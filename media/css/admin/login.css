@@ -1,0 +1,84 @@
+/*****************************
+ USHAHIDI STYLES
+ v1.0
+ David Kobia - 07/08/2008
+*****************************/
+
+* { margin: 0; padding: 0; }
+body {
+	background-image:url(../../img/admin/bkg_login.jpg);
+}
+body, td {
+	font: 13px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana, sans-serif;
+}
+a:link,
+a:visited {
+	color:#003399;
+}
+a:visited {
+	color:#0066CC;
+}
+a:hover,
+a:focus,
+a:active {
+	text-decoration:none;
+	color:#003399;
+}
+/* LOGIN BOX */
+/*****************************/
+#ushahidi_login_container{
+	width:400px;
+	height:240px;
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin:-150px auto auto -200px;
+}
+#ushahidi_login_logo {
+	text-align:center;
+	margin-bottom:20px;
+}
+#ushahidi_login {
+	border:3px solid #cb0000;
+	text-align:left;
+	padding: 20px;
+	background-color: #ddd;
+}
+#ushahidi_loginbox td{
+	padding:5px;
+}
+/*****************************/
+
+/* FORM */
+/*****************************/
+.login_label{
+	color:#fff;
+	text-align:right;
+	font-weight:bold;
+	background-color:#937233;
+	font-size:14px;
+}
+.login_text{
+	font-size:20px;
+	width:97%;
+	padding:2px;
+	color:#333;
+}
+.login_btn{
+	font-size: 14px;
+	font-weight: bold;
+	color: #FFFFFF;
+	background-color: #666666;
+	padding:5px;
+	border-top-color:#fff;
+	border-right-color: #333333;
+	border-bottom-color: #333333;
+	border-left-color:#fff;
+	border-width:1px;
+}
+.login_error{
+	background-color:#FFFFCC;
+	color:#990000;
+	font:bold;
+}
+/*****************************/
