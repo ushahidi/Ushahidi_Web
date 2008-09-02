@@ -662,12 +662,16 @@ ul.pager li a.active {background:#f2f7fa;}
 	line-height:24px;
 	float:left;
 }
+.report-form input:focus, .report-form textarea:focus
+{
+	background: #EDF9EE;
+}
 .report-form input.text{
 	display:inline;
 	margin:0;
 	padding:2px 5px;
 	float:left;
-	font:11px/14px Arial, Helvetica, sans-serif;
+	font:12px/14px Arial, Helvetica, sans-serif;
 	border:2px solid #d9d9d9;
 }
 .report-form input.title {
@@ -680,7 +684,7 @@ ul.pager li a.active {background:#f2f7fa;}
 	float:left;
 }
 .sel-holder select{
-	margin:-2px -1px;
+	margin:-1px -1px;
 	float:left;
 }
 .report-form h4{
@@ -712,10 +716,10 @@ ul.pager li a.active {background:#f2f7fa;}
 }
 .date-box {
 	float:left;
-	width:222px;
+	width:190px;
 	padding:0 0 3px;
 }
-.date-box input.text { width:150px;}
+.date-box input.text { width:100px;}
 a.calendar {
 	text-indent:-3000px;
 	overflow:hidden;
@@ -727,7 +731,7 @@ a.calendar {
 	background:url(../../img/admin/icon-calendar.gif) no-repeat;
 }
 .time {
-	width:158px;
+	width:188px;
 	float:left;
 	padding:0 0 3px;
 }
@@ -745,7 +749,6 @@ span.dots {
 .time select{width:46px;}
 .time .sel-holder {
 	display:inline;
-	margin:0 0 0 12px;
 }
 a.new-cat {
 	text-decoration:underline;
@@ -777,7 +780,7 @@ a.new-cat:hover{ text-decoration:none;}
 }
 .category ul li label{
 	color:#555;
-	font-size:12px;
+	font-size:11px;
 }
 .check-box {
 	margin:0;
@@ -789,6 +792,14 @@ a.new-cat:hover{ text-decoration:none;}
 .category ul li label span{
 	padding:0 0 0 5px;
 	float:left;
+}
+.category_add {
+	background:#f5f5f5;
+	width:377px;
+	clear:both;
+	overflow:hidden;
+	padding:0 0 18px;
+	display: none;
 }
 /*-- f-col --*/
 .f-col-1 {
@@ -832,6 +843,11 @@ a.new-cat:hover{ text-decoration:none;}
 	width:74px;
 	border:1px solid #c6c5c2;
 	color:#b75f5f;
+}
+.location-info input.text{
+	width:70px;
+	color:#CC0000;
+	background-color:#FFFFCC;
 }
 .town {
 	width:254px;
@@ -902,9 +918,25 @@ input.long {
 	float:right;
 }
 
-
-
-
+/*-- Color Picker --*/
+.jColorSelect {
+	overflow:hidden; /* for IE6 */
+	border:1px solid #fff;
+}
+.jColorSelect div{
+	background:url(../../img/icon_check.gif) no-repeat;
+	float:left;
+	width:13px;
+	height:13px;
+	cursor:pointer;
+	overflow:hidden; /* for IE6 */
+	border:1px solid #fff;
+	margin:1px;
+}
+.jColorSelect .check {
+	background-position:-13px 0;
+	cursor:default;
+}
 
 
 /*--  --*/

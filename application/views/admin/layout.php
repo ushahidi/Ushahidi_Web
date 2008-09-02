@@ -5,6 +5,16 @@
 	<title>UshahidiEngine</title>
 	<style type="text/css" media="all" >@import "<?php echo url::base() ?>media/css/admin/all.css";</style>
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>media/css/admin/ie6.css" media="screen"/><![endif]-->
+	<link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>media/css/datepicker/ui.datepicker.css" media="screen"/>
+	<script src="http://maps.google.com/maps?file=api&v=2&key=ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ" type="text/javascript"></script>
+	<?php echo html::script('media/js/jquery'); ?>
+	<?php echo html::script('media/js/jquery.form'); ?>
+	<?php echo html::script('media/js/ui.datepicker'); ?>
+	<?php echo html::script('media/js/extra'); ?>
+	<?php echo html::script('media/js/ui.highlightfade'); ?>
+	<?php echo html::script('media/js/mapstraction'); ?>
+	<?php echo html::script('media/js/mapstraction-geocode'); ?>
+	<?php echo html::script('media/js/mapstraction-route'); ?>
 </head>
 <body>
 	<div class="holder">

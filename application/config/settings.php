@@ -14,5 +14,7 @@ $config = array
 	'default_country' => '',
 	'default_lat' => '',
 	'default_lon' => '',
-	'default_zoom' => ''
+	'default_zoom' => '',
+	'items_per_page' => '',
+	'items_per_page_admin' => '20'
 );
