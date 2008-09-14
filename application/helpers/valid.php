@@ -268,13 +268,15 @@ class valid_Core {
 	 * Checks whether a string is a valid number (negative and decimal numbers allowed) and between a specified range.
 	 *
 	 * @param   string   input string
-	 * @param   float (MAX)
-	 * @param   float (MIN)
+	 * @param   float (MIN/MAX)
 	 * @return  boolean
 	 */
-	public static function between($str, $set_max, $set_min)
+	public static function between($str, $min_max = array(0,0))
 	{
-		return (is_numeric($str) AND preg_match('/^[-0-9.]++$/D', (string) $str) AND $str <= $set_max AND $str >= $set_min );
+		$set_min = $min_max[0];
+		$set_max = $min_max[1];
+		$str = (float) $str;
+		return (is_numeric($str) AND preg_match('/^[-0-9.]++$/D', (string) $str) AND ($str <= $set_max AND $str >= $set_min) );
 	}
 	
 
@@ -325,6 +327,31 @@ class valid_Core {
 		}
 
 		return (bool) preg_match($pattern, (string) $str);
+	}
+	
+	
+	/**
+	 * Checks whether a string is a valid date (mm/dd/yyyy).
+	 *
+	 * @param   string   input string
+	 * @return  boolean
+	 */
+	public static function date_mmddyyyy($str)
+	{
+		return (strptime($str, '%m/%d/%G'));
+	
+	}
+
+	/**
+	 * Checks whether a string is a valid date (dd/mm/yyyy).
+	 *
+	 * @param   string   input string
+	 * @return  boolean
+	 */
+	public static function date_ddmmyyyy($str)
+	{
+		return (strptime($str, '%d/%m/%G'));
+	
 	}
 
 } // End valid

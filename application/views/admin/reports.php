@@ -1,34 +1,51 @@
 			<div class="bg">
-				<h2><?php echo $title; ?> <span>(<?php echo $reports_total; ?>)</span><a href="reports/create">Create New Report</a></h2>
+				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span><a href="reports/edit">Create New Report</a></h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
 					<ul class="tabset">
-						<li><a href="reports" class="active">Show All</a></li>
-						<li><a href="reports/approve">Awaiting Approval</a></li>
-						<li><a href="reports/verify">Awaiting Verification</a></li>
+						<li><a href="?status=0" <?php if ($status != 'a' && $status !='v') echo "class=\"active\""; ?>>Show All</a></li>
+						<li><a href="?status=a" <?php if ($status == 'a') echo "class=\"active\""; ?>>Awaiting Approval</a></li>
+						<li><a href="?status=v" <?php if ($status == 'v') echo "class=\"active\""; ?>>Awaiting Verification</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#">APPROVE</a></li>
-							<li><a href="#">UNAPPROVE</a></li>
-							<li><a href="#">VERIFIY</a></li>
-							<li><a href="#">DELETE</a></li>
+							<li><a href="#" onclick="reportAction('a','APPROVE');">APPROVE</a></li>
+							<li><a href="#" onclick="reportAction('u','UNAPPROVE');">UNAPPROVE</a></li>
+							<li><a href="#" onclick="reportAction('v','VERIFY');">VERIFIY</a></li>
+							<li><a href="#" onclick="reportAction('d','DELETE');">DELETE</a></li>
 						</ul>
 					</div>
 				</div>
-				<!-- green-box -->
-				<div class="green-box">
-					<h3>Report Approved! <a href="#" class="hide">hide this message</a></h3>
-				</div>
+				<?php
+				if ($form_error) {
+				?>
+					<!-- red-box -->
+					<div class="red-box">
+						<h3>Error!</h3>
+						<ul>Please verify that you have checked an item</ul>
+					</div>
+				<?php
+				}
+
+				if ($form_saved) {
+				?>
+					<!-- green-box -->
+					<div class="green-box" id="submitStatus">
+						<h3>Reports <?php echo $form_action; ?> <a href="#" id="hideMessage" class="hide">hide this message</a></h3>
+					</div>
+				<?php
+				}
+				?>
 				<!-- report-table -->
-				<form action="#">
+				<?php print form::open(NULL, array('id' => 'reportMain', 'name' => 'reportMain')); ?>
+					<input type="hidden" name="action" id="action" value="">
 					<div class="table-holder">
 						<table class="table">
 							<thead>
 								<tr>
-									<th class="col-1"><input  type="checkbox" class="check-box"/></th>
+									<th class="col-1"><input id="checkallincidents" type="checkbox" class="check-box" onclick="CheckAll( this.id, 'incident_id[]' )" /></th>
 									<th class="col-2">Report Details</th>
 									<th class="col-3">Date</th>
 									<th class="col-4">Actions</th>
@@ -37,87 +54,96 @@
 							<tfoot>
 								<tr class="foot">
 									<td colspan="4">
-										<ul class="pager">
-											<li class="first">4 pages</li>
-											<li><a href="#" class="active">1</a></li>
-											<li><a href="#">2</a></li>
-											<li><a href="#">3</a></li>
-											<li><a href="#">4</a></li>
-											<li><a href="#">&gt;</a></li>
-										</ul>
 										<?php echo $pagination; ?>
 									</td>
 								</tr>
 							</tfoot>
 							<tbody>
-								<tr>
-									<td class="col-1"><input  type="checkbox" class="check-box"/></td>
-									<td class="col-2">
-										<div class="post">
-											<h4>Anxiety increases in IDP Camps as supplies dwindle</h4>
-											<p>Food and other essential supplies are fast dwindling in the camps for Internally Displaced People (IDP) in Nairobi without any significant Lorem ipsum an eam civibus fierent deleniti.... <a href="#" class="more">more</a></p>
-										</div>
-										<ul class="info">
-											<li class="none-separator">Location: <strong>Nairobi</strong>, <strong>Kenya</strong></li>
-											<li>Submitted by <strong>733779345</strong> via <strong>SMS</strong></li>
-										</ul>
-										<ul class="links">
-											<li class="none-separator">Categories:<a href="#">Displaced Peaple, </a><a href="#">Rape, </a><a href="#">Voting Iregularities.</a></li>
-										</ul>
-									</td>
-									<td class="col-3">02/31/08</td>
-									<td class="col-4">
-										<ul>
-											<li class="none-separator"><a href="#">Approve</a></li>
-											<li><a href="#">Verify</a></li>
-											<li><a href="#" class="del">Delete</a></li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td class="col-1"><input  type="checkbox" class="check-box"/></td>
-									<td class="col-2">
-										<div class="post">
-											<h4>Kikuyu tribe targeted in revenge attack</h4>
-											<p>One person was slashed at mauche belonging to the Kikuyu tribe. The Kikuyu tribe in revenge burnt down acar from the kalenjin community. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.<a href="#" class="more">less</a></p>
-										</div>
-										<ul class="info">
-											<li class="none-separator">Location: <strong>Eldoret, </strong><strong>Kenya</strong></li>
-											<li>Submitted by <strong>david@razornet.com</strong> via <strong>EMAIL</strong></li>
-										</ul>
-									</td>
-									<td class="col-3">02/31/08</td>
-									<td class="col-4">
-										<ul>
-											<li class="none-separator"><a href="#">Approve</a></li>
-											<li><a href="#">Verify</a></li>
-											<li><a href="#" class="del">Delete</a></li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td class="col-1"><input  type="checkbox" class="check-box"/></td>
-									<td class="col-2">
-										<div class="post">
-											<h4>300 refugees arrive via Kampala</h4>
-											<p>Food and other essential supplies are fast dwindling in the camps for Internally Displaced People (IDP) in Nairobi without any significant Lorem ipsum an eam civibus fierent deleniti....<a href="#" class="more">more</a></p>
-										</div>
-										<ul class="info">
-											<li class="none-separator">Location: <strong>Eldoret, </strong><strong>Kenya</strong></li>
-											<li>Submitted by <strong>198.165.2.24</strong> via <strong>WEB</strong></li>
-										</ul>
-									</td>
-									<td class="col-3">02/31/08</td>
-									<td class="col-4">
-										<ul>
-											<li class="none-separator"><a href="#">Approve</a></li>
-											<li><a href="#">Verify</a></li>
-											<li><a href="#" class="del">Delete</a></li>
-										</ul>
-									</td>
-								</tr>
+								<?php
+								if ($total_items == 0)
+								{
+								?>
+									<tr>
+										<td colspan="4" class="col">
+											<h3>No Results To Display!</h3>
+										</td>
+									</tr>
+								<?php	
+								}
+								foreach ($incidents as $incident)
+								{
+									$incident_id = $incident->id;
+									$incident_title = $incident->incident_title;
+									$incident_description = substr($incident->incident_description, 0, 150);
+									$incident_date = $incident->incident_date;
+									$incident_date = date('Y-m-d', strtotime($incident->incident_date));
+									$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
+									
+									if ($incident_mode == 1)
+									{
+										$submit_mode = "WEB";
+										// Who submitted the report?
+										if ($incident->incident_person->id)
+										{
+											// Report was submitted by a visitor
+											$submit_by = $incident->incident_person->person_first . " " . $incident->incident_person->person_last;
+										}
+										else
+										{
+											if ($incident->user_id)					// Report Was Submitted By Administrator
+											{
+												$submit_by = $incident->user->name;
+											}
+											else
+											{
+												$submit_by = 'Unknown';
+											}
+										}
+									}
+									
+									$incident_location = $incident->location->location_name;
+									$incident_country = $incident->location->country->country;
+
+									// Retrieve Incident Categories
+									$incident_category = "";
+									foreach($incident->incident_category as $category) 
+									{ 
+										$incident_category .= "<a href=\"#\">" . $category->category->category_title . "</a>&nbsp;&nbsp;";
+									}
+									
+									// Incident Status
+									$incident_approved = $incident->incident_active;
+									$incident_verified = $incident->incident_verified;
+									?>
+									<tr>
+										<td class="col-1"><input name="incident_id[]" value="<?php echo $incident_id; ?>" type="checkbox" class="check-box"/></td>
+										<td class="col-2">
+											<div class="post">
+												<h4><?php echo $incident_title; ?></h4>
+												<p><?php echo $incident_description; ?>... <a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more">more</a></p>
+											</div>
+											<ul class="info">
+												<li class="none-separator">Location: <strong><?php echo $incident_location; ?></strong>, <strong>Kenya</strong></li>
+												<li>Submitted by <strong><?php echo $submit_by; ?></strong> via <strong><?php echo $submit_mode; ?></strong></li>
+											</ul>
+											<ul class="links">
+												<li class="none-separator">Categories:<?php echo $incident_category; ?></li>
+											</ul>
+										</td>
+										<td class="col-3"><?php echo $incident_date; ?></td>
+										<td class="col-4">
+											<ul>
+												<li class="none-separator"><a href="#"<?php if ($incident_approved) echo " class=\"status_yes\"" ?>>Approve</a></li>
+												<li><a href="#"<?php if ($incident_verified) echo " class=\"status_yes\"" ?>>Verify</a></li>
+												<li><a href="#" class="del">Delete</a></li>
+											</ul>
+										</td>
+									</tr>
+									<?php
+								}
+								?>
 							</tbody>
 						</table>
 					</div>
-				</form>
+				<?php print form::close(); ?>
 			</div>

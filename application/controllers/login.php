@@ -1,4 +1,4 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 
 /**
 * Login Form
@@ -6,6 +6,8 @@
 class Login_Controller extends Template_Controller {
 	
 	public $auto_render = TRUE;
+	
+	protected $user;
 	
 	// Session Object
 	protected $session;
@@ -19,13 +21,6 @@ class Login_Controller extends Template_Controller {
 		parent::__construct();
 		
 		$this->session = new Session();
-		
-		if (KOHANA::config('auth.driver') != 'ORM')
-		{
-			throw new Kohana_User_Exception('Auth Demo (ORM)', 'Config Error : modules/auth/config driver set to - '.KOHANA::config('auth.driver'));
-		}		
-				
-		$this->profiler = new Profiler;
 	}
 	
 	public function index()
@@ -39,7 +34,7 @@ class Login_Controller extends Template_Controller {
 		{
 			if ($user = Session::instance()->get('auth_user',FALSE))
 			{
-				// url::redirect('admin/dashboard');
+				url::redirect('admin/dashboard');
 			}
 		}
 				
@@ -52,6 +47,7 @@ class Login_Controller extends Template_Controller {
 
 	    //  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
+		$form_error = FALSE;
 		
 		
 		// Set up the validation object
@@ -62,7 +58,7 @@ class Login_Controller extends Template_Controller {
 		
 		if ($_POST->validate())
 		{
-			// Sanitize $_POST data removing all inptus without rules
+			// Sanitize $_POST data removing all inputs without rules
 			$postdata_array = $_POST->safe_array();
 
 			// Load the user
@@ -75,7 +71,7 @@ class Login_Controller extends Template_Controller {
 			}
 			else
 			{
-				$remember = (isset($_REQUEST['remember']))? TRUE : FALSE;
+				$remember = (isset($_POST['remember']))? TRUE : FALSE;
 
 				// Attempt a login
 				if ($auth->login($user, $postdata_array['password'], $remember))
@@ -94,10 +90,11 @@ class Login_Controller extends Template_Controller {
 				// We need to already have created an error message file, for Kohana to use
 				// Pass the error message file name to the errors() method			
 			$errors = arr::overwrite($errors, $_POST->errors('auth'));
+			$form_error = TRUE;
 		}
 		
 		$this->template->errors = $errors;
 		$this->template->form = $form;
-		// $this->template->form_extra = $form_extra;
+		$this->template->form_error = $form_error;
 	}	
 }

@@ -15,6 +15,8 @@ $config = array
 	'default_lat' => '',
 	'default_lon' => '',
 	'default_zoom' => '',
-	'items_per_page' => '',
-	'items_per_page_admin' => '20'
+	'items_per_page' => '20',
+	'items_per_page_admin' => '20',
+	'api_url' => '<script src="http://maps.google.com/maps?file=api&v=2&key=" type="text/javascript"></script>',
+	'api_url_all' => ''
 );

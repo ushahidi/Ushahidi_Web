@@ -4,7 +4,7 @@
 * Locations Table Model
 */
 
-class Location_Model extends ORM
+class Media_Model extends ORM
 {
 	protected $belongs_to = array('location', 'incident');
 	

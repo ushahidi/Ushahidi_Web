@@ -1,4 +1,4 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 
 /**
 * Dashboard Controller
@@ -46,6 +46,11 @@ class Dashboard_Controller extends Admin_Controller
 		{
 			$this->template->content->timeline = '/month';
 		}
+		
+		// Get reports for display
+		$incidents = ORM::factory('incident')->limit(3)->orderby('incident_dateadd', 'desc')->find_all();
+		$this->template->content->incidents = $incidents;
+		
 	}
 	
 	
@@ -54,9 +59,6 @@ class Dashboard_Controller extends Admin_Controller
 		// Does this request have a URI?
 		// The URI can either be chart/month or chart/day
 		$timeline = $this->uri->segment('chart');
-		
-		// New Database For Querybuilder
-		$db = new Database();
 		
 		// Number of days this month
 		$month_days = date("t");
@@ -85,12 +87,7 @@ class Dashboard_Controller extends Admin_Controller
 				}
 				$mysql_date = $year . "-" . $month . "-" . $day . " " . $i;
 				$date_array[] = $i * 3600;	//Multiply by 3600. 3600 Seconds = 1 Hour
-
-				$db->select('count( * ) AS incident_count');
-				$db->from('incident');
-				$db->where('incident_date LIKE \''.$mysql_date.'%\'');
-				$incident_count = $db->get()->current()->incident_count;
-				$count_array[] = $incident_count;
+				$count_array[] = ORM::factory('incident')->where('incident_date LIKE \''.$mysql_date.'%\'')->count_all();
 			}
 		}
 		else
@@ -103,12 +100,16 @@ class Dashboard_Controller extends Admin_Controller
 				}
 				$mysql_date = $year . "-" . $month . "-" . $i;
 				$date_array[] = mktime(0,0,0,$month,$i,$year);	//Timestamp format
-
-				$db->select('count( * ) AS incident_count');
-				$db->from('incident');
-				$db->where('incident_date LIKE \''.$mysql_date.'%\'');
-				$incident_count = $db->get()->current()->incident_count;
-				$count_array[] = $incident_count;
+				$count_array[] = ORM::factory('incident')->where('incident_date LIKE \''.$mysql_date.'%\'')->count_all();
+			}
+		}
+		
+		// If all the values in $count_array are Zero, set a fixed scale
+		$setfixed = true;
+		foreach ($count_array as $key => $value) {
+			if ($value > 0) {
+				$setfixed = false;
+				break;
 			}
 		}
 		
@@ -118,8 +119,8 @@ class Dashboard_Controller extends Admin_Controller
 		$DataSet->AddPoint($date_array,"Serie2");
 		$DataSet->AddSerie("Serie1");  
 		$DataSet->SetAbsciseLabelSerie("Serie2");  
-		$DataSet->SetSerieName("Incidents","Serie1"); 
-		$DataSet->SetYAxisName("Incident Count");  
+		$DataSet->SetSerieName("Reports","Serie1"); 
+		$DataSet->SetYAxisName("Reports Count");  
 		$DataSet->SetYAxisFormat("number");
 		if (strtolower($timeline) == 'day')
 		{
@@ -131,32 +132,36 @@ class Dashboard_Controller extends Admin_Controller
 		}
 
 		// Initialise the graph     
-		$Test = new pChart(410,305);
-		$Test->setFixedScale(0,100);
-		$Test->setFontProperties(SYSPATH."fonts/tahoma.ttf",8);  
-		$Test->setGraphArea(60,30,370,255);  
-		$Test->drawFilledRoundedRectangle(7,7,403,298,5,240,240,240);  
-		$Test->drawRoundedRectangle(5,5,405,300,5,230,230,230);  
-		$Test->drawGraphArea(255,255,255,TRUE);  
-		$Test->drawScale($DataSet->GetData(),$DataSet->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,0,2,0,6);
+		$incidents_chart = new pChart(410,305);
+		if ($setfixed)
+		{
+			$incidents_chart->setFixedScale(0,100);
+		}
+		$incidents_chart->setFontProperties(SYSPATH."fonts/tahoma.ttf",8);  
+		$incidents_chart->setGraphArea(60,30,370,255);  
+		$incidents_chart->drawFilledRoundedRectangle(7,7,403,298,5,240,240,240);  
+		$incidents_chart->drawRoundedRectangle(5,5,405,300,5,230,230,230);  
+		$incidents_chart->drawGraphArea(255,255,255,TRUE);  
+		$incidents_chart->drawScale($DataSet->GetData(),$DataSet->GetDataDescription(),SCALE_NORMAL,150,150,150,TRUE,0,2,0,6);
 
 		// Draw the 0 line     
-		$Test->setFontProperties(SYSPATH."fonts/tahoma.ttf",6);  
-		$Test->drawTreshold(0,143,55,72,TRUE,TRUE);  
+		$incidents_chart->setFontProperties(SYSPATH."fonts/tahoma.ttf",6);  
+		$incidents_chart->drawTreshold(0,143,55,72,TRUE,TRUE);  
 
 		// Draw the line graph  
-		$Test->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());  
-		$Test->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255); 
+		$incidents_chart->setColorPalette(0,255,0,0);	// Set the color of the first series to Red
+		$incidents_chart->drawLineGraph($DataSet->GetData(),$DataSet->GetDataDescription());  
+		$incidents_chart->drawPlotGraph($DataSet->GetData(),$DataSet->GetDataDescription(),3,2,255,255,255); 
 		
 		// Draw A Cubic Curve graph instead
-		// $Test->drawCubicCurve($DataSet->GetData(),$DataSet->GetDataDescription()); 
+		// $incidents_chart->drawCubicCurve($DataSet->GetData(),$DataSet->GetDataDescription()); 
 
 		// Finish the graph  
-		$Test->setFontProperties(SYSPATH."fonts/tahoma.ttf",8);  
-		$Test->drawLegend(90,35,$DataSet->GetDataDescription(),255,255,255);  
-		$Test->setFontProperties(SYSPATH."fonts/tahoma.ttf",10);  
-		$Test->drawTitle(60,22,"Incidents",50,50,50,585);  
-		$Test->stroke("chart.png");
+		$incidents_chart->setFontProperties(SYSPATH."fonts/tahoma.ttf",8);  
+		$incidents_chart->drawLegend(90,35,$DataSet->GetDataDescription(),255,255,255);  
+		$incidents_chart->setFontProperties(SYSPATH."fonts/tahoma.ttf",10);  
+		$incidents_chart->drawTitle(60,22,"",50,50,50,585);  
+		$incidents_chart->stroke("chart.png");
 	}
 	
 	

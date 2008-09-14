@@ -12,9 +12,18 @@
     <div id="ushahidi_login">
       <table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
         <form method="POST" name="frm_login" style="line-height: 100%; margin-top: 0; margin-bottom: 0">     
-			<?php if (isset($errors)) { ?>
+			<?php
+			 if ($form_error) { ?>
             <tr>
-              <td align="center" class="login_error">Please Verify Your Username and Password</td>
+              	<td align="left" class="login_error">
+				<?php
+				foreach ($errors as $error_item => $error_description)
+				{
+					// print "<li>" . $error_description . "</li>";
+					print (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
+				}
+				?>
+				</td>
             </tr>
 			<?php } ?>
             <tr>
