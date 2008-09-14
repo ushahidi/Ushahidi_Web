@@ -60,7 +60,7 @@
 				<!-- sub-nav -->
 				<ul class="sub-nav">
 					<li><a href="<?php echo url::base() ?>admin/settings">Settings</a></li>
-					<li><a href="#">Users</a></li>
+					<li><a href="<?php echo url::base() ?>admin/users">Users</a></li>
 					<li><a href="#">Plugins</a></li>
 				</ul>
 			</div>
