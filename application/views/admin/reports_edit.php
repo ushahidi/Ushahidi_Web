@@ -101,10 +101,10 @@
 									<?php
 									$this_col = 1;		// First column
 									$max_col = round($categories_total/2);		// Maximum number of columns
-									foreach ($categories as $category => $category_extra)
+									foreach ($categories as $category => $category_info)
 									{
-										$category_title = $category_extra[0];
-										$category_color = $category_extra[1];
+										$category_title = $category_info[0];
+										$category_color = $category_info[1];
 										if ($this_col == 1) print "<ul>";
 										
 										if (!empty($form['incident_category']) && in_array($category, $form['incident_category'])) {

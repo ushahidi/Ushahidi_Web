@@ -54,7 +54,7 @@ class Swatch_Controller extends Controller
 		$brdr_color    = imagecolorallocate( $image, $bc_red, $bc_green, $bc_blue );
 
 		imagefill( $image, 0, 0, $brdr_color);
-		imagefilledrectangle( $image, 1, 1, ($width-2), ($height-2), $main_color);
+		imagefilledrectangle( $image, 1, 1, ($width-2), ($height-3), $main_color);
 		
 		imagepng($image);
 		imagedestroy($image);

@@ -1,0 +1,6 @@
+#footer .footer-info ul li {
+	background-image: expression( (this===this.parentNode.childNodes[0]) ? "none" : "auto");
+	padding-left: expression( (this===this.parentNode.childNodes[0]) ? "0" : "auto");
+}
+.small-block .block-bg ul li,
+.incident-name ul li {border: expression( (this===this.parentNode.childNodes[0]) ? "none" : "auto");}
