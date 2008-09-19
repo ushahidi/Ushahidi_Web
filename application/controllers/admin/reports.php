@@ -266,12 +266,21 @@ class Reports_Controller extends Admin_Controller
 					}
 	        	}
 	        }
-	
-			// Validate uploads
+			
+		
+			// Validate photo uploads.
 			if (!empty($_FILES['incident_photo']['name'][0]))
 			{
-				// $post->add_rules('incident_photo.*','upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[6M]');
-			}
+					$_FILES = Validation::factory($_FILES)->add_rules( 
+						'incident_photo',
+						'upload::valid','upload::type[gif,png,jpg]',
+						'upload::size[6M]');
+					
+					if( $_FILES->validate() ) {
+						upload::save('incident_photo' );
+					}
+			} 
+					
 			
 			// Validate Personal Information
 			if (!empty($_POST['person_first']))
