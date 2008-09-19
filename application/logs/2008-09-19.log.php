@@ -73,3 +73,8 @@
 2008-09-19 15:59:37 +00:00 --- error: Uncaught Kohana_404_Exception: The page you requested, media/js/OpenLayers/theme/default/style.css, could not be found. in file system/core/Kohana.php on line 816
 2008-09-19 16:00:21 +00:00 --- error: Uncaught Kohana_404_Exception: The page you requested, ushahidi/admin/reports/edit/12/saved, could not be found. in file system/core/Kohana.php on line 816
 2008-09-19 20:04:00 +00:00 --- error: Uncaught Kohana_404_Exception: The page you requested, ushahidi/admin/reports, could not be found. in file system/core/Kohana.php on line 816
+2008-09-19 20:48:04 +00:00 --- error: Uncaught Kohana_404_Exception: The page you requested, ushahidi/admin/reports/edit, could not be found. in file system/core/Kohana.php on line 816
+2008-09-19 20:48:17 +00:00 --- error: Uncaught Kohana_404_Exception: The page you requested, media/js/OpenLayers/theme/default/style.css, could not be found. in file system/core/Kohana.php on line 816
+2008-09-19 20:48:47 +00:00 --- error: Uncaught Kohana_404_Exception: The page you requested, ushahidi/admin/reports/edit/14/saved, could not be found. in file system/core/Kohana.php on line 816
+2008-09-19 20:49:18 +00:00 --- error: Uncaught Kohana_404_Exception: The page you requested, ushahidi/admin/reports/edit/15/saved, could not be found. in file system/core/Kohana.php on line 816
+2008-09-19 20:49:27 +00:00 --- error: Uncaught Kohana_404_Exception: The page you requested, media/js/OpenLayers/theme/default/style.css, could not be found. in file system/core/Kohana.php on line 816

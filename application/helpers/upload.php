@@ -55,18 +55,56 @@ class upload_Core {
 
 		if ( ! is_writable($directory))
 			throw new Kohana_Exception('upload.not_writable', $directory);
-
-		if (is_uploaded_file($file['tmp_name']) AND move_uploaded_file($file['tmp_name'], $filename = $directory.$filename))
-		{
-			if ($chmod !== FALSE)
-			{
-				// Set permissions on filename
-				chmod($filename, $chmod);
+		
+		// loop through if tmp_name returns an array
+		if( is_array( $file['tmp_name'] ) ) {
+			$i = 0;
+			foreach( $file['tmp_name'] as $tmp_name ) { 
+			if (is_uploaded_file($tmp_name ) AND 
+				move_uploaded_file($tmp_name, $filename = 
+					$directory.$file['name'][$i] ) ) {
+				
+						
+				if ($chmod !== FALSE)
+				{
+					// Set permissions on filename
+					chmod( $filename, $chmod );
+					
+				}
+				
+				//Resize image.
+				Image::factory($filename)->resize(100,100,Image::WIDTH)
+				->save($filename );
+				
+				$i++;
+				
+				}
 			}
-
-			// Return new file path
-			return $filename;
+			
+		} else {
+			
+			if (is_uploaded_file($tmp_name ) AND 
+				move_uploaded_file($tmp_name, $filename = 
+					$directory.$file['name'] ) ) {
+				
+						
+				if ($chmod !== FALSE)
+				{
+					// Set permissions on filename
+					chmod( $filename, $chmod );
+					
+				}
+				
+				//Resize image.
+				Image::factory($filename)->resize(100,100,Image::WIDTH)
+				->save($filename );
+				
+				$i++;
+				
+			}
+			
 		}
+			
 
 		return FALSE;
 	}
