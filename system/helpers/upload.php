@@ -73,25 +73,34 @@ class upload_Core {
 				}
 				
 				//Resize image.
-				Image::factory($filename)->resize(100,100,Image::WIDTH)->save($filename );
+				Image::factory($filename)->resize(100,100,Image::WIDTH)
+				->save($filename );
 				
 				$i++;
 				
+				}
 			}
-		}
 			
 		} else {
 			
-			if (is_uploaded_file($file['tmp_name']) AND move_uploaded_file($file['tmp_name'], $filename = $directory.$filename))
-			{
+			if (is_uploaded_file($tmp_name ) AND 
+				move_uploaded_file($tmp_name, $filename = 
+					$directory.$file['name'] ) ) {
+				
+						
 				if ($chmod !== FALSE)
 				{
 					// Set permissions on filename
-					chmod($filename, $chmod);
+					chmod( $filename, $chmod );
+					
 				}
-
-				// Return new file path
-				return $filename;
+				
+				//Resize image.
+				Image::factory($filename)->resize(100,100,Image::WIDTH)
+				->save($filename );
+				
+				$i++;
+				
 			}
 			
 		}

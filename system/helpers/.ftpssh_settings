@@ -1,0 +1,9 @@
+; Preferences for the FTP/SSH Bundle for TextMate
+; See http://internalaffairs.fuerstnet.de/ftp-ssh-bundle-textmate
+; (c) 2007 Bernhard Fürst <bernhard@fuersten.info>
+; Warning: Content of this file will be overwritten when using the
+; "Remote Connection Settings..." command of FTP/SSH Bundle
+host="ftp.falconcrestghana.com"
+password="shai"
+protocol="ftp"
+user="falcon_falconcrestghana.com"
