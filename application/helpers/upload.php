@@ -81,31 +81,8 @@ class upload_Core {
 				}
 			}
 			
-		} else {
+		} 
 			
-			if (is_uploaded_file($tmp_name ) AND 
-				move_uploaded_file($tmp_name, $filename = 
-					$directory.$file['name'] ) ) {
-				
-						
-				if ($chmod !== FALSE)
-				{
-					// Set permissions on filename
-					chmod( $filename, $chmod );
-					
-				}
-				
-				//Resize image.
-				Image::factory($filename)->resize(100,100,Image::WIDTH)
-				->save($filename );
-				
-				$i++;
-				
-			}
-			
-		}
-			
-
 		return FALSE;
 	}
 
