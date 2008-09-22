@@ -16,20 +16,35 @@
 									</ul>
 								</div>
 								<div id="map" class="map-holder"></div>
-								<div class="slider-holder"></div>
+								<div class="slider-holder">
+									<form action="#">
+										<input type="hidden" value="0" name="currentCat" id="currentCat">
+										<fieldset>
+											<label for="startDate">From:</label>
+											<select name="startDate" id="startDate">
+												<?php echo $startDate; ?>
+											</select>
+
+											<label for="endDate">To:</label>
+											<select name="endDate" id="endDate">
+												<?php echo $endDate; ?>
+											</select>
+										</fieldset>
+									</form>
+								</div>
 							</div>
 							<div class="category">
 								<strong class="title">CATEGORY FILTER</strong>
 								<div class="grey-box">
 									<div class="grey-box-bg">
 										<ul>
-											<li><a class="active" href="#"><span style="background:no-repeat url(<?php echo url::base() . 'swatch/?c=ffffff&w=16&h=16&.png' ?>); background-position:left center;">All Categories</span></a></li>
+											<li><a class="active" id="cat_0" href="#"><span style="background:no-repeat url(<?php echo url::base() . 'swatch/?c=ffffff&w=16&h=16&.png' ?>); background-position:left center;">All Categories</span></a></li>
 											<?php
 											foreach ($categories as $category => $category_info)
 											{
 												$category_title = $category_info[0];
 												$category_color = $category_info[1];
-												echo '<li><a href="#"><span style="background:no-repeat url('. url::base() . "swatch/?c=" . $category_color . "&w=16&h=16&.png" . '); background-position:left center;">' . $category_title . '</span></a></li>';
+												echo '<li><a href="#" id="cat_'. $category .'"><span style="background:no-repeat url('. url::base() . "swatch/?c=" . $category_color . "&w=16&h=16&.png" . '); background-position:left center;">' . $category_title . '</span></a></li>';
 											}
 											?>
 										</ul>
@@ -59,62 +74,37 @@
 												<li class="w-03">DATE</li>
 											</ul>
 										</li>
+										<?php
+										if ($total_items == 0)
+										{
+										?>
 										<li>
 											<ul>
-												<li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-												<li class="w-02">Eldoret</li>
-												<li class="w-03">18 Jan 2008</li>
+												<li class="w-01">No Reports In The System</li>
+												<li class="w-02">&nbsp;</li>
+												<li class="w-03">&nbsp;</li>
 											</ul>
 										</li>
-										<li>
-											<ul>
-												<li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-												<li class="w-02">Kisumu</li>
-												<li class="w-03">18 Jan 2008</li>
-											</ul>
-										</li>
-										<li>
-											<ul>
-												<li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-												<li class="w-02">Eldoret</li>
-												<li class="w-03">18 Jan 2008</li>
-											</ul>
-										</li>
-										<li>
-											<ul>
-												<li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-												<li class="w-02">Kisumu</li>
-												<li class="w-03">18 Jan 2008</li>
-											</ul>
-										</li>
-										<li>
-											<ul>
-												<li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-												<li class="w-02">Eldoret</li>
-												<li class="w-03">18 Jan 2008</li>
-											</ul>
-										</li>
-										<li>
-											<ul>
-												<li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-												<li class="w-02">Kisumu</li>
-												<li class="w-03">18 Jan 2008</li>
-											</ul>
-										</li>
-										<li>
-											<ul>
-												<li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-												<li class="w-02">Eldoret</li>
-												<li class="w-03">18 Jan 2008</li>
-											</ul>
-										</li>
-										<li>
-											<ul>
-												<li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-												<li class="w-02">Kisumu</li>
-												<li class="w-03">18 Jan 2008</li>
-											</ul>
-										</li>
+										<?php	
+										}
+										foreach ($incidents as $incident)
+										{
+											$incident_id = $incident->id;
+											$incident_title = substr($incident->incident_title, 0, 40);
+											$incident_date = $incident->incident_date;
+											$incident_date = date('M j Y', strtotime($incident->incident_date));
+											$incident_location = $incident->location->location_name;
+											?>
+											<li>
+												<ul>
+													<li class="w-01"><a href="<?php echo url::base() . 'reports/view/' . $incident_id; ?>"><?php echo $incident_title ?>...</a></li>
+													<li class="w-02"><?php echo $incident_location ?></li>
+													<li class="w-03"><?php echo $incident_date; ?></li>
+												</ul>
+											</li>
+											<?php
+										}
+										?>
 									</ul>
 									<a class="btn-more" href="#"><span>MORE</span></a>
 								</div>

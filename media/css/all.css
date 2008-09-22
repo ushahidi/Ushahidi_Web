@@ -26,9 +26,12 @@ form {
 	width:400px;
 	padding:26px 0 0 20px
 }
-#header .header-info strong {
+#header .header-info strong,
+#header .header-info strong a,
+#header .header-info strong a:visited{
 	color:#fff;
 	font:28px/33px Arial, Helvetica, sans-serif;
+	text-decoration:none;
 }
 #header .header-info p {
 	color:#fff;
@@ -160,7 +163,27 @@ form {
 	margin-top:10px;
 	width:573px;
 	height:70px;
-	border:1px solid #ccc;
+	font-size: 70%;
+}
+.slider-holder form, .slider-holder fieldset {
+	border:0;
+}
+.olControlLoadingPanel {
+	background-image:url(../img/loading.gif);
+	background-position:center;
+	background-repeat:no-repeat;
+}
+.infowindow{
+	padding:10px;
+}
+.infowindow h2{
+	margin:0 0 5px 0;
+	padding:0;
+	font-size:14px;
+	font-weight:bold;
+}
+.infowindow a, .infowindow a:visited{
+	color:#000;
 }
 /*--category--*/
 .category {
@@ -496,6 +519,11 @@ form {
 	color:#339933;
 	font:bold 12px/15px Arial, Helvetica, sans-serif;
 }
+.incident-name ul li p strong.red {
+	display:inline;
+	color:#CC0000;
+	font:bold 12px/15px Arial, Helvetica, sans-serif;
+}
 .incident-name ul li p a {
 	color:#09c;
 	text-decoration:none;
@@ -528,6 +556,8 @@ form {
 	overflow:hidden;
 	clear:both;
 	border:1px solid #ccc;
+	width:428px;
+	height:298px;
 }
 /*--report-description--*/
 .report-description {
@@ -764,4 +794,74 @@ form {
 	text-indent:-9999px;
 	overflow:hidden;
 	background:url(../img/f-logo.gif) no-repeat;
+}
+
+/*-----Accessible Slider CSS-----*/
+.ui-slider {clear: both; top: 10px;}
+.ui-slider  {
+	text-decoration: none !important;
+}
+.ui-slider-tooltip {
+	display: none;
+}
+.ui-slider-handle-active .ui-slider-tooltip {
+	display: block;
+	position: relative;
+	top: -25px;
+	text-align: center;
+	padding: .2em;
+	font-size: .9em;
+	width: 8em;
+	margin-left: -4em;
+	text-decoration: none !important;
+}
+.ui-slider ol, .ui-slider li, .ui-slider dl, .ui-slider dd, .ui-slider dt {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+.ui-slider ol, .ui-slider dl {
+	position: relative;
+	top: 1.3em;
+	width: 100%;
+}
+.ui-slider dt {
+	top: 1.5em;
+	position: absolute;
+	padding-top: .2em;
+	text-align: center;
+	border-bottom: 1px dotted #ddd;
+	height: .7em;
+	color: #999;
+}
+.ui-slider dt span {
+	background: #fff;
+	padding: 0 .5em;
+}
+.ui-slider li, .ui-slider dd {
+	position: absolute;
+	overflow: visible;
+	color: #666;
+}
+.ui-slider li span.ui-slider-label, .ui-slider dd span.ui-slider-label {
+	display: none;
+}
+.ui-slider li span.ui-slider-label-show, .ui-slider dd span.ui-slider-label-show {
+	display: block;
+}
+.ui-slider span.ui-slider-tic {
+	position: absolute;
+	left: 0;
+	height: .8em;
+	top: -1.3em;
+}
+.ui-slider li span.ui-component-content, .ui-slider dd span.ui-component-content {
+	border-right: 0;
+	border-left-width: 1px;
+	border-left-style: dotted;
+	border-top: 0;
+	border-bottom: 0;
+}
+.ui-slider .first .ui-slider-tic, .ui-slider .last .ui-slider-tic {
+	display: none;
 }

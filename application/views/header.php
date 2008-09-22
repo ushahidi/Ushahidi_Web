@@ -12,6 +12,9 @@
 	if ($map_enabled)
 	{
 		echo html::script('media/js/OpenLayers/OpenLayers');
+		echo html::script('media/js/OpenLayers/LoadingPanel');
+		echo html::script('media/js/accessibleUISlider.jQuery');
+		echo html::stylesheet('media/css/jquery-ui-themeroller');
 		echo $api_url . "\n";
 	}
 	?>
@@ -24,12 +27,12 @@
 		<!-- start header block -->
 		<div id="header">
 			<div class="header-info">
-				<strong><?php echo $site_name; ?></strong>
+				<strong><a href ="<?php echo url::base(); ?>"><?php echo $site_name; ?></a></strong>
 				<p>A brief description of the project can go here.</p>
 			</div>
 			<ul>
 				<li class="first"><a <?php if ($this_page == 'home') echo 'class="active"'; ?> href="<?php echo url::base() . "main" ?>">Home</a></li>
-				<li><a <?php if ($this_page == 'report') echo 'class="active"'; ?> href="<?php echo url::base() . "report" ?>">Report an Incident</a></li>
+				<li><a <?php if ($this_page == 'reports') echo 'class="active"'; ?> href="<?php echo url::base() . "report" ?>">Report an Incident</a></li>
 				<li><a <?php if ($this_page == 'alerts') echo 'class="active"'; ?> href="<?php echo url::base() . "alerts" ?>">Get Alerts</a></li>
 				<li class="last"><a <?php if ($this_page == 'help') echo 'class="active"'; ?> href="<?php echo url::base() . "help" ?>">How to Help</a></li>
 			</ul>
