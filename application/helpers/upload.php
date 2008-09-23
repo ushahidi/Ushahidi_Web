@@ -3,7 +3,7 @@
  * Upload helper class for working with the global $_FILES
  * array and Validation library.
  *
- * $Id: upload.php 3264 2008-08-05 19:03:14Z Geert $
+ * $Id: upload.php 3264 2008-09-23 19:03:14Z David Kobia $
  *
  * @package    Core
  * @author     Kohana Team
@@ -59,30 +59,42 @@ class upload_Core {
 		// loop through if tmp_name returns an array
 		if( is_array( $file['tmp_name'] ) ) {
 			$i = 0;
+			$filenames = array();
 			foreach( $file['tmp_name'] as $tmp_name ) { 
-			if (is_uploaded_file($tmp_name ) AND 
+				if (is_uploaded_file($tmp_name ) AND 
 				move_uploaded_file($tmp_name, $filename = 
-					$directory.$file['name'][$i] ) ) {
-				
-						
+					$directory.$file['name'][$i] ) ) 
+				{		
+					if ($chmod !== FALSE)
+					{
+						// Set permissions on filename
+						chmod( $filename, $chmod );
+					}
+					
+					// Add $filename to $filenames array
+					$filenames[] = $filename;
+				}
+				$i++;
+			}
+			
+			// Return new file path array
+			return $filenames;
+		}
+		else
+		{
+			if (is_uploaded_file($file['tmp_name']) AND move_uploaded_file($file['tmp_name'], $filename = $directory.$filename))
+			{
 				if ($chmod !== FALSE)
 				{
 					// Set permissions on filename
-					chmod( $filename, $chmod );
-					
+					chmod($filename, $chmod);
 				}
-				
-				//Resize image.
-				Image::factory($filename)->resize(100,100,Image::WIDTH)
-				->save($filename );
-				
-				$i++;
-				
-				}
+
+				// Return new file path
+				return $filename;
 			}
-			
-		} 
-			
+		}
+
 		return FALSE;
 	}
 
@@ -96,12 +108,41 @@ class upload_Core {
 	 */
 	public static function valid($file)
 	{
-		return (is_array($file)
-			AND isset($file['error'])
-			AND isset($file['name'])
-			AND isset($file['type'])
-			AND isset($file['tmp_name'])
-			AND isset($file['size']));
+		if (is_array($file))
+		{
+			// Is this a multi-upload array?
+			if (is_array($file['name']))
+			{
+				for ($i=0; $i <= count($file['name']) ; $i++) 
+				{ 
+					if (isset($file['error'][$i])
+						AND isset($file['name'][$i])
+						AND isset($file['type'][$i])
+						AND isset($file['tmp_name'][$i])
+						AND isset($file['size'][$i]))
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			// No - this is a single upload
+			else
+			{
+				return (isset($file['error'])
+					AND isset($file['name'])
+					AND isset($file['type'])
+					AND isset($file['tmp_name'])
+					AND isset($file['size']));
+			}
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -112,10 +153,31 @@ class upload_Core {
 	 */
 	public static function required(array $file)
 	{
-		return (isset($file['tmp_name'])
-			AND isset($file['error'])
-			AND is_uploaded_file($file['tmp_name'])
-			AND (int) $file['error'] === UPLOAD_ERR_OK);
+		if (is_array($file['name']))
+		{
+			for ($i=0; $i <= count($file['name']) ; $i++) 
+			{ 
+				if (isset($file['tmp_name'][$i])
+					AND isset($file['error'][$i])
+					AND is_uploaded_file($file['tmp_name'][$i])
+					AND (int) $file['error'][$i] === UPLOAD_ERR_OK)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		// This is a single upload
+		else
+		{
+			return (isset($file['tmp_name'])
+				AND isset($file['error'])
+				AND is_uploaded_file($file['tmp_name'])
+				AND (int) $file['error'] === UPLOAD_ERR_OK);
+		}
 	}
 
 	/**
@@ -127,17 +189,47 @@ class upload_Core {
 	 */
 	public static function type(array $file, array $allowed_types)
 	{
-		if ((int) $file['error'] !== UPLOAD_ERR_OK)
-			return TRUE;
+		if (is_array($file['name']))
+		{
+			for ($i=0; $i <= count($file['name']) ; $i++) 
+			{ 
+				if ((int) $file['error'][$i] !== UPLOAD_ERR_OK)
+				{
+					return TRUE;
+				}
+				
+				// Get the default extension of the file
+				$extension = strtolower(substr(strrchr($file['name'][$i], '.'), 1));
 
-		// Get the default extension of the file
-		$extension = strtolower(substr(strrchr($file['name'], '.'), 1));
+				// Get the mime types for the extension
+				$mime_types = Kohana::config('mimes.'.$extension);
 
-		// Get the mime types for the extension
-		$mime_types = Kohana::config('mimes.'.$extension);
+				// Make sure there is an extension, that the extension is allowed, and that mime types exist
+				if ( ! empty($extension) AND in_array($extension, $allowed_types) AND is_array($mime_types))
+				{
+					return TRUE;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		// This is a single upload
+		else
+		{
+			if ((int) $file['error'] !== UPLOAD_ERR_OK)
+				return TRUE;
 
-		// Make sure there is an extension, that the extension is allowed, and that mime types exist
-		return ( ! empty($extension) AND in_array($extension, $allowed_types) AND is_array($mime_types));
+			// Get the default extension of the file
+			$extension = strtolower(substr(strrchr($file['name'], '.'), 1));
+
+			// Get the mime types for the extension
+			$mime_types = Kohana::config('mimes.'.$extension);
+
+			// Make sure there is an extension, that the extension is allowed, and that mime types exist
+			return ( ! empty($extension) AND in_array($extension, $allowed_types) AND is_array($mime_types));
+		}
 	}
 
 	/**
@@ -152,26 +244,67 @@ class upload_Core {
 	 */
 	public static function size(array $file, array $size)
 	{
-		if ((int) $file['error'] !== UPLOAD_ERR_OK)
-			return TRUE;
-
-		// Only one size is allowed
-		$size = strtoupper($size[0]);
-
-		if ( ! preg_match('/[0-9]++[BKMG]/', $size))
-			return FALSE;
-
-		// Make the size into a power of 1024
-		switch (substr($size, -1))
+		if (is_array($file['name']))
 		{
-			case 'G': $size = intval($size) * pow(1024, 3); break;
-			case 'M': $size = intval($size) * pow(1024, 2); break;
-			case 'K': $size = intval($size) * pow(1024, 1); break;
-			default:  $size = intval($size);                break;
-		}
+			for ($i=0; $i <= count($file['name']) ; $i++) 
+			{
+				if ((int) $file['error'][$i] !== UPLOAD_ERR_OK)
+				{
+					return TRUE;
+				}
 
-		// Test that the file is under or equal to the max size
-		return ($file['size'] <= $size);
+				// Only one size is allowed
+				$size = strtoupper($size[0]);
+
+				if ( ! preg_match('/[0-9]++[BKMG]/', $size))
+				{
+					return FALSE;
+				}
+
+				// Make the size into a power of 1024
+				switch (substr($size, -1))
+				{
+					case 'G': $size = intval($size) * pow(1024, 3); break;
+					case 'M': $size = intval($size) * pow(1024, 2); break;
+					case 'K': $size = intval($size) * pow(1024, 1); break;
+					default:  $size = intval($size);                break;
+				}
+
+				// Test that the file is under or equal to the max size
+				if ($file['size'][$i] <= $size)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		// This is a single upload
+		else
+		{
+			if ((int) $file['error'] !== UPLOAD_ERR_OK)
+				return TRUE;
+
+			// Only one size is allowed
+			$size = strtoupper($size[0]);
+
+			if ( ! preg_match('/[0-9]++[BKMG]/', $size))
+				return FALSE;
+
+			// Make the size into a power of 1024
+			switch (substr($size, -1))
+			{
+				case 'G': $size = intval($size) * pow(1024, 3); break;
+				case 'M': $size = intval($size) * pow(1024, 2); break;
+				case 'K': $size = intval($size) * pow(1024, 1); break;
+				default:  $size = intval($size);                break;
+			}
+
+			// Test that the file is under or equal to the max size
+			return ($file['size'] <= $size);
+		}
 	}
 
 } // End upload

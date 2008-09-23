@@ -437,6 +437,7 @@ CREATE TABLE IF NOT EXISTS `media` (
   `media_title` varchar(255) default NULL,
   `media_description` longtext,
   `media_link` varchar(255) default NULL,
+  `media_thumb` varchar(255) default NULL,
   `media_date` datetime default NULL,
   `media_active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)

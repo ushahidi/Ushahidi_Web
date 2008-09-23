@@ -284,7 +284,7 @@
 										{
 											print "class=\"row link-row\" id=\"$i\">\n";
 										}
-										// print "\"<strong>" . $value . "</strong>\"" . "<BR />";
+										print "\"<strong>" . $value . "</strong>\"" . "<BR />";
 										print form::upload($this_field . '[]', $value, ' class="text long"');
 										print "<a href=\"#\" class=\"add\" onClick=\"addFormField('$this_div','$this_field','$this_startid','$this_field_type'); return false;\">add</a>";
 										if ($i != 0)

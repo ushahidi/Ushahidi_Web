@@ -222,7 +222,8 @@ class Reports_Controller extends Admin_Controller
 	    if ($_POST)
 	    {
 	        // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-	        // $post = new Validation(array_merge($_POST, $_FILES));
+			
+			// Merge the POST and FILES for validation
 			$post = Validation::factory(array_merge($_POST,$_FILES));
 			
 	         //  Add some filters
@@ -268,18 +269,8 @@ class Reports_Controller extends Admin_Controller
 	        }
 			
 		
-			// Validate photo uploads.
-			if (!empty($_FILES['incident_photo']['name'][0]))
-			{
-					$_FILES = Validation::factory($_FILES)->add_rules( 
-						'incident_photo',
-						'upload::valid','upload::type[gif,png,jpg]',
-						'upload::size[6M]');
-					
-					if( $_FILES->validate() ) {
-						upload::save('incident_photo' );
-					}
-			} 
+			// Validate photo uploads
+			$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[2M]');
 					
 			
 			// Validate Personal Information
@@ -377,10 +368,34 @@ class Reports_Controller extends Admin_Controller
 					}
 				}
 				
-				// c. Photos
-				// $filename = upload::save('incident_photo',NULL,NULL);
-				// unlink($filename);
-				
+				$filenames = upload::save('incident_photo');
+				$i = 1;
+				foreach ($filenames as $filename) {
+					$new_filename = $incident->id . "_" . $i . "_" . time();
+					
+					// Resize original file... make sure its max 408px wide
+					Image::factory($filename)->resize(408,248,Image::AUTO)
+						->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
+					
+					// Create thumbnail
+					Image::factory($filename)->resize(70,41,Image::HEIGHT)
+						->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");
+						
+					// Remove the temporary file
+					unlink($filename);
+					
+					// Save to DB
+					$photo = new Media_Model();
+					$photo->location_id = $location->id;
+					$photo->incident_id = $incident->id;
+					$photo->media_type = 1;		// Images
+					$photo->media_link = $new_filename . ".jpg";
+					$photo->media_thumb = $new_filename . "_t.jpg";
+					$photo->media_date = date("Y-m-d H:i:s",time());
+					$photo->save();
+					
+					$i++;
+				}
 				
 				// STEP 5: SAVE PERSONAL INFORMATION
 				ORM::factory('Incident_Person')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
@@ -393,7 +408,7 @@ class Reports_Controller extends Admin_Controller
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
 				
-				if ($post->save == 1)		// Save but don't close
+				if ($post->save == 1)		// Save and redirect back to same report
 				{
 					url::redirect(url::base() . 'admin/reports/edit/'. $incident->id .'/saved');
 				}

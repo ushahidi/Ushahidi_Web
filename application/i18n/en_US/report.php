@@ -73,7 +73,9 @@ $lang = array
 	
 	'incident_photo' => array
 	(
-		'valid'		=> 'The Upload Photos field does not appear to contain a valid image. The only accepted formats are .JPG, .PNG and .GIF. Please ensure that image sizes are limited to 2M.'
+		'valid'		=> 'The Upload Photos field does not appear to contain a valid file',
+		'type'		=> 'The Upload Photos field does not appear to contain a valid image. The only accepted formats are .JPG, .PNG and .GIF.',
+		'size'		=> 'Please ensure that photo uploads sizes are limited to 2MB.'
 	),
 	
 	'person_first' => array
