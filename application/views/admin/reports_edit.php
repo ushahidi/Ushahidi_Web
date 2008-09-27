@@ -87,49 +87,16 @@
 									  return false;
 									});
 								</script>
-								<div id="category_add" class="category_add">
-									<div class="row">
-										<h4>Category Name</h4>
-										<?php print form::input('', '', ' class="text"'); ?>
-									</div>
-									<div class="row">
-										<h4>Category Description</h4>
-										<?php print form::input('', '', ' class="text"'); ?>
-									</div>									
+								<!--category_add form goes here-->
+			                    <div id="category_add" class="category_add">
+			                        <?php echo $add_categories_form; ?>									
+
 								</div>
-								<div class="category">
-									<?php
-									$this_col = 1;		// First column
-									$max_col = round($categories_total/2);		// Maximum number of columns
-									foreach ($categories as $category => $category_info)
-									{
-										$category_title = $category_info[0];
-										$category_color = $category_info[1];
-										if ($this_col == 1) print "<ul>";
-										
-										if (!empty($form['incident_category']) && in_array($category, $form['incident_category'])) {
-										    $category_checked = TRUE;
-										}
-										else
-										{
-											$category_checked = FALSE;
-										}
-																				
-										print "\n<li><label>";
-										print form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
-										print "$category_title";
-										print "</label></li>";
-										
-										if ($this_col == $max_col) print "\n</ul>\n";
-										
-										if ($this_col < $max_col){
-											$this_col++;
-										} else {
-											$this_col = 1;
-										}
-									}
-									
-									?>
+
+			                    <div class="category">
+									<?php echo $categories ?>
+			                        <ul id="user_categories">
+			                        </ul>
 								</div>
 							</div>
 						</div>
@@ -158,8 +125,8 @@
 									&nbsp;&nbsp;<a href="#" id="findAddress" onClick="return false;">Find!</a>
 								</div>
 							</div>
-							
-							
+				
+				
 							<!-- News Fields -->
 							<div class="row link-row">
 								<h4>News Source Link</h4>
@@ -170,7 +137,7 @@
 								$this_field = "incident_news";
 								$this_startid = "news_id";
 								$this_field_type = "text";
-								
+					
 								if (empty($form[$this_field]))
 								{
 									$i = 1;
@@ -216,7 +183,7 @@
 								$this_field = "incident_video";
 								$this_startid = "video_id";
 								$this_field_type = "text";
-								
+					
 								if (empty($form[$this_field]))
 								{
 									$i = 1;
@@ -250,11 +217,12 @@
 								print "<input type=\"hidden\" name=\"$this_startid\" value=\"$i\" id=\"$this_startid\">";
 								?>
 							</div>
-							
-							
+				
+				
 							<!-- Photo Fields -->
 							<div class="row link-row">
 								<h4>Upload Photos</h4>
+								<?php echo $thumbnails; ?>
 							</div>
 							<div id="divPhoto">
 								<?php
@@ -262,7 +230,7 @@
 								$this_field = "incident_photo";
 								$this_startid = "photo_id";
 								$this_field_type = "file";
-								
+					
 								if (empty($form[$this_field]['name'][0]))
 								{
 									$i = 1;
@@ -284,7 +252,7 @@
 										{
 											print "class=\"row link-row\" id=\"$i\">\n";
 										}
-										print "\"<strong>" . $value . "</strong>\"" . "<BR />";
+										// print "\"<strong>" . $value . "</strong>\"" . "<BR />";
 										print form::upload($this_field . '[]', $value, ' class="text long"');
 										print "<a href=\"#\" class=\"add\" onClick=\"addFormField('$this_div','$this_field','$this_startid','$this_field_type'); return false;\">add</a>";
 										if ($i != 0)

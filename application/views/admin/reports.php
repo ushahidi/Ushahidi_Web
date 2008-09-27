@@ -119,7 +119,7 @@
 										<td class="col-1"><input name="incident_id[]" value="<?php echo $incident_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<h4><?php echo $incident_title; ?></h4>
+												<h4><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo $incident_title; ?></a></h4>
 												<p><?php echo $incident_description; ?>... <a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more">more</a></p>
 											</div>
 											<ul class="info">

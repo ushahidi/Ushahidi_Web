@@ -41,8 +41,6 @@ class Manage_Controller extends Admin_Controller
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			
-	        $post->add_rules('category_id','numeric');
 			$post->add_rules('category_title','required', 'length[3,200]');
 			$post->add_rules('category_description','required');
 			$post->add_rules('category_color','required', 'length[6,6]');
