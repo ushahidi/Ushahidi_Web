@@ -4,8 +4,8 @@ $lang = array
 (
 	'name' => array
 	(
-		'required'		=> 'The name field is required.',
-		'length'		=> 'The name field must be at least 3 and no more 100 characters long.',
+		'required'		=> 'The full name field is required.',
+		'length'		=> 'The full name field must be at least 3 and no more 100 characters long.',
 		'standard_text' => 'The username field contains disallowed characters.',
 		'login error'	=> 'Please check that you entered the correct name.'
 	),

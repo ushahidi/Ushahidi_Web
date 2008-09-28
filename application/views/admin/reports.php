@@ -12,8 +12,8 @@
 					<div class="tab">
 						<ul>
 							<li><a href="#" onclick="reportAction('a','APPROVE');">APPROVE</a></li>
-							<li><a href="#" onclick="reportAction('u','UNAPPROVE');">UNAPPROVE</a></li>
-							<li><a href="#" onclick="reportAction('v','VERIFY');">VERIFIY</a></li>
+							<li><a href="#" onclick="reportAction('u','UNAPPROVE');">UNAPPROVED</a></li>
+							<li><a href="#" onclick="reportAction('v','VERIFY');">VERIFY</a></li>
 							<li><a href="#" onclick="reportAction('d','DELETE');">DELETE</a></li>
 						</ul>
 					</div>
