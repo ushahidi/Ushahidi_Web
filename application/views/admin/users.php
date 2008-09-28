@@ -10,7 +10,8 @@
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<?php print form::open(); ?>
+						<?php print form::open(NULL,array('id' => 'userMain',
+						 	'name' => 'userMain')); ?>
 						<input type="hidden" id="user_id" name="user_id" value="">
 						<input type="hidden" name="action" id="action" value="">
 						<div class="tab_form_item">
@@ -143,7 +144,13 @@
 	'<?php echo(rawurlencode($name)); ?>',
 	'<?php echo(rawurlencode($role));?>',
 	'<?php echo(rawurlencode($email)); ?>')">Edit</a></li>
-	<li><a href="#" class="del">Delete</a></li>
+	<li><a href="#" onclick="userAction('d',
+		'<?php echo(rawurlencode($user_id)); ?>',
+		'<?php echo(rawurlencode($username)); ?>',
+		'<?php echo(rawurlencode($name)); ?>',
+		'<?php echo(rawurlencode($role));?>',
+		'<?php echo(rawurlencode($email)); ?>',
+		'DELETE');" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>

@@ -24,12 +24,13 @@ class Users_Controller extends Admin_Controller
 		// setup and initialize form field names
 		$form = array
 	    (
-	        'user_id'      => '',
-			'username' => '',
-			'password'      => '',
-			'name'  => '',
-			'email' => '',
-			'role'  => ''
+	        'user_id'   => '',
+			'action'	=> '',
+			'username' 	=> '',
+			'password'  => '',
+			'name'  	=> '',
+			'email' 	=> '',
+			'role'  	=> ''
 	    );
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
@@ -50,7 +51,7 @@ class Users_Controller extends Admin_Controller
 			//only validate password as required when user_id has value.
 			$post->user_id == ''? $post->add_rules('password','required',
 			'length[5,16]'):'';
-			$post->add_rules('name','required','length[3,100]', 'alpha' );
+			$post->add_rules('name','required','length[3,100]');
 			
 			$post->add_rules('email','required','email','length[4,64]');
 			
@@ -73,7 +74,7 @@ class Users_Controller extends Admin_Controller
 					$add_user->username = $post->username;
 					$add_user->name = $post->name;
 					$add_user->password = $post->password;
-					$add_email->email = $post->email;
+					$add_user->email = $post->email;
 					$add_user->save();
 					
 					//add role to role table.
@@ -82,7 +83,18 @@ class Users_Controller extends Admin_Controller
 					$data = array('user_id' => $user_role->id,
 						'role_id' => $post->role );
 					$this->roles_users->insert_role($data);	
-					$form_action = "ADD";
+				
+				} elseif( $post->action == 'd' ){ //delete action
+					
+					//print_r($post );
+					ORM::factory('user')->delete($post->user_id);
+					
+					//update role table too.
+					$data = array('user_id' => $post->user_id,
+						'role_id' => $post->role );
+						
+					$this->roles_users->delete_role($post->user_id, $data);
+					  
 				} else { // edit action
 					
 					$update_user = ORM::factory('user',$post->user_id );
@@ -97,7 +109,7 @@ class Users_Controller extends Admin_Controller
 						'role_id' => $post->role );
 						
 					$this->roles_users->update_role($post->user_id, $data);
-					$form_action = "EDIT";
+					
 				}
 				
 				$form_saved = TRUE;
@@ -129,6 +141,8 @@ class Users_Controller extends Admin_Controller
 			$roles[$role->id] = $role->name;
 		}
 		
+		
+		
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
@@ -137,6 +151,7 @@ class Users_Controller extends Admin_Controller
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->users = $users;
 		$this->template->content->roles = $roles;
+		
 		
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
