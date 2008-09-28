@@ -1,6 +1,53 @@
 /*
 		* Edit Reports Javascript
-		*/	
+		*/
+
+		/* Dynamic categories */
+		$(document).ready(function() {
+		    $('#user_categories_message').hide(); //This is not needed until the user adds a category 
+		    $('#add_new_category').click(function() { 
+		        var category_name = $("input#category_name").val();
+		        var category_description = $("input#category_description").val();
+		        var category_color = $("input#category_color").val();
+
+		        //trim the form fields
+		        category_name = category_name.replace(/^\s+|\s+$/g, '').toUpperCase();
+		        category_description = category_description.replace(/^\s+|\s+$/g,'').toUpperCase();
+		        category_color = category_color.replace(/^\s+|\s+$/g, '').toUpperCase();
+        
+		        if (!category_name || !category_description || !category_color) {
+		            alert("Please fill in all the fields");
+		            return false;
+		        }
+        
+		        //category_color = category_color.toUpperCase();
+
+		        re = new RegExp("[^ABCDEF0123456789]"); //Color values are in hex
+		        if (re.test(category_color) || category_color.length != 6) {
+		            alert("Please use the Color picker to help you choose a color");
+		            return false;
+		        }
+		
+				$.post("<?php echo url::base() . 'admin/reports/save_category/' ?>", { category_title: category_name, category_description: category_description, category_color: category_color },
+					function(data){
+						if ( data.status == 'saved')
+						{
+							// alert(category_name+" "+category_description+" "+category_color);
+					        $('#user_categories_message').show(); //Let the user know that they need to check categories for them to be added
+
+					        $('#user_categories').append("<li><label><input type=\"checkbox\"name=\"incident_category[]\" value=\""+data.id+"\" class=\"check-box\" />"+category_name+"</label></li>");
+							$('#category_add').hide();
+						}
+						else
+						{
+							alert("Your submission had errors!!");
+						}
+					}, "json");
+		        return false; 
+		    });
+		}); 
+
+
 		// Date Picker JS
 		$("#incident_date").datepicker({ 
 		    showOn: "both", 
@@ -27,8 +74,20 @@
 				return false;
 		    }
 		}
-			
-		// Map JS
+		
+		function deleteThumb (id, div)
+		{
+			var answer = confirm("Are You Sure You Want To Delete This Photo?");
+		    if (answer){
+				$("#" + div).effect("highlight", {}, 800);
+				$.get("<?php echo url::base() . 'admin/reports/delete_thumb/' ?>" + id);
+				$("#" + div).remove();
+		    }
+			else{
+				return false;
+		    }
+		}
+		
 		jQuery(function() {
 			var moved=false;
 			
@@ -90,7 +149,7 @@
 			});
 			
 			$("#findAddress").click(function () {
-				var selected = $("#country_id option[@selected]");
+				var selected = $("#location_country option[@selected]");
 				address = $("#location_name").val() + ', ' + selected.text();
 				var geocoder = new GClientGeocoder();
 				if (geocoder) {
@@ -125,4 +184,4 @@
 			  if (e.keyCode == 13) return false;
 			});
 
-		});			
+		});

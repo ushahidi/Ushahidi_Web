@@ -941,6 +941,14 @@ input.long2 {
 	display:inline;
 	float:right;
 }
+.report-form .report_thumbs {
+	border-bottom:1px #ccc dotted;
+	margin:0 0 10px 0;
+}
+.report-form .report_thumbs img {
+	border:1px #ccc solid;
+	padding:3px;
+}
 .status_yes{
 	color:#009900;
 	font-weight:bold;
