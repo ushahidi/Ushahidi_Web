@@ -14,6 +14,7 @@
 		echo html::script('media/js/OpenLayers/OpenLayers');
 		echo html::script('media/js/OpenLayers/LoadingPanel');
 		echo html::script('media/js/accessibleUISlider.jQuery');
+		echo html::script('media/js/jquery.flot');
 		echo html::stylesheet('media/css/jquery-ui-themeroller');
 		echo $api_url . "\n";
 	}

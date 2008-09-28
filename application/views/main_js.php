@@ -154,7 +154,30 @@
 					var endDate = $("#endDate").val();
 					var currentCat = $("#currentCat").val();
 					markers.setUrl("<?php echo url::base() . 'markers/index/' ?>" + currentCat + "/" + startDate + "/" + endDate);
+					
+					// refresh graph
+					plotGraph();
 				}
 			});
+			
+			// Graph
+			var graphData = [<?php echo join($graph_data, ",");?>];
+			var graphOptions = {
+				xaxis: { mode: "time", timeformat: "%b %y" },
+				yaxis: { tickDecimals: 0 }
+			};
+
+			function plotGraph() {	
+				// TODO: Filter incident count by seleted category
+				var startTime = new Date($("#startDate").val().replace("-","/","g"));
+				var endTime = new Date($("#endDate").val().replace("-","/","g"));
+
+				plot = $.plot($("#graph"), [graphData],
+				        $.extend(true, {}, graphOptions, {
+				            xaxis: { min: startTime.getTime(), max: endTime.getTime() }
+				        }));
+			}
+			
+			plotGraph();
 						
 		});

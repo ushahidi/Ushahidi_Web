@@ -143,11 +143,6 @@ class Reports_Controller extends Admin_Controller
 		// Javascript Header
 		$this->template->js = new View('admin/reports_js');		
 	}
-
-	
-	
-	
-	
 	
 	// Add & Edit Reports
 	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -190,21 +185,12 @@ class Reports_Controller extends Admin_Controller
 			$form_saved = FALSE;
 		}
 		
-		
-		// get categories array
-		$this->template->content->bind('categories', $categories);
-		// Total Categories In system
-		$this->template->content->categories_total = ORM::factory('category')->where('category_visible', '1')->count_all();
-		
-		$categories = array();
-		foreach (ORM::factory('category')->where('category_visible', '1')->find_all() as $category)
-		{
-			// Create a list of all categories
-			$categories[$category->id] = array($category->category_title, $category->category_color);
-		}
-		
-		
-		// Get Countries
+        //Create Categories
+        $this->template->content->categories = $this->_create_categories_form();	
+		$this->template->content->add_categories_form =
+            $this->_create_new_category_form();
+
+        // Get Countries
 		$countries = array();
 		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
 		{
@@ -218,19 +204,19 @@ class Reports_Controller extends Admin_Controller
 		}
 		$this->template->content->countries = $countries;
 		
+		// Retrieve thumbnail photos (if edit);
+		$this->template->content->thumbnails = $this->_get_thumbnails($id);
+	
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
-	        // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-			
-			// Merge the POST and FILES for validation
+            // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory(array_merge($_POST,$_FILES));
 			
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			
 	        $post->add_rules('location_id','numeric');
 			$post->add_rules('incident_title','required', 'length[3,200]');
 			$post->add_rules('incident_description','required');
@@ -246,6 +232,7 @@ class Reports_Controller extends Admin_Controller
 			$post->add_rules('location_name','required', 'length[3,200]');
 			$post->add_rules('incident_category.*','required','numeric');
 			
+            
 			// Validate only the fields that are filled in	
 	        if (!empty($_POST['incident_news']))
 			{
@@ -267,11 +254,10 @@ class Reports_Controller extends Admin_Controller
 					}
 	        	}
 	        }
-			
-		
+	
 			// Validate photo uploads
 			$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[2M]');
-					
+			
 			
 			// Validate Personal Information
 			if (!empty($_POST['person_first']))
@@ -292,7 +278,7 @@ class Reports_Controller extends Admin_Controller
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
-	            // Yes! everything is valid
+                // Yes! everything is valid
 				$location_id = $post->location_id;
 				// STEP 1: SAVE LOCATION
 				$location = new Location_Model($location_id);
@@ -368,6 +354,7 @@ class Reports_Controller extends Admin_Controller
 					}
 				}
 				
+				// c. Photos
 				$filenames = upload::save('incident_photo');
 				$i = 1;
 				foreach ($filenames as $filename) {
@@ -380,7 +367,7 @@ class Reports_Controller extends Admin_Controller
 					// Create thumbnail
 					Image::factory($filename)->resize(70,41,Image::HEIGHT)
 						->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");
-						
+					
 					// Remove the temporary file
 					unlink($filename);
 					
@@ -388,14 +375,14 @@ class Reports_Controller extends Admin_Controller
 					$photo = new Media_Model();
 					$photo->location_id = $location->id;
 					$photo->incident_id = $incident->id;
-					$photo->media_type = 1;		// Images
+					$photo->media_type = 1; // Images
 					$photo->media_link = $new_filename . ".jpg";
 					$photo->media_thumb = $new_filename . "_t.jpg";
 					$photo->media_date = date("Y-m-d H:i:s",time());
 					$photo->save();
-					
 					$i++;
-				}
+				}				
+				
 				
 				// STEP 5: SAVE PERSONAL INFORMATION
 				ORM::factory('Incident_Person')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
@@ -408,7 +395,7 @@ class Reports_Controller extends Admin_Controller
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
 				
-				if ($post->save == 1)		// Save and redirect back to same report
+				if ($post->save == 1)		// Save but don't close
 				{
 					url::redirect(url::base() . 'admin/reports/edit/'. $incident->id .'/saved');
 				}
@@ -514,10 +501,213 @@ class Reports_Controller extends Admin_Controller
 		
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
+        $this->template->colorpicker_enabled = TRUE;
 		$this->template->js = new View('admin/reports_edit_js');
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->js->latitude = $form['latitude'];
 		$this->template->js->longitude = $form['longitude'];
+                
+	}
+
+    //dynamic categories functionality
+    private function _create_categories_form()
+    {
+ 	    // get categories array
+		//$this->template->content->bind('categories', $categories);
+				
+        $categories_total = ORM::factory('category')->where('category_visible', '1')->count_all();
+        $this->template->content->categories_total = $categories_total;
+
+		$categories = array();
+		foreach (ORM::factory('category')->where('category_visible', '1')->find_all() as $category)
+		{
+			// Create a list of all categories
+			$categories[$category->id] = array($category->category_title, $category->category_color);
+		}
+
+        //format categories for 2 column display
+        $this_col = 1; // First column
+        $max_col = round($categories_total/2); // Maximum number of columns
+        $html= "";
+        foreach ($categories as $category => $category_extra)
+        {
+            $category_title = $category_extra[0];
+            $category_color = $category_extra[1];
+            if ($this_col == 1) 
+                $html.="<ul>";
+        
+            if (!empty($form['incident_category']) 
+                && in_array($category, $form['incident_category'])) {
+                $category_checked = TRUE;
+            }
+            else
+            {
+                $category_checked = FALSE;
+            }
+                                                                            
+            $html.="\n<li><label>";
+            $html.=form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
+            $html.="$category_title";
+            $html.="</label></li>";
+       
+            if ($this_col == $max_col) 
+                $html.="\n</ul>\n";
+      
+            if ($this_col < $max_col)
+            {
+                $this_col++;
+            } 
+            else 
+            {
+                $this_col = 1;
+            }
+        }
+        return $html;
+    }
+
+    /* This form is used to add categories dynamically */
+    private function _create_new_category_form()
+    {
+        $form = array
+        (
+            'category_name' => '',
+            'category_description' => '',
+            'category_color' => '',
+        );
+
+        return '<p>Add New Category<hr/></p>'
+                //.form::open(url::current(),
+                //                array('id'=>'new_categories_form'), '')
+                .form::label(array("id"=>"category_name_label",
+                                    "for"=>"category_name"), 'Name')
+                .'<br/>'
+                .form::input('category_name', $form['category_name'],
+                                'class=""')
+                .'<br/>'
+                .form::label(array("id"=>"description_label",
+                                    "for"=>"description"), 'Description')
+                .'<br/>'
+                .form::input('category_description',
+                                $form['category_description'], 'class=""')
+                .'<br/>'
+                .form::label(array("id"=>"color_label",
+                                    "for"=>"color"), 'Color')
+                .'<br/>'
+                .form::input('category_color', $form['category_color'],
+                                'class=""')
+                .$this->_create_color_picker_js()
+                .'<br/>'
+                .'<span>'
+                //.form::button('cancel', 'Cancel')
+                //.form::submit('add_new_category', 'Save')
+                .'<a href="#" id="add_new_category">Add</a>'
+                .'</span>'
+                .form::close();
+    }
+
+    private function _create_color_picker_js()
+    {
+     return "<script type=\"text/javascript\">
+                $('#category_color').ColorPicker({
+                        onSubmit: function(hsb, hex, rgb) {
+                            $('#category_color').val(hex);
+                        },
+                        onChange: function(hsb, hex, rgb) {
+                            $('#category_color').val(hex);
+                        },
+                        onBeforeShow: function () {
+                            $(this).ColorPickerSetColor(this.value);
+                        }
+                    })
+                .bind('keyup', function(){
+                    $(this).ColorPickerSetColor(this.value);
+                });
+
+            </script>";
+
+    }
+
+
+	/* Save New Dynamic Category */
+	function save_category()
+	{
+		$this->auto_render = FALSE;
+		$this->template = "";
+		
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+	        // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+			
+	         //  Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('category_title','required', 'length[3,200]');
+			$post->add_rules('category_description','required');
+			$post->add_rules('category_color','required', 'length[6,6]');
+			
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+				// SAVE Category
+				$category = new Category_Model();
+				$category->category_title = $post->category_title;
+				$category->category_description = $post->category_description;
+				$category->category_color = $post->category_color;
+				$category->save();
+				$form_saved = TRUE;
+
+				echo json_encode(array("status"=>"saved", "id"=>$category->id));
+	        }
+            // No! We have validation errors, we need to show the form again, with the errors
+	        else
+	        
+			{
+	            echo json_encode(array("status"=>"error"));
+	        }
+	    }
+		else
+		{
+			echo json_encode(array("status"=>"error"));
+		}
+	}
+
+	/* Return thumbnail photos */
+	private function _get_thumbnails( $id )
+	{
+		$html = "";
+		if ( $id )
+		{
+			$incident = ORM::factory('incident', $id);
+			if ($incident != "0")
+			{
+				// Retrieve Media
+				foreach($incident->media as $photo) 
+				{
+					if ($photo->media_type == 1)
+					{
+						$html .= "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
+						$html .= "<img src=\"" . url::base() . "media/uploads/" . $photo->media_thumb . "\" >";
+						$html .= "&nbsp;&nbsp;<a href=\"#\" onClick=\"deleteThumb('". $photo->id ."', 'photo_". $photo->id ."'); return false;\" >Delete</a>";
+						$html .= "</div>";
+					}
+				}
+			}
+		}
+		return $html;
+	}
+	
+	/* Delete thumbnail photo */
+	function delete_thumb ( $id )
+	{
+		if ( $id )
+		{
+			$photo = ORM::factory('media', $id);
+			$photo->delete();
+		}
 	}
 }

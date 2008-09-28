@@ -94,6 +94,21 @@ class Main_Controller extends Template_Controller {
 		$this->template->content->startDate = $startDate;
 		$this->template->content->endDate = $endDate;
 		
+		// get graph data
+		// could not use DB query builder. It does not support parentheses yet
+		$graph_data = array();
+		$query = $db->query('SELECT UNIX_TIMESTAMP(DATE_FORMAT(incident_date, \'%Y-%m-01\')) 
+		                     AS time, COUNT(*) AS number 
+		                     FROM incident 
+		                     WHERE incident_active = 1
+		                     GROUP BY DATE_FORMAT(incident_date, \'%Y%m\')');
+
+		foreach ( $query as $month_count )
+		{
+			array_push($graph_data, "[" . $month_count->time * 1000 . ", " . $month_count->number . "]");
+		}
+		
+		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->js = new View('main_js');
@@ -101,6 +116,7 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->header->js->latitude = Kohana::config('settings.default_lat');
 		$this->template->header->js->longitude = Kohana::config('settings.default_lon');
+		$this->template->header->js->graph_data = $graph_data;
 	}
 
 } // End Main

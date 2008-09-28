@@ -32,6 +32,7 @@
 										</fieldset>
 									</form>
 								</div>
+								<div id="graph" class="graph-holder"></div>
 							</div>
 							<div class="category">
 								<strong class="title">CATEGORY FILTER</strong>

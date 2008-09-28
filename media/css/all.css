@@ -865,3 +865,9 @@ form {
 .ui-slider .first .ui-slider-tic, .ui-slider .last .ui-slider-tic {
 	display: none;
 }
+/* graph */
+.graph-holder {
+	overflow:hidden;
+	width:573px;
+	height:150px;
+}
