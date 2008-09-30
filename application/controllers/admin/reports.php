@@ -27,7 +27,7 @@ class Reports_Controller extends Admin_Controller
 			
 			if (strtolower($status) == 'a')
 			{
-				$filter = 'incident_active = 1';
+				$filter = 'incident_active = 0';
 			}
 			elseif (strtolower($status) == 'v')
 			{

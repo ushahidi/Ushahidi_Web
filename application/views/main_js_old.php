@@ -39,38 +39,18 @@
 			map.addControl(new OpenLayers.Control.Attribution());
 			map.addControl(new OpenLayers.Control.MousePosition());
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
-			
-			
-			var style = new OpenLayers.Style({
-				pointRadius: "10",
-				fillColor: "${color}",
-				fillOpacity: 1,
-				strokeColor: "#000000",
-				strokeWidth: 1,
-				strokeOpacity: 1
-			}, 
-			{
-				context: 
-				{
-					color: function(feature) 
-					{
-						return "#" + feature.attributes.color;
-					}
-				}
-			});
-			
-			var sliderfilter = new OpenLayers.Rule();
-			style.addRules([sliderfilter]);
+						
 			
 			// Create the markers layer
-			var markers = new OpenLayers.Layer.GML("reports", "<?php echo url::base() . 'json' ?>", 
+			var markers = new OpenLayers.Layer.GML("KML", "<?php echo url::base() . 'markers' ?>", 
 			{
-				format: OpenLayers.Format.GeoJSON,
-				projection: new OpenLayers.Projection("EPSG:4326"),
-				styleMap: new OpenLayers.StyleMap({"default":style})
+				format: OpenLayers.Format.KML, 
+				formatOptions: 
+				{
+					extractStyles: true, 
+					extractAttributes: true
+				}
 			});
-			
-			
 			map.addLayer(markers);
 			selectControl = new OpenLayers.Control.SelectFeature(markers,
                 {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
@@ -79,12 +59,66 @@
             selectControl.activate();
 			
 			
+			// Create the heatmap layer
+			
+			// Polygon Styles
+			var style = new OpenLayers.Style({
+				pointRadius: "${radius}",
+				fillColor: "#990000",
+				fillOpacity: 0.8,
+				strokeColor: "#990000",
+				strokeWidth: 2,
+				strokeOpacity: 0.8
+			}, 
+			{
+				context: 
+				{
+					radius: function(feature) 
+					{
+						return Math.min(feature.attributes.count, 7) + 4;
+					}
+				}
+			});
+			
+			// Heatmap
+			var heatmap = new OpenLayers.Layer.Vector("HeatMap", {
+				strategies: [
+					new OpenLayers.Strategy.Fixed(),
+				    new OpenLayers.Strategy.Cluster()
+				],
+				protocol: new OpenLayers.Protocol.HTTP({url: "<?php echo url::base() . 'markers' ?>"}),
+				format: new OpenLayers.Format.KML(),
+				formatOptions: {
+					extractStyles: true,
+					extractAttributes: true
+				},
+				styleMap: new OpenLayers.StyleMap({
+					"default": style,
+					"select": {
+						fillColor: "#8aeeef",
+						strokeColor: "#32a8a9"
+					}
+				})
+			});
+			// Heatmaps Disabled
+			// map.addLayer(heatmap);
+		
+			
 			// create a lat/lon object
 			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
 	
 			// display the map centered on a latitude and longitude (Google zoom levels)
 			map.setCenter(myPoint, <?php echo $default_zoom; ?>);
-
+	
+			// Category Switch
+			$("a[@id^='cat_']").click(function() {
+				var catID = this.id.substring(4);
+				var catSet = 'cat_' + this.id.substring(4);
+				$("a[@id^='cat_']").removeClass("active");
+				$("#cat_" + catID).addClass("active");
+				$("#currentCat").val(catID);
+				markers.setUrl("<?php echo url::base() . 'markers/index/' ?>" + catID);
+			});
 			
 			function onPopupClose(evt) {
 	            selectControl.unselect(selectedFeature);
@@ -111,62 +145,20 @@
 	            feature.popup = null;
 	        }
 	
-			// Category Switch
-			$("a[@id^='cat_']").click(function() {
-				var catID = this.id.substring(4);
-				var catSet = 'cat_' + this.id.substring(4);
-				$("a[@id^='cat_']").removeClass("active");
-				$("#cat_" + catID).addClass("active");
-				$("#currentCat").val(catID);
-				markers.setUrl("<?php echo url::base() . 'json/index/' ?>" + catID);
-			});
 	
-			//Accessible Slider/Select Switch
+			//Accessible Slider/Select
 			$('select#startDate, select#endDate').accessibleUISlider({
 				labels: 6,
 				stop: function(e, ui) {
 					var startDate = $("#startDate").val();
 					var endDate = $("#endDate").val();
 					var currentCat = $("#currentCat").val();
-
-					var sliderfilter = new OpenLayers.Rule({
-						filter: new OpenLayers.Filter.Comparison(
-						{
-				            type: OpenLayers.Filter.Comparison.BETWEEN,
-				            property: "timestamp",
-				            lowerBoundary: startDate,
-							upperBoundary: endDate
-				        })     
-				    });
-					style.addRules([sliderfilter]);
-					markers.redraw();
-					
-					for (var i=0; i<style.rules.length; i++) {
-						style.rules[i].destroy();
-						style.rules[i] = null;
-		 	        }
-					style.rules = null;
+					markers.setUrl("<?php echo url::base() . 'markers/index/' ?>" + currentCat + "/" + startDate + "/" + endDate);
 					
 					// refresh graph
 					plotGraph();
 				}
 			});
-			
-			function setStyle(index) {
-				var rule = new OpenLayers.rule({
-					filter: new OpenLayers.Filter.Comparison({
-						type: OpenLayers.Filter.Comparison.EQUAL_TO,
-						property: "timestamp",
-			            lowerBoundary: startDate,
-						upperBoundary: endDate
-					}),
-					symbolizer: {
-						Point: { fillColor:"FFFF00", strokeColor: "blue"}
-					}
-				});
-	            gmlLayer.styleMap.styles["default"] = sld.namedLayers["markers"].userStyles[0].addRule(rule);  
-	            gmlLayer.redraw();
-	        }
 			
 			// Graph
 			var graphData = [<?php echo join($graph_data, ",");?>];
@@ -177,8 +169,8 @@
 
 			function plotGraph() {	
 				// TODO: Filter incident count by seleted category
-				var startTime = new Date($("#startDate").val() * 1000);
-				var endTime = new Date($("#endDate").val() * 1000);
+				var startTime = new Date($("#startDate").val().replace("-","/","g"));
+				var endTime = new Date($("#endDate").val().replace("-","/","g"));
 
 				plot = $.plot($("#graph"), [graphData],
 				        $.extend(true, {}, graphOptions, {

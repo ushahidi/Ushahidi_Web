@@ -72,7 +72,7 @@ class Main_Controller extends Template_Controller {
 				{
 					$i = "0" . $i;
 				}
-				$startDate .= "<option value=\"" . $slider_date->incident_date . "-" . $i . "-01\">" . date('M', mktime(0,0,0,$i,1)) . " " . $slider_date->incident_date . "</option>";
+				$startDate .= "<option value=\"" . strtotime($slider_date->incident_date . "-" . $i . "-01") . "\">" . date('M', mktime(0,0,0,$i,1)) . " " . $slider_date->incident_date . "</option>";
 			}
 			$startDate .= "</optgroup>";
 			
@@ -82,7 +82,7 @@ class Main_Controller extends Template_Controller {
 				{
 					$i = "0" . $i;
 				}
-				$endDate .= "<option value=\"" . $slider_date->incident_date . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1)) . "\"";
+				$endDate .= "<option value=\"" . strtotime($slider_date->incident_date . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))) . "\"";
 				if ( $i == 12 )
 				{
 					$endDate .= " selected=\"selected\" ";

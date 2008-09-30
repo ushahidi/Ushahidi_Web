@@ -4,7 +4,7 @@
  * then a full URL will be used, eg: http://localhost/ushahidi/. If it only includes
  * the path, and a site_protocol is specified, the domain will be auto-detected.
  */
-$config['site_domain'] = '/ushahidi/';
+$config['site_domain'] = '/';
 
 /**
  * Force a default protocol to be used by the site. If no site_protocol is
@@ -39,7 +39,7 @@ $config['internal_cache'] = FALSE;
  *
  * Do not enable this option if you are using output compression in php.ini!
  */
-$config['output_compression'] = FALSE;
+$config['output_compression'] = TRUE;
 
 /**
  * Enable or disable global XSS filtering of GET, POST, and SERVER data. This
