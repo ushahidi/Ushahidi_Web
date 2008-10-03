@@ -169,14 +169,16 @@
 	        }
 			
 			// Graph
-			var graphData = [<?php echo join($graph_data, ",");?>];
+			var allGraphData = [<?php echo $all_graphs ?>];
+			var graphData = allGraphData[0]['ALL'];
 			var graphOptions = {
 				xaxis: { mode: "time", timeformat: "%b %y" },
-				yaxis: { tickDecimals: 0 }
+				yaxis: { tickDecimals: 0 },
+				points: { show: true},
+				lines: { show: true}
 			};
 
 			function plotGraph() {	
-				// TODO: Filter incident count by seleted category
 				var startTime = new Date($("#startDate").val() * 1000);
 				var endTime = new Date($("#endDate").val() * 1000);
 
@@ -187,5 +189,14 @@
 			}
 			
 			plotGraph();
-						
+			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>]
+				
+			for (var i=0; i<categoryIds.length; i++) {
+				$('#cat_'+categoryIds[i]).click(function(){
+					var categories = <?php echo json_encode($categories); ?>;
+					categories['0'] = ["ALL", "#0099CC"];
+					graphData = allGraphData[0][categories[this.id.split("_")[1]][0]];
+					plotGraph();
+				});
+			}
 		});
