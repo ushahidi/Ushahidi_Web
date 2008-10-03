@@ -16,6 +16,9 @@ class Settings_Controller extends Admin_Controller
 		// Display all maps
 		$this->template->api_url = Kohana::config('settings.api_url_all');
 		
+		// Current Default Country
+		$current_country = Kohana::config('settings.default_country');
+		
 		$this->template->content = new View('admin/settings');
 		$this->template->content->title = 'Settings';
 		
@@ -49,7 +52,7 @@ class Settings_Controller extends Admin_Controller
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 			
 	        $post->add_rules('site_name','required', 'length[3,200]');
-			$post->add_rules('default_country', 'required', 'numeric', 'length[1,3]');
+			$post->add_rules('default_country', 'required', 'numeric', 'length[1,4]');
 			$post->add_rules('default_map', 'required', 'between[1,4]');
 			$post->add_rules('api_google','required', 'length[0,200]');
 			$post->add_rules('api_yahoo','required', 'length[0,200]');
@@ -74,6 +77,9 @@ class Settings_Controller extends Admin_Controller
 				
 				// Everything is A-Okay!
 				$form_saved = TRUE;
+				
+				// Retrieve Country City Information & Save to DB
+				$this->_update_cities($post->default_country, $current_country);
 				
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
@@ -149,4 +155,56 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->title = 'Settings';
 	}
 
+
+
+	/*
+	* Retrieves cities listing
+	* Using GeoNames Service
+	*/
+	private function _update_cities( $id, $cid )
+	{
+		// Get country ISO code from DB
+		$country = ORM::factory('country', $id);
+		$iso = $country->iso;
+		$city_count = $country->cities;
+		
+		$cities = 0;
+		
+		// Will only update the cities database if default country has changed
+		// Or countries city count = Zero
+		if ( $iso && ( ((int)$id != (int)$cid) || (int)$city_count == 0 ) )
+		{
+			// Reset All Countries City Counts to Zero
+			$countries = ORM::factory('country')->find_all();
+			foreach ($countries as $country) 
+			{
+				$country->cities = 0;
+				$country->save();
+			}
+			ORM::factory('city')->delete_all();
+			
+			
+			// GeoNames WebService URL + Country ISO Code
+			$geonames_url = "http://ws.geonames.org/search?country=" . $iso . "&featureCode=PPL&featureCode=PPLA&featureCode=PPLC";
+			$xmlstr = file_get_contents($geonames_url);		
+			$sitemap = new SimpleXMLElement($xmlstr);
+			foreach($sitemap as $city) {
+				if ( $city->name && $city->lng && $city->lat )
+				{
+					$newcity = new City_Model();
+					$newcity->country_id = $id;
+					$newcity->city = mysql_real_escape_string($city->name);
+					$newcity->city_lat = mysql_real_escape_string($city->lat);
+					$newcity->city_lon = mysql_real_escape_string($city->lng);
+					$newcity->save();
+					
+					$cities++;
+				}
+			}
+			// Update Country With City Count
+			$country = ORM::factory('country', $id);
+			$country->cities = $cities;
+			$country->save();
+		}
+	}
 }

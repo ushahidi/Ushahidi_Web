@@ -406,6 +406,8 @@ form {
 .step-1 .map .map-holder {
 	overflow:hidden;
 	border:1px solid #ccc;
+	width:387px;
+	height:290px;
 }
 .step-2-holder {
 	float:right;
@@ -870,4 +872,43 @@ form {
 	overflow:hidden;
 	width:573px;
 	height:150px;
+}
+/* error/success */
+.green-box {
+	margin:10px 0 10px 0;
+	padding:9px 0 8px;
+	background:#d8f1d8;
+	border:2px solid #a7d1a7;
+	clear:both;
+	overflow:hidden;
+}
+.red-box {
+	margin:10px 0 10px 0;
+	padding:9px 0 8px;
+	background:#FFD8D9;
+	border:2px solid #990000;
+	clear:both;
+	overflow:hidden;
+}
+.green-box h3, .red-box h3{
+	margin:0;
+	padding:0 0 0 15px; 
+	font-size:14px;
+	color:#555;
+}
+.alert_response {
+	margin:10px 15px 10px 15px;
+	border:2px #ccc solid;
+	background-color:#fff;
+	padding: 15px;
+	font:14px/17px Arial, Helvetica, sans-serif;
+}
+.alert_confirm {
+	margin:10px 0 0 0;
+	padding:10px;
+	border:1px #ccc solid;
+	background-color:#FFFFCC;
+}
+.alert_confirm .label{
+	margin-bottom:10px;
 }
