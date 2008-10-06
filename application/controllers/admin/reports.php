@@ -1,7 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
-* Reports Controller
+* Reports Controller.
+* This controller will take care of adding and editing reports in the Admin section.
 */
 class Reports_Controller extends Admin_Controller
 {
@@ -13,8 +14,10 @@ class Reports_Controller extends Admin_Controller
 	}
 	
 	
-	// Reports Main Listing
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	/**
+	* Lists the reports.
+    * @param int $page
+    */
 	function index($page = 1)
 	{
 		$this->template->content = new View('admin/reports');
@@ -144,8 +147,12 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js = new View('admin/reports_js');		
 	}
 	
-	// Add & Edit Reports
-	// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	/**
+	* Edit a report
+    * @param bool|int $id The id no. of the report
+    * @param bool|string $saved
+    */
+    
 	function edit( $id = false, $saved = false )
 	{
 		$this->template->content = new View('admin/reports_edit');
@@ -185,10 +192,14 @@ class Reports_Controller extends Admin_Controller
 			$form_saved = FALSE;
 		}
 		
-        //Create Categories
-        $this->template->content->categories = $this->_create_categories_form();	
-		$this->template->content->add_categories_form =
-            $this->_create_new_category_form();
+        // Create Categories
+        $this->template->content->categories = $this->_get_categories();	
+		$this->template->content->new_categories_form = $this->_new_categories_form_arr();
+		 
+		// Time formatting
+	    $this->template->content->hour_array = $this->_hour_array();
+	    $this->template->content->minute_array = $this->_minute_array();
+        $this->template->content->ampm_array = $this->_ampm_array();
 
         // Get Countries
 		$countries = array();
@@ -205,7 +216,8 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->countries = $countries;
 		
 		// Retrieve thumbnail photos (if edit);
-		$this->template->content->thumbnails = $this->_get_thumbnails($id);
+		//XXX: fix _get_thumbnails
+		$this->template->content->incident = $this->_get_thumbnails($id);
 	
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -407,8 +419,7 @@ class Reports_Controller extends Admin_Controller
 	        }
 	
             // No! We have validation errors, we need to show the form again, with the errors
-	        else
-	        
+	        else   
 			{
 	            // repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
@@ -507,129 +518,16 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->js->latitude = $form['latitude'];
 		$this->template->js->longitude = $form['longitude'];
-                
+		
+		// Inline Javascript
+		$this->template->content->date_picker_js = $this->_date_picker_js();
+        $this->template->content->color_picker_js = $this->_color_picker_js();
+        $this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
 	}
 
-    //dynamic categories functionality
-    private function _create_categories_form()
-    {
- 	    // get categories array
-		//$this->template->content->bind('categories', $categories);
-				
-        $categories_total = ORM::factory('category')->where('category_visible', '1')->count_all();
-        $this->template->content->categories_total = $categories_total;
-
-		$categories = array();
-		foreach (ORM::factory('category')->where('category_visible', '1')->find_all() as $category)
-		{
-			// Create a list of all categories
-			$categories[$category->id] = array($category->category_title, $category->category_color);
-		}
-
-        //format categories for 2 column display
-        $this_col = 1; // First column
-        $max_col = round($categories_total/2); // Maximum number of columns
-        $html= "";
-        foreach ($categories as $category => $category_extra)
-        {
-            $category_title = $category_extra[0];
-            $category_color = $category_extra[1];
-            if ($this_col == 1) 
-                $html.="<ul>";
-        
-            if (!empty($form['incident_category']) 
-                && in_array($category, $form['incident_category'])) {
-                $category_checked = TRUE;
-            }
-            else
-            {
-                $category_checked = FALSE;
-            }
-                                                                            
-            $html.="\n<li><label>";
-            $html.=form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
-            $html.="$category_title";
-            $html.="</label></li>";
-       
-            if ($this_col == $max_col) 
-                $html.="\n</ul>\n";
-      
-            if ($this_col < $max_col)
-            {
-                $this_col++;
-            } 
-            else 
-            {
-                $this_col = 1;
-            }
-        }
-        return $html;
-    }
-
-    /* This form is used to add categories dynamically */
-    private function _create_new_category_form()
-    {
-        $form = array
-        (
-            'category_name' => '',
-            'category_description' => '',
-            'category_color' => '',
-        );
-
-        return '<p>Add New Category<hr/></p>'
-                //.form::open(url::current(),
-                //                array('id'=>'new_categories_form'), '')
-                .form::label(array("id"=>"category_name_label",
-                                    "for"=>"category_name"), 'Name')
-                .'<br/>'
-                .form::input('category_name', $form['category_name'],
-                                'class=""')
-                .'<br/>'
-                .form::label(array("id"=>"description_label",
-                                    "for"=>"description"), 'Description')
-                .'<br/>'
-                .form::input('category_description',
-                                $form['category_description'], 'class=""')
-                .'<br/>'
-                .form::label(array("id"=>"color_label",
-                                    "for"=>"color"), 'Color')
-                .'<br/>'
-                .form::input('category_color', $form['category_color'],
-                                'class=""')
-                .$this->_create_color_picker_js()
-                .'<br/>'
-                .'<span>'
-                //.form::button('cancel', 'Cancel')
-                //.form::submit('add_new_category', 'Save')
-                .'<a href="#" id="add_new_category">Add</a>'
-                .'</span>'
-                .form::close();
-    }
-
-    private function _create_color_picker_js()
-    {
-     return "<script type=\"text/javascript\">
-                $('#category_color').ColorPicker({
-                        onSubmit: function(hsb, hex, rgb) {
-                            $('#category_color').val(hex);
-                        },
-                        onChange: function(hsb, hex, rgb) {
-                            $('#category_color').val(hex);
-                        },
-                        onBeforeShow: function () {
-                            $(this).ColorPickerSetColor(this.value);
-                        }
-                    })
-                .bind('keyup', function(){
-                    $(this).ColorPickerSetColor(this.value);
-                });
-
-            </script>";
-
-    }
-
-
-	/* Save New Dynamic Category */
+    /**
+    * Save newly added dynamic categories
+    */
 	function save_category()
 	{
 		$this->auto_render = FALSE;
@@ -663,7 +561,7 @@ class Reports_Controller extends Admin_Controller
 
 				echo json_encode(array("status"=>"saved", "id"=>$category->id));
 	        }
-            // No! We have validation errors, we need to show the form again, with the errors
+            
 	        else
 	        
 			{
@@ -676,32 +574,10 @@ class Reports_Controller extends Admin_Controller
 		}
 	}
 
-	/* Return thumbnail photos */
-	private function _get_thumbnails( $id )
-	{
-		$html = "";
-		if ( $id )
-		{
-			$incident = ORM::factory('incident', $id);
-			if ($incident != "0")
-			{
-				// Retrieve Media
-				foreach($incident->media as $photo) 
-				{
-					if ($photo->media_type == 1)
-					{
-						$html .= "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
-						$html .= "<img src=\"" . url::base() . "media/uploads/" . $photo->media_thumb . "\" >";
-						$html .= "&nbsp;&nbsp;<a href=\"#\" onClick=\"deleteThumb('". $photo->id ."', 'photo_". $photo->id ."'); return false;\" >Delete</a>";
-						$html .= "</div>";
-					}
-				}
-			}
-		}
-		return $html;
-	}
-	
-	/* Delete thumbnail photo */
+	/** 
+    * Delete thumbnail photo 
+    * @param int $id The unique id of the photo to be deleted
+    */
 	function delete_thumb ( $id )
 	{
 		if ( $id )
@@ -710,4 +586,121 @@ class Reports_Controller extends Admin_Controller
 			$photo->delete();
 		}
 	}
+	
+	/* private functions */
+	
+	// Return thumbnail photos
+	//XXX: This needs to be fixed, it's probably ok to return an empty iterable instead of "0"
+	private function _get_thumbnails( $id )
+	{
+		$incident = ORM::factory('incident', $id);
+		
+		if ( $id )
+		{
+			$incident = ORM::factory('incident', $id);
+			
+			return $incident;
+		
+		}
+		return "0";
+	}
+	
+    private function _get_categories()
+    {
+ 	    // get categories array
+		//$this->template->content->bind('categories', $categories);
+				
+        $categories_total = ORM::factory('category')->where('category_visible', '1')->count_all();
+        $this->template->content->categories_total = $categories_total;
+
+		$categories = array();
+		foreach (ORM::factory('category')->where('category_visible', '1')->find_all() as $category)
+		{
+			// Create a list of all categories
+			$categories[$category->id] = array($category->category_title, $category->category_color);
+		}
+		
+	    return $categories;
+		
+	}
+
+    // Dynamic categories form fields
+    private function _new_categories_form_arr()
+    {
+        return array
+        (
+            'category_name' => '',
+            'category_description' => '',
+            'category_color' => '',
+        );
+    }
+
+    // Time functions
+    private function _hour_array()
+    {
+        for ($i=1; $i <= 12 ; $i++) 
+        { 
+		    $hour_array[sprintf("%02d", $i)] = sprintf("%02d", $i); 	// Add Leading Zero
+		}
+	    return $hour_array;	
+	}
+									
+	private function _minute_array()
+	{								
+		for ($j=0; $j <= 59 ; $j++) 
+		{ 
+			$minute_array[sprintf("%02d", $j)] = sprintf("%02d", $j);	// Add Leading Zero
+		}
+		
+		return $minute_array;
+	}
+	
+	private function _ampm_array()
+	{								
+	    return $ampm_array = array('pm'=>'pm','am'=>'am');
+	}
+	
+	// Javascript functions
+	 private function _color_picker_js()
+    {
+     return "<script type=\"text/javascript\">
+                $('#category_color').ColorPicker({
+                        onSubmit: function(hsb, hex, rgb) {
+                            $('#category_color').val(hex);
+                        },
+                        onChange: function(hsb, hex, rgb) {
+                            $('#category_color').val(hex);
+                        },
+                        onBeforeShow: function () {
+                            $(this).ColorPickerSetColor(this.value);
+                        }
+                    })
+                .bind('keyup', function(){
+                    $(this).ColorPickerSetColor(this.value);
+                });
+
+            </script>";
+    }
+    
+    private function _date_picker_js() 
+    {
+        return "<script type=\"text/javascript\">
+				$(\"#incident_date\").datepicker({ 
+				showOn: \"both\", 
+				buttonImage: \"<?php print url::base() ?>media/img/admin/icon-calendar.gif\", 
+				buttonImageOnly: true 
+				});
+			</script>";	
+    }
+    
+    private function _new_category_toggle_js()
+    {
+        return "<script type=\"text/javascript\">
+			    $('#category_add').show('slow');
+			    $('a#category_toggle').click(function() {
+			    $('#category_add').toggle(400);
+			    return false;
+				});
+			</script>";
+    }
 }
