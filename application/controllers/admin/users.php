@@ -151,6 +151,7 @@ class Users_Controller extends Admin_Controller
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->users = $users;
 		$this->template->content->roles = $roles;
+		$this->template->content->roles_users = $this->roles_users;
 		
 		
 		// Javascript Header

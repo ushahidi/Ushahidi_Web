@@ -7,7 +7,7 @@
 			$("#user_id").attr("value", unescape(id));
 			$("#username").attr("value", unescape(username));
 			$("#name").attr("value", unescape(name));
-			$('#role').attr("value",unescape( $('#role').val() ) );
+			$('#role').attr("value",unescape( role ) );
 			$('#email').attr("value",unescape( email ) );
 			
 		}
@@ -26,7 +26,7 @@
 				$("#user_id").attr("value",user_id);
 				$("#username").attr("value", unescape(username));
 				$("#name").attr("value", unescape(name));
-				$('#role').attr("value",unescape( $('#role').val() ) );
+				$('#role').attr("value",unescape( role ) );
 				$('#email').attr("value",unescape( email ) );
 				
 				// Submit Form
