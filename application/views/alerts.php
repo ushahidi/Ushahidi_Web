@@ -29,7 +29,7 @@
 									<div class="location">
 										<form>
 										<label>Alert me if a report is filed in, or around:</label>
-										<?php print form::dropdown('alert_city',$cities,''); ?>
+										<?php print form::dropdown('alert_city',$cities,'', ' class="select" '); ?>
 										</form>
 									</div>
 								<div class="map">
@@ -58,7 +58,7 @@
 													?>
 													<span><strong>Mobile phone:</strong><br />enter mobile number with country code</span>
 												</label>
-												<span><?php print form::input('alert_mobile', $form['alert_mobile']); ?></span>
+												<span><?php print form::input('alert_mobile', $form['alert_mobile'], ' class="text long" '); ?></span>
 											</div>
 											<div class="box">
 												<label>
@@ -74,14 +74,14 @@
 													?>
 													<span><strong>Email Address:</strong><br />enter email address</span>
 												</label>
-												<span><?php print form::input('alert_email', $form['alert_email']); ?></span>
+												<span><?php print form::input('alert_email', $form['alert_email'], ' class="text long" '); ?></span>
 											</div>
 											<div class="box">
 												<label>
 													<input type="checkbox" checked="checked" readonly="readonly" />
 													<span>RSS Feeds (copy the url below)</span>
 												</label>
-												<span><input type="text" value="http://feeds.ushahidi.com/some_variable" readonly="readonly" /></span>
+												<span><input type="text" value="http://feeds.ushahidi.com/some_variable" readonly="readonly"  class="text long" /></span>
 											</div>
 										</div>
 									</div>

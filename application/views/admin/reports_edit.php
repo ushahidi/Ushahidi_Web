@@ -55,7 +55,7 @@
 									<script type="text/javascript">
 										$("#incident_date").datepicker({ 
 										    showOn: "both", 
-										    buttonImage: "<?php echo url::base() ?>media/img/admin/icon-calendar.gif", 
+										    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
 										    buttonImageOnly: true 
 										});
 								    </script>					    

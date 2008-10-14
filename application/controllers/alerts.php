@@ -203,9 +203,9 @@ class Alerts_Controller extends Main_Controller {
 		$html = "<div class=\"alert_confirm\">";
 		$html .= "<div class=\"label\">Please enter the SMS confirmation [CODE] you received on your mobile phone below:</div>";
 		$html .= form::open();
-		$html .= form::input('alert_code', '');
+		$html .= form::input('alert_code', '', ' class="text short" ');
 		$html .= "&nbsp;&nbsp;";
-		$html .= form::button('button', 'Confirm My Mobile Number');
+		$html .= form::button('button', 'Confirm', ' class="btn_blue" ');
 		$html .= form::close();
 		$html .= "</div>";
 		return $html;

@@ -891,9 +891,9 @@ a.rem{
 	width:13px;
 	height:13px;
 	float:left;
-	background:url(../../img/admin/icon-plus.gif) no-repeat;
+	background:url(../img/icon-plus.gif) no-repeat;
 }
-a.rem { background:url(../../img/admin/icon-minus.gif) no-repeat;}
+a.rem { background:url(../img/icon-minus.gif) no-repeat;}
 input.long {
 	width:454px;
 }
