@@ -1,8 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
-* Settings Controller
-*/
+ * This controller is used to manage user settings
+ */
 class Settings_Controller extends Admin_Controller
 {
 	function __construct()
@@ -34,19 +34,20 @@ class Settings_Controller extends Admin_Controller
 			'default_lon' => '',
 			'default_zoom' => ''
 	    );
-		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
-	    $errors = $form;
+        //  Copy the form as errors, so the errors will be stored with keys
+        //  corresponding to the form field names
+        $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
-		
 		
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
-	                // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-	        $post = new Validation($_POST);
+            // Instantiate Validation, use $post, so we don't overwrite $_POST
+            // fields with our own things
+            $post = new Validation($_POST);
 
-	         //  Add some filters
+	        // Add some filters
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
@@ -85,8 +86,10 @@ class Settings_Controller extends Admin_Controller
 	            $form = arr::overwrite($form, $post->as_array());
 					            
 	        }
-	                    // No! We have validation errors, we need to show the form again, with the errors
-	        else
+	                    
+            // No! We have validation errors, we need to show the form again,
+            // with the errors
+            else
 	        {
 	            // repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
@@ -143,24 +146,27 @@ class Settings_Controller extends Admin_Controller
 		$this->template->js->default_lon = Kohana::config('settings.default_lon');
 	}
 
+    /**
+     * Handles settings for SMS reportings
+     */
 	function sms()
 	{
 		$this->template->content = new View('admin/sms');
 		$this->template->content->title = 'Settings';
 	}
-
+    
+    /**
+     * Handles settings for sharing data
+     */
 	function sharing()
 	{
 		$this->template->content = new View('admin/sharing');
 		$this->template->content->title = 'Settings';
 	}
 
-
-
-	/*
-	* Retrieves cities listing
-	* Using GeoNames Service
-	*/
+	/**
+	 * Retrieves cities listing using GeoNames Service
+	 */
 	private function _update_cities( $id, $cid )
 	{
 		// Get country ISO code from DB
@@ -172,7 +178,7 @@ class Settings_Controller extends Admin_Controller
 		
 		// Will only update the cities database if default country has changed
 		// Or countries city count = Zero
-		if ( $iso && ( ((int)$id != (int)$cid) || (int)$city_count == 0 ) )
+		if ($iso && (((int)$id != (int)$cid) || (int)$city_count == 0 ))
 		{
 			// Reset All Countries City Counts to Zero
 			$countries = ORM::factory('country')->find_all();
@@ -183,13 +189,14 @@ class Settings_Controller extends Admin_Controller
 			}
 			ORM::factory('city')->delete_all();
 			
-			
 			// GeoNames WebService URL + Country ISO Code
-			$geonames_url = "http://ws.geonames.org/search?country=" . $iso . "&featureCode=PPL&featureCode=PPLA&featureCode=PPLC";
+			$geonames_url = "http://ws.geonames.org/search?country=" 
+                            .$iso."&featureCode=PPL&featureCode=PPLA&featureCode=PPLC";
 			$xmlstr = file_get_contents($geonames_url);		
 			$sitemap = new SimpleXMLElement($xmlstr);
-			foreach($sitemap as $city) {
-				if ( $city->name && $city->lng && $city->lat )
+			foreach($sitemap as $city) 
+            {
+				if ($city->name && $city->lng && $city->lat)
 				{
 					$newcity = new City_Model();
 					$newcity->country_id = $id;

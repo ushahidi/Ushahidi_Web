@@ -1,100 +1,99 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
-* Login Form
-*/
+ * This controller handles login requests.
+ */
 class Login_Controller extends Template_Controller {
 	
-	public $auto_render = TRUE;
+    public $auto_render = TRUE;
 	
-	protected $user;
+    protected $user;
 	
-	// Session Object
-	protected $session;
+    // Session Object
+    protected $session;
 	
-	// Main template
-	public $template = 'admin/login';
+    // Main template
+    public $template = 'admin/login';
 	
 
-	public function __construct()
-	{
-		parent::__construct();
+    public function __construct()
+    {
+        parent::__construct();
 		
-		$this->session = new Session();
-	}
+        $this->session = new Session();
+    }
 	
-	public function index()
-	{
-		$auth = Auth::instance();
+    public function index()
+    {
+        $auth = Auth::instance();
 		
-		// If already logged in redirect to user account page
-		// Otherwise attempt to auto login if autologin cookie can be found
-		// (Set when user previously logged in and ticked 'stay logged in')
-		if ($auth->logged_in() OR $auth->auto_login())
-		{
-			if ($user = Session::instance()->get('auth_user',FALSE))
-			{
-				url::redirect('admin/dashboard');
-			}
-		}
+        // If already logged in redirect to user account page
+        // Otherwise attempt to auto login if autologin cookie can be found
+        // (Set when user previously logged in and ticked 'stay logged in')
+        if ($auth->logged_in() OR $auth->auto_login())
+        {
+            if ($user = Session::instance()->get('auth_user',FALSE))
+            {
+                url::redirect('admin/dashboard');
+            }
+        }
 				
 		
-	    $form = array
-	    (
-	        'username'  => '',
-	        'password'  => '',
-	    );
+        $form = array(
+	        'username' => '',
+	        'password' => '',
+                );
 
-	    //  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
-	    $errors = $form;
-		$form_error = FALSE;
+        //  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+        $errors = $form;
+        $form_error = FALSE;
 		
 		
-		// Set up the validation object
-		$_POST = Validation::factory($_POST)
-			   ->pre_filter('trim')
-			   ->add_rules('username', 'required')
-			   ->add_rules('password', 'required');
+        // Set up the validation object
+        $_POST = Validation::factory($_POST)
+            ->pre_filter('trim')
+            ->add_rules('username', 'required')
+            ->add_rules('password', 'required');
 		
-		if ($_POST->validate())
-		{
-			// Sanitize $_POST data removing all inputs without rules
-			$postdata_array = $_POST->safe_array();
+        if ($_POST->validate())
+        {
+            // Sanitize $_POST data removing all inputs without rules
+            $postdata_array = $_POST->safe_array();
 
-			// Load the user
-			$user = ORM::factory('user', $postdata_array['username']);
+            // Load the user
+            $user = ORM::factory('user', $postdata_array['username']);
 
-			// If no user with that username found
-			if ( ! $user->id)
-			{
-				$_POST->add_error('username', 'login error');
-			}
-			else
-			{
-				$remember = (isset($_POST['remember']))? TRUE : FALSE;
+            // If no user with that username found
+            if (! $user->id)
+            {
+                $_POST->add_error('username', 'login error');
+            }
+            else
+            {
+                $remember = (isset($_POST['remember']))? TRUE : FALSE;
 
-				// Attempt a login
-				if ($auth->login($user, $postdata_array['password'], $remember))
-				{
-					url::redirect('admin/dashboard');
-				}
-				else
-				{
-					$_POST->add_error('password', 'login error');
-				}
-			}
-			// repopulate the form fields
-			$form = arr::overwrite($form, $_POST->as_array());
+                // Attempt a login
+                if ($auth->login($user, $postdata_array['password'], $remember))
+                {
+                    url::redirect('admin/dashboard');
+                }
+                else
+                {
+                    $_POST->add_error('password', 'login error');
+                }
+            }
+            // repopulate the form fields
+            $form = arr::overwrite($form, $_POST->as_array());
 			
-			// populate the error fields, if any
-				// We need to already have created an error message file, for Kohana to use
-				// Pass the error message file name to the errors() method			
-			$errors = arr::overwrite($errors, $_POST->errors('auth'));
-			$form_error = TRUE;
-		}
+            // populate the error fields, if any
+            // We need to already have created an error message file, for Kohana to use
+            // Pass the error message file name to the errors() method			
+            $errors = arr::overwrite($errors, $_POST->errors('auth'));
+            $form_error = TRUE;
+        }
 		
-		$this->template->errors = $errors;
-		$this->template->form = $form;
-		$this->template->form_error = $form_error;
-	}	
+        $this->template->errors = $errors;
+        $this->template->form = $form;
+        $this->template->form_error = $form_error;
+    }	
 }
