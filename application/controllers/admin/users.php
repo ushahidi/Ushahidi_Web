@@ -86,7 +86,6 @@ class Users_Controller extends Admin_Controller
 				
 				} elseif( $post->action == 'd' ){ //delete action
 					
-					//print_r($post );
 					ORM::factory('user')->delete($post->user_id);
 					
 					//update role table too.
@@ -175,7 +174,7 @@ class Users_Controller extends Admin_Controller
 	}
 	
 	/**
-	 * Checks if email address is associated with an account.
+	 * Checks if email address is associated with an existing account.
 	 */	
 	public function email_exists_chk( Validation $post )
 	{

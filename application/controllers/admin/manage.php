@@ -21,6 +21,7 @@ class Manage_Controller extends Admin_Controller
 		// setup and initialize form field names
 		$form = array
 	    (
+			'action' => '',
 	        'category_id'      => '',
 			'category_title'      => '',
 	        'category_description'    => '',
@@ -49,15 +50,25 @@ class Manage_Controller extends Admin_Controller
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
-	            // Yes! everything is valid
 				$category_id = $post->category_id;
-				// SAVE Category
 				$category = new Category_Model($category_id);
-				$category->category_title = $post->category_title;
-				$category->category_description = $post->category_description;
-				$category->category_color = $post->category_color;
-				$category->save();
-				$form_saved = TRUE;       
+				//delete action
+				if( $post->action == 'd' ){ 
+	            	$category_id = $post->category_id;
+					$category->delete( $category_id );
+				
+				} else {
+					// Yes! everything is valid
+					$category_id = $post->category_id;
+					// SAVE Category
+					
+					$category->category_title = $post->category_title;
+					$category->category_description =
+					 $post->category_description;
+					$category->category_color = $post->category_color;
+					$category->save();
+					$form_saved = TRUE;
+				}       
 	        }
             // No! We have validation errors, we need to show the form again, with the errors
 	        else

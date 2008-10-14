@@ -36,8 +36,12 @@
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<?php print form::open(); ?>
-						<input type="hidden" id="category_id" name="category_id" value="">
+						<?php print form::open(NULL,array('id' => 'catMain',
+						 	'name' => 'catMain')); ?>
+						<input type="hidden" id="category_id" 
+							name="category_id" value="" />
+						<input type="hidden" name="action" 
+							id="action" value=""/>
 						<div class="tab_form_item">
 							<strong>Category Name:</strong><br />
 							<?php print form::input('category_title', '', ' class="text"'); ?>
@@ -77,7 +81,7 @@
 				<div class="report-form">
 					<?php
 					if ($form_error) {
-						print_r($errors);
+					
 					?>
 						<!-- red-box -->
 						<div class="red-box">
@@ -157,7 +161,12 @@
 												<ul>
 													<li class="none-separator"><a href="#" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>')">Edit</a></li>
 													<li class="none-separator"><a href="#"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
-													<li><a href="#" class="del">Delete</a></li>
+<li><a href="#" onclick="userAction('d',
+	'<?php echo(rawurlencode($category_id)); ?>',
+	'<?php echo(rawurlencode($category_title)); ?>',
+	'<?php echo(rawurlencode($category_description)); ?>',
+	'<?php echo(rawurlencode($category_color)); ?>',
+	'DELETE');" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>
