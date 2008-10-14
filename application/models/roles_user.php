@@ -17,7 +17,9 @@ class Roles_User_Model extends Model {
 	 */
 	public function get_role_id( $user_id ){
 		//TODO write necessary code to fetch role id specific to a user id.
-		
+		$this->db->where('user_id', $user_id );
+		$query = $this->db->select('role_id')->from('roles_users')->get();
+		return $query->current();
 	}
 	
 	/**

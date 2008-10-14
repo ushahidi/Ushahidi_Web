@@ -118,12 +118,19 @@
 										$name = $user->name;
 										$email = $user->email;
 										
-										// Get Roles
-										foreach(ORM::factory('role')->find_all() as $role)
-										{
-											if ($user->has(new Role_Model($role->name)))
-											$role = $role->name; 
-										} 
+										//ORM can do much better, will look 
+										// into it more.
+										//get role ids
+										$role_id =  
+										$roles_users->get_role_id($user_id );
+										
+										$roles = 
+											ORM::factory('role')->where('id',
+											$role_id->role_id )->find();
+										
+										//get role names	
+										$role = $roles->name;
+										
 										?>
 										<tr>
 											
@@ -142,13 +149,13 @@
 	'<?php echo(rawurlencode($user_id)); ?>',
     '<?php echo(rawurlencode($username)); ?>',
 	'<?php echo(rawurlencode($name)); ?>',
-	'<?php echo(rawurlencode($role));?>',
+	'<?php echo(rawurlencode($role_id->role_id));?>',
 	'<?php echo(rawurlencode($email)); ?>')">Edit</a></li>
 	<li><a href="#" onclick="userAction('d',
 		'<?php echo(rawurlencode($user_id)); ?>',
 		'<?php echo(rawurlencode($username)); ?>',
 		'<?php echo(rawurlencode($name)); ?>',
-		'<?php echo(rawurlencode($role));?>',
+		'<?php echo(rawurlencode($role_id->role_id));?>',
 		'<?php echo(rawurlencode($email)); ?>',
 		'DELETE');" class="del">Delete</a></li>
 												</ul>

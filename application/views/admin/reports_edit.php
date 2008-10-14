@@ -1,8 +1,8 @@
 			<div class="bg">
-				<h2><?php echo $title; ?> <span></span><a href="<?php echo url::base() ?>admin/reports">View Reports</a></h2>
+				<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports">View Reports</a></h2>
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">
-					<input type="hidden" name="location_id" id="location_id" value="<?php echo $form['location_id']; ?>">
+					<input type="hidden" name="location_id" id="location_id" value="<?php print $form['location_id']; ?>">
 					<!-- report-form -->
 					<div class="report-form">
 						<?php
@@ -35,8 +35,8 @@
 						?>
 						<div class="head">
 							<h3>New Report</h3>
-							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
-							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
+							<input type="image" src="<?php print url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+							<input type="image" src="<?php print url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
 						</div>
 						<!-- f-col -->
 						<div class="f-col">
@@ -52,49 +52,98 @@
 								<div class="date-box">
 									<h4>Date <span>(mm/dd/yyyy)</span></h4>
 									<?php print form::input('incident_date', $form['incident_date'], ' class="text"'); ?>								
-									<script type="text/javascript">
-										$("#incident_date").datepicker({ 
-										    showOn: "both", 
-										    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
-										    buttonImageOnly: true 
-										});
-								    </script>					    
+									<?php print $date_picker_js; ?>				    
 								</div>
 								<div class="time">
 									<h4>Time <span>(Approximate)</span></h4>
 									<?php
-									for ($i=1; $i <= 12 ; $i++) { 
-										$hour_array[sprintf("%02d", $i)] = sprintf("%02d", $i); 	// Add Leading Zero
-									}
-									for ($j=0; $j <= 59 ; $j++) { 
-										$minute_array[sprintf("%02d", $j)] = sprintf("%02d", $j);	// Add Leading Zero
-									}
-									$ampm_array = array('pm'=>'pm','am'=>'am');
-									print '<span class="sel-holder">' . form::dropdown('incident_hour',$hour_array,$form['incident_hour']) . '</span>';
+									print '<span class="sel-holder">' .
+								    form::dropdown('incident_hour', $hour_array,
+									$form['incident_hour']) . '</span>';
+									
 									print '<span class="dots">:</span>';
-									print '<span class="sel-holder">' . form::dropdown('incident_minute',$minute_array,$form['incident_minute']) . '</span>';
+									
+									print '<span class="sel-holder">' .
+									form::dropdown('incident_minute',
+									$minute_array, $form['incident_minute']) .
+									'</span>';
 									print '<span class="dots">:</span>';
-									print '<span class="sel-holder">' . form::dropdown('incident_ampm',$ampm_array,$form['incident_ampm']) . '</span>';
+									
+									print '<span class="sel-holder">' .
+									form::dropdown('incident_ampm', $ampm_array,
+									$form['incident_ampm']) . '</span>';
 									?>
 								</div>
 							</div>
 							<div class="row">
-								<h4><a href="#" id="category_toggle" class="new-cat">new category</a>Categories <span>Select as many as needed.</span></h4>
-								<script type="text/javascript">
-									$('#category_add').show('slow');
-									$('a#category_toggle').click(function() {
-									  $('#category_add').toggle(400);
-									  return false;
-									});
-								</script>
+								<h4><a href="#" id="category_toggle" class="new-cat">new category</a>Categories 
+								<span>Select as many as needed.</span></h4>
+								<?php print $new_category_toggle_js; ?>
 								<!--category_add form goes here-->
 			                    <div id="category_add" class="category_add">
-			                        <?php echo $add_categories_form; ?>									
-
-								</div>
+			                        <?php
+			                        print '<p>Add New Category<hr/></p>';
+                                    print form::label(array("id"=>"category_name_label", "for"=>"category_name"), 'Name');
+                                    print '<br/>';
+                                    print form::input('category_name', $new_categories_form['category_name'], 'class=""');
+                                    print '<br/>';
+                                    print form::label(array("id"=>"description_label", "for"=>"description"), 'Description');
+                                    print '<br/>';
+                                    print form::input('category_description', $new_categories_form['category_description'], 'class=""');
+                                    print '<br/>';
+                                    print form::label(array("id"=>"color_label", "for"=>"color"), 'Color');
+                                    print '<br/>';
+                                    print form::input('category_color', $new_categories_form['category_color'], 'class=""');
+                                    print $color_picker_js;
+                                    print '<br/>';
+                                    print '<span>';
+                                    print '<a href="#" id="add_new_category">Add</a>';
+                                    print '</span>';
+                                    print form::close();
+                                    ?> 
+                                    </div>
 
 			                    <div class="category">
-									<?php echo $categories ?>
+                        	    <?php
+                        		//format categories for 2 column display
+                                $this_col = 1; // First column
+                                $max_col = round($categories_total/2); // Maximum number of columns
+                                
+                                foreach ($categories as $category => $category_extra)
+                                {
+                                    $category_title = $category_extra[0];
+                                    $category_color = $category_extra[1];
+                                    if ($this_col == 1) 
+                                        print "<ul>";
+                                
+                                    if (!empty($form['incident_category']) 
+                                        && in_array($category, $form['incident_category'])) {
+                                        $category_checked = TRUE;
+                                    }
+                                    else
+                                    {
+                                        $category_checked = FALSE;
+                                    }
+                                                                                                    
+                                    print "<li><label>";
+                                    print form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
+                                    print "$category_title";
+                                    print "</label></li>";
+                               
+                                    if ($this_col == $max_col) 
+                                        print "</ul>\n";
+                              
+                                    if ($this_col < $max_col)
+                                    {
+                                        $this_col++;
+                                    } 
+                                    else 
+                                    {
+                                        $this_col = 1;
+                                    }
+                                }
+                                
+                                ?>
 			                        <ul id="user_categories">
 			                        </ul>
 								</div>
@@ -222,7 +271,22 @@
 							<!-- Photo Fields -->
 							<div class="row link-row">
 								<h4>Upload Photos</h4>
-								<?php echo $thumbnails; ?>
+								<?php								
+    								if ($incident != "0")
+                        			{
+                        				// Retrieve Media
+                        				foreach($incident->media as $photo) 
+                        				{
+                        					if ($photo->media_type == 1)
+                        					{
+                        						print "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
+                        						print "<img src=\"" . url::base() . "media/uploads/" . $photo->media_thumb . "\" >";
+                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deleteThumb('". $photo->id ."', 'photo_". $photo->id ."'); return false;\" >Delete</a>";
+                        						print "</div>";
+                        					}
+                        				}
+                        			}
+			                    ?>
 							</div>
 							<div id="divPhoto">
 								<?php
@@ -287,9 +351,9 @@
 								</label>
 							</div>
 						</div>
-						<input id="save_only" type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
-						<input id="save_close" type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-and-close.gif" class="save-close-btn" />
-						<input id="cancel" type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+						<input id="save_only" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
+						<input id="save_close" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-and-close.gif" class="save-close-btn" />
+						<input id="cancel" type="image" src="<?php print url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 					</div>
 				<?php print form::close(); ?>
 			</div>
