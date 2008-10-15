@@ -47,9 +47,11 @@ class Main_Controller extends Template_Controller {
         $this->template->header->site_name = Kohana::config('settings.site_name');
         $this->template->header->api_url = Kohana::config('settings.api_url');
 		
-        // Javascript Header
-        $this->template->header->map_enabled = FALSE;
-        $this->template->header->js = '';
+		// Javascript Header
+		$this->template->header->map_enabled = FALSE;
+		$this->template->header->datepicker_enabled = FALSE;
+		$this->template->header->main_page = FALSE;
+		$this->template->header->js = '';
 		
         // Load profiler
         // $profiler = new Profiler;		
@@ -74,7 +76,7 @@ class Main_Controller extends Template_Controller {
 		
 		
         // Get Reports
-        // XXX: Might need to replace 8 with a constant
+        // XXX: Might need to replace magic no. 8 with a constant
         $this->template->content->total_items = ORM::factory('incident')
             ->where('incident_active', '1')
             ->limit('8')->count_all();
@@ -150,25 +152,25 @@ class Main_Controller extends Template_Controller {
 							INNER JOIN incident_category ON incident_category.incident_id = incident.id
 							WHERE incident_active = 1 AND incident_category.category_id = ". $index ."
 							GROUP BY DATE_FORMAT(incident_date, '%Y%m')";
-            $graph_text = $this->_category_graph_text($query_text, $category);
-            $all_graphs .= $graph_text;
-        }
+		    $graph_text = $this->_category_graph_text($query_text, $category);
+			$all_graphs .= $graph_text;
+		}
 		
-        $all_graphs .= " } ";
+	    $all_graphs .= " } ";
 		
+		$this->template->content->all_graphs = $all_graphs;
 		
-        $this->template->content->all_graphs = $all_graphs;
-		
-        // Javascript Header
-        $this->template->header->map_enabled = TRUE;
-        $this->template->header->js = new View('main_js');
-        $this->template->header->js->default_map = Kohana::config('settings.default_map');
-        $this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-        $this->template->header->js->latitude = Kohana::config('settings.default_lat');
-        $this->template->header->js->longitude = Kohana::config('settings.default_lon');
-        $this->template->header->js->graph_data = $graph_data;
-        $this->template->header->js->all_graphs = $all_graphs;
-        $this->template->header->js->categories = $categories;
-    }
+		// Javascript Header
+		$this->template->header->map_enabled = TRUE;
+		$this->template->header->main_page = TRUE;
+		$this->template->header->js = new View('main_js');
+		$this->template->header->js->default_map = Kohana::config('settings.default_map');
+		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->template->header->js->latitude = Kohana::config('settings.default_lat');
+		$this->template->header->js->longitude = Kohana::config('settings.default_lon');
+		$this->template->header->js->graph_data = $graph_data;
+		$this->template->header->js->all_graphs = $all_graphs;
+		$this->template->header->js->categories = $categories;
+	}
 
 } // End Main

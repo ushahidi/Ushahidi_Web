@@ -116,7 +116,6 @@ class Alerts_Controller extends Main_Controller {
         $this->template->header->js->longitude = $form['alert_lon'];
     }
 	
-	
     /**
      * Alerts Confirmation Page
      */
@@ -124,10 +123,9 @@ class Alerts_Controller extends Main_Controller {
     {
         $this->template->header->this_page = 'alerts';
         $this->template->content = new View('alerts_confirm');
-	$this->template->content->alert_mobile = $_SESSION['alert_mobile'];
+	    $this->template->content->alert_mobile = $_SESSION['alert_mobile'];
         $this->template->content->alert_email = $_SESSION['alert_email'];
     }
-	
 	
     /*
      * Retrieves Previously Cached Geonames Cities
@@ -141,7 +139,6 @@ class Alerts_Controller extends Main_Controller {
         }
         return $city_select;
     }
-	
 	
     /*
      * Checks to see if a previous alert has been set for the mobile phone
@@ -168,7 +165,6 @@ class Alerts_Controller extends Main_Controller {
         }
     }
 	
-	
     /*
      * Checks to see if a previous alert has been set for the email address
      */
@@ -193,5 +189,4 @@ class Alerts_Controller extends Main_Controller {
             $post->add_error( 'alert_email', 'email_check');
         }
     }
-		
 }
