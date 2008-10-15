@@ -116,7 +116,7 @@
 									$incident_verified = $incident->incident_verified;
 									?>
 									<tr>
-										<td class="col-1"><input name="incident_id[]" value="<?php echo $incident_id; ?>" type="checkbox" class="check-box"/></td>
+										<td class="col-1"><input name="incident_id[]" id="incident" value="<?php echo $incident_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
 												<h4><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo $incident_title; ?></a></h4>
@@ -133,9 +133,9 @@
 										<td class="col-3"><?php echo $incident_date; ?></td>
 										<td class="col-4">
 											<ul>
-												<li class="none-separator"><a href="#"<?php if ($incident_approved) echo " class=\"status_yes\"" ?>>Approve</a></li>
-												<li><a href="#"<?php if ($incident_verified) echo " class=\"status_yes\"" ?>>Verify</a></li>
-												<li><a href="#" class="del">Delete</a></li>
+												<li class="none-separator"><a href="#"<?php if ($incident_approved) echo " class=\"status_yes\"" ?> onclick="reportAction('a','APPROVE');">Approve</a></li>
+												<li><a href="#"<?php if ($incident_verified) echo " class=\"status_yes\"" ?> onclick="reportAction('v','VERIFY');">Verify</a></li>
+												<li><a href="#" class="del" onclick="reportAction('d','DELETE');">Delete</a></li>
 											</ul>
 										</td>
 									</tr>

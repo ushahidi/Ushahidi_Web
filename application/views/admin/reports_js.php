@@ -20,20 +20,37 @@
 		function reportAction ( action, confirmAction )
 		{
 			var statusMessage;
-			var answer = confirm('Are You Sure You Want To ' + confirmAction + ' items?')
-			if (answer){
-				// Set Submit Type
-				$("#action").attr("value", action);
+			if( !isChecked( "incident" ) ){ 
+				alert('Please select at least one report.')
+			
+			} else {
+				var answer = confirm('Are You Sure You Want To ' + confirmAction + ' items?')
+				if (answer){
+					// Set Submit Type
+					$("#action").attr("value", action);
 				
-				// Submit Form
-				$("input[@name='incident_id[]'][@checked]").each(
-				function() 
-				{
-					$("#reportMain").submit()
+					// Submit Form
+					$("input[@name='incident_id[]'][@checked]").each(
+						function() 
+						{
+							$("#reportMain").submit()
+						}
+					);
+				
+				} else {
+					return false;
 				}
-				);			
 			}
-			else{
-				return false;
-			}
+		}
+		
+		//check if a checkbox has been ticked.
+		function isChecked( id )
+		{
+			var checked = $("input[@id="+id+"]:checked").length
+			
+			if( checked == 0 )
+			return false
+			
+			else 
+			return true
 		}
