@@ -12,10 +12,10 @@ class Manage_Controller extends Admin_Controller
 		$this->template->this_page = 'manage';		
 	}
 	
+	
 	function index()
 	{	
 		$this->template->content = new View('admin/categories');
-		$this->template->content->title = 'Manage Categories';
 		
 		
 		// setup and initialize form field names
@@ -30,7 +30,7 @@ class Manage_Controller extends Admin_Controller
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
-		$form_saved = TRUE;
+		$form_saved = FALSE;
 		
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -93,9 +93,8 @@ class Manage_Controller extends Admin_Controller
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
 
-        $this->template->content->form_error = FALSE;
-        $this->template->content->form_saved = FALSE;
-        $this->template->content->form_action = FALSE;
+        $this->template->content->form_error = $form_error;
+        $this->template->content->form_saved = $form_saved;
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->categories = $categories;
@@ -103,5 +102,95 @@ class Manage_Controller extends Admin_Controller
         // Javascript Header
         $this->template->colorpicker_enabled = TRUE;
         $this->template->js = new View('admin/categories_js');
-    }	
+    }
+
+	/*
+	Add Edit Organizations
+	*/
+	function organizations()
+	{
+		$this->template->content = new View('admin/organizations');
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+			'action' => '',
+	        'category_id'      => '',
+			'category_title'      => '',
+	        'category_description'    => '',
+	        'category_color'  => ''
+	    );
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+	    $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+
+        // Pagination
+        $pagination = new Pagination(array(
+                            'query_string' => 'page',
+                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+                            'total_items'    => ORM::factory('category')->count_all()
+                        ));
+
+        $categories = ORM::factory('category')
+                        ->orderby('category_title', 'asc')
+                        ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                            $pagination->sql_offset);
+
+        $this->template->content->form_error = $form_error;
+        $this->template->content->form_saved = $form_saved;
+        $this->template->content->pagination = $pagination;
+        $this->template->content->total_items = $pagination->total_items;
+        $this->template->content->categories = $categories;
+
+        // Javascript Header
+        $this->template->colorpicker_enabled = TRUE;
+        $this->template->js = new View('admin/categories_js');
+	}
+	
+	/*
+	Add Edit News Feeds
+	*/
+	function feeds()
+	{
+		$this->template->content = new View('admin/feeds');
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+			'action' => '',
+	        'category_id'      => '',
+			'category_title'      => '',
+	        'category_description'    => '',
+	        'category_color'  => ''
+	    );
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+	    $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+
+        // Pagination
+        $pagination = new Pagination(array(
+                            'query_string' => 'page',
+                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+                            'total_items'    => ORM::factory('category')->count_all()
+                        ));
+
+        $categories = ORM::factory('category')
+                        ->orderby('category_title', 'asc')
+                        ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                            $pagination->sql_offset);
+
+        $this->template->content->form_error = $form_error;
+        $this->template->content->form_saved = $form_saved;
+        $this->template->content->pagination = $pagination;
+        $this->template->content->total_items = $pagination->total_items;
+        $this->template->content->categories = $categories;
+
+        // Javascript Header
+        $this->template->colorpicker_enabled = TRUE;
+        $this->template->js = new View('admin/categories_js');
+	}
+	
+	
 }

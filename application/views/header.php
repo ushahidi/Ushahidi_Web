@@ -25,7 +25,7 @@
 		echo html::stylesheet('media/css/datepicker/ui.datepicker');
 	}
 	?>
-	<script type="text/javascript" charset="utf-8">
+	<script type="text/javascript">
 		<?php echo $js . "\n"; ?>
 	</script>
 </head>

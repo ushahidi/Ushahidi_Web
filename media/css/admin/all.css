@@ -29,8 +29,7 @@ h2{
 	background:#f2f7fa;
 }
 h2 span{
-	padding:0 30px 0 0;
-	color:#b75f5f;
+	padding:0 15px 0 0;
 	font-size:14px;
 	line-height:14px;
 }
@@ -38,11 +37,17 @@ h2 a{
 	font-size:14px;
 	line-height:16px;
 	color:#00699b;
-	padding:0 19px 0;
-	background:url(../../img/admin/separator.gif) no-repeat 0 55%;}
+	padding:0 10px 0;
+}
 h2 a.active{
-	font-size:16px;
+	font-size:18px;
 	font-weight: bold;
+	padding-right:5px;
+}
+h2 span a, h2 span a:visited{
+	font-size:12px;
+	padding:0;
+	color:#666;
 }	
 h3{
 	padding:0 12px;
@@ -476,6 +481,9 @@ ul.tabset li a:hover{
 	float:left;
 	margin:10px 10px 0 10px;
 }
+.tab .tab_form_item2{
+	margin:10px 10px 0 10px;
+}
 /*-- tabs --*/
 .green-box {
 	margin:15px 21px 0 22px;
@@ -524,7 +532,7 @@ table td{
 	clear:both;
 	overflow:hidden;
 	margin:11px 20px 0;
-	padding:1px 1px 68px;
+	padding:1px 1px 1px;
 	width:900px;
 }
 .table td{
@@ -575,7 +583,6 @@ table td{
 	margin:0;
 	padding:0 0 8px;
 	width:492px;
-	border-bottom:1px solid #ddd;
 }
 .table .post h4{
 	padding:2px 0 0;
@@ -641,6 +648,7 @@ ul.links li a:hover{
 }
 .table .col-4 ul li a.del{ color:#b75f5f;}
 .table td .check-box { margin-top:2px !important;}
+
 /*-- pager --*/
 ul.pager {
 	margin:0;

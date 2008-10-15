@@ -485,6 +485,24 @@ CREATE TABLE IF NOT EXISTS `organization_incident` (
 -- Dumping data for table `organization_incident`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feed`
+--
+CREATE TABLE `feed`
+(
+`id` INTEGER unsigned  NOT NULL AUTO_INCREMENT ,
+`feed_name` VARCHAR(255),
+`feed_url` VARCHAR(255),
+`feed_cache` TEXT,
+`feed_active` TINYINT DEFAULT 1,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `feed`
+--
 
 -- --------------------------------------------------------
 
