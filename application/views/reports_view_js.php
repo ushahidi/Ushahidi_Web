@@ -88,5 +88,74 @@
 	            map.removePopup(feature.popup);
 	            feature.popup.destroy();
 	            feature.popup = null;
-	        }						
+	        }
+			
+			
+			/*
+			Add Comments JS
+			*/			
+			// Ajax Validation
+			$("#commentForm").validate({
+				rules: {
+					comment_author: {
+						required: true,
+						minlength: 3
+					},
+					comment_email: {
+						required: true,
+						email: true
+					},
+					comment_description: {
+						required: true,
+						minlength: 3
+					},
+					captcha: {
+						required: true
+					}
+				},
+				messages: {
+					comment_author: {
+						required: "Please enter your Name",
+						minlength: "Your Name must consist of at least 3 characters"
+					},
+					comment_email: {
+						required: "Please enter an Email Address",
+						email: "Please enter a valid Email Address"
+					},
+					comment_description: {
+						required: "Please enter a Comment",
+						minlength: "Your Comment must be at least 3 characters long"
+					},
+					captcha: {
+						required: "Please enter the Security Code"
+					}
+				}
+			});
 		});
+		
+		
+		function rating(id,action,type,loader)
+		{
+			$('#' + loader).html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+			$.post("<?php echo url::base() . 'reports/rating/' ?>" + id, { action: action, type: type },
+				function(data){
+					if (data.status == 'saved'){
+						if (type == 'original') {
+							$('#oup_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_up.png");
+							$('#odown_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_down.png");
+							$('#orating_' + id).html(data.rating);
+						}
+						else if (type == 'comment')
+						{
+							$('#cup_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_up.png");
+							$('#cdown_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_down.png");
+							$('#crating_' + id).html(data.rating);
+						}
+					} else {
+						alert('ERROR!');
+					}
+					$('#' + loader).html('');
+			  	}, "json");
+		}
+		
+		

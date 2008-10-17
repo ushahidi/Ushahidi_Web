@@ -272,6 +272,7 @@ body {
 	overflow:hidden;
 	width:100%;
 	padding:18px 0 0;
+	margin-bottom:20px;
 }
 .blocks-holder .incidents,
 .blocks-holder .images {float:left;}
@@ -637,6 +638,9 @@ body {
 	font:bold 12px/17px Arial, Helvetica, sans-serif;
 	text-transform:uppercase;
 }
+.discussion h5 a, .discussion h5 a:visited{
+	text-transform:none;
+}
 .report-description .orig-report .discussion .discussion-box {
 	overflow:hidden;
 	width:778px;
@@ -855,6 +859,33 @@ body {
 	color:#999;
 	font-weight:bold;
 }
+.report_comment{
+	border:1px #ccc solid;
+	padding:20px;
+	background:#eee;
+	clear:both;
+	overflow:hidden;
+}
+.report_rating{
+	margin:15px 0 0 10px;
+	font-size:90%;
+}
+.report_rating div{
+	float:left;
+	margin-right:3px;
+	
+}
+.rating_value{
+	height:14px;
+	font-weight:bold;
+	text-align:center;
+	background-color:#666;
+	color:#fff;
+	padding:0 4px 0 4px;
+}
+.rating_loading{
+	margin:0 0 0 10px;
+}
 span.dots {
 	width:17px;
 	text-align:center;
@@ -907,10 +938,12 @@ form {
 	background-color:#FFE0DD;
 	border:1px dotted red;
 }
-label.error{
+label.error {
+	margin-left: 10px;
 	color:red;
 	font-style: italic;
-	display:list-item;
+	width: auto;
+	display: block;
 }
 .text {
 	padding:3px 7px 3px 7px;
@@ -943,11 +976,6 @@ label.error{
 	background:url(../img/btn-blue.gif) no-repeat;
 	border:0;
 	cursor:pointer;	
-}
-label.error {
-	margin-left: 10px;
-	width: auto;
-	display: inline;
 }
 
 

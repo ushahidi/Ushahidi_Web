@@ -88,9 +88,70 @@ class Reports_Controller extends Main_Controller {
             {
                 url::redirect('main');
             }
+
+			// Comment Post?
+			// setup and initialize form field names
+			$form = array
+		    (
+		        'comment_author'      => '',
+				'comment_description'      => '',
+		        'comment_email'    => '',
+		        'comment_ip'  => '',
+				'captcha'  => ''
+		    );
+			$captcha = Captcha::factory(); 
+			$errors = $form;
+			$form_error = FALSE;
 			
-            $this->template->content->incident_title = $incident->incident_title;
+			// check, has the form been submitted, if so, setup validation
+		    if ($_POST)
+		    {
+	            // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+				$post = Validation::factory($_POST);
+
+		         //  Add some filters
+		        $post->pre_filter('trim', TRUE);
+		
+				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('comment_author','required', 'length[3,100]');
+				$post->add_rules('comment_description','required');
+				$post->add_rules('comment_email','required','email', 'length[4,100]');
+				$post->add_rules('captcha', 'required', 'Captcha::valid');
+				
+				// Test to see if things passed the rule checks
+		        if ($post->validate())
+		        {
+	                // Yes! everything is valid
+					$comment = new Comment_Model();
+					$comment->incident_id = $id;
+					$comment->comment_author = $post->comment_author;
+					$comment->comment_description = $post->comment_description;
+					$comment->comment_email = $post->comment_email;
+					$comment->comment_ip = $_SERVER['REMOTE_ADDR'];
+					$comment->comment_date = date("Y-m-d H:i:s",time());
+					$comment->comment_active = 1;		// Activate comment for now
+					$comment->save();
+					
+					// Redirect
+					url::redirect('reports/view/' . $id);
+				}
+
+	            // No! We have validation errors, we need to show the form again, with the errors
+		        else   
+				{
+		            // repopulate the form fields
+		            $form = arr::overwrite($form, $post->as_array());
+
+		            // populate the error fields, if any
+		            $errors = arr::overwrite($errors, $post->errors('comments'));
+					$form_error = TRUE;
+		        }
+			}
+			
+            $this->template->content->incident_id = $incident->id;
+			$this->template->content->incident_title = $incident->incident_title;
             $this->template->content->incident_description = $incident->incident_description;
+			$this->template->content->incident_rating = $incident->incident_rating;
             $this->template->content->incident_location = $incident->location->location_name;
             $this->template->content->incident_latitude = $incident->location->latitude;
             $this->template->content->incident_longitude = $incident->location->longitude;
@@ -136,6 +197,9 @@ class Reports_Controller extends Main_Controller {
             {
                 $this->template->content->incident_verified = "<p><strong class=\"red\">NO</strong></p>";
             }
+
+			// Retrieve Comments (Additional Information)
+			$this->template->content->incident_comments = $this->_get_comments($id);
         }
 		
 		// Javascript Header
@@ -146,7 +210,86 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->header->js->latitude = $incident->location->latitude;
 		$this->template->header->js->longitude = $incident->location->longitude;
+		
+		// Forms
+		$this->template->content->form = $form;
+		$this->template->content->captcha = $captcha;
+	    $this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
 	}
+	
+		
+	/**
+     * Report Rating.
+     * @param boolean $id If id is supplied, a rating will be applied to selected report
+     */
+	public function rating( $id = false )
+	{
+		$this->template = "";
+		$this->auto_render = FALSE;
+		
+		if ( !$id )
+        {
+			echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+		}
+		else
+		{
+			if ( !empty($_POST['action']) && !empty($_POST['type']) ) {
+				$action = $_POST['action'];
+				$type = $_POST['type'];
+				
+				// Is this an ADD(+1) or SUBTRACT(-1)?
+				if ($action == 'add') {
+					$action = 1;
+				}
+				elseif ($action == 'subtract') {
+					$action = -1;
+				}
+				else {
+					$action = 0;
+				}
+				
+				if (!empty($action) && ($type == 'original' || $type == 'comment'))
+				{
+					// Has this IP Address rated this post before?
+					if ($type == 'original') {
+						$previous = ORM::factory('rating')->where('incident_id',$id)->where('rating_ip',$_SERVER['REMOTE_ADDR'])->find();
+					}
+					elseif ($type == 'comment') {
+						$previous = ORM::factory('rating')->where('comment_id',$id)->where('rating_ip',$_SERVER['REMOTE_ADDR'])->find();
+					}
+					
+					$rating = new Rating_Model($previous->id);	// If previous exits... update previous vote
+					// Are we rating the original post or the comments?
+					if ($type == 'original') {
+						$rating->incident_id = $id;
+					}
+					elseif ($type == 'comment') {
+						$rating->comment_id = $id;
+					}
+
+					$rating->rating = $action;
+					$rating->rating_ip = $_SERVER['REMOTE_ADDR'];
+					$rating->rating_date = date("Y-m-d H:i:s",time());
+					$rating->save();
+					
+					// Get total rating and send back to json
+					$total_rating = $this->_get_rating($id, $type);
+					
+					echo json_encode(array("status"=>"saved", "message"=>"SAVED!", "rating"=>$total_rating));
+				}
+				else
+				{
+					echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+				}
+			}
+			else
+			{
+				echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+			}
+		}
+	}
+	
 	
     /*
 	* Retrieves Previously Cached Geonames Cities
@@ -214,4 +357,84 @@ class Reports_Controller extends Main_Controller {
         }
         return $html;
 	}
+	
+	
+	/*
+	* Retrieves Comments
+	*/
+	private function _get_comments($id)
+	{
+		if ($id)
+		{
+			$html = "";
+			foreach(ORM::factory('comment')->where('incident_id',$id)->where('comment_active','1')->orderby('comment_date', 'asc')->find_all() as $comment)
+			{
+				$html .= "<div class=\"discussion-box\">";
+				$html .= "<p><strong>" . $comment->comment_author . "</strong>&nbsp;(" . date('M j Y', strtotime($comment->comment_date)) . ")</p>";
+				$html .= "<p>" . $comment->comment_description . "</p>";
+				$html .= "<div class=\"report_rating\">";
+				$html .= "	<div>";
+				$html .= "	Credibility:&nbsp;";
+				$html .= "	<a href=\"javascript:rating('" . $comment->id . "','add','comment','cloader_" . $comment->id . "')\"><img id=\"cup_" . $comment->id . "\" src=\"" . url::base() . 'media/img/' . "up.png\" alt=\"UP\" title=\"UP\" border=\"0\" /></a>&nbsp;";
+				$html .= "	<a href=\"javascript:rating('" . $comment->id . "','subtract','comment','cloader_" . $comment->id . "')\"><img id=\"cdown_" . $comment->id . "\" src=\"" . url::base() . 'media/img/' . "down.png\" alt=\"DOWN\" title=\"DOWN\" border=\"0\" /></a>&nbsp;";
+				$html .= "	</div>";
+				$html .= "	<div class=\"rating_value\" id=\"crating_" . $comment->id . "\">" . $comment->comment_rating . "</div>";
+				$html .= "	<div id=\"cloader_" . $comment->id . "\" class=\"rating_loading\" ></div>";
+				$html .= "</div>";
+				$html .= "</div>";
+			}
+			
+			return $html;
+		}
+	}
+	
+	
+	/*
+	* Retrieves Total Rating For Specific Post
+	* Also Updates The Incident & Comment Tables (Ratings Column)
+	*/
+	private function _get_rating($id = false, $type = NULL)
+	{
+		if (!empty($id) && ($type == 'original' || $type == 'comment'))
+		{
+			if ($type == 'original') {
+				$which_count = 'incident_id';
+			} elseif ($type == 'comment') {
+				$which_count = 'comment_id';
+			}
+			else {
+				return 0;
+			}
+			
+			$total_rating = 0;
+			// Get All Ratings and Sum them up
+			foreach(ORM::factory('rating')->where($which_count,$id)->find_all() as $rating)
+			{
+				$total_rating += $rating->rating;
+			}
+			
+			// Update Counts
+			if ($type == 'original') {
+				$incident = ORM::factory('incident', $id);
+				if ($incident->loaded==true)
+				{
+					$incident->incident_rating = $total_rating;
+					$incident->save();
+				}
+			} elseif ($type == 'comment') {
+				$comment = ORM::factory('comment', $id);
+				if ($comment->loaded==true)
+				{
+					$comment->comment_rating = $total_rating;
+					$comment->save();
+				}
+			}
+			
+			return $total_rating;
+			
+		} else {
+			return 0;
+		}
+	}
+		
 } 

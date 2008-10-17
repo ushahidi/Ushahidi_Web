@@ -1,4 +1,8 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
+
+/**
+ * This controller handles API requests.
+ */
 class Api_Controller extends Controller {
 	var $db; //Database instance for queries
 	var $list_limit; //number of records to limit response to - set in __construct
@@ -350,4 +354,3 @@ class Api_Controller extends Controller {
 	}
 
 }
-?>
