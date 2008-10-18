@@ -6,7 +6,7 @@
 
 * { margin: 0; padding: 0; }
 body {
-	background-image:url(../../img/admin/bkg_login.jpg);
+	background-image:url(../../img/bkg_login.jpg);
 }
 body, td {
 	font: 13px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana, sans-serif;

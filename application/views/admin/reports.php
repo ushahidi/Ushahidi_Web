@@ -1,5 +1,5 @@
 			<div class="bg">
-				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span><a href="reports/edit">Create New Report</a><a href="reports/extra">Additional Reports</a></h2>
+				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span><a href="reports/edit">Create New Report</a></h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->

@@ -1078,7 +1078,7 @@ label.error {
 	font-size:14px;
 	color:#555;
 }
-.alert_response {
+.alert_response, .thanks_msg {
 	margin:10px 15px 10px 15px;
 	border:2px #ccc solid;
 	background-color:#fff;

@@ -8,6 +8,25 @@
 					<div class="big-block-top">
 						<div class="big-block-bottom">
 							<h1>Submit A New Report</h1>
+							<?php
+							if ($form_error) {
+							?>
+								<!-- red-box -->
+								<div class="red-box">
+									<h3>Error!</h3>
+									<ul>
+									<?php
+									foreach ($errors as $error_item => $error_description)
+									{
+										// print "<li>" . $error_description . "</li>";
+										print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+									}
+									?>
+									</ul>
+								</div>
+							<?php
+							}
+							?>
 							<div class="report_left">
 		                    	<div class="report_row">
 		                        	<h4>Report Title</h4>
@@ -59,15 +78,15 @@
 									<h3>Optional Information</h3>
 		                        	<div class="report_row">
 			                        	<h4>First Name</h4>
-								    	<input type="text" name="textfield" id="textfield" class="text long" />
+										<?php print form::input('person_first', $form['person_first'], ' class="text long"'); ?>
 			                        </div>
 			                        <div class="report_row">
 			                        	<h4>Last Name</h4>
-								    	<input type="text" name="textfield" id="textfield" class="text long" />
+										<?php print form::input('person_last', $form['person_last'], ' class="text long"'); ?>
 			                        </div>
 			                        <div class="report_row">
 			                        	<h4>Email</h4>
-								    	<input type="text" name="textfield" id="textfield" class="text long" />
+										<?php print form::input('person_email', $form['person_email'], ' class="text long"'); ?>
 			                        </div>
 								</div>
 							</div>
