@@ -4,10 +4,6 @@ body {
 	font:12px/15px Arial, Helvetica, sans-serif;
 	background:#fff url(../img/page-bg.gif) repeat-x;
 }
-form {
-	margin:0;
-	padding:0;
-}
 #main {
 	margin:0 auto;
 	width:960px;
@@ -276,6 +272,7 @@ form {
 	overflow:hidden;
 	width:100%;
 	padding:18px 0 0;
+	margin-bottom:20px;
 }
 .blocks-holder .incidents,
 .blocks-holder .images {float:left;}
@@ -385,12 +382,6 @@ form {
 	padding:0 0 8px;
 	font:12px/15px Arial, Helvetica, sans-serif;
 }
-.step-1 .location select {
-	overflow:hidden;
-	width:220px;
-	color:#09c;
-	font:12px Arial, Helvetica, sans-serif;
-}
 .step-1 .map {
 	overflow:hidden;
 	width:388px;
@@ -441,9 +432,6 @@ form {
 .step-2 .box input {
 	overflow:hidden;
 	margin:0 0 0 22px;
-	padding:2px 5px;
-	width:200px;
-	font:11px Arial, Helvetica, sans-serif;
 	clear:both;
 }
 .step-2 .box label {
@@ -650,6 +638,9 @@ form {
 	font:bold 12px/17px Arial, Helvetica, sans-serif;
 	text-transform:uppercase;
 }
+.discussion h5 a, .discussion h5 a:visited{
+	text-transform:none;
+}
 .report-description .orig-report .discussion .discussion-box {
 	overflow:hidden;
 	width:778px;
@@ -797,6 +788,197 @@ form {
 	overflow:hidden;
 	background:url(../img/f-logo.gif) no-repeat;
 }
+/* report */
+.report_left{
+	float:left;
+	width:400px;
+	margin:20px 0 0;
+	padding:0 0 10px;
+}
+.report_right{
+	overflow:hidden;
+	width:455px;
+	margin:20px 0 0 25px;
+	padding:0 0 10px;
+}
+.report_bottom{
+	clear:both;
+}
+.report_row{
+	margin:0 0 15px 0;
+	clear:both;
+}
+.report_row h4{
+	margin:0 0 5px 0;
+	padding:0;
+	font-size:120%;
+	font-weight:bold;
+}
+.report_row .date-box{
+	float:left;
+	margin-right:10px;
+}
+.report_row .date-box img{
+	padding:0 5px 0 5px;
+}
+.report_row .time{
+	float:left;
+}
+.report_row .optional-info{
+	float:left;
+	margin-right:10px;
+}
+.report_category {
+	clear:both;
+	overflow:hidden;
+	font-size:90%;
+}
+.report_category ul{
+	width:50%;
+	float:left;
+	margin:0;
+	padding:0 0 11px;
+}
+.report_category ul li{
+	overflow:hidden;
+	list-style:none;
+}
+.report_category ul li label{
+	color:#555;
+}
+.report_optional{
+	padding:15px;
+	background-color:#eee;
+	width:80%;
+}
+.report_optional h3
+{
+	margin:0 0 15px 0;
+	padding:0;
+	font-size:130%;
+	color:#999;
+	font-weight:bold;
+}
+.report_comment{
+	border:1px #ccc solid;
+	padding:20px;
+	background:#eee;
+	clear:both;
+	overflow:hidden;
+}
+.report_rating{
+	margin:15px 0 0 10px;
+	font-size:90%;
+}
+.report_rating div{
+	float:left;
+	margin-right:3px;
+	
+}
+.rating_value{
+	height:14px;
+	font-weight:bold;
+	text-align:center;
+	background-color:#666;
+	color:#fff;
+	padding:0 4px 0 4px;
+}
+.rating_loading{
+	margin:0 0 0 10px;
+}
+span.dots {
+	width:17px;
+	text-align:center;
+	color:#404040;
+	font-size:18px;
+	font-weight:bold;
+}
+a.add,
+a.rem{
+	margin:3px 0 0 5px;
+	text-indent:-3000px;
+	overflow:hidden;
+	width:13px;
+	height:13px;
+	float:left;
+	background:url(../img/icon-plus.gif) no-repeat;
+}
+a.rem { background:url(../img/icon-minus.gif) no-repeat;}
+.report_map{
+	overflow:hidden;
+	width:100%;
+	border:2px solid #ccc;
+	width:450px;
+	height:300px;
+}
+
+
+/* form */
+form {
+	margin:0;
+	padding:0;
+}
+.text,
+.textarea,
+.select,
+.file{
+	color:#00789F;
+	font-size:120%;
+}
+.text:focus,
+.textarea:focus,
+.select:focus,
+.file:focus{
+	background-color:#ffffcc;
+}
+.text.error,
+.textarea.error,
+.select.error,
+.file.error{
+	background-color:#FFE0DD;
+	border:1px dotted red;
+}
+label.error {
+	margin-left: 10px;
+	color:red;
+	font-style: italic;
+	width: auto;
+	display: block;
+}
+.text {
+	padding:3px 7px 3px 7px;
+	border:1px #ccc solid;
+}
+.textarea {
+	padding:7px 7px 3px 7px;
+	border:1px #ccc solid;
+}
+.select{
+	overflow:hidden;
+}
+.long{
+	width:90%;
+}
+.long2{
+	width:80%;
+	float:left;
+	margin-bottom:10px;
+}
+.short{
+	width:100px;
+}
+.btn_blue{
+	padding:0 0 2px;
+	width:118px;
+	height:31px;
+	color:#fff;
+	font:14px Arial, Helvetica, sans-serif;
+	background:url(../img/btn-blue.gif) no-repeat;
+	border:0;
+	cursor:pointer;	
+}
+
+
 
 /*-----Accessible Slider CSS-----*/
 .ui-slider {clear: both; top: 10px;}

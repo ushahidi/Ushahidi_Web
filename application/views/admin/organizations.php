@@ -1,5 +1,5 @@
 			<div class="bg">
-				<h2><a href="<?php echo url::base() . 'admin/manage' ?>" class="active">Categories</a><span>(<a href="#add">Add New</a>)</span><a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a><a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a></h2>
+				<h2><a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a><a href="<?php echo url::base() . 'admin/manage/organizations' ?>" class="active">Organizations</a><span>(<a href="#add">Add New</a>)</span><a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a></h2>
 				<?php
 				if ($form_error) {
 				?>
@@ -37,8 +37,7 @@
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2">Category</th>
-										<th class="col-3">Color</th>
+										<th class="col-2">Organization</th>
 										<th class="col-4">Actions</th>
 									</tr>
 								</thead>
@@ -77,10 +76,10 @@
 													<p><?php echo $category_description; ?>...</p>
 												</div>
 											</td>
-											<td class="col-3"><img src="<?php echo url::base() . "swatch/?c=" . $category_color . "&w=30&h=30"; ?>"></td>
+											
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>')">Edit</a></li>
+													<li class="none-separator"><a href="#" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>')">Edit</a></li>
 													<li class="none-separator"><a href="#"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
 <li><a href="#" onclick="userAction('d',
 	'<?php echo(rawurlencode($category_id)); ?>',
@@ -100,7 +99,6 @@
 					<?php print form::close(); ?>
 				</div>
 				
-				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
 					<a name="add"></a>
@@ -111,43 +109,28 @@
 					<div class="tab">
 						<?php print form::open(NULL,array('id' => 'catMain',
 						 	'name' => 'catMain')); ?>
-						<input type="hidden" id="category_id" 
-							name="category_id" value="" />
+						<input type="hidden" id="organization_id" 
+							name="organization_id" value="" />
 						<input type="hidden" name="action" 
-							id="action" value=""/>
-						<div class="tab_form_item">
-							<strong>Category Name:</strong><br />
-							<?php print form::input('category_title', '', ' class="text"'); ?>
+							id="action" value=""/>							
+						<div class="tab_form_item2">
+							<strong>Organization Name:</strong><br />
+							<?php print form::input('organization_name', '', ' class="text long"'); ?>
 						</div>
-						<div class="tab_form_item">
-							<strong>Description:</strong><br />
-							<?php print form::input('category_description', '', ' class="text long2"'); ?>
+						<div class="tab_form_item2">
+							<strong>Organization Website:</strong><br />
+							<?php print form::input('organization_website', '', ' class="text long"'); ?>
 						</div>
-						<div class="tab_form_item">
-							<strong>Color:</strong><br />
-							<?php print form::input('category_color', '', ' class="text"'); ?>
-							<script type="text/javascript" charset="utf-8">
-								$('#category_color').ColorPicker({
-									onSubmit: function(hsb, hex, rgb) {
-										$('#category_color').val(hex);
-									},
-									onChange: function(hsb, hex, rgb) {
-										$('#category_color').val(hex);
-									},
-									onBeforeShow: function () {
-										$(this).ColorPickerSetColor(this.value);
-									}
-								})
-								.bind('keyup', function(){
-									$(this).ColorPickerSetColor(this.value);
-								});
-							</script>
+						<div class="tab_form_item2">
+							<strong>Organization Description:</strong><br />
+							<?php print form::textarea('organization_description', '', ' rows="12" cols="60" '); ?>
 						</div>
 						<div class="tab_form_item">
 							&nbsp;<br />
 							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
 						</div>
-						<?php print form::close(); ?>			
+						<?php print form::close(); ?>
 					</div>
 				</div>
+				
 			</div>

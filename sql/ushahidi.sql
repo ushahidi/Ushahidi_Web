@@ -349,7 +349,9 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `incident_mode` tinyint(4) NOT NULL default '1' COMMENT '1 - WEB, 2 - SMS, 3 - EMAIL',
   `incident_active` tinyint(4) NOT NULL default '0',
   `incident_verified` tinyint(4) NOT NULL default '0',
+  `incident_rating` VARCHAR(15) DEFAULT '0' NOT NULL,
   `incident_dateadd` datetime default NULL,
+  `incident_dateadd_gmt` datetime default NULL,
   `incident_datemodify` datetime default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `location_id` (`location_id`)
@@ -399,6 +401,55 @@ CREATE TABLE IF NOT EXISTS `incident_person` (
 
 --
 -- Dumping data for table `incident_person`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comment`
+--
+
+CREATE TABLE IF NOT EXISTS `comment`
+(
+`id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
+`incident_id` BIGINT NOT NULL,
+`user_id` INT(11) DEFAULT 0,
+`comment_author` VARCHAR(100) default NULL,
+`comment_email` VARCHAR(120) default NULL,
+`comment_description` TEXT default NULL,
+`comment_ip` VARCHAR(100) default NULL,
+`comment_rating` VARCHAR(15) DEFAULT '0' NOT NULL,
+`comment_active` TINYINT DEFAULT 0,
+`comment_date` DATETIME default NULL,
+`comment_date_gmt` DATETIME default NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `comment`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rating`
+--
+
+CREATE TABLE IF NOT EXISTS `rating`
+(
+`id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
+`incident_id` BIGINT default NULL,
+`comment_id` BIGINT default NULL,
+`rating` TINYINT DEFAULT 0,
+`rating_ip` VARCHAR(100) default NULL,
+`rating_date` DATETIME default NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `rating`
 --
 
 
@@ -485,6 +536,24 @@ CREATE TABLE IF NOT EXISTS `organization_incident` (
 -- Dumping data for table `organization_incident`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feed`
+--
+CREATE TABLE IF NOT EXISTS `feed`
+(
+`id` int(11) unsigned  NOT NULL AUTO_INCREMENT ,
+`feed_name` VARCHAR(255),
+`feed_url` VARCHAR(255),
+`feed_cache` TEXT,
+`feed_active` TINYINT DEFAULT 1,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `feed`
+--
 
 -- --------------------------------------------------------
 

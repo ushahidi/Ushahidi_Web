@@ -1,8 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
-* Dashboard Controller
-*/
+ * This controller is used for the main Admin panel
+ */
 class Dashboard_Controller extends Admin_Controller
 {
 	function __construct()
@@ -50,11 +50,12 @@ class Dashboard_Controller extends Admin_Controller
 		// Get reports for display
 		$incidents = ORM::factory('incident')->limit(3)->orderby('incident_dateadd', 'desc')->find_all();
 		$this->template->content->incidents = $incidents;
-		
 	}
-	
-	
-	public function chart()
+        
+    /**
+     * Generates a chart that displays a timeline of reports
+     */
+    public function chart()
 	{
 		// Does this request have a URI?
 		// The URI can either be chart/month or chart/day
@@ -70,10 +71,8 @@ class Dashboard_Controller extends Admin_Controller
 		$month = date("m");
 		$year = date("Y");
 		
-		/**
-		* Create the Date and Count Array
-		* Used for creating the graph elements
-		*/
+		// Create the Date and Count Array
+		// Used for creating the graph elements
 		$date_array = array();
 		$count_array = array();
 		
@@ -106,8 +105,10 @@ class Dashboard_Controller extends Admin_Controller
 		
 		// If all the values in $count_array are Zero, set a fixed scale
 		$setfixed = true;
-		foreach ($count_array as $key => $value) {
-			if ($value > 0) {
+		foreach ($count_array as $key => $value) 
+        {
+			if ($value > 0) 
+            {
 				$setfixed = false;
 				break;
 			}
@@ -137,7 +138,8 @@ class Dashboard_Controller extends Admin_Controller
 		{
 			$incidents_chart->setFixedScale(0,100);
 		}
-		$incidents_chart->setFontProperties(SYSPATH."fonts/tahoma.ttf",8);  
+		//XXX: Should probably replace magic numbers below
+        $incidents_chart->setFontProperties(SYSPATH."fonts/tahoma.ttf",8);  
 		$incidents_chart->setGraphArea(60,30,370,255);  
 		$incidents_chart->drawFilledRoundedRectangle(7,7,403,298,5,240,240,240);  
 		$incidents_chart->drawRoundedRectangle(5,5,405,300,5,230,230,230);  
@@ -163,9 +165,5 @@ class Dashboard_Controller extends Admin_Controller
 		$incidents_chart->drawTitle(60,22,"",50,50,50,585);  
 		$incidents_chart->stroke("chart.png");
 	}
-	
-	
 }
-
-
 ?>

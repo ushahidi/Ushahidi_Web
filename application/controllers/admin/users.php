@@ -1,8 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
-* Users Controller
-*/
+ * This controller is used to manage users
+ */
 class Users_Controller extends Admin_Controller
 {
 	public $roles_users;
@@ -11,17 +11,12 @@ class Users_Controller extends Admin_Controller
 		parent::__construct();
 		$this->roles_users = new Roles_User_Model();
 		$this->template->this_page = 'users';
-				
 	}
-	
 	
 	function index()
 	{	
 		$this->template->content = new View('admin/users');
 		$this->template->content->title = 'Manage Users';
-		
-		
-		// setup and initialize form field names
 		$form = array
 	    (
 	        'user_id'   => '',
@@ -65,8 +60,8 @@ class Users_Controller extends Admin_Controller
 	        {
 				//check the actions being taken.
 				//add action
-				if($post->user_id == '' ) {
-					
+				if($post->user_id == '' ) 
+                {
 					//Getting familiar with ORM. Correct me if I'm doing 
 					//something wrong.
 					
@@ -81,22 +76,25 @@ class Users_Controller extends Admin_Controller
 					$user_role = ORM::factory('user')->where('username',$post->username )->find();
 					
 					$data = array('user_id' => $user_role->id,
-						'role_id' => $post->role );
+						        'role_id' => $post->role );
 					$this->roles_users->insert_role($data);	
 				
-				} elseif( $post->action == 'd' ){ //delete action
-					
-					//print_r($post );
+				} 
+                elseif( $post->action == 'd' )
+                { 
+                    //delete action
 					ORM::factory('user')->delete($post->user_id);
 					
 					//update role table too.
 					$data = array('user_id' => $post->user_id,
-						'role_id' => $post->role );
+						        'role_id' => $post->role );
 						
 					$this->roles_users->delete_role($post->user_id, $data);
 					  
-				} else { // edit action
-					
+				} 
+                else 
+                { 
+                    // edit action
 					$update_user = ORM::factory('user',$post->user_id );
 					$update_user->username = $post->username;
 					$update_user->name = $post->name;
@@ -106,15 +104,15 @@ class Users_Controller extends Admin_Controller
 					
 					//update role table too.
 					$data = array('user_id' => $post->user_id,
-						'role_id' => $post->role );
+						        'role_id' => $post->role );
 						
 					$this->roles_users->update_role($post->user_id, $data);
-					
 				}
 				
 				$form_saved = TRUE;
-			} else {
-							
+			} 
+            else 
+            {
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
 
@@ -123,27 +121,28 @@ class Users_Controller extends Admin_Controller
 				$form_error = TRUE;
 			}
 	    }
-	
-	
 		
 		// Pagination
 		$pagination = new Pagination(array(
-			'query_string'    => 'page',
-			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-			'total_items'    => ORM::factory('user')->count_all()
-		));
+			                'query_string' => 'page',
+			                'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			                'total_items'  => ORM::factory('user')->count_all()
+                        ));
 
-		$users = ORM::factory('user')->orderby('name', 'asc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		$users = ORM::factory('user')
+                    ->orderby('name', 'asc')
+                    ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                        $pagination->sql_offset);
 		
 		// Get User Roles
-		foreach (ORM::factory('role')->orderby('name', 'asc')->find_all() as $role)
+		foreach (ORM::factory('role')
+                    ->orderby('name', 'asc')
+                    ->find_all() as $role)
 		{
 			$roles[$role->id] = $role->name;
 		}
 		
-		
-		
-		$this->template->content->form = $form;
+        $this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
@@ -153,16 +152,16 @@ class Users_Controller extends Admin_Controller
 		$this->template->content->roles = $roles;
 		$this->template->content->roles_users = $this->roles_users;
 		
-		
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
 		$this->template->js = new View('admin/users_js');
-		
 	}
 	
 	/**
-	 * Checks if username already exists. 
+	 * Checks if username already exists.
+     * @param Validation $post $_POST variable with validation rules 
 	 */
+    //XXX: Should probably be marked private
 	public function username_exists_chk(Validation $post)
 	{
 		$users = ORM::factory('user');
@@ -176,7 +175,9 @@ class Users_Controller extends Admin_Controller
 	
 	/**
 	 * Checks if email address is associated with an account.
-	 */	
+	 * @param Validation $post $_POST variable with validation rules 
+	 */
+    //XXX: Should probably be marked private
 	public function email_exists_chk( Validation $post )
 	{
 		$users = ORM::factory('user');

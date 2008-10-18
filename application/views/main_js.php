@@ -4,32 +4,29 @@
 
 		// Map JS
 		jQuery(function() {
-			var moved=false;
+			var map_layer;
 	
 			// Now initialise the map
-			var options = {
-			units: "dd"
-			, numZoomLevels: 16
-			, controls:[]};
+			var options = {units: "dd",numZoomLevels: 16,controls:[]};
 			var map = new OpenLayers.Map('map', options);
 			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 			
 			var default_map = <?php echo $default_map; ?>;
 			if (default_map == 2)
 			{
-				var map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth");
+				map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth");
 			}
 			else if (default_map == 3)
 			{
-				var map_layer = new OpenLayers.Layer.Yahoo("yahoo");
+				map_layer = new OpenLayers.Layer.Yahoo("yahoo");
 			}
 			else if (default_map == 4)
 			{
-				var map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap");
+				map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap");
 			}
 			else
 			{
-				var map_layer = new OpenLayers.Layer.Google("google");
+				map_layer = new OpenLayers.Layer.Google("google");
 			}
 	
 			map.addLayer(map_layer);
@@ -122,7 +119,7 @@
 			});
 	
 			//Accessible Slider/Select Switch
-			$('select#startDate, select#endDate').accessibleUISlider({
+			$("select#startDate, select#endDate").accessibleUISlider({
 				labels: 6,
 				stop: function(e, ui) {
 					var startDate = $("#startDate").val();

@@ -8,21 +8,27 @@
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>/media/css/ie6.css" media="screen"/><![endif]-->
 	
 	<?php echo html::script('media/js/jquery'); ?>
-	<?php echo html::script('media/js/jquery.form'); ?>
+	<?php echo html::script('media/js/jquery.validate.min'); ?>
 	<?php echo html::script('media/js/jquery.ui.min'); ?>
 	<?php
 	if ($map_enabled)
 	{
 		echo html::script('media/js/OpenLayers/OpenLayers');
 		echo html::script('media/js/OpenLayers/LoadingPanel');
-		echo html::script('media/js/accessibleUISlider.jQuery');
-		echo html::script('media/js/jquery.flot');
-		echo html::stylesheet('media/css/jquery-ui-themeroller');
 		echo $api_url . "\n";
+		if ($main_page) {
+			echo html::script('media/js/accessibleUISlider.jQuery');
+			echo html::script('media/js/jquery.flot');
+			echo html::stylesheet('media/css/jquery-ui-themeroller');
+		}
+	}
+	if ($datepicker_enabled)
+	{
+		echo html::stylesheet('media/css/datepicker/ui.datepicker');
 	}
 	echo html::script('media/js/photoslider.js');
 	?>
-	<script type="text/javascript" charset="utf-8">
+	<script type="text/javascript">
 		<?php echo $js . "\n"; ?>
 	</script>
 </head>
@@ -36,7 +42,7 @@
 			</div>
 			<ul>
 				<li class="first"><a <?php if ($this_page == 'home') echo 'class="active"'; ?> href="<?php echo url::base() . "main" ?>">Home</a></li>
-				<li><a <?php if ($this_page == 'reports') echo 'class="active"'; ?> href="<?php echo url::base() . "report" ?>">Report an Incident</a></li>
+				<li><a <?php if ($this_page == 'reports') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/submit" ?>">Report an Incident</a></li>
 				<li><a <?php if ($this_page == 'alerts') echo 'class="active"'; ?> href="<?php echo url::base() . "alerts" ?>">Get Alerts</a></li>
 				<li class="last"><a <?php if ($this_page == 'help') echo 'class="active"'; ?> href="<?php echo url::base() . "help" ?>">How to Help</a></li>
 			</ul>
