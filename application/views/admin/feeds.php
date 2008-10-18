@@ -60,13 +60,12 @@
 										</tr>
 									<?php	
 									}
-									foreach ($categories as $category)
+									foreach ($feeds as $feed)
 									{
-										$category_id = $category->id;
-										$category_title = $category->category_title;
-										$category_description = substr($category->category_description, 0, 150);
-										$category_color = $category->category_color;
-										$category_visible = $category->category_visible;
+										$feed_id = $feed->id;
+										$feed_name = $feed->feed_name;
+										$feed_url = $feed->feed_url;
+										$feed_visible = $feed->feed_visible;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
@@ -79,13 +78,12 @@
 											
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="#"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($feed_id)); ?>','<?php echo(rawurlencode($feed_name)); ?>','<?php echo(rawurlencode($feed_url)); ?>')">Edit</a></li>
+													<li class="none-separator"><a href="#"<?php if ($feed_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
 <li><a href="#" onclick="userAction('d',
-	'<?php echo(rawurlencode($category_id)); ?>',
-	'<?php echo(rawurlencode($category_title)); ?>',
-	'<?php echo(rawurlencode($category_description)); ?>',
-	'<?php echo(rawurlencode($category_color)); ?>',
+	'<?php echo(rawurlencode($feed_id)); ?>',
+	'<?php echo(rawurlencode($feed_name)); ?>',
+	'<?php echo(rawurlencode($feed_url)); ?>'
 	'DELETE');" class="del">Delete</a></li>
 												</ul>
 											</td>
@@ -108,8 +106,8 @@
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<?php print form::open(NULL,array('id' => 'catMain',
-						 	'name' => 'catMain')); ?>
+						<?php print form::open(NULL,array('id' => 'feedMain',
+						 	'name' => 'feedMain')); ?>
 						<input type="hidden" id="feed_id" 
 							name="feed_id" value="" />
 						<input type="hidden" name="action" 

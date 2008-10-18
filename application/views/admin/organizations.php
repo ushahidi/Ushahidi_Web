@@ -23,15 +23,13 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>Your Category Has Been Saved!</h3>
+						<h3>Your Organization Has Been Saved!</h3>
 					</div>
 				<?php
 				}
 				?>
 				<!-- report-table -->
 				<div class="report-form">
-					<?php print form::open(); ?>
-						<input type="hidden" name="action" id="action" value="">
 						<div class="table-holder">
 							<table class="table">
 								<thead>
@@ -60,32 +58,37 @@
 										</tr>
 									<?php	
 									}
-									foreach ($categories as $category)
+									foreach ($organizations as $organization)
 									{
-										$category_id = $category->id;
-										$category_title = $category->category_title;
-										$category_description = substr($category->category_description, 0, 150);
-										$category_color = $category->category_color;
-										$category_visible = $category->category_visible;
+										$organization_id = $organization->id;
+										$organization_name =
+										 $organization->organization_name;
+										$organization_description = substr($organization->organization_description, 0, 150);
+										$organization_website = 
+											$organization->organization_website;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $category_title; ?></h4>
-													<p><?php echo $category_description; ?>...</p>
+													<h4><?php echo $organization_name; ?></h4>
+													<p><?php echo $organization_description; ?>...</p>
 												</div>
 											</td>
 											
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="#"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields(
+	'<?php echo(rawurlencode($organization_id)); ?>',
+	'<?php echo(rawurlencode($organization_name)); ?>',
+	'<?php echo(rawurlencode($organization_website)); ?>',
+	'<?php echo(rawurlencode($organization_description)); ?>')">Edit</a></li>
+													
 <li><a href="#" onclick="userAction('d',
-	'<?php echo(rawurlencode($category_id)); ?>',
-	'<?php echo(rawurlencode($category_title)); ?>',
-	'<?php echo(rawurlencode($category_description)); ?>',
-	'<?php echo(rawurlencode($category_color)); ?>',
+	'<?php echo(rawurlencode($organization_id)); ?>',
+	'<?php echo(rawurlencode($organization_name)); ?>',
+	'<?php echo(rawurlencode($organization_website)); ?>',
+	'<?php echo(rawurlencode($organization_description)); ?>',
 	'DELETE');" class="del">Delete</a></li>
 												</ul>
 											</td>
@@ -96,7 +99,6 @@
 								</tbody>
 							</table>
 						</div>
-					<?php print form::close(); ?>
 				</div>
 				
 				<div class="tabs">
@@ -107,8 +109,8 @@
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<?php print form::open(NULL,array('id' => 'catMain',
-						 	'name' => 'catMain')); ?>
+						<?php print form::open(NULL,array('id' => 'orgMain',
+						 	'name' => 'orgMain')); ?>
 						<input type="hidden" id="organization_id" 
 							name="organization_id" value="" />
 						<input type="hidden" name="action" 
