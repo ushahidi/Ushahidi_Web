@@ -79,10 +79,12 @@
 					<!-- start images -->
 					<div class="small-block images">
 						<h3>Images</h3>
+						
 						<div class="block-bg">
 							<div class="block-top">
 								<div class="block-bottom">
-									<div class="gallery">
+									<div class="photoslider" id="default"></div>
+									<!--div class="gallery">
 										<div class="gal-nav">
 											<a class="btn-prev" href="#">PREV</a>
 											<div class="mask">
@@ -106,7 +108,7 @@
 										<div class="big-img">
 											<img src="<?php echo url::base() . 'media/img/'; ?>gal-big.gif" alt="" />
 										</div>
-									</div>
+									</div-->
 								</div>
 							</div>
 						</div>
