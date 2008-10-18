@@ -78,7 +78,8 @@
 		        <div class="block-bg">
 		          <div class="block-top">
 		            <div class="block-bottom">
-		              <div class="gallery">
+		              <div class="photoslider" id="default"></div>
+		              <!--div class="gallery">
 		                <div class="gal-nav">
 		                  <a class="btn-prev" href="#">PREV</a>
 		                  <div class="mask">
@@ -103,7 +104,7 @@
 		                  <img src="<?php echo url::base() . 'media/img/'; ?>gal-big.gif" alt="" />
 		                </div>
 		              </div>
-		            </div>
+		            </div-->
 		          </div>
 		        </div>
 		      </div>
@@ -238,6 +239,4 @@
 					</div>
 				</div>
 			</div>
-			
-		  </div>
 		</div>

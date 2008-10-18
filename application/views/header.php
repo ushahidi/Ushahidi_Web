@@ -4,7 +4,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title><?php echo $site_name; ?></title>
 	<style media="all" type="text/css">@import "<?php echo url::base() ?>media/css/all.css";</style>
+	<style media="all" type="text/css">@import "<?php echo url::base() ?>media/css/photoslider.css";</style>
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>/media/css/ie6.css" media="screen"/><![endif]-->
+	
 	<?php echo html::script('media/js/jquery'); ?>
 	<?php echo html::script('media/js/jquery.validate.min'); ?>
 	<?php echo html::script('media/js/jquery.ui.min'); ?>
@@ -24,6 +26,7 @@
 	{
 		echo html::stylesheet('media/css/datepicker/ui.datepicker');
 	}
+	echo html::script('media/js/photoslider.js');
 	?>
 	<script type="text/javascript">
 		<?php echo $js . "\n"; ?>

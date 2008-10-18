@@ -407,6 +407,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->header->js->latitude = $incident->location->latitude;
 		$this->template->header->js->longitude = $incident->location->longitude;
+		$this->template->header->js->incident_photos = $incident_photo;
 		
 		// Forms
 		$this->template->content->form = $form;
@@ -643,6 +644,9 @@ class Reports_Controller extends Main_Controller {
 		} else {
 			return 0;
 		}
+
 	}
-		
-} 
+
+
+} // End Main
+
