@@ -56,9 +56,6 @@
 				}
 			});
 			
-			var sliderfilter = new OpenLayers.Rule();
-			style.addRules([sliderfilter]);
-			
 			// Create the markers layer
 			var markers = new OpenLayers.Layer.GML("reports", "<?php echo url::base() . 'json' ?>", 
 			{
@@ -117,7 +114,11 @@
 				$("#currentCat").val(catID);
 				markers.setUrl("<?php echo url::base() . 'json/index/' ?>" + catID);
 			});
-	
+			
+			if (!$("#startDate").val()) {
+				return;
+			}
+			
 			//Accessible Slider/Select Switch
 			$("select#startDate, select#endDate").accessibleUISlider({
 				labels: 6,
@@ -129,42 +130,23 @@
 					var sliderfilter = new OpenLayers.Rule({
 						filter: new OpenLayers.Filter.Comparison(
 						{
-				            type: OpenLayers.Filter.Comparison.BETWEEN,
-				            property: "timestamp",
-				            lowerBoundary: startDate,
+							type: OpenLayers.Filter.Comparison.BETWEEN,
+							property: "timestamp",
+							lowerBoundary: startDate,
 							upperBoundary: endDate
-				        })     
-				    });
-					style.addRules([sliderfilter]);
+						})
+					});
+									    
+					style.rules = [];
+					style.addRules(sliderfilter);					
+					markers.styleMap.styles["default"] = style; 
 					markers.redraw();
-					
-					for (var i=0; i<style.rules.length; i++) {
-						style.rules[i].destroy();
-						style.rules[i] = null;
-		 	        }
-					style.rules = null;
 					
 					// refresh graph
 					plotGraph();
 				}
 			});
-			
-			function setStyle(index) {
-				var rule = new OpenLayers.rule({
-					filter: new OpenLayers.Filter.Comparison({
-						type: OpenLayers.Filter.Comparison.EQUAL_TO,
-						property: "timestamp",
-			            lowerBoundary: startDate,
-						upperBoundary: endDate
-					}),
-					symbolizer: {
-						Point: { fillColor:"FFFF00", strokeColor: "blue"}
-					}
-				});
-	            gmlLayer.styleMap.styles["default"] = sld.namedLayers["markers"].userStyles[0].addRule(rule);  
-	            gmlLayer.redraw();
-	        }
-			
+		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
 			var graphData = allGraphData[0]['ALL'];
