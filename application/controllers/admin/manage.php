@@ -223,7 +223,51 @@ class Manage_Controller extends Admin_Controller
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
+		
+		if( $_POST ) 
+		{
+			$post = Validation::factory( $_POST );
+			
+			 //  Add some filters
+	        $post->pre_filter('trim', TRUE);
 
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('feed_name','required', 'length[3,70]');
+			$post->add_rules('feed_url','required');
+			
+			if( $post->validate() )
+			{
+				$feed_id = $post->feed_id;
+				
+				$feed = new Feed_Model($feed_id);
+				
+				//delete action
+				if( $post->action == 'd' ) { 
+					$feed->delete( $feed_id );
+				
+				} else {
+					// Yes! everything is valid
+					// SAVE Organization
+					
+					$feed->feed_name = $post->feed_name;
+					$feed->feed_url =
+					 $post->feed_url;
+					
+					$feed->save();
+					$form_saved = TRUE;
+				}
+				
+			} else {
+				// repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+               // populate the error fields, if any
+                $errors = arr::overwrite($errors, 
+					$post->errors('feeds'));
+                $form_error = TRUE;
+			}
+		}
+		
         // Pagination
         $pagination = new Pagination(array(
                             'query_string' => 'page',
@@ -241,10 +285,11 @@ class Manage_Controller extends Admin_Controller
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->feeds = $feeds;
+		$this->template->content->errors = $errors;
 
         // Javascript Header
         $this->template->colorpicker_enabled = TRUE;
-        $this->template->js = new View('admin/feed_js');
+        $this->template->js = new View('admin/feeds_js');
 	}
 	
 	

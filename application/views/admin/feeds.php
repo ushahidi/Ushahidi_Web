@@ -23,15 +23,13 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>Your Category Has Been Saved!</h3>
+						<h3>Your Feed Has Been Saved!</h3>
 					</div>
 				<?php
 				}
 				?>
 				<!-- report-table -->
 				<div class="report-form">
-					<?php print form::open(); ?>
-						<input type="hidden" name="action" id="action" value="">
 						<div class="table-holder">
 							<table class="table">
 								<thead>
@@ -65,14 +63,14 @@
 										$feed_id = $feed->id;
 										$feed_name = $feed->feed_name;
 										$feed_url = $feed->feed_url;
-										$feed_visible = $feed->feed_visible;
+										$feed_visible = $feed->feed_active;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $category_title; ?></h4>
-													<p><?php echo $category_description; ?>...</p>
+													<h4><?php echo $feed_name; ?></h4>
+													<p><?php echo $feed_url; ?>...</p>
 												</div>
 											</td>
 											
@@ -83,7 +81,8 @@
 <li><a href="#" onclick="userAction('d',
 	'<?php echo(rawurlencode($feed_id)); ?>',
 	'<?php echo(rawurlencode($feed_name)); ?>',
-	'<?php echo(rawurlencode($feed_url)); ?>'
+	'<?php echo(rawurlencode($feed_url)); ?>',
+	'<?php echo(rawurlencode($feed_visible)); ?>',
 	'DELETE');" class="del">Delete</a></li>
 												</ul>
 											</td>
@@ -94,7 +93,6 @@
 								</tbody>
 							</table>
 						</div>
-					<?php print form::close(); ?>
 				</div>
 				
 				<!-- tabs -->
