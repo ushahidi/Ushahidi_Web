@@ -23,15 +23,13 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>Your Category Has Been Saved!</h3>
+						<h3>Your Feed Has Been Saved!</h3>
 					</div>
 				<?php
 				}
 				?>
 				<!-- report-table -->
 				<div class="report-form">
-					<?php print form::open(); ?>
-						<input type="hidden" name="action" id="action" value="">
 						<div class="table-holder">
 							<table class="table">
 								<thead>
@@ -60,32 +58,38 @@
 										</tr>
 									<?php	
 									}
-									foreach ($categories as $category)
+									foreach ($feeds as $feed)
 									{
-										$category_id = $category->id;
-										$category_title = $category->category_title;
-										$category_description = substr($category->category_description, 0, 150);
-										$category_color = $category->category_color;
-										$category_visible = $category->category_visible;
+										$feed_id = $feed->id;
+										$feed_name = $feed->feed_name;
+										$feed_url = $feed->feed_url;
+										$feed_active = $feed->feed_active;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $category_title; ?></h4>
-													<p><?php echo $category_description; ?>...</p>
+													<h4><?php echo $feed_name; ?></h4>
+													<p><?php echo $feed_url; ?></p>
 												</div>
 											</td>
 											
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="#"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($feed_id)); ?>','<?php echo(rawurlencode($feed_name)); ?>','<?php echo(rawurlencode($feed_url)); ?>')">Edit</a></li>
+													<li class="none-separator"><a href="#"<?php if ($feed_active == 1) echo " class=\"status_yes\"" ?> onclick="userAction('v',
+	'<?php echo(rawurlencode($feed_id)); ?>',
+	'<?php echo(rawurlencode($feed_name)); ?>',
+	'<?php echo(rawurlencode($feed_url)); ?>',
+	'<?php echo(rawurlencode($feed_active)); ?>',
+	'VISIBLE');" >
+	<?php if( $feed_active == 1 ) echo "Visible"; 
+		else echo "Invisible"; ?></a></li>
 <li><a href="#" onclick="userAction('d',
-	'<?php echo(rawurlencode($category_id)); ?>',
-	'<?php echo(rawurlencode($category_title)); ?>',
-	'<?php echo(rawurlencode($category_description)); ?>',
-	'<?php echo(rawurlencode($category_color)); ?>',
+	'<?php echo(rawurlencode($feed_id)); ?>',
+	'<?php echo(rawurlencode($feed_name)); ?>',
+	'<?php echo(rawurlencode($feed_url)); ?>',
+	'<?php echo(rawurlencode($feed_active)); ?>',
 	'DELETE');" class="del">Delete</a></li>
 												</ul>
 											</td>
@@ -96,7 +100,6 @@
 								</tbody>
 							</table>
 						</div>
-					<?php print form::close(); ?>
 				</div>
 				
 				<!-- tabs -->
@@ -108,15 +111,18 @@
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<?php print form::open(NULL,array('id' => 'catMain',
-						 	'name' => 'catMain')); ?>
+						<?php print form::open(NULL,array('id' => 'feedMain',
+						 	'name' => 'feedMain')); ?>
 						<input type="hidden" id="feed_id" 
 							name="feed_id" value="" />
+						<input type="hidden" id="feed_active" 
+							name="feed_active" vaule="" />
 						<input type="hidden" name="action" 
 							id="action" value=""/>
 						<div class="tab_form_item">
 							<strong>Feed Name:</strong><br />
-							<?php print form::input('feed_name', '', ' class="text"'); ?>
+							<?php print form::input('feed_name', '', 
+							' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
 							<strong>Feed URL:</strong><br />

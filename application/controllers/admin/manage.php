@@ -115,25 +115,80 @@ class Manage_Controller extends Admin_Controller
 		$form = array
 	    (
 			'action' => '',
-	        'category_id'      => '',
-			'category_title'      => '',
-	        'category_description'    => '',
-	        'category_color'  => ''
+	        'organization_id'      => '',
+			'organization_name'      => '',
+	        'organization_description'    => '',
+	        'organization_website'  => ''
 	    );
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
+		
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+	        // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+			
+	         //  Add some filters
+	        $post->pre_filter('trim', TRUE);
 
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('organization_name','required', 'length[3,70]');
+			$post->add_rules('organization_description','required');
+			$post->add_rules('organization_website','required','url');
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+				$organization_id = $post->organization_id;
+				
+				$organization = new Organization_Model($organization_id);
+				
+				//delete action
+				if( $post->action == 'd' ) { 
+	            	$organization_id = $post->organization_id;
+					$organization->delete( $organization_id );
+				
+				} else {
+					// Yes! everything is valid
+					$organization_id = $post->organization_id;
+					// SAVE Organization
+					
+					$organization->organization_name = $post->organization_name;
+					$organization->organization_description =
+					 $post->organization_description;
+					
+					$organization->organization_website = 
+						$post->organization_website;
+					$organization->save();
+					$form_saved = TRUE;
+				}       
+	        }
+            // No! We have validation errors, we need to show the form again, with the errors
+	        else
+			{
+	            // repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+               // populate the error fields, if any
+                $errors = arr::overwrite($errors, 
+					$post->errors('organization'));
+                $form_error = TRUE;
+            }
+        }
+		
         // Pagination
         $pagination = new Pagination(array(
                             'query_string' => 'page',
                             'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-                            'total_items'    => ORM::factory('category')->count_all()
+                            'total_items'    =>
+ 							ORM::factory('organization')->count_all()
                         ));
 
-        $categories = ORM::factory('category')
-                        ->orderby('category_title', 'asc')
+        $organization = ORM::factory('organization')
+                        ->orderby('organization_name', 'asc')
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
 
@@ -141,11 +196,12 @@ class Manage_Controller extends Admin_Controller
         $this->template->content->form_saved = $form_saved;
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
-        $this->template->content->categories = $categories;
+        $this->template->content->organizations = $organization;
+		$this->template->content->errors = $errors;
 
         // Javascript Header
         $this->template->colorpicker_enabled = TRUE;
-        $this->template->js = new View('admin/categories_js');
+        $this->template->js = new View('admin/organization_js');
 	}
 	
 	/*
@@ -159,25 +215,74 @@ class Manage_Controller extends Admin_Controller
 		$form = array
 	    (
 			'action' => '',
-	        'category_id'      => '',
-			'category_title'      => '',
-	        'category_description'    => '',
-	        'category_color'  => ''
+	        'feed_id'      => '',
+			'feed_name'      => '',
+	        'feed_url'    => '',
+	        'feed_active'  => ''
 	    );
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
+		
+		if( $_POST ) 
+		{
+			$post = Validation::factory( $_POST );
+			
+			 //  Add some filters
+	        $post->pre_filter('trim', TRUE);
 
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('feed_name','required', 'length[3,70]');
+			$post->add_rules('feed_url','required','url');
+			
+			if( $post->validate() )
+			{
+				$feed_id = $post->feed_id;
+				
+				$feed = new Feed_Model($feed_id);
+				//delete action
+				if( $post->action == 'd' ) { 
+					$feed->delete( $feed_id );
+				
+				} else if($post->action == 'v') {
+					$feed_active = $post->feed_active == 1 ? 0 : 1;													  
+					
+					$feeds = ORM::factory('feed',$post->feed_id);
+					$feeds->feed_active = $feed_active;
+					$feeds->save();
+				} else {
+					// Yes! everything is valid
+					// SAVE Organization
+					
+					$feed->feed_name = $post->feed_name;
+					$feed->feed_url =
+					 $post->feed_url;
+					
+					$feed->save();
+					$form_saved = TRUE;
+				}
+				
+			} else {
+				// repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+               // populate the error fields, if any
+                $errors = arr::overwrite($errors, 
+					$post->errors('feeds'));
+                $form_error = TRUE;
+			}
+		}
+		
         // Pagination
         $pagination = new Pagination(array(
                             'query_string' => 'page',
                             'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-                            'total_items'    => ORM::factory('category')->count_all()
+                            'total_items'    => ORM::factory('feed')->count_all()
                         ));
 
-        $categories = ORM::factory('category')
-                        ->orderby('category_title', 'asc')
+        $feeds = ORM::factory('feed')
+                        ->orderby('feed_name', 'asc')
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
 
@@ -185,11 +290,12 @@ class Manage_Controller extends Admin_Controller
         $this->template->content->form_saved = $form_saved;
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
-        $this->template->content->categories = $categories;
+        $this->template->content->feeds = $feeds;
+		$this->template->content->errors = $errors;
 
         // Javascript Header
         $this->template->colorpicker_enabled = TRUE;
-        $this->template->js = new View('admin/categories_js');
+        $this->template->js = new View('admin/feeds_js');
 	}
 	
 	
