@@ -137,7 +137,7 @@ class Manage_Controller extends Admin_Controller
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 			$post->add_rules('organization_name','required', 'length[3,70]');
 			$post->add_rules('organization_description','required');
-			$post->add_rules('organization_website','required');
+			$post->add_rules('organization_website','required','url');
 			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
@@ -183,7 +183,8 @@ class Manage_Controller extends Admin_Controller
         $pagination = new Pagination(array(
                             'query_string' => 'page',
                             'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-                            'total_items'    => ORM::factory('category')->count_all()
+                            'total_items'    =>
+ 							ORM::factory('organization')->count_all()
                         ));
 
         $organization = ORM::factory('organization')
@@ -217,7 +218,7 @@ class Manage_Controller extends Admin_Controller
 	        'feed_id'      => '',
 			'feed_name'      => '',
 	        'feed_url'    => '',
-	        'feed_visible'  => ''
+	        'feed_active'  => ''
 	    );
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
@@ -233,18 +234,23 @@ class Manage_Controller extends Admin_Controller
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 			$post->add_rules('feed_name','required', 'length[3,70]');
-			$post->add_rules('feed_url','required');
+			$post->add_rules('feed_url','required','url');
 			
 			if( $post->validate() )
 			{
 				$feed_id = $post->feed_id;
 				
 				$feed = new Feed_Model($feed_id);
-				
 				//delete action
 				if( $post->action == 'd' ) { 
 					$feed->delete( $feed_id );
 				
+				} else if($post->action == 'v') {
+					$feed_active = $post->feed_active == 1 ? 0 : 1;													  
+					
+					$feeds = ORM::factory('feed',$post->feed_id);
+					$feeds->feed_active = $feed_active;
+					$feeds->save();
 				} else {
 					// Yes! everything is valid
 					// SAVE Organization

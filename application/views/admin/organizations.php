@@ -57,7 +57,7 @@
 											</td>
 										</tr>
 									<?php	
-									}
+									} 
 									foreach ($organizations as $organization)
 									{
 										$organization_id = $organization->id;

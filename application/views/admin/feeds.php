@@ -63,26 +63,33 @@
 										$feed_id = $feed->id;
 										$feed_name = $feed->feed_name;
 										$feed_url = $feed->feed_url;
-										$feed_visible = $feed->feed_active;
+										$feed_active = $feed->feed_active;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
 													<h4><?php echo $feed_name; ?></h4>
-													<p><?php echo $feed_url; ?>...</p>
+													<p><?php echo $feed_url; ?></p>
 												</div>
 											</td>
 											
 											<td class="col-4">
 												<ul>
 													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($feed_id)); ?>','<?php echo(rawurlencode($feed_name)); ?>','<?php echo(rawurlencode($feed_url)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="#"<?php if ($feed_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
+													<li class="none-separator"><a href="#"<?php if ($feed_active == 1) echo " class=\"status_yes\"" ?> onclick="userAction('v',
+	'<?php echo(rawurlencode($feed_id)); ?>',
+	'<?php echo(rawurlencode($feed_name)); ?>',
+	'<?php echo(rawurlencode($feed_url)); ?>',
+	'<?php echo(rawurlencode($feed_active)); ?>',
+	'VISIBLE');" >
+	<?php if( $feed_active == 1 ) echo "Visible"; 
+		else echo "Invisible"; ?></a></li>
 <li><a href="#" onclick="userAction('d',
 	'<?php echo(rawurlencode($feed_id)); ?>',
 	'<?php echo(rawurlencode($feed_name)); ?>',
 	'<?php echo(rawurlencode($feed_url)); ?>',
-	'<?php echo(rawurlencode($feed_visible)); ?>',
+	'<?php echo(rawurlencode($feed_active)); ?>',
 	'DELETE');" class="del">Delete</a></li>
 												</ul>
 											</td>
@@ -108,11 +115,14 @@
 						 	'name' => 'feedMain')); ?>
 						<input type="hidden" id="feed_id" 
 							name="feed_id" value="" />
+						<input type="hidden" id="feed_active" 
+							name="feed_active" vaule="" />
 						<input type="hidden" name="action" 
 							id="action" value=""/>
 						<div class="tab_form_item">
 							<strong>Feed Name:</strong><br />
-							<?php print form::input('feed_name', '', ' class="text"'); ?>
+							<?php print form::input('feed_name', '', 
+							' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
 							<strong>Feed URL:</strong><br />
