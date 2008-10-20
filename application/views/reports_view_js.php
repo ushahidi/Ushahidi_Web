@@ -1,11 +1,9 @@
 /*
 		* View Reports Javascript
 		*/
-
-		// Map JS
 		jQuery(function() {
 			var moved=false;
-			
+
 			// Photoslider
 			photos = ["<?php echo join($incident_photos, '","'); ?> "];
 			FOTO.Slider.baseURL = "<?php echo url::base() . 'media/uploads/'; ?>";
@@ -17,7 +15,8 @@
      			                                    'thumb': photos[i].replace('.jpg', '_t.jpg')};
      		}
      		FOTO.Slider.reload('default');  
-			FOTO.Slider.preloadImages('default');  
+			FOTO.Slider.preloadImages('default');
+			
 	
 			// Now initialise the map
 			var options = {
@@ -143,7 +142,9 @@
 						required: "Please enter the Security Code"
 					}
 				}
-			});		
+			});
+		});
+		
 		
 		function rating(id,action,type,loader)
 		{
@@ -168,5 +169,3 @@
 					$('#' + loader).html('');
 			  	}, "json");
 		}
-		
-

@@ -52,7 +52,7 @@
                 </div>
               </div>
               <div class="report-btns">
-                <a class="btn-red" href="#"><span>Submit an Incident!</span></a>
+                <a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span>Submit an Incident!</span></a>
                 <a class="btn-grey" href="#"><span>Submit via SMS</span></a>
               </div>
               <p>Send your SMS to <strong>6007</strong> on your phone</p>
@@ -109,7 +109,7 @@
                                                                           }
 		  ?>
                 </ul>
-                <a class="btn-more" href="#"><span>MORE</span></a>
+                <a class="btn-more" href="<?php echo url::base() . 'reports/'; ?>"><span>MORE</span></a>
               </div>
             </div>
           </div>

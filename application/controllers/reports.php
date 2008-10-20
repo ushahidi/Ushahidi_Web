@@ -13,7 +13,24 @@ class Reports_Controller extends Main_Controller {
     /**
      * Displays all reports.
      */
-    public function index() {}
+    public function index($page = 1) 
+	{
+		$this->template->header->this_page = 'reports';
+		$this->template->content = new View('reports');
+		
+		// Pagination
+		$pagination = new Pagination(array(
+			'query_string'    => 'page',
+			'items_per_page' => (int) Kohana::config('settings.items_per_page'),
+			'total_items'    => ORM::factory('incident')->where('incident_active', '1')->count_all()
+		));
+
+		$incidents = ORM::factory('incident')->where('incident_active', '1')->orderby('incident_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page'), $pagination->sql_offset);
+		
+		$this->template->content->incidents = $this->_get_incidentlisting($incidents);
+		$this->template->content->pagination = $pagination;
+		
+	}
     
     /**
 	 * Submits a new report.
@@ -488,14 +505,65 @@ class Reports_Controller extends Main_Controller {
 				}
 				else
 				{
-					echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+					echo json_encode(array("status"=>"error1", "message"=>"ERROR!"));
 				}
 			}
 			else
 			{
-				echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+				echo json_encode(array("status"=>"error2", "message"=>"ERROR!"));
 			}
 		}
+	}
+	
+	
+	/**
+     * Report Listing
+     */
+	public function _get_incidentlisting($incidents)
+	{
+		$html = "";
+		foreach ($incidents as $incident)
+		{
+			$incident_id = $incident->id;
+			$incident_title = $incident->incident_title;
+			$incident_description = $incident->incident_description;
+				// Trim to 150 characters without cutting words
+				if ((strlen($incident_description) > 150) && (strlen($incident_description) > 1)) {
+					$whitespaceposition = strpos($incident_description," ",145)-1;
+					$incident_description = substr($incident_description, 0, $whitespaceposition);
+				}
+			$incident_date = date('Y-m-d', strtotime($incident->incident_date));
+			$incident_location = $incident->location->location_name;
+			$incident_verified = $incident->incident_verified;
+				if ($incident_verified)
+				{
+					$incident_verified = "<span class=\"report_yes\">YES</span>";
+				}
+				else
+				{
+					$incident_verified = "<span class=\"report_no\">NO</span>";
+				}
+			
+			$html .=	"<div class=\"report_row1\">";
+            $html .=	"	<div class=\"report_thumb report_col1\">";
+            $html .=	"    	&nbsp;";
+            $html .=	"    </div>";
+            $html .=	"    <div class=\"report_details report_col2\">";
+            $html .=	"    	<h3><a href=\"" . url::base() . "reports/view/" . $incident_id . "\">" . $incident_title . "</a></h3>";
+            $html .=	$incident_description . " ...";
+            $html .=	"  	</div>";
+            $html .=	"    <div class=\"report_date report_col3\">";
+            $html .=	$incident_date;
+            $html .=	"    </div>";
+            $html .=	"    <div class=\"report_location report_col4\">";
+            $html .=	$incident_location;
+            $html .=	"    </div>";
+            $html .=	"    <div class=\"report_status report_col5\">";
+            $html .=	$incident_verified;
+            $html .=	"    </div>";
+            $html .=	"</div>";
+		}
+		return $html;
 	}
 	
 	
