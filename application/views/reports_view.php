@@ -21,7 +21,7 @@
 		              </li>
 		              <li>
 		                <strong>CATEGORY</strong>
-		                <p><a href="#">Internally Displaced People</a></p>
+		                <p><?php echo $incident_category; ?></p>
 		              </li>
 		              <li>
 		                <strong>ENTITY</strong>
@@ -43,7 +43,7 @@
 		          <div class="report-description">
 		            <div class="title">
 		              <h2>Incident Report Description</h2>
-		              <a href="#comments"><span>+ add comment</span></a>
+		              <a href="#comments"><span>+ add information</span></a>
 		            </div>
 		            <div class="orig-report">
 		              <div class="report">
@@ -62,7 +62,7 @@
 		            </div>
 		            <div class="orig-report">
 		              <div class="discussion">
-		                <h5>COMMENTS&nbsp;&nbsp;&nbsp;(<a href="#comments">Add Comment</a>)</h5>
+		                <h5>ADDITIONAL REPORTS AND DISCUSSION&nbsp;&nbsp;&nbsp;(<a href="#comments">Add</a>)</h5>
 						<?php echo $incident_comments; ?>
 		              </div>
 		            </div>		
@@ -98,20 +98,7 @@
 		                      <li class="w-03">DATE</li>
 		                    </ul>
 		                  </li>
-		                  <li>
-		                    <ul>
-		                      <li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-		                      <li class="w-02">BBC</li>
-		                      <li class="w-03">18 Jan 2008</li>
-		                    </ul>
-		                  </li>
-		                  <li>
-		                    <ul>
-		                      <li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-		                      <li class="w-02">Yahoo!</li>
-		                      <li class="w-03">18 Jan 2008</li>
-		                    </ul>
-		                  </li>
+		                  <?php echo $incident_neighbors; ?>
 		                </ul>
 		              </div>
 		            </div>
@@ -169,6 +156,7 @@
 		    <!-- end incident block <> start other report -->
 			<a name="comments"></a>
 			<div class="big-block">
+				<div class="big-block-top">
 				<div class="big-block-bottom">
 					<div id="comments" class="report_comment">
 						<?php
@@ -212,6 +200,8 @@
                         </div>
 						<?php print form::close(); ?>
 					</div>
+				  </div>
 				</div>
+			  </div>
 			</div>
 		</div>

@@ -45,9 +45,16 @@
 			</div>
 			<ul>
 				<li class="first"><a <?php if ($this_page == 'home') echo 'class="active"'; ?> href="<?php echo url::base() . "main" ?>">Home</a></li>
-				<li><a <?php if ($this_page == 'reports') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/submit" ?>">Report an Incident</a></li>
+				<li><a <?php if ($this_page == 'reports') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/" ?>">Reports</a></li>
+				<li><a <?php if ($this_page == 'reports_submit') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/submit" ?>">Submit an Incident</a></li>
 				<li><a <?php if ($this_page == 'alerts') echo 'class="active"'; ?> href="<?php echo url::base() . "alerts" ?>">Get Alerts</a></li>
 				<li class="last"><a <?php if ($this_page == 'help') echo 'class="active"'; ?> href="<?php echo url::base() . "help" ?>">How to Help</a></li>
 			</ul>
+			<div class="search_box">
+				<form method="get" id="search" action="<?php echo url::base() . 'search/'; ?>">
+				<input type="text" id="keywords" name="k" value="" class="text">
+				<input type="submit" name="b" class="searchbtn" value="SEARCH" title="">
+				</form>
+			</div>
 		</div>
 		<!-- end header block <> start content block -->

@@ -149,7 +149,7 @@
 			});
 			
 			$("#findAddress").click(function () {
-				var selected = $("#location_country option[@selected]");
+				var selected = $("#country_id option[@selected]");
 				address = $("#location_name").val() + ', ' + selected.text();
 				var geocoder = new GClientGeocoder();
 				if (geocoder) {

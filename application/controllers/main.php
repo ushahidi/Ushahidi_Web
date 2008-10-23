@@ -53,6 +53,8 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->main_page = FALSE;
 		$this->template->header->js = '';
 		
+		$this->template->header->this_page = "";
+		
         // Load profiler
         // $profiler = new Profiler;		
 		

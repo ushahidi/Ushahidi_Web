@@ -22,6 +22,7 @@ a:visited{
 	width:960px;
 	height:100px;
 	overflow:hidden;
+	position:relative;
 }
 #header .header-info {
 	float:left;
@@ -70,6 +71,30 @@ a:visited{
 #header ul li.last a {background:url(../img/nav-last.gif) no-repeat 100% 0 !important;}
 #header ul li.last a:hover,
 #header ul li.last a.active {background-position:100% -29px !important;}
+#header .search_box{
+	position:absolute;
+	top:0;
+	right:0;
+	float:right;
+	margin:10px 0 0 0;
+}
+#header input.searchbtn
+{
+   font-weight:bold;
+   font-size:12px;
+   height:23px;
+   background-color:#CCCCCC;
+   border-style:solid;
+   border-width:1px;
+   border-color:#999;
+}
+#header .text{
+	font-size:100%;
+	color:#00789F;
+	background-color:#ccc;
+	padding:2px;
+	border:1px #ccc solid;
+}
 /*-----content-----*/
 #content {
 	clear:both;
@@ -117,6 +142,7 @@ a:visited{
 .big-map-block .filter {
 	overflow:hidden;
 	width:100%;
+	position:relative;
 }
 .big-map-block .filter strong {
 	float:left;
@@ -161,6 +187,14 @@ a:visited{
 	width:573px;
 	height:366px;
 }
+.big-map-block .map-loader {
+	top:0;
+	position:absolute;
+	width:200px;
+	height:200px;
+	background-color:red;
+	display:none;
+}
 .big-map-block .slider-holder {
 	margin-top:10px;
 	width:573px;
@@ -178,11 +212,18 @@ a:visited{
 .infowindow{
 	padding:10px;
 }
-.infowindow h2{
+.infowindow h2,
+.infowindow h3{
 	margin:0 0 5px 0;
 	padding:0;
-	font-size:14px;
+	font-size:12px;
 	font-weight:bold;
+}
+.infowindow h2{
+	font-size:14px;
+}
+.infowindow h3{
+	font-size:12px;
 }
 .infowindow a, .infowindow a:visited{
 	color:#000;
@@ -278,7 +319,6 @@ a:visited{
 	overflow:hidden;
 	width:100%;
 	padding:18px 0 0;
-	margin-bottom:20px;
 }
 .blocks-holder .incidents,
 .blocks-holder .images {float:left;}
@@ -675,6 +715,37 @@ a:visited{
 	cursor:pointer;
 	background:url(../img/green-btn-r.gif) no-repeat 100% 0;
 }
+/*-search-*/
+.search_block{
+	padding:30px;
+}
+.search_info{
+	margin:0 0 15px 0;
+	border:1px solid #999;
+	padding:5px;
+	background-color:#eee;
+}
+.search_result{
+	margin:0 0 15px 0;
+}
+.search_highlight{
+	font-weight:bold;
+}
+.search_result{
+	font-size:13px;
+}
+.search_result h3{
+	margin:0;
+	padding:0;
+	font-weight:normal;
+	font-size:16px;
+}
+.search_date{
+	font-size:12px;
+	color:#006600;
+	font-style: italic;
+	margin-top:3px;
+}
 /*-gallery-*/
 .gallery {
 	overflow:hidden;
@@ -867,6 +938,7 @@ a:visited{
 }
 .report_comment{
 	border:1px #ccc solid;
+	margin-top:15px;
 	padding:20px;
 	background:#eee;
 	clear:both;

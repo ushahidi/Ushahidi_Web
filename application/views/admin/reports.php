@@ -102,7 +102,6 @@
 									}
 									
 									$incident_location = $incident->location->location_name;
-									$incident_country = $incident->location->country->country;
 
 									// Retrieve Incident Categories
 									$incident_category = "";

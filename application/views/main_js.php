@@ -81,13 +81,17 @@
 
 			
 			function onPopupClose(evt) {
-	            selectControl.unselect(selectedFeature);
+	            // selectControl.unselect(selectedFeature);
+				for (var i=0; i<map.popups.length; ++i)
+				{
+					map.removePopup(map.popups[i]);
+				}
 	        }
 	        function onFeatureSelect(feature) {
 	            selectedFeature = feature;
 	            // Since KML is user-generated, do naive protection against
 	            // Javascript.
-	            var content = "<div class=\"infowindow\"><h2>"+feature.attributes.name + "</h2>" + feature.attributes.description + "</div>";
+	            var content = "<div class=\"infowindow\"><h2>"+feature.attributes.name + "</h2></div>";
 	            if (content.search("<script") != -1) {
 	                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
 	            }
@@ -112,7 +116,7 @@
 				$("a[@id^='cat_']").removeClass("active");
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
-				markers.setUrl("<?php echo url::base() . 'json/index/' ?>" + catID);
+				markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
 			});
 			
 			if (!$("#startDate").val()) {

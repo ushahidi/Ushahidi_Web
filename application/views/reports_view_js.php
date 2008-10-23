@@ -51,24 +51,53 @@
 			map.addControl(new OpenLayers.Control.Attribution());
 			map.addControl(new OpenLayers.Control.MousePosition());
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
-						
 			
-			// Create the markers layer
-			var markers = new OpenLayers.Layer.GML("KML", "<?php echo url::base() . 'markers/single/' . $incident_id; ?>", 
+				
+			var style = new OpenLayers.Style({
+				pointRadius: "10",
+				fillColor: "${color}",
+				fillOpacity: 1,
+				strokeColor: "#000000",
+				strokeWidth: 1,
+				strokeOpacity: 1
+			}, 
 			{
-				format: OpenLayers.Format.KML, 
-				formatOptions: 
+				context: 
 				{
-					extractStyles: true, 
-					extractAttributes: true
+					color: function(feature) 
+					{
+						return "#" + feature.attributes.color;
+					}
 				}
 			});
-			map.addLayer(markers);
+			
+			// Create the single marker layer
+			var markers = new OpenLayers.Layer.GML("single report", "<?php echo url::base() . 'json/?i=' . $incident_id ?>", 
+			{
+				format: OpenLayers.Format.GeoJSON,
+				projection: new OpenLayers.Projection("EPSG:4326"),
+				styleMap: new OpenLayers.StyleMap({"default":style})
+			});
+			
+			// Create neighboring marker layer
+			var markers_2 = new OpenLayers.Layer.GML("neighboring reports", "<?php echo url::base() . 'json/?n=yes' ?>", 
+			{
+				format: OpenLayers.Format.GeoJSON,
+				projection: new OpenLayers.Projection("EPSG:4326"),
+				styleMap: new OpenLayers.StyleMap({"default":style})
+			});
+			
+			map.addLayers([markers_2, markers]);
+			
 			selectControl = new OpenLayers.Control.SelectFeature(markers,
                 {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});
+			selectControl2 = new OpenLayers.Control.SelectFeature(markers_2,
+                {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});			
 
             map.addControl(selectControl);
+			map.addControl(selectControl2);
             selectControl.activate();
+			selectControl2.activate();
 
 			// create a lat/lon object
 			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);

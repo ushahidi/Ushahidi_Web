@@ -13,7 +13,7 @@ class Reports_Controller extends Main_Controller {
     /**
      * Displays all reports.
      */
-    public function index($page = 1) 
+    public function index() 
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
@@ -29,7 +29,8 @@ class Reports_Controller extends Main_Controller {
 		
 		$this->template->content->incidents = $this->_get_incidentlisting($incidents);
 		$this->template->content->pagination = $pagination;
-		
+		$this->template->content->pagination_stats = "(Showing " . (($pagination->sql_offset/(int) Kohana::config('settings.items_per_page')) + 1)
+		 	. " of " . ceil($pagination->total_items/(int) Kohana::config('settings.items_per_page')) . " pages)";	
 	}
     
     /**
@@ -37,7 +38,7 @@ class Reports_Controller extends Main_Controller {
 	 */
 	public function submit()
 	{
-		$this->template->header->this_page = 'reports';
+		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit');
 		
 		// setup and initialize form field names
@@ -364,7 +365,7 @@ class Reports_Controller extends Main_Controller {
 			
             $this->template->content->incident_id = $incident->id;
 			$this->template->content->incident_title = $incident->incident_title;
-            $this->template->content->incident_description = $incident->incident_description;
+            $this->template->content->incident_description = nl2br($incident->incident_description);
 			$this->template->content->incident_rating = $incident->incident_rating;
             $this->template->content->incident_location = $incident->location->location_name;
             $this->template->content->incident_latitude = $incident->location->latitude;
@@ -374,12 +375,12 @@ class Reports_Controller extends Main_Controller {
             $this->template->content->incident_time = date('H:i', strtotime($incident->incident_date));
 			
             // Retrieve Categories
-            $incident_category = array();
+            $incident_category = "";
             foreach($incident->incident_category as $category) 
             { 
-                $incident_category[$category->category_id] = 
-                    array($category->category->category_title, $category->category->category_color);
+                $incident_category .= "<a href=\"#\">" . $category->category->category_title . "</a>&nbsp;&nbsp;&nbsp;";
             }
+			$this->template->content->incident_category = $incident_category;
 			
             // Retrieve Media
             $incident_news = array();
@@ -416,6 +417,11 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->incident_comments = $this->_get_comments($id);
         }
 		
+		// Add Neighbors
+		$this->template->content->incident_neighbors = $this->_get_neighbors(
+				$incident->location->latitude, 
+				$incident->location->longitude);
+		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->js = new View('reports_view_js');
@@ -439,7 +445,7 @@ class Reports_Controller extends Main_Controller {
      */
     function thanks ()
     {
-        $this->template->header->this_page = 'reports';
+        $this->template->header->this_page = 'reports_submit';
         $this->template->content = new View('reports_submit_thanks');
     }
 	
@@ -713,6 +719,43 @@ class Reports_Controller extends Main_Controller {
 			return 0;
 		}
 
+	}
+	
+	
+	/*
+	* Retrieves Neighboring Incidents
+	*/
+	private function _get_neighbors($latitude = 0, $longitude = 0)
+	{
+		$proximity = new Proximity();
+		$proximity->Proximity($latitude, $longitude, 100);		// Within 100 Miles ( or Kms ;-) )
+		
+		// Generate query from proximity calculator
+		$radius_query = " location.latitude >= '" . $proximity->MinLatitude() . "' 
+			AND location.latitude <= '" . $proximity->MaxLatitude() . "' 
+			AND location.longitude >= '" . $proximity->MinLongitude() . "'
+			AND location.longitude <= '" . $proximity->MaxLongitude() . "'
+			AND incident_active = 1";
+		$neighbors = ORM::factory('incident')
+			->join('location', 'incident.location_id', 'location.id','INNER')
+            ->select('incident.*')
+			->where($radius_query)
+			->limit('5')
+			->find_all();
+		
+		$html = "";
+		foreach($neighbors as $neighbor)
+		{
+			$html .= "	<li>";
+	        $html .= "      <ul>";
+	        $html .= "        <li class=\"w-01\"><a href=\"" . url::base() . 
+				"reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></li>";
+	        $html .= "        <li class=\"w-02\">" . $neighbor->location->location_name . "</li>";
+	        $html .= "        <li class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</li>";
+	        $html .= "      </ul>";
+	        $html .= "    </li>";
+		}
+		return $html;
 	}
 
 
