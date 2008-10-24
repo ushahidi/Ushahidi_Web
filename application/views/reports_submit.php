@@ -70,9 +70,7 @@
 		                        <div class="report_row">
 		                        	<h4>Categories</h4>
 							    	<div class="report_category" id="categories">
-										<!--Delete this -->
-                                        <?php echo $categories; ?>
-                                        
+										                                        
                                         <?php
                                         //format categories for 2 column display
                                         $this_col = 1; // First column
