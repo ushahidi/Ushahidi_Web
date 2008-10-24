@@ -21,7 +21,13 @@
 		              </li>
 		              <li>
 		                <strong>CATEGORY</strong>
-		                <p><?php echo $incident_category; ?></p>
+                        <?php
+                        foreach($incident_category as $category) 
+                        { 
+                            echo "<a href=\"#\">" .
+                                $category->category->category_title . "</a>&nbsp;&nbsp;&nbsp;";
+                        }
+                        ?>
 		              </li>
 		              <li>
 		                <strong>ENTITY</strong>
@@ -29,7 +35,16 @@
 		              </li>
 		              <li>
 		                <strong>VERIFIED</strong>
-		                <?php echo $incident_verified; ?>
+                        <?php        
+                        if ( $incident_verified == 1 )
+                        {
+                            echo "<p><strong class=\"green\">YES</strong></p>";
+                        }
+                        else
+                        {
+                            echo "<p><strong class=\"red\">NO</strong></p>";
+                        }
+                        ?>
 		              </li>
 		            </ul>
 		          </div>
@@ -63,7 +78,24 @@
 		            <div class="orig-report">
 		              <div class="discussion">
 		                <h5>ADDITIONAL REPORTS AND DISCUSSION&nbsp;&nbsp;&nbsp;(<a href="#comments">Add</a>)</h5>
-						<?php echo $incident_comments; ?>
+                        <?php
+                        	foreach($incident_comments as $comment)
+			                {
+                                echo "<div class=\"discussion-box\">";
+                                echo "<p><strong>" . $comment->comment_author . "</strong>&nbsp;(" . date('M j Y', strtotime($comment->comment_date)) . ")</p>";
+                                echo "<p>" . $comment->comment_description . "</p>";
+                                echo "<div class=\"report_rating\">";
+                                echo "	<div>";
+                                echo "	Credibility:&nbsp;";
+                                echo "	<a href=\"javascript:rating('" . $comment->id . "','add','comment','cloader_" . $comment->id . "')\"><img id=\"cup_" . $comment->id . "\" src=\"" . url::base() . 'media/img/' . "up.png\" alt=\"UP\" title=\"UP\" border=\"0\" /></a>&nbsp;";
+                                echo "	<a href=\"javascript:rating('" . $comment->id . "','subtract','comment','cloader_" . $comment->id . "')\"><img id=\"cdown_" . $comment->id . "\" src=\"" . url::base() . 'media/img/' . "down.png\" alt=\"DOWN\" title=\"DOWN\" border=\"0\" /></a>&nbsp;";
+                                echo "	</div>";
+                                echo "	<div class=\"rating_value\" id=\"crating_" . $comment->id . "\">" . $comment->comment_rating . "</div>";
+                                echo "	<div id=\"cloader_" . $comment->id . "\" class=\"rating_loading\" ></div>";
+                                echo "</div>";
+                                echo "</div>";
+			                }
+                        ?>
 		              </div>
 		            </div>		
 		          </div>
@@ -98,7 +130,19 @@
 		                      <li class="w-03">DATE</li>
 		                    </ul>
 		                  </li>
-		                  <?php echo $incident_neighbors; ?>
+                           <?php
+                           foreach($incident_neighbors as $neighbor)
+                           {
+                                echo "<li>";
+                                echo "<ul>";
+                                echo "<li class=\"w-01\"><a href=\"" . url::base(); 
+                                echo "reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></li>";
+                                echo "<li class=\"w-02\">" . $neighbor->location->location_name . "</li>";
+                                echo "<li class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</li>";
+                                echo "</ul>";
+                                echo "</li>";
+                           }
+                           ?>
 		                </ul>
 		              </div>
 		            </div>

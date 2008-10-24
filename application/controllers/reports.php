@@ -25,12 +25,25 @@ class Reports_Controller extends Main_Controller {
 			'total_items'    => ORM::factory('incident')->where('incident_active', '1')->count_all()
 		));
 
-		$incidents = ORM::factory('incident')->where('incident_active', '1')->orderby('incident_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page'), $pagination->sql_offset);
+		$incidents = ORM::factory('incident')
+            ->where('incident_active', '1')
+            ->orderby('incident_date', 'desc')
+            ->find_all((int) Kohana::config('settings.items_per_page'), $pagination->sql_offset);
 		
-		$this->template->content->incidents = $this->_get_incidentlisting($incidents);
+		$this->template->content->incidents = $incidents;
 		$this->template->content->pagination = $pagination;
-		$this->template->content->pagination_stats = "(Showing " . (($pagination->sql_offset/(int) Kohana::config('settings.items_per_page')) + 1)
-		 	. " of " . ceil($pagination->total_items/(int) Kohana::config('settings.items_per_page')) . " pages)";	
+        
+        //Only display stats when there are reports to display
+        if ($pagination->total_items > 0)
+        {
+		    $this->template->content->pagination_stats = "(Showing " 
+                . (($pagination->sql_offset/(int) Kohana::config('settings.items_per_page')) + 1)
+		 	    . " of " . ceil($pagination->total_items/(int) Kohana::config('settings.items_per_page')) . " pages)";	
+        }
+        else
+        {
+            $this->template->content->pagination_stats = "";
+        }
 	}
     
     /**
@@ -370,17 +383,9 @@ class Reports_Controller extends Main_Controller {
             $this->template->content->incident_location = $incident->location->location_name;
             $this->template->content->incident_latitude = $incident->location->latitude;
             $this->template->content->incident_longitude = $incident->location->longitude;
-			
             $this->template->content->incident_date = date('M j Y', strtotime($incident->incident_date));
             $this->template->content->incident_time = date('H:i', strtotime($incident->incident_date));
-			
-            // Retrieve Categories
-            $incident_category = "";
-            foreach($incident->incident_category as $category) 
-            { 
-                $incident_category .= "<a href=\"#\">" . $category->category->category_title . "</a>&nbsp;&nbsp;&nbsp;";
-            }
-			$this->template->content->incident_category = $incident_category;
+            $this->template->content->incident_category = $incident->incident_category;
 			
             // Retrieve Media
             $incident_news = array();
@@ -404,17 +409,24 @@ class Reports_Controller extends Main_Controller {
                 }
             }
 			
-            if ( $incident->incident_verified == 1 )
-            {
-                $this->template->content->incident_verified = "<p><strong class=\"green\">YES</strong></p>";
-            }
-            else
-            {
-                $this->template->content->incident_verified = "<p><strong class=\"red\">NO</strong></p>";
-            }
+            $this->template->content->incident_verified = $incident->incident_verified; 
 
 			// Retrieve Comments (Additional Information)
-			$this->template->content->incident_comments = $this->_get_comments($id);
+
+            $incident_comments = array(); //Initialize empty array to provide
+                                          //consistent collection even when
+                                          //there are no items to be retrieved
+            if ($id)
+            {
+                $incident_comments = ORM::factory('comment')
+                                    ->where('incident_id',$id)
+                                    ->where('comment_active','1')
+                                    ->orderby('comment_date', 'asc')
+                                    ->find_all();
+            }
+
+			//$this->template->content->incident_comments = $this->_get_comments($id);
+            $this->template->content->incident_comments = $incident_comments;
         }
 		
 		// Add Neighbors
@@ -524,59 +536,7 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 	}
-	
-	
-	/**
-     * Report Listing
-     */
-	public function _get_incidentlisting($incidents)
-	{
-		$html = "";
-		foreach ($incidents as $incident)
-		{
-			$incident_id = $incident->id;
-			$incident_title = $incident->incident_title;
-			$incident_description = $incident->incident_description;
-				// Trim to 150 characters without cutting words
-				if ((strlen($incident_description) > 150) && (strlen($incident_description) > 1)) {
-					$whitespaceposition = strpos($incident_description," ",145)-1;
-					$incident_description = substr($incident_description, 0, $whitespaceposition);
-				}
-			$incident_date = date('Y-m-d', strtotime($incident->incident_date));
-			$incident_location = $incident->location->location_name;
-			$incident_verified = $incident->incident_verified;
-				if ($incident_verified)
-				{
-					$incident_verified = "<span class=\"report_yes\">YES</span>";
-				}
-				else
-				{
-					$incident_verified = "<span class=\"report_no\">NO</span>";
-				}
-			
-			$html .=	"<div class=\"report_row1\">";
-            $html .=	"	<div class=\"report_thumb report_col1\">";
-            $html .=	"    	&nbsp;";
-            $html .=	"    </div>";
-            $html .=	"    <div class=\"report_details report_col2\">";
-            $html .=	"    	<h3><a href=\"" . url::base() . "reports/view/" . $incident_id . "\">" . $incident_title . "</a></h3>";
-            $html .=	$incident_description . " ...";
-            $html .=	"  	</div>";
-            $html .=	"    <div class=\"report_date report_col3\">";
-            $html .=	$incident_date;
-            $html .=	"    </div>";
-            $html .=	"    <div class=\"report_location report_col4\">";
-            $html .=	$incident_location;
-            $html .=	"    </div>";
-            $html .=	"    <div class=\"report_status report_col5\">";
-            $html .=	$incident_verified;
-            $html .=	"    </div>";
-            $html .=	"</div>";
-		}
-		return $html;
-	}
-	
-	
+		
     /*
 	* Retrieves Cities
 	*/
@@ -591,7 +551,6 @@ class Reports_Controller extends Main_Controller {
 	}
     
 
-    //XXX: Move form html code to viewer	
 	private function _get_categories($selected_categories)
 	{
 		// Count categories to determine column length
@@ -605,76 +564,8 @@ class Reports_Controller extends Main_Controller {
 			$categories[$category->id] = array($category->category_title, $category->category_color);
 		}
 
-        //format categories for 2 column display
-        $this_col = 1; // First column
-        $max_col = round($categories_total/2); // Maximum number of columns
-        $html= "";
-        foreach ($categories as $category => $category_extra)
-        {
-            $category_title = $category_extra[0];
-            $category_color = $category_extra[1];
-            if ($this_col == 1) 
-                $html.="<ul>";
-        
-            if (!empty($selected_categories) 
-                && in_array($category, $selected_categories)) {
-                $category_checked = TRUE;
-            }
-            else
-            {
-                $category_checked = FALSE;
-            }
-                                                                            
-            $html.="\n<li><label>";
-            $html.=form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
-            $html.="$category_title";
-            $html.="</label></li>";
-       
-            if ($this_col == $max_col) 
-                $html.="\n</ul>\n";
-      
-            if ($this_col < $max_col)
-            {
-                $this_col++;
-            } 
-            else 
-            {
-                $this_col = 1;
-            }
-        }
-        return $html;
-	}
-	
-	
-	/*
-	* Retrieves Comments
-	*/
-	private function _get_comments($id)
-	{
-		if ($id)
-		{
-			$html = "";
-			foreach(ORM::factory('comment')->where('incident_id',$id)->where('comment_active','1')->orderby('comment_date', 'asc')->find_all() as $comment)
-			{
-				$html .= "<div class=\"discussion-box\">";
-				$html .= "<p><strong>" . $comment->comment_author . "</strong>&nbsp;(" . date('M j Y', strtotime($comment->comment_date)) . ")</p>";
-				$html .= "<p>" . $comment->comment_description . "</p>";
-				$html .= "<div class=\"report_rating\">";
-				$html .= "	<div>";
-				$html .= "	Credibility:&nbsp;";
-				$html .= "	<a href=\"javascript:rating('" . $comment->id . "','add','comment','cloader_" . $comment->id . "')\"><img id=\"cup_" . $comment->id . "\" src=\"" . url::base() . 'media/img/' . "up.png\" alt=\"UP\" title=\"UP\" border=\"0\" /></a>&nbsp;";
-				$html .= "	<a href=\"javascript:rating('" . $comment->id . "','subtract','comment','cloader_" . $comment->id . "')\"><img id=\"cdown_" . $comment->id . "\" src=\"" . url::base() . 'media/img/' . "down.png\" alt=\"DOWN\" title=\"DOWN\" border=\"0\" /></a>&nbsp;";
-				$html .= "	</div>";
-				$html .= "	<div class=\"rating_value\" id=\"crating_" . $comment->id . "\">" . $comment->comment_rating . "</div>";
-				$html .= "	<div id=\"cloader_" . $comment->id . "\" class=\"rating_loading\" ></div>";
-				$html .= "</div>";
-				$html .= "</div>";
-			}
-			
-			return $html;
-		}
-	}
-	
+        return $categories;
+    }
 	
 	/*
 	* Retrieves Total Rating For Specific Post
@@ -725,7 +616,6 @@ class Reports_Controller extends Main_Controller {
 
 	}
 	
-	
 	/*
 	* Retrieves Neighboring Incidents
 	*/
@@ -746,20 +636,8 @@ class Reports_Controller extends Main_Controller {
 			->where($radius_query)
 			->limit('5')
 			->find_all();
-		
-		$html = "";
-		foreach($neighbors as $neighbor)
-		{
-			$html .= "	<li>";
-	        $html .= "      <ul>";
-	        $html .= "        <li class=\"w-01\"><a href=\"" . url::base() . 
-				"reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></li>";
-	        $html .= "        <li class=\"w-02\">" . $neighbor->location->location_name . "</li>";
-	        $html .= "        <li class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</li>";
-	        $html .= "      </ul>";
-	        $html .= "    </li>";
-		}
-		return $html;
+        
+        return $neighbors;
 	}
 
 
