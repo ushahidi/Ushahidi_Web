@@ -6,7 +6,6 @@
  * exactly X miles(Kms) from the specified center point.
  * This allows for much more efficient database queries to be written by
  * eliminating almost all points that don't fall within the specified radius.
- * password hashing.
  * 
  * @package    Proximity
  * @author     Ushahidi Team

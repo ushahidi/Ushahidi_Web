@@ -172,7 +172,7 @@
 			}
 			
 			plotGraph();
-			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>]
+			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
 				
 			for (var i=0; i<categoryIds.length; i++) {
 				$('#cat_'+categoryIds[i]).click(function(){

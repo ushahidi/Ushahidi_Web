@@ -166,7 +166,14 @@ class Main_Controller extends Template_Controller {
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->main_page = TRUE;
-		$this->template->header->js = new View('main_js');
+		
+		// Add '?cluster=yes' to /main controller to view clustered data
+		if (isset($_GET['cluster']) && ($_GET['cluster'] == 'yes'))
+		{
+			$this->template->header->js = new View('main_cluster_js');
+		} else {
+			$this->template->header->js = new View('main_js');
+		}
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->header->js->latitude = Kohana::config('settings.default_lat');
@@ -174,6 +181,10 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->graph_data = $graph_data;
 		$this->template->header->js->all_graphs = $all_graphs;
 		$this->template->header->js->categories = $categories;
+		
+		// Pack the javascript using the javascriptpacker helper
+		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
+		$this->template->header->js = $myPacker->pack();
 	}
 
 } // End Main

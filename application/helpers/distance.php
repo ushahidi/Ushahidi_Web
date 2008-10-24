@@ -1,7 +1,7 @@
 <?php
 /**
  * Distance Calculator helper
- * formulas to calculate the exact distance in miles 
+ * Formulas to calculate the exact distance in miles 
  * between two points on a sphere.
  * 
  * @package    Distance
@@ -16,7 +16,7 @@ class distance_Core {
 	}
 
 	/**
-	 * Calculate distances between to points
+	 * Calculate distances between two points
 	 *
 	 * @param   string	 point 1 latitude
 	 * @param   string   point 1 longitude

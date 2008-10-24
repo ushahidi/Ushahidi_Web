@@ -10,7 +10,9 @@
 		// Map JS
 		jQuery(function() {
 			var map_layer;
-	
+			var markers;
+			var catID = '';
+			
 			// Now initialise the map
 			var options = {units: "dd",numZoomLevels: 16,controls:[]};
 			var map = new OpenLayers.Map('map', options);
@@ -77,8 +79,6 @@
 			
 			
 			// Create the markers layer
-			var markers;
-			var catID = '';
 			function addMarkers(catID){
 				if (markers){
 					for (var i = 0; i < markers.length; i++) {
@@ -89,7 +89,7 @@
 				}
 				
 				if (catID != ''){
-					catID = '/index/' + catID;
+					catID = '/?c=' + catID;
 				}
 				markers = new OpenLayers.Layer.Vector("Reports", {
 					strategies: [
@@ -188,7 +188,7 @@
 				$("a[@id^='cat_']").removeClass("active");
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
-				// markers.setUrl("<?php echo url::base() . 'json/index/' ?>" + catID);
+				// markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
 				addMarkers(catID);
 			});
 			
@@ -245,7 +245,7 @@
 			}
 			
 			plotGraph();
-			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>]
+			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
 				
 			for (var i=0; i<categoryIds.length; i++) {
 				$('#cat_'+categoryIds[i]).click(function(){

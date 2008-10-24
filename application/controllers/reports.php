@@ -431,6 +431,10 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->js->latitude = $incident->location->latitude;
 		$this->template->header->js->longitude = $incident->location->longitude;
 		$this->template->header->js->incident_photos = $incident_photo;
+		// Pack the javascript using the javascriptpacker helper
+		
+		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
+		$this->template->header->js = $myPacker->pack();
 		
 		// Forms
 		$this->template->content->form = $form;
