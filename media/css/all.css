@@ -80,13 +80,15 @@ a:visited{
 }
 #header input.searchbtn
 {
-   font-weight:bold;
-   font-size:12px;
-   height:23px;
-   background-color:#CCCCCC;
-   border-style:solid;
-   border-width:1px;
-   border-color:#999;
+	cursor:pointer;
+	border:outset 1px #ccc;
+	background:#999;
+	color:#666;
+	font-weight:bold;
+	padding: 2px 2px;
+	background:url(../img/btn_bkg_g.gif) repeat-x left top;
+	float:left;
+	margin-left:5px;
 }
 #header .text{
 	font-size:100%;
@@ -94,6 +96,8 @@ a:visited{
 	background-color:#ccc;
 	padding:2px;
 	border:1px #ccc solid;
+	width:120px;
+	float:left;
 }
 /*-----content-----*/
 #content {

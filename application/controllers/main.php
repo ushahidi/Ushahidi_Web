@@ -85,7 +85,7 @@ class Main_Controller extends Template_Controller {
         $this->template->content->incidents = ORM::factory('incident')
             ->where('incident_active', '1')
 			->limit('10')
-            ->orderby('incident_dateadd', 'desc')
+            ->orderby('incident_date', 'desc')
             ->find_all();		
 		
         // Get Slider Dates By Year

@@ -93,7 +93,7 @@
 							
 		               	  	<div class="report_right">
 		                    	<div class="report_row">
-		                        	<h4>Select A City/Town</h4>
+		                        	<h4>Find a Location Near</h4>
 		                            <?php print form::dropdown('select_city',$cities,'', ' class="select" '); ?>
 		                    	</div>
 		                        <div class="report_row">

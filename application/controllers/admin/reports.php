@@ -687,7 +687,7 @@ class Reports_Controller extends Admin_Controller
         return "<script type=\"text/javascript\">
 				$(\"#incident_date\").datepicker({ 
 				showOn: \"both\", 
-				buttonImage: \"<?php print url::base() ?>media/img/admin/icon-calendar.gif\", 
+				buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
 				buttonImageOnly: true 
 				});
 			</script>";	
