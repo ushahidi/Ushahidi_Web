@@ -70,7 +70,48 @@
 		                        <div class="report_row">
 		                        	<h4>Categories</h4>
 							    	<div class="report_category" id="categories">
-										<?php echo $categories; ?>
+										                                        
+                                        <?php
+                                        //format categories for 2 column display
+                                        $this_col = 1; // First column
+                                        $max_col = round($categories_total/2); // Maximum number of columns
+                                        $html= "";
+                                        foreach ($categories as $category => $category_extra)
+                                        {
+                                            $category_title = $category_extra[0];
+                                            $category_color = $category_extra[1];
+                                            if ($this_col == 1) 
+                                                echo "<ul>";
+                                        
+                                            if (!empty($selected_categories) 
+                                                && in_array($category, $selected_categories)) {
+                                                $category_checked = TRUE;
+                                            }
+                                            else
+                                            {
+                                                $category_checked = FALSE;
+                                            }
+                                                                                                            
+                                            echo "\n<li><label>";
+                                            echo form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
+                                            echo "$category_title";
+                                            echo "</label></li>";
+                                    
+                                            if ($this_col == $max_col) 
+                                                echo "\n</ul>\n";
+                                    
+                                            if ($this_col < $max_col)
+                                            {
+                                                $this_col++;
+                                            } 
+                                            else 
+                                            {
+                                                $this_col = 1;
+                                            }
+                                        }
+
+                                        ?>
+                                       
 									</div>
 		                        </div>
 								

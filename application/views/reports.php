@@ -22,8 +22,52 @@
 	                    	<strong>VERIFIED?</strong>
 	                    </div>
 	                </div>
-					<?php echo $incidents; ?>
-					<?php echo $pagination; ?>
+                    <?php
+                   	foreach ($incidents as $incident)
+                    {
+                        $incident_id = $incident->id;
+                        $incident_title = $incident->incident_title;
+                        $incident_description = $incident->incident_description;
+
+                        // Trim to 150 characters without cutting words
+                        //XXX: Perhaps delcare 150 as constant
+                        if ((strlen($incident_description) > 150) && (strlen($incident_description) > 1)) {
+                            $whitespaceposition = strpos($incident_description," ",145)-1;
+                            $incident_description = substr($incident_description, 0, $whitespaceposition);
+                        }
+                        $incident_date = date('Y-m-d', strtotime($incident->incident_date));
+                        $incident_location = $incident->location->location_name;
+                        $incident_verified = $incident->incident_verified;
+                        if ($incident_verified)
+                        {
+                            $incident_verified = "<span class=\"report_yes\">YES</span>";
+                        }
+                        else
+                        {
+                            $incident_verified = "<span class=\"report_no\">NO</span>";
+                        }
+                    
+                        echo "<div class=\"report_row1\">";
+                        echo "	<div class=\"report_thumb report_col1\">";
+                        echo "    	&nbsp;";
+                        echo "    </div>";
+                        echo "    <div class=\"report_details report_col2\">";
+                        echo "    	<h3><a href=\"" . url::base() . "reports/view/" . $incident_id . "\">" . $incident_title . "</a></h3>";
+                        echo $incident_description . " ...";
+                        echo "  	</div>";
+                        echo "    <div class=\"report_date report_col3\">";
+                        echo $incident_date;
+                        echo "    </div>";
+                        echo "    <div class=\"report_location report_col4\">";
+                        echo $incident_location;
+                        echo "    </div>";
+                        echo "    <div class=\"report_status report_col5\">";
+                        echo $incident_verified;
+                        echo "    </div>";
+                        echo "</div>";
+                    }
+                ?>
+				<?php echo $pagination; ?>
 				</div>
 			</div>
 		</div>
