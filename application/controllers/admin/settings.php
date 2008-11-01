@@ -11,6 +11,115 @@ class Settings_Controller extends Admin_Controller
 		$this->template->this_page = 'settings';		
 	}
 	
+	/**
+	* Site Settings
+    */
+	function site()
+	{
+		$this->template->content = new View('admin/site');
+		$this->template->content->title = 'Settings';
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+			'site_name' => '',
+			'site_tagline' => '',
+			'site_email' => '',
+			'items_per_page' => '',
+			'items_per_page_admin' => '',
+			'allow_reports' => '',
+			'allow_comments' => ''
+			
+	    );
+        //  Copy the form as errors, so the errors will be stored with keys
+        //  corresponding to the form field names
+        $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+            // Instantiate Validation, use $post, so we don't overwrite $_POST
+            // fields with our own things
+            $post = new Validation($_POST);
+
+	        // Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			
+			$post->add_rules('site_name', 'required', 'length[3,50]');
+			$post->add_rules('site_tagline', 'length[3,100]');
+			$post->add_rules('site_email', 'email', 'length[4,100]');
+			$post->add_rules('items_per_page','required','between[10,50]');
+			$post->add_rules('items_per_page_admin','required','between[10,50]');
+			$post->add_rules('allow_reports','required','between[0,1]');
+			$post->add_rules('allow_comments','required','between[0,1]');
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+	            // Yes! everything is valid
+				$settings = new Settings_Model(1);
+				$settings->site_name = $post->site_name;
+				$settings->site_tagline = $post->site_tagline;
+				$settings->site_email = $post->site_email;
+				$settings->items_per_page = $post->items_per_page;
+				$settings->items_per_page_admin = $post->items_per_page_admin;
+				$settings->allow_reports = $post->allow_reports;
+				$settings->allow_comments = $post->allow_comments;
+				$settings->date_modify = date("Y-m-d H:i:s",time());
+				$settings->save();
+				
+				// Everything is A-Okay!
+				$form_saved = TRUE;
+				
+				// repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+					            
+	        }
+	                    
+            // No! We have validation errors, we need to show the form again,
+            // with the errors
+            else
+	        {
+	            // repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+	            // populate the error fields, if any
+	            $errors = arr::overwrite($errors, $post->errors('settings'));
+				$form_error = TRUE;
+	        }
+	    }
+		else
+		{
+			// Retrieve Current Settings
+			$settings = ORM::factory('settings', 1);
+			
+			$form = array
+		    (
+		        'site_name' => $settings->site_name,
+				'site_tagline' => $settings->site_tagline,
+				'site_email' => $settings->site_email,
+				'items_per_page' => $settings->items_per_page,
+				'items_per_page_admin' => $settings->items_per_page_admin,
+				'allow_reports' => $settings->allow_reports,
+				'allow_comments' => $settings->allow_comments
+		    );
+		}		
+		
+		$this->template->content->form = $form;
+	    $this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
+		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
+	}
+	
+	/**
+	* Map Settings
+    */	
 	function index()
 	{
 		// Display all maps
@@ -74,6 +183,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->default_zoom = $post->default_zoom;
 				$settings->default_lat = $post->default_lat;
 				$settings->default_lon = $post->default_lon;
+				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
 				
 				// Everything is A-Okay!
@@ -146,14 +256,104 @@ class Settings_Controller extends Admin_Controller
 		$this->template->js->default_lon = Kohana::config('settings.default_lon');
 	}
 
+
     /**
-     * Handles settings for SMS reportings
+     * Handles settings for FrontlineSMS
      */
 	function sms()
 	{
 		$this->template->content = new View('admin/sms');
 		$this->template->content->title = 'Settings';
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+			'sms_no1' => '',
+			'sms_no2' => '',
+			'sms_no3' => ''
+	    );
+        //  Copy the form as errors, so the errors will be stored with keys
+        //  corresponding to the form field names
+        $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+            // Instantiate Validation, use $post, so we don't overwrite $_POST
+            // fields with our own things
+            $post = new Validation($_POST);
+
+	        // Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			
+			$post->add_rules('sms_no1', 'numeric', 'length[1,30]');
+			$post->add_rules('sms_no2', 'numeric', 'length[1,30]');
+			$post->add_rules('sms_no3', 'numeric', 'length[1,30]');	
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+	            // Yes! everything is valid
+				$settings = new Settings_Model(1);
+				$settings->sms_no1 = $post->sms_no1;
+				$settings->sms_no2 = $post->sms_no2;
+				$settings->sms_no3 = $post->sms_no3;
+				$settings->date_modify = date("Y-m-d H:i:s",time());
+				$settings->save();
+				
+				// Everything is A-Okay!
+				$form_saved = TRUE;
+				
+				// repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+					            
+	        }
+	                    
+            // No! We have validation errors, we need to show the form again,
+            // with the errors
+            else
+	        {
+	            // repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+	            // populate the error fields, if any
+	            $errors = arr::overwrite($errors, $post->errors('settings'));
+				$form_error = TRUE;
+	        }
+	    }
+		else
+		{
+			// Retrieve Current Settings
+			$settings = ORM::factory('settings', 1);
+			
+			$form = array
+		    (
+		        'sms_no1' => $settings->sms_no1,
+				'sms_no2' => $settings->sms_no2,
+				'sms_no3' => $settings->sms_no3
+		    );
+		}
+		
+		// Do we have a frontlineSMS Key? If not create and save one on the fly
+		$settings = ORM::factory('settings', 1);
+		$frontlinesms_key = $settings->frontlinesms_key;
+		if ($frontlinesms_key == '' || !$frontlinesms_key) {
+			$settings->frontlinesms_key = strtoupper(text::random('alnum',8));
+			$settings->save();
+		}
+		
+		$this->template->content->form = $form;
+	    $this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->frontlinesms_key = $frontlinesms_key;
+		$this->template->content->frontlinesms_link = "http://" . $_SERVER['SERVER_NAME'] . "/frontlinesms/?key=" . $frontlinesms_key . "&s=\${sender_number}&m=\${message_content}";
 	}
+
     
     /**
      * Handles settings for sharing data
@@ -163,6 +363,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content = new View('admin/sharing');
 		$this->template->content->title = 'Settings';
 	}
+
 
 	/**
 	 * Retrieves cities listing using GeoNames Service

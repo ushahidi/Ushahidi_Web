@@ -55,11 +55,12 @@
 				<ul class="main-nav">
 					<li><a href="<?php echo url::base() ?>admin/dashboard" <?php if($this_page=="dashboard") echo "class=\"active\"" ;?>>Dashboard </a></li>
 					<li><a href="<?php echo url::base() ?>admin/reports" <?php if($this_page=="reports") echo "class=\"active\"" ;?>>Reports</a></li>
+					<li><a href="<?php echo url::base() ?>admin/messages" <?php if($this_page=="messages") echo "class=\"active\"" ;?>>Messages</a></li>
 					<li><a href="<?php echo url::base() ?>admin/manage" <?php if($this_page=="manage") echo "class=\"active\"" ;?>>Manage</a></li>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
-					<li><a href="<?php echo url::base() ?>admin/settings">Settings</a></li>
+					<li><a href="<?php echo url::base() ?>admin/settings/site">Settings</a></li>
 					<li><a href="<?php echo url::base() ?>admin/users">Users</a></li>
 					<li><a href="#">Plugins</a></li>
 				</ul>

@@ -7,6 +7,7 @@
 $settings = ORM::factory('settings', 1);
 
 Kohana::config_set('settings.site_name', $settings->site_name);
+Kohana::config_set('settings.site_tagline', $settings->site_tagline);
 Kohana::config_set('settings.default_map', $settings->default_map);
 Kohana::config_set('settings.api_google', $settings->api_google);
 Kohana::config_set('settings.api_yahoo', $settings->api_yahoo);

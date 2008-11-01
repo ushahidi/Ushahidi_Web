@@ -91,23 +91,23 @@
 			foreach ($incidents as $incident)
                             {
                                 $incident_id = $incident->id;
-                                $incident_title = substr($incident->incident_title, 0, 40);
+								$incident_title = text::limit_chars($incident->incident_title, 40, '...', True);
                                 $incident_date = $incident->incident_date;
                                 $incident_date = date('M j Y', strtotime($incident->incident_date));
                                 $incident_location = $incident->location->location_name;
-		  ?>
+		  		  ?>
                   <li>
                     <ul>
                       <li class="w-01">
                         <a href="<?php echo url::base() . 'reports/view/' . $incident_id; ?>">
-                        <?php echo $incident_title ?>...</a></li>
+                        <?php echo $incident_title ?></a></li>
                       <li class="w-02"><?php echo $incident_location ?></li>
                       <li class="w-03"><?php echo $incident_date; ?></li>
                     </ul>
                   </li>
                   <?php
-                                                                          }
-		  ?>
+					}
+				?>
                 </ul>
                 <a class="btn-more" href="<?php echo url::base() . 'reports/'; ?>"><span>MORE</span></a>
               </div>
@@ -120,69 +120,34 @@
             <div class="block-top">
               <div class="block-bottom">
                 <ul>
-                  <li>
-                    <ul class="title">
-                      <li class="w-01">TITLE</li>
-                      <li class="w-02">SOURCE</li>
-                      <li class="w-03">DATE</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-                      <li class="w-02">BBC</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-                      <li class="w-02">Yahoo!</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Police shoot and shoot and kill 2 at road...</a></li>
-                      <li class="w-02">Kenya.gov</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Young boy wandering wandering alone in...</a></li>
-                      <li class="w-02">CNBC</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-                      <li class="w-02">BBC</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-                      <li class="w-02">Yahoo!</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Police shoot and shoot and kill 2 at road...</a></li>
-                      <li class="w-02">Kenya.gov</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Young boy wandering wandering alone in...</a></li>
-                      <li class="w-02">CNBC</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
+	                <li>
+	                  <ul class="title">
+	                    <li class="w-01">TITLE</li>
+	                    <li class="w-02">SOURCE</li>
+	                    <li class="w-03">DATE</li>
+	                  </ul>
+	                </li>
+					<?php
+					foreach ($feeds as $feed)
+					{
+						$feed_id = $feed->id;
+						$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+						$feed_link = $feed->item_link;
+						$feed_date = date('M j Y', strtotime($feed->item_date));
+						$feed_source = "NEWS";
+						?>
+						<li>
+							<ul>
+								<li class="w-01">
+								<a href="<?php echo $feed_link; ?>" target="_blank">
+								<?php echo $feed_title ?></a></li>
+								<li class="w-02"><?php echo $feed_source; ?></li>
+								<li class="w-03"><?php echo $feed_date; ?></li>
+							</ul>
+						</li>
+						<?php
+					}
+					?>
                 </ul>
                 <a class="btn-more" href="#"><span>MORE</span></a>
               </div>

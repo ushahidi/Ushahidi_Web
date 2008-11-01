@@ -281,7 +281,7 @@
                         					{
                         						print "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
                         						print "<img src=\"" . url::base() . "media/uploads/" . $photo->media_thumb . "\" >";
-                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deleteThumb('". $photo->id ."', 'photo_". $photo->id ."'); return false;\" >Delete</a>";
+                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deletePhoto('". $photo->id ."', 'photo_". $photo->id ."'); return false;\" >Delete</a>";
                         						print "</div>";
                         					}
                         				}

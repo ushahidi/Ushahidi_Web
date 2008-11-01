@@ -41,7 +41,7 @@
 		<div id="header">
 			<div class="header-info">
 				<strong><a href ="<?php echo url::base(); ?>"><?php echo $site_name; ?></a></strong>
-				<p>A brief description of the project can go here.</p>
+				<p><?php echo $site_tagline; ?></p>
 			</div>
 			<ul>
 				<li class="first"><a <?php if ($this_page == 'home') echo 'class="active"'; ?> href="<?php echo url::base() . "main" ?>">Home</a></li>

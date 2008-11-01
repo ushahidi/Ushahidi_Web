@@ -45,6 +45,7 @@ class Main_Controller extends Template_Controller {
 		
         // Retrieve Default Settings
         $this->template->header->site_name = Kohana::config('settings.site_name');
+		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
         $this->template->header->api_url = Kohana::config('settings.api_url');
 		
 		// Javascript Header
@@ -86,7 +87,13 @@ class Main_Controller extends Template_Controller {
             ->where('incident_active', '1')
 			->limit('10')
             ->orderby('incident_date', 'desc')
-            ->find_all();		
+            ->find_all();
+
+		// Get RSS News Feeds
+		$this->template->content->feeds = ORM::factory('feed_item')
+			->limit('10')
+            ->orderby('item_date', 'desc')
+            ->find_all();
 		
         // Get Slider Dates By Year
         $startDate = "";

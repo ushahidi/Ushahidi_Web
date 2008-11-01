@@ -1,5 +1,5 @@
 			<div class="bg">
-				<h2><?php echo $title; ?> <a href="<?php echo url::base() . 'admin/settings' ?>">Map</a><a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a><a href="<?php echo url::base() . 'admin/settings/sharing' ?>" class="active">Sharing</a></h2>
+				<h2><?php echo $title; ?> <a href="<?php echo url::base() . 'admin/settings/site' ?>">Site</a><a href="<?php echo url::base() . 'admin/settings' ?>">Map</a><a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a><a href="<?php echo url::base() . 'admin/settings/sharing' ?>" class="active">Sharing</a></h2>
 				<div class="report-form">
 					<div class="head">
 						<h3>SMS Setup Options</h3>

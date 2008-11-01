@@ -106,6 +106,10 @@ class Reports_Controller extends Admin_Controller
 						$update = new Incident_Model($item);
 						ORM::factory('location')->where('id',$update->location_id)->delete_all();	// Delete Location
 						ORM::factory('incident_category')->where('incident_id',$update->id)->delete_all();	// Delete Categories
+						// Delete Photos From Directory
+						foreach (ORM::factory('media')->where('incident_id',$update->id)->where('media_type', 1) as $photo) {
+							deletePhoto($photo->id);
+						}
 						ORM::factory('media')->where('incident_id',$update->id)->delete_all();				// Delete Media
 						ORM::factory('incident_person')->where('incident_id',$update->id)->delete_all();	// Delete Sender
 						$update->delete();						
@@ -335,7 +339,7 @@ class Reports_Controller extends Admin_Controller
 				}
 				
 				// STEP 4: SAVE MEDIA
-				ORM::factory('Media')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
+				ORM::factory('Media')->where('incident_id',$incident->id)->where('media_type <> 1')->delete_all();		// Delete Previous Entries
 				// a. News
 				foreach($post->incident_news as $item)
 				{
@@ -575,14 +579,27 @@ class Reports_Controller extends Admin_Controller
 	}
 
 	/** 
-    * Delete thumbnail photo 
+    * Delete Photo 
     * @param int $id The unique id of the photo to be deleted
     */
-	function delete_thumb ( $id )
+	function deletePhoto ( $id )
 	{
+		$this->auto_render = FALSE;
+		$this->template = "";
+		
 		if ( $id )
 		{
 			$photo = ORM::factory('media', $id);
+			$photo_large = $photo->media_link;
+			$photo_thumb = $photo->media_thumb;
+			
+			// Delete Files from Directory
+			if (!empty($photo_large))
+				unlink(Kohana::config('upload.directory', TRUE) . $photo_large);
+			if (!empty($photo_thumb))
+				unlink(Kohana::config('upload.directory', TRUE) . $photo_thumb);
+
+			// Finally Remove from DB
 			$photo->delete();
 		}
 	}

@@ -75,12 +75,12 @@
 		    }
 		}
 		
-		function deleteThumb (id, div)
+		function deletePhoto (id, div)
 		{
 			var answer = confirm("Are You Sure You Want To Delete This Photo?");
 		    if (answer){
 				$("#" + div).effect("highlight", {}, 800);
-				$.get("<?php echo url::base() . 'admin/reports/delete_thumb/' ?>" + id);
+				$.get("<?php echo url::base() . 'admin/reports/deletePhoto/' ?>" + id);
 				$("#" + div).remove();
 		    }
 			else{
