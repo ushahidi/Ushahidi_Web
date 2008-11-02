@@ -24,6 +24,7 @@ $lang = array
 		'required'		=> 'The username field is required.',
 		'length'		=> 'The username field must be at least 2 and no more 16 characters long.',
 		'standard_text' => 'The username field contains disallowed characters.',
+		'admin' 		=> 'The admin user role cannot be modified.',
 		'exists'		=> 'Sorry, this username is already in use.',
 		'login error'	=> 'Please check that you entered the correct username.'
 	),
@@ -43,7 +44,8 @@ $lang = array
 
 	'roles' => array
 	(
-		'required' => 'You must define at least one role.'
+		'required' => 'You must define at least one role.',
+		'values' => 'You must select either ADMIN or USER role.'
 	)
 
 );

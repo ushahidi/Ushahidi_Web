@@ -8,7 +8,13 @@ class Settings_Controller extends Admin_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->template->this_page = 'settings';		
+		$this->template->this_page = 'settings';
+		
+		// If this is not a super-user account, redirect to dashboard
+		if (!$this->auth->logged_in('admin'))
+        {
+             url::redirect('admin/dashboard');
+		}	
 	}
 	
 	/**
@@ -249,8 +255,8 @@ class Settings_Controller extends Admin_Controller
 		$this->template->js = new View('admin/settings_js');
 		$this->template->js->default_map = $form['default_map'];
 		$this->template->js->default_zoom = $form['default_zoom'];
-		$this->template->js->default_lat = Kohana::config('settings.default_lat');
-		$this->template->js->default_lon = Kohana::config('settings.default_lon');
+		$this->template->js->default_lat = $form['default_lat'];
+		$this->template->js->default_lon = $form['default_lon'];
 	}
 
 

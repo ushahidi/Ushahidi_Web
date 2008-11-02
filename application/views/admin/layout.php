@@ -34,7 +34,7 @@
 				<strong>Ushahidi Engine v1.0</strong>
 				<ul>
 					<li class="none-separator">Welcome, <?php echo $admin_name; ?>!</li>
-					<li class="none-separator"><a href="#">Admin</a></li>
+					<li class="none-separator"><a href="#">My Profile</a></li>
 					<li><a href="log_out">Logout</a></li>
 				</ul>
 			</div>
@@ -56,11 +56,11 @@
 					<li><a href="<?php echo url::base() ?>admin/dashboard" <?php if($this_page=="dashboard") echo "class=\"active\"" ;?>>Dashboard </a></li>
 					<li><a href="<?php echo url::base() ?>admin/reports" <?php if($this_page=="reports") echo "class=\"active\"" ;?>>Reports</a></li>
 					<li><a href="<?php echo url::base() ?>admin/messages" <?php if($this_page=="messages") echo "class=\"active\"" ;?>>Messages</a></li>
-					<li><a href="<?php echo url::base() ?>admin/manage" <?php if($this_page=="manage") echo "class=\"active\"" ;?>>Manage</a></li>
+					<?php if ($this->auth->logged_in('admin')){ ?><li><a href="<?php echo url::base() ?>admin/manage" <?php if($this_page=="manage") echo "class=\"active\"" ;?>>Manage</a></li><?php } ?>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
-					<li><a href="<?php echo url::base() ?>admin/settings/site">Settings</a></li>
+					<?php if ($this->auth->logged_in('admin')){ ?><li><a href="<?php echo url::base() ?>admin/settings/site">Settings</a></li><?php } ?>
 					<li><a href="<?php echo url::base() ?>admin/users">Users</a></li>
 					<li><a href="#">Plugins</a></li>
 				</ul>

@@ -5,11 +5,9 @@
  */
 class Users_Controller extends Admin_Controller
 {
-	public $roles_users;
 	function __construct()
 	{
 		parent::__construct();
-		$this->roles_users = new Roles_User_Model();
 		$this->template->this_page = 'users';
 	}
 	
@@ -31,6 +29,7 @@ class Users_Controller extends Admin_Controller
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
+		$form_action = "";
 		
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -39,77 +38,92 @@ class Users_Controller extends Admin_Controller
 			
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
-
-	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('username','required','length[3,16]', 'alpha');
 			
-			//only validate password as required when user_id has value.
-			$post->user_id == ''? $post->add_rules('password','required',
-			'length[5,16]'):'';
-			$post->add_rules('name','required','length[3,100]');
+			if ($post->action = 'a') 				// Add/Edit Action
+			{
+	        	// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('username','required','length[3,16]', 'alpha');
 			
-			$post->add_rules('email','required','email','length[4,64]');
+				//only validate password as required when user_id has value.
+				$post->user_id == ''? $post->add_rules('password','required',
+				'length[5,16]','alpha_numeric'):'';
+				$post->add_rules('name','required','length[3,100]');
 			
-			$post->user_id == '' ? $post->add_callbacks('username',
-				array($this,'username_exists_chk')) : '';
+				$post->add_rules('email','required','email','length[4,64]');
 			
-			$post->user_id == '' ? $post->add_callbacks('email',
-				array($this,'email_exists_chk')) : '';
+				$post->user_id == '' ? $post->add_callbacks('username',
+					array($this,'username_exists_chk')) : '';
+			
+				$post->user_id == '' ? $post->add_callbacks('email',
+					array($this,'email_exists_chk')) : '';
+					
+				// Validate for roles
+				if ($post->role != 'admin' && $post->role != 'user') {
+					$post->add_error('role', 'values');
+				}
+				
+				// Prevent modification of the admin users role to user role
+				if ($post->username == 'admin' && $post->role == 'user') {
+					$post->add_error('username', 'admin');
+				}
+			}
 			
 			if ($post->validate())
 	        {
-				//check the actions being taken.
-				//add action
-				if($post->user_id == '' ) 
-                {
-					//Getting familiar with ORM. Correct me if I'm doing 
-					//something wrong.
-					
-					$add_user = ORM::factory('user');
-					$add_user->username = $post->username;
-					$add_user->name = $post->name;
-					$add_user->password = $post->password;
-					$add_user->email = $post->email;
-					$add_user->save();
-					
-					//add role to role table.
-					$user_role = ORM::factory('user')->where('username',$post->username )->find();
-					
-					$data = array('user_id' => $user_role->id,
-						        'role_id' => $post->role );
-					$this->roles_users->insert_role($data);	
-				
-				} 
-                elseif( $post->action == 'd' )
-                { 
-                    //delete action
-					ORM::factory('user')->delete($post->user_id);
-					
-					//update role table too.
-					$data = array('user_id' => $post->user_id,
-						        'role_id' => $post->role );
+				$user = ORM::factory('user',$post->user_id);
+				if ($post->action = 'a') 				// Add/Edit Action
+				{
+					// Existing User??
+					if ($user->loaded==true)
+					{
+						$user->username = $post->username;
+						$user->name = $post->name;
+						$user->email = $post->email;
+						$post->password !='' ? $user->password=$post->password : '';
+						$user->save();
+
+						// Remove Old Roles
+						foreach($user->roles as $role){
+							$user->remove($role); 
+						} 
 						
-					$this->roles_users->delete_role($post->user_id, $data);
-					  
-				} 
-                else 
-                { 
-                    // edit action
-					$update_user = ORM::factory('user',$post->user_id );
-					$update_user->username = $post->username;
-					$update_user->name = $post->name;
-					$update_user->email = $post->email;
-					$post->password !='' ? $update_user->password=$post->password : '';
-					$update_user->save();
-					
-					//update role table too.
-					$data = array('user_id' => $post->user_id,
-						        'role_id' => $post->role );
+						// Add New Role
+						$user->add(ORM::factory('role', $post->role));
 						
-					$this->roles_users->update_role($post->user_id, $data);
+						$form_saved = TRUE;
+						$form_action = "EDITED";
+					}
+					// New User
+					else 
+					{
+						$user->username = $post->username;
+						$user->name = $post->name;
+						$user->password = $post->password;
+						$user->email = $post->email;
+						$user->save();
+						
+						// Add New Role
+						$user->add(ORM::factory('role', $post->role));
+						
+						$form_saved = TRUE;
+						$form_action = "ADDED";
+					}
 				}
-				
-				$form_saved = TRUE;
+				elseif ($post->action = 'd')			// Delete Action 
+				{
+					if ($user->loaded==true)
+					{
+						// Remove Roles
+						foreach ($user->roles as $role) {
+							$user->remove_role($role);
+						}
+						
+						// Delete User
+						$user->delete($post->user_id);
+						$form_saved = TRUE;
+						$form_action = "DELETED";
+					}
+				}
 			} 
             else 
             {
@@ -133,24 +147,16 @@ class Users_Controller extends Admin_Controller
                     ->orderby('name', 'asc')
                     ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                         $pagination->sql_offset);
-		
-		// Get User Roles
-		foreach (ORM::factory('role')
-                    ->orderby('name', 'asc')
-                    ->find_all() as $role)
-		{
-			$roles[$role->id] = $role->name;
-		}
-		
+
         $this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
 		$this->template->content->pagination = $pagination;
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->users = $users;
-		$this->template->content->roles = $roles;
-		$this->template->content->roles_users = $this->roles_users;
+		$this->template->content->roles = array("admin"=>"admin","user"=>"user");
 		
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;

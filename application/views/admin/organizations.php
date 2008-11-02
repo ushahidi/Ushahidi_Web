@@ -23,13 +23,17 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>Your Organization Has Been Saved!</h3>
+						<h3>The Organization Has Been <?php echo $form_action; ?></h3>
 					</div>
 				<?php
 				}
 				?>
 				<!-- report-table -->
 				<div class="report-form">
+					<?php print form::open(NULL,array('id' => 'orgListing',
+					 	'name' => 'orgListing')); ?>
+						<input type="hidden" name="action" id="action" value="">
+						<input type="hidden" name="organization_id" id="org_id_action" value="">
 						<div class="table-holder">
 							<table class="table">
 								<thead>
@@ -84,12 +88,7 @@
 	'<?php echo(rawurlencode($organization_website)); ?>',
 	'<?php echo(rawurlencode($organization_description)); ?>')">Edit</a></li>
 													
-<li><a href="#" onclick="userAction('d',
-	'<?php echo(rawurlencode($organization_id)); ?>',
-	'<?php echo(rawurlencode($organization_name)); ?>',
-	'<?php echo(rawurlencode($organization_website)); ?>',
-	'<?php echo(rawurlencode($organization_description)); ?>',
-	'DELETE');" class="del">Delete</a></li>
+<li><a href="javascript:orgAction('d','DELETE','<?php echo(rawurlencode($organization_id)); ?>')" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>
@@ -99,6 +98,7 @@
 								</tbody>
 							</table>
 						</div>
+					<?php print form::close(); ?>
 				</div>
 				
 				<div class="tabs">

@@ -1,7 +1,7 @@
 /*
- * Categories Javascript
+ * Organizations Javascript
  */
-// Categories JS
+// Organizations JS
 function fillFields(id, organization_name, organization_website,
  organization_description )
 {
@@ -13,26 +13,18 @@ function fillFields(id, organization_name, organization_website,
 }
 
 // Ajax Submission
-function userAction ( action, id, organization_name, organization_website,
- organization_description, confirmAction )
+function orgAction ( action, confirmAction, id )
 {
 	var statusMessage;
 	var answer = confirm('Are You Sure You Want To ' 
 		+ confirmAction + ' items?')
-	
-	if (answer) {
+	if (answer){
+		// Set Category ID
+		$("#org_id_action").attr("value", id);
 		// Set Submit Type
-		$("#action").attr( "value", action );
-		// Set form values for deletion so it passes the validation test
-		$("#organization_id").attr( "value",unescape( id ) );
-		$("#organization_name").attr( "value", unescape(organization_name) );
-		$("#organization_website").attr( "value",
-		 	unescape( organization_website ));
-		$("#organization_description").attr("value",
-		 	unescape(organization_description));
-		
+		$("#action").attr("value", action);		
 		// Submit Form
-		$("#orgMain").submit();			
+		$("#orgListing").submit();			
 	
 	} else{
 		return false;

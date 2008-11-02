@@ -96,9 +96,9 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 (37, 'BZ', 'Belize', 'Belmopan', 0),
 (38, 'CA', 'Canada', 'Ottawa', 0),
 (39, 'CC', 'Cocos Islands', 'West Island', 0),
-(40, 'CD', 'Congo - Kinshasa', 'Kinshasa', 0),
+(40, 'CD', 'Democratic Republic of the Congo', 'Kinshasa', 0),
 (41, 'CF', 'Central African Republic', 'Bangui', 0),
-(42, 'CG', 'Congo - Brazzaville', 'Brazzaville', 0),
+(42, 'CG', 'Congo Brazzavile', 'Brazzaville', 0),
 (43, 'CH', 'Switzerland', 'Berne', 0),
 (44, 'CI', 'Ivory Coast', 'Yamoussoukro', 0),
 (45, 'CK', 'Cook Islands', 'Avarua', 0),
@@ -664,9 +664,7 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 -- Dumping data for table `roles_users`
 --
 
-INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
-(1, 1),
-(1, 2);
+INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES (1, 2);
 
 -- --------------------------------------------------------
 

@@ -23,15 +23,17 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>Your Category Has Been Saved!</h3>
+						<h3>The Category Has Been <?php echo $form_action; ?>!</h3>
 					</div>
 				<?php
 				}
 				?>
 				<!-- report-table -->
 				<div class="report-form">
-					<?php print form::open(); ?>
+					<?php print form::open(NULL,array('id' => 'catListing',
+					 	'name' => 'catListing')); ?>
 						<input type="hidden" name="action" id="action" value="">
+						<input type="hidden" name="category_id" id="category_id_action" value="">
 						<div class="table-holder">
 							<table class="table">
 								<thead>
@@ -81,13 +83,8 @@
 											<td class="col-4">
 												<ul>
 													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="#"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
-<li><a href="#" onclick="userAction('d',
-	'<?php echo(rawurlencode($category_id)); ?>',
-	'<?php echo(rawurlencode($category_title)); ?>',
-	'<?php echo(rawurlencode($category_description)); ?>',
-	'<?php echo(rawurlencode($category_color)); ?>',
-	'DELETE');" class="del">Delete</a></li>
+													<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
+<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>
@@ -114,7 +111,7 @@
 						<input type="hidden" id="category_id" 
 							name="category_id" value="" />
 						<input type="hidden" name="action" 
-							id="action" value=""/>
+							id="action" value="a"/>
 						<div class="tab_form_item">
 							<strong>Category Name:</strong><br />
 							<?php print form::input('category_title', '', ' class="text"'); ?>
