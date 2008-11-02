@@ -1036,6 +1036,23 @@ div.c_push{
 	display: block;
 	float: left;
 }
+#retrieve_cities{
+	clear:both;
+	background-color:#eee;
+	color:#333;
+	padding:5px;
+	margin:10px 15px 0 0;
+}
+#retrieve_cities a, #retrieve_cities a:visited{
+	color:#333;
+}
+#cities_loading{
+	
+}
+#city_count{
+	margin:5px 0 0 0;
+	display:none;
+}
 div.sms_nav_holder{
 	width: 900px;
 	margin: 20px 0 0 20px;

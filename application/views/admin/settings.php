@@ -50,6 +50,12 @@
 									<span class="my-sel-holder">
 										<?php print form::dropdown('default_country',$countries,$form['default_country']); ?>
 									</span>
+									
+									<div id="retrieve_cities">
+										<a href="javascript:retrieveCities()" id="retrieve">Retrieve Cities From Geonames</a>
+										<span id="cities_loading"></span>
+										<div id="city_count"></div>
+									</div>
 								</div>
 							</div>
 							<div class="has_border">

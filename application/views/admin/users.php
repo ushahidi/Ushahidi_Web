@@ -122,7 +122,7 @@
 										// into it more.
 										//get role ids
 										$role_id =  
-										$roles_users->get_role_id($user_id );
+										$roles_users->get_role_id($user_id);
 										
 										$roles = 
 											ORM::factory('role')->where('id',
