@@ -9,6 +9,12 @@ class Users_Controller extends Admin_Controller
 	{
 		parent::__construct();
 		$this->template->this_page = 'users';
+		
+		// If this is not a super-user account, redirect to dashboard
+		if (!$this->auth->logged_in('admin'))
+        {
+             url::redirect('admin/dashboard');
+		}
 	}
 	
 	function index()
