@@ -357,6 +357,124 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->frontlinesms_link = "http://" . $_SERVER['SERVER_NAME'] . "/frontlinesms/?key=" . $frontlinesms_key . "&s=\${sender_number}&m=\${message_content}";
 	}
 
+
+
+    /**
+     * Handles settings for Global SMS Providers - Clickatell In This Case
+     */
+	function smsglobal()
+	{
+		$this->template->content = new View('admin/smsglobal');
+		$this->template->content->title = 'Settings';
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+			'clickatell_api' => '',
+			'clickatell_username' => '',
+			'clickatell_password' => ''
+	    );
+        //  Copy the form as errors, so the errors will be stored with keys
+        //  corresponding to the form field names
+        $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+            // Instantiate Validation, use $post, so we don't overwrite $_POST
+            // fields with our own things
+            $post = new Validation($_POST);
+
+	        // Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			
+			$post->add_rules('clickatell_api','required', 'length[4,20]');
+			$post->add_rules('clickatell_username', 'required', 'length[3,50]');
+			$post->add_rules('clickatell_password', 'required', 'length[5,50]');
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+	            // Yes! everything is valid
+				$settings = new Settings_Model(1);
+				$settings->clickatell_api = $post->clickatell_api;
+				$settings->clickatell_username = $post->clickatell_username;
+				$settings->clickatell_password = $post->clickatell_password;
+				$settings->date_modify = date("Y-m-d H:i:s",time());
+				$settings->save();
+				
+				// Everything is A-Okay!
+				$form_saved = TRUE;
+				
+				// repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+					            
+	        }
+	                    
+            // No! We have validation errors, we need to show the form again,
+            // with the errors
+            else
+	        {
+	            // repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+	            // populate the error fields, if any
+	            $errors = arr::overwrite($errors, $post->errors('settings'));
+				$form_error = TRUE;
+	        }
+	    }
+		else
+		{
+			// Retrieve Current Settings
+			$settings = ORM::factory('settings', 1);
+			
+			$form = array
+		    (
+		        'clickatell_api' => $settings->clickatell_api,
+				'clickatell_username' => $settings->clickatell_username,
+				'clickatell_password' => $settings->clickatell_password
+		    );
+		}
+		
+		$this->template->content->form = $form;
+	    $this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		
+		// Javascript Header
+		$this->template->js = new View('admin/smsglobal_js');
+	}
+	
+
+	/**
+     * Retrieves Clickatell Balance using Clickatell Library
+     */
+	function smsbalance()
+	{
+		$this->template = "";
+		$this->auto_render = FALSE;
+		
+		$settings = new Settings_Model(1);
+		if ($settings->loaded == true) {
+			$clickatell_api = $settings->clickatell_api;
+			$clickatell_username = $settings->clickatell_username;
+			$clickatell_password = $settings->clickatell_password;
+			
+			$mysms = new Clickatell();
+			$mysms->api_id = $clickatell_api;
+			$mysms->user = $clickatell_username;
+			$mysms->password = $clickatell_password;
+			$mysms->use_ssl = false;
+			$mysms->sms();
+		 	// echo $mysms->session;
+		 	echo $mysms->getbalance();
+		}
+	}
+	
     
     /**
      * Handles settings for sharing data

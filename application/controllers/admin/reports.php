@@ -71,50 +71,63 @@ class Reports_Controller extends Admin_Controller
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						$update->incident_active = '1';
-						$update->save();
-						$form_action = "APPROVED";
+						if ($update->loaded == true) {
+							$update->incident_active = '1';
+							$update->save();
+						}
 					}
+					$form_action = "APPROVED";
 				}
 				elseif ($post->action == 'u') 	// Unapprove Action
 				{
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						$update->incident_active = '0';
-						$update->save();
-						$form_action = "UNAPPROVED";
+						if ($update->loaded == true) {
+							$update->incident_active = '0';
+							$update->save();
+						}
 					}
+					$form_action = "UNAPPROVED";
 				}
 				elseif ($post->action == 'v')	// Verify Action
 				{
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						$update->incident_verified = '1';
-						$update->verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
-						$update->verify->verified_date = date("Y-m-d H:i:s",time());
-						$update->verify->verified_status = '1';
-						$update->save();
-						$form_action = "VERIFIED";
+						if ($update->loaded == true) {
+							if ($update->incident_verified == '1') {
+								$update->incident_verified = '0';
+							}
+							else {
+								$update->incident_verified = '1';
+							}
+							$update->verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+							$update->verify->verified_date = date("Y-m-d H:i:s",time());
+							$update->verify->verified_status = '1';
+							$update->save();
+						}
 					}
+					$form_action = "VERIFIED";
 				}
 				elseif ($post->action == 'd')	// Delete Action
 				{
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						ORM::factory('location')->where('id',$update->location_id)->delete_all();	// Delete Location
-						ORM::factory('incident_category')->where('incident_id',$update->id)->delete_all();	// Delete Categories
-						// Delete Photos From Directory
-						foreach (ORM::factory('media')->where('incident_id',$update->id)->where('media_type', 1) as $photo) {
-							deletePhoto($photo->id);
-						}
-						ORM::factory('media')->where('incident_id',$update->id)->delete_all();				// Delete Media
-						ORM::factory('incident_person')->where('incident_id',$update->id)->delete_all();	// Delete Sender
-						$update->delete();						
-						$form_action = "DELETED";
+						if ($update->loaded == true) {
+							ORM::factory('location')->where('id',$update->location_id)->delete_all();	// Delete Location
+							ORM::factory('incident_category')->where('incident_id',$update->id)->delete_all();	// Delete Categories
+							// Delete Photos From Directory
+							foreach (ORM::factory('media')->where('incident_id',$update->id)->where('media_type', 1) as $photo) {
+								deletePhoto($photo->id);
+							}
+							ORM::factory('media')->where('incident_id',$update->id)->delete_all();				// Delete Media
+							ORM::factory('incident_person')->where('incident_id',$update->id)->delete_all();	// Delete Sender
+							$update->delete();
+						}					
 					}
+					$form_action = "DELETED";
 				}
 				$form_saved = TRUE;
 			}

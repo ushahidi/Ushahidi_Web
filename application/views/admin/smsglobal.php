@@ -38,8 +38,8 @@
 					<!-- column -->
 		
 					<div class="sms_nav_holder">
-						<a href="<?php echo url::base() . 'admin/settings/sms' ?>" class="active">Option 1: Use Frontline SMS</a>
-						<a href="<?php echo url::base() . 'admin/settings/smsglobal' ?>">Option 2: Use a Global SMS Gateway</a>
+						<a href="<?php echo url::base() . 'admin/settings/sms' ?>">Option 1: Use Frontline SMS</a>
+						<a href="<?php echo url::base() . 'admin/settings/smsglobal' ?>" class="active">Option 2: Use a Global SMS Gateway</a>
 					</div>
 		
 					<div class="sms_holder">
@@ -49,14 +49,7 @@
 									<span class="big_blue_span">Step 1:</span>
 								</td>
 								<td>
-									<h4 class="fix">Download Frontline SMS and install it on your computer. <sup><a href="#">?</a></sup></h4>
-									<p>
-										This is some descriptive text that talks about Frontline SMS a bit more.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
-									</p>
-									<a href="#" class="no_border">
-										<img src="<?php echo url::base() ?>media/img/admin/download_frontline_engine.gif" />
-									</a>
-						
+									<h4 class="fix">Sign up for Clickatells service by <a href="https://www.clickatell.com/central/user/client/step1.php?prod_id=2" target="_blank">clicking here</a>. <sup><a href="#">?</a></sup></h4>
 								</td>
 							</tr>
 							<tr>
@@ -64,39 +57,32 @@
 									<span class="big_blue_span">Step 2:</span>
 								</td>
 								<td>
-									<h4 class="fix">Sync with Ushahidi <sup><a href="#">?</a></sup></h4>
-									<p>
-										This is some descriptive text that talks Syncing with Ushahidi a bit more.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
-									</p>
-									<p class="sync_key">
-										Your Ushahidi Sync Key: <span><?php echo $frontlinesms_key; ?></span><br /><br />
-										FrontlineSMS HTTP Post LINK:<br /><span><?php echo $frontlinesms_link; ?></span>
-									</p>
+									<h4 class="fix">Enter your clickatell access information below. <sup><a href="#">?</a></sup></h4>
+									<div class="row">
+										<h4>Your Clickatell API Number:</h4>
+										<?php print form::input('clickatell_api', $form['clickatell_api'], ' class="text title_2"'); ?>
+									</div>
+									<div class="row">
+										<h4>Your Clickatell User Name:</h4>
+										<?php print form::input('clickatell_username', $form['clickatell_username'], ' class="text title_2"'); ?>
+									</div>
+									<div class="row">
+										<h4>Your Clickatell Password:</h4>
+										<?php print form::password('clickatell_password', $form['clickatell_password'], ' class="text title_2"'); ?>
+									</div>
 								</td>
 							</tr>
-							<tr>
+							<!--<tr>
 								<td>
 									<span class="big_blue_span">Step 3:</span>
 								</td>
 								<td>
-									<h4 class="fix">Enter phone number(s) connected to Frontline SMS in the field(s) below. <sup><a href="#">?</a></sup></h4>
-									<p>
-										This is some descriptive text about entering SMS Phone Numbers.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
-									</p>
+									<h4 class="fix">Check Your Clickatell Credit Balance. <sup><a href="#">?</a></sup></h4>
 									<div class="row">
-										<h4>Phone 1:</h4>
-										<?php print form::input('sms_no1', $form['sms_no1'], ' class="text title_2"'); ?>
-									</div>
-									<div class="row">
-										<h4>Phone 2:</h4>
-										<?php print form::input('sms_no2', $form['sms_no2'], ' class="text title_2"'); ?>
-									</div>
-									<div class="row">
-										<h4>Phone 3:</h4>
-										<?php print form::input('sms_no3', $form['sms_no3'], ' class="text title_2"'); ?>
+										<h4><a href="javascript:clickatellBalance()">Load Credit Balance</a>&nbsp;<span id="balance_loading"></span></h4>
 									</div>
 								</td>
-							</tr>
+							</tr>-->							
 						</table>
 					</div>
 		

@@ -88,6 +88,24 @@ class Main_Controller extends Template_Controller {
 			->limit('10')
             ->orderby('incident_date', 'desc')
             ->find_all();
+		
+		
+		// Get SMS Numbers
+		$phone_array = array();
+		$sms_no1 = Kohana::config('settings.sms_no1');
+		$sms_no2 = Kohana::config('settings.sms_no2');
+		$sms_no3 = Kohana::config('settings.sms_no3');
+		if (!empty($sms_no1)) {
+			$phone_array[] = $sms_no1;
+		}
+		if (!empty($sms_no2)) {
+			$phone_array[] = $sms_no2;
+		}
+		if (!empty($sms_no3)) {
+			$phone_array[] = $sms_no3;
+		}
+		$this->template->content->phone_array = $phone_array;
+		
 
 		// Get RSS News Feeds
 		$this->template->content->feeds = ORM::factory('feed_item')
@@ -95,9 +113,11 @@ class Main_Controller extends Template_Controller {
             ->orderby('item_date', 'desc')
             ->find_all();
 		
+		
         // Get Slider Dates By Year
         $startDate = "";
         $endDate = "";
+
 
         // We need to use the DB builder for a custom query
         $db = new Database();	
@@ -132,6 +152,7 @@ class Main_Controller extends Template_Controller {
         }
         $this->template->content->startDate = $startDate;
         $this->template->content->endDate = $endDate;
+		
 		
         // get graph data
         // could not use DB query builder. It does not support parentheses yet
@@ -168,7 +189,8 @@ class Main_Controller extends Template_Controller {
 		
 	    $all_graphs .= " } ";
 		
-		$this->template->content->all_graphs = $all_graphs;
+		$this->template->content->all_graphs = $all_graphs;		
+		
 		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;

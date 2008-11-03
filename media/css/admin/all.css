@@ -1187,8 +1187,35 @@ table.p_replace td.special{
 	text-align: center;
 }
 
-
-
+/*-- Messages --*/
+.reply{
+	display:none;
+	margin:5px 0 0 0;
+	padding:5px;
+	background-color:#eee;
+}
+#replies{
+	margin:0 0 10px 0;
+}
+.reply_can{
+	font-size:11px;
+	margin-bottom:3px;
+}
+.replychars{
+	font-size:11px;
+	color:#990000;
+}
+.reply_input{
+	float:left;
+	top:0;
+	margin-right:10px;
+}
+.reply_error{
+	background:#FFD8D9;
+	margin:0 0 3px 0;
+	padding:2px;
+	display:none;
+}
 /*-- Color Picker --*/
 .jColorSelect {
 	overflow:hidden; /* for IE6 */

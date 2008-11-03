@@ -74,10 +74,26 @@
 									$message_date = date('Y-m-d', strtotime($message->message_date));
 									?>
 									<tr>
-										<td class="col-1"><input name="message_id[]" id="message" value="<?php echo $message_id; ?>" type="checkbox" class="check-box"/></td>
+										<td class="col-1"><input name="message_id[]" id="message_id" value="<?php echo $message_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<p><?php echo $message_description; ?><br /><a href="<?php echo url::base() . 'admin/messages/view/' . $message_id; ?>" class="more">more</a></p>
+												<p><?php echo $message_description; ?></p>
+												<div id="replies">
+													
+												</div>
+												<a href="javascript:showReply('reply_<?php echo $message_id; ?>')" class="more">+Reply</a>
+												<div id="reply_<?php echo $message_id; ?>" class="reply">
+													<?php print form::open(url::base() . 'admin/messages/send/',array('id' => 'newreply_' . $message_id,
+													 	'name' => 'newreply_' . $message_id)); ?>
+													<div class="reply_can"><a href="javascript:cannedReply('1', 'message_<?php echo $message_id; ?>')">+Request Location</a>&nbsp;&nbsp;&nbsp;<a href="javascript:cannedReply('2', 'message_<?php echo $message_id; ?>')">+Request More Information</a></div>
+													<div id="replyerror_<?php echo $message_id; ?>" class="reply_error"></div>
+													<div class="reply_input"><?php print form::input('message_' .  $message_id, '', ' class="text long2" onkeyup="limitChars(this.id, \'160\', \'replyleft_' . $message_id . '\')" '); ?></div>
+													<div class="reply_input"><a href="javascript:sendMessage('<?php echo $message_id; ?>' , 'sending_<?php echo $message_id; ?>')" title="Submit Message"><img src="<?php echo url::base() ?>media/img/admin/btn-send.gif" alt="Submit" border="0" /></a></div>
+													<div class="reply_input" id="sending_<?php echo $message_id; ?>"></div>
+													<div style="clear:both"></div>
+													<?php print form::close(); ?>
+													<div id="replyleft_<?php echo $message_id; ?>" class="replychars"></div>
+												</div>
 											</div>
 											<ul class="info">
 												<li class="none-separator">From: <strong><?php echo $message_from; ?></strong>
@@ -86,6 +102,7 @@
 										<td class="col-3"><?php echo $message_date; ?></td>
 										<td class="col-4">
 											<ul>
+												<li class="none-separator"><a href="#">Approve</a></li>
 												<li><a href="#" class="del" onclick="">Delete</a></li>
 											</ul>
 										</td>

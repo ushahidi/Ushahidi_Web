@@ -53,9 +53,17 @@
               </div>
               <div class="report-btns">
                 <a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span>Submit an Incident!</span></a>
-                <a class="btn-grey" href="#"><span>Submit via SMS</span></a>
+                <?php if (!empty($phone_array)) ?><a class="btn-grey" href="#"><span>Submit via SMS</span></a>
               </div>
-              <p>Send your SMS to <strong>6007</strong> on your phone</p>
+			  <?php if (!empty($phone_array)) { ?>
+              <p>Send your SMS to 
+				<?php foreach ($phone_array as $phone) {
+					echo "<strong>". $phone ."</strong>";
+					if ($phone != end($phone_array)) {
+						echo ", ";
+					}
+				} ?>
+				 on your phone</p><?php } ?>
             </div>
           </div>
         </div>
