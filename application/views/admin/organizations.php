@@ -67,16 +67,21 @@
 										$organization_id = $organization->id;
 										$organization_name =
 										 $organization->organization_name;
-										$organization_description = substr($organization->organization_description, 0, 150);
+										$organization_description = $organization->organization_description;
+										$organization_description_short = substr($organization->organization_description, 0, 150);
 										$organization_website = 
 											$organization->organization_website;
+										$organization_active = $organization->organization_active;
+										$organization_email = $organization->organization_email;
+										$organization_phone1 = $organization->organization_phone1;
+										$organization_phone2 = $organization->organization_phone2;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
 													<h4><?php echo $organization_name; ?></h4>
-													<p><?php echo $organization_description; ?>...</p>
+													<p><?php echo $organization_description_short; ?>...</p>
 												</div>
 											</td>
 											
@@ -86,9 +91,12 @@
 	'<?php echo(rawurlencode($organization_id)); ?>',
 	'<?php echo(rawurlencode($organization_name)); ?>',
 	'<?php echo(rawurlencode($organization_website)); ?>',
-	'<?php echo(rawurlencode($organization_description)); ?>')">Edit</a></li>
-													
-<li><a href="javascript:orgAction('d','DELETE','<?php echo(rawurlencode($organization_id)); ?>')" class="del">Delete</a></li>
+	'<?php echo(rawurlencode($organization_description)); ?>',
+	'<?php echo(rawurlencode($organization_email)); ?>',
+	'<?php echo(rawurlencode($organization_phone1)); ?>',
+	'<?php echo(rawurlencode($organization_phone2)); ?>')">Edit</a></li>
+	<li class="none-separator"><a href="javascript:orgAction('v','SHOW/HIDE','<?php echo(rawurlencode($organization_id)); ?>')"<?php if ($organization_active) echo " class=\"status_yes\"" ?>>Visible</a></li>
+													<li><a href="javascript:orgAction('d','DELETE','<?php echo(rawurlencode($organization_id)); ?>')" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>
@@ -112,20 +120,32 @@
 						<?php print form::open(NULL,array('id' => 'orgMain',
 						 	'name' => 'orgMain')); ?>
 						<input type="hidden" id="organization_id" 
-							name="organization_id" value="" />
+							name="organization_id" value="<?php echo $form['organization_id']; ?>" />
 						<input type="hidden" name="action" 
-							id="action" value=""/>							
+							id="action" value="a"/>							
 						<div class="tab_form_item2">
 							<strong>Organization Name:</strong><br />
-							<?php print form::input('organization_name', '', ' class="text long"'); ?>
+							<?php print form::input('organization_name', $form['organization_name'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
 							<strong>Organization Website:</strong><br />
-							<?php print form::input('organization_website', '', ' class="text long"'); ?>
+							<?php print form::input('organization_website', $form['organization_website'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
 							<strong>Organization Description:</strong><br />
-							<?php print form::textarea('organization_description', '', ' rows="12" cols="60" '); ?>
+							<?php print form::textarea('organization_description', $form['organization_description'], ' rows="12" cols="60" '); ?>
+						</div>
+						<div class="tab_form_item2">
+							<strong>Organization Email:</strong><br />
+							<?php print form::input('organization_email', $form['organization_email'], ' class="text long"'); ?>
+						</div>
+						<div class="tab_form_item2">
+							<strong>Organization Phone 1:</strong><br />
+							<?php print form::input('organization_phone1', $form['organization_phone1'], ' class="text long"'); ?>
+						</div>
+						<div class="tab_form_item2">
+							<strong>Organization Phone 2:</strong><br />
+							<?php print form::input('organization_phone2', $form['organization_phone2'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item">
 							&nbsp;<br />

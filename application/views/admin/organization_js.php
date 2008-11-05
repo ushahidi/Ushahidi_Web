@@ -3,13 +3,16 @@
  */
 // Organizations JS
 function fillFields(id, organization_name, organization_website,
- organization_description )
+ organization_description, organization_email, organization_phone1, organization_phone2 )
 {
 	$("#organization_id").attr("value", unescape(id));
 	$("#organization_name").attr("value", unescape(organization_name));
 	$("#organization_website").attr("value", unescape(organization_website));
 	$("#organization_description").attr("value", 
 		unescape(organization_description));
+	$("#organization_email").attr("value", unescape(organization_email));
+	$("#organization_phone1").attr("value", unescape(organization_phone1));
+	$("#organization_phone2").attr("value", unescape(organization_phone2));
 }
 
 // Ajax Submission
@@ -24,9 +27,6 @@ function orgAction ( action, confirmAction, id )
 		// Set Submit Type
 		$("#action").attr("value", action);		
 		// Submit Form
-		$("#orgListing").submit();			
-	
-	} else{
-		return false;
+		$("#orgListing").submit();
 	}
 }

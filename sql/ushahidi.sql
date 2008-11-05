@@ -513,6 +513,7 @@ CREATE TABLE IF NOT EXISTS `organization` (
   `organization_website` varchar(255) default NULL,
   `organization_address` varchar(255) default NULL,
   `organization_country` varchar(100) default NULL,
+  `organization_active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

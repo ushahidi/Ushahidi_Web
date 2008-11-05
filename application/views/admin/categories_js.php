@@ -22,9 +22,6 @@ function catAction ( action, confirmAction, id )
 		// Set Submit Type
 		$("#action").attr("value", action);		
 		// Submit Form
-		$("#catListing").submit();			
-	
-	} else{
-		return false;
+		$("#catListing").submit();
 	}
 }

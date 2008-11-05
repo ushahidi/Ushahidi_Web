@@ -995,8 +995,8 @@ a.rem { background:url(../img/icon-minus.gif) no-repeat;}
 }
 
 
-/* View Reports */
-.report_rowtitle{
+/* View Reports / Help */
+.report_rowtitle, .org_rowtitle{
 	margin: 10px 0 5px 0;
 	padding-bottom:3px;
 	border-bottom:2px #000 solid;
@@ -1028,19 +1028,22 @@ a.rem { background:url(../img/icon-minus.gif) no-repeat;}
 	width:105px;
 	text-align:center;
 }
-.report_row1, .report_row2{
+.report_row1, .report_row2, .org_row1, .org_row2{
 	clear:both;
 	overflow:auto;
 	margin:0 0 10px 0;
 	padding:5px 0 5px 0;
 }
-.report_row1{
+.report_row1, .org_row1{
 	background-color:#eee;
 }
-.report_row1 h3, .report_row2 h3{
+.report_row1 h3, .report_row2 h3, .org_row1 h3, .org_row2 h3{
 	margin:0;
 	padding:0;
 	font-size:13px;
+}
+.org_row1, .org_row2{
+	padding:5px;
 }
 .report_yes,
 .report_no{
@@ -1051,6 +1054,28 @@ a.rem { background:url(../img/icon-minus.gif) no-repeat;}
 }
 .report_no{
 	color:#990000;
+}
+.org_contact{
+	border:1px #ccc solid;
+	margin-top:15px;
+	padding:10px;
+	background:#eee;
+	clear:both;
+	overflow:hidden;
+}
+.org_contact_row{
+	margin:0 0 15px 0;
+	clear:both;
+}
+.org_contact h3{
+	margin:0 0 5px 0;
+	padding:0 0 3px 0;
+	border-bottom:1px solid #ccc;
+}
+.org_contact h4{
+	margin:0 0 5px 0;
+	padding:0;
+	font-weight:bold;
 }
 
 /* form */
@@ -1107,17 +1132,21 @@ label.error {
 .short{
 	width:100px;
 }
-.btn_blue{
+.btn_blue, .btn_gray{
 	padding:0 0 2px;
 	width:118px;
 	height:31px;
 	color:#fff;
 	font:14px Arial, Helvetica, sans-serif;
-	background:url(../img/btn-blue.gif) no-repeat;
 	border:0;
 	cursor:pointer;	
 }
-
+.btn_blue{
+	background:url(../img/btn-blue.gif) no-repeat;	
+}
+.btn_gray{
+	background:url(../img/btn-gray.gif) no-repeat;	
+}
 /*-- pager --*/
 ul.pager {
 	margin:0;

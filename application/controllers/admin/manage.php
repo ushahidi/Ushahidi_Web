@@ -146,7 +146,10 @@ class Manage_Controller extends Admin_Controller
 	        'organization_id'      => '',
 			'organization_name'      => '',
 	        'organization_description'    => '',
-	        'organization_website'  => ''
+	        'organization_website'  => '',
+			'organization_email'  => '',
+			'organization_phone1'  => '',
+			'organization_phone2'  => ''
 	    );
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
@@ -169,6 +172,9 @@ class Manage_Controller extends Admin_Controller
 				$post->add_rules('organization_name','required', 'length[3,70]');
 				$post->add_rules('organization_description','required');
 				$post->add_rules('organization_website','required','url');
+				$post->add_rules('organization_email', 'email', 'length[4,100]');
+				$post->add_rules('organization_phone1', 'length[3,50]');
+				$post->add_rules('organization_phone2', 'length[3,50]');
 			}
 			
 			// Test to see if things passed the rule checks
@@ -178,20 +184,36 @@ class Manage_Controller extends Admin_Controller
 				
 				$organization = new Organization_Model($organization_id);
 				
-				//delete action
-				if( $post->action == 'd' ) { 							// Delete Action
+				if( $post->action == 'd' ) { 			// Delete Action
 					$organization->delete( $organization_id );
 					$form_saved = TRUE;
 					$form_action = "DELETED";
 				
-				} else {												// Save Action
+				}
+				else if( $post->action == 'v' )			// Show/Hide Action
+				{
+	            	if ($organization->loaded==true)
+					{
+						if ($organization->organization_active == 1) {
+							$organization->organization_active = 0;
+						}
+						else {
+							$organization->organization_active = 1;
+						}
+						$organization->save();
+						$form_saved = TRUE;
+						$form_action = "MODIFIED";
+					}
+				}
+				else if( $post->action == 'a' ) 		// Save Action
+				{
 					// SAVE Organization
 					$organization->organization_name = $post->organization_name;
-					$organization->organization_description =
-					 $post->organization_description;
-					
-					$organization->organization_website = 
-						$post->organization_website;
+					$organization->organization_description = $post->organization_description;
+					$organization->organization_website = $post->organization_website;
+					$organization->organization_email = $post->organization_email;
+					$organization->organization_phone1 = $post->organization_phone1;
+					$organization->organization_phone2 = $post->organization_phone2;
 					$organization->save();
 					$form_saved = TRUE;
 					$form_action = "ADDED/EDITED";
@@ -223,7 +245,8 @@ class Manage_Controller extends Admin_Controller
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
 
-        $this->template->content->form_error = $form_error;
+        $this->template->content->form = $form;
+		$this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
         $this->template->content->pagination = $pagination;
