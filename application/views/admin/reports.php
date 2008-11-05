@@ -75,7 +75,7 @@
 								{
 									$incident_id = $incident->id;
 									$incident_title = $incident->incident_title;
-									$incident_description = substr($incident->incident_description, 0, 150);
+									$incident_description = text::limit_chars($incident_description, 150, "...", true);
 									$incident_date = $incident->incident_date;
 									$incident_date = date('Y-m-d', strtotime($incident->incident_date));
 									$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?

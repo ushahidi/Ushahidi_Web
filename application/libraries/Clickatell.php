@@ -2,17 +2,17 @@
 /**
  * CLICKATELL SMS API
  *
- * This class is meant to send SMS messages via the Clickatell gateway
- * and provides support to authenticate to this service and also query
- * for the current account balance. This class use the fopen or CURL module
- * to communicate with the gateway via HTTP/S.
+ * This class is meant to send SMS messages (with unicode support) via 
+ * the Clickatell gateway and provides support to authenticate to this service, 
+ * spending an vouchers and also query for the current account balance. This class
+ * use the fopen or CURL module to communicate with the gateway via HTTP/S.
  *
  * For more information about CLICKATELL service visit http://www.clickatell.com
  *
- * @version 1.3d
+ * @version 1.6
  * @package sms_api
  * @author Aleksandar Markovic <mikikg@gmail.com>
- * @copyright Copyright © 2004, 2005 Aleksandar Markovic
+ * @copyright Copyright (c) 2004 - 2007 Aleksandar Markovic
  * @link http://sourceforge.net/projects/sms-api/ SMS-API Sourceforge project page
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *
@@ -28,6 +28,7 @@
  * $mysms = new sms();
  * echo $mysms->session;
  * echo $mysms->getbalance();
+ * // $mysms->token_pay("1234567890123456"); //spend voucher with SMS credits
  * $mysms->send ("38160123", "netsector", "TEST MESSAGE");
  * ?>
  * </code>
@@ -72,6 +73,12 @@ class Clickatell_Core {
     * @var mixed
     */
     var $sending_method = "fopen";
+
+    /**
+    * Does to use facility for delivering Unicode messages
+    * @var bool
+    */
+    var $unicode = false;
 
     /**
     * Optional CURL Proxy
@@ -157,27 +164,39 @@ class Clickatell_Core {
 
     	/* Check SMS credits balance */
     	if ($this->getbalance() < $this->balace_limit) {
-    	    die ("You have reach the SMS credit limit!");
+    	    return "You have reach the SMS credit limit!";
     	};
 
     	/* Check SMS $text length */
-        if (strlen ($text) > 465) {
-    	    die ("Your message is to long! (Current lenght=".strlen ($text).")");
-    	}
-
-    	/* Does message need to be concatenate */
-        if (strlen ($text) > 160) {
-            $concat = "&concat=3";
-    	} else {
-            $concat = "";
+        if ($this->unicode == true) {
+            $this->_chk_mbstring();
+            if (mb_strlen ($text) > 210) {
+        	    return "Your unicode message is too long! (Current lenght=".mb_strlen ($text).")";
+        	}
+        	/* Does message need to be concatenate */
+            if (mb_strlen ($text) > 70) {
+                $concat = "&concat=3";
+        	} else {
+                $concat = "";
+            }
+        } else {
+            if (strlen ($text) > 459) {
+    	        return "Your message is too long! (Current lenght=".strlen ($text).")";
+    	    }
+        	/* Does message need to be concatenate */
+            if (strlen ($text) > 160) {
+                $concat = "&concat=3";
+        	} else {
+                $concat = "";
+            }
         }
 
     	/* Check $to and $from is not empty */
         if (empty ($to)) {
-    	    die ("You not specify destination address (TO)!");
+    	    return "You not specify destination address (TO)!";
     	}
         if (empty ($from)) {
-    	    die ("You not specify source address (FROM)!");
+    	    return "You not specify source address (FROM)!";
     	}
 
     	/* Reformat $to number */
@@ -185,16 +204,81 @@ class Clickatell_Core {
         $to = str_replace($cleanup_chr, "", $to);
 
     	/* Send SMS now */
-    	$comm = sprintf ("%s/sendmsg?session_id=%s&to=%s&from=%s&text=%s&callback=%s%s",
+    	$comm = sprintf ("%s/sendmsg?session_id=%s&to=%s&from=%s&text=%s&callback=%s&unicode=%s%s",
             $this->base,
             $this->session,
             rawurlencode($to),
             rawurlencode($from),
-            rawurlencode($text),
+            $this->encode_message($text),
             $this->callback,
+            $this->unicode,
             $concat
         );
         return $this->_parse_send ($this->_execgw($comm));
+    }
+
+    /**
+    * Encode message text according to required standard
+    * @param text mixed  Input text of message.
+    * @return mixed  Return encoded text of message.
+    * @access public
+    */
+    function encode_message ($text) {
+        if ($this->unicode != true) {
+            //standard encoding
+            return rawurlencode($text);
+        } else {
+            //unicode encoding
+            $uni_text_len = mb_strlen ($text, "UTF-8");
+            $out_text = "";
+
+            //encode each character in text
+            for ($i=0; $i<$uni_text_len; $i++) {
+                $out_text .= $this->uniord(mb_substr ($text, $i, 1, "UTF-8"));
+            }
+
+            return $out_text;
+        }
+    }
+
+    /**
+    * Unicode function replacement for ord()
+    * @param c mixed  Unicode character.
+    * @return mixed  Return HEX value (with leading zero) of unicode character.
+    * @access public
+    */
+    function uniord($c) {
+        $ud = 0;
+        if (ord($c{0})>=0 && ord($c{0})<=127)
+            $ud = ord($c{0});
+        if (ord($c{0})>=192 && ord($c{0})<=223)
+            $ud = (ord($c{0})-192)*64 + (ord($c{1})-128);
+        if (ord($c{0})>=224 && ord($c{0})<=239)
+            $ud = (ord($c{0})-224)*4096 + (ord($c{1})-128)*64 + (ord($c{2})-128);
+        if (ord($c{0})>=240 && ord($c{0})<=247)
+            $ud = (ord($c{0})-240)*262144 + (ord($c{1})-128)*4096 + (ord($c{2})-128)*64 + (ord($c{3})-128);
+        if (ord($c{0})>=248 && ord($c{0})<=251)
+            $ud = (ord($c{0})-248)*16777216 + (ord($c{1})-128)*262144 + (ord($c{2})-128)*4096 + (ord($c{3})-128)*64 + (ord($c{4})-128);
+        if (ord($c{0})>=252 && ord($c{0})<=253)
+            $ud = (ord($c{0})-252)*1073741824 + (ord($c{1})-128)*16777216 + (ord($c{2})-128)*262144 + (ord($c{3})-128)*4096 + (ord($c{4})-128)*64 + (ord($c{5})-128);
+        if (ord($c{0})>=254 && ord($c{0})<=255) //error
+            $ud = false;
+        return sprintf("%04x", $ud);
+    }
+
+    /**
+    * Spend voucher with sms credits
+    * @param token mixed  The 16 character voucher number.
+    * @return mixed  Status code
+    * @access public
+    */
+    function token_pay ($token) {
+        $comm = sprintf ("%s/http/token_pay?session_id=%s&token=%s",
+        $this->base,
+        $this->session,
+        $token);
+
+        return $this->_execgw($comm);
     }
 
     /**
@@ -206,7 +290,7 @@ class Clickatell_Core {
             return $this->_curl($command);
         if ($this->sending_method == "fopen")
             return $this->_fopen($command);
-        die ("Unsupported sending method!");
+        return "Unsupported sending method!";
     }
 
     /**
@@ -242,7 +326,7 @@ class Clickatell_Core {
             fclose ($handler);
             return $result;
         } else {
-            die ("Error while executing fopen sending method!<br>Please check does PHP have OpenSSL support and check does PHP version is greater than 4.3.0.");
+            return "Error while executing fopen sending method!<br>Please check does PHP have OpenSSL support and check does PHP version is greater than 4.3.0.";
         }
     }
 
@@ -254,7 +338,7 @@ class Clickatell_Core {
     	$session = substr($result, 4);
         $code = substr($result, 0, 2);
         if ($code!="OK") {
-            die ("Error in SMS authorization! ($result)");
+            return "Error in SMS authorization! ($result)";
         }
         return $session;
     }
@@ -266,7 +350,7 @@ class Clickatell_Core {
     function _parse_send ($result) {
     	$code = substr($result, 0, 2);
     	if ($code!="ID") {
-    	    die ("Error sending SMS! ($result)");
+    	    return "Error sending SMS! ($result)";
     	} else {
     	    $code = "OK";
     	}
@@ -288,9 +372,18 @@ class Clickatell_Core {
     */
     function _chk_curl() {
         if (!extension_loaded('curl')) {
-            die ("This SMS API class can not work without CURL PHP module! Try using fopen sending method.");
+            return "This SMS API class can not work without CURL PHP module! Try using fopen sending method.";
         }
     }
-}
 
-?>
+    /**
+    * Check for Multibyte String Functions PHP module - mbstring
+    * @access private
+    */
+    function _chk_mbstring() {
+        if (!extension_loaded('mbstring')) {
+            return "Error. This SMS API class is setup to use Multibyte String Functions module - mbstring, but module not found. Please try to set unicode=false in class or install mbstring module into PHP.";
+        }
+    }
+
+}

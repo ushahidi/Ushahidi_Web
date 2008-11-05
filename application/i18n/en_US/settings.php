@@ -60,6 +60,24 @@ $lang = array
 	(
 		'numeric'		=> 'The phone 3 field should contain numbers only.',
 		'length' => 'The phone 3 field is too long'
-	)			
+	),
+	
+	'clickatell_api' => array
+	(
+		'required'		=> 'The Clickatell API number field is required.',
+		'length'		=> 'The Clickatell API number field must be no more 20 characters long.',
+	),
+	
+	'clickatell_username' => array
+	(
+		'required'		=> 'The Clickatell Username field is required.',
+		'length'		=> 'The Clickatell Username field must be no more 50 characters long.',
+	),
+	
+	'clickatell_password' => array
+	(
+		'required'		=> 'The Clickatell Password field is required.',
+		'length'		=> 'The Clickatell Password field must be at least 5 and no more 50 characters long.',
+	)		
 	
 );

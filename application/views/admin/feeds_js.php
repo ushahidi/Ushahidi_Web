@@ -12,30 +12,31 @@ function fillFields(id, feed_name, feed_url,
 	
 }
 
-// Ajax Submission
-function userAction ( action, id, feed_name, feed_url,feed_active, 
-	confirmAction )
+// Form Submission
+function feedAction ( action, confirmAction, id )
 {
+	var statusMessage;
 	var answer = confirm('Are You Sure You Want To ' 
 		+ confirmAction + ' items?')
-	
-	if (answer) {
+	if (answer){
+		// Set Category ID
+		$("#feed_id_action").attr("value", id);
 		// Set Submit Type
-		$("#action").attr( "value", action );
-		// Set form values for deletion so it passes the validation test
-		$("#feed_id").attr( "value",unescape( id ) );
-		$("#feed_name").attr( "value", unescape(feed_name) );
-		$("#feed_url").attr("value",
-		 	unescape(feed_url));
-		
-		$("#feed_active").attr( "value",
-		 	unescape( feed_active ));
-		
-		
+		$("#action").attr("value", action);		
 		// Submit Form
-		$("#feedMain").submit();			
+		$("#feedListing").submit();			
 	
 	} else{
 		return false;
 	}
+}
+
+// Ajax Refresh Feeds
+function refreshFeeds()
+{
+	$('#feeds_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+	$.get("<?php echo url::base() . 'admin/feeds/' ?>",
+		function(data){
+			location.reload();
+	  	});
 }

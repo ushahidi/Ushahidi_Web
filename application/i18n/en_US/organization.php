@@ -19,6 +19,22 @@
 		(
 			'required' => 'Please provide a little description about the 
 				organization.'
+		),
+		
+		'organization_email' => array
+		(
+			'email'		  => 'The organization email field does not appear to contain a valid email address?',
+			'length'	  => 'The organization email field must be at least 4 and no more 100 characters long.'
+		),
+		
+		'organization_phone1' => array
+		(
+			'length'		=> 'The organization phone 1 field must be at least 3 and no more 50 characters long.'
+		),
+		
+		'organization_phone2' => array
+		(
+			'length'		=> 'The organization phone 1 field must be at least 3 and no more 50 characters long.'
 		)
 	);
 
