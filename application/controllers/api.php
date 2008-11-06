@@ -301,7 +301,7 @@ class Api_Controller extends Controller {
 		$replar = array(); //assists in proper xml generation
 
 		//find incidents
-		$query = "SELECT i.id AS incidentid,l.id AS locationid, l.location_name AS locationname, 
+		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle, i.incident_description AS incidentdescription,l.id AS locationid, l.location_name AS locationname, 
 			c.id AS categoryid, c.category_title AS categorytitle  
 			FROM `incident` AS i 
 			INNER JOIN `location` as l ON l.id = i.location_id 

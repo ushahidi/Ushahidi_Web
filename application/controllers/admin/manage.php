@@ -22,7 +22,7 @@ class Manage_Controller extends Admin_Controller
 	function index()
 	{	
 		$this->template->content = new View('admin/categories');
-		
+		$this->template->content->title = 'Categories';
 		
 		// setup and initialize form field names
 		$form = array
@@ -222,8 +222,9 @@ class Manage_Controller extends Admin_Controller
             // No! We have validation errors, we need to show the form again, with the errors
 	        else
 			{
-	            // repopulate the form fields
-	            $form = arr::overwrite($form, $post->as_array());
+				
+	             // repopulate the form fields
+		         $form = arr::overwrite( $form, $post->as_array() ); 
 
                // populate the error fields, if any
                 $errors = arr::overwrite($errors, 
