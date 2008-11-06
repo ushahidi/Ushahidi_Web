@@ -71,8 +71,8 @@ class Alerts_Controller extends Main_Controller {
             $post->add_rules('alert_lon','required','between[-180,180]'); // Validate for maximum and minimum longitude values
 			
             // Add a callback, to validate the mobile phone/email (See the methods below)
-            $post->add_callbacks('alert_mobile', array($this, '_mobile_check'));
-            $post->add_callbacks('alert_email', array($this, '_email_check'));
+            $post->add_callbacks('alert_mobile', array($this, 'mobile_check'));
+            $post->add_callbacks('alert_email', array($this, 'email_check'));
 			
 			
             // Test to see if things passed the rule checks
@@ -130,7 +130,7 @@ class Alerts_Controller extends Main_Controller {
     /*
      * Retrieves Previously Cached Geonames Cities
      */
-    public function _get_cities()
+    private function _get_cities()
     {
         $cities = ORM::factory('city')->orderby('city', 'asc')->find_all();
         $city_select = array('' => 'Select A City');
@@ -143,7 +143,7 @@ class Alerts_Controller extends Main_Controller {
     /*
      * Checks to see if a previous alert has been set for the mobile phone
      */
-    public function _mobile_check(Validation $post)
+    public function mobile_check(Validation $post)
     {
         // If add->rules validation found any errors, get me out of here!
         if (array_key_exists('alert_mobile', $post->errors()) 
@@ -168,7 +168,7 @@ class Alerts_Controller extends Main_Controller {
     /*
      * Checks to see if a previous alert has been set for the email address
      */
-    public function _email_check(Validation $post)
+    public function email_check(Validation $post)
     {
         // If add->rules validation found any errors, get me out of here!
         if (array_key_exists('alert_email', $post->errors()) 
