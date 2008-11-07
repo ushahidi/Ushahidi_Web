@@ -288,6 +288,7 @@ class Reports_Controller extends Admin_Controller
 		}
 		else
 		{
+			$mobile_id = "";
 			$this->template->content->show_messages = false;
 		}
 	
@@ -815,7 +816,6 @@ class Reports_Controller extends Admin_Controller
     {
         return "<script type=\"text/javascript\">
 				$(document).ready(function() {
-			    	$('#category_add').show('slow');
 				    $('a#category_toggle').click(function() {
 				    $('#category_add').toggle(400);
 				    return false;

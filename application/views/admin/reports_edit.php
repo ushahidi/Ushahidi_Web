@@ -117,7 +117,7 @@
                                     print '</span>';
                                     print form::close();
                                     ?> 
-                                    </div>
+                                </div>
 
 			                    <div class="category">
                         	    <?php

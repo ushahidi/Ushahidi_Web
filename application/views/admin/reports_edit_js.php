@@ -4,6 +4,7 @@
 
 		/* Dynamic categories */
 		$(document).ready(function() {
+			$('#category_add').hide();
 		    $('#add_new_category').click(function() { 
 		        var category_name = $("input#category_name").val();
 		        var category_description = $("input#category_description").val();
