@@ -6,21 +6,28 @@
 	<style media="all" type="text/css">@import "<?php echo url::base() ?>media/css/all.css";</style>
 	<style media="all" type="text/css">@import "<?php echo url::base() ?>media/css/photoslider.css";</style>
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>/media/css/ie6.css" media="screen"/><![endif]-->
-	
-	<?php echo html::script('media/js/jquery'); ?>
-	<?php echo html::script('media/js/jquery.validate.min'); ?>
-	<?php echo html::script('media/js/jquery.ui.min'); ?>
 	<?php
+	// Load OpenLayers before jQuery!
 	if ($map_enabled)
 	{
 		echo html::script('media/js/OpenLayers/OpenLayers');
+	}	
+	
+	// Load jQuery
+	echo html::script('media/js/jquery');
+	echo html::script('media/js/jquery.validate.min');
+	echo html::script('media/js/jquery.ui.min');
+	
+	// Other stuff to load only we have the map enabled
+	if ($map_enabled)
+	{
 		echo html::script('media/js/OpenLayers/LoadingPanel');
 		echo $api_url . "\n";
 		if ($main_page) {
 			echo html::script('media/js/accessibleUISlider.jQuery');
 			echo html::script('media/js/jquery.flot');
 			?>
-			<!--[if IE]><script language="javascript" type="text/javascript" src="<?php echo url::base() ?>/media/js/excanvas.pack.js"></script><![endif]-->
+			<!--[if IE]><script language="javascript" type="text/javascript" src="<?php echo url::base() ?>media/js/excanvas.pack.js"></script><![endif]-->
 			<?php
 			echo html::stylesheet('media/css/jquery-ui-themeroller');
 		}

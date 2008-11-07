@@ -779,31 +779,34 @@ class Reports_Controller extends Admin_Controller
 	 private function _color_picker_js()
     {
      return "<script type=\"text/javascript\">
-                $('#category_color').ColorPicker({
-                        onSubmit: function(hsb, hex, rgb) {
-                            $('#category_color').val(hex);
-                        },
-                        onChange: function(hsb, hex, rgb) {
-                            $('#category_color').val(hex);
-                        },
-                        onBeforeShow: function () {
-                            $(this).ColorPickerSetColor(this.value);
-                        }
-                    })
-                .bind('keyup', function(){
-                    $(this).ColorPickerSetColor(this.value);
-                });
-
+                $(document).ready(function() {
+					$('#category_color').ColorPicker({
+	                        onSubmit: function(hsb, hex, rgb) {
+	                            $('#category_color').val(hex);
+	                        },
+	                        onChange: function(hsb, hex, rgb) {
+	                            $('#category_color').val(hex);
+	                        },
+	                        onBeforeShow: function () {
+	                            $(this).ColorPickerSetColor(this.value);
+	                        }
+	                    })
+	                .bind('keyup', function(){
+	                    $(this).ColorPickerSetColor(this.value);
+	                });
+				});
             </script>";
     }
     
     private function _date_picker_js() 
     {
         return "<script type=\"text/javascript\">
-				$(\"#incident_date\").datepicker({ 
-				showOn: \"both\", 
-				buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
-				buttonImageOnly: true 
+				$(document).ready(function() {
+					$(\"#incident_date\").datepicker({ 
+					showOn: \"both\", 
+					buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
+					buttonImageOnly: true 
+					});
 				});
 			</script>";	
     }
@@ -811,10 +814,12 @@ class Reports_Controller extends Admin_Controller
     private function _new_category_toggle_js()
     {
         return "<script type=\"text/javascript\">
-			    $('#category_add').show('slow');
-			    $('a#category_toggle').click(function() {
-			    $('#category_add').toggle(400);
-			    return false;
+				$(document).ready(function() {
+			    	$('#category_add').show('slow');
+				    $('a#category_toggle').click(function() {
+				    $('#category_add').toggle(400);
+				    return false;
+					});
 				});
 			</script>";
     }

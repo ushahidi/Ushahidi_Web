@@ -212,8 +212,8 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->categories = $categories;
 		
 		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
-		$this->template->header->js = $myPacker->pack();
+		//$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
+		//$this->template->header->js = $myPacker->pack();
 	}
 
 } // End Main

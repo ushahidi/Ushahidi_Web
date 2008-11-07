@@ -4,7 +4,6 @@
 
 		/* Dynamic categories */
 		$(document).ready(function() {
-		    $('#user_categories_message').hide(); //This is not needed until the user adds a category 
 		    $('#add_new_category').click(function() { 
 		        var category_name = $("input#category_name").val();
 		        var category_description = $("input#category_description").val();
@@ -33,8 +32,6 @@
 						if ( data.status == 'saved')
 						{
 							// alert(category_name+" "+category_description+" "+category_color);
-					        $('#user_categories_message').show(); //Let the user know that they need to check categories for them to be added
-
 					        $('#user_categories').append("<li><label><input type=\"checkbox\"name=\"incident_category[]\" value=\""+data.id+"\" class=\"check-box\" />"+category_name+"</label></li>");
 							$('#category_add').hide();
 						}
@@ -49,12 +46,14 @@
 
 
 		// Date Picker JS
-		$("#incident_date").datepicker({ 
-		    showOn: "both", 
-		    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
-		    buttonImageOnly: true 
+		$(document).ready(function() {
+			$("#incident_date").datepicker({ 
+			    showOn: "both", 
+			    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
+			    buttonImageOnly: true 
+			});
 		});
-	
+		
 		function addFormField(div, field, hidden_id, field_type) {
 			var id = document.getElementById(hidden_id).value;
 			$("#" + div).append("<div class=\"row link-row second\" id=\"" + field + "_" + id + "\"><input type=\"" + field_type + "\" name=\"" + field + "[]\" class=\"" + field_type + " long\" /><a href=\"#\" class=\"add\" onClick=\"addFormField('" + div + "','" + field + "','" + hidden_id + "','" + field_type + "'); return false;\">add</a><a href=\"#\" class=\"rem\"  onClick='removeFormField(\"#" + field + "_" + id + "\"); return false;'>remove</a></div>");

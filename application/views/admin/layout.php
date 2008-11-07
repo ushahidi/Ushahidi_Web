@@ -6,15 +6,21 @@
 	<style type="text/css" media="all" >@import "<?php echo url::base() ?>media/css/admin/all.css";</style>
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>media/css/admin/ie6.css" media="screen"/><![endif]-->
 	<link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>media/css/datepicker/ui.datepicker.css" media="screen"/>
-	<?php echo html::script('media/js/jquery'); ?>
-	<?php echo html::script('media/js/jquery.form'); ?>
-	<?php echo html::script('media/js/jquery.ui.min'); ?>
 	<?php
+	
+	// Load OpenLayers
 	if ($map_enabled)
 	{
 		echo html::script('media/js/OpenLayers/OpenLayers');
 		echo $api_url . "\n";
 	}
+	
+	// Load jQuery
+	echo html::script('media/js/jquery');
+	echo html::script('media/js/jquery.form');
+	echo html::script('media/js/jquery.ui.min');
+	
+	// Load ColorPicker
 	if ($colorpicker_enabled)
 	{
 		echo html::stylesheet('media/css/colorpicker');
