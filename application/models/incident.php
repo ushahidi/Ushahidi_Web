@@ -7,7 +7,7 @@
 class Incident_Model extends ORM
 {
 	protected $has_many = array('category' => 'incident_category', 'media', 'verify', 'comment', 'rating');
-	protected $has_one = array('location','incident_person','user');
+	protected $has_one = array('location','incident_person','user','message');
 	
 	// Database table name
 	protected $table_name = 'incident';

@@ -70,6 +70,7 @@
 								{
 									$message_id = $message->id;
 									$message_from = $message->message_from;
+									$incident_id = $message->incident_id;
 									$message_description = $message->message;
 									$message_date = date('Y-m-d', strtotime($message->message_date));
 									?>
@@ -102,7 +103,15 @@
 										<td class="col-3"><?php echo $message_date; ?></td>
 										<td class="col-4">
 											<ul>
-												<li class="none-separator"><a href="#">Approve</a></li>
+												<?php
+												if ($incident_id != 0) {
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
+												}
+												else
+												{
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $message_id ."\">Create Report?</a></li>";
+												}
+												?>
 												<li><a href="#" class="del" onclick="">Delete</a></li>
 											</ul>
 										</td>

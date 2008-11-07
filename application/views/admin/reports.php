@@ -80,7 +80,7 @@
 									$incident_date = date('Y-m-d', strtotime($incident->incident_date));
 									$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
 									
-									if ($incident_mode == 1)
+									if ($incident_mode == 1)	// Submitted via WEB
 									{
 										$submit_mode = "WEB";
 										// Who submitted the report?
@@ -100,6 +100,11 @@
 												$submit_by = 'Unknown';
 											}
 										}
+									}
+									elseif ($incident_mode == 2) 	// Submitted via SMS
+									{
+										$submit_mode = "SMS";
+										$submit_by = $incident->message->message_from;
 									}
 									
 									$incident_location = $incident->location->location_name;

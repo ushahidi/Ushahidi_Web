@@ -183,5 +183,11 @@
 			$("#reportForm").bind("keypress", function(e) {
 			  if (e.keyCode == 13) return false;
 			});
+			
+			// Show Messages Box
+		    $('a#messages_toggle').click(function() {
+		    $('#show_messages').toggle(400);
+		    return false;
+			});
 
 		});

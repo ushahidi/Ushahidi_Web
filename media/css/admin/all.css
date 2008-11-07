@@ -783,14 +783,14 @@ span.dots {
 .time .sel-holder {
 	display:inline;
 }
-a.new-cat {
+a.new-cat, a.show-messages {
 	text-decoration:underline;
 	font-size:10px;
 	padding:1px 0 0 18px;
 	background:url(../../img/admin/icon-plus.gif) no-repeat 0 4px;
 	float:right;
 }
-a.new-cat:hover{ text-decoration:none;}
+a.new-cat:hover, a.show-messages:hover;{ text-decoration:none;}
 .category {
 	background:#f5f5f5;
 	width:377px;
@@ -833,6 +833,16 @@ a.new-cat:hover{ text-decoration:none;}
 	overflow:hidden;
 	padding:0 0 18px;
 	display: none;
+}
+#show_messages{
+	display: none;
+	font-size:10px;
+	color:#666;
+	margin-bottom:5px;
+}
+#show_messages .message{
+	padding:2px 0 2px 0;
+	border-bottom:1px dotted #ccc;
 }
 /*-- f-col --*/
 .f-col-1 {
