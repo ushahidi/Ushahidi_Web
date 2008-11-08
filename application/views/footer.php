@@ -16,5 +16,6 @@
 		</div>
 		<!-- end footer block -->
 	</div>
+	<?php echo $google_analytics; ?>
 </body>
 </html>

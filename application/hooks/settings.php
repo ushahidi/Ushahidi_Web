@@ -21,6 +21,7 @@ Kohana::config_set('settings.default_lon', $settings->default_lon);
 Kohana::config_set('settings.default_zoom', $settings->default_zoom);
 Kohana::config_set('settings.items_per_page', $settings->items_per_page);
 Kohana::config_set('settings.items_per_page_admin', $settings->items_per_page_admin);
+Kohana::config_set('settings.google_analytics', $settings->google_analytics);
 
 $default_map = $settings->default_map;
 $api_google = $settings->api_google;

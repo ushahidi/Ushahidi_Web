@@ -72,7 +72,12 @@
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_comments', $yesno_array, $form['allow_comments']); ?>
 							</span>
-						</div>																							
+						</div>
+						<div class="row">
+							<h4>Google Analytics</h4>
+							Web Property ID - Format: UA-XXXXX-XX &nbsp;&nbsp;
+							<?php print form::input('google_analytics', $form['google_analytics'], ' class="text"'); ?>
+						</div>																						
 					</div>
 		
 					<div class="simple_border"></div>

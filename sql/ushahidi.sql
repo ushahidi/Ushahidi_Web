@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `category_type` tinyint(4) default NULL,
   `category_title` varchar(255) default NULL,
-  `category_description` text,
+  `category_description` text default NULL,
   `category_color` varchar(20) default NULL,
   `category_visible` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
@@ -717,6 +717,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `clickatell_api` varchar(30) default NULL,
   `clickatell_username` varchar(100) default NULL,
   `clickatell_password` varchar(100) default NULL,
+  `google_analytics` text default NULL,
   `date_modify` datetime default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -789,7 +790,7 @@ CREATE TABLE IF NOT EXISTS `verified` (
   `incident_id` bigint(20) default NULL,
   `idp_id` bigint(20) default NULL,
   `user_id` int(11) default NULL,
-  `verified_comment` longtext,
+  `verified_comment` longtext default NULL,
   `verified_date` datetime default NULL,
   `verified_status` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)

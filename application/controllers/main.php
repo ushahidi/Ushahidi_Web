@@ -56,6 +56,10 @@ class Main_Controller extends Template_Controller {
 		
 		$this->template->header->this_page = "";
 		
+		// Google Analytics
+		$google_analytics = Kohana::config('settings.google_analytics');
+		$this->template->footer->google_analytics = $this->_google_analytics($google_analytics);
+		
         // Load profiler
         // $profiler = new Profiler;		
 		
@@ -214,6 +218,28 @@ class Main_Controller extends Template_Controller {
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
+	}
+	
+	
+	/*
+	* Google Analytics
+	* @param text mixed  Input google analytics web property ID.
+    * @return mixed  Return google analytics HTML code.
+	*/
+	private function _google_analytics($google_analytics = false)
+	{
+		$html = "";
+		if (!empty($google_analytics)) {
+			$html = "<script type=\"text/javascript\">
+				var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");
+				document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));
+				</script>
+				<script type=\"text/javascript\">
+				var pageTracker = _gat._getTracker(\"" . $google_analytics . "\");
+				pageTracker._trackPageview();
+				</script>";
+		}
+		return $html;
 	}
 
 } // End Main

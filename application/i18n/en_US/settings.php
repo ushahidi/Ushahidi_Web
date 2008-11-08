@@ -78,6 +78,11 @@ $lang = array
 	(
 		'required'		=> 'The Clickatell Password field is required.',
 		'length'		=> 'The Clickatell Password field must be at least 5 and no more 50 characters long.',
+	),
+
+	'google_analytics' => array
+	(
+		'length'		=> 'The Google Analytics field must contain a valid Web Property ID in the format UA-XXXXX-XX.',
 	)		
 	
 );
