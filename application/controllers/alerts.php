@@ -19,6 +19,9 @@ class Alerts_Controller extends Main_Controller {
         $this->template->header->this_page = 'alerts';
         $this->template->content = new View('alerts');
 		
+		// Display news feeds?
+		$this->template->content->allow_feed = Kohana::config('settings.allow_feed');
+		
         // Retrieve default country, latitude, longitude
         $default_country = Kohana::config('settings.default_country');
 		

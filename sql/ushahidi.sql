@@ -699,6 +699,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `site_key` varchar(100) default NULL,
   `allow_reports` tinyint(4) NOT NULL default '1',
   `allow_comments` tinyint(4) NOT NULL default '1',
+  `allow_feed` tinyint(4) NOT NULL default '1',
   `default_map` tinyint(4) NOT NULL default '1' COMMENT '1 - GOOGLE MAPS, 2 - LIVE MAPS, 3 - YAHOO MAPS, 4 - OPEN STREET MAPS',
   `api_google` varchar(200) default NULL,
   `api_yahoo` varchar(200) default NULL,

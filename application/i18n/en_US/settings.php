@@ -44,6 +44,12 @@ $lang = array
 		'between' => 'The allow comments field does not appear to contain a valid value?'
 	),
 	
+	'allow_feed' => array
+	(
+		'required'		=> 'The include feed field is required.',
+		'between' => 'The include feed field does not appear to contain a valid value?'
+	),
+	
 	'sms_no1' => array
 	(
 		'numeric'		=> 'The phone 1 field should contain numbers only.',

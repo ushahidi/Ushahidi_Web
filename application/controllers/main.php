@@ -48,6 +48,9 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
         $this->template->header->api_url = Kohana::config('settings.api_url');
 		
+		// Display News Feed?
+		$this->template->header->allow_feed = Kohana::config('settings.allow_feed');
+		
 		// Javascript Header
 		$this->template->header->map_enabled = FALSE;
 		$this->template->header->datepicker_enabled = FALSE;

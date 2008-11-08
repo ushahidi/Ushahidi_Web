@@ -37,6 +37,10 @@
 		echo html::stylesheet('media/css/datepicker/ui.datepicker');
 	}
 	echo html::script('media/js/photoslider.js');
+	
+	if ($allow_feed == 1) {
+		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
+	}
 	?>
 	<script type="text/javascript">
 		<?php echo $js . "\n"; ?>

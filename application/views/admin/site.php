@@ -74,6 +74,12 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4>Include RSS News Feed on Website?</h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('allow_feed', $yesno_array, $form['allow_feed']); ?>
+							</span>
+						</div>
+						<div class="row">
 							<h4>Google Analytics</h4>
 							Web Property ID - Format: UA-XXXXX-XX &nbsp;&nbsp;
 							<?php print form::input('google_analytics', $form['google_analytics'], ' class="text"'); ?>

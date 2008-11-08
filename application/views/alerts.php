@@ -76,13 +76,20 @@
 		  </label>
 		  <span><?php print form::input('alert_email', $form['alert_email']); ?></span>
 		</div>
+		<?php
+		if ($allow_feed == 1 )
+		{
+		?>
 		<div class="box">
 		  <label>
 		    <input type="checkbox" checked="checked" readonly="readonly" />
 		    <span>RSS Feeds (copy the url below)</span>
 		  </label>
-		  <span><input type="text" value="http://feeds.ushahidi.com/some_variable" readonly="readonly" /></span>
+		  <span><input type="text" value="http://<?php echo $_SERVER['SERVER_NAME']; ?>/feed/" readonly="readonly" /></span>
 		</div>
+		<?php
+		}
+		?>
 	      </div>
 	    </div>
 	    <input id="btn-send-alerts" type="submit" value="Send Me Alerts!" />

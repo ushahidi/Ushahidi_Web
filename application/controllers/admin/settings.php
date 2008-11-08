@@ -35,6 +35,7 @@ class Settings_Controller extends Admin_Controller
 			'items_per_page_admin' => '',
 			'allow_reports' => '',
 			'allow_comments' => '',
+			'allow_feed' => '',
 			'google_analytics' => ''
 			
 	    );
@@ -63,6 +64,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('items_per_page_admin','required','between[10,50]');
 			$post->add_rules('allow_reports','required','between[0,1]');
 			$post->add_rules('allow_comments','required','between[0,1]');
+			$post->add_rules('allow_feed','required','between[0,1]');
 			$post->add_rules('google_analytics','length[0,20]');
 			
 			// Test to see if things passed the rule checks
@@ -77,6 +79,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->items_per_page_admin = $post->items_per_page_admin;
 				$settings->allow_reports = $post->allow_reports;
 				$settings->allow_comments = $post->allow_comments;
+				$settings->allow_feed = $post->allow_feed;
 				$settings->google_analytics = $post->google_analytics;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
@@ -115,6 +118,7 @@ class Settings_Controller extends Admin_Controller
 				'items_per_page_admin' => $settings->items_per_page_admin,
 				'allow_reports' => $settings->allow_reports,
 				'allow_comments' => $settings->allow_comments,
+				'allow_feed' => $settings->allow_feed,
 				'google_analytics' => $settings->google_analytics
 		    );
 		}		
