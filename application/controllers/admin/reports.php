@@ -288,7 +288,6 @@ class Reports_Controller extends Admin_Controller
 		}
 		else
 		{
-			$mobile_id = "";
 			$this->template->content->show_messages = false;
 		}
 	
@@ -406,7 +405,9 @@ class Reports_Controller extends Admin_Controller
 					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				}
 				// Is this an SMS submitted report?
-				if($mobile_id)
+                //XXX: It is possible that 'mobile_id' may not be available through
+                //$_POST
+				if(isset($mobile_id))
 				{
 					$incident->incident_mode = 2;		// Incident submission type
 				}
@@ -780,34 +781,31 @@ class Reports_Controller extends Admin_Controller
 	 private function _color_picker_js()
     {
      return "<script type=\"text/javascript\">
-                $(document).ready(function() {
-					$('#category_color').ColorPicker({
-	                        onSubmit: function(hsb, hex, rgb) {
-	                            $('#category_color').val(hex);
-	                        },
-	                        onChange: function(hsb, hex, rgb) {
-	                            $('#category_color').val(hex);
-	                        },
-	                        onBeforeShow: function () {
-	                            $(this).ColorPickerSetColor(this.value);
-	                        }
-	                    })
-	                .bind('keyup', function(){
-	                    $(this).ColorPickerSetColor(this.value);
-	                });
-				});
+                $('#category_color').ColorPicker({
+                        onSubmit: function(hsb, hex, rgb) {
+                            $('#category_color').val(hex);
+                        },
+                        onChange: function(hsb, hex, rgb) {
+                            $('#category_color').val(hex);
+                        },
+                        onBeforeShow: function () {
+                            $(this).ColorPickerSetColor(this.value);
+                        }
+                    })
+                .bind('keyup', function(){
+                    $(this).ColorPickerSetColor(this.value);
+                });
+
             </script>";
     }
     
     private function _date_picker_js() 
     {
         return "<script type=\"text/javascript\">
-				$(document).ready(function() {
-					$(\"#incident_date\").datepicker({ 
-					showOn: \"both\", 
-					buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
-					buttonImageOnly: true 
-					});
+				$(\"#incident_date\").datepicker({ 
+				showOn: \"both\", 
+				buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
+				buttonImageOnly: true 
 				});
 			</script>";	
     }
@@ -815,11 +813,10 @@ class Reports_Controller extends Admin_Controller
     private function _new_category_toggle_js()
     {
         return "<script type=\"text/javascript\">
-				$(document).ready(function() {
-				    $('a#category_toggle').click(function() {
-				    $('#category_add').toggle(400);
-				    return false;
-					});
+			    $('#category_add').show('slow');
+			    $('a#category_toggle').click(function() {
+			    $('#category_add').toggle(400);
+			    return false;
 				});
 			</script>";
     }
