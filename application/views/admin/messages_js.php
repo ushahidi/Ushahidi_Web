@@ -53,4 +53,11 @@
 			};
 			$("#" + field).attr("value", autoreply);		
 		}
+
+        function submitIds()
+        {
+            if (confirm("Delete cannot be undone. Are you sure you want to continue?"))
+                $('#messagesMain').submit(); 
+        }
+
 		
