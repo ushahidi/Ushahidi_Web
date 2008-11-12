@@ -124,19 +124,21 @@
 							<strong>Color:</strong><br />
 							<?php print form::input('category_color', '', ' class="text"'); ?>
 							<script type="text/javascript" charset="utf-8">
-								$('#category_color').ColorPicker({
-									onSubmit: function(hsb, hex, rgb) {
-										$('#category_color').val(hex);
-									},
-									onChange: function(hsb, hex, rgb) {
-										$('#category_color').val(hex);
-									},
-									onBeforeShow: function () {
+								$(document).ready(function() {
+									$('#category_color').ColorPicker({
+										onSubmit: function(hsb, hex, rgb) {
+											$('#category_color').val(hex);
+										},
+										onChange: function(hsb, hex, rgb) {
+											$('#category_color').val(hex);
+										},
+										onBeforeShow: function () {
+											$(this).ColorPickerSetColor(this.value);
+										}
+									})
+									.bind('keyup', function(){
 										$(this).ColorPickerSetColor(this.value);
-									}
-								})
-								.bind('keyup', function(){
-									$(this).ColorPickerSetColor(this.value);
+									});
 								});
 							</script>
 						</div>
