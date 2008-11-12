@@ -6,6 +6,10 @@
 
 $settings = ORM::factory('settings', 1);
 
+// Set Site Language
+Kohana::config_set('locale.language', $settings->site_language);
+
+// Main Site Settings
 Kohana::config_set('settings.site_name', $settings->site_name);
 Kohana::config_set('settings.site_tagline', $settings->site_tagline);
 Kohana::config_set('settings.allow_feed', $settings->allow_feed);

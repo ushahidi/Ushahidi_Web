@@ -6,13 +6,13 @@
         <div class="big-block-bottom">
           <div class="big-map-block">
             <div class="filter">
-              <strong>MEDIA FILTER</strong>
+              <strong><?php echo Kohana::lang('ui_main.media_filter'); ?></strong>
               <ul>
-                <li><a class="active" href="#"><span>Reports</span></a></li>
-                <li><a href="#"><span>News</span></a></li>
-                <li><a href="#"><span>Pictures</span></a></li>
-                <li><a href="#"><span>Video</span></a></li>
-                <li><a href="#"><span>All</span></a></li>
+                <li><a class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
+                <li><a href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
+                <li><a href="#"><span><?php echo Kohana::lang('ui_main.pictures'); ?></span></a></li>
+                <li><a href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
+                <li><a href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
               </ul>
             </div>
             <div id="map" class="map-holder"></div>
@@ -52,18 +52,18 @@
                 </div>
               </div>
               <div class="report-btns">
-                <a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span>Submit an Incident!</span></a>
-                <?php if (!empty($phone_array)) ?><a class="btn-grey" href="#"><span>Submit via SMS</span></a>
+                <a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span><?php echo Kohana::lang('ui_main.submit'); ?></span></a>
+                <?php if (!empty($phone_array)) ?><a class="btn-grey" href="#"><span><?php echo Kohana::lang('ui_main.submit_sms'); ?></span></a>
               </div>
 			  <?php if (!empty($phone_array)) { ?>
-              <p>Send your SMS to 
+              <p><?php echo Kohana::lang('ui_main.submit_sms1'); ?>  
 				<?php foreach ($phone_array as $phone) {
 					echo "<strong>". $phone ."</strong>";
 					if ($phone != end($phone_array)) {
 						echo ", ";
 					}
 				} ?>
-				 on your phone</p><?php } ?>
+				 <?php echo Kohana::lang('ui_main.submit_sms2'); ?></p><?php } ?>
             </div>
           </div>
         </div>
@@ -71,16 +71,16 @@
       <!-- end map and media filter <> start incidents and news blocks -->
       <div class="blocks-holder">
         <div class="small-block incidents">
-          <h3>Incidents <span>(from map above listed chronologically)</span></h3>
+          <h3><?php echo Kohana::lang('ui_main.incidents_listed'); ?></h3>
           <div class="block-bg">
             <div class="block-top">
               <div class="block-bottom">
                 <ul>
                   <li>
                     <ul class="title">
-                      <li class="w-01">TITLE</li>
-                      <li class="w-02">LOCATION</li>
-                      <li class="w-03">DATE</li>
+                      <li class="w-01"><?php echo Kohana::lang('ui_main.title'); ?></li>
+                      <li class="w-02"><?php echo Kohana::lang('ui_main.location'); ?></li>
+                      <li class="w-03"><?php echo Kohana::lang('ui_main.date'); ?></li>
                     </ul>
                   </li>
                   <?php
@@ -123,16 +123,16 @@
           </div>
         </div>
         <div class="small-block news">
-          <h3>Official &amp; Mainstream News</h3>
+          <h3><?php echo Kohana::lang('ui_main.official_news'); ?></h3>
           <div class="block-bg">
             <div class="block-top">
               <div class="block-bottom">
                 <ul>
 	                <li>
 	                  <ul class="title">
-	                    <li class="w-01">TITLE</li>
-	                    <li class="w-02">SOURCE</li>
-	                    <li class="w-03">DATE</li>
+	                    <li class="w-01"><?php echo Kohana::lang('ui_main.title'); ?></li>
+	                    <li class="w-02"><?php echo Kohana::lang('ui_main.source'); ?></li>
+	                    <li class="w-03"><?php echo Kohana::lang('ui_main.date'); ?></li>
 	                  </ul>
 	                </li>
 					<?php

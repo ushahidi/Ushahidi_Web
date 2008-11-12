@@ -7,7 +7,7 @@
 					<h1>Submit A New Report</h1>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>Your Report Has Been Submitted!</h3>
+						<h3>Your Report has been submitted to our staff for review. We will get back to you shortly if necessary.</h3>
 
 						<div class="thanks_msg"><a href="<?php echo
 							url::base().'reports' ?>">Return to the reports page</a>

@@ -31,6 +31,7 @@ class Settings_Controller extends Admin_Controller
 			'site_name' => '',
 			'site_tagline' => '',
 			'site_email' => '',
+			'site_language' => '',
 			'items_per_page' => '',
 			'items_per_page_admin' => '',
 			'allow_reports' => '',
@@ -60,6 +61,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_name', 'required', 'length[3,50]');
 			$post->add_rules('site_tagline', 'length[3,100]');
 			$post->add_rules('site_email', 'email', 'length[4,100]');
+			$post->add_rules('site_language','required', 'in_array[en_US, fr_FR]');
 			$post->add_rules('items_per_page','required','between[10,50]');
 			$post->add_rules('items_per_page_admin','required','between[10,50]');
 			$post->add_rules('allow_reports','required','between[0,1]');
@@ -75,6 +77,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->site_name = $post->site_name;
 				$settings->site_tagline = $post->site_tagline;
 				$settings->site_email = $post->site_email;
+				$settings->site_language = $post->site_language;
 				$settings->items_per_page = $post->items_per_page;
 				$settings->items_per_page_admin = $post->items_per_page_admin;
 				$settings->allow_reports = $post->allow_reports;
@@ -114,6 +117,7 @@ class Settings_Controller extends Admin_Controller
 		        'site_name' => $settings->site_name,
 				'site_tagline' => $settings->site_tagline,
 				'site_email' => $settings->site_email,
+				'site_language' => $settings->site_language,
 				'items_per_page' => $settings->items_per_page,
 				'items_per_page_admin' => $settings->items_per_page_admin,
 				'allow_reports' => $settings->allow_reports,
@@ -127,6 +131,7 @@ class Settings_Controller extends Admin_Controller
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
+		$this->template->content->site_language_array = array('en_US'=>'English (US)','fr_FR'=>'Français');
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
 	}

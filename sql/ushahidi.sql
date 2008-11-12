@@ -697,6 +697,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `site_tagline` varchar(255) default NULL,
   `site_email` varchar(120) default NULL,
   `site_key` varchar(100) default NULL,
+  `site_language` varchar(10) NOT NULL default 'en_US',
+  `site_timezone` varchar(80) default NULL,
   `allow_reports` tinyint(4) NOT NULL default '1',
   `allow_comments` tinyint(4) NOT NULL default '1',
   `allow_feed` tinyint(4) NOT NULL default '1',

@@ -50,6 +50,12 @@
 							<?php print form::input('site_email', $form['site_email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
+							<h4>Site Language (Locale)</h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('site_language', $site_language_array, $form['site_language']); ?>
+							</span>
+						</div>
+						<div class="row">
 							<h4>Items Per Page - Front End</h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('items_per_page', $items_per_page_array, $form['items_per_page']); ?>

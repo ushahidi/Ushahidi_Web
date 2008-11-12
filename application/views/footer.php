@@ -2,15 +2,15 @@
 		<div id="footer">
 			<div class="footer-info">
 				<ul>
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Report an Incident </a></li>
-					<li><a href="#">Get Alerts</a></li>
-					<li><a href="#">How to Help</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Contact Us</a></li>
-					<li><a href="#">Blog</a></li>
+					<li><a href="#"><?php echo Kohana::lang('ui_main.home'); ?></a></li>
+					<li><a href="#"><?php echo Kohana::lang('ui_main.report_an_incident'); ?></a></li>
+					<li><a href="#"><?php echo Kohana::lang('ui_main.alerts'); ?></a></li>
+					<li><a href="#"><?php echo Kohana::lang('ui_main.help'); ?></a></li>
+					<li><a href="#"><?php echo Kohana::lang('ui_main.about'); ?></a></li>
+					<li><a href="#"><?php echo Kohana::lang('ui_main.contact'); ?></a></li>
+					<li><a href="#"><?php echo Kohana::lang('ui_main.blog'); ?></a></li>
 				</ul>
-				<p>Copyright &copy; <?php echo date("Y"); ?> Ushahidi.com. All Rights Reserved.</p>
+				<p><?php echo Kohana::lang('ui_main.copyright'); ?></p>
 			</div>
 			<strong class="f-logo"><a href="http://www.ushahidi.com">Ushahidi</a></strong>
 		</div>

@@ -63,6 +63,15 @@ class Main_Controller extends Template_Controller {
 		$google_analytics = Kohana::config('settings.google_analytics');
 		$this->template->footer->google_analytics = $this->_google_analytics($google_analytics);
 		
+		// Create Language Session
+		if (isset($_GET['lang']) && !empty($_GET['lang'])) {
+			$_SESSION['lang'] = $_GET['lang'];
+		}
+		if (isset($_SESSION['lang']) && !empty($_SESSION['lang'])){
+			Kohana::config_set('locale.language', $_SESSION['lang']);
+		}
+		$this->template->header->site_language = Kohana::config('locale.language');
+		
         // Load profiler
         // $profiler = new Profiler;		
 		
