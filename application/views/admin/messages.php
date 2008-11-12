@@ -10,7 +10,7 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#">DELETE</a></li>
+							<li><a href="#" onClick="submitIds()">DELETE</a></li>
 						</ul>
 					</div>
 				</div>
@@ -112,7 +112,8 @@
 													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $message_id ."\">Create Report?</a></li>";
 												}
 												?>
-												<li><a href="#" class="del" onclick="">Delete</a></li>
+												<li>
+                                                <a href="<?php echo url::base().'admin/messages/delete/'.$message_id ?>" onclick="return confirm('Delete cannot be undone. Are you sure you want to continue?')" class="del">Delete</a></li>
 											</ul>
 										</td>
 									</tr>

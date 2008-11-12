@@ -21,6 +21,10 @@ class Messages_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/messages');
 		$this->template->content->title = 'Messages';
+
+        //So far this assumes that selected 'message_id's are for deleting
+        if (isset($_POST['message_id']))
+            $this->deleteMessages($_POST['message_id']);
 		
 		// Is this an Inbox or Outbox Filter?
 		if (!empty($_GET['type']))
@@ -179,5 +183,33 @@ class Messages_Controller extends Admin_Controller
 	    }
 		
 	}
+
+    /**
+     * Delete a single message
+     */
+    function delete($id = FALSE)
+    {
+        if ($id)
+        {
+            ORM::factory('message')->delete($id);
+        }
+        //XXX:get the current page number
+        url::redirect(url::base().'admin/messages/');
+    }
+
+    /**
+     * Delete selected messages
+     */
+    function deleteMessages($ids)
+    {
+        foreach($ids as $id)
+        {
+            ORM::factory('message')->delete($id);
+        }
+        //XXX:get the current page number
+        url::redirect(url::base().'admin/messages/');
+
+    }
+
 		
 }
