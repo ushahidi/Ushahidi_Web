@@ -51,7 +51,7 @@
 		<!-- start header block -->
 		<div id="header">
 			<div class="header-info">
-				<strong><a href ="<?php echo url::base(); ?>"><?php echo $site_name; ?></a></strong>
+				<strong><a href ="<?php echo url::base(); ?>" <?php echo $site_name_style; ?>><?php echo $site_name; ?></a></strong>
 				<p><?php echo $site_tagline; ?></p>
 			</div>
 			<ul id="menu">
