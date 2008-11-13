@@ -1,4 +1,7 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
+ 
+class Book_Core {
+
 /**
  * CLICKATELL SMS API
  *

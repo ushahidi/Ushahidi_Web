@@ -35,8 +35,11 @@ function feedAction ( action, confirmAction, id )
 function refreshFeeds()
 {
 	$('#feeds_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-	$.get("<?php echo url::base() . 'admin/feeds/' ?>",
+	$.get("<?php echo url::base() . 'admin/feeds' ?>",
 		function(data){
 			location.reload();
 	  	});
-}
+			$("#action").attr("value", 'r');		
+			// Submit Form
+			$("#feedListing").submit();
+}	

@@ -4,6 +4,7 @@
 				<div class="tabs">
 					<!-- tab -->
 					<div class="tab">
+						
 						<ul>
 							<li><a href="javascript:refreshFeeds();">REFRESH NEWS FEEDS</a></li><span id="feeds_loading"></span>
 						</ul>

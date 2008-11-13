@@ -9,7 +9,8 @@ class Feeds_Controller extends Controller
 	function index()
 	{
 		// Get All Feeds From DB
-		$feeds = ORM::factory('feed')->find_all();
+		//$feeds = ORM::factory('feed')->find_all();
+		$feeds = array();
 		foreach ($feeds as $feed)
 		{
 			// Parse Feed URL using Feed Helper
