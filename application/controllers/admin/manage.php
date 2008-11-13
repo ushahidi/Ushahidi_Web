@@ -393,7 +393,7 @@ class Manage_Controller extends Admin_Controller
 			// Parse Feed URL using Feed Helper
 			$feed_data = $this->_setup_simplepie( $feed->feed_url );
 			
-			foreach($feed_data->get_items() as $feed_data_item)
+			foreach($feed_data->get_items(0,50) as $feed_data_item)
 			{
 				$title = $feed_data_item->get_title();
 				$link = $feed_data_item->get_link();
@@ -404,7 +404,7 @@ class Manage_Controller extends Admin_Controller
 				{
 					// We need to check for duplicates!!!
 					// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
-					$dupe_count = ORM::factory('feed_item')->where('item_title',$title)->where('item_date',date("Y-m-d H:i:s",strtotime($title)))->count_all();
+					$dupe_count = ORM::factory('feed_item')->where('item_title',$title)->where('item_date',date("Y-m-d H:i:s",strtotime($date)))->count_all();
 					
 					if ($dupe_count == 0) {
 						$newitem = new Feed_Item_Model();
