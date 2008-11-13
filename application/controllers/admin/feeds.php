@@ -13,7 +13,9 @@ class Feeds_Controller extends Controller
 		foreach ($feeds as $feed)
 		{
 			// Parse Feed URL using Feed Helper
-			$feed_data = feed::parse($feed->feed_url);
+			//$feed_data = feed::parse($feed->feed_url);
+			//don't function anymore
+			$feed_data = array();
 			foreach($feed_data as $feed_data_item)
 			{
 				// Make Sure Title is Set (Atleast)
