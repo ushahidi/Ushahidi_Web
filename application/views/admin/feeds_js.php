@@ -39,4 +39,7 @@ function refreshFeeds()
 		function(data){
 			location.reload();
 	  	});
+	$("#action").attr("value", 'r');		
+	// Submit Form
+	$("#feedListing").submit();
 }
