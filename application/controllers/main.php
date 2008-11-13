@@ -264,17 +264,5 @@ class Main_Controller extends Template_Controller {
 		}
 		return $html;
 	}
-	
-	private function _parse_feeds( $feed_url ) 
-	{
-		$data = new SimplePie();
-		$data->set_feed_url( $feed_url );
-		$data->enable_cache(false);
-		$data->enable_order_by_date(true);
-		$data->init();
-		$data->handle_content_type();
-
-		return $data;
-	}
 
 } // End Main

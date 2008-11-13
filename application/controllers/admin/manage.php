@@ -322,8 +322,6 @@ class Manage_Controller extends Admin_Controller
 						$form_saved = TRUE;
 						$form_action = "MODIFIED";
 					}
-				}else if( $post->action == 'r' ){
-					$this->_parse_feed();	
 				} else {										// Save Action
 					// SAVE Feed
 					$feed->feed_name = $post->feed_name;
@@ -369,70 +367,5 @@ class Manage_Controller extends Admin_Controller
         $this->template->js = new View('admin/feeds_js');
 	}
 	
-	/**
-	 * setup simplepie
-	 */
-	private function _setup_simplepie( $feed_url ) 
-	{
-		$data = new SimplePie();
-		$data->set_feed_url( $feed_url );
-		$data->enable_cache(false);
-		$data->enable_order_by_date(true);
-		$data->init();
-		$data->handle_content_type();
-
-		return $data;
-	}
 	
-	/**
-	 * parse feed and
-	 * send feed items to database
-	 */
-	private function _parse_feed(){
-		
-		$feeds = ORM::factory('feed')->find_all();
-		foreach ($feeds as $feed)
-		{
-			$feed_data = $this->_setup_simplepie( $feed->feed_url );
-			foreach($feed_data->get_items() as $feed_data_item)
-			{
-				// Make Sure Title is Set (Atleast)
-				$title = $feed_data_item->get_title();
-				$date = $feed_data_item->get_date();
-				$description = $feed_data_item->get_description();
-				$link = $feed_data_item->get_link();
-				
-				if (isset($title ) && !empty($title ))
-				{
-					// We need to check for duplicates!!!
-					// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
-					$dupe_count = ORM::factory('feed_item')->where('item_title',$feed_data_item->get_title())->where('item_date',date("Y-m-d H:i:s",strtotime($feed_data_item->get_date())))->count_all();
-					
-					if ($dupe_count == 0) {
-						$newitem = new Feed_Item_Model();
-						$newitem->feed_id = $feed->id;
-						$newitem->item_title = $feed_data_item->get_title();
-						if (isset($description) && !empty($description))
-						{
-							$newitem->item_description = $description;
-						}
-						if (isset($link) && !empty($link))
-						{
-							$newitem->item_link = $link;
-						}
-						if (isset($date) && !empty($date))
-						{
-							$newitem->item_date = date("Y-m-d H:i:s",strtotime($date));
-						}
-						// Set todays date
-						else
-						{
-							$newitem->item_date = date("Y-m-d H:i:s",time());
-						}
-						$newitem->save();
-					}
-				}
-			}
-		}
-	}
 }
