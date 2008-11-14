@@ -386,50 +386,85 @@ class Manage_Controller extends Admin_Controller
 	/**
 	 * parse feed and send feed items to database
 	 */
-	private function _parse_feed() {
+	private function _parse_feed()
+	{
+		// Max number of feeds to keep
+		$max_feeds = 100;
+		
+		// Today's Date
+		$today = strtotime('now');
+		
+		// Get All Feeds From DB
 		$feeds = ORM::factory('feed')->find_all();
 		foreach ($feeds as $feed)
 		{
-			// Parse Feed URL using Feed Helper
-			$feed_data = $this->_setup_simplepie( $feed->feed_url );
+			$last_update = $feed->feed_update;
 			
-			foreach($feed_data->get_items(0,50) as $feed_data_item)
+			// Has it been more than 24 hours since the last update?
+			if ( ((int)$today - (int)$last_update) > 86400	)	// 86400 = 24 hours
 			{
-				$title = $feed_data_item->get_title();
-				$link = $feed_data_item->get_link();
-				$description = $feed_data_item->get_description();
-				$date = $feed_data_item->get_date();
-				// Make Sure Title is Set (Atleast)
-				if (isset($title) && !empty($title ))
+				// Parse Feed URL using Feed Helper
+				$feed_data = $this->_setup_simplepie( $feed->feed_url );
+
+				foreach($feed_data->get_items(0,50) as $feed_data_item)
 				{
-					// We need to check for duplicates!!!
-					// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
-					$dupe_count = ORM::factory('feed_item')->where('item_title',$title)->where('item_date',date("Y-m-d H:i:s",strtotime($date)))->count_all();
-					
-					if ($dupe_count == 0) {
-						$newitem = new Feed_Item_Model();
-						$newitem->feed_id = $feed->id;
-						$newitem->item_title = $title;
-						if (isset($description) && !empty($description))
-						{
-							$newitem->item_description = $description;
+					$title = $feed_data_item->get_title();
+					$link = $feed_data_item->get_link();
+					$description = $feed_data_item->get_description();
+					$date = $feed_data_item->get_date();
+					// Make Sure Title is Set (Atleast)
+					if (isset($title) && !empty($title ))
+					{
+						// We need to check for duplicates!!!
+						// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
+						$dupe_count = ORM::factory('feed_item')->where('item_title',$title)->where('item_date',date("Y-m-d H:i:s",strtotime($date)))->count_all();
+
+						if ($dupe_count == 0) {
+							$newitem = new Feed_Item_Model();
+							$newitem->feed_id = $feed->id;
+							$newitem->item_title = $title;
+							if (isset($description) && !empty($description))
+							{
+								$newitem->item_description = $description;
+							}
+							if (isset($link) && !empty($link))
+							{
+								$newitem->item_link = $link;
+							}
+							if (isset($date) && !empty($date))
+							{
+								$newitem->item_date = date("Y-m-d H:i:s",strtotime($date));
+							}
+							// Set todays date
+							else
+							{
+								$newitem->item_date = date("Y-m-d H:i:s",time());
+							}
+							$newitem->save();
 						}
-						if (isset($link) && !empty($link))
-						{
-							$newitem->item_link = $link;
-						}
-						if (isset($date) && !empty($date))
-						{
-							$newitem->item_date = date("Y-m-d H:i:s",strtotime($date));
-						}
-						// Set todays date
-						else
-						{
-							$newitem->item_date = date("Y-m-d H:i:s",time());
-						}
-						$newitem->save();
 					}
 				}
+				
+				// Get Feed Item Count
+				$feed_count = ORM::factory('feed_item')->where('feed_id', $feed->id)->count_all();
+				if ($feed_count > $max_feeds) {
+					// Excess Feeds
+					$feed_excess = $feed_count - $max_feeds;
+
+					// Delete Excess Feeds
+					foreach (ORM::factory('feed_item')
+						->where('feed_id', $feed->id)
+						->orderby('id', 'ASC')
+						->limit($feed_excess)
+						->find_all() as $del_feed)
+					{
+						$del_feed->delete($del_feed->id);
+					}
+				}
+
+				// Set feed update date
+				$feed->feed_update = strtotime('now');
+				$feed->save();
 			}
 		}
 	}

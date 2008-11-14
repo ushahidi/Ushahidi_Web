@@ -549,6 +549,7 @@ CREATE TABLE IF NOT EXISTS `feed`
 `feed_url` VARCHAR(255) default NULL,
 `feed_cache` TEXT default NULL,
 `feed_active` TINYINT DEFAULT 1,
+`feed_update` INT DEFAULT 0 NOT NULL,
 PRIMARY KEY (`id`)
 );
 
@@ -804,6 +805,8 @@ CREATE TABLE IF NOT EXISTS `verified` (
 --
 
 
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `alert`
 --
@@ -822,6 +825,26 @@ CREATE TABLE IF NOT EXISTS `alert` (
 
 --
 -- Dumping data for table `alert`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alert_sent`
+--
+
+CREATE TABLE `alert_sent`
+(
+`id` BIGINT unsigned  NOT NULL AUTO_INCREMENT,
+`incident_id` BIGINT NOT NULL,
+`alert_id` BIGINT NOT NULL,
+`alert_date` DATETIME NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `alert_sent`
 --
 
 

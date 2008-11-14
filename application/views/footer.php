@@ -17,5 +17,8 @@
 		<!-- end footer block -->
 	</div>
 	<?php echo $google_analytics; ?>
+	
+	<!-- Task Scheduler -->
+	<img src="<?php echo url::base() . 'scheduler'; ?>" height="1" width="1" border="0">
 </body>
 </html>
