@@ -207,9 +207,6 @@
 			$("select#startDate, select#endDate").accessibleUISlider({
 				labels: 6,
 				stop: function(e, ui) {
-					
-					console.log(markers.strategies[1].distance);
-					
 					var startDate = $("#startDate").val();
 					var endDate = $("#endDate").val();
 					var currentCat = $("#currentCat").val();
