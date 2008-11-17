@@ -47,15 +47,25 @@ class Json_Controller extends Template_Controller
 			}
 		}
 		
+		$where_text = '';
+        if (isset($_GET['s']) && !empty($_GET['s'])) {
+        	$start_date = $_GET['s']; 
+        	$where_text .= " AND UNIX_TIMESTAMP(incident.incident_date) >= '" . $start_date . "'";
+        }
+        if (isset($_GET['e']) && !empty($_GET['e'])) {
+        	$end_date = $_GET['e']; 
+        	$where_text .= " AND UNIX_TIMESTAMP(incident.incident_date) <= '" . $end_date . "'";
+        }
         // Do we have a category id to filter by?
         if (is_numeric($category_id) && $category_id != 0)
         {
             // Retrieve markers by category
             // XXX: Might need to replace magic numbers
+  
             foreach (ORM::factory('incident')
                      ->join('incident_category', 'incident.id', 'incident_category.incident_id','INNER')
                      ->select('incident.*')
-                     ->where('incident.incident_active = 1 AND incident_category.category_id = ' . $category_id)->orderby('incident.incident_dateadd', 'desc')
+                     ->where('incident.incident_active = 1 AND incident_category.category_id = ' . $category_id . $where_text)->orderby('incident.incident_dateadd', 'desc')
                      ->find_all() as $marker)
             {			
                 $json_item = "{";
@@ -123,7 +133,7 @@ class Json_Controller extends Template_Controller
         {
             // Retrieve all markers
             foreach (ORM::factory('incident')
-                     ->where('incident_active = 1')
+                     ->where('incident_active = 1' . $where_text)
                      ->orderby('incident_dateadd', 'desc')
                      ->find_all() as $marker)
             {			

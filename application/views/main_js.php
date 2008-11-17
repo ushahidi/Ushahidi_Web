@@ -116,7 +116,7 @@
 				$("a[@id^='cat_']").removeClass("active");
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
-				markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
+//				markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
 			});
 			
 			if (!$("#startDate").val()) {

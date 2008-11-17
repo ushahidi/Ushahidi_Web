@@ -79,7 +79,7 @@
 			
 			
 			// Create the markers layer
-			function addMarkers(catID){
+			function addMarkers(catID,startDate,endDate){
 				if (markers){
 					for (var i = 0; i < markers.length; i++) {
 						markers[i].destroy();
@@ -88,8 +88,15 @@
 					map.removeLayer(markers);
 				}
 				
-				if (catID != ''){
-					catID = '/?c=' + catID;
+				params = [];
+ 				if (typeof(catID) != 'undefined' && catID.length > 0){
+					params.push('c=' + catID);
+				}
+				if (typeof(startDate) != 'undefined'){
+					params.push('s=' + startDate);
+				}
+				if (typeof(endDate) != 'undefined'){
+					params.push('e=' + endDate);
 				}
 				markers = new OpenLayers.Layer.Vector("Reports", {
 					strategies: [
@@ -99,7 +106,7 @@
 						})
 					],
 					protocol: new OpenLayers.Protocol.HTTP({
-	                    url: "<?php echo url::base() . 'json' ?>" + catID,
+	                    url: "<?php echo url::base() . 'json' ?>" + '/?' + params.join('&'),
 	                    format: new OpenLayers.Format.GeoJSON()
 	                }),
 					projection: new OpenLayers.Projection("EPSG:4326"),
@@ -200,10 +207,13 @@
 			$("select#startDate, select#endDate").accessibleUISlider({
 				labels: 6,
 				stop: function(e, ui) {
+					
+					console.log(markers.strategies[1].distance);
+					
 					var startDate = $("#startDate").val();
 					var endDate = $("#endDate").val();
 					var currentCat = $("#currentCat").val();
-					
+/*					
 					var sliderfilter = new OpenLayers.Rule({
 						filter: new OpenLayers.Filter.Comparison(
 						{
@@ -217,12 +227,14 @@
 					style.rules = [];
 					style.addRules(sliderfilter);					
 					markers.styleMap.styles["default"] = style; 
-					markers.refresh();
+*/					//markers.refresh();
+					//markers.redraw();
+					addMarkers('',startDate,endDate);
 					
 					// refresh graph
 					plotGraph();
 				}
-			}).hide();
+			}); //.hide();
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
