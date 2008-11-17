@@ -6,6 +6,8 @@
 
 class Alert_Model extends ORM
 {
+	protected $has_many = array('incident' => 'alert_sent');
+	
 	// Database table name
 	protected $table_name = 'alert';
 }

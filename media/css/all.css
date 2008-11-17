@@ -26,7 +26,7 @@ a:visited{
 }
 #header .header-info {
 	float:left;
-	width:400px;
+	width:360px;
 	padding:26px 0 0 20px
 }
 #header .header-info strong,
@@ -41,42 +41,49 @@ a:visited{
 	margin:0;
 	font:12px/18px Arial, Helvetica, sans-serif;
 }
-#header ul {
+#header #menu {
 	float:right;
 	margin:70px 0 0;
 	padding:0;
 	background:url(../img/nav-bg.gif) no-repeat 100% 0;
 }
-#header ul li {
+#header #menu li {
 	float:left;
 	padding:0 0 0 1px;
 	list-style:none;
 	font:14px/29px Arial, Helvetica, sans-serif;
 	background:url(../img/nav-separator.gif) no-repeat;
 }
-#header ul li a {
+#header #menu li a {
 	float:left;
 	padding:0 9px;
 	color:#fff;
 	text-decoration:none;
 }
-#header ul li a.active,
-#header ul li a:hover {
+#header #menu li a.active,
+#header #menu li a:hover {
 	background:url(../img/nav-active.gif) repeat-x;
 	color:#333;
 }
-#header ul li.first a {background:url(../img/nav-first.gif) no-repeat !important;}
-#header ul li.first a:hover,
-#header ul li.first a.active {background-position:0 -29px !important;}
-#header ul li.last a {background:url(../img/nav-last.gif) no-repeat 100% 0 !important;}
-#header ul li.last a:hover,
-#header ul li.last a.active {background-position:100% -29px !important;}
-#header .search_box{
+#header #menu li.first a {background:url(../img/nav-first.gif) no-repeat !important;}
+#header #menu li.first a:hover,
+#header #menu li.first a.active {background-position:0 -29px !important;}
+#header #menu li.last a {background:url(../img/nav-last.gif) no-repeat 100% 0 !important;}
+#header #menu li.last a:hover,
+#header #menu li.last a.active {background-position:100% -29px !important;}
+#header .lang_search{
 	position:absolute;
 	top:0;
 	right:0;
 	float:right;
 	margin:10px 0 0 0;
+}
+#header .lang_box{
+	float:left;
+	margin-right:15px;
+}
+#header .search_box{
+	float:left;
 }
 #header input.searchbtn
 {
@@ -99,6 +106,15 @@ a:visited{
 	width:120px;
 	float:left;
 }
+#languages { float: left; margin:0; padding:0; }
+#languages li { display: inline; }
+#languages a { display: block; float: left; margin-right:10px; padding:2px 3px 0 3px; border: none; background: #333; }
+#languages a:hover { background-color: #999; }
+#languages a.active { background-color: #666; }
+#languages img{
+	border:none;
+}
+
 /*-----content-----*/
 #content {
 	clear:both;
@@ -995,8 +1011,8 @@ a.rem { background:url(../img/icon-minus.gif) no-repeat;}
 }
 
 
-/* View Reports */
-.report_rowtitle{
+/* View Reports / Help */
+.report_rowtitle, .org_rowtitle{
 	margin: 10px 0 5px 0;
 	padding-bottom:3px;
 	border-bottom:2px #000 solid;
@@ -1028,19 +1044,22 @@ a.rem { background:url(../img/icon-minus.gif) no-repeat;}
 	width:105px;
 	text-align:center;
 }
-.report_row1, .report_row2{
+.report_row1, .report_row2, .org_row1, .org_row2{
 	clear:both;
 	overflow:auto;
 	margin:0 0 10px 0;
 	padding:5px 0 5px 0;
 }
-.report_row1{
+.report_row1, .org_row1{
 	background-color:#eee;
 }
-.report_row1 h3, .report_row2 h3{
+.report_row1 h3, .report_row2 h3, .org_row1 h3, .org_row2 h3{
 	margin:0;
 	padding:0;
 	font-size:13px;
+}
+.org_row1, .org_row2{
+	padding:5px;
 }
 .report_yes,
 .report_no{
@@ -1051,6 +1070,28 @@ a.rem { background:url(../img/icon-minus.gif) no-repeat;}
 }
 .report_no{
 	color:#990000;
+}
+.org_contact{
+	border:1px #ccc solid;
+	margin-top:15px;
+	padding:10px;
+	background:#eee;
+	clear:both;
+	overflow:hidden;
+}
+.org_contact_row{
+	margin:0 0 15px 0;
+	clear:both;
+}
+.org_contact h3{
+	margin:0 0 5px 0;
+	padding:0 0 3px 0;
+	border-bottom:1px solid #ccc;
+}
+.org_contact h4{
+	margin:0 0 5px 0;
+	padding:0;
+	font-weight:bold;
 }
 
 /* form */
@@ -1107,17 +1148,21 @@ label.error {
 .short{
 	width:100px;
 }
-.btn_blue{
+.btn_blue, .btn_gray{
 	padding:0 0 2px;
 	width:118px;
 	height:31px;
 	color:#fff;
 	font:14px Arial, Helvetica, sans-serif;
-	background:url(../img/btn-blue.gif) no-repeat;
 	border:0;
 	cursor:pointer;	
 }
-
+.btn_blue{
+	background:url(../img/btn-blue.gif) no-repeat;	
+}
+.btn_gray{
+	background:url(../img/btn-gray.gif) no-repeat;	
+}
 /*-- pager --*/
 ul.pager {
 	margin:0;

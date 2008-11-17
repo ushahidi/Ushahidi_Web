@@ -12,32 +12,32 @@
 					<div class="tab">
 						<?php print form::open(NULL,array('id' => 'userMain',
 						 	'name' => 'userMain')); ?>
-						<input type="hidden" id="user_id" name="user_id" value="">
-						<input type="hidden" name="action" id="action" value="">
+						<input type="hidden" id="user_id" name="user_id" value="<?php echo $form['user_id']; ?>">
+						<input type="hidden" name="action" id="action" value="a">
 						<div class="tab_form_item">
 							<strong>Username:</strong><br />
-							<?php print form::input('username', '', 
+							<?php print form::input('username', $form['username'], 
 								' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
 							<strong>Password:</strong><br />
-							<?php print form::password('password', '', 
+							<?php print form::password('password', $form['password'], 
 								' class="text"'); ?>
 						</div>
 						
 						<div class="tab_form_item">
 							<strong>Full Name:</strong><br />
-							<?php print form::input('name', '', ' class="text"'); ?>
+							<?php print form::input('name', $form['name'], ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
 							<strong>Email Address:</strong><br />
-							<?php print form::input('email', '', ' class="text"'); ?>
+							<?php print form::input('email', $form['email'], ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
 							<strong>Role:</strong><br />
 							<span class="my-sel-holder">
 								<?php print form::dropdown('role',
-									$roles,1); ?>
+									$roles,$form['role']); ?>
 							</span>
 						</div>
 						<div class="tab_form_item">
@@ -73,7 +73,7 @@
 					?>
 						<!-- green-box -->
 						<div class="green-box">
-							<h3>Your Settings Have Been Saved!</h3>
+							<h3>The User Has Been <?php echo $form_action; ?>!</h3>
 						</div>
 					<?php
 					}
@@ -118,19 +118,9 @@
 										$name = $user->name;
 										$email = $user->email;
 										
-										//ORM can do much better, will look 
-										// into it more.
-										//get role ids
-										$role_id =  
-										$roles_users->get_role_id($user_id );
-										
-										$roles = 
-											ORM::factory('role')->where('id',
-											$role_id->role_id )->find();
-										
-										//get role names	
-										$role = $roles->name;
-										
+										foreach ($user->roles as $user_role) {
+											$role = $user_role->name;
+										}
 										?>
 										<tr>
 											
@@ -140,7 +130,7 @@
 												</div>
 											</td>
 											<td class="col-2">
-												<h4><?php echo $email; ?></h4>
+												<?php echo $email; ?>
 											</td>
 											<td class="col-3"><?php echo $role; ?></td>
 											<td class="col-4">
@@ -149,15 +139,9 @@
 	'<?php echo(rawurlencode($user_id)); ?>',
     '<?php echo(rawurlencode($username)); ?>',
 	'<?php echo(rawurlencode($name)); ?>',
-	'<?php echo(rawurlencode($role_id->role_id));?>',
+	'<?php echo(rawurlencode($role));?>',
 	'<?php echo(rawurlencode($email)); ?>')">Edit</a></li>
-	<li><a href="#" onclick="userAction('d',
-		'<?php echo(rawurlencode($user_id)); ?>',
-		'<?php echo(rawurlencode($username)); ?>',
-		'<?php echo(rawurlencode($name)); ?>',
-		'<?php echo(rawurlencode($role_id->role_id));?>',
-		'<?php echo(rawurlencode($email)); ?>',
-		'DELETE');" class="del">Delete</a></li>
+		<li><a href="javascript:userAction('d','DELETE','<?php echo(rawurlencode($user_id)); ?>')" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>

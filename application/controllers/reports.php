@@ -102,7 +102,16 @@ class Reports_Controller extends Main_Controller {
 			$post->add_rules('latitude','required','between[-90,90]');		// Validate for maximum and minimum latitude values
 			$post->add_rules('longitude','required','between[-180,180]');	// Validate for maximum and minimum longitude values
 			$post->add_rules('location_name','required', 'length[3,200]');
-			$post->add_rules('incident_category.*','required','numeric');
+			
+			//XXX: Hack to validate for no checkboxes checked
+			if (!isset($_POST['incident_category'])) {
+				$post->incident_category = "";
+				$post->add_error('incident_category','required');
+			}
+			else
+			{
+				$post->add_rules('incident_category.*','required','numeric');
+			}
 			
             
 			// Validate only the fields that are filled in	
@@ -433,6 +442,12 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->incident_neighbors = $this->_get_neighbors(
 				$incident->location->latitude, 
 				$incident->location->longitude);
+
+		// Get RSS News Feeds
+		$this->template->content->feeds = ORM::factory('feed_item')
+			->limit('5')
+            ->orderby('item_date', 'desc')
+            ->find_all();
 		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
@@ -543,7 +558,7 @@ class Reports_Controller extends Main_Controller {
 	private function _get_cities()
 	{
 		$cities = ORM::factory('city')->orderby('city', 'asc')->find_all();
-		$city_select = array('' => 'Select A City');
+		$city_select = array('' => Kohana::lang('ui_main.reports_select_city'));
 		foreach ($cities as $city) {
 			$city_select[$city->city_lon .  "," . $city->city_lat] = $city->city;
 		}

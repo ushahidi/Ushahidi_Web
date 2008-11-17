@@ -97,8 +97,8 @@ $config['extension_prefix'] = 'MY_';
 $config['modules'] = array
 (
 	MODPATH.'auth',      // Authentication
-	MODPATH.'forge',     // Form generation
-	MODPATH.'formation',     // Form generation
+	// MODPATH.'forge',     // Form generation
+	// MODPATH.'formation',     // Form generation
 	// MODPATH.'kodoc',     // Self-generating documentation
 	// MODPATH.'media',     // Media caching and compression
 	// MODPATH.'archive',   // Archive utility

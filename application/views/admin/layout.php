@@ -6,15 +6,21 @@
 	<style type="text/css" media="all" >@import "<?php echo url::base() ?>media/css/admin/all.css";</style>
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>media/css/admin/ie6.css" media="screen"/><![endif]-->
 	<link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>media/css/datepicker/ui.datepicker.css" media="screen"/>
-	<?php echo html::script('media/js/jquery'); ?>
-	<?php echo html::script('media/js/jquery.form'); ?>
-	<?php echo html::script('media/js/jquery.ui.min'); ?>
 	<?php
+	
+	// Load OpenLayers
 	if ($map_enabled)
 	{
 		echo html::script('media/js/OpenLayers/OpenLayers');
 		echo $api_url . "\n";
 	}
+	
+	// Load jQuery
+	echo html::script('media/js/jquery');
+	echo html::script('media/js/jquery.form');
+	echo html::script('media/js/jquery.ui.min');
+	
+	// Load ColorPicker
 	if ($colorpicker_enabled)
 	{
 		echo html::stylesheet('media/css/colorpicker');
@@ -34,7 +40,7 @@
 				<strong>Ushahidi Engine v1.0</strong>
 				<ul>
 					<li class="none-separator">Welcome, <?php echo $admin_name; ?>!</li>
-					<li class="none-separator"><a href="#">Admin</a></li>
+					<li class="none-separator"><a href="#">My Profile</a></li>
 					<li><a href="log_out">Logout</a></li>
 				</ul>
 			</div>
@@ -55,13 +61,14 @@
 				<ul class="main-nav">
 					<li><a href="<?php echo url::base() ?>admin/dashboard" <?php if($this_page=="dashboard") echo "class=\"active\"" ;?>>Dashboard </a></li>
 					<li><a href="<?php echo url::base() ?>admin/reports" <?php if($this_page=="reports") echo "class=\"active\"" ;?>>Reports</a></li>
-					<li><a href="<?php echo url::base() ?>admin/manage" <?php if($this_page=="manage") echo "class=\"active\"" ;?>>Manage</a></li>
+					<li><a href="<?php echo url::base() ?>admin/messages" <?php if($this_page=="messages") echo "class=\"active\"" ;?>>Messages</a></li>
+					<?php if ($this->auth->logged_in('admin')){ ?><li><a href="<?php echo url::base() ?>admin/manage" <?php if($this_page=="manage") echo "class=\"active\"" ;?>>Manage</a></li><?php } ?>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
-					<li><a href="<?php echo url::base() ?>admin/settings">Settings</a></li>
+					<?php if ($this->auth->logged_in('admin')){ ?><li><a href="<?php echo url::base() ?>admin/settings/site">Settings</a></li>
 					<li><a href="<?php echo url::base() ?>admin/users">Users</a></li>
-					<li><a href="#">Plugins</a></li>
+					<li><a href="#">Plugins</a></li><?php } ?>
 				</ul>
 			</div>
 		</div>

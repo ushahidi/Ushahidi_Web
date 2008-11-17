@@ -31,10 +31,8 @@
 
                         // Trim to 150 characters without cutting words
                         //XXX: Perhaps delcare 150 as constant
-                        if ((strlen($incident_description) > 150) && (strlen($incident_description) > 1)) {
-                            $whitespaceposition = strpos($incident_description," ",145)-1;
-                            $incident_description = substr($incident_description, 0, $whitespaceposition);
-                        }
+						$incident_description = text::limit_chars($incident_description, 150, "...", true);
+						
                         $incident_date = date('Y-m-d', strtotime($incident->incident_date));
                         $incident_location = $incident->location->location_name;
                         $incident_verified = $incident->incident_verified;
@@ -53,7 +51,7 @@
                         echo "    </div>";
                         echo "    <div class=\"report_details report_col2\">";
                         echo "    	<h3><a href=\"" . url::base() . "reports/view/" . $incident_id . "\">" . $incident_title . "</a></h3>";
-                        echo $incident_description . " ...";
+                        echo $incident_description;
                         echo "  	</div>";
                         echo "    <div class=\"report_date report_col3\">";
                         echo $incident_date;

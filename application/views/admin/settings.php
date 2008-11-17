@@ -1,5 +1,5 @@
 			<div class="bg">
-				<h2><?php echo $title; ?> <a href="<?php echo url::base() . 'admin/settings' ?>" class="active">Map</a><a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a><a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a></h2>
+				<h2><?php echo $title; ?> <a href="<?php echo url::base() . 'admin/settings/site' ?>">Site</a><a href="<?php echo url::base() . 'admin/settings' ?>" class="active">Map</a><a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a><a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a></h2>
 				<?php print form::open(); ?>
 					<input type="hidden" id="default_zoom" name="default_zoom" value="<?php echo $form['default_zoom']; ?>" />
 					<div class="report-form">
@@ -50,6 +50,12 @@
 									<span class="my-sel-holder">
 										<?php print form::dropdown('default_country',$countries,$form['default_country']); ?>
 									</span>
+									
+									<div id="retrieve_cities">
+										<a href="javascript:retrieveCities()" id="retrieve">Retrieve Cities From Geonames</a>
+										<span id="cities_loading"></span>
+										<div id="city_count"></div>
+									</div>
 								</div>
 							</div>
 							<div class="has_border">

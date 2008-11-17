@@ -44,8 +44,23 @@ class Main_Controller extends Template_Controller {
         $this->template->footer  = new View('footer');
 		
         // Retrieve Default Settings
-        $this->template->header->site_name = Kohana::config('settings.site_name');
+		$site_name = Kohana::config('settings.site_name');
+			// Prevent Site Name From Breaking up if its too long
+			// by reducing the size of the font
+			if (strlen($site_name) > 20) {
+				$site_name_style = " style=\"font-size:21px;\"";
+			}
+			else
+			{
+				$site_name_style = "";
+			}
+        $this->template->header->site_name = $site_name;
+		$this->template->header->site_name_style = $site_name_style;
+		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
         $this->template->header->api_url = Kohana::config('settings.api_url');
+		
+		// Display News Feed?
+		$this->template->header->allow_feed = Kohana::config('settings.allow_feed');
 		
 		// Javascript Header
 		$this->template->header->map_enabled = FALSE;
@@ -54,6 +69,19 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js = '';
 		
 		$this->template->header->this_page = "";
+		
+		// Google Analytics
+		$google_analytics = Kohana::config('settings.google_analytics');
+		$this->template->footer->google_analytics = $this->_google_analytics($google_analytics);
+		
+		// Create Language Session
+		if (isset($_GET['lang']) && !empty($_GET['lang'])) {
+			$_SESSION['lang'] = $_GET['lang'];
+		}
+		if (isset($_SESSION['lang']) && !empty($_SESSION['lang'])){
+			Kohana::config_set('locale.language', $_SESSION['lang']);
+		}
+		$this->template->header->site_language = Kohana::config('locale.language');
 		
         // Load profiler
         // $profiler = new Profiler;		
@@ -86,11 +114,37 @@ class Main_Controller extends Template_Controller {
             ->where('incident_active', '1')
 			->limit('10')
             ->orderby('incident_date', 'desc')
-            ->find_all();		
+            ->find_all();
+		
+		
+		// Get SMS Numbers
+		$phone_array = array();
+		$sms_no1 = Kohana::config('settings.sms_no1');
+		$sms_no2 = Kohana::config('settings.sms_no2');
+		$sms_no3 = Kohana::config('settings.sms_no3');
+		if (!empty($sms_no1)) {
+			$phone_array[] = $sms_no1;
+		}
+		if (!empty($sms_no2)) {
+			$phone_array[] = $sms_no2;
+		}
+		if (!empty($sms_no3)) {
+			$phone_array[] = $sms_no3;
+		}
+		$this->template->content->phone_array = $phone_array;
+		
+
+		// Get RSS News Feeds
+		$this->template->content->feeds = ORM::factory('feed_item')
+			->limit('10')
+            ->orderby('item_date', 'desc')
+            ->find_all();
+		
 		
         // Get Slider Dates By Year
         $startDate = "";
         $endDate = "";
+
 
         // We need to use the DB builder for a custom query
         $db = new Database();	
@@ -125,6 +179,7 @@ class Main_Controller extends Template_Controller {
         }
         $this->template->content->startDate = $startDate;
         $this->template->content->endDate = $endDate;
+		
 		
         // get graph data
         // could not use DB query builder. It does not support parentheses yet
@@ -161,7 +216,8 @@ class Main_Controller extends Template_Controller {
 		
 	    $all_graphs .= " } ";
 		
-		$this->template->content->all_graphs = $all_graphs;
+		$this->template->content->all_graphs = $all_graphs;		
+		
 		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
@@ -185,6 +241,28 @@ class Main_Controller extends Template_Controller {
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
+	}
+	
+	
+	/*
+	* Google Analytics
+	* @param text mixed  Input google analytics web property ID.
+    * @return mixed  Return google analytics HTML code.
+	*/
+	private function _google_analytics($google_analytics = false)
+	{
+		$html = "";
+		if (!empty($google_analytics)) {
+			$html = "<script type=\"text/javascript\">
+				var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");
+				document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));
+				</script>
+				<script type=\"text/javascript\">
+				var pageTracker = _gat._getTracker(\"" . $google_analytics . "\");
+				pageTracker._trackPageview();
+				</script>";
+		}
+		return $html;
 	}
 
 } // End Main

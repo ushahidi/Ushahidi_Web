@@ -9,14 +9,20 @@ class Manage_Controller extends Admin_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->template->this_page = 'manage';		
+		$this->template->this_page = 'manage';
+		
+		// If this is not a super-user account, redirect to dashboard
+		if (!$this->auth->logged_in('admin'))
+        {
+             url::redirect('admin/dashboard');
+		}
 	}
 	
 	
 	function index()
 	{	
 		$this->template->content = new View('admin/categories');
-		
+		$this->template->content->title = 'Categories';
 		
 		// setup and initialize form field names
 		$form = array
@@ -31,6 +37,7 @@ class Manage_Controller extends Admin_Controller
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
+		$form_action = "";
 		
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -40,34 +47,53 @@ class Manage_Controller extends Admin_Controller
 			
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
-
-	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('category_title','required', 'length[3,200]');
-			$post->add_rules('category_description','required');
-			$post->add_rules('category_color','required', 'length[6,6]');
+	
+			if ($post->action == 'a')		// Add Action
+			{
+				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('category_title','required', 'length[3,80]');
+				$post->add_rules('category_description','required');
+				$post->add_rules('category_color','required', 'length[6,6]');
+			}
 			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
 				$category_id = $post->category_id;
 				$category = new Category_Model($category_id);
-				//delete action
-				if( $post->action == 'd' ){ 
-	            	$category_id = $post->category_id;
-					$category->delete( $category_id );
 				
-				} else {
-					// Yes! everything is valid
-					$category_id = $post->category_id;
+				if( $post->action == 'd' )				// Delete Action
+				{
+					$category->delete( $category_id );
+					$form_saved = TRUE;
+					$form_action = "DELETED";
+			
+				}
+				else if( $post->action == 'v' )			// Show/Hide Action
+				{
+	            	if ($category->loaded==true)
+					{
+						if ($category->category_visible == 1) {
+							$category->category_visible = 0;
+						}
+						else {
+							$category->category_visible = 1;
+						}
+						$category->save();
+						$form_saved = TRUE;
+						$form_action = "MODIFIED";
+					}
+				} 
+				else if( $post->action == 'a' ) 		// Save Action
+				{		
 					// SAVE Category
-					
 					$category->category_title = $post->category_title;
-					$category->category_description =
-					 $post->category_description;
+					$category->category_description = $post->category_description;
 					$category->category_color = $post->category_color;
 					$category->save();
 					$form_saved = TRUE;
-				}       
+					$form_action = "ADDED/EDITED";
+				}
 	        }
             // No! We have validation errors, we need to show the form again, with the errors
 	        else
@@ -93,8 +119,10 @@ class Manage_Controller extends Admin_Controller
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
 
+		$this->template->content->errors = $errors;
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->categories = $categories;
@@ -118,12 +146,16 @@ class Manage_Controller extends Admin_Controller
 	        'organization_id'      => '',
 			'organization_name'      => '',
 	        'organization_description'    => '',
-	        'organization_website'  => ''
+	        'organization_website'  => '',
+			'organization_email'  => '',
+			'organization_phone1'  => '',
+			'organization_phone2'  => ''
 	    );
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
+		$form_action = "";
 		
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -134,10 +166,16 @@ class Manage_Controller extends Admin_Controller
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
 
-	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('organization_name','required', 'length[3,70]');
-			$post->add_rules('organization_description','required');
-			$post->add_rules('organization_website','required','url');
+			if ($post->action == 'a')		// Add Action
+			{
+				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('organization_name','required', 'length[3,70]');
+				$post->add_rules('organization_description','required');
+				$post->add_rules('organization_website','required','url');
+				$post->add_rules('organization_email', 'email', 'length[4,100]');
+				$post->add_rules('organization_phone1', 'length[3,50]');
+				$post->add_rules('organization_phone2', 'length[3,50]');
+			}
 			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
@@ -146,31 +184,47 @@ class Manage_Controller extends Admin_Controller
 				
 				$organization = new Organization_Model($organization_id);
 				
-				//delete action
-				if( $post->action == 'd' ) { 
-	            	$organization_id = $post->organization_id;
+				if( $post->action == 'd' ) { 			// Delete Action
 					$organization->delete( $organization_id );
+					$form_saved = TRUE;
+					$form_action = "DELETED";
 				
-				} else {
-					// Yes! everything is valid
-					$organization_id = $post->organization_id;
+				}
+				else if( $post->action == 'v' )			// Show/Hide Action
+				{
+	            	if ($organization->loaded==true)
+					{
+						if ($organization->organization_active == 1) {
+							$organization->organization_active = 0;
+						}
+						else {
+							$organization->organization_active = 1;
+						}
+						$organization->save();
+						$form_saved = TRUE;
+						$form_action = "MODIFIED";
+					}
+				}
+				else if( $post->action == 'a' ) 		// Save Action
+				{
 					// SAVE Organization
-					
 					$organization->organization_name = $post->organization_name;
-					$organization->organization_description =
-					 $post->organization_description;
-					
-					$organization->organization_website = 
-						$post->organization_website;
+					$organization->organization_description = $post->organization_description;
+					$organization->organization_website = $post->organization_website;
+					$organization->organization_email = $post->organization_email;
+					$organization->organization_phone1 = $post->organization_phone1;
+					$organization->organization_phone2 = $post->organization_phone2;
 					$organization->save();
 					$form_saved = TRUE;
+					$form_action = "ADDED/EDITED";
 				}       
 	        }
             // No! We have validation errors, we need to show the form again, with the errors
 	        else
 			{
-	            // repopulate the form fields
-	            $form = arr::overwrite($form, $post->as_array());
+				
+	             // repopulate the form fields
+		         $form = arr::overwrite( $form, $post->as_array() ); 
 
                // populate the error fields, if any
                 $errors = arr::overwrite($errors, 
@@ -192,8 +246,10 @@ class Manage_Controller extends Admin_Controller
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
 
-        $this->template->content->form_error = $form_error;
+        $this->template->content->form = $form;
+		$this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->organizations = $organization;
@@ -224,6 +280,7 @@ class Manage_Controller extends Admin_Controller
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
+		$form_action = "";
 		
 		if( $_POST ) 
 		{
@@ -231,36 +288,49 @@ class Manage_Controller extends Admin_Controller
 			
 			 //  Add some filters
 	        $post->pre_filter('trim', TRUE);
-
-	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('feed_name','required', 'length[3,70]');
-			$post->add_rules('feed_url','required','url');
+	
+			if ($post->action == 'a')		// Add Action
+			{
+				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('feed_name','required', 'length[3,70]');
+				$post->add_rules('feed_url','required','url');
+			}
 			
 			if( $post->validate() )
 			{
 				$feed_id = $post->feed_id;
 				
 				$feed = new Feed_Model($feed_id);
-				//delete action
-				if( $post->action == 'd' ) { 
+				if ( $post->action == 'd' ) { 					// Delete Action
+					if ($feed->loaded==true)
+					{
+						ORM::factory('feed_item')->where('feed_id',$feed_id)->delete_all();
+					}
 					$feed->delete( $feed_id );
-				
-				} else if($post->action == 'v') {
-					$feed_active = $post->feed_active == 1 ? 0 : 1;													  
-					
-					$feeds = ORM::factory('feed',$post->feed_id);
-					$feeds->feed_active = $feed_active;
-					$feeds->save();
-				} else {
-					// Yes! everything is valid
-					// SAVE Organization
-					
+					$form_saved = TRUE;
+					$form_action = "DELETED";
+				} else if($post->action == 'v') {				// Active/Inactive Action
+					if ($feed->loaded==true)
+					{
+						if ($feed->feed_active == 1) {
+							$feed->feed_active = 0;
+						}
+						else {
+							$feed->feed_active = 1;
+						}
+						$feed->save();
+						$form_saved = TRUE;
+						$form_action = "MODIFIED";
+					}
+				}else if( $post->action == 'r' ) { 
+					$this->_parse_feed();
+				} else {										// Save Action
+					// SAVE Feed
 					$feed->feed_name = $post->feed_name;
-					$feed->feed_url =
-					 $post->feed_url;
-					
+					$feed->feed_url = $post->feed_url;
 					$feed->save();
 					$form_saved = TRUE;
+					$form_action = "ADDED/EDITED";
 				}
 				
 			} else {
@@ -288,6 +358,7 @@ class Manage_Controller extends Admin_Controller
 
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->feeds = $feeds;
@@ -298,5 +369,103 @@ class Manage_Controller extends Admin_Controller
         $this->template->js = new View('admin/feeds_js');
 	}
 	
+	/**
+	 * setup simplepie
+	 */
+	private function _setup_simplepie( $feed_url ) {
+			$data = new SimplePie();
+			$data->set_feed_url( $feed_url );
+			$data->enable_cache(false);
+			$data->enable_order_by_date(true);
+			$data->init();
+			$data->handle_content_type();
+
+			return $data;
+	}
 	
+	/**
+	 * parse feed and send feed items to database
+	 */
+	private function _parse_feed()
+	{
+		// Max number of feeds to keep
+		$max_feeds = 100;
+		
+		// Today's Date
+		$today = strtotime('now');
+		
+		// Get All Feeds From DB
+		$feeds = ORM::factory('feed')->find_all();
+		foreach ($feeds as $feed)
+		{
+			$last_update = $feed->feed_update;
+			
+			// Has it been more than 24 hours since the last update?
+			if ( ((int)$today - (int)$last_update) > 86400	)	// 86400 = 24 hours
+			{
+				// Parse Feed URL using Feed Helper
+				$feed_data = $this->_setup_simplepie( $feed->feed_url );
+
+				foreach($feed_data->get_items(0,50) as $feed_data_item)
+				{
+					$title = $feed_data_item->get_title();
+					$link = $feed_data_item->get_link();
+					$description = $feed_data_item->get_description();
+					$date = $feed_data_item->get_date();
+					// Make Sure Title is Set (Atleast)
+					if (isset($title) && !empty($title ))
+					{
+						// We need to check for duplicates!!!
+						// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
+						$dupe_count = ORM::factory('feed_item')->where('item_title',$title)->where('item_date',date("Y-m-d H:i:s",strtotime($date)))->count_all();
+
+						if ($dupe_count == 0) {
+							$newitem = new Feed_Item_Model();
+							$newitem->feed_id = $feed->id;
+							$newitem->item_title = $title;
+							if (isset($description) && !empty($description))
+							{
+								$newitem->item_description = $description;
+							}
+							if (isset($link) && !empty($link))
+							{
+								$newitem->item_link = $link;
+							}
+							if (isset($date) && !empty($date))
+							{
+								$newitem->item_date = date("Y-m-d H:i:s",strtotime($date));
+							}
+							// Set todays date
+							else
+							{
+								$newitem->item_date = date("Y-m-d H:i:s",time());
+							}
+							$newitem->save();
+						}
+					}
+				}
+				
+				// Get Feed Item Count
+				$feed_count = ORM::factory('feed_item')->where('feed_id', $feed->id)->count_all();
+				if ($feed_count > $max_feeds) {
+					// Excess Feeds
+					$feed_excess = $feed_count - $max_feeds;
+
+					// Delete Excess Feeds
+					foreach (ORM::factory('feed_item')
+						->where('feed_id', $feed->id)
+						->orderby('id', 'ASC')
+						->limit($feed_excess)
+						->find_all() as $del_feed)
+					{
+						$del_feed->delete($del_feed->id);
+					}
+				}
+
+				// Set feed update date
+				$feed->feed_update = strtotime('now');
+				$feed->save();
+			}
+		}
+	}
 }

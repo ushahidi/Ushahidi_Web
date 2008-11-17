@@ -6,21 +6,28 @@
 	<style media="all" type="text/css">@import "<?php echo url::base() ?>media/css/all.css";</style>
 	<style media="all" type="text/css">@import "<?php echo url::base() ?>media/css/photoslider.css";</style>
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>/media/css/ie6.css" media="screen"/><![endif]-->
-	
-	<?php echo html::script('media/js/jquery'); ?>
-	<?php echo html::script('media/js/jquery.validate.min'); ?>
-	<?php echo html::script('media/js/jquery.ui.min'); ?>
 	<?php
+	// Load OpenLayers before jQuery!
 	if ($map_enabled)
 	{
 		echo html::script('media/js/OpenLayers/OpenLayers');
+	}	
+	
+	// Load jQuery
+	echo html::script('media/js/jquery');
+	echo html::script('media/js/jquery.validate.min');
+	echo html::script('media/js/jquery.ui.min');
+	
+	// Other stuff to load only we have the map enabled
+	if ($map_enabled)
+	{
 		echo html::script('media/js/OpenLayers/LoadingPanel');
 		echo $api_url . "\n";
 		if ($main_page) {
 			echo html::script('media/js/accessibleUISlider.jQuery');
 			echo html::script('media/js/jquery.flot');
 			?>
-			<!--[if IE]><script language="javascript" type="text/javascript" src="<?php echo url::base() ?>/media/js/excanvas.pack.js"></script><![endif]-->
+			<!--[if IE]><script language="javascript" type="text/javascript" src="<?php echo url::base() ?>media/js/excanvas.pack.js"></script><![endif]-->
 			<?php
 			echo html::stylesheet('media/css/jquery-ui-themeroller');
 		}
@@ -30,6 +37,10 @@
 		echo html::stylesheet('media/css/datepicker/ui.datepicker');
 	}
 	echo html::script('media/js/photoslider.js');
+	
+	if ($allow_feed == 1) {
+		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
+	}
 	?>
 	<script type="text/javascript">
 		<?php echo $js . "\n"; ?>
@@ -40,21 +51,30 @@
 		<!-- start header block -->
 		<div id="header">
 			<div class="header-info">
-				<strong><a href ="<?php echo url::base(); ?>"><?php echo $site_name; ?></a></strong>
-				<p>A brief description of the project can go here.</p>
+				<strong><a href ="<?php echo url::base(); ?>" <?php echo $site_name_style; ?>><?php echo $site_name; ?></a></strong>
+				<p><?php echo $site_tagline; ?></p>
 			</div>
-			<ul>
-				<li class="first"><a <?php if ($this_page == 'home') echo 'class="active"'; ?> href="<?php echo url::base() . "main" ?>">Home</a></li>
-				<li><a <?php if ($this_page == 'reports') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/" ?>">Reports</a></li>
-				<li><a <?php if ($this_page == 'reports_submit') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/submit" ?>">Submit an Incident</a></li>
-				<li><a <?php if ($this_page == 'alerts') echo 'class="active"'; ?> href="<?php echo url::base() . "alerts" ?>">Get Alerts</a></li>
-				<li class="last"><a <?php if ($this_page == 'help') echo 'class="active"'; ?> href="<?php echo url::base() . "help" ?>">How to Help</a></li>
+			<ul id="menu">
+				<li class="first"><a <?php if ($this_page == 'home') echo 'class="active"'; ?> href="<?php echo url::base() . "main" ?>"><?php echo Kohana::lang('ui_main.home'); ?></a></li>
+				<li><a <?php if ($this_page == 'reports') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/" ?>"><?php echo Kohana::lang('ui_main.reports'); ?></a></li>
+				<li><a <?php if ($this_page == 'reports_submit') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/submit" ?>"><?php echo Kohana::lang('ui_main.submit'); ?></a></li>
+				<li><a <?php if ($this_page == 'alerts') echo 'class="active"'; ?> href="<?php echo url::base() . "alerts" ?>"><?php echo Kohana::lang('ui_main.alerts'); ?></a></li>
+				<li class="last"><a <?php if ($this_page == 'help') echo 'class="active"'; ?> href="<?php echo url::base() . "help" ?>"><?php echo Kohana::lang('ui_main.help'); ?></a></li>
 			</ul>
-			<div class="search_box">
-				<form method="get" id="search" action="<?php echo url::base() . 'search/'; ?>">
-				<input type="text" id="keywords" name="k" value="" class="text">
-				<input type="submit" name="b" class="searchbtn" value="SEARCH" title="">
-				</form>
+			<div class="lang_search">
+				<div class="lang_box">
+					<ul id="languages">
+						<li><a <?php if ($site_language == 'en_US') echo 'class="active"'; ?> href="<?php echo url::base(); ?>?lang=en_US"><img alt="en_US" src="<?php echo url::base(); ?>media/img/flags/en_US.png" width="16" height="11" /></a></li>
+						<li><a <?php if ($site_language == 'fr_FR') echo 'class="active"'; ?> href="<?php echo url::base(); ?>?lang=fr_FR"><img alt="fr_FR" src="<?php echo url::base(); ?>media/img/flags/fr_FR.png" width="16" height="11" /></a></li>
+					</ul>
+					
+				</div>
+				<div class="search_box">
+					<form method="get" id="search" action="<?php echo url::base() . 'search/'; ?>">
+					<input type="text" id="keywords" name="k" value="" class="text">
+					<input type="submit" name="b" class="searchbtn" value="<?php echo Kohana::lang('ui_main.search'); ?>" title="">
+					</form>
+				</div>
 			</div>
 		</div>
 		<!-- end header block <> start content block -->

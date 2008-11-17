@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `category_type` tinyint(4) default NULL,
   `category_title` varchar(255) default NULL,
-  `category_description` text,
+  `category_description` text default NULL,
   `category_color` varchar(20) default NULL,
   `category_visible` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
@@ -96,9 +96,9 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 (37, 'BZ', 'Belize', 'Belmopan', 0),
 (38, 'CA', 'Canada', 'Ottawa', 0),
 (39, 'CC', 'Cocos Islands', 'West Island', 0),
-(40, 'CD', 'Congo - Kinshasa', 'Kinshasa', 0),
+(40, 'CD', 'Democratic Republic of the Congo', 'Kinshasa', 0),
 (41, 'CF', 'Central African Republic', 'Bangui', 0),
-(42, 'CG', 'Congo - Brazzaville', 'Brazzaville', 0),
+(42, 'CG', 'Congo Brazzavile', 'Brazzaville', 0),
 (43, 'CH', 'Switzerland', 'Berne', 0),
 (44, 'CI', 'Ivory Coast', 'Yamoussoukro', 0),
 (45, 'CK', 'Cook Islands', 'Avarua', 0),
@@ -487,7 +487,7 @@ CREATE TABLE IF NOT EXISTS `media` (
   `incident_id` bigint(20) default NULL,
   `media_type` tinyint(4) default NULL COMMENT '1 - IMAGES, 2 - VIDEO, 3 - AUDIO, 4 - NEWS, 5 - PODCAST',
   `media_title` varchar(255) default NULL,
-  `media_description` longtext,
+  `media_description` longtext default NULL,
   `media_link` varchar(255) default NULL,
   `media_thumb` varchar(255) default NULL,
   `media_date` datetime default NULL,
@@ -509,10 +509,11 @@ CREATE TABLE IF NOT EXISTS `media` (
 CREATE TABLE IF NOT EXISTS `organization` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `organization_name` varchar(255) default NULL,
-  `organization_description` longtext,
+  `organization_description` longtext default NULL,
   `organization_website` varchar(255) default NULL,
   `organization_address` varchar(255) default NULL,
   `organization_country` varchar(100) default NULL,
+  `organization_active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -544,15 +545,63 @@ CREATE TABLE IF NOT EXISTS `organization_incident` (
 CREATE TABLE IF NOT EXISTS `feed`
 (
 `id` int(11) unsigned  NOT NULL AUTO_INCREMENT ,
-`feed_name` VARCHAR(255),
-`feed_url` VARCHAR(255),
-`feed_cache` TEXT,
+`feed_name` VARCHAR(255) default NULL,
+`feed_url` VARCHAR(255) default NULL,
+`feed_cache` TEXT default NULL,
 `feed_active` TINYINT DEFAULT 1,
+`feed_update` INT DEFAULT 0 NOT NULL,
 PRIMARY KEY (`id`)
 );
 
 --
 -- Dumping data for table `feed`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `feed_item`
+--
+
+CREATE TABLE IF NOT EXISTS `feed_item`
+(
+`id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
+`feed_id` INT(11) NOT NULL,
+`location_id` BIGINT default NULL,
+`item_title` VARCHAR(255) default NULL,
+`item_description` TEXT default NULL,
+`item_link` VARCHAR(255) default NULL,
+`item_date` DATETIME default NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `feed_item`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `message`
+--
+
+CREATE TABLE IF NOT EXISTS `message`
+(
+`id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
+/*Outgoing Messages From Admin*/
+`parent_id` BIGINT DEFAULT 0,
+`incident_id` INTEGER DEFAULT 0,
+`user_id` INT DEFAULT 0,
+`message_from` VARCHAR(100) DEFAULT NULL,
+`message_to` VARCHAR(100) DEFAULT NULL,
+`message` TEXT DEFAULT NULL,
+`message_type` TINYINT DEFAULT 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
+`message_date` DATETIME DEFAULT NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `message`
 --
 
 -- --------------------------------------------------------
@@ -617,9 +666,7 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 -- Dumping data for table `roles_users`
 --
 
-INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
-(1, 1),
-(1, 2);
+INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES (1, 2);
 
 -- --------------------------------------------------------
 
@@ -648,6 +695,14 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 CREATE TABLE IF NOT EXISTS `settings` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `site_name` varchar(255) default NULL,
+  `site_tagline` varchar(255) default NULL,
+  `site_email` varchar(120) default NULL,
+  `site_key` varchar(100) default NULL,
+  `site_language` varchar(10) NOT NULL default 'en_US',
+  `site_timezone` varchar(80) default NULL,
+  `allow_reports` tinyint(4) NOT NULL default '1',
+  `allow_comments` tinyint(4) NOT NULL default '1',
+  `allow_feed` tinyint(4) NOT NULL default '1',
   `default_map` tinyint(4) NOT NULL default '1' COMMENT '1 - GOOGLE MAPS, 2 - LIVE MAPS, 3 - YAHOO MAPS, 4 - OPEN STREET MAPS',
   `api_google` varchar(200) default NULL,
   `api_yahoo` varchar(200) default NULL,
@@ -659,6 +714,14 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `default_zoom` tinyint(4) NOT NULL default '10',
   `items_per_page` smallint(6) NOT NULL default '20',
   `items_per_page_admin` smallint(6) NOT NULL default '20',
+  `sms_no1` varchar(100) default NULL,
+  `sms_no2` varchar(100) default NULL,
+  `sms_no3` varchar(100) default NULL,
+  `frontlinesms_key` varchar(30) default NULL,
+  `clickatell_api` varchar(30) default NULL,
+  `clickatell_username` varchar(100) default NULL,
+  `clickatell_password` varchar(100) default NULL,
+  `google_analytics` text default NULL,
   `date_modify` datetime default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -731,7 +794,7 @@ CREATE TABLE IF NOT EXISTS `verified` (
   `incident_id` bigint(20) default NULL,
   `idp_id` bigint(20) default NULL,
   `user_id` int(11) default NULL,
-  `verified_comment` longtext,
+  `verified_comment` longtext default NULL,
   `verified_date` datetime default NULL,
   `verified_status` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)
@@ -741,6 +804,8 @@ CREATE TABLE IF NOT EXISTS `verified` (
 -- Dumping data for table `verified`
 --
 
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `alert`
@@ -760,6 +825,26 @@ CREATE TABLE IF NOT EXISTS `alert` (
 
 --
 -- Dumping data for table `alert`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alert_sent`
+--
+
+CREATE TABLE `alert_sent`
+(
+`id` BIGINT unsigned  NOT NULL AUTO_INCREMENT,
+`incident_id` BIGINT NOT NULL,
+`alert_id` BIGINT NOT NULL,
+`alert_date` DATETIME NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `alert_sent`
 --
 
 

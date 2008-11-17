@@ -240,6 +240,30 @@
 						);
 					}
 				});
-				
 			}
 		);
+		
+		// Retrieve Cities From Geonames DB (Ajax)
+		function retrieveCities()
+		{
+			var selected = $("#default_country option[@selected]");
+			country = selected.val();
+			if (!country || country =='') {
+				alert('Please select a country from the dropdown');
+			}
+			else
+			{
+				$('#cities_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+				$.get("<?php echo url::base() . 'admin/settings/updateCities/' ?>" + country,
+					function(data){
+						if (data.status == 'success'){
+							$('#city_count').show();
+							$('#city_count').html(data.response);
+							$('#cities_loading').html('');
+						} else	{
+							alert(data.response);
+						}
+						$('#cities_loading').html('');
+				  	}, "json");
+			}
+		}

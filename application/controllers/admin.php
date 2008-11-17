@@ -59,7 +59,7 @@ class Admin_Controller extends Template_Controller {
         $this->template->js = '';
 		
         // Load profiler
-        $profiler = new Profiler;		
+        // $profiler = new Profiler;		
 		
     }
 

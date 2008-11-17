@@ -71,46 +71,81 @@ class Reports_Controller extends Admin_Controller
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						$update->incident_active = '1';
-						$update->save();
-						$form_action = "APPROVED";
+						if ($update->loaded == true) {
+							$update->incident_active = '1';
+							$update->save();
+						}
 					}
+					$form_action = "APPROVED";
 				}
 				elseif ($post->action == 'u') 	// Unapprove Action
 				{
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						$update->incident_active = '0';
-						$update->save();
-						$form_action = "UNAPPROVED";
+						if ($update->loaded == true) {
+							$update->incident_active = '0';
+							$update->save();
+						}
 					}
+					$form_action = "UNAPPROVED";
 				}
 				elseif ($post->action == 'v')	// Verify Action
 				{
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						$update->incident_verified = '1';
-						$update->verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
-						$update->verify->verified_date = date("Y-m-d H:i:s",time());
-						$update->verify->verified_status = '1';
-						$update->save();
-						$form_action = "VERIFIED";
+						if ($update->loaded == true) {
+							if ($update->incident_verified == '1') {
+								$update->incident_verified = '0';
+							}
+							else {
+								$update->incident_verified = '1';
+							}
+							$update->verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+							$update->verify->verified_date = date("Y-m-d H:i:s",time());
+							$update->verify->verified_status = '1';
+							$update->save();
+						}
 					}
+					$form_action = "VERIFIED";
 				}
 				elseif ($post->action == 'd')	// Delete Action
 				{
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						ORM::factory('location')->where('id',$update->location_id)->delete_all();	// Delete Location
-						ORM::factory('incident_category')->where('incident_id',$update->id)->delete_all();	// Delete Categories
-						ORM::factory('media')->where('incident_id',$update->id)->delete_all();				// Delete Media
-						ORM::factory('incident_person')->where('incident_id',$update->id)->delete_all();	// Delete Sender
-						$update->delete();						
-						$form_action = "DELETED";
+						if ($update->loaded == true) {
+							$incident_id = $update->id;
+							$location_id = $update->location_id;
+							$update->delete();
+							
+							// Delete Location
+							ORM::factory('location')->where('id',$location_id)->delete_all();
+							
+							// Delete Categories
+							ORM::factory('incident_category')->where('incident_id',$incident_id)->delete_all();
+							
+							// Delete Photos From Directory
+							foreach (ORM::factory('media')->where('incident_id',$incident_id)->where('media_type', 1) as $photo) {
+								deletePhoto($photo->id);
+							}
+							
+							// Delete Media
+							ORM::factory('media')->where('incident_id',$incident_id)->delete_all();
+							
+							// Delete Sender
+							ORM::factory('incident_person')->where('incident_id',$incident_id)->delete_all();
+							
+							// Delete relationship to SMS message
+							$updatemessage = ORM::factory('message')->where('incident_id',$incident_id)->find();
+							if ($updatemessage->loaded == true) {
+								$updatemessage->incident_id = 0;
+								$updatemessage->save();
+							}
+						}					
 					}
+					$form_action = "DELETED";
 				}
 				$form_saved = TRUE;
 			}
@@ -218,18 +253,56 @@ class Reports_Controller extends Admin_Controller
 		// Retrieve thumbnail photos (if edit);
 		//XXX: fix _get_thumbnails
 		$this->template->content->incident = $this->_get_thumbnails($id);
+		
+		// Are we creating this report from an SMS Message?
+		// If so retrieve message
+		if (isset($_GET['mid']) && !empty($_GET['mid'])) {
+			$mobile_id = $_GET['mid'];
+			$message = ORM::factory('message', $mobile_id)->where('message_type','1');
+			if ($message->loaded == true) {
+				
+				// Has a report already been created for this SMS?
+				if ($message->incident_id != 0) {
+					// Redirect to report
+					url::redirect(url::base() . 'admin/reports/edit/'. $message->incident_id);
+				}
+				$this->template->content->message = $message->message;
+				$this->template->content->message_from = $message->message_from;
+				$this->template->content->show_messages = true;
+				$form['incident_title'] = "Mobile Report";
+				$form['incident_description'] = $message->message;
+				
+				// Retrieve Last 5 Messages From this Number
+				$this->template->content->allmessages = ORM::factory('message')
+					->where('message_from', $message->message_from)
+					->where('message_type','1')
+					->orderby('message_date', 'desc')
+					->limit(5)
+					->find_all();
+			}
+			else
+			{
+				$mobile_id = "";
+				$this->template->content->show_messages = false;
+			}
+		}
+		else
+		{
+			$this->template->content->show_messages = false;
+		}
 	
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
             // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory(array_merge($_POST,$_FILES));
-			
+
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 	        $post->add_rules('location_id','numeric');
+			$post->add_rules('mobile_id','numeric');
 			$post->add_rules('incident_title','required', 'length[3,200]');
 			$post->add_rules('incident_description','required');
 			$post->add_rules('incident_date','required','date_mmddyyyy');
@@ -242,9 +315,17 @@ class Reports_Controller extends Admin_Controller
 			$post->add_rules('latitude','required','between[-90,90]');		// Validate for maximum and minimum latitude values
 			$post->add_rules('longitude','required','between[-180,180]');	// Validate for maximum and minimum longitude values
 			$post->add_rules('location_name','required', 'length[3,200]');
-			$post->add_rules('incident_category.*','required','numeric');
 			
-            
+			//XXX: Hack to validate for no checkboxes checked
+			if (!isset($_POST['incident_category'])) {
+				$post->incident_category = "";
+				$post->add_error('incident_category','required');
+			}
+			else
+			{
+				$post->add_rules('incident_category.*','required','numeric');
+			}
+
 			// Validate only the fields that are filled in	
 	        if (!empty($_POST['incident_news']))
 			{
@@ -314,15 +395,24 @@ class Reports_Controller extends Admin_Controller
 					
 				$incident_time = $post->incident_hour . ":" . $post->incident_hour . ":00 " . $post->incident_ampm;
 				$incident->incident_date = $incident_date . " " . $incident_time;
-				if ($id)
+				// Is this new or edit?
+				if ($id)	// edit
 				{
 					$incident->incident_datemodify = date("Y-m-d H:i:s",time());
 				}
-				else
+				else 		// new
 				{
 					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				}
+				// Is this an SMS submitted report?
+                //XXX: It is possible that 'mobile_id' may not be available through
+                //$_POST
+				if(isset($mobile_id))
+				{
+					$incident->incident_mode = 2;		// Incident submission type
+				}
 				$incident->save();
+				
 				
 				// STEP 3: SAVE CATEGORIES
 				ORM::factory('Incident_Category')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
@@ -334,8 +424,9 @@ class Reports_Controller extends Admin_Controller
 					$incident_category->save();
 				}
 				
+				
 				// STEP 4: SAVE MEDIA
-				ORM::factory('Media')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
+				ORM::factory('Media')->where('incident_id',$incident->id)->where('media_type <> 1')->delete_all();		// Delete Previous Entries
 				// a. News
 				foreach($post->incident_news as $item)
 				{
@@ -407,6 +498,20 @@ class Reports_Controller extends Admin_Controller
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
 				
+				
+				// STEP 6: SAVE LINK TO SMS MESSAGE
+				if($mobile_id != "")
+				{
+					$savemessage = ORM::factory('message', $mobile_id);
+					if ($savemessage->loaded == true) 
+					{
+						$savemessage->incident_id = $incident->id;
+						$savemessage->save();
+					}
+				}
+				
+				
+				// STEP 7: SAVE AND CLOSE?
 				if ($post->save == 1)		// Save but don't close
 				{
 					url::redirect(url::base() . 'admin/reports/edit/'. $incident->id .'/saved');
@@ -415,7 +520,6 @@ class Reports_Controller extends Admin_Controller
 				{
 					url::redirect(url::base() . 'admin/reports/');
 				}
-	            
 	        }
 	
             // No! We have validation errors, we need to show the form again, with the errors
@@ -575,14 +679,27 @@ class Reports_Controller extends Admin_Controller
 	}
 
 	/** 
-    * Delete thumbnail photo 
+    * Delete Photo 
     * @param int $id The unique id of the photo to be deleted
     */
-	function delete_thumb ( $id )
+	function deletePhoto ( $id )
 	{
+		$this->auto_render = FALSE;
+		$this->template = "";
+		
 		if ( $id )
 		{
 			$photo = ORM::factory('media', $id);
+			$photo_large = $photo->media_link;
+			$photo_thumb = $photo->media_thumb;
+			
+			// Delete Files from Directory
+			if (!empty($photo_large))
+				unlink(Kohana::config('upload.directory', TRUE) . $photo_large);
+			if (!empty($photo_thumb))
+				unlink(Kohana::config('upload.directory', TRUE) . $photo_thumb);
+
+			// Finally Remove from DB
 			$photo->delete();
 		}
 	}

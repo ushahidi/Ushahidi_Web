@@ -40,6 +40,22 @@
 						</div>
 						<!-- f-col -->
 						<div class="f-col">
+							<?php if ($show_messages) { ?>
+							<div class="row">
+								<h4 style="margin:0;padding:0;"><a href="#" id="messages_toggle" class="show-messages">Show SMS Messages</a>&nbsp;</h4>
+								<!--messages table goes here-->
+			                    <div id="show_messages">
+									<?php
+									foreach ($allmessages as $message) {
+										echo "<div class=\"message\">";
+										echo "<strong><u>" . $message->message_from . "</u></strong> - ";
+										echo $message->message;
+										echo "</div>";
+									}
+									?>
+								</div>
+							</div>
+							<?php } ?>
 							<div class="row">
 								<h4>Item Title</h4>
 								<?php print form::input('incident_title', $form['incident_title'], ' class="text title"'); ?>
@@ -101,7 +117,7 @@
                                     print '</span>';
                                     print form::close();
                                     ?> 
-                                    </div>
+                                </div>
 
 			                    <div class="category">
                         	    <?php
@@ -281,7 +297,7 @@
                         					{
                         						print "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
                         						print "<img src=\"" . url::base() . "media/uploads/" . $photo->media_thumb . "\" >";
-                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deleteThumb('". $photo->id ."', 'photo_". $photo->id ."'); return false;\" >Delete</a>";
+                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deletePhoto('". $photo->id ."', 'photo_". $photo->id ."'); return false;\" >Delete</a>";
                         						print "</div>";
                         					}
                         				}

@@ -6,7 +6,16 @@
 
 $settings = ORM::factory('settings', 1);
 
+// Set Site Language
+Kohana::config_set('locale.language', $settings->site_language);
+
+// Main Site Settings
 Kohana::config_set('settings.site_name', $settings->site_name);
+Kohana::config_set('settings.site_tagline', $settings->site_tagline);
+Kohana::config_set('settings.allow_feed', $settings->allow_feed);
+Kohana::config_set('settings.sms_no1', $settings->sms_no1);
+Kohana::config_set('settings.sms_no2', $settings->sms_no2);
+Kohana::config_set('settings.sms_no3', $settings->sms_no3);
 Kohana::config_set('settings.default_map', $settings->default_map);
 Kohana::config_set('settings.api_google', $settings->api_google);
 Kohana::config_set('settings.api_yahoo', $settings->api_yahoo);
@@ -17,6 +26,7 @@ Kohana::config_set('settings.default_lon', $settings->default_lon);
 Kohana::config_set('settings.default_zoom', $settings->default_zoom);
 Kohana::config_set('settings.items_per_page', $settings->items_per_page);
 Kohana::config_set('settings.items_per_page_admin', $settings->items_per_page_admin);
+Kohana::config_set('settings.google_analytics', $settings->google_analytics);
 
 $default_map = $settings->default_map;
 $api_google = $settings->api_google;

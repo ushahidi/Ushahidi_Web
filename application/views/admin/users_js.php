@@ -12,27 +12,21 @@
 			
 		}
 		
-		// Ajax Submission
-		function userAction ( action, user_id,username, 
-			name, role, email, confirmAction )
+		// Form Submission
+		function userAction ( action, confirmAction, id )
 		{
 			var statusMessage;
-			var answer = confirm('Are You Sure You Want To ' + confirmAction + ' items?')
+			var answer = confirm('Are You Sure You Want To ' 
+				+ confirmAction + ' users?')
 			if (answer){
+				// Set Category ID
+				$("#user_id").attr("value", id);
 				// Set Submit Type
-				$("#action").attr("value", action);
-
-				// Set form values for deletion so it passes the validation test
-				$("#user_id").attr("value",user_id);
-				$("#username").attr("value", unescape(username));
-				$("#name").attr("value", unescape(name));
-				$('#role').attr("value",unescape( role ) );
-				$('#email').attr("value",unescape( email ) );
-				
+				$("#action").attr("value", action);		
 				// Submit Form
 				$("#userMain").submit();			
-			}
-			else{
+
+			} else{
 				return false;
 			}
 		}

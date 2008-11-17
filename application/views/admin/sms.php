@@ -1,16 +1,45 @@
 			<div class="bg">
-				<h2><?php echo $title; ?> <a href="<?php echo url::base() . 'admin/settings' ?>">Map</a><a href="<?php echo url::base() . 'admin/settings/sms' ?>" class="active">SMS</a><a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a></h2>
+				<h2><?php echo $title; ?> <a href="<?php echo url::base() . 'admin/settings/site' ?>">Site</a><a href="<?php echo url::base() . 'admin/settings' ?>">Map</a><a href="<?php echo url::base() . 'admin/settings/sms' ?>" class="active">SMS</a><a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a></h2>
+				<?php print form::open(); ?>
 				<div class="report-form">
+					<?php
+					if ($form_error) {
+					?>
+						<!-- red-box -->
+						<div class="red-box">
+							<h3>Error!</h3>
+							<ul>
+							<?php
+							foreach ($errors as $error_item => $error_description)
+							{
+								// print "<li>" . $error_description . "</li>";
+								print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+							}
+							?>
+							</ul>
+						</div>
+					<?php
+					}
+
+					if ($form_saved) {
+					?>
+						<!-- green-box -->
+						<div class="green-box">
+							<h3>Your Settings Have Been Saved!</h3>
+						</div>
+					<?php
+					}
+					?>				
 					<div class="head">
 						<h3>SMS Setup Options</h3>
-						<input type="image" src="<?php echo url::base() ?>media/img/admin//btn-cancel.gif" class="cancel-btn" />
-						<input type="image" src="<?php echo url::base() ?>media/img/admin//btn-save-settings.gif" class="save-rep-btn" />
+						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 					</div>
 					<!-- column -->
 		
 					<div class="sms_nav_holder">
-						<a href="#" class="active">Option 1: Use Frontline SMS</a>
-						<a href="#">Option 2: Use a Global SMS Gateway</a>
+						<a href="<?php echo url::base() . 'admin/settings/sms' ?>" class="active">Option 1: Use Frontline SMS</a>
+						<a href="<?php echo url::base() . 'admin/settings/smsglobal' ?>">Option 2: Use a Global SMS Gateway</a>
 					</div>
 		
 					<div class="sms_holder">
@@ -25,7 +54,7 @@
 										This is some descriptive text that talks about Frontline SMS a bit more.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
 									</p>
 									<a href="#" class="no_border">
-										<img src="<?php echo url::base() ?>media/img/admin//download_frontline_engine.gif" />
+										<img src="<?php echo url::base() ?>media/img/admin/download_frontline_engine.gif" />
 									</a>
 						
 								</td>
@@ -40,7 +69,8 @@
 										This is some descriptive text that talks Syncing with Ushahidi a bit more.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
 									</p>
 									<p class="sync_key">
-										Your Ushahidi Sync Key: <span>32WSC402!</span>
+										Your Ushahidi Sync Key: <span><?php echo $frontlinesms_key; ?></span><br /><br />
+										FrontlineSMS HTTP Post LINK:<br /><span><?php echo $frontlinesms_link; ?></span>
 									</p>
 								</td>
 							</tr>
@@ -53,7 +83,18 @@
 									<p>
 										This is some descriptive text about entering SMS Phone Numbers.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
 									</p>
-									<input type="text" class="text title_2" /> <a href="#" class="add"></a>
+									<div class="row">
+										<h4>Phone 1:</h4>
+										<?php print form::input('sms_no1', $form['sms_no1'], ' class="text title_2"'); ?>
+									</div>
+									<div class="row">
+										<h4>Phone 2:</h4>
+										<?php print form::input('sms_no2', $form['sms_no2'], ' class="text title_2"'); ?>
+									</div>
+									<div class="row">
+										<h4>Phone 3:</h4>
+										<?php print form::input('sms_no3', $form['sms_no3'], ' class="text title_2"'); ?>
+									</div>
 								</td>
 							</tr>
 						</table>
@@ -61,7 +102,8 @@
 		
 					<div class="simple_border"></div>
 		
-					<input type="image" src="<?php echo url::base() ?>media/img/admin//btn-save-settings.gif" class="save-rep-btn" />
-					<input type="image" src="<?php echo url::base() ?>media/img/admin//btn-cancel.gif" class="cancel-btn" />
+					<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
+					<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 				</div>
+				<?php print form::close(); ?>
 			</div>

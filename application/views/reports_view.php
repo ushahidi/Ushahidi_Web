@@ -161,34 +161,27 @@
 		                      <li class="w-03">DATE</li>
 		                    </ul>
 		                  </li>
-		                  <li>
-		                    <ul>
-		                      <li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-		                      <li class="w-02">BBC</li>
-		                      <li class="w-03">18 Jan 2008</li>
-		                    </ul>
-		                  </li>
-		                  <li>
-		                    <ul>
-		                      <li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-		                      <li class="w-02">Yahoo!</li>
-		                      <li class="w-03">18 Jan 2008</li>
-		                    </ul>
-		                  </li>
-		                  <li>
-		                    <ul>
-		                      <li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-		                      <li class="w-02">BBC</li>
-		                      <li class="w-03">18 Jan 2008</li>
-		                    </ul>
-		                  </li>
-		                  <li>
-		                    <ul>
-		                      <li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-		                      <li class="w-02">Yahoo!</li>
-		                      <li class="w-03">18 Jan 2008</li>
-		                    </ul>
-		                  </li>
+						<?php
+						foreach ($feeds as $feed)
+						{
+							$feed_id = $feed->id;
+							$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+							$feed_link = $feed->item_link;
+							$feed_date = date('M j Y', strtotime($feed->item_date));
+							$feed_source = "NEWS";
+							?>
+							<li>
+								<ul>
+									<li class="w-01">
+									<a href="<?php echo $feed_link; ?>" target="_blank">
+									<?php echo $feed_title ?></a></li>
+									<li class="w-02"><?php echo $feed_source; ?></li>
+									<li class="w-03"><?php echo $feed_date; ?></li>
+								</ul>
+							</li>
+							<?php
+						}
+						?>
 		                </ul>
 		              </div>
 		            </div>

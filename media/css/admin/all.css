@@ -783,14 +783,14 @@ span.dots {
 .time .sel-holder {
 	display:inline;
 }
-a.new-cat {
+a.new-cat, a.show-messages {
 	text-decoration:underline;
 	font-size:10px;
 	padding:1px 0 0 18px;
-	background:url(../../img/admin/icon-plus.gif) no-repeat 0 4px;
+	background:url(../../img/icon-plus.gif) no-repeat 0 4px;
 	float:right;
 }
-a.new-cat:hover{ text-decoration:none;}
+a.new-cat:hover, a.show-messages:hover;{ text-decoration:none;}
 .category {
 	background:#f5f5f5;
 	width:377px;
@@ -833,6 +833,16 @@ a.new-cat:hover{ text-decoration:none;}
 	overflow:hidden;
 	padding:0 0 18px;
 	display: none;
+}
+#show_messages{
+	display: none;
+	font-size:10px;
+	color:#666;
+	margin-bottom:5px;
+}
+#show_messages .message{
+	padding:2px 0 2px 0;
+	border-bottom:1px dotted #ccc;
 }
 /*-- f-col --*/
 .f-col-1 {
@@ -1036,6 +1046,23 @@ div.c_push{
 	display: block;
 	float: left;
 }
+#retrieve_cities{
+	clear:both;
+	background-color:#eee;
+	color:#333;
+	padding:5px;
+	margin:10px 15px 0 0;
+}
+#retrieve_cities a, #retrieve_cities a:visited{
+	color:#333;
+}
+#cities_loading{
+	
+}
+#city_count{
+	margin:5px 0 0 0;
+	display:none;
+}
 div.sms_nav_holder{
 	width: 900px;
 	margin: 20px 0 0 20px;
@@ -1170,8 +1197,35 @@ table.p_replace td.special{
 	text-align: center;
 }
 
-
-
+/*-- Messages --*/
+.reply{
+	display:none;
+	margin:5px 0 0 0;
+	padding:5px;
+	background-color:#eee;
+}
+#replies{
+	margin:0 0 10px 0;
+}
+.reply_can{
+	font-size:11px;
+	margin-bottom:3px;
+}
+.replychars{
+	font-size:11px;
+	color:#990000;
+}
+.reply_input{
+	float:left;
+	top:0;
+	margin-right:10px;
+}
+.reply_error{
+	background:#FFD8D9;
+	margin:0 0 3px 0;
+	padding:2px;
+	display:none;
+}
 /*-- Color Picker --*/
 .jColorSelect {
 	overflow:hidden; /* for IE6 */

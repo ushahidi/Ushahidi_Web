@@ -11,10 +11,10 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onclick="reportAction('a','APPROVE');">APPROVE</a></li>
-							<li><a href="#" onclick="reportAction('u','UNAPPROVE');">UNAPPROVED</a></li>
-							<li><a href="#" onclick="reportAction('v','VERIFY');">VERIFY</a></li>
-							<li><a href="#" onclick="reportAction('d','DELETE');">DELETE</a></li>
+							<li><a href="#" onclick="reportAction('a','APPROVE', '');">APPROVE</a></li>
+							<li><a href="#" onclick="reportAction('u','UNAPPROVE', '');">UNAPPROVED</a></li>
+							<li><a href="#" onclick="reportAction('v','VERIFY', '');">VERIFY</a></li>
+							<li><a href="#" onclick="reportAction('d','DELETE', '');">DELETE</a></li>
 						</ul>
 					</div>
 				</div>
@@ -41,6 +41,7 @@
 				<!-- report-table -->
 				<?php print form::open(NULL, array('id' => 'reportMain', 'name' => 'reportMain')); ?>
 					<input type="hidden" name="action" id="action" value="">
+					<input type="hidden" name="incident_id[]" id="incident_single" value="">
 					<div class="table-holder">
 						<table class="table">
 							<thead>
@@ -74,12 +75,12 @@
 								{
 									$incident_id = $incident->id;
 									$incident_title = $incident->incident_title;
-									$incident_description = substr($incident->incident_description, 0, 150);
+									$incident_description = text::limit_chars($incident->incident_description, 150, "...", true);
 									$incident_date = $incident->incident_date;
 									$incident_date = date('Y-m-d', strtotime($incident->incident_date));
 									$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
 									
-									if ($incident_mode == 1)
+									if ($incident_mode == 1)	// Submitted via WEB
 									{
 										$submit_mode = "WEB";
 										// Who submitted the report?
@@ -99,6 +100,11 @@
 												$submit_by = 'Unknown';
 											}
 										}
+									}
+									elseif ($incident_mode == 2) 	// Submitted via SMS
+									{
+										$submit_mode = "SMS";
+										$submit_by = $incident->message->message_from;
 									}
 									
 									$incident_location = $incident->location->location_name;
@@ -132,9 +138,9 @@
 										<td class="col-3"><?php echo $incident_date; ?></td>
 										<td class="col-4">
 											<ul>
-												<li class="none-separator"><a href="#"<?php if ($incident_approved) echo " class=\"status_yes\"" ?> onclick="reportAction('a','APPROVE');">Approve</a></li>
-												<li><a href="#"<?php if ($incident_verified) echo " class=\"status_yes\"" ?> onclick="reportAction('v','VERIFY');">Verify</a></li>
-												<li><a href="#" class="del" onclick="reportAction('d','DELETE');">Delete</a></li>
+												<li class="none-separator"><a href="#"<?php if ($incident_approved) echo " class=\"status_yes\"" ?> onclick="reportAction('a','APPROVE', '<?php echo $incident_id; ?>');">Approve</a></li>
+												<li><a href="#"<?php if ($incident_verified) echo " class=\"status_yes\"" ?> onclick="reportAction('v','VERIFY', '<?php echo $incident_id; ?>');">Verify</a></li>
+												<li><a href="#" class="del" onclick="reportAction('d','DELETE', '<?php echo $incident_id; ?>');">Delete</a></li>
 											</ul>
 										</td>
 									</tr>

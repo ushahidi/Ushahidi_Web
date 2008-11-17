@@ -6,13 +6,13 @@
         <div class="big-block-bottom">
           <div class="big-map-block">
             <div class="filter">
-              <strong>MEDIA FILTER</strong>
+              <strong><?php echo Kohana::lang('ui_main.media_filter'); ?></strong>
               <ul>
-                <li><a class="active" href="#"><span>Reports</span></a></li>
-                <li><a href="#"><span>News</span></a></li>
-                <li><a href="#"><span>Pictures</span></a></li>
-                <li><a href="#"><span>Video</span></a></li>
-                <li><a href="#"><span>All</span></a></li>
+                <li><a class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
+                <li><a href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
+                <li><a href="#"><span><?php echo Kohana::lang('ui_main.pictures'); ?></span></a></li>
+                <li><a href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
+                <li><a href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
               </ul>
             </div>
             <div id="map" class="map-holder"></div>
@@ -52,10 +52,18 @@
                 </div>
               </div>
               <div class="report-btns">
-                <a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span>Submit an Incident!</span></a>
-                <a class="btn-grey" href="#"><span>Submit via SMS</span></a>
+                <a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span><?php echo Kohana::lang('ui_main.submit'); ?></span></a>
+                <?php if (!empty($phone_array)) ?><a class="btn-grey" href="#"><span><?php echo Kohana::lang('ui_main.submit_sms'); ?></span></a>
               </div>
-              <p>Send your SMS to <strong>6007</strong> on your phone</p>
+			  <?php if (!empty($phone_array)) { ?>
+              <p><?php echo Kohana::lang('ui_main.submit_sms1'); ?>  
+				<?php foreach ($phone_array as $phone) {
+					echo "<strong>". $phone ."</strong>";
+					if ($phone != end($phone_array)) {
+						echo ", ";
+					}
+				} ?>
+				 <?php echo Kohana::lang('ui_main.submit_sms2'); ?></p><?php } ?>
             </div>
           </div>
         </div>
@@ -63,16 +71,16 @@
       <!-- end map and media filter <> start incidents and news blocks -->
       <div class="blocks-holder">
         <div class="small-block incidents">
-          <h3>Incidents <span>(from map above listed chronologically)</span></h3>
+          <h3><?php echo Kohana::lang('ui_main.incidents_listed'); ?></h3>
           <div class="block-bg">
             <div class="block-top">
               <div class="block-bottom">
                 <ul>
                   <li>
                     <ul class="title">
-                      <li class="w-01">TITLE</li>
-                      <li class="w-02">LOCATION</li>
-                      <li class="w-03">DATE</li>
+                      <li class="w-01"><?php echo Kohana::lang('ui_main.title'); ?></li>
+                      <li class="w-02"><?php echo Kohana::lang('ui_main.location'); ?></li>
+                      <li class="w-03"><?php echo Kohana::lang('ui_main.date'); ?></li>
                     </ul>
                   </li>
                   <?php
@@ -91,23 +99,23 @@
 			foreach ($incidents as $incident)
                             {
                                 $incident_id = $incident->id;
-                                $incident_title = substr($incident->incident_title, 0, 40);
+								$incident_title = text::limit_chars($incident->incident_title, 40, '...', True);
                                 $incident_date = $incident->incident_date;
                                 $incident_date = date('M j Y', strtotime($incident->incident_date));
                                 $incident_location = $incident->location->location_name;
-		  ?>
+		  		  ?>
                   <li>
                     <ul>
                       <li class="w-01">
                         <a href="<?php echo url::base() . 'reports/view/' . $incident_id; ?>">
-                        <?php echo $incident_title ?>...</a></li>
+                        <?php echo $incident_title ?></a></li>
                       <li class="w-02"><?php echo $incident_location ?></li>
                       <li class="w-03"><?php echo $incident_date; ?></li>
                     </ul>
                   </li>
                   <?php
-                                                                          }
-		  ?>
+					}
+				?>
                 </ul>
                 <a class="btn-more" href="<?php echo url::base() . 'reports/'; ?>"><span>MORE</span></a>
               </div>
@@ -115,74 +123,39 @@
           </div>
         </div>
         <div class="small-block news">
-          <h3>Official &amp; Mainstream News</h3>
+          <h3><?php echo Kohana::lang('ui_main.official_news'); ?></h3>
           <div class="block-bg">
             <div class="block-top">
               <div class="block-bottom">
                 <ul>
-                  <li>
-                    <ul class="title">
-                      <li class="w-01">TITLE</li>
-                      <li class="w-02">SOURCE</li>
-                      <li class="w-03">DATE</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-                      <li class="w-02">BBC</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-                      <li class="w-02">Yahoo!</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Police shoot and shoot and kill 2 at road...</a></li>
-                      <li class="w-02">Kenya.gov</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Young boy wandering wandering alone in...</a></li>
-                      <li class="w-02">CNBC</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Church burned in burned in Eldoret with...</a></li>
-                      <li class="w-02">BBC</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Thousands trapped in trapped in forest....</a></li>
-                      <li class="w-02">Yahoo!</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Police shoot and shoot and kill 2 at road...</a></li>
-                      <li class="w-02">Kenya.gov</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
-                  <li>
-                    <ul>
-                      <li class="w-01"><a href="#">Young boy wandering wandering alone in...</a></li>
-                      <li class="w-02">CNBC</li>
-                      <li class="w-03">18 Jan 2008</li>
-                    </ul>
-                  </li>
+	                <li>
+	                  <ul class="title">
+	                    <li class="w-01"><?php echo Kohana::lang('ui_main.title'); ?></li>
+	                    <li class="w-02"><?php echo Kohana::lang('ui_main.source'); ?></li>
+	                    <li class="w-03"><?php echo Kohana::lang('ui_main.date'); ?></li>
+	                  </ul>
+	                </li>
+					<?php
+					foreach ($feeds as $feed)
+					{
+						$feed_id = $feed->id;
+						$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+						$feed_link = $feed->item_link;
+						$feed_date = date('M j Y', strtotime($feed->item_date));
+						$feed_source = "NEWS";
+						?>
+						<li>
+							<ul>
+								<li class="w-01">
+								<a href="<?php echo $feed_link; ?>" target="_blank">
+								<?php echo $feed_title ?></a></li>
+								<li class="w-02"><?php echo $feed_source; ?></li>
+								<li class="w-03"><?php echo $feed_date; ?></li>
+							</ul>
+						</li>
+						<?php
+					}
+					?>
                 </ul>
                 <a class="btn-more" href="#"><span>MORE</span></a>
               </div>

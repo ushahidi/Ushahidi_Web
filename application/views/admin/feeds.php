@@ -1,5 +1,14 @@
 			<div class="bg">
 				<h2><a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a><a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a><a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active">News Feeds</a><span>(<a href="#add">Add New</a>)</span></h2>
+				<!-- tabs -->
+				<div class="tabs">
+					<!-- tab -->
+					<div class="tab">
+						<ul>
+							<li><a href="javascript:refreshFeeds();">REFRESH NEWS FEEDS</a></li><span id="feeds_loading"></span>
+						</ul>
+					</div>
+				</div>
 				<?php
 				if ($form_error) {
 				?>
@@ -23,19 +32,24 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>Your Feed Has Been Saved!</h3>
+						<h3>The Feed Has Been <?php echo $form_action; ?>!</h3>
 					</div>
 				<?php
 				}
 				?>
 				<!-- report-table -->
 				<div class="report-form">
+					<?php print form::open(NULL,array('id' => 'feedListing',
+					 	'name' => 'feedListing')); ?>
+						<input type="hidden" name="action" id="action" value="">
+						<input type="hidden" name="feed_id" id="feed_id_action" value="">
 						<div class="table-holder">
 							<table class="table">
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
 										<th class="col-2">Feed</th>
+										<th class="col-3">Items</th>
 										<th class="col-4">Actions</th>
 									</tr>
 								</thead>
@@ -64,6 +78,7 @@
 										$feed_name = $feed->feed_name;
 										$feed_url = $feed->feed_url;
 										$feed_active = $feed->feed_active;
+										$feed_count = ORM::factory('feed_item')->where('feed_id',$feed->id)->count_all();
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
@@ -73,24 +88,12 @@
 													<p><?php echo $feed_url; ?></p>
 												</div>
 											</td>
-											
+											<td><?php echo $feed_count; ?></td>
 											<td class="col-4">
 												<ul>
 													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($feed_id)); ?>','<?php echo(rawurlencode($feed_name)); ?>','<?php echo(rawurlencode($feed_url)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="#"<?php if ($feed_active == 1) echo " class=\"status_yes\"" ?> onclick="userAction('v',
-	'<?php echo(rawurlencode($feed_id)); ?>',
-	'<?php echo(rawurlencode($feed_name)); ?>',
-	'<?php echo(rawurlencode($feed_url)); ?>',
-	'<?php echo(rawurlencode($feed_active)); ?>',
-	'VISIBLE');" >
-	<?php if( $feed_active == 1 ) echo "Visible"; 
-		else echo "Invisible"; ?></a></li>
-<li><a href="#" onclick="userAction('d',
-	'<?php echo(rawurlencode($feed_id)); ?>',
-	'<?php echo(rawurlencode($feed_name)); ?>',
-	'<?php echo(rawurlencode($feed_url)); ?>',
-	'<?php echo(rawurlencode($feed_active)); ?>',
-	'DELETE');" class="del">Delete</a></li>
+													<li class="none-separator"><a href="javascript:feedAction('v','SHOW/HIDE','<?php echo(rawurlencode($feed_id)); ?>')"<?php if ($feed_active) echo " class=\"status_yes\"" ?>>Visible</a></li>
+													<li><a href="javascript:feedAction('d','DELETE','<?php echo(rawurlencode($feed_id)); ?>')" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>
@@ -100,6 +103,7 @@
 								</tbody>
 							</table>
 						</div>
+					<?php print form::close(); ?>
 				</div>
 				
 				<!-- tabs -->
