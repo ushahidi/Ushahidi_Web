@@ -16,7 +16,7 @@
 			// Now initialise the map
 			var options = {units: "dd",numZoomLevels: 16,controls:[]};
 			var map = new OpenLayers.Map('map', options);
-			// map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
+			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 			
 			var default_map = <?php echo $default_map; ?>;
 			if (default_map == 2)
@@ -79,7 +79,7 @@
 			
 			
 			// Create the markers layer
-			function addMarkers(catID,startDate,endDate){
+			function addMarkers(catID,startDate,endDate, currZoom, currCenter){
 				if (markers){
 					for (var i = 0; i < markers.length; i++) {
 						markers[i].destroy();
@@ -130,11 +130,20 @@
 					"featureunselected": onFeatureUnselect
 				});
 				
-				// create a lat/lon object
-				var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+				var myPoint;
+				if (typeof(currZoom) != 'undefined' && typeof(currCenter) != 'undefined')
+				{
+					myPoint = currCenter;
+					myZoom = currZoom;
+					
+				}else{
+					// create a lat/lon object
+					myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
 
-				// display the map centered on a latitude and longitude (Google zoom levels)
-				map.setCenter(myPoint, <?php echo $default_zoom; ?>);
+					// display the map centered on a latitude and longitude (Google zoom levels)
+					myZoom = <?php echo $default_zoom; ?>;
+				};
+				map.setCenter(myPoint, myZoom);
 			}
 			
 			addMarkers();
@@ -196,7 +205,14 @@
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
 				// markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
-				addMarkers(catID);
+				
+				// Get Current Zoom
+				currZoom = map.getZoom();
+				
+				// Get Current Center
+				currCenter = map.getCenter();
+				
+				addMarkers(catID, '', '', currZoom, currCenter);
 			});
 			
 			if (!$("#startDate").val()) {
@@ -226,7 +242,18 @@
 					markers.styleMap.styles["default"] = style; 
 */					//markers.refresh();
 					//markers.redraw();
-					addMarkers('',startDate,endDate);
+					
+					// Get Current Category
+					currCat = $("#currentCat").val();
+					
+					// Get Current Zoom
+					currZoom = map.getZoom();
+					
+					// Get Current Center
+					currCenter = map.getCenter();
+					
+					// Refresh Map
+					addMarkers(currCat, startDate, endDate, currZoom, currCenter);
 					
 					// refresh graph
 					plotGraph();
@@ -265,34 +292,3 @@
 				});
 			}
 		});
-		
-		print_r = function(a, dTab) {
-		//initiate the return variable
-		var ret = "";
-
-		//the depth tabbing variable helps in indentation
-		if(!dTab) dTab = "\t";
-
-		//If the input variable is a collection object then iterate
-		if(typeof(a) == 'object'){
-
-		//foreach implementation in javascript
-		for(var sub in a) {
-		var val = a[sub];
-		ret += "'" + sub + "' =>";
-
-		//incase the value obtained is again a collection
-		if(typeof(val) == 'object') {
-
-		//drill it down by calling the print_r function recurrsively
-		ret += "\n" + dTab + "[" + print_r(val, dTab + "\t") + "]\n" + (dTab.substring(0, (dTab.length-1)));
-		} else {
-		ret += " \"" + val + "\"";
-		}
-		}
-		} else {
-		//Not a collection
-		ret = "'" + a + "' is of type '" + typeof(a) + "', not array/object.";
-		}
-		return ret;
-		}
