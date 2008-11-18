@@ -32,7 +32,6 @@
 				
 				map.addLayers([gmap_layer, ve_layer, ymap_layer, osmap_layer]);
 				
-				map.addControl(new OpenLayers.Control.Attribution());
 				map.addControl(new OpenLayers.Control.MousePosition());
 
 				// Create the markers layer

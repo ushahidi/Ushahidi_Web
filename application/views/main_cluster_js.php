@@ -40,46 +40,44 @@
 	
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
-			map.addControl(new OpenLayers.Control.Attribution());
 			map.addControl(new OpenLayers.Control.MousePosition());
-			map.addControl(new OpenLayers.Control.LayerSwitcher());
-			
-			
-			var style = new OpenLayers.Style({
-				pointRadius: "${radius}",
-				fillColor: "${color}",
-				fillOpacity: 0.9,
-				strokeColor: "#990000",
-				strokeWidth: 2,
-				strokeOpacity: 0.8
-			}, 
-			{
-				context: 
-				{
-					radius: function(feature)
-					{
-						//document.write(print_r(feature.cluster) + " || <BR><BR>");
-						return (Math.min(feature.attributes.count, 7) + 3) * 1.6;
-					},
-					color: function(feature)
-					{
-						// document.write(print_r(feature.cluster) + " ||| ");
-						if (feature.cluster.length < 2)
-						{
-							return "#" + feature.cluster[0].data.color;
-						}
-						else
-						{
-							return "#990000";
-						}
-					}
-				}
-			});
-			
+			map.addControl(new OpenLayers.Control.LayerSwitcher());		
 			
 			
 			// Create the markers layer
 			function addMarkers(catID,startDate,endDate, currZoom, currCenter){
+				
+				// Marker Style
+				var style = new OpenLayers.Style({
+					pointRadius: "${radius}",
+					fillColor: "${color}",
+					fillOpacity: 0.9,
+					strokeColor: "#990000",
+					strokeWidth: 2,
+					strokeOpacity: 0.8
+				}, 
+				{
+					context: 
+					{
+						radius: function(feature)
+						{
+							return (Math.min(feature.attributes.count, 7) + 3) * 1.6;
+						},
+						color: function(feature)
+						{
+							if ( feature.cluster.length < 2 || (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+							{
+								return "#" + feature.cluster[0].data.color;
+							}
+							else
+							{
+								return "#990000";
+							}
+						}
+					}
+				});
+				
+				// Does 'markers' already exist? If so, destroy it before creating new layer
 				if (markers){
 					for (var i = 0; i < markers.length; i++) {
 						markers[i].destroy();
@@ -124,8 +122,6 @@
 	            selectControl.activate();
 				
 				markers.events.on({
-					// "beforefeaturesadded": onMapStartLoad,
-					// "featuresadded": onMapEndLoad,
 					"featureselected": onFeatureSelect,
 					"featureunselected": onFeatureUnselect
 				});
@@ -205,6 +201,9 @@
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
 				// markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
+				
+				// Destroy any open popups
+				onPopupClose();
 				
 				// Get Current Zoom
 				currZoom = map.getZoom();

@@ -222,14 +222,7 @@ class Main_Controller extends Template_Controller {
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->main_page = TRUE;
-		
-		// Add '?cluster=yes' to /main controller to view clustered data
-		if (isset($_GET['cluster']) && ($_GET['cluster'] == 'yes'))
-		{
-			$this->template->header->js = new View('main_cluster_js');
-		} else {
-			$this->template->header->js = new View('main_js');
-		}
+		$this->template->header->js = new View('main_cluster_js');
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->header->js->latitude = Kohana::config('settings.default_lat');

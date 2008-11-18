@@ -11,6 +11,8 @@
 	if ($map_enabled)
 	{
 		echo html::script('media/js/OpenLayers/OpenLayers');
+		// OpenLayers Theme
+		echo html::stylesheet('media/js/OpenLayers/theme/default/style');
 	}	
 	
 	// Load jQuery
