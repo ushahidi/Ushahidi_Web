@@ -500,7 +500,7 @@ class Reports_Controller extends Admin_Controller
 				
 				
 				// STEP 6: SAVE LINK TO SMS MESSAGE
-				if($mobile_id != "")
+				if(isset($mobile_id) && $mobile_id != "")
 				{
 					$savemessage = ORM::factory('message', $mobile_id);
 					if ($savemessage->loaded == true) 
