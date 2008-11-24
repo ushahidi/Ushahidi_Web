@@ -199,7 +199,7 @@ class Main_Controller extends Template_Controller {
             array_push($graph_data, "[" . $month_count->time * 1000 . ", " . $month_count->number . "]");
         }
         $all_graphs .= "data: [". join($graph_data, ",") . "], ";
-        $all_graphs .= "color: '#0099CC' ";
+        $all_graphs .= "color: '#990000' ";
         $all_graphs .= " } ";
 		
         foreach ( $categories as $index => $category)
