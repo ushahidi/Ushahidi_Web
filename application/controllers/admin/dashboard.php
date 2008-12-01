@@ -17,6 +17,7 @@ class Dashboard_Controller extends Admin_Controller
 		$this->template->content = new View('admin/dashboard');
 		$this->template->content->title = 'Dashboard';
 		$this->template->this_page = 'dashboard';
+//		$this->template->header  = new View('header');
 				
 		// Retrieve Dashboard Count...
 		
@@ -50,6 +51,12 @@ class Dashboard_Controller extends Admin_Controller
 		// Get reports for display
 		$incidents = ORM::factory('incident')->limit(3)->orderby('incident_dateadd', 'desc')->find_all();
 		$this->template->content->incidents = $incidents;
+		
+		// Graph
+		$this->template->content->all_graphs = Incident_Model::get_incidents_by_interval();
+		
+//		$this->template->header->js = new View('admin/dashboard_js');
+		$this->template->content->current_date = date('Y') . '/' . date('m') . '/01';
 	}
         
     /**

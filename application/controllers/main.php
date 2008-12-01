@@ -13,22 +13,6 @@ class Main_Controller extends Template_Controller {
     // Cache instance
     protected $cache;
 	
-    private function _category_graph_text($sql, $category)
-    {
-        $db = new Database();
-        $query = $db->query($sql);
-        $graph_data = array();
-        $graph = ", \"".  $category[0] ."\": { label: '". $category[0] ."', ";
-        foreach ( $query as $month_count )
-        {
-            array_push($graph_data, "[" . $month_count->time * 1000 . ", " . $month_count->number . "]");
-        }
-        $graph .= "data: [". join($graph_data, ",") . "], ";
-        $graph .= "color: '#". $category[1] ."' ";
-        $graph .= " } ";
-        return $graph;
-    }
-	
     public function __construct()
     {
         parent::__construct();	
@@ -182,42 +166,10 @@ class Main_Controller extends Template_Controller {
 		
 		
         // get graph data
-        // could not use DB query builder. It does not support parentheses yet
-        $graph_data = array();
-        $all_graphs = "{ ";
-		
-        $all_graphs .= "\"ALL\": { label: 'All Categories', ";
-        $query_text = 'SELECT UNIX_TIMESTAMP(DATE_FORMAT(incident_date, \'%Y-%m-01\')) 
-		                     AS time, COUNT(*) AS number 
-		                     FROM incident 
-		                     WHERE incident_active = 1
-		                     GROUP BY DATE_FORMAT(incident_date, \'%Y%m\')';
-        $query = $db->query($query_text);
-
-        foreach ( $query as $month_count )
-        {
-            array_push($graph_data, "[" . $month_count->time * 1000 . ", " . $month_count->number . "]");
-        }
-        $all_graphs .= "data: [". join($graph_data, ",") . "], ";
-        $all_graphs .= "color: '#990000' ";
-        $all_graphs .= " } ";
-		
-        foreach ( $categories as $index => $category)
-        {
-            $query_text = "SELECT UNIX_TIMESTAMP(DATE_FORMAT(incident_date, '%Y-%m-01')) 
-							AS time, COUNT(*) AS number
-						        FROM incident 
-							INNER JOIN incident_category ON incident_category.incident_id = incident.id
-							WHERE incident_active = 1 AND incident_category.category_id = ". $index ."
-							GROUP BY DATE_FORMAT(incident_date, '%Y%m')";
-		    $graph_text = $this->_category_graph_text($query_text, $category);
-			$all_graphs .= $graph_text;
-		}
-		
-	    $all_graphs .= " } ";
-		
-		$this->template->content->all_graphs = $all_graphs;		
-		
+       // could not use DB query builder. It does not support parentheses yet
+        $graph_data = array();		
+        $all_graphs = Incident_Model::get_incidents_by_interval('month');	
+		$this->template->content->all_graphs = $all_graphs;
 		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;

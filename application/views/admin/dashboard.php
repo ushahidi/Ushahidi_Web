@@ -1,3 +1,4 @@
+			<style media="all" type="text/css">@import "/ushahidi/media/css/all.css";</style>
 			<div class="bg">
 				<h2><?php echo $title; ?></h2>
 				<!-- column -->
@@ -5,6 +6,7 @@
 					<!-- box -->
 					<div class="box">
 						<h3>Reports Timeline</h3>
+						<div id="graph" class="graph-holder"  style="width:410px;height:305px;margin:auto"></div>
 						<ul class="inf">
 							<li class="none-separator">View:<a href="dashboard?chart=day">Today</a></li>
 							<li><a href="dashboard">This Month</a></li>
@@ -142,3 +144,66 @@
 					</div>
 				</div>
 			</div>
+			<script type="text/javascript" src="/ushahidi/media/js/jquery.js"></script>
+            <script type="text/javascript" src="/ushahidi/media/js/jquery.flot.js"></script>
+			<script type="text/javascript">
+                // Graph
+                // TODO: Re-use this code
+            	var allGraphData = [<?php echo $all_graphs ?>];
+            	var graphData = allGraphData[0]['ALL'];
+            	var dailyGraphData = {};
+            	var graphOptions = {
+            		xaxis: { mode: "time", timeformat: "%b %y" },
+            		yaxis: { tickDecimals: 0 },
+            		points: { show: true},
+            		bars: { show: true},
+            		legend: { show: false}
+            	};
+
+            	function plotGraph(catId) {	
+            		var startTime = new Date("<?php echo $current_date; ?>");
+            		var endTime = new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
+            		endTime = new Date(endTime - 1);
+            		
+            		if (!catId || catId == '0') {
+            		    catId = 'ALL';
+            		}
+            		
+            		if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 62) {   // monthly
+            		    if (!graphData) { 
+            		        graphData = {'data': []};
+            		    }
+            			plot = $.plot($("#graph"), [graphData],
+            			        $.extend(true, {}, graphOptions, {
+            			            xaxis: { min: startTime.getTime(), max: endTime.getTime() }
+            			        }));
+            	    } else {   // daily
+            	        var url = "<?php echo url::base() . 'json/timeline/' ?>";
+            	        var startDate = startTime.getFullYear() + '-' + 
+            	                        (startTime.getMonth()+1) + '-'+ startTime.getDate();
+            	        var endDate = endTime.getFullYear() + '-' + 
+            	                        (endTime.getMonth()+1) + '-'+ endTime.getDate();
+            	        url += "?s=" + startDate + "&e=" + endDate;
+            	        $.getJSON(url,
+            	            function(data) {
+            	                dailyGraphData = data;
+            	                if (!dailyGraphData[catId]) { 
+            	                    dailyGraphData[catId] = {};
+            	                    dailyGraphData[catId]['data'] = [];
+            	                }
+            	                plot = $.plot($("#graph"), [dailyGraphData[catId]],
+            			        $.extend(true, {}, graphOptions, {
+            			            xaxis: { min: startTime.getTime(), 
+            			                     max: endTime.getTime(),
+            			                     mode: "time", 
+            			                     timeformat: "%d %b",
+            			                     tickSize: [5, "day"]
+            			            }
+            			        }));
+            	            }
+            	        );
+            	    }
+            	}
+            	
+            	plotGraph();
+			</script>
