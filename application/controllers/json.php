@@ -172,4 +172,27 @@ class Json_Controller extends Template_Controller
             $this->template->json = $json;	
         }	
     }
+    
+    public function timeline() {
+        $this->auto_render = FALSE;
+        $this->template = new View('json/timeline');
+        //$this->template->content = new View('json/timeline');
+        
+        $start_date = NULL;
+        $end_date = NULL;
+        if (isset($_GET['s'])) {
+            $start_date = $_GET['s'];
+        }
+        if (isset($_GET['e'])) {
+            $end_date = $_GET['e'];
+        }
+        
+        // get graph data
+        // could not use DB query builder. It does not support parentheses yet
+        $db = new Database();	
+        $graph_data = array();
+        $all_graphs = Incident_Model::get_incidents_by_interval('day',$start_date,$end_date);
+	    echo $all_graphs;
+   	}
+
 }

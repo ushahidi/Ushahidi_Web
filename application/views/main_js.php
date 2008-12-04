@@ -116,7 +116,7 @@
 				$("a[@id^='cat_']").removeClass("active");
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
-//				markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
+				markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
 			});
 			
 			if (!$("#startDate").val()) {
@@ -147,13 +147,14 @@
 					markers.redraw();
 					
 					// refresh graph
-					plotGraph();
+					plotGraph(currentCat);
 				}
 			});
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
 			var graphData = allGraphData[0]['ALL'];
+			var dailyGraphData = {};
 			var graphOptions = {
 				xaxis: { mode: "time", timeformat: "%b %y" },
 				yaxis: { tickDecimals: 0 },
@@ -161,14 +162,48 @@
 				lines: { show: true}
 			};
 
-			function plotGraph() {	
+			function plotGraph(catId) {	
 				var startTime = new Date($("#startDate").val() * 1000);
 				var endTime = new Date($("#endDate").val() * 1000);
-
-				plot = $.plot($("#graph"), [graphData],
-				        $.extend(true, {}, graphOptions, {
-				            xaxis: { min: startTime.getTime(), max: endTime.getTime() }
-				        }));
+				
+				if (!catId || catId == '0') {
+				    catId = 'ALL';
+				}
+				
+				if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 62) {   // monthly
+				    if (!graphData) { 
+				        graphData = {'data': []};
+				    }
+    				plot = $.plot($("#graph"), [graphData],
+    				        $.extend(true, {}, graphOptions, {
+    				            xaxis: { min: startTime.getTime(), max: endTime.getTime() }
+    				        }));
+    		    } else {   // daily
+    		        var url = "<?php echo url::base() . 'json/timeline/' ?>";
+    		        var startDate = startTime.getFullYear() + '-' + 
+    		                        (startTime.getMonth()+1) + '-'+ startTime.getDate();
+    		        var endDate = endTime.getFullYear() + '-' + 
+    		                        (endTime.getMonth()+1) + '-'+ endTime.getDate();
+    		        url += "?s=" + startDate + "&e=" + endDate;
+    		        $.getJSON(url,
+    		            function(data) {
+    		                dailyGraphData = data;
+    		                if (!dailyGraphData[catId]) { 
+    		                    dailyGraphData[catId] = {};
+    		                    dailyGraphData[catId]['data'] = [];
+    		                }
+    		                plot = $.plot($("#graph"), [dailyGraphData[catId]],
+    				        $.extend(true, {}, graphOptions, {
+    				            xaxis: { min: startTime.getTime(), 
+    				                     max: endTime.getTime(),
+    				                     mode: "time", 
+    				                     timeformat: "%d %b",
+    				                     tickSize: [5, "day"]
+    				            }
+    				        }));
+    		            }
+    		        );
+    		    }
 			}
 			
 			plotGraph();
@@ -177,9 +212,9 @@
 			for (var i=0; i<categoryIds.length; i++) {
 				$('#cat_'+categoryIds[i]).click(function(){
 					var categories = <?php echo json_encode($categories); ?>;
-					categories['0'] = ["ALL", "#0099CC"];
+					categories['0'] = ["ALL", "#990000"];
 					graphData = allGraphData[0][categories[this.id.split("_")[1]][0]];
-					plotGraph();
+					plotGraph(categories[this.id.split("_")[1]][0]);
 				});
 			}
 		});
