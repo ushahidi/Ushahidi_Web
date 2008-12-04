@@ -178,6 +178,12 @@
 				$("#save").attr("value", "1");
 			});
 			
+			// Action on Cancel
+			$("#cancel").click(function () {
+				window.location.href='<?php echo url::base() . 'admin/reports/' ?>';
+				return false;
+			});
+			
 			// Prevent Enter Button Submit
 			$("#reportForm").bind("keypress", function(e) {
 			  if (e.keyCode == 13) return false;
@@ -188,5 +194,4 @@
 		    $('#show_messages').toggle(400);
 		    return false;
 			});
-
 		});

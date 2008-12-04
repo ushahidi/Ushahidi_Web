@@ -126,6 +126,9 @@ class Reports_Controller extends Admin_Controller
 							// Delete Categories
 							ORM::factory('incident_category')->where('incident_id',$incident_id)->delete_all();
 							
+							// Delete Translations
+							ORM::factory('incident_lang')->where('incident_id',$incident_id)->delete_all();
+							
 							// Delete Photos From Directory
 							foreach (ORM::factory('media')->where('incident_id',$incident_id)->where('media_type', 1) as $photo) {
 								deletePhoto($photo->id);
@@ -197,6 +200,7 @@ class Reports_Controller extends Admin_Controller
 		$form = array
 	    (
 	        'location_id'      => '',
+			'locale'		   => '',
 			'incident_title'      => '',
 	        'incident_description'    => '',
 	        'incident_date'  => '',
@@ -226,6 +230,9 @@ class Reports_Controller extends Admin_Controller
 		{
 			$form_saved = FALSE;
 		}
+		
+		// Locale (Language) Array
+		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 		
         // Create Categories
         $this->template->content->categories = $this->_get_categories();	
@@ -301,7 +308,8 @@ class Reports_Controller extends Admin_Controller
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-	        $post->add_rules('location_id','numeric');
+	        $post->add_rules('locale','required','alpha_dash','length[5]');
+			$post->add_rules('location_id','numeric');
 			$post->add_rules('mobile_id','numeric');
 			$post->add_rules('incident_title','required', 'length[3,200]');
 			$post->add_rules('incident_description','required');
@@ -385,6 +393,7 @@ class Reports_Controller extends Admin_Controller
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model($id);
 				$incident->location_id = $location->id;
+				$incident->locale = $post->locale;
 				$incident->user_id = $_SESSION['auth_user']->id;
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
@@ -500,7 +509,7 @@ class Reports_Controller extends Admin_Controller
 				
 				
 				// STEP 6: SAVE LINK TO SMS MESSAGE
-				if($mobile_id != "")
+				if(isset($mobile_id) && $mobile_id != "")
 				{
 					$savemessage = ORM::factory('message', $mobile_id);
 					if ($savemessage->loaded == true) 
@@ -572,6 +581,7 @@ class Reports_Controller extends Admin_Controller
 					$incident_arr = array
 				    (
 						'location_id' => $incident->location->id,
+						'locale' => $incident->locale,
 						'incident_title' => $incident->incident_title,
 						'incident_description' => $incident->incident_description,
 						'incident_date' => date('m/d/Y', strtotime($incident->incident_date)),
@@ -603,6 +613,7 @@ class Reports_Controller extends Admin_Controller
 			}
 			else
 			{
+				$form['locale'] = Kohana::config('locale.language');
 				$form['latitude'] = Kohana::config('settings.default_lat');
 				$form['longitude'] = Kohana::config('settings.default_lon');
 				$form['country_id'] = Kohana::config('settings.default_country');
@@ -628,6 +639,153 @@ class Reports_Controller extends Admin_Controller
         $this->template->content->color_picker_js = $this->_color_picker_js();
         $this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
 	}
+
+
+
+	/**
+	* Translate a report
+    * @param bool|int $id The id no. of the report
+    * @param bool|string $saved
+    */
+    
+	function translate( $id = false, $saved = false )
+	{
+		$this->template->content = new View('admin/reports_translate');
+		$this->template->content->title = 'Translate Report';
+		
+		// Which incident are we adding this translation for?
+		if (isset($_GET['iid']) && !empty($_GET['iid']))
+		{
+			$incident_id = $_GET['iid'];
+			$incident = ORM::factory('incident', $incident_id);
+			if ($incident->loaded == true)
+			{
+				$orig_locale = $incident->locale;
+				$this->template->content->orig_title = $incident->incident_title;
+				$this->template->content->orig_description = $incident->incident_description;
+			}
+			else
+			{
+				// Redirect
+				url::redirect(url::base() . 'admin/reports/');
+			}
+		}
+		else
+		{
+			// Redirect
+			url::redirect(url::base() . 'admin/reports/');
+		}
+		
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+	        'locale'      => '',
+			'incident_title'      => '',
+			'incident_description'    => ''
+	    );
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+	    $errors = $form;
+		$form_error = FALSE;
+		if ($saved == 'saved')
+		{
+			$form_saved = TRUE;
+		}
+		else
+		{
+			$form_saved = FALSE;
+		}
+		
+		// Locale (Language) Array
+		$this->template->content->locale_array = Kohana::config('locale.all_languages');
+	
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+            // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+
+	         //  Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+	        $post->add_rules('locale','required','alpha_dash','length[5]');
+			$post->add_rules('incident_title','required', 'length[3,200]');
+			$post->add_rules('incident_description','required');
+			$post->add_callbacks('locale', array($this,'translate_exists_chk'));
+			
+			if ($orig_locale == $_POST['locale'])
+			{
+				// The original report and the translation are the same language!
+				$post->add_error('locale','locale');
+			}
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+				// SAVE INCIDENT TRANSLATION
+				$incident_l = new Incident_Lang_Model($id);
+				$incident_l->incident_id = $incident_id;
+				$incident_l->locale = $post->locale;
+				$incident_l->incident_title = $post->incident_title;
+				$incident_l->incident_description = $post->incident_description;
+				$incident_l->save();
+				
+				
+				// SAVE AND CLOSE?
+				if ($post->save == 1)		// Save but don't close
+				{
+					url::redirect(url::base() . 'admin/reports/translate/'. $incident_l->id .'/saved/?iid=' . $incident_id);
+				}
+				else 						// Save and close
+				{
+					url::redirect(url::base() . 'admin/reports/');
+				}
+	        }
+	
+            // No! We have validation errors, we need to show the form again, with the errors
+	        else   
+			{
+	            // repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+	            // populate the error fields, if any
+	            $errors = arr::overwrite($errors, $post->errors('report'));
+				$form_error = TRUE;
+	        }
+	    }
+		else
+		{
+			if ( $id )
+			{
+				// Retrieve Current Incident
+				$incident_l = ORM::factory('incident_lang', $id)->where('incident_id', $incident_id)->find();
+				if ($incident_l->loaded == true)
+				{
+					$form['locale'] = $incident_l->locale;
+					$form['incident_title'] = $incident_l->incident_title;
+					$form['incident_description'] = $incident_l->incident_description;
+				}
+				else
+				{
+					// Redirect
+					url::redirect(url::base() . 'admin/reports/');
+				}		
+				
+			}
+		}
+	
+		$this->template->content->form = $form;
+	    $this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		
+		// Javascript Header
+		$this->template->js = new View('admin/reports_translate_js');
+	}
+
+
+
 
     /**
     * Save newly added dynamic categories
@@ -820,4 +978,28 @@ class Reports_Controller extends Admin_Controller
 				});
 			</script>";
     }
+
+	/**
+	 * Checks if translation for this report & locale exists
+     * @param Validation $post $_POST variable with validation rules 
+	 * @param int $iid The unique incident_id of the original report
+	 */
+	public function translate_exists_chk(Validation $post)
+	{
+		// If add->rules validation found any errors, get me out of here!
+		if (array_key_exists('locale', $post->errors()))
+			return;
+		
+		$iid = $_GET['iid'];
+		if (empty($iid)) {
+			$iid = 0;
+		}
+		$translate = ORM::factory('incident_lang')->where('incident_id',$iid)->where('locale',$post->locale)->find();
+		if ($translate->loaded == true) {
+			$post->add_error( 'locale', 'exists');		
+		// Not found
+		} else {
+			return;
+		}
+	}
 }

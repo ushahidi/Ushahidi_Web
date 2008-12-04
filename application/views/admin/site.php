@@ -86,6 +86,12 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4>Cluster Reports on Map?</h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('allow_clustering', $yesno_array, $form['allow_clustering']); ?>
+							</span>
+						</div>
+						<div class="row">
 							<h4>Google Analytics</h4>
 							Web Property ID - Format: UA-XXXXX-XX &nbsp;&nbsp;
 							<?php print form::input('google_analytics', $form['google_analytics'], ' class="text"'); ?>

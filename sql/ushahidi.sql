@@ -14,6 +14,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) unsigned NOT NULL auto_increment,
+  `locale` varchar(10) NOT NULL default 'en_US',
   `category_type` tinyint(4) default NULL,
   `category_title` varchar(255) default NULL,
   `category_description` text default NULL,
@@ -36,6 +37,28 @@ INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_descr
 (7, 5, 'CIVILIANS', 'CIVILIANS', '66CC00', 1),
 (8, 5, 'LOOTING', 'LOOTING', 'FFCC00', 1),
 (9, 5, 'PEACE EFFORTS', 'PEACE EFFORTS', 'FAEBD7', 1);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category_lang`
+--
+
+CREATE TABLE `category_lang`
+(
+`id` INT(11) unsigned  NOT NULL AUTO_INCREMENT,
+`category_id` int(11) NOT NULL,
+`locale` VARCHAR(10) default NULL,
+`category_title` VARCHAR(255) default NULL,
+`category_description` TEXT default NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `category_lang`
+--
+
 
 -- --------------------------------------------------------
 
@@ -342,6 +365,7 @@ CREATE TABLE IF NOT EXISTS `idp` (
 CREATE TABLE IF NOT EXISTS `incident` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `location_id` bigint(20) NOT NULL,
+  `locale` varchar(10) NOT NULL default 'en_US',
   `user_id` bigint(20) default NULL,
   `incident_title` varchar(255) default NULL,
   `incident_description` longtext,
@@ -359,6 +383,27 @@ CREATE TABLE IF NOT EXISTS `incident` (
 
 --
 -- Dumping data for table `incident`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `incident_lang`
+--
+
+CREATE TABLE IF NOT EXISTS `incident_lang`
+(
+`id` BIGINT(20) unsigned  NOT NULL AUTO_INCREMENT,
+`incident_id` BIGINT(20) NOT NULL,
+`locale` VARCHAR(10) default NULL,
+`incident_title` VARCHAR(255) default NULL,
+`incident_description` LONGTEXT default NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `incident_lang`
 --
 
 
@@ -703,6 +748,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `allow_reports` tinyint(4) NOT NULL default '1',
   `allow_comments` tinyint(4) NOT NULL default '1',
   `allow_feed` tinyint(4) NOT NULL default '1',
+  `allow_clustering` tinyint(4) NOT NULL default '0',
   `default_map` tinyint(4) NOT NULL default '1' COMMENT '1 - GOOGLE MAPS, 2 - LIVE MAPS, 3 - YAHOO MAPS, 4 - OPEN STREET MAPS',
   `api_google` varchar(200) default NULL,
   `api_yahoo` varchar(200) default NULL,
@@ -834,7 +880,7 @@ CREATE TABLE IF NOT EXISTS `alert` (
 -- Table structure for table `alert_sent`
 --
 
-CREATE TABLE `alert_sent`
+CREATE TABLE IF NOT EXISTS `alert_sent`
 (
 `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT,
 `incident_id` BIGINT NOT NULL,

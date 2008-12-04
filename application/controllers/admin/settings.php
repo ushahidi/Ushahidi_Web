@@ -37,6 +37,7 @@ class Settings_Controller extends Admin_Controller
 			'allow_reports' => '',
 			'allow_comments' => '',
 			'allow_feed' => '',
+			'allow_clustering' => '',
 			'google_analytics' => ''
 			
 	    );
@@ -67,6 +68,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_reports','required','between[0,1]');
 			$post->add_rules('allow_comments','required','between[0,1]');
 			$post->add_rules('allow_feed','required','between[0,1]');
+			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('google_analytics','length[0,20]');
 			
 			// Test to see if things passed the rule checks
@@ -83,6 +85,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->allow_reports = $post->allow_reports;
 				$settings->allow_comments = $post->allow_comments;
 				$settings->allow_feed = $post->allow_feed;
+				$settings->allow_clustering = $post->allow_clustering;
 				$settings->google_analytics = $post->google_analytics;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
@@ -123,6 +126,7 @@ class Settings_Controller extends Admin_Controller
 				'allow_reports' => $settings->allow_reports,
 				'allow_comments' => $settings->allow_comments,
 				'allow_feed' => $settings->allow_feed,
+				'allow_clustering' => $settings->allow_clustering,
 				'google_analytics' => $settings->google_analytics
 		    );
 		}		
@@ -131,7 +135,7 @@ class Settings_Controller extends Admin_Controller
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->site_language_array = array('en_US'=>'English (US)','fr_FR'=>'Français');
+		$this->template->content->site_language_array = Kohana::config('locale.all_languages');
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
 	}

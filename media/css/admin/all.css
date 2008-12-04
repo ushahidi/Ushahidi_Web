@@ -273,6 +273,20 @@ ul.inf li a{
 	clear:both;
 	overflow:hidden;
 }
+.post-trans-new{
+	margin:5px 0 2px 20px;
+	font-size:80%;
+}
+.post-trans-new a, .post-trans-new a:visited{
+	color:#666;
+}
+.post-trans{
+	margin:5px 0 0 20px;
+	padding:2px;
+	font-size:90%;
+	background-color:#eee;
+	border:1px dotted #666;
+}
 ul.post-info {
 	display:inline;
 	margin:9px 0 0 12px;
@@ -711,6 +725,14 @@ ul.pager li a.active {background:#f2f7fa;}
 	width:363px;
 	padding:10px 5px;
 }
+.report-form textarea{
+	width:368px;
+	height:260px;
+	margin:0;
+	padding:4px 0 4px 5px;
+	border:2px solid #d9d9d9;
+	float:left;
+}
 .sel-holder {
 	overflow:hidden;
 	border:2px solid #d9d9d9;
@@ -719,6 +741,10 @@ ul.pager li a.active {background:#f2f7fa;}
 .sel-holder select{
 	margin:-1px -1px;
 	float:left;
+}
+.nofloat, .nofloat select, .nofloat input.text{
+	clear:both;
+	float:none;
 }
 .report-form h4{
 	font-weight:bold;
@@ -739,13 +765,8 @@ ul.pager li a.active {background:#f2f7fa;}
 	width:380px;
 	float:left;
 }
-.report-form textarea{
-	width:368px;
-	height:260px;
-	margin:0;
-	padding:4px 0 4px 5px;
-	border:2px solid #d9d9d9;
-	float:left;
+.f-col-full {
+	padding:0 10px 14px 20px;
 }
 .date-box {
 	float:left;
@@ -843,6 +864,17 @@ a.new-cat:hover, a.show-messages:hover;{ text-decoration:none;}
 #show_messages .message{
 	padding:2px 0 2px 0;
 	border-bottom:1px dotted #ccc;
+}
+.translation{
+	clear:both;
+	margin:10px 0 10px 20px;
+	background-color:#FFCCCC;
+	padding:10px;
+	width:400px;
+}
+.translation h4{
+	margin:0 0 3px 0;
+	padding:0;
 }
 /*-- f-col --*/
 .f-col-1 {

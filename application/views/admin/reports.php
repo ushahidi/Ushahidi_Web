@@ -119,6 +119,19 @@
 									// Incident Status
 									$incident_approved = $incident->incident_active;
 									$incident_verified = $incident->incident_verified;
+									
+									// Get Any Translations
+									$i = 1;
+									$incident_translation  = "<div class=\"post-trans-new\">";
+									$incident_translation .= "<a href=\"" . url::base() . 'admin/reports/translate/?iid=' . $incident_id . "\">+ADD TRANSLATION:</a></div>";
+									foreach ($incident->incident_lang as $translation) {
+										$incident_translation .= "<div class=\"post-trans\">";
+										$incident_translation .= "Translation " . $i . ": ";
+										$incident_translation .= "<a href=\"" . url::base() . 'admin/reports/translate/'. $translation->id .'/?iid=' . $incident_id . "\">"
+											. text::limit_chars($translation->incident_title, 150, "...", true) 
+											. "</a>";
+										$incident_translation .= "</div>";
+									}
 									?>
 									<tr>
 										<td class="col-1"><input name="incident_id[]" id="incident" value="<?php echo $incident_id; ?>" type="checkbox" class="check-box"/></td>
@@ -134,6 +147,7 @@
 											<ul class="links">
 												<li class="none-separator">Categories:<?php echo $incident_category; ?></li>
 											</ul>
+											<?php echo $incident_translation; ?>
 										</td>
 										<td class="col-3"><?php echo $incident_date; ?></td>
 										<td class="col-4">

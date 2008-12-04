@@ -57,6 +57,12 @@
 							</div>
 							<?php } ?>
 							<div class="row">
+								<h4>Locale <span>(Language)</span></h4>
+								<span class="sel-holder">
+								<?php print form::dropdown('locale', $locale_array, $form['locale']) ?>
+								</span>							
+							</div>
+							<div class="row">
 								<h4>Item Title</h4>
 								<?php print form::input('incident_title', $form['incident_title'], ' class="text title"'); ?>
 							</div>

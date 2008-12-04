@@ -2,10 +2,19 @@
 
 $lang = array
 (
+	'locale' => array
+	(
+		'required'		=> 'The title field is required.',
+		'length'		=> 'The locale field has an incorrect value. ',
+		'alpha_dash'	=> 'The locale field has an incorrect value. ',
+		'locale'		=> 'The Original Report and the Translation have the same locale (language)',
+		'exists'		=> 'This report already has a translation for this language'
+	),
+	
 	'incident_title' => array
 	(
 		'required'		=> 'The title field is required.',
-		'length'		=> 'The title field must be at least 3 and no more 200 characters long.',
+		'length'		=> 'The title field must be at least 3 and no more 200 characters long.'
 	),
 	
 	'incident_description' => array
