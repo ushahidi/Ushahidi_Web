@@ -18,7 +18,9 @@ class Manage_Controller extends Admin_Controller
 		}
 	}
 	
-	
+	/*
+	Add Edit Categories
+	*/
 	function index()
 	{	
 		$this->template->content = new View('admin/categories');
@@ -28,7 +30,8 @@ class Manage_Controller extends Admin_Controller
 		$form = array
 	    (
 			'action' => '',
-	        'category_id'      => '',
+	        'locale'      => '',
+			'category_id'      => '',
 			'category_title'      => '',
 	        'category_description'    => '',
 	        'category_color'  => ''
@@ -51,6 +54,7 @@ class Manage_Controller extends Admin_Controller
 			if ($post->action == 'a')		// Add Action
 			{
 				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('locale','required','alpha_dash','length[5]');
 				$post->add_rules('category_title','required', 'length[3,80]');
 				$post->add_rules('category_description','required');
 				$post->add_rules('category_color','required', 'length[6,6]');
@@ -87,6 +91,7 @@ class Manage_Controller extends Admin_Controller
 				else if( $post->action == 'a' ) 		// Save Action
 				{		
 					// SAVE Category
+					$category->locale = $post->locale;
 					$category->category_title = $post->category_title;
 					$category->category_description = $post->category_description;
 					$category->category_color = $post->category_color;
@@ -126,6 +131,9 @@ class Manage_Controller extends Admin_Controller
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->categories = $categories;
+
+		// Locale (Language) Array
+		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
         // Javascript Header
         $this->template->colorpicker_enabled = TRUE;

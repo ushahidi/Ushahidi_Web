@@ -1,7 +1,7 @@
 <?php
 $lang = array(
 	'search' => 'RECHERCHER',
-	'home' => 'Acceuil',
+	'home' => 'Accueil',
 	'reports' => 'Rapports',
 	'submit' => 'Soumettre un incident',
 	'submit_sms' => 'Envoyer par SMS',

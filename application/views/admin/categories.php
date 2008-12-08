@@ -70,6 +70,7 @@
 										$category_description = substr($category->category_description, 0, 150);
 										$category_color = $category->category_color;
 										$category_visible = $category->category_visible;
+										$locale = $category->locale;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
@@ -82,7 +83,7 @@
 											<td class="col-3"><img src="<?php echo url::base() . "swatch/?c=" . $category_color . "&w=30&h=30"; ?>"></td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>')">Edit</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($locale)); ?>')">Edit</a></li>
 													<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
 <li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del">Delete</a></li>
 												</ul>
@@ -103,6 +104,7 @@
 					<a name="add"></a>
 					<ul class="tabset">
 						<li><a href="#" class="active">Add/Edit</a></li>
+						<li><a href="#">Add Language</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -118,7 +120,7 @@
 						</div>
 						<div class="tab_form_item">
 							<strong>Description:</strong><br />
-							<?php print form::input('category_description', '', ' class="text long2"'); ?>
+							<?php print form::input('category_description', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
 							<strong>Color:</strong><br />
@@ -141,6 +143,10 @@
 									});
 								});
 							</script>
+						</div>
+						<div class="tab_form_item">
+							<strong>Locale:</strong><br />
+							<?php print form::dropdown('locale', $locale_array, '') ?>
 						</div>
 						<div class="tab_form_item">
 							&nbsp;<br />

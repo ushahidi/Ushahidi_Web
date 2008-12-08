@@ -17,13 +17,11 @@
 	
 	// Load jQuery
 	echo html::script('media/js/jquery');
-	echo html::script('media/js/jquery.validate.min');
 	echo html::script('media/js/jquery.ui.min');
 	
 	// Other stuff to load only we have the map enabled
 	if ($map_enabled)
 	{
-		echo html::script('media/js/OpenLayers/LoadingPanel');
 		echo $api_url . "\n";
 		if ($main_page) {
 			echo html::script('media/js/accessibleUISlider.jQuery');
@@ -34,12 +32,18 @@
 			echo html::stylesheet('media/css/jquery-ui-themeroller');
 		}
 	}
+	if ($validator_enabled) 
+	{
+		echo html::script('media/js/jquery.validate.min');
+	}
 	if ($datepicker_enabled)
 	{
 		echo html::stylesheet('media/css/datepicker/ui.datepicker');
 	}
-	echo html::script('media/js/photoslider.js');
-	
+	if ($photoslider_enabled)
+	{
+		echo html::script('media/js/photoslider.js');
+	}
 	if ($allow_feed == 1) {
 		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
 	}

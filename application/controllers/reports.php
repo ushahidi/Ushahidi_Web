@@ -7,7 +7,10 @@ class Reports_Controller extends Main_Controller {
 
     function __construct()
     {
-        parent::__construct();	
+        parent::__construct();
+
+		// Javascript Header
+		$this->template->header->validator_enabled = TRUE;
     }
 
     /**
@@ -451,6 +454,7 @@ class Reports_Controller extends Main_Controller {
 		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
+		$this->template->header->photoslider_enabled = TRUE;
 		$this->template->header->js = new View('reports_view_js');
 		$this->template->header->js->incident_id = $incident->id;
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');

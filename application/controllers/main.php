@@ -48,7 +48,9 @@ class Main_Controller extends Template_Controller {
 		
 		// Javascript Header
 		$this->template->header->map_enabled = FALSE;
+		$this->template->header->validator_enabled = FALSE;
 		$this->template->header->datepicker_enabled = FALSE;
+		$this->template->header->photoslider_enabled = FALSE;
 		$this->template->header->main_page = FALSE;
 		$this->template->header->js = '';
 		
