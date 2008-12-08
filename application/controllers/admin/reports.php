@@ -416,7 +416,7 @@ class Reports_Controller extends Admin_Controller
 				// Is this an SMS submitted report?
                 //XXX: It is possible that 'mobile_id' may not be available through
                 //$_POST
-				if(isset($mobile_id))
+				if(isset($mobile_id) && $mobile_id != "")
 				{
 					$incident->incident_mode = 2;		// Incident submission type
 				}
