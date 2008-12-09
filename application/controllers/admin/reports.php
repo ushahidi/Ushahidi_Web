@@ -939,6 +939,7 @@ class Reports_Controller extends Admin_Controller
 	 private function _color_picker_js()
     {
      return "<script type=\"text/javascript\">
+				$(document).ready(function() {
                 $('#category_color').ColorPicker({
                         onSubmit: function(hsb, hex, rgb) {
                             $('#category_color').val(hex);
@@ -953,17 +954,19 @@ class Reports_Controller extends Admin_Controller
                 .bind('keyup', function(){
                     $(this).ColorPickerSetColor(this.value);
                 });
-
+				});
             </script>";
     }
     
     private function _date_picker_js() 
     {
         return "<script type=\"text/javascript\">
+				$(document).ready(function() {
 				$(\"#incident_date\").datepicker({ 
 				showOn: \"both\", 
 				buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
 				buttonImageOnly: true 
+				});
 				});
 			</script>";	
     }
@@ -971,10 +974,11 @@ class Reports_Controller extends Admin_Controller
     private function _new_category_toggle_js()
     {
         return "<script type=\"text/javascript\">
-			    $('#category_add').show('slow');
+			    $(document).ready(function() {
 			    $('a#category_toggle').click(function() {
 			    $('#category_add').toggle(400);
 			    return false;
+				});
 				});
 			</script>";
     }

@@ -54,7 +54,8 @@
 					fillOpacity: 0.9,
 					strokeColor: "#990000",
 					strokeWidth: 2,
-					strokeOpacity: 0.8
+					strokeOpacity: 0.8,
+					label: "test"
 				}, 
 				{
 					context: 
