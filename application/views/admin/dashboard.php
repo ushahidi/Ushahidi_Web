@@ -8,7 +8,7 @@
 						<h3>Reports Timeline</h3>
 						<div id="graph" class="graph-holder"  style="width:410px;height:305px;margin:auto"></div>
 						<ul class="inf">
-							<li class="none-separator">View:<a href="dashboard?chart=day">Today</a></li>
+							<li class="none-separator">View:<a href="javascript:plotGraph('ALL', '<?php echo date('Y/m/d');?>', '<?php echo date('Y/m/d');?>')">Today</a></li>
 							<li><a href="dashboard">This Month</a></li>
 						</ul>
 						<img src="<?php echo url::base() . 'admin/dashboard/chart' . $timeline ?>" alt="Incidents" title="Incidents" width="410" height="305" />
@@ -160,9 +160,9 @@
             		legend: { show: false}
             	};
 
-            	function plotGraph(catId) {	
-            		var startTime = new Date("<?php echo $current_date; ?>");
-            		var endTime = new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
+            	function plotGraph(catId, aStartTime, aEndTime) {	
+            		var startTime = new Date(aStartTime) || new Date("<?php echo $current_date; ?>");
+            		var endTime = new Date(aEndTime) || new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
             		endTime = new Date(endTime - 1);
             		
             		if (!catId || catId == '0') {
@@ -184,6 +184,14 @@
             	        var endDate = endTime.getFullYear() + '-' + 
             	                        (endTime.getMonth()+1) + '-'+ endTime.getDate();
             	        url += "?s=" + startDate + "&e=" + endDate;
+            	        var aTimeformat = "%d %b";
+                        var aTickSize = [5, "day"];
+                        
+            	        if ((endTime - startTime) / (1000 * 60 * 60 * 24) < 4) {
+            	            var aTimeformat = "%H:%M";
+                            var aTickSize = [5, "hour"];
+                            url += "&i=hour";
+            	        }
             	        $.getJSON(url,
             	            function(data) {
             	                dailyGraphData = data;
@@ -196,14 +204,15 @@
             			            xaxis: { min: startTime.getTime(), 
             			                     max: endTime.getTime(),
             			                     mode: "time", 
-            			                     timeformat: "%d %b",
-            			                     tickSize: [5, "day"]
+            			                     timeformat: aTimeformat,
+            			                     tickSize: aTickSize
             			            }
             			        }));
             	            }
             	        );
             	    }
             	}
-            	
-            	plotGraph();
+            	var startTime = new Date("<?php echo $current_date; ?>");
+            	var endTime = new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
+            	plotGraph('ALL', startTime, endTime);
 			</script>
