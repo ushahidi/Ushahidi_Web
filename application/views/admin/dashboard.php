@@ -1,4 +1,3 @@
-			<style media="all" type="text/css">@import "/ushahidi/media/css/all.css";</style>
 			<div class="bg">
 				<h2><?php echo $title; ?></h2>
 				<!-- column -->
@@ -6,12 +5,12 @@
 					<!-- box -->
 					<div class="box">
 						<h3>Reports Timeline</h3>
-						<div id="graph" class="graph-holder"  style="width:410px;height:305px;margin:auto"></div>
 						<ul class="inf">
-							<li class="none-separator">View:<a href="javascript:plotGraph('ALL', '<?php echo date('Y/m/d');?>', '<?php echo date('Y/m/d');?>')">Today</a></li>
-							<li><a href="dashboard">This Month</a></li>
+							<li class="none-separator">View:<a href="#" onclick="graphSwitch('day')">Today</a></li>
+							<li><a href="#" onclick="graphSwitch('month')">This Month</a></li>
+							<li><a href="#" onclick="graphSwitch('year')">This Year</a></li>
 						</ul>
-						<img src="<?php echo url::base() . 'admin/dashboard/chart' . $timeline ?>" alt="Incidents" title="Incidents" width="410" height="305" />
+						<div id="graph" class="graph-holder"></div>
 					</div>
 					<!-- info-container -->
 					<div class="info-container">
@@ -111,8 +110,8 @@
 								<strong><?php echo $locations; ?></strong>
 							</li>
 							<li>
-								<a href="#" class="media">Incoming Media</a>
-								<strong><?php  ?></strong>
+								<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="media">Incoming Media</a>
+								<strong><?php echo $incoming_media; ?></strong>
 							</li>
 						</ul>
 					</div>
@@ -121,98 +120,30 @@
 						<div class="i-c-head">
 							<h3>Incoming Media</h3>
 							<ul>
-								<li class="none-separator"><a href="#">View All</a></li>
+								<li class="none-separator"><a href="<?php echo url::base() . 'admin/manage/feeds' ?>">View All</a></li>
 								<li><a href="#" class="rss-icon">rss</a></li>
 							</ul>
 						</div>
-						<div class="post">
-							<h4><a href="#">Anxiety increases in IDP Camps as supplies dwindle</a></h4>
-							<em class="date">The Associated Press - Feb 26, 2008 11:45 AM</em>
-							<p>One person was slashed at mauche belonging to the Kikuyu tribe. The Kikuyu tribe in revenge burnt down acar from the kalenjin community at k.</p>
-						</div>
-						<div class="post">
-							<h4><a href="#">Kalonzo urges youth to shun violence</a></h4>
-							<em class="date">YouTube - Feb 25, 2008 12:45 AM</em>
-							<p>in the Kenyan capital leave more dead in a flare up of ethnically motivated violence. They bring the death toll to more...</p>
-						</div>
-						<div class="post">
-							<h4><a href="#">Kenya Violence continues - 27 Jan 08</a></h4>
-							<em class="date">Standard, Kenya - Jan. 23, 2008 10:30 PM</em>
-							<p>Al Jazeera's Mohammed Adow reports from the Rift Valley region where ethnic violence continues despite mediation efforts...</p>
-						</div>
-						<a href="#" class="view-all">View All Reports</a>
+						<?php
+						foreach ($feeds as $feed)
+						{
+							$feed_id = $feed->id;
+							$feed_title = $feed->item_title;
+							$feed_description = text::limit_chars(strip_tags($feed->item_description), 100, '...', True);
+							$feed_link = $feed->item_link;
+							$feed_date = date('M j Y', strtotime($feed->item_date));
+							$feed_source = "NEWS";
+							?>
+							<div class="post">
+								<h4><a href="<?php echo $feed_link; ?>" target="_blank"><?php echo $feed_title ?></a></h4>
+								<em class="date"><?php echo $feed_source; ?> - <?php echo $feed_date; ?></em>
+								<p><?php echo $feed_description; ?></p>
+							</div>
+							<?php
+						}
+						?>
+						<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="view-all">View All Incoming Media</a>
 					</div>
 				</div>
 			</div>
-			<script type="text/javascript" src="/ushahidi/media/js/jquery.js"></script>
-            <script type="text/javascript" src="/ushahidi/media/js/jquery.flot.js"></script>
-			<script type="text/javascript">
-                // Graph
-                // TODO: Re-use this code
-            	var allGraphData = [<?php echo $all_graphs ?>];
-            	var graphData = allGraphData[0]['ALL'];
-            	var dailyGraphData = {};
-            	var graphOptions = {
-            		xaxis: { mode: "time", timeformat: "%b %y" },
-            		yaxis: { tickDecimals: 0 },
-            		points: { show: true},
-            		bars: { show: true},
-            		legend: { show: false}
-            	};
 
-            	function plotGraph(catId, aStartTime, aEndTime) {	
-            		var startTime = new Date(aStartTime) || new Date("<?php echo $current_date; ?>");
-            		var endTime = new Date(aEndTime) || new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
-            		endTime = new Date(endTime - 1);
-            		
-            		if (!catId || catId == '0') {
-            		    catId = 'ALL';
-            		}
-            		
-            		if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 62) {   // monthly
-            		    if (!graphData) { 
-            		        graphData = {'data': []};
-            		    }
-            			plot = $.plot($("#graph"), [graphData],
-            			        $.extend(true, {}, graphOptions, {
-            			            xaxis: { min: startTime.getTime(), max: endTime.getTime() }
-            			        }));
-            	    } else {   // daily
-            	        var url = "<?php echo url::base() . 'json/timeline/' ?>";
-            	        var startDate = startTime.getFullYear() + '-' + 
-            	                        (startTime.getMonth()+1) + '-'+ startTime.getDate();
-            	        var endDate = endTime.getFullYear() + '-' + 
-            	                        (endTime.getMonth()+1) + '-'+ endTime.getDate();
-            	        url += "?s=" + startDate + "&e=" + endDate;
-            	        var aTimeformat = "%d %b";
-                        var aTickSize = [5, "day"];
-                        
-            	        if ((endTime - startTime) / (1000 * 60 * 60 * 24) < 4) {
-            	            var aTimeformat = "%H:%M";
-                            var aTickSize = [5, "hour"];
-                            url += "&i=hour";
-            	        }
-            	        $.getJSON(url,
-            	            function(data) {
-            	                dailyGraphData = data;
-            	                if (!dailyGraphData[catId]) { 
-            	                    dailyGraphData[catId] = {};
-            	                    dailyGraphData[catId]['data'] = [];
-            	                }
-            	                plot = $.plot($("#graph"), [dailyGraphData[catId]],
-            			        $.extend(true, {}, graphOptions, {
-            			            xaxis: { min: startTime.getTime(), 
-            			                     max: endTime.getTime(),
-            			                     mode: "time", 
-            			                     timeformat: aTimeformat,
-            			                     tickSize: aTickSize
-            			            }
-            			        }));
-            	            }
-            	        );
-            	    }
-            	}
-            	var startTime = new Date("<?php echo $current_date; ?>");
-            	var endTime = new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
-            	plotGraph('ALL', startTime, endTime);
-			</script>

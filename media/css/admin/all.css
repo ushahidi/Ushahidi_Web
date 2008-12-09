@@ -226,6 +226,11 @@ ul.inf li a{
 	padding:18px 0 0 12px;
 	display:block;
 }
+.graph-holder{
+	width:410px;
+	height:315px;
+	margin:35px 0 0 10px;
+}
 /*-- info-container --*/
 .info-container {
 	margin:20px 0 0;
@@ -868,7 +873,7 @@ a.new-cat:hover, a.show-messages:hover;{ text-decoration:none;}
 .translation{
 	clear:both;
 	margin:10px 0 10px 20px;
-	background-color:#FFCCCC;
+	background-color:#CBDACF;
 	padding:10px;
 	width:400px;
 }

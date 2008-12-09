@@ -18,7 +18,14 @@
 	// Load jQuery
 	echo html::script('media/js/jquery');
 	echo html::script('media/js/jquery.form');
-	echo html::script('media/js/jquery.ui.min');
+	echo html::script('media/js/jquery.ui.packed');
+	
+	// Load Flot
+	if ($flot_enabled)
+	{
+		echo html::script('media/js/jquery.flot');
+		echo html::script('media/js/excanvas.pack');
+	}
 	
 	// Load ColorPicker
 	if ($colorpicker_enabled)

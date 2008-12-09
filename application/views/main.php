@@ -53,6 +53,7 @@
               </div>
               <div class="report-btns">
                 <a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span><?php echo Kohana::lang('ui_main.submit'); ?></span></a>
+				<div style="clear:both;margin:0;padding:0;height:1px;"></div>
                 <?php if (!empty($phone_array)) ?><a class="btn-grey" href="#"><span><?php echo Kohana::lang('ui_main.submit_sms'); ?></span></a>
               </div>
 			  <?php if (!empty($phone_array)) { ?>

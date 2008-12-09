@@ -323,8 +323,8 @@ a:visited{
 .category .report-btns a.btn-red {background:url(../img/red-btn-l.gif) no-repeat;}
 .category .report-btns a.btn-red span {background:url(../img/red-btn-r.gif) no-repeat 100% 0;}
 .category .report-btns a.btn-grey {
-	float:right;
 	background:url(../img/grey-btn-l.gif) no-repeat;
+	margin-top:5px;
 }
 .category .report-btns a.btn-grey span {background:url(../img/grey-btn-r.gif) no-repeat 100% 0;}
 .category p {
