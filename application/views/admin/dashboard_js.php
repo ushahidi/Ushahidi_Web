@@ -18,10 +18,9 @@ var graphOptions = {
 	}
 };
 
-var startTime;
-var endTime;
-
-function plotGraph(catId) {
+function plotGraph(catId, aStartTime, aEndTime) {	
+    var startTime = new Date(aStartTime) || new Date("<?php echo $current_date; ?>");
+    var endTime = new Date(aEndTime) || new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
 	
 	if (!catId || catId == '0') {
 	    catId = 'ALL';
@@ -42,6 +41,15 @@ function plotGraph(catId) {
         var endDate = endTime.getFullYear() + '-' + 
                         (endTime.getMonth()+1) + '-'+ endTime.getDate();
         url += "?s=" + startDate + "&e=" + endDate;
+        var aTimeformat = "%d %b";
+        var aTickSize = [5, "day"];
+
+        // plot hourly incidents when period is within 2 days
+        if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 2) {
+            aTimeformat = "%H:%M";
+            aTickSize = [5, "hour"];
+            url += "&i=hour";
+        }        
         $.getJSON(url,
             function(data) {
                 dailyGraphData = data;
@@ -54,8 +62,8 @@ function plotGraph(catId) {
 		            xaxis: { min: startTime.getTime(), 
 		                     max: endTime.getTime(),
 		                     mode: "time", 
-		                     timeformat: "%d %b",
-		                     tickSize: [5, "day"]
+		                     timeformat: aTimeformat,
+             			     tickSize: aTickSize
 		            }
 		        }));
             }
@@ -63,26 +71,28 @@ function plotGraph(catId) {
     }
 }
 
-startTime = new Date("<?php echo $current_date; ?>");
-endTime = new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
-endTime = new Date(endTime - 1);
-plotGraph();
+var startTime = new Date("<?php echo $current_date; ?>");
+var endTime = new Date(startTime.getFullYear() + '/'+ (startTime.getMonth()+2) + '/01');
+plotGraph('ALL', startTime, endTime);
 
 
 
 function graphSwitch(timeframe)
 {
+    var startTime;
+    var endTime;
+
 	$('#graph').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
 	if (timeframe == 'day') {
-		startTime = new Date("<?php echo date('Y') . '/' . date('m') . '/' . date('d'); ?>");
-		endTime = new Date("<?php echo date('Y') . '/' . date('m') . '/' . date('d'); ?>");
+		startTime = new Date("<?php echo date('Y/m/d'); ?>");
+		endTime = new Date("<?php echo date('Y/m/d 23:59:59'); ?>");
 	} else if (timeframe == 'year') {
-		startTime = new Date("<?php echo date('Y') . '/01/01'; ?>");
-		endTime = new Date("<?php echo date('Y') . '/12/' . date('t'); ?>");
+		startTime = new Date("<?php echo date('Y/01/01'); ?>");
+		endTime = new Date("<?php echo date('Y/12/t 23:59:59'); ?>");
 	} else if (timeframe == 'month') {
-		startTime = new Date("<?php echo date('Y') . '/' . date('m') . '/01'; ?>");
-		endTime = new Date("<?php echo date('Y') . '/' . date('m') . '/' . date('t'); ?>");
+		startTime = new Date("<?php echo date('Y/m/01'); ?>");
+		endTime = new Date("<?php echo date('Y/m/t 23:59:59'); ?>");
 	}
-	plotGraph();
+	plotGraph('ALL', startTime, endTime);
 	return false;
 }

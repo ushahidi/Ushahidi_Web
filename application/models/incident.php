@@ -57,7 +57,6 @@ class Incident_Model extends ORM
             $select_date_format = "%Y-%m-%d %H:%M";
             $groupby_date_format = "%Y%m%d%H%M";
         }
-        // TODO: add support for $interval = 'hour'
         
         $date_filter = "";
         if ($start_date) {
