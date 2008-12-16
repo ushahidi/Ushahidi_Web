@@ -13,6 +13,7 @@ $lang = array(
 	'about' => 'About ',
 	'contact' => 'Contact Us',
 	'blog' => 'Blog',
+	'feedback' => 'Feedback',
 	'copyright' => 'Copyright © 2008 Ushahidi.com. All Rights Reserved.',
 	'media_filter' => 'MEDIA FILTER',
 	'news' => 'News',

@@ -2,13 +2,14 @@
 		<div id="footer">
 			<div class="footer-info">
 				<ul>
-					<li><a href="#"><?php echo Kohana::lang('ui_main.home'); ?></a></li>
-					<li><a href="#"><?php echo Kohana::lang('ui_main.report_an_incident'); ?></a></li>
-					<li><a href="#"><?php echo Kohana::lang('ui_main.alerts'); ?></a></li>
-					<li><a href="#"><?php echo Kohana::lang('ui_main.help'); ?></a></li>
+					<li><a href="<?php echo url::base() ?>"><?php echo Kohana::lang('ui_main.home'); ?></a></li>
+					<li><a href="<?php echo url::base() . "reports/submit" ?>"><?php echo Kohana::lang('ui_main.report_an_incident'); ?></a></li>
+					<li><a href="<?php echo url::base() . "alerts" ?>"><?php echo Kohana::lang('ui_main.alerts'); ?></a></li>
+					<li><a href="<?php echo url::base() . "help" ?>"><?php echo Kohana::lang('ui_main.help'); ?></a></li>
 					<li><a href="#"><?php echo Kohana::lang('ui_main.about'); ?></a></li>
 					<li><a href="#"><?php echo Kohana::lang('ui_main.contact'); ?></a></li>
 					<li><a href="#"><?php echo Kohana::lang('ui_main.blog'); ?></a></li>
+					<li><a href="http://feedback.ushahidi.com/fillsurvey.php?sid=2&uid=<?php echo $_SERVER['SERVER_NAME']; ?>" target="_blank"><?php echo Kohana::lang('ui_main.feedback'); ?></a></li>
 				</ul>
 				<p><?php echo Kohana::lang('ui_main.copyright'); ?></p>
 			</div>

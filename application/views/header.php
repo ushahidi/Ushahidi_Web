@@ -17,7 +17,7 @@
 	
 	// Load jQuery
 	echo html::script('media/js/jquery');
-	echo html::script('media/js/jquery.ui.packed');
+	echo html::script('media/js/jquery.ui.min');
 	
 	// Other stuff to load only we have the map enabled
 	if ($map_enabled)

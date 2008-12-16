@@ -18,7 +18,7 @@
 	// Load jQuery
 	echo html::script('media/js/jquery');
 	echo html::script('media/js/jquery.form');
-	echo html::script('media/js/jquery.ui.packed');
+	echo html::script('media/js/jquery.ui.min');
 	
 	// Load Flot
 	if ($flot_enabled)

@@ -126,8 +126,10 @@ class Alerts_Controller extends Main_Controller {
     {
         $this->template->header->this_page = 'alerts';
         $this->template->content = new View('alerts_confirm');
-	    $this->template->content->alert_mobile = $_SESSION['alert_mobile'];
-        $this->template->content->alert_email = $_SESSION['alert_email'];
+		if (isset($_SESSION['alert_mobile']) && isset($_SESSION['alert_email'])) {
+			$this->template->content->alert_mobile = $_SESSION['alert_mobile'];
+	        $this->template->content->alert_email = $_SESSION['alert_email'];
+		}
     }
 	
     /*
