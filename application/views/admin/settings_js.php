@@ -234,7 +234,10 @@
 									markers.clearMarkers();
 							    	markers.addMarker(m);
 									map.setCenter(lonlat, 3);
-								}
+									
+									// Update form lat/lon values
+									$("#default_lat").attr("value", point.lat());
+								}   $("#default_lon").attr("value", point.lng());
 							}
 						);
 					}
@@ -253,7 +256,7 @@
 			else
 			{
 				$('#cities_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-				$.get("<?php echo url::base() . 'admin/settings/updateCities/' ?>" + country,
+				$.getJSON("<?php echo url::base() . 'admin/settings/updateCities/' ?>" + country,
 					function(data){
 						if (data.status == 'success'){
 							$('#city_count').show();

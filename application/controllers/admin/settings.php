@@ -143,7 +143,7 @@ class Settings_Controller extends Admin_Controller
 	/**
 	* Map Settings
     */	
-	function index()
+	function index($saved = false)
 	{
 		// Display all maps
 		$this->template->api_url = Kohana::config('settings.api_url_all');
@@ -157,7 +157,6 @@ class Settings_Controller extends Admin_Controller
 		// setup and initialize form field names
 		$form = array
 	    (
-	        'site_name' => '',
 			'default_map' => '',
 			'api_google' => '',
 			'api_yahoo' => '',
@@ -170,7 +169,14 @@ class Settings_Controller extends Admin_Controller
         //  corresponding to the form field names
         $errors = $form;
 		$form_error = FALSE;
-		$form_saved = FALSE;
+		if ($saved == 'saved')
+		{
+			$form_saved = TRUE;
+		}
+		else
+		{
+			$form_saved = FALSE;
+		}
 		
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -184,7 +190,6 @@ class Settings_Controller extends Admin_Controller
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 			
-	        $post->add_rules('site_name','required', 'length[3,200]');
 			$post->add_rules('default_country', 'required', 'numeric', 'length[1,4]');
 			$post->add_rules('default_map', 'required', 'between[1,4]');
 			$post->add_rules('api_google','required', 'length[0,200]');
@@ -198,7 +203,6 @@ class Settings_Controller extends Admin_Controller
 	        {
 	            // Yes! everything is valid
 				$settings = new Settings_Model(1);
-				$settings->site_name = $post->site_name;
 				$settings->default_country = $post->default_country;
 				$settings->default_map = $post->default_map;
 				$settings->api_google = $post->api_google;
@@ -212,8 +216,8 @@ class Settings_Controller extends Admin_Controller
 				// Everything is A-Okay!
 				$form_saved = TRUE;
 				
-				// repopulate the form fields
-	            $form = arr::overwrite($form, $post->as_array());
+				// Redirect to reload everything over again
+	            url::redirect(url::base() . 'admin/settings/index/saved');
 					            
 	        }
 	                    
@@ -236,7 +240,6 @@ class Settings_Controller extends Admin_Controller
 			
 			$form = array
 		    (
-		        'site_name' => $settings->site_name,
 				'default_map' => $settings->default_map,
 				'api_google' => $settings->api_google,
 				'api_yahoo' => $settings->api_yahoo,

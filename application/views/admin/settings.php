@@ -41,10 +41,6 @@
 						<div class="l-column">
 							<div class="has_border_first">
 								<div class="row">
-									<h4>Site Name</h4>
-									<?php print form::input('site_name', $form['site_name'], ' class="text"'); ?>
-								</div>
-								<div class="row">
 									<h4>Default Location <sup><a href="#">?</a></sup></h4>
 									<p class="bold_desc">Please set a default location. This is a bit more text about setting the default location.</p>
 									<span class="my-sel-holder">
