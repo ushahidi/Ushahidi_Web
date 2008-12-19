@@ -26,7 +26,7 @@ function plotGraph(catId, aStartTime, aEndTime) {
 	    catId = 'ALL';
 	}
 
-	if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 62) {   // monthly
+	if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 124) {   // monthly
 	    if (!graphData) { 
 	        graphData = {'data': []};
 	    }
@@ -49,7 +49,12 @@ function plotGraph(catId, aStartTime, aEndTime) {
             aTimeformat = "%H:%M";
             aTickSize = [5, "hour"];
             url += "&i=hour";
-        }        
+        } else if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 62) { 
+            // weekly if period > 2 months
+            aTimeformat = "%d %b";
+            aTickSize = [5, "day"];
+            url += "&i=week";
+        }
         $.getJSON(url,
             function(data) {
                 dailyGraphData = data;

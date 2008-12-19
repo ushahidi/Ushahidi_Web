@@ -48,14 +48,17 @@ class Incident_Model extends ORM
         // could not use DB query builder. It does not support parentheses yet
         $db = new Database();
         
-        $select_date_format = "%Y-%m-01";
-        $groupby_date_format = "%Y%m";
+        $select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-01')";
+        $groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m')";
         if ($interval == 'day') {
-            $select_date_format = "%Y-%m-%d";
-            $groupby_date_format = "%Y%m%d";
+            $select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d')";
+            $groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d')";
         } elseif ($interval == 'hour') {
-            $select_date_format = "%Y-%m-%d %H:%M";
-            $groupby_date_format = "%Y%m%d%H%M";
+            $select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d %H:%M')";
+            $groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d%H')";
+        } elseif ($interval == 'week') {
+            $select_date_text = "STR_TO_DATE(CONCAT(CAST(YEARWEEK(incident_date) AS CHAR), ' Sunday'), '%X%V %W')";
+            $groupby_date_text = "YEARWEEK(incident_date)";
         }
         
         $date_filter = "";
@@ -70,11 +73,11 @@ class Incident_Model extends ORM
         $all_graphs = "{ ";
 		
         $all_graphs .= "\"ALL\": { label: 'All Categories', ";
-        $query_text = 'SELECT UNIX_TIMESTAMP(DATE_FORMAT(incident_date, \'' . $select_date_format . '\')) 
+        $query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') 
 		                     AS time, COUNT(*) AS number 
 		                     FROM incident 
 		                     WHERE incident_active = 1
-		                     GROUP BY DATE_FORMAT(incident_date, \'' . $groupby_date_format . '\')';
+		                     GROUP BY ' . $groupby_date_text;
         $query = $db->query($query_text);
 
         foreach ( $query as $month_count )
@@ -87,12 +90,12 @@ class Incident_Model extends ORM
 		
         foreach ( self::get_active_categories() as $index => $category)
         {
-            $query_text = "SELECT UNIX_TIMESTAMP(DATE_FORMAT(incident_date, '" . $select_date_format . "')) 
+            $query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') 
 							AS time, COUNT(*) AS number
 						        FROM incident 
 							INNER JOIN incident_category ON incident_category.incident_id = incident.id
-							WHERE incident_active = 1 AND incident_category.category_id = ". $index ."
-							GROUP BY DATE_FORMAT(incident_date, '" . $groupby_date_format . "')";
+							WHERE incident_active = 1 AND incident_category.category_id = '. $index .'
+							GROUP BY ' . $groupby_date_text;
 		    $graph_text = self::category_graph_text($query_text, $category);
 			$all_graphs .= $graph_text;
 		}
