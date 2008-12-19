@@ -196,8 +196,8 @@
                         url += "&i=hour";
                     } else if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 62) { 
                         // weekly if period > 2 months
-                        aTimeformat = "%d %b";
-                        aTickSize = [5, "day"];
+                        aTimeformat = "%d%b";
+                        aTickSize = [7, "day"];
                         url += "&i=week";
                     }
                     $.getJSON(url,
