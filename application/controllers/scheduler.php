@@ -1,9 +1,19 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
 /**
-* Scheduler Controller (FAUX Cron)
-* Generates 1x1 pixel image while executing scheduled tasks
+ * Scheduler Controller (FAUX Cron)
+ * Generates 1x1 pixel image while executing scheduled tasks
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     Scheduler Controller  
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 */
+
 class Scheduler_Controller extends Controller
 {
 	public function __construct()
