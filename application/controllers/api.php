@@ -344,7 +344,7 @@ class Api_Controller extends Controller {
 				$json_incidents[] = array("incident" => $item, "media" => $json_incident_media);
 			} else {
 				$json_incidents['incident'.$i] = array("incident" => $item, "media" => $json_incident_media) ;
-				$replar[] = 'incident'.$i;
+				//$replar[] = 'incident'.$i;
 			}
 			
 			$i++;
