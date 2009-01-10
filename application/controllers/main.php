@@ -61,6 +61,7 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->validator_enabled = FALSE;
 		$this->template->header->datepicker_enabled = FALSE;
 		$this->template->header->photoslider_enabled = FALSE;
+		$this->template->header->videoslider_enabled = FALSE;
 		$this->template->header->main_page = FALSE;
 		$this->template->header->js = '';
 		

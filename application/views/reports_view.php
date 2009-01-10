@@ -190,6 +190,49 @@
 		      </div>
 		      <!-- end side block -->
 		    </div>
+			<br />
+			<!-- start videos -->
+			<?php
+				if( count($incident_videos) > 0 ) 
+				{
+
+			?>
+			    <div class="small-block images">
+			    	<h3>Videos</h3>
+					<div class="block-bg">
+			          <div class="block-top">
+			            <div class="block-bottom">
+
+							<div class="slider-wrap">
+								<div id="slider1" class="csw">
+									<div class="panelContainer">
+
+										<?php
+											// embed the video codes
+											foreach( $incident_videos as $incident_video) {
+										?>
+										<div class="panel">
+											<div class="wrapper">
+												<p>
+												 <?php
+												 $videos_embed->embed($incident_video,'');
+												 ?>	
+												<p>
+											</div>
+										</div>
+										<?php } ?>
+
+									</div><!-- .panelContainer -->
+								</div><!-- #slider1 -->
+							</div><!-- .slider-wrap -->
+
+						</div>
+			         </div>
+			       </div>
+			    </div>
+			 <?php } ?>
+			 <!-- end incident block <> start other report -->
+			<br />
 		    <!-- end incident block <> start other report -->
 			<a name="comments"></a>
 			<div class="big-block">

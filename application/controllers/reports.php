@@ -31,6 +31,9 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
 		
+		//load the video embed library
+		$this->load->library('VideoEmbed');
+		
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'    => 'page',
@@ -455,16 +458,24 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->incident_neighbors = $this->_get_neighbors(
 				$incident->location->latitude, 
 				$incident->location->longitude);
-
+				
 		// Get RSS News Feeds
 		$this->template->content->feeds = ORM::factory('feed_item')
 			->limit('5')
             ->orderby('item_date', 'desc')
             ->find_all();
 		
+		//Video links
+		$this->template->content->incident_videos = $incident_video;
+		
+		//create object of the video embed class
+		$video_embed = new VideoEmbed();
+		$this->template->content->videos_embed = $video_embed;
+		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->photoslider_enabled = TRUE;
+		$this->template->header->videoslider_enabled = TRUE;
 		$this->template->header->js = new View('reports_view_js');
 		$this->template->header->js->incident_id = $incident->id;
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
