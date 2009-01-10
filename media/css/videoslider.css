@@ -1,0 +1,140 @@
+/**
+ * Credits : Niall Doherty - http://www.ndoherty.com/blog/category/coda-slider
+ * CSS file for the video slider.
+ *
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     Alerts Controller  
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
+ */
+
+	.stripViewer .panelContainer .panel ul {
+		text-align: left;
+		margin: 0 15px 0 30px;
+		overflow : hidden;
+	}
+	
+	.slider-wrap { /* This div isn't entirely necessary but good for getting the side arrows vertically centered */
+		margin: 20px 0;
+		position: relative;
+		width: 100%;
+	}
+
+	/* These 2 lines specify style applied while slider is loading */
+	.csw {width: 100%; height: 300px; background: #fff; overflow: hidden}
+	.csw .loading {margin: 200px 0 300px 0; text-align: center}
+
+	.stripViewer { /* This is the viewing window */
+		position: relative;
+		overflow: hidden; 
+		/* this is the border. should have the same value for the links */
+		margin: auto;
+		width: 400px; /* Also specified in  .stripViewer .panelContainer .panel  below */
+		height: 300px;
+		clear: both;
+		
+	}
+	
+	.stripViewer .panelContainer { /* This is the big long container used to house your end-to-end divs. Width is calculated and specified by the JS  */
+		position: relative;
+		left: 0; top: 0;
+		width: 100%;
+		list-style-type: none;
+		overflow : hidden;
+		/* -moz-user-select: none; // This breaks CSS validation but stops accidental (and intentional - beware) panel highlighting in Firefox. Some people might find this useful, crazy fools. */
+	}
+	
+	.stripViewer .panelContainer .panel { /* Each panel is arranged end-to-end */
+		float:left;
+		height: 100%;
+		overflow : hidden;
+		position: relative;
+		width: 400px; /* Also specified in  .stripViewer  above */
+	}
+	
+	.stripViewer .panelContainer .panel .wrapper { /* Wrapper to give some padding in the panels, without messing with existing panel width */
+		
+		overflow : hidden;
+		padding: 10px 10px 10px 20px;
+	}
+	
+	.stripNav { /* This is the div to hold your nav (the UL generated at run time) */
+		margin: auto;
+	}
+	
+	.stripNav ul { /* The auto-generated set of links */
+		list-style: none;
+	}
+	
+	.stripNav ul li {
+		float: left;
+		margin-right: 2px; /* If you change this, be sure to adjust the initial value of navWidth in coda-slider.1.1.1.js */
+	}
+	
+	.stripNav a { /* The nav links */
+		font-size: 10px;
+		font-weight: bold;
+		text-align: center;
+		line-height: 32px;
+		background: #c6e3ff;
+		color: #fff;
+		text-decoration: none;
+		display: block;
+		padding: 0 15px;
+	}
+	
+	.stripNav li.tab1 a { background: #60f }
+	.stripNav li.tab2 a { background: #60c }
+	.stripNav li.tab3 a { background: #63f }
+	.stripNav li.tab4 a { background: #63c }
+	.stripNav li.tab5 a { background: #00e }
+	
+	.stripNav li a:hover {
+		background: #333;
+	}
+	
+	.stripNav li a.current {
+		background: #000;
+		color: #fff;
+	}
+	
+	.stripNavL, .stripNavR { /* The left and right arrows */
+		
+		position: absolute;
+		top: 150px;
+		text-indent: -1000em;
+	}
+	
+	.stripNavL a, .stripNavR a {
+		width : 400px;
+		display: block;
+		width:34px;
+		height:31px;
+	}
+	
+	.stripNavL {
+		left: -20px;
+	}
+	
+	.stripNavR {
+		right: -10px;
+}
+
+.stripNavL {
+	width:34px;
+	height:31px;
+	background:url(../img/btn-prev.gif) no-repeat;
+}
+
+.stripNavR {
+	width:34px;
+	height:31px;
+	/*overflow:hidden;*/
+	background:url(../img/btn-next.gif) no-repeat;
+}
+
+</style>
