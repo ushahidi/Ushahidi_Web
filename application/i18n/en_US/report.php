@@ -101,5 +101,29 @@ $lang = array
 	(
 		'email'		  => 'The email field does not appear to contain a valid email address?',
 		'length'	  => 'The email field must be at least 4 and no more 64 characters long.'
+	),
+	
+	// Admin - Report Download Validation
+	'data_point' => array
+	(
+		'required'		  => 'Please select a valid type of report to download',
+		'numeric'		  => 'Please select a valid type of report to download',
+		'between'		  => 'Please select a valid type of report to download'
+	),
+	'data_include' => array
+	(
+		'numeric'		  => 'Please select a valid item to include in the download',
+		'between'		  => 'Please select a valid item to include in the download'
+	),
+	'from_date' => array
+	(
+		'date_mmddyyyy'		  => 'The FROM date field does not appear to contain a valid date?',
+		'range'	  => 'Please enter a valid FROM date. It cannot be greater than today.'
+	),
+	'to_date' => array
+	(
+		'date_mmddyyyy'		  => 'The TO date field does not appear to contain a valid date?',
+		'range'	  => 'Please enter a valid TO date. It cannot be greater than today.',
+		'range_greater'	=> 'Your FROM date cannot be greater than your TO date.'
 	)
 );
