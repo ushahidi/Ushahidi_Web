@@ -109,7 +109,8 @@ class Session_Core {
 	public function create($vars = NULL)
 	{
 		// Destroy any current sessions
-		$this->destroy();
+		// NOTE: This is being commented out for Ticket #24
+		//$this->destroy();
 
 		if (self::$config['driver'] !== 'native')
 		{
@@ -157,7 +158,8 @@ class Session_Core {
 		);
 
 		// Start the session!
-		session_start();
+		// NOTE: Suppressing warnings for Ticket #24 since session not destroyed
+		@session_start();
 
 		// Put session_id in the session variable
 		$_SESSION['session_id'] = session_id();
