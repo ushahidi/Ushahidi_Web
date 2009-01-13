@@ -113,6 +113,10 @@
 								<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="media">Incoming Media</a>
 								<strong><?php echo $incoming_media; ?></strong>
 							</li>
+							<li>
+								<a href="<?php echo url::base() . 'admin/messages' ?>" class="messages">Messages</a>
+								<strong><?php echo $message_count; ?></strong>
+							</li>
 						</ul>
 					</div>
 					<!-- info-container -->

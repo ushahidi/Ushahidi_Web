@@ -47,6 +47,9 @@ class Dashboard_Controller extends Admin_Controller
 		// Total Incoming Media
 		$this->template->content->incoming_media = ORM::factory('feed_item')->count_all();
 		
+		// Total Messages
+		$this->template->content->message_count = ORM::factory('message')->count_all();
+		
 		// Get reports for display
 		$incidents = ORM::factory('incident')->limit(3)->orderby('incident_dateadd', 'desc')->find_all();
 		$this->template->content->incidents = $incidents;
