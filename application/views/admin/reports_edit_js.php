@@ -11,8 +11,9 @@
 		        var category_color = $("input#category_color").val();
 
 		        //trim the form fields
-		        category_name = category_name.replace(/^\s+|\s+$/g, '').toUpperCase();
-		        category_description = category_description.replace(/^\s+|\s+$/g,'').toUpperCase();
+                        //Removed ".toUpperCase()" from name and desc for Ticket #38
+		        category_name = category_name.replace(/^\s+|\s+$/g, '');
+		        category_description = category_description.replace(/^\s+|\s+$/g,'');
 		        category_color = category_color.replace(/^\s+|\s+$/g, '').toUpperCase();
         
 		        if (!category_name || !category_description || !category_color) {
