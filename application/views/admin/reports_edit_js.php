@@ -34,7 +34,7 @@
 						if ( data.status == 'saved')
 						{
 							// alert(category_name+" "+category_description+" "+category_color);
-					        $('#user_categories').append("<li><label><input type=\"checkbox\"name=\"incident_category[]\" value=\""+data.id+"\" class=\"check-box\" />"+category_name+"</label></li>");
+					        $('#user_categories').append("<li><label><input type=\"checkbox\"name=\"incident_category[]\" value=\""+data.id+"\" class=\"check-box\" checked />"+category_name+"</label></li>");
 							$('#category_add').hide();
 						}
 						else
