@@ -31,9 +31,6 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
 		
-		//load the video embed library
-		$this->load->library('VideoEmbed');
-		
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'    => 'page',
