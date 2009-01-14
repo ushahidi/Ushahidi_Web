@@ -768,6 +768,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `clickatell_username` varchar(100) default NULL,
   `clickatell_password` varchar(100) default NULL,
   `google_analytics` text default NULL,
+  `twitter_username` varchar(50) default NULL,
+  `twitter_password` varchar(50) default NULL,
   `date_modify` datetime default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
