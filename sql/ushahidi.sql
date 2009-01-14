@@ -652,6 +652,28 @@ PRIMARY KEY (`id`)
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `twitter`
+--
+
+CREATE TABLE IF NOT EXISTS `twitter`
+(
+`id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
+`incident_id` INTEGER DEFAULT 0,
+`tweet_from` VARCHAR(100) DEFAULT NULL,
+`tweet_to` VARCHAR(100) DEFAULT NULL,
+`tweet` VARCHAR(255) DEFAULT NULL,
+`tweet_type` TINYINT DEFAULT 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
+`tweet_date` DATETIME DEFAULT NULL,
+PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `twitter`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pending_users`
 --
 

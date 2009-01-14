@@ -48,7 +48,9 @@ class Settings_Controller extends Admin_Controller
 			'allow_comments' => '',
 			'allow_feed' => '',
 			'allow_clustering' => '',
-			'google_analytics' => ''
+			'google_analytics' => '',
+			'twitter_username' => '',
+			'twitter_password' => '',
 			
 	    );
         //  Copy the form as errors, so the errors will be stored with keys
@@ -80,6 +82,8 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_feed','required','between[0,1]');
 			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('google_analytics','length[0,20]');
+			$post->add_rules('twitter_username','length[0,50]');
+			$post->add_rules('twitter_password','length[0,50]');
 			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
@@ -97,6 +101,8 @@ class Settings_Controller extends Admin_Controller
 				$settings->allow_feed = $post->allow_feed;
 				$settings->allow_clustering = $post->allow_clustering;
 				$settings->google_analytics = $post->google_analytics;
+				$settings->twitter_username = $post->twitter_username;
+				$settings->twitter_password = $post->twitter_password;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
 				
@@ -137,7 +143,9 @@ class Settings_Controller extends Admin_Controller
 				'allow_comments' => $settings->allow_comments,
 				'allow_feed' => $settings->allow_feed,
 				'allow_clustering' => $settings->allow_clustering,
-				'google_analytics' => $settings->google_analytics
+				'google_analytics' => $settings->google_analytics,
+				'twitter_username' => $settings->twitter_username,
+				'twitter_password' => $settings->twitter_password
 		    );
 		}		
 		

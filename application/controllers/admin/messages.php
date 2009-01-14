@@ -30,7 +30,7 @@ class Messages_Controller extends Admin_Controller
 	function index($page = 1)
 	{
 		$this->template->content = new View('admin/messages');
-		$this->template->content->title = 'Messages';
+		$this->template->content->title = 'SMS Messages';
 
         //So far this assumes that selected 'message_id's are for deleting
         if (isset($_POST['message_id']))
@@ -210,16 +210,145 @@ class Messages_Controller extends Admin_Controller
     /**
      * Delete selected messages
      */
-    function deleteMessages($ids)
+    function deleteMessages($ids,$kind='message')
     {
-        foreach($ids as $id)
+    	foreach($ids as $id)
         {
-            ORM::factory('message')->delete($id);
+            ORM::factory($kind)->delete($id);
         }
         //XXX:get the current page number
-        url::redirect(url::base().'admin/messages/');
+        if($kind=='twitter'){
+        	$extradir = 'twitter/';
+        }else{
+        	$extradir = '';
+        }
+        url::redirect(url::base().'admin/messages/'.$extradir);
 
     }
+    
+    /**
+	* Lists the Twitter messages.
+    * @param int $page
+    */
+	function twitter($page = 1)
+	{
+		$this->template->content = new View('admin/messages_twitter');
+		$this->template->content->title = 'Twitter Messages';
+		
+		// Retrieve Current Settings
+		$settings = ORM::factory('settings', 1);
+		
+		$username = $settings->twitter_username;
+		$password = $settings->twitter_password;
+		$twitter_url = 'http://twitter.com/statuses/replies.rss';
+		$curl_handle = curl_init();
+		curl_setopt($curl_handle,CURLOPT_URL,"$twitter_url");
+		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password");
+		$buffer = curl_exec($curl_handle);
+		curl_close($curl_handle);
+		
+		$search_username = ': @'.$username;
+		$feed_data = $this->_setup_simplepie( $buffer );
+		foreach($feed_data->get_items(0,50) as $feed_data_item)
+		{
+			$full_tweet = $feed_data_item->get_description();
+			$full_date = $feed_data_item->get_date();
+			
+			$cut1 = stripos($full_tweet, $search_username);
+			$cut2 = $cut1 + strlen($search_username);
+			$tweet_from = substr($full_tweet,0,$cut1);
+			$tweet_to = $username;
+			$tweet = substr($full_tweet,$cut2);
+			$tweet_date = date("Y-m-d H:i:s",strtotime($full_date));
+			
+			if (isset($full_tweet) && !empty($full_tweet))
+			{
+				// We need to check for duplicates!!!
+				// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
+				$dupe_count = ORM::factory('twitter')->where('tweet_date',$tweet_date)->where('tweet_from',$tweet_from)->where('tweet',$tweet)->count_all();
+				if ($dupe_count == 0) {
+					$newitem = new Twitter_Model();
+					$newitem->tweet_from = $tweet_from;
+					$newitem->tweet_to = $tweet_to;
+					$newitem->tweet = $tweet;
+					$newitem->tweet_date = $tweet_date;
+					$newitem->save();
+				}
+			}
+		}
+		
+		
+		//So far this assumes that selected 'message_id's are for deleting
+        if (isset($_POST['tweet_id']))
+            $this->deleteMessages($_POST['tweet_id'],'twitter');
+		
+		// Is this an Inbox or Outbox Filter?
+		if (!empty($_GET['type']))
+		{
+			$type = $_GET['type'];
+			
+			if ($type == '2')
+			{
+				$filter = 'tweet_type = 2';
+			}
+			else
+			{
+				$type = "1";
+				$filter = 'tweet_type = 1';
+			}
+		}
+		else
+		{
+			$type = "1";
+			$filter = 'tweet_type = 1';
+		}
+		
+		// check, has the form been submitted?
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+		
+		// Pagination
+		$pagination = new Pagination(array(
+			'query_string'    => 'page',
+			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'total_items'    => ORM::factory('twitter')->where($filter)->count_all()
+		));
+
+		$tweets = ORM::factory('twitter')->where($filter)->orderby('tweet_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		
+		$this->template->content->tweets = $tweets;
+		$this->template->content->pagination = $pagination;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
+
+		// Total Reports
+		$this->template->content->total_items = $pagination->total_items;
+
+		// Message Type Tab - Inbox/Outbox
+		$this->template->content->type = $type;
+		
+		// Javascript Header
+		$this->template->js = new View('admin/messages_js');
+		
+	}
+	
+	/**
+	 * setup simplepie
+	 */
+	private function _setup_simplepie( $raw_data ) {
+			$data = new SimplePie();
+			$data->set_raw_data( $raw_data );
+			$data->enable_cache(false);
+			$data->enable_order_by_date(true);
+			$data->init();
+			$data->handle_content_type();
+
+			return $data;
+	}
 
 		
 }

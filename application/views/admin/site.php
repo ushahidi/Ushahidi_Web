@@ -95,7 +95,18 @@
 							<h4>Google Analytics</h4>
 							Web Property ID - Format: UA-XXXXX-XX &nbsp;&nbsp;
 							<?php print form::input('google_analytics', $form['google_analytics'], ' class="text"'); ?>
-						</div>																						
+						</div>
+						<div class="row">
+							<h4>Twitter Credentials</h4>
+							<div class="row">
+								Username
+								<?php print form::input('twitter_username', $form['twitter_username'], ' class="text"'); ?>
+							</div>
+							<div class="row" style="padding-top:5px;">
+								Password
+								<?php print form::password('twitter_password', $form['twitter_password'], ' class="text"'); ?>
+							</div>
+						</div>
 					</div>
 		
 					<div class="simple_border"></div>
