@@ -156,6 +156,13 @@ class Reports_Controller extends Admin_Controller
 								$updatemessage->incident_id = 0;
 								$updatemessage->save();
 							}
+							
+							// Delete relationship to Twitter message
+							$updatemessage = ORM::factory('twitter')->where('incident_id',$incident_id)->find();
+							if ($updatemessage->loaded == true) {
+								$updatemessage->incident_id = 0;
+								$updatemessage->save();
+							}
 						}					
 					}
 					$form_action = "DELETED";
@@ -271,11 +278,28 @@ class Reports_Controller extends Admin_Controller
 		//XXX: fix _get_thumbnails
 		$this->template->content->incident = $this->_get_thumbnails($id);
 		
-		// Are we creating this report from an SMS Message?
+		// Are we creating this report from an SMS or Twitter Message?
 		// If so retrieve message
-		if (isset($_GET['mid']) && !empty($_GET['mid'])) {
-			$mobile_id = $_GET['mid'];
-			$message = ORM::factory('message', $mobile_id)->where('message_type','1');
+		if ((isset($_GET['mid']) && !empty($_GET['mid'])) || (isset($_GET['tid']) && !empty($_GET['tid']))) {
+			
+			// Check what kind of message this is
+			if(isset($_GET['mid'])){
+				//Then it's an SMS message
+				$messageType = 'sms';
+				$mobile_id = $_GET['mid'];
+				$dbtable = 'message';
+				$col_prefix = 'message';
+				$incident_title = 'Mobile Report';
+			}elseif(isset($_GET['tid'])){
+				//Then it's a Twitter message
+				$messageType = 'twitter';
+				$mobile_id = $_GET['tid'];
+				$dbtable = 'twitter';
+				$col_prefix = 'tweet';
+				$incident_title = 'Twitter Report';
+			}
+			
+			$message = ORM::factory($dbtable, $mobile_id)->where($col_prefix.'_type','1');
 			if ($message->loaded == true) {
 				
 				// Has a report already been created for this SMS?
@@ -283,28 +307,34 @@ class Reports_Controller extends Admin_Controller
 					// Redirect to report
 					url::redirect(url::base() . 'admin/reports/edit/'. $message->incident_id);
 				}
-				$this->template->content->message = $message->message;
-				$this->template->content->message_from = $message->message_from;
-				$this->template->content->show_messages = true;
-				$form['incident_title'] = "Mobile Report";
-				$form['incident_description'] = $message->message;
+				if($messageType == 'sms'){
+					$this->template->content->message = $message->message;
+					$this->template->content->message_from = $message->message_from;
+					$this->template->content->show_messages = true;
+					$form['incident_title'] = $incident_title;
+					$form['incident_description'] = $message->message;
+					$from_search = $this->template->content->message_from;
+				}elseif($messageType == 'twitter'){
+					$this->template->content->message = $message->tweet;
+					$this->template->content->message_from = $message->tweet_from;
+					$this->template->content->show_messages = true;
+					$form['incident_title'] = $incident_title;
+					$form['incident_description'] = $message->tweet;
+					$from_search = $this->template->content->tweet_from;
+				}
 				
 				// Retrieve Last 5 Messages From this Number
-				$this->template->content->allmessages = ORM::factory('message')
-					->where('message_from', $message->message_from)
-					->where('message_type','1')
-					->orderby('message_date', 'desc')
+				$this->template->content->allmessages = ORM::factory($dbtable)
+					->where($col_prefix.'_from', $from_search)
+					->where($col_prefix.'_type','1')
+					->orderby($col_prefix.'_date', 'desc')
 					->limit(5)
 					->find_all();
-			}
-			else
-			{
+			}else{
 				$mobile_id = "";
 				$this->template->content->show_messages = false;
 			}
-		}
-		else
-		{
+		}else{
 			$this->template->content->show_messages = false;
 		}
 	
@@ -423,12 +453,18 @@ class Reports_Controller extends Admin_Controller
 				{
 					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				}
-				// Is this an SMS submitted report?
+				// Is this an SMS or Twitter submitted report?
                 //XXX: It is possible that 'mobile_id' may not be available through
                 //$_POST
-				if(isset($mobile_id) && $mobile_id != "")
+				if(isset($messageType) && $messageType != "")
 				{
-					$incident->incident_mode = 2;		// Incident submission type
+					if($messageType == 'sms'){
+						$incident->incident_mode = 2; // SMS - 2
+					}elseif($messageType == 'twitter'){
+						$incident->incident_mode = 4; // Twitter - 4
+					}elseif(isset($mobile_id) && $mobile_id != ""){
+						$incident->incident_mode = 2; //Set the default as SMS - 2
+					}
 				}
 				$incident->save();
 				
@@ -521,7 +557,7 @@ class Reports_Controller extends Admin_Controller
 				// STEP 6: SAVE LINK TO SMS MESSAGE
 				if(isset($mobile_id) && $mobile_id != "")
 				{
-					$savemessage = ORM::factory('message', $mobile_id);
+					$savemessage = ORM::factory($dbtable, $mobile_id);
 					if ($savemessage->loaded == true) 
 					{
 						$savemessage->incident_id = $incident->id;

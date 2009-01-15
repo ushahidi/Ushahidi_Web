@@ -106,6 +106,11 @@
 										$submit_mode = "SMS";
 										$submit_by = $incident->message->message_from;
 									}
+									elseif ($incident_mode == 4) 	// Submitted via Twitter
+									{
+										$submit_mode = "TWITTER";
+										$submit_by = '<a href="'.$incident->twitter->tweet_link.'" target="_blank">'.$incident->twitter->tweet_from.'</a>';
+									}
 									
 									$incident_location = $incident->location->location_name;
 

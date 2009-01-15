@@ -33,7 +33,7 @@ INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_descr
 (3, 5, 'PROPERTY LOSS', 'PROPERTY LOSS', '663300', 1),
 (4, 5, 'SEXUAL ASSAULT', 'SEXUAL ASSAULT', 'CC0000', 1),
 (5, 5, 'INTERNALLY DISPLACED PEOPLE ', 'INTERNALLY DISPLACED PEOPLE 	', 'CC9933', 1),
-(6, 5, 'GOVERNMENT FORCESS', 'GOVERNMENT FORCESS', '9999FF', 1),
+(6, 5, 'GOVERNMENT FORCES', 'GOVERNMENT FORCES', '9999FF', 1),
 (7, 5, 'CIVILIANS', 'CIVILIANS', '66CC00', 1),
 (8, 5, 'LOOTING', 'LOOTING', 'FFCC00', 1),
 (9, 5, 'PEACE EFFORTS', 'PEACE EFFORTS', 'FAEBD7', 1);
@@ -370,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `incident_title` varchar(255) default NULL,
   `incident_description` longtext,
   `incident_date` datetime default NULL,
-  `incident_mode` tinyint(4) NOT NULL default '1' COMMENT '1 - WEB, 2 - SMS, 3 - EMAIL',
+  `incident_mode` tinyint(4) NOT NULL default '1' COMMENT '1 - WEB, 2 - SMS, 3 - EMAIL, 4 - TWITTER',
   `incident_active` tinyint(4) NOT NULL default '0',
   `incident_verified` tinyint(4) NOT NULL default '0',
   `incident_rating` VARCHAR(15) DEFAULT '0' NOT NULL,
@@ -661,9 +661,11 @@ CREATE TABLE IF NOT EXISTS `twitter`
 `incident_id` INTEGER DEFAULT 0,
 `tweet_from` VARCHAR(100) DEFAULT NULL,
 `tweet_to` VARCHAR(100) DEFAULT NULL,
+`tweet_link` VARCHAR(100) DEFAULT NULL,
 `tweet` VARCHAR(255) DEFAULT NULL,
 `tweet_type` TINYINT DEFAULT 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
 `tweet_date` DATETIME DEFAULT NULL,
+`hide` tinyint(1) NOT NULL default '0',
 PRIMARY KEY (`id`)
 );
 

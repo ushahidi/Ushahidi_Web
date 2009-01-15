@@ -10,7 +10,7 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onClick="submitIds()">DELETE</a></li>
+							<li><!-- <a href="#" onClick="submitIds()">DELETE</a> --> <a href="#">DELETE DISABLED</a></li>
 						</ul>
 					</div>
 				</div>
@@ -73,6 +73,7 @@
 									$tweet_id = $tweet->id;
 									$tweet_from = $tweet->tweet_from;
 									$incident_id = $tweet->incident_id;
+									$tweet_link = $tweet->tweet_link;
 									$tweet_description = $tweet->tweet;
 									$tweet_date = date('Y-m-d', strtotime($tweet->tweet_date));
 									?>
@@ -83,7 +84,7 @@
 												<p><?php echo $tweet_description; ?></p>
 											</div>
 											<ul class="info">
-												<li class="none-separator">From: <strong><?php echo $tweet_from; ?></strong>
+												<li class="none-separator">From: <strong><a href="<?php echo $tweet_link; ?>" target="_blank"><?php echo $tweet_from; ?></a></strong>
 											</ul>
 										</td>
 										<td class="col-3"><?php echo $tweet_date; ?></td>
@@ -91,15 +92,15 @@
 											<ul>
 												<?php
 												if ($incident_id != 0) {
-													//echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
 												}
 												else
 												{
-													//echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $tweet_id ."\">Create Report?</a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?tid=' . $tweet_id ."\">Create Report?</a></li>";
 												}
 												?>
 												<li>
-                                                <!--<a href="<?php echo url::base().'admin/messages/delete/'.$tweet_id ?>" onclick="return confirm('Delete cannot be undone. Are you sure you want to continue?')" class="del">Delete</a>--></li>
+                                                <!-- <a href="<?php echo url::base().'admin/messages/delete/'.$tweet_id ?>" onclick="return confirm('Delete cannot be undone. Are you sure you want to continue?')" class="del">Delete</a> --></li>
 											</ul>
 										</td>
 									</tr>
