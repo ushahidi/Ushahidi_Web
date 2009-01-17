@@ -58,7 +58,7 @@
 				<ul>
 					<li ><a href="#">Wiki</a></li>
 					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha">FAQ's</a></li>
-					<li><a href="#">Forum</a></li>
+					<li><a href="http://forums.ushahidi.com/">Forum</a></li>
 				</ul>
 			</div>
 			<!-- title -->
