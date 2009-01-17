@@ -48,6 +48,7 @@
 				<strong>Ushahidi Engine v1.0</strong>
 				<ul>
 					<li class="none-separator">Welcome, <?php echo $admin_name; ?>!</li>
+					<li class="none-separator"><a href="<?php echo url::base() ?>" title="View the home page">View Site</a>					
 					<li class="none-separator"><a href="#">My Profile</a></li>
 					<li><a href="log_out">Logout</a></li>
 				</ul>
