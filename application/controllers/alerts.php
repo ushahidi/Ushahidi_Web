@@ -15,7 +15,10 @@
 
 class Alerts_Controller extends Main_Controller {
 
-    function __construct()
+    const MOBILE_ALERT = 1;
+	const EMAIL_ALERT = 2;
+		
+	function __construct()
     {
         parent::__construct();
         $this->session = Session::instance();
@@ -92,6 +95,42 @@ class Alerts_Controller extends Main_Controller {
             if ($post->validate())
             {
                 // Yes! everything is valid
+				// Save alert and send out confirmation code
+
+
+				if (!empty($post->alert_mobile))
+				{
+				    $alert = ORM::factory('alert');
+					$alert->alert_type = self::MOBILE_ALERT;
+					$alert->alert_recipient = $post->alert_mobile;
+					$alert->alert_code = $this->_mk_code();
+					$alert->alert_lon = $post->alert_lon;
+					$alert->alert_lat = $post->alert_lat;
+					$alert->save();
+
+                    //TODO: Send verification SMS
+				}
+
+				if (!empty($post->alert_email))
+				{
+				    $alert = ORM::factory('alert');
+					$alert->alert_type = self::EMAIL_ALERT;
+					$alert->alert_recipient = $post->alert_email;
+					$alert_code = $this->_mk_code();
+					$alert->alert_code = $alert_code;
+					$alert->alert_lon = $post->alert_lon;
+					$alert->alert_lat = $post->alert_lat;
+					$alert->save();
+
+					//Send verification email
+					//TODO: Setup correct 'from' address and message
+					$to      = $post->alert_email;
+					$from    = 'verify-code@ushahidi.com';
+					$subject = 'Ushahidi alerts - Verification code';
+					$message = 'Please follow the link below to confirm your
+								alert request:<br/>'.url::base().'/alerts/verify/'.$alert_code;
+ 					email::send($to, $from, $subject, $message, TRUE);
+				}
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
                 $this->session->set('alert_email', $post->alert_email);
@@ -141,6 +180,50 @@ class Alerts_Controller extends Main_Controller {
 	        $this->template->content->alert_email = $_SESSION['alert_email'];
 		}
     }
+
+    /**
+     * Verifies a previously sent alert confirmation code
+     */
+    function verify($code=NULL)
+    {
+        $errno = NULL;
+		define("ER_CODE_VERIFIED", 0);
+		define("ER_CODE_NOT_FOUND", 1);
+		define("ER_CODE_ALREADY_VERIFIED", 2);
+
+		if ($code != NULL)
+		{
+        	$code = ORM::factory('alert')
+            	->where('alert_code', $code)->find();
+		
+			if (!$code->id)
+			{
+				$errno = ER_CODE_NOT_FOUND;
+			}
+
+			elseif ($code->alert_confirmed == 1)
+			{
+				$errno = ER_CODE_ALREADY_VERIFIED; 
+			}
+
+			else
+			{
+				$code->alert_confirmed = 1;
+				$code->save($code->id);
+
+				if ($code->saved == true)
+					$errno = ER_CODE_VERIFIED;
+			}
+		}
+
+		else
+			$errno = ER_CODE_NOT_FOUND;
+
+		$this->template->header->this_page = 'alerts';
+        $this->template->content = new View('alerts_verify');
+		$this->template->content->errno = $errno;
+
+    }
 	
     /*
      * Retrieves Previously Cached Geonames Cities
@@ -168,7 +251,7 @@ class Alerts_Controller extends Main_Controller {
 
         // Now check for similar alert in system
         $mobile_check = ORM::factory('alert')
-            ->where('alert_type', '1')
+            ->where('alert_type', self::MOBILE_ALERT)
             ->where('alert_recipient', $post->alert_mobile)
             ->where('alert_lat', $post->alert_lat)
             ->where('alert_lon', $post->alert_lon)->find();
@@ -193,7 +276,7 @@ class Alerts_Controller extends Main_Controller {
 
         // Now check for similar alert in system
         $email_check = ORM::factory('alert')
-            ->where('alert_type', '2')
+            ->where('alert_type', self::EMAIL_ALERT)
             ->where('alert_recipient', $post->alert_email)
             ->where('alert_lat', $post->alert_lat)
             ->where('alert_lon', $post->alert_lon)->find();
@@ -204,4 +287,31 @@ class Alerts_Controller extends Main_Controller {
             $post->add_error( 'alert_email', 'email_check');
         }
     }
+
+	/**
+	 * Creates a confirmation code for use with email or sms verification 
+	 */
+	private function _mk_code()
+	{
+		define("CODE_LENGTH", 12);
+		$code_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+		$max_char_pos = strlen($code_chars)-1;
+		$code = NULL;
+
+        for($i = 0; $i < CODE_LENGTH; $i++) 
+        {
+			$pos = mt_rand(0, $max_char_pos);
+			$code.=$code_chars[$pos];
+		}
+
+        // Only generate unique codes. If a code has been used before, generate
+		// a new one.
+        $code_check = ORM::factory('alert')
+            ->where('alert_code', $code)->find();
+
+        if ($code_check->id)
+			$this->_mk_code();
+
+		return $code;
+	}
 }

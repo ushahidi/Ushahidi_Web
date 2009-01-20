@@ -51,6 +51,10 @@
 							{
 								$submit_mode = "mail";
 							}
+							elseif ($incident_mode == 4)
+							{
+								$submit_mode = "twitter";
+							}
 							
 							// Incident Status
 							$incident_approved = $incident->incident_active;
@@ -97,7 +101,7 @@
 								<a href="<?php echo url::base() . 'admin/reports' ?>" class="reports">Reports</a>
 								<strong><?php echo $reports_total; ?></strong>
 								<ul>
-									<li><a href="<?php echo url::base() . 'admin/reports?status=a' ?>">Unapproved</a><strong>(<?php echo $reports_unapproved; ?>)</strong></li>
+									<li><a href="<?php echo url::base() . 'admin/reports?status=a' ?>"> Unapproved</a><strong>(<?php echo $reports_unapproved; ?>)</strong></li>
 									<li><a href="<?php echo url::base() . 'admin/reports?status=v' ?>"> Unverified</a><strong>(<?php echo $reports_unverified; ?>)</strong></li>
 								</ul>
 							</li>
@@ -116,6 +120,10 @@
 							<li>
 								<a href="<?php echo url::base() . 'admin/messages' ?>" class="messages">Messages</a>
 								<strong><?php echo $message_count; ?></strong>
+								<ul>
+									<li><a href="<?php echo url::base() . 'admin/messages' ?>"> SMS</a><strong>(<?php echo $message_sms_count; ?>)</strong></li>
+									<li><a href="<?php echo url::base() . 'admin/messages/twitter' ?>"> Twitter</a><strong>(<?php echo $message_twitter_count; ?>)</strong></li>
+								</ul>
 							</li>
 						</ul>
 					</div>

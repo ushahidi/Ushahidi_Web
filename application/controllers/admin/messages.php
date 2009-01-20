@@ -197,29 +197,48 @@ class Messages_Controller extends Admin_Controller
     /**
      * Delete a single message
      */
-    function delete($id = FALSE)
+    function delete($id = FALSE,$dbtable='message')
     {
-        if ($id)
-        {
-            ORM::factory('message')->delete($id);
+        if($dbtable=='twitter'){
+	        if ($id){
+	            $update = ORM::factory($dbtable)->where('id',$id)->find();
+				if ($update->loaded == true) {
+					$update->hide = '1';
+					$update->save();
+				}
+	        }
+        	$extradir = 'twitter/';
+        }else{
+        	if ($id){
+	            ORM::factory($dbtable)->delete($id);
+	        }
+        	$extradir = '';
         }
         //XXX:get the current page number
-        url::redirect(url::base().'admin/messages/');
+        url::redirect(url::base().'admin/messages/'.$extradir);
     }
 
     /**
      * Delete selected messages
      */
-    function deleteMessages($ids,$kind='message')
+    function deleteMessages($ids,$dbtable='message')
     {
-    	foreach($ids as $id)
-        {
-            ORM::factory($kind)->delete($id);
-        }
         //XXX:get the current page number
-        if($kind=='twitter'){
+        if($dbtable=='twitter'){
+        	foreach($ids as $id)
+	        {
+	            $update = new Twitter_Model($id);
+				if ($update->loaded == true) {
+					$update->hide = '1';
+					$update->save();
+				}
+	        }
         	$extradir = 'twitter/';
         }else{
+        	foreach($ids as $id)
+	        {
+	            ORM::factory($dbtable)->delete($id);
+	        }
         	$extradir = '';
         }
         url::redirect(url::base().'admin/messages/'.$extradir);
@@ -228,81 +247,27 @@ class Messages_Controller extends Admin_Controller
     
     /**
 	* Lists the Twitter messages.
-    * @param int $page
     */
-	function twitter($page = 1)
+	function twitter()
 	{
 		$this->template->content = new View('admin/messages_twitter');
 		$this->template->content->title = 'Twitter Messages';
 		
-		// Retrieve Current Settings
-		$settings = ORM::factory('settings', 1);
+		$this->load_tweets();
 		
-		$username = $settings->twitter_username;
-		$password = $settings->twitter_password;
-		$twitter_url = 'http://twitter.com/statuses/replies.rss';
-		$curl_handle = curl_init();
-		curl_setopt($curl_handle,CURLOPT_URL,"$twitter_url");
-		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
-		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password");
-		$buffer = curl_exec($curl_handle);
-		curl_close($curl_handle);
-		
-		$search_username = ': @'.$username;
-		$feed_data = $this->_setup_simplepie( $buffer );
-		foreach($feed_data->get_items(0,50) as $feed_data_item)
-		{
-			$full_tweet = $feed_data_item->get_description();
-			$full_date = $feed_data_item->get_date();
-			
-			$cut1 = stripos($full_tweet, $search_username);
-			$cut2 = $cut1 + strlen($search_username);
-			$tweet_from = substr($full_tweet,0,$cut1);
-			$tweet_to = $username;
-			$tweet = substr($full_tweet,$cut2);
-			$tweet_date = date("Y-m-d H:i:s",strtotime($full_date));
-			
-			if (isset($full_tweet) && !empty($full_tweet))
-			{
-				// We need to check for duplicates!!!
-				// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
-				$dupe_count = ORM::factory('twitter')->where('tweet_date',$tweet_date)->where('tweet_from',$tweet_from)->where('tweet',$tweet)->count_all();
-				if ($dupe_count == 0) {
-					$newitem = new Twitter_Model();
-					$newitem->tweet_from = $tweet_from;
-					$newitem->tweet_to = $tweet_to;
-					$newitem->tweet = $tweet;
-					$newitem->tweet_date = $tweet_date;
-					$newitem->save();
-				}
-			}
+		//So far this assumes that selected 'twitter_id's are for deleting
+		if (isset($_POST['tweet_id'])) {
+			$this->deleteMessages($_POST['tweet_id'],'twitter');
 		}
 		
-		
-		//So far this assumes that selected 'message_id's are for deleting
-        if (isset($_POST['tweet_id']))
-            $this->deleteMessages($_POST['tweet_id'],'twitter');
-		
-		// Is this an Inbox or Outbox Filter?
-		if (!empty($_GET['type']))
-		{
-			$type = $_GET['type'];
-			
-			if ($type == '2')
-			{
-				$filter = 'tweet_type = 2';
-			}
-			else
-			{
-				$type = "1";
-				$filter = 'tweet_type = 1';
-			}
-		}
-		else
-		{
-			$type = "1";
-			$filter = 'tweet_type = 1';
+		//Set Inbox/Outbox filter for query and message tab in view
+		//Set default as inbox
+		$type = 1;
+		$filter = 'tweet_type = 1';
+		//Check if outbox
+		if (!empty($_GET['type']) && $_GET['type'] == 2){
+			$type = 2;
+			$filter = 'tweet_type = 2';
 		}
 		
 		// check, has the form been submitted?
@@ -312,13 +277,14 @@ class Messages_Controller extends Admin_Controller
 		
 		// Pagination
 		$pagination = new Pagination(array(
-			'query_string'    => 'page',
+			'query_string'   => 'page',
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
 			'total_items'    => ORM::factory('twitter')->where($filter)->count_all()
 		));
 
-		$tweets = ORM::factory('twitter')->where($filter)->orderby('tweet_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		$tweets = ORM::factory('twitter')->where($filter)->where('hide',0)->orderby('tweet_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 		
+		// Populate values for view
 		$this->template->content->tweets = $tweets;
 		$this->template->content->pagination = $pagination;
 		$this->template->content->form_error = $form_error;
@@ -337,7 +303,79 @@ class Messages_Controller extends Admin_Controller
 	}
 	
 	/**
+	* Collects the twitter messages and loads them into the database
+    */
+	function load_tweets()
+	{
+		// Set a timer so Twitter doesn't get requests every page load.
+		// Note: We will move this to the fake-cron in the scheduler controller and change this.
+		$proceed = 0; // Sanity check. This is just in case $proceed doesn't get set.
+		if(!isset($_SESSION['twitter_timer'])) {
+			$_SESSION['twitter_timer'] = time();
+			$proceed = 1;
+		}else{
+			$timeCheck = time() - $_SESSION['twitter_timer'];
+			if($timeCheck > 300) { //If it has been longer than 300 seconds (5 min)
+				$proceed = 1;
+				$_SESSION['twitter_timer'] = time(); //Only if we proceed do we want to reset the timer
+			}else{
+				$proceed = 0;
+			}
+		}
+		
+		if($proceed == 1) { // Grab Tweets
+			// Retrieve Current Settings
+			$settings = ORM::factory('settings', 1);
+			
+			$username = $settings->twitter_username;
+			$password = $settings->twitter_password;
+			$twitter_url = 'http://twitter.com/statuses/replies.rss';
+			$curl_handle = curl_init();
+			curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
+			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2); //Since Twitter is down a lot, set timeout to 2 secs
+			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
+			curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password"); //Authenticate!
+			$buffer = curl_exec($curl_handle);
+			curl_close($curl_handle);
+			
+			$search_username = ': @'.$username;
+			$feed_data = $this->_setup_simplepie( $buffer ); //Pass this the raw xml data
+			foreach($feed_data->get_items(0,50) as $feed_data_item) {
+				//Grab tweet data from RSS feed
+				$full_tweet = $feed_data_item->get_description();
+				$full_date = $feed_data_item->get_date();
+				$tweet_link = $feed_data_item->get_link();
+				
+				//Parse tweet for data
+				$cut1 = stripos($full_tweet, $search_username); //Find the position of the username
+				$cut2 = $cut1 + strlen($search_username) + 1; //Calculate the pos of the start of the tweet
+				$tweet_from = substr($full_tweet,0,$cut1);
+				$tweet_to = $username;
+				$tweet = substr($full_tweet,$cut2);
+				$tweet_date = date("Y-m-d H:i:s",strtotime($full_date));
+								
+				if(isset($full_tweet) && !empty($full_tweet)) {
+					// We need to check for duplicates.
+					// Note: Heave on server.
+					$dupe_count = ORM::factory('twitter')->where('tweet_link',$tweet_link)->where('tweet',$tweet)->count_all();
+					if ($dupe_count == 0) {
+						// Add tweet to database
+						$newtweet = new Twitter_Model();
+						$newtweet->tweet_from = $tweet_from;
+						$newtweet->tweet_to = $tweet_to;
+						$newtweet->tweet_link = $tweet_link;
+						$newtweet->tweet = $tweet;
+						$newtweet->tweet_date = $tweet_date;
+						$newtweet->save();
+					}
+				}
+			}
+		}
+	}
+	
+	/**
 	 * setup simplepie
+	 * @param string $raw_data
 	 */
 	private function _setup_simplepie( $raw_data ) {
 			$data = new SimplePie();
@@ -346,7 +384,6 @@ class Messages_Controller extends Admin_Controller
 			$data->enable_order_by_date(true);
 			$data->init();
 			$data->handle_content_type();
-
 			return $data;
 	}
 
