@@ -256,60 +256,26 @@
 					addMarkers(currCat, startDate, endDate, currZoom, currCenter);
 					
 					// refresh graph
-					plotGraph(currentCat);
+					if (!currentCat || currentCat == '0') {
+						currentCat = 'ALL';
+					}
+					$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
+					    endTime: new Date(endDate * 1000),
+						graphData: allGraphData[0][currentCat], 
+						url: "<?php echo url::base() . 'json/timeline/' ?>"
+					}).plot();
 				}
 			}); //.hide();
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
-			var graphData = allGraphData[0]['ALL'];
-			var dailyGraphData = {};
-			var graphOptions = {
-				xaxis: { mode: "time", timeformat: "%b %y" },
-				yaxis: { tickDecimals: 0 },
-				points: { show: true},
-				lines: { show: true}
-			};
-
-			function plotGraph(catId) {	
-				var startTime = new Date($("#startDate").val() * 1000);
-				var endTime = new Date($("#endDate").val() * 1000);
-				
-				if (!catId || catId == '0') {
-				    catId = 'ALL';
-				}
-				
-				if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 62) {
-
-    				plot = $.plot($("#graph"), [graphData],
-    				        $.extend(true, {}, graphOptions, {
-    				            xaxis: { min: startTime.getTime(), max: endTime.getTime() }
-    				        }));
-    		    } else {
-    		        var url = "<?php echo url::base() . 'json/timeline/' ?>";
-    		        var startDate = startTime.getFullYear() + '-' + 
-    		                        (startTime.getMonth()+1) + '-'+ startTime.getDate();
-    		        var endDate = endTime.getFullYear() + '-' + 
-    		                        (endTime.getMonth()+1) + '-'+ endTime.getDate();
-    		        url += "?s=" + startDate + "&e=" + endDate;
-    		        $.getJSON(url,
-    		            function(data) {
-    		                dailyGraphData = data;
-    		                plot = $.plot($("#graph"), [dailyGraphData[catId]],
-    				        $.extend(true, {}, graphOptions, {
-    				            xaxis: { min: startTime.getTime(), 
-    				                     max: endTime.getTime(),
-    				                     mode: "time", 
-    				                     timeformat: "%d %b",
-    				                     tickSize: [5, "day"]
-    				            }
-    				        }));
-    		            }
-    		        );
-    		    }
-			}
+			var startTime = new Date($("#startDate").val() * 1000);
+			var endTime = new Date($("#endDate").val() * 1000);
+			$.timeline({categoryId: 'ALL', startTime: startTime, endTime: endTime,
+			    graphData: allGraphData[0]['ALL'],
+			    url: "<?php echo url::base() . 'json/timeline/' ?>"
+			}).plot();
 			
-			plotGraph();
 			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
 				
 			for (var i=0; i<categoryIds.length; i++) {

@@ -27,6 +27,7 @@
 		if ($main_page) {
 			echo html::script('media/js/accessibleUISlider.jQuery');
 			echo html::script('media/js/jquery.flot');
+			echo html::script('media/js/timeline.js');
 			?>
 			<!--[if IE]><script language="javascript" type="text/javascript" src="<?php echo url::base() ?>media/js/excanvas.pack.js"></script><![endif]-->
 			<?php

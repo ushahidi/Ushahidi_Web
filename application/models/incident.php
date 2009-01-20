@@ -53,7 +53,7 @@ class Incident_Model extends ORM
         return $graph;
     }
 	
-	static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL) 
+	static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL,$active='true') 
 	{
 	    // get graph data
         // could not use DB query builder. It does not support parentheses yet
@@ -80,6 +80,13 @@ class Incident_Model extends ORM
             $date_filter .= ' AND incident_date <= "' . $end_date . '"';
         }
         
+        $active_filter = '1';
+        if ($active == 'all') {
+        	$active_filter = '0,1';
+        } elseif ($active == 'false') {
+        	$active_filter = '0,1';
+        }
+        
         $graph_data = array();
         $all_graphs = "{ ";
 		
@@ -87,7 +94,7 @@ class Incident_Model extends ORM
         $query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') 
 		                     AS time, COUNT(*) AS number 
 		                     FROM incident 
-		                     WHERE incident_active = 1
+		                     WHERE incident_active IN (' . $active_filter . ')
 		                     GROUP BY ' . $groupby_date_text;
         $query = $db->query($query_text);
 
@@ -105,7 +112,8 @@ class Incident_Model extends ORM
 							AS time, COUNT(*) AS number
 						        FROM incident 
 							INNER JOIN incident_category ON incident_category.incident_id = incident.id
-							WHERE incident_active = 1 AND incident_category.category_id = '. $index .'
+							WHERE incident_active IN (' . $active_filter . ') AND 
+							      incident_category.category_id = '. $index .'
 							GROUP BY ' . $groupby_date_text;
 		    $graph_text = self::category_graph_text($query_text, $category);
 			$all_graphs .= $graph_text;

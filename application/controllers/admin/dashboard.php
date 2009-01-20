@@ -65,7 +65,7 @@ class Dashboard_Controller extends Admin_Controller
 		$this->template->flot_enabled = TRUE;
 		$this->template->js = new View('admin/dashboard_js');
 		// Graph
-		$this->template->js->all_graphs = Incident_Model::get_incidents_by_interval();
+		$this->template->js->all_graphs = Incident_Model::get_incidents_by_interval('ALL',NULL,NULL,'all');
 		$this->template->js->current_date = date('Y') . '/' . date('m') . '/01';
 	}
 

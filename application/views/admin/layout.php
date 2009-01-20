@@ -26,6 +26,7 @@
 	{
 		echo html::script('media/js/jquery.flot');
 		echo html::script('media/js/excanvas.pack');
+		echo html::script('media/js/timeline.js');
 	}
 	
 	// Load ColorPicker

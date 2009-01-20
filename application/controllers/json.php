@@ -188,10 +188,10 @@ class Json_Controller extends Template_Controller
         $this->template = new View('json/timeline');
         //$this->template->content = new View('json/timeline');
         
-        
         $interval = 'day';
         $start_date = NULL;
         $end_date = NULL;
+        $active = 'true';
         if (isset($_GET['i'])) {
             $interval = $_GET['i'];
         }
@@ -201,10 +201,13 @@ class Json_Controller extends Template_Controller
         if (isset($_GET['e'])) {
             $end_date = $_GET['e'];
         }
+        if (isset($_GET['active'])) {
+            $active = $_GET['active'];
+        }
         
         // get graph data
         $graph_data = array();
-        $all_graphs = Incident_Model::get_incidents_by_interval($interval,$start_date,$end_date);
+        $all_graphs = Incident_Model::get_incidents_by_interval($interval,$start_date,$end_date,$a	ctive);
 	    echo $all_graphs;
    	}
 
