@@ -207,7 +207,7 @@ class Json_Controller extends Template_Controller
         
         // get graph data
         $graph_data = array();
-        $all_graphs = Incident_Model::get_incidents_by_interval($interval,$start_date,$end_date,$a	ctive);
+        $all_graphs = Incident_Model::get_incidents_by_interval($interval,$start_date,$end_date,$active);
 	    echo $all_graphs;
    	}
 
