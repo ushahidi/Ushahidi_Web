@@ -17,7 +17,10 @@ class Alerts_Controller extends Main_Controller {
 
     const MOBILE_ALERT = 1;
 	const EMAIL_ALERT = 2;
-		
+	
+    const CODE_LENGTH = 6;
+	private $code_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	
 	function __construct()
     {
         parent::__construct();
@@ -96,45 +99,90 @@ class Alerts_Controller extends Main_Controller {
             {
                 // Yes! everything is valid
 				// Save alert and send out confirmation code
-
+                $email_confirmation_saved = FALSE;
+                $sms_confirmation_saved = FALSE;
 
 				if (!empty($post->alert_mobile))
 				{
-				    $alert = ORM::factory('alert');
-					$alert->alert_type = self::MOBILE_ALERT;
-					$alert->alert_recipient = $post->alert_mobile;
-					$alert->alert_code = $this->_mk_code();
-					$alert->alert_lon = $post->alert_lon;
-					$alert->alert_lat = $post->alert_lat;
-					$alert->save();
+                    $alert_code = $this->_mk_code();
+					
+				    $settings = ORM::factory('settings', 1);
+					if ($settings->loaded == true) 
+					{
+                        // Get SMS Numbers
+                        if (!empty($settings->sms_no3)) {
+                            $sms_from = $settings->sms_no3;
+                        }elseif (!empty($settings->sms_no2)) {
+                            $sms_from = $settings->sms_no2;
+                        }elseif (!empty($settings->sms_no1)) {
+                            $sms_from = $settings->sms_no1;
+                        }else{
+                            $sms_from = "000";      // User needs to set up an SMS number
+                        }
 
-                    //TODO: Send verification SMS
+						$sms = new Clickatell();
+                    	$sms->api_id = $settings->clickatell_api;
+                    	$sms->user = $settings->clickatell_username;
+                    	$sms->password = $settings->clickatell_password;
+                    	$sms->use_ssl = false;
+                    	$sms->sms();
+						$message = "Your Ushahidi alerts confirmation code
+								is: ".$alert_code." This code is NOT case sensitive";
+                    
+						if ($sms->send ($post->alert_mobile, $sms_from, $message) == "OK")
+						{
+							$alert = ORM::factory('alert');
+							$alert->alert_type = self::MOBILE_ALERT;
+							$alert->alert_recipient = $post->alert_mobile;
+							$alert->alert_code = $alert_code;
+							$alert->alert_code = $this->_mk_code();
+							$alert->alert_lon = $post->alert_lon;
+							$alert->alert_lat = $post->alert_lat;
+							$alert->save();
+						
+							if ($alert->saved == TRUE)
+								$sms_confirmation_saved = TRUE;
+						}
+					}
 				}
 
 				if (!empty($post->alert_email))
 				{
-				    $alert = ORM::factory('alert');
-					$alert->alert_type = self::EMAIL_ALERT;
-					$alert->alert_recipient = $post->alert_email;
 					$alert_code = $this->_mk_code();
-					$alert->alert_code = $alert_code;
-					$alert->alert_lon = $post->alert_lon;
-					$alert->alert_lat = $post->alert_lat;
-					$alert->save();
-
+					
 					//Send verification email
 					//TODO: Setup correct 'from' address and message
-					$to      = $post->alert_email;
-					$from    = 'verify-code@ushahidi.com';
+					$to = $post->alert_email;
+					$from = 'verify-code@ushahidi.com';
 					$subject = 'Ushahidi alerts - Verification code';
 					$message = 'Please follow the link below to confirm your
 								alert request:<br/>'.url::base().'/alerts/verify/'.$alert_code;
- 					email::send($to, $from, $subject, $message, TRUE);
+					
+					$sent = email::send($to, $from, $subject, $message, TRUE);
+
+ 					if (email::send($to, $from, $subject, $message, TRUE) == 1)
+					{
+						$alert = ORM::factory('alert');
+						$alert->alert_type = self::EMAIL_ALERT;
+						$alert->alert_recipient = $post->alert_email;
+						$alert->alert_code = $alert_code;
+						$alert->alert_lon = $post->alert_lon;
+						$alert->alert_lat = $post->alert_lat;
+						$alert->save();
+						
+						if ($alert->saved == TRUE)
+							$email_confirmation_saved = TRUE;
+					}
 				}
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
                 $this->session->set('alert_email', $post->alert_email);
-				
+				$this->session->set('sms_confirmation_saved',
+									$sms_confirmation_saved);
+                $this->session->set('email_confirmation_saved',
+									$email_confirmation_saved);
+
+
                 url::redirect('alerts/confirm');		            
             }
             // No! We have validation errors, we need to show the form again, with the errors
@@ -173,12 +221,18 @@ class Alerts_Controller extends Main_Controller {
      */
     function confirm ()
     {
-        $this->template->header->this_page = 'alerts';
+        //$this->template->header->this_page = 'alerts';
         $this->template->content = new View('alerts_confirm');
 		if (isset($_SESSION['alert_mobile']) && isset($_SESSION['alert_email'])) {
 			$this->template->content->alert_mobile = $_SESSION['alert_mobile'];
 	        $this->template->content->alert_email = $_SESSION['alert_email'];
 		}
+
+		$this->template->content->email_confirmation_saved =
+			isset($_SESSION['email_confirmation_saved']) ? $_SESSION['email_confirmation_saved'] : FALSE;
+		$this->template->content->sms_confirmation_saved =
+			isset($_SESSION['sms_confirmation_saved']) ? $_SESSION['sms_confirmation_saved'] : FALSE;
+
     }
 
     /**
@@ -186,10 +240,13 @@ class Alerts_Controller extends Main_Controller {
      */
     function verify($code=NULL)
     {
-        $errno = NULL;
+		$errno = NULL;
 		define("ER_CODE_VERIFIED", 0);
 		define("ER_CODE_NOT_FOUND", 1);
 		define("ER_CODE_ALREADY_VERIFIED", 2);
+
+		if (isset($_POST['alert_code']))
+			$code = trim($_POST['alert_code']);
 
 		if ($code != NULL)
 		{
@@ -222,7 +279,6 @@ class Alerts_Controller extends Main_Controller {
 		$this->template->header->this_page = 'alerts';
         $this->template->content = new View('alerts_verify');
 		$this->template->content->errno = $errno;
-
     }
 	
     /*
@@ -293,15 +349,13 @@ class Alerts_Controller extends Main_Controller {
 	 */
 	private function _mk_code()
 	{
-		define("CODE_LENGTH", 12);
-		$code_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-		$max_char_pos = strlen($code_chars)-1;
+		$max_char_pos = strlen($this->code_chars)-1;
 		$code = NULL;
 
-        for($i = 0; $i < CODE_LENGTH; $i++) 
+        for($i = 0; $i < self::CODE_LENGTH; $i++) 
         {
 			$pos = mt_rand(0, $max_char_pos);
-			$code.=$code_chars[$pos];
+			$code.=$this->code_chars[$pos];
 		}
 
         // Only generate unique codes. If a code has been used before, generate
