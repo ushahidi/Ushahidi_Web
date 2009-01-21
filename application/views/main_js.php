@@ -147,81 +147,26 @@
 					markers.redraw();
 					
 					// refresh graph
-					plotGraph(currentCat, startDate, endDate);
+					if (!currentCat || currentCat == '0') {
+						currentCat = 'ALL';
+					}
+					$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
+					    endTime: new Date(endDate * 1000),
+						graphData: allGraphData[0][currentCat], 
+						url: "<?php echo url::base() . 'json/timeline/' ?>"
+					}).plot();
 				}
 			});
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
-			var graphData = allGraphData[0]['ALL'];
-			var dailyGraphData = {};
-			var graphOptions = {
-				xaxis: { mode: "time", timeformat: "%b %y" },
-				yaxis: { tickDecimals: 0 },
-				points: { show: true},
-				lines: { show: true}
-			};
+			var startTime = new Date($("#startDate").val() * 1000);
+			var endTime = new Date($("#endDate").val() * 1000);
+			$.timeline({categoryId: 'ALL', startTime: startTime, endTime: endTime,
+			    graphData: allGraphData[0]['ALL'],
+			    url: "<?php echo url::base() . 'json/timeline/' ?>"
+			}).plot();
 
-            function plotGraph(catId, aStartTime, aEndTime) {	
-                var startTime = new Date($("#startDate").val() * 1000);
-				var endTime = new Date($("#endDate").val() * 1000);
-            	
-            	if (!catId || catId == '0') {
-            	    catId = 'ALL';
-            	}
-
-            	if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 124) {   // monthly
-            	    if (!graphData) { 
-            	        graphData = {'data': []};
-            	    }
-            		plot = $.plot($("#graph"), [graphData],
-            		        $.extend(true, {}, graphOptions, {
-            		            xaxis: { min: startTime.getTime(), max: endTime.getTime() }
-            		        }));
-                } else {   // daily
-                    var url = "<?php echo url::base() . 'json/timeline/' ?>";
-                    var startDate = startTime.getFullYear() + '-' + 
-                                    (startTime.getMonth()+1) + '-'+ startTime.getDate();
-                    var endDate = endTime.getFullYear() + '-' + 
-                                    (endTime.getMonth()+1) + '-'+ endTime.getDate();
-                    url += "?s=" + startDate + "&e=" + endDate;
-                    var aTimeformat = "%d %b";
-                    var aTickSize = [5, "day"];
-                    url += "&i=day";
-
-                    // plot hourly incidents when period is within 2 days
-                    if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 2) {
-                        aTimeformat = "%H:%M";
-                        aTickSize = [5, "hour"];
-                        url += "&i=hour";
-                    } else if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 62) { 
-                        // weekly if period > 2 months
-                        aTimeformat = "%d%b";
-                        aTickSize = [7, "day"];
-                        url += "&i=week";
-                    }
-                    $.getJSON(url,
-                        function(data) {
-                            dailyGraphData = data;
-                            if (!dailyGraphData[catId]) { 
-                                dailyGraphData[catId] = {};
-                                dailyGraphData[catId]['data'] = [];
-                            }
-                            plot = $.plot($("#graph"), [dailyGraphData[catId]],
-            		        $.extend(true, {}, graphOptions, {
-            		            xaxis: { min: startTime.getTime(), 
-            		                     max: endTime.getTime(),
-            		                     mode: "time", 
-            		                     timeformat: aTimeformat,
-                         			     tickSize: aTickSize
-            		            }
-            		        }));
-                        }
-                    );
-                }
-            }
-            			
-			plotGraph();
 			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
 				
 			for (var i=0; i<categoryIds.length; i++) {
@@ -229,7 +174,14 @@
 					var categories = <?php echo json_encode($categories); ?>;
 					categories['0'] = ["ALL", "#990000"];
 					graphData = allGraphData[0][categories[this.id.split("_")[1]][0]];
-					plotGraph(categories[this.id.split("_")[1]][0]);
+					var catId = categories[this.id.split("_")[1]][0];
+					
+					var startTime = new Date($("#startDate").val() * 1000);
+					var endTime = new Date($("#endDate").val() * 1000);
+					$.timeline({categoryId: catId, startTime: startTime, endTime: endTime,
+			            graphData: graphData,
+			            url: "<?php echo url::base() . 'json/timeline/' ?>"
+					}).plot();
 				});
 			}
 		});
