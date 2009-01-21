@@ -363,9 +363,9 @@ class Alerts_Controller extends Main_Controller {
         $code_check = ORM::factory('alert')
             ->where('alert_code', $code)->find();
 
-        if ($code_check->id)
-			$this->_mk_code();
-
-		return $code;
+        if (!$code_check->id)
+			return $code;
+		
+		$this->_mk_code();
 	}
 }
