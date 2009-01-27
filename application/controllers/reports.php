@@ -44,21 +44,27 @@ class Reports_Controller extends Main_Controller {
             ->find_all((int) Kohana::config('settings.items_per_page'), $pagination->sql_offset);
 		
 		$this->template->content->incidents = $incidents;
-		$this->template->content->pagination = $pagination;
+		$this->template->content->pagination = ''; //Set default as not showing pagination. Will change below if necessary.
         
-        //Only display stats when there are reports to display
-        if ($pagination->total_items > 0)
-        {
-		    $this->template->content->pagination_stats = "(Showing " 
-                . (($pagination->sql_offset/(int) Kohana::config('settings.items_per_page')) + 1)
-		 	    . " of " . ceil($pagination->total_items/(int) Kohana::config('settings.items_per_page')) . " pages)";	
+        // Pagination and Total Num of Report Stats
+        if($pagination->total_items == 1){
+        	$plural = '';
+        }else{
+        	$plural = 's';
         }
-        else
-        {
-            $this->template->content->pagination_stats = "";
+        if ($pagination->total_items > 0){
+        	$current_page = ($pagination->sql_offset/(int) Kohana::config('settings.items_per_page')) + 1;
+        	$total_pages = ceil($pagination->total_items/(int) Kohana::config('settings.items_per_page'));
+        	if($total_pages > 1){ //If we want to show pagination
+			    $this->template->content->pagination_stats = '(Showing '.$current_page.' of '.$total_pages
+			    	.' pages of '.$pagination->total_items.' report'.$plural.')';
+			    $this->template->content->pagination = $pagination;
+        	}else{ //If we don't want to show pagination
+        		$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
+        	}
+        }else{
+            $this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
         }
-        
-        $this->template->content->pagination_count = $pagination->total_items;
 	}
     
     /**
