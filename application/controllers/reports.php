@@ -401,13 +401,17 @@ class Reports_Controller extends Main_Controller {
             $this->template->content->incident_id = $incident->id;
 			$this->template->content->incident_title = $incident->incident_title;
             $this->template->content->incident_description = nl2br($incident->incident_description);
-			$this->template->content->incident_rating = $incident->incident_rating;
             $this->template->content->incident_location = $incident->location->location_name;
             $this->template->content->incident_latitude = $incident->location->latitude;
             $this->template->content->incident_longitude = $incident->location->longitude;
             $this->template->content->incident_date = date('M j Y', strtotime($incident->incident_date));
             $this->template->content->incident_time = date('H:i', strtotime($incident->incident_date));
             $this->template->content->incident_category = $incident->incident_category;
+            if($incident->incident_rating == ''){
+            	$this->template->content->incident_rating = 0;
+            }else{
+            	$this->template->content->incident_rating = $incident->incident_rating;
+            }
 			
             // Retrieve Media
             $incident_news = array();
