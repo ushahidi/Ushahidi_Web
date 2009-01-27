@@ -65,6 +65,29 @@ class Reports_Controller extends Main_Controller {
         }else{
             $this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
         }
+        
+        $icon_html = array();
+        $icon_html[1] = "<img src=\"" . url::base() . "media/img/image.png\">"; //image
+        $icon_html[2] = "<img src=\"" . url::base() . "media/img/video.png\">"; //video
+        $icon_html[3] = ""; //audio
+        $icon_html[4] = ""; //news
+        $icon_html[5] = ""; //podcast
+        
+        //Populate media icon array
+        $this->template->content->media_icons = array();
+        foreach($incidents as $incident){
+        	$incident_id = $incident->id;
+        	if(ORM::factory('media')->where('incident_id', $incident_id)->count_all() > 0){
+        		$medias = ORM::factory('media')->where('incident_id', $incident_id)->find_all();
+        		//Modifying a tmp var prevents Kohona from throwing an error
+        		$tmp = $this->template->content->media_icons;
+        		$tmp[$incident_id] = '';
+        		foreach($medias as $media){
+	        		$tmp[$incident_id] .= $icon_html[$media->media_type];
+	        		$this->template->content->media_icons = $tmp;
+        		}
+        	}
+        }
 	}
     
     /**
