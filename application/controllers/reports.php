@@ -57,6 +57,8 @@ class Reports_Controller extends Main_Controller {
         {
             $this->template->content->pagination_stats = "";
         }
+        
+        $this->template->content->pagination_count = $pagination->total_items;
 	}
     
     /**
