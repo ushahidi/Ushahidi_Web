@@ -658,14 +658,14 @@ class Reports_Controller extends Main_Controller {
 	*/
 	private function _get_neighbors($latitude = 0, $longitude = 0)
 	{
-		$proximity = new Proximity();
+		$proximity = new Proximity($latitude, $longitude, 100);
 		$proximity->Proximity($latitude, $longitude, 100);		// Within 100 Miles ( or Kms ;-) )
 		
 		// Generate query from proximity calculator
-		$radius_query = " location.latitude >= '" . $proximity->MinLatitude() . "' 
-			AND location.latitude <= '" . $proximity->MaxLatitude() . "' 
-			AND location.longitude >= '" . $proximity->MinLongitude() . "'
-			AND location.longitude <= '" . $proximity->MaxLongitude() . "'
+		$radius_query = " location.latitude >= '" . $proximity->minLat . "' 
+			AND location.latitude <= '" . $proximity->maxLat . "' 
+			AND location.longitude >= '" . $proximity->minLong . "'
+			AND location.longitude <= '" . $proximity->maxLong . "'
 			AND incident_active = 1";
 		$neighbors = ORM::factory('incident')
 			->join('location', 'incident.location_id', 'location.id','INNER')
