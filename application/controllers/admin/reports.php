@@ -186,6 +186,21 @@ class Reports_Controller extends Admin_Controller
 
 		$incidents = ORM::factory('incident')->where($filter)->orderby('incident_dateadd', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 		
+		//GET countries
+		$countries = array();
+		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
+		{
+			// Create a list of all categories
+			$this_country = $country->country;
+			if (strlen($this_country) > 35)
+			{
+				$this_country = substr($this_country, 0, 35) . "...";
+			}
+			$countries[$country->id] = $this_country;
+		}
+		
+		$this->template->content->countries = $countries;
+		
 		$this->template->content->incidents = $incidents;
 		$this->template->content->pagination = $pagination;
 		$this->template->content->form_error = $form_error;
