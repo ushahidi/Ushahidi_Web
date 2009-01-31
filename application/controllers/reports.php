@@ -44,18 +44,49 @@ class Reports_Controller extends Main_Controller {
             ->find_all((int) Kohana::config('settings.items_per_page'), $pagination->sql_offset);
 		
 		$this->template->content->incidents = $incidents;
-		$this->template->content->pagination = $pagination;
+		$this->template->content->pagination = ''; //Set default as not showing pagination. Will change below if necessary.
         
-        //Only display stats when there are reports to display
-        if ($pagination->total_items > 0)
-        {
-		    $this->template->content->pagination_stats = "(Showing " 
-                . (($pagination->sql_offset/(int) Kohana::config('settings.items_per_page')) + 1)
-		 	    . " of " . ceil($pagination->total_items/(int) Kohana::config('settings.items_per_page')) . " pages)";	
+        // Pagination and Total Num of Report Stats
+        if($pagination->total_items == 1){
+        	$plural = '';
+        }else{
+        	$plural = 's';
         }
-        else
-        {
-            $this->template->content->pagination_stats = "";
+        if ($pagination->total_items > 0){
+        	$current_page = ($pagination->sql_offset/(int) Kohana::config('settings.items_per_page')) + 1;
+        	$total_pages = ceil($pagination->total_items/(int) Kohana::config('settings.items_per_page'));
+        	if($total_pages > 1){ //If we want to show pagination
+			    $this->template->content->pagination_stats = '(Showing '.$current_page.' of '.$total_pages
+			    	.' pages of '.$pagination->total_items.' report'.$plural.')';
+			    $this->template->content->pagination = $pagination;
+        	}else{ //If we don't want to show pagination
+        		$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
+        	}
+        }else{
+            $this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
+        }
+        
+        $icon_html = array();
+        $icon_html[1] = "<img src=\"" . url::base() . "media/img/image.png\">"; //image
+        $icon_html[2] = "<img src=\"" . url::base() . "media/img/video.png\">"; //video
+        $icon_html[3] = ""; //audio
+        $icon_html[4] = ""; //news
+        $icon_html[5] = ""; //podcast
+        
+        //Populate media icon array
+        $this->template->content->media_icons = array();
+        foreach($incidents as $incident){
+        	$incident_id = $incident->id;
+        	if(ORM::factory('media')->where('incident_id', $incident_id)->count_all() > 0){
+        		$medias = ORM::factory('media')->where('incident_id', $incident_id)->find_all();
+        		//Modifying a tmp var prevents Kohona from throwing an error
+        		$tmp = $this->template->content->media_icons;
+        		$tmp[$incident_id] = '';
+        		foreach($medias as $media){
+	        		$tmp[$incident_id] .= $icon_html[$media->media_type];
+	        		$this->template->content->media_icons = $tmp;
+        		}
+        	}
         }
 	}
     
@@ -401,13 +432,17 @@ class Reports_Controller extends Main_Controller {
             $this->template->content->incident_id = $incident->id;
 			$this->template->content->incident_title = $incident->incident_title;
             $this->template->content->incident_description = nl2br($incident->incident_description);
-			$this->template->content->incident_rating = $incident->incident_rating;
             $this->template->content->incident_location = $incident->location->location_name;
             $this->template->content->incident_latitude = $incident->location->latitude;
             $this->template->content->incident_longitude = $incident->location->longitude;
             $this->template->content->incident_date = date('M j Y', strtotime($incident->incident_date));
             $this->template->content->incident_time = date('H:i', strtotime($incident->incident_date));
             $this->template->content->incident_category = $incident->incident_category;
+            if($incident->incident_rating == ''){
+            	$this->template->content->incident_rating = 0;
+            }else{
+            	$this->template->content->incident_rating = $incident->incident_rating;
+            }
 			
             // Retrieve Media
             $incident_news = array();

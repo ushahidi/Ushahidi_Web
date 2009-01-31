@@ -7,7 +7,7 @@
 					<h1>Reports <?php echo $pagination_stats; ?></h1>
 					<div class="report_rowtitle">
 	                	<div class="report_col1">
-	                    	&nbsp;
+	                    	<strong>MEDIA</strong>
 	                    </div>
 	                    <div class="report_col2">
 	                    	<strong>REPORT TITLE</strong>
@@ -48,6 +48,9 @@
                         echo "<div class=\"report_row1\">";
                         echo "	<div class=\"report_thumb report_col1\">";
                         echo "    	&nbsp;";
+                        if(isset($media_icons[$incident_id])){
+                        	echo $media_icons[$incident_id];
+                        }
                         echo "    </div>";
                         echo "    <div class=\"report_details report_col2\">";
                         echo "    	<h3><a href=\"" . url::base() . "reports/view/" . $incident_id . "\">" . $incident_title . "</a></h3>";
