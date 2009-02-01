@@ -107,6 +107,22 @@
 								<?php print form::password('twitter_password', $form['twitter_password'], ' class="text"'); ?>
 							</div>
 						</div>
+						<div class="row">
+				        <h4>Laconica Credentials</h4>
+				
+				    <div class="row">
+					    Username
+					    <?php print form::input('laconica_username', $form['laconica_username'], ' class="text"'); ?>
+				    </div>
+				    <div class="row" style="padding-top:5px;">
+					    Password
+					    <?php print form::password('laconica_password', $form['laconica_password'], ' class="text"'); ?>
+				    </div>
+				    <div class="row" style="padding-top:5px;">
+					    Laconica Site
+					    <?php print form::input('laconica_site', $form['laconica_site'], 'class="text long2"'); ?>
+				    </div>
+			</div>
 					</div>
 		
 					<div class="simple_border"></div>

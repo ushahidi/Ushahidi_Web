@@ -51,6 +51,9 @@ class Settings_Controller extends Admin_Controller
 			'google_analytics' => '',
 			'twitter_username' => '',
 			'twitter_password' => '',
+			'laconica_username' => '',
+			'laconica_password' => '',
+			'laconica_site' => '',
 			
 	    );
         //  Copy the form as errors, so the errors will be stored with keys
@@ -84,6 +87,9 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('twitter_username','length[0,50]');
 			$post->add_rules('twitter_password','length[0,50]');
+			$post->add_rules('laconica_username','length[0,50]');
+			$post->add_rules('laconica_password','length[0,50]');
+			$post->add_rules('laconica_site','length[0,30]');
 			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
@@ -103,6 +109,9 @@ class Settings_Controller extends Admin_Controller
 				$settings->google_analytics = $post->google_analytics;
 				$settings->twitter_username = $post->twitter_username;
 				$settings->twitter_password = $post->twitter_password;
+				$settings->laconica_username = $post->laconica_username;
+				$settings->laconica_password = $post->laconica_password;
+				$settings->laconica_site = $post->laconica_site;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
 				
@@ -145,7 +154,10 @@ class Settings_Controller extends Admin_Controller
 				'allow_clustering' => $settings->allow_clustering,
 				'google_analytics' => $settings->google_analytics,
 				'twitter_username' => $settings->twitter_username,
-				'twitter_password' => $settings->twitter_password
+				'twitter_password' => $settings->twitter_password,
+				'laconica_username' => $settings->laconica_username,
+				'laconica_password' => $settings->laconica_password,
+				'laconica_site' => $settings->laconica_site
 		    );
 		}		
 		

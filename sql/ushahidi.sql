@@ -673,6 +673,28 @@ PRIMARY KEY (`id`)
 -- Dumping data for table `twitter`
 --
 
+--
+-- Table structure for table `laconica`
+--
+
+CREATE TABLE IF NOT EXISTS `laconica` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `incident_id` int(11) default '0',
+  `laconica_mesg_from` varchar(100) default NULL,
+  `laconica_mesg_to` varchar(100) default NULL,
+  `laconica_mesg_link` varchar(100) default NULL,
+  `laconica_mesg` varchar(255) default NULL,
+  `laconica_mesg_type` tinyint(4) default '1' COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
+  `laconica_mesg_date` datetime default NULL,
+  `hide` tinyint(1) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `laconica`
+--
+
+
 -- --------------------------------------------------------
 
 --
@@ -791,13 +813,15 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `clickatell_api` varchar(30) default NULL,
   `clickatell_username` varchar(100) default NULL,
   `clickatell_password` varchar(100) default NULL,
-  `google_analytics` text default NULL,
+  `google_analytics` text,
   `twitter_username` varchar(50) default NULL,
   `twitter_password` varchar(50) default NULL,
+  `laconica_username` varchar(50) default NULL,
+  `laconica_password` varchar(50) default NULL,
+  `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',
   `date_modify` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ; 
 --
 -- Dumping data for table `settings`
 --

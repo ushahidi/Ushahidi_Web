@@ -208,6 +208,15 @@ class Messages_Controller extends Admin_Controller
 				}
 	        }
         	$extradir = 'twitter/';
+        }else if( $dbtable == 'laconica') {
+            if ( $id){
+                $udpate = ORM::factory($dbtable)->where('id',$id)->find();
+                if($update->loaded == true ){
+                    $update->hide = '1';
+                    $update->save();
+                }
+            }
+            $extradir = 'laconica/';
         }else{
         	if ($id){
 	            ORM::factory($dbtable)->delete($id);
@@ -234,6 +243,16 @@ class Messages_Controller extends Admin_Controller
 				}
 	        }
         	$extradir = 'twitter/';
+        }else if ($dbtable == 'laconica'){
+            foreach($ids as $id)
+            {
+                $update = new Laconica_Model($id);
+                if ($update->loaded == true){
+                    $update->hide = '1';
+                    $update->save();
+                }
+            }
+            $extradir = 'laconica/';
         }else{
         	foreach($ids as $id)
 	        {
@@ -367,6 +386,146 @@ class Messages_Controller extends Admin_Controller
 						$newtweet->tweet = $tweet;
 						$newtweet->tweet_date = $tweet_date;
 						$newtweet->save();
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Lists the Laconica messages.
+     * @param int $page
+     */
+	function laconica($page = 1)
+	{
+		$this->template->content = new View('admin/messages_laconica');
+		$this->template->content->title = 'Laconica Messages';
+		
+		$this->load_laconica_mesgs();
+		
+		//So far this assumes that selected 'message_id's are for deleting
+        if (isset($_POST['laconica_mesg_id']))
+            $this->deleteMessages($_POST['laconica_mesg_id'],'laconica');
+		
+		// Is this an Inbox or Outbox Filter?
+		if (!empty($_GET['type']))
+		{
+			$type = $_GET['type'];
+			
+			if ($type == '2')
+			{
+				$filter = 'laconica_mesg_type = 2';
+			}
+			else
+			{
+				$type = "1";
+				$filter = 'laconica_mesg_type = 1';
+			}
+		}
+		else
+		{
+			$type = "1";
+			$filter = 'laconica_mesg_type = 1';
+		}
+		
+		// check, has the form been submitted?
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+		
+		// Pagination
+		$pagination = new Pagination(array(
+			'query_string'    => 'page',
+			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'total_items'    => ORM::factory('laconica')->where($filter)->count_all()
+		));
+
+		$laconica_mesgs = ORM::factory('laconica')->where($filter)->where('hide',0)->orderby('laconica_mesg_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		
+		$this->template->content->laconica_mesgs = $laconica_mesgs;
+		$this->template->content->pagination = $pagination;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
+
+		// Total Reports
+		$this->template->content->total_items = $pagination->total_items;
+
+		// Message Type Tab - Inbox/Outbox
+		$this->template->content->type = $type;
+		
+		// Javascript Header
+		$this->template->js = new View('admin/messages_js');
+		
+	}
+	
+	/**
+	 * Collects the laconica messages and loads them into the database
+     */
+	function load_laconica_mesgs()
+	{
+		// Set a timer so Twitter doesn't get requests every 2 seconds if the user hits refresh constantly
+		$proceed = 0; // Set this as the default in case something wonky happens with the conditional
+		if(!isset($_SESSION['laconica_timer'])){
+			$_SESSION['laconica_timer'] = time();
+			$proceed = 1;
+		}else{
+			$timeCheck = time() - $_SESSION['laconica_timer'];
+			if($timeCheck > 300) { //If it has been longer than 300 seconds (5 min)
+				$proceed = 1;
+				$_SESSION['laconica_timer'] = time(); //Only if we proceed do we want to reset the timer
+			}else{
+				$proceed = 0;
+			}
+		}
+		
+		if($proceed == 1) { // Grab Tweets
+			// Retrieve Current Settings
+			$settings = ORM::factory('settings', 1);
+			
+			$username = $settings->laconica_username;
+			$password = $settings->laconica_password;
+			$laconica_site = $settings->laconica_site;
+			$laconica_url = $laconica_site.'/api/statuses/replies.rss';
+			$curl_handle = curl_init();
+			curl_setopt($curl_handle,CURLOPT_URL,"$laconica_url");
+			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password");
+			$buffer = curl_exec($curl_handle);
+			curl_close($curl_handle);
+			
+			$search_username = ': @'.$username;
+			$feed_data = $this->_setup_simplepie( $buffer );
+			foreach($feed_data->get_items(0,50) as $feed_data_item)
+			{
+				$full_laconica_mesg = $feed_data_item->get_description();
+				$full_date = $feed_data_item->get_date();
+				$laconica_mesg_link = $feed_data_item->get_link();
+				
+				$cut1 = stripos($full_laconica_mesg, $search_username);
+				$cut2 = $cut1 + strlen($search_username) + 1;
+				$laconica_mesg_from = substr($full_laconica_mesg,0,$cut1);
+				$laconica_mesg_to = $username;
+				$laconica_mesg = substr($full_laconica_mesg,$cut2);
+				$laconica_mesg_date = date("Y-m-d H:i:s",strtotime($full_date));
+				
+				if (isset($full_laconica_mesg) && !empty($full_laconica_mesg))
+				{
+					// We need to check for duplicates!!!
+					// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
+					$dupe_count = ORM::factory('laconica')->where(
+					    'laconica_mesg_link',
+					    $laconica_mesg_link)->where('laconica_mesg',
+					    $laconica_mesg)->count_all();
+					if ($dupe_count == 0) {
+						$newitem = new Laconica_Model();
+						$newitem->laconica_mesg_from = $laconica_mesg_from;
+						$newitem->laconica_mesg_to = $laconica_mesg_to;
+						$newitem->laconica_mesg_link = $laconica_mesg_link;
+						$newitem->laconica_mesg = $laconica_mesg;
+						$newitem->laconica_mesg_date = $laconica_mesg_date;
+						$newitem->save();
 					}
 				}
 			}
