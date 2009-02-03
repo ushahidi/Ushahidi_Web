@@ -47,7 +47,6 @@ class Feed_Controller extends Controller
 				'feed_url' => $site_url . "feed/",
 				'feed_date' => date(DATE_RFC822, time()),
 				'feed_date' => gmdate("D, d M Y H:i:s T", time()),
-				)
 				'feed_description' => htmlspecialchars('Incident feed for '.Kohana::config('settings.site_name')),
 				'feeds' => $generate_feed
 				));
@@ -71,7 +70,7 @@ class Feed_Controller extends Controller
 			$feed_data .= "\t\t\t<title>" . htmlspecialchars($feed->incident_title) . "</title>\n";
 			$feed_data .= "\t\t\t<link>" . $site_url . 'reports/view/' . $feed->id . "</link>\n";
 			$feed_data .= "\t\t\t<description>" . htmlspecialchars(text::limit_chars($feed->incident_description, 120, "...", true)) . "</description>\n";
-			$feed_data .= "\t\t\t<pubDate>" . date(DATE_RFC822, strtotime($feed->incident_date)) . "</pubDate>\n";
+			$feed_data .= "\t\t\t<pubDate>" . gmdate("D, d M Y H:i:s T", strtotime($feed->incident_date)) . "</pubDate>\n";
 			$feed_data .= "\t\t\t<guid>" . $site_url . 'reports/view/' . $feed->id . "</guid>\n";
 			$feed_data .= "\t\t</item>\n";
 		}
