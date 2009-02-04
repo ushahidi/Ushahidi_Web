@@ -247,7 +247,7 @@ class Settings_Controller extends Admin_Controller
 				$form_saved = TRUE;
 				
 				// Redirect to reload everything over again
-	            url::redirect(url::base() . 'admin/settings/index/saved');
+	            url::redirect('admin/settings/index/saved');
 					            
 	        }
 	                    

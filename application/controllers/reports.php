@@ -307,7 +307,7 @@ class Reports_Controller extends Main_Controller {
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
 				
-				url::redirect(url::base() . 'reports/thanks');
+				url::redirect('reports/thanks');
 	            
 	        }
 	
