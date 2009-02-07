@@ -86,7 +86,7 @@ class Main_Controller extends Template_Controller {
 		}else{
 			$track_url = 'null';
 		}
-		$this->template->footer->tracker_url = 'http://tracker.ushahidi.com/track.php?url='.trim(urlencode($track_url)).'&lang='.$this->template->header->site_language.'';
+		$this->template->footer->tracker_url = 'http://tracker.ushahidi.com/track.php?url='.urlencode($track_url).'&lang='.$this->template->header->site_language.'';
 		
         // Load profiler
         // $profiler = new Profiler;		
