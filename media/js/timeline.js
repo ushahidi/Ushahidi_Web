@@ -18,7 +18,7 @@
 (function($) { // hide the namespace
 
 	function Timeline(options) {
-	    this.categoryID = 'ALL';
+	    this.categoryId = 'ALL';
 	    this.startTime = new Date(new Date().getFullYear() + '/01/01');
 	    this.endTime = new Date(this.startTime.getFullYear() + '/12/31');
 	    this.url = null;
@@ -27,7 +27,7 @@
 			xaxis: { mode: "time", timeformat: "%b %y", autoscaleMargin: 3 },
 			yaxis: { tickDecimals: 0 },
 			points: { show: true},
-			bars: { show: true},
+			lines: { show: true}, 
 			legend: { show: false},
 			grid: {
 			    color: "#999999"
@@ -35,17 +35,20 @@
 		};
 		this.graphData = [];
 	    
-	    if (options) {
-			if (options.categoryID == '0') {
-				options.categoryID = 'ALL';
+		if (options) {
+			if (options.categoryId == '0') {
+				options.categoryId = 'ALL';
 			}
 			$.extend(this, options);
+			if (!isNaN(this.categoryId)) {
+				this.categoryId = gCategoryId;
+			}
 		}
 	    
 		this.plot = function() {
 			gStartTime = this.startTime;
 			gEndTime = this.endTime;
-			gCategoryId = this.categoryID;
+			gCategoryId = this.categoryId;
 			gGraphOptions = this.graphOptions;
 	    	
 			if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) > 124) {   // monthly

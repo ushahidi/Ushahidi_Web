@@ -225,7 +225,7 @@
 				stop: function(e, ui) {
 					var startDate = $("#startDate").val();
 					var endDate = $("#endDate").val();
-					var currentCat = $("#currentCat").val();
+					var currentCat = gCategoryId;
 /*					
 					var sliderfilter = new OpenLayers.Rule({
 						filter: new OpenLayers.Filter.Comparison(
@@ -283,7 +283,15 @@
 					var categories = <?php echo json_encode($categories); ?>;
 					categories['0'] = ["ALL", "#990000"];
 					graphData = allGraphData[0][categories[this.id.split("_")[1]][0]];
-					plotGraph(categories[this.id.split("_")[1]][0]);
+					var catId = categories[this.id.split("_")[1]][0];
+					gCategoryId = catId;
+					
+					var startTime = new Date($("#startDate").val() * 1000);
+					var endTime = new Date($("#endDate").val() * 1000);
+					$.timeline({categoryId: catId, startTime: startTime, endTime: endTime,
+						graphData: graphData,
+						url: "<?php echo url::base() . 'json/timeline/' ?>"
+					}).plot();
 				});
 			}
 		});

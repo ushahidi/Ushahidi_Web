@@ -129,7 +129,7 @@
 				stop: function(e, ui) {
 					var startDate = $("#startDate").val();
 					var endDate = $("#endDate").val();
-					var currentCat = $("#currentCat").val();
+					var currentCat = gCategoryId;
 
 					var sliderfilter = new OpenLayers.Rule({
 						filter: new OpenLayers.Filter.Comparison(
@@ -175,6 +175,7 @@
 					categories['0'] = ["ALL", "#990000"];
 					graphData = allGraphData[0][categories[this.id.split("_")[1]][0]];
 					var catId = categories[this.id.split("_")[1]][0];
+					gCategoryId = catId;
 					
 					var startTime = new Date($("#startDate").val() * 1000);
 					var endTime = new Date($("#endDate").val() * 1000);
