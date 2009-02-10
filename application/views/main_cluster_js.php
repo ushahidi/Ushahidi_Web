@@ -13,31 +13,59 @@
 			var markers;
 			var catID = '';
 			
-			// Now initialise the map
-			var options = {units: "dd",numZoomLevels: 16,controls:[]};
+			/*
+			- Initialize Map
+			- Uses Spherical Mercator Projection
+			- Units in Metres instead of Degrees					
+			*/
+			var options = {
+				units: "m",
+				numZoomLevels: 16,
+				controls:[],
+				projection: new OpenLayers.Projection("EPSG:900913"),
+				'displayProjection': new OpenLayers.Projection("EPSG:4326")
+				};
 			var map = new OpenLayers.Map('map', options);
 			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 			
+			
+			/*
+			- Select A Mapping API
+			- Live/Yahoo/OSM/Google
+			- Set Bounds					
+			*/
 			var default_map = <?php echo $default_map; ?>;
 			if (default_map == 2)
 			{
-				map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth");
+				map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
 			}
 			else if (default_map == 3)
 			{
-				map_layer = new OpenLayers.Layer.Yahoo("yahoo");
+				map_layer = new OpenLayers.Layer.Yahoo("yahoo", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
 			}
 			else if (default_map == 4)
 			{
-				map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap");
+				map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
 			}
 			else
 			{
-				map_layer = new OpenLayers.Layer.Google("google");
+				map_layer = new OpenLayers.Layer.Google("google", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
 			}
-	
 			map.addLayer(map_layer);
-	
+			
+			// Add Controls
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition());
@@ -47,7 +75,7 @@
 			// Create the markers layer
 			function addMarkers(catID,startDate,endDate, currZoom, currCenter){
 				
-				// Marker Style
+				// Set Feature Styles
 				var style = new OpenLayers.Style({
 					pointRadius: "${radius}",
 					fillColor: "${color}",
@@ -77,6 +105,14 @@
 					}
 				});
 				
+				// Transform feature point coordinate to Spherical Mercator
+				preFeatureInsert = function(feature) {
+					var src = new OpenLayers.Projection('EPSG:4326');
+					var dest = new OpenLayers.Projection('EPSG:900913');			
+					var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
+					OpenLayers.Projection.transform(point, src, dest);
+				};
+				
 				// Does 'markers' already exist? If so, destroy it before creating new layer
 				if (markers){
 					for (var i = 0; i < markers.length; i++) {
@@ -97,6 +133,7 @@
 					params.push('e=' + endDate);
 				}
 				markers = new OpenLayers.Layer.Vector("Reports", {
+					preFeatureInsert:preFeatureInsert,
 					strategies: [
 						new OpenLayers.Strategy.Fixed(),
 					    new OpenLayers.Strategy.Cluster({
@@ -105,9 +142,17 @@
 					],
 					protocol: new OpenLayers.Protocol.HTTP({
 	                    url: "<?php echo url::base() . 'json' ?>" + '/?' + params.join('&'),
-	                    format: new OpenLayers.Format.GeoJSON()
+	                    format: new OpenLayers.Format.GeoJSON(
+							{
+								internalProjection: map.getProjectionObject(),
+								externalProjection: map.displayProjection 
+							})
 	                }),
 					projection: new OpenLayers.Projection("EPSG:4326"),
+					formatOptions: {
+						extractStyles: true,
+						extractAttributes: true,
+					},
 					styleMap: new OpenLayers.StyleMap({
 						"default": style
 					})
@@ -134,14 +179,15 @@
 					
 				}else{
 					// create a lat/lon object
+					var proj = new OpenLayers.Projection("EPSG:4326");
 					myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
-
+					myPoint.transform(proj, map.getProjectionObject());
+					
 					// display the map centered on a latitude and longitude (Google zoom levels)
 					myZoom = <?php echo $default_zoom; ?>;
 				};
 				map.setCenter(myPoint, myZoom);
 			}
-			
 			addMarkers();
 			
 			function onMapStartLoad(event) {
