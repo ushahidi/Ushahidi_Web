@@ -224,7 +224,7 @@ class Messages_Controller extends Admin_Controller
         	$extradir = '';
         }
         //XXX:get the current page number
-        url::redirect(url::base().'admin/messages/'.$extradir);
+        url::redirect('admin/messages/'.$extradir);
     }
 
     /**
@@ -260,7 +260,7 @@ class Messages_Controller extends Admin_Controller
 	        }
         	$extradir = '';
         }
-        url::redirect(url::base().'admin/messages/'.$extradir);
+        url::redirect('admin/messages/'.$extradir);
 
     }
     

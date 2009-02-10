@@ -14,6 +14,7 @@
 				<p><?php echo Kohana::lang('ui_main.copyright'); ?></p>
 			</div>
 			<strong class="f-logo"><a href="http://www.ushahidi.com">Ushahidi</a></strong>
+			<img src="<?php echo $tracker_url; ?>" />
 		</div>
 		<!-- end footer block -->
 	</div>

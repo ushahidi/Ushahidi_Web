@@ -101,7 +101,7 @@
 										</table>
 										<a href="#" class="dark_red">Edit organization</a>
 									</td>
-									<td class="col-32">Added on August 22, 20080</td>
+									<td class="col-32">Added on August 22, 2008</td>
 								</tr>
 								<tr>
 									<td class="col-1"><input  type="checkbox" class="check-box"/></td>
@@ -126,7 +126,7 @@
 										</table>
 										<a href="#" class="dark_red">Edit organization</a>
 									</td>
-									<td class="col-32">Added on August 22, 20080</td>
+									<td class="col-32">Added on August 22, 2008</td>
 								</tr>
 							</tbody>
 						</table>						

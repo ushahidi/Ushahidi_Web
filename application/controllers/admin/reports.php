@@ -320,7 +320,7 @@ class Reports_Controller extends Admin_Controller
 				// Has a report already been created for this SMS?
 				if ($message->incident_id != 0) {
 					// Redirect to report
-					url::redirect(url::base() . 'admin/reports/edit/'. $message->incident_id);
+					url::redirect('admin/reports/edit/'. $message->incident_id);
 				}
 				if($messageType == 'sms'){
 					$this->template->content->message = $message->message;
@@ -584,11 +584,11 @@ class Reports_Controller extends Admin_Controller
 				// STEP 7: SAVE AND CLOSE?
 				if ($post->save == 1)		// Save but don't close
 				{
-					url::redirect(url::base() . 'admin/reports/edit/'. $incident->id .'/saved');
+					url::redirect('admin/reports/edit/'. $incident->id .'/saved');
 				}
 				else 						// Save and close
 				{
-					url::redirect(url::base() . 'admin/reports/');
+					url::redirect('admin/reports/');
 				}
 	        }
 	
@@ -668,7 +668,7 @@ class Reports_Controller extends Admin_Controller
 				else
 				{
 					// Redirect
-					url::redirect(url::base() . 'admin/reports/');
+					url::redirect('admin/reports/');
 				}		
 				
 			}
@@ -900,13 +900,13 @@ class Reports_Controller extends Admin_Controller
 			else
 			{
 				// Redirect
-				url::redirect(url::base() . 'admin/reports/');
+				url::redirect('admin/reports/');
 			}
 		}
 		else
 		{
 			// Redirect
-			url::redirect(url::base() . 'admin/reports/');
+			url::redirect('admin/reports/');
 		}
 		
 		
@@ -968,11 +968,11 @@ class Reports_Controller extends Admin_Controller
 				// SAVE AND CLOSE?
 				if ($post->save == 1)		// Save but don't close
 				{
-					url::redirect(url::base() . 'admin/reports/translate/'. $incident_l->id .'/saved/?iid=' . $incident_id);
+					url::redirect('admin/reports/translate/'. $incident_l->id .'/saved/?iid=' . $incident_id);
 				}
 				else 						// Save and close
 				{
-					url::redirect(url::base() . 'admin/reports/');
+					url::redirect('admin/reports/');
 				}
 	        }
 	
@@ -1002,7 +1002,7 @@ class Reports_Controller extends Admin_Controller
 				else
 				{
 					// Redirect
-					url::redirect(url::base() . 'admin/reports/');
+					url::redirect('admin/reports/');
 				}		
 				
 			}
