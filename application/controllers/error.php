@@ -21,6 +21,8 @@ class Error_Controller extends Controller {
 	}
 	
 	function error_404() {
+		Header("HTTP/1.0 404 Not Found");
+		
 		$this->layout = new View('error');
 		$this->layout->title = "Page Not Found!";
 		$this->layout->content = "Sorry, the page you are trying to view is not here.

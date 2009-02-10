@@ -44,3 +44,5 @@ class Proximity_Core {
 	{
 		return $this->$name;
 	}
+
+}

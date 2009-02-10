@@ -964,6 +964,54 @@ CREATE TABLE IF NOT EXISTS `city` (
 --
 
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scheduler`
+--
+
+CREATE TABLE `scheduler` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `scheduler_name` varchar(100) NOT NULL,
+  `scheduler_last` int(10) unsigned NOT NULL default '0',
+  `scheduler_weekday` smallint(6) NOT NULL default '-1',
+  `scheduler_day` smallint(6) NOT NULL default '-1',
+  `scheduler_hour` smallint(6) NOT NULL default '-1',
+  `scheduler_minute` smallint(6) NOT NULL,
+  `scheduler_controller` varchar(100) NOT NULL,
+  `scheduler_active` tinyint(4) NOT NULL default '1',
+  PRIMARY KEY  (`id`)
+) AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `scheduler`
+--
+
+INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_weekday`, `scheduler_day`, `scheduler_hour`, `scheduler_minute`, `scheduler_controller`, `scheduler_active`) VALUES
+(1, 'Feeds', 0, -1, -1, -1, 0, 'feeds', 1),
+(2, 'Alerts', 0, -1, -1, -1, -1, 'alerts', 1),
+(3, 'Twitter', 0, -1, -1, -1, -1, 'twitter', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scheduler_log`
+--
+
+CREATE TABLE `scheduler_log` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `scheduler_id` int(11) NOT NULL,
+  `scheduler_name` varchar(100) NOT NULL,
+  `scheduler_status` varchar(20) default NULL,
+  `scheduler_date` int(10) unsigned NOT NULL,
+  PRIMARY KEY  (`id`)
+);
+
+--
+-- Dumping data for table `scheduler_log`
+--
+
+
 --
 -- Constraints for dumped tables
 --
