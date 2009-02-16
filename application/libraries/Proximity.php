@@ -14,40 +14,33 @@
  */
 class Proximity_Core {
 
-	var $maxLat;
-	var $minLat;
-	var $maxLong;
-	var $minLong;
-	
+	private $maxLat;
+	private $minLat;
+	private $maxLong;
+	private $minLong;
+
+	const EQUATOR_LAT_MILE = 69.172;
+	const EQUATOR_LAT_KM = 111.321543;
 	
 	/**
-	 * Retrieve Proximity Values
+	 * Create a  Proximity object
 	 *
-	 * @param   string	 latitude of this point
-	 * @param   string   longitude of this point
-	 * @param   string   the radius distance in miles
+	 * @param	string	latitude of this point
+	 * @param	string	longitude of this point
+	 * @param	int		the radius distance in miles/ km
+	 * @param	bool	True if the distance is in Kms
 	 */
-	public function Proximity($Latitude = 0, $Longitude = 0, $Miles = 100) {
-		global $maxLat,$minLat,$maxLong,$minLong;
-		$EQUATOR_LAT_MILE = 69.172;
-		$EQUATOR_LAT_KM = 111.321543;
-		$maxLat = $Latitude + $Miles / $EQUATOR_LAT_MILE;
-		$minLat = $Latitude - ($maxLat - $Latitude);
-		$maxLong = $Longitude + $Miles / (cos($minLat * M_PI / 180) * $EQUATOR_LAT_MILE);
-		$minLong = $Longitude - ($maxLong - $Longitude);
+
+	function __construct($latitude = 0, $longitude = 0, $distance = 100, $in_kms = FALSE) {
+		$equator_lat_dist = $in_kms ? self::EQUATOR_LAT_KM : self::EQUATOR_LAT_MILE;
+		
+		$this->maxLat = $latitude + $distance / $equator_lat_dist;
+		$this->minLat = $latitude - ($this->maxLat - $latitude);
+		$this->maxLong = $longitude + $distance / (cos($this->minLat * M_PI / 180) * $equator_lat_dist);
+		$this->minLong = $longitude - ($this->maxLong - $longitude);
 	}
 
-	public function MaxLatitude() {
-		return $GLOBALS["maxLat"];
-	}
-	public function MinLatitude() {
-		return $GLOBALS["minLat"];
-	}
-	public function MaxLongitude() {
-		return $GLOBALS["maxLong"];
-	}
-	public function MinLongitude() {
-		return $GLOBALS["minLong"];
-	}
-	
+	public function __get($name) {
+            return $this->$name;
+    }
 }
