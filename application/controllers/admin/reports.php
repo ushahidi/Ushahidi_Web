@@ -872,129 +872,49 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js = new View('admin/reports_download_js');
 		$this->template->js->calendar_img = url::base() . "media/img/icon-calendar.gif";
 	}
-
     function upload() {
-        if($_SERVER['REQUEST_METHOD'] == 'GET') {
-            $this->template->content = new View('admin/reports_upload');
-    		$this->template->content->title = 'Upload Reports';
-    		$this->template->content->form_error = false;
-        }
+		if($_SERVER['REQUEST_METHOD'] == 'GET') {
+			$this->template->content = new View('admin/reports_upload');
+			$this->template->content->title = 'Upload Reports';
+			$this->template->content->form_error = false;
+		}
 		if($_SERVER['REQUEST_METHOD']=='POST') {
 			$errors = array();
 			$notices = array();
-		    if(!$_FILES['csvfile']['error']) {
+			if(!$_FILES['csvfile']['error']) {
 				if(file_exists($_FILES['csvfile']['tmp_name'])) {
-					// Here we gonna parse the CSV
-					$filehandle = fopen($_FILES['csvfile']['tmp_name'], 'r');
-					$columns = array('#','INCIDENT TITLE','INCIDENT DATE','LOCATION','DESCRIPTION','CATEGORY','APPROVED','VERIFIED');
-					// fgetcsv defaults to ',' for delimiter and '"' for enclosure
-					if(($data = fgetcsv($filehandle, 1000)) !== FALSE) { // 1000 chars is max line length
-						$numcols = count($data);
-						if($numcols != count($columns)) {
-							$errors[] = 'Expected '.count($columns).' columns in CSV file, but found '.$num; 
+					if($filehandle = fopen($_FILES['csvfile']['tmp_name'], 'r')) {
+						$importer = new ReportsImporter;
+						if($importer->import($filehandle)) {
+							$this->template->content = new View('admin/reports_upload_success');
+							$this->template->content->title = 'Upload Reports';		
+							$this->template->content->rowcount = $importer->totalrows;
+							$this->template->content->imported = $importer->importedrows;
+							$this->template->content->notices = $importer->notices;
 						}
-						for ($c=0; $c < $numcols; $c++) {
-							if($data[$c] != $columns[$c]) {
-								$errors[] = 'Expected '.$columns[$c].' for column '.$c.', but found '.$data[$c];
-							}
+						else {
+							$errors = $importer->errors;
 						}
 					}
-					$category_ids = ORM::factory('category')->select_list('category_title','id'); // so we can assign category id to incidents, based on category title
-					$incident_ids = ORM::factory('incident')->select_list('id','id'); // so we can check if incident already exists in database
-					if(!count($errors)) { // We're not gonna do anything is the header is not ok.
-						$rownumber = 0; // current row number
-						$imported = 0; // how many rows are imported
-						$uploadtime = time(); // could possibly be used for roll-back
-						while (($row = fgetcsv($filehandle, 1000, ",")) !== FALSE) {
-							$rownumber++;
-							if(!isset($incident_ids[$row[0]])) {
-								$imported++;
-								$numcells = count($row);
-								if($numcells != $numcols) {
-									$errors[] = 'Row number '.$rownumber.' contained '.$numcells.' cells, expecting '.$numcols.'.';
-									break;
-								}							 
-								if(!strtotime($row[2])) {
-									$errors[] = 'Could not parse incident date "'.htmlspecialchars($row[2]).'" on line '.$rownumber;
-								}
-								if(!in_array($row[6],array('NO','YES'))) {
-									$errors[] = 'APPROVED must be either YES or NO on line '.$rownumber;
-								}
-								if(!in_array($row[7],array('NO','YES'))) {
-									$errors[] = 'VERIFIED must be either YES or NO on line '.$rownumber;
-								}
-								// STEP 1: SAVE LOCATION
-								$location = new Location_Model();
-								$location->location_name = $row[3];
-								$location->latitude = 0; // we don't know this!
-								$location->longitude = 0; // we don't know this!
-								$location->location_date = date("Y-m-d H:i:s",$uploadtime);
-								$location->save();
-								// STEP 2: SAVE INCIDENT
-								$incident = new Incident_Model();
-								$incident->location_id = $location->id;
-								$incident->user_id = 0;
-								$incident->incident_title = $row[1];
-								$incident->incident_description = $row[4];
-								$incident->incident_date = $row[2];
-								$incident->incident_dateadd = date("Y-m-d H:i:s",$uploadtime);
-								$incident->incident_active = $row[6] == 'YES' ? 1 : 0;
-								$incident->incident_verified = $row[7] == 'YES' ? 1 :0;
-								$incident->save();
-								// STEP 3: SAVE CATEGORIES
-								$categorynames = explode(',',trim($row[5]));
-								foreach($categorynames as $categoryname) {
-									$categoryname = strtoupper(trim($categoryname)); // There seems to be an uppercase convention for categories... Don't know why.
-									if($categoryname != '') {
-										if(!isset($category_ids[$categoryname])) {
-											$notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet. Added to database.';
-											$category = new Category_Model;
-											$category->category_title = $categoryname;
-											$category->category_color = '000000'; // We'll just use black for now. Maybe something random?
-											$category->category_type = 5; // because all current categories are of type '5'
-											$category->category_visible = 1;
-											$category->category_description = $categoryname;
-											$category->save();
-											$category_ids[$categoryname] = $category->id; // Now category_id is known: This time, and for the rest of the import.
-										}
-										$incident_category = new Incident_Category_Model();
-										$incident_category->incident_id = $incident->id;
-										$incident_category->category_id = $category_ids[$categoryname];
-										$incident_category->save();
-									} // empty categoryname not allowed
-								} // add categories to incident	
-							} // id does not exist in db, else we don't have to do anything
-							else {
-								// Maybe we need to implement update / overwrite
-								$notices[] = 'Incident with id #'.$row[0].' already exists.';
-							}
-							if(count($errors))
-								break;
-            		    } // loop through CSV rows
-        		    } // is CSV header ok?
-    		    } // file exists?
-    		    else {
-    		        $errors[] = 'Could not find uploaded file';
-    		    }
-		    } // errors?
-		    else {
-		        $errors[] = 'No file uploaded';
-		    }
-		    if(count($errors)) {
-			    // Roll-back still needs to be implemented. Alternative might be to return a textarea containing the data that has failed to import, so they can upload that, instead of the whole file
-                $this->template->content = new View('admin/reports_upload');
-    	        $this->template->content->errors = $errors;
-		        $this->template->content->form_error = 1;
-		    }
-		    else {
-                $this->template->content = new View('admin/reports_upload_success');
-    	        $this->template->content->rowcount = $rownumber;
-	  	        $this->template->content->imported = $imported;
-	   	        $this->template->content->notices = $notices;
-		    }
-    		$this->template->content->title = 'Upload Reports'; 	
+					else {
+						$errors[] = 'Could not open file for reading';
+					}
+				} // file exists?
+				else {
+					$errors[] = 'Could not find uploaded file';
+				}
+			} // upload errors?
+			else {
+				$errors[] = $_FILES['csvfile']['error'];
+			}
+			if(count($errors)) {
+				$this->template->content = new View('admin/reports_upload');
+				$this->template->content->title = 'Upload Reports';		
+				$this->template->content->errors = $errors;
+				$this->template->content->form_error = 1;
+			}
 		} // _POST
-    }
+	}
 
 	/**
 	* Translate a report
