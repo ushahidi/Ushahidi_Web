@@ -84,7 +84,7 @@ class ReportsImporter {
 		}
 		// STEP 2: SAVE INCIDENT
 		$incident = new Incident_Model();
-		$incident->location_id = isset($row['LOCATION']) ? $location->id : '';
+		$incident->location_id = isset($row['LOCATION']) ? $location->id : 0;
 		$incident->user_id = 0;
 		$incident->incident_title = $row['INCIDENT TITLE'];
 		$incident->incident_description = isset($row['DESCRIPTION']) ? $row['DESCRIPTION'] : '';
