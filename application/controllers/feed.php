@@ -21,36 +21,39 @@ class Feed_Controller extends Controller
         parent::__construct();
     }
 
-	public function index($feed = "rss2") 
-	{
-		// Display News Feed?
-		$allow_feed = Kohana::config('settings.allow_feed');
-		if ($allow_feed == 1) {
-			$site_url = "http://" . $_SERVER['SERVER_NAME'] . "/";
-			$incidents = ORM::factory('incident')->where('incident_active', '1')->orderby('incident_date', 'desc')->limit(20)->find_all();
-			$items = array();
-			foreach($incidents as $incident) {
-				$item = array();
-				$item['title'] = $incident->incident_title;
-				$item['link'] = $site_url.'reports/view/'.$incident->id;
-				$item['description'] = $incident->incident_description;
-				$item['date'] = gmdate("D, d M Y H:i:s T", strtotime($incident->incident_date));
-				if($incident->location_id != 0 AND $incident->location->longitude AND $incident->location->latitude) 
-					$item['point'] = array($incident->location->longitude,$incident->location->latitude);
-				$items[] = $item;
-			}
-			
-			
-			header("Content-Type: text/xml; charset=utf-8");
-			$view = new View('feed_rss2');
-			$view->feed_title = htmlspecialchars(Kohana::config('settings.site_name'));
-			$view->site_url = $site_url;
-			$view->georss = 1; // this adds georss namespace in the feed
-			$view->feed_url = $site_url . "feed/";
-			$view->feed_date = gmdate("D, d M Y H:i:s T", time());
-			$view->feed_description = 'Incident feed for '.Kohana::config('settings.site_name');
-			$view->items = $items;
-			$view->render(TRUE);
+	public function index($feedtype = 'rss2') 
+{
+		if(!Kohana::config('settings.allow_feed')) {
+			throw new Kohana_404_Exception();
 		}
+		if($feedtype!='atom' AND $feedtype!= 'rss2') {
+			throw new Kohana_404_Exception();
+		}
+		$feedpath = $feedtype == 'atom' ? 'feed/atom/' :  'feed/';
+		$site_url = "http://" . $_SERVER['SERVER_NAME'] . "/";
+		$incidents = ORM::factory('incident')->where('incident_active', '1')->orderby('incident_date', 'desc')->limit(20)->find_all();
+		$items = array();
+		foreach($incidents as $incident) {
+			$item = array();
+			$item['title'] = $incident->incident_title;
+			$item['link'] = $site_url.'reports/view/'.$incident->id;
+			$item['description'] = $incident->incident_description;
+			$item['date'] = $incident->incident_date;
+			if($incident->location_id != 0 AND $incident->location->longitude AND $incident->location->latitude) 
+				$item['point'] = array($incident->location->longitude,$incident->location->latitude);
+			$items[] = $item;
+		}
+
+		
+		header("Content-Type: text/xml; charset=utf-8");
+		$view = new View('feed_'.$feedtype);
+		$view->feed_title = htmlspecialchars(Kohana::config('settings.site_name'));
+		$view->site_url = $site_url;
+		$view->georss = 1; // this adds georss namespace in the feed
+		$view->feed_url = $site_url.$feedpath;
+		$view->feed_date = gmdate("D, d M Y H:i:s T", time());
+		$view->feed_description = 'Incident feed for '.Kohana::config('settings.site_name');
+		$view->items = $items;
+		$view->render(TRUE);
 	}
 }

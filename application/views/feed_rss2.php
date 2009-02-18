@@ -3,7 +3,7 @@
 	<channel>
 		<title><?php echo $feed_title; ?></title>
 		<link><?php echo $site_url; ?></link>
-		<pubDate><?php echo $feed_date; ?></pubDate>
+		<pubDate><?php echo gmdate("D, d M Y H:i:s T", strtotime($feed_date)); ?></pubDate>
 		<description><?php echo $feed_description; ?></description>
 		<generator>Ushahidi Engine</generator>
 		<atom:link href="<?php echo $feed_url; ?>" rel="self" type="application/rss+xml" /><?php 
