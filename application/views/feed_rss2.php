@@ -1,12 +1,24 @@
 <?php echo "<?xml version=\"1.0\"?>"; ?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"<?php if(isset($georss)) echo ' xmlns:georss="http://www.georss.org/georss"';?>>
 	<channel>
 		<title><?php echo $feed_title; ?></title>
 		<link><?php echo $site_url; ?></link>
 		<pubDate><?php echo $feed_date; ?></pubDate>
 		<description><?php echo $feed_description; ?></description>
 		<generator>Ushahidi Engine</generator>
-		<atom:link href="<?php echo $feed_url; ?>" rel="self" type="application/rss+xml" />
-<?php echo $feeds; ?>
+		<atom:link href="<?php echo $feed_url; ?>" rel="self" type="application/rss+xml" /><?php 
+		foreach ($items as $item) { ?>
+
+		<item>
+			<title><?php echo $item['title']; ?></title>
+			<link><?php echo $item['link']; ?></link>
+			<description><![CDATA[<?php echo $item['description']; ?>]]></description>
+			<pubDate><?php echo gmdate("D, d M Y H:i:s T", strtotime($item['date'])); ?></pubDate>
+			<guid><?php if(isset($item['guid'])) echo $item['guid']; else echo $item['link'] ?></guid>
+<?php if(isset($item['point'])) echo "\t\t\t<georss:point>".$item['point'][0].' '.$item['point'][1].'</georss:point>'; ?>
+
+		</item><?php 
+		}	?>
+
 	</channel>
 </rss>

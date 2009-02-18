@@ -25,55 +25,32 @@ class Feed_Controller extends Controller
 	{
 		// Display News Feed?
 		$allow_feed = Kohana::config('settings.allow_feed');
-		
 		if ($allow_feed == 1) {
 			$site_url = "http://" . $_SERVER['SERVER_NAME'] . "/";
-		
-			// Feed Type?
-			if ($feed = "rss2") {
-				$feed_view = "rss2";
-				$generate_feed = $this->_get_rss2();
+			$incidents = ORM::factory('incident')->where('incident_active', '1')->orderby('incident_date', 'desc')->limit(20)->find_all();
+			$items = array();
+			foreach($incidents as $incident) {
+				$item = array();
+				$item['title'] = $incident->incident_title;
+				$item['link'] = $site_url.'reports/view/'.$incident->id;
+				$item['description'] = $incident->incident_description;
+				$item['date'] = gmdate("D, d M Y H:i:s T", strtotime($incident->incident_date));
+				if($incident->location_id != 0 AND $incident->location->longitude AND $incident->location->latitude) 
+					$item['point'] = array($incident->location->longitude,$incident->location->latitude);
+				$items[] = $item;
 			}
-			// Add Atom and other formats here in future
-			else
-			{
-				$feed_view = "rss2";
-				$generate_feed = $this->_get_rss2();
-			}
-		
-			$view = new View('feed_' . $feed_view, array(
-				'feed_title' => htmlspecialchars(Kohana::config('settings.site_name')),
-				'site_url' => $site_url,
-				'feed_url' => $site_url . "feed/",
-				'feed_date' => date(DATE_RFC822, time()),
-				'feed_date' => gmdate("D, d M Y H:i:s T", time()),
-				'feed_description' => htmlspecialchars('Incident feed for '.Kohana::config('settings.site_name')),
-				'feeds' => $generate_feed
-				));
+			
+			
 			header("Content-Type: text/xml; charset=utf-8");
+			$view = new View('feed_rss2');
+			$view->feed_title = htmlspecialchars(Kohana::config('settings.site_name'));
+			$view->site_url = $site_url;
+			$view->georss = 1; // this adds georss namespace in the feed
+			$view->feed_url = $site_url . "feed/";
+			$view->feed_date = gmdate("D, d M Y H:i:s T", time());
+			$view->feed_description = 'Incident feed for '.Kohana::config('settings.site_name');
+			$view->items = $items;
 			$view->render(TRUE);
 		}
-	}
-	
-	private function _get_rss2()
-	{
-		$site_url = "http://" . $_SERVER['SERVER_NAME'] . "/";
-				
-		$feed_data = "";
-		foreach(ORM::factory('incident')
-            ->where('incident_active', '1')
-            ->orderby('incident_date', 'desc')
-			->limit(20)
-            ->find_all() as $feed)
-		{
-			$feed_data .= "\t\t<item>\n";
-			$feed_data .= "\t\t\t<title>" . htmlspecialchars($feed->incident_title) . "</title>\n";
-			$feed_data .= "\t\t\t<link>" . $site_url . 'reports/view/' . $feed->id . "</link>\n";
-			$feed_data .= "\t\t\t<description>" . htmlspecialchars(text::limit_chars($feed->incident_description, 120, "...", true)) . "</description>\n";
-			$feed_data .= "\t\t\t<pubDate>" . gmdate("D, d M Y H:i:s T", strtotime($feed->incident_date)) . "</pubDate>\n";
-			$feed_data .= "\t\t\t<guid>" . $site_url . 'reports/view/' . $feed->id . "</guid>\n";
-			$feed_data .= "\t\t</item>\n";
-		}
-		return $feed_data;
 	}
 }
