@@ -99,6 +99,10 @@
 						<div class="row">
 							<h4>Twitter Credentials</h4>
 							<div class="row">
+								Hashtags - Separate with commas
+								<?php print form::input('twitter_hashtags', $form['twitter_hashtags'], ' class="text"'); ?>
+							</div>
+							<div class="row" style="padding-top:5px;">
 								Username
 								<?php print form::input('twitter_username', $form['twitter_username'], ' class="text"'); ?>
 							</div>
