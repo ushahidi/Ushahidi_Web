@@ -38,27 +38,35 @@ class Install_Controller extends Template_Controller
             'username' => '',
             'password' => '',
             'host' => '',
-            'select_db_type' => ''
+            'select_db_type' => array(),
+            'db_name' => '',
+            'table_prefix' => '',
         );
         
         // Set up the validation object
         $_POST = Validation::factory($_POST)
             ->pre_filter('trim')
             ->add_rules('username', 'required')
-            ->add_rules('password', 'required');
+            ->add_rules('password', 'required')
+            ->add_rules('host',     'required')
+            ->add_rules('db_name',  'required');
 	   
 		$errors = $form;
 		$form_error = FALSE;
 		if( $_POST->validate() ) 
-		{ 
+		{
+		     
 		    // repopulate the form fields
+            
+        } else {
+            // repopulate the form fields
             $form = arr::overwrite($form, $_POST->as_array());
 			
             // populate the error fields, if any
             // We need to already have created an error message file, for Kohana to use
             // Pass the error message file name to the errors() method			
-            $errors = arr::overwrite($errors, $_POST->errors('auth'));
-            $form_error = TRUE;
+            $errors = arr::overwrite($errors, $_POST->errors('install'));
+            $form_error = TRUE;        
         }
             
 		$this->template->db_types = $db_types;
@@ -66,9 +74,10 @@ class Install_Controller extends Template_Controller
         $this->template->form = $form;
         $this->template->form_error = $form_error;
 		//$this->template->this_page = 'installer/install';
-		 
 
 	}
+	
+	
 
 }
 ?>
