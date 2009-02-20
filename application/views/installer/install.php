@@ -29,45 +29,58 @@ rel="stylesheet" type="text/css" />
 					print (!$error_description) ? '' : "&#8226;&nbsp;" . 
 					$error_description . "<br />";
 				}
-				
-				?>
+		        
+		        //display general errors
+		        print (!$general_errors) ? '' : "&#8226;&nbsp;" . 
+				    $general_errors . "<br />"; ?>
 				</td>
             </tr>
 			<?php } ?>
             <tr>
               <td><strong>Username:</strong><br />
               <?php print form::input('username', $form['username'], 
-              'class="login_text"');?></td>
+              'class="login_text"');?>
+              <br />Your database username.
+              </td>
             </tr>
             <tr>
               <td><strong>Password:</strong><br />
               <?php print form::input('password',$form['password'], 
-              'class="login_text"');?></td>
+              'class="login_text"');?>
+              <br />Your database password.
+              </td>
             </tr>
             <tr>
               <td>
-                <strong>Host:</strong><br />
+                <strong>Database Host:</strong><br />
               <?php print form::input('host', $form['host'], 
-              'class="login_text"');?></td>
+              'class="login_text" value="localhost"');?>
+              <br />Your database host. It could be http://mysql.somedomain.com.
+              </td>  
             </tr>
             <tr>
               <td>
                 <strong>Database name:</strong><br />
               <?php print form::input('db_name', $form['db_name'], 
-              'class="login_text"');?></td>
+              'class="login_text"');?>
+                <br />The name of the database you want to run Ushahidi in.
+              </td>
             </tr>
             <tr>
               <td>
                 <strong>Database Type:</strong><br />
-                
               <?php print form::dropdown('select_db_type',$db_types,'', 
               'class="select" '); ?>
+                <br />Select the type of database you want to use.
+              </td>
             </tr>
             <tr>
               <td>
                 <strong>Table prefix:</strong><br />
                   <?php print form::input('table_prefix', $form['table_prefix'], 
-                  'class="login_text"');?></td>
+                  'class="login_text"');?>
+                <br />The prefix to be used by the tables. Eg. ush_ 
+              </td>
             </tr>
             
             <tr>
