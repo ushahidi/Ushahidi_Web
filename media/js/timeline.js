@@ -23,6 +23,7 @@
 	    this.endTime = new Date(this.startTime.getFullYear() + '/12/31');
 	    this.url = null;
 	    this.active = 'true';
+	    this.mediaType = null;
 	    this.graphOptions = {
 			xaxis: { mode: "time", timeformat: "%b %y", autoscaleMargin: 3 },
 			yaxis: { tickDecimals: 0 },
@@ -51,23 +52,22 @@
 			gCategoryId = this.categoryId;
 			gGraphOptions = this.graphOptions;
 	    	
-			if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) > 124) {   // monthly
-				if (!this.graphData) { 
-				    this.graphData = {'data': []};
-				}
+			if (!this.url) { 
 				plot = $.plot($("#graph"), [this.graphData],
 				        $.extend(true, {}, this.graphOptions, {
 				            xaxis: { min: this.startTime.getTime(), 
 				                     max: this.endTime.getTime() 
 				            }
 				}));
-	        } else if (this.url) {   
-				// daily
+	        } else {   
+				
 				var startDate = this.startTime.getFullYear() + '-' + 
 				                (this.startTime.getMonth()+1) + '-'+ this.startTime.getDate();
 				var endDate = this.endTime.getFullYear() + '-' + 
 				                (this.endTime.getMonth()+1) + '-'+ this.endTime.getDate();
 				this.url += "?s=" + startDate + "&e=" + endDate;
+
+				// daily
 				var aTimeformat = "%d %b";
 				var aTickSize = [5, "day"];
 
@@ -76,11 +76,16 @@
 				    aTimeformat = "%H:%M";
 				    aTickSize = [5, "hour"];
 				    this.url += "&i=hour";
-				} else if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) > 62) { 
+				} else if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) <= 124) { 
 				    // weekly if period > 2 months
 				    aTimeformat = "%d %b";
 				    aTickSize = [5, "day"];
 				    this.url += "&i=week";
+				} else if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) > 124) {
+					// monthly if period > 4 months
+				    aTimeformat = "%d %b";
+				    aTickSize = [2, "month"];
+				    this.url += "&i=month";
 				}
 
 				if (this.active == 'all') {
@@ -88,6 +93,10 @@
 				} else if (this.active == 'false') {
 					this.url += '&active=false';
 				}
+				if (this.mediaType) {
+					this.url += '&m='+this.mediaType;
+				}
+				
 				$.getJSON(this.url,
 				    function(data) {
 				        dailyGraphData = data;
