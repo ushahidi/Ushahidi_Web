@@ -1,7 +1,7 @@
-<?php  defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * MSSQL Database Driver
- * 
+ *
  * @package    Core
  * @author     Kohana Team
  * @copyright  (c) 2007-2008 Kohana Team
@@ -30,7 +30,7 @@ class Database_Mssql_Driver extends Database_Driver
 
 		Kohana::log('debug', 'MSSQL Database Driver Initialized');
 	}
-	
+
 	/**
 	 * Closes the database connection.
 	 */
@@ -38,7 +38,7 @@ class Database_Mssql_Driver extends Database_Driver
 	{
 		is_resource($this->link) and mssql_close($this->link);
 	}
-	
+
 	/**
 	 * Make the connection
 	 *
@@ -58,13 +58,15 @@ class Database_Mssql_Driver extends Database_Driver
 
 		// Build the connection info
 		$host = isset($host) ? $host : $socket;
-		$port = (isset($port) AND is_string($port)) ? ':'.$port : '';
+
+		// Windows uses a comma instead of a colon
+		$port = (isset($port) AND is_string($port)) ? (KOHANA_IS_WIN ? ',' : ':').$port : '';
 
 		// Make the connection and select the database
 		if (($this->link = $connect($host.$port, $user, $pass, TRUE)) AND mssql_select_db($database, $this->link))
 		{
 			/* This is being removed so I can use it, will need to come up with a more elegant workaround in the future...
-			 * 
+			 *
 			if ($charset = $this->db_config['character_set'])
 			{
 				$this->set_charset($charset);
@@ -79,7 +81,7 @@ class Database_Mssql_Driver extends Database_Driver
 
 		return FALSE;
 	}
-	
+
 	public function query($sql)
 	{
 		// Only cache if it's turned on, and only cache if it's not a write statement
@@ -159,7 +161,7 @@ class Database_Mssql_Driver extends Database_Driver
 		}
 		return $column;
 	}
-	
+
 	/**
 	 * Limit in SQL Server 2000 only uses the keyword
 	 * 'TOP'; 2007 may have an offset keyword, but
@@ -191,7 +193,10 @@ class Database_Mssql_Driver extends Database_Driver
 
 		if (count($database['join']) > 0)
 		{
-			$sql .= ' '.$database['join']['type'].'JOIN ('.implode(', ', $database['join']['tables']).') ON '.implode(' AND ', $database['join']['conditions']);
+			foreach($database['join'] AS $join)
+			{
+				$sql .= "\n".$join['type'].'JOIN '.implode(', ', $join['tables']).' ON '.$join['conditions'];
+			}
 		}
 
 		if (count($database['where']) > 0)
@@ -241,7 +246,7 @@ class Database_Mssql_Driver extends Database_Driver
 		return preg_replace($characters, $replace, $str);
 	}
 
-	public function list_tables()
+	public function list_tables(Database $db)
 	{
 		$sql    = 'SHOW TABLES FROM ['.$this->db_config['connection']['database'].']';
 		$result = $this->query($sql)->result(FALSE, MSSQL_ASSOC);
@@ -257,7 +262,7 @@ class Database_Mssql_Driver extends Database_Driver
 
 	public function show_error()
 	{
-		return mssql_error($this->link);
+		return mssql_get_last_message($this->link);
 	}
 
 	public function list_fields($table)
@@ -328,7 +333,7 @@ class Mssql_Result extends Database_Result {
 			if ($result == FALSE)
 			{
 				// SQL error
-				throw new Kohana_Database_Exception('database.error', MSSQL_error($link).' - '.$sql);
+				throw new Kohana_Database_Exception('database.error', mssql_get_last_message($link).' - '.$sql);
 			}
 			else
 			{

@@ -1,9 +1,9 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Manipulate images using standard methods such as resize, crop, rotate, etc.
  * This class must be re-initialized for every image you wish to manipulate.
  *
- * $Id: Image.php 3246 2008-08-01 13:42:09Z OscarB $
+ * $Id: Image.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Image
  * @author     Kohana Team
@@ -303,9 +303,10 @@ class Image_Core {
 	 * @throws  Kohana_Exception
 	 * @param   string   new image filename
 	 * @param   integer  permissions for new image
+	 * @param   boolean  keep or discard image process actions
 	 * @return  object
 	 */
-	public function save($new_image = FALSE, $chmod = 0644)
+	public function save($new_image = FALSE, $chmod = 0644, $keep_actions = FALSE)
 	{
 		// If no new image is defined, use the current image
 		empty($new_image) and $new_image = $this->image['file'];
@@ -328,37 +329,40 @@ class Image_Core {
 				chmod($new_image, $chmod);
 			}
 		}
-
-		// Reset the actions
-		$this->actions = array();
-
+		
+		// Reset actions. Subsequent save() or render() will not apply previous actions.
+		if ($keep_actions === FALSE)
+			$this->actions = array();
+		
 		return $status;
 	}
 	
- 	/** 
- 	 * Output the image to the browser. 
- 	 * 
- 	 * @return	object 
- 	 */ 
- 	public function render() 
- 	{ 
- 		$new_image = $this->image['file']; 
-  
- 		// Separate the directory and filename 
- 		$dir  = pathinfo($new_image, PATHINFO_DIRNAME); 
- 		$file = pathinfo($new_image, PATHINFO_BASENAME); 
-  
- 		// Normalize the path 
- 		$dir = str_replace('\\', '/', realpath($dir)).'/'; 
-  
- 		// Process the image with the driver 
- 		$status = $this->driver->process($this->image, $this->actions, $dir, $file, $render = TRUE); 
-  
- 		// Reset the actions 
- 		$this->actions = array(); 
-  
- 		return $status; 
- 	}
+	/** 
+	 * Output the image to the browser. 
+	 * 
+	 * @param   boolean  keep or discard image process actions
+	 * @return	object 
+	 */ 
+	public function render($keep_actions = FALSE) 
+	{ 
+		$new_image = $this->image['file']; 
+	
+		// Separate the directory and filename 
+		$dir  = pathinfo($new_image, PATHINFO_DIRNAME); 
+		$file = pathinfo($new_image, PATHINFO_BASENAME); 
+	
+		// Normalize the path 
+		$dir = str_replace('\\', '/', realpath($dir)).'/'; 
+	
+		// Process the image with the driver 
+		$status = $this->driver->process($this->image, $this->actions, $dir, $file, $render = TRUE); 
+		
+		// Reset actions. Subsequent save() or render() will not apply previous actions.
+		if ($keep_actions === FALSE)
+			$this->actions = array();
+		
+		return $status; 
+	}
 
 	/**
 	 * Sanitize a given value type.

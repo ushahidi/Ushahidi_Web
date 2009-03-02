@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Database API driver
  *
- * $Id: Database.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: Database.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -163,7 +163,7 @@ abstract class Database_Driver {
 		if ($auto === TRUE)
 		{
 			// Add the start and end quotes
-			$match = '%'.$match.'%';
+			$match = '%'.str_replace('%', '\\%', $match).'%';
 		}
 
 		return $prefix.' '.$this->escape_column($field).' LIKE \''.$match . '\'';
@@ -337,7 +337,7 @@ abstract class Database_Driver {
 	 *
 	 * @return  array
 	 */
-	abstract public function list_tables();
+	abstract public function list_tables(Database $db);
 
 	/**
 	 * Lists all fields in a table.
@@ -603,7 +603,8 @@ abstract class Database_Result implements ArrayAccess, Iterator, Countable {
 	 */
 	public function next()
 	{
-		return ++$this->current_row;
+		++$this->current_row;
+		return $this;
 	}
 
 	/**
@@ -611,7 +612,8 @@ abstract class Database_Result implements ArrayAccess, Iterator, Countable {
 	 */
 	public function prev()
 	{
-		return --$this->current_row;
+		--$this->current_row;
+		return $this;
 	}
 
 	/**
@@ -619,7 +621,8 @@ abstract class Database_Result implements ArrayAccess, Iterator, Countable {
 	 */
 	public function rewind()
 	{
-		return $this->current_row = 0;
+		$this->current_row = 0;
+		return $this;
 	}
 
 	/**

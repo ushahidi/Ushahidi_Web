@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Date helper class.
  *
- * $Id: date.php 2663 2008-05-07 19:58:02Z Shadowhand $
+ * $Id: date.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

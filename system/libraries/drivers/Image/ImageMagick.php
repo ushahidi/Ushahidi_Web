@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * ImageMagick Image Driver.
  *
- * $Id: ImageMagick.php 3248 2008-08-01 21:02:18Z Geert $
+ * $Id: ImageMagick.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Image
  * @author     Kohana Team

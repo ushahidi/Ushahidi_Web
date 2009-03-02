@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Array helper class.
  *
- * $Id: arr.php 2924 2008-06-27 14:46:20Z Shadowhand $
+ * $Id: arr.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -286,6 +286,31 @@ class arr_Core {
 		}
 
 		return $array;
+	}
+
+	/**
+	 * Recursively convert an array to an object.
+	 *
+	 * @param   array   array to convert
+	 * @return  object
+	 */
+	public static function to_object(array $array, $class = 'stdClass')
+	{
+		$object = new $class;
+
+		foreach ($array as $key => $value)
+		{
+			if (is_array($value))
+			{
+				// Convert the array to an object
+				$value = arr::to_object($value, $class);
+			}
+
+			// Add the value to the object
+			$object->{$key} = $value;
+		}
+
+		return $object;
 	}
 
 } // End arr

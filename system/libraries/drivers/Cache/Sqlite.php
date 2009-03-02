@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * SQLite-based Cache driver.
  *
- * $Id: Sqlite.php 3168 2008-07-21 01:34:36Z Shadowhand $
+ * $Id: Sqlite.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Cache
  * @author     Kohana Team

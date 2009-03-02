@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * @package  Core
  *
@@ -36,7 +36,7 @@ $config = array
 	'cpt'   => array('application/mac-compactpro'),
 	'csh'   => array('text/x-csh'),
 	'css'   => array('text/css'),
-	'csv'   => array('text/x-comma-separated-values', 'application/vnd.ms-excel'),
+	'csv'   => array('text/x-comma-separated-values', 'application/vnd.ms-excel', 'text/comma-separated-values', 'text/csv'),
 	'dbk'   => array('application/docbook+xml'),
 	'dcr'   => array('application/x-director'),
 	'deb'   => array('application/x-debian-package'),

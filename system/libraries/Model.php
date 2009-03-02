@@ -1,16 +1,17 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Model base class.
  *
- * $Id: Model.php 3002 2008-07-08 14:19:12Z Shadowhand $
+ * $Id: Model.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
- * @copyright  (c) 2007-2008 Kohana Team
+ * @copyright  (c) 2007-2009 Kohana Team
  * @license    http://kohanaphp.com/license.html
  */
 class Model_Core {
 
+	// Database object
 	protected $db;
 
 	/**

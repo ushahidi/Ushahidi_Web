@@ -31,6 +31,7 @@ class Login_Controller extends Template_Controller {
         parent::__construct();
 		
         $this->session = new Session();
+		// $profiler = new Profiler;
     }
 	
     public function index()

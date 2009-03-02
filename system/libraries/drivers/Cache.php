@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Cache driver interface.
  *
- * $Id: Cache.php 3135 2008-07-17 13:14:17Z Geert $
+ * $Id: Cache.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Cache
  * @author     Kohana Team

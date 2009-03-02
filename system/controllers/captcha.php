@@ -1,10 +1,10 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Outputs the dynamic Captcha resource.
  * Usage: Call the Captcha controller from a view, e.g.
  *        <img src="<?php echo url::site('captcha') ?>" />
  *
- * $Id: captcha.php 3281 2008-08-06 16:13:58Z Shadowhand $
+ * $Id: captcha.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Captcha
  * @author     Kohana Team

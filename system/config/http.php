@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 
 // HTTP-EQUIV type meta tags
 $config['meta_equiv'] = array

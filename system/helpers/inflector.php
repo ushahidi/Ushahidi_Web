@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Inflector helper class.
  *
- * $Id: inflector.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: inflector.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

@@ -1,9 +1,9 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Kohana Controller class. The controller class must be extended to work
  * properly, so this class is defined as abstract.
  *
- * $Id: Controller.php 3281 2008-08-06 16:13:58Z Shadowhand $
+ * $Id: Controller.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -66,10 +66,18 @@ abstract class Controller_Core {
 		// Import the view variables to local namespace
 		extract($kohana_input_data, EXTR_SKIP);
 
-		// Views are straight HTML pages with embedded PHP, so importing them
-		// this way insures that $this can be accessed as if the user was in
-		// the controller, which gives the easiest access to libraries in views
-		include $kohana_view_filename;
+		try
+		{
+			// Views are straight HTML pages with embedded PHP, so importing them
+			// this way insures that $this can be accessed as if the user was in
+			// the controller, which gives the easiest access to libraries in views
+			include $kohana_view_filename;
+		}
+		catch (Exception $e)
+		{
+			// Display the exception using its internal __toString method
+			echo $e;
+		}
 
 		// Fetch the output and close the buffer
 		return ob_get_clean();

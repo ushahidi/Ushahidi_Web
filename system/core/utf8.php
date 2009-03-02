@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * A port of phputf8 to a unified file/class. Checks PHP status to ensure that
  * UTF-8 support is available and normalize global variables to UTF-8. It also
@@ -18,7 +18,7 @@
  * string functions.
  * @see http://php.net/mbstring
  *
- * $Id: utf8.php 2712 2008-05-29 17:05:06Z Geert $
+ * $Id: utf8.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * URL helper class.
  *
- * $Id: url.php 3238 2008-07-30 15:42:28Z Shadowhand $
+ * $Id: url.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -177,7 +177,7 @@ class url_Core {
 	}
 
 	/**
-	 * Sends a page redirect header.
+	 * Sends a page redirect header and runs the system.redirect Event.
 	 *
 	 * @param  mixed   string site URI or URL to redirect to, or array of strings if method is 300
 	 * @param  string  HTTP method of redirect
@@ -186,62 +186,64 @@ class url_Core {
 	public static function redirect($uri = '', $method = '302')
 	{
 		if (Event::has_run('system.send_headers'))
-			return;
-
-		$uri = (array) $uri;
-
-		for ($i = 0, $count_uri = count($uri); $i < $count_uri; $i++)
 		{
-			if (strpos($uri[$i], '://') === FALSE)
-			{
-				$uri[$i] = url::site($uri[$i]);
-			}
+			return FALSE;
 		}
 
-		if ($method == '300')
+		$codes = array
+		(
+			'refresh' => 'Refresh',
+			'300' => 'Multiple Choices',
+			'301' => 'Moved Permanently',
+			'302' => 'Found',
+			'303' => 'See Other',
+			'304' => 'Not Modified',
+			'305' => 'Use Proxy',
+			'307' => 'Temporary Redirect'
+		);
+
+		// Validate the method and default to 302
+		$method = isset($codes[$method]) ? (string) $method : '302';
+
+		if ($method === '300')
 		{
-			if ($count_uri > 0)
+			$uri = (array) $uri;
+
+			$output = '<ul>';
+			foreach ($uri as $link)
 			{
-				header('HTTP/1.1 300 Multiple Choices');
-				header('Location: '.$uri[0]);
-
-				$choices = '';
-				foreach ($uri as $href)
-				{
-					$choices .= '<li><a href="'.$href.'">'.$href.'</a></li>';
-				}
-
-				exit('<h1>301 - Multiple Choices:</h1><ul>'.$choices.'</ul>');
+				$output .= '<li>'.html::anchor($link).'</li>';
 			}
+			$output .= '</ul>';
+
+			// The first URI will be used for the Location header
+			$uri = $uri[0];
 		}
 		else
 		{
-			$uri = $uri[0];
-
-			if ($method == 'refresh')
-			{
-				header('Refresh: 0; url='.$uri);
-			}
-			else
-			{
-				$codes = array
-				(
-					'301' => 'Moved Permanently',
-					'302' => 'Found',
-					'303' => 'See Other',
-					'304' => 'Not Modified',
-					'305' => 'Use Proxy',
-					'307' => 'Temporary Redirect'
-				);
-
-				$method = isset($codes[$method]) ? $method : '302';
-
-				header('HTTP/1.1 '.$method.' '.$codes[$method]);
-				header('Location: '.$uri);
-			}
-
-			exit('<h1>'.$method.' - '.$codes[$method].'</h1><p><a href="'.$uri.'">'.$uri.'</a></p>');
+			$output = '<p>'.html::anchor($uri).'</p>';
 		}
+
+		// Run the redirect event
+		Event::run('system.redirect', $uri);
+
+		if (strpos($uri, '://') === FALSE)
+		{
+			// HTTP headers expect absolute URLs
+			$uri = url::site($uri, request::protocol());
+		}
+
+		if ($method === 'refresh')
+		{
+			header('Refresh: 0; url='.$uri);
+		}
+		else
+		{
+			header('HTTP/1.1 '.$method.' '.$codes[$method]);
+			header('Location: '.$uri);
+		}
+
+		exit('<h1>'.$method.' - '.$codes[$method].'</h1>'.$output);
 	}
 
 } // End url

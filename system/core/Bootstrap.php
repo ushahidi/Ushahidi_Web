@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Kohana process control file, loaded by the front controller.
  * 
- * $Id: Bootstrap.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: Bootstrap.php 3918 2009-01-21 03:15:53Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -10,11 +10,11 @@
  * @license    http://kohanaphp.com/license.html
  */
 
-define('KOHANA_VERSION',  '2.2');
-define('KOHANA_CODENAME', 'efímera');
+define('KOHANA_VERSION',  '2.3.1');
+define('KOHANA_CODENAME', 'accipiter');
 
 // Test of Kohana is running in Windows
-define('KOHANA_IS_WIN', PHP_SHLIB_SUFFIX === 'dll');
+define('KOHANA_IS_WIN', DIRECTORY_SEPARATOR === '\\');
 
 // Kohana benchmarks are prefixed to prevent collisions
 define('SYSTEM_BENCHMARK', 'system_benchmark');

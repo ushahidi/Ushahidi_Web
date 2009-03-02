@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Eaccelerator-based Cache driver.
  *
- * $Id: Eaccelerator.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: Eaccelerator.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Cache
  * @author     Kohana Team

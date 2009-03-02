@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 
 $config['uncountable'] = array
 (
@@ -32,6 +32,7 @@ $config['uncountable'] = array
 	'sheep',
 	'sms',
 	'species',
+	'staff',
 	'toothpaste',
 	'traffic',
 	'understanding',
@@ -52,4 +53,6 @@ $config['irregular'] = array
 	'goose' => 'geese',
 	'ox' => 'oxen',
 	'leaf' => 'leaves',
+	'course' => 'courses',
+	'size' => 'sizes',
 );

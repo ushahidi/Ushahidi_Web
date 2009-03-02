@@ -1,10 +1,10 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
 * Object Relational Mapping (ORM) result iterator.
 *
-* $Id: ORM_Iterator.php 3106 2008-07-13 22:27:01Z Shadowhand $
+* $Id: ORM_Iterator.php 3917 2009-01-21 03:06:22Z zombor $
 *
-* @package    Core
+* @package    ORM
 * @author     Kohana Team
 * @copyright  (c) 2007-2008 Kohana Team
 * @license    http://kohanaphp.com/license.html
@@ -19,7 +19,7 @@ class ORM_Iterator_Core implements Iterator, ArrayAccess, Countable {
 	// Database result object
 	protected $result;
 
-	public function __construct(ORM $model, $result)
+	public function __construct(ORM $model, Database_Result $result)
 	{
 		// Class attributes
 		$this->class_name  = get_class($model);
@@ -51,6 +51,21 @@ class ORM_Iterator_Core implements Iterator, ArrayAccess, Countable {
 		}
 
 		return $array;
+	}
+
+	/**
+	 * Return an array of all of the primary keys for this object.
+	 *
+	 * @return  array
+	 */
+	public function primary_key_array()
+	{
+		$ids = array();
+		foreach ($this->result as $row)
+		{
+			$ids[] = $row->{$this->primary_key};
+		}
+		return $ids;
 	}
 
 	/**

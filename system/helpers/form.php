@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Form helper class.
  *
- * $Id: form.php 2914 2008-06-25 22:45:11Z Shadowhand $
+ * $Id: form.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -144,9 +144,10 @@ class form_Core {
 	 * @param   string|array  input name or an array of HTML attributes
 	 * @param   string        input value, when using a name
 	 * @param   string        a string to be attached to the end of the attributes
+	 * @param   boolean       encode existing entities
 	 * @return  string
 	 */
-	public static function input($data, $value = '', $extra = '')
+	public static function input($data, $value = '', $extra = '', $double_encode = TRUE )
 	{
 		if ( ! is_array($data))
 		{
@@ -161,7 +162,7 @@ class form_Core {
 		);
 
 		// For safe form data
-		$data['value'] = html::specialchars($data['value']);
+		$data['value'] = html::specialchars($data['value'], $double_encode);
 
 		return '<input'.form::attributes($data).' '.$extra.' />';
 	}
@@ -212,9 +213,10 @@ class form_Core {
 	 * @param   string|array  input name or an array of HTML attributes
 	 * @param   string        input value, when using a name
 	 * @param   string        a string to be attached to the end of the attributes
+	 * @param   boolean       encode existing entities
 	 * @return  string
 	 */
-	public static function textarea($data, $value = '', $extra = '')
+	public static function textarea($data, $value = '', $extra = '', $double_encode = TRUE )
 	{
 		if ( ! is_array($data))
 		{
@@ -227,7 +229,7 @@ class form_Core {
 		// Value is not part of the attributes
 		unset($data['value']);
 
-		return '<textarea'.form::attributes($data, 'textarea').' '.$extra.'>'.html::specialchars($value).'</textarea>';
+		return '<textarea'.form::attributes($data, 'textarea').' '.$extra.'>'.html::specialchars($value, $double_encode).'</textarea>';
 	}
 
 	/**
@@ -241,6 +243,7 @@ class form_Core {
 	 */
 	public static function dropdown($data, $options = NULL, $selected = NULL, $extra = '')
 	{
+
 		if ( ! is_array($data))
 		{
 			$data = array('name' => $data);
@@ -260,14 +263,14 @@ class form_Core {
 			}
 		}
 
-		// Selected value should always be a string
-		$selected = (string) $selected;
-
 		$input = '<select'.form::attributes($data, 'select').' '.$extra.'>'."\n";
 		foreach ((array) $options as $key => $val)
 		{
 			// Key should always be a string
 			$key = (string) $key;
+
+			// Selected must always be a string
+			$selected = (string) $selected;
 
 			if (is_array($val))
 			{
@@ -277,7 +280,16 @@ class form_Core {
 					// Inner key should always be a string
 					$inner_key = (string) $inner_key;
 
-					$sel = ($selected === $inner_key) ? ' selected="selected"' : '';
+					if (is_array($selected))
+					{
+						$sel = in_array($inner_key, $selected, TRUE);
+					}
+					else
+					{
+						$sel = ($selected === $inner_key);
+					}
+
+					$sel = ($sel === TRUE) ? ' selected="selected"' : '';
 					$input .= '<option value="'.$inner_key.'"'.$sel.'>'.$inner_val.'</option>'."\n";
 				}
 				$input .= '</optgroup>'."\n";
@@ -427,16 +439,26 @@ class form_Core {
 	 * @param   string        a string to be attached to the end of the attributes
 	 * @return  string
 	 */
-	public static function label($data = '', $text = '', $extra = '')
+	public static function label($data = '', $text = NULL, $extra = '')
 	{
 		if ( ! is_array($data))
 		{
-			if (strpos($data, '[') !== FALSE)
+			if (is_string($data))
 			{
-				$data = preg_replace('/\[.*\]/', '', $data);
+				// Specify the input this label is for
+				$data = array('for' => $data);
 			}
+			else
+			{
+				// No input specified
+				$data = array();
+			}
+		}
 
-			$data = empty($data) ? array() : array('for' => $data);
+		if ($text === NULL AND isset($data['for']))
+		{
+			// Make the text the human-readable input name
+			$text = ucwords(inflector::humanize($data['for']));
 		}
 
 		return '<label'.form::attributes($data).' '.$extra.'>'.$text.'</label>';

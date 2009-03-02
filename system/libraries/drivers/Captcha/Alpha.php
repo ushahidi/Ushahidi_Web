@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Captcha driver for "alpha" style.
  *
- * $Id: Alpha.php 3103 2008-07-13 10:37:32Z Geert $
+ * $Id: Alpha.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Captcha
  * @author     Kohana Team

@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Remote url/file helper.
  *
- * $Id: remote.php 3149 2008-07-18 13:48:25Z Shadowhand $
+ * $Id: remote.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

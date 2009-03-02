@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * File helper class.
  *
- * $Id: file.php 3237 2008-07-30 12:10:20Z Geert $
+ * $Id: file.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -60,6 +60,15 @@ class file_Core {
 		{
 			// Return the mime type using mime_content_type
 			return mime_content_type($filename);
+		}
+
+		if ( ! KOHANA_IS_WIN)
+		{
+			// Attempt to locate use the file command, checking the return value
+			if ($command = trim(exec('which file', $output, $return)) AND $return === 0)
+			{
+				return trim(exec($command.' -bi '.escapeshellarg($filename)));
+			}
 		}
 
 		if ( ! empty($extension) AND is_array($mime = Kohana::config('mimes.'.$extension)))

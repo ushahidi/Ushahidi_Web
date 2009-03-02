@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Calendar creation library.
  *
- * $Id: Calendar.php 3279 2008-08-06 14:41:49Z Shadowhand $
+ * $Id: Calendar.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Calendar
  * @author     Kohana Team
@@ -27,13 +27,13 @@ class Calendar_Core extends Event_Subject {
 	/**
 	 * Returns an array of the names of the days, using the current locale.
 	 *
-	 * @param   boolean  return short names
+	 * @param   integer  left of day names
 	 * @return  array
 	 */
-	public static function days($short = FALSE)
+	public static function days($length = TRUE)
 	{
 		// strftime day format
-		$format = ($short == TRUE) ? '%a' : '%A';
+		$format = ($length > 3) ? '%A' : '%a';
 
 		// Days of the week
 		$days = array('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday');
@@ -53,12 +53,13 @@ class Calendar_Core extends Event_Subject {
 				$days[$i] = strftime($format, strtotime($day));
 			}
 		}
-		elseif ($short == TRUE)
+
+		if (is_int($length) OR ctype_digit($length))
 		{
 			foreach ($days as $i => $day)
 			{
-				// Shorten the day names to 3 letters
-				$days[$i] = substr($day, 0, 3);
+				// Shorten the days to the expected length
+				$days[$i] = utf8::substr($day, 0, $length);
 			}
 		}
 

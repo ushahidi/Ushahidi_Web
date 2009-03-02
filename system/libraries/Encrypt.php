@@ -1,10 +1,10 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * The Encrypt library provides two-way encryption of text and binary strings
  * using the MCrypt extension.
  * @see http://php.net/mcrypt
  *
- * $Id: Encrypt.php 3263 2008-08-05 17:57:50Z PugFish $
+ * $Id: Encrypt.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

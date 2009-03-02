@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Session cache driver.
  *
@@ -10,7 +10,7 @@
  * Lifetime does not need to be set as it is
  * overridden by the session expiration setting.
  *
- * $Id: Cache.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: Cache.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

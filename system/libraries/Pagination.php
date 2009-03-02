@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Pagination library.
  *
- * $Id: Pagination.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: Pagination.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -118,7 +118,8 @@ class Pagination_Core {
 			$_GET[$this->query_string] = '{page}';
 
 			// Create full URL
-			$this->url = url::site(Router::$current_uri).'?'.str_replace('%7Bpage%7D', '{page}', http_build_query($_GET));
+			$base_url = ($this->base_url === '') ? Router::$current_uri : $this->base_url;
+			$this->url = url::site($base_url).'?'.str_replace('%7Bpage%7D', '{page}', http_build_query($_GET));
 
 			// Reset page number
 			$_GET[$this->query_string] = $this->current_page;

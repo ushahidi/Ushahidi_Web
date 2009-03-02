@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /*
  * Class: Database_PdoSqlite_Driver
  *  Provides specific database items for Sqlite.
@@ -149,7 +149,10 @@ class Database_Pdosqlite_Driver extends Database_Driver {
 
 		if (count($database['join']) > 0)
 		{
-			$sql .= ' '.$database['join']['type'].'JOIN ('.implode(', ', $database['join']['tables']).') ON '.implode(' AND ', $database['join']['conditions']);
+			foreach($database['join'] AS $join)
+			{
+				$sql .= "\n".$join['type'].'JOIN '.implode(', ', $join['tables']).' ON '.$join['conditions'];
+			}
 		}
 
 		if (count($database['where']) > 0)
@@ -202,23 +205,23 @@ class Database_Pdosqlite_Driver extends Database_Driver {
 		return $res;
 	}
 
-	public function list_tables()
+	public function list_tables(Database $db)
 	{
 		$sql = "SELECT `name` FROM `sqlite_master` WHERE `type`='table' ORDER BY `name`;";
 		try
 		{
-			$result = $this->query($sql)->result(FALSE, PDO::FETCH_ASSOC);
-			$retval = array();
+			$result = $db->query($sql)->result(FALSE, PDO::FETCH_ASSOC);
+			$tables = array();
 			foreach ($result as $row)
 			{
-				$retval[] = current($row);
+				$tables[] = current($row);
 			}
 		}
 		catch (PDOException $e)
 		{
 			throw new Kohana_Database_Exception('database.error', $e->getMessage());
 		}
-		return $retval;
+		return $tables;
 	}
 
 	public function show_error()

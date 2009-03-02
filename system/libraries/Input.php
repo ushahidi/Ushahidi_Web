@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Input library.
  *
- * $Id: Input.php 3250 2008-08-02 11:58:29Z armen $
+ * $Id: Input.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -83,16 +83,13 @@ class Input_Core {
 				$preserve = array('GLOBALS', '_REQUEST', '_GET', '_POST', '_FILES', '_COOKIE', '_SERVER', '_ENV', '_SESSION');
 
 				// This loop has the same effect as disabling register_globals
-				foreach ($GLOBALS as $key => $val)
+				foreach (array_diff(array_keys($GLOBALS), $preserve) as $key)
 				{
-					if ( ! in_array($key, $preserve))
-					{
-						global $$key;
-						$$key = NULL;
+					global $$key;
+					$$key = NULL;
 
-						// Unset the global variable
-						unset($GLOBALS[$key], $$key);
-					}
+					// Unset the global variable
+					unset($GLOBALS[$key], $$key);
 				}
 
 				// Warn the developer about register globals
@@ -129,6 +126,10 @@ class Input_Core {
 			{
 				foreach ($_COOKIE as $key => $val)
 				{
+					// Ignore special attributes in RFC2109 compliant cookies
+					if ($key == '$Version' OR $key == '$Path' OR $key == '$Domain')
+						continue;
+
 					// Sanitize $_COOKIE
 					$_COOKIE[$this->clean_input_keys($key)] = $this->clean_input_data($val);
 				}

@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Session library.
  *
- * $Id: Session.php 3231 2008-07-29 07:30:50Z Geert $
+ * $Id: Session.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -109,8 +109,7 @@ class Session_Core {
 	public function create($vars = NULL)
 	{
 		// Destroy any current sessions
-		// NOTE: This is being commented out for Ticket #24
-		//$this->destroy();
+		$this->destroy();
 
 		if (self::$config['driver'] !== 'native')
 		{
@@ -158,8 +157,7 @@ class Session_Core {
 		);
 
 		// Start the session!
-		// NOTE: Suppressing warnings for Ticket #24 since session not destroyed
-		@session_start();
+		session_start();
 
 		// Put session_id in the session variable
 		$_SESSION['session_id'] = session_id();
@@ -207,10 +205,10 @@ class Session_Core {
 					break;
 				}
 			}
-
-			// Expire flash keys
-			$this->expire_flash();
 		}
+
+		// Expire flash keys
+		$this->expire_flash();
 
 		// Update last activity
 		$_SESSION['last_activity'] = time();

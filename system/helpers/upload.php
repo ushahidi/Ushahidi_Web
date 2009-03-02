@@ -1,9 +1,9 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Upload helper class for working with the global $_FILES
  * array and Validation library.
  *
- * $Id: upload.php 3264 2008-08-05 19:03:14Z Geert $
+ * $Id: upload.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

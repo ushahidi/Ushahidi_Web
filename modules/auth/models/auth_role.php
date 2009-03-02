@@ -1,12 +1,25 @@
-<?php
-/**
- * Model for roles for the Auth Module
- *
- * $Id: auth_role.php 3352 2008-08-18 09:43:56BST atomless $
- */
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
 class Auth_Role_Model extends ORM {
 
 	protected $has_and_belongs_to_many = array('users');
+
+	/**
+	 * Validates and optionally saves a role record from an array.
+	 *
+	 * @param  array    values to check
+	 * @param  boolean  save the record when validation succeeds
+	 * @return boolean
+	 */
+	public function validate(array & $array, $save = FALSE)
+	{
+		$array = Validation::factory($array)
+			->pre_filter('trim')
+			->add_rules('name', 'required', 'length[4,32]')
+			->add_rules('description', 'length[0,255]');
+
+		return parent::validate($array, $save);
+	}
 
 	/**
 	 * Allows finding roles by name.
@@ -21,4 +34,4 @@ class Auth_Role_Model extends ORM {
 		return parent::unique_key($id);
 	}
 
-} // End Role_Model
+} // End Auth Role Model

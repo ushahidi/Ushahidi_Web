@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 
 $lang = array
 (
@@ -18,7 +18,13 @@ $lang = array
 	(
 		'not_found' => 'The ImageMagick directory specified does not contain a required program, %s.',
 	),
-
+	
+	// GraphicsMagick specific messages
+	'graphicsmagick' => array
+	(
+		'not_found' => 'The GraphicsMagick directory specified does not contain a required program, %s.',
+	),
+	
 	// GD specific messages
 	'gd' => array
 	(

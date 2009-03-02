@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Validation library.
  *
- * $Id: Validation.php 3127 2008-07-16 14:43:52Z Shadowhand $
+ * $Id: Validation.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Validation
  * @author     Kohana Team
@@ -10,12 +10,6 @@
  * @license    http://kohanaphp.com/license.html
  */
 class Validation_Core extends ArrayObject {
-
-	// Unique "any field" key
-	protected $any_field;
-
-	// Array fields
-	protected $array_fields = array();
 
 	// Filters
 	protected $pre_filters = array();
@@ -32,6 +26,9 @@ class Validation_Core extends ArrayObject {
 	protected $errors = array();
 	protected $messages = array();
 
+	// Fields that are expected to be arrays
+	protected $array_fields = array();
+
 	// Checks if there is data to validate.
 	protected $submitted;
 
@@ -41,9 +38,9 @@ class Validation_Core extends ArrayObject {
 	 * @param   array   array to use for validation
 	 * @return  object
 	 */
-	public static function factory($array = NULL)
+	public static function factory(array $array)
 	{
-		return new Validation( ! is_array($array) ? $_POST : $array);
+		return new Validation($array);
 	}
 
 	/**
@@ -55,13 +52,37 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function __construct(array $array)
 	{
-		// Set a dynamic, unique "any field" key
-		$this->any_field = uniqid(NULL, TRUE);
-
-		// Test if there is any actual data
-		$this->submitted = (count($array) > 0);
+		// The array is submitted if the array is not empty
+		$this->submitted = ! empty($array);
 
 		parent::__construct($array, ArrayObject::ARRAY_AS_PROPS | ArrayObject::STD_PROP_LIST);
+	}
+
+	/**
+	 * Magic clone method, clears errors and messages.
+	 *
+	 * @return  void
+	 */
+	public function __clone()
+	{
+		$this->errors = array();
+		$this->messages = array();
+	}
+
+	/**
+	 * Create a copy of the current validation rules and change the array.
+	 *
+	 * @chainable
+	 * @param   array  new array to validate
+	 * @return  Validation
+	 */
+	public function copy(array $array)
+	{
+		$copy = clone $this;
+
+		$copy->exchangeArray($array);
+
+		return $copy;
 	}
 
 	/**
@@ -80,7 +101,29 @@ class Validation_Core extends ArrayObject {
 	}
 
 	/**
-	 * Returns the ArrayObject values.
+	 * Returns an array of all the field names that have filters, rules, or callbacks.
+	 *
+	 * @return  array
+	 */
+	public function field_names()
+	{
+		// All the fields that are being validated
+		$fields = array_unique(array_merge
+		(
+			array_keys($this->pre_filters),
+			array_keys($this->rules),
+			array_keys($this->callbacks),
+			array_keys($this->post_filters)
+		));
+
+		// Remove wildcard fields
+		$fields = array_diff($fields, array('*'));
+
+		return $fields;
+	}
+
+	/**
+	 * Returns the array values of the current object.
 	 *
 	 * @return  array
 	 */
@@ -93,39 +136,41 @@ class Validation_Core extends ArrayObject {
 	 * Returns the ArrayObject values, removing all inputs without rules.
 	 * To choose specific inputs, list the field name as arguments.
 	 *
+	 * @param   boolean  return only fields with filters, rules, and callbacks
 	 * @return  array
 	 */
 	public function safe_array()
 	{
-		// All the fields that are being validated
-		$all_fields = array_unique(array_merge
-		(
-			array_keys($this->pre_filters),
-			array_keys($this->rules),
-			array_keys($this->callbacks),
-			array_keys($this->post_filters)
-		));
-
 		// Load choices
 		$choices = func_get_args();
 		$choices = empty($choices) ? NULL : array_combine($choices, $choices);
 
+		// Get field names
+		$fields = $this->field_names();
+
 		$safe = array();
-		foreach ($all_fields as $i => $field)
+		foreach ($fields as $field)
 		{
-			// Ignore "any field" key
-			if ($field === $this->any_field) continue;
-
-			if (isset($this->array_fields[$field]))
-			{
-				// Use the key field
-				$field = $this->array_fields[$field];
-			}
-
 			if ($choices === NULL OR isset($choices[$field]))
 			{
-				// Make sure all fields are defined
-				$safe[$field] = isset($this[$field]) ? $this[$field] : NULL;
+				if (isset($this[$field]))
+				{
+					$value = $this[$field];
+
+					if (is_object($value))
+					{
+						// Convert the value back into an array
+						$value = $value->getArrayCopy();
+					}
+				}
+				else
+				{
+					// Even if the field is not in this array, it must be set
+					$value = NULL;
+				}
+
+				// Add the field to the array
+				$safe[$field] = $value;
 			}
 		}
 
@@ -152,7 +197,65 @@ class Validation_Core extends ArrayObject {
 	}
 
 	/**
-	 * Add a pre-filter to one or more inputs.
+	 * Converts a filter, rule, or callback into a fully-qualified callback array.
+	 *
+	 * @return  mixed
+	 */
+	protected function callback($callback)
+	{
+		if (is_string($callback))
+		{
+			if (strpos($callback, '::') !== FALSE)
+			{
+				$callback = explode('::', $callback);
+			}
+			elseif (function_exists($callback))
+			{
+				// No need to check if the callback is a method
+				$callback = $callback;
+			}
+			elseif (method_exists($this, $callback))
+			{
+				// The callback exists in Validation
+				$callback = array($this, $callback);
+			}
+			elseif (method_exists('valid', $callback))
+			{
+				// The callback exists in valid::
+				$callback = array('valid', $callback);
+			}
+		}
+
+		if ( ! is_callable($callback, FALSE))
+		{
+			if (is_array($callback))
+			{
+				if (is_object($callback[0]))
+				{
+					// Object instance syntax
+					$name = get_class($callback[0]).'->'.$callback[1];
+				}
+				else
+				{
+					// Static class syntax
+					$name = $callback[0].'::'.$callback[1];
+				}
+			}
+			else
+			{
+				// Function syntax
+				$name = $callback;
+			}
+
+			throw new Kohana_Exception('validation.not_callable', $name);
+		}
+
+		return $callback;
+	}
+
+	/**
+	 * Add a pre-filter to one or more inputs. Pre-filters are applied before
+	 * rules or callbacks are executed.
 	 *
 	 * @chainable
 	 * @param   callback  filter
@@ -161,15 +264,10 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function pre_filter($filter, $field = TRUE)
 	{
-		if ( ! is_callable($filter))
-			throw new Kohana_Exception('validation.filter_not_callable');
-
-		$filter = (is_string($filter) AND strpos($filter, '::') !== FALSE) ? explode('::', $filter) : $filter;
-
-		if ($field === TRUE)
+		if ($field === TRUE OR $field === '*')
 		{
-			// Handle "any field" filters
-			$fields = array($this->any_field);
+			// Use wildcard
+			$fields = array('*');
 		}
 		else
 		{
@@ -178,17 +276,11 @@ class Validation_Core extends ArrayObject {
 			$fields = array_slice($fields, 1);
 		}
 
+		// Convert to a proper callback
+		$filter = $this->callback($filter);
+
 		foreach ($fields as $field)
 		{
-			if (strpos($field, '.') > 0)
-			{
-				// Field keys
-				$keys = explode('.', $field);
-
-				// Add to array fields
-				$this->array_fields[$field] = $keys[0];
-			}
-
 			// Add the filter to specified field
 			$this->pre_filters[$field][] = $filter;
 		}
@@ -197,7 +289,8 @@ class Validation_Core extends ArrayObject {
 	}
 
 	/**
-	 * Add a post-filter to one or more inputs.
+	 * Add a post-filter to one or more inputs. Post-filters are applied after
+	 * rules and callbacks have been executed.
 	 *
 	 * @chainable
 	 * @param   callback  filter
@@ -206,15 +299,10 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function post_filter($filter, $field = TRUE)
 	{
-		if ( ! is_callable($filter, TRUE))
-			throw new Kohana_Exception('validation.filter_not_callable');
-
-		$filter = (is_string($filter) AND strpos($filter, '::') !== FALSE) ? explode('::', $filter) : $filter;
-
 		if ($field === TRUE)
 		{
-			// Handle "any field" filters
-			$fields = array($this->any_field);
+			// Use wildcard
+			$fields = array('*');
 		}
 		else
 		{
@@ -223,17 +311,11 @@ class Validation_Core extends ArrayObject {
 			$fields = array_slice($fields, 1);
 		}
 
+		// Convert to a proper callback
+		$filter = $this->callback($filter);
+
 		foreach ($fields as $field)
 		{
-			if (strpos($field, '.') > 0)
-			{
-				// Field keys
-				$keys = explode('.', $field);
-
-				// Add to array fields
-				$this->array_fields[$field] = $keys[0];
-			}
-
 			// Add the filter to specified field
 			$this->post_filters[$field][] = $filter;
 		}
@@ -242,26 +324,29 @@ class Validation_Core extends ArrayObject {
 	}
 
 	/**
-	 * Add rules to a field. Rules are callbacks or validation methods. Rules can
-	 * only return TRUE or FALSE.
+	 * Add rules to a field. Validation rules may only return TRUE or FALSE and
+	 * can not manipulate the value of a field.
 	 *
 	 * @chainable
 	 * @param   string    field name
-	 * @param   callback  rules (unlimited number)
+	 * @param   callback  rules (one or more arguments)
 	 * @return  object
 	 */
 	public function add_rules($field, $rules)
 	{
-		// Handle "any field" filters
-		($field === TRUE) and $field = $this->any_field;
-
 		// Get the rules
 		$rules = func_get_args();
 		$rules = array_slice($rules, 1);
 
+		if ($field === TRUE)
+		{
+			// Use wildcard
+			$field = '*';
+		}
+
 		foreach ($rules as $rule)
 		{
-			// Rule arguments
+			// Arguments for rule
 			$args = NULL;
 
 			if (is_string($rule))
@@ -275,34 +360,18 @@ class Validation_Core extends ArrayObject {
 					// Replace escaped comma with comma
 					$args = str_replace('\,', ',', $args);
 				}
-
-				if (method_exists($this, $rule))
-				{
-					// Make the rule a valid callback
-					$rule = array($this, $rule);
-				}
-				elseif (method_exists('valid', $rule))
-				{
-					// Make the rule a callback for the valid:: helper
-					$rule = array('valid', $rule);
-				}
 			}
 
-			if ( ! is_callable($rule, TRUE))
-				throw new Kohana_Exception('validation.rule_not_callable');
-
-			$rule = (is_string($rule) AND strpos($rule, '::') !== FALSE) ? explode('::', $rule) : $rule;
-
-			if (strpos($field, '.') > 0)
+			if ($rule === 'is_array')
 			{
-				// Field keys
-				$keys = explode('.', $field);
-
-				// Add to array fields
-				$this->array_fields[$field] = $keys[0];
+				// This field is expected to be an array
+				$this->array_fields[$field] = $field;
 			}
 
-			// Add the rule to specified field
+			// Convert to a proper callback
+			$rule = $this->callback($rule);
+
+			// Add the rule, with args, to the field
 			$this->rules[$field][] = array($rule, $args);
 		}
 
@@ -320,35 +389,20 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function add_callbacks($field, $callbacks)
 	{
-		// Handle "any field" filters
-		($field === TRUE) and $field = $this->any_field;
+		// Get all callbacks as an array
+		$callbacks = func_get_args();
+		$callbacks = array_slice($callbacks, 1);
 
-		if (func_get_args() > 2)
+		if ($field === TRUE)
 		{
-			// Multiple callback
-			$callbacks = array_slice(func_get_args(), 1);
-		}
-		else
-		{
-			// Only one callback
-			$callbacks = array($callbacks);
+			// Use wildcard
+			$field = '*';
 		}
 
 		foreach ($callbacks as $callback)
 		{
-			if ( ! is_callable($callback, TRUE))
-				throw new Kohana_Exception('validation.callback_not_callable');
-
-			$callback = (is_string($callback) AND strpos($callback, '::') !== FALSE) ? explode('::', $callback) : $callback;
-
-			if (strpos($field, '.') > 0)
-			{
-				// Field keys
-				$keys = explode('.', $field);
-
-				// Add to array fields
-				$this->array_fields[$field] = $keys[0];
-			}
+			// Convert to a proper callback
+			$callback = $this->callback($callback);
 
 			// Add the callback to specified field
 			$this->callbacks[$field][] = $callback;
@@ -363,65 +417,66 @@ class Validation_Core extends ArrayObject {
 	 * they are undefined. Validation will only be run if there is data already
 	 * in the array.
 	 *
-	 * @return bool
+	 * @param   object  Validation object, used only for recursion
+	 * @param   object  name of field for errors
+	 * @return  bool
 	 */
-	public function validate()
+	public function validate($object = NULL, $field_name = NULL)
 	{
-		// All the fields that are being validated
-		$all_fields = array_unique(array_merge
-		(
-			array_keys($this->pre_filters),
-			array_keys($this->rules),
-			array_keys($this->callbacks),
-			array_keys($this->post_filters)
-		));
+		if ($object === NULL)
+		{
+			// Use the current object
+			$object = $this;
+		}
+
+		// Get all field names
+		$fields = $this->field_names();
 
 		// Copy the array from the object, to optimize multiple sets
-		$object_array = $this->getArrayCopy();
+		$array = $this->getArrayCopy();
 
-		foreach ($all_fields as $i => $field)
+		foreach ($fields as $field)
 		{
-			if ($field === $this->any_field)
+			if ($field === '*')
 			{
-				// Remove "any field" from the list of fields
-				unset($all_fields[$i]);
+				// Ignore wildcard
 				continue;
 			}
 
-			if (substr($field, -2) === '.*')
+			if ( ! isset($array[$field]))
 			{
-				// Set the key to be an array
-				Kohana::key_string_set($object_array, substr($field, 0, -2), array());
-			}
-			else
-			{
-				// Set the key to be NULL
-				Kohana::key_string_set($object_array, $field, NULL);
+				if (isset($this->array_fields[$field]))
+				{
+					// This field must be an array
+					$array[$field] = array();
+				}
+				else
+				{
+					$array[$field] = NULL;
+				}
 			}
 		}
 
 		// Swap the array back into the object
-		$this->exchangeArray($object_array);
+		$this->exchangeArray($array);
 
-		// Reset all fields to ALL defined fields
-		$all_fields = array_keys($this->getArrayCopy());
+		// Get all defined field names
+		$fields = array_keys($array);
 
-		foreach ($this->pre_filters as $field => $calls)
+		foreach ($this->pre_filters as $field => $callbacks)
 		{
-			foreach ($calls as $func)
+			foreach ($callbacks as $callback)
 			{
-				if ($field === $this->any_field)
+				if ($field === '*')
 				{
-					foreach ($all_fields as $f)
+					foreach ($fields as $f)
 					{
-						// Process each filter
-						$this[$f] = is_array($this[$f]) ? arr::map_recursive($func, $this[$f]) : call_user_func($func, $this[$f]);
+						$this[$f] = is_array($this[$f]) ? array_map($callback, $this[$f]) : call_user_func($callback, $this[$f]);
 					}
 				}
 				else
 				{
-					// Process each filter
-					$this[$field] = is_array($this[$field]) ? arr::map_recursive($func, $this[$field]) : call_user_func($func, $this[$field]);
+					$this[$field] = is_array($this[$field]) ? array_map($callback, $this[$field]) : call_user_func($callback, $this[$field]);
 				}
 			}
 		}
@@ -429,96 +484,89 @@ class Validation_Core extends ArrayObject {
 		if ($this->submitted === FALSE)
 			return FALSE;
 
-		foreach ($this->rules as $field => $calls)
+		foreach ($this->rules as $field => $callbacks)
 		{
-			foreach ($calls as $call)
+			foreach ($callbacks as $callback)
 			{
-				// Split the rule into function and args
-				list($func, $args) = $call;
+				// Separate the callback and arguments
+				list ($callback, $args) = $callback;
 
-				if ($field === $this->any_field)
+				// Function or method name of the rule
+				$rule = is_array($callback) ? $callback[1] : $callback;
+
+				if ($field === '*')
 				{
-					foreach ($all_fields as $f)
+					foreach ($fields as $f)
 					{
-						if (isset($this->array_fields[$f]))
+						// Note that continue, instead of break, is used when
+						// applying rules using a wildcard, so that all fields
+						// will be validated.
+
+						if (isset($this->errors[$f]))
 						{
-							// Use the field key
-							$f_key = $this->array_fields[$f];
+							// Prevent other rules from being evaluated if an error has occurred
+							continue;
+						}
 
-							// Prevent other rules from running when this field already has errors
-							if ( ! empty($this->errors[$f_key])) break;
+						if (empty($this[$f]) AND ! in_array($rule, $this->empty_rules))
+						{
+							// This rule does not need to be processed on empty fields
+							continue;
+						}
 
-							// Don't process rules on empty fields
-							if ( ! in_array($func[1], $this->empty_rules, TRUE) AND $this[$f_key] == NULL)
-								continue;
-
-							foreach ($this[$f_key] as $k => $v)
+						if ($args === NULL)
+						{
+							if ( ! call_user_func($callback, $this[$f]))
 							{
-								if ( ! call_user_func($func, $this[$f_key][$k], $args))
-								{
-									// Run each rule
-									$this->errors[$f_key] = is_array($func) ? $func[1] : $func;
-								}
+								$this->errors[$f] = $rule;
+
+								// Stop validating this field when an error is found
+								continue;
 							}
 						}
 						else
 						{
-							// Prevent other rules from running when this field already has errors
-							if ( ! empty($this->errors[$f])) break;
-
-							// Don't process rules on empty fields
-							if ( ! in_array($func[1], $this->empty_rules, TRUE) AND $this[$f] == NULL)
-								continue;
-
-							if ( ! call_user_func($func, $this[$f], $args))
+							if ( ! call_user_func($callback, $this[$f], $args))
 							{
-								// Run each rule
-								$this->errors[$f] = is_array($func) ? $func[1] : $func;
+								$this->errors[$f] = $rule;
+
+								// Stop validating this field when an error is found
+								continue;
 							}
 						}
 					}
 				}
 				else
 				{
-					if (isset($this->array_fields[$field]))
+					if (isset($this->errors[$field]))
 					{
-						// Use the field key
-						$field_key = $this->array_fields[$field];
+						// Prevent other rules from being evaluated if an error has occurred
+						break;
+					}
 
-						// Prevent other rules from running when this field already has errors
-						if ( ! empty($this->errors[$field_key])) break;
+					if ( ! in_array($rule, $this->empty_rules) AND ! $this->required($this[$field]))
+					{
+						// This rule does not need to be processed on empty fields
+						continue;
+					}
 
-						// Don't process rules on empty fields
-						if ( ! in_array($func[1], $this->empty_rules, TRUE) AND $this[$field_key] == NULL)
-							continue;
-
-						foreach ($this[$field_key] as $k => $val)
+					if ($args === NULL)
+					{
+						if ( ! call_user_func($callback, $this[$field]))
 						{
-							if ( ! call_user_func($func, $this[$field_key][$k], $args))
-							{
-								// Run each rule
-								$this->errors[$field_key] = is_array($func) ? $func[1] : $func;
+							$this->errors[$field] = $rule;
 
-								// Stop after an error is found
-								break 2;
-							}
+							// Stop validating this field when an error is found
+							break;
 						}
 					}
 					else
 					{
-						// Prevent other rules from running when this field already has errors
-						if ( ! empty($this->errors[$field])) break;
-
-						// Don't process rules on empty fields
-						if ( ! in_array($func[1], $this->empty_rules, TRUE) AND $this[$field] == NULL)
-							continue;
-
-						if ( ! call_user_func($func, $this[$field], $args))
+						if ( ! call_user_func($callback, $this[$field], $args))
 						{
-							// Run each rule
-							$this->errors[$field] = is_array($func) ? $func[1] : $func;
+							$this->errors[$field] = $rule;
 
-							// Stop after an error is found
+							// Stop validating this field when an error is found
 							break;
 						}
 					}
@@ -526,66 +574,60 @@ class Validation_Core extends ArrayObject {
 			}
 		}
 
-		foreach ($this->callbacks as $field => $calls)
+		foreach ($this->callbacks as $field => $callbacks)
 		{
-			foreach ($calls as $func)
+			foreach ($callbacks as $callback)
 			{
-				if ($field === $this->any_field)
+				if ($field === '*')
 				{
-					foreach ($all_fields as $f)
+					foreach ($fields as $f)
 					{
-						// Execute the callback
-						call_user_func($func, $this, $f);
+						// Note that continue, instead of break, is used when
+						// applying rules using a wildcard, so that all fields
+						// will be validated.
 
-						// Stop after an error is found
-						if ( ! empty($errors[$f])) break 2;
+						if (isset($this->errors[$f]))
+						{
+							// Stop validating this field when an error is found
+							continue;
+						}
+
+						call_user_func($callback, $this, $f);
 					}
 				}
 				else
 				{
-					// Execute the callback
-					call_user_func($func, $this, $field);
+					if (isset($this->errors[$field]))
+					{
+						// Stop validating this field when an error is found
+						break;
+					}
 
-					// Stop after an error is found
-					if ( ! empty($errors[$field])) break;
+					call_user_func($callback, $this, $field);
 				}
 			}
 		}
 
-		foreach ($this->post_filters as $field => $calls)
+		foreach ($this->post_filters as $field => $callbacks)
 		{
-			foreach ($calls as $func)
+			foreach ($callbacks as $callback)
 			{
-				if ($field === $this->any_field)
+				if ($field === '*')
 				{
-					foreach ($all_fields as $f)
+					foreach ($fields as $f)
 					{
-						if (isset($this->array_fields[$f]))
-						{
-							// Use the field key
-							$f = $this->array_fields[$f];
-						}
-
-						// Process each filter
-						$this[$f] = is_array($this[$f]) ? array_map($func, $this[$f]) : call_user_func($func, $this[$f]);
+						$this[$f] = is_array($this[$f]) ? array_map($callback, $this[$f]) : call_user_func($callback, $this[$f]);
 					}
 				}
 				else
 				{
-					if (isset($this->array_fields[$field]))
-					{
-						// Use the field key
-						$field = $this->array_fields[$field];
-					}
-
-					// Process each filter
-					$this[$field] = is_array($this[$field]) ? array_map($func, $this[$field]) : call_user_func($func, $this[$field]);
+					$this[$field] = is_array($this[$field]) ? array_map($callback, $this[$field]) : call_user_func($callback, $this[$field]);
 				}
 			}
 		}
 
 		// Return TRUE if there are no errors
-		return (count($this->errors) === 0);
+		return $this->errors === array();
 	}
 
 	/**
@@ -598,10 +640,7 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function add_error($field, $name)
 	{
-		if (isset($this[$field]))
-		{
-			$this->errors[$field] = $name;
-		}
+		$this->errors[$field] = $name;
 
 		return $this;
 	}
@@ -660,6 +699,7 @@ class Validation_Core extends ArrayObject {
 		}
 		else
 		{
+
 			$errors = array();
 			foreach ($this->errors as $input => $error)
 			{
@@ -672,7 +712,7 @@ class Validation_Core extends ArrayObject {
 					$errors[$input] = Kohana::lang("$file.$input.default");
 				}
 			}
-			
+
 			return $errors;
 		}
 	}
@@ -685,7 +725,20 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function required($str)
 	{
-		return ! ($str === '' OR $str === NULL OR $str === FALSE OR (is_array($str) AND empty($str)));
+		if (is_object($str) AND $str instanceof ArrayObject)
+		{
+			// Get the array from the ArrayObject
+			$str = $str->getArrayCopy();
+		}
+
+		if (is_array($str))
+		{
+			return ! empty($str);
+		}
+		else
+		{
+			return ! ($str === '' OR $str === NULL OR $str === FALSE);
+		}
 	}
 
 	/**
@@ -767,7 +820,7 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function chars($value, array $chars)
 	{
-		return ! preg_match('![^'.preg_quote(implode(',', $chars)).']!', $value);
+		return ! preg_match('![^'.implode('', $chars).']!u', $value);
 	}
 
 } // End Validation

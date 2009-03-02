@@ -508,8 +508,8 @@ CREATE TABLE IF NOT EXISTS `location` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `location_name` varchar(255) default NULL,
   `country_id` int(11) default NULL,
-  `latitude` varchar(50) default NULL,
-  `longitude` varchar(50) default NULL,
+  `latitude` DOUBLE NOT NULL default '0',
+  `longitude` DOUBLE NOT NULL default '0',
   `location_visible` tinyint(4) NOT NULL default '1',
   `location_date` datetime default NULL,
   PRIMARY KEY  (`id`)
@@ -737,7 +737,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `description`) VALUES
-(1, 'user', 'Login privileges, granted after account confirmation'),
+(1, 'login', 'Login privileges, granted after account confirmation'),
 (2, 'admin', 'Administrative user, has access to everything.');
 
 -- --------------------------------------------------------
@@ -757,7 +757,9 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 -- Dumping data for table `roles_users`
 --
 
-INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES (1, 2);
+INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
+(1, 1),
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -1009,6 +1011,39 @@ CREATE TABLE `scheduler_log` (
 
 --
 -- Dumping data for table `scheduler_log`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cluster`
+--
+
+CREATE TABLE IF NOT EXISTS `cluster` (
+  `id` int(11) NOT NULL,
+  `location_id` bigint(20) NOT NULL default '0',	
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
+  `latitude_min` double NOT NULL,
+  `longitude_min` double NOT NULL,
+  `latitude_max` double NOT NULL,
+  `longitude_max` double NOT NULL,
+  `child_count` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `left_side` int(11) NOT NULL,
+  `right_side` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  `incident_id` bigint(20) NOT NULL default '0',
+  `incident_title` varchar(255) default NULL,
+  `incident_date` int(10) NOT NULL default 0,
+  `category_id` int(11) UNSIGNED NOT NULL default '0',
+  `category_color` varchar(20) NOT NULL default '990000',
+  PRIMARY KEY  (`id`)
+);
+
+--
+-- Dumping data for table `cluster`
 --
 
 

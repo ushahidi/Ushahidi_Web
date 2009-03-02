@@ -1,11 +1,11 @@
-<?php
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * User authorization library. Handles user login and logout, as well as secure
  * password hashing.
  *
  * @package    Auth
  * @author     Kohana Team
- * @copyright  (c) 2007-2008 Kohana Team
+ * @copyright  (c) 2007 Kohana Team
  * @license    http://kohanaphp.com/license.html
  */
 class Auth_Core {
@@ -49,10 +49,10 @@ class Auth_Core {
 	public function __construct($config = array())
 	{
 		// Append default auth configuration
-		$config += KOHANA::config('auth');
+		$config += Kohana::config('auth');
 
 		// Clean up the salt pattern and split it into an array
-		$config['salt_pattern'] = preg_split('/,\s*/', KOHANA::config('auth.salt_pattern'));
+		$config['salt_pattern'] = preg_split('/,\s*/', Kohana::config('auth.salt_pattern'));
 
 		// Save the config in the object
 		$this->config = $config;
@@ -85,6 +85,16 @@ class Auth_Core {
 	public function logged_in($role = NULL)
 	{
 		return $this->driver->logged_in($role);
+	}
+
+	/**
+	 * Returns the currently logged in user, or FALSE.
+	 *
+	 * @return  mixed
+	 */
+	public function get_user()
+	{
+		return $this->driver->get_user();
 	}
 
 	/**
@@ -136,7 +146,7 @@ class Auth_Core {
 	/**
 	 * Log out a user by removing the related session variables.
 	 *
-	 * @param   boolean   completely destroy the session
+	 * @param   boolean  completely destroy the session
 	 * @return  boolean
 	 */
 	public function logout($destroy = FALSE)
@@ -148,11 +158,8 @@ class Auth_Core {
 	 * Creates a hashed password from a plaintext password, inserting salt
 	 * based on the configured salt pattern.
 	 *
-	 * Parameters:
-	 *  password - plaintext password
-	 *
-	 * Returns:
-	 *  Hashed password string
+	 * @param   string  plaintext password
+	 * @return  string  hashed password string
 	 */
 	public function hash_password($password, $salt = FALSE)
 	{
@@ -196,10 +203,10 @@ class Auth_Core {
 	/**
 	 * Perform a hash, using the configured method.
 	 *
-	 * @param   string   string to hash
+	 * @param   string  string to hash
 	 * @return  string
 	 */
-	protected function hash($str)
+	public function hash($str)
 	{
 		return hash($this->config['hash_method'], $str);
 	}
@@ -210,13 +217,13 @@ class Auth_Core {
 	 * @param   string  hashed password
 	 * @return  string
 	 */
-	protected function find_salt($password)
+	public function find_salt($password)
 	{
 		$salt = '';
 
 		foreach ($this->config['salt_pattern'] as $i => $offset)
 		{
-			// Find salt characters... take a good long look..
+			// Find salt characters, take a good long look...
 			$salt .= substr($password, $offset + $i, 1);
 		}
 

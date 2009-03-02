@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Image API driver.
  *
- * $Id: Image.php 3287 2008-08-07 11:28:44Z OscarB $
+ * $Id: Image.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Image
  * @author     Kohana Team

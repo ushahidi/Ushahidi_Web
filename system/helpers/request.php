@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Request helper class.
  *
- * $Id: request.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: request.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -38,6 +38,28 @@ class request_Core {
 		}
 
 		return isset($ref) ? $ref : $default;
+	}
+
+	/**
+	 * Returns the current request protocol, based on $_SERVER['https']. In CLI
+	 * mode, NULL will be returned.
+	 *
+	 * @return  string
+	 */
+	public static function protocol()
+	{
+		if (PHP_SAPI === 'cli')
+		{
+			return NULL;
+		}
+		elseif ( ! empty($_SERVER['HTTPS']) AND $_SERVER['HTTPS'] === 'on')
+		{
+			return 'https';
+		}
+		else
+		{
+			return 'http';
+		}
 	}
 
 	/**

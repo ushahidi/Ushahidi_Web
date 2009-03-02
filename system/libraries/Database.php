@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Provides database access in a platform agnostic way, using simple query building blocks.
  *
- * $Id: Database.php 3295 2008-08-07 19:30:03Z zombor $
+ * $Id: Database.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -48,6 +48,9 @@ class Database_Core {
 	protected $limit      = FALSE;
 	protected $offset     = FALSE;
 	protected $last_query = '';
+
+	// Stack of queries for push/pop
+	protected $query_history = array();
 
 	/**
 	 * Returns a singleton instance of Database.
@@ -355,7 +358,9 @@ class Database_Core {
 	 */
 	public function join($table, $key, $value = NULL, $type = '')
 	{
-		if ($type != '')
+		$join = array();
+
+		if ( ! empty($type))
 		{
 			$type = strtoupper(trim($type));
 
@@ -377,22 +382,21 @@ class Database_Core {
 			$cond[] = $this->driver->where($key, $this->driver->escape_column($this->config['table_prefix'].$value), 'AND ', count($cond), FALSE);
 		}
 
-		if( ! isset($this->join['tables']) OR ! isset($this->join['conditions']))
-		{
-			$this->join['tables'] = array();
-			$this->join['conditions'] = array();
-		}
+		if( ! is_array($this->join)) { $this->join = array(); }
 
 		foreach ((array) $table as $t)
 		{
-			$this->join['tables'][] = $this->driver->escape_column($this->config['table_prefix'].$t);
+			$join['tables'][] = $this->driver->escape_column($this->config['table_prefix'].$t);
 		}
 
-		$this->join['conditions'][] = '('.trim(implode(' ', $cond)).')';
-		$this->join['type'] = $type;
+		$join['conditions'] = '('.trim(implode(' ', $cond)).')';
+		$join['type'] = $type;
+
+		$this->join[] = $join;
 
 		return $this;
 	}
+
 
 	/**
 	 * Selects the where(s) for a database query.
@@ -620,6 +624,12 @@ class Database_Core {
 
 			if ($val != '')
 			{
+				// Add the table prefix if we are using table.column names
+				if(strpos($val, '.'))
+				{
+					$val = $this->config['table_prefix'].$val;
+				}
+
 				$this->groupby[] = $this->driver->escape_column($val);
 			}
 		}
@@ -673,9 +683,16 @@ class Database_Core {
 		{
 			$direction = strtoupper(trim($direction));
 
+			// Add a direction if the provided one isn't valid
 			if ( ! in_array($direction, array('ASC', 'DESC', 'RAND()', 'RANDOM()', 'NULL')))
 			{
 				$direction = 'ASC';
+			}
+
+			// Add the table prefix if a table.column was passed
+			if (strpos($column, '.'))
+			{
+				$column = $this->config['table_prefix'].$column;
 			}
 
 			$this->orderby[] = $this->driver->escape_column($column).' '.$direction;
@@ -896,7 +913,9 @@ class Database_Core {
 			}
 			$values = implode(",", $escaped_values);
 		}
-		$this->where($this->driver->escape_column($field).' '.($not === TRUE ? 'NOT ' : '').'IN ('.$values.')');
+
+		$where = $this->driver->escape_column(((strpos($field,'.') !== FALSE) ? $this->config['table_prefix'] : ''). $field).' '.($not === TRUE ? 'NOT ' : '').'IN ('.$values.')';
+		$this->where[] = $this->driver->where($where, '', 'AND ', count($this->where), -1);
 
 		return $this;
 	}
@@ -1093,9 +1112,7 @@ class Database_Core {
 	{
 		$this->link or $this->connect();
 
-		$this->reset_select();
-
-		return $this->driver->list_tables();
+		return $this->driver->list_tables($this);
 	}
 
 	/**
@@ -1252,6 +1269,65 @@ class Database_Core {
 	{
 		return $this->driver->stmt_prepare($sql, $this->config);
 	}
+
+	/**
+	 * Pushes existing query space onto the query stack.  Use push
+	 * and pop to prevent queries from clashing before they are
+	 * executed
+	 *
+	 * @return Database_Core This Databaes object
+	 */
+	public function push()
+	{	
+		array_push($this->query_history, array(
+			$this->select,
+			$this->from,
+			$this->join,
+			$this->where,
+			$this->orderby,
+			$this->order,
+			$this->groupby,
+			$this->having,
+			$this->distinct,
+			$this->limit,
+			$this->offset
+		));
+
+		$this->reset_select();
+
+		return $this;
+	}
+
+	/**
+	 * Pops from query stack into the current query space.
+	 *
+	 * @return Database_Core This Databaes object
+	 */
+	public function pop()
+	{
+		if (count($this->query_history) == 0)
+		{
+			// No history
+			return $this;
+		}
+	
+		list(
+			$this->select,
+			$this->from,
+			$this->join,
+			$this->where,
+			$this->orderby,
+			$this->order,
+			$this->groupby,
+			$this->having,
+			$this->distinct,
+			$this->limit,
+			$this->offset
+		) = array_pop($this->query_history);
+
+		return $this;
+	}
+
 
 } // End Database Class
 

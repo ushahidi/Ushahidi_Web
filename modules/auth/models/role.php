@@ -1,11 +1,7 @@
-<?php
-/**
- * Model for roles for the Auth Module
- *
- * $Id: role.php 3352 2008-08-18 09:43:56BST atomless $
- */
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
 class Role_Model extends Auth_Role_Model {
 
-	// Use this actual model (rather than extending it) when needing to write a custom role model
+	// This class can be replaced or extended
 
-} // End Role_Model
+} // End Role Model

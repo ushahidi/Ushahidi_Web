@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Captcha library.
  *
- * $Id: Captcha.php 3168 2008-07-21 01:34:36Z Shadowhand $
+ * $Id: Captcha.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Captcha
  * @author     Kohana Team
@@ -49,7 +49,7 @@ class Captcha_Core {
 	 * @param   string  config group name
 	 * @return  object
 	 */
-	public function factory($group = NULL)
+	public static function factory($group = NULL)
 	{
 		return new Captcha($group);
 	}

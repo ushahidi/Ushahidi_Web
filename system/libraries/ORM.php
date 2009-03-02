@@ -1,14 +1,16 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * Object Relational Mapping (ORM) is a method of abstracting database
- * access to standard PHP calls. All table rows are represented as a model.
+ * [Object Relational Mapping][ref-orm] (ORM) is a method of abstracting database
+ * access to standard PHP calls. All table rows are represented as model objects,
+ * with object properties representing row data. ORM in Kohana generally follows
+ * the [Active Record][ref-act] pattern.
  *
- * @see http://en.wikipedia.org/wiki/Active_record
- * @see http://en.wikipedia.org/wiki/Object-relational_mapping
+ * [ref-orm]: http://wikipedia.org/wiki/Object-relational_mapping
+ * [ref-act]: http://wikipedia.org/wiki/Active_record
  *
- * $Id: ORM.php 3304 2008-08-08 18:45:30Z Shadowhand $
+ * $Id: ORM.php 3917 2009-01-21 03:06:22Z zombor $
  *
- * @package    Core
+ * @package    ORM
  * @author     Kohana Team
  * @copyright  (c) 2007-2008 Kohana Team
  * @license    http://kohanaphp.com/license.html
@@ -21,18 +23,24 @@ class ORM_Core {
 	protected $has_many                = array();
 	protected $has_and_belongs_to_many = array();
 
+	// Relationships that should always be joined
+	protected $load_with = array();
+
 	// Current object
 	protected $object  = array();
 	protected $changed = array();
+	protected $related = array();
 	protected $loaded  = FALSE;
 	protected $saved   = FALSE;
-	protected $sorting = array('id' => 'asc');
+	protected $sorting;
 
 	// Related objects
-	protected $related = array();
+	protected $object_relations = array();
+	protected $changed_relations = array();
 
 	// Model table information
 	protected $object_name;
+	protected $object_plural;
 	protected $table_name;
 	protected $table_columns;
 	protected $ignored_columns;
@@ -41,6 +49,9 @@ class ORM_Core {
 	protected $primary_key = 'id';
 	protected $primary_val = 'name';
 
+	// Array of foreign key name overloads
+	protected $foreign_key = array();
+
 	// Model configuration
 	protected $table_names_plural = TRUE;
 	protected $reload_on_wakeup   = TRUE;
@@ -48,6 +59,12 @@ class ORM_Core {
 	// Database configuration
 	protected $db = 'default';
 	protected $db_applied = array();
+
+	// With calls already applied
+	protected $with_applied = array();
+
+	// Stores column information for ORM models
+	protected static $column_cache = array();
 
 	/**
 	 * Creates and returns a new model.
@@ -73,26 +90,28 @@ class ORM_Core {
 	 */
 	public function __construct($id = NULL)
 	{
-		// Set the object name
-		$this->object_name = strtolower(substr(get_class($this), 0, -6));
+		// Set the object name and plural name
+		$this->object_name   = strtolower(substr(get_class($this), 0, -6));
+		$this->object_plural = inflector::plural($this->object_name);
+
+		if (!isset($this->sorting))
+		{
+			// Default sorting
+			$this->sorting = array($this->primary_key => 'asc');
+		}
 
 		// Initialize database
 		$this->__initialize();
 
-		if ($id === NULL OR $id === '')
-		{
-			// Clear the object
-			$this->clear();
-		}
-		elseif (is_object($id))
-		{
-			// Object is loaded and saved
-			$this->loaded = $this->saved = TRUE;
+		// Clear the object
+		$this->clear();
 
+		if (is_object($id))
+		{
 			// Load an object
 			$this->load_values((array) $id);
 		}
-		else
+		elseif (!empty($id))
 		{
 			// Find an object
 			$this->find($id);
@@ -195,7 +214,7 @@ class ORM_Core {
 			{
 				// We use switch here to manually call the database methods. This is
 				// done for speed: call_user_func_array can take over 300% longer to
-				// make calls. Mose database methods are 4 arguments or less, so this
+				// make calls. Most database methods are 4 arguments or less, so this
 				// avoids almost any calls to call_user_func_array.
 
 				switch ($num_args)
@@ -243,7 +262,7 @@ class ORM_Core {
 		{
 			return NULL;
 		}
-		elseif (isset($this->object[$column]) OR array_key_exists($column, $this->object))
+		elseif (array_key_exists($column, $this->object))
 		{
 			return $this->object[$column];
 		}
@@ -255,18 +274,14 @@ class ORM_Core {
 		{
 			return $this->object[$this->primary_key];
 		}
-		elseif (($owner = isset($this->has_one[$column])) OR isset($this->belongs_to[$column]))
+		elseif ($model = $this->related_object($column))
 		{
-			// Determine the model name
-			$model = ($owner === TRUE) ? $this->has_one[$column] : $this->belongs_to[$column];
+			// This handles the has_one and belongs_to relationships
 
-			// Load model
-			$model = ORM::factory($model);
-
-			if (isset($this->object[$column.'_'.$model->primary_key]))
+			if (array_key_exists($column.'_'.$model->primary_key, $this->object))
 			{
 				// Use the FK that exists in this model as the PK
-				$where = array($model->primary_key => $this->object[$column.'_'.$model->primary_key]);
+				$where = array($model->table_name.'.'.$model->primary_key => $this->object[$column.'_'.$model->primary_key]);
 			}
 			else
 			{
@@ -276,24 +291,6 @@ class ORM_Core {
 
 			// one<>alias:one relationship
 			return $this->related[$column] = $model->find($where);
-		}
-		elseif (in_array($column, $this->has_one) OR in_array($column, $this->belongs_to))
-		{
-			$model = ORM::factory($column);
-
-			if (isset($this->object[$column.'_'.$model->primary_key]))
-			{
-				// Use the FK that exists in this model as the PK
-				$where = array($model->primary_key => $this->object[$column.'_'.$model->primary_key]);
-			}
-			else
-			{
-				// Use this model PK as the FK
-				$where = array($this->foreign_key() => $this->object[$this->primary_key]);
-			}
-
-			// one<>one relationship
-			return $this->related[$column] = ORM::factory($column, $where);
 		}
 		elseif (isset($this->has_many[$column]))
 		{
@@ -326,23 +323,27 @@ class ORM_Core {
 			// Load the remote model, always singular
 			$model = ORM::factory(inflector::singular($column));
 
-			// Load JOIN info
-			$join_table = $model->join_table($this->table_name);
-			$join_col1  = $model->foreign_key(NULL, $join_table);
-			$join_col2  = $model->foreign_key(TRUE);
-
-			// many<>many relationship
-			return $this->related[$column] = $model
-				->join($join_table, $join_col1, $join_col2)
-				->where($this->foreign_key(NULL, $join_table), $this->object[$this->primary_key])
-				->find_all();
+			if ($this->has($model, TRUE))
+			{
+				// many<>many relationship
+				return $this->related[$column] = $model
+					->in($model->table_name.'.'.$model->primary_key, $this->changed_relations[$column])
+					->find_all();
+			}
+			else
+			{
+				// empty many<>many relationship
+				return $this->related[$column] = $model
+					->where($model->table_name.'.'.$model->primary_key, NULL)
+					->find_all();
+			}
 		}
 		elseif (in_array($column, array
 			(
-				'object_name', // Object
+				'object_name', 'object_plural', // Object
 				'primary_key', 'primary_val', 'table_name', 'table_columns', // Table
 				'loaded', 'saved', // Status
-				'has_one', 'belongs_to', 'has_many', 'has_and_belongs_to_many', // Relationships
+				'has_one', 'belongs_to', 'has_many', 'has_and_belongs_to_many', 'load_with' // Relationships
 			)))
 		{
 			// Model meta information
@@ -379,6 +380,26 @@ class ORM_Core {
 			}
 
 			$this->object[$column] = $this->load_type($column, $value);
+		}
+		elseif (in_array($column, $this->has_and_belongs_to_many) AND is_array($value))
+		{
+			// Load relations
+			$model = ORM::factory(inflector::singular($column));
+
+			if ( ! isset($this->object_relations[$column]))
+			{
+				// Load relations
+				$this->has($model);
+			}
+
+			// Change the relationships
+			$this->changed_relations[$column] = $value;
+
+			if (isset($this->related[$column]))
+			{
+				// Force a reload of the relationships
+				unset($this->related[$column]);
+			}
 		}
 		else
 		{
@@ -425,7 +446,108 @@ class ORM_Core {
 	 */
 	public function as_array()
 	{
-		return $this->object;
+		$object = array();
+
+		foreach ($this->object as $key => $val)
+		{
+			// Reconstruct the array (calls __get)
+			$object[$key] = $this->$key;
+		}
+
+		return $object;
+	}
+
+	/**
+	 * Binds another one-to-one object to this model.  One-to-one objects
+	 * can be nested using 'object1:object2' syntax
+	 *
+	 * @param string $object
+	 * @return void
+	 */
+	public function with($object)
+	{
+		if (isset($this->with_applied[$object]))
+		{
+			// Don't join anything already joined
+			return $this;
+		}
+
+		$prefix = $table = $object;
+
+		// Split object parts
+		$objects = explode(':', $object);
+		$object	 = $this;
+		foreach ($objects as $object_part)
+		{
+			// Go down the line of objects to find the given target
+			$parent = $object;
+			$object = $parent->related_object($object_part);
+
+			if ( ! $object)
+			{
+				// Can't find related object
+				return $this;
+			}
+		}
+
+		$table = $object_part;
+
+		if ($this->table_names_plural)
+		{
+			$table = inflector::plural($table);
+		}
+
+		// Pop-off top object to get the parent object (user:photo:tag's parent is user:photo)
+		array_pop($objects);
+		$parent_prefix = implode(':', $objects);
+
+		if (empty($parent_prefix))
+		{
+			// Use this table name itself for the parent prefix
+			$parent_prefix = $this->table_name;
+		}
+		else
+		{
+			if( ! isset($this->with_applied[$parent_prefix]))
+			{
+				// If the parent object hasn't been joined yet, do it first (otherwise LEFT JOINs fail)
+				$this->with($parent_prefix);
+			}
+		}
+
+		// Add to with_applied to prevent duplicate joins
+		$this->with_applied[$prefix] = TRUE;
+
+		// Use the keys of the empty object to determine the columns
+		$select = array_keys($object->as_array());
+		foreach ($select as $i => $column)
+		{
+			// Add the prefix so that load_result can determine the relationship
+			$select[$i] = $prefix.'.'.$column.' AS '.$prefix.':'.$column;
+		}
+
+		// Select all of the prefixed keys in the object
+		$this->db->select($select);
+
+		// Use last object part to generate foreign key
+		$foreign_key = $object_part.'_'.$object->primary_key;
+
+		if (array_key_exists($foreign_key, $parent->object))
+		{
+			// Foreign key exists in the joined object's parent
+			$join_col1 = $object->foreign_key(TRUE, $prefix);
+			$join_col2 = $parent_prefix.'.'.$foreign_key;
+		}
+		else
+		{
+			$join_col1 = $parent->foreign_key(NULL, $prefix);
+			$join_col2 = $parent_prefix.'.'.$parent->primary_key;
+		}
+
+		// Join the related object into the result
+		$this->db->join($object->table_name.' AS '.$this->db->table_prefix().$prefix, $join_col1, $join_col2, 'LEFT');
+
+		return $this;
 	}
 
 	/**
@@ -447,7 +569,7 @@ class ORM_Core {
 			else
 			{
 				// Search for a specific column
-				$this->db->where($this->unique_key($id), $id);
+				$this->db->where($this->table_name.'.'.$this->unique_key($id), $id);
 			}
 		}
 
@@ -462,24 +584,18 @@ class ORM_Core {
 	 * @param   integer  SQL offset
 	 * @return  ORM_Iterator
 	 */
-	public function find_all($limit = NULL, $offset = 0)
+	public function find_all($limit = NULL, $offset = NULL)
 	{
-		if ($limit !== NULL)
+		if ($limit !== NULL AND ! isset($this->db_applied['limit']))
 		{
 			// Set limit
-			$this->db->limit($limit);
+			$this->limit($limit);
 		}
 
-		if ($offset !== NULL)
+		if ($offset !== NULL AND ! isset($this->db_applied['offset']))
 		{
 			// Set offset
-			$this->db->offset($offset);
-		}
-
-		if ( ! isset($this->db_applied['orderby']))
-		{
-			// Apply sorting
-			$this->db->orderby($this->sorting);
+			$this->offset($offset);
 		}
 
 		return $this->load_result(TRUE);
@@ -493,8 +609,18 @@ class ORM_Core {
 	 * @param   string  value column
 	 * @return  array
 	 */
-	public function select_list($key, $val)
+	public function select_list($key = NULL, $val = NULL)
 	{
+		if ($key === NULL)
+		{
+			$key = $this->primary_key;
+		}
+
+		if ($val === NULL)
+		{
+			$val = $this->primary_val;
+		}
+
 		// Return a select list from the results
 		return $this->select($key, $val)->find_all()->select_list($key, $val);
 	}
@@ -512,10 +638,19 @@ class ORM_Core {
 		{
 			$safe_array = $array->safe_array();
 
-			foreach ($safe_array as $key => $val)
+			foreach ($safe_array as $key => $value)
 			{
+				// Get the value from this object
+				$value = $this->$key;
+
+				if (is_object($value) AND $value instanceof ORM_Iterator)
+				{
+					// Convert the value to an array of primary keys
+					$value = $value->primary_key_array();
+				}
+
 				// Pre-fill data
-				$array[$key] = $this->$key;
+				$array[$key] = $value;
 			}
 		}
 
@@ -524,10 +659,10 @@ class ORM_Core {
 		{
 			$safe_array = $array->safe_array();
 
-			foreach ($safe_array as $key => $val)
+			foreach ($safe_array as $key => $value)
 			{
 				// Set new data
-				$this->$key = $val;
+				$this->$key = $value;
 			}
 
 			if ($save === TRUE OR is_string($save))
@@ -548,51 +683,114 @@ class ORM_Core {
 	}
 
 	/**
-	 * Saves the current object. If the object is new, it will be reloaded
-	 * after being saved.
+	 * Saves the current object.
 	 *
 	 * @chainable
 	 * @return  ORM
 	 */
 	public function save()
 	{
-		if (empty($this->changed))
-			return $this;
-
-		$data = array();
-		foreach ($this->changed as $column)
+		if ( ! empty($this->changed))
 		{
-			// Compile changed data
-			$data[$column] = $this->object[$column];
-		}
-
-		if ($this->loaded === TRUE)
-		{
-			$query = $this->db
-				->where($this->primary_key, $this->object[$this->primary_key])
-				->update($this->table_name, $data);
-
-			// Object has been saved
-			$this->saved = TRUE;
-
-			// Nothing has been changed
-			$this->changed = array();
-		}
-		else
-		{
-			$query = $this->db
-				->insert($this->table_name, $data);
-
-			if ($query->count() > 0)
+			$data = array();
+			foreach ($this->changed as $column)
 			{
-				if (empty($this->object[$this->primary_key]))
+				// Compile changed data
+				$data[$column] = $this->object[$column];
+			}
+
+			if ($this->loaded === TRUE)
+			{
+				$query = $this->db
+					->where($this->primary_key, $this->object[$this->primary_key])
+					->update($this->table_name, $data);
+
+				// Object has been saved
+				$this->saved = TRUE;
+			}
+			else
+			{
+				$query = $this->db
+					->insert($this->table_name, $data);
+
+				if ($query->count() > 0)
 				{
-					// Load the insert id as the primary key
-					$this->object[$this->primary_key] = $query->insert_id();
+					if (empty($this->object[$this->primary_key]))
+					{
+						// Load the insert id as the primary key
+						$this->object[$this->primary_key] = $query->insert_id();
+					}
+
+					// Object is now loaded and saved
+					$this->loaded = $this->saved = TRUE;
+				}
+			}
+
+			if ($this->saved === TRUE)
+			{
+				// All changes have been saved
+				$this->changed = array();
+			}
+		}
+
+		if ($this->saved === TRUE AND ! empty($this->changed_relations))
+		{
+			foreach ($this->changed_relations as $column => $values)
+			{
+				// All values that were added
+				$added = array_diff($values, $this->object_relations[$column]);
+
+				// All values that were saved
+				$removed = array_diff($this->object_relations[$column], $values);
+
+				if (empty($added) AND empty($removed))
+				{
+					// No need to bother
+					continue;
 				}
 
-				// Reload the object
-				$this->reload();
+				// Clear related columns
+				unset($this->related[$column]);
+
+				// Load the model
+				$model = ORM::factory(inflector::singular($column));
+
+				if (($join_table = array_search($column, $this->has_and_belongs_to_many)) === FALSE)
+					continue;
+
+				if (is_int($join_table))
+				{
+					// No "through" table, load the default JOIN table
+					$join_table = $model->join_table($this->table_name);
+				}
+
+				// Foreign keys for the join table
+				$object_fk  = $this->foreign_key(NULL);
+				$related_fk = $model->foreign_key(NULL);
+
+				if ( ! empty($added))
+				{
+					foreach ($added as $id)
+					{
+						// Insert the new relationship
+						$this->db->insert($join_table, array
+						(
+							$object_fk  => $this->object[$this->primary_key],
+							$related_fk => $id,
+						));
+					}
+				}
+
+				if ( ! empty($removed))
+				{
+					$this->db
+						->where($object_fk, $this->object[$this->primary_key])
+						->in($related_fk, $removed)
+						->delete($join_table);
+				}
+
+				// Clear all relations for this column
+				unset($this->object_relations[$column], $this->changed_relations[$column]);
 			}
 		}
 
@@ -635,10 +833,15 @@ class ORM_Core {
 			// Delete only given ids
 			$this->db->in($this->primary_key, $ids);
 		}
-		else
+		elseif (is_null($ids))
 		{
 			// Delete all records
 			$this->db->where(TRUE);
+		}
+		else
+		{
+			// Do nothing - safeguard
+			return $this;
 		}
 
 		// Delete all objects
@@ -655,14 +858,12 @@ class ORM_Core {
 	 */
 	public function clear()
 	{
-		// Object is no longer loaded or saved
-		$this->loaded = $this->saved = FALSE;
-
-		// Nothing has been changed
-		$this->changed = array();
+		// Create an array with all the columns set to NULL
+		$columns = array_keys($this->table_columns);
+		$values  = array_combine($columns, array_fill(0, count($columns), NULL));
 
 		// Replace the current object with an empty one
-		$this->load_values(array());
+		$this->load_values($values);
 
 		return $this;
 	}
@@ -689,11 +890,16 @@ class ORM_Core {
 	{
 		if ($force === TRUE OR empty($this->table_columns))
 		{
-			// Load table columns
-			$this->table_columns = $this->db->list_fields($this->table_name);
-
-			if (empty($this->table_columns))
-				throw new Kohana_Exception('database.table_not_found', $this->table);
+			if (isset(self::$column_cache[$this->object_name]))
+			{
+				// Use cached column information
+				$this->table_columns = self::$column_cache[$this->object_name];
+			}
+			else
+			{
+				// Load table columns
+				self::$column_cache[$this->object_name] = $this->table_columns = $this->db->list_fields($this->table_name, TRUE);
+			}
 		}
 
 		return $this;
@@ -703,14 +909,14 @@ class ORM_Core {
 	 * Tests if this object has a relationship to a different model.
 	 *
 	 * @param   object   related ORM model
+	 * @param   boolean  check for any relations to given model
 	 * @return  boolean
 	 */
-	public function has(ORM $model)
+	public function has(ORM $model, $any = FALSE)
 	{
-		if ( ! $this->loaded)
-			return FALSE;
+		$related = $model->object_plural;
 
-		if (($join_table = array_search(inflector::plural($model->object_name), $this->has_and_belongs_to_many)) === FALSE)
+		if (($join_table = array_search($related, $this->has_and_belongs_to_many)) === FALSE)
 			return FALSE;
 
 		if (is_int($join_table))
@@ -719,16 +925,26 @@ class ORM_Core {
 			$join_table = $model->join_table($this->table_name);
 		}
 
-		if ($model->loaded)
+		if ( ! isset($this->object_relations[$related]))
 		{
-			// Select only objects of a specific id
-			$this->db->where($model->foreign_key(NULL, $join_table), $model->primary_key_value);
+			// Load the object relationships
+			$this->changed_relations[$related] = $this->object_relations[$related] = $this->load_relations($join_table, $model);
 		}
 
-		// Return the number of rows that exist
-		return $this->db
-			->where($this->foreign_key(NULL, $join_table), $this->object[$this->primary_key])
-			->count_records($join_table);
+		if ( ! $model->empty_primary_key())
+		{
+			// Check if a specific object exists
+			return in_array($model->primary_key_value, $this->changed_relations[$related]);
+		}
+		elseif ($any)
+		{
+			// Check if any relations to given model exist
+			return ! empty($this->changed_relations[$related]);
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 
 	/**
@@ -739,27 +955,20 @@ class ORM_Core {
 	 */
 	public function add(ORM $model)
 	{
-		if ( ! $this->loaded)
-			return FALSE;
-
 		if ($this->has($model))
 			return TRUE;
 
-		if (($join_table = array_search(inflector::plural($model->object_name), $this->has_and_belongs_to_many)) === FALSE)
-			return FALSE;
+		// Get the faked column name
+		$column = $model->object_plural;
 
-		if (is_int($join_table))
+		// Add the new relation to the update
+		$this->changed_relations[$column][] = $model->primary_key_value;
+
+		if (isset($this->related[$column]))
 		{
-			// No "through" table, load the default JOIN table
-			$join_table = $model->join_table($this->table_name);
+			// Force a reload of the relationships
+			unset($this->related[$column]);
 		}
-
-		// Insert the new relationship
-		$this->db->insert($join_table, array
-		(
-			$this->foreign_key(NULL, $join_table)  => $this->object[$this->primary_key],
-			$model->foreign_key(NULL, $join_table) => $model->primary_key_value,
-		));
 
 		return TRUE;
 	}
@@ -775,26 +984,22 @@ class ORM_Core {
 		if ( ! $this->has($model))
 			return FALSE;
 
-		if (($join_table = array_search(inflector::plural($model->object_name), $this->has_and_belongs_to_many)) === FALSE)
+		// Get the faked column name
+		$column = $model->object_plural;
+
+		if (($key = array_search($model->primary_key_value, $this->changed_relations[$column])) === FALSE)
 			return FALSE;
 
-		if (is_int($join_table))
+		// Remove the relationship
+		unset($this->changed_relations[$column][$key]);
+
+		if (isset($this->related[$column]))
 		{
-			// No "through" table, load the default JOIN table
-			$join_table = $model->join_table($this->table_name);
+			// Force a reload of the relationships
+			unset($this->related[$column]);
 		}
 
-		if ($model->loaded)
-		{
-			// Delete only a specific object
-			$this->db->where($model->foreign_key(NULL, $join_table), $model->primary_key_value);
-		}
-
-		// Return the number of rows deleted
-		return $this->db
-			->where($this->foreign_key(NULL, $join_table), $this->object[$this->primary_key])
-			->delete($join_table)
-			->count();
+		return TRUE;
 	}
 
 	/**
@@ -820,13 +1025,13 @@ class ORM_Core {
 			if (stripos($sql, 'LIMIT') !== FALSE)
 			{
 				// Remove LIMIT from the SQL
-				$sql = preg_replace('/\bLIMIT\s+[^a-z]+/i', '', $sql);
+				$sql = preg_replace('/\sLIMIT\s+[^a-z]+/i', ' ', $sql);
 			}
 
 			if (stripos($sql, 'OFFSET') !== FALSE)
 			{
 				// Remove OFFSET from the SQL
-				$sql = preg_replace('/\bOFFSET\s+\d+/i', '', $sql);
+				$sql = preg_replace('/\sOFFSET\s+\d+/i', '', $sql);
 			}
 
 			// Get the total rows from the last query executed
@@ -836,11 +1041,8 @@ class ORM_Core {
 				'FROM ('.trim($sql).') AS '.$this->db->escape_table('counted_results')
 			);
 
-			if ($result->count())
-			{
-				// Return the total number of rows from the query
-				return (int) $result->current()->total_rows;
-			}
+			// Return the total number of rows from the query
+			return (int) $result->current()->total_rows;
 		}
 
 		return FALSE;
@@ -919,8 +1121,16 @@ class ORM_Core {
 	{
 		if ($table === TRUE)
 		{
-			// Return the name of this tables PK
-			return $this->table_name.'.'.$this->primary_key;
+			if (is_string($prefix_table))
+			{
+				// Use prefix table name and this table's PK
+				return $prefix_table.'.'.$this->primary_key;
+			}
+			else
+			{
+				// Return the name of this table's PK
+				return $this->table_name.'.'.$this->primary_key;
+			}
 		}
 
 		if (is_string($prefix_table))
@@ -929,19 +1139,35 @@ class ORM_Core {
 			$prefix_table .= '.';
 		}
 
-		if ( ! is_string($table) OR ! isset($this->object[$table.'_'.$this->primary_key]))
+		if (isset($this->foreign_key[$table]))
 		{
-			// Use this table
-			$table = $this->table_name;
-
-			if ($this->table_names_plural === TRUE)
+			// Use the defined foreign key name, no magic here!
+			$foreign_key = $this->foreign_key[$table];
+		}
+		else
+		{
+			if ( ! is_string($table) OR ! isset($this->object[$table.'_'.$this->primary_key]))
 			{
-				// Make the key name singular
-				$table = inflector::singular($table);
+				// Use this table
+				$table = $this->table_name;
+
+				if (strpos($table, '.') !== FALSE)
+				{
+					// Hack around support for PostgreSQL schemas
+					list ($schema, $table) = explode('.', $table, 2);
+				}
+
+				if ($this->table_names_plural === TRUE)
+				{
+					// Make the key name singular
+					$table = inflector::singular($table);
+				}
 			}
+
+			$foreign_key = $table.'_'.$this->primary_key;
 		}
 
-		return $prefix_table.$table.'_'.$this->primary_key;
+		return $prefix_table.$foreign_key;
 	}
 
 	/**
@@ -949,7 +1175,7 @@ class ORM_Core {
 	 *
 	 * Example: The joining table of users and roles would be roles_users,
 	 * because "r" comes before "u". Joining products and categories would
-	 * result in categories_prouducts, because "c" comes before "p".
+	 * result in categories_products, because "c" comes before "p".
 	 *
 	 * Example: zoo > zebra > robber > ocean > angel > aardvark
 	 *
@@ -968,6 +1194,87 @@ class ORM_Core {
 		}
 
 		return $table;
+	}
+
+	/**
+	 * Returns an ORM model for the given object name;
+	 *
+	 * @param   string  object name
+	 * @return  ORM
+	 */
+	protected function related_object($object)
+	{
+		if (isset($this->has_one[$object]))
+		{
+			$object = ORM::factory($this->has_one[$object]);
+		}
+		elseif (isset($this->belongs_to[$object]))
+		{
+			$object = ORM::factory($this->belongs_to[$object]);
+		}
+		elseif (in_array($object, $this->has_one) OR in_array($object, $this->belongs_to))
+		{
+			$object = ORM::factory($object);
+		}
+		else
+		{
+			return FALSE;
+		}
+
+		return $object;
+	}
+
+	/**
+	 * Loads an array of values into into the current object.
+	 *
+	 * @chainable
+	 * @param   array  values to load
+	 * @return  ORM
+	 */
+	public function load_values(array $values)
+	{
+		if (array_key_exists($this->primary_key, $values))
+		{
+			// Replace the object and reset the object status
+			$this->object = $this->changed = $this->related = array();
+
+			// Set the loaded and saved object status based on the primary key
+			$this->loaded = $this->saved = ($values[$this->primary_key] !== NULL);
+		}
+
+		// Related objects
+		$related = array();
+
+		foreach ($values as $column => $value)
+		{
+			if (strpos($column, ':') === FALSE)
+			{
+				if (isset($this->table_columns[$column]))
+				{
+					// The type of the value can be determined, convert the value
+					$value = $this->load_type($column, $value);
+				}
+
+				$this->object[$column] = $value;
+			}
+			else
+			{
+				list ($prefix, $column) = explode(':', $column, 2);
+
+				$related[$prefix][$column] = $value;
+			}
+		}
+
+		if ( ! empty($related))
+		{
+			foreach ($related as $object => $values)
+			{
+				// Load the related objects with the values in the result
+				$this->related[$object] = $this->related_object($object)->load_values($values);
+			}
+		}
+
+		return $this;
 	}
 
 	/**
@@ -997,7 +1304,20 @@ class ORM_Core {
 		switch ($column['type'])
 		{
 			case 'int':
-				$value = ($value === '' AND ! empty($data['null'])) ? NULL : (int) $value;
+				if ($value === '' AND ! empty($column['null']))
+				{
+					// Forms will only submit strings, so empty integer values must be null
+					$value = NULL;
+				}
+				elseif ((float) $value > PHP_INT_MAX)
+				{
+					// This number cannot be represented by a PHP integer, so we convert it to a string
+					$value = (string) $value;
+				}
+				else
+				{
+					$value = (int) $value;
+				}
 			break;
 			case 'float':
 				$value = (float) $value;
@@ -1011,33 +1331,6 @@ class ORM_Core {
 		}
 
 		return $value;
-	}
-
-	/**
-	 * Loads an array of values into into the current object.
-	 *
-	 * @chainable
-	 * @param   array  values to load
-	 * @return  ORM
-	 */
-	protected function load_values(array $values)
-	{
-		// Get the table columns
-		$columns = array_keys($this->table_columns);
-
-		// Make sure all the columns are defined
-		$this->object += array_combine($columns, array_fill(0, count($columns), NULL));
-
-		foreach ($columns as $column)
-		{
-			// Value for this column
-			$value = isset($values[$column]) ? $values[$column] : NULL;
-
-			// Set value manually, to avoid triggering changes
-			$this->object[$column] = $this->load_type($column, $value);
-		}
-
-		return $this;
 	}
 
 	/**
@@ -1059,8 +1352,36 @@ class ORM_Core {
 
 		if ( ! isset($this->db_applied['select']))
 		{
-			// Selete all columns by default
+			// Select all columns by default
 			$this->db->select($this->table_name.'.*');
+		}
+
+		if ( ! empty($this->load_with))
+		{
+			foreach ($this->load_with as $object)
+			{
+				// Join each object into the results
+				$this->with($object);
+			}
+		}
+
+		if ( ! isset($this->db_applied['orderby']) AND ! empty($this->sorting))
+		{
+			$sorting = array();
+			foreach ($this->sorting as $column => $direction)
+			{
+				if (strpos($column, '.') === FALSE)
+				{
+					// Keeps sorting working properly when using JOINs on
+					// tables with columns of the same name
+					$column = $this->table_name.'.'.$column;
+				}
+
+				$sorting[$column] = $direction;
+			}
+
+			// Apply the user-defined sorting
+			$this->db->orderby($sorting);
 		}
 
 		// Load the result
@@ -1074,12 +1395,6 @@ class ORM_Core {
 
 		if ($result->count() === 1)
 		{
-			// Model is loaded and saved
-			$this->loaded = $this->saved = TRUE;
-
-			// Clear relationships and changed values
-			$this->related = $this->changed = array();
-
 			// Load object values
 			$this->load_values($result->result(FALSE)->current());
 		}
@@ -1090,6 +1405,46 @@ class ORM_Core {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * Return an array of all the primary keys of the related table.
+	 *
+	 * @param   string  table name
+	 * @param   object  ORM model to find relations of
+	 * @return  array
+	 */
+	protected function load_relations($table, ORM $model)
+	{
+		// Save the current query chain (otherwise the next call will clash)
+		$this->db->push();
+
+		$query = $this->db
+			->select($model->foreign_key(NULL).' AS id')
+			->from($table)
+			->where($this->foreign_key(NULL, $table), $this->object[$this->primary_key])
+			->get()
+			->result(TRUE);
+
+		$this->db->pop();
+
+		$relations = array();
+		foreach ($query as $row)
+		{
+			$relations[] = $row->id;
+		}
+
+		return $relations;
+	}
+
+	/**
+	 * Returns whether or not primary key is empty
+	 *
+	 * @return bool
+	 */
+	protected function empty_primary_key()
+	{
+		return (empty($this->object[$this->primary_key]) AND $this->object[$this->primary_key] !== '0');
 	}
 
 } // End ORM

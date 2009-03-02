@@ -55,7 +55,7 @@ class Users_Controller extends Admin_Controller
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
 			
-			if ($post->action = 'a') 				// Add/Edit Action
+			if ($post->action == 'a') 				// Add/Edit Action
 			{
 	        	// Add some rules, the input field, followed by a list of checks, carried out in order
 				$post->add_rules('username','required','length[3,16]', 'alpha');
@@ -74,20 +74,28 @@ class Users_Controller extends Admin_Controller
 					array($this,'email_exists_chk')) : '';
 					
 				// Validate for roles
-				if ($post->role != 'admin' && $post->role != 'user') {
+				if ($post->role != 'admin' && $post->role != 'login') {
 					$post->add_error('role', 'values');
 				}
 				
 				// Prevent modification of the admin users role to user role
-				if ($post->username == 'admin' && $post->role == 'user') {
+				if ($post->username == 'admin' && $post->role == 'login') {
+					$post->add_error('username', 'admin');
+				}
+			}
+			elseif ($post->action == 'd') 
+			{
+				// Prevent deletion of the admin account
+				if ($post->username == 'admin') {
 					$post->add_error('username', 'admin');
 				}
 			}
 			
+			
 			if ($post->validate())
 	        {
 				$user = ORM::factory('user',$post->user_id);
-				if ($post->action = 'a') 				// Add/Edit Action
+				if ($post->action == 'a') 				// Add/Edit Action
 				{
 					// Existing User??
 					if ($user->loaded==true)
@@ -101,10 +109,17 @@ class Users_Controller extends Admin_Controller
 						// Remove Old Roles
 						foreach($user->roles as $role){
 							$user->remove($role); 
-						} 
+						}
 						
 						// Add New Role
-						$user->add(ORM::factory('role', $post->role));
+						if ($post->role == 'admin') {
+							$user->add(ORM::factory('role', 'login'));
+							$user->add(ORM::factory('role', 'admin'));
+						}
+						else
+						{
+							$user->add(ORM::factory('role', 'login'));
+						}
 						
 						$form_saved = TRUE;
 						$form_action = "EDITED";
@@ -119,23 +134,30 @@ class Users_Controller extends Admin_Controller
 						$user->save();
 						
 						// Add New Role
-						$user->add(ORM::factory('role', $post->role));
+						if ($post->role == 'admin') {
+							$user->add(ORM::factory('role', 'login'));
+							$user->add(ORM::factory('role', 'admin'));
+						}
+						else
+						{
+							$user->add(ORM::factory('role', 'login'));
+						}
 						
 						$form_saved = TRUE;
 						$form_action = "ADDED";
 					}
 				}
-				elseif ($post->action = 'd')			// Delete Action 
+				elseif ($post->action == 'd')			// Delete Action 
 				{
 					if ($user->loaded==true)
 					{
-						// Remove Roles
-						foreach ($user->roles as $role) {
-							$user->remove_role($role);
+						// If the user does not exist, redirect
+						if ($user->loaded)
+						{
+							// Delete the user
+							$user->delete();
 						}
-						
-						// Delete User
-						$user->delete($post->user_id);
+
 						$form_saved = TRUE;
 						$form_action = "DELETED";
 					}
@@ -172,7 +194,7 @@ class Users_Controller extends Admin_Controller
 		$this->template->content->pagination = $pagination;
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->users = $users;
-		$this->template->content->roles = array("admin"=>"admin","user"=>"user");
+		$this->template->content->roles = array("admin"=>"admin","login"=>"login");
 		
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
@@ -183,8 +205,7 @@ class Users_Controller extends Admin_Controller
 	 * Checks if username already exists.
      * @param Validation $post $_POST variable with validation rules 
 	 */
-    //XXX: Should probably be marked private
-	public function username_exists_chk(Validation $post)
+	private function username_exists_chk(Validation $post)
 	{
 		$users = ORM::factory('user');
 		// If add->rules validation found any errors, get me out of here!
@@ -199,8 +220,7 @@ class Users_Controller extends Admin_Controller
 	 * Checks if email address is associated with an account.
 	 * @param Validation $post $_POST variable with validation rules 
 	 */
-    //XXX: Should probably be marked private
-	public function email_exists_chk( Validation $post )
+	private function email_exists_chk( Validation $post )
 	{
 		$users = ORM::factory('user');
 		if( array_key_exists('email',$post->errors()))

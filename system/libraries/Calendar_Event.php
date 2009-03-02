@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Calendar event observer class.
  *
- * $Id: Calendar_Event.php 2899 2008-06-25 08:04:09Z armen $
+ * $Id: Calendar_Event.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Calendar
  * @author     Kohana Team

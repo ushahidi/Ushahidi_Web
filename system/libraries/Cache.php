@@ -1,10 +1,10 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Provides a driver-based interface for finding, creating, and deleting cached
  * resources. Caches are identified by a unique string. Tagging of caches is
  * also supported, and caches can be found and deleted by id or tag.
  *
- * $Id: Cache.php 3263 2008-08-05 17:57:50Z PugFish $
+ * $Id: Cache.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Cache
  * @author     Kohana Team

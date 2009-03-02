@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Controls headers that effect client caching of pages
  *
- * $Id: expires.php 3229 2008-07-28 22:16:20Z Geert $
+ * $Id: expires.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

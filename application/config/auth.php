@@ -36,6 +36,11 @@ $config['salt_pattern'] = '3, 5, 6, 10, 24, 26, 35, 36, 37, 40';
 $config['lifetime'] = 1209600;
 
 /**
+ * Set the session key that will be used to store the current user.
+ */
+$config['session_key'] = 'auth_user';
+
+/**
  * Usernames (keys) and hashed passwords (values) used by the File driver.
  */
 $config['users'] = array

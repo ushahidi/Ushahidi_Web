@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * MySQLi Database Driver
  *
- * $Id: Mysqli.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: Mysqli.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -49,7 +49,7 @@ class Database_Mysqli_Driver extends Database_Mysql_Driver {
 		$host = isset($host) ? $host : $socket;
 
 		// Make the connection and select the database
-		if ($this->link = new mysqli($host, $user, $pass, $database))
+		if ($this->link = new mysqli($host, $user, $pass, $database, $port))
 		{
 			if ($charset = $this->db_config['character_set'])
 			{
@@ -114,15 +114,18 @@ class Database_Mysqli_Driver extends Database_Mysql_Driver {
 
 	public function field_data($table)
 	{
-		$query  = $this->link->query('SHOW COLUMNS FROM '.$this->escape_table($table));
+		$columns = array();
+		$query = $this->link->query('SHOW COLUMNS FROM '.$this->escape_table($table));
 
-		$table  = array();
-		while ($row = $query->fetch_object())
+		if (is_object($query))
 		{
-			$table[] = $row;
+			while ($row = $query->fetch_object())
+			{
+				$columns[] = $row;
+			}
 		}
 
-		return $table;
+		return $columns;
 	}
 
 } // End Database_Mysqli_Driver Class

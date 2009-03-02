@@ -1,3 +1,4 @@
+<?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
 <table class="kp-table">
 <?php
 foreach ($rows as $row):

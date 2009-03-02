@@ -1,10 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Validation helper class.
  *
- * $Id: valid.php 3238 2008-07-30 15:42:28Z Shadowhand $
- *
- * $Id: valid.php 3238 2008-08-25 10:03:28CST David Kobia $
+ * $Id: valid.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -87,12 +85,15 @@ class valid_Core {
 	 *
 	 * @param   string   IP address
 	 * @param   boolean  allow IPv6 addresses
+	 * @param   boolean  allow private IP networks
 	 * @return  boolean
 	 */
-	public static function ip($ip, $ipv6 = FALSE)
+	public static function ip($ip, $ipv6 = FALSE, $allow_private = TRUE)
 	{
-		// Do not allow private and reserved range IPs
+		// By default do not allow private and reserved range IPs
 		$flags = FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE;
+		if ($allow_private === TRUE)
+			$flags =  FILTER_FLAG_NO_RES_RANGE;
 
 		if ($ipv6 === TRUE)
 			return (bool) filter_var($ip, FILTER_VALIDATE_IP, $flags);
@@ -197,6 +198,17 @@ class valid_Core {
 	}
 
 	/**
+	 * Tests if a string is a valid date string.
+	 * 
+	 * @param   string   date to check
+	 * @return  boolean
+	 */
+	public function date($str)
+	{
+		return (strtotime($str) !== FALSE);
+	}
+
+	/**
 	 * Checks whether a string consists of alphabetical characters only.
 	 *
 	 * @param   string   input string
@@ -255,41 +267,35 @@ class valid_Core {
 	/**
 	 * Checks whether a string is a valid number (negative and decimal numbers allowed).
 	 *
+	 * @see Uses locale conversion to allow decimal point to be locale specific.
+	 * @see http://www.php.net/manual/en/function.localeconv.php
+	 * 
 	 * @param   string   input string
 	 * @return  boolean
 	 */
 	public static function numeric($str)
 	{
-		return (is_numeric($str) AND preg_match('/^[-0-9.]++$/D', (string) $str));
+		// Use localeconv to set the decimal_point value: Usually a comma or period.
+		$locale = localeconv();
+		return (preg_match('/^[-0-9'.$locale['decimal_point'].']++$/D', (string) $str));
 	}
-
-
-	/**
-	 * Checks whether a string is a valid number (negative and decimal numbers allowed) and between a specified range.
-	 *
-	 * @param   string   input string
-	 * @param   float (MIN/MAX)
-	 * @return  boolean
-	 */
-	public static function between($str, $min_max = array(0,0))
-	{
-		$set_min = $min_max[0];
-		$set_max = $min_max[1];
-		$str = (float) $str;
-		return (is_numeric($str) AND preg_match('/^[-0-9.]++$/D', (string) $str) AND ($str <= $set_max AND $str >= $set_min) );
-	}
-	
 
 	/**
 	 * Checks whether a string is a valid text. Letters, numbers, whitespace,
 	 * dashes, periods, and underscores are allowed.
 	 *
-	 * @param   string   $str
+	 * @param   string   text to check
 	 * @return  boolean
 	 */
 	public static function standard_text($str)
 	{
-		return (bool) preg_match('/^[-\pL\pN\pZ_.]++$/uD', (string) $str);
+		// pL matches letters
+		// pN matches numbers
+		// pZ matches whitespace
+		// pPc matches underscores
+		// pPd matches dashes
+		// pPo matches normal puncuation
+		return (bool) preg_match('/^[\pL\pN\pZ\p{Pc}\p{Pd}\p{Po}]++$/uD', (string) $str);
 	}
 
 	/**
@@ -329,6 +335,20 @@ class valid_Core {
 		return (bool) preg_match($pattern, (string) $str);
 	}
 	
+	/**
+	 * Checks whether a string is a valid number (negative and decimal numbers allowed) and between a specified range.
+	 *
+	 * @param   string   input string
+	 * @param   float (MIN/MAX)
+	 * @return  boolean
+	 */
+	public static function between($str, $min_max = array(0,0))
+	{
+		$set_min = $min_max[0];
+		$set_max = $min_max[1];
+		$str = (float) $str;
+		return (is_numeric($str) AND preg_match('/^[-0-9.]++$/D', (string) $str) AND ($str <= $set_max AND $str >= $set_min) );
+	}
 	
 	/**
 	 * Checks whether a string is a valid date (mm/dd/yyyy).

@@ -1,9 +1,5 @@
-<?php
-/**
- * Model for (auto login) user_tokens for the Auth Module
- *
- * $Id: auth_user_token.php 3352 3352 2008-08-18 09:43:56BST atomless $
- */
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+
 class Auth_User_Token_Model extends ORM {
 
 	// Relationships
@@ -70,7 +66,7 @@ class Auth_User_Token_Model extends ORM {
 	/**
 	 * Finds a new unique token, using a loop to make sure that the token does
 	 * not already exist in the database. This could potentially become an
-	 * infinite loop, but the chances of that happening are VERY unlikely.
+	 * infinite loop, but the chances of that happening are very unlikely.
 	 *
 	 * @return  string
 	 */
@@ -103,4 +99,4 @@ class Auth_User_Token_Model extends ORM {
 		return parent::unique_key($id);
 	}
 
-} // End User Token
+} // End Auth User Token Model

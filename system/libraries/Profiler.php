@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Adds useful information to the bottom of the current page for debugging and optimization purposes.
  *
@@ -8,7 +8,7 @@
  * POST Data    - The name and values of any POST data submitted to the current page.
  * Cookie Data  - All cookies sent for the current request.
  *
- * $Id: Profiler.php 3160 2008-07-20 16:03:48Z Shadowhand $
+ * $Id: Profiler.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Profiler
  * @author     Kohana Team

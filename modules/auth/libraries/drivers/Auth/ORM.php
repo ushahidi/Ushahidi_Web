@@ -1,71 +1,93 @@
-<?php
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * ORM Auth driver.
  *
- * $Id: ORM.php 3114 2008-07-15 21:11:44Z Geert $
- * $Id: ORM.php 3352 2008-08-18 09:43:56BST atomless $
+ * $Id: ORM.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Auth
  * @author     Kohana Team
  * @copyright  (c) 2007-2008 Kohana Team
  * @license    http://kohanaphp.com/license.html
  */
-class Auth_ORM_Driver implements Auth_Driver {
-
-	protected $config;
-
-	// Session library
-	protected $session;
+class Auth_ORM_Driver extends Auth_Driver {
 
 	/**
-	 * Constructor. Loads the Session instance.
+	 * Checks if a session is active.
 	 *
-	 * @return  void
+	 * @param   string   role name
+	 * @param   array    collection of role names
+	 * @return  boolean
 	 */
-	public function __construct(array $config)
-	{
-		// Load config
-		$this->config = $config;
-
-		// Load libraries
-		$this->session = Session::instance();
-	}
-
 	public function logged_in($role)
 	{
 		$status = FALSE;
 
-		$authuser = $this->session->get('auth_user', FALSE);
+		// Get the user from the session
+		$user = $this->session->get($this->config['session_key']);
 
-		// Checks if a user is logged in and valid
-		if ( ! empty($authuser)
-			 AND is_object($authuser)
-			 AND ($authuser instanceof User_Model)
-			 AND $authuser->loaded)
+		if (is_object($user) AND $user instanceof User_Model AND $user->loaded)
 		{
 			// Everything is okay so far
 			$status = TRUE;
 
 			if ( ! empty($role))
 			{
-				// Check that the user has the given role
-				$status = $authuser->has(new Role_Model($role));
+
+				// If role is an array
+				if (is_array($role))
+				{
+					// Check each role
+					foreach ($role as $role_iteration)
+					{
+						if ( ! is_object($role_iteration))
+						{
+							$role_iteration = ORM::factory('role', $role_iteration);
+						}
+						// If the user doesn't have the role
+						if( ! $user->has($role_iteration))
+						{
+							// Set the status false and get outta here
+							$status = FALSE;
+							break;
+						}
+					}
+				}
+				else
+				{
+				// Else just check the one supplied roles
+					if ( ! is_object($role))
+					{
+						// Load the role
+						$role = ORM::factory('role', $role);
+					}
+
+					// Check that the user has the given role
+					$status = $user->has($role);
+				}
 			}
 		}
 
 		return $status;
 	}
 
+	/**
+	 * Logs a user in.
+	 *
+	 * @param   string   username
+	 * @param   string   password
+	 * @param   boolean  enable auto-login
+	 * @return  boolean
+	 */
 	public function login($user, $password, $remember)
 	{
 		if ( ! is_object($user))
 		{
-			// Load the user if only username was passed
+			// Load the user
 			$user = ORM::factory('user', $user);
 		}
 
 		// If the passwords match, perform a login
-		if ($user->has(new Role_Model('login')) AND $user->password === $password)
+		if ($user->has(ORM::factory('role', 'login')) AND $user->password === $password)
 		{
 			if ($remember === TRUE)
 			{
@@ -77,7 +99,7 @@ class Auth_ORM_Driver implements Auth_Driver {
 				$token->expires = time() + $this->config['lifetime'];
 				$token->save();
 
-				// Set the autologin cookie - links to user_token in the db
+				// Set the autologin cookie
 				cookie::set('authautologin', $token->token, $this->config['lifetime']);
 			}
 
@@ -91,6 +113,32 @@ class Auth_ORM_Driver implements Auth_Driver {
 		return FALSE;
 	}
 
+	/**
+	 * Forces a user to be logged in, without specifying a password.
+	 *
+	 * @param   mixed    username
+	 * @return  boolean
+	 */
+	public function force_login($user)
+	{
+		if ( ! is_object($user))
+		{
+			// Load the user
+			$user = ORM::factory('user', $user);
+		}
+
+		// Mark the session as forced, to prevent users from changing account information
+		$_SESSION['auth_forced'] = TRUE;
+
+		// Run the standard completion
+		$this->complete_login($user);
+	}
+
+	/**
+	 * Logs a user in, based on the authautologin cookie.
+	 *
+	 * @return  boolean
+	 */
 	public function auto_login()
 	{
 		if ($token = cookie::get('authautologin'))
@@ -98,7 +146,7 @@ class Auth_ORM_Driver implements Auth_Driver {
 			// Load the token and user
 			$token = ORM::factory('user_token', $token);
 
-			if ($token->id > 0 AND $token->user->id > 0)
+			if ($token->loaded AND $token->user->loaded)
 			{
 				if ($token->user_agent === sha1(Kohana::$user_agent))
 				{
@@ -123,44 +171,29 @@ class Auth_ORM_Driver implements Auth_Driver {
 		return FALSE;
 	}
 
-	public function force_login($user)
-	{
-		if ( ! is_object($user))
-		{
-			// Load the user
-			$user = ORM::factory('user', $user);
-		}
-
-		// Mark the session as forced, to prevent users from changing account information
-		$this->session->set('auth_forced', TRUE);
-
-		// Run the standard completion
-		$this->complete_login($user);
-	}
-
+	/**
+	 * Log a user out and remove any auto-login cookies.
+	 *
+	 * @param   boolean  completely destroy the session
+	 * @return  boolean
+	 */
 	public function logout($destroy)
 	{
-		// Delete the autologin cookie if it exists
-		cookie::get('authautologin') and cookie::delete('authautologin');
-
-		if ($destroy === TRUE)
+		if (cookie::get('authautologin'))
 		{
-			// Destroy the session completely
-			Session::instance()->destroy();
-		}
-		else
-		{
-			// Remove the user object from the session
-			$this->session->delete('auth_user');
-
-			// Regenerate session_id
-			$this->session->regenerate();
+			// Delete the autologin cookie to prevent re-login
+			cookie::delete('authautologin');
 		}
 
-		// Double check
-		return ! $this->session->get('auth_user', FALSE);
+		return parent::logout($destroy);
 	}
 
+	/**
+	 * Get the stored password for a username.
+	 *
+	 * @param   mixed   username
+	 * @return  string
+	 */
 	public function password($user)
 	{
 		if ( ! is_object($user))
@@ -172,6 +205,13 @@ class Auth_ORM_Driver implements Auth_Driver {
 		return $user->password;
 	}
 
+	/**
+	 * Complete the login for a user by incrementing the logins and setting
+	 * session data: user_id, username, roles
+	 *
+	 * @param   object   user model object
+	 * @return  void
+	 */
 	protected function complete_login(User_Model $user)
 	{
 		// Update the number of logins
@@ -183,11 +223,7 @@ class Auth_ORM_Driver implements Auth_Driver {
 		// Save the user
 		$user->save();
 
-		// Regenerate session_id
-		$this->session->regenerate();
-
-		// Store session data
-		$this->session->set('auth_user', $user);
+		return parent::complete_login($user);
 	}
 
-} // End Auth_Orm_Driver Class
+} // End Auth_ORM_Driver

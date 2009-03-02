@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Simple benchmarking.
  *
- * $Id: Benchmark.php 2897 2008-06-25 08:02:08Z armen $
+ * $Id: Benchmark.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team

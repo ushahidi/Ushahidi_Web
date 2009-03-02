@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * GD Image Driver.
  *
- * $Id: GD.php 3248 2008-08-01 21:02:18Z Geert $
+ * $Id: GD.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Image
  * @author     Kohana Team
@@ -211,16 +211,16 @@ class Image_GD_Driver extends Image_Driver {
 			// Recalculate the percentage to a pixel size
 			$properties['height'] = round($height * (substr($properties['height'], 0, -1) / 100));
 		}
-
+		
+		// Recalculate the width and height, if they are missing
+		empty($properties['width'])  and $properties['width']  = round($width * $properties['height'] / $height);
+		empty($properties['height']) and $properties['height'] = round($height * $properties['width'] / $width);
+		
 		if ($properties['master'] === Image::AUTO)
 		{
 			// Change an automatic master dim to the correct type
 			$properties['master'] = (($width / $properties['width']) > ($height / $properties['height'])) ? Image::WIDTH : Image::HEIGHT;
 		}
-
-		// Recalculate the width and height, if they are missing
-		empty($properties['width'])  and $properties['width']  = round($width * $properties['height'] / $height);
-		empty($properties['height']) and $properties['height'] = round($height * $properties['width'] / $width);
 
 		if (empty($properties['height']) OR $properties['master'] === Image::WIDTH)
 		{

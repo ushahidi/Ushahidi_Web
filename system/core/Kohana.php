@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Provides Kohana-specific helper functions. This is where the magic happens!
  *
- * $Id: Kohana.php 3283 2008-08-06 20:56:56Z Geert $
+ * $Id: Kohana.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -109,7 +109,7 @@ final class Kohana {
 
 		if (function_exists('date_default_timezone_set'))
 		{
-			$timezone = Kohana::config('locale.timezone');
+			$timezone = self::config('locale.timezone');
 
 			// Set default timezone, due to increased validation of date settings
 			// which cause massive amounts of E_NOTICEs to be generated in PHP 5.2+
@@ -168,49 +168,15 @@ final class Kohana {
 		// Enable Kohana output handling
 		Event::add('system.shutdown', array('Kohana', 'shutdown'));
 
-		if ($config = Kohana::config('core.enable_hooks'))
+		if (self::config('core.enable_hooks') === TRUE)
 		{
-			$hooks = array();
+			// Find all the hook files
+			$hooks = self::list_files('hooks', TRUE);
 
-			if ( ! is_array($config))
+			foreach ($hooks as $file)
 			{
-				// All of the hooks are enabled, so we use list_files
-				$hooks = Kohana::list_files('hooks', TRUE);
-			}
-			else
-			{
-				// Individual hooks need to be found
-				foreach ($config as $name)
-				{
-					if ($hook = Kohana::find_file('hooks', $name, FALSE))
-					{
-						// Hook was found, add it to loaded hooks
-						$hooks[] = $hook;
-					}
-					else
-					{
-						// This should never happen
-						Kohana::log('error', 'Hook not found: '.$name);
-					}
-				}
-			}
-
-			// Length of extension, for offset
-			$ext = -(strlen(EXT));
-
-			foreach ($hooks as $hook)
-			{
-				// Validate the filename extension
-				if (substr($hook, $ext) === EXT)
-				{
-					// Hook was found, include it
-					include $hook;
-				}
-				else
-				{
-					// This should never happen
-					Kohana::log('error', 'Hook not found: '.$hook);
-				}
+				// Load the hook
+				include $file;
 			}
 		}
 
@@ -256,7 +222,7 @@ final class Kohana {
 				Event::run('system.404');
 			}
 
-			if (IN_PRODUCTION AND $class->getConstant('ALLOW_PRODUCTION') == FALSE)
+			if ($class->isAbstract() OR (IN_PRODUCTION AND $class->getConstant('ALLOW_PRODUCTION') == FALSE))
 			{
 				// Controller is not allowed to run in production
 				Event::run('system.404');
@@ -513,7 +479,12 @@ final class Kohana {
 	{
 		if (self::$log_levels[$type] <= self::$configuration['core']['log_threshold'])
 		{
-			self::$log[] = array(date('Y-m-d H:i:s P'), $type, $message);
+			$message = array(date('Y-m-d H:i:s P'), $type, $message);
+
+			// Run the system.log event
+			Event::run('system.log', $message);
+
+			self::$log[] = $message;
 		}
 	}
 
@@ -524,7 +495,7 @@ final class Kohana {
 	 */
 	public static function log_save()
 	{
-		if (empty(self::$log))
+		if (empty(self::$log) OR self::$configuration['core']['log_threshold'] < 1)
 			return;
 
 		// Filename of the log
@@ -729,7 +700,7 @@ final class Kohana {
 		// Fetch benchmark for page execution time
 		$benchmark = Benchmark::get(SYSTEM_BENCHMARK.'_total_execution');
 
-		if (Kohana::config('core.render_stats') === TRUE)
+		if (self::config('core.render_stats') === TRUE)
 		{
 			// Replace the global template variables
 			$output = str_replace(
@@ -753,7 +724,7 @@ final class Kohana {
 			);
 		}
 
-		if ($level = Kohana::config('core.output_compression') AND ini_get('output_handler') !== 'ob_gzhandler' AND (int) ini_get('zlib.output_compression') === 0)
+		if ($level = self::config('core.output_compression') AND ini_get('output_handler') !== 'ob_gzhandler' AND (int) ini_get('zlib.output_compression') === 0)
 		{
 			if ($level < 1 OR $level > 9)
 			{
@@ -882,7 +853,7 @@ final class Kohana {
 		$file = str_replace('\\', '/', realpath($file));
 		$file = preg_replace('|^'.preg_quote(DOCROOT).'|', '', $file);
 
-		if ($level >= self::$configuration['core']['log_threshold'])
+		if ($level <= self::$configuration['core']['log_threshold'])
 		{
 			// Log the error
 			self::log('error', self::lang('core.uncaught_exception', $type, $message, $file, $line));
@@ -1004,37 +975,39 @@ final class Kohana {
 			$file = $class;
 		}
 
-		if (($filepath = self::find_file($type, $file)) === FALSE)
-			return FALSE;
-
-		// Load the file
-		require $filepath;
-
-		if ($type === 'libraries' OR $type === 'helpers')
+		if ($filename = self::find_file($type, $file))
 		{
-			if ($extension = self::find_file($type, self::$configuration['core']['extension_prefix'].$class))
+			// Load the class
+			require $filename;
+		}
+		else
+		{
+			// The class could not be found
+			return FALSE;
+		}
+
+		if ($filename = self::find_file($type, self::$configuration['core']['extension_prefix'].$class))
+		{
+			// Load the class extension
+			require $filename;
+		}
+		elseif ($suffix !== 'Core' AND class_exists($class.'_Core', FALSE))
+		{
+			// Class extension to be evaluated
+			$extension = 'class '.$class.' extends '.$class.'_Core { }';
+
+			// Start class analysis
+			$core = new ReflectionClass($class.'_Core');
+
+			if ($core->isAbstract())
 			{
-				// Load the extension
-				require $extension;
+				// Make the extension abstract
+				$extension = 'abstract '.$extension;
 			}
-			elseif ($suffix !== 'Core' AND class_exists($class.'_Core', FALSE))
-			{
-				// Class extension to be evaluated
-				$extension = 'class '.$class.' extends '.$class.'_Core { }';
 
-				// Start class analysis
-				$core = new ReflectionClass($class.'_Core');
-
-				if ($core->isAbstract())
-				{
-					// Make the extension abstract
-					$extension = 'abstract '.$extension;
-				}
-
-				// Transparent class extensions are handled using eval. This is
-				// a disgusting hack, but it gets the job done.
-				eval($extension);
-			}
+			// Transparent class extensions are handled using eval. This is
+			// a disgusting hack, but it gets the job done.
+			eval($extension);
 		}
 
 		return TRUE;
@@ -1150,7 +1123,7 @@ final class Kohana {
 
 		if ($path === FALSE)
 		{
-			$paths = array_reverse(Kohana::include_paths());
+			$paths = array_reverse(self::include_paths());
 
 			foreach ($paths as $path)
 			{
@@ -1200,7 +1173,7 @@ final class Kohana {
 		$group = $group[0];
 
 		// Get locale name
-		$locale = Kohana::config('locale.language.0');
+		$locale = self::config('locale.language.0');
 
 		if ( ! isset(self::$internal_cache['language'][$locale][$group]))
 		{
@@ -1238,7 +1211,7 @@ final class Kohana {
 
 		if ($line === NULL)
 		{
-			Kohana::log('error', 'Missing i18n entry '.$key.' for language '.$locale);
+			self::log('error', 'Missing i18n entry '.$key.' for language '.$locale);
 
 			// Return the key string as fallback
 			return $key;
@@ -1391,20 +1364,20 @@ final class Kohana {
 
 		// Return the raw string
 		if ($key === 'agent')
-			return Kohana::$user_agent;
+			return self::$user_agent;
 
 		if ($info === NULL)
 		{
 			// Parse the user agent and extract basic information
-			$agents = Kohana::config('user_agents');
+			$agents = self::config('user_agents');
 
 			foreach ($agents as $type => $data)
 			{
 				foreach ($data as $agent => $name)
 				{
-					if (stripos(Kohana::$user_agent, $agent) !== FALSE)
+					if (stripos(self::$user_agent, $agent) !== FALSE)
 					{
-						if ($type === 'browser' AND preg_match('|'.preg_quote($agent).'[^0-9.]*+([0-9.][0-9.a-z]*)|i', Kohana::$user_agent, $match))
+						if ($type === 'browser' AND preg_match('|'.preg_quote($agent).'[^0-9.]*+([0-9.][0-9.a-z]*)|i', self::$user_agent, $match))
 						{
 							// Set the browser version
 							$info['version'] = $match[1];
@@ -1472,11 +1445,11 @@ final class Kohana {
 			{
 				case 'accept_lang':
 					// Check if the lange is accepted
-					return in_array($compare, Kohana::user_agent('languages'));
+					return in_array($compare, self::user_agent('languages'));
 				break;
 				case 'accept_charset':
 					// Check if the charset is accepted
-					return in_array($compare, Kohana::user_agent('charsets'));
+					return in_array($compare, self::user_agent('charsets'));
 				break;
 				default:
 					// Invalid comparison
@@ -1532,7 +1505,7 @@ final class Kohana {
 
 			if (isset($entry['file']))
 			{
-				$temp .= Kohana::lang('core.error_file_line', preg_replace('!^'.preg_quote(DOCROOT).'!', '', $entry['file']), $entry['line']);
+				$temp .= self::lang('core.error_file_line', preg_replace('!^'.preg_quote(DOCROOT).'!', '', $entry['file']), $entry['line']);
 			}
 
 			$temp .= '<pre>';

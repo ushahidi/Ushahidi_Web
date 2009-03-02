@@ -26,7 +26,5 @@
 				// Submit Form
 				$("#userMain").submit();			
 
-			} else{
-				return false;
 			}
 		}

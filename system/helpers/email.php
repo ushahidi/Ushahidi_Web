@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Email helper class.
  *
- * $Id: email.php 3213 2008-07-27 14:28:37Z Geert $
+ * $Id: email.php 3917 2009-01-21 03:06:22Z zombor $
  *
  * @package    Core
  * @author     Kohana Team
@@ -95,7 +95,7 @@ class email_Core {
 			break;
 			default:
 				// Use the native connection
-				$connection = new Swift_Connection_NativeMail;
+				$connection = new Swift_Connection_NativeMail($config['options']);
 			break;
 		}
 
