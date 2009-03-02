@@ -72,6 +72,7 @@
 								{
 									$tweet_id = $tweet->id;
 									$tweet_from = $tweet->tweet_from;
+									$tweet_hashtag = $tweet->tweet_hashtag;
 									$incident_id = $tweet->incident_id;
 									$tweet_link = $tweet->tweet_link;
 									$tweet_description = $tweet->tweet;
@@ -85,6 +86,13 @@
 											</div>
 											<ul class="info">
 												<li class="none-separator">From: <strong><a href="<?php echo $tweet_link; ?>" target="_blank"><?php echo $tweet_from; ?></a></strong>
+												<?php
+												if($tweet_hashtag == ''){ //if this was a direct report
+													echo "<li class=\"none-separator\"><strong>DIRECT REPORT</strong>";
+												}else{ //if this was found using a hashtag search
+													echo "<li class=\"none-separator\">Hashtag: <strong>#".$tweet_hashtag."</strong>";
+												}
+												?>
 											</ul>
 										</td>
 										<td class="col-3"><?php echo $tweet_date; ?></td>

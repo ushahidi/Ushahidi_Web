@@ -872,8 +872,49 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js = new View('admin/reports_download_js');
 		$this->template->js->calendar_img = url::base() . "media/img/icon-calendar.gif";
 	}
-
-
+    function upload() {
+		if($_SERVER['REQUEST_METHOD'] == 'GET') {
+			$this->template->content = new View('admin/reports_upload');
+			$this->template->content->title = 'Upload Reports';
+			$this->template->content->form_error = false;
+		}
+		if($_SERVER['REQUEST_METHOD']=='POST') {
+			$errors = array();
+			$notices = array();
+			if(!$_FILES['csvfile']['error']) {
+				if(file_exists($_FILES['csvfile']['tmp_name'])) {
+					if($filehandle = fopen($_FILES['csvfile']['tmp_name'], 'r')) {
+						$importer = new ReportsImporter;
+						if($importer->import($filehandle)) {
+							$this->template->content = new View('admin/reports_upload_success');
+							$this->template->content->title = 'Upload Reports';		
+							$this->template->content->rowcount = $importer->totalrows;
+							$this->template->content->imported = $importer->importedrows;
+							$this->template->content->notices = $importer->notices;
+						}
+						else {
+							$errors = $importer->errors;
+						}
+					}
+					else {
+						$errors[] = 'Could not open file for reading';
+					}
+				} // file exists?
+				else {
+					$errors[] = 'Could not find uploaded file';
+				}
+			} // upload errors?
+			else {
+				$errors[] = $_FILES['csvfile']['error'];
+			}
+			if(count($errors)) {
+				$this->template->content = new View('admin/reports_upload');
+				$this->template->content->title = 'Upload Reports';		
+				$this->template->content->errors = $errors;
+				$this->template->content->form_error = 1;
+			}
+		} // _POST
+	}
 
 	/**
 	* Translate a report

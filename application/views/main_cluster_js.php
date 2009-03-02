@@ -73,7 +73,7 @@
 			
 			
 			// Create the markers layer
-			function addMarkers(catID,startDate,endDate, currZoom, currCenter){
+			function addMarkers(catID,startDate,endDate, currZoom, currCenter, mediaType){
 				
 				// Set Feature Styles
 				var style = new OpenLayers.Style({
@@ -132,6 +132,10 @@
 				if (typeof(endDate) != 'undefined'){
 					params.push('e=' + endDate);
 				}
+				if (typeof(mediaType) != 'undefined'){
+					params.push('m=' + mediaType);
+				}
+				
 				markers = new OpenLayers.Layer.Vector("Reports", {
 					preFeatureInsert:preFeatureInsert,
 					strategies: [
@@ -257,8 +261,8 @@
 				
 				// Get Current Center
 				currCenter = map.getCenter();
-				
-				addMarkers(catID, '', '', currZoom, currCenter);
+					
+				addMarkers(catID, '', '', currZoom, currCenter, gMediaType);
 			});
 			
 			if (!$("#startDate").val()) {
@@ -299,14 +303,14 @@
 					currCenter = map.getCenter();
 					
 					// Refresh Map
-					addMarkers(currCat, startDate, endDate, currZoom, currCenter);
+					addMarkers(currCat, startDate, endDate, currZoom, currCenter, gMediaType);
 					
 					// refresh graph
 					if (!currentCat || currentCat == '0') {
 						currentCat = 'ALL';
 					}
 					$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
-					    endTime: new Date(endDate * 1000),
+					    endTime: new Date(endDate * 1000), mediaType: gMediaType,
 						graphData: allGraphData[0][currentCat], 
 						url: "<?php echo url::base() . 'json/timeline/' ?>"
 					}).plot();
@@ -323,6 +327,7 @@
 			}).plot();
 			
 			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
+			gMediaType = 0;
 				
 			for (var i=0; i<categoryIds.length; i++) {
 				$('#cat_'+categoryIds[i]).click(function(){
@@ -336,8 +341,35 @@
 					var endTime = new Date($("#endDate").val() * 1000);
 					$.timeline({categoryId: catId, startTime: startTime, endTime: endTime,
 						graphData: graphData,
-						url: "<?php echo url::base() . 'json/timeline/' ?>"
+						url: "<?php echo url::base() . 'json/timeline/' ?>",
+						mediaType: gMediaType
 					}).plot();
 				});
 			}
+			
+			// media filter
+			$('.filter a').click(function(){
+				var startTimestamp = $("#startDate").val();
+				var endTimestamp = $("#endDate").val();
+				var startTime = new Date(startTimestamp * 1000);
+				var endTime = new Date(endTimestamp * 1000);
+				gMediaType = parseFloat(this.id.replace('media_', '')) || 0;
+				
+				// Get Current Zoom
+				currZoom = map.getZoom();
+					
+				// Get Current Center
+				currCenter = map.getCenter();
+				
+				// Refresh Map
+				addMarkers($('#currentCat').val(), startTimestamp, endTimestamp, 
+				           currZoom, currCenter, gMediaType);
+				
+				$('.filter a').attr('class', '');
+				$(this).addClass('active');
+				$.timeline({categoryId: gCategoryId, startTime: startTime, 
+				    endTime: endTime, mediaType: gMediaType,
+					url: "<?php echo url::base() . 'json/timeline/' ?>"
+				}).plot();
+			});
 		});

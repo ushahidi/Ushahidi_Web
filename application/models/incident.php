@@ -53,7 +53,7 @@ class Incident_Model extends ORM
         return $graph;
     }
 	
-	static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL,$active='true') 
+	static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL,$active='true',$media_type=NULL) 
 	{
 	    // get graph data
         // could not use DB query builder. It does not support parentheses yet
@@ -81,10 +81,15 @@ class Incident_Model extends ORM
         }
         
         $active_filter = '1';
-        if ($active == 'all') {
+        if ($active == 'all' || $active == 'false') {
         	$active_filter = '0,1';
-        } elseif ($active == 'false') {
-        	$active_filter = '0,1';
+        }
+        
+        $joins = '';
+        $general_filter = '';
+        if (isset($media_type) && is_numeric($media_type)) {
+        	$joins = 'INNER JOIN media ON media.incident_id = incident.id';
+        	$general_filter = ' AND media.media_type IN ('. $media_type  .')';
         }
         
         $graph_data = array();
@@ -93,8 +98,8 @@ class Incident_Model extends ORM
         $all_graphs .= "\"ALL\": { label: 'All Categories', ";
         $query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') 
 		                     AS time, COUNT(*) AS number 
-		                     FROM incident 
-		                     WHERE incident_active IN (' . $active_filter . ')
+		                     FROM incident ' . $joins . '
+		                     WHERE incident_active IN (' . $active_filter .')' . $general_filter .'
 		                     GROUP BY ' . $groupby_date_text;
         $query = $db->query($query_text);
 
@@ -112,8 +117,9 @@ class Incident_Model extends ORM
 							AS time, COUNT(*) AS number
 						        FROM incident 
 							INNER JOIN incident_category ON incident_category.incident_id = incident.id
+							' . $joins . '
 							WHERE incident_active IN (' . $active_filter . ') AND 
-							      incident_category.category_id = '. $index .'
+							      incident_category.category_id = '. $index . $general_filter . '
 							GROUP BY ' . $groupby_date_text;
 		    $graph_text = self::category_graph_text($query_text, $category);
 			$all_graphs .= $graph_text;

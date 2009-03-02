@@ -193,7 +193,8 @@ a:visited{
 	float:left;
 	padding:0 5px;
 }
-.big-map-block .filter ul li a.active,
+/*.big-map-block .filter ul li a span.active,*/
+.big-map-block .filter ul li a.active, 
 .big-map-block .filter ul li a:hover {
 	background:#3399cc url(../img/filter-item-l.gif) no-repeat;
 	color:#fff;

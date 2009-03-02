@@ -32,6 +32,7 @@ class Json_Controller extends Template_Controller
 		$category_id = "";
 		$incident_id = "";
 		$neighboring = "";
+		$media_type = "";
 		
 		if (isset($_GET['c']))
 		{
@@ -58,6 +59,16 @@ class Json_Controller extends Template_Controller
 		}
 		
 		$where_text = '';
+		// Do we have a media id to filter by?
+		if (isset($_GET['m']))
+		{
+			if (!empty($_GET['m']) && $_GET['m'] != '0')
+			{
+				$media_type = $_GET['m'];
+				$where_text .= ' AND media.media_type = ' . $media_type;
+			}
+		}
+		
         if (isset($_GET['s']) && !empty($_GET['s'])) {
         	$start_date = $_GET['s']; 
         	$where_text .= " AND UNIX_TIMESTAMP(incident.incident_date) >= '" . $start_date . "'";
@@ -66,93 +77,93 @@ class Json_Controller extends Template_Controller
         	$end_date = $_GET['e']; 
         	$where_text .= " AND UNIX_TIMESTAMP(incident.incident_date) <= '" . $end_date . "'";
         }
+
+        $markers = array();
+                
         // Do we have a category id to filter by?
         if (is_numeric($category_id) && $category_id != 0)
         {
             // Retrieve markers by category
             // XXX: Might need to replace magic numbers
-  
-            foreach (ORM::factory('incident')
-                     ->join('incident_category', 'incident.id', 'incident_category.incident_id','INNER')
+
+/*          XXX Why doesn't this produce the same results as the SQL below?  
+            $markers = ORM::factory('incident')
+                     ->join('incident_category', 'incident.id', 'incident_category.incident_id','LEFT')
+                     ->join('media', 'incident.id', 'media.incident_id','LEFT')
                      ->select('incident.*')
                      ->where('incident.incident_active = 1 AND incident_category.category_id = ' . $category_id . $where_text)->orderby('incident.incident_dateadd', 'desc')
-                     ->find_all() as $marker)
-            {			
-                $json_item = "{";
-                $json_item .= "\"type\":\"Feature\",";
-                $json_item .= "\"properties\": {";
-                $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
-                // $json_item .= "\"description\":\"" . htmlentities(str_replace(chr(10), ' ', str_replace(chr(13), ' ', substr($marker->incident_description, 0, 150)))) . "...\", ";			
-                $json_item .= "\"category\":[" . $category_id . "], ";
-				
-				// Retrieve category color
-				$category = ORM::factory('category', $category_id);
-				$color = $category->category_color;
-                $json_item .= "\"color\": \"" . $color . "\", \n";
-
-                $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
-                $json_item .= "},";
-                $json_item .= "\"geometry\": {";
-                $json_item .= "\"type\":\"Point\", ";
-                $json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
-                $json_item .= "}";
-                $json_item .= "}";
-			
-                array_push($json_array, $json_item);
-                $cat_array = array();
-            }
-            $json = implode(",", $json_array);
-            $this->template->json = $json;
-        }
-
-        // Do we have a single incident id to filter by?
+                     ->find_all();
+*/            
+            $sql = "SELECT incident.id FROM incident";
+            $sql .= " LEFT JOIN incident_category ON incident.id = incident_category.incident_id";
+            $sql .= " LEFT JOIN media ON incident.id = media.incident_id";
+            $sql .= ' WHERE incident.incident_active = 1 AND incident_category.category_id = ';
+            $sql .= $category_id . $where_text; 
+            $db = new Database();
+	        $incidents = $db->query($sql);
+	        
+	        $marker_ids = array();
+	        foreach ( $incidents as $incident ) {
+	        	array_push($marker_ids, $incident->id);
+	        }
+	        
+            $markers = ORM::factory('incident')
+            	       ->where('incident.id IN (' . implode(',', $marker_ids) . ')')
+            	       ->orderby('incident.incident_dateadd', 'desc')
+                       ->find_all();
+            // Retrieve category color
+			$category = ORM::factory('category', $category_id);
+            $color = $category->category_color;
+                     
+        }// Do we have a single incident id to filter by?
         elseif (is_numeric($incident_id) && $incident_id != 0)
 		{
 			$color = "CC0000";
 		    // Retrieve individual marker
-            $marker = ORM::factory('incident', $incident_id);
-
-			if ( $marker->id != 0 )	// Not Found
-			{
-				if ($marker->incident_active == 1)
-				{
-	                $json_item = "{";
-	                $json_item .= "\"type\":\"Feature\",";
-	                $json_item .= "\"properties\": {";
-	                $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
-	                // $json_item .= "\"description\":\"" . htmlentities(str_replace(chr(10), ' ', str_replace(chr(13), ' ', substr($marker->incident_description, 0, 150)))) . "...\", ";			
-	                $json_item .= "\"color\": \"" . $color . "\", \n";
-	                $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
-	                $json_item .= "},";
-	                $json_item .= "\"geometry\": {";
-	                $json_item .= "\"type\":\"Point\", ";
-	                $json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
-	                $json_item .= "}";
-	                $json_item .= "}";
-				}
-			}
-
-               array_push($json_array, $json_item);
-               $cat_array = array();
-
-            $json = implode(",", $json_array);
-            $this->template->json = $json;
-		}
-		
+            $markers = ORM::factory('incident')->where('incident.incident_active = 1 AND incident.incident_id = ' . $incident_id)->find_all();
+        }
         else
         {
-            // Retrieve all markers
-            foreach (ORM::factory('incident')
-                     ->where('incident_active = 1' . $where_text)
-                     ->orderby('incident_dateadd', 'desc')
-                     ->find_all() as $marker)
-            {			
-                $json_item = "{";
-                $json_item .= "\"type\":\"Feature\",";
-                $json_item .= "\"properties\": {";
-                $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
-                // $json_item .= "\"description\":\"" . htmlentities(str_replace(chr(10), ' ', str_replace(chr(13), ' ', substr($marker->incident_description, 0, 150)))) . "...\", ";			
-                $json_item .= "\"category\":[";
+			// Retrieve all markers
+/*			
+			$markers = ORM::factory('incident')
+				//->join('media', 'incident_id', 'media.incident_id','LEFT')
+				->with('media')
+				->where('incident_active = 1' . $where_text)
+				->orderby('incident_dateadd', 'DESC')
+				->find_all();
+*/			
+			$sql = "SELECT incident.id FROM incident";
+            $sql .= " LEFT JOIN media ON incident.id = media.incident_id";
+            $sql .= ' WHERE incident.incident_active = 1' . $where_text;
+            $db = new Database();
+	        $incidents = $db->query($sql);
+	        
+	        $marker_ids = array();
+	        foreach ( $incidents as $incident ) {
+	        	array_push($marker_ids, $incident->id);
+	        }
+	        
+            $markers = ORM::factory('incident')
+            	       ->where('incident.id IN (' . implode(',', $marker_ids) . ')')
+            	       ->orderby('incident.incident_dateadd', 'desc')
+                       ->find_all();
+		
+			$color = "CC0000";
+        }
+        
+        foreach ($markers as $marker)
+        {			
+            $json_item = "{";
+            $json_item .= "\"type\":\"Feature\",";
+            $json_item .= "\"properties\": {";
+            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
+            // $json_item .= "\"description\":\"" . htmlentities(str_replace(chr(10), ' ', str_replace(chr(13), ' ', substr($marker->incident_description, 0, 150)))) . "...\", ";			
+            
+			if (isset($category)) { 
+				$json_item .= "\"category\":[" . $category_id . "], ";
+			} else {
+				$json_item .= "\"category\":[";
                 foreach($marker->incident_category as $category)
                 {
                     array_push($cat_array, $category->category->id);
@@ -160,27 +171,28 @@ class Json_Controller extends Template_Controller
                 }
                 $json_item .= implode(",", $cat_array);
                 $json_item .= "], ";
-				// Display as a neighboring marker on report/view page
-				if ($neighboring == 'yes')
-				{
-					$json_item .= "\"color\": \"FF9933\", \n";
-				} else {
-					$json_item .= "\"color\": \"" . $color . "\", \n";
-				}
-                $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
-                $json_item .= "},";
-                $json_item .= "\"geometry\": {";
-                $json_item .= "\"type\":\"Point\", ";
-                $json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
-                $json_item .= "}";
-                $json_item .= "}";
-			
-                array_push($json_array, $json_item);
-                $cat_array = array();
-            }
-            $json = implode(",", $json_array);
-            $this->template->json = $json;	
-        }	
+			}
+            // Display as a neighboring marker on report/view page
+			if ($neighboring == 'yes')
+			{
+				$json_item .= "\"color\": \"FF9933\", \n";
+			} else {
+				$json_item .= "\"color\": \"" . $color . "\", \n";
+			}
+            $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
+            $json_item .= "},";
+            $json_item .= "\"geometry\": {";
+            $json_item .= "\"type\":\"Point\", ";
+            $json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
+            $json_item .= "}";
+            $json_item .= "}";
+		
+            array_push($json_array, $json_item);
+            $cat_array = array();
+        }
+        $json = implode(",", $json_array);
+        $this->template->json = $json;
+
     }
     
     public function timeline() {
@@ -192,6 +204,7 @@ class Json_Controller extends Template_Controller
         $start_date = NULL;
         $end_date = NULL;
         $active = 'true';
+        $media_type = NULL;
         if (isset($_GET['i'])) {
             $interval = $_GET['i'];
         }
@@ -204,10 +217,12 @@ class Json_Controller extends Template_Controller
         if (isset($_GET['active'])) {
             $active = $_GET['active'];
         }
-        
+        if (isset($_GET['m'])) {
+            $media_type = $_GET['m'];
+        }
         // get graph data
         $graph_data = array();
-        $all_graphs = Incident_Model::get_incidents_by_interval($interval,$start_date,$end_date,$active);
+        $all_graphs = Incident_Model::get_incidents_by_interval($interval,$start_date,$end_date,$active,$media_type);
 	    echo $all_graphs;
    	}
 

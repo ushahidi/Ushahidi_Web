@@ -661,6 +661,7 @@ CREATE TABLE IF NOT EXISTS `twitter`
 `incident_id` INTEGER DEFAULT 0,
 `tweet_from` VARCHAR(100) DEFAULT NULL,
 `tweet_to` VARCHAR(100) DEFAULT NULL,
+`tweet_hashtag` VARCHAR(50) DEFAULT NULL,
 `tweet_link` VARCHAR(100) DEFAULT NULL,
 `tweet` VARCHAR(255) DEFAULT NULL,
 `tweet_type` TINYINT DEFAULT 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
@@ -669,9 +670,14 @@ CREATE TABLE IF NOT EXISTS `twitter`
 PRIMARY KEY (`id`)
 );
 
+ALTER TABLE `twitter` ADD COLUMN `tweet_hashtag` VARCHAR(50) NULL DEFAULT NULL AFTER `tweet_to`;
+
 --
 -- Dumping data for table `twitter`
 --
+
+
+-- --------------------------------------------------------
 
 --
 -- Table structure for table `laconica`
@@ -816,6 +822,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `clickatell_username` varchar(100) default NULL,
   `clickatell_password` varchar(100) default NULL,
   `google_analytics` text,
+  `twitter_hashtags` text default NULL,
   `twitter_username` varchar(50) default NULL,
   `twitter_password` varchar(50) default NULL,
   `laconica_username` varchar(50) default NULL,
@@ -827,6 +834,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
 --
 -- Dumping data for table `settings`
 --
+
+ALTER TABLE `settings` ADD COLUMN `twitter_hashtags` TEXT NULL DEFAULT NULL AFTER `google_analytics`;
 
 INSERT INTO `settings` (`id`, `site_name`, `default_map`, `api_google`, `api_yahoo`, `api_live`, `default_country`, `default_city`, `default_lat`, `default_lon`, `default_zoom`, `items_per_page`, `items_per_page_admin`, `date_modify`) VALUES
 (1, 'Ushahidi Beta', 1, 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 20, 20, '2008-08-25 10:25:18');

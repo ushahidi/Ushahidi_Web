@@ -1,5 +1,5 @@
 <div class="bg">
-	<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports">View Reports</a><a href="<?php print url::base() ?>admin/reports/edit">Create New Report</a></h2>
+	<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports/upload">Upload Reports</a><a href="<?php print url::base() ?>admin/reports">View Reports</a><a href="<?php print url::base() ?>admin/reports/edit">Create New Report</a></h2>
 	<!-- report-form -->
 	<div class="report-form">
 		<?php

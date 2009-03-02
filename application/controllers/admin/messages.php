@@ -300,8 +300,9 @@ class Messages_Controller extends Admin_Controller
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
 			'total_items'    => ORM::factory('twitter')->where($filter)->count_all()
 		));
-
-		$tweets = ORM::factory('twitter')->where($filter)->where('hide',0)->orderby('tweet_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		
+		//Order by tweet_hashtag first to bring direct reports to the top
+		$tweets = ORM::factory('twitter')->where($filter)->where('hide',0)->orderby('tweet_hashtag', 'asc')->orderby('tweet_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 		
 		// Populate values for view
 		$this->template->content->tweets = $tweets;
@@ -334,7 +335,7 @@ class Messages_Controller extends Admin_Controller
 			$proceed = 1;
 		}else{
 			$timeCheck = time() - $_SESSION['twitter_timer'];
-			if($timeCheck > 300) { //If it has been longer than 300 seconds (5 min)
+			if($timeCheck > 0) { //If it has been longer than 300 seconds (5 min)
 				$proceed = 1;
 				$_SESSION['twitter_timer'] = time(); //Only if we proceed do we want to reset the timer
 			}else{
@@ -346,33 +347,74 @@ class Messages_Controller extends Admin_Controller
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
 			
+			//Perform Hashtag Search
+			$hashtags = explode(',',$settings->twitter_hashtags);
+			foreach($hashtags as $hashtag){
+				$page = 1;
+				$have_results = TRUE; //just starting us off as true, although there may be no results
+				while($have_results == TRUE && $page <= 5){ //This loop is for pagination of rss results
+					$hashtag = trim(str_replace('#','',$hashtag));
+					$twitter_url = 'http://search.twitter.com/search.atom?q=%23'.$hashtag.'&page='.$page;
+					$curl_handle = curl_init();
+					curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
+					curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2); //Since Twitter is down a lot, set timeout to 2 secs
+					curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
+					$buffer = curl_exec($curl_handle);
+					curl_close($curl_handle);
+					$have_results = $this->add_tweets($buffer,$hashtag); //if FALSE, we will drop out of the loop
+					$page++;
+				}
+			}
+			
+			//Perform Direct Reports Search
 			$username = $settings->twitter_username;
 			$password = $settings->twitter_password;
 			$twitter_url = 'http://twitter.com/statuses/replies.rss';
 			$curl_handle = curl_init();
 			curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
-			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2); //Since Twitter is down a lot, set timeout to 2 secs
-			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
+			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
 			curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password"); //Authenticate!
 			$buffer = curl_exec($curl_handle);
 			curl_close($curl_handle);
-			
-			$search_username = ': @'.$username;
-			$feed_data = $this->_setup_simplepie( $buffer ); //Pass this the raw xml data
+			$this->add_tweets($buffer,null,$username);
+		}
+	}
+	
+	/**
+	* Adds tweets to the database.
+    * @param string $data - Twitter XML results
+    * @param string $hashsearch - null if using auth session, or the hashtag being used to search
+    * @param string $username
+    */
+	function add_tweets($data,$hashsearch = null,$username=''){
+		$feed_data = $this->_setup_simplepie( $data ); //Pass this the raw xml data
+		if($feed_data->get_item_quantity() != 0){
 			foreach($feed_data->get_items(0,50) as $feed_data_item) {
 				//Grab tweet data from RSS feed
-				$full_tweet = $feed_data_item->get_description();
-				$full_date = $feed_data_item->get_date();
 				$tweet_link = $feed_data_item->get_link();
-				
-				//Parse tweet for data
-				$cut1 = stripos($full_tweet, $search_username); //Find the position of the username
-				$cut2 = $cut1 + strlen($search_username) + 1; //Calculate the pos of the start of the tweet
-				$tweet_from = substr($full_tweet,0,$cut1);
-				$tweet_to = $username;
-				$tweet = substr($full_tweet,$cut2);
+				$full_date = $feed_data_item->get_date();
 				$tweet_date = date("Y-m-d H:i:s",strtotime($full_date));
-								
+				if($hashsearch != null){
+					$tweet_hashtag = $hashsearch;
+					$full_tweet = $feed_data_item->get_title();
+					$tweet_from = $feed_data_item->get_author()->get_name();
+					//chop off string at "("
+					$tweet_from = trim(substr($tweet_from,0,stripos($tweet_from,'(')));
+					$tweet_to = ''; // There is no "to" so we make it blank
+					$tweet = $full_tweet;
+				}else{
+					$tweet_hashtag = ''; //not searching using a hashtag
+					$full_tweet = $feed_data_item->get_description();
+					//Parse tweet for data
+					$chop_location = ': @'.$username;
+					$cut1 = stripos($full_tweet, $chop_location); //Find the position of the username
+					$cut2 = $cut1 + strlen($chop_location) + 1; //Calculate the pos of the start of the tweet
+					$tweet_from = substr($full_tweet,0,$cut1);
+					$tweet_to = $username;
+					$tweet = substr($full_tweet,$cut2);
+				}
+				
 				if(isset($full_tweet) && !empty($full_tweet)) {
 					// We need to check for duplicates.
 					// Note: Heave on server.
@@ -382,6 +424,7 @@ class Messages_Controller extends Admin_Controller
 						$newtweet = new Twitter_Model();
 						$newtweet->tweet_from = $tweet_from;
 						$newtweet->tweet_to = $tweet_to;
+						$newtweet->tweet_hashtag = $tweet_hashtag;
 						$newtweet->tweet_link = $tweet_link;
 						$newtweet->tweet = $tweet;
 						$newtweet->tweet_date = $tweet_date;
@@ -389,7 +432,11 @@ class Messages_Controller extends Admin_Controller
 					}
 				}
 			}
+		}else{
+			return FALSE; //if there are no items in the feed
 		}
+		$feed_data->__destruct(); //in the off chance we hit a ton of feeds, we need to clean it out
+		return TRUE; //if there were items in the feed
 	}
 	
 	/**

@@ -8,11 +8,11 @@
             <div class="filter">
               <strong><?php echo Kohana::lang('ui_main.media_filter'); ?></strong>
               <ul>
-                <li><a class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
-                <li><a href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
-                <li><a href="#"><span><?php echo Kohana::lang('ui_main.pictures'); ?></span></a></li>
-                <li><a href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
-                <li><a href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
+                <li><a id="media_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
+                <li><a id="media_4" href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
+                <li><a id="media_1" href="#"><span><?php echo Kohana::lang('ui_main.pictures'); ?></span></a></li>
+                <li><a id="media_2" href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
+                <li><a id="media_0" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
               </ul>
             </div>
             <div id="map" class="map-holder"></div>

@@ -693,8 +693,7 @@ class Reports_Controller extends Main_Controller {
 	*/
 	private function _get_neighbors($latitude = 0, $longitude = 0)
 	{
-		$proximity = new Proximity($latitude, $longitude, 100);
-		$proximity->Proximity($latitude, $longitude, 100);		// Within 100 Miles ( or Kms ;-) )
+		$proximity = new Proximity($latitude, $longitude, 100); // Within 100 Miles ( or Kms ;-) )
 		
 		// Generate query from proximity calculator
 		$radius_query = " location.latitude >= '" . $proximity->minLat . "' 
