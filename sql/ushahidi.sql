@@ -670,8 +670,6 @@ CREATE TABLE IF NOT EXISTS `twitter`
 PRIMARY KEY (`id`)
 );
 
-ALTER TABLE `twitter` ADD COLUMN `tweet_hashtag` VARCHAR(50) NULL DEFAULT NULL AFTER `tweet_to`;
-
 --
 -- Dumping data for table `twitter`
 --
