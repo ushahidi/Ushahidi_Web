@@ -205,7 +205,7 @@ class Users_Controller extends Admin_Controller
 	 * Checks if username already exists.
      * @param Validation $post $_POST variable with validation rules 
 	 */
-	private function username_exists_chk(Validation $post)
+	public function username_exists_chk(Validation $post)
 	{
 		$users = ORM::factory('user');
 		// If add->rules validation found any errors, get me out of here!
@@ -220,7 +220,7 @@ class Users_Controller extends Admin_Controller
 	 * Checks if email address is associated with an account.
 	 * @param Validation $post $_POST variable with validation rules 
 	 */
-	private function email_exists_chk( Validation $post )
+	public function email_exists_chk( Validation $post )
 	{
 		$users = ORM::factory('user');
 		if( array_key_exists('email',$post->errors()))
