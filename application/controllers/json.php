@@ -120,7 +120,7 @@ class Json_Controller extends Template_Controller
 		{
 			$color = "CC0000";
 		    // Retrieve individual marker
-            $markers = ORM::factory('incident')->where('incident.incident_active = 1 AND incident.incident_id = ' . $incident_id)->find_all();
+            $markers = ORM::factory('incident')->where('incident.incident_active = 1 AND incident.id = ' . $incident_id)->find_all();
         }
         else
         {
