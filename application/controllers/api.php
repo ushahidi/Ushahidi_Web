@@ -383,12 +383,13 @@ class Api_Controller extends Controller {
 		$reponse = array();
 		
 		if($this->_submit()){
-			/*$reponse = array(
+			
+			$reponse = array(
 				"payload" => array("success" => "true"),
 				"error" => $this->_getErrorMsg(0)
-			);*/
+			);
 			
-			return;
+			//return;
 			//return $this->_incidentById();
 			
 		} else {
@@ -412,6 +413,7 @@ class Api_Controller extends Controller {
 	*/
 	function _submit()
 	{		
+	    
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -426,7 +428,7 @@ class Api_Controller extends Controller {
 			$post->add_rules('incident_description','required');
 			$post->add_rules('incident_date','required','date_mmddyyyy');
 			$post->add_rules('incident_hour','required','between[1,12]');
-			$post->add_rules('incident_minute','required','between[0,59]');
+			//$post->add_rules('incident_minute','required','between[0,59]');
 			
 			if($this->_verifyArrayIndex($_POST, 'incident_ampm')){
 				if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != "pm")
@@ -438,20 +440,20 @@ class Api_Controller extends Controller {
 			$post->add_rules('latitude','required','between[-90,90]');		// Validate for maximum and minimum latitude values
 			$post->add_rules('longitude','required','between[-180,180]');	// Validate for maximum and minimum longitude values
 			$post->add_rules('location_name','required', 'length[3,200]');
-			$post->add_rules('incident_category.*','required','numeric');
+			$post->add_rules('incident_category','required','numeric');
 			
 			// Validate Personal Information
-			if (array_key_exists('person_first', $_POST) && !empty($_POST['person_first']))
+			if (!empty($post->person_first))
 			{
 				$post->add_rules('person_first', 'length[3,100]');
 			}
 			
-			if (array_key_exists('person_last', $_POST) && !empty($_POST['person_last']))
+			if (!empty($post->person_last))
 			{
 				$post->add_rules('person_last', 'length[3,100]');
 			}
 			
-			if (array_key_exists('person_email', $_POST) && !empty($_POST['person_email']))
+			if (!empty($post->person_email))
 			{
 				$post->add_rules('person_email', 'email', 'length[3,100]');
 			}
@@ -484,7 +486,7 @@ class Api_Controller extends Controller {
 				$incident->save();
 				
 				// SAVE CATEGORIES
-				if(array_key_exists('incident_category', $post) && is_array('incident_category')){
+				if(!empty($post->incident_category) && is_array($post->incident_category)){
 					foreach($post->incident_category as $item)
 					{
 						$incident_category = new Incident_Category_Model();
@@ -494,27 +496,90 @@ class Api_Controller extends Controller {
 					}
 				}
 				
-				// SAVE PERSONAL INFORMATION
-	            $person = new Incident_Person_Model();
-				$person->location_id = $location->id;
-				$person->incident_id = $incident->id;
-				$person->person_first = $post->person_first;
-				$person->person_last = $post->person_last;
-				$person->person_email = $post->person_email;
-				$person->person_date = date("Y-m-d H:i:s",time());
-				$person->save();
-				
-				//return the incident we just saved
-				$ret = $this->_incidentById($incident->id);
-				
-				header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-				header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
-				$mime = "";
-				if($this->responseType == 'xml'){
-					header("Content-type: text/xml");
+				// STEP 4: SAVE MEDIA
+				// a. News
+				if(!empty( $post->incident_news ) && 
+				    is_array($post->incident_news)){ 
+				    foreach($post->incident_news as $item)
+				    {
+					    if(!empty($item))
+					    {
+						    $news = new Media_Model();
+						    $news->location_id = $location->id;
+						    $news->incident_id = $incident->id;
+						    $news->media_type = 4;		// News
+						    $news->media_link = $item;
+						    $news->media_date = date("Y-m-d H:i:s",time());
+						    $news->save();
+					    }
+				    }
 				}
 				
-				print $ret;
+				// b. Video
+				if( !empty( $post->incident_video) && 
+				    is_array( $post->incident_video)){ 
+
+				    foreach($post->incident_video as $item)
+				    {
+					    if(!empty($item))
+					    {
+						    $video = new Media_Model();
+						    $video->location_id = $location->id;
+						    $video->incident_id = $incident->id;
+						    $video->media_type = 2;		// Video
+						    $video->media_link = $item;
+						    $video->media_date = date("Y-m-d H:i:s",time());
+						    $video->save();
+					    }
+				    }
+				}
+				
+				// c. Photos
+				if( !empty($post->incident_photo))){
+				    $filenames = upload::save('incident_photo');
+				    $i = 1;
+				    foreach ($filenames as $filename) {
+					    $new_filename = $incident->id . "_" . $i . "_" . time();
+					
+					    // Resize original file... make sure its max 408px wide
+					    Image::factory($filename)->resize(408,248,Image::AUTO)
+						    ->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
+					
+					    // Create thumbnail
+					    Image::factory($filename)->resize(70,41,Image::HEIGHT)
+						    ->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");
+					
+					    // Remove the temporary file
+					    unlink($filename);
+					
+					    // Save to DB
+					    $photo = new Media_Model();
+					    $photo->location_id = $location->id;
+					    $photo->incident_id = $incident->id;
+					    $photo->media_type = 1; // Images
+					    $photo->media_link = $new_filename . ".jpg";
+					    $photo->media_thumb = $new_filename . "_t.jpg";
+					    $photo->media_date = date("Y-m-d H:i:s",time());
+					    $photo->save();
+					    $i++;
+				    }
+				}				
+				
+				// SAVE PERSONAL INFORMATION IF ITS FILLED UP
+				if(!empty($post->person_first) || 
+				    !empty($post->person_last)){ 
+	                
+	                $person = new Incident_Person_Model();
+				    $person->location_id = $location->id;
+				    $person->incident_id = $incident->id;
+				    $person->person_first = $post->person_first;
+				    $person->person_last = $post->person_last;
+				    $person->person_email = $post->person_email;
+				    $person->person_date = date("Y-m-d H:i:s",time());
+				    $person->save();
+				}
+				
+				return true;
 	            
 	        }
 	
@@ -650,6 +715,7 @@ class Api_Controller extends Controller {
 	get a list of categories
 	*/
 	function _categories(){
+
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
 		$json_categories = array(); //incidents to parse to json
