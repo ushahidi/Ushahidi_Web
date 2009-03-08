@@ -81,7 +81,7 @@ class Json_Controller extends Template_Controller
         $markers = array();
                 
         // Do we have a category id to filter by?
-        if (is_numeric($category_id) && $category_id != 0)
+        if (is_numeric($category_id) && $category_id != '0')
         {
             // Retrieve markers by category
             // XXX: Might need to replace magic numbers
@@ -116,7 +116,7 @@ class Json_Controller extends Template_Controller
             $color = $category->category_color;
                      
         }// Do we have a single incident id to filter by?
-        elseif (is_numeric($incident_id) && $incident_id != 0)
+        elseif (is_numeric($incident_id) && $incident_id != '0')
 		{
 			$color = "CC0000";
 		    // Retrieve individual marker
@@ -163,14 +163,8 @@ class Json_Controller extends Template_Controller
 			if (isset($category)) { 
 				$json_item .= "\"category\":[" . $category_id . "], ";
 			} else {
-				$json_item .= "\"category\":[";
-                foreach($marker->incident_category as $category)
-                {
-                    array_push($cat_array, $category->category->id);
-                    $color = $category->category->category_color;
-                }
-                $json_item .= implode(",", $cat_array);
-                $json_item .= "], ";
+				$json_item .= "\"category\":[0], ";
+				$color = "CC0000";
 			}
             // Display as a neighboring marker on report/view page
 			if ($neighboring == 'yes')

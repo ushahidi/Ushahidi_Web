@@ -103,7 +103,7 @@
 				        if (!dailyGraphData[gCategoryId]) {
 				            dailyGraphData[gCategoryId] = {};
 				            dailyGraphData[gCategoryId]['data'] = [];
-				        }
+				        }	
 				        plot = $.plot($("#graph"), [dailyGraphData[gCategoryId]],
 				         	$.extend(true, {}, gGraphOptions, {
 				            	xaxis: { min: gStartTime.getTime(), 
