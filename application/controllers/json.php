@@ -106,8 +106,11 @@ class Json_Controller extends Template_Controller
 	        foreach ( $incidents as $incident ) {
 	        	array_push($marker_ids, $incident->id);
 	        }
-	        
-            $markers = ORM::factory('incident')
+
+			if (count($marker_ids) == 0 ) {
+				$marker_ids = array(0);
+			}
+			$markers = ORM::factory('incident')
             	       ->where('incident.id IN (' . implode(',', $marker_ids) . ')')
             	       ->orderby('incident.incident_dateadd', 'desc')
                        ->find_all();
@@ -143,8 +146,11 @@ class Json_Controller extends Template_Controller
 	        foreach ( $incidents as $incident ) {
 	        	array_push($marker_ids, $incident->id);
 	        }
-	        
-            $markers = ORM::factory('incident')
+
+			if (count($marker_ids) == 0 ) {
+				$marker_ids = array(0);
+			}
+			$markers = ORM::factory('incident')
             	       ->where('incident.id IN (' . implode(',', $marker_ids) . ')')
             	       ->orderby('incident.incident_dateadd', 'desc')
                        ->find_all();
