@@ -2,11 +2,11 @@
     require_once('install.php');
     global $install;
     
-    /*//check if ushahidi is installed?.
+    //check if ushahidi is installed?.
     if( $install->is_ushahidi_installed())
     {
         header('Location:../');
-    }*/
+    }
    
  ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 

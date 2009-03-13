@@ -93,10 +93,10 @@ class Install
 	    
 	        $this->add_config_details($base_path);
 	       
-		    //$this->add_db_details( $username, $password, $host, $select_db_type,
-		       // $db_name, $table_prefix );
+		    $this->add_db_details( $username, $password, $host, $select_db_type,
+		       $db_name, $table_prefix );
 		  
-		   // $this->import_sql($username, $password, $host,$db_name);
+		    $this->import_sql($username, $password, $host,$db_name);
 		    $this->chmod_folders();     
 	        return 0;
 	   } 
@@ -109,8 +109,8 @@ class Install
 	    $select_db_type, $db_name, $table_prefix ) 
 	{
 	    
-	    $database_file = file('../application/config/database.template.php');
-	    $handle = fopen('../application/config/database.php', 'w');
+	    $database_file = @file('../application/config/database.template.php');
+	    $handle = @fopen('../application/config/database.php', 'w');
 	    foreach( $database_file as $line_number => $line ) 
 	    {
 	        switch( trim(substr( $line,0,14 )) ) {
@@ -158,8 +158,8 @@ class Install
 	 */
 	private function add_config_details( $base_path )
 	{
-	    $config_file = file('../application/config/config.template.php');
-        $handle = fopen('../application/config/config2.php', 'w');
+	    $config_file = @file('../application/config/config.template.php');
+        $handle = @fopen('../application/config/config.php', 'w');
         
 	    foreach( $config_file as $line_number => $line ) 
 	    {
@@ -240,44 +240,31 @@ class Install
 	{
 	
 	    /**
-	     * Check if config file exists
+	     * Check if config file exists.
 	     */
-	    if( file_exists('../application/config/database.php') ) {
-	        $flag = true;
+	    $is_installed = true;
+	    if( file_exists('../application/config/database.php') ) 
+	    {
+	        
 	        $database_file = file('../application/config/database.php');
-	   // $handle = fopen('../application/config/database.php', 'w');
 	        foreach( $database_file as $line_number => $line ) 
 	        {
-	       /* switch( trim(substr( $line,0,14 )) ) {
-	            case "'type'     =": 
-	                fwrite($handle, str_replace("'mysql'","'".
-	                    $select_db_type."'",$line ));
-	                break;
-	             
-	            case "'user'     =":
-	                fwrite($handle, str_replace("'username'","'".
-	                    $username."'",$line ));
-	                break;
-	            case "'pass'     =":
-	                fwrite($handle, str_replace("'password'","'".
-	                    $password."'",$line));
-	                break;
-	            default:
-	                echo "Nothing happened."
-	        }*/
 	            if( preg_match( "/username/",$line ) )
 	            {
-	                $flag = false;
+	                $is_installed = false;
 	            }
 	        
 	            else if(preg_match( "/password/",$line )) 
 	            {
-	                $flag = false;
+	                $is_installed = false;
 	            }      
 	        }
 	    
+	    } else {
+	        $is_installed = false;
 	    }
-	    return $flag;
+	        
+	    return $is_installed;
 	}   
 }
 $install = new Install();
