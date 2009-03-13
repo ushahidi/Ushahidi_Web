@@ -47,7 +47,8 @@
 	        $_POST['host'],
 	        $_POST['select_db_type'],
 	        $_POST['db_name'],
-	        $_POST['table_prefix']
+	        $_POST['table_prefix'],
+	        $_POST['base_path']
 	    );
 	    
 	    //no errors

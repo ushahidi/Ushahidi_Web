@@ -1,6 +1,6 @@
 <?php
 /**
- * This class acts as like a controller.
+ * This class acts like a controller.
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -37,9 +37,10 @@ class Install
 	 * validate the form fields and does the necessary processing.
 	 */
 	public function install( $username, $password, $host, $select_db_type, 
-	    $db_name, $table_prefix ) 
+	    $db_name, $table_prefix, $base_path ) 
     {
 	    global $form;
+	    $install_directory = dirname(dirname(__FILE__));
 	    
 	    //check for empty fields
 	    if(!$username || strlen($username = trim($username)) == 0 ){
@@ -58,7 +59,7 @@ class Install
 	    }
 	    
 	    if( !$db_name || strlen($db_name = trim($db_name)) == 0 ){
-	        $form->set_error("db_name","please enter a new name for the 
+	        $form->set_error("db_name","Please enter a new name for the 
 	            database to be created.");
 	    }
 	    
@@ -68,10 +69,12 @@ class Install
             from. Please re-upload this file from your Ushahidi installation.");
 		}    
 		    
-		if( !is_writable('../')) {  
+		if( !is_writable('../application/config')) {  
 		    $form->set_error('permission',"Sorry, can't write to the directory. 
 		    You'll have to either change the permissions on your Ushahidi 
-		    directory or create your database.php manually.");
+		    directory with this command <blockquote>chmod a+w 
+		    $install_directory/application/config</blockquote> or 
+		    create your database.php manually.");
 		}
 		
 		if(!$this->make_connection($username, $password, $host)){
@@ -87,11 +90,13 @@ class Install
 	        return 1;
 	   
 	   } else {
+	    
+	        $this->add_config_details($base_path);
 	       
-		    $this->add_db_details( $username, $password, $host, $select_db_type,
-		        $db_name, $table_prefix );
+		    //$this->add_db_details( $username, $password, $host, $select_db_type,
+		       // $db_name, $table_prefix );
 		  
-		    $this->import_sql($username, $password, $host,$db_name);
+		   // $this->import_sql($username, $password, $host,$db_name);
 		    $this->chmod_folders();     
 	        return 0;
 	   } 
@@ -149,6 +154,34 @@ class Install
 	}
 	
 	/**
+	 * adds the site_name to the application/config/config.php file 
+	 */
+	private function add_config_details( $base_path )
+	{
+	    $config_file = file('../application/config/config.template.php');
+        $handle = fopen('../application/config/config2.php', 'w');
+        
+	    foreach( $config_file as $line_number => $line ) 
+	    {
+	        if( !empty( $base_path ) )
+            { 
+	            switch( trim(substr( $line,0,23 )) ) {
+	                case "\$config['site_domain']": 
+	                    fwrite($handle, str_replace("/","/".
+	                    $base_path."/",$line ));
+	                break;
+	             	                    
+	                default:
+	                    fwrite($handle, $line);
+	                }
+	        }else {
+	           fwrite($handle, $line); 
+	        }
+	    }
+	   
+	}
+	
+	/**
 	 * Imports sql file to the database.
 	 */
 	private function import_sql($username, $password, $host,$db_name) 
@@ -198,7 +231,54 @@ class Install
 	    @chmod('../application/cache',0777);
 	    @chmod('../application/logs',0777);
 	    @chmod('../media/uploads',0777);        
-	}  
+	}
+	
+	/**
+	 * check if ushahidi has been installed.
+	 */
+	public function is_ushahidi_installed()
+	{
+	
+	    /**
+	     * Check if config file exists
+	     */
+	    if( file_exists('../application/config/database.php') ) {
+	        $flag = true;
+	        $database_file = file('../application/config/database.php');
+	   // $handle = fopen('../application/config/database.php', 'w');
+	        foreach( $database_file as $line_number => $line ) 
+	        {
+	       /* switch( trim(substr( $line,0,14 )) ) {
+	            case "'type'     =": 
+	                fwrite($handle, str_replace("'mysql'","'".
+	                    $select_db_type."'",$line ));
+	                break;
+	             
+	            case "'user'     =":
+	                fwrite($handle, str_replace("'username'","'".
+	                    $username."'",$line ));
+	                break;
+	            case "'pass'     =":
+	                fwrite($handle, str_replace("'password'","'".
+	                    $password."'",$line));
+	                break;
+	            default:
+	                echo "Nothing happened."
+	        }*/
+	            if( preg_match( "/username/",$line ) )
+	            {
+	                $flag = false;
+	            }
+	        
+	            else if(preg_match( "/password/",$line )) 
+	            {
+	                $flag = false;
+	            }      
+	        }
+	    
+	    }
+	    return $flag;
+	}   
 }
 $install = new Install();
 $form = new Form();
