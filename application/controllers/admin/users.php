@@ -104,7 +104,6 @@ class Users_Controller extends Admin_Controller
 						$user->name = $post->name;
 						$user->email = $post->email;
 						$post->password !='' ? $user->password=$post->password : '';
-						$user->save();
 
 						// Remove Old Roles
 						foreach($user->roles as $role){
@@ -121,6 +120,8 @@ class Users_Controller extends Admin_Controller
 							$user->add(ORM::factory('role', 'login'));
 						}
 						
+						$user->save();
+						
 						$form_saved = TRUE;
 						$form_action = "EDITED";
 					}
@@ -131,7 +132,6 @@ class Users_Controller extends Admin_Controller
 						$user->name = $post->name;
 						$user->password = $post->password;
 						$user->email = $post->email;
-						$user->save();
 						
 						// Add New Role
 						if ($post->role == 'admin') {
@@ -142,6 +142,8 @@ class Users_Controller extends Admin_Controller
 						{
 							$user->add(ORM::factory('role', 'login'));
 						}
+						
+						$user->save();
 						
 						$form_saved = TRUE;
 						$form_action = "ADDED";
