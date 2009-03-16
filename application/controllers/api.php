@@ -59,11 +59,11 @@ class Api_Controller extends Controller {
 			case "tagphoto": //report/add an incident
 				$incidentid = '';
 				
-				if(!$this->_verifyArrayIndex($request, 'incidentid')){
-					$error = array("error" => $this->_getErrorMsg(001, 'incidentid'));
+				if(!$this->_verifyArrayIndex($request, 'id')){
+					$error = array("error" => $this->_getErrorMsg(001, 'id'));
 					break;
 				} else {
-					$incidentid = $request['incidentid'];
+					$incidentid = $request['id'];
 				}
 				
 				
@@ -283,15 +283,15 @@ class Api_Controller extends Controller {
 	function _getErrorMsg($errcode, $param = ''){
 		switch($errcode){
 			case 0:
-				return array("code" => "0", "message" => "No Error");
+				return array("code" => "0", "message" => "No Error.");
 			case 001:
-				return array("code" => "001", "message" => "Missing Parameter - $param");
+				return array("code" => "001", "message" => "Missing Parameter - $param.");
 			case 002:
 				return array("code" => "002", "message" => "Invalid Parameter");
 			case 003:
-				return array("code" => "003", "message" => "Form Post Failed");
+				return array("code" => "003", "message" => "Form Post Failed.");
 			default:
-				return array("code" => "999", "message" => "Not Found");
+				return array("code" => "999", "message" => "Not Found.");
 		}
 	}
 	
@@ -437,10 +437,10 @@ class Api_Controller extends Controller {
 		        }
 			}
 	        
-			$post->add_rules('latitude','required','between[-90,90]');		// Validate for maximum and minimum latitude values
-			$post->add_rules('longitude','required','between[-180,180]');	// Validate for maximum and minimum longitude values
+			$post->add_rules('latitude','required','between[-90,90]');	// Validate for maximum and minimum latitude values
+			$post->add_rules('longitude','required','between[-180,180]');// Validate for maximum and minimum longitude values
 			$post->add_rules('location_name','required', 'length[3,200]');
-			$post->add_rules('incident_category','required','numeric');
+			$post->add_rules('incident_category','required','length[3,100]');
 			
 			// Validate Personal Information
 			if (!empty($post->person_first))
@@ -478,7 +478,7 @@ class Api_Controller extends Controller {
 				
 				$incident_date=split("/",$post->incident_date);
 				// where the $_POST['date'] is a value posted by form in mm/dd/yyyy format
-					$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
+				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
 					
 				$incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
 				$incident->incident_date = $incident_date . " " . $incident_time;
@@ -486,8 +486,14 @@ class Api_Controller extends Controller {
 				$incident->save();
 				
 				// SAVE CATEGORIES
-				if(!empty($post->incident_category) && is_array($post->incident_category)){
-					foreach($post->incident_category as $item)
+				//check if data is array or a serialized data.
+				if( is_array( $post->incident_category ) ) {
+				    $categories = $post->incident_category;
+				} else { 
+				    $categories = unserialize($post->incident_category);
+				}
+				if(!empty($categories) && is_array($categories)){
+					foreach($categories as $item)
 					{
 						$incident_category = new Incident_Category_Model();
 						$incident_category->incident_id = $incident->id;
@@ -535,7 +541,7 @@ class Api_Controller extends Controller {
 				}
 				
 				// c. Photos
-				if( !empty($post->incident_photo))){
+				if( !empty($post->incident_photo)){
 				    $filenames = upload::save('incident_photo');
 				    $i = 1;
 				    foreach ($filenames as $filename) {

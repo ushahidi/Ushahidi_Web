@@ -1,5 +1,13 @@
 <?php 
     require_once('install.php');
+    global $install;
+    
+    //check if ushahidi is installed?.
+    if( $install->is_ushahidi_installed())
+    {
+        header('Location:../');
+    }
+   
  ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -25,26 +33,33 @@ rel="stylesheet" type="text/css" />
             <tr>
               	<td align="left" class="login_error">
 				<?php
-				
-					print ( $form->error('username') =="") ?'': "&#8226;&nbsp;" 
+					print ( $form->error('username') =="") ?'':"&#8226;&nbsp;" 
 					    . $form->error('username') . "<br />";
-					print ( $form->error('password') =="") ?'': "&#8226;&nbsp;" 
+					print ( $form->error('password') =="") ?'':"&#8226;&nbsp;" 
 					    . $form->error('password') . "<br />";
-					print ( $form->error('host') =="") ?'': "&#8226;&nbsp;" 
+					print ( $form->error('host') =="") ?'':"&#8226;&nbsp;" 
 					    .$form->error('host') . "<br />";
-					print ( $form->error('db_name') =="") ?'': "&#8226;&nbsp;" 
+					print ( $form->error('db_name') =="") ?'':"&#8226;&nbsp;" 
 					    . $form->error('db_name') . "<br />";
-					print ( $form->error('permission') =="") ?'': "&#8226;&nbsp;" 
+					print ( $form->error('permission') =="") ?'':"&#8226;&nbsp;" 
 					    . $form->error('permission') . "<br />";
-					print ( $form->error('load_db_tpl') =="") ?'': "&#8226;&nbsp;" 
+					print ( $form->error('load_db_tpl') =="") ?'':"&#8226;&nbsp;" 
 					    . $form->error('load_db_tpl') . "<br />";
-					print ( $form->error('connection') =="") ?'': "&#8226;&nbsp;" 
+					print ( $form->error('connection') =="") ?'':"&#8226;&nbsp;" 
 					    . $form->error('connection') . "<br />";
-		        
 		         ?>
 				</td>
             </tr>
 			<?php } ?>
+            <tr>
+              <td><strong>Base Path:</strong><br />
+              <input type="text" name="base_path" class="login_text" 
+                value="<?php print $form->value('base_path'); ?>"/>
+              <br />Just interested in the name of the sub folder.<br /> 
+              If Ushahidi is in the root folder, leave this field empty.
+              Eg. ushahidi 
+              </td>
+            </tr>
             <tr>
               <td><strong>Username:</strong><br />
               <input type="text" name="username" class="login_text" 
@@ -61,9 +76,9 @@ rel="stylesheet" type="text/css" />
             <tr>
               <td>
                 <strong>Database Host:</strong><br />
-              <input type="text" name="host" class="login_text" value="localhost" 
-              value="<?php print $form->value('host'); ?>" />
-              <br />Your database host. It could be http://mysql.somedomain.com.
+              <input type="text" name="host" class="login_text" 
+                value="<?php print $form->value('host') == ''? 'localhost':$form->value('host'); ?>" />
+              <br />Your database host. It could also be mysql.somedomain.com
               </td>  
             </tr>
             <tr>
@@ -89,7 +104,8 @@ rel="stylesheet" type="text/css" />
                 <strong>Table prefix:</strong><br />
                   <input type="text" name="table_prefix" class="login_text" 
                   value="<?php print $form->value('table_prefix'); ?>" />
-                <br />The prefix to be used by the tables. Eg. ush_ 
+                <br />The prefix to be used by the tables. Eg. ush_<br />
+                Leave it blank for nothing. 
                 <input type="hidden" name="connection" />
                 <input type="hidden" name="permission" />
                 <input type="hidden" name="load_db_tpl" />
