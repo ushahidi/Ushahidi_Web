@@ -12,7 +12,6 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
-
 class Main_Controller extends Template_Controller {
 
     public $auto_render = TRUE;
