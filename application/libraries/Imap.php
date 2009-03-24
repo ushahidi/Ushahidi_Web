@@ -10,16 +10,6 @@ class Imap_Core {
 
 	private $imap_stream;	
 	
-    /**
-	 * Create an instance of Imap
-	 *
-	 * @return object
-	 */
-	public static function factory($config = array())
-    {
-		return new Imap($config);
-    }
-
 	/**
 	 * Opens an IMAP stream
 	 */
