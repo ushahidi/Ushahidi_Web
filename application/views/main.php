@@ -1,3 +1,28 @@
+<?php
+/**
+ * This view for the main page.
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com>
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     Admin Dashboard Controller
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General
+ * Public License (LGPL)
+ */
+
+	require_once('installer/install.php');
+	global $install;
+
+	//check if ushahidi is not installed?.
+    if( $install->is_ushahidi_installed())
+    {
+       header('Location: '.url::base() . 'installer/');
+    }
+?>
 <div id="content">
   <div class="content-bg">
     <!-- start map and media filter -->
@@ -45,7 +70,7 @@
 		      {
                           $category_title = $category_info[0];
                           $category_color = $category_info[1];
-												echo '<li><a href="#" id="cat_'. $category .'"><span style="background:no-repeat url('. url::base() . "swatch/?c=" . $category_color . "&w=16&h=16&.png" . '); background-position:left center;">' . $category_title . '</span></a></li>';
+						echo '<li><a href="#" id="cat_'. $category .'"><span style="background:no-repeat url('. url::base() . "swatch/?c=" . $category_color . "&w=16&h=16&.png" . '); background-position:left center;">' . $category_title . '</span></a></li>';
                       }
 		    ?>
                   </ul>
@@ -57,7 +82,7 @@
                 <?php if (!empty($phone_array)) ?><a class="btn-grey" href="#"><span><?php echo Kohana::lang('ui_main.submit_sms'); ?></span></a>
               </div>
 			  <?php if (!empty($phone_array)) { ?>
-              <p><?php echo Kohana::lang('ui_main.submit_sms1'); ?>  
+              <p><?php echo Kohana::lang('ui_main.submit_sms1'); ?>
 				<?php foreach ($phone_array as $phone) {
 					echo "<strong>". $phone ."</strong>";
 					if ($phone != end($phone_array)) {
@@ -95,7 +120,7 @@
                       <li class="w-03">&nbsp;</li>
                     </ul>
                   </li>
-                  <?php	
+                  <?php
                         }
 			foreach ($incidents as $incident)
                             {
