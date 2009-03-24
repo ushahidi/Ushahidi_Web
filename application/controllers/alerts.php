@@ -153,10 +153,10 @@ class Alerts_Controller extends Main_Controller {
 					//Send verification email
 					//XXX: Setup correct 'from' address and message
 					$to = $post->alert_email;
-					$from = 'verify-code@ushahidi.com';
+					$from = 'jason.mule@gmail.com';
 					$subject = 'Ushahidi alerts - Verification code';
 					$message = 'Please follow the link below to confirm your
-								alert request:<br/>'.url::base().'/alerts/verify/'.$alert_code;
+								alert request:<br/>'.url::base().'alerts/verify/'.$alert_code;
 
  					if (email::send($to, $from, $subject, $message, TRUE) == 1)
 					{
