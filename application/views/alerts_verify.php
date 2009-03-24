@@ -32,7 +32,7 @@
 					elseif ($errno == ER_CODE_ALREADY_VERIFIED)
 					{
 						echo "<div class=\"red-box\">";
-						echo "<div class=\"alert_response\">
+						echo "<div class=\"alert_response\" align=\"center\">
 							This code has been verified before!</div>";
                    		echo "</div>";
 					}
@@ -40,7 +40,7 @@
                     elseif ($errno == ER_CODE_VERIFIED)
                     {
                         echo "<div class=\"green-box\">";
-                        echo "<div class=\"alert_response\">
+                        echo "<div class=\"alert_response\" align=\"center\">
                                 Your code was verified correctly. You will now
                                 receive alerts about incidents as they happen.</div>";
                    		echo "</div>";
