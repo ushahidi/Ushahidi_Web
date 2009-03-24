@@ -10,16 +10,11 @@
 					if ($errno == ER_CODE_NOT_FOUND)
 					{
 						echo "<div class=\"red-box\">";
-						echo "<div class=\"alert_response\">
-							This verification code was not found! Please
-							confirm that you entered the code
-							correctly. You may use the form below to re-enter
-							your verification code:</div>";
+						echo "<div class=\"alert_response\">";
+						echo Kohana::lang('alerts.code_not_found');
                    		echo "</div>";
 
 						echo "<div class=\"alert_confirm\">";
-						echo "<div class=\"label\">Please enter the confirmation [CODE] 
-								you received below: </div>";
 								
 								print form::open('/alerts/verify');
 								print form::input('alert_code', '');
@@ -32,18 +27,19 @@
 					elseif ($errno == ER_CODE_ALREADY_VERIFIED)
 					{
 						echo "<div class=\"red-box\">";
-						echo "<div class=\"alert_response\" align=\"center\">
-							This code has been verified before!</div>";
+						echo "<div class=\"alert_response\" align=\"center\">";
+						echo Kohana::lang('alerts.code_already_verified');
+                        echo "</div>";
                    		echo "</div>";
 					}
 
                     elseif ($errno == ER_CODE_VERIFIED)
                     {
                         echo "<div class=\"green-box\">";
-                        echo "<div class=\"alert_response\" align=\"center\">
-                                Your code was verified correctly. You will now
-                                receive alerts about incidents as they happen.</div>";
-                   		echo "</div>";
+                        echo "<div class=\"alert_response\" align=\"center\">";
+                   		echo Kohana::lang('alerts.code_verified');
+                        echo "</div>";
+                        echo "</div>";
                     }
 
                     ?>

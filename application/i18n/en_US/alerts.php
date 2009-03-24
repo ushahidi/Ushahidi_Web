@@ -30,5 +30,9 @@ $lang = array
 	(
 		'required'		=> 'You have not selected a valid location on the map.',
 		'between' => 'You have not selected a valid location on the map.'
-	)
+	),
+
+    'code_not_found' => 'This verification code was not found! Please confirm that you entered the code correctly. You may use the form below to re-enter your verification code:',
+    'code_already_verified' => 'This code has been verified before!',
+    'code_verified' => ' Your code was verified correctly. You will now receive alerts about incidents as they happen.'
 );
