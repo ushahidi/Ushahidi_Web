@@ -588,11 +588,11 @@ class Forms_Controller extends Admin_Controller
 		$html .="<div id=\"form_result_".$form_id."\" class=\"forms_fields_result\"></div>";
 		$html .="<div class=\"forms_item\">"; 
 		$html .="	<strong>Field Name:</strong><br />"; 
-		$html .= 	form::input('field_name', '', ' class="text"');
+		$html .= 	form::input('field_name', $field_name, ' class="text"');
 		$html .="</div>"; 
 		$html .="<div class=\"forms_item\">"; 
 		$html .="	<strong>Default Value?:</strong><br />"; 
-		$html .= 	form::input('field_default', '', ' class="text"');
+		$html .= 	form::input('field_default', $field_default, ' class="text"');
 		$html .="</div>"; 
 		$html .="<div class=\"forms_item\">"; 
 		$html .="	<strong>Required?</strong><br />"; 
@@ -613,7 +613,7 @@ class Forms_Controller extends Admin_Controller
 		//$html .="</div>";
 		$html .="<div class=\"forms_item\">"; 
 		$html .="	<strong>Height (Rows):</strong><br />"; 
-		$html .= 	form::input('field_height', '', ' class="text short"');
+		$html .= 	form::input('field_height', $field_height, ' class="text short"');
 		$html .="</div>";
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .="<div class=\"forms_item\">";

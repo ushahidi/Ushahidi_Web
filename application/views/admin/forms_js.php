@@ -76,11 +76,20 @@ function showFormSelected(id, form_id, field_id, select_disable)
 // Modify Individual Form Fields
 function fieldAction( action, confirmAction, field_id, form_id, field_type )
 {
+	$('#form_fields_current_' + form_id).css({
+	"background-image" : "url('<?php echo url::base() . "media/img/loading_g2.gif"; ?>')",
+	"background-position" : "center center",
+	"background-repeat" : "no-repeat"
+	});
+	
 	switch(action)
 	{
 	case 'e':
 		$('#formadd_' + form_id).show(400);
-		showFormSelected(field_type, form_id, field_id, true);		
+		showFormSelected(field_type, form_id, field_id, true);
+		$('#form_fields_current_' + form_id).css({
+		"background-image" : "none"
+		});
 		break;
 	case 'd':
 		var answer = confirm('Are You Sure You Want To ' 
@@ -91,7 +100,10 @@ function fieldAction( action, confirmAction, field_id, form_id, field_type )
 					if (data.status == 'success'){
 						$('#form_fields_current_' + form_id).html('');
 						$('#form_fields_current_' + form_id).html(unescape(data.response));
-						$('#form_fields_current_' + form_id).effect("highlight", {}, 2000);
+						//$('#form_fields_current_' + form_id).effect("highlight", {}, 2000);
+						$('#form_fields_current_' + form_id).css({
+						"background-image" : "none"
+						});
 					}
 			  	}, "json");
 		}
@@ -102,7 +114,10 @@ function fieldAction( action, confirmAction, field_id, form_id, field_type )
 				if (data.status == 'success'){
 					$('#form_fields_current_' + form_id).html('');
 					$('#form_fields_current_' + form_id).html(unescape(data.response));
-					$('#form_fields_current_' + form_id).effect("highlight", {}, 2000);
+					//$('#form_fields_current_' + form_id).effect("highlight", {}, 2000);
+					$('#form_fields_current_' + form_id).css({
+					"background-image" : "none"
+					});
 				}
 		  	}, "json");
 		break;
@@ -112,7 +127,10 @@ function fieldAction( action, confirmAction, field_id, form_id, field_type )
 				if (data.status == 'success'){
 					$('#form_fields_current_' + form_id).html('');
 					$('#form_fields_current_' + form_id).html(unescape(data.response));
-					$('#form_fields_current_' + form_id).effect("highlight", {}, 2000);
+					//$('#form_fields_current_' + form_id).effect("highlight", {}, 2000);
+					$('#form_fields_current_' + form_id).css({
+					"background-image" : "none"
+					});
 				}
 		  	}, "json");
 		break;
