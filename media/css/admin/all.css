@@ -950,6 +950,9 @@ a.rem{
 	background:url(../../img/icon-plus.gif) no-repeat;
 }
 a.rem { background:url(../../img/icon-minus.gif) no-repeat;}
+input.short {
+	width:50px;
+}
 input.long {
 	width:454px;
 }
@@ -1271,6 +1274,78 @@ table.p_replace td.special{
 	padding:2px;
 	display:none;
 }
+
+/*-- Forms --*/
+.forms_fields{
+	display:none;
+	margin:0 20px 15px 20px;
+	padding:10px;
+	background-color:#eee;
+	border-bottom:2px solid #ccc;
+}
+.forms_fields_add{
+	display:none;
+	margin:10px 0 0 15px;
+}
+.forms_fields_new{
+	display:none;
+	border:1px dashed #ccc;
+	padding:10px 10px 0 10px;
+	margin-top:5px;
+	background-color:#fff;
+}
+a.new-form_field{
+	text-decoration:underline;
+	font-size:11px;
+	font-weight:bold;
+	padding:1px 0 0 18px;
+	background:url(../../img/icon-plus.gif) no-repeat 0 2px;
+}
+.forms_item{
+	float:left;
+	margin:0 15px 10px 0;
+}
+.forms_fields_current{
+	margin:15px 0 0 0;
+	padding:5px 0 0 0;
+	border-top:1px solid #ccc;
+}
+.forms_fields_edit{
+	font-size:10px;
+	margin:5px 0 0 0;
+}
+.forms_fields_loading{
+	float:left;
+	margin-right:15px;
+}
+.forms_fields_result{
+	display:none;
+	font-weight:bold;
+	background:#d8f1d8;
+	border:1px solid #a7d1a7;
+	padding:5px;
+	margin:0 0 10px 0;
+}
+.forms_fields_result_error{
+	display:none;
+	font-weight:bold;
+	background:#FFD8D9;
+	border:1px solid #990000;
+	padding:5px;
+	margin:0 0 10px 0;
+}
+.forms_fields_result ul, .forms_fields_result_error ul{
+	margin:0;
+	padding:0;
+}
+.forms_fields_item{
+	margin:0 0 20px 0;
+}
+.forms_fields_item textarea{
+	float:none;
+	height:50px;
+}
+
 /*-- Color Picker --*/
 .jColorSelect {
 	overflow:hidden; /* for IE6 */
