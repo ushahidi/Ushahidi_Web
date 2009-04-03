@@ -365,6 +365,7 @@ CREATE TABLE IF NOT EXISTS `idp` (
 CREATE TABLE IF NOT EXISTS `incident` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `location_id` bigint(20) NOT NULL,
+  `form_id` int(11) NOT NULL default '1',
   `locale` varchar(10) NOT NULL default 'en_US',
   `user_id` bigint(20) default NULL,
   `incident_title` varchar(255) default NULL,
@@ -977,7 +978,7 @@ CREATE TABLE IF NOT EXISTS `city` (
 -- Table structure for table `scheduler`
 --
 
-CREATE TABLE `scheduler` (
+CREATE TABLE IF NOT EXISTS `scheduler` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `scheduler_name` varchar(100) NOT NULL,
   `scheduler_last` int(10) unsigned NOT NULL default '0',
@@ -1005,7 +1006,7 @@ INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_we
 -- Table structure for table `scheduler_log`
 --
 
-CREATE TABLE `scheduler_log` (
+CREATE TABLE IF NOT EXISTS `scheduler_log` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `scheduler_id` int(11) NOT NULL,
   `scheduler_name` varchar(100) NOT NULL,
@@ -1050,6 +1051,76 @@ CREATE TABLE IF NOT EXISTS `cluster` (
 --
 -- Dumping data for table `cluster`
 --
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `form`
+--
+
+CREATE TABLE IF NOT EXISTS `form` (
+  `id` int(11) NOT NULL auto_increment,
+  `form_title` varchar(200) NOT NULL,
+  `form_description` text,
+  `form_active` tinyint(4) default '1',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `form`
+--
+
+INSERT INTO `form` (`id`, `form_title`, `form_description`, `form_active`) VALUES
+(1, 'Default Form', 'Default form, for report entry', 1);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `form_field`
+--
+
+CREATE TABLE IF NOT EXISTS `form_field` (
+  `id` int(11) NOT NULL auto_increment,
+  `form_id` int(11) NOT NULL default '0',
+  `field_name` varchar(200) default NULL,
+  `field_type` tinyint(4) NOT NULL default '1' COMMENT '1 - TEXTFIELD, 2 - TEXTAREA (FREETEXT), 3 - DATE, 4 - PASSWORD, 5 - RADIO, 6 - CHECKBOX',
+  `field_required` tinyint(4) default '0',
+  `field_options` text,
+  `field_position` tinyint(4) NOT NULL default '0',
+  `field_default` varchar(200) default NULL,
+  `field_maxlength` int(11) NOT NULL default '0',
+  `field_width` smallint(6) NOT NULL default '0',
+  `field_height` tinyint(4) default '5',
+  `field_isdate` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  KEY `form_id` (`form_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `cluster`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `form_response`
+--
+
+CREATE TABLE IF NOT EXISTS `form_response` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `form_field_id` int(11) default NULL,
+  `form_response` text NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `form_field_id` (`form_field_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `form_response`
+--
+
 
 
 --

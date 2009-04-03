@@ -185,8 +185,7 @@ class Manage_Controller extends Admin_Controller
 	        $post->pre_filter('trim', TRUE);
 
 			if ($post->action == 'a')		// Add Action
-			{
-				// Add some rules, the input field, followed by a list of checks, carried out in order
+			{ // Add some rules, the input field, followed by a list of checks, carried out in order
 				$post->add_rules('organization_name','required', 'length[3,70]');
 				$post->add_rules('organization_description','required');
 				$post->add_rules('organization_website','required','url');
@@ -202,14 +201,15 @@ class Manage_Controller extends Admin_Controller
 				
 				$organization = new Organization_Model($organization_id);
 				
-				if( $post->action == 'd' ) { 			// Delete Action
+				if( $post->action == 'd' )
+				{ // Delete Action
 					$organization->delete( $organization_id );
 					$form_saved = TRUE;
 					$form_action = "DELETED";
 				
 				}
-				else if( $post->action == 'v' )			// Show/Hide Action
-				{
+				else if( $post->action == 'v' )			
+				{ // Show/Hide Action
 	            	if ($organization->loaded==true)
 					{
 						if ($organization->organization_active == 1) {
@@ -223,9 +223,8 @@ class Manage_Controller extends Admin_Controller
 						$form_action = "MODIFIED";
 					}
 				}
-				else if( $post->action == 'a' ) 		// Save Action
-				{
-					// SAVE Organization
+				else if( $post->action == 'a' ) 		
+				{ // Save Action
 					$organization->organization_name = $post->organization_name;
 					$organization->organization_description = $post->organization_description;
 					$organization->organization_website = $post->organization_website;
@@ -237,9 +236,8 @@ class Manage_Controller extends Admin_Controller
 					$form_action = "ADDED/EDITED";
 				}       
 	        }
-            // No! We have validation errors, we need to show the form again, with the errors
 	        else
-			{
+			{ // No! We have validation errors, we need to show the form again, with the errors
 				
 	             // repopulate the form fields
 		         $form = arr::overwrite( $form, $post->as_array() ); 
