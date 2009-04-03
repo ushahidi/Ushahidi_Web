@@ -102,7 +102,7 @@ class Imap_Core {
 	 */
 	public function delete_message($msg_no)
 	{
-		imap_delete($this->imap_stream, $msg_no]);
+		imap_delete($this->imap_stream, $msg_no);
 	}
 
 	/**
