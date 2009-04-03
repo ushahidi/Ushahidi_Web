@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * Imap library. Provides an IMAP interface to mailboxes. 
+ * Imap library. Wrapper to read email using IMAP/ POP3. 
  * @package    Imap
  * @author	   Ushahidi Team
  * @copyright  (c) 2009 Ushahidi Team
@@ -8,7 +8,7 @@
  */
 class Imap_Core {
 
-	private $imap_stream;	
+	private $imap_stream;
 	
 	/**
 	 * Opens an IMAP stream
@@ -20,14 +20,33 @@ class Imap_Core {
 		
 		$imap_stream =	imap_open($config['service'], $config['email_address'], 
 						   $config['password']);
+		if (!$imap_stream)
+			throw new Kohana_Exception('imap.imap_stream_not_opened', imap_last_error());
 
 		$this->imap_stream = $imap_stream;
+	}
+
+	/**
+	 * Create an instance of Imap
+	 *
+     * @param   string  name of service. Either 'imap' or 'pop3'
+	 * @return	object
+	 */
+	public static function factory($service)
+	{
+		if ($service == 'imap')
+			return new Imap(Kohana::config('imap'));
+		elseif ($service == 'pop3')
+			return new Imap(Kohana::config('pop3'));
+		else
+			throw new Kohana_Exception('imap.unsupported_service', $service);
 	}
 
 	/**
 	 * Get messages according to a search criteria
 	 * 
 	 * @param	string	search criteria (RFC2060, sec. 6.4.4). Set to "UNSEEN" by default
+	 					NB: Search criteria only affects IMAP mailboxes.
 	 * @param	string	date format. Set to "Y-m-d H:i:s" by default
 	 * @return	mixed	array containing messages
 	 */
@@ -83,7 +102,7 @@ class Imap_Core {
 	 */
 	public function delete_message($msg_no)
 	{
-		imap_delete($this->imap_stream, $msgs[$i]);
+		imap_delete($this->imap_stream, $msg_no]);
 	}
 
 	/**
