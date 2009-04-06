@@ -24,19 +24,28 @@ class Imap_Controller extends Scheduler_Controller
 	{
 		
 		// 'pop3' or 'imap'
-		$imap = Imap::factory('pop3');
+		$imap = Imap::factory('imap');
 		$messages = $imap->get_messages();
 
-		var_dump($messages);
-
+        //FIXME: use ORM relationships
 		foreach ($messages as $message)
 		{
-			
+            $location = ORM::factory('location');
+            $location->location_date = $message['date'];
+            $location->save();
+            
 			$incident = ORM::factory('incident');
-			$incident->incident_title = $message['subject'];
+			$incident->location_id = $location->id;
+            $incident->incident_title = $message['subject'];
 			$incident->incident_date = $message['date'];
 			$incident->incident_description = $message['body'];
+            $incident->incident_mode = 3;
 			$incident->save();
+
+            $incident_person = ORM::factory('incident_person');
+            $incident_person->incident_id = $incident->id;
+            $incident_person->person_email = $message['from'];
+            $incident_person->save();
 		}
     }
 }
