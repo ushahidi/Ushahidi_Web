@@ -11,7 +11,10 @@
     <div id="ushahidi_login_logo"><img src="<?php echo url::base() ?>media/img/admin/logo_login.gif" width="400" height="80" /></div>
     <div id="ushahidi_login">
       <table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
-        <form method="POST" name="frm_reset" style="line-height: 100%; margin-top: 0; margin-bottom: 0">     
+      <?php print form::open(NULL,array('id' => 'frm_reset',
+			'name' => 'frm_reset',
+			'method' => 'post', 
+			'style' => 'line-height: 100%; margin-top: 0; margin-bottom: 0' )); ?>     
 			<?php
 			 if ($form_error) { ?>
             <tr>
@@ -28,12 +31,13 @@
 			<?php } ?>
             <tr>
               <td><strong>Enter email address used for registration:</strong><br />
-              <input type="text" name="email" id="email" class="login_text" /></td>
+              <?php print form::input('resetemail', '', 
+						' class="login_text"'); ?></td>
             </tr>
             <tr>
-              <td><input type="submit" id="submit" name="submit" value="Reset password" class="login_btn" /></td>
+              <td><input type="submit" id="resetemail" name="submit" value="Reset password" class="login_btn" /></td>
             </tr>
-        </form>
+        <?php print form::close(); ?>
       </table>
   </div>
 </div>

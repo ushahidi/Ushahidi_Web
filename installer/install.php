@@ -29,8 +29,7 @@ class Install
 
 	public function index()
 	{
-	    //start session for handling error messages.
-	     session_start();
+	   
 	}
 
 	/**

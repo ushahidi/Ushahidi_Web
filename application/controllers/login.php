@@ -119,7 +119,7 @@ class Login_Controller extends Template_Controller {
 		$form = array
 	    (
 	        //'user_id'   => '',
-			'email' 	=> '',
+			'resetemail' 	=> '',
 	    );
 		
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -138,22 +138,24 @@ class Login_Controller extends Template_Controller {
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 			///$post->add_rules('username','required','length[3,16]', 'alpha');
-			$post->add_rules('email','required','email','length[4,64]');
+			$post->add_rules('resetemail','required','email','length[4,64]');
 			
-			$post->add_callbacks('email', array($this,'email_exists_chk'));
+			$post->add_callbacks('resetemail', array($this,'email_exists_chk'));
 
 			if ($post->validate())
 	    	{
-				$user = ORM::factory('user',$post->email);
+				$user = ORM::factory('user',$post->resetemail);
 				
 				// Existing User??
 				if ($user->loaded==true)
 				{
 					//$user->username = $post->username;
 					$new_password = $this->_generate_password();
-					$details_sent = $this->_email_details($post->email,$user->username,$new_password );
+					
+					$details_sent = $this->_email_details($post->resetemail,$user->username,$new_password );
+					
 					if( $details_sent ) {
-						$user->email = $post->email;
+						$user->email = $post->resetemail;
 					
 						$user->password = $new_password;
 					
@@ -208,11 +210,11 @@ class Login_Controller extends Template_Controller {
 	public function email_exists_chk( Validation $post )
 	{
 		$users = ORM::factory('user');
-		if( array_key_exists('email',$post->errors()))
+		if( array_key_exists('resetemail',$post->errors()))
 			return;
 
-		if( !$users->email_exists( $post->email ) )
-			$post->add_error('email','invalid');
+		if( !$users->email_exists( $post->resetemail ) )
+			$post->add_error('resetemail','invalid');
 	}
 	
 	/**
