@@ -1,3 +1,18 @@
+<?php 
+/**
+ * Login view.
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     API Controller
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ */
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -39,6 +54,9 @@
             </tr>
             <tr>
               <td><input type="submit" id="submit" name="submit" value="Log In" class="login_btn" /></td>
+            </tr>
+            <tr>
+              <td><a href="<?php echo url::base()?>login/resetpassword"> Forgot password?</a></td>
             </tr>
         </form>
       </table>

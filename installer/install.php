@@ -199,7 +199,7 @@ class Install
 	    $tables = explode(';',$db_schema);
 
 	    foreach($tables as $query) {
-	        $result = mysql_query($query,$connection);
+	        $result = @mysql_query($query,$connection);
 	    }
 
 	    @mysql_close( $connection );
