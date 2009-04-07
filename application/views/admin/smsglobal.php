@@ -1,3 +1,18 @@
+<?php 
+/**
+ * Sms global view page.
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     API Controller
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ */
+?>
 			<div class="bg">
 				<h2><?php echo $title; ?> <a href="<?php echo url::base() . 'admin/settings/site' ?>">Site</a><a href="<?php echo url::base() . 'admin/settings' ?>">Map</a><a href="<?php echo url::base() . 'admin/settings/sms' ?>" class="active">SMS</a><a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a></h2>
 				<?php print form::open(); ?>

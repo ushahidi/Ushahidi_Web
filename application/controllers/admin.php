@@ -46,7 +46,7 @@ class Admin_Controller extends Template_Controller {
         $this->session = Session::instance();
         $this->auth->auto_login();
         if (!$this->auth->logged_in('admin')
-             && !$this->auth->logged_in('user'))
+             && !$this->auth->logged_in('login'))
         {
             url::redirect('login');
         }

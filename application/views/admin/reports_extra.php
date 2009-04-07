@@ -1,3 +1,18 @@
+<?php 
+/**
+ * Reports extra view page.
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     API Controller
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ */
+?>
 			<div class="bg">
 				<h2><?php echo $title; ?><span>(<?php echo $total_items; ?>)</span><a href="reports/edit">Create New Report</a><a href="reports/extra">Additional Reports</a></h2>
 				<!-- tabs -->

@@ -29,8 +29,7 @@ class Install
 
 	public function index()
 	{
-	    //start session for handling error messages.
-	     session_start();
+	   session_start();
 	}
 
 	/**
@@ -187,12 +186,12 @@ class Install
 	private function import_sql($username, $password, $host,$db_name)
 	{
 	    $connection = @mysql_connect("$host", "$username", "$password");
-		@mysql_select_db("$db_name",$connection);
-
 	    $db_schema = file_get_contents('../sql/ushahidi.sql');
 
-	    $resutl = @mysql_query('CREATE DATABASE '.$db_name);
-
+	    $result = @mysql_query('CREATE DATABASE '.$db_name);
+	    
+	    // select newly created db
+	    @mysql_select_db($db_name,$connection);
 	    /**
 	     * split by ; to get the sql statement for creating individual
 	     * tables.
@@ -200,7 +199,7 @@ class Install
 	    $tables = explode(';',$db_schema);
 
 	    foreach($tables as $query) {
-	        $result = mysql_query($query,$connection);
+	        $result = @mysql_query($query,$connection);
 	    }
 
 	    @mysql_close( $connection );
