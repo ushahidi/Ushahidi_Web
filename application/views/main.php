@@ -1,6 +1,6 @@
 <?php
 /**
- * This view for the main page.
+ * Main view page.
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -14,6 +14,7 @@
  * Public License (LGPL)
  */
 ?>
+
 <div id="content">
   <div class="content-bg">
     <!-- start map and media filter -->

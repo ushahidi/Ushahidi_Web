@@ -1,6 +1,6 @@
 <?php 
 /**
- * Login view.
+ * Login view page.
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 

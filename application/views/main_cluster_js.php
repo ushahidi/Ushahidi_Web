@@ -1,12 +1,18 @@
-/*
-		* Main Javascript
-		* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		* TESTING THE CLUSTER STRATEGY
-		* REPLACE main_js.php with this one to use
-		* Clustering (heat mapping)
-		* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		*/
-
+/**
+ * Main cluster js file.
+ * 
+ * Handles javascript stuff related to main cluster function.
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     API Controller
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ */
 		// Map JS
 		jQuery(function() {
 			var map_layer;
