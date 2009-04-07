@@ -113,6 +113,19 @@ class Login_Controller extends Template_Controller {
      */
     public function resetpassword()
     {
+    	$auth = Auth::instance();
+		
+        // If already logged in redirect to user account page
+        // Otherwise attempt to auto login if autologin cookie can be found
+        // (Set when user previously logged in and ticked 'stay logged in')
+        if ($auth->logged_in() OR $auth->auto_login())
+        {
+            if ($user = Session::instance()->get('auth_user',FALSE))
+            {
+                url::redirect('admin/dashboard');
+            }
+        }
+    	
     	$this->template = new View('admin/reset_password');
 		
 		$this->template->title = 'Password Reset';
