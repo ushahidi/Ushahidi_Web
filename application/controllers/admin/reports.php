@@ -20,7 +20,7 @@ class Reports_Controller extends Admin_Controller
 	{
 		parent::__construct();
 	
-		$this->template->this_page = 'reports';		
+		$this->template->this_page = 'reports';
 	}
 	
 	
@@ -198,7 +198,6 @@ class Reports_Controller extends Admin_Controller
 			}
 			$countries[$country->id] = $this_country;
 		}
-		
 		$this->template->content->countries = $countries;
 		
 		$this->template->content->incidents = $incidents;
@@ -217,12 +216,12 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js = new View('admin/reports_js');		
 	}
 	
+	
 	/**
 	* Edit a report
     * @param bool|int $id The id no. of the report
     * @param bool|string $saved
     */
-    
 	function edit( $id = false, $saved = false )
 	{
 		$this->template->content = new View('admin/reports_edit');
@@ -232,6 +231,7 @@ class Reports_Controller extends Admin_Controller
 		$form = array
 	    (
 	        'location_id'      => '',
+			'form_id'      => '',
 			'locale'		   => '',
 			'incident_title'      => '',
 	        'incident_description'    => '',
@@ -249,8 +249,10 @@ class Reports_Controller extends Admin_Controller
 			'incident_photo' => array(),
 			'person_first' => '',
 			'person_last' => '',
-			'person_email' => ''
+			'person_email' => '',
+			'custom_field' => array()
 	    );
+		
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
@@ -289,6 +291,14 @@ class Reports_Controller extends Admin_Controller
 		}
 		$this->template->content->countries = $countries;
 		
+		//GET custom forms
+		$forms = array();
+		foreach (ORM::factory('form')->find_all() as $custom_forms)
+		{
+			$forms[$custom_forms->id] = $custom_forms->form_title;
+		}
+		$this->template->content->forms = $forms;
+		
 		// Retrieve thumbnail photos (if edit);
 		//XXX: fix _get_thumbnails
 		$this->template->content->incident = $this->_get_thumbnails($id);
@@ -298,14 +308,17 @@ class Reports_Controller extends Admin_Controller
 		if ((isset($_GET['mid']) && !empty($_GET['mid'])) || (isset($_GET['tid']) && !empty($_GET['tid']))) {
 			
 			// Check what kind of message this is
-			if(isset($_GET['mid'])){
+			if(isset($_GET['mid']))
+			{
 				//Then it's an SMS message
 				$messageType = 'sms';
 				$mobile_id = $_GET['mid'];
 				$dbtable = 'message';
 				$col_prefix = 'message';
 				$incident_title = 'Mobile Report';
-			}elseif(isset($_GET['tid'])){
+			}
+			elseif(isset($_GET['tid']))
+			{
 				//Then it's a Twitter message
 				$messageType = 'twitter';
 				$mobile_id = $_GET['tid'];
@@ -363,7 +376,7 @@ class Reports_Controller extends Admin_Controller
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-	        $post->add_rules('locale','required','alpha_dash','length[5]');
+	        // $post->add_rules('locale','required','alpha_dash','length[5]');
 			$post->add_rules('location_id','numeric');
 			$post->add_rules('mobile_id','numeric');
 			$post->add_rules('incident_title','required', 'length[3,200]');
@@ -431,6 +444,12 @@ class Reports_Controller extends Admin_Controller
 				$post->add_rules('person_email', 'email', 'length[3,100]');
 			}
 			
+			// Validate Custom Fields
+			if (!$this->_validate_custom_form_fields($post->custom_field))
+			{
+				$post->add_error('custom_field', 'values');
+			}
+			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -448,7 +467,8 @@ class Reports_Controller extends Admin_Controller
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model($id);
 				$incident->location_id = $location->id;
-				$incident->locale = $post->locale;
+				//$incident->locale = $post->locale;
+				$incident->form_id = $post->form_id;
 				$incident->user_id = $_SESSION['auth_user']->id;
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
@@ -581,7 +601,31 @@ class Reports_Controller extends Admin_Controller
 				}
 				
 				
-				// STEP 7: SAVE AND CLOSE?
+				// STEP 7: SAVE CUSTOM FORM FIELDS
+				foreach($post->custom_field as $key => $value)
+				{
+					$form_response = ORM::factory('form_response')
+					->where('form_field_id', $key)
+					->where('incident_id', $incident->id)
+					->find();
+					if ($form_response->loaded == true)
+					{
+						$form_response->form_field_id = $key;
+						$form_response->form_response = $value;
+						$form_response->save();
+					}
+					else
+					{
+						$form_response = new Form_Response_Model();
+						$form_response->form_field_id = $key;
+						$form_response->incident_id = $incident->id;
+						$form_response->form_response = $value;
+						$form_response->save();
+					}
+				}
+				
+				
+				// STEP 8: SAVE AND CLOSE?
 				if ($post->save == 1)		// Save but don't close
 				{
 					url::redirect('admin/reports/edit/'. $incident->id .'/saved');
@@ -597,7 +641,7 @@ class Reports_Controller extends Admin_Controller
 			{
 	            // repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
-
+	
 	            // populate the error fields, if any
 	            $errors = arr::overwrite($errors, $post->errors('report'));
 				$form_error = TRUE;
@@ -609,7 +653,7 @@ class Reports_Controller extends Admin_Controller
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident', $id);
-				if ($incident != "0")
+				if ($incident->loaded == true)
 				{
 					// Retrieve Categories
 					$incident_category = array();
@@ -642,6 +686,7 @@ class Reports_Controller extends Admin_Controller
 					$incident_arr = array
 				    (
 						'location_id' => $incident->location->id,
+						'form_id' => $incident->form_id,
 						'locale' => $incident->locale,
 						'incident_title' => $incident->incident_title,
 						'incident_description' => $incident->incident_description,
@@ -659,7 +704,8 @@ class Reports_Controller extends Admin_Controller
 						'incident_photo' => $incident_photo,
 						'person_first' => $incident->incident_person->person_first,
 						'person_last' => $incident->incident_person->person_last,
-						'person_email' => $incident->incident_person->person_email
+						'person_email' => $incident->incident_person->person_email,
+						'custom_field' => $this->_get_custom_form_fields($id,$incident->form_id,true)
 				    );
 					
 					// Merge To Form Array For Display
@@ -678,13 +724,21 @@ class Reports_Controller extends Admin_Controller
 				$form['latitude'] = Kohana::config('settings.default_lat');
 				$form['longitude'] = Kohana::config('settings.default_lon');
 				$form['country_id'] = Kohana::config('settings.default_country');
+				$form['incident_date'] = date("m/d/Y",time());
+				// initialize custom field array
+				$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
 			}
 		}
 	
+		$this->template->content->id = $id;
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
+		
+		// Retrieve Custom Form Fields Structure
+		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
+		$this->template->content->disp_custom_fields = $disp_custom_fields;
 		
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
@@ -1245,6 +1299,7 @@ class Reports_Controller extends Admin_Controller
 			</script>";	
     }
     
+
     private function _new_category_toggle_js()
     {
         return "<script type=\"text/javascript\">
@@ -1256,6 +1311,7 @@ class Reports_Controller extends Admin_Controller
 				});
 			</script>";
     }
+
 
 	/**
 	 * Checks if translation for this report & locale exists
@@ -1280,4 +1336,166 @@ class Reports_Controller extends Admin_Controller
 			return;
 		}
 	}
+
+
+	/**
+	 * Retrieve Custom Form Fields
+	 * @param bool|int $incident_id The unique incident_id of the original report
+	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
+	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
+	 * @param bool $data_only Whether or not to include just data
+	 */
+	private function _get_custom_form_fields($incident_id = false, $form_id = 1, $data_only = false)
+    {
+		$fields_array = array();
+		
+		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
+		foreach ($custom_form->form_field as $custom_formfield)
+		{
+			if ($data_only)
+			{ // Return Data Only
+				$fields_array[$custom_formfield->id] = '';
+				
+				foreach ($custom_formfield->form_response as $form_response)
+				{
+					if ($form_response->incident_id == $incident_id)
+					{
+						$fields_array[$custom_formfield->id] = $form_response->form_response;
+					}
+					else
+					{
+						$fields_array[$custom_formfield->id] = '';
+					}
+				}
+			}
+			else
+			{ // Return Field Structure
+				$fields_array[$custom_formfield->id] = array(
+					'field_id' => $custom_formfield->id,
+					'field_name' => $custom_formfield->field_name,
+					'field_type' => $custom_formfield->field_type,
+					'field_required' => $custom_formfield->field_required,
+					'field_maxlength' => $custom_formfield->field_maxlength,
+					'field_height' => $custom_formfield->field_height,
+					'field_width' => $custom_formfield->field_width,
+					'field_isdate' => $custom_formfield->field_isdate,
+					'field_response' => ''
+					);
+			}
+		}
+		
+		return $fields_array;
+    }
+
+
+	/**
+	 * Validate Custom Form Fields
+	 * @param array $custom_fields Array
+	 */
+	private function _validate_custom_form_fields($custom_fields = array())
+    {
+		$custom_fields_error = "";
+		
+		foreach ($custom_fields as $field_id => $field_response)
+		{
+			// Get the parameters for this field
+			$field_param = ORM::factory('form_field', $field_id);
+			if ($field_param->loaded == true)
+			{
+				// Validate for required
+				if ($field_param->field_required == 1 && $field_response == "")
+				{
+					return false;
+				}
+
+				// Validate for date
+				if ($field_param->field_isdate == 1)
+				{
+					
+					$myvalid = new Valid();
+					return $myvalid->date_mmddyyyy($field_response);
+				}
+			}
+		}
+		return true;
+    }
+
+
+	/**
+	 * Ajax call to update Incident Reporting Form
+	 */
+	public function switch_form()
+    {
+		$this->template = "";
+		$this->auto_render = FALSE;
+		
+		isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
+		isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
+			
+		$html = "";
+		$fields_array = array();		
+		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
+		
+		foreach ($custom_form->form_field as $custom_formfield)
+		{
+			$fields_array[$custom_formfield->id] = array(
+				'field_id' => $custom_formfield->id,
+				'field_name' => $custom_formfield->field_name,
+				'field_type' => $custom_formfield->field_type,
+				'field_required' => $custom_formfield->field_required,
+				'field_maxlength' => $custom_formfield->field_maxlength,
+				'field_height' => $custom_formfield->field_height,
+				'field_width' => $custom_formfield->field_width,
+				'field_isdate' => $custom_formfield->field_isdate,
+				'field_response' => ''
+				);
+			
+			// Load Data, if Any
+			foreach ($custom_formfield->form_response as $form_response)
+			{
+				if ($form_response->incident_id = $incident_id)
+				{
+					$fields_array[$custom_formfield->id]['field_response'] = $form_response->form_response;
+				}
+			}
+		}
+		
+		foreach ($fields_array as $field_property)
+		{
+			$html .= "<div class=\"row\">";
+			$html .= "<h4>" . $field_property['field_name'] . "</h4>";
+			if ($field_property['field_type'] == 1)
+			{ // Text Field
+				// Is this a date field?
+				if ($field_property['field_isdate'] == 1)
+				{
+					$html .= form::input('custom_field['.$field_property['field_id'].']', $field_property['field_response'],
+						' id="custom_field_'.$field_property['field_id'].'" class="text"');
+					$html .= "<script type=\"text/javascript\">
+							$(document).ready(function() {
+							$(\"#custom_field_".$field_property['field_id']."\").datepicker({ 
+							showOn: \"both\", 
+							buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
+							buttonImageOnly: true 
+							});
+							});
+						</script>";
+				}
+				else
+				{
+					$html .= form::input('custom_field['.$field_property['field_id'].']', $field_property['field_response'],
+						' id="custom_field_'.$field_property['field_id'].'" class="text custom_text"');
+				}
+			}
+			elseif ($field_property['field_type'] == 2)
+			{ // TextArea Field
+				$html .= form::textarea('custom_field['.$field_property['field_id'].']',
+					$field_property['field_response'], ' class="custom_text" rows="3"');
+			}
+			$html .= "</div>";
+		}
+		
+		echo json_encode(array("status"=>"success", "response"=>$html));
+    }
+	
 }

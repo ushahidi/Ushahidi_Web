@@ -731,6 +731,9 @@ ul.pager li a.active {background:#f2f7fa;}
 	width:363px;
 	padding:10px 5px;
 }
+.report-form input.custom_text {
+	width:363px;
+}
 .report-form textarea{
 	width:368px;
 	height:260px;
@@ -1341,7 +1344,7 @@ a.new-form_field{
 .forms_fields_item{
 	margin:0 0 20px 0;
 }
-.forms_fields_item textarea{
+.forms_fields_item textarea, #custom_forms textarea{
 	float:none;
 	height:50px;
 }

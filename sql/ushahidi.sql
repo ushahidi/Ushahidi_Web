@@ -1095,7 +1095,7 @@ CREATE TABLE IF NOT EXISTS `form_field` (
   `field_height` tinyint(4) default '5',
   `field_isdate` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`),
-  KEY `form_id` (`form_id`)
+  KEY `fk_form_id` (`form_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
@@ -1111,10 +1111,11 @@ CREATE TABLE IF NOT EXISTS `form_field` (
 
 CREATE TABLE IF NOT EXISTS `form_response` (
   `id` bigint(20) NOT NULL auto_increment,
-  `form_field_id` int(11) default NULL,
+  `form_field_id` int(11) NOT NULL,
+  `incident_id` bigint(20) NOT NULL,
   `form_response` text NOT NULL,
   PRIMARY KEY  (`id`),
-  KEY `form_field_id` (`form_field_id`)
+  KEY `fk_form_field_id` (`form_field_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 --
@@ -1133,6 +1134,18 @@ CREATE TABLE IF NOT EXISTS `form_response` (
 ALTER TABLE `roles_users`
   ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `form_field`
+--
+ALTER TABLE `form_field`
+  ADD CONSTRAINT `form_field_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `form` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `form_response`
+--
+ALTER TABLE `form_response`
+  ADD CONSTRAINT `form_response_ibfk_1` FOREIGN KEY (`form_field_id`) REFERENCES `form_field` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user_tokens`
