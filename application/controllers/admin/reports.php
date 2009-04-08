@@ -1483,9 +1483,8 @@ class Reports_Controller extends Admin_Controller
 				}
 
 				// Validate for date
-				if ($field_param->field_isdate == 1)
+				if ($field_param->field_isdate == 1 && $field_response != "")
 				{
-					
 					$myvalid = new Valid();
 					return $myvalid->date_mmddyyyy($field_response);
 				}

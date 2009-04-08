@@ -362,7 +362,14 @@ class valid_Core {
 		$str = str_replace('/', '-', $str);
 		$str = str_replace('--', '-', $str);
 		preg_match('/^(\d{2})-(\d{2})-(\d{4})$/', $str, $xadBits);
-		return checkdate($xadBits[1], $xadBits[2], $xadBits[3]);
+		if (is_array($xadBits) && count($xadBits) > 3)
+		{
+			return checkdate($xadBits[1], $xadBits[2], $xadBits[3]);
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -377,7 +384,14 @@ class valid_Core {
 		$str = str_replace('/', '-', $str);
 		$str = str_replace('--', '-', $str);
 		preg_match('/^(\d{2})-(\d{2})-(\d{4})$/', $str, $xadBits);
-		return checkdate($xadBits[2], $xadBits[1], $xadBits[3]);
+		if (is_array($xadBits) && count($xadBits) > 3)
+		{
+			return checkdate($xadBits[2], $xadBits[1], $xadBits[3]);
+		}
+		else
+		{
+			return false;
+		}
 	}	
 
 } // End valid
