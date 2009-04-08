@@ -129,5 +129,29 @@ $lang = array
 	'custom_field' => array
 	(
 		'values'		  => 'Please enter a valid value for one of your custom form items'
+	),
+	
+	'incident_active' => array
+	(
+		'required'		=> 'Please enter a valid value for Approve This Report',
+		'between'		=> 'Please enter a valid value for Approve This Report'
+	),
+	
+	'incident_verified' => array
+	(
+		'required'		=> 'Please enter a valid value for Verify This Report',
+		'between'		=> 'Please enter a valid value for Verify This Report'
+	),
+	
+	'incident_source' => array
+	(
+		'alpha'		=> 'Please enter a valid value for Source Reliability',
+		'length'		=> 'Please enter a valid value for Source Reliability'
+	),
+	
+	'incident_information' => array
+	(
+		'alpha'		=> 'Please enter a valid value for Information Probability',
+		'length'		=> 'Please enter a valid value for Information Probability'
 	)
 );

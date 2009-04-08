@@ -84,6 +84,13 @@ class Reports_Controller extends Admin_Controller
 						if ($update->loaded == true) {
 							$update->incident_active = '1';
 							$update->save();
+							
+							$verify = new Verify_Model();
+							$verify->incident_id = $item;
+							$verify->verified_status = '1';
+							$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+							$verify->verified_date = date("Y-m-d H:i:s",time());
+							$verify->save();
 						}
 					}
 					$form_action = "APPROVED";
@@ -96,6 +103,13 @@ class Reports_Controller extends Admin_Controller
 						if ($update->loaded == true) {
 							$update->incident_active = '0';
 							$update->save();
+							
+							$verify = new Verify_Model();
+							$verify->incident_id = $item;
+							$verify->verified_status = '0';
+							$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+							$verify->verified_date = date("Y-m-d H:i:s",time());
+							$verify->save();
 						}
 					}
 					$form_action = "UNAPPROVED";
@@ -105,17 +119,23 @@ class Reports_Controller extends Admin_Controller
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
+						$verify = new Verify_Model();
 						if ($update->loaded == true) {
-							if ($update->incident_verified == '1') {
+							if ($update->incident_verified == '1')
+							{
 								$update->incident_verified = '0';
+								$verify->verified_status = '0';
 							}
 							else {
 								$update->incident_verified = '1';
+								$verify->verified_status = '2';
 							}
-							$update->verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
-							$update->verify->verified_date = date("Y-m-d H:i:s",time());
-							$update->verify->verified_status = '1';
 							$update->save();
+							
+							$verify->incident_id = $item;
+							$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+							$verify->verified_date = date("Y-m-d H:i:s",time());
+							$verify->save();
 						}
 					}
 					$form_action = "VERIFIED";
@@ -250,7 +270,11 @@ class Reports_Controller extends Admin_Controller
 			'person_first' => '',
 			'person_last' => '',
 			'person_email' => '',
-			'custom_field' => array()
+			'custom_field' => array(),
+			'incident_active' => '',
+			'incident_verified' => '',
+			'incident_source' => '',
+			'incident_information' => ''
 	    );
 		
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -450,6 +474,11 @@ class Reports_Controller extends Admin_Controller
 				$post->add_error('custom_field', 'values');
 			}
 			
+			$post->add_rules('incident_active','required', 'between[0,1]');
+			$post->add_rules('incident_verified','required', 'length[0,1]');
+			$post->add_rules('incident_source','alpha', 'length[1,1]');
+			$post->add_rules('incident_information','numeric', 'length[1,1]');
+			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -501,7 +530,36 @@ class Reports_Controller extends Admin_Controller
 						$incident->incident_mode = 2; //Set the default as SMS - 2
 					}
 				}
+				// Incident Evaluation Info
+				$incident->incident_active = $post->incident_active;
+				$incident->incident_verified = $post->incident_verified;
+				$incident->incident_source = $post->incident_source;
+				$incident->incident_information = $post->incident_information;
+				//Save
 				$incident->save();
+				
+				// Record Approval/Verification Action
+				$verify = new Verify_Model();
+				$verify->incident_id = $incident->id;
+				$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+				$verify->verified_date = date("Y-m-d H:i:s",time());
+				if ($post->incident_active == 1)
+				{
+					$verify->verified_status = '1';
+				}
+				elseif ($post->incident_verified == 1)
+				{
+					$verify->verified_status = '2';
+				}
+				elseif ($post->incident_active == 1 && $post->incident_verified == 1)
+				{
+					$verify->verified_status = '3';
+				}
+				else
+				{
+					$verify->verified_status = '0';
+				}
+				$verify->save();
 				
 				
 				// STEP 3: SAVE CATEGORIES
@@ -625,7 +683,7 @@ class Reports_Controller extends Admin_Controller
 				}
 				
 				
-				// STEP 8: SAVE AND CLOSE?
+				// SAVE AND CLOSE?
 				if ($post->save == 1)		// Save but don't close
 				{
 					url::redirect('admin/reports/edit/'. $incident->id .'/saved');
@@ -705,7 +763,11 @@ class Reports_Controller extends Admin_Controller
 						'person_first' => $incident->incident_person->person_first,
 						'person_last' => $incident->incident_person->person_last,
 						'person_email' => $incident->incident_person->person_email,
-						'custom_field' => $this->_get_custom_form_fields($id,$incident->form_id,true)
+						'custom_field' => $this->_get_custom_form_fields($id,$incident->form_id,true),
+						'incident_active' => $incident->incident_active,
+						'incident_verified' => $incident->incident_verified,
+						'incident_source' => $incident->incident_source,
+						'incident_information' => $incident->incident_information
 				    );
 					
 					// Merge To Form Array For Display
@@ -753,6 +815,14 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->date_picker_js = $this->_date_picker_js();
         $this->template->content->color_picker_js = $this->_color_picker_js();
         $this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
+
+		// Information Evaluation Values
+		$this->template->content->incident_source_array = 
+			array(""=>"--- Select One ---", "A"=>"A - Accept", "B"=>"B", 
+			"C"=>"C", "D"=>"D", "E"=>"E", "F"=>"F - Reject");
+		$this->template->content->incident_information_array = 
+			array(""=>"--- Select One ---", "1"=>"1 - Accept", "2"=>"2", 
+			"3"=>"3", "4"=>"4", "5"=>"5", "6"=>"6 - Reject");
 	}
 
 
@@ -1349,6 +1419,10 @@ class Reports_Controller extends Admin_Controller
     {
 		$fields_array = array();
 		
+		if (!$form_id)
+		{
+			$form_id = 1;
+		}
 		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
 		foreach ($custom_form->form_field as $custom_formfield)
 		{

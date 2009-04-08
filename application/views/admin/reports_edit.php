@@ -408,24 +408,65 @@
 							</div>
 						</div>
 						<!-- f-col-bottom -->
-						<div class="f-col-bottom">
-							<div class="row">
-								<h4>Personal Information <span>Optional.</span></h4>
-								<label>
-									<span>First Name</span>
-									<?php print form::input('person_first', $form['person_first'], ' class="text"'); ?>
-								</label>
-								<label>
-									<span>Last Name</span>
-									<?php print form::input('person_last', $form['person_last'], ' class="text"'); ?>
-								</label>
+						<div class="f-col-bottom-container">
+							<div class="f-col-bottom">
+								<div class="row">
+									<h4>Personal Information <span>Optional.</span></h4>
+									<label>
+										<span>First Name</span>
+										<?php print form::input('person_first', $form['person_first'], ' class="text"'); ?>
+									</label>
+									<label>
+										<span>Last Name</span>
+										<?php print form::input('person_last', $form['person_last'], ' class="text"'); ?>
+									</label>
+								</div>
+								<div class="row">
+									<label>
+										<span>Email Address</span>
+										<?php print form::input('person_email', $form['person_email'], ' class="text"'); ?>
+									</label>
+								</div>
 							</div>
-							<div class="row">
-								<label>
-									<span>Email Address</span>
-									<?php print form::input('person_email', $form['person_email'], ' class="text"'); ?>
-								</label>
+							<!-- f-col-bottom-1 -->
+							<div class="f-col-bottom-1">
+								<h4>Information Evaluation</h4>
+								<div class="row">
+									<div class="f-col-bottom-1-col">Approve this report?</div>
+									<input type="radio" name="incident_active" value="1"
+									<?php if ($form['incident_active'] == 1)
+									{
+										echo " checked=\"checked\" ";
+									}?>> Yes
+									<input type="radio" name="incident_active" value="0"
+									<?php if ($form['incident_active'] == 0)
+									{
+										echo " checked=\"checked\" ";
+									}?>> No
+								</div>
+								<div class="row">
+									<div class="f-col-bottom-1-col">Verify this report?</div>
+									<input type="radio" name="incident_verified" value="1"
+									<?php if ($form['incident_verified'] == 1)
+									{
+										echo " checked=\"checked\" ";
+									}?>> Yes
+									<input type="radio" name="incident_verified" value="0"
+									<?php if ($form['incident_verified'] == 0)
+									{
+										echo " checked=\"checked\" ";
+									}?>> No									
+								</div>
+								<div class="row">
+									<div class="f-col-bottom-1-col">Source Reliability:</div>
+									<?php print form::dropdown('incident_source', $incident_source_array, $form['incident_source']) ?>									
+								</div>
+								<div class="row">
+									<div class="f-col-bottom-1-col">Information Probability:</div>
+									<?php print form::dropdown('incident_information', $incident_information_array, $form['incident_information']) ?>									
+								</div>								
 							</div>
+							<div style="clear:both;"></div>
 						</div>
 						<input id="save_only" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
 						<input id="save_close" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-and-close.gif" class="save-close-btn" />
