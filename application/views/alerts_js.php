@@ -1,3 +1,4 @@
+<?php
 /**
  * Alerts js file.
  *
@@ -13,6 +14,7 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
+?>
 		jQuery(function() {
 			var moved=false;
 			
