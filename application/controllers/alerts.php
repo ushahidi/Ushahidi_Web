@@ -126,7 +126,7 @@ class Alerts_Controller extends Main_Controller {
 						$sms->password = $settings->clickatell_password;
 						$sms->use_ssl = false;
 						$sms->sms();
-						$message = "Your Ushahidi alerts confirmation code
+						$message = "Your alerts confirmation code
 								is: ".$alert_code." This code is NOT case sensitive";
                     
 						if ($sms->send ($post->alert_mobile, $sms_from, $message) == "OK")
@@ -156,9 +156,9 @@ class Alerts_Controller extends Main_Controller {
 
 					$to = $post->alert_email;
 					$from = $config['alerts_email'];
-					$subject = 'Ushahidi alerts - Verification code';
+					$subject = 'Ushahidi alerts - verification';
 					$message = 'Please follow '.url::base().'alerts/verify/'.$alert_code.
-                               'to confirm your alert request';
+                               ' to confirm your alert request';
 
 					if (email::send($to, $from, $subject, $message, TRUE) == 1)
 					{
