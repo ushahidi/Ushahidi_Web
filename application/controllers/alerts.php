@@ -151,12 +151,12 @@ class Alerts_Controller extends Main_Controller {
 					$alert_code = $this->_mk_code();
 					
 					//Send verification email
-					//XXX: Setup correct 'from' address and message
                     $config = kohana::config('alerts');
-
-					$to = $post->alert_email;
+                    $settings = kohana::config('settings');
+				    
+                    $to = $post->alert_email;
 					$from = $config['alerts_email'];
-					$subject = 'Ushahidi alerts - verification';
+					$subject = $settings['site_name'].' alerts - verification';
 					$message = 'Please follow '.url::base().'alerts/verify/'.$alert_code.
                                ' to confirm your alert request';
 
