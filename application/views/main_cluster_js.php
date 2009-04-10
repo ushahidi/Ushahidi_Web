@@ -163,7 +163,7 @@
 					projection: new OpenLayers.Projection("EPSG:4326"),
 					formatOptions: {
 						extractStyles: true,
-						extractAttributes: true,
+						extractAttributes: true
 					},
 					styleMap: new OpenLayers.StyleMap({
 						"default": style

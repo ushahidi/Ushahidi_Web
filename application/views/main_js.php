@@ -15,7 +15,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-
 		// Map JS
 		jQuery(function() {
 			var map_layer;
@@ -113,7 +112,7 @@
 				projection: new OpenLayers.Projection("EPSG:4326"),
 				formatOptions: {
 					extractStyles: true,
-					extractAttributes: true,
+					extractAttributes: true
 				},
 				styleMap: new OpenLayers.StyleMap({"default":style})
 			});			

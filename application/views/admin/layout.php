@@ -17,6 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=7" />
 	<title>UshahidiEngine</title>
 	<style type="text/css" media="all" >@import "<?php echo url::base() ?>index.php/media/css/admin/all.css";</style>
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>index.php/media/css/admin/ie6.css" media="screen"/><![endif]-->

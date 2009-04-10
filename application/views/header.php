@@ -18,6 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=7" />
 	<title><?php echo $site_name; ?></title>
 	<style media="all" type="text/css">@import "<?php echo url::base() ?>index.php/media/css/all.css";</style>
 	<style media="all" type="text/css">@import "<?php echo url::base() ?>index.php/media/css/photoslider.css";</style>
