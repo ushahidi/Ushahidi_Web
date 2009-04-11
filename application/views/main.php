@@ -1,6 +1,6 @@
 <?php
 /**
- * This view for the main page.
+ * Main view page.
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -13,16 +13,8 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General
  * Public License (LGPL)
  */
-
-	require_once('installer/install.php');
-	global $install;
-
-	//check if ushahidi is not installed?.
-    if( $install->is_ushahidi_installed())
-    {
-       header('Location: '.url::base() . 'installer/');
-    }
 ?>
+
 <div id="content">
   <div class="content-bg">
     <!-- start map and media filter -->

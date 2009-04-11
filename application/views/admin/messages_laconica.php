@@ -1,6 +1,6 @@
 <?php 
 /**
- * View Laconica Messages 
+ * Laconica view page.
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 

@@ -106,7 +106,7 @@ class Alerts_Controller extends Main_Controller {
 				{
                     $alert_code = $this->_mk_code();
 					
-				    $settings = ORM::factory('settings', 1);
+					$settings = ORM::factory('settings', 1);
 					if ($settings->loaded == true) 
 					{
                         // Get SMS Numbers
@@ -121,12 +121,12 @@ class Alerts_Controller extends Main_Controller {
                         }
 
 						$sms = new Clickatell();
-                    	$sms->api_id = $settings->clickatell_api;
-                    	$sms->user = $settings->clickatell_username;
-                    	$sms->password = $settings->clickatell_password;
-                    	$sms->use_ssl = false;
-                    	$sms->sms();
-						$message = "Your Ushahidi alerts confirmation code
+						$sms->api_id = $settings->clickatell_api;
+						$sms->user = $settings->clickatell_username;
+						$sms->password = $settings->clickatell_password;
+						$sms->use_ssl = false;
+						$sms->sms();
+						$message = "Your alerts confirmation code
 								is: ".$alert_code." This code is NOT case sensitive";
                     
 						if ($sms->send ($post->alert_mobile, $sms_from, $message) == "OK")
@@ -151,14 +151,16 @@ class Alerts_Controller extends Main_Controller {
 					$alert_code = $this->_mk_code();
 					
 					//Send verification email
-					//XXX: Setup correct 'from' address and message
-					$to = $post->alert_email;
-					$from = 'jason.mule@gmail.com';
-					$subject = 'Ushahidi alerts - Verification code';
-					$message = 'Please follow the link below to confirm your
-								alert request:<br/>'.url::base().'alerts/verify/'.$alert_code;
+                    $config = kohana::config('alerts');
+                    $settings = kohana::config('settings');
+				    
+                    $to = $post->alert_email;
+					$from = $config['alerts_email'];
+					$subject = $settings['site_name'].' alerts - verification';
+					$message = 'Please follow '.url::base().'alerts/verify/'.$alert_code.
+                               ' to confirm your alert request';
 
- 					if (email::send($to, $from, $subject, $message, TRUE) == 1)
+					if (email::send($to, $from, $subject, $message, TRUE) == 1)
 					{
 						$alert = ORM::factory('alert');
 						$alert->alert_type = self::EMAIL_ALERT;
@@ -181,7 +183,7 @@ class Alerts_Controller extends Main_Controller {
 									$email_confirmation_saved);
 
 
-                url::redirect('alerts/confirm');		            
+                url::redirect('alerts/confirm');					
             }
             // No! We have validation errors, we need to show the form again, with the errors
             else
@@ -223,7 +225,7 @@ class Alerts_Controller extends Main_Controller {
         $this->template->content = new View('alerts_confirm');
 		if (isset($_SESSION['alert_mobile']) && isset($_SESSION['alert_email'])) {
 			$this->template->content->alert_mobile = $_SESSION['alert_mobile'];
-	        $this->template->content->alert_email = $_SESSION['alert_email'];
+			$this->template->content->alert_email = $_SESSION['alert_email'];
 		}
 
 		$this->template->content->email_confirmation_saved =
@@ -248,8 +250,8 @@ class Alerts_Controller extends Main_Controller {
 
 		if ($code != NULL)
 		{
-        	$code = ORM::factory('alert')
-            	->where('alert_code', $code)->find();
+			$code = ORM::factory('alert')
+				->where('alert_code', $code)->find();
 		
 			if (!$code->id)
 			{

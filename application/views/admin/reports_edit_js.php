@@ -1,6 +1,18 @@
-/*
-		* Edit Reports Javascript
-		*/
+/**
+ * Edit reports js file.
+ *
+ * Handles javascript stuff related to edit report function.
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     API Controller
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ */
 
 		/* Dynamic categories */
 		$(document).ready(function() {
@@ -196,3 +208,19 @@
 		    return false;
 			});
 		});
+		
+		function formSwitch(form_id, incident_id)
+		{
+			var answer = confirm('Are You Sure You Want To SWITCH Forms?');
+			if (answer){
+				$('#form_loader').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+				$.post("<?php echo url::base() . 'admin/reports/switch_form' ?>", { form_id: form_id, incident_id: incident_id },
+					function(data){
+						if (data.status == 'success'){
+							$('#custom_forms').html('');
+							$('#custom_forms').html(unescape(data.response));
+							$('#form_loader').html('');
+						}
+				  	}, "json");
+			}
+		}

@@ -4,7 +4,7 @@ $lang = array
 (
 	'locale' => array
 	(
-		'required'		=> 'The title field is required.',
+		'required'		=> 'The locale is required.',
 		'length'		=> 'The locale field has an incorrect value. ',
 		'alpha_dash'	=> 'The locale field has an incorrect value. ',
 		'locale'		=> 'The Original Report and the Translation have the same locale (language)',
@@ -125,5 +125,33 @@ $lang = array
 		'date_mmddyyyy'		  => 'The TO date field does not appear to contain a valid date?',
 		'range'	  => 'Please enter a valid TO date. It cannot be greater than today.',
 		'range_greater'	=> 'Your FROM date cannot be greater than your TO date.'
+	),
+	'custom_field' => array
+	(
+		'values'		  => 'Please enter a valid value for one of your custom form items'
+	),
+	
+	'incident_active' => array
+	(
+		'required'		=> 'Please enter a valid value for Approve This Report',
+		'between'		=> 'Please enter a valid value for Approve This Report'
+	),
+	
+	'incident_verified' => array
+	(
+		'required'		=> 'Please enter a valid value for Verify This Report',
+		'between'		=> 'Please enter a valid value for Verify This Report'
+	),
+	
+	'incident_source' => array
+	(
+		'alpha'		=> 'Please enter a valid value for Source Reliability',
+		'length'		=> 'Please enter a valid value for Source Reliability'
+	),
+	
+	'incident_information' => array
+	(
+		'alpha'		=> 'Please enter a valid value for Information Probability',
+		'length'		=> 'Please enter a valid value for Information Probability'
 	)
 );

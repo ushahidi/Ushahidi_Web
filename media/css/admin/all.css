@@ -731,6 +731,9 @@ ul.pager li a.active {background:#f2f7fa;}
 	width:363px;
 	padding:10px 5px;
 }
+.report-form input.custom_text {
+	width:363px;
+}
 .report-form textarea{
 	width:368px;
 	height:260px;
@@ -962,30 +965,54 @@ input.long2 {
 .second { margin:13px 0 0 !important;}
 .link-row h4{ padding-top:11px;}
 /*-- f-col-bottom --*/
-.f-col-bottom {
-	overflow:hidden;
+.f-col-bottom-container {
 	clear:both;
-	margin:0 20px;
-	padding:0 0 6px;
-	width:900px;
 	border-top:2px solid #dcdcdc;
 	border-bottom:2px solid #dcdcdc;
 }
-.f-col-bottom h4{
+.f-col-bottom {
+	overflow:hidden;
+	clear:both;
+	padding:0 10px 6px 20px;
+	width:423px;
+	float:left;
+}
+.f-col-bottom h4, .f-col-bottom-1 h4{
 	padding-top:9px;
 }
 .f-col-bottom  label{
 	padding:2px 17px 5px 0;
 	float:left;
 }
-.f-col-bottom  label span{
+.f-col-bottom  label span, .f-col-bottom-1 label span{
 	display:block;
 	font-size:12px;
 	font-weight:bold;
 	color:#636363;
 }
-.f-col-bottom  label input.text{ width:167px;}
-.f-col-bottom label input.email { width:362px;}
+.f-col-bottom  label input.text,
+.f-col-bottom-1 label input.text{ width:167px;}
+.f-col-bottom label input.email,
+.f-col-bottom-1 label input.email{ width:362px;}
+/*-- f-col-bottom-1 --*/
+.f-col-bottom-1 {
+	padding:0 14px 14px 20px;
+	width:451px;
+	float:left;
+	background-color:#eee;
+	border-left:2px dotted #dcdcdc;
+}
+.f-col-bottom-1 .row {
+	margin-top:10px;
+}
+.f-col-bottom-1-col{
+	font-size:12px;
+	font-weight:bold;
+	color:#636363;
+	float:left;
+	width:180px;
+}
+
 .report-form .save-rep-btn,
 .report-form .save-close-btn,
 .report-form .cancel-btn{
@@ -1341,7 +1368,7 @@ a.new-form_field{
 .forms_fields_item{
 	margin:0 0 20px 0;
 }
-.forms_fields_item textarea{
+.forms_fields_item textarea, #custom_forms textarea{
 	float:none;
 	height:50px;
 }

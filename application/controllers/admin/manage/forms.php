@@ -31,6 +31,9 @@ class Forms_Controller extends Admin_Controller
 	}
 	
 	
+	/**
+	* Lists the forms.
+    */
 	public function index()
 	{
 		$this->template->content = new View('admin/forms');
@@ -157,7 +160,9 @@ class Forms_Controller extends Admin_Controller
 	}
 
 	
-	
+	/**
+	* Generates Form Field Entry Form (Add/Edit) via Ajax Request
+    */
 	public function selector()
 	{
 		$this->template = "";
@@ -213,7 +218,9 @@ class Forms_Controller extends Admin_Controller
 	}
 	
 	
-	
+	/**
+	* Create/Edit & Save New Form Field
+    */
 	public function field_add()
 	{
 		$this->template = "";
@@ -342,7 +349,9 @@ class Forms_Controller extends Admin_Controller
 	}
 	
 	
-	
+	/**
+	* Delete Form Field
+    */
 	public function field_delete()
 	{
 		$this->template = "";
@@ -378,7 +387,10 @@ class Forms_Controller extends Admin_Controller
 	}
 	
 	
-	
+	/**
+	* Move Form Field Up or Down
+	* Positioning in layout
+    */
 	public function field_move()
 	{
 		$this->template = "";
@@ -424,10 +436,10 @@ class Forms_Controller extends Admin_Controller
 				// Get Current Position
 			    $current_position = $field->field_position;
 				
-				// Are we moving UP?
 				if ($field_position == 'u' && $current_position != 1)
-				{
+				{ // Are we moving UP?
 					$ahead = ORM::factory('form_field')
+						->where('form_id',$form_id)
 						->where('field_position < '.$current_position)
 						->orderby('field_position','desc')
 						->find();
@@ -442,17 +454,19 @@ class Forms_Controller extends Admin_Controller
 					}
 				}
 				elseif ($field_position == 'd' && $current_position != $total_fields)
-				{
+				{ // Are we moving DOWN?
 					$behind = ORM::factory('form_field')
+						->where('form_id',$form_id)
 						->where('field_position >'.$current_position)
 						->orderby('field_position','asc')
 						->find();
 					if ($behind->loaded == true)
 					{
+						$behind_position = $behind->field_position;
 						$behind->field_position = $current_position;
 						$behind->save();
 						
-						$field->field_position = $current_position + 1;
+						$field->field_position = $behind_position;
 						$field->save();
 					}
 				}
@@ -465,7 +479,11 @@ class Forms_Controller extends Admin_Controller
 	}
 	
 	
-	
+	/**
+	* Generate Text Field Entry Form
+    * @param int $form_id The id no. of the form
+    * @param int $field_id The id no. of the field
+    */
 	private function _get_selector_text($form_id = 0, $field_id = "")
 	{
 		if (is_numeric($field_id))
@@ -552,7 +570,11 @@ class Forms_Controller extends Admin_Controller
 	}
 	
 	
-	
+	/**
+	* Generate TextArea Field Entry Form
+    * @param int $form_id The id no. of the form
+    * @param int $field_id The id no. of the field
+    */
 	private function _get_selector_textarea($form_id = 0, $field_id = "")
 	{
 		if (is_numeric($field_id))
@@ -627,6 +649,11 @@ class Forms_Controller extends Admin_Controller
 	}
 	
 	
+	/**
+	* Generate Field Entry Form Javascript
+	* For Ajax Requests
+    * @param int $form_id The id no. of the form
+    */
 	private function _get_selector_js($form_id = 0)
 	{
 		$html = "";
@@ -665,7 +692,10 @@ class Forms_Controller extends Admin_Controller
 	}
 	
 	
-	
+	/**
+	* Generate list of currently created Form Fields
+    * @param int $form_id The id no. of the form
+    */
 	private function _get_current_fields($form_id = 0)
 	{
 		$fields = ORM::factory('form_field')

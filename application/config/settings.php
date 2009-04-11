@@ -6,7 +6,7 @@
 
 $config = array
 (
-	'site_name' => '',
+	'site_name' => 'Ushahidi',
 	'default_map' => '',
 	'api_google' => '',
 	'api_yahoo' => '',

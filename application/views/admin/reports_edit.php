@@ -1,3 +1,18 @@
+<?php 
+/**
+ * Reports edit view page.
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     API Controller
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ */
+?>
 			<div class="bg">
 				<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports">View Reports</a><a href="<?php print url::base() ?>admin/reports/download">Download Reports</a><a href="<?php print url::base() ?>admin/reports/upload">Upload Reports</a></h2>
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
@@ -57,10 +72,12 @@
 							</div>
 							<?php } ?>
 							<div class="row">
-								<h4>Locale <span>(Language)</span></h4>
+								<h4>Form <span>(Select A Form Type)</span></h4>
 								<span class="sel-holder">
-								<?php print form::dropdown('locale', $locale_array, $form['locale']) ?>
-								</span>							
+									<?php print form::dropdown('form_id', $forms, $form['form_id'],
+										' onchange="formSwitch(this.options[this.selectedIndex].value, \''.$id.'\')"') ?>
+								</span>
+								<div id="form_loader" style="float:left;"></div>
 							</div>
 							<div class="row">
 								<h4>Item Title</h4>
@@ -170,6 +187,43 @@
 			                        </ul>
 								</div>
 							</div>
+							<div id="custom_forms">
+								<?php
+								foreach ($disp_custom_fields as $field_id => $field_property)
+								{
+									echo "<div class=\"row\">";
+									echo "<h4>" . $field_property['field_name'] . "</h4>";
+									if ($field_property['field_type'] == 1)
+									{ // Text Field
+										// Is this a date field?
+										if ($field_property['field_isdate'] == 1)
+										{
+											echo form::input('custom_field['.$field_id.']', $form['custom_field'][$field_id],
+												' id="custom_field_'.$field_id.'" class="text"');
+											echo "<script type=\"text/javascript\">
+													$(document).ready(function() {
+													$(\"#custom_field_".$field_id."\").datepicker({ 
+													showOn: \"both\", 
+													buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
+													buttonImageOnly: true 
+													});
+													});
+												</script>";
+										}
+										else
+										{
+											echo form::input('custom_field['.$field_id.']', $form['custom_field'][$field_id],
+												' id="custom_field_'.$field_id.'" class="text custom_text"');
+										}
+									}
+									elseif ($field_property['field_type'] == 2)
+									{ // TextArea Field
+										echo form::textarea('custom_field['.$field_id.']', $form['custom_field'][$field_id], ' class="custom_text" rows="3"');
+									}
+									echo "</div>";
+								}
+								?>
+							</div>			
 						</div>
 						<!-- f-col-1 -->
 						<div class="f-col-1">
@@ -354,24 +408,65 @@
 							</div>
 						</div>
 						<!-- f-col-bottom -->
-						<div class="f-col-bottom">
-							<div class="row">
-								<h4>Personal Information <span>Optional.</span></h4>
-								<label>
-									<span>First Name</span>
-									<?php print form::input('person_first', $form['person_first'], ' class="text"'); ?>
-								</label>
-								<label>
-									<span>Last Name</span>
-									<?php print form::input('person_last', $form['person_last'], ' class="text"'); ?>
-								</label>
+						<div class="f-col-bottom-container">
+							<div class="f-col-bottom">
+								<div class="row">
+									<h4>Personal Information <span>Optional.</span></h4>
+									<label>
+										<span>First Name</span>
+										<?php print form::input('person_first', $form['person_first'], ' class="text"'); ?>
+									</label>
+									<label>
+										<span>Last Name</span>
+										<?php print form::input('person_last', $form['person_last'], ' class="text"'); ?>
+									</label>
+								</div>
+								<div class="row">
+									<label>
+										<span>Email Address</span>
+										<?php print form::input('person_email', $form['person_email'], ' class="text"'); ?>
+									</label>
+								</div>
 							</div>
-							<div class="row">
-								<label>
-									<span>Email Address</span>
-									<?php print form::input('person_email', $form['person_email'], ' class="text"'); ?>
-								</label>
+							<!-- f-col-bottom-1 -->
+							<div class="f-col-bottom-1">
+								<h4>Information Evaluation</h4>
+								<div class="row">
+									<div class="f-col-bottom-1-col">Approve this report?</div>
+									<input type="radio" name="incident_active" value="1"
+									<?php if ($form['incident_active'] == 1)
+									{
+										echo " checked=\"checked\" ";
+									}?>> Yes
+									<input type="radio" name="incident_active" value="0"
+									<?php if ($form['incident_active'] == 0)
+									{
+										echo " checked=\"checked\" ";
+									}?>> No
+								</div>
+								<div class="row">
+									<div class="f-col-bottom-1-col">Verify this report?</div>
+									<input type="radio" name="incident_verified" value="1"
+									<?php if ($form['incident_verified'] == 1)
+									{
+										echo " checked=\"checked\" ";
+									}?>> Yes
+									<input type="radio" name="incident_verified" value="0"
+									<?php if ($form['incident_verified'] == 0)
+									{
+										echo " checked=\"checked\" ";
+									}?>> No									
+								</div>
+								<div class="row">
+									<div class="f-col-bottom-1-col">Source Reliability:</div>
+									<?php print form::dropdown('incident_source', $incident_source_array, $form['incident_source']) ?>									
+								</div>
+								<div class="row">
+									<div class="f-col-bottom-1-col">Information Probability:</div>
+									<?php print form::dropdown('incident_information', $incident_information_array, $form['incident_information']) ?>									
+								</div>								
 							</div>
+							<div style="clear:both;"></div>
 						</div>
 						<input id="save_only" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
 						<input id="save_close" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-and-close.gif" class="save-close-btn" />

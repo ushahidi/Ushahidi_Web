@@ -358,8 +358,18 @@ class valid_Core {
 	 */
 	public static function date_mmddyyyy($str)
 	{
-		return (strptime($str, '%m/%d/%G'));
-	
+		$str = str_replace(' ', '-', $str);
+		$str = str_replace('/', '-', $str);
+		$str = str_replace('--', '-', $str);
+		preg_match('/^(\d{2})-(\d{2})-(\d{4})$/', $str, $xadBits);
+		if (is_array($xadBits) && count($xadBits) > 3)
+		{
+			return checkdate($xadBits[1], $xadBits[2], $xadBits[3]);
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -370,8 +380,18 @@ class valid_Core {
 	 */
 	public static function date_ddmmyyyy($str)
 	{
-		return (strptime($str, '%d/%m/%G'));
-	
-	}
+		$str = str_replace(' ', '-', $str);
+		$str = str_replace('/', '-', $str);
+		$str = str_replace('--', '-', $str);
+		preg_match('/^(\d{2})-(\d{2})-(\d{4})$/', $str, $xadBits);
+		if (is_array($xadBits) && count($xadBits) > 3)
+		{
+			return checkdate($xadBits[2], $xadBits[1], $xadBits[3]);
+		}
+		else
+		{
+			return false;
+		}
+	}	
 
 } // End valid

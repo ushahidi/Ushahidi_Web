@@ -22,12 +22,22 @@ class Alerts_Controller extends Scheduler_Controller
 	
 	public function index() 
 	{
-
 		$db = new Database();
 		
-		$incidents = $db->query("SELECT distinct incident.id, incident_title, incident_verified, location.latitude, location.longitude 
-									FROM location, incident, alert_sent 
-									WHERE incident.location_id = location.id AND incident.id != alert_sent.incident_id");
+		$incidents = $db->query("SELECT incident.id, incident_title,
+								 incident_description,
+							     incident_verified, location.latitude, 
+								 location.longitude FROM incident INNER JOIN location 
+								 ON incident.location_id = location.id");
+
+		$alerts_sent = $db->query("SELECT incident_id FROM alert_sent");
+
+		$alerts_sent_ids = array();
+
+		foreach ($alerts_sent as $alert_sent)
+			array_push($alerts_sent_ids, $alert_sent->incident_id);
+
+		$config = kohana::config('alerts');
 
 		$settings = null;
 		$sms_from = null;
@@ -35,7 +45,10 @@ class Alerts_Controller extends Scheduler_Controller
 
 		foreach ($incidents as $incident)
 		{
-   			$verified = (int) $incident->incident_verified;
+			if (in_array($incident->id, $alerts_sent_ids))
+				continue;
+			
+			$verified = (int) $incident->incident_verified;
 			
 			if ($verified)
 			{
@@ -44,7 +57,6 @@ class Alerts_Controller extends Scheduler_Controller
 				$proximity = new Proximity($latitude, $longitude);
 				$alertees = $this->_get_alertees($proximity);
 
-								
 				foreach ($alertees as $alertee)
 				{
 					$alert_type = (int) $alertee->alert_type;
@@ -54,18 +66,18 @@ class Alerts_Controller extends Scheduler_Controller
 						if ($settings == null)
 						{
 							$settings = ORM::factory('settings', 1);
-                    		if ($settings->loaded == true)
-                    		{
-                        		// Get SMS Numbers
-                        		if (!empty($settings->sms_no3))
-                            		$sms_from = $settings->sms_no3;
-                        		elseif (!empty($settings->sms_no2))
-                            		$sms_from = $settings->sms_no2;
-                        		elseif (!empty($settings->sms_no1))
-                            		$sms_from = $settings->sms_no1;
-                        		else
-                            		$sms_from = "000";      // User needs to set up an SMS number
-                        	}
+							if ($settings->loaded == true)
+							{
+								// Get SMS Numbers
+								if (!empty($settings->sms_no3))
+									$sms_from = $settings->sms_no3;
+								elseif (!empty($settings->sms_no2))
+									$sms_from = $settings->sms_no2;
+								elseif (!empty($settings->sms_no1))
+									$sms_from = $settings->sms_no1;
+								else
+									$sms_from = "000";      // User needs to set up an SMS number
+							}
 						
 							$clickatell = new Clickatell();
 							$clickatell->api_id = $settings->clickatell_api;
@@ -73,35 +85,30 @@ class Alerts_Controller extends Scheduler_Controller
 							$clickatell->password = $settings->clickatell_password;
 							$clickatell->use_ssl = false;
 							$clickatell->sms();
-			
 						}	
 						
 						//XXX: Fix the outgoing message!
-						$message = $incident->incident_title." occured near you!";
-						echo "$message<br/>";
+						$message = $incident->incident_description;
 
-						if ($clickatell->send ($alertee->alert_alert_recipient, $sms_from, $message) == "OK")
+						if ($clickatell->send($alertee->alert_recipient, $sms_from, $message) == "OK")
                         {
                             $alert = ORM::factory('alert_sent');
                             $alert->alert_id = $alertee->id;
                             $alert->incident_id = $incident->id;
                             $alert->alert_date = date("Y-m-d H:i:s");
 							$alert->save();
-
                         }
-					
 					}
 
 					elseif ($alert_type == 2) # Email alertee
 					{
-						 //XXX: Setup correct 'from' address and message
-                    	$to = $alertee->alert_recipient;
-                    	$from = 'alert@ushahidi.com';
-                    	$subject = 'Ushahidi alert!';
-						$message = $incident->incident_title." occured near you!";
+						//XXX: Setup correct 'from' address and message
+						$to = $alertee->alert_recipient;
+						$from = $config['alerts_email'];
+						$subject = $incident->incident_title;
+						$message = $incident->incident_description;
 
-
-                    	if (email::send($to, $from, $subject, $message, TRUE) == 1)
+						if (email::send($to, $from, $subject, $message, TRUE) == 1)
 						{
 							$alert = ORM::factory('alert_sent');
                             $alert->alert_id = $alertee->id;
@@ -112,19 +119,16 @@ class Alerts_Controller extends Scheduler_Controller
 						}
 					}
 				}	
-
 			}
-	
 		}
 	}
 
 	private function _get_alertees(Proximity $proximity) 
 	{
-		
-		$radius = " alert_lat >= '" . $proximity->minLat . "' 
-            AND alert_lat <= '" . $proximity->maxLat . "' 
-            AND alert_lon >= '" . $proximity->minLong . "'
-            AND alert_lon <= '" . $proximity->maxLong . "'
+		$radius = " alert_lat >= ".$proximity->minLat." 
+            AND alert_lat <= ".$proximity->maxLat." 
+            AND alert_lon >= ".$proximity->minLong."
+            AND alert_lon <= ".$proximity->maxLong."
 			AND alert_confirmed = 1";
 
 		$alertees = ORM::factory('alert')
@@ -133,7 +137,5 @@ class Alerts_Controller extends Scheduler_Controller
 					->find_all();
 
 		return $alertees;
-					
 	}
-	
 }
