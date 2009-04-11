@@ -348,7 +348,7 @@ class Messages_Controller extends Admin_Controller
 			$settings = ORM::factory('settings', 1);
 			
 			//Perform Hashtag Search
-			$hashtags = explode(',',$settings->twitter_hashtags);
+			$hashtags = explode(',',$settings->twitter_hashtags);			
 			foreach($hashtags as $hashtag){
 				$page = 1;
 				$have_results = TRUE; //just starting us off as true, although there may be no results
@@ -369,7 +369,7 @@ class Messages_Controller extends Admin_Controller
 			//Perform Direct Reports Search
 			$username = $settings->twitter_username;
 			$password = $settings->twitter_password;
-			$twitter_url = 'http://twitter.com/statuses/replies.rss';
+			$twitter_url = 'http://twitter.com/statuses/replies.json';
 			$curl_handle = curl_init();
 			curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
 			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
@@ -377,7 +377,8 @@ class Messages_Controller extends Admin_Controller
 			curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password"); //Authenticate!
 			$buffer = curl_exec($curl_handle);
 			curl_close($curl_handle);
-			$this->add_tweets($buffer,null,$username);
+			//$this->add_tweets($buffer,null,$username);
+			$this->add_json_tweets($buffer);
 		}
 	}
 	
@@ -437,6 +438,85 @@ class Messages_Controller extends Admin_Controller
 		}
 		$feed_data->__destruct(); //in the off chance we hit a ton of feeds, we need to clean it out
 		return TRUE; //if there were items in the feed
+	}
+	
+	/**
+	* Adds tweets in JSON format to the database and saves the sender as a new
+	* Reporter if they don't already exist
+    * @param string $data - Twitter JSON results
+    */
+	
+	private function add_json_tweets($data)
+	{
+		$services = new Service_Model();	
+    	$service = $services->where('service_name', 'Twitter')->find();
+	   	if (!$service) {
+ 		    return;
+	    }
+		$tweets = json_decode($data, false);
+		if (!$tweets) {
+			return;
+		}
+		
+		foreach($tweets as $tweet) {
+			$tweet_user = $tweet->{'user'};   	
+    		        	
+    		$reporter_model = new Reporter_Model();
+    		
+    		$reporter = null;
+    		$reporters = $reporter_model->where('service_id', $service->id)->
+			             where('service_userid', $tweet_user->{'id'})->
+			             find_all();
+			if (count($reporters) < 1) {
+				// Add new reporter
+	    		$names = split(' ', $tweet_user->{'name'}, 2);
+	    		$last_name = '';
+	    		if (count($names) == 2) {
+	    			$last_name = $names[1]; 
+	    		}
+	    		
+	    		// get default reporter level (Untrusted)
+	    		$levels = new Level_Model();	
+		    	$default_level = $levels->where('level_weight', 0)->find();
+		    	
+	    		$reporter = new Reporter_Model();
+	    		$reporter->service_id       = $service->id;
+	    		$reporter->service_userid   = $tweet_user->{'id'};
+	    		$reporter->service_username = $tweet_user->{'screen_name'};
+	    		$reporter->reporter_level   = $default_level; 
+	    		$reporter->reporter_first   = $names[0];
+	    		$reporter->reporter_last    = $last_name;
+	    		$reporter->reporter_email   = null;
+	    		$reporter->reporter_phone   = null;
+	    		$reporter->reporter_ip      = null;
+	    		$reporter->reporter_date    = date('Y-m-d');
+	    		$reporter->save();
+    		} else {
+    			// reporter already exists
+    			$reporter = $reporters[0];
+    		}
+    		
+    		echo(count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
+			                           ->find_all()));
+
+			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
+			                           ->find_all()) == 0) {    		
+				// Save Tweet as Message
+	    		$message = new Message_Model();
+	    		$message->parent_id = 0;
+	    		$message->incident_id = 0;
+	    		$message->user_id = 0;
+	    		$message->reporter_id = $reporter->id;
+	    		$message->message_from = $tweet_user->{'screen_name'};
+	    		$message->message_to = null;
+	    		$message->message = $tweet->{'text'};
+	    		$message->message_type = 1; // Inbox
+	    		$tweet_date = date("Y-m-d H:i:s",strtotime($tweet->{'created_at'}));
+	    		$message->message_date = $tweet_date;
+	    		$message->service_messageid = $tweet->{'id'};
+	    		$message->save();
+    		}
+    	}
 	}
 	
 	/**

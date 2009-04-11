@@ -61,8 +61,8 @@ class Api_Controller extends Controller {
 				
 				if(!$this->_verifyArrayIndex($request, 'id')){
 					$error = array("error" => $this->_getErrorMsg(001, 'id'));
-					break;
 				} else {
+					break;
 					$incidentid = $request['id'];
 				}
 				

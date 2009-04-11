@@ -385,6 +385,217 @@ class Manage_Controller extends Admin_Controller
         $this->template->js = new View('admin/feeds_js');
 	}
 	
+	/*
+	Add Edit Reporter Levels
+	*/
+	function levels()
+	{	
+		$this->template->content = new View('admin/levels');
+		$this->template->content->title = 'Reporter Levels';
+		
+		// setup and initialize form field names
+		$form = array
+		(
+			'level_id'      => '',
+			'level_title'      => '',
+			'level_description'    => '',
+			'level_weight'  => ''
+		);
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		$errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+		
+		// check, has the form been submitted, if so, setup validation
+		if ($_POST)
+		{
+			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+
+			//  Add some filters
+			$post->pre_filter('trim', TRUE);
+
+			if ($post->action == 'a')		// Add Action
+			{
+				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('level_title','required', 'length[3,80]');
+				$post->add_rules('level_description','required');
+				$post->add_rules('level_weight','required');
+			}
+			
+			// Test to see if things passed the rule checks
+			if ($post->validate())
+			{
+				$level_id = $post->level_id;
+				$level = new Level_Model($level_id);
+				
+				if( $post->action == 'd' )				// Delete Action
+				{
+					$level->delete( $level_id );
+					$form_saved = TRUE;
+					$form_action = "DELETED";
+			
+				}
+				else if( $post->action == 'a' ) 		// Save Action
+				{		
+					// SAVE Category
+					$level->level_title = $post->level_title;
+					$level->level_description = $post->level_description;
+					$level->level_weight = $post->level_weight;
+					$level->save();
+					$form_saved = TRUE;
+					$form_action = "ADDED/EDITED";
+				}
+			}
+			// No! We have validation errors, we need to show the form again, with the errors
+			else
+			{
+				// repopulate the form fields
+				$form = arr::overwrite($form, $post->as_array());
+
+				// populate the error fields, if any
+				$errors = arr::overwrite($errors, $post->errors('level'));
+				$form_error = TRUE;
+			}
+		}
+
+		// Pagination
+		$pagination = new Pagination(array(
+                            'query_string' => 'page',
+                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+                            'total_items'    => ORM::factory('level')->count_all()
+                        ));
+
+		$levels = ORM::factory('level')
+                        ->orderby('level_weight', 'asc')
+                        ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                            $pagination->sql_offset);
+
+		$this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
+		$this->template->content->pagination = $pagination;
+		$this->template->content->total_items = $pagination->total_items;
+		$this->template->content->levels = $levels;
+    }
+	
+	/*
+	Add Edit Reporters
+	*/
+	function reporters()
+	{	
+		$this->template->content = new View('admin/reporters');
+		$this->template->content->title = 'Reporters';
+
+		// setup and initialize form field names
+		$form = array
+		(
+			'reporter_id' => '',    
+			'service_id' => '',
+			'service_userid' => '',
+			'service_username' => '',
+			'reporter_level' => '',
+			'reporter_first' => '',
+			'reporter_last' => '',
+			'reporter_email' => '',
+			'reporter_phone' => '',
+			'reporter_ip' => '',
+			'reporter_date' => ''
+		);
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		$errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+
+			// check, has the form been submitted, if so, setup validation
+			if ($_POST)
+			{
+			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+
+			    //  Add some filters
+			$post->pre_filter('trim', TRUE);
+
+			if ($post->action == 'a')		// Add Action
+			{
+				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('service_id','required');				
+				// we also require either service_userid or service_username, not necessarily both
+			}
+
+			// Test to see if things passed the rule checks
+			if ($post->validate())
+			{
+				$reporter_id = $post->reporter_id;
+				$reporter = new Reporter_Model($reporter_id);
+				
+				if( $post->action == 'd' )				// Delete Action
+				{
+					$level->delete( $level_id );
+					$form_saved = TRUE;
+					$form_action = "DELETED";
+
+				}
+				else if( $post->action == 'a' ) 		// Save Action
+				{		
+					// SAVE Reporter    
+					$reporter->service_id = $post->service_id;
+					$reporter->service_userid = $post->service_userid;
+					$reporter->service_username = $post->service_username;
+					$reporter->reporter_level = $post->reporter_level;
+					$reporter->reporter_first = $post->reporter_first;
+					$reporter->reporter_last = $post->reporter_last;
+					$reporter->reporter_email = $post->reporter_email;
+					$reporter->reporter_phone = $post->reporter_phone;
+					$reporter->reporter_ip = $post->reporter_ip;
+					$reporter->reporter_date = $post->reporter_date;
+					
+					$reporter->save();
+					$form_saved = TRUE;
+					$form_action = "ADDED/EDITED";
+				}
+			}
+			// No! We have validation errors, we need to show the form again, with the errors
+			else
+			{
+				// repopulate the form fields
+				$form = arr::overwrite($form, $post->as_array());
+
+				// populate the error fields, if any
+				$errors = arr::overwrite($errors, $post->errors('level'));
+				$form_error = TRUE;
+			}
+		}
+
+		// Pagination
+		$pagination = new Pagination(array(
+		                    'query_string' => 'page',
+		                    'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+		                    'total_items'    => ORM::factory('reporter')->count_all()
+		                ));
+
+		$reporters = ORM::factory('reporter')
+		                ->orderby('reporter_first', 'asc')
+		                ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+		                    $pagination->sql_offset);
+
+		$this->template->content->form = $form;
+		$this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
+		$this->template->content->pagination = $pagination;
+		$this->template->content->total_items = $pagination->total_items;
+		$this->template->content->reporters = $reporters;
+
+		// Level and Service Arrays
+		$this->template->content->level_array = Level_Model::get_array();
+		$this->template->content->service_array = Service_Model::get_array();
+
+	}	
 	/**
 	 * setup simplepie
 	 */

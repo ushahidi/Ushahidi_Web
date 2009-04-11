@@ -3,20 +3,11 @@
 					<a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a>
 					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
 					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
-					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active">News Feeds</a>
+					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a>
+					<a href="<?php echo url::base() . 'admin/manage/levels' ?>" class="active">Reporter Levels</a>
 					<span>(<a href="#add">Add New</a>)</span>
-					<a href="<?php echo url::base() . 'admin/manage/levels' ?>">Reporter Levels</a>
 					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
 				</h2>
-				<!-- tabs -->
-				<div class="tabs">
-					<!-- tab -->
-					<div class="tab">
-						<ul>
-							<li><a href="javascript:refreshFeeds();">REFRESH NEWS FEEDS</a></li><span id="feeds_loading"></span>
-						</ul>
-					</div>
-				</div>
 				<?php
 				if ($form_error) {
 				?>
@@ -40,24 +31,24 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>The Feed Has Been <?php echo $form_action; ?>!</h3>
+						<h3>The Level Has Been <?php echo $form_action; ?>!</h3>
 					</div>
 				<?php
 				}
 				?>
 				<!-- report-table -->
 				<div class="report-form">
-					<?php print form::open(NULL,array('id' => 'feedListing',
-					 	'name' => 'feedListing')); ?>
+					<?php print form::open(NULL,array('id' => 'levListing',
+					 	'name' => 'levListing')); ?>
 						<input type="hidden" name="action" id="action" value="">
-						<input type="hidden" name="feed_id" id="feed_id_action" value="">
+						<input type="hidden" name="level_id" id="level_id_action" value="">
 						<div class="table-holder">
 							<table class="table">
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2">Feed</th>
-										<th class="col-3">Items</th>
+										<th class="col-2">Level</th>
+										<th class="col-3">Weight</th>
 										<th class="col-4">Actions</th>
 									</tr>
 								</thead>
@@ -80,28 +71,26 @@
 										</tr>
 									<?php	
 									}
-									foreach ($feeds as $feed)
+									foreach ($levels as $level)
 									{
-										$feed_id = $feed->id;
-										$feed_name = $feed->feed_name;
-										$feed_url = $feed->feed_url;
-										$feed_active = $feed->feed_active;
-										$feed_count = ORM::factory('feed_item')->where('feed_id',$feed->id)->count_all();
+										$level_id = $level->id;
+										$level_title = $level->level_title;
+										$level_description = substr($level->level_description, 0, 150);
+										$level_weight = $level->level_weight;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $feed_name; ?></h4>
-													<p><?php echo $feed_url; ?></p>
+													<h4><?php echo $level_title; ?></h4>
+													<p><?php echo $level_description; ?>...</p>
 												</div>
 											</td>
-											<td><?php echo $feed_count; ?></td>
+											<td class="col-3"> <?php echo $level_weight; ?></td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($feed_id)); ?>','<?php echo(rawurlencode($feed_name)); ?>','<?php echo(rawurlencode($feed_url)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="javascript:feedAction('v','SHOW/HIDE','<?php echo(rawurlencode($feed_id)); ?>')"<?php if ($feed_active) echo " class=\"status_yes\"" ?>>Visible</a></li>
-													<li><a href="javascript:feedAction('d','DELETE','<?php echo(rawurlencode($feed_id)); ?>')" class="del">Delete</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($level_id)); ?>','<?php echo(rawurlencode($level_title)); ?>','<?php echo(rawurlencode($level_description)); ?>','<?php echo(rawurlencode($level_weight)); ?>')">Edit</a></li>
+<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($level_id)); ?>')" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>
@@ -120,26 +109,28 @@
 					<a name="add"></a>
 					<ul class="tabset">
 						<li><a href="#" class="active">Add/Edit</a></li>
+						<li><a href="#">Add Language</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<?php print form::open(NULL,array('id' => 'feedMain',
-						 	'name' => 'feedMain')); ?>
-						<input type="hidden" id="feed_id" 
-							name="feed_id" value="" />
-						<input type="hidden" id="feed_active" 
-							name="feed_active" vaule="" />
+						<?php print form::open(NULL,array('id' => 'catMain',
+						 	'name' => 'catMain')); ?>
+						<input type="hidden" id="level_id" 
+							name="level_id" value="" />
 						<input type="hidden" name="action" 
-							id="action" value=""/>
+							id="action" value="a"/>
 						<div class="tab_form_item">
-							<strong>Feed Name:</strong><br />
-							<?php print form::input('feed_name', '', 
-							' class="text"'); ?>
+							<strong>level Name:</strong><br />
+							<?php print form::input('level_title', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Feed URL:</strong><br />
-							<?php print form::input('feed_url', '', ' class="text long"'); ?>
-						</div>						
+							<strong>Description:</strong><br />
+							<?php print form::input('level_description', '', ' class="text"'); ?>
+						</div>
+						<div class="tab_form_item">
+							<strong>Weight:</strong><br />
+							<?php print form::input('level_weight', '', ' class="text"'); ?>
+						</div>
 						<div class="tab_form_item">
 							&nbsp;<br />
 							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
@@ -148,3 +139,13 @@
 					</div>
 				</div>
 			</div>
+			<script type="text/javascript">
+			// Levels JS
+			function fillFields(id, level_title, level_description, level_weight)
+			{
+				$("#level_id").attr("value", unescape(id));
+				$("#level_title").attr("value", unescape(level_title));
+				$("#level_description").attr("value", unescape(level_description));
+				$("#level_weight").attr("value", unescape(level_weight));
+			}
+			</script>
