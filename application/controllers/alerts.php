@@ -117,7 +117,7 @@ class Alerts_Controller extends Main_Controller {
                         }elseif (!empty($settings->sms_no1)) {
                             $sms_from = $settings->sms_no1;
                         }else{
-                            $sms_from = "000";      // User needs to set up an SMS number
+                            $sms_from = "000";// User needs to set up an SMS number
                         }
 
 						$sms = new Clickatell();
@@ -135,7 +135,6 @@ class Alerts_Controller extends Main_Controller {
 							$alert->alert_type = self::MOBILE_ALERT;
 							$alert->alert_recipient = $post->alert_mobile;
 							$alert->alert_code = $alert_code;
-							$alert->alert_code = $this->_mk_code();
 							$alert->alert_lon = $post->alert_lon;
 							$alert->alert_lat = $post->alert_lat;
 							$alert->save();
@@ -153,7 +152,7 @@ class Alerts_Controller extends Main_Controller {
 					//Send verification email
                     $config = kohana::config('alerts');
                     $settings = kohana::config('settings');
-				    
+					
                     $to = $post->alert_email;
 					$from = $config['alerts_email'];
 					$subject = $settings['site_name'].' alerts - verification';
@@ -251,7 +250,7 @@ class Alerts_Controller extends Main_Controller {
 		if ($code != NULL)
 		{
 			$code = ORM::factory('alert')
-				->where('alert_code', $code)->find();
+					->where('alert_code', $code)->find();
 		
 			if (!$code->id)
 			{
@@ -361,7 +360,7 @@ class Alerts_Controller extends Main_Controller {
         // Only generate unique codes. If a code has been used before, generate
 		// a new one.
         $code_check = ORM::factory('alert')
-            ->where('alert_code', $code)->find();
+            			->where('alert_code', $code)->find();
 
         if (!$code_check->id)
 			return $code;
