@@ -24,30 +24,23 @@ class Alerts_Controller extends Scheduler_Controller
 	{
 		$db = new Database();
 		
-		$incidents = $db->query("SELECT incident.id, incident_title,
-								 incident_description,
-							     incident_verified, location.latitude, 
-								 location.longitude FROM incident INNER JOIN location 
-								 ON incident.location_id = location.id");
-
-		$alerts_sent = $db->query("SELECT incident_id FROM alert_sent");
-
-		$alerts_sent_ids = array();
-
-		foreach ($alerts_sent as $alert_sent)
-			array_push($alerts_sent_ids, $alert_sent->incident_id);
+		$incidents = $db->query("SELECT incident.id, incident_title, 
+								 incident_description, incident_verified, 
+								 location.latitude, location.longitude, alert_sent.incident_id
+								 FROM incident INNER JOIN location ON incident.location_id = location.id
+								 LEFT OUTER JOIN alert_sent ON incident.id = alert_sent.incident_id");
 
 		$config = kohana::config('alerts');
 
-		$settings = null;
-		$sms_from = null;
-		$clickatell = null;
+		$settings = NULL;
+		$sms_from = NULL;
+		$clickatell = NULL;
 
 		foreach ($incidents as $incident)
 		{
-			if (in_array($incident->id, $alerts_sent_ids))
+			if ($incident->incident_id != NULL)
 				continue;
-			
+
 			$verified = (int) $incident->incident_verified;
 			
 			if ($verified)
@@ -61,7 +54,7 @@ class Alerts_Controller extends Scheduler_Controller
 				{
 					$alert_type = (int) $alertee->alert_type;
 
-					if ($alert_type == 1) # SMS alertee
+					if ($alert_type == 1) // SMS alertee
 					{
 						if ($settings == null)
 						{
@@ -87,7 +80,6 @@ class Alerts_Controller extends Scheduler_Controller
 							$clickatell->sms();
 						}	
 						
-						//XXX: Fix the outgoing message!
 						$message = $incident->incident_description;
 
 						if ($clickatell->send($alertee->alert_recipient, $sms_from, $message) == "OK")
@@ -100,9 +92,8 @@ class Alerts_Controller extends Scheduler_Controller
                         }
 					}
 
-					elseif ($alert_type == 2) # Email alertee
+					elseif ($alert_type == 2) // Email alertee
 					{
-						//XXX: Setup correct 'from' address and message
 						$to = $alertee->alert_recipient;
 						$from = $config['alerts_email'];
 						$subject = $incident->incident_title;
@@ -115,7 +106,6 @@ class Alerts_Controller extends Scheduler_Controller
                             $alert->incident_id = $incident->id;
                             $alert->alert_date = date("Y-m-d H:i:s");
 							$alert->save();
-
 						}
 					}
 				}	

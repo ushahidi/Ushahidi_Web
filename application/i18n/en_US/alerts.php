@@ -34,5 +34,15 @@ $lang = array
 
     'code_not_found' => 'This verification code was not found! Please confirm that you entered the code correctly. You may use the form below to re-enter your verification code:',
     'code_already_verified' => 'This code has been verified before!',
-    'code_verified' => ' Your code was verified correctly. You will now receive alerts about incidents as they happen.'
+    'code_verified' => ' Your code was verified correctly. You will now receive alerts about incidents as they happen.',
+    'mobile_alert_request_created' => 'Your Mobile Alert request has been created and verification message has been sent to ',
+	'verify_code' => 'You will not receive alerts on this location until you confirm your request.',
+	'mobile_code' => 'Please enter the SMS confirmation code you received on your mobile phone below: ',
+	'mobile_ok_head' =>'Your Mobile Alert Request Has Been Saved!',
+	'mobile_error_head' => 'Your Mobile Alert Request Has NOT Been Saved!',
+	'error_body' => 'The system was not able to process your confirmation request!',
+	'email_alert_request_created' => 'Your Email Alert request has been created and verification message has been sent to ',
+	'email_ok_head' =>'Your Email Alert Request Has Been Saved!',
+	'email_error_head' => 'Your Email Alert Request Has NOT Been Saved!',
+    'create_more_alerts' => 'Return to the Alerts page to create more alerts',
 );
