@@ -249,6 +249,8 @@ class Login_Controller extends Template_Controller {
 		$message = 'Please per your request. See below for your new password.\n\r';
 		$message .= "Username: $username\n\r";
 		$message .= "Password: $password\n\r";
+		$message .= "Please click here ".url::base()."login"." to login ".
+		$message .=	"to change to a new password of your own.";
 		
 		//email details
 		if( email::send( $to, $from, $subject, $message, TRUE ) == 1 )
