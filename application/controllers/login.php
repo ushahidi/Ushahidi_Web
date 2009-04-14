@@ -131,14 +131,13 @@ class Login_Controller extends Template_Controller {
 		$this->template->title = 'Password Reset';
 		$form = array
 	    (
-	        //'user_id'   => '',
 			'resetemail' 	=> '',
 	    );
 		
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
-		$form_saved = FALSE;
+		$password_reset = FALSE;
 		$form_action = "";
 
 		// check, has the form been submitted, if so, setup validation
@@ -150,7 +149,6 @@ class Login_Controller extends Template_Controller {
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			///$post->add_rules('username','required','length[3,16]', 'alpha');
 			$post->add_rules('resetemail','required','email','length[4,64]');
 			
 			$post->add_callbacks('resetemail', array($this,'email_exists_chk'));
@@ -162,7 +160,6 @@ class Login_Controller extends Template_Controller {
 				// Existing User??
 				if ($user->loaded==true)
 				{
-					//$user->username = $post->username;
 					$new_password = $this->_generate_password();
 					
 					$details_sent = $this->_email_details($post->resetemail,$user->username,$new_password );
@@ -173,9 +170,9 @@ class Login_Controller extends Template_Controller {
 						$user->password = $new_password;
 					
 						$user->save();
+						$password_reset = TRUE;
 					}
-					$form_saved = TRUE;
-					$form_action = "EDITED";
+					
 				}
 					
 			}
@@ -193,27 +190,12 @@ class Login_Controller extends Template_Controller {
         $this->template->form = $form;
 	    $this->template->errors = $errors;
 		$this->template->form_error = $form_error;
-		$this->template->form_saved = $form_saved;
+		$this->template->password_reset = $password_reset;
 		$this->template->form_action = $form_action;
 
 		// Javascript Header
 		//TODO create reset_password js file.
 		$this->template->js = new View('admin/reset_password_js');
-	}
-
-	/**
-	 * Checks if username already exists.
-     * @param Validation $post $_POST variable with validation rules
-	 */
-	public function username_exists_chk(Validation $post)
-	{
-		$users = ORM::factory('user');
-		// If add->rules validation found any errors, get me out of here!
-		if (array_key_exists('username', $post->errors()))
-			return;
-
-		if( $users->username_exists($post->username) )
-			$post->add_error( 'username', 'exists');
 	}
 
 	/**

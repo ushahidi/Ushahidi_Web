@@ -47,11 +47,6 @@ class Install
 	            database server.");
 	    }
 
-	    if( !$password || strlen($password = trim($password)) == 0 ){
-	        $form->set_error("password", "Please enter the password of the
-	            database server.");
-	    }
-
 	    if( !$host || strlen($host = trim($host)) == 0 ){
 	        $form->set_error("host","Please enter the host of the
 	            database server." );

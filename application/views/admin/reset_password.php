@@ -45,14 +45,29 @@
 				</td>
             </tr>
 			<?php } ?>
+			<?php
+			if( $password_reset ) { ?>
+			<tr>
+				<td align="left">
+					<!-- green-box -->
+					<div class="green-box">
+						<h3><?php echo Kohana::lang('ui_main.password_reset_confirm'); ?></h3>
+					</div>
+				</td>
+			</tr>
+			<?php } else { ?>
             <tr>
-              <td><strong>Enter email address used for registration:</strong><br />
+              <td><strong><?php echo Kohana::lang('ui_main.password_reset_prompt')?></strong><br />
               <?php print form::input('resetemail', '', 
 						' class="login_text"'); ?></td>
             </tr>
             <tr>
-              <td><input type="submit" id="resetemail" name="submit" value="Reset password" class="login_btn" /></td>
+              <td><input type="submit" id="resetemail" name="submit" value="Reset password" class="login_btn" />
+              <br /><br />
+              <a href="<?php echo url::base().'login'?>">Login</a>
+              </td>
             </tr>
+            <?php } ?>
         <?php print form::close(); ?>
       </table>
   </div>
