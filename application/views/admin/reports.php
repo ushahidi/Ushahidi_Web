@@ -95,6 +95,7 @@
 									$incident_date = date('Y-m-d', strtotime($incident->incident_date));
 									$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
 									
+									//XXX incident_Mode will be discontinued in favour of $service_id
 									if ($incident_mode == 1)	// Submitted via WEB
 									{
 										$submit_mode = "WEB";
@@ -121,10 +122,20 @@
 										$submit_mode = "SMS";
 										$submit_by = $incident->message->message_from;
 									}
+									elseif ($incident_mode == 3) 	// Submitted via Email
+									{
+										$submit_mode = "EMAIL";
+										$submit_by = $incident->message->message_from;
+									}
 									elseif ($incident_mode == 4) 	// Submitted via Twitter
 									{
 										$submit_mode = "TWITTER";
-										$submit_by = '<a href="'.$incident->twitter->tweet_link.'" target="_blank">'.$incident->twitter->tweet_from.'</a>';
+										$submit_by = $incident->message->message_from;
+									}
+									elseif ($incident_mode == 5) 	// Submitted via Laconica
+									{
+										$submit_mode = "LACONICA";
+										$submit_by = $incident->message->message_from;
 									}
 									
 									$incident_location = $incident->location->location_name;
@@ -167,7 +178,10 @@
 											<ul class="links">
 												<li class="none-separator">Categories:<?php echo $incident_category; ?></li>
 											</ul>
-											<?php echo $incident_translation; ?>
+											<?php
+											//XXX DISABLED Until Completed
+											// echo $incident_translation;
+											?>
 										</td>
 										<td class="col-3"><?php echo $incident_date; ?></td>
 										<td class="col-4">

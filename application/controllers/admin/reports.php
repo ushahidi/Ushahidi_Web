@@ -335,7 +335,7 @@ class Reports_Controller extends Admin_Controller
 			$service_id = "";
 			$message = ORM::factory('message', $message_id);
 			
-			if ($message->loaded == true) {
+			if ($message->loaded == true && $message->message_type == 1) {
 				
 				$service_id = $message->reporter->service_id;
 				
