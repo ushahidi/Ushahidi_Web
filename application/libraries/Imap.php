@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * Imap library. Wrapper to read email using IMAP/ POP3. 
+ * Imap library. Wrapper to read email using IMAP/POP3. 
  * @package    Imap
  * @author	   Ushahidi Team
  * @copyright  (c) 2009 Ushahidi Team
@@ -13,13 +13,17 @@ class Imap_Core {
 	/**
 	 * Opens an IMAP stream
 	 */
-	public function __construct($config = array())
+	public function __construct()
 	{
-		// Use default imap configuration when none is provided
-		$config = !empty($config) ? $config : Kohana::config('imap');
+		// Set Imap Timeouts
+		imap_timeout(IMAP_OPENTIMEOUT,90);
+		imap_timeout(IMAP_READTIMEOUT,90);
 		
-		$imap_stream =	imap_open($config['service'], $config['email_address'], 
-						   $config['password']);
+		$config = Kohana::config('email');
+		$ssl = $config['ssl'] == true ? "ssl/novalidate-cert" : "";
+		$service = "{".$config['server'].":".$config['port']."/".$config['servertype']."/".$ssl."}";
+	
+		$imap_stream =	imap_open($service, $config['username'],$config['password']);
 		if (!$imap_stream)
 			throw new Kohana_Exception('imap.imap_stream_not_opened', imap_last_error());
 
@@ -27,26 +31,10 @@ class Imap_Core {
 	}
 
 	/**
-	 * Create an instance of Imap
-	 *
-     * @param   string  name of service. Either 'imap' or 'pop3'
-	 * @return	object
-	 */
-	public static function factory($service)
-	{
-		if ($service == 'imap')
-			return new Imap(Kohana::config('imap'));
-		elseif ($service == 'pop3')
-			return new Imap(Kohana::config('pop3'));
-		else
-			throw new Kohana_Exception('imap.unsupported_service', $service);
-	}
-
-	/**
 	 * Get messages according to a search criteria
 	 * 
 	 * @param	string	search criteria (RFC2060, sec. 6.4.4). Set to "UNSEEN" by default
-	 					NB: Search criteria only affects IMAP mailboxes.
+	 *					NB: Search criteria only affects IMAP mailboxes.
 	 * @param	string	date format. Set to "Y-m-d H:i:s" by default
 	 * @return	mixed	array containing messages
 	 */
@@ -57,13 +45,23 @@ class Imap_Core {
 		$no_of_msgs = $msgs ? count($msgs) : 0;
 
 		$messages = array();
+		$fromname = "";
+		$fromaddress = "";
 
 		for ($i = 0; $i < $no_of_msgs; $i++) 
 		{
 			$header = imap_header($this->imap_stream, $msgs[$i]);
 			$date = date($date_format, $header->udate);
-			$from = $this->_mime_decode($header->fromaddress);
+			$from = $header->from;
+			foreach ($from as $id => $object) {
+			    $fromname = $object->personal;
+			    $fromaddress = $object->mailbox . "@" . $object->host;
+			}
 			$subject = $this->_mime_decode($header->subject);
+			
+			// Get Message Unique ID in case mail box changes 
+			// in the middle of this operation
+			$message_id = imap_uid($this->imap_stream, $msgs[$i]);
 
 			$structure = imap_fetchstructure($this->imap_stream, $msgs[$i]);
 
@@ -75,24 +73,28 @@ class Imap_Core {
 
 					if ($part->subtype == 'PLAIN')
 					{
-						$body = imap_fetchbody($this->imap_stream, $msgs[$i], $j+1);
+						$body = imap_fetchbody($this->imap_stream, $message_id, $j+1);
 					}
 				}
 			}
 			else {
-				$body = imap_body($this->imap_stream, $msgs[$i]);
+				$body = imap_body($this->imap_stream, $message_id);
 			}
 
 			// Convert quoted-printable strings (RFC2045)
 			$body = imap_qprint($body);
 			
-			array_push($messages, array('msg_no' => $msgs[$i],
+			array_push($messages, array('msg_no' => $message_id,
 										'date' => $date,
-										'from' => $from,
+										'from' => $fromname,
+										'email' => $fromaddress,
 										'subject' => $subject,
 										'body' => $body));
+										
+			// Mark Message As Read
+			imap_setflag_full($this->imap_stream, $message_id, "\\Seen");
 		}
-
+				
 		return $messages;
 	}
 

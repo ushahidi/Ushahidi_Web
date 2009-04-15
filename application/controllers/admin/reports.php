@@ -469,7 +469,7 @@ class Reports_Controller extends Admin_Controller
 			}
 			
 			// Validate Custom Fields
-			if (!$this->_validate_custom_form_fields($post->custom_field))
+			if (isset($post->custom_field) && !$this->_validate_custom_form_fields($post->custom_field))
 			{
 				$post->add_error('custom_field', 'values');
 			}
@@ -660,25 +660,28 @@ class Reports_Controller extends Admin_Controller
 				
 				
 				// STEP 7: SAVE CUSTOM FORM FIELDS
-				foreach($post->custom_field as $key => $value)
+				if(isset($post->custom_field))
 				{
-					$form_response = ORM::factory('form_response')
-					->where('form_field_id', $key)
-					->where('incident_id', $incident->id)
-					->find();
-					if ($form_response->loaded == true)
+					foreach($post->custom_field as $key => $value)
 					{
-						$form_response->form_field_id = $key;
-						$form_response->form_response = $value;
-						$form_response->save();
-					}
-					else
-					{
-						$form_response = new Form_Response_Model();
-						$form_response->form_field_id = $key;
-						$form_response->incident_id = $incident->id;
-						$form_response->form_response = $value;
-						$form_response->save();
+						$form_response = ORM::factory('form_response')
+						->where('form_field_id', $key)
+						->where('incident_id', $incident->id)
+						->find();
+						if ($form_response->loaded == true)
+						{
+							$form_response->form_field_id = $key;
+							$form_response->form_response = $value;
+							$form_response->save();
+						}
+						else
+						{
+							$form_response = new Form_Response_Model();
+							$form_response->form_field_id = $key;
+							$form_response->incident_id = $incident->id;
+							$form_response->form_response = $value;
+							$form_response->save();
+						}
 					}
 				}
 				

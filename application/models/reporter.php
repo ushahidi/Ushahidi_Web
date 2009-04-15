@@ -17,16 +17,18 @@
 class Reporter_Model extends ORM
 {
 	protected $belongs_to = array('service');
-	protected $has_many = array('incident');
+	protected $has_many = array('incident','message');
 	
 	// Database table name
 	protected $table_name = 'reporter';
 	
 	// Create a Reporter if they do not already exist
-	function add($reporter_attrs) {
+	function add($reporter_attrs)
+	{
 		if (count($this->where('service_id', $reporter_attrs['service_id'])->
-		                 where('service_userid', $reporter_attrs['service_userid'])->
-		                 find_all()) == 0) {
+		                 where('service_account', $reporter_attrs['service_account'])->
+		                 find_all()) == 0)
+		{
 			$this->db->insert('reporter', $reporter_attrs);
 		}
 	}

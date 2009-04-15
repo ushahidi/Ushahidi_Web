@@ -35,8 +35,6 @@ rel="stylesheet" type="text/css" />
 				<?php
 					print ( $form->error('username') =="") ?'':"&#8226;&nbsp;" 
 					    . $form->error('username') . "<br />";
-					print ( $form->error('password') =="") ?'':"&#8226;&nbsp;" 
-					    . $form->error('password') . "<br />";
 					print ( $form->error('host') =="") ?'':"&#8226;&nbsp;" 
 					    .$form->error('host') . "<br />";
 					print ( $form->error('db_name') =="") ?'':"&#8226;&nbsp;" 

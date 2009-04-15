@@ -20,17 +20,20 @@ class Messages_Controller extends Admin_Controller
 	{
 		parent::__construct();
 	
-		$this->template->this_page = 'messages';		
+		$this->template->this_page = 'messages';	
 	}
 	
 	/**
 	* Lists the messages.
-    * @param int $page
+    * @param int $service_id
     */
-	function index($page = 1)
+	function index($service_id = 1)
 	{
 		$this->template->content = new View('admin/messages');
-		$this->template->content->title = 'SMS Messages';
+		
+		// Get Title
+		$service = ORM::factory('service', $service_id);
+		$this->template->content->title = $service->service_name;
 
         //So far this assumes that selected 'message_id's are for deleting
         if (isset($_POST['message_id']))
@@ -66,12 +69,21 @@ class Messages_Controller extends Admin_Controller
 		$pagination = new Pagination(array(
 			'query_string'    => 'page',
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-			'total_items'    => ORM::factory('message')->where($filter)->count_all()
+			'total_items'    => ORM::factory('message')
+				->with('reporter')
+				->where('service_id', $service_id)
+				->count_all()
 		));
-
-		$messages = ORM::factory('message')->where($filter)->orderby('message_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		
+		$messages = ORM::factory('message')
+			->with('reporter')
+			->where('service_id', $service_id)
+			->orderby('message_date','desc')
+			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 		
 		$this->template->content->messages = $messages;
+		$this->template->content->service_id = $service_id;
+		$this->template->content->services = ORM::factory('service')->find_all();
 		$this->template->content->pagination = $pagination;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
@@ -369,16 +381,19 @@ class Messages_Controller extends Admin_Controller
 			//Perform Direct Reports Search
 			$username = $settings->twitter_username;
 			$password = $settings->twitter_password;
-			$twitter_url = 'http://twitter.com/statuses/replies.json';
-			$curl_handle = curl_init();
-			curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
-			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
-			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-			curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password"); //Authenticate!
-			$buffer = curl_exec($curl_handle);
-			curl_close($curl_handle);
-			//$this->add_tweets($buffer,null,$username);
-			$this->add_json_tweets($buffer);
+			if (!empty($username) && !empty($password))
+			{
+				$twitter_url = 'http://twitter.com/statuses/replies.json';
+				$curl_handle = curl_init();
+				curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
+				curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
+				curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+				curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password"); //Authenticate!
+				$buffer = curl_exec($curl_handle);
+				curl_close($curl_handle);
+				//$this->add_tweets($buffer,null,$username);
+				$this->add_json_tweets($buffer);
+			}
 		}
 	}
 	
@@ -482,7 +497,7 @@ class Messages_Controller extends Admin_Controller
 	    		$reporter = new Reporter_Model();
 	    		$reporter->service_id       = $service->id;
 	    		$reporter->service_userid   = $tweet_user->{'id'};
-	    		$reporter->service_username = $tweet_user->{'screen_name'};
+	    		$reporter->service_account  = $tweet_user->{'screen_name'};
 	    		$reporter->reporter_level   = $default_level; 
 	    		$reporter->reporter_first   = $names[0];
 	    		$reporter->reporter_last    = $last_name;
@@ -495,9 +510,6 @@ class Messages_Controller extends Admin_Controller
     			// reporter already exists
     			$reporter = $reporters[0];
     		}
-    		
-    		echo(count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
-			                           ->find_all()));
 
 			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
 			                           ->find_all()) == 0) {    		

@@ -16,7 +16,7 @@
 
 class Message_Model extends ORM
 {
-	protected $belongs_to = array('incident');
+	protected $belongs_to = array('incident','reporter');
 	
 	// Database table name
 	protected $table_name = 'message';

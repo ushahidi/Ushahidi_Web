@@ -8,11 +8,10 @@ CREATE TABLE `service`
 PRIMARY KEY (`id`)
 );
 
-INSERT INTO service (id, service_name, service_description, service_url) 
-VALUES (1,'SMS','Text messages from phones', NULL), 
-VALUES (2,'Twitter','Tweets tweets tweets', 'http://twitter.com'),
-VALUES (3,'Flickr','Photo sharing', 'http://flickr.com')
-;
+INSERT INTO service (id, service_name, service_description, service_url) VALUES
+(1,'SMS','Text messages from phones', NULL), 
+(2,'Twitter','Tweets tweets tweets', 'http://twitter.com'),
+(3,'Flickr','Photo sharing', 'http://flickr.com');
 
 
 ALTER TABLE `message`
@@ -39,7 +38,7 @@ CREATE TABLE `reporter`
 `reporter_ip` VARCHAR(50),
 `reporter_date` DATETIME,
 PRIMARY KEY (`id`)
-) ENGINE=InnoDB COMMENT='InnoDB free: 382976 kB';
+) ENGINE=InnoDB;
 
 
 CREATE TABLE `level`
