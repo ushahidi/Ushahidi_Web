@@ -495,7 +495,7 @@ class Manage_Controller extends Admin_Controller
 			'reporter_id' => '',    
 			'service_id' => '',
 			'service_userid' => '',
-			'service_username' => '',
+			'service_account' => '',
 			'reporter_level' => '',
 			'reporter_first' => '',
 			'reporter_last' => '',
@@ -523,7 +523,7 @@ class Manage_Controller extends Admin_Controller
 			{
 				// Add some rules, the input field, followed by a list of checks, carried out in order
 				$post->add_rules('service_id','required');				
-				// we also require either service_userid or service_username, not necessarily both
+				// we also require either service_userid or service_account, not necessarily both
 			}
 
 			// Test to see if things passed the rule checks
@@ -544,7 +544,7 @@ class Manage_Controller extends Admin_Controller
 					// SAVE Reporter    
 					$reporter->service_id = $post->service_id;
 					$reporter->service_userid = $post->service_userid;
-					$reporter->service_username = $post->service_username;
+					$reporter->service_account = $post->service_account;
 					$reporter->reporter_level = $post->reporter_level;
 					$reporter->reporter_first = $post->reporter_first;
 					$reporter->reporter_last = $post->reporter_last;

@@ -1,4 +1,4 @@
-			<div class="bg">
+service_account			<div class="bg">
 				<h2>
 					<a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a>
 					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
@@ -78,7 +78,7 @@
 								        $service = new Service_Model($service_id);
 								        $service_name = $service->service_name;
 							    		$service_userid = $reporter->service_userid;
-							    		$service_username = $reporter->service_username;
+							    		$service_account = $reporter->service_account;
 							    		$reporter_level = $reporter->reporter_level;
 							    		$reporter_first = $reporter->reporter_first;
 							    		$reporter_last = $reporter->reporter_last;
@@ -92,7 +92,7 @@
 											<td class="col-2">
 												<div class="post">
 													<h4><?php echo $reporter_first . ' ' . $reporter_last; ?></h4>
-													<p><?php echo $service_userid . ': ' . $service_username; ?>...</p>
+													<p><?php echo $service_userid . ': ' . $service_account; ?>...</p>
 												</div>
 											</td>
 											<td class="col-3">
@@ -106,7 +106,7 @@
 	'<?php echo(rawurlencode($reporter_id)); ?>',
 	'<?php echo(rawurlencode($service_id)); ?>',
 	'<?php echo(rawurlencode($service_userid)); ?>',
-	'<?php echo(rawurlencode($service_username)); ?>',
+	'<?php echo(rawurlencode($service_account)); ?>',
 	'<?php echo(rawurlencode($reporter_level)); ?>',
 	'<?php echo(rawurlencode($reporter_first)); ?>',
 	'<?php echo(rawurlencode($reporter_last)); ?>',
@@ -151,7 +151,7 @@
 						</div>
 						<div class="tab_form_item2">
 							<strong>Service Username:</strong><br />
-							<?php print form::input('service_username', $form['service_username'], ' class="text long"'); ?>
+							<?php print form::input('service_account', $form['service_account'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
 							<strong>Reporter Level:</strong><br />
@@ -192,7 +192,7 @@
 			</div>
 			<script type="text/javascript">
 			// Levels JS
-			function fillFields(id, service_id, service_userid, service_username, 
+			function fillFields(id, service_id, service_userid, service_account, 
 			                    reporter_level, reporter_first, reporter_last, 
 			                    reporter_email, reporter_phone, reporter_ip, 
 			                    reporter_date)
@@ -200,7 +200,7 @@
 				$("#reporter_id").attr("value", unescape(id));
 				$("#service_id").attr("value", unescape(service_id));
 	    		$("#service_userid").attr("value", unescape(service_userid));
-	    		$("#service_username").attr("value", unescape(service_username));
+	    		$("#service_account").attr("value", unescape(service_account));
 	    		$("#reporter_level").attr("value", unescape(reporter_level));
 	    		$("#reporter_first").attr("value", unescape(reporter_first));
 	    		$("#reporter_last").attr("value", unescape(reporter_last));
