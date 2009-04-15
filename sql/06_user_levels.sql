@@ -63,7 +63,7 @@ CREATE TABLE `message` (
   `service_messageid` varchar(100) default NULL,
   `message_from` varchar(100) default NULL,
   `message_to` varchar(100) default NULL,
-  `message_subject` TEXT NULL
+  `message_subject` TEXT NULL,
   `message` text,
   `message_type` tinyint(4) default '1' COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
   `message_date` datetime default NULL,
