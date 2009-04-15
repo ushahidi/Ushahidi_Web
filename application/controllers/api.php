@@ -183,6 +183,8 @@ class Api_Controller extends Controller {
 				there are several ways to get incidents by
 				*/
 				$by = '';
+				$sort = 'asc';
+				$orderfield = 'incidentid';
 				
 				if(!$this->_verifyArrayIndex($request, 'by')){
 					$error = array("error" => $this->_getErrorMsg(001, 'by'));
@@ -190,7 +192,32 @@ class Api_Controller extends Controller {
 				} else {
 					$by = $request['by'];
 				}
+				/*IF we have an order by, 0=default=asc 1=desc */
+				if($this->_verifyArrayIndex($request, 'sort')){
+					if ( $request['sort'] == '1' ){
+						$sort = 'desc';
+					}
+				} 				
 				
+				/* Order field  */
+				if($this->_verifyArrayIndex($request, 'orderfield')){
+					switch ( $request['orderfield'] ){
+						case 'id':
+							$orderfield = 'incidentid';
+							break;
+						case 'locid':
+							$orderfield = 'locationid';
+							break;
+
+						case 'date':
+							$orderfield = 'incidentdate';
+							break;
+						default:
+							/* Again... it's set but let's cast it in concrete */
+							$orderfield = 'incidentid';
+					}
+
+				}
 				switch ($by){
 					case "all": // incidents
 						/*if(($this->_verifyArrayIndex($request, 'by'))) {
@@ -198,7 +225,7 @@ class Api_Controller extends Controller {
 						} else {
 							$error = array("error" => $this->_getErrorMsg(001, 'by'));	
 						}*/
-						$ret = $this->_incidentsByAll();
+						$ret = $this->_incidentsByAll($orderfield, $sort);
 						break;
 					case "latlon": //latitude and longitude
 						if(($this->_verifyArrayIndex($request, 'latitude')) && ($this->_verifyArrayIndex($request, 'longitude'))){
@@ -216,28 +243,28 @@ class Api_Controller extends Controller {
 						break;
 					case "locid": //Location Id
 						if(($this->_verifyArrayIndex($request, 'id'))){
-							$ret = $this->_incidentsByLocitionId($request['id']);
+							$ret = $this->_incidentsByLocitionId($request['id'], $orderfield, $sort);
 						} else {
 							$error = array("error" => $this->_getErrorMsg(001, 'id'));
 						}
 						break;
 					case "locname": //Location Name
 						if(($this->_verifyArrayIndex($request, 'name'))){
-							$ret = $this->_incidentsByLocationName($request['name']);
+							$ret = $this->_incidentsByLocationName($request['name'], $orderfield, $sort);
 						} else {
 							$error = array("error" => $this->_getErrorMsg(001, 'name'));
 						}
 						break;
 					case "catid": //Category Id
 						if(($this->_verifyArrayIndex($request, 'id'))){
-							$ret = $this->_incidentsByCategoryId($request['id']);
+							$ret = $this->_incidentsByCategoryId($request['id'], $orderfield, $sort);
 						} else {
 							$error = array("error" => $this->_getErrorMsg(001, 'id'));
 						}
 						break;
 					case "catname": //Category Name
 						if(($this->_verifyArrayIndex($request, 'name'))){
-							$ret = $this->_incidentsByCategoryName($request['name']);
+							$ret = $this->_incidentsByCategoryName($request['name'], $orderfield, $sort);
 						} else {
 							$error = array("error" => $this->_getErrorMsg(001, 'name'));
 						}
@@ -338,7 +365,6 @@ class Api_Controller extends Controller {
 				"locationlatitude,l.longitude AS locationlongitude FROM incident AS i " .
 				"INNER JOIN location as l on l.id = i.location_id ".
 				"$where $limit";
-		
 		$items = $this->db->query($query);
 		$i = 0;
 		foreach ($items as $item){
@@ -1027,10 +1053,12 @@ class Api_Controller extends Controller {
 	/**
 	 * Fetch all incidents
 	 */
-	function _incidentsByAll() {
+	function _incidentsByAll($orderfield,$sort) {
 		$where = "\nWHERE i.incident_active = 1";
+		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
-		return $this->_getIncidents($where, $limit);
+		/* Not elegant but works */
+		return $this->_getIncidents($where.$sortby, $limit);
 	}
 	
 	/*
@@ -1059,37 +1087,41 @@ class Api_Controller extends Controller {
 	/*
 	get the incidents by location id
 	*/
-	function _incidentsByLocitionId($locid){
+	function _incidentsByLocitionId($locid,$orderfield,$sort){
 		$where = "\nWHERE i.location_id = $locid AND i.incident_active = 1";
+		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
-		return $this->_getIncidents($where, $limit);
+		return $this->_getIncidents($where.$sortby, $limit);
 	}
 	
 	/*
 	get the incidents by location name
 	*/
-	function _incidentsByLocationName($locname){
+	function _incidentsByLocationName($locname,$orderfield,$sort){
 		$where = "\nWHERE l.location_name = '$locname' AND i.incident_active = 1";
+		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
-		return $this->_getIncidents($where, $limit);
+		return $this->_getIncidents($where.$sortby, $limit);
 	}
 	
 	/*
 	get the incidents by category id
 	*/
-	function _incidentsByCategoryId($catid){
+	function _incidentsByCategoryId($catid,$orderfield,$sort){
 		$where = "\nWHERE c.id = $catid AND i.incident_active = 1";
+		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
-		return $this->_getIncidents($where, $limit);
+		return $this->_getIncidents($where.$sortby, $limit);
 	}
 	
 	/*
 	get the incidents by category name
 	*/
-	function _incidentsByCategoryName($catname){
+	function _incidentsByCategoryName($catname,$orderfield,$sort){
 		$where = "\nWHERE c.category_title = '$catname' AND i.incident_active = 1";
+		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
-		return $this->_getIncidents($where, $limit);
+		return $this->_getIncidents($where.$sortby, $limit);
 	}
 	
 	/*
