@@ -192,6 +192,14 @@ class Api_Controller extends Controller {
 				}
 				
 				switch ($by){
+					case "all": // incidents
+						/*if(($this->_verifyArrayIndex($request, 'by'))) {
+							$ret = $this->_incidentsByAll();
+						} else {
+							$error = array("error" => $this->_getErrorMsg(001, 'by'));	
+						}*/
+						$ret = $this->_incidentsByAll();
+						break;
 					case "latlon": //latitude and longitude
 						if(($this->_verifyArrayIndex($request, 'latitude')) && ($this->_verifyArrayIndex($request, 'longitude'))){
 							$ret = $this->_incidentsByLatLon($request['latitude'], $request['longitude']);
@@ -309,55 +317,98 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 		
 		$replar = array(); //assists in proper xml generation
-
+		
+		// Doing this manaully. It was wasting my time trying modularize it.
+		// Will have to visit this again after a good rest. I mean a good rest.
+		
+		//XML elements
+		$xml = new XmlWriter();
+    	$xml->openMemory();
+    	$xml->startDocument('1.0', 'UTF-8');
+    	$xml->startElement('response');
+    	$xml->startElement('payload');
+    	$xml->startElement('incidents');
+		
 		//find incidents
-		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle, i.incident_description AS incidentdescription,l.id AS locationid, l.location_name AS locationname, 
-			c.id AS categoryid, c.category_title AS categorytitle  
-			FROM `incident` AS i 
-			INNER JOIN `location` as l ON l.id = i.location_id 
-			INNER JOIN `incident_category` AS ic ON ic.incident_id = i.id
-			INNER JOIN `category` c ON ic.category_id = c.id
-			$where
-			$limit";
-
+		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle," .
+				"i.incident_description AS incidentdescription, i.incident_date AS " .
+				"incidentdate, i.incident_mode AS incidentmode,i.incident_active AS " .
+				"incidentactive, i.incident_verified AS incidentverified, l.id AS " .
+				"locationid,l.location_name AS locationname,l.latitude AS " .
+				"locationlatitude,l.longitude AS locationlongitude FROM incident AS i " .
+				"INNER JOIN location as l on l.id = i.location_id ".
+				"$where $limit";
+		
 		$items = $this->db->query($query);
 		$i = 0;
-		
 		foreach ($items as $item){
-			//get the incident's associted media
-			$query = "SELECT m.id as id, m.media_title AS title, m.media_type AS type, m.media_link AS link, m.media_thumb AS thumb
-				FROM media AS m INNER JOIN incident AS i ON i.id = m.incident_id WHERE i.id = $item->incidentid";
-			
-			$media_items = $this->db->query($query);
 			
 			if($this->responseType == 'json'){
 				$json_incident_media = array();
-			} else {
-				$json_incident_media = array();
-
 			}
 			
+			//build xml file
+			$xml->startElement('incident');
+            
+            $xml->writeElement('incidentid',$item->incidentid);
+            $xml->writeElement('incidenttitle',$item->incidenttitle);
+            $xml->writeElement('incidentdescription',$item->incidentdescription);
+            $xml->writeElement('incidentdate',$item->incidentdate);
+            $xml->writeElement('incidentmode',$item->incidentmode);
+            $xml->writeElement('incidentactive',$item->incidentactive);
+            $xml->writeElement('incidentverified',$item->incidentverified);
+            $xml->writeElement('locationid',$item->locationid);
+            $xml->writeElement('locationname',$item->locationname);
+            $xml->writeElement('locationlatitude',$item->locationlatitude);
+            $xml->writeElement('locationlongitude',$item->locationlongitude);      
+            
+            $xml->startElement('category');
+			
+			//fetch categories
+            $query = " SELECT c.category_title AS categorytitle, c.id AS cid " .
+            		"FROM category AS c INNER JOIN incident_category AS ic ON " .
+            		"ic.category_id = c.id WHERE ic.incident_id =".$item->incidentid." LIMIT 0 , 30";
+            $category_items = $this->db->query( $query );
+            
+            foreach( $category_items as $category_item ) 
+            {
+                $xml->writeElement('categoryid',$category_item->cid);
+                $xml->writeElement('categorytitle',$category_item->categorytitle );
+                
+            }
+            $xml->endElement();//end categories
+			
+			//fetch media associated with an incident
+            $query = "SELECT m.id as mediaid, m.media_title AS mediatitle, " .
+            		"m.media_type AS mediatype, m.media_link AS medialink, " .
+            		"m.media_thumb AS mediathumb FROM media AS m " .
+            		"INNER JOIN incident AS i ON i.id = m.incident_id " .
+            		"WHERE i.id =". $item->incidentid."";
+			
+			$media_items = $this->db->query($query);
+			
 			if(count($media_items) > 0){
-				$j = 0;
+				$xml->startElement('media');
 				foreach ($media_items as $media_item){
 					if($this->responseType == 'json'){
 						$json_incident_media[] = $media_item;
 					} else {
-						$json_incident_media['mediaitem'.$j] = $media_item;
+						$xml->writeElement('mediaid',$media_item->mediaid);
+                		$xml->writeElement('mediatitle',$media_item->mediatitle);
+                		$xml->writeElement('mediatype',$media_item->mediatype);
+                		$xml->writeElement('medialink',$media_item->medialink);
+                		$xml->writeElement('mediathumb',$media_item->mediathumb);
 					}
-					$j++;
 				}
+				$xml->endElement(); // media
+				
 			}
-			
+			$xml->endElement(); // end incident
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
 				$json_incidents[] = array("incident" => $item, "media" => $json_incident_media);
-			} else {
-				$json_incidents['incident'.$i] = array("incident" => $item, "media" => $json_incident_media) ;
-				//$replar[] = 'incident'.$i;
 			}
 			
-			$i++;
 		}
 		
 		//create the json array
@@ -368,11 +419,19 @@ class Api_Controller extends Controller {
 		
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
+			return $retJsonOrXml;
 		} else {
-			$retJsonOrXml = $this->_arrayAsXML($data, $replar);
+			$xml->endElement(); //end incidents
+        	$xml->endElement(); // end payload
+        	$xml->startElement('error');
+        	$xml->writeElement('code',0);
+        	$xml->writeElement('message','No Error');
+        	$xml->endElement();//end error
+        	$xml->endElement(); // end response
+        	return $xml->outputMemory(true);
 		}
 		
-		return $retJsonOrXml;
+		//return $retJsonOrXml;
 	}
 	
 	/*
@@ -963,6 +1022,15 @@ class Api_Controller extends Controller {
 		$where = "\n WHERE iso='$iso'";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
+	}
+	
+	/**
+	 * Fetch all incidents
+	 */
+	function _incidentsByAll() {
+		$where = "\nWHERE i.incident_active = 1";
+		$limit = "\nLIMIT 0, $this->list_limit";
+		return $this->_getIncidents($where, $limit);
 	}
 	
 	/*
