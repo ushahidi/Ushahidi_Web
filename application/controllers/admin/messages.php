@@ -4,14 +4,14 @@
  * View SMS Messages Received Via FrontlineSMS
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Admin Messages Controller  
+ * @module     Admin Messages Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Messages_Controller extends Admin_Controller
@@ -19,10 +19,10 @@ class Messages_Controller extends Admin_Controller
 	function __construct()
 	{
 		parent::__construct();
-	
-		$this->template->this_page = 'messages';	
+
+		$this->template->this_page = 'messages';
 	}
-	
+
 	/**
 	* Lists the messages.
     * @param int $service_id
@@ -30,7 +30,7 @@ class Messages_Controller extends Admin_Controller
 	function index($service_id = 1)
 	{
 		$this->template->content = new View('admin/messages');
-		
+
 		// Get Title
 		$service = ORM::factory('service', $service_id);
 		$this->template->content->title = $service->service_name;
@@ -38,12 +38,12 @@ class Messages_Controller extends Admin_Controller
         //So far this assumes that selected 'message_id's are for deleting
         if (isset($_POST['message_id']))
             $this->deleteMessages($_POST['message_id']);
-		
+
 		// Is this an Inbox or Outbox Filter?
 		if (!empty($_GET['type']))
 		{
 			$type = $_GET['type'];
-			
+
 			if ($type == '2')
 			{
 				$filter = 'message_type = 2';
@@ -59,12 +59,12 @@ class Messages_Controller extends Admin_Controller
 			$type = "1";
 			$filter = 'message_type = 1';
 		}
-		
+
 		// check, has the form been submitted?
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-		
+
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'    => 'page',
@@ -74,13 +74,13 @@ class Messages_Controller extends Admin_Controller
 				->where('service_id', $service_id)
 				->count_all()
 		));
-		
+
 		$messages = ORM::factory('message')
 			->with('reporter')
 			->where('service_id', $service_id)
 			->orderby('message_date','desc')
 			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
-		
+
 		$this->template->content->messages = $messages;
 		$this->template->content->service_id = $service_id;
 		$this->template->content->services = ORM::factory('service')->find_all();
@@ -94,11 +94,11 @@ class Messages_Controller extends Admin_Controller
 
 		// Message Type Tab - Inbox/Outbox
 		$this->template->content->type = $type;
-		
+
 		// Javascript Header
 		$this->template->js = new View('admin/messages_js');
 	}
-	
+
 	/**
 	* Send A New Message Using Clickatell Library
     */
@@ -106,7 +106,7 @@ class Messages_Controller extends Admin_Controller
 	{
 		$this->template = "";
 		$this->auto_render = FALSE;
-		
+
 		// setup and initialize form field names
 		$form = array
 	    (
@@ -117,7 +117,7 @@ class Messages_Controller extends Admin_Controller
         //  corresponding to the form field names
         $errors = $form;
 		$form_error = FALSE;
-		
+
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -131,17 +131,17 @@ class Messages_Controller extends Admin_Controller
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 			$post->add_rules('to_id', 'required', 'numeric');
 			$post->add_rules('message', 'required', 'length[1,160]');
-			
+
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
-				// Yes! everything is valid				
+				// Yes! everything is valid
 				$reply_to = ORM::factory('message', $post->to_id);
 				if ($reply_to->loaded == true) {
 					// Yes! Replyto Exists
 					// This is the message we're replying to
 					$sms_to = $reply_to->message_from;
-					
+
 					// Load Users Settings
 					$settings = new Settings_Model(1);
 					if ($settings->loaded == true) {
@@ -155,7 +155,7 @@ class Messages_Controller extends Admin_Controller
 						}else{
 							$sms_from = "000";		// User needs to set up an SMS number
 						}
-						
+
 						// Create Clickatell Object
 						$mysms = new Clickatell();
 						$mysms->api_id = $settings->clickatell_api;
@@ -164,7 +164,7 @@ class Messages_Controller extends Admin_Controller
 						$mysms->use_ssl = false;
 						$mysms->sms();
 						$send_me = $mysms->send ($sms_to, $sms_from, $post->message);
-					
+
 						// Message Went Through??
 						if ($send_me == "OK") {
 							$newmessage = ORM::factory('message');
@@ -175,7 +175,7 @@ class Messages_Controller extends Admin_Controller
 							$newmessage->message_type = 2;			// This is an outgoing message
 							$newmessage->message_date = date("Y-m-d H:i:s",time());
 							$newmessage->save();
-							
+
 							echo json_encode(array("status"=>"sent", "message"=>"Your message has been sent!"));
 						}
 						// Message Failed
@@ -193,7 +193,7 @@ class Messages_Controller extends Admin_Controller
 					echo json_encode(array("status"=>"error", "message"=>"Error! Please make sure your message is valid!"));
 				}
 	        }
-	                    
+
             // No! We have validation errors, we need to show the form again,
             // with the errors
             else
@@ -203,7 +203,7 @@ class Messages_Controller extends Admin_Controller
 				echo json_encode(array("status"=>"error", "message"=>"Error! Please make sure your message is valid!"));
 	        }
 	    }
-		
+
 	}
 
     /**
@@ -275,7 +275,7 @@ class Messages_Controller extends Admin_Controller
         url::redirect('admin/messages/'.$extradir);
 
     }
-    
+
     /**
 	* Lists the Twitter messages.
     */
@@ -283,14 +283,14 @@ class Messages_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/messages_twitter');
 		$this->template->content->title = 'Twitter Messages';
-		
+
 		$this->load_tweets();
-		
+
 		//So far this assumes that selected 'twitter_id's are for deleting
 		if (isset($_POST['tweet_id'])) {
 			$this->deleteMessages($_POST['tweet_id'],'twitter');
 		}
-		
+
 		//Set Inbox/Outbox filter for query and message tab in view
 		//Set default as inbox
 		$type = 1;
@@ -300,22 +300,22 @@ class Messages_Controller extends Admin_Controller
 			$type = 2;
 			$filter = 'tweet_type = 2';
 		}
-		
+
 		// check, has the form been submitted?
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-		
+
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'   => 'page',
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
 			'total_items'    => ORM::factory('twitter')->where($filter)->count_all()
 		));
-		
+
 		//Order by tweet_hashtag first to bring direct reports to the top
 		$tweets = ORM::factory('twitter')->where($filter)->where('hide',0)->orderby('tweet_hashtag', 'asc')->orderby('tweet_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
-		
+
 		// Populate values for view
 		$this->template->content->tweets = $tweets;
 		$this->template->content->pagination = $pagination;
@@ -328,12 +328,12 @@ class Messages_Controller extends Admin_Controller
 
 		// Message Type Tab - Inbox/Outbox
 		$this->template->content->type = $type;
-		
+
 		// Javascript Header
 		$this->template->js = new View('admin/messages_js');
-		
+
 	}
-	
+
 	/**
 	* Collects the twitter messages and loads them into the database
     */
@@ -354,13 +354,21 @@ class Messages_Controller extends Admin_Controller
 				$proceed = 0;
 			}
 		}
-		
+
 		if($proceed == 1) { // Grab Tweets
+
+			// Grabbing tweets requires cURL so we will check for that here.
+			if (!function_exists('curl_exec'))
+			{
+				throw new Kohana_Exception('messages.load_tweets.cURL_not_installed');
+				return false;
+			}
+
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
-			
+
 			//Perform Hashtag Search
-			$hashtags = explode(',',$settings->twitter_hashtags);			
+			$hashtags = explode(',',$settings->twitter_hashtags);
 			foreach($hashtags as $hashtag){
 				$page = 1;
 				$have_results = TRUE; //just starting us off as true, although there may be no results
@@ -377,7 +385,7 @@ class Messages_Controller extends Admin_Controller
 					$page++;
 				}
 			}
-			
+
 			//Perform Direct Reports Search
 			$username = $settings->twitter_username;
 			$password = $settings->twitter_password;
@@ -396,7 +404,7 @@ class Messages_Controller extends Admin_Controller
 			}
 		}
 	}
-	
+
 	/**
 	* Adds tweets to the database.
     * @param string $data - Twitter XML results
@@ -430,7 +438,7 @@ class Messages_Controller extends Admin_Controller
 					$tweet_to = $username;
 					$tweet = substr($full_tweet,$cut2);
 				}
-				
+
 				if(isset($full_tweet) && !empty($full_tweet)) {
 					// We need to check for duplicates.
 					// Note: Heave on server.
@@ -454,16 +462,16 @@ class Messages_Controller extends Admin_Controller
 		$feed_data->__destruct(); //in the off chance we hit a ton of feeds, we need to clean it out
 		return TRUE; //if there were items in the feed
 	}
-	
+
 	/**
 	* Adds tweets in JSON format to the database and saves the sender as a new
 	* Reporter if they don't already exist
     * @param string $data - Twitter JSON results
     */
-	
+
 	private function add_json_tweets($data)
 	{
-		$services = new Service_Model();	
+		$services = new Service_Model();
     	$service = $services->where('service_name', 'Twitter')->find();
 	   	if (!$service) {
  		    return;
@@ -472,12 +480,12 @@ class Messages_Controller extends Admin_Controller
 		if (!$tweets) {
 			return;
 		}
-		
+
 		foreach($tweets as $tweet) {
-			$tweet_user = $tweet->{'user'};   	
-    		        	
+			$tweet_user = $tweet->{'user'};
+
     		$reporter_model = new Reporter_Model();
-    		
+
     		$reporter = null;
     		$reporters = $reporter_model->where('service_id', $service->id)->
 			             where('service_userid', $tweet_user->{'id'})->
@@ -487,18 +495,18 @@ class Messages_Controller extends Admin_Controller
 	    		$names = split(' ', $tweet_user->{'name'}, 2);
 	    		$last_name = '';
 	    		if (count($names) == 2) {
-	    			$last_name = $names[1]; 
+	    			$last_name = $names[1];
 	    		}
-	    		
+
 	    		// get default reporter level (Untrusted)
-	    		$levels = new Level_Model();	
+	    		$levels = new Level_Model();
 		    	$default_level = $levels->where('level_weight', 0)->find();
-		    	
+
 	    		$reporter = new Reporter_Model();
 	    		$reporter->service_id       = $service->id;
 	    		$reporter->service_userid   = $tweet_user->{'id'};
 	    		$reporter->service_account  = $tweet_user->{'screen_name'};
-	    		$reporter->reporter_level   = $default_level; 
+	    		$reporter->reporter_level   = $default_level;
 	    		$reporter->reporter_first   = $names[0];
 	    		$reporter->reporter_last    = $last_name;
 	    		$reporter->reporter_email   = null;
@@ -512,7 +520,7 @@ class Messages_Controller extends Admin_Controller
     		}
 
 			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
-			                           ->find_all()) == 0) {    		
+			                           ->find_all()) == 0) {
 				// Save Tweet as Message
 	    		$message = new Message_Model();
 	    		$message->parent_id = 0;
@@ -530,7 +538,7 @@ class Messages_Controller extends Admin_Controller
     		}
     	}
 	}
-	
+
 	/**
 	 * Lists the Laconica messages.
      * @param int $page
@@ -539,18 +547,18 @@ class Messages_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/messages_laconica');
 		$this->template->content->title = 'Laconica Messages';
-		
+
 		$this->load_laconica_mesgs();
-		
+
 		//So far this assumes that selected 'message_id's are for deleting
         if (isset($_POST['laconica_mesg_id']))
             $this->deleteMessages($_POST['laconica_mesg_id'],'laconica');
-		
+
 		// Is this an Inbox or Outbox Filter?
 		if (!empty($_GET['type']))
 		{
 			$type = $_GET['type'];
-			
+
 			if ($type == '2')
 			{
 				$filter = 'laconica_mesg_type = 2';
@@ -566,12 +574,12 @@ class Messages_Controller extends Admin_Controller
 			$type = "1";
 			$filter = 'laconica_mesg_type = 1';
 		}
-		
+
 		// check, has the form been submitted?
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-		
+
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'    => 'page',
@@ -580,7 +588,7 @@ class Messages_Controller extends Admin_Controller
 		));
 
 		$laconica_mesgs = ORM::factory('laconica')->where($filter)->where('hide',0)->orderby('laconica_mesg_date', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
-		
+
 		$this->template->content->laconica_mesgs = $laconica_mesgs;
 		$this->template->content->pagination = $pagination;
 		$this->template->content->form_error = $form_error;
@@ -592,12 +600,12 @@ class Messages_Controller extends Admin_Controller
 
 		// Message Type Tab - Inbox/Outbox
 		$this->template->content->type = $type;
-		
+
 		// Javascript Header
 		$this->template->js = new View('admin/messages_js');
-		
+
 	}
-	
+
 	/**
 	 * Collects the laconica messages and loads them into the database
      */
@@ -617,11 +625,19 @@ class Messages_Controller extends Admin_Controller
 				$proceed = 0;
 			}
 		}
-		
-		if($proceed == 1) { // Grab Tweets
+
+		if($proceed == 1) { // Grab Laconica Messages
+
+			// Grabbing Laconica Messages requires cURL so we will check for that here.
+			if (!function_exists('curl_exec'))
+			{
+				throw new Kohana_Exception('messages.load_laconica_mesgs.cURL_not_installed');
+				return false;
+			}
+
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
-			
+
 			$username = $settings->laconica_username;
 			$password = $settings->laconica_password;
 			$laconica_site = $settings->laconica_site;
@@ -633,7 +649,7 @@ class Messages_Controller extends Admin_Controller
 			curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password");
 			$buffer = curl_exec($curl_handle);
 			curl_close($curl_handle);
-			
+
 			$search_username = ': @'.$username;
 			$feed_data = $this->_setup_simplepie( $buffer );
 			foreach($feed_data->get_items(0,50) as $feed_data_item)
@@ -641,14 +657,14 @@ class Messages_Controller extends Admin_Controller
 				$full_laconica_mesg = $feed_data_item->get_description();
 				$full_date = $feed_data_item->get_date();
 				$laconica_mesg_link = $feed_data_item->get_link();
-				
+
 				$cut1 = stripos($full_laconica_mesg, $search_username);
 				$cut2 = $cut1 + strlen($search_username) + 1;
 				$laconica_mesg_from = substr($full_laconica_mesg,0,$cut1);
 				$laconica_mesg_to = $username;
 				$laconica_mesg = substr($full_laconica_mesg,$cut2);
 				$laconica_mesg_date = date("Y-m-d H:i:s",strtotime($full_date));
-				
+
 				if (isset($full_laconica_mesg) && !empty($full_laconica_mesg))
 				{
 					// We need to check for duplicates!!!
@@ -670,7 +686,7 @@ class Messages_Controller extends Admin_Controller
 			}
 		}
 	}
-	
+
 	/**
 	 * setup simplepie
 	 * @param string $raw_data
@@ -685,5 +701,5 @@ class Messages_Controller extends Admin_Controller
 			return $data;
 	}
 
-		
+
 }

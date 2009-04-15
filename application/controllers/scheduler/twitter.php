@@ -3,14 +3,14 @@
  * Twitter Scheduler Controller
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Twitter Controller  
+ * @module     Twitter Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
 */
 
 class Twitter_Controller extends Scheduler_Controller
@@ -19,12 +19,19 @@ class Twitter_Controller extends Scheduler_Controller
     {
         parent::__construct();
 	}
-	
+
 	public function index()
-	{	
+	{
+		// Grabbing tweets requires cURL so we will check for that here.
+		if (!function_exists('curl_exec'))
+		{
+			throw new Kohana_Exception('twitter.cURL_not_installed');
+			return false;
+		}
+
 		// Retrieve Current Settings
 		$settings = ORM::factory('settings', 1);
-		
+
 		// Retrieve Last Stored Twitter ID
 		$last_tweet_id = "";
 		$tweets = ORM::factory('message')
@@ -36,9 +43,9 @@ class Twitter_Controller extends Scheduler_Controller
 		{
 			$last_tweet_id = $tweets->service_messageid;
 		}
-		
+
 		//Perform Hashtag Search
-		$hashtags = explode(',',$settings->twitter_hashtags);			
+		$hashtags = explode(',',$settings->twitter_hashtags);
 		foreach($hashtags as $hashtag){
 			if (!empty($hashtag))
 			{
@@ -58,7 +65,7 @@ class Twitter_Controller extends Scheduler_Controller
 				}
 			}
 		}
-		
+
 		//Perform Direct Reports Search
 		$username = $settings->twitter_username;
 		$password = $settings->twitter_password;
@@ -75,8 +82,8 @@ class Twitter_Controller extends Scheduler_Controller
 			$this->add_tweets($buffer);
 		}
 	}
-	
-	
+
+
 	/**
 	* Adds tweets in JSON format to the database and saves the sender as a new
 	* Reporter if they don't already exist
@@ -84,7 +91,7 @@ class Twitter_Controller extends Scheduler_Controller
     */
 	private function add_tweets($data)
 	{
-		$services = new Service_Model();	
+		$services = new Service_Model();
     	$service = $services->where('service_name', 'Twitter')->find();
 	   	if (!$service) {
  		    return;
@@ -93,10 +100,10 @@ class Twitter_Controller extends Scheduler_Controller
 		if (!$tweets) {
 			return;
 		}
-		
+
 		foreach($tweets as $tweet) {
-			$tweet_user = $tweet->{'user'};   	
-    		        	
+			$tweet_user = $tweet->{'user'};
+
     		$reporter_check = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_userid', $tweet_user->{'id'})
@@ -112,18 +119,18 @@ class Twitter_Controller extends Scheduler_Controller
 	    		$names = split(' ', $tweet_user->{'name'}, 2);
 	    		$last_name = '';
 	    		if (count($names) == 2) {
-	    			$last_name = $names[1]; 
+	    			$last_name = $names[1];
 	    		}
-	    		
+
 	    		// get default reporter level (Untrusted)
-	    		$levels = new Level_Model();	
+	    		$levels = new Level_Model();
 		    	$default_level = $levels->where('level_weight', 0)->find();
-		    	
+
 	    		$reporter = new Reporter_Model();
 	    		$reporter->service_id       = $service->id;
 	    		$reporter->service_userid   = $tweet_user->{'id'};
 	    		$reporter->service_account  = $tweet_user->{'screen_name'};
-	    		$reporter->reporter_level   = $default_level; 
+	    		$reporter->reporter_level   = $default_level;
 	    		$reporter->reporter_first   = $names[0];
 	    		$reporter->reporter_last    = $last_name;
 	    		$reporter->reporter_email   = null;
@@ -135,7 +142,7 @@ class Twitter_Controller extends Scheduler_Controller
 			}
 
 			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
-			                           ->find_all()) == 0) {    		
+			                           ->find_all()) == 0) {
 				// Save Tweet as Message
 	    		$message = new Message_Model();
 	    		$message->parent_id = 0;

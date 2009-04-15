@@ -3,14 +3,14 @@
  * This controller is used to manage user settings
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Admin Settings Controller  
+ * @module     Admin Settings Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Settings_Controller extends Admin_Controller
@@ -19,14 +19,14 @@ class Settings_Controller extends Admin_Controller
 	{
 		parent::__construct();
 		$this->template->this_page = 'settings';
-		
+
 		// If this is not a super-user account, redirect to dashboard
 		if (!$this->auth->logged_in('admin'))
         {
              url::redirect('admin/dashboard');
-		}	
+		}
 	}
-	
+
 	/**
 	* Site Settings
     */
@@ -34,7 +34,7 @@ class Settings_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/site');
 		$this->template->content->title = 'Settings';
-		
+
 		// setup and initialize form field names
 		$form = array
 	    (
@@ -55,14 +55,14 @@ class Settings_Controller extends Admin_Controller
 			'laconica_username' => '',
 			'laconica_password' => '',
 			'laconica_site' => '',
-			
+
 	    );
         //  Copy the form as errors, so the errors will be stored with keys
         //  corresponding to the form field names
         $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
-		
+
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -74,7 +74,7 @@ class Settings_Controller extends Admin_Controller
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			
+
 			$post->add_rules('site_name', 'required', 'length[3,50]');
 			$post->add_rules('site_tagline', 'length[3,100]');
 			$post->add_rules('site_email', 'email', 'length[4,100]');
@@ -92,7 +92,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('laconica_username','length[0,50]');
 			$post->add_rules('laconica_password','length[0,50]');
 			$post->add_rules('laconica_site','length[0,30]');
-			
+
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -117,15 +117,15 @@ class Settings_Controller extends Admin_Controller
 				$settings->laconica_site = $post->laconica_site;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
-				
+
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-				
+
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
-					            
+
 	        }
-	                    
+
             // No! We have validation errors, we need to show the form again,
             // with the errors
             else
@@ -142,7 +142,7 @@ class Settings_Controller extends Admin_Controller
 		{
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
-			
+
 			$form = array
 		    (
 		        'site_name' => $settings->site_name,
@@ -163,8 +163,8 @@ class Settings_Controller extends Admin_Controller
 				'laconica_password' => $settings->laconica_password,
 				'laconica_site' => $settings->laconica_site
 		    );
-		}		
-		
+		}
+
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
@@ -173,21 +173,21 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
 	}
-	
+
 	/**
 	* Map Settings
-    */	
+    */
 	function index($saved = false)
 	{
 		// Display all maps
 		$this->template->api_url = Kohana::config('settings.api_url_all');
-		
+
 		// Current Default Country
 		$current_country = Kohana::config('settings.default_country');
-		
+
 		$this->template->content = new View('admin/settings');
 		$this->template->content->title = 'Settings';
-		
+
 		// setup and initialize form field names
 		$form = array
 	    (
@@ -211,7 +211,7 @@ class Settings_Controller extends Admin_Controller
 		{
 			$form_saved = FALSE;
 		}
-		
+
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -223,15 +223,15 @@ class Settings_Controller extends Admin_Controller
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			
+
 			$post->add_rules('default_country', 'required', 'numeric', 'length[1,4]');
 			$post->add_rules('default_map', 'required', 'between[1,4]');
 			$post->add_rules('api_google','required', 'length[0,200]');
 			$post->add_rules('api_yahoo','required', 'length[0,200]');
 			$post->add_rules('default_zoom','required','between[0,16]');		// Validate for maximum and minimum zoom values
 			$post->add_rules('default_lat','required','between[-90,90]');		// Validate for maximum and minimum latitude values
-			$post->add_rules('default_lon','required','between[-180,180]');		// Validate for maximum and minimum longitude values	
-			
+			$post->add_rules('default_lon','required','between[-180,180]');		// Validate for maximum and minimum longitude values
+
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -246,15 +246,15 @@ class Settings_Controller extends Admin_Controller
 				$settings->default_lon = $post->default_lon;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
-				
+
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-				
+
 				// Redirect to reload everything over again
 	            url::redirect('admin/settings/index/saved');
-					            
+
 	        }
-	                    
+
             // No! We have validation errors, we need to show the form again,
             // with the errors
             else
@@ -271,7 +271,7 @@ class Settings_Controller extends Admin_Controller
 		{
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
-			
+
 			$form = array
 		    (
 				'default_map' => $settings->default_map,
@@ -283,13 +283,13 @@ class Settings_Controller extends Admin_Controller
 				'default_zoom' => $settings->default_zoom
 		    );
 		}
-		
-		
+
+
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		
+
 		// Get Countries
 		$countries = array();
 		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
@@ -303,7 +303,7 @@ class Settings_Controller extends Admin_Controller
 			$countries[$country->id] = $this_country;
 		}
 		$this->template->content->countries = $countries;
-				
+
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
 		$this->template->js = new View('admin/settings_js');
@@ -321,7 +321,7 @@ class Settings_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/sms');
 		$this->template->content->title = 'Settings';
-		
+
 		// setup and initialize form field names
 		$form = array
 	    (
@@ -334,7 +334,7 @@ class Settings_Controller extends Admin_Controller
         $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
-		
+
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -346,11 +346,11 @@ class Settings_Controller extends Admin_Controller
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			
+
 			$post->add_rules('sms_no1', 'numeric', 'length[1,30]');
 			$post->add_rules('sms_no2', 'numeric', 'length[1,30]');
-			$post->add_rules('sms_no3', 'numeric', 'length[1,30]');	
-			
+			$post->add_rules('sms_no3', 'numeric', 'length[1,30]');
+
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -361,15 +361,15 @@ class Settings_Controller extends Admin_Controller
 				$settings->sms_no3 = $post->sms_no3;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
-				
+
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-				
+
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
-					            
+
 	        }
-	                    
+
             // No! We have validation errors, we need to show the form again,
             // with the errors
             else
@@ -386,7 +386,7 @@ class Settings_Controller extends Admin_Controller
 		{
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
-			
+
 			$form = array
 		    (
 		        'sms_no1' => $settings->sms_no1,
@@ -394,7 +394,7 @@ class Settings_Controller extends Admin_Controller
 				'sms_no3' => $settings->sms_no3
 		    );
 		}
-		
+
 		// Do we have a frontlineSMS Key? If not create and save one on the fly
 		$settings = ORM::factory('settings', 1);
 		$frontlinesms_key = $settings->frontlinesms_key;
@@ -402,7 +402,7 @@ class Settings_Controller extends Admin_Controller
 			$settings->frontlinesms_key = strtoupper(text::random('alnum',8));
 			$settings->save();
 		}
-		
+
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
@@ -420,7 +420,7 @@ class Settings_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/smsglobal');
 		$this->template->content->title = 'Settings';
-		
+
 		// setup and initialize form field names
 		$form = array
 	    (
@@ -433,7 +433,7 @@ class Settings_Controller extends Admin_Controller
         $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
-		
+
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -445,11 +445,11 @@ class Settings_Controller extends Admin_Controller
 	        $post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
-			
+
 			$post->add_rules('clickatell_api','required', 'length[4,20]');
 			$post->add_rules('clickatell_username', 'required', 'length[3,50]');
 			$post->add_rules('clickatell_password', 'required', 'length[5,50]');
-			
+
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -460,15 +460,15 @@ class Settings_Controller extends Admin_Controller
 				$settings->clickatell_password = $post->clickatell_password;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
-				
+
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-				
+
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
-					            
+
 	        }
-	                    
+
             // No! We have validation errors, we need to show the form again,
             // with the errors
             else
@@ -485,7 +485,7 @@ class Settings_Controller extends Admin_Controller
 		{
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
-			
+
 			$form = array
 		    (
 		        'clickatell_api' => $settings->clickatell_api,
@@ -493,16 +493,16 @@ class Settings_Controller extends Admin_Controller
 				'clickatell_password' => $settings->clickatell_password
 		    );
 		}
-		
+
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		
+
 		// Javascript Header
 		$this->template->js = new View('admin/smsglobal_js');
 	}
-	
+
 
 	/**
      * Retrieves Clickatell Balance using Clickatell Library
@@ -511,13 +511,13 @@ class Settings_Controller extends Admin_Controller
 	{
 		$this->template = "";
 		$this->auto_render = FALSE;
-		
+
 		$settings = new Settings_Model(1);
 		if ($settings->loaded == true) {
 			$clickatell_api = $settings->clickatell_api;
 			$clickatell_username = $settings->clickatell_username;
 			$clickatell_password = $settings->clickatell_password;
-			
+
 			$mysms = new Clickatell();
 			$mysms->api_id = $clickatell_api;
 			$mysms->user = $clickatell_username;
@@ -528,8 +528,8 @@ class Settings_Controller extends Admin_Controller
 		 	echo $mysms->getbalance();
 		}
 	}
-	
-    
+
+
     /**
      * Handles settings for sharing data
      */
@@ -549,37 +549,44 @@ class Settings_Controller extends Admin_Controller
 	{
 		$this->template = "";
 		$this->auto_render = FALSE;
-		
+
 		$cities = 0;
-		
+
 		// Get country ISO code from DB
 		$country = ORM::factory('country', (int)$cid);
-		
+
 		if ($country->loaded==true)
 		{
 			$iso = $country->iso;
-			
+
 			// GeoNames WebService URL + Country ISO Code
-			$geonames_url = "http://ws.geonames.org/search?country=" 
+			$geonames_url = "http://ws.geonames.org/search?country="
                             .$iso."&featureCode=PPL&featureCode=PPLA&featureCode=PPLC";
+
+			// Grabbing GeoNames requires cURL so we will check for that here.
+			if (!function_exists('curl_exec'))
+			{
+				throw new Kohana_Exception('settings.updateCities.cURL_not_installed');
+				return false;
+			}
 
 			// Use Curl
 			$ch = curl_init();
-			$timeout = 20; 
+			$timeout = 20;
 			curl_setopt ($ch, CURLOPT_URL, $geonames_url);
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 			$xmlstr = curl_exec($ch);
 			$err = curl_errno( $ch );
 			curl_close($ch);
-			
-			// $xmlstr = file_get_contents($geonames_url);	
-			
+
+			// $xmlstr = file_get_contents($geonames_url);
+
 			// No Timeout Error, so proceed
-			if ($err == 0) {				
+			if ($err == 0) {
 				// Reset All Countries City Counts to Zero
 				$countries = ORM::factory('country')->find_all();
-				foreach ($countries as $country) 
+				foreach ($countries as $country)
 				{
 					$country->cities = 0;
 					$country->save();
@@ -587,9 +594,9 @@ class Settings_Controller extends Admin_Controller
 
 				// Delete currently loaded cities
 				ORM::factory('city')->delete_all();
-				
+
 				$sitemap = new SimpleXMLElement($xmlstr);
-				foreach($sitemap as $city) 
+				foreach($sitemap as $city)
 	            {
 					if ($city->name && $city->lng && $city->lat)
 					{
