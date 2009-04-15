@@ -14,13 +14,25 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/messages">SMS</a> <a href="<?php print url::base() ?>admin/messages/twitter">Twitter</a> <a href="<?php print url::base() ?>admin/messages/laconica">Laconica</a> </h2>
+				<h2><?php echo $title; ?>
+				<?php
+				foreach ($services as $service)
+				{
+					echo "<a href=\"" . url::base() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
+				}
+				?>
+				</h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
 					<ul class="tabset">
 						<li><a href="?type=1" <?php if ($type == '1') echo "class=\"active\""; ?>>Inbox</a></li>
-						<li><a href="?type=2" <?php if ($type == '2') echo "class=\"active\""; ?>>Outbox</a></li>
+						<?php
+						if ($service_id == 1)
+						{
+							?><li><a href="?type=2" <?php if ($type == '2') echo "class=\"active\""; ?>>Outbox</a></li><?php
+						}
+						?>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -87,6 +99,7 @@
 									$message_from = $message->message_from;
 									$incident_id = $message->incident_id;
 									$message_description = $message->message;
+									$message_detail = $message->message_detail;
 									$message_date = date('Y-m-d', strtotime($message->message_date));
 									?>
 									<tr>
@@ -94,22 +107,29 @@
 										<td class="col-2">
 											<div class="post">
 												<p><?php echo $message_description; ?></p>
-												<div id="replies">
-													
-												</div>
-												<a href="javascript:showReply('reply_<?php echo $message_id; ?>')" class="more">+Reply</a>
-												<div id="reply_<?php echo $message_id; ?>" class="reply">
-													<?php print form::open(url::base() . 'admin/messages/send/',array('id' => 'newreply_' . $message_id,
-													 	'name' => 'newreply_' . $message_id)); ?>
-													<div class="reply_can"><a href="javascript:cannedReply('1', 'message_<?php echo $message_id; ?>')">+Request Location</a>&nbsp;&nbsp;&nbsp;<a href="javascript:cannedReply('2', 'message_<?php echo $message_id; ?>')">+Request More Information</a></div>
-													<div id="replyerror_<?php echo $message_id; ?>" class="reply_error"></div>
-													<div class="reply_input"><?php print form::input('message_' .  $message_id, '', ' class="text long2" onkeyup="limitChars(this.id, \'160\', \'replyleft_' . $message_id . '\')" '); ?></div>
-													<div class="reply_input"><a href="javascript:sendMessage('<?php echo $message_id; ?>' , 'sending_<?php echo $message_id; ?>')" title="Submit Message"><img src="<?php echo url::base() ?>media/img/admin/btn-send.gif" alt="Submit" border="0" /></a></div>
-													<div class="reply_input" id="sending_<?php echo $message_id; ?>"></div>
-													<div style="clear:both"></div>
-													<?php print form::close(); ?>
-													<div id="replyleft_<?php echo $message_id; ?>" class="replychars"></div>
-												</div>
+												<?php
+												if ($service_id == 1)
+												{
+													?>
+													<div id="replies">
+
+													</div>
+													<a href="javascript:showReply('reply_<?php echo $message_id; ?>')" class="more">+Reply</a>
+													<div id="reply_<?php echo $message_id; ?>" class="reply">
+														<?php print form::open(url::base() . 'admin/messages/send/',array('id' => 'newreply_' . $message_id,
+														 	'name' => 'newreply_' . $message_id)); ?>
+														<div class="reply_can"><a href="javascript:cannedReply('1', 'message_<?php echo $message_id; ?>')">+Request Location</a>&nbsp;&nbsp;&nbsp;<a href="javascript:cannedReply('2', 'message_<?php echo $message_id; ?>')">+Request More Information</a></div>
+														<div id="replyerror_<?php echo $message_id; ?>" class="reply_error"></div>
+														<div class="reply_input"><?php print form::input('message_' .  $message_id, '', ' class="text long2" onkeyup="limitChars(this.id, \'160\', \'replyleft_' . $message_id . '\')" '); ?></div>
+														<div class="reply_input"><a href="javascript:sendMessage('<?php echo $message_id; ?>' , 'sending_<?php echo $message_id; ?>')" title="Submit Message"><img src="<?php echo url::base() ?>media/img/admin/btn-send.gif" alt="Submit" border="0" /></a></div>
+														<div class="reply_input" id="sending_<?php echo $message_id; ?>"></div>
+														<div style="clear:both"></div>
+														<?php print form::close(); ?>
+														<div id="replyleft_<?php echo $message_id; ?>" class="replychars"></div>
+													</div>
+													<?php
+												}
+												?>
 											</div>
 											<ul class="info">
 												<li class="none-separator">From: <strong><?php echo $message_from; ?></strong>

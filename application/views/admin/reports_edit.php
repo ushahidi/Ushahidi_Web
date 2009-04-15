@@ -57,11 +57,11 @@
 						<div class="f-col">
 							<?php if ($show_messages) { ?>
 							<div class="row">
-								<h4 style="margin:0;padding:0;"><a href="#" id="messages_toggle" class="show-messages">Show SMS Messages</a>&nbsp;</h4>
+								<h4 style="margin:0;padding:0;"><a href="#" id="messages_toggle" class="show-messages">Show Messages</a>&nbsp;</h4>
 								<!--messages table goes here-->
 			                    <div id="show_messages">
 									<?php
-									foreach ($allmessages as $message) {
+									foreach ($all_messages as $message) {
 										echo "<div class=\"message\">";
 										echo "<strong><u>" . $message->message_from . "</u></strong> - ";
 										echo $message->message;

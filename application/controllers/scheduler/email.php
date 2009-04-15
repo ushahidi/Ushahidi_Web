@@ -93,8 +93,8 @@ class Email_Controller extends Scheduler_Controller
     		$email->reporter_id = $reporter_id;
     		$email->message_from = $message['from'];
     		$email->message_to = null;
-    		$email->message_subject = $message['subject'];
-			$email->message = $message['body'];
+    		$email->message = $message['subject'];
+			$email->message_detail = $message['body'];
     		$email->message_type = 1; // Inbox
     		$email->message_date = $message['date'];
     		$email->service_messageid = null;
