@@ -5,7 +5,11 @@ RewriteEngine On
 RewriteBase /ushahidi
 
 # Protect application and system files from being viewed
-# RewriteRule ^(application|modules|system) - [F,L]
+RewriteRule ^(application|modules|system) - [F,L]
+
+# Prevent schedulers from being accessed remotely
+RewriteCond %{REMOTE_ADDR} !^127.0.0.1$
+RewriteRule ^.*/scheduler/.*$ - [F,L]
 
 # Allow any files or directories that exist to be displayed directly
 RewriteCond %{REQUEST_FILENAME} !-f
