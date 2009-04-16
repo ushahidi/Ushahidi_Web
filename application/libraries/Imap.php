@@ -58,10 +58,6 @@ class Imap_Core {
 			    $fromaddress = $object->mailbox . "@" . $object->host;
 			}
 			$subject = $this->_mime_decode($header->subject);
-			
-			// Get Message Unique ID in case mail box changes 
-			// in the middle of this operation
-			$message_id = imap_uid($this->imap_stream, $msgs[$i]);
 
 			$structure = imap_fetchstructure($this->imap_stream, $msgs[$i]);
 
@@ -73,18 +69,18 @@ class Imap_Core {
 
 					if ($part->subtype == 'PLAIN')
 					{
-						$body = imap_fetchbody($this->imap_stream, $message_id, $j+1);
+						$body = imap_fetchbody($this->imap_stream, $msgs[$i], $j+1);
 					}
 				}
 			}
 			else {
-				$body = imap_body($this->imap_stream, $message_id);
+				$body = imap_body($this->imap_stream, $msgs[$i]);
 			}
 
 			// Convert quoted-printable strings (RFC2045)
 			$body = imap_qprint($body);
 			
-			array_push($messages, array('msg_no' => $message_id,
+			array_push($messages, array('msg_no' => $msgs[$i],
 										'date' => $date,
 										'from' => $fromname,
 										'email' => $fromaddress,
@@ -92,7 +88,7 @@ class Imap_Core {
 										'body' => $body));
 										
 			// Mark Message As Read
-			imap_setflag_full($this->imap_stream, $message_id, "\\Seen");
+			imap_setflag_full($this->imap_stream, $msgs[$i], "\\Seen");
 		}
 				
 		return $messages;
