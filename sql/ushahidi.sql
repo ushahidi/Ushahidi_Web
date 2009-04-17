@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 0.1
+-- version 2
 -- http://www.ushahidi.com
 
 
@@ -559,6 +559,9 @@ CREATE TABLE IF NOT EXISTS `organization` (
   `organization_name` varchar(255) default NULL,
   `organization_description` longtext default NULL,
   `organization_website` varchar(255) default NULL,
+  `organization_email` varchar(120) default NULL,
+  `organization_phone1` varchar(50) default NULL,
+  `organization_phone2` varchar(50) default NULL,
   `organization_address` varchar(255) default NULL,
   `organization_country` varchar(100) default NULL,
   `organization_active` tinyint(4) NOT NULL default '1',
@@ -1005,7 +1008,8 @@ CREATE TABLE IF NOT EXISTS `scheduler` (
 INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_weekday`, `scheduler_day`, `scheduler_hour`, `scheduler_minute`, `scheduler_controller`, `scheduler_active`) VALUES
 (1, 'Feeds', 0, -1, -1, -1, 0, 'feeds', 1),
 (2, 'Alerts', 0, -1, -1, -1, -1, 'alerts', 1),
-(3, 'Twitter', 0, -1, -1, -1, -1, 'twitter', 1);
+(3, 'Email', 0, -1, -1, -1, 0, 'email', 1),
+(4, 'Twitter', 0, -1, -1, -1, 0, 'twitter', 1);
 
 -- --------------------------------------------------------
 

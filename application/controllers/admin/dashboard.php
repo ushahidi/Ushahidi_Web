@@ -55,6 +55,7 @@ class Dashboard_Controller extends Admin_Controller
 			$message_count = ORM::factory('message')
 				->with('reporter')
 				->where('service_id', $service->id)
+				->where('message_type', '1')
 				->count_all();
 			$message_services[] = array(
 				'id' => $service->id,
