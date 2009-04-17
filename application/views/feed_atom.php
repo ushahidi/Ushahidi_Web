@@ -13,7 +13,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-
 <?php echo "<?xml version=\"1.0\"?>"; ?>
 <feed xmlns="http://www.w3.org/2005/Atom"<?php if(isset($georss)) echo ' xmlns:georss="http://www.georss.org/georss"';?>>
   <title type="text"><?php echo $feed_title; ?></title>
@@ -36,7 +35,7 @@ foreach ($items as $item) { ?>
         <?php echo $item['description']; ?>
       </div>
     </content>
-<?php if(isset($item['point'])) echo "  <georss:point>".$item['point'][0].' '.$item['point'][1].'</georss:point>'; ?>
+<?php if(isset($item['point'])) echo "  <georss:point>".$item['point'][0]." ".$item['point'][1]."</georss:point>\n"; ?>
   </entry>	<?php 
 	}	?>
 </feed>

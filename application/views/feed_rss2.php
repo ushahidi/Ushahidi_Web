@@ -13,7 +13,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-
 <?php echo "<?xml version=\"1.0\"?>"; ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"<?php if(isset($georss)) echo ' xmlns:georss="http://www.georss.org/georss"';?>>
 	<channel>
@@ -31,8 +30,7 @@
 			<description><![CDATA[<?php echo $item['description']; ?>]]></description>
 			<pubDate><?php echo gmdate("D, d M Y H:i:s T", strtotime($item['date'])); ?></pubDate>
 			<guid><?php if(isset($item['guid'])) echo $item['guid']; else echo $item['link'] ?></guid>
-<?php if(isset($item['point'])) echo "\t\t\t<georss:point>".$item['point'][0].' '.$item['point'][1].'</georss:point>'; ?>
-
+<?php if(isset($item['point'])) echo "\t\t\t<georss:point>".$item['point'][0]." ".$item['point'][1]."</georss:point>\n"; ?>
 		</item><?php 
 		}	?>
 
