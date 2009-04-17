@@ -372,8 +372,7 @@ class Messages_Controller extends Admin_Controller
 			foreach($hashtags as $hashtag){
 				$page = 1;
 				$have_results = TRUE; //just starting us off as true, although there may be no results
-				//while($have_results == TRUE && $page <= 5){ //This loop is for pagination of rss results
-				while($have_results == TRUE && $page <= 1){ //This loop is for pagination of rss results
+				while($have_results == TRUE && $page <= 5){ //This loop is for pagination of rss results
 				$hashtag = trim(str_replace('#','',$hashtag));
 					//$twitter_url = 'http://search.twitter.com/search.atom?q=%23'.$hashtag.'&page='.$page;
 					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&page='.$page;
@@ -468,7 +467,7 @@ class Messages_Controller extends Admin_Controller
 
 	/**
 	* Adds tweets in JSON format to the database and saves the sender as a new
-	* Reporter if they don't already exist
+	* Reporter if they don't already exist unless the message is a TWitter Search result
     * @param string $data - Twitter JSON results
     */
 
@@ -482,6 +481,10 @@ class Messages_Controller extends Admin_Controller
 		$tweets = json_decode($data, false);
 		if (!$tweets) {
 			return false;
+		}
+		
+		if (array_key_exists('results', $tweets)) {
+			$tweets = $tweets->{'results'};
 		}
 
 		foreach($tweets as $tweet) {
@@ -528,7 +531,6 @@ class Messages_Controller extends Admin_Controller
 	    		}
 	    	}
 
-			die(var_dump($tweet));
 			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
 			                           ->find_all()) == 0) {
 				// Save Tweet as Message
