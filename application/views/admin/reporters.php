@@ -4,7 +4,6 @@ service_account			<div class="bg">
 					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
 					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
 					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a>
-					<a href="<?php echo url::base() . 'admin/manage/levels' ?>">Reporter Levels</a>
 					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>" class="active">Reporters</a>
 					<span>(<a href="#add">Add New</a>)</span>
 				</h2>
@@ -141,33 +140,33 @@ service_account			<div class="bg">
 							name="reporter_id" value="<?php echo $form['reporter_id']; ?>" />
 						<input type="hidden" name="action" 
 							id="action" value="a"/>							
-						<div class="tab_form_item2">
+						<div class="tab_form_item">
 							<strong>Service:</strong><br />
 							<?php print form::dropdown('service_id', $service_array, ''); ?>
 						</div>
-						<div class="tab_form_item2">
+						<!--div class="tab_form_item2">
 							<strong>Service User ID:</strong><br />
-							<?php print form::input('service_userid', $form['service_userid'], ' class="text long"'); ?>
+							<?php //print form::input('service_userid', $form['service_userid'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
 							<strong>Service Username:</strong><br />
-							<?php print form::input('service_account', $form['service_account'], ' class="text long"'); ?>
-						</div>
-						<div class="tab_form_item2">
+							<?php //print form::input('service_account', $form['service_account'], ' class="text long"'); ?>
+						</div-->
+						<div class="tab_form_item">
 							<strong>Reporter Level:</strong><br />
 							<?php print form::dropdown('reporter_level', $level_array, ''); ?>
 						</div>
-						<div class="tab_form_item2">
+						<!--div class="tab_form_item2">
 							<strong>Reporter Firstname:</strong><br />
-							<?php print form::input('reporter_first', $form['reporter_first'], ' class="text long"'); ?>
+							<?php //print form::input('reporter_first', $form['reporter_first'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
 							<strong>Reporter Lastname:</strong><br />
-							<?php print form::input('reporter_last', $form['reporter_last'], ' class="text long"'); ?>
+							<?php //print form::input('reporter_last', $form['reporter_last'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
 							<strong>Reporter Email:</strong><br />
-							<?php print form::input('reporter_email', $form['reporter_email'], ' class="text long"'); ?>
+							<?php //print form::input('reporter_email', $form['reporter_email'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
 							<strong>Phone:</strong><br />
@@ -175,12 +174,12 @@ service_account			<div class="bg">
 						</div>
 						<div class="tab_form_item2">
 							<strong>Reporter IP Address:</strong><br />
-							<?php print form::input('reporter_ip', $form['reporter_ip'], ' class="text long"'); ?>
+							<?php //print form::input('reporter_ip', $form['reporter_ip'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
 							<strong>Reporter Date:</strong><br />
-							<?php print form::input('reporter_date', $form['reporter_date'], ' class="text long"'); ?>
-						</div>
+							<?php //print form::input('reporter_date', $form['reporter_date'], ' class="text long"'); ?>
+						</div-->
 						<div class="tab_form_item">
 							&nbsp;<br />
 							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />

@@ -543,15 +543,15 @@ class Manage_Controller extends Admin_Controller
 				{		
 					// SAVE Reporter    
 					$reporter->service_id = $post->service_id;
-					$reporter->service_userid = $post->service_userid;
-					$reporter->service_account = $post->service_account;
+					/*$reporter->service_userid = $post->service_userid;
+					$reporter->service_account = $post->service_account;*/
 					$reporter->reporter_level = $post->reporter_level;
-					$reporter->reporter_first = $post->reporter_first;
+					/*$reporter->reporter_first = $post->reporter_first;
 					$reporter->reporter_last = $post->reporter_last;
 					$reporter->reporter_email = $post->reporter_email;
 					$reporter->reporter_phone = $post->reporter_phone;
 					$reporter->reporter_ip = $post->reporter_ip;
-					$reporter->reporter_date = $post->reporter_date;
+					$reporter->reporter_date = $post->reporter_date;*/
 					
 					$reporter->save();
 					$form_saved = TRUE;
