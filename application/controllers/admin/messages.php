@@ -67,10 +67,11 @@ class Messages_Controller extends Admin_Controller
 
 		// Pagination
 		$pagination = new Pagination(array(
-			'query_string'    => 'page',
+			'query_string'   => 'page',
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
 			'total_items'    => ORM::factory('message')
 				->with('reporter')
+				->where($filter)
 				->where('service_id', $service_id)
 				->count_all()
 		));
@@ -78,6 +79,7 @@ class Messages_Controller extends Admin_Controller
 		$messages = ORM::factory('message')
 			->with('reporter')
 			->where('service_id', $service_id)
+			->where($filter)
 			->orderby('message_date','desc')
 			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
@@ -173,6 +175,7 @@ class Messages_Controller extends Admin_Controller
 							$newmessage->message_to = $sms_to;
 							$newmessage->message = $post->message;
 							$newmessage->message_type = 2;			// This is an outgoing message
+							$newmessage->reporter_id = $reply_to->reporter_id;
 							$newmessage->message_date = date("Y-m-d H:i:s",time());
 							$newmessage->save();
 
@@ -272,7 +275,7 @@ class Messages_Controller extends Admin_Controller
 	        }
         	$extradir = '';
         }
-        url::redirect('admin/messages/'.$extradir);
+        // url::redirect('admin/messages/'.$extradir);
 
     }
 

@@ -21,12 +21,17 @@ $config['port'] = 25;
 
 /**
  * Config Mail Server
+ * Examples:
+ * - mail.yourwebsite.com
+ * - imap.gmail.com
+ * - pop.gmail.com
  */
 $config['server'] = "";
 
 
 /**
  * Config Mail Server Type
+ * Examples:
  * - pop3
  * - imap
  */
