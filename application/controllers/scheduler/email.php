@@ -24,10 +24,12 @@ class Email_Controller extends Scheduler_Controller
 	{		
 		$check_email = new Imap;
 		$messages = $check_email->get_messages();
-        $this->add_email($messages);
-
+		
 		// Close Connection
 		$check_email->close();
+		
+		// Add Messages
+        $this->add_email($messages);
     }
 
 

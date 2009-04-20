@@ -48,7 +48,11 @@ class Imap_Core {
 
 		for ($i = 0; $i < $no_of_msgs; $i++) 
 		{
-			$header = imap_header($this->imap_stream, $msgs[$i]);
+			// Get Message Unique ID in case mail box changes 
+			// in the middle of this operation
+			$message_id = imap_uid($this->imap_stream, $msgs[$i]);
+			
+			$header = imap_header($this->imap_stream, $message_id);
 			$date = date($date_format, $header->udate);
 			$from = $header->from;
 			$fromname = "";
@@ -60,16 +64,16 @@ class Imap_Core {
 				if (isset($object->personal))
 					$fromname = $object->personal;
 				$fromaddress = $object->mailbox."@".$object->host;
+				if ($fromname == "")
+				{ // In case from object doesn't have Name
+					$fromname = $fromaddress;
+				}
 			}
 
 			if (isset($header->subject))
 				$subject = $this->_mime_decode($header->subject);
-			
-			// Get Message Unique ID in case mail box changes 
-			// in the middle of this operation
-			$message_id = imap_uid($this->imap_stream, $msgs[$i]);
 
-			$structure = imap_fetchstructure($this->imap_stream, $msgs[$i]);
+			$structure = imap_fetchstructure($this->imap_stream, $message_id);
 
 			if (!empty($structure->parts))
 			{
@@ -100,7 +104,7 @@ class Imap_Core {
 			// Mark Message As Read
 			imap_setflag_full($this->imap_stream, $message_id, "\\Seen");
 		}
-				
+		
 		return $messages;
 	}
 

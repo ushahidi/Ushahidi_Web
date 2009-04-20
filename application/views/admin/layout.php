@@ -74,7 +74,7 @@
 			<div class="info-nav">
 				<h3>Get help</h3>
 				<ul>
-					<li ><a href="#">Wiki</a></li>
+					<li ><a href="http://wiki.ushahididev.com/">Wiki</a></li>
 					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha">FAQ's</a></li>
 					<li><a href="http://forums.ushahidi.com/">Forum</a></li>
 				</ul>
