@@ -20,7 +20,6 @@
 					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
 					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
 					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a>
-					<a href="<?php echo url::base() . 'admin/manage/levels' ?>">Reporter Levels</a>
 					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
 				</h2>
 				<?php

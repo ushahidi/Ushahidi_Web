@@ -335,7 +335,7 @@ class Reports_Controller extends Admin_Controller
 			$service_id = "";
 			$message = ORM::factory('message', $message_id);
 			
-			if ($message->loaded == true) {
+			if ($message->loaded == true && $message->message_type == 1) {
 				
 				$service_id = $message->reporter->service_id;
 				
@@ -352,7 +352,6 @@ class Reports_Controller extends Admin_Controller
 					$incident_description .= "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
 					 	. $message->message_detail;
 				}
-				$form['incident_description'] = $incident_description;
 				
 				// Retrieve Last 5 Messages From this account
 				$this->template->content->all_messages = ORM::factory('message')
@@ -772,13 +771,26 @@ class Reports_Controller extends Admin_Controller
 			}
 			else
 			{
+				$reporter = $message->reporter;
 				$form['locale'] = Kohana::config('locale.language');
 				$form['latitude'] = Kohana::config('settings.default_lat');
 				$form['longitude'] = Kohana::config('settings.default_lon');
 				$form['country_id'] = Kohana::config('settings.default_country');
-				$form['incident_date'] = date("m/d/Y",time());
 				// initialize custom field array
 				$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
+				if ($reporter->reporter_level == 5 ) {
+					$form['incident_verified'] = 1;
+				}
+				$form['incident_description'] = $incident_description;
+				$date_array = date_parse($message->message_date);
+				
+				$form['incident_date'] = $date_array['month']. '/'. 
+				                         $date_array['day'].'/'.$date_array['year'];
+				$form['incident_hour'] = $date_array['hour'];
+				$form['incident_minute'] = $date_array['minute'];
+				$form['person_first'] = $reporter->reporter_first;
+				$form['person_last'] = $reporter->reporter_last;
+				
 			}
 		}
 	

@@ -67,10 +67,11 @@ class Messages_Controller extends Admin_Controller
 
 		// Pagination
 		$pagination = new Pagination(array(
-			'query_string'    => 'page',
+			'query_string'   => 'page',
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
 			'total_items'    => ORM::factory('message')
 				->with('reporter')
+				->where($filter)
 				->where('service_id', $service_id)
 				->count_all()
 		));
@@ -78,6 +79,7 @@ class Messages_Controller extends Admin_Controller
 		$messages = ORM::factory('message')
 			->with('reporter')
 			->where('service_id', $service_id)
+			->where($filter)
 			->orderby('message_date','desc')
 			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
@@ -173,6 +175,7 @@ class Messages_Controller extends Admin_Controller
 							$newmessage->message_to = $sms_to;
 							$newmessage->message = $post->message;
 							$newmessage->message_type = 2;			// This is an outgoing message
+							$newmessage->reporter_id = $reply_to->reporter_id;
 							$newmessage->message_date = date("Y-m-d H:i:s",time());
 							$newmessage->save();
 
@@ -272,7 +275,7 @@ class Messages_Controller extends Admin_Controller
 	        }
         	$extradir = '';
         }
-        url::redirect('admin/messages/'.$extradir);
+        // url::redirect('admin/messages/'.$extradir);
 
     }
 
@@ -373,15 +376,17 @@ class Messages_Controller extends Admin_Controller
 				$page = 1;
 				$have_results = TRUE; //just starting us off as true, although there may be no results
 				while($have_results == TRUE && $page <= 5){ //This loop is for pagination of rss results
-					$hashtag = trim(str_replace('#','',$hashtag));
-					$twitter_url = 'http://search.twitter.com/search.atom?q=%23'.$hashtag.'&page='.$page;
+				$hashtag = trim(str_replace('#','',$hashtag));
+					//$twitter_url = 'http://search.twitter.com/search.atom?q=%23'.$hashtag.'&page='.$page;
+					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&page='.$page;
 					$curl_handle = curl_init();
 					curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
 					curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2); //Since Twitter is down a lot, set timeout to 2 secs
 					curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
 					$buffer = curl_exec($curl_handle);
 					curl_close($curl_handle);
-					$have_results = $this->add_tweets($buffer,$hashtag); //if FALSE, we will drop out of the loop
+					//$have_results = $this->add_tweets($buffer,$hashtag); //if FALSE, we will drop out of the loop
+					$have_results = $this->add_json_tweets($buffer); //if FALSE, we will drop out of the loop
 					$page++;
 				}
 			}
@@ -465,7 +470,7 @@ class Messages_Controller extends Admin_Controller
 
 	/**
 	* Adds tweets in JSON format to the database and saves the sender as a new
-	* Reporter if they don't already exist
+	* Reporter if they don't already exist unless the message is a TWitter Search result
     * @param string $data - Twitter JSON results
     */
 
@@ -474,50 +479,60 @@ class Messages_Controller extends Admin_Controller
 		$services = new Service_Model();
     	$service = $services->where('service_name', 'Twitter')->find();
 	   	if (!$service) {
- 		    return;
+ 		    return false;
 	    }
 		$tweets = json_decode($data, false);
 		if (!$tweets) {
-			return;
+			return false;
+		}
+		
+		if (array_key_exists('results', $tweets)) {
+			$tweets = $tweets->{'results'};
 		}
 
 		foreach($tweets as $tweet) {
-			$tweet_user = $tweet->{'user'};
-
-    		$reporter_model = new Reporter_Model();
-
+			$tweet_user = null;
+			if (array_key_exists('user', $tweet)) {
+				$tweet_user = $tweet->{'user'};
+			}
+			
+			//XXX For Twitter Search, should we curl Twitter for a full tweet?
+			
     		$reporter = null;
-    		$reporters = $reporter_model->where('service_id', $service->id)->
-			             where('service_userid', $tweet_user->{'id'})->
-			             find_all();
-			if (count($reporters) < 1) {
-				// Add new reporter
-	    		$names = split(' ', $tweet_user->{'name'}, 2);
-	    		$last_name = '';
-	    		if (count($names) == 2) {
-	    			$last_name = $names[1];
+    		if ($tweet_user) {
+	    		$reporter_model = new Reporter_Model();
+				$reporters = $reporter_model->where('service_id', $service->id)->
+				             where('service_userid', $tweet_user->{'id'})->
+				             find_all();
+				if (count($reporters) < 1) {
+					// Add new reporter
+		    		$names = split(' ', $tweet_user->{'name'}, 2);
+		    		$last_name = '';
+		    		if (count($names) == 2) {
+		    			$last_name = $names[1];
+		    		}
+
+		    		// get default reporter level (Untrusted)
+		    		$levels = new Level_Model();
+			    	$default_level = $levels->where('level_weight', 0)->find();
+
+		    		$reporter = new Reporter_Model();
+		    		$reporter->service_id       = $service->id;
+		    		$reporter->service_userid   = $tweet_user->{'id'};
+		    		$reporter->service_account  = $tweet_user->{'screen_name'};
+		    		$reporter->reporter_level   = $default_level;
+		    		$reporter->reporter_first   = $names[0];
+		    		$reporter->reporter_last    = $last_name;
+		    		$reporter->reporter_email   = null;
+		    		$reporter->reporter_phone   = null;
+		    		$reporter->reporter_ip      = null;
+		    		$reporter->reporter_date    = date('Y-m-d');
+		    		$reporter->save();
+	    		} else {
+	    			// reporter already exists
+	    			$reporter = $reporters[0];
 	    		}
-
-	    		// get default reporter level (Untrusted)
-	    		$levels = new Level_Model();
-		    	$default_level = $levels->where('level_weight', 0)->find();
-
-	    		$reporter = new Reporter_Model();
-	    		$reporter->service_id       = $service->id;
-	    		$reporter->service_userid   = $tweet_user->{'id'};
-	    		$reporter->service_account  = $tweet_user->{'screen_name'};
-	    		$reporter->reporter_level   = $default_level;
-	    		$reporter->reporter_first   = $names[0];
-	    		$reporter->reporter_last    = $last_name;
-	    		$reporter->reporter_email   = null;
-	    		$reporter->reporter_phone   = null;
-	    		$reporter->reporter_ip      = null;
-	    		$reporter->reporter_date    = date('Y-m-d');
-	    		$reporter->save();
-    		} else {
-    			// reporter already exists
-    			$reporter = $reporters[0];
-    		}
+	    	}
 
 			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
 			                           ->find_all()) == 0) {
@@ -526,10 +541,21 @@ class Messages_Controller extends Admin_Controller
 	    		$message->parent_id = 0;
 	    		$message->incident_id = 0;
 	    		$message->user_id = 0;
-	    		$message->reporter_id = $reporter->id;
-	    		$message->message_from = $tweet_user->{'screen_name'};
+	    		
+	    		if ($reporter) {
+	    			$message->reporter_id = $reporter->id;
+	    		} else {
+	    			$message->reporter_id = 0;
+	    		}
+	    		
+		    	if ($tweet_user) { 
+		    		$message->message_from = $tweet_user->{'screen_name'};
+	    		} elseif (array_key_exists('from_user', $tweet)) { // Twitter Search tweets
+		    		$message->message_from = $tweet->{'from_user'};
+	    		}
 	    		$message->message_to = null;
 	    		$message->message = $tweet->{'text'};
+	    		$message->message_detail = null;
 	    		$message->message_type = 1; // Inbox
 	    		$tweet_date = date("Y-m-d H:i:s",strtotime($tweet->{'created_at'}));
 	    		$message->message_date = $tweet_date;
@@ -537,6 +563,7 @@ class Messages_Controller extends Admin_Controller
 	    		$message->save();
     		}
     	}
+    	return true;
 	}
 
 	/**

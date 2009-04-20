@@ -29,36 +29,64 @@ class Frontlinesms_Controller extends Controller
 		}
 		
 		if (isset($_GET['m'])) {
-			$message = $_GET['m'];
+			$message_description = $_GET['m'];
 		}
 		
-		if (!empty($frontlinesms_key) && !empty($message_from) && !empty($message))
+		if (!empty($frontlinesms_key) && !empty($message_from) && !empty($message_description))
 		{
 			// Is this a valid FrontlineSMS Key?
 			$keycheck = ORM::factory('settings', 1)->where('frontlinesms_key', $frontlinesms_key)->find();
 			if ($keycheck->loaded==true)
 			{
-				// Is this cell phone number already in the DB?
-				// If so, use as parent_id
-				$parent = ORM::factory('message')->where('message_from', $message_from)->where('parent_id', 0)->find();
-				if ($parent->loaded==true)
+				$services = new Service_Model();
+		    	$service = $services->where('service_name', 'SMS')->find();
+			   	if (!$service) {
+		 		    return;
+			    }
+			
+				$reporter_check = ORM::factory('reporter')
+					->where('service_id', $service->id)
+					->where('service_account', $message_from)
+					->find();
+
+				if ($reporter_check->loaded == true)
 				{
-					$newmessage = ORM::factory('message');
-					$newmessage->parent_id = $parent->id;
-					$newmessage->message_from = $message_from;
-					$newmessage->message = $message;
-					$newmessage->message_date = date("Y-m-d H:i:s",time());
-					$newmessage->save();
+					$reporter_id = $reporter_check->id;
 				}
-				// Cell phone number not in DB
 				else
 				{
-					$newmessage = ORM::factory('message');
-					$newmessage->message_from = $message_from;
-					$newmessage->message = $message;
-					$newmessage->message_date = date("Y-m-d H:i:s",time());
-					$newmessage->save();
+					// get default reporter level (Untrusted)
+		    		$levels = new Level_Model();
+			    	$default_level = $levels->where('level_weight', 0)->find();
+
+		    		$reporter = new Reporter_Model();
+		    		$reporter->service_id       = $service->id;
+		    		$reporter->service_userid   = null;
+		    		$reporter->service_account  = $message_from;
+		    		$reporter->reporter_level   = $default_level;
+		    		$reporter->reporter_first   = null;
+		    		$reporter->reporter_last    = null;
+		    		$reporter->reporter_email   = null;
+		    		$reporter->reporter_phone   = null;
+		    		$reporter->reporter_ip      = null;
+		    		$reporter->reporter_date    = date('Y-m-d');
+		    		$reporter->save();
+					$reporter_id = $reporter->id;
 				}
+				
+				// Save Message
+	    		$message = new Message_Model();
+	    		$message->parent_id = 0;
+	    		$message->incident_id = 0;
+	    		$message->user_id = 0;
+	    		$message->reporter_id = $reporter_id;
+	    		$message->message_from = $message_from;
+	    		$message->message_to = null;
+	    		$message->message = $message_description;
+	    		$message->message_type = 1; // Inbox
+	    		$message->message_date = date("Y-m-d H:i:s",time());
+	    		$message->service_messageid = null;
+	    		$message->save();
 			}
 		}
 	}

@@ -49,7 +49,7 @@
 						{
 							$incident_id = $incident->id;
 							$incident_title = $incident->incident_title;
-							$incident_description = substr($incident->incident_description, 0, 150);
+							$incident_description = text::limit_chars($incident->incident_description, 150, '...');
 							$incident_date = $incident->incident_date;
 							$incident_date = date('g:i A', strtotime($incident->incident_date));
 							$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
@@ -99,7 +99,7 @@
 									<li class="last"><a href="#" class="<?php echo $submit_mode; ?>">SOURCE:</a></li>
 								</ul>
 								<h4><strong><?php echo $incident_date; ?></strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo $incident_title; ?></a></h4>
-								<p><?php echo $incident_description; ?>...</p>
+								<p><?php echo $incident_description; ?></p>
 							</div>
 							<?php
 						}
@@ -117,7 +117,7 @@
 								<strong><?php echo $reports_total; ?></strong>
 								<ul>
 									<li><a href="<?php echo url::base() . 'admin/reports?status=a' ?>"> Unapproved</a><strong>(<?php echo $reports_unapproved; ?>)</strong></li>
-									<li><a href="<?php echo url::base() . 'admin/reports?status=v' ?>"> Unverified</a><strong>(<?php echo $reports_unverified; ?>)</strong></li>
+									
 								</ul>
 							</li>
 							<li>
@@ -136,8 +136,11 @@
 								<a href="<?php echo url::base() . 'admin/messages' ?>" class="messages">Messages</a>
 								<strong><?php echo $message_count; ?></strong>
 								<ul>
-									<li><a href="<?php echo url::base() . 'admin/messages' ?>"> SMS</a><strong>(<?php echo $message_sms_count; ?>)</strong></li>
-									<li><a href="<?php echo url::base() . 'admin/messages/twitter' ?>"> Twitter</a><strong>(<?php echo $message_twitter_count; ?>)</strong></li>
+									<?php
+									foreach ($message_services as $service) {
+										echo "<li><a href=\"".url::base() . 'admin/messages/index/'.$service['id']."\">".$service['name']."</a><strong>(".$service['count'].")</strong></li>";
+									}
+									?>
 								</ul>
 							</li>
 						</ul>
@@ -156,7 +159,7 @@
 						{
 							$feed_id = $feed->id;
 							$feed_title = $feed->item_title;
-							$feed_description = text::limit_chars(strip_tags($feed->item_description), 100, '...', True);
+							$feed_description = text::limit_chars(strip_tags($feed->item_description), 150, '...', True);
 							$feed_link = $feed->item_link;
 							$feed_date = date('M j Y', strtotime($feed->item_date));
 							$feed_source = "NEWS";

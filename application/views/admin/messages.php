@@ -97,10 +97,12 @@
 								{
 									$message_id = $message->id;
 									$message_from = $message->message_from;
+									$message_to = $message->message_to;
 									$incident_id = $message->incident_id;
 									$message_description = $message->message;
 									$message_detail = $message->message_detail;
 									$message_date = date('Y-m-d', strtotime($message->message_date));
+									$message_type = $message->message_type;
 									?>
 									<tr>
 										<td class="col-1"><input name="message_id[]" id="message_id" value="<?php echo $message_id; ?>" type="checkbox" class="check-box"/></td>
@@ -108,7 +110,7 @@
 											<div class="post">
 												<p><?php echo $message_description; ?></p>
 												<?php
-												if ($service_id == 1)
+												if ($service_id == 1 && $message_type == 1)
 												{
 													?>
 													<div id="replies">
@@ -132,17 +134,26 @@
 												?>
 											</div>
 											<ul class="info">
-												<li class="none-separator">From: <strong><?php echo $message_from; ?></strong>
+												<?php
+												if ($message_type == 2)
+												{
+													?><li class="none-separator">To: <strong><?php echo $message_to; ?></strong><?php
+												}
+												else
+												{
+													?><li class="none-separator">From: <strong><?php echo $message_from; ?></strong><?php
+												}
+												?>
 											</ul>
 										</td>
 										<td class="col-3"><?php echo $message_date; ?></td>
 										<td class="col-4">
 											<ul>
 												<?php
-												if ($incident_id != 0) {
+												if ($incident_id != 0 && $message_type != 2) {
 													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
 												}
-												else
+												elseif ($message_type != 2)
 												{
 													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $message_id ."\">Create Report?</a></li>";
 												}

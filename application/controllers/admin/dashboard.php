@@ -47,17 +47,31 @@ class Dashboard_Controller extends Admin_Controller
 		// Total Incoming Media
 		$this->template->content->incoming_media = ORM::factory('feed_item')->count_all();
 		
-		// Total SMS Messages
-		$this->template->content->message_sms_count = ORM::factory('message')->count_all();
+		// Messages By Service
+		$total_message_count = 0;
+		$message_services = array();
+		$services = ORM::factory('service')->find_all();
+		foreach ($services as $service) {
+			$message_count = ORM::factory('message')
+				->with('reporter')
+				->where('service_id', $service->id)
+				->where('message_type', '1')
+				->count_all();
+			$message_services[] = array(
+				'id' => $service->id,
+				'name' => $service->service_name,
+				'count' => $message_count
+				);
+			$total_message_count += $message_count;
+		}	
+		$this->template->content->message_services = $message_services;
 		
-		// Total Twitter Messages
-		$this->template->content->message_twitter_count = ORM::factory('twitter')->where('hide',0)->count_all();
+		// Total Messages
+		$this->template->content->message_count = $total_message_count;
 		
-		// Total Message Count
-		$this->template->content->message_count = $this->template->content->message_twitter_count + $this->template->content->message_sms_count;
 		
 		// Get reports for display
-		$incidents = ORM::factory('incident')->limit(3)->orderby('incident_dateadd', 'desc')->find_all();
+		$incidents = ORM::factory('incident')->limit(5)->orderby('incident_dateadd', 'desc')->find_all();
 		$this->template->content->incidents = $incidents;
 		
 		// Get Incoming Media (We'll Use NewsFeeds for now)

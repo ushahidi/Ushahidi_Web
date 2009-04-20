@@ -40,7 +40,7 @@ class Feed_Controller extends Controller
 			$item['description'] = $incident->incident_description;
 			$item['date'] = $incident->incident_date;
 			if($incident->location_id != 0 AND $incident->location->longitude AND $incident->location->latitude) 
-				$item['point'] = array($incident->location->longitude,$incident->location->latitude);
+				$item['point'] = array($incident->location->latitude,$incident->location->longitude);
 			$items[] = $item;
 		}
 

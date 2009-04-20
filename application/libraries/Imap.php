@@ -45,19 +45,25 @@ class Imap_Core {
 		$no_of_msgs = $msgs ? count($msgs) : 0;
 
 		$messages = array();
-		$fromname = "";
-		$fromaddress = "";
 
 		for ($i = 0; $i < $no_of_msgs; $i++) 
 		{
 			$header = imap_header($this->imap_stream, $msgs[$i]);
 			$date = date($date_format, $header->udate);
 			$from = $header->from;
-			foreach ($from as $id => $object) {
-			    $fromname = $object->personal;
-			    $fromaddress = $object->mailbox . "@" . $object->host;
+			$fromname = "";
+			$fromaddress = "";
+			$subject = "";
+
+			foreach ($from as $id => $object) 
+			{
+				if (isset($object->personal))
+					$fromname = $object->personal;
+				$fromaddress = $object->mailbox."@".$object->host;
 			}
-			$subject = $this->_mime_decode($header->subject);
+
+			if (isset($header->subject))
+				$subject = $this->_mime_decode($header->subject);
 			
 			// Get Message Unique ID in case mail box changes 
 			// in the middle of this operation

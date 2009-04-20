@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 0.1
+-- version 2
 -- http://www.ushahidi.com
 
 
@@ -559,6 +559,9 @@ CREATE TABLE IF NOT EXISTS `organization` (
   `organization_name` varchar(255) default NULL,
   `organization_description` longtext default NULL,
   `organization_website` varchar(255) default NULL,
+  `organization_email` varchar(120) default NULL,
+  `organization_phone1` varchar(50) default NULL,
+  `organization_phone2` varchar(50) default NULL,
   `organization_address` varchar(255) default NULL,
   `organization_country` varchar(100) default NULL,
   `organization_active` tinyint(4) NOT NULL default '1',
@@ -640,11 +643,14 @@ CREATE TABLE IF NOT EXISTS `message`
 `parent_id` BIGINT DEFAULT 0,
 `incident_id` INTEGER DEFAULT 0,
 `user_id` INT DEFAULT 0,
+`reporter_id` bigint(20) default NULL,
+`service_messageid` varchar(100) default NULL,
 `message_from` VARCHAR(100) DEFAULT NULL,
 `message_to` VARCHAR(100) DEFAULT NULL,
-`message` TEXT DEFAULT NULL,
-`message_type` TINYINT DEFAULT 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
-`message_date` DATETIME DEFAULT NULL,
+`message` TEXT default NULL,
+`message_detail` text default NULL,
+`message_type` TINYINT default 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
+`message_date` DATETIME default NULL,
 PRIMARY KEY (`id`)
 );
 
@@ -926,7 +932,8 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `alert_lat` varchar(150) default NULL,
   `alert_lon` varchar(150) default NULL,
   `alert_ip` varchar(100) default NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `uniq_alert_code` (`alert_code`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -946,7 +953,8 @@ CREATE TABLE IF NOT EXISTS `alert_sent`
 `incident_id` BIGINT NOT NULL,
 `alert_id` BIGINT NOT NULL,
 `alert_date` DATETIME NULL,
-PRIMARY KEY (`id`)
+PRIMARY KEY (`id`),
+UNIQUE KEY `uniq_incident_id` (`incident_id`)
 );
 
 --
@@ -1000,7 +1008,8 @@ CREATE TABLE IF NOT EXISTS `scheduler` (
 INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_weekday`, `scheduler_day`, `scheduler_hour`, `scheduler_minute`, `scheduler_controller`, `scheduler_active`) VALUES
 (1, 'Feeds', 0, -1, -1, -1, 0, 'feeds', 1),
 (2, 'Alerts', 0, -1, -1, -1, -1, 'alerts', 1),
-(3, 'Twitter', 0, -1, -1, -1, -1, 'twitter', 1);
+(3, 'Email', 0, -1, -1, -1, 0, 'email', 1),
+(4, 'Twitter', 0, -1, -1, -1, 0, 'twitter', 1);
 
 -- --------------------------------------------------------
 
@@ -1124,6 +1133,81 @@ CREATE TABLE IF NOT EXISTS `form_response` (
 -- Dumping data for table `form_response`
 --
 
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `level`
+--
+
+CREATE TABLE `level` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `level_title` varchar(200) default NULL,
+  `level_description` varchar(200) default NULL,
+  `level_weight` tinyint(4) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB;
+
+--
+-- Dumping data for table `level`
+--
+
+INSERT INTO `level` (`id`, `level_title`, `level_description`, `level_weight`) VALUES
+(1, 'SPAM + Delete', 'SPAM + Delete', -2),
+(2, 'SPAM', 'SPAM', -1),
+(3, 'Untrusted', 'Untrusted', 0),
+(4, 'Trusted', 'Trusted', 1),
+(5, 'Trusted + Verifiy', 'Trusted + Verify', 2);
+
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reporter`
+--
+
+CREATE TABLE `reporter` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `incident_id` bigint(20) default NULL,
+  `location_id` bigint(20) default NULL,
+  `user_id` int(11) default NULL,
+  `service_id` int(11) default NULL,
+  `service_userid` varchar(255) default NULL,
+  `service_account` varchar(255) default NULL,
+  `reporter_level` tinyint(4) default '3',
+  `reporter_first` varchar(200) default NULL,
+  `reporter_last` varchar(200) default NULL,
+  `reporter_email` varchar(120) default NULL,
+  `reporter_phone` varchar(60) default NULL,
+  `reporter_ip` varchar(50) default NULL,
+  `reporter_date` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `service`
+--
+
+CREATE TABLE `service` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `service_name` varchar(100) default NULL,
+  `service_description` varchar(255) default NULL,
+  `service_url` varchar(255) default NULL,
+  `service_api` varchar(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB;
+
+--
+-- Dumping data for table `service`
+--
+
+INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url`, `service_api`) VALUES
+(1, 'SMS', 'Text messages from phones', NULL, NULL),
+(2, 'Email', 'Text messages from phones', NULL, NULL),
+(3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL),
+(4, 'Laconica', 'Tweets tweets tweets', NULL, NULL);
 
 
 --

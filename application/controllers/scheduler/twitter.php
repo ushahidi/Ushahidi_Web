@@ -41,7 +41,7 @@ class Twitter_Controller extends Scheduler_Controller
 			->find();
 		if ($tweets->loaded == true)
 		{
-			$last_tweet_id = $tweets->service_messageid;
+			$last_tweet_id = "&since_id=" . $tweets->service_messageid;
 		}
 
 		//Perform Hashtag Search
@@ -51,16 +51,16 @@ class Twitter_Controller extends Scheduler_Controller
 			{
 				$page = 1;
 				$have_results = TRUE; //just starting us off as true, although there may be no results
-				while($have_results == TRUE && $page <= 5){ //This loop is for pagination of rss results
+				while($have_results == TRUE && $page <= 2){ //This loop is for pagination of rss results
 					$hashtag = trim(str_replace('#','',$hashtag));
-					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page.'&since_id='.$last_tweet_id;
+					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page;
 					$curl_handle = curl_init();
 					curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
-					curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,4); //Since Twitter is down a lot, set timeout to 2 secs
+					curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,4); //Since Twitter is down a lot, set timeout to 4 secs
 					curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
 					$buffer = curl_exec($curl_handle);
 					curl_close($curl_handle);
-					$have_results = $this->add_tweets($buffer); //if FALSE, we will drop out of the loop
+					$have_results = $this->add_hash_tweets($buffer); //if FALSE, we will drop out of the loop
 					$page++;
 				}
 			}
@@ -71,7 +71,7 @@ class Twitter_Controller extends Scheduler_Controller
 		$password = $settings->twitter_password;
 		if (!empty($username) && !empty($password))
 		{
-			$twitter_url = 'http://twitter.com/statuses/replies.json?since_id='.$last_tweet_id;
+			$twitter_url = 'http://twitter.com/statuses/replies.json'; //XXX '?.$last_tweet_id;
 			$curl_handle = curl_init();
 			curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
 			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,4);
@@ -79,17 +79,17 @@ class Twitter_Controller extends Scheduler_Controller
 			curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password"); //Authenticate!
 			$buffer = curl_exec($curl_handle);
 			curl_close($curl_handle);
-			$this->add_tweets($buffer);
+			$this->add_reply_tweets($buffer);
 		}
 	}
 
 
 	/**
-	* Adds tweets in JSON format to the database and saves the sender as a new
+	* Adds reply tweets in JSON format to the database and saves the sender as a new
 	* Reporter if they don't already exist
     * @param string $data - Twitter JSON results
     */
-	private function add_tweets($data)
+	private function add_reply_tweets($data)
 	{
 		$services = new Service_Model();
     	$service = $services->where('service_name', 'Twitter')->find();
@@ -100,10 +100,13 @@ class Twitter_Controller extends Scheduler_Controller
 		if (!$tweets) {
 			return;
 		}
+		if (isset($tweets->{'error'})) {
+			return;
+		}
 
 		foreach($tweets as $tweet) {
 			$tweet_user = $tweet->{'user'};
-
+			
     		$reporter_check = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_userid', $tweet_user->{'id'})
@@ -150,6 +153,81 @@ class Twitter_Controller extends Scheduler_Controller
 	    		$message->user_id = 0;
 	    		$message->reporter_id = $reporter_id;
 	    		$message->message_from = $tweet_user->{'screen_name'};
+	    		$message->message_to = null;
+	    		$message->message = $tweet->{'text'};
+	    		$message->message_type = 1; // Inbox
+	    		$tweet_date = date("Y-m-d H:i:s",strtotime($tweet->{'created_at'}));
+	    		$message->message_date = $tweet_date;
+	    		$message->service_messageid = $tweet->{'id'};
+	    		$message->save();
+    		}
+    	}
+	}
+	
+	
+	/**
+	* Adds hash tweets in JSON format to the database and saves the sender as a new
+	* Reporter if they don't already exist
+    * @param string $data - Twitter JSON results
+    */
+	private function add_hash_tweets($data)
+	{
+		$services = new Service_Model();
+    	$service = $services->where('service_name', 'Twitter')->find();
+	   	if (!$service) {
+ 		    return;
+	    }
+		$tweets = json_decode($data, false);
+		if (!$tweets) {
+			return;
+		}
+		if (isset($tweets->{'error'})) {
+			return;
+		}
+		
+		$tweet_results = $tweets->{'results'};
+
+		foreach($tweet_results as $tweet) {
+
+    		$reporter_check = ORM::factory('reporter')
+				->where('service_id', $service->id)
+				->where('service_account', $tweet->{'from_user'})
+				->find();
+
+			if ($reporter_check->loaded == true)
+			{
+				$reporter_id = $reporter_check->id;
+			}
+			else
+			{
+	    		// get default reporter level (Untrusted)
+	    		$levels = new Level_Model();
+		    	$default_level = $levels->where('level_weight', 0)->find();
+
+	    		$reporter = new Reporter_Model();
+	    		$reporter->service_id       = $service->id;
+	    		$reporter->service_userid   = null;
+	    		$reporter->service_account  = $tweet->{'from_user'};
+	    		$reporter->reporter_level   = $default_level;
+	    		$reporter->reporter_first   = null;
+	    		$reporter->reporter_last    = null;
+	    		$reporter->reporter_email   = null;
+	    		$reporter->reporter_phone   = null;
+	    		$reporter->reporter_ip      = null;
+	    		$reporter->reporter_date    = date('Y-m-d');
+	    		$reporter->save();
+				$reporter_id = $reporter->id;
+			}
+
+			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
+			                           ->find_all()) == 0) {
+				// Save Tweet as Message
+	    		$message = new Message_Model();
+	    		$message->parent_id = 0;
+	    		$message->incident_id = 0;
+	    		$message->user_id = 0;
+	    		$message->reporter_id = $reporter_id;
+	    		$message->message_from = $tweet->{'from_user'};
 	    		$message->message_to = null;
 	    		$message->message = $tweet->{'text'};
 	    		$message->message_type = 1; // Inbox
