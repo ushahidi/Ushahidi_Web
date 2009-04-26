@@ -52,6 +52,8 @@
 					<!-- green-box -->
 					<div class="green-box">
 						<h3><?php echo Kohana::lang('ui_main.password_reset_confirm'); ?></h3>
+						<br />
+						<a href="<?php echo url::base().'login'?>">Login</a>
 					</div>
 				</td>
 			</tr>
