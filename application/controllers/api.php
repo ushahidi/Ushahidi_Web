@@ -17,6 +17,8 @@ class Api_Controller extends Controller {
     var $db; //Database instance for queries
     var $list_limit; //number of records to limit response to - set in __construct
     var $responseType; //type of response, either json or xml as specified, defaults to json in set in __construct
+    var $error_messages; // validation error messages
+    var $messages = array(); // form validation error messages
 	
     /**
      *
@@ -24,9 +26,9 @@ class Api_Controller extends Controller {
      */
     function switchTask(){
         $task = ""; //holds the task to perform as requested
-	$ret = ""; //return value
-	$request = array();
-	$error = array();
+        $ret = ""; //return value
+		$request = array();
+        $error = array();
 		
 	//determine if we are using GET or POST
 	if($_SERVER['REQUEST_METHOD'] == 'GET'){
@@ -317,7 +319,7 @@ class Api_Controller extends Controller {
 	/*
 	returns an array error - array("code" => "CODE", "message" => "MESSAGE") based on the given code
 	*/
-    function _getErrorMsg($errcode, $param = ''){
+    function _getErrorMsg($errcode, $param = '', $message=''){
         switch($errcode){
             case 0:
 	        return array("code" => "0", "message" => "No Error.");
@@ -326,7 +328,9 @@ class Api_Controller extends Controller {
 	    case 002:
 		return array("code" => "002", "message" => "Invalid Parameter");
 	    case 003:
-		return array("code" => "003", "message" => "Form Post Failed.");
+                return array("code" => "003", "message" => $message );
+            case 004:
+                return array("code" => "004", "message" => "Data was not sent by post method.");
 	    default:
 	        return array("code" => "999", "message" => "Not Found.");
 	}
@@ -467,8 +471,8 @@ class Api_Controller extends Controller {
     function _report(){
         $retJsonOrXml = array();
 	$reponse = array();
-		
-	if($this->_submit()){
+	$ret_value = $this->_submit();	
+	if($ret_value == 0 ){
 			
 	    $reponse = array(
 	        "payload" => array("success" => "true"),
@@ -478,12 +482,18 @@ class Api_Controller extends Controller {
 	    //return;
 	    //return $this->_incidentById();
 			
-	} else {
+	} else if( $ret_value == 1 ) {
 	    $reponse = array(
 	        "payload" => array("success" => "false"),
-		"error" => $this->_getErrorMsg(003)
+		"error" => $this->_getErrorMsg(003,'',$this->error_messages)
 	    );
-	}
+        } else {
+            $reponse = array(
+	        "payload" => array("success" => "false"),
+		"error" => $this->_getErrorMsg(004)
+	    );
+
+        }
 		
 	if($this->responseType == 'json'){
 	    $retJsonOrXml = $this->_arrayAsJSON($reponse);
@@ -498,7 +508,29 @@ class Api_Controller extends Controller {
      * the actual reporting - ***must find a cleaner way to do this than duplicating code verbatim - modify report***
      */
     function _submit() {		
-	    
+        // setup and initialize form field names
+		$form = array
+		(
+			'incident_title' => '',
+			'incident_description' => '',
+			'incident_date' => '',
+			'incident_hour' => '',
+			'incident_minute' => '',
+			'incident_ampm' => '',
+			'latitude' => '',
+			'longitude' => '',
+			'location_name' => '',
+			'country_id' => '',
+			'incident_category' => array(),
+			'incident_news' => array(),
+			'incident_video' => array(),
+			'incident_photo' => array(),
+			'person_first' => '',
+			'person_last' => '',
+			'person_email' => ''
+		);
+		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		$this->messages = $form;	    
     // check, has the form been submitted, if so, setup validation
     if ($_POST) {
         // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
@@ -666,20 +698,33 @@ class Api_Controller extends Controller {
 				    $person->save();
 				}
 				
-				return true;
+				return 0; //success
 	            
 	        }
 	
             // No! We have validation errors, we need to show the form again, with the errors
 	        else   
-			{
+                {
+                                // populate the error fields, if any
+                                $this->messages = arr::overwrite($this->messages, $post->errors('report'));
+
+                                foreach ($this->messages as $error_item => $error_description)
+                                {
+                                    if( !is_array( $error_description ) ) {
+                                        $this->error_messages .= $error_description;
+                                        if( $error_description != end( $this->messages ) ) {
+                                            $this->error_messages .= " - ";
+                                        }
+                                    }
+                                }
+                                
 				//FAILED!!!
-				return false;
+				return 1; //validation error
 	        }
 	    }		
 		else
 		{
-			return false;
+			return 2; // Not sent by post method.
 		}
 		
 	}
@@ -1216,3 +1261,4 @@ class Api_Controller extends Controller {
     }
 
 }
+
