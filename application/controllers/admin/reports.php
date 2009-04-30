@@ -289,6 +289,16 @@ class Reports_Controller extends Admin_Controller
 			$form_saved = FALSE;
 		}
 		
+		// Initialize Default Values
+		$form['locale'] = Kohana::config('locale.language');
+		$form['latitude'] = Kohana::config('settings.default_lat');
+		$form['longitude'] = Kohana::config('settings.default_lon');
+		$form['country_id'] = Kohana::config('settings.default_country');
+		$form['incident_date'] = date("m/d/Y",time());
+		// initialize custom field array
+		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
+		
+		
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 		
@@ -335,8 +345,8 @@ class Reports_Controller extends Admin_Controller
 			$service_id = "";
 			$message = ORM::factory('message', $message_id);
 			
-			if ($message->loaded == true && $message->message_type == 1) {
-				
+			if ($message->loaded == true && $message->message_type == 1)
+			{
 				$service_id = $message->reporter->service_id;
 				
 				// Has a report already been created for this Message?
@@ -352,6 +362,13 @@ class Reports_Controller extends Admin_Controller
 					$incident_description .= "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
 					 	. $message->message_detail;
 				}
+				$form['incident_description'] = $incident_description;
+				$form['incident_date'] = date('m/d/Y', strtotime($message->message_date));
+				$form['incident_hour'] = date('h', strtotime($message->message_date));
+				$form['incident_minute'] = date('i', strtotime($message->message_date));
+				$form['incident_ampm'] = date('a', strtotime($message->message_date));
+				$form['person_first'] = $message->reporter->reporter_first;
+				$form['person_last'] = $message->reporter->reporter_last;
 				
 				// Retrieve Last 5 Messages From this account
 				$this->template->content->all_messages = ORM::factory('message')
@@ -767,29 +784,6 @@ class Reports_Controller extends Admin_Controller
 					// Redirect
 					url::redirect('admin/reports/');
 				}		
-				
-			}
-			else
-			{
-				$reporter = $message->reporter;
-				$form['locale'] = Kohana::config('locale.language');
-				$form['latitude'] = Kohana::config('settings.default_lat');
-				$form['longitude'] = Kohana::config('settings.default_lon');
-				$form['country_id'] = Kohana::config('settings.default_country');
-				// initialize custom field array
-				$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
-				if ($reporter->reporter_level == 5 ) {
-					$form['incident_verified'] = 1;
-				}
-				$form['incident_description'] = $incident_description;
-				$date_array = date_parse($message->message_date);
-				
-				$form['incident_date'] = $date_array['month']. '/'. 
-				                         $date_array['day'].'/'.$date_array['year'];
-				$form['incident_hour'] = $date_array['hour'];
-				$form['incident_minute'] = $date_array['minute'];
-				$form['person_first'] = $reporter->reporter_first;
-				$form['person_last'] = $reporter->reporter_last;
 				
 			}
 		}

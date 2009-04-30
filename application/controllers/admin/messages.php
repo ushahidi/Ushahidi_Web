@@ -70,14 +70,14 @@ class Messages_Controller extends Admin_Controller
 			'query_string'   => 'page',
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
 			'total_items'    => ORM::factory('message')
-				->with('reporter')
+				->join('reporter','message.reporter_id','reporter.id')
 				->where($filter)
 				->where('service_id', $service_id)
 				->count_all()
 		));
 
 		$messages = ORM::factory('message')
-			->with('reporter')
+			->join('reporter','message.reporter_id','reporter.id')
 			->where('service_id', $service_id)
 			->where($filter)
 			->orderby('message_date','desc')

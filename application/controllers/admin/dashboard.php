@@ -17,7 +17,7 @@ class Dashboard_Controller extends Admin_Controller
 {
 	function __construct()
 	{
-		parent::__construct();		
+		parent::__construct();
 	}
 	
 	function index()
@@ -53,7 +53,7 @@ class Dashboard_Controller extends Admin_Controller
 		$services = ORM::factory('service')->find_all();
 		foreach ($services as $service) {
 			$message_count = ORM::factory('message')
-				->with('reporter')
+				->join('reporter','message.reporter_id','reporter.id')
 				->where('service_id', $service->id)
 				->where('message_type', '1')
 				->count_all();
