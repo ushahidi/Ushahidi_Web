@@ -33,15 +33,15 @@ if (!$is_installed)
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Ushahidi</title>
-<link href="../media/css/admin/login.css" rel="stylesheet" type="text/css" />
+<link href="media/css/admin/login.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 <div id="ushahidi_login_container">
-    <div id="ushahidi_login_logo"><img src="../media/img/admin/logo_login.gif" width="400" 
+    <div id="ushahidi_login_logo"><img src="media/img/admin/logo_login.gif" width="400" 
     height="80" /></div>
     <div id="ushahidi_login">
-		<p>Welcome to Ushahidi!</p><br />
+		<h3>Welcome to Ushahidi!</h3><br />
 		<p>It appears as though Ushahidi is not installed on your system yet. You must run the installer script to complete this process.</p><br />
 		<p>Please <a href="installer/">click here</a> to continue.</p>
 	</div>

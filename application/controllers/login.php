@@ -244,11 +244,11 @@ class Login_Controller extends Template_Controller {
 	public function _email_details( $email, $username,$password )
 	{
 		$to = $email;
-		$from = 'henry@ushahidi.com';
-		$subject = 'Ushahidi password reset.';
-		$message = 'Please per your request. See below for your new password.\n\r';
-		$message .= "Username: $username\n\r";
-		$message .= "Password: $password\n\r";
+		$from = 'no-reply@ushahidi.com';
+		$subject = "Ushahidi password reset.";
+		$message = "Please per your request. See below for your new password.<br /><br />";
+		$message .= "Username: $username<br />";
+		$message .= "Password: $password<br /><br />";
 		$message .= "Please click here ".url::base()."login"." to login ".
 		$message .=	"to change to a new password of your own.";
 		

@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Ushahidi - Readme</title>
+<link href="media/css/admin/login.css" rel="stylesheet" type="text/css" />
+<link href="media/css/readme.css" rel="stylesheet" type="text/css" />
+</head>
+<html>
+    <body>
+        <div id="ushahidi_readme_container">
+            <div id="ushahidi_login_logo">
+                <img src="media/img/admin/logo_login.gif" width="400" 
+                height="80" />
+            </div>
+        <div id="ushahidi_readme">
+            <h1>Introduction To Ushahidi</h1>
+            <p>Ushahidi (meaning “testimony” in Swahili) was originally a website that was quickly developed to map reports of violence in Kenya after the post-election fallout at the beginning of 2008.</p>
+
+                <p>The new Ushahidi Engine incorporates the lessons learned from Kenya to create a platform that can be deployed by anyone to collect and visualize information, especially crisis information.</p>
+
+                <h1>System Requirement</h1>
+                There are a few minimum server requirements to run Ushahidi:
+                <ol>
+                    <li>Server with Unicode support</li>
+                    <li>PHP version >= 5.2.3</li>
+                    <li>An HTTP Server. <a href="http://kohana.com">Kohana</a> which Ushahidi is built upon is known to work with: Apache 1.3+,Apache2.0+,lighttpd, and MS IIS</li>
+                </ol>
+                <h2>Required Extensions</h2>
+                <ol>
+                    <li> <a href="http://php.net/pcre">PCRE</a> must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.</li>
+                    <li> <a href="http://php.net/iconv">iconv</a> is required for UTF-8 transliteration.</li>
+                    <li><a href="http://php.net/mcrypt">mcrypt</a> is required for encryption.</li>
+                    <li><a href="http://php.net/spl">SPL</a> is required for several core libraries</li>
+                    <li> <a href="http://php.net/mbstring">mbstring</a> which speeds up Kohana's UTF-8 functions.</li>
+                </ol>
+
+            <h1>Installation</h1>
+            <p>There are two ways to install ushahidi. Either manually by creating and editing a config and database file or by using the web installer. The easiest is to use the web installer as it serves you with a form to fill without creating or editing any file.</p>
+
+            <h2>Web Installer</h2>
+                <ol>
+                    <li>Upload the unpacked package unto your server.</li>
+                    <li>Make sure the uploaded files are owned by www-data or the webserver user to enable the installer make the necessary changes on certain files and folders.</li>
+                    <li>Point your browser to <a href="installer/">installer</a>. This should bring up a from for you to fill regarding your database credentials and the directory you uploaded Ushahidi files into.</li>
+                    <li>After filling all the required fields of the form, hit the Install button to install ushahidi.</li>
+                    <li>After a successful install, the installer should send you to the main page of Ushahidi.</li>
+                </ol>
+
+            <h2>Manual Install</h2>
+                <ol>
+                    <li>Upload the upacked package unto your server.</li>
+                    <li>Copy the content of <code>application/config/database.template.php to database.php</code>. If you have access to a unix shell, you can issue this command
+                    <code>cp application/config/database.template.php application/config/database.php</code></li>
+                    <li>Edit <code>database.php</code> and provide it with the right database credentials.</li>
+                    <li>Copy the content of <code>application/config/config.template.php to config.php</code>.</li>
+                    <li>Edit <code>config.php</code> providing it with the right values. The comments in the file tells you exactly what to provide.</li>
+                    <li>Change the permissions on application/logs, application/cache, media/uploads to writable.</li>
+                    <li>Import the tables into your database. The sql file is in the sql folder in the root directory of ushahidi.</li>
+                    <li>After all this has been done, load the installed Ushahidi with your browser. The main page should show up if everything went well.</li>
+                </ol>
+                <h1>Online Resources</h1>
+                <p>For further references and documentations, head over to Ushahidi's wiki. It has so much information you might need.</p>
+                <dl>
+                    <dt><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha&s[]=frontlinesms">How to use ushahidi</a></dt>
+                    <dd>This is where you will find information reqarding how to use your ushahidi instance.</dd>
+                </dl>
+                <h1>Ushahidi Support Forum</h1>
+                <p>Our <a href="forums.ushahidi.com">support forum</a> is a bit quiet. It will be great to head over there to report or find support regarding using ushahidi. There you will find most of the core developers.</p>
+            </div>
+        </div>
+</body>
+</html>
