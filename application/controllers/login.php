@@ -160,19 +160,17 @@ class Login_Controller extends Template_Controller {
 				// Existing User??
 				if ($user->loaded==true)
 				{
-					$new_password = $this->_generate_password();
+					// Secret consists of email and the last_login field.
+					// So as soon as the user logs in again, 
+					// the reset link expires automatically.
+					$secret = $auth->hash_password($user->email.$user->last_login);
+					$secret_link = url::site('login/newpassword/'.$user->id.'/'.$secret);
 					
-					$details_sent = $this->_email_details($post->resetemail,$user->username,$new_password );
-					
-					if( $details_sent ) {
-						$user->email = $post->resetemail;
-					
-						$user->password = $new_password;
-					
-						$user->save();
+					$details_sent = $this->_email_resetlink($post->resetemail,$user->name,$secret_link);
+					if( $details_sent )
+					{
 						$password_reset = TRUE;
-					}
-					
+					}		
 				}
 					
 			}
@@ -198,6 +196,44 @@ class Login_Controller extends Template_Controller {
 		$this->template->js = new View('admin/reset_password_js');
 	}
 
+    /**
+     * Create New password upon user request.
+     */
+    public function newpassword($user_id = 0)
+    {
+    	$auth = Auth::instance();
+		// If already logged in redirect to user account page
+        // Otherwise attempt to auto login if autologin cookie can be found
+        // (Set when user previously logged in and ticked 'stay logged in')
+        if ($auth->logged_in() OR $auth->auto_login())
+        {
+            if ($user = Session::instance()->get('auth_user',FALSE))
+            {
+                url::redirect('admin/dashboard');
+            }
+        }
+    	
+    	$this->template = new View('admin/new_password');
+		
+		$this->template->title = 'New Password';
+		
+		$secret = $this->uri->segment(4);
+		$user = ORM::factory('user',$user_id);
+		if ($user->loaded == true && 
+			$auth->hash_password($user->email.$user->last_login, $auth->find_salt($secret)) == $secret)
+		{ // Email New Password
+			$new_password = $this->_generate_password();
+			$user->password = $new_password;
+			$user->save();
+			
+			$this->_email_newpassword( $user->email, $user->name, $user->username, $new_password);
+		}
+		else
+		{ // User doesn't exist or reset link expired - redirect to login
+			url::redirect('admin/');
+		}		
+	}
+
 	/**
 	 * Checks if email address is associated with an account.
 	 * @param Validation $post $_POST variable with validation rules
@@ -214,26 +250,24 @@ class Login_Controller extends Template_Controller {
 	
 	/**
 	 * Generate random password for the user.
-	 * 
-	 * @return the new password
+	 *
+ 	 * @return the new password
 	 */
 	public function _generate_password()
 	{
 		$password_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 		$chars_length = strlen( $password_chars ) - 1;
 		$password = NULL;
-		
 		for( $i = 0; $i < 8; $i++ )
 		{
-			$position = mt_rand(0,$chars_length);	
+			$position = mt_rand(0,$chars_length);
 			$password .= $password_chars[$position];
 		}
-		
-		return $password;	
-	}
+		return $password;
+	}	
 	
 	/**
-	 * Email details to the user.
+	 * Email reset link to the user.
 	 * 
 	 * @param the email address of the user requesting a password reset.
 	 * @param the username of the user requesting a password reset.
@@ -241,19 +275,41 @@ class Login_Controller extends Template_Controller {
 	 * 
 	 * @return void.
 	 */
-	public function _email_details( $email, $username,$password )
+	public function _email_resetlink( $email, $name, $secret_url )
 	{
 		$to = $email;
 		$from = 'no-reply@ushahidi.com';
 		$subject = "Ushahidi password reset.";
-		$message = "Please per your request. See below for your new password.<br /><br />";
-		$message .= "Username: $username<br />";
-		$message .= "Password: $password<br /><br />";
-		$message .= "Please click here ".url::base()."login"." to login ".
-		$message .=	"to change to a new password of your own.";
+		$message = "Dear ".$name.",\n";
+		$message .= "We received a request to reset the password for ".$name.". ";
+		$message .= "To change your password, please click on the link below (or copy and paste it into your browser).\n\n";
+		$message .= $secret_url."\n\n";
 		
 		//email details
-		if( email::send( $to, $from, $subject, $message, TRUE ) == 1 )
+		if( email::send( $to, $from, $subject, $message, FALSE ) == 1 )
+		{
+			return TRUE;
+		}
+		else 
+		{
+			return FALSE;
+		}
+	
+	}
+	
+	public function _email_newpassword( $email, $name, $username, $password )
+	{
+		$to = $email;
+		$from = 'no-reply@ushahidi.com';
+		$subject = "Ushahidi password reset.";
+		
+		$message = "Dear ".$name.",\n";
+		$message .= "As you requested, your password has now been reset. Your new details are as follows:\n\n";
+		$message .= "Username: ".$username."\n";
+		$message .= "Password: ".$password;
+		
+		//email details
+		if( email::send( $to, $from, $subject, $message, FALSE ) == 1 )
 		{
 			return TRUE;
 		}
