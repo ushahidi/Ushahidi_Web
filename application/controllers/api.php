@@ -27,7 +27,7 @@ class Api_Controller extends Controller {
     function switchTask(){
         $task = ""; //holds the task to perform as requested
         $ret = ""; //return value
-		$request = array();
+	$request = array();
         $error = array();
 		
 	//determine if we are using GET or POST
@@ -184,8 +184,8 @@ class Api_Controller extends Controller {
 				
 		    case "incidents": //retrieve incidents
 		    /**
-                     * 
-                     * there are several ways to get incidents by
+             * 
+             * there are several ways to get incidents by
 		     */
 		        $by = '';
 			$sort = 'asc';
@@ -521,7 +521,7 @@ class Api_Controller extends Controller {
 			'longitude' => '',
 			'location_name' => '',
 			'country_id' => '',
-			'incident_category' => array(),
+			'incident_category' => '',
 			'incident_news' => array(),
 			'incident_video' => array(),
 			'incident_photo' => array(),
@@ -555,7 +555,7 @@ class Api_Controller extends Controller {
 	$post->add_rules('latitude','required','between[-90,90]');	// Validate for maximum and minimum latitude values
 	$post->add_rules('longitude','required','between[-180,180]');// Validate for maximum and minimum longitude values
 	$post->add_rules('location_name','required', 'length[3,200]');
-	$post->add_rules('incident_category','required','length[3,100]');
+	$post->add_rules('incident_category','required','length[1,100]');
 			
 	// Validate Personal Information
 	if (!empty($post->person_first))
@@ -600,20 +600,27 @@ class Api_Controller extends Controller {
 	    $incident->incident_dateadd = date("Y-m-d H:i:s",time());
 	    $incident->save();
 				
-	    // SAVE CATEGORIES
-	    //check if data is array or a serialized data.
-	    if( is_array( $post->incident_category ) ) {
-	        $categories = $post->incident_category;
-	    } else { 
-		$categories = unserialize($post->incident_category);
-	    }
+            // SAVE CATEGORIES
+	    //check if data is csv or a single value.
+        $pos = strpos($post->incident_category,",");
+        if( $pos === false ) {
+			//for backward compactibility. will drop support for it in the future. 
+			if( @unserialize( $post->incident_category) ) { 
+				$categories = unserialize( $post->incident_category);
+			} else {
+				$categories = array( $post->incident_category );
+			}
+        	
+        } else { 
+        	$categories = explode(",",$post->incident_category);    
+	    } 
 	    if(!empty($categories) && is_array($categories)){
 	        foreach($categories as $item){
-		    $incident_category = new Incident_Category_Model();
-		    $incident_category->incident_id = $incident->id;
-		    $incident_category->category_id = $item;
-		    $incident_category->save();
-		}
+		    	$incident_category = new Incident_Category_Model();
+		    	$incident_category->incident_id = $incident->id;
+		    	$incident_category->category_id = $item;
+		    	$incident_category->save();
+			}
 	    }
 				
 	    // STEP 4: SAVE MEDIA
@@ -1261,4 +1268,3 @@ class Api_Controller extends Controller {
     }
 
 }
-

@@ -11,7 +11,7 @@ $config['site_domain'] = '/ushahidi/';
  * specified, then the current protocol is used, or when possible, only an
  * absolute path (with no protocol/domain) is used.
  */
-$config['site_protocol'] = 'http';
+$config['site_protocol'] = '';
 
 /**
  * Name of the front controller for this application. Default: index.php
