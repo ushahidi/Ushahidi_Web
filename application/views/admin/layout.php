@@ -94,7 +94,9 @@
 				<ul class="sub-nav">
 					<?php if ($this->auth->logged_in('admin')){ ?><li><a href="<?php echo url::base() ?>admin/settings/site">Settings</a></li>
 					<li><a href="<?php echo url::base() ?>admin/users">Users</a></li>
-					<li><a href="#">Plugins</a></li><?php } ?>
+					<?php 
+					//<li><a href="#">Plugins</a></li>
+					} ?>
 				</ul>
 			</div>
 		</div>
