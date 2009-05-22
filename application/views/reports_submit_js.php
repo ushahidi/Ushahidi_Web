@@ -229,7 +229,7 @@
 					map.setCenter(l, <?php echo $default_zoom; ?>);
 					
 					// Update form values (jQuery)
-					var selected = $("#select_city option[@selected]");
+					var selected = $("#select_city option[selected]");
 					$("#location_name").attr("value", selected.text());
 					
 					$("#latitude").attr("value", lonlat[1]);

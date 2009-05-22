@@ -164,10 +164,10 @@
 	        }
 	
 			// Category Switch
-			$("a[@id^='cat_']").click(function() {
+			$("a[id^='cat_']").click(function() {
 				var catID = this.id.substring(4);
 				var catSet = 'cat_' + this.id.substring(4);
-				$("a[@id^='cat_']").removeClass("active");
+				$("a[id^='cat_']").removeClass("active");
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
 				markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
