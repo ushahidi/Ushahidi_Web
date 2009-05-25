@@ -48,6 +48,7 @@ class Settings_Controller extends Admin_Controller
 			'allow_comments' => '',
 			'allow_feed' => '',
 			'allow_clustering' => '',
+			'default_map_all' => '',
 			'google_analytics' => '',
 			'twitter_hashtags' => '',
 			'twitter_username' => '',
@@ -85,6 +86,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_comments','required','between[0,1]');
 			$post->add_rules('allow_feed','required','between[0,1]');
 			$post->add_rules('allow_clustering','required','between[0,1]');
+			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('twitter_hashtags','length[0,500]');
 			$post->add_rules('twitter_username','length[0,50]');
@@ -108,6 +110,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->allow_comments = $post->allow_comments;
 				$settings->allow_feed = $post->allow_feed;
 				$settings->allow_clustering = $post->allow_clustering;
+				$settings->default_map_all = $post->default_map_all;
 				$settings->google_analytics = $post->google_analytics;
 				$settings->twitter_hashtags = $post->twitter_hashtags;
 				$settings->twitter_username = $post->twitter_username;
@@ -155,6 +158,7 @@ class Settings_Controller extends Admin_Controller
 				'allow_comments' => $settings->allow_comments,
 				'allow_feed' => $settings->allow_feed,
 				'allow_clustering' => $settings->allow_clustering,
+				'default_map_all' => $settings->default_map_all,
 				'google_analytics' => $settings->google_analytics,
 				'twitter_hashtags' => $settings->twitter_hashtags,
 				'twitter_username' => $settings->twitter_username,
@@ -164,7 +168,8 @@ class Settings_Controller extends Admin_Controller
 				'laconica_site' => $settings->laconica_site
 		    );
 		}
-
+		
+		$this->template->colorpicker_enabled = TRUE;
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;

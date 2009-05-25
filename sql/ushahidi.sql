@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 2
+-- version 3
 -- http://www.ushahidi.com
 
 
@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_title` varchar(255) default NULL,
   `category_description` text default NULL,
   `category_color` varchar(20) default NULL,
+  `category_image` varchar(100) default NULL,
+  `category_image_shadow` varchar(100) default NULL,
   `category_visible` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
@@ -809,8 +811,9 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `allow_reports` tinyint(4) NOT NULL default '1',
   `allow_comments` tinyint(4) NOT NULL default '1',
   `allow_feed` tinyint(4) NOT NULL default '1',
-  `allow_clustering` tinyint(4) NOT NULL default '0',
+  `allow_clustering` tinyint(4) NOT NULL default '1',
   `default_map` tinyint(4) NOT NULL default '1' COMMENT '1 - GOOGLE MAPS, 2 - LIVE MAPS, 3 - YAHOO MAPS, 4 - OPEN STREET MAPS',
+  `default_map_all` varchar(20) NOT NULL default 'CC0000',
   `api_google` varchar(200) default NULL,
   `api_yahoo` varchar(200) default NULL,
   `api_live` varchar(200) default NULL,

@@ -91,8 +91,8 @@
 										$category_title = $category->category_title;
 										$category_description = substr($category->category_description, 0, 150);
 										$category_color = $category->category_color;
+										$category_image = $category->category_image;
 										$category_visible = $category->category_visible;
-										$locale = $category->locale;
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
@@ -102,10 +102,21 @@
 													<p><?php echo $category_description; ?>...</p>
 												</div>
 											</td>
-											<td class="col-3"><img src="<?php echo url::base() . "swatch/?c=" . $category_color . "&w=30&h=30"; ?>"></td>
+											<td class="col-3">
+											<?if (!empty($category_image))
+											{
+												echo "<img src=\"".url::base()."media/uploads/".$category_image."\">";
+												echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\">delete</a>]";
+											}
+											else
+											{
+												echo "<img src=\"".url::base()."swatch/?c=".$category_color."&w=30&h=30\">";
+											}
+											?>
+											</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($locale)); ?>')">Edit</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')">Edit</a></li>
 													<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
 <li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del">Delete</a></li>
 												</ul>
@@ -130,8 +141,8 @@
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<?php print form::open(NULL,array('id' => 'catMain',
-						 	'name' => 'catMain')); ?>
+						<?php print form::open(NULL,array('enctype' => 'multipart/form-data', 
+							'id' => 'catMain', 'name' => 'catMain')); ?>
 						<input type="hidden" id="category_id" 
 							name="category_id" value="" />
 						<input type="hidden" name="action" 
@@ -167,8 +178,8 @@
 							</script>
 						</div>
 						<div class="tab_form_item">
-							<strong>Locale:</strong><br />
-							<?php print form::dropdown('locale', $locale_array, '') ?>
+							<strong>Image/Icon:</strong><br />
+							<?php print form::upload('category_image', $category_image, '') ?>
 						</div>
 						<div class="tab_form_item">
 							&nbsp;<br />

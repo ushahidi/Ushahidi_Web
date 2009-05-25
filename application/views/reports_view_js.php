@@ -66,22 +66,22 @@
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
 				
-			var style = new OpenLayers.Style({
-				pointRadius: "10",
-				fillColor: "${color}",
+			var style1 = new OpenLayers.Style({
+				pointRadius: "8",
+				fillColor: "#CC0000",
 				fillOpacity: 1,
 				strokeColor: "#000000",
 				strokeWidth: 1,
 				strokeOpacity: 1
-			}, 
-			{
-				context: 
-				{
-					color: function(feature) 
-					{
-						return "#" + feature.attributes.color;
-					}
-				}
+			});
+			
+			var style2 = new OpenLayers.Style({
+				pointRadius: "8",
+				fillColor: "#FF9933",
+				fillOpacity: 1,
+				strokeColor: "#000000",
+				strokeWidth: 1,
+				strokeOpacity: 1
 			});
 			
 			// Create the single marker layer
@@ -89,7 +89,7 @@
 			{
 				format: OpenLayers.Format.GeoJSON,
 				projection: new OpenLayers.Projection("EPSG:4326"),
-				styleMap: new OpenLayers.StyleMap({"default":style})
+				styleMap: new OpenLayers.StyleMap({"default":style1})
 			});
 			
 			// Create neighboring marker layer
@@ -97,7 +97,7 @@
 			{
 				format: OpenLayers.Format.GeoJSON,
 				projection: new OpenLayers.Projection("EPSG:4326"),
-				styleMap: new OpenLayers.StyleMap({"default":style})
+				styleMap: new OpenLayers.StyleMap({"default":style2})
 			});
 			
 			map.addLayers([markers_2, markers]);

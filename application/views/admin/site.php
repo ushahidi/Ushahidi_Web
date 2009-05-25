@@ -107,6 +107,28 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4>Default Color For All Categories?</h4>
+							<?php print form::input('default_map_all', $form['default_map_all'], ' class="text"'); ?>
+							<script type="text/javascript" charset="utf-8">
+								$(document).ready(function() {
+									$('#default_map_all').ColorPicker({
+										onSubmit: function(hsb, hex, rgb) {
+											$('#default_map_all').val(hex);
+										},
+										onChange: function(hsb, hex, rgb) {
+											$('#default_map_all').val(hex);
+										},
+										onBeforeShow: function () {
+											$(this).ColorPickerSetColor(this.value);
+										}
+									})
+									.bind('keyup', function(){
+										$(this).ColorPickerSetColor(this.value);
+									});
+								});
+							</script>
+						</div>						
+						<div class="row">
 							<h4>Google Analytics</h4>
 							Web Property ID - Format: UA-XXXXX-XX &nbsp;&nbsp;
 							<?php print form::input('google_analytics', $form['google_analytics'], ' class="text"'); ?>

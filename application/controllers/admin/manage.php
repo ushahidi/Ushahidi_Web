@@ -40,11 +40,11 @@ class Manage_Controller extends Admin_Controller
 		$form = array
 	    (
 			'action' => '',
-	        'locale'      => '',
 			'category_id'      => '',
 			'category_title'      => '',
 	        'category_description'    => '',
-	        'category_color'  => ''
+	        'category_color'  => '',
+			'category_image'  => ''
 	    );
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
@@ -56,7 +56,7 @@ class Manage_Controller extends Admin_Controller
 	    if ($_POST)
 	    {
 	        // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-			$post = Validation::factory($_POST);
+			$post = Validation::factory(array_merge($_POST,$_FILES));
 			
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
@@ -64,10 +64,11 @@ class Manage_Controller extends Admin_Controller
 			if ($post->action == 'a')		// Add Action
 			{
 				// Add some rules, the input field, followed by a list of checks, carried out in order
-				$post->add_rules('locale','required','alpha_dash','length[5]');
 				$post->add_rules('category_title','required', 'length[3,80]');
 				$post->add_rules('category_description','required');
 				$post->add_rules('category_color','required', 'length[6,6]');
+				$post->add_rules('category_image', 'upload::valid', 
+					'upload::type[gif,jpg,png]', 'upload::size[50K]');
 			}
 			
 			// Test to see if things passed the rule checks
@@ -76,15 +77,15 @@ class Manage_Controller extends Admin_Controller
 				$category_id = $post->category_id;
 				$category = new Category_Model($category_id);
 				
-				if( $post->action == 'd' )				// Delete Action
-				{
+				if( $post->action == 'd' )
+				{ // Delete Action
 					$category->delete( $category_id );
 					$form_saved = TRUE;
 					$form_action = "DELETED";
 			
 				}
-				else if( $post->action == 'v' )			// Show/Hide Action
-				{
+				else if( $post->action == 'v' )
+				{ // Show/Hide Action
 	            	if ($category->loaded==true)
 					{
 						if ($category->category_visible == 1) {
@@ -97,15 +98,52 @@ class Manage_Controller extends Admin_Controller
 						$form_saved = TRUE;
 						$form_action = "MODIFIED";
 					}
+				}
+				else if( $post->action == 'i' )
+				{ // Delete Image/Icon Action
+	            	if ($category->loaded==true)
+					{
+						$category_image = $category->category_image;
+						if (!empty($category_image)
+						&& file_exists(Kohana::config('upload.directory', TRUE).$category_image))
+							unlink(Kohana::config('upload.directory', TRUE) . $category_image);
+						$category->category_image = null;
+						$category->save();
+						$form_saved = TRUE;
+						$form_action = "MODIFIED";
+					}
 				} 
-				else if( $post->action == 'a' ) 		// Save Action
-				{		
-					// SAVE Category
-					$category->locale = $post->locale;
+				else if( $post->action == 'a' )
+				{ // Save Action				
 					$category->category_title = $post->category_title;
 					$category->category_description = $post->category_description;
 					$category->category_color = $post->category_color;
 					$category->save();
+					
+					// Upload Image/Icon
+					$filename = upload::save('category_image');
+					if ($filename)
+					{
+						$new_filename = "category_".$category->id."_".time();
+
+						// Resize Image to 32px if greater
+						Image::factory($filename)->resize(32,32,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE) . $new_filename.".png");
+
+						// Remove the temporary file
+						unlink($filename);
+						
+						// Delete Old Image
+						$category_old_image = $category->category_image;
+						if (!empty($category_old_image)
+							&& file_exists(Kohana::config('upload.directory', TRUE).$category_old_image))
+							unlink(Kohana::config('upload.directory', TRUE).$category_old_image);
+						
+						// Save
+						$category->category_image = $new_filename.".png";
+						$category->save();
+					}
+					
 					$form_saved = TRUE;
 					$form_action = "ADDED/EDITED";
 				}

@@ -22,140 +22,93 @@ class Json_Controller extends Template_Controller
     public $template = 'json';
 	
     function index()
-    {		
+    {	
+		// $profile = new Profiler;
+		
         $json = "";
         $json_item = "";
         $json_array = array();
         $cat_array = array();
-        $color = "000000";
+        $color = Kohana::config('settings.default_map_all');
+		$icon = "";
 
 		$category_id = "";
 		$incident_id = "";
 		$neighboring = "";
 		$media_type = "";
 		
-		if (isset($_GET['c']))
+		if (isset($_GET['c']) && !empty($_GET['c']))
 		{
-			if (!empty($_GET['c']))
-			{
-				$category_id = $_GET['c'];
-			}
+			$category_id = $_GET['c'];
 		}
 		
-		if (isset($_GET['i']))
+		if (isset($_GET['i']) && !empty($_GET['i']))
 		{
-			if (!empty($_GET['i']))
-			{
-				$incident_id = $_GET['i'];
-			}
+			$incident_id = $_GET['i'];
 		}
 		
-		if (isset($_GET['n']))
+		if (isset($_GET['n']) && !empty($_GET['n']))
 		{
-			if (!empty($_GET['n']))
-			{
-				$neighboring = $_GET['n'];
-			}
+			$neighboring = $_GET['n'];
 		}
 		
 		$where_text = '';
 		// Do we have a media id to filter by?
-		if (isset($_GET['m']))
+		if (isset($_GET['m']) && !empty($_GET['m']) && $_GET['m'] != '0')
 		{
-			if (!empty($_GET['m']) && $_GET['m'] != '0')
-			{
-				$media_type = $_GET['m'];
-				$where_text .= ' AND media.media_type = ' . $media_type;
-			}
+			$media_type = $_GET['m'];
+			$where_text .= ' AND media.media_type = ' . $media_type;
 		}
 		
-        if (isset($_GET['s']) && !empty($_GET['s'])) {
+        if (isset($_GET['s']) && !empty($_GET['s']))
+		{
         	$start_date = $_GET['s']; 
         	$where_text .= " AND UNIX_TIMESTAMP(incident.incident_date) >= '" . $start_date . "'";
         }
-        if (isset($_GET['e']) && !empty($_GET['e'])) {
+        
+		if (isset($_GET['e']) && !empty($_GET['e']))
+		{
         	$end_date = $_GET['e']; 
         	$where_text .= " AND UNIX_TIMESTAMP(incident.incident_date) <= '" . $end_date . "'";
         }
-
-        $markers = array();
                 
         // Do we have a category id to filter by?
         if (is_numeric($category_id) && $category_id != '0')
         {
             // Retrieve markers by category
             // XXX: Might need to replace magic numbers
-
-/*          XXX Why doesn't this produce the same results as the SQL below?  
-            $markers = ORM::factory('incident')
-                     ->join('incident_category', 'incident.id', 'incident_category.incident_id','LEFT')
-                     ->join('media', 'incident.id', 'media.incident_id','LEFT')
-                     ->select('incident.*')
-                     ->where('incident.incident_active = 1 AND incident_category.category_id = ' . $category_id . $where_text)->orderby('incident.incident_dateadd', 'desc')
-                     ->find_all();
-*/            
-            $sql = "SELECT incident.id FROM incident";
-            $sql .= " LEFT JOIN incident_category ON incident.id = incident_category.incident_id";
-            $sql .= " LEFT JOIN media ON incident.id = media.incident_id";
-            $sql .= ' WHERE incident.incident_active = 1 AND incident_category.category_id = ';
-            $sql .= $category_id . $where_text; 
-            $db = new Database();
-	        $incidents = $db->query($sql);
-	        
-	        $marker_ids = array();
-	        foreach ( $incidents as $incident ) {
-	        	array_push($marker_ids, $incident->id);
-	        }
-
-			if (count($marker_ids) == 0 ) {
-				$marker_ids = array(0);
-			}
 			$markers = ORM::factory('incident')
-            	       ->where('incident.id IN (' . implode(',', $marker_ids) . ')')
-            	       ->orderby('incident.incident_dateadd', 'desc')
-                       ->find_all();
+				->select('DISTINCT incident.*')
+				->with('location')
+				->join('incident_category', 'incident.id', 'incident_category.incident_id','LEFT')
+				->join('media', 'incident.id', 'media.incident_id','LEFT')
+				->where('incident.incident_active = 1 AND 
+					incident_category.category_id = ' . $category_id . $where_text)
+				->find_all();
+
             // Retrieve category color
 			$category = ORM::factory('category', $category_id);
             $color = $category->category_color;
+			$icon = $category->category_image;
                      
         }// Do we have a single incident id to filter by?
         elseif (is_numeric($incident_id) && $incident_id != '0')
 		{
-			$color = "CC0000";
 		    // Retrieve individual marker
-            $markers = ORM::factory('incident')->where('incident.incident_active = 1 AND incident.id = ' . $incident_id)->find_all();
+            $markers = ORM::factory('incident')
+				->with('location')
+				->where('incident.incident_active = 1 AND incident.id = ' . $incident_id)
+				->find_all();
         }
         else
         {
 			// Retrieve all markers
-/*			
 			$markers = ORM::factory('incident')
-				//->join('media', 'incident_id', 'media.incident_id','LEFT')
-				->with('media')
-				->where('incident_active = 1' . $where_text)
-				->orderby('incident_dateadd', 'DESC')
+				->select('DISTINCT incident.*')
+				->with('location')
+				->join('media', 'incident.id', 'media.incident_id','LEFT')
+				->where('incident.incident_active = 1 '.$where_text)
 				->find_all();
-*/			
-			$sql = "SELECT incident.id FROM incident";
-            $sql .= " LEFT JOIN media ON incident.id = media.incident_id";
-            $sql .= ' WHERE incident.incident_active = 1' . $where_text;
-            $db = new Database();
-	        $incidents = $db->query($sql);
-	        
-	        $marker_ids = array();
-	        foreach ( $incidents as $incident ) {
-	        	array_push($marker_ids, $incident->id);
-	        }
-
-			if (count($marker_ids) == 0 ) {
-				$marker_ids = array(0);
-			}
-			$markers = ORM::factory('incident')
-            	       ->where('incident.id IN (' . implode(',', $marker_ids) . ')')
-            	       ->orderby('incident.incident_dateadd', 'desc')
-                       ->find_all();
-		
-			$color = "CC0000";
         }
         
         foreach ($markers as $marker)
@@ -164,21 +117,15 @@ class Json_Controller extends Template_Controller
             $json_item .= "\"type\":\"Feature\",";
             $json_item .= "\"properties\": {";
             $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
-            // $json_item .= "\"description\":\"" . htmlentities(str_replace(chr(10), ' ', str_replace(chr(13), ' ', substr($marker->incident_description, 0, 150)))) . "...\", ";			
-            
+			
 			if (isset($category)) { 
 				$json_item .= "\"category\":[" . $category_id . "], ";
 			} else {
 				$json_item .= "\"category\":[0], ";
-				$color = "CC0000";
 			}
-            // Display as a neighboring marker on report/view page
-			if ($neighboring == 'yes')
-			{
-				$json_item .= "\"color\": \"FF9933\", \n";
-			} else {
-				$json_item .= "\"color\": \"" . $color . "\", \n";
-			}
+			
+			$json_item .= "\"color\": \"".$color."\", \n";
+			$json_item .= "\"icon\": \"".$icon."\", \n";
             $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
             $json_item .= "},";
             $json_item .= "\"geometry\": {";
