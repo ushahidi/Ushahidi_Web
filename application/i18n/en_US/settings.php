@@ -55,7 +55,13 @@ $lang = array
 		'required'		=> 'The color field is required.',
 		'alpha_numeric'		=> 'The color feed field does not appear to contain a valid value?',
 		'length'		=> 'The color field must be no more 6 characters long.',
-	),	
+	),
+	
+	'api_akismet' => array
+	(
+		'alpha_numeric'		=> 'The Akismet field does not appear to contain a valid value?',
+		'length'		=> 'The Akismet field does not appear to contain a valid value?'
+	),		
 	
 	'sms_no1' => array
 	(

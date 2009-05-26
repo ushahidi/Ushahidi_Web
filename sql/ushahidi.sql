@@ -470,7 +470,8 @@ CREATE TABLE IF NOT EXISTS `comment`
 `comment_description` TEXT default NULL,
 `comment_ip` VARCHAR(100) default NULL,
 `comment_rating` VARCHAR(15) DEFAULT '0' NOT NULL,
-`comment_active` TINYINT DEFAULT 0,
+`comment_spam` TINYINT NOT NULL DEFAULT 0,
+`comment_active` TINYINT NOT NULL DEFAULT 0,
 `comment_date` DATETIME default NULL,
 `comment_date_gmt` DATETIME default NULL,
 PRIMARY KEY (`id`)
@@ -817,6 +818,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `api_google` varchar(200) default NULL,
   `api_yahoo` varchar(200) default NULL,
   `api_live` varchar(200) default NULL,
+  `api_akismet` VARCHAR( 200 ) default NULL,
   `default_country` int(11) default NULL,
   `default_city` varchar(150) default NULL,
   `default_lat` varchar(100) default NULL,

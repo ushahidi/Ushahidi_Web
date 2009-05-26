@@ -56,7 +56,7 @@ class Settings_Controller extends Admin_Controller
 			'laconica_username' => '',
 			'laconica_password' => '',
 			'laconica_site' => '',
-
+			'api_akismet' => ''
 	    );
         //  Copy the form as errors, so the errors will be stored with keys
         //  corresponding to the form field names
@@ -94,6 +94,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('laconica_username','length[0,50]');
 			$post->add_rules('laconica_password','length[0,50]');
 			$post->add_rules('laconica_site','length[0,30]');
+			$post->add_rules('api_akismet','length[0,100]', 'alpha_numeric');
 
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
@@ -118,6 +119,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->laconica_username = $post->laconica_username;
 				$settings->laconica_password = $post->laconica_password;
 				$settings->laconica_site = $post->laconica_site;
+				$settings->api_akismet = $post->api_akismet;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
 
@@ -165,7 +167,8 @@ class Settings_Controller extends Admin_Controller
 				'twitter_password' => $settings->twitter_password,
 				'laconica_username' => $settings->laconica_username,
 				'laconica_password' => $settings->laconica_password,
-				'laconica_site' => $settings->laconica_site
+				'laconica_site' => $settings->laconica_site,
+				'api_akismet' => $settings->api_akismet
 		    );
 		}
 		

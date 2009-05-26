@@ -21,6 +21,7 @@ Kohana::config_set('settings.default_map', $settings->default_map);
 Kohana::config_set('settings.default_map_all', $settings->default_map_all);
 Kohana::config_set('settings.api_google', $settings->api_google);
 Kohana::config_set('settings.api_yahoo', $settings->api_yahoo);
+Kohana::config_set('settings.api_akismet', $settings->api_akismet);
 Kohana::config_set('settings.default_city', $settings->default_city);
 Kohana::config_set('settings.default_country', $settings->default_country);
 Kohana::config_set('settings.default_lat', $settings->default_lat);

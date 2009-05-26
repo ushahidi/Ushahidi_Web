@@ -149,21 +149,26 @@
 							</div>
 						</div>
 						<div class="row">
-				        <h4>Laconica Credentials</h4>
-				
-				    <div class="row">
-					    Username
-					    <?php print form::input('laconica_username', $form['laconica_username'], ' class="text"'); ?>
-				    </div>
-				    <div class="row" style="padding-top:5px;">
-					    Password
-					    <?php print form::password('laconica_password', $form['laconica_password'], ' class="text"'); ?>
-				    </div>
-				    <div class="row" style="padding-top:5px;">
-					    Laconica Site
-					    <?php print form::input('laconica_site', $form['laconica_site'], 'class="text long2"'); ?>
-				    </div>
-			</div>
+							<h4>Laconica Credentials</h4>
+
+							<div class="row">
+								Username
+								<?php print form::input('laconica_username', $form['laconica_username'], ' class="text"'); ?>
+							</div>
+								<div class="row" style="padding-top:5px;">
+								Password
+								<?php print form::password('laconica_password', $form['laconica_password'], ' class="text"'); ?>
+							</div>
+								<div class="row" style="padding-top:5px;">
+								Laconica Site
+								<?php print form::input('laconica_site', $form['laconica_site'], 'class="text long2"'); ?>
+							</div>
+						</div>
+						<div class="row">
+							<h4>Akismet Key</h4>
+							Prevent comment spam using <a href="http://akismet.com/" target="_blank">Akismet</a> from Automattic. <BR />You can get a free API key by registering for a <a href="http://en.wordpress.com/api-keys/" target="_blank">WordPress.com user account</a>.
+							<?php print form::input('api_akismet', $form['api_akismet'], ' class="text"'); ?>
+						</div>
 					</div>
 		
 					<div class="simple_border"></div>
