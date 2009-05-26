@@ -423,10 +423,19 @@ class Api_Controller extends Controller {
 		        $json_incident_media[] = $media_item;
                     } else {
                         $xml->startElement('media');
-		        $xml->writeElement('id',$media_item->mediaid);
-                	$xml->writeElement('title',$media_item->mediatitle);
-                	$xml->writeElement('type',$media_item->mediatype);
-                	$xml->writeElement('link',$media_item->medialink);
+						if( $media_item->mediaid != "")
+		        			$xml->writeElement('id',$media_item->mediaid);
+						
+						if($media_item->mediatitle != "" )
+                			$xml->writeElement('title',$media_item->mediatitle);
+                		
+						if($media_item->mediatype != "" )
+							$xml->writeElement('type',$media_item->mediatype);
+                		
+						if( $media_item->medialink != "" )
+						$xml->writeElement('link',$media_item->medialink);
+						
+						if( $media_item->mediathumb != "" )
                         $xml->writeElement('thumb',$media_item->mediathumb);
                         $xml->endElement();
 		    }
