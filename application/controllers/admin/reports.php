@@ -183,6 +183,9 @@ class Reports_Controller extends Admin_Controller
 								$updatemessage->incident_id = 0;
 								$updatemessage->save();
 							}
+							
+							// Delete Comments
+							ORM::factory('comment')->where('incident_id',$incident_id)->delete_all();
 						}					
 					}
 					$form_action = "DELETED";
@@ -811,14 +814,6 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->date_picker_js = $this->_date_picker_js();
         $this->template->content->color_picker_js = $this->_color_picker_js();
         $this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
-
-		// Information Evaluation Values
-		$this->template->content->incident_source_array = 
-			array(""=>"--- Select One ---", "A"=>"A - Accept", "B"=>"B", 
-			"C"=>"C", "D"=>"D", "E"=>"E", "F"=>"F - Reject");
-		$this->template->content->incident_information_array = 
-			array(""=>"--- Select One ---", "1"=>"1 - Accept", "2"=>"2", 
-			"3"=>"3", "4"=>"4", "5"=>"5", "6"=>"6 - Reject");
 	}
 
 
