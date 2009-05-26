@@ -36,7 +36,7 @@
 							if ($status == 's')
 							{
 								?>
-								<li><a href="#" onclick="commentAction('x','DELETE', '');">DELETE ALL SPAM</a></li>
+								<li><a href="#" onclick="commentAction('x','DELETE ALL SPAM', '000');">DELETE ALL SPAM</a></li>
 								<?
 							}
 							?>

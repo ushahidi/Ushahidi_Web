@@ -143,6 +143,17 @@ class Comments_Controller extends Admin_Controller
 					}
 					$form_action = "DELETED";
 				}
+				elseif ($post->action == 'x')	// Delete All Spam Action
+				{
+					$comments = ORM::factory('comment')
+						->where('comment_spam','1')
+						->find_all();
+					foreach($comments as $item)
+					{
+						$item->delete();					
+					}
+					$form_action = "DELETED";
+				}
 				$form_saved = TRUE;
 			}
 			else
