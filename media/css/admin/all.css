@@ -1041,6 +1041,12 @@ input.long2 {
 	font-size:13px;
 	text-decoration:none;
 }
+.status_no{
+	color:#990000;
+	font-weight:bold;
+	font-size:13px;
+	text-decoration:none;
+}
 
 /*-- Extended --*/
 .l-column{

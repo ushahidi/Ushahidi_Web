@@ -79,20 +79,49 @@
 			
 			// Set Feature Styles
 			var style = new OpenLayers.Style({
-				pointRadius: "10",
+				'externalGraphic': "${icon}",
+				pointRadius: "${radius}",
 				fillColor: "${color}",
-				fillOpacity: 1,
-				strokeColor: "#000000",
+				fillOpacity: "${opacity}",
+				strokeColor: "#<?php echo $default_map_all;?>",
 				strokeWidth: 1,
-				strokeOpacity: 1
+				strokeOpacity: 1,
+				'graphicYOffset': -20
 			}, 
 			{
 				context: 
 				{
+					radius: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return 16;
+						} else {
+							return 9;
+						}
+					},
+					opacity: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return 1;
+						} else {
+							return 0.8;
+						}
+					},					
 					color: function(feature) 
 					{
 						return "#" + feature.attributes.color;
-					}
+					},
+					icon: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
+						} else {
+							return "";
+						}
+					}					
 				}
 			});
 			

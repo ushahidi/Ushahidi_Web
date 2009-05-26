@@ -107,6 +107,28 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4>Default Color For All Categories?</h4>
+							<?php print form::input('default_map_all', $form['default_map_all'], ' class="text"'); ?>
+							<script type="text/javascript" charset="utf-8">
+								$(document).ready(function() {
+									$('#default_map_all').ColorPicker({
+										onSubmit: function(hsb, hex, rgb) {
+											$('#default_map_all').val(hex);
+										},
+										onChange: function(hsb, hex, rgb) {
+											$('#default_map_all').val(hex);
+										},
+										onBeforeShow: function () {
+											$(this).ColorPickerSetColor(this.value);
+										}
+									})
+									.bind('keyup', function(){
+										$(this).ColorPickerSetColor(this.value);
+									});
+								});
+							</script>
+						</div>						
+						<div class="row">
 							<h4>Google Analytics</h4>
 							Web Property ID - Format: UA-XXXXX-XX &nbsp;&nbsp;
 							<?php print form::input('google_analytics', $form['google_analytics'], ' class="text"'); ?>
@@ -127,21 +149,26 @@
 							</div>
 						</div>
 						<div class="row">
-				        <h4>Laconica Credentials</h4>
-				
-				    <div class="row">
-					    Username
-					    <?php print form::input('laconica_username', $form['laconica_username'], ' class="text"'); ?>
-				    </div>
-				    <div class="row" style="padding-top:5px;">
-					    Password
-					    <?php print form::password('laconica_password', $form['laconica_password'], ' class="text"'); ?>
-				    </div>
-				    <div class="row" style="padding-top:5px;">
-					    Laconica Site
-					    <?php print form::input('laconica_site', $form['laconica_site'], 'class="text long2"'); ?>
-				    </div>
-			</div>
+							<h4>Laconica Credentials</h4>
+
+							<div class="row">
+								Username
+								<?php print form::input('laconica_username', $form['laconica_username'], ' class="text"'); ?>
+							</div>
+								<div class="row" style="padding-top:5px;">
+								Password
+								<?php print form::password('laconica_password', $form['laconica_password'], ' class="text"'); ?>
+							</div>
+								<div class="row" style="padding-top:5px;">
+								Laconica Site
+								<?php print form::input('laconica_site', $form['laconica_site'], 'class="text long2"'); ?>
+							</div>
+						</div>
+						<div class="row">
+							<h4>Akismet Key</h4>
+							Prevent comment spam using <a href="http://akismet.com/" target="_blank">Akismet</a> from Automattic. <BR />You can get a free API key by registering for a <a href="http://en.wordpress.com/api-keys/" target="_blank">WordPress.com user account</a>.
+							<?php print form::input('api_akismet', $form['api_akismet'], ' class="text"'); ?>
+						</div>
 					</div>
 		
 					<div class="simple_border"></div>

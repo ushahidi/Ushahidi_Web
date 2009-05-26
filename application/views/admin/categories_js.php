@@ -29,7 +29,7 @@ function catAction ( action, confirmAction, id )
 {
 	var statusMessage;
 	var answer = confirm('Are You Sure You Want To ' 
-		+ confirmAction + ' items?')
+		+ confirmAction)
 	if (answer){
 		// Set Category ID
 		$("#category_id_action").attr("value", id);

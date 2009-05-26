@@ -106,6 +106,9 @@ class Main_Controller extends Template_Controller {
             $categories[$category->id] = array($category->category_title, $category->category_color);
         }
         $this->template->content->categories = $categories;
+
+		// Default All Categories Color
+		$this->template->content->default_map_all = Kohana::config('settings.default_map_all');
 		
 		
         // Get Reports
@@ -185,7 +188,7 @@ class Main_Controller extends Template_Controller {
 		
 		
         // get graph data
-       // could not use DB query builder. It does not support parentheses yet
+        // could not use DB query builder. It does not support parentheses yet
         $graph_data = array();		
         $all_graphs = Incident_Model::get_incidents_by_interval('month');	
 		$this->template->content->all_graphs = $all_graphs;
@@ -210,6 +213,7 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->graph_data = $graph_data;
 		$this->template->header->js->all_graphs = $all_graphs;
 		$this->template->header->js->categories = $categories;
+		$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
 		
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);

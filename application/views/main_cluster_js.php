@@ -85,20 +85,36 @@
 				
 				// Set Feature Styles
 				var style = new OpenLayers.Style({
+					'externalGraphic': "${icon}",
 					pointRadius: "${radius}",
 					fillColor: "${color}",
-					fillOpacity: 0.9,
-					strokeColor: "#990000",
+					fillOpacity: "${opacity}",
+					strokeColor: "#<?php echo $default_map_all;?>",
 					strokeWidth: 2,
-					strokeOpacity: 0.8
+					strokeOpacity: 0.9,
+					'graphicYOffset': -20
 				}, 
 				{
 					context: 
 					{
 						radius: function(feature)
 						{
-							return (Math.min(feature.attributes.count, 7) + 3) * 1.6;
+							feature_icon = feature.cluster[0].data.icon;
+							if (feature_icon!="") {
+								return (Math.min(feature.attributes.count, 7) + 5) * 2;
+							} else {
+								return (Math.min(feature.attributes.count, 7) + 3) * 1.6;
+							}
 						},
+						opacity: function(feature)
+						{
+							feature_icon = feature.cluster[0].data.icon;
+							if (feature_icon!="") {
+								return 1;
+							} else {
+								return 0.8;
+							}
+						},						
 						color: function(feature)
 						{
 							if ( feature.cluster.length < 2 || (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
@@ -107,7 +123,23 @@
 							}
 							else
 							{
-								return "#990000";
+								return "#<?php echo $default_map_all;?>";
+							}
+						},
+						icon: function(feature)
+						{
+							if ( feature.cluster.length < 2 || (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+							{
+								feature_icon = feature.cluster[0].data.icon;
+								if (feature_icon!="") {
+									return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
+								} else {
+									return "";
+								}
+							}
+							else
+							{
+								return "";
 							}
 						}
 					}

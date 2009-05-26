@@ -393,6 +393,9 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports_view');
 		
+		// Load Akismet API Key (Spam Blocker)
+		$api_akismet = Kohana::config('settings.api_akismet');
+		
 		if ( !$id )
 		{
 			url::redirect('main');
@@ -440,6 +443,63 @@ class Reports_Controller extends Main_Controller {
 				if ($post->validate())
 				{
 					// Yes! everything is valid
+					
+					if ($api_akismet != "")
+					{ // Run Akismet Spam Checker
+						$akismet = new Akismet();
+
+						// comment data
+						$comment = array(
+							'author' => $post->comment_author,
+							'email' => $post->comment_email,
+							'website' => "",
+							'body' => $post->comment_description,
+							'user_ip' => $_SERVER['REMOTE_ADDR']
+						);
+
+						$config = array(
+							'blog_url' => url::site(),
+							'api_key' => $api_akismet,
+							'comment' => $comment
+						);
+
+						$akismet->init($config);
+
+						if($akismet->errors_exist()) 
+						{
+							if($akismet->is_error('AKISMET_INVALID_KEY'))
+							{
+								// throw new Kohana_Exception('akismet.api_key');
+							}
+							elseif($akismet->is_error('AKISMET_RESPONSE_FAILED')) 
+							{
+								// throw new Kohana_Exception('akismet.server_failed');
+							}
+							elseif($akismet->is_error('AKISMET_SERVER_NOT_FOUND')) 
+							{
+								// throw new Kohana_Exception('akismet.server_not_found');
+							}
+							// If the server is down, we have to post 
+							// the comment :(
+							// $this->_post_comment($comment);
+							$comment_spam = 0;
+						}
+						else {
+							if($akismet->is_spam()) 
+							{
+								$comment_spam = 1;
+							}
+							else {
+								$comment_spam = 0;
+							}
+						}
+					}
+					else
+					{ // No API Key!!
+						$comment_spam = 0;
+					}
+					
+					
 					$comment = new Comment_Model();
 					$comment->incident_id = $id;
 					$comment->comment_author = $post->comment_author;
@@ -449,7 +509,16 @@ class Reports_Controller extends Main_Controller {
 					$comment->comment_date = date("Y-m-d H:i:s",time());
 					
 					// Activate comment for now
-					$comment->comment_active = 1; 
+					if ($comment_spam == 1)
+					{
+						$comment->comment_spam = 1;
+						$comment->comment_active = 0;
+					}
+					else
+					{
+						$comment->comment_spam = 0;
+						$comment->comment_active = 1;
+					} 
 					$comment->save();
 					
 					// Redirect
@@ -517,6 +586,7 @@ class Reports_Controller extends Main_Controller {
 				$incident_comments = ORM::factory('comment')
                                      ->where('incident_id',$id)
                                      ->where('comment_active','1')
+									 ->where('comment_spam','0')
                                      ->orderby('comment_date', 'asc')
                                      ->find_all();
 			}
