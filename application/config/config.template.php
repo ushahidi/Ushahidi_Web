@@ -11,7 +11,7 @@ $config['site_domain'] = '/';
  * specified, then the current protocol is used, or when possible, only an
  * absolute path (with no protocol/domain) is used.
  */
-$config['site_protocol'] = '';
+$config['site_protocol'] = 'http';
 
 /**
  * Name of the front controller for this application. Default: index.php
@@ -30,7 +30,7 @@ $config['url_suffix'] = '';
  * The internal cache stores file paths and config entries across requests and
  * can give significant speed improvements at the expense of delayed updating.
  */
-$config['internal_cache'] = FALSE;
+$config['internal_cache'] = TRUE;
 
 /**
  * Enable or disable gzip output compression. This can dramatically decrease
