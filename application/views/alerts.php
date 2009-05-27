@@ -101,7 +101,7 @@
 		    <input type="checkbox" checked="checked" readonly="readonly" />
 		    <span><?php echo Kohana::lang('ui_main.alerts_rss'); ?></span>
 		  </label>
-		  <span><input type="text" value="http://<?php echo $_SERVER['SERVER_NAME']; ?>/feed/" readonly="readonly" /></span>
+		  <span><input type="text" value="<?php echo url::site() ?>feed/" readonly="readonly" /></span>
 		</div>
 		<?php
 		}
