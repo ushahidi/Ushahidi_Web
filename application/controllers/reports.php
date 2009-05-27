@@ -502,9 +502,9 @@ class Reports_Controller extends Main_Controller {
 					
 					$comment = new Comment_Model();
 					$comment->incident_id = $id;
-					$comment->comment_author = $post->comment_author;
-					$comment->comment_description = $post->comment_description;
-					$comment->comment_email = $post->comment_email;
+					$comment->comment_author = strip_tags($post->comment_author);
+					$comment->comment_description = strip_tags($post->comment_description);
+					$comment->comment_email = strip_tags($post->comment_email);
 					$comment->comment_ip = $_SERVER['REMOTE_ADDR'];
 					$comment->comment_date = date("Y-m-d H:i:s",time());
 					
