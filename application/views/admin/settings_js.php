@@ -135,7 +135,7 @@
 				}
 				
 				// $("#input_google").attr('checked', false);
-				$("INPUT[@name=baseLayers]").attr('checked', false);
+				$("INPUT[name=baseLayers]").attr('checked', false);
 
 				// Zoom Slider JS
 				$('#zoom1').slider({ 
@@ -232,7 +232,7 @@
 				});
 				
 				$('#default_country').change(function(){
-					var selected = $("#default_country option[@selected]");
+					var selected = $("#default_country option[selected]");
 					address = selected.text();
 					var geocoder = new GClientGeocoder();
 					if (geocoder) {
@@ -261,7 +261,7 @@
 		// Retrieve Cities From Geonames DB (Ajax)
 		function retrieveCities()
 		{
-			var selected = $("#default_country option[@selected]");
+			var selected = $("#default_country option[selected]");
 			country = selected.val();
 			if (!country || country =='') {
 				alert('Please select a country from the dropdown');

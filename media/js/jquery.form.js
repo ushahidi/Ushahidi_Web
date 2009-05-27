@@ -145,7 +145,7 @@ $.fn.ajaxSubmit = function(options) {
     function fileUpload() {
         var form = $form[0];
         
-        if ($(':input[@name=submit]', form).length) {
+        if ($(':input[name=submit]', form).length) {
             alert('Error: Form elements must not be named "submit".');
             return;
         }

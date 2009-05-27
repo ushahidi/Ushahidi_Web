@@ -683,7 +683,9 @@ table.ui-datepicker .ui-datepicker-title-row td a {
 	position: absolute;
 }
 
-
+.ui-slider .screenReaderContext {
+	display: none;
+}
 
 
 

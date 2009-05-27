@@ -221,7 +221,7 @@ FOTO.Slider = {
 
 
 		//click our first element
-		var firstThumb = $('#'+key+' .photoslider_thumb[@slot=0]');
+		var firstThumb = $('#'+key+' .photoslider_thumb[slot=0]');
 		firstThumb.click();
 	},
 
@@ -278,7 +278,7 @@ FOTO.Slider = {
 		//let's move our thumb into position
 		if(this.data[key]['currentId'] != null){
 			//move the thumbnail back up
-			SKEL.EFFECTS.Slide.animate($('.photoslider_thumb[@imageid='+this.data[key]['currentId']+']'),'top','20px','0px',500,SKEL.Transitions.quadOut);
+			SKEL.EFFECTS.Slide.animate($('.photoslider_thumb[imageid='+this.data[key]['currentId']+']'),'top','20px','0px',500,SKEL.Transitions.quadOut);
 			//NOTE: we don't want to clear this interval incase the user clicks really fast (unless we kept track of every animation)
 		}
 
@@ -428,10 +428,10 @@ FOTO.Slider = {
 	cycleImage: function(key){
 		var slot = parseInt(parseInt(this.data[key]['currentSlot'])+1); //force this to be a number
 
-		var thumb = $('#'+key+' .photoslider_thumb[@slot='+slot+']').get(0);
+		var thumb = $('#'+key+' .photoslider_thumb[slot='+slot+']').get(0);
 		if(thumb == null){
 			//perhaps we're at the end or don't have a valid slot, try slot 0
-			thumb = $('#'+key+' .photoslider_thumb[@slot=0]').get(0);
+			thumb = $('#'+key+' .photoslider_thumb[slot=0]').get(0);
 			if(thumb == null){
 				//there is no slot available, return
 				this.data[key]['paused'] = true;
@@ -444,11 +444,11 @@ FOTO.Slider = {
 	recycleImage: function(key){
 		var slot = parseInt(parseInt(this.data[key]['currentSlot'])-1); //force this to be a number
 
-		var thumb = $('#'+key+' .photoslider_thumb[@slot='+slot+']').get(0);
+		var thumb = $('#'+key+' .photoslider_thumb[slot='+slot+']').get(0);
 		if(thumb == null){
 			//perhaps we're at the end or don't have a valid slot, try last slot
 			slot = photos.length-1;
-			thumb = $('#'+key+' .photoslider_thumb[@slot='+slot+']').get(0);
+			thumb = $('#'+key+' .photoslider_thumb[slot='+slot+']').get(0);
 			if(thumb == null){
 				//there is no slot available, return
 				this.data[key]['paused'] = true;

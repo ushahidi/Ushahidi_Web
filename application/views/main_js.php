@@ -193,10 +193,10 @@
 	        }
 	
 			// Category Switch
-			$("a[@id^='cat_']").click(function() {
+			$("a[id^='cat_']").click(function() {
 				var catID = this.id.substring(4);
 				var catSet = 'cat_' + this.id.substring(4);
-				$("a[@id^='cat_']").removeClass("active");
+				$("a[id^='cat_']").removeClass("active");
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
 				markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
@@ -207,39 +207,43 @@
 			}
 			
 			//Accessible Slider/Select Switch
-			$("select#startDate, select#endDate").accessibleUISlider({
+			$("select#startDate, select#endDate").selectToUISlider({
 				labels: 6,
-				stop: function(e, ui) {
-					var startDate = $("#startDate").val();
-					var endDate = $("#endDate").val();
-					var currentCat = gCategoryId;
+				labelSrc: 'text',
+				sliderOptions: {
+					change: function(e, ui) {
+						var startDate = $("#startDate").val();
+						var endDate = $("#endDate").val();
+						var currentCat = gCategoryId;
 
-					var sliderfilter = new OpenLayers.Rule({
-						filter: new OpenLayers.Filter.Comparison(
-						{
-							type: OpenLayers.Filter.Comparison.BETWEEN,
-							property: "timestamp",
-							lowerBoundary: startDate,
-							upperBoundary: endDate
-						})
-					});
-									    
-					style.rules = [];
-					style.addRules(sliderfilter);					
-					markers.styleMap.styles["default"] = style; 
-					markers.redraw();
-					
-					// refresh graph
-					if (!currentCat || currentCat == '0') {
-						currentCat = 'ALL';
+						var sliderfilter = new OpenLayers.Rule({
+							filter: new OpenLayers.Filter.Comparison(
+							{
+								type: OpenLayers.Filter.Comparison.BETWEEN,
+								property: "timestamp",
+								lowerBoundary: startDate,
+								upperBoundary: endDate
+							})
+						});
+						style.rules = [];
+						style.addRules(sliderfilter);					
+						markers.styleMap.styles["default"] = style; 
+						markers.redraw();
+						
+						// refresh graph
+						if (!currentCat || currentCat == '0') {
+							currentCat = 'ALL';
+						}
+						
+						$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
+						    endTime: new Date(endDate * 1000),
+							graphData: allGraphData[0][currentCat], 
+							url: "<?php echo url::base() . 'json/timeline/' ?>"
+						}).plot();
 					}
-					$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
-					    endTime: new Date(endDate * 1000),
-						graphData: allGraphData[0][currentCat], 
-						url: "<?php echo url::base() . 'json/timeline/' ?>"
-					}).plot();
 				}
 			});
+
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
@@ -268,5 +272,6 @@
 			            url: "<?php echo url::base() . 'json/timeline/' ?>"
 					}).plot();
 				});
-			}
+			}			
+
 		});
