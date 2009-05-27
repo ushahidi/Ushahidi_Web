@@ -278,50 +278,53 @@
 			}
 			
 			//Accessible Slider/Select Switch
-			$("select#startDate, select#endDate").accessibleUISlider({
-				labels: 6,
-				stop: function(e, ui) {
-					var startDate = $("#startDate").val();
-					var endDate = $("#endDate").val();
-					var currentCat = gCategoryId;
+			$("select#startDate, select#endDate").selectToUISlider({
+				labels: 4,
+				labelSrc: 'text',
+				sliderOptions: {
+					change: function(e, ui) {
+						var startDate = $("#startDate").val();
+						var endDate = $("#endDate").val();
+						var currentCat = gCategoryId;
 /*					
-					var sliderfilter = new OpenLayers.Rule({
-						filter: new OpenLayers.Filter.Comparison(
-						{
-							type: OpenLayers.Filter.Comparison.BETWEEN,
-							property: "timestamp",
-							lowerBoundary: startDate,
-							upperBoundary: endDate
-						})
-					});
-									    
-					style.rules = [];
-					style.addRules(sliderfilter);					
-					markers.styleMap.styles["default"] = style; 
-*/					//markers.refresh();
-					//markers.redraw();
-					
-					// Get Current Category
-					currCat = $("#currentCat").val();
-					
-					// Get Current Zoom
-					currZoom = map.getZoom();
-					
-					// Get Current Center
-					currCenter = map.getCenter();
-					
-					// Refresh Map
-					addMarkers(currCat, startDate, endDate, currZoom, currCenter, gMediaType);
-					
-					// refresh graph
-					if (!currentCat || currentCat == '0') {
-						currentCat = 'ALL';
+						var sliderfilter = new OpenLayers.Rule({
+							filter: new OpenLayers.Filter.Comparison(
+							{
+								type: OpenLayers.Filter.Comparison.BETWEEN,
+								property: "timestamp",
+								lowerBoundary: startDate,
+								upperBoundary: endDate
+							})
+						});
+										    
+						style.rules = [];
+						style.addRules(sliderfilter);					
+						markers.styleMap.styles["default"] = style; 
+*/						//markers.refresh();
+						//markers.redraw();
+						
+						// Get Current Category
+						currCat = $("#currentCat").val();
+						
+						// Get Current Zoom
+						currZoom = map.getZoom();
+						
+						// Get Current Center
+						currCenter = map.getCenter();
+						
+						// Refresh Map
+						addMarkers(currCat, startDate, endDate, currZoom, currCenter, gMediaType);
+						
+						// refresh graph
+						if (!currentCat || currentCat == '0') {
+							currentCat = 'ALL';
+						}
+						$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
+						    endTime: new Date(endDate * 1000), mediaType: gMediaType,
+							graphData: allGraphData[0][currentCat], 
+							url: "<?php echo url::base() . 'json/timeline/' ?>"
+						}).plot();
 					}
-					$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
-					    endTime: new Date(endDate * 1000), mediaType: gMediaType,
-						graphData: allGraphData[0][currentCat], 
-						url: "<?php echo url::base() . 'json/timeline/' ?>"
-					}).plot();
 				}
 			}); //.hide();
 		
