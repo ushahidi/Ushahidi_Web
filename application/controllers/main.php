@@ -105,11 +105,7 @@ class Main_Controller extends Template_Controller {
             // Create a list of all categories
             $categories[$category->id] = array($category->category_title, $category->category_color);
         }
-        $this->template->content->categories = $categories;
-
-		// Default All Categories Color
-		$this->template->content->default_map_all = Kohana::config('settings.default_map_all');
-		
+        $this->template->content->categories = $categories;		
 		
         // Get Reports
         // XXX: Might need to replace magic no. 8 with a constant
@@ -122,6 +118,15 @@ class Main_Controller extends Template_Controller {
             ->orderby('incident_date', 'desc')
             ->find_all();
 		
+		// Get Default Color
+		$this->template->content->default_map_all = Kohana::config('settings.default_map_all');
+		
+		// Get Twitter Hashtags
+		$this->template->content->twitter_hashtag_array = array_filter(array_map('trim', 
+			explode(',', Kohana::config('settings.twitter_hashtags'))));
+		
+		// Get Report-To-Email
+		$this->template->content->report_email = Kohana::config('email.username');
 		
 		// Get SMS Numbers
 		$phone_array = array();

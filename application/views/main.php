@@ -68,20 +68,36 @@
                   </ul>
                 </div>
               </div>
-              <div class="report-btns">
-                <a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span><?php echo Kohana::lang('ui_main.submit'); ?></span></a>
-				<div style="clear:both;margin:0;padding:0;height:1px;"></div>
-                <?php if (!empty($phone_array)) ?><a class="btn-grey" href="#"><span><?php echo Kohana::lang('ui_main.submit_sms'); ?></span></a>
-              </div>
-			  <?php if (!empty($phone_array)) { ?>
-              <p><?php echo Kohana::lang('ui_main.submit_sms1'); ?>
-				<?php foreach ($phone_array as $phone) {
-					echo "<strong>". $phone ."</strong>";
-					if ($phone != end($phone_array)) {
-						echo ", ";
-					}
-				} ?>
-				 <?php echo Kohana::lang('ui_main.submit_sms2'); ?></p><?php } ?>
+			  <div class="category" style="margin-top:20px;">
+				<strong class="title">HOW TO REPORT</strong>
+				<div class="grey-box">
+					<div class="grey-box-bg">
+						<ol> 
+			            	<?php if (!empty($phone_array)) 
+							{ ?><li>By sending a message to <?php foreach ($phone_array as $phone) {
+								echo "<strong>". $phone ."</strong>";
+								if ($phone != end($phone_array)) {
+									echo " or ";
+								}
+							} ?></li><?php } ?>
+			            	<?php if (!empty($report_email)) 
+							{ ?><li>By sending an email to <a href="mailto:<?=$report_email?>"><?=$report_email?></a></li><?php } ?>
+							<?php if (!empty($twitter_hashtag_array)) 
+							{ ?><li>By sending a tweet with the hashtag/s <?php foreach ($twitter_hashtag_array 
+								as $twitter_hashtag) {
+								echo "<strong>". $twitter_hashtag ."</strong>";
+								if ($twitter_hashtag != end($twitter_hashtag_array)) {
+									echo " or ";
+								}
+							} ?></li><?php } ?>
+			            	<li>By <a href="<?php echo url::base() . 'reports/submit/'; ?>">filling a form</a> at the website</li>
+			           	</ol>					
+					</div>
+				</div>	
+			  </div>
+			  <div class="report-btns">
+				<a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span><?php echo Kohana::lang('ui_main.submit'); ?></span></a>
+			  </div>			
             </div>
           </div>
         </div>

@@ -231,9 +231,9 @@
 								<h4>Incident Location</h4>
 								<div class="location-info">
 									<span>Latitude:</span>
-									<?php print form::input('latitude', $form['latitude'], ' readonly="readonly" class="text"'); ?>
+									<?php print form::input('latitude', $form['latitude'], ' class="text"'); ?>
 									<span>Longitude:</span>
-									<?php print form::input('longitude', $form['longitude'], ' readonly="readonly" class="text"'); ?>
+									<?php print form::input('longitude', $form['longitude'], ' class="text"'); ?>
 								</div>
 								<div id="divMap" style="width: 494px; height: 400px; float:left; margin:-1px; border:3px solid #c2c2c2;"></div>
 							</div>
@@ -459,11 +459,29 @@
 								</div>
 								<div class="row">
 									<div class="f-col-bottom-1-col">Source Reliability:</div>
-									<?php print form::dropdown('incident_source', $incident_source_array, $form['incident_source']) ?>									
+									<?php print form::dropdown('incident_source', 
+									array(""=>"--- Select One ---", 
+									"A"=>"Yes, the source has direct access to information (witness or actor)", 
+									"B"=>"Yes, the source has access to information, but can be wrong", 
+									"C"=>"Yes, the source has no direct access to information, but is often right", 
+									"D"=>"Not always, but is often right", 
+									"E"=>"No, the source has (had) no access to information.", 
+									"F"=>"I don’t know"
+									)
+									, $form['incident_source']) ?>									
 								</div>
 								<div class="row">
 									<div class="f-col-bottom-1-col">Information Probability:</div>
-									<?php print form::dropdown('incident_information', $incident_information_array, $form['incident_information']) ?>									
+									<?php print form::dropdown('incident_information', 
+									array(""=>"--- Select One ---", 
+									"1"=>"Yes, the information is confirmed by several independent sources", 
+									"2"=>"Yes, the information is not confirmed (yet), but is likely", 
+									"3"=>"Yes, the information makes sense", 
+									"4"=>"No, the information is surprising", 
+									"5"=>"No, the information is unlikely and may be disinformation", 
+									"6"=>"I don’t know"
+									)
+									, $form['incident_information']) ?>									
 								</div>								
 							</div>
 							<div style="clear:both;"></div>

@@ -321,6 +321,8 @@ ul.post-info li a.ok{ background:url(../../img/admin/icon-ok.gif) no-repeat 100%
 ul.post-info li a.none{ background:url(../../img/admin/icon-none.gif) no-repeat 100% 3px;}
 ul.post-info li a.mail{ background:url(../../img/admin/icon-mail.gif) no-repeat 100% 3px;}
 ul.post-info li a.phone{ background:url(../../img/admin/icon-phone.gif) no-repeat 100% 2px;}
+ul.post-info li a.sms{ background:url(../../img/admin/icon-phone.gif) no-repeat 100% 2px;}
+ul.post-info li a.twitter{ background:url(../../img/admin/icon-twitter.gif) no-repeat 100% 2px;}
 .post  h4{
 	padding:9px 0 0;
 	font-weight:normal;
@@ -1046,6 +1048,14 @@ input.long2 {
 	font-weight:bold;
 	font-size:13px;
 	text-decoration:none;
+}
+.comment_incident{
+	background-color:#eee;
+	border-left:3px #ccc solid;
+	padding:2px 4px;
+}
+.comment_incident a, .comment_incident a:visited{
+	color:#666;
 }
 
 /*-- Extended --*/
