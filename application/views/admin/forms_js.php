@@ -74,14 +74,14 @@ function showFormSelected(id, form_id, field_id, select_disable)
 		$('#form_result_' + form_id).html('');
 		$('#form_result_' + form_id).hide();
 		$('#form_fields_' + form_id).hide(300);
-		$('#form_field_' + form_id +' [@name=field_type]').val(id);
+		$('#form_field_' + form_id +' [name=field_type]').val(id);
 		$.post("<?php echo url::base() . 'admin/manage/forms/selector' ?>", { selector_id: id, form_id: form_id, field_id: field_id },
 			function(data){
 				if (data.status == 'success'){
 					$('#form_fields_' + form_id).html('');
 					$('#form_fields_' + form_id).show(300);
 					$('#form_fields_' + form_id).html(data.message);
-					$('#form_field_' + form_id +' [@name=field_name]').focus();
+					$('#form_field_' + form_id +' [name=field_name]').focus();
 				}
 		  	}, "json");
 	};	
