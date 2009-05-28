@@ -50,6 +50,7 @@ class Email_Controller extends Scheduler_Controller
 		}
 		
 		foreach($messages as $message) {		
+			$reporter = null;
 			$reporter_check = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_account', $message['email'])
@@ -58,6 +59,7 @@ class Email_Controller extends Scheduler_Controller
 			if ($reporter_check->loaded == true)
 			{
 				$reporter_id = $reporter_check->id;
+				$reporter = ORM::factory('reporter')->find($reporter_id);
 			}
 			else
 			{
@@ -86,21 +88,23 @@ class Email_Controller extends Scheduler_Controller
 	    		$reporter->save();
 				$reporter_id = $reporter->id;
 			}
-			 		
-			// Save Email as Message
-    		$email = new Message_Model();
-    		$email->parent_id = 0;
-    		$email->incident_id = 0;
-    		$email->user_id = 0;
-    		$email->reporter_id = $reporter_id;
-    		$email->message_from = $message['from'];
-    		$email->message_to = null;
-    		$email->message = $message['subject'];
-			$email->message_detail = $message['body'];
-    		$email->message_type = 1; // Inbox
-    		$email->message_date = $message['date'];
-    		$email->service_messageid = null;
-    		$email->save();
-    	}
+			
+			if ($reporter->reporter_level > 1) 		
+				// Save Email as Message
+				$email = new Message_Model();
+				$email->parent_id = 0;
+				$email->incident_id = 0;
+				$email->user_id = 0;
+				$email->reporter_id = $reporter_id;
+				$email->message_from = $message['from'];
+				$email->message_to = null;
+				$email->message = $message['subject'];
+				$email->message_detail = $message['body'];
+				$email->message_type = 1; // Inbox
+				$email->message_date = $message['date'];
+				$email->service_messageid = null;
+				$email->save();
+			}
+		}
 	}
 }

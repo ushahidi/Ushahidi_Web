@@ -107,6 +107,7 @@ class Twitter_Controller extends Scheduler_Controller
 		foreach($tweets as $tweet) {
 			$tweet_user = $tweet->{'user'};
 			
+			$reporter = null;
     		$reporter_check = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_userid', $tweet_user->{'id'})
@@ -115,6 +116,7 @@ class Twitter_Controller extends Scheduler_Controller
 			if ($reporter_check->loaded == true)
 			{
 				$reporter_id = $reporter_check->id;
+				$reporter = ORM::factory('reporter')->find($reporter_id);
 			}
 			else
 			{
@@ -143,8 +145,9 @@ class Twitter_Controller extends Scheduler_Controller
 	    		$reporter->save();
 				$reporter_id = $reporter->id;
 			}
-
-			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
+			
+			if ($reporter->reporter_level > 1 && 
+			    count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
 			                           ->find_all()) == 0) {
 				// Save Tweet as Message
 	    		$message = new Message_Model();
@@ -188,7 +191,7 @@ class Twitter_Controller extends Scheduler_Controller
 		$tweet_results = $tweets->{'results'};
 
 		foreach($tweet_results as $tweet) {
-
+			$reporter = null;
     		$reporter_check = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_account', $tweet->{'from_user'})
@@ -197,6 +200,7 @@ class Twitter_Controller extends Scheduler_Controller
 			if ($reporter_check->loaded == true)
 			{
 				$reporter_id = $reporter_check->id;
+				$reporter = ORM::factory('reporter')->find($reporter_id);
 			}
 			else
 			{
@@ -218,8 +222,9 @@ class Twitter_Controller extends Scheduler_Controller
 	    		$reporter->save();
 				$reporter_id = $reporter->id;
 			}
-
-			if (count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
+			
+			if ($reporter->reporter_level > 1 && 
+			    count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
 			                           ->find_all()) == 0) {
 				// Save Tweet as Message
 	    		$message = new Message_Model();
