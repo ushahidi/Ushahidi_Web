@@ -92,25 +92,30 @@
 		  </label>
 		  <span><?php print form::input('alert_email', $form['alert_email']); ?></span>
 		</div>
-		<?php
-		if ($allow_feed == 1 )
-		{
-		?>
-		<div class="box">
-		  <label>
-		    <input type="checkbox" checked="checked" readonly="readonly" />
-		    <span><?php echo Kohana::lang('ui_main.alerts_rss'); ?></span>
-		  </label>
-		  <span><input type="text" value="http://<?php echo $_SERVER['SERVER_NAME']; ?>/feed/" readonly="readonly" /></span>
-		</div>
-		<?php
-		}
-		?>
 	      </div>
 	    </div>
 	    <input id="btn-send-alerts" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
 	  </div>
 	  <?php print form::close(); ?>
+	  
+	  <?php
+	  if ($allow_feed == 1 )
+	  {
+	  ?>
+	  <div class="step-2-holder">
+	    <div class="step-2">
+		  <h2><?php echo Kohana::lang('ui_main.alerts_rss'); ?></h2>
+	      <div class="holder">
+			<div class="box" style="text-align:center;">
+				<a href="<?php echo url::site(); ?>feed/"><img src="<?php echo url::base(); ?>media/img/icon-feed.png" style="vertical-align: middle;" border="0"></a>&nbsp;<strong><a href="<?php echo url::site(); ?>feed/"><?php echo url::site(); ?>feed/</a></strong>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <?
+      }
+  	  ?>
+
 	</div>
       </div>
     </div>
