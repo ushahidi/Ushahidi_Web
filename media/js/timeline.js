@@ -18,13 +18,14 @@
 (function($) { // hide the namespace
 
 	function Timeline(options) {
-	    this.categoryId = 'ALL';
-	    this.startTime = new Date(new Date().getFullYear() + '/01/01');
-	    this.endTime = new Date(this.startTime.getFullYear() + '/12/31');
-	    this.url = null;
-	    this.active = 'true';
-	    this.mediaType = null;
-	    this.graphOptions = {
+		this.elementId = 'graph';
+		this.categoryId = 'ALL';
+		this.startTime = new Date(new Date().getFullYear() + '/01/01');
+		this.endTime = new Date(this.startTime.getFullYear() + '/12/31');
+		this.url = null;
+		this.active = 'true';
+		this.mediaType = null;
+		this.graphOptions = {
 			xaxis: { mode: "time", timeformat: "%b %y", autoscaleMargin: 3 },
 			yaxis: { tickDecimals: 0 },
 			points: { show: true},
@@ -47,13 +48,14 @@
 		}
 	    
 		this.plot = function() {
-			gStartTime = this.startTime;
-			gEndTime = this.endTime;
-			gCategoryId = this.categoryId;
+			gStartTime    = this.startTime;
+			gEndTime      = this.endTime;
+			gCategoryId   = this.categoryId;
 			gGraphOptions = this.graphOptions;
+			gTimelineId   = this.elementId;
 	    	
 			if (!this.url) { 
-				plot = $.plot($("#graph"), [this.graphData],
+				plot = $.plot($("#"+this.elementId), [this.graphData],
 				        $.extend(true, {}, this.graphOptions, {
 				            xaxis: { min: this.startTime.getTime(), 
 				                     max: this.endTime.getTime() 
@@ -103,13 +105,14 @@
 				        if (!dailyGraphData[gCategoryId]) {
 				            dailyGraphData[gCategoryId] = {};
 				            dailyGraphData[gCategoryId]['data'] = [];
-				        }	
-				        plot = $.plot($("#graph"), [dailyGraphData[gCategoryId]],
+				        }
+				        plot = $.plot($("#"+gTimelineId), 
+				            [dailyGraphData[gCategoryId]],
 				         	$.extend(true, {}, gGraphOptions, {
 				            	xaxis: { min: gStartTime.getTime(), 
-				                     max: gEndTime.getTime(),
-				                     mode: "time", 
-				                     timeformat: aTimeformat,
+				                         max: gEndTime.getTime(),
+				                         mode: "time", 
+				                         timeformat: aTimeformat,
 				        			     tickSize: aTickSize
 				            	}
 				        	})
