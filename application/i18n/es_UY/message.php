@@ -4,31 +4,31 @@ $lang = array
 (
 	'name' => array
 	(
-		'required'=> 'The name field is required.',
-		'length'		=> 'The name field must be at least 3 characters long.',
+		'required'=> 'El campo nombre es obligatorio.',
+		'length'		=> 'El campo nombre debe tener al menos 3 caracteres de largo.',
 	),
 	
 	'email' => array
 	(
-		'required'		=> 'The Email field is required if the checkbox is checked.',
-		'email'		  => 'The Email field does not appear to contain a valid email address?',
-		'length'	  => 'The Email field must be at least 4 and no more 64 characters long.'
+		'required'		=> 'El campo Email es obligatorio cuando el checkbox está marcado..',
+		'email'		  => 'El campo Email parece no tener una dirección de email válida?',
+		'length'	  => 'El campo Email debe tener al menos 4 y no más de 64 caracteres de largo.'
 	),	
 	
 	'phone' => array
 	(
-		'length'		=> 'The phone field is not valid.',
+		'length'		=> 'El campo teléfono no es válido.',
 	),
 		
 	'message' => array
 	(
-		'required'		=> 'The comments field is required.'
+		'required'		=> 'El campo comentarios es obligatorio.'
 	),
 	
 	'captcha' => array
 	(
-		'required' => 'Please enter the security code', 
-		'default' => 'Please enter a valid security code'
+		'required' => 'Por favor ingrese el código de seguridad', 
+		'default' => 'Por favor ingrese un código de seguridad válido'
 	)
 	
 );

@@ -1,94 +1,94 @@
 <?php
 
 $lang = array
-(
+(as 
 	'site_name' => array
 	(
-		'required'		=> 'The site name field is required.',
-		'length'		=> 'The site name field must be at least 3 and no more 50 characters long.',
+		'required'		=> 'El campo nombre del sitio es obligatorio.',
+		'length'		=> 'El campo nombre del sitio debe tener al menos 3 y no más de 50 caracteres de largo.',
 	),
 	
 	'site_tagline' => array
 	(
-		'required'		=> 'The tagline field is required.',
-		'length'		=> 'The tagline field must be at least 3 and no more 100 characters long.',
+		'required'		=> 'El campo tagline es obligatorio.',
+		'length'		=> 'El campo tagline debe tener al menos 3 y no más de 100 caracteres de largo.',
 	),
 	
 	'site_email' => array
 	(
-		'email'		  => 'The site email field does not appear to contain a valid email address?',
-		'length'	  => 'The site email field must be at least 4 and no more 100 characters long.'
+		'email'		  => 'El campo email del sitio parece no contener una dirección de email válida?',
+		'length'	  => 'El campo email del sitio debe tener al menos 4 y no más de 100 caracteres de largo.'
 	),
 	
 	'items_per_page' => array
 	(
-		'required'		=> 'The items per page (Frontend) field is required.',
-		'between' => 'The items per page (Frontend) field does not appear to contain a valid value?'
+		'required'		=> 'El campo items por página (Frontend) es obligatorio.',
+		'between' => 'El campo items por página (Frontend) parece no contener un valor válido?'
 	),
 	
 	'items_per_page_admin' => array
 	(
-		'required'		=> 'The items per page (Admin) field is required.',
-		'between' => 'The items per page (Admin) field does not appear to contain a valid value?'
+		'required'		=> 'El campo items por página (Admin) es obligatorio.',
+		'between' => 'El campo items por página (Admin)parece no contener un valor válido?'
 	),
 	
 	'allow_reports' => array
 	(
-		'required'		=> 'The allow reports field is required.',
-		'between' => 'The allow reports field does not appear to contain a valid value?'
+		'required'		=> 'El campo informes permitidos es obligatorio.',
+		'between' => 'El campo informes permitidos parece no contener un valor válido?'
 	),
 	
 	'allow_comments' => array
 	(
-		'required'		=> 'The allow comments field is required.',
-		'between' => 'The allow comments field does not appear to contain a valid value?'
+		'required'		=> 'El campo comentarios permitidos es obligatorio.',
+		'between' => 'El campo comentarios permitidos parece no contener un valor válido?'
 	),
 	
 	'allow_feed' => array
 	(
-		'required'		=> 'The include feed field is required.',
-		'between' => 'The include feed field does not appear to contain a valid value?'
+		'required'		=> 'El campo feed incluido es obligatorio.',
+		'between' => 'El campo feed incluido parece no contener un valor válido?'
 	),
 	
 	'sms_no1' => array
 	(
-		'numeric'		=> 'The phone 1 field should contain numbers only.',
-		'length' => 'The phone 1 field does not appear to contain a valid value?'
+		'numeric'		=> 'El campo teléfono 1 debe contener sólo números.',
+		'length' => 'El campo teléfono 1 parece no contener un valor válido?'
 	),
 	
 	'sms_no2' => array
 	(
-		'numeric'		=> 'The phone 2 field should contain numbers only.',
-		'length' => 'The phone 2 field is too long'
+		'numeric'		=> 'El campo teléfono 2 debe sólo contener números.',
+		'length' => 'El campo teléfono 2 es demasiado largo'
 	),
 	
 	'sms_no3' => array
 	(
-		'numeric'		=> 'The phone 3 field should contain numbers only.',
-		'length' => 'The phone 3 field is too long'
+		'numeric'		=> 'El campo teléfono 3 debe sólo contener números.',
+		'length' => 'El campo teléfono 3 es demasiado largo'
 	),
 	
 	'clickatell_api' => array
 	(
-		'required'		=> 'The Clickatell API number field is required.',
-		'length'		=> 'The Clickatell API number field must be no more 20 characters long.',
+		'required'		=> 'El campo número Clickatell API es obligatorio.',
+		'length'		=> 'El campo número Clickatell API debe no tener más de 20 caracteres de largo.',
 	),
 	
 	'clickatell_username' => array
 	(
-		'required'		=> 'The Clickatell Username field is required.',
-		'length'		=> 'The Clickatell Username field must be no more 50 characters long.',
+		'required'		=> 'El campo Nombre de Usuario Clickatell es obligatorio.',
+		'length'		=> 'El campo Nombre de Usuario Clickatell debe no tener más de 50 caracteres de largo.',
 	),
 	
 	'clickatell_password' => array
 	(
-		'required'		=> 'The Clickatell Password field is required.',
-		'length'		=> 'The Clickatell Password field must be at least 5 and no more 50 characters long.',
+		'required'		=> 'El campo Clave de Clickatell es obligatorio.',
+		'length'		=> 'El campo Clave de Clickatell debe tener al menos 5 y no más de 50 caracteres de largo.',
 	),
 
 	'google_analytics' => array
 	(
-		'length'		=> 'The Google Analytics field must contain a valid Web Property ID in the format UA-XXXXX-XX.',
+		'length'		=> 'El campo Google Analytics debe contener un ID Web Property válido en el formato UA-XXXXX-XX.',
 	)		
 	
 );

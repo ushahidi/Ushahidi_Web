@@ -4,18 +4,18 @@ $lang = array
 (
 	'comment_author' => array
 	(
-		'required'=> 'The name field is required.',
-		'length'		=> 'The name field must be at least 3 characters long.',
+		'required'=> 'El nombre del campo es obligatorio.',
+		'length'		=> 'El nombre del campo debe tener por lo menos 3 caracteres de largo.',
 	),
 	
 	'comment_description' => array
 	(
-		'required'		=> 'The comments field is required.'
+		'required'		=> 'El campo comentarios es obligatorio.'
 	),
 	
 	'comment_email' => array
 	(
-		'required'		=> 'The Email field is required if the checkbox is checked.',
+		'required'		=> 'El campo Email es obligatorio si el checkbox está marcado.',
 		'email'		  => 'The Email field does not appear to contain a valid email address?',
 		'length'	  => 'The Email field must be at least 4 and no more 64 characters long.'
 	),
