@@ -156,7 +156,7 @@ class Alerts_Controller extends Main_Controller {
                     $to = $post->alert_email;
 					$from = $config['alerts_email'];
 					$subject = $settings['site_name'].' alerts - verification';
-					$message = 'Please follow '.url::base().'alerts/verify/'.$alert_code.
+					$message = 'Please follow '.url::site().'alerts/verify/'.$alert_code.
                                ' to confirm your alert request';
 
 					if (email::send($to, $from, $subject, $message, TRUE) == 1)
