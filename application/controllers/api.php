@@ -84,7 +84,36 @@ class Api_Controller extends Controller {
 	        $ret = $this->_tagMedia($incidentid, $mediatype);
 				
 		break;
-				
+		case "apikeys":
+			
+			$by = '';
+		   	if(!$this->_verifyArrayIndex($request, 'by')) {
+				$error = array("error" => $this->_getErrorMsg(001, 'by'));
+				break;
+		   	}else {
+				$by = $request['by'];
+		   	}
+		    
+			switch($by) {
+				 
+				case "google":
+					$ret = $this->_apiKey('api_google');
+					
+				break;
+
+				case "yahoo":
+					$ret = $this->_apiKey('api_yahoo');
+				break;
+
+				case "microsoft":
+					$ret = $this->_apiKey('api_live');
+					break;
+					
+				default:
+					$error = array("error" =>$this->_getErrorMsg(002));
+			}
+		break;
+					
 	    case "categories": //retrieve categories
 		$ret = $this->_categories();
 		break;
@@ -104,8 +133,8 @@ class Api_Controller extends Controller {
 				
 		case "locations": //retrieve locations
 	            $ret = $this->_locations();
-		    break;
-				
+		    break;		
+		
 		case "location": //retrieve locations
 		    $by = '';
 				
@@ -115,6 +144,8 @@ class Api_Controller extends Controller {
 		} else {
 		    $by = $request['by'];
 		}
+		
+		
 				
 		switch ($by){
 		    case "latlon": //latitude and longitude
@@ -181,6 +212,8 @@ class Api_Controller extends Controller {
 			    }
 				
 			    break;
+			
+				
 				
 		    case "incidents": //retrieve incidents
 		    /**
@@ -278,6 +311,7 @@ class Api_Controller extends Controller {
 				}
 				
 				break;
+				
 			default:
 				$error = array("error" => $this->_getErrorMsg(999));
 				break;
@@ -995,6 +1029,53 @@ class Api_Controller extends Controller {
 	}
 
 	return $retJsonOrXml;
+    }
+
+	/**
+     * get api keys
+     */
+    function _apiKey($service){
+        $items = array(); //will hold the items from the query
+		$data = array(); //items to parse to json
+		$json_apikey = array(); //incidents to parse to json
+		
+		$retJsonOrXml = ''; //will hold the json/xml string to return
+
+		//find incidents
+		$query = "SELECT id AS id, $service AS apikey
+		FROM `settings`
+		ORDER BY id DESC ;";
+
+		$items = $this->db->query($query);
+		$i = 0;
+		
+		$replar = array(); //assists in proper xml generation
+		
+		foreach ($items as $item){
+	    	//needs different treatment depending on the output
+	    	if($this->responseType == 'json'){
+	        	$json_services[] = array("service" => $item);
+	    	} else {
+	        	$json_services['service'.$i] = array("service" => $item) ;
+	        	$replar[] = 'service'.$i;
+	    	}
+			
+			$i++;
+		}
+		
+		//create the json array
+		$data = array(
+	    	"payload" => array("services" => $json_services),
+	    	"error" => $this->_getErrorMsg(0)
+			);
+		
+		if($this->responseType == 'json'){
+	    	$retJsonOrXml = $this->_arrayAsJSON($data);
+		} else {
+	    	$retJsonOrXml = $this->_arrayAsXML($data, $replar);
+		}
+
+		return $retJsonOrXml;
     }
 	
     /**

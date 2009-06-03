@@ -42,9 +42,9 @@
 	{
 		echo $api_url . "\n";
 		if ($main_page) {
-			echo html::script('index.php/media/js/accessibleUISlider.jQuery');
+			echo html::script('index.php/media/js/selectToUISlider.jQuery');
 			echo html::script('index.php/media/js/jquery.flot');
-			echo html::script('index.php/media/js/timeline.js');
+			echo html::script('index.php/media/js/timeline');
 			?>
 			<!--[if IE]><script language="javascript" type="text/javascript" src="<?php echo url::base() ?>media/js/excanvas.pack.js"></script><![endif]-->
 			<?php

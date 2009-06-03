@@ -25,7 +25,7 @@
 		// Check All / Check None
 		function CheckAll( id, name )
 		{
-			$("INPUT[@name='" + name + "'][type='checkbox']").attr('checked', $('#' + id).is(':checked'));
+			$("INPUT[name='" + name + "'][type='checkbox']").attr('checked', $('#' + id).is(':checked'));
 		}
 		
 		// Ajax Submission
@@ -52,7 +52,7 @@
 						// Set Hidden form item to 000 so that it doesn't return server side error for blank value
 						$("#incident_single").attr("value", "000");
 						// Submit Form For Multiple Items
-						$("input[@name='incident_id[]'][@checked]").each(
+						$("input[name='incident_id[]'][checked]").each(
 							function() 
 							{
 								$("#reportMain").submit();
@@ -69,7 +69,7 @@
 		//check if a checkbox has been ticked.
 		function isChecked( id )
 		{
-			var checked = $("input[@id="+id+"]:checked").length
+			var checked = $("input[id="+id+"]:checked").length
 			
 			if( checked == 0 )
 			return false

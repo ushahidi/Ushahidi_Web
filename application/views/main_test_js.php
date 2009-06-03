@@ -255,10 +255,10 @@
 	        }
 	
 			// Category Switch
-			$("a[@id^='cat_']").click(function() {
+			$("a[id^='cat_']").click(function() {
 				var catID = this.id.substring(4);
 				var catSet = 'cat_' + this.id.substring(4);
-				$("a[@id^='cat_']").removeClass("active");
+				$("a[id^='cat_']").removeClass("active");
 				$("#cat_" + catID).addClass("active");
 				$("#currentCat").val(catID);
 				
@@ -285,34 +285,37 @@
 			}
 			
 			//Accessible Slider/Select Switch
-			$("select#startDate, select#endDate").accessibleUISlider({
+			$("select#startDate, select#endDate").selectToUISlider({
 				labels: 6,
-				stop: function(e, ui) {
-					var startDate = $("#startDate").val();
-					var endDate = $("#endDate").val();
-					var currentCat = gCategoryId;
-					
-					// Get Current Category
-					currCat = $("#currentCat").val();
-					
-					// Get Current Zoom
-					currZoom = map.getZoom();
-					
-					// Get Current Center
-					currCenter = map.getCenter();
-					
-					// Refresh Map
-					addMarkers(currCat, startDate, endDate, currZoom, currCenter);
-					
-					// refresh graph
-					if (!currentCat || currentCat == '0') {
-						currentCat = 'ALL';
+				labelSrc: 'text',
+				sliderOptions: {
+					change: function(e, ui) {
+						var startDate = $("#startDate").val();
+						var endDate = $("#endDate").val();
+						var currentCat = gCategoryId;
+						
+						// Get Current Category
+						currCat = $("#currentCat").val();
+						
+						// Get Current Zoom
+						currZoom = map.getZoom();
+						
+						// Get Current Center
+						currCenter = map.getCenter();
+						
+						// Refresh Map
+						addMarkers(currCat, startDate, endDate, currZoom, currCenter);
+						
+						// refresh graph
+						if (!currentCat || currentCat == '0') {
+							currentCat = 'ALL';
+						}
+						$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
+						    endTime: new Date(endDate * 1000),
+							graphData: allGraphData[0][currentCat], 
+							url: "<?php echo url::base() . 'json_test/timeline/' ?>"
+						}).plot();
 					}
-					$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
-					    endTime: new Date(endDate * 1000),
-						graphData: allGraphData[0][currentCat], 
-						url: "<?php echo url::base() . 'json_test/timeline/' ?>"
-					}).plot();
 				}
 			}); //.hide();
 		

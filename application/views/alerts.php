@@ -92,6 +92,7 @@
 		  </label>
 		  <span><?php print form::input('alert_email', $form['alert_email']); ?></span>
 		</div>
+<<<<<<< HEAD:application/views/alerts.php
 		<?php
 		if ($allow_feed == 1 )
 		{
@@ -106,11 +107,32 @@
 		<?php
 		}
 		?>
+=======
+>>>>>>> 1c1616b3f381bf9b9b6d9c13c1aabfc2601245d7:application/views/alerts.php
 	      </div>
 	    </div>
 	    <input id="btn-send-alerts" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
 	  </div>
 	  <?php print form::close(); ?>
+	  
+	  <?php
+	  if ($allow_feed == 1 )
+	  {
+	  ?>
+	  <div class="step-2-holder">
+	    <div class="step-2">
+		  <h2><?php echo Kohana::lang('ui_main.alerts_rss'); ?></h2>
+	      <div class="holder">
+			<div class="box" style="text-align:center;">
+				<a href="<?php echo url::site(); ?>feed/"><img src="<?php echo url::base(); ?>media/img/icon-feed.png" style="vertical-align: middle;" border="0"></a>&nbsp;<strong><a href="<?php echo url::site(); ?>feed/"><?php echo url::site(); ?>feed/</a></strong>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	  <?
+      }
+  	  ?>
+
 	</div>
       </div>
     </div>

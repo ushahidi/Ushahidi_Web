@@ -4,46 +4,46 @@ $lang = array
 (
 	'locale' => array
 	(
-		'required'		=> 'The locale is required.',
-		'length'		=> 'The locale field has an incorrect value. ',
-		'alpha_dash'	=> 'The locale field has an incorrect value. ',
-		'locale'		=> 'The Original Report and the Translation have the same locale (language)',
-		'exists'		=> 'This report already has a translation for this language'
+		'required'		=> 'El locale es obligatorio.',
+		'length'		=> 'El campo locale tiene un valor incorrecto. ',
+		'alpha_dash'	=> 'El campo locale tiene un valor incorrecto. ',
+		'locale'		=> 'El Informe Original y la Traducción tienen el mismo locale (idioma)',
+		'exists'		=> 'Este informe ya tiene una traducción para ese idioma'
 	),
 	
 	'incident_title' => array
 	(
-		'required'		=> 'The title field is required.',
-		'length'		=> 'The title field must be at least 3 and no more 200 characters long.'
+		'required'		=> 'El campo titulo es obligatorio.',
+		'length'		=> 'El campo titulo debe tener al menos 3 y no más de 200 caracteres de largo.'
 	),
 	
 	'incident_description' => array
 	(
-		'required'		=> 'The description field is required.'
+		'required'		=> 'El campo descripción es obligatorio.'
 	),	
 	
 	'incident_date' => array
 	(
-		'required'		=> 'The date field is required.',
-		'date_mmddyyyy' => 'The date field does not appear to contain a valid date?',
-		'date_ddmmyyyy' => 'The date field does not appear to contain a valid date?'
+		'required'		=> 'El campo fecha es obligatorio.',
+		'date_mmddyyyy' => 'El campo fecha parece no contener una fecha válida?',
+		'date_ddmmyyyy' => 'El campo fecha parece no contener una fecha válida?'
 	),
 	
 	'incident_hour' => array
 	(
-		'required'		=> 'The hour field is required.',
-		'between' => 'The hour field does not appear to contain a valid hour?'
+		'required'		=> 'El campo hora es obligatorio.',
+		'between' => 'El campo hora parece no contener una hora válida?'
 	),
 	
 	'incident_minute' => array
 	(
-		'required'		=> 'The hour field is required.',
-		'between' => 'The hour field does not appear to contain a valid hour?'
+		'required'		=> 'El campo hora es obligatorio.',
+		'between' => 'El campo hora parece no contener una hora válida?'
 	),
 	
 	'incident_ampm' => array
 	(
-		'validvalues' => 'The am/pm field does not appear to contain a valid value?'
+		'validvalues' => 'El campo am/pm parece no contener un valor válido?'
 	),
 	
 	'latitude' => array
@@ -54,104 +54,104 @@ $lang = array
 	
 	'longitude' => array
 	(
-		'required'		=> 'The longitude field is required.',
-		'between' => 'The longitude field does not appear to contain a valid longitude?'
+		'required'		=> 'El campo longitud es obligatorio.',
+		'between' => 'El campo longitud parece no contener una longitud válida?'
 	),
 	
 	'location_name' => array
 	(
-		'required'		=> 'The location name field is required.',
-		'length'		=> 'The location name field must be at least 3 and no more 200 characters long.',
+		'required'		=> 'El campo nombre de lugar es obligatorio.',
+		'length'		=> 'El campo nombre de lugar debe tener al menos 3 y no más de 200 caracteres de largo.',
 	),
 			
 	'incident_category' => array
 	(
-		'required'		=> 'The category field is required.',
-		'numeric'		=> 'The category field does not appear to contain a valid category?'
+		'required'		=> 'El campo categoría es obligatorio.',
+		'numeric'		=> 'El campo categoría parece no contener una categoría válida?'
 	),
 	
 	'incident_news' => array
 	(
-		'url'		=> 'The news source links field does not appear to contain a valid URL?'
+		'url'		=> 'El campo enlaces a fuentes de noticias parece no contener una URL válida?'
 	),
 	
 	'incident_video' => array
 	(
-		'url'		=> 'The video links field does not appear to contain a valid URL?'
+		'url'		=> 'El campo enlaces a vídeo parece no contener una URL válida?'
 	),
 	
 	'incident_photo' => array
 	(
-		'valid'		=> 'The Upload Photos field does not appear to contain a valid file',
-		'type'		=> 'The Upload Photos field does not appear to contain a valid image. The only accepted formats are .JPG, .PNG and .GIF.',
-		'size'		=> 'Please ensure that photo uploads sizes are limited to 2MB.'
+		'valid'		=> 'El campo Subir Fotos parece no contener un campo válido',
+		'type'		=> 'El campo Subir Fotos parece no contener una imágen válida. Los únicos formatos aceptados son .JPG, .PNG y .GIF.',
+		'size'		=> 'Por favor que los tamaños de las fotos subidas no tienen más de 2MB.'
 	),
 	
 	'person_first' => array
 	(
-		'length'		=> 'The first name field must be at least 3 and no more 100 characters long.'
+		'length'		=> 'El campo nombre debe tener al menos 3 y no más de 100 caracteres de largo.'
 	),
 	
 	'person_last' => array
 	(
-		'length'		=> 'The last name field must be at least 3 and no more 100 characters long.'
+		'length'		=> 'El campo apellido debe tener al menos 3 y no más de 100 caracteres de largo.'
 	),
 	
 	'person_email' => array
 	(
-		'email'		  => 'The email field does not appear to contain a valid email address?',
-		'length'	  => 'The email field must be at least 4 and no more 64 characters long.'
+		'email'		  => 'El campo email parece no contener una dirección de email válida?',
+		'length'	  => 'El campo email debe tener al menos 4 y no más de 64 caracteres de largo.'
 	),
 	
 	// Admin - Report Download Validation
 	'data_point' => array
 	(
-		'required'		  => 'Please select a valid type of report to download',
-		'numeric'		  => 'Please select a valid type of report to download',
-		'between'		  => 'Please select a valid type of report to download'
+		'required'		  => 'Por favor seleccionar un tipo válido de informe a descargar',
+		'numeric'		  => 'Por favor seleccionar un tipo válido de informe a descargar',
+		'between'		  => 'Por favor seleccionar un tipo válido de informe a descargar'
 	),
 	'data_include' => array
 	(
-		'numeric'		  => 'Please select a valid item to include in the download',
-		'between'		  => 'Please select a valid item to include in the download'
+		'numeric'		  => 'Por favor seleccionar un item válido para incluir en la descarga',
+		'between'		  => 'Por favor seleccionar  un item válido para incluir en la descarga'
 	),
 	'from_date' => array
 	(
-		'date_mmddyyyy'		  => 'The FROM date field does not appear to contain a valid date?',
-		'range'	  => 'Please enter a valid FROM date. It cannot be greater than today.'
+		'date_mmddyyyy'		  => 'El campo fecha DESDE parece no contener una fecha válida?',
+		'range'	  => 'Por favor ingrese una fecha DESDE válida. No puede ser mayor al día de hoy.'
 	),
 	'to_date' => array
 	(
-		'date_mmddyyyy'		  => 'The TO date field does not appear to contain a valid date?',
-		'range'	  => 'Please enter a valid TO date. It cannot be greater than today.',
-		'range_greater'	=> 'Your FROM date cannot be greater than your TO date.'
+		'date_mmddyyyy'		  => 'El campo fecha HASTA parece no contener una fecha válida?',
+		'range'	  => 'Por favor ingrese una fecha HASTA válida. No puede ser mayor al día de hoy.',
+		'range_greater'	=> 'Su fecha DESDE no puede ser mayor a su fecha HASTA.'
 	),
 	'custom_field' => array
 	(
-		'values'		  => 'Please enter a valid value for one of your custom form items'
+		'values'		  => 'Por favor ingrese un valor válido para uno de sus items de formulario customizados'
 	),
 	
 	'incident_active' => array
 	(
-		'required'		=> 'Please enter a valid value for Approve This Report',
-		'between'		=> 'Please enter a valid value for Approve This Report'
+		'required'		=> 'Por favor ingrese un valor válido para Aprobar Este Informe',
+		'between'		=> 'Por favor ingrese un valor válido para Aprobar Este Informe'
 	),
 	
 	'incident_verified' => array
 	(
-		'required'		=> 'Please enter a valid value for Verify This Report',
-		'between'		=> 'Please enter a valid value for Verify This Report'
+		'required'		=> 'Por favor ingrese un valor válido para Verificar Este Informe',
+		'between'		=> 'Por favor ingrese un valor válido para Verificar Este Informe'
 	),
 	
 	'incident_source' => array
 	(
-		'alpha'		=> 'Please enter a valid value for Source Reliability',
-		'length'		=> 'Please enter a valid value for Source Reliability'
+		'alpha'		=> 'Por favor ingrese un valor válido para Source Reliability',
+		'length'		=> 'Por favor ingrese un valor válido para Source Reliability'
 	),
 	
 	'incident_information' => array
 	(
-		'alpha'		=> 'Please enter a valid value for Information Probability',
-		'length'		=> 'Please enter a valid value for Information Probability'
+		'alpha'		=> 'Por favor ingrese un valor válido para Information Probability',
+		'length'		=> 'Por favor ingrese un valor válido para Information Probability'
 	)
 );
