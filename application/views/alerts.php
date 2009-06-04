@@ -92,23 +92,6 @@
 		  </label>
 		  <span><?php print form::input('alert_email', $form['alert_email']); ?></span>
 		</div>
-<<<<<<< HEAD:application/views/alerts.php
-		<?php
-		if ($allow_feed == 1 )
-		{
-		?>
-		<div class="box">
-		  <label>
-		    <input type="checkbox" checked="checked" readonly="readonly" />
-		    <span><?php echo Kohana::lang('ui_main.alerts_rss'); ?></span>
-		  </label>
-		  <span><input type="text" value="<?php echo url::site() ?>feed/" readonly="readonly" /></span>
-		</div>
-		<?php
-		}
-		?>
-=======
->>>>>>> 1c1616b3f381bf9b9b6d9c13c1aabfc2601245d7:application/views/alerts.php
 	      </div>
 	    </div>
 	    <input id="btn-send-alerts" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
