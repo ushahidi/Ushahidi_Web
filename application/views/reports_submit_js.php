@@ -129,14 +129,6 @@
 			});
 		});
 		
-		
-		// Date Picker JS
-		$("#incident_date").datepicker({ 
-		    showOn: "both", 
-		    buttonImage: "<?php echo url::base() ?>media/img/admin/icon-calendar.gif", 
-		    buttonImageOnly: true 
-		});
-		
 		function addFormField(div, field, hidden_id, field_type) {
 			var id = document.getElementById(hidden_id).value;
 			$("#" + div).append("<div class=\"report_row\" id=\"" + field + "_" + id + "\"><input type=\"" + field_type + "\" name=\"" + field + "[]\" class=\"" + field_type + " long2\" /><a href=\"#\" class=\"add\" onClick=\"addFormField('" + div + "','" + field + "','" + hidden_id + "','" + field_type + "'); return false;\">add</a><a href=\"#\" class=\"rem\"  onClick='removeFormField(\"#" + field + "_" + id + "\"); return false;'>remove</a></div>");
