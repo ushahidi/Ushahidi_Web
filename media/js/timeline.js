@@ -20,8 +20,8 @@
 	function Timeline(options) {
 		this.elementId = 'graph';
 		this.categoryId = 'ALL';
-		this.startTime = new Date(new Date().getFullYear() + '/01/01');
-		this.endTime = new Date(this.startTime.getFullYear() + '/12/31');
+		this.startTime = null; //new Date(new Date().getFullYear() + '/01/01');
+		this.endTime = null; //new Date(this.startTime.getFullYear() + '/12/31');
 		this.url = null;
 		this.active = 'true';
 		this.mediaType = null;
@@ -54,19 +54,31 @@
 			gGraphOptions = this.graphOptions;
 			gTimelineId   = this.elementId;
 	    	
+	    	
+	    	
+	
 			if (!this.url) { 
+				plotPeriod = $.period(this.graphData.data);
+				gStartTime = gStartTime || new Date(plotPeriod[0]);
+				gEndTime   = gEndTime   || new Date(plotPeriod[1]);
 				plot = $.plot($("#"+this.elementId), [this.graphData],
 				        $.extend(true, {}, this.graphOptions, {
-				            xaxis: { min: this.startTime.getTime(), 
-				                     max: this.endTime.getTime() 
+				            xaxis: { min: gStartTime.getTime(), 
+				                     max: gEndTime.getTime() 
 				            }
 				}));
 	        } else {   
+				var startDate = '';
+				var endDate = ''; 
 				
-				var startDate = this.startTime.getFullYear() + '-' + 
+				if (this.startTime) {
+					startDate = this.startTime.getFullYear() + '-' + 
 				                (this.startTime.getMonth()+1) + '-'+ this.startTime.getDate();
-				var endDate = this.endTime.getFullYear() + '-' + 
+				}
+				if (this.endTime) {
+					endDate = this.endTime.getFullYear() + '-' + 
 				                (this.endTime.getMonth()+1) + '-'+ this.endTime.getDate();
+				}
 				this.url += "?s=" + startDate + "&e=" + endDate;
 
 				// daily
@@ -102,6 +114,10 @@
 				$.getJSON(this.url,
 				    function(data) {
 				        dailyGraphData = data;
+				        plotPeriod = $.period(data.ALL.data);
+				        gStartTime = gStartTime || new Date(plotPeriod[0]);
+				        gEndTime   = gEndTime   || new Date(plotPeriod[1]);
+				        console.log([gStartTime, gEndTime]);
 				        if (!dailyGraphData[gCategoryId]) {
 				            dailyGraphData[gCategoryId] = {};
 				            dailyGraphData[gCategoryId]['data'] = [];
@@ -127,5 +143,18 @@
 		timeline = new Timeline(options);
 		return timeline;
 	}
+	
+	$.period = function(plotData) {
+		heatLevel = 0;
+		hottestMoment = null;	
+		for (var i=0; i<plotData.length; i++) {
+			if (plotData[i][1] > heatLevel) {
+				hottestMoment = plotData[i][0];
+			}
+		}
+		startTime = hottestMoment - (6 * 30 * 24 * 60 * 60 * 1000);
+		endTime   = hottestMoment + (6 * 30 * 24 * 60 * 60 * 1000);
+		return [startTime, endTime];
+	};
 
 })(jQuery);

@@ -235,7 +235,8 @@
 							currentCat = 'ALL';
 						}
 						
-						$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
+						$.timeline({categoryId: currentCat, 
+							startTime: new Date(startDate * 1000), 
 						    endTime: new Date(endDate * 1000),
 							graphData: allGraphData[0][currentCat], 
 							url: "<?php echo url::base() . 'json/timeline/' ?>"
@@ -249,9 +250,10 @@
 			var allGraphData = [<?php echo $all_graphs ?>];
 			var startTime = new Date($("#startDate").val() * 1000);
 			var endTime = new Date($("#endDate").val() * 1000);
-			$.timeline({categoryId: 'ALL', startTime: startTime, endTime: endTime,
-			    graphData: allGraphData[0]['ALL'],
-			    url: "<?php echo url::base() . 'json/timeline/' ?>"
+			$.timeline({categoryId: 'ALL', 
+				//startTime: startTime, endTime: endTime,
+			    graphData: allGraphData[0]['ALL'] //,
+			    //url: "<?php echo url::base() . 'json/timeline/' ?>"
 			}).plot();
 
 			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
