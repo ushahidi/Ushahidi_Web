@@ -54,9 +54,6 @@
 			gGraphOptions = this.graphOptions;
 			gTimelineId   = this.elementId;
 	    	
-	    	
-	    	
-	
 			if (!this.url) { 
 				plotPeriod = $.period(this.graphData.data);
 				gStartTime = gStartTime || new Date(plotPeriod[0]);
@@ -114,10 +111,9 @@
 				$.getJSON(this.url,
 				    function(data) {
 				        dailyGraphData = data;
-				        plotPeriod = $.period(data.ALL.data);
+				        plotPeriod = $.timelinePeriod(data.ALL.data);
 				        gStartTime = gStartTime || new Date(plotPeriod[0]);
 				        gEndTime   = gEndTime   || new Date(plotPeriod[1]);
-				        console.log([gStartTime, gEndTime]);
 				        if (!dailyGraphData[gCategoryId]) {
 				            dailyGraphData[gCategoryId] = {};
 				            dailyGraphData[gCategoryId]['data'] = [];
@@ -144,7 +140,7 @@
 		return timeline;
 	}
 	
-	$.period = function(plotData) {
+	$.timelinePeriod = function(plotData) {
 		heatLevel = 0;
 		hottestMoment = null;	
 		for (var i=0; i<plotData.length; i++) {
@@ -156,5 +152,32 @@
 		endTime   = hottestMoment + (6 * 30 * 24 * 60 * 60 * 1000);
 		return [startTime, endTime];
 	};
+	
+	$.monthDays = function(year, month) {
+		days = [31,28,31,30,31,30,31,31,30,31,30,31];
+		daysInMonth = days[month];
+		if ((year % 4) == 0 && month == 1) daysInMonth++;
+		return daysInMonth;
+	};
+	
+	$.monthStartTime = function(timestamp) {
+		var startTime = new Date(timestamp - 
+			                     ((new Date(timestamp).getDate()-1) * 24*60*60*1000)).getTime();
+		var startDate = new Date(startTime);
+		return startTime - (startDate.getHours()   * 60*60*1000) - 
+		                   (startDate.getMinutes() * 60*1000) -
+		                   (startDate.getSeconds() * 1000);
+	};
 
+	$.monthEndTime = function(timestamp) {
+		var givenDate = new Date(timestamp);
+		var endTime = timestamp + 
+		              (($.monthDays(givenDate.getYear(), givenDate.getMonth()) - 
+		               new Date(timestamp).getDate()) * 24*60*60*1000);
+		var endDate = new Date(endTime);
+		return endTime - (endDate.getHours() * 60*60*1000) - 
+		                 (endDate.getMinutes() * 60*1000) -
+		                 (endDate.getSeconds() * 1000);
+	};
+	
 })(jQuery);

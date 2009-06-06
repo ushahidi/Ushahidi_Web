@@ -248,13 +248,13 @@
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
-			var startTime = new Date($("#startDate").val() * 1000);
-			var endTime = new Date($("#endDate").val() * 1000);
-			$.timeline({categoryId: 'ALL', 
-				//startTime: startTime, endTime: endTime,
-			    graphData: allGraphData[0]['ALL'] //,
-			    //url: "<?php echo url::base() . 'json/timeline/' ?>"
-			}).plot();
+			var plotPeriod = $.timelinePeriod(allGraphData[0]['ALL'].data);
+			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
+			var endTime = $.monthEndTime(plotPeriod[1]) / 1000;
+			$("#startDate").val(startTime);
+			$("#endDate").val(endTime);
+			gCategoryId = 'ALL';
+			$("#startDate, #endDate").change();
 
 			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
 				
@@ -274,6 +274,5 @@
 			            url: "<?php echo url::base() . 'json/timeline/' ?>"
 					}).plot();
 				});
-			}			
-
+			}
 		});
