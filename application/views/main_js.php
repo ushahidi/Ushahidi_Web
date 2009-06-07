@@ -235,9 +235,11 @@
 							currentCat = 'ALL';
 						}
 						
-						$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
+						$.timeline({categoryId: currentCat, 
+							startTime: new Date(startDate * 1000), 
 						    endTime: new Date(endDate * 1000),
 							graphData: allGraphData[0][currentCat], 
+							mediaType: gMediaType,
 							url: "<?php echo url::base() . 'json/timeline/' ?>"
 						}).plot();
 					}
@@ -247,12 +249,14 @@
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
-			var startTime = new Date($("#startDate").val() * 1000);
-			var endTime = new Date($("#endDate").val() * 1000);
-			$.timeline({categoryId: 'ALL', startTime: startTime, endTime: endTime,
-			    graphData: allGraphData[0]['ALL'],
-			    url: "<?php echo url::base() . 'json/timeline/' ?>"
-			}).plot();
+			var plotPeriod = $.timelinePeriod(allGraphData[0]['ALL'].data);
+			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
+			var endTime = $.monthEndTime(plotPeriod[1]) / 1000;
+			$("#startDate").val(startTime);
+			$("#endDate").val(endTime);
+			gCategoryId = 'ALL';
+			gMediaType = 0;
+			$("#startDate, #endDate").change();
 
 			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
 				
@@ -269,9 +273,36 @@
 					var endTime = new Date($("#endDate").val() * 1000);
 					$.timeline({categoryId: catId, startTime: startTime, endTime: endTime,
 			            graphData: graphData,
-			            url: "<?php echo url::base() . 'json/timeline/' ?>"
+			            url: "<?php echo url::base() . 'json/timeline/' ?>",
+			            mediaType: gMediaType
 					}).plot();
 				});
-			}			
-
+			}
+			
+			// media filter
+			$('.filter a').click(function(){
+				var startTimestamp = $("#startDate").val();
+				var endTimestamp = $("#endDate").val();
+				var startTime = new Date(startTimestamp * 1000);
+				var endTime = new Date(endTimestamp * 1000);
+				gMediaType = parseFloat(this.id.replace('media_', '')) || 0;
+				
+				// Get Current Zoom
+				currZoom = map.getZoom();
+					
+				// Get Current Center
+				currCenter = map.getCenter();
+				
+				// Refresh Map
+				// TODO: Fix filter markers on media type
+				//addMarkers($('#currentCat').val(), startTimestamp, endTimestamp, 
+				//           currZoom, currCenter, gMediaType);
+				
+				$('.filter a').attr('class', '');
+				$(this).addClass('active');
+				$.timeline({categoryId: gCategoryId, startTime: startTime, 
+				    endTime: endTime, mediaType: gMediaType,
+					url: "<?php echo url::base() . 'json/timeline/' ?>"
+				}).plot();
+			});
 		});
