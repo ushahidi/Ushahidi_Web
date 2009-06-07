@@ -153,6 +153,9 @@
 		return [startTime, endTime];
 	};
 	
+	/*
+	 * Returns number of days in given month. Jan is given as 0, Dec as 11
+	 */
 	$.monthDays = function(year, month) {
 		days = [31,28,31,30,31,30,31,31,30,31,30,31];
 		daysInMonth = days[month];
@@ -160,6 +163,9 @@
 		return daysInMonth;
 	};
 	
+	/*
+	 * Returns timestamp of the first day of Month of the given timestamp
+	 */
 	$.monthStartTime = function(timestamp) {
 		var startTime = new Date(timestamp - 
 			                     ((new Date(timestamp).getDate()-1) * 24*60*60*1000)).getTime();
@@ -168,14 +174,17 @@
 		                   (startDate.getMinutes() * 60*1000) -
 		                   (startDate.getSeconds() * 1000);
 	};
-
+	
+	/*
+	 * Returns timestamp of the last day of month of the given timestamp
+	 */
 	$.monthEndTime = function(timestamp) {
 		var givenDate = new Date(timestamp);
 		var endTime = timestamp + 
 		              (($.monthDays(givenDate.getYear(), givenDate.getMonth()) - 
 		               new Date(timestamp).getDate()) * 24*60*60*1000);
 		var endDate = new Date(endTime);
-		return endTime - (endDate.getHours() * 60*60*1000) - 
+		return endTime - (endDate.getHours()   * 60*60*1000) - 
 		                 (endDate.getMinutes() * 60*1000) -
 		                 (endDate.getSeconds() * 1000);
 	};

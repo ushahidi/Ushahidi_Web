@@ -318,22 +318,6 @@
 						var startDate = $("#startDate").val();
 						var endDate = $("#endDate").val();
 						var currentCat = gCategoryId;
-/*					
-						var sliderfilter = new OpenLayers.Rule({
-							filter: new OpenLayers.Filter.Comparison(
-							{
-								type: OpenLayers.Filter.Comparison.BETWEEN,
-								property: "timestamp",
-								lowerBoundary: startDate,
-								upperBoundary: endDate
-							})
-						});
-										    
-						style.rules = [];
-						style.addRules(sliderfilter);					
-						markers.styleMap.styles["default"] = style; 
-*/						//markers.refresh();
-						//markers.redraw();
 						
 						// Get Current Category
 						currCat = $("#currentCat").val();
@@ -362,15 +346,17 @@
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
-			var startTime = new Date($("#startDate").val() * 1000);
-			var endTime = new Date($("#endDate").val() * 1000);
-			$.timeline({categoryId: 'ALL', startTime: startTime, endTime: endTime,
-			    graphData: allGraphData[0]['ALL'],
-			    url: "<?php echo url::base() . 'json/timeline/' ?>"
-			}).plot();
+			var plotPeriod = $.timelinePeriod(allGraphData[0]['ALL'].data);
+			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
+			var endTime = $.monthEndTime(plotPeriod[1]) / 1000;
+			$("#startDate").val(startTime);
+			$("#endDate").val(endTime);
+			gCategoryId = 'ALL';
+			gMediaType = 0;
+			$("#startDate, #endDate").change();
 			
 			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];
-			gMediaType = 0;
+			
 				
 			for (var i=0; i<categoryIds.length; i++) {
 				$('#cat_'+categoryIds[i]).click(function(){
