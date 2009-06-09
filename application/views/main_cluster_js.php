@@ -375,7 +375,7 @@
 					}).plot();
 				});
 			}
-			
+/*			
 			// media filter
 			$('.filter a').click(function(){
 				var startTimestamp = $("#startDate").val();
@@ -401,4 +401,5 @@
 					url: "<?php echo url::base() . 'json/timeline/' ?>"
 				}).plot();
 			});
+*/			
 		});
