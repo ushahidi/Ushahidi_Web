@@ -146,7 +146,6 @@
 		for (var i=0; i<plotData.length; i++) {
 			if (plotData[i][1] > heatLevel) {
 				hottestMoment = plotData[i][0];
-				heatLevel = plotData[i][1];
 			}
 		}
 		startTime = hottestMoment - (6 * 30 * 24 * 60 * 60 * 1000);
