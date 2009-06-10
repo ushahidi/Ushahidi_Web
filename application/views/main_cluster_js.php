@@ -99,7 +99,10 @@
 					{
 						radius: function(feature)
 						{
-							feature_icon = feature.cluster[0].data.icon;
+							feature_icon = '';
+							if (typeof(feature.cluster) != 'undefined') {
+								feature_icon = feature.cluster[0].data.icon;
+							}
 							if (feature_icon!="") {
 								return (Math.min(feature.attributes.count, 7) + 5) * 2;
 							} else {
@@ -108,7 +111,10 @@
 						},
 						opacity: function(feature)
 						{
-							feature_icon = feature.cluster[0].data.icon;
+							feature_icon = '';
+							if (typeof(feature.cluster) != 'undefined') {
+								feature_icon = feature.cluster[0].data.icon;
+							}
 							if (feature_icon!="") {
 								return 1;
 							} else {
@@ -117,7 +123,9 @@
 						},						
 						color: function(feature)
 						{
-							if ( feature.cluster.length < 2 || (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+							if ( typeof(feature.cluster) != 'undefined' && 
+							     feature.cluster.length < 2 || 
+							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
 							{
 								return "#" + feature.cluster[0].data.color;
 							}
@@ -128,9 +136,14 @@
 						},
 						icon: function(feature)
 						{
-							if ( feature.cluster.length < 2 || (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+							if ( typeof(feature.cluster) != 'undefined' && 
+							     feature.cluster.length < 2 || 
+							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
 							{
-								feature_icon = feature.cluster[0].data.icon;
+								feature_icon = '';
+								if (typeof(feature.cluster) != 'undefined') {
+									feature_icon = feature.cluster[0].data.icon;
+								}
 								if (feature_icon!="") {
 									return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
 								} else {
