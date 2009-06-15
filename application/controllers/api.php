@@ -1262,7 +1262,10 @@ class Api_Controller extends Controller {
 	 * get the incidents by category name
 	 */
 	function _incidentsByCategoryName($catname,$orderfield,$sort){
-	    $where = "\nWHERE c.category_title = '$catname' AND i.incident_active = 1";
+		// Needs Extra Join
+		$join = "\nINNER JOIN incident_category AS ic ON ic.incident_id = i.id"; 
+		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id";
+	    $where = $join."\nWHERE c.category_title = '$catname' AND i.incident_active = 1";
 	    $sortby = "\nORDER BY $orderfield $sort";
 	    $limit = "\nLIMIT 0, $this->list_limit";
 	    return $this->_getIncidents($where.$sortby, $limit);
