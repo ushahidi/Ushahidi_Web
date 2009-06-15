@@ -36,6 +36,8 @@
 			}
 		};
 		this.graphData = [];
+		
+		this.playCount = 0;
 	    
 		if (options) {
 			if (options.categoryId == '0') {
@@ -55,15 +57,17 @@
 			gTimelineId   = this.elementId;
 	    	
 			if (!this.url) { 
-				plotPeriod = $.period(this.graphData.data);
-				gStartTime = gStartTime || new Date(plotPeriod[0]);
-				gEndTime   = gEndTime   || new Date(plotPeriod[1]);
+				gStartTime = gStartTime || new Date(this.graphData[0][0]); //|| new Date(plotPeriod[0]);
+				timeCount  = this.graphData.length-1;
+				gEndTime   = gEndTime || new Date(this.graphData[timeCount][0]);  //  || new Date(plotPeriod[1]);
+				var customOptions = {};
+				if (gStartTime && gEndTime) {
+					customOptions = {xaxis: { min: gStartTime.getTime(), 
+				                              max: gEndTime.getTime() 
+				                            }};
+				}
 				plot = $.plot($("#"+this.elementId), [this.graphData],
-				        $.extend(true, {}, this.graphOptions, {
-				            xaxis: { min: gStartTime.getTime(), 
-				                     max: gEndTime.getTime() 
-				            }
-				}));
+				        $.extend(true, {}, this.graphOptions, customOptions));
 	        } else {   
 				var startDate = '';
 				var endDate = ''; 
@@ -111,6 +115,7 @@
 				$.getJSON(this.url,
 				    function(data) {
 				        dailyGraphData = data;
+				        gTimelineData = data;
 				        plotPeriod = $.timelinePeriod(data.ALL.data);
 				        gStartTime = gStartTime || new Date(plotPeriod[0]);
 				        gEndTime   = gEndTime   || new Date(plotPeriod[1]);
@@ -132,6 +137,51 @@
 				    }
 				);
 			}
+		};
+		
+		this.resetPlay = function() {
+			this.playCount = 0;
+			return this;
+		};
+		
+		this.play = function() {
+			this.graphData = this.graphData || gTimelineData;
+			var plotData = this.graphData;
+			if (this.playCount >= plotData.data.length) {
+				return;
+			}
+			
+			playTimeline = $.timeline({graphData: plotData.data.slice(0,this.playCount+1), 
+			            startTime: new Date(plotData.data[0][0]),
+			            endTime: new Date(plotData.data[plotData.data.length-1][0])
+			           });
+			playTimeline.plot();
+			gStartTime = new Date(plotData.data[0][0]);
+			gPlayEndDate = playTimeline.graphData[playTimeline.graphData.length-1][0] / 1000;
+			this.playCount++;
+			gTimeline = this;
+			gTimelinePlayHandle = window.setTimeout("gTimeline.play(); playTimeline.plotMarkers(style, markers, gPlayEndDate)",1000);
+			return this;
+		};
+		
+		this.plotMarkers = function(style, markers, endDate) {
+			var startDate = this.startTime.getTime() / 1000;
+			var endDate = endDate || this.endTime.getTime() / 1000;
+			
+			var sliderfilter = new OpenLayers.Rule({
+				filter: new OpenLayers.Filter.Comparison(
+				{
+					type: OpenLayers.Filter.Comparison.BETWEEN,
+					property: "timestamp",
+					lowerBoundary: startDate,
+					upperBoundary: endDate
+				})
+			});
+			style.rules = [];
+			style.addRules(sliderfilter);					
+			markers.styleMap.styles["default"] = style; 
+			markers.redraw();
+			return this;
 		};
 	}  
 
@@ -189,5 +239,7 @@
 		                 (endDate.getMinutes() * 60*1000) -
 		                 (endDate.getSeconds() * 1000);
 	};
+	
+	
 	
 })(jQuery);
