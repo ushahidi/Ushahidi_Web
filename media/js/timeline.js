@@ -35,8 +35,8 @@
 			    color: "#999999"
 			}
 		};
-		this.graphData = [];
 		
+		this.graphData = [];
 		this.playCount = 0;
 	    
 		if (options) {
@@ -57,9 +57,9 @@
 			gTimelineId   = this.elementId;
 	    	
 			if (!this.url) { 
-				gStartTime = gStartTime || new Date(this.graphData[0][0]); //|| new Date(plotPeriod[0]);
+				gStartTime = gStartTime || new Date(this.graphData[0][0]);
 				timeCount  = this.graphData.length-1;
-				gEndTime   = gEndTime || new Date(this.graphData[timeCount][0]);  //  || new Date(plotPeriod[1]);
+				gEndTime   = gEndTime || new Date(this.graphData[timeCount][0]);
 				var customOptions = {};
 				if (gStartTime && gEndTime) {
 					customOptions = {xaxis: { min: gStartTime.getTime(), 
@@ -114,17 +114,16 @@
 				
 				$.getJSON(this.url,
 				    function(data) {
-				        dailyGraphData = data;
 				        gTimelineData = data;
 				        plotPeriod = $.timelinePeriod(data.ALL.data);
 				        gStartTime = gStartTime || new Date(plotPeriod[0]);
 				        gEndTime   = gEndTime   || new Date(plotPeriod[1]);
-				        if (!dailyGraphData[gCategoryId]) {
-				            dailyGraphData[gCategoryId] = {};
-				            dailyGraphData[gCategoryId]['data'] = [];
+				        if (!gTimelineData[gCategoryId]) {
+				            gTimelineData[gCategoryId] = {};
+				            gTimelineData[gCategoryId]['data'] = [];
 				        }
 				        plot = $.plot($("#"+gTimelineId), 
-				            [dailyGraphData[gCategoryId]],
+				            [gTimelineData[gCategoryId]],
 				         	$.extend(true, {}, gGraphOptions, {
 				            	xaxis: { min: gStartTime.getTime(), 
 				                         max: gEndTime.getTime(),
@@ -239,7 +238,5 @@
 		                 (endDate.getMinutes() * 60*1000) -
 		                 (endDate.getSeconds() * 1000);
 	};
-	
-	
-	
+		
 })(jQuery);

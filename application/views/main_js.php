@@ -78,7 +78,6 @@
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
 			// Set Feature Styles
-			//var 
 			style = new OpenLayers.Style({
 				'externalGraphic': "${icon}",
 				pointRadius: "${radius}",
@@ -135,7 +134,6 @@
 			};
 			
 			// Create the markers layer
-			//var 
 			markers = new OpenLayers.Layer.GML("reports", "<?php echo url::base() . 'json' ?>", 
 			{
 				preFeatureInsert:preFeatureInsert,
@@ -214,26 +212,9 @@
 				labelSrc: 'text',
 				sliderOptions: {
 					change: function(e, ui) {
-
 						var startDate = $("#startDate").val();
 						var endDate = $("#endDate").val();
 						var currentCat = gCategoryId;
-
-/*
-						var sliderfilter = new OpenLayers.Rule({
-							filter: new OpenLayers.Filter.Comparison(
-							{
-								type: OpenLayers.Filter.Comparison.BETWEEN,
-								property: "timestamp",
-								lowerBoundary: startDate,
-								upperBoundary: endDate
-							})
-						});
-						style.rules = [];
-						style.addRules(sliderfilter);					
-						markers.styleMap.styles["default"] = style; 
-						markers.redraw();
-*/						
 
 						// refresh graph
 						if (!currentCat || currentCat == '0') {
