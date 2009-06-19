@@ -39,39 +39,52 @@ class J2me_Controller extends Controller
 		$person_last = "";
 		$incident_photo = "";
 
-		if (isset($_GET['incident_title']))
-			$incident_title = $_GET['incident_title'];
-		if (isset($_GET['incident_description']))
-			$incident_description = $_GET['incident_description'];
-		if (isset($_GET['incident_date']))
-			$incident_date = $_GET['incident_date'];
-		if (isset($_GET['incident_hour']))
-			$incident_hour = $_GET['incident_hour'];
-		if (isset($_GET['incident_minute']))
-			$incident_minute = $_GET['incident_minute'];
-		if (isset($_GET['incident_ampm']))
-			$incident_ampm = $_GET['incident_ampm'];
-		if (isset($_GET['incident_category']))
-			$incident_category = $_GET['incident_category'];
-		if (isset($_GET['latitude']))
-			$latitude = $_GET['latitude'];
-		if (isset($_GET['longitude']))
-			$longitude = $_GET['longitude'];
-		if (isset($_GET['location_name']))
-			$location_name = $_GET['location_name'];
-		if (isset($_GET['person_first']))
-			$person_first = $_GET['person_first'];
-		if (isset($_GET['person_last']))
-			$person_last = $_GET['person_last'];
-
-		if (isset($_GET['image_name']))
-			$incident_photo = $_GET['image_name'];
+		if (isset($_POST['incident_title']))
+			$incident_title = $_POST['incident_title'];
+		if (isset($_POST['incident_description']))
+			$incident_description = $_POST['incident_description'];
+		if (isset($_POST['incident_date']))
+			$incident_date = $_POST['incident_date'];
+		if (isset($_POST['incident_hour']))
+			$incident_hour = $_POST['incident_hour'];
+		if (isset($_POST['incident_minute']))
+			$incident_minute = $_POST['incident_minute'];
+		if (isset($_POST['incident_ampm']))
+			$incident_ampm = $_POST['incident_ampm'];
+		if (isset($_POST['incident_category']))
+			$incident_category = $_POST['incident_category'];
+		if (isset($_POST['latitude']))
+			$latitude = $_POST['latitude'];
+		if (isset($_POST['longitude']))
+			$longitude = $_POST['longitude'];
+		if (isset($_POST['location_name']))
+			$location_name = $_POST['location_name'];
+		if (isset($_POST['person_first']))
+			$person_first = $_POST['person_first'];
+		if (isset($_POST['person_last']))
+			$person_last = $_POST['person_last'];
+		
+		// Upload Temporary Image If Any
+		print_r($_FILES['image_name']);
+		if(isset($_FILES['image_name'])
+			AND isset($_FILES['image_name']['error'])
+			AND isset($_FILES['image_name']['name'])
+			AND isset($_FILES['image_name']['type'])
+			AND isset($_FILES['image_name']['tmp_name'])
+			AND isset($_FILES['image_name']['size'])
+			AND is_uploaded_file($_FILES['image_name']['tmp_name'])
+			AND (int) $_FILES['image_name']['error'] === UPLOAD_ERR_OK
+			)
+		{
+			$incident_photo = upload::save('image_name');
+			$incident_photo = "@".$incident_photo;
+		}
+		
 
 		// On the fly GeoCoding with Google Maps
 		$key = Kohana::config('settings.api_google');
 		
 		$url = "http://maps.google.com/maps/geo?q=".urlencode($location_name)."&output=csv&key=".$key;
-		echo $url;
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -105,15 +118,19 @@ class J2me_Controller extends Controller
 			  'incident_category' => $incident_category,
 			  'latitude' => $latitude,
 			  'longitude' => $longitude, 
-			  'location_name' => $location_name,
-			  //'incident_photo[]' => $incident_photo
+			  'location_name' => $location_name
 			);
+			if ($incident_photo != "") 
+			{
+				$mobile_post['incident_photo[]'] = $incident_photo;
+			}
+			
+			//print_r($mobile_post);
 
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_HEADER,1);
 	   		curl_setopt($ch, CURLOPT_URL, url::site().'api' );
 	   		curl_setopt($ch, CURLOPT_POST, 1 );
-	   		//print_r($mobile_post);
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1 );
 	   		curl_setopt($ch, CURLOPT_POSTFIELDS, $mobile_post);
 	   		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -134,5 +151,6 @@ class J2me_Controller extends Controller
 		{
 			echo "Error in geocoding! Http error ".substr($data,0,3);
 		}
-	}	
+	}
+
 }
