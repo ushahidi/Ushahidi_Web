@@ -295,4 +295,8 @@
 				});
 				gTimeline.plot();
 			});
+			
+			$('#playTimeline').click(function() {
+				gTimeline.resetPlay().play();
+			});
 		});

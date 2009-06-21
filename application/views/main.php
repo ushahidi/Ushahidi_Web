@@ -50,7 +50,7 @@
                 </form>
               </div>
               <div id="graph" class="graph-holder"></div>
-              <a href="#"><div class="btn-more" onclick="gTimeline.resetPlay().play()">(Re-)Play</div></a>
+              <a href="#"><div class="btn-more" id="playTimeline">(Re-)Play</div></a>
             </div>
             <div class="category">
               <strong class="title">CATEGORY FILTER</strong>

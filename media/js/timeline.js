@@ -14,7 +14,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-
 (function($) { // hide the namespace
 
 	function Timeline(options) {
@@ -38,6 +37,10 @@
 		
 		this.graphData = [];
 		this.playCount = 0;
+		this.addMarkers = null;
+		if (typeof(gAddMarkers) != 'undefined') {
+			this.addMarkers = gAddMarkers;
+		}
 	    
 		if (options) {
 			if (options.categoryId == '0') {
@@ -159,13 +162,18 @@
 			gPlayEndDate = playTimeline.graphData[playTimeline.graphData.length-1][0] / 1000;
 			this.playCount++;
 			gTimeline = this;
-			gTimelinePlayHandle = window.setTimeout("gTimeline.play(); playTimeline.plotMarkers(style, markers, gPlayEndDate)",1000);
+			gTimelinePlayHandle = window.setTimeout("gTimeline.play(); playTimeline.plotMarkers(style, markers, gPlayEndDate)",2000);
 			return this;
 		};
 		
 		this.plotMarkers = function(style, markers, endDate) {
 			var startDate = this.startTime.getTime() / 1000;
 			var endDate = endDate || this.endTime.getTime() / 1000;
+
+			if (this.addMarkers) {	
+				this.addMarkers(gCategoryId, '', endDate, gMap.getZoom(), gMap.getCenter(), gMediaType);
+				return this;
+			}
 			
 			var sliderfilter = new OpenLayers.Rule({
 				filter: new OpenLayers.Filter.Comparison(
