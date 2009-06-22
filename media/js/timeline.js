@@ -160,9 +160,10 @@
 			playTimeline.plot();
 			gStartTime = new Date(plotData.data[0][0]);
 			gPlayEndDate = playTimeline.graphData[playTimeline.graphData.length-1][0] / 1000;
+			playTimeline.plotMarkers(style, markers, gPlayEndDate);
 			this.playCount++;
 			gTimeline = this;
-			gTimelinePlayHandle = window.setTimeout("gTimeline.play(); playTimeline.plotMarkers(style, markers, gPlayEndDate)",2000);
+			gTimelinePlayHandle = window.setTimeout("gTimeline.play()",2000);
 			return this;
 		};
 		
@@ -170,6 +171,9 @@
 			var startDate = this.startTime.getTime() / 1000;
 			var endDate = endDate || this.endTime.getTime() / 1000;
 
+			// XXX NOTE: Change this for intervals other than monthly if supported
+			endDate = $.monthEndTime(endDate * 1000) / 1000;
+			
 			if (this.addMarkers) {	
 				this.addMarkers(gCategoryId, '', endDate, gMap.getZoom(), gMap.getCenter(), gMediaType);
 				return this;
@@ -225,26 +229,31 @@
 	 * Returns timestamp of the first day of Month of the given timestamp
 	 */
 	$.monthStartTime = function(timestamp) {
-		var startTime = new Date(timestamp - 
-			                     ((new Date(timestamp).getDate()-1) * 24*60*60*1000)).getTime();
-		var startDate = new Date(startTime);
-		return startTime - (startDate.getHours()   * 60*60*1000) - 
-		                   (startDate.getMinutes() * 60*1000) -
-		                   (startDate.getSeconds() * 1000);
+		var startDate = new Date(timestamp);
+		startDate.setDate(1);
+		startDate.setHours(0);
+		startDate.setMinutes(0);
+		startDate.setSeconds(0);
+		return startDate.getTime();
 	};
 	
 	/*
 	 * Returns timestamp of the last day of month of the given timestamp
 	 */
+	$.monthEndDateTime = function(timestamp) {
+		endDate = new Date(timestamp);
+		endDate.setDate($.monthDays(endDate.getYear(), endDate.getMonth()));
+		endDate.setHours(0);
+		endDate.setMinutes(0);
+		endDate.setSeconds(0);
+		return endDate.getTime();	
+	};
+	
+	/*
+	 * Returns timestamp of the last second in the month of given timestamp
+	 */
 	$.monthEndTime = function(timestamp) {
-		var givenDate = new Date(timestamp);
-		var endTime = timestamp + 
-		              (($.monthDays(givenDate.getYear(), givenDate.getMonth()) - 
-		               new Date(timestamp).getDate()) * 24*60*60*1000);
-		var endDate = new Date(endTime);
-		return endTime - (endDate.getHours()   * 60*60*1000) - 
-		                 (endDate.getMinutes() * 60*1000) -
-		                 (endDate.getSeconds() * 1000);
+		return $.monthEndDateTime(timestamp) + (59*1000)+(59*60*1000)+(23*60*60*1000);
 	};
 		
 })(jQuery);

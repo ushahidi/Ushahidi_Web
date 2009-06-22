@@ -125,8 +125,8 @@
 						color: function(feature)
 						{
 							if ( typeof(feature.cluster) != 'undefined' && 
-							     feature.cluster.length < 2 || 
-							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+							     (feature.cluster.length < 2 || 
+							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0)))
 							{
 								return "#" + feature.cluster[0].data.color;
 							}
@@ -365,7 +365,7 @@
 			var allGraphData = [<?php echo $all_graphs ?>];
 			var plotPeriod = $.timelinePeriod(allGraphData[0]['ALL'].data);
 			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
-			var endTime = $.monthEndTime(plotPeriod[1]) / 1000;
+			var endTime = $.monthEndDateTime(plotPeriod[1]) / 1000;
 			$("#startDate").val(startTime);
 			$("#endDate").val(endTime);
 			gCategoryId = 'ALL';
