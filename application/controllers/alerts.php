@@ -18,9 +18,6 @@ class Alerts_Controller extends Main_Controller
     const MOBILE_ALERT = 1;
 	const EMAIL_ALERT = 2;
 	
-    const CODE_LENGTH = 6;
-	private $code_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-	
 	function __construct()
     {
         parent::__construct();
@@ -63,13 +60,15 @@ class Alerts_Controller extends Main_Controller
         // check, has the form been submitted, if so, setup validation
         if ($_POST)
         {
-            // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+            // Instantiate Validation, use $post, so we don't overwrite 
+			// $_POST fields with our own things
             $post = new Validation($_POST);
 
             //  Add some filters
             $post->pre_filter('trim', TRUE);
 			
-            // Add some rules, the input field, followed by a list of checks, carried out in order
+            // Add some rules, the input field, followed by a list of checks, 
+			// carried out in order
             if (!empty($_POST['alert_mobile']) || isset($_POST['alert_mobile_yes']))
             {
                 $post->add_rules('alert_mobile', 'required', 'numeric', 'length[6,20]');
@@ -82,15 +81,15 @@ class Alerts_Controller extends Main_Controller
 			
             if (empty($_POST['alert_email']) && empty($_POST['alert_mobile']))
             {
-                $post->add_error('alert_mobile','one_required');
-                $post->add_error('alert_email','one_required');
+                $post->add_error('alert_mobile', 'one_required');
+                $post->add_error('alert_email', 'one_required');
             }
 			
 			// Validate for maximum and minimum latitude values
-            $post->add_rules('alert_lat','required','between[-90,90]'); 
+            $post->add_rules('alert_lat', 'required', 'between[-90,90]'); 
             
 			// Validate for maximum and minimum longitude values
-			$post->add_rules('alert_lon','required','between[-180,180]'); 
+			$post->add_rules('alert_lon', 'required', 'between[-180,180]'); 
 			
             // Add a callback, to validate the mobile phone/email (See the methods below)
             $post->add_callbacks('alert_mobile', array($this, 'mobile_check'));
@@ -250,10 +249,11 @@ class Alerts_Controller extends Main_Controller
 
         // Now check for similar alert in system
         $mobile_check = ORM::factory('alert')
-            ->where('alert_type', self::MOBILE_ALERT)
-            ->where('alert_recipient', $post->alert_mobile)
-            ->where('alert_lat', $post->alert_lat)
-            ->where('alert_lon', $post->alert_lon)->find();
+            				->where('alert_type', self::MOBILE_ALERT)
+            				->where('alert_recipient', $post->alert_mobile)
+            				->where('alert_lat', $post->alert_lat)
+            				->where('alert_lon', $post->alert_lon)
+							->find();
         
         if ($mobile_check->id)
         {
@@ -275,10 +275,11 @@ class Alerts_Controller extends Main_Controller
 
         // Now check for similar alert in system
         $email_check = ORM::factory('alert')
-            ->where('alert_type', self::EMAIL_ALERT)
-            ->where('alert_recipient', $post->alert_email)
-            ->where('alert_lat', $post->alert_lat)
-            ->where('alert_lon', $post->alert_lon)->find();
+            			->where('alert_type', self::EMAIL_ALERT)
+            			->where('alert_recipient', $post->alert_email)
+            			->where('alert_lat', $post->alert_lat)
+            			->where('alert_lon', $post->alert_lon)
+						->find();
 
         if ($email_check->id)
         {
@@ -292,16 +293,17 @@ class Alerts_Controller extends Main_Controller
 	 */
 	private function _mk_code()
 	{
-		$max_char_pos = strlen($this->code_chars)-1;
+		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+		$max = strlen($chars)-1;
+		$code_length = 6;
 		$code = NULL;
 
         // Generate unique codes only
 		while(1)
 		{
-			for($i = 0; $i < self::CODE_LENGTH; $i++) 
+			for($i = 0; $i < $code_length; $i++) 
 			{
-				$pos = mt_rand(0, $max_char_pos);
-				$code.=$this->code_chars[$pos];
+				$code.=$chars[mt_rand(0, $max)];
 			}
 
 			$code_check = ORM::factory('alert')
