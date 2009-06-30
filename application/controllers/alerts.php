@@ -13,8 +13,8 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class Alerts_Controller extends Main_Controller {
-
+class Alerts_Controller extends Main_Controller 
+{
     const MOBILE_ALERT = 1;
 	const EMAIL_ALERT = 2;
 	
@@ -44,17 +44,17 @@ class Alerts_Controller extends Main_Controller {
         // Retrieve Country Cities
         $this->template->content->cities = $this->_get_cities($default_country);
 		
-	// setup and initialize form field names
+		// Setup and initialize form field names
         $form = array (
-                'alert_mobile'      => '',
-                'alert_mobile_yes'      => '',
-                'alert_email'      => '',
-                'alert_email_yes'      => '',
-                'alert_lat'    => '',
-                'alert_lon'  => ''
-             );
+                'alert_mobile' => '',
+                'alert_mobile_yes' => '',
+                'alert_email' => '',
+                'alert_email_yes' => '',
+                'alert_lat' => '',
+                'alert_lon' => ''
+        	);
 
-        // copy the form as errors, so the errors will be stored with keys
+        // Copy the form as errors, so the errors will be stored with keys
         // corresponding to the form field names
         $errors = $form;
         $form_error = FALSE;
@@ -70,24 +70,27 @@ class Alerts_Controller extends Main_Controller {
             $post->pre_filter('trim', TRUE);
 			
             // Add some rules, the input field, followed by a list of checks, carried out in order
-            if ( !empty($_POST['alert_mobile']) || isset($_POST['alert_mobile_yes']) )
+            if (!empty($_POST['alert_mobile']) || isset($_POST['alert_mobile_yes']))
             {
                 $post->add_rules('alert_mobile', 'required', 'numeric', 'length[6,20]');
             }
 			
-            if ( !empty($_POST['alert_email']) || isset($_POST['alert_email_yes']) )
+            if (!empty($_POST['alert_email']) || isset($_POST['alert_email_yes']))
             {
                 $post->add_rules('alert_email', 'required', 'email', 'length[3,64]');
             }
 			
-            if ( empty($_POST['alert_email']) && empty($_POST['alert_mobile']) )
+            if (empty($_POST['alert_email']) && empty($_POST['alert_mobile']))
             {
                 $post->add_error('alert_mobile','one_required');
                 $post->add_error('alert_email','one_required');
             }
 			
-            $post->add_rules('alert_lat','required','between[-90,90]'); // Validate for maximum and minimum latitude values
-            $post->add_rules('alert_lon','required','between[-180,180]'); // Validate for maximum and minimum longitude values
+			// Validate for maximum and minimum latitude values
+            $post->add_rules('alert_lat','required','between[-90,90]'); 
+            
+			// Validate for maximum and minimum longitude values
+			$post->add_rules('alert_lon','required','between[-180,180]'); 
 			
             // Add a callback, to validate the mobile phone/email (See the methods below)
             $post->add_callbacks('alert_mobile', array($this, 'mobile_check'));
@@ -104,74 +107,14 @@ class Alerts_Controller extends Main_Controller {
 
 				if (!empty($post->alert_mobile))
 				{
-                    $alert_code = $this->_mk_code();
-					
-					$settings = ORM::factory('settings', 1);
-					if ($settings->loaded == true) 
-					{
-                        // Get SMS Numbers
-                        if (!empty($settings->sms_no3)) {
-                            $sms_from = $settings->sms_no3;
-                        }elseif (!empty($settings->sms_no2)) {
-                            $sms_from = $settings->sms_no2;
-                        }elseif (!empty($settings->sms_no1)) {
-                            $sms_from = $settings->sms_no1;
-                        }else{
-                            $sms_from = "000";// User needs to set up an SMS number
-                        }
-
-						$sms = new Clickatell();
-						$sms->api_id = $settings->clickatell_api;
-						$sms->user = $settings->clickatell_username;
-						$sms->password = $settings->clickatell_password;
-						$sms->use_ssl = false;
-						$sms->sms();
-						$message = "Your alerts confirmation code
-								is: ".$alert_code." This code is NOT case sensitive";
-                    
-						if ($sms->send ($post->alert_mobile, $sms_from, $message) == "OK")
-						{
-							$alert = ORM::factory('alert');
-							$alert->alert_type = self::MOBILE_ALERT;
-							$alert->alert_recipient = $post->alert_mobile;
-							$alert->alert_code = $alert_code;
-							$alert->alert_lon = $post->alert_lon;
-							$alert->alert_lat = $post->alert_lat;
-							$alert->save();
-						
-							if ($alert->saved == TRUE)
-								$sms_confirmation_saved = TRUE;
-						}
-					}
+        			$sms_confirmation_saved =
+						_send_mobile_alert($post->alert_mobile);
 				}
 
 				if (!empty($post->alert_email))
 				{
-					$alert_code = $this->_mk_code();
-					
-					//Send verification email
-                    $config = kohana::config('alerts');
-                    $settings = kohana::config('settings');
-					
-                    $to = $post->alert_email;
-					$from = $config['alerts_email'];
-					$subject = $settings['site_name'].' alerts - verification';
-					$message = 'Please follow '.url::site().'alerts/verify/'.$alert_code.
-                               ' to confirm your alert request';
-
-					if (email::send($to, $from, $subject, $message, TRUE) == 1)
-					{
-						$alert = ORM::factory('alert');
-						$alert->alert_type = self::EMAIL_ALERT;
-						$alert->alert_recipient = $post->alert_email;
-						$alert->alert_code = $alert_code;
-						$alert->alert_lon = $post->alert_lon;
-						$alert->alert_lat = $post->alert_lat;
-						$alert->save();
-						
-						if ($alert->saved == TRUE)
-							$email_confirmation_saved = TRUE;
-					}
+					$email_confirmation_saved =
+						_send_email_alert($post->alert_email);			
 				}
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
@@ -180,9 +123,8 @@ class Alerts_Controller extends Main_Controller {
 									$sms_confirmation_saved);
                 $this->session->set('email_confirmation_saved',
 									$email_confirmation_saved);
-
-
-                url::redirect('alerts/confirm');					
+                
+				url::redirect('alerts/confirm');					
             }
             // No! We have validation errors, we need to show the form again, with the errors
             else
@@ -220,18 +162,20 @@ class Alerts_Controller extends Main_Controller {
      */
     function confirm ()
     {
-        //$this->template->header->this_page = 'alerts';
         $this->template->content = new View('alerts_confirm');
-		if (isset($_SESSION['alert_mobile']) && isset($_SESSION['alert_email'])) {
+
+		if (isset($_SESSION['alert_mobile']) && isset($_SESSION['alert_email']))
+		{
 			$this->template->content->alert_mobile = $_SESSION['alert_mobile'];
 			$this->template->content->alert_email = $_SESSION['alert_email'];
 		}
 
 		$this->template->content->email_confirmation_saved =
-			isset($_SESSION['email_confirmation_saved']) ? $_SESSION['email_confirmation_saved'] : FALSE;
+			isset($_SESSION['email_confirmation_saved']) 
+			    ? $_SESSION['email_confirmation_saved'] : FALSE;
 		$this->template->content->sms_confirmation_saved =
-			isset($_SESSION['sms_confirmation_saved']) ? $_SESSION['sms_confirmation_saved'] : FALSE;
-
+			isset($_SESSION['sms_confirmation_saved']) 
+			    ? $_SESSION['sms_confirmation_saved'] : FALSE;
     }
 
     /**
@@ -267,8 +211,7 @@ class Alerts_Controller extends Main_Controller {
 				$code->alert_confirmed = 1;
 				$code->save($code->id);
 
-				if ($code->saved == true)
-					$errno = ER_CODE_VERIFIED;
+				$errno = ER_CODE_VERIFIED;
 			}
 		}
 
@@ -287,8 +230,9 @@ class Alerts_Controller extends Main_Controller {
     {
         $cities = ORM::factory('city')->orderby('city', 'asc')->find_all();
         $city_select = array('' => Kohana::lang('ui_main.alerts_select_city'));
-        foreach ($cities as $city) {
-            $city_select[$city->city_lon .  "," . $city->city_lat] = $city->city;
+        foreach ($cities as $city) 
+		{
+            $city_select[$city->city_lon.",".$city->city_lat] = $city->city;
         }
         return $city_select;
     }
@@ -311,7 +255,7 @@ class Alerts_Controller extends Main_Controller {
             ->where('alert_lat', $post->alert_lat)
             ->where('alert_lon', $post->alert_lon)->find();
         
-        if ( $mobile_check->id )
+        if ($mobile_check->id)
         {
             // Add a validation error, this will cause $post->validate() to return FALSE
             $post->add_error( 'alert_mobile', 'mobile_check');
@@ -336,7 +280,7 @@ class Alerts_Controller extends Main_Controller {
             ->where('alert_lat', $post->alert_lat)
             ->where('alert_lon', $post->alert_lon)->find();
 
-        if ( $email_check->id )
+        if ($email_check->id)
         {
             // Add a validation error, this will cause $post->validate() to return FALSE
             $post->add_error( 'alert_email', 'email_check');
@@ -369,4 +313,85 @@ class Alerts_Controller extends Main_Controller {
 
 		return $code;
 	}
+
+	private function _send_mobile_alert($alert_mobile)
+	{
+		$alert_code = $this->_mk_code();
+					
+		$settings = ORM::factory('settings', 1);
+
+		if (!$settings->loaded)
+			return FALSE;
+
+		// Get SMS Numbers
+		if (!empty($settings->sms_no3)) 
+		{
+			$sms_from = $settings->sms_no3;
+		}
+		elseif (!empty($settings->sms_no2)) 
+		{
+			$sms_from = $settings->sms_no2;
+		}
+		elseif (!empty($settings->sms_no1)) 
+		{
+			$sms_from = $settings->sms_no1;
+		}
+		else
+		{
+			$sms_from = "000";// User needs to set up an SMS number
+		}
+
+		$sms = new Clickatell();
+		$sms->api_id = $settings->clickatell_api;
+		$sms->user = $settings->clickatell_username;
+		$sms->password = $settings->clickatell_password;
+		$sms->use_ssl = false;
+		$sms->sms();
+		$message = "Your alerts confirmation code
+				is: ".$alert_code." This code is NOT case sensitive";
+	
+		if ($sms->send($alert_mobile, $sms_from, $message) == "OK")
+		{
+			$alert = ORM::factory('alert');
+			$alert->alert_type = self::MOBILE_ALERT;
+			$alert->alert_recipient = $alert_mobile;
+			$alert->alert_code = $alert_code;
+			$alert->alert_lon = $post->alert_lon;
+			$alert->alert_lat = $post->alert_lat;
+			$alert->save();
+
+			return TRUE;
+		}
+
+		return FALSE;
+	}
+
+	private function _send_email_alert($alert_email)
+	{
+		$alert_code = $this->_mk_code();
+		
+		$config = kohana::config('alerts');
+		$settings = kohana::config('settings');
+		
+		$to = $alert_email;
+		$from = $config['alerts_email'];
+		$subject = $settings['site_name'].' alerts - verification';
+		$message = 'Please follow '.url::site().'alerts/verify/'.$alert_code.
+				   ' to confirm your alert request';
+
+		if (email::send($to, $from, $subject, $message, TRUE) == 1)
+		{
+			$alert = ORM::factory('alert');
+			$alert->alert_type = self::EMAIL_ALERT;
+			$alert->alert_recipient = $alert_email;
+			$alert->alert_code = $alert_code;
+			$alert->alert_lon = $post->alert_lon;
+			$alert->alert_lat = $post->alert_lat;
+			$alert->save();
+			
+			return TRUE;
+		}
+
+		return FALSE;
+	}	
 }
