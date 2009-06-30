@@ -351,20 +351,22 @@ class Alerts_Controller extends Main_Controller {
 		$max_char_pos = strlen($this->code_chars)-1;
 		$code = NULL;
 
-        for($i = 0; $i < self::CODE_LENGTH; $i++) 
-        {
-			$pos = mt_rand(0, $max_char_pos);
-			$code.=$this->code_chars[$pos];
+        // Generate unique codes only
+		while(1)
+		{
+			for($i = 0; $i < self::CODE_LENGTH; $i++) 
+			{
+				$pos = mt_rand(0, $max_char_pos);
+				$code.=$this->code_chars[$pos];
+			}
+
+			$code_check = ORM::factory('alert')
+							->where('alert_code', $code)->find();
+
+			if (!$code_check->id)
+				break;
 		}
 
-        // Only generate unique codes. If a code has been used before, generate
-		// a new one.
-        $code_check = ORM::factory('alert')
-            			->where('alert_code', $code)->find();
-
-        if (!$code_check->id)
-			return $code;
-		
-		$this->_mk_code();
+		return $code;
 	}
 }
