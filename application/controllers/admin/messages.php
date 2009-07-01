@@ -59,12 +59,38 @@ class Messages_Controller extends Admin_Controller
 			$type = "1";
 			$filter = 'message_type = 1';
 		}
+		
+		// Any time period filter?
+		$period = 'a';
+		if (!empty($_GET['period']))
+		{
+			$period = $_GET['period'];
+			
+			if ($period == 'd')
+			{
+				$message_date = date("Y-m-d 00:00:00", mktime(0, 0, 0,date("m"),date("d")-1,date("Y")));
+				$end_date = date("Y-m-d 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+			} elseif ($period == 'm')
+			{
+				$message_date = date("Y-m-01 00:00:00", mktime(0, 0, 0, date("m")-1, date("d"), date("Y")));
+				$end_date = date("Y-m-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+			} elseif ($period == 'y')
+			{
+				$message_date = date("Y-01-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")-1));
+				$end_date = date("Y-01-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+			}
+			
+			if (isset($message_date))
+			{
+				$filter .= " AND message_date >= '" . $message_date . "' AND message_date < '" . $end_date ."'";
+			}
+		}
 
 		// check, has the form been submitted?
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-
+		
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'   => 'page',
@@ -96,7 +122,8 @@ class Messages_Controller extends Admin_Controller
 
 		// Message Type Tab - Inbox/Outbox
 		$this->template->content->type = $type;
-
+		$this->template->content->period = $period;
+		
 		// Javascript Header
 		$this->template->js = new View('admin/messages_js');
 	}

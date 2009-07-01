@@ -33,6 +33,10 @@
 							?><li><a href="?type=2" <?php if ($type == '2') echo "class=\"active\""; ?>>Outbox</a></li><?php
 						}
 						?>
+						<li><a href="?type=<?php echo $type ?>&period=a" <?php if ($period == 'a') echo "class=\"active\""; ?>>All</a></li>
+						<li><a href="?type=<?php echo $type ?>&period=d" <?php if ($period == 'd') echo "class=\"active\""; ?>>Yesterday</a></li>
+						<li><a href="?type=<?php echo $type ?>&period=m" <?php if ($period == 'm') echo "class=\"active\""; ?>>Last Month</a></li>
+						<li><a href="?type=<?php echo $type ?>&period=y" <?php if ($period == 'y') echo "class=\"active\""; ?>>Last Year</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -105,7 +109,7 @@
 									$message_type = $message->message_type;
 									?>
 									<tr>
-										<td class="col-1"><input name="message_id[]" id="message_id" value="<?php echo $message_id; ?>" type="checkbox" class="check-box"/></td>
+										<td class="col-1"><input name="message_id[]" value="<?php echo $message_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
 												<p><?php echo $message_description; ?></p>
