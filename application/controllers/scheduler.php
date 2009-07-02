@@ -71,7 +71,7 @@ class Scheduler_Controller extends Controller
 			
 			if (!($scheduler_last > ($cronRan-45)) || $scheduler_last == 0)
 			{ // within 45 secs of cronRan time, so Execute control
-				$site_url = "http://" . $_SERVER['SERVER_NAME'] . "/";
+				$site_url = url::base();
 				$scheduler_status = remote::status( $site_url . "scheduler/" . $scheduler_controller );
 				
 				// Set last time of last execution
