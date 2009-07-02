@@ -18,7 +18,7 @@
 		// Map JS
 		jQuery(function() {
 			var map_layer;
-			var markers;
+			markers = null;
 			var catID = '';
 			
 			/*
@@ -78,13 +78,14 @@
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition());
 			map.addControl(new OpenLayers.Control.LayerSwitcher());		
+			gMap = map;
 			
 			
 			// Create the markers layer
 			function addMarkers(catID,startDate,endDate, currZoom, currCenter, mediaType){
-				
+			
 				// Set Feature Styles
-				var style = new OpenLayers.Style({
+				style = new OpenLayers.Style({
 					'externalGraphic': "${icon}",
 					pointRadius: "${radius}",
 					fillColor: "${color}",
@@ -124,8 +125,8 @@
 						color: function(feature)
 						{
 							if ( typeof(feature.cluster) != 'undefined' && 
-							     feature.cluster.length < 2 || 
-							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+							     (feature.cluster.length < 2 || 
+							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0)))
 							{
 								return "#" + feature.cluster[0].data.color;
 							}
@@ -245,6 +246,8 @@
 				};
 				map.setCenter(myPoint, myZoom);
 			}
+			
+			gAddMarkers = addMarkers;
 			addMarkers();
 			
 			function onMapStartLoad(event) {
@@ -348,20 +351,21 @@
 						if (!currentCat || currentCat == '0') {
 							currentCat = 'ALL';
 						}
-						$.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
+						gTimeline = $.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
 						    endTime: new Date(endDate * 1000), mediaType: gMediaType,
 							graphData: allGraphData[0][currentCat], 
 							url: "<?php echo url::base() . 'json/timeline/' ?>"
-						}).plot();
+						});
+						gTimeline.plot();
 					}
 				}
-			}); //.hide();
+			}); 
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
 			var plotPeriod = $.timelinePeriod(allGraphData[0]['ALL'].data);
 			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
-			var endTime = $.monthEndTime(plotPeriod[1]) / 1000;
+			var endTime = $.monthEndDateTime(plotPeriod[1]) / 1000;
 			$("#startDate").val(startTime);
 			$("#endDate").val(endTime);
 			gCategoryId = 'ALL';
@@ -381,11 +385,12 @@
 					
 					var startTime = new Date($("#startDate").val() * 1000);
 					var endTime = new Date($("#endDate").val() * 1000);
-					$.timeline({categoryId: catId, startTime: startTime, endTime: endTime,
+					gTimeline = $.timeline({categoryId: catId, startTime: startTime, endTime: endTime,
 						graphData: graphData,
 						url: "<?php echo url::base() . 'json/timeline/' ?>",
 						mediaType: gMediaType
-					}).plot();
+					});
+					gTimeline.plot();
 				});
 			}
 			
@@ -409,9 +414,14 @@
 				
 				$('.filter a').attr('class', '');
 				$(this).addClass('active');
-				$.timeline({categoryId: gCategoryId, startTime: startTime, 
+				gTimeline = $.timeline({categoryId: gCategoryId, startTime: startTime, 
 				    endTime: endTime, mediaType: gMediaType,
 					url: "<?php echo url::base() . 'json/timeline/' ?>"
-				}).plot();
+				});
+				gTimeline.plot();
+			});
+			
+			$('#playTimeline').click(function() {
+				gTimeline.resetPlay().play();
 			});
 		});
