@@ -68,7 +68,7 @@
 									<p>
 										This is some descriptive text that talks about Frontline SMS a bit more.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
 									</p>
-									<a href="#" class="no_border">
+									<a href="http://www.frontlinesms.com/download/" class="no_border">
 										<img src="<?php echo url::base() ?>media/img/admin/download_frontline_engine.gif" />
 									</a>
 						
