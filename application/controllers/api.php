@@ -589,7 +589,7 @@ class Api_Controller extends Controller {
 			$post->add_rules('incident_description','required');
 			$post->add_rules('incident_date','required','date_mmddyyyy');
 			$post->add_rules('incident_hour','required','between[1,12]');
-			$post->add_rules('incident_minute','required','between[0,59]');
+			//$post->add_rules('incident_minute','required','between[0,59]');
 			
 			if($this->_verifyArrayIndex($_POST, 'incident_ampm')) {
 	    		if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != 
