@@ -86,8 +86,6 @@
 		function CheckAll( id, name )
 		{
 			$("INPUT[name='" + name + "'][type='checkbox']").attr('checked', $('#' + id).is(':checked'));
-			//$(".check-box").hide();
-			$("input:checkbox").hide();
 		}
 		
 		// Ajax Submission
