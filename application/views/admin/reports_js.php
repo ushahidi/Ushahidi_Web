@@ -13,21 +13,9 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
-		
-		$(document).ready(function()
-		{		
-			$(".hide").click(function () {
-				$("#submitStatus").hide();
-				return false;
-			});
-		});
-		
-		// Check All / Check None
-		function CheckAll( id, name )
-		{
-			$("INPUT[name='" + name + "'][type='checkbox']").attr('checked', $('#' + id).is(':checked'));
-		}
-		
+
+<?php require SYSPATH.'../application/views/admin/form_utils_js.php' ?>
+
 		// Ajax Submission
 		function reportAction ( action, confirmAction, incident_id )
 		{
@@ -66,14 +54,4 @@
 			}
 		}
 		
-		//check if a checkbox has been ticked.
-		function isChecked( id )
-		{
-			var checked = $("input[id="+id+"]:checked").length
-			
-			if( checked == 0 )
-			return false
-			
-			else 
-			return true
-		}
+
