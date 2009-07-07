@@ -14,11 +14,21 @@
  */
 
 class Api_Controller extends Controller {
-    var $db; //Database instance for queries
-    var $list_limit; //number of records to limit response to - set in __construct
-    var $responseType; //type of response, either json or xml as specified, defaults to json in set in __construct
-    var $error_messages; // validation error messages
-    var $messages = array(); // form validation error messages
+	
+    private $db; //Database instance for queries
+    private $list_limit; //number of records to limit response to - set in __construct
+    private $responseType; //type of response, either json or xml as specified, defaults to json in set in __construct
+    private $error_messages; // validation error messages
+    private $messages = array(); // form validation error messages
+	
+	/**
+	 * constructor
+	 */
+	function __construct(){
+	    $this->db = new Database;
+	    $this->list_limit = '20';
+	    $this->responseType = 'json';
+	}
 	
     /**
      *
@@ -1284,15 +1294,6 @@ class Api_Controller extends Controller {
 	    $sortby = "\nORDER BY $orderfield $sort";
 	    $limit = "\nLIMIT 0, $this->list_limit";
 	    return $this->_getIncidents($where.$sortby, $limit);
-	}
-	
-	/**
-	 * constructor
-	 */
-	function __construct(){
-	    $this->db = new Database;
-	    $this->list_limit = '20';
-	    $this->responseType = 'json';
 	}
 	
 	/**
