@@ -107,13 +107,13 @@ class Alerts_Controller extends Main_Controller
 				if (!empty($post->alert_mobile))
 				{
         			$sms_confirmation_saved =
-						_send_mobile_alert($post->alert_mobile);
+						$this->_send_mobile_alert($post->alert_mobile);
 				}
 
 				if (!empty($post->alert_email))
 				{
 					$email_confirmation_saved =
-						_send_email_alert($post->alert_email);			
+						$this->_send_email_alert($post->alert_email);			
 				}
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
