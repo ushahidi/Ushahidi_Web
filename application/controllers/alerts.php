@@ -354,6 +354,11 @@ class Alerts_Controller extends Main_Controller
 	
 		if ($sms->send($alert_mobile, $sms_from, $message) == "OK")
 		{
+            // Instantiate Validation, use $post, so we don't overwrite 
+            // $_POST fields with our own things
+            $post = new Validation($_POST);
+            
+            
 			$alert = ORM::factory('alert');
 			$alert->alert_type = self::MOBILE_ALERT;
 			$alert->alert_recipient = $alert_mobile;
@@ -383,6 +388,11 @@ class Alerts_Controller extends Main_Controller
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{
+            // Instantiate Validation, use $post, so we don't overwrite 
+            // $_POST fields with our own things
+            $post = new Validation($_POST);
+            
+            
 			$alert = ORM::factory('alert');
 			$alert->alert_type = self::EMAIL_ALERT;
 			$alert->alert_recipient = $alert_email;
