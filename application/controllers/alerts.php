@@ -221,6 +221,55 @@ class Alerts_Controller extends Main_Controller
         $this->template->content = new View('alerts_verify');
 		$this->template->content->errno = $errno;
     }
+    
+    
+    /**
+     * Verifies a previously sent alert confirmation code
+     * 
+     * @param string $code
+     */
+    public function ccverify ( )
+    {   // IF data has been posted to the request ...
+        if ($post = $this->input->post())
+        {   // TRY to update the model and save it
+            try
+            {   // CREATE a local variable representing the alert identified with _POST
+                $Code = ORM::factory('alert', $post['alert_code']);
+                
+                // IF the code couldn't be loaded ...
+                if (! $Code->loaded)
+                {   // THROW an exception
+                    throw new Kohana_Exception('Code not found');
+                }    
+                    
+                // SET the alert as confirmed, and save it
+                $Code->set('alert_confirmed', 1)->save();
+            }
+            // CATCH any exceptions that might occur ...
+            catch (Exception $e)
+            {
+                var_dump($e);
+            }
+        }
+        // ELSE, no data was posted to the request ...
+        else
+        {
+            
+        }
+        
+        
+        define("ER_CODE_VERIFIED", 0);
+        define("ER_CODE_NOT_FOUND", 1);
+        define("ER_CODE_ALREADY_VERIFIED", 2);
+        
+        
+        $this->template->header->this_page = 'alerts';
+        $this->template->content = new View('alerts_verify');
+        $this->template->content->errno = ER_CODE_VERIFIED;
+        
+    } // END function ccverify
+    
+    
 	
     /*
      * Retrieves Previously Cached Geonames Cities
@@ -318,6 +367,10 @@ class Alerts_Controller extends Main_Controller
 
 	private function _send_mobile_alert($alert_mobile)
 	{
+        // Instantiate Validation, use $post, so we don't overwrite 
+        // $_POST fields with our own things
+        $post = new Validation($_POST);
+        
 		$alert_code = $this->_mk_code();
 					
 		$settings = ORM::factory('settings', 1);
@@ -375,6 +428,10 @@ class Alerts_Controller extends Main_Controller
 
 	private function _send_email_alert($alert_email)
 	{
+        // Instantiate Validation, use $post, so we don't overwrite 
+        // $_POST fields with our own things
+        $post = new Validation($_POST);
+        
 		$alert_code = $this->_mk_code();
 		
 		$config = kohana::config('alerts');
