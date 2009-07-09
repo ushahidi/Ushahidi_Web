@@ -176,51 +176,6 @@ class Alerts_Controller extends Main_Controller
 			isset($_SESSION['sms_confirmation_saved']) 
 			    ? $_SESSION['sms_confirmation_saved'] : FALSE;
     }
-
-    /**
-     * Verifies a previously sent alert confirmation code
-     */
-    function verify($code=NULL)
-    {
-		$errno = NULL;
-		define("ER_CODE_VERIFIED", 0);
-		define("ER_CODE_NOT_FOUND", 1);
-		define("ER_CODE_ALREADY_VERIFIED", 2);
-
-		if (isset($_POST['alert_code']))
-			$code = trim($_POST['alert_code']);
-
-		if ($code != NULL)
-		{
-			$code = ORM::factory('alert')
-					->where('alert_code', $code)->find();
-		
-			if (!$code->id)
-			{
-				$errno = ER_CODE_NOT_FOUND;
-			}
-
-			elseif ($code->alert_confirmed == 1)
-			{
-				$errno = ER_CODE_ALREADY_VERIFIED; 
-			}
-
-			else
-			{
-				$code->alert_confirmed = 1;
-				$code->save($code->id);
-
-				$errno = ER_CODE_VERIFIED;
-			}
-		}
-
-		else
-			$errno = ER_CODE_NOT_FOUND;
-
-		$this->template->header->this_page = 'alerts';
-        $this->template->content = new View('alerts_verify');
-		$this->template->content->errno = $errno;
-    }
     
     
     /**
@@ -228,8 +183,12 @@ class Alerts_Controller extends Main_Controller
      * 
      * @param string $code
      */
-    public function ccverify ( )
-    {   // IF data has been posted to the request ...
+    public function verify ( )
+    {   // INITIALIZE the content's section of the view
+        $this->template->content = new View('alerts_verify');
+        $this->template->header->this_page = 'alerts';
+        
+        // IF data has been posted to the request ...
         if ($post = $this->input->post())
         {   // TRY to update the model and save it
             try
@@ -241,34 +200,28 @@ class Alerts_Controller extends Main_Controller
                 {   // THROW an exception
                     throw new Kohana_Exception('Code not found');
                 }    
+                
+                if ($Code->alert_confirmed)
+                {   // SET the errno message to previously confirmed
+                    $this->template->content->errno = Alert_Model::ER_CODE_ALREADY_VERIFIED;
+                }
                     
                 // SET the alert as confirmed, and save it
                 $Code->set('alert_confirmed', 1)->save();
             }
             // CATCH any exceptions that might occur ...
             catch (Exception $e)
-            {
-                var_dump($e);
+            {   // SET the errno var to not found, indicating the likley error
+                $this->template->content->errno = Alert_Model::ER_CODE_NOT_FOUND;
             }
         }
         // ELSE, no data was posted to the request ...
         else
-        {
-            
+        {   // SET the errno var to not found, indicating the likley error
+            $this->template->content->errno = Alert_Model::ER_CODE_NOT_FOUND;
         }
         
-        
-        define("ER_CODE_VERIFIED", 0);
-        define("ER_CODE_NOT_FOUND", 1);
-        define("ER_CODE_ALREADY_VERIFIED", 2);
-        
-        
-        $this->template->header->this_page = 'alerts';
-        $this->template->content = new View('alerts_verify');
-        $this->template->content->errno = ER_CODE_VERIFIED;
-        
     } // END function ccverify
-    
     
 	
     /*

@@ -21,43 +21,50 @@
 				<div class="big-block-bottom">
 					<h1>Get Alerts</h1>
 					<!-- green-box/ red-box depending on verification result -->
-					<?php
-					if ($errno == ER_CODE_NOT_FOUND)
-					{
-						echo "<div class=\"red-box\">";
-						echo "<div class=\"alert_response\">";
-						echo Kohana::lang('alerts.code_not_found');
-                   		echo "</div>";
-
-						echo "<div class=\"alert_confirm\">";
-								
-								print form::open('/alerts/verify');
-								print form::input('alert_code', '');
-								print "&nbsp;&nbsp;";
-								print form::submit('button', 'Confirm', ' class="btn_blue"');
-								print form::close();
-						echo "</div>";
-						echo "</div>";
-					}
-					elseif ($errno == ER_CODE_ALREADY_VERIFIED)
-					{
-						echo "<div class=\"red-box\">";
-						echo "<div class=\"alert_response\" align=\"center\">";
-						echo Kohana::lang('alerts.code_already_verified');
-                        echo "</div>";
-                   		echo "</div>";
-					}
-
-                    elseif ($errno == ER_CODE_VERIFIED)
-                    {
-                        echo "<div class=\"green-box\">";
-                        echo "<div class=\"alert_response\" align=\"center\">";
-                   		echo Kohana::lang('alerts.code_verified');
-                        echo "</div>";
-                        echo "</div>";
-                    }
-
-                    ?>
+<?php
+    // SWITCH based on the value of the $errno
+    switch ($errno) : 
+    
+        // IF the code provided was not found ...
+        case Alert_Model::ER_CODE_NOT_FOUND:
+?>
+                        <div class="red-box">
+                            <div class="alert_response">
+                                <?php echo Kohana::lang('alerts.code_not_found'); ?>
+                            </div>
+                            <div class="alert_confirm">
+                                <?php echo form::open('/alerts/verify'); ?>
+                                <?php echo form::input('alert_code', ''); ?>
+                                <?php echo form::submit('button', 'Confirm', ' class="btn_blue"'); ?>
+                                <?php echo form::close(); ?>
+                            </div>
+                        </div>
+<?php
+        break;
+        
+        // IF the code provided means the alert has already been verified ...
+        case Alert_Model::ER_CODE_ALREADY_VERIFIED
+?>
+                        <div class="red-box">
+                            <div class="alert_response" align="center">
+                                <?php echo Kohana::lang('alerts.code_already_verified'); ?>
+                            </div>
+                        </div>
+<?php
+        // IF the code provided means the code is now verified ...
+        case Alert_Model::ER_CODE_VERIFIED;
+?>
+                        <div class="green-box">
+                            <div class="alert_response" align="center">
+                                <?php echo Kohana::lang('alerts.code_verified'); ?>
+                            </div>
+                        </div>
+<?php
+        break;
+        
+    // END the conditional regarding the status of the $errno passed to the view    
+    endswitch; 
+?>
                 </div>
 			</div>
 		</div>
