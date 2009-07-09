@@ -33,7 +33,8 @@ function CheckAll( id, name )
 //check if a checkbox has been ticked.
 function isChecked( id )
 {
-	var checked = $("input[id="+id+"]:checked").length
+	//var checked = $("input[id="+id+"]:checked").length
+	var checked = $("td > input:checked").length
 	
 	if( checked == 0 )
 	return false

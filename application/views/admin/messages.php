@@ -42,6 +42,9 @@
 					<div class="tab">
 						<ul>
 							<li><a href="#" onClick="submitIds()">DELETE</a></li>
+							<?php foreach($levels as $level) { ?>
+								<li><a href="#" onClick="itemAction('rank', 'Mark As <?php echo $level->level_title?>', '', <?php echo $level->id?>)"><?php echo $level->level_title?></a></li>
+							<?php } ?>
 						</ul>
 					</div>
 				</div>
@@ -68,6 +71,7 @@
 				<!-- report-table -->
 				<?php print form::open(NULL, array('id' => 'messagesMain', 'name' => 'messagesMain')); ?>
 					<input type="hidden" name="action" id="action" value="">
+					<input type="hidden" name="level"  id="level"  value="">
 					<div class="table-holder">
 						<table class="table">
 							<thead>
