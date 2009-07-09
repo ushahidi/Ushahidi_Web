@@ -107,13 +107,15 @@ class Alerts_Controller extends Main_Controller
 				if (!empty($post->alert_mobile))
 				{
         			$sms_confirmation_saved =
-						_send_mobile_alert($post->alert_mobile);
+						$this->_send_mobile_alert($post->alert_mobile,
+								$post->alert_lon, $post->alert_lat);
 				}
 
 				if (!empty($post->alert_email))
 				{
 					$email_confirmation_saved =
-						_send_email_alert($post->alert_email);			
+						$this->_send_email_alert($post->alert_email,
+								$post->alert_lon, $post->alert_lat);
 				}
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
@@ -316,7 +318,7 @@ class Alerts_Controller extends Main_Controller
 		return $code;
 	}
 
-	private function _send_mobile_alert($alert_mobile)
+	private function _send_mobile_alert($alert_mobile, $alert_lon, $alert_lat)
 	{
 		$alert_code = $this->_mk_code();
 					
@@ -358,8 +360,8 @@ class Alerts_Controller extends Main_Controller
 			$alert->alert_type = self::MOBILE_ALERT;
 			$alert->alert_recipient = $alert_mobile;
 			$alert->alert_code = $alert_code;
-			$alert->alert_lon = $post->alert_lon;
-			$alert->alert_lat = $post->alert_lat;
+			$alert->alert_lon = $alert_lon;
+			$alert->alert_lat = $alert_lat;
 			$alert->save();
 
 			return TRUE;
@@ -368,7 +370,7 @@ class Alerts_Controller extends Main_Controller
 		return FALSE;
 	}
 
-	private function _send_email_alert($alert_email)
+	private function _send_email_alert($alert_email, $alert_lon, $alert_lat)
 	{
 		$alert_code = $this->_mk_code();
 		
@@ -387,8 +389,8 @@ class Alerts_Controller extends Main_Controller
 			$alert->alert_type = self::EMAIL_ALERT;
 			$alert->alert_recipient = $alert_email;
 			$alert->alert_code = $alert_code;
-			$alert->alert_lon = $post->alert_lon;
-			$alert->alert_lat = $post->alert_lat;
+			$alert->alert_lon = $alert_lon;
+			$alert->alert_lat = $alert_lat;
 			$alert->save();
 			
 			return TRUE;
