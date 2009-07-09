@@ -654,6 +654,7 @@ CREATE TABLE IF NOT EXISTS `message`
 `message_detail` text default NULL,
 `message_type` TINYINT default 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',
 `message_date` DATETIME default NULL,
+`message_level` TINYINT NULL DEFAULT 0, 
 PRIMARY KEY (`id`)
 );
 
