@@ -64,7 +64,7 @@ class Email_Controller extends Scheduler_Controller
 			else
 			{
 				// Add new reporter
-	    		$names = split(' ', $message['from'], 2);
+	    		$names = explode(' ', $message['from'], 2);
 	    		$last_name = '';
 	    		if (count($names) == 2) {
 	    			$last_name = $names[1]; 

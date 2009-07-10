@@ -499,7 +499,7 @@ class Reports_Controller extends Admin_Controller
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
 				
-				$incident_date=split("/",$post->incident_date);
+				$incident_date=explode("/",$post->incident_date);
 				// where the $_POST['date'] is a value posted by form in mm/dd/yyyy format
 					$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
 					

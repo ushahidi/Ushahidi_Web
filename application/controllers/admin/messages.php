@@ -36,8 +36,16 @@ class Messages_Controller extends Admin_Controller
 		$this->template->content->title = $service->service_name;
 
         //So far this assumes that selected 'message_id's are for deleting
-        if (isset($_POST['message_id']))
-            $this->deleteMessages($_POST['message_id']);
+		if (isset($_POST['message_id']))
+		{
+			if ($_POST['action'] == 'rank') 
+			{
+				$this->rankMessages($_POST['message_id'], $_POST['level']);
+			} else 
+			{	
+				$this->deleteMessages($_POST['message_id']);
+			}
+		}
 
 		// Is this an Inbox or Outbox Filter?
 		if (!empty($_GET['type']))
@@ -116,6 +124,9 @@ class Messages_Controller extends Admin_Controller
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
+		
+		$levels = ORM::factory('level')->orderby('level_weight')->find_all();
+		$this->template->content->levels = $levels;
 
 		// Total Reports
 		$this->template->content->total_items = $pagination->total_items;
@@ -302,6 +313,23 @@ class Messages_Controller extends Admin_Controller
 	        }
         	$extradir = '';
         }
+        // url::redirect('admin/messages/'.$extradir);
+
+    }
+
+    /**
+     * Rank selected messages
+     */
+    function rankMessages($ids,$level,$dbtable='message')
+    {
+        //XXX:get the current page number
+    	foreach($ids as $id)
+        {
+            $msg = ORM::factory($dbtable)->find($id);
+            $msg->message_level = $level;
+            $msg->save();
+        }
+    	$extradir = '';
         // url::redirect('admin/messages/'.$extradir);
 
     }
@@ -533,7 +561,7 @@ class Messages_Controller extends Admin_Controller
 				             find_all();
 				if (count($reporters) < 1) {
 					// Add new reporter
-		    		$names = split(' ', $tweet_user->{'name'}, 2);
+		    		$names = explode(' ', $tweet_user->{'name'}, 2);
 		    		$last_name = '';
 		    		if (count($names) == 2) {
 		    			$last_name = $names[1];

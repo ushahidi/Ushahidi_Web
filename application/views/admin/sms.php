@@ -66,12 +66,11 @@
 								<td>
 									<h4 class="fix">Download Frontline SMS and install it on your computer. <sup><a href="#">?</a></sup></h4>
 									<p>
-										This is some descriptive text that talks about Frontline SMS a bit more.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
+										FrontlineSMS is free open source software that turns a laptop and a mobile phone into a central communications hub. Once installed, the program enables users to send and receive text messages with large groups of people through mobile phones. Click on the grey box to request a download from FrontlineSMS.com.
 									</p>
 									<a href="http://www.frontlinesms.com/download/" class="no_border">
 										<img src="<?php echo url::base() ?>media/img/admin/download_frontline_engine.gif" />
 									</a>
-						
 								</td>
 							</tr>
 							<tr>
@@ -81,7 +80,7 @@
 								<td>
 									<h4 class="fix">Sync with Ushahidi <sup><a href="#">?</a></sup></h4>
 									<p>
-										This is some descriptive text that talks Syncing with Ushahidi a bit more.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
+										Messages received into a FrontlineSMS hub can be synched with Ushahidi. Detailed instructions on how to sync can be found by <strong><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha#how_to_setup_frontlinesms_to_sync_with_ushahidi" target="_blank">here</a></strong>. You will require the key and link below to set up the sync with FrontlineSMS.
 									</p>
 									<p class="sync_key">
 										Your Ushahidi Sync Key: <span><?php echo $frontlinesms_key; ?></span><br /><br />
@@ -96,7 +95,7 @@
 								<td>
 									<h4 class="fix">Enter phone number(s) connected to Frontline SMS in the field(s) below. <sup><a href="#">?</a></sup></h4>
 									<p>
-										This is some descriptive text about entering SMS Phone Numbers.  Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed.
+										Enter the number without any + or dashes below.
 									</p>
 									<div class="row">
 										<h4>Phone 1:</h4>

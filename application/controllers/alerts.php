@@ -107,13 +107,15 @@ class Alerts_Controller extends Main_Controller
 				if (!empty($post->alert_mobile))
 				{
         			$sms_confirmation_saved =
-						_send_mobile_alert($post->alert_mobile);
+						$this->_send_mobile_alert($post->alert_mobile,
+								$post->alert_lon, $post->alert_lat);
 				}
 
 				if (!empty($post->alert_email))
 				{
 					$email_confirmation_saved =
-						_send_email_alert($post->alert_email);			
+						$this->_send_email_alert($post->alert_email,
+								$post->alert_lon, $post->alert_lat);
 				}
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
@@ -176,51 +178,53 @@ class Alerts_Controller extends Main_Controller
 			isset($_SESSION['sms_confirmation_saved']) 
 			    ? $_SESSION['sms_confirmation_saved'] : FALSE;
     }
-
+    
+    
     /**
      * Verifies a previously sent alert confirmation code
+     * 
+     * @param string $code
      */
-    function verify($code=NULL)
-    {
-		$errno = NULL;
-		define("ER_CODE_VERIFIED", 0);
-		define("ER_CODE_NOT_FOUND", 1);
-		define("ER_CODE_ALREADY_VERIFIED", 2);
-
-		if (isset($_POST['alert_code']))
-			$code = trim($_POST['alert_code']);
-
-		if ($code != NULL)
-		{
-			$code = ORM::factory('alert')
-					->where('alert_code', $code)->find();
-		
-			if (!$code->id)
-			{
-				$errno = ER_CODE_NOT_FOUND;
-			}
-
-			elseif ($code->alert_confirmed == 1)
-			{
-				$errno = ER_CODE_ALREADY_VERIFIED; 
-			}
-
-			else
-			{
-				$code->alert_confirmed = 1;
-				$code->save($code->id);
-
-				$errno = ER_CODE_VERIFIED;
-			}
-		}
-
-		else
-			$errno = ER_CODE_NOT_FOUND;
-
-		$this->template->header->this_page = 'alerts';
+    public function verify ( )
+    {   // INITIALIZE the content's section of the view
         $this->template->content = new View('alerts_verify');
-		$this->template->content->errno = $errno;
-    }
+        $this->template->header->this_page = 'alerts';
+        
+        // IF data has been posted to the request ...
+        if ($post = $this->input->post())
+        {   // TRY to update the model and save it
+            try
+            {   // CREATE a local variable representing the alert identified with _POST
+                $Code = ORM::factory('alert', $post['alert_code']);
+                
+                // IF the code couldn't be loaded ...
+                if (! $Code->loaded)
+                {   // THROW an exception
+                    throw new Kohana_Exception('Code not found');
+                }    
+                
+                if ($Code->alert_confirmed)
+                {   // SET the errno message to previously confirmed
+                    $this->template->content->errno = Alert_Model::ER_CODE_ALREADY_VERIFIED;
+                }
+                    
+                // SET the alert as confirmed, and save it
+                $Code->set('alert_confirmed', 1)->save();
+            }
+            // CATCH any exceptions that might occur ...
+            catch (Exception $e)
+            {   // SET the errno var to not found, indicating the likley error
+                $this->template->content->errno = Alert_Model::ER_CODE_NOT_FOUND;
+            }
+        }
+        // ELSE, no data was posted to the request ...
+        else
+        {   // SET the errno var to not found, indicating the likley error
+            $this->template->content->errno = Alert_Model::ER_CODE_NOT_FOUND;
+        }
+        
+    } // END function ccverify
+    
 	
     /*
      * Retrieves Previously Cached Geonames Cities
@@ -316,8 +320,12 @@ class Alerts_Controller extends Main_Controller
 		return $code;
 	}
 
-	private function _send_mobile_alert($alert_mobile)
+	private function _send_mobile_alert($alert_mobile, $alert_lon, $alert_lat)
 	{
+        // Instantiate Validation, use $post, so we don't overwrite 
+        // $_POST fields with our own things
+        $post = new Validation($_POST);
+        
 		$alert_code = $this->_mk_code();
 					
 		$settings = ORM::factory('settings', 1);
@@ -358,8 +366,8 @@ class Alerts_Controller extends Main_Controller
 			$alert->alert_type = self::MOBILE_ALERT;
 			$alert->alert_recipient = $alert_mobile;
 			$alert->alert_code = $alert_code;
-			$alert->alert_lon = $post->alert_lon;
-			$alert->alert_lat = $post->alert_lat;
+			$alert->alert_lon = $alert_lon;
+			$alert->alert_lat = $alert_lat;
 			$alert->save();
 
 			return TRUE;
@@ -368,8 +376,12 @@ class Alerts_Controller extends Main_Controller
 		return FALSE;
 	}
 
-	private function _send_email_alert($alert_email)
+	private function _send_email_alert($alert_email, $alert_lon, $alert_lat)
 	{
+        // Instantiate Validation, use $post, so we don't overwrite 
+        // $_POST fields with our own things
+        $post = new Validation($_POST);
+        
 		$alert_code = $this->_mk_code();
 		
 		$config = kohana::config('alerts');
@@ -387,8 +399,8 @@ class Alerts_Controller extends Main_Controller
 			$alert->alert_type = self::EMAIL_ALERT;
 			$alert->alert_recipient = $alert_email;
 			$alert->alert_code = $alert_code;
-			$alert->alert_lon = $post->alert_lon;
-			$alert->alert_lat = $post->alert_lat;
+			$alert->alert_lon = $alert_lon;
+			$alert->alert_lat = $alert_lat;
 			$alert->save();
 			
 			return TRUE;
