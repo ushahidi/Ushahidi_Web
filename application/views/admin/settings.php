@@ -20,7 +20,6 @@
 					<div class="report-form">
 						<?php
 						if ($form_error) {
-							print_r($errors);
 						?>
 							<!-- red-box -->
 							<div class="red-box">

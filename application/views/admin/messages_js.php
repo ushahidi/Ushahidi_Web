@@ -14,6 +14,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
+<?php require SYSPATH.'../application/views/admin/form_utils_js.php' ?>
 		
 		function limitChars(textid, limit, infodiv)
 		{
@@ -72,5 +73,46 @@
             if (confirm("Delete cannot be undone. Are you sure you want to continue?"))
                 $('#messagesMain').submit(); 
         }
-
+	
+		// Ajax Submission
+		function itemAction ( action, confirmAction, item_id, level )
+		{
+			var statusMessage;
+			if( !isChecked( "message" ) && item_id=='' )
+			{ 
+				alert('Please select at least one report.');
+			} else {
+				var answer = confirm('Are You Sure You Want To ' + confirmAction + ' items?')
+				if (answer){
+					// Set Submit Type
+					$("#action").attr("value", action);
+					
+					if (item_id != '') 
+					{
+						// Submit Form For Single Item
+						$("#item_single").attr("value", item_id);
+						$("#messagesMain").submit();
+					}
+					else
+					{
+						// Set Hidden form item to 000 so that it doesn't return server side error for blank value
+						$("#item_single").attr("value", "000");
+						$("#level").attr("value", level);
+						// Submit Form For Multiple Items
+						$('#messagesMain').submit();
+/*						
+						$("input[name='incident_id[]'][checked]").each(
+							function() 
+							{
+								$("#messageMain").submit();
+							}
+						);
+*/						
+					}
+				
+				} else {
+					return false;
+				}
+			}
+		}
 		

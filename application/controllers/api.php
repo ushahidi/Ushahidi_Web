@@ -27,137 +27,139 @@ class Api_Controller extends Controller {
     function switchTask(){
         $task = ""; //holds the task to perform as requested
         $ret = ""; //return value
-	$request = array();
+		$request = array();
         $error = array();
 		
-	//determine if we are using GET or POST
-	if($_SERVER['REQUEST_METHOD'] == 'GET'){
-	    $request =& $_GET;
-	} else {
-	    $request =& $_POST;
-	}
+		//determine if we are using GET or POST
+		if($_SERVER['REQUEST_METHOD'] == 'GET'){
+	    	$request =& $_GET;
+		} else {
+	    	$request =& $_POST;
+		}
 		
-	//make sure we have a task to work with
-	if(!$this->_verifyArrayIndex($request, 'task')){
-	    $error = array("error" => $this->_getErrorMsg(001, 'task'));
-	    $task = "";
-	} else {
-	    $task = $request['task'];
-	}
+		//make sure we have a task to work with
+		if(!$this->_verifyArrayIndex($request, 'task')){
+	    	$error = array("error" => $this->_getErrorMsg(001, 'task'));
+	    	$task = "";
+		} else {
+	    	$task = $request['task'];
+		}
 		
-	//response type
-	if(!$this->_verifyArrayIndex($request, 'resp')){
-	    $this->responseType = 'json';
+		//response type
+		if(!$this->_verifyArrayIndex($request, 'resp')){
+	    	$this->responseType = 'json';
         
         } else {
-	    $this->responseType = $request['resp'];
-	}
+	    	$this->responseType = $request['resp'];
+		}
 		
-	switch($task){
-	    case "report": //report/add an incident
-	        $ret = $this->_report();
-		break;
+		switch($task){
+	    	case "report": //report/add an incident
+	        	$ret = $this->_report();
+			break;
 				
-	    case "tagnews": //tag a news item to an incident
-	    case "tagvideo": //report/add an incident
-	    case "tagphoto": //report/add an incident
-	    $incidentid = '';
+	    	case "tagnews": //tag a news item to an incident
+	    	case "tagvideo": //report/add an incident
+	    	case "tagphoto": //report/add an incident
+	    		$incidentid = '';
 				
-	    if(!$this->_verifyArrayIndex($request, 'id')){
-	        $error = array("error" => $this->_getErrorMsg(001, 'id'));
-	    } else {
-		break;
-		$incidentid = $request['id'];
-	    }
+	    		if(!$this->_verifyArrayIndex($request, 'id')) {
+	        		$error = array("error" => $this->_getErrorMsg(001, 'id'));
+					break;
+	    		} else {
+					$incidentid = $request['id'];
+	    		}	
 				
-				
-	    $mediatype = 0;
-	    if($task == "tagnews")
-	        $mediatype = 4;
+	    		$mediatype = 0;
+	
+	    		if($task == "tagnews")
+	        		$mediatype = 4;
 					
-	    if($task == "tagvideo")
-	        $mediatype = 2;
+	    		if($task == "tagvideo")
+	        		$mediatype = 2;
 					
-	    if($task == "tagphoto")
-	        $mediatype = 1;
+	    		if($task == "tagphoto")
+	        		$mediatype = 1;
 					
-	        $ret = $this->_tagMedia($incidentid, $mediatype);
+	        	$ret = $this->_tagMedia($incidentid, $mediatype);
 				
-		break;
-		case "apikeys":
+			break;
+		
+			case "apikeys":
 			
-			$by = '';
-		   	if(!$this->_verifyArrayIndex($request, 'by')) {
-				$error = array("error" => $this->_getErrorMsg(001, 'by'));
-				break;
-		   	}else {
-				$by = $request['by'];
-		   	}
+				$by = '';
+		   		if(!$this->_verifyArrayIndex($request, 'by')) {
+					$error = array("error" => $this->_getErrorMsg(001, 'by'));
+					break;
+		   		}else {
+					$by = $request['by'];
+		   		}
 		    
-			switch($by) {
+				switch($by) {
 				 
-				case "google":
-					$ret = $this->_apiKey('api_google');
+					case "google":
+						$ret = $this->_apiKey('api_google');
 					
-				break;
+					break;
 
-				case "yahoo":
-					$ret = $this->_apiKey('api_yahoo');
-				break;
+					case "yahoo":
+						$ret = $this->_apiKey('api_yahoo');
+					break;
 
-				case "microsoft":
-					$ret = $this->_apiKey('api_live');
+					case "microsoft":
+						$ret = $this->_apiKey('api_live');
 					break;
 					
-				default:
-					$error = array("error" =>$this->_getErrorMsg(002));
-			}
-		break;
+					default:
+						$error = array("error" =>$this->_getErrorMsg(002));
+				}
+				break;
 					
-	    case "categories": //retrieve categories
-		$ret = $this->_categories();
-		break;
-				
-	    case "category": //retrieve categories
-	        $id = 0;
-				
-	        if(!$this->_verifyArrayIndex($request, 'id')){
-		    $error = array("error" => $this->_getErrorMsg(001, 'id'));
-		    break;
-		} else {
-		    $id = $request['id'];
-		}
-				
-		$ret = $this->_category($id);
-		break;
-				
-		case "locations": //retrieve locations
-	            $ret = $this->_locations();
-		    break;		
-		
-		case "location": //retrieve locations
-		    $by = '';
-				
-	        if(!$this->_verifyArrayIndex($request, 'by')){
-		    $error = array("error" => $this->_getErrorMsg(001, 'by'));
-		    break;
-		} else {
-		    $by = $request['by'];
-		}
-		
-		
-				
-		switch ($by){
-		    case "latlon": //latitude and longitude
-						//
-		        break;
-		    case "locid": //id
-		        if(($this->_verifyArrayIndex($request, 'id'))){
-			    $ret = $this->_locationById($request['id']);
-			} else {
-			    $error = array("error" => $this->_getErrorMsg(001, 'id'));
-			}
+	    	case "categories": //retrieve categories
+				$ret = $this->_categories();
 			break;
+				
+	    	case "category": //retrieve categories
+	        	$id = 0;
+				
+	        	if(!$this->_verifyArrayIndex($request, 'id')){
+		    		$error = array("error" => $this->_getErrorMsg(001, 'id'));
+		    		break;
+				} else {
+		    		$id = $request['id'];
+				}
+				
+				$ret = $this->_category($id);
+				break;
+				
+			case "locations": //retrieve locations
+	            $ret = $this->_locations();
+		    	break;		
+		
+			case "location": //retrieve locations
+		    	$by = '';
+				
+	        	if(!$this->_verifyArrayIndex($request, 'by')){
+		    		$error = array("error" => $this->_getErrorMsg(001, 'by'));
+		    		break;
+				} else {
+		    		$by = $request['by'];
+				}
+		
+		
+				
+				switch ($by){
+		    		case "latlon": //latitude and longitude
+						//
+		        	break;
+		    		case "locid": //id
+		        		if(($this->_verifyArrayIndex($request, 'id'))){
+			    			$ret = $this->_locationById($request['id']);
+						} else {
+			    			$error = array("error" => $this->_getErrorMsg(001, 'id'));
+						}
+					break;
+			
 			case "country": //id
 			    if(($this->_verifyArrayIndex($request, 'id'))){
 			        $ret = $this->_locationByCountryId($request['id']);
@@ -263,12 +265,12 @@ class Api_Controller extends Controller {
 			    break;
 			    case "latlon": //latitude and longitude
                                 
-                                if(($this->_verifyArrayIndex($request, 'latitude')) && ($this->_verifyArrayIndex($request, 'longitude'))){
+                    	if(($this->_verifyArrayIndex($request, 'latitude')) && ($this->_verifyArrayIndex($request, 'longitude'))){
 			        $ret = $this->_incidentsByLatLon($request['latitude'], $request['longitude']);
                                 
-                                } else {
-				    $error = array("error" => $this->_getErrorMsg(001, 'latitude or longitude'));
-				}
+                        } else {
+				    		$error = array("error" => $this->_getErrorMsg(001, 'latitude or longitude'));
+						}
 				break;
 				case "address": //address
 				    if(($this->_verifyArrayIndex($request, 'address'))){
@@ -574,203 +576,202 @@ class Api_Controller extends Controller {
 		);
 		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$this->messages = $form;	    
-    // check, has the form been submitted, if so, setup validation
-    if ($_POST) {
-        // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-	$post = Validation::factory(array_merge($_POST,$_FILES));
+    	// check, has the form been submitted, if so, setup validation
+    	if ($_POST) {
+        	// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory(array_merge($_POST,$_FILES));
 			
-        //  Add some filters
-	$post->pre_filter('trim', TRUE);
+        	//  Add some filters
+			$post->pre_filter('trim', TRUE);
 
-	// Add some rules, the input field, followed by a list of checks, carried out in order
-	$post->add_rules('incident_title','required', 'length[3,200]');
-	$post->add_rules('incident_description','required');
-	$post->add_rules('incident_date','required','date_mmddyyyy');
-	$post->add_rules('incident_hour','required','between[1,12]');
-	//$post->add_rules('incident_minute','required','between[0,59]');
+			// Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('incident_title','required', 'length[3,200]');
+			$post->add_rules('incident_description','required');
+			$post->add_rules('incident_date','required','date_mmddyyyy');
+			$post->add_rules('incident_hour','required','between[1,12]');
+			//$post->add_rules('incident_minute','required','between[0,59]');
 			
-	if($this->_verifyArrayIndex($_POST, 'incident_ampm')){
-	    if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != "pm") {
-	        $post->add_error('incident_ampm','values');
-	    }
-	}
+			if($this->_verifyArrayIndex($_POST, 'incident_ampm')) {
+	    		if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != 
+					"pm") {
+	        		$post->add_error('incident_ampm','values');
+	    		}
+			}
 	        
-	$post->add_rules('latitude','required','between[-90,90]');	// Validate for maximum and minimum latitude values
-	$post->add_rules('longitude','required','between[-180,180]');// Validate for maximum and minimum longitude values
-	$post->add_rules('location_name','required', 'length[3,200]');
-	$post->add_rules('incident_category','required','length[1,100]');
+			$post->add_rules('latitude','required','between[-90,90]');	// Validate for maximum and minimum latitude values
+			$post->add_rules('longitude','required','between[-180,180]');// Validate for maximum and minimum longitude values
+			$post->add_rules('location_name','required', 'length[3,200]');
+			$post->add_rules('incident_category','required','length[1,100]');
 			
-	// Validate Personal Information
-	if (!empty($post->person_first))
-	{
-	    $post->add_rules('person_first', 'length[3,100]');
-	}
+			// Validate Personal Information
+			if (!empty($post->person_first)) {
+	    		$post->add_rules('person_first', 'length[3,100]');
+			}
 			
-	if (!empty($post->person_last))
-	{
-	    $post->add_rules('person_last', 'length[3,100]');
-	}
+			if (!empty($post->person_last)) {
+	    		$post->add_rules('person_last', 'length[3,100]');
+			}
 			
-	if (!empty($post->person_email))
-	{
-	    $post->add_rules('person_email', 'email', 'length[3,100]');
-	}
+			if (!empty($post->person_email)) {
+	    		$post->add_rules('person_email', 'email', 'length[3,100]');
+			}
 			
-	// Test to see if things passed the rule checks
-	if ($post->validate()) //
-	{
-	    // SAVE LOCATION (***IF IT DOES NOT EXIST***)
-	    $location = new Location_Model();
-	    $location->location_name = $post->location_name;
-	    $location->latitude = $post->latitude;
-	    $location->longitude = $post->longitude;
-	    $location->location_date = date("Y-m-d H:i:s",time());
-	    $location->save();
+			// Test to see if things passed the rule checks
+			if ($post->validate()) {
+	    		// SAVE LOCATION (***IF IT DOES NOT EXIST***)
+	    		$location = new Location_Model();
+	    		$location->location_name = $post->location_name;
+	    		$location->latitude = $post->latitude;
+	    		$location->longitude = $post->longitude;
+	    		$location->location_date = date("Y-m-d H:i:s",time());
+	    		$location->save();
 				
-	    // SAVE INCIDENT
-	    $incident = new Incident_Model();
-	    $incident->location_id = $location->id;
-	    $incident->user_id = 0;
-	    $incident->incident_title = $post->incident_title;
-	    $incident->incident_description = $post->incident_description;
+	    		// SAVE INCIDENT
+	    		$incident = new Incident_Model();
+	    		$incident->location_id = $location->id;
+	    		$incident->user_id = 0;
+	    		$incident->incident_title = $post->incident_title;
+	    		$incident->incident_description = $post->incident_description;
 				
-	    $incident_date=split("/",$post->incident_date);
-	    // where the $_POST['date'] is a value posted by form in mm/dd/yyyy format
-	    $incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
+	    		$incident_date=split("/",$post->incident_date);
+	    		/**
+			 	 * where the $_POST['date'] is a value posted by form in 
+			 	 * mm/dd/yyyy format
+			 	 */
+	    		$incident_date=$incident_date[2]."-".$incident_date[0]."-"
+					.$incident_date[1];
 					
-	    $incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
-	    $incident->incident_date = $incident_date . " " . $incident_time;
-	    $incident->incident_dateadd = date("Y-m-d H:i:s",time());
-	    $incident->save();
+	    		$incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
+	    		$incident->incident_date = $incident_date . " " . $incident_time;
+	    		$incident->incident_dateadd = date("Y-m-d H:i:s",time());
+	    		$incident->save();
 				
-            // SAVE CATEGORIES
-	    //check if data is csv or a single value.
-        $pos = strpos($post->incident_category,",");
-        if( $pos === false ) {
-			//for backward compactibility. will drop support for it in the future. 
-			if( @unserialize( $post->incident_category) ) { 
-				$categories = unserialize( $post->incident_category);
-			} else {
-				$categories = array( $post->incident_category );
-			}
+            	// SAVE CATEGORIES
+	    		//check if data is csv or a single value.
+        		$pos = strpos($post->incident_category,",");
+        		if( $pos === false ) {
+					//for backward compactibility. will drop support for it in the future. 
+					if( @unserialize( $post->incident_category) ) { 
+						$categories = unserialize( $post->incident_category);
+					} else {
+						$categories = array( $post->incident_category );
+					}
         	
-        } else { 
-        	$categories = explode(",",$post->incident_category);    
-	    } 
-	    if(!empty($categories) && is_array($categories)){
-	        foreach($categories as $item){
-		    	$incident_category = new Incident_Category_Model();
-		    	$incident_category->incident_id = $incident->id;
-		    	$incident_category->category_id = $item;
-		    	$incident_category->save();
-			}
-	    }
+        		} else { 
+        			$categories = explode(",",$post->incident_category);    
+	    		}
+	 
+	    		if(!empty($categories) && is_array($categories)) {
+	        		foreach($categories as $item){
+		    			$incident_category = new Incident_Category_Model();
+		    			$incident_category->incident_id = $incident->id;
+		    			$incident_category->category_id = $item;
+		    			$incident_category->save();
+					}
+	    		}
 				
-	    // STEP 4: SAVE MEDIA
-	    // a. News
-	    if(!empty( $post->incident_news ) && 
-		is_array($post->incident_news)){ 
-		foreach($post->incident_news as $item) {
-		    if(!empty($item))
-		    {
-		        $news = new Media_Model();
-			$news->location_id = $location->id;
-			$news->incident_id = $incident->id;
-			$news->media_type = 4;		// News
-		        $news->media_link = $item;
-			$news->media_date = date("Y-m-d H:i:s",time());
-			$news->save();
-		    }
-		}
-	    }
+	    		// STEP 4: SAVE MEDIA
+	    		// a. News
+	    		if(!empty( $post->incident_news ) && 
+					is_array($post->incident_news)) { 
+						foreach($post->incident_news as $item) {
+		    				if(!empty($item)) {
+		        				$news = new Media_Model();
+								$news->location_id = $location->id;
+								$news->incident_id = $incident->id;
+								$news->media_type = 4;		// News
+		        				$news->media_link = $item;
+								$news->media_date = date("Y-m-d H:i:s",time());
+								$news->save();
+		    				}
+						}
+	    		}
 				
-	    // b. Video
-	    if( !empty( $post->incident_video) && 
-	        is_array( $post->incident_video)){ 
+	    		// b. Video
+	    		if( !empty( $post->incident_video) && 
+	        		is_array( $post->incident_video)){ 
 
-		foreach($post->incident_video as $item)
-		{
-		    if(!empty($item))
-		    {
-		        $video = new Media_Model();
-			$video->location_id = $location->id;
-			$video->incident_id = $incident->id;
-			$video->media_type = 2;		// Video
-			$video->media_link = $item;
-			$video->media_date = date("Y-m-d H:i:s",time());
-			$video->save();
-		    }
-		}
-	    }
+						foreach($post->incident_video as $item) {
+		    				if(!empty($item)) {
+		        				$video = new Media_Model();
+								$video->location_id = $location->id;
+								$video->incident_id = $incident->id;
+								$video->media_type = 2;		// Video
+								$video->media_link = $item;
+								$video->media_date = date("Y-m-d H:i:s",time());
+								$video->save();
+		    				}
+						}
+	    		}
 				
 				// c. Photos
 				if( !empty($post->incident_photo)){
-				    $filenames = upload::save('incident_photo');
-				    $i = 1;
-				    foreach ($filenames as $filename) {
-					    $new_filename = $incident->id . "_" . $i . "_" . time();
+					$filenames = upload::save('incident_photo');
+					$i = 1;
+					foreach ($filenames as $filename) {
+						$new_filename = $incident->id . "_" . $i . "_" . time();
 					
-					    // Resize original file... make sure its max 408px wide
-					    Image::factory($filename)->resize(408,248,Image::AUTO)
-						    ->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
+						// Resize original file... make sure its max 408px wide
+						Image::factory($filename)->resize(408,248,Image::AUTO)
+						    ->save(Kohana::config('upload.directory', TRUE) . 
+							$new_filename . ".jpg");
 					
-					    // Create thumbnail
-					    Image::factory($filename)->resize(70,41,Image::HEIGHT)
-						    ->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");
+				    	// Create thumbnail
+						Image::factory($filename)->resize(70,41,Image::HEIGHT)
+						    ->save(Kohana::config('upload.directory', TRUE) . 
+							$new_filename . "_t.jpg");
 					
-					    // Remove the temporary file
-					    unlink($filename);
+						// Remove the temporary file
+						unlink($filename);
 					
-					    // Save to DB
-					    $photo = new Media_Model();
-					    $photo->location_id = $location->id;
-					    $photo->incident_id = $incident->id;
-					    $photo->media_type = 1; // Images
-					    $photo->media_link = $new_filename . ".jpg";
-					    $photo->media_thumb = $new_filename . "_t.jpg";
-					    $photo->media_date = date("Y-m-d H:i:s",time());
-					    $photo->save();
-					    $i++;
-				    }
+						// Save to DB
+						$photo = new Media_Model();
+						$photo->location_id = $location->id;
+						$photo->incident_id = $incident->id;
+						$photo->media_type = 1; // Images
+						$photo->media_link = $new_filename . ".jpg";
+						$photo->media_thumb = $new_filename . "_t.jpg";
+						$photo->media_date = date("Y-m-d H:i:s",time());
+						$photo->save();
+						$i++;
+					}
 				}				
 				
 				// SAVE PERSONAL INFORMATION IF ITS FILLED UP
 				if(!empty($post->person_first) || 
-				    !empty($post->person_last)){ 
+					!empty($post->person_last)){ 
 	                
-	                $person = new Incident_Person_Model();
-				    $person->location_id = $location->id;
-				    $person->incident_id = $incident->id;
-				    $person->person_first = $post->person_first;
-				    $person->person_last = $post->person_last;
-				    $person->person_email = $post->person_email;
-				    $person->person_date = date("Y-m-d H:i:s",time());
-				    $person->save();
+	            		$person = new Incident_Person_Model();
+						$person->location_id = $location->id;
+						$person->incident_id = $incident->id;
+						$person->person_first = $post->person_first;
+						$person->person_last = $post->person_last;
+						$person->person_email = $post->person_email;
+						$person->person_date = date("Y-m-d H:i:s",time());
+						$person->save();
 				}
 				
 				return 0; //success
 	            
-	        }
-	
-            // No! We have validation errors, we need to show the form again, with the errors
-	        else   
-                {
-                                // populate the error fields, if any
-                                $this->messages = arr::overwrite($this->messages, $post->errors('report'));
+			}
+        	// No! We have validation errors, we need to show the form again, with the errors
+	   		else {
+        		// populate the error fields, if any
+        		$this->messages = arr::overwrite($this->messages, 
+					$post->errors('report'));
 
-                                foreach ($this->messages as $error_item => $error_description)
-                                {
-                                    if( !is_array( $error_description ) ) {
-                                        $this->error_messages .= $error_description;
-                                        if( $error_description != end( $this->messages ) ) {
-                                            $this->error_messages .= " - ";
-                                        }
-                                    }
-                                }
+        		foreach ($this->messages as $error_item => $error_description) {
+            		if( !is_array( $error_description ) ) {
+                		$this->error_messages .= $error_description;
+                		if( $error_description != end( $this->messages ) ) {
+                    		$this->error_messages .= " - ";
+                   		}
+              		}
+            	}
                                 
 				//FAILED!!!
 				return 1; //validation error
-	        }
+	      	}
 	    }		
 		else
 		{
@@ -779,10 +780,10 @@ class Api_Controller extends Controller {
 		
 	}
 	
-	/*
-	Tag a news item to an incident
-	*/
-	function _tagMedia($incidentid, $mediatype){
+	/**
+	 * Tag a news item to an incident
+	 */
+	function _tagMedia($incidentid, $mediatype) {
 		if ($_POST) //
 	    {
 
@@ -807,9 +808,13 @@ class Api_Controller extends Controller {
 				//require a url
 				if(!$this->_verifyArrayIndex($_POST, 'url')){
 					if($this->responseType == 'json'){
-						json_encode(array("error" => $this->_getErrorMsg(001, 'url')));
+						json_encode(array("error" => $this->_getErrorMsg(001, 
+							'url')));
+							
 					} else {
-						$err = array("error" => $this->_getErrorMsg(001, 'url'));
+						$err = array("error" => $this->_getErrorMsg(001, 
+							'url'));
+							
 						return $this->_arrayAsXML($err, array());
 					}
 				} else {
@@ -905,7 +910,9 @@ class Api_Controller extends Controller {
 	    $retJsonOrXml = ''; //will hold the json/xml string to return
 
 	    //find incidents
-	    $query = "SELECT id, category_title AS title, category_description AS description, category_color AS color FROM `category` WHERE category_visible = 1 ORDER BY id DESC";
+	    $query = "SELECT id, category_title AS title, category_description AS 
+			description, category_color AS color FROM `category` WHERE 
+			category_visible = 1 ORDER BY id DESC";
 
 	    $items = $this->db->query($query);
 	    $i = 0;
@@ -951,7 +958,9 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
-		$query = "SELECT id, category_title, category_description, category_color FROM `category` WHERE category_visible = 1 AND id=$id ORDER BY id DESC";
+		$query = "SELECT id, category_title, category_description, 
+			category_color FROM `category` WHERE category_visible = 1 
+			AND id=$id ORDER BY id DESC";
 
 	$items = $this->db->query($query);
 	$i = 0;
@@ -991,20 +1000,21 @@ class Api_Controller extends Controller {
      */
     function _getLocations($where = '', $limit = ''){
         $items = array(); //will hold the items from the query
-	$data = array(); //items to parse to json
-	$json_locations = array(); //incidents to parse to json
+		$data = array(); //items to parse to json
+		$json_locations = array(); //incidents to parse to json
 		
-	$retJsonOrXml = ''; //will hold the json/xml string to return
+		$retJsonOrXml = ''; //will hold the json/xml string to return
 
-	//find incidents
-	$query = "SELECT id, location_name AS name, country_id , latitude, longitude FROM `location` $where $limit ";
+		//find incidents
+		$query = "SELECT id, location_name AS name, country_id , latitude, 
+			longitude FROM `location` $where $limit ";
 
-	$items = $this->db->query($query);
-	$i = 0;
+		$items = $this->db->query($query);
+		$i = 0;
 		
-	$replar = array(); //assists in proper xml generation
+		$replar = array(); //assists in proper xml generation
 		
-	foreach ($items as $item){
+		foreach ($items as $item){
 	    //needs different treatment depending on the output
 	    if($this->responseType == 'json'){
 	        $json_locations[] = array("location" => $item);
@@ -1013,7 +1023,7 @@ class Api_Controller extends Controller {
 	        $replar[] = 'location'.$i;
 	    }
 			
-			$i++;
+		$i++;
 	}
 		
 	//create the json array
@@ -1108,9 +1118,9 @@ class Api_Controller extends Controller {
         return $this->_getLocations($where, $limit);
     }	
 	
-	/*
-	country query abstraction
-	*/
+	/**
+	 * country query abstraction
+	 */
 	function _getCountries($where = '', $limit = ''){
 	    $items = array(); //will hold the items from the query
 	    $data = array(); //items to parse to json
@@ -1119,7 +1129,8 @@ class Api_Controller extends Controller {
 	    $retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
-		$query = "SELECT id, iso, country as `name`, capital FROM `country` $where $limit";
+		$query = "SELECT id, iso, country as `name`, capital 
+			FROM `country` $where $limit";
 
 		$items = $this->db->query($query);
 		$i = 0;
@@ -1198,15 +1209,15 @@ class Api_Controller extends Controller {
      */
     function _incidentsByAll($orderfield,$sort) {
         $where = "\nWHERE i.incident_active = 1";
-	$sortby = "\nORDER BY i.id DESC";
-	$limit = "\nLIMIT 0, $this->list_limit";
-	/* Not elegant but works */
-	return $this->_getIncidents($where.$sortby, $limit);
+		$sortby = "\nORDER BY i.id DESC";
+		$limit = "\nLIMIT 0, $this->list_limit";
+		/* Not elegant but works */
+		return $this->_getIncidents($where.$sortby, $limit);
     }
 	
-	/*
-	get incident by id
-	*/
+	/**
+	 * get incident by id
+	 */
 	function _incidentById($id){
             $where = "\nWHERE i.id = $id AND i.incident_active = 1 ";
             $where .= "ORDER BY i.id DESC ";
@@ -1214,23 +1225,25 @@ class Api_Controller extends Controller {
 	    return $this->_getIncidents($where, $limit);
 	}
 	
-	/*
-	get the incidents by latitude and longitude
-	*/
+	/**
+	 * get the incidents by latitude and longitude.
+	 * TODO // write necessary codes to achieve this.
+	 */
 	function _incidentsByLatLon($lat, $long){
 		
 	}
 	
-	/*
-	get the incidents by address
-	*/
+	/**
+	 * get the incidents by address.
+	 * TODO // write necessary code to achieve this.
+	 */
 	function _incidentsByAddress($address){
 		
 	}
 	
-	/*
-	get the incidents by location id
-	*/
+	/**
+	 * get the incidents by location id
+	 */
 	function _incidentsByLocitionId($locid,$orderfield,$sort){
 	    $where = "\nWHERE i.location_id = $locid AND i.incident_active = 1";
 	    $sortby = "\nORDER BY $orderfield $sort";
@@ -1238,19 +1251,20 @@ class Api_Controller extends Controller {
 	    return $this->_getIncidents($where.$sortby, $limit);
 	}
 	
-	/*
-	get the incidents by location name
-	*/
+	/**
+	 * get the incidents by location name
+	 */
 	function _incidentsByLocationName($locname,$orderfield,$sort){
-	    $where = "\nWHERE l.location_name = '$locname' AND i.incident_active = 1";
+	    $where = "\nWHERE l.location_name = '$locname' AND 
+			i.incident_active = 1";
 	    $sortby = "\nORDER BY $orderfield $sort";
 	    $limit = "\nLIMIT 0, $this->list_limit";
             return $this->_getIncidents($where.$sortby, $limit);
 	}
 	
-	/*
-	get the incidents by category id
-	*/
+	/**
+	 * get the incidents by category id
+	 */
 	function _incidentsByCategoryId($catid,$orderfield,$sort){
 	    $where = "\nWHERE c.id = $catid AND i.incident_active = 1";
 	    $sortby = "\nORDER BY $orderfield $sort";
@@ -1265,39 +1279,40 @@ class Api_Controller extends Controller {
 		// Needs Extra Join
 		$join = "\nINNER JOIN incident_category AS ic ON ic.incident_id = i.id"; 
 		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id";
-	    $where = $join."\nWHERE c.category_title = '$catname' AND i.incident_active = 1";
+	    $where = $join."\nWHERE c.category_title = '$catname' AND 
+			i.incident_active = 1";
 	    $sortby = "\nORDER BY $orderfield $sort";
 	    $limit = "\nLIMIT 0, $this->list_limit";
 	    return $this->_getIncidents($where.$sortby, $limit);
 	}
 	
-	/*
-	constructor
-	*/
+	/**
+	 * constructor
+	 */
 	function __construct(){
 	    $this->db = new Database;
 	    $this->list_limit = '20';
 	    $this->responseType = 'json';
 	}
 	
-	/*
-	starting point
-	*/
+	/**
+	 * starting point
+	 */
 	public function index(){
 	    //switch task
 	    $this->switchTask();
 	}
 	
-	/*
-	Creates a JSON response given an array
-	*/
+	/**
+	 * Creates a JSON response given an array
+	 */
 	function _arrayAsJSON($data){
 	    return json_encode($data);
 	}
 	
-	/*
-	converts an object to an array
-	*/
+	/**
+	 * converts an object to an array
+	 */
 	function _object2array($object) {
 	    if (is_object($object)) {
 	        foreach ($object as $key => $value) {
@@ -1310,10 +1325,10 @@ class Api_Controller extends Controller {
 	    return $array;
 	}
 	
-	/*
-	Creates a XML response given an array
-	CREDIT TO: http://snippets.dzone.com/posts/show/3391
-	*/
+	/**
+	 * Creates a XML response given an array
+	 * CREDIT TO: http://snippets.dzone.com/posts/show/3391
+	 */
 	function _write(XMLWriter $xml, $data, $replar = ""){
 	    foreach($data as $key => $value){
 	        if(is_a($value, 'stdClass')){
@@ -1344,20 +1359,20 @@ class Api_Controller extends Controller {
      	    }	
 	}
 	
-	/*
-	Creates a XML response given an array
-	CREDIT TO: http://snippets.dzone.com/posts/show/3391
-	*/
+	/**
+	 * Creates a XML response given an array
+	 * CREDIT TO: http://snippets.dzone.com/posts/show/3391
+	 */
     function _arrayAsXML($data, $replar = array()){
         $xml = new XMLWriter();
-	$xml->openMemory();
-	$xml->startDocument('1.0', 'UTF-8');
-	$xml->startElement('response');
+		$xml->openMemory();
+		$xml->startDocument('1.0', 'UTF-8');
+		$xml->startElement('response');
 
-	$this->_write($xml, $data, $replar);
+		$this->_write($xml, $data, $replar);
 
-	$xml->endElement();
-	return $xml->outputMemory(true);
+		$xml->endElement();
+		return $xml->outputMemory(true);
     }
 
 }

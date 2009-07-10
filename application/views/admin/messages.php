@@ -33,11 +33,18 @@
 							?><li><a href="?type=2" <?php if ($type == '2') echo "class=\"active\""; ?>>Outbox</a></li><?php
 						}
 						?>
+						<li><a href="?type=<?php echo $type ?>&period=a" <?php if ($period == 'a') echo "class=\"active\""; ?>>All</a></li>
+						<li><a href="?type=<?php echo $type ?>&period=d" <?php if ($period == 'd') echo "class=\"active\""; ?>>Yesterday</a></li>
+						<li><a href="?type=<?php echo $type ?>&period=m" <?php if ($period == 'm') echo "class=\"active\""; ?>>Last Month</a></li>
+						<li><a href="?type=<?php echo $type ?>&period=y" <?php if ($period == 'y') echo "class=\"active\""; ?>>Last Year</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
 						<ul>
 							<li><a href="#" onClick="submitIds()">DELETE</a></li>
+							<?php foreach($levels as $level) { ?>
+								<li><a href="#" onClick="itemAction('rank', 'Mark As <?php echo $level->level_title?>', '', <?php echo $level->id?>)"><?php echo $level->level_title?></a></li>
+							<?php } ?>
 						</ul>
 					</div>
 				</div>
@@ -64,6 +71,7 @@
 				<!-- report-table -->
 				<?php print form::open(NULL, array('id' => 'messagesMain', 'name' => 'messagesMain')); ?>
 					<input type="hidden" name="action" id="action" value="">
+					<input type="hidden" name="level"  id="level"  value="">
 					<div class="table-holder">
 						<table class="table">
 							<thead>
@@ -105,7 +113,7 @@
 									$message_type = $message->message_type;
 									?>
 									<tr>
-										<td class="col-1"><input name="message_id[]" id="message_id" value="<?php echo $message_id; ?>" type="checkbox" class="check-box"/></td>
+										<td class="col-1"><input name="message_id[]" value="<?php echo $message_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
 												<p><?php echo $message_description; ?></p>

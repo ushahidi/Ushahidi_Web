@@ -13,8 +13,8 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 */
 
-class Error_Controller extends Controller {
-
+class Error_Controller extends Controller
+{
 	function __construct()
 	{
 		parent::__construct();

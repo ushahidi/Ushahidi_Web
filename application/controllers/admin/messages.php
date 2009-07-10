@@ -36,8 +36,16 @@ class Messages_Controller extends Admin_Controller
 		$this->template->content->title = $service->service_name;
 
         //So far this assumes that selected 'message_id's are for deleting
-        if (isset($_POST['message_id']))
-            $this->deleteMessages($_POST['message_id']);
+		if (isset($_POST['message_id']))
+		{
+			if ($_POST['action'] == 'rank') 
+			{
+				$this->rankMessages($_POST['message_id'], $_POST['level']);
+			} else 
+			{	
+				$this->deleteMessages($_POST['message_id']);
+			}
+		}
 
 		// Is this an Inbox or Outbox Filter?
 		if (!empty($_GET['type']))
@@ -59,12 +67,38 @@ class Messages_Controller extends Admin_Controller
 			$type = "1";
 			$filter = 'message_type = 1';
 		}
+		
+		// Any time period filter?
+		$period = 'a';
+		if (!empty($_GET['period']))
+		{
+			$period = $_GET['period'];
+			
+			if ($period == 'd')
+			{
+				$message_date = date("Y-m-d 00:00:00", mktime(0, 0, 0,date("m"),date("d")-1,date("Y")));
+				$end_date = date("Y-m-d 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+			} elseif ($period == 'm')
+			{
+				$message_date = date("Y-m-01 00:00:00", mktime(0, 0, 0, date("m")-1, date("d"), date("Y")));
+				$end_date = date("Y-m-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+			} elseif ($period == 'y')
+			{
+				$message_date = date("Y-01-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")-1));
+				$end_date = date("Y-01-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+			}
+			
+			if (isset($message_date))
+			{
+				$filter .= " AND message_date >= '" . $message_date . "' AND message_date < '" . $end_date ."'";
+			}
+		}
 
 		// check, has the form been submitted?
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-
+		
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'   => 'page',
@@ -90,13 +124,17 @@ class Messages_Controller extends Admin_Controller
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
+		
+		$levels = ORM::factory('level')->orderby('level_weight')->find_all();
+		$this->template->content->levels = $levels;
 
 		// Total Reports
 		$this->template->content->total_items = $pagination->total_items;
 
 		// Message Type Tab - Inbox/Outbox
 		$this->template->content->type = $type;
-
+		$this->template->content->period = $period;
+		
 		// Javascript Header
 		$this->template->js = new View('admin/messages_js');
 	}
@@ -275,6 +313,23 @@ class Messages_Controller extends Admin_Controller
 	        }
         	$extradir = '';
         }
+        // url::redirect('admin/messages/'.$extradir);
+
+    }
+
+    /**
+     * Rank selected messages
+     */
+    function rankMessages($ids,$level,$dbtable='message')
+    {
+        //XXX:get the current page number
+    	foreach($ids as $id)
+        {
+            $msg = ORM::factory($dbtable)->find($id);
+            $msg->message_level = $level;
+            $msg->save();
+        }
+    	$extradir = '';
         // url::redirect('admin/messages/'.$extradir);
 
     }

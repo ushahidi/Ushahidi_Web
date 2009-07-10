@@ -68,10 +68,9 @@
 									<p>
 										FrontlineSMS is free open source software that turns a laptop and a mobile phone into a central communications hub. Once installed, the program enables users to send and receive text messages with large groups of people through mobile phones. Click on the grey box to request a download from FrontlineSMS.com.
 									</p>
-									<a href="http://www.frontlinesms.com/download/" target="_blank" class="no_border">
+									<a href="http://www.frontlinesms.com/download/" class="no_border">
 										<img src="<?php echo url::base() ?>media/img/admin/download_frontline_engine.gif" />
 									</a>
-						
 								</td>
 							</tr>
 							<tr>

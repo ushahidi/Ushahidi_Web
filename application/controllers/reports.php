@@ -607,6 +607,9 @@ class Reports_Controller extends Main_Controller {
 		// Video links
 		$this->template->content->incident_videos = $incident_video;
 		
+		//images 
+		$this->template->content->incident_photos = $incident_photo;
+		
 		// Create object of the video embed class
 		$video_embed = new VideoEmbed();
 		$this->template->content->videos_embed = $video_embed;
