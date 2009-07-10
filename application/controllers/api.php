@@ -633,7 +633,7 @@ class Api_Controller extends Controller {
 	    		$incident->incident_title = $post->incident_title;
 	    		$incident->incident_description = $post->incident_description;
 				
-	    		$incident_date=split("/",$post->incident_date);
+	    		$incident_date=explode("/",$post->incident_date);
 	    		/**
 			 	 * where the $_POST['date'] is a value posted by form in 
 			 	 * mm/dd/yyyy format

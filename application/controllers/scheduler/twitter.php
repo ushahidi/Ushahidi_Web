@@ -121,7 +121,7 @@ class Twitter_Controller extends Scheduler_Controller
 			else
 			{
 				// Add new reporter
-	    		$names = split(' ', $tweet_user->{'name'}, 2);
+	    		$names = explode(' ', $tweet_user->{'name'}, 2);
 	    		$last_name = '';
 	    		if (count($names) == 2) {
 	    			$last_name = $names[1];
