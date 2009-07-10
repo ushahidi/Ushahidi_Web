@@ -65,7 +65,6 @@ class J2me_Controller extends Controller
 			$person_last = $_POST['person_last'];
 		
 		// Upload Temporary Image If Any
-		print_r($_FILES['image_name']);
 		if(isset($_FILES['image_name'])
 			AND isset($_FILES['image_name']['error'])
 			AND isset($_FILES['image_name']['name'])
