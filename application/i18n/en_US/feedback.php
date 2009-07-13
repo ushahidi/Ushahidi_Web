@@ -3,7 +3,7 @@
 	(
 		'feedback' => 'Feedback',
 		
-		'show_all' => 'Show all',
+		'show_all' => 'All',
 		
 		'read' => 'READ',
 		

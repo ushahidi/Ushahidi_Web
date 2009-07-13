@@ -221,8 +221,8 @@ class Reports_Controller extends Admin_Controller
 			}
 			$countries[$country->id] = $this_country;
 		}
-		$this->template->content->countries = $countries;
 		
+		$this->template->content->countries = $countries;		
 		$this->template->content->incidents = $incidents;
 		$this->template->content->pagination = $pagination;
 		$this->template->content->form_error = $form_error;
