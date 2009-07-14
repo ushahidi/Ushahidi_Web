@@ -100,7 +100,7 @@ class Feedback_Controller extends Admin_Controller
 		));
 
 		$all_feedback = ORM::factory('feedback')
-			->select('feedback_person.*,feedback.*')
+			->select('feedback_person.person_full_name, feedback_person.person_ip,feedback.*')
 			->join('feedback_person',array('feedback_person.feedback_id'=>'feedback.id'),
 			'','LEFT JOIN')
 			->orderby('feedback_dateadd', 'desc')
@@ -113,8 +113,27 @@ class Feedback_Controller extends Admin_Controller
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
 
-		// Total Reports
+		// Total feedback
 		$this->template->content->total_items = $pagination->total_items;
+		
+	}
+	
+	/**
+	 * View feedback
+	 * @param id - feedback id
+	 */
+	function view( $id=false ) 
+	{
+		$this->template->content = new View('admin/feedback_view');
+		$this->template->content->title = Kohana::lang('feedback.feedback_page_title');
+		
+		$feedback = ORM::factory('feedback')
+			->select('feedback_person.*,feedback.*')
+			->join('feedback_person',array('feedback_person.feedback_id'=>'feedback.id'),
+			"WHERE feedback.id=$id.",'LEFT JOIN')
+			->orderby('feedback_dateadd', 'desc')->find();
+			
+		$this->template->content->feedback = $feedback;
 		
 	}
 	

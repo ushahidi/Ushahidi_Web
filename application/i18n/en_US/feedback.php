@@ -25,6 +25,8 @@
 		
 		'feedback_no_result' => 'No Feedback To Display!',
 		
+		'feedback_page_title' => 'Feedback Details',
+		
 		'feedback_title' => array
 		(
 			'required' => 'Please enter the name of the feed.',
