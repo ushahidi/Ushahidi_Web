@@ -28,9 +28,6 @@ class Main_Controller extends Template_Controller {
 
         // Load cache
         $this->cache = new Cache;
-
-        // Load session
-        $this->session = new Session;
 		
         // Load Header & Footer
         $this->template->header  = new View('header');
@@ -40,7 +37,8 @@ class Main_Controller extends Template_Controller {
 		$site_name = Kohana::config('settings.site_name');
 			// Prevent Site Name From Breaking up if its too long
 			// by reducing the size of the font
-			if (strlen($site_name) > 20) {
+			if (strlen($site_name) > 20)
+			{
 				$site_name_style = " style=\"font-size:21px;\"";
 			}
 			else
