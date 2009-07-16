@@ -57,47 +57,14 @@ class Alerts_Controller extends Main_Controller
         $form_error = FALSE;
         $form_saved = FALSE;
 		
-        // check, has the form been submitted, if so, setup validation
-        if ($_POST)
-        {
-            // Instantiate Validation, use $post, so we don't overwrite 
-			// $_POST fields with our own things
-            $post = new Validation($_POST);
-
-            //  Add some filters
-            $post->pre_filter('trim', TRUE);
-			
-            // Add some rules, the input field, followed by a list of checks, 
-			// carried out in order
-            if (!empty($_POST['alert_mobile']) || isset($_POST['alert_mobile_yes']))
-            {
-                $post->add_rules('alert_mobile', 'required', 'numeric', 'length[6,20]');
-            }
-			
-            if (!empty($_POST['alert_email']) || isset($_POST['alert_email_yes']))
-            {
-                $post->add_rules('alert_email', 'required', 'email', 'length[3,64]');
-            }
-			
-            if (empty($_POST['alert_email']) && empty($_POST['alert_mobile']))
-            {
-                $post->add_error('alert_mobile', 'one_required');
-                $post->add_error('alert_email', 'one_required');
-            }
-			
-			// Validate for maximum and minimum latitude values
-            $post->add_rules('alert_lat', 'required', 'between[-90,90]'); 
-            
-			// Validate for maximum and minimum longitude values
-			$post->add_rules('alert_lon', 'required', 'between[-180,180]'); 
-			
-            // Add a callback, to validate the mobile phone/email (See the methods below)
-            $post->add_callbacks('alert_mobile', array($this, 'mobile_check'));
-            $post->add_callbacks('alert_email', array($this, 'email_check'));
-			
+        // If there is a post and $_POST is not empty
+		if ($post = $this->input->post())
+		{
+			// Create a new alert
+			$alert = ORM::factory('alert');			
 			
             // Test to see if things passed the rule checks
-            if ($post->validate())
+            if ($alert->validate($post))
             {
                 // Yes! everything is valid
 				// Save alert and send out confirmation code
@@ -157,6 +124,7 @@ class Alerts_Controller extends Main_Controller
         $this->template->header->js->latitude = $form['alert_lat'];
         $this->template->header->js->longitude = $form['alert_lon'];
     }
+
 	
     /**
      * Alerts Confirmation Page
@@ -239,58 +207,7 @@ class Alerts_Controller extends Main_Controller
         }
         return $city_select;
     }
-	
-    /*
-     * Checks to see if a previous alert has been set for the mobile phone
-     */
-    public function mobile_check(Validation $post)
-    {
-        // If add->rules validation found any errors, get me out of here!
-        if (array_key_exists('alert_mobile', $post->errors()) 
-            || array_key_exists('alert_lat', $post->errors()) 
-            || array_key_exists('alert_lon', $post->errors()))
-            return;
 
-        // Now check for similar alert in system
-        $mobile_check = ORM::factory('alert')
-            				->where('alert_type', self::MOBILE_ALERT)
-            				->where('alert_recipient', $post->alert_mobile)
-            				->where('alert_lat', $post->alert_lat)
-            				->where('alert_lon', $post->alert_lon)
-							->find();
-        
-        if ($mobile_check->id)
-        {
-            // Add a validation error, this will cause $post->validate() to return FALSE
-            $post->add_error( 'alert_mobile', 'mobile_check');
-        }
-    }
-	
-    /*
-     * Checks to see if a previous alert has been set for the email address
-     */
-    public function email_check(Validation $post)
-    {
-        // If add->rules validation found any errors, get me out of here!
-        if (array_key_exists('alert_email', $post->errors()) 
-            || array_key_exists('alert_lat', $post->errors()) 
-            || array_key_exists('alert_lon', $post->errors()))
-            return;
-
-        // Now check for similar alert in system
-        $email_check = ORM::factory('alert')
-            			->where('alert_type', self::EMAIL_ALERT)
-            			->where('alert_recipient', $post->alert_email)
-            			->where('alert_lat', $post->alert_lat)
-            			->where('alert_lon', $post->alert_lon)
-						->find();
-
-        if ($email_check->id)
-        {
-            // Add a validation error, this will cause $post->validate() to return FALSE
-            $post->add_error( 'alert_email', 'email_check');
-        }
-    }
 
 	/**
 	 * Creates a confirmation code for use with email or sms verification 

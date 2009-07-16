@@ -1,10 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
 /**
 * Default Settings From Database
 */
 
-$settings = ORM::factory('settings', 1);
+// Retrieve Cached Settings
+$cache = Cache::instance();
+$settings = $cache->get('settings');
+if (!$settings)
+{ // Cache is Empty so Re-Cache
+	$settings = ORM::factory('settings', 1);
+	$cache->set('settings', $settings, array('settings'), 3600);
+}
 
 // Set Site Language
 Kohana::config_set('locale.language', $settings->site_language);
@@ -44,11 +50,11 @@ elseif ($default_map == 3) {	// Yahoo
 	Kohana::config_set('settings.api_url', '<script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script>');
 }
 elseif ($default_map == 4) {	// Open Streetmaps
-	Kohana::config_set('settings.api_url', '<script src="http://openstreetmap.org/openlayers/OpenStreetMap.js"></script>');
+	Kohana::config_set('settings.api_url', html::script('index.php/media/js/OpenLayers/OpenStreetMap'));
 }
 else {							// Google
 	Kohana::config_set('settings.api_url', '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_google . '" type="text/javascript"></script>');
 }
 
 // And in case you want to display all maps on one page...
-Kohana::config_set('settings.api_url_all', '<script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6"></script><script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script><script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_google . '" type="text/javascript"></script><script src="http://openstreetmap.org/openlayers/OpenStreetMap.js"></script>');
+Kohana::config_set('settings.api_url_all', '<script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6"></script><script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script><script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_google . '" type="text/javascript"></script>'.html::script('index.php/media/js/OpenLayers/OpenStreetMap'));
