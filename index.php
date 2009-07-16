@@ -7,51 +7,6 @@
  * @see http://kohanaphp.com
  */
 
-// Installation Check
-$is_installed = true;
-if( file_exists('application/config/database.php') )
-{
-
-	$database_file = file('application/config/database.php');
-
-	if( preg_match( "/username/",$database_file[22] ) &&
-		preg_match( "/password/",$database_file[23] ) ){
-
-			$is_installed = false;
-	}
-
-} else {
-	$is_installed = false;
-}
-
-if (!$is_installed)
-{
-	die(<<<EOF
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Ushahidi</title>
-<link href="media/css/admin/login.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-<div id="ushahidi_login_container">
-    <div id="ushahidi_login_logo"><img src="media/img/admin/logo_login.gif" width="400" 
-    height="80" /></div>
-    <div id="ushahidi_login">
-		<h3>Welcome to Ushahidi!</h3><br />
-		<p>It appears as though Ushahidi is not installed on your system yet. You must run the installer script to complete this process.</p><br />
-		<p>Please <a href="installer/">click here</a> to continue.</p>
-	</div>
-</div>
-</body>
-</html>
-EOF
-);
-}
-
 /**
  * Define the website environment status. When this flag is set to TRUE, some
  * module demonstration controllers will result in 404 errors. For more information
@@ -85,6 +40,13 @@ $kohana_modules = 'modules';
  * This path can be absolute or relative to this file.
  */
 $kohana_system = 'system';
+
+/**
+ * Themes directory.
+ *
+ * This path can be absolute or relative to this file.
+ */
+$kohana_themes = 'themes';
 
 /**
  * Test to make sure that Kohana is running on PHP 5.2 or newer. Once you are
@@ -128,11 +90,12 @@ is_link(KOHANA) and chdir(dirname(realpath(__FILE__)));
 
 // Define application and system paths
 define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
+define('THEMEPATH', str_replace('\\', '/', realpath($kohana_themes)).'/');
 define('MODPATH', str_replace('\\', '/', realpath($kohana_modules)).'/');
 define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).'/');
 
 // Clean up
-unset($kohana_application, $kohana_modules, $kohana_system);
+unset($kohana_application, $kohana_themes, $kohana_modules, $kohana_system);
 
 if ( ! IN_PRODUCTION)
 {

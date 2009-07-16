@@ -1,10 +1,16 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
 /**
 * Default Settings From Database
 */
 
-$settings = ORM::factory('settings', 1);
+// Retrieve Cached Settings
+$cache = Cache::instance();
+$settings = $cache->get('settings');
+if (!$settings)
+{ // Cache is Empty so Re-Cache
+	$settings = ORM::factory('settings', 1);
+	$cache->set('settings', $settings, array('settings'), 3600);
+}
 
 // Set Site Language
 Kohana::config_set('locale.language', $settings->site_language);
