@@ -16,12 +16,19 @@
 
 class Alert_Model 
 extends ORM
-{
+{	
     protected $has_many = array('incident' => 'alert_sent');
     
     // Database table name
     protected $table_name = 'alert';
-    
+	
+	// Constants
+	const ER_CODE_ALREADY_VERIFIED = '';
+	const ER_CODE_NOT_FOUND = '';
+	
+	// Ignored columns - alert_mobile & alert_email will be replaced with alert_recipient
+	// These are columns not contained in the Model itself
+	protected $ignored_columns = array('alert_mobile', 'alert_email'); 	
     
     /**
      * Method that provides the functionality of the magic method, __set, without the overhead
@@ -58,5 +65,95 @@ extends ORM
         return $this;
         
     } // END function assign
+
+
+    /**
+     * Model Validation
+     * 
+     * @param array $array values to check
+     * @param boolean $save save[Optional] the record when validation succeeds
+     * @return boolean
+     */
+	public function validate(array & $array, $save = FALSE)
+	{
+		// Initialise the validation library and setup some rules
+		$array = Validation::factory($array)
+			->pre_filter('trim')
+			->add_rules('alert_mobile', 'numeric', 'length[6,20]')
+			->add_rules('alert_email', 'email', 'length[3,64]')
+			->add_rules('alert_lat', 'required', 'between[-90,90]')
+			->add_rules('alert_lon', 'required', 'between[-180,180]')
+			->add_callbacks('alert_mobile', array($this, '_mobile_or_email'))
+			->add_callbacks('alert_mobile', array($this, '_mobile_check'))
+			->add_callbacks('alert_email', array($this, '_email_check'));
+
+		return parent::validate($array, $save);
+	} // END function validate
+
+
+    /**
+     * Callback tests if a mobile number exists in the database for this alert
+	 * @param   mixed mobile number to check
+	 * @return  boolean
+     */
+    public function _mobile_check(Validation $array)
+    {
+		// If add->rules validation found any errors, get me out of here!
+        if (array_key_exists('alert_mobile', $array->errors()) 
+            || array_key_exists('alert_lat', $array->errors()) 
+            || array_key_exists('alert_lon', $array->errors()))
+            return;
+
+        if ($array->alert_mobile && (bool) $this->db
+			->where(array(
+				'alert_type' => 1,
+				'alert_recipient' => $array->alert_mobile,
+				'alert_lat' => $array->alert_lat,
+				'alert_lon' => $array->alert_lon
+				))
+			->count_records($this->table_name) )
+		{
+			$array->add_error( 'alert_mobile', 'mobile_check');
+		}
+    } // END function _mobile_check
+
+	
+    /**
+     * Callback tests if an email accounts exists in the database for this alert
+	 * @param   mixed mobile number to check
+	 * @return  boolean
+     */
+    public function _email_check(Validation $array)
+    {
+		// If add->rules validation found any errors, get me out of here!
+        if (array_key_exists('alert_email', $array->errors()) 
+            || array_key_exists('alert_lat', $array->errors()) 
+            || array_key_exists('alert_lon', $array->errors()))
+            return;
+
+        if ( $array->alert_email && (bool) $this->db
+			->where(array(
+				'alert_type' => 2,
+				'alert_recipient' => $array->alert_email,
+				'alert_lat' => $array->alert_lat,
+				'alert_lon' => $array->alert_lon
+				))
+			->count_records($this->table_name) )
+		{
+			$array->add_error( 'alert_email', 'email_check');
+		}
+    } // END function _email_check
+
+
+    /**
+     * Tests if an email accounts exists in the database for this alert
+	 * @param   mixed mobile number to check
+	 * @return  boolean
+     */
+    public function _mobile_or_email(Validation $array)
+    {
+		if ( empty($array->alert_mobile) && empty($array->alert_email) )
+			$array->add_error( 'alert_mobile', 'one_required');
+    } // END function _mobile_or_email
 
 } // END class Alert_Model

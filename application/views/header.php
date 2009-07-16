@@ -21,8 +21,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
 	<title><?php echo $site_name; ?></title>
 	<style media="all" type="text/css">@import "<?php echo url::base() ?>index.php/media/css/all.css";</style>
-	<style media="all" type="text/css">@import "<?php echo url::base() ?>index.php/media/css/photoslider.css";</style>
-	<style media="all" type="text/css">@import "<?php echo url::base() ?>index.php/media/css/videoslider.css";</style>
 	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>index.php/media/css/ie6.css" media="screen"/><![endif]-->
 	<?php
 	// Load OpenLayers before jQuery!
@@ -62,10 +60,12 @@
 	if ($photoslider_enabled)
 	{
 		echo html::script('index.php/media/js/photoslider.js');
+		echo html::stylesheet('index.php/media/css/photoslider.css');
 	}
 	if( $videoslider_enabled )
 	{
 		echo html::script('index.php/media/js/coda-slider.pack.js');
+		echo html::stylesheet('index.php/media/css/videoslider.css');
 	}
 	if ($allow_feed == 1) {
 		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
