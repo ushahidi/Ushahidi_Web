@@ -17,53 +17,102 @@
 	<!-- f-col-bottom-1 -->
 	<div style="width:100%;background:#DDD;padding:10px;">
 		<h4><?php print Kohana::lang('feedback.feedback'); ?></h4>
-		<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'replyForm', 'name' => 'replyForm')); ?>
+		<?php print form::open(NULL,array('id' => 'rpelyForm',
+				'name' => 'replyForm',
+				'method' => 'post')); ?>
 		<div class="row">
-			<div class="f-col-bottom-1-col">Title:</div>
+			<div class="f-col-bottom-1-col">
+				<?php print Kohana::lang('feedback.feedback_reply_title')?>
+			</div>
 			<?php print $feedback->feedback_title;?>
 		</div>
 		<div class="row">
-			<div class="f-col-bottom-1-col">Message Detail:</div>
+			<div class="f-col-bottom-1-col">
+				<?php print Kohana::lang('feedback.feedback_reply_message')?>
+			</div>
 			<?php print $feedback->feedback_mesg?>		
 		</div>
 		<div class="row">
-			<div class="f-col-bottom-1-col">Name:</div>
+			<div class="f-col-bottom-1-col">
+				<?php print Kohana::lang('feedback.feedback_person_name')?>
+			</div>
 			<?php print $feedback->person_full_name;?>								
 		</div>
 		<div class="row">
-			<div class="f-col-bottom-1-col">Email:</div>
+			<div class="f-col-bottom-1-col">
+				<?php print Kohana::lang('feedback.feedback_person_email')?>
+			</div>
 			<?php print $feedback->person_email;?>							
 		</div>
 		
 		<div class="row">
-			<div class="f-col-bottom-1-col">IP:</div>
+			<div class="f-col-bottom-1-col">
+				<?php print Kohana::lang('feedback.feedback_person_ip')?>
+			</div>
 			<?php print $feedback->person_ip;?>							
 		</div>
 										
 	</div>
 	<div style="clear:both;"></div>
+	<?php
+	if ($form_error) {
+	?>
+			<!-- red-box -->
+			<div class="red-box">
+				<h3>Error!</h3>
+				<ul>
+				<?php
+				foreach ($errors as $error_item => $error_description)
+				{
+					print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+				}
+				?>
+				</ul>
+		</div>
+		<br /><br />
+	<?php
+	}
+
+	if ($message_sent) {
+	?>
+		<!-- green-box -->
+		<div class="green-box">
+			<h3><?php print Kohana::lang('feedback.feedback_confirm_mesg');?></h3>
+		</div>
+		<br /><br />
+	<?php
+	}
+	?>
 	<div style="width:100%;padding:10px;">
 		
-		<h3>Send Reply</h3>
+		<h3><?php print Kohana::lang('feedback.feedback_send_reply')?></h3>
 		</br /><br />
 		<div class="row">
-			<div class="f-col-bottom-1-col">Title:</div>
+			<div class="f-col-bottom-1-col">
+				<?php print Kohana::lang('feedback.feedback_reply_title')?>
+			</div>
 			<?php print form::input('feedback_title', $feedback->feedback_title, 
 			' class="text long"'); ?>							
 		</div>
 		
 		<div class="row">
 			<br /></br />
-			<div class="f-col-bottom-1-col">Message:</div>
-			<?php print form::textarea('feedback_message', '', ' rows="12" cols="57"'); ?>								
+			<div class="f-col-bottom-1-col">
+				<?php print Kohana::lang('feedback.feedback_reply_message')?>
+			</div>
+			<?php print form::textarea('feedback_message', '', 'rows="12" cols="57"'); ?>								
 		</div>
 		
 		<div class="row">
 			<br /></br />
-			<div class="f-col-bottom-1-col">&nbsp;</div>
-			<?php print form::submit('submit', 'Send'); ?>								
+			<div class="f-col-bottom-1-col">
+				&nbsp;
+			`</div>
+				<input type="hidden" name="person_name" 
+					id="person_name" value="<?php print $feedback->person_email?>" />
+			<?php print form::submit('submit', 
+				Kohana::lang('feedback.feedback_reply_send')); ?>								
 		</div>
-		
 	</div>
 	<?php print form::close(); ?>
 </div>
