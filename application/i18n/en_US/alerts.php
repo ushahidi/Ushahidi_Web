@@ -32,7 +32,7 @@ $lang = array
 		'between' => 'You have not selected a valid location on the map.'
 	),
 
-    'code_not_found' => 'This verification code was not found! Please confirm that you entered the code correctly. You may use the form below to re-enter your verification code:',
+    'code_not_found' => 'This verification code was not found! It is possible that you followed an incorrect URL.',
     'code_already_verified' => 'This code has been verified before!',
     'code_verified' => ' Your code was verified correctly. You will now receive alerts about incidents as they happen.',
     'mobile_alert_request_created' => 'Your Mobile Alert request has been created and verification message has been sent to ',
