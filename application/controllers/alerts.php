@@ -165,7 +165,9 @@ class Alerts_Controller extends Main_Controller
         
 		if ($code != NULL)
 		{
-			$alert_code = ORM::factory('alert')->where('alert_code', $code)->find();
+			$alert_code = ORM::factory('alert')
+							->where('alert_code', $code)
+							->find();
 					
 			// IF there was no result
 			if (!$alert_code->loaded)
@@ -188,6 +190,31 @@ class Alerts_Controller extends Main_Controller
 			$this->template->content->errno = ER_CODE_NOT_FOUND;
 		}
 	} // END function verify
+
+	/**
+     * Unsubscribes alertee using alertee's confirmation code
+     * 
+     * @param string $code
+     */
+	public function unsubscribe($code = NULL)
+	{
+       	$this->template->content = new View('alerts_unsubscribe');
+        $this->template->header->this_page = 'alerts';
+		$this->template->content->unsubscribed = FALSE;
+
+		if ($code != NULL)
+		{
+			$alert_code = ORM::factory('alert')
+							->where('alert_code', $code)
+							->find();
+			
+			if ($alert_code->loaded)
+			{
+				$alert_code->delete();
+				$this->template->content->unsubscribed = TRUE;
+			}
+		}
+	}
 	
     /*
      * Retrieves Previously Cached Geonames Cities
@@ -225,7 +252,7 @@ class Alerts_Controller extends Main_Controller
 			$code_check = ORM::factory('alert')
 							->where('alert_code', $code)->find();
 
-			if (!$code_check->id)
+			if (!$code_check->loaded)
 				break;
 		}
 
@@ -234,10 +261,6 @@ class Alerts_Controller extends Main_Controller
 
 	private function _send_mobile_alert($alert_mobile, $alert_lon, $alert_lat)
 	{
-        // Instantiate Validation, use $post, so we don't overwrite 
-        // $_POST fields with our own things
-        $post = new Validation($_POST);
-        
 		$alert_code = $this->_mk_code();
 					
 		$settings = ORM::factory('settings', 1);
@@ -290,10 +313,6 @@ class Alerts_Controller extends Main_Controller
 
 	private function _send_email_alert($alert_email, $alert_lon, $alert_lat)
 	{
-        // Instantiate Validation, use $post, so we don't overwrite 
-        // $_POST fields with our own things
-        $post = new Validation($_POST);
-        
 		$alert_code = $this->_mk_code();
 		
 		$config = kohana::config('alerts');
@@ -301,9 +320,10 @@ class Alerts_Controller extends Main_Controller
 		
 		$to = $alert_email;
 		$from = $config['alerts_email'];
-		$subject = $settings['site_name'].' alerts - verification';
-		$message = 'Please follow '.url::site().'alerts/verify/'.$alert_code.
-				   ' to confirm your alert request';
+		$subject = $settings['site_name']." "
+					.Kohana::lang('alerts.verification_email_subject');
+		$message = Kohana::lang('alerts.confirm_request')
+					.url::site().'alerts/verify/'.$alert_code;
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{

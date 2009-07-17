@@ -32,7 +32,7 @@ $lang = array
 		'between' => 'You have not selected a valid location on the map.'
 	),
 
-    'code_not_found' => 'This verification code was not found! It is possible that you followed an incorrect URL.',
+    'code_not_found' => 'This verification code was not found! Please confirm that you have the correct URL.',
     'code_already_verified' => 'This code has been verified before!',
     'code_verified' => ' Your code was verified correctly. You will now receive alerts about incidents as they happen.',
     'mobile_alert_request_created' => 'Your Mobile Alert request has been created and verification message has been sent to ',
@@ -45,4 +45,9 @@ $lang = array
 	'email_ok_head' =>'Your Email Alert Request Has Been Saved!',
 	'email_error_head' => 'Your Email Alert Request Has NOT Been Saved!',
     'create_more_alerts' => 'Return to the Alerts page to create more alerts',
+	'unsubscribe' => 'You have received this email because you subscribed to receive alerts. If you do not wish to receive future alerts go to ',
+	'verification_email_subject' => 'alerts - verification',
+	'confirm_request' => 'To confirm your alert request, please go to ',
+	'unsubscribed' => 'You will no longer receive alerts from ',
+	'unsubscribe_failed' => 'We were not able to unsubscribe you. Please confirm that you have the correct URL.'
 );
