@@ -1215,6 +1215,35 @@ INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url
 (3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL),
 (4, 'Laconica', 'Tweets tweets tweets', NULL, NULL);
 
+--
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE IF NOT EXISTS `feedback` (
+  `id` tinyint(11) NOT NULL auto_increment,
+  `feedback_title` varchar(60) NOT NULL,
+  `feedback_mesg` text NOT NULL,
+  `feedback_status` tinyint(3) NOT NULL,
+  `feedback_dateadd` datetime default NULL,
+  `feedback_datemodify` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB;
+
+
+
+--
+-- Table structure for table `feedback_person`
+--
+
+CREATE TABLE IF NOT EXISTS `feedback_person` (
+  `id` tinyint(11) NOT NULL auto_increment,
+  `feedback_id` tinyint(11) NOT NULL,
+  `person_name` varchar(60) NOT NULL,
+  `person_email` varchar(30) NOT NULL,
+  `person_date` datetime default NULL,
+  `person_ip` varchar(50) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB;
 
 --
 -- Constraints for dumped tables
