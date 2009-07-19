@@ -140,7 +140,7 @@ class Reports_Controller extends Admin_Controller
 					}
 					$form_action = "VERIFIED";
 				}
-				elseif ($post->action == 'd')	// Delete Action
+				elseif ($post->action == 'd')	//Delete Action
 				{
 					foreach($post->incident_id as $item)
 					{

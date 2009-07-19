@@ -36,7 +36,7 @@
 			<div class="f-col-bottom-1-col">
 				<?php print Kohana::lang('feedback.feedback_person_name')?>
 			</div>
-			<?php print $feedback->person_full_name;?>								
+			<?php print $feedback->person_name;?>								
 		</div>
 		<div class="row">
 			<div class="f-col-bottom-1-col">

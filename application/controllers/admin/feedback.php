@@ -49,13 +49,14 @@ class Feedback_Controller extends Admin_Controller
 			
 			if ($post->validate())
 	        {
-				if ($post->action == 'a')	// Read Action
+				if ($post->action == 'r')	// Read Action
 				{
 					foreach($post->feedback_id as $item)
 					{
 						$update = new Feedback_Model($item);
+						
 						if ($update->loaded == true) {
-							$update->feedback_status = '1';
+							$update->feedback_status = '0';
 							$update->save();
 						}
 					}
@@ -78,7 +79,19 @@ class Feedback_Controller extends Admin_Controller
 				
 				elseif ($post->action == 'd')	// Delete Action
 				{
-					//TODO write delete action code
+					foreach($post->feedback_id as $item)
+					{
+						$update = new Feedback_Model($item);
+
+						if ($update->loaded == true) {
+							$feedback_id = $update->id;
+							$update->delete();
+						}
+						
+						// Delete feedback_person
+						ORM::factory('feedback_person')->where('feedback_id',$feedback_id)->delete_all();
+					}
+					
 					$form_action = "DELETED";
 				}
 				
@@ -100,7 +113,7 @@ class Feedback_Controller extends Admin_Controller
 		));
 
 		$all_feedback = ORM::factory('feedback')
-			->select('feedback_person.person_full_name, feedback_person.person_ip,feedback.*')
+			->select('feedback_person.person_name, feedback_person.person_ip,feedback.*')
 			->join('feedback_person',array('feedback_person.feedback_id'=>'feedback.id'),
 			$filter,'LEFT JOIN')
 			->orderby('feedback_dateadd', 'desc')
@@ -115,6 +128,9 @@ class Feedback_Controller extends Admin_Controller
 
 		// Total feedback
 		$this->template->content->total_items = $pagination->total_items;
+		
+		// Javascript Header
+		$this->template->js = new View('admin/feedback_js');
 		
 	}
 	
@@ -139,9 +155,9 @@ class Feedback_Controller extends Admin_Controller
 		//setup and initialize form fields
 		$form = array
 		(
-			'feedback_title',
-			'feedback_message',
-			'person_email'
+			'feedback_title' =>'',
+			'feedback_message'=>'',
+			'person_email' => ''
 		);
 		
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -176,6 +192,7 @@ class Feedback_Controller extends Admin_Controller
 	
 				// repopulate the form fields
             	$form = arr::overwrite($form, $post->as_array());
+
             	// populate the error fields, if any
             	$errors = arr::overwrite($errors, $post->errors('feedback'));
 				$form_error = TRUE;

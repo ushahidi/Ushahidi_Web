@@ -31,15 +31,15 @@
 		<!-- tab -->
 		<div class="tab">
 			<ul>
-				<li><a href="#" onclick="reportAction('r','READ', '');">
+				<li><a href="#" onclick="feedbackAction('r','READ', '');">
 					<?php echo Kohana::lang('feedback.read'); ?></a>
 				</li>
 				
-				<li><a href="#" onclick="reportAction('u','UNREAD', '');">
+				<li><a href="#" onclick="feedbackAction('u','UNREAD', '');">
 					<?php echo Kohana::lang('feedback.unread'); ?></a>
 				</li>
 				
-				<li><a href="#" onclick="reportAction('d','DELETE', '');">
+				<li><a href="#" onclick="feedbackAction('d','DELETE', '');">
 					<?php echo Kohana::lang('feedback.delete'); ?></a>
 				</li>
 			</ul>
@@ -50,8 +50,13 @@
 	?>
 		<!-- red-box -->
 		<div class="red-box">
-			<h3><?php echo Kohana::lang('feedback.error_title'); ?></h3>
-			<ul><?php echo Kohana::lang('feedback.error_msg'); ?></ul>
+			<?php
+			foreach ($errors as $error_item => $error_description)
+			{
+				// print "<li>" . $error_description . "</li>";
+				print (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
+			}
+			?>
 		</div>
 	<?php
 	}
@@ -70,7 +75,7 @@
 	<?php
 	}
 	?>
-	<!-- report-table -->
+	<!-- feedback-table -->
 	<?php print form::open(NULL, array('id' => 'feedbackMain', 'name' => 'feedbackMain')); ?>
 		<input type="hidden" name="action" id="action" value="">
 		<input type="hidden" name="feedback_id[]" id="feedback_single" value="">
@@ -125,7 +130,7 @@
 							$feedback_dateadd = $feedback->feedback_dateadd;
 							$feedback_dateadd = date('Y-m-d', strtotime($feedback->feedback_dateadd));
 							$feedback_read = $feedback->feedback_status;
-							$person_name = $feedback->person_full_name;
+							$person_name = $feedback->person_name;
 							$person_ip = $feedback->person_ip;
 							
 							?>
@@ -140,7 +145,7 @@
 										<li class="none-separator">
 											<strong>Submitted by: </strong><?php echo $person_name; ?>
 										</li>
-										<li >
+										<li>
 											<strong>IP: </strong><?php echo $person_ip; ?>
 										</li>
 									</ul>
@@ -149,9 +154,15 @@
 								<td class="col-4">
 									<ul>
 										<li class="none-separator">
-											<a href="#"<?php if ($feedback_read == 1) echo " class=\"status_yes\"" ?> onclick="reportAction('a','READ', '<?php echo $feedback_id; ?>');">
-												<?php echo $feedback_read == 1 ? "Read" : "Unread" ?> 
+											<?php if($feedback_read == 1 ) { ?>
+											<a href="#" class="status_yes" onclick="feedbackAction('r','READ', '<?php echo $feedback_id; ?>');">
+												Read 
 											</a>
+											<?php } else {?>
+											<a href="#" onclick="feedbackAction('u','UNREAD', '<?php echo $feedback_id; ?>');">
+												Uread 
+											</a>
+											<?php }?>
 											</li>
 										<li><a href="#" class="del" onclick="feedbackAction('d','DELETE', '<?php echo $feedback_id; ?>');">Delete</a></li>
 									</ul>

@@ -33,8 +33,7 @@
 		'feedback_person_email' => 'Email',
 		'feedback_person_ip' => 'IP',
 		'feedback_send_reply' => 'Send Reply',
-		'feedback_confirm_mesg' => 'Message sent',
-		
+		'feedback_confirm_mesg' => 'Message sent',		
 		'feedback_title' => array
 		(
 			'required'		=> 'A title is required.',
@@ -48,14 +47,14 @@
 		
 		'person_name' => array
 		(
-			'required' => 'Please enter feed\'s URL.',
-			'email'	=> 'The email field does not appear to contain a valid email address?',
+			'required' => 'Please enter your full name.',
+			
 		),
 		
 		'person_email' => array
 		(
-			'required' => 'Please enter feed\'s URL.',
-			'url' => 'Please enter a valid URL. Eg. http://www.ushahidi.com'
+			'required' => 'Please enter your email address',
+			'email'	=> 'The email field does not appear to contain a valid email address?',
 		),
 		
 		
