@@ -1427,10 +1427,6 @@ class Reports_Controller extends Admin_Controller
 					{
 						$fields_array[$custom_formfield->id] = $form_response->form_response;
 					}
-					else
-					{
-						$fields_array[$custom_formfield->id] = '';
-					}
 				}
 			}
 			else

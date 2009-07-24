@@ -37,7 +37,8 @@
               <form action="#">
                 <input type="hidden" value="0" name="currentCat" id="currentCat">
                   <fieldset>
-                    <label for="startDate">From:</label>
+                    <div class="play"><a href="#" id="playTimeline">PLAY</a></div>
+					<label for="startDate">From:</label>
                     <select name="startDate" id="startDate">
                       <?php echo $startDate; ?>
                     </select>
@@ -50,7 +51,6 @@
                 </form>
               </div>
               <div id="graph" class="graph-holder"></div>
-              <a href="#"><div class="btn-more" id="playTimeline">(Re-)Play</div></a>
             </div>
             <div class="category">
               <strong class="title">CATEGORY FILTER</strong>
