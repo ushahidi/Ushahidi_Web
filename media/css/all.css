@@ -1327,3 +1327,13 @@ ul.pager li a.active {background:#f2f7fa;}
 .alert_confirm .label{
 	margin-bottom:10px;
 }
+
+/*-- feedback --*/
+.feedback_forms{
+	display:none;
+	float: right;
+	width: 300px;
+	padding:10px;
+	background-color:#eee;
+	border-bottom:2px solid #ccc;
+}

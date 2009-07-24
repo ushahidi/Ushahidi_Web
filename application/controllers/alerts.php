@@ -153,46 +153,68 @@ class Alerts_Controller extends Main_Controller
      * 
      * @param string $code
      */
-    public function verify ( )
-    {   // INITIALIZE the content's section of the view
-        $this->template->content = new View('alerts_verify');
+    public function verify($code = NULL)
+    {   
+		define("ER_CODE_VERIFIED", 0);
+		define("ER_CODE_NOT_FOUND", 1);
+		define("ER_CODE_ALREADY_VERIFIED", 3);
+		
+		// INITIALIZE the content's section of the view
+       	$this->template->content = new View('alerts_verify');
         $this->template->header->this_page = 'alerts';
         
-        // IF data has been posted to the request ...
-        if ($post = $this->input->post())
-        {   // TRY to update the model and save it
-            try
-            {   // CREATE a local variable representing the alert identified with _POST
-                $Code = ORM::factory('alert', $post['alert_code']);
-                
-                // IF the code couldn't be loaded ...
-                if (! $Code->loaded)
-                {   // THROW an exception
-                    throw new Kohana_Exception('Code not found');
-                }    
-                
-                if ($Code->alert_confirmed)
-                {   // SET the errno message to previously confirmed
-                    $this->template->content->errno = Alert_Model::ER_CODE_ALREADY_VERIFIED;
-                }
-                    
-                // SET the alert as confirmed, and save it
-                $Code->set('alert_confirmed', 1)->save();
-            }
-            // CATCH any exceptions that might occur ...
-            catch (Exception $e)
-            {   // SET the errno var to not found, indicating the likley error
-                $this->template->content->errno = Alert_Model::ER_CODE_NOT_FOUND;
-            }
-        }
-        // ELSE, no data was posted to the request ...
-        else
-        {   // SET the errno var to not found, indicating the likley error
-            $this->template->content->errno = Alert_Model::ER_CODE_NOT_FOUND;
-        }
-        
-    } // END function ccverify
-    
+		if ($code != NULL)
+		{
+			$alert_code = ORM::factory('alert')
+							->where('alert_code', $code)
+							->find();
+					
+			// IF there was no result
+			if (!$alert_code->loaded)
+			{
+				$this->template->content->errno = ER_CODE_NOT_FOUND;
+			}    
+			elseif ($alert_code->alert_confirmed)
+			{   // SET the errno message to previously confirmed
+				$this->template->content->errno = ER_CODE_ALREADY_VERIFIED;
+			}
+			else
+			{
+				// SET the alert as confirmed, and save it
+				$alert_code->set('alert_confirmed', 1)->save();
+				$this->template->content->errno = ER_CODE_VERIFIED;
+			}
+		}
+		else
+		{
+			$this->template->content->errno = ER_CODE_NOT_FOUND;
+		}
+	} // END function verify
+
+	/**
+     * Unsubscribes alertee using alertee's confirmation code
+     * 
+     * @param string $code
+     */
+	public function unsubscribe($code = NULL)
+	{
+       	$this->template->content = new View('alerts_unsubscribe');
+        $this->template->header->this_page = 'alerts';
+		$this->template->content->unsubscribed = FALSE;
+
+		if ($code != NULL)
+		{
+			$alert_code = ORM::factory('alert')
+							->where('alert_code', $code)
+							->find();
+			
+			if ($alert_code->loaded)
+			{
+				$alert_code->delete();
+				$this->template->content->unsubscribed = TRUE;
+			}
+		}
+	}
 	
     /*
      * Retrieves Previously Cached Geonames Cities
@@ -230,7 +252,7 @@ class Alerts_Controller extends Main_Controller
 			$code_check = ORM::factory('alert')
 							->where('alert_code', $code)->find();
 
-			if (!$code_check->id)
+			if (!$code_check->loaded)
 				break;
 		}
 
@@ -239,10 +261,6 @@ class Alerts_Controller extends Main_Controller
 
 	private function _send_mobile_alert($alert_mobile, $alert_lon, $alert_lat)
 	{
-        // Instantiate Validation, use $post, so we don't overwrite 
-        // $_POST fields with our own things
-        $post = new Validation($_POST);
-        
 		$alert_code = $this->_mk_code();
 					
 		$settings = ORM::factory('settings', 1);
@@ -295,10 +313,6 @@ class Alerts_Controller extends Main_Controller
 
 	private function _send_email_alert($alert_email, $alert_lon, $alert_lat)
 	{
-        // Instantiate Validation, use $post, so we don't overwrite 
-        // $_POST fields with our own things
-        $post = new Validation($_POST);
-        
 		$alert_code = $this->_mk_code();
 		
 		$config = kohana::config('alerts');
@@ -306,9 +320,10 @@ class Alerts_Controller extends Main_Controller
 		
 		$to = $alert_email;
 		$from = $config['alerts_email'];
-		$subject = $settings['site_name'].' alerts - verification';
-		$message = 'Please follow '.url::site().'alerts/verify/'.$alert_code.
-				   ' to confirm your alert request';
+		$subject = $settings['site_name']." "
+					.Kohana::lang('alerts.verification_email_subject');
+		$message = Kohana::lang('alerts.confirm_request')
+					.url::site().'alerts/verify/'.$alert_code;
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{

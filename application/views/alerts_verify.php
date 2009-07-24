@@ -23,27 +23,21 @@
 					<!-- green-box/ red-box depending on verification result -->
 <?php
     // SWITCH based on the value of the $errno
-    switch ($errno) : 
-    
+    switch ($errno)
+	{
         // IF the code provided was not found ...
-        case Alert_Model::ER_CODE_NOT_FOUND:
+        case ER_CODE_NOT_FOUND:
 ?>
                         <div class="red-box">
                             <div class="alert_response">
                                 <?php echo Kohana::lang('alerts.code_not_found'); ?>
                             </div>
-                            <div class="alert_confirm">
-                                <?php echo form::open('/alerts/verify'); ?>
-                                <?php echo form::input('alert_code', ''); ?>
-                                <?php echo form::submit('button', 'Confirm', ' class="btn_blue"'); ?>
-                                <?php echo form::close(); ?>
-                            </div>
-                        </div>
+                       </div>
 <?php
         break;
         
         // IF the code provided means the alert has already been verified ...
-        case Alert_Model::ER_CODE_ALREADY_VERIFIED
+        case ER_CODE_ALREADY_VERIFIED:
 ?>
                         <div class="red-box">
                             <div class="alert_response" align="center">
@@ -51,8 +45,9 @@
                             </div>
                         </div>
 <?php
+		break;
         // IF the code provided means the code is now verified ...
-        case Alert_Model::ER_CODE_VERIFIED;
+        case ER_CODE_VERIFIED:
 ?>
                         <div class="green-box">
                             <div class="alert_response" align="center">
@@ -61,9 +56,7 @@
                         </div>
 <?php
         break;
-        
-    // END the conditional regarding the status of the $errno passed to the view    
-    endswitch; 
+    } // End switch
 ?>
                 </div>
 			</div>

@@ -22,6 +22,15 @@ class Alerts_Controller extends Scheduler_Controller
 	
 	public function index() 
 	{
+		$config = kohana::config('alerts');
+		$settings = kohana::config('settings');
+		$site_name = $settings['site_name'];
+		$unsubscribe_message = Kohana::lang('alerts.unsubscribe')
+								.url::site().'alerts/unsubscribe/';
+		$settings = NULL;
+		$sms_from = NULL;
+		$clickatell = NULL;
+
 		$db = new Database();
 		
 		$incidents = $db->query("SELECT incident.id, incident_title, 
@@ -29,13 +38,7 @@ class Alerts_Controller extends Scheduler_Controller
 								 location.latitude, location.longitude, alert_sent.incident_id
 								 FROM incident INNER JOIN location ON incident.location_id = location.id
 								 LEFT OUTER JOIN alert_sent ON incident.id = alert_sent.incident_id");
-
-		$config = kohana::config('alerts');
-
-		$settings = NULL;
-		$sms_from = NULL;
-		$clickatell = NULL;
-
+		
 		foreach ($incidents as $incident)
 		{
 			if ($incident->incident_id != NULL)
@@ -96,8 +99,10 @@ class Alerts_Controller extends Scheduler_Controller
 					{
 						$to = $alertee->alert_recipient;
 						$from = $config['alerts_email'];
-						$subject = $incident->incident_title;
-						$message = $incident->incident_description;
+						$subject = "[$site_name] ".$incident->incident_title;
+						$message = $incident->incident_description
+									."<p>".$unsubscribe_message
+									.$alertee->alert_code."</p>";
 
 						if (email::send($to, $from, $subject, $message, TRUE) == 1)
 						{
@@ -122,7 +127,7 @@ class Alerts_Controller extends Scheduler_Controller
 			AND alert_confirmed = 1";
 
 		$alertees = ORM::factory('alert')
-					->select('id, alert_type, alert_recipient')
+					->select('id, alert_type, alert_recipient, alert_code')
 					->where($radius)
 					->find_all();
 
