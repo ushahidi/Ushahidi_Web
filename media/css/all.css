@@ -244,6 +244,9 @@ a:visited{
 	color:#666;
 	text-decoration:none;
 }
+.slider-holder .play:hover{
+	background-color:#ffffcc;
+}
 .slider-holder .play a:hover{
 	text-decoration:underline;
 }

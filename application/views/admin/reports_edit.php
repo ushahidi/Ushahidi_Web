@@ -49,9 +49,18 @@
 						}
 						?>
 						<div class="head">
-							<h3>New Report</h3>
-							<input type="image" src="<?php print url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
-							<input type="image" src="<?php print url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
+							<h3><?php echo $id ? "Edit Report" : "New Report"; ?></h3>
+							<div class="btns" style="float:right;">
+								<ul>
+									<li><a href="#" class="btn_save">SAVE REPORT</a></li>
+									<li><a href="#" class="btn_save_close">SAVE & CLOSE</a></li>
+									<li><a href="<?php echo url::base().'admin/reports/';?>" class="btns_red">CANCEL</a>&nbsp;&nbsp;&nbsp;</li>
+									<?php if ($id) {?>
+									<li><a href="<?php echo $previous_url;?>" class="btns_gray">&laquo; PREVIOUS</a></li>
+									<li><a href="<?php echo $next_url;?>" class="btns_gray">NEXT &raquo;</a></li>
+									<?php } ?>
+								</ul>
+							</div>
 						</div>
 						<!-- f-col -->
 						<div class="f-col">
@@ -138,7 +147,6 @@
                                     print '<span>';
                                     print '<a href="#" id="add_new_category">Add</a>';
                                     print '</span>';
-                                    print form::close();
                                     ?> 
                                 </div>
 
@@ -146,8 +154,9 @@
                         	    <?php
                         		//format categories for 2 column display
                                 $this_col = 1; // First column
-                                $max_col = round($categories_total/2); // Maximum number of columns
+                                $maxper_col = round($categories_total/2); // Maximum number of elements per column
                                 
+								$i = 1; // Element Count
                                 foreach ($categories as $category => $category_extra)
                                 {
                                     $category_title = $category_extra[0];
@@ -168,11 +177,11 @@
                                     print form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
                                     print "$category_title";
                                     print "</label></li>";
-                               
-                                    if ($this_col == $max_col) 
+
+                                    if ($this_col == $maxper_col || $i == count($categories)) 
                                         print "</ul>\n";
                               
-                                    if ($this_col < $max_col)
+                                    if ($this_col < $maxper_col)
                                     {
                                         $this_col++;
                                     } 
@@ -180,6 +189,7 @@
                                     {
                                         $this_col = 1;
                                     }
+									$i++;
                                 }
                                 
                                 ?>
@@ -486,9 +496,13 @@
 							</div>
 							<div style="clear:both;"></div>
 						</div>
-						<input id="save_only" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
-						<input id="save_close" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-and-close.gif" class="save-close-btn" />
-						<input id="cancel" type="image" src="<?php print url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+						<div class="btns">
+							<ul>
+								<li><a href="#" class="btn_save">SAVE REPORT</a></li>
+								<li><a href="#" class="btn_save_close">SAVE & CLOSE</a></li>
+								<li><a href="<?php echo url::base().'admin/reports/';?>" class="btns_red">CANCEL</a></li>
+							</ul>
+						</div>						
 					</div>
 				<?php print form::close(); ?>
 			</div>
