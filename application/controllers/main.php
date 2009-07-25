@@ -264,11 +264,13 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->all_graphs = $all_graphs;
 		$this->template->header->js->categories = $categories;
 		$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
-		$this->template->header->js = new View('footer_form_js');
+		//$this->template->header->footerjs = new View('footer_form_js');
+		$footerjs = new View('footer_form_js');
 		
 		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
-		$this->template->header->js = $myPacker->pack();
+		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+		$footerjs = $myPacker->pack();
+		$this->template->header->js .= $footerjs;
 	}
 	
 	
