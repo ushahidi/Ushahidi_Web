@@ -205,14 +205,17 @@
 				})
 				.change();
 			
+			
+			/* Form Actions */
 			// Action on Save Only
-			$("#save_only").click(function () {
+			$('.btn_save').live('click', function () {
 				$("#save").attr("value", "1");
+				$(this).parents("form").submit();
+				return false;
 			});
 			
-			// Action on Cancel
-			$("#cancel").click(function () {
-				window.location.href='<?php echo url::base() . 'admin/reports/' ?>';
+			$('.btn_save_close').live('click', function () {
+				$(this).parents("form").submit();
 				return false;
 			});
 			
@@ -220,6 +223,7 @@
 			$("#reportForm").bind("keypress", function(e) {
 			  if (e.keyCode == 13) return false;
 			});
+			
 			
 			// Show Messages Box
 		    $('a#messages_toggle').click(function() {
