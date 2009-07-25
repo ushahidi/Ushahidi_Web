@@ -219,6 +219,15 @@
 				return false;
 			});
 			
+			// Delete Action
+			$('.btn_delete').live('click', function () {
+				var agree=confirm("Are You Sure You Want To DELETE item?");
+				if (agree){
+					$('#reportMain').submit();
+				}
+				return false;
+			});
+			
 			// Prevent Enter Button Submit
 			$("#reportForm").bind("keypress", function(e) {
 			  if (e.keyCode == 13) return false;

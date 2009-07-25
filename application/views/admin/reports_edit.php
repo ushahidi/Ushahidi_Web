@@ -500,9 +500,25 @@
 							<ul>
 								<li><a href="#" class="btn_save">SAVE REPORT</a></li>
 								<li><a href="#" class="btn_save_close">SAVE & CLOSE</a></li>
+								<?php 
+								if($id)
+								{
+									echo "<li><a href=\"#\" class=\"btn_delete btns_red\">DELETE THIS REPORT</a></li>";
+								}
+								?>
 								<li><a href="<?php echo url::base().'admin/reports/';?>" class="btns_red">CANCEL</a></li>
 							</ul>
 						</div>						
 					</div>
 				<?php print form::close(); ?>
+				<?php
+				if($id)
+				{
+					// Hidden Form to Perform the Delete function
+					print form::open(url::base().'admin/reports/', array('id' => 'reportMain', 'name' => 'reportMain'));
+					$array=array('action'=>'d','incident_id[]'=>$id);
+					print form::hidden($array);
+					print form::close();
+				}
+				?>
 			</div>
