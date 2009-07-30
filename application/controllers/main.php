@@ -237,11 +237,15 @@ class Main_Controller extends Template_Controller {
         $this->template->content->endDate = $endDate;
 		
 		
-        // get graph data
-        // could not use DB query builder. It does not support parentheses yet
-        $graph_data = array();		
-        $all_graphs = Incident_Model::get_incidents_by_interval('month');	
+		// get graph data
+		// could not use DB query builder. It does not support parentheses yet
+		$graph_data = array();		
+		$all_graphs = Incident_Model::get_incidents_by_interval('month');
+		$daily_graphs = Incident_Model::get_incidents_by_interval('day');
+		$weekly_graphs = Incident_Model::get_incidents_by_interval('week');
+		$hourly_graphs = Incident_Model::get_incidents_by_interval('hour');
 		$this->template->content->all_graphs = $all_graphs;
+		$this->template->content->daily_graphs = $daily_graphs;
 		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
@@ -262,6 +266,9 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->longitude = Kohana::config('settings.default_lon');
 		$this->template->header->js->graph_data = $graph_data;
 		$this->template->header->js->all_graphs = $all_graphs;
+		$this->template->header->js->daily_graphs = $daily_graphs;
+		$this->template->header->js->hourly_graphs = $hourly_graphs;
+		$this->template->header->js->weekly_graphs = $weekly_graphs;
 		$this->template->header->js->categories = $categories;
 		$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
 		//$this->template->header->footerjs = new View('footer_form_js');
