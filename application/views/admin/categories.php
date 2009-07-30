@@ -103,7 +103,7 @@
 												</div>
 											</td>
 											<td class="col-3">
-											<?if (!empty($category_image))
+											<?php if (!empty($category_image))
 											{
 												echo "<img src=\"".url::base()."media/uploads/".$category_image."\">";
 												echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\">delete</a>]";

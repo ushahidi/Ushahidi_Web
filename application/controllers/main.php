@@ -33,6 +33,49 @@ class Main_Controller extends Template_Controller {
         $this->template->header  = new View('header');
         $this->template->footer  = new View('footer');
 		
+		//setup and initialize form fields
+		$form = array
+		(
+			'feedback_title' => '',
+			'feedback_message' => '',
+			'person_email' => '',
+			'person_name' => ''
+		);
+		
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+	    $errors = $form;
+		$form_error = FALSE;
+		
+		//has form been submitted, if so setup validation
+		if($_POST)
+		{
+			
+			$post = Validation::factory($_POST);
+			
+			//Trim whitespaces
+			$post->pre_filter('trim', TRUE);
+			
+			//Add validation rules
+			$post->add_rules('feedback_title','required', 'length[3,200]');
+			$post->add_rules('feedback_message','required');
+			$post->add_rules('person_email', 'required','email');
+			$post->add_rules('person_name','required','length[3,50]');
+			
+			if( $post->validate() ) { 
+				$this->_dump_feedback($post);
+				
+			}
+			else
+        	{
+				// repopulate the form fields
+            	$form = arr::overwrite($form, $post->as_array());
+
+            	// populate the error fields, if any
+            	$errors = arr::overwrite($errors, $post->errors('feedback'));
+				$form_error = TRUE;
+			}
+		}
+		
         // Retrieve Default Settings
 		$site_name = Kohana::config('settings.site_name');
 			// Prevent Site Name From Breaking up if its too long
@@ -60,7 +103,7 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->photoslider_enabled = FALSE;
 		$this->template->header->videoslider_enabled = FALSE;
 		$this->template->header->main_page = FALSE;
-		$this->template->header->js = '';
+		$this->template->header->js = new View('footer_form_js');
 		
 		$this->template->header->this_page = "";
 		
@@ -84,6 +127,10 @@ class Main_Controller extends Template_Controller {
 			$track_url = 'null';
 		}
 		$this->template->footer->tracker_url = 'http://tracker.ushahidi.com/track.php?url='.urlencode($track_url).'&lang='.$this->template->header->site_language.'';
+		$this->template->footer->js = new View('footer_form_js');
+		$this->template->footer->form = $form;
+	    $this->template->footer->errors = $errors;
+		$this->template->footer->form_error = $form_error;
 		
         // Load profiler
         // $profiler = new Profiler;
@@ -190,11 +237,15 @@ class Main_Controller extends Template_Controller {
         $this->template->content->endDate = $endDate;
 		
 		
-        // get graph data
-        // could not use DB query builder. It does not support parentheses yet
-        $graph_data = array();		
-        $all_graphs = Incident_Model::get_incidents_by_interval('month');	
+		// get graph data
+		// could not use DB query builder. It does not support parentheses yet
+		$graph_data = array();		
+		$all_graphs = Incident_Model::get_incidents_by_interval('month');
+		$daily_graphs = Incident_Model::get_incidents_by_interval('day');
+		$weekly_graphs = Incident_Model::get_incidents_by_interval('week');
+		$hourly_graphs = Incident_Model::get_incidents_by_interval('hour');
 		$this->template->content->all_graphs = $all_graphs;
+		$this->template->content->daily_graphs = $daily_graphs;
 		
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
@@ -215,12 +266,18 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->longitude = Kohana::config('settings.default_lon');
 		$this->template->header->js->graph_data = $graph_data;
 		$this->template->header->js->all_graphs = $all_graphs;
+		$this->template->header->js->daily_graphs = $daily_graphs;
+		$this->template->header->js->hourly_graphs = $hourly_graphs;
+		$this->template->header->js->weekly_graphs = $weekly_graphs;
 		$this->template->header->js->categories = $categories;
 		$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
+		//$this->template->header->footerjs = new View('footer_form_js');
+		$footerjs = new View('footer_form_js');
 		
 		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
-		$this->template->header->js = $myPacker->pack();
+		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+		$footerjs = $myPacker->pack();
+		$this->template->header->js .= $footerjs;
 	}
 	
 	
@@ -244,5 +301,26 @@ class Main_Controller extends Template_Controller {
 		}
 		return $html;
 	}
-
+	
+	/**
+	 * puts feedback info into the database.
+	 * @param the post object
+	 */
+	private function _dump_feedback($post) {
+		
+		$feedback = new Feedback_Model();
+		$feedback->feedback_title = $post->feedback_title;
+		$feedback->feedback_mesg = $post->feedback_message;
+		$feedback->feedback_dateadd = date("Y-m-d H:i:s",time());
+		$feedback->save();//save feedback info to db
+		
+		$feedback_person = new Feedback_Person_Model();
+		$feedback_person->feedback_id = $feedback->id;
+		$feedback_person->person_name = $post->person_name;
+		$feedback_person->person_email = $post->person_email;
+		$feedback_person->person_date = date("Y-m-d H:i:s",time());
+		$feedback_person->person_ip = $post->person_ip;
+		$feedback_person->save(); //save person info to db
+	}
+	
 } // End Main

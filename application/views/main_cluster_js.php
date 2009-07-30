@@ -351,10 +351,27 @@
 						if (!currentCat || currentCat == '0') {
 							currentCat = 'ALL';
 						}
+						
+						var startTime = new Date(startDate * 1000);
+						var endTime = new Date(endDate * 1000);
+						// daily
+						var graphData = dailyGraphData[0][currentCat];
+
+						// plot hourly incidents when period is within 2 days
+						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 2) {
+						    graphData = hourlyGraphData[0][currentCat];
+						} else if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 124) { 
+						    // weekly if period > 2 months
+						    graphData = dailyGraphData[0][currentCat];
+						} else if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 124) {
+							// monthly if period > 4 months
+						    graphData = allGraphData[0][currentCat];
+						}
+						
 						gTimeline = $.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
 						    endTime: new Date(endDate * 1000), mediaType: gMediaType,
-							graphData: allGraphData[0][currentCat], 
-							url: "<?php echo url::base() . 'json/timeline/' ?>"
+							graphData: graphData //allGraphData[0][currentCat], 
+							//url: "<?php echo url::base() . 'json/timeline/' ?>"
 						});
 						gTimeline.plot();
 					}
@@ -363,6 +380,9 @@
 		
 			// Graph
 			var allGraphData = [<?php echo $all_graphs ?>];
+			dailyGraphData = [<?php echo $daily_graphs ?>];
+			weeklyGraphData = [<?php echo $weekly_graphs ?>];
+			hourlyGraphData = [<?php echo $hourly_graphs ?>];
 			var plotPeriod = $.timelinePeriod(allGraphData[0]['ALL'].data);
 			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
 			var endTime = $.monthEndDateTime(plotPeriod[1]) / 1000;
@@ -387,7 +407,7 @@
 					var endTime = new Date($("#endDate").val() * 1000);
 					gTimeline = $.timeline({categoryId: catId, startTime: startTime, endTime: endTime,
 						graphData: graphData,
-						url: "<?php echo url::base() . 'json/timeline/' ?>",
+						//url: "<?php echo url::base() . 'json/timeline/' ?>",
 						mediaType: gMediaType
 					});
 					gTimeline.plot();

@@ -37,14 +37,15 @@
 							{
 								?>
 								<li><a href="#" onclick="commentAction('x','DELETE ALL SPAM', '000');">DELETE ALL SPAM</a></li>
-								<?
+								<?php
 							}
 							?>
 						</ul>
 					</div>
 				</div>
 				<?php
-				if ($form_error) {
+				if ($form_error)
+				{
 				?>
 					<!-- red-box -->
 					<div class="red-box">
@@ -54,7 +55,8 @@
 				<?php
 				}
 
-				if ($form_saved) {
+				if ($form_saved)
+				{
 				?>
 					<!-- green-box -->
 					<div class="green-box" id="submitStatus">
@@ -119,7 +121,7 @@
 												<?php
 												if ($incident_title != "")
 												{
-													?><div class="comment_incident">In response to: <strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo $incident_title; ?></a></strong></div><?
+													?><div class="comment_incident">In response to: <strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo $incident_title; ?></a></strong></div><?php
 												}
 												?>
 												<p><?php echo $comment_description; ?></p>
@@ -136,21 +138,21 @@
 												<li class="none-separator"><?php
 												if ($comment_active)
 												{
-													?><a href="#" class="status_yes" onclick="commentAction('u','UNAPPROVE', '<?php echo $comment_id; ?>');">Approved</a><?
+													?><a href="#" class="status_yes" onclick="commentAction('u','UNAPPROVE', '<?php echo $comment_id; ?>');">Approved</a><?php
 												}
 												else
 												{
-													?><a href="#" class="status_no" onclick="commentAction('a','APPROVE', '<?php echo $comment_id; ?>');">Approve</a><?
+													?><a href="#" class="status_no" onclick="commentAction('a','APPROVE', '<?php echo $comment_id; ?>');">Approve</a><?php
 												}
 												?></li>
 												<li><?php
 												if ($comment_spam)
 												{
-													?><a href="#" class="status_yes" onclick="commentAction('n','MARK AS NOT SPAM', '<?php echo $comment_id; ?>');">Spam</a><?
+													?><a href="#" class="status_yes" onclick="commentAction('n','MARK AS NOT SPAM', '<?php echo $comment_id; ?>');">Spam</a><?php
 												}
 												else
 												{
-													?><a href="#" class="status_no" onclick="commentAction('s','MARK AS SPAM', '<?php echo $comment_id; ?>');">Spam</a><?
+													?><a href="#" class="status_no" onclick="commentAction('s','MARK AS SPAM', '<?php echo $comment_id; ?>');">Spam</a><?php
 												}
 												?></li>
 												<li><a href="#" class="del" onclick="commentAction('d','DELETE', '<?php echo $comment_id; ?>');">Delete</a></li>

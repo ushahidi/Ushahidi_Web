@@ -507,6 +507,36 @@ ul.tabset li a:hover{
 	margin:10px 10px 0 10px;
 }
 /*-- tabs --*/
+/*-- btns --*/
+.btns ul{
+	margin:0;
+	padding:9px 10px 0;
+	clear:both;
+	overflow:hidden;
+}
+.btns ul li{
+	padding:0 4px;
+	float:left;
+	list-style:none;
+}
+.btns ul li a{
+	padding:0 9px;
+	color:#5c5c5c;
+	background:#f2f7fa;
+	float:left;
+	line-height:24px;
+	text-decoration:none;
+	border:1px solid #d1d1d1;
+}
+.btns ul li a.btns_red{
+	background:#FFE9EC;
+}
+.btns ul li a.btns_gray{
+	background:#eee;
+}
+.btns ul li a:hover{ text-decoration:underline;}
+/*-- btns --*/
+
 .green-box {
 	margin:15px 21px 0 22px;
 	padding:9px 0 8px;

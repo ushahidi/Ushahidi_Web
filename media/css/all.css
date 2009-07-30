@@ -225,6 +225,31 @@ a:visited{
 .slider-holder form, .slider-holder fieldset {
 	border:0;
 }
+.slider-holder form, .slider-holder fieldset {
+	border:0;
+}
+.slider-holder .play{
+	float:right;
+	border:1px solid #ccc;
+	background-color:#eee;
+	padding:3px 6px 3px 15px;
+	color:#666;
+	font-weight:bold;
+	background-image:url(../img/arrow-play.gif);
+	background-position:5px 50%;
+	background-repeat:no-repeat;
+	font-size:1.2em;
+}
+.slider-holder .play a{
+	color:#666;
+	text-decoration:none;
+}
+.slider-holder .play:hover{
+	background-color:#ffffcc;
+}
+.slider-holder .play a:hover{
+	text-decoration:underline;
+}
 .olControlLoadingPanel {
 	background-image:url(../img/loading.gif);
 	background-position:center;
@@ -1304,4 +1329,14 @@ ul.pager li a.active {background:#f2f7fa;}
 }
 .alert_confirm .label{
 	margin-bottom:10px;
+}
+
+/*-- feedback --*/
+.feedback_forms{
+	display:none;
+	float: right;
+	width: 300px;
+	padding:10px;
+	background-color:#eee;
+	border-bottom:2px solid #ccc;
 }

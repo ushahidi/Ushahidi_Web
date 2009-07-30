@@ -58,6 +58,8 @@
 			gCategoryId   = this.categoryId;
 			gGraphOptions = this.graphOptions;
 			gTimelineId   = this.elementId;
+			
+			$.extend(this.graphOptions.xaxis, this.getXaxisOptions());
 	    	
 			if (!this.url) { 
 				gStartTime = gStartTime || new Date(this.graphData[0][0]);
@@ -193,6 +195,39 @@
 			markers.styleMap.styles["default"] = style; 
 			markers.redraw();
 			return this;
+		};
+		
+		/*
+		 * Returns options to plot incidents hourly, daily, weekly or monthly
+		 * according to the period
+		 */
+		this.getXaxisOptions = function() {
+			var startTime = this.startTime; //new Date(startDate * 1000);
+			var endTime = this.endTime; //new Date(endDate * 1000);
+			// daily
+			var aTimeformat = "%d %b";
+			var aTickSize = [5, "day"];
+
+			// plot hourly incidents when period is within 2 days
+			if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 2) {
+			    aTimeformat = "%H:%M";
+			    aTickSize = [5, "hour"];
+			} else if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 124) { 
+			    // weekly if period > 2 months
+			    aTimeformat = "%d %b";
+			    aTickSize = [5, "day"];
+			} else if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 124) {
+				// monthly if period > 4 months
+			    aTimeformat = "%b %y";
+			    aTickSize = [2, "month"];
+			}
+			
+			return {
+				mode: "time", 
+				timeformat: aTimeformat,
+				tickSize: aTickSize, 
+				autoscaleMargin: 3
+			};
 		};
 	}  
 

@@ -140,7 +140,7 @@ class Reports_Controller extends Admin_Controller
 					}
 					$form_action = "VERIFIED";
 				}
-				elseif ($post->action == 'd')	// Delete Action
+				elseif ($post->action == 'd')	//Delete Action
 				{
 					foreach($post->incident_id as $item)
 					{
@@ -221,8 +221,8 @@ class Reports_Controller extends Admin_Controller
 			}
 			$countries[$country->id] = $this_country;
 		}
-		$this->template->content->countries = $countries;
 		
+		$this->template->content->countries = $countries;		
 		$this->template->content->incidents = $incidents;
 		$this->template->content->pagination = $pagination;
 		$this->template->content->form_error = $form_error;
@@ -800,6 +800,18 @@ class Reports_Controller extends Admin_Controller
 		// Retrieve Custom Form Fields Structure
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
+		
+		// Retrieve Previous & Next Records
+		$previous = ORM::factory('incident')->where('id < ', $id)->orderby('id','desc')->find();
+		$previous_url = ($previous->loaded ? 
+				url::base().'admin/reports/edit/'.$previous->id : 
+				url::base().'admin/reports/');
+		$next = ORM::factory('incident')->where('id > ', $id)->orderby('id','desc')->find();
+		$next_url = ($next->loaded ? 
+				url::base().'admin/reports/edit/'.$next->id : 
+				url::base().'admin/reports/');
+		$this->template->content->previous_url = $previous_url;
+		$this->template->content->next_url = $next_url;
 		
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
@@ -1426,10 +1438,6 @@ class Reports_Controller extends Admin_Controller
 					if ($form_response->incident_id == $incident_id)
 					{
 						$fields_array[$custom_formfield->id] = $form_response->form_response;
-					}
-					else
-					{
-						$fields_array[$custom_formfield->id] = '';
 					}
 				}
 			}
