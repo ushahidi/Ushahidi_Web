@@ -53,7 +53,6 @@
 			<?php
 			foreach ($errors as $error_item => $error_description)
 			{
-				// print "<li>" . $error_description . "</li>";
 				print (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
 			}
 			?>
@@ -125,12 +124,11 @@
 						foreach ( $all_feedback as $feedback )
 						{
 							$feedback_id = $feedback->id;
-							$feedback_title = $feedback->feedback_title;
+							$feedback_title = text::limit_chars($feedback->feedback_mesg, 10, "...", true);
 							$feedback_mesg = text::limit_chars($feedback->feedback_mesg, 150, "...", true);
 							$feedback_dateadd = $feedback->feedback_dateadd;
 							$feedback_dateadd = date('Y-m-d', strtotime($feedback->feedback_dateadd));
 							$feedback_read = $feedback->feedback_status;
-							$person_name = $feedback->person_name;
 							$person_ip = $feedback->person_ip;
 							
 							?>
@@ -143,9 +141,6 @@
 									</div>
 									<ul class="info">
 										<li class="none-separator">
-											<strong>Submitted by: </strong><?php echo $person_name; ?>
-										</li>
-										<li>
 											<strong>IP: </strong><?php echo $person_ip; ?>
 										</li>
 									</ul>

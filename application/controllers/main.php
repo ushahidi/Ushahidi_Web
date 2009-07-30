@@ -36,10 +36,8 @@ class Main_Controller extends Template_Controller {
 		//setup and initialize form fields
 		$form = array
 		(
-			'feedback_title' => '',
 			'feedback_message' => '',
-			'person_email' => '',
-			'person_name' => ''
+			'person_email' => ''
 		);
 		
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -56,14 +54,27 @@ class Main_Controller extends Template_Controller {
 			$post->pre_filter('trim', TRUE);
 			
 			//Add validation rules
-			$post->add_rules('feedback_title','required', 'length[3,200]');
 			$post->add_rules('feedback_message','required');
 			$post->add_rules('person_email', 'required','email');
-			$post->add_rules('person_name','required','length[3,50]');
 			
 			if( $post->validate() ) { 
 				$this->_dump_feedback($post);
 				
+				
+				//send details to admin
+				$frm = $post->person_email;
+				$subject = Kohana::lang('feedback.feedback_details');;
+				$message = $post->feedback_message;
+				$email = Kohana::config('settings.site_email');
+				$this->_send_feedback( $email, $message, $subject, $frm );
+				
+				//send details to ushahidi
+				$frm = $post->person_email;
+				$subject = Kohana::lang('feedback.feedback_details');;
+				$message = $post->feedback_message;
+				$message .= "Instance: ".url::base();
+				$email = "feedback@ushahidi.com";
+				$this->_send_feedback( $email, $message, $subject, $frm );
 			}
 			else
         	{
@@ -309,18 +320,38 @@ class Main_Controller extends Template_Controller {
 	private function _dump_feedback($post) {
 		
 		$feedback = new Feedback_Model();
-		$feedback->feedback_title = $post->feedback_title;
 		$feedback->feedback_mesg = $post->feedback_message;
 		$feedback->feedback_dateadd = date("Y-m-d H:i:s",time());
 		$feedback->save();//save feedback info to db
 		
 		$feedback_person = new Feedback_Person_Model();
 		$feedback_person->feedback_id = $feedback->id;
-		$feedback_person->person_name = $post->person_name;
 		$feedback_person->person_email = $post->person_email;
 		$feedback_person->person_date = date("Y-m-d H:i:s",time());
 		$feedback_person->person_ip = $post->person_ip;
 		$feedback_person->save(); //save person info to db
+	}
+	
+	/**
+	 * Send feedback info as email to admin and Ushahidi
+	 */
+	public function _send_feedback( $email, $message, $subject, $frm )
+	{
+		$to = $email;
+		$from = $frm;
+		$subject = $subject;
+		
+		$message .= "\n\n";
+		//email details
+		if( email::send( $to, $from, $subject, $message, FALSE ) == 1 )
+		{
+			return TRUE;
+		}
+		else 
+		{
+			return FALSE;
+		}
+	
 	}
 	
 } // End Main

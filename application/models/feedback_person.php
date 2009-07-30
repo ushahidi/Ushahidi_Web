@@ -1,7 +1,7 @@
+<?php defined('SYSPATH') or die('No direct script access.');
+
 /**
- * Feedback Forms js file.
- *
- * Handles javascript stuff related to feedback function.
+ * Model for feedback person.
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -9,30 +9,15 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
+ * @module     Feedback Model  
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-// Form Submission
-function formSubmit ()
+class Feedback_Person_Model extends ORM
 {
-	// Submit Form
-	$("#footerfeedbackMain").submit();
+	protected $belongs_to = array('feedback');
+	
+	// Database table name
+	protected $table_name = 'feedback_person';
 }
-
-// Show Function
-function showForm(id)
-{
-	if (id) {
-		$('#' + id).toggle(400);
-	}
-}
-
-function clearField()
-{
-	$('#person_email').val("");
-} 
-
-
-
