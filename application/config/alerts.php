@@ -1,4 +1,4 @@
 <?php 
-/* This settings may be moved to the DB in the future */
+/* Alerts Email address*/
 $config['alerts_email'] = "alerts@ushahidi.com";
 ?>

@@ -71,6 +71,10 @@
 							<?php print form::input('site_email', $form['site_email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
+							<h4>Alert Email Address</h4>
+							<?php print form::input('alerts_email', $form['alerts_email'], ' class="text long2"'); ?>
+						</div>
+						<div class="row">
 							<h4>Site Language (Locale)</h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('site_language', $site_language_array, $form['site_language']); ?>

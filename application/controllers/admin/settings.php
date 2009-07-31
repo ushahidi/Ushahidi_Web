@@ -41,6 +41,7 @@ class Settings_Controller extends Admin_Controller
 			'site_name' => '',
 			'site_tagline' => '',
 			'site_email' => '',
+			'alerts_email' =>  '',
 			'site_language' => '',
 			'items_per_page' => '',
 			'items_per_page_admin' => '',
@@ -79,6 +80,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_name', 'required', 'length[3,50]');
 			$post->add_rules('site_tagline', 'length[3,100]');
 			$post->add_rules('site_email', 'email', 'length[4,100]');
+			$post->add_rules('alerts_email', 'email', 'length[4,100]');
 			$post->add_rules('site_language','required', 'in_array[en_US, fr_FR]');
 			$post->add_rules('items_per_page','required','between[10,50]');
 			$post->add_rules('items_per_page_admin','required','between[10,50]');
@@ -104,6 +106,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->site_name = $post->site_name;
 				$settings->site_tagline = $post->site_tagline;
 				$settings->site_email = $post->site_email;
+				$settings->alerts_email = $post->alerts_email;
 				$settings->site_language = $post->site_language;
 				$settings->items_per_page = $post->items_per_page;
 				$settings->items_per_page_admin = $post->items_per_page_admin;
@@ -125,7 +128,9 @@ class Settings_Controller extends Admin_Controller
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-
+				
+				$this->_add_alerts_settings($settings);	
+					
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
 
@@ -153,6 +158,7 @@ class Settings_Controller extends Admin_Controller
 		        'site_name' => $settings->site_name,
 				'site_tagline' => $settings->site_tagline,
 				'site_email' => $settings->site_email,
+				'alerts_email' => $settings->alerts_email,
 				'site_language' => $settings->site_language,
 				'items_per_page' => $settings->items_per_page,
 				'items_per_page_admin' => $settings->items_per_page_admin,
@@ -774,6 +780,28 @@ class Settings_Controller extends Admin_Controller
 			        fwrite($handle,  str_replace("\$config['ssl'] = false","\$config['ssl'] = ".$enable,$line ));
 			        break;
 					
+	            default:
+	            	fwrite($handle, $line );
+	        }
+	    }
+
+	}
+	
+	/**
+	 * adds the email settings to the application/config/email.php file
+	 */
+	private function _add_alerts_settings( $settings )
+	{
+	    $alerts_file = file('application/config/alerts.template.php');
+        $handle = fopen('application/config/alerts.php', 'w');
+
+	    foreach( $alerts_file as $number_line => $line )
+	    {
+	        
+	    	switch( $line ) {
+	        	case strpos($line,"\$config['alerts_email']"):
+	            	fwrite($handle,  str_replace("\$config['alerts_email'] = \"\"","\$config['alerts_email'] = ".'"'.$settings->alerts_email.'"',$line ));
+	           		break;	
 	            default:
 	            	fwrite($handle, $line );
 	        }
