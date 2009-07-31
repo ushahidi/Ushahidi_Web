@@ -45,10 +45,6 @@
                         ?>
 		              </li>
 		              <li>
-		                <strong>ENTITY</strong>
-		                <p>N/A</p>
-		              </li>
-		              <li>
 		                <strong>VERIFIED</strong>
                         <?php        
                         if ( $incident_verified == 1 )
