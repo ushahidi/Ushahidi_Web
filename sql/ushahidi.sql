@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 6
+-- version 7
 -- http://www.ushahidi.com
 
 
@@ -1222,7 +1222,6 @@ INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url
 
 CREATE TABLE IF NOT EXISTS `feedback` (
   `id` tinyint(11) NOT NULL auto_increment,
-  `feedback_title` varchar(60) NOT NULL,
   `feedback_mesg` text NOT NULL,
   `feedback_status` tinyint(3) NOT NULL,
   `feedback_dateadd` datetime default NULL,
@@ -1239,7 +1238,6 @@ CREATE TABLE IF NOT EXISTS `feedback` (
 CREATE TABLE IF NOT EXISTS `feedback_person` (
   `id` tinyint(11) NOT NULL auto_increment,
   `feedback_id` tinyint(11) NOT NULL,
-  `person_name` varchar(60) NOT NULL,
   `person_email` varchar(30) NOT NULL,
   `person_date` datetime default NULL,
   `person_ip` varchar(50) default NULL,
@@ -1274,3 +1272,16 @@ ALTER TABLE `form_response`
 --
 ALTER TABLE `user_tokens`
   ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `settings`
+--
+ALTER TABLE `settings` 
+  ADD `email_username` VARCHAR( 100 ) NOT NULL ,
+  ADD `email_password` VARCHAR( 100 ) NOT NULL ,
+  ADD `email_port` INT( 11 ) NOT NULL ,
+  ADD `email_host` VARCHAR( 100 ) NOT NULL ,
+  ADD `email_servertype` VARCHAR( 100 ) NOT NULL ,
+  ADD `email_ssl` INT( 5 ) NOT NULL,
+  ADD `alerts_email` VARCHAR( 120 ) NOT NULL;
+
