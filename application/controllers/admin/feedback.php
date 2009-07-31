@@ -113,7 +113,7 @@ class Feedback_Controller extends Admin_Controller
 		));
 
 		$all_feedback = ORM::factory('feedback')
-			->select('feedback_person.person_name, feedback_person.person_ip,feedback.*')
+			->select('feedback_person.person_ip,feedback.*')
 			->join('feedback_person',array('feedback_person.feedback_id'=>'feedback.id'),
 			$filter,'LEFT JOIN')
 			->orderby('feedback_dateadd', 'desc')
@@ -155,7 +155,6 @@ class Feedback_Controller extends Admin_Controller
 		//setup and initialize form fields
 		$form = array
 		(
-			'feedback_title' =>'',
 			'feedback_message'=>'',
 			'person_email' => ''
 		);
@@ -175,7 +174,6 @@ class Feedback_Controller extends Admin_Controller
 			$post->pre_filter('trim', TRUE);
 			
 			//Add validation rules
-			$post->add_rules('feedback_title','required', 'length[3,200]');
 			$post->add_rules('feedback_message','required');
 			$post->add_rules('person_email','email', 'length[3,100]');
 		

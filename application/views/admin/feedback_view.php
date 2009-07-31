@@ -22,21 +22,9 @@
 				'method' => 'post')); ?>
 		<div class="row">
 			<div class="f-col-bottom-1-col">
-				<?php print Kohana::lang('feedback.feedback_reply_title')?>
-			</div>
-			<?php print $feedback->feedback_title;?>
-		</div>
-		<div class="row">
-			<div class="f-col-bottom-1-col">
 				<?php print Kohana::lang('feedback.feedback_reply_message')?>
 			</div>
 			<?php print $feedback->feedback_mesg?>		
-		</div>
-		<div class="row">
-			<div class="f-col-bottom-1-col">
-				<?php print Kohana::lang('feedback.feedback_person_name')?>
-			</div>
-			<?php print $feedback->person_name;?>								
 		</div>
 		<div class="row">
 			<div class="f-col-bottom-1-col">
@@ -88,14 +76,6 @@
 		<h3><?php print Kohana::lang('feedback.feedback_send_reply')?></h3>
 		</br /><br />
 		<div class="row">
-			<div class="f-col-bottom-1-col">
-				<?php print Kohana::lang('feedback.feedback_reply_title')?>
-			</div>
-			<?php print form::input('feedback_title', $feedback->feedback_title, 
-			' class="text long"'); ?>							
-		</div>
-		
-		<div class="row">
 			<br /></br />
 			<div class="f-col-bottom-1-col">
 				<?php print Kohana::lang('feedback.feedback_reply_message')?>
@@ -108,8 +88,8 @@
 			<div class="f-col-bottom-1-col">
 				&nbsp;
 			`</div>
-				<input type="hidden" name="person_name" 
-					id="person_name" value="<?php print $feedback->person_email?>" />
+				<input type="hidden" name="person_email" 
+					id="person_email" value="<?php print $feedback->person_email?>" />
 			<?php print form::submit('submit', 
 				Kohana::lang('feedback.feedback_reply_send')); ?>								
 		</div>

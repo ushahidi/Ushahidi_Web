@@ -24,8 +24,12 @@
 					<li><a href="#"><?php echo Kohana::lang('ui_main.about'); ?></a></li>
 					<li><a href="#"><?php echo Kohana::lang('ui_main.contact'); ?></a></li>
 					<li><a href="#"><?php echo Kohana::lang('ui_main.blog'); ?></a></li>
-					<li><a href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a></li>
 				</ul>
+				
+				<p><?php echo Kohana::lang('ui_main.copyright'); ?></p>
+				<p class="feedback_title">
+					<a href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a>
+				</p>
 				<div id="table-holder" class="feedback_forms">
 					
 					<table class="table">
@@ -35,73 +39,44 @@
 									'name' => 'footerfeedbackMain')); ?>
 								<?php print form::hidden('person_ip',getenv("REMOTE_ADDR"),'')?>	
 								</td>
-								<td colspan="4">
-									<?php print form::button('submit', 
-										Kohana::lang('feedback.feedback_reply_send'),'onclick="formSubmit();"'); ?>
-								</td>
-								<td>
-									&nbsp;
-								</td>
 							</tr>
 						</tfoot>
 						<tbody>
+							
 							<tr>
 								<td>
-									<?php print form::label('title','Title:');?> 
-								</td>
-								<td>
-								<?php print form::input("feedback_title", '', 'size="23"'); ?>
-								</td>
-								<td>
+									<?php print form::textarea("feedback_message",'',' rows="5" cols="50"');?>
+									<br /><br />
 									<?php
-									print(empty($errors['feedback_title'])) ?'': $errors['feedback_title'];
+										print(empty($errors['feedback_message'])) ?'': $errors['feedback_message'].'<br /><br />';
 									?>
 								</td>
-								</tr>
-								<tr>
-									<td>
-										<?php print form::label('message','Message:');?>
-									</td>
-									<td>
-										<?php print form::textarea("feedback_message",'');?>
-									</td>
-									<td>
-										<?php
-										print(empty($errors['feedback_message'])) ?'': $errors['feedback_message'];
-										?>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<?php print form::label('fullname','Full Name:');?>
-									</td>
-									<td>
-										<?php print form::input("person_name",'','size="23"');?>
-									</td>
-									<td>
-										<?php
-										print(empty($errors['person_name'])) ?'': $errors['person_name'];
-										?>
-									</td>
-								</tr>
-								<tr>
-									<td>
-										<?php print form::label('email','Email:');?>
-									</td>
-									<td>
-										<?php print form::input("person_email",'','size="23"');?>
-									</td>
-									<td>
-										<?php
-										print(empty($errors['person_email'])) ?'': $errors['person_email'];
-										?>
-									</td>
-								</tr>
-								<?php print form::close();?>
+								<td>
+									<div class="or_txt">
+										Or
+									</div>
+								</td>
+								<td>
+									<div class="detailed_feedback">
+										<a href="http://feedback.ushahidi.com/fillsurvey.php?sid=5">Provide Detailed Feedback</a>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="3">
+									<?php print form::input('person_email','Email address','size="40" onclick="clearField();"');?>
+									<?php print form::button('submit', 
+										Kohana::lang('feedback.feedback_reply_send'),'onclick="formSubmit();"'); ?>
+									<br /><br />
+									<?php 
+										print(empty($errors['person_email'])) ?'': $errors['person_email'].'<br /><br />';
+									?>
+								</td>
+							</tr>
+							<?php print form::close();?>
 						</tbody>
 					</table>
 				</div>
-				<p><?php echo Kohana::lang('ui_main.copyright'); ?></p>
 			</div>
 			<strong class="f-logo"><a href="http://www.ushahidi.com">Ushahidi</a></strong>
 			<img src="<?php echo $tracker_url; ?>" />

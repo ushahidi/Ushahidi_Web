@@ -1,6 +1,6 @@
 <?php 
 /**
- * Sms global view page.
+ * Email view page.
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -33,7 +33,6 @@
 							<?php
 							foreach ($errors as $error_item => $error_description)
 							{
-								// print "<li>" . $error_description . "</li>";
 								print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
 							}
 							?>
@@ -52,59 +51,54 @@
 					}
 					?>				
 					<div class="head">
-						<h3>SMS Setup Options</h3>
+						<h3>Mail Server Settings</h3>
 						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 					</div>
-					<!-- column -->
-		
-					<div class="sms_nav_holder">
-						<a href="<?php echo url::base() . 'admin/settings/sms' ?>">Option 1: Use Frontline SMS</a>
-						<a href="<?php echo url::base() . 'admin/settings/smsglobal' ?>" class="active">Option 2: Use a Global SMS Gateway</a>
-					</div>
-		
+					<!-- column -->		
 					<div class="sms_holder">
-						<table style="width: 630px;" class="my_table">
-							<tr>
-								<td style="width:60px;">
-									<span class="big_blue_span">Step 1:</span>
-								</td>
-								<td>
-									<h4 class="fix">Sign up for Clickatells service by <a href="https://www.clickatell.com/central/user/client/step1.php?prod_id=2" target="_blank">clicking here</a>. <sup><a href="#">?</a></sup></h4>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span class="big_blue_span">Step 2:</span>
-								</td>
-								<td>
-									<h4 class="fix">Enter your clickatell access information below. <sup><a href="#">?</a></sup></h4>
-									<div class="row">
-										<h4>Your Clickatell API Number:</h4>
-										<?php print form::input('clickatell_api', $form['clickatell_api'], ' class="text title_2"'); ?>
-									</div>
-									<div class="row">
-										<h4>Your Clickatell User Name:</h4>
-										<?php print form::input('clickatell_username', $form['clickatell_username'], ' class="text title_2"'); ?>
-									</div>
-									<div class="row">
-										<h4>Your Clickatell Password:</h4>
-										<?php print form::password('clickatell_password', $form['clickatell_password'], ' class="text title_2"'); ?>
-									</div>
-								</td>
-							</tr>
-							<!--<tr>
-								<td>
-									<span class="big_blue_span">Step 3:</span>
-								</td>
-								<td>
-									<h4 class="fix">Check Your Clickatell Credit Balance. <sup><a href="#">?</a></sup></h4>
-									<div class="row">
-										<h4><a href="javascript:clickatellBalance()">Load Credit Balance</a>&nbsp;<span id="balance_loading"></span></h4>
-									</div>
-								</td>
-							</tr>-->							
-						</table>
+						<div class="row">
+							<h4>Mail Server Username</h4>
+							<?php print form::input('email_username', $form['email_username'], ' class="text long2"'); ?>
+						</div>
+						<span>
+							Some providers require a full email address as username
+						</span>
+						<div class="row">
+							<h4>Mail Server Password</h4>
+							<?php print form::password('email_password', $form['email_password'], ' class="text long2"'); ?>							
+						</div>
+						<span>
+							Mail server password
+						</span>
+						<div class="row">
+							<h4>Mail Server Port</h4>
+							<?php print form::input('email_port', $form['email_port'], ' class="text long2"'); ?>
+						</div>
+						<span>
+							Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)
+						</span>
+						<div class="row">
+							<h4>Mail Server Host</h4>
+							<?php print form::input('email_host', $form['email_host'], ' class="text long2"'); ?>
+						</div>
+						<span>
+							Config Mail Server Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com
+						</span>
+						<div class="row">
+							<h4>Mail Server Type</h4>
+							<?php print form::input('email_servertype', $form['email_servertype'], ' class="text long2"'); ?>								 
+						</div>
+						<span>
+							Config Mail Server Type Examples: pop3, imap
+						</span>
+						<div class="row">
+							<h4>Mail Server SSL support</h4>
+								<?php print form::dropdown('email_ssl', $email_ssl_array, $form['email_ssl']); ?>
+						</div>
+						<span>
+							Enable or disable SSL
+						</span>
 					</div>
 		
 					<div class="simple_border"></div>

@@ -26,7 +26,7 @@
     switch ($errno)
 	{
         // IF the code provided was not found ...
-        case ER_CODE_NOT_FOUND:
+        case Alert::ER_CODE_NOT_FOUND:
 ?>
                         <div class="red-box">
                             <div class="alert_response">
@@ -37,7 +37,7 @@
         break;
         
         // IF the code provided means the alert has already been verified ...
-        case ER_CODE_ALREADY_VERIFIED:
+        case Alert::ER_CODE_ALREADY_VERIFIED:
 ?>
                         <div class="red-box">
                             <div class="alert_response" align="center">
@@ -47,7 +47,7 @@
 <?php
 		break;
         // IF the code provided means the code is now verified ...
-        case ER_CODE_VERIFIED:
+        case Alert::ER_CODE_VERIFIED:
 ?>
                         <div class="green-box">
                             <div class="alert_response" align="center">

@@ -7,6 +7,7 @@
 $config = array
 (
 	'site_name' => 'Ushahidi',
+	'site_email' => '',
 	'default_map' => '',
 	'api_google' => '',
 	'api_yahoo' => '',

@@ -14,7 +14,13 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> <a href="<?php echo url::base() . 'admin/settings/site' ?>" class="active">Site</a><a href="<?php echo url::base() . 'admin/settings' ?>">Map</a><a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a><a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a></h2>
+				<h2><?php echo $title; ?> 
+					<a href="<?php echo url::base() . 'admin/settings/site' ?>" class="active">Site</a>
+					<a href="<?php echo url::base() . 'admin/settings' ?>">Map</a>
+					<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
+					<a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a>
+					<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
+				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">
 					<?php
@@ -63,6 +69,10 @@
 						<div class="row">
 							<h4>Site Email Address</h4>
 							<?php print form::input('site_email', $form['site_email'], ' class="text long2"'); ?>
+						</div>
+						<div class="row">
+							<h4>Alert Email Address</h4>
+							<?php print form::input('alerts_email', $form['alerts_email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
 							<h4>Site Language (Locale)</h4>
