@@ -66,6 +66,20 @@
 										<span id="cities_loading"></span>
 										<div id="city_count"></div>
 									</div>
+									<div>
+										Does this Ushahidi Instance Span Multiple Countries?<br />
+										<input type="radio" name="multi_country" value="1"
+										<?php if ($form['multi_country'] == 1)
+										{
+											echo " checked=\"checked\" ";
+										}?>> Yes
+										<input type="radio" name="multi_country" value="0"
+										<?php if ($form['multi_country'] != 1)
+										{
+											echo " checked=\"checked\" ";
+										}?>> No
+										
+									</div>
 								</div>
 							</div>
 							<div class="has_border">

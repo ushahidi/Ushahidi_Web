@@ -15,6 +15,45 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>		
+		// jQuery Textbox Hints Plugin
+		// Will move to separate file later or attach to forms plugin
+		jQuery.fn.hint = function (blurClass) {
+		  if (!blurClass) { 
+		    blurClass = 'texthint';
+		  }
+
+		  return this.each(function () {
+		    // get jQuery version of 'this'
+		    var $input = jQuery(this),
+
+		    // capture the rest of the variable to allow for reuse
+		      title = $input.attr('title'),
+		      $form = jQuery(this.form),
+		      $win = jQuery(window);
+
+		    function remove() {
+		      if ($input.val() === title && $input.hasClass(blurClass)) {
+		        $input.val('').removeClass(blurClass);
+		      }
+		    }
+
+		    // only apply logic if the element has the attribute
+		    if (title) { 
+		      // on blur, set value to title attr if text is blank
+		      $input.blur(function () {
+		        if (this.value === '') {
+		          $input.val(title).addClass(blurClass);
+		        }
+		      }).focus(remove).blur(); // now change all inputs to title
+
+		      // clear the pre-defined text when form is submitted
+		      $form.submit(remove);
+		      $win.unload(remove); // handles Firefox's autocomplete
+			  $(".btn_find").click(remove);
+		    }
+		  });
+		};
+
 		$().ready(function() {
 			// validate signup form on keyup and submit
 			$("#reportForm").validate({
@@ -119,7 +158,7 @@
 					{
 						error.append("#incident_date_time");
 					}else if (element.attr("name") == "latitude" || element.attr("name") == "longitude"){
-						error.insertAfter("#select_city");
+						error.insertAfter("#find_text");
 					}else if (element.attr("name") == "incident_category[]"){
 						error.insertAfter("#categories");
 					}else{
@@ -150,7 +189,7 @@
 		}
 		
 		
-		jQuery(function() {
+		$(document).ready(function() {
 			var moved=false;
 			
 			// Now initialise the map
@@ -228,5 +267,53 @@
 					$("#longitude").attr("value", lonlat[0]);
 				}
 			});
-
+			
+			/* 
+			Google GeoCoder
+			TODO - Add Yahoo and Bing Geocoding Services
+			 */
+			$('.btn_find').live('click', function () {
+				address = escape($("#location_find").val());
+				var geocoder = new GClientGeocoder();
+				if (geocoder) {
+					$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+					geocoder.getLatLng(
+						address,
+						function(point) {
+							if (!point) {
+								alert(address + " not found!\n\n***************************\nFind a city or town close by and zoom in\nto find your precise location");
+								$('#find_loading').html('');
+							} else {
+								var lonlat = new OpenLayers.LonLat(point.lng(), point.lat());
+								m = new OpenLayers.Marker(lonlat);
+								markers.clearMarkers();
+						    	markers.addMarker(m);
+								map.setCenter(lonlat, <?php echo $default_zoom; ?>);
+								
+								// Update form values (jQuery)
+								$("#latitude").attr("value", lonlat.lat);
+								$("#longitude").attr("value", lonlat.lon);
+								$("#location_name").attr("value", $("#location_find").val());
+								$('#find_loading').html('');
+							}
+						}
+					);
+				}
+				return false;
+			});
+			
+			// Prevent Enter Button Submit
+			$("#reportForm").bind("keypress", function(e) {
+				if (e.keyCode == 13) return false;
+			});
+			
+			// Textbox Hints
+			$("#location_find").hint();
+			
+			// Toggle Date Editor
+			$('a#date_toggle').click(function() {
+		    	$('#datetime_edit').show(400);
+				$('#datetime_default').hide();
+		    	return false;
+			});
 		});

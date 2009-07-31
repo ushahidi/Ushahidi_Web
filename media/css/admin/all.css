@@ -774,6 +774,12 @@ ul.pager li a.active {background:#f2f7fa;}
 	border:2px solid #d9d9d9;
 	float:left;
 }
+.report-form .texthint{
+	font-style:italic;
+	font-weight:normal;
+	color:red;
+	background-color:#FFFF99;
+}
 .sel-holder {
 	overflow:hidden;
 	border:2px solid #d9d9d9;
@@ -933,6 +939,31 @@ a.new-cat:hover, a.show-messages:hover;{ text-decoration:none;}
 	clear:none;
 	float:left;
 }
+.incident-find-location {
+	margin-right:6px;
+	padding:0 9px 9px 9px;
+	background-color:#eee;
+	border:1px solid #ccc;
+	border-width:0 1px 1px 1px;
+	font-size:90%;
+	color:#666;
+}
+.incident-find-location input.findtext {
+	margin-top:9px;
+	padding:3px 3px 0 3px;
+	height:21px;
+	float:left;
+	font-size:14px;
+	font-weight:bold;
+	color:#666;
+	width:250px;
+	border:1px #ccc solid;
+}
+.incident-find-loading{
+	float:left;
+	height:24px;
+	margin-top:9px;
+}
 .location-info {
 	padding:11px 0 0;
 	width:290px;
@@ -961,11 +992,9 @@ a.new-cat:hover, a.show-messages:hover;{ text-decoration:none;}
 	background-color:#FFFFCC;
 }
 .town {
-	width:170px;
 	float:left;
 	padding-bottom:8px;
 }
-.town select{width:238px;}
 .location {
 	float:left;
 	width:310px;
@@ -1129,7 +1158,15 @@ p.bold_desc{
 	border-bottom:2px solid #d9d9d9;
 }
 .has_border h4{margin-top: 0px; padding-top: 0px;}
-.map_holder{
+.map_holder_settings{
+	
+}
+.map_holder_reports{
+	width: 494px; 
+	height: 350px; 
+	float:left; 
+	margin:-1px; 
+	border:3px solid #c2c2c2;
 }
 .mini_map_holder{
 	margin: 0 0 20px 20px;	
@@ -1165,7 +1202,7 @@ div.c_push{
 	background-color:#eee;
 	color:#333;
 	padding:5px;
-	margin:10px 15px 0 0;
+	margin:10px 15px 10px 0;
 }
 #retrieve_cities a, #retrieve_cities a:visited{
 	color:#333;

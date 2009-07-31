@@ -294,10 +294,13 @@ class Reports_Controller extends Admin_Controller
 		
 		// Initialize Default Values
 		$form['locale'] = Kohana::config('locale.language');
-		$form['latitude'] = Kohana::config('settings.default_lat');
-		$form['longitude'] = Kohana::config('settings.default_lon');
+		//$form['latitude'] = Kohana::config('settings.default_lat');
+		//$form['longitude'] = Kohana::config('settings.default_lon');
 		$form['country_id'] = Kohana::config('settings.default_country');
 		$form['incident_date'] = date("m/d/Y",time());
+		$form['incident_hour'] = "12";
+		$form['incident_minute'] = "00";
+		$form['incident_ampm'] = "pm";
 		// initialize custom field array
 		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
 		
@@ -484,7 +487,6 @@ class Reports_Controller extends Admin_Controller
 				// STEP 1: SAVE LOCATION
 				$location = new Location_Model($location_id);
 				$location->location_name = $post->location_name;
-				$location->country_id = $post->country_id;
 				$location->latitude = $post->latitude;
 				$location->longitude = $post->longitude;
 				$location->location_date = date("Y-m-d H:i:s",time());
@@ -819,8 +821,17 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js = new View('admin/reports_edit_js');
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
-		$this->template->js->latitude = $form['latitude'];
-		$this->template->js->longitude = $form['longitude'];
+		
+		if (!$form['latitude'] || !$form['latitude'])
+		{
+			$this->template->js->latitude = Kohana::config('settings.default_lat');
+			$this->template->js->longitude = Kohana::config('settings.default_lon');
+		}
+		else
+		{
+			$this->template->js->latitude = $form['latitude'];
+			$this->template->js->longitude = $form['longitude'];
+		}
 		
 		// Inline Javascript
 		$this->template->content->date_picker_js = $this->_date_picker_js();
