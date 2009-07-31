@@ -30,7 +30,7 @@ class Feed_Controller extends Controller
 			throw new Kohana_404_Exception();
 		}
 		$feedpath = $feedtype == 'atom' ? 'feed/atom/' : 'feed/';
-		$site_url = "http://".$_SERVER['SERVER_NAME']."/";
+		$site_url = url::base();
 		$incidents = ORM::factory('incident')
 						->where('incident_active', '1')
 						->orderby('incident_date', 'desc')
