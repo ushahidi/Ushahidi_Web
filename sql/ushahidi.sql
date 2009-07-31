@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 5
+-- version 6
 -- http://www.ushahidi.com
 
 
@@ -821,6 +821,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `api_live` varchar(200) default NULL,
   `api_akismet` VARCHAR( 200 ) default NULL,
   `default_country` int(11) default NULL,
+  `multi_country` TINYINT NOT NULL DEFAULT '0',
   `default_city` varchar(150) default NULL,
   `default_lat` varchar(100) default NULL,
   `default_lon` varchar(100) default NULL,

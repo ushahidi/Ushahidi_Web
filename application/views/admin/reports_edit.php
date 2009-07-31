@@ -96,7 +96,23 @@
 								<h4>Description <span>Please include as much detail as possible.</span></h4>
 								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"') ?>
 							</div>
-							<div class="row">
+							<?php
+							if (!($id))
+							{ // Use default date for new report
+								?>
+								<div class="row" id="datetime_default">
+									<h4><a href="#" id="date_toggle" class="new-cat">Modify Date</a>Date & Time: 
+									<?php echo "Today at ".$form['incident_hour']
+										.":".$form['incident_minute']." ".$form['incident_ampm']; ?></h4>
+								</div>
+								<?php
+							}
+							?>
+							<div class="row" id="datetime_edit" <?php
+								if (!($id))
+								{ // Hide date editor for new report
+									echo "style=\"display:none;\"";
+								}?>>
 								<div class="date-box">
 									<h4>Date <span>(mm/dd/yyyy)</span></h4>
 									<?php print form::input('incident_date', $form['incident_date'], ' class="text"'); ?>								
@@ -245,19 +261,22 @@
 									<span>Longitude:</span>
 									<?php print form::input('longitude', $form['longitude'], ' class="text"'); ?>
 								</div>
-								<div id="divMap" style="width: 494px; height: 400px; float:left; margin:-1px; border:3px solid #c2c2c2;"></div>
+								<div id="divMap" class="map_holder_reports"></div>
+							</div>
+							<div class="incident-find-location">
+								<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
+								<div class="btns" style="float:left;">
+									<ul>
+										<li><a href="#" class="btn_find">FIND LOCATION</a></li>
+									</ul>
+								</div>
+								<div id="find_loading" class="incident-find-loading"></div>
+								<div style="clear:both;">* If you can't find your location, please click on the map to pinpoint the correct location.</div>
 							</div>
 							<div class="row">
 								<div class="town">
-									<h4>Location Name</h4>
-									<?php print form::input('location_name', $form['location_name'], ' class="text"'); ?>
-								</div>
-								<div class="location">
-									<h4>Location</h4>
-									<span class="sel-holder">
-										<?php print form::dropdown('country_id',$countries,$form['country_id']); ?>
-									</span>
-									&nbsp;&nbsp;<a href="#" id="findAddress" onClick="return false;">Find!</a>
+									<h4>Refine Your Location Name <br /><span>Examples: Johannesburg, Corner City Market, 5th Street & 4th Avenue</span></h4>
+									<?php print form::input('location_name', $form['location_name'], ' class="text long"'); ?>
 								</div>
 							</div>
 				

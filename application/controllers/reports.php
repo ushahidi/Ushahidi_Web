@@ -148,6 +148,12 @@ class Reports_Controller extends Main_Controller {
 		$errors = $form;
 		$form_error = FALSE;
 		
+		// Initialize Default Values
+		$form['incident_date'] = date("m/d/Y",time());
+		$form['incident_hour'] = "12";
+		$form['incident_minute'] = "00";
+		$form['incident_ampm'] = "pm";
+		
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
@@ -357,16 +363,12 @@ class Reports_Controller extends Main_Controller {
 				$errors = arr::overwrite($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
-		}		
-		else
-		{
-			$form['latitude'] = Kohana::config('settings.default_lat');
-			$form['longitude'] = Kohana::config('settings.default_lon');
 		}
 		
 		// Retrieve Country Cities
 		$default_country = Kohana::config('settings.default_country');
 		$this->template->content->cities = $this->_get_cities($default_country);
+		$this->template->content->multi_country = Kohana::config('settings.multi_country');
 		
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
@@ -379,8 +381,16 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->js = new View('reports_submit_js');
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-		$this->template->header->js->latitude = $form['latitude'];
-		$this->template->header->js->longitude = $form['longitude'];
+		if (!$form['latitude'] || !$form['latitude'])
+		{
+			$this->template->header->js->latitude = Kohana::config('settings.default_lat');
+			$this->template->header->js->longitude = Kohana::config('settings.default_lon');
+		}
+		else
+		{
+			$this->template->header->js->latitude = $form['latitude'];
+			$this->template->header->js->longitude = $form['longitude'];
+		}
 	}
 	
 	 /**

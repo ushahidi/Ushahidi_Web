@@ -51,7 +51,12 @@
 		                        	<h4><?php echo Kohana::lang('ui_main.reports_description'); ?></h4>
 									<?php print form::textarea('incident_description', $form['incident_description'], ' rows="10" class="textarea long" ') ?>
 		                        </div>
-		                        <div class="report_row">
+								<div class="report_row" id="datetime_default">
+									<h4><a href="#" id="date_toggle" class="show-more">Modify Date</a>Date & Time: 
+									<?php echo "Today at ".$form['incident_hour']
+										.":".$form['incident_minute']." ".$form['incident_ampm']; ?></h4>
+								</div>
+		                        <div class="report_row" id="datetime_edit" style="display:none;">
 		                       	  <div class="date-box">
 		                            	<h4><?php echo Kohana::lang('ui_main.reports_date'); ?></h4>
 										<?php print form::input('incident_date', $form['incident_date'], ' class="text short"'); ?>								
@@ -62,7 +67,7 @@
 											    buttonImageOnly: true 
 											});
 									    </script>
-		                            </div>
+		                          </div>
 		                          <div class="time">
 		                            	<h4><?php echo Kohana::lang('ui_main.reports_time'); ?></h4>
 						    		  	<?php
@@ -80,7 +85,7 @@
 										print form::dropdown('incident_ampm',$ampm_array,$form['incident_ampm']);
 										?>
 		                          </div>
-		                            <div style="clear:both; display:block;" id="incident_date_time"></div>
+		                          <div style="clear:both; display:block;" id="incident_date_time"></div>
 		                        </div>
 		                        <div class="report_row">
 		                        	<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?></h4>
@@ -148,15 +153,27 @@
 							</div>
 							
 		               	  	<div class="report_right">
-		                    	<div class="report_row">
-		                        	<h4><?php echo Kohana::lang('ui_main.reports_find_location'); ?></h4>
-		                            <?php print form::dropdown('select_city',$cities,'', ' class="select" '); ?>
-		                    	</div>
+		                    	<?php if (!$multi_country)
+								{
+		                    		?>
+									<div class="report_row">
+			                        	<h4><?php echo Kohana::lang('ui_main.reports_find_location'); ?></h4>
+			                            <?php print form::dropdown('select_city',$cities,'', ' class="select" '); ?>
+			                    	</div>
+									<?php
+		                    	}?>
 		                        <div class="report_row">
 		                        	<div id="divMap" class="report_map"></div>
+									<div class="report-find-location">
+										<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
+										<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="Find Location" class="btn_gray btn_find" /></div>
+										<div id="find_loading" class="report-find-loading"></div>
+										<div style="clear:both;" id="find_text">* If you can't find your location, please click on the map to pinpoint the correct location.</div>
+									</div>
 		                        </div>
+								
 		                        <div class="report_row">
-		                        	<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?></h4>
+		                        	<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span>Examples: Johannesburg, Corner City Market, 5th Street & 4th Avenue</span></h4>
 									<?php print form::input('location_name', $form['location_name'], ' class="text long"'); ?>
 		                        </div>
 

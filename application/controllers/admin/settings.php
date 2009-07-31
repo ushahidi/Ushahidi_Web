@@ -125,6 +125,10 @@ class Settings_Controller extends Admin_Controller
 				$settings->api_akismet = $post->api_akismet;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
+				
+				// Delete Settings Cache
+				$cache = Cache::instance();
+				$settings = $cache->delete('settings');
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
@@ -209,6 +213,7 @@ class Settings_Controller extends Admin_Controller
 			'api_google' => '',
 			'api_yahoo' => '',
 			'default_country' => '',
+			'multi_country' => '',
 			'default_lat' => '',
 			'default_lon' => '',
 			'default_zoom' => ''
@@ -239,6 +244,7 @@ class Settings_Controller extends Admin_Controller
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 
 			$post->add_rules('default_country', 'required', 'numeric', 'length[1,4]');
+			$post->add_rules('multi_country', 'numeric', 'length[1,1]');
 			$post->add_rules('default_map', 'required', 'between[1,4]');
 			$post->add_rules('api_google','required', 'length[0,200]');
 			$post->add_rules('api_yahoo','required', 'length[0,200]');
@@ -252,6 +258,7 @@ class Settings_Controller extends Admin_Controller
 	            // Yes! everything is valid
 				$settings = new Settings_Model(1);
 				$settings->default_country = $post->default_country;
+				$settings->multi_country = $post->multi_country;
 				$settings->default_map = $post->default_map;
 				$settings->api_google = $post->api_google;
 				$settings->api_yahoo = $post->api_yahoo;
@@ -260,6 +267,10 @@ class Settings_Controller extends Admin_Controller
 				$settings->default_lon = $post->default_lon;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
+				
+				// Delete Settings Cache
+				$cache = Cache::instance();
+				$settings = $cache->delete('settings');
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
@@ -292,6 +303,7 @@ class Settings_Controller extends Admin_Controller
 				'api_google' => $settings->api_google,
 				'api_yahoo' => $settings->api_yahoo,
 				'default_country' => $settings->default_country,
+				'multi_country' => $settings->multi_country,
 				'default_lat' => $settings->default_lat,
 				'default_lon' => $settings->default_lon,
 				'default_zoom' => $settings->default_zoom
@@ -412,8 +424,10 @@ class Settings_Controller extends Admin_Controller
 		// Do we have a frontlineSMS Key? If not create and save one on the fly
 		$settings = ORM::factory('settings', 1);
 		$frontlinesms_key = $settings->frontlinesms_key;
-		if ($frontlinesms_key == '' || !$frontlinesms_key) {
-			$settings->frontlinesms_key = strtoupper(text::random('alnum',8));
+		if (!$frontlinesms_key)
+		{
+			$frontlinesms_key = strtoupper(text::random('alnum',8));
+			$settings->frontlinesms_key = $frontlinesms_key;
 			$settings->save();
 		}
 
@@ -653,6 +667,18 @@ class Settings_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/sharing');
 		$this->template->content->title = 'Settings';
+		
+		// Does this instance have a site key? If not create one on the fly
+		$settings = ORM::factory('settings', 1);
+		$site_key = $settings->site_key;
+		if (!$site_key)
+		{ // Generate 16 character key (4.8 × 10^28 Combinations)
+			$site_key = text::random('alnum',16);
+			$settings->site_key = $site_key;
+			$settings->save();
+		}
+		
+		$this->template->content->site_key = $site_key;
 	}
 
 

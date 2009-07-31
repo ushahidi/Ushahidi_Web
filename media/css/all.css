@@ -937,6 +937,12 @@ a:visited{
 	font-size:120%;
 	font-weight:bold;
 }
+.report_row h4 span{
+	font-weight: normal;
+	font-size: 10px;
+	line-height: 12px;
+	color: #a1a1a1;
+}
 .report_row .date-box{
 	float:left;
 	margin-right:10px;
@@ -1034,6 +1040,46 @@ a.rem { background:url(../img/icon-minus.gif) no-repeat;}
 	border:2px solid #ccc;
 	width:450px;
 	height:300px;
+}
+.report-find-location {
+	margin-right:1px;
+	padding:0 9px 9px 9px;
+	background-color:#eee;
+	border:1px solid #ccc;
+	border-width:0 1px 1px 1px;
+	font-size:90%;
+	color:#666;
+}
+.report-find-location input.findtext {
+	margin-top:9px;
+	padding:5px 3px 0 3px;
+	height:24px;
+	float:left;
+	font-size:14px;
+	font-weight:bold;
+	color:#666;
+	width:250px;
+	border:1px #ccc solid;
+}
+.report-find-loading{
+	float:left;
+	height:31px;
+	margin:9px 0 0 3px;
+}
+a.show-more {
+	text-decoration:underline;
+	font-size:10px;
+	padding:1px 0 0 18px;
+	background:url(../img/icon-plus.gif) no-repeat 0 2px;
+	float:right;
+	margin-right:23px;
+}
+a.show-more:hover{ text-decoration:none;}
+.texthint{
+	font-style:italic;
+	font-weight:normal;
+	color:red;
+	background-color:#FFFF99;
 }
 
 

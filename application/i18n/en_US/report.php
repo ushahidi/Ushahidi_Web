@@ -48,13 +48,13 @@ $lang = array
 	
 	'latitude' => array
 	(
-		'required'		=> 'The latitude field is required.',
+		'required'		=> 'The latitude field is required. Please click on the map to pinpoint a location.',
 		'between' => 'The latitude field does not appear to contain a valid latitude?'
 	),
 	
 	'longitude' => array
 	(
-		'required'		=> 'The longitude field is required.',
+		'required'		=> 'The longitude field is required. Please click on the map to pinpoint a location.',
 		'between' => 'The longitude field does not appear to contain a valid longitude?'
 	),
 	
