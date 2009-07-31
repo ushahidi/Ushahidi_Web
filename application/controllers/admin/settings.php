@@ -416,7 +416,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->frontlinesms_key = $frontlinesms_key;
-		$this->template->content->frontlinesms_link = "http://" . $_SERVER['SERVER_NAME'] . "/frontlinesms/?key=" . $frontlinesms_key . "&s=\${sender_number}&m=\${message_content}";
+		$this->template->content->frontlinesms_link = url::base(). "frontlinesms/?key=" . $frontlinesms_key . "&s=\${sender_number}&m=\${message_content}";
 	}
 
 
@@ -536,6 +536,108 @@ class Settings_Controller extends Admin_Controller
 		 	echo $mysms->getbalance();
 		}
 	}
+	
+	/**
+	* Email Settings
+    */
+	function email()
+	{
+		$this->template->content = new View('admin/email');
+		$this->template->content->title = 'Settings';
+
+		// setup and initialize form field names
+		$form = array
+	    (
+			'email_username' => '',
+			'email_password' => '',
+			'email_port' => '',
+			'email_host' => '',
+			'email_servertype' => '',
+			'email_ssl' => ''
+	    );
+        //  Copy the form as errors, so the errors will be stored with keys
+        //  corresponding to the form field names
+        $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+            // Instantiate Validation, use $post, so we don't overwrite $_POST
+            // fields with our own things
+            $post = new Validation($_POST);
+
+	        // Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+
+			$post->add_rules('email_username', 'required', 'length[3,50]');
+			$post->add_rules('email_password', 'length[3,100]');
+			$post->add_rules('email_port', 'numeric[1,100]','length[1,20]');
+			$post->add_rules('email_host','required', 'length[3,100]');
+			$post->add_rules('email_servertype','required','length[3,100]');
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+	            // Yes! everything is valid
+				$settings = new Settings_Model(1);
+				$settings->email_username = $post->email_username;
+				$settings->email_password = $post->email_password;
+				$settings->email_port = $post->email_port;
+				$settings->email_host = $post->email_host;
+				$settings->email_servertype = $post->email_servertype;
+				$settings->email_ssl = $post->email_ssl;
+				$settings->save();
+				
+				//add details to application/config/email.php
+				$this->_add_email_settings($settings);
+				
+				// Everything is A-Okay!
+				$form_saved = TRUE;
+
+				// repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+	        }
+
+            // No! We have validation errors, we need to show the form again,
+            // with the errors
+            else
+	        {
+	            // repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+				
+	            // populate the error fields, if any
+	            $errors = arr::overwrite($errors, $post->errors('settings'));
+				$form_error = TRUE;
+	        }
+	    }
+		else
+		{
+			// Retrieve Current Settings
+			$settings = ORM::factory('settings', 1);
+
+			$form = array
+		    (
+		        'email_username' => $settings->email_username,
+				'email_password' => $settings->email_password,
+				'email_port' => $settings->email_port,
+				'email_host' => $settings->email_host,
+				'email_servertype' => $settings->email_servertype,
+				'email_ssl' => $settings->email_ssl
+		    );
+		}
+		
+		$this->template->colorpicker_enabled = TRUE;
+		$this->template->content->form = $form;
+	    $this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->email_ssl_array = array('1'=>'YES','0'=>'NO');
+	}
 
 
     /**
@@ -633,5 +735,49 @@ class Settings_Controller extends Admin_Controller
 		{
 			echo json_encode(array("status"=>"error", "response"=>"0 Cities Loaded. Country Not Found!"));
 		}
+	}
+	
+	/**
+	 * adds the email settings to the application/config/email.php file
+	 */
+	private function _add_email_settings( $settings )
+	{
+	    $email_file = @file('application/config/email.template.php');
+        $handle = @fopen('application/config/email.php', 'w');
+
+	    foreach( $email_file as $number_line => $line )
+	    {
+	        
+	    	switch( $line ) {
+	        	case strpos($line,"\$config['username']"):
+	            	fwrite($handle,  str_replace("\$config['username'] = \"\"","\$config['username'] = ".'"'.$settings->email_username.'"',$line ));
+	           		break;
+				
+				case strpos($line,"\$config['password']"):
+		            fwrite($handle,  str_replace("\$config['password'] = \"\"","\$config['password'] = ".'"'.$settings->email_password.'"',$line ));
+		           	break;	
+				
+				case strpos($line,"\$config['port']"):
+		            fwrite($handle,  str_replace("\$config['port'] = 25","\$config['port'] = ".'"'.$settings->email_port.'"',$line ));
+		           	break;
+				
+				case strpos($line,"\$config['server']"):
+		            fwrite($handle,  str_replace("\$config['server'] = \"\"","\$config['server'] = ".'"'.$settings->email_host.'"',$line ));
+		          	break;
+		
+				case strpos($line,"\$config['servertype']"):
+		            fwrite($handle,  str_replace("\$config['servertype'] = \"pop3\"","\$config['servertype'] = ".'"'.$settings->email_servertype.'"',$line ));
+		           	break;
+		
+				case strpos($line,"\$config['ssl']"):
+					$enable = $settings->email_ssl == 0? 'false':'true';
+			        fwrite($handle,  str_replace("\$config['ssl'] = false","\$config['ssl'] = ".$enable,$line ));
+			        break;
+					
+	            default:
+	            	fwrite($handle, $line );
+	        }
+	    }
+
 	}
 }

@@ -102,6 +102,36 @@ $lang = array
 	'google_analytics' => array
 	(
 		'length'		=> 'The Google Analytics field must contain a valid Web Property ID in the format UA-XXXXX-XX.',
+	),
+	
+	'email_username' => array
+	(
+		'required'		=> 'The Mail Server Username field is required.',
+		'length'		=> 'The Mail Server Username field must be no more 50 characters long.',
+	),
+	
+	'email_password' => array
+	(
+		'required'		=> 'The Mail Server Password field is required.',
+		'length'		=> 'The Mail Server Password field must be at least 5 and no more 50 characters long.',
+	),
+	
+	'email_port' => array
+	(
+		'numeric'		=> 'The Mail server port field should contain numbers only.',
+		'length' 		=> 'The Mail server port field is too long'
+	),
+	
+	'email_host' => array
+	(
+		'numeric'		=> 'The Mail server port field should contain numbers only.',
+		'length' 		=> 'The Mail server port field is too long'
+	),
+	
+	'email_servertype' => array
+	(
+		'required'		=> 'The Mail Server Type field is required.',
+		'length' 		=> 'The Mail server port field is too long'
 	)		
 	
 );
