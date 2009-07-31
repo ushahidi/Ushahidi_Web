@@ -27,7 +27,7 @@
 						<p>In order to share data with other organizations, you will need to give them your Ushahidi Data Sharing Key.</p>
 						<div class="final_l">
 							<span class="dark_red_span">My Ushahidi Data Sharing Key:</span>
-							<p class="sync_key_2">8esA3k234sKp341m</p>
+							<p class="sync_key_2"><?php echo $site_key; ?></p>
 						</div>
 						<div class="final_r">
 							<span style="font-weight: bold; color: #00699b; display: block; padding-bottom: 5px;">Choose data points to share with other organizations:</span>
