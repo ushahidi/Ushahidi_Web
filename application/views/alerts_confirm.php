@@ -61,7 +61,7 @@
 								<h3><?php echo Kohana::lang('alerts.mobile_error_head'); ?></h3>
 
 										<div class="alert_response">
-										<?php echo Kohana::lang('alerts.error_body'); ?>
+										<?php echo Kohana::lang('alerts.error'); ?>
 										</div>
 								</div>
 								<?php
@@ -95,7 +95,7 @@
 								<h3><?php echo Kohana::lang('alerts.email_error_head'); ?></h3>
 
 										<div class="alert_response">
-										<?php echo Kohana::lang('alerts.error_body'); ?>
+										<?php echo Kohana::lang('alerts.error'); ?>
 										</div>
 								</div>
 							<?php

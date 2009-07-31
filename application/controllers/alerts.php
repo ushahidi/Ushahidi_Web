@@ -155,39 +155,18 @@ class Alerts_Controller extends Main_Controller
      */
     public function verify($code = NULL)
     {   
-		define("ER_CODE_VERIFIED", 0);
-		define("ER_CODE_NOT_FOUND", 1);
-		define("ER_CODE_ALREADY_VERIFIED", 3);
-		
 		// INITIALIZE the content's section of the view
        	$this->template->content = new View('alerts_verify');
         $this->template->header->this_page = 'alerts';
         
 		if ($code != NULL)
 		{
-			$alert_code = ORM::factory('alert')
-							->where('alert_code', $code)
-							->find();
 					
-			// IF there was no result
-			if (!$alert_code->loaded)
-			{
-				$this->template->content->errno = ER_CODE_NOT_FOUND;
-			}    
-			elseif ($alert_code->alert_confirmed)
-			{   // SET the errno message to previously confirmed
-				$this->template->content->errno = ER_CODE_ALREADY_VERIFIED;
-			}
-			else
-			{
-				// SET the alert as confirmed, and save it
-				$alert_code->set('alert_confirmed', 1)->save();
-				$this->template->content->errno = ER_CODE_VERIFIED;
-			}
+			$this->template->content->errno = Alert::verify($code);
 		}
 		else
 		{
-			$this->template->content->errno = ER_CODE_NOT_FOUND;
+			$this->template->content->errno = Alert::ER_CODE_NOT_FOUND;
 		}
 	} // END function verify
 
@@ -204,15 +183,11 @@ class Alerts_Controller extends Main_Controller
 
 		if ($code != NULL)
 		{
-			$alert_code = ORM::factory('alert')
-							->where('alert_code', $code)
-							->find();
-			
-			if ($alert_code->loaded)
-			{
-				$alert_code->delete();
-				$this->template->content->unsubscribed = TRUE;
-			}
+			$this->template->content->unsubscribed = Alert::unsubscribe($code);
+		}
+		else
+		{
+			$this->template->content->unsubscribed = FALSE;
 		}
 	}
 	
