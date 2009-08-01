@@ -34,7 +34,6 @@
 								<?php
 								foreach ($errors as $error_item => $error_description)
 								{
-									// print "<li>" . $error_description . "</li>";
 									print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
 								}
 								?>

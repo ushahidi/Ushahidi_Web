@@ -130,14 +130,14 @@
                     </ul>
                   </li>
                   <?php
-                        }
-			foreach ($incidents as $incident)
-                            {
-                                $incident_id = $incident->id;
-								$incident_title = text::limit_chars($incident->incident_title, 40, '...', True);
-                                $incident_date = $incident->incident_date;
-                                $incident_date = date('M j Y', strtotime($incident->incident_date));
-                                $incident_location = $incident->location->location_name;
+                  }
+					foreach ($incidents as $incident)
+                	{
+                    	$incident_id = $incident->id;
+						$incident_title = text::limit_chars($incident->incident_title, 40, '...', True);
+                        $incident_date = $incident->incident_date;
+                        $incident_date = date('M j Y', strtotime($incident->incident_date));
+                        $incident_location = $incident->location->location_name;
 		  		  ?>
                   <li>
                     <ul>
@@ -192,7 +192,7 @@
 					}
 					?>
                 </ul>
-                <a class="btn-more" href="#"><span>MORE</span></a>
+                <a class="btn-more" href="feeds"><span>MORE</span></a>
               </div>
             </div>
           </div>

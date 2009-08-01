@@ -74,12 +74,14 @@ class Users_Controller extends Admin_Controller
 					array($this,'email_exists_chk')) : '';
 					
 				// Validate for roles
-				if ($post->role != 'admin' && $post->role != 'login') {
+				if ($post->role != 'admin' && $post->role != 'login' && 
+					$post->role !='superadmin') {
 					$post->add_error('role', 'values');
 				}
 				
 				// Prevent modification of the admin users role to user role
-				if ($post->username == 'admin' && $post->role == 'login') {
+				if ($post->username == 'admin' && $post->role == 'login' && 
+					$post->role == 'superadmin') {
 					$post->add_error('username', 'admin');
 				}
 			}
@@ -111,13 +113,19 @@ class Users_Controller extends Admin_Controller
 						}
 						
 						// Add New Role
-						if ($post->role == 'admin') {
+						if ($post->role == 'admin') 
+						{
+							
 							$user->add(ORM::factory('role', 'login'));
 							$user->add(ORM::factory('role', 'admin'));
 						}
-						else
+						else if($post->role == 'login') 
 						{
 							$user->add(ORM::factory('role', 'login'));
+						} else if($post->role == 'superadmin') {
+							$user->add(ORM::factory('role', 'login'));
+							$user->add(ORM::factory('role', 'admin'));
+							$user->add(ORM::factory('role','superadmin'));
 						}
 						
 						$user->save();
@@ -134,13 +142,19 @@ class Users_Controller extends Admin_Controller
 						$user->email = $post->email;
 						
 						// Add New Role
-						if ($post->role == 'admin') {
+						if ($post->role == 'admin') 
+						{
+							
 							$user->add(ORM::factory('role', 'login'));
 							$user->add(ORM::factory('role', 'admin'));
 						}
-						else
+						else if($post->role == 'login') 
 						{
 							$user->add(ORM::factory('role', 'login'));
+						} else if($post->role == 'superadmin') {
+							$user->add(ORM::factory('role', 'login'));
+							$user->add(ORM::factory('role', 'admin'));
+							$user->add(ORM::factory('role','superadmin'));
 						}
 						
 						$user->save();
@@ -196,7 +210,8 @@ class Users_Controller extends Admin_Controller
 		$this->template->content->pagination = $pagination;
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->users = $users;
-		$this->template->content->roles = array("admin"=>"admin","login"=>"login");
+		$this->template->content->roles = array("superadmin"=>"Super Admin",
+			"admin"=>"Admin","login"=>"Moderator");
 		
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
