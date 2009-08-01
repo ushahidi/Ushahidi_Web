@@ -115,6 +115,7 @@ class Json_Controller extends Template_Controller
         {			
             $json_item = "{";
             $json_item .= "\"type\":\"Feature\",";
+            $json_item .= "\"time\": \"" . strtotime($marker->incident_date) . "\",";
             $json_item .= "\"properties\": {";
             $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
 			

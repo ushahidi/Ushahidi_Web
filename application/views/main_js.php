@@ -315,6 +315,7 @@
 			});
 			
 			$('#playTimeline').click(function() {
-				gTimeline.resetPlay().play();
+				//gTimeline.resetPlay().play();
+				gTimeline.playOrPause();
 			});
 		});
