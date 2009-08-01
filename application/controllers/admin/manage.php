@@ -22,7 +22,7 @@ class Manage_Controller extends Admin_Controller
 		$this->template->this_page = 'manage';
 		
 		// If this is not a super-user account, redirect to dashboard
-		if (!$this->auth->logged_in('admin'))
+		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
         {
              url::redirect('admin/dashboard');
 		}

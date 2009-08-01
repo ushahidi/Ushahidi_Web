@@ -14,14 +14,18 @@
  */
 ?>
 			<div class="bg">
-				<h2>Manage Users</h2>
+				<h2><?php echo Kohana::lang('users.title')?></h2>
 				<!-- tabs -->
 				<div class="tabs">
 			
 				
 					<!-- tabset -->
 					<ul class="tabset">
-						<li><a href="#" class="active">Add/Edit</a></li>
+						<li>
+							<a href="#" class="active">
+								<?php echo Kohana::lang('users.header_add_edit'); ?>
+							</a>
+						</li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -30,26 +34,26 @@
 						<input type="hidden" id="user_id" name="user_id" value="<?php echo $form['user_id']; ?>">
 						<input type="hidden" name="action" id="action" value="a">
 						<div class="tab_form_item">
-							<strong>Username:</strong><br />
+							<strong><?php echo Kohana::lang('users.label_username');?></strong><br />
 							<?php print form::input('username', $form['username'], 
 								' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Password:</strong><br />
+							<strong><?php echo Kohana::lang('users.label_password');?></strong><br />
 							<?php print form::password('password', $form['password'], 
 								' class="text"'); ?>
 						</div>
 						
 						<div class="tab_form_item">
-							<strong>Full Name:</strong><br />
+							<strong><?php echo Kohana::lang('users.label_full_name');?></strong><br />
 							<?php print form::input('name', $form['name'], ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Email Address:</strong><br />
+							<strong><?php echo Kohana::lang('users.label_email');?></strong><br />
 							<?php print form::input('email', $form['email'], ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Role:</strong><br />
+							<strong><?php echo Kohana::lang('users.label_role');?></strong><br />
 							<span class="my-sel-holder">
 								<?php print form::dropdown('role',
 									$roles,$form['role']); ?>
@@ -70,12 +74,11 @@
 					?>
 						<!-- red-box -->
 						<div class="red-box">
-							<h3>Error!</h3>
+							<h3><?php echo Kohana::lang('users.error_msg');?></h3>
 							<ul>
 							<?php
 							foreach ($errors as $error_item => $error_description)
 							{
-								// print "<li>" . $error_description . "</li>";
 								print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
 							}
 							?>
@@ -88,7 +91,10 @@
 					?>
 						<!-- green-box -->
 						<div class="green-box">
-							<h3>The User Has Been <?php echo $form_action; ?>!</h3>
+							<h3>
+								<?php echo Kohana::lang('users.confirm_msg'); ?> 
+								<?php echo $form_action; ?>!
+							</h3>
 						</div>
 					<?php
 					}
@@ -100,10 +106,18 @@
 							<table class="table">
 								<thead>
 									<tr>
-										<th class="col-1">User</th>
-										<th class="col-2">Email</th>
-										<th class="col-2">Role</th>
-										<th class="col-4">Actions</th>
+										<th class="col-1">
+											<?php echo Kohana::lang('users.header_user'); ?>
+										</th>
+										<th class="col-2">
+											<?php echo Kohana::lang('users.header_email'); ?>
+										</th>
+										<th class="col-2">
+											<?php echo Kohana::lang('users.header_role');?>
+										</th>
+										<th class="col-4">
+											<?php echo Kohana::lang('users.header_actions')?>
+										</th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -120,7 +134,9 @@
 									?>
 										<tr>
 											<td colspan="4" class="col">
-												<h3>No Results To Display!</h3>
+												<h3>
+													<?php echo Kohana::lang('users.no_result_display_msg');?>
+												</h3>
 											</td>
 										</tr>
 									<?php	
@@ -147,16 +163,30 @@
 											<td class="col-2">
 												<?php echo $email; ?>
 											</td>
-											<td class="col-3"><?php echo $role; ?></td>
+											<td class="col-3">
+												<?php  
+													if( $role == "admin") 
+														echo Kohana::lang('users.admin_role');
+													else if ($role == "login")
+														echo Kohana::lang('users.login_role');
+													else 
+														echo Kohana::lang('users.superadmin_role');
+												?>
+											</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#" onClick="fillFields(
-	'<?php echo(rawurlencode($user_id)); ?>',
-    '<?php echo(rawurlencode($username)); ?>',
-	'<?php echo(rawurlencode($name)); ?>',
-	'<?php echo(rawurlencode($role));?>',
-	'<?php echo(rawurlencode($email)); ?>')">Edit</a></li>
-		<li><a href="javascript:userAction('d','DELETE','<?php echo(rawurlencode($user_id)); ?>')" class="del">Delete</a></li>
+													<li class="none-separator"><a href="#" 
+														onClick="fillFields(
+														'<?php echo(rawurlencode($user_id)); ?>',
+    													'<?php echo(rawurlencode($username)); ?>',
+														'<?php echo(rawurlencode($name)); ?>',
+														'<?php echo(rawurlencode($role));?>',
+														'<?php echo(rawurlencode($email)); ?>')">
+														<?php echo Kohana::lang('users.edit_action');?>
+														</a></li>
+		<li><a href="javascript:userAction('d','DELETE','<?php echo(rawurlencode($user_id)); ?>')" class="del">
+														<?php echo Kohana::lang('users.delete_action');?>
+														</a></li>
 												</ul>
 											</td>
 										</tr>

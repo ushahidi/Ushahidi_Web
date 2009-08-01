@@ -68,21 +68,22 @@
 		<div id="header">
 			<!-- top-area -->
 			<div class="top">
-				<strong>Ushahidi Engine v1.0</strong>
+				<strong><?php echo Kohana::lang('layout.version')?></strong>
 				<ul>
-					<li class="none-separator">Welcome, <?php echo $admin_name; ?>!</li>
-					<li class="none-separator"><a href="<?php echo url::base() ?>" title="View the home page">View Site</a>					
-					<li class="none-separator"><a href="#">My Profile</a></li>
-					<li><a href="log_out">Logout</a></li>
+					<li class="none-separator"> <?php echo Kohana::lang('layout.welcome');echo $admin_name; ?>!</li>
+					<li class="none-separator"><a href="<?php echo url::base() ?>" title="View the home page">
+						<?php echo Kohana::lang('layout.view_site');?></a>					
+					<li class="none-separator"><a href="#"><?php echo Kohana::lang('layout.my_profile');?></a></li>
+					<li><a href="log_out"><?php echo Kohana::lang('layout.logout');?></a></li>
 				</ul>
 			</div>
 			<!-- info-nav -->
 			<div class="info-nav">
-				<h3>Get help</h3>
+				<h3><?php echo Kohana::lang('layout.get_help');?></h3>
 				<ul>
-					<li ><a href="http://wiki.ushahididev.com/">Wiki</a></li>
-					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha">FAQ's</a></li>
-					<li><a href="http://forums.ushahidi.com/">Forum</a></li>
+					<li ><a href="http://wiki.ushahididev.com/"><?php echo Kohana::lang('layout.wiki');?></a></li>
+					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha"><?php echo Kohana::lang('layout.faqs');?></a></li>
+					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('layout.forum');?></a></li>
 				</ul>
 			</div>
 			<!-- title -->
@@ -91,20 +92,38 @@
 			<div class="nav-holder">
 				<!-- main-nav -->
 				<ul class="main-nav">
-					<li><a href="<?php echo url::base() ?>admin/dashboard" <?php if($this_page=="dashboard") echo "class=\"active\"" ;?>>Dashboard </a></li>
-					<li><a href="<?php echo url::base() ?>admin/reports" <?php if($this_page=="reports") echo "class=\"active\"" ;?>>Reports</a></li>
-					<li><a href="<?php echo url::base() ?>admin/comments" <?php if($this_page=="comments") echo "class=\"active\"" ;?>>Comments</a></li>
-					<li><a href="<?php echo url::base() ?>admin/messages" <?php if($this_page=="messages") echo "class=\"active\"" ;?>>Messages</a></li>
-					<?php if ($this->auth->logged_in('admin')){ ?><li><a href="<?php echo url::base() ?>admin/manage" <?php if($this_page=="manage") echo "class=\"active\"" ;?>>Manage</a></li><?php } ?>
-					<li><a href="<?php echo url::base() ?>admin/feedback" <?php if($this_page=="feedback") echo "class=\"active\"" ;?>>Feedback</a></li>
+					<li><a href="<?php echo url::base() ?>admin/dashboard" <?php if($this_page=="dashboard") echo "class=\"active\"" ;?>>
+						<?php echo Kohana::lang('layout.dashboard');?>
+						</a></li>
+					<li><a href="<?php echo url::base() ?>admin/reports" <?php if($this_page=="reports") echo "class=\"active\"" ;?>>
+						<?php echo Kohana::lang('layout.reports');?>
+						</a></li>
+					<li><a href="<?php echo url::base() ?>admin/comments" <?php if($this_page=="comments") echo "class=\"active\"" ;?>>
+						<?php echo Kohana::lang('layout.comments');?>
+						</a></li>
+					<li><a href="<?php echo url::base() ?>admin/messages" <?php if($this_page=="messages") echo "class=\"active\"" ;?>>
+						<?php echo Kohana::lang('layout.messages');?>
+						</a></li>
+					<li><a href="<?php echo url::base() ?>admin/feedback" <?php if($this_page=="feedback") echo "class=\"active\"" ;?>>
+						<?php echo Kohana::lang('layout.feedback')?>
+						</a></li>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
-					<?php if ($this->auth->logged_in('admin')){ ?><li><a href="<?php echo url::base() ?>admin/settings/site">Settings</a></li>
-					<li><a href="<?php echo url::base() ?>admin/users">Users</a></li>
+					<?php if ($this->auth->logged_in('superadmin')){ ?>
+						<li><a href="<?php echo url::base() ?>admin/settings/site"><?php echo Kohana::lang('layout.settings');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('layout.manage');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('layout.users');?></a></li>
 					<?php 
-					//<li><a href="#">Plugins</a></li>
-					} ?>
+					} else if($this->auth->logged_in('admin')) { ?>
+						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('layout.manage');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('layout.users');?></a></li> 
+					<?php
+					} else { ?> 
+					
+					<?php 
+					} 
+					?>
 				</ul>
 			</div>
 		</div>
@@ -116,7 +135,13 @@
 		</div>
 	</div>
 	<div id="footer">
-		<div class="holder"><strong><a href="http://www.ushahidi.com" target="_blank" title="Ushahidi Engine" alt="Ushahidi Engine">Ushahidi</a></strong></div>
+		<div class="holder">
+			<strong>
+				<a href="http://www.ushahidi.com" target="_blank" title="Ushahidi Engine" alt="Ushahidi Engine">
+					<?php echo Kohana::lang('layout.ushahidi');?>
+				</a>
+			</strong>
+		</div>
 	</div>
 </body>
 </html>

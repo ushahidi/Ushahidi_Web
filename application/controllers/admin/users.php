@@ -21,7 +21,7 @@ class Users_Controller extends Admin_Controller
 		$this->template->this_page = 'users';
 		
 		// If this is not a super-user account, redirect to dashboard
-		if (!$this->auth->logged_in('admin'))
+		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
         {
              url::redirect('admin/dashboard');
 		}
@@ -41,7 +41,7 @@ class Users_Controller extends Admin_Controller
 			'email' 	=> '',
 			'role'  	=> ''
 	    );
-		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		//copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
@@ -74,12 +74,14 @@ class Users_Controller extends Admin_Controller
 					array($this,'email_exists_chk')) : '';
 					
 				// Validate for roles
-				if ($post->role != 'admin' && $post->role != 'login') {
+				if ($post->role != 'admin' && $post->role != 'login' && 
+					$post->role !='superadmin') {
 					$post->add_error('role', 'values');
 				}
 				
 				// Prevent modification of the admin users role to user role
-				if ($post->username == 'admin' && $post->role == 'login') {
+				if ($post->username == 'admin' && $post->role == 'login' && 
+					$post->role == 'superadmin') {
 					$post->add_error('username', 'admin');
 				}
 			}
@@ -111,13 +113,20 @@ class Users_Controller extends Admin_Controller
 						}
 						
 						// Add New Role
-						if ($post->role == 'admin') {
+						if ($post->role == 'admin') 
+						{
+							
 							$user->add(ORM::factory('role', 'login'));
 							$user->add(ORM::factory('role', 'admin'));
 						}
-						else
+						else if($post->role == 'login') 
 						{
 							$user->add(ORM::factory('role', 'login'));
+							
+						} else if($post->role == 'superadmin') {
+							$user->add(ORM::factory('role', 'login'));
+							$user->add(ORM::factory('role', 'admin'));
+							$user->add(ORM::factory('role','superadmin'));
 						}
 						
 						$user->save();
@@ -134,13 +143,19 @@ class Users_Controller extends Admin_Controller
 						$user->email = $post->email;
 						
 						// Add New Role
-						if ($post->role == 'admin') {
+						if ($post->role == 'admin') 
+						{
+							
 							$user->add(ORM::factory('role', 'login'));
 							$user->add(ORM::factory('role', 'admin'));
 						}
-						else
+						else if($post->role == 'login') 
 						{
 							$user->add(ORM::factory('role', 'login'));
+						} else if($post->role == 'superadmin') {
+							$user->add(ORM::factory('role', 'login'));
+							$user->add(ORM::factory('role', 'admin'));
+							$user->add(ORM::factory('role','superadmin'));
 						}
 						
 						$user->save();
@@ -196,7 +211,7 @@ class Users_Controller extends Admin_Controller
 		$this->template->content->pagination = $pagination;
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->users = $users;
-		$this->template->content->roles = array("admin"=>"admin","login"=>"login");
+		$this->template->content->roles = array("login"=>"Moderator","admin"=>"Admin","superadmin"=>"Super Admin");
 		
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
