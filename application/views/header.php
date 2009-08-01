@@ -27,6 +27,7 @@
 	if ($map_enabled)
 	{
 		echo html::script('index.php/media/js/OpenLayers/OpenLayers');
+		echo html::script('index.php/media/js/JSONQuery');
 		// OpenLayers Theme
 		echo html::stylesheet('index.php/media/js/OpenLayers/theme/default/style');
 	}	
