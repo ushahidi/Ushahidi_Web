@@ -21,7 +21,7 @@ class Users_Controller extends Admin_Controller
 		$this->template->this_page = 'users';
 		
 		// If this is not a super-user account, redirect to dashboard
-		if (!$this->auth->logged_in('admin'))
+		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
         {
              url::redirect('admin/dashboard');
 		}
@@ -122,6 +122,7 @@ class Users_Controller extends Admin_Controller
 						else if($post->role == 'login') 
 						{
 							$user->add(ORM::factory('role', 'login'));
+							
 						} else if($post->role == 'superadmin') {
 							$user->add(ORM::factory('role', 'login'));
 							$user->add(ORM::factory('role', 'admin'));
@@ -210,8 +211,7 @@ class Users_Controller extends Admin_Controller
 		$this->template->content->pagination = $pagination;
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->users = $users;
-		$this->template->content->roles = array("superadmin"=>"Super Admin",
-			"admin"=>"Admin","login"=>"Moderator");
+		$this->template->content->roles = array("login"=>"Moderator","admin"=>"Admin","superadmin"=>"Super Admin");
 		
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;

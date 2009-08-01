@@ -104,12 +104,20 @@
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
-					<?php if ($this->auth->logged_in('admin')){ ?>
-					<li><a href="<?php echo url::base() ?>admin/settings/site"><?php echo Kohana::lang('layout.settings');?></a></li>
-					<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('layout.manage');?></a></li>
-					<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('layout.users');?></a></li>
+					<?php if ($this->auth->logged_in('superadmin')){ ?>
+						<li><a href="<?php echo url::base() ?>admin/settings/site"><?php echo Kohana::lang('layout.settings');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('layout.manage');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('layout.users');?></a></li>
 					<?php 
-					} ?>
+					} else if($this->auth->logged_in('admin')) { ?>
+						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('layout.manage');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('layout.users');?></a></li> 
+					<?php
+					} else { ?> 
+					
+					<?php 
+					} 
+					?>
 				</ul>
 			</div>
 		</div>
