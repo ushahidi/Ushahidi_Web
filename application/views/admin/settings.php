@@ -22,7 +22,6 @@
 					<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
 				</h2>
 				<?php print form::open(); ?>
-					<input type="hidden" id="default_zoom" name="default_zoom" value="<?php echo $form['default_zoom']; ?>" />
 					<div class="report-form">
 						<?php
 						if ($form_error) {
@@ -129,10 +128,7 @@
 							<div style="width: 279px; float: left; margin-top: 10px;">
 								<span class="bold_span">Default Zoom Level</span>
 								<div class="slider_container">
-									<div id="zoom1" class="ui-slider-1">
-										<div class="ui-slider-handle" id="handleholder1"><img src="<?php echo url::base() ?>media/img/slider-handle-inactive.gif" id="handleQ7"></div>
-									</div>
-									Zoom Level : <span id="zoom_level" class="slider_zoom">"<?php echo $form['default_zoom']; ?>"</span>
+									<?php print form::dropdown('default_zoom',$default_zoom_array,$form['default_zoom']); ?>
 								</div>
 							</div>
 							<div style="width: 279px; height: 90px; float: left; margin-top: 10px;">
@@ -145,7 +141,7 @@
 									<?php print form::input('default_lon', $form['default_lon'], ' readonly="readonly" class="text"'); ?>
 								</div>
 							</div>
-
+							<div style="clear:both;"></div>
 							<h4>Map preview <sup><a href="#">?</a></sup></h4>
 							<p class="bold_desc">Click and drag the map to set your exact location.</p>
 

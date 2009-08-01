@@ -19,37 +19,43 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
 	<title>UshahidiEngine</title>
-	<style type="text/css" media="all" >@import "<?php echo url::base() ?>index.php/media/css/admin/all.css";</style>
-	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>index.php/media/css/admin/ie6.css" media="screen"/><![endif]-->
-	<link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>index.php/media/css/datepicker/ui.datepicker.css" media="screen"/>
 	<?php
+	echo html::stylesheet('media/css/admin/all', '', true);
+	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
+	echo "<!--[if lt IE 7]>".
+		html::stylesheet('media/css/ie6', '', true)
+		."<![endif]-->";
 	
 	// Load OpenLayers
 	if ($map_enabled)
 	{
-		echo html::script('index.php/media/js/OpenLayers/OpenLayers');
+		echo html::script('media/js/OpenLayers', true);
 		echo $api_url . "\n";
+		echo "<script type=\"text/javascript\">
+			OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';
+			</script>";
 	}
 	
 	// Load jQuery
-	echo html::script('index.php/media/js/jquery');
-	echo html::script('index.php/media/js/jquery.form');
-	echo html::script('index.php/media/js/jquery.validate.min');
-	echo html::script('index.php/media/js/jquery.ui.min');
+	echo html::script('media/js/jquery', true);
+	echo html::script('media/js/jquery.form', true);
+	echo html::script('media/js/jquery.validate.min', true);
+	echo html::script('media/js/jquery.ui.min', true);
+	echo html::script('media/js/selectToUISlider.jQuery', true);
 	
 	// Load Flot
 	if ($flot_enabled)
 	{
-		echo html::script('index.php/media/js/jquery.flot');
-		echo html::script('index.php/media/js/excanvas.pack');
-		echo html::script('index.php/media/js/timeline.js');
+		echo html::script('media/js/jquery.flot', true);
+		echo html::script('media/js/excanvas.pack', true);
+		echo html::script('media/js/timeline.js', true);
 	}
 	
 	// Load ColorPicker
 	if ($colorpicker_enabled)
 	{
-		echo html::stylesheet('index.php/media/css/colorpicker');
-		echo html::script('index.php/media/js/colorpicker');
+		echo html::stylesheet('media/css/colorpicker', '', true);
+		echo html::script('media/js/colorpicker', true);
 	}
 	?>
 	<script type="text/javascript" charset="utf-8">

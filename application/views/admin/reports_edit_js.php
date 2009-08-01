@@ -204,7 +204,7 @@
 			TODO - Add Yahoo and Bing Geocoding Services
 			 */
 			$('.btn_find').live('click', function () {
-				address = escape($("#location_find").val());
+				address = $("#location_find").val();
 				var geocoder = new GClientGeocoder();
 				if (geocoder) {
 					$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');

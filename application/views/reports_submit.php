@@ -56,15 +56,17 @@
 									<?php echo "Today at ".$form['incident_hour']
 										.":".$form['incident_minute']." ".$form['incident_ampm']; ?></h4>
 								</div>
-		                        <div class="report_row" id="datetime_edit" style="display:none;">
+		                        <div class="report_row hide" id="datetime_edit">
 		                       	  <div class="date-box">
 		                            	<h4><?php echo Kohana::lang('ui_main.reports_date'); ?></h4>
 										<?php print form::input('incident_date', $form['incident_date'], ' class="text short"'); ?>								
 										<script type="text/javascript">
-											$("#incident_date").datepicker({ 
-											    showOn: "both", 
-											    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
-											    buttonImageOnly: true 
+											$().ready(function() {
+												$("#incident_date").datepicker({ 
+												    showOn: "both", 
+												    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
+												    buttonImageOnly: true 
+												});
 											});
 									    </script>
 		                          </div>
@@ -94,8 +96,9 @@
                                         <?php
                                         //format categories for 2 column display
                                         $this_col = 1; // First column
-                                        $max_col = round($categories_total/2); // Maximum number of columns
-                                        $html= "";
+		                                $maxper_col = round($categories_total/2); // Maximum number of elements per column
+										
+										$i = 1; // Element Count
                                         foreach ($categories as $category => $category_extra)
                                         {
                                             $category_title = $category_extra[0];
@@ -117,17 +120,18 @@
                                             echo "$category_title";
                                             echo "</label></li>";
                                     
-                                            if ($this_col == $max_col) 
-                                                echo "\n</ul>\n";
-                                    
-                                            if ($this_col < $max_col)
-                                            {
-                                                $this_col++;
-                                            } 
-                                            else 
-                                            {
-                                                $this_col = 1;
-                                            }
+                                            if ($this_col == $maxper_col || $i == count($categories)) 
+		                                        print "</ul>\n";
+
+		                                    if ($this_col < $maxper_col)
+		                                    {
+		                                        $this_col++;
+		                                    } 
+		                                    else 
+		                                    {
+		                                        $this_col = 1;
+		                                    }
+											$i++;
                                         }
 
                                         ?>

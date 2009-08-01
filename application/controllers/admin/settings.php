@@ -329,6 +329,14 @@ class Settings_Controller extends Admin_Controller
 			$countries[$country->id] = $this_country;
 		}
 		$this->template->content->countries = $countries;
+		
+		// Zoom Array for Slider
+		$default_zoom_array = array();
+		for ($i=0; $i<16 ; $i++)
+		{ 
+			$default_zoom_array[$i] = $i;
+		}
+		$this->template->content->default_zoom_array = $default_zoom_array;
 
 		// Javascript Header
 		$this->template->map_enabled = TRUE;

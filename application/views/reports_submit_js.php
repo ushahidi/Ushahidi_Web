@@ -260,9 +260,8 @@
 					map.setCenter(l, <?php echo $default_zoom; ?>);
 					
 					// Update form values (jQuery)
-					var selected = $("#select_city option[selected]");
-					$("#location_name").attr("value", selected.text());
-					
+					$("#location_name").attr("value", $('#select_city :selected').text());
+										
 					$("#latitude").attr("value", lonlat[1]);
 					$("#longitude").attr("value", lonlat[0]);
 				}
@@ -273,7 +272,7 @@
 			TODO - Add Yahoo and Bing Geocoding Services
 			 */
 			$('.btn_find').live('click', function () {
-				address = escape($("#location_find").val());
+				address = $("#location_find").val();
 				var geocoder = new GClientGeocoder();
 				if (geocoder) {
 					$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');

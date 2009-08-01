@@ -108,11 +108,11 @@
 								<?php
 							}
 							?>
-							<div class="row" id="datetime_edit" <?php
+							<div class="row <?php
 								if (!($id))
 								{ // Hide date editor for new report
-									echo "style=\"display:none;\"";
-								}?>>
+									echo "hide";
+								}?> " id="datetime_edit">
 								<div class="date-box">
 									<h4>Date <span>(mm/dd/yyyy)</span></h4>
 									<?php print form::input('incident_date', $form['incident_date'], ' class="text"'); ?>								

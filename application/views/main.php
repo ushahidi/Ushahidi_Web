@@ -57,15 +57,16 @@
               <div class="grey-box">
                 <div class="grey-box-bg">
                   <ul>
-                    <li><a class="active" id="cat_0" href="#"><span style="background:no-repeat url(<?php echo url::base() . 'swatch/?c='.$default_map_all.'&w=16&h=16&.png' ?>); background-position:left center;">All Categories</span></a></li>
+                    <li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="float:left">All Categories</div></a></li>
                     <?php
 		      foreach ($categories as $category => $category_info)
 		      {
                           $category_title = $category_info[0];
                           $category_color = $category_info[1];
-						echo '<li><a href="#" id="cat_'. $category .'"><span style="background:no-repeat url('. url::base() . "swatch/?c=" . $category_color . "&w=16&h=16&.png" . '); background-position:left center;">' . $category_title . '</span></a></li>';
-                      }
-		    ?>
+						echo '<li><a href="#" id="cat_'. $category .'"><div class="swatch" style="background-color:#'.$category_color.'"></div>
+							<div>'.$category_title.'</div></a></li>';
+			   }
+		    		?>
                   </ul>
                 </div>
               </div>

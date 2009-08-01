@@ -20,52 +20,52 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
 	<title><?php echo $site_name; ?></title>
-	<style media="all" type="text/css">@import "<?php echo url::base() ?>index.php/media/css/all.css";</style>
-	<!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="<?php echo url::base() ?>index.php/media/css/ie6.css" media="screen"/><![endif]-->
 	<?php
+	echo html::stylesheet('media/css/all', '', true);
+	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
+	echo "<!--[if lt IE 7]>".
+		html::stylesheet('media/css/ie6', '', true)
+		."<![endif]-->";
+		
 	// Load OpenLayers before jQuery!
 	if ($map_enabled)
 	{
-		echo html::script('index.php/media/js/OpenLayers/OpenLayers');
-		// OpenLayers Theme
-		echo html::stylesheet('index.php/media/js/OpenLayers/theme/default/style');
+		echo html::script('media/js/OpenLayers', true);
+		echo "<script type=\"text/javascript\">
+			OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';
+			</script>";
 	}	
 	
 	// Load jQuery
-	echo html::script('index.php/media/js/jquery');
-	echo html::script('index.php/media/js/jquery.ui.min');
+	echo html::script('media/js/jquery', true);
+	echo html::script('media/js/jquery.ui.min', true);
 	
 	// Other stuff to load only we have the map enabled
 	if ($map_enabled)
 	{
 		echo $api_url . "\n";
 		if ($main_page) {
-			echo html::script('index.php/media/js/selectToUISlider.jQuery');
-			echo html::script('index.php/media/js/jquery.flot');
-			echo html::script('index.php/media/js/timeline');
-			?>
-			<!--[if IE]><script language="javascript" type="text/javascript" src="<?php echo url::base() ?>media/js/excanvas.pack.js"></script><![endif]-->
-			<?php
-			echo html::stylesheet('index.php/media/css/jquery-ui-themeroller');
+			echo html::script('media/js/selectToUISlider.jQuery', true);
+			echo html::script('media/js/jquery.flot', true);
+			echo html::script('media/js/timeline', true);
+			echo "<!--[if IE]>".
+				html::script('media/js/excanvas.pack', true)
+				."<![endif]-->";
 		}
 	}
 	if ($validator_enabled) 
 	{
-		echo html::script('index.php/media/js/jquery.validate.min');
-	}
-	if ($datepicker_enabled)
-	{
-		echo html::stylesheet('index.php/media/css/datepicker/ui.datepicker');
+		echo html::script('media/js/jquery.validate.min');
 	}
 	if ($photoslider_enabled)
 	{
-		echo html::script('index.php/media/js/photoslider.js');
-		echo html::stylesheet('index.php/media/css/photoslider.css');
+		echo html::script('media/js/photoslider');
+		echo html::stylesheet('media/css/photoslider');
 	}
 	if( $videoslider_enabled )
 	{
-		echo html::script('index.php/media/js/coda-slider.pack.js');
-		echo html::stylesheet('index.php/media/css/videoslider.css');
+		echo html::script('media/js/coda-slider.pack');
+		echo html::stylesheet('media/css/videoslider');
 	}
 	if ($allow_feed == 1) {
 		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
