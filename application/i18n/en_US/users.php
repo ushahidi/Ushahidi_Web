@@ -5,6 +5,7 @@ $lang = array
 	'login_role' => 'Moderator',
 	'admin_role' => 'Admin',
 	'superadmin_role' => 'Super Admin',
+	'title' => 'Manage Users',
 	'header_user' => 'User',
 	'header_email' => 'Email',
 	'header_role' => 'Role',

@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2>Manage Users</h2>
+				<h2><?php echo Kohana::lang('users.title')?></h2>
 				<!-- tabs -->
 				<div class="tabs">
 			
