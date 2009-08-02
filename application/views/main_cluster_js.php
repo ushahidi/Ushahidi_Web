@@ -380,7 +380,7 @@
 			}); 
 		
 			// Graph
-			var allGraphData = [<?php echo $all_graphs ?>];
+			allGraphData = [<?php echo $all_graphs ?>];
 			dailyGraphData = [<?php echo $daily_graphs ?>];
 			weeklyGraphData = [<?php echo $weekly_graphs ?>];
 			hourlyGraphData = [<?php echo $hourly_graphs ?>];
@@ -443,6 +443,6 @@
 			});
 			
 			$('#playTimeline').click(function() {
-				gTimeline.resetPlay().play();
+				gTimeline.playOrPause();
 			});
 		});
