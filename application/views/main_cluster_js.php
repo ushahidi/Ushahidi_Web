@@ -92,8 +92,8 @@
 					fillColor: "${color}",
 					fillOpacity: "${opacity}",
 					strokeColor: "#<?php echo $default_map_all;?>",
-					strokeWidth: 2,
-					strokeOpacity: 0.9,
+					strokeWidth: <?php echo $marker_stroke_width; ?>,
+					strokeOpacity: <?php echo $marker_stroke_opacity; ?>,
 					'graphicYOffset': -20
 				}, 
 				{
@@ -108,7 +108,14 @@
 							if (feature_icon!="") {
 								return (Math.min(feature.attributes.count, 7) + 5) * 2;
 							} else {
-								return (Math.min(feature.attributes.count, 7) + 3) * 1.6;
+								if (typeof(feature.cluster) == 'undefined'
+								|| feature.cluster.length < 2)
+								{
+									return (Math.min(feature.attributes.count, 7) + 1) * <?php echo $marker_radius; ?>;
+								}else{
+									return (Math.min(feature.attributes.count, 7) + 1) * 
+										(<?php echo $marker_radius; ?> * 0.6);
+								}
 							}
 						},
 						opacity: function(feature)
@@ -120,7 +127,7 @@
 							if (feature_icon!="") {
 								return 1;
 							} else {
-								return 0.8;
+								return <?php echo $marker_opacity; ?>;
 							}
 						},						
 						color: function(feature)
@@ -196,7 +203,7 @@
 					strategies: [
 						new OpenLayers.Strategy.Fixed(),
 					    new OpenLayers.Strategy.Cluster({
-							distance: 15
+							distance: 1000000
 						})
 					],
 					protocol: new OpenLayers.Protocol.HTTP({
@@ -207,7 +214,7 @@
 								externalProjection: map.displayProjection 
 							})
 	                }),
-					projection: new OpenLayers.Projection("EPSG:4326"),
+					projection: map.displayProjection,
 					formatOptions: {
 						extractStyles: true,
 						extractAttributes: true
