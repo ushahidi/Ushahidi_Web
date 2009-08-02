@@ -40,6 +40,13 @@ class Json_Controller extends Template_Controller
 		if (isset($_GET['c']) && !empty($_GET['c']))
 		{
 			$category_id = $_GET['c'];
+			if (!is_numeric($category_id)) {
+				$category_id = $markers = ORM::factory('category')
+				                                ->select('id')
+				                                ->where('category_title = "'. $category_id . '"')
+				                                ->find()->id;
+			}
+			//die(var_dump($category_id));
 		}
 		
 		if (isset($_GET['i']) && !empty($_GET['i']))
@@ -115,7 +122,6 @@ class Json_Controller extends Template_Controller
         {			
             $json_item = "{";
             $json_item .= "\"type\":\"Feature\",";
-            $json_item .= "\"time\": \"" . strtotime($marker->incident_date) . "\",";
             $json_item .= "\"properties\": {";
             $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
 			
