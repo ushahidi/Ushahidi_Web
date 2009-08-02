@@ -148,24 +148,65 @@
 			return this;
 		};
 		
+		this.pause = function() {
+			window.clearTimeout(gTimelinePlayHandle);
+			gTimelinePlayHandle = null;
+			$('#playTimeline').html('PLAY');
+			$('#playTimeline').parent().attr('class', 'play');
+			return this;
+		};
+		
+		this.resume = function() {
+			this.play();
+		};
+		
+		this.playOrPause = function() {
+			if (this.playCount == 0 || this.playCount == this.filteredData().length) {
+				this.resetPlay().play();
+			} else if (typeof(gTimelinePlayHandle) != 'undefined' && gTimelinePlayHandle) {
+				this.pause();
+			} else {
+				this.resume();
+			}
+		};
+		
+		this.filteredData = function() {
+			return $.grep(this.graphData.data, function(n,i) {
+				return (n[0] >= gStartTime.getTime() && n[0] <= gEndTime.getTime());
+			});
+		};
+		
 		this.play = function() {
 			this.graphData = this.graphData || gTimelineData;
 			var plotData = this.graphData;
-			if (this.playCount >= plotData.data.length) {
+			var data = this.filteredData();
+			
+			if (this.playCount >= data.length) {
 				return;
 			}
 			
-			playTimeline = $.timeline({graphData: plotData.data.slice(0,this.playCount+1), 
-			            startTime: new Date(plotData.data[0][0]),
-			            endTime: new Date(plotData.data[plotData.data.length-1][0])
+			playTimeline = $.timeline({graphData: {color: plotData.color, 
+			                                       data: data.slice(0,this.playCount+1)}, 
+			            categoryId: this.categoryId,                           
+			            startTime: gStartTime, //new Date(plotData.data[0][0]),
+			            endTime: gEndTime //new Date(plotData.data[plotData.data.length-1][0])
 			           });
 			playTimeline.plot();
-			gStartTime = new Date(plotData.data[0][0]);
-			gPlayEndDate = playTimeline.graphData[playTimeline.graphData.length-1][0] / 1000;
+			//gStartTime = new Date(plotData.data[0][0]);
+			gPlayEndDate = playTimeline.graphData.data[playTimeline.graphData.data.length-1][0] / 1000;
 			playTimeline.plotMarkers(style, markers, gPlayEndDate);
 			this.playCount++;
-			gTimeline = this;
-			gTimelinePlayHandle = window.setTimeout("gTimeline.play()",2000);
+			if (this.playCount == data.length) {
+				$('#playTimeline').html('PLAY');
+				$('#playTimeline').parent().attr('class', 'play');
+				this.graphData = allGraphData[0][gCategoryId];
+			} else {
+				$('#playTimeline').html('PAUSE');
+				$('#playTimeline').parent().attr('class', 'play pause');
+				gTimeline = this;
+				gTimelinePlayHandle = window.setTimeout("gTimeline.play()",1000);
+			}
+			
 			return this;
 		};
 		

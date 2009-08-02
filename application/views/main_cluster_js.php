@@ -20,6 +20,7 @@
 			var map_layer;
 			markers = null;
 			var catID = '';
+			OpenLayers.Strategy.Fixed.prototype.preload=true;
 			
 			/*
 			- Initialize Map
