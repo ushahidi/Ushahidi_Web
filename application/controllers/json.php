@@ -40,6 +40,13 @@ class Json_Controller extends Template_Controller
 		if (isset($_GET['c']) && !empty($_GET['c']))
 		{
 			$category_id = $_GET['c'];
+			if (!is_numeric($category_id)) {
+				$category_id = $markers = ORM::factory('category')
+				                                ->select('id')
+				                                ->where('category_title = "'. $category_id . '"')
+				                                ->find()->id;
+			}
+			//die(var_dump($category_id));
 		}
 		
 		if (isset($_GET['i']) && !empty($_GET['i']))
@@ -138,8 +145,9 @@ class Json_Controller extends Template_Controller
             $cat_array = array();
         }
         $json = implode(",", $json_array);
-        $this->template->json = $json;
 
+		header('Content-type: application/json');
+        $this->template->json = $json;
     }
     
     public function timeline() {

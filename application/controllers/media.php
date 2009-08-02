@@ -67,19 +67,26 @@ class Media_Controller extends Controller {
 		}
 		
 		// HTTP Headers
+		$expiry_time = 613200;	// 1 Week
+		$mime = ($ext == 'css') ? 'text/css' : 'application/javascript';
+		header('Content-type: '.$mime);
+        header('Cache-Control: must-revalidate');
+        header('Expires: ' . gmdate("D, d M Y H:i:s", time() + $expiry_time) . ' GMT');
 		header('ETag: '.$mtime);
 		header("Last-Modified: ".gmdate("D, d M Y H:i:s", $mtime)." GMT");
-		if ($ext == '') $ext = $type;
-		$mime = Kohana::config("mimes." . $ext);
-		header('Content-Type: '.$mime[0]);
+
 		$oldetag = isset($_SERVER['HTTP_IF_NONE_MATCH'])?trim($_SERVER['HTTP_IF_NONE_MATCH']):'';
 		$oldmtime = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])?$_SERVER['HTTP_IF_MODIFIED_SINCE']:'';
 		$accencoding = isset($_SERVER['HTTP_ACCEPT_ENCODING'])?$_SERVER['HTTP_ACCEPT_ENCODING']:'';
-		if (($oldmtime && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $oldmtime) || $oldetag == $mtime) {
+		
+		if (($oldmtime && strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $oldmtime) || $oldetag == $mtime)
+		{
 			header('HTTP/1.1 304 Not Modified');
 		}
-		else {
-			if (strpos($accencoding, 'gzip') !== false && $gzip) {
+		else 
+		{
+			if (strpos($accencoding, 'gzip') !== false && $gzip)
+			{
 				header('Content-Encoding: gzip');
 				echo gzencode($file_data);
 			}

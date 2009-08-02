@@ -240,6 +240,9 @@ a:visited{
 	background-repeat:no-repeat;
 	font-size:1.2em;
 }
+.slider-holder .pause{
+	background-image:url(../img/pause.gif);
+}
 .slider-holder .play a{
 	color:#666;
 	text-decoration:none;
@@ -254,6 +257,10 @@ a:visited{
 	background-image:url(../img/loading.gif);
 	background-position:center;
 	background-repeat:no-repeat;
+}
+.olPopupCloseBox {
+  background: url("../img/openlayers/close.gif") no-repeat;
+  cursor: pointer;
 }
 .infowindow{
 	padding:10px;

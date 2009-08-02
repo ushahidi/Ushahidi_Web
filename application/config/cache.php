@@ -1,6 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
+* CACHE CONFIGURATION
+*/
+
+/**
  * Enable or disable file caching. This makes pages display faster
  * but can take a large amount of storage space on larger sites
  */
