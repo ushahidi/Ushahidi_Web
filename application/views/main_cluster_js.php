@@ -387,6 +387,22 @@
 			var plotPeriod = $.timelinePeriod(allGraphData[0]['ALL'].data);
 			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
 			var endTime = $.monthEndDateTime(plotPeriod[1]) / 1000;
+					
+			// get the closest existing dates in the selection options
+			var options = $('#startDate > optgroup > option').map(function() { 
+				return $(this).val(); 
+			});
+			startTime = $.grep(options, function(n,i) {
+			  return n >= ('' + startTime) ;
+			})[0];
+			
+			options = $('#endDate > optgroup > option').map(function() { 
+				return $(this).val(); 
+			});
+			endTime = $.grep(options, function(n,i) {
+			  return n >= ('' + endTime) ;
+			})[0];
+
 			$("#startDate").val(startTime);
 			$("#endDate").val(endTime);
 			gCategoryId = 'ALL';
@@ -445,4 +461,10 @@
 			$('#playTimeline').click(function() {
 				gTimeline.playOrPause();
 			});
-		});
+		});/*		
+		d = $('#startDate > optgroup > option').map(function() { return $(this).val(); });
+
+$.grep(d, function(n,i) {
+  return n > '1183240800';
+})[0];
+*/
