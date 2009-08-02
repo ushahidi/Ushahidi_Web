@@ -138,8 +138,9 @@ class Json_Controller extends Template_Controller
             $cat_array = array();
         }
         $json = implode(",", $json_array);
-        $this->template->json = $json;
 
+		header('Content-type: application/json');
+        $this->template->json = $json;
     }
     
     public function timeline() {
