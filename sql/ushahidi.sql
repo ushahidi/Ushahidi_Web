@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 7
+-- version 8
 -- http://www.ushahidi.com
 
 

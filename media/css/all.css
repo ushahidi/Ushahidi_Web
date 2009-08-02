@@ -258,6 +258,10 @@ a:visited{
 	background-position:center;
 	background-repeat:no-repeat;
 }
+.olPopupCloseBox {
+  background: url("../img/openlayers/close.gif") no-repeat;
+  cursor: pointer;
+}
 .infowindow{
 	padding:10px;
 }

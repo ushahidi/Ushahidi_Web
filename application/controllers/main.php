@@ -261,16 +261,26 @@ class Main_Controller extends Template_Controller {
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->main_page = TRUE;
-		// Cluster Reports on Map?
+		
+		// Map Settings
 		$clustering = Kohana::config('settings.allow_clustering');
-		if ($clustering == 1) 
-		{
-			$this->template->header->js = new View('main_cluster_js');
-		}
-		else
-		{
-			$this->template->header->js = new View('main_js');
-		}
+		$marker_radius = Kohana::config('map.marker_radius');
+		$marker_opacity = Kohana::config('map.marker_opacity');
+		$marker_stroke_width = Kohana::config('map.marker_stroke_width');
+		$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
+		$this->template->header->js = 
+			($clustering == 1) ? new View('main_cluster_js') : new View('main_js');
+		$this->template->header->js->marker_radius =
+			($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;
+		$this->template->header->js->marker_opacity =
+			($marker_opacity >=1 && $marker_opacity <= 10 ) 
+			? $marker_opacity * 0.1  : 0.9;
+		$this->template->header->js->marker_stroke_width =
+			($marker_stroke_width >=1 && $marker_stroke_width <= 5 ) ? $marker_stroke_width : 2;
+		$this->template->header->js->marker_stroke_opacity =
+			($marker_stroke_opacity >=1 && $marker_stroke_opacity <= 10 ) 
+			? $marker_stroke_opacity * 0.1  : 0.9;	
+		
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->header->js->latitude = Kohana::config('settings.default_lat');
