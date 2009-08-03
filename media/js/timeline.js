@@ -171,7 +171,9 @@
 		};
 		
 		this.filteredData = function() {
-			return $.grep(this.graphData.data, function(n,i) {
+			// Uncomment to play at default intervals
+			//return $.grep(this.graphData.data, function(n,i) {
+			return $.grep(dailyGraphData[0][this.categoryId].data, function(n,i) {
 				return (n[0] >= gStartTime.getTime() && n[0] <= gEndTime.getTime());
 			});
 		};
@@ -214,8 +216,9 @@
 			var startDate = this.startTime.getTime() / 1000;
 			var endDate = endDate || this.endTime.getTime() / 1000;
 
-			// XXX NOTE: Change this for intervals other than monthly if supported
-			endDate = $.monthEndTime(endDate * 1000) / 1000;
+			// Uncomment to play at monthly intervals
+			//endDate = $.monthEndTime(endDate * 1000) / 1000;
+			endDate = $.dayEndDateTime(endDate * 1000) / 1000;
 			
 			if (this.addMarkers) {	
 				this.addMarkers(gCategoryId, '', endDate, gMap.getZoom(), gMap.getCenter(), gMediaType);
@@ -322,6 +325,18 @@
 		endDate.setHours(0);
 		endDate.setMinutes(0);
 		endDate.setSeconds(0);
+		return endDate.getTime();	
+	};
+	
+	/*
+	 * Returns timestamp of the last hour of day of the given timestamp
+	 */
+	$.dayEndDateTime = function(timestamp) {
+		endDate = new Date(timestamp);
+		//endDate.setDate($.monthDays(endDate.getYear(), endDate.getMonth()));
+		endDate.setHours(23);
+		endDate.setMinutes(59);
+		endDate.setSeconds(59);
 		return endDate.getTime();	
 	};
 	

@@ -16,6 +16,7 @@
  */
 ?>
 		// Map JS
+		var map;
 		jQuery(function() {
 			var map_layer;
 			markers = null;
@@ -27,14 +28,17 @@
 			- Uses Spherical Mercator Projection
 			- Units in Metres instead of Degrees					
 			*/
+			var proj_4326 = new OpenLayers.Projection('EPSG:4326');
+			var proj_900913 = new OpenLayers.Projection('EPSG:900913');
+			
 			var options = {
 				units: "m",
 				numZoomLevels: 16,
 				controls:[],
-				projection: new OpenLayers.Projection("EPSG:900913"),
-				'displayProjection': new OpenLayers.Projection("EPSG:4326")
+				projection: proj_900913,
+				'displayProjection': proj_4326
 				};
-			var map = new OpenLayers.Map('map', options);
+			map = new OpenLayers.Map('map', options);
 			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 			
 			
@@ -168,11 +172,9 @@
 				});
 				
 				// Transform feature point coordinate to Spherical Mercator
-				preFeatureInsert = function(feature) {
-					var src = new OpenLayers.Projection('EPSG:4326');
-					var dest = new OpenLayers.Projection('EPSG:900913');			
+				preFeatureInsert = function(feature) {			
 					var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
-					OpenLayers.Projection.transform(point, src, dest);
+					OpenLayers.Projection.transform(point, proj_4326, proj_900913);
 				};
 				
 				// Does 'markers' already exist? If so, destroy it before creating new layer
@@ -245,9 +247,8 @@
 					
 				}else{
 					// create a lat/lon object
-					var proj = new OpenLayers.Projection("EPSG:4326");
 					myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
-					myPoint.transform(proj, map.getProjectionObject());
+					myPoint.transform(proj_4326, map.getProjectionObject());
 					
 					// display the map centered on a latitude and longitude (Google zoom levels)
 					myZoom = <?php echo $default_zoom; ?>;
@@ -282,12 +283,22 @@
 	            // Javascript.
 				var content = "<div class=\"infowindow\">";
 				content = content + "<h2>" + event.feature.cluster.length + " Event[s]...</h2>\n";
+				content = content + "<div class=\"infowindow_list\"><ul>";
 				for(var i=0; i<Math.min(event.feature.cluster.length, 5); ++i) {
-					content = content + "\n<h3>" + event.feature.cluster[i].data.name + "</h3>";
+					content = content + "\n<li>" + event.feature.cluster[i].data.name + "</li>";
 				}
+				content = content + "</ul></div>";
 				if (event.feature.cluster.length > 1)
 				{
-					content = content + "\n<BR><a href=\"<?php echo url::base() . 'reports/' ?>\">More...</a> "
+					// Lon/Lat Spherical Mercator
+					zoom_point_sm = event.feature.cluster[0].geometry.getBounds().getCenterLonLat();
+					lon_sm = zoom_point_sm.lon;
+					lat_sm = zoom_point_sm.lat;
+					// Converted Lon/Lat
+					zoom_point = zoom_point_sm.transform(proj_900913, proj_4326);
+					lon = zoom_point.lon;
+					lat = zoom_point.lat;
+					content = content + "\n<div class=\"infowindow_meta\"><a href=\"<?php echo url::base() . 'reports/?lon="+ lon + "&lat="+ lat +"' ?>\">View&nbsp;Events</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon_sm+ ","+ lat_sm +")'>Zoom&nbsp;In</a></div>";
 				}
 				content = content + "</div>";
 				if (content.search("<script") != -1) {
@@ -306,7 +317,6 @@
 	            event.feature.popup.destroy();
 	            event.feature.popup = null;
 	        }
-	
 			// Category Switch
 			$("a[id^='cat_']").click(function() {
 				var catID = this.id.substring(4);
@@ -468,7 +478,19 @@
 			$('#playTimeline').click(function() {
 				gTimeline.playOrPause();
 			});
-		});/*		
+		});
+		
+		function zoomToSelectedFeature(lon, lat){
+			var lonlat = new OpenLayers.LonLat(lon,lat);
+			map.panTo(lonlat);
+			// Get Current Zoom
+			currZoom = map.getZoom();
+			// New Zoom
+			newZoom = currZoom + 1;
+			map.zoomTo(newZoom);
+		}
+		
+		/*		
 		d = $('#startDate > optgroup > option').map(function() { return $(this).val(); });
 
 $.grep(d, function(n,i) {
