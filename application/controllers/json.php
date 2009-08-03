@@ -98,14 +98,6 @@ class Json_Controller extends Template_Controller
             $color = $category->category_color;
 			$icon = $category->category_image;
                      
-        }// Do we have a single incident id to filter by?
-        elseif (is_numeric($incident_id) && $incident_id != '0')
-		{
-		    // Retrieve individual marker
-            $markers = ORM::factory('incident')
-				->with('location')
-				->where('incident.incident_active = 1 AND incident.id = ' . $incident_id)
-				->find_all();
         }
         else
         {
@@ -118,11 +110,13 @@ class Json_Controller extends Template_Controller
 				->find_all();
         }
         
+		$json_item_first = "";	// Variable to store individual item for report detail page
         foreach ($markers as $marker)
-        {			
+        {	
             $json_item = "{";
             $json_item .= "\"type\":\"Feature\",";
             $json_item .= "\"properties\": {";
+			$json_item .= "\"id\": \"".$marker->id."\", \n";
             $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
 			
 			if (isset($category)) { 
@@ -141,9 +135,20 @@ class Json_Controller extends Template_Controller
             $json_item .= "}";
             $json_item .= "}";
 		
-            array_push($json_array, $json_item);
+			if ($marker->id == $incident_id)
+			{
+				$json_item_first = $json_item;
+			}
+			else
+			{
+				array_push($json_array, $json_item);
+			}
             $cat_array = array();
         }
+		if ($json_item_first)
+		{ // Push individual marker in last so that it is layered on top when pulled into map
+			array_push($json_array, $json_item_first);
+		}
         $json = implode(",", $json_array);
 
 		header('Content-type: application/json');
