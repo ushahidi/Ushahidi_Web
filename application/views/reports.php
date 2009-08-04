@@ -20,7 +20,8 @@
 		<div class="big-block">
 			<div class="big-block-top">
 				<div class="big-block-bottom">
-					<h1>Reports <?php echo $pagination_stats; ?></h1>
+					<h1>Reports <?php echo ($category_title) ? " in $category_title" : ""?>
+						<?php echo $pagination_stats; ?></h1>
 					<div class="report_rowtitle">
 	                	<div class="report_col1">
 	                    	<strong>MEDIA</strong>
