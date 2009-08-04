@@ -39,7 +39,7 @@
                         <?php
                         foreach($incident_category as $category) 
                         { 
-                            echo "<a href=\"#\">" .
+                            echo "<a href=\"".url::base()."reports/?c=".$category->category->id."\">" .
                                 $category->category->category_title . "</a>&nbsp;&nbsp;&nbsp;";
                         }
                         ?>

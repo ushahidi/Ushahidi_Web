@@ -16,6 +16,7 @@
  */
 ?>
 		// Map JS
+		var map;
 		jQuery(function() {
 			var map_layer;
 	
@@ -24,13 +25,15 @@
 			- Uses Spherical Mercator Projection
 			- Units in Metres instead of Degrees					
 			*/
+			var proj_4326 = new OpenLayers.Projection('EPSG:4326');
+			var proj_900913 = new OpenLayers.Projection('EPSG:900913');
 			var options = {
 				units: "m",
 				numZoomLevels: 16,
 				controls:[],
-				projection: new OpenLayers.Projection("EPSG:900913")
+				projection: proj_900913
 				};
-			var map = new OpenLayers.Map('map', options);
+			map = new OpenLayers.Map('map', options);
 			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 			
 			
@@ -84,8 +87,8 @@
 				fillColor: "${color}",
 				fillOpacity: "${opacity}",
 				strokeColor: "#<?php echo $default_map_all;?>",
-				strokeWidth: 1,
-				strokeOpacity: 1,
+				strokeWidth: <?php echo $marker_stroke_width; ?>,
+				strokeOpacity: <?php echo $marker_stroke_opacity; ?>,
 				'graphicYOffset': -20
 			}, 
 			{
@@ -97,7 +100,7 @@
 						if (feature_icon!="") {
 							return 16;
 						} else {
-							return 9;
+							return <?php echo $marker_radius; ?> * 1.6;
 						}
 					},
 					opacity: function(feature)
@@ -106,7 +109,7 @@
 						if (feature_icon!="") {
 							return 1;
 						} else {
-							return 0.8;
+							return <?php echo $marker_opacity; ?>;
 						}
 					},					
 					color: function(feature) 
@@ -126,11 +129,9 @@
 			});
 			
 			// Transform feature point coordinate to Spherical Mercator
-			preFeatureInsert = function(feature) {
-				var src = new OpenLayers.Projection('EPSG:4326');
-				var dest = new OpenLayers.Projection('EPSG:900913');			
+			preFeatureInsert = function(feature) {			
 				var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
-				OpenLayers.Projection.transform(point, src, dest);
+				OpenLayers.Projection.transform(point, proj_4326, proj_900913);
 			};
 			
 			// Create the markers layer
@@ -138,7 +139,7 @@
 			{
 				preFeatureInsert:preFeatureInsert,
 				format: OpenLayers.Format.GeoJSON,
-				projection: new OpenLayers.Projection("EPSG:4326"),
+				projection: proj_4326,
 				formatOptions: {
 					extractStyles: true,
 					extractAttributes: true
@@ -154,9 +155,8 @@
 			
 			
 			// Create center lat/lon object, converted to metres
-			var proj = new OpenLayers.Projection("EPSG:4326");
 			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
-			myPoint.transform(proj, map.getProjectionObject());
+			myPoint.transform(proj_4326, map.getProjectionObject());
 			
 			// display the map centered on a latitude and longitude (Google zoom levels)
 			map.setCenter(myPoint, <?php echo $default_zoom; ?>);
@@ -172,9 +172,15 @@
 	        }
 	        function onFeatureSelect(feature) {
 	            selectedFeature = feature;
-	            // Since KML is user-generated, do naive protection against
+	            // Lon/Lat Spherical Mercator
+				zoom_point = feature.geometry.getBounds().getCenterLonLat();
+				lon = zoom_point.lon;
+				lat = zoom_point.lat;
+	            var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+feature.attributes.name + "</li></ul></div>";
+				content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
+				content = content + "</div>";
+				// Since KML is user-generated, do naive protection against
 	            // Javascript.
-	            var content = "<div class=\"infowindow\"><h2>"+feature.attributes.name + "</h2></div>";
 	            if (content.search("<script") != -1) {
 	                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
 	            }
@@ -335,3 +341,13 @@
 				gTimeline.playOrPause();
 			});
 		});
+		
+		function zoomToSelectedFeature(lon, lat, zoomfactor){
+			var lonlat = new OpenLayers.LonLat(lon,lat);
+			map.panTo(lonlat);
+			// Get Current Zoom
+			currZoom = map.getZoom();
+			// New Zoom
+			newZoom = currZoom + zoomfactor;
+			map.zoomTo(newZoom);
+		}
