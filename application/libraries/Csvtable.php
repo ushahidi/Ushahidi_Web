@@ -21,9 +21,11 @@ class Csvtable_Core {
 			} // fields
 		}		
 	}
+	
 	function hasColumn($name) {
 		return isset($this->colnames[$name]);
 	}
+	
 	function getRows() {
 		$rows = array();
 		$numcols = count($this->columnnames);

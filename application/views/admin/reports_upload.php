@@ -28,7 +28,6 @@
 				<?php
 				foreach ($errors as $error_item => $error_description)
 				{
-					// print "<li>" . $error_description . "</li>";
 					print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
 				}
 				?>
@@ -44,8 +43,17 @@
 		<ul>
 			<li>Reports must be upladed in CSV format.</li>
 			<li>When incident ID already exists in the database, the entry in the CSV file will be ignored.</li>
+			<li>It must contain at least Incident Title and Incident Date</li>
 		</ul>
-			<p></p>
+			<p>
+				A Sample CSV Report
+				<p>
+					#,INCIDENT TITLE,INCIDENT DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED<br />
+					"1","Suspected death in Nairobi","2009-05-15 01:06:00","Nairobi","Three cases have been confirmed in C. del Uruguay","DEATHS, CIVILIANS, ",YES,YES<br />
+					"2","Looting","2009-03-18 10:10:00","Accra","Looting happening everywhere","RIOTS, DEATHS, PROPERTY LOSS, ",YES,NO<br />
+					
+				</p>
+			</p>
 			<?php print form::open(NULL, array('id' => 'uploadForm', 'name' => 'uploadForm', 'enctype' => 'multipart/form-data')); ?>
             <p><b>File to upload</b> <?php echo form::upload(array('name' => 'csvfile'), 'path/to/local/file'); ?></p>
 			<button type="submit">Upload</button>

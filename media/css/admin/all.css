@@ -1641,8 +1641,8 @@ UL.mapNavigation LI A:focus {
 	outline: 0;
 }
 
-
-
-
+.upload_container {
+	padding : 20px;
+}
 /*--  --*/
 /*--  --*/

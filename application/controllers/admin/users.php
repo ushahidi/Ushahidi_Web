@@ -84,6 +84,12 @@ class Users_Controller extends Admin_Controller
 					$post->role == 'superadmin') {
 					$post->add_error('username', 'admin');
 				}
+				
+				// Prevent modification of the super admin role to user role
+				if ($post->username == 'admin' && $post->role == 'login' && 
+					$post->role == 'superadmin') {
+					$post->add_error('username', 'superadmin');
+				}
 			}
 			elseif ($post->action == 'd') 
 			{
