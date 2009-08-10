@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 8
+-- version 9
 -- http://www.ushahidi.com
 
 
@@ -777,7 +777,8 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 
 INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 (1, 1),
-(1, 2);
+(1, 2),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -1017,7 +1018,8 @@ INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_we
 (1, 'Feeds', 0, -1, -1, -1, 0, 'feeds', 1),
 (2, 'Alerts', 0, -1, -1, -1, -1, 'alerts', 1),
 (3, 'Email', 0, -1, -1, -1, 0, 'email', 1),
-(4, 'Twitter', 0, -1, -1, -1, 0, 'twitter', 1);
+(4, 'Twitter', 0, -1, -1, -1, 0, 'twitter', 1),
+(5, 'Sharing', 0, -1, -1, -1, 0, 'sharing', 1);
 
 -- --------------------------------------------------------
 
@@ -1244,6 +1246,47 @@ CREATE TABLE IF NOT EXISTS `feedback_person` (
   `person_ip` varchar(50) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB;
+
+
+--
+-- Table structure for table `sharing`
+--
+
+CREATE TABLE `sharing` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `sharing_type` tinyint(4) default '1' COMMENT '1 - PULLing Data, 2 - PUSHing Data, 3 - TWO way',
+  `sharing_limits` tinyint(4) NOT NULL default '1' COMMENT '1 - Once Per Hour, 2 - Once Every 6 Hours, 3 - Once Every 12 Hours, 4 - Once Daily',
+  `sharing_color` varchar(20) default NULL,
+  `sharing_site_name` varchar(255) default NULL,
+  `sharing_email` varchar(255) default NULL,
+  `sharing_url` varchar(255) default NULL,
+  `sharing_key` varchar(50) default NULL,
+  `sharing_ushahidi` tinyint(4) NOT NULL default '1',
+  `sharing_report` tinyint(4) NOT NULL default '1',
+  `sharing_media` tinyint(4) NOT NULL default '1',
+  `sharing_category` tinyint(4) NOT NULL default '1',
+  `sharing_personaldata` tinyint(4) NOT NULL default '0',
+  `sharing_active` tinyint(4) NOT NULL default '0',
+  `sharing_date` datetime NOT NULL,
+  `sharing_dateaccess` int(10) unsigned default '0',
+  PRIMARY KEY  (`id`),
+  KEY `sharing_key` (`sharing_key`),
+  KEY `sharing_url` (`sharing_url`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sharing_log`
+--
+
+CREATE TABLE `sharing_log` (
+  `id` int(10) unsigned NOT NULL auto_increment,
+  `sharing_id` int(11) NOT NULL,
+  `sharing_log_date` int(10) unsigned default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 
 --
 -- Constraints for dumped tables
