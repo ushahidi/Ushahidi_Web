@@ -74,14 +74,14 @@ class Alerts_Controller extends Main_Controller
 				if (!empty($post->alert_mobile))
 				{
         			$sms_confirmation_saved =
-						$this->_send_mobile_alert($post->alert_mobile,
+						$this->_send_mobile_alert($alert, $post->alert_mobile,
 								$post->alert_lon, $post->alert_lat);
 				}
 
 				if (!empty($post->alert_email))
 				{
 					$email_confirmation_saved =
-						$this->_send_email_alert($post->alert_email,
+						$this->_send_email_alert($alert, $post->alert_email,
 								$post->alert_lon, $post->alert_lat);
 				}
 
@@ -129,7 +129,7 @@ class Alerts_Controller extends Main_Controller
     /**
      * Alerts Confirmation Page
      */
-    function confirm ()
+    function confirm()
     {
         $this->template->content = new View('alerts_confirm');
 
@@ -162,11 +162,11 @@ class Alerts_Controller extends Main_Controller
 		if ($code != NULL)
 		{
 					
-			$this->template->content->errno = Alert::verify($code);
+			$this->template->content->errno = ORM::factory('alert')->verify($code);
 		}
 		else
 		{
-			$this->template->content->errno = Alert::ER_CODE_NOT_FOUND;
+			$this->template->content->errno = Alert_Model::ER_CODE_NOT_FOUND;
 		}
 	} // END function verify
 
@@ -183,7 +183,7 @@ class Alerts_Controller extends Main_Controller
 
 		if ($code != NULL)
 		{
-			$this->template->content->unsubscribed = Alert::unsubscribe($code);
+			$this->template->content->unsubscribed = ORM::factory('alert')->unsubscribe($code);
 		}
 		else
 		{
@@ -234,7 +234,7 @@ class Alerts_Controller extends Main_Controller
 		return $code;
 	}
 
-	private function _send_mobile_alert($alert_mobile, $alert_lon, $alert_lat)
+	private function _send_mobile_alert($alert, $alert_mobile, $alert_lon, $alert_lat)
 	{
 		$alert_code = $this->_mk_code();
 					
@@ -272,7 +272,6 @@ class Alerts_Controller extends Main_Controller
 	
 		if ($sms->send($alert_mobile, $sms_from, $message) == "OK")
 		{
-			$alert = ORM::factory('alert');
 			$alert->alert_type = self::MOBILE_ALERT;
 			$alert->alert_recipient = $alert_mobile;
 			$alert->alert_code = $alert_code;
@@ -286,7 +285,7 @@ class Alerts_Controller extends Main_Controller
 		return FALSE;
 	}
 
-	private function _send_email_alert($alert_email, $alert_lon, $alert_lat)
+	private function _send_email_alert($alert, $alert_email, $alert_lon, $alert_lat)
 	{
 		$alert_code = $this->_mk_code();
 		
@@ -302,7 +301,6 @@ class Alerts_Controller extends Main_Controller
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{
-			$alert = ORM::factory('alert');
 			$alert->alert_type = self::EMAIL_ALERT;
 			$alert->alert_recipient = $alert_email;
 			$alert->alert_code = $alert_code;
