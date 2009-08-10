@@ -14,8 +14,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class Alert_Model 
-extends ORM
+class Alert_Model extends ORM
 {	
     protected $has_many = array('incident' => 'alert_sent');
     
@@ -23,9 +22,10 @@ extends ORM
     protected $table_name = 'alert';
 	
 	// Constants
-	const ER_CODE_ALREADY_VERIFIED = '';
-	const ER_CODE_NOT_FOUND = '';
-	
+	const ER_CODE_VERIFIED = 0;
+	const ER_CODE_NOT_FOUND = 1;
+	const ER_CODE_ALREADY_VERIFIED = 2;
+
 	// Ignored columns - alert_mobile & alert_email will be replaced with alert_recipient
 	// These are columns not contained in the Model itself
 	protected $ignored_columns = array('alert_mobile', 'alert_email'); 	
@@ -155,5 +155,42 @@ extends ORM
 		if ( empty($array->alert_mobile) && empty($array->alert_email) )
 			$array->add_error( 'alert_mobile', 'one_required');
     } // END function _mobile_or_email
+
+	/**
+	 * Verifies alerts request.
+	 * 
+	 * @param	string	unique code sent out for this location
+	 * @return	int	error code
+	 */
+	public function verify($code)
+	{
+		$alert_code = $this->db->where('alert_code', $code)->find();
+		
+		if (!$alert_code->loaded)
+			return self::ER_CODE_NOT_FOUND;
+		elseif ($alert_code->alert_confirmed)
+			return  self::ER_CODE_ALREADY_VERIFIED;
+		
+		// SET the alert as confirmed, and save it
+		$alert_code->set('alert_confirmed', 1)->save();
+		return self::ER_CODE_VERIFIED;
+	}
+
+	/**
+	 * Unsubscribes alertee.
+	 * 
+	 * @param	string	unique code for this location
+	 * @return	boolean
+	 */
+	public function unsubscribe($code)
+	{
+		$alert_code = $this->db->where('alert_recipient', $code)->find();
+			
+		if (!$alert_code->loaded)
+			return FALSE;
+
+		$alert_code->delete();
+		return TRUE;
+	}
 
 } // END class Alert_Model
