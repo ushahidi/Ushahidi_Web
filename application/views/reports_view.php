@@ -114,186 +114,197 @@
 		      </div>
 		    </div>
 		    <!-- end incident block <> start other report -->
-		    <div class="blocks-holder">
-			 <?php
-			 	if( count($incident_photos) > 0 ) 
+
+		 	<div class="blocks-holder">
+				<?php
+				if( count($incident_photos) > 0 ) 
 				{
-			 ?>
-		      <!-- start images -->
-		      <div class="small-block images">
-		        <h3>Images</h3>
-		        <div class="block-bg">
-		          <div class="block-top">
-		            <div class="block-bottom">
-		              <div class="photoslider" id="default"></div>
+				?>
+					<!-- start images -->
+					<div class="small-block images">
+						<h3>Images</h3>
+						<div class="block-bg">
+							<div class="block-top">
+								<div class="block-bottom">
+									<div class="photoslider" id="default"></div>
+								</div>
+							</div>
+						</div>
 					</div>
-		          </div>
-		        </div>
-		      </div>
-		      <!-- end images <> start side block -->
-			  <?php } else {?> 
-			  <!-- start mainstream news of incident -->	
-				<div class="small-block images">
-		          <h3>Related Mainstream News of Incident</h3>
-		          <div class="block-bg">
-		            <div class="block-top">
-		              <div class="block-bottom">
-		                <ul>
-		                  <li>
-		                    <ul class="title">
-		                      <li class="w-01">TITLE</li>
-		                      <li class="w-02">SOURCE</li>
-		                      <li class="w-03">DATE</li>
-		                    </ul>
-		                  </li>
-						<?php
-						foreach ($feeds as $feed)
-						{
-							$feed_id = $feed->id;
-							$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
-							$feed_link = $feed->item_link;
-							$feed_date = date('M j Y', strtotime($feed->item_date));
-							$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
-							?>
-							<li>
-								<ul>
-									<li class="w-01">
-									<a href="<?php echo $feed_link; ?>" target="_blank">
-									<?php echo $feed_title ?></a></li>
-									<li class="w-02"><?php echo $feed_source; ?></li>
-									<li class="w-03"><?php echo $feed_date; ?></li>
-								</ul>
-							</li>
-							<?php
-						}
-						?>
-		                </ul>
-		              </div>
-		            </div>
-		          </div>
-		        </div>
-			 <?php } ?>
-		      <div class="side-block">
-		        <div class="small-block">
-		          <h3>Incident Report(s)</h3>
-		          <div class="block-bg">
-		            <div class="block-top">
-		              <div class="block-bottom">
-		                <ul>
-		                  <li>
-		                    <ul class="title">
-		                      <li class="w-01">TITLE</li>
-		                      <li class="w-02">LOCATION</li>
-		                      <li class="w-03">DATE</li>
-		                    </ul>
-		                  </li>
-                           <?php
-                           foreach($incident_neighbors as $neighbor)
-                           {
-                                echo "<li>";
-                                echo "<ul>";
-                                echo "<li class=\"w-01\"><a href=\"" . url::base(); 
-                                echo "reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></li>";
-                                echo "<li class=\"w-02\">" . $neighbor->location->location_name . "</li>";
-                                echo "<li class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</li>";
-                                echo "</ul>";
-                                echo "</li>";
-                           }
-                           ?>
-		                </ul>
-		              </div>
-		            </div>
-		          </div>
-		        </div>
+					<!-- end images <> start side block -->
+				<?php 
+				} else {
+				?> 
+					<!-- start mainstream news of incident -->	
+					<div class="small-block images">
+						<h3>Related Mainstream News of Incident</h3>
+						<div class="block-bg">
+							<div class="block-top">
+								<div class="block-bottom">
+									<ul>
+										<li>
+											<ul class="title">
+												<li class="w-01">TITLE</li>
+												<li class="w-02">SOURCE</li>
+												<li class="w-03">DATE</li>
+											</ul>
+										</li>
+										<?php
+										foreach ($feeds as $feed)
+										{
+											$feed_id = $feed->id;
+											$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+											$feed_link = $feed->item_link;
+											$feed_date = date('M j Y', strtotime($feed->item_date));
+											$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
+											?>
+											<li>
+												<ul>
+													<li class="w-01">
+													<a href="<?php echo $feed_link; ?>" target="_blank">
+													<?php echo $feed_title ?></a></li>
+													<li class="w-02"><?php echo $feed_source; ?></li>
+													<li class="w-03"><?php echo $feed_date; ?></li>
+												</ul>
+											</li>
+											<?php
+										}
+										?>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- end mainstream news of incident -->
+				<?php
+				}?>
+			
+				<div class="side-block">
+					<div class="small-block">
+						<h3>Incident Report(s)</h3>
+						<div class="block-bg">
+							<div class="block-top">
+								<div class="block-bottom">
+									<ul>
+										<li>
+											<ul class="title">
+												<li class="w-01">TITLE</li>
+												<li class="w-02">LOCATION</li>
+												<li class="w-03">DATE</li>
+											</ul>
+										</li>
+										<?php
+										foreach($incident_neighbors as $neighbor)
+										{
+											echo "<li>";
+											echo "<ul>";
+											echo "<li class=\"w-01\"><a href=\"" . url::base(); 
+											echo "reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></li>";
+											echo "<li class=\"w-02\">" . $neighbor->location->location_name . "</li>";
+											echo "<li class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</li>";
+											echo "</ul>";
+											echo "</li>";
+										}
+										?>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<?php 
 				if( $incident_photos <= 0) 
 				{
 				?> 
-		        <div class="small-block">
-		          <h3>Related Mainstream News of Incident</h3>
-		          <div class="block-bg">
-		            <div class="block-top">
-		              <div class="block-bottom">
-		                <ul>
-		                  <li>
-		                    <ul class="title">
-		                      <li class="w-01">TITLE</li>
-		                      <li class="w-02">SOURCE</li>
-		                      <li class="w-03">DATE</li>
-		                    </ul>
-		                  </li>
-						<?php
-						foreach ($feeds as $feed)
-						{
-							$feed_id = $feed->id;
-							$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
-							$feed_link = $feed->item_link;
-							$feed_date = date('M j Y', strtotime($feed->item_date));
-							$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
-							?>
-							<li>
-								<ul>
-									<li class="w-01">
-									<a href="<?php echo $feed_link; ?>" target="_blank">
-									<?php echo $feed_title ?></a></li>
-									<li class="w-02"><?php echo $feed_source; ?></li>
-									<li class="w-03"><?php echo $feed_date; ?></li>
-								</ul>
-							</li>
-							<?php
-						}
-						?>
-		                </ul>
-		              </div>
-		            </div>
-		          </div>
-		        </div>
-		      </div>
+					<div class="small-block">
+						<h3>Related Mainstream News of Incident</h3>
+						<div class="block-bg">
+							<div class="block-top">
+								<div class="block-bottom">
+									<ul>
+										<li>
+											<ul class="title">
+												<li class="w-01">TITLE</li>
+												<li class="w-02">SOURCE</li>
+												<li class="w-03">DATE</li>
+											</ul>
+										</li>
+										<?php
+										foreach ($feeds as $feed)
+										{
+											$feed_id = $feed->id;
+											$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+											$feed_link = $feed->item_link;
+											$feed_date = date('M j Y', strtotime($feed->item_date));
+											$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
+											?>
+											<li>
+											<ul>
+												<li class="w-01">
+												<a href="<?php echo $feed_link; ?>" target="_blank">
+												<?php echo $feed_title ?></a></li>
+												<li class="w-02"><?php echo $feed_source; ?></li>
+												<li class="w-03"><?php echo $feed_date; ?></li>
+											</ul>
+											</li>
+											<?php
+										}
+										?>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
 				<?php }  ?>
-		      <!-- end side block -->
-		    </div>
-			<!-- start videos -->
-			<?php
+				<!-- end side block -->
+			
+			
+				<!-- start videos -->
+				<?php
 				if( count($incident_videos) > 0 ) 
 				{
+				?>
+					<div class="small-block images">
+						<h3>Videos</h3>
+						<div class="block-bg">
+							<div class="block-top">
+								<div class="block-bottom">
 
-			?>
-			    <div class="small-block images">
-					<br />
-			    	<h3>Videos</h3>
-					<div class="block-bg">
-			          <div class="block-top">
-			            <div class="block-bottom">
+									<div class="slider-wrap">
+										<div id="slider1" class="csw">
+											<div class="panelContainer">
 
-							<div class="slider-wrap">
-								<div id="slider1" class="csw">
-									<div class="panelContainer">
+												<?php
+												// embed the video codes
+												foreach( $incident_videos as $incident_video) {
+												?>
+													<div class="panel">
+														<div class="wrapper">
+															<p>
+															<?php
+															$videos_embed->embed($incident_video,'');
+															?>	
+															<p>
+														</div>
+													</div>
+												<?php } ?>
 
-										<?php
-											// embed the video codes
-											foreach( $incident_videos as $incident_video) {
-										?>
-										<div class="panel">
-											<div class="wrapper">
-												<p>
-												 <?php
-												 $videos_embed->embed($incident_video,'');
-												 ?>	
-												<p>
-											</div>
-										</div>
-										<?php } ?>
+											</div><!-- .panelContainer -->
+										</div><!-- #slider1 -->
+									</div><!-- .slider-wrap -->
 
-									</div><!-- .panelContainer -->
-								</div><!-- #slider1 -->
-							</div><!-- .slider-wrap -->
-
+								</div>
+							</div>
 						</div>
-			         </div>
-			       </div>
-			    </div>
-			 <?php } ?>
-			 <!-- end incident block <> start other report -->
+					</div>
+				<?php } ?>
+				<!-- end incident block <> start other report -->
+			
+			</div>
+			
+			
+			
 			<br />
 		    <!-- end incident block <> start other report -->
 			<a name="comments"></a>

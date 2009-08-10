@@ -32,20 +32,30 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
 		
+		// Filter By Category
+		$category_filter = ( isset($_GET['c']) && !empty($_GET['c']) )
+			? "category_id = ".$_GET['c'] : " 1=1 ";
+		
 		// Pagination
 		$pagination = new Pagination(array(
-                      'query_string' => 'page',
-                      'items_per_page' => (int) Kohana::config('settings.items_per_page'),
-                      'total_items' => ORM::factory('incident')
-                                       ->where('incident_active', '1')
-                                       ->count_all()
-                      ));
+				'query_string' => 'page',
+				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
+				'total_items' => ORM::factory('incident')
+					->join('incident_category', 'incident.id', 'incident_category.incident_id')
+					->where('incident_active', '1')
+					->where($category_filter)
+					->count_all()
+				));
 
 		$incidents = ORM::factory('incident')
-                     ->where('incident_active', '1')
-                     ->orderby('incident_date', 'desc')
-                     ->find_all( (int) Kohana::config('settings.items_per_page'), 
-                                 $pagination->sql_offset);
+				->select('DISTINCT incident.*')
+				->join('incident_category', 'incident.id', 'incident_category.incident_id')
+				->where('incident_active', '1')
+				->where($category_filter)
+				->groupby('incident.id')
+				->orderby('incident_date', 'desc')
+				->find_all( (int) Kohana::config('settings.items_per_page'), 
+					$pagination->sql_offset);
 		
 		$this->template->content->incidents = $incidents;
 		
@@ -113,6 +123,14 @@ class Reports_Controller extends Main_Controller {
 				}
 			}
 		}
+		
+		// Category Title, if Category ID available
+		$category_id = ( isset($_GET['c']) && !empty($_GET['c']) )
+			? $_GET['c'] : "0";
+		$category = ORM::factory('category')
+			->find($category_id);
+		$this->template->content->category_title = ( $category->loaded ) ?
+			$category->category_title : "";
 	} 
 	
 	/**

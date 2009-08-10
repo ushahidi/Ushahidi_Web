@@ -33,16 +33,10 @@
 				<div id="table-holder" class="feedback_forms">
 					
 					<table class="table">
-						<tfoot>
-							<tr class="foot">
-								<td><?php print form::open(NULL, array('id' => 'footerfeedbackMain', 
-									'name' => 'footerfeedbackMain')); ?>
-								<?php print form::hidden('person_ip',getenv("REMOTE_ADDR"),'')?>	
-								</td>
-							</tr>
-						</tfoot>
 						<tbody>
-							
+							<?php print form::open(NULL, array('id' => 'footerfeedbackMain', 
+								'name' => 'footerfeedbackMain')); ?>
+							<?php print form::hidden('person_ip',getenv("REMOTE_ADDR"),'')?>
 							<tr>
 								<td>
 									<?php print form::textarea("feedback_message",'',' rows="5" cols="50"');?>

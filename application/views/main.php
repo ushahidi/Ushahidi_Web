@@ -53,80 +53,84 @@
               <div id="graph" class="graph-holder"></div>
             </div>
 
-            <div class="category">
-              <strong class="title">CATEGORY FILTER</strong>
-              <div class="grey-box">
-                <div class="grey-box-bg">
-                  <ul>
-                    <li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="float:left">All Categories</div></a></li>
-                    <?php
-		      foreach ($categories as $category => $category_info)
-		      {
-                          $category_title = $category_info[0];
-                          $category_color = $category_info[1];
-						echo '<li><a href="#" id="cat_'. $category .'"><div class="swatch" style="background-color:#'.$category_color.'"></div>
-							<div>'.$category_title.'</div></a></li>';
-			   }
-		    		?>
-                  </ul>
-                </div>
-              </div>
+			<div class="category">
+				<strong class="title">CATEGORY FILTER</strong>
+				<div class="grey-box">
+					<div class="grey-box-bg">
+						<ul>
+							<li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="float:left">All Categories</div></a></li>
+							<?php
+							foreach ($categories as $category => $category_info)
+							{
+								$category_title = $category_info[0];
+								$category_color = $category_info[1];
+								echo '<li><a href="#" id="cat_'. $category .'"><div class="swatch" style="background-color:#'.$category_color.'"></div>
+								<div>'.$category_title.'</div></a></li>';
+							}
+							?>
+						</ul>
+					</div>
+				</div>
+			</div>
 			
 			<?php
 			if ($shares)
 			{ ?>
-			    <div class="category" style="margin-top:20px;">
-	              <strong class="title">OTHER USHAHIDI INSTANCES</strong>
-	              <div class="grey-box">
-	                <div class="grey-box-bg">
-	                  <ul>
-						<?php
-						foreach ($shares as $share => $share_info)
-						{
-							$sharing_site_name = $share_info[0];
-							$sharing_color = $share_info[1];
-							echo '<li><a href="#" id="share_'. $share .'"><div class="swatch" style="background-color:#'.$sharing_color.'"></div>
-							<div>'.$sharing_site_name.'</div></a></li>';
-						}
-						?>
-	                  </ul>
-	                </div>
-	              </div>			
+				<div class="category" style="margin-top:20px;">
+					<strong class="title">OTHER USHAHIDI INSTANCES</strong>
+					<div class="grey-box">
+						<div class="grey-box-bg">
+							<ul>
+								<?php
+								foreach ($shares as $share => $share_info)
+								{
+								$sharing_site_name = $share_info[0];
+								$sharing_color = $share_info[1];
+								echo '<li><a href="#" id="share_'. $share .'"><div class="swatch" style="background-color:#'.$sharing_color.'"></div>
+								<div>'.$sharing_site_name.'</div></a></li>';
+								}
+								?>
+							</ul>
+						</div>
+					</div>
+				</div>
 			<?php
 			}
 			?>
 
-			  <div class="category" style="margin-top:20px;">
+			<div class="category" style="margin-top:20px;">
 				<strong class="title">HOW TO REPORT</strong>
 				<div class="grey-box">
 					<div class="grey-box-bg">
 						<ol> 
-			            	<?php if (!empty($phone_array)) 
+							<?php if (!empty($phone_array)) 
 							{ ?><li>By sending a message to <?php foreach ($phone_array as $phone) {
-								echo "<strong>". $phone ."</strong>";
-								if ($phone != end($phone_array)) {
-									echo " or ";
-								}
+							echo "<strong>". $phone ."</strong>";
+							if ($phone != end($phone_array)) {
+							echo " or ";
+							}
 							} ?></li><?php } ?>
-			            	<?php if (!empty($report_email)) 
+							<?php if (!empty($report_email)) 
 							{ ?><li>By sending an email to <a href="mailto:<?=$report_email?>"><?=$report_email?></a></li><?php } ?>
 							<?php if (!empty($twitter_hashtag_array)) 
 							{ ?><li>By sending a tweet with the hashtag/s <?php foreach ($twitter_hashtag_array 
-								as $twitter_hashtag) {
-								echo "<strong>". $twitter_hashtag ."</strong>";
-								if ($twitter_hashtag != end($twitter_hashtag_array)) {
-									echo " or ";
-								}
+							as $twitter_hashtag) {
+							echo "<strong>". $twitter_hashtag ."</strong>";
+							if ($twitter_hashtag != end($twitter_hashtag_array)) {
+							echo " or ";
+							}
 							} ?></li><?php } ?>
-			            	<li>By <a href="<?php echo url::base() . 'reports/submit/'; ?>">filling a form</a> at the website</li>
-			           	</ol>					
+							<li>By <a href="<?php echo url::base() . 'reports/submit/'; ?>">filling a form</a> at the website</li>
+						</ol>					
 					</div>
-				</div>	
-			  </div>
-			  <div class="report-btns">
+				</div>
+
+				<div class="report-btns">
 				<a class="btn-red" href="<?php echo url::base() . 'reports/submit/'; ?>"><span><?php echo Kohana::lang('ui_main.submit'); ?></span></a>
-			  </div>			
-            </div>
+				</div>			
+			</div>
+
+
           </div>
         </div>
       </div>
