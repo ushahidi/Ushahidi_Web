@@ -27,8 +27,6 @@ class Sharing_Controller extends Admin_Controller
         {
              url::redirect('admin/dashboard');
 		}
-		
-		$profiler = new Profiler;
 	}
 	
 	
