@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * EMAIL(IMAP/POP3) Scheduler Controller
+ * EMAIL Scheduler Controller (IMAP/POP3)
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -13,7 +13,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 */
 
-class Email_Controller extends Scheduler_Controller
+class Email_Controller extends Controller
 {
 	public function __construct()
     {

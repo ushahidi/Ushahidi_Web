@@ -1479,8 +1479,26 @@ a.new-form_field{
 	cursor:default;
 }
 
-
-
+/*-- Sharing --*/
+.sharing_siteinfo{
+	border:1px solid #ccc;
+	padding:10px;
+	background-color:#ffffcc;
+	font-size:95%;
+}
+.sharing_siteinfo span{
+	padding:2px 5px;
+	background-color:#fff;
+	color:#990000;
+	font-weight:bold;
+	font-size:110%;
+}
+.sharing_dispinfo{
+	border:1px solid #ccc;
+	margin-top:5px;
+	padding:1px 5px 4px 5px;
+	background-color:#eee;
+}
 /*-- Admin Map InfoWindow --*/
 .infowindow{
 	margin:0 15px 0 0;

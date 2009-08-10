@@ -128,7 +128,8 @@ class Settings_Controller extends Admin_Controller
 				
 				// Delete Settings Cache
 				$cache = Cache::instance();
-				$settings = $cache->delete('settings');
+				$cache->delete('settings');
+				$cache->delete_tag('settings');
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
@@ -270,7 +271,8 @@ class Settings_Controller extends Admin_Controller
 				
 				// Delete Settings Cache
 				$cache = Cache::instance();
-				$settings = $cache->delete('settings');
+				$cache->delete('settings');
+				$cache->delete_tag('settings');
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
@@ -665,28 +667,6 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->email_ssl_array = array('1'=>'YES','0'=>'NO');
-	}
-
-
-    /**
-     * Handles settings for sharing data
-     */
-	function sharing()
-	{
-		$this->template->content = new View('admin/sharing');
-		$this->template->content->title = 'Settings';
-		
-		// Does this instance have a site key? If not create one on the fly
-		$settings = ORM::factory('settings', 1);
-		$site_key = $settings->site_key;
-		if (!$site_key)
-		{ // Generate 16 character key (4.8 × 10^28 Combinations)
-			$site_key = text::random('alnum',16);
-			$settings->site_key = $site_key;
-			$settings->save();
-		}
-		
-		$this->template->content->site_key = $site_key;
 	}
 
 

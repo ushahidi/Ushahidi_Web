@@ -186,4 +186,34 @@ class Json_Controller extends Template_Controller
 	    echo $all_graphs;
    	}
 
+
+	public function share( $share_id = false)
+	{
+		$this->template = "";
+		$this->auto_render = FALSE;
+		
+		$sharing_data = "";
+		if ($share_id)
+		{
+			$cache = Cache::instance();
+			
+			$share = ORM::factory('sharing', $share_id)
+				->find();
+			if ($share->loaded)
+			{
+				$sharing_key = $share->sharing_key;
+				$sharing_color = $share->sharing_color;
+				$sharing_cache = $share->id."_".$sharing_key;
+				
+				$sharing_data = utf8_decode($cache->get($sharing_cache));
+				
+				// Perform color replacement
+				$sharing_data = str_replace("%%%COLOR%%%", $sharing_color, $sharing_data);
+			}
+		}
+		
+		header('Content-type: application/json');
+		echo $sharing_data;
+	}
+
 }

@@ -269,10 +269,9 @@ class Api_Controller extends Controller {
 
 			}
 			switch ($by){
-			case "all": // incidents
-				
-			    $ret = $this->_incidentsByAll($orderfield, $sort);
-			    break;
+				case "all": // incidents
+			    	$ret = $this->_incidentsByAll($orderfield, $sort);
+			    	break;
 			    case "latlon": //latitude and longitude
                                 
                     	if(($this->_verifyArrayIndex($request, 'latitude')) && ($this->_verifyArrayIndex($request, 'longitude'))){
@@ -324,6 +323,31 @@ class Api_Controller extends Controller {
 				
 				break;
 				
+				
+			case "sharing": //Sharing Data based on Permissions
+				if( $this->_verifyArrayIndex($request, 'sharing_key') && $this->_verifyArrayIndex($request, 'sharing_site_name')
+					&& $this->_verifyArrayIndex($request, 'sharing_email') && $this->_verifyArrayIndex($request, 'sharing_url')
+					&& $this->_verifyArrayIndex($request, 'type') && $this->_verifyArrayIndex($request, 'session') )
+				{
+					$ret = $this->_sharing($request['type'], $request['session'], $request['sharing_key'], $request['sharing_site_name'], 
+						$request['sharing_email'], $request['sharing_url'], $request['sharing_data']);
+				}
+				else
+				{
+			        $error = json_encode(array("error" => $this->_getErrorMsg(001, 'Authentication Credentials')));
+			    }
+			    break;
+			
+			
+			case "validate": //Validate Session
+				if(!$this->_verifyArrayIndex($request, 'session')){
+		    		$error = array("error" => $this->_getErrorMsg(006, 'session'));
+				}
+				else
+				{
+		    		$ret = $this->_validate($request['session']);
+				}
+				break;
 			default:
 				$error = array("error" => $this->_getErrorMsg(999));
 				break;
@@ -366,20 +390,25 @@ class Api_Controller extends Controller {
 	returns an array error - array("code" => "CODE", "message" => "MESSAGE") based on the given code
 	*/
     function _getErrorMsg($errcode, $param = '', $message=''){
-        switch($errcode){
-            case 0:
-	        return array("code" => "0", "message" => "No Error.");
-	    case 001:
-		return array("code" => "001", "message" => "Missing Parameter - $param.");
-	    case 002:
-		return array("code" => "002", "message" => "Invalid Parameter");
-	    case 003:
-                return array("code" => "003", "message" => $message );
-            case 004:
-                return array("code" => "004", "message" => "Data was not sent by post method.");
-	    default:
-	        return array("code" => "999", "message" => "Not Found.");
-	}
+		switch($errcode){
+			case 0:
+				return array("code" => "0", "message" => "No Error.");
+			case 001:
+				return array("code" => "001", "message" => "Missing Parameter - $param.");
+			case 002:
+				return array("code" => "002", "message" => "Invalid Parameter");
+			case 003:
+				return array("code" => "003", "message" => $message );
+			case 004:
+				return array("code" => "004", "message" => "Data was not sent by post method.");
+			case 005:
+				return array("code" => "005", "message" => "Access denied. Either your credentials are not valid or your request has been refused. ");
+			case 006:
+				return array("code" => "006", "message" => "Access denied. Your request has been understood, 
+					but denied due to access limits like time. Try Back Later");			
+			default:
+				return array("code" => "999", "message" => "Not Found.");
+		}
     }
 	
     /**
@@ -1276,7 +1305,10 @@ class Api_Controller extends Controller {
 	 * get the incidents by category id
 	 */
 	function _incidentsByCategoryId($catid,$orderfield,$sort){
-	    $where = "\nWHERE c.id = $catid AND i.incident_active = 1";
+	    // Needs Extra Join
+		$join = "\nINNER JOIN incident_category AS ic ON ic.incident_id = i.id"; 
+		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id";
+		$where = $join."\nWHERE c.id = $catid AND i.incident_active = 1";
 	    $sortby = "\nORDER BY $orderfield $sort";
 	    $limit = "\nLIMIT 0, $this->list_limit";
 	    return $this->_getIncidents($where.$sortby, $limit);
@@ -1295,6 +1327,89 @@ class Api_Controller extends Controller {
 	    $limit = "\nLIMIT 0, $this->list_limit";
 	    return $this->_getIncidents($where.$sortby, $limit);
 	}
+	
+	/**
+	 * Instance to Instance Sharing of Data
+	 * Access Limits: Hourly
+	 */
+	function _sharing($request_type, $sharing_session, $sharing_key, $sharing_site_name, 
+			$sharing_email, $sharing_url, $sharing_data = "")
+	{
+		$sharing = new Sharing();	// New Sharing Object
+		switch($request_type)
+		{
+			case "notify": 		// Handle New Share Request
+				$return_array = $sharing->share_edit($sharing_session, $sharing_key, $sharing_site_name, 
+						$sharing_email, $sharing_url);
+				if ( $return_array["success"] === TRUE )
+				{
+					$data = array("payload" => array("success" => "true"),
+						"error" => $this->_getErrorMsg(0));
+				}
+				else
+				{
+					$data = array("payload" => array("success" => "false"),
+						"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
+				}
+				break;
+				
+			case "request": 	// Handle Request For Data
+				$return_array = $sharing->share_send($sharing_session, $sharing_key, $sharing_site_name, 
+						$sharing_email, $sharing_url);
+				if ( $return_array["success"] === TRUE )
+				{
+					$data = array("payload" => array("success" => "true"),
+						"error" => $this->_getErrorMsg(0));
+				}
+				else
+				{
+					$data = array("payload" => array("success" => "false"),
+						"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
+				}
+				break;
+				
+			case "incoming": 	// Handle Incoming Data
+				$return_array = $sharing->share_incoming($sharing_session, $sharing_key, $sharing_site_name, 
+						$sharing_email, $sharing_url, $sharing_data);			
+				if ( $return_array["success"] === TRUE )
+				{
+					$data = array("payload" => array("success" => "true"),
+						"error" => $this->_getErrorMsg(0));
+				}
+				else
+				{
+					$data = array("payload" => array("success" => "false"),
+						"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
+				}
+				break;				
+				
+			default:
+				$data = array("payload" => array("success" => "false"),
+					"error" => $this->_getErrorMsg(002));	// Invalid Request	
+		}
+		return $this->_arrayAsJSON($data);
+	}
+	
+	
+	/**
+	 * Validate Session ID against URL that sent it
+	 */
+	function _validate($session)
+	{
+		$sharing = new Sharing();
+		if ($sharing->share_validate($session))
+		{
+			$data = array("payload" => array("success" => "true"),
+				"error" => $this->_getErrorMsg(0));
+		}
+		else
+		{
+			$data = array("payload" => array("success" => "false"),
+				"error" => $this->_getErrorMsg(005));	// Request Failed
+		}
+		return $this->_arrayAsJSON($data);
+	}
+	
 	
 	/**
 	 * starting point

@@ -13,149 +13,223 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>	
-			<div class="bg">
-				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::base() . 'admin/settings/site' ?>" class="active">Site</a>
-					<a href="<?php echo url::base() . 'admin/settings' ?>">Map</a>
-					<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
-					<a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a>
-					<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
-				</h2>
-				<div class="report-form">
-					<div class="head">
-						<h3>SMS Setup Options</h3>
-						<input type="image" src="<?php echo url::base() ?>media/img/admin//btn-cancel.gif" class="cancel-btn" />
-						<input type="image" src="<?php echo url::base() ?>media/img/admin//btn-save-settings.gif" class="save-rep-btn" />
-					</div>
-					<!-- column -->
-					<div class="final_container">
-						<h4>Share Data With Other Organizations <sup><a href="#">?</a></sup></h4>
-						<p>In order to share data with other organizations, you will need to give them your Ushahidi Data Sharing Key.</p>
-						<div class="final_l">
-							<span class="dark_red_span">My Ushahidi Data Sharing Key:</span>
-							<p class="sync_key_2"><?php echo $site_key; ?></p>
-						</div>
-						<div class="final_r">
-							<span style="font-weight: bold; color: #00699b; display: block; padding-bottom: 5px;">Choose data points to share with other organizations:</span>
-							<table class="data_points">
-								<tr>
-									<td><input type="checkbox" checked="checked" />Location</td>
-									<td><input type="checkbox" checked="checked" />Title</td>
-									<td><input type="checkbox" checked="checked" />Time</td>
-									<td><input type="checkbox" />Media</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" />Category</td>
-									<td><input type="checkbox" />Report</td>
-									<td><input type="checkbox" checked="checked" />Date</td>
-									<td><input type="checkbox" checked="checked" />Personal Data</td>
-								</tr>
-							</table>
-						</div>
-					</div>
-		
-					<div class="final_container">
-						<h4>Share Data With Ushahidi <sup><a href="#">?</a></sup></h4>
-						<p style="width: 500px;">Sharing data with Ushahidi is important.  Please contribute to the cause and share your data with the world.  You may stop sharing your data at any time.</p>
-						<div class="final_l">
-							<span class="dark_red_span_2">My Ushahidi Data Sharing Key:</span>
-								<table class="p_replace">
-									<tr>
-										<td>By selecting this checkmark, I agree to share my data with the Global Ushahidi Instance. <a href="#" style="font-size: 10px;">Terms and Conditions &raquo; </a>
-										</td>
-										<td align="center" class="special">
-											<input type="checkbox" name="" />
-										</td>
-									</tr>
-								</table>
+		<div class="bg">
+			<h2><?php echo $title; ?> 
+				<a href="<?php echo url::base() . 'admin/settings/site' ?>">Site</a>
+				<a href="<?php echo url::base() . 'admin/settings' ?>">Map</a>
+				<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
+				<a href="<?php echo url::base() . 'admin/settings/sharing' ?>" class="active">Sharing</a>
+				<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
+			</h2>
+			
+			<?php
+			if ($form_error) {
+			?>
+				<!-- red-box -->
+				<div class="red-box">
+					<h3>Error!</h3>
+					<ul>
+					<?php
+					foreach ($errors as $error_item => $error_description)
+					{
+						// print "<li>" . $error_description . "</li>";
+						print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+					}
+					?>
+					</ul>
+				</div>
+			<?php
+			}
+
+			if ($form_saved) {
+			?>
+				<!-- green-box -->
+				<div class="green-box">
+					<h3>The Share Has Been <?php echo $form_action; ?>!</h3>
+				</div>
+			<?php
+			}
+			?>
 				
-						</div>
-						<div class="final_r">
-							<span style="font-weight: bold; color: #00699b; display: block; padding-bottom: 5px;">Choose data points to share with other organizations:</span>
-							<table class="data_points">
-								<tr>
-									<td><input type="checkbox" checked="checked" />Location</td>
-									<td><input type="checkbox" checked="checked" />Title</td>
-									<td><input type="checkbox" checked="checked" />Time</td>
-									<td><input type="checkbox" />Media</td>
-								</tr>
-								<tr>
-									<td><input type="checkbox" />Category</td>
-									<td><input type="checkbox" />Report</td>
-									<td><input type="checkbox" checked="checked" />Date</td>
-									<td><input type="checkbox" checked="checked" />Personal Data</td>
-								</tr>
-							</table>
+			<!-- tabs -->
+			<div class="tabs">
+				<!-- tabset -->
+				<a name="add"></a>
+				<ul class="tabset">
+					<li><a href="#" class="active">Add/Edit A Share</a></li>
+				</ul>
+				<!-- tab -->
+				<div class="tab">
+					<?php print form::open(NULL,array('id' => 'sharingMain',
+					 	'name' => 'sharingMain')); ?>
+					<input type="hidden" name="action" 
+						id="sharing_action" value="a"/>
+					<input type="hidden" id="sharing_id_action" 
+						name="sharing_id" value="" />
+					<input type="hidden" id="sharing_type" 
+						name="sharing_type" value="" />	
+					<div class="tab_form_item">
+						<strong>Site Url:</strong><br />
+						<?php print form::input('sharing_url', 'http://', ' class="text long2"'); ?>
+					</div>
+					<div class="tab_form_item">
+						<strong>Color:</strong><br />
+						<?php print form::input('sharing_color', '', ' class="text"'); ?>
+						<script type="text/javascript" charset="utf-8">
+							$(document).ready(function() {
+								$('#sharing_color').ColorPicker({
+									onSubmit: function(hsb, hex, rgb) {
+										$('#sharing_color').val(hex);
+									},
+									onChange: function(hsb, hex, rgb) {
+										$('#sharing_color').val(hex);
+									},
+									onBeforeShow: function () {
+										$(this).ColorPickerSetColor(this.value);
+									}
+								})
+								.bind('keyup', function(){
+									$(this).ColorPickerSetColor(this.value);
+								});
+							});
+						</script>
+					</div>
+					<div class="tab_form_item">
+						<strong>Access Limits:</strong> (Sending)<br />
+						<?php print form::dropdown('sharing_limits', $sharing_limits_array, ''); ?>
+					</div>				
+					<div class="tab_form_item">
+						&nbsp;<br />
+						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
+					</div>
+					<div class="tab_form_item" id="sharing_loading"></div>
+					<div style="clear:both;"></div>
+					<div class="tab_form_item">
+						The following information will be sent with this request:
+						<div class="sharing_siteinfo">
+						Website: <span><?php echo url::base(); ?></span>, 
+						Site Email: <span><?php echo $site_email; ?></span>
 						</div>
 					</div>
-		
-					<div class="table-holder">
-						<table class="table">
-							<thead>
-								<tr>
-									<th class="col-1" style="padding-right: 20px;">ACTIVE</th>
-									<th class="col-2">ORGANIZATION DETAILS</th>
-									<th class="col-32" style="width: 150px;">DATE ADDED</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td class="col-1"><input  type="checkbox" class="check-box"/></td>
-									<td class="col-2">
-										<span class="span_cl1">United Nations Relief Fund</span>
-										<span class="span_cl2">Data Sharing Key</span><span class="span_cl3">123455678</span><br />
-										<span class="span_cl4">Data points to display:</span>
-							
-										<table class="data_points">
-											<tr>
-												<td><input type="checkbox" checked="checked" />Location</td>
-												<td><input type="checkbox" checked="checked" />Title</td>
-												<td><input type="checkbox" checked="checked" />Time</td>
-												<td><input type="checkbox" />Media</td>
-											</tr>
-											<tr>
-												<td><input type="checkbox" />Category</td>
-												<td><input type="checkbox" />Report</td>
-												<td><input type="checkbox" checked="checked" />Date</td>
-												<td><input type="checkbox" checked="checked" />Personal Data</td>
-											</tr>
-										</table>
-										<a href="#" class="dark_red">Edit organization</a>
-									</td>
-									<td class="col-32">Added on August 22, 2008</td>
-								</tr>
-								<tr>
-									<td class="col-1"><input  type="checkbox" class="check-box"/></td>
-									<td class="col-2">
-										<span class="span_cl1">Rainbow Coalition</span>
-										<span class="span_cl2">Data Sharing Key</span><span class="span_cl3">123455678</span><br />
-										<span class="span_cl4">Data points to display:</span>
-							
-										<table class="data_points">
-											<tr>
-												<td><input type="checkbox" checked="checked" />Location</td>
-												<td><input type="checkbox" checked="checked" />Title</td>
-												<td><input type="checkbox" checked="checked" />Time</td>
-												<td><input type="checkbox" />Media</td>
-											</tr>
-											<tr>
-												<td><input type="checkbox" />Category</td>
-												<td><input type="checkbox" />Report</td>
-												<td><input type="checkbox" checked="checked" />Date</td>
-												<td><input type="checkbox" checked="checked" />Personal Data</td>
-											</tr>
-										</table>
-										<a href="#" class="dark_red">Edit organization</a>
-									</td>
-									<td class="col-32">Added on August 22, 2008</td>
-								</tr>
-							</tbody>
-						</table>						
-					</div>
-		
-					<div class="simple_border"></div>
-		
-					<input type="image" src="<?php echo url::base() ?>media/img/admin//btn-save-settings.gif" class="save-rep-btn" />
-					<input type="image" src="<?php echo url::base() ?>media/img/admin//btn-cancel.gif" class="cancel-btn" />
+					<?php print form::close(); ?>			
 				</div>
 			</div>
+			
+			
+			<!-- tabs -->
+			<div class="tabs">
+				<!-- tabset -->
+				<ul class="tabset">
+					<li><a href="?status=0" <?php if ($status != 's' && $status !='r') echo "class=\"active\""; ?>>Show All</a></li>
+					<li><a href="?status=s" <?php if ($status == 's') echo "class=\"active\""; ?>>Sending To</a></li>
+					<li><a href="?status=r" <?php if ($status == 'r') echo "class=\"active\""; ?>>Receiving From</a></li>
+				</ul>
+				<!-- tab -->
+				<div class="tab">
+					&nbsp;
+				</div>
+			</div>
+				
+				
+			<!-- report-table -->
+			<div class="report-form">				
+				<div class="table-holder">
+					<table class="table">
+						<thead>
+							<tr>
+								<th class="col-1">&nbsp;</th>
+								<th class="col-2">Organization</th>
+								<th class="col-3">&nbsp;</th>
+								<th class="col-4">Actions</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr class="foot">
+								<td colspan="4">
+									<?php echo $pagination; ?>
+								</td>
+							</tr>
+						</tfoot>
+						<tbody>
+							<?php
+							if ($total_items == 0)
+							{
+							?>
+								<tr>
+									<td colspan="4" class="col">
+										<h3>No Results To Display!</h3>
+									</td>
+								</tr>
+							<?php	
+							}
+							foreach ($shares as $share)
+							{
+								$share_id = $share->id;
+								$sharing_type = $share->sharing_type;
+								$sharing_limits = $share->sharing_limits;
+								$sharing_site_name = $share->sharing_site_name;
+								$sharing_email = $share->sharing_email;
+								$sharing_color = $share->sharing_color;
+								$sharing_key = $share->sharing_key;
+								$sharing_url = "http://".$share->sharing_url;
+								$sharing_active = $share->sharing_active;
+								$sharing_date = $share->sharing_date;
+								$sharing_dateaccess = $share->sharing_dateaccess;
+							
+								$sharing_site_name = ($sharing_site_name) ? $sharing_site_name : "??? <span>[ SHARE AWAITING APPROVAL ]</span>";
+								$sharing_image = ($sharing_type == 1) ? "down" : "up";		// Up or down image
+								$sharing_image .= ($sharing_active == 1) ? "" : "_gray";	// If inactive use gray image
+								$sharing_color = ($sharing_type == 2) ? "ffffff" : $sharing_color;
+								
+								$sharing_dateaccess = ($sharing_dateaccess) ? date("Y-m-d H:i:s", $sharing_dateaccess)
+								 	: "Never";
+								?>
+								<?php print form::open(NULL,array('id' => 'share_action_' . $share_id,
+								 	'name' => 'share_action_' . $share_id )); ?>
+									<input type="hidden" name="action" id="action_<?php echo $share_id;?>" value="">
+									<input type="hidden" name="share_id" value="<?php echo $share_id;?>">
+									<tr id="tr_<?php echo $share_id; ?>">
+										<td class="col-1"><img src="<?php echo url::base().'media/img/admin/sharing_'.$sharing_image.'.gif'; ?>" style="margin-right:10px;"></td>
+										<td class="col-2">
+											<div class="post">
+												<h4><?php echo $sharing_site_name; ?></h4>
+												<p><?php echo html::anchor($sharing_url); ?></p>
+												<div class="sharing_dispinfo">
+													<ul class="info">
+														<li class="none-separator">Date Added: <strong><?php echo $sharing_date; ?></strong></li>
+														<li>Key: <strong><?php echo $sharing_key; ?></strong></li>
+													</ul>
+													<ul class="info">
+														<li class="none-separator">Contact: <strong><?php echo html::mailto($sharing_email); ?></strong></li>
+														<li>Last Access: <strong><?php echo $sharing_dateaccess; ?></strong></li>
+													</ul>
+													<?php if ($sharing_type == 2)
+													{
+														?>
+														<ul class="info">
+															<li class="none-separator">Access Limited To: <strong><?php echo $sharing_limits_array[$sharing_limits]; ?></strong></li>
+														</ul>
+														<?php
+													}?>
+												</div>
+											</div>
+										</td>
+										<td><?php echo "<img src=\"".url::base()."swatch/?c=".$sharing_color."&w=30&h=30\">";?></td>
+										<td class="col-4">
+											<ul>
+												<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($share_id)); ?>','<?php echo(rawurlencode($sharing_url)); ?>','<?php echo(rawurlencode($sharing_color)); ?>','<?php echo(rawurlencode($sharing_limits)); ?>','<?php echo(rawurlencode($sharing_type)); ?>')">Edit</a></li>
+												<li class="none-separator"><a href="javascript:sharingAction('v','ACTIVATE/DEACTIVATE','<?php echo(rawurlencode($share_id)); ?>')"<?php if ($sharing_active) echo " class=\"status_yes\"" ?>>Active</a></li>
+												<li><a href="javascript:sharingAction('d','DELETE','<?php echo(rawurlencode($share_id)); ?>')" class="del">Delete</a></li>
+											</ul>
+										</td>
+									</tr>
+								<?php print form::close();
+							}
+							?>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+			
+		</div>

@@ -17,6 +17,7 @@
 ?>
 		// Map JS
 		var map;
+		var thisLayer;
 		jQuery(function() {
 			var map_layer;
 			markers = null;
@@ -87,8 +88,17 @@
 			
 			
 			// Create the markers layer
-			function addMarkers(catID,startDate,endDate, currZoom, currCenter, mediaType){
-			
+			function addMarkers(catID,startDate,endDate, currZoom, currCenter, mediaType, thisLayer, thisLayerColor){
+				
+				if (!thisLayer)
+				{
+					protocolUrl = "json";
+					thisLayer = "Reports";
+				} else {
+					protocolUrl = "json/share/"+thisLayer;
+					thisLayer = "Share_"+thisLayer;
+				}
+				
 				// Set Feature Styles
 				style = new OpenLayers.Style({
 					'externalGraphic': "${icon}",
@@ -137,8 +147,9 @@
 						color: function(feature)
 						{
 							if ( typeof(feature.cluster) != 'undefined' && 
-							     (feature.cluster.length < 2 || 
-							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0)))
+								(feature.cluster.length < 2 || 
+								(typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+								|| thisLayer != "Reports" )
 							{
 								return "#" + feature.cluster[0].data.color;
 							}
@@ -178,12 +189,14 @@
 				};
 				
 				// Does 'markers' already exist? If so, destroy it before creating new layer
+				markers = map.getLayersByName(thisLayer);
 				if (markers){
 					for (var i = 0; i < markers.length; i++) {
-						markers[i].destroy();
-						markers[i] = null;
+						//markers[i].destroy();
+						//markers[i] = null;
+						map.removeLayer(markers[i]);
 					}
-					map.removeLayer(markers);
+					// map.removeLayer(markers);
 				}
 				
 				params = [];
@@ -200,7 +213,7 @@
 					params.push('m=' + mediaType);
 				}
 				
-				markers = new OpenLayers.Layer.Vector("Reports", {
+				markers = new OpenLayers.Layer.Vector(thisLayer, {
 					preFeatureInsert:preFeatureInsert,
 					strategies: [
 						new OpenLayers.Strategy.Fixed(),
@@ -209,7 +222,7 @@
 						})
 					],
 					protocol: new OpenLayers.Protocol.HTTP({
-	                    url: "<?php echo url::base() . 'json' ?>" + '/?' + params.join('&'),
+	                    url: "<?php echo url::base(); ?>" + protocolUrl + '/?' + params.join('&'),
 	                    format: new OpenLayers.Format.GeoJSON(
 							{
 								internalProjection: map.getProjectionObject(),
@@ -337,6 +350,33 @@
 				currCenter = map.getCenter();
 					
 				addMarkers(catID, '', '', currZoom, currCenter, gMediaType);
+			});
+			
+			// Sharing Layer[s] Switch
+			$("a[id^='share_']").click(function() {
+				var shareID = this.id.substring(6);
+				
+				if ( $("#share_" + shareID).hasClass("active") ) {
+					share_layer = map.getLayersByName("Share_"+shareID);
+					if (share_layer){
+						for (var i = 0; i < share_layer.length; i++) {
+							map.removeLayer(share_layer[i]);
+						}
+					}
+					$("#share_" + shareID).removeClass("active");
+					
+				} else {
+					$("#share_" + shareID).addClass("active");
+					
+					// Get Current Zoom
+					currZoom = map.getZoom();
+
+					// Get Current Center
+					currCenter = map.getCenter();
+					
+					// Add New Layer
+					addMarkers('', '', '', currZoom, currCenter, '', shareID);
+				}
 			});
 			
 			if (!$("#startDate").val()) {

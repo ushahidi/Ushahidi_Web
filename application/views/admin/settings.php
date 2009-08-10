@@ -15,8 +15,8 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::base() . 'admin/settings/site' ?>" class="active">Site</a>
-					<a href="<?php echo url::base() . 'admin/settings' ?>">Map</a>
+					<a href="<?php echo url::base() . 'admin/settings/site' ?>">Site</a>
+					<a href="<?php echo url::base() . 'admin/settings' ?>" class="active">Map</a>
 					<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
 					<a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a>
 					<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>

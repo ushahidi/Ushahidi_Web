@@ -9,7 +9,7 @@ $settings = $cache->get('settings');
 if ($settings == NULL)
 { // Cache is Empty so Re-Cache
 	$settings = ORM::factory('settings', 1);
-	$cache->set('settings', $settings, array('settings'), 3600);
+	$cache->set('settings', $settings, array('settings'), 604800); // 1 Week
 }
 
 // Set Site Language
@@ -17,6 +17,7 @@ Kohana::config_set('locale.language', $settings->site_language);
 
 // Main Site Settings
 Kohana::config_set('settings.site_name', $settings->site_name);
+Kohana::config_set('settings.site_email', $settings->site_email);
 Kohana::config_set('settings.site_tagline', $settings->site_tagline);
 Kohana::config_set('settings.allow_feed', $settings->allow_feed);
 Kohana::config_set('settings.allow_clustering', $settings->allow_clustering);

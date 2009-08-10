@@ -161,7 +161,18 @@ class Main_Controller extends Template_Controller {
             // Create a list of all categories
             $categories[$category->id] = array($category->category_title, $category->category_color);
         }
-        $this->template->content->categories = $categories;		
+        $this->template->content->categories = $categories;
+
+		// Get all active Shares
+		$shares = array();
+		foreach (ORM::factory('sharing')
+				  ->where('sharing_active', 1)
+				  ->where('sharing_type', 1)
+				  ->find_all() as $share)
+		{
+			$shares[$share->id] = array($share->sharing_site_name, $share->sharing_color);
+		}
+		$this->template->content->shares = $shares;
 		
         // Get Reports
         // XXX: Might need to replace magic no. 8 with a constant

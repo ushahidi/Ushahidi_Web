@@ -52,6 +52,7 @@
               </div>
               <div id="graph" class="graph-holder"></div>
             </div>
+
             <div class="category">
               <strong class="title">CATEGORY FILTER</strong>
               <div class="grey-box">
@@ -70,6 +71,31 @@
                   </ul>
                 </div>
               </div>
+			
+			<?php
+			if ($shares)
+			{ ?>
+			    <div class="category" style="margin-top:20px;">
+	              <strong class="title">OTHER USHAHIDI INSTANCES</strong>
+	              <div class="grey-box">
+	                <div class="grey-box-bg">
+	                  <ul>
+						<?php
+						foreach ($shares as $share => $share_info)
+						{
+							$sharing_site_name = $share_info[0];
+							$sharing_color = $share_info[1];
+							echo '<li><a href="#" id="share_'. $share .'"><div class="swatch" style="background-color:#'.$sharing_color.'"></div>
+							<div>'.$sharing_site_name.'</div></a></li>';
+						}
+						?>
+	                  </ul>
+	                </div>
+	              </div>			
+			<?php
+			}
+			?>
+
 			  <div class="category" style="margin-top:20px;">
 				<strong class="title">HOW TO REPORT</strong>
 				<div class="grey-box">

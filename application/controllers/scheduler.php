@@ -74,23 +74,26 @@ class Scheduler_Controller extends Controller
 				$site_url = url::base();
 				$scheduler_status = remote::status( $site_url . "scheduler/" . $scheduler_controller );
 				
-				// Set last time of last execution
-				$schedule_time = time();
-				$scheduler->scheduler_last = $schedule_time;
-				$scheduler->save();
-				
-				// Record Action to Log				
-				$scheduler_log = new Scheduler_Log_Model();
-				$scheduler_log->scheduler_id = $scheduler_id;
-				$scheduler_log->scheduler_name = $scheduler->scheduler_name;
-				$scheduler_log->scheduler_status = $scheduler_status;
-				$scheduler_log->scheduler_date = $schedule_time;
-				$scheduler_log->save();
+				if ($scheduler_status == "200")
+				{ // Successful
+					// Set last time of last execution
+					$schedule_time = time();
+					$scheduler->scheduler_last = $schedule_time;
+					$scheduler->save();
+
+					// Record Action to Log				
+					$scheduler_log = new Scheduler_Log_Model();
+					$scheduler_log->scheduler_id = $scheduler_id;
+					$scheduler_log->scheduler_name = $scheduler->scheduler_name;
+					$scheduler_log->scheduler_status = $scheduler_status;
+					$scheduler_log->scheduler_date = $schedule_time;
+					$scheduler_log->save();
+				}
 			}
 		}
 		
-	    Header("Content-Type: image/gif");
+	    //Header("Content-Type: image/gif");
 		// Transparent GIF
-		echo base64_decode("R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==");
+		//echo base64_decode("R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==");
 	}
 }
