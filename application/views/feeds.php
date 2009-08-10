@@ -22,17 +22,14 @@
 				<div class="big-block-bottom">
 					<h1>Feeds <?php echo $pagination_stats; ?></h1>
 					<div class="report_rowtitle">
-	                	<div class="report_col1">
-	                    	<strong>MEDIA</strong>
-	                    </div>
 	                    <div class="report_col2">
-	                    	<strong>TITLE</strong>
+	                    	<strong><?php echo Kohana::lang('feeds.title');?></strong>
 	                    </div>
 	                    <div class="report_col3">
-	                    	<strong>DATE</strong>
+	                    	<strong><?php echo Kohana::lang('feeds.date');?></strong>
 	                    </div>
 	                    <div class="report_col4">
-	                    	<strong>SOURCE</strong>
+	                    	<strong><?php echo Kohana::lang('feeds.source');?></strong>
 	                    </div>
 	                </div>
                     <?php
@@ -45,15 +42,8 @@
 						$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
                     
                         print "<div class=\"report_row1\">";
-                        print "	<div class=\"report_thumb report_col1\">";
-                        print "    	&nbsp;";
-                        /*if(isset($media_icons[$feeds_id])){
-                        	echo $media_icons[$feeds_id];
-                        }*/
-                        print "    </div>";
                         print "    <div class=\"report_details report_col2\">";
-                        print "    	<h3><a href=\"" . url::base() . "reports/view/" . $feeds_id . "\">" . $incident_title . "</a></h3>";
-                        print $feed_title;
+                        print "    	<h3><a href=\"$feed_title\">" . $feed_title . "</a></h3>";
                         print "  	</div>";
                         print "    <div class=\"report_date report_col3\">";
                         print $feed_date;

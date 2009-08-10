@@ -33,61 +33,10 @@ class Main_Controller extends Template_Controller {
         $this->template->header  = new View('header');
         $this->template->footer  = new View('footer');
 		
-		//setup and initialize form fields
-		$form = array
-		(
-			'feedback_message' => '',
-			'person_email' => ''
-		);
-		
-		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
-	    $errors = $form;
-		$form_error = FALSE;
-		
-		//has form been submitted, if so setup validation
-		if($_POST)
-		{
-			
-			$post = Validation::factory($_POST);
-			
-			//Trim whitespaces
-			$post->pre_filter('trim', TRUE);
-			
-			//Add validation rules
-			$post->add_rules('feedback_message','required');
-			$post->add_rules('person_email', 'required','email');
-			
-			if( $post->validate() ) { 
-				$this->_dump_feedback($post);
-				
-				
-				//send details to admin
-				$frm = $post->person_email;
-				$subject = Kohana::lang('feedback.feedback_details');;
-				$message = $post->feedback_message;
-				$email = Kohana::config('settings.site_email');
-				$this->_send_feedback( $email, $message, $subject, $frm );
-				
-				//send details to ushahidi
-				$frm = $post->person_email;
-				$subject = Kohana::lang('feedback.feedback_details');;
-				$message = $post->feedback_message;
-				$message .= "Instance: ".url::base();
-				$email = "feedback@ushahidi.com";
-				$this->_send_feedback( $email, $message, $subject, $frm );
-			}
-			else
-        	{
-				// repopulate the form fields
-            	$form = arr::overwrite($form, $post->as_array());
-
-            	// populate the error fields, if any
-            	$errors = arr::overwrite($errors, $post->errors('feedback'));
-				$form_error = TRUE;
-			}
-		}
-		
-        // Retrieve Default Settings
+		//call the feedback form
+		$this->_get_feedback_form();
+        
+		// Retrieve Default Settings
 		$site_name = Kohana::config('settings.site_name');
 			// Prevent Site Name From Breaking up if its too long
 			// by reducing the size of the font
@@ -138,11 +87,6 @@ class Main_Controller extends Template_Controller {
 			$track_url = 'null';
 		}
 		$this->template->footer->tracker_url = 'http://tracker.ushahidi.com/track.php?url='.urlencode($track_url).'&lang='.$this->template->header->site_language.'';
-		$this->template->footer->js = new View('footer_form_js');
-		$this->template->footer->form = $form;
-	    $this->template->footer->errors = $errors;
-		$this->template->footer->form_error = $form_error;
-		
         // Load profiler
         // $profiler = new Profiler;
     }
@@ -335,6 +279,69 @@ class Main_Controller extends Template_Controller {
 	}
 	
 	/**
+	 * Get the feedback
+	 */
+	private function _get_feedback_form() {
+		//setup and initialize form fields
+		$form = array
+		(
+				'feedback_message' => '',
+				'person_email' => ''
+		);
+
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		$errors = $form;
+		$form_error = FALSE;
+
+		//has form been submitted, if so setup validation
+		if($_POST)
+		{
+
+			$post = Validation::factory($_POST);
+
+			//Trim whitespaces
+			$post->pre_filter('trim', TRUE);
+
+			//Add validation rules
+			$post->add_rules('feedback_message','required');
+			$post->add_rules('person_email', 'required','email');
+
+			if( $post->validate() ) { 
+				$this->_dump_feedback($post);
+
+
+				//send details to admin
+				$frm = $post->person_email;
+				$subject = Kohana::lang('feedback.feedback_details');;
+				$message = $post->feedback_message;
+				$email = Kohana::config('settings.site_email');
+				$this->_send_feedback( $email, $message, $subject, $frm );
+
+				//send details to ushahidi
+				$frm = $post->person_email;
+				$subject = Kohana::lang('feedback.feedback_details');;
+				$message = $post->feedback_message;
+				$message .= "Instance: ".url::base();
+				$email = "feedback@ushahidi.com";
+				$this->_send_feedback( $email, $message, $subject, $frm );
+			}
+			else
+	        {
+				// repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+	            // populate the error fields, if any
+	            $errors = arr::overwrite($errors, $post->errors('feedback'));
+				$form_error = TRUE;
+			}
+		}
+		$this->template->footer->js = new View('footer_form_js');
+		$this->template->footer->form = $form;
+		$this->template->footer->errors = $errors;
+		$this->template->footer->form_error = $form_error;
+	}
+	
+	/**
 	 * puts feedback info into the database.
 	 * @param the post object
 	 */
@@ -372,7 +379,6 @@ class Main_Controller extends Template_Controller {
 		{
 			return FALSE;
 		}
-	
 	}
 	
 } // End Main

@@ -25,6 +25,7 @@ $lang = array
 		'length'		=> 'The username field must be at least 2 and no more 16 characters long.',
 		'standard_text' => 'The username field contains disallowed characters.',
 		'admin' 		=> 'The admin user role cannot be modified.',
+		'superadmin'	=> 'The super admin role cannot boe modified.',
 		'exists'		=> 'Sorry, this username is already in use.',
 		'login error'	=> 'Please check that you entered the correct username.'
 	),
