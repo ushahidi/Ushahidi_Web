@@ -43,7 +43,18 @@
                                 $category->category->category_title . "</a>&nbsp;&nbsp;&nbsp;";
                         }
                         ?>
-		              </li>
+                              </li>
+                        <!-- custom fields display -->
+                        <?php
+                        if( is_array($disp_custom_fields) ) {
+                            foreach ($disp_custom_fields as $field_id => $field_property)
+			    {
+                                echo  "<li><strong>".$form_field_names[$field_id]['field_name']."</strong>";
+                                echo "<p>".$field_property."</p></li>";
+                            }
+                        }
+                        ?>
+
 		              <li>
 		                <strong>VERIFIED</strong>
                         <?php        

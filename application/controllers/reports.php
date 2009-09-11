@@ -657,9 +657,18 @@ class Reports_Controller extends Main_Controller {
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($this->template->header->js, 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
-		
+
+                // initialize custom field array
+	        $form_field_names = $this->_get_custom_form_fields($id,$incident->form_id,false);
+
+                // Retrieve Custom Form Fields Structure
+	        $disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
+	        $this->template->content->disp_custom_fields = $disp_custom_fields;
+
+
 		// Forms
-		$this->template->content->form = $form;
+                $this->template->content->form = $form;
+                $this->template->content->form_field_names = $form_field_names;
 		$this->template->content->captcha = $captcha;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
@@ -883,5 +892,51 @@ class Reports_Controller extends Main_Controller {
                      ->find_all();
 		
 		return $neighbors;
-	}
+        }
+        
+            /**
+	 * Retrieve Custom Form Fields
+	 * @param bool|int $incident_id The unique incident_id of the original report
+	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
+	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
+	 * @param bool $data_only Whether or not to include just data
+	 */
+	private function _get_custom_form_fields($incident_id = false, $form_id = 1, $data_only = false) {
+	    $fields_array = array();
+		
+	    $custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
+		
+	    foreach ($custom_form->form_field as $custom_formfield)
+	    {
+	        if ($data_only)
+	        { // Return Data Only
+		    $fields_array[$custom_formfield->id] = '';
+
+		    foreach ($custom_formfield->form_response as $form_response)
+		    {
+		        if ($form_response->incident_id == $incident_id)
+			{
+			    $fields_array[$custom_formfield->id] = $form_response->form_response;
+			}
+		    }
+		}
+		else
+		{ // Return Field Structure
+		    $fields_array[$custom_formfield->id] = array(
+		        'field_id' => $custom_formfield->id,
+		        'field_name' => $custom_formfield->field_name,
+		        'field_type' => $custom_formfield->field_type,
+		        'field_required' => $custom_formfield->field_required,
+		        'field_maxlength' => $custom_formfield->field_maxlength,
+		        'field_height' => $custom_formfield->field_height,
+		        'field_width' => $custom_formfield->field_width,
+		        'field_isdate' => $custom_formfield->field_isdate,
+		        'field_response' => ''
+		    );
+		}
+	    } 
+		
+            return $fields_array;
+        }
+
 } // End Reports
