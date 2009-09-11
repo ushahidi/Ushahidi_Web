@@ -1656,11 +1656,27 @@ UL.mapNavigation LI A:hover {
 }
 
 UL.mapNavigation LI A:focus {
-	outline: 0;
+    outline: 0;
 }
 
 .upload_container {
-	padding : 20px;
+    padding : 20px;
+}
+
+/* update info */
+#update-info {
+    line-height: 29px;
+    font-size: 12px;
+    text-align: center;
+    background : #FFEA5F;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+#update-info a {
+    font-size: 1.1em;
 }
 /*--  --*/
 /*--  --*/

@@ -76,7 +76,15 @@
 					<li class="none-separator"><a href="#"><?php echo Kohana::lang('layout.my_profile');?></a></li>
 					<li><a href="log_out"><?php echo Kohana::lang('layout.logout');?></a></li>
 				</ul>
-			</div>
+                        </div>
+                        <?php if( $version != "" ) { ?>
+                        <div id="update-info">
+                        Ushahidi <?php echo $version; ?> 
+                            is available for upgrade. 
+                            <a href="#" title="upgrade ushahidi">Click here to upgrade</a>
+                        </div>
+                        <?php } ?>
+
 			<!-- info-nav -->
 			<div class="info-nav">
 				<h3><?php echo Kohana::lang('layout.get_help');?></h3>
