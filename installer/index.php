@@ -5,7 +5,7 @@
     //check if ushahidi is installed?.
     if( $install->is_ushahidi_installed())
     {
-        header('Location:../');
+        header('Location:../installer');
     }
    
  ?>
@@ -28,33 +28,33 @@ rel="stylesheet" type="text/css" />
       background="" id="ushahidi_loginbox">
         <form method="POST" name="frm_install" action="process.php" 
         style="line-height: 100%; margin-top: 0; margin-bottom: 0">     
-			<?php
-			if ($form->num_errors > 0 ) { ?>
+	    <?php
+	        if ($form->num_errors > 0 ) { ?>
             <tr>
               	<td align="left" class="login_error">
-				<?php
-					print ( $form->error('username') =="") ?'':"&#8226;&nbsp;" 
-					    . $form->error('username') . "<br />";
-					print ( $form->error('host') =="") ?'':"&#8226;&nbsp;" 
-					    .$form->error('host') . "<br />";
-					print ( $form->error('db_name') =="") ?'':"&#8226;&nbsp;" 
-					    . $form->error('db_name') . "<br />";
-					print ( $form->error('permission') =="") ?'':"&#8226;&nbsp;" 
-					    . $form->error('permission') . "<br />";
-					print ( $form->error('load_db_tpl') =="") ?'':"&#8226;&nbsp;" 
-					    . $form->error('load_db_tpl') . "<br />";
-					print ( $form->error('connection') =="") ?'':"&#8226;&nbsp;" 
-					    . $form->error('connection') . "<br />";
-		         ?>
-				</td>
+		    <?php
+		        print ( $form->error('username') =="") ?'':"&#8226;&nbsp;" 
+			    . $form->error('username') . "<br />";
+			print ( $form->error('host') =="") ?'':"&#8226;&nbsp;" 
+			    .$form->error('host') . "<br />";
+			print ( $form->error('db_name') =="") ?'':"&#8226;&nbsp;" 
+			    .$form->error('db_name') . "<br />";
+			print ( $form->error('permission') =="") ?'':"&#8226;&nbsp;" 
+			    .$form->error('permission') . "<br />";
+			print ( $form->error('load_db_tpl') =="") ?'':"&#8226;&nbsp;" 
+			    .$form->error('load_db_tpl') . "<br />";
+			print ( $form->error('connection') =="") ?'':"&#8226;&nbsp;" 
+			    .$form->error('connection') . "<br />";
+		    ?>
+		</td>
             </tr>
-			<?php } ?>
+		<?php } ?>
             <tr>
               <td><strong>Base Path:</strong><br />
               <input type="text" name="base_path" class="login_text" 
                 value="<?php print $form->value('base_path'); ?>"/>
               <br />Just interested in the name of the sub folder.<br /> 
-              If Ushahidi is in the root folder, leave this field empty.
+              If Ushahidi is in the root folder, leave this field empty. No slahes
               Eg. ushahidi 
               </td>
             </tr>
