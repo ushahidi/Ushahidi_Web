@@ -80,8 +80,10 @@
                         <?php if( $version != "" ) { ?>
                         <div id="update-info">
                         Ushahidi <?php echo $version; ?> 
-                            is available for upgrade. 
-                            <a href="#" title="upgrade ushahidi">Click here to upgrade</a>
+                            <?php echo Kohana::lang('layout.version_available');?> 
+                            <a href="#" title="upgrade ushahidi">
+                             <?php echo Kohana::lang('layout.update_link');?>
+                            </a>.
                         </div>
                         <?php } ?>
 
