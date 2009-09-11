@@ -6,5 +6,5 @@
 */
 if (!file_exists(DOCROOT."application/config/database.php"))
 {
-  url::redirect(DOCROOT."installer/");
+  url::redirect("installer/");
 }
