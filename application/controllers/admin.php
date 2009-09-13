@@ -52,7 +52,9 @@ class Admin_Controller extends Template_Controller
         }
 
         //fetch latest version of ushahidi
-        $version = $this->_fetch_core_version();		
+        $version_number = $this->_fetch_core_version();
+        
+        $version = $this->_find_core_version($version_number);        
 	// Get Session Information
 	$user = new User_Model($_SESSION['auth_user']->id);
 		
@@ -105,7 +107,10 @@ class Admin_Controller extends Template_Controller
      * Fetch latest ushahidi version from a remote instance
      */
     function _fetch_core_version() {
-        return $latest_version = 0.9;
+        $version_api = "http://localhost/ushahidi/api?task=version&resp=json";
+        $json_string = file_get_contents($version_api);
+        $json_obj = json_decode($json_string);
+        $version_number = $json_obj->payload->version[0]->version;
+        return $latest_version = $version_number;
     }
-
 } // End Admin

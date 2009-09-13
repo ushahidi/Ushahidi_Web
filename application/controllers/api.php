@@ -125,9 +125,13 @@ class Api_Controller extends Controller {
 		}
 		break;
 					
-	    	case "categories": //retrieve categories
+	    	case "categories": //retrieve all categories
 		    $ret = $this->_categories();
-		    break;
+                    break;
+
+                case "version": //retrieve an ushahidi instance version number
+                    $ret = $this->_getVersionNumber();
+                    break;
 				
 	    	case "category": //retrieve categories
 	            $id = 0;
@@ -1108,7 +1112,7 @@ class Api_Controller extends Controller {
     function _apiKey($service){
         $items = array(); //will hold the items from the query
 	$data = array(); //items to parse to json
-	$json_apikey = array(); //incidents to parse to json	
+	$json_apikey = array(); //api string to parse to json	
 	$retJsonOrXml = ''; //will hold the json/xml string to return
 
 	//find incidents
@@ -1144,6 +1148,37 @@ class Api_Controller extends Controller {
 	}
 
 	return $retJsonOrXml;
+    }
+
+    /**
+     * get an ushahidi instance version number
+     */
+    function _getVersionNumber(){
+        $data = array();
+        $json_version = array();
+        $retJsonOrXml = '';
+        $version = Kohana::config('version.ushahidi_version');
+
+        if($this->responseType == 'json'){
+            $json_version[] = array("version" => $version);
+        }else{
+            $json_version['version0'] = array("version" => $version);
+            $replar[] = 'version0';
+        }
+
+        //create the json array
+        $data = array(
+            "payload" => array("version" => $json_version),
+            "error" => $this->_getErrorMsg(0));
+
+        if($this->responseType = 'json') {
+            $retJsonOrXml = $this->_arrayAsJSON($data);
+
+        }else{
+            $retJsonOrXml = $this->_arrayAsXML($data,$replar);
+        }
+        
+        return $retJsonOrXml;
     }
 	
     /**
@@ -1480,8 +1515,7 @@ class Api_Controller extends Controller {
 
                 continue;
             }
-            //echo $key.' - '.$value."::";
-         	
+                     	
             $xml->writeElement($key, $value);
      	}	
     }

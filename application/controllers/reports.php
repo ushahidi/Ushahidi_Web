@@ -162,7 +162,7 @@ class Reports_Controller extends Main_Controller {
 			'person_last' => '',
 			'person_email' => ''
 		);
-		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		//copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 		
