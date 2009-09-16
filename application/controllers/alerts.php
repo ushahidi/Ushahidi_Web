@@ -17,7 +17,9 @@ class Alerts_Controller extends Main_Controller
 {
     const MOBILE_ALERT = 1;
 	const EMAIL_ALERT = 2;
-	
+    
+    
+
 	function __construct()
     {
         parent::__construct();
@@ -155,18 +157,41 @@ class Alerts_Controller extends Main_Controller
      */
     public function verify($code = NULL)
     {   
-		// INITIALIZE the content's section of the view
+        
+        // Define error codes for this view.
+        define("ER_CODE_VERIFIED", 0);
+	    define("ER_CODE_NOT_FOUND", 1);
+	    define("ER_CODE_ALREADY_VERIFIED", 3);
+        
+        // INITIALIZE the content's section of the view
        	$this->template->content = new View('alerts_verify');
         $this->template->header->this_page = 'alerts';
-        
+       
 		if ($code != NULL)
 		{
-					
-			$this->template->content->errno = ORM::factory('alert')->verify($code);
+            $alert_code = ORM::factory('alert')
+                            ->where('alert_code', $code)
+                            ->find();
+
+            // IF there was no result
+            if (!$alert_code->loaded)
+            {
+                $this->template->content->errno = ER_CODE_NOT_FOUND;
+            }
+            elseif ($alert_code->alert_confirmed)
+            {
+                $this->template->content->errno = ER_CODE_ALREADY_VERIFIED;
+            }
+            else 
+            {
+                // SET the alert as confirmed, and save it
+		        $alert_code->set('alert_confirmed', 1)->save();
+                $this->template->content->errno = ER_CODE_VERIFIED;
+            }
 		}
 		else
 		{
-			$this->template->content->errno = Alert_Model::ER_CODE_NOT_FOUND;
+			$this->template->content->errno = self::ER_CODE_NOT_FOUND;
 		}
 	} // END function verify
 
@@ -181,14 +206,16 @@ class Alerts_Controller extends Main_Controller
         $this->template->header->this_page = 'alerts';
 		$this->template->content->unsubscribed = FALSE;
 
-		if ($code != NULL)
+		
+        // XXX Might need to validate $code as well
+        if ($code != NULL)
 		{
-			$this->template->content->unsubscribed = ORM::factory('alert')->unsubscribe($code);
-		}
-		else
-		{
-			$this->template->content->unsubscribed = FALSE;
-		}
+			$alert_code = ORM::factory('alert')
+							->where('alert_code', $code)
+                            ->delete_all();
+
+            $this->template->content->unsubscribed = TRUE;
+        }
 	}
 	
     /*
