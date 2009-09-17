@@ -44,6 +44,12 @@ $lang = array
 		'between' => 'El campo comentarios permitidos parece no contener un valor válido?'
 	),
 	
+	'allow_stat_sharing' => array
+	(
+		'required'		=> 'El campo "stat sharing" es obligatorio.',
+		'between' => 'El campo "stat sharing" parece no contener un valor válido?'
+	),
+	
 	'allow_feed' => array
 	(
 		'required'		=> 'El campo feed incluido es obligatorio.',

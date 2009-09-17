@@ -815,6 +815,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `allow_reports` tinyint(4) NOT NULL default '1',
   `allow_comments` tinyint(4) NOT NULL default '1',
   `allow_feed` tinyint(4) NOT NULL default '1',
+  `allow_stat_sharing` tinyint(4) NOT NULL default '1',
   `allow_clustering` tinyint(4) NOT NULL default '1',
   `default_map` tinyint(4) NOT NULL default '1' COMMENT '1 - GOOGLE MAPS, 2 - LIVE MAPS, 3 - YAHOO MAPS, 4 - OPEN STREET MAPS',
   `default_map_all` varchar(20) NOT NULL default 'CC0000',

@@ -20,6 +20,7 @@ Kohana::config_set('settings.site_name', $settings->site_name);
 Kohana::config_set('settings.site_email', $settings->site_email);
 Kohana::config_set('settings.site_tagline', $settings->site_tagline);
 Kohana::config_set('settings.allow_feed', $settings->allow_feed);
+Kohana::config_set('settings.allow_stat_sharing', $settings->allow_stat_sharing);
 Kohana::config_set('settings.allow_clustering', $settings->allow_clustering);
 Kohana::config_set('settings.sms_no1', $settings->sms_no1);
 Kohana::config_set('settings.sms_no2', $settings->sms_no2);

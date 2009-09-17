@@ -110,6 +110,12 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4>Share Site Statistics in API?</h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('allow_stat_sharing', $yesno_array, $form['allow_stat_sharing']); ?>
+							</span>
+						</div>
+						<div class="row">
 							<h4>Cluster Reports on Map?</h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_clustering', $yesno_array, $form['allow_clustering']); ?>

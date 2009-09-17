@@ -44,6 +44,12 @@ $lang = array
 		'between' => 'The allow comments field does not appear to contain a valid value?'
 	),
 	
+	'allow_stat_sharing' => array
+	(
+		'required'		=> 'The stat sharing field is required.',
+		'between' => 'The stat sharing field does not appear to contain a valid value?'
+	),
+	
 	'allow_feed' => array
 	(
 		'required'		=> 'The include feed field is required.',
