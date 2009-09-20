@@ -50,10 +50,11 @@ $lang = array
 	),
 	
 	'resetemail' => array
-    (
-    	'required' => 'The email field is required.',
-       	'invalid' => 'Sorry, we don\'t have your email address',
-        'email'  => 'The email field does not appear to contain a valid email address?',
-    )
+        (
+    	        'required' => 'The email field is required.',
+       	        'invalid' => 'Sorry, we don\'t have your email address',
+                'email'  => 'The email field does not appear to contain a valid email address?',
+        ),
 
+        'forgot_password' => 'Forgot password?',
 );

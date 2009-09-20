@@ -34,7 +34,6 @@
 				<?php
 				foreach ($errors as $error_item => $error_description)
 				{
-					// print "<li>" . $error_description . "</li>";
 					print (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
 				}
 				?>
@@ -56,7 +55,7 @@
               <td><input type="submit" id="submit" name="submit" value="Log In" class="login_btn" /></td>
             </tr>
             <tr>
-              <td><a href="<?php echo url::base()?>login/resetpassword"> Forgot password?</a></td>
+            <td><a href="<?php echo url::base()?>login/resetpassword"> <?php echo Kohana::lang('auth.forgot_password');?></a></td>
             </tr>
         </form>
       </table>
