@@ -423,6 +423,7 @@ ul.nav-list li li strong{
 }
 #footer strong{ display:block;}
 #footer a{
+        
 	margin:34px 0 0 60px;
 	background:url(../../img/admin/logo.gif) no-repeat;
 	width:257px;
@@ -430,7 +431,14 @@ ul.nav-list li li strong{
 	display:block;
 	overflow:hidden;
 	text-indent:-3000px;
+        text-align : right;
+        text-decoration : none;
 }
+
+#footer sup {
+    color : #231f20;
+}
+
 /*------------------- inner ---------------------*/
 /*-- tabs --*/
 .tabs {

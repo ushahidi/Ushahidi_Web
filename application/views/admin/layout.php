@@ -148,8 +148,8 @@
 		<div class="holder">
 			<strong>
 				<a href="http://www.ushahidi.com" target="_blank" title="Ushahidi Engine" alt="Ushahidi Engine">
-					<?php echo Kohana::lang('layout.ushahidi');?>
-				</a>
+                                    <sup><?php echo Kohana::config('version.ushahidi_version');?></sup>
+                                </a>
 			</strong>
 		</div>
 	</div>
