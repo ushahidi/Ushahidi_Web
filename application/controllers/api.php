@@ -343,6 +343,14 @@ class Api_Controller extends Controller {
 					$ret = $this->_validate($request['session']);
 				}
 				break;
+				
+			case "statistics":
+				if(!Kohana::config('settings.allow_stat_sharing')){
+					$error = array("error" => $this->_getErrorMsg(005));
+				} else {
+					$ret = $this->_statistics();
+				}
+				break;
 			
 			default:
 				$error = array("error" => $this->_getErrorMsg(999));
@@ -1348,6 +1356,61 @@ class Api_Controller extends Controller {
 		return $this->_arrayAsJSON($data);
 	}
 	
+	/**
+ 	* Provide statistics for the instance
+ 	*/
+	function _statistics(){
+		
+		$messages_total = 0;
+		$messages_services = array();
+		$services = ORM::factory('service')->find_all();
+		foreach ($services as $service) {
+		    $message_count = ORM::factory('message')
+		        ->join('reporter','message.reporter_id','reporter.id')
+				->where('service_id', $service->id)
+				->where('message_type', '1')
+				->count_all();
+			$service_name = $service->service_name;
+			$messages_stats[$service_name] = $message_count;
+		    $messages_total += $message_count;
+		}
+		$messages_stats['total'] = $messages_total;
+		
+		$incidents_total = ORM::factory('incident')->count_all();
+		$incidents_unapproved = ORM::factory('incident')->where('incident_active', '0')->count_all();
+		$incidents_approved = $incidents_total - $incidents_unapproved;
+		$incomingmedia_total = ORM::factory('feed_item')->count_all();
+		$categories_total = ORM::factory('category')->count_all();
+		$locations_total = ORM::factory('location')->count_all();
+		
+		//print_r($messages_services);
+		
+		$data = array(
+			'incidents'=>array(
+				'total'=>$incidents_total,
+				'approved'=>$incidents_approved,
+				'unapproved'=>$incidents_unapproved
+			),
+			'incoming_media'=>array(
+				'total_feed_items'=>$incomingmedia_total
+			),
+			'categories'=>array(
+				'total'=>$categories_total
+			),
+			'locations'=>array(
+				'total'=>$locations_total
+			),
+			'messages'=>$messages_stats,
+			
+		
+		);
+		
+		if($this->responseType == 'json'){
+			return $this->_arrayAsJSON($data);
+		} else {
+			return $this->_arrayAsXML($data);
+		}
+	}
 	
 	/**
  	* starting point
