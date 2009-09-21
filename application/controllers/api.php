@@ -1120,7 +1120,7 @@ class Api_Controller extends Controller {
  	* get a single location by id
  	*/
 	function _locationById($id) {
-		$where = "\n WHERE location_visible = 1 AND id=$id";
+		$where = "\n WHERE location_visible = 1 AND id=$id ";
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getLocations($where, $limit);
@@ -1130,7 +1130,7 @@ class Api_Controller extends Controller {
  	* get a single location by id
  	*/
 	function _locationByCountryId($id){
-		$where = "\n WHERE location_visible = 1 AND country_id=$id";
+		$where = "\n WHERE location_visible = 1 AND country_id=$idi ";
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getLocations($where, $limit);
@@ -1184,7 +1184,7 @@ class Api_Controller extends Controller {
  	* get a list of countries
  	*/
 	function _countries(){
-		$where = "ORDER by id DESC";
+		$where = "ORDER by id DESC ";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
 	}
@@ -1193,7 +1193,7 @@ class Api_Controller extends Controller {
  	* get a country by name
  	*/
 	function _countryByName($name){
-		$where = "\n WHERE country = '$name'";
+		$where = "\n WHERE country = '$name' ";
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
@@ -1203,7 +1203,7 @@ class Api_Controller extends Controller {
  	* get a country by id
  	*/
 	function _countryById($id){
-		$where = "\n WHERE id=$id";
+		$where = "\n WHERE id=$id ";
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
@@ -1213,7 +1213,7 @@ class Api_Controller extends Controller {
  	* get a country by iso
  	*/
 	function _countryByIso($iso){
-		$where = "\n WHERE iso='$iso'";
+		$where = "\n WHERE iso='$iso' ";
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
@@ -1223,7 +1223,7 @@ class Api_Controller extends Controller {
  	* Fetch all incidents
  	*/
 	function _incidentsByAll($orderfield,$sort) {
-		$where = "\nWHERE i.incident_active = 1";
+		$where = "\nWHERE i.incident_active = 1 ";
 		$sortby = "\nORDER BY i.id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		/* Not elegant but works */
@@ -1245,7 +1245,7 @@ class Api_Controller extends Controller {
  	* TODO // write necessary codes to achieve this.
  	*/
 	function _incidentsByLatLon($lat, $orderfield,$long,$sort){
-		$where = "\nWHERE l.latitude = $lat AND l.longitude = $long AND i.incident_active = 1";
+		$where = "\nWHERE l.latitude = $lat AND l.longitude = $long AND i.incident_active = 1 ";
 		$sortby = "\nORDER BY $orderfield $sort ";
 		$limit = "\n LMIT 0, $this->list_limit";
 		return $this->_getIncidents($where,$sortby,$limit);		
@@ -1255,7 +1255,7 @@ class Api_Controller extends Controller {
  	* get the incidents by location id
  	*/
 	function _incidentsByLocitionId($locid,$orderfield,$sort){
-		$where = "\nWHERE i.location_id = $locid AND i.incident_active = 1";
+		$where = "\nWHERE i.location_id = $locid AND i.incident_active = 1 ";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
@@ -1266,7 +1266,7 @@ class Api_Controller extends Controller {
  	*/
 	function _incidentsByLocationName($locname,$orderfield,$sort){
 		$where = "\nWHERE l.location_name = '$locname' AND 
-				i.incident_active = 1";
+				i.incident_active = 1 ";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
@@ -1278,7 +1278,7 @@ class Api_Controller extends Controller {
 	function _incidentsByCategoryId($catid,$orderfield,$sort){
 		// Needs Extra Join
 		$join = "\nINNER JOIN incident_category AS ic ON ic.incident_id = i.id"; 
-		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id";
+		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id ";
 		$where = $join."\nWHERE c.id = $catid AND i.incident_active = 1";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";

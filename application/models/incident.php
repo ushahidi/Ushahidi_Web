@@ -47,7 +47,7 @@ class Incident_Model extends ORM
         $db = new Database();
         $query = $db->query($sql);
         $graph_data = array();
-        $graph = ", \"".  $category[0] ."\": { label: '". $category[0] ."', ";
+        $graph = ", \"".  $category[0] ."\": { label: '". str_replace("'","",$category[0]) ."', ";
         foreach ( $query as $month_count )
         {
             array_push($graph_data, "[" . $month_count->time * 1000 . ", " . $month_count->number . "]");

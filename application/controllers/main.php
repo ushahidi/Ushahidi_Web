@@ -103,7 +103,7 @@ class Main_Controller extends Template_Controller {
                  ->find_all() as $category)
         {
             // Create a list of all categories
-            $categories[$category->id] = array($category->category_title, $category->category_color);
+            $categories[$category->id] = array( $category->category_title, $category->category_color);
         }
         $this->template->content->categories = $categories;
 
@@ -207,9 +207,9 @@ class Main_Controller extends Template_Controller {
 		// could not use DB query builder. It does not support parentheses yet
 		$graph_data = array();		
 		$all_graphs = Incident_Model::get_incidents_by_interval('month');
-		$daily_graphs = Incident_Model::get_incidents_by_interval('day');
+                $daily_graphs = Incident_Model::get_incidents_by_interval('day');
 		$weekly_graphs = Incident_Model::get_incidents_by_interval('week');
-		$hourly_graphs = Incident_Model::get_incidents_by_interval('hour');
+                $hourly_graphs = Incident_Model::get_incidents_by_interval('hour');
 		$this->template->content->all_graphs = $all_graphs;
 		$this->template->content->daily_graphs = $daily_graphs;
 		
@@ -339,7 +339,21 @@ class Main_Controller extends Template_Controller {
 		$this->template->footer->form = $form;
 		$this->template->footer->errors = $errors;
 		$this->template->footer->form_error = $form_error;
-	}
+        }
+
+        /**
+         * Escape string
+         */
+        private function _escape_string($str) {
+            if( $str != "" ){
+                $str = str_replace(array('\''),array('\\\''),$str);
+                $str = "'".$str."'";
+            }else {
+                return "";
+            }
+            return $str;
+        }
+
 	
 	/**
 	 * puts feedback info into the database.
