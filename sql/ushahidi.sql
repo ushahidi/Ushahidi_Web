@@ -846,6 +846,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `laconica_password` varchar(50) default NULL,
   `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',
   `date_modify` datetime default NULL,
+  `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ; 
 --
