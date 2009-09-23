@@ -89,6 +89,9 @@ class Main_Controller extends Template_Controller {
 		$this->template->footer->tracker_url = 'http://tracker.ushahidi.com/track.php?url='.urlencode($track_url).'&lang='.$this->template->header->site_language.'&version='.Kohana::config('version.ushahidi_version');
         // Load profiler
         // $profiler = new Profiler;
+        
+        // Get tracking javascript for stats
+        $this->template->footer->ushahidi_stats = $this->_ushahidi_stats();
     }
 
     public function index()
@@ -254,6 +257,35 @@ class Main_Controller extends Template_Controller {
 		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
 		$footerjs = $myPacker->pack();
 		$this->template->header->js .= $footerjs;
+	}
+	
+	/*
+	* Ushahidi Stats HTML/JavaScript
+    * @return mixed  Return ushahidi stats HTML code.
+	*/
+	private function _ushahidi_stats( )
+	{	
+		// Make sure cURL is installed
+		if (!function_exists('curl_exec')) {
+			throw new Kohana_Exception('footer.cURL_not_installed');
+			return false;
+		}
+		
+		$settings = ORM::factory('settings', 1);
+		$stat_id = $settings->stat_id;
+		
+		if($stat_id == 0) return ''; 
+		$url = 'http://tracker.ushahidi.com/px.php?task=tc&siteid='.$stat_id;
+		
+		$curl_handle = curl_init();
+		curl_setopt($curl_handle,CURLOPT_URL,$url);
+		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
+		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); // Set cURL to store data in variable instead of print
+		$buffer = curl_exec($curl_handle);
+		curl_close($curl_handle);
+		
+		return simplexml_load_string($buffer); // This works because the tracking code is only wrapped in one tag
+
 	}
 	
 	

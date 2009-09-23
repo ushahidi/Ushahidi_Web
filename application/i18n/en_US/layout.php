@@ -20,6 +20,7 @@ $lang = array
 	'reports' => 'Reports',
 	'feedback' => 'Feedback',
 	'ushahidi' => 'Ushahidi',
-	'messages' => 'Messages'
+	'messages' => 'Messages',
+	'stats' => 'Stats'
 );
 ?>
