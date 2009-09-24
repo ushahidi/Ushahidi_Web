@@ -14,25 +14,27 @@
  */
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=7" />
-	<title><?php echo $site_name; ?></title>
-	<?php
-	echo html::stylesheet('media/css/all', '', true);
-	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
-	echo "<!--[if lt IE 7]>".
-		html::stylesheet('media/css/ie6', '', true)
-		."<![endif]-->";
-		
+  <title><?php echo $site_name; ?></title>
+  <meta name="robots" content="index, follow" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="RapidxHTML" />
+
+  <?php 
+    echo html::stylesheet('media/css/style','',true);
+    echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
+    echo "<!--[if lte IE 7]>".html::stylesheet('media/css/iehacks','',true)."<![endif]-->";
+    echo "<!--[if IE 7]>".html::stylesheet('media/css/ie7hacks','',true)."<![endif]-->";
+    echo "<!--[if IE 6]>".html::stylesheet('media/css/ie6hacks','',true)."<![endif]-->";
+
 	// Load OpenLayers before jQuery!
 	if ($map_enabled)
 	{
 		echo html::script('media/js/OpenLayers', true);
 		echo "<script type=\"text/javascript\">
-			OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';
+ 			OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';
 			</script>";
 	}	
 	
@@ -71,39 +73,83 @@
 		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
 	}
 	?>
+
+  <!--[if IE 6]>
+  <script type="text/javascript" src="js/ie6pngfix.js"></script>
+  <script type="text/javascript">
+    DD_belatedPNG.fix('img, ul, ol, li, div, p, a');
+  </script>
+  <![endif]-->
 	<script type="text/javascript">
 		<?php echo $js . "\n"; ?>
 	</script>
 </head>
-<body>
-	<div id="main">
-		<!-- start header block -->
-		<div id="header">
-			<div class="header-info">
-				<strong><a href ="<?php echo url::base(); ?>" <?php echo $site_name_style; ?>><?php echo $site_name; ?></a></strong>
-				<p><?php echo $site_tagline; ?></p>
-			</div>
-			<ul id="menu">
-				<li class="first"><a <?php if ($this_page == 'home') echo 'class="active"'; ?> href="<?php echo url::base() . "main" ?>"><?php echo Kohana::lang('ui_main.home'); ?></a></li>
-				<li><a <?php if ($this_page == 'reports') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/" ?>"><?php echo Kohana::lang('ui_main.reports'); ?></a></li>
-				<li><a <?php if ($this_page == 'reports_submit') echo 'class="active"'; ?> href="<?php echo url::base() . "reports/submit" ?>"><?php echo Kohana::lang('ui_main.submit'); ?></a></li>
-				<li><a <?php if ($this_page == 'alerts') echo 'class="active"'; ?> href="<?php echo url::base() . "alerts" ?>"><?php echo Kohana::lang('ui_main.alerts'); ?></a></li>
-				<li class="last"><a <?php if ($this_page == 'help') echo 'class="active"'; ?> href="<?php echo url::base() . "help" ?>"><?php echo Kohana::lang('ui_main.help'); ?></a></li>
-			</ul>
-			<div class="lang_search">
-				<div class="lang_box">
-					<ul id="languages">
-						<li><a <?php if ($site_language == 'en_US') echo 'class="active"'; ?> href="<?php echo url::base(); ?>?lang=en_US"><img alt="en_US" src="<?php echo url::base(); ?>media/img/flags/en_US.png" width="16" height="11" /></a></li>
-						<li><a <?php if ($site_language == 'fr_FR') echo 'class="active"'; ?> href="<?php echo url::base(); ?>?lang=fr_FR"><img alt="fr_FR" src="<?php echo url::base(); ?>media/img/flags/fr_FR.png" width="16" height="11" /></a></li>
-					</ul>
-					
-				</div>
-				<div class="search_box">
-					<form method="get" id="search" action="<?php echo url::base() . 'search/'; ?>">
-					<input type="text" id="keywords" name="k" value="" class="text">
-					<input type="submit" name="b" class="searchbtn" value="<?php echo Kohana::lang('ui_main.search'); ?>" title="">
-					</form>
-				</div>
-			</div>
-		</div>
-		<!-- end header block <> start content block -->
+
+<body id="page">
+
+<!-- wrapper -->
+<div class="rapidxwpr floatholder">
+
+  <!-- header -->
+  <div id="header">
+  
+    <!-- searchbox -->
+    <div id="searchbox">
+    
+      <!-- languages -->
+      <div class="language-box">
+        <ul>
+					<li><a <?php if ($site_language == 'en_US') echo 'class="active"'; ?> href="<?php echo url::base(); ?>?lang=en_US"><img alt="en_US" src="<?php echo url::base(); ?>media/img/flags/en_US.png" width="16" height="11" /></a></li>
+					<li><a <?php if ($site_language == 'fr_FR') echo 'class="active"'; ?> href="<?php echo url::base(); ?>?lang=fr_FR"><img alt="fr_FR" src="<?php echo url::base(); ?>media/img/flags/fr_FR.png" width="16" height="11" /></a></li>
+<!--OLD
+          <li><a href=""><img src="images/lang_us.png" alt="English" width="16" height="11" /></a></li>
+          <li><a class="active" href=""><img src="images/lang_fr.png" alt="French" width="16" height="11" /></a></li>
+-->
+        </ul>
+      </div>
+      <!-- / languages -->
+      
+      <!-- searchform -->
+      <div class="search-form">
+        <form method="get" id="search" action="<?php echo url::base() . 'search/'; ?>">
+          <ul>
+            <li><input type="text" name="k" value="" class="text" /></li>
+            <li><input type="submit" name="b" class="searchbtn" value="search" /></li>
+          </ul>
+        </form>
+      </div>
+      <!-- / searchform -->
+    
+    </div>
+    <!-- / searchbox -->
+    
+    <!-- logo -->
+    <div id="logo">
+      <strong>ORGANIZATION NAME / LOGO / Site Name</strong>
+    </div>
+    <!-- / logo -->
+    
+    <!-- submit incident -->
+    <div class="submit-incident clearingfix">
+      <a href="">Submit an incident</a>
+    </div>
+    <!-- / submit incident -->
+  
+  </div>
+  <!-- / header -->
+
+  <!-- main body -->
+  <div id="middle">
+    <div class="background layoutleft">
+    
+      <!-- mainmenu -->
+      <div id="mainmenu" class="clearingfix">
+        <ul>
+          <li><a href="<?php echo url::base() . "main" ?>" <?php if ($this_page == 'home') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.home'); ?></a></li>
+          <li><a href="<?php echo url::base() . "reports" ?>" <?php if ($this_page == 'reports') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.reports'); ?></a></li>
+          <li><a href="<?php echo url::base() . "reports/submit" ?>" <?php if ($this_page == 'reports_submit') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.submit'); ?></a></li>
+          <li><a href="<?php echo url::base() . "alerts" ?>" <?php if ($this_page == 'alerts') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.alerts'); ?></a></li>
+          <li><a href="<?php echo url::base() . "help" ?>" <?php if ($this_page == 'help') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.help'); ?></a></li>
+        </ul>
+      </div>
+      <!-- / mainmenu -->

@@ -13,29 +13,41 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-		<div id="content">
-		  <div class="content-bg">
+		<div id="main" class="clearingfix">
+		  <div id="mainmiddle" class="floatbox withright">
 		    <!-- start incident block -->
-		    <div class="big-block">
-		      <div class="big-block-top">
-		        <div class="big-block-bottom">
-		          <div class="incident-name">
-		            <h1><?php echo $incident_title; ?></h1>
-		            <ul>
-		              <li>
-		                <strong>LOCATION</strong>
-		                <p><?php echo $incident_location; ?></p>
-		              </li>
-		              <li>
-		                <strong>DATE</strong>
-		                <p><?php echo $incident_date; ?></p>
-		              </li>
-		              <li>
-		                <strong>TIME</strong>
-		                <p><?php echo $incident_time; ?></p>
-		              </li>
-		              <li>
-		                <strong>CATEGORY</strong>
+		    <div class="reports">
+		      <div class="report-details">
+		        <div class="verified">
+              Verified<br/>
+                        <?php        
+                        if ( $incident_verified == 1 )
+                        {
+                            echo "<span>YES</span>";
+                        }
+                        else
+                        {
+                            echo "<span>NO</span>";
+                        }
+                        ?>
+
+            </div>
+		        <h1><?php echo $incident_title; ?></h1>
+		        <ul class="details">
+		          <li>
+		            <small>Location</small>
+		            <?php echo $incident_location; ?>
+	            </li>
+		          <li>
+		            <small>Date</small>
+		            <?php echo $incident_date; ?>
+		          </li>
+		          <li>
+		            <small>Time</small>
+		            <?php echo $incident_time; ?>
+		          </li>
+		          <li>
+		            <small>Category</small>
                         <?php
                         foreach($incident_category as $category) 
                         { 
@@ -43,59 +55,39 @@
                                 $category->category->category_title . "</a>&nbsp;&nbsp;&nbsp;";
                         }
                         ?>
-                              </li>
-                        <!-- custom fields display -->
-                        <?php
-                        if( is_array($disp_custom_fields) ) {
-                            foreach ($disp_custom_fields as $field_id => $field_property)
-			    {
-                                echo  "<li><strong>".$form_field_names[$field_id]['field_name']."</strong>";
-                                echo "<p>".$field_property."</p></li>";
-                            }
-                        }
-                        ?>
+		          </li>
+		        </ul>
+		      </div>
+          <div class="location">
+		        <div class="incident-notation clearingfix">
+              <ul>
+                <li><img align="absmiddle" alt="Incident" src="<?php echo url::base(); ?>media/img/incident-pointer.jpg"/> Incident</li>
+                <li><img align="absmiddle" alt="Nearby Incident" src="<?php echo url::base(); ?>media/img/nearby-incident-pointer.jpg"/> Nearby Incident</li>
+              </ul>
+            </div>
+            <div class="report-map">
+              <div class="map-holder" id="map"></div>
+	          </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-		              <li>
-		                <strong>VERIFIED</strong>
-                        <?php        
-                        if ( $incident_verified == 1 )
-                        {
-                            echo "<p><strong class=\"green\">YES</strong></p>";
-                        }
-                        else
-                        {
-                            echo "<p><strong class=\"red\">NO</strong></p>";
-                        }
-                        ?>
-		              </li>
-		            </ul>
-		          </div>
-		          <div class="incident-map">
-		            <ul class="legend">
-		              <li class="ico-red">INCIDENT</li>
-		              <li class="ico-orange">NEARBY INCIDENTS</li>
-		            </ul>
-		            <div class="map-holder" id="map"></div>
-		          </div>
-		          <div class="report-description">
-		            <div class="title">
-		              <h2>Incident Report Description</h2>
-		              <a href="#comments"><span>+ add information</span></a>
-		            </div>
-		            <div class="orig-report">
-		              <div class="report">
-		                <h4>Original Report</h4>
-		                <p><?php echo $incident_description; ?></p>
-						<div class="report_rating">
-							<div>
-							Credibility:&nbsp;
-							<a href="javascript:rating('<?php echo $incident_id; ?>','add','original','oloader_<?php echo $incident_id; ?>')"><img id="oup_<?php echo $incident_id; ?>" src="<?php echo url::base() . 'media/img/'; ?>up.png" alt="UP" title="UP" border="0" /></a>&nbsp;
-							<a href="javascript:rating('<?php echo $incident_id; ?>','subtract','original')"><img id="odown_<?php echo $incident_id; ?>" src="<?php echo url::base() . 'media/img/'; ?>down.png" alt="DOWN" title="DOWN" border="0" /></a>&nbsp;
-							</div>
-							<div class="rating_value" id="orating_<?php echo $incident_id; ?>"><?php echo $incident_rating; ?></div>
-							<div id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></div>
-						</div>
-		              </div>
+    <div class="report-description">
+      <h3>Incident Report Description</h3>
+        <div class="content">
+          <?php echo $incident_description; ?>
+					<div class="credibility">
+						Credibility:
+						<a href="javascript:rating('<?php echo $incident_id; ?>','add','original','oloader_<?php echo $incident_id; ?>')"><img id="oup_<?php echo $incident_id; ?>" src="<?php echo url::base() . 'media/img/'; ?>thumb-up.jpg" alt="UP" title="UP" border="0" /></a>&nbsp;
+						<a href="javascript:rating('<?php echo $incident_id; ?>','subtract','original')"><img id="odown_<?php echo $incident_id; ?>" src="<?php echo url::base() . 'media/img/'; ?>thumb-down.jpg" alt="DOWN" title="DOWN" border="0" /></a>&nbsp;
+						<a href="" class="rating_value" id="orating_<?php echo $incident_id; ?>"><?php echo $incident_rating; ?></a>
+						<a href="" id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></a>
+					</div>
+	      </div>
+
+
+
 		            </div>
 		            <div class="orig-report">
 		              <div class="discussion">
