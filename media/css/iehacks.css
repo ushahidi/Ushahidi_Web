@@ -1,0 +1,41 @@
+/* Handcoded by RapidxHTML - http://www.rapidxhtml.com */
+
+/* clearing & floating */
+.clearingfix{display:inline-block;}
+/* Hides from IE-mac \*/
+* html .clearingfix{height:1%;}
+.clearingfix{display:block;}
+/* End hide from IE-mac */
+* html .floatbox{width:100%;}
+.ie_fix_floats{width:100%;padding:0 1px 0 1px;margin:0 -1px 0 -1px;overflow:hidden;}
+/* Escaping Floats Bug */
+/* Hides from IE-mac \*/
+.floatholder{height:1%;}
+/* End hide from IE-mac */
+/* Peekaboo Bug  */
+/* * html #left{position:relative;}*/
+/* * html #right{position:relative;}*/
+/* * html #main{position:relative;}*/
+/* force hasLayout */
+#wrapper, #header, #top, #middle, #bottom{zoom:1;}
+/* Doubled Float Margins */
+* html #left{display:inline;}
+* html #right{display:inline;}
+* html .float-left{display:inline;}
+* html .float-right{display:inline;}
+/* IE and italics Problem */
+* html #left_container{overflow:visible;}
+* html #right_container{overflow:visible;}
+* html #main_container{overflow:visible;}
+* html i, * html em{overflow:visible;display:inline-block;}
+/* Expanding Box Problem */
+* html #left_container{word-wrap:break-word;}
+* html #right_container{word-wrap:break-word;}
+* html #main_container{word-wrap:break-word;}
+/* Disappearing List-Background Bug */
+/* * html ul{position:relative;}*/
+/* * html ol{position:relative;}*/
+/* * html dl{position:relative;}*/
+/* * html blockquote{zoom:1 }*/
+/* IE/Win Guillotine Bug */
+a, a:hover{background-color:transparent;}
