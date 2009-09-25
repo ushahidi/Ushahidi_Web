@@ -313,8 +313,15 @@ class Api_Controller extends Controller {
 						} else {
 							$error = array("error" => $this->_getErrorMsg(001, 'name'));
 						}
-						break;
-					
+                                                break;
+                                        case "sinceid": //Since Id
+                                                if(($this->_verifyArrayIndex($request,'id'))){
+                                                        $ret = $this->_incidentsBySinceId($request['id'], $orderfield, $sort);
+                                                } else {
+                                                        $error = array("error" => $this->_getErrorMsg(001,'id'));
+                                                }
+                                                break;
+
 					default:
 						$error = array("error" => $this->_getErrorMsg(002));
 				}
@@ -440,7 +447,8 @@ class Api_Controller extends Controller {
 		
 		//find incidents
 		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle," ."i.incident_description AS incidentdescription, i.incident_date AS " ."incidentdate, i.incident_mode AS incidentmode,i.incident_active AS " ."incidentactive, i.incident_verified AS incidentverified, l.id AS " ."locationid,l.location_name AS locationname,l.latitude AS " ."locationlatitude,l.longitude AS locationlongitude FROM incident AS i " ."INNER JOIN location as l on l.id = i.location_id ".
-			"$where $limit";
+                    "$where $limit";
+                //echo $query;exit; 
 		$items = $this->db->query($query);
 		$i = 0;
 		foreach ($items as $item){
@@ -1297,7 +1305,22 @@ class Api_Controller extends Controller {
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
-	}
+        }
+
+        /**
+         * get the incidents by since an incidents was updated
+         */
+        function _incidentsBySinceId($since_id,$orderfield,$sort){
+                // Needs Extra Join
+		$join = "\nINNER JOIN incident_category AS ic ON ic.incident_id = i.id"; 
+		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id";
+		$where = $join."\nWHERE i.id > $since_id AND 
+				i.incident_active = 1";
+		$sortby = "\nORDER BY $orderfield $sort";
+		$limit = "\nLIMIT 0, $this->list_limit";
+		return $this->_getIncidents($where.$sortby, $limit);
+
+        }
 	
 	/**
  	* Instance to Instance Sharing of Data
