@@ -307,3 +307,6 @@
         <!-- end report form block -->
       </div>
     </div>
+  </div>
+</div>
+</div>

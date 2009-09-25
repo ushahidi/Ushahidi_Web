@@ -188,10 +188,9 @@ div#footer{
     padding: 50px 0px 20px 0px;
     clear: both;
     color: #fff;
-    background-color: #A8A8A8;
-    position: relative;
-    top: -42px;
-    z-index: -1;
+    background: #A8A8A8 url(../img/border.png);
+    background-repeat: no-repeat;
+    background-position: top center;
 }
 
 /* clearing & floating */
@@ -504,10 +503,6 @@ div.additional-content ol {
 div.content-container{
     padding: 15px 15px 0 15px;
     background: #E2E2E2;
-}
-
-div.content-blocks{
-    margin: 0 0 15px 0;
 }
 
 div.content-block-left{
