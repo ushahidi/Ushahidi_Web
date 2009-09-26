@@ -301,11 +301,6 @@
 				return false;
 			});
 			
-			// Prevent Enter Button Submit
-			$("#reportForm").bind("keypress", function(e) {
-				if (e.keyCode == 13) return false;
-			});
-			
 			// Textbox Hints
 			$("#location_find").hint();
 			
