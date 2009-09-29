@@ -43,3 +43,6 @@
 		<!-- end alerts block -->
 	</div>
 </div>
+</div>
+</div>
+</div>
