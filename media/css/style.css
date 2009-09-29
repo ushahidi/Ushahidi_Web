@@ -1385,3 +1385,30 @@ a.show-more {
 	border:0;
 	cursor:pointer;
 }
+/*-- pager --*/
+ul.pager {
+	margin:0;
+	padding:0 0 0 17px;
+}
+ul.pager li{
+	display:inline;
+	margin:0 6px 0 0;
+	font-size:10px;
+	font-weight:bold;
+	color:#555;
+	border:1px solid #bbb;
+	float:left;
+	list-style:none;
+}
+ul.pager li.first {
+	padding:0 5px;
+}
+ul.pager li a{
+	text-decoration:none;
+	color:#555;
+	padding:0 5px;
+
+}
+ul.pager li a:hover,
+ul.pager li a.active {background:#f2f7fa;}
+
