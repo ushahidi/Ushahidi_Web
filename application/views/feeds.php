@@ -61,4 +61,7 @@
 		<!-- end reports block -->
 	</div>
 </div>
+</div>
+</div>
+</div>
 
