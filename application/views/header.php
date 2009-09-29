@@ -131,7 +131,7 @@
     
     <!-- submit incident -->
     <div class="submit-incident clearingfix">
-      <a href="">Submit an incident</a>
+      <a href="<?php echo url::base() . "reports/submit" ?>">Submit an incident</a>
     </div>
     <!-- / submit incident -->
   
