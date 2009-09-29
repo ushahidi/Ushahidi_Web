@@ -1260,10 +1260,128 @@ a.show-more {
 .org_contact h3{
 	margin:0 0 5px 0;
 	padding:0 0 3px 0;
-	border-bottom:1px solid #ccc;
+	border-bottom:1px solid #c2c2c2;
 }
 .org_contact h4{
 	margin:0 0 5px 0;
 	padding:0;
 	font-weight:bold;
+}
+
+/*---alerts-block---*/
+.step-1 {
+	float:left;
+	width:430px;
+	margin:20px 0 0;
+	padding:0 0 9px;
+}
+.step-1 h2 {
+	margin:0;
+	padding:0 0 0 10px;
+}
+.step-1 .location {
+	overflow:hidden;
+	width:388px;
+	padding:10px;
+	margin:10px 0 0 10px;
+}
+.step-1 .location label {
+	display:block;
+	padding:0 0 8px;
+	font:12px/15px Arial, Helvetica, sans-serif;
+}
+.step-1 .map {
+	overflow:hidden;
+	width:388px;
+	padding:10px;
+	margin:10px 0 0 10px;
+}
+.step-1 .map p {
+	margin:0;
+	padding:0 0 6px;
+	font:12px/15px Arial, Helvetica, sans-serif;
+}
+.step-1 .map .map-holder {
+	overflow:hidden;
+	width:387px;
+	height:325px;
+}
+.step-2-holder {
+	float:right;
+	width:450px;
+}
+.step-2 {
+	overflow:hidden;
+	width:430px;
+	margin:10px 0 0;
+	padding:0 0 10px;
+}
+.feed {
+	overflow:hidden;
+	width:400px;
+	margin:50px 0 0;
+	padding: 15px;
+  border: 1px solid #c2c2c2;
+}
+
+.feed .holder .box {
+  padding: 20px;
+}
+
+.step-2 h2 {
+	margin:0;
+	padding:0 0 0 10px;
+}
+.step-2 .holder {
+	overflow:hidden;
+	width:100%;
+}
+.step-2 .box {
+	overflow:hidden;
+	width:388px;
+	padding:10px;
+	margin:10px 0 0 10px;
+}
+.step-2 .box input {
+	overflow:hidden;
+	margin:0 0 0 22px;
+	clear:both;
+}
+.step-2 .box label {
+	display:block;
+	width:100%;
+	overflow:hidden;
+	padding:0 0 8px;
+	font:12px/15px Arial, Helvetica, sans-serif;
+	clear:both;
+}
+.step-2 .box label input {
+	float:left;
+	margin:2px 0 0;
+	padding:0;
+	padding:0;
+	clear:both;
+	width:auto;
+}
+* html .step-2 .box label input {
+	width:15px;
+	height:15px;
+}
+* +html .step-2 .box label input {
+	width:15px;
+	height:15px;
+}
+.step-2 .box label span {
+	float:left;
+	padding:0 0 0 10px;
+}
+.step-2-holder #btn-send-alerts {
+  background-color: #2E8AB;
+	margin:20px 0 0;
+	padding:0 0 2px;
+	width:118px;
+	height:31px;
+	font:14px Arial, Helvetica, sans-serif;
+	border:0;
+	cursor:pointer;
 }

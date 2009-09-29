@@ -103,7 +103,7 @@
 	  {
 	  ?>
 	  <div class="step-2-holder">
-	    <div class="step-2">
+	    <div class="feed">
 		  <h2><?php echo Kohana::lang('ui_main.alerts_rss'); ?></h2>
 	      <div class="holder">
 			<div class="box" style="text-align:center;">
@@ -121,4 +121,7 @@
     </div>
     <!-- end alerts block -->
   </div>
+</div>
+</div>
+</div>
 </div>
