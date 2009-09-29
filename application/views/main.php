@@ -165,7 +165,7 @@
 
               </tbody>
             </table>
-          <a class="more" href="">View More...</a>
+          <a class="more" href="<?php echo url::base() . 'reports/' ?>">View More...</a>
           </div>
           <!-- / left content block -->
         
@@ -202,7 +202,7 @@
 					?>
               </tbody>
             </table>
-            <a class="more" href="">View More...</a>
+            <a class="more" href="<?php echo url::base() . 'feeds' ?>">View More...</a>
           </div>
           <!-- / right content block -->
         
