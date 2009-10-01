@@ -17,18 +17,16 @@
 	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Hit Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a></h2>
 	
 	<div>
-		<?php
-			if($stat_id == 0){ // No stat account created
-		?>
-				<a href="?create_account=1">Create stat account</a>
-		<?php
-			}else{
-		?>
-				
-				cdsfsdafas
-		<?php
-			}
-		?>
+		<style type="text/css">
+		/* Fixes legend */
+		.legend table { width: auto; } 
+		</style>
+		<div style="width:500px">
+			<div id="plotarea" style="height:250px;width:500px;" class="graph-holder"></div>
+			<div id="overview" style="margin-left:50px;margin-top:20px;width:350px;height:50px;float:left;"></div>
+			<div id="choices" style="float:right;">Show:</div>
+			<div style="clear:both"></div>
+		</div>
 	</div>
 	
 </div>

@@ -30,7 +30,20 @@ class Stats_Controller extends Admin_Controller
 	function index()
 	{	
 		$this->template->content = new View('admin/stats');
-		$this->template->content->title = 'Stats';
+		$this->template->content->title = 'Statistics';
+		
+		// Retrieve Current Settings
+		$settings = ORM::factory('settings', 1);
+		$this->template->content->stat_id = $settings->stat_id;
+		
+		
+		
+	}
+	
+	function hits()
+	{
+		$this->template->content = new View('admin/stats_hits');
+		$this->template->content->title = 'Hit Summary';
 		
 		// Retrieve Current Settings
 		$settings = ORM::factory('settings', 1);
@@ -38,14 +51,49 @@ class Stats_Controller extends Admin_Controller
 		$sitename = $settings->site_name;
 		$url = url::base();
 		
-		$this->template->content->url = url::base();
-		
-		$this->template->content->test = ' X ';
-		
 		if (!empty($_GET['create_account'])){
 			$this->template->content->stat_id = $this->_create_site( $sitename, $url );
 		}
 		
+		// Javascript Header
+		$this->template->flot_enabled = TRUE;
+		$this->template->js = new View('admin/stats_js');
+		
+		// Graphs, Maps and other Data
+		
+		$this->template->js->all_graphs = Stats_Model::get_hit_stats();
+		$this->template->content->countries = Stats_Model::get_hit_countries();
+	}
+	
+	function country()
+	{
+		$this->template->content = new View('admin/stats_country');
+		$this->template->content->title = 'Country Breakdown';
+		
+		$this->template->content->countries = Stats_Model::get_hit_countries();
+		
+		//Set up country map
+		$country_total = array();
+		foreach($this->template->content->countries as $country){
+			foreach($country as $code => $arr) {
+				if(!isset($country_total[$code])) $country_total[$code] = 0;
+				$country_total[$code] += $arr['uniques'];
+			}
+		}
+		
+		arsort($country_total);
+		
+		$codes = '';
+		$values = '';
+		$i = 0;
+		foreach($country_total as $code => $uniques){
+			if($i == 0) $highest = $uniques;
+			if($i != 0) $values .= ',';
+			$values .= ($uniques / $highest) * 100;
+			$codes .= strtoupper($code);
+			$i++;
+		}
+		$this->template->content->visitor_map = "http://chart.apis.google.com/chart?chs=440x220&chf=bg,s,ffffff&cht=t&chtm=world&chco=cccccc,A07B7B,a20000&chld=".$codes."&chd=t:".$values;
 	}
 	
 	/**
