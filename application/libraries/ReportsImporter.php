@@ -38,7 +38,7 @@ class ReportsImporter {
 		$this->rownumber = 0;
 	 	foreach($rows as $row) {
 			$this->rownumber++;
-			if(isset($row['#']) AND isset($incident_ids[$row['#']])) {
+			if(isset($row['#']) AND isset($this->incident_ids[$row['#']])) {
 				$this->notices[] = 'Incident with id #'.$row['#'].' already exists.';
 			}
 			else {
