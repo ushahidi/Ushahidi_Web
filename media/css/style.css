@@ -1375,16 +1375,6 @@ a.show-more {
 	float:left;
 	padding:0 0 0 10px;
 }
-.step-2-holder #btn-send-alerts {
-  background-color: #2E8AB;
-	margin:20px 0 0;
-	padding:0 0 2px;
-	width:118px;
-	height:31px;
-	font:14px Arial, Helvetica, sans-serif;
-	border:0;
-	cursor:pointer;
-}
 /*-- pager --*/
 ul.pager {
 	margin:0;
@@ -1412,3 +1402,12 @@ ul.pager li a{
 ul.pager li a:hover,
 ul.pager li a.active {background:#f2f7fa;}
 
+.btn_submit {
+  margin: 20px 20px 0 0;
+	padding: 8px 10px 8px 10px;
+  color: white;
+	background-color:#368c00;
+	font-size:14px;
+	cursor:pointer;	
+  border: 0;
+}

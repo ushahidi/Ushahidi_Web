@@ -94,7 +94,7 @@
 		</div>
 	      </div>
 	    </div>
-	    <input id="btn-send-alerts" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
+	    <input id="btn-send-alerts" class="btn_submit" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
 	  </div>
 	  <?php print form::close(); ?>
 	  

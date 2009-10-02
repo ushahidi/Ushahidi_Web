@@ -292,16 +292,14 @@
                   }
                   print "<input type=\"hidden\" name=\"$this_startid\" value=\"$i\" id=\"$this_startid\">";
                   ?>
+
                 </div>
                     
-                <div style="clear:both;"></div>
-                        </div>
+                <div class="report_row">
+                  <input name="submit" type="submit" value="<?php echo Kohana::lang('ui_main.reports_btn_submit'); ?>" class="btn_submit" /> 
+                  </div>
+                </div>
                     
-                        <div class="report_bottom">
-                            <div class="report_row">
-                              <input name="submit" type="submit" value="<?php echo Kohana::lang('ui_main.reports_btn_submit'); ?>" class="btn_blue" />
-                            </div>
-                        </div>
         </div>
         <?php print form::close(); ?>
         <!-- end report form block -->
