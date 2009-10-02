@@ -869,7 +869,7 @@ class Reports_Controller extends Admin_Controller
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 	        $post->add_rules('data_point.*','required','numeric','between[1,4]');
-			$post->add_rules('data_include.*','numeric','between[1,3]');
+			$post->add_rules('data_include.*','numeric','between[1,5]');
 			$post->add_rules('from_date','date_mmddyyyy');
 			$post->add_rules('to_date','date_mmddyyyy');
 			
@@ -936,7 +936,13 @@ class Reports_Controller extends Admin_Controller
 					}
 					if ($item == 3) {
 						$report_csv .= ",CATEGORY";
-					}
+                                        }
+                                        if ($item == 4) {
+                                                $report_csv .= ",LATITUDE";
+                                        }
+                                        if($item == 5) {
+                                                $report_csv .= ",LONGITUDE";
+                                        }
 				}
 				$report_csv .= ",APPROVED,VERIFIED";
 				$report_csv .= "\n";
@@ -950,7 +956,7 @@ class Reports_Controller extends Admin_Controller
 					foreach($post->data_include as $item)
 					{
 						if ($item == 1) {
-							$report_csv .= ',"'.htmlspecialchars($incident->location->location_name).'"';
+                                                        $report_csv .= ',"'.htmlspecialchars($incident->location->location_name).'"';
 						}
 						if ($item == 2) {
 							$report_csv .= ',"'.htmlspecialchars($incident->incident_description).'"';
@@ -962,7 +968,13 @@ class Reports_Controller extends Admin_Controller
 								$report_csv .= htmlspecialchars($category->category->category_title) . ", ";
 							}
 							$report_csv .= '"';
-						}
+                                                }
+                                                if ($item == 4) {
+                                                        $report_csv .= ',"'.htmlspecialchars($incident->location->latitude).'"';
+                                                }
+                                                if ($item == 5) {
+                                                        $report_csv .= ',"'.htmlspecialchars($incident->location->longitude).'"';
+                                                }
 					}
 					if ($incident->incident_active) {
 						$report_csv .= ",YES";

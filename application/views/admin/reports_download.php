@@ -60,7 +60,13 @@
 					<td><?php print form::checkbox('data_point[]', '3', TRUE); ?>Reports Awaiting Approval</td>
 					<td><?php print form::checkbox('data_include[]', '3', TRUE); ?>Include Categories</td>
 				</tr>
-				<tr><td colspan="2"><?php print form::checkbox('data_point[]', '4', TRUE); ?>Reports Awaiting Verification</td></tr>
+                                <tr>
+                                        <td><?php print form::checkbox('data_point[]', '4', TRUE); ?>Reports Awaiting Verification</td>
+                                        <td><?php print form::checkbox('data_include[]','4',TRUE); ?>Include Latitude</td>
+                                </tr>
+                                <tr>
+                                        <td><?php print form::checkbox('data_include[]','5',TRUE); ?>Include Longitude</td>
+                                </tr>
 				<tr>
 					<td colspan="2">
 						<div class="date-box">
