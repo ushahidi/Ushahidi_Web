@@ -58,6 +58,16 @@ class Reports_Controller extends Admin_Controller
 			$filter = "1=1";
 		}
 		
+		// Get Search Keywords (If Any)
+		if (isset($_GET['k']))
+		{
+			$keyword_raw = $_GET['k'];
+			$filter .= " AND (".$this->_get_searchstring($keyword_raw).")";
+		}
+		else
+		{
+			$keyword_raw = "";
+		}
 		
 		// check, has the form been submitted?
 		$form_error = FALSE;
@@ -204,10 +214,16 @@ class Reports_Controller extends Admin_Controller
 		$pagination = new Pagination(array(
 			'query_string'    => 'page',
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-			'total_items'    => ORM::factory('incident')->where($filter)->count_all()
+			'total_items'    => ORM::factory('incident')
+				->where($filter)
+				->join('location', 'incident.location_id', 'location.id','INNER')
+				->count_all()
 		));
 
-		$incidents = ORM::factory('incident')->where($filter)->orderby('incident_dateadd', 'desc')->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		$incidents = ORM::factory('incident')
+			->where($filter)->orderby('incident_dateadd', 'desc')
+			->join('location', 'incident.location_id', 'location.id','INNER')
+			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 		
 		//GET countries
 		$countries = array();
@@ -1592,4 +1608,46 @@ class Reports_Controller extends Admin_Controller
 		
 		echo json_encode(array("status"=>"success", "response"=>$html));
     }
+
+	/**
+	 * Creates a SQL string from search keywords
+	 */
+	private function _get_searchstring($keyword_raw)
+	{
+		$or = '';
+		$where_string = '';
+		
+		
+		// Stop words that we won't search for
+		// Add words as needed!!
+		$stop_words = array('the', 'and', 'a', 'to', 'of', 'in', 'i', 'is', 'that', 'it', 
+		'on', 'you', 'this', 'for', 'but', 'with', 'are', 'have', 'be', 
+		'at', 'or', 'as', 'was', 'so', 'if', 'out', 'not');
+		
+		$keywords = explode(' ', $keyword_raw);
+		if (is_array($keywords) && !empty($keywords)) {
+			array_change_key_case($keywords, CASE_LOWER);
+			$i = 0;
+			foreach($keywords as $value) {
+				if (!in_array($value,$stop_words) && !empty($value))
+				{
+					$chunk = mysql_real_escape_string($value);
+					if ($i > 0) {
+						$or = ' OR ';
+					}
+					$where_string = $where_string.$or."incident_title LIKE '%$chunk%' OR incident_description LIKE '%$chunk%'  OR location_name LIKE '%$chunk%'";
+					$i++;
+				}
+			}
+		}
+		
+		if ($where_string)
+		{
+			return $where_string;
+		}
+		else
+		{
+			return "1=1";
+		}
+	}
 }

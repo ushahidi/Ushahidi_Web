@@ -60,6 +60,9 @@
 	?>
 	<script type="text/javascript" charset="utf-8">
 		<?php echo $js . "\n"; ?>
+		function info_search(){
+			$("#info-search").submit();
+		}
 	</script>
 </head>
 <body>
@@ -95,6 +98,8 @@
 					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha"><?php echo Kohana::lang('layout.faqs');?></a></li>
 					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('layout.forum');?></a></li>
 				</ul>
+				<div class="info-search"><form action="<?php echo url::base() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn">Search</a></form></div>
+				<div style="clear:both"></div>
 			</div>
 			<!-- title -->
 			<h1><?php echo $site_name ?></h1>

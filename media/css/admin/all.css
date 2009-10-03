@@ -101,7 +101,6 @@ a:hover{ text-decoration:none;}
 .info-nav {
 	margin:40px 7px 0 0;
 	display:inline;
-	width:153px;
 	float:right;
 }
 .info-nav h3{
@@ -116,6 +115,9 @@ a:hover{ text-decoration:none;}
 	padding:6px 0 9px;
 	border-top:1px solid #898989;
 	border-bottom:1px solid #898989;
+	clear:both;
+	float:left;
+	line-height:25px;
 }
 .info-nav ul li{
 	padding:0 7px 0 10px;
@@ -124,6 +126,26 @@ a:hover{ text-decoration:none;}
 }
 .info-nav ul li a{
 	color:#a20000;
+}
+.info-nav .info-search{
+	margin:0;
+	padding:6px 0 9px 20px;
+	border-top:1px solid #898989;
+	border-bottom:1px solid #898989;
+	float:left;
+	line-height:25px;
+}
+.info-nav .info-search a{
+	padding:2px 5px;
+	color:#5c5c5c;
+	background:#f2f7fa;
+	text-decoration:none;
+	border:1px solid #d1d1d1;
+	vertical-align: middle;
+}
+.info-nav .info-search .info-keyword{
+	vertical-align: middle;
+	width:100px;
 }
 /*-- nav-holder --*/
 .nav-holder {
