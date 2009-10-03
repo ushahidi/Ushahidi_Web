@@ -17,19 +17,18 @@
 	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Hit Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a></h2>
 	
 	<div>
+		<img src="<?php echo $visitor_map; ?>" />
+		<table style="width:200px;">
+		<tr><th>Country</td><th>Uniques</td></tr>
 		<?php
-			if($stat_id == 0){ // No stat account created
-		?>
-				<a href="?create_account=1">Create stat account</a>
-		<?php
-			}else{
-		?>
-				
-				cdsfsdafas
-		<?php
+			foreach($countries as $date => $country){
+				echo '<tr><td colspan="2"><br/>'.$date.'</td></tr>';
+				foreach($country as $code => $arr) {
+					echo '<tr><td><img src="'.$arr['logo'].'" /> '.$arr['label'].'</td><td>'.$arr['uniques'].'</td></tr>';
+				}
 			}
 		?>
+		</table>
 	</div>
 	
 </div>
-
