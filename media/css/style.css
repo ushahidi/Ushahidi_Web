@@ -746,6 +746,16 @@ div.incident-notation ul li{
 }
 
 /* media files */
+.report-map .map-holder {
+	overflow:hidden;
+	clear:both;
+	border:1px solid #ccc;
+	width:428px;
+	height:298px;
+}
+
+
+/* media files */
 div.content-media{
     padding: 15px;
     background: #FFFFFF;
