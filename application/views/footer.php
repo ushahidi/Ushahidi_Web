@@ -18,9 +18,11 @@
 <!-- footer -->
 <div id="footer" class="clearingfix">
 
+  <div id="underfooter"></div>
+
   <!-- footer content -->
   <div class="rapidxwpr floatholder">
-  
+
     <!-- footer credits -->
     <div class="footer-credits">
       Powered by <a href=""><img src="<?php echo url::base(); ?>/media/img/footer-logo.jpg" alt="Ushahidi" align="absmiddle" /></a>

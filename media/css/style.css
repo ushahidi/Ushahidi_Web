@@ -185,12 +185,18 @@ div#main .withoutright div#content{
 /* footer */
 div#footer{
     width: auto;
-    padding: 50px 0px 20px 0px;
     clear: both;
     color: #fff;
     background-color: #A8A8A8;
+    padding-bottom: 20px;
+}
+
+div#underfooter{
+    width:auto;
+    height: 28px;
+    background-color:#A8A8A8;
     position: relative;
-    top: -30px;
+    top: -28px;
     z-index: -1;
 }
 
