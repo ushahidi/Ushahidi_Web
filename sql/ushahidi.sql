@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_image_shadow` varchar(100) default NULL,
   `category_visible` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category`
@@ -55,7 +55,7 @@ CREATE TABLE `category_lang`
 `category_title` VARCHAR(255) default NULL,
 `category_description` TEXT default NULL,
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `category_lang`
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `country` (
   `capital` varchar(100) default NULL,
   `cities` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `country`
@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `idp` (
   `movedto_location_id` bigint(20) default NULL,
   `idp_move_date` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `idp`
@@ -384,7 +384,7 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `incident_datemodify` datetime default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `location_id` (`location_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `incident`
@@ -405,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `incident_lang`
 `incident_title` VARCHAR(255) default NULL,
 `incident_description` LONGTEXT default NULL,
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `incident_lang`
@@ -423,7 +423,7 @@ CREATE TABLE IF NOT EXISTS `incident_category` (
   `incident_id` bigint(20) NOT NULL default '0',
   `category_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `incident_category`
@@ -447,7 +447,7 @@ CREATE TABLE IF NOT EXISTS `incident_person` (
   `person_ip` varchar(50) default NULL,
   `person_date` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `incident_person`
@@ -475,7 +475,7 @@ CREATE TABLE IF NOT EXISTS `comment`
 `comment_date` DATETIME default NULL,
 `comment_date_gmt` DATETIME default NULL,
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `comment`
@@ -497,7 +497,7 @@ CREATE TABLE IF NOT EXISTS `rating`
 `rating_ip` VARCHAR(100) default NULL,
 `rating_date` DATETIME default NULL,
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `rating`
@@ -519,7 +519,7 @@ CREATE TABLE IF NOT EXISTS `location` (
   `location_visible` tinyint(4) NOT NULL default '1',
   `location_date` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `location`
@@ -544,7 +544,7 @@ CREATE TABLE IF NOT EXISTS `media` (
   `media_date` datetime default NULL,
   `media_active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `media`
@@ -569,7 +569,7 @@ CREATE TABLE IF NOT EXISTS `organization` (
   `organization_country` varchar(100) default NULL,
   `organization_active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `organization`
@@ -585,7 +585,7 @@ CREATE TABLE IF NOT EXISTS `organization` (
 CREATE TABLE IF NOT EXISTS `organization_incident` (
   `organization_id` bigint(20) default NULL,
   `incident_id` bigint(20) default NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `organization_incident`
@@ -605,7 +605,7 @@ CREATE TABLE IF NOT EXISTS `feed`
 `feed_active` TINYINT DEFAULT 1,
 `feed_update` INT DEFAULT 0 NOT NULL,
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `feed`
@@ -627,7 +627,7 @@ CREATE TABLE IF NOT EXISTS `feed_item`
 `item_link` VARCHAR(255) default NULL,
 `item_date` DATETIME default NULL,
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `feed_item`
@@ -656,7 +656,7 @@ CREATE TABLE IF NOT EXISTS `message`
 `message_date` DATETIME default NULL,
 `message_level` TINYINT NULL DEFAULT 0, 
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `message`
@@ -681,7 +681,7 @@ CREATE TABLE IF NOT EXISTS `twitter`
 `tweet_date` DATETIME DEFAULT NULL,
 `hide` tinyint(1) NOT NULL default '0',
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `twitter`
@@ -705,7 +705,7 @@ CREATE TABLE IF NOT EXISTS `laconica` (
   `laconica_mesg_date` datetime default NULL,
   `hide` tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `laconica`
@@ -728,7 +728,7 @@ CREATE TABLE IF NOT EXISTS `pending_users` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `pending_users`
@@ -747,7 +747,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `description` varchar(255) NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `roles`
@@ -791,7 +791,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `last_activity` int(10) unsigned NOT NULL,
   `data` text NOT NULL,
   PRIMARY KEY  (`session_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `sessions`
@@ -848,7 +848,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `date_modify` datetime default NULL,
   `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ; 
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ; 
 --
 -- Dumping data for table `settings`
 --
@@ -874,7 +874,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
@@ -899,7 +899,7 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user_tokens`
@@ -921,7 +921,7 @@ CREATE TABLE IF NOT EXISTS `verified` (
   `verified_date` datetime default NULL,
   `verified_status` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `verified`
@@ -966,7 +966,7 @@ CREATE TABLE IF NOT EXISTS `alert_sent`
 `alert_date` DATETIME NULL,
 PRIMARY KEY (`id`),
 UNIQUE KEY `uniq_incident_id` (`incident_id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `alert_sent`
@@ -986,7 +986,7 @@ CREATE TABLE IF NOT EXISTS `city` (
   `city_lat` varchar(150) default NULL,
   `city_lon` varchar(200) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `city`
@@ -1010,7 +1010,7 @@ CREATE TABLE IF NOT EXISTS `scheduler` (
   `scheduler_controller` varchar(100) NOT NULL,
   `scheduler_active` tinyint(4) NOT NULL default '1',
   PRIMARY KEY  (`id`)
-) AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=4;
 
 --
 -- Dumping data for table `scheduler`
@@ -1036,7 +1036,7 @@ CREATE TABLE IF NOT EXISTS `scheduler_log` (
   `scheduler_status` varchar(20) default NULL,
   `scheduler_date` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `scheduler_log`
@@ -1069,7 +1069,7 @@ CREATE TABLE IF NOT EXISTS `cluster` (
   `category_id` int(11) UNSIGNED NOT NULL default '0',
   `category_color` varchar(20) NOT NULL default '990000',
   PRIMARY KEY  (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `cluster`
@@ -1088,7 +1088,7 @@ CREATE TABLE IF NOT EXISTS `form` (
   `form_description` text,
   `form_active` tinyint(4) default '1',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `form`
@@ -1119,7 +1119,7 @@ CREATE TABLE IF NOT EXISTS `form_field` (
   `field_isdate` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `fk_form_id` (`form_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `cluster`
@@ -1139,7 +1139,7 @@ CREATE TABLE IF NOT EXISTS `form_response` (
   `form_response` text NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `fk_form_field_id` (`form_field_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `form_response`
@@ -1158,7 +1158,7 @@ CREATE TABLE `level` (
   `level_description` varchar(200) default NULL,
   `level_weight` tinyint(4) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `level`
@@ -1194,7 +1194,7 @@ CREATE TABLE `reporter` (
   `reporter_ip` varchar(50) default NULL,
   `reporter_date` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1209,7 +1209,7 @@ CREATE TABLE `service` (
   `service_url` varchar(255) default NULL,
   `service_api` varchar(255) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `service`
@@ -1232,7 +1232,7 @@ CREATE TABLE IF NOT EXISTS `feedback` (
   `feedback_dateadd` datetime default NULL,
   `feedback_datemodify` datetime default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -1247,7 +1247,7 @@ CREATE TABLE IF NOT EXISTS `feedback_person` (
   `person_date` datetime default NULL,
   `person_ip` varchar(50) default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 --
@@ -1274,7 +1274,7 @@ CREATE TABLE `sharing` (
   PRIMARY KEY  (`id`),
   KEY `sharing_key` (`sharing_key`),
   KEY `sharing_url` (`sharing_url`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -1287,7 +1287,7 @@ CREATE TABLE `sharing_log` (
   `sharing_id` int(11) NOT NULL,
   `sharing_log_date` int(10) unsigned default NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 --
