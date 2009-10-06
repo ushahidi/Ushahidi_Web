@@ -24,25 +24,43 @@ class Upgrade_Controller extends Admin_Controller
 	}
 
 	/**
-	 * Lists the messages.
-         * @param int $service_id
+	 * Upgrade page.
+         *
          */
 	function index()
 	{
-		$this->template->content = new View('admin/upgrade');
+	    $this->template->content = new View('admin/upgrade');
 
-
-		// check, has the form been submitted?
-		$form_error = FALSE;
-		$form_saved = FALSE;
-		$form_action = "";
+	    // check, has the form been submitted?
+	    $form_error = FALSE;
+	    $form_saved = FALSE;
+	    $form_action = "";
 		
-                $this->template->content->title = "Upgrade Ushahidi";
-		$this->template->content->form_error = $form_error;
-		$this->template->content->form_saved = $form_saved;
-		$this->template->content->form_action = $form_action;
+            $this->template->content->title = "Upgrade Ushahidi";
+	    $this->template->content->form_error = $form_error;
+	    $this->template->content->form_saved = $form_saved;
+	    $this->template->content->form_action = $form_action;
 		
         }
 
+        /**
+         * The status of the upgrade
+         */
+        function status() {
+            $this->template->content = new View('admin/upgrade/status');
+        }
 
+        private function _upgrade_tables() {
+            $db = Database;
+            $db_schema = file_get_contents('../sql/update.sql');
+
+            // get individual sql statement 
+            $sql_statements = explode( ';',$db_schema );
+            
+            foreach( $sql_statements as $sql_statement ) {
+                $db->query($sql_statement);
+            }
+
+        }
+        
 }
