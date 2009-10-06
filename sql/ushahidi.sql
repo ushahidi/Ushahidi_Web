@@ -847,6 +847,15 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',
   `date_modify` datetime default NULL,
   `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',
+  `email_username` VARCHAR(100) NOT NULL ,
+  `email_password` VARCHAR(100) NOT NULL ,
+  `email_port` INT(11) NOT NULL ,
+  `email_host` VARCHAR(100) NOT NULL ,
+  `email_servertype` VARCHAR(100) NOT NULL ,
+  `email_ssl` INT(5) NOT NULL,
+  `alerts_email` VARCHAR(120) NOT NULL,
+  `db_version` varchar(20) default NULL,
+  `ushahidi_version` varchar(20) default NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ; 
 --
@@ -1320,14 +1329,9 @@ ALTER TABLE `user_tokens`
   ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
--- Constraints for table `settings`
+-- Version information for table `settings`
 --
-ALTER TABLE `settings` 
-  ADD `email_username` VARCHAR( 100 ) NOT NULL ,
-  ADD `email_password` VARCHAR( 100 ) NOT NULL ,
-  ADD `email_port` INT( 11 ) NOT NULL ,
-  ADD `email_host` VARCHAR( 100 ) NOT NULL ,
-  ADD `email_servertype` VARCHAR( 100 ) NOT NULL ,
-  ADD `email_ssl` INT( 5 ) NOT NULL,
-  ADD `alerts_email` VARCHAR( 120 ) NOT NULL;
-
+UPDATE `settings` SET
+`db_version` = '11',
+`ushahidi_version` = '0.9'
+WHERE `id` =1 LIMIT 1 ;
