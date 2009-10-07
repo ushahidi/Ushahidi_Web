@@ -89,7 +89,8 @@ class Email_Controller extends Controller
 				$reporter_id = $reporter->id;
 			}
 			
-			if ($reporter->reporter_level > 1) 		
+			if ($reporter->reporter_level > 1)
+			{	
 				// Save Email as Message
 				$email = new Message_Model();
 				$email->parent_id = 0;

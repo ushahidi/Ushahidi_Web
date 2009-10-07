@@ -42,6 +42,13 @@
 	echo html::script('media/js/jquery.validate.min', true);
 	echo html::script('media/js/jquery.ui.min', true);
 	echo html::script('media/js/selectToUISlider.jQuery', true);
+	echo html::script('media/js/jquery.hovertip-1.0', true);
+	echo html::stylesheet('media/css/jquery.hovertip-1.0', '', true);
+	echo "<script type=\"text/javascript\">
+		$(function() {
+			$('span[title]').hovertip();
+		});
+	</script>";
 	
 	// Load Flot
 	if ($flot_enabled)

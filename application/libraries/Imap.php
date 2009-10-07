@@ -19,11 +19,14 @@ class Imap_Core {
 		imap_timeout(IMAP_OPENTIMEOUT,90);
 		imap_timeout(IMAP_READTIMEOUT,90);
 		
-		$config = Kohana::config('email');
-		$ssl = $config['ssl'] == true ? "ssl/novalidate-cert" : "";
-		$service = "{".$config['server'].":".$config['port']."/".$config['servertype']."/".$ssl."}";
-	
-		$imap_stream =	imap_open($service, $config['username'],$config['password']);
+		$ssl = Kohana::config('settings.email_ssl') == true ? "ssl/novalidate-cert" : "";
+		$service = "{".Kohana::config('settings.email_host').":"
+			.Kohana::config('settings.email_port')."/"
+			.Kohana::config('settings.email_servertype')
+			."/".$ssl."}";
+
+		$imap_stream =	imap_open($service, Kohana::config('settings.email_username')
+			,Kohana::config('settings.email_password'));
 		if (!$imap_stream)
 			throw new Kohana_Exception('imap.imap_stream_not_opened', imap_last_error());
 
