@@ -1197,8 +1197,8 @@ a.show-more {
 /*---big-block---*/
 .big-block {
 	overflow:hidden;
-	width:930px;
-	padding:16px 25px 20px;
+/*	width:930px; */
+	padding:16px 25px 10px;
 }
 
 /* View Reports / Help */
