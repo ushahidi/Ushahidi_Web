@@ -350,6 +350,7 @@
 				currCenter = map.getCenter();
 					
 				addMarkers(catID, '', '', currZoom, currCenter, gMediaType);
+				return false;
 			});
 			
 			// Sharing Layer[s] Switch
