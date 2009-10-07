@@ -142,6 +142,7 @@ a:hover{ text-decoration:none;}
 	text-decoration:none;
 	border:1px solid #d1d1d1;
 	vertical-align: middle;
+	line-height:23px;
 }
 .info-nav .info-search .info-keyword{
 	vertical-align: middle;
