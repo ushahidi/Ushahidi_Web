@@ -20,7 +20,13 @@ class Upgrade_Controller extends Admin_Controller
 	{
 		parent::__construct();
 
-		$this->template->this_page = 'upgrade';
+                $this->template->this_page = 'upgrade';
+
+                // limit access to only superadmin
+                if(!$this->auth->logged_in('superadmin'))
+                {
+                    url::redirect('admin/dashboard');
+                }
 	}
 
 	/**
