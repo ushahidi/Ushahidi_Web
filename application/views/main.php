@@ -29,7 +29,7 @@
             </div>
             
             <ul class="category-filters">
-                    <li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="category-title">All Categories</div></a></li>
+              <li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="category-title">All Categories</div></a></li>
                     <?php
 		      foreach ($categories as $category => $category_info)
 		      {
@@ -39,15 +39,15 @@
 
 			   }
 		    		?>
-            </ul>
-            <!-- / category filters -->
+              </ul>
+              <!-- / category filters -->
             
-            <br />
+              <br />
             
-            <!-- additional content -->
-            <div class="additional-content">
-              <h5>HOW TO REPORT</h5>
-              <ol>
+              <!-- additional content -->
+              <div class="additional-content">
+                <h5>HOW TO REPORT</h5>
+                <ol>
 			            	<?php if (!empty($phone_array)) 
 							{ ?><li>By sending a message to <?php foreach ($phone_array as $phone) {
 								echo "<strong>". $phone ."</strong>";
@@ -66,80 +66,80 @@
 								}
 							} ?></li><?php } ?>
 			            	<li>By <a href="<?php echo url::base() . 'reports/submit/'; ?>">filling a form</a> at the website</li>
-			           	</ol>					
+		</ol>					
     
+              </div>
+              <!-- / additional content -->
+          
             </div>
-            <!-- / additional content -->
+            <!-- / right column -->
           
-          </div>
-          <!-- / right column -->
-          
-          <!-- content column -->
-          <div id="content" class="clearingfix">
-            <div class="floatbox">
+            <!-- content column -->
+            <div id="content" class="clearingfix">
+              <div class="floatbox">
             
-            <!-- filters -->
-            <div class="filters clearingfix">
-              <strong>Filters</strong>
-              <ul>
-                <li><a class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
-                <li><a href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
-                <li><a href="#"><span><?php echo Kohana::lang('ui_main.pictures'); ?></span></a></li>
-                <li><a href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
-                <li><a href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
-              </ul>
+              <!-- filters -->
+              <div class="filters clearingfix">
+                <strong>Filters</strong>
+                <ul>
+                  <li><a class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
+                  <li><a href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
+                  <li><a href="#"><span><?php echo Kohana::lang('ui_main.pictures'); ?></span></a></li>
+                  <li><a href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
+                  <li><a href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
+                </ul>
               
-              <a href="" class="share">Share</a>
-            </div>
-            <!-- / filters -->
+                <a href="" class="share">Share</a>
+              </div>
+              <!-- / filters -->
             
-            <!-- map -->
-            <div class="map" id="map"></div>
-            <div class="slider-holder">
-              <form action="">
-                <fieldset>
-                  <div class="play"><a href="#" id="playTimeline">PLAY</a></div>
-                  <label for="startDate">From:</label>
-                  <select name="startDate" id="startDate">
-                    <?php echo $startDate; ?>
-                  </select>
-                  <label for="endDate">To:</label>
-                  <select name="endDate" id="endDate">
-                    <?php echo $endDate; ?>
-                  </select>
-                </fieldset>
-              </form>
+              <!-- map -->
+              <div class="map" id="map"></div>
+              <div class="slider-holder">
+                <form action="">
+                  <fieldset>
+                    <div class="play"><a href="#" id="playTimeline">PLAY</a></div>
+                    <label for="startDate">From:</label>
+                    <select name="startDate" id="startDate">
+                      <?php echo $startDate; ?>
+                    </select>
+                    <label for="endDate">To:</label>
+                    <select name="endDate" id="endDate">
+                      <?php echo $endDate; ?>
+                    </select>
+                  </fieldset>
+                </form>
+              </div>
+              <!-- / map -->
+              <div id="graph" class="graph-holder"></div>
+              </div>
             </div>
-            <!-- / map -->
-            <div id="graph" class="graph-holder"></div>
-            </div>
+            <!-- / content column -->
+        
           </div>
-          <!-- / content column -->
-        
         </div>
-      </div>
-      <!-- / main body -->
+        <!-- / main body -->
       
-      <!-- content -->
-      <div class="content-container">
+        <!-- content -->
+        <div class="content-container">
       
-        <!-- content blocks -->
-        <div class="content-blocks clearingfix">
+          <!-- content blocks -->
+          <div class="content-blocks clearingfix">
         
-          <!-- left content block -->
-          <div class="content-block-left">
-            <h5><?php echo Kohana::lang('ui_main.incidents_listed'); ?></h5>
-            <table class="table-list">
-              <thead>
-                <tr>
-                  <th scope="col" class="title"><?php echo Kohana::lang('ui_main.title'); ?></th>
-                  <th scope="col" class="location"><?php echo Kohana::lang('ui_main.location'); ?></th>
-                  <th scope="col" class="date"><?php echo Kohana::lang('ui_main.date'); ?></td>
-                </tr>
-              </thead>
-              <tbody>
+            <!-- left content block -->
+            <div class="content-block-left">
+              <h5><?php echo Kohana::lang('ui_main.incidents_listed'); ?></h5>
+              <table class="table-list">
+                <thead>
+                  <tr>
+                    <th scope="col" class="title"><?php echo Kohana::lang('ui_main.title'); ?></th>
+                    <th scope="col" class="location"><?php echo Kohana::lang('ui_main.location'); ?></th>
+                    <th scope="col" class="date"><?php echo Kohana::lang('ui_main.date'); ?></td>
+                  </tr>
+                </thead>
+                <tbody>
                   <?php
-		    if ($total_items == 0)
+	 	    if ($total_items == 0)
                         {
 		  ?>
                   <tr><td colspan="3">No Reports In The System</td></tr>
@@ -163,26 +163,24 @@
 					}
 				?>
 
-              </tbody>
-            </table>
-          <a class="more" href="<?php echo url::base() . 'reports/' ?>">View More...</a>
-          </div>
-          <!-- / left content block -->
+                </tbody>
+              </table>
+            <a class="more" href="<?php echo url::base() . 'reports/' ?>">View More...</a>
+            </div>
+            <!-- / left content block -->
         
-          <!-- right content block -->
-          <div class="content-block-right">
-            <h5><?php echo Kohana::lang('ui_main.official_news'); ?></h5>
-            <table class="table-list">
-              <thead>
-                <tr>
-                  <th scope="col"><?php echo Kohana::lang('ui_main.title'); ?></th>
-                  <th scope="col"><?php echo Kohana::lang('ui_main.source'); ?></th>
-                  <th scope="col"><?php echo Kohana::lang('ui_main.date'); ?></th>
-                </tr>
-              </thead>
-              <tbody>
-
-
+            <!-- right content block -->
+            <div class="content-block-right">
+              <h5><?php echo Kohana::lang('ui_main.official_news'); ?></h5>
+              <table class="table-list">
+                <thead>
+                  <tr>
+                    <th scope="col"><?php echo Kohana::lang('ui_main.title'); ?></th>
+                    <th scope="col"><?php echo Kohana::lang('ui_main.source'); ?></th>
+                    <th scope="col"><?php echo Kohana::lang('ui_main.date'); ?></th>
+                  </tr>
+                </thead>
+                <tbody>
 					<?php
 					foreach ($feeds as $feed)
 					{
@@ -200,32 +198,32 @@
 						<?php
 					}
 					?>
-              </tbody>
-            </table>
-            <a class="more" href="<?php echo url::base() . 'feeds' ?>">View More...</a>
-          </div>
-          <!-- / right content block -->
+                </tbody>
+              </table>
+              <a class="more" href="<?php echo url::base() . 'feeds' ?>">View More...</a>
+            </div>
+            <!-- / right content block -->
         
-        </div>
-        <!-- /content blocks -->
+          </div>
+          <!-- /content blocks -->
 
-        <!-- site footer -->
-<!--
-        <div class="site-footer">
+          <!-- site footer -->
+  <!--
+          <div class="site-footer">
 
-          <h5>Site Footer</h5>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris porta. Sed eget nisi. Fusce rhoncus lorem ac erat. Maecenas turpis tellus, volutpat quis, sodales et, consectetuer ac, est. Nullam sed est sed augue vestibulum condimentum. In tellus. Integer luctus odio eu arcu. Pellentesque imperdiet felis eu tortor. Morbi ante dui, iaculis id, vulputate sit amet, venenatis in, turpis. Fusce in risus.
+            <h5>Site Footer</h5>
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris porta. Sed eget nisi. Fusce rhoncus lorem ac erat. Maecenas turpis tellus, volutpat quis, sodales et, consectetuer ac, est. Nullam sed est sed augue vestibulum condimentum. In tellus. Integer luctus odio eu arcu. Pellentesque imperdiet felis eu tortor. Morbi ante dui, iaculis id, vulputate sit amet, venenatis in, turpis. Fusce in risus.
 
-        </div>
+          </div>
+          <!-- / site footer -->
 -->
-        <!-- / site footer -->
       
-      </div>
-      <!-- content -->
+        </div>
+        <!-- content -->
     
+      </div>
     </div>
-  </div>
-  <!-- / main body -->
+    <!-- / main body -->
 
-</div>
-<!-- / wrapper -->
+  </div>
+  <!-- / wrapper -->

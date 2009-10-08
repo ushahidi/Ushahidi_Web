@@ -1427,3 +1427,45 @@ ul.pager li a.active {background:#f2f7fa;}
 	cursor:pointer;	
   border: 0;
 }
+
+/*-- feedback --*/
+.feedback_forms{
+	display:none;
+	
+}
+
+.feedback_forms textarea, .feedback_forms textarea input{
+	color : #000;
+	border : 1px solid #996;
+}
+
+.feedback_forms button {
+	height : 22px;
+	border : 1px solid #000;
+	background : #ccc;
+}
+
+.feedback_title {
+	padding : 20px 0 0 10px;
+}
+
+.or_txt {
+	padding : 0 10px 0 10px;
+	font:14px/17px Arial, Helvetica, sans-serif;
+}
+
+.detailed_feedback {
+	text-align : center;
+	padding: 10px 0 0 0;
+	width : 150px;
+	height : 50px;
+	border : 1px solid #000;
+	background : #ccc;
+	
+}
+
+.detailed_feedback a {
+	color : #000;
+	font:14px/17px Arial, Helvetica, sans-serif;
+	text-decoration :none;
+}
