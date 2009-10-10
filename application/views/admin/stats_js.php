@@ -18,6 +18,16 @@ $(document).ready(function() {
 	
 	var graphData = <?php echo $all_graphs ?>;
 	
+	// hard-code color indices to prevent them from shifting as
+    // countries are turned on/off
+    if(<?php if(isset($custom_colors)) { echo 'false'; }else{ echo 'true'; } ?>){
+	    var i = 0;
+	    $.each(graphData, function(key, val) {
+	        val.color = i;
+	        ++i;
+	    });
+    }
+	
 	var options = {  
 		legend: {  
 			show: true,
@@ -29,10 +39,14 @@ $(document).ready(function() {
 			radius: 3  
 			},  
 		lines: {  
-			show: true  
+			show: true
 			},
 		xaxis: {
-			mode: "time"
+			mode: "time",
+			tickDecimals: 0
+		},
+		yaxis: {
+			tickDecimals: 0
 		},
 		selection: {
 			mode: "x"
@@ -40,21 +54,27 @@ $(document).ready(function() {
 	};
 	
 	var overviewoptions = {
-        legend: { show: false },
-        lines: { show: true, lineWidth: 1 },
+        legend: { 
+        	show: false
+        },
+        lines: { 
+        	show: true, 
+        	lineWidth: 1 
+        },
         shadowSize: 0,
-        xaxis: { ticks: [], mode: "time" },
-        yaxis: { ticks: [], min: 0, max: 40 },
-        selection: { mode: "x" }
+        xaxis: { 
+        	ticks: [], 
+        	mode: "time" 
+        },
+        yaxis: { 
+        	ticks: [], 
+        	min: 0, 
+        	max: <?php echo $largest_value; ?>
+        },
+        selection: { 
+        	mode: "x"
+        }
     };
-	
-	// hard-code color indices to prevent them from shifting as
-    // countries are turned on/off
-    var i = 0;
-    $.each(graphData, function(key, val) {
-        val.color = i;
-        ++i;
-    });
     
     // insert checkboxes 
     var choiceContainer = $("#choices");
@@ -64,9 +84,7 @@ $(document).ready(function() {
     });
     choiceContainer.find("input").click(plotAccordingToChoices);
 	
-	var plotarea = $("#plotarea");  
-	//plotarea.css("height", "250px");  
-	//plotarea.css("width", "500px");
+	var plotarea = $("#plotarea");
 	
 	var plot = $.plot( plotarea, graphData, options );
 	var overview = $.plot($("#overview"), graphData, overviewoptions);
@@ -88,14 +106,6 @@ $(document).ready(function() {
         plot.setSelection(ranges);
     });
     
-    
-    
-    
-    
-    
-    
-
-    
     function plotAccordingToChoices() {
         var data = [];
 
@@ -112,11 +122,6 @@ $(document).ready(function() {
     }
 
     plotAccordingToChoices();
-
-    
-    
-    
-    
 
 
 });

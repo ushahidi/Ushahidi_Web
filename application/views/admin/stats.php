@@ -14,7 +14,7 @@
  */
 ?>
 <div class="bg">
-	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Hit Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a></h2>
+	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Hit Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a> <a href="<?php print url::base() ?>admin/stats/reports">Report Stats</a></h2>
 	
 	<div>
 		<?php
@@ -24,8 +24,7 @@
 		<?php
 			}else{
 		?>
-				
-				cdsfsdafas
+		Hello, this is the statistics section. General  going here soon. For now, browse around using the sub category links above.
 		<?php
 			}
 		?>
