@@ -31,3 +31,6 @@
 		<!-- end search block -->
 	</div>
 </div>
+</div>
+</div>
+</div>

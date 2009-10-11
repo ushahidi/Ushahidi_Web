@@ -1469,3 +1469,101 @@ ul.pager li a.active {background:#f2f7fa;}
 	font:14px/17px Arial, Helvetica, sans-serif;
 	text-decoration :none;
 }
+
+/*-search-*/
+.search_block{
+	padding:30px;
+}
+.search_info{
+	margin:0 0 15px 0;
+	border:1px solid #999;
+	padding:5px;
+	background-color:#eee;
+}
+.search_result{
+	margin:0 0 15px 0;
+}
+.search_highlight{
+	font-weight:bold;
+}
+.search_result{
+	font-size:13px;
+}
+.search_result h3{
+	margin:0;
+	padding:0;
+	font-weight:normal;
+	font-size:16px;
+}
+.search_date{
+	font-size:12px;
+	color:#006600;
+	font-style: italic;
+	margin-top:3px;
+}
+/*-gallery-*/
+.gallery {
+	overflow:hidden;
+	width:100%;
+	padding:0 0 10px;
+}
+.gallery .gal-nav {
+	overflow:hidden;
+	width:98%;
+}
+.gallery .gal-nav a.btn-prev {
+	float:left;
+	width:34px;
+	height:31px;
+	margin:7px 0 0;
+	text-indent:-9999px;
+	overflow:hidden;
+	background:url(../img/btn-prev.gif) no-repeat;
+}
+.gallery .gal-nav a.btn-prev:hover {background-position:0 -31px;}
+.gallery .gal-nav a.btn-next {
+	float:right;
+	width:34px;
+	height:31px;
+	margin:7px 0 0;
+	text-indent:-9999px;
+	overflow:hidden;
+	background:url(../img/btn-next.gif) no-repeat;
+}
+.gallery .gal-nav a.btn-next:hover {background-position:0 -31px;}
+.gallery .gal-nav .mask {
+	float:left;
+	width:320px;
+	height:43px;
+	margin:0 0 0 12px;
+	display:inline;
+	overflow:hidden;
+}
+.gallery .gal-nav .mask ul {
+	overflow:hidden;
+	width:9999px;
+	margin:0;
+	padding:0;
+}
+.gallery .gal-nav .mask ul li {
+	float:left;
+	padding:0 10px 0 0;
+	list-style:none;
+	border:none;
+	width:auto;
+}
+.gallery .gal-nav .mask ul li img {
+	display:block;
+	margin:0;
+	border:1px solid #ccc;
+}
+.gallery .big-img {
+	overflow:hidden;
+	width:100%;
+	padding:10px 0 0;
+}
+.gallery .big-img img {
+	display:block;
+	margin:0;
+	border:1px solid #ccc;
+}
