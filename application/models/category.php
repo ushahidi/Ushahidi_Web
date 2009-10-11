@@ -20,4 +20,21 @@ class Category_Model extends ORM
 	
 	// Database table name
 	protected $table_name = 'category';
+	
+	static function categories($id=NULL,$locale='en_US')
+	{
+		if($id == NULL){
+			$categories = ORM::factory('category')->where('locale',$locale)->find_all();
+		}else{
+			$categories = ORM::factory('category')->where('id',$id)->find_all(); // Don't need locale if we specify an id
+		}
+		
+		$cats = array();
+		foreach($categories as $category) {
+			$cats[$category->id]['category_title'] = $category->category_title;
+			$cats[$category->id]['category_color'] = $category->category_color;
+		}
+		
+		return $cats;
+	}
 }

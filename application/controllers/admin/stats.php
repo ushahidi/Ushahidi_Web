@@ -40,6 +40,65 @@ class Stats_Controller extends Admin_Controller
 		
 	}
 	
+	function reports()
+	{
+		$this->template->content = new View('admin/stats_reports');
+		$this->template->content->title = 'Report Stats';
+		
+		// Retrieve Current Settings
+		$settings = ORM::factory('settings', 1);
+		$this->template->content->stat_id = $settings->stat_id;
+		
+		// Javascript Header
+		$this->template->flot_enabled = TRUE;
+		$this->template->js = new View('admin/stats_js');
+		
+		$report_stats = Stats_Model::get_report_stats();
+		
+		// START: Build the graph variable string for flot
+		
+		// Grab category names
+		$cats = Category_Model::categories();
+		
+		$bar_string = '[';
+		$flag1 = 0; // flag for commas
+		$largest_value = 1;
+		foreach($report_stats['category_counts'] as $category_id => $arr){
+			
+			if($flag1 != 0) $bar_string .= ',';
+			$bar_string .= '{label:"'.$cats[$category_id]['category_title'].'",data:[';
+			
+			$flag2 = 0; // flag for commas
+			foreach($arr as $timestamp => $count){
+				if($flag2 != 0) $bar_string .= ',';
+				$bar_string .= '['.$timestamp.'000, '.$count.']';
+				if($count > $largest_value) $largest_value = $count;
+				$flag2 = 1;
+			}
+			
+			$bar_string .= '],color: \'#'.$cats[$category_id]['category_color'].'\'}';
+			$flag1 = 1;
+		}
+		$bar_string .= ']';
+		
+		// STOP: Building the graph variable string for flot
+		
+		// Convert category ids to names
+		foreach($report_stats['category_counts'] as $category_id => $arr) {
+			$raw[$cats[$category_id]['category_title']] = $arr;
+		}
+		$this->template->content->raw_data = $raw;
+		
+		$this->template->js->all_graphs = $bar_string;
+		$this->template->js->largest_value = $largest_value;
+		$this->template->js->custom_colors = true;
+		
+		//echo '<pre>';
+		//var_dump($report_stats);
+		//echo '</pre>';
+		
+	}
+	
 	function hits()
 	{
 		$this->template->content = new View('admin/stats_hits');
@@ -59,10 +118,21 @@ class Stats_Controller extends Admin_Controller
 		$this->template->flot_enabled = TRUE;
 		$this->template->js = new View('admin/stats_js');
 		
-		// Graphs, Maps and other Data
+		// Hit Data
+		$data = Stats_Model::get_hit_stats();
+		$this->template->js->all_graphs = $data['graph'];
+		$this->template->content->raw_data = $data['raw'];
 		
-		$this->template->js->all_graphs = Stats_Model::get_hit_stats();
-		$this->template->content->countries = Stats_Model::get_hit_countries();
+		// We use largest value to determine how tall the smaller selector graph should be.
+		//   Note: We could do this on the client in js but we want to cut down on their cpu time
+		$largest_value = 1;
+		foreach($data['raw'] as $timestamp => $hit_arr){
+			foreach($hit_arr as $value) {
+				if($value > $largest_value) $largest_value = $value;
+			}
+		}
+		
+		$this->template->js->largest_value = $largest_value + 1; //Adding 1 keeps data off the top border of the graph
 	}
 	
 	function country()

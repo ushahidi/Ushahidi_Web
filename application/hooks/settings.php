@@ -40,6 +40,12 @@ Kohana::config_set('settings.items_per_page', $settings->items_per_page);
 Kohana::config_set('settings.items_per_page_admin', $settings->items_per_page_admin);
 Kohana::config_set('settings.google_analytics', $settings->google_analytics);
 Kohana::config_set('settings.twitter_hashtags', $settings->twitter_hashtags);
+Kohana::config_set('settings.email_username', $settings->email_username);
+Kohana::config_set('settings.email_password', $settings->email_password);
+Kohana::config_set('settings.email_port', $settings->email_port);
+Kohana::config_set('settings.email_host', $settings->email_host);
+Kohana::config_set('settings.email_servertype', $settings->email_servertype);
+Kohana::config_set('settings.email_ssl', $settings->email_ssl);
 
 
 $default_map = $settings->default_map;

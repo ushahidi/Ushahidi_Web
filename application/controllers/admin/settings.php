@@ -627,7 +627,13 @@ class Settings_Controller extends Admin_Controller
 				$settings->save();
 				
 				//add details to application/config/email.php
-				$this->_add_email_settings($settings);
+				//$this->_add_email_settings($settings);
+				
+				// Delete Settings Cache
+				$cache = Cache::instance();
+				$cache->delete('settings');
+				$cache->delete_tag('settings');
+				
 				
 				// Everything is A-Okay!
 				$form_saved = TRUE;
