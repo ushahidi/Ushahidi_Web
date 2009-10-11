@@ -15,6 +15,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
+<![CDATA[
 		// Map JS
 		var map;
 		jQuery(function() {
@@ -351,3 +352,4 @@
 			newZoom = currZoom + zoomfactor;
 			map.zoomTo(newZoom);
 		}
+]]>

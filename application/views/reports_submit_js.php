@@ -15,6 +15,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>		
+<![CDATA[
 		// jQuery Textbox Hints Plugin
 		// Will move to separate file later or attach to forms plugin
 		jQuery.fn.hint = function (blurClass) {
@@ -311,3 +312,4 @@
 		    	return false;
 			});
 		});
+]]>

@@ -13,7 +13,7 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
-
+<![CDATA[
 // Form Submission
 function formSubmit ()
 {
@@ -34,5 +34,4 @@ function clearField()
 	$('#person_email').val("");
 } 
 
-
-
+]]>
