@@ -15,7 +15,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-<![CDATA[
 		jQuery(function() {
 			var moved=false;
 			
@@ -134,4 +133,3 @@
 				}
 			});
 		});
-]]>

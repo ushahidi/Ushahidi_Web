@@ -135,7 +135,7 @@ final class Kohana {
 		set_exception_handler(array('Kohana', 'exception_handler'));
 
 		// Send default text/html UTF-8 header
-		header('Content-Type: application/xhtml+xml; charset=UTF-8');
+		header('Content-Type: text/html; charset=UTF-8');
 
 		// Load locales
 		$locales = self::config('locale.language');

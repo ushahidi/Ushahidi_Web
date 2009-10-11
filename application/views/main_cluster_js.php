@@ -15,7 +15,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-<![CDATA[
 		// Map JS
 		var map;
 		var thisLayer;
@@ -539,4 +538,3 @@ $.grep(d, function(n,i) {
   return n > '1183240800';
 })[0];
 */
-]]>
