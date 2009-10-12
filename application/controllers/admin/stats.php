@@ -80,6 +80,13 @@ class Stats_Controller extends Admin_Controller
 		}
 		$categories_data .= ']';
 		
+		// Generate Raw Data
+		// Convert category ids to names
+		foreach($report_stats['category_counts'] as $category_id => $arr) {
+			$raw_category[$cats[$category_id]['category_title']] = $arr;
+		}
+		$this->template->content->raw_category_data = $raw_category;
+		
 		// Approved and Unapproved chart data
 		$approved_verified_data = '[';
 		$flag1 = 0; // flag for commas
@@ -104,16 +111,12 @@ class Stats_Controller extends Admin_Controller
 		}
 		$approved_verified_data .= ']';
 		
-		// STOP: Building the graph variable string for flot
+		$this->template->content->raw_approved_verified_data = $report_stats['approved_counts'] + $report_stats['verified_counts'];
 		
-		// Convert category ids to names
-		foreach($report_stats['category_counts'] as $category_id => $arr) {
-			$raw[$cats[$category_id]['category_title']] = $arr;
-		}
-		$this->template->content->raw_data = $raw;
+		// STOP: Building the graphs variable strings for flot
 		
 		$this->template->js->graph_data = array(0=>$categories_data,1=>$approved_verified_data);
-		$this->template->js->custom_colors = true;
+		$this->template->js->custom_colors = array(0=>true,1=>false);
 		
 	}
 	
