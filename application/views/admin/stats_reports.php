@@ -18,12 +18,18 @@
 	
 	<div>
 		<div style="width:500px;float:left;">
-			<div id="plotarea" style="height:250px;width:500px;" class="graph-holder"></div>
-			<div id="overview" style="margin-left:50px;margin-top:20px;width:350px;height:50px;float:left;"></div>
-			<div id="choices" style="float:right;">Show:</div>
+			<div id="plotarea0" style="height:250px;width:500px;" class="graph-holder"></div>
+			<div id="overview0" style="margin-left:50px;margin-top:20px;width:350px;height:50px;float:left;"></div>
+			<div id="choices0" style="float:right;">Show:</div>
 			<div style="clear:both"></div>
 		</div>
-		<div style="float:left;border:solid 2px #444444;margin-left:25px;">
+		<div style="width:500px;float:left;">
+			<div id="plotarea1" style="height:250px;width:500px;" class="graph-holder"></div>
+			<div id="overview1" style="margin-left:50px;margin-top:20px;width:350px;height:50px;float:left;"></div>
+			<div id="choices1" style="float:right;">Show:</div>
+			<div style="clear:both"></div>
+		</div>
+		<div style="border:solid 2px #444444;margin-left:25px;">
 			<table>
 				<tr><th>Date</th>
 				<?php
