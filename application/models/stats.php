@@ -114,12 +114,32 @@ class Stats_Model extends ORM
 		// Gather some data into an array on incident reports
 		$report_data = array();
 		foreach($reports as $report) {
+			$timestamp = (string)strtotime(substr($report->incident_date,0,10));
 			$report_data[$report->id] = array(
-				'date'=>(string)strtotime(substr($report->incident_date,0,10)),
+				'date'=>$timestamp,
 				'mode'=>$report->incident_mode,
 				'active'=>$report->incident_active,
 				'verified'=>$report->incident_verified
 			);
+			
+			if(!isset($verified_counts['verified'][$timestamp])) {
+				$verified_counts['verified'][$timestamp] = 0;
+				$verified_counts['unverified'][$timestamp] = 0;
+				$approved_counts['approved'][$timestamp] = 0;
+				$approved_counts['unapproved'][$timestamp] = 0;
+			}
+			
+			if($report->incident_verified == 1){
+				$verified_counts['verified'][$timestamp]++;
+			}else{
+				$verified_counts['unverified'][$timestamp]++;
+			}
+			
+			if($report->incident_active == 1){
+				$approved_counts['approved'][$timestamp]++;
+			}else{
+				$approved_counts['unapproved'][$timestamp]++;
+			}
 		}
 	
 		$category_counts = array();
@@ -148,16 +168,26 @@ class Stats_Model extends ORM
 		// Zero out days that don't have a count
 		foreach($category_counts as &$arr) {
 			foreach($date_range as $timestamp){
-				if(!isset($arr[$timestamp])){
-					$arr[$timestamp] = 0;
-				}
+				if(!isset($arr[$timestamp])) $arr[$timestamp] = 0;
+				if(!isset($verified_counts['verified'][$timestamp])) $verified_counts['verified'][$timestamp] = 0;
+				if(!isset($verified_counts['unverified'][$timestamp])) $verified_counts['unverified'][$timestamp] = 0;
+				if(!isset($approved_counts['approved'][$timestamp])) $approved_counts['approved'][$timestamp] = 0;
+				if(!isset($approved_counts['unapproved'][$timestamp])) $approved_counts['unapproved'][$timestamp] = 0;
 			}
-			ksort($arr); // keep dates in order
+			// keep dates in order
+			ksort($arr);
+			ksort($verified_counts['verified']);
+			ksort($verified_counts['unverified']);
+			ksort($approved_counts['approved']);
+			ksort($approved_counts['unapproved']);
+			
 		}
 		
 		
 		// Add all our data sets to the array we are returning
 		$data['category_counts'] = $category_counts;
+		$data['verified_counts'] = $verified_counts;
+		$data['approved_counts'] = $approved_counts;
 		
 		return $data;
 	}

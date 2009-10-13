@@ -60,42 +60,63 @@ class Stats_Controller extends Admin_Controller
 		// Grab category names
 		$cats = Category_Model::categories();
 		
-		$bar_string = '[';
+		// Individual Category chart data
+		$categories_data = '[';
 		$flag1 = 0; // flag for commas
-		$largest_value = 1;
 		foreach($report_stats['category_counts'] as $category_id => $arr){
 			
-			if($flag1 != 0) $bar_string .= ',';
-			$bar_string .= '{label:"'.$cats[$category_id]['category_title'].'",data:[';
+			if($flag1 != 0) $categories_data .= ',';
+			$categories_data .= '{label:"'.$cats[$category_id]['category_title'].'",data:[';
 			
 			$flag2 = 0; // flag for commas
 			foreach($arr as $timestamp => $count){
-				if($flag2 != 0) $bar_string .= ',';
-				$bar_string .= '['.$timestamp.'000, '.$count.']';
-				if($count > $largest_value) $largest_value = $count;
+				if($flag2 != 0) $categories_data .= ',';
+				$categories_data .= '['.$timestamp.'000, '.$count.']';
 				$flag2 = 1;
 			}
 			
-			$bar_string .= '],color: \'#'.$cats[$category_id]['category_color'].'\'}';
+			$categories_data .= '],color: \'#'.$cats[$category_id]['category_color'].'\'}';
 			$flag1 = 1;
 		}
-		$bar_string .= ']';
+		$categories_data .= ']';
 		
-		// STOP: Building the graph variable string for flot
-		
+		// Generate Raw Data
 		// Convert category ids to names
 		foreach($report_stats['category_counts'] as $category_id => $arr) {
-			$raw[$cats[$category_id]['category_title']] = $arr;
+			$raw_category[$cats[$category_id]['category_title']] = $arr;
 		}
-		$this->template->content->raw_data = $raw;
+		$this->template->content->raw_category_data = $raw_category;
 		
-		$this->template->js->all_graphs = $bar_string;
-		$this->template->js->largest_value = $largest_value;
-		$this->template->js->custom_colors = true;
+		// Approved and Unapproved chart data
+		$approved_verified_data = '[';
+		$flag1 = 0; // flag for commas
+		$to_graph = array('approved_counts','verified_counts'); // We are graphing these two arrays
+		foreach($to_graph as $graph_key){
+			foreach($report_stats[$graph_key] as $status => $arr){
+				
+				if($flag1 != 0) $approved_verified_data .= ',';
+				$approved_verified_data .= '{label:"'.$status.'",data:[';
+				
+				$flag2 = 0; // flag for commas
+				foreach($arr as $timestamp => $count){
+					if($flag2 != 0) $approved_verified_data .= ',';
+					$approved_verified_data .= '['.$timestamp.'000, '.$count.']';
+					$flag2 = 1;
+				}
+				
+				$approved_verified_data .= ']}';
+				$flag1 = 1;
+				
+			}
+		}
+		$approved_verified_data .= ']';
 		
-		//echo '<pre>';
-		//var_dump($report_stats);
-		//echo '</pre>';
+		$this->template->content->raw_approved_verified_data = $report_stats['approved_counts'] + $report_stats['verified_counts'];
+		
+		// STOP: Building the graphs variable strings for flot
+		
+		$this->template->js->graph_data = array(0=>$categories_data,1=>$approved_verified_data);
+		$this->template->js->custom_colors = array(0=>true,1=>false);
 		
 	}
 	
@@ -120,19 +141,8 @@ class Stats_Controller extends Admin_Controller
 		
 		// Hit Data
 		$data = Stats_Model::get_hit_stats();
-		$this->template->js->all_graphs = $data['graph'];
+		$this->template->js->graph_data = array(0=>$data['graph']);
 		$this->template->content->raw_data = $data['raw'];
-		
-		// We use largest value to determine how tall the smaller selector graph should be.
-		//   Note: We could do this on the client in js but we want to cut down on their cpu time
-		$largest_value = 1;
-		foreach($data['raw'] as $timestamp => $hit_arr){
-			foreach($hit_arr as $value) {
-				if($value > $largest_value) $largest_value = $value;
-			}
-		}
-		
-		$this->template->js->largest_value = $largest_value + 1; //Adding 1 keeps data off the top border of the graph
 	}
 	
 	function country()
