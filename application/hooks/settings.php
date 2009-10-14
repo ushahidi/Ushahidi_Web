@@ -46,6 +46,7 @@ Kohana::config_set('settings.email_port', $settings->email_port);
 Kohana::config_set('settings.email_host', $settings->email_host);
 Kohana::config_set('settings.email_servertype', $settings->email_servertype);
 Kohana::config_set('settings.email_ssl', $settings->email_ssl);
+Kohana::config_set('settings.alerts_email', $settings->alerts_email);
 
 
 $default_map = $settings->default_map;
