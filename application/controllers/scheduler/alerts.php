@@ -22,9 +22,9 @@ class Alerts_Controller extends Controller
 	
 	public function index() 
 	{
-		$config = kohana::config('alerts');
 		$settings = kohana::config('settings');
 		$site_name = $settings['site_name'];
+		$alerts_email = $settings['alerts_email'];
 		$unsubscribe_message = Kohana::lang('alerts.unsubscribe')
 								.url::site().'alerts/unsubscribe/';
 		$settings = NULL;
@@ -98,7 +98,7 @@ class Alerts_Controller extends Controller
 					elseif ($alert_type == 2) // Email alertee
 					{
 						$to = $alertee->alert_recipient;
-						$from = $config['alerts_email'];
+						$from = $alerts_email;
 						$subject = "[$site_name] ".$incident->incident_title;
 						$message = $incident->incident_description
 									."<p>".$unsubscribe_message
