@@ -136,8 +136,6 @@ class Settings_Controller extends Admin_Controller
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-				
-				$this->_add_alerts_settings($settings);	
 					
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
@@ -804,28 +802,6 @@ class Settings_Controller extends Admin_Controller
 			        fwrite($handle,  str_replace("\$config['ssl'] = false","\$config['ssl'] = ".$enable,$line ));
 			        break;
 					
-	            default:
-	            	fwrite($handle, $line );
-	        }
-	    }
-
-	}
-	
-	/**
-	 * adds the email settings to the application/config/email.php file
-	 */
-	private function _add_alerts_settings( $settings )
-	{
-	    $alerts_file = file('application/config/alerts.template.php');
-        $handle = fopen('application/config/alerts.php', 'w');
-
-	    foreach( $alerts_file as $number_line => $line )
-	    {
-	        
-	    	switch( $line ) {
-	        	case strpos($line,"\$config['alerts_email']"):
-	            	fwrite($handle,  str_replace("\$config['alerts_email'] = \"\"","\$config['alerts_email'] = ".'"'.$settings->alerts_email.'"',$line ));
-	           		break;	
 	            default:
 	            	fwrite($handle, $line );
 	        }

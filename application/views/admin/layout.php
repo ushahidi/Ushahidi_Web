@@ -46,7 +46,7 @@
 	echo html::stylesheet('media/css/jquery.hovertip-1.0', '', true);
 	echo "<script type=\"text/javascript\">
 		$(function() {
-			$('span[title]').hovertip();
+			$('.tooltip[title]').hovertip();
 		});
 	</script>";
 	
