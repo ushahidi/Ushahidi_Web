@@ -1567,3 +1567,94 @@ ul.pager li a.active {background:#f2f7fa;}
 	margin:0;
 	border:1px solid #ccc;
 }
+
+.report-description .orig-report {
+	overflow:hidden;
+	border:1px solid #eee;
+	margin:15px;
+  padding:10px 15px;
+}
+.report-description .orig-report .report {
+	overflow:hidden;
+	background:#ffc;
+	padding:10px;
+	width:818px;
+}
+.report-description .orig-report .report h4 {
+	margin:0;
+	width:100%;
+	clear:both;
+	font:bold 12px/17px Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+}
+.report-description .orig-report .report p {
+	margin:0;
+	font:12px/17px Arial, Helvetica, sans-serif;
+}
+.report-description .orig-report .report a.lnk {
+	float:left;
+	margin:7px 0 0;
+	font:10px/13px Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	color:#fff;
+	background:#393 url(../img/green-btn-l.gif) no-repeat;
+	text-transform:uppercase;
+}
+.report-description .orig-report .report a.lnk:hover,
+.report-description .orig-report .report a.lnk:hover span {text-decoration:underline;}
+.report-description .orig-report .report a.lnk span {
+	float:left;
+	padding:0 4px;
+	cursor:pointer;
+	background:url(../img/green-btn-r.gif) no-repeat 100% 0;
+}
+.report-description .orig-report .discussion {
+	overflow:hidden;
+	padding:16px 20px 20px;
+	width:798px;
+}
+.report-description .orig-report .discussion h5 {
+	margin:0;
+	width:100%;
+	clear:both;
+	font:bold 12px/17px Arial, Helvetica, sans-serif;
+	text-transform:uppercase;
+}
+.discussion h5 a, .discussion h5 a:visited{
+	text-transform:none;
+}
+.report-description .orig-report .discussion .discussion-box {
+	overflow:hidden;
+	width:778px;
+	margin:10px 0 0;
+	padding:10px;
+	background:#eee;
+}
+.report-description .orig-report .discussion .discussion-box p {
+	margin:0;
+	font:12px/17px Arial, Helvetica, sans-serif;
+}
+.report-description .orig-report .discussion .discussion-box a.lnk {
+	float:left;
+	margin:7px 0 0;
+	font:10px/13px Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	color:#fff;
+	background:#393 url(../img/green-btn-l.gif) no-repeat;
+	text-transform:uppercase;
+}
+.report-description .orig-report .discussion .discussion-box a.lnk:hover,
+.report-description .orig-report .discussion .discussion-box a.lnk:hover span {text-decoration:underline;}
+.report-description .orig-report .discussion .discussion-box a.lnk span {
+	float:left;
+	padding:0 4px;
+	cursor:pointer;
+	background:url(../img/green-btn-r.gif) no-repeat 100% 0;
+}
+
+/*---blocks-holder---*/
+.blocks-holder {
+	overflow:hidden;
+	width:100%;
+	margin: 30px;
+}

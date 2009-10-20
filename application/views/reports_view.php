@@ -84,7 +84,6 @@
 								<a href="" id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></a>
 							</div>
 						</div>
-					</div>
 					<div class="orig-report">
 						<div class="discussion">
 							<h5>ADDITIONAL REPORTS AND DISCUSSION&nbsp;&nbsp;&nbsp;(<a href="#comments">Add</a>)</h5>
@@ -132,7 +131,7 @@
 						} else {
 					?> 
 					<!-- start mainstream news of incident -->	
-					<div class="small-block images">
+					<div class="report_left">
 						<h3>Related Mainstream News of Incident</h3>
 						<div class="block-bg">
 							<div class="block-top">
@@ -175,7 +174,7 @@
 						<?php
 						}?>
 					
-						<div class="side-block">
+						<div class="report_right">
 							<div class="small-block">
 								<h3>Incident Report(s)</h3>
 								<div class="block-bg">
