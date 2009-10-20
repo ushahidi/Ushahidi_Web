@@ -61,7 +61,8 @@
                                     </li>
                             </ul>
                             <p>Step 3: Click on the button below to update the necessary tables.</p>
-                            <a href="#" class="btn">Upgrade</a>                           
+                            <a href="#" class="btn">Upgrade</a>
+                            <?php print form::close();?>                           
                     </p>
             </div>
         </div>
