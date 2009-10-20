@@ -1037,12 +1037,34 @@ div.content-media ul li a.media-type-video{
 	margin:20px 0 0;
 	padding:0 0 10px;
 }
+.report_left table {
+	width: 100%;
+}
+.report_left table tr th {
+	text-align: left;
+}
 .report_right{
 	overflow:hidden;
 	width:455px;
 	margin:20px 0 0 25px;
 	padding:0 0 10px;
 }
+.report_right table {
+	width: 100%;
+}
+.report_right table tr th {
+	text-align: left;
+}
+.w-01 {
+	width:238px;
+	padding:0 10px 0 0;
+}
+.w-02 {
+	width:92px;
+	padding:0 10px 0 0;
+}
+.w-03 {width:60px;}
+
 .report_bottom{
 	clear:both;
 }
@@ -1109,7 +1131,7 @@ div.content-media ul li a.media-type-video{
 }
 .report_comment{
 	border:1px #ccc solid;
-	margin-top:15px;
+	margin-bottom:15px;
 	padding:20px;
 	background:#eee;
 	clear:both;

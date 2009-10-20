@@ -118,13 +118,7 @@
 					<!-- start images -->
 					<div class="small-block images">
 						<h3>Images</h3>
-						<div class="block-bg">
-							<div class="block-top">
-								<div class="block-bottom">
-									<div class="photoslider" id="default"></div>
-								</div>
-							</div>
-						</div>
+						<div class="photoslider" id="default"></div>
 					</div>
 					<!-- end images <> start side block -->
 					<?php 
@@ -133,80 +127,60 @@
 					<!-- start mainstream news of incident -->	
 					<div class="report_left">
 						<h3>Related Mainstream News of Incident</h3>
-						<div class="block-bg">
-							<div class="block-top">
-								<div class="block-bottom">
-									<ul>
-										<li>
-											<ul class="title">
-												<li class="w-01">TITLE</li>
-												<li class="w-02">SOURCE</li>
-												<li class="w-03">DATE</li>
-											</ul>
-										</li>
-										<?php
-											foreach ($feeds as $feed)
-											{
-												$feed_id = $feed->id;
-												$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
-												$feed_link = $feed->item_link;
-												$feed_date = date('M j Y', strtotime($feed->item_date));
-												$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
-										?>
-										<li>
-											<ul>
-												<li class="w-01">
-													<a href="<?php echo $feed_link; ?>" target="_blank">
-													<?php echo $feed_title ?></a></li>
-												<li class="w-02"><?php echo $feed_source; ?></li>
-												<li class="w-03"><?php echo $feed_date; ?></li>
-											</ul>
-										</li>
-										<?php
-											}
-										?>
-										</ul>
-									</div>
-								</div>
-							</div>
-						</div>
+						<table>
+							<tr class="title">
+								<th class="w-01">TITLE</th>
+								<th class="w-02">SOURCE</th>
+								<th class="w-03">DATE</th>
+							</tr>
+							<?php
+								foreach ($feeds as $feed)
+									{
+										$feed_id = $feed->id;
+										$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+										$feed_link = $feed->item_link;
+										$feed_date = date('M j Y', strtotime($feed->item_date));
+										$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
+								?>
+							<tr>
+								<td class="w-01">
+									<a href="<?php echo $feed_link; ?>" target="_blank">
+									<?php echo $feed_title ?></a>
+								</td>
+								<td class="w-02"><?php echo $feed_source; ?></td
+									<td class="w-03"><?php echo $feed_date; ?></td>
+							</tr>
+							<?php
+								}
+							?>
+						</table>
 						<!-- end mainstream news of incident -->
 						<?php
 						}?>
-					
-						<div class="report_right">
-							<div class="small-block">
-								<h3>Incident Report(s)</h3>
-								<div class="block-bg">
-									<div class="block-top">
-										<div class="block-bottom">
-											<ul>
-												<li>
-													<ul class="title">
-														<li class="w-01">TITLE</li>
-														<li class="w-02">LOCATION</li>
-														<li class="w-03">DATE</li>
-													</ul>
-												</li>
-												<?php
-												foreach($incident_neighbors as $neighbor)
-												{
-													echo "<li>";
-													echo "<ul>";
-													echo "<li class=\"w-01\"><a href=\"" . url::base(); 
-													echo "reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></li>";
-													echo "<li class=\"w-02\">" . $neighbor->location->location_name . "</li>";
-													echo "<li class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</li>";
-													echo "</ul>";
-													echo "</li>";
-												}
-												?>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
+					</div>
+					<div class="report_right">
+						<div class="small-block">
+							<h3>Incident Report(s)</h3>
+							<table>
+								<tr class="title">
+									<th class="w-01">TITLE</th>
+									<th class="w-02">LOCATION</th>
+									<th class="w-03">DATE</th>
+								</tr>
+								<?php
+								foreach($incident_neighbors as $neighbor)
+								{
+									echo "<tr>";
+									echo "<td class=\"w-01\"><a href=\"" . url::base(); 
+									echo "reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></td>";
+									echo "<td class=\"w-02\">" . $neighbor->location->location_name . "</td>";
+									echo "<td class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</td>";
+									echo "</tr>";
+								}
+								?>
+							</table>
 						</div>
+					</div>
 						
 						<?php 
 						if( $incident_photos <= 0) 
@@ -215,40 +189,32 @@
 						<div class="small-block">
 							<h3>Related Mainstream News of Incident</h3>
 							<div class="block-bg">
-								<div class="block-top">
-									<div class="block-bottom">
-										<ul>
-											<li>
-												<ul class="title">
-													<li class="w-01">TITLE</li>
-													<li class="w-02">SOURCE</li>
-													<li class="w-03">DATE</li>
-												</ul>
-											</li>
-											<?php
-												foreach ($feeds as $feed)
-												{
-													$feed_id = $feed->id;
-													$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
-													$feed_link = $feed->item_link;
-													$feed_date = date('M j Y', strtotime($feed->item_date));
-													$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
-											?>
-											<li>
-												<ul>
-													<li class="w-01">
-													<a href="<?php echo $feed_link; ?>" target="_blank">
-													<?php echo $feed_title ?></a></li>
-													<li class="w-02"><?php echo $feed_source; ?></li>
-													<li class="w-03"><?php echo $feed_date; ?></li>
-												</ul>
-											</li>
-											<?php
-												}
-											?>
-										</ul>
-									</div>
-								</div>
+								<table>
+									<tr class="title">
+										<th class="w-01">TITLE</th>
+										<th class="w-02">SOURCE</th>
+										<th class="w-03">DATE</th>
+									</tr>
+									<?php
+										foreach ($feeds as $feed)
+										{
+											$feed_id = $feed->id;
+											$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+											$feed_link = $feed->item_link;
+											$feed_date = date('M j Y', strtotime($feed->item_date));
+											$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
+									?>
+									<tr>
+										<td class="w-01">
+										<a href="<?php echo $feed_tdnk; ?>" target="_blank">
+										<?php echo $feed_title ?></a></td>
+										<td class="w-02"><?php echo $feed_source; ?></td>
+										<td class="w-03"><?php echo $feed_date; ?></td>
+									</tr>
+									<?php
+										}
+									?>
+								</table>
 							</div>
 						</div>
 						<?php }	?>
@@ -263,32 +229,28 @@
 						<div class="small-block images">
 							<h3>Videos</h3>
 							<div class="block-bg">
-								<div class="block-top">
-									<div class="block-bottom">
-										<div class="slider-wrap">
-											<div id="slider1" class="csw">
-												<div class="panelContainer">
-		
-													<?php
-														// embed the video codes
-														foreach( $incident_videos as $incident_video) {
-													?>
-													<div class="panel">
-														<div class="wrapper">
-															<p>
-																<?php
-																	$videos_embed->embed($incident_video,'');
-																?>	
-															<p>
-														</div>
-													</div>
-													<?php } ?>
-		
-													</div><!-- .panelContainer -->
-												</div><!-- #slider1 -->
-											</div><!-- .slider-wrap -->
-										</div>
-									</div>
+								<div class="slider-wrap">
+									<div id="slider1" class="csw">
+										<div class="panelContainer">
+
+											<?php
+												// embed the video codes
+												foreach( $incident_videos as $incident_video) {
+											?>
+											<div class="panel">
+												<div class="wrapper">
+													<p>
+														<?php
+															$videos_embed->embed($incident_video,'');
+														?>	
+													<p>
+												</div>
+											</div>
+											<?php } ?>
+
+											</div><!-- .panelContainer -->
+										</div><!-- #slider1 -->
+									</div><!-- .slider-wrap -->
 								</div>
 							</div>
 						<?php } ?>
@@ -298,51 +260,47 @@
 					<!-- end incident block <> start other report -->
 					<a name="comments"></a>
 					<div class="big-block">
-						<div class="big-block-top">
-							<div class="big-block-bottom">
-								<div id="comments" class="report_comment">
+						<div id="comments" class="report_comment">
+							<?php
+								if ($form_error) {
+							?>
+							<!-- red-box -->
+							<div class="red-box">
+								<h3>Error!</h3>
+								<ul>
 									<?php
-										if ($form_error) {
+										foreach ($errors as $error_item => $error_description)
+										{
+											print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+										}
 									?>
-									<!-- red-box -->
-									<div class="red-box">
-										<h3>Error!</h3>
-										<ul>
-											<?php
-												foreach ($errors as $error_item => $error_description)
-												{
-													print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
-												}
-											?>
-										</ul>
-									</div>
-								<?php
-								}
-								?>
-								<?php print form::open(NULL, array('id' => 'commentForm', 'name' => 'commentForm')); ?>
-								<div class="report_row">
-									<strong>Name:</strong><br />
-									<?php print form::input('comment_author', $form['comment_author'], ' class="text"'); ?>
-								</div>
-								<div class="report_row">
-									<strong>E-Mail:</strong><br />
-									<?php print form::input('comment_email', $form['comment_email'], ' class="text"'); ?>
-								</div>
-								<div class="report_row">
-									<strong>Comments:</strong><br />
-									<?php print form::textarea('comment_description', $form['comment_description'], ' rows="4" cols="40" class="textarea long" ') ?>
-								</div>
-								<div class="report_row">
-									<strong>Security Code:</strong><br />
-									<?php print $captcha->render(); ?><br />
-									<?php print form::input('captcha', $form['captcha'], ' class="text"'); ?>
-								</div>
-								<div class="report_row">
-									<input name="submit" type="submit" value="Submit Comment" class="btn_blue" />
-								</div>
-								<?php print form::close(); ?>
+								</ul>
 							</div>
+						<?php
+						}
+						?>
+						<?php print form::open(NULL, array('id' => 'commentForm', 'name' => 'commentForm')); ?>
+						<div class="report_row">
+							<strong>Name:</strong><br />
+							<?php print form::input('comment_author', $form['comment_author'], ' class="text"'); ?>
 						</div>
+						<div class="report_row">
+							<strong>E-Mail:</strong><br />
+							<?php print form::input('comment_email', $form['comment_email'], ' class="text"'); ?>
+						</div>
+						<div class="report_row">
+							<strong>Comments:</strong><br />
+							<?php print form::textarea('comment_description', $form['comment_description'], ' rows="4" cols="40" class="textarea long" ') ?>
+						</div>
+						<div class="report_row">
+							<strong>Security Code:</strong><br />
+							<?php print $captcha->render(); ?><br />
+							<?php print form::input('captcha', $form['captcha'], ' class="text"'); ?>
+						</div>
+						<div class="report_row">
+							<input name="submit" type="submit" value="Submit Comment" class="btn_blue" />
+						</div>
+						<?php print form::close(); ?>
 					</div>
 				</div>
 			</div>
