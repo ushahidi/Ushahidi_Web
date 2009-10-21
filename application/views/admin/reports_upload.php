@@ -25,8 +25,7 @@
 			<div class="red-box">
 				<h3>Error!</h3>
 				<ul>
-                                <?php
-                                print_r($errors);
+                <?php
 				foreach ($errors as $error_item => $error_description)
 				{
 					print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
