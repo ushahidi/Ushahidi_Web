@@ -74,7 +74,7 @@
 														?>
 														<span><strong><?php echo Kohana::lang('ui_main.alerts_mobile_phone'); ?></strong><br /><?php echo Kohana::lang('ui_main.alerts_enter_mobile'); ?></span>
 													</label>
-													<span><?php print form::input('alert_mobile', $form['alert_mobile']); ?></span>
+													<span><?php print form::input('alert_mobile', $form['alert_mobile'], ' class="text long"'); ?></span>
 												</div>
 												<div class="box">
 													<label>
@@ -90,7 +90,7 @@
 														?>
 														<span><strong><?php echo Kohana::lang('ui_main.alerts_email'); ?></strong><br /><?php echo Kohana::lang('ui_main.alerts_enter_email'); ?></span>
 													</label>
-													<span><?php print form::input('alert_email', $form['alert_email']); ?></span>
+													<span><?php print form::input('alert_email', $form['alert_email'], ' class="text long"'); ?></span>
 												</div>
 											</div>
 										</div>

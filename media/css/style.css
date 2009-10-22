@@ -1024,8 +1024,77 @@ div.content-media ul li a.media-type-video{
 	padding:1px 5px 3px 5px;
 }
 
-.long {
-    width: 90%;
+/* Stylized Forms */
+form {
+	margin:0;
+	padding:0;
+}
+.text,
+.textarea,
+.select,
+.file{
+	color:#00789F;
+	font-size:120%;
+}
+.text:focus,
+.textarea:focus,
+.select:focus,
+.file:focus{
+	background-color:#ffffcc;
+}
+.text.error,
+.textarea.error,
+.select.error,
+.file.error{
+	background-color:#FFE0DD;
+	border:1px dotted red;
+}
+label.error {
+	margin-left: 10px;
+	color:red;
+	font-style: italic;
+	width: auto;
+	display: block;
+}
+.text {
+	padding:3px 7px 3px 7px;
+	border:1px #ccc solid;
+}
+.textarea {
+	padding:7px 7px 3px 7px;
+	border:1px #ccc solid;
+}
+.select{
+	overflow:hidden;
+}
+.long{
+	width:90%;
+}
+.long2{
+	width:80%;
+	float:left;
+	margin-bottom:10px;
+}
+.short{
+	width:100px;
+}
+.btn_submit {
+	margin: 20px 20px 0 0;
+	padding: 8px 10px 8px 10px;
+	color: white;
+	background-color:#368c00;
+	font-size:14px;
+	cursor:pointer;	
+	border: 0;
+}
+.btn_find {
+	margin:0;
+	padding: 5px 10px 6px 10px;
+	color: white;
+	background-color:#999;
+	font-size:14px;
+	cursor:pointer;	
+	border: 0;	
 }
 
 .hide {display:none;}
@@ -1439,16 +1508,6 @@ ul.pager li a{
 }
 ul.pager li a:hover,
 ul.pager li a.active {background:#f2f7fa;}
-
-.btn_submit {
-  margin: 20px 20px 0 0;
-	padding: 8px 10px 8px 10px;
-  color: white;
-	background-color:#368c00;
-	font-size:14px;
-	cursor:pointer;	
-  border: 0;
-}
 
 /*-- feedback --*/
 .feedback_forms{

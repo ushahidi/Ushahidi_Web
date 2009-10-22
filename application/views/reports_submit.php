@@ -16,7 +16,7 @@
 				<div id="content">
 					<div class="content-bg">
 						<!-- start report form block -->
-						<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
+						<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm', 'class' => 'gen_forms')); ?>
 						<input type="hidden" name="latitude" id="latitude" value="<?php echo $form['latitude']; ?>">
 						<input type="hidden" name="longitude" id="longitude" value="<?php echo $form['longitude']; ?>">
 						<div class="big-block">
@@ -161,7 +161,7 @@
 								<div id="divMap" class="report_map"></div>
 								<div class="report-find-location">
 									<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
-									<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="Find Location" class="btn_gray btn_find" /></div>
+									<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="Find Location" class="btn_find" /></div>
 									<div id="find_loading" class="report-find-loading"></div>
 									<div style="clear:both;" id="find_text">* If you can't find your location, please click on the map to pinpoint the correct location.</div>
 								</div>
