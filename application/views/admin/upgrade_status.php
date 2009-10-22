@@ -17,7 +17,7 @@
 <div class="bg">
 	<h2><?php echo $title; ?></h2>
 	
-	<?php if( count($logs) ) { ?>
+	<?php if (isset($logs) && count($logs) ) { ?>
 	<h3>Upgrading</h3>
 	<ul>
 		<?php foreach( $logs as $log ) { ?>
@@ -27,7 +27,7 @@
 	
 	<?php }?>
 	
-	<?php if(count($errors)){  ?>  
+	<?php if( isset($errors ) && count($errors)){  ?>  
 	<h3>Upgrade failed at some point</h3>	
 		<ul>
 	<?php foreach($errors as $error)  { ?>

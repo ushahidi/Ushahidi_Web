@@ -31,15 +31,14 @@
        	$snoopy->read_timeout = 30;
     	$snoopy->gzip = false;
         $snoopy->fetch($url);
-
-       	if( $snoopy == '200' ) {
-        	$this->log[] = $snoopy->results;
-        	$this->log[] = "Downloading the latest ushahidi went successful.";
+		$this->log[] = "Starting to download the latest ushahidi build...";
+       	if( $snoopy->status == '200' ) {
+        	
+        	$this->log[] = "Download of latest ushahidi went successful.";
         	$this->success = true;        
           	return $snoopy->results;
             
        	} else {        	
-        	$this->log[] = $snoopy->results;
             $this->errors[] = sprintf("Downloading the latest ushahidi failed. HTTP status code: %d", $snoopy->status);    
         	$this->success = false;
         	return $snoopy;
@@ -75,14 +74,16 @@
 			    		if($ow > 0) {
 			        		if(copy($srcfile, $dstfile)) {
 				    			touch($dstfile, filemtime($srcfile));
+				    			$this->log[] = sprintf("Copying file <code>%s</coded>", $this->strip_abspath($dstfile));
 				    			$this->success = true;
                         	} else {
-                            	$this->errors[] = sprintf("File <code>%s</coded> could not be copied",strip_abspath($dstdir));
+                            	$this->errors[] = sprintf("File <code>%s</coded> could not be copied",$this->strip_abspath($dstdir));
 				        		$this->success = false;
 							}
 			    		}
 					}
-					elseif(is_dir($srcfile)){ 
+					elseif(is_dir($srcfile)){
+						$this->log[] = sprintf("Copying file <code>%s</coded>", $this->strip_abspath($dstfile)); 
 			    		$this->copy_recursive($srcfile, $dstfile);
 			    		$this->success = true;
 					}
@@ -110,16 +111,21 @@
 		        if ( is_file($dir . $entry) ) {
 			    if ( !@unlink($dir . $entry) ) {
 			        $this->errors[] = sprintf( 'File <code>%s</code> could not be deleted!', $this->strip_abspath($dir.$entry) );
+			    	$this->success = false;
 			    }
 			} elseif (is_dir($dir . $entry)) {
+				$this->errors[] = sprintf( 'Deleting file <code>%s</code> ', $this->strip_abspath($dir.$entry) );
 			    $this->remove_recursive($dir . $entry);
+			    $this->success = true;
 			}
 		    }
 		}
 		closedir($dh);
 		if ( !@rmdir($dir) ) {
 		    $this->errors[] = sprintf( 'Directory <code>%s</code> could not be deleted!', $this->strip_abspath($dir.$entry) );
+			$this->success = false;
 		}
+			$this->success = true;
 			return true;
 	    }
 	    return false;
@@ -134,12 +140,17 @@
  	 */
  	
  	public function unzip_ushahidi($zip_file, $destdir) {
- 		$archive = new PclZip($this->workdir.$this->wp_package);
+ 		$archive = new Pclzip($zip_file);
+ 		$this->log[] = sprintf("Unpacking %s ",$zip_file);
+ 		
 		if (@$archive->extract(PCLZIP_OPT_PATH, $destdir) == 0)
 		{
 			$this->errors[] = sprintf( 'Error while extracting: <code>%s</code>',$archive->errorInfo(true) ) ;
 			return false;
 		}
+		
+		$this->log[] = sprintf("Unpacking went successful");
+		$this->success = true;
 		return true;
  	} 
  	
@@ -152,11 +163,15 @@
  	public function write_to_file($zip_file, $dest_file) {
  		$handler = fopen( $dest_file,'w');
        	$fwritten = fwrite($handler,$zip_file);
+       	$this->log[] = sprintf("Writting to a file ");
        	if( !$fwritten ) {
        		$this->errors[] = sprintf("The downloaded ushahidi zip file <code>%s</code>, couldn't be written.",$dest_file);
+       		$this->success = false;
        		return false;
        	}
        	fclose($handler);
+       	$this->success = true;
+       	$this->log[] = sprintf("Zip file successfully written to a file ");
  		return true;
  	}
  }

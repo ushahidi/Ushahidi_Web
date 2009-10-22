@@ -89,28 +89,54 @@ class Upgrade_Controller extends Admin_Controller
          * Delete the extracted ushahidi file.
          * 
          */
-        private function _do_upgrade() {
-        	$upgrade = new Upgrade;
-        	$url = "http://download.ushahidi.com/ushahidi.zip";
-        	$working_dir = "../media/uploads/";
-        	$zip_file = "../media/uploads/ushahidi.zip";
-        	//download the latest ushahidi
-        	$latest_ushahidi = $upgrade->download_ushahidi($url);
+	private function _do_upgrade() {
+    	$upgrade = new Upgrade;
+       	$url = "http://localhost/ushahidi.zip";
+        $working_dir = "media/uploads/";
+        $zip_file = "media/uploads/ushahidi.zip";
+      	
+      	//download the latest ushahidi
+       	$latest_ushahidi = $upgrade->download_ushahidi($url);
+                	
+       	//download went successful
+       	if($upgrade->success ) {
+        	$upgrade->write_to_file($latest_ushahidi, $zip_file);
+          	$upgrade->success = false;
+       	}
         	
-        	//download went successful
-        	$upgrade->write_to_file($latest_ushahidi,$working_dir);
-        	
-        	//extract compressed file
+       	//extract compressed file
+       	if( $upgrade->success ) {
         	$upgrade->unzip_ushahidi($zip_file, $working_dir);
-        	
-        	$upgrade->remove_recursively($working_dir."ushahidi/application/config");
+        	$upgrade->success = false;
+       	}
+
+      	if( $upgrade->success ) {
+       		$upgrade->remove_recursively($working_dir."ushahidi/application/config");
+        	$upgrade->success = false;
+      	}
+
+       	if( $upgrade->success ) {
         	$upgrade->remove_recursively($working_dir."ushahidi/application/cache");
+        	$upgrade->success = false;
+       	}
+
+       	if( $upgrade->success ) {
         	$upgrade->remove_recursively($working_dir."ushahidi/application/logs");
-        	$upgrade->remove_recursively($working_dir."ushahidi/media/uploads");
-        	
+        	$upgrade->success = false;
+       	}
+
+      	if( $upgrade->success ) {
+       		$upgrade->remove_recursively($working_dir."ushahidi/media/uploads");
+     		$upgrade->success = false;
+       	}
+                
+       	if( $upgrade->success ) {
         	$upgrade->copy_recursively($working_dir."ushahidi","../");
+         	$upgrade->success = false;
+       	}
         	
-        	return $upgrade;
+        return $upgrade;
+
         	
-        }
+	}
 }
