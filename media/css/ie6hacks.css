@@ -1,0 +1,130 @@
+/* Handcoded by RapidxHTML - http://www.rapidxhtml.com */
+
+div#main .withright div#content{
+    margin: 0px 322px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+div#searchbox{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    background: #BEBEBE;
+    border: #9F9F9F 2px solid;
+    border-top: 0;
+    height: 45px;
+    width: 290px;
+}
+
+div.language-box{
+    padding: 0px;
+    margin: 13px 0px 13px 15px;
+    float: left;
+}
+
+div.language-box li{
+    float: left;
+    display: block;
+    margin-right: 5px;
+}
+
+div.search-form{
+    padding: 0px;
+    margin: 10px 15px 10px 0px;
+    float: left;
+}
+
+div.search-form input.text{
+    padding: 1px 0px 2px 0px;
+    border: #9E9E9E 1px solid;
+    margin: 0;
+    background: #EEEEEE;
+    width: 160px;
+}
+
+div.search-form input.searchbtn{
+    border: #868686 1px solid;
+    background: #EEEEEE url(../images/search-button.jpg) 5px 4px no-repeat;
+    width: 24px;
+    height: 21px;
+    margin: 1px 0 0 -1px;
+    text-indent: 0px;
+    cursor: pointer;
+    padding: 1px 0 19px 0;
+    font-size: 0px;
+    line-height: 7px;
+}
+
+ul.category-filters li{
+    padding: 0;
+    background: #000;
+    margin-bottom: 0px;
+}
+
+div.content-media{
+    padding: 15px;
+    background: #FFFFFF;
+    margin: 0 0 15px 0;
+}
+
+div.content-media h5{
+    float: left;
+}
+
+div.content-media div.selectmedia{
+    color: #666;
+    margin: 20px 5px 5px 5px;
+    margin-left: 75px;
+    text-transform: uppercase;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+div.content-media div.selectmedia a{
+    color: #004276;
+    padding: 0 3px;
+}
+
+div.content-media ul{
+    margin: 30px 0 10px 0;
+    list-style: none;
+}
+
+div.content-media ul li{
+    margin: 0 0 0 5px;
+    list-style: none;
+    font-size: 10px;
+    font-weight: bold;
+    float: left;
+    padding: 0 20px;
+}
+
+div.content-media ul li span{
+    color: #9B9B9B;
+}
+
+div.content-media ul li img{
+    margin: 0 0 5px 0;
+}
+
+div.content-media ul li a.media-type-image{
+    background: url(../images/media-type-image.jpg) 0 1px no-repeat;
+    padding: 1px 0 2px 20px;
+    color: #004276;
+    margin: 5px 0 0 0;
+}
+
+div.content-media ul li a.media-type-video{
+    background: url(../images/media-type-video.jpg) 0 1px no-repeat;
+    padding: 1px 0 2px 19px;
+    color: #004276;
+    margin: 5px 0 0 0;
+}
+
+div.content-media a.more{
+    float: right;
+    margin: 20px 50px 10px 10px;
+    color: #004276;
+    font-weight: bold;
+    text-decoration: underline;
+}

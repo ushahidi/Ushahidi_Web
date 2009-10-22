@@ -887,6 +887,7 @@ a:visited{
 }
 /*-----footer-----*/
 #footer {
+  background:#A8A8A8 url(../images/footer-bg2.jpg) no-repeat scroll 50% -5px;
 	clear:both;
 	width:960px;
 	padding:20px 0 0;
