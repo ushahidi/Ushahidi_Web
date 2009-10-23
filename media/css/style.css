@@ -226,7 +226,7 @@ div#searchbox{
     border: #9F9F9F 2px solid;
     border-top: 0;
     height: 45px;
-    width: 290px;
+/*    width: 290px;*/
 }
 
 /* languages */
@@ -381,7 +381,7 @@ div#mainmenu a.active{
 div.filters{
     font-size: 85%;
     text-transform: uppercase;
-    margin: 0 0 10px 0;
+    margin: 5px 0 15px;
 }
 
 div.filters strong{
@@ -414,10 +414,12 @@ div.filters ul li a:hover, div.filters ul li a.active{
     text-decoration: none;
 }
 
-div.filters a.share{
-    float: right;
-    margin: 2px;
-    background:transparent url(../img/share.jpg) no-repeat scroll 0 0;
+a.share{
+    float: left;
+		border-right: 1px solid #999;
+		margin-top:7px;
+		padding:5px 25px 5px 5px;
+    background: url(../img/share.jpg) no-repeat center;
     text-indent:-2000px;
     width:125px;
     height: 18px;

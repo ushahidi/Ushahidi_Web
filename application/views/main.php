@@ -74,9 +74,10 @@
 						<!-- content column -->
 						<div id="content" class="clearingfix">
 							<div class="floatbox">
-						
+							
 								<!-- filters -->
 								<div class="filters clearingfix">
+								<div style="float:left; width: 65%">
 									<strong>Filters</strong>
 									<ul>
 										<li><a id="media_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
@@ -85,8 +86,13 @@
 										<li><a id="media_2" href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
 										<li><a id="media_0" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
 									</ul>
-							
-									<a href="" class="share">Share</a>
+</div>
+								<div style="float:right; width: 31%">
+									<strong>Views</strong>
+									<ul>
+										<li><a id="view_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.clusters'); ?></span></a></li>
+										<li><a id="view_1" href="#"><span><?php echo Kohana::lang('ui_main.time'); ?></span></a></li>
+</div>
 								</div>
 								<!-- / filters -->
 						

@@ -88,7 +88,8 @@
 	
 			<!-- searchbox -->
 			<div id="searchbox">
-		
+				<a href="" class="share">Share</a>
+
 				<!-- languages -->
 				<div class="language-box">
 					<ul>
@@ -121,7 +122,6 @@
 				<a href="<?php echo url::base() . "reports/submit" ?>">Submit an incident</a>
 			</div>
 			<!-- / submit incident -->
-	
 		</div>
 		<!-- / header -->
 
@@ -138,5 +138,6 @@
 						<li><a href="<?php echo url::base() . "alerts" ?>" <?php if ($this_page == 'alerts') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.alerts'); ?></a></li>
 						<li><a href="<?php echo url::base() . "help" ?>" <?php if ($this_page == 'help') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.help'); ?></a></li>
 					</ul>
+
 				</div>
 				<!-- / mainmenu -->
