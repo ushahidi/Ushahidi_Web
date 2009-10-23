@@ -17,38 +17,34 @@
 					<div class="content-bg">
 						<!-- start alerts block -->
 						<div class="big-block">
-							<div class="big-block-top">
-								<div class="big-block-bottom">
-									<h1>Get Alerts</h1>
-									<!--<div class="green-box">
-										<h3>Your Alert Has Been Saved!</h3>-->
-									
-										<?php 
-										if (!empty($alert_mobile))
-										{
-											if ($sms_confirmation_saved)
-											{
-											?>
-											<div class="green-box">
-												<h3><?php echo Kohana::lang('alerts.mobile_ok_head'); ?></h3>
-				
-												<div class="alert_response">
-														<?php echo Kohana::lang('alerts.mobile_alert_request_created'); ?><u><strong>
-														<?php echo $alert_mobile; ?></strong></u>.
-														<?php echo Kohana::lang('alerts.verify_code'); ?>
-														<div class="alert_confirm">
-														<div class="label">
-														<?php echo Kohana::lang('alerts.mobile_code'); ?>
-														</div>
-														<?php 
-														print form::open('/alerts/verify');
-														print form::input('alert_code', '');
-														print "&nbsp;&nbsp;";
-														print form::submit('button', 'Confirm My Alert Request', ' class="btn_blue"');
-														print form::close();
-														?>
-														</div>
+							<h1>Get Alerts</h1>
+							<!--<div class="green-box">
+								<h3>Your Alert Has Been Saved!</h3>-->
+							
+								<?php 
+								if (!empty($alert_mobile))
+								{
+									if ($sms_confirmation_saved)
+									{
+									?>
+									<div class="green-box">
+										<h3><?php echo Kohana::lang('alerts.mobile_ok_head'); ?></h3>
+		
+										<div class="alert_response">
+												<?php echo Kohana::lang('alerts.mobile_alert_request_created'); ?><u><strong>
+												<?php echo $alert_mobile; ?></strong></u>.
+												<?php echo Kohana::lang('alerts.verify_code'); ?>
+												<div class="alert_confirm">
+												<div class="label">
+												<?php echo Kohana::lang('alerts.mobile_code'); ?>
 												</div>
+												<?php 
+												print form::open('/alerts/verify');
+												print form::input('alert_code', '');
+												print "&nbsp;&nbsp;";
+												print form::submit('button', 'Confirm My Alert Request', ' class="btn_blue"');
+												print form::close();
+												?>
 											</div>
 											<?php
 											}
