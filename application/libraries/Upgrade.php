@@ -55,10 +55,9 @@
  	public function copy_recursively($srcdir, $dstdir) {
  		if ( !is_dir($dstdir) && !@mkdir($dstdir) )
        	{
-	    	$this->errors[] = sprintf("File <code>%s</coded> could not be copied",strip_abspath($dstdir));
+	    	$this->errors[] = sprintf("File <code>%s</coded> could not be copied",$dstdir);
 	    	$this->success = false;
 	    }
-
 	    if ($curdir = opendir($srcdir))
 	    {
 	        while($file = readdir($curdir))
@@ -74,17 +73,15 @@
 			    		if($ow > 0) {
 			        		if(copy($srcfile, $dstfile)) {
 				    			touch($dstfile, filemtime($srcfile));
-				    			$this->log[] = sprintf("Copying file <code>%s</coded>", $this->strip_abspath($dstfile));
 				    			$this->success = true;
                         	} else {
-                            	$this->errors[] = sprintf("File <code>%s</coded> could not be copied",$this->strip_abspath($dstdir));
+                            	$this->errors[] = sprintf("File <code>%s</coded> could not be copied",$dstdir);
 				        		$this->success = false;
 							}
 			    		}
 					}
-					elseif(is_dir($srcfile)){
-						$this->log[] = sprintf("Copying file <code>%s</coded>", $this->strip_abspath($dstfile)); 
-			    		$this->copy_recursive($srcfile, $dstfile);
+					elseif(is_dir($srcfile)){ 
+			    		$this->copy_recursively($srcfile, $dstfile);
 			    		$this->success = true;
 					}
 		    	}
@@ -110,11 +107,11 @@
 		    if ($entry != "." && $entry != "..") {
 		        if ( is_file($dir . $entry) ) {
 			    if ( !@unlink($dir . $entry) ) {
-			        $this->errors[] = sprintf( 'File <code>%s</code> could not be deleted!', $this->strip_abspath($dir.$entry) );
+			        $this->errors[] = sprintf( 'File <code>%s</code> could not be deleted!', $dir.$entry );
 			    	$this->success = false;
 			    }
 			} elseif (is_dir($dir . $entry)) {
-				$this->errors[] = sprintf( 'Deleting file <code>%s</code> ', $this->strip_abspath($dir.$entry) );
+				$this->errors[] = sprintf( 'Deleting file <code>%s</code> ', $dir.$entry );
 			    $this->remove_recursive($dir . $entry);
 			    $this->success = true;
 			}
@@ -122,7 +119,7 @@
 		}
 		closedir($dh);
 		if ( !@rmdir($dir) ) {
-		    $this->errors[] = sprintf( 'Directory <code>%s</code> could not be deleted!', $this->strip_abspath($dir.$entry) );
+		    $this->errors[] = sprintf( 'Directory <code>%s</code> could not be deleted!', $dir.$entry);
 			$this->success = false;
 		}
 			$this->success = true;
