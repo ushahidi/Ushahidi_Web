@@ -108,9 +108,9 @@ class Upgrade_Controller extends Admin_Controller
        	}
         	
     	//extract compressed file
-      	/*if( $upgrade->success ) {
+      	if( $upgrade->success ) {
         	$upgrade->unzip_ushahidi($zip_file, $working_dir);
-       	}*/
+       	}
 
       	if( $upgrade->success ) {
      		$upgrade->remove_recursively($working_dir."ushahidi/application/config");
