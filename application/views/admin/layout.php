@@ -91,7 +91,7 @@
                         <div id="update-info">
                         Ushahidi <?php echo $version; ?> 
                             <?php echo Kohana::lang('layout.version_available');?> 
-                            <a href="#" title="upgrade ushahidi">
+        <a href="<?php echo url::base() ?>admin/upgrade" title="upgrade ushahidi">
                              <?php echo Kohana::lang('layout.update_link');?>
                             </a>.
                         </div>
