@@ -130,6 +130,7 @@ class Main_Controller extends Template_Controller {
             ->where('incident_active', '1')
 			->limit('10')
             ->orderby('incident_date', 'desc')
+			->with('location')
             ->find_all();
 		
 		// Get Default Color
@@ -210,9 +211,9 @@ class Main_Controller extends Template_Controller {
 		// could not use DB query builder. It does not support parentheses yet
 		$graph_data = array();		
 		$all_graphs = Incident_Model::get_incidents_by_interval('month');
-                $daily_graphs = Incident_Model::get_incidents_by_interval('day');
+		$daily_graphs = Incident_Model::get_incidents_by_interval('day');
 		$weekly_graphs = Incident_Model::get_incidents_by_interval('week');
-                $hourly_graphs = Incident_Model::get_incidents_by_interval('hour');
+		$hourly_graphs = Incident_Model::get_incidents_by_interval('hour');
 		$this->template->content->all_graphs = $all_graphs;
 		$this->template->content->daily_graphs = $daily_graphs;
 		
