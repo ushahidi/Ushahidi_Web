@@ -41,7 +41,7 @@
                     <p>
                             <?php print form::open(NULL, array('id' => 'upgradeMain', 'name' => 'upgradeMain')); ?>
                             
-                            <p>The instructions below detail how to update your Ushahidi instance.<p>
+                            <p>The instructions below details how to upgrade your Ushahidi instance.<p>
 
                             <p>Step 1: Download the most recent ushahidi build from <a href="http://download.ushahidi.com/">http://download.ushahidi.com</a>.</p>
 

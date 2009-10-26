@@ -37,36 +37,27 @@ class Upgrade_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/upgrade');
 
-	    // check, has the form been submitted?
-	    $form_error = FALSE;
-	    $form_saved = FALSE;
 	    $form_action = "";
 		
       	$this->template->content->title = "Upgrade Ushahidi";
       	
-      	$upgrade = $this->_do_upgrade();
+      	//check if form has been submitted
+      	if( $_POST ){  
+      		$upgrade = $this->_do_upgrade();
       	
-      	if( count( $upgrade->errors ) == 0  ) {
-      		$this->template->content = new View('admin/upgrade_status');
-      		$this->template->content->title = "Upgrade Ushahidi Status";
-      		$this->template->content->logs = $upgrade->log;
-      	}else{
-      		$this->template->content = new View('admin/upgrade_status');
-      		$this->template->content->title = "Upgrade Ushahidi Status";
-      		$this->template->content->errors = $upgrade->errors;
-      	}
-      	
-	    $this->template->content->form_error = $form_error;
-	    $this->template->content->form_saved = $form_saved;
+      		if( count( $upgrade->errors ) == 0  ) {
+      			$this->template->content = new View('admin/upgrade_status');
+      			$this->template->content->title = "Upgrade Ushahidi Status";
+      			$this->template->content->logs = $upgrade->log;
+      		}else{
+      			$this->template->content = new View('admin/upgrade_status');
+      			$this->template->content->title = "Upgrade Ushahidi Status";
+      			$this->template->content->errors = $upgrade->errors;
+      		}
+		}
+		
 	    $this->template->content->form_action = $form_action;
 		
-	}
-
-  	/**
-     * The status of the upgrade
-     */
-	function status() {
-    	$this->template->content = new View('admin/upgrade/status');
 	}
 
 	private function _upgrade_tables() {
