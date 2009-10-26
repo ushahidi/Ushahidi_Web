@@ -28,19 +28,18 @@
 		echo "<!--[if IE 6]>".html::stylesheet('media/css/ie6hacks','',true)."<![endif]-->";
 
 	// Load OpenLayers before jQuery!
-	if ($map_enabled)
-	{
+	if ($map_enabled == 'streetmap') {
 		echo html::script('media/js/OpenLayers', true);
 		echo "<script type=\"text/javascript\">OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';</script>";
-	}	
+		//echo 'STREET!';
+	}
 	
 	// Load jQuery
 	echo html::script('media/js/jquery', true);
 	echo html::script('media/js/jquery.ui.min', true);
 	
 	// Other stuff to load only we have the map enabled
-	if ($map_enabled)
-	{
+	if ($map_enabled) {
 		echo $api_url . "\n";
 		if ($main_page) {
 			echo html::script('media/js/selectToUISlider.jQuery', true);
@@ -51,20 +50,21 @@
 				."<![endif]-->";
 		}
 	}
-	if ($validator_enabled) 
-	{
+	
+	if ($validator_enabled) {
 		echo html::script('media/js/jquery.validate.min');
 	}
-	if ($photoslider_enabled)
-	{
+	
+	if ($photoslider_enabled) {
 		echo html::script('media/js/photoslider');
 		echo html::stylesheet('media/css/photoslider');
 	}
-	if( $videoslider_enabled )
-	{
+	
+	if( $videoslider_enabled ) {
 		echo html::script('media/js/coda-slider.pack');
 		echo html::stylesheet('media/css/videoslider');
 	}
+	
 	if ($allow_feed == 1) {
 		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
 	}

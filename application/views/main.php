@@ -90,14 +90,18 @@
 								<div style="float:right; width: 31%">
 									<strong>Views</strong>
 									<ul>
-										<li><a id="view_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.clusters'); ?></span></a></li>
-										<li><a id="view_1" href="#"><span><?php echo Kohana::lang('ui_main.time'); ?></span></a></li>
+										<li><a id="view_0" <?php if($map_enabled === 'streetmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.clusters'); ?></span></a></li>
+										<li><a id="view_1" <?php if($map_enabled === '3dmap') { echo 'class="active" '; } ?>href="?3dmap=1"><span><?php echo Kohana::lang('ui_main.time'); ?></span></a></li>
 </div>
 								</div>
 								<!-- / filters -->
 						
 								<!-- map -->
-								<div class="map" id="map"></div>
+								<?php
+									// My apologies for the inline CSS. Seems a little wonky when styles added to stylesheet, not sure why.
+								?>
+								<div class="<?php echo $map_container; ?>" id="<?php echo $map_container; ?>" <?php if($map_container === 'map3d') { echo 'style="width:573px; height:573px;"'; } ?>></div> 
+								<?php if($map_container === 'map') { ?>
 								<div class="slider-holder">
 									<form action="">
 										<fieldset>
@@ -109,6 +113,7 @@
 										</fieldset>
 									</form>
 								</div>
+								<? } ?>
 								<!-- / map -->
 								<div id="graph" class="graph-holder"></div>
 							</div>
