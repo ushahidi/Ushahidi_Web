@@ -86,7 +86,9 @@ class Install
 	   } else {
 
 	        $this->add_config_details($base_path);
-
+			
+			$this->add_htaccess_entry($base_path);
+			
 		    $this->add_db_details( $username, $password, $host, $select_db_type,
 		       $db_name, $table_prefix );
 
@@ -174,6 +176,32 @@ class Install
 	    }
 
 	}
+	
+	/**
+	 * Adds the right RewriteBase entry to the .htaccess file.
+	 * 
+	 * @param base_path - the base path.
+	 */
+	private function add_htaccess_entry($base_path) {
+		$htaccess_file = file('../htaccess');
+		$handle = fopen('../.htacces','w');
+			
+		foreach($htaccess_file as $line_number => $line ) {
+			if( !empty($base_path) ) {
+				switch( trim( substr($line, 0, 12 ) ) ) {
+					case "RewriteBase":
+						fwrite($handle, str_replace("/","/".$base_path,$line));
+						break;
+						
+					default:
+						fwrite($handle,$line);
+				}
+			} else {
+				fwrite($handle,$line);
+			}	
+		}	
+		
+	} 
 
 	/**
 	 * Imports sql file to the database.
