@@ -18,7 +18,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
-	<title>UshahidiEngine</title>
+	<title><?php echo $title ?></title>
 	<?php
 	echo html::stylesheet('media/css/admin/all', '', true);
 	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
@@ -163,8 +163,8 @@
 		<div class="holder">
 			<strong>
 				<a href="http://www.ushahidi.com" target="_blank" title="Ushahidi Engine" alt="Ushahidi Engine">
-                                    <sup><?php echo Kohana::config('version.ushahidi_version');?></sup>
-                                </a>
+                	<sup><?php echo Kohana::config('version.ushahidi_version');?></sup>
+            	</a>
 			</strong>
 		</div>
 	</div>
