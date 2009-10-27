@@ -35,8 +35,7 @@ var ge;
 		ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
 		
 		var link = ge.createLink('');
-		var href = 'http://localhost:8888/Ushahidi/ushahidi/api/?task=3dkml'
-		//var href = 'http://localhost:8888/test.php'
+		var href = '<?php echo url::base(); ?>api/?task=3dkml'
 		link.setHref(href);
 		
 		var networkLink = ge.createNetworkLink('');

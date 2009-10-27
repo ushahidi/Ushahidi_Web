@@ -616,7 +616,7 @@ class Api_Controller extends Controller {
 				<Style>
 					<IconStyle>
 						<Icon>
-							<href>http://localhost:8888/Ushahidi/ushahidi/media/img/color_icon.php?c='.$hex_color.'</href>
+							<href>'.url::base().'media/img/color_icon.php?c='.$hex_color.'</href>
 						</Icon>
 					</IconStyle>
 					<LineStyle>
