@@ -113,7 +113,7 @@
 										</fieldset>
 									</form>
 								</div>
-								<? } ?>
+								<?php } ?>
 								<!-- / map -->
 								<div id="graph" class="graph-holder"></div>
 							</div>
