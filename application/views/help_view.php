@@ -13,32 +13,30 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-		<div id="content">
-			<div class="content-bg">
-				<div class="big-block">
-					<div class="big-block-top">
-						<div class="big-block-bottom">
+				<div id="content">
+					<div class="content-bg">
+						<div class="big-block">
 							<?php print form::open(NULL, array('id' => 'sendMessage', 'name' => 'sendMessage')); ?>
 							<div class="incident-name">
 								<h1><?php echo $organization_name; ?></h1>
 								<?php
-								if ($form_error) {
+									if ($form_error) {
 								?>
-									<!-- red-box -->
-									<div class="red-box">
-										<h3>Error!</h3>
-										<ul>
-										<?php
-										foreach ($errors as $error_item => $error_description)
-										{
-											// print "<li>" . $error_description . "</li>";
-											print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
-										}
-										?>
-										</ul>
-									</div>
+								<!-- red-box -->
+								<div class="red-box">
+									<h3>Error!</h3>
+									<ul>
 								<?php
-								}
+											foreach ($errors as $error_item => $error_description)
+											{
+												// print "<li>" . $error_description . "</li>";
+												print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+											}
+										?>
+									</ul>
+								</div>
+								<?php
+									}
 								?>								
 								<ul>
 									<li>
@@ -62,29 +60,29 @@
 										<div id="contact" class="org_contact">
 											<h3>Contact Us:</h3>
 											<div class="org_contact_row">
-					                        	<h4>Name:</h4>
+					              <h4>Name:</h4>
 												<?php print form::input('name', $form['name'], ' class="text long"'); ?>
-					                        </div>
+					            </div>
 											<div class="org_contact_row">
-					                        	<h4>Email:</h4>
+					              <h4>Email:</h4>
 												<?php print form::input('email', $form['email'], ' class="text long"'); ?>
-					                        </div>
+					            </div>
 											<div class="org_contact_row">
-					                        	<h4>Phone:</h4>
+					              <h4>Phone:</h4>
 												<?php print form::input('phone', $form['phone'], ' class="text long"'); ?>
-					                        </div>
+					            </div>
 											<div class="org_contact_row">
-					                        	<h4>Message:</h4>
+					              <h4>Message:</h4>
 												<?php print form::textarea('message', $form['message'], ' rows="4" cols"20" class="textarea long" '); ?>
-					                        </div>
+					            </div>
 											<div class="org_contact_row">
 												<h4>Security Code:</h4>
 												<?php print $captcha->render(); ?><br />
 												<?php print form::input('captcha', $form['captcha'], ' class="text"'); ?>
-					                        </div>
+					            </div>
 											<div class="org_contact_row">
-					                        	<input class="btn_blue" type="submit" value="Send Message" />
-					                        </div>
+					              <input class="btn_blue" type="submit" value="Send Message" />
+					            </div>
 										</div>
 									</li>
 									<?php } ?>
@@ -99,3 +97,4 @@
 				</div>
 			</div>
 		</div>
+	</div>

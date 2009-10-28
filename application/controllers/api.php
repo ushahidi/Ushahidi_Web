@@ -66,6 +66,10 @@ class Api_Controller extends Controller {
 			case "report": //report/add an incident
 				$ret = $this->_report();
 			break;
+			
+			case "3dkml": //report/add an incident
+				$ret = $this->_3dkml();
+			break;
 				
 			case "tagnews": //tag a news item to an incident
 			
@@ -448,7 +452,7 @@ class Api_Controller extends Controller {
 		//find incidents
 		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle," ."i.incident_description AS incidentdescription, i.incident_date AS " ."incidentdate, i.incident_mode AS incidentmode,i.incident_active AS " ."incidentactive, i.incident_verified AS incidentverified, l.id AS " ."locationid,l.location_name AS locationname,l.latitude AS " ."locationlatitude,l.longitude AS locationlongitude FROM incident AS i " ."INNER JOIN location as l on l.id = i.location_id ".
                     "$where $limit";
-                //echo $query;exit; 
+ 
 		$items = $this->db->query($query);
 		$i = 0;
 		foreach ($items as $item){
@@ -547,6 +551,92 @@ class Api_Controller extends Controller {
 		}
 		
 		//return $retJsonOrXml;
+	}
+	
+	/**
+	* return KML for 3d "geo spatial temporal" map
+	* FIXME: This could probably be done in less than >5 foreach loops
+	*/
+	function _3dkml(){
+		$kml = '<?xml version="1.0" encoding="UTF-8"?>
+		<kml xmlns="http://earth.google.com/kml/2.2">
+		<Document>
+		<name>Ushahidi</name>'."\n";
+		
+		// Get the categories that each incident belongs to
+		$incident_categories = $this->_incidentCategories();
+		
+		// Get category colors in this format: $category_colors[id] = color
+		$categories = json_decode($this->_categories());
+		$categories = $categories->payload->categories;
+		$category_colors = array();
+		foreach($categories as $category) {
+			$category_colors[$category->category->id] = $category->category->color;
+		}
+		
+		// Finally, grab the incidents
+		$incidents = json_decode($this->_getIncidents());
+		$incidents = $incidents->payload->incidents;
+		
+		// Calculate times for relative altitudes (This is the whole idea behind 3D maps)
+		$incident_times = array();
+		foreach($incidents as $inc_obj) {
+			$incident = $inc_obj->incident;
+			$incident_times[$incident->incidentid] = strtotime($incident->incidentdate);
+		}
+		
+		// All times to be adjusted according to max altitude.
+		
+		$max_altitude = 10000;
+		$newest = 0;
+		foreach($incident_times as $incident_id => $timestamp) {
+			if(!isset($oldest)) $oldest = $timestamp;
+			$incident_times[$incident_id] -= $oldest;
+			if($newest < $incident_times[$incident_id]) $newest = $incident_times[$incident_id];
+		}
+		
+		foreach($incident_times as $incident_id => $timestamp) {
+			$incident_altitude[$incident_id] = 0;
+			if($newest != 0) $incident_altitude[$incident_id] = floor(($timestamp / $newest) * $max_altitude);
+		}
+		
+		// Compile KML and output
+		foreach($incidents as $inc_obj) {
+			
+			$incident = $inc_obj->incident;
+			
+			$category_id = $incident_categories[$incident->incidentid][0]; // Could be multiple categories. Pick the first one.
+			$hex_color = $category_colors[$category_id];
+			// Color for KML is not the traditional HTML Hex of (rrggbb). It's (aabbggrr). aa = alpha or transparency
+			$color = 'FF'.$hex_color{4}.$hex_color{5}.$hex_color{2}.$hex_color{3}.$hex_color{0}.$hex_color{1};
+			
+			$kml .= '<Placemark>
+				<name>'.$incident->incidenttitle.'</name>
+				<description>'.$incident->incidentdescription.'</description>
+				<Style>
+					<IconStyle>
+						<Icon>
+							<href>'.url::base().'media/img/color_icon.php?c='.$hex_color.'</href>
+						</Icon>
+					</IconStyle>
+					<LineStyle>
+						<color>'.$color.'</color>
+						<width>2</width>
+					</LineStyle>
+				</Style>
+				<Point>
+					<extrude>1</extrude>
+					<altitudeMode>relativeToGround</altitudeMode>
+					<coordinates>'.$incident->locationlongitude.','.$incident->locationlatitude.','.$incident_altitude[$incident->incidentid].'</coordinates>
+				</Point>
+			</Placemark>'."\n";
+			
+		}
+		
+		$kml .= '</Document>
+		</kml>';
+		
+		return $kml;
 	}
 	
 	/**
@@ -996,6 +1086,24 @@ class Api_Controller extends Controller {
 		}
 
 		return $retJsonOrXml;
+	}
+	
+	/**
+	* get a list of incident categories
+	* returns an array
+	* FIXME: Might as well add functionality to return this in the API
+	*
+	* Return format: array[incident_id][] = category_id;
+	*
+	*/
+	function _incidentCategories(){
+		$query = "SELECT incident_id, category_id FROM `incident_category` ORDER BY id DESC";
+		$items = $this->db->query($query);
+		$data = array();
+		foreach ($items as $item){
+			$data[$item->incident_id][] = $item->category_id;
+		}
+		return $data;
 	}
 	
 	/**

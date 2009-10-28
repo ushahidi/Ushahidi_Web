@@ -40,6 +40,86 @@ class Stats_Controller extends Admin_Controller
 		
 	}
 	
+	function reports()
+	{
+		$this->template->content = new View('admin/stats_reports');
+		$this->template->content->title = 'Report Stats';
+		
+		// Retrieve Current Settings
+		$settings = ORM::factory('settings', 1);
+		$this->template->content->stat_id = $settings->stat_id;
+		
+		// Javascript Header
+		$this->template->flot_enabled = TRUE;
+		$this->template->js = new View('admin/stats_js');
+		
+		$report_stats = Stats_Model::get_report_stats();
+		
+		// START: Build the graph variable string for flot
+		
+		// Grab category names
+		$cats = Category_Model::categories();
+		
+		// Individual Category chart data
+		$categories_data = '[';
+		$flag1 = 0; // flag for commas
+		foreach($report_stats['category_counts'] as $category_id => $arr){
+			
+			if($flag1 != 0) $categories_data .= ',';
+			$categories_data .= '{label:"'.$cats[$category_id]['category_title'].'",data:[';
+			
+			$flag2 = 0; // flag for commas
+			foreach($arr as $timestamp => $count){
+				if($flag2 != 0) $categories_data .= ',';
+				$categories_data .= '['.$timestamp.'000, '.$count.']';
+				$flag2 = 1;
+			}
+			
+			$categories_data .= '],color: \'#'.$cats[$category_id]['category_color'].'\'}';
+			$flag1 = 1;
+		}
+		$categories_data .= ']';
+		
+		// Generate Raw Data
+		// Convert category ids to names
+		foreach($report_stats['category_counts'] as $category_id => $arr) {
+			$raw_category[$cats[$category_id]['category_title']] = $arr;
+		}
+		$this->template->content->raw_category_data = $raw_category;
+		
+		// Approved and Unapproved chart data
+		$approved_verified_data = '[';
+		$flag1 = 0; // flag for commas
+		$to_graph = array('approved_counts','verified_counts'); // We are graphing these two arrays
+		foreach($to_graph as $graph_key){
+			foreach($report_stats[$graph_key] as $status => $arr){
+				
+				if($flag1 != 0) $approved_verified_data .= ',';
+				$approved_verified_data .= '{label:"'.$status.'",data:[';
+				
+				$flag2 = 0; // flag for commas
+				foreach($arr as $timestamp => $count){
+					if($flag2 != 0) $approved_verified_data .= ',';
+					$approved_verified_data .= '['.$timestamp.'000, '.$count.']';
+					$flag2 = 1;
+				}
+				
+				$approved_verified_data .= ']}';
+				$flag1 = 1;
+				
+			}
+		}
+		$approved_verified_data .= ']';
+		
+		$this->template->content->raw_approved_verified_data = $report_stats['approved_counts'] + $report_stats['verified_counts'];
+		
+		// STOP: Building the graphs variable strings for flot
+		
+		$this->template->js->graph_data = array(0=>$categories_data,1=>$approved_verified_data);
+		$this->template->js->custom_colors = array(0=>true,1=>false);
+		
+	}
+	
 	function hits()
 	{
 		$this->template->content = new View('admin/stats_hits');
@@ -59,10 +139,10 @@ class Stats_Controller extends Admin_Controller
 		$this->template->flot_enabled = TRUE;
 		$this->template->js = new View('admin/stats_js');
 		
-		// Graphs, Maps and other Data
-		
-		$this->template->js->all_graphs = Stats_Model::get_hit_stats();
-		$this->template->content->countries = Stats_Model::get_hit_countries();
+		// Hit Data
+		$data = Stats_Model::get_hit_stats();
+		$this->template->js->graph_data = array(0=>$data['graph']);
+		$this->template->content->raw_data = $data['raw'];
 	}
 	
 	function country()

@@ -15,8 +15,15 @@
  */
 	
 $(document).ready(function() {
+
+	<?php
+		$numGraphs = count($graph_data) - 1;
+	?>
 	
-	var graphData = <?php echo $all_graphs ?>;
+	var graphData = [];
+	var choiceContainer = [];
+	var plotContainer = [];
+	var overviewContainer = [];
 	
 	var options = {  
 		legend: {  
@@ -29,10 +36,14 @@ $(document).ready(function() {
 			radius: 3  
 			},  
 		lines: {  
-			show: true  
+			show: true
 			},
 		xaxis: {
-			mode: "time"
+			mode: "time",
+			tickDecimals: 0
+		},
+		yaxis: {
+			tickDecimals: 0
 		},
 		selection: {
 			mode: "x"
@@ -40,83 +51,93 @@ $(document).ready(function() {
 	};
 	
 	var overviewoptions = {
-        legend: { show: false },
-        lines: { show: true, lineWidth: 1 },
+        legend: { 
+        	show: false
+        },
+        lines: { 
+        	show: true, 
+        	lineWidth: 1 
+        },
         shadowSize: 0,
-        xaxis: { ticks: [], mode: "time" },
-        yaxis: { ticks: [], min: 0, max: 40 },
-        selection: { mode: "x" }
+        xaxis: { 
+        	ticks: [], 
+        	mode: "time" 
+        },
+        yaxis: { 
+        	ticks: [], 
+        	min: 0
+        },
+        selection: { 
+        	mode: "x"
+        }
     };
 	
-	// hard-code color indices to prevent them from shifting as
-    // countries are turned on/off
-    var i = 0;
-    $.each(graphData, function(key, val) {
-        val.color = i;
-        ++i;
-    });
-    
-    // insert checkboxes 
-    var choiceContainer = $("#choices");
-    $.each(graphData, function(key, val) {
-        choiceContainer.append('<br/><input type="checkbox" name="' + key +
-                               '" checked="checked" >' + val.label + '</input>');
-    });
-    choiceContainer.find("input").click(plotAccordingToChoices);
+	<?php
+	$i = 0;
+	while($i <= $numGraphs) {
+	?>
+		graphData[<?=$i?>] = <?=$graph_data[$i]?>;
+		choiceContainer[<?=$i?>] = $("#choices<?=$i?>");
+		plotContainer[<?=$i?>] = $("#plotarea<?=$i?>");
+		overviewContainer[<?=$i?>] = $("#overview<?=$i?>");
 	
-	var plotarea = $("#plotarea");  
-	//plotarea.css("height", "250px");  
-	//plotarea.css("width", "500px");
+		// hard-code color indices to prevent them from shifting as
+	    // countries are turned on/off
+	    if(<?php if(isset($custom_colors[$i]) && $custom_colors[$i] == 'true') { echo 'false'; }else{ echo 'true'; } ?>){
+		    var i = 0;
+		    $.each(graphData[<?=$i?>], function(key, val) {
+		        val.color = i;
+		        ++i;
+		    });
+	    }
+	    
+	    // insert checkboxes
+	    $.each(graphData[<?=$i?>], function(key, val) {
+	        choiceContainer[<?=$i?>].append('<br/><input type="checkbox" name="' + key +
+	                               '" checked="checked" >' + val.label + '</input>');
+	    });
+	    choiceContainer[<?=$i?>].find("input").click(plotAccordingToChoices<?=$i?>);
+		
+		var plot<?=$i?> = $.plot( plotContainer[<?=$i?>], graphData[<?=$i?>], options );
+		var overview<?=$i?> = $.plot(overviewContainer[<?=$i?>], graphData[<?=$i?>], overviewoptions);
 	
-	var plot = $.plot( plotarea, graphData, options );
-	var overview = $.plot($("#overview"), graphData, overviewoptions);
+	    // now connect the two
+	    
+	    plotContainer[<?=$i?>].bind("plotselected", function (event, ranges) {
+	        // do the zooming
+	        plot<?=$i?> = $.plot(plotContainer[<?=$i?>], graphData[1],
+	                      $.extend(true, {}, options, {
+	                          xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
+	                      }));
+	
+	        // don't fire event on the overview to prevent eternal loop
+	        overview<?=$i?>.setSelection(ranges, true);
+	    });
+	    
+	    overviewContainer[<?=$i?>].bind("plotselected", function (event, ranges) {
+	        plot<?=$i?>.setSelection(ranges);
+	    });
+	    
+	    function plotAccordingToChoices<?=$i?>() {
+	        var data = [];
+	
+	        choiceContainer[<?=$i?>].find("input:checked").each(function () {
+	            var key = $(this).attr("name");
+	            if (key && graphData[<?=$i?>][key])
+	                data.push(graphData[<?=$i?>][key]);
+	        });
+	
+	        if (data.length > 0) {
+	            $.plot(plotContainer[<?=$i?>], data, options);
+	            $.plot(overviewContainer[<?=$i?>], data, overviewoptions);
+	        }
+	    }
+	
+	    plotAccordingToChoices<?=$i?>();
 
-    // now connect the two
-    
-    $("#plotarea").bind("plotselected", function (event, ranges) {
-        // do the zooming
-        plot = $.plot($("#plotarea"), graphData,
-                      $.extend(true, {}, options, {
-                          xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
-                      }));
-
-        // don't fire event on the overview to prevent eternal loop
-        overview.setSelection(ranges, true);
-    });
-    
-    $("#overview").bind("plotselected", function (event, ranges) {
-        plot.setSelection(ranges);
-    });
-    
-    
-    
-    
-    
-    
-    
-
-    
-    function plotAccordingToChoices() {
-        var data = [];
-
-        choiceContainer.find("input:checked").each(function () {
-            var key = $(this).attr("name");
-            if (key && graphData[key])
-                data.push(graphData[key]);
-        });
-
-        if (data.length > 0) {
-            $.plot($("#plotarea"), data, options);
-            $.plot($("#overview"), data, overviewoptions);
-        }
-    }
-
-    plotAccordingToChoices();
-
-    
-    
-    
-    
-
+	<?php
+		$i++;
+	}
+	?>
 
 });

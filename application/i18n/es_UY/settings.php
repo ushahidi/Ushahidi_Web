@@ -1,7 +1,7 @@
 <?php
 
 $lang = array
-(as 
+(
 	'site_name' => array
 	(
 		'required'		=> 'El campo nombre del sitio es obligatorio.',

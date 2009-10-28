@@ -107,10 +107,10 @@ class Admin_Controller extends Template_Controller
      * Fetch latest ushahidi version from a remote instance
      */
     function _fetch_core_version() {
-        $version_api = url::base()."/api?task=version&resp=json";
-        $json_string = file_get_contents($version_api);
-        $json_obj = json_decode($json_string);
-        $version_number = $json_obj->payload->version[0]->version;
+        $version_url = "http://version.ushahidi.com";
+        $version_string = file_get_contents($version_url);
+        $version_details = explode(",",$version_string);
+        $version_number = $version_details[0];
         return $latest_version = $version_number;
     }
 } // End Admin

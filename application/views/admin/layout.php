@@ -18,7 +18,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
-	<title>UshahidiEngine</title>
+	<title><?php echo $site_name ?></title>
 	<?php
 	echo html::stylesheet('media/css/admin/all', '', true);
 	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
@@ -42,6 +42,13 @@
 	echo html::script('media/js/jquery.validate.min', true);
 	echo html::script('media/js/jquery.ui.min', true);
 	echo html::script('media/js/selectToUISlider.jQuery', true);
+	echo html::script('media/js/jquery.hovertip-1.0', true);
+	echo html::stylesheet('media/css/jquery.hovertip-1.0', '', true);
+	echo "<script type=\"text/javascript\">
+		$(function() {
+			$('.tooltip[title]').hovertip();
+		});
+	</script>";
 	
 	// Load Flot
 	if ($flot_enabled)
@@ -84,7 +91,7 @@
                         <div id="update-info">
                         Ushahidi <?php echo $version; ?> 
                             <?php echo Kohana::lang('layout.version_available');?> 
-                            <a href="#" title="upgrade ushahidi">
+        <a href="<?php echo url::base() ?>admin/upgrade" title="upgrade ushahidi">
                              <?php echo Kohana::lang('layout.update_link');?>
                             </a>.
                         </div>
@@ -156,8 +163,8 @@
 		<div class="holder">
 			<strong>
 				<a href="http://www.ushahidi.com" target="_blank" title="Ushahidi Engine" alt="Ushahidi Engine">
-                                    <sup><?php echo Kohana::config('version.ushahidi_version');?></sup>
-                                </a>
+                	<sup><?php echo Kohana::config('version.ushahidi_version');?></sup>
+            	</a>
 			</strong>
 		</div>
 	</div>
