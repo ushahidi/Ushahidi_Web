@@ -96,41 +96,52 @@ class Incident_Model extends ORM
         	$joins = 'INNER JOIN media ON media.incident_id = incident.id';
         	$general_filter = ' AND media.media_type IN ('. $media_type  .')';
         }
-        
-        $graph_data = array();
-        $all_graphs = "{ ";
-		
-        $all_graphs .= "\"ALL\": { label: 'All Categories', ";
-        $query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') 
-		                     AS time, COUNT(*) AS number 
-		                     FROM incident ' . $joins . '
-		                     WHERE incident_active IN (' . $active_filter .')' . $general_filter .'
-		                     GROUP BY ' . $groupby_date_text;
-        $query = $db->query($query_text);
 
-        foreach ( $query as $month_count )
+		$graph_data = array();
+		$all_graphs = array();
+
+		$all_graphs['ALL'] = array();
+		$all_graphs['ALL']['label'] = 'All Categories';
+		$query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') AS time,
+		               COUNT(*) AS number
+		               FROM incident ' . $joins . '
+		               WHERE incident_active IN (' . $active_filter .')' .
+		                     $general_filter .'
+		               GROUP BY ' . $groupby_date_text;
+		$query = $db->query($query_text);
+		$all_graphs['ALL']['data'] = array();
+		foreach ( $query as $month_count )
         {
-            array_push($graph_data, "[" . $month_count->time * 1000 . ", " . $month_count->number . "]");
-        }
-        $all_graphs .= "data: [". join($graph_data, ",") . "], ";
-        $all_graphs .= "color: '#990000' ";
-        $all_graphs .= " } ";
-		
-        foreach ( self::get_active_categories() as $index => $category)
-        {
-            $query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') 
-							AS time, COUNT(*) AS number
-						        FROM incident 
-							INNER JOIN incident_category ON incident_category.incident_id = incident.id
-							' . $joins . '
-							WHERE incident_active IN (' . $active_filter . ') AND 
-							      incident_category.category_id = '. $index . $general_filter . '
-							GROUP BY ' . $groupby_date_text;
-		    $graph_text = self::category_graph_text($query_text, $category);
-			$all_graphs .= $graph_text;
+			array_push($all_graphs['ALL']['data'],
+				       array($month_count->time * 1000, $month_count->number));
 		}
-		
-	    $all_graphs .= " } ";
-	    return $all_graphs;
+		$all_graphs['ALL']['color'] = '#990000';
+
+		$query_text = 'SELECT category_id, category_title, category_color, UNIX_TIMESTAMP(' . $select_date_text . ')
+							AS time, COUNT(*) AS number
+						        FROM incident
+							INNER JOIN incident_category ON incident_category.incident_id = incident.id
+                            INNER JOIN category ON incident_category.category_id = category.id
+							' . $joins . '
+							WHERE incident_active IN (' . $active_filter . ')
+							      ' . $general_filter . '
+							GROUP BY ' . $groupby_date_text . ', category_id ';
+		$query = $db->query($query_text);
+		foreach ( $query as $month_count )
+		{
+			$title = $month_count->category_title;
+			if (!isset($all_graphs[$title]))
+			{
+				$all_graphs[$title] = array();
+				$all_graphs[$title]['label'] = $title;
+				$all_graphs[$title]['color'] = '#'. $month_count->category_color;
+				$all_graphs[$title]['data'] = array();
+			}
+			array_push($all_graphs[$title]['data'], $month_count->time * 1000);
+			array_push($all_graphs[$title]['data'], $month_count->number);
+		}
+
+		$graphs = json_encode($all_graphs);
+		return $graphs;
 	}
 }
