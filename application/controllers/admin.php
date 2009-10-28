@@ -109,7 +109,7 @@ class Admin_Controller extends Template_Controller
     function _fetch_core_version() {
         $version_url = "http://version.ushahidi.com";
         $version_string = file_get_contents($version_url);
-        $version_details = split(",",$version_string);
+        $version_details = explode(",",$version_string);
         $version_number = $version_details[0];
         return $latest_version = $version_number;
     }
