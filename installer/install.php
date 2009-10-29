@@ -184,7 +184,7 @@ class Install
 	 */
 	private function add_htaccess_entry($base_path) {
 		$htaccess_file = file('../htaccess');
-		$handle = fopen('../.htacces','w');
+		$handle = fopen('../.htaccess','w');
 			
 		foreach($htaccess_file as $line_number => $line ) {
 			if( !empty($base_path) ) {
