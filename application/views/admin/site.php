@@ -80,6 +80,12 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4>Site Style</h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('site_style', $site_style_array, $form['site_style']); ?>
+							</span>
+						</div>
+						<div class="row">
 							<h4>Items Per Page - Front End</h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('items_per_page', $items_per_page_array, $form['items_per_page']); ?>
