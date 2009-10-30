@@ -52,6 +52,9 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->site_name_style = $site_name_style;
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
         $this->template->header->api_url = Kohana::config('settings.api_url');
+        
+        // Get custom CSS file from settings
+        $this->template->header->site_style = Kohana::config('settings.site_style');
 		
 		// Display News Feed?
 		$this->template->header->allow_feed = Kohana::config('settings.allow_feed');

@@ -68,6 +68,9 @@
 	if ($allow_feed == 1) {
 		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
 	}
+	
+	//Custom stylesheet
+	echo html::stylesheet('media/css/themes/'.$site_style);
 	?>
 
 	<!--[if IE 6]>
