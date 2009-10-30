@@ -1333,6 +1333,6 @@ ALTER TABLE `user_tokens`
 -- Version information for table `settings`
 --
 UPDATE `settings` SET
-`db_version` = '13',
+`db_version` = '14',
 `ushahidi_version` = '0.9'
 WHERE `id` =1 LIMIT 1 ;
