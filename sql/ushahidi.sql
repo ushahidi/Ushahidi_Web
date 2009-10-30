@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 9
+-- version 12
 -- http://www.ushahidi.com
 
 
@@ -14,6 +14,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) unsigned NOT NULL auto_increment,
+  `parent_id` INT NOT NULL DEFAULT '0'
   `locale` varchar(10) NOT NULL default 'en_US',
   `category_type` tinyint(4) default NULL,
   `category_title` varchar(255) default NULL,
@@ -1332,6 +1333,6 @@ ALTER TABLE `user_tokens`
 -- Version information for table `settings`
 --
 UPDATE `settings` SET
-`db_version` = '11',
+`db_version` = '14',
 `ushahidi_version` = '0.9'
 WHERE `id` =1 LIMIT 1 ;

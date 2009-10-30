@@ -88,6 +88,7 @@
 									foreach ($categories as $category)
 									{
 										$category_id = $category->id;
+										$parent_id = $category->parent_id;
 										$category_title = $category->category_title;
 										$category_description = substr($category->category_description, 0, 150);
 										$category_color = $category->category_color;
@@ -116,13 +117,55 @@
 											</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')">Edit</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')">Edit</a></li>
 													<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
 <li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del">Delete</a></li>
 												</ul>
 											</td>
 										</tr>
 										<?php
+										
+										// Get All Category Children
+										foreach ($category->children as $child)
+										{
+											$category_id = $child->id;
+											$parent_id = $child->parent_id;
+											$category_title = $child->category_title;
+											$category_description = substr($child->category_description, 0, 150);
+											$category_color = $child->category_color;
+											$category_image = $child->category_image;
+											$category_visible = $child->category_visible;
+											?>
+											<tr>
+												<td class="col-1">&nbsp;</td>
+												<td class="col-2_sub">
+													<div class="post">
+														<h4><?php echo $category_title; ?></h4>
+														<p><?php echo $category_description; ?>...</p>
+													</div>
+												</td>
+												<td class="col-3">
+												<?php if (!empty($category_image))
+												{
+													echo "<img src=\"".url::base()."media/uploads/".$category_image."\">";
+													echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\">delete</a>]";
+												}
+												else
+												{
+													echo "<img src=\"".url::base()."swatch/?c=".$category_color."&w=30&h=30\">";
+												}
+												?>
+												</td>
+												<td class="col-4">
+													<ul>
+														<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')">Edit</a></li>
+														<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
+	<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del">Delete</a></li>
+													</ul>
+												</td>
+											</tr>
+											<?php
+										}										
 									}
 									?>
 								</tbody>
@@ -137,7 +180,6 @@
 					<a name="add"></a>
 					<ul class="tabset">
 						<li><a href="#" class="active">Add/Edit</a></li>
-						<li><a href="#">Add Language</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -178,9 +220,15 @@
 							</script>
 						</div>
 						<div class="tab_form_item">
+							<strong>Parent Category:</strong><br />
+							<?php print form::dropdown('parent_id', $parents_array, ''); ?>
+						</div>
+						<div style="clear:both"></div>
+						<div class="tab_form_item">
 							<strong>Image/Icon:</strong><br />
 							<?php print form::upload('category_image', $category_image, '') ?>
 						</div>
+						<div style="clear:both"></div>
 						<div class="tab_form_item">
 							&nbsp;<br />
 							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />

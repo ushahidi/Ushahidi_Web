@@ -41,6 +41,7 @@ class Manage_Controller extends Admin_Controller
 	    (
 			'action' => '',
 			'category_id'      => '',
+			'parent_id'      => '',
 			'category_title'      => '',
 	        'category_description'    => '',
 	        'category_color'  => '',
@@ -64,11 +65,13 @@ class Manage_Controller extends Admin_Controller
 			if ($post->action == 'a')		// Add Action
 			{
 				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('parent_id','required','numeric');
 				$post->add_rules('category_title','required', 'length[3,80]');
 				$post->add_rules('category_description','required');
 				$post->add_rules('category_color','required', 'length[6,6]');
 				$post->add_rules('category_image', 'upload::valid', 
 					'upload::type[gif,jpg,png]', 'upload::size[50K]');
+				$post->add_callbacks('parent_id', array($this,'parent_id_chk'));
 			}
 			
 			// Test to see if things passed the rule checks
@@ -115,6 +118,7 @@ class Manage_Controller extends Admin_Controller
 				} 
 				else if( $post->action == 'a' )
 				{ // Save Action				
+					$category->parent_id = $post->parent_id;
 					$category->category_title = $post->category_title;
 					$category->category_description = $post->category_description;
 					$category->category_color = $post->category_color;
@@ -164,10 +168,13 @@ class Manage_Controller extends Admin_Controller
         $pagination = new Pagination(array(
                             'query_string' => 'page',
                             'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-                            'total_items'    => ORM::factory('category')->count_all()
+                            'total_items'    => ORM::factory('category')
+													->where('parent_id','0')
+													->count_all()
                         ));
 
         $categories = ORM::factory('category')
+						->where('parent_id','0')
                         ->orderby('category_title', 'asc')
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
@@ -179,6 +186,15 @@ class Manage_Controller extends Admin_Controller
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->categories = $categories;
+		
+		// Get All Parent Categories
+		$parents_array = array();
+		$parents_array[0] = "--- Top Level Category ---";
+		foreach ($categories as $parent)
+		{
+			$parents_array[$parent->id] = $parent->category_title;
+		}
+		$this->template->content->parents_array = $parents_array;
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
@@ -731,6 +747,37 @@ class Manage_Controller extends Admin_Controller
 				$feed->feed_update = strtotime('now');
 				$feed->save();
 			}
+		}
+	}
+	
+	/**
+	 * Checks if parent_id for this category exists
+     * @param Validation $post $_POST variable with validation rules
+	 */
+	public function parent_id_chk(Validation $post)
+	{
+		// If add->rules validation found any errors, get me out of here!
+		if (array_key_exists('parent_id', $post->errors()))
+			return;
+		
+		$category_id = $post->category_id;
+		$parent_id = $post->parent_id;
+		// This is a parent category - exit
+		if ($parent_id == 0)
+			return;
+		
+		$parent_exists = ORM::factory('category')
+			->where('id', $parent_id)
+			->find();
+		
+		if (!$parent_exists->loaded)
+		{ // Parent Category Doesn't Exist
+			$post->add_error( 'parent_id', 'exists');
+		}
+		
+		if (!empty($category_id) && $category_id == $parent_id)
+		{ // Category ID and Parent ID can't be the same!
+			$post->add_error( 'parent_id', 'same');
 		}
 	}
 }

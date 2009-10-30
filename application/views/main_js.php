@@ -201,9 +201,14 @@
 			// Category Switch
 			$("a[id^='cat_']").click(function() {
 				var catID = this.id.substring(4);
-				var catSet = 'cat_' + this.id.substring(4);
-				$("a[id^='cat_']").removeClass("active");
-				$("#cat_" + catID).addClass("active");
+				var catSet = 'cat_' + this.id.substring(4);		
+				
+				$("a[id^='cat_']").removeClass("active"); // Remove All active
+				$("[id^='child_']").hide(); // Hide All Children DIV
+				$("#cat_" + catID).addClass("active"); // Add Highlight
+				$("#child_" + catID).show(); // Show children DIV
+				$(this).parents("div").show();
+				
 				$("#currentCat").val(catID);
 				markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
 			});

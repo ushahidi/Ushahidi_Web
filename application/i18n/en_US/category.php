@@ -2,6 +2,14 @@
 
 $lang = array
 (
+	'parent_id' => array
+	(
+		'required'		=> 'The parent category field is required.',
+		'numeric'		=> 'The parent category field must be numeric.',
+		'exists'		=> 'The parent category does not exist.',
+		'same'			=> 'The category and the parent category cannot be the same.',
+	),
+	
 	'category_title' => array
 	(
 		'required'		=> 'The title field is required.',
