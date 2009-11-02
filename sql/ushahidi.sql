@@ -1300,6 +1300,28 @@ CREATE TABLE `sharing_log` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `page`
+--
+
+CREATE TABLE `page` (
+  `id` int(11) NOT NULL auto_increment,
+  `page_title` varchar(255) NOT NULL,
+  `page_description` longtext,
+  `page_tab` varchar(100) NOT NULL,
+  `page_active` tinyint(4) NOT NULL default '0',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `page`
+--
+
+INSERT INTO `page` (`id`, `page_title`, `page_description`, `page_tab`, `page_active`) VALUES
+(1, 'About Us', '<p>This is the default about us page.</p>', 'About Us', 1);
+
 
 --
 -- Constraints for dumped tables
@@ -1334,6 +1356,6 @@ ALTER TABLE `user_tokens`
 -- Version information for table `settings`
 --
 UPDATE `settings` SET
-`db_version` = '14',
+`db_version` = '15',
 `ushahidi_version` = '0.9'
 WHERE `id` =1 LIMIT 1 ;
