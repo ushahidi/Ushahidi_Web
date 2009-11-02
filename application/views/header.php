@@ -91,7 +91,7 @@
 	
 			<!-- searchbox -->
 			<div id="searchbox">
-				<a href="" class="share">Share</a>
+				<a class="share addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=xa-4aee423643f8276e">Share</a>
 
 				<!-- languages -->
 				<div class="language-box">
