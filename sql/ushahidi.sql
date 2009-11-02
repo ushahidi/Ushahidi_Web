@@ -14,7 +14,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int(11) unsigned NOT NULL auto_increment,
-  `parent_id` INT NOT NULL DEFAULT '0'
+  `parent_id` INT NOT NULL DEFAULT '0',
   `locale` varchar(10) NOT NULL default 'en_US',
   `category_type` tinyint(4) default NULL,
   `category_title` varchar(255) default NULL,
