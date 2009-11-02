@@ -328,6 +328,124 @@ class Manage_Controller extends Admin_Controller
         $this->template->js = new View('admin/organization_js');
 	}
 	
+	
+	/*
+	Add Edit Pages
+	*/
+	function pages()
+	{
+		$this->template->content = new View('admin/pages');
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+			'action' => '',
+	        'page_id'      => '',
+			'page_title'      => '',
+			'page_tab'      => '',
+	        'page_description'    => ''
+	    );
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+	    $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+		
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+	        // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+			
+	         //  Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+			if ($post->action == 'a')		// Add Action
+			{ // Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('page_title','required', 'length[3,150]');
+				$post->add_rules('page_description','required');
+			}
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+				$page_id = $post->page_id;
+				
+				$page = new Page_Model($page_id);
+				
+				if( $post->action == 'd' )
+				{ // Delete Action
+					$page->delete( $page_id );
+					$form_saved = TRUE;
+					$form_action = "DELETED";
+				
+				}
+				else if( $post->action == 'v' )			
+				{ // Show/Hide Action
+	            	if ($page->loaded==true)
+					{
+						if ($page->page_active == 1) {
+							$page->page_active = 0;
+						}
+						else {
+							$page->page_active = 1;
+						}
+						$page->save();
+						$form_saved = TRUE;
+						$form_action = "MODIFIED";
+					}
+				}
+				else if( $post->action == 'a' ) 		
+				{ // Save Action
+					$page->page_title = $post->page_title;
+					$page->page_tab = $post->page_tab;
+					$page->page_description = $post->page_description;
+					$page->save();
+					$form_saved = TRUE;
+					$form_action = "ADDED/EDITED";
+				}       
+	        }
+	        else
+			{ // No! We have validation errors, we need to show the form again, with the errors
+				
+	             // repopulate the form fields
+		         $form = arr::overwrite( $form, $post->as_array() ); 
+
+               // populate the error fields, if any
+                $errors = arr::overwrite($errors, 
+					$post->errors('page'));
+                $form_error = TRUE;
+            }
+        }
+		
+        // Pagination
+        $pagination = new Pagination(array(
+                            'query_string' => 'page',
+                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+                            'total_items'    =>
+ 							ORM::factory('page')->count_all()
+                        ));
+
+        $pages = ORM::factory('page')
+                        ->orderby('page_title', 'asc')
+                        ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                            $pagination->sql_offset);
+
+        $this->template->content->form = $form;
+		$this->template->content->form_error = $form_error;
+        $this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
+        $this->template->content->pagination = $pagination;
+        $this->template->content->total_items = $pagination->total_items;
+        $this->template->content->pages = $pages;
+		$this->template->content->errors = $errors;
+
+        // Javascript Header
+        $this->template->editor_enabled = TRUE;
+        $this->template->js = new View('admin/pages_js');
+	}	
+	
+	
 	/*
 	Add Edit News Feeds
 	*/
