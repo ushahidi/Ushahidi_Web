@@ -221,7 +221,7 @@
 						</div>
 						<div class="tab_form_item">
 							<strong>Parent Category:</strong><br />
-							<?php print form::dropdown('parent_id', $parents_array, ''); ?>
+							<?php print form::dropdown('parent_id', $parents_array, '0'); ?>
 						</div>
 						<div style="clear:both"></div>
 						<div class="tab_form_item">

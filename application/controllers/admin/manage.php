@@ -52,7 +52,7 @@ class Manage_Controller extends Admin_Controller
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-		
+		$parents_array = array();
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -178,7 +178,12 @@ class Manage_Controller extends Admin_Controller
                         ->orderby('category_title', 'asc')
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
-
+		 $parents_array = ORM::factory('category')
+            ->where('parent_id','0')
+            ->select_list('id', 'category_title');
+        // add none to the list
+        $parents_array[0] = "--- Top Level Category ---";
+		
 		$this->template->content->errors = $errors;
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
@@ -187,13 +192,6 @@ class Manage_Controller extends Admin_Controller
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->categories = $categories;
 		
-		// Get All Parent Categories
-		$parents_array = array();
-		$parents_array[0] = "--- Top Level Category ---";
-		foreach ($categories as $parent)
-		{
-			$parents_array[$parent->id] = $parent->category_title;
-		}
 		$this->template->content->parents_array = $parents_array;
 
 		// Locale (Language) Array
