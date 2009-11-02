@@ -22,7 +22,8 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_image` varchar(100) default NULL,
   `category_image_shadow` varchar(100) default NULL,
   `category_visible` tinyint(4) NOT NULL default '1',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  KEY `category_visible` (`category_visible`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -383,7 +384,9 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `incident_dateadd_gmt` datetime default NULL,
   `incident_datemodify` datetime default NULL,
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `location_id` (`location_id`)
+  UNIQUE KEY `location_id` (`location_id`),
+  KEY `incident_active` (`incident_active`),
+  KEY `incident_date` (`incident_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -422,7 +425,8 @@ CREATE TABLE IF NOT EXISTS `incident_category` (
   `id` int(11) NOT NULL auto_increment,
   `incident_id` bigint(20) NOT NULL default '0',
   `category_id` int(11) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `incident_category_ids` (`incident_id,category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
