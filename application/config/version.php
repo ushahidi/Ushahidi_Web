@@ -2,11 +2,11 @@
 /**
  * The Ushahidi Engine version
  */
-$config['ushahidi_version'] = "1.0";
+$config['ushahidi_version'] = "0.9";
 
 
 /**
  * The Ushahidi Engine DB revision number
  * Increments when changes are made to the Ushahidi DB schema.
  */
-$config['ushahidi_db_version'] = "11";
+$config['ushahidi_db_version'] = "14";
