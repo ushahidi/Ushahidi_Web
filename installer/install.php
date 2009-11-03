@@ -282,6 +282,8 @@ class Install
 	    return $is_installed;
 	}
 }
+
 $install = new Install();
 $form = new Form();
+
 ?>

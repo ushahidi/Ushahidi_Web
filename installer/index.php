@@ -35,15 +35,15 @@ rel="stylesheet" type="text/css" />
 		    <?php
 		        print ( $form->error('username') =="") ?'':"&#8226;&nbsp;" 
 			    . $form->error('username') . "<br />";
-			print ( $form->error('host') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('host') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('host') . "<br />";
-			print ( $form->error('db_name') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('db_name') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('db_name') . "<br />";
-			print ( $form->error('permission') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('permission') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('permission') . "<br />";
-			print ( $form->error('load_db_tpl') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('load_db_tpl') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('load_db_tpl') . "<br />";
-			print ( $form->error('connection') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('connection') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('connection') . "<br />";
 		    ?>
 		</td>
