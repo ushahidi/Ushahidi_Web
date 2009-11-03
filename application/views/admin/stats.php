@@ -20,7 +20,7 @@
 		<?php
 			if($stat_id == 0){ // No stat account created
 		?>
-				<a href="?create_account=1">Create stat account</a>
+				<h1 style="text-align:center"><a href="?create_account=1">Create stat account</a></h1>
 		<?php
 			}else{
 		?>
