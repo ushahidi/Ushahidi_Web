@@ -18,6 +18,30 @@
 class Stats_Model extends ORM
 {
 	
+	/**
+	 * Creates a new site in centralized stat tracker
+	 * @param sitename - name of the instance
+	 * @param url - base url 
+	 */
+	static function create_site( $sitename, $url ) 
+	{
+		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
+		
+		// FIXME: This method of extracting the stat_id will only work as 
+		//        long as we are only returning the id and nothing else. It
+		//        is just a quick and dirty implementation for now.
+		$stat_id = trim(strip_tags($this->_curl_req($stat_url))); // Create site and get stat_id
+		
+		if($stat_id > 0){
+			$settings = ORM::factory('settings',1);
+			$settings->stat_id = $stat_id;
+			$settings->save();
+			return $stat_id;
+		}
+		
+		return false;
+	}
+	
 	static function get_hit_stats($range=31)
 	{		
 		$settings = ORM::factory('settings', 1);
@@ -183,7 +207,6 @@ class Stats_Model extends ORM
 			
 		}
 		
-		
 		// Add all our data sets to the array we are returning
 		$data['category_counts'] = $category_counts;
 		$data['verified_counts'] = $verified_counts;
@@ -191,9 +214,6 @@ class Stats_Model extends ORM
 		
 		return $data;
 	}
-	
-	
-	
 	
 	/**
 	 * Helper function to send a cURL request

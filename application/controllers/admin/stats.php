@@ -132,7 +132,7 @@ class Stats_Controller extends Admin_Controller
 		$url = url::base();
 		
 		if (!empty($_GET['create_account'])){
-			$this->template->content->stat_id = $this->_create_site( $sitename, $url );
+			$this->template->content->stat_id = Stats_Model::create_site( $sitename, $url );
 		}
 		
 		// Javascript Header
@@ -181,17 +181,15 @@ class Stats_Controller extends Admin_Controller
 	 * @param sitename - name of the instance
 	 * @param url - base url 
 	 */
+	/*
 	public function _create_site( $sitename, $url ) 
 	{
 		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
-		$this->template->content->test .= '<br>Create Site - '.$stat_url.'<br>';
 		
 		// FIXME: This method of extracting the stat_id will only work as 
 		//        long as we are only returning the id and nothing else. It
 		//        is just a quick and dirty implementation for now.
 		$stat_id = trim(strip_tags($this->_curl_req($stat_url))); // Create site and get stat_id
-		
-		$this->template->content->test .= 'New Stat ID: '.$stat_id.'<br>';
 		
 		if($stat_id > 0){
 			$settings = ORM::factory('settings',1);
@@ -202,11 +200,13 @@ class Stats_Controller extends Admin_Controller
 		
 		return false;
 	}
+	*/
 	
 	/**
 	 * Helper function to send a cURL request
 	 * @param url - URL for cURL to hit
 	 */
+	/*
 	public function _curl_req( $url )
 	{
 		// Make sure cURL is installed
@@ -224,4 +224,5 @@ class Stats_Controller extends Admin_Controller
 		
 		return $buffer;
 	}
+	*/
 }
