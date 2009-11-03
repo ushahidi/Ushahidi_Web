@@ -6,11 +6,7 @@
 */
 if (!file_exists(DOCROOT."application/config/database.php"))
 {
-	// not elegant at the moment but  works. I know there is a shorter way of achieving this.
-	$doc_root = DOCROOT;
-	$folders = explode('/',$doc_root);
-	$installer = end(array_filter($folders))."/installer/";
-	
+	$installer = "http://".$_SERVER["SERVER_NAME"].$_SERVER['REQUEST_URI'].'installer';
 	url::redirect($installer);
 	
 }
