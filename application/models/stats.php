@@ -135,8 +135,12 @@ class Stats_Model extends ORM
 		$reports = ORM::factory('incident')->find_all();
 		$reports_categories = ORM::factory('incident_category')->find_all();
 		
-		// Gather some data into an array on incident reports
+		// Initialize arrays so we don't error out
 		$report_data = array();
+		$verified_counts = array();
+		$approved_counts = array();
+		
+		// Gather some data into an array on incident reports
 		foreach($reports as $report) {
 			$timestamp = (string)strtotime(substr($report->incident_date,0,10));
 			$report_data[$report->id] = array(

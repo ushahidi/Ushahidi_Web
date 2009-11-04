@@ -82,6 +82,7 @@ class Stats_Controller extends Admin_Controller
 		
 		// Generate Raw Data
 		// Convert category ids to names
+		$raw_category = array();
 		foreach($report_stats['category_counts'] as $category_id => $arr) {
 			$raw_category[$cats[$category_id]['category_title']] = $arr;
 		}

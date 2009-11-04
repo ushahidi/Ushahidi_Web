@@ -105,7 +105,7 @@ $(document).ready(function() {
 	    
 	    plotContainer[<?=$i?>].bind("plotselected", function (event, ranges) {
 	        // do the zooming
-	        plot<?=$i?> = $.plot(plotContainer[<?=$i?>], graphData[1],
+	        plot<?=$i?> = $.plot(plotContainer[<?=$i?>], graphData[<?=$i?>],
 	                      $.extend(true, {}, options, {
 	                          xaxis: { min: ranges.xaxis.from, max: ranges.xaxis.to }
 	                      }));
