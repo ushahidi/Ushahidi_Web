@@ -644,6 +644,11 @@ table td{
 	width:25px;
 }
 .table .col-2{ width:539px;}
+.table .col-2_sub{
+	width:519px;
+	padding-left:20px;
+	background:url(../../img/admin/arrow.gif) no-repeat 3px 17px;
+}
 .table .col-3{
 	width:103px;
 }

@@ -18,6 +18,7 @@
 					<a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a>
 					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
 					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
+					<a href="<?php echo url::base() . 'admin/manage/pages' ?>">Pages</a>
 					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active">News Feeds</a>
 					<span>(<a href="#add">Add New</a>)</span>
 					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>

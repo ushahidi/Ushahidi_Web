@@ -64,6 +64,12 @@
 		echo html::stylesheet('media/css/colorpicker', '', true);
 		echo html::script('media/js/colorpicker', true);
 	}
+	
+	// Load TinyMCE
+	if ($editor_enabled)
+	{
+		echo html::script('media/js/tinymce/tiny_mce', true);
+	}
 	?>
 	<script type="text/javascript" charset="utf-8">
 		<?php echo $js . "\n"; ?>

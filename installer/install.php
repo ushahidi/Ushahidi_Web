@@ -94,9 +94,29 @@ class Install
 
 		    $this->import_sql($username, $password, $host,$db_name);
 		    $this->chmod_folders();
+	        
+	        $sitename = $this->get_url();
+		    $url = $this->get_url();
+		    $configure_stats = $this->configure_stats($sitename, $url, $host, $username, $password, $db_name);
+	        
 	        return 0;
 	   }
 	}
+	
+	/**
+	 * gets the URL
+	 */
+	 private function get_url()
+	 {
+	 	global $_SERVER;
+	 	if ($_SERVER["SERVER_PORT"] != "80") {
+			$url = $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+		} else {
+			$url = $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		}
+		
+		return 'http://'.substr($url,0,stripos($url,'/installer/'));
+	 }
 
 	/**
 	 * adds the database details to the config/database.php file.
@@ -108,7 +128,7 @@ class Install
 	    $database_file = @file('../application/config/database.template.php');
 	    $handle = @fopen('../application/config/database.php', 'w');
 	    foreach( $database_file as $line_number => $line )
-	    {
+	    {   
 	        switch( trim(substr( $line,0,14 )) ) {
 	            case "'type'     =":
 	                fwrite($handle, str_replace("'mysql'","'".
@@ -244,6 +264,30 @@ class Install
 		    return FALSE;
 		}
 	}
+	
+	/**
+	 * Set up stat tracking
+	 */
+	private function configure_stats($sitename, $url, $host, $username, $password, $db_name)
+	{
+		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
+		
+		// FIXME: This method of extracting the stat_id will only work as 
+		//        long as we are only returning the id and nothing else. It
+		//        is just a quick and dirty implementation for now.
+		$stat_id = trim(strip_tags($this->_curl_req($stat_url))); // Create site and get stat_id
+		
+		if($stat_id > 0){
+			$connection = @mysql_connect("$host", "$username", "$password");
+			@mysql_select_db($db_name,$connection);
+			@mysql_query('UPDATE `settings` SET `stat_id` = \''.mysql_escape_string($stat_id).'\' WHERE `id` =1 LIMIT 1;');
+			@mysql_close($connection);
+			
+			return $stat_id;
+		}
+		
+		return false;
+	}
 
 	/**
 	 * Change permissions on the cache, logs, and upload folders.
@@ -281,7 +325,31 @@ class Install
 
 	    return $is_installed;
 	}
+	
+	/**
+	 * Helper function to send a cURL request
+	 * @param url - URL for cURL to hit
+	 */
+	public function _curl_req( $url )
+	{
+		// Make sure cURL is installed
+		if (!function_exists('curl_exec')) {
+			throw new Kohana_Exception('stats.cURL_not_installed');
+			return false;
+		}
+		
+		$curl_handle = curl_init();
+		curl_setopt($curl_handle,CURLOPT_URL,$url);
+		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
+		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
+		$buffer = curl_exec($curl_handle);
+		curl_close($curl_handle);
+		
+		return $buffer;
+	}
 }
+
 $install = new Install();
 $form = new Form();
+
 ?>

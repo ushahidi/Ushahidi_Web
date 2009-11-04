@@ -6,5 +6,7 @@
 */
 if (!file_exists(DOCROOT."application/config/database.php"))
 {
-  url::redirect("installer/");
+	$installer = "http://".$_SERVER["SERVER_NAME"].$_SERVER['REQUEST_URI'].'installer';
+	url::redirect($installer);
+	
 }

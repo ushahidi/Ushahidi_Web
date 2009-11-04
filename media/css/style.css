@@ -99,7 +99,7 @@ div#logo{
     border: 0;
     background: #E2E2E2;
     padding: 44px 24px;
-    font-size: 115%;
+    font-size: 20px;
     float: left;
     margin: 14px 0 0 0;
 }
@@ -496,6 +496,10 @@ ul.category-filters li a:hover, ul.category-filters li a.active {
     color: #FFFFFF;
     background-color: #3484AC;
     border: #3484AC 1px solid;
+}
+
+ul.category-filters li.child{
+	display:none;
 }
 
 /* additional content */

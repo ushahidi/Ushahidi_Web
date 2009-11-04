@@ -70,6 +70,7 @@ class Admin_Controller extends Template_Controller
 	$this->template->map_enabled = FALSE;
 	$this->template->flot_enabled = FALSE;
 	$this->template->colorpicker_enabled = FALSE;
+	$this->template->editor_enabled = FALSE;
 	$this->template->js = '';
 		
 	// Load profiler

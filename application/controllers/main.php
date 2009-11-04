@@ -52,6 +52,9 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->site_name_style = $site_name_style;
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
         $this->template->header->api_url = Kohana::config('settings.api_url');
+
+		// Get Custom Pages
+		$this->template->header->pages = ORM::factory('page')->where('page_active', '1')->find_all();
         
         // Get custom CSS file from settings
         $this->template->header->site_style = Kohana::config('settings.site_style');
@@ -102,16 +105,31 @@ class Main_Controller extends Template_Controller {
         $this->template->header->this_page = 'home';
         $this->template->content = new View('main');
 		
-        // Get all active categories
-        $categories = array();
+        // Get all active top level categories
+        $parent_categories = array();
         foreach (ORM::factory('category')
-                 ->where('category_visible', '1')
-                 ->find_all() as $category)
+				->where('category_visible', '1')
+				->where('parent_id', '0')
+				->find_all() as $category)
         {
-            // Create a list of all categories
-            $categories[$category->id] = array( $category->category_title, $category->category_color);
+            // Get The Children
+			$children = array();
+			foreach ($category->children as $child)
+			{
+				$children[$child->id] = array( 
+					$child->category_title, 
+					$child->category_color
+				);
+			}
+			
+			// Put it all together
+            $parent_categories[$category->id] = array( 
+				$category->category_title, 
+				$category->category_color,
+				$children
+			);
         }
-        $this->template->content->categories = $categories;
+        $this->template->content->categories = $parent_categories;
 
 		// Get all active Shares
 		$shares = array();
@@ -259,7 +277,7 @@ class Main_Controller extends Template_Controller {
 			$this->template->header->js->daily_graphs = $daily_graphs;
 			$this->template->header->js->hourly_graphs = $hourly_graphs;
 			$this->template->header->js->weekly_graphs = $weekly_graphs;
-			$this->template->header->js->categories = $categories;
+			$this->template->header->js->categories = $parent_categories;
 			$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
 		
 		// If we are viewing the 3D map

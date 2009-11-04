@@ -35,15 +35,15 @@ rel="stylesheet" type="text/css" />
 		    <?php
 		        print ( $form->error('username') =="") ?'':"&#8226;&nbsp;" 
 			    . $form->error('username') . "<br />";
-			print ( $form->error('host') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('host') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('host') . "<br />";
-			print ( $form->error('db_name') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('db_name') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('db_name') . "<br />";
-			print ( $form->error('permission') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('permission') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('permission') . "<br />";
-			print ( $form->error('load_db_tpl') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('load_db_tpl') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('load_db_tpl') . "<br />";
-			print ( $form->error('connection') =="") ?'':"&#8226;&nbsp;" 
+				print ( $form->error('connection') =="") ?'':"&#8226;&nbsp;" 
 			    .$form->error('connection') . "<br />";
 		    ?>
 		</td>
@@ -75,13 +75,13 @@ rel="stylesheet" type="text/css" />
               <td>
                 <strong>Database Host:</strong><br />
               <input type="text" name="host" class="login_text" 
-                value="<?php print $form->value('host') == ''? 'localhost':$form->value('host'); ?>" />
+                value="<?php print $form->value('host') == '' ? 'localhost':$form->value('host'); ?>" />
               <br />Your database host. It could also be mysql.somedomain.com
               </td>  
             </tr>
             <tr>
               <td>
-                <strong>Database name:</strong><br />
+                <strong>Database Name:</strong><br />
               <input type="text" name="db_name" class="login_text" 
               value="<?php print $form->value('db_name'); ?>" />
                 <br />The name of the database you want to run Ushahidi in.
@@ -99,7 +99,7 @@ rel="stylesheet" type="text/css" />
             </tr>
             <tr>
               <td>
-                <strong>Table prefix:</strong><br />
+                <strong>Table Prefix:</strong><br />
                   <input type="text" name="table_prefix" class="login_text" 
                   value="<?php print $form->value('table_prefix'); ?>" />
                 <br />The prefix to be used by the tables. Eg. ush_<br />

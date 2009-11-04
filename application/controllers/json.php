@@ -23,7 +23,7 @@ class Json_Controller extends Template_Controller
 	
     function index()
     {	
-		// $profile = new Profiler;
+		//$profile = new Profiler;
 		
         $json = "";
         $json_item = "";
@@ -82,6 +82,20 @@ class Json_Controller extends Template_Controller
         // Do we have a category id to filter by?
         if (is_numeric($category_id) && $category_id != '0')
         {
+			// Retrieve children categories and category color
+			$category = ORM::factory('category', $category_id);
+            $color = $category->category_color;
+			$icon = $category->category_image;
+			
+			$where_child = "";
+			$children = ORM::factory('category')
+				->where('parent_id', $category_id)
+				->find_all();
+			foreach ($children as $child)
+			{
+				$where_child .= " OR incident_category.category_id = ".$child->id." ";
+			}
+			
             // Retrieve markers by category
             // XXX: Might need to replace magic numbers
 			$markers = ORM::factory('incident')
@@ -89,14 +103,9 @@ class Json_Controller extends Template_Controller
 				->with('location')
 				->join('incident_category', 'incident.id', 'incident_category.incident_id','LEFT')
 				->join('media', 'incident.id', 'media.incident_id','LEFT')
-				->where('incident.incident_active = 1 AND 
-					incident_category.category_id = ' . $category_id . $where_text)
+				->where('incident.incident_active = 1 AND (incident_category.category_id = ' . $category_id . ' ' . $where_child . ')' . $where_text)
 				->find_all();
-
-            // Retrieve category color
-			$category = ORM::factory('category', $category_id);
-            $color = $category->category_color;
-			$icon = $category->category_image;
+			
                      
         }
         else

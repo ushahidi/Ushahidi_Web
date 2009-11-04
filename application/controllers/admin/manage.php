@@ -41,6 +41,7 @@ class Manage_Controller extends Admin_Controller
 	    (
 			'action' => '',
 			'category_id'      => '',
+			'parent_id'      => '',
 			'category_title'      => '',
 	        'category_description'    => '',
 	        'category_color'  => '',
@@ -51,7 +52,7 @@ class Manage_Controller extends Admin_Controller
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-		
+		$parents_array = array();
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -64,11 +65,13 @@ class Manage_Controller extends Admin_Controller
 			if ($post->action == 'a')		// Add Action
 			{
 				// Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('parent_id','required','numeric');
 				$post->add_rules('category_title','required', 'length[3,80]');
 				$post->add_rules('category_description','required');
 				$post->add_rules('category_color','required', 'length[6,6]');
 				$post->add_rules('category_image', 'upload::valid', 
 					'upload::type[gif,jpg,png]', 'upload::size[50K]');
+				$post->add_callbacks('parent_id', array($this,'parent_id_chk'));
 			}
 			
 			// Test to see if things passed the rule checks
@@ -115,6 +118,7 @@ class Manage_Controller extends Admin_Controller
 				} 
 				else if( $post->action == 'a' )
 				{ // Save Action				
+					$category->parent_id = $post->parent_id;
 					$category->category_title = $post->category_title;
 					$category->category_description = $post->category_description;
 					$category->category_color = $post->category_color;
@@ -164,14 +168,22 @@ class Manage_Controller extends Admin_Controller
         $pagination = new Pagination(array(
                             'query_string' => 'page',
                             'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-                            'total_items'    => ORM::factory('category')->count_all()
+                            'total_items'    => ORM::factory('category')
+													->where('parent_id','0')
+													->count_all()
                         ));
 
         $categories = ORM::factory('category')
+						->where('parent_id','0')
                         ->orderby('category_title', 'asc')
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
-
+		 $parents_array = ORM::factory('category')
+            ->where('parent_id','0')
+            ->select_list('id', 'category_title');
+        // add none to the list
+        $parents_array[0] = "--- Top Level Category ---";
+		
 		$this->template->content->errors = $errors;
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
@@ -179,6 +191,8 @@ class Manage_Controller extends Admin_Controller
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->categories = $categories;
+		
+		$this->template->content->parents_array = $parents_array;
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
@@ -313,6 +327,124 @@ class Manage_Controller extends Admin_Controller
         $this->template->colorpicker_enabled = TRUE;
         $this->template->js = new View('admin/organization_js');
 	}
+	
+	
+	/*
+	Add Edit Pages
+	*/
+	function pages()
+	{
+		$this->template->content = new View('admin/pages');
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+			'action' => '',
+	        'page_id'      => '',
+			'page_title'      => '',
+			'page_tab'      => '',
+	        'page_description'    => ''
+	    );
+		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+	    $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+		
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+	        // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+			
+	         //  Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+			if ($post->action == 'a')		// Add Action
+			{ // Add some rules, the input field, followed by a list of checks, carried out in order
+				$post->add_rules('page_title','required', 'length[3,150]');
+				$post->add_rules('page_description','required');
+			}
+			
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+				$page_id = $post->page_id;
+				
+				$page = new Page_Model($page_id);
+				
+				if( $post->action == 'd' )
+				{ // Delete Action
+					$page->delete( $page_id );
+					$form_saved = TRUE;
+					$form_action = "DELETED";
+				
+				}
+				else if( $post->action == 'v' )			
+				{ // Show/Hide Action
+	            	if ($page->loaded==true)
+					{
+						if ($page->page_active == 1) {
+							$page->page_active = 0;
+						}
+						else {
+							$page->page_active = 1;
+						}
+						$page->save();
+						$form_saved = TRUE;
+						$form_action = "MODIFIED";
+					}
+				}
+				else if( $post->action == 'a' ) 		
+				{ // Save Action
+					$page->page_title = $post->page_title;
+					$page->page_tab = $post->page_tab;
+					$page->page_description = $post->page_description;
+					$page->save();
+					$form_saved = TRUE;
+					$form_action = "ADDED/EDITED";
+				}       
+	        }
+	        else
+			{ // No! We have validation errors, we need to show the form again, with the errors
+				
+	             // repopulate the form fields
+		         $form = arr::overwrite( $form, $post->as_array() ); 
+
+               // populate the error fields, if any
+                $errors = arr::overwrite($errors, 
+					$post->errors('page'));
+                $form_error = TRUE;
+            }
+        }
+		
+        // Pagination
+        $pagination = new Pagination(array(
+                            'query_string' => 'page',
+                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+                            'total_items'    =>
+ 							ORM::factory('page')->count_all()
+                        ));
+
+        $pages = ORM::factory('page')
+                        ->orderby('page_title', 'asc')
+                        ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                            $pagination->sql_offset);
+
+        $this->template->content->form = $form;
+		$this->template->content->form_error = $form_error;
+        $this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
+        $this->template->content->pagination = $pagination;
+        $this->template->content->total_items = $pagination->total_items;
+        $this->template->content->pages = $pages;
+		$this->template->content->errors = $errors;
+
+        // Javascript Header
+        $this->template->editor_enabled = TRUE;
+        $this->template->js = new View('admin/pages_js');
+	}	
+	
 	
 	/*
 	Add Edit News Feeds
@@ -731,6 +863,37 @@ class Manage_Controller extends Admin_Controller
 				$feed->feed_update = strtotime('now');
 				$feed->save();
 			}
+		}
+	}
+	
+	/**
+	 * Checks if parent_id for this category exists
+     * @param Validation $post $_POST variable with validation rules
+	 */
+	public function parent_id_chk(Validation $post)
+	{
+		// If add->rules validation found any errors, get me out of here!
+		if (array_key_exists('parent_id', $post->errors()))
+			return;
+		
+		$category_id = $post->category_id;
+		$parent_id = $post->parent_id;
+		// This is a parent category - exit
+		if ($parent_id == 0)
+			return;
+		
+		$parent_exists = ORM::factory('category')
+			->where('id', $parent_id)
+			->find();
+		
+		if (!$parent_exists->loaded)
+		{ // Parent Category Doesn't Exist
+			$post->add_error( 'parent_id', 'exists');
+		}
+		
+		if (!empty($category_id) && $category_id == $parent_id)
+		{ // Category ID and Parent ID can't be the same!
+			$post->add_error( 'parent_id', 'same');
 		}
 	}
 }
