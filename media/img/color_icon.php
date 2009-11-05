@@ -10,12 +10,12 @@
 
 header("Content-type: image/png"); 
 
-$width = 1;
-$height = 1;
+$width = 100;
+$height = 100;
 $r = 0;
 $g = 0;
 $b = 255;
-$alpha = 0;
+//$alpha = 0;
 
 if(isset($_GET['w'])) $width = $_GET['w'];
 if(isset($_GET['h'])) $height = $_GET['h'];
@@ -27,13 +27,22 @@ if(isset($_GET['c'])) {
 }
 
 $im = imagecreatetruecolor($width, $height);
-imagealphablending($im, true);
-$color = imagecolorallocatealpha($im, $r, $g, $b, $alpha);
-imagefilltoborder($im, 0, 0, $color, $color);
- 
+
+$color = ImageColorAllocate($im, $r, $g, $b);
+$white = ImageColorAllocate($im, 255, 255, 255);
+
+imagefilltoborder($im, 0, 0, $white, $white);
+
+imagecolortransparent($im, $white);
+
+$cx = ceil(($width / 2));
+$cy = ceil(($height / 2));
+ImageFilledEllipse($im, $cx, $cy, ($width-1), ($height-1), $color);
+
 // send the new PNG image to the browser
 imagepng($im); 
  
 // destroy the reference pointer to the image in memory to free up resources
 imagedestroy($im); 
+
 ?>

@@ -575,7 +575,7 @@ class Api_Controller extends Controller {
 		}
 		
 		// Finally, grab the incidents
-		$incidents = json_decode($this->_getIncidents());
+		$incidents = json_decode($this->_getIncidents('WHERE incident_active=1'));
 		$incidents = $incidents->payload->incidents;
 		
 		// Calculate times for relative altitudes (This is the whole idea behind 3D maps)
