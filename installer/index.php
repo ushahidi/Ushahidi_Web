@@ -5,7 +5,7 @@
     //check if ushahidi is installed?.
     if( $install->is_ushahidi_installed())
     {
-        header('Location:../installer');
+        header('Location:../');
     }
    
  ?>

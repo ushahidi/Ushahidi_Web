@@ -10,7 +10,9 @@
  */
 $config['cache_pages'] = TRUE;
 
-
+if (@!is_writable(APPPATH.'cache')) {
+	$config["cache_pages"] = FALSE;
+}
 
 /**
  * CONFIGURATION

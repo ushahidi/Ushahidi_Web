@@ -176,7 +176,7 @@ class Install
 	{
 	    $config_file = @file('../application/config/config.template.php');
         $handle = @fopen('../application/config/config.php', 'w');
-
+		
 	    foreach( $config_file as $line_number => $line )
 	    {
 	        if( !empty( $base_path ) )

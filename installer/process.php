@@ -53,7 +53,7 @@
 	    
 	    //no errors
 	    if( $status == 0 ) { 
-	        header("Location:index.php");
+	        header("Location:../");
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
 	        $_SESSION['error_array'] = $form->get_error_array();
