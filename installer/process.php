@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * simplify the task of processing form fields, redirecting to the pages.
  *
@@ -33,7 +33,7 @@
 	        $this->process_install();
 	    
 	    } else {
-	        header("Location:index.php");
+	        header("Location:.");
 	    }        
 	}
 	
@@ -57,7 +57,7 @@
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
 	        $_SESSION['error_array'] = $form->get_error_array();
-	        header("Location:index.php");
+	        header("Location:.");
 	    }
 	           
 	}

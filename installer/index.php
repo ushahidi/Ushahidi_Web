@@ -26,27 +26,32 @@ rel="stylesheet" type="text/css" />
     <div id="ushahidi_login">
     
       <?php 
-      	$ret = $install->_check_writable_dir();
+      	$ret = 0;
+		if( !isset($_GET['do']) ) {
+			//$ret = $install->_check_writable_dir();
+       		
+			if( !is_writable('../')) {
+				print("Sorry, can't write to the directory. You'll have to " .
+					"change the permission on the directory <code>$this->install_directory/</code>. Make sure its writable by the webserver. <br />");
+			}
 		
-		if ($form->num_errors > 0 ) {
-			print ( $form->error('root_dir') =="") ?'':"&#8226;&nbsp;" 
-				.$form->error('root_dir') . "<br /><br />";
-			print ( $form->error('config_dir') =="") ?'':"&#8226;&nbsp;" 
-				.$form->error('config_dir') . "<br /><br />";
-		}?>
+			if( !is_writable('../application/config')) {
+		    	print("Sorry, can't write to the directory.
+		    You'll have to either change the permissions on your Ushahidi
+		    directory with this command <code>chmod a+w
+		    	$this->install_directory/application/config</code> or
+		    	create your database.php manually.");
+			}
+			print('<p>
+					After fixing the above problem, click <a href=".?do=install">here</a> to install ushahidi.
+				</p>'); ?>
 		
-		<p>
-			After fixing the above problem, click <a href="">here</a> to install ushahidi.
-		</p>
-		
-		<?php
-	    if($ret == 0 ){ 
-	    	if ($form->num_errors > 0 ) { ?>
-	    		<table width="100%" border="0" cellspacing="3" c<table width="100%" border="0" cellspacing="3" cellpadding="4" 
-      				background="" id="ushahidi_loginbox">ellpadding="4" 
+		<?php } else if( isset($_GET['do']) && ($_GET['do'] == 'install' ) && ( $ret == 0 ) ){ print $ret;?> 
+	    		<table width="100%" border="0" cellspacing="3" cellpadding="4" 
       				background="" id="ushahidi_loginbox">
         		<form method="POST" name="frm_install" action="process.php" 
-        			style="line-height: 100%; margin-top: 0; margin-bottom: 0">     
+        			style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
+        			<?php if ($form->num_errors > 0 ) { ?>   
             		<tr>
               			<td align="left" class="login_error">
 		    			<?php
@@ -133,6 +138,7 @@ rel="stylesheet" type="text/css" />
             		</tr>
             	</table>
         	</form>
+        		
         	<?php } ?>
   </div>
 </div>
