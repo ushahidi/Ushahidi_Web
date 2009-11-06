@@ -1,6 +1,6 @@
 <?php 
 /**
- * Email view page.
+ * Themes view page.
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -8,7 +8,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
+ * @module     Themes View
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
@@ -19,8 +19,8 @@
 					<a href="<?php echo url::base() . 'admin/settings' ?>">Map</a>
 					<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
 					<a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a>
-					<a href="<?php echo url::base() . 'admin/settings/email' ?>" class="active">Email</a>
-					<a href="<?php echo url::base() . 'admin/settings/themes' ?>">Themes</a>
+					<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
+					<a href="<?php echo url::base() . 'admin/settings/themes' ?>" class="active">Themes</a>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">
@@ -52,54 +52,43 @@
 					}
 					?>				
 					<div class="head">
-						<h3>Mail Server Settings</h3>
+						<h3>Theme Settings</h3>
 						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 					</div>
-					<!-- column -->		
+					<!-- column -->
 					<div class="sms_holder">
-						<div class="row">
-							<h4>Mail Server Username</h4>
-							<?php print form::input('email_username', $form['email_username'], ' class="text long2"'); ?>
-						</div>
-						<span>
-							Some providers require a full email address as username
-						</span>
-						<div class="row">
-							<h4>Mail Server Password</h4>
-							<?php print form::password('email_password', $form['email_password'], ' class="text long2"'); ?>							
-						</div>
-						<span>
-							Mail server password
-						</span>
-						<div class="row">
-							<h4>Mail Server Port</h4>
-							<?php print form::input('email_port', $form['email_port'], ' class="text long2"'); ?>
-						</div>
-						<span>
-							Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL)
-						</span>
-						<div class="row">
-							<h4>Mail Server Host</h4>
-							<?php print form::input('email_host', $form['email_host'], ' class="text long2"'); ?>
-						</div>
-						<span>
-							Config Mail Server Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com
-						</span>
-						<div class="row">
-							<h4>Mail Server Type</h4>
-							<?php print form::input('email_servertype', $form['email_servertype'], ' class="text long2"'); ?>								 
-						</div>
-						<span>
-							Config Mail Server Type Examples: pop3, imap
-						</span>
-						<div class="row">
-							<h4>Mail Server SSL support</h4>
-								<?php print form::dropdown('email_ssl', $email_ssl_array, $form['email_ssl']); ?>
-						</div>
-						<span>
-							Enable or disable SSL
-						</span>
+						<?php
+						foreach ($themes as $theme)
+						{
+							?>
+							<div class="theme_holder">
+								<div class="theme_screenshot"><?php
+									if (!empty($theme['Screenshot']))
+									{
+										echo "<img src=\"".url::base()."themes/".$theme['Template_Dir']."/".
+										$theme['Screenshot']."\" width=240 height=150 border=0>";
+									}
+								?></div>
+								<strong><?php echo $theme['Title']." by ".$theme['Author']; ?></strong><BR />
+								<?php echo $theme['Description'] ?><BR />
+								<strong><u>Version</u></strong>: <?php echo $theme['Version'] ?><BR />
+								<strong><u>Demo</u></strong>: <?php echo $theme['Demo'] ?><BR />
+								<strong><u>Contact</u></strong>: <?php echo $theme['Author_Email'] ?><BR />
+								<strong><u>Location</u></strong>: <i>/themes/<?php echo $theme['Template_Dir'] ?>/</i>
+								<div class="theme_select">
+									<input type="radio" name="site_style" value="<?php echo $theme['Name'] ?>" <?php
+									if ($theme['Name'] == $form['site_style'])
+									{
+										echo "checked = \"checked\"";
+									}
+									?> />Select Theme
+								</div>												
+							</div>
+							<?php
+						}						
+						?>
+						<div style="clear:both;"></div>
 					</div>
 		
 					<div class="simple_border"></div>

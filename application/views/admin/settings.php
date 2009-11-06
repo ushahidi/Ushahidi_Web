@@ -20,6 +20,7 @@
 					<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
 					<a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a>
 					<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
+					<a href="<?php echo url::base() . 'admin/settings/themes' ?>">Themes</a>
 				</h2>
 				<?php print form::open(); ?>
 					<div class="report-form">

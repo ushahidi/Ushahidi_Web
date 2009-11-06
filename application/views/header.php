@@ -70,7 +70,7 @@
 	}
 	
 	//Custom stylesheet
-	echo html::stylesheet('media/css/themes/'.$site_style);
+	echo html::stylesheet(url::base().'themes/'.$site_style."/style.css");
 	?>
 
 	<!--[if IE 6]>
@@ -117,7 +117,7 @@
 			<!-- / searchbox -->
 		
 			<!-- logo -->
-			<div id="logo"><strong>ORGANIZATION NAME / LOGO / Site Name</strong></div>
+			<div id="logo"><strong><?php echo $site_name; ?></strong></div>
 			<!-- / logo -->
 		
 			<!-- submit incident -->
