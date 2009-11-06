@@ -1274,6 +1274,30 @@ div.sms_holder{
 	* html div.sms_holder{
 		margin-left: 10px;
 	}
+	div.theme_holder{
+		width:243px;
+		margin-right:20px;
+		border:1px solid #ccc;
+		float:left;
+		padding:10px;
+	}
+		div.theme_screenshot{
+			width:240px;
+			height:150px;
+			border:1px solid #000;
+			background-color:#ccc;
+			margin-bottom:10px;
+		}
+		div.theme_select{
+			margin-top:10px;
+			padding:5px;
+			background-color:#eee;
+			border:1px solid #ccc;
+			font-weight:bold;
+		}
+		div.theme_select:hover{
+			background-color:#FFFFCC;
+		}
 
 div.simple_border{
 	width: 900px;

@@ -20,6 +20,7 @@
 					<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
 					<a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a>
 					<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
+					<a href="<?php echo url::base() . 'admin/settings/themes' ?>">Themes</a>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">
@@ -77,12 +78,6 @@
 							<h4>Site Language (Locale)</h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('site_language', $site_language_array, $form['site_language']); ?>
-							</span>
-						</div>
-						<div class="row">
-							<h4>Site Style</h4>
-							<span class="sel-holder">
-								<?php print form::dropdown('site_style', $site_style_array, $form['site_style']); ?>
 							</span>
 						</div>
 						<div class="row">

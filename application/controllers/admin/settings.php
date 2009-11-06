@@ -43,7 +43,6 @@ class Settings_Controller extends Admin_Controller
 			'site_email' => '',
 			'alerts_email' =>  '',
 			'site_language' => '',
-			'site_style' => '',
 			'items_per_page' => '',
 			'items_per_page_admin' => '',
 			'allow_reports' => '',
@@ -93,7 +92,6 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_email', 'email', 'length[4,100]');
 			$post->add_rules('alerts_email', 'email', 'length[4,100]');
 			$post->add_rules('site_language','required', 'in_array[en_US, fr_FR]');
-			$post->add_rules('site_style','required', 'in_array['.implode(',',$style_array).']');
 			$post->add_rules('items_per_page','required','between[10,50]');
 			$post->add_rules('items_per_page_admin','required','between[10,50]');
 			$post->add_rules('allow_reports','required','between[0,1]');
@@ -121,7 +119,6 @@ class Settings_Controller extends Admin_Controller
 				$settings->site_email = $post->site_email;
 				$settings->alerts_email = $post->alerts_email;
 				$settings->site_language = $post->site_language;
-				$settings->site_style = $post->site_style;
 				$settings->items_per_page = $post->items_per_page;
 				$settings->items_per_page_admin = $post->items_per_page_admin;
 				$settings->allow_reports = $post->allow_reports;
@@ -178,7 +175,6 @@ class Settings_Controller extends Admin_Controller
 				'site_email' => $settings->site_email,
 				'alerts_email' => $settings->alerts_email,
 				'site_language' => $settings->site_language,
-				'site_style' => $settings->site_style,
 				'items_per_page' => $settings->items_per_page,
 				'items_per_page_admin' => $settings->items_per_page_admin,
 				'allow_reports' => $settings->allow_reports,
@@ -206,7 +202,6 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->site_language_array = Kohana::config('locale.all_languages');
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
-		$this->template->content->site_style_array = $style_array;
 	}
 
 	/**

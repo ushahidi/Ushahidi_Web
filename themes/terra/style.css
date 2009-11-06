@@ -1,0 +1,89 @@
+/*
+Theme Name: Terra
+Description: Some dark blues and browns
+Demo: http://beta1-1.ushahididev.com/
+Version: 1.0
+Author: David Kobia
+Author Email: david@ushahidi.com
+*/
+
+/* header background */
+body#page{
+	background: #031634 url(terra.gif) 50% 0 repeat-x;
+}
+
+/* footer */
+div#footer
+{
+	background-color: #033649;
+}
+div#underfooter{
+	background-color:#033649;
+}
+
+/* links */
+a{
+    color: #3764aa;
+}
+
+a:hover{
+    color: #008cff;
+}
+
+table.table-list tbody tr td a{
+    color: #0099CC;
+}
+
+/* Logo Box */
+div#logo{
+    background-color: #E8DDCB;
+}
+
+/* Main Menu */
+div#mainmenu{
+    background-color: #C2C2C2;
+}
+
+div#mainmenu a{
+    color: #fff;
+}
+
+div#mainmenu a:hover{
+	color: #fff;
+    background-color: #036564;
+}
+
+div#mainmenu a.active{
+    color: #fff;
+    background-color: #036564;
+}
+
+
+/* Submit Button */
+div.submit-incident a{
+    background-color: #CDB380;
+    color: #000;
+}
+
+div.submit-incident a:hover{
+	background-color: #368C00;
+}
+
+
+/* Category Filter Side Bar */
+ul.category-filters{
+    background: #E7E3DA;
+    border-top-color: #C7C2BC;
+    border-bottom-color: #C7C2BC;
+}
+
+ul.category-filters li a{
+    color: #3F3F3F;
+    border-color: #E7E3DA;
+}
+
+ul.category-filters li a:hover, ul.category-filters li a.active {
+    color: #FFFFFF;
+    background-color: #036564;
+    border-color: #036564;
+}
