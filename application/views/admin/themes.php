@@ -77,7 +77,7 @@
 								<strong><u>Contact</u></strong>: <?php echo $theme['Author_Email'] ?><BR />
 								<strong><u>Location</u></strong>: <i>/themes/<?php echo $theme['Template_Dir'] ?>/</i>
 								<div class="theme_select">
-									<input type="radio" name="site_style" value="<?php echo $theme['Name'] ?>" <?php
+									<input type="radio" name="site_style" value="<?php echo $theme['Template_Dir'] ?>" <?php
 									if ($theme['Name'] == $form['site_style'])
 									{
 										echo "checked = \"checked\"";
