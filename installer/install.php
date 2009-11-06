@@ -21,9 +21,13 @@ class Install
 
     private $database_file;
 
-
+	private $install_directory;
 	public function __construct()
 	{
+		global $form;
+	    
+	    $this->install_directory = dirname(dirname(__FILE__));
+	    
 		$this->index();
 	}
 
@@ -39,8 +43,6 @@ class Install
 	    $db_name, $table_prefix, $base_path )
     {
 	    global $form;
-	    $install_directory = dirname(dirname(__FILE__));
-
 	    //check for empty fields
 	    if(!$username || strlen($username = trim($username)) == 0 ){
 	        $form->set_error("username", "Please enter the username of the
@@ -60,14 +62,14 @@ class Install
 	    // load database.template.php and work from it.
 		if(!file_exists('../application/config/database.template.php')){
 		    $form->set_error("load_db_tpl","Sorry, I need a database.template.php file to work
-            from. Please re-upload this file from your Ushahidi installation.");
+            from. Please re-upload this file from the Ushahidi files.");
 		}
 
 		if( !is_writable('../application/config')) {
 		    $form->set_error('permission',"Sorry, can't write to the directory.
 		    You'll have to either change the permissions on your Ushahidi
 		    directory with this command <blockquote>chmod a+w
-		    $install_directory/application/config</blockquote> or
+		    $this->install_directory/application/config</blockquote> or
 		    create your database.php manually.");
 		}
 
@@ -346,6 +348,37 @@ class Install
 		curl_close($curl_handle);
 		
 		return $buffer;
+	}
+	
+	/**
+	 * Check if relevant directories are writable.
+	 */
+	public function _check_writable_dir() {
+		global $form;
+		
+		if( !is_writable('../')) {
+			$form->set_error('root_dir',"Sorry, can't write to the directory. You'll have to " .
+					"change the permission on the directory <code>$this->install_directory/</code>. Make sure its writable by the webserver. <br />");
+		}
+		
+		if( !is_writable('../application/config')) {
+		    $form->set_error('config_dir',"Sorry, can't write to the directory.
+		    You'll have to either change the permissions on your Ushahidi
+		    directory with this command <code>chmod a+w
+		    $this->install_directory/application/config</code> or
+		    create your database.php manually.");
+		}
+		
+		/**
+	     * error exists, have user correct them.
+	     */
+	   if( $form->num_errors > 0 ) {
+	        return 1;
+
+	   } else {
+	   		return 0;
+	   }
+			
 	}
 }
 
