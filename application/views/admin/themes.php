@@ -99,7 +99,7 @@
 								<strong><u>Location</u></strong>: <i>/themes/<?php echo $theme['Template_Dir'] ?>/</i>
 								<div class="theme_select">
 									<input type="radio" name="site_style" value="<?php echo $theme['Template_Dir'] ?>" <?php
-									if ($theme['Name'] == $form['site_style'])
+									if ($theme['Template_Dir'] == $form['site_style'])
 									{
 										echo "checked = \"checked\"";
 									}
