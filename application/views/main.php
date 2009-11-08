@@ -219,17 +219,18 @@
 				
 					</div>
 					<!-- /content blocks -->
-
-					<!-- site footer -->
-	<!--
-					<div class="site-footer">
-
-						<h5>Site Footer</h5>
-						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris porta. Sed eget nisi. Fusce rhoncus lorem ac erat. Maecenas turpis tellus, volutpat quis, sodales et, consectetuer ac, est. Nullam sed est sed augue vestibulum condimentum. In tellus. Integer luctus odio eu arcu. Pellentesque imperdiet felis eu tortor. Morbi ante dui, iaculis id, vulputate sit amet, venenatis in, turpis. Fusce in risus.
-
-					</div>
-					<!-- / site footer -->
--->
+<?php
+/*
+ *					<!-- site footer -->
+ *					<div class="site-footer">
+ *
+ *						<h5>Site Footer</h5>
+ *						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris porta. Sed eget nisi. Fusce rhoncus lorem ac erat. Maecenas turpis tellus, volutpat quis, sodales et, consectetuer ac, est. Nullam sed est sed augue vestibulum condimentum. In tellus. Integer luctus odio eu arcu. Pellentesque imperdiet felis eu tortor. Morbi ante dui, iaculis id, vulputate sit amet, venenatis in, turpis. Fusce in risus.
+ *
+ *					</div>
+ *					<!-- / site footer -->
+*/
+?>
 			
 				</div>
 				<!-- content -->
