@@ -32,11 +32,18 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content = new View('admin/stats');
 		$this->template->content->title = 'Statistics';
 		
+		$this->template->protochart_enabled = TRUE;
+		
 		// Retrieve Current Settings
 		$settings = ORM::factory('settings', 1);
-		$this->template->content->stat_id = $settings->stat_id;
 		
-		
+		if($settings->stat_id === null) {
+			$sitename = $settings->site_name;
+			$url = url::base();
+			$this->template->content->stat_id = $this->_create_site( $sitename, $url );
+		}else{
+			$this->template->content->stat_id = $settings->stat_id;
+		}
 		
 	}
 	
@@ -126,16 +133,6 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content = new View('admin/stats_hits');
 		$this->template->content->title = 'Hit Summary';
 		
-		// Retrieve Current Settings
-		$settings = ORM::factory('settings', 1);
-		$this->template->content->stat_id = $settings->stat_id;
-		$sitename = $settings->site_name;
-		$url = url::base();
-		
-		if (!empty($_GET['create_account'])){
-			$this->template->content->stat_id = Stats_Model::create_site( $sitename, $url );
-		}
-		
 		// Javascript Header
 		$this->template->flot_enabled = TRUE;
 		$this->template->js = new View('admin/stats_js');
@@ -182,7 +179,6 @@ class Stats_Controller extends Admin_Controller
 	 * @param sitename - name of the instance
 	 * @param url - base url 
 	 */
-	/*
 	public function _create_site( $sitename, $url ) 
 	{
 		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
@@ -201,13 +197,11 @@ class Stats_Controller extends Admin_Controller
 		
 		return false;
 	}
-	*/
 	
 	/**
 	 * Helper function to send a cURL request
 	 * @param url - URL for cURL to hit
 	 */
-	/*
 	public function _curl_req( $url )
 	{
 		// Make sure cURL is installed
@@ -225,5 +219,4 @@ class Stats_Controller extends Admin_Controller
 		
 		return $buffer;
 	}
-	*/
 }
