@@ -17,6 +17,10 @@
 <title>Ushahidi Web Installer</title>
 <link href="../media/css/admin/login.css" 
 rel="stylesheet" type="text/css" />
+<style type="text/css">
+h3 { margin-top: 1em }
+#install { display: block; margin-top: 1em }
+</style>
 </head>
 
 <body>
@@ -33,11 +37,12 @@ rel="stylesheet" type="text/css" />
 				.$form->error('root_dir') . "<br /><br />";
 			print ( $form->error('config_dir') =="") ?'':"&#8226;&nbsp;" 
 				.$form->error('config_dir') . "<br /><br />";
-		}?>
-		
-		<p>
+			?>
+
+			<p>
 			After fixing the above problem, click <a href="">here</a> to install ushahidi.
-		</p>
+			</p>
+		<?php }?>
 		
 		<?php
 	    if($ret == 0 ){ 
@@ -67,30 +72,30 @@ rel="stylesheet" type="text/css" />
             		</tr>
 				<?php } ?>
             		<tr>
-              			<td><strong>Base Path:</strong><br />
+              			<td><h3>Base Path:</h3>
               				<input type="text" name="base_path" class="login_text" 
                 				value="<?php print $form->value('base_path'); ?>"/>
               					<br />Just interested in the name of the sub folder.<br /> 
               					If Ushahidi is in the root folder, leave this field empty. No slahes
-              					Eg. ushahidi 
+              					Eg. ushahidi
               			</td>
             		</tr>
             		<tr>
-              			<td><strong>Username:</strong><br />
+              			<td><h3>Username:</h3>
               				<input type="text" name="username" class="login_text" 
                 				value="<?php print $form->value('username'); ?>"/>
               				<br />Your database username.
               			</td>
             		</tr>
             		<tr>
-              			<td><strong>Password:</strong><br />
+              			<td><h3>Password:</h3>
               				<input type="password" name="password" class="login_text" />
               				<br />Your database password.
               			</td>
             		</tr>
             		<tr>
               			<td>
-                			<strong>Database Host:</strong><br />
+                			<h3>Database Host:</h3>
               				<input type="text" name="host" class="login_text" 
                 			value="<?php print $form->value('host') == '' ? 'localhost':$form->value('host'); ?>" />
               				<br />Your database host. It could also be mysql.somedomain.com
@@ -98,7 +103,7 @@ rel="stylesheet" type="text/css" />
             		</tr>
             		<tr>
               			<td>
-                			<strong>Database Name:</strong><br />
+                			<h3>Database Name:</h3>
               				<input type="text" name="db_name" class="login_text" 
               				value="<?php print $form->value('db_name'); ?>" />
                 			<br />The name of the database you want to run Ushahidi in.
@@ -106,7 +111,7 @@ rel="stylesheet" type="text/css" />
             		</tr>
             		<tr>
               			<td>
-                			<strong>Database Type:</strong><br />
+                			<h3>Database Type:</strong></h3>
                 			<select name="select_db_type">
                     			<option value="mysql">mysql</option>
                     			<option value="postgresql">postgresql</option>
@@ -116,7 +121,7 @@ rel="stylesheet" type="text/css" />
             		</tr>
             		<tr>
               			<td>
-                			<strong>Table Prefix:</strong><br />
+                			<h3>Table Prefix:</strong></h3>
                   			<input type="text" name="table_prefix" class="login_text" 
                   			value="<?php print $form->value('table_prefix'); ?>" />
                 			<br />The prefix to be used by the tables. Eg. ush_<br />
