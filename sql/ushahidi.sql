@@ -427,7 +427,7 @@ CREATE TABLE IF NOT EXISTS `incident_category` (
   `incident_id` bigint(20) NOT NULL default '0',
   `category_id` int(11) NOT NULL default '0',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `incident_category_ids` (`incident_id,category_id`)
+  UNIQUE KEY `incident_category_ids` (`incident_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
