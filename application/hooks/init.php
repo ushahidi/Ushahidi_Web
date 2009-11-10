@@ -1,4 +1,3 @@
-!
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
 * Initiate Instance. Verify Install
