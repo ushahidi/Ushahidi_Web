@@ -15,103 +15,109 @@
 
 class Admin_Controller extends Template_Controller
 {
-    public $auto_render = TRUE;
-	
-    // Main template
-    public $template = 'admin/layout';
-	
-    // Cache instance
-    protected $cache;
+	public $auto_render = TRUE;
 
-    // Enable auth
-    protected $auth_required = FALSE;
-	
-    protected $user;
+	// Main template
+	public $template = 'admin/layout';
 
-    public function __construct()
-    {
-        parent::__construct();	
+	// Cache instance
+	protected $cache;
 
-	// Load cache
-	$this->cache = new Cache;
+	// Enable auth
+	protected $auth_required = FALSE;
 
-	// Load session
-	$this->session = new Session;
+	protected $user;
 
-	// Load database
-	$this->db = new Database();
-		
-	$this->auth = new Auth();
-	$this->session = Session::instance();
-	$this->auth->auto_login();
-		
-	if (!$this->auth->logged_in('admin')
-	    && !$this->auth->logged_in('login'))
+	public function __construct()
 	{
-	    url::redirect('login');
-        }
+		parent::__construct();	
 
-        //fetch latest version of ushahidi
-        $version_number = $this->_fetch_core_version();
-        
-        $version = $this->_find_core_version($version_number);        
-	// Get Session Information
-	$user = new User_Model($_SESSION['auth_user']->id);
+		// Load cache
+		$this->cache = new Cache;
 		
-	$this->template->admin_name = $user->name;
-
-        $this->template->version = $version;        
-	// Retrieve Default Settings
-	$this->template->site_name = Kohana::config('settings.site_name');
-	$this->template->mapstraction = Kohana::config('settings.mapstraction');
-	$this->template->api_url = Kohana::config('settings.api_url');
+		// Load session
+		$this->session = new Session;
 		
-	// Javascript Header
-	$this->template->map_enabled = FALSE;
-	$this->template->flot_enabled = FALSE;
-	$this->template->colorpicker_enabled = FALSE;
-	$this->template->editor_enabled = FALSE;
-	$this->template->js = '';
+		// Load database
+		$this->db = new Database();
 		
-	// Load profiler
-	// $profiler = new Profiler;		
+		$this->auth = new Auth();
+		$this->session = Session::instance();
+		$this->auth->auto_login();
+		
+		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('login')) {
+			url::redirect('login');
+		}
+
+		//fetch latest version of ushahidi
+		$version_number = $this->_fetch_core_version();
+		
+		$this->template->version = $this->_find_core_version($version_number);
+		
+		// Get Session Information
+		$user = new User_Model($_SESSION['auth_user']->id);
+		
+		$this->template->admin_name = $user->name;
+		
+		// Retrieve Default Settings
+		$this->template->site_name = Kohana::config('settings.site_name');
+		$this->template->mapstraction = Kohana::config('settings.mapstraction');
+		$this->template->api_url = Kohana::config('settings.api_url');
+		
+		// Javascript Header
+		$this->template->map_enabled = FALSE;
+		$this->template->flot_enabled = FALSE;
+		$this->template->protochart_enabled = FALSE;
+		$this->template->colorpicker_enabled = FALSE;
+		$this->template->editor_enabled = FALSE;
+		$this->template->js = '';
+		
+		// Load profiler
+		// $profiler = new Profiler;		
 		
     }
 
-    public function index()
-    {
-        // Send them to the right page
-	url::redirect('admin/dashboard');
-    }
+	public function index()
+	{
+		// Send them to the right page
+		url::redirect('admin/dashboard');
+	}
 
-    public function log_out()
-    {
-	$auth = new Auth;
-	$auth->logout(TRUE);
+	public function log_out()
+	{
+		$auth = new Auth;
+		$auth->logout(TRUE);
+		
+		url::redirect('login');
+	}
+	
+	
 
-	url::redirect('login');
-    }
+	/**
+	* find ushahidi core version details
+	*/
+	function _find_core_version($version) {
+		if($version > Kohana::config('version.ushahidi_version') && $version !== false) {
+			return $version;
+		} else {
+			return "";
+		}
+	}
 
-    /**
-     * find ushahidi core version details
-     */
-    function _find_core_version($version) {
-        if($version > Kohana::config('version.ushahidi_version')){
-            return $version;
-        
-        } else {
-            return "";
-        }
-    }
+	/**
+	* Fetch latest ushahidi version from a remote instance
+	*/
+	function _fetch_core_version() {
+		$version_url = "http://version.ushahidi.com";		
+		$version_string = @file_get_contents($version_url);
+		
+		// If we didn't get anything back...
+		if(!$version_string) return false;
 
-    /**
-     * Fetch latest ushahidi version from a remote instance
-     */
-    function _fetch_core_version() {
-        $version_url = "http://version.ushahidi.com";
-        $version_string = file_get_contents($version_url);
-        $version_details = explode(",",$version_string);
-        $version_number = $version_details[0];
-        return $latest_version = $version_number;
-    }
+		$version_details = explode(",",$version_string);
+		$version_number = $version_details[0];
+		
+		return $latest_version = $version_number;
+	}
+	
 } // End Admin
