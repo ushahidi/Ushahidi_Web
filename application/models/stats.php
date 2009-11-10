@@ -20,65 +20,34 @@ class Stats_Model extends ORM
 	
 	static function get_hit_stats($range=31)
 	{		
+		// Get ID for stats
 		$settings = ORM::factory('settings', 1);
 		$stat_id = $settings->stat_id;
 	    
 	    $stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range);
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
-		$visits = '{label:"Visits",data:[';
-		$uniques = '{label:"Uniques",data:[';
-		$pageviews = '{label:"Pageviews",data:[';
-		$i = 0;
 		foreach($response->visits->result as $res) {
 			$timestamp = strtotime($res['date'])*1000;
-			$date = strtotime($res['date']);
-			
-			if($i != 0) {
-				$visits .= ',';
-				$uniques .= ',';
-				$pageviews .= ',';
-			}
-			
-			$visits .= '['.$timestamp.',';
-			$uniques .= '['.$timestamp.',';
-			$pageviews .= '['.$timestamp.',';
 			
 			if(isset($res->nb_visits)){ 
-				$visits .= $res->nb_visits;
-				$data['raw'][$date]['visits'] = (string)$res->nb_visits;
+				$data['visits'][(string)$timestamp] = (string)$res->nb_visits;
 			}else{
-				$visits .= '0';
-				$data['raw'][$date]['visits'] = '0';
+				$data['visits'][(string)$timestamp] = '0';
 			}
 			
 			if(isset($res->nb_uniq_visitors)){ 
-				$uniques .= $res->nb_uniq_visitors;
-				$data['raw'][$date]['uniques'] = (string)$res->nb_uniq_visitors;
+				$data['uniques'][(string)$timestamp] = (string)$res->nb_uniq_visitors;
 			}else{
-				$uniques .= '0';
-				$data['raw'][$date]['uniques'] = '0';
+				$data['uniques'][(string)$timestamp] = '0';
 			}
 			
-			if(isset($res->nb_actions)){ 
-				$pageviews .= $res->nb_actions;
-				$data['raw'][$date]['pageviews'] = (string)$res->nb_actions;
+			if(isset($res->nb_actions)){
+				$data['pageviews'][(string)$timestamp] = (string)$res->nb_actions;
 			}else{
-				$pageviews .= '0';
-				$data['raw'][$date]['pageviews'] = '0';
+				$data['pageviews'][(string)$timestamp] = '0';
 			}
-			
-			$visits .= ']';
-			$uniques .= ']';
-			$pageviews .= ']';
-			
-			$i++;
 		}
-		$visits .= ']}';
-		$uniques .= ']}';
-		$pageviews .= ']}';
-		
-		$data['graph'] = "[$visits,$uniques,$pageviews]";
 		
 		return $data;
 	}

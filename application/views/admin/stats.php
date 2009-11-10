@@ -24,11 +24,10 @@
 		<?php
 			}else{
 		?>
-		Hello, this is the statistics section. General  going here soon. For now, browse around using the sub category links above.
+		Hello, this is the statistics section. General description going here soon. For now, browse around using the sub category links above.
 		<?php
 			}
 		?>
 	</div>
 	
 </div>
-
