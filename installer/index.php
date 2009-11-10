@@ -25,33 +25,11 @@ rel="stylesheet" type="text/css" />
     height="80" /></div>
     <div id="ushahidi_login">
     
-      <?php 
-      	$ret = 0;
-		if( !isset($_GET['do']) ) {
-			//$ret = $install->_check_writable_dir();
-       		
-			if( !is_writable('../')) {
-				print("Sorry, can't write to the directory. You'll have to " .
-					"change the permission on the directory <code>$this->install_directory/</code>. Make sure its writable by the webserver. <br />");
-			}
-		
-			if( !is_writable('../application/config')) {
-		    	print("Sorry, can't write to the directory.
-		    You'll have to either change the permissions on your Ushahidi
-		    directory with this command <code>chmod a+w
-		    	$this->install_directory/application/config</code> or
-		    	create your database.php manually.");
-			}
-			print('<p>
-					After fixing the above problem, click <a href=".?do=install">here</a> to install ushahidi.
-				</p>'); ?>
-		
-		<?php } else if( isset($_GET['do']) && ($_GET['do'] == 'install' ) && ( $ret == 0 ) ){ print $ret;?> 
-	    		<table width="100%" border="0" cellspacing="3" cellpadding="4" 
-      				background="" id="ushahidi_loginbox">
-        		<form method="POST" name="frm_install" action="process.php" 
-        			style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
-        			<?php if ($form->num_errors > 0 ) { ?>   
+	    <table width="100%" border="0" cellspacing="3" cellpadding="4" 
+      		background="" id="ushahidi_loginbox">
+        	<form method="POST" name="frm_install" action="process.php" 
+        		style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
+        		<?php if ($form->num_errors > 0 ) { ?>   
             		<tr>
               			<td align="left" class="login_error">
 		    			<?php
@@ -138,8 +116,6 @@ rel="stylesheet" type="text/css" />
             		</tr>
             	</table>
         	</form>
-        		
-        	<?php } ?>
   </div>
 </div>
 </body>

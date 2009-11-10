@@ -1362,4 +1362,4 @@ ALTER TABLE `user_tokens`
 UPDATE `settings` SET
 `db_version` = '15',
 `ushahidi_version` = '0.9'
-WHERE `id` =1 LIMIT 1 ;
+WHERE `id` =1 LIMIT 1;
