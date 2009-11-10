@@ -65,15 +65,6 @@ class Settings_Controller extends Admin_Controller
         $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
-		
-		// Find all the css themes in the media/css/themes directory for the site style dropdown and validation
-		$listing = scandir(getcwd().'/media/css/themes/');
-		foreach($listing as $filename) {
-			if($filename{0} != '.') {
-				$name = str_ireplace('.css','',$filename);
-				$style_array[$name] = $name;
-			}
-		}
 
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
