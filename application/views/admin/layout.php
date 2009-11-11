@@ -58,6 +58,16 @@
 		echo html::script('media/js/timeline.js', true);
 	}
 	
+	// Load ProtoChart
+	if ($protochart_enabled)
+	{
+		echo html::script('media/js/protochart/prototype', true);
+		echo '<!--[if IE]>';
+		echo html::script('media/js/protochart/excanvas-compressed', true);
+		echo '<![endif]-->';
+		echo html::script('media/js/protochart/ProtoChart', true);
+	}
+	
 	// Load ColorPicker
 	if ($colorpicker_enabled)
 	{
