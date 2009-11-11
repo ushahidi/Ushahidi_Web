@@ -17,7 +17,7 @@ class protochart {
 	 * custom_colors: array with label as key and a RRGGBB code (ex: FF0000) as a value.
 	 *
 	 */
-	public function chart($name='chart',$data,$options_array=null,$custom_color=null) {
+	public function chart($name='chart',$data,$options_array=null,$custom_color=null,$width=400,$height=300) {
 		
 		// Set default options
 		if($options_array === null) {
@@ -29,7 +29,8 @@ class protochart {
 		foreach($options_array as $modifying => $opts){
 			$options .= $modifying.': {';
 			foreach($opts as $key => $val){
-				$options .= "$key: $val, ";
+				$options .= "$key: $val,
+				";
 			}
 			$options .= '},';
 		}
@@ -74,7 +75,7 @@ class protochart {
 				});		
 			});
 		</script>
-		<div id=\"$name\" style=\"width:940px;height:300px\"></div>";
+		<div id=\"$name\" style=\"width:".$width."px;height:".$height."px\"></div>";
 		
 		return $html;
 	}

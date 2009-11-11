@@ -65,6 +65,16 @@
 		echo html::stylesheet('media/css/videoslider');
 	}
 	
+	// Load ProtoChart
+	if ($protochart_enabled)
+	{
+		echo html::script('media/js/protochart/prototype', true);
+		echo '<!--[if IE]>';
+		echo html::script('media/js/protochart/excanvas-compressed', true);
+		echo '<![endif]-->';
+		echo html::script('media/js/protochart/ProtoChart', true);
+	}
+	
 	if ($allow_feed == 1) {
 		echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
 	}

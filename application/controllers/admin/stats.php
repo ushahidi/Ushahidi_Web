@@ -78,9 +78,7 @@ class Stats_Controller extends Admin_Controller
 			$colors[$category_name] = $cats[$category_id]['category_color'];
 		}
 		
-		
 		$this->template->content->reports_chart = $reports_chart->chart('reports',$report_data,$options,$colors);
-		
 		
 		$report_status_chart = new protochart;
 		

@@ -75,9 +75,15 @@ class Stats_Model extends ORM
 		
 	}
 	
-	static function get_report_stats($range=31)
+	static function get_report_stats($approved=false)
 	{
-		$reports = ORM::factory('incident')->find_all();
+		// Only grab approved
+		if($approved) {
+			$reports = ORM::factory('incident')->where('incident_active','1')->find_all();
+		}else{
+			$reports = ORM::factory('incident')->find_all();
+		}
+		
 		$reports_categories = ORM::factory('incident_category')->find_all();
 		
 		// Initialize arrays so we don't error out
@@ -119,6 +125,11 @@ class Stats_Model extends ORM
 		$lowest_date = 9999999999; // Really far in the future.
 		$highest_date = 0;
 		foreach($reports_categories as $report){
+			
+			// if this report category doesn't have any reports (in case we are only
+			//   looking at approved reports), move on to the next one.
+			if(!isset($report_data[$report->incident_id])) continue;
+			
 			$c_id = $report->category_id;
 			$timestamp = $report_data[$report->incident_id]['date'];
 			

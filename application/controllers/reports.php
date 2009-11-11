@@ -63,34 +63,25 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->pagination = ''; 
 		
 		// Pagination and Total Num of Report Stats
-		if($pagination->total_items == 1)
-		{
+		if($pagination->total_items == 1) {
 			$plural = '';
-		}
-		else
-		{
+		} else {
 			$plural = 's';
 		}
-		if ($pagination->total_items > 0)
-		{
+		if ($pagination->total_items > 0) {
 			$current_page = ($pagination->sql_offset/ (int) Kohana::config('settings.items_per_page')) + 1;
 			$total_pages = ceil($pagination->total_items/ (int) Kohana::config('settings.items_per_page'));
 			
-			if($total_pages > 1)
-			{ // If we want to show pagination
+			if($total_pages > 1) { // If we want to show pagination
 				$this->template->content->pagination_stats = '(Showing '
                      .$current_page.' of '.$total_pages
                      .' pages of '.$pagination->total_items.' report'.$plural.')';
 				
                 $this->template->content->pagination = $pagination;
-			}
-			else
-			{ // If we don't want to show pagination
+			} else { // If we don't want to show pagination
 				$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
 			}
-		}
-		else
-		{
+		} else {
 			$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
 		}
 		
@@ -103,12 +94,10 @@ class Reports_Controller extends Main_Controller {
 		
 		//Populate media icon array
 		$this->template->content->media_icons = array();
-		foreach($incidents as $incident)
-		{
+		foreach($incidents as $incident) {
 			$incident_id = $incident->id;
 			if(ORM::factory('media')
-               ->where('incident_id', $incident_id)->count_all() > 0)
-			{
+               ->where('incident_id', $incident_id)->count_all() > 0) {
 				$medias = ORM::factory('media')
                           ->where('incident_id', $incident_id)->find_all();
 				
@@ -116,8 +105,7 @@ class Reports_Controller extends Main_Controller {
 				$tmp = $this->template->content->media_icons;
 				$tmp[$incident_id] = '';
 				
-				foreach($medias as $media)
-				{
+				foreach($medias as $media) {
 					$tmp[$incident_id] .= $icon_html[$media->media_type];
 					$this->template->content->media_icons = $tmp;
 				}
@@ -131,6 +119,88 @@ class Reports_Controller extends Main_Controller {
 			->find($category_id);
 		$this->template->content->category_title = ( $category->loaded ) ?
 			$category->category_title : "";
+		
+		// BEGIN CHART CREATION
+		//   Note: The reason this code block is so long is because protochart
+		//         doesn't seem to handle bar charts in time mode so well. The
+		//         bars show up as skinny lines because it uses the timestamp
+		//         to determine location on the graph, which doesn't give the
+		//         bar much wiggle room in just a few hundred pixels.
+		
+		// Create protochart
+		$this->template->header->protochart_enabled = TRUE;
+		
+		$report_chart = new protochart;
+		
+		// FIXME: Perhaps instead of grabbing the report stats again, we can
+		//        get what we need from above so we can cut down on database
+		//        calls. It will take playing with the incident model to get
+		//        all of the data we need, though.
+		
+		// Report Data
+		$data = Stats_Model::get_report_stats(true);
+		
+		// Grab category data
+		$cats = Category_Model::categories();
+		
+		$highest_count = 1;
+		$report_data = array();
+		foreach($data['category_counts'] as $category_id => $count_array) {
+			$category_name = $cats[$category_id]['category_title'];
+			$colors[$category_name] = $cats[$category_id]['category_color'];
+			$i = 1;
+			foreach($count_array as $time => $count){
+				
+				$report_data[$category_name][$i] = $count;
+				
+				// The highest count will determine the number of ticks on the y-axis
+				if($count > $highest_count) {
+					$highest_count = $count;
+				}
+				
+				// This statement sets us up so we can convert the key to a date
+				if(!isset($tick_represents[$i])) {
+					$tick_represents[$i] = $time;
+					// Save name
+					$tick_string_array[$i] = date('M d',$time);
+				}
+				
+				$i++;
+			}
+		}
+		$highest_count += 1;
+		
+		// This javascript function will take the integer index and convert it to a readable date
+		$tickFormatter = "function (val, axis)
+						{
+						    switch(val){";
+		foreach($tick_string_array as $i => $date_string){
+			$tickFormatter .= "case $i:
+						    		return '$date_string';";
+		}
+		$tickFormatter .= "default:
+						    		return '';
+						    }
+						    return 'sup';
+						  }";
+		
+		$options = array(
+			'bars'=>array('show'=>'true'),
+			'xaxis'=>array('min'=>0,'max'=>(count($tick_string_array)+1),'tickFormatter'=>$tickFormatter),
+			'yaxis'=>array('tickSize'=>1,'max'=>$highest_count,'tickDecimals'=>0),
+			'legend'=>array('show'=>'true','noColumns'=>3),
+			'grid'=>array('drawXAxis'=>'false')
+			);
+
+		if(count($report_data) == 0) {
+			// Don't show a chart if there's no data
+			$this->template->content->report_chart = '';
+		} else {
+			// Show chart
+			$width = 900;
+			$height = 100;
+			$this->template->content->report_chart = $report_chart->chart('reports',$report_data,$options,$colors,$width,$height);
+		}
 	} 
 	
 	/**
