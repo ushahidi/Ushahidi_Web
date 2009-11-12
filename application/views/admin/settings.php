@@ -102,7 +102,7 @@
 	
 								<span class="blue_span">Step 2: </span><span class="dark_span">Get an API Key</span><br />
 								<div class="c_push">
-									<a href="#" id="api_link" title="Get API Key"><img src="<?php echo url::base() ?>media/img/admin/btn-get-api-key.gif" border="0" alt="Get API Key"></a>
+									<a href="http://code.google.com/apis/maps/signup.html" id="api_link" title="Get API Key"><img src="<?php echo url::base() ?>media/img/admin/btn-get-api-key.gif" border="0" alt="Get API Key"></a>
 								</div>
 								
 								<div id="api_div_google" <?php if ($form['default_map'] != 1 && $form['default_map'] != 4) echo "style=\"display:none\""; ?>>
