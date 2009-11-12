@@ -147,7 +147,7 @@
 									<tr>
 										<th scope="col" class="title"><?php echo Kohana::lang('ui_main.title'); ?></th>
 										<th scope="col" class="location"><?php echo Kohana::lang('ui_main.location'); ?></th>
-										<th scope="col" class="date"><?php echo Kohana::lang('ui_main.date'); ?></td>
+										<th scope="col" class="date"><?php echo Kohana::lang('ui_main.date'); ?></th>
 									</tr>
 								</thead>
 								<tbody>
