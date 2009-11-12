@@ -145,6 +145,7 @@ class Reports_Controller extends Main_Controller {
 		
 		$highest_count = 1;
 		$report_data = array();
+		$tick_string_array = array();
 		foreach($data['category_counts'] as $category_id => $count_array) {
 			$category_name = $cats[$category_id]['category_title'];
 			$colors[$category_name] = $cats[$category_id]['category_color'];
