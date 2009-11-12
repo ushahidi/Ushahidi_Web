@@ -60,8 +60,8 @@
 		
 		'feedback_captcha' => array
 		(
-			'required' => 'some message.',
-			'captcha' => 'some message.'
+			'required' => 'Please enter the Security Code.',
+			'valid' => 'Please enter a valid security code'
 		)
 		
 	);

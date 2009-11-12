@@ -14,6 +14,38 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
+jQuery(function() {
+// Ajax Validation
+	$("#footerfeedbackMain").validate({
+		rules: {
+			feedback_message: {
+				required: true,
+				minlength: 10
+		},
+			person_email: {
+				required: true,
+				email: true
+			},
+			captcha: {
+				required: true
+			}
+		},
+		messages: {
+			feedback_message: {
+				required: "Please enter some information for the reply.",
+				minlength: "Your message must consist of at least 10 characters."
+			},
+			person_email: {
+				required: "Please enter an Email Address",
+				email: "Please enter a valid Email Address"
+			},
+			captcha: {
+				required: "Please enter the Security Code"
+			}
+		}
+	});
+});
+
 // Form Submission
 function formSubmit ()
 {
@@ -33,6 +65,7 @@ function clearField()
 {
 	$('#person_email').val("");
 } 
+
 
 
 
