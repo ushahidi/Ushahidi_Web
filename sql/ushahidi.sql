@@ -885,7 +885,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` char(50) NOT NULL,
   `logins` int(10) unsigned NOT NULL default '0',
   `last_login` int(10) unsigned default NULL,
-  `can_notify` tinyint(1) NOT NULL default '0' COMMENT 'Flag incase admin opts in for email notifications',
+  `notify` tinyint(1) NOT NULL default '0' COMMENT 'Flag incase admin opts in for email notifications',
   `updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),

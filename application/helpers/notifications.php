@@ -15,15 +15,18 @@ class notifications_Core
 			$subject = $settings['site_name']."
 				".Kohana::lang('users.notification');
 			
-			$admins = ORM::factory('user')->where('can_notify', 1)->find_all();
+			$users = ORM::factory('user')->where('notify', 1)->find_all();
 
-			foreach($admins as $admin) 
+			foreach($users as $user) 
 			{
-				$address = $admin->email;
-
-				if ( ! email::send($address, $from, $subject, $message, TRUE))
+				if ($user->has(ORM::factory('role', 'admin')))
 				{
-					Kohana::log('error', "email to $address could not be sent");
+					$address = $user->email;
+
+					if ( ! email::send($address, $from, $subject, $message, TRUE))
+					{
+						Kohana::log('error', "email to $address could not be sent");
+					}
 				}
 			}
 		}
