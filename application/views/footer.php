@@ -49,6 +49,7 @@
 				<a href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a>
 			</h2>
 			<div id="table-holder" class="feedback_forms">
+				<h2><a href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a></h2>
 				<table class="table">
 					<tbody>
 							<?php print form::open(NULL, array('id' => 'footerfeedbackMain', 'name' => 'footerfeedbackMain')); ?>
