@@ -46,6 +46,7 @@
 	echo html::stylesheet('media/css/jquery.hovertip-1.0', '', true);
 	echo "<script type=\"text/javascript\">
 		$(function() {
+			if($('.tooltip[title]') != null)
 			$('.tooltip[title]').hovertip();
 		});
 	</script>";
