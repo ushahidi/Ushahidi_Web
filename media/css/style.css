@@ -603,7 +603,9 @@ div.verified{
     text-align: center;
     margin: 0 0 0 10px;
 }
-
+div.verified_yes{
+	background: #368c00;
+}
 div.verified span{
     color: #FFF;
     text-transform: uppercase;

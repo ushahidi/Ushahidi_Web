@@ -18,20 +18,28 @@
 						<!-- start incident block -->
 						<div class="reports">
 							<div class="report-details">
-								<div class="verified">
+								<div class="verified <?php
+								if ($incident_verified == 1)
+								{
+									echo " verified_yes";
+								}
+								?>">
 									Verified<br/>
-									<?php				
-										if ( $incident_verified == 1 )
-										{
-											echo "<span>YES</span>";
-										}
-										else
-										{
-											echo "<span>NO</span>";
-										}
+									<?php
+									echo ($incident_verified == 1) ?
+										"<span>YES</span>" :
+										"<span>NO</span>";
 									?>
 								</div>
-								<h1><?php echo $incident_title; ?></h1>
+								<h1><?php
+								echo $incident_title;
+								
+								// If Admin is Logged In - Allow For Edit Link
+								if ($logged_in)
+								{
+									echo " [&nbsp;<a href=\"".url::base()."admin/reports/edit/".$incident_id."\">Edit</a>&nbsp;]";
+								}
+								?></h1>
 								<ul class="details">
 									<li>
 										<small>Location</small>
