@@ -21,7 +21,8 @@ $lang = array
 	'label_password' => 'Password:',
 	'label_full_name' => 'Full Name:',
 	'label_email' => 'Email Address:',
-	'label_role' => 'Role:'
+	'label_role' => 'Role:',
+	'notification' => 'Notification'
 	
 );
 ?>

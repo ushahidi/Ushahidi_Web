@@ -41,7 +41,7 @@
 												
 									print "<div class=\"report_row1\">";
 									print "		<div class=\"report_details report_col2\">";
-									print "			<h3><a href=\"$feed_title\">" . $feed_title . "</a></h3>";
+									print "			<h3><a href=\"$feed_link\">" . $feed_title . "</a></h3>";
 									print "		</div>";
 									print "		<div class=\"report_date report_col3\">";
 									print $feed_date;

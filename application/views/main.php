@@ -100,7 +100,7 @@
 									<strong>Views</strong>
 									<ul>
 										<li><a id="view_0" <?php if($map_enabled === 'streetmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.clusters'); ?></span></a></li>
-										<li><a id="view_1" <?php if($map_enabled === '3dmap') { echo 'class="active" '; } ?>href="?3dmap=1"><span><?php echo Kohana::lang('ui_main.time'); ?></span></a></li>
+										<li><a id="view_1" <?php if($map_enabled === '3dmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.time'); ?></span></a></li>
 </div>
 								</div>
 								<!-- / filters -->
