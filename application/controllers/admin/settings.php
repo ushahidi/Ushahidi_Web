@@ -43,6 +43,8 @@ class Settings_Controller extends Admin_Controller
 			'site_email' => '',
 			'alerts_email' =>  '',
 			'site_language' => '',
+			'site_help_page' => '',
+			'site_contact_page' => '',
 			'items_per_page' => '',
 			'items_per_page_admin' => '',
 			'allow_reports' => '',
@@ -83,6 +85,8 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_email', 'email', 'length[4,100]');
 			$post->add_rules('alerts_email', 'email', 'length[4,100]');
 			$post->add_rules('site_language','required', 'in_array[en_US, fr_FR]');
+			$post->add_rules('site_help_page','required','between[0,1]');
+			$post->add_rules('site_contact_page','required','between[0,1]');
 			$post->add_rules('items_per_page','required','between[10,50]');
 			$post->add_rules('items_per_page_admin','required','between[10,50]');
 			$post->add_rules('allow_reports','required','between[0,1]');
@@ -110,6 +114,8 @@ class Settings_Controller extends Admin_Controller
 				$settings->site_email = $post->site_email;
 				$settings->alerts_email = $post->alerts_email;
 				$settings->site_language = $post->site_language;
+				$settings->site_help_page = $post->site_help_page;
+				$settings->site_contact_page = $post->site_contact_page;
 				$settings->items_per_page = $post->items_per_page;
 				$settings->items_per_page_admin = $post->items_per_page_admin;
 				$settings->allow_reports = $post->allow_reports;
@@ -166,6 +172,8 @@ class Settings_Controller extends Admin_Controller
 				'site_email' => $settings->site_email,
 				'alerts_email' => $settings->alerts_email,
 				'site_language' => $settings->site_language,
+				'site_help_page' => $settings->site_help_page,
+				'site_contact_page' => $settings->site_contact_page,
 				'items_per_page' => $settings->items_per_page,
 				'items_per_page_admin' => $settings->items_per_page_admin,
 				'allow_reports' => $settings->allow_reports,

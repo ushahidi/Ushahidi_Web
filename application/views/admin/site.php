@@ -81,6 +81,14 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4>Display How To Help Page?</h4>
+							<?php print form::dropdown('site_help_page', $yesno_array, $form['site_help_page']); ?>
+						</div>
+						<div class="row">
+							<h4>Display Contact Page?</h4>
+							<?php print form::dropdown('site_contact_page', $yesno_array, $form['site_contact_page']); ?>
+						</div>
+						<div class="row">
 							<h4>Items Per Page - Front End</h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('items_per_page', $items_per_page_array, $form['items_per_page']); ?>
