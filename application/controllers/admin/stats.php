@@ -72,6 +72,7 @@ class Stats_Controller extends Admin_Controller
 		$cats = Category_Model::categories();
 
 		$report_data = array();
+		$colors = array();
 		foreach($data['category_counts'] as $category_id => $count) {
 			$category_name = $cats[$category_id]['category_title'];
 			$report_data[$category_name] = $count;
@@ -81,6 +82,8 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content->reports_chart = $reports_chart->chart('reports',$report_data,$options,$colors);
 		
 		$report_status_chart = new protochart;
+		
+		$report_staus_data = array();
 		
 		foreach($data['verified_counts'] as $ver_or_un => $arr){
 			if(!isset($report_staus_data[$ver_or_un][0])) $report_staus_data[$ver_or_un][0] = 0;
