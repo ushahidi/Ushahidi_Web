@@ -69,6 +69,18 @@
 		echo html::script('media/js/protochart/ProtoChart', true);
 	}
 	
+	// Load Raphael
+	if($raphael_enabled)
+	{
+		// The only reason we include prototype is to keep the div element naming convention consistent
+		//echo html::script('media/js/protochart/prototype', true);
+		echo html::script('media/js/raphael', true);
+		echo '<script type="text/javascript" charset="utf-8">';
+		echo 'var impact_json = { '.$impact_json .' };';
+		echo '</script>';
+		echo html::script('media/js/raphael-ushahidi-impact', true);
+	}
+	
 	// Load ColorPicker
 	if ($colorpicker_enabled)
 	{

@@ -32,8 +32,6 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content = new View('admin/stats');
 		$this->template->content->title = 'Statistics';
 		
-		$this->template->protochart_enabled = TRUE;
-		
 		// Retrieve Current Settings
 		$settings = ORM::factory('settings', 1);
 		
@@ -51,10 +49,6 @@ class Stats_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/stats_reports');
 		$this->template->content->title = 'Report Stats';
-		
-		// Retrieve Current Settings
-		$settings = ORM::factory('settings', 1);
-		$this->template->content->stat_id = $settings->stat_id;
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
@@ -82,7 +76,7 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content->reports_chart = $reports_chart->chart('reports',$report_data,$options,$colors);
 		
 		$report_status_chart = new protochart;
-		
+
 		$report_staus_data = array();
 		
 		foreach($data['verified_counts'] as $ver_or_un => $arr){
@@ -95,6 +89,71 @@ class Stats_Controller extends Admin_Controller
 		}
 		
 		$this->template->content->report_status_chart = $report_status_chart->chart('report_status',$report_staus_data,$options);
+		
+	}
+	
+	function impact()
+	{
+		$this->template->content = new View('admin/stats_impact');
+		$this->template->content->title = 'Category Impact';
+		
+		// Javascript Header
+		$this->template->raphael_enabled = TRUE;
+		
+		// Report Data
+		$data = Stats_Model::get_report_stats(false,true);
+		
+		$json = '';
+		$use_log = '';
+		$json .= '"buckets":['."\n";
+		$cat_report_count = array();
+		foreach($data['category_counts'] as $timestamp => $count_array) {
+			$comma_flag = false;
+			$line = '';
+			// If this number is greater than 0, we'll show the line
+			$display_test = 0;
+			foreach($count_array as $category_id => $count) {
+				// We aren't allowing 0s
+				if($count > 0) {
+					if($comma_flag) $line .= ',';
+					$comma_flag = true;
+					
+					$line .= '['.$category_id.','.$count.']';
+					
+					$display_test += $count;
+					
+					// If we see a count over 50 (picked this arbitrarily), then switch to log format
+					if($count > 50) $use_log = '"use_log":1,'."\n";
+					
+					// Count the number of reports so we have something useful to show in the legend
+					if(!isset($cat_report_count[$category_id])) $cat_report_count[$category_id] = 0;
+					$cat_report_count[$category_id] += $count;
+				}
+			}
+			if($display_test > 0){
+				$json .= '{"d":'.$timestamp.',"i":[';
+				$json .= $line;
+				$json .= ']},'."\n";
+			}
+		}
+		
+		$json .= '],'."\n";
+		$json .= $use_log;
+		$json .= '"categories":'."\n";
+		$json .= '{'."\n";
+		
+		// Grab category data
+		$cats = Category_Model::categories();
+		
+		foreach($cats as $category_id => $cat_array) {
+			$report_count = 0;
+			if(isset($cat_report_count[$category_id])) $report_count = $cat_report_count[$category_id];
+			$json .= $category_id.':{"name":"'.$cat_array['category_title'].'","fill":"#'.$cat_array['category_color'].'","reports":'.$report_count.'},'."\n";
+		}
+		
+		$json .= '}'."\n";
+		
+		$this->template->impact_json = $json;
 		
 	}
 	

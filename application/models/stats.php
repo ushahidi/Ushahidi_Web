@@ -75,7 +75,12 @@ class Stats_Model extends ORM
 		
 	}
 	
-	static function get_report_stats($approved=false)
+	/*
+	* get an array of report counts
+	* @param approved - Only count approved reports if true
+	* @param by_time - Format array with timestamp as the key if true
+	*/
+	static function get_report_stats($approved=false,$by_time=false)
 	{
 		// Only grab approved
 		if($approved) {
@@ -171,6 +176,24 @@ class Stats_Model extends ORM
 		$data['category_counts'] = $category_counts;
 		$data['verified_counts'] = $verified_counts;
 		$data['approved_counts'] = $approved_counts;
+		
+		// I'm just tacking this on here. However, we could improve performance
+		//   by implementing the code above but I just don't have the time
+		//   to mess with it.
+		
+		if($by_time){
+		
+			// Reorder the array. Is there a built in PHP function that can do this?
+			$new_data = array();
+			foreach($data as $main_key => $data_array){
+				foreach($data_array as $key => $counts){
+					foreach($counts as $timestamp => $count) $new_data[$main_key][$timestamp][$key] = $count;
+				}
+			}
+			
+			$data = $new_data;
+			
+		}
 		
 		return $data;
 	}

@@ -15,19 +15,13 @@
 ?>
 <div class="bg">
 	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Hit Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a> <a href="<?php print url::base() ?>admin/stats/reports">Report Stats</a> <a href="<?php print url::base() ?>admin/stats/impact">Category Impact</a></h2>
-	
-	<div>
-		<?php
-			if($stat_id == 0){ // No stat account created
-		?>
-				<h1 style="text-align:center">Stats Not Set Up. :o(</h1>
-		<?php
-			}else{
-		?>
-		Hello, this is the statistics section. General description going here soon. For now, browse around using the sub category links above.
-		<?php
-			}
-		?>
-	</div>
+
+	<div id="impact_info2" class="impact_hidden">
+        <div id="impact_legend2">&nbsp;</div>
+        <div id="impact_message2">legend</div>
+    </div>
+    <div id="impact_placeholder">mouse over the graph for more details</div>
+    <div id="impact_chart"></div>
 	
 </div>
+
