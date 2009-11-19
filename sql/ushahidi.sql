@@ -818,6 +818,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `site_language` varchar(10) NOT NULL default 'en_US',
   `site_style` varchar(50) NOT NULL default 'default',
   `site_timezone` varchar(80) default NULL,
+  `site_contact_page` TINYINT NOT NULL DEFAULT '1',
+  `site_help_page` TINYINT NOT NULL DEFAULT '1',
   `allow_reports` tinyint(4) NOT NULL default '1',
   `allow_comments` tinyint(4) NOT NULL default '1',
   `allow_feed` tinyint(4) NOT NULL default '1',
