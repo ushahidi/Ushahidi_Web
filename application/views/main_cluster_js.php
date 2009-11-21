@@ -474,7 +474,7 @@
 			map.setCenter(myPoint, myZoom);
 		}
 		
-		//gAddMarkers = addMarkers;
+		gAddMarkers = addMarkers;
 		//addMarkers();
 		
 		/*
