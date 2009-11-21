@@ -42,6 +42,7 @@ class protochart {
 				';
 				
 		// Compile data
+		$labels = array();
 		$i = 0;
 		foreach($data as $label => $data_array){
 			$html .= "data$i = new Array(";

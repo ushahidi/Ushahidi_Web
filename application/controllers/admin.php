@@ -72,6 +72,10 @@ class Admin_Controller extends Template_Controller
 		$this->template->editor_enabled = FALSE;
 		$this->template->js = '';
 		
+		// Initialize some variables for raphael impact charts
+		$this->template->raphael_enabled = FALSE;
+		$this->template->impact_json = '';
+		
 		// Load profiler
 		// $profiler = new Profiler;		
 		
