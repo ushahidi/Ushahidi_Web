@@ -603,7 +603,9 @@ div.verified{
     text-align: center;
     margin: 0 0 0 10px;
 }
-
+div.verified_yes{
+	background: #368c00;
+}
 div.verified span{
     color: #FFF;
     text-transform: uppercase;
@@ -1204,7 +1206,7 @@ label.error {
 	color:#999;
 	font-weight:bold;
 }
-.report_comment{
+.report_comment, .contact{
 	border:1px #ccc solid;
 	margin-bottom:15px;
 	padding:20px;
@@ -1518,7 +1520,13 @@ ul.pager li a.active {background:#f2f7fa;}
 /*-- feedback --*/
 .feedback_forms{
 	display:none;
-	
+	position: relative;
+	top: -350px;
+	left: 25px;
+	border: 5px solid black;
+	background: #bbb;
+	width: 600px;
+	padding: 5px 20px 5px 20px;
 }
 
 .feedback_forms textarea, .feedback_forms textarea input{
@@ -1744,4 +1752,32 @@ ul.pager li a.active {background:#f2f7fa;}
 	overflow:hidden;
 	width:100%;
 	margin: 30px;
+}
+
+/*--error/success--*/
+div.green-box {
+	margin:10px 0 25px 0;
+	padding:9px 0 8px;
+	background:#d8f1d8;
+	border:2px solid #a7d1a7;
+	clear:both;
+	overflow:hidden;
+}
+div.red-box {
+	margin:10px 0 25px 0;
+	padding:9px 0 8px;
+	background:#FFD8D9;
+	border:2px solid #990000;
+	clear:both;
+	overflow:hidden;
+}
+div.green-box h3, div.red-box h3{
+	margin:0;
+	padding:0 0 0 15px; 
+	font-size:14px;
+	color:#555;
+}
+div.green-box ul, div.red-box ul{
+	margin-left:2em;
+	padding-left:2em;
 }

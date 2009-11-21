@@ -32,6 +32,7 @@ class Category_Model extends ORM_Tree
 		
 		$cats = array();
 		foreach($categories as $category) {
+			$cats[$category->id]['category_id'] = $category->id;
 			$cats[$category->id]['category_title'] = $category->category_title;
 			$cats[$category->id]['category_color'] = $category->category_color;
 		}

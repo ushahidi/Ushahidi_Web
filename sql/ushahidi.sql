@@ -818,6 +818,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `site_language` varchar(10) NOT NULL default 'en_US',
   `site_style` varchar(50) NOT NULL default 'default',
   `site_timezone` varchar(80) default NULL,
+  `site_contact_page` TINYINT NOT NULL DEFAULT '1',
+  `site_help_page` TINYINT NOT NULL DEFAULT '1',
   `allow_reports` tinyint(4) NOT NULL default '1',
   `allow_comments` tinyint(4) NOT NULL default '1',
   `allow_feed` tinyint(4) NOT NULL default '1',
@@ -885,6 +887,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` char(50) NOT NULL,
   `logins` int(10) unsigned NOT NULL default '0',
   `last_login` int(10) unsigned default NULL,
+  `notify` tinyint(1) NOT NULL default '0' COMMENT 'Flag incase admin opts in for email notifications',
   `updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
@@ -1360,6 +1363,6 @@ ALTER TABLE `user_tokens`
 -- Version information for table `settings`
 --
 UPDATE `settings` SET
-`db_version` = '15',
+`db_version` = '16',
 `ushahidi_version` = '0.9'
 WHERE `id` =1 LIMIT 1;

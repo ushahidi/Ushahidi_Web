@@ -53,6 +53,12 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
         $this->template->header->api_url = Kohana::config('settings.api_url');
 
+		// Display Contact Tab?
+		$this->template->header->site_contact_page = Kohana::config('settings.site_contact_page');
+				
+		// Display Help Tab?
+		$this->template->header->site_help_page = Kohana::config('settings.site_help_page');
+		
 		// Get Custom Pages
 		$this->template->header->pages = ORM::factory('page')->where('page_active', '1')->find_all();
         
@@ -370,9 +376,15 @@ class Main_Controller extends Template_Controller {
 		$form = array
 		(
 				'feedback_message' => '',
-				'person_email' => ''
+				'person_email' => '',
+				'feedback_captcha' => ''
 		);
-
+		
+		// Load Akismet API Key (Spam Blocker)
+		$api_akismet = Kohana::config('settings.api_akismet');
+		
+		$captcha = Captcha::factory();
+		
 		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
@@ -389,8 +401,59 @@ class Main_Controller extends Template_Controller {
 			//Add validation rules
 			$post->add_rules('feedback_message','required');
 			$post->add_rules('person_email', 'required','email');
-
+			$post->add_rules('feedback_captcha', 'required', 'Captcha::valid');
 			if( $post->validate() ) { 
+				if($api_akismet != "" ) {
+					// Run Akismet Spam Checker
+						$akismet = new Akismet();
+
+						// comment data
+						$feedback = array(
+							'feedback_message' => $post->feedback_message,
+							'person_email' => $post->feedback_message,
+						);
+
+						$config = array(
+							'blog_url' => url::site(),
+							'api_key' => $api_akismet,
+							'feedback' => $feedback
+						);
+
+						$akismet->init($config);
+
+						if($akismet->errors_exist()) 
+						{
+							if($akismet->is_error('AKISMET_INVALID_KEY'))
+							{
+								// throw new Kohana_Exception('akismet.api_key');
+							}
+							elseif($akismet->is_error('AKISMET_RESPONSE_FAILED')) 
+							{
+								// throw new Kohana_Exception('akismet.server_failed');
+							}
+							elseif($akismet->is_error('AKISMET_SERVER_NOT_FOUND')) 
+							{
+								// throw new Kohana_Exception('akismet.server_not_found');
+							}
+							// If the server is down, we have to post 
+							// the comment :(
+							// $this->_post_comment($comment);
+							$feedback_spam = 0;
+						}
+						else {
+							if($akismet->is_spam()) 
+							{
+								$feedback_spam = 1;
+							}
+							else {
+								$feedback_spam = 0;
+							}
+						}
+					}
+					else
+					{ // No API Key!!
+						$feedback_spam = 0;
+					}
 				$this->_dump_feedback($post);
 
 
@@ -421,6 +484,7 @@ class Main_Controller extends Template_Controller {
 		}
 		$this->template->footer->js = new View('footer_form_js');
 		$this->template->footer->form = $form;
+		$this->template->footer->captcha = $captcha;
 		$this->template->footer->errors = $errors;
 		$this->template->footer->form_error = $form_error;
         }

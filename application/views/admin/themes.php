@@ -64,7 +64,7 @@
 								echo "<img src=\"".url::base()."media/img/default_theme.png\" width=240 height=150 border=0>";
 							?></div>
 							<strong>Default Ushahidi Theme</strong><BR />
-							The default Ushahidi Theme. We've made it easy for you to customize Ushahidi by modifying a single stylesheet!<BR />
+							The default Ushahidi Theme.<BR />
 							<strong><u>Version</u></strong>: 1.0<BR />
 							<strong><u>Demo</u></strong>: http://www.ushahidi.com<BR />
 							<strong><u>Contact</u></strong>: team@ushahidi.com<BR />

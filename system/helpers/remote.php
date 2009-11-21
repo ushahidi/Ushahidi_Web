@@ -26,7 +26,12 @@ class remote_Core {
 		}
 
 		// Open a remote connection
-		$remote = fsockopen($url['host'], 80, $errno, $errstr, 5);
+		if(isset($_SERVER["SERVER_PORT"])) {
+			$server_port = $_SERVER["SERVER_PORT"];
+		} else {
+			$server_port = '80';
+		}
+		$remote = fsockopen($url['host'], $server_port, $errno, $errstr, 5);
 
 		if ( ! is_resource($remote))
 			return FALSE;

@@ -16,12 +16,19 @@
 
 class Reports_Controller extends Main_Controller {
 
+	var $logged_in;
+	
 	function __construct()
 	{
 		parent::__construct();
 
 		// Javascript Header
 		$this->template->header->validator_enabled = TRUE;
+		
+		// Is the Admin Logged In?
+		$this->logged_in = Auth::instance()->logged_in()
+		     ? TRUE
+		     : FALSE;
 	}
 
 	/**
@@ -145,6 +152,7 @@ class Reports_Controller extends Main_Controller {
 		
 		$highest_count = 1;
 		$report_data = array();
+		$tick_string_array = array();
 		foreach($data['category_counts'] as $category_id => $count_array) {
 			$category_name = $cats[$category_id]['category_title'];
 			$colors[$category_name] = $cats[$category_id]['category_color'];
@@ -742,6 +750,9 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->captcha = $captcha;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
+		
+		// If the Admin is Logged in - Allow for an edit link
+		$this->template->content->logged_in = $this->logged_in;
 	}
 	
 	/**

@@ -49,14 +49,14 @@
 				<a href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a>
 			</h2>
 			<div id="table-holder" class="feedback_forms">
+				<h2><a href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a></h2>
 				<table class="table">
 					<tbody>
-							<?php print form::open(NULL, array('id' => 'footerfeedbackMain', 
-								'name' => 'footerfeedbackMain')); ?>
+							<?php print form::open(NULL, array('id' => 'footerfeedbackMain', 'name' => 'footerfeedbackMain')); ?>
 							<?php print form::hidden('person_ip',getenv("REMOTE_ADDR"),'')?>
 							<tr>
 								<td>
-									<?php print form::textarea("feedback_message",'',' rows="5" cols="50"');?>
+									<?php print form::textarea("feedback_message",$form['feedback_message'],' class="textarea long" rows="5" cols="50"');?>
 									<br /><br />
 									<?php
 										print(empty($errors['feedback_message'])) ?'': $errors['feedback_message'].'<br /><br />';
@@ -74,10 +74,24 @@
 								</td>
 							</tr>
 							<tr>
+								<td>
+									<div class="report_row">
+										<strong>Security Code:</strong><br />
+										<?php print $captcha->render(); ?><br />
+										<?php print form::input('feedback_captcha', $form['feedback_captcha'], ' class="text"'); ?>
+										<br /><br />
+										<?php
+											print(empty($errors['feedback_captcha'])) ? '' : $errors['feedback_captcha'].'<br /<br />';
+										?>
+									</div>
+								</td>
+							</tr>
+							<tr>
 								<td colspan="3">
-									<?php print form::input('person_email','Email address','size="40" onclick="clearField();"');?>
+									<?php $email = empty($form['person_email']) ? 'Email address' : $form['person_email']; ?>
+									<?php print form::input('person_email',$email,'size="40" class="text"  onclick="clearField();"');?>
 									<?php print form::button('submit', 
-										Kohana::lang('feedback.feedback_reply_send'),'onclick="formSubmit();"'); ?>
+										Kohana::lang('feedback.feedback_reply_send')); ?>
 									<br /><br />
 									<?php 
 										print(empty($errors['person_email'])) ?'': $errors['person_email'].'<br /><br />';

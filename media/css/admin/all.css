@@ -1738,5 +1738,40 @@ UL.mapNavigation LI A:focus {
 #update-info a {
     font-size: 1.1em;
 }
+
+/* raphael impact chart */
+#impact_chart {
+	width: 100%;
+	_width: 940px;
+	height: 500px;
+	overflow: auto;
+	clear: left;
+}
+.impact_hidden {
+	display: none;
+}
+#impact_legend,
+#impact_legend2 {
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	width: 1em;
+	height: 1em;
+	border: solid 1px #000;
+	margin-right: .3em;
+	line-height: 1;
+}
+#impact_info, 
+#impact_info2 {
+	float: left;
+	clear: left;
+}
+#impact_info div,
+#impact_info2 div {
+	float: left;
+}
+#impact_placeholder {
+	clear: left;
+	color: #999;
+}
 /*--  --*/
 /*--  --*/

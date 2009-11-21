@@ -20,6 +20,8 @@ Kohana::config_set('settings.site_name', $settings->site_name);
 Kohana::config_set('settings.site_email', $settings->site_email);
 Kohana::config_set('settings.site_tagline', $settings->site_tagline);
 Kohana::config_set('settings.site_style', $settings->site_style);
+Kohana::config_set('settings.site_contact_page', $settings->site_contact_page);
+Kohana::config_set('settings.site_help_page', $settings->site_help_page);
 Kohana::config_set('settings.allow_feed', $settings->allow_feed);
 Kohana::config_set('settings.allow_stat_sharing', $settings->allow_stat_sharing);
 Kohana::config_set('settings.allow_clustering', $settings->allow_clustering);
