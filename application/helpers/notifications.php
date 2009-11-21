@@ -3,31 +3,41 @@
 class notifications_Core 
 {
 	
-	public static function notify_admins($message)	
+	public function notify_admins($subject = NULL, $message = NULL)	
 	{
 		
 		// Don't show the exceptions for this operation to the user. Log them
 		// instead
 		try
-		{ 
-			$settings = kohana::config('settings');
-			$from = $settings['site_email'];
-			$subject = $settings['site_name']."
-				".Kohana::lang('users.notification');
-			
-			$users = ORM::factory('user')->where('notify', 1)->find_all();
-
-			foreach($users as $user) 
+		{
+			if ($subject && $message)
 			{
-				if ($user->has(ORM::factory('role', 'admin')))
-				{
-					$address = $user->email;
+				$settings = kohana::config('settings');
+				$from = $settings['site_email'];			
+				$users = ORM::factory('user')->where('notify', 1)->find_all();
 
-					if ( ! email::send($address, $from, $subject, $message, TRUE))
+				foreach($users as $user) 
+				{
+					if ($user->has(ORM::factory('role', 'admin')))
 					{
-						Kohana::log('error', "email to $address could not be sent");
+						$address = $user->email;
+						
+						$message .= "\n\n\n\n~~~~~~~~~~~~\n".Kohana::lang('notifications.footer')
+							."\n".url::base()
+							."\n\n".Kohana::lang('notifications.admin_login')
+							."\n".url::base()."admin";
+												
+						if ( ! email::send($address, $from, $subject, $message, FALSE))
+						{
+							Kohana::log('error', "email to $address could not be sent");
+						}
 					}
 				}
+			}
+			else
+			{
+				Kohana::log('error', "email to $address could not be sent
+				 - Missing Subject or Message");
 			}
 		}
 		catch (Exception $e)
