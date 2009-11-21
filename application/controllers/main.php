@@ -53,6 +53,12 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
         $this->template->header->api_url = Kohana::config('settings.api_url');
 
+		// Display Contact Tab?
+		$this->template->header->site_contact_page = Kohana::config('settings.site_contact_page');
+				
+		// Display Help Tab?
+		$this->template->header->site_help_page = Kohana::config('settings.site_help_page');
+		
 		// Get Custom Pages
 		$this->template->header->pages = ORM::factory('page')->where('page_active', '1')->find_all();
         
