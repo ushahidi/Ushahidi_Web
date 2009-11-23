@@ -447,11 +447,11 @@ class Reports_Controller extends Main_Controller {
 				$person->save();
 				
 				
-				// Notify Admin Of New Message
+				// Notify Admin Of New Report
 				$send = notifications::notify_admins(
 					"[".Kohana::config('settings.site_name')."] ".
-						Kohana::lang('notifications.new_report.subject'),
-					Kohana::lang('notifications.new_report.message')
+						Kohana::lang('notifications.admin_new_report.subject'),
+					Kohana::lang('notifications.admin_new_report.message')
 						."\n\n'".strtoupper($incident->incident_title)."'"
 						."\n".$incident->incident_description
 					);
@@ -640,8 +640,8 @@ class Reports_Controller extends Main_Controller {
 					// Notify Admin Of New Comment
 					$send = notifications::notify_admins(
 						"[".Kohana::config('settings.site_name')."] ".
-							Kohana::lang('notifications.new_comment.subject'),
-						Kohana::lang('notifications.new_comment.message')
+							Kohana::lang('notifications.admin_new_comment.subject'),
+						Kohana::lang('notifications.admin_new_comment.message')
 							."\n\n'".strtoupper($incident->incident_title)."'"
 							."\n".url::base().'reports/view/'.$id
 						);

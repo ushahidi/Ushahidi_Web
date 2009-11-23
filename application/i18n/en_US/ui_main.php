@@ -62,5 +62,5 @@ $lang = array(
 	'alerts_email' => 'Email Address:',
 	'alerts_enter_email' => 'enter email address',
 	'alerts_rss' => 'RSS Feeds (copy the url below)',
-	'alerts_btn_send' => 'Submit'
+	'alerts_btn_send' => 'Save My Alert'
 );

@@ -50,7 +50,8 @@ class Alerts_Controller extends Main_Controller
                 'alert_email' => '',
                 'alert_email_yes' => '',
                 'alert_lat' => '',
-                'alert_lon' => ''
+                'alert_lon' => '',
+				'alert_radius' => ''
         	);
 
         // Copy the form as errors, so the errors will be stored with keys
@@ -77,14 +78,14 @@ class Alerts_Controller extends Main_Controller
 				{
         			$sms_confirmation_saved =
 						$this->_send_mobile_alert($alert, $post->alert_mobile,
-								$post->alert_lon, $post->alert_lat);
+								$post->alert_lon, $post->alert_lat, $post->alert_radius);
 				}
 
 				if (!empty($post->alert_email))
 				{
 					$email_confirmation_saved =
 						$this->_send_email_alert($alert, $post->alert_email,
-								$post->alert_lon, $post->alert_lat);
+								$post->alert_lon, $post->alert_lat, $post->alert_radius);
 				}
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
@@ -111,6 +112,7 @@ class Alerts_Controller extends Main_Controller
         {
             $form['alert_lat'] = Kohana::config('settings.default_lat');
             $form['alert_lon'] = Kohana::config('settings.default_lon');
+			$form['alert_radius'] = 20;
         }
 		
         $this->template->content->form = $form;
@@ -261,7 +263,7 @@ class Alerts_Controller extends Main_Controller
 		return $code;
 	}
 
-	private function _send_mobile_alert($alert, $alert_mobile, $alert_lon, $alert_lat)
+	private function _send_mobile_alert($alert, $alert_mobile, $alert_lon, $alert_lat, $alert_radius)
 	{
 		$alert_code = $this->_mk_code();
 					
@@ -304,6 +306,7 @@ class Alerts_Controller extends Main_Controller
 			$alert->alert_code = $alert_code;
 			$alert->alert_lon = $alert_lon;
 			$alert->alert_lat = $alert_lat;
+			$alert->alert_radius = $alert_radius;
 			$alert->save();
 
 			return TRUE;
@@ -312,7 +315,7 @@ class Alerts_Controller extends Main_Controller
 		return FALSE;
 	}
 
-	private function _send_email_alert($alert, $alert_email, $alert_lon, $alert_lat)
+	private function _send_email_alert($alert, $alert_email, $alert_lon, $alert_lat, $alert_radius)
 	{
 		$alert_code = $this->_mk_code();
 		
@@ -333,6 +336,7 @@ class Alerts_Controller extends Main_Controller
 			$alert->alert_code = $alert_code;
 			$alert->alert_lon = $alert_lon;
 			$alert->alert_lat = $alert_lat;
+			$alert->alert_radius = $alert_radius;
 			$alert->save();
 			
 			return TRUE;

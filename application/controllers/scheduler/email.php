@@ -109,8 +109,8 @@ class Email_Controller extends Controller
 				// Notify Admin Of New Email Message
 				$send = notifications::notify_admins(
 					"[".Kohana::config('settings.site_name')."] ".
-						Kohana::lang('notifications.new_email.subject'),
-					Kohana::lang('notifications.new_email.message')
+						Kohana::lang('notifications.admin_new_email.subject'),
+					Kohana::lang('notifications.admin_new_email.message')
 					);
 			}
 		}

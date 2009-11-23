@@ -31,6 +31,12 @@ $lang = array
 		'required'		=> 'You have not selected a valid location on the map.',
 		'between' => 'You have not selected a valid location on the map.'
 	),
+	
+	'alert_radius' => array
+	(
+		'required'		=> 'You have not set your radius on the map.',
+		'in_array' => 'You have not set a valid radius on the map.'
+	),
 
     'code_not_found' => 'This verification code was not found! Please confirm that you have the correct URL.',
     'code_already_verified' => 'This code has been verified before!',

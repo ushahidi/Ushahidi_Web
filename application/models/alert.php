@@ -78,6 +78,7 @@ class Alert_Model extends ORM
 			->add_rules('alert_email', 'email', 'length[3,64]')
 			->add_rules('alert_lat', 'required', 'between[-90,90]')
 			->add_rules('alert_lon', 'required', 'between[-180,180]')
+			->add_rules('alert_radius', 'required', 'in_array[1,5,10,20,50,100]')
 			->add_callbacks('alert_mobile', array($this, '_mobile_or_email'))
 			->add_callbacks('alert_mobile', array($this, '_mobile_check'))
 			->add_callbacks('alert_email', array($this, '_email_check'));
