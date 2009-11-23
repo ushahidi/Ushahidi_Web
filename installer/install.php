@@ -45,38 +45,41 @@ class Install
 	    global $form;
 	    //check for empty fields
 	    if(!$username || strlen($username = trim($username)) == 0 ){
-	        $form->set_error("username", "Please enter the username of the
-	            database server.");
+	        $form->set_error("username", "Please make sure to " .
+	        		"enter the <strong>username</strong> of the database server.");
 	    }
 
 	    if( !$host || strlen($host = trim($host)) == 0 ){
-	        $form->set_error("host","Please enter the host of the
+	        $form->set_error("host","Please enter the <strong>host</strong> of the
 	            database server." );
 	    }
 
 	    if( !$db_name || strlen($db_name = trim($db_name)) == 0 ){
-	        $form->set_error("db_name","Please enter a new name for the
-	            database to be created.");
+	        $form->set_error("db_name","Please enter the <strong>name</strong> of your database.");
 	    }
 
 	    // load database.template.php and work from it.
 		if(!file_exists('../application/config/database.template.php')){
-		    $form->set_error("load_db_tpl","Sorry, I need a database.template.php file to work
+		    $form->set_error("load_db_tpl","<strong>Sorry</strong>, I need a " .
+		    		"<config>database.template.php</config> file to work
             from. Please re-upload this file from the Ushahidi files.");
 		}
 
 		if( !is_writable('../application/config')) {
-		    $form->set_error('permission',"Sorry, can't write to the directory.
-		    You'll have to either change the permissions on your Ushahidi
-		    directory with this command <blockquote>chmod a+w
-		    $this->install_directory/application/config</blockquote> or
-		    create your database.php manually.");
+		    $form->set_error('permission',
+			"<strong>Oops!</strong> Ushahidi is trying to create and/or edit a file called \"" .
+			"database.php\" and is unable to do so at the moment. This is probably due to the fact " .
+			"that your permissions aren't set up properly for the <code>config</code> folder. " .
+			"Please change the permissions of that folder to allow write access (666).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
 		}
 
 		if(!$this->make_connection($username, $password, $host)){
-		    $form->set_error("connection","Sorry, couldn't make connection to
+		    $form->set_error("connection","<strong>Oops!</strong>, couldn't make connection to
 		    the database server with the credentials given. Could you double
-		    check if they are correct.'");
+		    check if they are correct.");
 		}
 
 	    /**
@@ -380,6 +383,28 @@ class Install
 	   		return 0;
 	   }
 			
+	}
+	
+	public function _include_html_header() {
+		$header = <<<HTML
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+			<html xmlns="http://www.w3.org/1999/xhtml">
+			<head>
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+				<title>Database Connections / Ushahidi Web Installer</title>
+				<link href="../media/css/admin/login.css" rel="stylesheet" type="text/css" />
+			</head>
+			<script src="../media/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../media/js/login.js" type="text/javascript" charset="utf-8"></script>
+HTML;
+		return $header;
+
+	}
+	
+	public function _detect_ushahidi_base_path() {
+		$long_base_path = $_SERVER["REQUEST_URI"];
+		
 	}
 }
 

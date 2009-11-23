@@ -48,43 +48,44 @@
 			<h2 class="feedback_title" style="clear:both">
 				<a href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a>
 			</h2>
+			
 			<div id="table-holder" class="feedback_forms">
-				<h2><a href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a></h2>
-				<table class="table">
-					<tbody>
-							<?php print form::open(NULL, array('id' => 'footerfeedbackMain', 'name' => 'footerfeedbackMain')); ?>
-							<?php print form::hidden('person_ip',getenv("REMOTE_ADDR"),'')?>
-							<tr>
-								<td>
-									<?php print form::textarea("feedback_message",$form['feedback_message'],' class="textarea long" rows="5" cols="50"');?>
-									<br /><br />
-									<?php
-										print(empty($errors['feedback_message'])) ?'': $errors['feedback_message'].'<br /><br />';
-									?>
-								</td>
-								<td>
-									<div class="or_txt">
-										Or
-									</div>
-								</td>
-								<td>
-									<div class="detailed_feedback">
-										<a href="http://feedback.ushahidi.com/fillsurvey.php?sid=5">Provide Detailed Feedback</a>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="report_row">
-										<strong>Security Code:</strong><br />
-										<?php print $captcha->render(); ?><br />
-										<?php print form::input('feedback_captcha', $form['feedback_captcha'], ' class="text"'); ?>
-										<br /><br />
-										<?php
+	<h2><a class="feedback-tab" href="javascript:showForm('table-holder')"><?php echo Kohana::lang('ui_main.feedback'); ?></a></h2>
+	<table class="table">
+		<tbody>
+			<?php print form::open(NULL, array('id' => 'footerfeedbackMain', 'name' => 'footerfeedbackMain')); ?>
+			<?php print form::hidden('person_ip',getenv("REMOTE_ADDR"),'')?>
+				<tr>
+					<td>
+						<?php print form::textarea("feedback_message",$form['feedback_message'],' class="textarea long" rows="5" cols="50"');?>
+						<br /><br />
+						<?php
+							print(empty($errors['feedback_message'])) ?'': $errors['feedback_message'].'<br /><br />';
+						?>
+					</td>
+					<td>
+						<div class="or_txt">
+							Or
+						</div>
+					</td>
+					<td>
+						<div class="detailed_feedback">
+							<a href="http://feedback.ushahidi.com/fillsurvey.php?sid=5">Provide Detailed Feedback</a>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="report_row">
+							<strong>Security Code:</strong><br />
+							<?php print $captcha->render(); ?><br />
+							<?php print form::input('feedback_captcha', $form['feedback_captcha'], ' class="text"'); ?>
+							<br /><br />
+							<?php
 											print(empty($errors['feedback_captcha'])) ? '' : $errors['feedback_captcha'].'<br /<br />';
-										?>
-									</div>
-								</td>
+							?>
+						</div>
+					</td>
 							</tr>
 							<tr>
 								<td colspan="3">
@@ -102,14 +103,14 @@
 					</tbody>
 				</table>
 			</div>
-			<!-- /feedback form -->
-
 		</div>
 		<!-- / footer content -->
 
 	</div>
 	<!-- / footer -->
+</div>
 
+			<!-- /feedback form -->
 	<img src="<?php echo $tracker_url; ?>" />
 	<?php echo $ushahidi_stats; ?>
 	<?php echo $google_analytics; ?>
