@@ -30,6 +30,7 @@ $lang = array(
 	'official_news' => 'Official &amp; mainstream news',
 	'source' => 'SOURCE',
 	'date' => 'Date',
+        'close' => 'Close',
 	'reports_submit_new' => 'Submit a New Report',
 	'reports_title' => 'Report Title',
 	'reports_description' => 'Description',

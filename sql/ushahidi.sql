@@ -856,6 +856,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',
   `date_modify` datetime default NULL,
   `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',
+  `stat_key` VARCHAR(30) NOT NULL ,
   `email_username` VARCHAR(100) NOT NULL ,
   `email_password` VARCHAR(100) NOT NULL ,
   `email_port` INT(11) NOT NULL ,
