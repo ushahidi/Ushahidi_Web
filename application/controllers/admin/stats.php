@@ -168,6 +168,13 @@ class Stats_Controller extends Admin_Controller
 		// Hit Data
 		$data = Stats_Model::get_hit_stats();
 		
+		// If we failed to get hit data, fail.
+		if(!$data) {
+			$this->template->content->traffic_chart = 'Error displaying chart';
+			$this->template->content->raw_data = null;
+			return false;
+		}
+		
 		$traffic_chart = new protochart;
 		$options = array(
 			'xaxis'=>array('mode'=>'"time"'),
