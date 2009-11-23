@@ -446,6 +446,16 @@ class Reports_Controller extends Main_Controller {
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
 				
+				
+				// Notify Admin Of New Message
+				$send = notifications::notify_admins(
+					"[".Kohana::config('settings.site_name')."] ".
+						Kohana::lang('notifications.new_report.subject'),
+					Kohana::lang('notifications.new_report.message')
+						."\n\n'".strtoupper($incident->incident_title)."'"
+						."\n".$incident->incident_description
+					);
+				
 				url::redirect('reports/thanks');
 			}
 	
@@ -626,6 +636,15 @@ class Reports_Controller extends Main_Controller {
 						$comment->comment_active = 1;
 					} 
 					$comment->save();
+					
+					// Notify Admin Of New Comment
+					$send = notifications::notify_admins(
+						"[".Kohana::config('settings.site_name')."] ".
+							Kohana::lang('notifications.new_comment.subject'),
+						Kohana::lang('notifications.new_comment.message')
+							."\n\n'".strtoupper($incident->incident_title)."'"
+							."\n".url::base().'reports/view/'.$id
+						);
 					
 					// Redirect
 					url::redirect('reports/view/'.$id);

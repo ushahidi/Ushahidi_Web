@@ -1155,7 +1155,7 @@ label.error {
 	font-size:120%;
 	font-weight:bold;
 }
-.report_row h4 span{
+.report_row h4 .example{
 	font-weight: normal;
 	font-size: 10px;
 	line-height: 12px;

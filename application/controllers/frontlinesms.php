@@ -91,6 +91,13 @@ class Frontlinesms_Controller extends Controller
 				$message->message_date = date("Y-m-d H:i:s",time());
 				$message->service_messageid = null;
 				$message->save();
+				
+				// Notify Admin Of New Email Message
+				$send = notifications::notify_admins(
+					"[".Kohana::config('settings.site_name')."] ".
+						Kohana::lang('notifications.new_sms.subject'),
+					Kohana::lang('notifications.new_sms.message')
+					);
 			}
 		}
 	}

@@ -184,7 +184,7 @@
 			var data = this.filteredData();
 			
 			if (this.playCount >= data.length) {
-				return;
+				return this;
 			}
 			
 			playTimeline = $.timeline({graphData: {color: plotData.color, 
@@ -219,7 +219,8 @@
 			// Uncomment to play at monthly intervals
 			//endDate = $.monthEndTime(endDate * 1000) / 1000;
 			endDate = $.dayEndDateTime(endDate * 1000) / 1000;
-			
+
+			// plot markers using a custom addMarkers method if available
 			if (this.addMarkers) {	
 				this.addMarkers(gCategoryId, '', endDate, gMap.getZoom(), gMap.getCenter(), gMediaType);
 				return this;

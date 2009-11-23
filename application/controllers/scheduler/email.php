@@ -105,6 +105,13 @@ class Email_Controller extends Controller
 				$email->message_date = $message['date'];
 				$email->service_messageid = null;
 				$email->save();
+				
+				// Notify Admin Of New Email Message
+				$send = notifications::notify_admins(
+					"[".Kohana::config('settings.site_name')."] ".
+						Kohana::lang('notifications.new_email.subject'),
+					Kohana::lang('notifications.new_email.message')
+					);
 			}
 		}
 	}
