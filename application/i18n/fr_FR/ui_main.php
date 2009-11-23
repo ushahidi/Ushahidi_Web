@@ -27,6 +27,7 @@ $lang = array(
 	'title' => 'TITRE',
 	'location' => 'LIEU',
 	'date' => 'DATE',
+        'close' => 'Fermer',
 	'official_news' => 'Nouvelles officielles et l’actualité',
 	'source' => 'SOURCE',
 	'date' => 'Date',
