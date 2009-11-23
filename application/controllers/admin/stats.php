@@ -29,7 +29,7 @@ class Stats_Controller extends Admin_Controller
 	
 	function index()
 	{	
-		$this->template->content = new View('admin/stats');
+		$this->template->content = new View('admin/stats_hits');
 		$this->template->content->title = 'Statistics';
 		
 		// Retrieve Current Settings
@@ -39,16 +39,17 @@ class Stats_Controller extends Admin_Controller
 			$sitename = $settings->site_name;
 			$url = url::base();
 			$this->template->content->stat_id = $this->_create_site( $sitename, $url );
-		}else{
-			$this->template->content->stat_id = $settings->stat_id;
 		}
+		
+		// Show the hits page since stats are already set up
+		$this->hits();
 		
 	}
 	
 	function reports()
 	{
 		$this->template->content = new View('admin/stats_reports');
-		$this->template->content->title = 'Report Stats';
+		$this->template->content->title = 'Statistics';
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
@@ -95,7 +96,7 @@ class Stats_Controller extends Admin_Controller
 	function impact()
 	{
 		$this->template->content = new View('admin/stats_impact');
-		$this->template->content->title = 'Category Impact';
+		$this->template->content->title = 'Statistics';
 		
 		// Javascript Header
 		$this->template->raphael_enabled = TRUE;
@@ -160,7 +161,7 @@ class Stats_Controller extends Admin_Controller
 	function hits()
 	{
 		$this->template->content = new View('admin/stats_hits');
-		$this->template->content->title = 'Hit Summary';
+		$this->template->content->title = 'Statistics';
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
@@ -187,7 +188,7 @@ class Stats_Controller extends Admin_Controller
 	function country()
 	{
 		$this->template->content = new View('admin/stats_country');
-		$this->template->content->title = 'Country Breakdown';
+		$this->template->content->title = 'Statistics';
 		
 		$this->template->content->countries = Stats_Model::get_hit_countries();
 		
