@@ -14,7 +14,7 @@
 		<li class="last"><span>Finished</span></li>
 	</ol>
 
-        	<form method="POST" name="frm_install" action="advanced-general-settings.html" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
+        	<form method="POST" name="frm_install" action="process.php" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
         		<?php if ($form->num_errors > 0 ) { ?>
         		<div class="feedback error"><a class="btn-close" href="#">x</a>
                 	<p>Listed below is a summary of the errors we encountered:</p>
@@ -59,12 +59,12 @@
                         </tr>
                         <tr>
                             <th scope="row"><label for="username">User Name</label></th>
-                            <td><input type="text" value="username" size="25" id="username" name="username"/></td>
+                            <td><input type="text" value="<?php print $form->value('username'); ?>" size="25" id="username" name="username"/></td>
                             <td>Your database username.</td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="pwd">Password</label></th>
-                            <td><input type="text" value="password" size="25" id="password" name="password"/></td>
+                            <td><input type="text" value="<?php print $form->value('password'); ?>" size="25" id="password" name="password"/></td>
                             <td>Your database password.</td>
                         </tr>
                         

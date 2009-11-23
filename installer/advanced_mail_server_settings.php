@@ -1,14 +1,10 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Mail Server Settings / Ushahidi Web Installer</title>
-<link href="../media/css/admin/login.css" rel="stylesheet" type="text/css" />
-</head>
-<script src="../media/js/jquery.js" type="text/javascript" charset="utf-8"></script>
-<script src="../media/js/login.js" type="text/javascript" charset="utf-8"></script>
-
+<?php 
+    require_once('install.php');
+    global $install;
+    
+    $header = $install->_include_html_header();
+    print $header;
+ ?>
 <body>
 <div id="ushahidi_login_container" class="advanced">
     <div id="ushahidi_login_logo"><img src="../media/img/admin/logo_login.gif" /></div>
@@ -82,8 +78,8 @@
                 <table class="form-table">
                 	<tbody>
                     	<tr>
-                        	<td class="next"><a class="button" href="advanced-general-settings.html">&larr; Previous</a><!--<input type="button" class="button" value="&larr; Previous" />--></td>
-                            <td class="prev"><a class="button" href="advanced-map-configuration.html">Continue &rarr;</a><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
+                        	<td class="next"><a class="button" href="advanced_general_settings.php">&larr; Previous</a><!--<input type="button" class="button" value="&larr; Previous" />--></td>
+                            <td class="prev"><a class="button" href="advanced_map_configuration.php">Continue &rarr;</a><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
                         </tr>
                 	</tbody>
                 </table>

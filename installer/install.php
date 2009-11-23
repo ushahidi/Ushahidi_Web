@@ -386,6 +386,7 @@ class Install
 	}
 	
 	public function _include_html_header() {
+		//TODO make title tag configurable
 		$header = <<<HTML
 			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -397,6 +398,7 @@ class Install
 			</head>
 			<script src="../media/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 			<script src="../media/js/login.js" type="text/javascript" charset="utf-8"></script>
+			</head>
 HTML;
 		return $header;
 
