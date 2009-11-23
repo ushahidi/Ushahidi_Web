@@ -22,9 +22,9 @@ class notifications_Core
 					{
 						$address = $user->email;
 						
-						$message .= "\n\n\n\n~~~~~~~~~~~~\n".Kohana::lang('notifications.footer')
+						$message .= "\n\n\n\n~~~~~~~~~~~~\n".Kohana::lang('notifications.admin_footer')
 							."\n".url::base()
-							."\n\n".Kohana::lang('notifications.admin_login')
+							."\n\n".Kohana::lang('notifications.admin_login_url')
 							."\n".url::base()."admin";
 												
 						if ( ! email::send($address, $from, $subject, $message, FALSE))

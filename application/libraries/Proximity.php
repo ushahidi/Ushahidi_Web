@@ -19,6 +19,8 @@ class Proximity_Core {
 	private $maxLong;
 	private $minLong;
 
+	public $radius;
+	
 	const EQUATOR_LAT_MILE = 69.172;
 	const EQUATOR_LAT_KM = 111.321543;
 	
@@ -28,10 +30,10 @@ class Proximity_Core {
 	 * @param	string	latitude of this point
 	 * @param	string	longitude of this point
 	 * @param	int		the radius distance in miles/ km
-	 * @param	bool	True if the distance is in Kms
+	 * @param	bool	True if the distance is in Kms, otherwise returns Miles
 	 */
 
-	function __construct($latitude = 0, $longitude = 0, $distance = 100, $in_kms = FALSE) {
+	function __construct($latitude = 0, $longitude = 0, $distance = 100, $in_kms = TRUE) {
 		$equator_lat_dist = $in_kms ? self::EQUATOR_LAT_KM : self::EQUATOR_LAT_MILE;
 		
 		$this->maxLat = $latitude + $distance / $equator_lat_dist;

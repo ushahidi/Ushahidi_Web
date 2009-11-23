@@ -384,6 +384,7 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `incident_dateadd` datetime default NULL,
   `incident_dateadd_gmt` datetime default NULL,
   `incident_datemodify` datetime default NULL,
+  `incident_alert_status` TINYINT NOT NULL DEFAULT '0' COMMENT '0 - Not Tagged for Sending, 1 - Tagged for Sending, 2 - Alerts Have Been Sent',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `location_id` (`location_id`),
   KEY `incident_active` (`incident_active`),
@@ -960,6 +961,7 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `alert_confirmed` tinyint(4) NOT NULL default '0',
   `alert_lat` varchar(150) default NULL,
   `alert_lon` varchar(150) default NULL,
+  `alert_radius` TINYINT NOT NULL DEFAULT '20',
   `alert_ip` varchar(100) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_alert_code` (`alert_code`)
@@ -982,8 +984,7 @@ CREATE TABLE IF NOT EXISTS `alert_sent`
 `incident_id` BIGINT NOT NULL,
 `alert_id` BIGINT NOT NULL,
 `alert_date` DATETIME NULL,
-PRIMARY KEY (`id`),
-UNIQUE KEY `uniq_incident_id` (`incident_id`)
+PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -1363,6 +1364,6 @@ ALTER TABLE `user_tokens`
 -- Version information for table `settings`
 --
 UPDATE `settings` SET
-`db_version` = '17',
+`db_version` = '18',
 `ushahidi_version` = '0.9'
 WHERE `id` =1 LIMIT 1;
