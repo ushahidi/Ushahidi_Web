@@ -855,6 +855,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',
   `date_modify` datetime default NULL,
   `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',
+  `stat_key` VARCHAR(30) NOT NULL ,
   `email_username` VARCHAR(100) NOT NULL ,
   `email_password` VARCHAR(100) NOT NULL ,
   `email_port` INT(11) NOT NULL ,
@@ -1363,6 +1364,6 @@ ALTER TABLE `user_tokens`
 -- Version information for table `settings`
 --
 UPDATE `settings` SET
-`db_version` = '17',
+`db_version` = '18',
 `ushahidi_version` = '0.9'
 WHERE `id` =1 LIMIT 1;
