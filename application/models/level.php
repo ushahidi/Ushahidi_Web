@@ -16,7 +16,7 @@
 
 class Level_Model extends ORM
 {	
-	protected $has_many = array('incident' => 'incident_reporter');
+	protected $has_many = array('reporter');
 	
 	// Database table name
 	protected $table_name = 'level';
