@@ -227,7 +227,12 @@
 						<div style="clear:both"></div>
 						<div class="tab_form_item">
 							<strong>Image/Icon:</strong><br />
-							<?php print form::upload('category_image', $category_image, '') ?>
+							<?php
+								
+								// I removed $category_image from the second parameter to fix bug #161
+								print form::upload('category_image', '', '');
+							
+							?>
 						</div>
 						<div style="clear:both"></div>
 						<div class="tab_form_item">
