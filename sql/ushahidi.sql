@@ -1173,7 +1173,7 @@ CREATE TABLE IF NOT EXISTS `form_response` (
 --
 
 CREATE TABLE `level` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT,
   `level_title` varchar(200) default NULL,
   `level_description` varchar(200) default NULL,
   `level_weight` tinyint(4) NOT NULL,
@@ -1204,9 +1204,9 @@ CREATE TABLE `reporter` (
   `location_id` bigint(20) default NULL,
   `user_id` int(11) default NULL,
   `service_id` int(11) default NULL,
+  `level_id` INT( 11 ) NULL,
   `service_userid` varchar(255) default NULL,
   `service_account` varchar(255) default NULL,
-  `reporter_level` tinyint(4) default '3',
   `reporter_first` varchar(200) default NULL,
   `reporter_last` varchar(200) default NULL,
   `reporter_email` varchar(120) default NULL,
@@ -1365,6 +1365,6 @@ ALTER TABLE `user_tokens`
 -- Version information for table `settings`
 --
 UPDATE `settings` SET
-`db_version` = '18',
+`db_version` = '19',
 `ushahidi_version` = '0.9'
 WHERE `id` =1 LIMIT 1;

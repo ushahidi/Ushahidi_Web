@@ -665,9 +665,9 @@ class Manage_Controller extends Admin_Controller
 		(
 			'reporter_id' => '',    
 			'service_id' => '',
+			'level_id' => '',
 			'service_userid' => '',
 			'service_account' => '',
-			'reporter_level' => '',
 			'reporter_first' => '',
 			'reporter_last' => '',
 			'reporter_email' => '',
@@ -705,7 +705,7 @@ class Manage_Controller extends Admin_Controller
 				
 				if( $post->action == 'd' )				// Delete Action
 				{
-					$level->delete( $level_id );
+					$reporter->delete( $reporter_id );
 					$form_saved = TRUE;
 					$form_action = "DELETED";
 
@@ -714,9 +714,9 @@ class Manage_Controller extends Admin_Controller
 				{		
 					// SAVE Reporter    
 					$reporter->service_id = $post->service_id;
+					$reporter->level_id = $post->level_id;
 					/*$reporter->service_userid = $post->service_userid;
 					$reporter->service_account = $post->service_account;*/
-					$reporter->reporter_level = $post->reporter_level;
 					/*$reporter->reporter_first = $post->reporter_first;
 					$reporter->reporter_last = $post->reporter_last;
 					$reporter->reporter_email = $post->reporter_email;
