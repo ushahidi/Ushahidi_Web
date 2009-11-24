@@ -27,6 +27,12 @@ class Stats_Model extends ORM
 	    $stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range);
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
+		// If we encounter an error, return false
+		if(isset($response->result->error[0])) {
+			Kohana::log('error', "Error on stats request");
+			return false;
+		}
+		
 		foreach($response->visits->result as $res) {
 			$timestamp = strtotime($res['date'])*1000;
 			
