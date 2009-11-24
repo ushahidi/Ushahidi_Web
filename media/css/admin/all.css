@@ -737,6 +737,21 @@ ul.links li a:hover{
 .table .col-4 ul li a.del{ color:#b75f5f;}
 .table td .check-box { margin-top:2px !important;}
 
+/*-- tooltips --*/
+.tooltip{
+	border-bottom: 1px dotted #990000;
+	cursor: help;
+	background:url(../../img/tooltip.gif) no-repeat 100% 4px;
+	padding-right:10px;
+}
+a.tooltip{
+	text-decoration:none;
+	color:#333;
+}
+a.tooltip:hover{
+	border-width:0;
+}
+
 /*-- pager --*/
 ul.pager {
 	margin:0;
