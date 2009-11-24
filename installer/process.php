@@ -24,40 +24,41 @@
  {
     public function __construct()
 	{
-		$this->index();		
+		$this->_index();		
 	}
 	
-	public function index()
+	public function _index()
 	{
-	    if(isset($_POST['install'])) {
-	        $this->process_install();
+	    if(isset($_POST['basic_db_info'])) {
+	        $this->_process_install();
 	    
 	    } else {
 	        header("Location:.");
 	    }        
 	}
 	
-	public function process_install()
+	public function _process_install()
 	{
 	    global $form, $install;
 	        
-	    $status = $install->install( 
+	    $status = $install->_install( 
 	        $_POST['username'],
 	        $_POST['password'],
 	        $_POST['host'],
-	        $_POST['select_db_type'],
+	        'mysql',
 	        $_POST['db_name'],
 	        $_POST['table_prefix'],
 	        $_POST['base_path']
 	    );
 	    
 	    //no errors
-	    if( $status == 0 ) { 
-	        header("Location:../");
+	    if( $status == 0 ) {
+	    	$_SESSION['basic_finished'] = 'basic_db_info'; 
+	        header("Location:basic_finished.php");
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
 	        $_SESSION['error_array'] = $form->get_error_array();
-	        header("Location:.");
+	        header("Location:basic_db_info.php");
 	    }
 	           
 	}

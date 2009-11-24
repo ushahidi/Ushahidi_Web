@@ -28,10 +28,10 @@ class Install
 	    
 	    $this->install_directory = dirname(dirname(__FILE__));
 	    
-		$this->index();
+		$this->_index();
 	}
 
-	public function index()
+	public function _index()
 	{
 	   session_start();
 	}
@@ -39,7 +39,7 @@ class Install
 	/**
 	 * validate the form fields and does the necessary processing.
 	 */
-	public function install( $username, $password, $host, $select_db_type,
+	public function _install( $username, $password, $host, $select_db_type,
 	    $db_name, $table_prefix, $base_path )
     {
 	    global $form;
@@ -64,6 +64,13 @@ class Install
 		    		"<config>database.template.php</config> file to work
             from. Please re-upload this file from the Ushahidi files.");
 		}
+		
+		// load .htaccess file and work with it.
+		if(!file_exists('../.htaccess')){
+		    $form->set_error("load_htaccess_file","<strong>Sorry</strong>, I need a " .
+		    		"<code>.htaccess</code> file to work
+            with. Please re-upload this file from the Ushahidi files.");
+		}
 
 		if( !is_writable('../application/config')) {
 		    $form->set_error('permission',
@@ -76,7 +83,7 @@ class Install
 			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
 		}
 
-		if(!$this->make_connection($username, $password, $host)){
+		if(!$this->_make_connection($username, $password, $host)){
 		    $form->set_error("connection","<strong>Oops!</strong>, couldn't make connection to
 		    the database server with the credentials given. Could you double
 		    check if they are correct.");
@@ -90,19 +97,19 @@ class Install
 
 	   } else {
 
-	        $this->add_config_details($base_path);
+	        $this->_add_config_details($base_path);
 			
-			$this->add_htaccess_entry($base_path);
+			$this->_add_htaccess_entry($base_path);
 			
-		    $this->add_db_details( $username, $password, $host, $select_db_type,
+		    $this->_add_db_details( $username, $password, $host, $select_db_type,
 		       $db_name, $table_prefix );
 
-		    $this->import_sql($username, $password, $host,$db_name);
-		    $this->chmod_folders();
+		    $this->_import_sql($username, $password, $host,$db_name);
+		    $this->_chmod_folders();
 	        
-	        $sitename = $this->get_url();
-		    $url = $this->get_url();
-		    $configure_stats = $this->configure_stats($sitename, $url, $host, $username, $password, $db_name);
+	        $sitename = $this->_get_url();
+		    $url = $this->_get_url();
+		    $configure_stats = $this->_configure_stats($sitename, $url, $host, $username, $password, $db_name);
 	        
 	        return 0;
 	   }
@@ -111,7 +118,7 @@ class Install
 	/**
 	 * gets the URL
 	 */
-	 private function get_url()
+	 private function _get_url()
 	 {
 	 	global $_SERVER;
 	 	if ($_SERVER["SERVER_PORT"] != "80") {
@@ -126,7 +133,7 @@ class Install
 	/**
 	 * adds the database details to the config/database.php file.
 	 */
-	private function add_db_details( $username, $password, $host,
+	private function _add_db_details( $username, $password, $host,
 	    $select_db_type, $db_name, $table_prefix )
 	{
 
@@ -177,7 +184,7 @@ class Install
 	/**
 	 * adds the site_name to the application/config/config.php file
 	 */
-	private function add_config_details( $base_path )
+	private function _add_config_details( $base_path )
 	{
 	    $config_file = @file('../application/config/config.template.php');
         $handle = @fopen('../application/config/config.php', 'w');
@@ -207,7 +214,7 @@ class Install
 	 * 
 	 * @param base_path - the base path.
 	 */
-	private function add_htaccess_entry($base_path) {
+	private function _add_htaccess_entry($base_path) {
 		$htaccess_file = file('../.htaccess');
 		$handle = fopen('../.htaccess','w');
 			
@@ -231,7 +238,7 @@ class Install
 	/**
 	 * Imports sql file to the database.
 	 */
-	private function import_sql($username, $password, $host,$db_name)
+	private function _import_sql($username, $password, $host,$db_name)
 	{
 	    $connection = @mysql_connect("$host", "$username", "$password");
 	    $db_schema = @file_get_contents('../sql/ushahidi.sql');
@@ -259,7 +266,7 @@ class Install
 	 * check if we can make connection to the db server with the credentials
 	 * given.
 	 */
-	private function make_connection($username, $password, $host)
+	private function _make_connection($username, $password, $host)
 	{
 	    $connection = @mysql_connect("$host", "$username", "$password");
 		if( $connection ) {
@@ -274,7 +281,7 @@ class Install
 	/**
 	 * Set up stat tracking
 	 */
-	private function configure_stats($sitename, $url, $host, $username, $password, $db_name)
+	private function _configure_stats($sitename, $url, $host, $username, $password, $db_name)
 	{
 		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
 		
@@ -298,7 +305,7 @@ class Install
 	/**
 	 * Change permissions on the cache, logs, and upload folders.
 	 */
-	private function chmod_folders()
+	private function _chmod_folders()
 	{
 	    @chmod('../application/cache',0777);
 	    @chmod('../application/logs',0777);
@@ -404,8 +411,8 @@ HTML;
 
 	}
 	
-	public function _detect_ushahidi_base_path() {
-		$long_base_path = $_SERVER["REQUEST_URI"];
+	public function _get_base_path($request_uri) {
+		return substr( substr($request_uri,0,stripos($request_uri,'/installer/')) ,1);
 		
 	}
 }

@@ -38,6 +38,9 @@
 							print ( $form->error('load_db_tpl') == "" ) ? '' : 
 							"<li>".$form->error('load_db_tpl')."</li>";
 							
+							print ( $form->error('load_htaccess_file') == "" ) ? '' : 
+							"<li>".$form->error('load_htaccess_file')."</li>";
+							
 							print ( $form->error('connection') == "" ) ? '' : 
 							"<li>".$form->error('connection')."</li>";
 	   				    ?>

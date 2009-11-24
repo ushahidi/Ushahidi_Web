@@ -32,8 +32,8 @@
 							print ( $form->error('permission') == "" ) ? '' : 
 							"<li>".$form->error('permission')."</li>";
 							
-							print ( $form->error('load_db_tpl') == "" ) ? '' : 
-							"<li>".$form->error('load_db_tpl')."</li>";
+							print ( $form->error('load_htaccess_file') == "" ) ? '' : 
+							"<li>".$form->error('load_htaccess_file')."</li>";
 							
 							print ( $form->error('connection') == "" ) ? '' : 
 							"<li>".$form->error('connection')."</li>";
@@ -49,8 +49,10 @@
                     <tbody>
                         <tr>
                             <th scope="row"><label for="base_path">Base Path</label></th>
-                            <td><input type="text" value="<?php print $form->value('base_path') == "" ? $_SERVER["REQUEST_URI"] : $form->value('base_path'); ?>" size="25" id="base_path" name="base_path"/></td>
-                            <td>The location on your server where you placed your Ushahidi files. <strong>We have automatically detected this value, please make sure that it is correct.</strong></td>
+                            <td><input type="text" value="<?php print $form->value('base_path') == "" ? $install->_get_base_path($_SERVER["REQUEST_URI"]) : $form->value('base_path'); ?>" size="25" id="base_path" name="base_path"/></td>
+                            <td>The location on your server where you placed your Ushahidi files. <strong>We have automatically detected this value, please make sure that it is correct.</strong>
+                            	If the field is empty, do not worry, it means ushahidi is installed at the top level directory.
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="db_name">Database Name</label></th>
@@ -64,7 +66,7 @@
                         </tr>
                         <tr>
                             <th scope="row"><label for="pwd">Password</label></th>
-                            <td><input type="text" value="<?php print $form->value('password'); ?>" size="25" id="password" name="password"/></td>
+                            <td><input type="password" value="<?php print $form->value('password'); ?>" size="25" id="password" name="password"/></td>
                             <td>Your database password.</td>
                         </tr>
                         
@@ -81,15 +83,14 @@
                         <input type="hidden" name="connection" />
                         <input type="hidden" name="permission" />
                         <input type="hidden" name="load_db_tpl" />
-                        
+                        <input type="hidden" name="load_htaccess_file" />
                 	</tbody>
                 </table>
                 <table class="form-table">
                 	<tbody>
                     	<tr>
                         	<td class="next"><!--<input type="button" class="button" value="&larr; Previous" />--></td>
-                            <td class="prev"><!--<input type="button" class="button" value="Continue &rarr;" value="submit"  />-->
-                      		<a class="button" href="basic_finished.php">Continue &rarr;</a></td>
+                            <td class="prev"><input type="submit" id="install" name="basic_db_info" value="Continue &rarr;" class="button"  /></td>
                         </tr>
                 	</tbody>
                 </table>
