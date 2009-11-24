@@ -48,26 +48,22 @@ class Frontlinesms_Controller extends Controller
 				if (!$service) 
 					return;
 			
-				$reporter_check = ORM::factory('reporter')
+				$reporter = ORM::factory('reporter')
 									->where('service_id', $service->id)
 									->where('service_account', $message_from)
 									->find();
 
-				if ($reporter_check->loaded == TRUE)
-				{
-					$reporter_id = $reporter_check->id;
-				}
-				else
+				if (!$reporter->loaded == TRUE)
 				{
 					// get default reporter level (Untrusted)
-					$levels = new Level_Model();
-					$default_level = $levels->where('level_weight', 0)->find();
-
-					$reporter = new Reporter_Model();
+					$level = ORM::factory('level')
+						->where('level_weight', 0)
+						->find();
+					
 					$reporter->service_id = $service->id;
+					$reporter->level_id = $level->id;
 					$reporter->service_userid = null;
 					$reporter->service_account = $message_from;
-					$reporter->reporter_level = $default_level;
 					$reporter->reporter_first = null;
 					$reporter->reporter_last = null;
 					$reporter->reporter_email = null;
@@ -75,7 +71,6 @@ class Frontlinesms_Controller extends Controller
 					$reporter->reporter_ip = null;
 					$reporter->reporter_date = date('Y-m-d');
 					$reporter->save();
-					$reporter_id = $reporter->id;
 				}
 				
 				// Save Message
@@ -83,7 +78,7 @@ class Frontlinesms_Controller extends Controller
 				$message->parent_id = 0;
 				$message->incident_id = 0;
 				$message->user_id = 0;
-				$message->reporter_id = $reporter_id;
+				$message->reporter_id = $reporter->id;
 				$message->message_from = $message_from;
 				$message->message_to = null;
 				$message->message = $message_description;

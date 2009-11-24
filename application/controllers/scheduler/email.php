@@ -21,8 +21,9 @@ class Email_Controller extends Controller
 	}	
 	
 	public function index() 
-	{		
+	{
 		$check_email = new Imap;
+		
 		$messages = $check_email->get_messages();
 		
 		// Close Connection
@@ -50,18 +51,12 @@ class Email_Controller extends Controller
 		}
 		
 		foreach($messages as $message) {		
-			$reporter = null;
-			$reporter_check = ORM::factory('reporter')
+			$reporter = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_account', $message['email'])
 				->find();
 			
-			if ($reporter_check->loaded == true)
-			{
-				$reporter_id = $reporter_check->id;
-				$reporter = ORM::factory('reporter')->find($reporter_id);
-			}
-			else
+			if (!$reporter->loaded == true)
 			{
 				// Add new reporter
 	    		$names = explode(' ', $message['from'], 2);
@@ -71,39 +66,41 @@ class Email_Controller extends Controller
 	    		}
 	    		
 	    		// get default reporter level (Untrusted)
-	    		$levels = new Level_Model();	
-		    	$default_level = $levels->where('level_weight', 0)->find();
+				$level = ORM::factory('level')
+					->where('level_weight', 0)
+					->find();
 		    	
-	    		$reporter = new Reporter_Model();
 	    		$reporter->service_id       = $service->id;
+				$reporter->level_id	        = $level->id;
 	    		$reporter->service_userid   = null;
-	    		$reporter->service_account  = $message['email'];
-	    		$reporter->reporter_level   = $default_level; 
+	    		$reporter->service_account  = $message['email']; 
 	    		$reporter->reporter_first   = $names[0];
 	    		$reporter->reporter_last    = $last_name;
-	    		$reporter->reporter_email   = null;
+	    		$reporter->reporter_email   = $message['email'];
 	    		$reporter->reporter_phone   = null;
 	    		$reporter->reporter_ip      = null;
 	    		$reporter->reporter_date    = date('Y-m-d');
 	    		$reporter->save();
-				$reporter_id = $reporter->id;
 			}
 			
-			if ($reporter->reporter_level > 1)
+			if ($reporter->level_id > 1 && 
+				count(ORM::factory('message')
+					->where('service_messageid', $message['message_id'])
+					->find_all()) == 0 )
 			{	
 				// Save Email as Message
 				$email = new Message_Model();
 				$email->parent_id = 0;
 				$email->incident_id = 0;
 				$email->user_id = 0;
-				$email->reporter_id = $reporter_id;
+				$email->reporter_id = $reporter->id;
 				$email->message_from = $message['from'];
 				$email->message_to = null;
 				$email->message = $message['subject'];
 				$email->message_detail = $message['body'];
 				$email->message_type = 1; // Inbox
 				$email->message_date = $message['date'];
-				$email->service_messageid = null;
+				$email->service_messageid = $message['message_id'];
 				$email->save();
 				
 				// Notify Admin Of New Email Message

@@ -74,11 +74,11 @@
 									{
 										$reporter_id = $reporter->id;   
 								        $service_id = $reporter->service_id;
+										$level_id = $reporter->level_id;
 								        $service = new Service_Model($service_id);
 								        $service_name = $service->service_name;
 							    		$service_userid = $reporter->service_userid;
 							    		$service_account = $reporter->service_account;
-							    		$reporter_level = $reporter->reporter_level;
 							    		$reporter_first = $reporter->reporter_first;
 							    		$reporter_last = $reporter->reporter_last;
 							    		$reporter_email = $reporter->reporter_email;
@@ -104,9 +104,9 @@
 													<li class="none-separator"><a href="#add" onClick="fillFields(
 	'<?php echo(rawurlencode($reporter_id)); ?>',
 	'<?php echo(rawurlencode($service_id)); ?>',
+	'<?php echo(rawurlencode($level_id)); ?>',
 	'<?php echo(rawurlencode($service_userid)); ?>',
 	'<?php echo(rawurlencode($service_account)); ?>',
-	'<?php echo(rawurlencode($reporter_level)); ?>',
 	'<?php echo(rawurlencode($reporter_first)); ?>',
 	'<?php echo(rawurlencode($reporter_last)); ?>',
 	'<?php echo(rawurlencode($reporter_email)); ?>',
@@ -144,6 +144,10 @@
 							<strong>Service:</strong><br />
 							<?php print form::dropdown('service_id', $service_array, ''); ?>
 						</div>
+						<div class="tab_form_item">
+							<strong>Reporter Level:</strong><br />
+							<?php print form::dropdown('level_id', $level_array, ''); ?>
+						</div>
 						<!--div class="tab_form_item2">
 							<strong>Service User ID:</strong><br />
 							<?php //print form::input('service_userid', $form['service_userid'], ' class="text long"'); ?>
@@ -152,10 +156,6 @@
 							<strong>Service Username:</strong><br />
 							<?php //print form::input('service_account', $form['service_account'], ' class="text long"'); ?>
 						</div-->
-						<div class="tab_form_item">
-							<strong>Reporter Level:</strong><br />
-							<?php print form::dropdown('reporter_level', $level_array, ''); ?>
-						</div>
 						<!--div class="tab_form_item2">
 							<strong>Reporter Firstname:</strong><br />
 							<?php //print form::input('reporter_first', $form['reporter_first'], ' class="text long"'); ?>
@@ -191,16 +191,16 @@
 			</div>
 			<script type="text/javascript">
 			// Levels JS
-			function fillFields(id, service_id, service_userid, service_account, 
-			                    reporter_level, reporter_first, reporter_last, 
+			function fillFields(id, service_id, level_id, service_userid, service_account, 
+								reporter_first, reporter_last, 
 			                    reporter_email, reporter_phone, reporter_ip, 
 			                    reporter_date)
 			{
 				$("#reporter_id").attr("value", unescape(id));
 				$("#service_id").attr("value", unescape(service_id));
+				$("#level_id").attr("value", unescape(level_id));
 	    		$("#service_userid").attr("value", unescape(service_userid));
 	    		$("#service_account").attr("value", unescape(service_account));
-	    		$("#reporter_level").attr("value", unescape(reporter_level));
 	    		$("#reporter_first").attr("value", unescape(reporter_first));
 	    		$("#reporter_last").attr("value", unescape(reporter_last));
 	    		$("#reporter_email").attr("value", unescape(reporter_email));

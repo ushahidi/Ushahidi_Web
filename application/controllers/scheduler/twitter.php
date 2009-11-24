@@ -107,18 +107,12 @@ class Twitter_Controller extends Controller
 		foreach($tweets as $tweet) {
 			$tweet_user = $tweet->{'user'};
 			
-			$reporter = null;
-    		$reporter_check = ORM::factory('reporter')
+    		$reporter = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_userid', $tweet_user->{'id'})
 				->find();
 
-			if ($reporter_check->loaded == true)
-			{
-				$reporter_id = $reporter_check->id;
-				$reporter = ORM::factory('reporter')->find($reporter_id);
-			}
-			else
+			if (!$reporter->loaded)
 			{
 				// Add new reporter
 	    		$names = explode(' ', $tweet_user->{'name'}, 2);
@@ -128,14 +122,15 @@ class Twitter_Controller extends Controller
 	    		}
 
 	    		// get default reporter level (Untrusted)
-	    		$levels = new Level_Model();
-		    	$default_level = $levels->where('level_weight', 0)->find();
+				$level = ORM::factory('level')
+					->where('level_weight', 0)
+					->find();
 
 	    		$reporter = new Reporter_Model();
 	    		$reporter->service_id       = $service->id;
+				$reporter->level_id	        = $level->id;
 	    		$reporter->service_userid   = $tweet_user->{'id'};
 	    		$reporter->service_account  = $tweet_user->{'screen_name'};
-	    		$reporter->reporter_level   = $default_level;
 	    		$reporter->reporter_first   = $names[0];
 	    		$reporter->reporter_last    = $last_name;
 	    		$reporter->reporter_email   = null;
@@ -146,7 +141,7 @@ class Twitter_Controller extends Controller
 				$reporter_id = $reporter->id;
 			}
 			
-			if ($reporter->reporter_level > 1 && 
+			if ($reporter->level_id > 1 && 
 			    count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
 			                           ->find_all()) == 0) {
 				// Save Tweet as Message
@@ -154,7 +149,7 @@ class Twitter_Controller extends Controller
 	    		$message->parent_id = 0;
 	    		$message->incident_id = 0;
 	    		$message->user_id = 0;
-	    		$message->reporter_id = $reporter_id;
+	    		$message->reporter_id = $reporter->id;
 	    		$message->message_from = $tweet_user->{'screen_name'};
 	    		$message->message_to = null;
 	    		$message->message = $tweet->{'text'};
@@ -191,28 +186,22 @@ class Twitter_Controller extends Controller
 		$tweet_results = $tweets->{'results'};
 
 		foreach($tweet_results as $tweet) {
-			$reporter = null;
-    		$reporter_check = ORM::factory('reporter')
+    		$reporter = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_account', $tweet->{'from_user'})
 				->find();
 
-			if ($reporter_check->loaded == true)
-			{
-				$reporter_id = $reporter_check->id;
-				$reporter = ORM::factory('reporter')->find($reporter_id);
-			}
-			else
+			if (!$reporter->loaded)
 			{
 	    		// get default reporter level (Untrusted)
-	    		$levels = new Level_Model();
-		    	$default_level = $levels->where('level_weight', 0)->find();
+	    		$level = ORM::factory('level')
+					->where('level_weight', 0)
+					->find();
 
-	    		$reporter = new Reporter_Model();
 	    		$reporter->service_id       = $service->id;
+				$reporter->level_id	        = $level->id;
 	    		$reporter->service_userid   = null;
 	    		$reporter->service_account  = $tweet->{'from_user'};
-	    		$reporter->reporter_level   = $default_level;
 	    		$reporter->reporter_first   = null;
 	    		$reporter->reporter_last    = null;
 	    		$reporter->reporter_email   = null;
@@ -220,10 +209,9 @@ class Twitter_Controller extends Controller
 	    		$reporter->reporter_ip      = null;
 	    		$reporter->reporter_date    = date('Y-m-d');
 	    		$reporter->save();
-				$reporter_id = $reporter->id;
 			}
 			
-			if ($reporter->reporter_level > 1 && 
+			if ($reporter->level_id > 1 && 
 			    count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
 			                           ->find_all()) == 0) {
 				// Save Tweet as Message
@@ -231,7 +219,7 @@ class Twitter_Controller extends Controller
 	    		$message->parent_id = 0;
 	    		$message->incident_id = 0;
 	    		$message->user_id = 0;
-	    		$message->reporter_id = $reporter_id;
+	    		$message->reporter_id = $reporter->id;
 	    		$message->message_from = $tweet->{'from_user'};
 	    		$message->message_to = null;
 	    		$message->message = $tweet->{'text'};
