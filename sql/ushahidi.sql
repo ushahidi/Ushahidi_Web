@@ -627,7 +627,8 @@ CREATE TABLE IF NOT EXISTS `feed_item`
 (
 `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
 `feed_id` INT(11) NOT NULL,
-`location_id` BIGINT default NULL,
+`location_id` BIGINT default '0',
+`incident_id` INT(11) NOT NULL DEFAULT '0',
 `item_title` VARCHAR(255) default NULL,
 `item_description` TEXT default NULL,
 `item_link` VARCHAR(255) default NULL,

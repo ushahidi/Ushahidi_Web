@@ -129,7 +129,7 @@
 			<!-- / searchbox -->
 		
 			<!-- logo -->
-			<div id="logo"><strong><?php echo $site_name; ?></strong></div>
+			<div id="logo"><span><strong><?php echo $site_name; ?></strong></span></div>
 			<!-- / logo -->
 		
 			<!-- submit incident -->
