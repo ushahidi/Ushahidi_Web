@@ -18,18 +18,6 @@
 	</ol>
 
         	<form method="POST" name="frm_install" action="process.php" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
-        		<!--<div class="feedback error">
-                	<p>Listed below is a summary of the errors we encountered:</p>
-	   				<ul id="error-list">
-                    	<li>Please make sure your <strong>Site Email Address</strong> is a valid email address.</li>
-                        <li>Please make sure your <strong>Site Alert Email Address</strong> is a valid email address.</li>
-                        <li>Please enter a <strong>Mail Server Username</strong>.</li>
-                        <li>Please make sure your <strong>Mail Server Password</strong>.</li>
-                        <li>Please enter a <strong>Mail Server Port</strong>.</li>
-                        <li>Please make sure your <strong>Mail Server Host</strong>.</li>
-					</ul>
-				</div>-->
-                
                 <div class="feedback success">
                 	<h2>Installation Successful!</h2>
 				</div>

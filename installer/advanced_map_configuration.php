@@ -18,17 +18,27 @@
 	</ol>
 
         	<form method="POST" name="frm_install" action="process.php" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
-        		<!--<div class="feedback error">
+        		<?php if ($form->num_errors > 0 ) { ?>
+        		<div class="feedback error"><a class="btn-close" href="#">x</a>
                 	<p>Listed below is a summary of the errors we encountered:</p>
 	   				<ul id="error-list">
-                    	<li>Please make sure your <strong>Site Email Address</strong> is a valid email address.</li>
-                        <li>Please make sure your <strong>Site Alert Email Address</strong> is a valid email address.</li>
-                        <li>Please enter a <strong>Mail Server Username</strong>.</li>
-                        <li>Please make sure your <strong>Mail Server Password</strong>.</li>
-                        <li>Please enter a <strong>Mail Server Port</strong>.</li>
-                        <li>Please make sure your <strong>Mail Server Host</strong>.</li>
+                    	<?php
+	   				    	print ( $form->error('site_name') == "" ) ? '' : 
+							"<li>".$form->error('site_name')."</li>";
+							
+							print ( $form->error('site_tagline') == "" ) ? '' : 
+							"<li>".$form->error('site_tagline')."</li>";
+							
+							print ( $form->error('select_language') == "" ) ? '' : 
+							"<li>".$form->error('select_language')."</li>";
+							
+							print ( $form->error('site_email') == "" ) ? '' : 
+							"<li>".$form->error('site_email')."</li>";
+							
+	   				    ?>
 					</ul>
-				</div>-->
+				</div>
+                <?php } ?>
                 
                 <div class="feedback info"><a class="btn-close" href="#">x</a>
                 	<p>This is an example of an informative message box that we would use to add a bit more context. Not sure if this page needs one or not.</p>
@@ -60,12 +70,11 @@
                 	<tbody>
                     	<tr>
                         	<td class="next"><a class="button" href="advanced_mail_server_settings.php">&larr; Previous</a><!--<input type="button" class="button" value="&larr; Previous" />--></td>
-                            <td class="prev"><input type="submit" id="advanced_map_configuration" name="advanced_map_configuration" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
+                            <td class="prev"><input type="submit" id="advanced_map_config" name="advanced_map_configuration" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
                         </tr>
                 	</tbody>
                 </table>
         	</form>
-            <p></p>
   </div>
 
 </div>

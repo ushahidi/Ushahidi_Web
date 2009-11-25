@@ -36,6 +36,12 @@
 	        $this->_proc_basic_db_info();
 	    }else if($_POST['advanced_db_info']){
 	    	$this->_proc_advanced_db_info();
+	    }else if( $_POST['advanced_general_settings']){
+	    	$this->_proc_general_settings();
+	    }else if($_POST['advanced_mail_server_settings']){ 
+	    	$this->_proc_mail_server();
+	    }else if($_POST['advanced_map_config']){ 
+	    	$this->_proc_map();
 	    } else {
 	        header("Location:.");
 	    }        
@@ -95,7 +101,7 @@
 	    	$_SESSION['password'] = $_POST['password'];
 	    	$_SESSION['host'] = $_POST['host'];
 	    	$_SESSION['db_name'] = $_POST['db_name'];
-	    	 
+	    	$_SESSION['table_prefix'] = $_POST['table_prefix']; 
 	        header("Location:advanced_general_settings.php");
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
@@ -109,14 +115,12 @@
 	 */
 	public function _proc_general_settings() {
 		global $form, $install;
+		
 		$status = $install->_install_db_info( 
-	        $_POST['username'],
-	        $_POST['password'],
-	        $_POST['host'],
-	        'mysql',
-	        $_POST['db_name'],
-	        $_POST['table_prefix'],
-	        $_POST['base_path']
+	        $_POST['site_name'],
+	        $_POST['site_tagline'],
+	        $_POST['select_language'],
+	        $_POST['site_email']
 	    );
 	    
 	    //no errors
@@ -124,11 +128,11 @@
 	    	// make sure users get to the general setting from advanced db info page.
 	    	$_SESSION['mail_server'] = 'mail_server';
 	    	
-	  		// send the database info to the next page for updating the settings table.
-	    	$_SESSION['username'] = $_POST['username'];
+	  		// set it up in case someone want to goes the previous page.
+	    	$_SESSION['site_name'] = $_POST['username'];
 	    	$_SESSION['password'] = $_POST['password'];
-	    	$_SESSION['host'] = $_POST['host'];
-	    	$_SESSION['db_name'] = $_POST['db_name'];
+	    	$_SESSION['select_language'] = $_POST['select_language'];
+	    	$_SESSION['site_email'] = $_POST['site_email'];
 	    	 
 	        header("Location:advanced_mail_server_settings.php");
 	    }else if($status == 1 ) {

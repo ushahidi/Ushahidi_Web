@@ -116,6 +116,120 @@ class Install
 	}
 	
 	/**
+	 * Validates general settings fields and then add details to 
+	 * the settings table.
+	 */
+	private function _general_settings($site_name, $site_tagline, $default_lang, $site_email)
+	{
+		global $form;
+	    //check for empty fields
+	    if(!$site_name || strlen($site_name = trim($site_name)) == 0 ){
+	        $form->set_error("site_name", "Please make sure to " .
+	        		"enter a<strong>site name</strong>.");
+	    } else {
+	    	$site_name = stripslashes($site_name);
+	    }
+	    
+	    if(!$site_tagline || strlen($site_tagline = trim($site_tagline)) == 0 ){
+	        $form->set_error("site_tagline", "Please make sure to " .
+	        		"enter a<strong>site tagline</strong>.");
+	    } else {
+	    	$site_tagline = stripslashes($site_tagline);
+	    }
+	    
+	    /* Email error checking */
+      	if(!$site_email || strlen($site_email = trim($site_email)) == 0){
+        	$form->setError("site_email", "* Email not entered");
+      	} else{
+         	/* Check if valid email address */
+         	$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
+                 ."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
+                 ."\.([a-z]{2,}){1}$";
+         	if(!eregi($regex,$site_email)){
+            	$form->setError("site_email", "* Invalid email was entered.");
+         	}
+         	$site_email = stripslashes($site_email);
+      	}
+      	
+      	/**
+	     * error exists, have user correct them.
+	     */
+	   	if( $form->num_errors > 0 ) {
+	        return 1;
+
+	   	} else {
+	   		$this->_add_general_settings($site_name, $site_tagline, $default_lang, $site_email);
+	   		return 0;	
+	   	}
+	    
+	}
+	
+	private function _map_info($map_provider, $map_api_key )
+	{
+		//check for empty fields
+	    if(!$map_api_key || strlen($map_api_key = trim($map_api_key)) == 0 ){
+	        $form->set_error("map_api_key", "Please make sure to " .
+	        		"enter an<strong>api key</strong> for the choosen map.");
+	    } else {
+	    	$map_api_key = stripslashes($map_api_key);
+	    }
+	    
+	    /**
+	     * error exists, have user correct them.
+	     */
+	   	if( $form->num_errors > 0 ) {
+	        return 1;
+
+		} else {
+			$this->_add_map_info($map_provider, $map_api_key );
+			return 0;
+		}
+	}
+	
+	private function _mail_server($alert_email, $mail_username,$mail_password,
+		$mail_port,$mail_host,$mail_type,$mail_ssl ){
+		
+		global $form;
+	    //check for empty fields
+	    if(!$alert_email || strlen($alert_email = trim($alert_email)) == 0 ){
+	        $form->set_error("site_alert_email", "Please make sure to " .
+	        		"enter an <strong>email address</strong> for the alerts.");
+	    }
+
+	    if( !$mail_username || strlen($mail_username = trim($mail_username)) == 0 ){
+	        $form->set_error("mail_server_username","Please enter the <strong>host</strong> of the
+	            database server." );
+	    }
+
+	    if( !$mail_password || strlen($mail_password = trim($mail_password)) == 0 ){
+	        $form->set_error("mail_server_pwd","Please enter the <strong>user name</strong> of the mail server.");
+	    }
+	    
+	    if(!$mail_port|| strlen($mail_port = trim($mail_port)) == 0 ){
+	        $form->set_error("mail_server_port", "Please make sure to " .
+	        		"enter the <strong>port</strong> for the mail server.");
+	    }
+	    
+	    if(!$mail_host|| strlen($mail_host = trim($mail_host)) == 0 ){
+	        $form->set_error("mail_server_host", "Please make sure to " .
+	        		"enter the <strong>host</strong> of the mail server.");
+	    }
+	    
+	    /**
+	     * error exists, have user correct them.
+	     */
+	   	if( $form->num_errors > 0 ) {
+	        return 1;
+
+		} else {
+			$this->_add_mail_server_info( $alert_email, $mail_username,$mail_password,
+						$mail_port,$mail_host,$mail_type,$mail_ssl );
+			return 0;
+		}
+
+	}
+	
+	/**
 	 * gets the URL
 	 */
 	 private function _get_url()
@@ -278,17 +392,34 @@ class Install
 	}
 	
 	/**
-	 * Add google map api key to the settings table.
+	 * Adds google map api key to the settings table.
 	 * @param map_provider - map provider.
-	 * @param google_api_key - api key
+	 * @param map_api_key - map api key
 	 */
-	private function _add_map_info($map_provider, $google_api_key ){
+	private function _add_map_info($map_provider, $map_api_key ){
 		//TODO modularize the db connection part.
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
 		
 		@mysql_query('UPDATE `settings` SET `site_key` = \''.mysql_escape_string($map_provider).
-		'\', default_map= \''.mysql_escape_string($google_api_key).'\' ');
+		'\', default_map= \''.mysql_escape_string($map_api_key).'\' ');
+		@mysql_close($connection);
+	}
+	
+	/**
+	 * Adds mail server details to the settings table.
+	 * 
+	 */
+	private function _add_mail_server_info( $alert_email, $mail_username,$mail_password,
+		$mail_port,$mail_host,$mail_type,$mail_ssl ) {
+		
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		
+		@mysql_query('UPDATE `settings` SET `alerts_email` = \''.mysql_escape_string($alert_email).
+		'\', `email_username` = \''.mysql_escape_string($mail_username).'\' , `email_password` = \''.mysql_escape_string($mail_password).'\'' .
+				', `email_port` = \''.mysql_escape_string($mail_port).'\' , `email_host` = \''.mysql_escape_string($mail_host).'\' ' .
+						', `email_servertype` = \''.mysql_escape_string($mail_type).'\' , `email_ssl` = \''.mysql_escape_string($mail_ssl).'\' ');
 		@mysql_close($connection);
 	}
 
