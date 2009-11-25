@@ -23,8 +23,15 @@
 					<span>(<a href="#add">Add New</a>)</span>
 					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
 				</h2>
+				
 				<!-- tabs -->
 				<div class="tabs">
+					<!-- tabset -->
+					<ul class="tabset">
+						<li><a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active">Feeds</a></li>
+						<li><a href="<?php echo url::base() . 'admin/manage/feeds_items' ?>">Feed Items</a></li>
+					</ul>
+					
 					<!-- tab -->
 					<div class="tab">
 						<ul>
@@ -107,7 +114,7 @@
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $feed_name; ?></h4>
+													<h4><?php echo $feed_name; ?>&nbsp;&nbsp;&nbsp;[<a href="<?php echo url::base() . 'admin/manage/feeds_items/'.$feed_id ?>">View Items</a>]</h4>
 													<p><?php echo $feed_url; ?></p>
 												</div>
 											</td>
