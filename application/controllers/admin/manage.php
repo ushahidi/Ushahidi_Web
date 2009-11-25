@@ -47,7 +47,8 @@ class Manage_Controller extends Admin_Controller
 	        'category_color'  => '',
 			'category_image'  => ''
 	    );
-		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+	    
+		// copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
