@@ -2,6 +2,10 @@
     require_once('install.php');
     global $install;
     
+    if(!isset( $_SESSION['general_settings']) && $_SESSION['general_settings'] != "general_settings"){
+    	header('Location:.');
+    }
+    
     $header = $install->_include_html_header();
     print $header;
  ?>
@@ -18,24 +22,38 @@
 	</ol>
 
         	<form method="POST" name="frm_install" action="process.php" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
+        		<?php if ($form->num_errors > 0 ) { ?>
         		<div class="feedback error"><a class="btn-close" href="#">x</a>
                 	<p>Listed below is a summary of the errors we encountered:</p>
 	   				<ul id="error-list">
-                    	<li>Please make sure your <strong>Site Email Address</strong> is a valid email address.</li>
-                        <li>Please make sure your <strong>Site Alert Email Address</strong> is a valid email address.</li>
+                    	<?php
+	   				    	print ( $form->error('site_name') == "" ) ? '' : 
+							"<li>".$form->error('site_name')."</li>";
+							
+							print ( $form->error('site_tagline') == "" ) ? '' : 
+							"<li>".$form->error('site_tagline')."</li>";
+							
+							print ( $form->error('select_language') == "" ) ? '' : 
+							"<li>".$form->error('select_language')."</li>";
+							
+							print ( $form->error('site_email') == "" ) ? '' : 
+							"<li>".$form->error('site_email')."</li>";
+							
+	   				    ?>
 					</ul>
 				</div>
+                <?php } ?>
                 
 				<table class="form-table fields">
                     <tbody>
                         <tr>
                             <th scope="row"><label for="site_name">Site Name</label></th>
-                            <td><input type="text" value="Name your ushahidi instance" size="25" id="site_name" name="site_name"/></td>
+                            <td><input type="text" value="<?php print $form->value('site_name'); ?>" size="25" id="site_name" name="site_name"/></td>
                             <td>The name of your site.</td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="site_tagline">Site Tagline.</label></th>
-                            <td><input type="text" value="Insert your tagline here" size="25" id="site_tagline" name="site_tagline"/></td>
+                            <td><input type="text" value="<?php print $form->value('site_tagline'); ?>" size="25" id="site_tagline" name="site_tagline"/></td>
                             <td>Your tagline </td>
                         </tr>
                          <tr>
@@ -50,7 +68,7 @@
                         </tr>
                         <tr>
                             <th scope="row"><label for="site_email">Site Email Address</label></th>
-                            <td><input type="text" value="email@address.org" size="25" id="site_email" name="site_email"/></td>
+                            <td><input type="text" value="<?php print $form->value('site_email'); ?>" size="25" id="site_email" name="site_email"/></td>
                             <td>Site wide email communication will be funneled through this address.</td>
                         </tr>
                        
@@ -60,7 +78,7 @@
                 	<tbody>
                     	<tr>
                         	<td class="next"><a class="button" href="advanced_db_info.php">&larr; Previous</a><!--<input type="button" class="button" value="&larr; Previous" />--></td>
-                            <td class="prev"><a class="button" href="advanced_mail_server_settings.php">Continue &rarr;</a><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
+                            <td class="prev"><input type="submit" id="install" name="advanced_general_settings" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
                         </tr>
                 	</tbody>
                 </table>

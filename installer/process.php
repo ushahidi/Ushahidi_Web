@@ -27,21 +27,28 @@
 		$this->_index();		
 	}
 	
+	/**
+	 * Call up all the processors.
+	 */
 	public function _index()
 	{
 	    if(isset($_POST['basic_db_info'])) {
-	        $this->_process_install();
-	    
+	        $this->_proc_basic_db_info();
+	    }else if($_POST['advanced_db_info']){
+	    	$this->_proc_advanced_db_info();
 	    } else {
 	        header("Location:.");
 	    }        
 	}
 	
-	public function _process_install()
+	/**
+	 * Process basic database info.
+	 */
+	public function _proc_basic_db_info()
 	{
 	    global $form, $install;
 	        
-	    $status = $install->_install( 
+	    $status = $install->_install_basic_info( 
 	        $_POST['username'],
 	        $_POST['password'],
 	        $_POST['host'],
@@ -62,6 +69,143 @@
 	    }
 	           
 	}
+	
+	/**
+	 * Process advanced database info. 
+	 */
+	public function _proc_advanced_db_info(){
+		global $form, $install;
+		$status = $install->_install_db_info( 
+	        $_POST['username'],
+	        $_POST['password'],
+	        $_POST['host'],
+	        'mysql',
+	        $_POST['db_name'],
+	        $_POST['table_prefix'],
+	        $_POST['base_path']
+	    );
+	    
+	    //no errors
+	    if( $status == 0 ) {
+	    	// make sure users get to the general setting from advanced db info page.
+	    	$_SESSION['general_settings'] = 'general_settings';
+	    	
+	  		// send the database info to the next page for updating the settings table.
+	    	$_SESSION['username'] = $_POST['username'];
+	    	$_SESSION['password'] = $_POST['password'];
+	    	$_SESSION['host'] = $_POST['host'];
+	    	$_SESSION['db_name'] = $_POST['db_name'];
+	    	 
+	        header("Location:advanced_general_settings.php");
+	    }else if($status == 1 ) {
+	        $_SESSION['value_array'] = $_POST;
+	        $_SESSION['error_array'] = $form->get_error_array();
+	        header("Location:advanced_db_info.php");
+	    }
+	}
+	
+	/**
+	 * Process the general settings.
+	 */
+	public function _proc_general_settings() {
+		global $form, $install;
+		$status = $install->_install_db_info( 
+	        $_POST['username'],
+	        $_POST['password'],
+	        $_POST['host'],
+	        'mysql',
+	        $_POST['db_name'],
+	        $_POST['table_prefix'],
+	        $_POST['base_path']
+	    );
+	    
+	    //no errors
+	    if( $status == 0 ) {
+	    	// make sure users get to the general setting from advanced db info page.
+	    	$_SESSION['mail_server'] = 'mail_server';
+	    	
+	  		// send the database info to the next page for updating the settings table.
+	    	$_SESSION['username'] = $_POST['username'];
+	    	$_SESSION['password'] = $_POST['password'];
+	    	$_SESSION['host'] = $_POST['host'];
+	    	$_SESSION['db_name'] = $_POST['db_name'];
+	    	 
+	        header("Location:advanced_mail_server_settings.php");
+	    }else if($status == 1 ) {
+	        $_SESSION['value_array'] = $_POST;
+	        $_SESSION['error_array'] = $form->get_error_array();
+	        header("Location:advanced_general_settings.php");
+	    }	
+	}
+	
+	/**
+	 * Process the mail server.
+	 */
+	public function _proc_mail_server() {
+		global $form, $install;
+		$status = $install->_install_db_info( 
+	        $_POST['username'],
+	        $_POST['password'],
+	        $_POST['host'],
+	        'mysql',
+	        $_POST['db_name'],
+	        $_POST['table_prefix'],
+	        $_POST['base_path']
+	    );
+	    
+	    //no errors
+	    if( $status == 0 ) {
+	    	// make sure users get to the general setting from advanced db info page.
+	    	$_SESSION['map_settings'] = 'map_settings';
+	    	
+	  		// send the database info to the next page for updating the settings table.
+	    	$_SESSION['username'] = $_POST['username'];
+	    	$_SESSION['password'] = $_POST['password'];
+	    	$_SESSION['host'] = $_POST['host'];
+	    	$_SESSION['db_name'] = $_POST['db_name'];
+	    	 
+	        header("Location:advanced_map_configuration.php");
+	    }else if($status == 1 ) {
+	        $_SESSION['value_array'] = $_POST;
+	        $_SESSION['error_array'] = $form->get_error_array();
+	        header("Location:advanced_mail_server_settings.php");
+	    }
+	}
+	
+	/**
+	 * Process the map details.
+	 */
+	public function _proc_map() {
+		global $form, $install;
+		$status = $install->_install_db_info( 
+	        $_POST['username'],
+	        $_POST['password'],
+	        $_POST['host'],
+	        'mysql',
+	        $_POST['db_name'],
+	        $_POST['table_prefix'],
+	        $_POST['base_path']
+	    );
+	    
+	    //no errors
+	    if( $status == 0 ) {
+	    	// make sure users get to the general setting from advanced db info page.
+	    	$_SESSION['advanced_mail_server_settings'] = 'advanced_mail_server_settings';
+	    	
+	  		// send the database info to the next page for updating the settings table.
+	    	$_SESSION['username'] = $_POST['username'];
+	    	$_SESSION['password'] = $_POST['password'];
+	    	$_SESSION['host'] = $_POST['host'];
+	    	$_SESSION['db_name'] = $_POST['db_name'];
+	    	 
+	        header("Location:advanced_general_settings.php");
+	    }else if($status == 1 ) {
+	        $_SESSION['value_array'] = $_POST;
+	        $_SESSION['error_array'] = $form->get_error_array();
+	        header("Location:advanced_mail_server_settings.php");
+	    }
+	}
+	
  }
  $process = new Process();
 ?>

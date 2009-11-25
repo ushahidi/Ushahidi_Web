@@ -60,7 +60,7 @@
                 	<tbody>
                     	<tr>
                         	<td class="next"><a class="button" href="advanced_mail_server_settings.php">&larr; Previous</a><!--<input type="button" class="button" value="&larr; Previous" />--></td>
-                            <td class="prev"><a class="button" href="advanced_finished.php">Continue &rarr;</a><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
+                            <td class="prev"><input type="submit" id="advanced_map_configuration" name="advanced_map_configuration" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
                         </tr>
                 	</tbody>
                 </table>

@@ -37,9 +37,9 @@ class Install
 	}
 
 	/**
-	 * validate the form fields and does the necessary processing.
+	 * Validates the form fields and does the necessary processing.
 	 */
-	public function _install( $username, $password, $host, $select_db_type,
+	public function _install_db_info( $username, $password, $host, $select_db_type,
 	    $db_name, $table_prefix, $base_path )
     {
 	    global $form;
@@ -259,7 +259,37 @@ class Install
 	    }
 
 	    @mysql_close( $connection );
-
+	    
+	}
+	
+	/**
+	 * Adds general settings detail to the db.
+	 * @param site_name - site name.
+	 * @param site_tagline - site name.
+	 * @param defaul_lang - default language.
+	 * @param site_email - site email.
+	 */
+	private function _add_general_settings($site_name, $site_tagline, $default_lang, $site_email) {
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		@mysql_query('UPDATE `settings` SET `site_name` = \''.mysql_escape_string($site_name).
+		'\', site_tagline= \''.mysql_escape_string($site_name).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
+		@mysql_close($connection);		
+	}
+	
+	/**
+	 * Add google map api key to the settings table.
+	 * @param map_provider - map provider.
+	 * @param google_api_key - api key
+	 */
+	private function _add_map_info($map_provider, $google_api_key ){
+		//TODO modularize the db connection part.
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		
+		@mysql_query('UPDATE `settings` SET `site_key` = \''.mysql_escape_string($map_provider).
+		'\', default_map= \''.mysql_escape_string($google_api_key).'\' ');
+		@mysql_close($connection);
 	}
 
 	/**
@@ -311,7 +341,7 @@ class Install
 	    @chmod('../application/logs',0777);
 	    @chmod('../media/uploads',0777);
 	}
-
+	
 	/**
 	 * check if ushahidi has been installed.
 	 */
@@ -392,6 +422,9 @@ class Install
 			
 	}
 	
+	/**
+	 * Adds header details to the installer html pages.
+	 */
 	public function _include_html_header() {
 		//TODO make title tag configurable
 		$header = <<<HTML
@@ -411,10 +444,14 @@ HTML;
 
 	}
 	
+	/**
+	 * Gets the current directory ushahidi is installed in.
+	 */
 	public function _get_base_path($request_uri) {
 		return substr( substr($request_uri,0,stripos($request_uri,'/installer/')) ,1);
 		
 	}
+	
 }
 
 $install = new Install();

@@ -52,7 +52,7 @@
                     <tbody>
                         <tr>
                             <th scope="row"><label for="base_path">Base Path</label></th>
-                            <td><input type="text" value="<?php print $form->value('base_path') == "" ? $_SERVER["REQUEST_URI"] : $form->value('base_path'); ?>" size="25" id="base_path" name="base_path"/></td>
+                            <td><input type="text" value="<?php print $form->value('base_path') == "" ? $install->_get_base_path($_SERVER["REQUEST_URI"]) : $form->value('base_path'); ?>" size="25" id="base_path" name="base_path"/></td>
                             <td>The location on your server where you placed your Ushahidi files. <strong>We have automatically detected this value, please make sure that it is correct.</strong></td>
                         </tr>
                         <tr>
@@ -84,7 +84,7 @@
                         <input type="hidden" name="connection" />
                         <input type="hidden" name="permission" />
                         <input type="hidden" name="load_db_tpl" />
-                        
+                        <input type="hidden" name="load_htaccess_file" />
                 	</tbody>
                 </table>
                 <table class="form-table">
@@ -92,7 +92,7 @@
                     	<tr>
                         	<td class="next"><!--<input type="button" class="button" value="&larr; Previous" />--></td>
                             <td class="prev"><!--<input type="button" class="button" value="Continue &rarr;" value="submit"  />-->
-                      		<a class="button" href="advanced_general_settings.php">Continue &rarr;</a></td>
+                      		<input type="submit" id="install" name="advanced_db_info" value="Continue &rarr;" class="button"  /></td>
                         </tr>
                 	</tbody>
                 </table>
