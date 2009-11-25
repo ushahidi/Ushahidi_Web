@@ -119,7 +119,7 @@ class Install
 	 * Validates general settings fields and then add details to 
 	 * the settings table.
 	 */
-	private function _general_settings($site_name, $site_tagline, $default_lang, $site_email)
+	public function _general_settings($site_name, $site_tagline, $default_lang, $site_email)
 	{
 		global $form;
 	    //check for empty fields
@@ -139,14 +139,14 @@ class Install
 	    
 	    /* Email error checking */
       	if(!$site_email || strlen($site_email = trim($site_email)) == 0){
-        	$form->setError("site_email", "* Email not entered");
+        	$form->set_error("site_email", "* Email not entered");
       	} else{
          	/* Check if valid email address */
          	$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
                  ."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
                  ."\.([a-z]{2,}){1}$";
          	if(!eregi($regex,$site_email)){
-            	$form->setError("site_email", "* Invalid email was entered.");
+            	$form->set_error("site_email", "* Invalid email was entered.");
          	}
          	$site_email = stripslashes($site_email);
       	}
@@ -164,7 +164,7 @@ class Install
 	    
 	}
 	
-	private function _map_info($map_provider, $map_api_key )
+	public function _map_info($map_provider, $map_api_key )
 	{
 		//check for empty fields
 	    if(!$map_api_key || strlen($map_api_key = trim($map_api_key)) == 0 ){
@@ -186,7 +186,7 @@ class Install
 		}
 	}
 	
-	private function _mail_server($alert_email, $mail_username,$mail_password,
+	public function _mail_server($alert_email, $mail_username,$mail_password,
 		$mail_port,$mail_host,$mail_type,$mail_ssl ){
 		
 		global $form;

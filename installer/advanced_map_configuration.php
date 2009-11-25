@@ -2,6 +2,10 @@
     require_once('install.php');
     global $install;
     
+    if(!isset( $_SESSION['map_settings']) && $_SESSION['map_settings'] != "map_settings"){
+    	header('Location:advanced_mail_server_settings.php');
+    }
+    
     $header = $install->_include_html_header();
     print $header;
  ?>
@@ -23,17 +27,11 @@
                 	<p>Listed below is a summary of the errors we encountered:</p>
 	   				<ul id="error-list">
                     	<?php
-	   				    	print ( $form->error('site_name') == "" ) ? '' : 
-							"<li>".$form->error('site_name')."</li>";
+	   				    	print ( $form->error('select_map_provider') == "" ) ? '' : 
+							"<li>".$form->error('select_map_provider')."</li>";
 							
-							print ( $form->error('site_tagline') == "" ) ? '' : 
-							"<li>".$form->error('site_tagline')."</li>";
-							
-							print ( $form->error('select_language') == "" ) ? '' : 
-							"<li>".$form->error('select_language')."</li>";
-							
-							print ( $form->error('site_email') == "" ) ? '' : 
-							"<li>".$form->error('site_email')."</li>";
+							print ( $form->error('map_provider_api_key') == "" ) ? '' : 
+							"<li>".$form->error('map_provider_api_key')."</li>";
 							
 	   				    ?>
 					</ul>
@@ -60,7 +58,7 @@
                         </tr>
                         <tr>
                             <th scope="row"><label id="map-provider-label" for="map_provider_api_key"><span>Google</span> API Key</label></th>
-                            <td><input type="text" value="" size="25" id="map_provider_api_key" name="map_provider_api_key"/></td>
+                            <td><input type="text" value="<?php print $form->value('map_provider_api_key') == "" ? $_SESSION['map_provider_api_key'] : $form->value('map_provider_api_key'); ?>" size="25" id="map_provider_api_key" name="map_provider_api_key"/></td>
                             <td>Anyone can get an api key. <a id="api-link" href="http://code.google.com/apis/maps/signup.html">Get yours now</a> (<span id="map-provider-title">Google</span>).
                             </td>
                         </tr> 
@@ -70,7 +68,7 @@
                 	<tbody>
                     	<tr>
                         	<td class="next"><a class="button" href="advanced_mail_server_settings.php">&larr; Previous</a><!--<input type="button" class="button" value="&larr; Previous" />--></td>
-                            <td class="prev"><input type="submit" id="advanced_map_config" name="advanced_map_configuration" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
+                            <td class="prev"><input type="submit" id="advanced_map_config" name="advanced_map_config" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
                         </tr>
                 	</tbody>
                 </table>

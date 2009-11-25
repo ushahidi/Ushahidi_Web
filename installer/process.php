@@ -116,7 +116,7 @@
 	public function _proc_general_settings() {
 		global $form, $install;
 		
-		$status = $install->_install_db_info( 
+		$status = $install->_general_settings( 
 	        $_POST['site_name'],
 	        $_POST['site_tagline'],
 	        $_POST['select_language'],
@@ -129,8 +129,8 @@
 	    	$_SESSION['mail_server'] = 'mail_server';
 	    	
 	  		// set it up in case someone want to goes the previous page.
-	    	$_SESSION['site_name'] = $_POST['username'];
-	    	$_SESSION['password'] = $_POST['password'];
+	    	$_SESSION['site_name'] = $_POST['site_name'];
+	    	$_SESSION['site_tagline'] = $_POST['site_tagline'];
 	    	$_SESSION['select_language'] = $_POST['select_language'];
 	    	$_SESSION['site_email'] = $_POST['site_email'];
 	    	 
@@ -138,6 +138,7 @@
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
 	        $_SESSION['error_array'] = $form->get_error_array();
+	        
 	        header("Location:advanced_general_settings.php");
 	    }	
 	}
@@ -147,14 +148,15 @@
 	 */
 	public function _proc_mail_server() {
 		global $form, $install;
-		$status = $install->_install_db_info( 
-	        $_POST['username'],
-	        $_POST['password'],
-	        $_POST['host'],
-	        'mysql',
-	        $_POST['db_name'],
-	        $_POST['table_prefix'],
-	        $_POST['base_path']
+		
+		$status = $install->_mail_server( 
+	        $_POST['site_alert_email'],
+	        $_POST['mail_server_username'],
+	        $_POST['mail_server_pwd'],
+	        $_POST['mail_server_port'],
+	        $_POST['mail_server_host'],
+	        $_POST['select_mail_server_type'],
+	        $_POST['select_mail_server_ssl']
 	    );
 	    
 	    //no errors
@@ -163,10 +165,13 @@
 	    	$_SESSION['map_settings'] = 'map_settings';
 	    	
 	  		// send the database info to the next page for updating the settings table.
-	    	$_SESSION['username'] = $_POST['username'];
-	    	$_SESSION['password'] = $_POST['password'];
-	    	$_SESSION['host'] = $_POST['host'];
-	    	$_SESSION['db_name'] = $_POST['db_name'];
+	  		$_SESSION['site_alert_email'] = $_POST['site_alert_email'];
+	        $_SESSION['mail_server_username'] = $_POST['mail_server_username'];
+	        $_SESSION['mail_server_pwd'] = $_POST['mail_server_pwd'];
+	        $_SESSION['mail_server_port'] = $_POST['mail_server_port'];
+	        $_SESSION['mail_server_host'] = $_POST['mail_server_host'];
+	        $_SESSION['select_mail_server_type'] = $_POST['select_mail_server_type'];
+	        $_SESSION['select_mail_server_ssl'] = $_POST['select_mail_server_ssl'];
 	    	 
 	        header("Location:advanced_map_configuration.php");
 	    }else if($status == 1 ) {
@@ -181,28 +186,22 @@
 	 */
 	public function _proc_map() {
 		global $form, $install;
-		$status = $install->_install_db_info( 
-	        $_POST['username'],
-	        $_POST['password'],
-	        $_POST['host'],
-	        'mysql',
-	        $_POST['db_name'],
-	        $_POST['table_prefix'],
-	        $_POST['base_path']
+		
+		$status = $install->_map_info( 
+	        $_POST['select_map_provider'],
+	        $_POST['map_provider_api_key']
 	    );
 	    
 	    //no errors
 	    if( $status == 0 ) {
 	    	// make sure users get to the general setting from advanced db info page.
-	    	$_SESSION['advanced_mail_server_settings'] = 'advanced_mail_server_settings';
+	    	$_SESSION['advanced_finished'] = 'advanced_map';
 	    	
 	  		// send the database info to the next page for updating the settings table.
-	    	$_SESSION['username'] = $_POST['username'];
-	    	$_SESSION['password'] = $_POST['password'];
-	    	$_SESSION['host'] = $_POST['host'];
-	    	$_SESSION['db_name'] = $_POST['db_name'];
-	    	 
-	        header("Location:advanced_general_settings.php");
+	  		$_SESSION['select_map_provider'] = $_POST['select_map_provider'];
+	        $_SESSION['map_provider_api_key'] = $_POST['map_provider_api_key'];
+	         
+	        header("Location:advanced_finished.php");
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
 	        $_SESSION['error_array'] = $form->get_error_array();

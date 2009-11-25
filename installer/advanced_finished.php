@@ -2,6 +2,10 @@
     require_once('install.php');
     global $install;
     
+    if(!isset( $_SESSION['advanced_finished']) && $_SESSION['advanced_finished'] != "advanced_map"){
+    	header('Location:advanced_mail_server.php');
+    }
+    
     $header = $install->_include_html_header();
     print $header;
  ?>
@@ -27,13 +31,20 @@
                 <p><strong>Other next steps...</strong></p>
              
                 <ul>
-                    <li><a href="#">View your website</a></li>
-                    <li><a href="#">Upload report data</a></li>
-                    <li><a href="#">setup your SMS server</a></li>                        
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/">View your website</a></li>
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/reports/edit">Upload report data</a></li>
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings/sms">setup your SMS server</a></li>                        
                 </ul>
            
   </div>
-
 </div>
+<?php
+	// clear all set sessions
+	$_SESSION['advanced_mail_server_settings'];
+	// send the database info to the next page for updating the settings table.
+	$_SESSION['select_map_provider'];
+	$_SESSION['map_provider_api_key'];
+	         
+?>
 </body>
 </html>

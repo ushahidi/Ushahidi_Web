@@ -2,6 +2,10 @@
     require_once('install.php');
     global $install;
     
+    if(!isset( $_SESSION['mail_server']) && $_SESSION['mail_server'] != "mail_server"){
+    	header('Location:advanced_general_settings.php');
+    }
+    
     $header = $install->_include_html_header();
     print $header;
  ?>
@@ -48,27 +52,27 @@
                     <tbody>
                         <tr>
                             <th scope="row"><label for="site_alert_email">Site Alert Email Address</label></th>
-                            <td><input type="text" value="<?php print $form->value('site_alert_email'); ?>" size="25" id="site_alert_email" name="site_alert_email"/></td>
+                            <td><input type="text" value="<?php print $form->value('site_alert_email') == "" ? $_SESSION['site_alert_email'] : $form->value('site_alert_email'); ?>" size="25" id="site_alert_email" name="site_alert_email"/></td>
                             <td>When your site visitors sign up for email alerts, they will recieve emails from this address. This email address does not have to be the same as the Site Email Address.</td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="mail_server_username">Mail Server Username</label></th>
-                            <td><input type="text" value="<?php print $form->value('site_name'); ?>" size="25" id="mail_server_username" name="mail_server_username"/></td>
+                            <td><input type="text" value="<?php print $form->value('mail_server_username') == "" ? $_SESSION['mail_server_username'] : $form->value('mail_server_username'); ?>" size="25" id="mail_server_username" name="mail_server_username"/></td>
                             <td>If you're using Gmail, Hotmail, or Yahoo Mail, enter a full email address as a username.</td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="mail_server_pwd">Mail Server Password </label></th>
-                            <td><input type="password" value="<?php print $form->value('site_name'); ?>" size="25" id="mail_server_pwd" name="mail_server_pwd"/></td>
+                            <td><input type="password" value="<?php print $form->value('mail_server_pwd') == "" ? $_SESSION['mail_server_pwd'] : $form->value('mail_server_pwd'); ?>" size="25" id="mail_server_pwd" name="mail_server_pwd"/></td>
                             <td>The password you normally use to login in to your email.</td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="mail_server_port">Mail Server Port</label></th>
-                            <td><input type="text" value="<?php print $form->value('mail_server_port') == "" ? "25": $form->value('mail_server_port'); ?>" size="25" id="mail_server_port" name="mail_server_port"/></td>
+                            <td><input type="text" value="<?php print $form->value('mail_server_port') == "" ? $_SESSION['mail_server_port']: $form->value('mail_server_port'); ?>" size="25" id="mail_server_port" name="mail_server_port"/></td>
                             <td>Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL) .</td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="mail_server_host">Mail Server Host</label></th>
-                            <td><input type="text" value="<?php print $form->value('mail_server_host') == "" ? "mailserver.yourwebsite.com": $form->value('mail_server_host'); ?>" size="25" id="mail_server_host" name="mail_server_host"/></td>
+                            <td><input type="text" value="<?php print $form->value('mail_server_host') == "" ? $_SESSION['mail_server_host']: $form->value('mail_server_host'); ?>" size="25" id="mail_server_host" name="mail_server_host"/></td>
                             <td>Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com.</td>
                         </tr>
                         <tr>

@@ -78,7 +78,7 @@
                 	<tbody>
                     	<tr>
                         	<td class="next"><a class="button" href="advanced_db_info.php">&larr; Previous</a><!--<input type="button" class="button" value="&larr; Previous" />--></td>
-                            <td class="prev"><input type="submit" id="install" name="advanced_general_settings" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
+                            <td class="prev"><input type="submit" id="advanced_general_settings" name="advanced_general_settings" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
                         </tr>
                 	</tbody>
                 </table>
