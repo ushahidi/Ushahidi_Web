@@ -28,55 +28,65 @@ class Install
 	    
 	    $this->install_directory = dirname(dirname(__FILE__));
 	    
-		$this->index();
+		$this->_index();
 	}
 
-	public function index()
+	public function _index()
 	{
 	   session_start();
 	}
 
 	/**
-	 * validate the form fields and does the necessary processing.
+	 * Validates the form fields and does the necessary processing.
 	 */
-	public function install( $username, $password, $host, $select_db_type,
+	public function _install_db_info( $username, $password, $host, $select_db_type,
 	    $db_name, $table_prefix, $base_path )
     {
 	    global $form;
 	    //check for empty fields
 	    if(!$username || strlen($username = trim($username)) == 0 ){
-	        $form->set_error("username", "Please enter the username of the
-	            database server.");
+	        $form->set_error("username", "Please make sure to " .
+	        		"enter the <strong>username</strong> of the database server.");
 	    }
 
 	    if( !$host || strlen($host = trim($host)) == 0 ){
-	        $form->set_error("host","Please enter the host of the
+	        $form->set_error("host","Please enter the <strong>host</strong> of the
 	            database server." );
 	    }
 
 	    if( !$db_name || strlen($db_name = trim($db_name)) == 0 ){
-	        $form->set_error("db_name","Please enter a new name for the
-	            database to be created.");
+	        $form->set_error("db_name","Please enter the <strong>name</strong> of your database.");
 	    }
 
 	    // load database.template.php and work from it.
 		if(!file_exists('../application/config/database.template.php')){
-		    $form->set_error("load_db_tpl","Sorry, I need a database.template.php file to work
+		    $form->set_error("load_db_tpl","<strong>Sorry</strong>, I need a " .
+		    		"<config>database.template.php</config> file to work
             from. Please re-upload this file from the Ushahidi files.");
+		}
+		
+		// load .htaccess file and work with it.
+		if(!file_exists('../.htaccess')){
+		    $form->set_error("load_htaccess_file","<strong>Sorry</strong>, I need a " .
+		    		"<code>.htaccess</code> file to work
+            with. Please re-upload this file from the Ushahidi files.");
 		}
 
 		if( !is_writable('../application/config')) {
-		    $form->set_error('permission',"Sorry, can't write to the directory.
-		    You'll have to either change the permissions on your Ushahidi
-		    directory with this command <blockquote>chmod a+w
-		    $this->install_directory/application/config</blockquote> or
-		    create your database.php manually.");
+		    $form->set_error('permission',
+			"<strong>Oops!</strong> Ushahidi is trying to create and/or edit a file called \"" .
+			"database.php\" and is unable to do so at the moment. This is probably due to the fact " .
+			"that your permissions aren't set up properly for the <code>config</code> folder. " .
+			"Please change the permissions of that folder to allow write access (666).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
 		}
 
-		if(!$this->make_connection($username, $password, $host)){
-		    $form->set_error("connection","Sorry, couldn't make connection to
+		if(!$this->_make_connection($username, $password, $host)){
+		    $form->set_error("connection","<strong>Oops!</strong>, couldn't make connection to
 		    the database server with the credentials given. Could you double
-		    check if they are correct.'");
+		    check if they are correct.");
 		}
 
 	    /**
@@ -87,28 +97,142 @@ class Install
 
 	   } else {
 
-	        $this->add_config_details($base_path);
+	        $this->_add_config_details($base_path);
 			
-			$this->add_htaccess_entry($base_path);
+			$this->_add_htaccess_entry($base_path);
 			
-		    $this->add_db_details( $username, $password, $host, $select_db_type,
+		    $this->_add_db_details( $username, $password, $host, $select_db_type,
 		       $db_name, $table_prefix );
 
-		    $this->import_sql($username, $password, $host,$db_name);
-		    $this->chmod_folders();
+		    $this->_import_sql($username, $password, $host,$db_name);
+		    $this->_chmod_folders();
 	        
-	        $sitename = $this->get_url();
-		    $url = $this->get_url();
-		    $configure_stats = $this->configure_stats($sitename, $url, $host, $username, $password, $db_name);
+	        $sitename = $this->_get_url();
+		    $url = $this->_get_url();
+		    $configure_stats = $this->_configure_stats($sitename, $url, $host, $username, $password, $db_name);
 	        
 	        return 0;
 	   }
 	}
 	
 	/**
+	 * Validates general settings fields and then add details to 
+	 * the settings table.
+	 */
+	private function _general_settings($site_name, $site_tagline, $default_lang, $site_email)
+	{
+		global $form;
+	    //check for empty fields
+	    if(!$site_name || strlen($site_name = trim($site_name)) == 0 ){
+	        $form->set_error("site_name", "Please make sure to " .
+	        		"enter a<strong>site name</strong>.");
+	    } else {
+	    	$site_name = stripslashes($site_name);
+	    }
+	    
+	    if(!$site_tagline || strlen($site_tagline = trim($site_tagline)) == 0 ){
+	        $form->set_error("site_tagline", "Please make sure to " .
+	        		"enter a<strong>site tagline</strong>.");
+	    } else {
+	    	$site_tagline = stripslashes($site_tagline);
+	    }
+	    
+	    /* Email error checking */
+      	if(!$site_email || strlen($site_email = trim($site_email)) == 0){
+        	$form->setError("site_email", "* Email not entered");
+      	} else{
+         	/* Check if valid email address */
+         	$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
+                 ."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
+                 ."\.([a-z]{2,}){1}$";
+         	if(!eregi($regex,$site_email)){
+            	$form->setError("site_email", "* Invalid email was entered.");
+         	}
+         	$site_email = stripslashes($site_email);
+      	}
+      	
+      	/**
+	     * error exists, have user correct them.
+	     */
+	   	if( $form->num_errors > 0 ) {
+	        return 1;
+
+	   	} else {
+	   		$this->_add_general_settings($site_name, $site_tagline, $default_lang, $site_email);
+	   		return 0;	
+	   	}
+	    
+	}
+	
+	private function _map_info($map_provider, $map_api_key )
+	{
+		//check for empty fields
+	    if(!$map_api_key || strlen($map_api_key = trim($map_api_key)) == 0 ){
+	        $form->set_error("map_api_key", "Please make sure to " .
+	        		"enter an<strong>api key</strong> for the choosen map.");
+	    } else {
+	    	$map_api_key = stripslashes($map_api_key);
+	    }
+	    
+	    /**
+	     * error exists, have user correct them.
+	     */
+	   	if( $form->num_errors > 0 ) {
+	        return 1;
+
+		} else {
+			$this->_add_map_info($map_provider, $map_api_key );
+			return 0;
+		}
+	}
+	
+	private function _mail_server($alert_email, $mail_username,$mail_password,
+		$mail_port,$mail_host,$mail_type,$mail_ssl ){
+		
+		global $form;
+	    //check for empty fields
+	    if(!$alert_email || strlen($alert_email = trim($alert_email)) == 0 ){
+	        $form->set_error("site_alert_email", "Please make sure to " .
+	        		"enter an <strong>email address</strong> for the alerts.");
+	    }
+
+	    if( !$mail_username || strlen($mail_username = trim($mail_username)) == 0 ){
+	        $form->set_error("mail_server_username","Please enter the <strong>host</strong> of the
+	            database server." );
+	    }
+
+	    if( !$mail_password || strlen($mail_password = trim($mail_password)) == 0 ){
+	        $form->set_error("mail_server_pwd","Please enter the <strong>user name</strong> of the mail server.");
+	    }
+	    
+	    if(!$mail_port|| strlen($mail_port = trim($mail_port)) == 0 ){
+	        $form->set_error("mail_server_port", "Please make sure to " .
+	        		"enter the <strong>port</strong> for the mail server.");
+	    }
+	    
+	    if(!$mail_host|| strlen($mail_host = trim($mail_host)) == 0 ){
+	        $form->set_error("mail_server_host", "Please make sure to " .
+	        		"enter the <strong>host</strong> of the mail server.");
+	    }
+	    
+	    /**
+	     * error exists, have user correct them.
+	     */
+	   	if( $form->num_errors > 0 ) {
+	        return 1;
+
+		} else {
+			$this->_add_mail_server_info( $alert_email, $mail_username,$mail_password,
+						$mail_port,$mail_host,$mail_type,$mail_ssl );
+			return 0;
+		}
+
+	}
+	
+	/**
 	 * gets the URL
 	 */
-	 private function get_url()
+	 private function _get_url()
 	 {
 	 	global $_SERVER;
 	 	if ($_SERVER["SERVER_PORT"] != "80") {
@@ -123,7 +247,7 @@ class Install
 	/**
 	 * adds the database details to the config/database.php file.
 	 */
-	private function add_db_details( $username, $password, $host,
+	private function _add_db_details( $username, $password, $host,
 	    $select_db_type, $db_name, $table_prefix )
 	{
 
@@ -174,7 +298,7 @@ class Install
 	/**
 	 * adds the site_name to the application/config/config.php file
 	 */
-	private function add_config_details( $base_path )
+	private function _add_config_details( $base_path )
 	{
 	    $config_file = @file('../application/config/config.template.php');
         $handle = @fopen('../application/config/config.php', 'w');
@@ -204,7 +328,7 @@ class Install
 	 * 
 	 * @param base_path - the base path.
 	 */
-	private function add_htaccess_entry($base_path) {
+	private function _add_htaccess_entry($base_path) {
 		$htaccess_file = file('../.htaccess');
 		$handle = fopen('../.htaccess','w');
 			
@@ -228,7 +352,7 @@ class Install
 	/**
 	 * Imports sql file to the database.
 	 */
-	private function import_sql($username, $password, $host,$db_name)
+	private function _import_sql($username, $password, $host,$db_name)
 	{
 	    $connection = @mysql_connect("$host", "$username", "$password");
 	    $db_schema = @file_get_contents('../sql/ushahidi.sql');
@@ -249,14 +373,61 @@ class Install
 	    }
 
 	    @mysql_close( $connection );
-
+	    
+	}
+	
+	/**
+	 * Adds general settings detail to the db.
+	 * @param site_name - site name.
+	 * @param site_tagline - site name.
+	 * @param defaul_lang - default language.
+	 * @param site_email - site email.
+	 */
+	private function _add_general_settings($site_name, $site_tagline, $default_lang, $site_email) {
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		@mysql_query('UPDATE `settings` SET `site_name` = \''.mysql_escape_string($site_name).
+		'\', site_tagline= \''.mysql_escape_string($site_name).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
+		@mysql_close($connection);		
+	}
+	
+	/**
+	 * Adds google map api key to the settings table.
+	 * @param map_provider - map provider.
+	 * @param map_api_key - map api key
+	 */
+	private function _add_map_info($map_provider, $map_api_key ){
+		//TODO modularize the db connection part.
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		
+		@mysql_query('UPDATE `settings` SET `site_key` = \''.mysql_escape_string($map_provider).
+		'\', default_map= \''.mysql_escape_string($map_api_key).'\' ');
+		@mysql_close($connection);
+	}
+	
+	/**
+	 * Adds mail server details to the settings table.
+	 * 
+	 */
+	private function _add_mail_server_info( $alert_email, $mail_username,$mail_password,
+		$mail_port,$mail_host,$mail_type,$mail_ssl ) {
+		
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		
+		@mysql_query('UPDATE `settings` SET `alerts_email` = \''.mysql_escape_string($alert_email).
+		'\', `email_username` = \''.mysql_escape_string($mail_username).'\' , `email_password` = \''.mysql_escape_string($mail_password).'\'' .
+				', `email_port` = \''.mysql_escape_string($mail_port).'\' , `email_host` = \''.mysql_escape_string($mail_host).'\' ' .
+						', `email_servertype` = \''.mysql_escape_string($mail_type).'\' , `email_ssl` = \''.mysql_escape_string($mail_ssl).'\' ');
+		@mysql_close($connection);
 	}
 
 	/**
 	 * check if we can make connection to the db server with the credentials
 	 * given.
 	 */
-	private function make_connection($username, $password, $host)
+	private function _make_connection($username, $password, $host)
 	{
 	    $connection = @mysql_connect("$host", "$username", "$password");
 		if( $connection ) {
@@ -271,7 +442,7 @@ class Install
 	/**
 	 * Set up stat tracking
 	 */
-	private function configure_stats($sitename, $url, $host, $username, $password, $db_name)
+	private function _configure_stats($sitename, $url, $host, $username, $password, $db_name)
 	{
 		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
 		
@@ -295,13 +466,13 @@ class Install
 	/**
 	 * Change permissions on the cache, logs, and upload folders.
 	 */
-	private function chmod_folders()
+	private function _chmod_folders()
 	{
 	    @chmod('../application/cache',0777);
 	    @chmod('../application/logs',0777);
 	    @chmod('../media/uploads',0777);
 	}
-
+	
 	/**
 	 * check if ushahidi has been installed.
 	 */
@@ -381,6 +552,37 @@ class Install
 	   }
 			
 	}
+	
+	/**
+	 * Adds header details to the installer html pages.
+	 */
+	public function _include_html_header() {
+		//TODO make title tag configurable
+		$header = <<<HTML
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+			<html xmlns="http://www.w3.org/1999/xhtml">
+			<head>
+				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+				<title>Database Connections / Ushahidi Web Installer</title>
+				<link href="../media/css/admin/login.css" rel="stylesheet" type="text/css" />
+			</head>
+			<script src="../media/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+			<script src="../media/js/login.js" type="text/javascript" charset="utf-8"></script>
+			</head>
+HTML;
+		return $header;
+
+	}
+	
+	/**
+	 * Gets the current directory ushahidi is installed in.
+	 */
+	public function _get_base_path($request_uri) {
+		return substr( substr($request_uri,0,stripos($request_uri,'/installer/')) ,1);
+		
+	}
+	
 }
 
 $install = new Install();
