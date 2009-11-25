@@ -40,11 +40,37 @@
 </div>
 <?php
 	// clear all set sessions
-	$_SESSION['advanced_mail_server_settings'];
+	unset($_SESSION['advanced_mail_server_settings']);
 	// send the database info to the next page for updating the settings table.
-	$_SESSION['select_map_provider'];
-	$_SESSION['map_provider_api_key'];
-	         
+	unset($_SESSION['select_map_provider']);
+	unset($_SESSION['map_provider_api_key']);
+	
+	unset($_SESSION['site_alert_email']);
+	unset($_SESSION['mail_server_username']);
+	unset($_SESSION['mail_server_pwd']);
+	unset($_SESSION['mail_server_port']);
+	unset($_SESSION['mail_server_host']);
+	unset($_SESSION['select_mail_server_type']);
+	unset($_SESSION['select_mail_server_ssl']);
+	unset($_SESSION['map_settings']);
+	
+	unset($_SESSION['mail_server']);
+	    	
+	// set it up in case someone want to goes the previous page.
+	unset($_SESSION['site_name']);
+	unset($_SESSION['site_tagline']);
+	unset($_SESSION['select_language']);
+	unset($_SESSION['site_email']);
+	
+	unset($_SESSION['general_settings']);
+	    	
+	// send the database info to the next page for updating the settings table.
+	unset($_SESSION['username']);
+	unset($_SESSION['password']);
+	unset($_SESSION['host']);
+	unset($_SESSION['db_name']);
+	unset($_SESSION['table_prefix']); 
+	          
 ?>
 </body>
 </html>
