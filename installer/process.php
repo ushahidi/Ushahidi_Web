@@ -42,6 +42,10 @@
 	    	$this->_proc_mail_server();
 	    }else if($_POST['advanced_map_config']){ 
 	    	$this->_proc_map();
+		}else if($_POST['advanced_perm_pre_check']){ 
+	    	$this->_proc_advanced_pre_perm_check();
+	    }else if($_POST['basic_perm_pre_check']){ 
+	    	$this->_proc_basic_pre_perm_check();	    
 	    } else {
 	        header("Location:.");
 	    }        
@@ -207,6 +211,36 @@
 	        $_SESSION['error_array'] = $form->get_error_array();
 	        header("Location:advanced_mail_server_settings.php");
 	    }
+	}
+	
+	/**
+	 * Process the pre permission check for basic installer mode.
+	 */
+	public function _proc_basic_pre_perm_check() {
+		global $install,$form;
+		$status = $install->_check_writable_dir();
+		if($status == 0 ) {
+			header("Location:basic_db_info.php");
+		}else if($status == 1){
+			$_SESSION['value_array'] = $_POST;
+	        $_SESSION['error_array'] = $form->get_error_array();
+	        header("Location:basic_summary.php");
+		}
+	}
+	
+	/**
+	 * Process the pre permission check for advanced installer mode.
+	 */
+	public function _proc_advanced_pre_perm_check() {
+		global $install, $form;
+		$status = $install->_check_writable_dir();
+		if($status == 0 ) {
+			header("Location:advanced_db_info.php");
+		}else if($status == 1){
+			$_SESSION['value_array'] = $_POST;
+	        $_SESSION['error_array'] = $form->get_error_array();
+	        header("Location:advanced_summary.php");
+		}
 	}
 	
  }

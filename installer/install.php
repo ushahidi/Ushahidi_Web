@@ -554,17 +554,63 @@ class Install
 	public function _check_writable_dir() {
 		global $form;
 		
-		if( !is_writable('../')) {
-			$form->set_error('root_dir',"Sorry, can't write to the directory. You'll have to " .
-					"change the permission on the directory <code>$this->install_directory/</code>. Make sure its writable by the webserver. <br />");
+		
+		if( !is_writable('../.htaccess')) {
+		    $form->set_error('htaccess_perm',
+			"<strong>Oops!</strong> Ushahidi is unable to write to <code>.htaccess</code> file. " .
+			"Please change the permissions of that file to allow write access (777).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+		}
+
+		if( !is_writable('../application/config')) {
+		    $form->set_error('config_folder_perm',
+			"<strong>Oops!</strong> Ushahidi is trying to create and/or edit a file called \"" .
+			"database.php\" and is unable to do so at the moment. This is probably due to the fact " .
+			"that your permissions aren't set up properly for the <code>config</code> folder. " .
+			"Please change the permissions of that folder to allow write access (777).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
 		}
 		
-		if( !is_writable('../application/config')) {
-		    $form->set_error('config_dir',"Sorry, can't write to the directory.
-		    You'll have to either change the permissions on your Ushahidi
-		    directory with this command <code>chmod a+w
-		    $this->install_directory/application/config</code> or
-		    create your database.php manually.");
+		if( !is_writable('../application/config/config.php')) {
+		    $form->set_error('config_file_perm',
+			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
+			"config.php\" and is unable to do so at the moment. This is probably due to the fact " .
+			"that your permissions aren't set up properly for the <code>config.php</code> file. " .
+			"Please change the permissions of that folder to allow write access (777).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+		}
+		
+		if( !is_writable('../application/cache')) {
+		    $form->set_error('cache_perm',
+			"<strong>Oops!</strong> Ushahidi needs <code>application/cache</code> to be writable. ".
+			"Please change the permissions of that folder to allow write access (777).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+		}
+		
+		if( !is_writable('../application/logs')) {
+		    $form->set_error('logs_perm',
+			"<strong>Oops!</strong> Ushahidi needs <code>application/logs</code> to be writable. " .
+			"Please change the permissions of that folder to allow write access (777). " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+		}
+		
+		if( !is_writable('media/uploads')) {
+		    $form->set_error('uploads_perm',
+			"<strong>Oops!</strong> Ushahidi needs <code>media/uploads</code> to be writable. " .
+			"Please change the permissions of that folder to allow write access (777). " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
 		}
 		
 		/**
