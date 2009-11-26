@@ -72,7 +72,7 @@ class Scheduler_Controller extends Controller
 			if (!($scheduler_last > ($cronRan-45)) || $scheduler_last == 0)
 			{ // within 45 secs of cronRan time, so Execute control
 				$site_url = url::base();
-				$scheduler_status = remote::status( $site_url . "scheduler/" . $scheduler_controller );
+				$scheduler_status = remote::get( $site_url . "scheduler/" . $scheduler_controller );
 				
 				if ($scheduler_status == "200")
 				{ // Successful
