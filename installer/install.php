@@ -75,7 +75,7 @@ class Install
 		if( !is_writable('../.htaccess')) {
 		    $form->set_error('htaccess_perm',
 			"<strong>Oops!</strong> Ushahidi is unable to write to <code>.htaccess</code> file. " .
-			"Please change the permissions of that file to allow write access (666).  " .
+			"Please change the permissions of that file to allow write access (777).  " .
 			"More information on changing file permissions can be found at the following " .
 			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
 			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>" .
@@ -88,7 +88,7 @@ class Install
 			"<strong>Oops!</strong> Ushahidi is trying to create and/or edit a file called \"" .
 			"database.php\" and is unable to do so at the moment. This is probably due to the fact " .
 			"that your permissions aren't set up properly for the <code>config</code> folder. " .
-			"Please change the permissions of that folder to allow write access (666).  " .
+			"Please change the permissions of that folder to allow write access (777).  " .
 			"More information on changing file permissions can be found at the following " .
 			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
 			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>".
@@ -101,7 +101,7 @@ class Install
 			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
 			"config.php\" and is unable to do so at the moment. This is probably due to the fact " .
 			"that your permissions aren't set up properly for the <code>config.php</code> file. " .
-			"Please change the permissions of that folder to allow write access (666).  " .
+			"Please change the permissions of that folder to allow write access (777).  " .
 			"More information on changing file permissions can be found at the following " .
 			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
 			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>".
@@ -413,7 +413,7 @@ class Install
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
 		@mysql_query('UPDATE `settings` SET `site_name` = \''.mysql_escape_string($site_name).
-		'\', site_tagline= \''.mysql_escape_string($site_name).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
+		'\', site_tagline = \''.mysql_escape_string($site_tagline).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
 		@mysql_close($connection);		
 	}
 	
@@ -427,8 +427,8 @@ class Install
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
 		
-		@mysql_query('UPDATE `settings` SET `site_key` = \''.mysql_escape_string($map_provider).
-		'\', default_map= \''.mysql_escape_string($map_api_key).'\' ');
+		@mysql_query('UPDATE `settings` SET `default_map` = \''.mysql_escape_string($map_provider).
+		'\', api_google = \''.mysql_escape_string($map_api_key).'\' ');
 		@mysql_close($connection);
 	}
 	
