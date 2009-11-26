@@ -2,6 +2,10 @@
     require_once('install.php');
     global $install;
     
+    if(!isset( $_SESSION['advanced_finished']) && $_SESSION['advanced_finished'] != "advanced_map"){
+    	header('Location:advanced_mail_server.php');
+    }
+    
     $header = $install->_include_html_header();
     print $header;
  ?>
@@ -27,13 +31,46 @@
                 <p><strong>Other next steps...</strong></p>
              
                 <ul>
-                    <li><a href="#">View your website</a></li>
-                    <li><a href="#">Upload report data</a></li>
-                    <li><a href="#">setup your SMS server</a></li>                        
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>">View your website</a></li>
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/reports/edit">Upload report data</a></li>
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings/sms">setup your SMS server</a></li>                        
                 </ul>
            
   </div>
-
 </div>
+<?php
+	// clear all set sessions
+	unset($_SESSION['advanced_mail_server_settings']);
+	// send the database info to the next page for updating the settings table.
+	unset($_SESSION['select_map_provider']);
+	unset($_SESSION['map_provider_api_key']);
+	
+	unset($_SESSION['site_alert_email']);
+	unset($_SESSION['mail_server_username']);
+	unset($_SESSION['mail_server_pwd']);
+	unset($_SESSION['mail_server_port']);
+	unset($_SESSION['mail_server_host']);
+	unset($_SESSION['select_mail_server_type']);
+	unset($_SESSION['select_mail_server_ssl']);
+	unset($_SESSION['map_settings']);
+	
+	unset($_SESSION['mail_server']);
+	    	
+	// set it up in case someone want to goes the previous page.
+	unset($_SESSION['site_name']);
+	unset($_SESSION['site_tagline']);
+	unset($_SESSION['select_language']);
+	unset($_SESSION['site_email']);
+	
+	unset($_SESSION['general_settings']);
+	    	
+	// send the database info to the next page for updating the settings table.
+	unset($_SESSION['username']);
+	unset($_SESSION['password']);
+	unset($_SESSION['host']);
+	unset($_SESSION['db_name']);
+	unset($_SESSION['table_prefix']); 
+	          
+?>
 </body>
 </html>

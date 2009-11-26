@@ -71,16 +71,42 @@ class Install
 		    		"<code>.htaccess</code> file to work
             with. Please re-upload this file from the Ushahidi files.");
 		}
+		
+		if( !is_writable('../.htaccess')) {
+		    $form->set_error('htaccess_perm',
+			"<strong>Oops!</strong> Ushahidi is unable to write to <code>.htaccess</code> file. " .
+			"Please change the permissions of that file to allow write access (777).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>" .
+			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
+			"issue this command <code>chown -R www-data:ww-data</code>");
+		}
 
 		if( !is_writable('../application/config')) {
 		    $form->set_error('permission',
 			"<strong>Oops!</strong> Ushahidi is trying to create and/or edit a file called \"" .
 			"database.php\" and is unable to do so at the moment. This is probably due to the fact " .
 			"that your permissions aren't set up properly for the <code>config</code> folder. " .
-			"Please change the permissions of that folder to allow write access (666).  " .
+			"Please change the permissions of that folder to allow write access (777).  " .
 			"More information on changing file permissions can be found at the following " .
 			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>".
+			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
+			"issue this command <code>chown -R www-data:ww-data</code>");
+		}
+		
+		if( !is_writable('../application/config/config.php')) {
+		    $form->set_error('config_perm',
+			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
+			"config.php\" and is unable to do so at the moment. This is probably due to the fact " .
+			"that your permissions aren't set up properly for the <code>config.php</code> file. " .
+			"Please change the permissions of that folder to allow write access (777).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>".
+			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
+			"issue this command <code>chown -R www-data:ww-data</code>");
 		}
 
 		if(!$this->_make_connection($username, $password, $host)){
@@ -119,7 +145,7 @@ class Install
 	 * Validates general settings fields and then add details to 
 	 * the settings table.
 	 */
-	private function _general_settings($site_name, $site_tagline, $default_lang, $site_email)
+	public function _general_settings($site_name, $site_tagline, $default_lang, $site_email)
 	{
 		global $form;
 	    //check for empty fields
@@ -139,14 +165,14 @@ class Install
 	    
 	    /* Email error checking */
       	if(!$site_email || strlen($site_email = trim($site_email)) == 0){
-        	$form->setError("site_email", "* Email not entered");
+        	$form->set_error("site_email", "* Email not entered");
       	} else{
          	/* Check if valid email address */
          	$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
                  ."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
                  ."\.([a-z]{2,}){1}$";
          	if(!eregi($regex,$site_email)){
-            	$form->setError("site_email", "* Invalid email was entered.");
+            	$form->set_error("site_email", "* Invalid email was entered.");
          	}
          	$site_email = stripslashes($site_email);
       	}
@@ -164,7 +190,7 @@ class Install
 	    
 	}
 	
-	private function _map_info($map_provider, $map_api_key )
+	public function _map_info($map_provider, $map_api_key )
 	{
 		//check for empty fields
 	    if(!$map_api_key || strlen($map_api_key = trim($map_api_key)) == 0 ){
@@ -186,7 +212,7 @@ class Install
 		}
 	}
 	
-	private function _mail_server($alert_email, $mail_username,$mail_password,
+	public function _mail_server($alert_email, $mail_username,$mail_password,
 		$mail_port,$mail_host,$mail_type,$mail_ssl ){
 		
 		global $form;
@@ -387,7 +413,7 @@ class Install
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
 		@mysql_query('UPDATE `settings` SET `site_name` = \''.mysql_escape_string($site_name).
-		'\', site_tagline= \''.mysql_escape_string($site_name).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
+		'\', site_tagline = \''.mysql_escape_string($site_tagline).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
 		@mysql_close($connection);		
 	}
 	
@@ -401,8 +427,8 @@ class Install
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
 		
-		@mysql_query('UPDATE `settings` SET `site_key` = \''.mysql_escape_string($map_provider).
-		'\', default_map= \''.mysql_escape_string($map_api_key).'\' ');
+		@mysql_query('UPDATE `settings` SET `default_map` = \''.mysql_escape_string($map_provider).
+		'\', api_google = \''.mysql_escape_string($map_api_key).'\' ');
 		@mysql_close($connection);
 	}
 	

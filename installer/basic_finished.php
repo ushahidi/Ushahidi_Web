@@ -25,10 +25,10 @@
           	<strong>Password:</strong> admin</p>
           	<p><strong>Other next steps...</strong></p>
           	<ul>
-            	<li><a href="#">View your website</a></li>
-              	<li><a href="#">Upload report data</a></li>
-               	<li><a href="#">Configure your map</a></li>
-               	<li><a href="#">setup your SMS server</a></li>                        
+            	<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>">View your website</a></li>
+                <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/reports/edit">Upload report data</a></li>
+               	<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings">configure your map</a></li>  
+               	<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings/sms">setup your SMS server</a></li>                          
           	</ul>
                
   </div>

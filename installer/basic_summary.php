@@ -19,7 +19,11 @@
 	    <li>Database username</li>
 	    <li>Database password</li>
 	    <li>Database host</li>
+	    
 	</ol>
+	<p>
+		Also make sure 
+	</p>
 	<p><a class="button" href="index.php">&larr; Go back</a>&nbsp;&nbsp;<a class="button" href="basic_db_info.php">Let's get started!</a></p>
 
         	

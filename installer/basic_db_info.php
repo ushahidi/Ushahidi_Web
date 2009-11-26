@@ -37,6 +37,12 @@
 							
 							print ( $form->error('connection') == "" ) ? '' : 
 							"<li>".$form->error('connection')."</li>";
+							
+							print ( $form->error('htaccess_perm') == "" ) ? '' : 
+							"<li>".$form->error('htaccess_perm')."</li>";
+							
+							print ( $form->error('config_perm') == "" ) ? '' : 
+							"<li>".$form->error('config_perm')."</li>";
 	   				    ?>
 					</ul>
 				</div>
@@ -84,6 +90,8 @@
                         <input type="hidden" name="permission" />
                         <input type="hidden" name="load_db_tpl" />
                         <input type="hidden" name="load_htaccess_file" />
+                        <input type="hidden" name="config_perm" />
+                        <input type="hidden" name="htaccess_perm" />
                 	</tbody>
                 </table>
                 <table class="form-table">
