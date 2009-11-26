@@ -26,6 +26,7 @@
 			} else {
 				var answer = confirm('Are You Sure You Want To ' + confirmAction + ' items?')
 				if (answer){
+					
 					// Set Submit Type
 					$("#action").attr("value", action);
 					
@@ -39,13 +40,9 @@
 					{
 						// Set Hidden form item to 000 so that it doesn't return server side error for blank value
 						$("#incident_single").attr("value", "000");
+						
 						// Submit Form For Multiple Items
-						$("input[name='incident_id[]'][checked]").each(
-							function() 
-							{
-								$("#reportMain").submit();
-							}
-						);
+						$("#reportMain").submit();
 					}
 				
 				} else {

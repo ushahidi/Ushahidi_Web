@@ -563,35 +563,31 @@ class Install
 
 		if( !is_writable('../application/config')) {
 		    $form->set_error('config_folder_perm',
-			"<strong>Oops!</strong> Ushahidi is trying to create and/or edit a file called \"" .
-			"database.php\" and is unable to do so at the moment. This is probably due to the fact " .
-			"that your permissions aren't set up properly for the <code>config</code> folder. " .
+			"<strong>Oops!</strong> Ushahidi needs <code>application/config</code> folder to be writable. ".
 			"Please change the permissions of that folder to allow write access (777).  ");
 		}
 		
 		if( !is_writable('../application/config/config.php')) {
 		    $form->set_error('config_file_perm',
-			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
-			"config.php\" and is unable to do so at the moment. This is probably due to the fact " .
-			"that your permissions aren't set up properly for the <code>config.php</code> file. " .
-			"Please change the permissions of that folder to allow write access (777).  ");
+			"<strong>Oops!</strong> Ushahidi is unable to write to <code>application/config/config.php</code> file. " .
+			"Please change the permissions of that file to allow write access (777).  ");
 		}
 		
 		if( !is_writable('../application/cache')) {
 		    $form->set_error('cache_perm',
-			"<strong>Oops!</strong> Ushahidi needs <code>application/cache</code> to be writable. ".
+			"<strong>Oops!</strong> Ushahidi needs <code>application/cache</code> folder to be writable. ".
 			"Please change the permissions of that folder to allow write access (777).  ");
 		}
 		
 		if( !is_writable('../application/logs')) {
 		    $form->set_error('logs_perm',
-			"<strong>Oops!</strong> Ushahidi needs <code>application/logs</code> to be writable. " .
+			"<strong>Oops!</strong> Ushahidi needs <code>application/logs</code> folder to be writable. " .
 			"Please change the permissions of that folder to allow write access (777). ");
 		}
 		
 		if( !is_writable('../media/uploads')) {
 		    $form->set_error('uploads_perm',
-			"<strong>Oops!</strong> Ushahidi needs <code>media/uploads</code> to be writable. " .
+			"<strong>Oops!</strong> Ushahidi needs <code>media/uploads</code> folder to be writable. " .
 			"Please change the permissions of that folder to allow write access (777). ");
 		}
 		
