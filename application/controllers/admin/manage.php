@@ -854,7 +854,8 @@ class Manage_Controller extends Admin_Controller
 			$last_update = $feed->feed_update;
 			
 			// Has it been more than 24 hours since the last update?
-			if ( ((int)$today - (int)$last_update) > 86400	)	// 86400 = 24 hours
+			// Since its a manual refresh, we don't need to set a time
+			if ( ((int)$today - (int)$last_update) > 0	)	// 86400 = 24 hours
 			{
 				// Parse Feed URL using Feed Helper
 				$feed_data = $this->_setup_simplepie( $feed->feed_url );

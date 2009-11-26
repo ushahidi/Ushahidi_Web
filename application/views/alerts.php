@@ -103,6 +103,8 @@
 									</div>
 								</div>
 								<input id="btn-send-alerts" class="btn_submit" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
+								<BR /><BR />
+								<a href="<?php echo url::base()."alerts/confirm";?>"><?php echo Kohana::lang('ui_main.alert_confirm_previous'); ?></a>
 							</div>
 							<?php print form::close(); ?>
 														<?php

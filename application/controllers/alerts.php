@@ -71,29 +71,21 @@ class Alerts_Controller extends Main_Controller
             {
                 // Yes! everything is valid
 				// Save alert and send out confirmation code
-                $email_confirmation_saved = FALSE;
-                $sms_confirmation_saved = FALSE;
 
 				if (!empty($post->alert_mobile))
 				{
-        			$sms_confirmation_saved =
-						$this->_send_mobile_alert($alert, $post->alert_mobile,
+        			$this->_send_mobile_alert($post->alert_mobile,
 								$post->alert_lon, $post->alert_lat, $post->alert_radius);
 				}
 
 				if (!empty($post->alert_email))
 				{
-					$email_confirmation_saved =
-						$this->_send_email_alert($alert, $post->alert_email,
+					$this->_send_email_alert($post->alert_email,
 								$post->alert_lon, $post->alert_lat, $post->alert_radius);
 				}
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
                 $this->session->set('alert_email', $post->alert_email);
-				$this->session->set('sms_confirmation_saved',
-									$sms_confirmation_saved);
-                $this->session->set('email_confirmation_saved',
-									$email_confirmation_saved);
                 
 				url::redirect('alerts/confirm');					
             }
@@ -135,20 +127,16 @@ class Alerts_Controller extends Main_Controller
      */
     function confirm()
     {
-        $this->template->content = new View('alerts_confirm');
+		$this->template->header->this_page = 'alerts';
+		$this->template->content = new View('alerts_confirm');
 
-		if (isset($_SESSION['alert_mobile']) && isset($_SESSION['alert_email']))
-		{
-			$this->template->content->alert_mobile = $_SESSION['alert_mobile'];
-			$this->template->content->alert_email = $_SESSION['alert_email'];
-		}
-
-		$this->template->content->email_confirmation_saved =
-			isset($_SESSION['email_confirmation_saved']) 
-			    ? $_SESSION['email_confirmation_saved'] : FALSE;
-		$this->template->content->sms_confirmation_saved =
-			isset($_SESSION['sms_confirmation_saved']) 
-			    ? $_SESSION['sms_confirmation_saved'] : FALSE;
+		$this->template->content->alert_mobile = 
+			(isset($_SESSION['alert_mobile']) && !empty($_SESSION['alert_mobile'])) ?
+				$_SESSION['alert_mobile'] : "";
+		
+		$this->template->content->alert_email = 
+			(isset($_SESSION['alert_email']) && !empty($_SESSION['alert_email'])) ?
+				$_SESSION['alert_email'] : "";
     }
     
     
@@ -157,7 +145,7 @@ class Alerts_Controller extends Main_Controller
      * 
      * @param string $code
      */
-    public function verify($code = NULL)
+    public function verify($code = NULL, $email = NULL)
     {   
         
         // Define error codes for this view.
@@ -168,32 +156,68 @@ class Alerts_Controller extends Main_Controller
         // INITIALIZE the content's section of the view
        	$this->template->content = new View('alerts_verify');
         $this->template->header->this_page = 'alerts';
-       
-		if ($code != NULL)
+
+		$filter = "";
+		$missing_info = FALSE;
+		if ( $_POST && isset($_POST['alert_code'])
+			&& !empty($_POST['alert_code']) )
 		{
-            $alert_code = ORM::factory('alert')
-                            ->where('alert_code', $code)
+			if (isset($_POST['alert_mobile']) && 
+				!empty($_POST['alert_mobile']))
+			{
+				$filter = "alert_type=1 AND alert_code='".strtoupper($_POST['alert_code'])
+					."' AND alert_recipient='".$_POST['alert_mobile']."' ";
+			}
+			elseif (isset($_POST['alert_email']) && 
+				!empty($_POST['alert_email']))
+			{
+				$filter = "alert_type=2 AND alert_code='".$_POST['alert_code']
+					."' AND alert_recipient='".$_POST['alert_email']."' ";
+			}
+			else
+			{
+				$missing_info = TRUE;
+			}
+		}
+		else
+		{
+			if (empty($code) || empty($email))
+			{
+				$missing_info = TRUE;
+			}
+			else
+			{
+				$filter = "alert_type=2 AND alert_code='".$code
+					."' AND alert_recipient='".$email."' ";
+			}
+		}
+		
+		
+		if (!$missing_info)
+		{
+            $alert_check = ORM::factory('alert')
+                            ->where($filter)
                             ->find();
 
             // IF there was no result
-            if (!$alert_code->loaded)
+            if (!$alert_check->loaded)
             {
                 $this->template->content->errno = ER_CODE_NOT_FOUND;
             }
-            elseif ($alert_code->alert_confirmed)
+            elseif ($alert_check->alert_confirmed)
             {
                 $this->template->content->errno = ER_CODE_ALREADY_VERIFIED;
             }
             else 
             {
                 // SET the alert as confirmed, and save it
-		        $alert_code->set('alert_confirmed', 1)->save();
+		        $alert_check->set('alert_confirmed', 1)->save();
                 $this->template->content->errno = ER_CODE_VERIFIED;
             }
 		}
 		else
 		{
-			$this->template->content->errno = self::ER_CODE_NOT_FOUND;
+			$this->template->content->errno = ER_CODE_NOT_FOUND;
 		}
 	} // END function verify
 
@@ -235,37 +259,11 @@ class Alerts_Controller extends Main_Controller
     }
 
 
-	/**
-	 * Creates a confirmation code for use with email or sms verification 
-	 */
-	private function _mk_code()
+	private function _send_mobile_alert($alert_mobile, $alert_lon, $alert_lat, $alert_radius)
 	{
-		$chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-		$max = strlen($chars)-1;
-		$code_length = 6;
-		$code = NULL;
-
-        // Generate unique codes only
-		while(1)
-		{
-			for($i = 0; $i < $code_length; $i++) 
-			{
-				$code.=$chars[mt_rand(0, $max)];
-			}
-
-			$code_check = ORM::factory('alert')
-							->where('alert_code', $code)->find();
-
-			if (!$code_check->loaded)
-				break;
-		}
-
-		return $code;
-	}
-
-	private function _send_mobile_alert($alert, $alert_mobile, $alert_lon, $alert_lat, $alert_radius)
-	{
-		$alert_code = $this->_mk_code();
+		// For Mobile Alerts, Confirmation Code
+		// Should be 6 distinct characters
+		$alert_code = text::random('distinct', 8);
 					
 		$settings = ORM::factory('settings', 1);
 
@@ -301,6 +299,7 @@ class Alerts_Controller extends Main_Controller
 	
 		if ($sms->send($alert_mobile, $sms_from, $message) == "OK")
 		{
+			$alert = ORM::factory('alert');	
 			$alert->alert_type = self::MOBILE_ALERT;
 			$alert->alert_recipient = $alert_mobile;
 			$alert->alert_code = $alert_code;
@@ -315,9 +314,10 @@ class Alerts_Controller extends Main_Controller
 		return FALSE;
 	}
 
-	private function _send_email_alert($alert, $alert_email, $alert_lon, $alert_lat, $alert_radius)
+	private function _send_email_alert($alert_email, $alert_lon, $alert_lat, $alert_radius)
 	{
-		$alert_code = $this->_mk_code();
+		// Email Alerts, Confirmation Code
+		$alert_code = text::random('alnum', 20);
 		
 		$config = kohana::config('alerts');
 		$settings = kohana::config('settings');
@@ -327,10 +327,11 @@ class Alerts_Controller extends Main_Controller
 		$subject = $settings['site_name']." "
 					.Kohana::lang('alerts.verification_email_subject');
 		$message = Kohana::lang('alerts.confirm_request')
-					.url::site().'alerts/verify/'.$alert_code;
+					.url::site().'alerts/verify/'.$alert_code."/".$alert_email;
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{
+			$alert = ORM::factory('alert');
 			$alert->alert_type = self::EMAIL_ALERT;
 			$alert->alert_recipient = $alert_email;
 			$alert->alert_code = $alert_code;
