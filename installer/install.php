@@ -589,7 +589,7 @@ class Install
 			"Please change the permissions of that folder to allow write access (777). ");
 		}
 		
-		if( !is_writable('media/uploads')) {
+		if( !is_writable('../media/uploads')) {
 		    $form->set_error('uploads_perm',
 			"<strong>Oops!</strong> Ushahidi needs <code>media/uploads</code> to be writable. " .
 			"Please change the permissions of that folder to allow write access (777). ");
