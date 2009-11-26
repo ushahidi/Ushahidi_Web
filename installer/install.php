@@ -71,6 +71,17 @@ class Install
 		    		"<code>.htaccess</code> file to work
             with. Please re-upload this file from the Ushahidi files.");
 		}
+		
+		if( !is_writable('../.htaccess')) {
+		    $form->set_error('htaccess_perm',
+			"<strong>Oops!</strong> Ushahidi is unable to write to <code>.htaccess</code> file. " .
+			"Please change the permissions of that file to allow write access (666).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>" .
+			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
+			"issue this command <code>chown -R www-data:ww-data</code>");
+		}
 
 		if( !is_writable('../application/config')) {
 		    $form->set_error('permission',
@@ -80,7 +91,22 @@ class Install
 			"Please change the permissions of that folder to allow write access (666).  " .
 			"More information on changing file permissions can be found at the following " .
 			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>".
+			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
+			"issue this command <code>chown -R www-data:ww-data</code>");
+		}
+		
+		if( !is_writable('../application/config/config.php')) {
+		    $form->set_error('config_perm',
+			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
+			"config.php\" and is unable to do so at the moment. This is probably due to the fact " .
+			"that your permissions aren't set up properly for the <code>config.php</code> file. " .
+			"Please change the permissions of that folder to allow write access (666).  " .
+			"More information on changing file permissions can be found at the following " .
+			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
+			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>".
+			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
+			"issue this command <code>chown -R www-data:ww-data</code>");
 		}
 
 		if(!$this->_make_connection($username, $password, $host)){

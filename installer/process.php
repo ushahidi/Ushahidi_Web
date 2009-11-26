@@ -54,7 +54,7 @@
 	{
 	    global $form, $install;
 	        
-	    $status = $install->_install_basic_info( 
+	    $status = $install->_install_db_info( 
 	        $_POST['username'],
 	        $_POST['password'],
 	        $_POST['host'],

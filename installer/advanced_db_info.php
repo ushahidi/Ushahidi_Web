@@ -43,6 +43,13 @@
 							
 							print ( $form->error('connection') == "" ) ? '' : 
 							"<li>".$form->error('connection')."</li>";
+							
+							print ( $form->error('htaccess_perm') == "" ) ? '' : 
+							"<li>".$form->error('htaccess_perm')."</li>";
+							
+							print ( $form->error('config_perm') == "" ) ? '' : 
+							"<li>".$form->error('config_perm')."</li>";
+							
 	   				    ?>
                         
 					</ul>
@@ -53,7 +60,7 @@
                         <tr>
                             <th scope="row"><label for="base_path">Base Path</label></th>
                             <td><input type="text" value="<?php print $form->value('base_path') == "" ? $install->_get_base_path($_SERVER["REQUEST_URI"]) : $form->value('base_path'); ?>" size="25" id="base_path" name="base_path"/></td>
-                            <td>The location on your server where you placed your Ushahidi files. <strong>We have automatically detected this value, please make sure that it is correct.</strong></td>
+                            <td>The location on your server where you placed your Ushahidi files. <strong>We have automatically detected this value, please make sure that it is correct.</strong> If the field is empty, do not worry, it means ushahidi is installed at the top level directory.</td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="db_name">Database Name</label></th>
@@ -85,6 +92,8 @@
                         <input type="hidden" name="permission" />
                         <input type="hidden" name="load_db_tpl" />
                         <input type="hidden" name="load_htaccess_file" />
+                        <input type="hidden" name="config_perm" />
+                        <input type="hidden" name="htaccess_perm" />
                 	</tbody>
                 </table>
                 <table class="form-table">
