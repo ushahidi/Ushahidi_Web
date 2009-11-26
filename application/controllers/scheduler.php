@@ -74,6 +74,8 @@ class Scheduler_Controller extends Controller
 				$site_url = url::base();
 				$scheduler_status = remote::get( $site_url . "scheduler/" . $scheduler_controller );
 				
+				//XXX: ToDo Parse $scheduler_status
+				
 				// Set last time of last execution
 				$schedule_time = time();
 				$scheduler->scheduler_last = $schedule_time;
@@ -83,7 +85,7 @@ class Scheduler_Controller extends Controller
 				$scheduler_log = new Scheduler_Log_Model();
 				$scheduler_log->scheduler_id = $scheduler_id;
 				$scheduler_log->scheduler_name = $scheduler->scheduler_name;
-				$scheduler_log->scheduler_status = $scheduler_status;
+				$scheduler_log->scheduler_status = "200";
 				$scheduler_log->scheduler_date = $schedule_time;
 				$scheduler_log->save();
 			}
