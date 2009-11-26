@@ -2,6 +2,10 @@
     require_once('install.php');
     global $install;
     
+    if(!isset( $_SESSION['advanced_db_info']) && $_SESSION['advanced_db_info'] != "advanced_summary"){
+    	header('Location:.');
+    }
+    
     $header = $install->_include_html_header();
     print $header;
  ?>

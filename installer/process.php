@@ -220,6 +220,7 @@
 		global $install,$form;
 		$status = $install->_check_writable_dir();
 		if($status == 0 ) {
+			$_SESSION['basic_db_info'] = 'basic_summary';
 			header("Location:basic_db_info.php");
 		}else if($status == 1){
 			$_SESSION['value_array'] = $_POST;
@@ -235,6 +236,9 @@
 		global $install, $form;
 		$status = $install->_check_writable_dir();
 		if($status == 0 ) {
+			// make sure users get to the general setting from advanced db info page.
+	    	$_SESSION['advanced_db_info'] = 'advanced_summary';
+	    	
 			header("Location:advanced_db_info.php");
 		}else if($status == 1){
 			$_SESSION['value_array'] = $_POST;

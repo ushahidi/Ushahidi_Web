@@ -558,10 +558,7 @@ class Install
 		if( !is_writable('../.htaccess')) {
 		    $form->set_error('htaccess_perm',
 			"<strong>Oops!</strong> Ushahidi is unable to write to <code>.htaccess</code> file. " .
-			"Please change the permissions of that file to allow write access (777).  " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+			"Please change the permissions of that file to allow write access (777).  ");
 		}
 
 		if( !is_writable('../application/config')) {
@@ -569,10 +566,7 @@ class Install
 			"<strong>Oops!</strong> Ushahidi is trying to create and/or edit a file called \"" .
 			"database.php\" and is unable to do so at the moment. This is probably due to the fact " .
 			"that your permissions aren't set up properly for the <code>config</code> folder. " .
-			"Please change the permissions of that folder to allow write access (777).  " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+			"Please change the permissions of that folder to allow write access (777).  ");
 		}
 		
 		if( !is_writable('../application/config/config.php')) {
@@ -580,37 +574,25 @@ class Install
 			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
 			"config.php\" and is unable to do so at the moment. This is probably due to the fact " .
 			"that your permissions aren't set up properly for the <code>config.php</code> file. " .
-			"Please change the permissions of that folder to allow write access (777).  " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+			"Please change the permissions of that folder to allow write access (777).  ");
 		}
 		
 		if( !is_writable('../application/cache')) {
 		    $form->set_error('cache_perm',
 			"<strong>Oops!</strong> Ushahidi needs <code>application/cache</code> to be writable. ".
-			"Please change the permissions of that folder to allow write access (777).  " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+			"Please change the permissions of that folder to allow write access (777).  ");
 		}
 		
 		if( !is_writable('../application/logs')) {
 		    $form->set_error('logs_perm',
 			"<strong>Oops!</strong> Ushahidi needs <code>application/logs</code> to be writable. " .
-			"Please change the permissions of that folder to allow write access (777). " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+			"Please change the permissions of that folder to allow write access (777). ");
 		}
 		
 		if( !is_writable('media/uploads')) {
 		    $form->set_error('uploads_perm',
 			"<strong>Oops!</strong> Ushahidi needs <code>media/uploads</code> to be writable. " .
-			"Please change the permissions of that folder to allow write access (777). " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>");
+			"Please change the permissions of that folder to allow write access (777). ");
 		}
 		
 		/**

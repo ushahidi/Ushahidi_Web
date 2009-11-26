@@ -37,6 +37,20 @@
 					</ul>
 			</div>
     	<?php } ?>
+    <div class="feedback info"> 
+    	<p>The files and folders listed below needs to be writable by the webserver(777)</p>
+    	<p>More information on changing file permissions can be found at the following 
+			links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">
+			Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a></p>
+    </div>
+		<ul>
+			<li>application/config/config.php</li>
+			<li>application/config</li>
+			<li>application/cache</li>
+			<li>application/logs</li>
+			<li>media/uploads</li>
+			<li>.htaccess</li>
+		</ul> 
 	<p>Before you get started, please have the following bits of information on hand:</p>
 	<div class="two-col tc-left">
         <h3>Database</h3>
