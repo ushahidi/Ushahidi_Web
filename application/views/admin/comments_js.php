@@ -42,12 +42,7 @@
 					// Set Hidden form item to 000 so that it doesn't return server side error for blank value
 					$("#comment_single").attr("value", "000");
 					// Submit Form For Multiple Items
-					$("input[@name='comment_id[]'][@checked]").each(
-						function() 
-						{
-							$("#commentMain").submit();
-						}
-					);
+					$("#commentMain").submit();
 				}
 		
 			} else {
