@@ -25,7 +25,7 @@
                 <div class="feedback success">
                 	<h2>Installation Successful!</h2>
 				</div>
-                <p>To login to your site, go to http://[websiteurl]/admin and use the following credentials:<br /><br />
+                <p>To login, go to <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?>">http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?></a> and use the following credentials:<br /><br />
                 <strong>Username:</strong> admin<br />
                 <strong>Password:</strong> admin</p>
                 <p><strong>Other next steps...</strong></p>

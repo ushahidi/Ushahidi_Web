@@ -38,30 +38,44 @@
 			</div>
     	<?php } ?>
     <div class="feedback info"> 
-    	<p>The files and folders listed below needs to be writable by the webserver(777)</p>
-    	<p>More information on changing file permissions can be found at the following 
-			links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">
-			Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a></p>
+    	<p>Before you get started, you will need to make sure the following files and folders are writable by your webserver. This involves changing file permissions.</p>
+            <ul>
+                <li>application/config/config.php</li>
+                <li>application/config</li>
+                <li>application/cache</li>
+                <li>application/logs</li>
+                <li>media/uploads</li>
+                <li>.htaccess</li>
+            </ul> 
+            
+        <p>Here are instructions for changing file permissions:</p>
+        <ul>
+            <li><a href="http://www.washington.edu/computing/unix/permissions.html">Unix/Linux</a></li>
+            <li><a href="http://support.microsoft.com/kb/308419">Windows</a></li>
+        </ul>
     </div>
-		<ul>
-			<li>application/config/config.php</li>
-			<li>application/config</li>
-			<li>application/cache</li>
-			<li>application/logs</li>
-			<li>media/uploads</li>
-			<li>.htaccess</li>
-		</ul> 
+		
     
-	<p>Before you get started, please have the following bits of information on hand.</p>	
-	<h3>Database <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases">what's this?</a></h3>
-	<ol>	
-		<li>Database name</li>
-	    <li>Database username</li>
-	    <li>Database password</li>
-	    <li>Database host</li>
-	    
-	</ol>
-		<p><a class="button" href="index.php">&larr; Go back</a>&nbsp;&nbsp;
+	<p>For the installation process, please have the following bits of information on hand.</p>	
+	<div class="two-col tc-left">
+        <h3>Database <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases">what's this?</a></h3>
+        <ol>	
+            <li>Database name</li>
+            <li>Database username</li>
+            <li>Database password</li>
+            <li>Database host</li>
+            
+        </ol>
+    </div>
+    <div class="two-col tc-right">
+        <h3>General</h3>
+        <ol>	
+            <li>Site name &amp; tagline</li>
+            <li>Site Email Address</li>
+        </ol>
+    </div>
+    <div style="clear:both"></div>
+	<p><a class="button" href="index.php">&larr; Go back</a>&nbsp;&nbsp;
 		<input type="submit" id="basic_perm_pre_check" name="basic_perm_pre_check" value="Let's get started!" class="button"  /></p>
 	</div>
 	</form>

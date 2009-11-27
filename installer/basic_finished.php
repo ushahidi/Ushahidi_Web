@@ -15,17 +15,18 @@
     <div id="ushahidi_login">
 	<ol class="progress-meter clearfix">
 		<li class=""><span>Database</span></li>
+        <li class=""><span>General</span></li>
 		<li class="active last"><span>Finished</span></li>
 	</ol>
 		<div class="feedback success">
         	<h2>Installation Successful!</h2>
 		</div>
-       	<p>To login to your site, go to http://[websiteurl]/admin and use the following credentials:<br /><br />
+       	<p>To login, go to <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin";?>">http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin";?></a> and use the following credentials:<br /><br />
         	<strong>Username:</strong> admin<br />
           	<strong>Password:</strong> admin</p>
           	<p><strong>Other next steps...</strong></p>
           	<ul>
-            	<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>">View your website</a></li>
+            	<li><a href="http://<?php echo $_SERVER['SERVER_NAME'].":".$_SERVER["SERVER_PORT"]."/".$install->_get_base_path($_SERVER["REQUEST_URI"]); ?>">View your website</a></li>
                 <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/reports/edit">Upload report data</a></li>
                	<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings">configure your map</a></li>  
                	<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings/sms">setup your SMS server</a></li>                          

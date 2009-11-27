@@ -86,22 +86,22 @@
                             <td>Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a href="http://saturn.med.nyu.edu/it/help/email/imap/index.html">What's the difference?</a></td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="select_mail_server_ssl">Mail Server Type</label></th>
+                            <th scope="row"><label for="select_mail_server_ssl">Enable or disable SSL</label></th>
                             <td>
                             	<select name="select_mail_server_ssl">
-                                    <option value="0" selected="selected">No</option>
-                                    <option value="1">Yes</option>
+                                    <option value="0" selected="selected">Disable</option>
+                                    <option value="1">Enable</option>
                                 </select>
                             </td>
-                            <td>Enable or disable SSL</td>
+                            <td>Some mail servers give you the option of using <abbr title="Secure Sockets Layer">SSL</abbr> when making a connection. Using SSL is recommended as it gives you an added level of security.</td>
                         </tr>
                 	</tbody>
                 </table>
                 <table class="form-table">
                 	<tbody>
                     	<tr>
-                        	<td class="next"><a class="button" href="advanced_general_settings.php">&larr; Previous</a><!--<input type="button" class="button" value="&larr; Previous" />--></td>
-                            <td class="prev"><input type="submit" id="advanced_mail_server_settings" name="advanced_mail_server_settings" value="Continue &rarr;" class="button"  /><!--<input type="button" class="button" value="Continue &rarr;" />--></td>
+                        	<td class="next"><a class="button" href="advanced_general_settings.php">&larr; Previous</a></td>
+                            <td class="prev"><input type="submit" id="advanced_mail_server_settings" name="advanced_mail_server_settings" value="Continue &rarr;" class="button"  /></td>
                         </tr>
                 	</tbody>
                 </table>

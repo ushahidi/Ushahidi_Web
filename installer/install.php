@@ -60,27 +60,27 @@ class Install
 
 	    // load database.template.php and work from it.
 		if(!file_exists('../application/config/database.template.php')){
-		    $form->set_error("load_db_tpl","<strong>Sorry</strong>, I need a " .
-		    		"<config>database.template.php</config> file to work
-            from. Please re-upload this file from the Ushahidi files.");
+		    $form->set_error("load_db_tpl","<strong>Oops!</strong> I need the file called " .
+		    		"<code>database.template.php</code> to work
+            from. Please make sure this file is in the <code>application/config/</code> folder.");
 		}
 		
 		// load .htaccess file and work with it.
 		if(!file_exists('../.htaccess')){
-		    $form->set_error("load_htaccess_file","<strong>Sorry</strong>, I need a " .
-		    		"<code>.htaccess</code> file to work
-            with. Please re-upload this file from the Ushahidi files.");
+		    $form->set_error("load_htaccess_file","<strong>Oops!</strong> I need a file called " .
+		    		"<code>.htaccess</code> to work
+            with. Please make sure this file is in the root directory of your Ushahidi files.");
 		}
 		
 		if( !is_writable('../.htaccess')) {
 		    $form->set_error('htaccess_perm',
-			"<strong>Oops!</strong> Ushahidi is unable to write to <code>.htaccess</code> file. " .
+			"<strong>Oops!</strong> Ushahidi is unable to write to the <code>.htaccess</code> file. " .
 			"Please change the permissions of that file to allow write access (777).  " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>" .
-			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
-			"issue this command <code>chown -R www-data:ww-data</code>");
+			"<p>Here are instructions for changing file permissions:</p>" .
+			"<ul>" .
+			"	<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\">Unix/Linux</a></li>" .
+			"	<li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li>" .
+			"</ul>");
 		}
 
 		if( !is_writable('../application/config')) {
@@ -89,11 +89,11 @@ class Install
 			"database.php\" and is unable to do so at the moment. This is probably due to the fact " .
 			"that your permissions aren't set up properly for the <code>config</code> folder. " .
 			"Please change the permissions of that folder to allow write access (777).  " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>".
-			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
-			"issue this command <code>chown -R www-data:ww-data</code>");
+			"<p>Here are instructions for changing file permissions:</p>" .
+			"<ul>" .
+			"	<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\">Unix/Linux</a></li>" .
+			"	<li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li>" .
+			"</ul>");
 		}
 		
 		if( !is_writable('../application/config/config.php')) {
@@ -102,17 +102,22 @@ class Install
 			"config.php\" and is unable to do so at the moment. This is probably due to the fact " .
 			"that your permissions aren't set up properly for the <code>config.php</code> file. " .
 			"Please change the permissions of that folder to allow write access (777).  " .
-			"More information on changing file permissions can be found at the following " .
-			"links: <a href=\"http://www.washington.edu/computing/unix/permissions.html\">" .
-			"Unix/Linux</a>, <a href=\"http://support.microsoft.com/kb/308419\">Windows.</a>".
+			"<p>Here are instructions for changing file permissions:</p>" .
+			"<ul>" .
+			"	<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\">Unix/Linux</a></li>" .
+			"	<li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li>" .
+			"</ul>"
+			/* CB: Commenting this out... I think it's better if we just have them change the permissions of the specific
+				files and folders rather than all the files
 			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
 			"issue this command <code>chown -R www-data:ww-data</code>");
+			*/
+			);
 		}
 
 		if(!$this->_make_connection($username, $password, $host)){
-		    $form->set_error("connection","<strong>Oops!</strong>, couldn't make connection to
-		    the database server with the credentials given. Could you double
-		    check if they are correct.");
+		    $form->set_error("connection","<strong>Oops!</strong>, We couldn't make a connection to
+		    the database server with the credentials given. Please make sure they are correct.");
 		}
 
 	    /**
@@ -151,28 +156,28 @@ class Install
 	    //check for empty fields
 	    if(!$site_name || strlen($site_name = trim($site_name)) == 0 ){
 	        $form->set_error("site_name", "Please make sure to " .
-	        		"enter a<strong>site name</strong>.");
+	        		"enter a <strong>site name</strong>.");
 	    } else {
 	    	$site_name = stripslashes($site_name);
 	    }
 	    
 	    if(!$site_tagline || strlen($site_tagline = trim($site_tagline)) == 0 ){
 	        $form->set_error("site_tagline", "Please make sure to " .
-	        		"enter a<strong>site tagline</strong>.");
+	        		"enter a <strong>site tagline</strong>.");
 	    } else {
 	    	$site_tagline = stripslashes($site_tagline);
 	    }
 	    
 	    /* Email error checking */
       	if(!$site_email || strlen($site_email = trim($site_email)) == 0){
-        	$form->set_error("site_email", "* Email not entered");
+        	$form->set_error("site_email", "Please enter a <strong>site email address</strong>.");
       	} else{
          	/* Check if valid email address */
          	$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
                  ."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
                  ."\.([a-z]{2,}){1}$";
          	if(!eregi($regex,$site_email)){
-            	$form->set_error("site_email", "* Invalid email was entered.");
+            	$form->set_error("site_email", "Please enter a valid email address. ex: johndoe@email.com.");
          	}
          	$site_email = stripslashes($site_email);
       	}
@@ -195,7 +200,7 @@ class Install
 		//check for empty fields
 	    if(!$map_api_key || strlen($map_api_key = trim($map_api_key)) == 0 ){
 	        $form->set_error("map_api_key", "Please make sure to " .
-	        		"enter an<strong>api key</strong> for the choosen map.");
+	        		"enter an<strong>api key</strong> for your map provider.");
 	    } else {
 	    	$map_api_key = stripslashes($map_api_key);
 	    }
@@ -219,21 +224,20 @@ class Install
 	    //check for empty fields
 	    if(!$alert_email || strlen($alert_email = trim($alert_email)) == 0 ){
 	        $form->set_error("site_alert_email", "Please make sure to " .
-	        		"enter an <strong>email address</strong> for the alerts.");
+	        		"enter a <strong>site alert email address</strong>.");
 	    }
 
 	    if( !$mail_username || strlen($mail_username = trim($mail_username)) == 0 ){
-	        $form->set_error("mail_server_username","Please enter the <strong>host</strong> of the
-	            database server." );
+	        $form->set_error("mail_server_username","Please enter the <strong>user name</strong> of your mail server." );
 	    }
 
 	    if( !$mail_password || strlen($mail_password = trim($mail_password)) == 0 ){
-	        $form->set_error("mail_server_pwd","Please enter the <strong>user name</strong> of the mail server.");
+	        $form->set_error("mail_server_pwd","Please enter the <strong>password</strong> for your email account.");
 	    }
 	    
 	    if(!$mail_port|| strlen($mail_port = trim($mail_port)) == 0 ){
 	        $form->set_error("mail_server_port", "Please make sure to " .
-	        		"enter the <strong>port</strong> for the mail server.");
+	        		"enter the <strong>port</strong> for your mail server.");
 	    }
 	    
 	    if(!$mail_host|| strlen($mail_host = trim($mail_host)) == 0 ){
@@ -557,13 +561,13 @@ class Install
 		
 		if( !is_writable('../.htaccess')) {
 		    $form->set_error('htaccess_perm',
-			"<strong>Oops!</strong> Ushahidi is unable to write to <code>.htaccess</code> file. " .
+			"<strong>Oops!</strong> Ushahidi is unable to write to your <code>.htaccess</code> file. " .
 			"Please change the permissions of that file to allow write access (777).  ");
 		}
 
 		if( !is_writable('../application/config')) {
 		    $form->set_error('config_folder_perm',
-			"<strong>Oops!</strong> Ushahidi needs <code>application/config</code> folder to be writable. ".
+			"<strong>Oops!</strong> Ushahidi needs the <code>application/config</code> folder to be writable. ".
 			"Please change the permissions of that folder to allow write access (777).  ");
 		}
 		
@@ -607,7 +611,7 @@ class Install
 	 * Adds header details to the installer html pages.
 	 */
 	public function _include_html_header() {
-		//TODO make title tag configurable
+		/*TODO make title tag configurable*/
 		$header = <<<HTML
 			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

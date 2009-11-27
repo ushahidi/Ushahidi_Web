@@ -15,6 +15,7 @@
     <div id="ushahidi_login">
 	<ol class="progress-meter clearfix">
 		<li class="active"><span>Database</span></li>
+        <li class=""><span>General</span></li>
 		<li class="last"><span>Finished</span></li>
 	</ol>
 
@@ -61,7 +62,7 @@
                             <th scope="row"><label for="base_path">Base Path</label></th>
                             <td><input type="text" value="<?php print $form->value('base_path') == "" ? $install->_get_base_path($_SERVER["REQUEST_URI"]) : $form->value('base_path'); ?>" size="25" id="base_path" name="base_path"/></td>
                             <td>The location on your server where you placed your Ushahidi files. <strong>We have automatically detected this value, please make sure that it is correct.</strong>
-                            	If the field is empty, do not worry, it means ushahidi is installed at the top level directory.
+                            	If the field is empty, do not worry, it means Ushahidi is installed at the top level directory.
                             </td>
                         </tr>
                         <tr>
