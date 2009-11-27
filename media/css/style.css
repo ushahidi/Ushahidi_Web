@@ -1299,7 +1299,14 @@ a.show-more {
 /*	width:930px; */
 	padding:16px 25px 10px;
 }
-
+/* Min-Height */
+.big-block{
+	min-height:400px;
+}
+/* Min-Height for IE */
+* html .big-block {
+	height:400px
+}
 /* View Reports / Help */
 .report_rowtitle, .org_rowtitle{
 	margin: 10px 0 5px 0;
@@ -1382,7 +1389,9 @@ a.show-more {
 	padding:0;
 	font-weight:bold;
 }
-
+.big-block .page_text p{
+	margin-bottom:15px;
+}
 /*---alerts-block---*/
 .step-1 {
 	float:left;

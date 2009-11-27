@@ -117,3 +117,10 @@
 			}
 		}
 		
+		// Preview Message
+		function preview ( id ){
+			if (id) {
+				$('#' + id).toggle(400);
+			}
+		}
+		
