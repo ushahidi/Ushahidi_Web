@@ -38,6 +38,8 @@
 	    	$this->_proc_advanced_db_info();
 	    }else if( $_POST['advanced_general_settings']){
 	    	$this->_proc_general_settings();
+	    }else if($_POST['basic_general_settings']){ 
+	    	$this->_proc_basic_general_settings();
 	    }else if($_POST['advanced_mail_server_settings']){ 
 	    	$this->_proc_mail_server();
 	    }else if($_POST['advanced_map_config']){ 
@@ -68,10 +70,18 @@
 	        $_POST['base_path']
 	    );
 	    
+	    
 	    //no errors
 	    if( $status == 0 ) {
-	    	$_SESSION['basic_finished'] = 'basic_db_info'; 
-	        header("Location:basic_finished.php");
+	    	$_SESSION['basic_db_info'] = 'basic_general_settings'; 
+	    	// send the database info to the next page for updating the settings table.
+	    	$_SESSION['username'] = $_POST['username'];
+	    	$_SESSION['password'] = $_POST['password'];
+	    	$_SESSION['host'] = $_POST['host'];
+	    	$_SESSION['db_name'] = $_POST['db_name'];
+	    	$_SESSION['table_prefix'] = $_POST['table_prefix'];
+	    	
+	        header("Location:basic_general_settings.php");
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
 	        $_SESSION['error_array'] = $form->get_error_array();
@@ -106,6 +116,7 @@
 	    	$_SESSION['host'] = $_POST['host'];
 	    	$_SESSION['db_name'] = $_POST['db_name'];
 	    	$_SESSION['table_prefix'] = $_POST['table_prefix']; 
+	    	
 	        header("Location:advanced_general_settings.php");
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
@@ -144,6 +155,39 @@
 	        $_SESSION['error_array'] = $form->get_error_array();
 	        
 	        header("Location:advanced_general_settings.php");
+	    }	
+	}
+	
+	 /* 
+	  * Process the general settings.
+	  */
+	public function _proc_basic_general_settings() {
+		global $form, $install;
+		
+		$status = $install->_general_settings( 
+	        $_POST['site_name'],
+	        $_POST['site_tagline'],
+	        $_POST['select_language'],
+	        $_POST['site_email']
+	    );
+	    
+	    //no errors
+	    if( $status == 0 ) {
+	    	// make sure users get to the general setting from advanced db info page.
+	    	$_SESSION['basic_general_settings'] = 'basic_finished';
+	    	
+	  		// set it up in case someone want to goes the previous page.
+	    	$_SESSION['site_name'] = $_POST['site_name'];
+	    	$_SESSION['site_tagline'] = $_POST['site_tagline'];
+	    	$_SESSION['select_language'] = $_POST['select_language'];
+	    	$_SESSION['site_email'] = $_POST['site_email'];
+	    	 
+	        header("Location:basic_finished.php");
+	    }else if($status == 1 ) {
+	        $_SESSION['value_array'] = $_POST;
+	        $_SESSION['error_array'] = $form->get_error_array();
+	        
+	        header("Location:basic_general_settings.php");
 	    }	
 	}
 	
@@ -209,7 +253,7 @@
 	    }else if($status == 1 ) {
 	        $_SESSION['value_array'] = $_POST;
 	        $_SESSION['error_array'] = $form->get_error_array();
-	        header("Location:advanced_mail_server_settings.php");
+	        header("Location:advanced_map_configuration.php");
 	    }
 	}
 	

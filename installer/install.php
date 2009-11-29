@@ -197,10 +197,11 @@ class Install
 	
 	public function _map_info($map_provider, $map_api_key )
 	{
+		global $form;
 		//check for empty fields
 	    if(!$map_api_key || strlen($map_api_key = trim($map_api_key)) == 0 ){
-	        $form->set_error("map_api_key", "Please make sure to " .
-	        		"enter an<strong>api key</strong> for your map provider.");
+	        $form->set_error("map_provider_api_key", "Please make sure to " .
+	        		"enter an<strong> api key</strong> for your map provider.");
 	    } else {
 	    	$map_api_key = stripslashes($map_api_key);
 	    }
