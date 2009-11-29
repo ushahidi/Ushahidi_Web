@@ -214,7 +214,7 @@
 		
 		this.plotMarkers = function(style, markers, endDate) {
 			var startDate = this.startTime.getTime() / 1000;
-			var endDate = endDate || this.endTime.getTime() / 1000;
+			endDate = endDate || this.endTime.getTime() / 1000;
 
 			// Uncomment to play at monthly intervals
 			//endDate = $.monthEndTime(endDate * 1000) / 1000;
@@ -282,17 +282,37 @@
 	}
 	
 	$.timelinePeriod = function(plotData) {
-		heatLevel = 0;
-		hottestMoment = null;	
-		for (var i=0; i<plotData.length; i++) {
-			if (plotData[i][1] > heatLevel) {
-				hottestMoment = plotData[i][0];
-				heatLevel = plotData[i][1];
+		var days = $.timelineDays(plotData);
+		if (days < 365) {
+			startTime = plotData[0][0];
+			endTime = plotData[plotData.length-1][0];
+		} else {
+			heatLevel = 0;
+			hottestMoment = null;
+			for (var i=0; i<plotData.length; i++) {
+				if (plotData[i][1] > heatLevel) {
+					hottestMoment = plotDatas[i][0];
+					heatLevel = plotData[i][1];
+				}
 			}
+			startTime = hottestMoment - (6 * 30 * 24 * 60 * 60 * 1000);
+			endTime   = hottestMoment + (6 * 30 * 24 * 60 * 60 * 1000);
 		}
-		startTime = hottestMoment - (6 * 30 * 24 * 60 * 60 * 1000);
-		endTime   = hottestMoment + (6 * 30 * 24 * 60 * 60 * 1000);
 		return [startTime, endTime];
+	};
+
+	/*
+	 * Returns number of days in the given plot data
+	 */
+	$.timelineDays = function(plotData) {
+		var days = 0;
+		if (plotData) {
+			var incidentCount = plotData.length;
+			var startDate = new Date(plotData[0][0]);
+			var endDate = new Date(plotData[incidentCount-1][0]);
+			days = (endDate - startDate)/(1000 * 60 * 60 * 24);
+		}
+		return days;
 	};
 	
 	/*
