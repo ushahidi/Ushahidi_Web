@@ -384,6 +384,7 @@ CREATE TABLE IF NOT EXISTS `incident` (
   `incident_dateadd` datetime default NULL,
   `incident_dateadd_gmt` datetime default NULL,
   `incident_datemodify` datetime default NULL,
+  `incident_alert_status` TINYINT NOT NULL DEFAULT '0' COMMENT '0 - Not Tagged for Sending, 1 - Tagged for Sending, 2 - Alerts Have Been Sent',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `location_id` (`location_id`),
   KEY `incident_active` (`incident_active`),
@@ -636,7 +637,8 @@ CREATE TABLE IF NOT EXISTS `feed_item`
 (
 `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
 `feed_id` INT(11) NOT NULL,
-`location_id` BIGINT default NULL,
+`location_id` BIGINT default '0',
+`incident_id` INT(11) NOT NULL DEFAULT '0',
 `item_title` VARCHAR(255) default NULL,
 `item_description` TEXT default NULL,
 `item_link` VARCHAR(255) default NULL,
@@ -865,6 +867,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',
   `date_modify` datetime default NULL,
   `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',
+  `stat_key` VARCHAR(30) NOT NULL ,
   `email_username` VARCHAR(100) NOT NULL ,
   `email_password` VARCHAR(100) NOT NULL ,
   `email_port` INT(11) NOT NULL ,
@@ -970,6 +973,7 @@ CREATE TABLE IF NOT EXISTS `alert` (
   `alert_confirmed` tinyint(4) NOT NULL default '0',
   `alert_lat` varchar(150) default NULL,
   `alert_lon` varchar(150) default NULL,
+  `alert_radius` TINYINT NOT NULL DEFAULT '20',
   `alert_ip` varchar(100) default NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_alert_code` (`alert_code`)
@@ -992,8 +996,7 @@ CREATE TABLE IF NOT EXISTS `alert_sent`
 `incident_id` BIGINT NOT NULL,
 `alert_id` BIGINT NOT NULL,
 `alert_date` DATETIME NULL,
-PRIMARY KEY (`id`),
-UNIQUE KEY `uniq_incident_id` (`incident_id`)
+PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 --
@@ -1181,7 +1184,7 @@ CREATE TABLE IF NOT EXISTS `form_response` (
 --
 
 CREATE TABLE `level` (
-  `id` bigint(20) unsigned NOT NULL auto_increment,
+  `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT,
   `level_title` varchar(200) default NULL,
   `level_description` varchar(200) default NULL,
   `level_weight` tinyint(4) NOT NULL,
@@ -1212,9 +1215,9 @@ CREATE TABLE `reporter` (
   `location_id` bigint(20) default NULL,
   `user_id` int(11) default NULL,
   `service_id` int(11) default NULL,
+  `level_id` INT( 11 ) NULL,
   `service_userid` varchar(255) default NULL,
   `service_account` varchar(255) default NULL,
-  `reporter_level` tinyint(4) default '3',
   `reporter_first` varchar(200) default NULL,
   `reporter_last` varchar(200) default NULL,
   `reporter_email` varchar(120) default NULL,
@@ -1373,6 +1376,6 @@ ALTER TABLE `user_tokens`
 -- Version information for table `settings`
 --
 UPDATE `settings` SET
-`db_version` = '16',
+`db_version` = '19',
 `ushahidi_version` = '0.9'
 WHERE `id` =1 LIMIT 1;

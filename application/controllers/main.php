@@ -342,7 +342,26 @@ class Main_Controller extends Template_Controller {
 		$buffer = curl_exec($curl_handle);
 		curl_close($curl_handle);
 		
-		return simplexml_load_string($buffer); // This works because the tracking code is only wrapped in one tag
+		try {
+			$tag = @simplexml_load_string($buffer); // This works because the tracking code is only wrapped in one tag
+		} catch (Exception $e) {
+			// In case the xml was malformed for whatever reason, we will just guess what the tag should be here
+			$tag = '<!-- Piwik -->
+					<script type="text/javascript">
+					var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracker.ushahidi.com/piwik/" : "http://tracker.ushahidi.com/piwik/");
+					document.write(unescape("%3Cscript src=\'" + pkBaseURL + "piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));
+					</script><script type="text/javascript">
+					try {
+					  var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", '.$stat_id.');
+					  piwikTracker.trackPageView();
+					  piwikTracker.enableLinkTracking();
+					} catch( err ) {}
+					</script><noscript><p><img src="http://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'" style="border:0" alt=""/></p></noscript>
+					<!-- End Piwik Tag -->
+					';
+		}
+		
+		return $tag;
 
 	}
 	

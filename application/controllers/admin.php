@@ -28,6 +28,8 @@ class Admin_Controller extends Template_Controller
 
 	protected $user;
 
+	protected $tooltips;
+
 	public function __construct()
 	{
 		parent::__construct();	
@@ -76,6 +78,9 @@ class Admin_Controller extends Template_Controller
 		$this->template->raphael_enabled = FALSE;
 		$this->template->impact_json = '';
 		
+		// Load Tooltips Language Strings
+		$this->tooltips = Kohana::lang('tooltips');;
+		
 		// Load profiler
 		// $profiler = new Profiler;		
 		
@@ -101,7 +106,10 @@ class Admin_Controller extends Template_Controller
 	* find ushahidi core version details
 	*/
 	function _find_core_version($version) {
-		if($version > Kohana::config('version.ushahidi_version') && $version !== false) {
+		$settings = ORM::factory('settings', 1);
+		$version_ushahidi = $settings->ushahidi_version;
+		
+		if($version > $version_ushahidi && $version !== false) {
 			return $version;
 		} else {
 			return "";

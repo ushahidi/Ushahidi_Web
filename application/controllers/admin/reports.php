@@ -93,6 +93,9 @@ class Reports_Controller extends Admin_Controller
 						$update = new Incident_Model($item);
 						if ($update->loaded == true) {
 							$update->incident_active = '1';
+							
+							// Tag this as a report that needs to be sent out as an alert
+							$update->incident_alert_status = '1';
 							$update->save();
 							
 							$verify = new Verify_Model();
@@ -405,6 +408,46 @@ class Reports_Controller extends Admin_Controller
 		}else{
 			$this->template->content->show_messages = false;
 		}
+		
+		// Are we creating this report from a Newsfeed?
+		if ( isset($_GET['fid']) && !empty($_GET['fid']) )
+		{
+			$feed_item_id = $_GET['fid'];
+			$feed_item = ORM::factory('feed_item', $feed_item_id);
+			
+			if ($feed_item->loaded == true)
+			{				
+				// Has a report already been created for this Feed item?
+				if ($feed_item->incident_id != 0)
+				{
+					// Redirect to report
+					url::redirect('admin/reports/edit/'. $feed_item->incident_id);
+				}
+				
+				$form['incident_title'] = $feed_item->item_title;
+				$form['incident_description'] = $feed_item->item_description;
+				$form['incident_date'] = date('m/d/Y', strtotime($feed_item->item_date));
+				$form['incident_hour'] = date('h', strtotime($feed_item->item_date));
+				$form['incident_minute'] = date('i', strtotime($feed_item->item_date));
+				$form['incident_ampm'] = date('a', strtotime($feed_item->item_date));
+				
+				// News Link
+				$form['incident_news'][0] = $feed_item->item_link;
+				
+				// Does this newsfeed have a geolocation?
+				if ($feed_item->location_id)
+				{
+					$form['location_id'] = $feed_item->location_id;
+					$form['latitude'] = $feed_item->location->latitude;
+					$form['longitude'] = $feed_item->location->longitude;
+					$form['location_name'] = $feed_item->location->location_name;
+				}
+			}
+			else
+			{
+				$feed_item_id = "";
+			}
+		}
 	
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -671,7 +714,8 @@ class Reports_Controller extends Admin_Controller
 				$person->save();
 				
 				
-				// STEP 6: SAVE LINK TO REPORTER MESSAGE
+				// STEP 6a: SAVE LINK TO REPORTER MESSAGE
+				// We're creating a report from a message with this option
 				if(isset($message_id) && $message_id != "")
 				{
 					$savemessage = ORM::factory('message', $message_id);
@@ -682,6 +726,18 @@ class Reports_Controller extends Admin_Controller
 					}
 				}
 				
+				// STEP 6b: SAVE LINK TO NEWS FEED
+				// We're creating a report from a newsfeed with this option
+				if(isset($feed_item_id) && $feed_item_id != "")
+				{
+					$savefeed = ORM::factory('feed_item', $feed_item_id);
+					if ($savefeed->loaded == true) 
+					{
+						$savefeed->incident_id = $incident->id;
+						$savefeed->location_id = $location->id;
+						$savefeed->save();
+					}
+				}
 				
 				// STEP 7: SAVE CUSTOM FORM FIELDS
 				if(isset($post->custom_field))

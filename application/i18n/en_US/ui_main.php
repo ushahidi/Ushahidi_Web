@@ -1,4 +1,9 @@
 <?php
+/**
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ */
+
 $lang = array(
 	'search' => 'SEARCH',
 	'home' => 'Home',
@@ -30,6 +35,7 @@ $lang = array(
 	'official_news' => 'Official &amp; mainstream news',
 	'source' => 'SOURCE',
 	'date' => 'Date',
+        'close' => 'Close',
 	'reports_submit_new' => 'Submit a New Report',
 	'reports_title' => 'Report Title',
 	'reports_description' => 'Description',
@@ -61,5 +67,6 @@ $lang = array(
 	'alerts_email' => 'Email Address:',
 	'alerts_enter_email' => 'enter email address',
 	'alerts_rss' => 'RSS Feeds (copy the url below)',
-	'alerts_btn_send' => 'Submit'
+	'alerts_btn_send' => 'Save My Alert',
+	'alert_confirm_previous' => 'Confirm A Previous Alert Request'
 );

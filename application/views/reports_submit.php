@@ -51,8 +51,8 @@
 								</div>
 								<div class="report_row" id="datetime_default">
 									<h4><a href="#" id="date_toggle" class="show-more">Modify Date</a>Date & Time: 
-										<?php echo "Today at ".$form['incident_hour']
-											.":".$form['incident_minute']." ".$form['incident_ampm']; ?></h4>
+										<?php echo "Today at <span id='current_time'>".$form['incident_hour']
+											.":".$form['incident_minute']." ".$form['incident_ampm']."</span>"; ?></h4>
 								</div>
 								<div class="report_row hide" id="datetime_edit">
 									<div class="date-box">
@@ -87,6 +87,22 @@
 									</div>
 									<div style="clear:both; display:block;" id="incident_date_time"></div>
 								</div>
+										<script type="text/javascript">
+var now = new Date();
+var h=now.getHours();
+var m=now.getMinutes();
+var ampm="am";
+if (h>=12) ampm="pm"; 
+if (h>12) h-=12;
+var hs=(h<10)?("0"+h):h;
+var ms=(m<10)?("0"+m):m;
+$("#current_time").text(hs+":"+ms+" "+ampm);
+$("#incident_hour option[value='"+hs+"']").attr("selected","true");
+$("#incident_minute option[value='"+ms+"']").attr("selected","true");
+$("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
+
+										</script>
+
 								<div class="report_row">
 									<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?></h4>
 									<div class="report_category" id="categories">
@@ -166,7 +182,7 @@
 								</div>
 								
 								<div class="report_row">
-									<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span>Examples: Johannesburg, Corner City Market, 5th Street & 4th Avenue</span></h4>
+									<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span class="example">Examples: Johannesburg, Corner City Market, 5th Street & 4th Avenue</span></h4>
 									<?php print form::input('location_name', $form['location_name'], ' class="text long"'); ?>
 								</div>
 			

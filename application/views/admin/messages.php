@@ -107,8 +107,8 @@
 									$message_from = $message->message_from;
 									$message_to = $message->message_to;
 									$incident_id = $message->incident_id;
-									$message_description = $message->message;
-									$message_detail = $message->message_detail;
+									$message_description = text::auto_link($message->message);
+									$message_detail = text::auto_link($message->message_detail);
 									$message_date = date('Y-m-d', strtotime($message->message_date));
 									$message_type = $message->message_type;
 									?>
@@ -117,6 +117,17 @@
 										<td class="col-2">
 											<div class="post">
 												<p><?php echo $message_description; ?></p>
+												<?php
+												if ($message_detail)
+												{
+													?>
+													<p><a href="javascript:preview('message_preview_<?php echo $message_id?>')">Preview Message</a></p>
+													<div id="message_preview_<?php echo $message_id?>" style="display:none;">
+														<?php echo $message_detail; ?>
+													</div>
+													<?php
+												}
+												?>
 												<?php
 												if ($service_id == 1 && $message_type == 1)
 												{

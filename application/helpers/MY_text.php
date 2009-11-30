@@ -3,8 +3,6 @@
  * Text helper class.
  * Extends built-in helper class
  *
- * $Id: valid.php 3917 2009-01-21 03:06:22Z zombor $
- *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
  * that is available through the world-wide-web at the following URI:

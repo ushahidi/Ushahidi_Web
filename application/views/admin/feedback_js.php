@@ -40,12 +40,8 @@ function feedbackAction ( action, confirmAction, feedback_id )
 				
 				// Set Hidden form item to 000 so that it doesn't return server side error for blank value
 				$("#feedback_single").attr("value", "000");
-				// Submit Form For Multiple Items
-				$("input[name='feedback_id[]'][checked]").each(
-				function() 
-				{
-					$("#feedbackMain").submit();
-				});
+				// Submit Form For Multiple Items				
+				$("#feedbackMain").submit();
 			}
 				
 		} else {

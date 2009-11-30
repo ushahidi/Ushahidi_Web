@@ -41,8 +41,10 @@
 	// Other stuff to load only we have the map enabled
 	if ($map_enabled) {
 		echo $api_url . "\n";
-		if ($main_page) {
+		if ($main_page || $this_page == 'alerts') {
 			echo html::script('media/js/selectToUISlider.jQuery', true);
+		}
+		if ($main_page) {
 			echo html::script('media/js/jquery.flot', true);
 			echo html::script('media/js/timeline', true);
 			echo "<!--[if IE]>".
@@ -127,7 +129,7 @@
 			<!-- / searchbox -->
 		
 			<!-- logo -->
-			<div id="logo"><strong><?php echo $site_name; ?></strong></div>
+			<div id="logo"><span><strong><?php echo $site_name; ?></strong></span></div>
 			<!-- / logo -->
 		
 			<!-- submit incident -->

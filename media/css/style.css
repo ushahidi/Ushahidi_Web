@@ -1155,7 +1155,7 @@ label.error {
 	font-size:120%;
 	font-weight:bold;
 }
-.report_row h4 span{
+.report_row h4 .example{
 	font-weight: normal;
 	font-size: 10px;
 	line-height: 12px;
@@ -1299,7 +1299,14 @@ a.show-more {
 /*	width:930px; */
 	padding:16px 25px 10px;
 }
-
+/* Min-Height */
+.big-block{
+	min-height:400px;
+}
+/* Min-Height for IE */
+* html .big-block {
+	height:400px
+}
 /* View Reports / Help */
 .report_rowtitle, .org_rowtitle{
 	margin: 10px 0 5px 0;
@@ -1382,7 +1389,9 @@ a.show-more {
 	padding:0;
 	font-weight:bold;
 }
-
+.big-block .page_text p{
+	margin-bottom:15px;
+}
 /*---alerts-block---*/
 .step-1 {
 	float:left;
@@ -1407,9 +1416,9 @@ a.show-more {
 }
 .step-1 .map {
 	overflow:hidden;
-	width:388px;
+	width:407px;
 	padding:10px;
-	margin:10px 0 0 10px;
+	margin:10px 0 0 0;
 }
 .step-1 .map p {
 	margin:0;
@@ -1420,6 +1429,15 @@ a.show-more {
 	overflow:hidden;
 	width:387px;
 	height:325px;
+}
+.step-1 .alert_slider{
+	margin:10px 0 0 0;
+	padding:15px 15px 35px 15px;
+	border:1px solid #ccc;
+	background-color:#fff;
+}
+.step-1 .alert_slider .ui-slider span.ui-slider-label{
+	font-size:8px;
 }
 .step-2-holder {
 	float:right;
@@ -1780,4 +1798,22 @@ div.green-box h3, div.red-box h3{
 div.green-box ul, div.red-box ul{
 	margin-left:2em;
 	padding-left:2em;
+}
+
+/*--Alerts Messages--*/
+.alert_response, .thanks_msg {
+	margin:10px 15px 10px 15px;
+	border:2px #ccc solid;
+	background-color:#fff;
+	padding: 15px;
+	font:14px/17px Arial, Helvetica, sans-serif;
+}
+.alert_confirm {
+	margin:10px 0 0 0;
+	padding:10px;
+	border:1px #ccc solid;
+	background-color:#FFFFCC;
+}
+.alert_confirm .label{
+	margin-bottom:10px;
 }

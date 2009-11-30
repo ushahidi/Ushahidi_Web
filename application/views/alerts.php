@@ -38,20 +38,30 @@
 							<?php
 							}
 							?>
+							<?php print form::open() ?>
 							<div class="step-1">
 								<h2><?php echo Kohana::lang('ui_main.alerts_step1_select_city'); ?></h2>
-								<div class="location">
-									<form>
-										<label><?php echo Kohana::lang('ui_main.alerts_alert_me'); ?></label>
-										<?php print form::dropdown('alert_city',$cities,''); ?>
-									</form>
-								</div>
 								<div class="map">
 									<p><?php echo Kohana::lang('ui_main.alerts_place_spot'); ?></p>
 									<div class="map-holder" id="divMap"></div>
 								</div>
+								<div class="report-find-location">
+									<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
+									<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="Find Location" class="btn_find" /></div>
+									<div id="find_loading" class="report-find-loading"></div>
+									<div style="clear:both;" id="find_text">* If you can't find your location, please click on the map to pinpoint the correct location.</div>
+									<div class="alert_slider">
+										<select name="alert_radius" id="alert_radius">
+											<option value="1">1 KM</option>
+											<option value="5">5 KM</option>
+											<option value="10">10 KM</option>
+											<option value="20" selected="selected">20 KM</option>
+											<option value="50">50 KM</option>
+											<option value="100">100 KM</option>
+										</select>
+									</div>
+								</div>
 							</div>
-							<?php print form::open() ?>
 							<input type="hidden" id="alert_lat" name="alert_lat" value="<?php echo $form['alert_lat']; ?>">
 							<input type="hidden" id="alert_lon" name="alert_lon" value="<?php echo $form['alert_lon']; ?>">
 							<div class="step-2-holder">
@@ -93,6 +103,8 @@
 									</div>
 								</div>
 								<input id="btn-send-alerts" class="btn_submit" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
+								<BR /><BR />
+								<a href="<?php echo url::base()."alerts/confirm";?>"><?php echo Kohana::lang('ui_main.alert_confirm_previous'); ?></a>
 							</div>
 							<?php print form::close(); ?>
 														<?php

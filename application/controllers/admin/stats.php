@@ -29,26 +29,27 @@ class Stats_Controller extends Admin_Controller
 	
 	function index()
 	{	
-		$this->template->content = new View('admin/stats');
+		$this->template->content = new View('admin/stats_hits');
 		$this->template->content->title = 'Statistics';
 		
 		// Retrieve Current Settings
 		$settings = ORM::factory('settings', 1);
 		
-		if($settings->stat_id === null) {
+		if($settings->stat_id === null || $settings->stat_id == 0) {
 			$sitename = $settings->site_name;
 			$url = url::base();
 			$this->template->content->stat_id = $this->_create_site( $sitename, $url );
-		}else{
-			$this->template->content->stat_id = $settings->stat_id;
 		}
+		
+		// Show the hits page since stats are already set up
+		$this->hits();
 		
 	}
 	
 	function reports()
 	{
 		$this->template->content = new View('admin/stats_reports');
-		$this->template->content->title = 'Report Stats';
+		$this->template->content->title = 'Statistics';
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
@@ -95,7 +96,7 @@ class Stats_Controller extends Admin_Controller
 	function impact()
 	{
 		$this->template->content = new View('admin/stats_impact');
-		$this->template->content->title = 'Category Impact';
+		$this->template->content->title = 'Statistics';
 		
 		// Javascript Header
 		$this->template->raphael_enabled = TRUE;
@@ -160,13 +161,20 @@ class Stats_Controller extends Admin_Controller
 	function hits()
 	{
 		$this->template->content = new View('admin/stats_hits');
-		$this->template->content->title = 'Hit Summary';
+		$this->template->content->title = 'Statistics';
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
 		
 		// Hit Data
 		$data = Stats_Model::get_hit_stats();
+		
+		// If we failed to get hit data, fail.
+		if(!$data) {
+			$this->template->content->traffic_chart = 'Error displaying chart';
+			$this->template->content->raw_data = null;
+			return false;
+		}
 		
 		$traffic_chart = new protochart;
 		$options = array(
@@ -180,7 +188,7 @@ class Stats_Controller extends Admin_Controller
 	function country()
 	{
 		$this->template->content = new View('admin/stats_country');
-		$this->template->content->title = 'Country Breakdown';
+		$this->template->content->title = 'Statistics';
 		
 		$this->template->content->countries = Stats_Model::get_hit_countries();
 		
@@ -217,14 +225,14 @@ class Stats_Controller extends Admin_Controller
 	{
 		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
 		
-		// FIXME: This method of extracting the stat_id will only work as 
-		//        long as we are only returning the id and nothing else. It
-		//        is just a quick and dirty implementation for now.
-		$stat_id = trim(strip_tags($this->_curl_req($stat_url))); // Create site and get stat_id
+		$xml = simplexml_load_string($this->_curl_req($stat_url));
+		$stat_id = (string)$xml->id[0];
+		$stat_key = (string)$xml->key[0];
 		
 		if($stat_id > 0){
 			$settings = ORM::factory('settings',1);
 			$settings->stat_id = $stat_id;
+			$settings->stat_key = $stat_key;
 			$settings->save();
 			return $stat_id;
 		}

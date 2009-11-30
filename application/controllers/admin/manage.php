@@ -47,7 +47,8 @@ class Manage_Controller extends Admin_Controller
 	        'category_color'  => '',
 			'category_image'  => ''
 	    );
-		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+	    
+		// copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
@@ -556,6 +557,55 @@ class Manage_Controller extends Admin_Controller
 	}
 	
 	/*
+	View/Edit News Feed Items
+	*/
+	function feeds_items($feed_id = NULL)
+	{
+		$this->template->content = new View('admin/feeds_items');
+		
+		if ( isset($feed_id)  && !empty($feed_id) )
+		{
+			$filter = " feed_id = '" . $feed_id . "' ";
+		}
+		else
+		{
+			$filter = " 1=1";
+		}
+		
+		// check, has the form been submitted?
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+		
+		// Pagination
+		$pagination = new Pagination(array(
+			'query_string'   => 'page',
+			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'total_items'    => ORM::factory('feed_item')
+				->where($filter)
+				->count_all()
+		));
+
+		$feed_items = ORM::factory('feed_item')
+			->where($filter)
+			->orderby('item_date','desc')
+			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+			
+		$this->template->content->feed_items = $feed_items;
+		$this->template->content->pagination = $pagination;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
+
+		// Total Reports
+		$this->template->content->total_items = $pagination->total_items;
+		
+		// Javascript Header
+		$this->template->js = new View('admin/feeds_items_js');	
+	}
+	
+	
+	/*
 	Add Edit Reporter Levels
 	*/
 	function levels()
@@ -664,9 +714,9 @@ class Manage_Controller extends Admin_Controller
 		(
 			'reporter_id' => '',    
 			'service_id' => '',
+			'level_id' => '',
 			'service_userid' => '',
 			'service_account' => '',
-			'reporter_level' => '',
 			'reporter_first' => '',
 			'reporter_last' => '',
 			'reporter_email' => '',
@@ -704,7 +754,7 @@ class Manage_Controller extends Admin_Controller
 				
 				if( $post->action == 'd' )				// Delete Action
 				{
-					$level->delete( $level_id );
+					$reporter->delete( $reporter_id );
 					$form_saved = TRUE;
 					$form_action = "DELETED";
 
@@ -713,9 +763,9 @@ class Manage_Controller extends Admin_Controller
 				{		
 					// SAVE Reporter    
 					$reporter->service_id = $post->service_id;
+					$reporter->level_id = $post->level_id;
 					/*$reporter->service_userid = $post->service_userid;
 					$reporter->service_account = $post->service_account;*/
-					$reporter->reporter_level = $post->reporter_level;
 					/*$reporter->reporter_first = $post->reporter_first;
 					$reporter->reporter_last = $post->reporter_last;
 					$reporter->reporter_email = $post->reporter_email;
@@ -769,15 +819,21 @@ class Manage_Controller extends Admin_Controller
 	/**
 	 * setup simplepie
 	 */
-	private function _setup_simplepie( $feed_url ) {
-			$data = new SimplePie();
-			$data->set_feed_url( $feed_url );
-			$data->enable_cache(false);
-			$data->enable_order_by_date(true);
-			$data->init();
-			$data->handle_content_type();
+	private function _setup_simplepie( $feed_url )
+	{
+		$data = new SimplePie();
+	
+		// Convert To GeoRSS feed
+		$geocoder = new Geocoder();
+		$georss_feed = $geocoder->geocode_feed($feed_url);
+	
+		$data->set_raw_data( $georss_feed );
+		$data->enable_cache(false);
+		$data->enable_order_by_date(true);
+		$data->init();
+		$data->handle_content_type();
 
-			return $data;
+		return $data;
 	}
 	
 	/**
@@ -798,7 +854,8 @@ class Manage_Controller extends Admin_Controller
 			$last_update = $feed->feed_update;
 			
 			// Has it been more than 24 hours since the last update?
-			if ( ((int)$today - (int)$last_update) > 86400	)	// 86400 = 24 hours
+			// Since its a manual refresh, we don't need to set a time
+			if ( ((int)$today - (int)$last_update) > 0	)	// 86400 = 24 hours
 			{
 				// Parse Feed URL using Feed Helper
 				$feed_data = $this->_setup_simplepie( $feed->feed_url );
@@ -809,6 +866,9 @@ class Manage_Controller extends Admin_Controller
 					$link = $feed_data_item->get_link();
 					$description = $feed_data_item->get_description();
 					$date = $feed_data_item->get_date();
+					$latitude = $feed_data_item->get_latitude();
+					$longitude = $feed_data_item->get_longitude();
+					
 					// Make Sure Title is Set (Atleast)
 					if (isset($title) && !empty($title ))
 					{
@@ -816,9 +876,25 @@ class Manage_Controller extends Admin_Controller
 						// Maybe combination of Title + Date? (Kinda Heavy on the Server :-( )
 						$dupe_count = ORM::factory('feed_item')->where('item_title',$title)->where('item_date',date("Y-m-d H:i:s",strtotime($date)))->count_all();
 
-						if ($dupe_count == 0) {
+						if ($dupe_count == 0)
+						{
+							// Does this feed have a location??
+							$location_id = 0;
+							// STEP 1: SAVE LOCATION
+							if ($latitude && $longitude)
+							{
+								$location = new Location_Model();
+								$location->location_name = "Unknown";
+								$location->latitude = $latitude;
+								$location->longitude = $longitude;
+								$location->location_date = date("Y-m-d H:i:s",time());
+								$location->save();
+								$location_id = $location->id;
+							}
+							
 							$newitem = new Feed_Item_Model();
 							$newitem->feed_id = $feed->id;
+							$newitem->location_id = $location_id;
 							$newitem->item_title = $title;
 							if (isset($description) && !empty($description))
 							{
