@@ -35,7 +35,8 @@ $lang = array
 		'required'		=> 'The password field is required.',
 		'length'		=> 'The password field must be at least 5 and no more 16 characters long.',
 		'standard_text' => 'The password field contains disallowed characters.',
-		'login error'	=> 'Please check that you entered the correct password.'
+		'login error'	=> 'Please check that you entered the correct password.',
+		'matches'		=> 'Please enter the same password in the two password fields.'
 	),
 
 	'password_confirm' => array

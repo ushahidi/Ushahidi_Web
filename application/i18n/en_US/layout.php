@@ -2,7 +2,7 @@
 $lang = array
 (
 	'version' => 'Moderator',
-	'welcome' => 'Welcome,',
+	'welcome' => 'Welcome, ',
 	'view_site' => 'View Site',
 	'my_profile' => 'My Profile',
 	'logout' => 'Logout',

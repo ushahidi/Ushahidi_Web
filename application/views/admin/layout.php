@@ -112,7 +112,7 @@
 					<li class="none-separator"> <?php echo Kohana::lang('layout.welcome');echo $admin_name; ?>!</li>
 					<li class="none-separator"><a href="<?php echo url::base() ?>" title="View the home page">
 						<?php echo Kohana::lang('layout.view_site');?></a>					
-					<li class="none-separator"><a href="#"><?php echo Kohana::lang('layout.my_profile');?></a></li>
+					<li class="none-separator"><a href="<?php echo url::base()."admin/profile/" ?>"><?php echo Kohana::lang('layout.my_profile');?></a></li>
 					<li><a href="log_out"><?php echo Kohana::lang('layout.logout');?></a></li>
 				</ul>
                         </div>
