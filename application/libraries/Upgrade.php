@@ -111,8 +111,7 @@
 			    	$this->success = false;
 			    }
 			} elseif (is_dir($dir . $entry)) {
-				$this->errors[] = sprintf( 'Deleting file <code>%s</code> ', $dir.$entry );
-			    $this->remove_recursive($dir . $entry);
+			    $this->remove_recursively($dir . $entry);
 			    $this->success = true;
 			}
 		    }
@@ -171,5 +170,34 @@
        	$this->log[] = sprintf("Zip file successfully written to a file ");
  		return true;
  	}
+
+	/**
+	* Fetch latest ushahidi version from a remote instance then 
+	* compare it with local instance version number.
+	*/
+	function _fetch_core_version() {
+		$version_url = "http://version.ushahidi.com";		
+		$version_string = @file_get_contents($version_url);
+		
+		// If we didn't get anything back...
+		if(!$version_string){
+			 return "";
+		}
+
+		$version_details = explode(",",$version_string);
+		$version_number = $version_details[0];
+		
+		$latest_version = $version_number;
+		
+		$settings = ORM::factory('settings', 1);
+		$version_ushahidi = $settings->ushahidi_version;
+		
+		if($latest_version > $version_ushahidi && $latest_version !== false) {
+			return $latest_version;
+		} else {
+			return "";
+		}
+	}
+ 	
  }
 ?>

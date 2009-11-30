@@ -25,19 +25,19 @@
        	<p>Step 2: Depending on the operating system running the webserver, use your preferred tool/mode (i.e: telnet, ftp, ssh) to login to the webserver and replace the contents of all the folders with the newest from the recent build. All EXCEPT:<p>
        	<ul>
        		<li>
-                                            /applications/config
+            	/applications/config
             </li>
            	<li>
-                                            /applications/cache
+            	/applications/cache
           	</li>
           	<li>
-                                            /applications/logs
+            	/applications/logs
           	</li>
           	<li>
-                                            /media/uploads
+             	/media/uploads
           	</li>
         </ul>
-       	<p>Step 3: Open phpMyAdmin, and execute the <code>upgrade.sql</code>. The script shall update and alter the respective tables.</p>
+       	<p>Step 3: Use your favorite Mysql client ( eg. phpMyAdmin ), and execute the <code>upgrade.sql</code>. The script shall update and alter the respective tables.</p>
         
         <p>For automatic upgrade, click on the button below.</p>
         <p><input type="submit" id="upgrade" name="submit" value="Automatic Upgrade" class="login_btn" /></p>                

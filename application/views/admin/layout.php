@@ -116,7 +116,7 @@
 					<li><a href="log_out"><?php echo Kohana::lang('layout.logout');?></a></li>
 				</ul>
                         </div>
-                        <?php if( $version != "" ) { ?>
+                        <?php if( ( $version != "" ) && ( url::current() != "admin/upgrade" ) ) { ?>
                         <div id="update-info">
                         Ushahidi <?php echo $version; ?> 
                             <?php echo Kohana::lang('layout.version_available');?> 

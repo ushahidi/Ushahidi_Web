@@ -43,6 +43,8 @@ class Admin_Controller extends Template_Controller
 		// Load database
 		$this->db = new Database();
 		
+		$upgrade = new Upgrade;
+		
 		$this->auth = new Auth();
 		$this->session = Session::instance();
 		$this->auth->auto_login();
@@ -52,9 +54,9 @@ class Admin_Controller extends Template_Controller
 		}
 
 		//fetch latest version of ushahidi
-		$version_number = $this->_fetch_core_version();
+		$version_number = $upgrade->_fetch_core_version();
 		
-		$this->template->version = $this->_find_core_version($version_number);
+		$this->template->version = $version_number;
 		
 		// Get Session Information
 		$user = new User_Model($_SESSION['auth_user']->id);
@@ -98,38 +100,6 @@ class Admin_Controller extends Template_Controller
 		$auth->logout(TRUE);
 		
 		url::redirect('login');
-	}
-	
-	
-
-	/**
-	* find ushahidi core version details
-	*/
-	function _find_core_version($version) {
-		$settings = ORM::factory('settings', 1);
-		$version_ushahidi = $settings->ushahidi_version;
-		
-		if($version > $version_ushahidi && $version !== false) {
-			return $version;
-		} else {
-			return "";
-		}
-	}
-
-	/**
-	* Fetch latest ushahidi version from a remote instance
-	*/
-	function _fetch_core_version() {
-		$version_url = "http://version.ushahidi.com";		
-		$version_string = @file_get_contents($version_url);
-		
-		// If we didn't get anything back...
-		if(!$version_string) return false;
-
-		$version_details = explode(",",$version_string);
-		$version_number = $version_details[0];
-		
-		return $latest_version = $version_number;
 	}
 	
 } // End Admin

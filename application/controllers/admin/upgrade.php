@@ -21,9 +21,10 @@ class Upgrade_Controller extends Admin_Controller
 		parent::__construct();
 
                 $this->template->this_page = 'upgrade';
-
+				$upgrade = new Upgrade;
+				$latest_version = $upgrade->_fetch_core_version();
                 // limit access to only superadmin
-                if(!$this->auth->logged_in('superadmin'))
+                if(!$this->auth->logged_in('superadmin') && $latest_version != "" )
                 {
                     url::redirect('admin/dashboard');
                 }
@@ -104,7 +105,7 @@ class Upgrade_Controller extends Admin_Controller
        	}
 
       	if( $upgrade->success ) {
-     		$upgrade->remove_recursively($working_dir."ushahidi/application/config");
+     		//$upgrade->remove_recursively($working_dir."ushahidi/application/config");
            	$upgrade->remove_recursively($working_dir."ushahidi/application/cache");
            	$upgrade->remove_recursively($working_dir."ushahidi/application/logs");
         	$upgrade->remove_recursively($working_dir."ushahidi/media/uploads");
@@ -124,8 +125,16 @@ class Upgrade_Controller extends Admin_Controller
       			$upgrade->errors[] = sprintf("Tables upgrade failed");
       		}
       	}
+      	
+      	if( $upgrade->success ) {
+			$upgrade->remove_recursively($working_dir."ushahidi");
+			unlink($zip_file);
+			$upgrade->log[] = sprintf("Upgrade went successful.");
+		}
+
         	
        	return $upgrade;
 
 	}
+	
 }
