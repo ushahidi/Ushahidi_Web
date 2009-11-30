@@ -14,7 +14,9 @@ class protochart {
 	 * options: Multi-dimensional array. Ex: array('bars'=>array('show'=>'true'))
 	 *          See protochart site for more details related to options: http://www.deensoft.com/lab/protochart/
 	 *          Eaxample bar graph options: array('bars'=>array('show'=>'true'));
-	 * custom_colors: array with label as key and a RRGGBB code (ex: FF0000) as a value.
+	 * custom_color: array with label as key and a RRGGBB code (ex: FF0000) as a value.
+	 * width: width of the chart in pixels
+	 * height: height of the chart in pixels
 	 *
 	 */
 	public function chart($name='chart',$data,$options_array=null,$custom_color=null,$width=400,$height=300) {

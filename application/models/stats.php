@@ -23,8 +23,8 @@ class Stats_Model extends ORM
 		// Get ID for stats
 		$settings = ORM::factory('settings', 1);
 		$stat_id = $settings->stat_id;
-	    
-	    $stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range);
+
+		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range);
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
 		// If we encounter an error, return false
@@ -62,8 +62,8 @@ class Stats_Model extends ORM
 	{
 		$settings = ORM::factory('settings', 1);
 		$stat_id = $settings->stat_id;
-	    
-	    $stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range);
+
+		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range);
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
 		$data = array();
@@ -103,6 +103,7 @@ class Stats_Model extends ORM
 		$approved_counts = array();
 		
 		// Gather some data into an array on incident reports
+		$num_reports = 0;
 		foreach($reports as $report) {
 			$timestamp = (string)strtotime(substr($report->incident_date,0,10));
 			$report_data[$report->id] = array(
@@ -130,6 +131,7 @@ class Stats_Model extends ORM
 			}else{
 				$approved_counts['unapproved'][$timestamp]++;
 			}
+			$num_reports++;
 		}
 	
 		$category_counts = array();
@@ -200,6 +202,9 @@ class Stats_Model extends ORM
 			$data = $new_data;
 			
 		}
+		
+		$data['total_reports'] = $num_reports;
+		$data['total_categories'] = count($category_counts);
 		
 		return $data;
 	}

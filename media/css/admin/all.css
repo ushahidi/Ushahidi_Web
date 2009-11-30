@@ -1797,7 +1797,7 @@ UL.mapNavigation LI A:focus {
 	.tc-right { }
 	
 /* Chart Holders */
-.chart-holder { background:#eee; height:300px; }
+.chart-holder { height:300px; }
 .reports-charts { width:664px; margin-right:36px; }
 
 /* Time Period Selection*/
@@ -1870,6 +1870,14 @@ UL.mapNavigation LI A:focus {
 
 .two-col .tabs { width:auto; }
 
+/* Color box used for legend on reports stats page */
+#little-color-box {
+	float:left;
+	width:15px;
+	height:10px;
+	background-color:#CCCCCC; /* This should be overridden in the HTML */
+	margin: 4px 8px 4px 0;
+}
 
 /* Clearfix */
 .clearfix:after {

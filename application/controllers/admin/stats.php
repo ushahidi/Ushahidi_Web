@@ -22,8 +22,8 @@ class Stats_Controller extends Admin_Controller
 		
 		// If this is not a super-user account, redirect to dashboard
 		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
-        {
-             url::redirect('admin/dashboard');
+		{
+			 url::redirect('admin/dashboard');
 		}
 	}
 	
@@ -58,38 +58,72 @@ class Stats_Controller extends Admin_Controller
 		$data = Stats_Model::get_report_stats();
 		
 		$reports_chart = new protochart;
+		
+		// This makes the chart a delicious pie chart
 		$options = array(
-			'pies'=>array('show'=>'true'),
-			'legend'=>array('show'=>'true')
+			'pies'=>array('show'=>'true')
 			);
 		
 		// Grab category data
 		$cats = Category_Model::categories();
+		
+		$this->template->content->category_data = $cats;
 
 		$report_data = array();
 		$colors = array();
+		$reports_per_cat = array();
 		foreach($data['category_counts'] as $category_id => $count) {
 			$category_name = $cats[$category_id]['category_title'];
 			$report_data[$category_name] = $count;
 			$colors[$category_name] = $cats[$category_id]['category_color'];
+			
+			foreach($count as $c) {				
+				// Count up the total number of reports per category
+				if(!isset($reports_per_cat[$category_id])) $reports_per_cat[$category_id] = 0;
+				$reports_per_cat[$category_id] += $c;
+			}
 		}
 		
-		$this->template->content->reports_chart = $reports_chart->chart('reports',$report_data,$options,$colors);
+		$this->template->content->num_categories = $data['total_categories'];
+		$this->template->content->reports_per_cat = $reports_per_cat;
+		
+		$this->template->content->reports_chart = $reports_chart->chart('reports',$report_data,$options,$colors,350,350);
+		
+		$this->template->content->verified = 0;
+		$this->template->content->unverified = 0;
+		$this->template->content->approved = 0;
+		$this->template->content->unapproved = 0;
 		
 		$report_status_chart = new protochart;
-
 		$report_staus_data = array();
 		
 		foreach($data['verified_counts'] as $ver_or_un => $arr){
 			if(!isset($report_staus_data[$ver_or_un][0])) $report_staus_data[$ver_or_un][0] = 0;
-			foreach($arr as $count) $report_staus_data[$ver_or_un][0] += $count;
-		}
-		foreach($data['approved_counts'] as $app_or_un => $arr){
-			if(!isset($report_staus_data[$app_or_un][0])) $report_staus_data[$app_or_un][0] = 0;
-			foreach($arr as $count) $report_staus_data[$app_or_un][0] += $count;
+			if(!isset($this->template->content->$ver_or_un)) $this->template->content->$ver_or_un = 0;
+			foreach($arr as $count) {
+				$report_staus_data[$ver_or_un][0] += $count;
+				$this->template->content->$ver_or_un += $count;
+			}
 		}
 		
-		$this->template->content->report_status_chart = $report_status_chart->chart('report_status',$report_staus_data,$options);
+		$colors = array('verified'=>'01DF01','unverified'=>'FF3333');
+		$this->template->content->report_status_chart_ver = $report_status_chart->chart('report_status_ver',$report_staus_data,$options,$colors,150,150);
+		
+		$report_staus_data = array();
+		
+		foreach($data['approved_counts'] as $app_or_un => $arr){
+			if(!isset($report_staus_data[$app_or_un][0])) $report_staus_data[$app_or_un][0] = 0;
+			if(!isset($this->template->content->$app_or_un)) $this->template->content->$app_or_un = 0;
+			foreach($arr as $count) {
+				$report_staus_data[$app_or_un][0] += $count;
+				$this->template->content->$app_or_un += $count;
+			}
+		}
+		
+		$this->template->content->num_reports = $data['total_reports'];
+		
+		$colors = array('approved'=>'01DF01','unapproved'=>'FF3333');
+		$this->template->content->report_status_chart_app = $report_status_chart->chart('report_status_app',$report_staus_data,$options,$colors,150,150);
 		
 	}
 	
@@ -108,12 +142,16 @@ class Stats_Controller extends Admin_Controller
 		$use_log = '';
 		$json .= '"buckets":['."\n";
 		$cat_report_count = array();
+		$category_counter = array();
 		foreach($data['category_counts'] as $timestamp => $count_array) {
 			$comma_flag = false;
 			$line = '';
 			// If this number is greater than 0, we'll show the line
 			$display_test = 0;
 			foreach($count_array as $category_id => $count) {
+				
+				$category_counter[$category_id] = 1;
+				
 				// We aren't allowing 0s
 				if($count > 0) {
 					if($comma_flag) $line .= ',';
@@ -137,6 +175,9 @@ class Stats_Controller extends Admin_Controller
 				$json .= ']},'."\n";
 			}
 		}
+		
+		$this->template->content->num_reports = $data['total_reports'];
+		$this->template->content->num_categories = $data['total_categories'];;
 		
 		$json .= '],'."\n";
 		$json .= $use_log;
@@ -166,8 +207,21 @@ class Stats_Controller extends Admin_Controller
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
 		
+		// Set the date range (how many days in the past from today?)
+		$range = 30;
+		if(isset($_GET['range'])) $range = $_GET['range'];
+		$this->template->content->range = $range;
+		
 		// Hit Data
-		$data = Stats_Model::get_hit_stats();
+		$data = Stats_Model::get_hit_stats($range);
+		
+		$this->template->content->uniques = 0;
+		$this->template->content->visits = 0;
+		$this->template->content->pageviews = 0;
+		$this->template->content->active_tab = 'uniques';
+		
+		// Lazy tab switcher (not using javascript)
+		if(isset($_GET['active_tab'])) $this->template->content->active_tab = $_GET['active_tab'];
 		
 		// If we failed to get hit data, fail.
 		if(!$data) {
@@ -176,12 +230,18 @@ class Stats_Controller extends Admin_Controller
 			return false;
 		}
 		
+		$counts = array();
+		foreach($data as $label => $data_array) {
+			if(!isset($this->template->content->$label)) $this->template->content->$label = 0;
+			foreach($data_array as $timestamp => $count) $this->template->content->$label += $count;
+		}
+		
 		$traffic_chart = new protochart;
 		$options = array(
 			'xaxis'=>array('mode'=>'"time"'),
 			'legend'=>array('show'=>'true')
 			);
-		$this->template->content->traffic_chart = $traffic_chart->chart('traffic',$data,$options);
+		$this->template->content->traffic_chart = $traffic_chart->chart('traffic',$data,$options,null,884,300);
 		$this->template->content->raw_data = $data;
 	}
 	
@@ -190,16 +250,34 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content = new View('admin/stats_country');
 		$this->template->content->title = 'Statistics';
 		
-		$this->template->content->countries = Stats_Model::get_hit_countries();
+		// Set the date range (how many days in the past from today?)
+		$range = 30;
+		if(isset($_GET['range'])) $range = $_GET['range'];
+		$this->template->content->range = $range;
 		
-		//Set up country map
+		$countries = Stats_Model::get_hit_countries($range);
+		
+		//Set up country map and totals
 		$country_total = array();
-		foreach($this->template->content->countries as $country){
+		$countries_reformatted = array();
+		foreach($countries as $country){
 			foreach($country as $code => $arr) {
 				if(!isset($country_total[$code])) $country_total[$code] = 0;
 				$country_total[$code] += $arr['uniques'];
+				
+				$name = $arr['label'];
+				if(!isset($countries_reformatted[$name])) $countries_reformatted[$name] = array();
+				if(!isset($countries_reformatted[$name]['count'])) $countries_reformatted[$name]['count'] = 0;
+				$countries_reformatted[$name]['count'] += $arr['uniques'];
+				$countries_reformatted[$name]['icon'] = $arr['logo'];
 			}
 		}
+		
+		arsort($countries_reformatted);
+		
+		$this->template->content->countries = $countries_reformatted;
+		
+		$this->template->content->num_countries = count($countries_reformatted);
 		
 		arsort($country_total);
 		
@@ -214,6 +292,28 @@ class Stats_Controller extends Admin_Controller
 			$i++;
 		}
 		$this->template->content->visitor_map = "http://chart.apis.google.com/chart?chs=440x220&chf=bg,s,ffffff&cht=t&chtm=world&chco=cccccc,A07B7B,a20000&chld=".$codes."&chd=t:".$values;
+		
+		// Hit Data
+		$data = Stats_Model::get_hit_stats($range);
+		
+		$this->template->content->uniques = 0;
+		$this->template->content->visits = 0;
+		$this->template->content->pageviews = 0;
+		$this->template->content->active_tab = 'uniques';
+		
+		// Lazy tab switcher (not using javascript)
+		if(isset($_GET['active_tab'])) $this->template->content->active_tab = $_GET['active_tab'];
+		
+		// If we failed to get hit data, fail.
+		if(!$data) {
+			return false;
+		}
+		
+		$counts = array();
+		foreach($data as $label => $data_array) {
+			if(!isset($this->template->content->$label)) $this->template->content->$label = 0;
+			foreach($data_array as $timestamp => $count) $this->template->content->$label += $count;
+		}
 	}
 	
 	/**

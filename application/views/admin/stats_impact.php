@@ -14,17 +14,18 @@
  */
 ?>
 <div class="bg">
-	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Hit Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a> <a href="<?php print url::base() ?>admin/stats/reports">Report Stats</a> <a href="<?php print url::base() ?>admin/stats/impact">Category Impact</a></h2>
+	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Visitor Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a> <a href="<?php print url::base() ?>admin/stats/reports">Report Stats</a> <a href="<?php print url::base() ?>admin/stats/impact">Category Impact</a></h2>
+	
 	<div class="content-wrap clearfix">
         <h3>Reports Impact</h3>
         
         <div id="time-period-selector">
-            <p>Choose a date range: <a href="#">1 MO</a> <a href="#">3 MO</a> <a href="#">6 MO</a> <input type="text" class="dp" value="datepicker" /> - <input type="text" value="datepicker" class="dp" /> <input type="button" value="Go &rarr;" class="button" /> </p>
+        	<p>Choose a date range: <a href="<?php print url::base() ?>admin/stats/impact/?range=30">1 MO</a> <a href="<?php print url::base() ?>admin/stats/impact/?range=90">3 MO</a> <a href="<?php print url::base() ?>admin/stats/impact/?range=180">6 MO</a><!-- <input type="text" class="dp" value="datepicker" /> - <input type="text" value="datepicker" class="dp" /> <input type="button" value="Go &rarr;" class="button" /> --></p>
         </div>
         
         <!-- Left Column -->
         <div class="two-col tc-left reports-charts">
-        <p>This chart gives you a linear view of the inpact of different categories over time.  Scroll from left to right to see a compartive view of the different categories. Mouse over the graph for more details.</p>
+        <p>This chart gives you a linear view of the reports by category over time.  Scroll from left to right to see a comparative view of the different categories. Mouse over the graph for more details.</p>
             <div id="impact_info2" class="impact_hidden">
                 <div id="impact_legend2">&nbsp;</div>
                 <div id="impact_message2">legend</div>
@@ -39,17 +40,14 @@
         	<div class="stats-wrapper clearfix">
                 <div class="statistic first">
                     <h4>Reports</h4>
-                    <p>234</p>
+                    <p><?php echo $num_reports; ?></p>
                 </div>
                 <div class="statistic">
                     <h4>Categories</h4>
-                    <p>7</p>
+                    <p><?php echo $num_categories; ?></p>
                 </div>
             </div>
             <div style="clear:both;"></div>
-    
-        
-
-	</div>
+		</div>
 </div>
 
