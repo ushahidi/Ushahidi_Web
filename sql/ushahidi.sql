@@ -395,6 +395,12 @@ CREATE TABLE IF NOT EXISTS `incident` (
 --
 
 
+LOCK TABLES `incident` WRITE;
+/*!40000 ALTER TABLE `incident` DISABLE KEYS */;
+INSERT INTO `incident` VALUES (1,1,1,'en_US',1,'Hello Ushahidi!','Welcome to Ushahidi. Please replace this report with a valid incident','2009-06-30 12:00:00',1,1,1,'0','2009-06-30 12:00:00','0',NULL,NULL,NULL);
+/*!40000 ALTER TABLE `incident` ENABLE KEYS */;
+UNLOCK TABLES;
+
 -- --------------------------------------------------------
 
 --
@@ -530,7 +536,11 @@ CREATE TABLE IF NOT EXISTS `location` (
 -- Dumping data for table `location`
 --
 
-
+LOCK TABLES `location` WRITE;
+/*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` VALUES (1,'Nairobi',NULL,-1.2873000707050097, 36.821451182008204,1,'2009-06-30 00:00:00');
+/*!40000 ALTER TABLE `location` ENABLE KEYS */;
+UNLOCK TABLES;
 -- --------------------------------------------------------
 
 --
