@@ -77,7 +77,7 @@ class Stats_Model extends ORM
 			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
 		}
 
-		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
+		$stat_url = 'http://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
 		// If we encounter an error, return false
