@@ -36,6 +36,12 @@
 
 	<div class="chart-holder">
 		<?php echo $traffic_chart; ?>
+		<?php if($failure != ''){ ?>
+			<div class="red-box">
+				<h3>Error!</h3>
+				<ul><li><?php echo $failure; ?></li></ul>
+			</div>
+		<?php } ?>
 	</div>
 
 	<div class="stats-wrapper clearfix">
@@ -76,7 +82,8 @@
 				$data_array = array_reverse($data_array);
 				foreach($data_array as $timestamp => $count) {
 					$date = date('M jS, Y',($timestamp/1000));
-					$percentage = round((($count / $$label) * 100),1);
+					$percentage = 0;
+					if($$label != 0) $percentage = round((($count / $$label) * 100),1);
 					?>
 					<tr>
 						<td class="hbItem"><?php echo $date; ?></td>
@@ -109,18 +116,3 @@
 
 	</div>
 </div>
-<script type="text/javascript" language="javascript">
-
-  	/*Not sure why this doesn't work... getting  weird JS error 
-	//tabs
-	$(".tabset a").click(function(){
-		//remove all the active states
-		$(".tab-box").removeClass("active-tab");
-
-		//show the appropriate tab box
-		$($(this).attr("href")).addClass("active-tab");
-
-		//don't jump around on the page please
-		return false;
-	});*/
-</script>

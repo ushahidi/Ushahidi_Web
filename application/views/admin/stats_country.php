@@ -33,6 +33,12 @@
 
 	<div class="chart-holder" style="height:220px;text-align:center;">
 	<img src="<?php echo $visitor_map; ?>" />
+	<?php if($failure != ''){ ?>
+		<div class="red-box">
+			<h3>Error!</h3>
+			<ul><li><?php echo $failure; ?></li></ul>
+		</div>
+	<?php } ?>
 	</div>
 
 	<div class="stats-wrapper clearfix">

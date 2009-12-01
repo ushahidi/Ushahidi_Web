@@ -33,11 +33,12 @@ class Stats_Model extends ORM
 			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
 		}
 		
-		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
+		$stat_url = 'http://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
+		var_dump($stat_url);
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
 		// If we encounter an error, return false
-		if(isset($response->result->error[0])) {
+		if(isset($response->result->error[0]) || isset($response->error[0])) {
 			Kohana::log('error', "Error on stats request");
 			return false;
 		}
@@ -79,6 +80,12 @@ class Stats_Model extends ORM
 
 		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 		$response = simplexml_load_string(self::_curl_req($stat_url));
+		
+		// If we encounter an error, return false
+		if(isset($response->result->error[0]) || isset($response->error[0])) {
+			Kohana::log('error', "Error on stats request");
+			return false;
+		}
 		
 		$data = array();
 		foreach($response->countries->result as $res) {

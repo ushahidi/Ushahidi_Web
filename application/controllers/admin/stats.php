@@ -55,6 +55,8 @@ class Stats_Controller extends Admin_Controller
 		$this->template->protochart_enabled = TRUE;
 		//$this->template->js = new View('admin/stats_js');
 		
+		$this->template->content->failure = '';
+		
 		// Set the date range (how many days in the past from today?)
 		$range = 10000; //get all reports so go back far into the past
 		if(isset($_GET['range'])) $range = $_GET['range'];
@@ -150,6 +152,8 @@ class Stats_Controller extends Admin_Controller
 		// Javascript Header
 		$this->template->raphael_enabled = TRUE;
 		//$this->template->js = new View('admin/stats_js');
+		
+		$this->template->content->failure = '';
 		
 		// Set the date range (how many days in the past from today?)
 		$range = 10000; //get all reports so go back far into the past
@@ -247,6 +251,8 @@ class Stats_Controller extends Admin_Controller
 		$this->template->protochart_enabled = TRUE;
 		//$this->template->js = new View('admin/stats_js');
 		
+		$this->template->content->failure = '';
+		
 		// Set the date range (how many days in the past from today?)
 		$range = 30;
 		if(isset($_GET['range'])) $range = $_GET['range'];
@@ -272,7 +278,10 @@ class Stats_Controller extends Admin_Controller
 		// If we failed to get hit data, fail.
 		if(!$data) {
 			$this->template->content->traffic_chart = 'Error displaying chart';
-			$this->template->content->raw_data = null;
+			$this->template->content->raw_data = array();
+			$this->template->content->dp1 = null;
+			$this->template->content->dp2 = null;
+			$this->template->content->failure = 'Stat Collection Failed! Either your stat_id or stat_key in the settings table in the database are incorrect or our stat server is down. Try back in a bit to see if the server is up and running. If you are really in a pinch, you can always modify stat_id (set to null) and stat_key (set to 0) in the settings table of your database to get your stats back up and running. Keep in mind you will lose access to your stats currently on the stats server.';
 			return false;
 		}
 		
@@ -306,6 +315,8 @@ class Stats_Controller extends Admin_Controller
 		// Javascript Header
 		//$this->template->js = new View('admin/stats_js');
 		
+		$this->template->content->failure = '';
+		
 		// Set the date range (how many days in the past from today?)
 		$range = 30;
 		if(isset($_GET['range'])) $range = $_GET['range'];
@@ -318,6 +329,21 @@ class Stats_Controller extends Admin_Controller
 		if(isset($_GET['dp2'])) $dp2 = $_GET['dp2'];
 		
 		$countries = Stats_Model::get_hit_countries($range,$dp1,$dp2);
+		
+		// If we failed to get country data, fail.
+		if(!$countries) {
+			$this->template->content->countries = array();
+			$this->template->content->num_countries = 0;
+			$this->template->content->dp1 = null;
+			$this->template->content->dp2 = null;
+			$this->template->content->visitor_map = '';
+			$this->template->content->uniques = 0;
+			$this->template->content->visits = 0;
+			$this->template->content->pageviews = 0;
+			$this->template->content->active_tab = 'uniques';
+			$this->template->content->failure = 'Stat Collection Failed!';
+			return false;
+		}
 		
 		//Set up country map and totals
 		$country_total = array();
