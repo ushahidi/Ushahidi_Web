@@ -115,7 +115,7 @@
 												</div>
 											</div>
 											<ul class="info">
-												<li class="none-separator">Feed: <strong><?php echo $feed_name; ?></strong>
+												<li class="none-separator">Feed: <strong><a href="<?php echo $item_link; ?>"><?php echo $feed_name; ?></a></strong>
 												<li>GeoLocation Available?: <strong><?php echo ($location_id) ? "YES" : "NO"; ?></strong></li>
 											</ul>
 										</td>

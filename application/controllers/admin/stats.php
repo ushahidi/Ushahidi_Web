@@ -53,7 +53,7 @@ class Stats_Controller extends Admin_Controller
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
-		//$this->template->js = new View('admin/stats_js');
+		$this->template->js = new View('admin/stats_js');
 		
 		$this->template->content->failure = '';
 		
@@ -151,7 +151,7 @@ class Stats_Controller extends Admin_Controller
 		
 		// Javascript Header
 		$this->template->raphael_enabled = TRUE;
-		//$this->template->js = new View('admin/stats_js');
+		$this->template->js = new View('admin/stats_js');
 		
 		$this->template->content->failure = '';
 		
@@ -249,7 +249,7 @@ class Stats_Controller extends Admin_Controller
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
-		//$this->template->js = new View('admin/stats_js');
+		$this->template->js = new View('admin/stats_js');
 		
 		$this->template->content->failure = '';
 		
@@ -313,7 +313,7 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content->title = 'Statistics';
 		
 		// Javascript Header
-		//$this->template->js = new View('admin/stats_js');
+		$this->template->js = new View('admin/stats_js');
 		
 		$this->template->content->failure = '';
 		

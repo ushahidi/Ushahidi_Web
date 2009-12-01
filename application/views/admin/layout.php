@@ -62,6 +62,7 @@
 	// Load ProtoChart
 	if ($protochart_enabled)
 	{
+		echo "<script type=\"text/javascript\">jQuery.noConflict()</script>";
 		echo html::script('media/js/protochart/prototype', true);
 		echo '<!--[if IE]>';
 		echo html::script('media/js/protochart/excanvas-compressed', true);

@@ -1,3 +1,4 @@
+<?php
 /**
  * Stats js file.
  *
@@ -13,14 +14,18 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
-
+?>
 // Date Picker JS
-/*
-$(document).ready(function() {
-	$("#dp1").datepicker({ 
+jQuery(document).ready(function() {
+	jQuery("#dp1").datepicker({ 
+	    showOn: "both", 
+	    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
+	    buttonImageOnly: true 
+	});
+	
+	jQuery("#dp2").datepicker({ 
 	    showOn: "both", 
 	    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
 	    buttonImageOnly: true 
 	});
 });
-*/

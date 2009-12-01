@@ -23,8 +23,8 @@
 		<p>
 			<form method="get" action="<?php print url::base() ?>admin/stats/country/" style="display: inline;">
 				Choose a date range: <a href="<?php print url::base() ?>admin/stats/country/?range=30">1 MO</a> <a href="<?php print url::base() ?>admin/stats/country/?range=90">3 MO</a> <a href="<?php print url::base() ?>admin/stats/country/?range=180">6 MO</a>
-				<input type="text" class="dp" name="dp1" value="<?php echo $dp1; ?>" /> - 
-				<input type="text" class="dp" name="dp2" value="<?php echo $dp2; ?>" /> 
+				<input type="text" class="dp" name="dp1" id="dp1" value="<?php echo $dp1; ?>" />&nbsp;&nbsp;-&nbsp;&nbsp; 
+				<input type="text" class="dp" name="dp2" id="dp2" value="<?php echo $dp2; ?>" /> 
 				<input type="hidden" name="range" value="<?php echo $range; ?>" />
 				<input type="submit" value="Go &rarr;" class="button" />
 			</form>
