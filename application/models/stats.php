@@ -34,7 +34,6 @@ class Stats_Model extends ORM
 		}
 		
 		$stat_url = 'http://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
-		var_dump($stat_url);
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
 		// If we encounter an error, return false
