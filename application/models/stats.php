@@ -18,13 +18,22 @@
 class Stats_Model extends ORM
 {
 	
-	static function get_hit_stats($range=31)
+	/*
+	*	range will be ignored if dp1 and dp2 are set
+	*	dp1 and dp2 format is YYYY-MM-DD
+	*/
+	static function get_hit_stats($range=30,$dp1=null,$dp2=null)
 	{		
 		// Get ID for stats
 		$settings = ORM::factory('settings', 1);
 		$stat_id = $settings->stat_id;
-
-		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range);
+		
+		$twodates = '';
+		if($dp1 !== null && $dp2 !== null) {
+			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
+		}
+		
+		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
 		// If we encounter an error, return false
@@ -58,12 +67,17 @@ class Stats_Model extends ORM
 		return $data;
 	}
 	
-	static function get_hit_countries($range=31)
+	static function get_hit_countries($range=30,$dp1=null,$dp2=null)
 	{
 		$settings = ORM::factory('settings', 1);
 		$stat_id = $settings->stat_id;
+		
+		$twodates = '';
+		if($dp1 !== null && $dp2 !== null) {
+			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
+		}
 
-		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range);
+		$stat_url = 'http://tracker.ushahidi.com/px.php?task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
 		$data = array();
@@ -85,14 +99,25 @@ class Stats_Model extends ORM
 	* get an array of report counts
 	* @param approved - Only count approved reports if true
 	* @param by_time - Format array with timestamp as the key if true
+	* @param range - Number of days back from today to pull reports from. Will end up defaulting to 100000 days to get them all.
+	* @param dp1 - Arbitrary date range. Low date. YYYY-MM-DD
+	* @param dp2 - Arbitrary date range. High date. YYYY-MM-DD
 	*/
-	static function get_report_stats($approved=false,$by_time=false)
+	static function get_report_stats($approved=false,$by_time=false,$range=null,$dp1=null,$dp2=null)
 	{
+		if($range === null) $range = 100000;
+		if($dp1 === null) $dp1 = 0;
+		if($dp2 === null) $dp2 = '3000-01-01';
+		
+		// Set up the range calculation
+		$time = time() - ($range*86400);
+		$range_date = date('Y-m-d',$time);
+
 		// Only grab approved
 		if($approved) {
-			$reports = ORM::factory('incident')->where('incident_active','1')->find_all();
+			$reports = ORM::factory('incident')->where('incident_active','1')->where('incident_date >=',$dp1)->where('incident_date <=',$dp2)->where('incident_date >',$range_date)->find_all();
 		}else{
-			$reports = ORM::factory('incident')->find_all();
+			$reports = ORM::factory('incident')->where('incident_date >=',$dp1)->where('incident_date <=',$dp2)->where('incident_date >',$range_date)->find_all();
 		}
 		
 		$reports_categories = ORM::factory('incident_category')->find_all();
@@ -101,6 +126,8 @@ class Stats_Model extends ORM
 		$report_data = array();
 		$verified_counts = array();
 		$approved_counts = array();
+		$earliest_timestamp = 32503680000; // Year 3000 in epoch so we can catch everything less than this.
+		$latest_timestamp = 0;
 		
 		// Gather some data into an array on incident reports
 		$num_reports = 0;
@@ -112,6 +139,9 @@ class Stats_Model extends ORM
 				'active'=>$report->incident_active,
 				'verified'=>$report->incident_verified
 			);
+			
+			if($timestamp < $earliest_timestamp) $earliest_timestamp = $timestamp;
+			if($timestamp > $latest_timestamp) $latest_timestamp = $timestamp;
 			
 			if(!isset($verified_counts['verified'][$timestamp])) {
 				$verified_counts['verified'][$timestamp] = 0;
@@ -205,6 +235,8 @@ class Stats_Model extends ORM
 		
 		$data['total_reports'] = $num_reports;
 		$data['total_categories'] = count($category_counts);
+		$data['earliest_report_time'] = $earliest_timestamp;
+		$data['latest_report_time'] = $latest_timestamp;
 		
 		return $data;
 	}

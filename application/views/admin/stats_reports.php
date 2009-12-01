@@ -20,8 +20,16 @@
         <h3>Reports Statistics</h3>
         
         <div id="time-period-selector">
-        	<p>Choose a date range: <a href="<?php print url::base() ?>admin/stats/reports/?range=30">1 MO</a> <a href="<?php print url::base() ?>admin/stats/reports/?range=90">3 MO</a> <a href="<?php print url::base() ?>admin/stats/reports/?range=180">6 MO</a><!-- <input type="text" class="dp" value="datepicker" /> - <input type="text" value="datepicker" class="dp" /> <input type="button" value="Go &rarr;" class="button" /> --></p>
-        </div>
+			<p>
+				<form method="get" action="<?php print url::base() ?>admin/stats/reports/" style="display: inline;">
+					Choose a date range: <a href="<?php print url::base() ?>admin/stats/reports/?range=30">1 MO</a> <a href="<?php print url::base() ?>admin/stats/reports/?range=90">3 MO</a> <a href="<?php print url::base() ?>admin/stats/reports/?range=180">6 MO</a> <a href="<?php print url::base() ?>admin/stats/reports/">ALL</a>
+					<input type="text" class="dp" name="dp1" value="<?php echo $dp1; ?>" /> - 
+					<input type="text" class="dp" name="dp2" value="<?php echo $dp2; ?>" /> 
+					<input type="hidden" name="range" value="<?php echo $range; ?>" />
+					<input type="submit" value="Go &rarr;" class="button" />
+				</form>
+			</p>
+		</div>
 		
         <!-- Left Column -->
         <div class="two-col tc-left reports-charts">
@@ -54,12 +62,12 @@
 				<div style="float:left;">
 					<table>
 						<tr>
-							<td><div id="little-color-box" style="background-color:#01DF01">&nbsp;</div></td>
+							<td><div id="little-color-box" style="background-color:#0E7800">&nbsp;</div></td>
 							<td>Verified</td>
 							<td style="padding-left:25px;"><?php echo $verified; ?></td>
 						</tr>
 						<tr>
-							<td><div id="little-color-box" style="background-color:#FF3333">&nbsp;</div></td>
+							<td><div id="little-color-box" style="background-color:#FFCF00">&nbsp;</div></td>
 							<td>Unverified</td>
 							<td style="padding-left:25px;"><?php echo $unverified; ?></td>
 						</tr>
@@ -70,12 +78,12 @@
 				<div style="float:left;">
 					<table>
 						<tr>
-							<td><div id="little-color-box" style="background-color:#01DF01">&nbsp;</div></td>
+							<td><div id="little-color-box" style="background-color:#0E7800">&nbsp;</div></td>
 							<td>Approved</td>
 							<td style="padding-left:25px;"><?php echo $approved; ?></td>
 						</tr>
 						<tr>
-							<td><div id="little-color-box" style="background-color:#FF3333">&nbsp;</div></td>
+							<td><div id="little-color-box" style="background-color:#FFCF00">&nbsp;</div></td>
 							<td>Unapproved</td>
 							<td style="padding-left:25px;"><?php echo $unapproved; ?></td>
 						</tr>

@@ -22,7 +22,16 @@
 	<h3>Visitors Summary</h3>
 	
 	<div id="time-period-selector">
-		<p>Choose a date range: <a href="<?php print url::base() ?>admin/stats/hits/?range=30">1 MO</a> <a href="<?php print url::base() ?>admin/stats/hits/?range=90">3 MO</a> <a href="<?php print url::base() ?>admin/stats/hits/?range=180">6 MO</a><!-- <input type="text" class="dp" value="datepicker" /> - <input type="text" value="datepicker" class="dp" /> <input type="button" value="Go &rarr;" class="button" /> --></p>
+		<p>
+			<form method="get" action="<?php print url::base() ?>admin/stats/hits/" style="display: inline;">
+				Choose a date range: <a href="<?php print url::base() ?>admin/stats/hits/?range=30">1 MO</a> <a href="<?php print url::base() ?>admin/stats/hits/?range=90">3 MO</a> <a href="<?php print url::base() ?>admin/stats/hits/?range=180">6 MO</a>
+				<input type="text" class="dp" name="dp1" value="<?php echo $dp1; ?>" /> - 
+				<input type="text" class="dp" name="dp2" value="<?php echo $dp2; ?>" /> 
+				<input type="hidden" name="range" value="<?php echo $range; ?>" />
+				<input type="hidden" name="active_tab" value="<?php echo $active_tab; ?>" /> 
+				<input type="submit" value="Go &rarr;" class="button" />
+			</form>
+		</p>
 	</div>
 
 	<div class="chart-holder">
@@ -49,9 +58,9 @@
 		<div class="tabs">
 			<!-- tabset -->
 			<ul class="tabset">
-				<li><a <?php if($active_tab == 'uniques') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&active_tab=uniques">Unique Visitors</a></li>
-				<li><a <?php if($active_tab == 'visits') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&active_tab=visits">Visits</a></li>
-				<li><a <?php if($active_tab == 'pageviews') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&active_tab=pageviews">Pageviews</a></li>
+				<li><a <?php if($active_tab == 'uniques') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=uniques">Unique Visitors</a></li>
+				<li><a <?php if($active_tab == 'visits') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=visits">Visits</a></li>
+				<li><a <?php if($active_tab == 'pageviews') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=pageviews">Pageviews</a></li>
 			</ul>
 
 			<div class="tab-boxes">

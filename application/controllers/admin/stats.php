@@ -53,9 +53,21 @@ class Stats_Controller extends Admin_Controller
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
+		//$this->template->js = new View('admin/stats_js');
+		
+		// Set the date range (how many days in the past from today?)
+		$range = 10000; //get all reports so go back far into the past
+		if(isset($_GET['range'])) $range = $_GET['range'];
+		$this->template->content->range = $range;
+		
+		// Get an arbitrary date range
+		$dp1 = null;
+		if(isset($_GET['dp1'])) $dp1 = $_GET['dp1'];
+		$dp2 = null;
+		if(isset($_GET['dp2'])) $dp2 = $_GET['dp2'];
 		
 		// Report Data
-		$data = Stats_Model::get_report_stats();
+		$data = Stats_Model::get_report_stats(false,false,$range,$dp1,$dp2);
 		
 		$reports_chart = new protochart;
 		
@@ -106,7 +118,7 @@ class Stats_Controller extends Admin_Controller
 			}
 		}
 		
-		$colors = array('verified'=>'01DF01','unverified'=>'FF3333');
+		$colors = array('verified'=>'0E7800','unverified'=>'FFCF00');
 		$this->template->content->report_status_chart_ver = $report_status_chart->chart('report_status_ver',$report_staus_data,$options,$colors,150,150);
 		
 		$report_staus_data = array();
@@ -122,9 +134,12 @@ class Stats_Controller extends Admin_Controller
 		
 		$this->template->content->num_reports = $data['total_reports'];
 		
-		$colors = array('approved'=>'01DF01','unapproved'=>'FF3333');
+		$colors = array('approved'=>'0E7800','unapproved'=>'FFCF00');
 		$this->template->content->report_status_chart_app = $report_status_chart->chart('report_status_app',$report_staus_data,$options,$colors,150,150);
 		
+		// Set the date
+		$this->template->content->dp1 = date('Y-m-d',$data['earliest_report_time']);
+		$this->template->content->dp2 = date('Y-m-d',$data['latest_report_time']);
 	}
 	
 	function impact()
@@ -134,9 +149,29 @@ class Stats_Controller extends Admin_Controller
 		
 		// Javascript Header
 		$this->template->raphael_enabled = TRUE;
+		//$this->template->js = new View('admin/stats_js');
+		
+		// Set the date range (how many days in the past from today?)
+		$range = 10000; //get all reports so go back far into the past
+		if(isset($_GET['range'])) $range = $_GET['range'];
+		$this->template->content->range = $range;
+		
+		// Get an arbitrary date range
+		$dp1 = null;
+		if(isset($_GET['dp1'])) $dp1 = $_GET['dp1'];
+		$dp2 = null;
+		if(isset($_GET['dp2'])) $dp2 = $_GET['dp2'];
 		
 		// Report Data
-		$data = Stats_Model::get_report_stats(false,true);
+		$data = Stats_Model::get_report_stats(false,true,$range,$dp1,$dp2);
+		
+		// If we failed to get hit data, fail.
+		if(!isset($data['category_counts'])) {
+			$this->template->content->num_reports = 0;
+			$this->template->content->num_categories = 0;
+			$this->template->impact_json = '';
+			return false;
+		}
 		
 		$json = '';
 		$use_log = '';
@@ -177,7 +212,7 @@ class Stats_Controller extends Admin_Controller
 		}
 		
 		$this->template->content->num_reports = $data['total_reports'];
-		$this->template->content->num_categories = $data['total_categories'];;
+		$this->template->content->num_categories = $data['total_categories'];
 		
 		$json .= '],'."\n";
 		$json .= $use_log;
@@ -197,6 +232,10 @@ class Stats_Controller extends Admin_Controller
 		
 		$this->template->impact_json = $json;
 		
+		// Set the date
+		$this->template->content->dp1 = date('Y-m-d',$data['earliest_report_time']);
+		$this->template->content->dp2 = date('Y-m-d',$data['latest_report_time']);
+		
 	}
 	
 	function hits()
@@ -206,21 +245,28 @@ class Stats_Controller extends Admin_Controller
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
+		//$this->template->js = new View('admin/stats_js');
 		
 		// Set the date range (how many days in the past from today?)
 		$range = 30;
 		if(isset($_GET['range'])) $range = $_GET['range'];
 		$this->template->content->range = $range;
 		
+		// Get an arbitrary date range
+		$dp1 = null;
+		if(isset($_GET['dp1'])) $dp1 = $_GET['dp1'];
+		$dp2 = null;
+		if(isset($_GET['dp2'])) $dp2 = $_GET['dp2'];
+		
 		// Hit Data
-		$data = Stats_Model::get_hit_stats($range);
+		$data = Stats_Model::get_hit_stats($range,$dp1,$dp2);
 		
 		$this->template->content->uniques = 0;
 		$this->template->content->visits = 0;
 		$this->template->content->pageviews = 0;
 		$this->template->content->active_tab = 'uniques';
 		
-		// Lazy tab switcher (not using javascript)
+		// Lazy tab switcher (not using javascript, just refreshing the page)
 		if(isset($_GET['active_tab'])) $this->template->content->active_tab = $_GET['active_tab'];
 		
 		// If we failed to get hit data, fail.
@@ -243,6 +289,13 @@ class Stats_Controller extends Admin_Controller
 			);
 		$this->template->content->traffic_chart = $traffic_chart->chart('traffic',$data,$options,null,884,300);
 		$this->template->content->raw_data = $data;
+		
+		
+		// Set the date
+		reset($data['visits']);
+		$this->template->content->dp1 = date('Y-m-d',(key($data['visits'])/1000));
+		end($data['visits']);
+		$this->template->content->dp2 = date('Y-m-d',(key($data['visits'])/1000));
 	}
 	
 	function country()
@@ -250,12 +303,21 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content = new View('admin/stats_country');
 		$this->template->content->title = 'Statistics';
 		
+		// Javascript Header
+		//$this->template->js = new View('admin/stats_js');
+		
 		// Set the date range (how many days in the past from today?)
 		$range = 30;
 		if(isset($_GET['range'])) $range = $_GET['range'];
 		$this->template->content->range = $range;
 		
-		$countries = Stats_Model::get_hit_countries($range);
+		// Get an arbitrary date range
+		$dp1 = null;
+		if(isset($_GET['dp1'])) $dp1 = $_GET['dp1'];
+		$dp2 = null;
+		if(isset($_GET['dp2'])) $dp2 = $_GET['dp2'];
+		
+		$countries = Stats_Model::get_hit_countries($range,$dp1,$dp2);
 		
 		//Set up country map and totals
 		$country_total = array();
@@ -294,7 +356,7 @@ class Stats_Controller extends Admin_Controller
 		$this->template->content->visitor_map = "http://chart.apis.google.com/chart?chs=440x220&chf=bg,s,ffffff&cht=t&chtm=world&chco=cccccc,A07B7B,a20000&chld=".$codes."&chd=t:".$values;
 		
 		// Hit Data
-		$data = Stats_Model::get_hit_stats($range);
+		$data = Stats_Model::get_hit_stats($range,$dp1,$dp2);
 		
 		$this->template->content->uniques = 0;
 		$this->template->content->visits = 0;
@@ -314,6 +376,12 @@ class Stats_Controller extends Admin_Controller
 			if(!isset($this->template->content->$label)) $this->template->content->$label = 0;
 			foreach($data_array as $timestamp => $count) $this->template->content->$label += $count;
 		}
+		
+		// Set the date
+		reset($data['visits']);
+		$this->template->content->dp1 = date('Y-m-d',(key($data['visits'])/1000));
+		end($data['visits']);
+		$this->template->content->dp2 = date('Y-m-d',(key($data['visits'])/1000));
 	}
 	
 	/**
