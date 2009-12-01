@@ -18,13 +18,15 @@
 // Date Picker JS
 jQuery(document).ready(function() {
 	jQuery("#dp1").datepicker({ 
-	    showOn: "both", 
+	    showOn: "both",
+		dateFormat: "yy-mm-dd",
 	    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
 	    buttonImageOnly: true 
 	});
 	
 	jQuery("#dp2").datepicker({ 
-	    showOn: "both", 
+	    showOn: "both",
+		dateFormat: "yy-mm-dd",
 	    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
 	    buttonImageOnly: true 
 	});
