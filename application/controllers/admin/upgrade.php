@@ -105,7 +105,9 @@ class Upgrade_Controller extends Admin_Controller
        	}
 
       	if( $upgrade->success ) {
-     		//$upgrade->remove_recursively($working_dir."ushahidi/application/config");
+      		//remove delete database.php and config.php files. we don't want to overwrite them.
+     		unlink($working_dir."ushahidi/application/config/database.php");
+     		unlink($working_dir."ushahidi/application/config/config.php");
            	$upgrade->remove_recursively($working_dir."ushahidi/application/cache");
            	$upgrade->remove_recursively($working_dir."ushahidi/application/logs");
         	$upgrade->remove_recursively($working_dir."ushahidi/media/uploads");
