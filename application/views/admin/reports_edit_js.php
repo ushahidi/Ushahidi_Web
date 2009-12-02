@@ -1,3 +1,4 @@
+<?php
 /**
  * Edit reports js file.
  *
@@ -13,7 +14,7 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
-
+?>
 		// jQuery Textbox Hints Plugin
 		// Will move to separate file later or attach to forms plugin
 		jQuery.fn.hint = function (blurClass) {
@@ -140,31 +141,49 @@
 		    }
 		}
 		
-		$(document).ready(function() {			
-			var moved=false;
+		$(document).ready(function() {
+			var map;
+			var thisLayer;
+			var proj_4326 = new OpenLayers.Projection('EPSG:4326');
+			var proj_900913 = new OpenLayers.Projection('EPSG:900913');
 			
 			// Now initialise the map
 			var options = {
-			units: "dd"
+			units: "m"
 			, numZoomLevels: 16
-			, controls:[]};
-			var map = new OpenLayers.Map('divMap', options);
+			, controls:[],
+			projection: proj_900913,
+			'displayProjection': proj_4326
+			};
+			map = new OpenLayers.Map('divMap', options);
 			var default_map = <?php echo $default_map; ?>;
 			if (default_map == 2)
 			{
-				var map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth");
+				map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
 			}
 			else if (default_map == 3)
 			{
-				var map_layer = new OpenLayers.Layer.Yahoo("yahoo");
+				map_layer = new OpenLayers.Layer.Yahoo("yahoo", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
 			}
 			else if (default_map == 4)
 			{
-				var map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap");
+				map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
 			}
 			else
 			{
-				var map_layer = new OpenLayers.Layer.Google("google");
+				map_layer = new OpenLayers.Layer.Google("google", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
 			}
 			
 			map.addLayer(map_layer);
@@ -179,6 +198,7 @@
 			
 			// create a lat/lon object
 			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+			myPoint.transform(proj_4326, map.getProjectionObject());
 			
 			// create a marker positioned at a lon/lat
 			var marker = new OpenLayers.Marker(myPoint);
@@ -190,13 +210,15 @@
 			// Detect Map Clicks
 			map.events.register("click", map, function(e){
 				var lonlat = map.getLonLatFromViewPortPx(e.xy);
+				var lonlat2 = map.getLonLatFromViewPortPx(e.xy);
 			    m = new OpenLayers.Marker(lonlat);
 				markers.clearMarkers();
 		    	markers.addMarker(m);
-							
+				
+				lonlat2.transform(proj_900913,proj_4326);	
 				// Update form values (jQuery)
-				$("#latitude").attr("value", lonlat.lat);
-				$("#longitude").attr("value", lonlat.lon);
+				$("#latitude").attr("value", lonlat2.lat);
+				$("#longitude").attr("value", lonlat2.lon);
 			});
 			
 			/* 
@@ -205,30 +227,36 @@
 			 */
 			$('.btn_find').live('click', function () {
 				address = $("#location_find").val();
-				var geocoder = new GClientGeocoder();
-				if (geocoder) {
-					$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-					geocoder.getLatLng(
-						address,
-						function(point) {
-							if (!point) {
-								alert(address + " not found!\n\n***************************\nFind a city or town close by and zoom in\nto find your precise location");
-								$('#find_loading').html('');
-							} else {
-								var lonlat = new OpenLayers.LonLat(point.lng(), point.lat());
-								m = new OpenLayers.Marker(lonlat);
-								markers.clearMarkers();
-						    	markers.addMarker(m);
-								map.setCenter(lonlat, <?php echo $default_zoom; ?>);
+				if ( typeof GBrowserIsCompatible == 'undefined' ) {
+					alert('GeoCoding is only currently supported by Google Maps.\n\nPlease pinpoint the location on the map\nusing your mouse.');
+				} else {
+					var geocoder = new GClientGeocoder();
+					if (geocoder) {
+						$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+						geocoder.getLatLng(
+							address,
+							function(point) {
+								if (!point) {
+									alert(address + " not found!\n\n***************************\nFind a city or town close by and zoom in\nto find your precise location");
+									$('#find_loading').html('');
+								} else {
+									var lonlat = new OpenLayers.LonLat(point.lng(), point.lat());
+									lonlat.transform(proj_4326,proj_900913);
 								
-								// Update form values (jQuery)
-								$("#latitude").attr("value", lonlat.lat);
-								$("#longitude").attr("value", lonlat.lon);
-								$("#location_name").attr("value", $("#location_find").val());
-								$('#find_loading').html('');
+									m = new OpenLayers.Marker(lonlat);
+									markers.clearMarkers();
+							    	markers.addMarker(m);
+									map.setCenter(lonlat, <?php echo $default_zoom; ?>);
+								
+									// Update form values (jQuery)
+									$("#latitude").attr("value", point.lat());
+									$("#longitude").attr("value", point.lng());
+									$("#location_name").attr("value", $("#location_find").val());
+									$('#find_loading').html('');
+								}
 							}
-						}
-					);
+						);
+					}
 				}
 				return false;
 			});

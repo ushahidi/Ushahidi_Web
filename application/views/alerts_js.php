@@ -144,37 +144,41 @@
 			 */
 			$('.btn_find').live('click', function () {
 				address = $("#location_find").val();
-				var geocoder = new GClientGeocoder();
-				if (geocoder) {
-					$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-					geocoder.getLatLng(
-						address,
-						function(point) {
-							if (!point) {
-								alert(address + " not found!\n\n***************************\nFind a city or town close by and zoom in\nto find your precise location");
-								$('#find_loading').html('');
-							} else {
-								var lonlat = new OpenLayers.LonLat(point.lng(), point.lat());
-								lonlat.transform(proj_4326,proj_900913);
+				if ( typeof GBrowserIsCompatible == 'undefined' ) {
+					alert('GeoCoding is only currently supported by Google Maps.\n\nPlease pinpoint the location on the map\nusing your mouse.');
+				} else {
+					var geocoder = new GClientGeocoder();
+					if (geocoder) {
+						$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+						geocoder.getLatLng(
+							address,
+							function(point) {
+								if (!point) {
+									alert(address + " not found!\n\n***************************\nFind a city or town close by and zoom in\nto find your precise location");
+									$('#find_loading').html('');
+								} else {
+									var lonlat = new OpenLayers.LonLat(point.lng(), point.lat());
+									lonlat.transform(proj_4326,proj_900913);
 								
-								m = new OpenLayers.Marker(lonlat);
-								markers.clearMarkers();
-						    	markers.addMarker(m);
-								map.setCenter(lonlat, <?php echo $default_zoom; ?>);
+									m = new OpenLayers.Marker(lonlat);
+									markers.clearMarkers();
+							    	markers.addMarker(m);
+									map.setCenter(lonlat, <?php echo $default_zoom; ?>);
 								
-								newRadius = $("#alert_radius").val();
-								radius = newRadius * 1000
+									newRadius = $("#alert_radius").val();
+									radius = newRadius * 1000
 
-								drawCircle(point.lng(),point.lat(), radius);
+									drawCircle(point.lng(),point.lat(), radius);
 								
-								// Update form values (jQuery)
-								$("#alert_lat").attr("value", point.lat());
-								$("#alert_lon").attr("value", point.lng());
+									// Update form values (jQuery)
+									$("#alert_lat").attr("value", point.lat());
+									$("#alert_lon").attr("value", point.lng());
 								
-								$('#find_loading').html('');
+									$('#find_loading').html('');
+								}
 							}
-						}
-					);
+						);
+					}
 				}
 				return false;
 			});

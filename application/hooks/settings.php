@@ -63,7 +63,7 @@ elseif ($default_map == 3) {	// Yahoo
 	Kohana::config_set('settings.api_url', '<script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script>');
 }
 elseif ($default_map == 4) {	// Open Streetmaps
-	Kohana::config_set('settings.api_url', html::script('media/js/OpenStreetMap'));
+	Kohana::config_set('settings.api_url', '<script src="http://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>');
 }
 else {							// Google
 	Kohana::config_set('settings.api_url', '<script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_google . '" type="text/javascript"></script>');
