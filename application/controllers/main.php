@@ -76,7 +76,13 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->videoslider_enabled = FALSE;
 		$this->template->header->protochart_enabled = FALSE;
 		$this->template->header->main_page = FALSE;
-		$this->template->header->js = new View('footer_form_js');
+		
+		$footerjs = new View('footer_form_js');
+		
+		// Pack the javascript using the javascriptpacker helper
+		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+		$footerjs = $myPacker->pack();
+		$this->template->header->js = $footerjs;
 		
 		$this->template->header->this_page = "";
 		
@@ -255,6 +261,7 @@ class Main_Controller extends Template_Controller {
 			$this->template->content->map_enabled = 'streetmap';
 			$this->template->content->map_container = 'map';
 			$this->template->header->main_page = TRUE;
+			$this->template->header->validator_enabled = TRUE;
 			
 			// Map Settings
 			$clustering = Kohana::config('settings.allow_clustering');
@@ -308,6 +315,13 @@ class Main_Controller extends Template_Controller {
 			
 		}
 		
+		
+		$footerjs = new View('footer_form_js');
+		
+		// Pack the javascript using the javascriptpacker helper
+		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+		$footerjs = $myPacker->pack();
+		$this->template->header->js .= $footerjs;
 	}
 	
 	/*
