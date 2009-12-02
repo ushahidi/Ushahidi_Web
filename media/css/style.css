@@ -94,6 +94,15 @@ div#header{
     margin: 0px 0px 0px 0px;
 }
 
+
+div#tagline {
+    margin: 105px 0px 10px 20px;
+    padding: 0 5px 0 5px;
+    background: #DDD;
+    font-size: 17px;
+    float: left;
+}
+
 /* logo */
 div#logo{
     border: 0;

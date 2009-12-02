@@ -130,6 +130,7 @@
 		
 			<!-- logo -->
 			<div id="logo"><span><strong><?php echo $site_name; ?></strong></span></div>
+			<div id="tagline"><?php echo $site_tagline; ?></div>
 			<!-- / logo -->
 		
 			<!-- submit incident -->
