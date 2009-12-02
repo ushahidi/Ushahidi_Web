@@ -755,17 +755,17 @@ class Reports_Controller extends Main_Controller {
 		$myPacker = new javascriptpacker($this->template->header->js, 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
 
-                // initialize custom field array
-	        $form_field_names = $this->_get_custom_form_fields($id,$incident->form_id,false);
+        // initialize custom field array
+	    $form_field_names = $this->_get_custom_form_fields($id,$incident->form_id,false);
 
-                // Retrieve Custom Form Fields Structure
-	        $disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
-	        $this->template->content->disp_custom_fields = $disp_custom_fields;
+        // Retrieve Custom Form Fields Structure
+	    $disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
+	    $this->template->content->disp_custom_fields = $disp_custom_fields;
 
 
 		// Forms
-                $this->template->content->form = $form;
-                $this->template->content->form_field_names = $form_field_names;
+        $this->template->content->form = $form;
+        $this->template->content->form_field_names = $form_field_names;
 		$this->template->content->captcha = $captcha;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;

@@ -27,7 +27,7 @@ jQuery(function() {
 				required: true,
 				email: true
 			},
-			captcha: {
+			feedback_captcha: {
 				required: true
 			}
 		},
@@ -40,7 +40,7 @@ jQuery(function() {
 				required: "Please enter an Email Address",
 				email: "Please enter a valid Email Address"
 			},
-			captcha: {
+			feedback_captcha: {
 				required: "Please enter the Security Code"
 			}
 		}

@@ -176,7 +176,7 @@ class Install
          	$regex = "^[_+a-z0-9-]+(\.[_+a-z0-9-]+)*"
                  ."@[a-z0-9-]+(\.[a-z0-9-]{1,})*"
                  ."\.([a-z]{2,}){1}$";
-         	if(!eregi($regex,$site_email)){
+         	if(!ereg($regex,$site_email)){
             	$form->set_error("site_email", "Please enter a valid email address. ex: johndoe@email.com.");
          	}
          	$site_email = stripslashes($site_email);
