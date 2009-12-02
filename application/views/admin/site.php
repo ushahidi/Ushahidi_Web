@@ -59,23 +59,23 @@
 					<!-- column -->		
 					<div class="sms_holder">
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["settings_site_name"]; ?>">Site Name</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_name"); ?>">Site Name</a></h4>
 							<?php print form::input('site_name', $form['site_name'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["settings_site_tagline"]; ?>">Site Tagline</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_tagline"); ?>">Site Tagline</a></h4>
 							<?php print form::input('site_tagline', $form['site_tagline'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["settings_site_email"]; ?>">Site Email Address</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_email"); ?>">Site Email Address</a></h4>
 							<?php print form::input('site_email', $form['site_email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["settings_alert_email"]; ?>">Alert Email Address</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_alert_email"); ?>">Alert Email Address</a></h4>
 							<?php print form::input('alerts_email', $form['alerts_email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["settings_locale"]; ?>">Site Language</a> (Locale)</h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_locale"); ?>">Site Language</a> (Locale)</h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('site_language', $site_language_array, $form['site_language']); ?>
 							</span>

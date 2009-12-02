@@ -63,7 +63,7 @@
 										}
 									} ?></li><?php } ?>
 									<?php if (!empty($report_email)) 
-									{ ?><li>By sending an email to <a href="mailto:<?=$report_email?>"><?=$report_email?></a></li><?php } ?>
+									{ ?><li>By sending an email to <a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a></li><?php } ?>
 									<?php if (!empty($twitter_hashtag_array)) 
 												{ ?><li>By sending a tweet with the hashtag/s <?php foreach ($twitter_hashtag_array as $twitter_hashtag) {
 									echo "<strong>". $twitter_hashtag ."</strong>";

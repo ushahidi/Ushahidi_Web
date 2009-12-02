@@ -28,8 +28,6 @@ class Admin_Controller extends Template_Controller
 
 	protected $user;
 
-	protected $tooltips;
-
 	public function __construct()
 	{
 		parent::__construct();	
@@ -79,9 +77,6 @@ class Admin_Controller extends Template_Controller
 		// Initialize some variables for raphael impact charts
 		$this->template->raphael_enabled = FALSE;
 		$this->template->impact_json = '';
-		
-		// Load Tooltips Language Strings
-		$this->tooltips = Kohana::lang('tooltips');;
 		
 		// Load profiler
 		// $profiler = new Profiler;		

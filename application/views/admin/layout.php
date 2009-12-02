@@ -108,32 +108,32 @@
 		<div id="header">
 			<!-- top-area -->
 			<div class="top">
-				<strong><?php echo Kohana::lang('layout.version')?></strong>
+				<strong><?php echo Kohana::lang('ui_admin.version')?></strong>
 				<ul>
-					<li class="none-separator"> <?php echo Kohana::lang('layout.welcome');echo $admin_name; ?>!</li>
+					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
 					<li class="none-separator"><a href="<?php echo url::base() ?>" title="View the home page">
-						<?php echo Kohana::lang('layout.view_site');?></a>					
-					<li class="none-separator"><a href="<?php echo url::base()."admin/profile/" ?>"><?php echo Kohana::lang('layout.my_profile');?></a></li>
-					<li><a href="log_out"><?php echo Kohana::lang('layout.logout');?></a></li>
+						<?php echo Kohana::lang('ui_admin.view_site');?></a>					
+					<li class="none-separator"><a href="<?php echo url::base()."admin/profile/" ?>"><?php echo Kohana::lang('ui_admin.my_profile');?></a></li>
+					<li><a href="log_out"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
 				</ul>
                         </div>
                         <?php if( ( $version != "" ) && ( url::current() != "admin/upgrade" ) ) { ?>
                         <div id="update-info">
                         Ushahidi <?php echo $version; ?> 
-                            <?php echo Kohana::lang('layout.version_available');?> 
+                            <?php echo Kohana::lang('ui_admin.version_available');?> 
         <a href="<?php echo url::base() ?>admin/upgrade" title="upgrade ushahidi">
-                             <?php echo Kohana::lang('layout.update_link');?>
+                             <?php echo Kohana::lang('ui_admin.update_link');?>
                             </a>.
                         </div>
                         <?php } ?>
 
 			<!-- info-nav -->
 			<div class="info-nav">
-				<h3><?php echo Kohana::lang('layout.get_help');?></h3>
+				<h3><?php echo Kohana::lang('ui_admin.get_help');?></h3>
 				<ul>
-					<li ><a href="http://wiki.ushahididev.com/"><?php echo Kohana::lang('layout.wiki');?></a></li>
-					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha"><?php echo Kohana::lang('layout.faqs');?></a></li>
-					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('layout.forum');?></a></li>
+					<li ><a href="http://wiki.ushahididev.com/"><?php echo Kohana::lang('ui_admin.wiki');?></a></li>
+					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha"><?php echo Kohana::lang('ui_admin.faqs');?></a></li>
+					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('ui_admin.forum');?></a></li>
 				</ul>
 				<div class="info-search"><form action="<?php echo url::base() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn">Search</a></form></div>
 				<div style="clear:both"></div>
@@ -145,34 +145,34 @@
 				<!-- main-nav -->
 				<ul class="main-nav">
 					<li><a href="<?php echo url::base() ?>admin/dashboard" <?php if($this_page=="dashboard") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('layout.dashboard');?>
+						<?php echo Kohana::lang('ui_admin.dashboard');?>
 						</a></li>
 					<li><a href="<?php echo url::base() ?>admin/reports" <?php if($this_page=="reports") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('layout.reports');?>
+						<?php echo Kohana::lang('ui_admin.reports');?>
 						</a></li>
 					<li><a href="<?php echo url::base() ?>admin/comments" <?php if($this_page=="comments") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('layout.comments');?>
+						<?php echo Kohana::lang('ui_admin.comments');?>
 						</a></li>
 					<li><a href="<?php echo url::base() ?>admin/messages" <?php if($this_page=="messages") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('layout.messages');?>
+						<?php echo Kohana::lang('ui_admin.messages');?>
 						</a></li>
 					<li><a href="<?php echo url::base() ?>admin/feedback" <?php if($this_page=="feedback") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('layout.feedback')?>
+						<?php echo Kohana::lang('ui_admin.feedback')?>
 						</a></li>
 					<li><a href="<?php echo url::base() ?>admin/stats" <?php if($this_page=="stats") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('layout.stats')?>
+						<?php echo Kohana::lang('ui_admin.stats')?>
 						</a></li>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
 					<?php if ($this->auth->logged_in('superadmin')){ ?>
-						<li><a href="<?php echo url::base() ?>admin/settings/site"><?php echo Kohana::lang('layout.settings');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('layout.manage');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('layout.users');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/settings/site"><?php echo Kohana::lang('ui_admin.settings');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('ui_admin.manage');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('ui_admin.users');?></a></li>
 					<?php 
 					} else if($this->auth->logged_in('admin')) { ?>
-						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('layout.manage');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('layout.users');?></a></li> 
+						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('ui_admin.manage');?></a></li>
+						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('ui_admin.users');?></a></li> 
 					<?php
 					} else { ?> 
 					

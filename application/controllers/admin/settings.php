@@ -201,9 +201,6 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->site_language_array = Kohana::config('locale.all_languages');
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
-		
-		// Tooltips
-		$this->template->content->tooltips = $this->tooltips;
 	}
 
 	/**
@@ -360,9 +357,6 @@ class Settings_Controller extends Admin_Controller
 		$this->template->js->default_zoom = $form['default_zoom'];
 		$this->template->js->default_lat = $form['default_lat'];
 		$this->template->js->default_lon = $form['default_lon'];
-		
-		// Tooltips
-		$this->template->content->tooltips = $this->tooltips;
 	}
 
 

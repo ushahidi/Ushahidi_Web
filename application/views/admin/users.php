@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo Kohana::lang('users.title')?></h2>
+				<h2><?php echo Kohana::lang('ui_admin.title')?></h2>
 				<!-- tabs -->
 				<div class="tabs">
 			
@@ -23,7 +23,7 @@
 					<ul class="tabset">
 						<li>
 							<a href="#" class="active">
-								<?php echo Kohana::lang('users.header_add_edit'); ?>
+								<?php echo Kohana::lang('ui_admin.header_add_edit'); ?>
 							</a>
 						</li>
 					</ul>
@@ -34,26 +34,26 @@
 						<input type="hidden" id="user_id" name="user_id" value="<?php echo $form['user_id']; ?>">
 						<input type="hidden" name="action" id="action" value="a">
 						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('users.label_username');?></strong><br />
+							<strong><?php echo Kohana::lang('ui_admin.label_username');?></strong><br />
 							<?php print form::input('username', $form['username'], 
 								' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('users.label_password');?></strong><br />
+							<strong><?php echo Kohana::lang('ui_admin.label_password');?></strong><br />
 							<?php print form::password('password', $form['password'], 
 								' class="text"'); ?>
 						</div>
 						
 						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('users.label_full_name');?></strong><br />
+							<strong><?php echo Kohana::lang('ui_admin.label_full_name');?></strong><br />
 							<?php print form::input('name', $form['name'], ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('users.label_email');?></strong><br />
+							<strong><?php echo Kohana::lang('ui_admin.label_email');?></strong><br />
 							<?php print form::input('email', $form['email'], ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('users.label_role');?></strong><br />
+							<strong><?php echo Kohana::lang('ui_admin.label_role');?></strong><br />
 							<span class="my-sel-holder">
 								<?php print form::dropdown('role',
 									$roles,$form['role']); ?>
@@ -74,7 +74,7 @@
 					?>
 						<!-- red-box -->
 						<div class="red-box">
-							<h3><?php echo Kohana::lang('users.error_msg');?></h3>
+							<h3><?php echo Kohana::lang('ui_admin.error_msg');?></h3>
 							<ul>
 							<?php
 							foreach ($errors as $error_item => $error_description)
@@ -92,7 +92,7 @@
 						<!-- green-box -->
 						<div class="green-box">
 							<h3>
-								<?php echo Kohana::lang('users.confirm_msg'); ?> 
+								<?php echo Kohana::lang('ui_admin.confirm_msg'); ?> 
 								<?php echo $form_action; ?>!
 							</h3>
 						</div>
@@ -107,16 +107,16 @@
 								<thead>
 									<tr>
 										<th class="col-1">
-											<?php echo Kohana::lang('users.header_user'); ?>
+											<?php echo Kohana::lang('ui_admin.header_user'); ?>
 										</th>
 										<th class="col-2">
-											<?php echo Kohana::lang('users.header_email'); ?>
+											<?php echo Kohana::lang('ui_admin.header_email'); ?>
 										</th>
 										<th class="col-2">
-											<?php echo Kohana::lang('users.header_role');?>
+											<?php echo Kohana::lang('ui_admin.header_role');?>
 										</th>
 										<th class="col-4">
-											<?php echo Kohana::lang('users.header_actions')?>
+											<?php echo Kohana::lang('ui_admin.header_actions')?>
 										</th>
 									</tr>
 								</thead>
@@ -135,7 +135,7 @@
 										<tr>
 											<td colspan="4" class="col">
 												<h3>
-													<?php echo Kohana::lang('users.no_result_display_msg');?>
+													<?php echo Kohana::lang('ui_admin.no_result_display_msg');?>
 												</h3>
 											</td>
 										</tr>
@@ -166,11 +166,11 @@
 											<td class="col-3">
 												<?php  
 													if( $role == "admin") 
-														echo Kohana::lang('users.admin_role');
+														echo Kohana::lang('ui_admin.admin_role');
 													else if ($role == "login")
-														echo Kohana::lang('users.login_role');
+														echo Kohana::lang('ui_admin.login_role');
 													else 
-														echo Kohana::lang('users.superadmin_role');
+														echo Kohana::lang('ui_admin.superadmin_role');
 												?>
 											</td>
 											<td class="col-4">
@@ -182,10 +182,10 @@
 														'<?php echo(rawurlencode($name)); ?>',
 														'<?php echo(rawurlencode($role));?>',
 														'<?php echo(rawurlencode($email)); ?>')">
-														<?php echo Kohana::lang('users.edit_action');?>
+														<?php echo Kohana::lang('ui_admin.edit_action');?>
 														</a></li>
 		<li><a href="javascript:userAction('d','DELETE','<?php echo(rawurlencode($user_id)); ?>')" class="del">
-														<?php echo Kohana::lang('users.delete_action');?>
+														<?php echo Kohana::lang('ui_admin.delete_action');?>
 														</a></li>
 												</ul>
 											</td>
