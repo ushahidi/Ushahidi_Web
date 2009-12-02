@@ -24,7 +24,7 @@
 					
 							<!-- category filters -->
 							<div class="cat-filters clearingfix">
-								<strong>Category Filter</strong>
+								<strong><?php echo Kohana::lang('ui_main.category_filter');?></strong>
 							</div>
 						
 							<ul class="category-filters">
@@ -53,7 +53,7 @@
 						
 							<!-- additional content -->
 							<div class="additional-content">
-								<h5>HOW TO REPORT</h5>
+								<h5><?php echo Kohana::lang('ui_main.how_to_report'); ?></h5>
 								<ol>
 									<?php if (!empty($phone_array)) 
 									{ ?><li>By sending a message to <?php foreach ($phone_array as $phone) {
@@ -87,7 +87,7 @@
 								<!-- filters -->
 								<div class="filters clearingfix">
 								<div style="float:left; width: 65%">
-									<strong>Filters</strong>
+									<strong><?php echo Kohana::lang('ui_main.filters'); ?></strong>
 									<ul>
 										<li><a id="media_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
 										<li><a id="media_4" href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
@@ -97,7 +97,7 @@
 									</ul>
 </div>
 								<div style="float:right; width: 31%">
-									<strong>Views</strong>
+									<strong><?php echo Kohana::lang('ui_main.views'); ?></strong>
 									<ul>
 										<li><a id="view_0" <?php if($map_enabled === 'streetmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.clusters'); ?></span></a></li>
 										<li><a id="view_1" <?php if($map_enabled === '3dmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.time'); ?></span></a></li>

@@ -134,7 +134,7 @@
 		
 			<!-- submit incident -->
 			<div class="submit-incident clearingfix">
-				<a href="<?php echo url::base() . "reports/submit" ?>">Submit an incident</a>
+				<a href="<?php echo url::base() . "reports/submit" ?>"><?php echo Kohana::lang('ui_main.submit'); ?></a>
 			</div>
 			<!-- / submit incident -->
 		</div>
