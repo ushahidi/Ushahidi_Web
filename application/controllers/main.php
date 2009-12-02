@@ -308,13 +308,6 @@ class Main_Controller extends Template_Controller {
 			
 		}
 		
-		
-		$footerjs = new View('footer_form_js');
-		
-		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
-		$footerjs = $myPacker->pack();
-		$this->template->header->js .= $footerjs;
 	}
 	
 	/*
