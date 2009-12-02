@@ -3,6 +3,10 @@
 $lang = array
 (
 	/*** User Email Notifications ***/
+	// Alerts
+	
+	
+	
 	
 	
 	/*** Administrator Email Notifications ***/

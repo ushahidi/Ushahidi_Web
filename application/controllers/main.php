@@ -175,7 +175,7 @@ class Main_Controller extends Template_Controller {
 			explode(',', Kohana::config('settings.twitter_hashtags'))));
 		
 		// Get Report-To-Email
-		$this->template->content->report_email = Kohana::config('email.username');
+		$this->template->content->report_email = Kohana::config('settings.site_email');
 		
 		// Get SMS Numbers
 		$phone_array = array();

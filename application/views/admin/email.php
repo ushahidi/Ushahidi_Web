@@ -58,6 +58,10 @@
 					</div>
 					<!-- column -->		
 					<div class="sms_holder">
+						In order to receive reports by email, please input your email account settings below. 
+						Please note that emails will be received at your <a href="<?php echo url::base()."admin/settings/site";?>">site email address</a> 
+						<strong><?php echo Kohana::config('settings.site_email');?></strong>, so your settings have to be associated with 
+						this email address.
 						<div class="row">
 							<h4>Mail Server Username</h4>
 							<?php print form::input('email_username', $form['email_username'], ' class="text long2"'); ?>
