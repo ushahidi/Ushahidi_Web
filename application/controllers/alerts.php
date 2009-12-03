@@ -319,11 +319,10 @@ class Alerts_Controller extends Main_Controller
 		// Email Alerts, Confirmation Code
 		$alert_code = text::random('alnum', 20);
 		
-		$config = kohana::config('alerts');
 		$settings = kohana::config('settings');
 		
 		$to = $alert_email;
-		$from = $config['alerts_email'];
+		$from = $settings['alerts_email'];
 		$subject = $settings['site_name']." "
 					.Kohana::lang('alerts.verification_email_subject');
 		$message = Kohana::lang('alerts.confirm_request')
