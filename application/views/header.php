@@ -108,7 +108,7 @@
 				<!-- languages -->
 				<div class="language-box">
 					<form>
-						<?php print form::dropdown('l', $locales_array, $l); ?>
+						<?php print form::dropdown('l', $locales_array, $l, ' onChange="this.form.submit()" '); ?>
 					</form>
 				</div>
 				<!-- / languages -->
