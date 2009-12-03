@@ -94,23 +94,21 @@ div#header{
     margin: 0px 0px 0px 0px;
 }
 
-
-div#tagline {
-    margin: 105px 0px 10px 20px;
-    padding: 0 5px 0 5px;
-    background: #DDD;
-    font-size: 17px;
-    float: left;
-}
-
 /* logo */
 div#logo{
     border: 0;
     background: #E2E2E2;
-    padding: 44px 24px;
-    font-size: 20px;
+    padding: 35px 24px;
     float: left;
     margin: 14px 0 0 0;
+}
+div#logo h1{
+	margin:0;
+	padding:0;
+	font-size: 20px;
+}
+div#logo span{
+	font-size:14px;
 }
 
 /* main body setup */
@@ -241,7 +239,7 @@ div#searchbox{
 /* languages */
 div.language-box{
     padding: 0px;
-    margin: 13px 0px 13px 15px;
+    margin: 10px 0px 13px 15px;
     float: left;
 }
 
@@ -270,7 +268,11 @@ div.language-box li a.active img{
 }
 
 div.language-box select{
-	width:175px;
+	width:160px;
+	margin:0;
+	padding:1px;
+	font-size: 11px;
+	color:#00789F;
 }
 
 /* searchform */

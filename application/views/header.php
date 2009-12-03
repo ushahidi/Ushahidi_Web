@@ -128,8 +128,10 @@
 			<!-- / searchbox -->
 		
 			<!-- logo -->
-			<div id="logo"><span><strong><?php echo $site_name; ?></strong></span></div>
-			<div id="tagline"><?php echo $site_tagline; ?></div>
+			<div id="logo">
+				<h1><?php echo $site_name; ?></h1>
+				<span><?php echo $site_tagline; ?></span>
+			</div>
 			<!-- / logo -->
 		
 			<!-- submit incident -->
