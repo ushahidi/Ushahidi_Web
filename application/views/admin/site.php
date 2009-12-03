@@ -67,7 +67,9 @@
 							<?php print form::input('site_tagline', $form['site_tagline'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_email"); ?>">Site Email Address</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_email"); ?>">Site Email Address</a> 
+							<br /><span>In order to receive reports by email, please <a href="<?php echo url::base().'admin/settings/email' ;?>">
+							configure your email account settings</a>.</span></h4>
 							<?php print form::input('site_email', $form['site_email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
@@ -77,7 +79,7 @@
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_locale"); ?>">Site Language</a> (Locale)</h4>
 							<span class="sel-holder">
-								<?php print form::dropdown('site_language', $site_language_array, $form['site_language']); ?>
+								<?php print form::dropdown('site_language', $locales_array, $form['site_language']); ?>
 							</span>
 						</div>
 						<div class="row">

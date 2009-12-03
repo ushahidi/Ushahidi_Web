@@ -15,6 +15,8 @@
 
 class Settings_Controller extends Admin_Controller
 {
+	protected $cache;
+	
 	function __construct()
 	{
 		parent::__construct();
@@ -25,6 +27,8 @@ class Settings_Controller extends Admin_Controller
         {
              url::redirect('admin/dashboard');
 		}
+		
+		$this->cache = Cache::instance();
 	}
 
 	/**
@@ -136,9 +140,8 @@ class Settings_Controller extends Admin_Controller
 				$settings->save();
 				
 				// Delete Settings Cache
-				$cache = Cache::instance();
-				$cache->delete('settings');
-				$cache->delete_tag('settings');
+				$this->cache->delete('settings');
+				$this->cache->delete_tag('settings');
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
@@ -198,9 +201,13 @@ class Settings_Controller extends Admin_Controller
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->site_language_array = Kohana::config('locale.all_languages');
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
+		
+		// Generate Available Locales
+		$locales = $this->_get_i18n();
+		$this->template->content->locales_array = $locales;
+		$this->cache->set('locales', $locales, array('locales'), 0);
 	}
 
 	/**
@@ -280,9 +287,8 @@ class Settings_Controller extends Admin_Controller
 				$settings->save();
 				
 				// Delete Settings Cache
-				$cache = Cache::instance();
-				$cache->delete('settings');
-				$cache->delete_tag('settings');
+				$this->cache->delete('settings');
+				$this->cache->delete_tag('settings');
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
@@ -636,9 +642,8 @@ class Settings_Controller extends Admin_Controller
 				//$this->_add_email_settings($settings);
 				
 				// Delete Settings Cache
-				$cache = Cache::instance();
-				$cache->delete('settings');
-				$cache->delete_tag('settings');
+				$this->cache->delete('settings');
+				$this->cache->delete_tag('settings');
 				
 				
 				// Everything is A-Okay!
@@ -815,5 +820,44 @@ class Settings_Controller extends Admin_Controller
 	        }
 	    }
 
+	}
+	
+	/**
+	 * checks the i18n folder to see what folders we have available
+	 */
+	private function _get_i18n()
+	{
+		$locales = array();
+		
+		// i18n path
+		$i18n_path = APPPATH.'i18n/';
+		
+		// i18n folder
+		$i18n_folder = @ opendir($i18n_path);
+		
+		if ( !$i18n_folder )
+			return false;
+		
+		while ( ($i18n_dir = readdir($i18n_folder)) !== false )
+		{			
+			if ( is_dir($i18n_path.$i18n_dir) && is_readable($i18n_path.$i18n_dir) )
+			{				
+				// Strip out .  and .. and any other stuff
+				if ( $i18n_dir{0} == '.' || $i18n_dir == '..'
+				 	|| $i18n_dir ==  '.DS_Store' || $i18n_dir == '.git')
+					continue;
+				
+				$locale = explode("_", $i18n_dir);
+				if ( count($locale) < 2 )
+					continue;
+					
+				$directories[$i18n_dir] = locale::language($locale[0])." (".locale::country($locale[1]).")";
+			}
+		}
+		
+		if ( is_dir( $i18n_dir ) )
+			@closedir( $i18n_dir );
+		
+		return $directories;
 	}
 }

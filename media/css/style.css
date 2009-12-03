@@ -269,6 +269,10 @@ div.language-box li a.active img{
     border: #666666 3px solid;
 }
 
+div.language-box select{
+	width:175px;
+}
+
 /* searchform */
 div.search-form{
     padding: 0px;

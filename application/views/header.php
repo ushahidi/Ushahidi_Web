@@ -107,10 +107,9 @@
 
 				<!-- languages -->
 				<div class="language-box">
-					<ul>
-						<li><a <?php if ($site_language == 'en_US') echo 'class="active"'; ?> href="<?php echo url::base(); ?>?lang=en_US"><img alt="en_US" src="<?php echo url::base(); ?>media/img/flags/en_US.png" width="16" height="11" /></a></li>
-						<li><a <?php if ($site_language == 'fr_FR') echo 'class="active"'; ?> href="<?php echo url::base(); ?>?lang=fr_FR"><img alt="fr_FR" src="<?php echo url::base(); ?>media/img/flags/fr_FR.png" width="16" height="11" /></a></li>
-					</ul>
+					<form>
+						<?php print form::dropdown('l', $locales_array, $l); ?>
+					</form>
 				</div>
 				<!-- / languages -->
 			

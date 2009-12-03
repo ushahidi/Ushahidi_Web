@@ -345,6 +345,10 @@
 				//gTimeline.resetPlay().play();
 				gTimeline.playOrPause();
 			});
+			
+			$("#l").change(function() {
+			    $(this).parents("form").submit();
+			});
 		});
 		
 		function zoomToSelectedFeature(lon, lat, zoomfactor){

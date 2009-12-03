@@ -21,6 +21,9 @@ class Main_Controller extends Template_Controller {
 	
     // Cache instance
     protected $cache;
+
+	// Session instance
+	protected $session;
 	
     public function __construct()
     {
@@ -28,6 +31,9 @@ class Main_Controller extends Template_Controller {
 
         // Load cache
         $this->cache = new Cache;
+
+		// Load Session
+		$this->session = Session::instance();
 		
         // Load Header & Footer
         $this->template->header  = new View('header');
@@ -90,14 +96,22 @@ class Main_Controller extends Template_Controller {
 		$google_analytics = Kohana::config('settings.google_analytics');
 		$this->template->footer->google_analytics = $this->_google_analytics($google_analytics);
 		
-		// Create Language Session
-		if (isset($_GET['lang']) && !empty($_GET['lang'])) {
-			$_SESSION['lang'] = $_GET['lang'];
+		// *** Locales/Languages ***
+		// First Get Available Locales
+		$this->template->header->locales_array = $this->cache->get('locales');
+		
+		// Locale form submitted?
+		if (isset($_GET['l']) && !empty($_GET['l']))
+		{
+			$this->session->set('locale', $_GET['l']);
 		}
-		if (isset($_SESSION['lang']) && !empty($_SESSION['lang'])){
-			Kohana::config_set('locale.language', $_SESSION['lang']);
+		// Has a locale session been set?
+		if ($this->session->get('locale',FALSE))
+		{
+			// Change current locale
+			Kohana::config_set('locale.language', $_SESSION['locale']);
 		}
-		$this->template->header->site_language = Kohana::config('locale.language');
+		$this->template->header->l = Kohana::config('locale.language');
 		
 		//Set up tracking gif
 		if($_SERVER['SERVER_NAME'] != 'localhost' && $_SERVER['SERVER_NAME'] != '127.0.0.1'){
@@ -105,7 +119,7 @@ class Main_Controller extends Template_Controller {
 		}else{
 			$track_url = 'null';
 		}
-		$this->template->footer->tracker_url = 'http://tracker.ushahidi.com/track.php?url='.urlencode($track_url).'&lang='.$this->template->header->site_language.'&version='.Kohana::config('version.ushahidi_version');
+		$this->template->footer->tracker_url = 'http://tracker.ushahidi.com/track.php?url='.urlencode($track_url).'&lang='.$this->template->header->l.'&version='.Kohana::config('version.ushahidi_version');
         // Load profiler
         // $profiler = new Profiler;
         
