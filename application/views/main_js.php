@@ -350,12 +350,18 @@
 			});
 		});
 		
-		function zoomToSelectedFeature(lon, lat, zoomfactor){
+		function zoomToSelectedFeature(lon, lat){
 			var lonlat = new OpenLayers.LonLat(lon,lat);
-			map.panTo(lonlat);
+			
 			// Get Current Zoom
 			currZoom = map.getZoom();
 			// New Zoom
-			newZoom = currZoom + zoomfactor;
-			map.zoomTo(newZoom);
+			newZoom = currZoom + 1;
+			// Center and Zoom
+			map.setCenter(lonlat, newZoom);
+			// Remove Popups
+			for (var i=0; i<map.popups.length; ++i)
+			{
+				map.removePopup(map.popups[i]);
+			}
 		}
