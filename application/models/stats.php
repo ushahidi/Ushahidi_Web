@@ -43,7 +43,11 @@ class Stats_Model extends ORM
 		}
 		
 		foreach($response->visits->result as $res) {
-			$timestamp = strtotime($res['date'])*1000;
+			$dt = $res['date'];
+			$y = substr($dt,0,4);
+			$m = substr($dt,5,2);
+			$d = substr($dt,8,2);
+			$timestamp = mktime(0,0,0,$m,$d,$y)*1000;
 			
 			if(isset($res->nb_visits)){ 
 				$data['visits'][(string)$timestamp] = (string)$res->nb_visits;
