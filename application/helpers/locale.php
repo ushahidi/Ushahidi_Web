@@ -62,7 +62,7 @@ class locale_Core
 			"fi" => "suomi, suomen kieli",
 			"fj" => "vosa Vakaviti",
 			"fo" => "føroyskt",
-			"fr" => "français, langue française",
+			"fr" => "français",
 			"fy" => "Frysk",
 			"ga" => "Gaeilge",
 			"gd" => "Gàidhlig",
