@@ -304,6 +304,11 @@
 							|| feature.cluster.length < 2)
 							{
 								return (Math.min(feature.attributes.count, 7) + 1) * <?php echo $marker_radius; ?>;
+							}else if (typeof(feature.cluster) == 'undefined'
+								|| feature.cluster.length == 2)
+							{
+								return (Math.min(feature.attributes.count, 7) + 1) * 
+									(<?php echo $marker_radius; ?> * 0.8);
 							}else{
 								return (Math.min(feature.attributes.count, 7) + 1) * 
 									(<?php echo $marker_radius; ?> * 0.6);
@@ -439,7 +444,8 @@
 					extractAttributes: true
 				},
 				styleMap: new OpenLayers.StyleMap({
-					"default": style
+					"default": style,
+					"select": style
 				})
 			});
 			

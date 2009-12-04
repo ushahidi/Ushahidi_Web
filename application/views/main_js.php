@@ -144,7 +144,10 @@
 					extractStyles: true,
 					extractAttributes: true
 				},
-				styleMap: new OpenLayers.StyleMap({"default":style})
+				styleMap: new OpenLayers.StyleMap({
+					"default":style,
+					"select": style
+				})
 			});			
 			map.addLayer(markers);
 			
