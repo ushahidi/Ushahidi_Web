@@ -851,7 +851,7 @@ class Settings_Controller extends Admin_Controller
 				if ( count($locale) < 2 )
 					continue;
 					
-				$directories[$i18n_dir] = locale::language($locale[0])." (".locale::country($locale[1]).")";
+				$directories[$i18n_dir] = locale::language($locale[0])." (".$locale[1].")";
 			}
 		}
 		

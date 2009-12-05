@@ -79,7 +79,7 @@
 				<div class="tab-box <?php echo $activetabcss; ?>" id="<?php echo $label; ?>">
 				<table class="table-graph horizontal-bar">
 				<?php
-				$data_array = array_reverse($data_array);
+				$data_array = array_reverse($data_array,true);
 				foreach($data_array as $timestamp => $count) {
 					$date = date('M jS, Y',($timestamp/1000));
 					$percentage = 0;
