@@ -25,6 +25,14 @@ class Reports_Controller extends Main_Controller {
 		// Javascript Header
 		$this->template->header->validator_enabled = TRUE;
 		
+		//include footer form js file
+        $footerjs = new View('footer_form_js');
+		
+		// Pack the javascript using the javascriptpacker helper
+		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+		$footerjs = $myPacker->pack();
+        $this->template->header->js = $footerjs;
+		
 		// Is the Admin Logged In?
 		$this->logged_in = Auth::instance()->logged_in()
 		     ? TRUE
@@ -209,6 +217,13 @@ class Reports_Controller extends Main_Controller {
 			$height = 100;
 			$this->template->content->report_chart = $report_chart->chart('reports',$report_data,$options,$colors,$width,$height);
 		}
+		//include footer form js file
+        $footerjs = new View('footer_form_js');
+		
+		// Pack the javascript using the javascriptpacker helper
+		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+		$footerjs = $myPacker->pack();
+        $this->template->header->js .= $footerjs;
 	} 
 	
 	/**
@@ -469,6 +484,7 @@ class Reports_Controller extends Main_Controller {
 				$errors = arr::overwrite($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
+			
 		}
 		
 		// Retrieve Country Cities
@@ -497,6 +513,13 @@ class Reports_Controller extends Main_Controller {
 			$this->template->header->js->latitude = $form['latitude'];
 			$this->template->header->js->longitude = $form['longitude'];
 		}
+		//include footer form js file
+        $footerjs = new View('footer_form_js');
+		
+		// Pack the javascript using the javascriptpacker helper
+		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+		$footerjs = $myPacker->pack();
+        $this->template->header->js .= $footerjs;
 	}
 	
 	 /**
@@ -750,7 +773,11 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->js->latitude = $incident->location->latitude;
 		$this->template->header->js->longitude = $incident->location->longitude;
 		$this->template->header->js->incident_photos = $incident_photo;
+		//include footer form js file
+        $footerjs = new View('footer_form_js');
 		
+		
+        $this->template->header->js .= $footerjs;
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($this->template->header->js, 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();

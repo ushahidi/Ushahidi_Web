@@ -115,10 +115,19 @@ class Alerts_Controller extends Main_Controller
         // Javascript Header
         $this->template->header->map_enabled = TRUE;
         $this->template->header->js = new View('alerts_js');
+        
         $this->template->header->js->default_map = Kohana::config('settings.default_map');
         $this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
         $this->template->header->js->latitude = $form['alert_lat'];
         $this->template->header->js->longitude = $form['alert_lon'];
+        
+        //include footer form js file
+        $footerjs = new View('footer_form_js');
+		
+		// Pack the javascript using the javascriptpacker helper
+		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+		$footerjs = $myPacker->pack();
+        $this->template->header->js .= $footerjs;
     }
 
 	

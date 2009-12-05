@@ -76,7 +76,7 @@ class Main_Controller extends Template_Controller {
 		
 		// Javascript Header
 		$this->template->header->map_enabled = FALSE;
-		$this->template->header->validator_enabled = FALSE;
+		$this->template->header->validator_enabled = TRUE;
 		$this->template->header->datepicker_enabled = FALSE;
 		$this->template->header->photoslider_enabled = FALSE;
 		$this->template->header->videoslider_enabled = FALSE;
@@ -88,6 +88,7 @@ class Main_Controller extends Template_Controller {
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
 		$footerjs = $myPacker->pack();
+		
 		$this->template->header->js = $footerjs;
 		
 		$this->template->header->this_page = "";
