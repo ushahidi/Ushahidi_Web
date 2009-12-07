@@ -18,6 +18,7 @@
 		// Map JS
 		var map;
 		var cluster = <?php echo $cluster; ?>;
+		var currentCat;
 		var thisLayer;
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
@@ -98,7 +99,7 @@
 				$("#child_" + catID).show(); // Show children DIV
 				$(this).parents("div").show();
 				
-				$("#currentCat").val(catID);
+				currentCat = catID;
 				// setUrl not supported with Cluster Strategy
 				//markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
 				
@@ -157,7 +158,7 @@
 						var currentCat = gCategoryId;
 						
 						// Get Current Category
-						currCat = $("#currentCat").val();
+						currCat = currentCat;
 						
 						// Get Current Zoom
 						currZoom = map.getZoom();
@@ -241,7 +242,7 @@
 				currCenter = map.getCenter();
 				
 				// Refresh Map
-				addMarkers($('#currentCat').val(), startTimestamp, endTimestamp, 
+				addMarkers(currentCat, startTimestamp, endTimestamp, 
 				           currZoom, currCenter, gMediaType);
 				
 				$('.filters li a').attr('class', '');
