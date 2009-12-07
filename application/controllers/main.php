@@ -316,7 +316,6 @@ class Main_Controller extends Template_Controller {
 			$this->template->header->js->daily_graphs = $daily_graphs;
 			$this->template->header->js->hourly_graphs = $hourly_graphs;
 			$this->template->header->js->weekly_graphs = $weekly_graphs;
-			$this->template->header->js->categories = $parent_categories;
 			$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
 		
 		// If we are viewing the 3D map

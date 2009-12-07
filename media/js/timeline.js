@@ -18,7 +18,7 @@
 
 	function Timeline(options) {
 		this.elementId = 'graph';
-		this.categoryId = 'ALL';
+		this.categoryId = '0';
 		this.startTime = null; //new Date(new Date().getFullYear() + '/01/01');
 		this.endTime = null; //new Date(this.startTime.getFullYear() + '/12/31');
 		this.url = null;
@@ -44,7 +44,7 @@
 	    
 		if (options) {
 			if (options.categoryId == '0') {
-				options.categoryId = 'ALL';
+				options.categoryId = '0';
 			}
 			$.extend(this, options);
 			if (!isNaN(this.categoryId)) {

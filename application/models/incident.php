@@ -100,8 +100,8 @@ class Incident_Model extends ORM
 		$graph_data = array();
 		$all_graphs = array();
 
-		$all_graphs['ALL'] = array();
-		$all_graphs['ALL']['label'] = 'All Categories';
+		$all_graphs['0'] = array();
+		$all_graphs['0']['label'] = 'All Categories';
 		$query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') AS time,
 					   COUNT(*) AS number
 					   FROM incident ' . $joins . '
@@ -109,13 +109,13 @@ class Incident_Model extends ORM
 		$general_filter .'
 					   GROUP BY ' . $groupby_date_text;
 		$query = $db->query($query_text);
-		$all_graphs['ALL']['data'] = array();
+		$all_graphs['0']['data'] = array();
 		foreach ( $query as $month_count )
 		{
-			array_push($all_graphs['ALL']['data'],
+			array_push($all_graphs['0']['data'],
 				array($month_count->time * 1000, $month_count->number));
 		}
-		$all_graphs['ALL']['color'] = '#990000';
+		$all_graphs['0']['color'] = '#990000';
 
 		$query_text = 'SELECT category_id, category_title, category_color, UNIX_TIMESTAMP(' . $select_date_text . ')
 							AS time, COUNT(*) AS number
@@ -129,15 +129,15 @@ class Incident_Model extends ORM
 		$query = $db->query($query_text);
 		foreach ( $query as $month_count )
 		{
-			$title = $month_count->category_title;
-			if (!isset($all_graphs[$title]))
+			$category_id = $month_count->category_id;
+			if (!isset($all_graphs[$category_id]))
 			{
-				$all_graphs[$title] = array();
-				$all_graphs[$title]['label'] = $title;
-				$all_graphs[$title]['color'] = '#'. $month_count->category_color;
-				$all_graphs[$title]['data'] = array();
+				$all_graphs[$category_id] = array();
+				$all_graphs[$category_id]['label'] = $month_count->category_title;
+				$all_graphs[$category_id]['color'] = '#'. $month_count->category_color;
+				$all_graphs[$category_id]['data'] = array();
 			}
-			array_push($all_graphs[$title]['data'],
+			array_push($all_graphs[$category_id]['data'],
 				array($month_count->time * 1000, $month_count->number));
 		}
 		$graphs = json_encode($all_graphs);

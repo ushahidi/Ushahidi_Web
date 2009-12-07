@@ -113,6 +113,18 @@
 				currCenter = map.getCenter();
 					
 				addMarkers(catID, '', '', currZoom, currCenter, gMediaType);
+				
+				graphData = allGraphData[0][catID];
+				gCategoryId = catID;
+				var startTime = new Date($("#startDate").val() * 1000);
+				var endTime = new Date($("#endDate").val() * 1000);
+				gTimeline = $.timeline({categoryId: catID, startTime: startTime, endTime: endTime,
+					graphData: graphData,
+					//url: "<?php echo url::base() . 'json/timeline/' ?>",
+					mediaType: gMediaType
+				});
+				gTimeline.plot();
+				
 				return false;
 			});
 			
@@ -179,7 +191,7 @@
 			dailyGraphData = [<?php echo $daily_graphs ?>];
 			weeklyGraphData = [<?php echo $weekly_graphs ?>];
 			hourlyGraphData = [<?php echo $hourly_graphs ?>];
-			var plotPeriod = $.timelinePeriod(allGraphData[0]['ALL'].data);
+			var plotPeriod = $.timelinePeriod(allGraphData[0]['0'].data);
 			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
 			var endTime = $.monthEndDateTime(plotPeriod[1]) / 1000;
 					
@@ -200,32 +212,12 @@
 
 			$("#startDate").val(startTime);
 			$("#endDate").val(endTime);
-			gCategoryId = 'ALL';
+			gCategoryId = '0';
 			gMediaType = 0;
 			
 			// Initialize Map
 			addMarkers(gCategoryId, startTime, endTime, '', '', gMediaType);
 			refreshGraph(startTime, endTime);
-			
-			var categoryIds = [0,<?php echo join(array_keys($categories), ","); ?>];				
-			for (var i=0; i<categoryIds.length; i++) {
-				$('#cat_'+categoryIds[i]).click(function(){
-					var categories = <?php echo json_encode($categories); ?>;
-					categories['0'] = ["ALL", "#990000"];
-					graphData = allGraphData[0][categories[this.id.split("_")[1]][0]];
-					var catId = categories[this.id.split("_")[1]][0];
-					gCategoryId = catId;
-					
-					var startTime = new Date($("#startDate").val() * 1000);
-					var endTime = new Date($("#endDate").val() * 1000);
-					gTimeline = $.timeline({categoryId: catId, startTime: startTime, endTime: endTime,
-						graphData: graphData,
-						//url: "<?php echo url::base() . 'json/timeline/' ?>",
-						mediaType: gMediaType
-					});
-					gTimeline.plot();
-				});
-			}
 			
 			// media filter
 			$('.filters li a').click(function(){
@@ -658,7 +650,7 @@
 			
 			// refresh graph
 			if (!currentCat || currentCat == '0') {
-				currentCat = 'ALL';
+				currentCat = '0';
 			}
 			
 			var startTime = new Date(startDate * 1000);
