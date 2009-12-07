@@ -137,10 +137,9 @@ class Incident_Model extends ORM
 				$all_graphs[$title]['color'] = '#'. $month_count->category_color;
 				$all_graphs[$title]['data'] = array();
 			}
-			array_push($all_graphs[$title]['data'], $month_count->time * 1000);
-			array_push($all_graphs[$title]['data'], $month_count->number);
+			array_push($all_graphs[$title]['data'],
+				array($month_count->time * 1000, $month_count->number));
 		}
-
 		$graphs = json_encode($all_graphs);
 		return $graphs;
 	}
