@@ -173,6 +173,8 @@ class Stats_Controller extends Admin_Controller
 		if(!isset($data['category_counts'])) {
 			$this->template->content->num_reports = 0;
 			$this->template->content->num_categories = 0;
+			$this->template->content->dp1 = null;
+			$this->template->content->dp2 = null;
 			$this->template->impact_json = '';
 			return false;
 		}
