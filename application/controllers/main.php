@@ -158,6 +158,17 @@ class Main_Controller extends Template_Controller {
         }
         $this->template->content->categories = $parent_categories;
 
+		// Get all active Layers (KMZ/KML)
+		$layers = array();
+		foreach (ORM::factory('layer')
+				  ->where('layer_visible', 1)
+				  ->find_all() as $layer)
+		{
+			$layers[$layer->id] = array($layer->layer_name, $layer->layer_color,
+				$layer->layer_url, $layer->layer_file);
+		}
+		$this->template->content->layers = $layers;
+		
 		// Get all active Shares
 		$shares = array();
 		foreach (ORM::factory('sharing')
@@ -283,8 +294,8 @@ class Main_Controller extends Template_Controller {
 			$marker_opacity = Kohana::config('map.marker_opacity');
 			$marker_stroke_width = Kohana::config('map.marker_stroke_width');
 			$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
-			$this->template->header->js = 
-				($clustering == 1) ? new View('main_cluster_js') : new View('main_js');
+			$this->template->header->js = new View('main_cluster_js');
+			$this->template->header->js->cluster = ($clustering == 1) ? "true" : "false";
 			$this->template->header->js->marker_radius =
 				($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;
 			$this->template->header->js->marker_opacity =
@@ -326,16 +337,16 @@ class Main_Controller extends Template_Controller {
 			
 			// Override API URL
 			$this->template->header->api_url = '<script src="http://www.google.com/jsapi?key='.Kohana::config('settings.api_google').'"> </script>';
-			
 		}
 		
 		
 		$footerjs = new View('footer_form_js');
 		
-		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
-		$footerjs = $myPacker->pack();
+		// Pack the javascript using the javascriptpacker helper		
 		$this->template->header->js .= $footerjs;
+		
+		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
+		$this->template->header->js = $myPacker->pack();
 	}
 	
 	/*

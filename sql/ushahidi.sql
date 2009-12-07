@@ -1342,6 +1342,20 @@ CREATE TABLE `page` (
 INSERT INTO `page` (`id`, `page_title`, `page_description`, `page_tab`, `page_active`) VALUES
 (1, 'About Us', '<p>This is the default about us page.</p>', 'About Us', 1);
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `layer`
+--
+
+CREATE TABLE `layer` (
+	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`layer_name` VARCHAR( 255 ) NULL ,
+	`layer_url` VARCHAR( 255 ) NULL ,
+	`layer_file` VARCHAR( 100 ) NULL ,
+	`layer_color` VARCHAR( 20 ) NULL ,
+	`layer_visible` TINYINT NOT NULL DEFAULT '1'
+) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
 
 --
 -- Constraints for dumped tables

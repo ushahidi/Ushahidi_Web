@@ -21,6 +21,7 @@
 					<a href="<?php echo url::base() . 'admin/manage/pages' ?>">Pages</a>
 					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active">News Feeds</a>
 					<span>(<a href="#add">Add New</a>)</span>
+					<a href="<?php echo url::base() . 'admin/manage/layers' ?>">Layers</a>
 					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
 				</h2>
 				
