@@ -291,7 +291,7 @@
 			hottestMoment = null;
 			for (var i=0; i<plotData.length; i++) {
 				if (plotData[i][1] > heatLevel) {
-					hottestMoment = plotDatas[i][0];
+					hottestMoment = plotData[i][0];
 					heatLevel = plotData[i][1];
 				}
 			}

@@ -17,6 +17,8 @@
 ?>
 		// Map JS
 		var map;
+		var cluster = <?php echo $cluster; ?>;
+		var currentCat;
 		var thisLayer;
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
@@ -97,7 +99,7 @@
 				$("#child_" + catID).show(); // Show children DIV
 				$(this).parents("div").show();
 				
-				$("#currentCat").val(catID);
+				currentCat = catID;
 				// setUrl not supported with Cluster Strategy
 				//markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
 				
@@ -137,7 +139,7 @@
 					currCenter = map.getCenter();
 					
 					// Add New Layer
-					addMarkers('', '', '', currZoom, currCenter, '', shareID);
+					addMarkers('', '', '', currZoom, currCenter, '', shareID, 'shares');
 				}
 			});
 			
@@ -156,7 +158,7 @@
 						var currentCat = gCategoryId;
 						
 						// Get Current Category
-						currCat = $("#currentCat").val();
+						currCat = currentCat;
 						
 						// Get Current Zoom
 						currZoom = map.getZoom();
@@ -240,7 +242,7 @@
 				currCenter = map.getCenter();
 				
 				// Refresh Map
-				addMarkers($('#currentCat').val(), startTimestamp, endTimestamp, 
+				addMarkers(currentCat, startTimestamp, endTimestamp, 
 				           currZoom, currCenter, gMediaType);
 				
 				$('.filters li a').attr('class', '');
@@ -262,15 +264,35 @@
 		/*
 		Create the Markers Layer
 		*/
-		function addMarkers(catID,startDate,endDate, currZoom, currCenter, mediaType, thisLayer, thisLayerColor){
+		function addMarkers(catID,startDate,endDate, currZoom, currCenter,
+			mediaType, thisLayerID, thisLayerType, thisLayerUrl, thisLayerColor){
 			
-			if (!thisLayer)
-			{
-				protocolUrl = "json";
-				thisLayer = "Reports";
+			var	protocolUrl = "<?php echo url::base(); ?>" + "json/"; // Default Json
+			var thisLayer = "Reports"; // Default Layer Name
+			
+			if (cluster) {
+				var protocolFormat = new OpenLayers.Format.GeoJSON({
+					internalProjection: proj_900913,
+					externalProjection: proj_4326}); // Default Layer Format
 			} else {
-				protocolUrl = "json/share/"+thisLayer;
-				thisLayer = "Share_"+thisLayer;
+				var protocolFormat = OpenLayers.Format.GeoJSON
+			}
+			
+			if (thisLayer && thisLayerType == 'shares')
+			{				
+				protocolUrl = "<?php echo url::base(); ?>" + "json/share/"+thisLayer+"/";
+				thisLayer = "Share_"+thisLayerID;
+			} else if (thisLayer && thisLayerType == 'layers') {
+				protocolUrl = thisLayerUrl;
+				thisLayer = "Layer_"+thisLayerID;
+				
+				if (cluster) {
+					protocolFormat = new OpenLayers.Format.KML({
+						internalProjection: proj_900913,
+						externalProjection: proj_4326});
+				} else {
+					var protocolFormat = OpenLayers.Format.KML
+				}
 			}
 			
 			// Set Feature Styles
@@ -293,98 +315,146 @@
 				{
 					radius: function(feature)
 					{
-						feature_icon = '';
-						if (typeof(feature.cluster) != 'undefined') {
-							feature_icon = feature.cluster[0].data.icon;
-						}
-						if (feature_icon!="") {
-							return (Math.min(feature.attributes.count, 7) + 5) * 2;
-						} else {
-							if (typeof(feature.cluster) == 'undefined'
-							|| feature.cluster.length < 2)
-							{
-								return (Math.min(feature.attributes.count, 7) + 1) * <?php echo $marker_radius; ?>;
-							}else if (typeof(feature.cluster) == 'undefined'
-								|| feature.cluster.length == 2)
-							{
-								return (Math.min(feature.attributes.count, 7) + 1) * 
-									(<?php echo $marker_radius; ?> * 0.8);
-							}else{
-								return (Math.min(feature.attributes.count, 7) + 1) * 
-									(<?php echo $marker_radius; ?> * 0.6);
-							}
-						}
-					},
-					opacity: function(feature)
-					{
-						feature_icon = '';
-						if (typeof(feature.cluster) != 'undefined') {
-							feature_icon = feature.cluster[0].data.icon;
-						}
-						if (feature_icon!="") {
-							return 1;
-						} else {
-							return <?php echo $marker_opacity; ?>;
-						}
-					},						
-					color: function(feature)
-					{
-						if ( typeof(feature.cluster) != 'undefined' && 
-							(feature.cluster.length < 2 || 
-							(typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
-							|| thisLayer != "Reports" )
-						{
-							return "#" + feature.cluster[0].data.color;
-						}
-						else
-						{
-							return "#<?php echo $default_map_all;?>";
-						}
-					},
-					icon: function(feature)
-					{
-						if ( typeof(feature.cluster) != 'undefined' && 
-						     feature.cluster.length < 2 || 
-						     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+						if (cluster)
 						{
 							feature_icon = '';
 							if (typeof(feature.cluster) != 'undefined') {
 								feature_icon = feature.cluster[0].data.icon;
 							}
 							if (feature_icon!="") {
+								return (Math.min(feature.attributes.count, 7) + 5) * 2;
+							} else {
+								if (typeof(feature.cluster) == 'undefined'
+								|| feature.cluster.length < 2)
+								{
+									return (Math.min(feature.attributes.count, 7) + 1) * <?php echo $marker_radius; ?>;
+								}else if (typeof(feature.cluster) == 'undefined'
+									|| feature.cluster.length == 2)
+								{
+									return (Math.min(feature.attributes.count, 7) + 1) * 
+										(<?php echo $marker_radius; ?> * 0.8);
+								}else{
+									return (Math.min(feature.attributes.count, 7) + 1) * 
+										(<?php echo $marker_radius; ?> * 0.6);
+								}
+							}
+						} else {
+							feature_icon = feature.attributes.icon;
+							if (feature_icon!="") {
+								return 16;
+							} else {
+								return <?php echo $marker_radius; ?> * 1.6;
+							}
+						}
+					},
+					opacity: function(feature)
+					{
+						if (cluster)
+						{
+							feature_icon = '';
+							if (typeof(feature.cluster) != 'undefined') {
+								feature_icon = feature.cluster[0].data.icon;
+							}
+							if (feature_icon!="") {
+								return 1;
+							} else {
+								return <?php echo $marker_opacity; ?>;
+							}
+						} else {
+							feature_icon = feature.attributes.icon;
+							if (feature_icon!="") {
+								return 1;
+							} else {
+								return <?php echo $marker_opacity; ?>;
+							}
+						}
+					},						
+					color: function(feature)
+					{
+						if (cluster)
+						{
+							if (thisLayerType == 'layers') {
+								return "#" + thisLayerColor;
+							} else {
+								if ( typeof(feature.cluster) != 'undefined' && 
+									(feature.cluster.length < 2 || 
+									(typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+									|| thisLayer != "Reports" )
+								{
+									return "#" + feature.cluster[0].data.color;
+								}
+								else
+								{
+									return "#<?php echo $default_map_all;?>";
+								}
+							}
+						} else {
+							return "#" + feature.attributes.color;
+						}
+					},
+					icon: function(feature)
+					{
+						if (cluster) 
+						{
+							if ( typeof(feature.cluster) != 'undefined' && 
+							     feature.cluster.length < 2 || 
+							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+							{
+								feature_icon = '';
+								if (typeof(feature.cluster) != 'undefined') {
+									feature_icon = feature.cluster[0].data.icon;
+								}
+								if (feature_icon!="") {
+									return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
+								} else {
+									return "";
+								}
+							}
+							else
+							{
+								return "";
+							}
+						} else {
+							feature_icon = feature.attributes.icon;
+							if (feature_icon!="") {
 								return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
 							} else {
 								return "";
 							}
 						}
-						else
-						{
-							return "";
-						}
 					},
 					cluster_count: function(feature)
 					{
-						if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 1)
-						{
-							return feature.cluster.length;
-						}
-						else
-						{
+						if (cluster) {
+							if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 1)
+							{
+								return feature.cluster.length;
+							}
+							else
+							{
+								return "";
+							}
+						} else {
 							return "";
 						}
+						
 					},
 					font_size: function(feature)
 					{
-						if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 10)
-						{
-							return "20px";
-						}
-						else if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 5)
-						{
-							return "15px";
-						}
-						else
-						{
+						if (cluster) {
+							if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 10)
+							{
+								return "20px";
+							}
+							else if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 5)
+							{
+								return "15px";
+							}
+							else
+							{
+								return "";
+							}
+						} else {
 							return "";
 						}
 					}
@@ -422,32 +492,45 @@
 				params.push('m=' + mediaType);
 			}
 			
-			markers = new OpenLayers.Layer.Vector(thisLayer, {
-				preFeatureInsert:preFeatureInsert,
-				strategies: [
-					new OpenLayers.Strategy.Fixed(),
-				    new OpenLayers.Strategy.Cluster({
-						distance: 20
-					})
-				],
-				protocol: new OpenLayers.Protocol.HTTP({
-                    url: "<?php echo url::base(); ?>" + protocolUrl + '/?' + params.join('&'),
-                    format: new OpenLayers.Format.GeoJSON(
-						{
-							internalProjection: proj_900913,
-							externalProjection: proj_4326
+			if (cluster) {
+				markers = new OpenLayers.Layer.Vector(thisLayer, {
+					preFeatureInsert: preFeatureInsert,
+					strategies: [
+						new OpenLayers.Strategy.Fixed(),
+					    new OpenLayers.Strategy.Cluster({
+							distance: 20
 						})
-                }),
-				projection: proj_900913,
-				formatOptions: {
-					extractStyles: true,
-					extractAttributes: true
-				},
-				styleMap: new OpenLayers.StyleMap({
-					"default": style,
-					"select": style
-				})
-			});
+					],
+					protocol: new OpenLayers.Protocol.HTTP({
+	                    url: protocolUrl + '?' + params.join('&'),
+	                    format: protocolFormat
+	                }),
+					projection: proj_900913,
+					formatOptions: {
+						extractStyles: true,
+						extractAttributes: true
+					},
+					styleMap: new OpenLayers.StyleMap({
+						"default": style,
+						"select": style
+					})
+				});
+			} else {
+				markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?' + params.join('&'), 
+				{
+					preFeatureInsert:preFeatureInsert,
+					format: protocolFormat,					
+					projection: proj_4326,
+					formatOptions: {
+						extractStyles: true,
+						extractAttributes: true
+					},
+					styleMap: new OpenLayers.StyleMap({
+						"default":style,
+						"select": style
+					})
+				});
+			}
 			
 			map.addLayer(markers);
 			selectControl = new OpenLayers.Control.SelectFeature(
@@ -515,26 +598,37 @@
             selectedFeature = event;
             // Since KML is user-generated, do naive protection against
             // Javascript.
-			var content = "<div class=\"infowindow\">";
-			content = content + "<h2>" + event.feature.cluster.length + " Event[s]...</h2>\n";
-			content = content + "<div class=\"infowindow_list\"><ul>";
-			for(var i=0; i<Math.min(event.feature.cluster.length, 5); ++i) {
-				content = content + "\n<li>" + event.feature.cluster[i].data.name + "</li>";
-			}
-			content = content + "</ul></div>";
-			if (event.feature.cluster.length > 1)
+			if (cluster)
 			{
-				// Lon/Lat Spherical Mercator
-				zoom_point_sm = event.feature.cluster[0].geometry.getBounds().getCenterLonLat();
-				lon_sm = zoom_point_sm.lon;
-				lat_sm = zoom_point_sm.lat;
-				// Converted Lon/Lat
-				zoom_point = zoom_point_sm.transform(proj_900913, proj_4326);
+				var content = "<div class=\"infowindow\">";
+				content = content + "<h2>" + event.feature.cluster.length + " Event[s]...</h2>\n";
+				content = content + "<div class=\"infowindow_list\"><ul>";
+				for(var i=0; i<Math.min(event.feature.cluster.length, 5); ++i) {
+					content = content + "\n<li>" + event.feature.cluster[i].data.name + "</li>";
+				}
+				content = content + "</ul></div>";
+				if (event.feature.cluster.length > 1)
+				{
+					// Lon/Lat Spherical Mercator
+					zoom_point_sm = event.feature.cluster[0].geometry.getBounds().getCenterLonLat();
+					lon_sm = zoom_point_sm.lon;
+					lat_sm = zoom_point_sm.lat;
+					// Converted Lon/Lat
+					zoom_point = zoom_point_sm.transform(proj_900913, proj_4326);
+					lon = zoom_point.lon;
+					lat = zoom_point.lat;
+					content = content + "\n<div class=\"infowindow_meta\"><a href=\"<?php echo url::base() . 'reports/?lon="+ lon + "&lat="+ lat +"' ?>\">View&nbsp;Events</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+lon_sm+","+lat_sm+")'>Zoom&nbsp;In</a></div>";
+				}
+				content = content + "</div>";
+			} else {
+				zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
 				lon = zoom_point.lon;
 				lat = zoom_point.lat;
-				content = content + "\n<div class=\"infowindow_meta\"><a href=\"<?php echo url::base() . 'reports/?lon="+ lon + "&lat="+ lat +"' ?>\">View&nbsp;Events</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+lon_sm+","+lat_sm+")'>Zoom&nbsp;In</a></div>";
-			}
-			content = content + "</div>";
+				var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+event.feature.attributes.name + "</li></ul></div>";
+				content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
+				content = content + "</div>";
+			}			
+			
 			if (content.search("<script") != -1) {
                 content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
             }
@@ -609,6 +703,34 @@
 				map.removePopup(map.popups[i]);
 			}
 		}
+		
+		/*
+		Add KML/KMZ Layers
+		*/
+		function switchLayer(layerID, layerURL, layerColor){
+			if ( $("#layer_" + layerID).hasClass("active") ) {
+				new_layer = map.getLayersByName("Layer_"+layerID);
+				if (new_layer){
+					for (var i = 0; i < new_layer.length; i++) {
+						map.removeLayer(new_layer[i]);
+					}
+				}
+				$("#layer_" + layerID).removeClass("active");
+				
+			} else {
+				$("#layer_" + layerID).addClass("active");
+				
+				// Get Current Zoom
+				currZoom = map.getZoom();
+
+				// Get Current Center
+				currCenter = map.getCenter();
+				
+				// Add New Layer
+				addMarkers('', '', '', currZoom, currCenter, '', layerID, 'layers', layerURL, layerColor);
+			}
+		}
+		
 		
 		/*		
 		d = $('#startDate > optgroup > option').map(function() { return $(this).val(); });

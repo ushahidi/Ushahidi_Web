@@ -71,5 +71,6 @@ $lang = array(
 	'alerts_enter_email' => 'enter email address',
 	'alerts_rss' => 'RSS Feeds (copy the url below)',
 	'alerts_btn_send' => 'Save My Alert',
-	'alert_confirm_previous' => 'Confirm A Previous Alert Request'
+	'alert_confirm_previous' => 'Confirm A Previous Alert Request',
+	'layers_filter' => 'Other Layers'
 );
