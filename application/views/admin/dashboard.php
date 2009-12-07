@@ -17,16 +17,26 @@
 				<h2><?php echo $title; ?></h2>
 				<!-- column -->
 				<div class="column">
+					
 					<!-- box -->
 					<div class="box">
 						<h3>Reports Timeline</h3>
-						<ul class="inf">
-							<li class="none-separator">View:<a href="#" onclick="graphSwitch('day')">Today</a></li>
-							<li><a href="#" onclick="graphSwitch('month')">This Month</a></li>
-							<li><a href="#" onclick="graphSwitch('year')">This Year</a></li>
+						<ul class="inf" style="margin-bottom:10px;">
+							<li class="none-separator">View:<a href="<?php print url::base() ?>admin/dashboard/?range=1">Today</a></li>
+							<li><a href="<?php print url::base() ?>admin/dashboard/?range=31">Past Month</a></li>
+							<li><a href="<?php print url::base() ?>admin/dashboard/?range=365">Past Year</a></li>
 						</ul>
-						<div id="graph" class="graph-holder"></div>
+						<div class="chart-holder" style="clear:both;padding-left:5px;">
+							<?php echo $report_chart; ?>
+							<?php if($failure != ''){ ?>
+								<div class="red-box" style="width:400px;">
+									<h3>Error!</h3>
+									<ul><li><?php echo $failure; ?></li></ul>
+								</div>
+							<?php } ?>
+						</div>
 					</div>
+					
 					<!-- info-container -->
 					<div class="info-container">
 						<div class="i-c-head">

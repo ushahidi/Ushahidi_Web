@@ -78,13 +78,49 @@ class Dashboard_Controller extends Admin_Controller
 			->orderby('item_date', 'desc')
 			->find_all();
 			
-			
+		/*
 		// Javascript Header
 		$this->template->flot_enabled = TRUE;
 		$this->template->js = new View('admin/dashboard_js');
 		// Graph
 		$this->template->js->all_graphs = Incident_Model::get_incidents_by_interval('ALL',NULL,NULL,'all');
 		$this->template->js->current_date = date('Y') . '/' . date('m') . '/01';
+		*/
+		
+		// Javascript Header
+		$this->template->protochart_enabled = TRUE;
+		$this->template->js = new View('admin/stats_js');
+		
+		// Set the date range (how many days in the past from today?)
+		//    default to one year
+		$range = 365;
+		if(isset($_GET['range'])) $range = $_GET['range'];
+		$this->template->content->range = $range;
+		
+		// Report Data
+		$data = Stats_Model::get_report_stats(false,true,$range,null,null,true);
+		
+		$this->template->content->failure = '';
+		// If we failed to get hit data, fail.
+		if(!$data) {
+			$now = time()*1000;
+			$data['all'][$now] = 0;
+			/*
+			$this->template->content->report_chart = '';
+			$this->template->content->failure = 'No report data for chart.';
+			return false;
+			*/
+		}
+		
+		$report_chart = new protochart;
+		$options = array(
+			'xaxis'=>array('mode'=>'"time"'),
+			'legend'=>array('show'=>'true')
+			);
+		
+		$pass_data['Reports'] = $data['all'];
+		$this->template->content->report_chart = $report_chart->chart('report_chart',$pass_data,$options,array('Reports'=>'CC0000'),410,310);
+		
 	}
 
 }
