@@ -118,6 +118,6 @@
 	<img src="<?php echo url::base() . 'scheduler'; ?>" height="1" width="1" border="0" />
  
         <!-- script for share button -->
-        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=xa-4aee423643f8276e"></script>
+        <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=ushahidi"></script>
 </body>
 </html>

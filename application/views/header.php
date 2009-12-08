@@ -90,6 +90,9 @@
 	<script type="text/javascript">DD_belatedPNG.fix('img, ul, ol, li, div, p, a');</script>
 	<![endif]-->
 	<script type="text/javascript">
+		var addthis_config = {
+		   ui_click: true
+		}	
 		<?php echo $js . "\n"; ?>
 	</script>
 </head>
