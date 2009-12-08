@@ -85,7 +85,7 @@ class Stats_Model extends ORM
 		$response = simplexml_load_string(self::_curl_req($stat_url));
 		
 		// If we encounter an error, return false
-		if(isset($response->result->error[0]) || isset($response->error[0])) {
+		if(isset($response->result->error[0]) || isset($response->error[0]) || !isset($response->countries->result)) {
 			Kohana::log('error', "Error on stats request");
 			return false;
 		}
