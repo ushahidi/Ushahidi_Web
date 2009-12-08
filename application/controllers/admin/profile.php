@@ -109,9 +109,6 @@ class Profile_Controller extends Admin_Controller
 		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
 		
 		// Javascript Header
-		
-		// Tooltips
-		$this->template->content->tooltips = $this->tooltips;
 	}
 	
 	
