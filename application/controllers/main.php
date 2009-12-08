@@ -276,14 +276,10 @@ class Main_Controller extends Template_Controller {
                 }
                 $endDate .= "<option value=\"" . strtotime($years . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))." 23:59:59") . "\"";
                 if ( $active_month && 
-						( (int) $i == ( $active_month + 1)) )
+						( ( (int) $i == ( $active_month + 1)) )
+						 	|| $i == 12)
 				{
 					$endDate .= " selected=\"selected\" ";
-                }
-				
-				if ( !$active_month && $i == 12 )
-                {
-                    $endDate .= " selected=\"selected\" ";
                 }
                 $endDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $years . "</option>";
             }
