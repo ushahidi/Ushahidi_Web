@@ -184,16 +184,15 @@
 						refreshGraph(startDate, endDate);
 					}
 				}
-			}); 
+			});
 		
 			// Graph
 			allGraphData = [<?php echo $all_graphs ?>];
 			dailyGraphData = [<?php echo $daily_graphs ?>];
 			weeklyGraphData = [<?php echo $weekly_graphs ?>];
 			hourlyGraphData = [<?php echo $hourly_graphs ?>];
-			var plotPeriod = $.timelinePeriod(allGraphData[0]['0'].data);
-			var startTime = $.monthStartTime(plotPeriod[0]) / 1000;
-			var endTime = $.monthEndDateTime(plotPeriod[1]) / 1000;
+			var startTime = <?php echo $active_startDate ?>;	// Default to most active month
+			var endTime = <?php echo $active_endDate ?>;		// Default to most active month
 					
 			// get the closest existing dates in the selection options
 			var options = $('#startDate > optgroup > option').map(function() { 
@@ -209,11 +208,11 @@
 			endTime = $.grep(options, function(n,i) {
 			  return n >= ('' + endTime) ;
 			})[0];
-
-			$("#startDate").val(startTime);
-			$("#endDate").val(endTime);
+			
 			gCategoryId = '0';
 			gMediaType = 0;
+			//$("#startDate").val(startTime);
+			//$("#endDate").val(endTime);
 			
 			// Initialize Map
 			addMarkers(gCategoryId, startTime, endTime, '', '', gMediaType);
@@ -461,13 +460,12 @@
 			
 			// Does 'markers' already exist? If so, destroy it before creating new layer
 			markers = map.getLayersByName(thisLayer);
-			if (markers){
+			if (markers && markers.length > 0){
 				for (var i = 0; i < markers.length; i++) {
 					//markers[i].destroy();
 					//markers[i] = null;
 					map.removeLayer(markers[i]);
 				}
-				//map.removeLayer(markers);
 			}
 			
 			params = [];
