@@ -25,7 +25,7 @@
  
 			<!-- footer credits -->
 			<div class="footer-credits">
-				Powered by <a href="http://www.ushahidi.com/"><img src="<?php echo url::base(); ?>/media/img/footer-logo.jpg" alt="Ushahidi" align="absmiddle" /></a>
+				Powered by <a href="http://www.ushahidi.com/"><img src="<?php echo url::base(); ?>/media/img/footer-logo.png" alt="Ushahidi" align="absmiddle" /></a>
 			</div>
 			<!-- / footer credits -->
 		
