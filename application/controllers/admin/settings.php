@@ -88,7 +88,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_tagline', 'length[3,100]');
 			$post->add_rules('site_email', 'email', 'length[4,100]');
 			$post->add_rules('alerts_email', 'email', 'length[4,100]');
-			$post->add_rules('site_language','required', 'in_array[en_US, fr_FR]');
+			$post->add_rules('site_language','required', 'length[5, 5]');
 			$post->add_rules('site_help_page','required','between[0,1]');
 			$post->add_rules('site_contact_page','required','between[0,1]');
 			$post->add_rules('items_per_page','required','between[10,50]');
