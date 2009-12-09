@@ -113,7 +113,7 @@ class Stats_Model extends ORM
 	* @param dp1 - Arbitrary date range. Low date. YYYY-MM-DD
 	* @param dp2 - Arbitrary date range. High date. YYYY-MM-DD
 	*/
-	static function get_report_stats($approved=false,$by_time=false,$range=null,$dp1=null,$dp2=null)
+	static function get_report_stats($approved=false,$by_time=false,$range=null,$dp1=null,$dp2=null,$line_chart_data=false)
 	{
 		if($range === null) $range = 100000;
 		if($dp1 === null) $dp1 = 0;
@@ -136,6 +136,7 @@ class Stats_Model extends ORM
 		$report_data = array();
 		$verified_counts = array();
 		$approved_counts = array();
+		$all = array();
 		$earliest_timestamp = 32503680000; // Year 3000 in epoch so we can catch everything less than this.
 		$latest_timestamp = 0;
 		
@@ -158,7 +159,10 @@ class Stats_Model extends ORM
 				$verified_counts['unverified'][$timestamp] = 0;
 				$approved_counts['approved'][$timestamp] = 0;
 				$approved_counts['unapproved'][$timestamp] = 0;
+				$all[$timestamp] = 0;
 			}
+			
+			$all[$timestamp]++;
 			
 			if($report->incident_verified == 1){
 				$verified_counts['verified'][$timestamp]++;
@@ -210,6 +214,7 @@ class Stats_Model extends ORM
 				if(!isset($verified_counts['unverified'][$timestamp])) $verified_counts['unverified'][$timestamp] = 0;
 				if(!isset($approved_counts['approved'][$timestamp])) $approved_counts['approved'][$timestamp] = 0;
 				if(!isset($approved_counts['unapproved'][$timestamp])) $approved_counts['unapproved'][$timestamp] = 0;
+				if(!isset($all[$timestamp])) $all[$timestamp] = 0;
 			}
 			// keep dates in order
 			ksort($arr);
@@ -217,6 +222,7 @@ class Stats_Model extends ORM
 			ksort($verified_counts['unverified']);
 			ksort($approved_counts['approved']);
 			ksort($approved_counts['unapproved']);
+			ksort($all);
 			
 		}
 		
@@ -224,6 +230,7 @@ class Stats_Model extends ORM
 		$data['category_counts'] = $category_counts;
 		$data['verified_counts'] = $verified_counts;
 		$data['approved_counts'] = $approved_counts;
+		$data['all']['all'] = $all;
 		
 		// I'm just tacking this on here. However, we could improve performance
 		//   by implementing the code above but I just don't have the time
@@ -235,7 +242,16 @@ class Stats_Model extends ORM
 			$new_data = array();
 			foreach($data as $main_key => $data_array){
 				foreach($data_array as $key => $counts){
-					foreach($counts as $timestamp => $count) $new_data[$main_key][$timestamp][$key] = $count;
+					
+					if($line_chart_data == false){
+						foreach($counts as $timestamp => $count) $new_data[$main_key][$timestamp][$key] = $count;
+					}else{
+						foreach($counts as $timestamp => $count){
+							$timestamp_key = (string)($timestamp*1000);
+							if(!isset($new_data[$main_key][$timestamp_key])) $new_data[$main_key][$timestamp_key] = 0;
+							$new_data[$main_key][$timestamp_key] += $count;
+						}
+					}
 				}
 			}
 			
@@ -243,10 +259,12 @@ class Stats_Model extends ORM
 			
 		}
 		
-		$data['total_reports'] = $num_reports;
-		$data['total_categories'] = count($category_counts);
-		$data['earliest_report_time'] = $earliest_timestamp;
-		$data['latest_report_time'] = $latest_timestamp;
+		if($line_chart_data == false) {
+			$data['total_reports'] = $num_reports;
+			$data['total_categories'] = count($category_counts);
+			$data['earliest_report_time'] = $earliest_timestamp;
+			$data['latest_report_time'] = $latest_timestamp;
+		}
 		
 		return $data;
 	}

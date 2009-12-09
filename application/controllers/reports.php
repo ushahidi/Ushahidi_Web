@@ -162,26 +162,30 @@ class Reports_Controller extends Main_Controller {
 		$report_data = array();
 		$tick_string_array = array();
 		foreach($data['category_counts'] as $category_id => $count_array) {
-			$category_name = $cats[$category_id]['category_title'];
-			$colors[$category_name] = $cats[$category_id]['category_color'];
-			$i = 1;
-			foreach($count_array as $time => $count){
-				
-				$report_data[$category_name][$i] = $count;
-				
-				// The highest count will determine the number of ticks on the y-axis
-				if($count > $highest_count) {
-					$highest_count = $count;
+			// Does this category exist locally any more?
+			if (isset($cats[$category_id]))
+			{
+				$category_name = $cats[$category_id]['category_title'];
+				$colors[$category_name] = $cats[$category_id]['category_color'];
+				$i = 1;
+				foreach($count_array as $time => $count){
+
+					$report_data[$category_name][$i] = $count;
+
+					// The highest count will determine the number of ticks on the y-axis
+					if($count > $highest_count) {
+						$highest_count = $count;
+					}
+
+					// This statement sets us up so we can convert the key to a date
+					if(!isset($tick_represents[$i])) {
+						$tick_represents[$i] = $time;
+						// Save name
+						$tick_string_array[$i] = date('M d',$time);
+					}
+
+					$i++;
 				}
-				
-				// This statement sets us up so we can convert the key to a date
-				if(!isset($tick_represents[$i])) {
-					$tick_represents[$i] = $time;
-					// Save name
-					$tick_string_array[$i] = date('M d',$time);
-				}
-				
-				$i++;
 			}
 		}
 		$highest_count += 1;

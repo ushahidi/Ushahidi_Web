@@ -50,26 +50,26 @@
 					<!-- column -->		
 					<div class="sms_holder">
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["profile_username"]; ?>">User Name</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_username"); ?>">User Name</a></h4>
 							<?php print form::input('username', $form['username'], ' class="text long2" readonly="readonly"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["profile_name"]; ?>">Full Name</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_name"); ?>">Full Name</a></h4>
 							<?php print form::input('name', $form['name'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["profile_email"]; ?>">Email Address</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_email"); ?>">Email Address</a></h4>
 							<?php print form::input('email', $form['email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["profile_password"]; ?>">New Password</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_password"); ?>">New Password</a></h4>
 							<?php print form::password('password', $form['password'], ' class="text"'); ?>
 							<div style="clear:both;"></div>
 							Your Password Again:<br />
 							<?php print form::password('password_again', $form['password_again'], ' class="text"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo $tooltips["profile_notify"]; ?>">Receive Notifications?</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_notify"); ?>">Receive Notifications?</a></h4>
 							<?php print form::dropdown('notify', $yesno_array, $form['notify']); ?>
 						</div>
 					</div>

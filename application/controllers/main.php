@@ -227,39 +227,62 @@ class Main_Controller extends Template_Controller {
             ->find_all();
 		
 		
-        // Get Slider Dates By Year
+		
+        // Get The START, END and most ACTIVE Incident Dates
         $startDate = "";
         $endDate = "";
-
-
-        // We need to use the DB builder for a custom query
-        $db = new Database();	
+		$active_month = 0;
+		$active_startDate = 0;
+		$active_endDate = 0;
+		
+		$db = new Database();
+		// First Get The Most Active Month
+		$query = $db->query('SELECT incident_date, count(*) AS incident_count FROM incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y-%m\') ORDER BY incident_count DESC LIMIT 1');
+		foreach ($query as $query_active)
+		{
+			$active_month = date('n', strtotime($query_active->incident_date));
+			$active_year = date('Y', strtotime($query_active->incident_date));
+			$active_startDate = strtotime($active_year . "-" . $active_month . "-01");
+			$active_endDate = strtotime($active_year . "-" . $active_month . 
+				"-" . date('t', mktime(0,0,0,$active_month,1))." 23:59:59");
+		}
+		
+        // Next, Get the Range of Years
         $query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y\') AS incident_date FROM incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y\') ORDER BY incident_date');
         foreach ($query as $slider_date)
         {
-            $startDate .= "<optgroup label=\"" . $slider_date->incident_date . "\">";
+			$years = $slider_date->incident_date;
+            $startDate .= "<optgroup label=\"" . $years . "\">";
             for ( $i=1; $i <= 12; $i++ ) {
                 if ( $i < 10 )
                 {
                     $i = "0" . $i;
                 }
-                $startDate .= "<option value=\"" . strtotime($slider_date->incident_date . "-" . $i . "-01") . "\">" . date('M', mktime(0,0,0,$i,1)) . " " . $slider_date->incident_date . "</option>";
+                $startDate .= "<option value=\"" . strtotime($years . "-" . $i . "-01") . "\"";
+				if ( $active_month && 
+						( (int) $i == ( $active_month - 1)) )
+				{
+					$startDate .= " selected=\"selected\" ";
+				}
+				$startDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $years . "</option>";
             }
             $startDate .= "</optgroup>";
 			
-            $endDate .= "<optgroup label=\"" . $slider_date->incident_date . "\">";
+            $endDate .= "<optgroup label=\"" . $years . "\">";
             for ( $i=1; $i <= 12; $i++ ) 
             {
                 if ( $i < 10 )
                 {
                     $i = "0" . $i;
                 }
-                $endDate .= "<option value=\"" . strtotime($slider_date->incident_date . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))) . "\"";
-                if ( $i == 12 )
-                {
-                    $endDate .= " selected=\"selected\" ";
+                $endDate .= "<option value=\"" . strtotime($years . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))." 23:59:59") . "\"";
+                if ( $active_month && 
+						( ( (int) $i == ( $active_month + 1)) )
+						 	|| $i == 12)
+				{
+					$endDate .= " selected=\"selected\" ";
                 }
-                $endDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $slider_date->incident_date . "</option>";
+                $endDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $years . "</option>";
             }
             $endDate .= "</optgroup>";			
         }
@@ -317,9 +340,12 @@ class Main_Controller extends Template_Controller {
 			$this->template->header->js->daily_graphs = $daily_graphs;
 			$this->template->header->js->hourly_graphs = $hourly_graphs;
 			$this->template->header->js->weekly_graphs = $weekly_graphs;
-			$this->template->header->js->categories = $parent_categories;
 			$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
-		
+			
+			//
+			$this->template->header->js->active_startDate = $active_startDate;
+			$this->template->header->js->active_endDate = $active_endDate;
+			
 		// If we are viewing the 3D map
 		}else{
 		

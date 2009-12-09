@@ -10,3 +10,6 @@ CREATE TABLE `layer` (
 	`layer_color` VARCHAR( 20 ) NULL ,
 	`layer_visible` TINYINT NOT NULL DEFAULT '1'
 ) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
+
+
+UPDATE `settings` SET `db_version` = '21' WHERE `id`=1 LIMIT 1;

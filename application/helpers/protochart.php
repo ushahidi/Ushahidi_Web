@@ -50,12 +50,14 @@ class protochart {
 			$html .= "data$i = new Array(";
 			$labels[$i] = $label;
 			$show_comma = false;
-			foreach($data_array as $pos => $value){
-				if($show_comma){
-					$html .= ",";
+			if(is_array($data_array)){
+				foreach($data_array as $pos => $value){
+					if($show_comma){
+						$html .= ",";
+					}
+					$html .= "[$pos,$value]";
+					$show_comma = true;
 				}
-				$html .= "[$pos,$value]";
-				$show_comma = true;
 			}
 			$html .= ");
 			";
