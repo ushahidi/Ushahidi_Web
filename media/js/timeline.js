@@ -120,9 +120,9 @@
 				$.getJSON(this.url,
 				    function(data) {
 				        gTimelineData = data;
-				        plotPeriod = $.timelinePeriod(data.ALL.data);
-				        gStartTime = gStartTime || new Date(plotPeriod[0]);
-				        gEndTime   = gEndTime   || new Date(plotPeriod[1]);
+				        //plotPeriod = $.timelinePeriod(gTimelineData[0].data);
+				        gStartTime = gStartTime // || new Date(plotPeriod[0]);
+				        gEndTime   = gEndTime // || new Date(plotPeriod[1]);
 				        if (!gTimelineData[gCategoryId]) {
 				            gTimelineData[gCategoryId] = {};
 				            gTimelineData[gCategoryId]['data'] = [];
