@@ -70,6 +70,7 @@
 	// Load ProtoChart
 	if ($protochart_enabled)
 	{
+		echo "<script type=\"text/javascript\">jQuery.noConflict()</script>";
 		echo html::script('media/js/protochart/prototype', true);
 		echo '<!--[if IE]>';
 		echo html::script('media/js/protochart/excanvas-compressed', true);
@@ -90,6 +91,9 @@
 	<script type="text/javascript">DD_belatedPNG.fix('img, ul, ol, li, div, p, a');</script>
 	<![endif]-->
 	<script type="text/javascript">
+		var addthis_config = {
+		   ui_click: true
+		}	
 		<?php echo $js . "\n"; ?>
 	</script>
 </head>

@@ -129,6 +129,9 @@ class Search_Controller extends Main_Controller {
 						}
 					}
 				$incident_description = $search->incident_description;
+					// Remove any markup, otherwise trimming below will mess things up
+					$incident_description = strip_tags($incident_description);
+
 					// Trim to 180 characters without cutting words
 					if ((strlen($incident_description) > 180) && (strlen($incident_description) > 1)) {
 						$whitespaceposition = strpos($incident_description," ",175)-1;

@@ -17,7 +17,7 @@
 ?>
 jQuery(function() {
 // Ajax Validation
-	$("#footerfeedbackMain").validate({
+	jQuery("#footerfeedbackMain").validate({
 		rules: {
 			feedback_message: {
 				required: true,
@@ -51,20 +51,20 @@ jQuery(function() {
 function formSubmit ()
 {
 	// Submit Form
-	$("#footerfeedbackMain").submit();
+	jQuery("#footerfeedbackMain").submit();
 }
 
 // Show Function
 function showForm(id)
 {
 	if (id) {
-		$('#' + id).toggle(400);
+		jQuery('#' + id).toggle(400);
 	}
 }
 
 function clearField()
 {
-	$('#person_email').val("");
+	jQuery('#person_email').val("");
 } 
 
 
