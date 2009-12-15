@@ -33,7 +33,7 @@ class Sharing_Controller extends Admin_Controller
 	function index()
 	{
 		$this->template->content = new View('admin/sharing');
-		$this->template->content->title = 'Settings';
+		$this->template->content->title = Kohana::lang('ui_main.Settings');
 		
 		// What to display
 		if (isset($_GET['status']) && !empty($_GET['status']))
@@ -110,7 +110,7 @@ class Sharing_Controller extends Admin_Controller
 				{ // Delete Action
 					$sharing->delete( $sharing_id );
 					$form_saved = TRUE;
-					$form_action = "DELETED";
+					$form_action = Kohana::lang('ui_admin.deleted_caps');
 				}
 				else if($post->action == 'v')
 				{ // Active/Inactive Action
@@ -126,7 +126,7 @@ class Sharing_Controller extends Admin_Controller
 						}
 						$sharing->save();
 						$form_saved = TRUE;
-						$form_action = "MODIFIED";
+						$form_action = Kohana::lang('ui_admin.modified_caps');
 					}
 				}
 				else
@@ -168,7 +168,7 @@ class Sharing_Controller extends Admin_Controller
 					{
 						$sharing->save();
 						$form_saved = TRUE;
-						$form_action = "CREATED/EDITED";
+						$form_action = Kohana::lang('ui_admin.created_edited_caps');
 					}
 					else
 					{
@@ -225,10 +225,10 @@ class Sharing_Controller extends Admin_Controller
 		
 		// Sharing Limits Array
 		$this->template->content->sharing_limits_array = array(
-				"1" => "Hourly",
-				"2" => "Every 6 Hours",
-				"3" => "Every 12 Hours",
-				"4" => "Daily"
+				"1" => Kohana::lang('ui_admin.hourly'),
+				"2" => Kohana::lang('ui_admin.every_six_hours'),
+				"3" => Kohana::lang('ui_admin.every_twelve_hours'),
+				"4" => Kohana::lang('ui_admin.daily')
 			);
 		
         // Javascript Header
