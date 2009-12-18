@@ -83,7 +83,7 @@
                                     <option value="pop">POP</option>
                                 </select>
                             </td>
-                            <td>Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a href="http://saturn.med.nyu.edu/it/help/email/imap/index.html">What's the difference?</a></td>
+                            <td>Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a href="http://saturn.med.nyu.edu/it/help/email/imap/index.html" target="_blank">What's the difference?</a></td>
                         </tr>
                         <tr>
                             <th scope="row"><label for="select_mail_server_ssl">Enable or disable SSL</label></th>
