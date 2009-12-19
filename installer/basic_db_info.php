@@ -53,7 +53,7 @@
 				</div>
 				<?php } ?>
                 <div class="feedback info">
-                	<p>For more information, please check out <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases">this article</a> on the wiki that talks about databases in more detail.</p>
+                	<p>For more information, please check out <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases" target="_blank">this article</a> on the wiki that talks about databases in more detail.</p>
                 </div>
                 
 				<table class="form-table fields">

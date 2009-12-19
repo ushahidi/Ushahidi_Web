@@ -50,15 +50,15 @@
             
         <p>Here are instructions for changing file permissions:</p>
         <ul>
-            <li><a href="http://www.washington.edu/computing/unix/permissions.html">Unix/Linux</a></li>
-            <li><a href="http://support.microsoft.com/kb/308419">Windows</a></li>
+            <li><a href="http://www.washington.edu/computing/unix/permissions.html" target="_blank">Unix/Linux</a></li>
+            <li><a href="http://support.microsoft.com/kb/308419" target="_blank">Windows</a></li>
         </ul>
     </div>
 		
     
 	<p>For the installation process, please have the following bits of information on hand.</p>	
 	<div class="two-col tc-left">
-        <h3>Database <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases">what's this?</a></h3>
+        <h3>Database <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases" target="_blank">what's this?</a></h3>
         <ol>	
             <li>Database name</li>
             <li>Database username</li>

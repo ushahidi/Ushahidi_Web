@@ -59,7 +59,7 @@
                         <tr>
                             <th scope="row"><label id="map-provider-label" for="map_provider_api_key"><span>Google</span> API Key</label></th>
                             <td><input type="text" value="<?php print $form->value('map_provider_api_key') == "" ? $_SESSION['map_provider_api_key'] : $form->value('map_provider_api_key'); ?>" size="25" id="map_provider_api_key" name="map_provider_api_key"/></td>
-                            <td>Anyone can get an api key. <a id="api-link" href="http://code.google.com/apis/maps/signup.html">Get yours now</a> (<span id="map-provider-title">Google</span>).
+                            <td>Anyone can get an api key. <a id="api-link" href="http://code.google.com/apis/maps/signup.html" target="_blank">Get yours now</a> (<span id="map-provider-title">Google</span>).
                             </td>
                         </tr> 
                 	</tbody>

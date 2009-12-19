@@ -1391,5 +1391,5 @@ ALTER TABLE `user_tokens`
 --
 UPDATE `settings` SET
 `db_version` = '21',
-`ushahidi_version` = '1.0'
+`ushahidi_version` = '1.0.1'
 WHERE `id` =1 LIMIT 1;

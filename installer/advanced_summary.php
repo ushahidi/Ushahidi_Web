@@ -40,8 +40,8 @@
     <div class="feedback info"> 
     	<p>The files and folders listed below need to be writable by your webserver.</p>
     	<p>More information on changing file permissions can be found at the following 
-			links: <a href="http://www.washington.edu/computing/unix/permissions.html">
-			Unix/Linux</a>, <a href="http://support.microsoft.com/kb/308419\">Windows.</a></p>
+			links: <a href="http://www.washington.edu/computing/unix/permissions.html" target="_blank">
+			Unix/Linux</a>, <a href="http://support.microsoft.com/kb/308419\" target="_blank">Windows.</a></p>
             <ul>
                 <li>application/config/config.php</li>
                 <li>application/config</li>
@@ -54,7 +54,7 @@
 		
 	<p>Before you get started, you will need to make sure the following files and folders are writable by your webserver. This involves changing file permissions.</p>
 	<div class="two-col tc-left">
-        <h3>Database <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases">what's this?</a></h3>
+        <h3>Database <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases" target="_blank">what's this?</a></h3>
         <ol>	
             <li>Database name</li>
             <li>Database username</li>
