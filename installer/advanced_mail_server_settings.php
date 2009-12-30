@@ -14,17 +14,17 @@
     <div id="ushahidi_login_logo"><img src="../media/img/admin/logo_login.gif" /></div>
     <div id="ushahidi_login">
 	<ol class="progress-meter clearfix">
-		<li class=""><span>Database</span></li>
-		<li class=""><span>General</span></li>
-		<li class="active"><span>Mail Server</span></li>
-		<li class=""><span>Map</span></li>
-		<li class="last"><span>Finished</span></li>
+		<li class="active"><span><?php echo Kohana::lang('installer.database');?></span></li>
+		<li class=""><span><?php echo Kohana::lang('installer.general');?></span></li>
+		<li class=""><span><?php echo Kohana::lang('installer.mail_server');?></span></li>
+		<li class=""><span><?php echo Kohana::lang('installer.map');?></span></li>
+		<li class="last"><span><?php echo Kohana::lang('installer.finished');?></span></li>
 	</ol>
 
         	<form method="POST" name="frm_install" action="process.php" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
         		<?php if ($form->num_errors > 0 ) { ?>
         		<div class="feedback error"><a class="btn-close" href="#">x</a>
-                	<p>Listed below is a summary of the errors we encountered:</p>
+                	<p><?php echo Kohana::lang('installer.error_summary');?>:</p>
 	   				<ul id="error-list">
                     	<?php
 	   				    	print ( $form->error('site_alert_email') == "" ) ? '' : 
@@ -51,56 +51,56 @@
 				<table class="form-table fields">
                     <tbody>
                         <tr>
-                            <th scope="row"><label for="site_alert_email">Site Alert Email Address</label></th>
+                            <th scope="row"><label for="site_alert_email"><?php echo Kohana::lang('installer.site_email_alerts');?></label></th>
                             <td><input type="text" value="<?php print $form->value('site_alert_email') == "" ? $_SESSION['site_alert_email'] : $form->value('site_alert_email'); ?>" size="25" id="site_alert_email" name="site_alert_email"/></td>
-                            <td>When your site visitors sign up for email alerts, they will recieve emails from this address. This email address does not have to be the same as the Site Email Address.</td>
+                            <td><?php echo Kohana::lang('installer.site_email_alerts_description');?>.</td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="mail_server_username">Mail Server Username</label></th>
+                            <th scope="row"><label for="mail_server_username"><?php echo Kohana::lang('installer.mail_server_username');?></label></th>
                             <td><input type="text" value="<?php print $form->value('mail_server_username') == "" ? $_SESSION['mail_server_username'] : $form->value('mail_server_username'); ?>" size="25" id="mail_server_username" name="mail_server_username"/></td>
-                            <td>If you're using Gmail, Hotmail, or Yahoo Mail, enter a full email address as a username.</td>
+                            <td><?php echo Kohana::lang('installer.mail_server_username_description');?>.</td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="mail_server_pwd">Mail Server Password </label></th>
+                            <th scope="row"><label for="mail_server_pwd"><?php echo Kohana::lang('installer.mail_server_password');?> </label></th>
                             <td><input type="password" value="<?php print $form->value('mail_server_pwd') == "" ? $_SESSION['mail_server_pwd'] : $form->value('mail_server_pwd'); ?>" size="25" id="mail_server_pwd" name="mail_server_pwd"/></td>
-                            <td>The password you normally use to login in to your email.</td>
+                            <td><?php echo Kohana::lang('ui_main.<?php echo Kohana::lang('installer.mail_server_password_description');?>');?>.</td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="mail_server_port">Mail Server Port</label></th>
+                            <th scope="row"><label for="mail_server_port"><?php echo Kohana::lang('installer.mail_server_port');?></label></th>
                             <td><input type="text" value="<?php print $form->value('mail_server_port') == "" ? $_SESSION['mail_server_port']: $form->value('mail_server_port'); ?>" size="25" id="mail_server_port" name="mail_server_port"/></td>
-                            <td>Common Ports: 25, 110, 995 (Gmail POP3 SSL), 993 (Gmail IMAP SSL) .</td>
+                            <td><?php echo Kohana::lang('installer.mail_server_port_description');?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="mail_server_host">Mail Server Host</label></th>
+                            <th scope="row"><label for="mail_server_host"><?php echo Kohana::lang('installer.mail_server_host');?></label></th>
                             <td><input type="text" value="<?php print $form->value('mail_server_host') == "" ? $_SESSION['mail_server_host']: $form->value('mail_server_host'); ?>" size="25" id="mail_server_host" name="mail_server_host"/></td>
-                            <td>Examples: mail.yourwebsite.com, imap.gmail.com, pop.gmail.com.</td>
+                            <td><?php echo Kohana::lang('installer.mail_server_host_description');?>.</td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="select_mail_server_type">Mail Server Type</label></th>
+                            <th scope="row"><label for="select_mail_server_type"><?php echo Kohana::lang('installer.mail_server_type');?></label></th>
                             <td>
                             	<select name="select_mail_server_type">
                                     <option value="imap" selected="selected">IMAP</option>
                                     <option value="pop">POP</option>
                                 </select>
                             </td>
-                            <td>Internet Message Access Protocol (IMAP) or Post Office Protocol (POP). <a href="http://saturn.med.nyu.edu/it/help/email/imap/index.html" target="_blank">What's the difference?</a></td>
+                            <td><?php echo Kohana::lang('installer.mail_server_type_description');?></td>
                         </tr>
                         <tr>
-                            <th scope="row"><label for="select_mail_server_ssl">Enable or disable SSL</label></th>
+                            <th scope="row"><label for="select_mail_server_ssl"><?php echo Kohana::lang('installer.select_mail_server_ssl');?></label></th>
                             <td>
                             	<select name="select_mail_server_ssl">
-                                    <option value="0" selected="selected">Disable</option>
-                                    <option value="1">Enable</option>
+                                    <option value="0" selected="selected"><?php echo Kohana::lang('installer.disable');?></option>
+                                    <option value="1"><?php echo Kohana::lang('installer.enable');?></option>
                                 </select>
                             </td>
-                            <td>Some mail servers give you the option of using <abbr title="Secure Sockets Layer">SSL</abbr> when making a connection. Using SSL is recommended as it gives you an added level of security.</td>
+                            <td><?php echo Kohana::lang('installer.select_mail_server_ssl_description');?>.</td>
                         </tr>
                 	</tbody>
                 </table>
                 <table class="form-table">
                 	<tbody>
                     	<tr>
-                        	<td class="next"><a class="button" href="advanced_general_settings.php">&larr; Previous</a></td>
+                        	<td class="next"><a class="button" href="advanced_general_settings.php">&larr; <?php echo Kohana::lang('installer.previous');?></a></td>
                             <td class="prev"><input type="submit" id="advanced_mail_server_settings" name="advanced_mail_server_settings" value="Continue &rarr;" class="button"  /></td>
                         </tr>
                 	</tbody>

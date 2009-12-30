@@ -1,19 +1,19 @@
 			<div class="bg">
 				<h2>
-					<a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a>
-					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
-					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
-					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a>
-					<a href="<?php echo url::base() . 'admin/manage/levels' ?>" class="active">Reporter Levels</a>
-					<span>(<a href="#add">Add New</a>)</span>
-					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
+					<a href="<?php echo url::base() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/levels' ?>" class="active"><?php echo Kohana::lang('ui_main.reporter_levels');?></a>
+					<span>(<a href="#add"><?php echo Kohana::lang('ui_main.add_new');?></a>)</span>
+					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
 				</h2>
 				<?php
 				if ($form_error) {
 				?>
 					<!-- red-box -->
 					<div class="red-box">
-						<h3>Error!</h3>
+						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 						<ul>
 						<?php
 						foreach ($errors as $error_item => $error_description)
@@ -31,7 +31,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>The Level Has Been <?php echo $form_action; ?>!</h3>
+						<h3><?php echo Kohana::lang('ui_main.level_has_been');?> <?php echo $form_action; ?>!</h3>
 					</div>
 				<?php
 				}
@@ -47,9 +47,9 @@
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2">Level</th>
-										<th class="col-3">Weight</th>
-										<th class="col-4">Actions</th>
+										<th class="col-2"><?php echo Kohana::lang('ui_main.level');?></th>
+										<th class="col-3"><?php echo Kohana::lang('ui_main.weight');?></th>
+										<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -66,7 +66,7 @@
 									?>
 										<tr>
 											<td colspan="4" class="col">
-												<h3>No Results To Display!</h3>
+												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 											</td>
 										</tr>
 									<?php	
@@ -89,8 +89,8 @@
 											<td class="col-3"> <?php echo $level_weight; ?></td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($level_id)); ?>','<?php echo(rawurlencode($level_title)); ?>','<?php echo(rawurlencode($level_description)); ?>','<?php echo(rawurlencode($level_weight)); ?>')">Edit</a></li>
-<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($level_id)); ?>')" class="del">Delete</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($level_id)); ?>','<?php echo(rawurlencode($level_title)); ?>','<?php echo(rawurlencode($level_description)); ?>','<?php echo(rawurlencode($level_weight)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($level_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>
 										</tr>
@@ -108,8 +108,8 @@
 					<!-- tabset -->
 					<a name="add"></a>
 					<ul class="tabset">
-						<li><a href="#" class="active">Add/Edit</a></li>
-						<li><a href="#">Add Language</a></li>
+						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
+						<li><a href="#"><?php echo Kohana::lang('ui_main.add_language');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -120,15 +120,15 @@
 						<input type="hidden" name="action" 
 							id="action" value="a"/>
 						<div class="tab_form_item">
-							<strong>level Name:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.level_name');?>:</strong><br />
 							<?php print form::input('level_title', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Description:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.description');?>:</strong><br />
 							<?php print form::input('level_description', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Weight:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.weight');?>:</strong><br />
 							<?php print form::input('level_weight', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">

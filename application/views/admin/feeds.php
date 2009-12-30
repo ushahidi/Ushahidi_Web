@@ -15,28 +15,28 @@
 ?>
 			<div class="bg">
 				<h2>
-					<a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a>
-					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
-					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
-					<a href="<?php echo url::base() . 'admin/manage/pages' ?>">Pages</a>
-					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active">News Feeds</a>
+					<a href="<?php echo url::base() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
 					<span>(<a href="#add">Add New</a>)</span>
-					<a href="<?php echo url::base() . 'admin/manage/layers' ?>">Layers</a>
-					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
+					<a href="<?php echo url::base() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
 				</h2>
 				
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
 					<ul class="tabset">
-						<li><a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active">Feeds</a></li>
-						<li><a href="<?php echo url::base() . 'admin/manage/feeds_items' ?>">Feed Items</a></li>
+						<li><a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.feeds');?></a></li>
+						<li><a href="<?php echo url::base() . 'admin/manage/feeds_items' ?>"><?php echo Kohana::lang('ui_main.feed_items');?></a></li>
 					</ul>
 					
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="javascript:refreshFeeds();">REFRESH NEWS FEEDS</a></li><span id="feeds_loading"></span>
+							<li><a href="javascript:refreshFeeds();"><?php echo strtoupper(Kohana::lang('ui_main.refresh_news_feeds'));?></a></li><span id="feeds_loading"></span>
 						</ul>
 					</div>
 				</div>
@@ -45,7 +45,7 @@
 				?>
 					<!-- red-box -->
 					<div class="red-box">
-						<h3>Error!</h3>
+						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 						<ul>
 						<?php
 						foreach ($errors as $error_item => $error_description)
@@ -63,7 +63,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>The Feed Has Been <?php echo $form_action; ?>!</h3>
+						<h3><?php echo Kohana::lang('ui_main.feed_has_been');?> <?php echo $form_action; ?>!</h3>
 					</div>
 				<?php
 				}
@@ -79,9 +79,9 @@
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2">Feed</th>
-										<th class="col-3">Items</th>
-										<th class="col-4">Actions</th>
+										<th class="col-2"><?php echo Kohana::lang('ui_main.feed');?></th>
+										<th class="col-3"><?php echo Kohana::lang('ui_main.items');?></th>
+										<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -98,7 +98,7 @@
 									?>
 										<tr>
 											<td colspan="4" class="col">
-												<h3>No Results To Display!</h3>
+												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 											</td>
 										</tr>
 									<?php	
@@ -115,16 +115,16 @@
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $feed_name; ?>&nbsp;&nbsp;&nbsp;[<a href="<?php echo url::base() . 'admin/manage/feeds_items/'.$feed_id ?>">View Items</a>]</h4>
+													<h4><?php echo $feed_name; ?>&nbsp;&nbsp;&nbsp;[<a href="<?php echo url::base() . 'admin/manage/feeds_items/'.$feed_id ?>"><?php echo Kohana::lang('ui_main.view_items');?></a>]</h4>
 													<p><?php echo $feed_url; ?></p>
 												</div>
 											</td>
 											<td><?php echo $feed_count; ?></td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($feed_id)); ?>','<?php echo(rawurlencode($feed_name)); ?>','<?php echo(rawurlencode($feed_url)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="javascript:feedAction('v','SHOW/HIDE','<?php echo(rawurlencode($feed_id)); ?>')"<?php if ($feed_active) echo " class=\"status_yes\"" ?>>Visible</a></li>
-													<li><a href="javascript:feedAction('d','DELETE','<?php echo(rawurlencode($feed_id)); ?>')" class="del">Delete</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($feed_id)); ?>','<?php echo(rawurlencode($feed_name)); ?>','<?php echo(rawurlencode($feed_url)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+													<li class="none-separator"><a href="javascript:feedAction('v','SHOW/HIDE','<?php echo(rawurlencode($feed_id)); ?>')"<?php if ($feed_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
+													<li><a href="javascript:feedAction('d','DELETE','<?php echo(rawurlencode($feed_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>
 										</tr>
@@ -142,7 +142,7 @@
 					<!-- tabset -->
 					<a name="add"></a>
 					<ul class="tabset">
-						<li><a href="#" class="active">Add/Edit</a></li>
+						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -155,12 +155,12 @@
 						<input type="hidden" name="action" 
 							id="action" value=""/>
 						<div class="tab_form_item">
-							<strong>Feed Name:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.feed_name');?>:</strong><br />
 							<?php print form::input('feed_name', '', 
 							' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Feed URL:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.feed_url');?>:</strong><br />
 							<?php print form::input('feed_url', '', ' class="text long"'); ?>
 						</div>						
 						<div class="tab_form_item">

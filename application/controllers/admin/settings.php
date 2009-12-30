@@ -202,7 +202,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
-		$this->template->content->yesno_array = array('1'=>'YES','0'=>'NO');
+		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
 		
 		// Generate Available Locales
 		$locales = $this->_get_i18n();

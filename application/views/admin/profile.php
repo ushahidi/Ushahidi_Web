@@ -22,7 +22,7 @@
 					?>
 						<!-- red-box -->
 						<div class="red-box">
-							<h3>Error!</h3>
+							<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 							<ul>
 							<?php
 							foreach ($errors as $error_item => $error_description)
@@ -39,7 +39,7 @@
 					?>
 						<!-- green-box -->
 						<div class="green-box">
-							<h3>Your Profile Has Been Saved!</h3>
+							<h3><?php echo Kohana::lang('ui_main.profile_saved');?></h3>
 						</div>
 					<?php
 					}
@@ -50,26 +50,26 @@
 					<!-- column -->		
 					<div class="sms_holder">
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_username"); ?>">User Name</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_username"); ?>"><?php echo Kohana::lang('ui_main.username');?></a></h4>
 							<?php print form::input('username', $form['username'], ' class="text long2" readonly="readonly"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_name"); ?>">Full Name</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_name"); ?>"><?php echo Kohana::lang('ui_main.full_name');?></a></h4>
 							<?php print form::input('name', $form['name'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_email"); ?>">Email Address</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_email"); ?>"><?php echo Kohana::lang('ui_main.email');?></a></h4>
 							<?php print form::input('email', $form['email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_password"); ?>">New Password</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_password"); ?>"><?php echo Kohana::lang('ui_main.new_password');?></a></h4>
 							<?php print form::password('password', $form['password'], ' class="text"'); ?>
 							<div style="clear:both;"></div>
-							Your Password Again:<br />
+							<?php echo Kohana::lang('ui_main.password_again');?>:<br />
 							<?php print form::password('password_again', $form['password_again'], ' class="text"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_notify"); ?>">Receive Notifications?</a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_notify"); ?>"><?php echo Kohana::lang('ui_main.receive_notifications');?>?</a></h4>
 							<?php print form::dropdown('notify', $yesno_array, $form['notify']); ?>
 						</div>
 					</div>

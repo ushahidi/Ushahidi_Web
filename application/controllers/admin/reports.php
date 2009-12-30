@@ -535,7 +535,7 @@ class Reports_Controller extends Admin_Controller
 			
 			$post->add_rules('incident_active','required', 'between[0,1]');
 			$post->add_rules('incident_verified','required', 'length[0,1]');
-			$post->add_rules('incident_source','alpha', 'length[1,1]');
+			$post->add_rules('incident_source','numeric', 'length[1,1]');
 			$post->add_rules('incident_information','numeric', 'length[1,1]');
 			
 			// Test to see if things passed the rule checks

@@ -14,15 +14,15 @@
  */
 ?>
 <div class="bg">
-	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Visitor Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a> <a href="<?php print url::base() ?>admin/stats/reports">Report Stats</a> <a href="<?php print url::base() ?>admin/stats/impact">Category Impact</a></h2>
+	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits"><?php echo Kohana::lang('stats.visitor_summary');?></a> <a href="<?php print url::base() ?>admin/stats/country"><?php echo Kohana::lang('stats.country_breakdown');?></a> <a href="<?php print url::base() ?>admin/stats/reports"><?php echo Kohana::lang('stats.report_stats');?></a> <a href="<?php print url::base() ?>admin/stats/impact"><?php echo Kohana::lang('stats.category_impact');?></a></h2>
     
     <div class="content-wrap clearfix">
-        <h3>Reports Statistics</h3>
+        <h3><?php echo Kohana::lang('stats.reports_statistics');?></h3>
         
         <div id="time-period-selector">
 			<p>
 				<form method="get" action="<?php print url::base() ?>admin/stats/reports/" style="display: inline;">
-					Choose a date range: <a href="<?php print url::base() ?>admin/stats/reports/?range=30">1 MO</a> <a href="<?php print url::base() ?>admin/stats/reports/?range=90">3 MO</a> <a href="<?php print url::base() ?>admin/stats/reports/?range=180">6 MO</a> <a href="<?php print url::base() ?>admin/stats/reports/">ALL</a>
+					<?php echo Kohana::lang('stats.choose_date_range');?>: <a href="<?php print url::base() ?>admin/stats/reports/?range=30"><?php echo Kohana::lang('stats.time_range_1');?></a> <a href="<?php print url::base() ?>admin/stats/reports/?range=90"><?php echo Kohana::lang('stats.time_range_2');?></a> <a href="<?php print url::base() ?>admin/stats/reports/?range=180"><?php echo Kohana::lang('stats.time_range_3');?></a> <a href="<?php print url::base() ?>admin/stats/reports/"><?php echo Kohana::lang('stats.time_range_all');?></a>
 					<input type="text" class="dp" name="dp1" id="dp1" value="<?php echo $dp1; ?>" />&nbsp;&nbsp;-&nbsp;&nbsp; 
 					<input type="text" class="dp" name="dp2" id="dp2" value="<?php echo $dp2; ?>" /> 
 					<input type="hidden" name="range" value="<?php echo $range; ?>" />
@@ -34,7 +34,7 @@
         <!-- Left Column -->
         <div class="two-col tc-left reports-charts">
         	
-            <h4>Reports Categories</h4>
+            <h4><?php echo Kohana::lang('stats.reports_categories');?></h4>
             <p>
             	<div style="float:left;"><?php echo $reports_chart; ?></div>
             	<div style="float:left;">
@@ -55,7 +55,7 @@
             	<div style="clear:both;"></div>
             </p>
 
-            <h4>Reports Status</h4>
+            <h4><?php echo Kohana::lang('stats.reports_status');?></h4>
             <p>
 
             	<div style="float:left;"><?php echo $report_status_chart_ver; ?></div>
@@ -63,12 +63,12 @@
 					<table>
 						<tr>
 							<td><div id="little-color-box" style="background-color:#0E7800">&nbsp;</div></td>
-							<td>Verified</td>
+							<td><?php echo Kohana::lang('stats.verified');?></td>
 							<td style="padding-left:25px;"><?php echo $verified; ?></td>
 						</tr>
 						<tr>
 							<td><div id="little-color-box" style="background-color:#FFCF00">&nbsp;</div></td>
-							<td>Unverified</td>
+							<td><?php echo Kohana::lang('stats.unverified');?></td>
 							<td style="padding-left:25px;"><?php echo $unverified; ?></td>
 						</tr>
 					</table>
@@ -79,12 +79,12 @@
 					<table>
 						<tr>
 							<td><div id="little-color-box" style="background-color:#0E7800">&nbsp;</div></td>
-							<td>Approved</td>
+							<td><?php echo Kohana::lang('stats.approved');?></td>
 							<td style="padding-left:25px;"><?php echo $approved; ?></td>
 						</tr>
 						<tr>
 							<td><div id="little-color-box" style="background-color:#FFCF00">&nbsp;</div></td>
-							<td>Unapproved</td>
+							<td><?php echo Kohana::lang('stats.unapproved');?></td>
 							<td style="padding-left:25px;"><?php echo $unapproved; ?></td>
 						</tr>
 					</table>
@@ -98,11 +98,11 @@
         <div class="two-col tc-right stats-sidebar">
         	<div class="stats-wrapper clearfix">
                 <div class="statistic first">
-                    <h4>Reports</h4>
+                    <h4><?php echo Kohana::lang('stats.reports');?></h4>
                     <p><?php echo $num_reports; ?></p>
                 </div>
                 <div class="statistic">
-                    <h4>Categories</h4>
+                    <h4><?php echo Kohana::lang('stats.categories');?></h4>
                     <p><?php echo $num_categories; ?></p>
                 </div>
                 

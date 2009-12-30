@@ -16,15 +16,15 @@
 
 <div class="bg">
 
-	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits">Visitor Summary</a> <a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a> <a href="<?php print url::base() ?>admin/stats/reports">Report Stats</a> <a href="<?php print url::base() ?>admin/stats/impact">Category Impact</a></h2>
+	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/stats/hits"><?php echo Kohana::lang('stats.visitor_summary');?></a> <a href="<?php print url::base() ?>admin/stats/country"><?php echo Kohana::lang('stats.country_breakdown');?></a> <a href="<?php print url::base() ?>admin/stats/reports"><?php echo Kohana::lang('stats.report_stats');?></a> <a href="<?php print url::base() ?>admin/stats/impact"><?php echo Kohana::lang('stats.category_impact');?></a></h2>
 	
 	<div class="content-wrap">
-	<h3>Visitors Summary</h3>
+	<h3><?php echo Kohana::lang('stats.visitor_summary');?></h3>
 	
 	<div id="time-period-selector">
 		<p>
 			<form method="get" action="<?php print url::base() ?>admin/stats/hits/" style="display: inline;">
-				Choose a date range: <a href="<?php print url::base() ?>admin/stats/hits/?range=30">1 MO</a> <a href="<?php print url::base() ?>admin/stats/hits/?range=90">3 MO</a> <a href="<?php print url::base() ?>admin/stats/hits/?range=180">6 MO</a>
+				<?php echo Kohana::lang('stats.choose_date_range');?>: <a href="<?php print url::base() ?>admin/stats/hits/?range=30"><?php echo Kohana::lang('stats.time_range_1');?></a> <a href="<?php print url::base() ?>admin/stats/hits/?range=90"><?php echo Kohana::lang('stats.time_range_2');?></a> <a href="<?php print url::base() ?>admin/stats/hits/?range=180"><?php echo Kohana::lang('stats.time_range_3');?></a> <a href="<?php print url::base() ?>admin/stats/hits/"><?php echo Kohana::lang('stats.time_range_all');?></a>
 				<input type="text" class="dp" name="dp1" id="dp1" value="<?php echo $dp1; ?>" />&nbsp;&nbsp;-&nbsp;&nbsp; 
 				<input type="text" class="dp" name="dp2" id="dp2" value="<?php echo $dp2; ?>" /> 
 				<input type="hidden" name="range" value="<?php echo $range; ?>" />
@@ -38,7 +38,7 @@
 		<?php echo $traffic_chart; ?>
 		<?php if($failure != ''){ ?>
 			<div class="red-box">
-				<h3>Error!</h3>
+				<h3><?php echo Kohana::lang('stats.error');?></h3>
 				<ul><li><?php echo $failure; ?></li></ul>
 			</div>
 		<?php } ?>
@@ -46,15 +46,15 @@
 
 	<div class="stats-wrapper clearfix">
 		<div class="statistic first">
-			<h4>Unique Visitors</h4>
+			<h4><?php echo Kohana::lang('stats.unique_visitors');?></h4>
 			<p><?php echo $uniques; ?></p>
 		</div>
 		<div class="statistic">
-			<h4>Visits</h4>
+			<h4><?php echo Kohana::lang('stats.visits');?></h4>
 			<p><?php echo $visits; ?></p>
 		</div>
 		<div class="statistic">
-			<h4>Pageviews</h4>
+			<h4><?php echo Kohana::lang('stats.pageviews');?></h4>
 			<p><?php echo $pageviews; ?></p>
 		</div>
 	</div>
@@ -64,9 +64,9 @@
 		<div class="tabs">
 			<!-- tabset -->
 			<ul class="tabset">
-				<li><a <?php if($active_tab == 'uniques') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=uniques">Unique Visitors</a></li>
-				<li><a <?php if($active_tab == 'visits') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=visits">Visits</a></li>
-				<li><a <?php if($active_tab == 'pageviews') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=pageviews">Pageviews</a></li>
+				<li><a <?php if($active_tab == 'uniques') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=uniques"><?php echo Kohana::lang('stats.unique_visitors');?></a></li>
+				<li><a <?php if($active_tab == 'visits') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=visits"><?php echo Kohana::lang('stats.visits');?></a></li>
+				<li><a <?php if($active_tab == 'pageviews') echo 'class="active"'; ?> href="<?php print url::base() ?>admin/stats/hits/?range=<?php echo $range; ?>&dp1=<?php echo $dp1; ?>&dp2=<?php echo $dp2; ?>&active_tab=pageviews"><?php echo Kohana::lang('stats.pageviews');?></a></li>
 			</ul>
 
 			<div class="tab-boxes">
@@ -104,11 +104,11 @@
 
 	<!-- Right Column -->
 	<div class="two-col tc-right glossary">
-		<h4>Glossary</h4>
+		<h4><?php echo Kohana::lang('stats.glossary');?></h4>
 		<div class="terms">
-			<p><strong>Unique Visitors:</strong> The number of individuals coming to your instance; Unique Visitors are determined using cookies. In the case that a visitor does not have cookies enabled, they will be identified using a simple heuristic taking into account IP address, resolution, browser, plugins, OS, etc.</p>
-			<p><strong>Visits:</strong> A visit is a record of a unique visitor coming to the site more than 30 minutes past his/her last pageview.</p>
-			<p><strong>Pageviews:</strong> The total number of pages that visitors have viewed on your site.</p>
+			<p><strong><?php echo Kohana::lang('stats.unique_visitors');?>:</strong> <?php echo Kohana::lang('stats.unique_visitors_description');?>.</p>
+			<p><strong><?php echo Kohana::lang('stats.visits');?>:</strong> <?php echo Kohana::lang('stats.visits_description');?>.</p>
+			<p><strong><?php echo Kohana::lang('stats.pageviews');?>:</strong> <?php echo Kohana::lang('stats.pageviews_description');?>.</p>
 		</div>
 	</div>
 	<div style="clear:both;"></div>

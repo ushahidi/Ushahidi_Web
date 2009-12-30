@@ -15,21 +15,21 @@
 ?>
 <div class="bg">
 	<h2><?php echo $title; ?> 
-		<a href="<?php print url::base() ?>admin/stats/hits">Hit Summary</a> 
-		<a href="<?php print url::base() ?>admin/stats/country">Country Breakdown</a> 
-		<a href="<?php print url::base() ?>admin/stats/reports">Report Stats</a> 
-		<a href="<?php print url::base() ?>admin/stats/impact">Category Impact</a>
+		<a href="<?php print url::base() ?>admin/stats/hits"><?php echo Kohana::lang('stats.hit_summary');?></a> 
+		<a href="<?php print url::base() ?>admin/stats/country"><?php echo Kohana::lang('stats.country_breakdown');?></a> 
+		<a href="<?php print url::base() ?>admin/stats/reports"><?php echo Kohana::lang('stats.report_stats');?></a> 
+		<a href="<?php print url::base() ?>admin/stats/impact"><?php echo Kohana::lang('stats.category_impact');?></a>
 	</h2>
 	
 	<div>
 		<?php
 			if($stat_id == 0){ // No stat account created
 		?>
-				<h1 style="text-align:center">Stats Not Set Up. :o(</h1>
+				<h1 style="text-align:center"><?php echo Kohana::lang('stats.stats_not_setup');?></h1>
 		<?php
 			}else{
 		?>
-		Hello, this is the statistics section. General description going here soon. For now, browse around using the sub category links above.
+		<?php echo Kohana::lang('stats.description');?>.
 		<?php
 			}
 		?>

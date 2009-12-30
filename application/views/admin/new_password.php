@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Reset Password</title>
+<title><?php echo Kohana::lang('ui_main.reset_password');?></title>
 <link href="<?php echo url::base() ?>media/css/admin/login.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -33,7 +33,7 @@
 					<div class="green-box">
 						<h3><?php echo Kohana::lang('ui_main.password_reset_confirm'); ?></h3>
 						<br />
-						<a href="<?php echo url::base().'login'?>">Login</a>
+						<a href="<?php echo url::base().'login'?>"><?php echo Kohana::lang('ui_main.login');?></a>
 					</div>
 				</td>
 			</tr>

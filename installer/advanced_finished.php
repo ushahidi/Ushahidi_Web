@@ -14,27 +14,27 @@
     <div id="ushahidi_login_logo"><img src="../media/img/admin/logo_login.gif" /></div>
     <div id="ushahidi_login">
 	<ol class="progress-meter clearfix">
-		<li class=""><span>Database</span></li>
-		<li class=""><span>General</span></li>
-		<li class=""><span>Mail Server</span></li>
-		<li class=""><span>Map</span></li>
-		<li class="active last"><span>Finished</span></li>
+		<li class="active"><span><?php echo Kohana::lang('installer.database');?></span></li>
+		<li class=""><span><?php echo Kohana::lang('installer.general');?></span></li>
+		<li class=""><span><?php echo Kohana::lang('installer.mail_server');?></span></li>
+		<li class=""><span><?php echo Kohana::lang('installer.map');?></span></li>
+		<li class="last"><span><?php echo Kohana::lang('installer.finished');?></span></li>
 	</ol>
 
         	<form method="POST" name="frm_install" action="process.php" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
                 <div class="feedback success">
-                	<h2>Installation Successful!</h2>
+                	<h2><?php echo Kohana::lang('installer.installation_successful');?></h2>
 				</div>
-		<p>Please restart your Apache Server.</p>
-                <p>To login, go to <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?>" target="_blank">http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?></a> and use the following credentials:<br /><br />
-                <strong>Username:</strong> admin<br />
-                <strong>Password:</strong> admin</p>
-                <p><strong>Other next steps...</strong></p>
+		<p><?php echo Kohana::lang('installer.restart_apache');?>.</p>
+                <p><?php echo Kohana::lang('installer.to_login');?> <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?>" target="_blank">http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?></a> <?php echo Kohana::lang('installer.use_credentials');?>:<br /><br />
+                <strong><?php echo Kohana::lang('installer.Username');?>:</strong> admin<br />
+                <strong><?php echo Kohana::lang('installer.Password');?>:</strong> admin</p>
+                <p><strong><?php echo Kohana::lang('installer.other_steps');?></strong></p>
              
                 <ul>
-                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>" target="_blank">View your website</a></li>
-                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/reports/edit" target="_blank">Upload report data</a></li>
-                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings/sms" target="_blank">Setup your SMS server</a></li>                        
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>" target="_blank"><?php echo Kohana::lang('installer.view_website');?></a></li>
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/reports/edit" target="_blank"><?php echo Kohana::lang('installer.upload_data');?></a></li>
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings/sms" target="_blank"><?php echo Kohana::lang('installer.setup_sms');?></a></li>                        
                 </ul>
            
   </div>

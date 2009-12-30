@@ -1146,13 +1146,13 @@ input.long2 {
 .status_yes{
 	color:#009900;
 	font-weight:bold;
-	font-size:13px;
+	font-size:11px;
 	text-decoration:none;
 }
 .status_no{
 	color:#990000;
 	font-weight:bold;
-	font-size:13px;
+	font-size:11px;
 	text-decoration:none;
 }
 .comment_incident{
