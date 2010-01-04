@@ -154,8 +154,10 @@
 					addMarkers('', '', '', currZoom, currCenter, '', shareID, 'shares');
 				}
 			});
-			
+
+			// Exit if we don't have any incidents
 			if (!$("#startDate").val()) {
+				map.setCenter(new OpenLayers.LonLat(<?php echo $longitude ?>, <?php echo $latitude ?>), 5);
 				return;
 			}
 			
