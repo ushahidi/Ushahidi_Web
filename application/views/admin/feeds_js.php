@@ -38,9 +38,10 @@ function feedAction ( action, confirmAction, id )
 		// Submit Form
 		$("#feedListing").submit();			
 	
-	} else{
-		return false;
-	}
+	} 
+//	else{
+//		return false;
+//	}
 }
 
 // Ajax Refresh Feeds
