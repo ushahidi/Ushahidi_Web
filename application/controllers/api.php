@@ -1247,10 +1247,6 @@ class Api_Controller extends Controller {
 	/**
  	* get an ushahidi instance version number
  	*/
-
-	/**
- 	* get an ushahidi instance version number
- 	*/
 	function _getVersionNumber(){
 		$data = array();
 		$json_version = array();
