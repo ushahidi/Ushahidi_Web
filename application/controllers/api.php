@@ -133,6 +133,9 @@ class Api_Controller extends Controller {
 			case "version": //retrieve an ushahidi instance version number
 				$ret = $this->_getVersionNumber();
 				break;
+			case "mapcenter": //retrieve lat and lon for map centre
+				$ret = $this->_mapCenter();
+				break;
 				
 			case "category": //retrieve categories
 				$id = 0;
@@ -276,7 +279,12 @@ class Api_Controller extends Controller {
 				}
 				switch ($by){
 					case "all": // incidents
-						$ret = $this->_incidentsByAll($orderfield, $sort);
+						if(($this->_verifyArrayIndex($request, 'limit'))) { 
+							$ret = $this->_incidentsByAll($orderfield, $sort,$request['limit']);
+							
+						}else{
+							$ret = $this->_incidentsByAll($orderfield, $sort);
+						}
 						break;
 				
 					case "latlon": //latitude and longitude
@@ -482,7 +490,7 @@ class Api_Controller extends Controller {
 			//fetch categories
 			$query = " SELECT c.category_title AS categorytitle, c.id AS cid " .
 					"FROM category AS c INNER JOIN incident_category AS ic ON " .
-					"ic.category_id = c.id WHERE ic.incident_id =".$item->incidentid." LIMIT 0 , 20";
+					"ic.category_id = c.id WHERE ic.incident_id =".$item->incidentid;
 			$category_items = $this->db->query( $query );
 			
 			foreach( $category_items as $category_item ){
@@ -499,7 +507,7 @@ class Api_Controller extends Controller {
 					"m.media_type AS mediatype, m.media_link AS medialink, " .
 					"m.media_thumb AS mediathumb FROM media AS m " .
 					"INNER JOIN incident AS i ON i.id = m.incident_id " .
-					"WHERE i.id =". $item->incidentid."  LIMIT 0 , 20";
+					"WHERE i.id =". $item->incidentid;
 			
 			$media_items = $this->db->query($query);
 			
@@ -1153,8 +1161,8 @@ class Api_Controller extends Controller {
 	}
 
 	/**
- 	* get api keys
- 	*/
+ 	 * get api keys
+ 	 */
 	function _apiKey($service){
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
@@ -1193,6 +1201,52 @@ class Api_Controller extends Controller {
 
 		return $retJsonOrXml;
 	}
+	
+	/**
+ 	 * get the latitude and longitude for the default centre of the map.
+ 	 */
+	function _mapCenter(){
+		$items = array(); //will hold the items from the query
+		$data = array(); //items to parse to json
+		$json_mapcentres = array(); //lat and lon string to parse to json	
+		$retJsonOrXml = ''; //will hold the json/xml string to return
+
+		//find incidents
+		$query = "SELECT default_lat AS latitude, default_lon as longitude FROM `settings`
+			ORDER BY id DESC ;";
+
+		$items = $this->db->query($query);
+		$i = 0;
+		
+		$replar = array(); //assists in proper xml generation
+		
+		foreach ($items as $item){
+			//needs different treatment depending on the output
+			if($this->responseType == 'json'){
+				$json_mapcentres[] = array("mapcentre" => $item);
+			} else {
+				$json_mapcentres['mapcentre'.$i] = array("mapcentre" => $item) ;
+				$replar[] = 'mapcentre'.$i;
+			}
+			
+			$i++;
+		}
+		
+		//create the json array
+		$data = array("payload" => array("mapcentres" => $json_mapcentres),"error" => $this->_getErrorMsg(0));
+		
+		if($this->responseType == 'json'){
+			$retJsonOrXml = $this->_arrayAsJSON($data);
+		} else {
+			$retJsonOrXml = $this->_arrayAsXML($data, $replar);
+		}
+
+		return $retJsonOrXml;
+	}
+
+	/**
+ 	* get an ushahidi instance version number
+ 	*/
 
 	/**
  	* get an ushahidi instance version number
@@ -1338,10 +1392,10 @@ class Api_Controller extends Controller {
 	/**
  	* Fetch all incidents
  	*/
-	function _incidentsByAll($orderfield,$sort) {
+	function _incidentsByAll($orderfield,$sort,$limits=0) {
 		$where = "\nWHERE i.incident_active = 1 ";
 		$sortby = "\nORDER BY i.id DESC";
-		$limit = "\nLIMIT 0, $this->list_limit";
+		$limit = $limits != 0 ? "\nLIMIT 0, $limits" : "";
 		/* Not elegant but works */
 		return $this->_getIncidents($where.$sortby, $limit);
 	}
