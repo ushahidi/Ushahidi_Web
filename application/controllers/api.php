@@ -1208,7 +1208,7 @@ class Api_Controller extends Controller {
 	function _mapCenter(){
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
-		$json_mapcentres = array(); //lat and lon string to parse to json	
+		$json_mapcenters = array(); //lat and lon string to parse to json	
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
@@ -1223,17 +1223,17 @@ class Api_Controller extends Controller {
 		foreach ($items as $item){
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
-				$json_mapcentres[] = array("mapcentre" => $item);
+				$json_mapcenters[] = array("mapcenter" => $item);
 			} else {
-				$json_mapcentres['mapcentre'.$i] = array("mapcentre" => $item) ;
-				$replar[] = 'mapcentre'.$i;
+				$json_mapcenters['mapcenter'.$i] = array("mapcenter" => $item) ;
+				$replar[] = 'mapcenter'.$i;
 			}
 			
 			$i++;
 		}
 		
 		//create the json array
-		$data = array("payload" => array("mapcentres" => $json_mapcentres),"error" => $this->_getErrorMsg(0));
+		$data = array("payload" => array("mapcenters" => $json_mapcenters),"error" => $this->_getErrorMsg(0));
 		
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
