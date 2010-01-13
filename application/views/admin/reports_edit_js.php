@@ -268,6 +268,7 @@
 				if (!isNaN(newlat) && !isNaN(newlon))
 				{
 					var lonlat = new OpenLayers.LonLat(newlon, newlat);
+					lonlat.transform(proj_4326,proj_900913);
 					m = new OpenLayers.Marker(lonlat);
 					markers.clearMarkers();
 			    	markers.addMarker(m);
