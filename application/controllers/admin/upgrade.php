@@ -40,7 +40,7 @@ class Upgrade_Controller extends Admin_Controller
 
 	    $form_action = "";
 		
-      	$this->template->content->title = "Upgrade Ushahidi";
+      	$this->template->content->title = Kohana::lang('ui_admin.upgrade');
       	
       	//check if form has been submitted
       	if( $_POST ){  
@@ -48,11 +48,11 @@ class Upgrade_Controller extends Admin_Controller
       	
       		if( count( $upgrade->errors ) == 0  ) {
       			$this->template->content = new View('admin/upgrade_status');
-      			$this->template->content->title = "Upgrade Ushahidi Status";
+      			$this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
       			$this->template->content->logs = $upgrade->log;
       		}else{
       			$this->template->content = new View('admin/upgrade_status');
-      			$this->template->content->title = "Upgrade Ushahidi Status";
+      			$this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
       			$this->template->content->errors = $upgrade->errors;
       		}
 		}

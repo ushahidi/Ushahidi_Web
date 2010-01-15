@@ -30,7 +30,7 @@ class Stats_Controller extends Admin_Controller
 	function index()
 	{	
 		$this->template->content = new View('admin/stats_hits');
-		$this->template->content->title = 'Statistics';
+		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 		
 		// Retrieve Current Settings
 		$settings = ORM::factory('settings', 1);
@@ -49,7 +49,7 @@ class Stats_Controller extends Admin_Controller
 	function reports()
 	{
 		$this->template->content = new View('admin/stats_reports');
-		$this->template->content->title = 'Statistics';
+		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
@@ -147,7 +147,7 @@ class Stats_Controller extends Admin_Controller
 	function impact()
 	{
 		$this->template->content = new View('admin/stats_impact');
-		$this->template->content->title = 'Statistics';
+		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 		
 		// Javascript Header
 		$this->template->raphael_enabled = TRUE;
@@ -173,8 +173,6 @@ class Stats_Controller extends Admin_Controller
 		if(!isset($data['category_counts'])) {
 			$this->template->content->num_reports = 0;
 			$this->template->content->num_categories = 0;
-			$this->template->content->dp1 = null;
-			$this->template->content->dp2 = null;
 			$this->template->impact_json = '';
 			return false;
 		}
@@ -247,7 +245,7 @@ class Stats_Controller extends Admin_Controller
 	function hits()
 	{
 		$this->template->content = new View('admin/stats_hits');
-		$this->template->content->title = 'Statistics';
+		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 		
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
@@ -279,7 +277,7 @@ class Stats_Controller extends Admin_Controller
 		
 		// If we failed to get hit data, fail.
 		if(!$data) {
-			$this->template->content->traffic_chart = 'Error displaying chart';
+			$this->template->content->traffic_chart = Kohana::lang('ui_admin.chart_display_error');
 			$this->template->content->raw_data = array();
 			$this->template->content->dp1 = null;
 			$this->template->content->dp2 = null;
@@ -312,7 +310,7 @@ class Stats_Controller extends Admin_Controller
 	function country()
 	{
 		$this->template->content = new View('admin/stats_country');
-		$this->template->content->title = 'Statistics';
+		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 		
 		// Javascript Header
 		$this->template->js = new View('admin/stats_js');
@@ -343,7 +341,7 @@ class Stats_Controller extends Admin_Controller
 			$this->template->content->visits = 0;
 			$this->template->content->pageviews = 0;
 			$this->template->content->active_tab = 'uniques';
-			$this->template->content->failure = 'Stat Collection Failed!';
+			$this->template->content->failure = Kohana::lang('ui_admin.stats_collection_error_short');
 			return false;
 		}
 		
