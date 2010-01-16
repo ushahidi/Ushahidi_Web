@@ -1,20 +1,20 @@
 		<div class="bg">
 				<h2>
-					<a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a>
-					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
-					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
-					<a href="<?php echo url::base() . 'admin/manage/pages' ?>">Pages</a>
-					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a>
-					<a href="<?php echo url::base() . 'admin/manage/layers' ?>">Layers</a>
-					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>" class="active">Reporters</a>
-					<span>(<a href="#add">Add New</a>)</span>
+					<a href="<?php echo url::base() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>" class="active"><?php echo Kohana::lang('ui_main.reporters');?></a>
+					<span>(<a href="#add"><?php echo Kohana::lang('ui_main.add_new');?></a>)</span>
 				</h2>
 				<?php
 				if ($form_error) {
 				?>
 					<!-- red-box -->
 					<div class="red-box">
-						<h3>Error!</h3>
+						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 						<ul>
 						<?php
 						foreach ($errors as $error_item => $error_description)
@@ -31,7 +31,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>The Reporter Has Been <?php echo $form_action; ?></h3>
+						<h3><?php echo Kohana::lang('ui_main.reporter_has_been');?> <?php echo $form_action; ?></h3>
 					</div>
 				<?php
 				}
@@ -47,9 +47,9 @@
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2">Reporter</th>
-										<th class="col-3">Service</th>
-										<th class="col-4">Actions</th>
+										<th class="col-2"><?php echo Kohana::lang('ui_main.reporter');?></th>
+										<th class="col-3"><?php echo Kohana::lang('ui_main.service');?></th>
+										<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -66,7 +66,7 @@
 									?>
 										<tr>
 											<td colspan="4" class="col">
-												<h3>No Results To Display!</h3>
+												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 											</td>
 										</tr>
 									<?php	
@@ -113,8 +113,8 @@
 	'<?php echo(rawurlencode($reporter_email)); ?>',
 	'<?php echo(rawurlencode($reporter_phone)); ?>',
 	'<?php echo(rawurlencode($reporter_ip)); ?>',
-	'<?php echo(rawurlencode($reporter_date)); ?>')">Edit</a></li>
-													<li><a href="javascript:orgAction('d','DELETE','<?php echo(rawurlencode($reporter_id)); ?>')" class="del">Delete</a></li>
+	'<?php echo(rawurlencode($reporter_date)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+													<li><a href="javascript:orgAction('d','DELETE','<?php echo(rawurlencode($reporter_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>
 										</tr>
@@ -131,7 +131,7 @@
 					<!-- tabset -->
 					<a name="add"></a>
 					<ul class="tabset">
-						<li><a href="#" class="active">Add/Edit</a></li>
+						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -142,43 +142,43 @@
 						<input type="hidden" name="action" 
 							id="action" value="a"/>							
 						<div class="tab_form_item">
-							<strong>Service:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.service');?>:</strong><br />
 							<?php print form::dropdown('service_id', $service_array, ''); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Reporter Level:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.reporter_level');?>:</strong><br />
 							<?php print form::dropdown('level_id', $level_array, ''); ?>
 						</div>
 						<!--div class="tab_form_item2">
-							<strong>Service User ID:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.service_user_id');?>:</strong><br />
 							<?php //print form::input('service_userid', $form['service_userid'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Service Username:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.service_username');?>:</strong><br />
 							<?php //print form::input('service_account', $form['service_account'], ' class="text long"'); ?>
 						</div-->
 						<!--div class="tab_form_item2">
-							<strong>Reporter Firstname:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.reporter_firstname');?>:</strong><br />
 							<?php //print form::input('reporter_first', $form['reporter_first'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Reporter Lastname:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.reporter_last_name');?>:</strong><br />
 							<?php //print form::input('reporter_last', $form['reporter_last'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Reporter Email:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.reporter_email');?>:</strong><br />
 							<?php //print form::input('reporter_email', $form['reporter_email'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Phone:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.reporter_phone');?>:</strong><br />
 							<?php print form::input('reporter_phone', $form['reporter_phone'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Reporter IP Address:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.reporter_ip_address');?>:</strong><br />
 							<?php //print form::input('reporter_ip', $form['reporter_ip'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Reporter Date:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.reporter_date');?>:</strong><br />
 							<?php //print form::input('reporter_date', $form['reporter_date'], ' class="text long"'); ?>
 						</div-->
 						<div class="tab_form_item">

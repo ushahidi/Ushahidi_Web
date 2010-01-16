@@ -19,24 +19,24 @@
 				<div class="tabs">
 					<!-- tabset -->
 					<ul class="tabset">
-						<li><a href="?status=0" <?php if ($status != 'a' && $status !='p' && $status !='s') echo "class=\"active\""; ?>>Show All</a></li>
-						<li><a href="?status=p" <?php if ($status == 'p') echo "class=\"active\""; ?>>Pending</a></li>
-						<li><a href="?status=a" <?php if ($status == 'a') echo "class=\"active\""; ?>>Approved</a></li>
-						<li><a href="?status=s" <?php if ($status == 's') echo "class=\"active\""; ?>>Spam</a></li>
+						<li><a href="?status=0" <?php if ($status != 'a' && $status !='p' && $status !='s') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.show_all');?></a></li>
+						<li><a href="?status=p" <?php if ($status == 'p') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.pending');?></a></li>
+						<li><a href="?status=a" <?php if ($status == 'a') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.approved');?></a></li>
+						<li><a href="?status=s" <?php if ($status == 's') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.spam');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onclick="commentAction('a','APPROVE', '');">APPROVE</a></li>
-							<li><a href="#" onclick="commentAction('u','UNAPPROVE', '');">UNAPPROVE</a></li>
-							<li><a href="#" onclick="commentAction('s','MARK AS SPAM', '');">SPAM</a></li>
-							<li><a href="#" onclick="commentAction('n','MARK AS NOT SPAM', '');">NOT SPAM</a></li>
-							<li><a href="#" onclick="commentAction('d','DELETE', '');">DELETE</a></li>
+							<li><a href="#" onclick="commentAction('a','APPROVE', '');"><?php echo strtoupper(Kohana::lang('ui_main.approve'));?></a></li>
+							<li><a href="#" onclick="commentAction('u','UNAPPROVE', '');"><?php echo strtoupper(Kohana::lang('ui_main.disapprove'));?></a></li>
+							<li><a href="#" onclick="commentAction('s','MARK AS SPAM', '');"><?php echo strtoupper(Kohana::lang('ui_main.spam'));?></a></li>
+							<li><a href="#" onclick="commentAction('n','MARK AS NOT SPAM', '');"><?php echo strtoupper(Kohana::lang('ui_main.not_spam'));?></a></li>
+							<li><a href="#" onclick="commentAction('d','DELETE', '');"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 							<?php 
 							if ($status == 's')
 							{
 								?>
-								<li><a href="#" onclick="commentAction('x','DELETE ALL SPAM', '000');">DELETE ALL SPAM</a></li>
+								<li><a href="#" onclick="commentAction('x','DELETE ALL SPAM', '000');"><?php echo strtoupper(Kohana::lang('ui_main.delete_spam'));?></a></li>
 								<?php
 							}
 							?>
@@ -49,8 +49,8 @@
 				?>
 					<!-- red-box -->
 					<div class="red-box">
-						<h3>Error!</h3>
-						<ul>Please verify that you have checked an item</ul>
+						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
+						<ul><?php echo Kohana::lang('ui_main.select_one');?></ul>
 					</div>
 				<?php
 				}
@@ -60,7 +60,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box" id="submitStatus">
-						<h3>Comments <?php echo $form_action; ?> <a href="#" id="hideMessage" class="hide">hide this message</a></h3>
+						<h3>Comments <?php echo $form_action; ?> <a href="#" id="hideMessage" class="hide"><?php echo Kohana::lang('ui_main.hide_this_message');?></a></h3>
 					</div>
 				<?php
 				}
@@ -74,9 +74,9 @@
 							<thead>
 								<tr>
 									<th class="col-1"><input id="checkallcomments" type="checkbox" class="check-box" onclick="CheckAll( this.id, 'comment_id[]' )" /></th>
-									<th class="col-2">Comment Details</th>
-									<th class="col-3">Date</th>
-									<th class="col-4">Actions</th>
+									<th class="col-2"><?php echo Kohana::lang('ui_main.comment_details');?></th>
+									<th class="col-3"><?php echo Kohana::lang('ui_main.date');?></th>
+									<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -93,7 +93,7 @@
 								?>
 									<tr>
 										<td colspan="4" class="col">
-											<h3>No Results To Display!</h3>
+											<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 										</td>
 									</tr>
 								<?php	
@@ -121,15 +121,15 @@
 												<?php
 												if ($incident_title != "")
 												{
-													?><div class="comment_incident">In response to: <strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo $incident_title; ?></a></strong></div><?php
+													?><div class="comment_incident"><?php echo Kohana::lang('ui_main.in_response_to');?>: <strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo $incident_title; ?></a></strong></div><?php
 												}
 												?>
 												<p><?php echo $comment_description; ?></p>
 											</div>
 											<ul class="info">
-												<li class="none-separator">Email: <strong><?php echo $comment_email; ?></strong></li>
-												<li>IP Address: <strong><?php echo $comment_ip; ?></strong></li>
-												<li>Comment Rating: <strong><?php echo $comment_rating; ?></strong></li>
+												<li class="none-separator"><?php echo Kohana::lang('ui_main.email');?>: <strong><?php echo $comment_email; ?></strong></li>
+												<li><?php echo Kohana::lang('ui_main.ip_address');?>: <strong><?php echo $comment_ip; ?></strong></li>
+												<li><?php echo Kohana::lang('ui_main.comment_rating');?>: <strong><?php echo $comment_rating; ?></strong></li>
 											</ul>
 										</td>
 										<td class="col-3"><?php echo $comment_date; ?></td>
@@ -138,24 +138,24 @@
 												<li class="none-separator"><?php
 												if ($comment_active)
 												{
-													?><a href="#" class="status_yes" onclick="commentAction('u','UNAPPROVE', '<?php echo $comment_id; ?>');">Approved</a><?php
+													?><a href="#" class="status_yes" onclick="commentAction('u','UNAPPROVE', '<?php echo $comment_id; ?>');"><?php echo Kohana::lang('ui_main.approved');?></a><?php
 												}
 												else
 												{
-													?><a href="#" class="status_no" onclick="commentAction('a','APPROVE', '<?php echo $comment_id; ?>');">Approve</a><?php
+													?><a href="#" class="status_no" onclick="commentAction('a','APPROVE', '<?php echo $comment_id; ?>');"><?php echo Kohana::lang('ui_main.approve');?></a><?php
 												}
 												?></li>
 												<li><?php
 												if ($comment_spam)
 												{
-													?><a href="#" class="status_yes" onclick="commentAction('n','MARK AS NOT SPAM', '<?php echo $comment_id; ?>');">Spam</a><?php
+													?><a href="#" class="status_yes" onclick="commentAction('n','MARK AS NOT SPAM', '<?php echo $comment_id; ?>');"><?php echo Kohana::lang('ui_main.not_spam');?></a><?php
 												}
 												else
 												{
-													?><a href="#" class="status_no" onclick="commentAction('s','MARK AS SPAM', '<?php echo $comment_id; ?>');">Spam</a><?php
+													?><a href="#" class="status_no" onclick="commentAction('s','MARK AS SPAM', '<?php echo $comment_id; ?>');"><?php echo Kohana::lang('ui_main.spam');?></a><?php
 												}
 												?></li>
-												<li><a href="#" class="del" onclick="commentAction('d','DELETE', '<?php echo $comment_id; ?>');">Delete</a></li>
+												<li><a href="#" class="del" onclick="commentAction('d','DELETE', '<?php echo $comment_id; ?>');"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>
 										</td>
 									</tr>

@@ -18,7 +18,7 @@
 	<h2><?php echo $title; ?></h2>
 	
 	<?php if (isset($logs) && count($logs) ) { ?>
-	<h3>Upgrading</h3>
+	<h3><?php echo Kohana::lang('upgrade.upgrading');?></h3>
 	<ul>
 		<?php foreach( $logs as $log ) { ?>
 			<li><?php echo $log ?></li>
@@ -28,7 +28,7 @@
 	<?php }?>
 	
 	<?php if( isset($errors ) && count($errors)){  ?>  
-	<h3>Upgrade failed at some point</h3>	
+	<h3><?php echo Kohana::lang('upgrade.upgrade_failed');?></h3>	
 		<ul>
 	<?php foreach($errors as $error)  { ?>
 	<li><?php echo $error ?></li>

@@ -14,18 +14,18 @@
  */
 ?>
 <div class="bg">
-	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/messages">SMS</a> <a href="<?php print url::base() ?>admin/messages/twitter">Twitter</a> <a href="<?php print url::base() ?>admin/messages/laconica">Laconica</a> </h2>
+	<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/messages">SMS</a> <a href="<?php print url::base() ?>admin/messages/twitter"><?php echo Kohana::lang('ui_main.twitter');?></a> <a href="<?php print url::base() ?>admin/messages/laconica"><?php echo Kohana::lang('ui_main.laconica');?></a> </h2>
 	<!-- tabs -->
 	<div class="tabs">
 		<!-- tabset -->
 		<ul class="tabset">
-			<li><a href="?type=1" <?php if ($type == '1') echo "class=\"active\""; ?>>Inbox</a></li>
-			<li><a href="?type=2" <?php if ($type == '2') echo "class=\"active\""; ?>>Outbox</a></li>
+			<li><a href="?type=1" <?php if ($type == '1') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.inbox');?></a></li>
+			<li><a href="?type=2" <?php if ($type == '2') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.outbox');?></a></li>
 		</ul>
 		<!-- tab -->
 		<div class="tab">
 			<ul>
-				<li><!-- <a href="#" onClick="submitIds()">DELETE</a> --> <a href="#">DELETE DISABLED</a></li>
+				<li><!-- <a href="#" onClick="submitIds()">DELETE</a> --> <a href="#"><?php echo strtoupper(Kohana::lang('ui_main.delete_disabled'));?></a></li>
 			</ul>
 		</div>
 	</div>
@@ -34,8 +34,8 @@
 	?>
 		<!-- red-box -->
 		<div class="red-box">
-			<h3>Error!</h3>
-			<ul>Please verify that you have checked an item</ul>
+			<h3><?php echo Kohana::lang('ui_main.error');?></h3>
+			<ul><?php echo Kohana::lang('ui_main.select_one');?></ul>
 		</div>
 	<?php
 	}
@@ -44,7 +44,7 @@
 	?>
 		<!-- green-box -->
 		<div class="green-box" id="submitStatus">
-			<h3>Messages <?php echo $form_action; ?> <a href="#" id="hideMessage" class="hide">hide this message</a></h3>
+			<h3><?php echo Kohana::lang('ui_main.messages');?> <?php echo $form_action; ?> <a href="#" id="hideMessage" class="hide"><?php echo Kohana::lang('ui_main.hide_this_message');?></a></h3>
 		</div>
 	<?php
 	}
@@ -58,9 +58,9 @@
 				<thead>
 					<tr>
 						<th class="col-1"><input id="checkallincidents" type="checkbox" class="check-box" onclick="CheckAll( this.id, 'message_id[]' )" /></th>
-						<th class="col-2">Message Details</th>
-						<th class="col-3">Date</th>
-						<th class="col-4">Actions</th>
+						<th class="col-2"><?php echo Kohana::lang('ui_main.message_details');?></th>
+						<th class="col-3"><?php echo Kohana::lang('ui_main.date');?></th>
+						<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 					</tr>
 				</thead>
 				<tfoot>
@@ -77,7 +77,7 @@
 					?>
 						<tr>
 							<td colspan="4" class="col">
-								<h3>No Results To Display!</h3>
+								<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 							</td>
 						</tr>
 					<?php	
@@ -100,7 +100,7 @@
 									<p><?php echo $laconica_mesg_description; ?></p>
 								</div>
 								<ul class="info">
-									<li class="none-separator">From: <strong><a href="<?php echo $laconica_mesg_link; ?>" target="_blank"><?php echo $laconica_mesg_from; ?></a></strong>
+									<li class="none-separator"><?php echo Kohana::lang('ui_main.from');?>: <strong><a href="<?php echo $laconica_mesg_link; ?>" target="_blank"><?php echo $laconica_mesg_from; ?></a></strong>
 								</ul>
 							</td>
 							<td class="col-3"><?php echo $laconica_mesg_date; ?></td>
@@ -108,15 +108,15 @@
 								<ul>
 									<?php
 									if ($incident_id != 0) {
-										echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
+										echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_main.view_report')."</strong></a></li>";
 									}
 									else
 									{
-										echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?tid=' . $laconica_mesg_id ."\">Create Report?</a></li>";
+										echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?tid=' . $laconica_mesg_id ."\">".Kohana::lang('ui_main.create_report')."?</a></li>";
 									}
 									?>
 									<li>
-                                    <!-- <a href="<?php echo url::base().'admin/messages/delete/'.$laconica_mesg_id ?>" onclick="return confirm('Delete cannot be undone. Are you sure you want to continue?')" class="del">Delete</a> --></li>
+                                    <!-- <a href="<?php echo url::base().'admin/messages/delete/'.$laconica_mesg_id ?>" onclick="return confirm(<?php echo Kohana::lang('ui_main.action_confirm');?>)" class="del">Delete</a> --></li>
 								</ul>
 							</td>
 						</tr>

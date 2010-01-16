@@ -18,7 +18,7 @@
 					<div class="content-bg">
 						<!-- start reports block -->
 						<div class="big-block">
-							<h1>Feeds <?php echo $pagination_stats; ?></h1>
+							<h1><?php echo Kohana::lang('ui_admin.feeds').': '.$pagination_stats; ?></h1>
 							<div class="report_rowtitle">
 								<div class="report_col2">
 									<strong><?php echo Kohana::lang('feeds.title');?></strong>

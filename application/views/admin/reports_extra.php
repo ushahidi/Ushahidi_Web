@@ -14,22 +14,22 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?><span>(<?php echo $total_items; ?>)</span><a href="reports/edit">Create New Report</a><a href="reports/extra">Additional Reports</a></h2>
+				<h2><?php echo $title; ?><span>(<?php echo $total_items; ?>)</span><a href="reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a><a href="reports/extra"><?php echo Kohana::lang('ui_main.additional_reports');?></a></h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
 					<ul class="tabset">
-						<li><a href="?status=0" <?php if ($status != 'a' && $status !='v') echo "class=\"active\""; ?>>Show All</a></li>
-						<li><a href="?status=a" <?php if ($status == 'a') echo "class=\"active\""; ?>>Awaiting Approval</a></li>
-						<li><a href="?status=v" <?php if ($status == 'v') echo "class=\"active\""; ?>>Awaiting Verification</a></li>
+						<li><a href="?status=0" <?php if ($status != 'a' && $status !='v') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.show_all');?></a></li>
+						<li><a href="?status=a" <?php if ($status == 'a') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.awaiting_approval');?></a></li>
+						<li><a href="?status=v" <?php if ($status == 'v') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.awaiting_verification');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onclick="reportAction('a','APPROVE');">APPROVE</a></li>
-							<li><a href="#" onclick="reportAction('u','UNAPPROVE');">UNAPPROVED</a></li>
-							<li><a href="#" onclick="reportAction('v','VERIFY');">VERIFY</a></li>
-							<li><a href="#" onclick="reportAction('d','DELETE');">DELETE</a></li>
+							<li><a href="#" onclick="reportAction('a','APPROVE');"><?php echo strtoupper(Kohana::lang('ui_main.appove'));?></a></li>
+							<li><a href="#" onclick="reportAction('u','UNAPPROVE');"><?php echo strtoupper(Kohana::lang('ui_main.disapprove'));?></a></li>
+							<li><a href="#" onclick="reportAction('v','VERIFY');"><?php echo strtoupper(Kohana::lang('ui_main.verify'));?></a></li>
+							<li><a href="#" onclick="reportAction('d','DELETE');"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 						</ul>
 					</div>
 				</div>
@@ -38,8 +38,8 @@
 				?>
 					<!-- red-box -->
 					<div class="red-box">
-						<h3>Error!</h3>
-						<ul>Please verify that you have checked an item</ul>
+						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
+						<ul><?php echo Kohana::lang('ui_main.select_one');?></ul>
 					</div>
 				<?php
 				}
@@ -48,7 +48,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box" id="submitStatus">
-						<h3>Reports <?php echo $form_action; ?> <a href="#" id="hideMessage" class="hide">hide this message</a></h3>
+						<h3>Reports <?php echo $form_action; ?> <a href="#" id="hideMessage" class="hide"><?php echo Kohana::lang('ui_main.hide_this_message');?></a></h3>
 					</div>
 				<?php
 				}
@@ -61,9 +61,9 @@
 							<thead>
 								<tr>
 									<th class="col-1"><input id="checkallincidents" type="checkbox" class="check-box" onclick="CheckAll( this.id, 'incident_id[]' )" /></th>
-									<th class="col-2">Report Details</th>
-									<th class="col-3">Date</th>
-									<th class="col-4">Actions</th>
+									<th class="col-2"><?php echo Kohana::lang('ui_main.report_details');?></th>
+									<th class="col-3"><?php echo Kohana::lang('ui_main.date');?></th>
+									<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 								</tr>
 							</thead>
 							<tfoot>
@@ -80,7 +80,7 @@
 								?>
 									<tr>
 										<td colspan="4" class="col">
-											<h3>No Results To Display!</h3>
+											<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 										</td>
 									</tr>
 								<?php	
@@ -135,22 +135,22 @@
 										<td class="col-2">
 											<div class="post">
 												<h4><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo $incident_title; ?></a></h4>
-												<p><?php echo $incident_description; ?>... <a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more">more</a></p>
+												<p><?php echo $incident_description; ?>... <a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
 											</div>
 											<ul class="info">
-												<li class="none-separator">Location: <strong><?php echo $incident_location; ?></strong>, <strong>Kenya</strong></li>
-												<li>Submitted by <strong><?php echo $submit_by; ?></strong> via <strong><?php echo $submit_mode; ?></strong></li>
+												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: <strong><?php echo $incident_location; ?></strong>, <strong><?php echo Kohana::lang('ui_main.example_country');?></strong></li>
+												<li><?php echo Kohana::lang('ui_main.submitted_by');?> <strong><?php echo $submit_by; ?></strong> via <strong><?php echo $submit_mode; ?></strong></li>
 											</ul>
 											<ul class="links">
-												<li class="none-separator">Categories:<?php echo $incident_category; ?></li>
+												<li class="none-separator"><?php echo Kohana::lang('ui_main.categories');?>:<?php echo $incident_category; ?></li>
 											</ul>
 										</td>
 										<td class="col-3"><?php echo $incident_date; ?></td>
 										<td class="col-4">
 											<ul>
-												<li class="none-separator"><a href="#"<?php if ($incident_approved) echo " class=\"status_yes\"" ?> onclick="reportAction('a','APPROVE');">Approve</a></li>
-												<li><a href="#"<?php if ($incident_verified) echo " class=\"status_yes\"" ?> onclick="reportAction('v','VERIFY');">Verify</a></li>
-												<li><a href="#" class="del" onclick="reportAction('d','DELETE');">Delete</a></li>
+												<li class="none-separator"><a href="#"<?php if ($incident_approved) echo " class=\"status_yes\"" ?> onclick="reportAction('a','APPROVE');"><?php echo Kohana::lang('ui_main.approve');?></a></li>
+												<li><a href="#"<?php if ($incident_verified) echo " class=\"status_yes\"" ?> onclick="reportAction('v','VERIFY');"><?php echo Kohana::lang('ui_main.verify');?></a></li>
+												<li><a href="#" class="del" onclick="reportAction('d','DELETE');"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>
 										</td>
 									</tr>

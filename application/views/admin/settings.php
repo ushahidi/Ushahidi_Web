@@ -15,12 +15,12 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::base() . 'admin/settings/site' ?>">Site</a>
-					<a href="<?php echo url::base() . 'admin/settings' ?>" class="active">Map</a>
-					<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
-					<a href="<?php echo url::base() . 'admin/settings/sharing' ?>">Sharing</a>
-					<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
-					<a href="<?php echo url::base() . 'admin/settings/themes' ?>">Themes</a>
+					<a href="<?php echo url::base() . 'admin/settings/site' . '">' . Kohana::lang('ui_main.site') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings' . '" class="active">' . Kohana::lang('ui_main.map') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
 				</h2>
 				<?php print form::open(); ?>
 					<div class="report-form">
@@ -29,7 +29,7 @@
 						?>
 							<!-- red-box -->
 							<div class="red-box">
-								<h3>Error!</h3>
+								<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 								<ul>
 								<?php
 								foreach ($errors as $error_item => $error_description)
@@ -46,13 +46,13 @@
 						?>
 							<!-- green-box -->
 							<div class="green-box">
-								<h3>Your Settings Have Been Saved!</h3>
+								<h3><?php echo Kohana::lang('ui_main.configuration_saved');?></h3>
 							</div>
 						<?php
 						}
 						?>
 						<div class="head">
-							<h3>Map Settings</h3>
+							<h3><?php echo Kohana::lang('settings.map_settings');?></h3>
 							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 						</div>
@@ -60,37 +60,37 @@
 						<div class="l-column">
 							<div class="has_border_first">
 								<div class="row">
-									<h4>Default Location <sup><a href="#">?</a></sup></h4>
-									<p class="bold_desc">Please set a default location. This is a bit more text about setting the default location.</p>
+									<h4><?php echo Kohana::lang('settings.default_location');?> <sup><a href="#">?</a></sup></h4>
+									<p class="bold_desc"><?php echo Kohana::lang('settings.select_default_location');?>.</p>
 									<span class="my-sel-holder">
 										<?php print form::dropdown('default_country',$countries,$form['default_country']); ?>
 									</span>
 									
 									<div id="retrieve_cities">
-										<a href="javascript:retrieveCities()" id="retrieve">Retrieve Cities From Geonames</a>
+										<a href="javascript:retrieveCities()" id="retrieve"><?php echo Kohana::lang('settings.download_city_list');?></a>
 										<span id="cities_loading"></span>
 										<div id="city_count"></div>
 									</div>
 									<div>
-										Does this Ushahidi Instance Span Multiple Countries?<br />
+										<?php echo Kohana::lang('settings.multiple_countries');?>?<br />
 										<input type="radio" name="multi_country" value="1"
 										<?php if ($form['multi_country'] == 1)
 										{
 											echo " checked=\"checked\" ";
-										}?>> Yes
+										}?>> <?php echo Kohana::lang('ui_main.yes');?>
 										<input type="radio" name="multi_country" value="0"
 										<?php if ($form['multi_country'] != 1)
 										{
 											echo " checked=\"checked\" ";
-										}?>> No
+										}?>> <?php echo Kohana::lang('ui_main.no');?>
 										
 									</div>
 								</div>
 							</div>
 							<div class="has_border">
-								<h4>Map provider <sup><a href="#">?</a></sup></h4>
-								<p class="bold_desc">Setting up your map provider is a straight- forward process. More text to go here!</p>
-								<span class="blue_span">Step 1: </span><span class="dark_span">Select a Map Provider</span><br />
+								<h4><?php echo Kohana::lang('settings.map_provider.name');?> <sup><a href="#">?</a></sup></h4>
+								<p class="bold_desc"><?php echo Kohana::lang('settings.map_provider.info');?></p>
+								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 1: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.choose');?></span><br />
 								<div class="c_push">
 									<span class="my-sel-holder">
 										<?php 
@@ -100,19 +100,19 @@
 									</span>
 								</div>
 	
-								<span class="blue_span">Step 2: </span><span class="dark_span">Get an API Key</span><br />
+								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 2: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.get_api');?></span><br />
 								<div class="c_push">
 									<a href="http://code.google.com/apis/maps/signup.html" id="api_link" title="Get API Key"><img src="<?php echo url::base() ?>media/img/admin/btn-get-api-key.gif" border="0" alt="Get API Key"></a>
 								</div>
 								
 								<div id="api_div_google" <?php if ($form['default_map'] != 1 && $form['default_map'] != 4) echo "style=\"display:none\""; ?>>
-									<span class="blue_span">Step 3: </span><span class="dark_span">Enter Your Google API Key</span><br />
+									<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 3: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.enter_api');?></span><br />
 									<div class="c_push">
 										<?php print form::input('api_google', $form['api_google'], ' class="text"'); ?>
 									</div>
 								</div>
 								<div id="api_div_yahoo" <?php if ($form['default_map'] != 3) echo "style=\"display:none\""; ?>>
-									<span class="blue_span">Step 3: </span><span class="dark_span">Enter Your Yahoo API Key</span><br />
+									<span class="blue_span">Step 3: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.enter_api');?></span><br />
 									<div class="c_push">
 										<?php print form::input('api_yahoo', $form['api_yahoo'], ' class="text"'); ?>
 									</div>
@@ -123,27 +123,27 @@
 								<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 						</div>
 						<div class="r-column">
-							<h4>Configure Map <sup><a href="#">?</a></sup></h4>
+							<h4><?php echo Kohana::lang('settings.configure_map');?> <sup><a href="#">?</a></sup></h4>
 
 							<div style="width: 279px; float: left; margin-top: 10px;">
-								<span class="bold_span">Default Zoom Level</span>
+								<span class="bold_span"><?php echo Kohana::lang('settings.default_zoom_level');?></span>
 								<div class="slider_container">
 									<?php print form::dropdown('default_zoom',$default_zoom_array,$form['default_zoom']); ?>
 								</div>
 							</div>
 							<div style="width: 279px; height: 90px; float: left; margin-top: 10px;">
-								<span class="bold_span">Default Map View</span>
-								<span class="my-sel-holder"><select><option>Map</option></select></span>
+								<span class="bold_span"><?php echo Kohana::lang('settings.default_map_view');?></span>
+								<span class="my-sel-holder"><select><option><?php echo Kohana::lang('ui_main.map');?></option></select></span>
 								<div class="location-info">
-									<span>Lat:</span>
+									<span><?php echo Kohana::lang('ui_main.latitude');?>:</span>
 									<?php print form::input('default_lat', $form['default_lat'], ' readonly="readonly" class="text"'); ?>
-									<span>Lon:</span>
+									<span><?php echo Kohana::lang('ui_main.longitude');?>:</span>
 									<?php print form::input('default_lon', $form['default_lon'], ' readonly="readonly" class="text"'); ?>
 								</div>
 							</div>
 							<div style="clear:both;"></div>
-							<h4>Map preview <sup><a href="#">?</a></sup></h4>
-							<p class="bold_desc">Click and drag the map to set your exact location.</p>
+							<h4><?php echo Kohana::lang('ui_main.preview');?> <sup><a href="#">?</a></sup></h4>
+							<p class="bold_desc"><?php echo Kohana::lang('settings.set_location');?>.</p>
 
 							<div id="map_holder">
 								<div id="map" class="mapstraction"></div>    

@@ -15,21 +15,21 @@
 ?>
 			<div class="bg">
 				<h2>
-					<a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a>
-					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
-					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
-					<a href="<?php echo url::base() . 'admin/manage/pages' ?>" class="active">Pages</a>
-					<span>(<a href="#add">Add New</a>)</span>
-					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a>
-					<a href="<?php echo url::base() . 'admin/manage/layers' ?>">Layers</a>
-					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
+					<a href="<?php echo url::base() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/pages' ?>" class="active"><?php echo Kohana::lang('ui_main.pages');?></a>
+					<span>(<a href="#add"><?php echo Kohana::lang('ui_main.add_new');?></a>)</span>
+					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
 				</h2>
 				<?php
 				if ($form_error) {
 				?>
 					<!-- red-box -->
 					<div class="red-box">
-						<h3>Error!</h3>
+						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 						<ul>
 						<?php
 						foreach ($errors as $error_item => $error_description)
@@ -46,7 +46,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>The Page Has Been <?php echo $form_action; ?></h3>
+						<h3><?php echo Kohana::lang('ui_main.page_has_been');?> <?php echo $form_action; ?></h3>
 					</div>
 				<?php
 				}
@@ -62,8 +62,8 @@
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2">Page</th>
-										<th class="col-4">Actions</th>
+										<th class="col-2"><?php echo Kohana::lang('ui_main.page');?></th>
+										<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -80,7 +80,7 @@
 									?>
 										<tr>
 											<td colspan="4" class="col">
-												<h3>No Results To Display!</h3>
+												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 											</td>
 										</tr>
 									<?php	
@@ -109,9 +109,9 @@
 	'<?php echo(rawurlencode($page_id)); ?>',
 	'<?php echo(rawurlencode($page_title)); ?>',
 	'<?php echo(rawurlencode($page_tab)); ?>',
-	'<?php echo(rawurlencode($page_description)); ?>')">Edit</a></li>
-	<li class="none-separator"><a href="javascript:pageAction('v','SHOW/HIDE','<?php echo(rawurlencode($page_id)); ?>')"<?php if ($page_active) echo " class=\"status_yes\"" ?>>Visible</a></li>
-													<li><a href="javascript:pageAction('d','DELETE','<?php echo(rawurlencode($page_id)); ?>')" class="del">Delete</a></li>
+	'<?php echo(rawurlencode($page_description)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+	<li class="none-separator"><a href="javascript:pageAction('v','SHOW/HIDE','<?php echo(rawurlencode($page_id)); ?>')"<?php if ($page_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
+													<li><a href="javascript:pageAction('d','DELETE','<?php echo(rawurlencode($page_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>
 										</tr>
@@ -128,7 +128,7 @@
 					<!-- tabset -->
 					<a name="add"></a>
 					<ul class="tabset">
-						<li><a href="#" class="active">Add/Edit</a></li>
+						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -139,15 +139,15 @@
 						<input type="hidden" name="action" 
 							id="action" value="a"/>							
 						<div class="tab_form_item2">
-							<strong>Page Title:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.page_title');?>:</strong><br />
 							<?php print form::input('page_title', $form['page_title'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Page Tab Name:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.page_tab_name');?>:</strong><br />
 							<?php print form::input('page_tab', $form['page_tab'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Page Description:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.page_description');?>:</strong><br />
 							<?php print form::textarea('page_description', $form['page_description'], ' rows="12" cols="60" '); ?>
 						</div>
 						<div class="tab_form_item">
