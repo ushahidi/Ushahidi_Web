@@ -64,14 +64,14 @@ class Akismet_Core {
 		
 		// Check if the API key is valid
 		if(!$this->_is_valid_api_key($this->api_key)) {
-			$this->set_error('AKISMET_INVALID_KEY', "Your Akismet API key is not valid.");
+			$this->set_error('AKISMET_INVALID_KEY', Kohana::lang('libraries.askimet_invalid_apikey'));
 		}
 	}
 	
 	// Connect to the Akismet server and store that connection in the instance variable $con
 	function _connect() {
 		if(!($this->con = @fsockopen($this->akismet_server, $this->api_port))) {
-			$this->set_error('AKISMET_SERVER_NOT_FOUND', "Could not connect to akismet server.");
+			$this->set_error('AKISMET_SERVER_NOT_FOUND', Kohana::lang('libraries.akismet_cannot_connect'));
 		}
 	}
 	
@@ -106,7 +106,7 @@ class Akismet_Core {
 			return $response[1];
 		}
 		else {
-			$this->set_error('AKISMET_RESPONSE_FAILED', "The response could not be retrieved.");
+			$this->set_error('AKISMET_RESPONSE_FAILED', Kohana::lang('libraries.akismet_cannot_retrieve'));
 		}
 		
 		$this->_disconnect();

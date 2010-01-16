@@ -52,6 +52,7 @@ $lang = array(
 	'reports_photos' => 'Transférer les Photos',
 	'reports_btn_browse' => 'Rechercher',
 	'reports_btn_submit' => 'Soumettre',
+    'select_one' => 'Please select an item',
 	'alerts_get' => 'Obtenez des Alertes',
 	'alerts_step1_select_city' => '<strong>1er pas:</strong> Choisissez votre ville ou lieu:',
 	'alerts_alert_me' => 'Alerte-moi si un rapport est déposé dans ou autour de:',
