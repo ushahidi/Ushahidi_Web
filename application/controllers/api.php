@@ -420,21 +420,21 @@ class Api_Controller extends Controller {
 	function _getErrorMsg($errcode, $param = '', $message=''){
 		switch($errcode){
 			case 0:
-				return array("code" => "0", "message" => "No Error.");
+				return array("code" => "0", "message" => Kohana::lang('ui_admin.no_error'));
 			case 001:
-				return array("code" => "001", "message" => "Missing Parameter - $param.");
+				return array("code" => "001", "message" => Kohana::lang('ui_admin.missing_parameter')." - $param.");
 			case 002:
-				return array("code" => "002", "message" => "Invalid Parameter");
+				return array("code" => "002", "message" => Kohana::lang('ui_admin.invalid_parameter'));
 			case 003:
 				return array("code" => "003", "message" => $message );
 			case 004:
-				return array("code" => "004", "message" => "Data was not sent by post method.");
+				return array("code" => "004", "message" => Kohana::lang('ui_admin.post_method_not_used')));
 			case 005:
-				return array("code" => "005", "message" => "Access denied. Either your credentials are not valid or your request has been refused. ");
+				return array("code" => "005", "message" => Kohana::lang('ui_admin.access_denied_credentials'));
 			case 006:
-				return array("code" => "006", "message" => "Access denied. Your request has been understood, but denied due to access limits like time. Try Back Later");			
+				return array("code" => "006", "message" => Kohana::lang('ui_admin.access_denied_others'));			
 			default:
-				return array("code" => "999", "message" => "Not Found.");
+				return array("code" => "999", "message" => Kohana::lang('ui_admin.not_found'));
 		}
 	}
 	

@@ -303,8 +303,7 @@ class Alerts_Controller extends Main_Controller
 		$sms->password = $settings->clickatell_password;
 		$sms->use_ssl = false;
 		$sms->sms();
-		$message = "Your alerts confirmation code
-				is: ".$alert_code." This code is NOT case sensitive";
+		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code.'. '.Kohana::lang('ui_admin.not_case_sensitive');
 	
 		if ($sms->send($alert_mobile, $sms_from, $message) == "OK")
 		{

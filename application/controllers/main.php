@@ -566,7 +566,7 @@ class Main_Controller extends Template_Controller {
 				$frm = $post->person_email;
 				$subject = Kohana::lang('feedback.feedback_details');;
 				$message = $post->feedback_message;
-				$message .= "Instance: ".url::base();
+				$message .= Kohana::lang('ui_admin.instance').": ".url::base();
 				$email = "feedback@ushahidi.com";
 				$this->_send_feedback( $email, $message, $subject, $frm );
 			}

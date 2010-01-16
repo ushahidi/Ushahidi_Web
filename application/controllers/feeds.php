@@ -29,7 +29,7 @@ class Feeds_Controller extends Main_Controller {
 	 */
 	public function index() 
 	{
-		$this->template->header->this_page = 'feeds';
+		$this->template->header->this_page = Kohana::lang('ui_admin.feeds');
 		$this->template->content = new View('feeds');
 		
 		// Pagination
@@ -66,20 +66,18 @@ class Feeds_Controller extends Main_Controller {
 			
 			if($total_pages > 1)
 			{ // If we want to show pagination
-				$this->template->content->pagination_stats = '(Showing '
-                     .$current_page.' of '.$total_pages
-                     .' pages of '.$pagination->total_items.' feeds'.$plural.')';
+                $this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
 				
                 $this->template->content->pagination = $pagination;
 			}
 			else
 			{ // If we don't want to show pagination
-				$this->template->content->pagination_stats = '('.$pagination->total_items.' feed'.$plural.')';
+				$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.feeds');
 			}
 		}
 		else
 		{
-			$this->template->content->pagination_stats = '('.$pagination->total_items.' feed'.$plural.')';
+			$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.feeds');
 		}
 		
 		/*$icon_html = array();

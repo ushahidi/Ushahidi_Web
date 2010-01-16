@@ -88,13 +88,11 @@ class Reports_Controller extends Main_Controller {
 			$total_pages = ceil($pagination->total_items/ (int) Kohana::config('settings.items_per_page'));
 			
 			if($total_pages > 1) { // If we want to show pagination
-				$this->template->content->pagination_stats = '(Showing '
-                     .$current_page.' of '.$total_pages
-                     .' pages of '.$pagination->total_items.' report'.$plural.')';
-				
+				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
+ 				
                 $this->template->content->pagination = $pagination;
 			} else { // If we don't want to show pagination
-				$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
+				$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
 			}
 		} else {
 			$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
