@@ -19,7 +19,7 @@ class Themes_Controller extends Admin_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->template->this_page = 'settings';
+		$this->template->this_page = Kohana::lang('ui_admin.settings');
 	}
 	
 	
@@ -211,32 +211,32 @@ class Themes_Controller extends Admin_Controller
 	{		
 		$theme_data = implode( '', file( $theme_file ) );
 		$theme_data = str_replace ( '\r', '\n', $theme_data );
-		if ( preg_match( '|Theme Name:(.*)$|mi', $theme_data, $theme_name ) )
+		if ( preg_match( '|'.Kohana::lang('ui_admin.theme_name').':(.*)$|mi', $theme_data, $theme_name ) )
 			$name = $theme = trim(text::html2txt($theme_name[1]));
 		else
 			$name = $theme = '';
 
-		if ( preg_match( '|Description:(.*)$|mi', $theme_data, $description ) )
+		if ( preg_match( '|'.Kohana::lang('ui_admin.description').':(.*)$|mi', $theme_data, $description ) )
 			$description = trim(text::html2txt($description[1]));
 		else
 			$description = '';
 
-		if ( preg_match( '|Demo:(.*)$|mi', $theme_data, $demo_url ) )
+		if ( preg_match( '|'.Kohana::lang('ui_admin.demo').':(.*)$|mi', $theme_data, $demo_url ) )
 			$demo_url = trim(text::html2txt($demo_url[1]));
 		else
 			$demo_url = '';
 
-		if ( preg_match( '|Version:(.*)|i', $theme_data, $version ) )
+		if ( preg_match( '|'.Kohana::lang('ui_admin.version').':(.*)|i', $theme_data, $version ) )
 			$version = trim(text::html2txt($version[1]));
 		else
 			$version = '';
 			
-		if ( preg_match( '|Author:(.*)|i', $theme_data, $author ) )
+		if ( preg_match( '|'.Kohana::lang('ui_admin.author').':(.*)|i', $theme_data, $author ) )
 			$author = trim(text::html2txt($author[1]));
 		else
-			$author = 'Anonymous';
+			$author = Kohana::lang('ui_admin.anonymous');
 			
-		if ( preg_match( '|Author Email:(.*)|i', $theme_data, $author_email ) )
+		if ( preg_match( '|'.Kohana::lang('ui_admin.author_email').':(.*)|i', $theme_data, $author_email ) )
 			$author_email = trim(text::html2txt($author_email[1]));
 		else
 			$author_email = '';
