@@ -89,7 +89,11 @@ class Stats_Controller extends Admin_Controller
 		foreach($data['category_counts'] as $category_id => $count) {
 			$category_name = $cats[$category_id]['category_title'];
 			$report_data[$category_name] = $count;
-			$colors[$category_name] = $cats[$category_id]['category_color'];
+			if(isset($cats[$category_id]['category_color'])){
+				$colors[$category_name] = $cats[$category_id]['category_color'];
+			}else{
+				$colors[$category_name] = 'FFFFFF';
+			}
 			
 			foreach($count as $c) {				
 				// Count up the total number of reports per category
