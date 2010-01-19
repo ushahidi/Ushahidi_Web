@@ -318,7 +318,8 @@ class Main_Controller extends Template_Controller {
 			$marker_opacity = Kohana::config('map.marker_opacity');
 			$marker_stroke_width = Kohana::config('map.marker_stroke_width');
 			$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
-			$this->template->header->js = new View('main_cluster_js');
+			$this->template->header->js = ($clustering) ? 
+				new View('main_cluster_js') : new View('main_cluster_js');
 			$this->template->header->js->cluster = ($clustering == 1) ? "true" : "false";
 			$this->template->header->js->marker_radius =
 				($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;

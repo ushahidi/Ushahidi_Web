@@ -2,7 +2,7 @@
 /**
  * Main cluster js file.
  * 
- * Handles javascript stuff related to main cluster function.
+ * Server Side Map Clustering
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -17,11 +17,11 @@
 ?>
 		// Map JS
 		var map;
-		var cluster = <?php echo $cluster; ?>;
 		var currentCat;
 		var thisLayer;
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
+		var mapLoad = 0;
 		var json_url = "json_cluster";
 		
 		jQuery(function() {
@@ -37,11 +37,14 @@
 			*/
 			
 			var options = {
-				units: "m",
+				units: "mi",
 				numZoomLevels: 16,
 				controls:[],
 				projection: proj_900913,
-				'displayProjection': proj_4326
+				'displayProjection': proj_4326,
+				eventListeners: {
+						"zoomend": mapMove
+				    }
 				};
 			map = new OpenLayers.Map('map', options);
 			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
@@ -52,42 +55,38 @@
 			- Live/Yahoo/OSM/Google
 			- Set Bounds					
 			*/
-			var default_map = <?php echo $default_map; ?>;
-			if (default_map == 2)
-			{
-				map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			}
-			else if (default_map == 3)
-			{
-				map_layer = new OpenLayers.Layer.Yahoo("yahoo", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			}
-			else if (default_map == 4)
-			{
-				map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			}
-			else
-			{
-				map_layer = new OpenLayers.Layer.Google("google", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			}
-			map.addLayer(map_layer);
+			google_st = new OpenLayers.Layer.Google("Google Streets", {
+				sphericalMercator: true,
+				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+				});
+				
+			google_sat = new OpenLayers.Layer.Google("Google Satellite", {
+				type: G_SATELLITE_MAP,
+				sphericalMercator: true,
+				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+				});
+				
+			osm_sat = new OpenLayers.Layer.OSM.Mapnik("Open Street Maps Satellite", {
+				sphericalMercator: true,
+				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+				});
+				
+			map.addLayers([osm_sat, google_st, google_sat]);
+			
 			
 			// Add Controls
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
-			map.addControl(new OpenLayers.Control.MousePosition());
-			map.addControl(new OpenLayers.Control.LayerSwitcher());		
+			map.addControl(new OpenLayers.Control.MousePosition(
+					{ div: 	document.getElementById('mapMousePosition'), numdigits: 5 
+				}));    
+			map.addControl(new OpenLayers.Control.Scale('mapScale'));
+            map.addControl(new OpenLayers.Control.ScaleLine());
+			map.addControl(new OpenLayers.Control.LayerSwitcher());
+			
+			// display the map projection
+			document.getElementById('mapProjection').innerHTML = map.projection;
+				
 			gMap = map;
 			
 			// Category Switch
@@ -101,8 +100,9 @@
 				$(this).parents("div").show();
 				
 				currentCat = catID;
+				$("#currentCat").val(catID);
 				// setUrl not supported with Cluster Strategy
-				//markers.setUrl("<?php echo url::base() ?>" + json_url + '/?c=' + catID);
+				//markers.setUrl("<?php echo url::base(); ?>" json_url + '/?c=' + catID);
 				
 				// Destroy any open popups
 				onPopupClose();
@@ -115,13 +115,13 @@
 					
 				addMarkers(catID, '', '', currZoom, currCenter, gMediaType);
 				
-				graphData = allGraphData[0][catID];
+				graphData = dailyGraphData[0][catID];
 				gCategoryId = catID;
 				var startTime = new Date($("#startDate").val() * 1000);
 				var endTime = new Date($("#endDate").val() * 1000);
 				gTimeline = $.timeline({categoryId: catID, startTime: startTime, endTime: endTime,
 					graphData: graphData,
-					//url: "<?php echo url::base() ?>" + json_url + '/timeline/',
+					//url: "<?php echo url::base(); ?>json_url + '/timeline/'",
 					mediaType: gMediaType
 				});
 				gTimeline.plot();
@@ -180,17 +180,17 @@
 						
 						// Get Current Center
 						currCenter = map.getCenter();
-
-						// If we're in a two day date range, switch to
+						
+						// If we're in a two day date range, switch to 
 						// non-clustered mode
 						var startTime = new Date(startDate * 1000);
 						var endTime = new Date(endDate * 1000);
 						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 3){
-							json_url = "json";
+							json_url = "json"
 						} else {
-							json_url = "json_cluster";
+							json_url = "json_cluster"
 						}
-
+						
 						// Refresh Map
 						addMarkers(currCat, startDate, endDate, '', '', gMediaType);
 						
@@ -244,7 +244,7 @@
 					
 				// Get Current Center
 				currCenter = map.getCenter();
-
+				
 				// Refresh Map
 				addMarkers(currentCat, startTimestamp, endTimestamp, 
 				           currZoom, currCenter, gMediaType);
@@ -253,7 +253,7 @@
 				$(this).addClass('active');
 				gTimeline = $.timeline({categoryId: gCategoryId, startTime: startTime, 
 				    endTime: endTime, mediaType: gMediaType,
-					url: "<?php echo url::base() ?>" + json_url + '/timeline/'
+					url: "<?php echo url::base(); ?>json_url+'/timeline/'"
 				});
 				gTimeline.plot();
 			});
@@ -270,198 +270,240 @@
 		*/
 		function addMarkers(catID,startDate,endDate, currZoom, currCenter,
 			mediaType, thisLayerID, thisLayerType, thisLayerUrl, thisLayerColor){
-
-			var protocolUrl = "<?php echo url::base(); ?>" + json_url + "/"; // Default Json
-			var thisLayer = "Reports"; // Default Layer Name
 			
-			if (cluster) {
-				var protocolFormat = new OpenLayers.Format.GeoJSON({
-					internalProjection: proj_900913,
-					externalProjection: proj_4326}); // Default Layer Format
-			} else {
-				var protocolFormat = OpenLayers.Format.GeoJSON
-			}
+			var	protocolUrl = "<?php echo url::base(); ?>" + json_url + "/"; // Default Json
+			var thisLayer = "Reports"; // Default Layer Name
+			var protocolFormat = OpenLayers.Format.GeoJSON;
+			newlayer = false;
 			
 			if (thisLayer && thisLayerType == 'shares')
 			{				
 				protocolUrl = "<?php echo url::base(); ?>" + json_url + "/share/"+thisLayer+"/";
 				thisLayer = "Share_"+thisLayerID;
+				newlayer = true;
 			} else if (thisLayer && thisLayerType == 'layers') {
-				protocolUrl = thisLayerUrl;
+				protocolUrl = "<?php echo url::base(); ?>" + json_url + "/layer/"+thisLayerID+"/";
 				thisLayer = "Layer_"+thisLayerID;
 				
-				if (cluster) {
-					protocolFormat = new OpenLayers.Format.KML({
-						internalProjection: proj_900913,
-						externalProjection: proj_4326});
-				} else {
-					var protocolFormat = OpenLayers.Format.KML
-				}
+				var protocolFormat = OpenLayers.Format.KML;
+				//var protocolFormat = OpenLayers.Format.GeoJSON;
+				
+				newlayer = true;
 			}
+			
+			var myPoint;
+			if ( currZoom && currCenter && 
+				typeof(currZoom) != 'undefined' && typeof(currCenter) != 'undefined')
+			{
+				myPoint = currCenter;
+				myZoom = currZoom;				
+			}else{
+				// create a lat/lon object
+				myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+				myPoint.transform(proj_4326, map.getProjectionObject());
+				
+				// display the map centered on a latitude and longitude (Google zoom levels)
+				myZoom = <?php echo $default_zoom; ?>;
+			}
+			
+			if (mapLoad == 0) {
+				map.setCenter(myPoint, myZoom, false, false);
+			}
+			
+			mapLoad = mapLoad+1;
+			
+			// Get Viewport Boundaries				
+			extent = map.getExtent().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+			southwest = extent.bottom+','+extent.left;
+			northeast = extent.top+','+extent.right;
+			
 			
 			// Set Feature Styles
 			style = new OpenLayers.Style({
 				'externalGraphic': "${icon}",
+				'graphicTitle': "${cluster_count}",
 				pointRadius: "${radius}",
 				fillColor: "${color}",
 				fillOpacity: "${opacity}",
-				strokeColor: "#<?php echo $default_map_all;?>",
-				strokeWidth: <?php echo $marker_stroke_width; ?>,
-				strokeOpacity: <?php echo $marker_stroke_opacity; ?>,
-				'graphicYOffset': -20,
+				strokeColor: "${color}",
+				strokeWidth: "${strokeWidth}",
+				strokeOpacity: "0.3",
 				label:"${cluster_count}",
-				fontWeight: "bold",
+				labelAlign: "${labelalign}",
+				fontWeight: "${fontweight}",
 				fontColor: "#ffffff",
-				fontSize: "${font_size}"
+				fontSize: "${fontsize}"
 			}, 
 			{
 				context: 
 				{
-					radius: function(feature)
+					count: function(feature)
 					{
-						if (cluster)
-						{
-							feature_icon = '';
-							if (typeof(feature.cluster) != 'undefined') {
-								feature_icon = feature.cluster[0].data.icon;
-							}
-							if (feature_icon!="") {
-								return (Math.min(feature.attributes.count, 7) + 5) * 2;
-							} else {
-								if (typeof(feature.cluster) == 'undefined'
-								|| feature.cluster.length < 2)
-								{
-									return (Math.min(feature.attributes.count, 7) + 1) * <?php echo $marker_radius; ?>;
-								}else if (typeof(feature.cluster) == 'undefined'
-									|| feature.cluster.length == 2)
-								{
-									return (Math.min(feature.attributes.count, 7) + 1) * 
-										(<?php echo $marker_radius; ?> * 0.8);
-								}else{
-									return (Math.min(feature.attributes.count, 7) + 1) * 
-										(<?php echo $marker_radius; ?> * 0.6);
-								}
-							}
+						if (feature.attributes.count < 2) {
+							return 2 * <?php echo $marker_radius; ?>
+						} else if (feature.attributes.count == 2) {
+							return (Math.min(feature.attributes.count, 7) + 1) * 
+								(<?php echo $marker_radius; ?> * 0.8);
 						} else {
-							feature_icon = feature.attributes.icon;
-							if (feature_icon!="") {
-								return 16;
-							} else {
-								return <?php echo $marker_radius; ?> * 1.6;
-							}
-						}
+							return (Math.min(feature.attributes.count, 7) + 1) * 
+								(<?php echo $marker_radius; ?> * 0.6);
+						}							
 					},
-					opacity: function(feature)
+					fontsize: function(feature)
 					{
-						if (cluster)
-						{
-							feature_icon = '';
-							if (typeof(feature.cluster) != 'undefined') {
-								feature_icon = feature.cluster[0].data.icon;
-							}
-							if (feature_icon!="") {
-								return 1;
-							} else {
-								return <?php echo $marker_opacity; ?>;
-							}
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "9px";
 						} else {
-							feature_icon = feature.attributes.icon;
-							if (feature_icon!="") {
-								return 1;
-							} else {
-								return <?php echo $marker_opacity; ?>;
-							}
-						}
-					},						
-					color: function(feature)
-					{
-						if (cluster)
-						{
-							if (thisLayerType == 'layers') {
-								return "#" + thisLayerColor;
-							} else {
-								if ( typeof(feature.cluster) != 'undefined' && 
-									(feature.cluster.length < 2 || 
-									(typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
-									|| thisLayer != "Reports" )
-								{
-									return "#" + feature.cluster[0].data.color;
-								}
-								else
-								{
-									return "#<?php echo $default_map_all;?>";
-								}
-							}
-						} else {
-							return "#" + feature.attributes.color;
-						}
-					},
-					icon: function(feature)
-					{
-						if (cluster) 
-						{
-							if ( typeof(feature.cluster) != 'undefined' && 
-							     feature.cluster.length < 2 || 
-							     (typeof(catID) != 'undefined' && catID.length > 0 && catID != 0))
+							feature_count = feature.attributes.count;
+							if (feature_count > 1000)
 							{
-								feature_icon = '';
-								if (typeof(feature.cluster) != 'undefined') {
-									feature_icon = feature.cluster[0].data.icon;
-								}
-								if (feature_icon!="") {
-									return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
-								} else {
-									return "";
-								}
+								return "20px";
+							}
+							else if (feature_count > 500)
+							{
+								return "18px";
+							}
+							else if (feature_count > 100)
+							{
+								return "14px";
+							}
+							else if (feature_count > 10)
+							{
+								return "12px";
+							}
+							else if (feature_count >= 2)
+							{
+								return "10px";
 							}
 							else
 							{
 								return "";
 							}
+						}					
+					},
+					fontweight: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "normal";
 						} else {
-							feature_icon = feature.attributes.icon;
-							if (feature_icon!="") {
-								return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
-							} else {
-								return "";
-							}
+							return "bold";
+						}
+					},
+					radius: function(feature)
+					{
+						feature_count = feature.attributes.count;
+						if (feature_count > 10000) {
+							return <?php echo $marker_radius; ?> * 17;
+						}
+						else if (feature_count > 5000)
+						{
+							return <?php echo $marker_radius; ?> * 10;
+						}
+						else if (feature_count > 1000)
+						{
+							return <?php echo $marker_radius; ?> * 8;
+						}
+						else if (feature_count > 500)
+						{
+							return <?php echo $marker_radius; ?> * 7;
+						}
+						else if (feature_count > 100)
+						{
+							return <?php echo $marker_radius; ?> * 6;
+						}
+						else if (feature_count > 10)
+						{
+							return <?php echo $marker_radius; ?> * 5;
+						}
+						else if (feature_count >= 2)
+						{
+							return <?php echo $marker_radius; ?> * 3;
+						}
+						else
+						{
+							return <?php echo $marker_radius; ?> * 2;
+						}
+					},
+					strokeWidth: function(feature)
+					{
+						feature_count = feature.attributes.count;
+						if (feature_count > 10000) {
+							return 45;
+						}
+						else if (feature_count > 5000)
+						{
+							return 30;
+						}
+						else if (feature_count > 1000)
+						{
+							return 22;
+						}
+						else if (feature_count > 100)
+						{
+							return 15;
+						}
+						else if (feature_count > 10)
+						{
+							return 10;
+						}
+						else if (feature_count >= 2)
+						{
+							return 5;
+						}
+						else
+						{
+							return 1;
+						}
+					},					
+					color: function(feature) 
+					{
+						return "#" + feature.attributes.color;
+					},
+					icon: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
+						} else {
+							return "";
 						}
 					},
 					cluster_count: function(feature)
 					{
-						if (cluster) {
-							if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 1)
-							{
-								return feature.cluster.length;
+						if (feature.attributes.count > 1)
+						{
+							feature_icon = feature.attributes.icon;
+							if (feature_icon!="") {
+								return "> " + feature.attributes.count;
+							} else {
+								return feature.attributes.count;
 							}
-							else
-							{
-								return "";
-							}
-						} else {
+						}
+						else
+						{
 							return "";
 						}
-						
 					},
-					font_size: function(feature)
+					opacity: function(feature)
 					{
-						if (cluster) {
-							if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 10)
-							{
-								return "20px";
-							}
-							else if ( typeof(feature.cluster) != 'undefined' && feature.cluster.length > 5)
-							{
-								return "15px";
-							}
-							else
-							{
-								return "";
-							}
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "1";
 						} else {
-							return "";
+							return "<?php echo $marker_opacity; ?>";
 						}
-					}
+					},
+					labelalign: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "lb";
+						} else {
+							return "c";
+						}
+					},					
 				}
 			});
 			
@@ -481,6 +523,7 @@
 				}
 			}
 			
+			// Add parameters
 			params = [];
 			if (typeof(catID) != 'undefined' && catID.length > 0){
 				params.push('c=' + catID);
@@ -492,82 +535,45 @@
 				params.push('e=' + endDate);
 			}
 			if (typeof(mediaType) != 'undefined'){
-				params.push('m=' + mediaType);
+				//params.push('m=' + mediaType);
 			}
 			
-			if (cluster) {
-				markers = new OpenLayers.Layer.Vector(thisLayer, {
-					preFeatureInsert: preFeatureInsert,
-					strategies: [
-						new OpenLayers.Strategy.Fixed(),
-					    new OpenLayers.Strategy.Cluster({
-							distance: 20
-						})
-					],
-					protocol: new OpenLayers.Protocol.HTTP({
-	                    url: protocolUrl + '?' + params.join('&'),
-	                    format: protocolFormat
-	                }),
-					projection: proj_900913,
-					formatOptions: {
-						extractStyles: true,
-						extractAttributes: true
-					},
-					styleMap: new OpenLayers.StyleMap({
-						"default": style,
-						"select": style
-					})
-				});
-			} else {
-				markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?' + params.join('&'), 
-				{
-					preFeatureInsert:preFeatureInsert,
-					format: protocolFormat,					
-					projection: proj_4326,
-					formatOptions: {
-						extractStyles: true,
-						extractAttributes: true
-					},
-					styleMap: new OpenLayers.StyleMap({
-						"default":style,
-						"select": style
-					})
-				});
-			}
-			
-			map.addLayer(markers);
-			selectControl = new OpenLayers.Control.SelectFeature(
-				markers
-			);
-
-            map.addControl(selectControl);
-            selectControl.activate();
-			
-			markers.events.on({
-				"featureselected": onFeatureSelect,
-				"featureunselected": onFeatureUnselect
+			//markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?z='+ myZoom +'&sw='+ southwest +'&ne='+ northeast +'&' + params.join('&'), 
+			markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?z='+ myZoom + '&' + params.join('&'), 
+			{
+				preFeatureInsert:preFeatureInsert,
+				format: protocolFormat,					
+				projection: proj_4326,
+				formatOptions: {
+					extractStyles: true,
+					extractAttributes: true
+				},
+				styleMap: new OpenLayers.StyleMap({
+					"default":style,
+					"select": style
+				})
 			});
 			
-			var myPoint;
-			if ( currZoom && currCenter && 
-				typeof(currZoom) != 'undefined' && typeof(currCenter) != 'undefined')
-			{
-				myPoint = currCenter;
-				myZoom = currZoom;
-				
-			}else{
-				// create a lat/lon object
-				myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
-				myPoint.transform(proj_4326, map.getProjectionObject());
-				
-				// display the map centered on a latitude and longitude (Google zoom levels)
-				myZoom = <?php echo $default_zoom; ?>;
-			};
-			map.setCenter(myPoint, myZoom);
+			map.addLayer(markers);
+			
+			if (!newlayer || thisLayerID==8) {
+				selectControl = new OpenLayers.Control.SelectFeature(
+					markers
+				);
+
+	            map.addControl(selectControl);
+	            selectControl.activate();
+
+				markers.events.on({
+					"featureselected": onFeatureSelect,
+					"featureunselected": onFeatureUnselect
+				});
+			}
 		}
 		
 		gAddMarkers = addMarkers;
 		//addMarkers();
+		
 		
 		/*
 		Display loader as Map Loads
@@ -601,36 +607,14 @@
             selectedFeature = event;
             // Since KML is user-generated, do naive protection against
             // Javascript.
-			if (cluster)
-			{
-				var content = "<div class=\"infowindow\">";
-				content = content + "<h2>" + event.feature.cluster.length + " Event[s]...</h2>\n";
-				content = content + "<div class=\"infowindow_list\"><ul>";
-				for(var i=0; i<Math.min(event.feature.cluster.length, 5); ++i) {
-					content = content + "\n<li>" + event.feature.cluster[i].data.name + "</li>";
-				}
-				content = content + "</ul></div>";
-				if (event.feature.cluster.length > 1)
-				{
-					// Lon/Lat Spherical Mercator
-					zoom_point_sm = event.feature.cluster[0].geometry.getBounds().getCenterLonLat();
-					lon_sm = zoom_point_sm.lon;
-					lat_sm = zoom_point_sm.lat;
-					// Converted Lon/Lat
-					zoom_point = zoom_point_sm.transform(proj_900913, proj_4326);
-					lon = zoom_point.lon;
-					lat = zoom_point.lat;
-					content = content + "\n<div class=\"infowindow_meta\"><a href=\"<?php echo url::base() . 'reports/?lon="+ lon + "&lat="+ lat +"' ?>\">View&nbsp;Events</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+lon_sm+","+lat_sm+")'>Zoom&nbsp;In</a></div>";
-				}
-				content = content + "</div>";
-			} else {
-				zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
-				lon = zoom_point.lon;
-				lat = zoom_point.lat;
-				var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+event.feature.attributes.name + "</li></ul></div>";
-				content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
-				content = content + "</div>";
-			}			
+
+			zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
+			lon = zoom_point.lon;
+			lat = zoom_point.lat;
+			
+			var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+event.feature.attributes.name + "</li></ul><div style=\"clear:both;\"></div></div>";
+			content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
+			content = content + "</div>";			
 			
 			if (content.search("<script") != -1) {
                 content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
@@ -651,7 +635,57 @@
             map.removePopup(event.feature.popup);
             event.feature.popup.destroy();
             event.feature.popup = null;
-        }		
+        }
+
+		// Refactor Clusters On Zoom
+		// *** Causes the map to load json twice on the first go
+		// *** Need to fix this!
+		function mapZoom(event) {
+			// Prevent this event from running on the first load
+			if (mapLoad > 0) {
+				// Get Current Category
+				currCat = $("#currentCat").val();
+
+				// Get Current Start Date
+				currStartDate = $("#startDate").val();
+
+				// Get Current End Date
+				currEndDate = $("#endDate").val();
+
+				// Get Current Zoom
+				currZoom = map.getZoom();
+
+				// Get Current Center
+				currCenter = map.getCenter();
+
+				// Refresh Map
+				addMarkers(currCat, currStartDate, currEndDate, currZoom, currCenter);
+			}
+		}
+		
+		function mapMove(event) {
+			// Prevent this event from running on the first load
+			if (mapLoad > 0) {
+				// Get Current Category
+				currCat = $("#currentCat").val();
+
+				// Get Current Start Date
+				currStartDate = $("#startDate").val();
+
+				// Get Current End Date
+				currEndDate = $("#endDate").val();
+
+				// Get Current Zoom
+				currZoom = map.getZoom();
+
+				// Get Current Center
+				currCenter = map.getCenter();
+
+				// Refresh Map
+				addMarkers(currCat, currStartDate, currEndDate, currZoom, currCenter);
+			}
+		}
+		
 		
 		/*
 		Refresh Graph on Slider Change
@@ -670,7 +704,7 @@
 			var graphData = dailyGraphData[0][currentCat];
 
 			// plot hourly incidents when period is within 2 days
-			if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 2) {
+			if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 3) {
 			    graphData = hourlyGraphData[0][currentCat];
 			} else if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 124) { 
 			    // weekly if period > 2 months
@@ -683,7 +717,7 @@
 			gTimeline = $.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
 			    endTime: new Date(endDate * 1000), mediaType: gMediaType,
 				graphData: graphData //allGraphData[0][currentCat], 
-				//url: "<?php echo url::base() ?>" + json_url + '/timeline/'
+				//url: "<?php echo url::base(); ?>json_url+'/timeline/'"
 			});
 			gTimeline.plot();
 		}
