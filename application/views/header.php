@@ -29,7 +29,9 @@
 
 	// Load OpenLayers before jQuery!
 	if ($map_enabled == 'streetmap') {
+
 		echo html::script('media/js/OpenLayers', true);
+		//echo html::script('http://assets.ushahidi.com/media/js/OpenLayers_2'.$gz, true);
 		echo "<script type=\"text/javascript\">OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';</script>";
 		//echo 'STREET!';
 	}

@@ -140,7 +140,15 @@
 								<?php
 									// My apologies for the inline CSS. Seems a little wonky when styles added to stylesheet, not sure why.
 								?>
-								<div class="<?php echo $map_container; ?>" id="<?php echo $map_container; ?>" <?php if($map_container === 'map3d') { echo 'style="width:573px; height:573px;"'; } ?>></div> 
+								<div class="<?php echo $map_container; ?>" id="<?php echo $map_container; ?>" <?php if($map_container === 'map3d') { echo 'style="width:573px; height:573px;"'; } ?>></div>
+								<div style="clear:both;"></div>
+								<div id="mapStatus">
+									<div id="mapScale" style="border-right: solid 1px #999"></div>
+									<div id="mapMousePosition" style="min-width: 135px;border-right: solid 1px #999;text-align: center"></div>
+									<div id="mapProjection" style="border-right: solid 1px #999"></div>
+									<div id="mapOutput"></div>
+								</div>
+								<div style="clear:both;"></div>
 								<?php if($map_container === 'map') { ?>
 								<div class="slider-holder">
 									<form action="">

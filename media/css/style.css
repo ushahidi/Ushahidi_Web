@@ -446,6 +446,32 @@ div.map {
     width: 573px;
     height: 366px;
 }
+#mapStatus
+{
+	float: left;
+	background-color: #e1e1e1;
+	border-left: solid 1px #999;
+	border-right: solid 1px #999;
+	border-bottom: solid 1px #999;
+	font-size: 10px;
+	width: 573px;
+}
+#mapStatus div
+{
+	float: left;
+	display: inline-block;
+	padding: 4px 6px 4px 6px;
+}
+#mapOutput sup
+{
+	height: 0;
+	line-height: 1;
+	vertical-align: text-top;
+	_vertical-align: text-top;
+	position: relative;
+	font-size: 8px;
+}
+
 
 div.graph-holder {
     height:150px;
@@ -778,9 +804,8 @@ div.incident-notation ul li{
 .report-map .map-holder {
 	overflow:hidden;
 	clear:both;
-	border:1px solid #ccc;
 	width:428px;
-	height:298px;
+	height:370px;
 }
 
 
@@ -1010,6 +1035,24 @@ div.content-media ul li a.media-type-video{
 .olPopupCloseBox {
   background: url("../img/openlayers/close.gif") no-repeat;
   cursor: pointer;
+}
+.olControlScale {
+	right: 3px;
+	bottom: 3em;
+	display: block;
+	position: absolute;
+	font-size: smaller;
+}
+.olControlScaleLine {
+	left: 10px;
+	bottom: 15px;
+	font-size: xx-small;
+}
+.olControlScaleLineBottom {
+	border: solid 2px black;
+	border-bottom: none;
+	margin-top:0;
+	text-align: center;
 }
 .infowindow{
 	padding:10px;
