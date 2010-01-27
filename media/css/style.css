@@ -1141,21 +1141,31 @@ label.error {
 	margin:20px 0 0 25px;
 	padding:0 0 10px;
 }
+.report_block{
+  margin: 20px 0 20px 25px;
+}
+.report_block table tr th {
+  text-align: left;
+}
 .report_right table {
 	width: 100%;
 }
 .report_right table tr th {
 	text-align: left;
 }
+.report-description table tr th {
+	text-align: left;
+}
+.report-description table { width: 100%; }
 .w-01 {
-	width:238px;
+	width:50%;
 	padding:0 10px 0 0;
 }
 .w-02 {
-	width:92px;
+/*	width:100px; */
 	padding:0 10px 0 0;
 }
-.w-03 {width:60px;}
+/*.w-03 {width:100px;}*/
 
 .report_bottom{
 	clear:both;
