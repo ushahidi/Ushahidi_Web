@@ -22,6 +22,7 @@
 		var thisLayer;
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
+		var json_url = "json_cluster";
 		
 		jQuery(function() {
 			var map_layer;
@@ -101,7 +102,7 @@
 				
 				currentCat = catID;
 				// setUrl not supported with Cluster Strategy
-				//markers.setUrl("<?php echo url::base() . 'json/?c=' ?>" + catID);
+				//markers.setUrl("<?php echo url::base() ?>" + json_url + '/?c=' + catID);
 				
 				// Destroy any open popups
 				onPopupClose();
@@ -120,7 +121,7 @@
 				var endTime = new Date($("#endDate").val() * 1000);
 				gTimeline = $.timeline({categoryId: catID, startTime: startTime, endTime: endTime,
 					graphData: graphData,
-					//url: "<?php echo url::base() . 'json/timeline/' ?>",
+					//url: "<?php echo url::base() ?>" + json_url + '/timeline/',
 					mediaType: gMediaType
 				});
 				gTimeline.plot();
@@ -179,7 +180,17 @@
 						
 						// Get Current Center
 						currCenter = map.getCenter();
-						
+
+						// If we're in a two day date range, switch to
+						// non-clustered mode
+						var startTime = new Date(startDate * 1000);
+						var endTime = new Date(endDate * 1000);
+						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 3){
+							json_url = "json";
+						} else {
+							json_url = "json_cluster";
+						}
+
 						// Refresh Map
 						addMarkers(currCat, startDate, endDate, '', '', gMediaType);
 						
@@ -233,7 +244,7 @@
 					
 				// Get Current Center
 				currCenter = map.getCenter();
-				
+
 				// Refresh Map
 				addMarkers(currentCat, startTimestamp, endTimestamp, 
 				           currZoom, currCenter, gMediaType);
@@ -242,7 +253,7 @@
 				$(this).addClass('active');
 				gTimeline = $.timeline({categoryId: gCategoryId, startTime: startTime, 
 				    endTime: endTime, mediaType: gMediaType,
-					url: "<?php echo url::base() . 'json/timeline/' ?>"
+					url: "<?php echo url::base() ?>" + json_url + '/timeline/'
 				});
 				gTimeline.plot();
 			});
@@ -259,8 +270,8 @@
 		*/
 		function addMarkers(catID,startDate,endDate, currZoom, currCenter,
 			mediaType, thisLayerID, thisLayerType, thisLayerUrl, thisLayerColor){
-			
-			var	protocolUrl = "<?php echo url::base(); ?>" + "json/"; // Default Json
+
+			var protocolUrl = "<?php echo url::base(); ?>" + json_url + "/"; // Default Json
 			var thisLayer = "Reports"; // Default Layer Name
 			
 			if (cluster) {
@@ -273,7 +284,7 @@
 			
 			if (thisLayer && thisLayerType == 'shares')
 			{				
-				protocolUrl = "<?php echo url::base(); ?>" + "json/share/"+thisLayer+"/";
+				protocolUrl = "<?php echo url::base(); ?>" + json_url + "/share/"+thisLayer+"/";
 				thisLayer = "Share_"+thisLayerID;
 			} else if (thisLayer && thisLayerType == 'layers') {
 				protocolUrl = thisLayerUrl;
@@ -672,7 +683,7 @@
 			gTimeline = $.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
 			    endTime: new Date(endDate * 1000), mediaType: gMediaType,
 				graphData: graphData //allGraphData[0][currentCat], 
-				//url: "<?php echo url::base() . 'json/timeline/' ?>"
+				//url: "<?php echo url::base() ?>" + json_url + '/timeline/'
 			});
 			gTimeline.plot();
 		}
