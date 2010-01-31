@@ -116,66 +116,64 @@
 						</div>
 					</div>		
 				</div>
-				<!-- end incident block <> start other report -->
 		
-				<div class="blocks-holder">
+				<?php
+					if( count($incident_photos) > 0 ) 
+					{
+				?>
+				<!-- start images -->
+				<div class="report-description">
+					<h3>Images</h3>
+					<div class="photoslider" id="default"></div>
+				</div>
+
+				<!-- end images <> start side block -->
+				<?php 
+					} else {
+				?> 
+
+				<div class="report-description">
+					<h3>Related Mainstream News of Incident</h3>
+					<table>
+						<tr class="title">
+							<th class="w-01">TITLE</th>
+							<th class="w-02">SOURCE</th>
+							<th class="w-03">DATE</th>
+						</tr>
+						<?php
+							foreach ($feeds as $feed)
+								{
+									$feed_id = $feed->id;
+									$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+									$feed_link = $feed->item_link;
+									$feed_date = date('M j Y', strtotime($feed->item_date));
+									$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
+							?>
+						<tr>
+							<td class="w-01">
+								<a href="<?php echo $feed_link; ?>" target="_blank">
+								<?php echo $feed_title ?></a>
+							</td>
+							<td class="w-02"><?php echo $feed_source; ?></td>
+								<td class="w-03"><?php echo $feed_date; ?></td>
+						</tr>
+						<?php
+							}
+						?>
+					</table>
+					<!-- end mainstream news of incident -->
 					<?php
-						if( count($incident_photos) > 0 ) 
-						{
-					?>
-					<!-- start images -->
-					<div class="small-block images">
-						<h3>Images</h3>
-						<div class="photoslider" id="default"></div>
-					</div>
-					<!-- end images <> start side block -->
-					<?php 
-						} else {
-					?> 
-					<!-- start mainstream news of incident -->	
-					<div class="report_left">
-						<h3>Related Mainstream News of Incident</h3>
+					}?>
+
+					<div class="report-description">
+						<h3>Incident Report(s)</h3>
 						<table>
 							<tr class="title">
 								<th class="w-01">TITLE</th>
-								<th class="w-02">SOURCE</th>
+								<th class="w-02">LOCATION</th>
 								<th class="w-03">DATE</th>
 							</tr>
 							<?php
-								foreach ($feeds as $feed)
-									{
-										$feed_id = $feed->id;
-										$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
-										$feed_link = $feed->item_link;
-										$feed_date = date('M j Y', strtotime($feed->item_date));
-										$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
-								?>
-							<tr>
-								<td class="w-01">
-									<a href="<?php echo $feed_link; ?>" target="_blank">
-									<?php echo $feed_title ?></a>
-								</td>
-								<td class="w-02"><?php echo $feed_source; ?></td
-									<td class="w-03"><?php echo $feed_date; ?></td>
-							</tr>
-							<?php
-								}
-							?>
-						</table>
-						<!-- end mainstream news of incident -->
-						<?php
-						}?>
-					</div>
-					<div class="report_right">
-						<div class="small-block">
-							<h3>Incident Report(s)</h3>
-							<table>
-								<tr class="title">
-									<th class="w-01">TITLE</th>
-									<th class="w-02">LOCATION</th>
-									<th class="w-03">DATE</th>
-								</tr>
-								<?php
 								foreach($incident_neighbors as $neighbor)
 								{
 									echo "<tr>";
@@ -186,10 +184,9 @@
 									echo "</tr>";
 								}
 								?>
-							</table>
-						</div>
+						</table>
 					</div>
-						
+
 						<?php 
 						if( $incident_photos <= 0) 
 						{
@@ -234,7 +231,7 @@
 							if( count($incident_videos) > 0 ) 
 							{
 						?>
-						<div class="small-block images">
+						<div class="report-description">
 							<h3>Videos</h3>
 							<div class="block-bg">
 								<div class="slider-wrap">

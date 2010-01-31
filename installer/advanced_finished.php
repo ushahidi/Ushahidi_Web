@@ -25,15 +25,16 @@
                 <div class="feedback success">
                 	<h2>Installation Successful!</h2>
 				</div>
-                <p>To login, go to <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?>">http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?></a> and use the following credentials:<br /><br />
+		<p>Please restart your Apache Server.</p>
+                <p>To login, go to <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?>" target="_blank">http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin/";?></a> and use the following credentials:<br /><br />
                 <strong>Username:</strong> admin<br />
                 <strong>Password:</strong> admin</p>
                 <p><strong>Other next steps...</strong></p>
              
                 <ul>
-                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>">View your website</a></li>
-                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/reports/edit">Upload report data</a></li>
-                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings/sms">Setup your SMS server</a></li>                        
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>" target="_blank">View your website</a></li>
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/reports/edit" target="_blank">Upload report data</a></li>
+                    <li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]);?>/admin/settings/sms" target="_blank">Setup your SMS server</a></li>                        
                 </ul>
            
   </div>
