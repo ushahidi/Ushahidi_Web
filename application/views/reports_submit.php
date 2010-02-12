@@ -145,7 +145,9 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 									</div>
 								</div>
 								<div id="custom_forms">
+									
                                     <?php
+                                    
 									foreach ($disp_custom_fields as $field_id => $field_property)
 									{
 										echo "<div class=\"row\">";
