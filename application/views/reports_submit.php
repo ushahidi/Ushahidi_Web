@@ -150,7 +150,7 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
                                     
 									foreach ($disp_custom_fields as $field_id => $field_property)
 									{
-										echo "<div class=\"row\">";
+										echo "<div class=\"report_row\">";
 										echo "<h4>" . $field_property['field_name'] . "</h4>";
 										if ($field_property['field_type'] == 1)
 										{ // Text Field
