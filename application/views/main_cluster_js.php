@@ -185,7 +185,7 @@
 						// non-clustered mode
 						var startTime = new Date(startDate * 1000);
 						var endTime = new Date(endDate * 1000);
-						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 3){
+						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 32){
 							json_url = "json"
 						} else {
 							json_url = "json_cluster"
