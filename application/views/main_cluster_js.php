@@ -181,8 +181,8 @@
 						// Get Current Center
 						currCenter = map.getCenter();
 						
-						// If we're in a two day date range, switch to 
-						// non-clustered mode
+						// If we're in a month date range, switch to
+						// non-clustered mode. Default interval is monthly
 						var startTime = new Date(startDate * 1000);
 						var endTime = new Date(endDate * 1000);
 						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 32){
