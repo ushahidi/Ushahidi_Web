@@ -276,9 +276,10 @@ class Main_Controller extends Template_Controller {
                     $i = "0" . $i;
                 }
                 $endDate .= "<option value=\"" . strtotime($years . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))." 23:59:59") . "\"";
-                if ( $active_month && 
+                // Focus on the most active month or set December as month of endDate
+				if ( $active_month &&
 						( ( (int) $i == ( $active_month + 1)) )
-						 	|| $i == 12)
+						 	|| ($i == 12 && preg_match('/selected/', $endDate) == 0))
 				{
 					$endDate .= " selected=\"selected\" ";
                 }
