@@ -690,6 +690,15 @@ div.report-details ul.details li a:hover{
     text-decoration: none;
 }
 
+.photos {
+    font-size: 40px;
+    padding: .3em;
+}
+
+.photos img {
+    vertical-align: bottom;
+}
+
 /* reports description */
 div.report-description{
     border: #E8E4DB 5px solid;

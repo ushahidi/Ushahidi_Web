@@ -60,8 +60,8 @@
 	}
 	
 	if ($photoslider_enabled) {
-		echo html::script('media/js/photoslider');
-		echo html::stylesheet('media/css/photoslider');
+		echo html::script('media/js/picbox', true);
+		echo html::stylesheet('media/css/picbox/picbox');
 	}
 	
 	if( $videoslider_enabled ) {

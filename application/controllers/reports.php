@@ -233,7 +233,7 @@ class Reports_Controller extends Main_Controller {
 	/**
 	 * Submits a new report.
 	 */
-	public function submit()
+	public function submit($id = false, $saved = false)
 	{
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit');
@@ -254,20 +254,43 @@ class Reports_Controller extends Main_Controller {
 			'incident_category' => array(),
 			'incident_news' => array(),
 			'incident_video' => array(),
-			'incident_photo' => array(),
+            'incident_photo' => array(),
+            'incident_doc' => array(),
 			'person_first' => '',
 			'person_last' => '',
-			'person_email' => ''
+            'person_email' => '',
+            'form_id'      => '',
+            'custom_field' => array()
 		);
-		//copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
-		$form_error = FALSE;
+                $form_error = FALSE;
+
+        if ($saved == 'saved')
+		{
+			$form_saved = TRUE;
+		}
+		else
+		{
+			$form_saved = FALSE;
+		}
+
 		
 		// Initialize Default Values
 		$form['incident_date'] = date("m/d/Y",time());
 		$form['incident_hour'] = "12";
 		$form['incident_minute'] = "00";
-		$form['incident_ampm'] = "pm";
+        $form['incident_ampm'] = "pm";
+        // initialize custom field array
+		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
+                //GET custom forms
+		$forms = array();
+		foreach (ORM::factory('form')->find_all() as $custom_forms)
+		{
+			$forms[$custom_forms->id] = $custom_forms->form_title;
+		}
+		$this->template->content->forms = $forms;
+
 		
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
@@ -335,7 +358,10 @@ class Reports_Controller extends Main_Controller {
 	
 			// Validate photo uploads
 			$post->add_rules('incident_photo', 'upload::valid', 
-                             'upload::type[gif,jpg,png]', 'upload::size[2M]');
+                            'upload::type[gif,jpg,png]', 'upload::size[2M]');
+
+                        // Validate doc uploads
+                        $post->add_rules('incident_doc', 'upload::valid', 'upload::type[doc,pdf,odt,xml]','upload::size[2M]');
 			
 			// Validate Personal Information
 			if (!empty($_POST['person_first']))
@@ -366,7 +392,8 @@ class Reports_Controller extends Main_Controller {
 				
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model();
-				$incident->location_id = $location->id;
+                                $incident->location_id = $location->id;
+                                $incident->form_id = $post->form_id;
 				$incident->user_id = 0;
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
@@ -453,7 +480,66 @@ class Reports_Controller extends Main_Controller {
 					$photo->media_date = date("Y-m-d H:i:s",time());
 					$photo->save();
 					$i++;
-				}				
+                                }
+
+                                 // d. Docs
+				$docnames = upload::save('incident_doc','',Kohana::config('upload.directory',TRUE). 'docs/');
+                                $i = 1;
+                                $extensions = array('.doc' => 1, '.pdf' => 2, '.xml'=> 3, '.odt' => 4 );
+				foreach ($docnames as $docname) {
+					$new_docname = $incident->id . "_" . $i . "_" . time().strrchr($docname,'.');
+					
+					// Resize original file... make sure its max 408px wide
+					/*Image::factory($filename)->resize(408,248,Image::AUTO)
+						->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
+					
+					// Create thumbnail
+					Image::factory($filename)->resize(70,41,Image::HEIGHT)
+                                            ->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");*/
+
+                                        //upload::save($docname,$new_docname,Kohana::config('upload.directory',TRUE). 'docs/');
+					
+					// Remove the temporary file
+                                        //rename file
+                                        rename($docname,Kohana::config('upload.directory',TRUE). 'docs/'.$new_docname);
+                                        //unlink($docname);
+					
+					// Save to DB
+					$docs = new Doc_Model();
+					$docs->location_id = $location->id;
+					$docs->incident_id = $incident->id;
+					$docs->doc_type = $extensions[strrchr($docname,'.')]; // Images
+					$docs->doc_link = $new_docname;
+					$docs->doc_date = date("Y-m-d H:i:s",time());
+                                        $docs->save();
+					$i++;
+				} 
+
+                                // STEP 7: SAVE CUSTOM FORM FIELDS
+				if(isset($post->custom_field))
+				{
+					foreach($post->custom_field as $key => $value)
+					{
+						$form_response = ORM::factory('form_response')
+						->where('form_field_id', $key)
+						->where('incident_id', $incident->id)
+						->find();
+						if ($form_response->loaded == true)
+						{
+							$form_response->form_field_id = $key;
+							$form_response->form_response = $value;
+							$form_response->save();
+						}
+						else
+						{
+							$form_response = new Form_Response_Model();
+							$form_response->form_field_id = $key;
+							$form_response->incident_id = $incident->id;
+							$form_response->form_response = $value;
+							$form_response->save();
+						}
+					}
+				}                                
 				
 				// STEP 5: SAVE PERSONAL INFORMATION
 				$person = new Incident_Person_Model();
@@ -464,16 +550,6 @@ class Reports_Controller extends Main_Controller {
 				$person->person_email = $post->person_email;
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
-				
-				
-				// Notify Admin Of New Report
-				$send = notifications::notify_admins(
-					"[".Kohana::config('settings.site_name')."] ".
-						Kohana::lang('notifications.admin_new_report.subject'),
-					Kohana::lang('notifications.admin_new_report.message')
-						."\n\n'".strtoupper($incident->incident_title)."'"
-						."\n".$incident->incident_description
-					);
 				
 				url::redirect('reports/thanks');
 			}
@@ -488,19 +564,25 @@ class Reports_Controller extends Main_Controller {
 				$errors = arr::overwrite($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
-			
 		}
+
 		
 		// Retrieve Country Cities
 		$default_country = Kohana::config('settings.default_country');
 		$this->template->content->cities = $this->_get_cities($default_country);
 		$this->template->content->multi_country = Kohana::config('settings.multi_country');
-		
+
+                $this->template->content->id = $id;
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->categories = $this->_get_categories($form['incident_category']);
-		
+
+                // Retrieve Custom Form Fields Structure
+		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
+		$this->template->content->disp_custom_fields = $disp_custom_fields;
+
+
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->datepicker_enabled = TRUE;
@@ -1025,49 +1107,163 @@ class Reports_Controller extends Main_Controller {
 		return $neighbors;
         }
         
-            /**
+    /**
 	 * Retrieve Custom Form Fields
 	 * @param bool|int $incident_id The unique incident_id of the original report
 	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
 	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
 	 * @param bool $data_only Whether or not to include just data
 	 */
-	private function _get_custom_form_fields($incident_id = false, $form_id = 1, $data_only = false) {
-	    $fields_array = array();
+	private function _get_custom_form_fields($incident_id = false, $form_id = 1, $data_only = false)
+    {
+		$fields_array = array();
 		
-	    $custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
-		
-	    foreach ($custom_form->form_field as $custom_formfield)
-	    {
-	        if ($data_only)
-	        { // Return Data Only
-		    $fields_array[$custom_formfield->id] = '';
-
-		    foreach ($custom_formfield->form_response as $form_response)
-		    {
-		        if ($form_response->incident_id == $incident_id)
-			{
-			    $fields_array[$custom_formfield->id] = $form_response->form_response;
+		if (!$form_id)
+		{
+			$form_id = 1;
+		}
+		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
+		foreach ($custom_form->form_field as $custom_formfield)
+		{
+			if ($data_only)
+			{ // Return Data Only
+				$fields_array[$custom_formfield->id] = '';
+				
+				foreach ($custom_formfield->form_response as $form_response)
+				{
+					if ($form_response->incident_id == $incident_id)
+					{
+						$fields_array[$custom_formfield->id] = $form_response->form_response;
+					}
+				}
 			}
-		    }
+			else
+			{ // Return Field Structure
+				$fields_array[$custom_formfield->id] = array(
+					'field_id' => $custom_formfield->id,
+					'field_name' => $custom_formfield->field_name,
+					'field_type' => $custom_formfield->field_type,
+					'field_required' => $custom_formfield->field_required,
+					'field_maxlength' => $custom_formfield->field_maxlength,
+					'field_height' => $custom_formfield->field_height,
+					'field_width' => $custom_formfield->field_width,
+					'field_isdate' => $custom_formfield->field_isdate,
+					'field_response' => ''
+					);
+			}
 		}
-		else
-		{ // Return Field Structure
-		    $fields_array[$custom_formfield->id] = array(
-		        'field_id' => $custom_formfield->id,
-		        'field_name' => $custom_formfield->field_name,
-		        'field_type' => $custom_formfield->field_type,
-		        'field_required' => $custom_formfield->field_required,
-		        'field_maxlength' => $custom_formfield->field_maxlength,
-		        'field_height' => $custom_formfield->field_height,
-		        'field_width' => $custom_formfield->field_width,
-		        'field_isdate' => $custom_formfield->field_isdate,
-		        'field_response' => ''
-		    );
-		}
-	    } 
 		
-            return $fields_array;
-        }
+		return $fields_array;
+    }
+
+
+	/**
+	 * Validate Custom Form Fields
+	 * @param array $custom_fields Array
+	 */
+	private function _validate_custom_form_fields($custom_fields = array())
+    {
+		$custom_fields_error = "";
+		
+		foreach ($custom_fields as $field_id => $field_response)
+		{
+			// Get the parameters for this field
+			$field_param = ORM::factory('form_field', $field_id);
+			if ($field_param->loaded == true)
+			{
+				// Validate for required
+				if ($field_param->field_required == 1 && $field_response == "")
+				{
+					return false;
+				}
+
+				// Validate for date
+				if ($field_param->field_isdate == 1 && $field_response != "")
+				{
+					$myvalid = new Valid();
+					return $myvalid->date_mmddyyyy($field_response);
+				}
+			}
+		}
+		return true;
+    }
+
+
+	/**
+	 * Ajax call to update Incident Reporting Form
+	 */
+	/*public function switch_form()
+    {
+		$this->template = "";
+		$this->auto_render = FALSE;
+		
+		isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
+		isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
+			
+		$html = "";
+		$fields_array = array();		
+		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
+		
+		foreach ($custom_form->form_field as $custom_formfield)
+		{
+			$fields_array[$custom_formfield->id] = array(
+				'field_id' => $custom_formfield->id,
+				'field_name' => $custom_formfield->field_name,
+				'field_type' => $custom_formfield->field_type,
+				'field_required' => $custom_formfield->field_required,
+				'field_maxlength' => $custom_formfield->field_maxlength,
+				'field_height' => $custom_formfield->field_height,
+				'field_width' => $custom_formfield->field_width,
+				'field_isdate' => $custom_formfield->field_isdate,
+				'field_response' => ''
+				);
+			
+			// Load Data, if Any
+			foreach ($custom_formfield->form_response as $form_response)
+			{
+				if ($form_response->incident_id = $incident_id)
+				{
+					$fields_array[$custom_formfield->id]['field_response'] = $form_response->form_response;
+				}
+			}
+		}
+		
+		foreach ($fields_array as $field_property)
+		{
+			$html .= "<div class=\"row\">";
+			$html .= "<h4>" . $field_property['field_name'] . "</h4>";
+			if ($field_property['field_type'] == 1)
+			{ // Text Field
+				// Is this a date field?
+				if ($field_property['field_isdate'] == 1)
+				{
+					$html .= form::input('custom_field['.$field_property['field_id'].']', $field_property['field_response'],
+						' id="custom_field_'.$field_property['field_id'].'" class="text"');
+					$html .= "<script type=\"text/javascript\">
+							$(document).ready(function() {
+							$(\"#custom_field_".$field_property['field_id']."\").datepicker({ 
+							showOn: \"both\", 
+							buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
+							buttonImageOnly: true 
+							});
+							});
+						</script>";
+				}
+				else
+				{
+					$html .= form::input('custom_field['.$field_property['field_id'].']', $field_property['field_response'],
+						' id="custom_field_'.$field_property['field_id'].'" class="text custom_text"');
+				}
+			}
+			elseif ($field_property['field_type'] == 2)
+			{ // TextArea Field
+				$html .= form::textarea('custom_field['.$field_property['field_id'].']',
+					$field_property['field_response'], ' class="custom_text" rows="3"');
+			}
+			$html .= "</div>";
+		}
+		
+		echo json_encode(array("status"=>"success", "response"=>$html));
+    }*/
 
 } // End Reports

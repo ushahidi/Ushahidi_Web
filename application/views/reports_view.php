@@ -124,7 +124,16 @@
 				<!-- start images -->
 				<div class="report-description">
 					<h3>Images</h3>
-					<div class="photoslider" id="default"></div>
+				<div class="photos">
+				<?php
+					foreach ($incident_photos as $photo)
+						{
+							$thumb = str_replace(".","_t.",$photo);
+				      $prefix = url::base()."media/uploads";
+							echo("<a class='photothumb' rel='lightbox-group1' href='$prefix/$photo'><img src='$prefix/$thumb'/></a> ");
+						}
+				?>
+				</div>
 				</div>
 
 				<!-- end images <> start side block -->
