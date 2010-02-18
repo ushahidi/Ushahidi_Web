@@ -2,39 +2,10 @@
 /**
  * ADMIN INTERFACE INTERNATIONALIZATION
  * Strings associated with the Admin UI
- * en_US : english_UNITEDSTATES
  */
 
 $lang = array
 (
-    // Time-related
-    'hourly' => 'Hourly',
-    'daily' => 'Daily',
-    'every_six_hours' => 'Every Six Hours',
-    'every_twelve_hours' => 'Every Twelve Hours',
-    
-    // General phrases
-    'deleted_caps' => 'DELETED',
-    'modified_caps' => 'MODIFIED',
-    'created_edited_caps' => 'CREATED/EDITED',
-    'select_field_type' => '--- Select A Field Type ---',
-    'text_field' => 'Text Field',
-	'free_text_field' => 'Text Area Field (Free Text)',
-    'select_item' => 'Please select an item',
-    'form_not_exists' => 'That Form Does Not Exist!',
-    'field_name' => 'Field Name',
-    'field_default' => 'Default Value',
-    'required' => 'Required',
-    'yes' => 'Yes',
-    'no' => 'No',
-    'field_maxlength' => 'Maximum Character Length',
-    'is_date' => 'Is this a Date Field?',
-    'field_height' => 'Height (In Rows)',
-    'delete_action_caps' => 'DELETE',
-	'edit_action_caps' => 'EDIT',
-    'move_up_action_caps' => 'MOVE UP', 
-    'move_down_action_caps' => 'MOVE DOWN', 
-    
 	// Main Interface
 	'version' => 'Moderator',
 	'welcome' => 'Welcome, ',
@@ -73,7 +44,7 @@ $lang = array
 	'no_result_display_msg' => 'No Results To Display!',
 	'delete_action' => 'Delete',
 	'edit_action' => 'Edit',
-    'error_msg' => 'Error',
+	'error_msg' => 'Error',
 	'label_username' => 'Username:',
 	'label_password' => 'Password:',
 	'label_full_name' => 'Full Name:',
