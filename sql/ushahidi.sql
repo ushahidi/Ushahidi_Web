@@ -49,7 +49,7 @@ INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_descr
 -- Table structure for table `category_lang`
 --
 
-CREATE TABLE `category_lang`
+CREATE TABLE IF NOT EXISTS `category_lang`
 (
 `id` INT(11) unsigned  NOT NULL AUTO_INCREMENT,
 `category_id` int(11) NOT NULL,
@@ -1183,7 +1183,7 @@ CREATE TABLE IF NOT EXISTS `form_response` (
 -- Table structure for table `level`
 --
 
-CREATE TABLE `level` (
+CREATE TABLE IF NOT EXISTS `level` (
   `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT,
   `level_title` varchar(200) default NULL,
   `level_description` varchar(200) default NULL,
@@ -1209,7 +1209,7 @@ INSERT INTO `level` (`id`, `level_title`, `level_description`, `level_weight`) V
 -- Table structure for table `reporter`
 --
 
-CREATE TABLE `reporter` (
+CREATE TABLE IF NOT EXISTS `reporter` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `incident_id` bigint(20) default NULL,
   `location_id` bigint(20) default NULL,
@@ -1233,7 +1233,7 @@ CREATE TABLE `reporter` (
 -- Table structure for table `service`
 --
 
-CREATE TABLE `service` (
+CREATE TABLE IF NOT EXISTS `service` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `service_name` varchar(100) default NULL,
   `service_description` varchar(255) default NULL,
@@ -1285,7 +1285,7 @@ CREATE TABLE IF NOT EXISTS `feedback_person` (
 -- Table structure for table `sharing`
 --
 
-CREATE TABLE `sharing` (
+CREATE TABLE IF NOT EXISTS `sharing` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `sharing_type` tinyint(4) default '1' COMMENT '1 - PULLing Data, 2 - PUSHing Data, 3 - TWO way',
   `sharing_limits` tinyint(4) NOT NULL default '1' COMMENT '1 - Once Per Hour, 2 - Once Every 6 Hours, 3 - Once Every 12 Hours, 4 - Once Daily',
@@ -1313,7 +1313,7 @@ CREATE TABLE `sharing` (
 -- Table structure for table `sharing_log`
 --
 
-CREATE TABLE `sharing_log` (
+CREATE TABLE IF NOT EXISTS `sharing_log` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `sharing_id` int(11) NOT NULL,
   `sharing_log_date` int(10) unsigned default NULL,
@@ -1326,7 +1326,7 @@ CREATE TABLE `sharing_log` (
 -- Table structure for table `page`
 --
 
-CREATE TABLE `page` (
+CREATE TABLE IF NOT EXISTS `page` (
   `id` int(11) NOT NULL auto_increment,
   `page_title` varchar(255) NOT NULL,
   `page_description` longtext,
@@ -1348,7 +1348,7 @@ INSERT INTO `page` (`id`, `page_title`, `page_description`, `page_tab`, `page_ac
 -- Table structure for table `layer`
 --
 
-CREATE TABLE `layer` (
+CREATE TABLE IF NOT EXISTS `layer` (
 	`id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`layer_name` VARCHAR( 255 ) NULL ,
 	`layer_url` VARCHAR( 255 ) NULL ,
