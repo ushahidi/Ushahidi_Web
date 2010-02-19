@@ -40,6 +40,9 @@
 							<?php
 								}
 							?>
+							<div class="row">
+								<input type="hidden" name="form_id" id="form_id" value="<?php echo $id?>">
+							</div>
 							<div class="report_left">
 								<div class="report_row">
 									<h4><?php echo Kohana::lang('ui_main.reports_title'); ?></h4>
