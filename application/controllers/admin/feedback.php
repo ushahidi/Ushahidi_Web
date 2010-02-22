@@ -30,7 +30,7 @@ class Feedback_Controller extends Admin_Controller
 	function index( $page=1 )
 	{	
 		$this->template->content = new View('admin/feedback');
-		$this->template->content->title = 'Feedback';
+		$this->template->content->title = Kohana::lang('ui_admin.feedback');
 		
 		// check, has the form been submitted?
 		$form_error = FALSE;
@@ -60,7 +60,7 @@ class Feedback_Controller extends Admin_Controller
 							$update->save();
 						}
 					}
-					$form_action = "READ";
+					$form_action = strtoupper(Kohana::lang('ui_admin.read'));
 				}
 				
 				elseif ($post->action == 'u') 	// Unread Action
@@ -74,7 +74,7 @@ class Feedback_Controller extends Admin_Controller
 						}
 					}
 					//TODO write unread action code
-					$form_action = "UNREAD";
+					$form_action = strtoupper(Kohana::lang('ui_admin.unread'));
 				}
 				
 				elseif ($post->action == 'd')	// Delete Action
@@ -92,7 +92,7 @@ class Feedback_Controller extends Admin_Controller
 						ORM::factory('feedback_person')->where('feedback_id',$feedback_id)->delete_all();
 					}
 					
-					$form_action = "DELETED";
+					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				
 				$form_saved = TRUE;

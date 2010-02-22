@@ -217,21 +217,21 @@ class Messages_Controller extends Admin_Controller
 							$newmessage->message_date = date("Y-m-d H:i:s",time());
 							$newmessage->save();
 
-							echo json_encode(array("status"=>"sent", "message"=>"Your message has been sent!"));
+							echo json_encode(array("status"=>"sent", "message"=>Kohana::lang('ui_admin.message_sent')));
 						}
 						// Message Failed
 						else {
-							echo json_encode(array("status"=>"error", "message"=>"Error! - " . $send_me));
+							echo json_encode(array("status"=>"error", "message"=>Kohana::lang('ui_admin.error')." - " . $send_me));
 						}
 					}
 					else
 					{
-						echo json_encode(array("status"=>"error", "message"=>"Error! Please check your SMS settings!"));
+						echo json_encode(array("status"=>"error", "message"=>Kohana::lang('ui_admin.error').Kohana::lang('ui_admin.check_sms_settings')));
 					}
 				}
 				// Send_To Mobile Number Doesn't Exist
 				else {
-					echo json_encode(array("status"=>"error", "message"=>"Error! Please make sure your message is valid!"));
+					echo json_encode(array("status"=>"error", "message"=>Kohana::lang('ui_admin.error').Kohana::lang('ui_admin.check_number')));
 				}
 	        }
 
@@ -241,7 +241,7 @@ class Messages_Controller extends Admin_Controller
 	        {
 	            // populate the error fields, if any
 	            $errors = arr::overwrite($errors, $post->errors('messages'));
-				echo json_encode(array("status"=>"error", "message"=>"Error! Please make sure your message is valid!"));
+				echo json_encode(array("status"=>"error", "message"=>Kohana::lang('ui_admin.error').Kohana::lang('ui_admin.check_message_valid')));
 	        }
 	    }
 
@@ -340,7 +340,7 @@ class Messages_Controller extends Admin_Controller
 	function twitter()
 	{
 		$this->template->content = new View('admin/messages_twitter');
-		$this->template->content->title = 'Twitter Messages';
+		$this->template->content->title = Kohana::lang('ui_admin.messages_twitter');
 
 		$this->load_tweets();
 
@@ -628,7 +628,7 @@ class Messages_Controller extends Admin_Controller
 	function laconica($page = 1)
 	{
 		$this->template->content = new View('admin/messages_laconica');
-		$this->template->content->title = 'Laconica Messages';
+		$this->template->content->title = Kohana::lang('ui_admin.messages_laconica');
 
 		$this->load_laconica_mesgs();
 

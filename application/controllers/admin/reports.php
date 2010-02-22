@@ -31,7 +31,7 @@ class Reports_Controller extends Admin_Controller
 	function index($page = 1)
 	{
 		$this->template->content = new View('admin/reports');
-		$this->template->content->title = 'Reports';
+		$this->template->content->title = Kohana::lang('ui_admin.reports');
 		
 		
 		if (!empty($_GET['status']))
@@ -106,7 +106,7 @@ class Reports_Controller extends Admin_Controller
 							$verify->save();
 						}
 					}
-					$form_action = "APPROVED";
+					$form_action = strtoupper(Kohana::lang('ui_admin.approved'));
 				}
 				elseif ($post->action == 'u') 	// Unapprove Action
 				{
@@ -125,7 +125,7 @@ class Reports_Controller extends Admin_Controller
 							$verify->save();
 						}
 					}
-					$form_action = "UNAPPROVED";
+					$form_action = strtoupper(Kohana::lang('ui_admin.unapproved'));
 				}
 				elseif ($post->action == 'v')	// Verify Action
 				{
@@ -201,7 +201,7 @@ class Reports_Controller extends Admin_Controller
 							ORM::factory('comment')->where('incident_id',$incident_id)->delete_all();
 						}					
 					}
-					$form_action = "DELETED";
+					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				$form_saved = TRUE;
 			}
@@ -267,7 +267,7 @@ class Reports_Controller extends Admin_Controller
 	function edit( $id = false, $saved = false )
 	{
 		$this->template->content = new View('admin/reports_edit');
-		$this->template->content->title = 'Create A Report';
+		$this->template->content->title = Kohana::lang('ui_admin.create_report');
 		
 		// setup and initialize form field names
 		$form = array
@@ -535,7 +535,7 @@ class Reports_Controller extends Admin_Controller
 			
 			$post->add_rules('incident_active','required', 'between[0,1]');
 			$post->add_rules('incident_verified','required', 'length[0,1]');
-			$post->add_rules('incident_source','alpha', 'length[1,1]');
+			$post->add_rules('incident_source','numeric', 'length[1,1]');
 			$post->add_rules('incident_information','numeric', 'length[1,1]');
 			
 			// Test to see if things passed the rule checks
@@ -919,7 +919,7 @@ class Reports_Controller extends Admin_Controller
 	function download()
 	{
 		$this->template->content = new View('admin/reports_download');
-		$this->template->content->title = 'Download Reports';
+		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 		
 		$form = array(
 			'data_point'      => '',
@@ -1119,11 +1119,11 @@ class Reports_Controller extends Admin_Controller
 			}
 			}
 			else {
-			$errors[] = 'Could not open file for reading';
+			$errors[] = Kohana::lang('ui_admin.file_open_error');
 			}
 			} // file exists?
 			else {
-			$errors[] = 'Could not find uploaded file';
+			$errors[] = Kohana::lang('ui_admin.file_not_found_upload');
 			}
 			} // upload errors?
 			else {
@@ -1131,7 +1131,7 @@ class Reports_Controller extends Admin_Controller
 			}
 			if(count($errors)) {
 				$this->template->content = new View('admin/reports_upload');
-				$this->template->content->title = 'Upload Reports';		
+				$this->template->content->title = Kohana::lang('ui_admin.upload_reports');		
 				$this->template->content->errors = $errors;
 				$this->template->content->form_error = 1;
 			}
@@ -1147,7 +1147,7 @@ class Reports_Controller extends Admin_Controller
 	function translate( $id = false, $saved = false )
 	{
 		$this->template->content = new View('admin/reports_translate');
-		$this->template->content->title = 'Translate Report';
+		$this->template->content->title = Kohana::lang('ui_admin.translate_reports');
 		
 		// Which incident are we adding this translation for?
 		if (isset($_GET['iid']) && !empty($_GET['iid']))
@@ -1428,7 +1428,7 @@ class Reports_Controller extends Admin_Controller
 	
 	private function _ampm_array()
 	{								
-	    return $ampm_array = array('pm'=>'pm','am'=>'am');
+	    return $ampm_array = array('pm'=>Kohana::lang('ui_admin.pm'),'am'=>Kohana::lang('ui_admin.am'));
 	}
 	
 	// Javascript functions
