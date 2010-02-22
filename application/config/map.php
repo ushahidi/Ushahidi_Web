@@ -36,3 +36,10 @@ $config['marker_stroke_width'] = "2";
  */
 $config['marker_stroke_opacity'] = "9";
 
+
+/**
+ * Set list of map layers to use
+ * Values ???
+ * Default: array()
+ */
+$config['layers'] = array();

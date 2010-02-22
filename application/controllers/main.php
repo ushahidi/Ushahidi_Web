@@ -161,12 +161,17 @@ class Main_Controller extends Template_Controller {
 
 		// Get all active Layers (KMZ/KML)
 		$layers = array();
-		foreach (ORM::factory('layer')
-				  ->where('layer_visible', 1)
-				  ->find_all() as $layer)
-		{
-			$layers[$layer->id] = array($layer->layer_name, $layer->layer_color,
-				$layer->layer_url, $layer->layer_file);
+		$config_layers = Kohana::config('map.layers'); // use config/map layers if set
+		if ($config_layers == $layers) {
+			foreach (ORM::factory('layer')
+					  ->where('layer_visible', 1)
+					  ->find_all() as $layer)
+			{
+				$layers[$layer->id] = array($layer->layer_name, $layer->layer_color,
+					$layer->layer_url, $layer->layer_file);
+			}
+		} else {
+			$layers = $config_layers;
 		}
 		$this->template->content->layers = $layers;
 		
