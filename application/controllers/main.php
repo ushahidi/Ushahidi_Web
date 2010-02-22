@@ -276,9 +276,10 @@ class Main_Controller extends Template_Controller {
                     $i = "0" . $i;
                 }
                 $endDate .= "<option value=\"" . strtotime($years . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))." 23:59:59") . "\"";
-                if ( $active_month && 
+                // Focus on the most active month or set December as month of endDate
+				if ( $active_month &&
 						( ( (int) $i == ( $active_month + 1)) )
-						 	|| $i == 12)
+						 	|| ($i == 12 && preg_match('/selected/', $endDate) == 0))
 				{
 					$endDate .= " selected=\"selected\" ";
                 }
@@ -318,7 +319,8 @@ class Main_Controller extends Template_Controller {
 			$marker_opacity = Kohana::config('map.marker_opacity');
 			$marker_stroke_width = Kohana::config('map.marker_stroke_width');
 			$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
-			$this->template->header->js = new View('main_cluster_js');
+			$this->template->header->js = ($clustering) ? 
+				new View('main_cluster_js') : new View('main_cluster_js');
 			$this->template->header->js->cluster = ($clustering == 1) ? "true" : "false";
 			$this->template->header->js->marker_radius =
 				($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;

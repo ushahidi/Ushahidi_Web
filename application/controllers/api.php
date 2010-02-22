@@ -446,7 +446,7 @@ class Api_Controller extends Controller {
 		
 		$replar = array(); //assists in proper xml generation
 		
-		// Doing this manaully. It was wasting my time trying modularize it.
+		// Doing this manaully. It was wasting my time trying to modularize it.
 		// Will have to visit this again after a good rest. I mean a good rest.
 		
 		//XML elements

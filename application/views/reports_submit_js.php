@@ -204,6 +204,7 @@
 			'displayProjection': proj_4326
 			};
 			map = new OpenLayers.Map('divMap', options);
+
 			var default_map = <?php echo $default_map; ?>;
 			if (default_map == 2)
 			{
@@ -234,11 +235,32 @@
 					});
 			}
 			
-			map.addLayer(map_layer);
+			google_st = new OpenLayers.Layer.Google("Google Streets", {
+				sphericalMercator: true,
+				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+				});
+				
+			google_sat = new OpenLayers.Layer.Google("Google Satellite", {
+				type: G_SATELLITE_MAP,
+				sphericalMercator: true,
+				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+				});
+				
+			osm_sat = new OpenLayers.Layer.OSM.Mapnik("Open Street Maps Satellite", {
+				sphericalMercator: true,
+				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+				});
+				
+			map.addLayers([osm_sat, google_st, google_sat]);
 			
 			map.addControl(new OpenLayers.Control.Navigation());
-			map.addControl(new OpenLayers.Control.PanZoomBar());
-			map.addControl(new OpenLayers.Control.MousePosition());
+			map.addControl(new OpenLayers.Control.PanZoom());
+			map.addControl(new OpenLayers.Control.MousePosition(
+					{ div: 	document.getElementById('mapMousePosition'), numdigits: 5 
+				}));    
+			map.addControl(new OpenLayers.Control.Scale('mapScale'));
+            map.addControl(new OpenLayers.Control.ScaleLine());
+			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
 			// Create the markers layer
 			var markers = new OpenLayers.Layer.Markers("Markers");

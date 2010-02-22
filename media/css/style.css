@@ -446,6 +446,32 @@ div.map {
     width: 573px;
     height: 366px;
 }
+#mapStatus
+{
+	float: left;
+	background-color: #e1e1e1;
+	border-left: solid 1px #999;
+	border-right: solid 1px #999;
+	border-bottom: solid 1px #999;
+	font-size: 10px;
+	width: 573px;
+}
+#mapStatus div
+{
+	float: left;
+	display: inline-block;
+	padding: 4px 6px 4px 6px;
+}
+#mapOutput sup
+{
+	height: 0;
+	line-height: 1;
+	vertical-align: text-top;
+	_vertical-align: text-top;
+	position: relative;
+	font-size: 8px;
+}
+
 
 div.graph-holder {
     height:150px;
@@ -664,6 +690,15 @@ div.report-details ul.details li a:hover{
     text-decoration: none;
 }
 
+.photos {
+    font-size: 40px;
+    padding: .3em;
+}
+
+.photos img {
+    vertical-align: bottom;
+}
+
 /* reports description */
 div.report-description{
     border: #E8E4DB 5px solid;
@@ -778,9 +813,8 @@ div.incident-notation ul li{
 .report-map .map-holder {
 	overflow:hidden;
 	clear:both;
-	border:1px solid #ccc;
 	width:428px;
-	height:298px;
+	height:370px;
 }
 
 
@@ -1011,6 +1045,24 @@ div.content-media ul li a.media-type-video{
   background: url("../img/openlayers/close.gif") no-repeat;
   cursor: pointer;
 }
+.olControlScale {
+	right: 3px;
+	bottom: 3em;
+	display: block;
+	position: absolute;
+	font-size: smaller;
+}
+.olControlScaleLine {
+	left: 10px;
+	bottom: 15px;
+	font-size: xx-small;
+}
+.olControlScaleLineBottom {
+	border: solid 2px black;
+	border-bottom: none;
+	margin-top:0;
+	text-align: center;
+}
 .infowindow{
 	padding:10px;
 	margin-right:-15px;
@@ -1141,21 +1193,31 @@ label.error {
 	margin:20px 0 0 25px;
 	padding:0 0 10px;
 }
+.report_block{
+  margin: 20px 0 20px 25px;
+}
+.report_block table tr th {
+  text-align: left;
+}
 .report_right table {
 	width: 100%;
 }
 .report_right table tr th {
 	text-align: left;
 }
+.report-description table tr th {
+	text-align: left;
+}
+.report-description table { width: 100%; }
 .w-01 {
-	width:238px;
+	width:50%;
 	padding:0 10px 0 0;
 }
 .w-02 {
-	width:92px;
+/*	width:100px; */
 	padding:0 10px 0 0;
 }
-.w-03 {width:60px;}
+/*.w-03 {width:100px;}*/
 
 .report_bottom{
 	clear:both;

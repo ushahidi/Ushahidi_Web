@@ -31,7 +31,7 @@ class Comments_Controller extends Admin_Controller
 	function index($page = 1)
 	{
 		$this->template->content = new View('admin/comments');
-		$this->template->content->title = 'Comments';
+		$this->template->content->title = Kohana::lang('ui_admin.comments');
 		
 		
 		if (!empty($_GET['status']))
@@ -91,7 +91,7 @@ class Comments_Controller extends Admin_Controller
 							$update->save();
 						}
 					}
-					$form_action = "APPROVED";
+					$form_action = strtoupper(Kohana::lang('ui_admin.approved'));
 				}
 				elseif ($post->action == 'u') 	
 				{ // Unapprove Action
@@ -103,7 +103,7 @@ class Comments_Controller extends Admin_Controller
 							$update->save();
 						}
 					}
-					$form_action = "UNAPPROVED";
+					$form_action = strtoupper(Kohana::lang('ui_admin.unapproved'));
 				}
 				elseif ($post->action == 's')	
 				{ // Spam Action
@@ -116,7 +116,7 @@ class Comments_Controller extends Admin_Controller
 							$update->save();
 						}
 					}
-					$form_action = "MARKED AS SPAM SPAM";
+					$form_action = strtoupper(Kohana::lang('ui_admin.marked_as_spam'));
 				}
 				elseif ($post->action == 'n')	
 				{ // Spam Action
@@ -129,7 +129,7 @@ class Comments_Controller extends Admin_Controller
 							$update->save();
 						}
 					}
-					$form_action = "MARKED AS NOT SPAM";
+					$form_action = strtoupper(Kohana::lang('ui_admin.marked_as_not_spam'));
 				}
 				elseif ($post->action == 'd')	// Delete Action
 				{
@@ -141,12 +141,12 @@ class Comments_Controller extends Admin_Controller
 							$update->delete();
 						}					
 					}
-					$form_action = "DELETED";
+					$form_action = Kohana::lang('ui_admin.deleted');
 				}
 				elseif ($post->action == 'x')	// Delete All Spam Action
 				{
 					ORM::factory('comment')->where('comment_spam','1')->delete_all();
-					$form_action = "DELETED";
+					$form_action = Kohana::lang('ui_admin.deleted');
 				}
 				$form_saved = TRUE;
 			}

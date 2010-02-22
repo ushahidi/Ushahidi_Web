@@ -21,6 +21,7 @@
 	<title><?php echo $site_name ?></title>
 	<?php
 	echo html::stylesheet('media/css/admin/all', '', true);
+	echo html::stylesheet('media/css/jquery.treeview', '', true);
 	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
 	echo "<!--[if lt IE 7]>".
 		html::stylesheet('media/css/ie6', '', true)
@@ -43,7 +44,9 @@
 	echo html::script('media/js/jquery.ui.min', true);
 	echo html::script('media/js/selectToUISlider.jQuery', true);
 	echo html::script('media/js/jquery.hovertip-1.0', true);
-	echo html::stylesheet('media/css/jquery.hovertip-1.0', '', true);
+	echo html::script('media/js/jquery.treeview');
+	
+	
 	echo "<script type=\"text/javascript\">
 		$(function() {
 			if($('.tooltip[title]') != null)
@@ -161,6 +164,9 @@
 						</a></li>
 					<li><a href="<?php echo url::base() ?>admin/stats" <?php if($this_page=="stats") echo "class=\"active\"" ;?>>
 						<?php echo Kohana::lang('ui_admin.stats')?>
+						</a></li>
+					<li><a href="<?php echo url::base() ?>admin/apilogs" <?php if($this_page=="apilogs") echo "class=\"active\"" ;?>>
+						<?php echo Kohana::lang('ui_admin.apilogs')?>
 						</a></li>
 				</ul>
 				<!-- sub-nav -->

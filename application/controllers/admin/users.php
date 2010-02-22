@@ -30,7 +30,7 @@ class Users_Controller extends Admin_Controller
 	function index()
 	{	
 		$this->template->content = new View('admin/users');
-		$this->template->content->title = 'Manage Users';
+		$this->template->content->title = Kohana::lang('ui_admin.manage_users');
 		$form = array
 	    (
 	        'user_id'   => '',
@@ -167,7 +167,7 @@ class Users_Controller extends Admin_Controller
 						$user->save();
 						
 						$form_saved = TRUE;
-						$form_action = "ADDED";
+						$form_action = strtoupper(Kohana::lang('ui_admin.added'));
 					}
 				}
 				elseif ($post->action == 'd')			// Delete Action 
@@ -182,7 +182,7 @@ class Users_Controller extends Admin_Controller
 						}
 
 						$form_saved = TRUE;
-						$form_action = "DELETED";
+						$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 					}
 				}
 			} 
@@ -217,7 +217,7 @@ class Users_Controller extends Admin_Controller
 		$this->template->content->pagination = $pagination;
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->users = $users;
-		$this->template->content->roles = array("login"=>"Moderator","admin"=>"Admin","superadmin"=>"Super Admin");
+		$this->template->content->roles = array("login"=>Kohana::lang('ui_admin.login_role'),"admin"=>Kohana::lang('ui_admin.admin_role'),"superadmin"=>Kohana::lang('ui_admin.superadmin_role'));
 		
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;

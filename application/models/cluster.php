@@ -15,7 +15,9 @@
  */
 
 class Cluster_Model extends ORM
-{	
+{
+	protected $has_many = array('incident' => 'cluster_incident');
+	
 	// Database table name
 	protected $table_name = 'cluster';
 }
