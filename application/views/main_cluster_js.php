@@ -22,8 +22,9 @@
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
 		var mapLoad = 0;
-		var json_url = "json_cluster";
-		
+		var default_json_url = "<?php echo $default_json_url ?>";
+		var json_url = default_json_url; // json_url used to switch to non-cluster for short timelines
+
 		jQuery(function() {
 			var map_layer;
 			markers = null;
@@ -207,9 +208,9 @@
 						var startTime = new Date(startDate * 1000);
 						var endTime = new Date(endDate * 1000);
 						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 32){
-							json_url = "json"
+							json_url = "json";
 						} else {
-							json_url = "json_cluster"
+							json_url = default_json_url;
 						}
 						
 						// Refresh Map
