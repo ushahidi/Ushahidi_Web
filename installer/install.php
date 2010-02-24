@@ -282,26 +282,28 @@ class Install
 		$select_db_type, $db_name, $table_prefix )
 	{
 
+		echo "$username, $password, $host,
+			$select_db_type, $db_name, $table_prefix";
 		$database_file = @file('../application/config/database.template.php');
 		$handle = @fopen('../application/config/database.php', 'w');
 		foreach( $database_file as $line_number => $line )
 		{	
 			switch( trim(substr( $line,0,14 )) ) {
-				case "'type'	 =":
+				case "'type'     =":
 					fwrite($handle, str_replace("'mysql'","'".
 						$select_db_type."'",$line ));
 					break;
 
-				case "'user'	 =":
+				case "'user'     =":
 					fwrite($handle, str_replace("'username'","'".
 						$username."'",$line ));
 					break;
-				case "'pass'	 =":
+				case "'pass'     =":
 					fwrite($handle, str_replace("'password'","'".
 						$password."'",$line));
 					break;
 
-				case "'host'	 =":
+				case "'host'     =":
 					fwrite($handle, str_replace("'localhost'","'".
 						$host."'",$line));
 					break;
