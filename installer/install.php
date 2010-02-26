@@ -282,8 +282,8 @@ class Install
 		$select_db_type, $db_name, $table_prefix )
 	{
 
-		echo "$username, $password, $host,
-			$select_db_type, $db_name, $table_prefix";
+//		echo "$username, $password, $host,
+//			$select_db_type, $db_name, $table_prefix";
 		$database_file = @file('../application/config/database.template.php');
 		$handle = @fopen('../application/config/database.php', 'w');
 		foreach( $database_file as $line_number => $line )
@@ -315,7 +315,7 @@ class Install
 
 				case "'table_prefix":
 					fwrite($handle, str_replace("''","'".
-						$table_prefix."_'",$line));
+						($table_prefix ? $table_prefix."_'" : "'"),$line));
 					break;
 
 				default:
