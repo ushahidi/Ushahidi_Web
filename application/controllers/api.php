@@ -260,34 +260,38 @@ class Api_Controller extends Controller {
 					if ( $request['sort'] == '1' ){
 						$sort = 'desc';
 					}
-				}						
+				}
+                
+                /*Specify how many incidents to return */
+				if($this->_verifyArrayIndex($request, 'limit')){
+					if ( $request['limit'] > 0 ){
+						$limit = $request['limit'];
+					} else {
+					$limit = 20;
+				}
+				}
 			
 				/* Order field  */
 				if($this->_verifyArrayIndex($request, 'orderfield')){
 					switch ( $request['orderfield'] ){
 						case 'id':
-							$orderfield = 'incidentid';
+							$orderfield = 'id';
 							break;
 						case 'locid':
-							$orderfield = 'locationid';
+							$orderfield = 'location_id';
 							break;
 						case 'date':
-							$orderfield = 'incidentdate';
+							$orderfield = 'incident_date';
 							break;
 						default:
 							/* Again... it's set but let's cast it in concrete */
-							$orderfield = 'incidentid';
+							$orderfield = 'id';
 					}
 
 				}
 				switch ($by){
 					case "all": // incidents
-						if(($this->_verifyArrayIndex($request, 'limit'))) { 
-							$ret = $this->_incidentsByAll($orderfield, $sort,$request['limit']);
-							
-						}else{
-							$ret = $this->_incidentsByAll($orderfield, $sort);
-						}
+						$ret = $this->_incidentsByAll($orderfield, $sort, $limit);
 						break;
 				
 					case "latlon": //latitude and longitude
@@ -428,7 +432,7 @@ class Api_Controller extends Controller {
 			case 003:
 				return array("code" => "003", "message" => $message );
 			case 004:
-				return array("code" => "004", "message" => Kohana::lang('ui_admin.post_method_not_used')));
+				return array("code" => "004", "message" => Kohana::lang('ui_admin.post_method_not_used'));
 			case 005:
 				return array("code" => "005", "message" => Kohana::lang('ui_admin.access_denied_credentials'));
 			case 006:
@@ -453,7 +457,7 @@ class Api_Controller extends Controller {
 		
 		$replar = array(); //assists in proper xml generation
 		
-		// Doing this manaully. It was wasting my time trying to modularize it.
+		// Doing this manually. It was wasting my time trying to modularize it.
 		// Will have to visit this again after a good rest. I mean a good rest.
 		
 		//XML elements
@@ -465,8 +469,19 @@ class Api_Controller extends Controller {
 		$xml->startElement('incidents');
 		
 		//find incidents
-		$query = "SELECT i.id AS incidentid, i.incident_title AS incidenttitle," ."i.incident_description AS incidentdescription, i.incident_date AS " ."incidentdate, i.incident_mode AS incidentmode,i.incident_active AS " ."incidentactive, i.incident_verified AS incidentverified, l.id AS " ."locationid,l.location_name AS locationname,l.latitude AS " ."locationlatitude,l.longitude AS locationlongitude FROM ".$this->table_prefix."incident AS i " ."INNER JOIN ".$this->table_prefix."location as l on l.id = i.location_id ".
-                    "$where $limit";
+		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle," 
+                ."i.incident_description AS incidentdescription, "
+				."i.incident_date AS incidentdate, "
+				."i.incident_mode AS incidentmode, "
+				."i.incident_active AS incidentactive, "
+				."i.incident_verified AS incidentverified, "
+				."l.id AS locationid, "
+				."l.location_name AS locationname, "
+				."l.latitude AS locationlatitude, "
+				."l.longitude AS locationlongitude "
+				."FROM incident AS i " 
+                ."INNER JOIN location as l on l.id = i.location_id "
+                ."$where $limit";
  
 		$items = $this->db->query($query);
 		$i = 0;
@@ -728,7 +743,7 @@ class Api_Controller extends Controller {
 			$post->add_rules('incident_title','required', 'length[3,200]');
 			$post->add_rules('incident_description','required');
 			$post->add_rules('incident_date','required','date_mmddyyyy');
-			$post->add_rules('incident_hour','required','between[1,12]');
+			$post->add_rules('incident_hour','required','between[0,23]');
 			//$post->add_rules('incident_minute','required','between[0,59]');
 			
 			if($this->_verifyArrayIndex($_POST, 'incident_ampm')) {
@@ -1168,8 +1183,8 @@ class Api_Controller extends Controller {
 	}
 
 	/**
- 	 * get api keys
- 	 */
+ 	* get api keys
+ 	*/
 	function _apiKey($service){
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
@@ -1395,10 +1410,10 @@ class Api_Controller extends Controller {
 	/**
  	* Fetch all incidents
  	*/
-	function _incidentsByAll($orderfield,$sort,$limits=0) {
+	function _incidentsByAll($orderfield,$sort,$limit) {
 		$where = "\nWHERE i.incident_active = 1 ";
-		$sortby = "\nORDER BY i.id DESC";
-		$limit = $limits != 0 ? "\nLIMIT 0, $limits" : "";
+		$sortby = "\nORDER BY i.$orderfield $sort";
+		$limit = "\nLIMIT 0, $limit";
 		/* Not elegant but works */
 		return $this->_getIncidents($where.$sortby, $limit);
 	}
@@ -1420,14 +1435,14 @@ class Api_Controller extends Controller {
 	function _incidentsByLatLon($lat, $orderfield,$long,$sort){
 		$where = "\nWHERE l.latitude = $lat AND l.longitude = $long AND i.incident_active = 1 ";
 		$sortby = "\nORDER BY $orderfield $sort ";
-		$limit = "\n LMIT 0, $this->list_limit";
+		$limit = "\n LIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where,$sortby,$limit);		
 	}
 	
 	/**
  	* get the incidents by location id
  	*/
-	function _incidentsByLocitionId($locid,$orderfield,$sort){
+	function _incidentsByLocationId($locid,$orderfield,$sort){
 		$where = "\nWHERE i.location_id = $locid AND i.incident_active = 1 ";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
