@@ -161,12 +161,17 @@ class Main_Controller extends Template_Controller {
 
 		// Get all active Layers (KMZ/KML)
 		$layers = array();
-		foreach (ORM::factory('layer')
-				  ->where('layer_visible', 1)
-				  ->find_all() as $layer)
-		{
-			$layers[$layer->id] = array($layer->layer_name, $layer->layer_color,
-				$layer->layer_url, $layer->layer_file);
+		$config_layers = Kohana::config('map.layers'); // use config/map layers if set
+		if ($config_layers == $layers) {
+			foreach (ORM::factory('layer')
+					  ->where('layer_visible', 1)
+					  ->find_all() as $layer)
+			{
+				$layers[$layer->id] = array($layer->layer_name, $layer->layer_color,
+					$layer->layer_url, $layer->layer_file);
+			}
+		} else {
+			$layers = $config_layers;
 		}
 		$this->template->content->layers = $layers;
 		
@@ -321,7 +326,13 @@ class Main_Controller extends Template_Controller {
 			$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
 			$this->template->header->js = ($clustering) ? 
 				new View('main_cluster_js') : new View('main_cluster_js');
-			$this->template->header->js->cluster = ($clustering == 1) ? "true" : "false";
+			if ($clustering == 1) {
+				//$this->template->header->js->cluster = "true"; // not used??
+				$this->template->header->js->default_json_url = "json_cluster";
+			} else {
+				//$this->template->header->js->cluster = "false"; // not used??
+				$this->template->header->js->default_json_url = "json";
+			}
 			$this->template->header->js->marker_radius =
 				($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;
 			$this->template->header->js->marker_opacity =

@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 12
+-- version 22
 -- http://www.ushahidi.com
 
 
@@ -1415,4 +1415,5 @@ ALTER TABLE `user_tokens`
 --
 -- Version information for table `settings`
 --
+UPDATE `settings` SET `ushahidi_version` = '1.0.1' WHERE `id`=1 LIMIT 1;
 UPDATE `settings` SET `db_version` = '22' WHERE `id`=1 LIMIT 1;

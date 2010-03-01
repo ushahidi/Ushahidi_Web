@@ -22,8 +22,9 @@
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
 		var mapLoad = 0;
-		var json_url = "json_cluster";
-		
+		var default_json_url = "<?php echo $default_json_url ?>";
+		var json_url = default_json_url; // json_url used to switch to non-cluster for short timelines
+
 		jQuery(function() {
 			var map_layer;
 			markers = null;
@@ -55,23 +56,44 @@
 			- Live/Yahoo/OSM/Google
 			- Set Bounds					
 			*/
-			google_st = new OpenLayers.Layer.Google("Google Streets", {
-				sphericalMercator: true,
-				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-				});
+			var default_map = <?php echo $default_map; ?>;
+			
 				
-			google_sat = new OpenLayers.Layer.Google("Google Satellite", {
-				type: G_SATELLITE_MAP,
-				sphericalMercator: true,
-				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-				});
-				
-			osm_sat = new OpenLayers.Layer.OSM.Mapnik("Open Street Maps Satellite", {
-				sphericalMercator: true,
-				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-				});
-				
-			map.addLayers([osm_sat, google_st, google_sat]);
+			if (default_map == 2) {
+				map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
+			} else if (default_map == 3) {
+				map_layer = new OpenLayers.Layer.Yahoo("yahoo", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
+			} else if (default_map == 4) {
+				map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
+			} else if (default_map == 5) {
+				map_layer = new OpenLayers.Layer.Google("Google Satellite", {
+					type: G_SATELLITE_MAP,
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
+			} else if (default_map == 6) {
+				map_layer = new OpenLayers.Layer.OSM.Mapnik("Open Street Maps Satellite", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
+
+			} else {  // default is 1
+				map_layer = new OpenLayers.Layer.Google("Google Streets", {
+					sphericalMercator: true,
+					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
+					});
+			}
+			
+			map.addLayer(map_layer);
 			
 			
 			// Add Controls
@@ -186,9 +208,9 @@
 						var startTime = new Date(startDate * 1000);
 						var endTime = new Date(endDate * 1000);
 						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 32){
-							json_url = "json"
+							json_url = "json";
 						} else {
-							json_url = "json_cluster"
+							json_url = default_json_url;
 						}
 						
 						// Refresh Map
@@ -579,14 +601,20 @@
 		Display loader as Map Loads
 		*/
 		function onMapStartLoad(event) {
-			$("#loader").show();
+			if ($("#loader")) $("#loader").show();
+			if ($("#OpenLayers\\.Control\\.LoadingPanel_4")) {
+				$("#OpenLayers\\.Control\\.LoadingPanel_4").show();
+			}
 		}
 		
 		/*
 		Hide Loader
 		*/
 		function onMapEndLoad(event) {
-			$("#loader").hide();
+			if ($("#loader")) $("#loader").hide();
+			if ($("#OpenLayers\\.Control\\.LoadingPanel_4")) {
+				$("#OpenLayers\\.Control\\.LoadingPanel_4").hide();
+			}
 		}
 		
 		/*
