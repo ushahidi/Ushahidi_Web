@@ -281,7 +281,7 @@
 			});
 			
 			$('#playTimeline').click(function() {
-				gTimeline.playOrPause();
+				gTimeline.playOrPause('raindrops');
 			});
 		});
 		
