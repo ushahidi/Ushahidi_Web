@@ -46,7 +46,9 @@
 			if (options.categoryId == '0') {
 				options.categoryId = '0';
 			}
+			var defaultGraphOptions = this.graphOptions;
 			$.extend(this, options);
+			$.extend(true, this.graphOptions, defaultGraphOptions);
 			if (!isNaN(this.categoryId)) {
 				this.categoryId = gCategoryId;
 			}
@@ -156,29 +158,38 @@
 			return this;
 		};
 		
-		this.resume = function() {
-			this.play();
+		this.resume = function(visualType) {
+			this.play(visualType);
 		};
 		
-		this.playOrPause = function() {
-			if (this.playCount == 0 || this.playCount == this.filteredData().length) {
-				this.resetPlay().play();
+		this.playOrPause = function(visualType) {
+			if (typeof(visualType) == 'undefined') visualType = 'default';
+			// TODO: Fix pause/resume for default visualization
+			//if (this.playCount == 0 || this.playCount >= this.filteredData().length) {
+			if (this.playCount == 0 || gPlayEndDate >= this.endTime.getTime()/1000) {
+				this.resetPlay().play(visualType);
 			} else if (typeof(gTimelinePlayHandle) != 'undefined' && gTimelinePlayHandle) {
 				this.pause();
 			} else {
-				this.resume();
+				this.resume(visualType);
 			}
 		};
 		
-		this.filteredData = function() {
+		this.filteredData = function(endTime) {
 			// Uncomment to play at default intervals
 			//return $.grep(this.graphData.data, function(n,i) {
+			if (typeof(endTime) == 'undefined') {
+				endTime = gEndTime;
+			}
 			return $.grep(dailyGraphData[0][this.categoryId].data, function(n,i) {
-				return (n[0] >= gStartTime.getTime() && n[0] <= gEndTime.getTime());
+				return (n[0] >= gStartTime.getTime() && n[0] <= endTime.getTime());
 			});
 		};
 		
-		this.play = function() {
+		this.play = function(visualType) {
+			if (typeof(visualType) == 'undefined') visualType = 'default';
+			if (visualType == 'raindrops') return this.playRainDrops();
+			
 			this.graphData = this.graphData || gTimelineData;
 			var plotData = this.graphData;
 			var data = this.filteredData();
@@ -186,15 +197,15 @@
 			if (this.playCount >= data.length) {
 				return this;
 			}
-			
+
+			gAddMarkers = false;  // prevent server side clustering
 			playTimeline = $.timeline({graphData: {color: plotData.color, 
-			                                       data: data.slice(0,this.playCount+1)}, 
+			                                       data: data.slice(0,this.playCount+1)},
 			            categoryId: this.categoryId,                           
 			            startTime: gStartTime, //new Date(plotData.data[0][0]),
 			            endTime: gEndTime //new Date(plotData.data[plotData.data.length-1][0])
 			           });
 			playTimeline.plot();
-			//gStartTime = new Date(plotData.data[0][0]);
 			gPlayEndDate = playTimeline.graphData.data[playTimeline.graphData.data.length-1][0] / 1000;
 			playTimeline.plotMarkers(style, markers, gPlayEndDate);
 			this.playCount++;
@@ -206,9 +217,50 @@
 				$('#playTimeline').html('PAUSE');
 				$('#playTimeline').parent().attr('class', 'play pause');
 				gTimeline = this;
-				gTimelinePlayHandle = window.setTimeout("gTimeline.play()",1000);
+				gTimelinePlayHandle = window.setTimeout("gTimeline.play('"+visualType+"')",500);
 			}
 			
+			return this;
+		};
+
+		this.playRainDrops = function() {
+			this.graphData = this.graphData || gTimelineData;
+			var plotData = this.graphData;
+			gPlayEndDate = gStartTime.getTime()/1000 + (this.playCount * 60*60*24);
+			var playEndDateTime = new Date(gPlayEndDate * 1000);
+			var data = this.filteredData(new Date(gPlayEndDate * 1000));
+
+			if (gPlayEndDate >= this.endTime.getTime()/1000) {
+				return this;
+			}
+
+			var playOptions = {graphData: {color: plotData.color, data: data},
+							   graphOptions: {grid: {markings: [
+							       {xaxis: {from: playEndDateTime.getTime() -
+											      60*60*24*1000,
+		                                      to: playEndDateTime.getTime()},
+									color: "#222222"}
+							   ]}},
+							   categoryId: this.categoryId,
+							   startTime: gStartTime,
+							   endTime: gEndTime}
+
+			gAddMarkers = false; // prevent server side clustering
+			playTimeline = $.timeline(playOptions);
+			playTimeline.plot();
+			playTimeline.plotMarkers(style, markers, gPlayEndDate);
+			this.playCount++;
+			if (gPlayEndDate >= gEndTime.getTime()/1000) {
+				$('#playTimeline').html('PLAY');
+				$('#playTimeline').parent().attr('class', 'play');
+				this.graphData = allGraphData[0][gCategoryId];
+			} else {
+				$('#playTimeline').html('PAUSE');
+				$('#playTimeline').parent().attr('class', 'play pause');
+				gTimeline = this;
+				gTimelinePlayHandle = window.setTimeout("gTimeline.playRainDrops()",500);
+			}
+
 			return this;
 		};
 		
@@ -221,7 +273,7 @@
 			endDate = $.dayEndDateTime(endDate * 1000) / 1000;
 
 			// plot markers using a custom addMarkers method if available
-			if (this.addMarkers) {	
+			if (this.addMarkers && !this.playCount > 0) {
 				this.addMarkers(gCategoryId, '', endDate, gMap.getZoom(), gMap.getCenter(), gMediaType);
 				return this;
 			}
