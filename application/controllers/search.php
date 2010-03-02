@@ -82,7 +82,7 @@ class Search_Controller extends Main_Controller {
 			}
 			if (!empty($keyword_string) && !empty($where_string))
 			{
-				$search_query = "SELECT *, (".$keyword_string.") AS relevance FROM incident WHERE (".$where_string.") ORDER BY relevance DESC LIMIT ";
+				$search_query = "SELECT *, (".$keyword_string.") AS relevance FROM ".$this->table_prefix."incident WHERE (".$where_string.") ORDER BY relevance DESC LIMIT ";
 			}
 		}
 		
