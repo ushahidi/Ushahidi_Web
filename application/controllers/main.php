@@ -25,6 +25,9 @@ class Main_Controller extends Template_Controller {
 	// Session instance
 	protected $session;
 	
+	// Table Prefix
+	protected $table_prefix;
+	
     public function __construct()
     {
         parent::__construct();	
@@ -38,6 +41,9 @@ class Main_Controller extends Template_Controller {
         // Load Header & Footer
         $this->template->header  = new View('header');
         $this->template->footer  = new View('footer');
+		
+		// Set Table Prefix
+		$this->table_prefix = Kohana::config('database.default.table_prefix');
 		
 		//call the feedback form
 		$this->_get_feedback_form();
@@ -239,10 +245,10 @@ class Main_Controller extends Template_Controller {
 		$active_month = 0;
 		$active_startDate = 0;
 		$active_endDate = 0;
-		
+
 		$db = new Database();
 		// First Get The Most Active Month
-		$query = $db->query('SELECT incident_date, count(*) AS incident_count FROM incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y-%m\') ORDER BY incident_count DESC LIMIT 1');
+		$query = $db->query('SELECT incident_date, count(*) AS incident_count FROM '.$this->table_prefix.'incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y-%m\') ORDER BY incident_count DESC LIMIT 1');
 		foreach ($query as $query_active)
 		{
 			$active_month = date('n', strtotime($query_active->incident_date));
@@ -253,7 +259,7 @@ class Main_Controller extends Template_Controller {
 		}
 		
         // Next, Get the Range of Years
-        $query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y\') AS incident_date FROM incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y\') ORDER BY incident_date');
+        $query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y\') AS incident_date FROM '.$this->table_prefix.'incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y\') ORDER BY incident_date');
         foreach ($query as $slider_date)
         {
 			$years = $slider_date->incident_date;

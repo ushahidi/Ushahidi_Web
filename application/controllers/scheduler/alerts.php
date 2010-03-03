@@ -42,12 +42,12 @@ class Alerts_Controller extends Controller
 		  - 1, Incident has been tagged for sending by updating it with 'approved' or 'verified'
 		  - 2, Incident has been tagged as sent. No need to resend again
 		*/
-		$incidents = $db->query("SELECT incident.id, incident_title, 
+		$incidents = $db->query("SELECT i.id, incident_title, 
 								 incident_description, incident_verified, 
-								 location.latitude, location.longitude, alert_sent.alert_id, alert_sent.incident_id
-								 FROM incident INNER JOIN location ON incident.location_id = location.id
-								 LEFT OUTER JOIN alert_sent ON incident.id = alert_sent.incident_id WHERE
-								 incident.incident_active=1 AND incident.incident_alert_status = 1 ");
+								 l.latitude, l.longitude, a.alert_id, a.incident_id
+								 FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
+								 LEFT OUTER JOIN ".$this->table_prefix."alert_sent AS a ON i.id = a.incident_id WHERE
+								 i.incident_active=1 AND i.incident_alert_status = 1 ");
 		
 		foreach ($incidents as $incident)
 		{

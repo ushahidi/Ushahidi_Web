@@ -20,14 +20,17 @@ class Api_Controller extends Controller {
 	private $responseType; //type of response, either json or xml as specified, defaults to json in set in __construct
 	private $error_messages; // validation error messages
 	private $messages = array(); // form validation error messages
+	protected $table_prefix; // Table Prefix
 	
 	/**
 	 * constructor
 	*/
-	function __construct(){
+	function __construct()
+	{
 		$this->db = new Database;
 		$this->list_limit = '20';
 		$this->responseType = 'json';
+		$this->table_prefix = Kohana::config('database.default.table_prefix');
 	}
 	
 	/**
@@ -370,6 +373,10 @@ class Api_Controller extends Controller {
 					$ret = $this->_statistics();
 				}
 				break;
+				
+			case "sms": // Incoming SMS via FrontlineSMS, SmartPhone etc.
+				$ret = $this->_sms();
+				break;			
 			
 			default:
 				$error = array("error" => $this->_getErrorMsg(999));
@@ -458,7 +465,7 @@ class Api_Controller extends Controller {
 		$xml->startElement('incidents');
 		
 		//find incidents
-		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle," ."i.incident_description AS incidentdescription, i.incident_date AS " ."incidentdate, i.incident_mode AS incidentmode,i.incident_active AS " ."incidentactive, i.incident_verified AS incidentverified, l.id AS " ."locationid,l.location_name AS locationname,l.latitude AS " ."locationlatitude,l.longitude AS locationlongitude FROM incident AS i " ."INNER JOIN location as l on l.id = i.location_id ".
+		$query = "SELECT i.id AS incidentid, i.incident_title AS incidenttitle," ."i.incident_description AS incidentdescription, i.incident_date AS " ."incidentdate, i.incident_mode AS incidentmode,i.incident_active AS " ."incidentactive, i.incident_verified AS incidentverified, l.id AS " ."locationid,l.location_name AS locationname,l.latitude AS " ."locationlatitude,l.longitude AS locationlongitude FROM ".$this->table_prefix."incident AS i " ."INNER JOIN ".$this->table_prefix."location as l on l.id = i.location_id ".
                     "$where $limit";
  
 		$items = $this->db->query($query);
@@ -489,7 +496,7 @@ class Api_Controller extends Controller {
 			
 			//fetch categories
 			$query = " SELECT c.category_title AS categorytitle, c.id AS cid " .
-					"FROM category AS c INNER JOIN incident_category AS ic ON " .
+					"FROM ".$this->table_prefix."category AS c INNER JOIN ".$this->table_prefix."incident_category AS ic ON " .
 					"ic.category_id = c.id WHERE ic.incident_id =".$item->incidentid;
 			$category_items = $this->db->query( $query );
 			
@@ -505,8 +512,8 @@ class Api_Controller extends Controller {
 			//fetch media associated with an incident
 			$query = "SELECT m.id as mediaid, m.media_title AS mediatitle, " .
 					"m.media_type AS mediatype, m.media_link AS medialink, " .
-					"m.media_thumb AS mediathumb FROM media AS m " .
-					"INNER JOIN incident AS i ON i.id = m.incident_id " .
+					"m.media_thumb AS mediathumb FROM ".$this->table_prefix."media AS m " .
+					"INNER JOIN ".$this->table_prefix."incident AS i ON i.id = m.incident_id " .
 					"WHERE i.id =". $item->incidentid;
 			
 			$media_items = $this->db->query($query);
@@ -904,7 +911,7 @@ class Api_Controller extends Controller {
 			//get the locationid for the incidentid
 			$locationid = 0;
 			
-			$query = "SELECT location_id FROM incident WHERE id=$incidentid";
+			$query = "SELECT location_id FROM ".$this->table_prefix."incident WHERE id=$incidentid";
 			
 			$items = $this->db->query($query);
 			if(count($items) > 0){
@@ -1012,7 +1019,7 @@ class Api_Controller extends Controller {
 
 		//find incidents
 		$query = "SELECT id, category_title AS title, category_description AS 
-				description, category_color AS color FROM `category` WHERE 
+				description, category_color AS color FROM `".$this->table_prefix."category` WHERE 
 				category_visible = 1 ORDER BY id DESC";
 
 		$items = $this->db->query($query);
@@ -1060,7 +1067,7 @@ class Api_Controller extends Controller {
 
 		//find incidents
 		$query = "SELECT id, category_title, category_description, 
-				category_color FROM `category` WHERE category_visible = 1 
+				category_color FROM `".$this->table_prefix."category` WHERE category_visible = 1 
 				AND id=$id ORDER BY id DESC";
 
 		$items = $this->db->query($query);
@@ -1105,7 +1112,7 @@ class Api_Controller extends Controller {
 	*
 	*/
 	function _incidentCategories(){
-		$query = "SELECT incident_id, category_id FROM `incident_category` ORDER BY id DESC";
+		$query = "SELECT incident_id, category_id FROM `".$this->table_prefix."incident_category` ORDER BY id DESC";
 		$items = $this->db->query($query);
 		$data = array();
 		foreach ($items as $item){
@@ -1126,7 +1133,7 @@ class Api_Controller extends Controller {
 
 		//find incidents
 		$query = "SELECT id, location_name AS name, country_id , latitude, 
-				longitude FROM `location` $where $limit ";
+				longitude FROM `".$this->table_prefix."location` $where $limit ";
 
 		$items = $this->db->query($query);
 		$i = 0;
@@ -1170,7 +1177,7 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
-		$query = "SELECT id AS id, $service AS apikey FROM `settings`
+		$query = "SELECT id AS id, $service AS apikey FROM `".$this->table_prefix."settings`
 			ORDER BY id DESC ;";
 
 		$items = $this->db->query($query);
@@ -1212,7 +1219,7 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
-		$query = "SELECT default_lat AS latitude, default_lon as longitude FROM `settings`
+		$query = "SELECT default_lat AS latitude, default_lon as longitude FROM `".$this->table_prefix."settings`
 			ORDER BY id DESC ;";
 
 		$items = $this->db->query($query);
@@ -1314,7 +1321,7 @@ class Api_Controller extends Controller {
 	
 		//find incidents
 		$query = "SELECT id, iso, country as `name`, capital 
-			FROM `country` $where $limit";
+			FROM `".$this->table_prefix."country` $where $limit";
 	
 		$items = $this->db->query($query);
 		$i = 0;
@@ -1443,8 +1450,8 @@ class Api_Controller extends Controller {
  	*/
 	function _incidentsByCategoryId($catid,$orderfield,$sort){
 		// Needs Extra Join
-		$join = "\nINNER JOIN incident_category AS ic ON ic.incident_id = i.id"; 
-		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id ";
+		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id"; 
+		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id = ic.category_id ";
 		$where = $join."\nWHERE c.id = $catid AND i.incident_active = 1";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
@@ -1456,8 +1463,8 @@ class Api_Controller extends Controller {
  	*/
 	function _incidentsByCategoryName($catname,$orderfield,$sort){
 		// Needs Extra Join
-		$join = "\nINNER JOIN incident_category AS ic ON ic.incident_id = i.id"; 
-		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id";
+		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id"; 
+		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id = ic.category_id";
 		$where = $join."\nWHERE c.category_title = '$catname' AND 
 				i.incident_active = 1";
 		$sortby = "\nORDER BY $orderfield $sort";
@@ -1470,8 +1477,8 @@ class Api_Controller extends Controller {
          */
         function _incidentsBySinceId($since_id,$orderfield,$sort){
                 // Needs Extra Join
-		$join = "\nINNER JOIN incident_category AS ic ON ic.incident_id = i.id"; 
-		$join .= "\nINNER JOIN category AS c ON c.id = ic.category_id";
+		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id"; 
+		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id = ic.category_id";
 		$where = $join."\nWHERE i.id > $since_id AND 
 				i.incident_active = 1";
 		$sortby = "\nORDER BY $orderfield $sort";
@@ -1594,6 +1601,137 @@ class Api_Controller extends Controller {
 	}
 	
 	/**
+ 	* Receive SMS's via FrontlineSMS or via Mobile Phone Native Apps
+ 	*/
+	function _sms()
+	{
+		$retJsonOrXml = array();
+		$reponse = array();
+		
+		// Validate User
+		// Should either be authenticated or have app_key
+		$username = isset($request['username']) ? $request['username'] : "";
+		$password = isset($request['password']) ? $request['password'] : "";
+		
+		$app_key = isset($request['key']) ? $request['key'] : "";
+		
+		if ( $user_id = $this->_login($username, $password) || 
+		 	$this->_chk_key($app_key) )
+		{
+			// Process POST
+			// setup and initialize form field names
+			$form = array
+			(
+				'message_from' => '',
+				'message_description' => '',
+				'message_date' => ''
+			);
+			
+			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($request);
+			
+			//  Add some filters
+			$post->pre_filter('trim', TRUE);
+
+			// Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('message_from', 'required', 'numeric', 'length[6,20]');
+			$post->add_rules('message_description', 'required', 'length[3,300]');
+			$post->add_rules('message_date', 'date_mmddyyyy');
+			
+			// Test to see if things passed the rule checks
+			if ($post->validate())
+			{
+				// Validates so Save Message
+				$services = new Service_Model();
+				$service = $services->where('service_name', 'SMS')->find();
+				if (!$service) 
+					return;
+			
+				$reporter = ORM::factory('reporter')
+									->where('service_id', $service->id)
+									->where('service_account', $message_from)
+									->find();
+
+				if (!$reporter->loaded == TRUE)
+				{
+					// get default reporter level (Untrusted)
+					$level = ORM::factory('level')
+						->where('level_weight', 0)
+						->find();
+					
+					$reporter->service_id = $service->id;
+					$reporter->level_id = $level->id;
+					$reporter->service_userid = null;
+					$reporter->service_account = $post->message_from;
+					$reporter->reporter_first = null;
+					$reporter->reporter_last = null;
+					$reporter->reporter_email = null;
+					$reporter->reporter_phone = null;
+					$reporter->reporter_ip = null;
+					$reporter->reporter_date = date('Y-m-d');
+					$reporter->save();
+				}
+				
+				// Save Message
+				$message = new Message_Model();
+				$message->parent_id = 0;
+				$message->incident_id = 0;
+				$message->user_id = ( $user_id ) ? $user_id : 0;
+				$message->reporter_id = $reporter->id;
+				$message->message_from = $post->message_from;
+				$message->message_to = null;
+				$message->message = $post->message_description;
+				$message->message_type = 1; // Inbox
+				$message->message_date = date("Y-m-d H:i:s",time());
+				$message->service_messageid = null;
+				$message->save();
+				
+				// Notify Admin Of New SMS Messages
+//				$send = notifications::notify_admins(
+//					"[".Kohana::config('settings.site_name')."] ".
+//						Kohana::lang('notifications.admin_new_sms.subject'),
+//					Kohana::lang('notifications.admin_new_sms.message')
+//					);
+					
+				// success!
+				$reponse = array(
+					"payload" => array("success" => "true"),
+					"error" => $this->_getErrorMsg(0)
+				);
+				
+			}
+			else
+			{
+				// Required parameters are missing or invalid
+				$reponse = array(
+					"payload" => array("success" => "false"),
+					"error" => $this->_getErrorMsg(004)
+				);
+			}
+			
+		}
+		else
+		{
+			// Authentication Failed. Invalid User or App Key
+			$reponse = array(
+				"payload" => array("success" => "false"),
+				"error" => $this->_getErrorMsg(005)
+			);
+		}
+		
+		if($this->responseType == 'json')
+		{
+			$retJsonOrXml = $this->_arrayAsJSON($reponse);
+		}
+		else
+		{
+			$retJsonOrXml = $this->_arrayAsXML($reponse, array());
+		}
+		
+		return $retJsonOrXml;
+	}	
+	
+	/**
  	* starting point
  	*/
 	public function index(){
@@ -1669,5 +1807,57 @@ class Api_Controller extends Controller {
 		$xml->endElement();
 		return $xml->outputMemory(true);
 	}
-
+	
+	/**
+	 * Log user in.
+	 *
+	 * @param string $username User's username.
+	 * @param string $password User's password.
+	 * @return int user_id, false if authentication fails
+	 */
+	function _login($username, $password)
+	{
+		$auth = Auth::instance();
+		
+		// Is user previously authenticated?
+        if ($auth->logged_in())
+        {
+            return $auth->get_user()->id;
+        }
+		else
+		{
+			// Attempt a login
+	        if ($auth->login($username, $password))
+	        {
+	            return $auth->get_user()->id;
+	        }
+	        else
+	        {
+	            return false;
+	        }
+		}
+	}
+	
+	/**
+	 * FrontlineSMS Key Validation
+	 *
+	 * @param string $app_key FrontlineSMS Key
+	 * @return bool, false if authentication fails
+	 */
+	function _chk_key($app_key = 0)
+	{
+		// Is this a valid FrontlineSMS Key?
+		$keycheck = ORM::factory('settings', 1)
+			->where('frontlinesms_key', $app_key)
+			->find();
+			
+		if ($keycheck->loaded)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
