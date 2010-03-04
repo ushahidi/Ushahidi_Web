@@ -230,14 +230,9 @@
 			var playEndDateTime = new Date(gPlayEndDate * 1000);
 			var data = this.filteredData(new Date(gPlayEndDate * 1000));
 
-			if (gPlayEndDate >= this.endTime.getTime()/1000) {
-				return this;
-			}
-
 			var playOptions = {graphData: {color: plotData.color, data: data},
 							   graphOptions: {grid: {markings: [
-							       {xaxis: {from: playEndDateTime.getTime() -
-											      60*60*24*1000,
+							       {xaxis: {from: playEndDateTime.getTime(),
 		                                      to: playEndDateTime.getTime()},
 									color: "#222222"}
 							   ]}},
