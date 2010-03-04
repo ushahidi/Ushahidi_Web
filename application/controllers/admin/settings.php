@@ -266,8 +266,8 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('default_map', 'required', 'between[1,4]');
 			$post->add_rules('api_google','required', 'length[0,200]');
 			$post->add_rules('api_yahoo','required', 'length[0,200]');
-			$post->add_rules('default_zoom','required','between[0,16]');		// Validate for maximum and minimum zoom values
-			$post->add_rules('default_lat','required','between[-90,90]');		// Validate for maximum and minimum latitude values
+			$post->add_rules('default_zoom','required','between[0,21]');		// Validate for maximum and minimum zoom values
+			$post->add_rules('default_lat','required','between[-85,85]');		// Validate for maximum and minimum latitude values
 			$post->add_rules('default_lon','required','between[-180,180]');		// Validate for maximum and minimum longitude values
 
 			// Test to see if things passed the rule checks
@@ -350,11 +350,12 @@ class Settings_Controller extends Admin_Controller
 		
 		// Zoom Array for Slider
 		$default_zoom_array = array();
-		for ($i=0; $i<16 ; $i++)
-		{ 
-			$default_zoom_array[$i] = $i;
-		}
-		$this->template->content->default_zoom_array = $default_zoom_array;
+        
+		for ($i=Kohana::config('map.minZoomLevel'); $i<Kohana::config('map.minZoomLevel')+Kohana::config('map.numZoomLevels') ; $i++)
+        {
+            $default_zoom_array[$i] = $i;
+        }
+        $this->template->content->default_zoom_array = $default_zoom_array;
 
 		// Javascript Header
 		$this->template->map_enabled = TRUE;

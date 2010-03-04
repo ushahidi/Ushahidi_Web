@@ -331,7 +331,19 @@ class Main_Controller extends Template_Controller {
 			$marker_opacity = Kohana::config('map.marker_opacity');
 			$marker_stroke_width = Kohana::config('map.marker_stroke_width');
 			$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
-			$this->template->header->js = ($clustering) ? 
+			
+            // pdestefanis - allows to restrict the number of zoomlevels available
+			$numZoomLevels = Kohana::config('map.numZoomLevels');
+		    $minZoomLevel = Kohana::config('map.minZoomLevel');
+        	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
+            
+            // pdestefanis - allows to limit the extents of the map
+            $lonFrom = Kohana::config('map.lonFrom');
+            $latFrom = Kohana::config('map.latFrom');
+            $lonTo = Kohana::config('map.lonTo');
+            $latTo = Kohana::config('map.latTo');
+            
+            $this->template->header->js = ($clustering) ? 
 				new View('main_cluster_js') : new View('main_cluster_js');
 			if ($clustering == 1) {
 				//$this->template->header->js->cluster = "true"; // not used??
@@ -351,6 +363,17 @@ class Main_Controller extends Template_Controller {
 				($marker_stroke_opacity >=1 && $marker_stroke_opacity <= 10 ) 
 				? $marker_stroke_opacity * 0.1  : 0.9;	
 			
+            // pdestefanis - allows to restrict the number of zoomlevels available
+			$this->template->header->js->numZoomLevels = $numZoomLevels;
+		    $this->template->header->js->minZoomLevel = $minZoomLevel;
+		    $this->template->header->js->maxZoomLevel = $maxZoomLevel;
+            
+            // pdestefanis - allows to limit the extents of the map
+            $this->template->header->js->lonFrom = $lonFrom;
+            $this->template->header->js->latFrom = $latFrom;
+            $this->template->header->js->lonTo = $lonTo;
+            $this->template->header->js->latTo = $latTo;
+            
 			$this->template->header->js->default_map = Kohana::config('settings.default_map');
 			$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 			$this->template->header->js->latitude = Kohana::config('settings.default_lat');

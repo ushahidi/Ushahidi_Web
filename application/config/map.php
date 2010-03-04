@@ -43,3 +43,40 @@ $config['marker_stroke_opacity'] = "9";
  * Default: array()
  */
 $config['layers'] = array();
+
+/**
+ * Set number of zoom levels.
+ * If maxZoomLevel - minZoomLevel > numZoomLevels then numZoomLevels has priority
+ */
+
+$config['numZoomLevels'] = "15";  // 
+
+
+/**
+ * Set minimum zoom level, as defined by the provider. (0-21)
+ * http://code.google.com/apis/maps/documentation/staticmaps/#Zoomlevels
+ */
+
+$config['minZoomLevel'] = "1";
+
+
+/**
+ * Set maximum zoom level, as defined by the provider. (0-21)
+ * http://code.google.com/apis/maps/documentation/staticmaps/#Zoomlevels
+ */
+
+$config['maxZoomLevel'] = "15";
+
+/**
+ * Set maximum extents for the map. This will limit the area on the map
+ * that users can access.
+ * Default values allow the user to see the whole world
+ */
+
+$config['lonFrom'] = "-180";
+$config['latFrom'] = "-85";
+$config['lonTo'] = "180";
+$config['latTo'] = "85";
+
+
+
