@@ -1270,6 +1270,16 @@ label.error {
 .report_category ul li label{
 	color:#555;
 }
+/*Categories Tree*/
+.report_category ul ul { width: auto; float: none; }
+.report_category ul li.sub_category { padding-left: 47px; }
+.report_category ul li.sub_category_last { background-position: 16px -1766px; }
+.report_category ul li input.check-box { margin: 0 3px 0 0; }
+.report_category ul li.hover,
+.report_category ul li li:hover { background-color: #efefef; }
+ul.treeview li.lastCollapsable,
+ul.treeview li.lastExpandable { width:155px; }
+
 .report_optional{
 	padding:15px;
 	background-color:#eee;

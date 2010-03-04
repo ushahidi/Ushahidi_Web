@@ -168,48 +168,15 @@
 
 			                    <div class="category">
                         	    <?php
-                        		//format categories for 2 column display
-                                $this_col = 1; // First column
-                                $maxper_col = round($categories_total/2); // Maximum number of elements per column
-                                
-								$i = 1; // Element Count
-                                foreach ($categories as $category => $category_extra)
-                                {
-                                    $category_title = $category_extra[0];
-                                    $category_color = $category_extra[1];
-                                    if ($this_col == 1) 
-                                        print "<ul>";
-                                
-                                    if (!empty($form['incident_category']) 
-                                        && in_array($category, $form['incident_category'])) {
-                                        $category_checked = TRUE;
-                                    }
-                                    else
-                                    {
-                                        $category_checked = FALSE;
-                                    }
-                                                                                                    
-                                    print "<li><label>";
-                                    print form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
-                                    print "$category_title";
-                                    print "</label></li>";
-
-                                    if ($this_col == $maxper_col || $i == count($categories)) 
-                                        print "</ul>\n";
-                              
-                                    if ($this_col < $maxper_col)
-                                    {
-                                        $this_col++;
-                                    } 
-                                    else 
-                                    {
-                                        $this_col = 1;
-                                    }
-									$i++;
-                                }
-                                
-                                ?>
-			                        <ul id="user_categories">
+															$selected_categories = array();
+															if (!empty($form['incident_category']) && is_array($form['incident_category'])) {
+																$selected_categories = $form['incident_category'];
+															}
+															$columns = 2;
+															echo category::tree($categories, $selected_categories, 'incident_category', $columns);
+															?>
+			                        
+									<ul id="user_categories">
 			                        </ul>
 								</div>
 							</div>

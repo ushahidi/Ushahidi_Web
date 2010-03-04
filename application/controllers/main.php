@@ -83,6 +83,7 @@ class Main_Controller extends Template_Controller {
 		// Javascript Header
 		$this->template->header->map_enabled = FALSE;
 		$this->template->header->validator_enabled = TRUE;
+		$this->template->header->treeview_enabled = FALSE;
 		$this->template->header->datepicker_enabled = FALSE;
 		$this->template->header->photoslider_enabled = FALSE;
 		$this->template->header->videoslider_enabled = FALSE;

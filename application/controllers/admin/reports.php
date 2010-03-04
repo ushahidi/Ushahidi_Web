@@ -890,6 +890,7 @@ class Reports_Controller extends Admin_Controller
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
         $this->template->colorpicker_enabled = TRUE;
+		$this->template->treeview_enabled = TRUE;
 		$this->template->js = new View('admin/reports_edit_js');
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
@@ -1378,21 +1379,13 @@ class Reports_Controller extends Admin_Controller
 	
     private function _get_categories()
     {
- 	    // get categories array
-		//$this->template->content->bind('categories', $categories);
-				
-        $categories_total = ORM::factory('category')->where('category_visible', '1')->count_all();
-        $this->template->content->categories_total = $categories_total;
+		$categories = ORM::factory('category')
+			->where('category_visible', '1')
+			->where('parent_id', '0')
+			->orderby('category_title', 'ASC')
+			->find_all();
 
-		$categories = array();
-		foreach (ORM::factory('category')->where('category_visible', '1')->find_all() as $category)
-		{
-			// Create a list of all categories
-			$categories[$category->id] = array($category->category_title, $category->category_color);
-		}
-		
-	    return $categories;
-		
+		return $categories;		
 	}
 
     // Dynamic categories form fields

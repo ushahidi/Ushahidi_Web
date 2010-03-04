@@ -21,7 +21,6 @@
 	<title><?php echo $site_name ?></title>
 	<?php
 	echo html::stylesheet('media/css/admin/all', '', true);
-	echo html::stylesheet('media/css/jquery.treeview', '', true);
 	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
 	echo "<!--[if lt IE 7]>".
 		html::stylesheet('media/css/ie6', '', true)
@@ -44,7 +43,6 @@
 	echo html::script('media/js/jquery.ui.min', true);
 	echo html::script('media/js/selectToUISlider.jQuery', true);
 	echo html::script('media/js/jquery.hovertip-1.0', true);
-	echo html::script('media/js/jquery.treeview');
 	
 	
 	echo "<script type=\"text/javascript\">
@@ -60,6 +58,12 @@
 		echo html::script('media/js/jquery.flot', true);
 		echo html::script('media/js/excanvas.pack', true);
 		echo html::script('media/js/timeline.js', true);
+	}
+	
+	// Load TreeView
+	if ($treeview_enabled) {
+		echo html::script('media/js/jquery.treeview');
+		echo html::stylesheet('media/css/jquery.treeview');
 	}
 	
 	// Load ProtoChart

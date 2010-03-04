@@ -110,43 +110,16 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 									<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?></h4>
 									<div class="report_category" id="categories">
 										<?php
-										//format categories for 2 column display
-										$this_col = 1; // First column
-										$maxper_col = round($categories_total/2); // Maximum number of elements per column
-										$i = 1; // Element Count
-										foreach ($categories as $category => $category_extra)
-										{
-											$category_title = $category_extra[0];
-											$category_color = $category_extra[1];
-											if ($this_col == 1) 
-												echo "<ul>";
-											if (!empty($selected_categories) && in_array($category, $selected_categories))
-											{
-												$category_checked = TRUE;
-											}
-											else
-											{
-												$category_checked = FALSE;
-											}
-											echo "\n<li><label>";
-											echo form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
-											echo "$category_title";
-											echo "</label></li>";
-											if ($this_col == $maxper_col || $i == count($categories)) 
-												print "</ul>\n";
-											if ($this_col < $maxper_col)
-											{
-												$this_col++;
-											} 
-											else 
-											{
-												$this_col = 1;
-											}
-											$i++;
+										$selected_categories = array();
+                    if (!empty($form['incident_category']) && is_array($form['incident_category'])) {
+											$selected_categories = $form['incident_category'];
 										}
+										$columns = 2;
+										echo category::tree($categories, $selected_categories, 'incident_category', $columns);
 										?>
 									</div>
 								</div>
+								
 								<div id="custom_forms">
 									
                                     <?php
@@ -186,6 +159,7 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 									}
 									?>
                                 </div>
+
 								<div class="report_optional">
 									<h3><?php echo Kohana::lang('ui_main.reports_optional'); ?></h3>
 									<div class="report_row">
