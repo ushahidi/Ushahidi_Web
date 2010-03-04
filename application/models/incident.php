@@ -60,6 +60,9 @@ class Incident_Model extends ORM
 
 	static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL,$active='true',$media_type=NULL)
 	{
+		// Table Prefix
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
 		// get graph data
 		// could not use DB query builder. It does not support parentheses yet
 		$db = new Database();
@@ -93,8 +96,8 @@ class Incident_Model extends ORM
 		$joins = '';
 		$general_filter = '';
 		if (isset($media_type) && is_numeric($media_type)) {
-			$joins = 'INNER JOIN media ON media.incident_id = incident.id';
-			$general_filter = ' AND media.media_type IN ('. $media_type  .')';
+			$joins = 'INNER JOIN '.$table_prefix.'media AS m ON m.incident_id = i.id';
+			$general_filter = ' AND m.media_type IN ('. $media_type  .')';
 		}
 
 		$graph_data = array();
@@ -104,7 +107,7 @@ class Incident_Model extends ORM
 		$all_graphs['0']['label'] = 'All Categories';
 		$query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') AS time,
 					   COUNT(*) AS number
-					   FROM incident ' . $joins . '
+					   FROM '.$table_prefix.'incident AS i ' . $joins . '
 					   WHERE incident_active IN (' . $active_filter .')' .
 		$general_filter .'
 					   GROUP BY ' . $groupby_date_text;
@@ -119,9 +122,9 @@ class Incident_Model extends ORM
 
 		$query_text = 'SELECT category_id, category_title, category_color, UNIX_TIMESTAMP(' . $select_date_text . ')
 							AS time, COUNT(*) AS number
-								FROM incident
-							INNER JOIN incident_category ON incident_category.incident_id = incident.id
-							INNER JOIN category ON incident_category.category_id = category.id
+								FROM '.$table_prefix.'incident AS i
+							INNER JOIN '.$table_prefix.'incident_category AS ic ON ic.incident_id = i.id
+							INNER JOIN '.$table_prefix.'category AS c ON ic.category_id = c.id
 							' . $joins . '
 							WHERE incident_active IN (' . $active_filter . ')
 								  ' . $general_filter . '

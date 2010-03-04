@@ -27,9 +27,15 @@ class Json_Cluster_Controller extends Template_Controller
     // Main template
     public $template = 'json';
 
+	// Table Prefix
+	protected $table_prefix;
+
 	public function __construct()
 	{
 		parent::__construct();
+		
+		// Set Table Prefix
+		$this->table_prefix = Kohana::config('database.default.table_prefix');
 		
 		set_time_limit(60);
 	}
@@ -74,27 +80,27 @@ class Json_Cluster_Controller extends Template_Controller
 			$_GET['ne'] : "0";			
 			
 		$filter = "";
-		$filter .= ($category_id !=0) ? " AND ( category.id=".$category_id
-			." OR category.parent_id=".$category_id.") " : "";
+		$filter .= ($category_id !=0) ? " AND ( c.id=".$category_id
+			." OR c.parent_id=".$category_id.") " : "";
 		$filter .= ($start_date) ? 
-			" AND incident.incident_date >= '" . date("Y-m-d H:i:s", $start_date) . "'" : "";
+			" AND i.incident_date >= '" . date("Y-m-d H:i:s", $start_date) . "'" : "";
 		$filter .= ($end_date) ? 
-			" AND incident.incident_date <= '" . date("Y-m-d H:i:s", $end_date) . "'" : "";
+			" AND i.incident_date <= '" . date("Y-m-d H:i:s", $end_date) . "'" : "";
 			
 		if ($southwest && $northeast)
 		{
 			list($latitude_min, $longitude_min) = explode(',', $southwest);
 			list($latitude_max, $longitude_max) = explode(',', $northeast);
 			
-			$filter .= " AND location.latitude >=".$latitude_min.
-				" AND location.latitude <=".$latitude_max;
-			$filter .= " AND location.longitude >=".$longitude_min.
-				" AND location.longitude <=".$longitude_max;
+			$filter .= " AND l.latitude >=".$latitude_min.
+				" AND l.latitude <=".$latitude_max;
+			$filter .= " AND l.longitude >=".$longitude_min.
+				" AND l.longitude <=".$longitude_max;
 		}
 		
 		if ($category_id > 0)
 		{
-			$query_cat = $db->query("SELECT `category_color`, `category_image` FROM `category` WHERE id=$category_id");
+			$query_cat = $db->query("SELECT `category_color`, `category_image` FROM `".$this->table_prefix."category` WHERE id=$category_id");
 			foreach ($query_cat as $cat)
 			{
 				$color = $cat->category_color;
@@ -111,7 +117,7 @@ class Json_Cluster_Controller extends Template_Controller
 //			->where('incident.incident_active=1'.$filter)
 //			->find_all();
 
-		$query = $db->query("SELECT DISTINCT `incident`.id, `location`.`latitude`, `location`.`longitude` FROM `incident` INNER JOIN `location` ON (`location`.`id` = `incident`.`location_id`) INNER JOIN `incident_category` ON (`incident`.`id` = `incident_category`.`incident_id`) INNER JOIN `category` ON (`incident_category`.`category_id` = `category`.`id`) WHERE incident.incident_active=1 $filter ORDER BY `incident`.`id` ASC ");	
+		$query = $db->query("SELECT DISTINCT i.id, l.`latitude`, l.`longitude` FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1 $filter ORDER BY i.`id` ASC ");	
 		$query->result(FALSE, MYSQL_ASSOC);
 //		echo count($query);
 
@@ -245,18 +251,18 @@ class Json_Cluster_Controller extends Template_Controller
 			$latitude = $marker->location->latitude;
 			$longitude = $marker->location->longitude;
 			
-			$filter = " AND incident.incident_date LIKE '$incident_date%' ";
-			$filter .= " AND incident.id <>".$marker->id;
+			$filter = " AND i.incident_date LIKE '$incident_date%' ";
+			$filter .= " AND i.id <>".$marker->id;
 			
 			// Database
 			$db = new Database();
 			
 			// Get Neighboring Markers From The Same Month Within A Mile
-			$query = $db->query("SELECT DISTINCT `incident`.*, `location`.`latitude`, `location`.`longitude`, 
-			((ACOS(SIN($latitude * PI() / 180) * SIN(`location`.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(`location`.`latitude` * PI() / 180) * COS(($longitude - `location`.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance 
-			 FROM `incident` INNER JOIN `location` ON (`location`.`id` = `incident`.`location_id`) INNER JOIN `incident_category` ON (`incident`.`id` = `incident_category`.`incident_id`) INNER JOIN `category` ON (`incident_category`.`category_id` = `category`.`id`) WHERE incident.incident_active=1 $filter 
+			$query = $db->query("SELECT DISTINCT i.*, l.`latitude`, l.`longitude`, 
+			((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance 
+			 FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1 $filter 
 			HAVING distance<='1'
-			 ORDER BY `incident`.`id` ASC ");
+			 ORDER BY i.`id` ASC ");
 			
 			foreach ($query as $row)
 			{
