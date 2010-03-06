@@ -7,7 +7,7 @@
 
 $lang = array
 (
-    'askimet_invalid_apikey' => 'Your Akismet API key is not valid'
+    'askimet_invalid_apikey' => 'Your Akismet API key is not valid',
     'akismet_cannot_connect' => 'Could not connect to akismet server',
     'akismet_cannot_retrieve' => 'The response from Akismet could not be retrieved',
     'clickatell_unicode_message_too_long' => 'Your unicode message is too long! (Current lenght=',

@@ -161,5 +161,6 @@ $lang = array
     'wiki' => 'Wiki',
     'yes' => 'Yes',
     'your_search_for' => "Your search for",
+    'api_logs' => "API Logs"
 );
 ?>

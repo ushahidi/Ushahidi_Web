@@ -326,7 +326,7 @@ class Clickatell_Core {
             fclose ($handler);
             return $result;
         } else {
-            return Kohana::lang('libraries.clickatell_fopen_error')";
+            return Kohana::lang('libraries.clickatell_fopen_error');
         }
     }
 

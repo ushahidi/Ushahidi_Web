@@ -428,7 +428,7 @@ class Api_Controller extends Controller {
 			case 003:
 				return array("code" => "003", "message" => $message );
 			case 004:
-				return array("code" => "004", "message" => Kohana::lang('ui_admin.post_method_not_used')));
+				return array("code" => "004", "message" => Kohana::lang('ui_admin.post_method_not_used'));
 			case 005:
 				return array("code" => "005", "message" => Kohana::lang('ui_admin.access_denied_credentials'));
 			case 006:

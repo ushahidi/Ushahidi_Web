@@ -103,9 +103,9 @@
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.from');?>: <strong><a href="<?php echo $tweet_link; ?>" target="_blank"><?php echo $tweet_from; ?></a></strong>
 												<?php
 												if($tweet_hashtag == ''){ //if this was a direct report
-													echo "<li class=\"none-separator\"><strong>".<?php echo strtoupper(Kohana::lang('ui_main.direct_report'));?>."</strong>";
+													echo "<li class=\"none-separator\"><strong>". strtoupper(Kohana::lang('ui_main.direct_report'))."</strong>";
 												}else{ //if this was found using a hashtag search
-													echo "<li class=\"none-separator\">".<?php echo Kohana::lang('ui_main.hashtag');?>.": <strong>#".$tweet_hashtag."</strong>";
+													echo "<li class=\"none-separator\">". Kohana::lang('ui_main.hashtag').": <strong>#".$tweet_hashtag."</strong>";
 												}
 												?>
 											</ul>
@@ -115,11 +115,11 @@
 											<ul>
 												<?php
 												if ($incident_id != 0) {
-													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".<?php echo Kohana::lang('ui_main.view_report');?>."</strong></a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_main.view_report')."</strong></a></li>";
 												}
 												else
 												{
-													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?tid=' . $tweet_id ."\">".<?php echo Kohana::lang('ui_main.create_report');?>."?</a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?tid=' . $tweet_id ."\">".Kohana::lang('ui_main.create_report')."?</a></li>";
 												}
 												?>
 												<li>

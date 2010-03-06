@@ -170,7 +170,7 @@
 						<?php echo Kohana::lang('ui_admin.stats')?>
 						</a></li>
 					<li><a href="<?php echo url::base() ?>admin/apilogs" <?php if($this_page=="apilogs") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.apilogs')?>
+						<?php echo Kohana::lang('ui_admin.api_logs')?>
 						</a></li>
 				</ul>
 				<!-- sub-nav -->
