@@ -6,7 +6,7 @@
  * es_AR
  */
 
-$lang = array
+$lang = array( 
     'db_information_link' => 'Para más información vea <a href="http://wiki.ushahidi.com/doku.php?id=a_brief_word_on_databases" target="_blank">este artículo</a> en nuestro wiki, que describe bases de datos en más detalle',
     'error' => array
     (   'username' => 'Please make sure to enter the <strong>username</strong> of the database server.',
@@ -47,7 +47,7 @@ $lang = array
         'text_3' => 'Antes de comezar asegurese que el servidor web tenga permiso de escritura a los siguientes archivos y directorios. Puede ser necesario cambiar los permisos en forma manual',
         'text_4' => 'La siguiente información será necesaria para el proceso de instalación'
     ),
-(
+
     'base_path' => 'Directorio base',
     'database' => 'Base de datos',
     'database_host' => 'Dirección del servidor de base de datos',
