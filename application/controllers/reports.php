@@ -88,13 +88,11 @@ class Reports_Controller extends Main_Controller {
 			$total_pages = ceil($pagination->total_items/ (int) Kohana::config('settings.items_per_page'));
 			
 			if($total_pages > 1) { // If we want to show pagination
-				$this->template->content->pagination_stats = '(Showing '
-                     .$current_page.' of '.$total_pages
-                     .' pages of '.$pagination->total_items.' report'.$plural.')';
-				
+				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
+ 				
                 $this->template->content->pagination = $pagination;
 			} else { // If we don't want to show pagination
-				$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
+				$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
 			}
 		} else {
 			$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
@@ -586,6 +584,7 @@ class Reports_Controller extends Main_Controller {
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->datepicker_enabled = TRUE;
+		$this->template->header->treeview_enabled = TRUE;
 		$this->template->header->js = new View('reports_submit_js');
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
@@ -1004,22 +1003,11 @@ class Reports_Controller extends Main_Controller {
 	 */	
 	private function _get_categories($selected_categories)
 	{
-		// Count categories to determine column length
-		$categories_total = ORM::factory('category')
-                            ->where('category_visible', '1')
-                            ->count_all();
-
-		$this->template->content->categories_total = $categories_total;
-
-		$categories = array();
-
-		foreach (ORM::factory('category')
-                 ->where('category_visible', '1')
-                 ->find_all() as $category)
-		{
-			// Create a list of all categories
-			$categories[$category->id] = array($category->category_title, $category->category_color);
-		}
+		$categories = ORM::factory('category')
+			->where('category_visible', '1')
+			->where('parent_id', '0')
+			->orderby('category_title', 'ASC')
+			->find_all();
 
 		return $categories;
 	}

@@ -69,6 +69,7 @@ class Admin_Controller extends Template_Controller
 		// Javascript Header
 		$this->template->map_enabled = FALSE;
 		$this->template->flot_enabled = FALSE;
+		$this->template->treeview_enabled = FALSE;
 		$this->template->protochart_enabled = FALSE;
 		$this->template->colorpicker_enabled = FALSE;
 		$this->template->editor_enabled = FALSE;

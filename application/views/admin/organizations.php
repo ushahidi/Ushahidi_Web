@@ -15,21 +15,21 @@
 ?>
 			<div class="bg">
 				<h2>
-					<a href="<?php echo url::base() . 'admin/manage' ?>">Categories</a>
-					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
-					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>" class="active">Organizations</a>
-					<span>(<a href="#add">Add New</a>)</span>
-					<a href="<?php echo url::base() . 'admin/manage/pages' ?>">Pages</a>
-					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a>
-					<a href="<?php echo url::base() . 'admin/manage/layers' ?>">Layers</a>
-					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
+					<a href="<?php echo url::base() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>" class="active"><?php echo Kohana::lang('ui_main.organizations');?></a>
+					<span>(<a href="#add"><?php echo Kohana::lang('ui_main.add_new');?></a>)</span>
+					<a href="<?php echo url::base() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
 				</h2>
 				<?php
 				if ($form_error) {
 				?>
 					<!-- red-box -->
 					<div class="red-box">
-						<h3>Error!</h3>
+						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 						<ul>
 						<?php
 						foreach ($errors as $error_item => $error_description)
@@ -46,7 +46,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>The Organization Has Been <?php echo $form_action; ?></h3>
+						<h3><?php echo Kohana::lang('ui_main.organization_has_been');?> <?php echo $form_action; ?></h3>
 					</div>
 				<?php
 				}
@@ -62,8 +62,8 @@
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2">Organization</th>
-										<th class="col-4">Actions</th>
+										<th class="col-2"><?php echo Kohana::lang('ui_main.organization');?></th>
+										<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -80,7 +80,7 @@
 									?>
 										<tr>
 											<td colspan="4" class="col">
-												<h3>No Results To Display!</h3>
+												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 											</td>
 										</tr>
 									<?php	
@@ -117,9 +117,9 @@
 	'<?php echo(rawurlencode($organization_description)); ?>',
 	'<?php echo(rawurlencode($organization_email)); ?>',
 	'<?php echo(rawurlencode($organization_phone1)); ?>',
-	'<?php echo(rawurlencode($organization_phone2)); ?>')">Edit</a></li>
-	<li class="none-separator"><a href="javascript:orgAction('v','SHOW/HIDE','<?php echo(rawurlencode($organization_id)); ?>')"<?php if ($organization_active) echo " class=\"status_yes\"" ?>>Visible</a></li>
-													<li><a href="javascript:orgAction('d','DELETE','<?php echo(rawurlencode($organization_id)); ?>')" class="del">Delete</a></li>
+	'<?php echo(rawurlencode($organization_phone2)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+	<li class="none-separator"><a href="javascript:orgAction('v','SHOW/HIDE','<?php echo(rawurlencode($organization_id)); ?>')"<?php if ($organization_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
+													<li><a href="javascript:orgAction('d','DELETE','<?php echo(rawurlencode($organization_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>
 										</tr>
@@ -136,7 +136,7 @@
 					<!-- tabset -->
 					<a name="add"></a>
 					<ul class="tabset">
-						<li><a href="#" class="active">Add/Edit</a></li>
+						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -147,27 +147,27 @@
 						<input type="hidden" name="action" 
 							id="action" value="a"/>							
 						<div class="tab_form_item2">
-							<strong>Organization Name:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.organization_name');?>:</strong><br />
 							<?php print form::input('organization_name', $form['organization_name'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Organization Website:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.organization_website');?>:</strong><br />
 							<?php print form::input('organization_website', $form['organization_website'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Organization Description:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.organization_description');?>:</strong><br />
 							<?php print form::textarea('organization_description', $form['organization_description'], ' rows="12" cols="60" '); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Organization Email:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.organization_email');?>:</strong><br />
 							<?php print form::input('organization_email', $form['organization_email'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Organization Phone 1:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.organization_phone_1');?>:</strong><br />
 							<?php print form::input('organization_phone1', $form['organization_phone1'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item2">
-							<strong>Organization Phone 2:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.organization_phone_2');?>:</strong><br />
 							<?php print form::input('organization_phone2', $form['organization_phone2'], ' class="text long"'); ?>
 						</div>
 						<div class="tab_form_item">

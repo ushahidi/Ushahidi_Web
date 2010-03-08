@@ -1,8 +1,20 @@
 <?php
 
+/**
+ * SHARING INTERFACE INTERNATIONALIZATION
+ *
+ * en_US
+ */
+
 $lang = array
 (
-	'sharing_url' => array
+    'contact' => 'Contact',	
+    'date' => 'Ingress date',
+    'date_added' => 'Date Added',
+    'last_access' => 'Last Access',
+    'sent_info' => 'he following information will be sent with this request',
+    'sharing_key' => 'Key',
+    'sharing_url' => array
 	(
 		'required'	=> 'The site url is required.',
 		'url'		=> 'The site url field does not appear to contain a valid URL?',

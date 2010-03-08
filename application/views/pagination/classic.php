@@ -22,7 +22,7 @@
 
 <ul class="pager">
 
-	<li class="first"><?php echo $total_pages . " " . Kohana::lang('pagination.pages') ?></li>
+	<li class="first"><?php echo $total_pages . " " . Kohana::lang('ui_main.pages') ?></li>
 
 	<?php if ($current_page > 10): ?>
 		<li><a href="<?php echo str_replace('{page}', 1, $url) ?>">1</a></li>

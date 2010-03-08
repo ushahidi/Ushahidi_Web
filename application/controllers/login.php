@@ -128,7 +128,7 @@ class Login_Controller extends Template_Controller {
     	
     	$this->template = new View('admin/reset_password');
 		
-		$this->template->title = 'Password Reset';
+		$this->template->title = Kohana::lang('ui_admin.password_reset');
 		$form = array
 	    (
 			'resetemail' 	=> '',
@@ -215,7 +215,7 @@ class Login_Controller extends Template_Controller {
     	
     	$this->template = new View('admin/new_password');
 		
-		$this->template->title = 'New Password';
+		$this->template->title = Kohana::lang('ui_admin.new_password');
 		
 		$secret = $this->uri->segment(4);
 		$user = ORM::factory('user',$user_id);
@@ -278,11 +278,11 @@ class Login_Controller extends Template_Controller {
 	public function _email_resetlink( $email, $name, $secret_url )
 	{
 		$to = $email;
-		$from = 'no-reply@ushahidi.com';
-		$subject = "Ushahidi password reset.";
-		$message = "Dear ".$name.",\n";
-		$message .= "We received a request to reset the password for ".$name.". ";
-		$message .= "To change your password, please click on the link below (or copy and paste it into your browser).\n\n";
+		$from = Kohana::lang('ui_admin.password_reset_from');
+		$subject = Kohana::lang('ui_admin.password_reset_subject');
+		$message = Kohana::lang('ui_admin.password_reset_message_line_1').' '.$name.",\n";
+		$message .= Kohana::lang('ui_admin.password_reset_message_line_2').' '.$name.". ";
+		$message .= Kohana::lang('ui_admin.password_reset_message_line_3')."\n\n";
 		$message .= $secret_url."\n\n";
 		
 		//email details
@@ -300,13 +300,13 @@ class Login_Controller extends Template_Controller {
 	public function _email_newpassword( $email, $name, $username, $password )
 	{
 		$to = $email;
-		$from = 'no-reply@ushahidi.com';
-		$subject = "Ushahidi password reset.";
+		$from = Kohana::lang('ui_admin.password_reset_from');
+		$subject = Kohana::lang('ui_admin.password_reset_subject');
 		
-		$message = "Dear ".$name.",\n";
-		$message .= "As you requested, your password has now been reset. Your new details are as follows:\n\n";
-		$message .= "Username: ".$username."\n";
-		$message .= "Password: ".$password;
+		$message = Kohana::lang('ui_admin.password_reset_message_line_1').' '.$name.",\n";
+		$message .= Kohana::lang('ui_admin.password_reset_message_line_4').":\n\n";
+		$message .= Kohana::lang('ui_admin.label_username').": ".$username."\n";
+		$message .= Kohana::lang('ui_admin.password').": ".$password;
 		
 		//email details
 		if( email::send( $to, $from, $subject, $message, FALSE ) == 1 )

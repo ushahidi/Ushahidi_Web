@@ -27,7 +27,7 @@
  	 */
  	public function download_ushahidi($url) {
  		$snoopy = new Snoopy();
-       	$snoopy->agent = "Ushahidi upgrade script";
+       	$snoopy->agent = Kohana::lang('libraries.upgrade_title');
        	$snoopy->read_timeout = 30;
     	$snoopy->gzip = false;
         $snoopy->fetch($url);
@@ -39,7 +39,7 @@
           	return $snoopy->results;
             
        	} else {        	
-            $this->errors[] = sprintf("Downloading the latest ushahidi failed. HTTP status code: %d", $snoopy->status);    
+            $this->errors[] = sprintf(Kohana::lang('libraries.upgrade_failed').": %d", $snoopy->status);    
         	$this->success = false;
         	return $snoopy;
     	}
@@ -55,7 +55,7 @@
  	public function copy_recursively($srcdir, $dstdir) {
  		if ( !is_dir($dstdir) && !@mkdir($dstdir) )
        	{
-	    	$this->errors[] = sprintf("File <code>%s</coded> could not be copied",$dstdir);
+	    	$this->errors[] = sprintf(Kohana::lang('libraries.upgrade_file_not_copied'),$dstdir);
 	    	$this->success = false;
 	    }
 	    if ($curdir = opendir($srcdir))
@@ -75,7 +75,7 @@
 				    			touch($dstfile, filemtime($srcfile));
 				    			$this->success = true;
                         	} else {
-                            	$this->errors[] = sprintf("File <code>%s</coded> could not be copied",$dstdir);
+                            	$this->errors[] = sprintf(Kohana::lang('libraries.upgrade_file_not_copied'),$dstdir);
 				        		$this->success = false;
 							}
 			    		}
@@ -107,7 +107,7 @@
 		    if ($entry != "." && $entry != "..") {
 		        if ( is_file($dir . $entry) ) {
 			    if ( !@unlink($dir . $entry) ) {
-			        $this->errors[] = sprintf( 'File <code>%s</code> could not be deleted!', $dir.$entry );
+			        $this->errors[] = sprintf(Kohana::lang('libraries.upgrade_file_not_deleted'), $dir.$entry );
 			    	$this->success = false;
 			    }
 			} elseif (is_dir($dir . $entry)) {
@@ -118,7 +118,7 @@
 		}
 		closedir($dh);
 		if ( !@rmdir($dir) ) {
-		    $this->errors[] = sprintf( 'Directory <code>%s</code> could not be deleted!', $dir.$entry);
+		    $this->errors[] = sprintf(Kohana::lang('libraries.upgrade_directory_not_deleted'), $dir.$entry);
 			$this->success = false;
 		}
 			$this->success = true;
@@ -141,7 +141,7 @@
  		
 		if (@$archive->extract(PCLZIP_OPT_PATH, $destdir) == 0)
 		{
-			$this->errors[] = sprintf( 'Error while extracting: <code>%s</code>',$archive->errorInfo(true) ) ;
+			$this->errors[] = sprintf(Kohana::lang('libraries.upgrade_extracting_error'),$archive->errorInfo(true) ) ;
 			return false;
 		}
 		
@@ -161,7 +161,7 @@
        	$fwritten = fwrite($handler,$zip_file);
        	$this->log[] = sprintf("Writting to a file ");
        	if( !$fwritten ) {
-       		$this->errors[] = sprintf("The downloaded ushahidi zip file <code>%s</code>, couldn't be written.",$dest_file);
+       		$this->errors[] = sprintf(Kohana::lang('libraries.upgrade_zip_error'),$dest_file);
        		$this->success = false;
        		return false;
        	}

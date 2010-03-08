@@ -15,21 +15,21 @@
 ?>
 			<div class="bg">
 				<h2>
-					<a href="<?php echo url::base() . 'admin/manage' ?>" class="active">Categories</a>
+					<a href="<?php echo url::base() . 'admin/manage' ?>" class="active"><?php echo Kohana::lang('ui_main.categories');?></a>
 					<span>(<a href="#add">Add New</a>)</span>
-					<a href="<?php echo url::base() . 'admin/manage/forms' ?>">Forms</a>
-					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>">Organizations</a>
-					<a href="<?php echo url::base() . 'admin/manage/pages' ?>">Pages</a>
-					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>">News Feeds</a>
-					<a href="<?php echo url::base() . 'admin/manage/layers' ?>">Layers</a>
-					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>">Reporters</a>
+					<a href="<?php echo url::base() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
 				</h2>
 				<?php
 				if ($form_error) {
 				?>
 					<!-- red-box -->
 					<div class="red-box">
-						<h3>Error!</h3>
+						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 						<ul>
 						<?php
 						foreach ($errors as $error_item => $error_description)
@@ -47,7 +47,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>The Category Has Been <?php echo $form_action; ?>!</h3>
+						<h3><?php echo Kohana::lang('ui_main.category_has_been');?> <?php echo $form_action; ?>!</h3>
 					</div>
 				<?php
 				}
@@ -63,9 +63,9 @@
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2">Category</th>
-										<th class="col-3">Color</th>
-										<th class="col-4">Actions</th>
+										<th class="col-2"><?php echo Kohana::lang('ui_main.category');?></th>
+										<th class="col-3"><?php echo Kohana::lang('ui_main.color');?></th>
+										<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -82,7 +82,7 @@
 									?>
 										<tr>
 											<td colspan="4" class="col">
-												<h3>No Results To Display!</h3>
+												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 											</td>
 										</tr>
 									<?php	
@@ -109,7 +109,7 @@
 											<?php if (!empty($category_image))
 											{
 												echo "<img src=\"".url::base()."media/uploads/".$category_image."\">";
-												echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\">delete</a>]";
+												echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\"><?php echo Kohana::lang('ui_main.delete');?></a>]";
 											}
 											else
 											{
@@ -119,9 +119,9 @@
 											</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')">Edit</a></li>
-													<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
-<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del">Delete</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+													<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
+<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>
 										</tr>
@@ -160,9 +160,9 @@
 												</td>
 												<td class="col-4">
 													<ul>
-														<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')">Edit</a></li>
-														<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>>Visible</a></li>
-	<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del">Delete</a></li>
+														<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+														<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
+	<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 													</ul>
 												</td>
 											</tr>
@@ -181,7 +181,7 @@
 					<!-- tabset -->
 					<a name="add"></a>
 					<ul class="tabset">
-						<li><a href="#" class="active">Add/Edit</a></li>
+						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -192,11 +192,11 @@
 						<input type="hidden" name="action" 
 							id="action" value="a"/>
 						<div class="tab_form_item">
-							<strong>Category Name:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.category_name');?>:</strong><br />
 							<?php print form::input('category_title', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Description:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.description');?>:</strong><br />
 							<?php print form::input('category_description', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
@@ -222,12 +222,12 @@
 							</script>
 						</div>
 						<div class="tab_form_item">
-							<strong>Parent Category:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.parent_category');?>:</strong><br />
 							<?php print form::dropdown('parent_id', $parents_array, '0'); ?>
 						</div>
 						<div style="clear:both"></div>
 						<div class="tab_form_item">
-							<strong>Image/Icon:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.image_icon');?>:</strong><br />
 							<?php
 								
 								// I removed $category_image from the second parameter to fix bug #161

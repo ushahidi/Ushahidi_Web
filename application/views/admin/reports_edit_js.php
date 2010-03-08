@@ -96,8 +96,16 @@
 					}, "json");
 		        return false; 
 		    });
-		}); 
-
+		
+			// Category treeview
+			$("#category-column-1,#category-column-2").treeview({
+			  persist: "location",
+			  collapsed: true,
+			  unique: false
+			});
+			
+		});
+		
 
 		// Date Picker JS
 		$(document).ready(function() {

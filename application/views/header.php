@@ -55,6 +55,11 @@
 		}
 	}
 	
+	if ($treeview_enabled) {
+		echo html::script('media/js/jquery.treeview');
+		echo html::stylesheet('media/css/jquery.treeview');
+	}
+	
 	if ($validator_enabled) {
 		echo html::script('media/js/jquery.validate.min');
 	}
