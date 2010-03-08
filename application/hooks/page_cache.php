@@ -55,7 +55,7 @@ class hook_page_cache
 		 	&& Kohana::$instance->is_cachable == true
 		 	&& Kohana::$has_error == false )
 		{
-			$this->cache->set('page_'.$this->gzip.'_'.$_SERVER['REQUEST_URI'], Event::$data);
+			$this->cache->set(Kohana::config('settings.subdomain').'_page_'.$this->gzip.'_'.$_SERVER['REQUEST_URI'], Event::$data);
 		}
 	}
 }
