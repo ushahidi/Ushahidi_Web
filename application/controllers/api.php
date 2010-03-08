@@ -1412,7 +1412,7 @@ class Api_Controller extends Controller {
  	*/
 	function _incidentsByAll($orderfield,$sort,$limit) {
 		$where = "\nWHERE i.incident_active = 1 ";
-		$sortby = "\nORDER BY i.$orderfield $sort";
+		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $limit";
 		/* Not elegant but works */
 		return $this->_getIncidents($where.$sortby, $limit);
