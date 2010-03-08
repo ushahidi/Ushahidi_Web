@@ -428,7 +428,7 @@ class Api_Controller extends Controller {
 			case 003:
 				return array("code" => "003", "message" => $message );
 			case 004:
-				return array("code" => "004", "message" => Kohana::lang('ui_admin.post_method_not_used')));
+				return array("code" => "004", "message" => Kohana::lang('ui_admin.post_method_not_used'));
 			case 005:
 				return array("code" => "005", "message" => Kohana::lang('ui_admin.access_denied_credentials'));
 			case 006:
@@ -1682,7 +1682,9 @@ class Api_Controller extends Controller {
 				$message->message_to = null;
 				$message->message = $post->message_description;
 				$message->message_type = 1; // Inbox
-				$message->message_date = date("Y-m-d H:i:s",time());
+				$message->message_date = (isset($post->message_date) 
+					&& !empty($post->message_date))
+					? $post->message_date : date("Y-m-d H:i:s",time());
 				$message->service_messageid = null;
 				$message->save();
 				
