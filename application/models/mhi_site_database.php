@@ -35,12 +35,14 @@ class mhi_site_database_Model extends ORM
 	
 	static function assign_db($db_name,$site_id)
 	{
+		$mhi_db = Kohana::config('database.default');
+		
 		$mhi_site_database = ORM::factory('mhi_site_database');
 		$mhi_site_database->mhi_id = $site_id;
-		$mhi_site_database->user = 'root';
-		$mhi_site_database->pass = 'root';
-		$mhi_site_database->host = 'localhost';
-		$mhi_site_database->port = '8889';
+		$mhi_site_database->user = $mhi_db['connection']['user'];
+		$mhi_site_database->pass = $mhi_db['connection']['pass'];
+		$mhi_site_database->host = $mhi_db['connection']['host'];
+		$mhi_site_database->port = $mhi_db['connection']['port'];
 		$mhi_site_database->database = $db_name;
 		$mhi_site_database->save();
 		
