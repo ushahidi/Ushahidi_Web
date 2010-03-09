@@ -64,5 +64,6 @@ $lang = array(
 	'alerts_email' => 'Adresse Email:',
 	'alerts_enter_email' => 'entrer adresse Email',
 	'alerts_rss' => 'Fils RSS (copier l\'URL ci-dessous)',
-	'alerts_btn_send' => 'Soumettre'
+	'alerts_btn_send' => 'Soumettre',
+    'modify_date' => 'Modify Date'
 );

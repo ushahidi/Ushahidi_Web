@@ -53,8 +53,8 @@
 									<?php print form::textarea('incident_description', $form['incident_description'], ' rows="10" class="textarea long" ') ?>
 								</div>
 								<div class="report_row" id="datetime_default">
-									<h4><a href="#" id="date_toggle" class="show-more">Modify Date</a>Date & Time: 
-										<?php echo "Today at <span id='current_time'>".$form['incident_hour']
+									<h4><a href="#" id="date_toggle" class="show-more"><?php echo Kohana::lang('ui_main.modify_date'); ?></a><?php echo Kohana::lang('ui_main.date_time'); ?>: 
+										<?php echo Kohana::lang('ui_main.today_at')." "."<span id='current_time'>".$form['incident_hour']
 											.":".$form['incident_minute']." ".$form['incident_ampm']."</span>"; ?></h4>
 								</div>
 								<div class="report_row hide" id="datetime_edit">
@@ -190,15 +190,15 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 								<div class="report_row">
 									<div id="divMap" class="report_map"></div>
 									<div class="report-find-location">
-										<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
-										<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="Find Location" class="btn_find" /></div>
+										<?php print form::input('location_find', '', 'title='.Kohana::lang('ui_main.location_example').' class="findtext"'); ?>
+										<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" /></div>
 										<div id="find_loading" class="report-find-loading"></div>
-										<div style="clear:both;" id="find_text">* If you can't find your location, please click on the map to pinpoint the correct location.</div>
+										<div style="clear:both;" id="find_text"><?php echo Kohana::lang('ui_main.pinpoint_location'); ?>.</div>
 									</div>
 								</div>
 								
 								<div class="report_row">
-									<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span class="example">Examples: Johannesburg, Corner City Market, 5th Street & 4th Avenue</span></h4>
+									<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span class="example"><?php echo Kohana::lang('ui_main.detailed_location_example'); ?></span></h4>
 									<?php print form::input('location_name', $form['location_name'], ' class="text long"'); ?>
 								</div>
 			

@@ -148,7 +148,7 @@
 					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha"><?php echo Kohana::lang('ui_admin.faqs');?></a></li>
 					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('ui_admin.forum');?></a></li>
 				</ul>
-				<div class="info-search"><form action="<?php echo url::base() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn">Search</a></form></div>
+				<div class="info-search"><form action="<?php echo url::base() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn"><?php echo Kohana::lang('ui_admin.search');?></a></form></div>
 				<div style="clear:both"></div>
 			</div>
 			<!-- title -->

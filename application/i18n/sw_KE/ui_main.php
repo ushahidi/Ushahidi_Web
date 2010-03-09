@@ -68,5 +68,6 @@ $lang = array(
 	'alerts_enter_email' => 'Weka anwani ya barua pepe',
 	'alerts_rss' => 'Vitawanyiko vya RSS (nakii kisara kilicho chini)',
 	'alerts_btn_send' => 'Save My Alert',
-	'alert_confirm_previous' => 'Confirm A Previous Alert Request'
+	'alert_confirm_previous' => 'Confirm A Previous Alert Request',
+    'modify_date' => 'Modify Date'
 );

@@ -51,5 +51,7 @@ $lang = array
 	'label_email' => 'Email Address:',
 	'label_role' => 'Role:',
 	'notification' => 'Notification',
+    'api_logs' => "API Logs",
+    'search' => 'Search'
 );
 ?>

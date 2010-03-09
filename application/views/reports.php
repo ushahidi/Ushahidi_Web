@@ -18,26 +18,26 @@
 					<div class="content-bg">
 						<!-- start reports block -->
 						<div class="big-block">
-							<h1>Reports <?php echo ($category_title) ? " in $category_title" : ""?>
+							<h1><?php echo Kohana::lang('ui_main.reports').": ";?> <?php echo ($category_title) ? " in $category_title" : ""?>
 								<?php echo $pagination_stats; ?></h1>
 								
 							<?php echo $report_chart; ?>
 								
 							<div class="report_rowtitle">
 								<div class="report_col1">
-									<strong>MEDIA</strong>
+									<strong><?php echo strtoupper(Kohana::lang('ui_main.media'));?></strong>
 								</div>
 								<div class="report_col2">
-									<strong>REPORT TITLE</strong>
+									<strong><?php echo strtoupper(Kohana::lang('ui_main.report_title'));?></strong>
 								</div>
 								<div class="report_col3">
-									<strong>DATE</strong>
+									<strong><?php echo strtoupper(Kohana::lang('ui_main.date'));?></strong>
 								</div>
 								<div class="report_col4">
-									<strong>LOCATION</strong>
+									<strong><?php echo strtoupper(Kohana::lang('ui_main.location'));?></strong>
 								</div>
 								<div class="report_col5">
-									<strong>VERIFIED?</strong>
+									<strong><?php echo strtoupper(Kohana::lang('ui_main.verified'));?>?</strong>
 								</div>
 							</div>
 							<?php

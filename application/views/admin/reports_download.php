@@ -70,11 +70,11 @@
 				<tr>
 					<td colspan="2">
 						<div class="date-box">
-							<h4><?php echo Kohana::lang('ui_main.from');?>: <span><?php echo Kohana::lang('ui_main.date_format');?></span></h4>
+							<h4><?php echo Kohana::lang('ui_admin.from_date');?>: <span><?php echo Kohana::lang('ui_main.date_format');?></span></h4>
 							<?php print form::input('from_date', $form['from_date'], ' class="text"'); ?>											    
 						</div>
 						<div class="date-box">
-							<h4><?php echo Kohana::lang('ui_main.ro');?>: <span><?php echo Kohana::lang('ui_main.date_format');?></span></h4>
+							<h4><?php echo Kohana::lang('ui_admin.to_date');?>: <span><?php echo Kohana::lang('ui_main.date_format');?></span></h4>
 							<?php print form::input('to_date', $form['to_date'], ' class="text"'); ?>											    
 						</div>
 						<div id="form_error2"></div>

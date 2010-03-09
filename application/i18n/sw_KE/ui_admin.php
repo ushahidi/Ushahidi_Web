@@ -49,5 +49,7 @@ $lang = array
 	'label_email' => 'Barua Pepe:',
 	'label_role' => 'Jukumu:',
 	'notification' => 'Notification',
+    'api_logs' => "API Logs",
+    'search' => 'Search'
 );
 ?>
