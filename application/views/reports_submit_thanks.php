@@ -18,14 +18,14 @@
 					<div class="content-bg">
 						<!-- start alerts block -->
 						<div class="big-block">
-							<h1>Submit A New Report</h1>
+							<h1><?php echo Kohana::lang('ui_main.reports_submit_new');?></h1>
 							<!-- green-box -->
 							<div class="green-box">
-								<h3>Your Report has been submitted to our staff for review. We will get back to you shortly if necessary.</h3>
+								<h3><?php echo Kohana::lang('ui_main.reports_submitted');?></h3>
 		
 								<div class="thanks_msg"><a href="<?php echo
-									url::base().'reports' ?>">Return to the reports page</a><br /><br /><br />
-									Please give us feedback about your experience by clicking on the button below.<br /><br />
+									url::base().'reports' ?>"><?php echo Kohana::lang('ui_main.reports_return');?></a><br /><br /><br />
+									<?php echo Kohana::lang('ui_main.feedback_reports');?><br /><br />
 									<?php 
 									print form::open('http://feedback.ushahidi.com/fillsurvey.php?sid=2', array('target'=>'_blank'));
 									print form::hidden('alert_code', $_SERVER['SERVER_NAME']);
