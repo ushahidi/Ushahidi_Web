@@ -912,7 +912,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `last_login`, `updated`) VALUES
-(1, 'Administrator', 'david@ushahidi.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 290, 1221420023, '2008-09-14 14:17:22');
+(1, 'Administrator', 'david@ushahidi.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22');
 
 -- --------------------------------------------------------
 
