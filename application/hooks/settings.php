@@ -18,6 +18,9 @@ if(Kohana::config('config.enable_mhi') == TRUE && $subdomain != ''){
 	$query = 'SELECT '.$tp.'mhi_site_database.user as user, '.$tp.'mhi_site_database.pass as pass, '.$tp.'mhi_site_database.host as host, '.$tp.'mhi_site_database.port as port, '.$tp.'mhi_site_database.database as db  FROM '.$tp.'mhi_site LEFT JOIN '.$tp.'mhi_site_database ON '.$tp.'mhi_site.id = '.$tp.'mhi_site_database.mhi_id WHERE '.$tp.'mhi_site.site_domain = \''.mysql_escape_string($subdomain).'\'';
 	$result = mysql_query($query);
 
+	// If this subdomain exists as an MHI instance...
+	if(mysql_num_rows($result) != 0) {
+
 	// Overwrite database settings so the subdomain will work properly
 	$new_connection_config['connection']['user'] = mysql_result($result,0,'user');
 	$new_connection_config['connection']['pass'] = mysql_result($result,0,'pass');
@@ -25,6 +28,11 @@ if(Kohana::config('config.enable_mhi') == TRUE && $subdomain != ''){
 	$new_connection_config['connection']['port'] = mysql_result($result,0,'port');
 	$new_connection_config['connection']['database'] = mysql_result($result,0,'db');
 	Kohana::config_set('database.default', $new_connection_config);
+
+	}else{
+		// If this site doesn't exist as an instance, we will reset our subdomain and ignore it.
+		Kohana::config_set('settings.subdomain', '');
+	}
 
 	mysql_close($link);
 }

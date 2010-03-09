@@ -19,7 +19,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>[SITE NAME]</title>
+<title><?php echo $site_name; ?></title>
 <?php
 	echo html::stylesheet('media/css/mhi/reset','',true);
 	echo "<!--[if lte IE 7]>".html::stylesheet('media/css/mhi/reset.ie','',true)."<![endif]-->";
@@ -114,7 +114,7 @@ $(function(){
 
 	<div id="header">
     	<div id="header-wrapper">
-    		<h1>Create your own instance of [SITE NAME]</h1>
+    		<h1>Create your own instance of <?php echo $site_name; ?></h1>
         </div>
     </div>
     

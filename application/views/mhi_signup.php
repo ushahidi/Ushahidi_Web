@@ -14,8 +14,8 @@
  */
 ?>
 
-	<p>Fill out the form below to set up your own instance of [SITE NAME].
-	<form id="frm-MHI-Signup" class="frm-content" action="#" method="post">
+	<p>Fill out the form below to set up your own instance of <?php echo $site_name; ?>.
+	<?php print form::open(url::base().'mhi/create', array('id' => 'frm-MHI-Signup', 'name' => 'frm-MHI-Signup', 'class' => 'frm-content')); ?>
 		<img src="media/img/mhi/step-1.gif" align="left" class="step" /> <h2 class="step-1">Create Your Account</h2>
 	   
 	    <table><tbody>
@@ -51,7 +51,7 @@
 	    <img src="media/img/mhi/step-2.gif" align="left"  class="step"/> <h2 class="step-2">Create Your Instance Address</h2>
 	
 	    <p class="desc">Each instance has it's own web address. <strong>No spaces, use letters and numbers only.</strong></p>
-	    <p class="url">http://<input type="text" size="20" onfocus="this.style.color = 'black'" name="signup_subdomain" maxwidth="30" id="signup_subdomain"/>.MHIDomainName.com</p>
+	    <p class="url">http://<input type="text" size="20" onfocus="this.style.color = 'black'" name="signup_subdomain" maxwidth="30" id="signup_subdomain"/>.<?php echo $domain_name; ?></p>
 	    
 	    <hr />
 	    
@@ -67,14 +67,17 @@
 	    	<input type="text" size="30" name="signup_instance_tagline" maxlength="40" id="signup_instance_tagline" autocomplete="off"/>
 	    	
 	    </p>
+
+	    <!--
 	    <p>
 	    	<label for="signup_report_categories">Report Categories</label><br/>
 	
 	    	<textarea rows="4" cols="30" name="signup_report_categories" id="signup_report_categories" autocomplete="off"></textarea>
 	        <span>Enter your categories separated by a comma. ex: violence, riots, looting</span>
 	    </p>
+	    -->
 	    
 	    <p>
 	    	<input class="button" type="submit" value="Finish &amp; Create Instance" />
 	    </p>
-	</form>
+	<?php print form::close(); ?>
