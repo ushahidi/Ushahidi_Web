@@ -43,3 +43,4 @@ CREATE TABLE `mhi_users` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 UPDATE `settings` SET `db_version` = '23' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `ushahidi_version` = '1.0.1' WHERE `id`=1 LIMIT 1;
