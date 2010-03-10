@@ -98,7 +98,7 @@ class Admin_Controller extends Template_Controller
 			'apilogs' => Kohana::lang('ui_admin.api_logs'),
 		);
 
-		if(Kohana::config('config.enable_mhi') == TRUE || Kohana::config('settings.subdomain') == '') {
+		if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '') {
         	$tabs['mhi'] = Kohana::lang('ui_admin.mhi');
         }
 
