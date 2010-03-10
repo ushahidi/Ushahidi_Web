@@ -87,6 +87,7 @@ class db_genesis {
 		$setgs = new Settings_Model(1);
 		$setgs->site_name = $settings['site_name'];
 		$setgs->site_tagline = $settings['site_tagline'];
+		$setgs->api_google = Kohana::config('settings.api_google');
 		$setgs->date_modify = date("Y-m-d H:i:s",time());
 		$setgs->save();
 		
