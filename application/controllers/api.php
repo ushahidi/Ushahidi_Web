@@ -379,7 +379,7 @@ class Api_Controller extends Controller {
 				break;
 				
 			case "sms": // Incoming SMS via FrontlineSMS, SmartPhone etc.
-				$ret = $this->_sms();
+				$ret = $this->_sms($request);
 				break;			
 			
 			default:
@@ -1618,7 +1618,7 @@ class Api_Controller extends Controller {
 	/**
  	* Receive SMS's via FrontlineSMS or via Mobile Phone Native Apps
  	*/
-	function _sms()
+	function _sms($request)
 	{
 		$retJsonOrXml = array();
 		$reponse = array();
@@ -1664,7 +1664,7 @@ class Api_Controller extends Controller {
 			
 				$reporter = ORM::factory('reporter')
 									->where('service_id', $service->id)
-									->where('service_account', $message_from)
+									->where('service_account', $post->message_from)
 									->find();
 
 				if (!$reporter->loaded == TRUE)
@@ -1722,7 +1722,7 @@ class Api_Controller extends Controller {
 				// Required parameters are missing or invalid
 				$reponse = array(
 					"payload" => array("success" => "false"),
-					"error" => $this->_getErrorMsg(004)
+					"error" => $this->_getErrorMsg(002)
 				);
 			}
 			
