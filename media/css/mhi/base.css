@@ -1,0 +1,70 @@
+/*
+Name: base.css
+Description: Multiple Hosted Instance signup page styles
+Version: 1.0
+Author: Caleb Bell
+Author Email: caleb@ushahidi.com
+*/
+
+/* Base Styles
+--------------*/
+	body.content { font-size:.75em; }
+	body.mhi-signup { background:#f3f4f6 url(../../img/mhi/bg_body.jpg) top repeat-x; }
+	.content h1, .content h2, .content h3, .content h4, .content h5 { margin-top:0; padding-top:0; }
+
+/* Header
+--------------*/
+	#header { width:100%; height:75px; background:#595959; }
+		#header-wrapper { width:960px; margin:0 auto; }
+			h1 { color:#fff; }
+
+/* Body Layout
+--------------*/
+	#wrapper { width:960px; margin:0 auto; }
+	.twocol-left { width:645px; background:transparent url(../../img/mhi/bg_content-shadow-bottom-cap.png) bottom left no-repeat; padding-bottom:15px; }
+		.shadow { background:transparent url(../../img/mhi/bg_content-shadow.png) left repeat-y; padding:10px 38px 1px 18px; }
+	
+/* The Form
+--------------*/
+	#frm-MHI-Signup { margin-bottom:0; }
+		
+		.content .frm-content table,
+		.content .frm-content table td { border:0; }
+		
+		.frm-content h2 { color:#0089ca; font-size:1.25em; margin:0 0 10px 0; line-height:29px; }
+			.frm-content p.desc { font-size:13px;}
+		
+		img.step { padding:0 10px 0 0;}
+		
+		/*Form elements*/
+		.frm-content label {  }
+		.content textarea, .content input[type="text"], .content input[type="password"]  { font-size:16px; font-family:inherit; font-weight:bold; padding:5px 4px 3px; color:#595959; }
+		
+			/*Error Styles*/
+			.content input[type="text"].error, .content input[type="password"].error, .content textarea.error { border:2px solid #ff6666; }
+			label.error { display:block; display:block; font-size:11px; font-weight:bold; color:#ff6666; }
+			
+			/*Buttons*/
+			span.inputButton { display:inline-table; padding-right:7px; cursor:pointer;
+							   background:transparent url(../../img/mhi/bg_InputButton.gif) no-repeat scroll right top; }
+							
+			span.inputButton input { border:none; height:29px; color:#fff; font-weight:bold; font-size:12px; line-height:28px;
+									 font-family: Trebuchet, Lucida Sans Unicode, Lucida Grande, Lucida Sans, Arial, sans-serif;
+									 width:auto; overflow:visible; cursor:pointer; padding:0 5px 4px 9px;
+									 background:transparent url(../../img/mhi/bg_InputButton.gif) no-repeat scroll left top; }
+		
+			span.inputButton:hover,
+			table span.inputButton:hover { background:transparent url(../../img/mhi/bg_InputButton.gif) no-repeat scroll right bottom; }
+			
+			span.inputButton input:hover,
+			table span.inputButton input:hover { background:transparent url(../../img/mhi/bg_InputButton.gif) no-repeat scroll left bottom; }
+
+
+		
+		#signup_subdomain { margin:0 5px; }
+		
+		.content .frm-content table td { vertical-align:top; padding:5px 10px; }
+		
+		.content .frm-content table td span,
+		.frm-content p span { font-size:11px; color:#CCC; display:block; }
+

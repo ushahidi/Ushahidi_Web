@@ -97,6 +97,11 @@ a:hover{ text-decoration:none;}
 .top ul li a{
 	color:#ffa9a9;
 }
+.top span {
+	color:#C90000;
+	background-color:#FFE8E7;
+	padding:0 4px 0 4px;
+}
 /*-- info-nav --*/
 .info-nav {
 	margin:40px 7px 0 0;

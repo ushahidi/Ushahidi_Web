@@ -53,19 +53,27 @@ class Admin_Controller extends Template_Controller
 
 		//fetch latest version of ushahidi
 		$version_number = $upgrade->_fetch_core_version();
-		
+
 		$this->template->version = $version_number;
-		
+
+		// Get version coded numbers to display
+		$this->template->code_version = Kohana::config('version.ushahidi_version');
+		$this->template->db_version = Kohana::config('version.ushahidi_db_version');
+
+		// Get version from the db
+		$this->template->actual_code_version = Kohana::config('settings.ushahidi_version');
+		$this->template->actual_db_version = Kohana::config('settings.db_version');
+
 		// Get Session Information
 		$user = new User_Model($_SESSION['auth_user']->id);
-		
+
 		$this->template->admin_name = $user->name;
-		
+
 		// Retrieve Default Settings
 		$this->template->site_name = Kohana::config('settings.site_name');
 		$this->template->mapstraction = Kohana::config('settings.mapstraction');
 		$this->template->api_url = Kohana::config('settings.api_url');
-		
+
 		// Javascript Header
 		$this->template->map_enabled = FALSE;
 		$this->template->flot_enabled = FALSE;
@@ -74,10 +82,27 @@ class Admin_Controller extends Template_Controller
 		$this->template->colorpicker_enabled = FALSE;
 		$this->template->editor_enabled = FALSE;
 		$this->template->js = '';
-		
+
 		// Initialize some variables for raphael impact charts
 		$this->template->raphael_enabled = FALSE;
 		$this->template->impact_json = '';
+
+		// Generate main tab navigation list. Key = Page (/admin/???), Val = Tab Name
+		$tabs = array(
+			'dashboard' => Kohana::lang('ui_admin.dashboard'),
+			'reports' => Kohana::lang('ui_admin.reports'),
+			'comments' => Kohana::lang('ui_admin.comments'),
+			'messages' => Kohana::lang('ui_admin.messages'),
+			'feedback' => Kohana::lang('ui_admin.feedback'),
+			'stats' => Kohana::lang('ui_admin.stats'),
+			'apilogs' => Kohana::lang('ui_admin.api_logs'),
+		);
+
+		if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '') {
+        	$tabs['mhi'] = Kohana::lang('ui_admin.mhi');
+        }
+
+        $this->template->tabs = $tabs;
 		
 		// Load profiler
 		// $profiler = new Profiler;		

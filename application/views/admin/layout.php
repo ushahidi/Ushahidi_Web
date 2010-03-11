@@ -115,7 +115,13 @@
 		<div id="header">
 			<!-- top-area -->
 			<div class="top">
-				<strong><?php echo Kohana::lang('ui_admin.version')?></strong>
+				<strong>
+				<?php echo ucfirst(Kohana::lang('ui_admin.code')); ?> <?php echo Kohana::lang('ui_admin.version'); ?> <?php echo $code_version; ?>
+				<?php if($code_version != $actual_code_version) echo '<span>'.Kohana::lang('ui_admin.code_out_of_sync').' v'.$actual_code_version.'</span>'; ?>
+				 - 
+				<?php echo ucfirst(Kohana::lang('ui_admin.database')); ?> <?php echo Kohana::lang('ui_admin.version'); ?> <?php echo $actual_db_version; ?>
+				<?php if($db_version != $actual_db_version) echo '<span>'.Kohana::lang('ui_admin.db_out_of_sync').' v'.$db_version.'</span>'; ?>
+				</strong>
 				<ul>
 					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
 					<li class="none-separator"><a href="<?php echo url::base() ?>" title="View the home page">
@@ -151,27 +157,9 @@
 			<div class="nav-holder">
 				<!-- main-nav -->
 				<ul class="main-nav">
-					<li><a href="<?php echo url::base() ?>admin/dashboard" <?php if($this_page=="dashboard") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.dashboard');?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/reports" <?php if($this_page=="reports") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.reports');?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/comments" <?php if($this_page=="comments") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.comments');?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/messages" <?php if($this_page=="messages") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.messages');?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/feedback" <?php if($this_page=="feedback") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.feedback')?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/stats" <?php if($this_page=="stats") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.stats')?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/apilogs" <?php if($this_page=="apilogs") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.api_logs')?>
-						</a></li>
+					<?php foreach($tabs as $page => $tab_name){ ?>
+						<li><a href="<?php echo url::base(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
+					<?php } ?>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
