@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 22
+-- version 23
 -- http://www.ushahidi.com
 
 

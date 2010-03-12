@@ -1,6 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * This controller handles API requests.
+ * 
+ * @version 18 - David Kobia 2010-03-11
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -1285,7 +1287,7 @@ class Api_Controller extends Controller {
 		//create the json array
 		$data = array("payload" => array("version" => $json_version),"error" => $this->_getErrorMsg(0));
 
-		if($this->responseType = 'json') {
+		if($this->responseType == 'json') {
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		}else{
 			$retJsonOrXml = $this->_arrayAsXML($data,$replar);
