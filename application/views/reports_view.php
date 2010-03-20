@@ -92,10 +92,10 @@
 								<a href="" id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></a>
 							</div>
 						</div>
-					<div class="orig-report">
-						<div class="discussion">
-							<h5>ADDITIONAL REPORTS AND DISCUSSION&nbsp;&nbsp;&nbsp;(<a href="#comments">Add</a>)</h5>
-							<?php
+						<div class="orig-report">
+							<div class="discussion">
+								<h5>ADDITIONAL REPORTS AND DISCUSSION&nbsp;&nbsp;&nbsp;(<a href="#comments">Add</a>)</h5>
+								<?php
 								foreach($incident_comments as $comment)
 								{
 									echo "<div class=\"discussion-box\">";
@@ -112,45 +112,45 @@
 									echo "</div>";
 									echo "</div>";
 								}
-							?>
-						</div>
-					</div>		
-				</div>
+								?>
+							</div>
+						</div>		
+					</div>
 		
-				<?php
+					<?php
 					if( count($incident_photos) > 0 ) 
 					{
-				?>
-				<!-- start images -->
-				<div class="report-description">
-					<h3>Images</h3>
-				<div class="photos">
-				<?php
-					foreach ($incident_photos as $photo)
-						{
-							$thumb = str_replace(".","_t.",$photo);
-				      $prefix = url::base()."media/uploads";
-							echo("<a class='photothumb' rel='lightbox-group1' href='$prefix/$photo'><img src='$prefix/$thumb'/></a> ");
-						}
-				?>
-				</div>
-				</div>
+					?>
+					<!-- start images -->
+					<div class="report-description">
+						<h3>Images</h3>
+						<div class="photos">
+							<?php
+							foreach ($incident_photos as $photo)
+							{
+								$thumb = str_replace(".","_t.",$photo);
+				      	$prefix = url::base()."media/uploads";
+								echo("<a class='photothumb' rel='lightbox-group1' href='$prefix/$photo'><img src='$prefix/$thumb'/></a> ");
+							}
+							?>
+						</div>
+					</div>
 
-				<!-- end images <> start side block -->
-				<?php 
-					} else {
-				?> 
+					<!-- end images <> start side block -->
+					<?php 
+						} else {
+					?> 
 
-				<div class="report-description">
-					<h3>Related Mainstream News of Incident</h3>
-					<table>
-						<tr class="title">
-							<th class="w-01">TITLE</th>
-							<th class="w-02">SOURCE</th>
-							<th class="w-03">DATE</th>
-						</tr>
-						<?php
-							foreach ($feeds as $feed)
+					<div class="report-description">
+						<h3>Related Mainstream News of Incident</h3>
+						<table>
+							<tr class="title">
+								<th class="w-01">TITLE</th>
+								<th class="w-02">SOURCE</th>
+								<th class="w-03">DATE</th>
+							</tr>
+							<?php
+								foreach ($feeds as $feed)
 								{
 									$feed_id = $feed->id;
 									$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
@@ -158,21 +158,22 @@
 									$feed_date = date('M j Y', strtotime($feed->item_date));
 									$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
 							?>
-						<tr>
-							<td class="w-01">
-								<a href="<?php echo $feed_link; ?>" target="_blank">
-								<?php echo $feed_title ?></a>
-							</td>
-							<td class="w-02"><?php echo $feed_source; ?></td>
+							<tr>
+								<td class="w-01">
+									<a href="<?php echo $feed_link; ?>" target="_blank">
+									<?php echo $feed_title ?></a>
+								</td>
+								<td class="w-02"><?php echo $feed_source; ?></td>
 								<td class="w-03"><?php echo $feed_date; ?></td>
-						</tr>
-						<?php
+							</tr>
+							<?php
 							}
-						?>
-					</table>
-					<!-- end mainstream news of incident -->
-					<?php
-					}?>
+							?>
+						</table>
+						<!-- end mainstream news of incident -->
+						<?php
+						}?>
+					</div>
 
 					<div class="report-description">
 						<h3>Incident Report(s)</h3>
