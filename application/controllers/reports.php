@@ -26,12 +26,12 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->validator_enabled = TRUE;
 		
 		//include footer form js file
-        $footerjs = new View('footer_form_js');
+		$footerjs = new View('footer_form_js');
 		
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
 		$footerjs = $myPacker->pack();
-        $this->template->header->js = $footerjs;
+		$this->template->header->js = $footerjs;
 		
 		// Is the Admin Logged In?
 		$this->logged_in = Auth::instance()->logged_in()
@@ -89,8 +89,8 @@ class Reports_Controller extends Main_Controller {
 			
 			if($total_pages > 1) { // If we want to show pagination
 				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
- 				
-                $this->template->content->pagination = $pagination;
+
+				$this->template->content->pagination = $pagination;
 			} else { // If we don't want to show pagination
 				$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
 			}
@@ -110,9 +110,9 @@ class Reports_Controller extends Main_Controller {
 		foreach($incidents as $incident) {
 			$incident_id = $incident->id;
 			if(ORM::factory('media')
-               ->where('incident_id', $incident_id)->count_all() > 0) {
+				->where('incident_id', $incident_id)->count_all() > 0) {
 				$medias = ORM::factory('media')
-                          ->where('incident_id', $incident_id)->find_all();
+												->where('incident_id', $incident_id)->find_all();
 				
 				//Modifying a tmp var prevents Kohona from throwing an error
 				$tmp = $this->template->content->media_icons;
@@ -220,12 +220,12 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->report_chart = $report_chart->chart('reports',$report_data,$options,$colors,$width,$height);
 		}
 		//include footer form js file
-        $footerjs = new View('footer_form_js');
+		$footerjs = new View('footer_form_js');
 		
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
 		$footerjs = $myPacker->pack();
-        $this->template->header->js .= $footerjs;
+		$this->template->header->js .= $footerjs;
 	} 
 	
 	/**
@@ -252,19 +252,18 @@ class Reports_Controller extends Main_Controller {
 			'incident_category' => array(),
 			'incident_news' => array(),
 			'incident_video' => array(),
-            'incident_photo' => array(),
-            'incident_doc' => array(),
+			'incident_photo' => array(),
 			'person_first' => '',
 			'person_last' => '',
-            'person_email' => '',
-            'form_id'      => '',
-            'custom_field' => array()
+			'person_email' => '',
+			'form_id'      => '',
+			'custom_field' => array()
 		);
 		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
-                $form_error = FALSE;
+		$form_error = FALSE;
 
-        if ($saved == 'saved')
+		if ($saved == 'saved')
 		{
 			$form_saved = TRUE;
 		}
@@ -278,10 +277,10 @@ class Reports_Controller extends Main_Controller {
 		$form['incident_date'] = date("m/d/Y",time());
 		$form['incident_hour'] = "12";
 		$form['incident_minute'] = "00";
-        $form['incident_ampm'] = "pm";
-        // initialize custom field array
+		$form['incident_ampm'] = "pm";
+		// initialize custom field array
 		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
-                //GET custom forms
+		//GET custom forms
 		$forms = array();
 		foreach (ORM::factory('form')->find_all() as $custom_forms)
 		{
@@ -332,8 +331,8 @@ class Reports_Controller extends Main_Controller {
 				foreach ($_POST['incident_news'] as $key => $url) 
 				{
 					if (!empty($url) AND 
-                        !(bool) filter_var($url, FILTER_VALIDATE_URL, 
-                                           FILTER_FLAG_HOST_REQUIRED))
+					!(bool) filter_var($url, FILTER_VALIDATE_URL, 
+																	 FILTER_FLAG_HOST_REQUIRED))
 					{
 						$post->add_error('incident_news', 'url');
 					}
@@ -346,8 +345,8 @@ class Reports_Controller extends Main_Controller {
 				foreach ($_POST['incident_video'] as $key => $url) 
 				{
 					if (!empty($url) AND 
-                        !(bool) filter_var($url, FILTER_VALIDATE_URL, 
-                                           FILTER_FLAG_HOST_REQUIRED))
+						 	!(bool) filter_var($url, FILTER_VALIDATE_URL, 
+																			 FILTER_FLAG_HOST_REQUIRED))
 					{
 						$post->add_error('incident_video', 'url');
 					}
@@ -356,11 +355,9 @@ class Reports_Controller extends Main_Controller {
 	
 			// Validate photo uploads
 			$post->add_rules('incident_photo', 'upload::valid', 
-                            'upload::type[gif,jpg,png]', 'upload::size[2M]');
+											 'upload::type[gif,jpg,png]', 'upload::size[2M]');
 
-                        // Validate doc uploads
-                        $post->add_rules('incident_doc', 'upload::valid', 'upload::type[doc,pdf,odt,xml]','upload::size[2M]');
-			
+
 			// Validate Personal Information
 			if (!empty($_POST['person_first']))
 			{
@@ -390,8 +387,8 @@ class Reports_Controller extends Main_Controller {
 				
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model();
-                                $incident->location_id = $location->id;
-                                $incident->form_id = $post->form_id;
+				$incident->location_id = $location->id;
+				$incident->form_id = $post->form_id;
 				$incident->user_id = 0;
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
@@ -402,8 +399,8 @@ class Reports_Controller extends Main_Controller {
 				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
 					
 				$incident_time = $post->incident_hour
-                                  .":".$post->incident_minute
-                                  .":00 ".$post->incident_ampm;
+											 	 .":".$post->incident_minute
+												 .":00 ".$post->incident_ampm;
 
 				$incident->incident_date = $incident_date." ".$incident_time;
 				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
@@ -478,42 +475,10 @@ class Reports_Controller extends Main_Controller {
 					$photo->media_date = date("Y-m-d H:i:s",time());
 					$photo->save();
 					$i++;
-                                }
+				}
 
-                                 // d. Docs
-				$docnames = upload::save('incident_doc','',Kohana::config('upload.directory',TRUE). 'docs/');
-                                $i = 1;
-                                $extensions = array('.doc' => 1, '.pdf' => 2, '.xml'=> 3, '.odt' => 4 );
-				foreach ($docnames as $docname) {
-					$new_docname = $incident->id . "_" . $i . "_" . time().strrchr($docname,'.');
-					
-					// Resize original file... make sure its max 408px wide
-					/*Image::factory($filename)->resize(408,248,Image::AUTO)
-						->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
-					
-					// Create thumbnail
-					Image::factory($filename)->resize(70,41,Image::HEIGHT)
-                                            ->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");*/
 
-                                        //upload::save($docname,$new_docname,Kohana::config('upload.directory',TRUE). 'docs/');
-					
-					// Remove the temporary file
-                                        //rename file
-                                        rename($docname,Kohana::config('upload.directory',TRUE). 'docs/'.$new_docname);
-                                        //unlink($docname);
-					
-					// Save to DB
-					$docs = new Doc_Model();
-					$docs->location_id = $location->id;
-					$docs->incident_id = $incident->id;
-					$docs->doc_type = $extensions[strrchr($docname,'.')]; // Images
-					$docs->doc_link = $new_docname;
-					$docs->doc_date = date("Y-m-d H:i:s",time());
-                                        $docs->save();
-					$i++;
-				} 
-
-                                // STEP 7: SAVE CUSTOM FORM FIELDS
+				// STEP 7: SAVE CUSTOM FORM FIELDS
 				if(isset($post->custom_field))
 				{
 					foreach($post->custom_field as $key => $value)
@@ -570,13 +535,13 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->cities = $this->_get_cities($default_country);
 		$this->template->content->multi_country = Kohana::config('settings.multi_country');
 
-                $this->template->content->id = $id;
+		$this->template->content->id = $id;
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->categories = $this->_get_categories($form['incident_category']);
 
-                // Retrieve Custom Form Fields Structure
+		// Retrieve Custom Form Fields Structure
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
 
@@ -599,12 +564,12 @@ class Reports_Controller extends Main_Controller {
 			$this->template->header->js->longitude = $form['longitude'];
 		}
 		//include footer form js file
-        $footerjs = new View('footer_form_js');
+		$footerjs = new View('footer_form_js');
 		
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
 		$footerjs = $myPacker->pack();
-        $this->template->header->js .= $footerjs;
+		$this->template->header->js .= $footerjs;
 	}
 	
 	 /**
@@ -817,11 +782,11 @@ class Reports_Controller extends Main_Controller {
 			if ($id)
 			{
 				$incident_comments = ORM::factory('comment')
-                                     ->where('incident_id',$id)
-                                     ->where('comment_active','1')
-									 ->where('comment_spam','0')
-                                     ->orderby('comment_date', 'asc')
-                                     ->find_all();
+																->where('incident_id',$id)
+																->where('comment_active','1')
+																->where('comment_spam','0')
+																->orderby('comment_date', 'asc')
+																->find_all();
 			}
 
 			$this->template->content->incident_comments = $incident_comments;
@@ -829,13 +794,13 @@ class Reports_Controller extends Main_Controller {
 		
 		// Add Neighbors
 		$this->template->content->incident_neighbors = $this->_get_neighbors($incident->location->latitude, 
-                                                              $incident->location->longitude);
-				
+																								 	 $incident->location->longitude);
+
 		// Get RSS News Feeds
 		$this->template->content->feeds = ORM::factory('feed_item')
-                                          ->limit('5')
-                                          ->orderby('item_date', 'desc')
-                                          ->find_all();
+																			->limit('5')
+																			->orderby('item_date', 'desc')
+																			->find_all();
 		
 		// Video links
 		$this->template->content->incident_videos = $incident_video;
@@ -859,25 +824,25 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->js->longitude = $incident->location->longitude;
 		$this->template->header->js->incident_photos = $incident_photo;
 		//include footer form js file
-        $footerjs = new View('footer_form_js');
+		$footerjs = new View('footer_form_js');
 		
 		
-        $this->template->header->js .= $footerjs;
+		$this->template->header->js .= $footerjs;
 		// Pack the javascript using the javascriptpacker helper
 		$myPacker = new javascriptpacker($this->template->header->js, 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
 
-        // initialize custom field array
-	    $form_field_names = $this->_get_custom_form_fields($id,$incident->form_id,false);
+		// initialize custom field array
+		$form_field_names = $this->_get_custom_form_fields($id,$incident->form_id,false);
 
-        // Retrieve Custom Form Fields Structure
-	    $disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
-	    $this->template->content->disp_custom_fields = $disp_custom_fields;
+		// Retrieve Custom Form Fields Structure
+		$disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
+		$this->template->content->disp_custom_fields = $disp_custom_fields;
 
 
 		// Forms
-        $this->template->content->form = $form;
-        $this->template->content->form_field_names = $form_field_names;
+		$this->template->content->form = $form;
+		$this->template->content->form_field_names = $form_field_names;
 		$this->template->content->captcha = $captcha;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
@@ -935,16 +900,16 @@ class Reports_Controller extends Main_Controller {
 					if ($type == 'original') 
 					{
 						$previous = ORM::factory('rating')
-                                    ->where('incident_id',$id)
-                                    ->where('rating_ip',$_SERVER['REMOTE_ADDR'])
-                                    ->find();
+												->where('incident_id',$id)
+												->where('rating_ip',$_SERVER['REMOTE_ADDR'])
+												->find();
 					}
 					elseif ($type == 'comment') 
 					{
 						$previous = ORM::factory('rating')
-                                    ->where('comment_id',$id)
-                                    ->where('rating_ip',$_SERVER['REMOTE_ADDR'])
-                                    ->find();
+						->where('comment_id',$id)
+						->where('rating_ip',$_SERVER['REMOTE_ADDR'])
+						->find();
 					}
 					
 					// If previous exits... update previous vote
@@ -1037,8 +1002,8 @@ class Reports_Controller extends Main_Controller {
 			
 			// Get All Ratings and Sum them up
 			foreach(ORM::factory('rating')
-                    ->where($which_count,$id)
-                    ->find_all() as $rating)
+												->where($which_count,$id)
+												->find_all() as $rating)
 			{
 				$total_rating += $rating->rating;
 			}
@@ -1080,22 +1045,22 @@ class Reports_Controller extends Main_Controller {
 		
 		// Generate query from proximity calculator
 		$radius_query = "location.latitude >= '" . $proximity->minLat . "' 
-                         AND location.latitude <= '" . $proximity->maxLat . "' 
-                         AND location.longitude >= '" . $proximity->minLong . "'
-                         AND location.longitude <= '" . $proximity->maxLong . "'
-                         AND incident_active = 1";
+										AND location.latitude <= '" . $proximity->maxLat . "' 
+										AND location.longitude >= '" . $proximity->minLong . "'
+										AND location.longitude <= '" . $proximity->maxLong . "'
+										AND incident_active = 1";
 		
 		$neighbors = ORM::factory('incident')
-                     ->join('location', 'incident.location_id', 'location.id','INNER')
-                     ->select('incident.*')
-                     ->where($radius_query)
-                     ->limit('5')
-                     ->find_all();
+							 	 ->join('location', 'incident.location_id', 'location.id','INNER')
+								 ->select('incident.*')
+								 ->where($radius_query)
+								 ->limit('5')
+								 ->find_all();
 		
 		return $neighbors;
-        }
-        
-    /**
+	}
+
+	/**
 	 * Retrieve Custom Form Fields
 	 * @param bool|int $incident_id The unique incident_id of the original report
 	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
@@ -1103,7 +1068,7 @@ class Reports_Controller extends Main_Controller {
 	 * @param bool $data_only Whether or not to include just data
 	 */
 	private function _get_custom_form_fields($incident_id = false, $form_id = 1, $data_only = false)
-    {
+	{
 		$fields_array = array();
 		
 		if (!$form_id)
@@ -1142,7 +1107,7 @@ class Reports_Controller extends Main_Controller {
 		}
 		
 		return $fields_array;
-    }
+	}
 
 
 	/**
@@ -1150,7 +1115,7 @@ class Reports_Controller extends Main_Controller {
 	 * @param array $custom_fields Array
 	 */
 	private function _validate_custom_form_fields($custom_fields = array())
-    {
+	{
 		$custom_fields_error = "";
 		
 		foreach ($custom_fields as $field_id => $field_response)
@@ -1174,14 +1139,14 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 		return true;
-    }
+	}
 
 
 	/**
 	 * Ajax call to update Incident Reporting Form
 	 */
 	/*public function switch_form()
-    {
+	{
 		$this->template = "";
 		$this->auto_render = FALSE;
 		
@@ -1252,6 +1217,6 @@ class Reports_Controller extends Main_Controller {
 		}
 		
 		echo json_encode(array("status"=>"success", "response"=>$html));
-    }*/
+	}*/
 
 } // End Reports
