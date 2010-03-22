@@ -87,7 +87,8 @@ class Admin_Controller extends Template_Controller
 		$this->template->raphael_enabled = FALSE;
 		$this->template->impact_json = '';
 
-		// Generate main tab navigation list. Key = Page (/admin/???), Val = Tab Name
+		// Generate main tab navigation list.
+		// Key = Page (/admin/???), Val = Tab Name
 		$tabs = array(
 			'dashboard' => Kohana::lang('ui_admin.dashboard'),
 			'reports' => Kohana::lang('ui_admin.reports'),
@@ -99,10 +100,31 @@ class Admin_Controller extends Template_Controller
 		);
 
 		if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '') {
-        	$tabs['mhi'] = Kohana::lang('ui_admin.mhi');
+        	//Start from scratch on admin tabs since most are irrelevant
+        	$tabs = array(
+				'mhi' => Kohana::lang('ui_admin.mhi'),
+				'stats' => Kohana::lang('ui_admin.stats'),
+			);
+        }
+
+        // Generate sub navigation list (in default layout, sits on right side.
+        // Key = Page (/admin/???), Val = Tab Name
+        $secondary_tabs = array();
+        if($this->auth->logged_in('superadmin')){
+        	$secondary_tabs = array(
+        		'settings/site' => Kohana::lang('ui_admin.settings'),
+        		'manage' => Kohana::lang('ui_admin.manage'),
+        		'users' => Kohana::lang('ui_admin.users')
+        	);
+        }elseif($this->auth->logged_in('admin')){
+        	$secondary_tabs = array(
+        		'manage' => Kohana::lang('ui_admin.manage'),
+        		'users' => Kohana::lang('ui_admin.users')
+        	);
         }
 
         $this->template->tabs = $tabs;
+        $this->template->secondary_tabs = $secondary_tabs;
 		
 		// Load profiler
 		// $profiler = new Profiler;		
@@ -112,7 +134,11 @@ class Admin_Controller extends Template_Controller
 	public function index()
 	{
 		// Send them to the right page
-		url::redirect('admin/dashboard');
+		if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '') {
+			url::redirect('admin/mhi');
+		}else{
+			url::redirect('admin/dashboard');
+		}
 	}
 
 	public function log_out()
