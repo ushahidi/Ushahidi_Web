@@ -163,20 +163,9 @@
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
-					<?php if ($this->auth->logged_in('superadmin')){ ?>
-						<li><a href="<?php echo url::base() ?>admin/settings/site"><?php echo Kohana::lang('ui_admin.settings');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('ui_admin.manage');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('ui_admin.users');?></a></li>
-					<?php 
-					} else if($this->auth->logged_in('admin')) { ?>
-						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('ui_admin.manage');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('ui_admin.users');?></a></li> 
-					<?php
-					} else { ?> 
-					
-					<?php 
-					} 
-					?>
+					<?php foreach($secondary_tabs as $page => $tab_name){ ?>
+						<li><a href="<?php echo url::base(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
+					<?php } ?>
 				</ul>
 			</div>
 		</div>
