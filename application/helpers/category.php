@@ -23,7 +23,13 @@ class category_Core {
 		// Category is selected.
 		$category_checked = in_array($cid, $selected_categories);
 		
-		$html .= form::checkbox($form_field.'[]', $cid, $category_checked, ' class="check-box"');
+		$disabled = "";
+		if ($category->children->count() > 0)
+		{
+			$disabled = " disabled=\"disabled\"";
+		}
+		
+		$html .= form::checkbox($form_field.'[]', $cid, $category_checked, ' class="check-box"'.$disabled);
 		$html .= $category_title;
 		
 		return $html;
