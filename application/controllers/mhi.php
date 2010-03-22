@@ -72,7 +72,7 @@ class MHI_Controller extends Template_Controller
 			if($post->validate()) {
 
 				$mhi_user = new Mhi_User_Model();
-				$db_genesis = new db_genesis;
+				$db_genesis = new DBGenesis();
 				$mhi_site_database = new Mhi_Site_Database_Model();
 				$mhi_site = new Mhi_Site_Model();
 

@@ -1,15 +1,13 @@
 <?php
 /**
  * In the beginning there was a MySQL database... Used primarily for MHI
- * Formulas to calculate the exact distance in miles 
- * between two points on a sphere.
  * 
  * @package    Distance
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
  * @license    http://www.ushahidi.com/license.html
  */
-class db_genesis {
+class DBGenesis_Core {
 	
 	function dbgenesis() {
 		
