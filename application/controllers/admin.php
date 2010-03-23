@@ -94,7 +94,6 @@ class Admin_Controller extends Template_Controller
 			'reports' => Kohana::lang('ui_admin.reports'),
 			'comments' => Kohana::lang('ui_admin.comments'),
 			'messages' => Kohana::lang('ui_admin.messages'),
-			'feedback' => Kohana::lang('ui_admin.feedback'),
 			'stats' => Kohana::lang('ui_admin.stats'),
 			'apilogs' => Kohana::lang('ui_admin.api_logs'),
 		);

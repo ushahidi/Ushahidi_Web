@@ -121,12 +121,10 @@ class Alerts_Controller extends Main_Controller
         $this->template->header->js->latitude = $form['alert_lat'];
         $this->template->header->js->longitude = $form['alert_lon'];
         
-        //include footer form js file
-        $footerjs = new View('footer_form_js');
-		
-		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
-		$footerjs = $myPacker->pack();
+
+        // Pack the javascript using the javascriptpacker helper
+        $myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
+        $footerjs = $myPacker->pack();
         $this->template->header->js .= $footerjs;
     }
 

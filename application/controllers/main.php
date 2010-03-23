@@ -45,9 +45,6 @@ class Main_Controller extends Template_Controller {
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 		
-		//call the feedback form
-		$this->_get_feedback_form();
-        
 		// Retrieve Default Settings
 		$site_name = Kohana::config('settings.site_name');
 			// Prevent Site Name From Breaking up if its too long
@@ -89,14 +86,6 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->videoslider_enabled = FALSE;
 		$this->template->header->protochart_enabled = FALSE;
 		$this->template->header->main_page = FALSE;
-		
-		$footerjs = new View('footer_form_js');
-		
-		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
-		$footerjs = $myPacker->pack();
-		
-		$this->template->header->js = $footerjs;
 		
 		$this->template->header->this_page = "";
 		
@@ -408,13 +397,8 @@ class Main_Controller extends Template_Controller {
 			// Override API URL
 			$this->template->header->api_url = '<script src="http://www.google.com/jsapi?key='.Kohana::config('settings.api_google').'"> </script>';
 		}
-		
-		
-		$footerjs = new View('footer_form_js');
-		
-		// Pack the javascript using the javascriptpacker helper		
-		$this->template->header->js .= $footerjs;
-		
+
+
 		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
 	}
@@ -487,181 +471,6 @@ class Main_Controller extends Template_Controller {
 				</script>";
 		}
 		return $html;
-	}
-	
-	/**
-	 * Get the feedback
-	 */
-	private function _get_feedback_form() {
-		//setup and initialize form fields
-		$form = array
-		(
-				'feedback_message' => '',
-				'person_email' => '',
-				'feedback_captcha' => ''
-		);
-		
-		// Load Akismet API Key (Spam Blocker)
-		$api_akismet = Kohana::config('settings.api_akismet');
-		
-		$captcha = Captcha::factory();
-		
-		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
-		$errors = $form;
-		$form_error = FALSE;
-
-		//has form been submitted, if so setup validation
-		if($_POST)
-		{
-
-			$post = Validation::factory($_POST);
-
-			//Trim whitespaces
-			$post->pre_filter('trim', TRUE);
-
-			//Add validation rules
-			$post->add_rules('feedback_message','required');
-			$post->add_rules('person_email', 'required','email');
-			$post->add_rules('feedback_captcha', 'required', 'Captcha::valid');
-			if( $post->validate() ) { 
-				if($api_akismet != "" ) {
-					// Run Akismet Spam Checker
-						$akismet = new Akismet();
-
-						// comment data
-						$feedback = array(
-							'feedback_message' => $post->feedback_message,
-							'person_email' => $post->feedback_message,
-						);
-
-						$config = array(
-							'blog_url' => url::site(),
-							'api_key' => $api_akismet,
-							'feedback' => $feedback
-						);
-
-						$akismet->init($config);
-
-						if($akismet->errors_exist()) 
-						{
-							if($akismet->is_error('AKISMET_INVALID_KEY'))
-							{
-								// throw new Kohana_Exception('akismet.api_key');
-							}
-							elseif($akismet->is_error('AKISMET_RESPONSE_FAILED')) 
-							{
-								// throw new Kohana_Exception('akismet.server_failed');
-							}
-							elseif($akismet->is_error('AKISMET_SERVER_NOT_FOUND')) 
-							{
-								// throw new Kohana_Exception('akismet.server_not_found');
-							}
-							// If the server is down, we have to post 
-							// the comment :(
-							// $this->_post_comment($comment);
-							$feedback_spam = 0;
-						}
-						else {
-							if($akismet->is_spam()) 
-							{
-								$feedback_spam = 1;
-							}
-							else {
-								$feedback_spam = 0;
-							}
-						}
-					}
-					else
-					{ // No API Key!!
-						$feedback_spam = 0;
-					}
-				$this->_dump_feedback($post);
-
-
-				//send details to admin
-				$frm = $post->person_email;
-				$subject = Kohana::lang('feedback.feedback_details');;
-				$message = $post->feedback_message;
-				$email = Kohana::config('settings.site_email');
-				$this->_send_feedback( $email, $message, $subject, $frm );
-
-				//send details to ushahidi
-				$frm = $post->person_email;
-				$subject = Kohana::lang('feedback.feedback_details');;
-				$message = $post->feedback_message;
-				$message .= Kohana::lang('ui_admin.instance').": ".url::base();
-				$email = "feedback@ushahidi.com";
-				$this->_send_feedback( $email, $message, $subject, $frm );
-			}
-			else
-	        {
-				// repopulate the form fields
-	            $form = arr::overwrite($form, $post->as_array());
-
-	            // populate the error fields, if any
-	            $errors = arr::overwrite($errors, $post->errors('feedback'));
-				$form_error = TRUE;
-			}
-		}
-		$this->template->footer->js = new View('footer_form_js');
-		$this->template->footer->form = $form;
-		$this->template->footer->captcha = $captcha;
-		$this->template->footer->errors = $errors;
-		$this->template->footer->form_error = $form_error;
-        }
-
-        /**
-         * Escape string
-         */
-        private function _escape_string($str) {
-            if( $str != "" ){
-                $str = str_replace(array('\''),array('\\\''),$str);
-                $str = "'".$str."'";
-            }else {
-                return "";
-            }
-            return $str;
-        }
-
-	
-	/**
-	 * puts feedback info into the database.
-	 * @param the post object
-	 */
-	private function _dump_feedback($post) {
-		
-		$feedback = new Feedback_Model();
-		$feedback->feedback_mesg = $post->feedback_message;
-		$feedback->feedback_dateadd = date("Y-m-d H:i:s",time());
-		$feedback->save();//save feedback info to db
-		
-		$feedback_person = new Feedback_Person_Model();
-		$feedback_person->feedback_id = $feedback->id;
-		$feedback_person->person_email = $post->person_email;
-		$feedback_person->person_date = date("Y-m-d H:i:s",time());
-		$feedback_person->person_ip = $post->person_ip;
-		$feedback_person->save(); //save person info to db
-	}
-	
-	/**
-	 * Send feedback info as email to admin and Ushahidi
-	 */
-	public function _send_feedback( $email, $message, $subject, $frm )
-	{
-		$to = $email;
-		$from = $frm;
-		$subject = $subject;
-		
-		$message .= "\n\n";
-		//email details
-		if( email::send( $to, $from, $subject, $message, FALSE ) == 1 )
-		{
-			return TRUE;
-		}
-		else 
-		{
-			return FALSE;
-		}
 	}
 	
 } // End Main
