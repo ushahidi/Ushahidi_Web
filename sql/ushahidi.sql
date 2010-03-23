@@ -1,19 +1,12 @@
-/**
-* Ushahidi Engine
-* 
-*/
-/**
-* version 23
-* 
-*/
-/**
-* http://www.ushahidi.com
-* 
-*/
+-- Ushahidi Engine
+-- version 23
+-- http://www.ushahidi.com
 
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
+
+-- --------------------------------------------------------
 
 
 /**
