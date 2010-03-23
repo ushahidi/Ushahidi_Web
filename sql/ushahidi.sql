@@ -9,12 +9,14 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 
+
+
 /**
 * Table structure for table `category`
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `category` (    -- table description
+CREATE TABLE IF NOT EXISTS `category` (                                             -- table description
     `id` int(11) unsigned NOT NULL auto_increment,                                  -- field description
     `parent_id` INT NOT NULL DEFAULT '0',                                           -- field description
     `locale` varchar(10) NOT NULL default 'en_US',                                  -- field description
@@ -51,7 +53,7 @@ INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_descr
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `category_lang`    -- table description
+CREATE TABLE IF NOT EXISTS `category_lang`                                          -- table description
 (
     `id` INT(11) unsigned  NOT NULL AUTO_INCREMENT,                                 -- field description
     `category_id` int(11) NOT NULL,                                                 -- field description
@@ -72,7 +74,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `country` (    -- table description
+CREATE TABLE IF NOT EXISTS `country` (                                              -- table description
     `id` int(11) NOT NULL auto_increment,                                           -- field description
     `iso` varchar(10) default NULL,                                                 -- field description
     `country` varchar(100) default NULL,                                            -- field description
@@ -340,7 +342,7 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `idp` (    -- table description
+CREATE TABLE IF NOT EXISTS `idp` (                                                  -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `incident_id` bigint(20) NOT NULL,                                              -- field description
     `verified_id` bigint(20) default NULL,                                          -- field description
@@ -368,7 +370,7 @@ CREATE TABLE IF NOT EXISTS `idp` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `incident` (    -- table description
+CREATE TABLE IF NOT EXISTS `incident` (                                             -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `location_id` bigint(20) NOT NULL,                                              -- field description
     `form_id` int(11) NOT NULL default '1',                                         -- field description
@@ -410,7 +412,7 @@ UNLOCK TABLES;
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `incident_lang`    -- table description
+CREATE TABLE IF NOT EXISTS `incident_lang`                                          -- table description
 (
     `id` BIGINT(20) unsigned  NOT NULL AUTO_INCREMENT,                              -- field description
     `incident_id` BIGINT(20) NOT NULL,                                              -- field description
@@ -431,7 +433,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `incident_category` (    -- table description
+CREATE TABLE IF NOT EXISTS `incident_category` (                                    -- table description
     `id` int(11) NOT NULL auto_increment,                                           -- field description
     `incident_id` bigint(20) NOT NULL default '0',                                  -- field description
     `category_id` int(11) NOT NULL default '0',                                     -- field description
@@ -450,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `incident_category` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `incident_person` (    -- table description
+CREATE TABLE IF NOT EXISTS `incident_person` (                                      -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `incident_id` bigint(20) default NULL,                                          -- field description
     `location_id` bigint(20) default NULL,                                          -- field description
@@ -474,7 +476,7 @@ CREATE TABLE IF NOT EXISTS `incident_person` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `comment`    -- table description
+CREATE TABLE IF NOT EXISTS `comment`                                                -- table description
 (
     `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 -- field description
     `incident_id` BIGINT NOT NULL,                                                  -- field description
@@ -502,7 +504,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `rating`    -- table description
+CREATE TABLE IF NOT EXISTS `rating`                                                 -- table description
 (
     `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 -- field description
     `incident_id` BIGINT default NULL,                                              -- field description
@@ -524,7 +526,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `location` (    -- table description
+CREATE TABLE IF NOT EXISTS `location` (                                             -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `location_name` varchar(255) default NULL,                                      -- field description
     `country_id` int(11) default NULL,                                              -- field description
@@ -550,7 +552,7 @@ UNLOCK TABLES;
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `media` (    -- table description
+CREATE TABLE IF NOT EXISTS `media` (                                                -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `location_id` bigint(20) default NULL,                                          -- field description
     `incident_id` bigint(20) default NULL,                                          -- field description
@@ -575,7 +577,7 @@ CREATE TABLE IF NOT EXISTS `media` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `organization` (    -- table description
+CREATE TABLE IF NOT EXISTS `organization` (                                         -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `organization_name` varchar(255) default NULL,                                  -- field description
     `organization_description` longtext default NULL,                               -- field description
@@ -600,7 +602,7 @@ CREATE TABLE IF NOT EXISTS `organization` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `organization_incident` (    -- table description
+CREATE TABLE IF NOT EXISTS `organization_incident` (                                -- table description
     `organization_id` bigint(20) default NULL,                                      -- field description
     `incident_id` bigint(20) default NULL                                           -- field description
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -614,7 +616,7 @@ CREATE TABLE IF NOT EXISTS `organization_incident` (    -- table description
 * Table structure for table `feed`
 * 
 */
-CREATE TABLE IF NOT EXISTS `feed`    -- table description
+CREATE TABLE IF NOT EXISTS `feed`                                                   -- table description
 (
     `id` int(11) unsigned  NOT NULL AUTO_INCREMENT ,                                -- field description
     `feed_name` VARCHAR(255) default NULL,                                          -- field description
@@ -635,7 +637,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `feed_item`    -- table description
+CREATE TABLE IF NOT EXISTS `feed_item`                                              -- table description
 (
     `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 -- field description
     `feed_id` INT(11) NOT NULL,                                                     -- field description
@@ -658,7 +660,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `message`    -- table description
+CREATE TABLE IF NOT EXISTS `message`                                                -- table description
 (
     `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 -- field description
 /*Outgoing Messages From Admin*/
@@ -687,7 +689,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `twitter`    -- table description
+CREATE TABLE IF NOT EXISTS `twitter`                                                -- table description
 (
     `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 -- field description
     `incident_id` INTEGER DEFAULT 0,                                                -- field description
@@ -713,7 +715,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `laconica` (    -- table description
+CREATE TABLE IF NOT EXISTS `laconica` (                                             -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `incident_id` int(11) default '0',                                              -- field description
     `laconica_mesg_from` varchar(100) default NULL,                                 -- field description
@@ -737,7 +739,7 @@ CREATE TABLE IF NOT EXISTS `laconica` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `pending_users` (    -- table description
+CREATE TABLE IF NOT EXISTS `pending_users` (                                        -- table description
     `id` int(11) unsigned NOT NULL auto_increment,                                  -- field description
     `key` varchar(32) NOT NULL,                                                     -- field description
     `email` varchar(127) NOT NULL,                                                  -- field description
@@ -760,7 +762,7 @@ CREATE TABLE IF NOT EXISTS `pending_users` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `roles` (    -- table description
+CREATE TABLE IF NOT EXISTS `roles` (                                                -- table description
     `id` int(11) unsigned NOT NULL auto_increment,                                  -- field description
     `name` varchar(32) NOT NULL,                                                    -- field description
     `description` varchar(255) NOT NULL,                                            -- field description
@@ -783,7 +785,7 @@ INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `roles_users` (    -- table description
+CREATE TABLE IF NOT EXISTS `roles_users` (                                          -- table description
     `user_id` int(11) unsigned NOT NULL,                                            -- field description
     `role_id` int(11) unsigned NOT NULL,                                            -- field description
   PRIMARY KEY  (`user_id`,`role_id`),
@@ -805,7 +807,7 @@ INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `sessions` (    -- table description
+CREATE TABLE IF NOT EXISTS `sessions` (                                             -- table description
     `session_id` varchar(40) NOT NULL,                                              -- field description
     `last_activity` int(10) unsigned NOT NULL,                                      -- field description
     `data` text NOT NULL,                                                           -- field description
@@ -823,7 +825,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `settings` (    -- table description
+CREATE TABLE IF NOT EXISTS `settings` (                                             -- table description
     `id` int(10) unsigned NOT NULL auto_increment,                                  -- field description
     `site_name` varchar(255) default NULL,                                          -- field description
     `site_tagline` varchar(255) default NULL,                                       -- field description
@@ -894,7 +896,7 @@ INSERT INTO `settings` (`id`, `site_name`, `default_map`, `api_google`, `api_yah
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `users` (    -- table description
+CREATE TABLE IF NOT EXISTS `users` (                                                -- table description
     `id` int(11) unsigned NOT NULL auto_increment,                                  -- field description
     `name` varchar(200) default NULL,                                               -- field description
     `email` varchar(127) NOT NULL,                                                  -- field description
@@ -922,7 +924,7 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `l
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `user_tokens` (    -- table description
+CREATE TABLE IF NOT EXISTS `user_tokens` (                                          -- table description
     `id` int(11) unsigned NOT NULL auto_increment,                                  -- field description
     `user_id` int(11) unsigned NOT NULL,                                            -- field description
     `user_agent` varchar(40) NOT NULL,                                              -- field description
@@ -945,7 +947,7 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `verified` (    -- table description
+CREATE TABLE IF NOT EXISTS `verified` (                                             -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `incident_id` bigint(20) default NULL,                                          -- field description
     `idp_id` bigint(20) default NULL,                                               -- field description
@@ -967,7 +969,7 @@ CREATE TABLE IF NOT EXISTS `verified` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `alert` (    -- table description
+CREATE TABLE IF NOT EXISTS `alert` (                                                -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `alert_type` tinyint(4) NOT NULL COMMENT '1 - MOBILE, 2 - EMAIL',               -- field description
     `alert_recipient` varchar(200) default NULL,                                    -- field description
@@ -992,7 +994,7 @@ CREATE TABLE IF NOT EXISTS `alert` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `alert_sent`    -- table description
+CREATE TABLE IF NOT EXISTS `alert_sent`                                             -- table description
 (
     `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT,                                  -- field description
     `incident_id` BIGINT NOT NULL,                                                  -- field description
@@ -1012,7 +1014,7 @@ PRIMARY KEY (`id`)
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `city` (    -- table description
+CREATE TABLE IF NOT EXISTS `city` (                                                 -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `country_id` int(11) default NULL,                                              -- field description
     `city` varchar(200) default NULL,                                               -- field description
@@ -1032,7 +1034,7 @@ CREATE TABLE IF NOT EXISTS `city` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `scheduler` (    -- table description
+CREATE TABLE IF NOT EXISTS `scheduler` (                                            -- table description
     `id` int(10) unsigned NOT NULL auto_increment,                                  -- field description
     `scheduler_name` varchar(100) NOT NULL,                                         -- field description
     `scheduler_last` int(10) unsigned NOT NULL default '0',                         -- field description
@@ -1062,7 +1064,7 @@ INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_we
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `scheduler_log` (    -- table description
+CREATE TABLE IF NOT EXISTS `scheduler_log` (                                        -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `scheduler_id` int(11) NOT NULL,                                                -- field description
     `scheduler_name` varchar(100) NOT NULL,                                         -- field description
@@ -1082,7 +1084,7 @@ CREATE TABLE IF NOT EXISTS `scheduler_log` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `cluster` (    -- table description
+CREATE TABLE IF NOT EXISTS `cluster` (                                              -- table description
     `id` int(11) NOT NULL,                                                          -- field description
     `location_id` bigint(20) NOT NULL default '0',                                  -- field description
     `latitude` double NOT NULL,                                                     -- field description
@@ -1115,7 +1117,7 @@ CREATE TABLE IF NOT EXISTS `cluster` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `form` (    -- table description
+CREATE TABLE IF NOT EXISTS `form` (                                                 -- table description
     `id` int(11) NOT NULL auto_increment,                                           -- field description
     `form_title` varchar(200) NOT NULL,                                             -- field description
     `form_description` text,                                                        -- field description
@@ -1137,7 +1139,7 @@ INSERT INTO `form` (`id`, `form_title`, `form_description`, `form_active`) VALUE
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `form_field` (    -- table description
+CREATE TABLE IF NOT EXISTS `form_field` (                                           -- table description
     `id` int(11) NOT NULL auto_increment,                                           -- field description
     `form_id` int(11) NOT NULL default '0',                                         -- field description
     `field_name` varchar(200) default NULL,                                         -- field description
@@ -1165,7 +1167,7 @@ CREATE TABLE IF NOT EXISTS `form_field` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `form_response` (    -- table description
+CREATE TABLE IF NOT EXISTS `form_response` (                                        -- table description
     `id` bigint(20) NOT NULL auto_increment,                                        -- field description
     `form_field_id` int(11) NOT NULL,                                               -- field description
     `incident_id` bigint(20) NOT NULL,                                              -- field description
@@ -1185,7 +1187,7 @@ CREATE TABLE IF NOT EXISTS `form_response` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `level` (    -- table description
+CREATE TABLE IF NOT EXISTS `level` (                                                -- table description
     `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT,                                -- field description
     `level_title` varchar(200) default NULL,                                        -- field description
     `level_description` varchar(200) default NULL,                                  -- field description
@@ -1211,7 +1213,7 @@ INSERT INTO `level` (`id`, `level_title`, `level_description`, `level_weight`) V
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `reporter` (    -- table description
+CREATE TABLE IF NOT EXISTS `reporter` (                                             -- table description
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `incident_id` bigint(20) default NULL,                                          -- field description
     `location_id` bigint(20) default NULL,                                          -- field description
@@ -1237,7 +1239,7 @@ CREATE TABLE IF NOT EXISTS `reporter` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `service` (    -- table description
+CREATE TABLE IF NOT EXISTS `service` (                                              -- table description
     `id` int(10) unsigned NOT NULL auto_increment,                                  -- field description
     `service_name` varchar(100) default NULL,                                       -- field description
     `service_description` varchar(255) default NULL,                                -- field description
@@ -1261,7 +1263,7 @@ INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `feedback` (    -- table description
+CREATE TABLE IF NOT EXISTS `feedback` (                                             -- table description
     `id` tinyint(11) NOT NULL auto_increment,                                       -- field description
     `feedback_mesg` text NOT NULL,                                                  -- field description
     `feedback_status` tinyint(3) NOT NULL,                                          -- field description
@@ -1279,7 +1281,7 @@ CREATE TABLE IF NOT EXISTS `feedback` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `feedback_person` (    -- table description
+CREATE TABLE IF NOT EXISTS `feedback_person` (                                      -- table description
     `id` tinyint(11) NOT NULL auto_increment,                                       -- field description
     `feedback_id` tinyint(11) NOT NULL,                                             -- field description
     `person_email` varchar(30) NOT NULL,                                            -- field description
@@ -1296,7 +1298,7 @@ CREATE TABLE IF NOT EXISTS `feedback_person` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `sharing` (    -- table description
+CREATE TABLE IF NOT EXISTS `sharing` (                                              -- table description
     `id` int(10) unsigned NOT NULL auto_increment,                                  -- field description
     `sharing_type` tinyint(4) default '1' COMMENT '1 - PULLing Data, 2 - PUSHing Data, 3 - TWO way',    -- field description
     `sharing_limits` tinyint(4) NOT NULL default '1' COMMENT '1 - Once Per Hour, 2 - Once Every 6 Hours, 3 - Once Every 12 Hours, 4 - Once Daily',    -- field description
@@ -1326,7 +1328,7 @@ CREATE TABLE IF NOT EXISTS `sharing` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `sharing_log` (    -- table description
+CREATE TABLE IF NOT EXISTS `sharing_log` (                                          -- table description
     `id` int(10) unsigned NOT NULL auto_increment,                                  -- field description
     `sharing_id` int(11) NOT NULL,                                                  -- field description
     `sharing_log_date` int(10) unsigned default NULL,                               -- field description
@@ -1341,7 +1343,7 @@ CREATE TABLE IF NOT EXISTS `sharing_log` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `page` (    -- table description
+CREATE TABLE IF NOT EXISTS `page` (                                                 -- table description
     `id` int(11) NOT NULL auto_increment,                                           -- field description
     `page_title` varchar(255) NOT NULL,                                             -- field description
     `page_description` longtext,                                                    -- field description
@@ -1363,7 +1365,7 @@ INSERT INTO `page` (`id`, `page_title`, `page_description`, `page_tab`, `page_ac
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `layer` (    -- table description
+CREATE TABLE IF NOT EXISTS `layer` (                                                -- table description
     `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,                            -- field description
     `layer_name` VARCHAR( 255 ) NULL ,                                              -- field description
     `layer_url` VARCHAR( 255 ) NULL ,                                               -- field description
@@ -1379,7 +1381,7 @@ CREATE TABLE IF NOT EXISTS `layer` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `api_banned` (    -- table description
+CREATE TABLE IF NOT EXISTS `api_banned` (                                           -- table description
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                  -- field description
     `banned_ipaddress` varchar(50) NOT NULL,                                        -- field description
     `banned_date` datetime NOT NULL,                                                -- field description
@@ -1393,7 +1395,7 @@ CREATE TABLE IF NOT EXISTS `api_banned` (    -- table description
 * 
 */
 
-CREATE TABLE IF NOT EXISTS `api_log` (    -- table description
+CREATE TABLE IF NOT EXISTS `api_log` (                                              -- table description
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                  -- field description
     `api_task` varchar(10) NOT NULL,                                                -- field description
     `api_parameters` varchar(50) NOT NULL,                                          -- field description
