@@ -19,6 +19,7 @@ The follwing is a list of PHP extensions that must be installed on your server i
 - mcrypt (http://php.net/mcrypt) is required for encryption.
 - SPL (http://php.net/spl) is required for several core libraries
 - mbstring (http://php.net/mbstring) which speeds up Kohana's UTF-8 functions.
+- cURL (http://php.net/curl) which is used to access remote sites.
 
 * Need to figure out what extensions you already have installed on your server? Here are instructions to do just that: http://jontangerine.com/silo/php/phpinfo/
 
@@ -44,7 +45,7 @@ Ushahidi can be installed manually or via the web installer. The easiest way to 
 	~~~~~~~
 	- Upload the unpacked/unzipped Ushahidi files to your server.
 	- Make sure the appropriate files are writable by your web server (see "Preliminary Setup" above).
-	- Point your browser to the http://[Your Ushahidi URL]/installer and follow the step by step instructions. 
+	- Point your browser to the http://[Your Ushahidi URL]/installer and follow the step by step instructions.
 
 	Manual Installation
 	~~~~~~~
