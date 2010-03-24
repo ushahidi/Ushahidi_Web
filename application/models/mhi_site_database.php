@@ -18,11 +18,11 @@
 class mhi_site_database_Model extends ORM
 {
 	protected $table_name = 'mhi_site_database';
-	
+
 	protected $primary_key = 'mhi_id';
-	
+
 	protected $primary_val = 'database';
-	
+
 	static function db_assigned($db_name)
 	{
 		// Check if the database name has already been reserved
@@ -32,11 +32,11 @@ class mhi_site_database_Model extends ORM
 		}
 		return false;
 	}
-	
+
 	static function assign_db($db_name,$site_id)
 	{
 		$mhi_db = Kohana::config('database.default');
-		
+
 		$mhi_site_database = ORM::factory('mhi_site_database');
 		$mhi_site_database->mhi_id = $site_id;
 		$mhi_site_database->user = $mhi_db['connection']['user'];
@@ -45,7 +45,7 @@ class mhi_site_database_Model extends ORM
 		$mhi_site_database->port = $mhi_db['connection']['port'];
 		$mhi_site_database->database = $db_name;
 		$mhi_site_database->save();
-		
+
 		return true;
 	}
 }
