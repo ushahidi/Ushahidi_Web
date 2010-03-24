@@ -26,10 +26,11 @@ class mhi_site_database_Model extends ORM
 	static function db_assigned($db_name)
 	{
 		// Check if the database name has already been reserved
+
 		$count = ORM::factory('mhi_site_database')->where('database',$db_name)->count_all();
-		if($count != 0){
+		if ($count != 0)
 			return true;
-		}
+
 		return false;
 	}
 

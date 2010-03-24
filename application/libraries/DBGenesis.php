@@ -9,46 +9,55 @@
  */
 class DBGenesis_Core {
 
-	function dbgenesis() {
+	function dbgenesis()
+	{
 
 	}
 
-	public static function current_db() {
+	public static function current_db()
+	{
 		$result = mysql_query('SELECT DATABASE() as db_name;');
 		return mysql_result($result,0,'db_name');
 	}
 
-	public static function db_exists($db_name) {
+	public static function db_exists($db_name)
+	{
 		$query = 'SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = \''.mysql_escape_string($db_name).'\'';
 		$result = mysql_query($query);
-		if(mysql_num_rows($result) == 0){
+		if (mysql_num_rows($result) == 0)
+		{
 			return false;
 		}else{
 			return true;
 		}
 	}
 
-	public static function create_db($db_name) {
+	public static function create_db($db_name)
+	{
 		$query = 'CREATE DATABASE IF NOT EXISTS '.mysql_escape_string($db_name).';';
 		$result = mysql_query($query);
 		return true;
 	}
 
-	// user is assoc array (username, name, password, email)
-	// settings is assoc array (site_name, site_tagline)
-	public static function populate_db($db_name,$user,$settings) {
+	// User is assoc array (username, name, password, email)
+	// Settings is assoc array (site_name, site_tagline)
 
+	public static function populate_db($db_name,$user,$settings)
+	{
 		$mhi_db = Kohana::config('database.default');
 		$table_prefix = $mhi_db['table_prefix'];
 		$mhi_db_name = $mhi_db['connection']['database'];
 
 		// Switch to new DB for a moment
+
 		mysql_query('USE '.$db_name);
 
 		$db_schema = file_get_contents('sql/ushahidi.sql');
 
 		// If a table prefix is specified, add it to sql
-		if ($table_prefix) {
+
+		if ($table_prefix)
+		{
 			$find = array(
 				'CREATE TABLE IF NOT EXISTS `',
 				'INSERT INTO `',
@@ -64,16 +73,16 @@ class DBGenesis_Core {
 			$db_schema = str_replace($find, $replace, $db_schema);
 		}
 
-		/**
-		 * split by ; to get the sql statement for creating individual
-		 * tables.
-		 */
+		// Split by ; to get the sql statement for creating individual tables.
+
 		$tables = explode(';',$db_schema);
-		foreach($tables as $query) {
+		foreach($tables as $query)
+		{
 			$result = mysql_query($query);
 		}
 
 		// Set up admin user on new site
+
 		$usr = ORM::factory('user','1');
 		$usr->username = $user['username'];
 		$usr->name = $user['name'];
@@ -82,6 +91,7 @@ class DBGenesis_Core {
 		$usr->save();
 
 		// Save site settings (name, tagline, etc)
+
 		$setgs = new Settings_Model(1);
 		$setgs->site_name = $settings['site_name'];
 		$setgs->site_tagline = $settings['site_tagline'];
@@ -92,6 +102,7 @@ class DBGenesis_Core {
 		// Set up stats here.
 
 		// Switch back to the appropriate DB
+
 		mysql_query('USE '.$mhi_db_name);
 
 		return true;
