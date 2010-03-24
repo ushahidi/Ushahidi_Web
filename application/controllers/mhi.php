@@ -131,9 +131,7 @@ class MHI_Controller extends Template_Controller {
 		$session = Session::instance();
 		$mhi_user_id = $session->get('mhi_user_id');
 		if ($mhi_user_id == FALSE)
-		{
 			url::redirect('/');
-		}
 
 		$this->template->header->this_page = 'mhi';
 		$this->template->content = new View('mhi_account');
@@ -160,7 +158,7 @@ class MHI_Controller extends Template_Controller {
 		$this->template->content->site_name = Kohana::config('settings.site_name');
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
-		$session = Session::instance();
+		$session = Session::instance;
 		$this->template->content->logged_in = $session->get('mhi_user_id');
 	}
 
@@ -179,7 +177,7 @@ class MHI_Controller extends Template_Controller {
 
 			$post->pre_filter('trim');
 
-			$session = Session::instance();
+			$session = Session::instance;
 			$mhi_user_id = $session->get('mhi_user_id');
 
 			// These rules are only required if we aren't already logged in
