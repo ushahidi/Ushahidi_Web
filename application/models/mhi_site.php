@@ -18,15 +18,15 @@
 class mhi_site_Model extends ORM
 {
 	protected $table_name = 'mhi_site';
-	
+
 	protected $primary_key = 'id';
-	
+
 	protected $primary_val = 'site_domain';
-	
+
 	static function domain_exists($site_domain)
 	{
 		// TODO: We could also do a subdomain lookup to see if the subdomain is being used already for something other than MHI
-	
+
 		// Check if the subdomain has been taken
 		$count = ORM::factory('mhi_site')->where('site_domain',$site_domain)->count_all();
 		if($count != 0){
@@ -34,7 +34,7 @@ class mhi_site_Model extends ORM
 		}
 		return false;
 	}
-	
+
 	// $a should be an assoc array including user_id, site_domain, site_privacy, site_active
 	static function save_site($a)
 	{
@@ -45,13 +45,24 @@ class mhi_site_Model extends ORM
 		$mhi_site->site_active = $a['site_active'];
 		$mhi_site->site_dateadd = date('Y-m-d H:i:s', time());
 		$mhi_site->save();
-		
+
 		$result = ORM::factory('mhi_site')->where('site_domain',$a['site_domain'])->find_all();
 		$id = 0;
 		foreach($result as $res){
 			$id = $res->id;
 		}
-		
+
 		return $id;
+	}
+
+	// Get sites, user_id returns all of that users sites
+	static function get_user_sites($user_id=FALSE)
+	{
+		$result = ORM::factory('mhi_site')->where('user_id',$user_id)->find_all();
+
+		$sites = array();
+		foreach($result as $res) $sites[] = $res;
+
+		return $sites;
 	}
 }

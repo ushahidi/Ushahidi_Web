@@ -18,11 +18,11 @@
 class mhi_user_Model extends ORM
 {
 	protected $table_name = 'mhi_users';
-	
+
 	protected $primary_key = 'id';
-	
+
 	protected $primary_val = 'email';
-	
+
 	// $a should be an assoc array including email, firstname, lastname and password (plain text)
 	static function save_user($a)
 	{
@@ -31,23 +31,49 @@ class mhi_user_Model extends ORM
 		if($count != 0){
 			throw new Kohana_User_Exception('DB Entry Error', "Email address for MHI user already exists. Pole sana.");
 		}
-		
+
 		$salt = Kohana::config('auth.salt_pattern');
-		
+
 		$mhi_user = ORM::factory('mhi_user');
 		$mhi_user->firstname = $a['firstname'];
 		$mhi_user->lastname = $a['lastname'];
 		$mhi_user->email = $a['email'];
 		$mhi_user->password = sha1($a['password'].$salt);
-		//$mhi_user->password = Auth::instance()->hash_password($a['password']);
 		$mhi_user->save();
-		
+
+		// Log the new user in so they will be authenticated after creation
+        $this->login($a['email'],sha1($a['password'].$salt));
+
 		$result = ORM::factory('mhi_user')->where('email',$a['email'])->find_all();
 		$id = 0;
-		foreach($result as $res){
-			$id = $res->id;
-		}
-		
+		foreach($result as $res) $id = $res->id;
 		return $id;
+	}
+
+	// This function is for logging in MHI users, NOT Ushahidi admin users!
+	static function login($username,$password)
+	{
+		$salt = Kohana::config('auth.salt_pattern');
+		$password = sha1($password.$salt);
+		$result = ORM::factory('mhi_user')->where('email',$username)->where('password',$password)->find_all();
+		$id = FALSE;
+		foreach($result as $res) $id = $res->id;
+		$session = Session::instance();
+		$session->set('mhi_user_id',$id);
+		return $id;
+	}
+
+	// No BS. Doesn't take any arguments.
+	static function logout()
+	{
+		return Session::instance()->delete('mhi_user_id');
+	}
+
+	// Get user details
+	static function get($user_id)
+	{
+		$result = ORM::factory('mhi_user')->where('id',$user_id)->find_all();
+		$details = FALSE;
+		foreach($result as $res) return $res;
 	}
 }

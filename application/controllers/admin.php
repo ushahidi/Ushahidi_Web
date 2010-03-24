@@ -98,14 +98,6 @@ class Admin_Controller extends Template_Controller
 			'apilogs' => Kohana::lang('ui_admin.api_logs'),
 		);
 
-		if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '') {
-        	//Start from scratch on admin tabs since most are irrelevant
-        	$tabs = array(
-				'mhi' => Kohana::lang('ui_admin.mhi'),
-				'stats' => Kohana::lang('ui_admin.stats'),
-			);
-        }
-
         // Generate sub navigation list (in default layout, sits on right side.
         // Key = Page (/admin/???), Val = Tab Name
         $secondary_tabs = array();
@@ -120,6 +112,16 @@ class Admin_Controller extends Template_Controller
         		'manage' => Kohana::lang('ui_admin.manage'),
         		'users' => Kohana::lang('ui_admin.users')
         	);
+        }
+
+        // Change tabs for MHI
+        if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '') {
+        	//Start from scratch on admin tabs since most are irrelevant
+        	$tabs = array(
+				'mhi' => Kohana::lang('ui_admin.mhi'),
+				'stats' => Kohana::lang('ui_admin.stats'),
+			);
+			$secondary_tabs = array();
         }
 
         $this->template->tabs = $tabs;

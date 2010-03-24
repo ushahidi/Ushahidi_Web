@@ -1,23 +1,23 @@
 <?php
 /**
  * In the beginning there was a MySQL database... Used primarily for MHI
- * 
+ *
  * @package    Distance
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
  * @license    http://www.ushahidi.com/license.html
  */
 class DBGenesis_Core {
-	
+
 	function dbgenesis() {
-		
+
 	}
-	
+
 	public static function current_db() {
 		$result = mysql_query('SELECT DATABASE() as db_name;');
 		return mysql_result($result,0,'db_name');
 	}
-	
+
 	public static function db_exists($db_name) {
 		$query = 'SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = \''.mysql_escape_string($db_name).'\'';
 		$result = mysql_query($query);
@@ -33,20 +33,20 @@ class DBGenesis_Core {
 		$result = mysql_query($query);
 		return true;
 	}
-	
+
 	// user is assoc array (username, name, password, email)
 	// settings is assoc array (site_name, site_tagline)
 	public static function populate_db($db_name,$user,$settings) {
-	
+
 		$mhi_db = Kohana::config('database.default');
 		$table_prefix = $mhi_db['table_prefix'];
 		$mhi_db_name = $mhi_db['connection']['database'];
-		
+
 		// Switch to new DB for a moment
 		mysql_query('USE '.$db_name);
-		
+
 		$db_schema = file_get_contents('sql/ushahidi.sql');
-		
+
 		// If a table prefix is specified, add it to sql
 		if ($table_prefix) {
 			$find = array(
@@ -63,7 +63,7 @@ class DBGenesis_Core {
 				);
 			$db_schema = str_replace($find, $replace, $db_schema);
 		}
-		
+
 		/**
 		 * split by ; to get the sql statement for creating individual
 		 * tables.
@@ -72,7 +72,7 @@ class DBGenesis_Core {
 		foreach($tables as $query) {
 			$result = mysql_query($query);
 		}
-		
+
 		// Set up admin user on new site
 		$usr = ORM::factory('user','1');
 		$usr->username = $user['username'];
@@ -80,7 +80,7 @@ class DBGenesis_Core {
 		$usr->password = $user['password'];
 		$usr->email = $user['email'];
 		$usr->save();
-		
+
 		// Save site settings (name, tagline, etc)
 		$setgs = new Settings_Model(1);
 		$setgs->site_name = $settings['site_name'];
@@ -88,11 +88,13 @@ class DBGenesis_Core {
 		$setgs->api_google = Kohana::config('settings.api_google');
 		$setgs->date_modify = date("Y-m-d H:i:s",time());
 		$setgs->save();
-		
+
+		// Set up stats here.
+
 		// Switch back to the appropriate DB
 		mysql_query('USE '.$mhi_db_name);
-		
+
 		return true;
 	}
-		
+
 }
