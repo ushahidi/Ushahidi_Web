@@ -142,6 +142,50 @@ class MHI_Controller extends Template_Controller {
 
 		$this->template->content->user = $mhi_user->get($mhi_user_id);
 
+		$form = array(
+			'username' => '',
+			'password' => '',
+			);
+
+		$form_error = FALSE;
+		$errors = FALSE;
+
+		// Set up the validation object
+
+		$_POST = Validation::factory($_POST)
+			->pre_filter('trim')
+			->add_rules('firstname', 'required')
+			->add_rules('lastname', 'required')
+			->add_rules('email', 'required')
+			->add_rules('password', 'required');
+
+		if ($_POST->validate())
+		{
+			$mhi_user = new Mhi_User_Model;
+
+			$postdata_array = $_POST->safe_array();
+
+			$update = $mhi_user->update($mhi_user_id,array(
+				'firstname'=>$postdata_array['firstname'],
+				'lastname'=>$postdata_array['lastname'],
+				'email'=>$postdata_array['email'],
+				'password'=>$postdata_array['password']
+			));
+
+			// If update worked, go back to manage page
+
+			if($update != FALSE)
+			{
+				url::redirect('mhi/manage');
+			}else{
+				$errors = array('Something went wrong with form submission. Please try again.');
+				$form_error = TRUE;
+			}
+		}
+
+		$this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+
 	}
 
 	public function logout()
@@ -158,7 +202,7 @@ class MHI_Controller extends Template_Controller {
 		$this->template->content->site_name = Kohana::config('settings.site_name');
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
-		$session = Session::instance;
+		$session = Session::instance();
 		$this->template->content->logged_in = $session->get('mhi_user_id');
 	}
 
@@ -177,7 +221,7 @@ class MHI_Controller extends Template_Controller {
 
 			$post->pre_filter('trim');
 
-			$session = Session::instance;
+			$session = Session::instance();
 			$mhi_user_id = $session->get('mhi_user_id');
 
 			// These rules are only required if we aren't already logged in

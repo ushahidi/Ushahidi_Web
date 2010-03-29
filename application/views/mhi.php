@@ -18,12 +18,10 @@
 
 	<table>
 	<form method="POST" name="frm_login" style="line-height: 100%; margin-top: 0; margin-bottom: 0">
+
 		<?php
 		if ($form_error) {
-		//if(TRUE) {
 		?>
-
-
         <tr>
           	<td align="left" class="login_error">
 			<?php
@@ -35,6 +33,7 @@
 			</td>
         </tr>
 		<?php } ?>
+
         <tr>
           <td><strong><?php echo Kohana::lang('ui_main.username');?>:</strong><br />
           <input type="text" name="username" id="username" class="login_text" /></td>

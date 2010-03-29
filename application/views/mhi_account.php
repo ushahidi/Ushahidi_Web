@@ -19,6 +19,22 @@
 	<h2 class="step-1">Your Account Details</h2>
 
 	<table><tbody>
+
+		<?php
+		if ($form_error) {
+		?>
+        <tr>
+          	<td align="left" class="error" colspan="2">
+			<?php
+			foreach ($errors as $error_item => $error_description)
+			{
+				echo '&#8226; '.$error_description.'<br />';
+			}
+			?>
+			</td>
+        </tr>
+		<?php } ?>
+
 	    <tr>
 	      <td><label for="firstname">First name</label></td>
 	      <td><input type="text" size="24" name="firstname" maxlength="42" id="firstname" value="<?php echo $user->firstname; ?>" />
@@ -40,7 +56,7 @@
 	      <span>Use 4 to 32 characters.</span></td>
 	    </tr>
 	    <tr>
-	      <td><label for="confirm_password">Confirm Password</label></td>
+	      <td><label for="signup_confirm_password">Confirm Password</label></td>
 	      <td><input type="password" size="24" name="confirm_password" maxlength="42" id="confirm_password"/></td>
 	    </tr>
 	</tbody></table>
@@ -48,4 +64,5 @@
 	<p>
 		<input class="button" type="submit" value="Update Account" />
 	</p>
+
 <?php print form::close(); ?>
