@@ -30,6 +30,10 @@ class MHI_Controller extends Template_Controller {
 
 		$this->template->header->site_name = Kohana::config('settings.site_name');
 
+		// Initialize JS variables. js_files is an array of ex: html::script('media/js/jquery.validate.min');
+		$this->template->header->js = '';
+		$this->template->header->js_files = array();
+
 		// If we aren't at the top level MHI site or MHI isn't enabled, don't allow access to any of this jazz
 
 		if (Kohana::config('config.enable_mhi') == FALSE OR Kohana::config('settings.subdomain') != '')
@@ -38,8 +42,10 @@ class MHI_Controller extends Template_Controller {
 
 	public function index()
 	{
-		$this->template->header->this_page = 'mhi';
+		$this->template->header->this_body = 'mhi-home';
 		$this->template->content = new View('mhi');
+		$this->template->header->js = new View('mhi_js');
+		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
 
 		$session = Session::instance();
 		$mhi_user_id = $session->get('mhi_user_id');
@@ -115,13 +121,20 @@ class MHI_Controller extends Template_Controller {
 		if ($mhi_user_id == FALSE)
 			url::redirect('/');
 
-		$this->template->header->this_page = 'mhi';
+		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi_manage');
 
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
 		$mhi_site = new Mhi_Site_Model;
 		$this->template->content->sites = $mhi_site->get_user_sites($mhi_user_id);
+	}
+
+	public function about()
+	{
+		$this->template->header->this_body = 'mhi-about';
+		$this->template->content = new View('mhi_about');
+		$this->template->header->js = new View('mhi_about_js');
 	}
 
 	public function account()
@@ -133,8 +146,9 @@ class MHI_Controller extends Template_Controller {
 		if ($mhi_user_id == FALSE)
 			url::redirect('/');
 
-		$this->template->header->this_page = 'mhi';
+		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi_account');
+		$this->template->header->js = new View('mhi_account_js');
 
 		$mhi_user = new Mhi_User_Model;
 
@@ -197,8 +211,11 @@ class MHI_Controller extends Template_Controller {
 
 	public function signup()
 	{
-		$this->template->header->this_page = 'mhi';
+		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi_signup');
+		$this->template->header->js = new View('mhi_signup_js');
+		$this->template->header->js_files = array(html::script('media/js/mhi/initialize', true));
+
 		$this->template->content->site_name = Kohana::config('settings.site_name');
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
@@ -208,7 +225,7 @@ class MHI_Controller extends Template_Controller {
 
 	public function create()
 	{
-		$this->template->header->this_page = 'mhi';
+		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi_create');
 
 		// Process Form

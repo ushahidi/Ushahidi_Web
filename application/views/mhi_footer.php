@@ -13,10 +13,6 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
-</div></div>
-<div class="twocol-right">
-        	<p>this will contain additional contextual information if needed.</p>
-        </div>
-    </div>
+<div style="clear:both;"></div>
 </body>
 </html>
