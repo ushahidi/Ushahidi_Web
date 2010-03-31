@@ -22,7 +22,7 @@ Author Email: caleb@ushahidi.com
 			-webkit-border-top-left-radius: 4px 4px;
 			-webkit-border-top-right-radius: 4px 4px; }
 			
-	.shadow { -moz-box-shadow:0 2px 2px rgba(0, 0, 0, 0.25); -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 3px 3px; }
+	.box-shadow { -moz-box-shadow:0 2px 2px rgba(0, 0, 0, 0.25); -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 3px 3px; }
 
 	
 

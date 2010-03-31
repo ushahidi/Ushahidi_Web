@@ -49,9 +49,13 @@
                 <li><a class="contact.html" href="#">Contact Us</a></li>
             </ul>
             <div id="login-box">
-            	<p>Have an account?<a class="sign-in rounded" href="#">Sign In </a></p>
+            	<!-- Displayed when NOT logged in -->
+                <p>Have an account?<a class="sign-in rounded" href="#">Sign In </a></p>
+                
+                <!-- Displayed when logged in -->
+                <!-- <p>You are logged in.<a class="sign-in rounded" href="#">Log Out </a></p> -->
             </div>
-            <div id="login-form" class="rounded shadow">
+            <div id="login-form" class="rounded box-shadow">
             	<form method="POST" name="frm_login" style="line-height: 100%; margin-top: 0; margin-bottom: 0">
                 	<p class="error">
 					<?php
