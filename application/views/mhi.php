@@ -12,11 +12,45 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
-?>
+?>    
+<div class="twocol-left">
+	<div class="intro-slideshow">
+    	<p class="slide">
+        	<img src="<?php echo url::base(); ?>media/img/mhi/info_0-intro.jpg" />
+        </p>
+        <p class="slide">
+        	<img src="<?php echo url::base(); ?>media/img/mhi/info_01-intro.jpg" />
+        </p>
+        <p class="slide">
+        	<img src="<?php echo url::base(); ?>media/img/mhi/info_02-intro.jpg" />
+        </p>
+       
+        <p class="slide">
+        	<img src="<?php echo url::base(); ?>media/img/mhi/info_6-example.jpg" />
+            <a href="#">Ushahidi-Haiti</a> was used to crowdsource and visualize crisis information after the earthquake. <a class="cycle-Resume" href="#">Replay animation</a>.
+        </p>
+    </div>
+</div>
+<div class="twocol-right">
+	<h2 class="title-lead-in">Use Ushahidi to CROWDSOURCE and VISUALIZE information.</h2>
+    <p class="sub-title">Nothing to install, minimum configuration.</p>
+    <p><a class="button btn_sign-up" href="<?php echo url::base()."mhi/signup" ?>">Sign Up Now!</a></p>
+    
+    <div class="footer-links">
+    	<ul>
+            <li class="first"><a href="<?php echo url::base() ?>mhi/about">About</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li class="regular">Copyright &copy; <?php echo date('Y'); ?> Ushahidi</li>
+        </ul>
+    </div>
+</div>
+</div>
 
-	<p>Hi. MHI is cool. If you also want to be cool and you don't already have an MHI account, <a href="<?php echo url::base() . "mhi/signup" ?>">SIGN UP HERE</a>. Otherwise, use the form below to sign in.</p>
 
-	<table>
+
+
+
+<table style="clear:both;">
 	<form method="POST" name="frm_login" style="line-height: 100%; margin-top: 0; margin-bottom: 0">
 
 		<?php
@@ -47,3 +81,4 @@
         </tr>
     </form>
     </table>
+
