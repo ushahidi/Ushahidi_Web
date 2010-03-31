@@ -57,7 +57,7 @@
             			<?php
             		}else{
             			?>
-            			<p>Have an account?<a class="sign-in rounded" href="#">Sign In </a></p>
+            			<p>Have an account?<a id="btn_sign-in" class="sign-in rounded" href="#">Sign In </a></p>
             			<?php
             		}
             	?>

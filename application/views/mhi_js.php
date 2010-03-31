@@ -23,7 +23,7 @@ $(function(){
 		$(".intro-slideshow").cycle({ delay:3000, speed:1000, timeout:2000, autostop:3 })
 	});
     
-    $('.sign-in').toggle(function(){
+    $('#btn_sign-in').toggle(function(){
         //show the dagum form	
         $("#login-form").show()
         //add the active class to sign-in link
