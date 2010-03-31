@@ -48,6 +48,38 @@
                 <li><a href="<?php echo url::base() ?>mhi/about"<?php if($this_body == 'about') { ?> class="active" <?php } ?>>About</a></li>
                 <li><a class="contact.html" href="#">Contact Us</a></li>
             </ul>
+            <div id="login-box">
+            	<p>Have an account?<a class="sign-in rounded" href="#">Sign In </a></p>
+            </div>
+            <div id="login-form" class="rounded shadow">
+            	<form method="POST" name="frm_login" style="line-height: 100%; margin-top: 0; margin-bottom: 0">
+                	<p class="error">
+					<?php
+                        if ($form_error) {
+                            
+                            foreach ($errors as $error_item => $error_description)
+                            {
+                                print (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
+                            }
+                        } 
+                     ?>
+                	</p>
+                	<p>
+                    	<label for="username"><?php echo Kohana::lang('ui_main.username');?></label>
+                    	<input name="username" class="text rounded" id="username" type="text" title="username" value="" />
+                   	</p>
+                    <p>
+                    	<label for="password"><?php echo Kohana::lang('ui_main.password');?></label>
+                    	<input name="password" class="text rounded" id="password" type="password" title="password" value="" />
+                   	</p>
+                    <p>
+                    	<input id="submit" name="submit" class="btn_sign-in rounded" type="submit" value="Sign in" />
+                    </p>
+                    <p class="forgot-password">
+                    	<a href="#">Forgot Password?</a>
+                    </p>
+                </form>
+            </div>
         </div>
     </div>
 	<div id="wrapper">

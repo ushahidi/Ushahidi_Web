@@ -38,15 +38,7 @@ class MHI_Controller extends Template_Controller {
 
 		if (Kohana::config('config.enable_mhi') == FALSE OR Kohana::config('settings.subdomain') != '')
 			throw new Kohana_User_Exception('MHI Access Error', "MHI disabled for this site.");
-	}
-
-	public function index()
-	{
-		$this->template->header->this_body = 'mhi-home';
-		$this->template->content = new View('mhi');
-		$this->template->header->js = new View('mhi_js');
-		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
-
+			
 		$session = Session::instance();
 		$mhi_user_id = $session->get('mhi_user_id');
 
@@ -106,9 +98,19 @@ class MHI_Controller extends Template_Controller {
 			}
 		}
 
-		$this->template->content->errors = $errors;
-		$this->template->content->form = $form;
-		$this->template->content->form_error = $form_error;
+		$this->template->header->errors = $errors;
+		$this->template->header->form = $form;
+		$this->template->header->form_error = $form_error;
+	}
+
+	public function index()
+	{
+		$this->template->header->this_body = 'mhi-home';
+		$this->template->content = new View('mhi');
+		$this->template->header->js = new View('mhi_js');
+		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
+
+		
 	}
 
 	public function manage()
@@ -196,9 +198,10 @@ class MHI_Controller extends Template_Controller {
 				$form_error = TRUE;
 			}
 		}
-
-		$this->template->content->errors = $errors;
-		$this->template->content->form_error = $form_error;
+		$this->template->header->form_error = $form_error;
+		$this->template->header->errors = $errors;
+		//$this->template->content->errors = $errors;
+		//$this->template->content->form_error = $form_error;
 
 	}
 
