@@ -41,9 +41,12 @@ class MHI_Controller extends Template_Controller {
 			throw new Kohana_User_Exception('MHI Access Error', "MHI disabled for this site.");
 
 		// Login Form variables
+
+		$session = Session::instance();
 		$this->template->header->errors = '';
 		$this->template->header->form = '';
 		$this->template->header->form_error = '';
+		$this->template->header->mhi_user_id = $session->get('mhi_user_id');
 
 	}
 
