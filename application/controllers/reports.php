@@ -129,93 +129,31 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->category_title = ( $category->loaded ) ?
 			$category->category_title : "";
 
-		// BEGIN CHART CREATION
-		//   Note: The reason this code block is so long is because protochart
-		//         doesn't seem to handle bar charts in time mode so well. The
-		//         bars show up as skinny lines because it uses the timestamp
-		//         to determine location on the graph, which doesn't give the
-		//         bar much wiggle room in just a few hundred pixels.
 
-		// Create protochart
-		$this->template->header->protochart_enabled = TRUE;
+		// Collect report stats
 
-		$report_chart = new protochart;
+		// Total Reports
 
-		// FIXME: Perhaps instead of grabbing the report stats again, we can
-		//        get what we need from above so we can cut down on database
-		//        calls. It will take playing with the incident model to get
-		//        all of the data we need, though.
+		$total_reports = Incident_Model::get_total_reports(TRUE);
 
-		// Report Data
-		$data = Stats_Model::get_report_stats(true);
+		// Average Reports Per Day
 
-		// Grab category data
-		$cats = Category_Model::categories();
-
-		$highest_count = 1;
-		$report_data = array();
-		$tick_string_array = array();
-		foreach($data['category_counts'] as $category_id => $count_array) {
-			// Does this category exist locally any more?
-			if (isset($cats[$category_id]))
-			{
-				$category_name = $cats[$category_id]['category_title'];
-				$colors[$category_name] = $cats[$category_id]['category_color'];
-				$i = 1;
-				foreach($count_array as $time => $count){
-
-					$report_data[$category_name][$i] = $count;
-
-					// The highest count will determine the number of ticks on the y-axis
-					if ($count > $highest_count) {
-						$highest_count = $count;
-					}
-
-					// This statement sets us up so we can convert the key to a date
-					if (!isset($tick_represents[$i])) {
-						$tick_represents[$i] = $time;
-						// Save name
-						$tick_string_array[$i] = date('M d',$time);
-					}
-
-					$i++;
-				}
-			}
-		}
-		$highest_count += 1;
-
-		// This javascript function will take the integer index and convert it to a readable date
-		$tickFormatter = "function (val, axis)
-						{
-							switch(val){";
-		foreach($tick_string_array as $i => $date_string){
-			$tickFormatter .= "case $i:
-									return '$date_string';";
-		}
-		$tickFormatter .= "default:
-									return '';
-							}
-							return 'sup';
-						  }";
-
-		$options = array(
-			'bars'=>array('show'=>'true'),
-			'xaxis'=>array('min'=>0,'max'=>(count($tick_string_array)+1),'tickFormatter'=>$tickFormatter),
-			'yaxis'=>array('tickSize'=>1,'max'=>$highest_count,'tickDecimals'=>0),
-			'legend'=>array('show'=>'true','noColumns'=>3),
-			'grid'=>array('drawXAxis'=>'false')
-			);
-
-		if (count($report_data) == 0)
+		$data = Stats_Model::get_report_stats(TRUE,TRUE);
+		$counts_by_day = array();
+		foreach($data['category_counts'] as $timestamp => $array_counts)
 		{
-			// Don't show a chart if there's no data
-			$this->template->content->report_chart = '';
-		}else{
-			// Show chart
-			$width = 900;
-			$height = 100;
-			$this->template->content->report_chart = $report_chart->chart('reports',$report_data,$options,$colors,$width,$height);
+			$counts_by_day[$timestamp] = array_sum($array_counts);
 		}
+		$avg_reports_per_day = round((array_sum($counts_by_day) / count($counts_by_day)), 2);
+
+		// Percent Verified
+
+		$total_verified = Incident_Model::get_total_reports_by_verified(true);
+		$percent_verified = round((($total_verified / $total_reports) * 100),2).'%';
+
+		$this->template->content->total_reports = $total_reports;
+		$this->template->content->avg_reports_per_day = $avg_reports_per_day;
+		$this->template->content->percent_verified = $percent_verified;
 	}
 
 	/**

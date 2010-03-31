@@ -42,6 +42,38 @@ class Incident_Model extends ORM
 		return $categories;
 	}
 
+	/*
+	* get the total number of reports
+	* @param approved - Only count approved reports if true
+	*/
+	public static function get_total_reports($approved=false)
+	{
+		if($approved)
+		{
+			$count = ORM::factory('incident')->where('incident_active', '1')->count_all();
+		}else{
+			$count = ORM::factory('incident')->count_all();
+		}
+
+		return $count;
+	}
+
+	/*
+	* get the total number of verified or unverified reports
+	* @param verified - Only count verified reports if true, unverified if false
+	*/
+	public static function get_total_reports_by_verified($verified=false)
+	{
+		if($verified)
+		{
+			$count = ORM::factory('incident')->where('incident_verified', '1')->count_all();
+		}else{
+			$count = ORM::factory('incident')->where('incident_verified', '0')->count_all();
+		}
+
+		return $count;
+	}
+
 	private static function category_graph_text($sql, $category)
 	{
 		$db = new Database();
@@ -62,7 +94,7 @@ class Incident_Model extends ORM
 	{
 		// Table Prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
-		
+
 		// get graph data
 		// could not use DB query builder. It does not support parentheses yet
 		$db = new Database();
