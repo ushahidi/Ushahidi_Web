@@ -31,6 +31,7 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->site_name = Kohana::config('settings.site_name');
 
 		// Initialize JS variables. js_files is an array of ex: html::script('media/js/jquery.validate.min');
+
 		$this->template->header->js = '';
 		$this->template->header->js_files = array();
 
@@ -38,7 +39,21 @@ class MHI_Controller extends Template_Controller {
 
 		if (Kohana::config('config.enable_mhi') == FALSE OR Kohana::config('settings.subdomain') != '')
 			throw new Kohana_User_Exception('MHI Access Error', "MHI disabled for this site.");
-			
+
+		// Login Form variables
+		$this->template->header->errors = '';
+		$this->template->header->form = '';
+		$this->template->header->form_error = '';
+
+	}
+
+	public function index()
+	{
+		$this->template->header->this_body = 'mhi-home';
+		$this->template->content = new View('mhi');
+		$this->template->header->js = new View('mhi_js');
+		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
+
 		$session = Session::instance();
 		$mhi_user_id = $session->get('mhi_user_id');
 
@@ -101,16 +116,6 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->errors = $errors;
 		$this->template->header->form = $form;
 		$this->template->header->form_error = $form_error;
-	}
-
-	public function index()
-	{
-		$this->template->header->this_body = 'mhi-home';
-		$this->template->content = new View('mhi');
-		$this->template->header->js = new View('mhi_js');
-		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
-
-		
 	}
 
 	public function manage()
@@ -190,7 +195,7 @@ class MHI_Controller extends Template_Controller {
 
 			// If update worked, go back to manage page
 
-			if($update != FALSE)
+			if ($update != FALSE)
 			{
 				url::redirect('mhi/manage');
 			}else{
@@ -324,7 +329,7 @@ class MHI_Controller extends Template_Controller {
 					'user_id'=>$user_id,
 					'site_domain'=>$post->signup_subdomain,
 					'site_privacy'=>1,	// TODO: 1 is the hardcoded default for now. Needs to be changed?
-					'site_active'=>1    // TODO: 1 is the default. This needs to be a config item since this essentially "auto-approves" sites
+					'site_active'=>1	// TODO: 1 is the default. This needs to be a config item since this essentially "auto-approves" sites
 				));
 
 				// Set up database and save details to MHI DB
