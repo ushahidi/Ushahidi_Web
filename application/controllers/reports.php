@@ -4,50 +4,49 @@
  * This controller is used to list/ view and edit reports
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
+ * @author	   Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module	   Reports Controller  
+ * @module	   Reports Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Reports_Controller extends Main_Controller {
 
 	var $logged_in;
-	
+
 	function __construct()
 	{
 		parent::__construct();
 
 		// Javascript Header
+
 		$this->template->header->validator_enabled = TRUE;
-		
-		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
-		$footerjs = $myPacker->pack();
-		$this->template->header->js = $footerjs;
-		
+
+		$this->template->header->js = '';
+
 		// Is the Admin Logged In?
+
 		$this->logged_in = Auth::instance()->logged_in()
-		     ? TRUE
-		     : FALSE;
+			 ? TRUE
+			 : FALSE;
 	}
 
 	/**
 	 * Displays all reports.
 	 */
-	public function index($cluster_id = 0) 
+	public function index($cluster_id = 0)
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
-		
+
 		// Filter By Category
 		$category_filter = ( isset($_GET['c']) && !empty($_GET['c']) )
 			? "category_id = ".$_GET['c'] : " 1=1 ";
-		
+
 		// Pagination
 		$pagination = new Pagination(array(
 				'query_string' => 'page',
@@ -207,22 +206,18 @@ class Reports_Controller extends Main_Controller {
 			'grid'=>array('drawXAxis'=>'false')
 			);
 
-		if(count($report_data) == 0) {
+		if (count($report_data) == 0)
+		{
 			// Don't show a chart if there's no data
 			$this->template->content->report_chart = '';
-		} else {
+		}else{
 			// Show chart
 			$width = 900;
 			$height = 100;
 			$this->template->content->report_chart = $report_chart->chart('reports',$report_data,$options,$colors,$width,$height);
 		}
+	}
 
-		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
-		$footerjs = $myPacker->pack();
-		$this->template->header->js .= $footerjs;
-	} 
-	
 	/**
 	 * Submits a new report.
 	 */
@@ -552,19 +547,12 @@ class Reports_Controller extends Main_Controller {
 		{
 			$this->template->header->js->latitude = Kohana::config('settings.default_lat');
 			$this->template->header->js->longitude = Kohana::config('settings.default_lon');
-		}
-		else
-		{
+		}else{
 			$this->template->header->js->latitude = $form['latitude'];
 			$this->template->header->js->longitude = $form['longitude'];
 		}
-
-		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($footerjs , 'Normal', false, false);
-		$footerjs = $myPacker->pack();
-		$this->template->header->js .= $footerjs;
 	}
-	
+
 	 /**
 	 * Displays a report.
 	 * @param boolean $id If id is supplied, a report with that id will be
@@ -817,30 +805,28 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->js->longitude = $incident->location->longitude;
 		$this->template->header->js->incident_photos = $incident_photo;
 
-		$this->template->header->js .= $footerjs;
-		// Pack the javascript using the javascriptpacker helper
-		$myPacker = new javascriptpacker($this->template->header->js, 'Normal', false, false);
-		$this->template->header->js = $myPacker->pack();
+		// Initialize custom field array
 
-		// initialize custom field array
 		$form_field_names = $this->_get_custom_form_fields($id,$incident->form_id,false);
 
 		// Retrieve Custom Form Fields Structure
+
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
 
-
 		// Forms
+
 		$this->template->content->form = $form;
 		$this->template->content->form_field_names = $form_field_names;
 		$this->template->content->captcha = $captcha;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
-		
+
 		// If the Admin is Logged in - Allow for an edit link
+
 		$this->template->content->logged_in = $this->logged_in;
 	}
-	
+
 	/**
 	 * Report Thanks Page
 	 */
