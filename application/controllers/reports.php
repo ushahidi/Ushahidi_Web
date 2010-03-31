@@ -138,13 +138,12 @@ class Reports_Controller extends Main_Controller {
 
 		// Average Reports Per Day
 
-		$data = Stats_Model::get_report_stats(TRUE,TRUE);
-		$counts_by_day = array();
-		foreach($data['category_counts'] as $timestamp => $array_counts)
-		{
-			$counts_by_day[$timestamp] = array_sum($array_counts);
-		}
-		$avg_reports_per_day = round((array_sum($counts_by_day) / count($counts_by_day)), 2);
+		$oldest_timestamp = Incident_Model::get_oldest_report_timestamp();
+
+		// Round the number of days up to the nearest full day
+
+		$days_since = ceil((time() - $oldest_timestamp) / 86400);
+		$avg_reports_per_day = round(($total_reports / $days_since),2);
 
 		// Percent Verified
 

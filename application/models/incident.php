@@ -74,6 +74,25 @@ class Incident_Model extends ORM
 		return $count;
 	}
 
+	/*
+	* get the total number of verified or unverified reports
+	* @param approved - Oldest approved report timestamp if true (oldest overall if false)
+	*/
+	public static function get_oldest_report_timestamp($approved=true)
+	{
+		if($approved)
+		{
+			$result = ORM::factory('incident')->where('incident_active', '1')->orderby(array('incident_date'=>'ASC'))->find_all(1,0);
+		}else{
+			$result = ORM::factory('incident')->where('incident_active', '0')->orderby(array('incident_date'=>'ASC'))->find_all(1,0);
+		}
+
+		foreach($result as $report)
+		{
+			return strtotime($report->incident_date);
+		}
+	}
+
 	private static function category_graph_text($sql, $category)
 	{
 		$db = new Database();
