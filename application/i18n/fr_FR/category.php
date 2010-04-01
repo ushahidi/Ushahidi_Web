@@ -4,18 +4,18 @@ $lang = array
 (
 	'category_title' => array
 	(
-		'required'		=> 'The title field is required.',
-		'length'		=> 'The title field must be at least 3 and no more 80 characters long.',
+		'required'		=> 'Veuillez indiquer un titre.',
+		'length'		=> 'Le titre doit comporter entre 3 et 80 caractères.',
 	),
 	
 	'category_description' => array
 	(
-		'required'		=> 'The description field is required.'
+		'required'		=> 'Veuillez indiquer une description.'
 	),	
 	
 	'category_color' => array
 	(
-		'required'		=> 'The color field is required.',
-		'length'		=> 'The color field must be 6 characters long.',
+		'required'		=> 'Veuillez spécifier une couleur.',
+		'length'		=> 'Le champ «couleur» doit comporter 6 caractères.',
 	)
 );

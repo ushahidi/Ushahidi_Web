@@ -4,26 +4,26 @@ $lang = array
 (
 	'comment_author' => array
 	(
-		'required'=> 'The name field is required.',
-		'length'		=> 'The name field must be at least 3 characters long.',
+		'required'=> 'Veuillez indiquer un nom.',
+		'length'		=> 'Le nom doit comporter au moins 3 caractères.',
 	),
 	
 	'comment_description' => array
 	(
-		'required'		=> 'The comments field is required.'
+		'required'		=> 'Veuillez remplir le champ «commentaire».'
 	),
 	
 	'comment_email' => array
 	(
-		'required'		=> 'The Email field is required if the checkbox is checked.',
-		'email'		  => 'The Email field does not appear to contain a valid email address?',
-		'length'	  => 'The Email field must be at least 4 and no more 64 characters long.'
+		'required'		=> 'Une adresse email doit être spécifiée si la case est cochée.',
+		'email'		  => 'Adresse email invalide.',
+		'length'	  => 'L\'adresse email doit comporter entre 4 et 64 caractères.'
 	),
 	
 	'captcha' => array
 	(
-		'required' => 'Please enter the security code', 
-		'default' => 'Please enter a valid security code'
+		'required' => 'Indiquez le code de sécurité',
+		'default' => 'Indiquez un code de sécurité valide'
 	)
 	
 );
