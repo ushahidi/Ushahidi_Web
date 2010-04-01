@@ -6,18 +6,18 @@
 
 $lang = array
 (
-	'settings_site_name' => 'This is the name of the site that appears at the top of the main site.',
-	'settings_site_tagline' => 'In a few words, explain what this site is about.',
-	'settings_site_email' => 'This is the email address that will receive email reports and messages from the contact form.',
-	'settings_alert_email' => 'This is the email address that will be used to send email alerts.',
-	'settings_locale' => 'Sets the language that will be used in the site.',
-	'settings_display_contact' => 'Turn the Contact Tab on or off on the main site.',
+	'settings_site_name' => 'Nom de votre site (visite en haut de la page principale).',
+	'settings_site_tagline' => 'Décrivez votre site en quelques mots.',
+	'settings_site_email' => 'Adresse email à laquelle les rapports et les messages seront envoyés.',
+	'settings_alert_email' => 'Adresse à laquelle seront envoyées les alertes email.',
+	'settings_locale' => 'La langue utilisée sur votre site.',
+	'settings_display_contact' => 'Visibilité de l\'onglet Contact.',
 	
 	// Admin Profile
-	'profile_username' => 'Your username cannot be changed',
-	'profile_name' => 'Your full name',
-	'profile_email' => 'Your email address',
-	'profile_password' => 'Your password. Leave this field blank if you wish to keep your current password',
-	'profile_notify' => 'Selecting YES lets you get alerts via email when new reports or comments are posted on your website'
+	'profile_username' => 'Vous ne pouvez pas changer votre nom d\'utilisateur.',
+	'profile_name' => 'Votre nom',
+	'profile_email' => 'Votre adresse email',
+	'profile_password' => 'Votre mot de passe. Laisser vide si vous ne désirez pas le changer.',
+	'profile_notify' => 'Choisissez OUI pour recevoir une alerte par email quand un nouveau rapport ou un commentaire est envoyé sur votre site.'
 );
 ?>
