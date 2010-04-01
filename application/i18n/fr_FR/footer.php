@@ -2,6 +2,6 @@
 
 $lang = array
 (
-	'cURL_not_installed' => 'php5-curl is not installed on this system'
+	'cURL_not_installed' => 'php5-curl n\'est pas installé sur ce système'
 );
 ?>

@@ -2,39 +2,36 @@
 	$lang = array(
 		'organization_name' => array
 		(
-			'required'		=> 'The organization name field is required.',
-			'length'		=> 'The organization name field must be at least 3 
-				and no more 70 characters long.',
-			'standard_text' => 'The username field contains disallowed 
-				characters.',
+			'required'		=> 'Veuillez spécifier un nom d\'organisation.',
+			'length'		=> 'Le nom d\'organisation doit comporter entre 3 et 70 caractères.',
+			'standard_text' => 'Le nom d\'utilisateur contient des caractères invalides.',
 		),
 		
 		'organization_website' => array
 		(
-			'required' => 'Please provide the organization\'s website.',
-			'url' => 'Please enter a valid URL. Eg. http://www.ushahidi.com'
+			'required' => 'Veuillez entrer l\'adresse web de l'organisation.',
+			'url' => 'Veuillez entrer un URL valide. Ex: http://www.ushahidi.com'
 		),
 		
 		'organization_description' => array
 		(
-			'required' => 'Please provide a little description about the 
-				organization.'
+			'required' => 'Veuillez entrer une courte description de l\'organisation.'
 		),
 		
 		'organization_email' => array
 		(
-			'email'		  => 'The organization email field does not appear to contain a valid email address?',
-			'length'	  => 'The organization email field must be at least 4 and no more 100 characters long.'
+			'email'		  => 'L\'adresse email de l\'organisation est invalide.',
+			'length'	  => 'L\'adresse email de l\'organisation doit comporter entre 4 et 100 caractères.'
 		),
 		
 		'organization_phone1' => array
 		(
-			'length'		=> 'The organization phone 1 field must be at least 3 and no more 50 characters long.'
+			'length'		=> 'Le premier numéro de téléphone de l\'organisation doit comporter entre 3 et 50 caractères.'
 		),
 		
 		'organization_phone2' => array
 		(
-			'length'		=> 'The organization phone 1 field must be at least 3 and no more 50 characters long.'
+			'length'		=> 'Le second numéro de téléphone de l\'organisation doit comporter entre 3 et 50 caractères.'
 		)
 	);
 

@@ -12,36 +12,36 @@ $lang = array
 	/*** Administrator Email Notifications ***/
 	
 	// Message Footer
-	'admin_footer'			=> 'This message was sent from your website',
+	'admin_footer'			=> 'Ce message a été envoyé de votre site web',
 	
 	// Administrator Login
-	'admin_login_url'		=> 'Administrator Login',
+	'admin_login_url'		=> 'Login Administrateur',
 	
 	// Notify Administrators that a new report has been submitted
 	'admin_new_report' => array
 	(
-		'subject'		=> 'New Report',
-		'message'		=> 'A new report has been submitted to your website.'
+		'subject'		=> 'Nouveau rapport',
+		'message'		=> 'Un nouveau rapport vient d\'être envoyé sur votre site.'
 	),
 	
 	// Notify Administrators that a new comment has been submitted
 	'admin_new_comment' => array
 	(
-		'subject'		=> 'New Comment',
-		'message'		=> 'A new comment has been submitted to your website in response to:'
+		'subject'		=> 'Nouveau commentaire',
+		'message'		=> 'Un nouveau commentaire vient d\'être envoyé sur votre site, en réponse à:'
 	),
 	
 	// Notify Administrators that a new sms has been received
 	'admin_new_sms' => array
 	(
-		'subject'		=> 'New Text Message',
-		'message'		=> 'A new text message has been submitted to your website.'
+		'subject'		=> 'Nouveau SMS',
+		'message'		=> 'Un nouvel SMS vient d\'être envoyé sur votre site.'
 	),
 	
 	// Notify Administrators that a new email has been received
 	'admin_new_email' => array
 	(
-		'subject'		=> 'New Email Message',
-		'message'		=> 'A new email message has been submitted to your website.'
+		'subject'		=> 'Nouvel email',
+		'message'		=> 'Un nouvel email vient d\'être envoyé sur votre site.'
 	)
 );
