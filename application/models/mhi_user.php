@@ -44,7 +44,7 @@ class mhi_user_Model extends ORM
 
 		// Log the new user in so they will be authenticated after creation
 
-		$this->login($a['email'],sha1($a['password'].$salt));
+		Mhi_User_Model::login($a['email'],sha1($a['password'].$salt));
 
 		$result = ORM::factory('mhi_user')->where('email',$a['email'])->find_all();
 		$id = 0;
