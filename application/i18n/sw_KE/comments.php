@@ -4,26 +4,26 @@ $lang = array
 (
 	'comment_author' => array
 	(
-		'required'		=> 'Jina linahitajika.',
-		'length'        => 'Jina lazima liwe na dhati tatu au zaidi.'
+		'required'		=> 'Sehemu ya jina inahitajika.',
+		'length'        => 'Sehemu ya jina lazima iwe herufi 3 au zaidi.'
 	),
 	
 	'comment_description' => array
 	(
-		'required'        => 'Maoni ni lazima yawe.'
+		'required'        => 'Sehemu ya fikira inahitajika.'
 	),
 	
 	'comment_email' => array
 	(
-		'required'    => 'Anwani ya barua pepe lazima iwepo kama umepiga tiki kitiki.',
-		'email'		  => 'Anwani ya barua pepe yaonekana sio halali?',
-		'length'	  => 'Uga wa barua pepe lazima uwe na vibambo 4 na visizidi 64.'
+		'required'    => 'Anwani ya barua pepe inahitajika kama kisanduku tiki chake kimewekwa tiki.',
+		'email'		  => 'Anwani ya barua pepe inaonekana si sahihi',
+		'length'	  => 'Anwani ya barua pepe lazima iwe baina ya herufi 4 na 64.'
 	),
 	
 	'captcha' => array
 	(
-		'required' => 'Tafadhali weka code ya usalama', 
-		'default' => 'Tafadhali weka codi ya usalama halali'
+		'required' => 'Tafadhali andika ishara ya ulinzi', 
+		'default' => 'Tafadhali andika ishara ya ulinzi iliyo sahihi'
 	)
 	
 );

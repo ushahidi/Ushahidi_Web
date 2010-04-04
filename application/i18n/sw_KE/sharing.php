@@ -1,34 +1,48 @@
 <?php
 
+/**
+ * SHARING INTERFACE INTERNATIONALIZATION
+ *
+ * en_US
+ */
+
 $lang = array
 (
-	'sharing_url' => array
+    'contact' => 'Mawasiliano',	
+    'date' => 'Tarehe ingress',
+    'date_added' => 'Tarehe iliengezwa',
+    'last_access' => 'Tarehe ya mwisho kushikwa',
+    'sent_info' => 'Maarifa inayofuata itatumwa pamoja na ombi hili',
+    'sharing_key' => 'Key',
+    'sharing_url' => array
 	(
-		'required'	=> 'The site url is required.',
-		'url'		=> 'The site url field does not appear to contain a valid URL?',
-		'valid'	=> 'The site url does not appear to be a valid Ushahidi instance, or is not Sharing enabled.',
-		'exists'	=> 'The site url already exists',
+		'required'	=> 'Sehemu ya anwani ya tovuti inahitajika.',
+		'url'		=> 'Sehemu ya anwani ya tovuti inaonekana si sahihi',
+		'valid'	=> 'Sehemu ya anwani ya tovuti inaonekana si anwani ya Ushahidi, ama ushirikiano haujawezeshwa.',
+		'exists'	=> 'Anwani ya tovuti ilishasajilishwa',
+		'edit'	=> 'Huezi badilisha anwani ya tovuti. Shirikiano hili linaweza futwa na nyengine kutengenezwa.'
 	),
 	
 	'sharing_email' => array
 	(
-		'required'	=> 'Your site email is required. Please go to Settings to add an email address.',
+		'email'		  => 'Sehemu ya anwani ya barua pepe inaonekaka si sahihi',
+		'required'	=> 'Sehemu ya anwani ya barua pepe inahitajika. Enda kwa vipimo vya tovuti uiengeze.',
 	),	
 	
 	'sharing_color' => array
 	(
-		'required'		=> 'The color field is required.',
-		'length'		=> 'The color field must be 6 characters long.',
+		'required'		=> 'Sehemu ya rangi inahitajika.',
+		'length'		=> 'Sehemu ya rangi lazima iwe na herufi 6.',
 	),
 	
 	'sharing_limits' => array
 	(
-		'required'		=> 'The Access limits field is required.',
-		'between'		=> 'The Access limits does not appear to be valid?',
+		'required'		=> 'Sehemu ya kikomo cha matumizi inahitajika.',
+		'between'		=> 'Sehemu ya kikomo cha matumizi inaonekana si sahihi',
 	),
 
 	'sharing_type' => array
 	(
-		'between'		=> 'The Share Type does not appear to be valid?',
+		'between'		=> 'Sehemu ya aina ya ushirikiano inaonekana si sahihi',
 	)	
 );

@@ -4,33 +4,33 @@ $lang = array
 (
 	'parent_id' => array
 	(
-		'required'		=> 'The parent category field is required.',
-		'numeric'		=> 'The parent category field must be numeric.',
-		'exists'		=> 'The parent category does not exist.',
-		'same'			=> 'The category and the parent category cannot be the same.',
+		'required'		=> 'Jamii mzazi inatakikana.',
+		'numeric'		=> 'Jamii mzazi lazma iwe nambari.',
+		'exists'		=> 'Jamii mzazi uliotupatia haipo.',
+		'same'			=> 'Jamii pamoja na jamii mzazi haziezi kuwa sawa.',
 	),
 	
 	'category_title' => array
 	(
-		'required'		=> 'The title field is required.',
-		'length'		=> 'The title field must be at least 3 and no more 80 characters long.',
+		'required'		=> 'Jina la jamii linahitajika.',
+		'length'		=> 'Jina la jamii lazima liwe baina ya herifi 3 na 80.',
 	),
 	
 	'category_description' => array
 	(
-		'required'		=> 'The description field is required.'
+		'required'		=> 'Sehemu ya elezo inahitajika.'
 	),	
 	
 	'category_color' => array
 	(
-		'required'		=> 'The color field is required.',
-		'length'		=> 'The color field must be 6 characters long.',
+		'required'		=> 'Sehemu ya rangi inahitajika.',
+		'length'		=> 'Sehemu ya rangi lazma iwe herufi 6.',
 	),
 	
 	'category_image' => array
 	(
-		'valid'		=> 'The image field does not appear to contain a valid file',
-		'type'		=> 'The image field does not appear to contain a valid image. The only accepted formats are .JPG, .PNG and .GIF.',
-		'size'		=> 'Please ensure that image uploads sizes are limited to 50KB.'
+		'valid'		=> 'Sehemu ya picha inaonekana haina faili ilio sawa',
+		'type'		=> 'Sehemu ya picha inaonekana haina faili ilio sawa. Picha zinazokubalika ni za .JPG, .PNG na .GIF.',
+		'size'		=> 'Tafadhali hakikisha faili ya picha haipiti 50KB.'
 	),	
 );

@@ -3,15 +3,17 @@ $lang = array
 (
 	'feed_name' => array
 	(
-		'required' => 'Please enter the name of the feed.',
-		'length'   => 'The feed name field must be at least 3 and no more 
-			70 characters long.'
+		'required' => 'Tafadhali andika jina la tawanyiko.',
+		'length'   => 'Jina la tawanyiko lazima liwe baina ya herufi 3 na 70.'
 	),
 	
 	'feed_url' => array
 	(
-		'url' => 'Please enter a valid URL. Eg. http://www.ushahidi.com'
+		'required' => 'Tafadhali andika anwani la tawanyiko.',
+		'url' => 'Tafadhali andikwa anwani iliyo sahihi. Kwa mfano: http://www.ushahidi.com'
 	),
-	'source' => 'SOURCE',
+	'source' => 'ASILI',
+	'title' => 'JINA',
+	'date' => 'TAREHE',
 );
 ?>

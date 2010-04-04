@@ -4,32 +4,32 @@ $lang = array
 (
 	'contact_name' => array
 	(
-		'required'		=> 'Jina linahitajika.',
-		'length'        => 'Jina lazima liwe na dhati tatu au zaidi.'
+		'required'		=> 'Sehemu ya jina inahitajika.',
+		'length'        => 'Sehemu ya jina lazima iwe herufi 3 au zaidi.'
 	),
 
 	'contact_subject' => array
 	(
-		'required'		=> 'The subject field is required.',
-		'length'        => 'The subject field must be at least 3 characters long.'
+		'required'		=> 'Sehemu ya maudhui inahitajika.',
+		'length'        => 'Sehemu ya maudhui lazima iwe herufi 3 au zaidi.'
 	),
 	
 	'contact_message' => array
 	(
-		'required'        => 'The message field is required.'
+		'required'        => 'Sehemu ya ujumbe inahitajika.'
 	),
 	
 	'contact_email' => array
 	(
-		'required'    => 'Anwani ya barua pepe lazima iwepo kama umepiga tiki kitiki.',
-		'email'		  => 'Anwani ya barua pepe yaonekana sio halali?',
-		'length'	  => 'Uga wa barua pepe lazima uwe na vibambo 4 na visizidi 64.'
+		'required'    => 'Sehemu ya anwani ya barua pepe inahitajika kama sanduku tiki yake imewekwa tiki.',
+		'email'		  => 'Anwani ya barua pepe inaonekana si sahihi',
+		'length'	  => 'Anwani ya barua pepe lazima iwe baina ya herufi 4 na 64.'
 	),
 	
 	'captcha' => array
 	(
-		'required' => 'Tafadhali weka code ya usalama', 
-		'default' => 'Tafadhali weka codi ya usalama halali'
+		'required' => 'Tafadhali andika ishara ya ulinzi', 
+		'default' => 'Tafadhali andika ishara ya ulinzi iliyo sahihi'
 	)
 	
 );

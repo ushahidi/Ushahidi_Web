@@ -3,61 +3,59 @@
 	(
 		'form_title' => array
 		(
-			'required' => 'Please enter the name of the form.',
-			'length'   => 'The form name field must be at least 3 and no more 
-				100 characters long.'
+			'required' => 'Tafadhali andika jina la fomu.',
+			'length'   => 'Jina la fomu lazima liwa baina ya herufi 3 na 100.'
 		),
 		
 		'form_description' => array
 		(
+			'required' => 'Tafadhali andika elezo la fomu.'
 		),
 		
 		'form_id' => array
 		(
-			'default' => 'The default form cannot be deleted.',
-			'required' => 'Please select which form to add this field to.',
-			'numeric' => 'Please select which form to add this field to.'
+			'default' => 'Fomu ya awali haiezi kufutwa.',
+			'required' => 'Tafadhali chagua fomu ambayo itaongezewa uga.',
+			'numeric' => 'Tafadhali chagua fomu ambayo itaongezewa uga.'
 		),
 		
 		'field_type' => array
 		(
-			'required' => 'Please select a Field Type.',
-			'numeric' => 'Please select a valid Field Type.'
+			'required' => 'Tafadhali chagua aina ya uga.',
+			'numeric' => 'Tafadhali chagua aina ya uga.'
 		),
 		
 		'field_name' => array
 		(
-			'required' => 'Please enter Field Name.',
-			'length'   => 'The Field Name must be at least 3 and no more 
-				100 characters long.'
+			'required' => 'Tafadhali andika jina la uga.',
+			'length'   => 'Jina la uga lazima liwe baina ya hefuri 3 na 100.'
 		),
 		
 		'field_default' => array
 		(
-			'length'   => 'The Field Name must be at least 3 and no more 
-				200 characters long.'
+			'length'   => 'Jina la uga lazima liwe baina ya heufi 3 na 100.'
 		),
 		
 		'field_required' => array
 		(
-			'required' => 'Please select Yes or No for Field Required',
-			'between'   => 'You have entered an invalid value for Field Required'
+			'required' => 'Tafadhali chagua Ndio au La kwa sehemu ya kuhitajika kwa uga',
+			'between'   => 'Tafadhali chagua neno la sahihi kwa sehemu ya kuhitajika kwa uga'
 		),
 		
 		'field_width' => array
 		(
-			'between' => 'Please enter a value 0 to 300 for the Field Width'
+			'between' => 'Tafadhali andika baina ya 0 na 300 kwenye sehemu ya upana wa uga'
 		),
 		
 		'field_height' => array
 		(
-			'between' => 'Please enter a value 0 to 50 for the Field Height'
+			'between' => 'Tafadhali andika baina ya 0 na 50 kwenye sehemu ya urefu wa uga'
 		),
 		
 		'field_isdate' => array
 		(
-			'required' => 'Please select Yes or No for the Date Field',
-			'between'   => 'You have entered an invalid value for Date Field'
+			'required' => 'Tafadhali chagua Ndio au La kwa sehemu ya uga ya tarehe',
+			'between'   => 'Umeandika kimakosa kwenye sehemu ya tarehe ya uga ya tarehe'
 		)
 	);
 
