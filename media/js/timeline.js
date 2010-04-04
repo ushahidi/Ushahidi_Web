@@ -34,7 +34,9 @@
 			    color: "#999999"
 			}
 		};
-		
+
+		this.markerOptions = null;
+
 		this.graphData = [];
 		this.playCount = 0;
 		this.addMarkers = null;
@@ -53,7 +55,7 @@
 				this.categoryId = gCategoryId;
 			}
 		}
-	    
+		
 		this.plot = function() {
 			gStartTime    = this.startTime;
 			gEndTime      = this.endTime;
@@ -201,7 +203,8 @@
 			gAddMarkers = false;  // prevent server side clustering
 			playTimeline = $.timeline({graphData: {color: plotData.color, 
 			                                       data: data.slice(0,this.playCount+1)},
-			            categoryId: this.categoryId,                           
+			            markerOptions: this.markerOptions,
+						categoryId: this.categoryId,
 			            startTime: gStartTime, //new Date(plotData.data[0][0]),
 			            endTime: gEndTime //new Date(plotData.data[plotData.data.length-1][0])
 			           });
@@ -236,12 +239,15 @@
 		                                      to: playEndDateTime.getTime()},
 									color: "#222222"}
 							   ]}},
+					           markerOptions: this.markerOptions,
 							   categoryId: this.categoryId,
 							   startTime: gStartTime,
 							   endTime: gEndTime}
 
 			gAddMarkers = false; // prevent server side clustering
 			playTimeline = $.timeline(playOptions);
+			var style = playTimeline.markerStyle();
+			var markers = gTimelineMarkers;
 			playTimeline.plot();
 			playTimeline.plotMarkers(style, markers, gPlayEndDate);
 			this.playCount++;
@@ -267,12 +273,14 @@
 			//endDate = $.monthEndTime(endDate * 1000) / 1000;
 			endDate = $.dayEndDateTime(endDate * 1000) / 1000;
 
+/*
 			// plot markers using a custom addMarkers method if available
 			if (this.addMarkers && !this.playCount > 0) {
 				this.addMarkers(gCategoryId, '', endDate, gMap.getZoom(), gMap.getCenter(), gMediaType);
 				return this;
 			}
-			
+*/
+
 			var sliderfilter = new OpenLayers.Rule({
 				filter: new OpenLayers.Filter.Comparison(
 				{
@@ -284,9 +292,332 @@
 			});
 			style.rules = [];
 			style.addRules(sliderfilter);					
-			markers.styleMap.styles["default"] = style; 
+			markers.styleMap.styles["default"] = style;
 			markers.redraw();
 			return this;
+		};
+
+		// Get url params for creating markers layer
+		this.markerUrlParams = function() {
+			// Add parameters
+			params = [];
+			if (typeof(this.categoryId) != 'undefined' && this.categoryId.length > 0){
+				params.push('c=' + this.categoryId);
+			}
+			if (typeof(startDate) != 'undefined'){
+				params.push('s=' + this.startTime.getTime()/1000);
+			}
+			if (typeof(endDate) != 'undefined'){
+				params.push('e=' + this.endTime.getTime()/1000);
+			}
+			if (typeof(mediaType) != 'undefined'){
+				//params.push('m=' + mediaType);
+			}
+			return params;
+		};
+
+
+		/*
+		 * Style
+		 */
+		this.markerStyle = function() {
+			// Set Feature Styles
+			style = new OpenLayers.Style({
+				'externalGraphic': "${icon}",
+				'graphicTitle': "${cluster_count}",
+				pointRadius: "${radius}",
+				fillColor: "${color}",
+				fillOpacity: "${opacity}",
+				strokeColor: "${color}",
+				strokeWidth: "${strokeWidth}",
+				strokeOpacity: "0.3",
+				label:"${cluster_count}",
+				labelAlign: "${labelalign}",
+				fontWeight: "${fontweight}",
+				fontColor: "#ffffff",
+				fontSize: "${fontsize}"
+			},
+			{
+				context:
+				{
+					count: function(feature)
+					{
+						if (feature.attributes.count < 2) {
+							return 2 * markerRadius;
+						} else if (feature.attributes.count == 2) {
+							return (Math.min(feature.attributes.count, 7) + 1) *
+								(markerRadius * 0.8);
+						} else {
+							return (Math.min(feature.attributes.count, 7) + 1) *
+								(markerRadius * 0.6);
+						}
+					},
+					fontsize: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "9px";
+						} else {
+							feature_count = feature.attributes.count;
+							if (feature_count > 1000)
+							{
+								return "20px";
+							}
+							else if (feature_count > 500)
+							{
+								return "18px";
+							}
+							else if (feature_count > 100)
+							{
+								return "14px";
+							}
+							else if (feature_count > 10)
+							{
+								return "12px";
+							}
+							else if (feature_count >= 2)
+							{
+								return "10px";
+							}
+							else
+							{
+								return "";
+							}
+						}
+					},
+					fontweight: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "normal";
+						} else {
+							return "bold";
+						}
+					},
+					radius: function(feature)
+					{
+						feature_count = feature.attributes.count;
+						if (feature_count > 10000) {
+							return markerRadius * 17;
+						}
+						else if (feature_count > 5000)
+						{
+							return markerRadius * 10;
+						}
+						else if (feature_count > 1000)
+						{
+							return markerRadius * 8;
+						}
+						else if (feature_count > 500)
+						{
+							return markerRadius * 7;
+						}
+						else if (feature_count > 100)
+						{
+							return markerRadius * 6;
+						}
+						else if (feature_count > 10)
+						{
+							return markerRadius * 5;
+						}
+						else if (feature_count >= 2)
+						{
+							return markerRadius * 3;
+						}
+						else
+						{
+							return markerRadius * 2;
+						}
+					},
+					strokeWidth: function(feature)
+					{
+						feature_count = feature.attributes.count;
+						if (feature_count > 10000) {
+							return 45;
+						}
+						else if (feature_count > 5000)
+						{
+							return 30;
+						}
+						else if (feature_count > 1000)
+						{
+							return 22;
+						}
+						else if (feature_count > 100)
+						{
+							return 15;
+						}
+						else if (feature_count > 10)
+						{
+							return 10;
+						}
+						else if (feature_count >= 2)
+						{
+							return 5;
+						}
+						else
+						{
+							return 1;
+						}
+					},
+					color: function(feature)
+					{
+						return "#" + feature.attributes.color;
+					},
+					icon: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return baseUrl + "media/uploads/" + feature_icon;
+						} else {
+							return "";
+						}
+					},
+					cluster_count: function(feature)
+					{
+						if (feature.attributes.count > 1)
+						{
+							feature_icon = feature.attributes.icon;
+							if (feature_icon!="") {
+								return "> " + feature.attributes.count;
+							} else {
+								return feature.attributes.count;
+							}
+						}
+						else
+						{
+							return "";
+						}
+					},
+					opacity: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "1";
+						} else {
+							return markerOpacity;
+						}
+					},
+					labelalign: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!="") {
+							return "lb";
+						} else {
+							return "c";
+						}
+					}
+				}
+			});
+			return style;
+		};
+
+		/*
+		Create the Markers Layer
+		*/
+		this.addMarkers = function(catID,startDate,endDate, currZoom, currCenter,
+			mediaType, thisLayerID, thisLayerType, thisLayerUrl, thisLayerColor){
+
+			timelineJsonUrl = 'json';
+
+			var	protocolUrl = baseUrl + timelineJsonUrl + "/"; // Default Json
+			var thisLayer = "Reports"; // Default Layer Name
+			var protocolFormat = OpenLayers.Format.GeoJSON;
+			newlayer = false;
+
+			if (thisLayer && thisLayerType == 'shares')
+			{
+				protocolUrl = baseUrl + timelineJsonUrl + "/share/"+thisLayer+"/";
+				thisLayer = "Share_"+thisLayerID;
+				newlayer = true;
+			} else if (thisLayer && thisLayerType == 'layers') {
+				protocolUrl = baseUrl + timelineJsonUrl + "/layer/"+thisLayerID+"/";
+				thisLayer = "Layer_"+thisLayerID;
+
+				var protocolFormat = OpenLayers.Format.KML;
+				//var protocolFormat = OpenLayers.Format.GeoJSON;
+
+				newlayer = true;
+			}
+
+			var myPoint;
+			if ( currZoom && currCenter &&
+				typeof(currZoom) != 'undefined' && typeof(currCenter) != 'undefined')
+			{
+				myPoint = currCenter;
+				myZoom = currZoom;
+			}else{
+				// create a lat/lon object
+				myPoint = new OpenLayers.LonLat(longitude, latitude);
+				myPoint.transform(proj_4326, map.getProjectionObject());
+
+				// display the map centered on a latitude and longitude (Google zoom levels)
+				myZoom = defaultZoom;
+			}
+
+			if (mapLoad == 0) {
+				map.setCenter(myPoint, myZoom, false, false);
+			}
+
+			mapLoad = mapLoad+1;
+
+			// Get Viewport Boundaries
+			extent = map.getExtent().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+			southwest = extent.bottom+','+extent.left;
+			northeast = extent.top+','+extent.right;
+
+			var style = this.markerStyle();
+
+			// Transform feature point coordinate to Spherical Mercator
+			preFeatureInsert = function(feature) {
+				var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
+				OpenLayers.Projection.transform(point, proj_4326, proj_900913);
+			};
+
+			// Does 'markers' already exist? If so, destroy it before creating new layer
+			markers = map.getLayersByName(thisLayer);
+			if (markers && markers.length > 0){
+				for (var i = 0; i < markers.length; i++) {
+					//markers[i].destroy();
+					//markers[i] = null;
+					map.removeLayer(markers[i]);
+				}
+			}
+
+			//markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?z='+ myZoom +'&sw='+ southwest +'&ne='+ northeast +'&' + params.join('&'),
+			markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?z=' +
+				      myZoom + '&' + this.markerUrlParams().join('&'),
+			{
+				preFeatureInsert:preFeatureInsert,
+				format: protocolFormat,
+				projection: proj_4326,
+				formatOptions: {
+					extractStyles: true,
+					extractAttributes: true
+				},
+				styleMap: new OpenLayers.StyleMap({
+					"default":style,
+					"select": style
+				})
+			});
+
+			map.addLayer(markers);
+
+			if (!newlayer || thisLayerID==8) {
+				selectControl = new OpenLayers.Control.SelectFeature(
+					markers
+				);
+
+				map.addControl(selectControl);
+				selectControl.activate();
+
+				markers.events.on({
+					"featureselected": onFeatureSelect,
+					"featureunselected": onFeatureUnselect
+				});
+			}
+
+			return markers;
 		};
 		
 		/*

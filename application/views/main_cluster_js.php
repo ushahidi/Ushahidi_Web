@@ -25,6 +25,19 @@
 		var default_json_url = "<?php echo $default_json_url ?>";
 		var json_url = default_json_url; // json_url used to switch to non-cluster for short timelines
 
+		var baseUrl = "<?php echo url::base(); ?>";
+		var longitude = <?php echo $longitude; ?>;
+		var latitude = <?php echo $latitude; ?>;
+		var defaultZoom = <?php echo $default_zoom; ?>;
+		var markerRadius = <?php echo $marker_radius; ?>;
+		var markerOpacity = "<?php echo $marker_opacity; ?>";
+
+		var gMarkerOptions = {baseUrl: baseUrl, longitude: longitude,
+		                     latitude: latitude, defaultZoom: defaultZoom,
+							 markerRadius: markerRadius,
+							 markerOpacity: markerOpacity,
+							 protocolFormat: OpenLayers.Format.GeoJSON};
+
 		jQuery(function() {
 			var map_layer;
 			markers = null;
@@ -281,6 +294,7 @@
 			});
 			
 			$('#playTimeline').click(function() {
+			    gTimelineMarkers = gTimeline.addMarkers(gCategoryId, gStartTime.getTime()/1000, $.dayEndDateTime(gEndTime.getTime()/1000), gMap.getZoom(), gMap.getCenter(), gMediaType);
 				gTimeline.playOrPause('raindrops');
 			});
 		});
@@ -293,18 +307,25 @@
 		function addMarkers(catID,startDate,endDate, currZoom, currCenter,
 			mediaType, thisLayerID, thisLayerType, thisLayerUrl, thisLayerColor){
 			
-			var	protocolUrl = "<?php echo url::base(); ?>" + json_url + "/"; // Default Json
+			var baseUrl = "<?php echo url::base(); ?>";
+			var longitude = <?php echo $longitude; ?>;
+			var latitude = <?php echo $latitude; ?>;
+			var defaultZoom = <?php echo $default_zoom; ?>;
+			var markerRadius = <?php echo $marker_radius; ?>;
+			var markerOpacity = "<?php echo $marker_opacity; ?>";
+			
+			var	protocolUrl = baseUrl + json_url + "/"; // Default Json
 			var thisLayer = "Reports"; // Default Layer Name
 			var protocolFormat = OpenLayers.Format.GeoJSON;
 			newlayer = false;
-			
+
 			if (thisLayer && thisLayerType == 'shares')
 			{				
-				protocolUrl = "<?php echo url::base(); ?>" + json_url + "/share/"+thisLayer+"/";
+				protocolUrl = baseUrl + json_url + "/share/"+thisLayer+"/";
 				thisLayer = "Share_"+thisLayerID;
 				newlayer = true;
 			} else if (thisLayer && thisLayerType == 'layers') {
-				protocolUrl = "<?php echo url::base(); ?>" + json_url + "/layer/"+thisLayerID+"/";
+				protocolUrl = baseUrl + json_url + "/layer/"+thisLayerID+"/";
 				thisLayer = "Layer_"+thisLayerID;
 				
 				var protocolFormat = OpenLayers.Format.KML;
@@ -321,11 +342,11 @@
 				myZoom = currZoom;				
 			}else{
 				// create a lat/lon object
-				myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+				myPoint = new OpenLayers.LonLat(longitude, latitude);
 				myPoint.transform(proj_4326, map.getProjectionObject());
 				
 				// display the map centered on a latitude and longitude (Google zoom levels)
-				myZoom = <?php echo $default_zoom; ?>;
+				myZoom = defaultZoom;
 			}
 			
 			if (mapLoad == 0) {
@@ -362,13 +383,13 @@
 					count: function(feature)
 					{
 						if (feature.attributes.count < 2) {
-							return 2 * <?php echo $marker_radius; ?>
+							return 2 * markerRadius;
 						} else if (feature.attributes.count == 2) {
 							return (Math.min(feature.attributes.count, 7) + 1) * 
-								(<?php echo $marker_radius; ?> * 0.8);
+								(markerRadius * 0.8);
 						} else {
 							return (Math.min(feature.attributes.count, 7) + 1) * 
-								(<?php echo $marker_radius; ?> * 0.6);
+								(markerRadius * 0.6);
 						}							
 					},
 					fontsize: function(feature)
@@ -417,35 +438,35 @@
 					{
 						feature_count = feature.attributes.count;
 						if (feature_count > 10000) {
-							return <?php echo $marker_radius; ?> * 17;
+							return markerRadius * 17;
 						}
 						else if (feature_count > 5000)
 						{
-							return <?php echo $marker_radius; ?> * 10;
+							return markerRadius * 10;
 						}
 						else if (feature_count > 1000)
 						{
-							return <?php echo $marker_radius; ?> * 8;
+							return markerRadius * 8;
 						}
 						else if (feature_count > 500)
 						{
-							return <?php echo $marker_radius; ?> * 7;
+							return markerRadius * 7;
 						}
 						else if (feature_count > 100)
 						{
-							return <?php echo $marker_radius; ?> * 6;
+							return markerRadius * 6;
 						}
 						else if (feature_count > 10)
 						{
-							return <?php echo $marker_radius; ?> * 5;
+							return markerRadius * 5;
 						}
 						else if (feature_count >= 2)
 						{
-							return <?php echo $marker_radius; ?> * 3;
+							return markerRadius * 3;
 						}
 						else
 						{
-							return <?php echo $marker_radius; ?> * 2;
+							return markerRadius * 2;
 						}
 					},
 					strokeWidth: function(feature)
@@ -487,7 +508,7 @@
 					{
 						feature_icon = feature.attributes.icon;
 						if (feature_icon!="") {
-							return "<?php echo url::base() . 'media/uploads/' ?>" + feature_icon;
+							return baseUrl + "media/uploads/" + feature_icon;
 						} else {
 							return "";
 						}
@@ -514,7 +535,7 @@
 						if (feature_icon!="") {
 							return "1";
 						} else {
-							return "<?php echo $marker_opacity; ?>";
+							return markerOpacity;
 						}
 					},
 					labelalign: function(feature)
@@ -525,7 +546,7 @@
 						} else {
 							return "c";
 						}
-					},					
+					}					
 				}
 			});
 			
@@ -591,6 +612,7 @@
 					"featureunselected": onFeatureUnselect
 				});
 			}
+			return [style,markers];
 		}
 		
 		gAddMarkers = addMarkers;
@@ -741,9 +763,10 @@
 				// monthly if period > 4 months
 			    graphData = allGraphData[0][currentCat];
 			}
-			
+
 			gTimeline = $.timeline({categoryId: currentCat, startTime: new Date(startDate * 1000), 
 			    endTime: new Date(endDate * 1000), mediaType: gMediaType,
+				markerOptions: gMarkerOptions,
 				graphData: graphData //allGraphData[0][currentCat], 
 				//url: "<?php echo url::base(); ?>json_url+'/timeline/'"
 			});
