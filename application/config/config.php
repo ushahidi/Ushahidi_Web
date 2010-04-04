@@ -4,7 +4,7 @@
  * then a full URL will be used, eg: http://localhost/ushahidi/. If it only includes
  * the path, and a site_protocol is specified, the domain will be auto-detected.
  */
-$config['site_domain'] = '/ushahidi/';
+$config['site_domain'] = '/Ushahidi_Web/';
 
 /**
  * Force a default protocol to be used by the site. If no site_protocol is
@@ -86,6 +86,14 @@ $config['display_errors'] = TRUE;
  * @see http://docs.kohanaphp.com/general/configuration
  */
 $config['render_stats'] = TRUE;
+
+/**
+ * Turn MHI on or off. This is an advanced feature that will drastically alter
+ * the way your instance works. Please read documentation before proceeding.
+ *
+ * @see [A URL not yet created]
+ */
+$config['enable_mhi'] = FALSE;
 
 /**
  * Filename prefixed used to determine extensions. For example, an

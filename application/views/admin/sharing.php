@@ -15,20 +15,20 @@
 ?>	
 		<div class="bg">
 			<h2><?php echo $title; ?> 
-				<a href="<?php echo url::base() . 'admin/settings/site' ?>">Site</a>
-				<a href="<?php echo url::base() . 'admin/settings' ?>">Map</a>
-				<a href="<?php echo url::base() . 'admin/settings/sms' ?>">SMS</a>
-				<a href="<?php echo url::base() . 'admin/settings/sharing' ?>" class="active">Sharing</a>
-				<a href="<?php echo url::base() . 'admin/settings/email' ?>">Email</a>
-				<a href="<?php echo url::base() . 'admin/settings/themes' ?>">Themes</a>
-			</h2>
+					<a href="<?php echo url::base() . 'admin/settings/site' . '">' . Kohana::lang('ui_main.site') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sharing' . '" class="active">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
+				</h2>
 			
 			<?php
 			if ($form_error) {
 			?>
 				<!-- red-box -->
 				<div class="red-box">
-					<h3>Error!</h3>
+					<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 					<ul>
 					<?php
 					foreach ($errors as $error_item => $error_description)
@@ -46,7 +46,7 @@
 			?>
 				<!-- green-box -->
 				<div class="green-box">
-					<h3>The Share Has Been <?php echo $form_action; ?>!</h3>
+					<h3><?php echo Kohana::lang('ui_main.share_has_been');?> <?php echo $form_action; ?>!</h3>
 				</div>
 			<?php
 			}
@@ -57,7 +57,7 @@
 				<!-- tabset -->
 				<a name="add"></a>
 				<ul class="tabset">
-					<li><a href="#" class="active">Add/Edit A Share</a></li>
+					<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?> <?php echo Kohana::lang('ui_main.share');?></a></li>
 				</ul>
 				<!-- tab -->
 				<div class="tab">
@@ -70,11 +70,11 @@
 					<input type="hidden" id="sharing_type" 
 						name="sharing_type" value="" />	
 					<div class="tab_form_item">
-						<strong>Site Url:</strong><br />
+						<strong><?php echo Kohana::lang('ui_main.site_url');?>:</strong><br />
 						<?php print form::input('sharing_url', 'http://', ' class="text long2"'); ?>
 					</div>
 					<div class="tab_form_item">
-						<strong>Color:</strong><br />
+						<strong><?php echo Kohana::lang('ui_main.color');?>:</strong><br />
 						<?php print form::input('sharing_color', '', ' class="text"'); ?>
 						<script type="text/javascript" charset="utf-8">
 							$(document).ready(function() {
@@ -96,7 +96,7 @@
 						</script>
 					</div>
 					<div class="tab_form_item">
-						<strong>Access Limits:</strong> (Sending)<br />
+						<strong><?php echo Kohana::lang('ui_main.access_imits');?>:</strong> (<?php echo Kohana::lang('ui_main.outgoing');?>)<br />
 						<?php print form::dropdown('sharing_limits', $sharing_limits_array, ''); ?>
 					</div>				
 					<div class="tab_form_item">
@@ -106,10 +106,10 @@
 					<div class="tab_form_item" id="sharing_loading"></div>
 					<div style="clear:both;"></div>
 					<div class="tab_form_item">
-						The following information will be sent with this request:
+						<?php echo Kohana::lang('sharing.sent_info');?>:
 						<div class="sharing_siteinfo">
-						Website: <span><?php echo url::base(); ?></span>, 
-						Site Email: <span><?php echo $site_email; ?></span>
+						<?php echo Kohana::lang('ui_main.site');?>: <span><?php echo url::base(); ?></span>, 
+						<?php echo Kohana::lang('ui_main.email');?>: <span><?php echo $site_email; ?></span>
 						</div>
 					</div>
 					<?php print form::close(); ?>			
@@ -121,9 +121,9 @@
 			<div class="tabs">
 				<!-- tabset -->
 				<ul class="tabset">
-					<li><a href="?status=0" <?php if ($status != 's' && $status !='r') echo "class=\"active\""; ?>>Show All</a></li>
-					<li><a href="?status=s" <?php if ($status == 's') echo "class=\"active\""; ?>>Sending To</a></li>
-					<li><a href="?status=r" <?php if ($status == 'r') echo "class=\"active\""; ?>>Receiving From</a></li>
+					<li><a href="?status=0" <?php if ($status != 's' && $status !='r') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.show_all');?></a></li>
+					<li><a href="?status=s" <?php if ($status == 's') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.sending_to');?></a></li>
+					<li><a href="?status=r" <?php if ($status == 'r') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.receive_from');?></a></li>
 				</ul>
 				<!-- tab -->
 				<div class="tab">
@@ -139,9 +139,9 @@
 						<thead>
 							<tr>
 								<th class="col-1">&nbsp;</th>
-								<th class="col-2">Organization</th>
+								<th class="col-2"><?php echo Kohana::lang('ui_main.organization');?></th>
 								<th class="col-3">&nbsp;</th>
-								<th class="col-4">Actions</th>
+								<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 							</tr>
 						</thead>
 						<tfoot>
@@ -158,7 +158,7 @@
 							?>
 								<tr>
 									<td colspan="4" class="col">
-										<h3>No Results To Display!</h3>
+										<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 									</td>
 								</tr>
 							<?php	
@@ -197,18 +197,18 @@
 												<p><?php echo html::anchor($sharing_url); ?></p>
 												<div class="sharing_dispinfo">
 													<ul class="info">
-														<li class="none-separator">Date Added: <strong><?php echo $sharing_date; ?></strong></li>
-														<li>Key: <strong><?php echo $sharing_key; ?></strong></li>
+														<li class="none-separator"><?php echo Kohana::lang('sharing.date_added');?>: <strong><?php echo $sharing_date; ?></strong></li>
+														<li><?php echo Kohana::lang('sharing.sharing_key');?>: <strong><?php echo $sharing_key; ?></strong></li>
 													</ul>
 													<ul class="info">
-														<li class="none-separator">Contact: <strong><?php echo html::mailto($sharing_email); ?></strong></li>
-														<li>Last Access: <strong><?php echo $sharing_dateaccess; ?></strong></li>
+														<li class="none-separator"><?php echo Kohana::lang('sharing.contact');?>: <strong><?php echo html::mailto($sharing_email); ?></strong></li>
+														<li><?php echo Kohana::lang('sharing.last_access');?>: <strong><?php echo $sharing_dateaccess; ?></strong></li>
 													</ul>
 													<?php if ($sharing_type == 2)
 													{
 														?>
 														<ul class="info">
-															<li class="none-separator">Access Limited To: <strong><?php echo $sharing_limits_array[$sharing_limits]; ?></strong></li>
+															<li class="none-separator"><?php echo Kohana::lang('ui_main.access_limits');?>: <strong><?php echo $sharing_limits_array[$sharing_limits]; ?></strong></li>
 														</ul>
 														<?php
 													}?>
@@ -218,9 +218,9 @@
 										<td><?php echo "<img src=\"".url::base()."swatch/?c=".$sharing_color."&w=30&h=30\">";?></td>
 										<td class="col-4">
 											<ul>
-												<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($share_id)); ?>','<?php echo(rawurlencode($sharing_url)); ?>','<?php echo(rawurlencode($sharing_color)); ?>','<?php echo(rawurlencode($sharing_limits)); ?>','<?php echo(rawurlencode($sharing_type)); ?>')">Edit</a></li>
-												<li class="none-separator"><a href="javascript:sharingAction('v','ACTIVATE/DEACTIVATE','<?php echo(rawurlencode($share_id)); ?>')"<?php if ($sharing_active) echo " class=\"status_yes\"" ?>>Active</a></li>
-												<li><a href="javascript:sharingAction('d','DELETE','<?php echo(rawurlencode($share_id)); ?>')" class="del">Delete</a></li>
+												<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($share_id)); ?>','<?php echo(rawurlencode($sharing_url)); ?>','<?php echo(rawurlencode($sharing_color)); ?>','<?php echo(rawurlencode($sharing_limits)); ?>','<?php echo(rawurlencode($sharing_type)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+												<li class="none-separator"><a href="javascript:sharingAction('v','ACTIVATE/DEACTIVATE','<?php echo(rawurlencode($share_id)); ?>')"<?php if ($sharing_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.active');?></a></li>
+												<li><a href="javascript:sharingAction('d','DELETE','<?php echo(rawurlencode($share_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>
 										</td>
 									</tr>

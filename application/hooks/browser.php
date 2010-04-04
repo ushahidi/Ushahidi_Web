@@ -62,7 +62,8 @@ function detect_mobile_device()
 }
 
 // If Mobile Configure Mobile Settings
-if(detect_mobile_device())
+if(isset($_SERVER['HTTP_USER_AGENT'])
+ 	&& detect_mobile_device())
 {
 	Kohana::config_set('settings.mobile', TRUE);
 }

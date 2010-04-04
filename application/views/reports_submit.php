@@ -53,8 +53,8 @@
 									<?php print form::textarea('incident_description', $form['incident_description'], ' rows="10" class="textarea long" ') ?>
 								</div>
 								<div class="report_row" id="datetime_default">
-									<h4><a href="#" id="date_toggle" class="show-more">Modify Date</a>Date & Time: 
-										<?php echo "Today at <span id='current_time'>".$form['incident_hour']
+									<h4><a href="#" id="date_toggle" class="show-more"><?php echo Kohana::lang('ui_main.modify_date'); ?></a><?php echo Kohana::lang('ui_main.date_time'); ?>: 
+										<?php echo Kohana::lang('ui_main.today_at')." "."<span id='current_time'>".$form['incident_hour']
 											.":".$form['incident_minute']." ".$form['incident_ampm']."</span>"; ?></h4>
 								</div>
 								<div class="report_row hide" id="datetime_edit">
@@ -110,43 +110,16 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 									<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?></h4>
 									<div class="report_category" id="categories">
 										<?php
-										//format categories for 2 column display
-										$this_col = 1; // First column
-										$maxper_col = round($categories_total/2); // Maximum number of elements per column
-										$i = 1; // Element Count
-										foreach ($categories as $category => $category_extra)
-										{
-											$category_title = $category_extra[0];
-											$category_color = $category_extra[1];
-											if ($this_col == 1) 
-												echo "<ul>";
-											if (!empty($selected_categories) && in_array($category, $selected_categories))
-											{
-												$category_checked = TRUE;
-											}
-											else
-											{
-												$category_checked = FALSE;
-											}
-											echo "\n<li><label>";
-											echo form::checkbox('incident_category[]', $category, $category_checked, ' class="check-box"');
-											echo "$category_title";
-											echo "</label></li>";
-											if ($this_col == $maxper_col || $i == count($categories)) 
-												print "</ul>\n";
-											if ($this_col < $maxper_col)
-											{
-												$this_col++;
-											} 
-											else 
-											{
-												$this_col = 1;
-											}
-											$i++;
+										$selected_categories = array();
+                    if (!empty($form['incident_category']) && is_array($form['incident_category'])) {
+											$selected_categories = $form['incident_category'];
 										}
+										$columns = 2;
+										echo category::tree($categories, $selected_categories, 'incident_category', $columns);
 										?>
 									</div>
 								</div>
+								
 								<div id="custom_forms">
 									
                                     <?php
@@ -186,6 +159,7 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 									}
 									?>
                                 </div>
+
 								<div class="report_optional">
 									<h3><?php echo Kohana::lang('ui_main.reports_optional'); ?></h3>
 									<div class="report_row">
@@ -216,15 +190,15 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 								<div class="report_row">
 									<div id="divMap" class="report_map"></div>
 									<div class="report-find-location">
-										<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
-										<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="Find Location" class="btn_find" /></div>
+										<?php print form::input('location_find', '', 'title='.Kohana::lang('ui_main.location_example').' class="findtext"'); ?>
+										<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" /></div>
 										<div id="find_loading" class="report-find-loading"></div>
-										<div style="clear:both;" id="find_text">* If you can't find your location, please click on the map to pinpoint the correct location.</div>
+										<div style="clear:both;" id="find_text"><?php echo Kohana::lang('ui_main.pinpoint_location'); ?>.</div>
 									</div>
 								</div>
 								
 								<div class="report_row">
-									<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span class="example">Examples: Johannesburg, Corner City Market, 5th Street & 4th Avenue</span></h4>
+									<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span class="example"><?php echo Kohana::lang('ui_main.detailed_location_example'); ?></span></h4>
 									<?php print form::input('location_name', $form['location_name'], ' class="text long"'); ?>
 								</div>
 			

@@ -88,6 +88,14 @@ $config['display_errors'] = TRUE;
 $config['render_stats'] = TRUE;
 
 /**
+ * Turn MHI on or off. This is an advanced feature that will drastically alter
+ * the way your instance works. Please read documentation before proceeding.
+ *
+ * @see [A URL not yet created]
+ */
+$config['enable_mhi'] = FALSE;
+
+/**
  * Filename prefixed used to determine extensions. For example, an
  * extension to the Controller class would be named MY_Controller.php.
  */

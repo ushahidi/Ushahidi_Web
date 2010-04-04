@@ -97,6 +97,11 @@ a:hover{ text-decoration:none;}
 .top ul li a{
 	color:#ffa9a9;
 }
+.top span {
+	color:#C90000;
+	background-color:#FFE8E7;
+	padding:0 4px 0 4px;
+}
 /*-- info-nav --*/
 .info-nav {
 	margin:40px 7px 0 0;
@@ -930,6 +935,16 @@ a.new-cat:hover, a.show-messages:hover;{ text-decoration:none;}
 	color:#555;
 	font-size:11px;
 }
+/*Categories Tree*/
+.category ul ul { width: auto; float: none; }
+.category ul li.sub_category { padding-left: 47px; }
+.category ul li.sub_category_last { background-position: 16px -1766px; }
+.category ul li input.check-box { margin: 0 3px 0 0; }
+.category ul li.hover,
+.category ul li li:hover { background-color: #efefef; }
+ul.treeview li.lastCollapsable,
+ul.treeview li.lastExpandable { width:155px; }
+
 .check-box {
 	margin:0;
 	padding:0;

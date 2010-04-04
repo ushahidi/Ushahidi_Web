@@ -15,7 +15,7 @@
 ?>
 
 <div class="bg">
-	<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports/download">Download Reports</a><a href="<?php print url::base() ?>admin/reports">View Reports</a><a href="<?php print url::base() ?>admin/reports/edit">Create New Report</a></h2>
+	<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::base() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a><a href="<?php print url::base() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a></h2>
 	<!-- report-form -->
 	<div class="report-form">
 		<?php
@@ -23,7 +23,7 @@
 		?>
 			<!-- red-box -->
 			<div class="red-box">
-				<h3>Error!</h3>
+				<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 				<ul>
                 <?php
 				foreach ($errors as $error_item => $error_description)
@@ -38,25 +38,24 @@
 		?>
 		<!-- column -->
 		<div class="upload_container">
-		<p>With the form below, you can import incidents into the Ushahidi engine.</p>
-		<h3>Please note</h3>
+		<p><?php echo Kohana::lang('ui_main.upload_reports_detail_1');?>.</p>
+		<h3><?php echo Kohana::lang('ui_main.please_note');?></h3>
 		<ul>
-			<li>Reports must be upladed in CSV format.</li>
-			<li>When incident ID already exists in the database, the entry in the CSV file will be ignored.</li>
-			<li>It must contain at least Incident Title and Incident Date</li>
+			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_2');?>.</li>
+			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_3');?>.</li>
+			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4');?></li>
 		</ul>
 			<p>
-				A Sample CSV Report
+				<?php echo Kohana::lang('ui_main.upload_reports_detail_5');?>:
 				<p>
-					#,INCIDENT TITLE,INCIDENT DATE,LOCATION,DESCRIPTION,CATEGORY,APPROVED,VERIFIED<br />
-					"1","Suspected death in Nairobi","2009-05-15 01:06:00","Nairobi","Three cases have been confirmed in C. del Uruguay","DEATHS, CIVILIANS, ",YES,YES<br />
-					"2","Looting","2009-03-18 10:10:00","Accra","Looting happening everywhere","RIOTS, DEATHS, PROPERTY LOSS, ",YES,NO<br />
+					<?php echo Kohana::lang('ui_main.upload_reports_detail_6');?><br />
+					<?php echo Kohana::lang('ui_main.upload_reports_detail_7');?><br />
 					
 				</p>
 			</p>
 			<?php print form::open(NULL, array('id' => 'uploadForm', 'name' => 'uploadForm', 'enctype' => 'multipart/form-data')); ?>
-            <p><b>File to upload</b> <?php echo form::upload(array('name' => 'csvfile'), 'path/to/local/file'); ?></p>
-			<button type="submit">Upload</button>
+            <p><b><?php echo Kohana::lang('ui_main.upload_file');?></b> <?php echo form::upload(array('name' => 'csvfile'), 'path/to/local/file'); ?></p>
+			<button type="submit"><?php echo Kohana::lang('ui_main.upload');?></button>
 			<?php print form::close(); ?>
 		</div>
 	</div>

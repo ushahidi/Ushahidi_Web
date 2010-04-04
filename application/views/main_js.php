@@ -32,11 +32,11 @@
 			- Initialize Map
 			- Uses Spherical Mercator Projection
 			- Units in Metres instead of Degrees					
-			*/
 			
+			*/
 			var options = {
 				units: "m",
-				numZoomLevels: 16,
+				numZoomLevels: 4,
 				controls:[],
 				projection: proj_900913,
 				'displayProjection': proj_4326

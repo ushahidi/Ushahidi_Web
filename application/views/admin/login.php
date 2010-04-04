@@ -17,7 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>Ushahidi Admin</title>
+<title><?php echo Kohana::lang('ui_main.ushahidi_admin');?></title>
 <link href="<?php echo url::base() ?>media/css/admin/login.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -41,21 +41,21 @@
             </tr>
 			<?php } ?>
             <tr>
-              <td><strong>Username:</strong><br />
+              <td><strong><?php echo Kohana::lang('ui_main.username');?>:</strong><br />
               <input type="text" name="username" id="username" class="login_text" /></td>
             </tr>
             <tr>
-              <td><strong>Password:</strong><br />
+              <td><strong><?php echo Kohana::lang('ui_main.password');?>:</strong><br />
               <input name="password" type="password" class="login_text" id="password" size="20" /></td>
             </tr>
             <tr>
-              <td><input type="checkbox" id="remember" name="remember" value="1" checked="checked" />Stay logged in on this computer?</td>
+              <td><input type="checkbox" id="remember" name="remember" value="1" checked="checked" /><?php echo Kohana::lang('ui_main.password_save');?></td>
             </tr>
             <tr>
               <td><input type="submit" id="submit" name="submit" value="Log In" class="login_btn" /></td>
             </tr>
             <tr>
-            <td><a href="<?php echo url::base()?>login/resetpassword"> <?php echo Kohana::lang('auth.forgot_password');?></a></td>
+            <td><a href="<?php echo url::base()?>login/resetpassword"> <?php echo Kohana::lang('ui_main.forgot_password');?></a></td>
             </tr>
         </form>
       </table>

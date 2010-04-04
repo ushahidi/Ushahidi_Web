@@ -37,8 +37,8 @@ $lang = array
 	
 	'incident_minute' => array
 	(
-		'required'		=> 'The hour field is required.',
-		'between' => 'The hour field does not appear to contain a valid hour?'
+		'required'		=> 'The minute field is required.',
+		'between' => 'The minute field does not appear to contain a valid value?'
 	),
 	
 	'incident_ampm' => array

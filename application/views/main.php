@@ -28,7 +28,7 @@
 							</div>
 						
 							<ul class="category-filters">
-								<li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="category-title">All Categories</div></a></li>
+								<li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></div></a></li>
 								<?php
 									foreach ($categories as $category => $category_info)
 									{
@@ -87,22 +87,22 @@
 								<h5><?php echo Kohana::lang('ui_main.how_to_report'); ?></h5>
 								<ol>
 									<?php if (!empty($phone_array)) 
-									{ ?><li>By sending a message to <?php foreach ($phone_array as $phone) {
+									{ ?><li><?php echo Kohana::lang('ui_main.report_option_1')." "; ?> <?php foreach ($phone_array as $phone) {
 										echo "<strong>". $phone ."</strong>";
 										if ($phone != end($phone_array)) {
 											echo " or ";
 										}
 									} ?></li><?php } ?>
 									<?php if (!empty($report_email)) 
-									{ ?><li>By sending an email to <a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a></li><?php } ?>
+									{ ?><li><?php echo Kohana::lang('ui_main.report_option_2')." "; ?> <a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a></li><?php } ?>
 									<?php if (!empty($twitter_hashtag_array)) 
-												{ ?><li>By sending a tweet with the hashtag/s <?php foreach ($twitter_hashtag_array as $twitter_hashtag) {
+												{ ?><li><?php echo Kohana::lang('ui_main.report_option_3')." "; ?> <?php foreach ($twitter_hashtag_array as $twitter_hashtag) {
 									echo "<strong>". $twitter_hashtag ."</strong>";
 									if ($twitter_hashtag != end($twitter_hashtag_array)) {
 										echo " or ";
 									}
 									} ?></li><?php } ?>
-									<li>By <a href="<?php echo url::base() . 'reports/submit/'; ?>">filling a form</a> at the website</li>
+									<li><a href="<?php echo url::base() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a></li>
 								</ol>					
 		
 							</div>

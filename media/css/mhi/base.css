@@ -1,0 +1,170 @@
+/*
+Name: base.css
+Description: Multiple Hosted Instance
+Version: 1.0
+Author: Caleb Bell
+Author Email: caleb@ushahidi.com
+*/
+
+/* Base Styles
+--------------*/
+	html { background:#f3f4f6; }
+	
+	body.content { font-size:.75em; }
+	body { background:#f3f4f6 url(../../img/mhi/bg_body.jpg) top repeat-x; height:100%; }
+	
+	.content h1, .content h2, .content h3, .content h4, .content h5 { margin-top:0; padding-top:0; }
+	.content p.sub-title { font-size:16px; font-style:italic; }
+	
+	.rounded { -moz-border-radius:4px 4px 4px 4px;
+			-webkit-border-bottom-left-radius: 4px 4px;
+			-webkit-border-bottom-right-radius: 4px 4px;
+			-webkit-border-top-left-radius: 4px 4px;
+			-webkit-border-top-right-radius: 4px 4px; }
+			
+	.box-shadow { -moz-box-shadow:0 2px 2px rgba(0, 0, 0, 0.25); -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 3px 3px; }
+
+	
+
+
+/* General Content Styles
+------------------------*/
+	/* Headlines */
+	.content h1, .content h2, .content h3, .content h4, .content h5 { margin-top:0; padding-top:0; }
+	.content p.sub-title { font-size:16px; font-style:italic; }
+	
+	/* Buttons */
+	a.button { display:block; text-indent:-23420px; }
+	a.btn_sign-up { background:transparent url(../../img/mhi/btn_sign-up.png) 0 0 no-repeat; height:67px; width:235px; } 
+	
+	/* Top-Link */
+	.top-link { text-align:right; background:transparent url(../../img/mhi/dots.gif) 0 11px repeat-x;  }
+	.top-link a { background:#fff; font-size:10px; padding:0 0 0 8px; text-decoration:none; }
+		.top-link a:hover { text-decoration:underline; }
+
+/* Header
+--------------*/
+	#header { width:100%; height:75px; background:#595959; }
+		#header-wrapper { width:960px; margin:0 auto; position:relative; }
+			.content h1 { text-indent:-23439px; background:transparent url(../../img/mhi/Ushahidi_logo-header.png) no-repeat; height:40px; width:150px; float:left; margin:17px 0 0 0; }
+			.content h1 a { display:block; height:40px; width:150px; }
+			p.main-sub-title { float:left; color:#fff;font-size:14px; font-weight:bold; margin:25px 0 0 18px; }
+
+	/* Primary Navigation */
+	ul.primary-nav		{ float:right; margin:40px 0 0 0; padding:0; }
+	ul.primary-nav li	{ display:inline; list-style-type:none; padding:0 5px; margin:0 0 0 10px; }
+	ul.primary-nav li a	{ color:#fff; font-size:16px; font-weight:bold; text-decoration:none; }
+	ul.primary-nav li a:hover,
+	ul.primary-nav li a.active	{ color:#fff; border-bottom:2px solid; }
+	
+	/* Login Box */
+	#login-box { position: absolute; top:3px; right:0; color:#e3e3e3; font-size:12px;}
+	#login-box p { margin:0; }
+	#login-box a { background:#96a6a9; color:#f3f3f3; font-weight:bold; margin-left:4px; padding:4px 6px; text-decoration:none; }
+	#login-box a.active { background:#f3f4f6; color:#666; padding-bottom:7px;}
+	
+	#login-form { z-index:1;  background:#f3f4f6; position:absolute; top:23px; right:0px; font-size:12px;  padding:5px 8px; display:none; }
+		
+	#login-form form { margin:0; } 
+	
+	#login-form  p { margin:0 0 5px 0; }
+	
+	#login-form  p label { display:block; font-weight:bold; }
+	#login-form  p input { display:block;  }
+	#login-form  p input:active,
+	#login-form  p input:focus { outline:none; }
+	#login-form  p input.text { display:block; width:175px; }
+	#login-form .btn_sign-in { background:#96a6a9; color:#f3f3f3; font-weight:bold; padding:4px 6px; border:1px solid; }
+	
+	#login-form p.forgot-password { background:transparent url(../../img/mhi/dots.gif) 0 2px repeat-x; font-size:10px; padding:10px 0 0; margin:0; }
+	p.forgot-password a { background:transparent url(../../img/mhi/bullet.png) 0px 3px no-repeat; padding:0 0 0 10px; }
+
+/* Body Layout
+--------------*/
+	#wrapper { width:960px; margin:0 auto; position:relative; }
+	.twocol-left { float:left; width:565px; background:transparent url(../../img/mhi/bg_content-shadow-bottom-cap.png) bottom left no-repeat; padding-bottom:15px; }
+		.shadow { background:transparent url(../../img/mhi/bg_content-shadow.png) left repeat-y; padding:10px 38px 1px 18px; }
+	.twocol-right { float:left; width:375px; padding:0 0 0 0; position:relative;}
+		
+
+
+
+/* Side Bar Module
+-------------------*/
+	.side-bar-module 		{ position:absolute; margin:18px 0 0 0; width:226px; padding:0 0 13px 0; background:transparent url(../../img/mhi/bg_side-bar-bottom.png) 7px bottom no-repeat; }
+		.fixed { position:fixed; top:0px; }
+	.side-bar-module h4		{ background:transparent url(../../img/mhi/bg_side-bar-top.png) top left no-repeat; margin:0; padding:10px 0 7px 18px; font-size:14px;  }
+	.side-bar-content		{ background:transparent url(../../img/mhi/bg_side-bar-content.png) 7px repeat-y; padding:0 13px 1px 18px; line-height:16px; font-size:12px; }
+	
+	/* FAQ Links */
+	ul.faq-links { margin:0; padding:0; }
+	ul.faq-links li { padding:0 10px 0 20px; margin:0 0 5px 0; list-style-type:none; background:transparent url(../../img/mhi/bullet.png) 9px 8px no-repeat; }
+	ul.faq-links li a { display:block; padding:3px 0; }
+
+
+/* Home Page 
+--------------*/
+	body.mhi-home #wrapper { background:transparent url(../../img/mhi/bg_content-home.png) 420px 87px no-repeat; height:600px; padding:35px 0 0 0; }
+	
+	body.mhi-home .twocol-left	{ float:left; width:490px; background:none; padding-bottom:0; }
+	body.mhi-home .twocol-right	{ float:left; width:380px; padding:75px 0 0 25px; }
+	
+	h2.title-lead-in { text-indent:-231032px; background:transparent url(../../img/mhi/title_lead-in.png) 0 0 no-repeat; height:57px; }
+	
+	.intro-slideshow {}
+	p.slide + p { margin:0; }
+	p.slide { font-size:12px; font-style:italic; color:#666; }
+	
+	.footer-links { margin:60px 0 0 0; }
+	.footer-links ul { margin:0; } 
+	.footer-links ul li.first { background:none repeat scroll 0 0 transparent; padding-left:0; }
+	.footer-links ul li { background:transparent url(../../img/mhi/bullet.png) 0 8px no-repeat; display:block; float:left;
+						   list-style-type:none; margin:0 6px 5px 0; padding:0 2px 0 10px; text-transform:uppercase; font-size:12px; }
+	.footer-links ul li.regular { text-transform:none; color:#898989; }
+
+
+
+/* The Form
+--------------*/
+	#frm-MHI-Signup { margin-bottom:0; }
+		
+		.content .frm-content table,
+		.content .frm-content table td { border:0; }
+		
+		.frm-content h2 { color:#0089ca; font-size:1.25em; margin:0 0 10px 0; line-height:29px; }
+			.frm-content p.desc { font-size:13px;}
+		
+		img.step { padding:0 10px 0 0;}
+		
+		/*Form elements*/
+		.frm-content label {  }
+		.content textarea, .content input[type="text"], .content input[type="password"]  { font-size:16px; font-family:inherit; font-weight:bold; padding:5px 4px 3px; color:#595959; }
+		
+			/*Error Styles*/
+			.content input[type="text"].error, .content input[type="password"].error, .content textarea.error { border:2px solid #ff6666; }
+			label.error { display:block; display:block; font-size:11px; font-weight:bold; color:#ff6666; }
+			
+			/*Buttons*/
+			span.inputButton { display:inline-table; padding-right:7px; cursor:pointer;
+							   background:transparent url(../../img/mhi/bg_InputButton.gif) no-repeat scroll right top; }
+							
+			span.inputButton input { border:none; height:29px; color:#fff; font-weight:bold; font-size:12px; line-height:28px;
+									 font-family: Trebuchet, Lucida Sans Unicode, Lucida Grande, Lucida Sans, Arial, sans-serif;
+									 width:auto; overflow:visible; cursor:pointer; padding:0 5px 4px 9px;
+									 background:transparent url(../../img/mhi/bg_InputButton.gif) no-repeat scroll left top; }
+		
+			span.inputButton:hover,
+			table span.inputButton:hover { background:transparent url(../../img/mhi/bg_InputButton.gif) no-repeat scroll right bottom; }
+			
+			span.inputButton input:hover,
+			table span.inputButton input:hover { background:transparent url(../../img/mhi/bg_InputButton.gif) no-repeat scroll left bottom; }
+
+
+		
+		#signup_subdomain { margin:0 5px; }
+		
+		.content .frm-content table td { vertical-align:top; padding:5px 10px; }
+		
+		.content .frm-content table td span,
+		.frm-content p span { font-size:11px; color:#CCC; display:block; }
+

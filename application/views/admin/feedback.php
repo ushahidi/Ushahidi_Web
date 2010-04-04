@@ -15,7 +15,7 @@
 ?>
 <div class="bg">
 	<h2>
-		<?php echo Kohana::lang('feedback.feedback'); ?> 
+		<?php echo Kohana::lang('ui_main.feedback'); ?> 
 		<span>
 			<?php echo "($total_items)"; ?>
 		</span>
@@ -25,22 +25,22 @@
 		<!-- tabset -->
 		<ul class="tabset">
 			<li><a href="#" class="active">
-				<?php echo Kohana::lang('feedback.show_all'); ?> </a>
+				<?php echo Kohana::lang('ui_main.show_all'); ?> </a>
 			</li>
 		</ul>
 		<!-- tab -->
 		<div class="tab">
 			<ul>
 				<li><a href="#" onclick="feedbackAction('r','READ', '');">
-					<?php echo Kohana::lang('feedback.read'); ?></a>
+					<?php echo strtoupper(Kohana::lang('ui_main.read')); ?></a>
 				</li>
 				
 				<li><a href="#" onclick="feedbackAction('u','UNREAD', '');">
-					<?php echo Kohana::lang('feedback.unread'); ?></a>
+					<?php echo strtoupper(Kohana::lang('ui_main.unread')); ?></a>
 				</li>
 				
 				<li><a href="#" onclick="feedbackAction('d','DELETE', '');">
-					<?php echo Kohana::lang('feedback.delete'); ?></a>
+					<?php echo strtoupper(Kohana::lang('ui_main.delete')); ?></a>
 				</li>
 			</ul>
 		</div>
@@ -65,10 +65,10 @@
 		<!-- green-box -->
 		<div class="green-box" id="submitStatus">
 			<h3>
-				<?php echo Kohana::lang('feedback.feedback'); ?>
+				<?php echo Kohana::lang('ui_main.feedback'); ?>
 				 <?php echo "";//$form_action; ?> 
 				<a href="#" id="hideMessage" class="hide">
-					<?php echo Kohana::lang('feedback.hide_msg'); ?></a>
+					<?php echo Kohana::lang('ui_main.hide_this_message'); ?></a>
 			</h3>
 		</div>
 	<?php
@@ -113,7 +113,7 @@
 						<tr>
 							<td colspan="4" class="col">
 								<h3>
-									<?php echo Kohana::lang('feedback.feedback_no_result'); ?>
+									<?php echo Kohana::lang('ui_main.no_results'); ?>
 								</h3>
 							</td>
 						</tr>
@@ -137,11 +137,11 @@
 								<td class="col-2">
 									<div class="post">
 										<h4><a href="<?php echo url::base() . 'admin/feedback/view/' . $feedback_id; ?>" class="more"><?php echo $feedback_title; ?></a></h4>
-										<p><?php echo $feedback_mesg; ?>... <a href="<?php echo url::base() . 'admin/feedback/view/' . $feedback_id; ?>" class="more">more</a></p>
+										<p><?php echo $feedback_mesg; ?>... <a href="<?php echo url::base() . 'admin/feedback/view/' . $feedback_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
 									</div>
 									<ul class="info">
 										<li class="none-separator">
-											<strong>IP: </strong><?php echo $person_ip; ?>
+											<strong><?php echo Kohana::lang('ui_main.ip_address');?>: </strong><?php echo $person_ip; ?>
 										</li>
 									</ul>
 								</td>
@@ -151,15 +151,15 @@
 										<li class="none-separator">
 											<?php if($feedback_read == 1 ) { ?>
 											<a href="#" class="status_yes" onclick="feedbackAction('r','READ', '<?php echo $feedback_id; ?>');">
-												Read 
+												<?php echo Kohana::lang('ui_main.mark_read');?> 
 											</a>
 											<?php } else {?>
 											<a href="#" onclick="feedbackAction('u','UNREAD', '<?php echo $feedback_id; ?>');">
-												Uread 
+												<?php echo Kohana::lang('ui_main.mark_unread');?> 
 											</a>
 											<?php }?>
 											</li>
-										<li><a href="#" class="del" onclick="feedbackAction('d','DELETE', '<?php echo $feedback_id; ?>');">Delete</a></li>
+										<li><a href="#" class="del" onclick="feedbackAction('d','DELETE', '<?php echo $feedback_id; ?>');"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 									</ul>
 								</td>
 							</tr>

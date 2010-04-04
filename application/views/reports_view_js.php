@@ -19,20 +19,6 @@
 		jQuery(function() {
 			var moved=false;
 
-			// Photoslider
-			photos = ["<?php echo join($incident_photos, '","'); ?> "];
-			FOTO.Slider.baseURL = "<?php echo url::base() . 'media/uploads/'; ?>";
-			FOTO.Slider.bucket = {  
-         		'default': {}  
-     		}; 
-     		for(var i = 0; i<photos.length; i++) {
-     			FOTO.Slider.bucket['default'][i] = {'main': photos[i], 
-     			                                    'thumb': photos[i].replace('.jpg', '_t.jpg')};
-     		}
-     		FOTO.Slider.reload('default');  
-			FOTO.Slider.preloadImages('default');
-			
-	
 			/*
 			- Initialize Map
 			- Uses Spherical Mercator Projection			
@@ -87,7 +73,7 @@
 					{ div: 	document.getElementById('mapMousePosition'), numdigits: 5 
 				}));    
 			map.addControl(new OpenLayers.Control.Scale('mapScale'));
-            map.addControl(new OpenLayers.Control.ScaleLine());
+			map.addControl(new OpenLayers.Control.ScaleLine());
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
 			
@@ -129,10 +115,10 @@
 			map.addLayer(markers);
 			
 			selectControl = new OpenLayers.Control.SelectFeature(markers,
-                {onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});			
+															{onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});			
 
-            map.addControl(selectControl);
-            selectControl.activate();
+			map.addControl(selectControl);
+			selectControl.activate();
 
 			// create a lat/lon object
 			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);

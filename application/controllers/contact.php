@@ -63,12 +63,12 @@ class Contact_Controller extends Main_Controller
 			if ($post->validate())
 			{// Yes! everything is valid - Send email
 				$site_email = Kohana::config('settings.site_email');
-				$message = "Sender: " . $post->contact_name . "\n";
-				$message .= "Email: " . $post->contact_email . "\n";
-				$message .= "Phone: " . $post->contact_phone . "\n\n";
-				$message .= "Message: \n" . $post->contact_message . "\n\n\n";
+				$message = Kohana::lang('ui_admin.sender').": " . $post->contact_name . "\n";
+				$message .= Kohana::lang('ui_admin.email').": " . $post->contact_email . "\n";
+				$message .= Kohana::lang('ui_admin.phone').": " . $post->contact_phone . "\n\n";
+				$message .= Kohana::lang('ui_admin.message').": \n" . $post->contact_message . "\n\n\n";
 				$message .= "~~~~~~~~~~~~~~~~~~~~~~\n";
-				$message .= "This message was sent from your website at " . url::base();
+				$message .= Kohana::lang('ui_admin.sent_from_website'). url::base();
 				// Send Admin Message
 				email::send( $site_email, $post->contact_email, $post->contact_subject, $message, FALSE );
 				

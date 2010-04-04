@@ -3,15 +3,14 @@
 	(
 		'feed_name' => array
 		(
-			'required' => 'Please enter the name of the feed.',
-			'length'   => 'The feed name field must be at least 3 and no more 
-				70 characters long.'
+			'required' => 'Entrez le nom du fil.',
+			'length'   => 'Le nom du fil doit comporter entre 3 et 70 caractères.'
 		),
 		
 		'feed_url' => array
 		(
-			'required' => 'Please enter feed\'s URL.',
-			'url' => 'Please enter a valid URL. Eg. http://www.ushahidi.com'
+			'required' => 'Veuillez entrer l\'URL du fil.',
+			'url' => 'Veuillez entrer un URL valide. Ex: http://www.ushahidi.com'
 		)
 	);
 

@@ -21,7 +21,6 @@
 	<title><?php echo $site_name ?></title>
 	<?php
 	echo html::stylesheet('media/css/admin/all', '', true);
-	echo html::stylesheet('media/css/jquery.treeview', '', true);
 	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
 	echo "<!--[if lt IE 7]>".
 		html::stylesheet('media/css/ie6', '', true)
@@ -44,8 +43,7 @@
 	echo html::script('media/js/jquery.ui.min', true);
 	echo html::script('media/js/selectToUISlider.jQuery', true);
 	echo html::script('media/js/jquery.hovertip-1.0', true);
-	echo html::script('media/js/jquery.treeview');
-	
+	echo html::stylesheet('media/css/jquery.hovertip-1.0', '', true);	
 	
 	echo "<script type=\"text/javascript\">
 		$(function() {
@@ -60,6 +58,12 @@
 		echo html::script('media/js/jquery.flot', true);
 		echo html::script('media/js/excanvas.pack', true);
 		echo html::script('media/js/timeline.js', true);
+	}
+	
+	// Load TreeView
+	if ($treeview_enabled) {
+		echo html::script('media/js/jquery.treeview');
+		echo html::stylesheet('media/css/jquery.treeview');
 	}
 	
 	// Load ProtoChart
@@ -111,7 +115,13 @@
 		<div id="header">
 			<!-- top-area -->
 			<div class="top">
-				<strong><?php echo Kohana::lang('ui_admin.version')?></strong>
+				<strong>
+				<?php echo ucfirst(Kohana::lang('ui_admin.code')); ?> <?php echo Kohana::lang('ui_admin.version'); ?> <?php echo $code_version; ?>
+				<?php if($code_version != $actual_code_version) echo '<span>'.Kohana::lang('ui_admin.code_out_of_sync').' v'.$actual_code_version.'</span>'; ?>
+				 - 
+				<?php echo ucfirst(Kohana::lang('ui_admin.database')); ?> <?php echo Kohana::lang('ui_admin.version'); ?> <?php echo $actual_db_version; ?>
+				<?php if($db_version != $actual_db_version) echo '<span>'.Kohana::lang('ui_admin.db_out_of_sync').' v'.$db_version.'</span>'; ?>
+				</strong>
 				<ul>
 					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
 					<li class="none-separator"><a href="<?php echo url::base() ?>" title="View the home page">
@@ -138,7 +148,7 @@
 					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha"><?php echo Kohana::lang('ui_admin.faqs');?></a></li>
 					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('ui_admin.forum');?></a></li>
 				</ul>
-				<div class="info-search"><form action="<?php echo url::base() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn">Search</a></form></div>
+				<div class="info-search"><form action="<?php echo url::base() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn"><?php echo Kohana::lang('ui_admin.search');?></a></form></div>
 				<div style="clear:both"></div>
 			</div>
 			<!-- title -->
@@ -147,44 +157,15 @@
 			<div class="nav-holder">
 				<!-- main-nav -->
 				<ul class="main-nav">
-					<li><a href="<?php echo url::base() ?>admin/dashboard" <?php if($this_page=="dashboard") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.dashboard');?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/reports" <?php if($this_page=="reports") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.reports');?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/comments" <?php if($this_page=="comments") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.comments');?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/messages" <?php if($this_page=="messages") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.messages');?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/feedback" <?php if($this_page=="feedback") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.feedback')?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/stats" <?php if($this_page=="stats") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.stats')?>
-						</a></li>
-					<li><a href="<?php echo url::base() ?>admin/apilogs" <?php if($this_page=="apilogs") echo "class=\"active\"" ;?>>
-						<?php echo Kohana::lang('ui_admin.apilogs')?>
-						</a></li>
+					<?php foreach($tabs as $page => $tab_name){ ?>
+						<li><a href="<?php echo url::base(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
+					<?php } ?>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
-					<?php if ($this->auth->logged_in('superadmin')){ ?>
-						<li><a href="<?php echo url::base() ?>admin/settings/site"><?php echo Kohana::lang('ui_admin.settings');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('ui_admin.manage');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('ui_admin.users');?></a></li>
-					<?php 
-					} else if($this->auth->logged_in('admin')) { ?>
-						<li><a href="<?php echo url::base() ?>admin/manage"><?php echo Kohana::lang('ui_admin.manage');?></a></li>
-						<li><a href="<?php echo url::base() ?>admin/users"><?php echo Kohana::lang('ui_admin.users');?></a></li> 
-					<?php
-					} else { ?> 
-					
-					<?php 
-					} 
-					?>
+					<?php foreach($secondary_tabs as $page => $tab_name){ ?>
+						<li><a href="<?php echo url::base(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
+					<?php } ?>
 				</ul>
 			</div>
 		</div>

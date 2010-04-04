@@ -47,7 +47,7 @@ class VideoEmbed{
          <object width='320' height='265'><param name='movie' value='http://www.youtube.com/v/$code$you_auto'></param>
          <param name='wmode' value='transparent'></param>
          <embed src='http://www.youtube.com/v/$code$you_auto' type='application/x-shockwave-flash' wmode='transparent' width='320' height='265'>
-         </embed></object><br/>";
+         </embed></object>";
       }
       
       if($host == "google")
@@ -58,7 +58,7 @@ class VideoEmbed{
       
          echo "
          <embed style='width:320px; height:265px;' id='VideoPlayback' type='application/x-shockwave-flash'
-         src='http://video.google.com/googleplayer.swf?docId=-$code$google_auto&hl=en' flashvars=''></embed><br/><br/>";
+         src='http://video.google.com/googleplayer.swf?docId=-$code$google_auto&hl=en' flashvars=''></embed>";
       }
       
       if($host == "revver")
@@ -71,7 +71,7 @@ class VideoEmbed{
          if($auto == "play") { $rev_auto = "&autoStart=true"; }
          
          echo "<script src='http://flash.revver.com/player/1.0/player.js?mediaId:$code;affiliateId:0;height:320;width:265;' type='text/javascript'>
-         </script><br/>";
+         </script>";
       }
       
       if($host == "metacafe")
@@ -83,7 +83,7 @@ class VideoEmbed{
       
          echo "<embed src='http://www.metacafe.com/fplayer/$code.swf'
          width='320' height='265' wmode='transparent' pluginspage='http://www.macromedia.com/go/getflashplayer'
-         type='application/x-shockwave-flash'> </embed><br/><br/>";
+         type='application/x-shockwave-flash'> </embed>";
       }
       
       if($host == "liveleak")
@@ -95,7 +95,7 @@ class VideoEmbed{
          echo "<object type='application/x-shockwave-flash' width='320' height='272'='transparent'
          data='http://www.liveleak.com/player.swf?autostart=$live_auto&token=$code'>
          <param name='movie' value='http://www.liveleak.com/player.swf?autostart=$live_auto&token=$code'>
-         <param name='wmode' value='transparent'><param name='quality' value='high'></object><br/><br/>";
+         <param name='wmode' value='transparent'><param name='quality' value='high'></object>";
       }
 
 	  if( $host == "dotsub") 

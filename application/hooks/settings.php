@@ -1,15 +1,61 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
+* If MHI is enabled, determine the appropriate database settings
+*/
+$subdomain = Kohana::config('settings.subdomain');
+if(Kohana::config('config.enable_mhi') == TRUE && $subdomain != '')
+{
+
+	// Get the database settings from database.php
+	$mhi_db = Kohana::config('database.default');
+	$new_connection_config = $mhi_db;
+
+	// Connect to the MHI database
+	$link = mysql_connect($mhi_db['connection']['host'], $mhi_db['connection']['user'], $mhi_db['connection']['pass']) or die();
+	mysql_select_db($mhi_db['connection']['database']) or die();
+
+	// Query for the database settings for this subdomain
+	$tp = $mhi_db['table_prefix'];
+	$query = 'SELECT '.$tp.'mhi_site_database.user as user, '.$tp.'mhi_site_database.pass as pass, '.$tp.'mhi_site_database.host as host, '.$tp.'mhi_site_database.port as port, '.$tp.'mhi_site_database.database as db  FROM '.$tp.'mhi_site LEFT JOIN '.$tp.'mhi_site_database ON '.$tp.'mhi_site.id = '.$tp.'mhi_site_database.mhi_id WHERE '.$tp.'mhi_site.site_domain = \''.mysql_escape_string($subdomain).'\' AND '.$tp.'mhi_site.site_active = 1';
+	$result = mysql_query($query);
+
+	// If this subdomain exists as an MHI instance...
+	if(mysql_num_rows($result) != 0)
+	{
+
+		// Overwrite database settings so the subdomain will work properly
+
+		$new_connection_config['connection']['user'] = mysql_result($result,0,'user');
+		$new_connection_config['connection']['pass'] = mysql_result($result,0,'pass');
+		$new_connection_config['connection']['host'] = mysql_result($result,0,'host');
+		$new_connection_config['connection']['port'] = mysql_result($result,0,'port');
+		$new_connection_config['connection']['database'] = mysql_result($result,0,'db');
+		Kohana::config_set('database.default', $new_connection_config);
+
+	}else{
+
+		// If this site doesn't exist as an instance, we will reset our subdomain and ignore it.
+
+		Kohana::config_set('settings.subdomain', '');
+	}
+
+	mysql_close($link);
+}
+/**
+* End MHI DB Settings
+*/
+
+/**
 * Default Settings From Database
 */
 
 // Retrieve Cached Settings
 $cache = Cache::instance();
-$settings = $cache->get('settings');
+$settings = $cache->get($subdomain.'_settings');
 if ($settings == NULL)
 { // Cache is Empty so Re-Cache
 	$settings = ORM::factory('settings', 1);
-	$cache->set('settings', $settings, array('settings'), 604800); // 1 Week
+	$cache->set($subdomain.'_settings', $settings, array('settings'), 86400); // 1 Day
 }
 
 // Set Site Language
@@ -50,6 +96,8 @@ Kohana::config_set('settings.email_host', $settings->email_host);
 Kohana::config_set('settings.email_servertype', $settings->email_servertype);
 Kohana::config_set('settings.email_ssl', $settings->email_ssl);
 Kohana::config_set('settings.alerts_email', $settings->alerts_email);
+Kohana::config_set('settings.db_version', $settings->db_version);
+Kohana::config_set('settings.ushahidi_version', $settings->ushahidi_version);
 
 
 $default_map = $settings->default_map;

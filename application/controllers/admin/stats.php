@@ -38,7 +38,7 @@ class Stats_Controller extends Admin_Controller
 		if($settings->stat_id === null || $settings->stat_id == 0) {
 			$sitename = $settings->site_name;
 			$url = url::base();
-			$this->template->content->stat_id = $this->_create_site( $sitename, $url );
+			$this->template->content->stat_id = Stats_Model::create_site( $sitename, $url );
 		}
 		
 		// Show the hits page since stats are already set up
@@ -89,7 +89,11 @@ class Stats_Controller extends Admin_Controller
 		foreach($data['category_counts'] as $category_id => $count) {
 			$category_name = $cats[$category_id]['category_title'];
 			$report_data[$category_name] = $count;
-			$colors[$category_name] = $cats[$category_id]['category_color'];
+			if(isset($cats[$category_id]['category_color'])){
+				$colors[$category_name] = $cats[$category_id]['category_color'];
+			}else{
+				$colors[$category_name] = 'FFFFFF';
+			}
 			
 			foreach($count as $c) {				
 				// Count up the total number of reports per category
@@ -415,6 +419,7 @@ class Stats_Controller extends Admin_Controller
 	 * @param sitename - name of the instance
 	 * @param url - base url 
 	 */
+	/*
 	public function _create_site( $sitename, $url ) 
 	{
 		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
@@ -433,6 +438,7 @@ class Stats_Controller extends Admin_Controller
 		
 		return false;
 	}
+	*/
 	
 	/**
 	 * Helper function to send a cURL request
