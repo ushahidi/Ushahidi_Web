@@ -75,7 +75,7 @@ class Incident_Model extends ORM
 	}
 
 	/*
-	* get the timestamp of the oldest report
+	* get the total number of verified or unverified reports
 	* @param approved - Oldest approved report timestamp if true (oldest overall if false)
 	*/
 	public static function get_oldest_report_timestamp($approved=true)
