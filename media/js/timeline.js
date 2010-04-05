@@ -25,13 +25,25 @@
 		this.active = 'true';
 		this.mediaType = null;
 		this.graphOptions = {
-			xaxis: { mode: "time", timeformat: "%b %y", autoscaleMargin: 3 },
-			yaxis: { tickDecimals: 0 },
-			points: { show: true},
-			lines: { show: true}, 
-			legend: { show: false},
+			xaxis: { 
+				mode: "time",
+				timeformat: "%b %y",
+				autoscaleMargin: 3
+			},
+			yaxis: { 
+				tickDecimals: 0
+			},
+			points: { 
+				show: true
+			},
+			lines: { 
+				show: true
+			},
+			legend: { 
+				show: false
+			},
 			grid: {
-			    color: "#999999"
+				color: "#999999"
 			}
 		};
 
@@ -40,23 +52,24 @@
 		this.graphData = [];
 		this.playCount = 0;
 		this.addMarkers = null;
-		if (typeof(gAddMarkers) != 'undefined') {
-			this.addMarkers = gAddMarkers;
-		}
 	    
-		if (options) {
-			if (options.categoryId == '0') {
+		if (options)
+		{
+			if (options.categoryId == '0')
+			{
 				options.categoryId = '0';
 			}
 			var defaultGraphOptions = this.graphOptions;
 			$.extend(this, options);
 			$.extend(true, this.graphOptions, defaultGraphOptions);
-			if (!isNaN(this.categoryId)) {
+			if (!isNaN(this.categoryId))
+			{
 				this.categoryId = gCategoryId;
 			}
 		}
 		
-		this.plot = function() {
+		this.plot = function()
+		{
 			gStartTime    = this.startTime;
 			gEndTime      = this.endTime;
 			gCategoryId   = this.categoryId;
@@ -65,29 +78,38 @@
 			
 			$.extend(this.graphOptions.xaxis, this.getXaxisOptions());
 	    	
-			if (!this.url) { 
+			if (!this.url)
+			{
 				gStartTime = gStartTime || new Date(this.graphData[0][0]);
 				timeCount  = this.graphData.length-1;
 				gEndTime   = gEndTime || new Date(this.graphData[timeCount][0]);
 				var customOptions = {};
-				if (gStartTime && gEndTime) {
-					customOptions = {xaxis: { min: gStartTime.getTime(), 
-				                              max: gEndTime.getTime() 
-				                            }};
+				if (gStartTime && gEndTime)
+				{
+					customOptions = {
+						xaxis: {
+							min: gStartTime.getTime(),
+							max: gEndTime.getTime()
+						}
+					};
 				}
 				plot = $.plot($("#"+this.elementId), [this.graphData],
-				        $.extend(true, {}, this.graphOptions, customOptions));
-	        } else {   
+					$.extend(true, {}, this.graphOptions, customOptions));
+			}
+			else
+			{
 				var startDate = '';
 				var endDate = ''; 
 				
-				if (this.startTime) {
+				if (this.startTime)
+				{
 					startDate = this.startTime.getFullYear() + '-' + 
-				                (this.startTime.getMonth()+1) + '-'+ this.startTime.getDate();
+					(this.startTime.getMonth()+1) + '-'+ this.startTime.getDate();
 				}
-				if (this.endTime) {
+				if (this.endTime)
+				{
 					endDate = this.endTime.getFullYear() + '-' + 
-				                (this.endTime.getMonth()+1) + '-'+ this.endTime.getDate();
+					(this.endTime.getMonth()+1) + '-'+ this.endTime.getDate();
 				}
 				this.url += "?s=" + startDate + "&e=" + endDate;
 
@@ -96,63 +118,77 @@
 				var aTickSize = [5, "day"];
 
 				// plot hourly incidents when period is within 2 days
-				if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) <= 2) {
-				    aTimeformat = "%H:%M";
-				    aTickSize = [5, "hour"];
-				    this.url += "&i=hour";
-				} else if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) <= 124) { 
-				    // weekly if period > 2 months
-				    aTimeformat = "%d %b";
-				    aTickSize = [5, "day"];
-				    this.url += "&i=week";
-				} else if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) > 124) {
+				if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) <= 2)
+				{
+					aTimeformat = "%H:%M";
+					aTickSize = [5, "hour"];
+					this.url += "&i=hour";
+				}
+				else if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) <= 124)
+				{
+					// weekly if period > 2 months
+					aTimeformat = "%d %b";
+					aTickSize = [5, "day"];
+					this.url += "&i=week";
+				} 
+				else if ((this.endTime - this.startTime) / (1000 * 60 * 60 * 24) > 124)
+				{
 					// monthly if period > 4 months
-				    aTimeformat = "%d %b";
-				    aTickSize = [2, "month"];
-				    this.url += "&i=month";
+					aTimeformat = "%d %b";
+					aTickSize = [2, "month"];
+					this.url += "&i=month";
 				}
 
-				if (this.active == 'all') {
+				if (this.active == 'all')
+				{
 					this.url += '&active=all';
-				} else if (this.active == 'false') {
+				} 
+				else if (this.active == 'false')
+				{
 					this.url += '&active=false';
 				}
-				if (this.mediaType) {
+				if (this.mediaType)
+				{
 					this.url += '&m='+this.mediaType;
 				}
 				
 				$.getJSON(this.url,
-				    function(data) {
-				        gTimelineData = data;
-				        //plotPeriod = $.timelinePeriod(gTimelineData[0].data);
-				        gStartTime = gStartTime // || new Date(plotPeriod[0]);
-				        gEndTime   = gEndTime // || new Date(plotPeriod[1]);
-				        if (!gTimelineData[gCategoryId]) {
-				            gTimelineData[gCategoryId] = {};
-				            gTimelineData[gCategoryId]['data'] = [];
-				        }
-				        plot = $.plot($("#"+gTimelineId), 
-				            [gTimelineData[gCategoryId]],
-				         	$.extend(true, {}, gGraphOptions, {
-				            	xaxis: { min: gStartTime.getTime(), 
-				                         max: gEndTime.getTime(),
-				                         mode: "time", 
-				                         timeformat: aTimeformat,
-				        			     tickSize: aTickSize
-				            	}
-				        	})
-				    	);
-				    }
+					function(data)
+					{
+						gTimelineData = data;
+						//plotPeriod = $.timelinePeriod(gTimelineData[0].data);
+						gStartTime = gStartTime // || new Date(plotPeriod[0]);
+						gEndTime   = gEndTime // || new Date(plotPeriod[1]);
+						if (!gTimelineData[gCategoryId])
+						{
+							gTimelineData[gCategoryId] = {};
+							gTimelineData[gCategoryId]['data'] = [];
+						}
+						plot = $.plot($("#"+gTimelineId),
+							[gTimelineData[gCategoryId]],
+							$.extend(true, {}, gGraphOptions, {
+								xaxis: {
+									min: gStartTime.getTime(),
+									max: gEndTime.getTime(),
+									mode: "time",
+									timeformat: aTimeformat,
+									tickSize: aTickSize
+								}
+							})
+						);
+					}
 				);
 			}
 		};
 		
-		this.resetPlay = function() {
+		this.resetPlay = function()
+		{
 			this.playCount = 0;
 			return this;
 		};
 		
-		this.pause = function() {
+		this.pause = function()
+		{
 			window.clearTimeout(gTimelinePlayHandle);
 			gTimelinePlayHandle = null;
 			$('#playTimeline').html('PLAY');
@@ -160,27 +196,38 @@
 			return this;
 		};
 		
-		this.resume = function(visualType) {
+		this.resume = function(visualType)
+		{
 			this.play(visualType);
 		};
 		
-		this.playOrPause = function(visualType) {
-			if (typeof(visualType) == 'undefined') visualType = 'default';
-			// TODO: Fix pause/resume for default visualization
-			//if (this.playCount == 0 || this.playCount >= this.filteredData().length) {
-			if (this.playCount == 0 || gPlayEndDate >= this.endTime.getTime()/1000) {
+		this.playOrPause = function(visualType)
+		{
+			if (typeof(visualType) == 'undefined') 
+			{	
+				visualType = 'default';
+			}
+			
+			if (this.playCount == 0 || gPlayEndDate >= this.endTime.getTime()/1000)
+			{
 				this.resetPlay().play(visualType);
-			} else if (typeof(gTimelinePlayHandle) != 'undefined' && gTimelinePlayHandle) {
+			}
+			else if (typeof(gTimelinePlayHandle) != 'undefined' && gTimelinePlayHandle)
+			{
 				this.pause();
-			} else {
+			} 
+			else
+			{
 				this.resume(visualType);
 			}
 		};
 		
-		this.filteredData = function(endTime) {
+		this.filteredData = function(endTime)
+		{
 			// Uncomment to play at default intervals
 			//return $.grep(this.graphData.data, function(n,i) {
-			if (typeof(endTime) == 'undefined') {
+			if (typeof(endTime) == 'undefined')
+			{
 				endTime = gEndTime;
 			}
 			return $.grep(dailyGraphData[0][this.categoryId].data, function(n,i) {
@@ -188,35 +235,48 @@
 			});
 		};
 		
-		this.play = function(visualType) {
-			if (typeof(visualType) == 'undefined') visualType = 'default';
-			if (visualType == 'raindrops') return this.playRainDrops();
+		this.play = function(visualType)
+		{
+			if (typeof(visualType) == 'undefined')
+			{
+				visualType = 'default';
+			}
+			else if (visualType == 'raindrops')
+			{
+				return this.playRainDrops();
+			}
 			
 			this.graphData = this.graphData || gTimelineData;
 			var plotData = this.graphData;
 			var data = this.filteredData();
 			
-			if (this.playCount >= data.length) {
+			if (this.playCount >= data.length)
+			{
 				return this;
 			}
 
-			gAddMarkers = false;  // prevent server side clustering
-			playTimeline = $.timeline({graphData: {color: plotData.color, 
-			                                       data: data.slice(0,this.playCount+1)},
-			            markerOptions: this.markerOptions,
-						categoryId: this.categoryId,
-			            startTime: gStartTime, //new Date(plotData.data[0][0]),
-			            endTime: gEndTime //new Date(plotData.data[plotData.data.length-1][0])
-			           });
+			playTimeline = $.timeline({
+				graphData: {
+					color: plotData.color,
+					data: data.slice(0,this.playCount+1)
+				},
+				markerOptions: this.markerOptions,
+				categoryId: this.categoryId,
+				startTime: gStartTime, //new Date(plotData.data[0][0]),
+				endTime: gEndTime //new Date(plotData.data[plotData.data.length-1][0])
+			});
 			playTimeline.plot();
 			gPlayEndDate = playTimeline.graphData.data[playTimeline.graphData.data.length-1][0] / 1000;
 			playTimeline.plotMarkers(style, markers, gPlayEndDate);
 			this.playCount++;
-			if (this.playCount == data.length) {
+			if (this.playCount == data.length)
+			{
 				$('#playTimeline').html('PLAY');
 				$('#playTimeline').parent().attr('class', 'play');
 				this.graphData = allGraphData[0][gCategoryId];
-			} else {
+			} 
+			else
+			{
 				$('#playTimeline').html('PAUSE');
 				$('#playTimeline').parent().attr('class', 'play pause');
 				gTimeline = this;
@@ -226,36 +286,50 @@
 			return this;
 		};
 
-		this.playRainDrops = function() {
+		this.playRainDrops = function()
+		{
 			this.graphData = this.graphData || gTimelineData;
 			var plotData = this.graphData;
 			gPlayEndDate = gStartTime.getTime()/1000 + (this.playCount * 60*60*24);
 			var playEndDateTime = new Date(gPlayEndDate * 1000);
 			var data = this.filteredData(new Date(gPlayEndDate * 1000));
 
-			var playOptions = {graphData: {color: plotData.color, data: data},
-							   graphOptions: {grid: {markings: [
-							       {xaxis: {from: playEndDateTime.getTime(),
-		                                      to: playEndDateTime.getTime()},
-									color: "#222222"}
-							   ]}},
-					           markerOptions: this.markerOptions,
-							   categoryId: this.categoryId,
-							   startTime: gStartTime,
-							   endTime: gEndTime}
+			var playOptions = {
+				graphData: {
+					color: plotData.color,
+					data: data
+				},
+				graphOptions: {
+					grid: {
+						markings: [{
+							xaxis: {
+								from: playEndDateTime.getTime(),
+								to: playEndDateTime.getTime()
+							},
+							color: "#222222"
+						}]
+					}
+				},
+				markerOptions: this.markerOptions,
+				categoryId: this.categoryId,
+				startTime: gStartTime,
+				endTime: gEndTime
+			}
 
-			gAddMarkers = false; // prevent server side clustering
 			playTimeline = $.timeline(playOptions);
 			var style = playTimeline.markerStyle();
 			var markers = gTimelineMarkers;
 			playTimeline.plot();
 			playTimeline.plotMarkers(style, markers, gPlayEndDate);
 			this.playCount++;
-			if (gPlayEndDate >= gEndTime.getTime()/1000) {
+			if (gPlayEndDate >= gEndTime.getTime()/1000)
+			{
 				$('#playTimeline').html('PLAY');
 				$('#playTimeline').parent().attr('class', 'play');
 				this.graphData = allGraphData[0][gCategoryId];
-			} else {
+			}
+			else
+			{
 				$('#playTimeline').html('PAUSE');
 				$('#playTimeline').parent().attr('class', 'play pause');
 				gTimeline = this;
@@ -265,7 +339,8 @@
 			return this;
 		};
 		
-		this.plotMarkers = function(style, markers, endDate) {
+		this.plotMarkers = function(style, markers, endDate)
+		{
 			var startDate = this.startTime.getTime() / 1000;
 			endDate = endDate || this.endTime.getTime() / 1000;
 
@@ -273,13 +348,13 @@
 			//endDate = $.monthEndTime(endDate * 1000) / 1000;
 			endDate = $.dayEndDateTime(endDate * 1000) / 1000;
 
-/*
+			/*
 			// plot markers using a custom addMarkers method if available
 			if (this.addMarkers && !this.playCount > 0) {
 				this.addMarkers(gCategoryId, '', endDate, gMap.getZoom(), gMap.getCenter(), gMediaType);
 				return this;
 			}
-*/
+			*/
 
 			var sliderfilter = new OpenLayers.Rule({
 				filter: new OpenLayers.Filter.Comparison(
@@ -298,20 +373,25 @@
 		};
 
 		// Get url params for creating markers layer
-		this.markerUrlParams = function() {
+		this.markerUrlParams = function(startDate, endDate)
+		{
 			// Add parameters
 			params = [];
-			if (typeof(this.categoryId) != 'undefined' && this.categoryId.length > 0){
+			if (typeof(this.categoryId) != 'undefined' && this.categoryId.length > 0)
+			{
 				params.push('c=' + this.categoryId);
 			}
-			if (typeof(startDate) != 'undefined'){
-				params.push('s=' + this.startTime.getTime()/1000);
+			if (typeof(startDate) != 'undefined')
+			{
+				params.push('s=' + startDate);
 			}
-			if (typeof(endDate) != 'undefined'){
-				params.push('e=' + this.endTime.getTime()/1000);
+			if (typeof(endDate) != 'undefined')
+			{
+				params.push('e=' + endDate);
 			}
-			if (typeof(mediaType) != 'undefined'){
-				//params.push('m=' + mediaType);
+			if (typeof(mediaType) != 'undefined')
+			{
+			//params.push('m=' + mediaType);
 			}
 			return params;
 		};
@@ -320,7 +400,8 @@
 		/*
 		 * Style
 		 */
-		this.markerStyle = function() {
+		this.markerStyle = function()
+		{
 			// Set Feature Styles
 			style = new OpenLayers.Style({
 				'externalGraphic': "${icon}",
@@ -342,22 +423,30 @@
 				{
 					count: function(feature)
 					{
-						if (feature.attributes.count < 2) {
+						if (feature.attributes.count < 2)
+						{
 							return 2 * markerRadius;
-						} else if (feature.attributes.count == 2) {
+						} 
+						else if (feature.attributes.count == 2)
+						{
 							return (Math.min(feature.attributes.count, 7) + 1) *
-								(markerRadius * 0.8);
-						} else {
+							(markerRadius * 0.8);
+						}
+						else
+						{
 							return (Math.min(feature.attributes.count, 7) + 1) *
-								(markerRadius * 0.6);
+							(markerRadius * 0.6);
 						}
 					},
 					fontsize: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="") {
+						if (feature_icon!="")
+						{
 							return "9px";
-						} else {
+						}
+						else
+						{
 							feature_count = feature.attributes.count;
 							if (feature_count > 1000)
 							{
@@ -388,16 +477,20 @@
 					fontweight: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="") {
+						if (feature_icon!="")
+						{
 							return "normal";
-						} else {
+						}
+						else
+						{
 							return "bold";
 						}
 					},
 					radius: function(feature)
 					{
 						feature_count = feature.attributes.count;
-						if (feature_count > 10000) {
+						if (feature_count > 10000)
+						{
 							return markerRadius * 17;
 						}
 						else if (feature_count > 5000)
@@ -432,7 +525,8 @@
 					strokeWidth: function(feature)
 					{
 						feature_count = feature.attributes.count;
-						if (feature_count > 10000) {
+						if (feature_count > 10000)
+						{
 							return 45;
 						}
 						else if (feature_count > 5000)
@@ -467,9 +561,12 @@
 					icon: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="") {
+						if (feature_icon!="")
+						{
 							return baseUrl + "media/uploads/" + feature_icon;
-						} else {
+						} 
+						else
+						{
 							return "";
 						}
 					},
@@ -478,9 +575,12 @@
 						if (feature.attributes.count > 1)
 						{
 							feature_icon = feature.attributes.icon;
-							if (feature_icon!="") {
+							if (feature_icon!="")
+							{
 								return "> " + feature.attributes.count;
-							} else {
+							} 
+							else
+							{
 								return feature.attributes.count;
 							}
 						}
@@ -492,18 +592,24 @@
 					opacity: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="") {
+						if (feature_icon!="")
+						{
 							return "1";
-						} else {
+						}
+						else
+						{
 							return markerOpacity;
 						}
 					},
 					labelalign: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="") {
+						if (feature_icon!="")
+						{
 							return "lb";
-						} else {
+						}
+						else
+						{
 							return "c";
 						}
 					}
@@ -515,28 +621,27 @@
 		/*
 		Create the Markers Layer
 		*/
-		this.addMarkers = function(catID,startDate,endDate, currZoom, currCenter,
-			mediaType, thisLayerID, thisLayerType, thisLayerUrl, thisLayerColor){
+		this.addMarkers = function(startDate,endDate, currZoom, currCenter,
+			thisLayerID, thisLayerType, thisLayerUrl, thisLayerColor, json_url)
+		{
 
-			timelineJsonUrl = 'json';
-
-			var	protocolUrl = baseUrl + timelineJsonUrl + "/"; // Default Json
+			var	protocolUrl = baseUrl + json_url + "/"; // Default Json
 			var thisLayer = "Reports"; // Default Layer Name
 			var protocolFormat = OpenLayers.Format.GeoJSON;
 			newlayer = false;
 
 			if (thisLayer && thisLayerType == 'shares')
 			{
-				protocolUrl = baseUrl + timelineJsonUrl + "/share/"+thisLayer+"/";
+				protocolUrl = baseUrl + json_url + "/share/"+thisLayer+"/";
 				thisLayer = "Share_"+thisLayerID;
 				newlayer = true;
-			} else if (thisLayer && thisLayerType == 'layers') {
-				protocolUrl = baseUrl + timelineJsonUrl + "/layer/"+thisLayerID+"/";
+			} 
+			else if (thisLayer && thisLayerType == 'layers')
+			{
+				protocolUrl = baseUrl + json_url + "/layer/"+thisLayerID+"/";
 				thisLayer = "Layer_"+thisLayerID;
-
-				var protocolFormat = OpenLayers.Format.KML;
-				//var protocolFormat = OpenLayers.Format.GeoJSON;
-
+				protocolFormat = OpenLayers.Format.KML;
+				//protocolFormat = OpenLayers.Format.GeoJSON;
 				newlayer = true;
 			}
 
@@ -546,7 +651,9 @@
 			{
 				myPoint = currCenter;
 				myZoom = currZoom;
-			}else{
+			}
+			else
+			{
 				// create a lat/lon object
 				myPoint = new OpenLayers.LonLat(longitude, latitude);
 				myPoint.transform(proj_4326, map.getProjectionObject());
@@ -555,62 +662,61 @@
 				myZoom = defaultZoom;
 			}
 
-			if (mapLoad == 0) {
+			if (mapLoad == 0)
+			{
 				map.setCenter(myPoint, myZoom, false, false);
 			}
-
 			mapLoad = mapLoad+1;
 
 			// Get Viewport Boundaries
-			extent = map.getExtent().transform(map.getProjectionObject(), new OpenLayers.Projection("EPSG:4326"));
+			extent = map.getExtent().transform(map.getProjectionObject(),
+				new OpenLayers.Projection("EPSG:4326"));
 			southwest = extent.bottom+','+extent.left;
 			northeast = extent.top+','+extent.right;
 
 			var style = this.markerStyle();
 
 			// Transform feature point coordinate to Spherical Mercator
-			preFeatureInsert = function(feature) {
+			preFeatureInsert = function(feature)
+			{
 				var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
 				OpenLayers.Projection.transform(point, proj_4326, proj_900913);
 			};
 
 			// Does 'markers' already exist? If so, destroy it before creating new layer
 			markers = map.getLayersByName(thisLayer);
-			if (markers && markers.length > 0){
-				for (var i = 0; i < markers.length; i++) {
-					//markers[i].destroy();
-					//markers[i] = null;
+			if (markers && markers.length > 0)
+			{
+				for (var i = 0; i < markers.length; i++)
+				{
 					map.removeLayer(markers[i]);
 				}
 			}
 
 			//markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?z='+ myZoom +'&sw='+ southwest +'&ne='+ northeast +'&' + params.join('&'),
 			markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?z=' +
-				      myZoom + '&' + this.markerUrlParams().join('&'),
-			{
-				preFeatureInsert:preFeatureInsert,
-				format: protocolFormat,
-				projection: proj_4326,
-				formatOptions: {
-					extractStyles: true,
-					extractAttributes: true
-				},
-				styleMap: new OpenLayers.StyleMap({
-					"default":style,
-					"select": style
-				})
-			});
+				myZoom + '&' + this.markerUrlParams(startDate, endDate).join('&'),
+				{
+					preFeatureInsert:preFeatureInsert,
+					format: protocolFormat,
+					projection: proj_4326,
+					formatOptions: {
+						extractStyles: true,
+						extractAttributes: true
+					},
+					styleMap: new OpenLayers.StyleMap({
+						"default":style,
+						"select": style
+					})
+				});
 
 			map.addLayer(markers);
 
-			if (!newlayer || thisLayerID==8) {
-				selectControl = new OpenLayers.Control.SelectFeature(
-					markers
-				);
-
+			if (!newlayer || thisLayerID==8)
+			{
+				selectControl = new OpenLayers.Control.SelectFeature(markers);
 				map.addControl(selectControl);
 				selectControl.activate();
-
 				markers.events.on({
 					"featureselected": onFeatureSelect,
 					"featureunselected": onFeatureUnselect
@@ -624,7 +730,8 @@
 		 * Returns options to plot incidents hourly, daily, weekly or monthly
 		 * according to the period
 		 */
-		this.getXaxisOptions = function() {
+		this.getXaxisOptions = function()
+		{
 			var startTime = this.startTime; //new Date(startDate * 1000);
 			var endTime = this.endTime; //new Date(endDate * 1000);
 			// daily
@@ -632,17 +739,22 @@
 			var aTickSize = [5, "day"];
 
 			// plot hourly incidents when period is within 2 days
-			if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 2) {
-			    aTimeformat = "%H:%M";
-			    aTickSize = [5, "hour"];
-			} else if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 124) { 
-			    // weekly if period > 2 months
-			    aTimeformat = "%d %b";
-			    aTickSize = [5, "day"];
-			} else if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 124) {
+			if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 2)
+			{
+				aTimeformat = "%H:%M";
+				aTickSize = [5, "hour"];
+			} 
+			else if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 124)
+			{
+				// weekly if period > 2 months
+				aTimeformat = "%d %b";
+				aTickSize = [5, "day"];
+			} 
+			else if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 124)
+			{
 				// monthly if period > 4 months
-			    aTimeformat = "%b %y";
-			    aTickSize = [2, "month"];
+				aTimeformat = "%b %y";
+				aTickSize = [2, "month"];
 			}
 			
 			return {
@@ -654,21 +766,28 @@
 		};
 	}  
 
-	$.timeline = function(options) {
+	$.timeline = function(options)
+	{
 		timeline = new Timeline(options);
 		return timeline;
 	}
 	
-	$.timelinePeriod = function(plotData) {
+	$.timelinePeriod = function(plotData)
+	{
 		var days = $.timelineDays(plotData);
-		if (days < 365) {
+		if (days < 365)
+		{
 			startTime = plotData[0][0];
 			endTime = plotData[plotData.length-1][0];
-		} else {
+		} 
+		else
+		{
 			heatLevel = 0;
 			hottestMoment = null;
-			for (var i=0; i<plotData.length; i++) {
-				if (plotData[i][1] > heatLevel) {
+			for (var i=0; i<plotData.length; i++)
+			{
+				if (plotData[i][1] > heatLevel)
+				{
 					hottestMoment = plotData[i][0];
 					heatLevel = plotData[i][1];
 				}
@@ -682,9 +801,11 @@
 	/*
 	 * Returns number of days in the given plot data
 	 */
-	$.timelineDays = function(plotData) {
+	$.timelineDays = function(plotData)
+	{
 		var days = 0;
-		if (plotData) {
+		if (plotData)
+		{
 			var incidentCount = plotData.length;
 			var startDate = new Date(plotData[0][0]);
 			var endDate = new Date(plotData[incidentCount-1][0]);
@@ -696,17 +817,22 @@
 	/*
 	 * Returns number of days in given month. Jan is given as 0, Dec as 11
 	 */
-	$.monthDays = function(year, month) {
+	$.monthDays = function(year, month)
+	{
 		days = [31,28,31,30,31,30,31,31,30,31,30,31];
 		daysInMonth = days[month];
-		if ((year % 4) == 0 && month == 1) daysInMonth++;
+		if ((year % 4) == 0 && month == 1)
+		{
+			daysInMonth++;
+		}
 		return daysInMonth;
 	};
 	
 	/*
 	 * Returns timestamp of the first day of Month of the given timestamp
 	 */
-	$.monthStartTime = function(timestamp) {
+	$.monthStartTime = function(timestamp)
+	{
 		var startDate = new Date(timestamp);
 		startDate.setDate(1);
 		startDate.setHours(0);
@@ -718,7 +844,8 @@
 	/*
 	 * Returns timestamp of the last day of month of the given timestamp
 	 */
-	$.monthEndDateTime = function(timestamp) {
+	$.monthEndDateTime = function(timestamp)
+	{
 		endDate = new Date(timestamp);
 		endDate.setDate($.monthDays(endDate.getYear(), endDate.getMonth()));
 		endDate.setHours(0);
@@ -730,7 +857,8 @@
 	/*
 	 * Returns timestamp of the last hour of day of the given timestamp
 	 */
-	$.dayEndDateTime = function(timestamp) {
+	$.dayEndDateTime = function(timestamp)
+	{
 		endDate = new Date(timestamp);
 		//endDate.setDate($.monthDays(endDate.getYear(), endDate.getMonth()));
 		endDate.setHours(23);
@@ -742,7 +870,8 @@
 	/*
 	 * Returns timestamp of the last second in the month of given timestamp
 	 */
-	$.monthEndTime = function(timestamp) {
+	$.monthEndTime = function(timestamp)
+	{
 		return $.monthEndDateTime(timestamp) + (59*1000)+(59*60*1000)+(23*60*60*1000);
 	};
 		
