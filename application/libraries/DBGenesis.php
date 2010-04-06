@@ -35,7 +35,11 @@ class DBGenesis_Core {
 	public static function create_db($db_name)
 	{
 		$query = 'CREATE DATABASE IF NOT EXISTS '.mysql_escape_string($db_name).';';
-		$result = mysql_query($query);
+		$result = mysql_query($query) or die('DB not created.');
+
+		// TODO: Throw an error if we couldn't create the database
+		// TODO: Grant permissions to access the newly created database (even though a full dba user will have access anyway)
+
 		return true;
 	}
 
