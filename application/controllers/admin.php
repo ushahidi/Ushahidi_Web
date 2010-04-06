@@ -121,7 +121,9 @@ class Admin_Controller extends Template_Controller
 				'mhi' => Kohana::lang('ui_admin.mhi'),
 				'stats' => Kohana::lang('ui_admin.stats'),
 			);
-			$secondary_tabs = array();
+			$secondary_tabs = array(
+        		'users' => Kohana::lang('ui_admin.users')
+        	);
         }
 
         $this->template->tabs = $tabs;
