@@ -76,7 +76,8 @@ class DBGenesis_Core {
 		// Split by ; to get the sql statement for creating individual tables.
 
 		$tables = explode(';',$db_schema);
-		foreach($tables as $query)
+
+		foreach ($tables as $query)
 		{
 			$result = mysql_query($query);
 		}

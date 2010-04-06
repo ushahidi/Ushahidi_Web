@@ -48,10 +48,9 @@ class mhi_user_Model extends ORM
 
 		$result = ORM::factory('mhi_user')->where('email',$a['email'])->find_all();
 		$id = 0;
-		foreach($result as $res)
-		{
+		foreach ($result as $res)
 			$id = $res->id;
-		}
+		
 		return $id;
 	}
 
@@ -63,9 +62,13 @@ class mhi_user_Model extends ORM
 		$password = sha1($password.$salt);
 		$result = ORM::factory('mhi_user')->where('email',$username)->where('password',$password)->find_all();
 		$id = FALSE;
-		foreach($result as $res) $id = $res->id;
+		
+		foreach ($result as $res)
+			$id = $res->id;
+		
 		$session = Session::instance();
 		$session->set('mhi_user_id',$id);
+		
 		return $id;
 	}
 
@@ -82,10 +85,8 @@ class mhi_user_Model extends ORM
 	{
 		$result = ORM::factory('mhi_user')->where('id',$user_id)->find_all();
 		$details = FALSE;
-		foreach($result as $res)
-		{
+		foreach ($result as $res)
 			return $res;
-		}
 	}
 
 	// Update user

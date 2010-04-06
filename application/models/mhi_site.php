@@ -51,10 +51,8 @@ class mhi_site_Model extends ORM
 
 		$result = ORM::factory('mhi_site')->where('site_domain',$a['site_domain'])->find_all();
 		$id = 0;
-		foreach($result as $res)
-		{
+		foreach ($result as $res)
 			$id = $res->id;
-		}
 
 		return $id;
 	}
@@ -66,7 +64,8 @@ class mhi_site_Model extends ORM
 		$result = ORM::factory('mhi_site')->where('user_id',$user_id)->find_all();
 
 		$sites = array();
-		foreach($result as $res) $sites[] = $res;
+		foreach ($result as $res)
+			$sites[] = $res;
 
 		return $sites;
 	}

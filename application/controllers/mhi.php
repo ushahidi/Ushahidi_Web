@@ -129,7 +129,10 @@ class MHI_Controller extends Template_Controller {
 		$mhi_user_id = $session->get('mhi_user_id');
 
 		if ($mhi_user_id == FALSE)
+		{
+			// If the user is not logged in, go home.
 			url::redirect('/');
+		}
 
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi_manage');
@@ -154,7 +157,10 @@ class MHI_Controller extends Template_Controller {
 		$session = Session::instance();
 		$mhi_user_id = $session->get('mhi_user_id');
 		if ($mhi_user_id == FALSE)
+		{
+			// If the user is not logged in, go home.
 			url::redirect('/');
+		}
 
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi_account');
@@ -208,8 +214,6 @@ class MHI_Controller extends Template_Controller {
 		}
 		$this->template->header->form_error = $form_error;
 		$this->template->header->errors = $errors;
-		//$this->template->content->errors = $errors;
-		//$this->template->content->form_error = $form_error;
 
 	}
 
