@@ -148,7 +148,7 @@ class Reports_Controller extends Main_Controller {
 		// Percent Verified
 
 		$total_verified = Incident_Model::get_total_reports_by_verified(true);
-		$percent_verified = round((($total_verified / $total_reports) * 100),2).'%';
+		$percent_verified = ($total_reports == 0) ? 'n/a' : round((($total_verified / $total_reports) * 100),2).'%';
 
 		$this->template->content->total_reports = $total_reports;
 		$this->template->content->avg_reports_per_day = $avg_reports_per_day;
