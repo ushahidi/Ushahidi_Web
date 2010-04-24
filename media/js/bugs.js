@@ -47,4 +47,5 @@ function validatePost()
 	
 	$("#submit").attr("disabled","disabled");
 	$("#submit").val("Sending...");
+	return true;
 }
