@@ -366,7 +366,7 @@ class Install
 		$handle = fopen('../.htaccess','w');
 			
 		foreach($htaccess_file as $line_number => $line ) {
-			if( !empty($base_path) ) {
+			if( !empty($base_path) && $base_path != "/" ) {
 				switch( trim( substr($line, 0, 12 ) ) ) {
 					case "RewriteBase":
 						fwrite($handle, str_replace("/","/".$base_path,$line));
@@ -406,6 +406,10 @@ class Install
 				);
 			$db_schema = str_replace($find, $replace, $db_schema);
 		}
+		
+		// Use todays date as the date for the first incident in the system
+		$db_schema = str_replace('2009-06-30 12:00:00',
+			date("Y-m-d H:i:s",time()), $db_schema);
 		
 		$result = @mysql_query('CREATE DATABASE '.$db_name);
 		
