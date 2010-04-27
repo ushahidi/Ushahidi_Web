@@ -283,16 +283,18 @@
 	
 	/**
 	 * Process the pre permission check for advanced installer mode.
+	 * +Check for required PHP libraries
 	 */
 	public function _proc_advanced_pre_perm_check() {
-		global $install, $form;
+		global $install, $form, $modules;
 		$status = $install->_check_writable_dir();
+		$status += $install->_check_modules();
 		if($status == 0 ) {
 			// make sure users get to the general setting from advanced db info page.
 			$_SESSION['advanced_db_info'] = 'advanced_summary';
 			
 			header("Location:advanced_db_info.php");
-		}else if($status == 1){
+		}else{
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
 			header("Location:advanced_summary.php");

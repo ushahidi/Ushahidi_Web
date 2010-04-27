@@ -33,6 +33,20 @@
 							print ( $form->error('uploads_perm') == "" ) ? '' : 
 							"<li>".$form->error('uploads_perm')."</li>";
 							
+							print ( $form->error('curl') == "" ) ? '' : 
+							"<li>".$form->error('curl')."</li>";
+							
+							print ( $form->error('pcre') == "" ) ? '' : 
+							"<li>".$form->error('pcre')."</li>";
+							
+							print ( $form->error('iconv') == "" ) ? '' : 
+							"<li>".$form->error('iconv')."</li>";
+							
+							print ( $form->error('mcrypt') == "" ) ? '' : 
+							"<li>".$form->error('mcrypt')."</li>";
+							
+							print ( $form->error('spl') == "" ) ? '' : 
+							"<li>".$form->error('spl')."</li>";
 	   				    ?>
 					</ul>
 			</div>
@@ -49,7 +63,16 @@
                 <li>application/logs</li>
                 <li>media/uploads</li>
                 <li>.htaccess</li>
-            </ul> 
+            </ul>
+
+		<p>Ushahidi will run in almost any environment with minimal configuration. The following PHP extensions are required.</p>
+			<ul>
+				<li><a href="http://php.net/curl" target="_blank">cURL</a> for getting or sending files using the URL syntax.</li>
+				<li><a href="http://php.net/pcre" target="_blank">PCRE</a> compiled with <code>–enable-utf8</code> and <code>–enable-unicode-properties</code> for UTF-8 functions to work properly.</li>
+				<li><a href="http://php.net/iconv" target="_blank">iconv</a> for UTF-8 transliteration.</li>
+				<li><a href="http://php.net/mcrypt" target="_blank">mcrypt</a> for encryption.</li>
+				<li><a href="http://php.net/spl" target="_blank">SPL</a> for several core libraries.</li>
+			</ul>
     </div>
 		
 	<p>Before you get started, you will need to make sure the following files and folders are writable by your webserver. This involves changing file permissions.</p>
