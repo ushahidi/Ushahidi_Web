@@ -32,7 +32,7 @@ class MHI_Controller extends Template_Controller {
 
 		// Initialize JS variables. js_files is an array of ex: html::script('media/js/jquery.validate.min');
 		// Add the sign in box javascript
-		
+
 		$this->template->header->js = new View('mhi_js_signin');
 		$this->template->header->js_files = array();
 
@@ -150,6 +150,14 @@ class MHI_Controller extends Template_Controller {
 		$this->template->content = new View('mhi_about');
 		$this->template->header->js .= new View('mhi_about_js');
 	}
+
+	public function features()
+	{
+		$this->template->header->this_body = 'mhi-features';
+		$this->template->content = new View('mhi_features');
+		$this->template->header->js .= new View('mhi_features_js');
+	}
+
 
 	public function account()
 	{
