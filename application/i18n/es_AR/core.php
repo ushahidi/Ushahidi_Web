@@ -16,7 +16,7 @@ $lang = array
 	'no_controller'         => 'Ushahidi no pudo encontrar un controlador para ejecutar este pedido: %s',
 	'page_not_found'        => 'La página que ha solicitado, %s, no pudo ser encontrada.',
 	'stats_footer'          => 'Cargado en {execution_time} segundos, utilizando {memory_usage} de memoria. Generado por Ushahidi v%s.',
-	'report_bug'			=> '<a href="%s">Reporte esto a Ushahidi</a>',
+	'report_bug'			=> '<a href="%s" id="show_bugs">Reporte esto a Ushahidi</a>',
 	'error_file_line'       => '<tt>%s <strong>[%s]:</strong></tt>',
 	'stack_trace'           => 'Stack Trace',
 	'generic_error'         => 'No es posible completar este pedido',

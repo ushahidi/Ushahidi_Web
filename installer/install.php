@@ -15,6 +15,7 @@
  */
 
 require_once('form.php');
+require_once('modulecheck.php');
 
 class Install
 {
@@ -366,7 +367,7 @@ class Install
 		$handle = fopen('../.htaccess','w');
 			
 		foreach($htaccess_file as $line_number => $line ) {
-			if( !empty($base_path) ) {
+			if( !empty($base_path) && $base_path != "/" ) {
 				switch( trim( substr($line, 0, 12 ) ) ) {
 					case "RewriteBase":
 						fwrite($handle, str_replace("/","/".$base_path,$line));
@@ -406,6 +407,10 @@ class Install
 				);
 			$db_schema = str_replace($find, $replace, $db_schema);
 		}
+		
+		// Use todays date as the date for the first incident in the system
+		$db_schema = str_replace('2009-06-30 12:00:00',
+			date("Y-m-d H:i:s",time()), $db_schema);
 		
 		$result = @mysql_query('CREATE DATABASE '.$db_name);
 		
@@ -630,6 +635,48 @@ class Install
 	}
 	
 	/**
+	 * Check if required PHP libraries are installed.
+	 */
+	public function _check_modules() {
+		global $form, $modules;
+		
+		if( !$modules->isLoaded('curl')) {
+			$form->set_error('curl',
+			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/curl\" target=\"_blank\">cURL</a> for getting or sending files using the URL syntax. ");
+		}
+		
+		if( !$modules->isLoaded('pcre')) {
+			$form->set_error('pcre',
+			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/pcre\" target=\"_blank\">PCRE</a> compiled with <code>–enable-utf8</code> and <code>–enable-unicode-properties</code> for UTF-8 functions to work properly. ");
+		}
+		
+		if( !$modules->isLoaded('iconv')) {
+			$form->set_error('iconv',
+			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/iconv\" target=\"_blank\">iconv</a> for UTF-8 transliteration. ");
+		}
+		
+		if( !$modules->isLoaded('mcrypt')) {
+			$form->set_error('mcrypt',
+			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/mcrypt\" target=\"_blank\">mcrypt</a> for encryption. ");
+		}
+		
+		if( !$modules->isLoaded('SPL')) {
+			$form->set_error('spl',
+			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/spl\" target=\"_blank\">SPL</a> for several core libraries. ");
+		}
+		
+		/**
+		 * error exists, have user correct them.
+		 */
+	   if( $form->num_errors > 0 ) {
+			return 1;
+
+	   } else {
+			return 0;
+	   }	
+	}
+	
+	/**
 	 * Adds header details to the installer html pages.
 	 */
 	public function _include_html_header() {
@@ -663,5 +710,5 @@ HTML;
 
 $install = new Install();
 $form = new Form();
-
+$modules = new Modulecheck();
 ?>

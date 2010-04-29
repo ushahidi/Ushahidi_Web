@@ -979,10 +979,10 @@ class Reports_Controller extends Main_Controller {
 
 		// Generate query from proximity calculator
 		$radius_query = "location.latitude >= '" . $proximity->minLat . "'
-										AND location.latitude <= '" . $proximity->maxLat . "'
-										AND location.longitude >= '" . $proximity->minLong . "'
-										AND location.longitude <= '" . $proximity->maxLong . "'
-										AND incident_active = 1";
+			AND ".$this->table_prefix."location.latitude <= '" . $proximity->maxLat . "'
+			AND ".$this->table_prefix."location.longitude >= '" . $proximity->minLong . "'
+			AND ".$this->table_prefix."location.longitude <= '" . $proximity->maxLong . "'
+			AND incident_active = 1";
 
 		$neighbors = ORM::factory('incident')
 							 	 ->join('location', 'incident.location_id', 'location.id','INNER')

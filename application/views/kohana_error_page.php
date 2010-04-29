@@ -4,37 +4,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title><?php echo $error ?></title>
-<base href="http://php.net/" />
+<?php
+echo html::stylesheet('media/css/error','',true);
+echo html::script('media/js/jquery', true);
+echo html::script('media/js/jquery.ui.min', true);
+echo html::script('media/js/bugs', true);
+?>
 </head>
 <body>
-<style type="text/css">
-* { margin: 0; padding: 0; }
-body {background-image:url(<?php echo url::base(); ?>media/img/bkg_login.gif);}
-div#ushahidi_login_logo {text-align:center; margin:50px 0 20px 0;}
-div#ushahidi_login_logo img { width:400px; height:80px;  }
-div#framework_error { background:#fff; font-family:sans-serif; color:#111; font-size:14px; line-height:130%;border:3px solid #ccc;text-align:left;padding: 20px; }
-div#framework_error h3 { color:#fff; font-size:16px; padding:8px 6px; margin:0 0 8px; background:#666; text-align:center; }
-div#framework_error a { color:#228; text-decoration:none; }
-div#framework_error a:hover { text-decoration:underline; }
-div#framework_error strong { color:#900; }
-div#framework_error p { margin:0; padding:4px 6px 10px; }
-div#framework_error tt,
-div#framework_error pre,
-div#framework_error code { font-family:monospace; padding:2px 4px; font-size:12px; color:#333;
-	white-space:pre-wrap; /* CSS 2.1 */
-	white-space:-moz-pre-wrap; /* For Mozilla */
-	word-wrap:break-word; /* For IE5.5+ */
-}
-div#framework_error tt { font-style:italic; }
-div#framework_error tt:before { content:">"; color:#aaa; }
-div#framework_error code tt:before { content:""; }
-div#framework_error pre,
-div#framework_error code { background:#eaeee5; border:solid 0 #D6D8D1; border-width:0 1px 1px 0; }
-div#framework_error .block { display:block; text-align:left; }
-div#framework_error .ushahidi_bugs { text-align:center; font-size:12px; }
-div#framework_error .stats { padding:4px; background: #eee; border-top:solid 1px #ccc; text-align:center; font-size:10px; color:#888; }
-div#framework_error .backtrace { margin:0; padding:0 6px; list-style:none; line-height:12px; }
-</style>
 <div id="ushahidi_login_logo"><img src="<?php echo url::base(); ?>media/img/admin/logo_login.gif" /></div>
 <div id="framework_error" style="width:42em;margin:20px auto;">
 <h3><?php echo html::specialchars($error) ?></h3>
@@ -43,12 +20,88 @@ div#framework_error .backtrace { margin:0; padding:0 6px; list-style:none; line-
 <p><?php echo Kohana::lang('core.error_file_line', $file, $line) ?></p>
 <?php endif ?>
 <p><code class="block"><?php echo $message ?></code></p>
+<p class="ushahidi_bugs"><?php echo Kohana::lang('core.report_bug',"#"); ?>
+</p>
+<div id="loader"></div>
+<?php
+$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
+$url = $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "";
+$ip_address = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
+
+$environ = "";
+$environ .= "*URL*: ".$url."\n";
+$environ .= "*REFERER*: ".$referer."\n";
+$environ .= "*USER_AGENT*: ".$user_agent."\n";
+$environ .= "*IP*: ".$ip_address."\n";
+$environ .= "*USHAHIDI VERSION*: ".Kohana::config('version.ushahidi_version')."\n";
+$environ .= "*DB VERSION*: ".Kohana::config('version.ushahidi_db_version')."\n";
+
+$error_message = "";
+if ( ! empty($file))
+{
+	$error_message .= "FILE: ".$file."\n";
+}
+if ( ! empty($line))
+{
+	$error_message .= "LINE: ".$line."\n";
+}
+$error_message .= "ERROR: ".$message."\n";
+?>
+<div id="bug_form">
+	<p class="bug_form_desc">Found a bug? Please fill out and submit the form below - help us make Ushahidi better software -- Thanks!</p>
+	<p class="bug_form_desc">All fields are required!</p>
+	<table width="100%" border="0" cellspacing="0" cellpadding="6">
+		<form method="post" action="http://bugs.ushahidi.com" id="form" onSubmit="return validatePost();">
+			<input name="tracker" type="hidden" value="Bug">
+			<input name="remote" type="hidden" value="yes">
+			<tr>
+				<td width="25%" align="right" valign="top" bgcolor="#eeeeee" class="label">Subject:</td>
+				<td width="75%" bgcolor="#eeeeee">
+					<input name="subject" id="subject" value="" class="text long" />
+					<label class="error" for="name" id="subject_error">This field is required.</label>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" valign="top" class="label">Your Name:</td>
+				<td>
+					<input name="yourname" id="yourname" value="" class="text long" />
+					<label class="error" for="name" id="yourname_error">This field is required.</label>
+				</td>
+			</tr>
+			<tr bgcolor="#eeeeee">
+				<td align="right" valign="top" class="label">Your Email Address:</td>
+				<td>
+					<input name="email" id="email" value="" class="text long" />
+					<label class="error" for="name" id="email_error">This field is required.</label>
+				</td>
+			</tr>
+			<tr>
+				<td align="right" valign="top" class="label">Please describe what you were doing when this error occurred:</td>
+				<td>
+					<textarea id="description" name="description" class="textarea long" rows="10"></textarea>
+					<label class="error" for="description" id="description_error">This field is required.</label>
+				</td>
+			</tr>
+			<tr bgcolor="#eeeeee">
+				<td align="right" valign="top" class="label">Error:</td>
+				<td><textarea name="error_message" rows="3" class="textarea long environ" id="error_message" readonly="readonly"><?php echo $error_message; ?></textarea></td>
+			</tr>
+			<tr>
+				<td align="right" valign="top" class="label">Your Environment:</td>
+				<td><textarea name="environ" rows="3" class="textarea long environ" id="environ" readonly="readonly"><?php echo $environ; ?></textarea></td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td><input name="submit" type="submit" class="action_btn" id="submit" value="Submit" /></td>
+			</tr>
+		</form>
+	</table>
+</div>
 <?php if ( ! empty($trace)): ?>
 <h3><?php echo Kohana::lang('core.stack_trace') ?></h3>
 <?php echo $trace ?>
 <?php endif ?>
-<p class="ushahidi_bugs"><?php echo Kohana::lang('core.report_bug',
-	"http://bugs.ushahidi.com?e=".urlencode($message)."&f=".urlencode($file)."&l=".urlencode($line)) ?></p>
 <p class="stats"><?php echo Kohana::lang('core.stats_footer', Kohana::config('version.ushahidi_version')) ?></p>
 </div>
 </body>
