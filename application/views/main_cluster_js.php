@@ -16,15 +16,24 @@
  */
 ?>
 		// Map JS
+		
+		// Map Object
 		var map;
+		// Selected Category
 		var currentCat;
+		// Selected Layer
 		var thisLayer;
+		// WGS84 Datum
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
+		// Spherical Mercator
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
+		// Change to 1 after map loads
 		var mapLoad = 0;
+		// /json or /json_cluster depending on if clustering is on
 		var default_json_url = "<?php echo $default_json_url ?>";
-		var json_url = default_json_url; // json_url used to switch to non-cluster for short timelines
-
+		// Current json_url, if map is switched dynamically between json and json_cluster
+		var json_url = default_json_url;
+		
 		var baseUrl = "<?php echo url::base(); ?>";
 		var longitude = <?php echo $longitude; ?>;
 		var latitude = <?php echo $latitude; ?>;
@@ -49,7 +58,6 @@
 			- Uses Spherical Mercator Projection
 			- Units in Metres instead of Degrees					
 			*/
-			
 			var options = {
 				units: "mi",
 				numZoomLevels: 16,
@@ -62,7 +70,6 @@
 				};
 			map = new OpenLayers.Map('map', options);
 			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
-			
 			
 			/*
 			- Select A Mapping API
@@ -116,7 +123,7 @@
 					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
 					});
 			}
-			
+			// Add the layer to the map object
 			map.addLayer(map_layer);
 			
 			
@@ -135,7 +142,7 @@
 				
 			gMap = map;
 			
-			// Category Switch
+			// Category Switch Action
 			$("a[id^='cat_']").click(function()
 			{
 				var catID = this.id.substring(4);
@@ -159,8 +166,6 @@
 				
 				// Get Current Center
 				currCenter = map.getCenter();
-					
-				addMarkers(catID, '', '', currZoom, currCenter, gMediaType);
 				
 				graphData = dailyGraphData[0][catID];
 				gCategoryId = catID;
@@ -172,10 +177,12 @@
 				});
 				gTimeline.plot();
 				
+				addMarkers(catID, '', '', currZoom, currCenter, gMediaType);
+				
 				return false;
 			});
 			
-			// Sharing Layer[s] Switch
+			// Sharing Layer[s] Switch Action
 			$("a[id^='share_']").click(function()
 			{
 				var shareID = this.id.substring(6);
@@ -292,7 +299,7 @@
 			addMarkers(gCategoryId, startTime, endTime, '', '', gMediaType);
 			refreshGraph(startTime, endTime);
 			
-			// media filter
+			// Media Filter Action
 			$('.filters li a').click(function()
 			{
 				var startTimestamp = $("#startDate").val();
@@ -341,8 +348,8 @@
 			                   endTime: new Date(endDate * 1000),
 							   mediaType: mediaType
 							  }).addMarkers(startDate, endDate, gMap.getZoom(),
-							                gMap.getCenter(), null, null, null,
-											null, json_url);
+							                gMap.getCenter(), thisLayerID, thisLayerType,
+							 				thisLayerUrl, thisLayerColor, json_url);
 		}
 		
 		/*
@@ -516,7 +523,6 @@
 				// monthly if period > 4 months
 			    graphData = allGraphData[0][currentCat];
 			}
-
 			gTimeline = $.timeline({categoryId: currentCat,
 				startTime: new Date(startDate * 1000),
 			    endTime: new Date(endDate * 1000), mediaType: gMediaType,

@@ -20,6 +20,17 @@ class Json_Controller extends Template_Controller
 	
     // Main template
     public $template = 'json';
+
+	// Table Prefix
+	protected $table_prefix;
+
+	public function __construct()
+	{
+		parent::__construct();
+		
+		// Set Table Prefix
+		$this->table_prefix = Kohana::config('database.default.table_prefix');
+	}
 	
     function index()
     {	
@@ -64,19 +75,19 @@ class Json_Controller extends Template_Controller
 		if (isset($_GET['m']) && !empty($_GET['m']) && $_GET['m'] != '0')
 		{
 			$media_type = $_GET['m'];
-			$where_text .= ' AND media.media_type = ' . $media_type;
+			$where_text .= " AND ".$this->table_prefix."media.media_type = " . $media_type;
 		}
 		
         if (isset($_GET['s']) && !empty($_GET['s']))
 		{
         	$start_date = $_GET['s']; 
-        	$where_text .= " AND UNIX_TIMESTAMP(incident.incident_date) >= '" . $start_date . "'";
+        	$where_text .= " AND UNIX_TIMESTAMP(".$this->table_prefix."incident.incident_date) >= '" . $start_date . "'";
         }
         
 		if (isset($_GET['e']) && !empty($_GET['e']))
 		{
         	$end_date = $_GET['e']; 
-        	$where_text .= " AND UNIX_TIMESTAMP(incident.incident_date) <= '" . $end_date . "'";
+        	$where_text .= " AND UNIX_TIMESTAMP(".$this->table_prefix."incident.incident_date) <= '" . $end_date . "'";
         }
                 
         // Do we have a category id to filter by?
@@ -103,7 +114,7 @@ class Json_Controller extends Template_Controller
 				->with('location')
 				->join('incident_category', 'incident.id', 'incident_category.incident_id','LEFT')
 				->join('media', 'incident.id', 'media.incident_id','LEFT')
-				->where('incident.incident_active = 1 AND (incident_category.category_id = ' . $category_id . ' ' . $where_child . ')' . $where_text)
+				->where('incident.incident_active = 1 AND ('.$this->table_prefix.'incident_category.category_id = ' . $category_id . ' ' . $where_child . ')' . $where_text)
 				->find_all();
 			
                      
