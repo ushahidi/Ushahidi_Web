@@ -45,7 +45,8 @@
     	<div id="header-wrapper">
     		<h1><a href="<?php echo url::base() ?>mhi/">Ushahidi</a></h1>
             <ul class="primary-nav">
-                <li><a href="<?php echo url::base() ?>mhi/about"<?php if($this_body == 'about') { ?> class="active" <?php } ?>>About</a></li>
+            	<li><a href="<?php echo url::base() ?>mhi/features"<?php if($this_body == 'mhi-features') { ?> class="active" <?php } ?>>Features</a></li>
+                <li><a href="<?php echo url::base() ?>mhi/about"<?php if($this_body == 'mhi-about') { ?> class="active" <?php } ?>>About</a></li>
                 <li><a class="contact.html" href="#">Contact Us</a></li>
             </ul>
             <div id="login-box">

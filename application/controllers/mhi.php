@@ -31,8 +31,9 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->site_name = Kohana::config('settings.site_name');
 
 		// Initialize JS variables. js_files is an array of ex: html::script('media/js/jquery.validate.min');
+		// Add the sign in box javascript
 
-		$this->template->header->js = '';
+		$this->template->header->js = new View('mhi_js_signin');
 		$this->template->header->js_files = array();
 
 		// If we aren't at the top level MHI site or MHI isn't enabled, don't allow access to any of this jazz
@@ -54,7 +55,7 @@ class MHI_Controller extends Template_Controller {
 	{
 		$this->template->header->this_body = 'mhi-home';
 		$this->template->content = new View('mhi');
-		$this->template->header->js = new View('mhi_js');
+		$this->template->header->js .= new View('mhi_js');
 		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
 
 		$session = Session::instance();
@@ -147,8 +148,16 @@ class MHI_Controller extends Template_Controller {
 	{
 		$this->template->header->this_body = 'mhi-about';
 		$this->template->content = new View('mhi_about');
-		$this->template->header->js = new View('mhi_about_js');
+		$this->template->header->js .= new View('mhi_about_js');
 	}
+
+	public function features()
+	{
+		$this->template->header->this_body = 'mhi-features';
+		$this->template->content = new View('mhi_features');
+		$this->template->header->js .= new View('mhi_features_js');
+	}
+
 
 	public function account()
 	{
@@ -164,7 +173,7 @@ class MHI_Controller extends Template_Controller {
 
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi_account');
-		$this->template->header->js = new View('mhi_account_js');
+		$this->template->header->js .= new View('mhi_account_js');
 
 		$mhi_user = new Mhi_User_Model;
 
@@ -228,7 +237,7 @@ class MHI_Controller extends Template_Controller {
 	{
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi_signup');
-		$this->template->header->js = new View('mhi_signup_js');
+		$this->template->header->js .= new View('mhi_signup_js');
 		$this->template->header->js_files = array(html::script('media/js/mhi/initialize', true));
 
 		$this->template->content->site_name = Kohana::config('settings.site_name');
