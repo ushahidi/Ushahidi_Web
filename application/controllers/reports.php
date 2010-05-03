@@ -329,12 +329,10 @@ class Reports_Controller extends Main_Controller {
 
 				// The $_POST['date'] is a value posted by form in mm/dd/yyyy format
 				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
-
 				$incident_time = $post->incident_hour
-											 	 .":".$post->incident_minute
-												 .":00 ".$post->incident_ampm;
-
-				$incident->incident_date = $incident_date." ".$incident_time;
+					.":".$post->incident_minute
+					.":00 ".$post->incident_ampm;
+				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );				
 				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				$incident->save();
 
