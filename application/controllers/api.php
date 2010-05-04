@@ -481,8 +481,8 @@ class Api_Controller extends Controller {
 				."l.location_name AS locationname, "
 				."l.latitude AS locationlatitude, "
 				."l.longitude AS locationlongitude "
-				."FROM incident AS i " 
-                ."INNER JOIN location as l on l.id = i.location_id "
+				."FROM ".$this->table_prefix."incident AS i " 
+                ."INNER JOIN ".$this->table_prefix."location as l on l.id = i.location_id "
                 ."$where $limit";
  
 		$items = $this->db->query($query);
