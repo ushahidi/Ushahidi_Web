@@ -15,6 +15,8 @@
 
 class Alerts_Controller extends Controller
 {
+
+        public $table_prefix = '';
 	public function __construct()
     {
         parent::__construct();
@@ -27,6 +29,10 @@ class Alerts_Controller extends Controller
 		$alerts_email = $settings['alerts_email'];
 		$unsubscribe_message = Kohana::lang('alerts.unsubscribe')
 								.url::site().'alerts/unsubscribe/';
+
+                $database_settings = kohana::config('database'); //around line 33
+                $this->table_prefix = $database_settings['default']['table_prefix']; //around line 34
+
 		$settings = NULL;
 		$sms_from = NULL;
 		$clickatell = NULL;
