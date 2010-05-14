@@ -12,9 +12,9 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
 /**
-* Table structure for table `category`
-* 
-*/
+ * Table structure for table `category`
+ * 
+ */
 
 CREATE TABLE IF NOT EXISTS `category` (                                             -- table description
     `id` int(11) unsigned NOT NULL auto_increment,                                  -- field description

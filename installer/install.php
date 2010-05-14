@@ -218,6 +218,36 @@ class Install
 		}
 	}
 	
+	/**
+	 * Validate if require extensions are installed.
+	 */
+	public function _required_ext_installed() {
+		global $form;
+		
+		// Make sure cURL is installed
+		if (!function_exists('curl_exec')) {
+			$form->set_error("curl","Curl is not installed. Could get You it installed??? Please.");
+		}
+		
+		if( !function_exists('iconv')) {
+			$form->set_error("iconv","http=\"http://php.net/pcre\">PCRE</a> must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.");
+		}
+		
+		//TODO figure out how to check for the other extensions.
+		
+		
+		/**
+		 * error exists, have user correct them.
+		 */
+		if( $form->num_errors > 0 ) {
+			
+			return 1;
+		} else {
+			
+			return 0;
+		}
+	}
+	
 	public function _mail_server($alert_email, $mail_username,$mail_password,
 		$mail_port,$mail_host,$mail_type,$mail_ssl,$table_prefix){
 		
@@ -573,6 +603,8 @@ class Install
 		
 		return $buffer;
 	}
+	
+	
 	
 	/**
 	 * Check if relevant directories are writable.

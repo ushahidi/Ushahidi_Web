@@ -118,6 +118,7 @@
 			$_SESSION['table_prefix'] = $_POST['table_prefix']; 
 			
 			header("Location:advanced_general_settings.php");
+		
 		}else if($status == 1 ) {
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
