@@ -565,7 +565,7 @@ class Reports_Controller extends Admin_Controller
 					$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
 					
 				$incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
-				$incident->incident_date = $incident_date . " " . $incident_time;
+				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );				
 				// Is this new or edit?
 				if ($id)	// edit
 				{
@@ -1023,30 +1023,33 @@ class Reports_Controller extends Admin_Controller
 				foreach ($incidents as $incident)
 				{
 					$report_csv .= '"'.$incident->id.'",';
-					$report_csv .= '"'.htmlspecialchars($incident->incident_title).'",';
+					$report_csv .= '"'.$this->_csv_text($incident->incident_title).'",';
 					$report_csv .= '"'.$incident->incident_date.'"';
 					
 					foreach($post->data_include as $item)
 					{
 						if ($item == 1) {
-                                                        $report_csv .= ',"'.htmlspecialchars($incident->location->location_name).'"';
+                                                        $report_csv .= ',"'.$this->_csv_text($incident->location->location_name).'"';
 						}
 						if ($item == 2) {
-							$report_csv .= ',"'.htmlspecialchars($incident->incident_description).'"';
+							$report_csv .= ',"'.$this->_csv_text($incident->incident_description).'"';
 						}
 						if ($item == 3) {
 							$report_csv .= ',"';
 							foreach($incident->incident_category as $category) 
-							{ 
-								$report_csv .= htmlspecialchars($category->category->category_title) . ", ";
+							{
+								if ($category->category->category_title)
+								{
+									$report_csv .= $this->_csv_text($category->category->category_title) . ", ";
+								}
 							}
 							$report_csv .= '"';
                                                 }
                                                 if ($item == 4) {
-                                                        $report_csv .= ',"'.htmlspecialchars($incident->location->latitude).'"';
+                                                        $report_csv .= ',"'.$this->_csv_text($incident->location->latitude).'"';
                                                 }
                                                 if ($item == 5) {
-                                                        $report_csv .= ',"'.htmlspecialchars($incident->location->longitude).'"';
+                                                        $report_csv .= ',"'.$this->_csv_text($incident->location->longitude).'"';
                                                 }
 					}
 					if ($incident->incident_active) {
@@ -1698,5 +1701,11 @@ class Reports_Controller extends Admin_Controller
 		{
 			return "1=1";
 		}
+	}
+	
+	private function _csv_text($text)
+	{
+		$text = stripslashes(htmlspecialchars($text));
+		return $text;
 	}
 }

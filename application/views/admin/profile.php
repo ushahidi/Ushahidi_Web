@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2>My Profile</h2>
+				<h2><?php echo Kohana::lang('ui_admin.my_profile');?></h2>
 				<?php print form::open(); ?>
 				<div class="report-form">
 					<?php

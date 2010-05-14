@@ -632,13 +632,13 @@
 
 			if (thisLayer && thisLayerType == 'shares')
 			{
-				protocolUrl = baseUrl + json_url + "/share/"+thisLayer+"/";
+				protocolUrl = baseUrl + "json/share/"+thisLayer+"/";
 				thisLayer = "Share_"+thisLayerID;
 				newlayer = true;
 			} 
 			else if (thisLayer && thisLayerType == 'layers')
 			{
-				protocolUrl = baseUrl + json_url + "/layer/"+thisLayerID+"/";
+				protocolUrl = baseUrl + "json/layer/"+thisLayerID+"/";
 				thisLayer = "Layer_"+thisLayerID;
 				protocolFormat = OpenLayers.Format.KML;
 				//protocolFormat = OpenLayers.Format.GeoJSON;

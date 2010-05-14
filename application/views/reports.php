@@ -68,7 +68,7 @@
 
 								$incident_description = text::limit_chars($incident_description, 150, "...", true);
 								$incident_date = date('Y-m-d', strtotime($incident->incident_date));
-								$incident_location = $incident->location->location_name;
+								$incident_location = $incident->location_name;
 								$incident_verified = $incident->incident_verified;
 								if ($incident_verified)
 								{

@@ -42,32 +42,38 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
+		
+		$db = new Database;
+		
+		$filter = ( isset($_GET['c']) && !empty($_GET['c']) && $_GET['c']!=0 )
+			? " AND ( c.id='".$_GET['c']."' OR 
+				c.parent_id='".$_GET['c']."' )  "
+			: " AND 1 = 1";
 
-		// Filter By Category
-		$category_filter = ( isset($_GET['c']) && !empty($_GET['c']) )
-			? "category_id = ".$_GET['c'] : " 1=1 ";
+		if ( isset($_GET['sw']) && !empty($_GET['sw']) && 
+				count($southwest = explode(",",$_GET['sw'])) > 1 &&
+			isset($_GET['ne']) && !empty($_GET['ne']) && 
+				count($northeast = explode(",",$_GET['ne'])) > 1
+			)
+ 		{
+			list($longitude_min, $latitude_min) = $southwest;
+			list($longitude_max, $latitude_max) = $northeast;
 
+			$filter .= " AND l.latitude >=".$latitude_min.
+				" AND l.latitude <=".$latitude_max;
+			$filter .= " AND l.longitude >=".$longitude_min.
+				" AND l.longitude <=".$longitude_max;
+		}
+		
 		// Pagination
 		$pagination = new Pagination(array(
 				'query_string' => 'page',
 				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
-				'total_items' => ORM::factory('incident')
-					->join('incident_category', 'incident.id', 'incident_category.incident_id')
-					->where('incident_active', '1')
-					->where($category_filter)
-					->count_all()
+				'total_items' => $db->query("SELECT DISTINCT i.* FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) JOIN `".$this->table_prefix."location` AS l ON (i.`location_id` = l.`id`) WHERE `incident_active` = '1' $filter")->count()
 				));
 
-		$incidents = ORM::factory('incident')
-				->select('DISTINCT incident.*')
-				->join('incident_category', 'incident.id', 'incident_category.incident_id')
-				->where('incident_active', '1')
-				->where($category_filter)
-				->groupby('incident.id')
-				->orderby('incident_date', 'desc')
-				->find_all( (int) Kohana::config('settings.items_per_page'),
-					$pagination->sql_offset);
-
+		$incidents = $db->query("SELECT DISTINCT i.*, l.`location_name` FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) JOIN `".$this->table_prefix."location` AS l ON (i.`location_id` = l.`id`) WHERE `incident_active` = '1' $filter ORDER BY incident_date DESC LIMIT ". (int) Kohana::config('settings.items_per_page') . " OFFSET ".$pagination->sql_offset);
+			
 		$this->template->content->incidents = $incidents;
 
 		//Set default as not showing pagination. Will change below if necessary.
@@ -323,12 +329,10 @@ class Reports_Controller extends Main_Controller {
 
 				// The $_POST['date'] is a value posted by form in mm/dd/yyyy format
 				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
-
 				$incident_time = $post->incident_hour
-											 	 .":".$post->incident_minute
-												 .":00 ".$post->incident_ampm;
-
-				$incident->incident_date = $incident_date." ".$incident_time;
+					.":".$post->incident_minute
+					.":00 ".$post->incident_ampm;
+				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );				
 				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				$incident->save();
 
@@ -979,10 +983,10 @@ class Reports_Controller extends Main_Controller {
 
 		// Generate query from proximity calculator
 		$radius_query = "location.latitude >= '" . $proximity->minLat . "'
-										AND location.latitude <= '" . $proximity->maxLat . "'
-										AND location.longitude >= '" . $proximity->minLong . "'
-										AND location.longitude <= '" . $proximity->maxLong . "'
-										AND incident_active = 1";
+			AND ".$this->table_prefix."location.latitude <= '" . $proximity->maxLat . "'
+			AND ".$this->table_prefix."location.longitude >= '" . $proximity->minLong . "'
+			AND ".$this->table_prefix."location.longitude <= '" . $proximity->maxLong . "'
+			AND incident_active = 1";
 
 		$neighbors = ORM::factory('incident')
 							 	 ->join('location', 'incident.location_id', 'location.id','INNER')

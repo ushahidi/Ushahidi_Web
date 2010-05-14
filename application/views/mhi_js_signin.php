@@ -1,6 +1,6 @@
 <?php
 /**
- * MHI Homepage JS file
+ * MHI Sing In Box JS file
  * 
  * Non-clustered map rendering (Please refer to main_cluster_js for Server Side Clusters)
  *
@@ -18,10 +18,15 @@
 
 
 $(function(){
-	$(".intro-slideshow").cycle({ delay:3000, speed:1000, timeout:2000, autostop:3 })
-	$('a.cycle-Resume').click(function(){
-		//alert("clicked");
-		$(".intro-slideshow").cycle('destroy');
-		$(".intro-slideshow").cycle({ delay:3000, speed:1000, timeout:2000, autostop:3 })
-	});
+    $('#btn_sign-in').toggle(function(){
+        //show the dagum form	
+        $("#login-form").show()
+        //add the active class to sign-in link
+        $(this).addClass("active")
+    }, function(){
+        //hide the dagum form
+        $("#login-form").hide()
+        //remove the active class from the sign-in link
+        $(this).removeClass("active")
+    });
 });

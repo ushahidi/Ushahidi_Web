@@ -16,14 +16,14 @@
  */
 
 class Api_Controller extends Controller {
-	
+
 	private $db; //Database instance for queries
 	private $list_limit; //number of records to limit response to - set in __construct
 	private $responseType; //type of response, either json or xml as specified, defaults to json in set in __construct
 	private $error_messages; // validation error messages
 	private $messages = array(); // form validation error messages
 	protected $table_prefix; // Table Prefix
-	
+
 	/**
 	 * constructor
 	*/
@@ -34,7 +34,7 @@ class Api_Controller extends Controller {
 		$this->responseType = 'json';
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 	}
-	
+
 	/**
  	*
  	* determines what to do
@@ -44,14 +44,14 @@ class Api_Controller extends Controller {
 		$ret = ""; //return value
 		$request = array();
 		$error = array();
-		
+
 		//determine if we are using GET or POST
 		if($_SERVER['REQUEST_METHOD'] == 'GET'){
 			$request =& $_GET;
 		} else {
 			$request =& $_POST;
 		}
-		
+
 		//make sure we have a task to work with
 		if(!$this->_verifyArrayIndex($request, 'task')){
 			$error = array("error" => $this->_getErrorMsg(001, 'task'));
@@ -59,30 +59,30 @@ class Api_Controller extends Controller {
 		} else {
 			$task = $request['task'];
 		}
-		
+
 		//response type
 		if(!$this->_verifyArrayIndex($request, 'resp')){
 			$this->responseType = 'json';
 		} else {
 			$this->responseType = $request['resp'];
 		}
-		
+
 		switch($task){
 			case "report": //report/add an incident
 				$ret = $this->_report();
 			break;
-			
+
 			case "3dkml": //report/add an incident
 				$ret = $this->_3dkml();
 			break;
-				
+
 			case "tagnews": //tag a news item to an incident
-			
+
 			case "tagvideo": //report/add an incident
-			
+
 			case "tagphoto": //report/add an incident
 				$incidentid = '';
-				
+
 				if(!$this->_verifyArrayIndex($request, 'id')) {
 					$error = array("error" => 
 					$this->_getErrorMsg(001, 'id'));
@@ -90,19 +90,19 @@ class Api_Controller extends Controller {
 				} else {
 					$incidentid = $request['id'];
 				}	
-				
+
 				$mediatype = 0;
-	
+
 				if($task == "tagnews") $mediatype = 4;
-					
+
 				if($task == "tagvideo") $mediatype = 2;
-					
+
 				if($task == "tagphoto") $mediatype = 1;
-					
+
 				$ret = $this->_tagMedia($incidentid, $mediatype);
-				
+
 				break;
-		
+
 			case "apikeys":
 				$by = '';
 				if(!$this->_verifyArrayIndex($request, 'by')) {
@@ -112,7 +112,7 @@ class Api_Controller extends Controller {
 				}else {
 					$by = $request['by'];
 				}
-			
+
 				switch($by) {
 					case "google":
 						$ret = $this->_apiKey('api_google');
@@ -125,12 +125,12 @@ class Api_Controller extends Controller {
 					case "microsoft":
 						$ret = $this->_apiKey('api_live');
 						break;
-					
+
 					default:
 						$error = array("error" =>$this->_getErrorMsg(002));
 				}
 				break;
-					
+
 			case "categories": //retrieve all categories
 				$ret = $this->_categories();
 				break;
@@ -141,10 +141,10 @@ class Api_Controller extends Controller {
 			case "mapcenter": //retrieve lat and lon for map centre
 				$ret = $this->_mapCenter();
 				break;
-				
+
 			case "category": //retrieve categories
 				$id = 0;
-				
+
 				if(!$this->_verifyArrayIndex($request, 'id')){
 					$error = array("error" => 
 					$this->_getErrorMsg(001, 'id'));
@@ -152,17 +152,17 @@ class Api_Controller extends Controller {
 				} else {
 					$id = $request['id'];
 				}
-				
+
 				$ret = $this->_category($id);
 				break;
-				
+
 			case "locations": //retrieve locations
 				$ret = $this->_locations();
 				break;		
-		
+
 			case "location": //retrieve locations
 				$by = '';
-				
+
 				if(!$this->_verifyArrayIndex($request, 'by')){
 					$error = array("error" => 
 					$this->_getErrorMsg(001, 'by'));
@@ -170,11 +170,11 @@ class Api_Controller extends Controller {
 				} else {
 					$by = $request['by'];
 				}
-		
+
 				switch ($by){
 					case "latlon": //latitude and longitude
 						break;
-					
+
 					case "locid": //id
 						if(($this->_verifyArrayIndex($request, 'id'))){
 							$ret = $this->_locationById($request['id']);
@@ -182,7 +182,7 @@ class Api_Controller extends Controller {
 							$error = array("error" => $this->_getErrorMsg(001, 'id'));
 						}
 						break;
-			
+
 					case "country": //id
 						if(($this->_verifyArrayIndex($request, 'id'))){
 							$ret = $this->_locationByCountryId($request['id']);
@@ -190,27 +190,27 @@ class Api_Controller extends Controller {
 							$error = array("error" => $this->_getErrorMsg(001, 'id'));
 						}
 						break;
-				
+
 					default:
 						$error = array("error" => $this->_getErrorMsg(002));
 				}
-				
+
 				break;
-				
+
 			case "countries": //retrieve countries
 				$ret = $this->_countries();
 				break;
-				
+
 			case "country": //retrieve countries
 				$by = '';
-			
+
 				if(!$this->_verifyArrayIndex($request, 'by')){
 					$error = array("error" => $this->_getErrorMsg(001, 'by'));
 					break;
 				} else {
 					$by = $request['by'];
 				}
-			
+
 				switch ($by){
 					case "countryid": //id
 						if(($this->_verifyArrayIndex($request, 'id'))){
@@ -219,7 +219,7 @@ class Api_Controller extends Controller {
 							$error = array("error" => $this->_getErrorMsg(001, 'id'));
 						}
 						break;
-			
+
 					case "countryname": //name
 						if(($this->_verifyArrayIndex($request, 'name'))){
 							$ret = $this->_countryByName($request['name']);
@@ -227,7 +227,7 @@ class Api_Controller extends Controller {
 							$error = array("error" => $this->_getErrorMsg(001, 'name'));
 						}
 						break;
-			
+
 					case "countryiso": //name
 						if(($this->_verifyArrayIndex($request, 'iso'))){
 							$ret = $this->_countryByIso($request['iso']);
@@ -235,13 +235,13 @@ class Api_Controller extends Controller {
 							$error = array("error" => $this->_getErrorMsg(001, 'iso'));
 						}
 						break;
-					
+
 					default:
 						$error = array("error" => $this->_getErrorMsg(002));
 				}
-			
+
 				break;
-				
+
 			case "incidents": //retrieve incidents
 				/**
 				* 
@@ -250,7 +250,7 @@ class Api_Controller extends Controller {
 				$by = '';
 				$sort = 'asc';
 				$orderfield = 'incidentid';
-			
+
 				if(!$this->_verifyArrayIndex($request, 'by')){
 					$error = array("error" => $this->_getErrorMsg(001, 'by'));
 					break;
@@ -272,7 +272,7 @@ class Api_Controller extends Controller {
 					$limit = 20;
 				}
 				}
-			
+
 				/* Order field  */
 				if($this->_verifyArrayIndex($request, 'orderfield')){
 					switch ( $request['orderfield'] ){
@@ -295,7 +295,7 @@ class Api_Controller extends Controller {
 					case "all": // incidents
 						$ret = $this->_incidentsByAll($orderfield, $sort, $limit);
 						break;
-				
+
 					case "latlon": //latitude and longitude
 						if(($this->_verifyArrayIndex($request, 'latitude')) && ($this->_verifyArrayIndex($request, 'longitude'))){
 							$ret = $this->_incidentsByLatLon($request['latitude'],$orderfield,$request['longitude'],$sort);
@@ -311,7 +311,7 @@ class Api_Controller extends Controller {
 							$error = array("error" => $this->_getErrorMsg(001, 'id'));
 						}
 						break;
-			
+
 					case "locname": //Location Name
 						if(($this->_verifyArrayIndex($request, 'name'))){
 							$ret = $this->_incidentsByLocationName($request['name'], $orderfield, $sort);
@@ -319,7 +319,7 @@ class Api_Controller extends Controller {
 							$error = array("error" => $this->_getErrorMsg(001, 'name'));
 						}
 						break;
-					
+
 					case "catid": //Category Id
 						if(($this->_verifyArrayIndex($request, 'id'))){
 							$ret = $this->_incidentsByCategoryId($request['id'], $orderfield, $sort);
@@ -327,7 +327,7 @@ class Api_Controller extends Controller {
 							$error = array("error" => $this->_getErrorMsg(001, 'id'));
 						}
 						break;
-			
+
 					case "catname": //Category Name
 						if(($this->_verifyArrayIndex($request, 'name'))){
 							$ret = $this->_incidentsByCategoryName($request['name'], $orderfield, $sort);
@@ -346,10 +346,10 @@ class Api_Controller extends Controller {
 					default:
 						$error = array("error" => $this->_getErrorMsg(002));
 				}
-			
+
 				break;
-				
-				
+
+
 			case "sharing": //Sharing Data based on Permissions
 				if( $this->_verifyArrayIndex($request, 'sharing_key') && $this->_verifyArrayIndex($request, 'sharing_site_name') && $this->_verifyArrayIndex($request, 'sharing_email') && $this->_verifyArrayIndex($request, 'sharing_url') && $this->_verifyArrayIndex($request, 'type') && $this->_verifyArrayIndex($request, 'session') ){
 					$ret = $this->_sharing($request['type'], 
@@ -363,7 +363,7 @@ class Api_Controller extends Controller {
 					$error = json_encode(array("error" => $this->_getErrorMsg(001,'Authentication Credentials')));
 				}
 				break;
-		
+
 			case "validate": //Validate Session
 				if(!$this->_verifyArrayIndex($request,'session')){
 					$error = array("error" => $this->_getErrorMsg(006, 'session'));
@@ -371,7 +371,7 @@ class Api_Controller extends Controller {
 					$ret = $this->_validate($request['session']);
 				}
 				break;
-				
+
 			case "statistics":
 				if(!Kohana::config('settings.allow_stat_sharing')){
 					$error = array("error" => $this->_getErrorMsg(005));
@@ -379,16 +379,16 @@ class Api_Controller extends Controller {
 					$ret = $this->_statistics();
 				}
 				break;
-				
+
 			case "sms": // Incoming SMS via FrontlineSMS, SmartPhone etc.
 				$ret = $this->_sms($request);
 				break;			
-			
+
 			default:
 				$error = array("error" => $this->_getErrorMsg(999));
 				break;
 		}
-		
+
 		//create the response depending on the kind that was requested
 		if(!empty($error) || count($error) > 0){
 			if($this->responseType == 'json'){
@@ -397,18 +397,18 @@ class Api_Controller extends Controller {
 				$ret = $this->_arrayAsXML($error, array());
 			}
 		}
-		
+
 		//avoid caching
 		header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
 		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 		$mime = "";
 		if($this->responseType == 'xml') header("Content-type: text/xml");
-		
+
 		print $ret;
-		
+
 		//END
 	}
-	
+
 	/**
  	* Makes sure the appropriate key is there in a given array (POST or GET) and that it is set
  	*/
@@ -419,7 +419,7 @@ class Api_Controller extends Controller {
 			return false;
 		}
 	}
-	
+
 	/**
  	* returns an array error - array("code" => "CODE", "message" => "MESSAGE") based on the given code
 	*/
@@ -443,7 +443,7 @@ class Api_Controller extends Controller {
 				return array("code" => "999", "message" => Kohana::lang('ui_admin.not_found'));
 		}
 	}
-	
+
 	/**
  	* generic function to get incidents by given set of parameters
  	*/
@@ -451,17 +451,17 @@ class Api_Controller extends Controller {
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
 		$json_incidents = array(); //incidents to parse to json
-		
+
 		$media_items = array(); //incident media
 		$json_incident_media = array(); //incident media
-		
+
 		$retJsonOrXml = ''; //will hold the json/xml string to return
-		
+
 		$replar = array(); //assists in proper xml generation
-		
+
 		// Doing this manually. It was wasting my time trying to modularize it.
 		// Will have to visit this again after a good rest. I mean a good rest.
-		
+
 		//XML elements
 		$xml = new XmlWriter();
 		$xml->openMemory();
@@ -469,7 +469,7 @@ class Api_Controller extends Controller {
 		$xml->startElement('response');
 		$xml->startElement('payload');
 		$xml->startElement('incidents');
-		
+
 		//find incidents
 		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle," 
                 ."i.incident_description AS incidentdescription, "
@@ -482,20 +482,20 @@ class Api_Controller extends Controller {
 				."l.latitude AS locationlatitude, "
 				."l.longitude AS locationlongitude "
 				."FROM ".$this->table_prefix."incident AS i " 
-                ."INNER JOIN location as l on l.id = i.location_id "
+                ."INNER JOIN ".$this->table_prefix."location as l on l.id = i.location_id "
                 ."$where $limit";
  
 		$items = $this->db->query($query);
 		$i = 0;
 		foreach ($items as $item){
-			
+
 			if($this->responseType == 'json'){
 				$json_incident_media = array();
 			}
-			
+
 			//build xml file
 			$xml->startElement('incident');
-			
+
 			$xml->writeElement('id',$item->incidentid);
 			$xml->writeElement('title',$item->incidenttitle);
 			$xml->writeElement('description',$item->incidentdescription);
@@ -510,31 +510,31 @@ class Api_Controller extends Controller {
 			$xml->writeElement('longitude',$item->locationlongitude);  	
 			$xml->endElement();
 			$xml->startElement('categories');
-			
+
 			//fetch categories
 			$query = " SELECT c.category_title AS categorytitle, c.id AS cid " .
 					"FROM ".$this->table_prefix."category AS c INNER JOIN ".$this->table_prefix."incident_category AS ic ON " .
 					"ic.category_id = c.id WHERE ic.incident_id =".$item->incidentid;
 			$category_items = $this->db->query( $query );
-			
+
 			foreach( $category_items as $category_item ){
 				$xml->startElement('category');
 				$xml->writeElement('id',$category_item->cid);
 				$xml->writeElement('title',$category_item->categorytitle );
 				$xml->endElement();
-				
+
 			}
 			$xml->endElement();//end categories
-			
+
 			//fetch media associated with an incident
 			$query = "SELECT m.id as mediaid, m.media_title AS mediatitle, " .
 					"m.media_type AS mediatype, m.media_link AS medialink, " .
 					"m.media_thumb AS mediathumb FROM ".$this->table_prefix."media AS m " .
 					"INNER JOIN ".$this->table_prefix."incident AS i ON i.id = m.incident_id " .
 					"WHERE i.id =". $item->incidentid;
-			
+
 			$media_items = $this->db->query($query);
-			
+
 			if(count($media_items) > 0){
 				$xml->startElement('mediaItems');
 				foreach ($media_items as $media_item){
@@ -551,23 +551,23 @@ class Api_Controller extends Controller {
 					}
 				}
 				$xml->endElement(); // media
-				
+
 			}
 			$xml->endElement(); // end incident
-			
+
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
 				$json_incidents[] = array("incident" => $item, "media" => $json_incident_media);
 			}
-			
+
 		}
-		
+
 		//create the json array
 		$data = array(
 			"payload" => array("incidents" => $json_incidents),
 			"error" => $this->_getErrorMsg(0)
 		);
-		
+
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 			return $retJsonOrXml;
@@ -581,10 +581,10 @@ class Api_Controller extends Controller {
 			$xml->endElement(); // end response
 			return $xml->outputMemory(true);
 		}
-		
+
 		//return $retJsonOrXml;
 	}
-	
+
 	/**
 	* return KML for 3d "geo spatial temporal" map
 	* FIXME: This could probably be done in less than >5 foreach loops
@@ -594,10 +594,10 @@ class Api_Controller extends Controller {
 		<kml xmlns="http://earth.google.com/kml/2.2">
 		<Document>
 		<name>Ushahidi</name>'."\n";
-		
+
 		// Get the categories that each incident belongs to
 		$incident_categories = $this->_incidentCategories();
-		
+
 		// Get category colors in this format: $category_colors[id] = color
 		$categories = json_decode($this->_categories());
 		$categories = $categories->payload->categories;
@@ -605,20 +605,20 @@ class Api_Controller extends Controller {
 		foreach($categories as $category) {
 			$category_colors[$category->category->id] = $category->category->color;
 		}
-		
+
 		// Finally, grab the incidents
 		$incidents = json_decode($this->_getIncidents('WHERE incident_active=1'));
 		$incidents = $incidents->payload->incidents;
-		
+
 		// Calculate times for relative altitudes (This is the whole idea behind 3D maps)
 		$incident_times = array();
 		foreach($incidents as $inc_obj) {
 			$incident = $inc_obj->incident;
 			$incident_times[$incident->incidentid] = strtotime($incident->incidentdate);
 		}
-		
+
 		// All times to be adjusted according to max altitude.
-		
+
 		$max_altitude = 10000;
 		$newest = 0;
 		foreach($incident_times as $incident_id => $timestamp) {
@@ -626,22 +626,22 @@ class Api_Controller extends Controller {
 			$incident_times[$incident_id] -= $oldest;
 			if($newest < $incident_times[$incident_id]) $newest = $incident_times[$incident_id];
 		}
-		
+
 		foreach($incident_times as $incident_id => $timestamp) {
 			$incident_altitude[$incident_id] = 0;
 			if($newest != 0) $incident_altitude[$incident_id] = floor(($timestamp / $newest) * $max_altitude);
 		}
-		
+
 		// Compile KML and output
 		foreach($incidents as $inc_obj) {
-			
+
 			$incident = $inc_obj->incident;
-			
+
 			$category_id = $incident_categories[$incident->incidentid][0]; // Could be multiple categories. Pick the first one.
 			$hex_color = $category_colors[$category_id];
 			// Color for KML is not the traditional HTML Hex of (rrggbb). It's (aabbggrr). aa = alpha or transparency
 			$color = 'FF'.$hex_color{4}.$hex_color{5}.$hex_color{2}.$hex_color{3}.$hex_color{0}.$hex_color{1};
-			
+
 			$kml .= '<Placemark>
 				<name>'.$incident->incidenttitle.'</name>
 				<description>'.$incident->incidentdescription.'</description>
@@ -662,15 +662,15 @@ class Api_Controller extends Controller {
 					<coordinates>'.$incident->locationlongitude.','.$incident->locationlatitude.','.$incident_altitude[$incident->incidentid].'</coordinates>
 				</Point>
 			</Placemark>'."\n";
-			
+
 		}
-		
+
 		$kml .= '</Document>
 		</kml>';
-		
+
 		return $kml;
 	}
-	
+
 	/**
  	* report an incident
  	*/
@@ -696,16 +696,16 @@ class Api_Controller extends Controller {
 				"error" => $this->_getErrorMsg(004)
 			);
 		}
-		
+
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($reponse);
 		} else {
 			$retJsonOrXml = $this->_arrayAsXML($reponse, array());
 		}
-		
+
 		return $retJsonOrXml;
 	}
-	
+
 	/**
  	* the actual reporting - ***must find a cleaner way to do this than duplicating code verbatim - modify report***
  	*/
@@ -737,7 +737,7 @@ class Api_Controller extends Controller {
 		if ($_POST) {
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory(array_merge($_POST,$_FILES));
-			
+
 			//  Add some filters
 			$post->pre_filter('trim', TRUE);
 
@@ -747,31 +747,31 @@ class Api_Controller extends Controller {
 			$post->add_rules('incident_date','required','date_mmddyyyy');
 			$post->add_rules('incident_hour','required','between[0,23]');
 			//$post->add_rules('incident_minute','required','between[0,59]');
-			
+
 			if($this->_verifyArrayIndex($_POST, 'incident_ampm')) {
 				if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != "pm") {
 					$post->add_error('incident_ampm','values');
 				}
 			}
-			
+
 			$post->add_rules('latitude','required','between[-90,90]');	// Validate for maximum and minimum latitude values
 			$post->add_rules('longitude','required','between[-180,180]');// Validate for maximum and minimum longitude values
 			$post->add_rules('location_name','required', 'length[3,200]');
 			$post->add_rules('incident_category','required','length[1,100]');
-			
+
 			// Validate Personal Information
 			if (!empty($post->person_first)) {
 				$post->add_rules('person_first', 'length[3,100]');
 			}
-			
+
 			if (!empty($post->person_last)) {
 				$post->add_rules('person_last', 'length[3,100]');
 			}
-			
+
 			if (!empty($post->person_email)) {
 				$post->add_rules('person_email', 'email', 'length[3,100]');
 			}
-			
+
 			// Test to see if things passed the rule checks
 			if ($post->validate()) {
 				// SAVE LOCATION (***IF IT DOES NOT EXIST***)
@@ -781,26 +781,26 @@ class Api_Controller extends Controller {
 				$location->longitude = $post->longitude;
 				$location->location_date = date("Y-m-d H:i:s",time());
 				$location->save();
-				
+
 				// SAVE INCIDENT
 				$incident = new Incident_Model();
 				$incident->location_id = $location->id;
 				$incident->user_id = 0;
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
-				
+
 				$incident_date=explode("/",$post->incident_date);
 				/**
 		 		* where the $_POST['date'] is a value posted by form in 
 		 		* mm/dd/yyyy format
 		 		*/
 				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
-					
+
 				$incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
 				$incident->incident_date = $incident_date . " " . $incident_time;
 				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				$incident->save();
-				
+
 				// SAVE CATEGORIES
 				//check if data is csv or a single value.
 				$pos = strpos($post->incident_category,",");
@@ -814,7 +814,7 @@ class Api_Controller extends Controller {
 				} else { 
 					$categories = explode(",",$post->incident_category);	
 				}
-	 
+
 				if(!empty($categories) && is_array($categories)) {
 					foreach($categories as $item){
 						$incident_category = new Incident_Category_Model();
@@ -823,7 +823,7 @@ class Api_Controller extends Controller {
 						$incident_category->save();
 					}
 				}
-				
+
 				// STEP 4: SAVE MEDIA
 				// a. News
 				if(!empty( $post->incident_news ) && is_array($post->incident_news)) { 
@@ -839,7 +839,7 @@ class Api_Controller extends Controller {
 						}
 					}
 				}
-				
+
 				// b. Video
 				if( !empty( $post->incident_video) && is_array( $post->incident_video)){ 
 
@@ -855,23 +855,23 @@ class Api_Controller extends Controller {
 						}
 					}
 				}
-				
+
 				// c. Photos
 				if( !empty($post->incident_photo)){
 					$filenames = upload::save('incident_photo');
 					$i = 1;
 					foreach ($filenames as $filename) {
 						$new_filename = $incident->id . "_" . $i . "_" . time();
-					
+
 						// Resize original file... make sure its max 408px wide
 						Image::factory($filename)->resize(408,248,Image::AUTO)->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
-					
+
 						// Create thumbnail
 						Image::factory($filename)->resize(70,41,Image::HEIGHT)->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");
-					
+
 						// Remove the temporary file
 						unlink($filename);
-					
+
 						// Save to DB
 						$photo = new Media_Model();
 						$photo->location_id = $location->id;
@@ -884,7 +884,7 @@ class Api_Controller extends Controller {
 						$i++;
 					}
 				}				
-				
+
 				// SAVE PERSONAL INFORMATION IF ITS FILLED UP
 				if(!empty($post->person_first) || !empty($post->person_last)){
 					$person = new Incident_Person_Model();
@@ -896,9 +896,9 @@ class Api_Controller extends Controller {
 					$person->person_date = date("Y-m-d H:i:s",time());
 					$person->save();
 				}
-				
+
 				return 0; //success
-				
+
 			} else { // No! We have validation errors, we need to show the form again, with the errors
 				// populate the error fields, if any
 				$this->messages = arr::overwrite($this->messages, $post->errors('report'));
@@ -911,7 +911,7 @@ class Api_Controller extends Controller {
    						}
   					}
 				}
-								
+
 			//FAILED!!!
 			return 1; //validation error
 	  		}
@@ -919,7 +919,7 @@ class Api_Controller extends Controller {
 			return 2; // Not sent by post method.
 		}
 	}
-	
+
 	/**
  	* Tag a news item to an incident
  	*/
@@ -927,20 +927,20 @@ class Api_Controller extends Controller {
 		if ($_POST) {
 			//get the locationid for the incidentid
 			$locationid = 0;
-			
+
 			$query = "SELECT location_id FROM ".$this->table_prefix."incident WHERE id=$incidentid";
-			
+
 			$items = $this->db->query($query);
 			if(count($items) > 0){
 				$locationid = $items[0]->location_id;
 			}
-			
+
 			$media = new Media_Model(); //create media model object
-			
+
 			$url = '';
-			
+
 			$post = Validation::factory(array_merge($_POST,$_FILES));
-			
+
 			if($mediatype == 2 || $mediatype == 4){
 				//require a url
 				if(!$this->_verifyArrayIndex($_POST, 'url')){
@@ -963,51 +963,51 @@ class Api_Controller extends Controller {
 						return $this->_arrayAsXML($err, array());
 					}
 				}
-				
+
 				$post->add_rules('photo', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[1M]');
-				
+
 				if($post->validate()){
 					//assuming this is a photo
 					$filename = upload::save('photo');
 					$new_filename = $incidentid . "_" . $i . "_" . time();
-								
+
 					// Resize original file... make sure its max 408px wide
 					Image::factory($filename)->resize(408,248,Image::AUTO)->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
-								
+
 					// Create thumbnail
 					Image::factory($filename)->resize(70,41,Image::HEIGHT)->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");
-								
+
 					// Remove the temporary file
 					unlink($filename);
-								
+
 					$media->media_link = $new_filename . ".jpg";
 					$media->media_thumb = $new_filename . "_t.jpg";
 				}
 			}
-			
+
 			//optional title & description
 			$title = '';
 			if($this->_verifyArrayIndex($_POST, 'title')){
 				$title = $_POST['title'];
 			}
-			
+
 			$description = '';
 			if($this->_verifyArrayIndex($_POST, 'description')){
 				$description = $_POST['description'];
 			}	
-			
+
 			$media->location_id = $locationid;
 			$media->incident_id = $incidentid;
 			$media->media_type = $mediatype;
 			$media->media_title = $title;
 			$media->media_description = $description;
 			$media->media_date = date("Y-m-d H:i:s",time());
-			
+
 			$media->save(); //save the thing
-			
+
 			//SUCESS!!!
 			$ret = array("payload" => array("success" => "true"),"error" => $this->_getErrorMsg(0));
-			
+
 			if($this->responseType == 'json'){
 				return json_encode($ret);
 			} else {
@@ -1022,7 +1022,7 @@ class Api_Controller extends Controller {
 			}
 		}
 	}
-	
+
 	/**
  	* get a list of categories
 	*/
@@ -1031,7 +1031,7 @@ class Api_Controller extends Controller {
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
 		$json_categories = array(); //incidents to parse to json
-		
+
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
@@ -1041,11 +1041,11 @@ class Api_Controller extends Controller {
 
 		$items = $this->db->query($query);
 		$i = 0;
-		
+
 		$replar = array(); //assists in proper xml generation
-		
+
 		foreach ($items as $item){
-			
+
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
 				$json_categories[] = array("category" => $item);
@@ -1053,16 +1053,16 @@ class Api_Controller extends Controller {
 				$json_categories['category'.$i] = array("category" => $item) ;
 				$replar[] = 'category'.$i;
 			}
-			
+
 			$i++;
 		}
-		
+
 		//create the json array
 		$data = array(
 			"payload" => array("categories" => $json_categories),
 			"error" => $this->_getErrorMsg(0)
 		);
-		
+
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		} else {
@@ -1071,7 +1071,7 @@ class Api_Controller extends Controller {
 
 		return $retJsonOrXml;
 	}
-	
+
 	/**
  	* get a single category
  	*/
@@ -1079,7 +1079,7 @@ class Api_Controller extends Controller {
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
 		$json_categories = array(); //incidents to parse to json
-		
+
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
@@ -1089,11 +1089,11 @@ class Api_Controller extends Controller {
 
 		$items = $this->db->query($query);
 		$i = 0;
-		
+
 		$replar = array(); //assists in proper xml generation
-		
+
 		foreach ($items as $item){
-			
+
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
 					$json_categories[] = array("category" => $item);
@@ -1101,16 +1101,16 @@ class Api_Controller extends Controller {
 				$json_categories['category'.$i] = array("category" => $item) ;
 				$replar[] = 'category'.$i;
 			}
-			
+
 			$i++;
 		}
-		
+
 		//create the json array
 		$data = array(
 			"payload" => array("categories" => $json_categories),
 			"error" => $this->_getErrorMsg(0)
 		);
-		
+
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		} else {
@@ -1119,7 +1119,7 @@ class Api_Controller extends Controller {
 
 		return $retJsonOrXml;
 	}
-	
+
 	/**
 	* get a list of incident categories
 	* returns an array
@@ -1137,7 +1137,7 @@ class Api_Controller extends Controller {
 		}
 		return $data;
 	}
-	
+
 	/**
  	* get a list of locations
  	*/
@@ -1145,7 +1145,7 @@ class Api_Controller extends Controller {
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
 		$json_locations = array(); //incidents to parse to json
-		
+
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
@@ -1154,9 +1154,9 @@ class Api_Controller extends Controller {
 
 		$items = $this->db->query($query);
 		$i = 0;
-		
+
 		$replar = array(); //assists in proper xml generation
-		
+
 		foreach ($items as $item){
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
@@ -1165,16 +1165,16 @@ class Api_Controller extends Controller {
 				$json_locations['location'.$i] = array("location" => $item) ;
 				$replar[] = 'location'.$i;
 			}
-			
+
 			$i++;
 		}
-		
+
 		//create the json array
 		$data = array(
 			"payload" => array("locations" => $json_locations),
 			"error" => $this->_getErrorMsg(0)
 		);
-		
+
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		} else {
@@ -1199,9 +1199,9 @@ class Api_Controller extends Controller {
 
 		$items = $this->db->query($query);
 		$i = 0;
-		
+
 		$replar = array(); //assists in proper xml generation
-		
+
 		foreach ($items as $item){
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
@@ -1210,13 +1210,13 @@ class Api_Controller extends Controller {
 				$json_services['service'.$i] = array("service" => $item) ;
 				$replar[] = 'service'.$i;
 			}
-			
+
 			$i++;
 		}
-		
+
 		//create the json array
 		$data = array("payload" => array("services" => $json_services),"error" => $this->_getErrorMsg(0));
-		
+
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		} else {
@@ -1225,7 +1225,7 @@ class Api_Controller extends Controller {
 
 		return $retJsonOrXml;
 	}
-	
+
 	/**
  	 * get the latitude and longitude for the default centre of the map.
  	 */
@@ -1241,9 +1241,9 @@ class Api_Controller extends Controller {
 
 		$items = $this->db->query($query);
 		$i = 0;
-		
+
 		$replar = array(); //assists in proper xml generation
-		
+
 		foreach ($items as $item){
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
@@ -1252,13 +1252,13 @@ class Api_Controller extends Controller {
 				$json_mapcenters['mapcenter'.$i] = array("mapcenter" => $item) ;
 				$replar[] = 'mapcenter'.$i;
 			}
-			
+
 			$i++;
 		}
-		
+
 		//create the json array
 		$data = array("payload" => array("mapcenters" => $json_mapcenters),"error" => $this->_getErrorMsg(0));
-		
+
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		} else {
@@ -1292,10 +1292,10 @@ class Api_Controller extends Controller {
 		}else{
 			$retJsonOrXml = $this->_arrayAsXML($data,$replar);
 		}
-		
+
 		return $retJsonOrXml;
 	}
-	
+
 	/**
  	* get a single location by id
  	*/
@@ -1305,7 +1305,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getLocations($where, $limit);
 	}
-	
+
 	/**
  	* get a single location by id
  	*/
@@ -1315,7 +1315,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getLocations($where, $limit);
 	}
-	
+
 	/**
  	* get a single location by id
  	*/
@@ -1325,7 +1325,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getLocations($where, $limit);
 	}	
-	
+
 	/**
  	* country query abstraction
  	*/
@@ -1333,20 +1333,20 @@ class Api_Controller extends Controller {
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
 		$json_countries = array(); //incidents to parse to json
-			
+
 		$retJsonOrXml = ''; //will hold the json/xml string to return
-	
+
 		//find incidents
 		$query = "SELECT id, iso, country as `name`, capital 
 			FROM `".$this->table_prefix."country` $where $limit";
-	
+
 		$items = $this->db->query($query);
 		$i = 0;
-			
+
 		$replar = array(); //assists in proper xml generation
-			
+
 		foreach ($items as $item){
-			
+
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
 				$json_countries[] = array("country" => $item);
@@ -1354,22 +1354,22 @@ class Api_Controller extends Controller {
 				$json_countries['country'.$i] = array("country" => $item) ;
 				$replar[] = 'country'.$i;
 			}
-			
+
 			$i++;
 		}
-		
+
 		//create the json array
 		$data = array("payload" => array("countries" => $json_countries),"error" => $this->_getErrorMsg(0));
-			
+
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		} else {
 			$retJsonOrXml = $this->_arrayAsXML($data, $replar);
 		}
-	
+
 		return $retJsonOrXml;
 	}
-	
+
 	/**
  	* get a list of countries
  	*/
@@ -1378,7 +1378,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
 	}
-	
+
 	/**
  	* get a country by name
  	*/
@@ -1388,7 +1388,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
 	}
-	
+
 	/**
  	* get a country by id
  	*/
@@ -1398,7 +1398,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
 	}
-	
+
 	/**
  	* get a country by iso
  	*/
@@ -1408,7 +1408,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getCountries($where, $limit);
 	}
-	
+
 	/**
  	* Fetch all incidents
  	*/
@@ -1419,7 +1419,7 @@ class Api_Controller extends Controller {
 		/* Not elegant but works */
 		return $this->_getIncidents($where.$sortby, $limit);
 	}
-	
+
 	/**
  	* get incident by id
  	*/
@@ -1429,7 +1429,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where, $limit);
 	}
-	
+
 	/**
  	* get the incidents by latitude and longitude.
  	* TODO // write necessary codes to achieve this.
@@ -1440,7 +1440,7 @@ class Api_Controller extends Controller {
 		$limit = "\n LIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where,$sortby,$limit);		
 	}
-	
+
 	/**
  	* get the incidents by location id
  	*/
@@ -1450,7 +1450,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
 	}
-	
+
 	/**
  	* get the incidents by location name
  	*/
@@ -1461,7 +1461,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
 	}
-	
+
 	/**
  	* get the incidents by category id
  	*/
@@ -1474,7 +1474,7 @@ class Api_Controller extends Controller {
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
 	}
-	
+
 	/**
  	* get the incidents by category name
  	*/
@@ -1503,7 +1503,7 @@ class Api_Controller extends Controller {
 		return $this->_getIncidents($where.$sortby, $limit);
 
         }
-	
+
 	/**
  	* Instance to Instance Sharing of Data
  	* Access Limits: Hourly
@@ -1521,7 +1521,7 @@ class Api_Controller extends Controller {
 					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
 				}
 				break;
-					
+
 			case "request": 	// Handle Request For Data
 				$return_array = $sharing->share_send($sharing_session, $sharing_key, $sharing_site_name, $sharing_email, $sharing_url);
 				if ( $return_array["success"] === TRUE ){
@@ -1530,7 +1530,7 @@ class Api_Controller extends Controller {
 					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
 				}
 				break;
-					
+
 			case "incoming": 	// Handle Incoming Data
 				$return_array = $sharing->share_incoming($sharing_session, $sharing_key, $sharing_site_name, 
 				$sharing_email, $sharing_url, $sharing_data);			
@@ -1540,14 +1540,14 @@ class Api_Controller extends Controller {
 					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
 				}
 				break;				
-					
+
 				default:
 					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(002));	// Invalid Request	
 		}
 		return $this->_arrayAsJSON($data);
 	}
-	
-	
+
+
 	/**
  	* Validate Session ID against URL that sent it
  	*/
@@ -1560,12 +1560,12 @@ class Api_Controller extends Controller {
 		}
 		return $this->_arrayAsJSON($data);
 	}
-	
+
 	/**
  	* Provide statistics for the instance
  	*/
 	function _statistics(){
-		
+
 		$messages_total = 0;
 		$messages_services = array();
 		$services = ORM::factory('service')->find_all();
@@ -1580,16 +1580,16 @@ class Api_Controller extends Controller {
 		    $messages_total += $message_count;
 		}
 		$messages_stats['total'] = $messages_total;
-		
+
 		$incidents_total = ORM::factory('incident')->count_all();
 		$incidents_unapproved = ORM::factory('incident')->where('incident_active', '0')->count_all();
 		$incidents_approved = $incidents_total - $incidents_unapproved;
 		$incomingmedia_total = ORM::factory('feed_item')->count_all();
 		$categories_total = ORM::factory('category')->count_all();
 		$locations_total = ORM::factory('location')->count_all();
-		
+
 		//print_r($messages_services);
-		
+
 		$data = array(
 			'incidents'=>array(
 				'total'=>$incidents_total,
@@ -1606,17 +1606,17 @@ class Api_Controller extends Controller {
 				'total'=>$locations_total
 			),
 			'messages'=>$messages_stats,
-			
-		
+
+
 		);
-		
+
 		if($this->responseType == 'json'){
 			return $this->_arrayAsJSON($data);
 		} else {
 			return $this->_arrayAsXML($data);
 		}
 	}
-	
+
 	/**
  	* Receive SMS's via FrontlineSMS or via Mobile Phone Native Apps
  	*/
@@ -1624,14 +1624,14 @@ class Api_Controller extends Controller {
 	{
 		$retJsonOrXml = array();
 		$reponse = array();
-		
+
 		// Validate User
 		// Should either be authenticated or have app_key
 		$username = isset($request['username']) ? $request['username'] : "";
 		$password = isset($request['password']) ? $request['password'] : "";
-		
+
 		$app_key = isset($request['key']) ? $request['key'] : "";
-		
+
 		if ( $user_id = $this->_login($username, $password) || 
 		 	$this->_chk_key($app_key) )
 		{
@@ -1643,10 +1643,10 @@ class Api_Controller extends Controller {
 				'message_description' => '',
 				'message_date' => ''
 			);
-			
+
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory($request);
-			
+
 			//  Add some filters
 			$post->pre_filter('trim', TRUE);
 
@@ -1654,7 +1654,7 @@ class Api_Controller extends Controller {
 			$post->add_rules('message_from', 'required', 'numeric', 'length[6,20]');
 			$post->add_rules('message_description', 'required', 'length[3,300]');
 			$post->add_rules('message_date', 'date_mmddyyyy');
-			
+
 			// Test to see if things passed the rule checks
 			if ($post->validate())
 			{
@@ -1663,7 +1663,7 @@ class Api_Controller extends Controller {
 				$service = $services->where('service_name', 'SMS')->find();
 				if (!$service) 
 					return;
-			
+
 				$reporter = ORM::factory('reporter')
 									->where('service_id', $service->id)
 									->where('service_account', $post->message_from)
@@ -1675,7 +1675,7 @@ class Api_Controller extends Controller {
 					$level = ORM::factory('level')
 						->where('level_weight', 0)
 						->find();
-					
+
 					$reporter->service_id = $service->id;
 					$reporter->level_id = $level->id;
 					$reporter->service_userid = null;
@@ -1688,7 +1688,7 @@ class Api_Controller extends Controller {
 					$reporter->reporter_date = date('Y-m-d');
 					$reporter->save();
 				}
-				
+
 				// Save Message
 				$message = new Message_Model();
 				$message->parent_id = 0;
@@ -1704,20 +1704,20 @@ class Api_Controller extends Controller {
 					? $post->message_date : date("Y-m-d H:i:s",time());
 				$message->service_messageid = null;
 				$message->save();
-				
+
 				// Notify Admin Of New SMS Messages
 //				$send = notifications::notify_admins(
 //					"[".Kohana::config('settings.site_name')."] ".
 //						Kohana::lang('notifications.admin_new_sms.subject'),
 //					Kohana::lang('notifications.admin_new_sms.message')
 //					);
-					
+
 				// success!
 				$reponse = array(
 					"payload" => array("success" => "true"),
 					"error" => $this->_getErrorMsg(0)
 				);
-				
+
 			}
 			else
 			{
@@ -1727,7 +1727,7 @@ class Api_Controller extends Controller {
 					"error" => $this->_getErrorMsg(002)
 				);
 			}
-			
+
 		}
 		else
 		{
@@ -1737,7 +1737,7 @@ class Api_Controller extends Controller {
 				"error" => $this->_getErrorMsg(005)
 			);
 		}
-		
+
 		if($this->responseType == 'json')
 		{
 			$retJsonOrXml = $this->_arrayAsJSON($reponse);
@@ -1746,10 +1746,10 @@ class Api_Controller extends Controller {
 		{
 			$retJsonOrXml = $this->_arrayAsXML($reponse, array());
 		}
-		
+
 		return $retJsonOrXml;
 	}	
-	
+
 	/**
  	* starting point
  	*/
@@ -1757,14 +1757,14 @@ class Api_Controller extends Controller {
 		//switch task
 		$this->switchTask();
 	}
-	
+
 	/**
  	* Creates a JSON response given an array
  	*/
 	function _arrayAsJSON($data){
 		return json_encode($data);
 	}
-	
+
 	/**
  	* converts an object to an array
  	*/
@@ -1778,7 +1778,7 @@ class Api_Controller extends Controller {
 		}
 		return $array;
 	}
-	
+
 	/**
  	* Creates a XML response given an array
  	* CREDIT TO: http://snippets.dzone.com/posts/show/3391
@@ -1789,17 +1789,17 @@ class Api_Controller extends Controller {
 				//echo 'convert to an array';
 				$value = $this->_object2array($value);
 			}
-			
+
 			if(is_array($value)){
 	 			$toprint = true;
-					
+
 				if(in_array($key, $replar)){
 					//move up one level
 					$keys = array_keys($value);
 					$key = $keys[0];
 					$value = $value[$key];
 				}
-					
+
 				$xml->startElement($key);
 				$this->_write($xml, $value, $replar);
 				$xml->endElement();
@@ -1810,7 +1810,7 @@ class Api_Controller extends Controller {
 			$xml->writeElement($key, $value);
  		}	
 	}
-	
+
 	/**
  	* Creates a XML response given an array
  	* CREDIT TO: http://snippets.dzone.com/posts/show/3391
@@ -1820,13 +1820,13 @@ class Api_Controller extends Controller {
 		$xml->openMemory();
 		$xml->startDocument('1.0', 'UTF-8');
 		$xml->startElement('response');
-	
+
 		$this->_write($xml, $data, $replar);
-	
+
 		$xml->endElement();
 		return $xml->outputMemory(true);
 	}
-	
+
 	/**
 	 * Log user in.
 	 *
@@ -1837,7 +1837,7 @@ class Api_Controller extends Controller {
 	function _login($username, $password)
 	{
 		$auth = Auth::instance();
-		
+
 		// Is user previously authenticated?
         if ($auth->logged_in())
         {
@@ -1856,7 +1856,7 @@ class Api_Controller extends Controller {
 	        }
 		}
 	}
-	
+
 	/**
 	 * FrontlineSMS Key Validation
 	 *
@@ -1869,7 +1869,7 @@ class Api_Controller extends Controller {
 		$keycheck = ORM::factory('settings', 1)
 			->where('frontlinesms_key', $app_key)
 			->find();
-			
+
 		if ($keycheck->loaded)
 		{
 			return true;

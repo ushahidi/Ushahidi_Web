@@ -234,24 +234,9 @@
 					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
 					});
 			}
-			
-			google_st = new OpenLayers.Layer.Google("Google Streets", {
-				sphericalMercator: true,
-				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-				});
 				
-			google_sat = new OpenLayers.Layer.Google("Google Satellite", {
-				type: G_SATELLITE_MAP,
-				sphericalMercator: true,
-				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-				});
-				
-			osm_sat = new OpenLayers.Layer.OSM.Mapnik("Open Street Maps Satellite", {
-				sphericalMercator: true,
-				maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-				});
-				
-			map.addLayers([osm_sat, google_st, google_sat]);
+			// Add the layer to the map object
+			map.addLayer(map_layer);
 			
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoom());

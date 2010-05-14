@@ -444,6 +444,11 @@ CREATE TABLE IF NOT EXISTS `incident_category` (                                
 
 
 -- Dumping data for table `incident_category`
+LOCK TABLES `incident_category` WRITE;
+/*!40000 ALTER TABLE `incident_category` DISABLE KEYS */;
+INSERT INTO `incident_category` VALUES (1,1,7);
+/*!40000 ALTER TABLE `incident_category` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 

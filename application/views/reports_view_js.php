@@ -105,11 +105,11 @@
 			});
 			
 			// Create the single marker layer
-			var markers = new OpenLayers.Layer.GML("single report", "<?php echo url::base() . 'json/?i=' . $incident_id; ?>", 
+			var markers = new OpenLayers.Layer.GML("single report", "<?php echo url::base() . 'json/single/' . $incident_id; ?>", 
 			{
 				format: OpenLayers.Format.GeoJSON,
 				projection: map.displayProjection,
-				styleMap: new OpenLayers.StyleMap({"default":style})
+				styleMap: new OpenLayers.StyleMap({"default":style, "select": style})
 			});
 			
 			map.addLayer(markers);
@@ -126,7 +126,7 @@
 			
 			// display the map centered on a latitude and longitude (Google zoom levels)
 
-			map.setCenter(myPoint, 8);			
+			map.setCenter(myPoint, 10);			
 			
 			function onPopupClose(evt) {
 	            selectControl.unselect(selectedFeature);
