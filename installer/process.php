@@ -34,19 +34,19 @@
 	{
 		if(isset($_POST['basic_db_info'])) {
 			$this->_proc_basic_db_info();
-		}else if($_POST['advanced_db_info']){
+		}else if(isset($_POST['advanced_db_info'])){
 			$this->_proc_advanced_db_info();
-		}else if( $_POST['advanced_general_settings']){
+		}else if(isset($_POST['advanced_general_settings'])){
 			$this->_proc_general_settings();
-		}else if($_POST['basic_general_settings']){ 
+		}else if(isset($_POST['basic_general_settings'])){ 
 			$this->_proc_basic_general_settings();
-		}else if($_POST['advanced_mail_server_settings']){ 
+		}else if(isset($_POST['advanced_mail_server_settings'])){ 
 			$this->_proc_mail_server();
-		}else if($_POST['advanced_map_config']){ 
+		}else if(isset($_POST['advanced_map_config'])){ 
 			$this->_proc_map();
-		}else if($_POST['advanced_perm_pre_check']){ 
+		}else if(isset($_POST['advanced_perm_pre_check'])){ 
 			$this->_proc_advanced_pre_perm_check();
-		}else if($_POST['basic_perm_pre_check']){ 
+		}else if(isset($_POST['basic_perm_pre_check'])){ 
 			$this->_proc_basic_pre_perm_check();		
 		} else {
 			header("Location:.");
