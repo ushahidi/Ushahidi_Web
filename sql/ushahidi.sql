@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 23
+-- version 24
 -- http://www.ushahidi.com
 
 
@@ -1410,6 +1410,23 @@ CREATE TABLE IF NOT EXISTS `api_log` (                                          
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='For logging API activities' AUTO_INCREMENT=19 ;
 
+
+
+/**
+* Table structure for table `plugin`
+* 
+*/
+
+CREATE TABLE IF NOT EXISTS `plugin` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_name` varchar(100) NOT NULL,
+  `plugin_url` varchar(250) NULL,
+  `plugin_description` text NULL,
+  `plugin_active` tinyint(4) DEFAULT '0',
+  `plugin_installed` tinyint(4) DEFAULT '0',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `plugin_name` (`plugin_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 
