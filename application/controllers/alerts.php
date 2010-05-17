@@ -140,32 +140,36 @@ class Alerts_Controller extends Main_Controller {
 	
 	/**
 	 * Verifies a previously sent alert confirmation code
-	 * 
-	 * @param string $code
 	 */
-	public function verify($code = NULL, $email = NULL)
-	{
+ 	public function verify()
+ 	{
 		// Define error codes for this view.
 		define("ER_CODE_VERIFIED", 0);
 		define("ER_CODE_NOT_FOUND", 1);
 		define("ER_CODE_ALREADY_VERIFIED", 3);
 		
+		$code = (isset($_GET['c']) && !empty($_GET['c'])) ?
+			$_GET['c'] : "";
+			
+		$email = (isset($_GET['e']) && !empty($_GET['e'])) ?
+			$_GET['e'] : "";
+		
 		// INITIALIZE the content's section of the view
 		$this->template->content = new View('alerts_verify');
 		$this->template->header->this_page = 'alerts';
 
-		$filter = "";
+		$filter = " ";
 		$missing_info = FALSE;
 		if ($_POST AND isset($_POST['alert_code'])
 			AND ! empty($_POST['alert_code']))
 		{
 			if (isset($_POST['alert_mobile']) AND ! empty($_POST['alert_mobile']))
 			{
-				$filter = "alert_type=1 AND alert_code='".strtoupper($_POST['alert_code'])."' AND alert_recipient='".$_POST['alert_mobile']."' ";
+				$filter = "alert.alert_type=1 AND alert_code='".strtoupper($_POST['alert_code'])."' AND alert_recipient='".$_POST['alert_mobile']."' ";
 			}
 			elseif (isset($_POST['alert_email']) AND ! empty($_POST['alert_email']))
 			{
-				$filter = "alert_type=2 AND alert_code='".$_POST['alert_code']."' AND alert_recipient='".$_POST['alert_email']."' ";
+				$filter = "alert.alert_type=2 AND alert_code='".$_POST['alert_code']."' AND alert_recipient='".$_POST['alert_email']."' ";
 			}
 			else
 			{
@@ -180,7 +184,7 @@ class Alerts_Controller extends Main_Controller {
 			}
 			else
 			{
-				$filter = "alert_type=2 AND alert_code='".$code."' AND alert_recipient='".$email."' ";
+				$filter = "alert.alert_type=2 AND alert_code='".$code."' AND alert_recipient='".$email."' ";
 			}
 		}
 		
@@ -315,7 +319,7 @@ class Alerts_Controller extends Main_Controller {
 		$to = $alert_email;
 		$from = $settings['alerts_email'];
 		$subject = $settings['site_name']." ".Kohana::lang('alerts.verification_email_subject');
-		$message = Kohana::lang('alerts.confirm_request').url::site().'alerts/verify/'.$alert_code."/".$alert_email;
+		$message = Kohana::lang('alerts.confirm_request').url::site().'alerts/verify/?c='.$alert_code."&e=".$alert_email;
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{
