@@ -765,6 +765,16 @@ class Reports_Controller extends Admin_Controller
 					}
 				}
 				
+				if ($id AND $incident->loaded)	// edit
+				{
+					// Event::report_edit - Edited a Report
+					Event::run('ushahidi.report_edit', $incident);
+				}
+				else
+				{
+					// Event::report_add - Added a New Report
+					Event::run('ushahidi.report_add', $incident);
+				}
 				
 				// SAVE AND CLOSE?
 				if ($post->save == 1)		// Save but don't close

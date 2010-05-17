@@ -15,7 +15,6 @@
  */
 
 class register_plugins {
-
 	/**
 	 * Adds the register method to load after the find_uri Router method.
 	 */
@@ -23,7 +22,12 @@ class register_plugins {
 	{
 		// Hook into routing
 		if (file_exists(DOCROOT."application/config/database.php"))
+		{
 			Event::add_after('system.routing', array('Router', 'find_uri'), array($this, 'register'));
+		}
+		
+		// Set Table Prefix
+		$this->table_prefix = Kohana::config('database.default.table_prefix');
 	}
 
 	/**
@@ -34,9 +38,11 @@ class register_plugins {
 		$db = Database::instance();
 		$plugins = array();
 		// Get the list of plugins from the db
-		foreach ($db->getwhere('plugin', array('active' => TRUE, 'installed' => TRUE)) as $plugin)
+		foreach ($db->getwhere('plugin', array(
+				'plugin_active' => 1,
+				'plugin_installed' => 1)) as $plugin)
 		{
-			$plugins[] = MODPATH.'plugins/'.$plugin->name;
+			$plugins[] = PLUGINPATH.$plugin->plugin_name;
 		}
 
 		// Now set the plugins
@@ -49,7 +55,9 @@ class register_plugins {
 			$d = dir($plugin.'/hooks'); // Load all the hooks
 			while (($entry = $d->read()) !== FALSE)
 				if ($entry[0] != '.')
+				{
 					include $plugin.'/hooks/'.$entry;
+				}
 		}
 	}
 }
