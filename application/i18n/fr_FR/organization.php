@@ -9,7 +9,7 @@
 		
 		'organization_website' => array
 		(
-			'required' => 'Veuillez entrer l\'adresse web de l'organisation.',
+			'required' => 'Veuillez entrer l\'adresse web de l\'organisation.',
 			'url' => 'Veuillez entrer un URL valide. Ex: http://www.ushahidi.com'
 		),
 		

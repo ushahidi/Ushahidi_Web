@@ -16,7 +16,7 @@ $lang = array
 		'email'		  => 'Adresse email invalide.',
 		'length'	  => 'L\'adresse email doit comporter entre 4 et 64 caractères.',
 		'exists'	  => 'Cette adress email existe déja.',
-		'login error' => 'Veuillez vérifier que l'adresse email est correcte.'
+		'login error' => 'Veuillez vérifier que l\'adresse email est correcte.'
 	),
 
 	'username' => array

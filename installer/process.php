@@ -34,19 +34,19 @@
 	{
 		if(isset($_POST['basic_db_info'])) {
 			$this->_proc_basic_db_info();
-		}else if($_POST['advanced_db_info']){
+		}else if(isset($_POST['advanced_db_info'])){
 			$this->_proc_advanced_db_info();
-		}else if( $_POST['advanced_general_settings']){
+		}else if(isset($_POST['advanced_general_settings'])){
 			$this->_proc_general_settings();
-		}else if($_POST['basic_general_settings']){ 
+		}else if(isset($_POST['basic_general_settings'])){ 
 			$this->_proc_basic_general_settings();
-		}else if($_POST['advanced_mail_server_settings']){ 
+		}else if(isset($_POST['advanced_mail_server_settings'])){ 
 			$this->_proc_mail_server();
-		}else if($_POST['advanced_map_config']){ 
+		}else if(isset($_POST['advanced_map_config'])){ 
 			$this->_proc_map();
-		}else if($_POST['advanced_perm_pre_check']){ 
+		}else if(isset($_POST['advanced_perm_pre_check'])){ 
 			$this->_proc_advanced_pre_perm_check();
-		}else if($_POST['basic_perm_pre_check']){ 
+		}else if(isset($_POST['basic_perm_pre_check'])){ 
 			$this->_proc_basic_pre_perm_check();		
 		} else {
 			header("Location:.");
@@ -118,6 +118,7 @@
 			$_SESSION['table_prefix'] = $_POST['table_prefix']; 
 			
 			header("Location:advanced_general_settings.php");
+		
 		}else if($status == 1 ) {
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
@@ -271,6 +272,7 @@
 	public function _proc_basic_pre_perm_check() {
 		global $install,$form;
 		$status = $install->_check_writable_dir();
+		$status += $install->_check_modules();
 		if($status == 0 ) {
 			$_SESSION['basic_db_info'] = 'basic_summary';
 			header("Location:basic_db_info.php");
@@ -288,7 +290,7 @@
 	public function _proc_advanced_pre_perm_check() {
 		global $install, $form, $modules;
 		$status = $install->_check_writable_dir();
-		$status += $install->_check_modules();
+		$status += $install->_check_modules_advanced();
 		if($status == 0 ) {
 			// make sure users get to the general setting from advanced db info page.
 			$_SESSION['advanced_db_info'] = 'advanced_summary';

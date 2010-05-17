@@ -219,6 +219,36 @@ class Install
 		}
 	}
 	
+	/**
+	 * Validate if require extensions are installed.
+	 */
+	public function _required_ext_installed() {
+		global $form;
+		
+		// Make sure cURL is installed
+		if (!function_exists('curl_exec')) {
+			$form->set_error("curl","Curl is not installed. Could get You it installed??? Please.");
+		}
+		
+		if( !function_exists('iconv')) {
+			$form->set_error("iconv","http=\"http://php.net/pcre\">PCRE</a> must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.");
+		}
+		
+		//TODO figure out how to check for the other extensions.
+		
+		
+		/**
+		 * error exists, have user correct them.
+		 */
+		if( $form->num_errors > 0 ) {
+			
+			return 1;
+		} else {
+			
+			return 0;
+		}
+	}
+	
 	public function _mail_server($alert_email, $mail_username,$mail_password,
 		$mail_port,$mail_host,$mail_type,$mail_ssl,$table_prefix){
 		
@@ -579,6 +609,8 @@ class Install
 		return $buffer;
 	}
 	
+	
+	
 	/**
 	 * Check if relevant directories are writable.
 	 */
@@ -634,33 +666,68 @@ class Install
 			
 	}
 	
+	
 	/**
-	 * Check if required PHP libraries are installed.
+	 * Check if required PHP libraries are installed. Basic Mode.
 	 */
 	public function _check_modules() {
 		global $form, $modules;
 		
-		if( !$modules->isLoaded('curl')) {
+		if( ! $modules->isLoaded('curl') 
+			OR ! $modules->isLoaded('pcre')
+			OR ! $modules->isLoaded('iconv')
+			OR ! $modules->isLoaded('mcrypt')
+			OR ! $modules->isLoaded('SPL')
+		) {
+			$form->set_error('modules',
+			"<strong>Oops!</strong> Send an email to your system administrator or web host saying: \"I'm installing an application which requires  
+			<a href=\"http://php.net/curl\" target=\"_blank\">cURL</a>, 
+			<a href=\"http://php.net/pcre\" target=\"_blank\">PCRE</a>, 
+			<a href=\"http://php.net/iconv\" target=\"_blank\">iconv</a>, 
+			<a href=\"http://php.net/mcrypt\" target=\"_blank\">mcrypt</a> and 
+			<a href=\"http://php.net/spl\" target=\"_blank\">SPL</a>. 
+			Can you ensure that these PHP libraries are installed?\"");
+		}
+		
+		/**
+		 * error exists, have user correct them.
+		 */
+	   if( $form->num_errors > 0 ) {
+			return 1;
+
+	   } else {
+			return 0;
+	   }	
+	}
+
+
+	/**
+	 * Check if required PHP libraries are installed. Advanced Mode.
+	 */
+	public function _check_modules_advanced() {
+		global $form, $modules;
+		
+		if( ! $modules->isLoaded('curl')) {
 			$form->set_error('curl',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/curl\" target=\"_blank\">cURL</a> for getting or sending files using the URL syntax. ");
 		}
 		
-		if( !$modules->isLoaded('pcre')) {
+		if( ! $modules->isLoaded('pcre')) {
 			$form->set_error('pcre',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/pcre\" target=\"_blank\">PCRE</a> compiled with <code>–enable-utf8</code> and <code>–enable-unicode-properties</code> for UTF-8 functions to work properly. ");
 		}
 		
-		if( !$modules->isLoaded('iconv')) {
+		if( ! $modules->isLoaded('iconv')) {
 			$form->set_error('iconv',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/iconv\" target=\"_blank\">iconv</a> for UTF-8 transliteration. ");
 		}
 		
-		if( !$modules->isLoaded('mcrypt')) {
+		if( ! $modules->isLoaded('mcrypt')) {
 			$form->set_error('mcrypt',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/mcrypt\" target=\"_blank\">mcrypt</a> for encryption. ");
 		}
 		
-		if( !$modules->isLoaded('SPL')) {
+		if( ! $modules->isLoaded('SPL')) {
 			$form->set_error('spl',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/spl\" target=\"_blank\">SPL</a> for several core libraries. ");
 		}
