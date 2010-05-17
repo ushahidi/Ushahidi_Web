@@ -272,6 +272,7 @@
 	public function _proc_basic_pre_perm_check() {
 		global $install,$form;
 		$status = $install->_check_writable_dir();
+		$status += $install->_check_modules();
 		if($status == 0 ) {
 			$_SESSION['basic_db_info'] = 'basic_summary';
 			header("Location:basic_db_info.php");
@@ -289,7 +290,7 @@
 	public function _proc_advanced_pre_perm_check() {
 		global $install, $form, $modules;
 		$status = $install->_check_writable_dir();
-		$status += $install->_check_modules();
+		$status += $install->_check_modules_advanced();
 		if($status == 0 ) {
 			// make sure users get to the general setting from advanced db info page.
 			$_SESSION['advanced_db_info'] = 'advanced_summary';

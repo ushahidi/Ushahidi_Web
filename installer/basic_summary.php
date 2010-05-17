@@ -33,6 +33,9 @@
 							print ( $form->error('uploads_perm') == "" ) ? '' : 
 							"<li>".$form->error('uploads_perm')."</li>";
 							
+							print ( $form->error('modules') == "" ) ? '' : 
+							"<li>".$form->error('modules')."</li>";
+							
 	   				    ?>
 					</ul>
 			</div>
