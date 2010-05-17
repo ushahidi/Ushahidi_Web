@@ -25,7 +25,7 @@ class Frontlinesms_Controller extends Controller
 		if (isset($_GET['s'])) {
 			$message_from = $_GET['s'];
 			// Remove non-numeric characters from string
-			$message_from = ereg_replace("[^0-9]", "", $message_from);
+			$message_from = preg_replace("[^0-9]", "", $message_from);
 		}
 		
 		if (isset($_GET['m'])) {
