@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
-* Feed Controller
+ * Feed Controller
+ * ATOM/RSS2 Generator
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -58,6 +59,7 @@ class Feed_Controller extends Controller
 			foreach($incidents as $incident)
 			{
 				$item = array();
+				$item['id'] = $incident->id;
 				$item['title'] = $incident->incident_title;
 				$item['link'] = $site_url.'reports/view/'.$incident->id;
 				$item['description'] = $incident->incident_description;

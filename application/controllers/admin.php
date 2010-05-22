@@ -27,6 +27,9 @@ class Admin_Controller extends Template_Controller
 	protected $auth_required = FALSE;
 
 	protected $user;
+	
+	// Table Prefix
+	protected $table_prefix;
 
 	public function __construct()
 	{
@@ -50,6 +53,9 @@ class Admin_Controller extends Template_Controller
 		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('login')) {
 			url::redirect('login');
 		}
+		
+		// Set Table Prefix
+		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
 		//fetch latest version of ushahidi
 		$version_number = $upgrade->_fetch_core_version();
@@ -94,8 +100,8 @@ class Admin_Controller extends Template_Controller
 			'reports' => Kohana::lang('ui_admin.reports'),
 			'comments' => Kohana::lang('ui_admin.comments'),
 			'messages' => Kohana::lang('ui_admin.messages'),
+			'addons' => Kohana::lang('ui_admin.addons'),
 			'stats' => Kohana::lang('ui_admin.stats'),
-			'apilogs' => Kohana::lang('ui_admin.api_logs'),
 		);
 
         // Generate sub navigation list (in default layout, sits on right side.

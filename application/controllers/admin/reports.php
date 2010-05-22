@@ -104,6 +104,9 @@ class Reports_Controller extends Admin_Controller
 							$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
 							$verify->verified_date = date("Y-m-d H:i:s",time());
 							$verify->save();
+							
+							// Action::report_approve - Approve a Report
+							Event::run('ushahidi_action.report_approve', $update);
 						}
 					}
 					$form_action = strtoupper(Kohana::lang('ui_admin.approved'));
@@ -123,6 +126,9 @@ class Reports_Controller extends Admin_Controller
 							$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
 							$verify->verified_date = date("Y-m-d H:i:s",time());
 							$verify->save();
+							
+							// Action::report_unapprove - Unapprove a Report
+							Event::run('ushahidi_action.report_unapprove', $update);
 						}
 					}
 					$form_action = strtoupper(Kohana::lang('ui_admin.unapproved'));
@@ -199,6 +205,9 @@ class Reports_Controller extends Admin_Controller
 							
 							// Delete Comments
 							ORM::factory('comment')->where('incident_id',$incident_id)->delete_all();
+							
+							// Action::report_delete - Deleted a Report
+							Event::run('ushahidi_action.report_delete', $update);
 						}					
 					}
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
@@ -767,13 +776,13 @@ class Reports_Controller extends Admin_Controller
 				
 				if ($id AND $incident->loaded)	// edit
 				{
-					// Event::report_edit - Edited a Report
-					Event::run('ushahidi.report_edit', $incident);
+					// Action::report_edit - Edited a Report
+					Event::run('ushahidi_action.report_edit', $incident);
 				}
 				else
 				{
-					// Event::report_add - Added a New Report
-					Event::run('ushahidi.report_add', $incident);
+					// Action::report_add - Added a New Report
+					Event::run('ushahidi_action.report_add', $incident);
 				}
 				
 				// SAVE AND CLOSE?

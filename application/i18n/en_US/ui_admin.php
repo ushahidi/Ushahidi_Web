@@ -12,6 +12,7 @@ $lang = array
     'actions' => 'Actions',
     'added' => 'added',
     'added_edited' => 'added/edited',
+	'addons' => "Plugins & Themes",
     'admin_role' => 'Admin',
     'am' => 'AM',
     'anonymous' => 'Anonymous',

@@ -33,7 +33,7 @@ class test {
 			switch (Router::$method)
 			{
 				case "view":
-					Event::add('ushahidi.report_title', array($this, 'foo'));
+					Event::add('ushahidi_filter.report_title', array($this, 'foo'));
 					break;
 			}
 		}
@@ -41,8 +41,7 @@ class test {
 	
 	public function foo()
 	{
-		global $incident_title;
-		$incident_title = Event::$data . " YESS!!!!!";
+		Event::$data = Event::$data . " YESS!!!!!";
 	}
 }
 

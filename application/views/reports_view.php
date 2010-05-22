@@ -63,6 +63,7 @@
 											}
 										?>
 									</li>
+									<?php Event::run('ushahidi_action.report_meta', $incident_id)?>
 								</ul>
 							</div>
 							<div class="location">

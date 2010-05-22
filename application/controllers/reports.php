@@ -444,8 +444,8 @@ class Reports_Controller extends Main_Controller {
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
 				
-				// Event::report_add - Added a New Report
-				Event::run('ushahidi.report_add', $incident);
+				// Action::report_add - Added a New Report
+				Event::run('ushahidi_action.report_add', $incident);
 
 				url::redirect('reports/thanks');
 			}
@@ -647,7 +647,7 @@ class Reports_Controller extends Main_Controller {
 					$comment->save();
 
 					// Event::comment_add - Added a New Comment
-					Event::run('ushahidi.comment_add', $comment);
+					Event::run('ushahidi_action.comment_add', $comment);
 
 					// Notify Admin Of New Comment
 					$send = notifications::notify_admins(
@@ -677,14 +677,15 @@ class Reports_Controller extends Main_Controller {
 				}
 			}
 			
-			// Filter::report_add - Added a New Report
+			// Filters
 			$incident_title = $incident->incident_title;
-			Event::run('ushahidi.report_title', $incident_title);
-			echo $incident_title;
+			$incident_description = nl2br($incident->incident_description);			
+			Event::run('ushahidi_filter.report_title', $incident_title);
+			Event::run('ushahidi_filter.report_description', $incident_description);
 
 			$this->template->content->incident_id = $incident->id;
-			$this->template->content->incident_title = $incident->incident_title;
-			$this->template->content->incident_description = nl2br($incident->incident_description);
+			$this->template->content->incident_title = $incident_title;
+			$this->template->content->incident_description = $incident_description;
 			$this->template->content->incident_location = $incident->location->location_name;
 			$this->template->content->incident_latitude = $incident->location->latitude;
 			$this->template->content->incident_longitude = $incident->location->longitude;

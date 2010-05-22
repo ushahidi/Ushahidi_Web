@@ -51,13 +51,16 @@ class register_plugins {
 		// We need to manually include the hook file for each plugin,
 		// because the additional plugins aren't loaded until after the application hooks are loaded.
 		foreach ($plugins as $plugin)
-		{
-			$d = dir($plugin.'/hooks'); // Load all the hooks
-			while (($entry = $d->read()) !== FALSE)
-				if ($entry[0] != '.')
-				{
-					include $plugin.'/hooks/'.$entry;
-				}
+		{	
+			if (file_exists($plugin.'/hooks'))
+			{
+				$d = dir($plugin.'/hooks'); // Load all the hooks
+				while (($entry = $d->read()) !== FALSE)
+					if ($entry[0] != '.')
+					{
+						include $plugin.'/hooks/'.$entry;
+					}
+			}
 		}
 	}
 }

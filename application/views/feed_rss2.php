@@ -23,6 +23,11 @@
 		<generator>Ushahidi Engine</generator>
 		<atom:link href="<?php echo $feed_url; ?>" rel="self" type="application/rss+xml" /><?php 
 		foreach ($items as $item) { ?>
+		
+		<?php
+		// Event::feed_rss_head - Add to the feed head
+		Event::run('ushahidi_action.feed_rss_head');
+		?>
 
 		<item>
 			<title><?php echo $item['title']; ?></title>
@@ -31,6 +36,10 @@
 			<pubDate><?php echo gmdate("D, d M Y H:i:s T", strtotime($item['date'])); ?></pubDate>
 			<guid><?php if(isset($item['guid'])) echo $item['guid']; else echo $item['link'] ?></guid>
 <?php if(isset($item['point'])) echo "\t\t\t<georss:point>".$item['point'][0]." ".$item['point'][1]."</georss:point>\n"; ?>
+			<?php
+			// Event::feed_rss_item - Add to the feed item
+			Event::run('ushahidi_action.feed_rss_item', $item['id']);
+			?>
 		</item><?php 
 		}	?>
 

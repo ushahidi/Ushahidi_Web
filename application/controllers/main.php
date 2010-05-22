@@ -399,8 +399,6 @@ class Main_Controller extends Template_Controller {
 
 		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
-		
-		Event::run('ushahidi.main_index');
 	}
 
 	/*
