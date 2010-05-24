@@ -33,11 +33,31 @@ class Plugins_Controller extends Admin_Controller {
 		$this->template->content = new View('admin/plugins');
 		$this->template->content->title = 'Addons';
 		
+		if (isset($_GET['status']) && ! empty($_GET['status']))
+		{
+			$status = $_GET['status'];
+			
+			if (strtolower($status) == 'a')
+			{
+				$filter = 'plugin_active = 1';
+			}
+			elseif (strtolower($status) == 'i')
+			{
+				$filter = 'plugin_active = 0';
+			}
+			else
+			{
+				$status = "0";
+				$filter = '1=1';
+			}
+		}
+		else
+		{
+			$status = "0";
+			$filter = '1=1';
+		}
+		
 		$db = new Database();
-		$form_error = FALSE;
-		$form_saved = FALSE;
-		$form_action = "";
-		$status = "0";
 
 		// Update the plugin list in the database
 		$d = dir(PLUGINPATH);
@@ -60,70 +80,118 @@ class Plugins_Controller extends Admin_Controller {
 			}
 		}
 
-		// Now remove the ones that weren't found from the database
+		// Remove Any Plugins not found in the plugins folder from the database
 		foreach (ORM::factory('plugin')->find_all() as $plugin)
+		{
 			if ( ! array_key_exists($plugin->plugin_name, $directories))
-				$plugin->delete();
-			else
-				$directories[$plugin->plugin_name] = $plugin;
-
-		if ( ! $_POST)
-		{
-			$this->template->content->plugins = $directories;
-		}
-		else
-		{
-			try
 			{
-				unset($_POST['go']);
-				// First unset everything
-				$db->query('UPDATE `'.$this->table_prefix.'plugin` SET `plugin_active` = 0');
+				$plugin->delete();
+			}
+		}		
+				
+		// check, has the form been submitted?
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+		if ($_POST)
+		{
+			$post = Validation::factory($_POST);
 
-				// Then set all the applicable plugins
-				foreach ($this->input->post() as $field => $active)
-				{
-					$plugin = ORM::factory('plugin', $field);
-					// Make sure we run the installer if it hasnt been installed yet.
-					// Then mark it as installed
-					if (count($db->getwhere('plugin', array('plugin_installed' => FALSE, 'plugin_name' => $field))))
+	         //  Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('action','required', 'alpha', 'length[1,1]');
+			$post->add_rules('comment_id.*','required','numeric');
+
+			if ($post->validate())
+	        {
+				if ($post->action == 'a')		
+				{ // Activate Action
+					foreach($post->plugin_id as $item)
 					{
-						Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH.$field)));
-						$class = ucfirst($field).'_Install';
-						if ($path = Kohana::find_file('libraries', $field.'_install'))
+						$plugin = ORM::factory('plugin', $item);
+						// Make sure we run the installer if it hasnt been installed yet.
+						// Then mark it as installed
+						if ($plugin->loaded AND $plugin->plugin_name)
 						{
-							include $path;
+							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH.$plugin->plugin_name)));
+							$class = ucfirst($plugin->plugin_name).'_Install';
+							if ($path = Kohana::find_file('libraries', $plugin->plugin_name.'_install'))
+							{
+								include $path;
 
-							// Run the installer
-							$install = new $class;
-							$install->run_install();
+								// Run the installer
+								$install = new $class;
+								$install->run_install();
+							}
+							
+							// Mark as Active and Mark as Installed
+							$plugin->plugin_active = 1;
+							$plugin->plugin_installed = 1;
+							$plugin->save();
 						}
 					}
-
-					$plugin->plugin_active = TRUE;
-					$plugin->plugin_installed = TRUE;
-					$plugin->save();
 				}
+				elseif ($post->action == 'i')	
+				{ // Deactivate Action
+					foreach($post->plugin_id as $item)
+					{
+						$plugin = ORM::factory('plugin', $item);
+						if ($plugin->loaded)
+						{
+							$plugin->plugin_active = 0;
+							$plugin->save();
+						}
+					}
+				}
+				elseif ($post->action == 'd')
+				{ // Delete Action
+					foreach($post->plugin_id as $item)
+					{
+						$plugin = ORM::factory('plugin', $item);
+						if ($plugin->loaded AND $plugin->plugin_name)
+						{
+							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(MODPATH.'argentum/'.$module)));
+							if ($path = Kohana::find_file('libraries', $plugin->plugin_name.'_install'))
+							{
+								include $path;
 
-				Database::instance()->clear_cache();
-				foreach (ORM::factory('plugin')->find_all() as $plugin)
-					$directories[$plugin->plugin_name] = $plugin;
-
-				$this->template->content->plugins = $directories;
+								// Run the uninstaller
+								$class = ucfirst($module).'_Install';
+								$install = new $class;
+								$install->uninstall();
+							}
+							
+							// Mark as InActive and Mark as UnInstalled
+							$plugin->plugin_active = 0;
+							$plugin->plugin_installed = 0;
+							$plugin->save();
+						}
+					}
+				}
 			}
-			catch (Kohana_Database_Exception $e)
+			else
 			{
-				$this->template->content->plugins = $directories;
+				$form_error = TRUE;
 			}
+
 		}
+		
+		$plugins = ORM::factory('plugin')
+			->where($filter)
+			->find_all();
+		$this->template->content->plugins = $plugins;
+		$this->template->content->total_items = $plugins->count();
 		
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
 		
-		// Total Reports
-		$this->template->content->total_items = count($directories);
-		
 		// Status Tab
 		$this->template->content->status = $status;
+		
+		// Javascript Header
+		$this->template->js = new View('admin/plugins_js');
 	}	
 }

@@ -10,7 +10,7 @@
 class plugin_Core {
 	
 	/**
-	 * Temporarily load a config file.
+	 * Load Plugin Information from readme.txt file
 	 *
 	 * @param   string plugin name
 	 * @return  array
@@ -59,7 +59,52 @@ class plugin_Core {
 		}
 	}
 	
-	
+	/**
+	 * Delete plugin from Plugin Folder
+	 *
+	 * @param   string   plugin name/folder
+	 */
+	public static function delete($folder = NULL)
+	{
+		if ($folder)
+		{
+			if (is_dir(PLUGINPATH.$folder))
+			{ // First Delete Files Recursively
+				$files = scandir(PLUGINPATH.$folder);
+				array_shift($files);    // remove '.' from array
+				array_shift($files);    // remove '..' from array
+
+				foreach ($files as $file)
+				{
+					$file = PLUGINPATH.$folder."/".$file;
+					if (is_dir($file))
+					{
+						plugin::delete($file);
+						try
+						{
+							rmdir($file);
+						}
+						catch (Kohana_Database_Exception $e)
+						{
+							echo 'Caught exception: ',  $e->getMessage(), "\n";
+						}
+					}
+					else
+					{
+						try
+						{
+							unlink($file);
+						}
+						catch (Kohana_Database_Exception $e)
+						{
+							echo 'Caught exception: ',  $e->getMessage(), "\n";
+						}
+					}
+				}
+			}
+		}
+	}
+
 	/**
 	 * Temporarily load a config file.
 	 *

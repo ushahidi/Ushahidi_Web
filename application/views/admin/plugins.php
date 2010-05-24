@@ -15,20 +15,23 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::base() . 'admin/addons/themes' . '" class="active">' . Kohana::lang('ui_main.plugins') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/addons/plugins' . '" class="active">' . Kohana::lang('ui_main.plugins') . '</a>' ?>
 					<a href="<?php echo url::base() . 'admin/addons/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
 				</h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
 					<ul class="tabset">
-						<li><a href="?status=0" <?php if ($status != 'a' && $status !='p' && $status !='s') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.show_all');?></a></li>
-						<li><a href="?status=p" <?php if ($status == 'p') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.inactive');?></a></li>
+						<li><a href="?status=0" <?php if ($status !='i' && $status !='a') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.show_all');?></a></li>
+						<li><a href="?status=i" <?php if ($status == 'i') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.inactive');?></a></li>
 						<li><a href="?status=a" <?php if ($status == 'a') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.active');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						&nbsp;
+						<ul>
+							<li><a href="#" onclick="pluginAction('a','ACTIVATE', '');"><?php echo strtoupper(Kohana::lang('ui_main.activate'));?></a></li>
+							<li><a href="#" onclick="pluginAction('i','DEACTIVATE', '');"><?php echo strtoupper(Kohana::lang('ui_main.deactivate'));?></a></li>
+						</ul>
 					</div>
 				</div>
 				<?php
@@ -113,14 +116,13 @@
 												<li class="none-separator"><?php
 												if ($plugin_active)
 												{
-													?><a href="#" class="status_no" onclick="pluginAction('u','DEACTIVATE', '<?php echo $plugin_id; ?>');"><?php echo Kohana::lang('ui_main.deactivate');?></a><?php
+													?><a href="#" class="status_no" onclick="pluginAction('i','DEACTIVATE', '<?php echo $plugin_id; ?>');"><?php echo Kohana::lang('ui_main.deactivate');?></a><?php
 												}
 												else
 												{
 													?><a href="#" class="status_yes" onclick="pluginAction('a','ACTIVATE', '<?php echo $plugin_id; ?>');"><?php echo Kohana::lang('ui_main.activate');?></a><?php
 												}
 												?></li>
-												<li><a href="#" class="del" onclick="pluginAction('d','DELETE', '<?php echo $plugin_id; ?>');"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>
 										</td>
 									</tr>

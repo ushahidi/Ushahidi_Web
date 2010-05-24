@@ -107,6 +107,11 @@
 		
 							</div>
 							<!-- / additional content -->
+							
+							<?php
+							// Action::main_sidebar - Add Items to the Entry Page Sidebar
+							echo Event::run('ushahidi_action.main_sidebar');
+							?>
 					
 						</div>
 						<!-- / right column -->

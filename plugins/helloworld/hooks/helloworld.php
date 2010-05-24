@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Test Hook - Load All Events
+ * Hello World Hook - Load All Events
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -12,7 +12,7 @@
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class test {
+class helloworld {
 	/**
 	 * Registers the main event add method
 	 */
@@ -27,22 +27,13 @@ class test {
 	 */
 	public function add()
 	{
-		// Only add the events if we are on that controller
-		if (Router::$controller == "reports")
-		{
-			switch (Router::$method)
-			{
-				case "view":
-					Event::add('ushahidi_filter.report_title', array($this, 'foo'));
-					break;
-			}
-		}
+		Event::add('ushahidi_action.main_sidebar', array($this, 'hello'));
 	}
 	
-	public function foo()
+	public function hello()
 	{
-		Event::$data = Event::$data . " YESS!!!!!";
+		View::factory('helloworld')->render(TRUE);
 	}
 }
 
-new test;
+new helloworld;
