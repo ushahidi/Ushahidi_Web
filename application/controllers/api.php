@@ -139,6 +139,10 @@ class Api_Controller extends Controller {
 				$ret = $this->_getVersionNumber();
 				break;
 
+			case "incidentcount": //retrieve the number of approved incidents
+				$ret = $this->_getIncidentCount();
+				break;
+
 			case "mapcenter": //retrieve lat and lon for map centre
 				$ret = $this->_mapCenter();
 				break;
@@ -1264,6 +1268,40 @@ class Api_Controller extends Controller {
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		} else {
 			$retJsonOrXml = $this->_arrayAsXML($data, $replar);
+		}
+
+		return $retJsonOrXml;
+	}
+
+	/**
+	* gets the number of approved incidents
+	*/
+	function _getIncidentCount(){
+		$data = array();
+		$json_count = array();
+		$retJsonOrXml = '';
+		$query = 'SELECT COUNT(*) as count FROM '.$this->table_prefix.'incident WHERE incident_active = 1';
+		$items = $this->db->query($query);
+
+		foreach ($items as $item){
+			$count = $item->count;
+			break;
+		}
+
+		if($this->responseType == 'json'){
+			$json_count[] = array("count" => $count);
+		}else{
+			$json_count['count'] = array("count" => $count);
+			$replar[] = 'count';
+		}
+
+		//create the json array
+		$data = array("payload" => array("count" => $json_count),"error" => $this->_getErrorMsg(0));
+
+		if($this->responseType == 'json') {
+			$retJsonOrXml = $this->_arrayAsJSON($data);
+		}else{
+			$retJsonOrXml = $this->_arrayAsXML($data,$replar);
 		}
 
 		return $retJsonOrXml;
