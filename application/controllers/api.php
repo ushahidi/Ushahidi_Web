@@ -139,6 +139,10 @@ class Api_Controller extends Controller {
 				$ret = $this->_getVersionNumber();
 				break;
 
+			case "geographicmidpoint": //retrieve the geographic midpoint of incidents
+				$ret = $this->_getGeographicMidpoint();
+				break;
+
 			case "incidentcount": //retrieve the number of approved incidents
 				$ret = $this->_getIncidentCount();
 				break;
@@ -1268,6 +1272,41 @@ class Api_Controller extends Controller {
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 		} else {
 			$retJsonOrXml = $this->_arrayAsXML($data, $replar);
+		}
+
+		return $retJsonOrXml;
+	}
+
+	/**
+	* gets the geographic midpoint of incidents
+	*/
+	function _getGeographicMidpoint(){
+		$data = array();
+		$json_latlon = array();
+		$retJsonOrXml = '';
+		$query = 'SELECT AVG( latitude ) AS avglat, AVG( longitude ) AS avglon FROM '.$this->table_prefix.'location WHERE id IN (SELECT location_id FROM '.$this->table_prefix.'incident WHERE incident_active = 1)';
+		$items = $this->db->query($query);
+
+		foreach ($items as $item){
+			$latitude = $item->avglat;
+			$longitude = $item->avglon;
+			break;
+		}
+
+		if($this->responseType == 'json'){
+			$json_latlon[] = array("latitude" => $latitude, "longitude" => $longitude);
+		}else{
+			$json_latlon['geographic_midpoint'] = array("latitude" => $latitude, "longitude" => $longitude);
+			$replar[] = 'geographic_midpoint';
+		}
+
+		//create the json array
+		$data = array("payload" => array("geographic_midpoint" => $json_latlon),"error" => $this->_getErrorMsg(0));
+
+		if($this->responseType == 'json') {
+			$retJsonOrXml = $this->_arrayAsJSON($data);
+		}else{
+			$retJsonOrXml = $this->_arrayAsXML($data,$replar);
 		}
 
 		return $retJsonOrXml;
