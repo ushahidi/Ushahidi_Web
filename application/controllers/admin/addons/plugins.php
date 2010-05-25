@@ -4,7 +4,8 @@
  * Install new Plugins & Themes
  * Credits To Jeremy Bush at Zombor.net (http://www.zombor.net/)
  *
- * Portions of this: Code Copyright (c) 2008-2009, Argentum Team
+ * Portions of this code:
+ * Copyright (c) 2008-2009, Argentum Team
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
