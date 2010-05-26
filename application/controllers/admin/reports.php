@@ -547,6 +547,11 @@ class Reports_Controller extends Admin_Controller
 			$post->add_rules('incident_source','numeric', 'length[1,1]');
 			$post->add_rules('incident_information','numeric', 'length[1,1]');
 			
+			
+			// Action::report_submit_admin - Report Posted
+			Event::run('ushahidi_action.report_submit_admin', $post);
+			
+			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -774,16 +779,14 @@ class Reports_Controller extends Admin_Controller
 					}
 				}
 				
-				if ($id AND $incident->loaded)	// edit
-				{
-					// Action::report_edit - Edited a Report
-					Event::run('ushahidi_action.report_edit', $incident);
-				}
-				else
-				{
-					// Action::report_add - Added a New Report
-					Event::run('ushahidi_action.report_add', $incident);
-				}
+				
+				$event_data = array(
+						'incident' => $incident,
+						'post' => $_POST,
+						'id' => $id);
+				// Action::report_edit - Edited a Report
+				Event::run('ushahidi_action.report_edit', $event_data);
+				
 				
 				// SAVE AND CLOSE?
 				if ($post->save == 1)		// Save but don't close

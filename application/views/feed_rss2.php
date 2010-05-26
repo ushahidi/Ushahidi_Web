@@ -21,14 +21,13 @@
 		<pubDate><?php echo gmdate("D, d M Y H:i:s T", strtotime($feed_date)); ?></pubDate>
 		<description><?php echo $feed_description; ?></description>
 		<generator>Ushahidi Engine</generator>
-		<atom:link href="<?php echo $feed_url; ?>" rel="self" type="application/rss+xml" /><?php 
-		foreach ($items as $item) { ?>
-		
+		<atom:link href="<?php echo $feed_url; ?>" rel="self" type="application/rss+xml" />
 		<?php
 		// Event::feed_rss_head - Add to the feed head
 		Event::run('ushahidi_action.feed_rss_head');
-		?>
 
+		foreach ($items as $item)
+		{?>
 		<item>
 			<title><?php echo $item['title']; ?></title>
 			<link><?php echo $item['link']; ?></link>
@@ -41,7 +40,7 @@
 			Event::run('ushahidi_action.feed_rss_item', $item['id']);
 			?>
 		</item><?php 
-		}	?>
+		}?>
 
 	</channel>
 </rss>

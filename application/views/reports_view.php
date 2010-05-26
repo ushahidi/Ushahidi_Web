@@ -63,7 +63,10 @@
 											}
 										?>
 									</li>
-									<?php Event::run('ushahidi_action.report_meta', $incident_id)?>
+									<?php
+									// Action::report_meta - Add Items to the Report Meta (Location/Date/Time etc.)
+									Event::run('ushahidi_action.report_meta', $incident_id);
+									?>
 								</ul>
 							</div>
 							<div class="location">

@@ -180,6 +180,11 @@
 			                        </ul>
 								</div>
 							</div>
+							<?php
+							// Action::report_form_admin - Runs right before the end of the report
+							// entry form
+							Event::run('ushahidi_action.report_form_admin', $id);
+							?>
 							<div id="custom_forms">
 								<?php
 								foreach ($disp_custom_fields as $field_id => $field_property)
