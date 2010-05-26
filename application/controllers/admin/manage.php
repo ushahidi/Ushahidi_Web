@@ -446,6 +446,7 @@ class Manage_Controller extends Admin_Controller
                         ->orderby('page_title', 'asc')
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
+		
 
         $this->template->content->form = $form;
 		$this->template->content->form_error = $form_error;
@@ -486,6 +487,7 @@ class Manage_Controller extends Admin_Controller
 		
 		if( $_POST ) 
 		{
+			//print_r($_POST);
 			$post = Validation::factory( $_POST );
 			
 			 //  Add some filters
@@ -574,7 +576,10 @@ class Manage_Controller extends Admin_Controller
 	/*
 	View/Edit News Feed Items
 	*/
-	function feeds_items($feed_id = NULL)
+	/*
+	Add Edit News Feeds
+	*/
+	function feeds_items()
 	{
 		$this->template->content = new View('admin/feeds_items');
 		
@@ -586,11 +591,28 @@ class Manage_Controller extends Admin_Controller
 		{
 			$filter = " 1=1";
 		}
-		
-		// check, has the form been submitted?
+	
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
+		
+		if ( $_POST )
+		{
+			$post = Validation::factory( $_POST );
+			
+			 //  Add some filters
+	        $post->pre_filter('trim', TRUE);
+			
+			if( $post->validate() )
+			{
+				$item_id = $this->input->post('item_id');
+				
+				ORM::factory('feed_item')->delete($item_id); 
+				
+				$form_saved = TRUE;
+				$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+			}
+		}
 		
 		// Pagination
 		$pagination = new Pagination(array(
@@ -600,6 +622,7 @@ class Manage_Controller extends Admin_Controller
 				->where($filter)
 				->count_all()
 		));
+		
 
 		$feed_items = ORM::factory('feed_item')
 			->where($filter)
@@ -616,8 +639,10 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->total_items = $pagination->total_items;
 		
 		// Javascript Header
-		$this->template->js = new View('admin/feeds_items_js');	
+		$this->template->js = new View('admin/feeds_items_js');
 	}
+	
+
 	
 	
 	/*
