@@ -149,12 +149,16 @@ class Reports_Controller extends Main_Controller {
 		// Round the number of days up to the nearest full day
 
 		$days_since = ceil((time() - $oldest_timestamp) / 86400);
-		$avg_reports_per_day = round(($total_reports / $days_since),2);
+		if($days_since < 1) {
+			$avg_reports_per_day = $total_reports;
+		}else{
+			$avg_reports_per_day = round(($total_reports / $days_since),2);
+		}
 
 		// Percent Verified
 
 		$total_verified = Incident_Model::get_total_reports_by_verified(true);
-		$percent_verified = ($total_reports == 0) ? 'n/a' : round((($total_verified / $total_reports) * 100),2).'%';
+		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
 
 		$this->template->content->total_reports = $total_reports;
 		$this->template->content->avg_reports_per_day = $avg_reports_per_day;
