@@ -1,14 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * This controller handles API requests.
- * 
+ *
  * @version 18 - David Kobia 2010-03-11
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
@@ -84,12 +84,12 @@ class Api_Controller extends Controller {
 				$incidentid = '';
 
 				if(!$this->_verifyArrayIndex($request, 'id')) {
-					$error = array("error" => 
+					$error = array("error" =>
 					$this->_getErrorMsg(001, 'id'));
 					break;
 				} else {
 					$incidentid = $request['id'];
-				}	
+				}
 
 				$mediatype = 0;
 
@@ -106,7 +106,7 @@ class Api_Controller extends Controller {
 			case "apikeys":
 				$by = '';
 				if(!$this->_verifyArrayIndex($request, 'by')) {
-					$error = array("error" => 
+					$error = array("error" =>
 					$this->_getErrorMsg(001, 'by'));
 					break;
 				}else {
@@ -138,6 +138,15 @@ class Api_Controller extends Controller {
 			case "version": //retrieve an ushahidi instance version number
 				$ret = $this->_getVersionNumber();
 				break;
+
+			case "geographicmidpoint": //retrieve the geographic midpoint of incidents
+				$ret = $this->_getGeographicMidpoint();
+				break;
+
+			case "incidentcount": //retrieve the number of approved incidents
+				$ret = $this->_getIncidentCount();
+				break;
+
 			case "mapcenter": //retrieve lat and lon for map centre
 				$ret = $this->_mapCenter();
 				break;
@@ -146,7 +155,7 @@ class Api_Controller extends Controller {
 				$id = 0;
 
 				if(!$this->_verifyArrayIndex($request, 'id')){
-					$error = array("error" => 
+					$error = array("error" =>
 					$this->_getErrorMsg(001, 'id'));
 					break;
 				} else {
@@ -158,13 +167,13 @@ class Api_Controller extends Controller {
 
 			case "locations": //retrieve locations
 				$ret = $this->_locations();
-				break;		
+				break;
 
 			case "location": //retrieve locations
 				$by = '';
 
 				if(!$this->_verifyArrayIndex($request, 'by')){
-					$error = array("error" => 
+					$error = array("error" =>
 					$this->_getErrorMsg(001, 'by'));
 					break;
 				} else {
@@ -244,7 +253,7 @@ class Api_Controller extends Controller {
 
 			case "incidents": //retrieve incidents
 				/**
-				* 
+				*
 				* there are several ways to get incidents by
 				*/
 				$by = '';
@@ -263,7 +272,7 @@ class Api_Controller extends Controller {
 						$sort = 'desc';
 					}
 				}
-                
+
                 /*Specify how many incidents to return */
 				if($this->_verifyArrayIndex($request, 'limit')){
 					if ( $request['limit'] > 0 ){
@@ -352,10 +361,10 @@ class Api_Controller extends Controller {
 
 			case "sharing": //Sharing Data based on Permissions
 				if( $this->_verifyArrayIndex($request, 'sharing_key') && $this->_verifyArrayIndex($request, 'sharing_site_name') && $this->_verifyArrayIndex($request, 'sharing_email') && $this->_verifyArrayIndex($request, 'sharing_url') && $this->_verifyArrayIndex($request, 'type') && $this->_verifyArrayIndex($request, 'session') ){
-					$ret = $this->_sharing($request['type'], 
-					$request['session'], 
-					$request['sharing_key'], 
-					$request['sharing_site_name'], 
+					$ret = $this->_sharing($request['type'],
+					$request['session'],
+					$request['sharing_key'],
+					$request['sharing_site_name'],
 					$request['sharing_email'],
 					$request['sharing_url'],
 					$request['sharing_data']);
@@ -382,7 +391,7 @@ class Api_Controller extends Controller {
 
 			case "sms": // Incoming SMS via FrontlineSMS, SmartPhone etc.
 				$ret = $this->_sms($request);
-				break;			
+				break;
 
 			default:
 				$error = array("error" => $this->_getErrorMsg(999));
@@ -438,7 +447,7 @@ class Api_Controller extends Controller {
 			case 005:
 				return array("code" => "005", "message" => Kohana::lang('ui_admin.access_denied_credentials'));
 			case 006:
-				return array("code" => "006", "message" => Kohana::lang('ui_admin.access_denied_others'));			
+				return array("code" => "006", "message" => Kohana::lang('ui_admin.access_denied_others'));
 			default:
 				return array("code" => "999", "message" => Kohana::lang('ui_admin.not_found'));
 		}
@@ -471,7 +480,7 @@ class Api_Controller extends Controller {
 		$xml->startElement('incidents');
 
 		//find incidents
-		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle," 
+		$query = "SELECT i.id AS incidentid,i.incident_title AS incidenttitle,"
                 ."i.incident_description AS incidentdescription, "
 				."i.incident_date AS incidentdate, "
 				."i.incident_mode AS incidentmode, "
@@ -481,10 +490,10 @@ class Api_Controller extends Controller {
 				."l.location_name AS locationname, "
 				."l.latitude AS locationlatitude, "
 				."l.longitude AS locationlongitude "
-				."FROM ".$this->table_prefix."incident AS i " 
+				."FROM ".$this->table_prefix."incident AS i "
                 ."INNER JOIN ".$this->table_prefix."location as l on l.id = i.location_id "
                 ."$where $limit";
- 
+
 		$items = $this->db->query($query);
 		$i = 0;
 		foreach ($items as $item){
@@ -507,7 +516,7 @@ class Api_Controller extends Controller {
 			$xml->writeElement('id',$item->locationid);
 			$xml->writeElement('name',$item->locationname);
 			$xml->writeElement('latitude',$item->locationlatitude);
-			$xml->writeElement('longitude',$item->locationlongitude);  	
+			$xml->writeElement('longitude',$item->locationlongitude);
 			$xml->endElement();
 			$xml->startElement('categories');
 
@@ -542,8 +551,8 @@ class Api_Controller extends Controller {
 						$json_incident_media[] = $media_item;
 					} else {
 						$xml->startElement('media');
-						if( $media_item->mediaid != "" ) $xml->writeElement('id',$media_item->mediaid);	
-						if( $media_item->mediatitle != "" ) $xml->writeElement('title',$media_item->mediatitle); 		
+						if( $media_item->mediaid != "" ) $xml->writeElement('id',$media_item->mediaid);
+						if( $media_item->mediatitle != "" ) $xml->writeElement('title',$media_item->mediatitle);
 						if( $media_item->mediatype != "" ) $xml->writeElement('type',$media_item->mediatype);
 						if( $media_item->medialink != "" ) $xml->writeElement('link',$media_item->medialink);
 						if( $media_item->mediathumb != "" ) $xml->writeElement('thumb',$media_item->mediathumb);
@@ -677,7 +686,7 @@ class Api_Controller extends Controller {
 	function _report(){
 		$retJsonOrXml = array();
 		$reponse = array();
-		$ret_value = $this->_submit();	
+		$ret_value = $this->_submit();
 		if($ret_value == 0 ){
 			$reponse = array(
 				"payload" => array("success" => "true"),
@@ -709,7 +718,7 @@ class Api_Controller extends Controller {
 	/**
  	* the actual reporting - ***must find a cleaner way to do this than duplicating code verbatim - modify report***
  	*/
-	function _submit() {		
+	function _submit() {
 		// setup and initialize form field names
 		$form = array
 		(
@@ -732,7 +741,7 @@ class Api_Controller extends Controller {
 			'person_email' => ''
 		);
 		//copy the form as errors, so the errors will be stored with keys corresponding to the form field names
-		$this->messages = $form;		
+		$this->messages = $form;
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST) {
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
@@ -791,7 +800,7 @@ class Api_Controller extends Controller {
 
 				$incident_date=explode("/",$post->incident_date);
 				/**
-		 		* where the $_POST['date'] is a value posted by form in 
+		 		* where the $_POST['date'] is a value posted by form in
 		 		* mm/dd/yyyy format
 		 		*/
 				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
@@ -805,14 +814,14 @@ class Api_Controller extends Controller {
 				//check if data is csv or a single value.
 				$pos = strpos($post->incident_category,",");
 				if( $pos === false ) {
-					//for backward compactibility. will drop support for it in the future. 
-					if( @unserialize( $post->incident_category) ) { 
+					//for backward compactibility. will drop support for it in the future.
+					if( @unserialize( $post->incident_category) ) {
 						$categories = unserialize( $post->incident_category);
 					} else {
 						$categories = array( $post->incident_category );
 					}
-				} else { 
-					$categories = explode(",",$post->incident_category);	
+				} else {
+					$categories = explode(",",$post->incident_category);
 				}
 
 				if(!empty($categories) && is_array($categories)) {
@@ -826,7 +835,7 @@ class Api_Controller extends Controller {
 
 				// STEP 4: SAVE MEDIA
 				// a. News
-				if(!empty( $post->incident_news ) && is_array($post->incident_news)) { 
+				if(!empty( $post->incident_news ) && is_array($post->incident_news)) {
 					foreach($post->incident_news as $item) {
 						if(!empty($item)) {
 							$news = new Media_Model();
@@ -841,7 +850,7 @@ class Api_Controller extends Controller {
 				}
 
 				// b. Video
-				if( !empty( $post->incident_video) && is_array( $post->incident_video)){ 
+				if( !empty( $post->incident_video) && is_array( $post->incident_video)){
 
 					foreach($post->incident_video as $item) {
 						if(!empty($item)) {
@@ -883,7 +892,7 @@ class Api_Controller extends Controller {
 						$photo->save();
 						$i++;
 					}
-				}				
+				}
 
 				// SAVE PERSONAL INFORMATION IF ITS FILLED UP
 				if(!empty($post->person_first) || !empty($post->person_last)){
@@ -994,7 +1003,7 @@ class Api_Controller extends Controller {
 			$description = '';
 			if($this->_verifyArrayIndex($_POST, 'description')){
 				$description = $_POST['description'];
-			}	
+			}
 
 			$media->location_id = $locationid;
 			$media->incident_id = $incidentid;
@@ -1035,8 +1044,8 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
-		$query = "SELECT id, category_title AS title, category_description AS 
-				description, category_color AS color FROM `".$this->table_prefix."category` WHERE 
+		$query = "SELECT id, category_title AS title, category_description AS
+				description, category_color AS color FROM `".$this->table_prefix."category` WHERE
 				category_visible = 1 ORDER BY id DESC";
 
 		$items = $this->db->query($query);
@@ -1083,8 +1092,8 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
-		$query = "SELECT id, category_title, category_description, 
-				category_color FROM `".$this->table_prefix."category` WHERE category_visible = 1 
+		$query = "SELECT id, category_title, category_description,
+				category_color FROM `".$this->table_prefix."category` WHERE category_visible = 1
 				AND id=$id ORDER BY id DESC";
 
 		$items = $this->db->query($query);
@@ -1149,7 +1158,7 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
-		$query = "SELECT id, location_name AS name, country_id , latitude, 
+		$query = "SELECT id, location_name AS name, country_id , latitude,
 				longitude FROM `".$this->table_prefix."location` $where $limit ";
 
 		$items = $this->db->query($query);
@@ -1190,7 +1199,7 @@ class Api_Controller extends Controller {
 	function _apiKey($service){
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
-		$json_apikey = array(); //api string to parse to json	
+		$json_apikey = array(); //api string to parse to json
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
@@ -1232,7 +1241,7 @@ class Api_Controller extends Controller {
 	function _mapCenter(){
 		$items = array(); //will hold the items from the query
 		$data = array(); //items to parse to json
-		$json_mapcenters = array(); //lat and lon string to parse to json	
+		$json_mapcenters = array(); //lat and lon string to parse to json
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
@@ -1269,6 +1278,75 @@ class Api_Controller extends Controller {
 	}
 
 	/**
+	* gets the geographic midpoint of incidents
+	*/
+	function _getGeographicMidpoint(){
+		$data = array();
+		$json_latlon = array();
+		$retJsonOrXml = '';
+		$query = 'SELECT AVG( latitude ) AS avglat, AVG( longitude ) AS avglon FROM '.$this->table_prefix.'location WHERE id IN (SELECT location_id FROM '.$this->table_prefix.'incident WHERE incident_active = 1)';
+		$items = $this->db->query($query);
+
+		foreach ($items as $item){
+			$latitude = $item->avglat;
+			$longitude = $item->avglon;
+			break;
+		}
+
+		if($this->responseType == 'json'){
+			$json_latlon[] = array("latitude" => $latitude, "longitude" => $longitude);
+		}else{
+			$json_latlon['geographic_midpoint'] = array("latitude" => $latitude, "longitude" => $longitude);
+			$replar[] = 'geographic_midpoint';
+		}
+
+		//create the json array
+		$data = array("payload" => array("geographic_midpoint" => $json_latlon),"error" => $this->_getErrorMsg(0));
+
+		if($this->responseType == 'json') {
+			$retJsonOrXml = $this->_arrayAsJSON($data);
+		}else{
+			$retJsonOrXml = $this->_arrayAsXML($data,$replar);
+		}
+
+		return $retJsonOrXml;
+	}
+
+	/**
+	* gets the number of approved incidents
+	*/
+	function _getIncidentCount(){
+		$data = array();
+		$json_count = array();
+		$retJsonOrXml = '';
+		$query = 'SELECT COUNT(*) as count FROM '.$this->table_prefix.'incident WHERE incident_active = 1';
+		$items = $this->db->query($query);
+
+		foreach ($items as $item){
+			$count = $item->count;
+			break;
+		}
+
+		if($this->responseType == 'json'){
+			$json_count[] = array("count" => $count);
+		}else{
+			$json_count['count'] = array("count" => $count);
+			$replar[] = 'count';
+		}
+
+		//create the json array
+		$data = array("payload" => array("count" => $json_count),"error" => $this->_getErrorMsg(0));
+
+		if($this->responseType == 'json') {
+			$retJsonOrXml = $this->_arrayAsJSON($data);
+		}else{
+			$retJsonOrXml = $this->_arrayAsXML($data,$replar);
+		}
+
+		return $retJsonOrXml;
+	}
+
+	/**
  	* get an ushahidi instance version number
  	*/
 	function _getVersionNumber(){
@@ -1280,8 +1358,8 @@ class Api_Controller extends Controller {
 		if($this->responseType == 'json'){
 			$json_version[] = array("version" => $version);
 		}else{
-			$json_version['version0'] = array("version" => $version);
-			$replar[] = 'version0';
+			$json_version['version'] = array("version" => $version);
+			$replar[] = 'version';
 		}
 
 		//create the json array
@@ -1324,7 +1402,7 @@ class Api_Controller extends Controller {
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getLocations($where, $limit);
-	}	
+	}
 
 	/**
  	* country query abstraction
@@ -1337,7 +1415,7 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		//find incidents
-		$query = "SELECT id, iso, country as `name`, capital 
+		$query = "SELECT id, iso, country as `name`, capital
 			FROM `".$this->table_prefix."country` $where $limit";
 
 		$items = $this->db->query($query);
@@ -1438,7 +1516,7 @@ class Api_Controller extends Controller {
 		$where = "\nWHERE l.latitude = $lat AND l.longitude = $long AND i.incident_active = 1 ";
 		$sortby = "\nORDER BY $orderfield $sort ";
 		$limit = "\n LIMIT 0, $this->list_limit";
-		return $this->_getIncidents($where,$sortby,$limit);		
+		return $this->_getIncidents($where,$sortby,$limit);
 	}
 
 	/**
@@ -1455,7 +1533,7 @@ class Api_Controller extends Controller {
  	* get the incidents by location name
  	*/
 	function _incidentsByLocationName($locname,$orderfield,$sort){
-		$where = "\nWHERE l.location_name = '$locname' AND 
+		$where = "\nWHERE l.location_name = '$locname' AND
 				i.incident_active = 1 ";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
@@ -1467,7 +1545,7 @@ class Api_Controller extends Controller {
  	*/
 	function _incidentsByCategoryId($catid,$orderfield,$sort){
 		// Needs Extra Join
-		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id"; 
+		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id";
 		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id = ic.category_id ";
 		$where = $join."\nWHERE c.id = $catid AND i.incident_active = 1";
 		$sortby = "\nORDER BY $orderfield $sort";
@@ -1480,9 +1558,9 @@ class Api_Controller extends Controller {
  	*/
 	function _incidentsByCategoryName($catname,$orderfield,$sort){
 		// Needs Extra Join
-		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id"; 
+		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id";
 		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id = ic.category_id";
-		$where = $join."\nWHERE c.category_title = '$catname' AND 
+		$where = $join."\nWHERE c.category_title = '$catname' AND
 				i.incident_active = 1";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
@@ -1494,9 +1572,9 @@ class Api_Controller extends Controller {
          */
         function _incidentsBySinceId($since_id,$orderfield,$sort){
                 // Needs Extra Join
-		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id"; 
+		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id";
 		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id = ic.category_id";
-		$where = $join."\nWHERE i.id > $since_id AND 
+		$where = $join."\nWHERE i.id > $since_id AND
 				i.incident_active = 1";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
@@ -1508,12 +1586,12 @@ class Api_Controller extends Controller {
  	* Instance to Instance Sharing of Data
  	* Access Limits: Hourly
  	*/
-	function _sharing($request_type, $sharing_session, $sharing_key, $sharing_site_name, 
+	function _sharing($request_type, $sharing_session, $sharing_key, $sharing_site_name,
 		$sharing_email, $sharing_url, $sharing_data = ""){
 		$sharing = new Sharing();	// New Sharing Object
 		switch($request_type){
 			case "notify": 		// Handle New Share Request
-				$return_array = $sharing->share_edit($sharing_session, $sharing_key, $sharing_site_name, 
+				$return_array = $sharing->share_edit($sharing_session, $sharing_key, $sharing_site_name,
 				$sharing_email, $sharing_url);
 				if ( $return_array["success"] === TRUE ){
 					$data = array("payload" => array("success" => "true"),"error" => $this->_getErrorMsg(0));
@@ -1532,17 +1610,17 @@ class Api_Controller extends Controller {
 				break;
 
 			case "incoming": 	// Handle Incoming Data
-				$return_array = $sharing->share_incoming($sharing_session, $sharing_key, $sharing_site_name, 
-				$sharing_email, $sharing_url, $sharing_data);			
+				$return_array = $sharing->share_incoming($sharing_session, $sharing_key, $sharing_site_name,
+				$sharing_email, $sharing_url, $sharing_data);
 				if ( $return_array["success"] === TRUE ){
 					$data = array("payload" => array("success" => "true"),"error" => $this->_getErrorMsg(0));
 				} else {
 					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
 				}
-				break;				
+				break;
 
 				default:
-					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(002));	// Invalid Request	
+					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(002));	// Invalid Request
 		}
 		return $this->_arrayAsJSON($data);
 	}
@@ -1632,7 +1710,7 @@ class Api_Controller extends Controller {
 
 		$app_key = isset($request['key']) ? $request['key'] : "";
 
-		if ( $user_id = $this->_login($username, $password) || 
+		if ( $user_id = $this->_login($username, $password) ||
 		 	$this->_chk_key($app_key) )
 		{
 			// Process POST
@@ -1661,7 +1739,7 @@ class Api_Controller extends Controller {
 				// Validates so Save Message
 				$services = new Service_Model();
 				$service = $services->where('service_name', 'SMS')->find();
-				if (!$service) 
+				if (!$service)
 					return;
 
 				$reporter = ORM::factory('reporter')
@@ -1699,7 +1777,7 @@ class Api_Controller extends Controller {
 				$message->message_to = null;
 				$message->message = $post->message_description;
 				$message->message_type = 1; // Inbox
-				$message->message_date = (isset($post->message_date) 
+				$message->message_date = (isset($post->message_date)
 					&& !empty($post->message_date))
 					? $post->message_date : date("Y-m-d H:i:s",time());
 				$message->service_messageid = null;
@@ -1748,7 +1826,7 @@ class Api_Controller extends Controller {
 		}
 
 		return $retJsonOrXml;
-	}	
+	}
 
 	/**
  	* starting point
@@ -1784,13 +1862,14 @@ class Api_Controller extends Controller {
  	* CREDIT TO: http://snippets.dzone.com/posts/show/3391
  	*/
 	function _write(XMLWriter $xml, $data, $replar = ""){
+
 		foreach($data as $key => $value){
 			if(is_a($value, 'stdClass')){
-				//echo 'convert to an array';
 				$value = $this->_object2array($value);
 			}
 
 			if(is_array($value)){
+
 	 			$toprint = true;
 
 				if(in_array($key, $replar)){
@@ -1806,9 +1885,9 @@ class Api_Controller extends Controller {
 
 				continue;
 			}
- 						
+
 			$xml->writeElement($key, $value);
- 		}	
+ 		}
 	}
 
 	/**

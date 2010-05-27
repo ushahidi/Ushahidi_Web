@@ -34,14 +34,32 @@
 									{
 										$category_title = $category_info[0];
 										$category_color = $category_info[1];
-										echo '<li><a href="#" id="cat_'. $category .'"><div class="swatch" style="background-color:#'.$category_color.'"></div><div class="category-title">'.$category_title.'</div></a></li>';
+										$category_image = '';
+										$color_css = 'class="swatch" style="background-color:#'.$category_color.'"';
+										if($category_info[2] != NULL && file_exists('media/uploads/'.$category_info[2])) {
+											$category_image = html::image(array(
+												'src'=>'media/uploads/'.$category_info[2],
+												'style'=>'float:left;padding-right:5px;'
+												));
+											$color_css = '';
+										}
+										echo '<li><a href="#" id="cat_'. $category .'"><div '.$color_css.'>'.$category_image.'</div><div class="category-title">'.$category_title.'</div></a></li>';
 										// Get Children
 										echo '<div class="hide" id="child_'. $category .'">';
-										foreach ($category_info[2] as $child => $child_info)
+										foreach ($category_info[3] as $child => $child_info)
 										{
 											$child_title = $child_info[0];
 											$child_color = $child_info[1];
-											echo '<li style="padding-left:20px;"><a href="#" id="cat_'. $child .'"><div class="swatch" style="background-color:#'.$child_color.'"></div><div class="category-title">'.$child_title.'</div></a></li>';
+											$child_image = '';
+											$color_css = 'class="swatch" style="background-color:#'.$child_color.'"';
+											if($child_info[2] != NULL && file_exists('media/uploads/'.$child_info[2])) {
+												$child_image = html::image(array(
+													'src'=>'media/uploads/'.$child_info[2],
+													'style'=>'float:left;padding-right:5px;'
+													));
+												$color_css = '';
+											}
+											echo '<li style="padding-left:20px;"><a href="#" id="cat_'. $child .'"><div '.$color_css.'>'.$child_image.'</div><div class="category-title">'.$child_title.'</div></a></li>';
 										}
 										echo '</div>';
 									}

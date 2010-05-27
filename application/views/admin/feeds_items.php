@@ -30,6 +30,7 @@
 					<ul class="tabset">
 						<li><a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.feeds');?></a></li>
 						<li><a href="<?php echo url::base() . 'admin/manage/feeds_items' ?>" class="active"><?php echo Kohana::lang('ui_main.feed_items');?></a></li>
+						
 					</ul>
 				
 					<!-- tab -->
@@ -61,7 +62,7 @@
 				<!-- report-table -->
 				<?php print form::open(NULL, array('id' => 'feedListing', 'name' => 'feedListing')); ?>
 					<input type="hidden" name="action" id="action" value="">
-					<input type="hidden" name="level"  id="level"  value="">
+					<input type="hidden" name="item_id"  id="item_id_action"  value="">
 					<div class="table-holder">
 						<table class="table">
 							<thead>
@@ -131,8 +132,7 @@
 													echo "<li class=\"none-separator\"><a href=\"".url::base().'admin/reports/edit?fid='.$item_id."\">".Kohana::lang('ui_main.create_report')."?</a></li>";
 												}
 												?>
-												<li>
-                                                <a href="<?php echo url::base().'admin/manage/feeds_delete/'.$item_id ?>" onclick="return confirm(<?php echo Kohana::lang('ui_main.action_confirm');?>)" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
+											<li><a href="javascript:feedAction('d','DELETE','<?php echo(rawurlencode($item_id)); ?>');"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 											</ul>
 										</td>
 									</tr>

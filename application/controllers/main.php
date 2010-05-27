@@ -146,7 +146,8 @@ class Main_Controller extends Template_Controller {
 			{
 				$children[$child->id] = array(
 					$child->category_title,
-					$child->category_color
+					$child->category_color,
+					$child->category_image
 				);
 			}
 
@@ -154,6 +155,7 @@ class Main_Controller extends Template_Controller {
             $parent_categories[$category->id] = array(
 				$category->category_title,
 				$category->category_color,
+				$category->category_image,
 				$children
 			);
         }
