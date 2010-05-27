@@ -46,10 +46,6 @@
 									<div class="map-holder" id="divMap"></div>
 								</div>
 								<div class="report-find-location">
-									<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
-									<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="Find Location" class="btn_find" /></div>
-									<div id="find_loading" class="report-find-loading"></div>
-									<div style="clear:both;" id="find_text">* If you can't find your location, please click on the map to pinpoint the correct location.</div>
 									<div class="alert_slider">
 										<select name="alert_radius" id="alert_radius">
 											<option value="1">1 KM</option>
@@ -60,6 +56,10 @@
 											<option value="100">100 KM</option>
 										</select>
 									</div>
+									<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
+									<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="Find Location" class="btn_find" /></div>
+									<div id="find_loading" class="report-find-loading"></div>
+									<div style="clear:both;" id="find_text">* If you can't find your location, please click on the map to pinpoint the correct location.</div>
 								</div>
 							</div>
 							<input type="hidden" id="alert_lat" name="alert_lat" value="<?php echo $form['alert_lat']; ?>">
