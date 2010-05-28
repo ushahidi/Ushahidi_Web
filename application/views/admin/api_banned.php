@@ -19,8 +19,8 @@
 	<div class="tabs">
 		<!-- tabset -->
 		<ul class="tabset">
-			<li><a href="<?php echo url::base() ?>admin/apilogs" <?php if($this_page == "apilogs" ) echo "class=\"active\""; ?> >Logs</a></li>
-			<li><a href="<?php echo url::base() ?>admin/apilogs/apibanned" <?php if($this_page == "apibanned" ) echo "class=\"active\""; ?>>API Banned</a></li>
+			<li><a href="<?php echo url::site() ?>admin/apilogs" <?php if($this_page == "apilogs" ) echo "class=\"active\""; ?> >Logs</a></li>
+			<li><a href="<?php echo url::site() ?>admin/apilogs/apibanned" <?php if($this_page == "apibanned" ) echo "class=\"active\""; ?>>API Banned</a></li>
 		</ul>
 		<!-- tab -->
 		<div class="tab">

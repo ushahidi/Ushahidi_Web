@@ -120,7 +120,7 @@
 										echo " or ";
 									}
 									} ?></li><?php } ?>
-									<li><a href="<?php echo url::base() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a></li>
+									<li><a href="<?php echo url::site() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a></li>
 								</ol>					
 		
 							</div>
@@ -226,7 +226,7 @@
 										$incident_location = $incident->location->location_name;
 									?>
 									<tr>
-										<td><a href="<?php echo url::base() . 'reports/view/' . $incident_id; ?>"> <?php echo $incident_title ?></a></td>
+										<td><a href="<?php echo url::site() . 'reports/view/' . $incident_id; ?>"> <?php echo $incident_title ?></a></td>
 										<td><?php echo $incident_location ?></td>
 										<td><?php echo $incident_date; ?></td>
 									</tr>
@@ -236,7 +236,7 @@
 
 								</tbody>
 							</table>
-							<a class="more" href="<?php echo url::base() . 'reports/' ?>">View More...</a>
+							<a class="more" href="<?php echo url::site() . 'reports/' ?>">View More...</a>
 						</div>
 						<!-- / left content block -->
 				
@@ -271,24 +271,12 @@
 									?>
 								</tbody>
 							</table>
-							<a class="more" href="<?php echo url::base() . 'feeds' ?>">View More...</a>
+							<a class="more" href="<?php echo url::site() . 'feeds' ?>">View More...</a>
 						</div>
 						<!-- / right content block -->
 				
 					</div>
 					<!-- /content blocks -->
-<?php
-/*
- *					<!-- site footer -->
- *					<div class="site-footer">
- *
- *						<h5>Site Footer</h5>
- *						Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Mauris porta. Sed eget nisi. Fusce rhoncus lorem ac erat. Maecenas turpis tellus, volutpat quis, sodales et, consectetuer ac, est. Nullam sed est sed augue vestibulum condimentum. In tellus. Integer luctus odio eu arcu. Pellentesque imperdiet felis eu tortor. Morbi ante dui, iaculis id, vulputate sit amet, venenatis in, turpis. Fusce in risus.
- *
- *					</div>
- *					<!-- / site footer -->
-*/
-?>
 			
 				</div>
 				<!-- content -->

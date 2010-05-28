@@ -18,13 +18,13 @@
 		
 		<h3>Your Sites</h3>
 		
-		<a href="<?php echo url::base() ?>mhi/logout"><?php echo Kohana::lang('ui_admin.logout');?></a>
+		<a href="<?php echo url::site() ?>mhi/logout"><?php echo Kohana::lang('ui_admin.logout');?></a>
 
-		<a href="<?php echo url::base() ?>mhi/signup">Create New Instance</a>
+		<a href="<?php echo url::site() ?>mhi/signup">Create New Instance</a>
 		
-		<a href="<?php echo url::base() ?>mhi/account">Account Settings</a>
+		<a href="<?php echo url::site() ?>mhi/account">Account Settings</a>
 		
-		<a href="<?php echo url::base() ?>mhi/account">Your Sites</a>
+		<a href="<?php echo url::site() ?>mhi/account">Your Sites</a>
 		
 		<table><tbody>
 		<?php foreach($sites as $site) { ?>

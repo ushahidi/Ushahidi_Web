@@ -43,10 +43,10 @@
 <body class="<?php echo $this_body; ?> content">
 	<div id="header">
     	<div id="header-wrapper">
-    		<h1><a href="<?php echo url::base() ?>mhi/">Ushahidi</a></h1>
+    		<h1><a href="<?php echo url::site() ?>mhi/">Ushahidi</a></h1>
             <ul class="primary-nav">
-            	<li><a href="<?php echo url::base() ?>mhi/features"<?php if($this_body == 'mhi-features') { ?> class="active" <?php } ?>>Features</a></li>
-                <li><a href="<?php echo url::base() ?>mhi/about"<?php if($this_body == 'mhi-about') { ?> class="active" <?php } ?>>About</a></li>
+            	<li><a href="<?php echo url::site() ?>mhi/features"<?php if($this_body == 'mhi-features') { ?> class="active" <?php } ?>>Features</a></li>
+                <li><a href="<?php echo url::site() ?>mhi/about"<?php if($this_body == 'mhi-about') { ?> class="active" <?php } ?>>About</a></li>
                 <li><a class="contact.html" href="#">Contact Us</a></li>
             </ul>
             <div id="login-box">
@@ -54,7 +54,7 @@
             		if($mhi_user_id)
             		{
             			?>
-            			<p>You are logged in.<a class="sign-in rounded" href="<?php echo url::base() ?>mhi/logout">Log Out </a></p>
+            			<p>You are logged in.<a class="sign-in rounded" href="<?php echo url::site() ?>mhi/logout">Log Out </a></p>
             			<?php
             		}else{
             			?>

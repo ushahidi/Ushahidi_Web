@@ -34,11 +34,11 @@
 <div class="twocol-right">
 	<h2 class="title-lead-in">Use Ushahidi to CROWDSOURCE and VISUALIZE information.</h2>
     <p class="sub-title">Nothing to install, minimum configuration.</p>
-    <p><a class="button btn_sign-up" href="<?php echo url::base()."mhi/signup" ?>">Sign Up Now!</a></p>
+    <p><a class="button btn_sign-up" href="<?php echo url::site()."mhi/signup" ?>">Sign Up Now!</a></p>
     
     <div class="footer-links">
     	<ul>
-            <li class="first"><a href="<?php echo url::base() ?>mhi/about">About</a></li>
+            <li class="first"><a href="<?php echo url::site() ?>mhi/about">About</a></li>
             <li><a href="#">Contact Us</a></li>
             <li class="regular">Copyright &copy; <?php echo date('Y'); ?> Ushahidi</li>
         </ul>

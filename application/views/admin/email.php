@@ -15,12 +15,12 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::base() . 'admin/settings/site' ?>"><?php echo Kohana::lang('ui_main.site');?></a>
-					<a href="<?php echo url::base() . 'admin/settings' ?>"><?php echo Kohana::lang('ui_main.map');?></a>
-					<a href="<?php echo url::base() . 'admin/settings/sms' ?>"><?php echo Kohana::lang('ui_main.sms');?></a>
-					<a href="<?php echo url::base() . 'admin/settings/sharing' ?>"><?php echo Kohana::lang('ui_main.sharing');?></a>
-					<a href="<?php echo url::base() . 'admin/settings/email' ?>" class="active"><?php echo Kohana::lang('ui_main.email');?></a>
-					<a href="<?php echo url::base() . 'admin/settings/themes' ?>"><?php echo Kohana::lang('ui_main.themes');?></a>
+					<a href="<?php echo url::site() . 'admin/settings/site' ?>"><?php echo Kohana::lang('ui_main.site');?></a>
+					<a href="<?php echo url::site() . 'admin/settings' ?>"><?php echo Kohana::lang('ui_main.map');?></a>
+					<a href="<?php echo url::site() . 'admin/settings/sms' ?>"><?php echo Kohana::lang('ui_main.sms');?></a>
+					<a href="<?php echo url::site() . 'admin/settings/sharing' ?>"><?php echo Kohana::lang('ui_main.sharing');?></a>
+					<a href="<?php echo url::site() . 'admin/settings/email' ?>" class="active"><?php echo Kohana::lang('ui_main.email');?></a>
+					<a href="<?php echo url::site() . 'admin/settings/themes' ?>"><?php echo Kohana::lang('ui_main.themes');?></a>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">

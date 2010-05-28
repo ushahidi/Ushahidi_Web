@@ -81,7 +81,7 @@
 		            return false;
 		        }
 		
-				$.post("<?php echo url::base() . 'admin/reports/save_category/' ?>", { category_title: category_name, category_description: category_description, category_color: category_color },
+				$.post("<?php echo url::site() . 'admin/reports/save_category/' ?>", { category_title: category_name, category_description: category_description, category_color: category_color },
 					function(data){
 						if ( data.status == 'saved')
 						{
@@ -141,7 +141,7 @@
 			var answer = confirm("Are You Sure You Want To Delete This Photo?");
 		    if (answer){
 				$("#" + div).effect("highlight", {}, 800);
-				$.get("<?php echo url::base() . 'admin/reports/deletePhoto/' ?>" + id);
+				$.get("<?php echo url::site() . 'admin/reports/deletePhoto/' ?>" + id);
 				$("#" + div).remove();
 		    }
 			else{

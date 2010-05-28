@@ -14,7 +14,7 @@
  */
 ?>
 <div class="bg">
-	<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a><a href="<?php print url::base() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a><a href="<?php print url::base() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a></h2>
+	<h2><?php print $title; ?> <span></span><a href="<?php print url::site() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a><a href="<?php print url::site() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a><a href="<?php print url::site() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a></h2>
 	<!-- report-form -->
 	<div class="report-form">
 		<?php
