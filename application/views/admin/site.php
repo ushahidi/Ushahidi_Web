@@ -152,7 +152,7 @@
 									});
 								});
 							</script>
-						</div>						
+						</div>				
 						<div class="row">
 							<h4><?php echo Kohana::lang('settings.site.google_analytics');?></h4>
 							<?php echo Kohana::lang('settings.site.google_analytics_example');?> &nbsp;&nbsp;
