@@ -18,15 +18,15 @@
 		
 		<h3>Account Settings</h3>
 		
-		<a href="<?php echo url::site() ?>mhi/logout"><?php echo Kohana::lang('ui_admin.logout');?></a>
+		<a href="<?php echo url::base() ?>mhi/logout"><?php echo Kohana::lang('ui_admin.logout');?></a>
 
-		<a href="<?php echo url::site() ?>mhi/signup">Create New Instance</a>
+		<a href="<?php echo url::base() ?>mhi/signup">Create New Instance</a>
 		
-		<a href="<?php echo url::site() ?>mhi/account">Account Settings</a>
+		<a href="<?php echo url::base() ?>mhi/account">Account Settings</a>
 		
-		<a href="<?php echo url::site() ?>mhi/account">Your Sites</a>
+		<a href="<?php echo url::base() ?>mhi/account">Your Sites</a>
 		
-		<?php print form::open(url::site().'mhi/account', array('id' => 'frm-MHI-Account', 'name' => 'frm-MHI-Account', 'class' => 'frm-content')); ?>
+		<?php print form::open(url::base().'mhi/account', array('id' => 'frm-MHI-Account', 'name' => 'frm-MHI-Account', 'class' => 'frm-content')); ?>
 	
 		<table><tbody>
 	

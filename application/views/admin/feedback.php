@@ -136,8 +136,8 @@
 								<td class="col-1"><input name="feedback_id[]" id="feedback" value="<?php echo $feedback_id; ?>" type="checkbox" class="check-box"/></td>
 								<td class="col-2">
 									<div class="post">
-										<h4><a href="<?php echo url::site() . 'admin/feedback/view/' . $feedback_id; ?>" class="more"><?php echo $feedback_title; ?></a></h4>
-										<p><?php echo $feedback_mesg; ?>... <a href="<?php echo url::site() . 'admin/feedback/view/' . $feedback_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
+										<h4><a href="<?php echo url::base() . 'admin/feedback/view/' . $feedback_id; ?>" class="more"><?php echo $feedback_title; ?></a></h4>
+										<p><?php echo $feedback_mesg; ?>... <a href="<?php echo url::base() . 'admin/feedback/view/' . $feedback_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
 									</div>
 									<ul class="info">
 										<li class="none-separator">

@@ -15,21 +15,21 @@
 ?>
 			<div class="bg">
 				<h2>
-					<a href="<?php echo url::site() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+					<a href="<?php echo url::base() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
 					<span>(<a href="#add"><?php echo Kohana::lang('ui_main.add_new');?></a>)</span>
-					<a href="<?php echo url::site() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
+					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
 				</h2>
 			
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
 					<ul class="tabset">
-						<li><a href="<?php echo url::site() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.feeds');?></a></li>
-						<li><a href="<?php echo url::site() . 'admin/manage/feeds_items' ?>" class="active"><?php echo Kohana::lang('ui_main.feed_items');?></a></li>
+						<li><a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.feeds');?></a></li>
+						<li><a href="<?php echo url::base() . 'admin/manage/feeds_items' ?>" class="active"><?php echo Kohana::lang('ui_main.feed_items');?></a></li>
 						
 					</ul>
 				
@@ -125,11 +125,11 @@
 											<ul>
 												<?php
 												if ($incident_id != 0) {
-													echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_main.view_report')."</strong></a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_main.view_report')."</strong></a></li>";
 												}
 												else
 												{
-													echo "<li class=\"none-separator\"><a href=\"".url::site().'admin/reports/edit?fid='.$item_id."\">".Kohana::lang('ui_main.create_report')."?</a></li>";
+													echo "<li class=\"none-separator\"><a href=\"".url::base().'admin/reports/edit?fid='.$item_id."\">".Kohana::lang('ui_main.create_report')."?</a></li>";
 												}
 												?>
 											<li><a href="javascript:feedAction('d','DELETE','<?php echo(rawurlencode($item_id)); ?>');"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>

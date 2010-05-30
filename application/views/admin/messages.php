@@ -18,7 +18,7 @@
 				<?php
 				foreach ($services as $service)
 				{
-					echo "<a href=\"" . url::site() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
+					echo "<a href=\"" . url::base() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
 				}
 				?>
 				</h2>
@@ -137,7 +137,7 @@
 													</div>
 													<a href="javascript:showReply('reply_<?php echo $message_id; ?>')" class="more">+<?php echo Kohana::lang('ui_main.reply');?></a>
 													<div id="reply_<?php echo $message_id; ?>" class="reply">
-														<?php print form::open(url::site() . 'admin/messages/send/',array('id' => 'newreply_' . $message_id,
+														<?php print form::open(url::base() . 'admin/messages/send/',array('id' => 'newreply_' . $message_id,
 														 	'name' => 'newreply_' . $message_id)); ?>
 														<div class="reply_can"><a href="javascript:cannedReply('1', 'message_<?php echo $message_id; ?>')">+<?php echo Kohana::lang('ui_main.request_location');?></a>&nbsp;&nbsp;&nbsp;<a href="javascript:cannedReply('2', 'message_<?php echo $message_id; ?>')">+<?php echo Kohana::lang('ui_main.request_information');?></a></div>
 														<div id="replyerror_<?php echo $message_id; ?>" class="reply_error"></div>
@@ -170,15 +170,15 @@
 											<ul>
 												<?php
 												if ($incident_id != 0 && $message_type != 2) {
-													echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
 												}
 												elseif ($message_type != 2)
 												{
-													echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit?mid=' . $message_id ."\">Create Report?</a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $message_id ."\">Create Report?</a></li>";
 												}
 												?>
 												<li>
-                                                <a href="<?php echo url::site().'admin/messages/delete/'.$message_id ?>" onclick="return confirm('Delete cannot be undone. Are you sure you want to continue?')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
+                                                <a href="<?php echo url::base().'admin/messages/delete/'.$message_id ?>" onclick="return confirm('Delete cannot be undone. Are you sure you want to continue?')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>
 										</td>
 									</tr>

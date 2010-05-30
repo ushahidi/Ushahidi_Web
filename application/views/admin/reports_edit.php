@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php print $title; ?> <span></span><a href="<?php print url::site() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a><a href="<?php print url::site() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::site() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a></h2>
+				<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a><a href="<?php print url::base() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::base() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a></h2>
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">
 					<input type="hidden" name="location_id" id="location_id" value="<?php print $form['location_id']; ?>">
@@ -492,7 +492,7 @@
 									echo "<li><a href=\"#\" class=\"btn_delete btns_red\">".strtoupper(Kohana::lang('ui_main.delete_report'))."</a></li>";
 								}
 								?>
-								<li><a href="<?php echo url::site().'admin/reports/';?>" class="btns_red"><?php echo strtoupper(Kohana::lang('ui_main.cancel'));?></a></li>
+								<li><a href="<?php echo url::base().'admin/reports/';?>" class="btns_red"><?php echo strtoupper(Kohana::lang('ui_main.cancel'));?></a></li>
 							</ul>
 						</div>						
 					</div>
@@ -501,7 +501,7 @@
 				if($id)
 				{
 					// Hidden Form to Perform the Delete function
-					print form::open(url::site().'admin/reports/', array('id' => 'reportMain', 'name' => 'reportMain'));
+					print form::open(url::base().'admin/reports/', array('id' => 'reportMain', 'name' => 'reportMain'));
 					$array=array('action'=>'d','incident_id[]'=>$id);
 					print form::hidden($array);
 					print form::close();

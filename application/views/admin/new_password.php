@@ -33,7 +33,7 @@
 					<div class="green-box">
 						<h3><?php echo Kohana::lang('ui_main.password_reset_confirm'); ?></h3>
 						<br />
-						<a href="<?php echo url::site().'login'?>"><?php echo Kohana::lang('ui_main.login');?></a>
+						<a href="<?php echo url::base().'login'?>"><?php echo Kohana::lang('ui_main.login');?></a>
 					</div>
 				</td>
 			</tr>

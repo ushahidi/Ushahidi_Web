@@ -55,7 +55,7 @@
               <td><input type="submit" id="submit" name="submit" value="Log In" class="login_btn" /></td>
             </tr>
             <tr>
-            <td><a href="<?php echo url::site()?>login/resetpassword"> <?php echo Kohana::lang('ui_main.forgot_password');?></a></td>
+            <td><a href="<?php echo url::base()?>login/resetpassword"> <?php echo Kohana::lang('ui_main.forgot_password');?></a></td>
             </tr>
         </form>
       </table>

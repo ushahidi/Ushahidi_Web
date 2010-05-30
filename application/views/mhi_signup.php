@@ -19,11 +19,11 @@
 	<h3>Create New Instance</h3>
 	
 	<p>Fill out the form below to set up your own instance of <?php echo $site_name; ?>.
-	<?php print form::open(url::site().'mhi/create', array('id' => 'frm-MHI-Signup', 'name' => 'frm-MHI-Signup', 'class' => 'frm-content')); ?>
+	<?php print form::open(url::base().'mhi/create', array('id' => 'frm-MHI-Signup', 'name' => 'frm-MHI-Signup', 'class' => 'frm-content')); ?>
 	
 	<?php if($logged_in == FALSE){ ?>
 	
-    	<img src="<?php echo url::site(); ?>media/img/mhi/step-1.gif" align="left" class="step" /> <h2 class="step-1">Create Your Account</h2>
+    	<img src="<?php echo url::base(); ?>media/img/mhi/step-1.gif" align="left" class="step" /> <h2 class="step-1">Create Your Account</h2>
        
         <table><tbody>
             <tr>

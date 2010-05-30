@@ -124,9 +124,9 @@
 				</strong>
 				<ul>
 					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
-					<li class="none-separator"><a href="<?php echo url::site() ?>" title="View the home page">
+					<li class="none-separator"><a href="<?php echo url::base() ?>" title="View the home page">
 						<?php echo Kohana::lang('ui_admin.view_site');?></a>					
-					<li class="none-separator"><a href="<?php echo url::site()."admin/profile/" ?>"><?php echo Kohana::lang('ui_admin.my_profile');?></a></li>
+					<li class="none-separator"><a href="<?php echo url::base()."admin/profile/" ?>"><?php echo Kohana::lang('ui_admin.my_profile');?></a></li>
 					<li><a href="log_out"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
 				</ul>
                         </div>
@@ -134,7 +134,7 @@
                         <div id="update-info">
                         Ushahidi <?php echo $version; ?> 
                             <?php echo Kohana::lang('ui_admin.version_available');?> 
-        <a href="<?php echo url::site() ?>admin/upgrade" title="upgrade ushahidi">
+        <a href="<?php echo url::base() ?>admin/upgrade" title="upgrade ushahidi">
                              <?php echo Kohana::lang('ui_admin.update_link');?>
                             </a>.
                         </div>
@@ -148,7 +148,7 @@
 					<li><a href="http://wiki.ushahididev.com/doku.php?id=how_to_use_ushahidi_alpha"><?php echo Kohana::lang('ui_admin.faqs');?></a></li>
 					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('ui_admin.forum');?></a></li>
 				</ul>
-				<div class="info-search"><form action="<?php echo url::site() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn"><?php echo Kohana::lang('ui_admin.search');?></a></form></div>
+				<div class="info-search"><form action="<?php echo url::base() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn"><?php echo Kohana::lang('ui_admin.search');?></a></form></div>
 				<div style="clear:both"></div>
 			</div>
 			<!-- title -->
@@ -158,13 +158,13 @@
 				<!-- main-nav -->
 				<ul class="main-nav">
 					<?php foreach($tabs as $page => $tab_name){ ?>
-						<li><a href="<?php echo url::site(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
+						<li><a href="<?php echo url::base(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
 					<?php } ?>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
 					<?php foreach($secondary_tabs as $page => $tab_name){ ?>
-						<li><a href="<?php echo url::site(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
+						<li><a href="<?php echo url::base(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
 					<?php } ?>
 				</ul>
 			</div>

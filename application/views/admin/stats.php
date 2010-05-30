@@ -15,10 +15,10 @@
 ?>
 <div class="bg">
 	<h2><?php echo $title; ?> 
-		<a href="<?php print url::site() ?>admin/stats/hits"><?php echo Kohana::lang('stats.hit_summary');?></a> 
-		<a href="<?php print url::site() ?>admin/stats/country"><?php echo Kohana::lang('stats.country_breakdown');?></a> 
-		<a href="<?php print url::site() ?>admin/stats/reports"><?php echo Kohana::lang('stats.report_stats');?></a> 
-		<a href="<?php print url::site() ?>admin/stats/impact"><?php echo Kohana::lang('stats.category_impact');?></a>
+		<a href="<?php print url::base() ?>admin/stats/hits"><?php echo Kohana::lang('stats.hit_summary');?></a> 
+		<a href="<?php print url::base() ?>admin/stats/country"><?php echo Kohana::lang('stats.country_breakdown');?></a> 
+		<a href="<?php print url::base() ?>admin/stats/reports"><?php echo Kohana::lang('stats.report_stats');?></a> 
+		<a href="<?php print url::base() ?>admin/stats/impact"><?php echo Kohana::lang('stats.category_impact');?></a>
 	</h2>
 	
 	<div>

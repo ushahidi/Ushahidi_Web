@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> <a href="<?php print url::site() ?>admin/messages">SMS</a> <a href="<?php print url::site() ?>admin/messages/twitter"><?php echo Kohana::lang('ui_main.twitter');?></a> <a href="<?php print url::site() ?>admin/messages/laconica"><?php echo Kohana::lang('ui_main.laconica');?></a> </h2>
+				<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/messages">SMS</a> <a href="<?php print url::base() ?>admin/messages/twitter"><?php echo Kohana::lang('ui_main.twitter');?></a> <a href="<?php print url::base() ?>admin/messages/laconica"><?php echo Kohana::lang('ui_main.laconica');?></a> </h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
@@ -115,15 +115,15 @@
 											<ul>
 												<?php
 												if ($incident_id != 0) {
-													echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_main.view_report')."</strong></a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_main.view_report')."</strong></a></li>";
 												}
 												else
 												{
-													echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit?tid=' . $tweet_id ."\">".Kohana::lang('ui_main.create_report')."?</a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?tid=' . $tweet_id ."\">".Kohana::lang('ui_main.create_report')."?</a></li>";
 												}
 												?>
 												<li>
-                                                <!-- <a href="<?php echo url::site().'admin/messages/delete/'.$tweet_id ?>" onclick="return confirm("<?php echo Kohana::lang('ui_main.action_confirm');?>")" class="del"><?php echo Kohana::lang('ui_main.delete');?></a> --></li>
+                                                <!-- <a href="<?php echo url::base().'admin/messages/delete/'.$tweet_id ?>" onclick="return confirm("<?php echo Kohana::lang('ui_main.action_confirm');?>")" class="del"><?php echo Kohana::lang('ui_main.delete');?></a> --></li>
 											</ul>
 										</td>
 									</tr>

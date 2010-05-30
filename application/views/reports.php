@@ -85,7 +85,7 @@
 								</div>
 
 								<div class="report_details report_col2">
-									<h3><a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>"><?php echo $incident_title; ?></a></h3>
+									<h3><a href="<?php echo url::base(); ?>reports/view/<?php echo $incident_id; ?>"><?php echo $incident_title; ?></a></h3>
 									<?php echo $incident_description; ?>
 								</div>
 

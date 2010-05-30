@@ -53,7 +53,7 @@
 					<div class="green-box">
 						<h3><?php echo Kohana::lang('ui_main.password_reset_confirm'); ?></h3>
 						<br />
-						<a href="<?php echo url::site().'login'?>"><?php echo Kohana::lang('ui_main.login');?></a>
+						<a href="<?php echo url::base().'login'?>"><?php echo Kohana::lang('ui_main.login');?></a>
 					</div>
 				</td>
 			</tr>
@@ -66,7 +66,7 @@
             <tr>
               <td><input type="submit" id="resetemail" name="submit" value="Reset password" class="login_btn" />
               <br /><br />
-              <a href="<?php echo url::site().'login'?>">Login</a>
+              <a href="<?php echo url::base().'login'?>">Login</a>
               </td>
             </tr>
             <?php } ?>

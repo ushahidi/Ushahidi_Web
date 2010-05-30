@@ -15,12 +15,12 @@
 ?>	
 		<div class="bg">
 			<h2><?php echo $title; ?> 
-					<a href="<?php echo url::site() . 'admin/settings/site' . '">' . Kohana::lang('ui_main.site') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/sharing' . '" class="active">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/site' . '">' . Kohana::lang('ui_main.site') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sharing' . '" class="active">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
 				</h2>
 			
 			<?php
@@ -108,7 +108,7 @@
 					<div class="tab_form_item">
 						<?php echo Kohana::lang('sharing.sent_info');?>:
 						<div class="sharing_siteinfo">
-						<?php echo Kohana::lang('ui_main.site');?>: <span><?php echo url::site(); ?></span>, 
+						<?php echo Kohana::lang('ui_main.site');?>: <span><?php echo url::base(); ?></span>, 
 						<?php echo Kohana::lang('ui_main.email');?>: <span><?php echo $site_email; ?></span>
 						</div>
 					</div>
@@ -215,7 +215,7 @@
 												</div>
 											</div>
 										</td>
-										<td><?php echo "<img src=\"".url::site()."swatch/?c=".$sharing_color."&w=30&h=30\">";?></td>
+										<td><?php echo "<img src=\"".url::base()."swatch/?c=".$sharing_color."&w=30&h=30\">";?></td>
 										<td class="col-4">
 											<ul>
 												<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($share_id)); ?>','<?php echo(rawurlencode($sharing_url)); ?>','<?php echo(rawurlencode($sharing_color)); ?>','<?php echo(rawurlencode($sharing_limits)); ?>','<?php echo(rawurlencode($sharing_type)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>

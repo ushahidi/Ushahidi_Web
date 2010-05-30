@@ -14,7 +14,7 @@
  */
 ?>
 				<div class="bg">
-					<h2><?php echo $title; ?> <a href="<?php print url::site() ?>admin/messages">SMS</a> <a href="<?php print url::site() ?>admin/messages/twitter">Twitter</a> <a href="<?php print url::site() ?>admin/messages/laconica">Laconica</a> </h2>
+					<h2><?php echo $title; ?> <a href="<?php print url::base() ?>admin/messages">SMS</a> <a href="<?php print url::base() ?>admin/messages/twitter">Twitter</a> <a href="<?php print url::base() ?>admin/messages/laconica">Laconica</a> </h2>
 					<!-- tabs -->
 					<div class="tabs">
 						<!-- tabset -->
@@ -108,15 +108,15 @@
 												<ul>
 													<?php
 													if ($incident_id != 0) {
-														echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
+														echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
 													}
 													else
 													{
-														echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit?tid=' . $laconica_mesg_id ."\">Create Report?</a></li>";
+														echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?tid=' . $laconica_mesg_id ."\">Create Report?</a></li>";
 													}
 													?>
 													<li>
-				                                    <!-- <a href="<?php echo url::site().'admin/messages/delete/'.$laconica_mesg_id ?>" onclick="return confirm('Delete cannot be undone. Are you sure you want to continue?')" class="del">Delete</a> --></li>
+				                                    <!-- <a href="<?php echo url::base().'admin/messages/delete/'.$laconica_mesg_id ?>" onclick="return confirm('Delete cannot be undone. Are you sure you want to continue?')" class="del">Delete</a> --></li>
 												</ul>
 											</td>
 										</tr>

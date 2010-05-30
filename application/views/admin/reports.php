@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span><a href="<?php print url::site() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a><a href="<?php print url::site() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::site() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a></h2>
+				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span><a href="<?php print url::base() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a><a href="<?php print url::base() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::base() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a></h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
@@ -154,11 +154,11 @@
 									// Get Any Translations
 									$i = 1;
 									$incident_translation  = "<div class=\"post-trans-new\">";
-									$incident_translation .= "<a href=\"" . url::site() . 'admin/reports/translate/?iid=' . $incident_id . "\">".strtoupper(Kohana::lang('ui_main.add_translation')).":</a></div>";
+									$incident_translation .= "<a href=\"" . url::base() . 'admin/reports/translate/?iid=' . $incident_id . "\">".strtoupper(Kohana::lang('ui_main.add_translation')).":</a></div>";
 									foreach ($incident->incident_lang as $translation) {
 										$incident_translation .= "<div class=\"post-trans\">";
 										$incident_translation .= Kohana::lang('ui_main.translation'). $i . ": ";
-										$incident_translation .= "<a href=\"" . url::site() . 'admin/reports/translate/'. $translation->id .'/?iid=' . $incident_id . "\">"
+										$incident_translation .= "<a href=\"" . url::base() . 'admin/reports/translate/'. $translation->id .'/?iid=' . $incident_id . "\">"
 											. text::limit_chars($translation->incident_title, 150, "...", true) 
 											. "</a>";
 										$incident_translation .= "</div>";
@@ -168,8 +168,8 @@
 										<td class="col-1"><input name="incident_id[]" id="incident" value="<?php echo $incident_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<h4><a href="<?php echo url::site() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo $incident_title; ?></a></h4>
-												<p><?php echo $incident_description; ?>... <a href="<?php echo url::site() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
+												<h4><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo $incident_title; ?></a></h4>
+												<p><?php echo $incident_description; ?>... <a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
 											</div>
 											<ul class="info">
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: <strong><?php echo $incident_location; ?></strong>, <strong><?php echo $countries[Kohana::config('settings.default_country')]; ?></strong></li>

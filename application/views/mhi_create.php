@@ -18,7 +18,7 @@
 		
 		<h3>Site Setup Successful</h3>
 		
-		<p>Site setup. <a href="<?php echo url::site() ?>mhi/manage">Manage your account.</a>.</p>
+		<p>Site setup. <a href="<?php echo url::base() ?>mhi/manage">Manage your account.</a>.</p>
 		
 	</div>
 </div>

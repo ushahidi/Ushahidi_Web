@@ -1,5 +1,6 @@
 # Turn on URL rewriting only when mod rewrite is turn on
 
+
 <IfModule mod_rewrite.c>
 	RewriteEngine On
 
