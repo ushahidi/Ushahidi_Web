@@ -1,6 +1,6 @@
 <?php 
 /**
- * This class acts like a controller.
+ * This class acts like a controller. Does the necessary validation before processing
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -219,35 +219,6 @@ class Install
 		}
 	}
 	
-	/**
-	 * Validate if require extensions are installed.
-	 */
-	public function _required_ext_installed() {
-		global $form;
-		
-		// Make sure cURL is installed
-		if (!function_exists('curl_exec')) {
-			$form->set_error("curl","Curl is not installed. Could get You it installed??? Please.");
-		}
-		
-		if( !function_exists('iconv')) {
-			$form->set_error("iconv","http=\"http://php.net/pcre\">PCRE</a> must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.");
-		}
-		
-		//TODO figure out how to check for the other extensions.
-		
-		
-		/**
-		 * error exists, have user correct them.
-		 */
-		if( $form->num_errors > 0 ) {
-			
-			return 1;
-		} else {
-			
-			return 0;
-		}
-	}
 	
 	public function _mail_server($alert_email, $mail_username,$mail_password,
 		$mail_port,$mail_host,$mail_type,$mail_ssl,$table_prefix){
@@ -595,7 +566,7 @@ class Install
 	{
 		// Make sure cURL is installed
 		if (!function_exists('curl_exec')) {
-			throw new Kohana_Exception('stats.cURL_not_installed');
+			
 			return false;
 		}
 		
@@ -773,6 +744,39 @@ HTML;
 		
 	}
 	
+	/**
+	 * Check if clean url can be enabled on the server so 
+	 * Ushahidi can emit clean URLs
+	 * 
+	 * @return boolean
+	 */
+		
+	function _check_for_clean_url() {
+		
+		$url = $this->_get_url()."/help";
+  		$curl_handle = curl_init();
+       
+   		curl_setopt($curl_handle, CURLOPT_URL, $url); 
+  	   	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );     
+  	  	curl_exec($curl_handle);
+   
+  	   	$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
+ 	   	curl_close($curl_handle);
+  
+ 	   	if( $return_code ==  404) {
+ 	    	$form->set_error('clean_url',"404"); 	
+ 	   	}
+
+	   /**
+		* error exists, have user correct them.
+		*/
+	   if( $form->num_errors > 0 ) {
+			return 1;
+
+	   } else {
+			return 0;
+	   }
+	}
 }
 
 $install = new Install();
