@@ -773,6 +773,41 @@ HTML;
 		
 	}
 	
+	/**
+	 * Check if clean url can be enabled on the server so 
+	 * Ushahidi can emit clean URLs
+	 * 
+	 * @return boolean
+	 */
+		
+	function _check_for_clean_url() {
+		
+		$url = $this->_get_url()."/help";
+  		$curl_handle = curl_init();
+       
+   		curl_setopt($curl_handle, CURLOPT_URL, $url); 
+  	   	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );     
+  	  	curl_exec($curl_handle);
+   
+  	   	$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
+ 	   	curl_close($curl_handle);
+  
+ 	   	if( $return_code ==  404) {
+ 	    	$form->set_error('clean_url',"404"); 	
+ 	   	}
+
+	   /**
+		* error exists, have user correct them.
+		*/
+	   if( $form->num_errors > 0 ) {
+			return 1;
+
+	   } else {
+			return 0;
+	   }
+	}
+	
+	
 }
 
 $install = new Install();

@@ -690,6 +690,82 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->email_ssl_array = array('1'=>Kohana::lang('ui_admin.yes'),'0'=>Kohana::lang('ui_admin.no'));
 	}
+	
+		/**
+	 * Clean URLs settings
+	 */
+	function cleanurl() {
+		$this->template->content = new View('admin/cleanurl');
+		$this->template->content->title = Kohana::lang('ui_admin.settings');
+		
+		// setup and initialize form field names
+		$form = array
+	    (
+	    	'enable_clean_url' => '',
+	    );
+	    
+	    //  Copy the form as errors, so the errors will be stored with keys
+        //  corresponding to the form field names
+        $errors = $form;
+		$form_error = FALSE;
+		$form_saved = FALSE;
+
+		// check, has the form been submitted, if so, setup validation
+	    if ($_POST)
+	    {
+            // Instantiate Validation, use $post, so we don't overwrite $_POST
+            // fields with our own things
+            $post = new Validation($_POST);
+
+	        // Add some filters
+	        $post->pre_filter('trim', TRUE);
+
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+
+			$post->add_rules('enable_clean_url','required','between[0,1]');
+			
+	    	// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+	            // Yes! everything is valid
+				
+	        	//TODO add details to config file
+				
+				// Delete Settings Cache
+				$this->cache->delete('settings');
+				$this->cache->delete_tag('settings');
+
+				// Everything is A-Okay!
+				$form_saved = TRUE;
+					
+				// repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+	        }
+
+            // No! We have validation errors, we need to show the form again,
+            // with the errors
+            else
+	        {
+	            // repopulate the form fields
+	            $form = arr::overwrite($form, $post->as_array());
+
+	            // populate the error fields, if any
+	            $errors = arr::overwrite($errors, $post->errors('settings'));
+				$form_error = TRUE;
+	        }
+			
+	    } else {
+	    	//TODO load content of config file for site index
+	    }
+	    
+	    $this->template->content->form = $form;
+	    $this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+	}
+	
 
 
 	/**
