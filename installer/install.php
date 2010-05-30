@@ -793,18 +793,8 @@ HTML;
  	   	curl_close($curl_handle);
   
  	   	if( $return_code ==  404) {
- 	    	$form->set_error('clean_url',"404"); 	
+ 	    	return FALSE; 	
  	   	}
-
-	   /**
-		* error exists, have user correct them.
-		*/
-	   if( $form->num_errors > 0 ) {
-			return 1;
-
-	   } else {
-			return 0;
-	   }
 	}
 	
 	
