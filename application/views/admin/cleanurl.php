@@ -62,14 +62,14 @@
 						<div class="row">
 							<h4><?php echo Kohana::lang('settings.cleanurl.enable_clean_url');?>?</h4>
 								<?php if(!$is_clean_url_enabled) { ?>
-								<?php print form::dropdown(array('name'=>'enable_clean_url','disabled' =>'true'), $yesno_array, $form['enable_clean_url']); ?>
+								<?php print form::dropdown(array('name'=>'enable_clean_url','disabled' =>'true'), $yesno_array, '0'); ?>
 								<p>
-								<?php echo Kohana::lang('settings.cleanurl.disable_clean_url');?>
+								<?php echo Kohana::lang('settings.cleanurl.clean_url_disabled');?>
 								</p>
 								<?php } else {?>
 								<?php print form::dropdown('enable_clean_url', $yesno_array, $form['enable_clean_url']); ?>
 								<p>
-								<?php echo Kohana::lang('settings.cleanurl.enable_clean_url');?>
+								<?php echo Kohana::lang('settings.cleanurl.clean_url_enabled');?>
 								</p>
 								<?php } ?>
 						</div>						

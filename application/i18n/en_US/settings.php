@@ -57,8 +57,8 @@ $lang = array
 	(
 		'title' => 'Clean URLs',
 		'enable_clean_url' => 'Enable Clean URLs',
-		'enable_clean_url' => 'This option makes Ushahidi to be accessed via "clean" URLs. Without "index.php" in the URL.',
-		'disable_clean_url' => 'It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com" target="_blank">post</a>',
+		'clean_url_enabled' => 'This option makes Ushahidi to be accessed via "clean" URLs. Without "index.php" in the URL.',
+		'clean_url_disabled' => 'It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com" target="_blank">post</a>',
 	),
     'sms' => array
 	(

@@ -151,7 +151,7 @@ class Install
 	 * Validates general settings fields and then add details to 
 	 * the settings table.
 	 */
-	public function _general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix)
+	public function _general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix,$clean_url)
 	{
 		global $form;
 		//check for empty fields
@@ -190,7 +190,7 @@ class Install
 			return 1;
 
 		} else {
-			$this->_add_general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix);
+			$this->_add_general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix,$clean_url);
 			return 0;	
 		}
 		
@@ -787,6 +787,8 @@ HTML;
   
  	   	if( $return_code ==  404) {
  	    	return FALSE; 	
+ 	   	} else {
+ 	   		return TRUE;
  	   	}
 	}
 	

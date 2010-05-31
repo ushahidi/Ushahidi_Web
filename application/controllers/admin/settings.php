@@ -729,7 +729,7 @@ class Settings_Controller extends Admin_Controller
 	        {
 	            // Yes! everything is valid
 				
-	        	$this->_remove_index_page();
+	        	$this->_remove_index_page($post->enable_clean_url);
 				
 				// Delete Settings Cache
 				$this->cache->delete('settings');
@@ -756,8 +756,8 @@ class Settings_Controller extends Admin_Controller
 	        }
 			
 	    } else {
-	    	$yes_or_no = $this-> _check_clean_url_on_ushahidi() == true ? 1 : 0;
-	    	
+	    	$yes_or_no = $this->_check_clean_url_on_ushahidi() == TRUE ? 1 : 0;
+	    	print $yes_or_no;exit;
 	    	$form = array
 		    (
 		        'enable_clean_url' => $yes_or_no,
@@ -953,7 +953,8 @@ class Settings_Controller extends Admin_Controller
 		
 	private function _check_for_clean_url() {
 		
-		$url = url::base()."/help";
+		$url = url::base()."help";
+		
   		$curl_handle = curl_init();
        
    		curl_setopt($curl_handle, CURLOPT_URL, $url); 
@@ -965,23 +966,39 @@ class Settings_Controller extends Admin_Controller
   
  	   	if( $return_code ==  404) {
  	    	return FALSE; 	
+ 	   	} else {
+ 	   		return TRUE;
  	   	}
 	}
 	
 	/**
 	 * Removes index.php from index page variable in application/config.config.php file
+	 * 
+	 * @param $yes_or_no
 	 */
-	private function _remove_index_page() {
-		$config_file = @file('/application/config/config.php');
-		$handle = @fopen('/application/config/config.php', 'w');
+	private function _remove_index_page( $yes_or_no ) {
+		
+		$config_file = @file('application/config/config.php');
+		$handle = @fopen('application/config/config.php', 'w');
 		
 		foreach( $config_file as $line_number => $line )
         {
-            if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
-                fwrite($handle, str_replace("index.php","",$line ));    
-            } else {
-                fwrite($handle, $line);
-            }
+        	if( $yes_or_no == 1 ) {
+            	if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
+                	fwrite($handle, str_replace("index.php","",$line ));    
+            	} else {
+                	fwrite($handle, $line);
+            	}
+        	
+        	} else {
+        		if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
+        			
+        			fwrite($handle, str_replace("''","'index.php'",$line ));    
+            	} else {
+            		
+                	fwrite($handle, $line);
+            	}        		
+        	}
         }	
 	}
 	
@@ -989,7 +1006,7 @@ class Settings_Controller extends Admin_Controller
 	 * Check if clean URL is enabled on Ushahidi 
 	 */
 	private function _check_clean_url_on_ushahidi() {
-		$config_file = @file('/application/config/config.php');
+		$config_file = @file('application/config/config.php');
 		
 		foreach( $config_file as $line_number => $line )
         {
