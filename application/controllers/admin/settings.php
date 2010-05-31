@@ -757,7 +757,7 @@ class Settings_Controller extends Admin_Controller
 			
 	    } else {
 	    	$yes_or_no = $this->_check_clean_url_on_ushahidi() == TRUE ? 1 : 0;
-	    	print $yes_or_no;exit;
+	    	
 	    	$form = array
 		    (
 		        'enable_clean_url' => $yes_or_no,
