@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span><a href="<?php print url::base() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a><a href="<?php print url::base() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::base() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a></h2>
+				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span><a href="<?php print url::site() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a><a href="<?php print url::site() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::site() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a></h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
@@ -168,7 +168,7 @@
 										<td class="col-1"><input name="incident_id[]" id="incident" value="<?php echo $incident_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<h4><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo $incident_title; ?></a></h4>
+												<h4><a href="<?php echo url::site() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo $incident_title; ?></a></h4>
 												<p><?php echo $incident_description; ?>... <a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
 											</div>
 											<ul class="info">

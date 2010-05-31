@@ -868,40 +868,42 @@ class Settings_Controller extends Admin_Controller
 	{
 	    $email_file = @file('application/config/email.template.php');
         $handle = @fopen('application/config/email.php', 'w');
-
-	    foreach( $email_file as $number_line => $line )
-	    {
+		
+        if(is_array($email_file) ) {
+	    	foreach( $email_file as $number_line => $line )
+	    	{
 	        
-	    	switch( $line ) {
-	        	case strpos($line,"\$config['username']"):
-	            	fwrite($handle,  str_replace("\$config['username'] = \"\"","\$config['username'] = ".'"'.$settings->email_username.'"',$line ));
-	           		break;
+	    		switch( $line ) {
+	        		case strpos($line,"\$config['username']"):
+	            		fwrite($handle,  str_replace("\$config['username'] = \"\"","\$config['username'] = ".'"'.$settings->email_username.'"',$line ));
+	           			break;
 				
-				case strpos($line,"\$config['password']"):
-		            fwrite($handle,  str_replace("\$config['password'] = \"\"","\$config['password'] = ".'"'.$settings->email_password.'"',$line ));
-		           	break;	
+					case strpos($line,"\$config['password']"):
+		            	fwrite($handle,  str_replace("\$config['password'] = \"\"","\$config['password'] = ".'"'.$settings->email_password.'"',$line ));
+		           		break;	
 				
-				case strpos($line,"\$config['port']"):
-		            fwrite($handle,  str_replace("\$config['port'] = 25","\$config['port'] = ".'"'.$settings->email_port.'"',$line ));
-		           	break;
+					case strpos($line,"\$config['port']"):
+		            	fwrite($handle,  str_replace("\$config['port'] = 25","\$config['port'] = ".'"'.$settings->email_port.'"',$line ));
+		           		break;
 				
-				case strpos($line,"\$config['server']"):
-		            fwrite($handle,  str_replace("\$config['server'] = \"\"","\$config['server'] = ".'"'.$settings->email_host.'"',$line ));
-		          	break;
+					case strpos($line,"\$config['server']"):
+		            	fwrite($handle,  str_replace("\$config['server'] = \"\"","\$config['server'] = ".'"'.$settings->email_host.'"',$line ));
+		          		break;
 		
-				case strpos($line,"\$config['servertype']"):
-		            fwrite($handle,  str_replace("\$config['servertype'] = \"pop3\"","\$config['servertype'] = ".'"'.$settings->email_servertype.'"',$line ));
-		           	break;
+					case strpos($line,"\$config['servertype']"):
+		            	fwrite($handle,  str_replace("\$config['servertype'] = \"pop3\"","\$config['servertype'] = ".'"'.$settings->email_servertype.'"',$line ));
+		           		break;
 		
-				case strpos($line,"\$config['ssl']"):
-					$enable = $settings->email_ssl == 0? 'false':'true';
-			        fwrite($handle,  str_replace("\$config['ssl'] = false","\$config['ssl'] = ".$enable,$line ));
-			        break;
+					case strpos($line,"\$config['ssl']"):
+						$enable = $settings->email_ssl == 0? 'false':'true';
+			        	fwrite($handle,  str_replace("\$config['ssl'] = false","\$config['ssl'] = ".$enable,$line ));
+			        	break;
 					
-	            default:
-	            	fwrite($handle, $line );
-	        }
-	    }
+	            	default:
+	            		fwrite($handle, $line );
+	        	}
+	    	}
+		}
 
 	}
 	
@@ -946,7 +948,7 @@ class Settings_Controller extends Admin_Controller
 	
 	/**
 	 * Check if clean url can be enabled on the server so 
-	 * Ushahidi can emit clean URLs
+	 * Ushahidi can cough it.
 	 * 
 	 * @return boolean
 	 */
@@ -981,40 +983,40 @@ class Settings_Controller extends Admin_Controller
 		$config_file = @file('application/config/config.php');
 		$handle = @fopen('application/config/config.php', 'w');
 		
-		foreach( $config_file as $line_number => $line )
-        {
-        	if( $yes_or_no == 1 ) {
-            	if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
-                	fwrite($handle, str_replace("index.php","",$line ));    
-            	} else {
-                	fwrite($handle, $line);
-            	}
+		if(is_array($config_file) ) {
+			foreach( $config_file as $line_number => $line )
+        	{
+        		if( $yes_or_no == 1 ) {
+            		if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
+                		fwrite($handle, str_replace("index.php","",$line ));    
+            		} else {
+                		fwrite($handle, $line);
+            		}
         	
-        	} else {
-        		if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
+        		} else {
+        			if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
         			
-        			fwrite($handle, str_replace("''","'index.php'",$line ));    
-            	} else {
+        				fwrite($handle, str_replace("''","'index.php'",$line ));    
+            		} else {
             		
-                	fwrite($handle, $line);
-            	}        		
+                		fwrite($handle, $line);
+            		}        		
+        		}
         	}
-        }	
+		}	
 	}
 	
 	/**
 	 * Check if clean URL is enabled on Ushahidi 
 	 */
 	private function _check_clean_url_on_ushahidi() {
-		$config_file = @file('application/config/config.php');
+		$config_file = @file_get_contents('application/config/config.php');
 		
-		foreach( $config_file as $line_number => $line )
-        {
-            if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
-               return FALSE;    
-            } else {
-                return TRUE;
-            }
-        }	
+		if( strpos( $config_file,"\$config['index_page'] = 'index.php';") != 0 ) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }        
+			
 	}
 }

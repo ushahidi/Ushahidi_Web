@@ -22,9 +22,9 @@
 					<div class="box">
 						<h3><?php echo Kohana::lang('ui_main.reports');?> <?php echo Kohana::lang('ui_main.reports_timeline');?></h3>
 						<ul class="inf" style="margin-bottom:10px;">
-							<li class="none-separator"><?php echo Kohana::lang('ui_main.view');?>:<a href="<?php print url::base() ?>admin/dashboard/?range=1"><?php echo Kohana::lang('ui_main.today');?></a></li>
-							<li><a href="<?php print url::base() ?>admin/dashboard/?range=31"><?php echo Kohana::lang('ui_main.past_month');?></a></li>
-							<li><a href="<?php print url::base() ?>admin/dashboard/?range=365"><?php echo Kohana::lang('ui_main.past_year');?></a></li>
+							<li class="none-separator"><?php echo Kohana::lang('ui_main.view');?>:<a href="<?php print url::site() ?>admin/dashboard/?range=1"><?php echo Kohana::lang('ui_main.today');?></a></li>
+							<li><a href="<?php print url::site() ?>admin/dashboard/?range=31"><?php echo Kohana::lang('ui_main.past_month');?></a></li>
+							<li><a href="<?php print url::site() ?>admin/dashboard/?range=365"><?php echo Kohana::lang('ui_main.past_year');?></a></li>
 						</ul>
 						<div class="chart-holder" style="clear:both;padding-left:5px;">
 							<?php echo $report_chart; ?>
@@ -42,7 +42,7 @@
 						<div class="i-c-head">
 							<h3><?php echo Kohana::lang('ui_main.recent_reports');?></h3>
 							<ul>
-								<li class="none-separator"><a href="<?php echo url::base() . 'admin/reports' ?>"><?php echo Kohana::lang('ui_main.view_all');?></a></li>
+								<li class="none-separator"><a href="<?php echo url::site() . 'admin/reports' ?>"><?php echo Kohana::lang('ui_main.view_all');?></a></li>
 								<li><a href="#" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
 							</ul>
 						</div>
@@ -108,13 +108,13 @@
 									<li><a href="#" class="<?php echo $incident_verified ?>"><?php echo strtoupper(Kohana::lang('ui_main.verified'));?>:</a></li>
 									<li class="last"><a href="#" class="<?php echo $submit_mode; ?>"><?php echo strtoupper(Kohana::lang('ui_main.source'));?>:</a></li>
 								</ul>
-								<h4><strong><?php echo $incident_date; ?></strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo $incident_title; ?></a></h4>
+								<h4><strong><?php echo $incident_date; ?></strong><a href="<?php echo url::site() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo $incident_title; ?></a></h4>
 								<p><?php echo $incident_description; ?></p>
 							</div>
 							<?php
 						}
 						?>
-						<a href="<?php echo url::base() . 'admin/reports' ?>" class="view-all"><?php echo Kohana::lang('ui_main.view_all_reports');?></a>
+						<a href="<?php echo url::site() . 'admin/reports' ?>" class="view-all"><?php echo Kohana::lang('ui_main.view_all_reports');?></a>
 					</div>
 				</div>
 				<div class="column-1">
@@ -123,15 +123,15 @@
 						<h3><?php echo Kohana::lang('ui_main.quick_stats');?></h3>
 						<ul class="nav-list">
 							<li>
-								<a href="<?php echo url::base() . 'admin/reports' ?>" class="reports"><?php echo Kohana::lang('ui_main.reports');?></a>
+								<a href="<?php echo url::site() . 'admin/reports' ?>" class="reports"><?php echo Kohana::lang('ui_main.reports');?></a>
 								<strong><?php echo $reports_total; ?></strong>
 								<ul>
-									<li><a href="<?php echo url::base() . 'admin/reports?status=a' ?>"><?php echo Kohana::lang('ui_main.not_approved');?></a><strong>(<?php echo $reports_unapproved; ?>)</strong></li>
+									<li><a href="<?php echo url::site() . 'admin/reports?status=a' ?>"><?php echo Kohana::lang('ui_main.not_approved');?></a><strong>(<?php echo $reports_unapproved; ?>)</strong></li>
 									
 								</ul>
 							</li>
 							<li>
-								<a href="<?php echo url::base() . 'admin/manage' ?>" class="categories"><?php echo Kohana::lang('ui_main.categories');?></a>
+								<a href="<?php echo url::site() . 'admin/manage' ?>" class="categories"><?php echo Kohana::lang('ui_main.categories');?></a>
 								<strong><?php echo $categories; ?></strong>
 							</li>
 							<li>
@@ -139,16 +139,16 @@
 								<strong><?php echo $locations; ?></strong>
 							</li>
 							<li>
-								<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="media"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+								<a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="media"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
 								<strong><?php echo $incoming_media; ?></strong>
 							</li>
 							<li>
-								<a href="<?php echo url::base() . 'admin/messages' ?>" class="messages"><?php echo Kohana::lang('ui_main.messages');?></a>
+								<a href="<?php echo url::site() . 'admin/messages' ?>" class="messages"><?php echo Kohana::lang('ui_main.messages');?></a>
 								<strong><?php echo $message_count; ?></strong>
 								<ul>
 									<?php
 									foreach ($message_services as $service) {
-										echo "<li><a href=\"".url::base() . 'admin/messages/index/'.$service['id']."\">".$service['name']."</a><strong>(".$service['count'].")</strong></li>";
+										echo "<li><a href=\"".url::site() . 'admin/messages/index/'.$service['id']."\">".$service['name']."</a><strong>(".$service['count'].")</strong></li>";
 									}
 									?>
 								</ul>
@@ -160,7 +160,7 @@
 						<div class="i-c-head">
 							<h3><?php echo Kohana::lang('ui_main.news_feeds');?></h3>
 							<ul>
-								<li class="none-separator"><a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.view_all');?></a></li>
+								<li class="none-separator"><a href="<?php echo url::site() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.view_all');?></a></li>
 								<li><a href="#" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
 							</ul>
 						</div>
@@ -182,7 +182,7 @@
 							<?php
 						}
 						?>
-						<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="view-all"><?php echo Kohana::lang('ui_main.view_all');?> <?php echo Kohana::lang('ui_main.incoming_media');?></a>
+						<a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="view-all"><?php echo Kohana::lang('ui_main.view_all');?> <?php echo Kohana::lang('ui_main.incoming_media');?></a>
 					</div>
 				</div>
 			</div>

@@ -15,22 +15,22 @@
 ?>
 			<div class="bg">
 				<h2>
-					<a href="<?php echo url::base() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
-					<a href="<?php echo url::base() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
-					<a href="<?php echo url::base() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
-					<a href="<?php echo url::base() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
-					<a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+					<a href="<?php echo url::site() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
+					<a href="<?php echo url::site() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
+					<a href="<?php echo url::site() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
+					<a href="<?php echo url::site() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
+					<a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
 					<span>(<a href="#add">Add New</a>)</span>
-					<a href="<?php echo url::base() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
-					<a href="<?php echo url::base() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
+					<a href="<?php echo url::site() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
+					<a href="<?php echo url::site() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
 				</h2>
 				
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
 					<ul class="tabset">
-						<li><a href="<?php echo url::base() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.feeds');?></a></li>
-						<li><a href="<?php echo url::base() . 'admin/manage/feeds_items' ?>"><?php echo Kohana::lang('ui_main.feed_items');?></a></li>
+						<li><a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.feeds');?></a></li>
+						<li><a href="<?php echo url::site() . 'admin/manage/feeds_items' ?>"><?php echo Kohana::lang('ui_main.feed_items');?></a></li>
 					</ul>
 					
 					<!-- tab -->

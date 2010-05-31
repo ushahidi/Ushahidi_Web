@@ -15,14 +15,14 @@
 ?>	
 		<div class="bg">
 			<h2>
-				<a href="<?php echo url::base() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
-				<a href="<?php echo url::base() . 'admin/manage/forms' ?>" class="active"><?php echo Kohana::lang('ui_main.forms');?></a>
+				<a href="<?php echo url::site() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
+				<a href="<?php echo url::site() . 'admin/manage/forms' ?>" class="active"><?php echo Kohana::lang('ui_main.forms');?></a>
 				<span>(<a href="#add">Add New</a>)</span>
-				<a href="<?php echo url::base() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
-				<a href="<?php echo url::base() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
-				<a href="<?php echo url::base() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
-				<a href="<?php echo url::base() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
-				<a href="<?php echo url::base() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
+				<a href="<?php echo url::site() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
+				<a href="<?php echo url::site() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
+				<a href="<?php echo url::site() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
+				<a href="<?php echo url::site() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
+				<a href="<?php echo url::site() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
 			</h2>
 			<?php
 			if ($form_error) {
@@ -162,7 +162,7 @@
 											<div id="formadd_<?php echo $form_id; ?>" class="forms_fields_add">
 												<div class="tab">
 													<div>
-														<?php echo form::open(url::base() . 'admin/manage/forms/field_add', array('id' => 'form_field_'.$form_id,
+														<?php echo form::open(url::site() . 'admin/manage/forms/field_add', array('id' => 'form_field_'.$form_id,
 																'name' => 'form_field_'.$form_id)); ?>
 															<strong><?php echo Kohana::lang('ui_main.select_field_type');?>:</strong>
 															<?php print form::dropdown('field_type',$form_field_types, '', ' onchange="showFormSelected(this.options[this.selectedIndex].value, \''.$form_id.'\', \'\', \'\')"'); ?>

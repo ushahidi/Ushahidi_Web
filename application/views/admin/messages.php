@@ -18,7 +18,7 @@
 				<?php
 				foreach ($services as $service)
 				{
-					echo "<a href=\"" . url::base() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
+					echo "<a href=\"" . url::site() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
 				}
 				?>
 				</h2>
@@ -137,7 +137,7 @@
 													</div>
 													<a href="javascript:showReply('reply_<?php echo $message_id; ?>')" class="more">+<?php echo Kohana::lang('ui_main.reply');?></a>
 													<div id="reply_<?php echo $message_id; ?>" class="reply">
-														<?php print form::open(url::base() . 'admin/messages/send/',array('id' => 'newreply_' . $message_id,
+														<?php print form::open(url::site() . 'admin/messages/send/',array('id' => 'newreply_' . $message_id,
 														 	'name' => 'newreply_' . $message_id)); ?>
 														<div class="reply_can"><a href="javascript:cannedReply('1', 'message_<?php echo $message_id; ?>')">+<?php echo Kohana::lang('ui_main.request_location');?></a>&nbsp;&nbsp;&nbsp;<a href="javascript:cannedReply('2', 'message_<?php echo $message_id; ?>')">+<?php echo Kohana::lang('ui_main.request_information');?></a></div>
 														<div id="replyerror_<?php echo $message_id; ?>" class="reply_error"></div>
