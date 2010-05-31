@@ -137,7 +137,8 @@
 			$_POST['site_tagline'],
 			$_POST['select_language'],
 			$_POST['site_email'],
-			$_POST['table_prefix']
+			$_POST['table_prefix'],
+			$_POST['enable_clean_url']
 		);
 		
 		//no errors
@@ -145,7 +146,7 @@
 			// make sure users get to the general setting from advanced db info page.
 			$_SESSION['mail_server'] = 'mail_server';
 			
-			// set it up in case someone want to goes the previous page.
+			// set it up in case someone wants to go to the previous page.
 			$_SESSION['site_name'] = $_POST['site_name'];
 			$_SESSION['site_tagline'] = $_POST['site_tagline'];
 			$_SESSION['select_language'] = $_POST['select_language'];
@@ -172,7 +173,8 @@
 			$_POST['site_tagline'],
 			$_POST['select_language'],
 			$_POST['site_email'],
-			$_POST['table_prefix']
+			$_POST['table_prefix'],
+			$_POST['enable_clean_url']
 		);
 		
 		//no errors

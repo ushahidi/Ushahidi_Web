@@ -59,15 +59,19 @@
 					</div>
 					<!-- column -->		
 					<div class="sms_holder">
-						
 						<div class="row">
 							<h4><?php echo Kohana::lang('settings.cleanurl.enable_clean_url');?>?</h4>
-							
+								<?php if(!$is_clean_url_enabled) { ?>
+								<?php print form::dropdown(array('name'=>'enable_clean_url','disabled' =>'true'), $yesno_array, $form['enable_clean_url']); ?>
+								<p>
+								<?php echo Kohana::lang('settings.cleanurl.disable_clean_url');?>
+								</p>
+								<?php } else {?>
 								<?php print form::dropdown('enable_clean_url', $yesno_array, $form['enable_clean_url']); ?>
-							
-							<p>
-							<?php echo Kohana::lang('settings.cleanurl.test_clean_url');?>
-							</p>
+								<p>
+								<?php echo Kohana::lang('settings.cleanurl.enable_clean_url');?>
+								</p>
+								<?php } ?>
 						</div>						
 						
 					</div>

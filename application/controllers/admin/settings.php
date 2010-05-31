@@ -729,7 +729,7 @@ class Settings_Controller extends Admin_Controller
 	        {
 	            // Yes! everything is valid
 				
-	        	//TODO add details to config file
+	        	$this->_remove_index_page();
 				
 				// Delete Settings Cache
 				$this->cache->delete('settings');
@@ -756,7 +756,12 @@ class Settings_Controller extends Admin_Controller
 	        }
 			
 	    } else {
-	    	//TODO load content of config file for site index
+	    	$yes_or_no = $this-> _check_clean_url_on_ushahidi() == true ? 1 : 0;
+	    	
+	    	$form = array
+		    (
+		        'enable_clean_url' => $yes_or_no,
+		    );
 	    }
 	    
 	    $this->template->content->form = $form;
@@ -764,6 +769,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+		$this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
 	}
 	
 
@@ -936,5 +942,62 @@ class Settings_Controller extends Admin_Controller
 			@closedir( $i18n_dir );
 		
 		return $directories;
+	}
+	
+	/**
+	 * Check if clean url can be enabled on the server so 
+	 * Ushahidi can emit clean URLs
+	 * 
+	 * @return boolean
+	 */
+		
+	private function _check_for_clean_url() {
+		
+		$url = url::base()."/help";
+  		$curl_handle = curl_init();
+       
+   		curl_setopt($curl_handle, CURLOPT_URL, $url); 
+  	   	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );     
+  	  	curl_exec($curl_handle);
+   
+  	   	$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
+ 	   	curl_close($curl_handle);
+  
+ 	   	if( $return_code ==  404) {
+ 	    	return FALSE; 	
+ 	   	}
+	}
+	
+	/**
+	 * Removes index.php from index page variable in application/config.config.php file
+	 */
+	private function _remove_index_page() {
+		$config_file = @file('/application/config/config.php');
+		$handle = @fopen('/application/config/config.php', 'w');
+		
+		foreach( $config_file as $line_number => $line )
+        {
+            if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
+                fwrite($handle, str_replace("index.php","",$line ));    
+            } else {
+                fwrite($handle, $line);
+            }
+        }	
+	}
+	
+	/**
+	 * Check if clean URL is enabled on Ushahidi 
+	 */
+	private function _check_clean_url_on_ushahidi() {
+		$config_file = @file('/application/config/config.php');
+		
+		foreach( $config_file as $line_number => $line )
+        {
+            if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
+               return FALSE;    
+            } else {
+                return TRUE;
+            }
+        }	
 	}
 }

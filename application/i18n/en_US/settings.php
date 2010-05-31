@@ -57,7 +57,8 @@ $lang = array
 	(
 		'title' => 'Clean URLs',
 		'enable_clean_url' => 'Enable Clean URLs',
-		'test_clean_url' => 'Before enabling clean URLs, you need to perform a test to determine if your server is properly configured. If you are able to see a page again after clicking on this <a href="admin/settings/site">link</a>, then test has succeeded. If instead you are directed to a "Page not found" error, you will need to change the configuration of your server. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com" target="_blank">post</a> ',
+		'enable_clean_url' => 'This option makes Ushahidi to be accessed via "clean" URLs. Without "index.php" in the URL.',
+		'disable_clean_url' => 'It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com" target="_blank">post</a>',
 	),
     'sms' => array
 	(

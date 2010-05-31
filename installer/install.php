@@ -219,35 +219,6 @@ class Install
 		}
 	}
 	
-	/**
-	 * Validate if require extensions are installed.
-	 */
-	public function _required_ext_installed() {
-		global $form;
-		
-		// Make sure cURL is installed
-		if (!function_exists('curl_exec')) {
-			$form->set_error("curl","Curl is not installed. Could get You it installed??? Please.");
-		}
-		
-		if( !function_exists('iconv')) {
-			$form->set_error("iconv","http=\"http://php.net/pcre\">PCRE</a> must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.");
-		}
-		
-		//TODO figure out how to check for the other extensions.
-		
-		
-		/**
-		 * error exists, have user correct them.
-		 */
-		if( $form->num_errors > 0 ) {
-			
-			return 1;
-		} else {
-			
-			return 0;
-		}
-	}
 	
 	public function _mail_server($alert_email, $mail_username,$mail_password,
 		$mail_port,$mail_host,$mail_type,$mail_ssl,$table_prefix){
@@ -388,6 +359,24 @@ class Install
 	}
 	
 	/**
+	 * Removes index.php from index page variable in application/config.config.php file
+	 */
+	private function _remove_index_page() {
+	$config_file = @file('../application/config/config.php');
+		$handle = @fopen('../application/config/config.php', 'w');
+		
+		foreach( $config_file as $line_number => $line )
+        {
+            if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
+                fwrite($handle, str_replace("index.php","",$line ));    
+            } else {
+                fwrite($handle, $line);
+            }
+        }
+		
+	}
+	
+	/**
 	 * Adds the right RewriteBase entry to the .htaccess file.
 	 * 
 	 * @param base_path - the base path.
@@ -468,13 +457,18 @@ class Install
 	 * @param defaul_lang - default language.
 	 * @param site_email - site email.
 	 */
-	private function _add_general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix = NULL) {
+	private function _add_general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix = NULL,$clean_url) {
 		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
 		@mysql_query('UPDATE `'.$table_prefix.'settings` SET `site_name` = \''.mysql_escape_string($site_name).
 		'\', site_tagline = \''.mysql_escape_string($site_tagline).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
-		@mysql_close($connection);		
+		@mysql_close($connection);	
+		
+		//enable clean url
+		if($clean_url = 1 ) {
+			$this->_remove_index_page();
+		}
 	}
 	
 	/**
@@ -595,7 +589,6 @@ class Install
 	{
 		// Make sure cURL is installed
 		if (!function_exists('curl_exec')) {
-			throw new Kohana_Exception('stats.cURL_not_installed');
 			return false;
 		}
 		
