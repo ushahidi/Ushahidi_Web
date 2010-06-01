@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php print $title; ?> <span></span><a href="<?php print url::base() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a></h2>
+				<h2><?php print $title; ?> <span></span><a href="<?php print url::site() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a></h2>
 				<?php print form::open(NULL, array('id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">
 					<!-- report-form -->

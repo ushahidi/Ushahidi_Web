@@ -1,22 +1,25 @@
-# Turn on URL rewriting
-RewriteEngine On
+# Turn on URL rewriting only when mod rewrite is turn on
 
-# Installation directory
-RewriteBase /
+<IfModule mod_rewrite.c>
+	RewriteEngine On
 
-# Protect application and system files from being viewed
-RewriteRule ^(application|modules|system) - [F,L]
+	# Installation directory
+	RewriteBase /
 
-# Prevent schedulers from being accessed remotely
-RewriteCond %{REMOTE_ADDR} !^127.0.0.1$
-RewriteRule ^.*/scheduler/.*$ - [F,L]
+	# Protect application and system files from being viewed
+	RewriteRule ^(application|modules|system) - [F,L]
 
-# Allow any files or directories that exist to be displayed directly
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
+	# Prevent schedulers from being accessed remotely
+	RewriteCond %{REMOTE_ADDR} !^127.0.0.1$
+	RewriteRule ^.*/scheduler/.*$ - [F,L]
 
-# Rewrite all other URLs to index.php/URL
-RewriteRule .* index.php/$0 [PT,L]
+	# Allow any files or directories that exist to be displayed directly
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+
+	# Rewrite all other URLs to index.php/URL
+	RewriteRule .* index.php/$0 [PT,L]
+</IfModule>
 
 # Protect the htaccess from being viewed
 <Files .htaccess>

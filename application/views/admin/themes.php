@@ -14,7 +14,7 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> 
+				<h2><?php echo $title; ?>
 					<a href="<?php echo url::base() . 'admin/addons' . '">' . Kohana::lang('ui_main.plugins') . '</a>' ?>
 					<a href="<?php echo url::base() . 'admin/addons/themes' . '" class="active">' . Kohana::lang('ui_main.themes') . '</a>' ?>
 				</h2>

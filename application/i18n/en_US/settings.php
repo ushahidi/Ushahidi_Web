@@ -52,7 +52,14 @@ $lang = array
         'api_akismet' => 'Akismet Key',
         'kismet_notice' => 'Prevent comment spam using <a href="http://akismet.com/" target="_blank">Akismet</a> from Automattic. <BR />You can get a free API key by registering for a <a href="http://en.wordpress.com/api-keys/" target="_blank">WordPress.com user account</a>',
         'share_site_stats' => 'Share Site Statistics in API'
-	),    
+	),
+	'cleanurl' => array 
+	(
+		'title' => 'Clean URLs',
+		'enable_clean_url' => 'Enable Clean URLs',
+		'clean_url_enabled' => 'This option makes Ushahidi to be accessed via "clean" URLs. Without "index.php" in the URL.',
+		'clean_url_disabled' => 'It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com" target="_blank">post</a>',
+	),
     'sms' => array
 	(
         'title' => 'SMS Setup Options',
