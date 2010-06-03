@@ -43,7 +43,7 @@
 		function sendMessage(id, loader)
 		{
 			$('#' + loader).html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-			$.post("<?php echo url::base() . 'admin/messages/send/' ?>", { to_id: id, message: $("#message_" + id).attr("value") },
+			$.post("<?php echo url::site() . 'admin/messages/send/' ?>", { to_id: id, message: $("#message_" + id).attr("value") },
 				function(data){
 					if (data.status == 'sent'){
 						$('#reply_' + id).hide();

@@ -66,7 +66,7 @@
             <tr>
               <td><input type="submit" id="resetemail" name="submit" value="Reset password" class="login_btn" />
               <br /><br />
-              <a href="<?php echo url::base().'login'?>">Login</a>
+              <a href="<?php echo url::site().'login'?>">Login</a>
               </td>
             </tr>
             <?php } ?>

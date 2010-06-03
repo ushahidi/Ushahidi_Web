@@ -22,7 +22,7 @@
 			
 			// Action on Cancel
 			$("#cancel").click(function () {
-				window.location.href='<?php echo url::base() . 'admin/reports/' ?>';
+				window.location.href='<?php echo url::site() . 'admin/reports/' ?>';
 				return false;
 			});
 		});

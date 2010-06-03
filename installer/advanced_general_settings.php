@@ -72,7 +72,29 @@
 							<td><input type="text" value="<?php print $form->value('site_email') == "" ? $_SESSION['site_email'] : $form->value('site_email'); ?>" size="25" id="site_email" name="site_email"/></td>
 							<td>Site wide email communication will be funneled through this address.</td>
 						</tr>
-					   
+					   	<tr>
+							<th scope="row"><label for="enable_clean_url">Enable Clean URLs</label></th>
+							if<?php if( !$install->_check_for_clean_url() ) { ?>
+							<td>
+								<select name="enable_clean_url" disabled="true">
+									<option value="1" >Yes</option>
+									<option value="0" selected="selected">No</option>
+								</select>
+							</td>		
+							<?php }else {?>
+							<td>
+								<select name="enable_clean_url">
+									<option value="1" selected="selected">Yes</option>
+									<option value="0">No</option>
+								</select>
+							</td>
+							<?php }?>
+							
+							<?php if( !$install->_check_for_clean_url() ) ?>
+							<td>This option makes Ushahidi to be accessed via "clean" URLs. Without "index.php" in the URL.</td>
+							<?php else ?>
+							<td>It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite" target="_blank">post</a></td>
+						</tr>
 					</tbody>
 				</table>
 				<table class="form-table">

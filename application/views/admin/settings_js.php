@@ -241,7 +241,7 @@
 			else
 			{
 				$('#cities_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-				$.getJSON("<?php echo url::base() . 'admin/settings/updateCities/' ?>" + country,
+				$.getJSON("<?php echo url::site() . 'admin/settings/updateCities/' ?>" + country,
 					function(data){
 						if (data.status == 'success'){
 							$('#city_count').show();

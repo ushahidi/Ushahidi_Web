@@ -75,7 +75,7 @@ function showFormSelected(id, form_id, field_id, select_disable)
 		$('#form_result_' + form_id).hide();
 		$('#form_fields_' + form_id).hide(300);
 		$('#form_field_' + form_id +' [name=field_type]').val(id);
-		$.post("<?php echo url::base() . 'admin/manage/forms/selector' ?>", { selector_id: id, form_id: form_id, field_id: field_id },
+		$.post("<?php echo url::site() . 'admin/manage/forms/selector' ?>", { selector_id: id, form_id: form_id, field_id: field_id },
 			function(data){
 				if (data.status == 'success'){
 					$('#form_fields_' + form_id).html('');
@@ -109,7 +109,7 @@ function fieldAction( action, confirmAction, field_id, form_id, field_type )
 		var answer = confirm('Are You Sure You Want To ' 
 			+ confirmAction + ' Field?');
 		if (answer){
-			$.post("<?php echo url::base() . 'admin/manage/forms/field_delete' ?>", { form_id: form_id, field_id: field_id },
+			$.post("<?php echo url::site() . 'admin/manage/forms/field_delete' ?>", { form_id: form_id, field_id: field_id },
 				function(data){
 					if (data.status == 'success'){
 						$('#form_fields_current_' + form_id).html('');
@@ -123,7 +123,7 @@ function fieldAction( action, confirmAction, field_id, form_id, field_type )
 		}
 		break;
 	case 'mu':
-		$.post("<?php echo url::base() . 'admin/manage/forms/field_move' ?>", { form_id: form_id, field_id: field_id, field_position: 'u' },
+		$.post("<?php echo url::site() . 'admin/manage/forms/field_move' ?>", { form_id: form_id, field_id: field_id, field_position: 'u' },
 			function(data){
 				if (data.status == 'success'){
 					$('#form_fields_current_' + form_id).html('');
@@ -136,7 +136,7 @@ function fieldAction( action, confirmAction, field_id, form_id, field_type )
 		  	}, "json");
 		break;
 	case 'md':
-		$.post("<?php echo url::base() . 'admin/manage/forms/field_move' ?>", { form_id: form_id, field_id: field_id, field_position: 'd' },
+		$.post("<?php echo url::site() . 'admin/manage/forms/field_move' ?>", { form_id: form_id, field_id: field_id, field_position: 'd' },
 			function(data){
 				if (data.status == 'success'){
 					$('#form_fields_current_' + form_id).html('');
