@@ -145,12 +145,6 @@
 										<li><a id="media_0" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
 									</ul>
 </div>
-								<div style="float:right; width: 31%">
-									<strong><?php echo Kohana::lang('ui_main.views'); ?></strong>
-									<ul>
-										<li><a id="view_0" <?php if($map_enabled === 'streetmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.clusters'); ?></span></a></li>
-										<li><a id="view_1" <?php if($map_enabled === '3dmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.time'); ?></span></a></li>
-</div>
 								</div>
 								<!-- / filters -->
 						
