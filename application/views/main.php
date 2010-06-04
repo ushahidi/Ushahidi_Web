@@ -43,9 +43,9 @@
 												));
 											$color_css = '';
 										}
-										echo '<li><a href="#" id="cat_'. $category .'"><div '.$color_css.'>'.$category_image.'</div><div class="category-title">'.$category_title.'</div></a></li>';
+										echo '<li><a href="#" id="cat_'. $category .'"><div '.$color_css.'>'.$category_image.'</div><div class="category-title">'.$category_title.'</div></a>';
 										// Get Children
-										echo '<div class="hide" id="child_'. $category .'">';
+										echo '<div class="hide" id="child_'. $category .'"><ul>';
 										foreach ($category_info[3] as $child => $child_info)
 										{
 											$child_title = $child_info[0];
@@ -61,7 +61,7 @@
 											}
 											echo '<li style="padding-left:20px;"><a href="#" id="cat_'. $child .'"><div '.$color_css.'>'.$child_image.'</div><div class="category-title">'.$child_title.'</div></a></li>';
 										}
-										echo '</div>';
+										echo '</ul></div></li>';
 									}
 								?>
 							</ul>
