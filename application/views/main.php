@@ -150,20 +150,11 @@
 										<li><a id="media_0" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
 									</ul>
 </div>
-								<div style="float:right; width: 31%">
-									<strong><?php echo Kohana::lang('ui_main.views'); ?></strong>
-									<ul>
-										<li><a id="view_0" <?php if($map_enabled === 'streetmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.clusters'); ?></span></a></li>
-										<li><a id="view_1" <?php if($map_enabled === '3dmap') { echo 'class="active" '; } ?>href="#"><span><?php echo Kohana::lang('ui_main.time'); ?></span></a></li>
-</div>
 								</div>
 								<!-- / filters -->
 						
 								<!-- map -->
-								<?php
-									// My apologies for the inline CSS. Seems a little wonky when styles added to stylesheet, not sure why.
-								?>
-								<div class="<?php echo $map_container; ?>" id="<?php echo $map_container; ?>" <?php if($map_container === 'map3d') { echo 'style="width:573px; height:573px;"'; } ?>></div>
+								<div class="map" id="map"></div>
 								<div style="clear:both;"></div>
 								<div id="mapStatus">
 									<div id="mapScale" style="border-right: solid 1px #999"></div>
