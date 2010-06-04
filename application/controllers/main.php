@@ -132,6 +132,16 @@ class Main_Controller extends Template_Controller {
     {
         $this->template->header->this_page = 'home';
         $this->template->content = new View('main');
+		
+		// Map and Slider Blocks
+		$div_map = new View('main_map');
+		$div_timeline = new View('main_timeline');
+			// Filter::map_main - Modify Main Map Block
+			Event::run('ushahidi_filter.map_main', $div_map);
+			// Filter::map_timeline - Modify Main Map Block
+			Event::run('ushahidi_filter.map_timeline', $div_timeline);
+		$this->template->content->div_map = $div_map;
+		$this->template->content->div_timeline = $div_timeline;
 
         // Get all active top level categories
         $parent_categories = array();
@@ -294,8 +304,8 @@ class Main_Controller extends Template_Controller {
             }
             $endDate .= "</optgroup>";
         }
-        $this->template->content->startDate = $startDate;
-        $this->template->content->endDate = $endDate;
+        $this->template->content->div_timeline->startDate = $startDate;
+        $this->template->content->div_timeline->endDate = $endDate;
 
 
 		// get graph data
@@ -320,18 +330,18 @@ class Main_Controller extends Template_Controller {
 		$marker_stroke_width = Kohana::config('map.marker_stroke_width');
 		$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
 
-           // pdestefanis - allows to restrict the number of zoomlevels available
+		// pdestefanis - allows to restrict the number of zoomlevels available
 		$numZoomLevels = Kohana::config('map.numZoomLevels');
 	    $minZoomLevel = Kohana::config('map.minZoomLevel');
        	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
 
-           // pdestefanis - allows to limit the extents of the map
-           $lonFrom = Kohana::config('map.lonFrom');
-           $latFrom = Kohana::config('map.latFrom');
-           $lonTo = Kohana::config('map.lonTo');
-           $latTo = Kohana::config('map.latTo');
+		// pdestefanis - allows to limit the extents of the map
+		$lonFrom = Kohana::config('map.lonFrom');
+		$latFrom = Kohana::config('map.latFrom');
+		$lonTo = Kohana::config('map.lonTo');
+		$latTo = Kohana::config('map.latTo');
 
-           $this->template->header->js = new View('main_js');
+		$this->template->header->js = new View('main_js');
 		$this->template->header->js->json_url = ($clustering == 1) ?
 			"json/cluster" : "json";
 		$this->template->header->js->marker_radius =

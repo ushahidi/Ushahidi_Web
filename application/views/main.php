@@ -152,31 +152,12 @@
 </div>
 								</div>
 								<!-- / filters -->
-						
-								<!-- map -->
-								<div class="map" id="map"></div>
-								<div style="clear:both;"></div>
-								<div id="mapStatus">
-									<div id="mapScale" style="border-right: solid 1px #999"></div>
-									<div id="mapMousePosition" style="min-width: 135px;border-right: solid 1px #999;text-align: center"></div>
-									<div id="mapProjection" style="border-right: solid 1px #999"></div>
-									<div id="mapOutput"></div>
-								</div>
-								<div style="clear:both;"></div>
-								<div class="slider-holder">
-									<form action="">
-										<input type="hidden" value="0" name="currentCat" id="currentCat">
-										<fieldset>
-											<div class="play"><a href="#" id="playTimeline">PLAY</a></div>
-											<label for="startDate">From:</label>
-											<select name="startDate" id="startDate"><?php echo $startDate; ?></select>
-											<label for="endDate">To:</label>
-											<select name="endDate" id="endDate"><?php echo $endDate; ?></select>
-										</fieldset>
-									</form>
-								</div>
-								<!-- / map -->
-								<div id="graph" class="graph-holder"></div>
+								
+								<?php								
+								// Map and Timeline Blocks
+								echo $div_map;
+								echo $div_timeline;
+								?>
 							</div>
 						</div>
 						<!-- / content column -->
