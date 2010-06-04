@@ -308,96 +308,68 @@ class Main_Controller extends Template_Controller {
 		$this->template->content->all_graphs = $all_graphs;
 		$this->template->content->daily_graphs = $daily_graphs;
 
-		// If we are looking at the standard street map set by user
-		if(!isset($_GET['3dmap'])) {
+		// Javascript Header
+		$this->template->header->map_enabled = TRUE;
+		$this->template->header->main_page = TRUE;
+		$this->template->header->validator_enabled = TRUE;
 
-			//echo 'STREET MAP';
+		// Map Settings
+		$clustering = Kohana::config('settings.allow_clustering');
+		$marker_radius = Kohana::config('map.marker_radius');
+		$marker_opacity = Kohana::config('map.marker_opacity');
+		$marker_stroke_width = Kohana::config('map.marker_stroke_width');
+		$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
 
-			// Javascript Header
-			$this->template->header->map_enabled = 'streetmap';
-			$this->template->content->map_enabled = 'streetmap';
-			$this->template->content->map_container = 'map';
-			$this->template->header->main_page = TRUE;
-			$this->template->header->validator_enabled = TRUE;
+           // pdestefanis - allows to restrict the number of zoomlevels available
+		$numZoomLevels = Kohana::config('map.numZoomLevels');
+	    $minZoomLevel = Kohana::config('map.minZoomLevel');
+       	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
 
-			// Map Settings
-			$clustering = Kohana::config('settings.allow_clustering');
-			$marker_radius = Kohana::config('map.marker_radius');
-			$marker_opacity = Kohana::config('map.marker_opacity');
-			$marker_stroke_width = Kohana::config('map.marker_stroke_width');
-			$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
+           // pdestefanis - allows to limit the extents of the map
+           $lonFrom = Kohana::config('map.lonFrom');
+           $latFrom = Kohana::config('map.latFrom');
+           $lonTo = Kohana::config('map.lonTo');
+           $latTo = Kohana::config('map.latTo');
 
-            // pdestefanis - allows to restrict the number of zoomlevels available
-			$numZoomLevels = Kohana::config('map.numZoomLevels');
-		    $minZoomLevel = Kohana::config('map.minZoomLevel');
-        	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
+           $this->template->header->js = new View('main_js');
+		$this->template->header->js->json_url = ($clustering == 1) ?
+			"json/cluster" : "json";
+		$this->template->header->js->marker_radius =
+			($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;
+		$this->template->header->js->marker_opacity =
+			($marker_opacity >=1 && $marker_opacity <= 10 )
+			? $marker_opacity * 0.1  : 0.9;
+		$this->template->header->js->marker_stroke_width =
+			($marker_stroke_width >=1 && $marker_stroke_width <= 5 ) ? $marker_stroke_width : 2;
+		$this->template->header->js->marker_stroke_opacity =
+			($marker_stroke_opacity >=1 && $marker_stroke_opacity <= 10 )
+			? $marker_stroke_opacity * 0.1  : 0.9;
 
-            // pdestefanis - allows to limit the extents of the map
-            $lonFrom = Kohana::config('map.lonFrom');
-            $latFrom = Kohana::config('map.latFrom');
-            $lonTo = Kohana::config('map.lonTo');
-            $latTo = Kohana::config('map.latTo');
+           // pdestefanis - allows to restrict the number of zoomlevels available
+		$this->template->header->js->numZoomLevels = $numZoomLevels;
+	    $this->template->header->js->minZoomLevel = $minZoomLevel;
+	    $this->template->header->js->maxZoomLevel = $maxZoomLevel;
 
-            $this->template->header->js = new View('main_js');
-			$this->template->header->js->json_url = ($clustering == 1) ?
-				"json/cluster" : "json";
-			$this->template->header->js->marker_radius =
-				($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;
-			$this->template->header->js->marker_opacity =
-				($marker_opacity >=1 && $marker_opacity <= 10 )
-				? $marker_opacity * 0.1  : 0.9;
-			$this->template->header->js->marker_stroke_width =
-				($marker_stroke_width >=1 && $marker_stroke_width <= 5 ) ? $marker_stroke_width : 2;
-			$this->template->header->js->marker_stroke_opacity =
-				($marker_stroke_opacity >=1 && $marker_stroke_opacity <= 10 )
-				? $marker_stroke_opacity * 0.1  : 0.9;
+           // pdestefanis - allows to limit the extents of the map
+           $this->template->header->js->lonFrom = $lonFrom;
+           $this->template->header->js->latFrom = $latFrom;
+           $this->template->header->js->lonTo = $lonTo;
+           $this->template->header->js->latTo = $latTo;
 
-            // pdestefanis - allows to restrict the number of zoomlevels available
-			$this->template->header->js->numZoomLevels = $numZoomLevels;
-		    $this->template->header->js->minZoomLevel = $minZoomLevel;
-		    $this->template->header->js->maxZoomLevel = $maxZoomLevel;
+		$this->template->header->js->default_map = Kohana::config('settings.default_map');
+		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->template->header->js->latitude = Kohana::config('settings.default_lat');
+		$this->template->header->js->longitude = Kohana::config('settings.default_lon');
+		$this->template->header->js->graph_data = $graph_data;
+		$this->template->header->js->all_graphs = $all_graphs;
+		$this->template->header->js->daily_graphs = $daily_graphs;
+		$this->template->header->js->hourly_graphs = $hourly_graphs;
+		$this->template->header->js->weekly_graphs = $weekly_graphs;
+		$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
 
-            // pdestefanis - allows to limit the extents of the map
-            $this->template->header->js->lonFrom = $lonFrom;
-            $this->template->header->js->latFrom = $latFrom;
-            $this->template->header->js->lonTo = $lonTo;
-            $this->template->header->js->latTo = $latTo;
-
-			$this->template->header->js->default_map = Kohana::config('settings.default_map');
-			$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-			$this->template->header->js->latitude = Kohana::config('settings.default_lat');
-			$this->template->header->js->longitude = Kohana::config('settings.default_lon');
-			$this->template->header->js->graph_data = $graph_data;
-			$this->template->header->js->all_graphs = $all_graphs;
-			$this->template->header->js->daily_graphs = $daily_graphs;
-			$this->template->header->js->hourly_graphs = $hourly_graphs;
-			$this->template->header->js->weekly_graphs = $weekly_graphs;
-			$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
-
-			//
-			$this->template->header->js->active_startDate = $active_startDate;
-			$this->template->header->js->active_endDate = $active_endDate;
-
-		// If we are viewing the 3D map
-		}else{
-
-			//echo '3D MAP';
-
-			// Javascript Header
-			$this->template->header->map_enabled = '3dmap';
-			$this->template->content->map_enabled = '3dmap';
-			$this->template->content->map_container = 'map3d';
-			$this->template->header->main_page = FALSE; // Setting to false because we don't want all the external controls that the street map has
-			$this->template->header->js = new View('main_3d_js');
-
-			$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-			$this->template->header->js->latitude = Kohana::config('settings.default_lat');
-			$this->template->header->js->longitude = Kohana::config('settings.default_lon');
-
-			// Override API URL
-			$this->template->header->api_url = '<script src="http://www.google.com/jsapi?key='.Kohana::config('settings.api_google').'"> </script>';
-		}
-
+		//
+		$this->template->header->js->active_startDate = $active_startDate;
+		$this->template->header->js->active_endDate = $active_endDate;
 
 		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
