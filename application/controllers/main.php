@@ -310,7 +310,6 @@ class Main_Controller extends Template_Controller {
 
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
-		$this->template->content->map_container = 'map';
 		$this->template->header->main_page = TRUE;
 		$this->template->header->validator_enabled = TRUE;
 

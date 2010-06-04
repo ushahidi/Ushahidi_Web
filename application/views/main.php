@@ -158,7 +158,6 @@
 									<div id="mapOutput"></div>
 								</div>
 								<div style="clear:both;"></div>
-								<?php if($map_container === 'map') { ?>
 								<div class="slider-holder">
 									<form action="">
 										<input type="hidden" value="0" name="currentCat" id="currentCat">
@@ -171,7 +170,6 @@
 										</fieldset>
 									</form>
 								</div>
-								<?php } ?>
 								<!-- / map -->
 								<div id="graph" class="graph-holder"></div>
 							</div>
