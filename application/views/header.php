@@ -112,13 +112,17 @@
 	<script type="text/javascript" src="js/ie6pngfix.js"></script>
 	<script type="text/javascript">DD_belatedPNG.fix('img, ul, ol, li, div, p, a');</script>
 	<![endif]-->
-	<?php page::render('javascript'); ?>
 	<script type="text/javascript">
 		var addthis_config = {
 		   ui_click: true
 		}
 		<?php echo $js . "\n"; ?>
 	</script>
+	<?php
+	// Render CSS and Javascript from Plugins
+	page::render('stylesheet');
+	page::render('javascript');
+	?>
 </head>
 
 <body id="page">
