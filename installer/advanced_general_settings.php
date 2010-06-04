@@ -10,7 +10,7 @@
 	print $header;
  ?>
 <body>
-<div id="ushahidi_login_container" class="advanced">
+<div id="ushahidi_install_container" class="advanced">
 	<div id="ushahidi_login_logo"><img src="../media/img/admin/logo_login.gif" /></div>
 	<div id="ushahidi_login">
 	<ol class="progress-meter clearfix">

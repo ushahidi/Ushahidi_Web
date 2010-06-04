@@ -48,7 +48,7 @@ dl {}
 /* LOGIN BOX */
 /*****************************/
 #ushahidi_login_container{
-	width:800px;
+	width:400px;
 	margin:50px auto;
 }
 #ushahidi_login_logo {
@@ -66,6 +66,13 @@ dl {}
 #ushahidi_loginbox td{
 	padding:5px;
 	vertical-align:top;
+}
+
+/* Installer Container	 */
+/*****************************/
+#ushahidi_install_container { 
+    width:800px;
+    margin:50px auto;
 }
 
 /* Content Area */
