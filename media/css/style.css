@@ -516,6 +516,7 @@ ul.category-filters{
 ul.category-filters li{
     padding: 0;
     margin-bottom: 2px;
+	list-style-type:none; 
 }
 
 ul.category-filters li a{

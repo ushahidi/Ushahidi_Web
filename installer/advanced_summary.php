@@ -6,7 +6,7 @@
     print $header;
  ?>
 <body>
-<div id="ushahidi_login_container">
+<div id="ushahidi_install_container">
     <div id="ushahidi_login_logo"><img src="../media/img/admin/logo_login.gif" /></div>
     <div id="ushahidi_login" class="clearfix">
     <form method="POST" name="frm_install" action="process.php" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
