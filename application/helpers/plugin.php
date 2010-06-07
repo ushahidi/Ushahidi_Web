@@ -15,7 +15,7 @@ class plugin_Core {
 	 * @param   string plugin name
 	 * @return  array
 	 */
-	public static function meta($plugin)
+	public static function meta($plugin = NULL)
 	{	
 		// Set Default Values
 		$plugin_headers = array(
@@ -56,6 +56,26 @@ class plugin_Core {
 		else
 		{
 			return $plugin_headers;
+		}
+	}
+	
+	/**
+	 * Discover Plugin Settings Controller
+	 *
+	 * @param   string plugin name
+	 * @return  string plugin settings page
+	 */
+	public static function settings($plugin = NULL)
+	{
+		// Determine if readme.txt (Case Insensitive) exists
+		$file = PLUGINPATH.$plugin."/controllers/admin/".$plugin."_admin.php";
+		if ( file::file_exists_i($file) )
+		{
+			return $plugin."_admin";
+		}
+		else
+		{
+			return false;
 		}
 	}
 	

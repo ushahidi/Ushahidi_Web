@@ -1290,7 +1290,7 @@ div.sms_nav_holder a{
 }
 div.sms_nav_holder a:hover{background-color: #f0f0f0;}
 div.sms_nav_holder a.active{background-color: #eee; color: #6c6c6c; font-weight: bold;}
-div.sms_holder{
+div.sms_holder, div.settings_holder{
 	width: 860px;
 	padding: 15px;
 	margin-left: 20px;

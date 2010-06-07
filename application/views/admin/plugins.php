@@ -8,7 +8,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
+ * @module     Plugin Settings View
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
@@ -97,12 +97,21 @@
 									
 									// Retrieve Plugin Header Information from readme.txt
 									$plugin_meta = plugin::meta($plugin->plugin_name);
+									
+									// Do we have a settings page?
+									$settings = plugin::settings($plugin->plugin_name);
 									?>
 									<tr>
 										<td class="col-1"><input name="plugin_id[]" id="plugin" value="<?php echo $plugin_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<h4><?php echo $plugin_meta["plugin_name"]; ?></h4>
+												<h4>
+												<?php echo $plugin_meta["plugin_name"]; ?><?php
+												if ($plugin_active AND $settings)
+												{
+													echo "&nbsp;&nbsp;&nbsp;[<a href=\"".url::base()."admin/".$settings."\">".Kohana::lang('ui_admin.settings')."</a>]";
+												}
+												?></h4>
 												<p><?php echo $plugin_meta["plugin_description"]; ?></p>
 											</div>
 											<ul class="info">
