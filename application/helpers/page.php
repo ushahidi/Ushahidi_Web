@@ -54,10 +54,20 @@ class page_Core {
 			switch ($type)
 			{
 				case 'stylesheet':
-					echo '<link rel="stylesheet" type="text/css" href="'.url::base(TRUE).$file.'" />';
+					if (substr_compare($file, '.css', -3, 3, FALSE) !== 0)
+					{
+						// Add the javascript suffix
+						$file .= '.css';
+					}
+					echo '<link rel="stylesheet" type="text/css" href="'.url::site()."plugins/".$file.'" />';
 					break;
 				case 'javascript':
-					echo '<script type="text/javascript" src="'.url::base(TRUE).$file.'"></script>';
+					if (substr_compare($file, '.js', -3, 3, FALSE) !== 0)
+					{
+						// Add the javascript suffix
+						$file .= '.js';
+					}
+					echo '<script type="text/javascript" src="'.url::base()."plugins/".$file.'"></script>';
 					break;
 			}
 		}
