@@ -90,10 +90,11 @@
 							</td>
 							<?php }?>
 							
-							<?php if( !$install->_check_for_clean_url() ) ?>
+							<?php if( !$install->_check_for_clean_url() ) {?>
 							<td>This option makes Ushahidi to be accessed via "clean" URLs. Without "index.php" in the URL.</td>
-							<?php else ?>
+							<?php }else{ ?>
 							<td>It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite" target="_blank">post</a></td>
+							<?php } ?>
 						</tr>
 					</tbody>
 				</table>
