@@ -1,0 +1,190 @@
+html,
+body {
+	font:12px/14px "Trebuchet MS",sans-serif;
+	margin:0;
+	padding:0;
+	height:100%;
+}
+h1, h2, h3, p {
+	margin: 0 0 5px 0;
+	padding: 0;
+}
+a{
+    color: #3764aa;
+    text-decoration: none;
+}
+a:hover{
+    color: #008cff;
+    text-decoration: underline;
+}
+
+div#container {
+   min-height:100%;
+   position:relative;
+}
+
+/* Header */
+div#header{
+	padding:10px;
+	background-color:#666;
+	border-bottom:1px dotted #000;
+	border-top:2px solid #000;
+	margin-bottom:5px;
+	color:#fff;
+}
+	div#header h1 {
+		font-size:22px;
+	}
+	div#header span {
+		font-size:11px;
+	}
+
+div#navigation{
+	padding:3px 3px 3px 5px;
+	margin-bottom:5px;
+	background-color:#ccc;
+}
+	
+/* Page */
+div#page{
+	margin:0 5px 0 5px;
+	padding-bottom:40px; /* Height of the footer */
+}
+	div#page .block{
+		margin-bottom:10px;
+	}
+		div#page .block .submit,
+		div#page .block .other,
+		div#page .block .expand a {
+			padding:8px 5px;
+			font-size:16px;
+			background-color:#eee;
+		}
+		div#page .block .submit {
+			background: #368C00 url(../images/submit-incident.jpg) 6px 7px no-repeat;
+			padding-left:30px;
+		}
+		div#page .block .submit a{
+			color:#fff;
+			display:block;
+		}
+		div#page .block .expand a:link, div#page .block .expand a:visited {
+			border-bottom-width:1px;
+			background-image:url(../images/arrow-down.gif);
+			background-repeat:no-repeat;
+			background-position:98% 50%;
+		}
+		div#page .block .expand a:hover, div#page .block .expand a:active, div#page .block .expand a:focus {
+			text-decoration:underline
+		}
+		div#page .block .expand a.open:link, div#page .block .expand a.open:visited {
+			border-bottom-style:solid;
+			background:#eee url(../images/arrow-up.gif) no-repeat 98% 50%;
+		}
+		div#page .block .collapse{
+			padding:3px 3px 3px 10px;
+		}
+		
+		div#page .block ul{
+			padding-left:15px;
+			margin:0;
+		}
+			div#page .block ul li{
+				list-style-type: square;
+			}
+		
+		.swatch {
+		    float:left;
+		    height:12px;
+		    margin-right: 8px;
+		    width:12px;
+		    border:1px solid white;
+		}
+	
+	div#page .block_title{
+		margin-top:15px;
+		padding:8px 5px;
+		font-size:16px;
+	}
+	
+/* Report View Page */
+.report_info{
+	margin-top:10px;
+}
+	.report_info h2{
+		font-size:16px;
+	}
+	.report_info .verified{
+		float:right;
+		background-color:#ccc;
+	}
+	.report_info .verified{
+	    background: #A60003;
+	    padding:5px;
+	    float: right;
+	    color: #FFF;
+	    text-transform: uppercase;
+	    font-size: 10px;
+	    font-weight: bold;
+	    text-align: center;
+	    margin: 0 0 0 10px;
+	}
+	.report_info .verified_yes{
+		background: #368c00;
+	}
+	.report_info .verified span{
+	    color: #FFF;
+	    text-transform: uppercase;
+	    font-size: 14px;
+	    font-weight: bold;
+	}
+	
+	.report_info ul.details{
+	    list-style: none;
+		margin:0;
+		padding:0;
+	}
+
+	.report_info ul.details li{
+	    list-style: none;
+	    border-bottom: #EEEEEE 1px solid;
+	    padding: 5px 0;
+	    color: #666666;
+	    font-size: 11px;
+	}
+
+	.report_info ul.details li small{
+	    text-transform: uppercase;
+	    font-weight: bold;
+	    font-size: 11px;
+	    margin: 0 0 5px 0;
+	}
+	.report_info ul.details li a{
+	    background: #E2E2E2;
+	    padding: 1px 4px 2px 4px;
+	    -moz-border-radius: 3px;
+	    -webkit-border-radius: 3px;
+	    color: #004276;
+	    text-transform: uppercase;
+	    font-weight: bold;
+	    font-size: 10px;
+	    text-decoration: underline;
+	}
+	
+#map_canvas{
+	width:100%;
+	height:300px;
+	border:1px solid #ccc;
+	margin:15px 0 0 0;
+}		
+		
+/* Footer */
+div#footer{
+	position:absolute;
+	bottom:0;
+	width:100%;
+	height:30px;   /* Height of the footer */
+	border-top:1px dotted #000;
+	background-color:#ccc;
+	line-height:30px;
+}
