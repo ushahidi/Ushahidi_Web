@@ -35,7 +35,7 @@ var ge;
 		ge.getLayerRoot().enableLayerById(ge.LAYER_ROADS, true);
 		
 		var link = ge.createLink('');
-		var href = '<?php echo url::base(); ?>api/?task=3dkml'
+		var href = '<?php echo url::site(); ?>api/?task=3dkml'
 		link.setHref(href);
 		
 		var networkLink = ge.createNetworkLink('');

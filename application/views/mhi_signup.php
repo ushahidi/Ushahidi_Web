@@ -19,7 +19,7 @@
 	<h3>Create New Instance</h3>
 	
 	<p>Fill out the form below to set up your own instance of <?php echo $site_name; ?>.
-	<?php print form::open(url::base().'mhi/create', array('id' => 'frm-MHI-Signup', 'name' => 'frm-MHI-Signup', 'class' => 'frm-content')); ?>
+	<?php print form::open(url::site().'mhi/create', array('id' => 'frm-MHI-Signup', 'name' => 'frm-MHI-Signup', 'class' => 'frm-content')); ?>
 	
 	<?php if($logged_in == FALSE){ ?>
 	

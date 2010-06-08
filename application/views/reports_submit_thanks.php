@@ -24,7 +24,7 @@
 								<h3><?php echo Kohana::lang('ui_main.reports_submitted');?></h3>
 		
 								<div class="thanks_msg"><a href="<?php echo
-									url::base().'reports' ?>"><?php echo Kohana::lang('ui_main.reports_return');?></a><br /><br /><br />
+									url::site().'reports' ?>"><?php echo Kohana::lang('ui_main.reports_return');?></a><br /><br /><br />
 									<?php echo Kohana::lang('ui_main.feedback_reports');?><br /><br />
 									<?php 
 									print form::open('http://feedback.ushahidi.com/fillsurvey.php?sid=2', array('target'=>'_blank'));

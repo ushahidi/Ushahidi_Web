@@ -105,7 +105,7 @@
 			});
 			
 			// Create the single marker layer
-			var markers = new OpenLayers.Layer.GML("single report", "<?php echo url::base() . 'json/single/' . $incident_id; ?>", 
+			var markers = new OpenLayers.Layer.GML("single report", "<?php echo url::site() . 'json/single/' . $incident_id; ?>", 
 			{
 				format: OpenLayers.Format.GeoJSON,
 				projection: map.displayProjection,
@@ -221,7 +221,7 @@
 		function rating(id,action,type,loader)
 		{
 			$('#' + loader).html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-			$.post("<?php echo url::base() . 'reports/rating/' ?>" + id, { action: action, type: type },
+			$.post("<?php echo url::site() . 'reports/rating/' ?>" + id, { action: action, type: type },
 				function(data){
 					if (data.status == 'saved'){
 						if (type == 'original') {
