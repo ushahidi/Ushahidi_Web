@@ -39,6 +39,10 @@
 					<li><a href="#"><?php echo Kohana::lang('ui_main.about'); ?></a></li>
 					<li><a href="#"><?php echo Kohana::lang('ui_main.contact'); ?></a></li>
 					<li><a href="#"><?php echo Kohana::lang('ui_main.blog'); ?></a></li>
+					<?php
+					// Action::nav_main_bottom - Add items to the bottom links
+					Event::run('ushahidi_action.nav_main_bottom');
+					?>
 				</ul>
 				<p><?php echo Kohana::lang('ui_main.copyright'); ?></p>
 			</div>

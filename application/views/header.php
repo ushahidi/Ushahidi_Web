@@ -208,6 +208,10 @@
 							echo "<li><a href=\"".url::base()."page/index/".$page->id."\" ".$this_active.">".$page->page_tab."</a></li>";
 						}
 						?>
+						<?php
+						// Action::nav_main_top - Add items to the main navigation tabs
+						Event::run('ushahidi_action.nav_main_top');
+						?>
 					</ul>
 
 				</div>
