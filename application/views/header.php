@@ -120,8 +120,8 @@
 	</script>
 	<?php
 	// Render CSS and Javascript from Plugins
-	page::render('stylesheet');
-	page::render('javascript');
+	plugin::render('stylesheet');
+	plugin::render('javascript');
 	?>
 </head>
 

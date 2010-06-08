@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>
 <title><?php echo $site_name; ?></title>
 <?php
-page::render('stylesheet');
-page::render('javascript');
+plugin::render('stylesheet');
+plugin::render('javascript');
 
 if ($show_map === TRUE)
 {
