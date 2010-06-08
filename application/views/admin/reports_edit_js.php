@@ -311,11 +311,6 @@
 				return false;
 			});
 			
-			// Prevent Enter Button Submit
-			$("#reportForm").bind("keypress", function(e) {
-				if (e.keyCode == 13) return false;
-			});
-			
 			// Toggle Date Editor
 			$('a#date_toggle').click(function() {
 		    	$('#datetime_edit').show(400);
