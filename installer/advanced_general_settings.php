@@ -74,7 +74,7 @@
 						</tr>
 					   	<tr>
 							<th scope="row"><label for="enable_clean_url">Enable Clean URLs</label></th>
-							if<?php if( !$install->_check_for_clean_url() ) { ?>
+							<?php if( !$install->_check_for_clean_url() ) { ?>
 							<td>
 								<select name="enable_clean_url" disabled="true">
 									<option value="1" >Yes</option>
