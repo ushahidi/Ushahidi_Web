@@ -34,7 +34,7 @@
 
 			echo html::script('media/js/OpenLayers', true);
 			echo html::script('media/js/OpenStreetMap.js', true);
-			echo "<script type=\"text/javascript\">OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';</script>";
+			echo "<script type=\"text/javascript\">OpenLayers.ImgPath = '".url::site().'media/img/openlayers/'."';</script>";
 		}
 
 		// Load jQuery
@@ -98,14 +98,14 @@
 			echo html::script('media/js/protochart/ProtoChart', true);
 		}
 
-		if ($allow_feed == 1)
+		if (Kohana::config('settings.allow_feed'))
 		{
 			echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
 		}
 
 		//Custom stylesheet
 
-		echo html::stylesheet(url::base().'themes/'.$site_style."/style.css");
+		echo html::stylesheet(url::site().'themes/'.$site_style."/style.css");
 	?>
 
 	<!--[if IE 6]>
@@ -159,12 +159,17 @@
 				<span><?php echo $site_tagline; ?></span>
 			</div>
 			<!-- / logo -->
-
-			<!-- submit incident -->
+			
+			<?php
+			if (Kohana::config('settings.allow_reports'))
+			{
+				?><!-- submit incident -->
 			<div class="submit-incident clearingfix">
 				<a href="<?php echo url::site() . "reports/submit" ?>"><?php echo Kohana::lang('ui_main.submit'); ?></a>
 			</div>
-			<!-- / submit incident -->
+			<!-- / submit incident --><?php
+			}
+			?>
 		</div>
 		<!-- / header -->
 
@@ -177,7 +182,12 @@
 					<ul>
 						<li><a href="<?php echo url::site() . "main" ?>" <?php if ($this_page == 'home') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.home'); ?></a></li>
 						<li><a href="<?php echo url::site() . "reports" ?>" <?php if ($this_page == 'reports') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.reports'); ?></a></li>
-						<li><a href="<?php echo url::site() . "reports/submit" ?>" <?php if ($this_page == 'reports_submit') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.submit'); ?></a></li>
+						<?php
+						if (Kohana::config('settings.allow_reports'))
+						{
+							?><li><a href="<?php echo url::site() . "reports/submit" ?>" <?php if ($this_page == 'reports_submit') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.submit'); ?></a></li><?php
+						}
+						?>
 						<li><a href="<?php echo url::site() . "alerts" ?>" <?php if ($this_page == 'alerts') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.alerts'); ?></a></li>
 						<?php
 						// Contact Page
