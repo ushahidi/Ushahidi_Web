@@ -23,7 +23,7 @@ $lang = array
 	(
 		'required'		=> 'El campo nombre de usuario es obligatorio.',
 		'length'		=> 'El campo nombre de usuario debe tener por lo menos 2 y no mas de 16 caracteres.',
-		'standard_text' => 'El campo nombre de usuario contiene caracteres no permitidos.',
+		'alpha' => 'El campo nombre de usuario contiene caracteres no permitidos.',
 		'admin' 		=> 'El rol del usuario administrador no puede ser modificado.',
         'superadmin'	=> 'El rol del usuario super-administrador no puede ser modificado.',
 		'exists'		=> 'Lo siento, este nombre de usuario ya esta siendo usado.',
@@ -34,7 +34,7 @@ $lang = array
 	(
 		'required'		=> 'El campo clave es obligatorio.',
 		'length'		=> 'El campo clave debe tener por lo menos 5 y no mas de 16 caracteres en el largo.',
-		'standard_text' => 'El campo clave contiene caracteres no permitidos.',
+		'alpha_numeric' => 'El campo clave contiene caracteres no permitidos.',
 		'login error'	=> 'Por favor revise que ha ingresado la clave correcta.',
         'matches'		=> 'Por favor ingrese la misma clave en ambos campos.'
 	),
