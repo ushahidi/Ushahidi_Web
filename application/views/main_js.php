@@ -69,7 +69,7 @@
 				    }
 				};
 			map = new OpenLayers.Map('map', options);
-			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
+//			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 			
 			/*
 			- Select A Mapping API
