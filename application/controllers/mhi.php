@@ -47,11 +47,11 @@ class MHI_Controller extends Template_Controller {
 
 		if ($beta_session_thing == 2)
 		{
-			$this->template->header  = new View('mhi_header_beta');
-			$this->template->footer  = new View('mhi_footer_beta');
+			$this->template->header  = new View('mhi/mhi_header_beta');
+			$this->template->footer  = new View('mhi/mhi_footer_beta');
 		}else{
-			$this->template->header  = new View('mhi_header');
-			$this->template->footer  = new View('mhi_footer');
+			$this->template->header  = new View('mhi/mhi_header');
+			$this->template->footer  = new View('mhi/mhi_footer');
 		}
 
 		$this->template->header->site_name = Kohana::config('settings.site_name');
@@ -59,7 +59,7 @@ class MHI_Controller extends Template_Controller {
 		// Initialize JS variables. js_files is an array of ex: html::script('media/js/jquery.validate.min');
 		// Add the sign in box javascript
 
-		$this->template->header->js = new View('mhi_js_signin');
+		$this->template->header->js = new View('mhi/mhi_js_signin');
 		$this->template->header->js_files = array();
 
 		// If we aren't at the top level MHI site or MHI isn't enabled, don't allow access to any of this jazz
@@ -85,12 +85,12 @@ class MHI_Controller extends Template_Controller {
 		$beta_session_thing = $session->get('real_deal');
 		if ($beta_session_thing == 2)
 		{
-			$this->template->content = new View('beta_signup');
+			$this->template->content = new View('mhi/beta_signup');
 		}else{
-			$this->template->content = new View('mhi');
+			$this->template->content = new View('mhi/mhi');
 		}
 
-		$this->template->header->js .= new View('mhi_js');
+		$this->template->header->js .= new View('mhi/mhi_js');
 		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
 
 		$mhi_user_id = $session->get('mhi_user_id');
@@ -170,7 +170,7 @@ class MHI_Controller extends Template_Controller {
 		}
 
 		$this->template->header->this_body = '';
-		$this->template->content = new View('mhi_manage');
+		$this->template->content = new View('mhi/mhi_manage');
 
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
@@ -181,13 +181,13 @@ class MHI_Controller extends Template_Controller {
 	public function about()
 	{
 		$this->template->header->this_body = 'crowdmap-about';
-		$this->template->content = new View('mhi_about');
+		$this->template->content = new View('mhi/mhi_about');
 	}
 
 	public function features()
 	{
 		$this->template->header->this_body = 'crowdmap-features';
-		$this->template->content = new View('mhi_features');
+		$this->template->content = new View('mhi/mhi_features');
 	}
 
 
@@ -204,8 +204,8 @@ class MHI_Controller extends Template_Controller {
 		}
 
 		$this->template->header->this_body = '';
-		$this->template->content = new View('mhi_account');
-		$this->template->header->js .= new View('mhi_account_js');
+		$this->template->content = new View('mhi/mhi_account');
+		$this->template->header->js .= new View('mhi/mhi_account_js');
 
 		$mhi_user = new Mhi_User_Model;
 
@@ -268,8 +268,8 @@ class MHI_Controller extends Template_Controller {
 	public function signup()
 	{
 		$this->template->header->this_body = '';
-		$this->template->content = new View('mhi_signup');
-		$this->template->header->js .= new View('mhi_signup_js');
+		$this->template->content = new View('mhi/mhi_signup');
+		$this->template->header->js .= new View('mhi/mhi_signup_js');
 		$this->template->header->js_files = array(html::script('media/js/mhi/initialize', true));
 
 		$this->template->content->site_name = Kohana::config('settings.site_name');
@@ -282,7 +282,7 @@ class MHI_Controller extends Template_Controller {
 	public function create()
 	{
 		$this->template->header->this_body = '';
-		$this->template->content = new View('mhi_create');
+		$this->template->content = new View('mhi/mhi_create');
 
 		// Process Form
 
@@ -411,7 +411,8 @@ class MHI_Controller extends Template_Controller {
 					$message .= 'Admin URL: '.$new_site_url.'/admin'."/n";
 					$message .= 'Username: '.$email."/n";
 					$message .= 'Password: (hidden)'."/n";
-					// email::send($to, $from, $subject, $message, TRUE);
+
+					email::send($to,$from,$subject,$message,FALSE);
 				}
 
 			}else{

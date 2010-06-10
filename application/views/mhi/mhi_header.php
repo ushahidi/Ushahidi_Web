@@ -62,7 +62,7 @@
             <div id="login-form" class="rounded shadow">
                 <form>
                     <p>
-                        <label for="username">Username</label>
+                        <label for="username">E-mail</label>
                         <input class="text rounded" id="username" type="text" title="username" value="" />
                     </p>
                     <p>
