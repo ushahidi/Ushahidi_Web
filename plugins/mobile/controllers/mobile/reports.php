@@ -23,6 +23,45 @@ class Reports_Controller extends Mobile_Controller {
 	}
 	
 	/**
+	 * Displays a list of reports
+	 * @param boolean $category_id If category_id is supplied filter by
+	 * that category
+	 */
+	public function index($category_id = false)
+	{
+		$this->template->content = new View('mobile/reports');
+		
+		$db = new Database;
+		
+		$filter = ( $category_id )
+			? " AND ( c.id='".$category_id."' OR 
+				c.parent_id='".$category_id."' )  "
+			: " AND 1 = 1";
+			
+		// Pagination
+		$pagination = new Pagination(array(
+				'query_string' => 'page',
+				'items_per_page' => (int) Kohana::config('mobile.items_per_page'),
+				'total_items' => $db->query("SELECT DISTINCT i.* FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) WHERE `incident_active` = '1' $filter")->count()
+				));
+
+		$incidents = $db->query("SELECT DISTINCT i.* FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) WHERE `incident_active` = '1' $filter ORDER BY incident_date DESC LIMIT ". (int) Kohana::config('mobile.items_per_page') . " OFFSET ".$pagination->sql_offset);
+		
+		// If Category Exists
+		if ($category_id)
+		{
+			$category = ORM::factory("category", $category_id);
+		}
+		else
+		{
+			$category = FALSE;
+		}
+			
+		$this->template->content->incidents = $incidents;
+		$this->template->content->category = $category;
+	}
+	
+	/**
 	 * Displays a report.
 	 * @param boolean $id If id is supplied, a report with that id will be
 	 * retrieved.

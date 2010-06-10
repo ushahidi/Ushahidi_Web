@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Mobile Controller
- * Generates KML with PlaceMarkers and Category Styles
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -23,9 +22,15 @@ class Mobile_Controller extends Template_Controller {
 	// Main template
     public $template = 'mobile/layout';
 
+	// Table Prefix
+	protected $table_prefix;
+
     public function __construct()
     {
 		parent::__construct();
+		
+		// Set Table Prefix
+		$this->table_prefix = Kohana::config('database.default.table_prefix');
 		
 		// Load Header & Footer
         $this->template->header  = new View('mobile/header');
@@ -59,6 +64,7 @@ class Mobile_Controller extends Template_Controller {
         foreach (ORM::factory('category')
 				->where('category_visible', '1')
 				->where('parent_id', '0')
+				->orderby('category_title')
 				->find_all() as $category)
         {
             // Get The Children
@@ -68,7 +74,8 @@ class Mobile_Controller extends Template_Controller {
 				$children[$child->id] = array(
 					$child->category_title,
 					$child->category_color,
-					$child->category_image
+					$child->category_image,
+					$this->_category_count($child->id)
 				);
 			}
 
@@ -77,6 +84,7 @@ class Mobile_Controller extends Template_Controller {
 				$category->category_title,
 				$category->category_color,
 				$category->category_image,
+				$this->_category_count($category->id),
 				$children
 			);
         }
@@ -87,5 +95,21 @@ class Mobile_Controller extends Template_Controller {
 			->limit('10')
             ->orderby('item_date', 'desc')
             ->find_all();
+	}
+	
+	private function _category_count($category_id = false)
+	{
+		if ($category_id)
+		{
+			return ORM::factory('incident_category')
+				->join('incident', 'incident_category.incident_id', 'incident.id')
+				->where('category_id', $category_id)
+				->where('incident_active', '1')
+				->count_all();
+		}
+		else
+		{
+			return 0;
+		}
 	}
 }

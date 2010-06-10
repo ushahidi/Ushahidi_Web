@@ -60,6 +60,12 @@ div#page{
 			font-size:16px;
 			background-color:#eee;
 		}
+			div#page .block .other span,
+			div#page .block .expand span{
+				font-size:14px;
+				padding-left:10px;
+				color:#999;
+			}
 		div#page .block .submit {
 			background: #368C00 url(../images/submit-incident.jpg) 6px 7px no-repeat;
 			padding-left:30px;
@@ -82,7 +88,7 @@ div#page{
 			background:#eee url(../images/arrow-up.gif) no-repeat 98% 50%;
 		}
 		div#page .block .collapse{
-			padding:3px 3px 3px 10px;
+			padding:3px 3px 3px 12px;
 		}
 		
 		div#page .block ul{
@@ -91,6 +97,9 @@ div#page{
 		}
 			div#page .block ul li{
 				list-style-type: square;
+				margin:8px 0 12px 0;
+				padding-bottom:10px;
+				border-bottom:1px solid #ccc;
 			}
 		
 		.swatch {
@@ -107,6 +116,21 @@ div#page{
 		font-size:16px;
 	}
 	
+/* Report List Page */
+.report_list{
+	
+}
+	div#page .block ul{
+		padding-left:15px;
+		margin:0;
+	}
+		div#page .block ul li{
+			list-style-type: square;
+			margin:8px 0 12px 0;
+			padding-bottom:10px;
+			border-bottom:1px solid #ccc;
+		}
+
 /* Report View Page */
 .report_info{
 	margin-top:10px;
