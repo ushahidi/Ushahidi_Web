@@ -96,7 +96,14 @@
 								<a href="" id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></a>
 							</div>
 						</div>
-						<?php echo $comments; ?>		
+						<?php
+						// Action::report_extra - Add Items to the Report Extra block
+						Event::run('ushahidi_action.report_extra', $incident_id);
+						
+						// Filter::comments_block - The block that contains posted comments
+						Event::run('ushahidi_filter.comment_block', $comments);
+						echo $comments;
+						?>		
 					</div>
 		
 					<?php
@@ -240,7 +247,11 @@
 					</div>
 					<!-- end incident block <> start other report -->
 					
-					<?php echo $comments_form; ?>
+					<?php
+					// Filter::comments_form_block - The block that contains the comments form
+					Event::run('ushahidi_filter.comment_form_block', $comments_form);
+					echo $comments_form;
+					?>
 					
 				</div>
 			</div>

@@ -181,7 +181,7 @@
 								</div>
 							</div>
 							<?php
-							// Action::report_form_admin - Runs right before the end of the report
+							// Action::report_form_admin - Runs right before the end of the report submit form
 							// entry form
 							Event::run('ushahidi_action.report_form_admin', $id);
 							?>

@@ -119,7 +119,10 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 										?>
 									</div>
 								</div>
-								
+								<?php
+								// Action::report_form - Runs right before the end of the report submit form
+								Event::run('ushahidi_action.report_form');
+								?>
 								<div id="custom_forms">
 									
                                     <?php

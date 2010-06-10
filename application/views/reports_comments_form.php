@@ -40,6 +40,10 @@
 			<?php print $captcha->render(); ?><br />
 			<?php print form::input('captcha', $form['captcha'], ' class="text"'); ?>
 		</div>
+		<?php
+		// Action::comments_form - Runs right before the end of the comment submit form
+		Event::run('ushahidi_action.comment_form');
+		?>
 		<div class="report_row">
 			<input name="submit" type="submit" value="Submit Comment" class="btn_blue" />
 		</div>
