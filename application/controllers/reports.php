@@ -170,6 +170,12 @@ class Reports_Controller extends Main_Controller {
 	 */
 	public function submit($id = false, $saved = false)
 	{
+		// First, are we allowed to submit new reports?
+		if ( ! Kohana::config('settings.allow_reports'))
+		{
+			url::redirect(url::site().'main');
+		}
+		
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit');
 
@@ -729,19 +735,22 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->incident_verified = $incident->incident_verified;
 
 			// Retrieve Comments (Additional Information)
-
-			$incident_comments = array();
-			if ($id)
+			$this->template->content->comments = "";
+			if (Kohana::config('settings.allow_comments'))
 			{
-				$incident_comments = ORM::factory('comment')
-																->where('incident_id',$id)
-																->where('comment_active','1')
-																->where('comment_spam','0')
-																->orderby('comment_date', 'asc')
-																->find_all();
+				$this->template->content->comments = new View('reports_comments');
+				$incident_comments = array();
+				if ($id)
+				{
+					$incident_comments = ORM::factory('comment')
+																	->where('incident_id',$id)
+																	->where('comment_active','1')
+																	->where('comment_spam','0')
+																	->orderby('comment_date', 'asc')
+																	->find_all();
+				}
+				$this->template->content->comments->incident_comments = $incident_comments;
 			}
-
-			$this->template->content->incident_comments = $incident_comments;
 		}
 
 		// Add Neighbors
@@ -790,17 +799,20 @@ class Reports_Controller extends Main_Controller {
 
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
-
-		// Forms
-
-		$this->template->content->form = $form;
-		$this->template->content->form_field_names = $form_field_names;
-		$this->template->content->captcha = $captcha;
-		$this->template->content->errors = $errors;
-		$this->template->content->form_error = $form_error;
+		
+		// Are we allowed to submit comments?
+		$this->template->content->comments_form = "";
+		if (Kohana::config('settings.allow_comments'))
+		{
+			$this->template->content->comments_form = new View('reports_comments_form');
+			$this->template->content->comments_form->form = $form;
+			$this->template->content->comments_form->form_field_names = $form_field_names;
+			$this->template->content->comments_form->captcha = $captcha;
+			$this->template->content->comments_form->errors = $errors;
+			$this->template->content->comments_form->form_error = $form_error;
+		}
 
 		// If the Admin is Logged in - Allow for an edit link
-
 		$this->template->content->logged_in = $this->logged_in;
 	}
 

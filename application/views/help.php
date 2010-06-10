@@ -36,7 +36,7 @@
 								$organization_description = text::limit_chars($organization_description, 150, "...", true);
 												
 														echo "<div class=\"org_row1\">";
-														echo "	<h3><a href=\"" . url::base() . "help/view/" . $organization_id . "\">" . $organization_name . "</a></h3>";
+														echo "	<h3><a href=\"" . url::site() . "help/view/" . $organization_id . "\">" . $organization_name . "</a></h3>";
 														echo $organization_description;
 														echo "</div>";
 												}

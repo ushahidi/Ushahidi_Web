@@ -78,9 +78,6 @@ class Main_Controller extends Template_Controller {
         // Get custom CSS file from settings
         $this->template->header->site_style = Kohana::config('settings.site_style');
 
-		// Display News Feed?
-		$this->template->header->allow_feed = Kohana::config('settings.allow_feed');
-
 		// Javascript Header
 		$this->template->header->map_enabled = FALSE;
 		$this->template->header->validator_enabled = TRUE;

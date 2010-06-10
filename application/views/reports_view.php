@@ -37,7 +37,7 @@
 								// If Admin is Logged In - Allow For Edit Link
 								if ($logged_in)
 								{
-									echo " [&nbsp;<a href=\"".url::base()."admin/reports/edit/".$incident_id."\">Edit</a>&nbsp;]";
+									echo " [&nbsp;<a href=\"".url::site()."admin/reports/edit/".$incident_id."\">Edit</a>&nbsp;]";
 								}
 								?></h1>
 								<ul class="details">
@@ -58,7 +58,7 @@
 										<?php
 											foreach($incident_category as $category) 
 											{ 
-												echo "<a href=\"".url::base()."reports/?c=".$category->category->id."\">" .
+												echo "<a href=\"".url::site()."reports/?c=".$category->category->id."\">" .
 												$category->category->category_title . "</a>&nbsp;&nbsp;&nbsp;";
 											}
 										?>
@@ -96,29 +96,7 @@
 								<a href="" id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></a>
 							</div>
 						</div>
-						<div class="orig-report">
-							<div class="discussion">
-								<h5>ADDITIONAL REPORTS AND DISCUSSION&nbsp;&nbsp;&nbsp;(<a href="#comments">Add</a>)</h5>
-								<?php
-								foreach($incident_comments as $comment)
-								{
-									echo "<div class=\"discussion-box\">";
-									echo "<p><strong>" . $comment->comment_author . "</strong>&nbsp;(" . date('M j Y', strtotime($comment->comment_date)) . ")</p>";
-									echo "<p>" . $comment->comment_description . "</p>";
-									echo "<div class=\"report_rating\">";
-									echo "	<div>";
-									echo "	Credibility:&nbsp;";
-									echo "	<a href=\"javascript:rating('" . $comment->id . "','add','comment','cloader_" . $comment->id . "')\"><img id=\"cup_" . $comment->id . "\" src=\"" . url::base() . 'media/img/' . "up.png\" alt=\"UP\" title=\"UP\" border=\"0\" /></a>&nbsp;";
-									echo "	<a href=\"javascript:rating('" . $comment->id . "','subtract','comment','cloader_" . $comment->id . "')\"><img id=\"cdown_" . $comment->id . "\" src=\"" . url::base() . 'media/img/' . "down.png\" alt=\"DOWN\" title=\"DOWN\" border=\"0\" /></a>&nbsp;";
-									echo "	</div>";
-									echo "	<div class=\"rating_value\" id=\"crating_" . $comment->id . "\">" . $comment->comment_rating . "</div>";
-									echo "	<div id=\"cloader_" . $comment->id . "\" class=\"rating_loading\" ></div>";
-									echo "</div>";
-									echo "</div>";
-								}
-								?>
-							</div>
-						</div>		
+						<?php echo $comments; ?>		
 					</div>
 		
 					<?php
@@ -192,7 +170,7 @@
 								foreach($incident_neighbors as $neighbor)
 								{
 									echo "<tr>";
-									echo "<td class=\"w-01\"><a href=\"" . url::base(); 
+									echo "<td class=\"w-01\"><a href=\"" . url::site(); 
 									echo "reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></td>";
 									echo "<td class=\"w-02\">" . $neighbor->location->location_name . "</td>";
 									echo "<td class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</td>";
@@ -261,56 +239,9 @@
 						<?php } ?>
 					</div>
 					<!-- end incident block <> start other report -->
-
-
-					<!-- end incident block <> start other report -->
-					<a name="comments"></a>
-					<div class="big-block">
-						<div id="comments" class="report_comment">
-							<h2>Leave a Comment</h2>
-							<?php
-								if ($form_error) {
-							?>
-							<!-- red-box -->
-							<div class="red-box">
-								<h3>Error!</h3>
-								<ul>
-									<?php
-										foreach ($errors as $error_item => $error_description)
-										{
-											print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
-										}
-									?>
-								</ul>
-							</div>
-							<?php
-							}
-							?>
-							<?php print form::open(NULL, array('id' => 'commentForm', 'name' => 'commentForm')); ?>
-							<div class="report_row">
-								<strong>Name:</strong><br />
-								<?php print form::input('comment_author', $form['comment_author'], ' class="text"'); ?>
-								</div>
-
-								<div class="report_row">
-								<strong>E-Mail:</strong><br />
-								<?php print form::input('comment_email', $form['comment_email'], ' class="text"'); ?>
-							</div>
-							<div class="report_row">
-								<strong>Comments:</strong><br />
-								<?php print form::textarea('comment_description', $form['comment_description'], ' rows="4" cols="40" class="textarea long" ') ?>
-							</div>
-							<div class="report_row">
-								<strong>Security Code:</strong><br />
-								<?php print $captcha->render(); ?><br />
-								<?php print form::input('captcha', $form['captcha'], ' class="text"'); ?>
-							</div>
-							<div class="report_row">
-								<input name="submit" type="submit" value="Submit Comment" class="btn_blue" />
-							</div>
-							<?php print form::close(); ?>
-						</div>
-					</div>
+					
+					<?php echo $comments_form; ?>
+					
 				</div>
 			</div>
 		</div>

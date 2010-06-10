@@ -156,7 +156,7 @@
 				currentCat = catID;
 				$("#currentCat").val(catID);
 				// setUrl not supported with Cluster Strategy
-				//markers.setUrl("<?php echo url::base(); ?>" json_url + '/?c=' + catID);
+				//markers.setUrl("<?php echo url::site(); ?>" json_url + '/?c=' + catID);
 				
 				// Destroy any open popups
 				onPopupClose();
@@ -322,7 +322,7 @@
 				$(this).addClass('active');
 				gTimeline = $.timeline({categoryId: gCategoryId, startTime: startTime, 
 				    endTime: endTime, mediaType: gMediaType,
-					url: "<?php echo url::base(); ?>json_url+'/timeline/'"
+					url: "<?php echo url::site(); ?>json_url+'/timeline/'"
 				});
 				gTimeline.plot();
 			});

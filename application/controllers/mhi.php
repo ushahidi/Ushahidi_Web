@@ -23,10 +23,36 @@ class MHI_Controller extends Template_Controller {
 	{
 		parent::__construct();
 
+		$session = Session::instance();
+
+		$beta_session_thing = $session->get('real_deal');
+
+		if ( ! isset($beta_session_thing))
+		{
+			$session->set('real_deal',2);
+			$beta_session_thing = 2;
+		}
+		if (isset($_GET['go']))
+		{
+			$session->set('real_deal',3);
+			$beta_session_thing = 3;
+		}
+		if (isset($_GET['halt']))
+		{
+			$session->set('real_deal',2);
+			$beta_session_thing = 2;
+		}
+
 		// Load Header & Footer
 
-		$this->template->header  = new View('mhi_header');
-		$this->template->footer  = new View('mhi_footer');
+		if ($beta_session_thing == 2)
+		{
+			$this->template->header  = new View('mhi_header_beta');
+			$this->template->footer  = new View('mhi_footer_beta');
+		}else{
+			$this->template->header  = new View('mhi_header');
+			$this->template->footer  = new View('mhi_footer');
+		}
 
 		$this->template->header->site_name = Kohana::config('settings.site_name');
 
@@ -43,7 +69,6 @@ class MHI_Controller extends Template_Controller {
 
 		// Login Form variables
 
-		$session = Session::instance();
 		$this->template->header->errors = '';
 		$this->template->header->form = '';
 		$this->template->header->form_error = '';
@@ -53,12 +78,21 @@ class MHI_Controller extends Template_Controller {
 
 	public function index()
 	{
-		$this->template->header->this_body = 'mhi-home';
-		$this->template->content = new View('mhi');
+		$session = Session::instance();
+
+		$this->template->header->this_body = 'crowdmap-home';
+
+		$beta_session_thing = $session->get('real_deal');
+		if ($beta_session_thing == 2)
+		{
+			$this->template->content = new View('beta_signup');
+		}else{
+			$this->template->content = new View('mhi');
+		}
+
 		$this->template->header->js .= new View('mhi_js');
 		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
 
-		$session = Session::instance();
 		$mhi_user_id = $session->get('mhi_user_id');
 
 		$form = array(
@@ -146,16 +180,14 @@ class MHI_Controller extends Template_Controller {
 
 	public function about()
 	{
-		$this->template->header->this_body = 'mhi-about';
+		$this->template->header->this_body = 'crowdmap-about';
 		$this->template->content = new View('mhi_about');
-		$this->template->header->js .= new View('mhi_about_js');
 	}
 
 	public function features()
 	{
-		$this->template->header->this_body = 'mhi-features';
+		$this->template->header->this_body = 'crowdmap-features';
 		$this->template->content = new View('mhi_features');
-		$this->template->header->js .= new View('mhi_features_js');
 	}
 
 
@@ -265,6 +297,8 @@ class MHI_Controller extends Template_Controller {
 			$session = Session::instance();
 			$mhi_user_id = $session->get('mhi_user_id');
 
+			$blocked_subdomains = Kohana::config('mhi.blocked_subdomains');
+
 			// These rules are only required if we aren't already logged in
 
 			if ($mhi_user_id == FALSE)
@@ -281,7 +315,8 @@ class MHI_Controller extends Template_Controller {
 			$post->add_rules('signup_instance_name','required');
 			$post->add_rules('signup_instance_tagline','required');
 
-			if ($post->validate())
+			// If we pass validation AND it's not one of the blocked subdomains
+			if ($post->validate() AND ! in_array($post->signup_subdomain,$blocked_subdomains))
 			{
 
 				$mhi_user = new Mhi_User_Model;
@@ -362,11 +397,29 @@ class MHI_Controller extends Template_Controller {
 						'site_name'=>$post->signup_instance_name,
 						'site_tagline'=>$post->signup_instance_tagline));
 
+				// Congrats, everything has been set up. Send an email confirmation.
+
+				$settings = kohana::config('settings');
+				$new_site_url = 'http://'.$post->signup_subdomain.'.'.$_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
+
+				if ($settings['site_email'] != NULL)
+				{
+					$to = $email;
+					$from = $settings['site_email'];
+					$subject = 'You Deployment '.$settings['site_name'].' set up';
+					$message = 'You new site, '.$post->signup_instance_name.' has been set up.'."/n";
+					$message .= 'Admin URL: '.$new_site_url.'/admin'."/n";
+					$message .= 'Username: '.$email."/n";
+					$message .= 'Password: (hidden)'."/n";
+					// email::send($to, $from, $subject, $message, TRUE);
+				}
+
 			}else{
 				throw new Kohana_User_Exception('Validation Error', "Form not validating. Dev TODO: Come back later and clean up validation!");
 			}
 
 		}else{
+
 			// If the form was never posted, we need to complain about it.
 
 			throw new Kohana_User_Exception('Incomplete Form', "Form not posted.");

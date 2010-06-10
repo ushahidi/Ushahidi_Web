@@ -92,7 +92,7 @@
 							<!-- Return -->
 							<div class="green-box">
 								<div class="alert_response">
-									<a href="<?php echo url::base().'alerts'?>">
+									<a href="<?php echo url::site().'alerts'?>">
 									<?php echo Kohana::lang('alerts.create_more_alerts'); ?>
 									</a>
 								</div>
