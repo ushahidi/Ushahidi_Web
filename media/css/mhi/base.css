@@ -11,7 +11,13 @@ Author Email: caleb@ushahidi.com
 	html { background:#f3f4f6; }
 	
 	body.content { font-size:.75em; }
-	body { background:#f3f4f6 url(../../img/mhi/bg_body.jpg) top repeat-x; height:100%; }
+	
+	body { background:#f3f4f6; height:100%; }
+	
+	/* home page */
+	body.crowdmap-home { background:transparent url(../../img/mhi/bg_body.png) top repeat; height:100%; }
+	
+	
 	
 	.content h1, .content h2, .content h3, .content h4, .content h5 { margin-top:0; padding-top:0; }
 	.content p.sub-title { font-size:16px; font-style:italic; }
@@ -22,7 +28,7 @@ Author Email: caleb@ushahidi.com
 			-webkit-border-top-left-radius: 4px 4px;
 			-webkit-border-top-right-radius: 4px 4px; }
 			
-	.box-shadow { -moz-box-shadow:0 2px 2px rgba(0, 0, 0, 0.25); -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 3px 3px; }
+	.shadow { -moz-box-shadow:0 2px 2px rgba(0, 0, 0, 0.25); -webkit-box-shadow: rgba(0, 0, 0, 0.296875) 0px 3px 3px; }
 
 	
 
@@ -30,28 +36,47 @@ Author Email: caleb@ushahidi.com
 /* General Content Styles
 ------------------------*/
 	/* Headlines */
-	.content h1, .content h2, .content h3, .content h4, .content h5 { margin-top:0; padding-top:0; }
+	.content h1, .content h2, .content h3, .content h4, .content h5 { margin-top:0; padding-top:0; font-family: 'Yanone Kaffeesatz', arial, serif; color:#3c3c3c; }
+	.content h2 { font-size:25px; background:transparent url(../../img/mhi/bg_body.png) repeat; margin:-10px -24px 18px -14px; padding:10px 18px; border-bottom:1px solid #ededea; }
+	.content h3 { font-size:25px; }
+	
 	.content p.sub-title { font-size:16px; font-style:italic; }
+	
+	.content p, .content li { line-height:1.25em; }
 	
 	/* Buttons */
 	a.button { display:block; text-indent:-23420px; }
-	a.btn_sign-up { background:transparent url(../../img/mhi/btn_sign-up.png) 0 0 no-repeat; height:67px; width:235px; } 
+	a.btn_sign-up { background:transparent url(../../img/mhi/btn_sign-up.png) 0 0 no-repeat; height:58px; width:244px; } 
+		a.btn_sign-up:hover { background:transparent url(../../img/mhi/btn_sign-up.png) 0 bottom no-repeat; }
+	
+	a.btn_play-slideshow { background:transparent url(../../img/mhi/btn_play-slideshow.png) 0 0 no-repeat; height:43px; width:190px; margin:170px 0 0 170px; } 
+		a.btn_play-slideshow:hover { background:transparent url(../../img/mhi/btn_play-slideshow.png) 0 bottom no-repeat; }
 	
 	/* Top-Link */
 	.top-link { text-align:right; background:transparent url(../../img/mhi/dots.gif) 0 11px repeat-x;  }
 	.top-link a { background:#fff; font-size:10px; padding:0 0 0 8px; text-decoration:none; }
 		.top-link a:hover { text-decoration:underline; }
+		
+	/* Page Width */
+	#header,#primary-content, #secondary-content, #footer { width:960px; margin:0 auto; position:relative; }
 
+
+/* Page Wrap */
+	/* Home Page */
+	body.crowdmap-home #page-wrap { background:transparent url(../../img/mhi/bg_content-home.png) top center no-repeat; }
+	
+	/* Sub-Pages */
+	#page-wrap { background:transparent url(../../img/mhi/bg_header.jpg) top repeat-x; }
+	
 /* Header
 --------------*/
-	#header { width:100%; height:75px; background:#595959; }
-		#header-wrapper { width:960px; margin:0 auto; position:relative; }
-			.content h1 { text-indent:-23439px; background:transparent url(../../img/mhi/Ushahidi_logo-header.png) no-repeat; height:40px; width:150px; float:left; margin:17px 0 0 0; }
-			.content h1 a { display:block; height:40px; width:150px; }
+	#header { height:111px; }
+			.content h1 { text-indent:-23439px; background:transparent url(../../img/mhi/crowdmap-logo.png) no-repeat; height:71px; width:302px; float:left; margin:17px 0 0 0; }
+			.content h1 a { display:block; height:71px; width:302px; }
 			p.main-sub-title { float:left; color:#fff;font-size:14px; font-weight:bold; margin:25px 0 0 18px; }
 
 	/* Primary Navigation */
-	ul.primary-nav		{ float:right; margin:40px 0 0 0; padding:0; }
+	ul.primary-nav		{ float:right; margin:80px 0 0 0; padding:0; }
 	ul.primary-nav li	{ display:inline; list-style-type:none; padding:0 5px; margin:0 0 0 10px; }
 	ul.primary-nav li a	{ color:#fff; font-size:16px; font-weight:bold; text-decoration:none; }
 	ul.primary-nav li a:hover,
@@ -71,58 +96,110 @@ Author Email: caleb@ushahidi.com
 	
 	#login-form  p label { display:block; font-weight:bold; }
 	#login-form  p input { display:block;  }
-	#login-form  p input:active,
-	#login-form  p input:focus { outline:none; }
 	#login-form  p input.text { display:block; width:175px; }
 	#login-form .btn_sign-in { background:#96a6a9; color:#f3f3f3; font-weight:bold; padding:4px 6px; border:1px solid; }
 	
-	#login-form p.forgot-password { background:transparent url(../../img/mhi/dots.gif) 0 2px repeat-x; font-size:10px; padding:10px 0 0; margin:0; }
+	#login-form p.forgot-password { background:transparent url(../../img/mhi/dots.gif) 0 2px repeat-x; font-size:10px; padding:5px 0 0; margin:0; }
 	p.forgot-password a { background:transparent url(../../img/mhi/bullet.png) 0px 3px no-repeat; padding:0 0 0 10px; }
+
+
+/* Footer
+--------------*/
+	#footer { border-top:2px solid #dededb; margin-top:18px; }
+		.footer-block { float:left; padding:5px 0; }
+		.footer-block p { margin:0; padding:0; }
+		.fb_middle { border-left:2px solid #dededb; margin:0 0 0 8px; padding:0 0 6px; }
+		
+	#footer ul { margin:0; clear:both; }
+	#footer ul li { list-style-type:none; display:block; float:left; margin:0 0 5px; padding:0 2px 0 10px; background:transparent url(../../img/mhi/bullet.png) 0 10px no-repeat; }
+		#footer ul li.first { background:none; }
+	#footer ul li a { display:block; padding:3px; margin-right:7px; font-size:12px; }
+	#footer ul li a:hover { text-decoration:underline; }
 
 /* Body Layout
 --------------*/
-	#wrapper { width:960px; margin:0 auto; position:relative; }
+	
 	.twocol-left { float:left; width:565px; background:transparent url(../../img/mhi/bg_content-shadow-bottom-cap.png) bottom left no-repeat; padding-bottom:15px; }
-		.shadow { background:transparent url(../../img/mhi/bg_content-shadow.png) left repeat-y; padding:10px 38px 1px 18px; }
+		.content-shadow { background:transparent url(../../img/mhi/bg_content-shadow.png) left repeat-y; padding:10px 38px 1px 18px; }
 	.twocol-right { float:left; width:375px; padding:0 0 0 0; position:relative;}
 		
 
-
-
 /* Side Bar Module
 -------------------*/
-	.side-bar-module 		{ position:absolute; margin:18px 0 0 0; width:226px; padding:0 0 13px 0; background:transparent url(../../img/mhi/bg_side-bar-bottom.png) 7px bottom no-repeat; }
+	.side-bar-module 		{ position:absolute; margin:11px 0 0 0; width:226px; padding:0 0 13px 0; background:#ededea; }
 		.fixed { position:fixed; top:0px; }
-	.side-bar-module h4		{ background:transparent url(../../img/mhi/bg_side-bar-top.png) top left no-repeat; margin:0; padding:10px 0 7px 18px; font-size:14px;  }
-	.side-bar-content		{ background:transparent url(../../img/mhi/bg_side-bar-content.png) 7px repeat-y; padding:0 13px 1px 18px; line-height:16px; font-size:12px; }
+	.side-bar-module h4		{ margin:0; padding:10px 0 7px 15px; font-size:18px; color:#81817f;  }
+	.side-bar-content		{ padding:0 13px 1px 18px; line-height:16px; font-size:12px; }
+	
+	/*Sub-nav Links*/
+	ul.sub-nav-links { margin:0; padding:0; }
+	ul.sub-nav-links li { padding:0 10px 0 3px; margin:0 0 5px 0; list-style-type:none; border-bottom:1px dotted #d7d7d5; }
+	ul.sub-nav-links li a { display:block; padding:3px 0; text-decoration:none; }
 	
 	/* FAQ Links */
 	ul.faq-links { margin:0; padding:0; }
-	ul.faq-links li { padding:0 10px 0 20px; margin:0 0 5px 0; list-style-type:none; background:transparent url(../../img/mhi/bullet.png) 9px 8px no-repeat; }
+	ul.faq-links li { padding:0 10px 0 20px; margin:0 0 5px 0; list-style-type:none; background:transparent url(../../img/mhi/bullet.png) 9px 8px no-repeat;  }
 	ul.faq-links li a { display:block; padding:3px 0; }
 
 
 /* Home Page 
 --------------*/
-	body.mhi-home #wrapper { background:transparent url(../../img/mhi/bg_content-home.png) 420px 87px no-repeat; height:600px; padding:35px 0 0 0; }
+	body.crowdmap-home #primary-content { height:425px; padding:14px 0 0 0; }
 	
-	body.mhi-home .twocol-left	{ float:left; width:490px; background:none; padding-bottom:0; }
-	body.mhi-home .twocol-right	{ float:left; width:380px; padding:75px 0 0 25px; }
+	body.crowdmap-home .twocol-left	{ float:left; width:434px; background:none; padding:0 16px 0 0; }
+	body.crowdmap-home .twocol-right	{ float:left; width:510px; }
+		body.crowdmap-home #secondary-content .twocol-right	{ width:490px; padding:0 0 0 20px; }
+		
+		body.crowdmap-home #secondary-content { color:#676767; }
 	
-	h2.title-lead-in { text-indent:-231032px; background:transparent url(../../img/mhi/title_lead-in.png) 0 0 no-repeat; height:57px; }
+	h2.title-lead-in { margin:14px 0 24px; font-size:36px; padding:0; background:none; border:none; }
 	
-	.intro-slideshow {}
+	ul.elevator-list { margin:0; padding:0;}
+	ul.elevator-list li { list-style-type:none; margin:0 0 26px 0; padding:0 0 0 63px; font-size:20px; font-weight:bold; line-height:22px; color:#707070; }
+		ul.elevator-list li.s01 { background:transparent url(../../img/mhi/bg-intro-list.png) left top no-repeat; }
+		ul.elevator-list li.s02 { background:transparent url(../../img/mhi/bg-intro-list.png) left -75px no-repeat;  }
+		ul.elevator-list li.s03 { background:transparent url(../../img/mhi/bg-intro-list.png) left -150px no-repeat; padding:12px 0 13px 63px;  }
+	
+	table.tbl-sign-up { border:none; }
+	table.tbl-sign-up td { border:none; padding:27px 10px 10px; }
+		td.meta-text { font-size:14px; font-style:italic; text-align:right; line-height:18px; }
+		td.sign-up-box {  }
+		
+	.intro-slideshow { }
 	p.slide + p { margin:0; }
 	p.slide { font-size:12px; font-style:italic; color:#666; }
+		p.slide img { margin:20px 0 0 29px; }
+		p.full img { margin:9px 0 0 19px; }
+		
+		span.slide-desc { color:#fff; position:absolute; bottom:0; display:block; margin:0 1px 1px 20px; padding:18px; background: transparent url(../../img/mhi/bg_transparent-black-75.png) repeat; }
+		span.slide-desc a {  }
+		
+	/*What You Can Do*/
+	ul.what-you-can-do { margin:0; padding:0; }
+		ul.what-you-can-do li { list-style-type:none; float:left; width:222px; margin:0 18px 10px 0; font-size:14px; font-style:italic; height:128px; }
+		ul.what-you-can-do li:nth-child(even) { margin-right:0;  }
+		
+		ul.what-you-can-do li strong { display:block; font-size:20px; font-style:normal; color:#484848; margin:0 0 16px 60px; line-height:20px; }
+		
+		li.monitor 	{ background:transparent url(../../img/mhi/icon_monitor-elections.png) top left no-repeat; }
+		li.map		{ background:transparent url(../../img/mhi/icon_map-crisis.png) top left no-repeat; }
+		li.curate	{ background:transparent url(../../img/mhi/icon_curate-local-resources.png) top left no-repeat; }
+		li.document { background:transparent url(../../img/mhi/icon_zombie-invasion.png) top left no-repeat; }
 	
-	.footer-links { margin:60px 0 0 0; }
-	.footer-links ul { margin:0; } 
-	.footer-links ul li.first { background:none repeat scroll 0 0 transparent; padding-left:0; }
-	.footer-links ul li { background:transparent url(../../img/mhi/bullet.png) 0 8px no-repeat; display:block; float:left;
-						   list-style-type:none; margin:0 6px 5px 0; padding:0 2px 0 10px; text-transform:uppercase; font-size:12px; }
-	.footer-links ul li.regular { text-transform:none; color:#898989; }
 
 
+/* Features Page 
+-----------------*/
+	.feature { padding:1px 0; margin:0 -24px 0 -15px; height:198px; border-bottom:1px solid #b2b2b2; }
+		.feature h3 { margin-top:20px; }
+		.feature p { }
+	
+	#f_no-install	{ border-top:1px solid #b2b2b2;
+					  padding-left:290px; background:transparent url(../../img/mhi/feature_no-installation.jpg) no-repeat left; }
+	#f_map			{ padding:1px 290px 1px 18px;  background:transparent url(../../img/mhi/feature_interactive-map.jpg) no-repeat right; }
+	#f_timeline		{ padding-left:290px; background:transparent url(../../img/mhi/feature_dynamic-timeline.jpg) no-repeat left; }
+	#f_realtime		{ border-bottom:none;
+					  padding:1px 290px 1px 18px; background:transparent url(../../img/mhi/feature_realtime-datatracking.jpg) no-repeat right; }
 
 /* The Form
 --------------*/
@@ -131,7 +208,7 @@ Author Email: caleb@ushahidi.com
 		.content .frm-content table,
 		.content .frm-content table td { border:0; }
 		
-		.frm-content h2 { color:#0089ca; font-size:1.25em; margin:0 0 10px 0; line-height:29px; }
+		.frm-content h2 { color:#0089ca; background:none; font-size:1.5em; margin:0 0 10px 0; line-height:26px; margin:0 0 12px; padding:0; border:none; }
 			.frm-content p.desc { font-size:13px;}
 		
 		img.step { padding:0 10px 0 0;}

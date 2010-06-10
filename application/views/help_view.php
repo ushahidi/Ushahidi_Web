@@ -89,7 +89,7 @@
 								</ul>
 								<br />
 								<br />
-								<input class="btn_gray" type="button" value="Back" onclick="location.href='<?php echo url::base() . 'help/'; ?>';" />
+								<input class="btn_gray" type="button" value="Back" onclick="location.href='<?php echo url::site() . 'help/'; ?>';" />
 							</div>
 							<?php print form::close(); ?>
 						</div>

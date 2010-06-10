@@ -16,12 +16,15 @@
  */
 ?>
 
-
 $(function(){
-	$(".intro-slideshow").cycle({ delay:3000, speed:1000, timeout:2000, autostop:3 })
+	$(".intro-slideshow").cycle({ delay:3000, speed:1000, timeout:2000, autostop:4 });
+	$(".intro-slideshow").cycle('pause');
+	
 	$('a.cycle-Resume').click(function(){
 		//alert("clicked");
 		$(".intro-slideshow").cycle('destroy');
-		$(".intro-slideshow").cycle({ delay:3000, speed:1000, timeout:2000, autostop:3 })
+		$(".intro-slideshow").cycle({ delay:-2000, speed:1000, timeout:2000, autostop:4 })
+		return false;
 	});
+	
 });

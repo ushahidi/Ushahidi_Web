@@ -37,7 +37,7 @@
 								// If Admin is Logged In - Allow For Edit Link
 								if ($logged_in)
 								{
-									echo " [&nbsp;<a href=\"".url::base()."admin/reports/edit/".$incident_id."\">Edit</a>&nbsp;]";
+									echo " [&nbsp;<a href=\"".url::site()."admin/reports/edit/".$incident_id."\">Edit</a>&nbsp;]";
 								}
 								?></h1>
 								<ul class="details">
@@ -58,7 +58,7 @@
 										<?php
 											foreach($incident_category as $category) 
 											{ 
-												echo "<a href=\"".url::base()."reports/?c=".$category->category->id."\">" .
+												echo "<a href=\"".url::site()."reports/?c=".$category->category->id."\">" .
 												$category->category->category_title . "</a>&nbsp;&nbsp;&nbsp;";
 											}
 										?>
@@ -166,7 +166,7 @@
 								foreach($incident_neighbors as $neighbor)
 								{
 									echo "<tr>";
-									echo "<td class=\"w-01\"><a href=\"" . url::base(); 
+									echo "<td class=\"w-01\"><a href=\"" . url::site(); 
 									echo "reports/view/" . $neighbor->id . "\">" . $neighbor->incident_title . "</a></td>";
 									echo "<td class=\"w-02\">" . $neighbor->location->location_name . "</td>";
 									echo "<td class=\"w-03\">" . date('M j Y', strtotime($neighbor->incident_date)) . "</td>";

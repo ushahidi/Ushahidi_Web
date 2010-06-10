@@ -23,7 +23,7 @@ $lang = array
 	(
 		'required'		=> 'The username field is required.',
 		'length'		=> 'The username field must be at least 2 and no more 16 characters long.',
-		'standard_text' => 'The username field contains disallowed characters.',
+		'alpha' => 'The username field must only contain letters.',
 		'admin' 		=> 'The admin user role cannot be modified.',
 		'superadmin'	=> 'The super admin role cannot be modified.',
 		'exists'		=> 'Sorry, this username is already in use.',
@@ -34,7 +34,7 @@ $lang = array
 	(
 		'required'		=> 'The password field is required.',
 		'length'		=> 'The password field must be at least 5 and no more 16 characters long.',
-		'standard_text' => 'The password field contains disallowed characters.',
+		'alpha_numeric'		=> 'The password must only contain numbers and letters.',
 		'login error'	=> 'Please check that you entered the correct password.',
 		'matches'		=> 'Please enter the same password in the two password fields.'
 	),

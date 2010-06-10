@@ -13,23 +13,19 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
-<div class="twocol-left">
-	<div class="shadow">
-		
-		<h3>About Ushahidi MHI</h3>
-		
-		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. </p>
-		<p>Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at.</p>
-		<p>Vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil.</p>
-		<p>Imperdiet doming id quod mazim placerat facer possim assum. Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. </p>
-		
-	</div>
-</div>
-<div class="twocol-right">
-	<div class="side-bar-module">
-		<h4>Side Bar</h4>
-		<div class="side-bar-content">
-			<p>Content goes here. This will scroll with the page.</p>
-		</div>
-	</div>
-</div>
+		<div id="primary-content">
+            <div class="twocol-left"><div class="content-shadow">
+                <h2>About Crowdmap</h2>
+                <p class="intro-para">Ordinary people have a voice, and interesting things happen when you aggregate those voices and visualize the results.  Surprising information and insights can be found.  </p>
+                <p>Crowdmap is a tool that allows you to crowdsource information and see it on a map and timeline.  It is the Ushahidi platform, built by the team who created Ushahidi as a way for anyone to run their own crowdsourcing site without having to know the intricacies of running their own server.  It's free and it's yours to use.</p>    
+            </div></div>
+            <div class="twocol-right">
+                <!-- CB: We'll just leave this empty for now.
+                
+                <div class="side-bar-module rounded shadow">
+                    <p>Sign-up Sidebar promo to go here</p>
+                </div>
+                -->
+            </div>
+            <div style="clear:both;"></div>
+        </div>
