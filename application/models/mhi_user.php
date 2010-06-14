@@ -50,7 +50,7 @@ class mhi_user_Model extends ORM
 		$id = 0;
 		foreach ($result as $res)
 			$id = $res->id;
-		
+
 		return $id;
 	}
 
@@ -62,13 +62,13 @@ class mhi_user_Model extends ORM
 		$password = sha1($password.$salt);
 		$result = ORM::factory('mhi_user')->where('email',$username)->where('password',$password)->find_all();
 		$id = FALSE;
-		
+
 		foreach ($result as $res)
 			$id = $res->id;
-		
+
 		$session = Session::instance();
 		$session->set('mhi_user_id',$id);
-		
+
 		return $id;
 	}
 
@@ -89,18 +89,35 @@ class mhi_user_Model extends ORM
 			return $res;
 	}
 
+	static function get_id($email)
+	{
+		$result = ORM::factory('mhi_user')->where('email',$email)->find_all();
+		$details = FALSE;
+		foreach ($result as $res)
+			return $res->id;
+	}
+
 	// Update user
-	// $a should be an assoc array including email, firstname, lastname and password (plain text)
+	// $a should be an assoc array including at least one of email, firstname, lastname and password (plain text)
 
 	static function update($id,$a)
 	{
 		$salt = Kohana::config('auth.salt_pattern');
 
 		$mhi_user = ORM::factory('mhi_user',$id);
-		$mhi_user->firstname = $a['firstname'];
-		$mhi_user->lastname = $a['lastname'];
-		$mhi_user->email = $a['email'];
-		$mhi_user->password = sha1($a['password'].$salt);
+
+		if(isset($a['firstname']))
+			$mhi_user->firstname = $a['firstname'];
+
+		if(isset($a['lastname']))
+			$mhi_user->lastname = $a['lastname'];
+
+		if(isset($a['email']))
+			$mhi_user->email = $a['email'];
+
+		if(isset($a['password']))
+			$mhi_user->password = sha1($a['password'].$salt);
+
 		return $mhi_user->save();
 	}
 }

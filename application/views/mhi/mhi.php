@@ -24,7 +24,7 @@
                 <table class="tbl-sign-up">
                 	<tr>
                     	<td class="meta-text">Nothing to install,<br />minimal configuration<a href="<?php echo url::site()."mhi/signup" ?>">.</a></td>
-                        <td class="sign-up-box"><!--<a href="<?php echo url::site()."mhi/signup" ?>" class="button btn_sign-up">--><a href="#" class="button btn_sign-up">Sign Up Now!</a></td>
+                        <td class="sign-up-box"><!--<a href="<?php echo url::site()."mhi/signup" ?>" class="button btn_sign-up">--><a href="http://crowdmap.com/?halt=1" class="button btn_sign-up">Sign Up Now!</a></td>
                     </tr>
                 </table>
             </div>

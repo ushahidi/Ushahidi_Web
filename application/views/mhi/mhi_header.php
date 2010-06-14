@@ -73,7 +73,7 @@
                         <input class="btn_sign-in rounded" type="submit" value="Sign in" />
                     </p>
                     <p class="forgot-password">
-                        <a href="#">Forgot Password?</a>
+                        <a href="<?php echo url::site() ?>mhi/reset_password">Forgot Password?</a>
                     </p>
                 </form>
             </div>
