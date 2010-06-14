@@ -8,7 +8,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Contact Us Controller
+ * @module     MHI Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
@@ -68,7 +68,7 @@ class MHI_Controller extends Template_Controller {
 			throw new Kohana_User_Exception('MHI Access Error', "MHI disabled for this site.");
 
 		// Login Form variables
-
+		
 		$this->template->header->errors = '';
 		$this->template->header->form = '';
 		$this->template->header->form_error = '';
@@ -111,8 +111,9 @@ class MHI_Controller extends Template_Controller {
 			->pre_filter('trim')
 			->add_rules('username', 'required')
 			->add_rules('password', 'required');
-
-		if ($_POST->validate() OR $mhi_user_id != FALSE)
+		
+		// OR $mhi_user_id != FALSE
+		if ($_POST->validate())
 		{
 			// Sanitize $_POST data removing all inputs without rules
 
@@ -166,6 +167,7 @@ class MHI_Controller extends Template_Controller {
 		if ($mhi_user_id == FALSE)
 		{
 			// If the user is not logged in, go home.
+			
 			url::redirect('/');
 		}
 
@@ -182,6 +184,12 @@ class MHI_Controller extends Template_Controller {
 	{
 		$this->template->header->this_body = 'crowdmap-about';
 		$this->template->content = new View('mhi/mhi_about');
+	}
+	
+	public function contact()
+	{
+		$this->template->header->this_body = 'crowdmap-contact';
+		$this->template->content = new View('mhi/mhi_contact');
 	}
 
 	public function features()
@@ -213,11 +221,6 @@ class MHI_Controller extends Template_Controller {
 
 		$this->template->content->user = $mhi_user->get($mhi_user_id);
 
-		$form = array(
-			'username' => '',
-			'password' => '',
-			);
-
 		$form_error = FALSE;
 		$errors = FALSE;
 
@@ -228,7 +231,7 @@ class MHI_Controller extends Template_Controller {
 			->add_rules('firstname', 'required')
 			->add_rules('lastname', 'required')
 			->add_rules('email', 'required')
-			->add_rules('password', 'required');
+			->add_rules('account_password', 'required');
 
 		if ($_POST->validate())
 		{
@@ -240,7 +243,7 @@ class MHI_Controller extends Template_Controller {
 				'firstname'=>$postdata_array['firstname'],
 				'lastname'=>$postdata_array['lastname'],
 				'email'=>$postdata_array['email'],
-				'password'=>$postdata_array['password']
+				'password'=>$postdata_array['account_password']
 			));
 
 			// If update worked, go back to manage page
@@ -253,8 +256,9 @@ class MHI_Controller extends Template_Controller {
 				$form_error = TRUE;
 			}
 		}
-		$this->template->header->form_error = $form_error;
-		$this->template->header->errors = $errors;
+
+		$this->template->content->form_error = $form_error;
+		$this->template->content->errors = $errors;
 
 	}
 
@@ -263,6 +267,54 @@ class MHI_Controller extends Template_Controller {
 		$mhi_user = new Mhi_User_Model;
 		$mhi_user->logout();
 		url::redirect('/');
+	}
+	
+	public function reset_password()
+	{
+		$this->template->header->this_body = '';
+		$this->template->content = new View('mhi/mhi_reset_password');
+		$this->template->content->reset_flag = FALSE;
+		
+		if ($_POST)
+		{
+			// Validate the email address
+			$post = Validation::factory($_POST);
+			$post->pre_filter('trim');
+			$post->add_rules('email', 'required','email');
+			
+			if ($post->validate()){
+			
+				$settings = kohana::config('settings');
+			
+				$mhi_user = new Mhi_User_Model;
+				
+				$email = 'brianherbert@gmail.com';
+				
+				$mhi_user_id = $mhi_user->get_id($email);
+				
+				$new_password = text::rand_str(15);
+				
+				$update = $mhi_user->update($mhi_user_id,array(
+						'password'=>$new_password
+					));
+				
+				$to = $email;
+				$from = $settings['site_email'];
+				$subject = 'Your Crowdmap password has been reset.';
+				$message = 'You have chosen to have your password reset. We have gone ahead and changed your login information to the following:'."\n\n";
+				$message .= 'E-mail: '.$email."\n";
+				$message .= 'Password: '.$new_password."\n\n";
+				$message .= 'Now that your password has changed, please visit the website at http://crowdmap.com to change it to something you prefer.'."\n\n";
+				$message .= 'Thank you!'."\n";
+				$message .= 'The Crowdmap Team';
+				
+				email::send($to,$from,$subject,$message,FALSE);
+				
+				$this->template->content->reset_flag = TRUE;
+			}else{
+				throw new Kohana_User_Exception('E-mail Validation Error', "Email didn't validate");
+			}
+		}
 	}
 
 	public function signup()
