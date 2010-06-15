@@ -15,13 +15,12 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::site() . 'admin/settings/site' . '" class="active">' . Kohana::lang('ui_main.site') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/cleanurl'.'">' . Kohana::lang('ui_main.cleanurl').'</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/site' . '" class="active">' . Kohana::lang('ui_main.site') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">
@@ -83,57 +82,57 @@
 							</span>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.display_contact_page');?>?</h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_display_contact"); ?>"><?php echo Kohana::lang('settings.site.display_contact_page');?></a></h4>
 							<?php print form::dropdown('site_contact_page', $yesno_array, $form['site_contact_page']); ?>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.display_howtohelp_page');?>?</h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_display_howtohelp"); ?>"><?php echo Kohana::lang('settings.site.display_howtohelp_page');?></a></h4>
 							<?php print form::dropdown('site_help_page', $yesno_array, $form['site_help_page']); ?>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.items_per_page');?></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_display_items_per_page"); ?>"><?php echo Kohana::lang('settings.site.items_per_page');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('items_per_page', $items_per_page_array, $form['items_per_page']); ?>
 							</span>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.items_per_page_admin');?></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_display_items_per_page_admin"); ?>"><?php echo Kohana::lang('settings.site.items_per_page_admin');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('items_per_page_admin', $items_per_page_array, $form['items_per_page_admin']); ?>
 							</span>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.allow_reports');?>?</h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_reports"); ?>"><?php echo Kohana::lang('settings.site.allow_reports');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_reports', $yesno_array, $form['allow_reports']); ?>
 							</span>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.allow_comments');?>?</h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_comments"); ?>"><?php echo Kohana::lang('settings.site.allow_comments');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_comments', $yesno_array, $form['allow_comments']); ?>
 							</span>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.allow_feed');?>?</h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_feed"); ?>"><?php echo Kohana::lang('settings.site.allow_feed');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_feed', $yesno_array, $form['allow_feed']); ?>
 							</span>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.share_site_stats');?>?</h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_share_site_stats"); ?>"><?php echo Kohana::lang('settings.site.share_site_stats');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_stat_sharing', $yesno_array, $form['allow_stat_sharing']); ?>
 							</span>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.allow_clustering');?>?</h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_clustering"); ?>"><?php echo Kohana::lang('settings.site.allow_clustering');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_clustering', $yesno_array, $form['allow_clustering']); ?>
 							</span>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.default_category_colors');?></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_default_category_colors"); ?>"><?php echo Kohana::lang('settings.site.default_category_colors');?></a></h4>
 							<?php print form::input('default_map_all', $form['default_map_all'], ' class="text"'); ?>
 							<script type="text/javascript" charset="utf-8">
 								$(document).ready(function() {
@@ -155,12 +154,12 @@
 							</script>
 						</div>						
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.google_analytics');?></h4>
+						<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_google_analytics"); ?>"><?php echo Kohana::lang('settings.site.google_analytics');?></a></h4>
 							<?php echo Kohana::lang('settings.site.google_analytics_example');?> &nbsp;&nbsp;
 							<?php print form::input('google_analytics', $form['google_analytics'], ' class="text"'); ?>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.twitter_configuration');?></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_twitter_configuration"); ?>"><?php echo Kohana::lang('settings.site.twitter_configuration');?></a></h4>
 							<div class="row">
 								<?php echo Kohana::lang('settings.site.twitter_hashtags');?>
 								<?php print form::input('twitter_hashtags', $form['twitter_hashtags'], ' class="text"'); ?>
