@@ -68,7 +68,7 @@ class MHI_Controller extends Template_Controller {
 			throw new Kohana_User_Exception('MHI Access Error', "MHI disabled for this site.");
 
 		// Login Form variables
-		
+
 		$this->template->header->errors = '';
 		$this->template->header->form = '';
 		$this->template->header->form_error = '';
@@ -111,7 +111,7 @@ class MHI_Controller extends Template_Controller {
 			->pre_filter('trim')
 			->add_rules('username', 'required')
 			->add_rules('password', 'required');
-		
+
 		// OR $mhi_user_id != FALSE
 		if ($_POST->validate())
 		{
@@ -167,17 +167,39 @@ class MHI_Controller extends Template_Controller {
 		if ($mhi_user_id == FALSE)
 		{
 			// If the user is not logged in, go home.
-			
+
 			url::redirect('/');
 		}
 
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi/mhi_manage');
+		$this->template->content->site_pw_changed = '';
 
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
 		$mhi_site = new Mhi_Site_Model;
 		$this->template->content->sites = $mhi_site->get_user_sites($mhi_user_id);
+
+		if ($_POST)
+		{
+			$new_password = $_POST['admin_password'];
+			$site_domain = $_POST['site_domain'];
+
+			$db_genesis = new DBGenesis;
+			$mhi_site = new Mhi_Site_Model;
+
+			// Check if the logged in user is the owner of the site
+
+			$domain_owner = $mhi_site->domain_owner($site_domain);
+
+			// If the owner of the site isn't the person updating the password for the site, there's something fishy going on
+
+			if($domain_owner == $mhi_user_id)
+			{
+				$db_genesis->change_admin_password($site_domain,$new_password);
+				$this->template->content->site_pw_changed = $site_domain;
+			}
+		}
 	}
 
 	public function about()
@@ -185,7 +207,7 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->this_body = 'crowdmap-about';
 		$this->template->content = new View('mhi/mhi_about');
 	}
-	
+
 	public function contact()
 	{
 		$this->template->header->this_body = 'crowdmap-contact';
@@ -268,36 +290,36 @@ class MHI_Controller extends Template_Controller {
 		$mhi_user->logout();
 		url::redirect('/');
 	}
-	
+
 	public function reset_password()
 	{
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi/mhi_reset_password');
 		$this->template->content->reset_flag = FALSE;
-		
+
 		if ($_POST)
 		{
 			// Validate the email address
 			$post = Validation::factory($_POST);
 			$post->pre_filter('trim');
 			$post->add_rules('email', 'required','email');
-			
+
 			if ($post->validate()){
-			
+
 				$settings = kohana::config('settings');
-			
+
 				$mhi_user = new Mhi_User_Model;
-				
+
 				$email = 'brianherbert@gmail.com';
-				
+
 				$mhi_user_id = $mhi_user->get_id($email);
-				
+
 				$new_password = text::rand_str(15);
-				
+
 				$update = $mhi_user->update($mhi_user_id,array(
 						'password'=>$new_password
 					));
-				
+
 				$to = $email;
 				$from = $settings['site_email'];
 				$subject = 'Your Crowdmap password has been reset.';
@@ -307,9 +329,9 @@ class MHI_Controller extends Template_Controller {
 				$message .= 'Now that your password has changed, please visit the website at http://crowdmap.com to change it to something you prefer.'."\n\n";
 				$message .= 'Thank you!'."\n";
 				$message .= 'The Crowdmap Team';
-				
+
 				email::send($to,$from,$subject,$message,FALSE);
-				
+
 				$this->template->content->reset_flag = TRUE;
 			}else{
 				throw new Kohana_User_Exception('E-mail Validation Error', "Email didn't validate");
@@ -459,10 +481,10 @@ class MHI_Controller extends Template_Controller {
 					$to = $email;
 					$from = $settings['site_email'];
 					$subject = 'You Deployment '.$settings['site_name'].' set up';
-					$message = 'You new site, '.$post->signup_instance_name.' has been set up.'."/n";
-					$message .= 'Admin URL: '.$new_site_url.'/admin'."/n";
-					$message .= 'Username: '.$email."/n";
-					$message .= 'Password: (hidden)'."/n";
+					$message = 'You new site, '.$post->signup_instance_name.' has been set up.'."\n";
+					$message .= 'Admin URL: '.$new_site_url.'/admin'."\n";
+					$message .= 'Username: '.$email."\n";
+					$message .= 'Password: (hidden)'."\n";
 
 					email::send($to,$from,$subject,$message,FALSE);
 				}

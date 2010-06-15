@@ -1,6 +1,6 @@
 <?php
 /**
- * MHI - Page after creating new site
+ * MHI - Page after creating a new site
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -13,20 +13,18 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
-<div class="twocol-left">
-	<div class="shadow">
-		
-		<h3>Site Setup Successful</h3>
-		
-		<p>Site setup. <a href="<?php echo url::site() ?>mhi/manage">Manage your account.</a>.</p>
-		
-	</div>
-</div>
-<div class="twocol-right">
-	<div class="side-bar-module">
-		<h4>Side Bar</h4>
-		<div class="side-bar-content">
-			<p>Content goes here. This will scroll with the page.</p>
-		</div>
-	</div>
-</div>
+		<div id="primary-content">
+            <div class="twocol-left"><div class="content-shadow">
+                <h2>Site Setup Successful</h2>
+                <p class="intro-para">Site setup. <a href="<?php echo url::site() ?>mhi/manage">Manage your account.</a>.</p>    
+            </div></div>
+            <div class="twocol-right">
+                <!-- CB: We'll just leave this empty for now.
+                
+                <div class="side-bar-module rounded shadow">
+                    <p>Sign-up Sidebar promo to go here</p>
+                </div>
+                -->
+            </div>
+            <div style="clear:both;"></div>
+        </div>

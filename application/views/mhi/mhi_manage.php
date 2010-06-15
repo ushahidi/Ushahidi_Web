@@ -16,9 +16,6 @@
 		<div id="primary-content">
             <div class="twocol-left"><div class="content-shadow">
                 <h2>Manage Your Account</h2>
-                
-                
-                <h3>Your Sites</h3>
 		
 				<a href="<?php echo url::site() ?>mhi/signup">Create New Instance</a>
 				
@@ -26,11 +23,29 @@
 				
 				<a href="<?php echo url::site() ?>mhi/manage">Your Sites</a>
 				
+				<br/>
+				<h3>Your Sites</h3>
+				
 				<table><tbody>
+					<tr>
+						<th style="padding:2px;margin:0px;text-align:center;">Site</th>
+						<th style="padding:2px;margin:0px;text-align:center;">Status</th>
+						<th style="padding:2px;margin:0px;text-align:center;">Change Admin Password</th>
+					</tr>
 				<?php foreach($sites as $site) { ?>
 					<tr>
 						<td><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>" target="_blank"><?php echo $site->site_domain.'.'.$domain_name; ?></a></td>
 						<td><?php if($site->site_active == 1) { echo 'Active'; }else{ echo 'Pending Activation'; } ?></td>
+						<td>
+							<?php if($site_pw_changed == $site->site_domain) { ?>
+								<strong>* Password Changed</strong>
+							<?php } ?>
+							<?php print form::open(url::site().'mhi/manage', array('id' => 'frm-MHI-Admin-PW', 'name' => 'frm-MHI-Admin-PW')); ?>
+								<input type="password" size="24" name="admin_password" maxlength="32" id="admin_password"/>
+								<input type="hidden" name="site_domain" value="<?php echo $site->site_domain; ?>"/>
+								<input class="button" type="submit" value="Change Password" />
+							<?php print form::close(); ?>
+						</td>
 					</tr>
 				<?php } ?>
 				</tbody></table>
