@@ -23,7 +23,7 @@
                 	
                 	<?php print form::open(url::site().'mhi/create', array('id' => 'frm-MHI-Signup', 'name' => 'frm-MHI-Signup', 'class' => 'frm-content')); ?>
                 
-                    <img src="images/step-1.gif" align="left" class="step" /> <h2 class="step-1">Create Your Account</h2>
+                    <img src="<?php echo url::site(); ?>media/img/mhi/step-1.gif" align="left" class="step" /> <h2 class="step-1">Create Your Account</h2>
                    
                     <table><tbody>
 			            <tr>
@@ -68,13 +68,13 @@
                     
                     <hr />
                     
-                    <img src="images/step-2.gif" align="left"  class="step"/> <h2 class="step-2">Create Your Instance Address</h2>
+                    <img src="<?php echo url::site(); ?>media/img/mhi/step-2.gif" align="left"  class="step"/> <h2 class="step-2">Create Your Instance Address</h2>
                     <p class="desc">Each instance has it's own web address. <strong>No spaces, use letters and numbers only.</strong></p>
        				<p class="url">http://<input type="text" size="20" onfocus="this.style.color = 'black'" name="signup_subdomain" maxwidth="30" id="signup_subdomain"/>.<?php echo $domain_name; ?></p>
                     
                     <hr />
                     
-                    <img src="images/step-3.gif" align="left" class="step" /> <h2 class="step-3">Enter Your Instance Details</h2>
+                    <img src="<?php echo url::site(); ?>media/img/mhi/step-3.gif" align="left" class="step" /> <h2 class="step-3">Enter Your Instance Details</h2>
                     <p>
 			        	<label for="signup_instance_name">Instance Name</label><br/>
 			        	<input type="text" size="30" name="signup_instance_name" maxlength="40" id="signup_instance_name" autocomplete="off"/>
