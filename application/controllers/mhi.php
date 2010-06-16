@@ -505,7 +505,7 @@ class MHI_Controller extends Template_Controller {
 					$from = $settings['site_email'];
 					$subject = 'You Deployment '.$settings['site_name'].' set up';
 					$message = 'You new site, '.$post->signup_instance_name.' has been set up.'."\n";
-					$message .= 'Admin URL: '.$new_site_url.'/admin'."\n";
+					$message .= 'Admin URL: '.$new_site_url.'admin'."\n";
 					$message .= 'Username: '.$email."\n";
 					$message .= 'Password: (hidden)'."\n";
 
