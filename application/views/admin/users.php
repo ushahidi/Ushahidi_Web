@@ -52,6 +52,8 @@
 							<strong><?php echo Kohana::lang('ui_admin.label_email');?></strong><br />
 							<?php print form::input('email', $form['email'], ' class="text"'); ?>
 						</div>
+						<?php echo $form['user_id']; ?>
+						<?php if($form['user_id'] != 1) { ?>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_admin.label_role');?></strong><br />
 							<span class="my-sel-holder">
@@ -59,6 +61,7 @@
 									$roles,$form['role']); ?>
 							</span>
 						</div>
+						<?php } ?>
 						<div class="tab_form_item">
 							&nbsp;<br />
 							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
@@ -184,9 +187,11 @@
 														'<?php echo(rawurlencode($email)); ?>')">
 														<?php echo Kohana::lang('ui_admin.edit_action');?>
 														</a></li>
+		<?php if($user_id != 1) { ?>
 		<li><a href="javascript:userAction('d','DELETE','<?php echo(rawurlencode($user_id)); ?>')" class="del">
 														<?php echo Kohana::lang('ui_admin.delete_action');?>
 														</a></li>
+		<?php } ?>
 												</ul>
 											</td>
 										</tr>

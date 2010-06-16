@@ -41,7 +41,8 @@ $(function(){
 			},
 			signup_subdomain: {
 				required: true,
-				alphanumeric: true
+				alphanumeric: true,
+				rangelength: [4, 32]
 			},
 			signup_instance_name: "required",
 			signup_instance_tagline: "required",
@@ -66,7 +67,8 @@ $(function(){
 				equalTo: "Passwords do not match."
 			},
 			signup_subdomain: {
-				required: "Please enter your instance address."
+				required: "Please enter your instance address.",
+				rangelength: "Your password must be between 4 and 32 characters."
 			},
 			signup_instance_name: "Please enter a name for your instance.",
 			signup_instance_tagline: "Please enter a tagline for your instance.",

@@ -56,25 +56,31 @@
                 <li><a href="<?php echo url::site() ?>mhi/about"<?php if($this_body == 'crowdmap-about') { ?> class="active" <?php } ?>>About</a></li>
                 <li><a href="<?php echo url::site() ?>mhi/contact"<?php if($this_body == 'crowdmap-contact') { ?> class="active" <?php } ?>>Contact Us</a></li>
             </ul>
+            <?php if( ! is_int($mhi_user_id)) { ?>
             <div id="login-box">
                 <p>Have an account?<a class="sign-in active rounded" href="#">Sign In </a></p>
             </div>
+            <?php }else{ ?>
+           	<div id="login-box">
+                <p><a href="<?php echo url::site() ?>mhi/manage" class="rounded">Manage Your Account</a> or <a href="<?php echo url::site() ?>mhi/logout" class="rounded">Logout</a></p>
+            </div>
+            <?php } ?>
             <div id="login-form" class="rounded shadow">
-                <form>
+                <?php print form::open(url::site().'mhi/', array('id' => 'frm-MHI-Login', 'name' => 'frm-Login')); ?>
                     <p>
                         <label for="username">E-mail</label>
-                        <input class="text rounded" id="username" type="text" title="username" value="" />
+                        <input type="text" name="username" class="text rounded" id="username" title="username" value="" />
                     </p>
                     <p>
                         <label for="password">Password</label>
-                        <input class="text rounded" id="password" type="password" title="password" value="" />
+                        <input type="password" name="password" class="text rounded" id="password" title="password" value="" />
                     </p>
                     <p>
-                        <input class="btn_sign-in rounded" type="submit" value="Sign in" />
+                        <input class="btn_sign-in rounded" type="submit" value="Sign In" />
                     </p>
                     <p class="forgot-password">
-                        <a href="#">Forgot Password?</a>
+                        <a href="<?php echo url::site() ?>mhi/reset_password">Forgot Password?</a>
                     </p>
-                </form>
+                <?php print form::close(); ?>
             </div>
         </div>

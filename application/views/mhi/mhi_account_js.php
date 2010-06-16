@@ -31,14 +31,14 @@ $(function(){
 				required: true,
 				email: true
 			},
-			password: {
+			account_password: {
 				required: true,
 				rangelength: [4, 32]
 			},
-			confirm_password: {
+			account_confirm_password: {
 				required: true,
-				equalTo: "#password"
-			}
+				equalTo: "#account_password"
+			},
 		},
 		messages: {
 			firstname: "Please enter your first name.",

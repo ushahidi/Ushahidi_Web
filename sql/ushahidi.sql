@@ -1437,7 +1437,7 @@ CREATE TABLE `mhi_category` (
 CREATE TABLE `mhi_site` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                  -- field description
     `user_id` int(11) NOT NULL,                                                     -- field description
-    `site_domain` varchar(100) NOT NULL,                                            -- field description
+    `site_domain` varchar(32) NOT NULL,                                            -- field description
     `site_privacy` tinyint(4) NOT NULL DEFAULT '0',                                 -- field description
     `site_active` tinyint(4) DEFAULT '1',                                           -- field description
     `site_dateadd` datetime NOT NULL,                                               -- field description

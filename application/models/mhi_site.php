@@ -37,6 +37,23 @@ class mhi_site_Model extends ORM
 		return false;
 	}
 
+	//site_domains must be an array
+	static function domain_owner($site_domains)
+	{
+		$return_array = array();
+		// Return an array of the MHI user id of the owner of the domain
+
+		foreach($site_domains as $domain)
+		{
+			$result = ORM::factory('mhi_site')->where('site_domain',$domain)->find_all();
+			foreach ($result as $res){
+				$return_array[$res->id] = $res->user_id;
+			}
+		}
+
+		return $return_array;
+	}
+
 	// $a should be an assoc array including user_id, site_domain, site_privacy, site_active
 
 	static function save_site($a)

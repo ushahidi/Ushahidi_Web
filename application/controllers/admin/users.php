@@ -177,8 +177,11 @@ class Users_Controller extends Admin_Controller
 						// If the user does not exist, redirect
 						if ($user->loaded)
 						{
-							// Delete the user
-							$user->delete();
+							if($post->user_id != 1)
+							{
+								// Delete the user
+								$user->delete();
+							}
 						}
 
 						$form_saved = TRUE;
