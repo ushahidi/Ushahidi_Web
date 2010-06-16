@@ -8,6 +8,7 @@
 					<a href="<?php echo url::site() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
 					<a href="<?php echo url::site() . 'admin/manage/reporters' ?>" class="active"><?php echo Kohana::lang('ui_main.reporters');?></a>
 					<span>(<a href="#add"><?php echo Kohana::lang('ui_main.add_new');?></a>)</span>
+					<a href="<?php echo url::site() . 'admin/manage/scheduler' ?>"><?php echo Kohana::lang('ui_main.scheduler');?></a>
 				</h2>
 				<?php
 				if ($form_error) {

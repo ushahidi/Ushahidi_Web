@@ -23,6 +23,7 @@
 					<a href="<?php echo url::site() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
 					<a href="<?php echo url::site() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
 					<a href="<?php echo url::site() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
+					<a href="<?php echo url::site() . 'admin/manage/scheduler' ?>"><?php echo Kohana::lang('ui_main.scheduler');?></a>
 				</h2>
 				<?php
 				if ($form_error) {

@@ -13,10 +13,10 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 */
 
-class Alerts_Controller extends Controller
-{
-
-        public $table_prefix = '';
+class S_Alerts_Controller extends Controller {
+	
+	public $table_prefix = '';
+	
 	public function __construct()
     {
         parent::__construct();

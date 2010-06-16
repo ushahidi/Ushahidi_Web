@@ -13,8 +13,8 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
 */
 
-class Sharing_Controller extends Controller
-{
+class S_Sharing_Controller extends Controller {
+	
 	public function __construct()
     {
         parent::__construct();
