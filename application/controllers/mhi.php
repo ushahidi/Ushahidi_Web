@@ -374,17 +374,76 @@ class MHI_Controller extends Template_Controller {
 
 		$session = Session::instance();
 		$this->template->content->logged_in = $session->get('mhi_user_id');
+
+		$form_array = array(
+			'errors' => array(),
+			'form' => array(
+				'signup_first_name' => '',
+				'signup_last_name' => '',
+				'signup_email' => '',
+				'signup_password' => '',
+				'signup_subdomain' => '',
+				'signup_instance_name' => '',
+				'signup_instance_tagline' => ''
+			),
+			'form_error' => array()
+		);
+
+		if ($_POST)
+		{
+			$form_array = $this->processcreation();
+
+			// If there were no errors, redirect to management page
+
+			if(count($form_array['form_error']) == 0)
+			{
+				url::redirect('mhi/manage');
+			}
+
+		}
+
+		$this->template->content->errors = $form_array['errors'];
+		$this->template->content->form = $form_array['form'];
+		$this->template->content->form_error = $form_array['form_error'];
 	}
 
-	public function create()
+	public function processcreation()
 	{
-		$this->template->header->this_body = '';
-		$this->template->content = new View('mhi/mhi_create');
+		// Used to populate form fields. Will assign values on error
+
+		$errors = array();
+		$form = array(
+			'signup_first_name' => '',
+			'signup_last_name' => '',
+			'signup_email' => '',
+			'signup_password' => '',
+			'signup_subdomain' => '',
+			'signup_instance_name' => '',
+			'signup_instance_tagline' => ''
+		);
+		$form_error = array();
 
 		// Process Form
 
 		if ($_POST)
 		{
+
+			$sfn = isset($_POST['signup_first_name']) ? $_POST['signup_first_name'] : '';
+			$sln = isset($_POST['signup_last_name']) ? $_POST['signup_last_name'] : '';
+			$sem = isset($_POST['signup_email']) ? $_POST['signup_email'] : '';
+			$spw = isset($_POST['signup_password']) ? $_POST['signup_password'] : '';
+
+			$form = array(
+				'signup_first_name' => $sfn,
+				'signup_last_name' => $sln,
+				'signup_email' => $sem,
+				'signup_password' => $spw,
+				'signup_subdomain' => $_POST['signup_subdomain'],
+				'signup_instance_name' => $_POST['signup_instance_name'],
+				'signup_instance_tagline' => $_POST['signup_instance_tagline']
+			);
+
+
 			$post = Validation::factory($_POST);
 
 			// Trim whitespaces
@@ -413,13 +472,54 @@ class MHI_Controller extends Template_Controller {
 			$post->add_rules('signup_instance_tagline','required');
 
 			// If we pass validation AND it's not one of the blocked subdomains
-			if ($post->validate() AND ! in_array($post->signup_subdomain,$blocked_subdomains))
+			if ($post->validate())
 			{
 
 				$mhi_user = new Mhi_User_Model;
 				$db_genesis = new DBGenesis;
 				$mhi_site_database = new Mhi_Site_Database_Model;
 				$mhi_site = new Mhi_Site_Model;
+
+				// Setup DB name variable
+
+				$base_db = $db_genesis->current_db();
+
+				$new_db_name = $base_db.'_'.$post->signup_subdomain;
+
+				// Do some graceful validation
+
+				if ($mhi_site->domain_exists($post->signup_subdomain))
+				{
+					// ERROR: Domain already assigned in MHI DB.
+
+					return array(
+						'errors' => $errors,
+						'form' => $form,
+						'form_error' => array('signup_subdomain' => 'This subdomain has already been taken. Please try again.')
+					);
+				}
+
+				if ($mhi_site_database->db_assigned($new_db_name) OR $db_genesis->db_exists($new_db_name))
+				{
+					// ERROR: Database already exists and/or is already assigned in the MHI DB
+
+					return array(
+						'errors' => $errors,
+						'form' => $form,
+						'form_error' => array('signup_subdomain' => 'This subdomain is not allowed. Please try again.')
+					);
+				}
+
+				if(in_array($post->signup_subdomain,$blocked_subdomains))
+				{
+					// ERROR: Blocked Subdomain
+
+					return array(
+						'errors' => $errors,
+						'form' => $form,
+						'form_error' => array('signup_subdomain' => 'This subdomain is not allowed. Please try again.')
+					);
+				}
 
 				// Check passwords if logged in and create user if not
 
@@ -434,7 +534,15 @@ class MHI_Controller extends Template_Controller {
 					$verify_password = sha1($post->verify_password.$salt);
 
 					if ($verify_password != $user->password)
-						throw new Kohana_User_Exception('Password Match Error', "Passwords do not match. Dev TODO: Come back later and clean up validation!");
+					{
+						// ERROR: Passwords do not match.
+
+						return array(
+							'errors' => $errors,
+							'form' => $form,
+							'form_error' => array('password' => 'Password doesn\'t match. Please try again.')
+						);
+					}
 
 					$user_id = $mhi_user_id;
 					$email = $user->email;
@@ -455,21 +563,13 @@ class MHI_Controller extends Template_Controller {
 					$email = $post->signup_email;
 					$name = $post->signup_first_name.' '.$post->signup_last_name;
 					$password = $post->signup_password;
+
+					// Log new user in
+					$mhi_user_id = $mhi_user->login($email,$password);
+
 				}
 
 				// Set up DB and Site
-
-				$base_db = $db_genesis->current_db();
-
-				$new_db_name = $base_db.'_'.$post->signup_subdomain;
-
-				// Do some not so graceful validation
-
-				if ($mhi_site_database->db_assigned($new_db_name) OR $db_genesis->db_exists($new_db_name))
-					throw new Kohana_User_Exception('MHI Site Setup Error', "Database already exists and/or is already assigned in the MHI DB.");
-
-				if ($mhi_site->domain_exists($post->signup_subdomain))
-					throw new Kohana_User_Exception('MHI Site Setup Error', "Domain already assigned in MHI DB.");
 
 				// Create site
 
@@ -522,5 +622,11 @@ class MHI_Controller extends Template_Controller {
 
 			throw new Kohana_User_Exception('Incomplete Form', "Form not posted.");
 		}
+
+		return array(
+			'errors' => $errors,
+			'form' => $form,
+			'form_error' => $form_error
+		);
 	}
 }
