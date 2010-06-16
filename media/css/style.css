@@ -636,7 +636,7 @@ div.report-details{
 
 div.verified{
     background: #A60003;
-    width: 65px;
+    width: 85px;
     padding: 6px 0;
     float: right;
     color: #FFF;
@@ -647,12 +647,11 @@ div.verified{
     margin: 0 0 0 10px;
 }
 div.verified_yes{
-	background: #368c00;
+	background: #368c00; width:65px;
 }
 div.verified span{
     color: #FFF;
     text-transform: uppercase;
-    font-size: 19px;
     font-weight: bold;
 }
 

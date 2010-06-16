@@ -23,12 +23,10 @@
 								{
 									echo " verified_yes";
 								}
-								?>">
-									Verified<br/>
-									<?php
+								?>"><?php
 									echo ($incident_verified == 1) ?
-										"<span>YES</span>" :
-										"<span>NO</span>";
+										"<span>Verified</span>" :
+										"<span>Unverified</span>";
 									?>
 								</div>
 								<h1><?php
