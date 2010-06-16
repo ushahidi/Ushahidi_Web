@@ -136,8 +136,9 @@ class Reports_Controller extends Main_Controller {
 			$category->category_title : "";
 
 
-		// Collect report stats
 
+		// Collect report stats
+		$this->template->content->report_stats = new View('reports_stats');
 		// Total Reports
 
 		$total_reports = Incident_Model::get_total_reports(TRUE);
@@ -160,9 +161,9 @@ class Reports_Controller extends Main_Controller {
 		$total_verified = Incident_Model::get_total_reports_by_verified(true);
 		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
 
-		$this->template->content->total_reports = $total_reports;
-		$this->template->content->avg_reports_per_day = $avg_reports_per_day;
-		$this->template->content->percent_verified = $percent_verified;
+		$this->template->content->report_stats->total_reports = $total_reports;
+		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
+		$this->template->content->report_stats->percent_verified = $percent_verified;
 	}
 
 	/**

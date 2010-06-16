@@ -19,20 +19,11 @@
 						<!-- start reports block -->
 						<div class="big-block">
 
-							<div id="report_stats">
-								<table>
-									<tr>
-										<th>Total Reports</th>
-										<th>Avg Reports Per Day</th>
-										<th>% Verified</th>
-									</tr>
-									<tr>
-										<td><?php echo $total_reports; ?></td>
-										<td><?php echo $avg_reports_per_day; ?></td>
-										<td><?php echo $percent_verified; ?></td>
-									</tr>
-								</table>
-							</div>
+							<?php
+							// Filter::report_stats - The block that contains reports list statistics
+							Event::run('ushahidi_filter.report_stats', $report_stats);
+							echo $report_stats;
+							?>
 
 							<h1><?php echo Kohana::lang('ui_main.reports').": ";?> <?php echo ($category_title) ? " in $category_title" : ""?>
 								<?php echo $pagination_stats; ?></h1>

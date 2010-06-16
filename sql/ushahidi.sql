@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 24
+-- version 25
 -- http://www.ushahidi.com
 
 
@@ -1553,4 +1553,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '1.0.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '24' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '25' WHERE `id`=1 LIMIT 1;
