@@ -9,7 +9,7 @@ CREATE TABLE `mhi_category` (
 CREATE TABLE `mhi_site` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
-  `site_domain` varchar(100) NOT NULL,
+  `site_domain` varchar(32) NOT NULL,
   `site_privacy` tinyint(4) NOT NULL DEFAULT '0',
   `site_active` tinyint(4) DEFAULT '1',
   `site_dateadd` datetime NOT NULL,
