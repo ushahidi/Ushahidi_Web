@@ -29,19 +29,26 @@
 				<table><tbody>
 					<tr>
 						<th style="padding:2px;margin:0px;text-align:center;">Site</th>
+						<th style="padding:2px;margin:0px;text-align:center;">Go To</th>
 						<th style="padding:2px;margin:0px;text-align:center;">Status</th>
 						<th style="padding:2px;margin:0px;text-align:center;">Change Admin Password</th>
 					</tr>
 				<?php foreach($sites as $site) { ?>
 					<tr>
 						<td><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>" target="_blank"><?php echo $site->site_domain.'.'.$domain_name; ?></a></td>
+						<td><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>" target="_blank">Homepage</a> <a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>admin" target="_blank">Admin</a></td>
 						<td><?php if($site->site_active == 1) { echo 'Active'; }else{ echo 'Pending Activation'; } ?></td>
 						<td>
-							<?php if($site_pw_changed == $site->site_domain) { ?>
+							<?php if(in_array($site->site_domain,$sites_pw_changed)) { ?>
 								<strong>* Password Changed</strong>
 							<?php } ?>
 							<?php print form::open(url::site().'mhi/manage', array('id' => 'frm-MHI-Admin-PW', 'name' => 'frm-MHI-Admin-PW')); ?>
 								<input type="password" size="24" name="admin_password" maxlength="32" id="admin_password"/>
+								Change password for 
+								<select name="change_pw_for">
+									<option value="one" selected="yes">just this deployment.</option>
+									<option value="all">all deployments.</option>
+								</select>
 								<input type="hidden" name="site_domain" value="<?php echo $site->site_domain; ?>"/>
 								<input class="button" type="submit" value="Change Password" />
 							<?php print form::close(); ?>

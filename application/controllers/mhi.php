@@ -173,31 +173,54 @@ class MHI_Controller extends Template_Controller {
 
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi/mhi_manage');
-		$this->template->content->site_pw_changed = '';
+		$this->template->content->sites_pw_changed = array();
 
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
 		$mhi_site = new Mhi_Site_Model;
-		$this->template->content->sites = $mhi_site->get_user_sites($mhi_user_id);
+		$all_user_sites = $mhi_site->get_user_sites($mhi_user_id);
+		$this->template->content->sites = $all_user_sites;
 
 		if ($_POST)
 		{
 			$new_password = $_POST['admin_password'];
-			$site_domain = $_POST['site_domain'];
+			$site_domains = array($_POST['site_domain']);
+
+			if ($_POST['change_pw_for'] == 'all')
+			{
+				// Get all domains
+				$site_domains = array();
+				foreach($all_user_sites as $site) {
+					$site_domains[] = $site->site_domain;
+				}
+			}
+
 
 			$db_genesis = new DBGenesis;
 			$mhi_site = new Mhi_Site_Model;
 
 			// Check if the logged in user is the owner of the site
 
-			$domain_owner = $mhi_site->domain_owner($site_domain);
+			$domain_owners = $mhi_site->domain_owner($site_domains);
+
+			// using array_unique to see if there is only one owner
+
+			$domain_owners = array_unique($domain_owners);
+
+			if(count($domain_owners) != 1)
+			{
+				// If there are more than one owner, the we shouldn't be able to change all those passwords.
+				throw new Kohana_User_Exception('Site Ownership Error', "Improper owner for site to change password.");
+			}
+
+			$domain_owner = current($domain_owners);
 
 			// If the owner of the site isn't the person updating the password for the site, there's something fishy going on
 
 			if($domain_owner == $mhi_user_id)
 			{
-				$db_genesis->change_admin_password($site_domain,$new_password);
-				$this->template->content->site_pw_changed = $site_domain;
+				$db_genesis->change_admin_password($site_domains,$new_password);
+				$this->template->content->sites_pw_changed = $site_domains;
 			}
 		}
 	}
@@ -310,7 +333,7 @@ class MHI_Controller extends Template_Controller {
 
 				$mhi_user = new Mhi_User_Model;
 
-				$email = 'brianherbert@gmail.com';
+				$email = $post->email;
 
 				$mhi_user_id = $mhi_user->get_id($email);
 

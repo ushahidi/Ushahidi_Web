@@ -43,7 +43,8 @@ class DBGenesis_Core {
 		return true;
 	}
 
-	public static function change_admin_password($db_name,$new_password)
+	//db_names must be an array of names
+	public static function change_admin_password($db_names,$new_password)
 	{
 		$mhi_db = Kohana::config('database.default');
 		$table_prefix = $mhi_db['table_prefix'];
@@ -52,18 +53,20 @@ class DBGenesis_Core {
 		// Switch to new DB for a moment
 
 		$base_db = DBGenesis::current_db();
-		$db_name = $base_db.'_'.$db_name;
+		foreach($db_names as $name)
+		{
+			mysql_query('USE '.$base_db.'_'.$name.';');
 
-		mysql_query('USE '.$db_name.';');
+			// START: Everything that happens in the deployment DB happens below
 
-		// START: Everything that happens in the deployment DB happens below
+			$usr = ORM::factory('user','1');
+			$usr->password = $new_password;
+			$usr->save();
 
-		$usr = ORM::factory('user','1');
-		$usr->password = $new_password;
-		$usr->save();
+			// END: Everything that happens in the deployment DB happens above
+		}
 
-		// END: Everything that happens in the deployment DB happens above
-
+		//Switch back to our db, otherwise we would be running off some other deployments DB and that wouldn't work
 		mysql_query('USE '.$mhi_db_name);
 
 		return true;
