@@ -1,6 +1,6 @@
 <?php
 /**
- * MHI Signup JS file
+ * MHI Account Management JS file
  * 
  * Non-clustered map rendering (Please refer to main_cluster_js for Server Side Clusters)
  *
@@ -23,60 +23,42 @@ $(function(){
 	}, "Please use letters or numbers only.");
 
 	/*Validate the Form*/
-	$("#frm-MHI-Signup").validate({
+	$("#frm-MHI-Account").validate({
 		rules: {
-			signup_first_name: "required",
-			signup_last_name: "required",
-			signup_email: {
+			firstname: "required",
+			lastname: "required",
+			email: {
 				required: true,
 				email: true
 			},
-			signup_password: {
+			account_password: {
 				required: true,
 				rangelength: [4, 32]
 			},
-			signup_confirm_password: {
+			account_confirm_password: {
 				required: true,
-				equalTo: "#signup_password"
+				equalTo: "#account_password"
 			},
-			signup_subdomain: {
-				required: true,
-				alphanumeric: true
-			},
-			signup_instance_name: "required",
-			signup_instance_tagline: "required",
-			signup_report_categories: {
-				required: true,
-				//csv: true
-			}
 		},
 		messages: {
-			signup_first_name: "Please enter your first name.",
-			signup_last_name: "Please enter your first name.",
-			signup_email: {
+			firstname: "Please enter your first name.",
+			lastname: "Please enter your first name.",
+			email: {
 				required: "Please enter your email address.",
 				email: "Please enter a valid email address."
 			},
-			signup_password: {
+			password: {
 				required: "Please enter a password.",
 				rangelength: "Your password must be between 4 and 32 characters."
 			},
-			signup_confirm_password: {
+			confirm_password: {
 				required: "Please confirm your password.",
 				equalTo: "Passwords do not match."
-			},
-			signup_subdomain: {
-				required: "Please enter your instance address."
-			},
-			signup_instance_name: "Please enter a name for your instance.",
-			signup_instance_tagline: "Please enter a tagline for your instance.",
-			signup_report_categories: {
-				required: "Please enter at least one category for your instance."
 			}
-
 		},
 		errorPlacement: function(error, element) {
 		 error.appendTo(element.parent());
 	    }
 	});
+
 });

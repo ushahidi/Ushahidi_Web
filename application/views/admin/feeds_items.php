@@ -22,6 +22,7 @@
 					<a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
 					<span>(<a href="#add"><?php echo Kohana::lang('ui_main.add_new');?></a>)</span>
 					<a href="<?php echo url::site() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
+					<a href="<?php echo url::site() . 'admin/manage/scheduler' ?>"><?php echo Kohana::lang('ui_main.scheduler');?></a>
 				</h2>
 			
 				<!-- tabs -->

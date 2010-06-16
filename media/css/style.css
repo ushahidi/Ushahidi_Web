@@ -636,7 +636,7 @@ div.report-details{
 
 div.verified{
     background: #A60003;
-    width: 65px;
+    width: 85px;
     padding: 6px 0;
     float: right;
     color: #FFF;
@@ -647,12 +647,11 @@ div.verified{
     margin: 0 0 0 10px;
 }
 div.verified_yes{
-	background: #368c00;
+	background: #368c00; width:65px;
 }
 div.verified span{
     color: #FFF;
     text-transform: uppercase;
-    font-size: 19px;
     font-weight: bold;
 }
 
@@ -1229,19 +1228,29 @@ label.error {
 .report_right table tr th {
 	text-align: left;
 }
-.report-description table tr th {
-	text-align: left;
-}
+
+
 .report-description table { width: 100%; }
-.w-01 {
-	width:50%;
-	padding:0 10px 0 0;
-}
-.w-02 {
-/*	width:100px; */
-	padding:0 10px 0 0;
-}
-/*.w-03 {width:100px;}*/
+
+	.report-description table tr th { text-align: left; padding:5px; background:#E8E4DB; border-collapse:collapse; }
+		th.w-01, th.w-02 { border-right:1px dotted #fff; }
+	
+	.report-description table tr td { padding:0 5px; }
+		.report-description table tr td a { display:block; padding:5px 0; }
+		
+	.report-description table tr:hover { background:#f8f6f2; }
+		td.w-01, td.w-02 { border-right:1px dotted #E8E4DB; border-bottom:1px dotted #E8E4DB;  }
+		td.w-03 { border-bottom:1px dotted #E8E4DB; }
+	
+	.w-01 {
+		width:50%;
+		padding:0 10px 0 0;
+	}
+	.w-02 {
+		width:320px;
+		padding:0 10px 0 0;
+	}
+	/*.w-03 {width:100px;}*/
 
 .report_bottom{
 	clear:both;

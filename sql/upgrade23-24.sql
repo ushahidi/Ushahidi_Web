@@ -9,6 +9,5 @@ CREATE TABLE IF NOT EXISTS `plugin` (
   UNIQUE KEY `plugin_name` (`plugin_name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-
 UPDATE `settings` SET `db_version` = '24' WHERE `id`=1 LIMIT 1;
 UPDATE `settings` SET `ushahidi_version` = '1.0.1' WHERE `id`=1 LIMIT 1;

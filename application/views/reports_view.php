@@ -23,12 +23,10 @@
 								{
 									echo " verified_yes";
 								}
-								?>">
-									Verified<br/>
-									<?php
+								?>"><?php
 									echo ($incident_verified == 1) ?
-										"<span>YES</span>" :
-										"<span>NO</span>";
+										"<span>Verified</span>" :
+										"<span>Unverified</span>";
 									?>
 								</div>
 								<h1><?php
@@ -132,7 +130,7 @@
 
 					<div class="report-description">
 						<h3>Related Mainstream News of Incident</h3>
-						<table>
+						<table cellpadding="0" cellspacing="0">
 							<tr class="title">
 								<th class="w-01">TITLE</th>
 								<th class="w-02">SOURCE</th>
@@ -167,7 +165,7 @@
 
 					<div class="report-description">
 						<h3>Incident Report(s)</h3>
-						<table>
+						<table cellpadding="0" cellspacing="0">
 							<tr class="title">
 								<th class="w-01">TITLE</th>
 								<th class="w-02">LOCATION</th>

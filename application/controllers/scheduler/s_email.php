@@ -13,8 +13,8 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 */
 
-class Email_Controller extends Controller
-{
+class S_Email_Controller extends Controller {
+	
 	public function __construct()
     {
         parent::__construct();
@@ -22,15 +22,23 @@ class Email_Controller extends Controller
 	
 	public function index() 
 	{
-		$check_email = new Imap;
-		
-		$messages = $check_email->get_messages();
-		
-		// Close Connection
-		$check_email->close();
-		
-		// Add Messages
-        $this->add_email($messages);
+		$modules = new Modulecheck;
+		if ($modules->isLoaded('imap'))
+		{
+			$check_email = new Imap;
+
+			$messages = $check_email->get_messages();
+
+			// Close Connection
+			$check_email->close();
+
+			// Add Messages
+	        $this->add_email($messages);
+		}
+		else
+		{
+			echo "You Do Not Have the IMAP PHP Library installed. Email will not be retrieved.<BR/ ><BR/ >";
+		}
     }
 
 

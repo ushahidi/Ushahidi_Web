@@ -1,6 +1,6 @@
 <?php
 /**
- * MHI Account Management JS file
+ * MHI Signup JS file
  * 
  * Non-clustered map rendering (Please refer to main_cluster_js for Server Side Clusters)
  *
@@ -23,42 +23,62 @@ $(function(){
 	}, "Please use letters or numbers only.");
 
 	/*Validate the Form*/
-	$("#frm-MHI-Account").validate({
+	$("#frm-MHI-Signup").validate({
 		rules: {
-			firstname: "required",
-			lastname: "required",
-			email: {
+			signup_first_name: "required",
+			signup_last_name: "required",
+			signup_email: {
 				required: true,
 				email: true
 			},
-			password: {
+			signup_password: {
 				required: true,
 				rangelength: [4, 32]
 			},
-			confirm_password: {
+			signup_confirm_password: {
 				required: true,
-				equalTo: "#password"
+				equalTo: "#signup_password"
+			},
+			signup_subdomain: {
+				required: true,
+				alphanumeric: true,
+				rangelength: [4, 32]
+			},
+			signup_instance_name: "required",
+			signup_instance_tagline: "required",
+			signup_report_categories: {
+				required: true,
+				//csv: true
 			}
 		},
 		messages: {
-			firstname: "Please enter your first name.",
-			lastname: "Please enter your first name.",
-			email: {
+			signup_first_name: "Please enter your first name.",
+			signup_last_name: "Please enter your first name.",
+			signup_email: {
 				required: "Please enter your email address.",
 				email: "Please enter a valid email address."
 			},
-			password: {
+			signup_password: {
 				required: "Please enter a password.",
 				rangelength: "Your password must be between 4 and 32 characters."
 			},
-			confirm_password: {
+			signup_confirm_password: {
 				required: "Please confirm your password.",
 				equalTo: "Passwords do not match."
+			},
+			signup_subdomain: {
+				required: "Please enter your instance address.",
+				rangelength: "Your password must be between 4 and 32 characters."
+			},
+			signup_instance_name: "Please enter a name for your instance.",
+			signup_instance_tagline: "Please enter a tagline for your instance.",
+			signup_report_categories: {
+				required: "Please enter at least one category for your instance."
 			}
+
 		},
 		errorPlacement: function(error, element) {
 		 error.appendTo(element.parent());
 	    }
 	});
-
 });

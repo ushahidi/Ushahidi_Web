@@ -69,7 +69,7 @@
 				    }
 				};
 			map = new OpenLayers.Map('map', options);
-			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
+//			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 			
 			/*
 			- Select A Mapping API
@@ -535,14 +535,14 @@
 		/*
 		Zoom to Selected Feature from within Popup
 		*/
-		function zoomToSelectedFeature(lon, lat)
+		function zoomToSelectedFeature(lon, lat, zoomfactor)
 		{
 			var lonlat = new OpenLayers.LonLat(lon,lat);
 			
 			// Get Current Zoom
 			currZoom = map.getZoom();
 			// New Zoom
-			newZoom = currZoom + 1;
+			newZoom = currZoom + zoomfactor;
 			// Center and Zoom
 			map.setCenter(lonlat, newZoom);
 			// Remove Popups

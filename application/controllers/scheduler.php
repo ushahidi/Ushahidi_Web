@@ -19,11 +19,15 @@ class Scheduler_Controller extends Controller
 	public function __construct()
     {
         parent::__construct();
-		// $profiler = new Profiler;
+		//$profiler = new Profiler;
 	}
 	
 	public function index()
 	{
+		// Debug
+		$debug = "";
+		
+		
 		// Get all active scheduled items
 		foreach (ORM::factory('scheduler')
 			->where('scheduler_active','1')
@@ -64,35 +68,91 @@ class Scheduler_Controller extends Controller
 			
 			
 			$scheduler_cron = $scheduler_minute . " " . $scheduler_hour . " " . $scheduler_day . " * " . $scheduler_weekday;
+			
 			//Start new cron parser instance    	
-			$cron = new CronParser($scheduler_cron);
+			$cron = new CronParser();
+			
+			if ( ! $cron->calcLastRan($scheduler_cron))
+			{
+				echo "Error parsing CRON";
+			}
+			
 			$lastRan = $cron->getLastRan(); //Array (0=minute, 1=hour, 2=dayOfMonth, 3=month, 4=week, 5=year)
 			$cronRan = mktime ($lastRan[1] ,$lastRan[0],0 , $lastRan[3] ,$lastRan[2], $lastRan[5]);
 			
-			if (!($scheduler_last > ($cronRan-45)) || $scheduler_last == 0)
-			{ // within 45 secs of cronRan time, so Execute control
-				$site_url = url::base();
-				$scheduler_status = remote::get( $site_url . "scheduler/" . $scheduler_controller );
+			if (isset($_GET['debug']) AND $_GET['debug'] == 1)
+			{
+				$debug .= "~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+				."<BR />~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+				."<BR />RUNNING: ".$scheduler->scheduler_name
+				."<BR />~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+				."<BR /> LAST RUN: ".date("r", $scheduler_last)
+				."<BR /> LAST DUE AT: ".date('r', $cron->getLastRanUnix())
+				."<BR /> SCHEDULE: <a href=\"http://en.wikipedia.org/wiki/Cron\" target=\"_blank\">".$scheduler_cron."</a>";
+			}
+			
+			if ( ! ($scheduler_last > $cronRan) || $scheduler_last == 0)
+			//if ($scheduler_controller)
+			{
+				$run = Dispatch::controller("$scheduler_controller", "scheduler/")->method('index', '');
 				
-				//XXX: ToDo Parse $scheduler_status
-				
-				// Set last time of last execution
-				$schedule_time = time();
-				$scheduler->scheduler_last = $schedule_time;
-				$scheduler->save();
+				if ($run !== FALSE)
+				{					
+					// Set last time of last execution
+					$schedule_time = time();
+					$scheduler->scheduler_last = $schedule_time;
+					$scheduler->save();
 
-				// Record Action to Log				
-				$scheduler_log = new Scheduler_Log_Model();
-				$scheduler_log->scheduler_id = $scheduler_id;
-				$scheduler_log->scheduler_name = $scheduler->scheduler_name;
-				$scheduler_log->scheduler_status = "200";
-				$scheduler_log->scheduler_date = $schedule_time;
-				$scheduler_log->save();
+					// Record Action to Log				
+					$scheduler_log = new Scheduler_Log_Model();
+					$scheduler_log->scheduler_id = $scheduler_id;
+					$scheduler_log->scheduler_name = $scheduler->scheduler_name;
+					$scheduler_log->scheduler_status = "200";
+					$scheduler_log->scheduler_date = $schedule_time;
+					$scheduler_log->save();
+
+					if (isset($_GET['debug']) AND $_GET['debug'] == 1)
+					{
+						$debug .= "<BR /> STATUS: {{ EXECUTED }}";
+					}
+				}
+				else
+				{
+					if (isset($_GET['debug']) AND $_GET['debug'] == 1)
+					{
+						$debug .= "<BR /> STATUS: {{ SCHEDULER NOT FOUND! }}";
+					}
+				}
+				
+			}
+			else
+			{
+				if (isset($_GET['debug']) AND $_GET['debug'] == 1)
+				{
+					$debug .= "<BR /> STATUS: {{ NOT RUN }}";
+				}
+			}
+			if (isset($_GET['debug']) AND $_GET['debug'] == 1)
+			{
+				//$debug .= "<BR /><BR />CRON DEBUG:<BR \>".nl2br($cron->getDebug());
+				$debug .= "<BR \>~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR />~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR /><BR /><BR />";
 			}
 		}
 		
-	    //Header("Content-Type: image/gif");
-		// Transparent GIF
-		//echo base64_decode("R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==");
+		// If DEBUG is TRUE echo DEBUG info instead of transparent GIF
+		if (isset($_GET['debug']) AND $_GET['debug'] == 1)
+		{
+			echo $debug;
+		}
+		else
+		{
+			// Transparent GIF
+			Header( "Content-type: image/gif");
+			Header( "Expires: Wed, 11 Nov 1998 11:11:11 GMT");
+			Header( "Cache-Control: no-cache");
+			Header( "Cache-Control: must-revalidate");
+
+			printf ("%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%c%",71,73,70,56,57,97,1,0,1,0,128,255,0,192,192,192,0,0,0,33,249,4,1,0,0,0,0,44,0,0,0,0,1,0,1,0,0,2,2,68,1,0,59);
+		}
 	}
 }

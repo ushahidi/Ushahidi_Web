@@ -15,13 +15,12 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::site() . 'admin/settings/site' . '" class="active">' . Kohana::lang('ui_main.site') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/cleanurl'.'">' . Kohana::lang('ui_main.cleanurl').'</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/site' . '">' . Kohana::lang('ui_main.site') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings' . '" class="active">' . Kohana::lang('ui_main.map') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
 				</h2>
 				<?php print form::open(); ?>
 					<div class="report-form">
@@ -61,7 +60,7 @@
 						<div class="l-column">
 							<div class="has_border_first">
 								<div class="row">
-									<h4><?php echo Kohana::lang('settings.default_location');?> <sup><a href="#">?</a></sup></h4>
+									<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_default_location"); ?>"><?php echo Kohana::lang('settings.default_location');?></a></h4>
 									<p class="bold_desc"><?php echo Kohana::lang('settings.select_default_location');?>.</p>
 									<span class="my-sel-holder">
 										<?php print form::dropdown('default_country',$countries,$form['default_country']); ?>
@@ -89,7 +88,7 @@
 								</div>
 							</div>
 							<div class="has_border">
-								<h4><?php echo Kohana::lang('settings.map_provider.name');?> <sup><a href="#">?</a></sup></h4>
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_map_provider"); ?>"><?php echo Kohana::lang('settings.map_provider.name');?></a></h4>
 								<p class="bold_desc"><?php echo Kohana::lang('settings.map_provider.info');?></p>
 								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 1: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.choose');?></span><br />
 								<div class="c_push">
@@ -124,7 +123,7 @@
 								<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 						</div>
 						<div class="r-column">
-							<h4><?php echo Kohana::lang('settings.configure_map');?> <sup><a href="#">?</a></sup></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_configure_map"); ?>"><?php echo Kohana::lang('settings.configure_map');?></a></h4>
 
 							<div style="width: 279px; float: left; margin-top: 10px;">
 								<span class="bold_span"><?php echo Kohana::lang('settings.default_zoom_level');?></span>
@@ -143,7 +142,7 @@
 								</div>
 							</div>
 							<div style="clear:both;"></div>
-							<h4><?php echo Kohana::lang('ui_main.preview');?> <sup><a href="#">?</a></sup></h4>
+							<h4><?php echo Kohana::lang('ui_main.preview');?></h4>
 							<p class="bold_desc"><?php echo Kohana::lang('settings.set_location');?>.</p>
 
 							<div id="map_holder">

@@ -15,13 +15,12 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::site() . 'admin/settings/site' . '" class="active">' . Kohana::lang('ui_main.site') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
-					<a href="<?php echo url::site() . 'admin/settings/cleanurl'.'">' . Kohana::lang('ui_main.cleanurl').'</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/site' . '">' . Kohana::lang('ui_main.site') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sms' . '" class="active">' . Kohana::lang('ui_main.sms') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
+					<a href="<?php echo url::base() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">
@@ -61,8 +60,8 @@
 					<!-- column -->
 		
 					<div class="sms_nav_holder">
-						<a href="<?php echo url::site() . 'admin/settings/sms' ?>" class="active"><?php echo Kohana::lang('settings.sms.option_1');?></a>
-						<a href="<?php echo url::site() . 'admin/settings/smsglobal' ?>"><?php echo Kohana::lang('settings.sms.option_2');?></a>
+						<a href="<?php echo url::base() . 'admin/settings/sms' ?>" class="active"><?php echo Kohana::lang('settings.sms.option_1');?></a>
+						<a href="<?php echo url::base() . 'admin/settings/smsglobal' ?>"><?php echo Kohana::lang('settings.sms.option_2');?></a>
 					</div>
 		
 					<div class="sms_holder">
@@ -72,7 +71,7 @@
 									<span class="big_blue_span"><?php echo Kohana::lang('ui_main.step');?> 1:</span>
 								</td>
 								<td>
-									<h4 class="fix"><?php echo Kohana::lang('settings.sms.flsms_download');?>. <sup><a href="#">?</a></sup></h4>
+									<h4 class="fix"><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_flsms_download"); ?>"><?php echo Kohana::lang('settings.sms.flsms_download');?></a></h4>
 									<p>
 										<?php echo Kohana::lang('settings.sms.flsms_description');?>.
 									</p>
@@ -86,7 +85,7 @@
 									<span class="big_blue_span"><?php echo Kohana::lang('ui_main.step');?> 2:</span>
 								</td>
 								<td>
-									<h4 class="fix"><?php echo Kohana::lang('settings.sms.flsms_synchronize');?> <sup><a href="#">?</a></sup></h4>
+									<h4 class="fix"><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_flsms_synchronize"); ?>"><?php echo Kohana::lang('settings.sms.flsms_synchronize');?></a></h4>
 									<p>
 										<?php echo Kohana::lang('settings.sms.flsms_instructions');?>.
 									</p>
@@ -101,7 +100,7 @@
 									<span class="big_blue_span"><?php echo Kohana::lang('ui_main.step');?> 3:</span>
 								</td>
 								<td>
-									<h4 class="fix"><?php echo Kohana::lang('settings.sms.flsms_text_1');?>. <sup><a href="#">?</a></sup></h4>
+									<h4 class="fix"><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_flsms_text_1"); ?>"><?php echo Kohana::lang('settings.sms.flsms_text_1');?>.</a></h4>
 									<p>
 										<?php echo Kohana::lang('settings.sms.flsms_text_2');?>.
 									</p>
