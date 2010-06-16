@@ -22,6 +22,12 @@
 			$('#role').attr("value",unescape( role ) );
 			$('#email').attr("value",unescape( email ) );
 			
+			// If it is the main admin, do not allow role change
+			if(id == 1)
+			{
+				alert("hi");
+				$("#role").attr("disabled", "disabled");
+			}
 		}
 		
 		// Form Submission
