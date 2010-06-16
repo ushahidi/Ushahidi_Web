@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 23
+-- version 24
 -- http://www.ushahidi.com
 
 
@@ -1057,11 +1057,11 @@ CREATE TABLE IF NOT EXISTS `scheduler` (                                        
 -- Dumping data for table `scheduler`
 
 INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_weekday`, `scheduler_day`, `scheduler_hour`, `scheduler_minute`, `scheduler_controller`, `scheduler_active`) VALUES
-(1, 'Feeds', 0, -1, -1, -1, 0, 'feeds', 1),
-(2, 'Alerts', 0, -1, -1, -1, -1, 'alerts', 1),
-(3, 'Email', 0, -1, -1, -1, 0, 'email', 1),
-(4, 'Twitter', 0, -1, -1, -1, 0, 'twitter', 1),
-(5, 'Sharing', 0, -1, -1, -1, 0, 'sharing', 1);
+(1, 'Feeds', 0, -1, -1, -1, 0, 's_feeds', 1),
+(2, 'Alerts', 0, -1, -1, -1, -1, 's_alerts', 1),
+(3, 'Email', 0, -1, -1, -1, 0, 's_email', 1),
+(4, 'Twitter', 0, -1, -1, -1, 0, 's_twitter', 1),
+(5, 'Sharing', 0, -1, -1, -1, 0, 's_sharing', 1);
 
 
 /**
@@ -1437,7 +1437,7 @@ CREATE TABLE `mhi_category` (
 CREATE TABLE `mhi_site` (
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                  -- field description
     `user_id` int(11) NOT NULL,                                                     -- field description
-    `site_domain` varchar(100) NOT NULL,                                            -- field description
+    `site_domain` varchar(32) NOT NULL,                                            -- field description
     `site_privacy` tinyint(4) NOT NULL DEFAULT '0',                                 -- field description
     `site_active` tinyint(4) DEFAULT '1',                                           -- field description
     `site_dateadd` datetime NOT NULL,                                               -- field description
@@ -1536,4 +1536,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '1.0.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '23' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '24' WHERE `id`=1 LIMIT 1;
