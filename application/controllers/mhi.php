@@ -488,6 +488,17 @@ class MHI_Controller extends Template_Controller {
 
 				// Do some graceful validation
 
+				if ($post->signup_subdomain < 4 OR $post->signup_subdomain > 32)
+				{
+					// ERROR: subdomain length falls outside the char length bounds allowed.
+
+					return array(
+						'errors' => $errors,
+						'form' => $form,
+						'form_error' => array('signup_subdomain' => 'Subdomain must be between at least 4 characters and no more than 32 characters long. Please try again.')
+					);
+				}
+
 				if ($mhi_site->domain_exists($post->signup_subdomain))
 				{
 					// ERROR: Domain already assigned in MHI DB.
