@@ -73,6 +73,7 @@ class register_plugins {
 				while (($entry = $d->read()) !== FALSE)
 					if ($entry[0] != '.')
 					{
+						$plugin_path = url::base().$plugin;
 						include $plugin.'/hooks/'.$entry;
 					}
 			}

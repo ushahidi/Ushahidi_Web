@@ -119,9 +119,12 @@
 		<?php echo $js . "\n"; ?>
 	</script>
 	<?php
-	// Render CSS and Javascript from Plugins
+	// Render CSS and Javascript Files from Plugins
 	plugin::render('stylesheet');
 	plugin::render('javascript');
+	
+	// Action::header_scripts - Additional Inline Scripts
+	Event::run('ushahidi_action.header_scripts');
 	?>
 </head>
 
