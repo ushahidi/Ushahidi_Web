@@ -68,7 +68,7 @@ $(function(){
 			},
 			signup_subdomain: {
 				required: "Please enter your instance address.",
-				rangelength: "Your password must be between 4 and 32 characters."
+				rangelength: "The name you use for your instance address must be between 4 and 32 characters."
 			},
 			signup_instance_name: "Please enter a name for your instance.",
 			signup_instance_tagline: "Please enter a tagline for your instance.",
