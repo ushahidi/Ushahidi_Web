@@ -249,7 +249,8 @@ class Json_Controller extends Template_Controller
 			}
 		}
 
-		$query = $db->query("SELECT DISTINCT i.id, l.`latitude`, l.`longitude` FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1 $filter ORDER BY i.`id` ASC ");	
+		$query = $db->query("SELECT DISTINCT i.id, i.incident_title, l.`latitude`, l.`longitude` FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1 $filter ORDER BY i.`id` ASC ");	
+
 		$query->result(FALSE, MYSQL_ASSOC);
 
 		//*** There has to be a more efficient way to do this than to
@@ -336,7 +337,7 @@ class Json_Controller extends Template_Controller
 			$json_item = "{";
 		    $json_item .= "\"type\":\"Feature\",";
 		    $json_item .= "\"properties\": {";
-			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/view/" . $single['id'] . "/>1 Report</a>")) . "\",";	
+			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/view/" . $single['id'] . "/>".$single['incident_title']."</a>")) . "\",";	
 		    $json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
 			$json_item .= "\"icon\": \"".$icon."\", ";
