@@ -111,6 +111,10 @@ class Imap_Core {
 			// Convert quoted-printable strings (RFC2045)
 			$body = imap_qprint($body);
 			
+			// Convert to valid UTF8
+			$body = htmlentities($body);
+			$subject = htmlentities($subject);
+			
 			array_push($messages, array('message_id' => $message_id,
 										'date' => $date,
 										'from' => $fromname,

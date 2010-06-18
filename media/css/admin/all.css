@@ -1290,7 +1290,7 @@ div.sms_nav_holder a{
 }
 div.sms_nav_holder a:hover{background-color: #f0f0f0;}
 div.sms_nav_holder a.active{background-color: #eee; color: #6c6c6c; font-weight: bold;}
-div.sms_holder{
+div.sms_holder, div.settings_holder{
 	width: 860px;
 	padding: 15px;
 	margin-left: 20px;
@@ -1324,6 +1324,18 @@ div.sms_holder{
 		div.theme_select:hover{
 			background-color:#FFFFCC;
 		}
+	div.test_settings{
+		margin-bottom:15px;
+	}
+		div.test_settings #test_loading{
+			line-height: 24px;
+		}
+		div.test_settings #test_status{
+			line-height: 24px;
+			font-size:16px;
+			font-weight:bold;
+		}
+		
 
 div.simple_border{
 	width: 900px;

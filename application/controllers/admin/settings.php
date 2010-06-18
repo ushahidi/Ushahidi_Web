@@ -689,6 +689,9 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->email_ssl_array = array('1'=>Kohana::lang('ui_admin.yes'),'0'=>Kohana::lang('ui_admin.no'));
+		
+		// Javascript Header
+		$this->template->js = new View('admin/email_js');
 	}
 	
 		/**

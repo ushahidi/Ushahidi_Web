@@ -108,7 +108,7 @@
 									$message_to = $message->message_to;
 									$incident_id = $message->incident_id;
 									$message_description = text::auto_link($message->message);
-									$message_detail = text::auto_link($message->message_detail);
+									$message_detail = nl2br(text::auto_link($message->message_detail));
 									$message_date = date('Y-m-d', strtotime($message->message_date));
 									$message_type = $message->message_type;
 									?>
