@@ -88,7 +88,7 @@ Author Email: caleb@ushahidi.com
 	#login-box a { background:#96a6a9; color:#f3f3f3; font-weight:bold; margin-left:4px; padding:4px 6px; text-decoration:none; }
 	#login-box a.active { background:#f3f4f6; color:#666; padding-bottom:7px;}
 	
-	#login-form { z-index:1;  background:#f3f4f6; position:absolute; top:23px; right:0px; font-size:12px;  padding:5px 8px; display:none; }
+	#login-form { z-index:1000;  background:#f3f4f6; position:absolute; top:23px; right:0px; font-size:12px;  padding:5px 8px; display:none; }
 		
 	#login-form form { margin:0; } 
 	
