@@ -55,6 +55,7 @@ $lang = array
     'edit_action' => 'Edit',
     'email' => 'Email',
     'error_geocoding' => 'Error in geocoding! HTTP error',
+	'error_imap' => 'IMAP PHP Library is not installed',
     'error_msg' => 'Error',
     'error_post_incident' => 'Error, unable to post incident',
     'every_six_hours' => 'Every Six Hours',

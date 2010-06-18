@@ -403,6 +403,7 @@ $lang = array(
     'ssl_support' => 'SSL Support?',
     'start_point' => 'From',
     'step' => 'Step',
+	'success' => 'Success!',
     'successfuly_imported' => 'Succesfully imported',
     'submit' => 'Submit an Incident',
     'submit_sms' => 'Submit via SMS',

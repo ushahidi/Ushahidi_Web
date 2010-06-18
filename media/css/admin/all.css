@@ -1324,6 +1324,18 @@ div.sms_holder, div.settings_holder{
 		div.theme_select:hover{
 			background-color:#FFFFCC;
 		}
+	div.test_settings{
+		margin-bottom:15px;
+	}
+		div.test_settings #test_loading{
+			line-height: 24px;
+		}
+		div.test_settings #test_status{
+			line-height: 24px;
+			font-size:16px;
+			font-weight:bold;
+		}
+		
 
 div.simple_border{
 	width: 900px;

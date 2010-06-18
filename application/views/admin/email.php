@@ -58,6 +58,29 @@
 					</div>
 					<!-- column -->		
 					<div class="sms_holder">
+						<?php
+						if ( ! $form_error
+							AND ! empty($form['email_username'])
+							AND ! empty($form['email_username'])
+							AND ! empty($form['email_password'])
+							AND ! empty($form['email_port'])
+							AND ! empty($form['email_host'])
+							AND ! empty($form['email_servertype'])
+						)
+						{
+						?>
+							<div class="test_settings">
+								<div class="tab">
+									<ul>
+										<li><a href="javascript:emailTest();">TEST SETTINGS</a></li>
+										<li id="test_loading"></li>
+										<li id="test_status"></li>
+									</ul>
+								</div>
+							</div>
+						<?php
+						}
+						?>
 						<?php echo Kohana::lang('ui_main.email_settings_comment_00');?> <a href="<?php echo url::base()."admin/settings/site";?>"><?php echo Kohana::lang('ui_main.site_email_address');?></a> 
 						(<strong> <?php echo Kohana::config('settings.site_email');?></strong>), <?php echo Kohana::lang('ui_main.email_settings_comment_0');?>.
 						<div class="row">
