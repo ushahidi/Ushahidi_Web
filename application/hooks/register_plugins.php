@@ -57,7 +57,7 @@ class register_plugins {
 				'plugin_active' => 1,
 				'plugin_installed' => 1)) as $plugin)
 		{
-			$plugins[] = PLUGINPATH.$plugin->plugin_name;
+			$plugins[$plugin->plugin_name] = PLUGINPATH.$plugin->plugin_name;
 		}
 
 		// Now set the plugins
@@ -65,7 +65,7 @@ class register_plugins {
 
 		// We need to manually include the hook file for each plugin,
 		// because the additional plugins aren't loaded until after the application hooks are loaded.
-		foreach ($plugins as $plugin)
+		foreach ($plugins as $key => $plugin)
 		{	
 			if (file_exists($plugin.'/hooks'))
 			{
@@ -73,7 +73,8 @@ class register_plugins {
 				while (($entry = $d->read()) !== FALSE)
 					if ($entry[0] != '.')
 					{
-						$plugin_path = url::base().$plugin;
+						// $plugin_base Variable gives plugin hook access to the base location of the plugin
+						$plugin_base = url::base()."plugins/".$key."/";
 						include $plugin.'/hooks/'.$entry;
 					}
 			}
