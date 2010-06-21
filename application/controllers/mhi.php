@@ -70,7 +70,7 @@ class MHI_Controller extends Template_Controller {
 		// Login Form variables
 
 		$this->template->header->errors = '';
-		$this->template->header->form = '';
+		$this->template->header->form = array('username'=>'');
 		$this->template->header->form_error = '';
 		$this->template->header->mhi_user_id = $session->get('mhi_user_id');
 

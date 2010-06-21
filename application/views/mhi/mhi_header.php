@@ -43,6 +43,17 @@
 </script>
 <?php } ?>
 
+<?php if($form_error === true) { ?>
+<script type="text/javascript" language="javascript">
+$(function(){
+    //show the dagum form	
+    $("#login-form").show();
+    //add the active class to sign-in link
+    $(this).addClass("active");
+});
+</script>
+<?php } ?>
+
 </head>
 
 <body class="<?php echo $this_body; ?> content">
@@ -58,7 +69,7 @@
             </ul>
             <?php if( ! is_int($mhi_user_id)) { ?>
             <div id="login-box">
-                <p>Have an account?<a class="sign-in active rounded" href="#">Sign In </a></p>
+                <p>Have an account?<a class="sign-in rounded" href="#">Sign In </a></p>
             </div>
             <?php }else{ ?>
            	<div id="login-box">
@@ -69,11 +80,14 @@
                 <?php print form::open(url::site().'mhi/', array('id' => 'frm-MHI-Login', 'name' => 'frm-Login')); ?>
                     <p>
                         <label for="username">E-mail</label>
-                        <input type="text" name="username" class="text rounded" id="username" title="username" value="" />
+                        <input type="text" name="username" class="text rounded" id="username" title="username" value="<?php echo $form['username'] ?>" />
                     </p>
                     <p>
                         <label for="password">Password</label>
                         <input type="password" name="password" class="text rounded" id="password" title="password" value="" />
+                        <?php if($form_error === true) { ?>
+                        	<div class="error">Your username and/or<br/>password were incorrect.</div>
+                        <?php } ?>
                     </p>
                     <p>
                         <input class="btn_sign-in rounded" type="submit" value="Sign In" />
