@@ -14,7 +14,9 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php print $title; ?> <span></span><a href="<?php print url::site() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a><a href="<?php print url::site() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::site() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a></h2>
+				<h2>
+					<?php echo admin::reports_subtabs("edit"); ?>
+				</h2>
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">
 					<input type="hidden" name="location_id" id="location_id" value="<?php print $form['location_id']; ?>">

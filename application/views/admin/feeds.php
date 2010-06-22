@@ -15,17 +15,8 @@
 ?>
 			<div class="bg">
 				<h2>
-					<a href="<?php echo url::site() . 'admin/manage' ?>"><?php echo Kohana::lang('ui_main.categories');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/forms' ?>"><?php echo Kohana::lang('ui_main.forms');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/organizations' ?>"><?php echo Kohana::lang('ui_main.organizations');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/pages' ?>"><?php echo Kohana::lang('ui_main.pages');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="active"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
-					<span>(<a href="#add">Add New</a>)</span>
-					<a href="<?php echo url::site() . 'admin/manage/layers' ?>"><?php echo Kohana::lang('ui_main.layers');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/reporters' ?>"><?php echo Kohana::lang('ui_main.reporters');?></a>
-					<a href="<?php echo url::site() . 'admin/manage/scheduler' ?>"><?php echo Kohana::lang('ui_main.scheduler');?></a>
-				</h2>
-				
+					<?php echo admin::manage_subtabs("feeds"); ?>
+				</h2>				
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->

@@ -20,7 +20,7 @@ class Comments_Controller extends Admin_Controller
 	{
 		parent::__construct();
 	
-		$this->template->this_page = 'comments';
+		$this->template->this_page = 'reports';
 	}
 	
 	
