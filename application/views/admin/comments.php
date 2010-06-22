@@ -14,7 +14,9 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span></h2>
+				<h2>
+					<?php echo admin::reports_subtabs("comments"); ?>
+				</h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->

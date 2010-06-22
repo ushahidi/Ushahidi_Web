@@ -14,13 +14,8 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?>
-				<?php
-				foreach ($services as $service)
-				{
-					echo "<a href=\"" . url::site() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
-				}
-				?>
+				<h2>
+					<?php echo admin::messages_subtabs($service_id); ?>
 				</h2>
 				<!-- tabs -->
 				<div class="tabs">

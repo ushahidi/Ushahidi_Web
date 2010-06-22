@@ -157,13 +157,13 @@
 			<div class="nav-holder">
 				<!-- main-nav -->
 				<ul class="main-nav">
-					<?php foreach($tabs as $page => $tab_name){ ?>
+					<?php foreach($main_tabs as $page => $tab_name){ ?>
 						<li><a href="<?php echo url::site(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
 					<?php } ?>
 				</ul>
 				<!-- sub-nav -->
 				<ul class="sub-nav">
-					<?php foreach($secondary_tabs as $page => $tab_name){ ?>
+					<?php foreach($main_right_tabs as $page => $tab_name){ ?>
 						<li><a href="<?php echo url::site(); ?>admin/<?php echo $page; ?>" <?php if($this_page==$page) echo 'class="active"' ;?>><?php echo $tab_name; ?></a></li>
 					<?php } ?>
 				</ul>
