@@ -15,12 +15,13 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::base() . 'admin/settings/site' . '">' . Kohana::lang('ui_main.site') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings/sms' . '" class="active">' . Kohana::lang('ui_main.sms') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
+					<a href="<?php echo url::site() . 'admin/settings/site' . '">' . Kohana::lang('ui_main.site') . '</a>' ?>
+					<a href="<?php echo url::site() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
+					<a href="<?php echo url::site() . 'admin/settings/sms' . '" class="active">' . Kohana::lang('ui_main.sms') . '</a>' ?>
+					<a href="<?php echo url::site() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
+					<a href="<?php echo url::site() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
+					<a href="<?php echo url::site() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
+					<a href="<?php echo url::site() . 'admin/settings/cleanurl'.'">' . Kohana::lang('ui_main.cleanurl').'</a>' ?>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">
@@ -60,8 +61,8 @@
 					<!-- column -->
 		
 					<div class="sms_nav_holder">
-						<a href="<?php echo url::base() . 'admin/settings/sms' ?>" class="active"><?php echo Kohana::lang('settings.sms.option_1');?></a>
-						<a href="<?php echo url::base() . 'admin/settings/smsglobal' ?>"><?php echo Kohana::lang('settings.sms.option_2');?></a>
+						<a href="<?php echo url::site() . 'admin/settings/sms' ?>" class="active"><?php echo Kohana::lang('settings.sms.option_1');?></a>
+						<a href="<?php echo url::site() . 'admin/settings/smsglobal' ?>"><?php echo Kohana::lang('settings.sms.option_2');?></a>
 					</div>
 		
 					<div class="sms_holder">
