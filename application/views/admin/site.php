@@ -14,13 +14,8 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> 
-					<a href="<?php echo url::base() . 'admin/settings/site' . '" class="active">' . Kohana::lang('ui_main.site') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings' . '">' . Kohana::lang('ui_main.map') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings/sms' . '">' . Kohana::lang('ui_main.sms') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings/sharing' . '">' . Kohana::lang('ui_main.sharing') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings/email' . '">' . Kohana::lang('ui_main.email') . '</a>' ?>
-					<a href="<?php echo url::base() . 'admin/settings/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
+				<h2>
+					<?php echo admin::settings_subtabs("site"); ?>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">

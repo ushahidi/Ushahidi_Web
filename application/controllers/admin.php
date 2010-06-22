@@ -88,50 +88,12 @@ class Admin_Controller extends Template_Controller
 		$this->template->impact_json = '';
 
 		// Generate main tab navigation list.
-		// Key = Page (/admin/???), Val = Tab Name
-		$tabs = array(
-			'dashboard' => Kohana::lang('ui_admin.dashboard'),
-			'reports' => Kohana::lang('ui_admin.reports'),
-			'comments' => Kohana::lang('ui_admin.comments'),
-			'messages' => Kohana::lang('ui_admin.messages'),
-			'stats' => Kohana::lang('ui_admin.stats'),
-			'apilogs' => Kohana::lang('ui_admin.api_logs'),
-		);
-
-        // Generate sub navigation list (in default layout, sits on right side.
-        // Key = Page (/admin/???), Val = Tab Name
-        $secondary_tabs = array();
-        if($this->auth->logged_in('superadmin')){
-        	$secondary_tabs = array(
-        		'settings/site' => Kohana::lang('ui_admin.settings'),
-        		'manage' => Kohana::lang('ui_admin.manage'),
-        		'users' => Kohana::lang('ui_admin.users')
-        	);
-        }elseif($this->auth->logged_in('admin')){
-        	$secondary_tabs = array(
-        		'manage' => Kohana::lang('ui_admin.manage'),
-        		'users' => Kohana::lang('ui_admin.users')
-        	);
-        }
-
-        // Change tabs for MHI
-        if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '') {
-        	//Start from scratch on admin tabs since most are irrelevant
-        	$tabs = array(
-				'mhi' => Kohana::lang('ui_admin.mhi'),
-				'stats' => Kohana::lang('ui_admin.stats'),
-			);
-			$secondary_tabs = array(
-        		'users' => Kohana::lang('ui_admin.users')
-        	);
-        }
-
-        $this->template->tabs = $tabs;
-        $this->template->secondary_tabs = $secondary_tabs;
+		$this->template->main_tabs = admin::main_tabs();
+		// Generate sub navigation list (in default layout, sits on right side).
+        $this->template->main_right_tabs = admin::main_right_tabs($this->auth);
 		
 		// Load profiler
-		// $profiler = new Profiler;		
-		
+		// $profiler = new Profiler;	
     }
 
 	public function index()

@@ -14,7 +14,9 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span><a href="<?php print url::site() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a><a href="<?php print url::site() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::site() ?>admin/reports/upload"><?php echo Kohana::lang('ui_main.upload_reports');?></a></h2>
+				<h2>
+					<?php echo admin::reports_subtabs("view"); ?>
+				</h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
