@@ -15,7 +15,7 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php echo admin::settings_subtabs("map"); ?>
+					<?php admin::settings_subtabs("map"); ?>
 				</h2>
 				<?php print form::open(); ?>
 					<div class="report-form">

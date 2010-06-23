@@ -15,7 +15,7 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php echo admin::messages_subtabs($service_id); ?>
+					<?php admin::messages_subtabs($service_id); ?>
 				</h2>
 				<!-- tabs -->
 				<div class="tabs">

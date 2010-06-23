@@ -15,7 +15,7 @@
 ?>	
 		<div class="bg">
 			<h2>
-				<?php echo admin::settings_subtabs("sharing"); ?>
+				<?php admin::settings_subtabs("sharing"); ?>
 			</h2>
 			<?php
 			if ($form_error) {

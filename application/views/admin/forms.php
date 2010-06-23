@@ -15,7 +15,7 @@
 ?>	
 		<div class="bg">
 			<h2>
-				<?php echo admin::manage_subtabs("forms"); ?>
+				<?php admin::manage_subtabs("forms"); ?>
 			</h2>
 			<?php
 			if ($form_error) {

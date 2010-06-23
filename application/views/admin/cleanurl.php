@@ -15,7 +15,7 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php echo admin::settings_subtabs("cleanurl"); ?>
+					<?php admin::settings_subtabs("cleanurl"); ?>
 				</h2>
 				<?php print form::open(NULL, array('id' => 'cleanurlForm', 'name' => 'cleanurlForm','action'=> url::site().'admin/settings/cleanurl')); ?>
 				<div class="report-form">

@@ -15,7 +15,7 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php echo admin::reports_subtabs("edit"); ?>
+					<?php admin::reports_subtabs("edit"); ?>
 				</h2>
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">

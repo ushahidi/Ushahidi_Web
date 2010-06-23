@@ -16,7 +16,7 @@
 			<div class="bg">
 
 				<h2>
-					<?php echo admin::settings_subtabs("sms"); ?>
+					<?php admin::settings_subtabs("sms"); ?>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">

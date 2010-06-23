@@ -31,7 +31,8 @@ class admin_Core {
 				'dashboard' => Kohana::lang('ui_admin.dashboard'),
 				'reports' => Kohana::lang('ui_admin.reports'),
 				'messages' => Kohana::lang('ui_admin.messages'),
-				'stats' => Kohana::lang('ui_admin.stats')
+				'stats' => Kohana::lang('ui_admin.stats'),
+				'addons' => Kohana::lang('ui_admin.addons')
 			);
 		}
 	}
@@ -92,7 +93,10 @@ class admin_Core {
 		
 		$menu .= ($this_sub_page == "upload") ? Kohana::lang('ui_main.upload_reports') : "<a href=\"".url::base()."admin/reports/upload\">".Kohana::lang('ui_main.upload_reports')."</a>";
 		
-		return $menu;
+		echo $menu;
+		
+		// Action::nav_admin_reports - Add items to the admin reports navigation tabs
+		Event::run('ushahidi_action.nav_admin_reports');
 	}
 	
 	
@@ -115,7 +119,11 @@ class admin_Core {
 				$menu .= "<a href=\"" . url::site() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
 			}
 		}
-		return $menu;
+		
+		echo $menu;
+		
+		// Action::nav_admin_messages - Add items to the admin messages navigation tabs
+		Event::run('ushahidi_action.nav_admin_messages');
 	}
 	
 	
@@ -140,8 +148,12 @@ class admin_Core {
 		
 		$menu .= ($this_sub_page == "themes") ? Kohana::lang('ui_main.themes') : "<a href=\"".url::site()."admin/settings/themes\">".Kohana::lang('ui_main.themes')."</a>";
 		
-		$menu .= ($this_sub_page == "cleanurl") ? Kohana::lang('ui_main.cleanurl'):  "<a href=\"".url::site() ."admin/settings/cleanurl\">".Kohana::lang('ui_main.cleanurl')."</a>";		
-		return $menu;
+		$menu .= ($this_sub_page == "cleanurl") ? Kohana::lang('ui_main.cleanurl'):  "<a href=\"".url::site() ."admin/settings/cleanurl\">".Kohana::lang('ui_main.cleanurl')."</a>";
+		
+		echo $menu;
+		
+		// Action::nav_admin_settings - Add items to the admin settings navigation tabs
+		Event::run('ushahidi_action.nav_admin_settings');
 	}
 	
 	
@@ -170,7 +182,10 @@ class admin_Core {
 		
 		$menu .= ($this_sub_page == "scheduler") ? Kohana::lang('ui_main.scheduler') : "<a href=\"".url::site()."admin/manage/scheduler\">".Kohana::lang('ui_main.scheduler')."</a>";
 		
-		return $menu;
+		echo $menu;
+		
+		// Action::nav_admin_manage - Add items to the admin manage navigation tabs
+		Event::run('ushahidi_action.nav_admin_manage');
 	}
 	
 }
