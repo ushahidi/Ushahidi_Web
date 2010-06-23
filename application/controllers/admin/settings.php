@@ -732,11 +732,11 @@ class Settings_Controller extends Admin_Controller
 	        {
 	            // Yes! everything is valid
 				
-	        	$this->_remove_index_page($post->enable_clean_url);
-				
 				// Delete Settings Cache
 				$this->cache->delete('settings');
 				$this->cache->delete_tag('settings');
+								
+				$this->_configure_index_page($post->enable_clean_url);
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
@@ -759,8 +759,9 @@ class Settings_Controller extends Admin_Controller
 	        }
 			
 	    } else {
-	    	$yes_or_no = $this->_check_clean_url_on_ushahidi() == TRUE ? 1 : 0;
 	    	
+	    	$yes_or_no = $this->_check_clean_url_on_ushahidi() == TRUE ? 1 : 0;
+	    	// initialize form
 	    	$form = array
 		    (
 		        'enable_clean_url' => $yes_or_no,
@@ -773,6 +774,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
 		$this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
+		
 	}
 	
 
@@ -977,11 +979,11 @@ class Settings_Controller extends Admin_Controller
 	}
 	
 	/**
-	 * Removes index.php from index page variable in application/config.config.php file
+	 * Removes / Adds index.php from / to index page variable in application/config.config.php file
 	 * 
 	 * @param $yes_or_no
 	 */
-	private function _remove_index_page( $yes_or_no ) {
+	private function _configure_index_page( $yes_or_no ) {
 		
 		$config_file = @file('application/config/config.php');
 		$handle = @fopen('application/config/config.php', 'w');

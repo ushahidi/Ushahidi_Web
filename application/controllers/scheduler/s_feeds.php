@@ -38,7 +38,7 @@ class S_Feeds_Controller extends Controller {
 			$last_update = $feed->feed_update;
 			
 			// Parse Feed URL using Feed Helper
-			$feed_data = $this->_setup_simplepie( $feed->feed_url );
+			$feed_data = feed::simplepie( $feed->feed_url );
 
 			foreach($feed_data->get_items(0,50) as $feed_data_item)
 			{
@@ -120,27 +120,5 @@ class S_Feeds_Controller extends Controller {
 			$feed->feed_update = strtotime('now');
 			$feed->save();
 		}
-	}
-	
-	
-	
-	/**
-	 * setup simplepie
-	 */
-	private function _setup_simplepie( $feed_url )
-	{
-			$data = new SimplePie();
-			
-			// Convert To GeoRSS feed
-			$geocoder = new Geocoder();
-			$georss_feed = $geocoder->geocode_feed($feed_url);
-			
-			$data->set_raw_data( $georss_feed );
-			$data->enable_cache(false);
-			$data->enable_order_by_date(true);
-			$data->init();
-			$data->handle_content_type();
-
-			return $data;
 	}
 }

@@ -1040,55 +1040,43 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->level_array = Level_Model::get_array();
 		$this->template->content->service_array = Service_Model::get_array();
 
-	}	
-	/**
-	 * setup simplepie
-	 */
-	private function _setup_simplepie( $feed_url )
-	{
-		$data = new SimplePie();
-	
-		// Convert To GeoRSS feed
-		$geocoder = new Geocoder();
-		$georss_feed = $geocoder->geocode_feed($feed_url);
-	
-		$data->set_raw_data( $georss_feed );
-		$data->enable_cache(false);
-		$data->enable_order_by_date(true);
-		$data->init();
-		$data->handle_content_type();
-
-		return $data;
 	}
 
-        /**
-         * get the feed type of the feed item. 
-         */
-        private function _get_feed_type( $feed_item ) {
-          @$enclosures = $feed_item->get_enclosures();
-          if($enclosures and ($enclosures[0]->medium == 'video' || strstr($enclosures[0]->type,'video'))){
-            return FEED_TYPE_VIDEO;
-          }
-          if($enclosures and strstr($enclosures[0]->type,'image') || $enclosures[0]->medium == 'image'){
-            return FEED_TYPE_PHOTO;
-          }
+	/**
+	 * get the feed type of the feed item. 
+	 */
+	private function _get_feed_type( $feed_item )
+	{
+		@$enclosures = $feed_item->get_enclosures();
+		if($enclosures and ($enclosures[0]->medium == 'video' || strstr($enclosures[0]->type,'video')))
+		{
+			return FEED_TYPE_VIDEO;
+		}
+		if($enclosures and strstr($enclosures[0]->type,'image') || $enclosures[0]->medium == 'image')
+		{
+			return FEED_TYPE_PHOTO;
+		}
 
-          $categories = $feed_item->get_categories();
-          if(!$categories || empty($categories)){
-            return FEED_TYPE_TEXT;
-          }
-          // go through categories for the label having Report Type
-          foreach($categories as $key => $category){
-            if(!empty($category->label)){
-                $matched = strstr($category->label,'Report type');
-                if(!empty($matched)){
-                  $split_array = split(':', $category->label);
-                  return trim($split_array[1]);
-                }
-            }
-          }
-	  return FEED_TYPE_TEXT;
-        }
+		$categories = $feed_item->get_categories();
+		if(!$categories || empty($categories))
+		{
+			return FEED_TYPE_TEXT;
+		}
+		// go through categories for the label having Report Type
+		foreach($categories as $key => $category)
+		{
+			if(!empty($category->label))
+			{
+				$matched = strstr($category->label,'Report type');
+				if(!empty($matched))
+				{
+					$split_array = split(':', $category->label);
+					return trim($split_array[1]);
+				}
+			}
+		}
+		return FEED_TYPE_TEXT;
+	}
 	
 	/**
 	 * parse feed and send feed items to database
@@ -1112,7 +1100,7 @@ class Manage_Controller extends Admin_Controller
 			if ( ((int)$today - (int)$last_update) > 0	)	// 86400 = 24 hours
 			{
 				// Parse Feed URL using Feed Helper
-				$feed_data = $this->_setup_simplepie( $feed->feed_url );
+				$feed_data = feed::simplepie( $feed->feed_url );
 
 				foreach($feed_data->get_items(0,50) as $feed_data_item)
 				{
