@@ -15,7 +15,7 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php echo admin::settings_subtabs("themes"); ?>
+					<?php admin::settings_subtabs("themes"); ?>
 				</h2>
 				<?php print form::open(); ?>
 				<div class="report-form">

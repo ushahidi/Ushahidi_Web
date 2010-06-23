@@ -1,6 +1,6 @@
 		<div class="bg">
 				<h2>
-					<?php echo admin::manage_subtabs("reporters"); ?>
+					<?php admin::manage_subtabs("reporters"); ?>
 				</h2>
 				<?php
 				if ($form_error) {

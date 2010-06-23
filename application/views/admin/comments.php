@@ -15,7 +15,7 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php echo admin::reports_subtabs("comments"); ?>
+					<?php admin::reports_subtabs("comments"); ?>
 				</h2>
 				<!-- tabs -->
 				<div class="tabs">

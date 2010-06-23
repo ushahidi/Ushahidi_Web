@@ -15,7 +15,7 @@
 ?>
 <div class="bg">
 	<h2>
-		<?php echo admin::reports_subtabs("download"); ?>
+		<?php admin::reports_subtabs("download"); ?>
 	</h2>
 	<!-- report-form -->
 	<div class="report-form">

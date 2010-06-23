@@ -15,7 +15,7 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php echo admin::manage_subtabs("feeds"); ?>
+					<?php admin::manage_subtabs("feeds"); ?>
 				</h2>				
 				<!-- tabs -->
 				<div class="tabs">

@@ -92,7 +92,7 @@ class admin_Core {
 		
 		$menu .= ($this_sub_page == "upload") ? Kohana::lang('ui_main.upload_reports') : "<a href=\"".url::base()."admin/reports/upload\">".Kohana::lang('ui_main.upload_reports')."</a>";
 		
-		return $menu;
+		echo $menu;
 	}
 	
 	
@@ -115,7 +115,7 @@ class admin_Core {
 				$menu .= "<a href=\"" . url::site() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
 			}
 		}
-		return $menu;
+		echo $menu;
 	}
 	
 	
@@ -141,7 +141,7 @@ class admin_Core {
 		$menu .= ($this_sub_page == "themes") ? Kohana::lang('ui_main.themes') : "<a href=\"".url::site()."admin/settings/themes\">".Kohana::lang('ui_main.themes')."</a>";
 		
 		$menu .= ($this_sub_page == "cleanurl") ? Kohana::lang('ui_main.cleanurl'):  "<a href=\"".url::site() ."admin/settings/cleanurl\">".Kohana::lang('ui_main.cleanurl')."</a>";		
-		return $menu;
+		echo $menu;
 	}
 	
 	
@@ -170,7 +170,7 @@ class admin_Core {
 		
 		$menu .= ($this_sub_page == "scheduler") ? Kohana::lang('ui_main.scheduler') : "<a href=\"".url::site()."admin/manage/scheduler\">".Kohana::lang('ui_main.scheduler')."</a>";
 		
-		return $menu;
+		echo $menu;
 	}
 	
 }
