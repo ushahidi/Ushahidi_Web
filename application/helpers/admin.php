@@ -4,10 +4,10 @@
  *
  * $Id: valid.php 3917 2009-01-21 03:06:22Z zombor $
  *
- * @package    Core
- * @author     Kohana Team
- * @copyright  (c) 2007-2008 Kohana Team
- * @license    http://kohanaphp.com/license.html
+ * @package    Distance
+ * @author     Ushahidi Team
+ * @copyright  (c) 2008 Ushahidi Team
+ * @license    http://www.ushahidi.com/license.html
  */
 class admin_Core {
 	

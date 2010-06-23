@@ -108,7 +108,7 @@ class Geocoder_Core {
 			}
 			
 			$georss = file_get_contents($request_url);
-			$georss = utf8_encode($georss);
+			//$georss = utf8_encode($georss);
 
 			return $georss;
 			
