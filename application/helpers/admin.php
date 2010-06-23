@@ -128,18 +128,19 @@ class admin_Core {
 	{
 		$menu = "";
 		
-		$menu .= ($this_sub_page == "site") ? Kohana::lang('ui_main.site') : "<a href=\"".url::base()."admin/settings/site\">".Kohana::lang('ui_main.site')."</a>";
+		$menu .= ($this_sub_page == "site") ? Kohana::lang('ui_main.site') : "<a href=\"".url::site()."admin/settings/site\">".Kohana::lang('ui_main.site')."</a>";
 		
-		$menu .= ($this_sub_page == "map") ? Kohana::lang('ui_main.map') : "<a href=\"".url::base()."admin/settings\">".Kohana::lang('ui_main.map')."</a>";
+		$menu .= ($this_sub_page == "map") ? Kohana::lang('ui_main.map') : "<a href=\"".url::site()."admin/settings\">".Kohana::lang('ui_main.map')."</a>";
 		
-		$menu .= ($this_sub_page == "sms") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::base()."admin/settings/sms\">".Kohana::lang('ui_main.sms')."</a>";
+		$menu .= ($this_sub_page == "sms") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::site()."admin/settings/sms\">".Kohana::lang('ui_main.sms')."</a>";
 		
-		$menu .= ($this_sub_page == "sharing") ? Kohana::lang('ui_main.sharing') : "<a href=\"".url::base()."admin/settings/sharing\">".Kohana::lang('ui_main.sharing')."</a>";
+		$menu .= ($this_sub_page == "sharing") ? Kohana::lang('ui_main.sharing') : "<a href=\"".url::site()."admin/settings/sharing\">".Kohana::lang('ui_main.sharing')."</a>";
 		
-		$menu .= ($this_sub_page == "email") ? Kohana::lang('ui_main.email') : "<a href=\"".url::base()."admin/settings/email\">".Kohana::lang('ui_main.email')."</a>";
+		$menu .= ($this_sub_page == "email") ? Kohana::lang('ui_main.email') : "<a href=\"".url::site()."admin/settings/email\">".Kohana::lang('ui_main.email')."</a>";
 		
-		$menu .= ($this_sub_page == "themes") ? Kohana::lang('ui_main.themes') : "<a href=\"".url::base()."admin/settings/themes\">".Kohana::lang('ui_main.themes')."</a>";
+		$menu .= ($this_sub_page == "themes") ? Kohana::lang('ui_main.themes') : "<a href=\"".url::site()."admin/settings/themes\">".Kohana::lang('ui_main.themes')."</a>";
 		
+		$menu .= ($this_sub_page == "cleanurl") ? Kohana::lang('ui_main.cleanurl'):  "<a href=\"".url::site() ."admin/settings/cleanurl\">".Kohana::lang('ui_main.cleanurl')."</a>";		
 		return $menu;
 	}
 	
@@ -153,21 +154,21 @@ class admin_Core {
 	{
 		$menu = "";
 		
-		$menu .= ($this_sub_page == "categories") ? Kohana::lang('ui_main.categories')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::base()."admin/manage\">".Kohana::lang('ui_main.categories')."</a>";
+		$menu .= ($this_sub_page == "categories") ? Kohana::lang('ui_main.categories')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage\">".Kohana::lang('ui_main.categories')."</a>";
 		
-		$menu .= ($this_sub_page == "forms") ? Kohana::lang('ui_main.forms')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::base()."admin/manage/forms\">".Kohana::lang('ui_main.forms')."</a>";
+		$menu .= ($this_sub_page == "forms") ? Kohana::lang('ui_main.forms')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/forms\">".Kohana::lang('ui_main.forms')."</a>";
 		
-		$menu .= ($this_sub_page == "organizations") ? Kohana::lang('ui_main.organizations')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::base()."admin/manage/organizations\">".Kohana::lang('ui_main.organizations')."</a>";
+		$menu .= ($this_sub_page == "organizations") ? Kohana::lang('ui_main.organizations')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/organizations\">".Kohana::lang('ui_main.organizations')."</a>";
 		
-		$menu .= ($this_sub_page == "pages") ? Kohana::lang('ui_main.pages')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::base()."admin/manage/pages\">".Kohana::lang('ui_main.pages')."</a>";
+		$menu .= ($this_sub_page == "pages") ? Kohana::lang('ui_main.pages')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/pages\">".Kohana::lang('ui_main.pages')."</a>";
 		
-		$menu .= ($this_sub_page == "feeds") ? Kohana::lang('ui_main.news_feeds')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::base()."admin/manage/feeds\">".Kohana::lang('ui_main.news_feeds')."</a>";
+		$menu .= ($this_sub_page == "feeds") ? Kohana::lang('ui_main.news_feeds')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/feeds\">".Kohana::lang('ui_main.news_feeds')."</a>";
 		
-		$menu .= ($this_sub_page == "layers") ? Kohana::lang('ui_main.layers')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::base()."admin/manage/layers\">".Kohana::lang('ui_main.layers')."</a>";
+		$menu .= ($this_sub_page == "layers") ? Kohana::lang('ui_main.layers')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/layers\">".Kohana::lang('ui_main.layers')."</a>";
 		
-		$menu .= ($this_sub_page == "reporters") ? Kohana::lang('ui_main.reporters')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::base()."admin/manage/reporters\">".Kohana::lang('ui_main.reporters')."</a>";
+		$menu .= ($this_sub_page == "reporters") ? Kohana::lang('ui_main.reporters')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/reporters\">".Kohana::lang('ui_main.reporters')."</a>";
 		
-		$menu .= ($this_sub_page == "scheduler") ? Kohana::lang('ui_main.scheduler') : "<a href=\"".url::base()."admin/manage/scheduler\">".Kohana::lang('ui_main.scheduler')."</a>";
+		$menu .= ($this_sub_page == "scheduler") ? Kohana::lang('ui_main.scheduler') : "<a href=\"".url::site()."admin/manage/scheduler\">".Kohana::lang('ui_main.scheduler')."</a>";
 		
 		return $menu;
 	}

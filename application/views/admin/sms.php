@@ -14,6 +14,7 @@
  */
 ?>
 			<div class="bg">
+
 				<h2>
 					<?php echo admin::settings_subtabs("sms"); ?>
 				</h2>
@@ -55,8 +56,8 @@
 					<!-- column -->
 		
 					<div class="sms_nav_holder">
-						<a href="<?php echo url::base() . 'admin/settings/sms' ?>" class="active"><?php echo Kohana::lang('settings.sms.option_1');?></a>
-						<a href="<?php echo url::base() . 'admin/settings/smsglobal' ?>"><?php echo Kohana::lang('settings.sms.option_2');?></a>
+						<a href="<?php echo url::site() . 'admin/settings/sms' ?>" class="active"><?php echo Kohana::lang('settings.sms.option_1');?></a>
+						<a href="<?php echo url::site() . 'admin/settings/smsglobal' ?>"><?php echo Kohana::lang('settings.sms.option_2');?></a>
 					</div>
 		
 					<div class="sms_holder">
