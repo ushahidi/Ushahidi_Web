@@ -148,6 +148,7 @@ class admin_Core {
 		
 		$menu .= ($this_sub_page == "themes") ? Kohana::lang('ui_main.themes') : "<a href=\"".url::site()."admin/settings/themes\">".Kohana::lang('ui_main.themes')."</a>";
 		
+
 		$menu .= ($this_sub_page == "cleanurl") ? Kohana::lang('ui_main.cleanurl'):  "<a href=\"".url::site() ."admin/settings/cleanurl\">".Kohana::lang('ui_main.cleanurl')."</a>";
 		
 		echo $menu;
@@ -187,5 +188,4 @@ class admin_Core {
 		// Action::nav_admin_manage - Add items to the admin manage navigation tabs
 		Event::run('ushahidi_action.nav_admin_manage');
 	}
-	
 }
