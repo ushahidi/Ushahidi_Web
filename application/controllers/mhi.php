@@ -246,6 +246,7 @@ class MHI_Controller extends Template_Controller {
 
 	public function account()
 	{
+
 		// If not logged in, go back to the start
 
 		$session = Session::instance();
@@ -259,6 +260,10 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi/mhi_account');
 		$this->template->header->js .= new View('mhi/mhi_account_js');
+
+		// Initiate the variable that holds the message displayed on form success
+
+		$this->template->content->success_message = '';
 
 		$mhi_user = new Mhi_User_Model;
 
@@ -291,11 +296,16 @@ class MHI_Controller extends Template_Controller {
 				'password'=>$postdata_array['account_password']
 			));
 
-			// If update worked, go back to manage page
+			// If update worked, present a success message to the user
 
 			if ($update != FALSE)
 			{
-				url::redirect('mhi/manage');
+				$this->template->content->success_message = 'Success! You have updated your account.';
+
+				// Reload user information since it has changed
+
+				$this->template->content->user = $mhi_user->get($mhi_user_id);
+
 			}else{
 				$errors = array('Something went wrong with form submission. Please try again.');
 				$form_error = TRUE;

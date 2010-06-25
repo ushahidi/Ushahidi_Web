@@ -23,13 +23,15 @@
 				
 				<a href="<?php echo url::site() ?>mhi/manage">Your Sites</a>
 				
+				<?php if ($success_message != '') { ?>
+					<div style="background-color:#95C274;border:4px #8CB063 solid;padding:2px 8px 1px 8px;margin:10px;"><?php echo $success_message; ?></div>
+				<?php } ?>
+
 				<?php print form::open(url::site().'mhi/account', array('id' => 'frm-MHI-Account', 'name' => 'frm-MHI-Account', 'class' => 'frm-content')); ?>
 			
 				<table><tbody>
 			
-					<?php
-					if ($form_error) {
-					?>
+					<?php if ($form_error) { ?>
 			        <tr>
 			          	<td align="left" class="error" colspan="2">
 						<?php
