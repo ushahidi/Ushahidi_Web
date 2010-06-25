@@ -488,7 +488,7 @@ class MHI_Controller extends Template_Controller {
 
 				// Do some graceful validation
 
-				if ($post->signup_subdomain < 4 OR $post->signup_subdomain > 32)
+				if (strlen($post->signup_subdomain) < 4 OR strlen($post->signup_subdomain) > 32)
 				{
 					// ERROR: subdomain length falls outside the char length bounds allowed.
 
