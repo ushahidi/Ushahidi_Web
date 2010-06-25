@@ -96,7 +96,7 @@ class admin_Core {
 		echo $menu;
 		
 		// Action::nav_admin_reports - Add items to the admin reports navigation tabs
-		Event::run('ushahidi_action.nav_admin_reports');
+		Event::run('ushahidi_action.nav_admin_reports', $this_sub_page);
 	}
 	
 	
@@ -123,7 +123,7 @@ class admin_Core {
 		echo $menu;
 		
 		// Action::nav_admin_messages - Add items to the admin messages navigation tabs
-		Event::run('ushahidi_action.nav_admin_messages');
+		Event::run('ushahidi_action.nav_admin_messages', $service_id);
 	}
 	
 	
@@ -154,7 +154,7 @@ class admin_Core {
 		echo $menu;
 		
 		// Action::nav_admin_settings - Add items to the admin settings navigation tabs
-		Event::run('ushahidi_action.nav_admin_settings');
+		Event::run('ushahidi_action.nav_admin_settings', $this_sub_page);
 	}
 	
 	
@@ -186,6 +186,6 @@ class admin_Core {
 		echo $menu;
 		
 		// Action::nav_admin_manage - Add items to the admin manage navigation tabs
-		Event::run('ushahidi_action.nav_admin_manage');
+		Event::run('ushahidi_action.nav_admin_manage', $this_sub_page);
 	}
 }

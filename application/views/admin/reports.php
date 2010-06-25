@@ -181,8 +181,8 @@
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.categories');?>:<?php echo $incident_category; ?></li>
 											</ul>
 											<?php
-											//XXX DISABLED Until Completed
-											// echo $incident_translation;
+											// Action::report_extra_admin - Add items to the report list in admin
+											Event::run('ushahidi_action.report_extra_admin', $incident);
 											?>
 										</td>
 										<td class="col-3"><?php echo $incident_date; ?></td>

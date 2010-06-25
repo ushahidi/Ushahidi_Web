@@ -196,6 +196,7 @@ class Plugins_Controller extends Admin_Controller {
 		
 		$plugins = ORM::factory('plugin')
 			->where($filter)
+			->orderby('plugin_name', 'ASC')
 			->find_all();
 		$this->template->content->plugins = $plugins;
 		$this->template->content->total_items = $plugins->count();
