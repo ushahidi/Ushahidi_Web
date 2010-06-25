@@ -132,6 +132,8 @@ class MHI_Controller extends Template_Controller {
 			if ($mhi_user_id != FALSE)
 			{
 
+				MhiLogger::log($mhi_user_id,1);
+
 				url::redirect('mhi/manage');
 
 			}else{
@@ -306,6 +308,8 @@ class MHI_Controller extends Template_Controller {
 
 				$this->template->content->user = $mhi_user->get($mhi_user_id);
 
+				MhiLogger::log($mhi_user_id,7,'Updated to: '.$postdata_array['firstname'].' '.$postdata_array['lastname'].' '.$postdata_array['email'].' (hidden password)');
+
 			}else{
 				$errors = array('Something went wrong with form submission. Please try again.');
 				$form_error = TRUE;
@@ -319,8 +323,13 @@ class MHI_Controller extends Template_Controller {
 
 	public function logout()
 	{
+		$session = Session::instance();
+		$mhi_user_id = $session->get('mhi_user_id');
+		MhiLogger::log($mhi_user_id,2);
+
 		$mhi_user = new Mhi_User_Model;
 		$mhi_user->logout();
+
 		url::redirect('/');
 	}
 
@@ -364,6 +373,8 @@ class MHI_Controller extends Template_Controller {
 				$message .= 'The Crowdmap Team';
 
 				email::send($to,$from,$subject,$message,FALSE);
+
+				MhiLogger::log($mhi_user_id,5);
 
 				$this->template->content->reset_flag = TRUE;
 			}else{
@@ -588,6 +599,8 @@ class MHI_Controller extends Template_Controller {
 					// Log new user in
 					$mhi_user_id = $mhi_user->login($email,$password);
 
+					MhiLogger::log($mhi_user_id,6);
+
 				}
 
 				// Set up DB and Site
@@ -631,6 +644,8 @@ class MHI_Controller extends Template_Controller {
 					$message .= 'Password: (hidden)'."\n";
 
 					email::send($to,$from,$subject,$message,FALSE);
+
+					MhiLogger::log($user_id,3,'Deployment Created: '.$post->signup_instance_name);
 				}
 
 			}else{
