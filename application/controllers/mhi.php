@@ -173,6 +173,13 @@ class MHI_Controller extends Template_Controller {
 			url::redirect('/');
 		}
 
+		// Activate or deactivate a site
+
+		if(isset($_GET['deactivate']) OR isset($_GET['activate']))
+		{
+			$this->activation();
+		}
+
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi/mhi_manage');
 		$this->template->content->sites_pw_changed = array();
@@ -224,6 +231,49 @@ class MHI_Controller extends Template_Controller {
 				$db_genesis->change_admin_password($site_domains,$new_password);
 				$this->template->content->sites_pw_changed = $site_domains;
 			}
+		}
+	}
+
+	public function activation()
+	{
+
+		if( ! isset($_GET['deactivate']) AND ! isset($_GET['activate'])) return false;
+
+		$session = Session::instance();
+		$mhi_user_id = $session->get('mhi_user_id');
+
+		if(isset($_GET['deactivate']))
+		{
+			$site_domain = $_GET['deactivate'];
+			$activation = 0;
+		}else{
+			$site_domain = $_GET['activate'];
+			$activation = 1;
+		}
+
+		$mhi_site = new Mhi_Site_Model;
+
+		// Check if the logged in user is the owner of the site
+
+		$domain_owners = $mhi_site->domain_owner(array($site_domain));
+
+		// using array_unique to see if there is only one owner
+
+		$domain_owners = array_unique($domain_owners);
+
+		if(count($domain_owners) != 1)
+		{
+			// If there are more than one owner, the we shouldn't be able to change all those passwords.
+			throw new Kohana_User_Exception('Site Ownership Error', "Improper owner for site to change password.");
+		}
+
+		$domain_owner = current($domain_owners);
+
+		// If the owner of the site isn't the person updating the password for the site, there's something fishy going on
+
+		if($domain_owner == $mhi_user_id)
+		{
+			$mhi_site->activation($site_domain,$activation);
 		}
 	}
 

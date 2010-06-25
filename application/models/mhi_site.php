@@ -54,6 +54,21 @@ class mhi_site_Model extends ORM
 		return $return_array;
 	}
 
+	// This function activates or deactivates a site
+
+	static function activation($domain,$activation)
+	{
+		$result = ORM::factory('mhi_site')->where('site_domain',$domain)->find_all();
+
+		foreach ($result as $res){
+			$site = ORM::factory('mhi_site',$res->id);
+			$site->site_active = $activation;
+			$site->save();
+		}
+
+		return true;
+	}
+
 	// $a should be an assoc array including user_id, site_domain, site_privacy, site_active
 
 	static function save_site($a)
