@@ -53,7 +53,6 @@
 							<strong><?php echo Kohana::lang('ui_admin.label_email');?></strong><br />
 							<?php print form::input('email', $form['email'], ' class="text"'); ?>
 						</div>
-						<?php echo $form['user_id']; ?>
 						<?php if($form['user_id'] != 1) { ?>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_admin.label_role');?></strong><br />
