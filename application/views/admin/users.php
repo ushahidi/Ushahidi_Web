@@ -32,6 +32,7 @@
 						<?php print form::open(NULL,array('id' => 'userMain',
 						 	'name' => 'userMain')); ?>
 						<input type="hidden" id="user_id" name="user_id" value="<?php echo $form['user_id']; ?>">
+						<?php if( $form['user_id'] == 1 ) echo '<input type="hidden" id="role" name="role" value="'.$form['user_id'].'">'; ?>
 						<input type="hidden" name="action" id="action" value="a">
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_admin.label_username');?></strong><br />

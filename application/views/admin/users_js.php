@@ -24,8 +24,8 @@
 			
 			// If it is the main admin, do not allow role change
 			if(id == 1)
-			{
-				$("#role").attr("disabled", "disabled");
+			{	  	
+				$("#role").attr("disabled","disabled");
 			}
 		}
 		
