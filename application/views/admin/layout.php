@@ -101,14 +101,7 @@
 	{
 		echo html::script('media/js/tinymce/tiny_mce', true);
 	}
-	?>
-	<script type="text/javascript" charset="utf-8">
-		<?php echo $js . "\n"; ?>
-		function info_search(){
-			$("#info-search").submit();
-		}
-	</script>
-	<?php
+	
 	// Render CSS and Javascript Files from Plugins
 	plugin::render('stylesheet');
 	plugin::render('javascript');
@@ -116,6 +109,12 @@
 	// Action::header_scripts_admin - Additional Inline Scripts
 	Event::run('ushahidi_action.header_scripts_admin');
 	?>
+	<script type="text/javascript" charset="utf-8">
+		<?php echo $js . "\n"; ?>
+		function info_search(){
+			$("#info-search").submit();
+		}
+	</script>
 </head>
 <body>
 	<div class="holder">

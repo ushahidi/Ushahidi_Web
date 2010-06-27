@@ -106,6 +106,13 @@
 		//Custom stylesheet
 
 		echo html::stylesheet(url::site().'themes/'.$site_style."/style.css");
+		
+		// Render CSS and Javascript Files from Plugins
+		plugin::render('stylesheet');
+		plugin::render('javascript');
+
+		// Action::header_scripts - Additional Inline Scripts
+		Event::run('ushahidi_action.header_scripts');
 	?>
 
 	<!--[if IE 6]>
@@ -118,14 +125,6 @@
 		}
 		<?php echo $js . "\n"; ?>
 	</script>
-	<?php
-	// Render CSS and Javascript Files from Plugins
-	plugin::render('stylesheet');
-	plugin::render('javascript');
-	
-	// Action::header_scripts - Additional Inline Scripts
-	Event::run('ushahidi_action.header_scripts');
-	?>
 </head>
 
 <body id="page">
