@@ -134,7 +134,7 @@ class MHI_Controller extends Template_Controller {
 			if ($mhi_user_id != FALSE)
 			{
 
-				MhiLogger::log($mhi_user_id,1);
+				Mhi_Log_Model::log($mhi_user_id,1);
 
 				url::redirect('mhi/manage');
 
@@ -360,7 +360,7 @@ class MHI_Controller extends Template_Controller {
 
 				$this->template->content->user = $mhi_user->get($mhi_user_id);
 
-				MhiLogger::log($mhi_user_id,7,'Updated to: '.$postdata_array['firstname'].' '.$postdata_array['lastname'].' '.$postdata_array['email'].' (hidden password)');
+				Mhi_Log_Model::log($mhi_user_id,7,'Updated to: '.$postdata_array['firstname'].' '.$postdata_array['lastname'].' '.$postdata_array['email'].' (hidden password)');
 
 			}else{
 				$errors = array('Something went wrong with form submission. Please try again.');
@@ -377,7 +377,7 @@ class MHI_Controller extends Template_Controller {
 	{
 		$session = Session::instance();
 		$mhi_user_id = $session->get('mhi_user_id');
-		MhiLogger::log($mhi_user_id,2);
+		Mhi_Log_Model::log($mhi_user_id,2);
 
 		$mhi_user = new Mhi_User_Model;
 		$mhi_user->logout();
@@ -426,7 +426,7 @@ class MHI_Controller extends Template_Controller {
 
 				email::send($to,$from,$subject,$message,FALSE);
 
-				MhiLogger::log($mhi_user_id,5);
+				Mhi_Log_Model::log($mhi_user_id,5);
 
 				$this->template->content->reset_flag = TRUE;
 			}else{
@@ -651,7 +651,7 @@ class MHI_Controller extends Template_Controller {
 					// Log new user in
 					$mhi_user_id = $mhi_user->login($email,$password);
 
-					MhiLogger::log($mhi_user_id,6);
+					Mhi_Log_Model::log($mhi_user_id,6);
 
 				}
 
@@ -697,7 +697,7 @@ class MHI_Controller extends Template_Controller {
 
 					email::send($to,$from,$subject,$message,FALSE);
 
-					MhiLogger::log($user_id,3,'Deployment Created: '.$post->signup_instance_name);
+					Mhi_Log_Model::log($user_id,3,'Deployment Created: '.$post->signup_subdomain);
 				}
 
 			}else{

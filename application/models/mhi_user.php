@@ -89,6 +89,21 @@ class mhi_user_Model extends ORM
 			return $res;
 	}
 
+	// Get list of all users in an array
+
+	static function get_all_users()
+	{
+		$result = ORM::factory('mhi_user')->find_all();
+		$array = array();
+		foreach ($result as $res)
+		{
+			$array[$res->id]['email'] = $res->email;
+			$array[$res->id]['firstname'] = $res->firstname;
+			$array[$res->id]['lastname'] = $res->lastname;
+		}
+		return $array;
+	}
+
 	static function get_id($email)
 	{
 		$result = ORM::factory('mhi_user')->where('email',$email)->find_all();
