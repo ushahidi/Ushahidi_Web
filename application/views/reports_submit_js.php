@@ -189,8 +189,9 @@
 		}
 		
 		
+		var map;
+		var markers;
 		$(document).ready(function() {
-			var map;
 			var thisLayer;
 			var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 			var proj_900913 = new OpenLayers.Projection('EPSG:900913');
@@ -248,7 +249,7 @@
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
 			// Create the markers layer
-			var markers = new OpenLayers.Layer.Markers("Markers");
+			markers = new OpenLayers.Layer.Markers("Markers");
 			map.addLayer(markers);
 			
 			// create a lat/lon object

@@ -779,13 +779,8 @@ class Reports_Controller extends Admin_Controller
 					}
 				}
 				
-				
-				$event_data = array(
-						'incident' => $incident,
-						'post' => $_POST,
-						'id' => $id);
 				// Action::report_edit - Edited a Report
-				Event::run('ushahidi_action.report_edit', $event_data);
+				Event::run('ushahidi_action.report_edit', $incident);
 				
 				
 				// SAVE AND CLOSE?
