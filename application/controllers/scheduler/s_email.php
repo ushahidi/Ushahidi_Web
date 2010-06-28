@@ -25,15 +25,32 @@ class S_Email_Controller extends Controller {
 		$modules = new Modulecheck;
 		if ($modules->isLoaded('imap'))
 		{
-			$check_email = new Imap;
+			$email_username = Kohana::config('settings.email_username');
+			$email_password = Kohana::config('settings.email_password');
+			$email_host = Kohana::config('settings.email_host');
+			$email_port = Kohana::config('settings.email_port');
+			$email_servertype = Kohana::config('settings.email_servertype');
+			
+			if ( ! empty($email_username)
+			AND ! empty($email_password)
+			AND ! empty($email_host)
+			AND ! empty($email_port)
+			AND ! empty($email_servertype) )
+			{
+				$check_email = new Imap;
 
-			$messages = $check_email->get_messages();
+				$messages = $check_email->get_messages();
 
-			// Close Connection
-			$check_email->close();
+				// Close Connection
+				$check_email->close();
 
-			// Add Messages
-	        $this->add_email($messages);
+				// Add Messages
+		        $this->add_email($messages);
+			}
+			else
+			{
+				echo "Email is not configured.<BR /><BR />";
+			}
 		}
 		else
 		{

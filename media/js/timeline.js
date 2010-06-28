@@ -413,7 +413,7 @@
 				strokeWidth: "${strokeWidth}",
 				strokeOpacity: "0.3",
 				label:"${cluster_count}",
-				labelAlign: "${labelalign}",
+				//labelAlign: "${labelalign}", // IE doesn't like this for some reason
 				fontWeight: "${fontweight}",
 				fontColor: "#ffffff",
 				fontSize: "${fontsize}"

@@ -1441,7 +1441,7 @@ CREATE TABLE `mhi_category` (
     `category_title` varchar(100) CHARACTER SET utf8 NOT NULL,                      -- field description
     `category_active` tinyint(4) DEFAULT '1',                                       -- field description
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 
@@ -1459,7 +1459,7 @@ CREATE TABLE `mhi_site` (
     `site_active` tinyint(4) DEFAULT '1',                                           -- field description
     `site_dateadd` datetime NOT NULL,                                               -- field description
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 
@@ -1474,7 +1474,7 @@ CREATE TABLE `mhi_site_category` (
     `site_id` int(11) unsigned NOT NULL,                                            -- field description
     `category_id` int(11) unsigned NOT NULL,                                        -- field description
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
 
@@ -1492,7 +1492,7 @@ CREATE TABLE `mhi_site_database` (
     `port` smallint(6) NOT NULL,                                                    -- field description
     `database` varchar(30) CHARACTER SET utf8 NOT NULL,                             -- field description
   PRIMARY KEY (`mhi_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 COMMENT='This table holds DB credentials for MHI instances';
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='This table holds DB credentials for MHI instances';
 
 
 
@@ -1509,7 +1509,48 @@ CREATE TABLE `mhi_users` (
     `lastname` varchar(30) CHARACTER SET utf8 NOT NULL,                             -- field description
     `password` varchar(40) CHARACTER SET utf8 NOT NULL,                             -- field description
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+
+/**
+* Table structure for table `mhi_log`
+* 
+*/
+
+CREATE TABLE `mhi_log` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `user_id` int(11) NOT NULL,
+  `action_id` int(11) NOT NULL,
+  `notes` varchar(255) NOT NULL,
+  `ip` int(10) NOT NULL,
+  `time` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
+
+
+/**
+* Table structure for table `mhi_log_actions`
+* 
+*/
+
+CREATE TABLE `mhi_log_actions` (
+  `int` int(11) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY  (`int`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `mhi_log_actions` (`int`, `description`) VALUES
+(1, 'Logged in'),
+(2, 'Logged out'),
+(3, 'Created a deployment'),
+(4, 'Disabled a deployment'),
+(5, 'Password reset'),
+(6, 'New user created'),
+(7, 'Updated account information');
 
 
 
