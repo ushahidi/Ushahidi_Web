@@ -100,7 +100,7 @@
 
 		if (Kohana::config('settings.allow_feed'))
 		{
-			echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://" . $_SERVER['SERVER_NAME'] . "/feed/\" title=\"RSS2\" />";
+			echo "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".url::site()."feed/\" title=\"RSS2\" />";
 		}
 
 		//Custom stylesheet

@@ -22,8 +22,9 @@ class Api_Controller extends Controller {
 	private $responseType; //type of response, either json or xml as specified, defaults to json in set in __construct
 	private $error_messages; // validation error messages
 	private $messages = array(); // form validation error messages
+	private $domain; // the domain name of the calling site
 	protected $table_prefix; // Table Prefix
-
+	
 	/**
 	 * constructor
 	*/
@@ -32,7 +33,16 @@ class Api_Controller extends Controller {
 		$this->db = new Database;
 		$this->list_limit = '20';
 		$this->responseType = 'json';
+		$this->domain = $this->_getDomain();
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
+	}
+	
+	// get the FQDN
+	function _getDomain() {
+		$domain = ((empty($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] === 'off') ? 
+			'http' : 'https').'://'.$_SERVER['SERVER_NAME'];
+		
+		return $domain;
 	}
 
 	/**
@@ -477,6 +487,7 @@ class Api_Controller extends Controller {
 		$xml->startDocument('1.0', 'UTF-8');
 		$xml->startElement('response');
 		$xml->startElement('payload');
+		$this->writeElement('domain',$this->domain);
 		$xml->startElement('incidents');
 
 		//find incidents
@@ -573,7 +584,7 @@ class Api_Controller extends Controller {
 
 		//create the json array
 		$data = array(
-			"payload" => array("incidents" => $json_incidents),
+			"payload" => array("domain" => $this->domain,"incidents" => $json_incidents),
 			"error" => $this->_getErrorMsg(0)
 		);
 
@@ -689,19 +700,19 @@ class Api_Controller extends Controller {
 		$ret_value = $this->_submit();
 		if($ret_value == 0 ){
 			$reponse = array(
-				"payload" => array("success" => "true"),
+				"payload" => array("domain" => $this->domain,"success" => "true"),
 				"error" => $this->_getErrorMsg(0)
 			);
 			//return;
 			//return $this->_incidentById();
 		} else if( $ret_value == 1 ) {
 			$reponse = array(
-				"payload" => array("success" => "false"),
+				"payload" => array("domain" => $this->domain,"success" => "false"),
 				"error" => $this->_getErrorMsg(003,'',$this->error_messages)
 			);
 		} else {
 			$reponse = array(
-				"payload" => array("success" => "false"),
+				"payload" => array("domain" => $this->domain,"success" => "false"),
 				"error" => $this->_getErrorMsg(004)
 			);
 		}
@@ -1015,7 +1026,7 @@ class Api_Controller extends Controller {
 			$media->save(); //save the thing
 
 			//SUCESS!!!
-			$ret = array("payload" => array("success" => "true"),"error" => $this->_getErrorMsg(0));
+			$ret = array("payload" => array("domain" => $this->domain,"success" => "true"),"error" => $this->_getErrorMsg(0));
 
 			if($this->responseType == 'json'){
 				return json_encode($ret);
@@ -1068,7 +1079,7 @@ class Api_Controller extends Controller {
 
 		//create the json array
 		$data = array(
-			"payload" => array("categories" => $json_categories),
+			"payload" => array("domain" => $this->domain,"categories" => $json_categories),
 			"error" => $this->_getErrorMsg(0)
 		);
 
@@ -1116,7 +1127,7 @@ class Api_Controller extends Controller {
 
 		//create the json array
 		$data = array(
-			"payload" => array("categories" => $json_categories),
+			"payload" => array("domain" => $this->domain,"categories" => $json_categories),
 			"error" => $this->_getErrorMsg(0)
 		);
 
@@ -1180,7 +1191,7 @@ class Api_Controller extends Controller {
 
 		//create the json array
 		$data = array(
-			"payload" => array("locations" => $json_locations),
+			"payload" => array("domain" => $this->domain,"locations" => $json_locations),
 			"error" => $this->_getErrorMsg(0)
 		);
 
@@ -1224,7 +1235,7 @@ class Api_Controller extends Controller {
 		}
 
 		//create the json array
-		$data = array("payload" => array("services" => $json_services),"error" => $this->_getErrorMsg(0));
+		$data = array("payload" => array("domain" => $this->domain,"services" => $json_services),"error" => $this->_getErrorMsg(0));
 
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
@@ -1266,7 +1277,7 @@ class Api_Controller extends Controller {
 		}
 
 		//create the json array
-		$data = array("payload" => array("mapcenters" => $json_mapcenters),"error" => $this->_getErrorMsg(0));
+		$data = array("payload" => array("domain" => $this->domain,"mapcenters" => $json_mapcenters),"error" => $this->_getErrorMsg(0));
 
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
@@ -1301,7 +1312,7 @@ class Api_Controller extends Controller {
 		}
 
 		//create the json array
-		$data = array("payload" => array("geographic_midpoint" => $json_latlon),"error" => $this->_getErrorMsg(0));
+		$data = array("payload" => array("domain" => $this->domain,"geographic_midpoint" => $json_latlon),"error" => $this->_getErrorMsg(0));
 
 		if($this->responseType == 'json') {
 			$retJsonOrXml = $this->_arrayAsJSON($data);
@@ -1335,7 +1346,7 @@ class Api_Controller extends Controller {
 		}
 
 		//create the json array
-		$data = array("payload" => array("count" => $json_count),"error" => $this->_getErrorMsg(0));
+		$data = array("payload" => array("domain" => $this->domain,"count" => $json_count),"error" => $this->_getErrorMsg(0));
 
 		if($this->responseType == 'json') {
 			$retJsonOrXml = $this->_arrayAsJSON($data);
@@ -1363,7 +1374,7 @@ class Api_Controller extends Controller {
 		}
 
 		//create the json array
-		$data = array("payload" => array("version" => $json_version),"error" => $this->_getErrorMsg(0));
+		$data = array("payload" => array("domain" => $this->domain,"version" => $json_version),"error" => $this->_getErrorMsg(0));
 
 		if($this->responseType == 'json') {
 			$retJsonOrXml = $this->_arrayAsJSON($data);
@@ -1437,7 +1448,7 @@ class Api_Controller extends Controller {
 		}
 
 		//create the json array
-		$data = array("payload" => array("countries" => $json_countries),"error" => $this->_getErrorMsg(0));
+		$data = array("payload" => array("domain" => $this->domain,"countries" => $json_countries),"error" => $this->_getErrorMsg(0));
 
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
@@ -1594,18 +1605,18 @@ class Api_Controller extends Controller {
 				$return_array = $sharing->share_edit($sharing_session, $sharing_key, $sharing_site_name,
 				$sharing_email, $sharing_url);
 				if ( $return_array["success"] === TRUE ){
-					$data = array("payload" => array("success" => "true"),"error" => $this->_getErrorMsg(0));
+					$data = array("payload" => array("domain" => $this->domain,"success" => "true"),"error" => $this->_getErrorMsg(0));
 				} else {
-					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
+					$data = array("payload" => array("domain" => $this->domain,"success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
 				}
 				break;
 
 			case "request": 	// Handle Request For Data
 				$return_array = $sharing->share_send($sharing_session, $sharing_key, $sharing_site_name, $sharing_email, $sharing_url);
 				if ( $return_array["success"] === TRUE ){
-					$data = array("payload" => array("success" => "true"),"error" => $this->_getErrorMsg(0));
+					$data = array("payload" => array("domain" => $this->domain,"success" => "true"),"error" => $this->_getErrorMsg(0));
 				} else {
-					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
+					$data = array("payload" => array("domain" => $this->domain,"success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
 				}
 				break;
 
@@ -1613,14 +1624,14 @@ class Api_Controller extends Controller {
 				$return_array = $sharing->share_incoming($sharing_session, $sharing_key, $sharing_site_name,
 				$sharing_email, $sharing_url, $sharing_data);
 				if ( $return_array["success"] === TRUE ){
-					$data = array("payload" => array("success" => "true"),"error" => $this->_getErrorMsg(0));
+					$data = array("payload" => array("domain" => $this->domain,"success" => "true"),"error" => $this->_getErrorMsg(0));
 				} else {
-					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
+					$data = array("payload" => array("domain" => $this->domain,"success" => "false"),"error" => $this->_getErrorMsg(003, '', $return_array["debug"]));	// Request Failed
 				}
 				break;
 
 				default:
-					$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(002));	// Invalid Request
+					$data = array("payload" => array("domain" => $this->domain,"success" => "false"),"error" => $this->_getErrorMsg(002));	// Invalid Request
 		}
 		return $this->_arrayAsJSON($data);
 	}
@@ -1632,9 +1643,9 @@ class Api_Controller extends Controller {
 	function _validate($session){
 		$sharing = new Sharing();
 		if ($sharing->share_validate($session)){
-			$data = array("payload" => array("success" => "true"),"error" => $this->_getErrorMsg(0));
+			$data = array("payload" => array("domain" => $this->domain,"success" => "true"),"error" => $this->_getErrorMsg(0));
 		} else {
-			$data = array("payload" => array("success" => "false"),"error" => $this->_getErrorMsg(005));	// Request Failed
+			$data = array("payload" => array("domain" => $this->domain,"success" => "false"),"error" => $this->_getErrorMsg(005));	// Request Failed
 		}
 		return $this->_arrayAsJSON($data);
 	}
@@ -1792,7 +1803,7 @@ class Api_Controller extends Controller {
 
 				// success!
 				$reponse = array(
-					"payload" => array("success" => "true"),
+					"payload" => array("domain" => $this->domain,"success" => "true"),
 					"error" => $this->_getErrorMsg(0)
 				);
 
@@ -1801,7 +1812,7 @@ class Api_Controller extends Controller {
 			{
 				// Required parameters are missing or invalid
 				$reponse = array(
-					"payload" => array("success" => "false"),
+					"payload" => array("domain" => $this->domain,"success" => "false"),
 					"error" => $this->_getErrorMsg(002)
 				);
 			}
@@ -1811,7 +1822,7 @@ class Api_Controller extends Controller {
 		{
 			// Authentication Failed. Invalid User or App Key
 			$reponse = array(
-				"payload" => array("success" => "false"),
+				"payload" => array("domain" => $this->domain,"success" => "false"),
 				"error" => $this->_getErrorMsg(005)
 			);
 		}

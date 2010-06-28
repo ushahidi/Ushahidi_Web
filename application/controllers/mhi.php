@@ -132,6 +132,8 @@ class MHI_Controller extends Template_Controller {
 			if ($mhi_user_id != FALSE)
 			{
 
+				MhiLogger::log($mhi_user_id,1);
+
 				url::redirect('mhi/manage');
 
 			}else{
@@ -169,6 +171,13 @@ class MHI_Controller extends Template_Controller {
 			// If the user is not logged in, go home.
 
 			url::redirect('/');
+		}
+
+		// Activate or deactivate a site
+
+		if(isset($_GET['deactivate']) OR isset($_GET['activate']))
+		{
+			$this->activation();
 		}
 
 		$this->template->header->this_body = '';
@@ -225,6 +234,49 @@ class MHI_Controller extends Template_Controller {
 		}
 	}
 
+	public function activation()
+	{
+
+		if( ! isset($_GET['deactivate']) AND ! isset($_GET['activate'])) return false;
+
+		$session = Session::instance();
+		$mhi_user_id = $session->get('mhi_user_id');
+
+		if(isset($_GET['deactivate']))
+		{
+			$site_domain = $_GET['deactivate'];
+			$activation = 0;
+		}else{
+			$site_domain = $_GET['activate'];
+			$activation = 1;
+		}
+
+		$mhi_site = new Mhi_Site_Model;
+
+		// Check if the logged in user is the owner of the site
+
+		$domain_owners = $mhi_site->domain_owner(array($site_domain));
+
+		// using array_unique to see if there is only one owner
+
+		$domain_owners = array_unique($domain_owners);
+
+		if(count($domain_owners) != 1)
+		{
+			// If there are more than one owner, the we shouldn't be able to change all those passwords.
+			throw new Kohana_User_Exception('Site Ownership Error', "Improper owner for site to change password.");
+		}
+
+		$domain_owner = current($domain_owners);
+
+		// If the owner of the site isn't the person updating the password for the site, there's something fishy going on
+
+		if($domain_owner == $mhi_user_id)
+		{
+			$mhi_site->activation($site_domain,$activation);
+		}
+	}
+
 	public function about()
 	{
 		$this->template->header->this_body = 'crowdmap-about';
@@ -246,6 +298,7 @@ class MHI_Controller extends Template_Controller {
 
 	public function account()
 	{
+
 		// If not logged in, go back to the start
 
 		$session = Session::instance();
@@ -259,6 +312,10 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi/mhi_account');
 		$this->template->header->js .= new View('mhi/mhi_account_js');
+
+		// Initiate the variable that holds the message displayed on form success
+
+		$this->template->content->success_message = '';
 
 		$mhi_user = new Mhi_User_Model;
 
@@ -291,11 +348,18 @@ class MHI_Controller extends Template_Controller {
 				'password'=>$postdata_array['account_password']
 			));
 
-			// If update worked, go back to manage page
+			// If update worked, present a success message to the user
 
 			if ($update != FALSE)
 			{
-				url::redirect('mhi/manage');
+				$this->template->content->success_message = 'Success! You have updated your account.';
+
+				// Reload user information since it has changed
+
+				$this->template->content->user = $mhi_user->get($mhi_user_id);
+
+				MhiLogger::log($mhi_user_id,7,'Updated to: '.$postdata_array['firstname'].' '.$postdata_array['lastname'].' '.$postdata_array['email'].' (hidden password)');
+
 			}else{
 				$errors = array('Something went wrong with form submission. Please try again.');
 				$form_error = TRUE;
@@ -309,8 +373,13 @@ class MHI_Controller extends Template_Controller {
 
 	public function logout()
 	{
+		$session = Session::instance();
+		$mhi_user_id = $session->get('mhi_user_id');
+		MhiLogger::log($mhi_user_id,2);
+
 		$mhi_user = new Mhi_User_Model;
 		$mhi_user->logout();
+
 		url::redirect('/');
 	}
 
@@ -354,6 +423,8 @@ class MHI_Controller extends Template_Controller {
 				$message .= 'The Crowdmap Team';
 
 				email::send($to,$from,$subject,$message,FALSE);
+
+				MhiLogger::log($mhi_user_id,5);
 
 				$this->template->content->reset_flag = TRUE;
 			}else{
@@ -488,7 +559,7 @@ class MHI_Controller extends Template_Controller {
 
 				// Do some graceful validation
 
-				if ($post->signup_subdomain < 4 OR $post->signup_subdomain > 32)
+				if (strlen($post->signup_subdomain) < 4 OR strlen($post->signup_subdomain) > 32)
 				{
 					// ERROR: subdomain length falls outside the char length bounds allowed.
 
@@ -578,6 +649,8 @@ class MHI_Controller extends Template_Controller {
 					// Log new user in
 					$mhi_user_id = $mhi_user->login($email,$password);
 
+					MhiLogger::log($mhi_user_id,6);
+
 				}
 
 				// Set up DB and Site
@@ -621,6 +694,8 @@ class MHI_Controller extends Template_Controller {
 					$message .= 'Password: (hidden)'."\n";
 
 					email::send($to,$from,$subject,$message,FALSE);
+
+					MhiLogger::log($user_id,3,'Deployment Created: '.$post->signup_instance_name);
 				}
 
 			}else{

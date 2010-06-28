@@ -37,7 +37,10 @@
 					<tr>
 						<td><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>" target="_blank"><?php echo $site->site_domain.'.'.$domain_name; ?></a></td>
 						<td><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>" target="_blank">Homepage</a> <a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>admin" target="_blank">Admin</a></td>
-						<td><?php if($site->site_active == 1) { echo 'Active'; }else{ echo 'Pending Activation'; } ?></td>
+						<td>
+							<strong><?php if($site->site_active == 1) { ?> Active <?php }else{ ?> Deactivated <?php } ?></strong>
+							<div style="font-size:xx-small;"><?php if($site->site_active == 1) { ?> <a href="?deactivate=<?php echo $site->site_domain; ?>">Deactivate</a> <?php }else{ ?> <a href="?activate=<?php echo $site->site_domain; ?>">Activate</a> <?php } ?></div>
+						</td>
 						<td>
 							<?php if(in_array($site->site_domain,$sites_pw_changed)) { ?>
 								<strong>* Password Changed</strong>

@@ -79,15 +79,9 @@ class Users_Controller extends Admin_Controller
 					$post->add_error('role', 'values');
 				}
 				
-				// Prevent modification of the admin users role to user role
-				if ($post->username == 'admin' && $post->role == 'login' && 
-					$post->role == 'superadmin') {
-					$post->add_error('username', 'admin');
-				}
-				
-				// Prevent modification of the super admin role to user role
-				if ($post->username == 'admin' && $post->role == 'login' && 
-					$post->role == 'superadmin') {
+				// Prevent modification of the super admin role to login role or admin
+				if ($post->username == 'admin' && ( $post->role == 'login' || 
+					$post->role == 'admin' ) ) {
 					$post->add_error('username', 'superadmin');
 				}
 			}
@@ -241,6 +235,10 @@ class Users_Controller extends Admin_Controller
 		if( $users->username_exists($post->username) )
 			$post->add_error( 'username', 'exists');
 	}
+	
+	/**
+	 * Check if 
+	 */
 	
 	/**
 	 * Checks if email address is associated with an account.
