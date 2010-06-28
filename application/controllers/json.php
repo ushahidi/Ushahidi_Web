@@ -393,7 +393,7 @@ class Json_Controller extends Template_Controller
 			$query = $db->query("SELECT DISTINCT i.*, l.`latitude`, l.`longitude`, 
 			((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance 
 			 FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1 $filter 
-			HAVING distance<='62'
+			HAVING distance<='20'
 			 ORDER BY i.`id` ASC ");
 
 			foreach ($query as $row)
