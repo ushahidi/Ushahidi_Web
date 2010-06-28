@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ * fr_FR
+ */
+
 $lang = array(
 	'about' => 'à propos de',
 	'alerts' => 'Recevoir des alertes',
@@ -16,18 +23,18 @@ $lang = array(
 	'alerts_step2_send_alerts' => '<strong>2e pas:</strong> Envoyer des alertes à mon:',
 	'all' => 'Tout',
 	'all_categories' => 'Toutes catégories',
-  'allowed' => 'Permis',
-  'and' => 'et',
-  'approve' => 'Approuve',
-  'approve_this_report' => 'Approuver ce rapport',
-  'approved' => 'Approuvé',
-  'approved_reports' => 'Rapports approuvés',
+	'allowed' => 'Permis',
+	'and' => 'et',
+	'approve' => 'Approuve',
+	'approve_this_report' => 'Approuver ce rapport',
+	'approved' => 'Approuvé',
+	'approved_reports' => 'Rapports approuvés',
 	'blog' => 'Blog',
 	'category_filter' => 'Filtre des catégories',
 	'close' => 'Fermer',
 	'clusters' => 'Groupes',
 	'contact' => 'Contactez-nous',
-	'copyright' => 'Copyright © 2009 Ushahidi.com. Tous droits réservés.',
+	'copyright' => 'Copyright © 2010 Ushahidi.com. Tous droits réservés.',
 	'date' => 'DATE',
 	'date' => 'Date',
 	'feedback' => 'Rétroaction',
@@ -38,7 +45,7 @@ $lang = array(
 	'incidents_listed' => 'Incidents <span>(sur la carte ci-dessus, énumérés chronologiquement)</span>',
 	'location' => 'LIEU',
 	'media_filter' => 'FILTRE DES MÉDIAS',
-	'modify_date' => 'Changer Date'
+	'modify_date' => 'Changer Date',
 	'news' => 'Nouvelles',
 	'official_news' => 'Nouvelles officielles et actualité',
 	'pictures' => 'Photos',
@@ -68,7 +75,7 @@ $lang = array(
 	'submit' => 'Soumettre un incident',
 	'submit_sms' => 'Envoyer par SMS',
 	'submit_sms1' => 'Envoyez votre SMS au',
-	'submit_sms2' => 'sur votre téléphone',	
+	'submit_sms2' => 'sur votre téléphone',
 	'time' => 'heure',
 	'title' => 'TITRE',
 	'video' => 'Vidéo',

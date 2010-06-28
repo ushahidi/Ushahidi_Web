@@ -2,9 +2,11 @@
 /**
  * FRONT END USER INTERFACE INTERNATIONALIZATION
  * Strings associated with the front end UI
+ * sw_KE
  */
 
 $lang = array(
+	'all_categories' => 'Cateories Zote',
 	'search' => 'SAKA',
 	'home' => 'Ushahidi',
 	'reports' => 'Ripoti',
@@ -15,13 +17,13 @@ $lang = array(
 	'alerts' => 'Pata Tahadhari',
 	'help' => 'Vile Kusaidia',
 	'report_an_incident' => 'Ripoti Tukio',
-        'how_to_report' => 'VILE KUPIGA RIPOTI',
+	'how_to_report' => 'VILE KUPIGA RIPOTI',
 	'about' => 'Kuhusu ',
 	'contact' => 'Wasiliana Nasi',
 	'blog' => 'Blogi',
 	'feedback' => 'Provide Feedback',
-	'copyright' => 'Copyright © 2009 Ushahidi.com. All Rights Reserved..',
-        'category_filter' => 'Kichuja Jamii',
+	'copyright' => 'Copyright © 2010 Ushahidi.com. All Rights Reserved..',
+	'category_filter' => 'Kichuja Jamii',
 	'media_filter' => 'KICHUJIO',
 	'news' => 'Habari',
 	'pictures' => 'Picha',
@@ -36,7 +38,7 @@ $lang = array(
 	'official_news' => 'Rasmi &amp; habari mpya',
 	'source' => 'SOURCE',
 	'date' => 'Tarehe',
-        'close' => 'Funga',
+	'close' => 'Funga',
 	'reports_submit_new' => 'Wasilisha Ripoti Mpya',
 	'reports_title' => 'Kichwa cha Ripoti',
 	'reports_description' => 'Ufafanuzi',
@@ -69,5 +71,5 @@ $lang = array(
 	'alerts_rss' => 'Vitawanyiko vya RSS (nakii kisara kilicho chini)',
 	'alerts_btn_send' => 'Save My Alert',
 	'alert_confirm_previous' => 'Confirm A Previous Alert Request',
-    'modify_date' => 'Modify Date'
+	'modify_date' => 'Modify Date'
 );
