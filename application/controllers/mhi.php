@@ -54,6 +54,8 @@ class MHI_Controller extends Template_Controller {
 			$this->template->footer  = new View('mhi/mhi_footer');
 		}
 
+		$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
+
 		$this->template->header->site_name = Kohana::config('settings.site_name');
 
 		// Initialize JS variables. js_files is an array of ex: html::script('media/js/jquery.validate.min');

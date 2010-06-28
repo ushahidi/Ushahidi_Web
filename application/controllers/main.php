@@ -135,7 +135,7 @@ class Main_Controller extends Template_Controller {
         // $profiler = new Profiler;
 
         // Get tracking javascript for stats
-		$this->template->footer->ushahidi_stats = $this->_ushahidi_stats();
+		$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
 	}
 
 	public function index()
@@ -384,55 +384,6 @@ class Main_Controller extends Template_Controller {
 		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
 	}
-
-	/*
-	* Ushahidi Stats HTML/JavaScript
-    * @return mixed  Return ushahidi stats HTML code.
-	*/
-	private function _ushahidi_stats( )
-	{
-		// Make sure cURL is installed
-		if (!function_exists('curl_exec')) {
-			throw new Kohana_Exception('footer.cURL_not_installed');
-			return false;
-		}
-
-		$settings = ORM::factory('settings', 1);
-		$stat_id = $settings->stat_id;
-
-		if($stat_id == 0) return '';
-		$url = 'http://tracker.ushahidi.com/px.php?task=tc&siteid='.$stat_id;
-
-		$curl_handle = curl_init();
-		curl_setopt($curl_handle,CURLOPT_URL,$url);
-		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
-		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); // Set cURL to store data in variable instead of print
-		$buffer = curl_exec($curl_handle);
-		curl_close($curl_handle);
-
-		try {
-			$tag = @simplexml_load_string($buffer); // This works because the tracking code is only wrapped in one tag
-		} catch (Exception $e) {
-			// In case the xml was malformed for whatever reason, we will just guess what the tag should be here
-			$tag = '<!-- Piwik -->
-					<script type="text/javascript">
-					var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracker.ushahidi.com/piwik/" : "http://tracker.ushahidi.com/piwik/");
-					document.write(unescape("%3Cscript src=\'" + pkBaseURL + "piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));
-					</script><script type="text/javascript">
-					try {
-					  var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", '.$stat_id.');
-					  piwikTracker.trackPageView();
-					  piwikTracker.enableLinkTracking();
-					} catch( err ) {}
-					</script><noscript><p><img src="http://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'" style="border:0" alt=""/></p></noscript>
-					<!-- End Piwik Tag -->
-					';
-		}
-
-		return $tag;
-
-	}
-
 
 	/*
 	* Google Analytics
