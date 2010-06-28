@@ -272,7 +272,7 @@
 			var endTime = <?php echo $active_endDate ?>;		// Default to most active month
 					
 			// get the closest existing dates in the selection options
-			var options = $('#startDate > optgroup > option').map(function()
+			options = $('#startDate > optgroup > option').map(function()
 			{
 				return $(this).val(); 
 			});
