@@ -52,7 +52,12 @@ class mhi_log_Model extends ORM
 		$result = ORM::factory('mhi_log')->find_all($limit,$offset);
 		foreach ($result as $res)
 		{
-			$array[$res->id]['email'] = $users[$res->user_id]['email'];
+			if($res->user_id != 0)
+			{
+				$array[$res->id]['email'] = $users[$res->user_id]['email'];
+			} else {
+				$array[$res->id]['email'] = 'unknown';
+			}
 			$array[$res->id]['action'] = $actions[$res->action_id];
 			$array[$res->id]['notes'] = $res->notes;
 			$array[$res->id]['ip'] = Mhi_Log_Model::_int_oct($res->ip);
