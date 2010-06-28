@@ -58,7 +58,7 @@
         <div id="secondary-content">
         	<div class="twocol-left">
             	<h3>What Exactly Is Crowdmap?</h3>
-                <p style="font-style:italic"><img src="<?php echo url::site(); ?>media/img/mhi/powered-by-ushahidi.png" style="float:left; margin:0 14px 10px 0;" />Crowdmap is designed and built by the people behind Ushahidi, a platform that was originally built to crowdsource crisis information. As the platform has evolved, so have  its uses. Crowdmap allows you to set up your own instance of Ushahidi without having to install it on your own web server.
+                <p style="font-style:italic"><img src="<?php echo url::site(); ?>media/img/mhi/powered-by-ushahidi.png" style="float:left; margin:0 14px 10px 0;" />Crowdmap is designed and built by the people behind Ushahidi, a platform that was originally built to crowdsource crisis information. As the platform has evolved, so have  its uses. Crowdmap allows you to set up your own deployment of Ushahidi without having to install it on your own web server.
                 </p>
             </div>
             <div class="twocol-right">

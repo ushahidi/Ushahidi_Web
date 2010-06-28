@@ -6,7 +6,7 @@ $lang = array
 	(
 		'required'	=> 'Veuillez spécifier l\'URL du site.',
 		'url'		=> 'L\'URL du site est incorrecte.',
-		'valid'	=> 'L\'URL ne pointe pas vers une instance valide d\'Ushahidi, ou bien celle-ci n\'est pas en mode partage.',
+		'valid'	=> 'L\'URL ne pointe pas vers une deployment valide d\'Ushahidi, ou bien celle-ci n\'est pas en mode partage.',
 		'exists'	=> 'L\'URL du site existe déjà.',
 		'edit'	=> 'Vous ne pouvez pas changer l\'URL du site. Le partage doit être annulé et une nouvelle requête de partage doit être faite.'
 	),

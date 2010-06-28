@@ -17,7 +17,7 @@
             <div class="twocol-left"><div class="content-shadow">
                 <h2>Account Settings</h2>
 		
-				<a href="<?php echo url::site() ?>mhi/signup">Create New Instance</a>
+				<a href="<?php echo url::site() ?>mhi/signup">Create New Deployment</a>
 				
 				<a href="<?php echo url::site() ?>mhi/account">Account Settings</a>
 				

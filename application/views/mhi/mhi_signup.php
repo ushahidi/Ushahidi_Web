@@ -19,7 +19,7 @@
             	<?php if($logged_in == FALSE){ ?>
             	
             		<h2>Sign up for your free Crowdmap account</h2>
-                	<p>Fill out the form below to set up your own instance of Crowdmap.</p>
+                	<p>Fill out the form below to set up your own deployment of Crowdmap.</p>
                 	
                 	<?php print form::open(url::site().'mhi/signup', array('id' => 'frm-MHI-Signup', 'name' => 'frm-MHI-Signup', 'class' => 'frm-content')); ?>
                 
@@ -60,8 +60,8 @@
 			        
 			        <?php }else{ ?>
 			        
-			        <h2>Create a new instance</h2>
-                	<p>Fill out the form below to set up a new instance on your account.</p>
+			        <h2>Create a new deployment</h2>
+                	<p>Fill out the form below to set up a new deployment on your account.</p>
                 	
                 	<?php print form::open(url::site().'mhi/signup', array('id' => 'frm-MHI-Signup', 'name' => 'frm-MHI-Signup', 'class' => 'frm-content')); ?>
 			        
@@ -80,8 +80,8 @@
                     
                     <hr />
                     
-                    <img src="<?php echo url::site(); ?>media/img/mhi/step-2.gif" align="left"  class="step"/> <h2 class="step-2">Create Your Instance Address</h2>
-                    <p class="desc">Each instance has it's own web address. <strong>No spaces, use letters and numbers only.</strong></p>
+                    <img src="<?php echo url::site(); ?>media/img/mhi/step-2.gif" align="left"  class="step"/> <h2 class="step-2">Create Your Deployment Address</h2>
+                    <p class="desc">Each deployment has it's own web address. <strong>No spaces, use letters and numbers only.</strong></p>
        				<p class="url">http://<input type="text" size="20" onfocus="this.style.color = 'black'" name="signup_subdomain" maxwidth="30" id="signup_subdomain" value="<?php echo $form['signup_subdomain']; ?>"/>.<?php echo $domain_name; ?></p>
        				
        				<?php if(isset($form_error['signup_subdomain'])) { ?>
@@ -90,17 +90,17 @@
                     
                     <hr />
                     
-                    <img src="<?php echo url::site(); ?>media/img/mhi/step-3.gif" align="left" class="step" /> <h2 class="step-3">Enter Your Instance Details</h2>
+                    <img src="<?php echo url::site(); ?>media/img/mhi/step-3.gif" align="left" class="step" /> <h2 class="step-3">Enter Your Deployment Details</h2>
                     <p>
-			        	<label for="signup_instance_name">Instance Name</label><br/>
+			        	<label for="signup_instance_name">Deployment Name</label><br/>
 			        	<input type="text" size="30" name="signup_instance_name" maxlength="100" id="signup_instance_name" value="<?php echo $form['signup_instance_name']; ?>" autocomplete="off"/>
 			        </p>
 			        <p>
-			        	<label for="signup_instance_tagline">Instance Tagline</label><br/>
+			        	<label for="signup_instance_tagline">Deployment Tagline</label><br/>
 			        	<input type="text" size="30" name="signup_instance_tagline" maxlength="100" id="signup_instance_tagline" value="<?php echo $form['signup_instance_tagline']; ?>" autocomplete="off"/>
 			        </p>
 			        <p>
-			        	<input class="button" type="submit" value="Finish &amp; Create Instance" />
+			        	<input class="button" type="submit" value="Finish &amp; Create Deployment" />
 			        </p>
 
             <?php print form::close(); ?>
