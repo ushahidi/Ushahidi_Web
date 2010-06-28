@@ -93,11 +93,11 @@
                     <img src="<?php echo url::site(); ?>media/img/mhi/step-3.gif" align="left" class="step" /> <h2 class="step-3">Enter Your Instance Details</h2>
                     <p>
 			        	<label for="signup_instance_name">Instance Name</label><br/>
-			        	<input type="text" size="30" name="signup_instance_name" maxlength="40" id="signup_instance_name" value="<?php echo $form['signup_instance_name']; ?>" autocomplete="off"/>
+			        	<input type="text" size="30" name="signup_instance_name" maxlength="100" id="signup_instance_name" value="<?php echo $form['signup_instance_name']; ?>" autocomplete="off"/>
 			        </p>
 			        <p>
 			        	<label for="signup_instance_tagline">Instance Tagline</label><br/>
-			        	<input type="text" size="30" name="signup_instance_tagline" maxlength="40" id="signup_instance_tagline" value="<?php echo $form['signup_instance_tagline']; ?>" autocomplete="off"/>
+			        	<input type="text" size="30" name="signup_instance_tagline" maxlength="100" id="signup_instance_tagline" value="<?php echo $form['signup_instance_tagline']; ?>" autocomplete="off"/>
 			        </p>
 			        <p>
 			        	<input class="button" type="submit" value="Finish &amp; Create Instance" />
