@@ -84,7 +84,7 @@
 						
 						<tr>
 							<th scope="row"><label for="host">Database Host</label></th>
-							<td><input type="text" value="<?php print $form->value('host') == "" ? $_SESSION['host'] : $form->value('host'); ?>" size="25" id="host" name="host"/></td>
+							<td><input type="text" value="<?php print $form->value('host') == "" ? 'localhost' : $form->value('host'); ?>" size="25" id="host" name="host"/></td>
 							<td>If you are running Ushahidi on your own computer, this will more than likely be "localhost". If you are running Ushahidi from a web server, you'll get your host information from your web hosting provider.</td>
 						</tr>
 						<tr>

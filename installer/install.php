@@ -362,17 +362,40 @@ class Install
 	 * Removes index.php from index page variable in application/config.config.php file
 	 */
 	private function _remove_index_page() {
-	$config_file = @file('../application/config/config.php');
+		$config_file = @file('../application/config/config.php');
 		$handle = @fopen('../application/config/config.php', 'w');
 		
-		foreach( $config_file as $line_number => $line )
+		if(is_array($config_file) ) {
+			foreach( $config_file as $line_number => $line )
+        	{
+        		if( $yes_or_no == 1 ) {
+            		if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
+                		fwrite($handle, str_replace("index.php","",$line ));    
+            		} else {
+                		fwrite($handle, $line);
+            		}
+        	
+        		} else {
+        			if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
+        			
+        				fwrite($handle, str_replace("''","'index.php'",$line ));    
+            		} else {
+            		
+                		fwrite($handle, $line);
+            		}        		
+        		}
+        	}
+		}
+		
+		
+		/*foreach( $config_file as $line_number => $line )
         {
             if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
                 fwrite($handle, str_replace("index.php","",$line ));    
             } else {
                 fwrite($handle, $line);
             }
-        }
+        }*/
 		
 	}
 	
@@ -462,10 +485,9 @@ class Install
 		'\', site_tagline = \''.mysql_escape_string($site_tagline).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
 		@mysql_close($connection);	
 		
-		//enable clean url
-		if($clean_url = 1 ) {
-			$this->_remove_index_page();
-		}
+		//enable / disable clean url 
+		$this->_remove_index_page($clean_url);
+		
 	}
 	
 	/**
