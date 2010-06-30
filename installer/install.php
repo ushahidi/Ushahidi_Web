@@ -190,6 +190,7 @@ class Install
 			return 1;
 
 		} else {
+			print_r($clean_url);exit;
 			$this->_add_general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix,$clean_url);
 			return 0;	
 		}
@@ -386,16 +387,6 @@ class Install
         		}
         	}
 		}
-		
-		
-		/*foreach( $config_file as $line_number => $line )
-        {
-            if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
-                fwrite($handle, str_replace("index.php","",$line ));    
-            } else {
-                fwrite($handle, $line);
-            }
-        }*/
 		
 	}
 	
