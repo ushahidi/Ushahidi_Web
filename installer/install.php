@@ -382,24 +382,21 @@ class Install
 	 * @param base_path - the base path.
 	 */
 	private function _add_htaccess_entry($base_path) {
-		$htaccess_file = file('../.htaccess');
-		$handle = fopen('../.htaccess','w');
-			
-		foreach($htaccess_file as $line_number => $line ) {
-			if( !empty($base_path) && $base_path != "/" ) {
-				switch( trim( substr($line, 0, 12 ) ) ) {
-					case "RewriteBase":
-						fwrite($handle, str_replace("/","/".$base_path,$line));
-						break;
-						
-					default:
-						fwrite($handle,$line);
-				}
-			} else {
-				fwrite($handle,$line);
-			}	
-		}	
 		
+		$htaccess_file = @file('../.htaccess');
+		$handle = @fopen('../.htaccess','w');
+
+		if( is_array( $htaccess_file ) ) {
+			foreach($htaccess_file as $line_number => $line ) {
+				if( !empty($base_path) && $base_path != "/" ) {
+					if( strpos(" ".$line,"RewriteBase /") != 0 ) {
+						fwrite($handle, str_replace("/","/".$base_path,$line));			
+					} else {
+						fwrite($handle,$line);
+					}	
+				}
+			}
+		}	
 	} 
 
 	/**
