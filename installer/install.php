@@ -190,7 +190,7 @@ class Install
 			return 1;
 
 		} else {
-			print_r($clean_url);exit;
+			
 			$this->_add_general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix,$clean_url);
 			return 0;	
 		}
