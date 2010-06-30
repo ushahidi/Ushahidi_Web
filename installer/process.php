@@ -278,7 +278,7 @@
 		if($status == 0 ) {
 			$_SESSION['basic_db_info'] = 'basic_summary';
 			header("Location:basic_db_info.php");
-		}else if($status == 1){
+		}else {
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
 			header("Location:basic_summary.php");
