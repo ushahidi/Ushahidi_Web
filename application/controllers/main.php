@@ -104,8 +104,7 @@ class Main_Controller extends Template_Controller {
 		if( ! $locales)
 		{
 			$locales = locale::get_i18n();
-			var_dump($locales);
-			//$this->cache->set('locales', $locales, array('locales'), 604800);
+			$this->cache->set('locales', $locales, array('locales'), 604800);
 		}
 
 
