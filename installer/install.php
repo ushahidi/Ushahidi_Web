@@ -785,7 +785,7 @@ HTML;
 		
 	function _check_for_clean_url() {
 		
-		$url = $this->_get_url()."/help";
+		$url = $this->_get_url()."/installer/mod_rewrite/";
   		$curl_handle = curl_init();
        
    		curl_setopt($curl_handle, CURLOPT_URL, $url); 
@@ -795,7 +795,7 @@ HTML;
   	   	$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
  	   	curl_close($curl_handle);
   
- 	   	if( $return_code ==  404) {
+ 	   	if( $return_code ==  404 OR $return_code ==  403 ) {
  	    	return FALSE; 	
  	   	} else {
  	   		return TRUE;
