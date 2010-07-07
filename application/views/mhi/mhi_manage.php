@@ -33,8 +33,8 @@
                 <?php foreach($sites as $site) { ?>
                 <div class="deployment <?php if($site->site_active == 1) { ?>d-active<?php }else{?>d-inactive<?php } ?> clearfix">
                 	<div class="d-left">
-                        <h4><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>">TODO: Add deployment Title here</a>  <span><?php if($site->site_active == 1) { ?>active<?php }else{?>inactive<?php } ?></span></h4>
-                        <p class="d-tagline">TODO: Add tagline here</p>
+                        <h4><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>"><?php echo $site->site_name; ?></a>  <span><?php if($site->site_active == 1) { ?>active<?php }else{?>inactive<?php } ?></span></h4>
+                        <p class="d-tagline"><?php echo $site->site_tagline; ?></p>
                         
                     </div>
                     <div class="d-right">
@@ -68,7 +68,7 @@
                 <p class="no-results msg m-info">No results.</p>
                 </div>
                 <hr />
-                <h3>Multi-Deployment Opperations</h3>
+                <h3>Multi-Deployment Operations</h3>
                 <p>Use these functions to perform changes across all your deployments.</p>
                 
                 <h4>Change Admin Password</h4>

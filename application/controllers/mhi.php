@@ -193,7 +193,7 @@ class MHI_Controller extends Template_Controller {
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
 		$mhi_site = new Mhi_Site_Model;
-		$all_user_sites = $mhi_site->get_user_sites($mhi_user_id);
+		$all_user_sites = $mhi_site->get_user_sites($mhi_user_id,TRUE);
 		$this->template->content->sites = $all_user_sites;
 
 		if ($_POST)
@@ -693,8 +693,8 @@ class MHI_Controller extends Template_Controller {
 				{
 					$to = $email;
 					$from = $settings['site_email'];
-					$subject = 'You Deployment '.$settings['site_name'].' set up';
-					$message = 'You new site, '.$post->signup_instance_name.' has been set up.'."\n";
+					$subject = 'Your deployment at '.$settings['site_name'];
+					$message = 'Your new site, '.$post->signup_instance_name.' has been set up.'."\n";
 					$message .= 'Admin URL: '.$new_site_url.'admin'."\n";
 					$message .= 'Username: '.$email."\n";
 					$message .= 'Password: (hidden)'."\n";
