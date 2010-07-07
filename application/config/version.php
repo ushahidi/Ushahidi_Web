@@ -10,4 +10,5 @@ $config['ushahidi_version'] = "2.0b3";
  * Increments when changes are made to the Ushahidi DB schema.
  */
 
+
 $config['ushahidi_db_version'] = "26";
