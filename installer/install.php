@@ -190,6 +190,7 @@ class Install
 			return 1;
 
 		} else {
+			
 			$this->_add_general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix,$clean_url);
 			return 0;	
 		}
@@ -361,18 +362,31 @@ class Install
 	/**
 	 * Removes index.php from index page variable in application/config.config.php file
 	 */
-	private function _remove_index_page() {
-	$config_file = @file('../application/config/config.php');
+	private function _remove_index_page($yes_or_no) {
+		$config_file = @file('../application/config/config.php');
 		$handle = @fopen('../application/config/config.php', 'w');
 		
-		foreach( $config_file as $line_number => $line )
-        {
-            if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
-                fwrite($handle, str_replace("index.php","",$line ));    
-            } else {
-                fwrite($handle, $line);
-            }
-        }
+		if(is_array($config_file) ) {
+        	foreach( $config_file as $line_number => $line )
+        	{
+            	if( $yes_or_no == 1 ) {
+                	if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
+                		fwrite($handle, str_replace("index.php","",$line ));    
+            		} else {
+                		fwrite($handle, $line);
+            		}
+        	
+            	} else {
+                	if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
+        			
+                    	fwrite($handle, str_replace("''","'index.php'",$line ));    
+                	} else {
+                    	fwrite($handle, $line);
+                	}        		
+            	}
+        	}
+    	}
+		
 		
 	}
 	
@@ -382,24 +396,25 @@ class Install
 	 * @param base_path - the base path.
 	 */
 	private function _add_htaccess_entry($base_path) {
-		$htaccess_file = file('../.htaccess');
-		$handle = fopen('../.htaccess','w');
-			
-		foreach($htaccess_file as $line_number => $line ) {
-			if( !empty($base_path) && $base_path != "/" ) {
-				switch( trim( substr($line, 0, 12 ) ) ) {
-					case "RewriteBase":
-						fwrite($handle, str_replace("/","/".$base_path,$line));
-						break;
-						
-					default:
-						fwrite($handle,$line);
-				}
-			} else {
-				fwrite($handle,$line);
-			}	
-		}	
 		
+		$htaccess_file = @file('../.htaccess');
+		$handle = @fopen('../.htaccess','w');
+
+		if( is_array( $htaccess_file ) ) {
+			foreach($htaccess_file as $line_number => $line ) {
+				if( !empty($base_path) && $base_path != "/" ) {
+					
+					if( strpos(" ".$line,"RewriteBase /") != 0 ) {
+						fwrite($handle, str_replace("/","/".$base_path,$line));			
+					} else {
+						fwrite($handle,$line);
+					}
+						
+				} else {
+					fwrite($handle,$line);
+				}
+			}
+		}	
 	} 
 
 	/**
@@ -465,10 +480,9 @@ class Install
 		'\', site_tagline = \''.mysql_escape_string($site_tagline).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
 		@mysql_close($connection);	
 		
-		//enable clean url
-		if($clean_url = 1 ) {
-			$this->_remove_index_page();
-		}
+		//enable / disable clean url 
+		$this->_remove_index_page($clean_url);
+		
 	}
 	
 	/**
@@ -775,7 +789,7 @@ HTML;
 		
 	function _check_for_clean_url() {
 		
-		$url = $this->_get_url()."/help";
+		$url = $this->_get_url()."/installer/mod_rewrite/";
   		$curl_handle = curl_init();
        
    		curl_setopt($curl_handle, CURLOPT_URL, $url); 
@@ -785,7 +799,7 @@ HTML;
   	   	$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
  	   	curl_close($curl_handle);
   
- 	   	if( $return_code ==  404) {
+ 	   	if( $return_code ==  404 OR $return_code ==  403 ) {
  	    	return FALSE; 	
  	   	} else {
  	   		return TRUE;

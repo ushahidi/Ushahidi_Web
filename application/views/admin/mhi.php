@@ -14,7 +14,9 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo $title; ?> <span>(<?php echo $total_items; ?>)</span></h2>
+				<h2>
+					<?php admin::mhi_subtabs("deployments"); ?>
+				</h2>
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->

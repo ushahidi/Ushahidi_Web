@@ -60,8 +60,14 @@ class DBGenesis_Core {
 			// START: Everything that happens in the deployment DB happens below
 
 			$usr = ORM::factory('user','1');
-			$usr->password = $new_password;
-			$usr->save();
+
+			// Only if the user with id of 1 exists will we attempt to update the password
+
+			if($usr->loaded === true)
+			{
+				$usr->password = $new_password;
+				$usr->save();
+			}
 
 			// END: Everything that happens in the deployment DB happens above
 		}

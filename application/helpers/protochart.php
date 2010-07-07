@@ -28,13 +28,23 @@ class protochart {
 		
 		// Compile options
 		$options = '';
+		$first = 1;
 		foreach($options_array as $modifying => $opts){
 			$options .= $modifying.': {';
+			$first_ = 1;
 			foreach($opts as $key => $val){
-				$options .= "$key: $val,
-				";
+				$options .= "$key: $val";
+				if($first_ < count($opts))
+					$options .= ",";
+					
+				$first_++;
 			}
-			$options .= '},';
+			$options .= '}';
+			
+			if($first < count($options_array))
+				$options .= ",";
+			
+			$first++;
 		}
 		
 		$name = 'protochart_'.$name;
@@ -66,13 +76,16 @@ class protochart {
 		
 		$html .= "new Proto.Chart($('$name'),[";
 		
+		$first = 1;
 		foreach($labels as $i => $label_name){
 			
 			// Apply custom colors, otherwise use defaults.
 			$color = '';
 			if(isset($custom_color[$label_name])) $color = "color:\"#".$custom_color[$label_name]."\",";
 			
-			$html .= "{label: \"$label_name\", $color data: data$i},";
+			$html .= "{label: \"$label_name\", $color data: data$i}";
+			if($first < count($labels))
+				$html .= ",";
 		}
 		
 		$html .= "],{

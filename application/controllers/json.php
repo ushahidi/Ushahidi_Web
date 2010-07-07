@@ -59,7 +59,6 @@ class Json_Controller extends Template_Controller
 				                                ->where('category_title = "'. $category_id . '"')
 				                                ->find()->id;
 			}
-			//die(var_dump($category_id));
 		}
 		
 		if (isset($_GET['i']) && !empty($_GET['i']))

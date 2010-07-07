@@ -18,7 +18,7 @@ $lang = array
 	(
 		'required'	=> 'The site url is required.',
 		'url'		=> 'The site url field does not appear to contain a valid URL?',
-		'valid'	=> 'The site url does not appear to be a valid Ushahidi instance, or is not Sharing enabled.',
+		'valid'	=> 'The site url does not appear to be a valid Ushahidi deployment, or is not Sharing enabled.',
 		'exists'	=> 'The site url already exists',
 		'edit'	=> 'You can\'t edit the URL of remote site. This share can be deleted and a new share request made.'
 	),

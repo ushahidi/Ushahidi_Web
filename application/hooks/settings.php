@@ -36,6 +36,17 @@ if(Kohana::config('config.enable_mhi') == TRUE && $subdomain != '')
 
 		// If this site doesn't exist as an instance, we will reset our subdomain and ignore it.
 
+		$base = url::base();
+		$url = parse_url($base);
+		$domain = strstr($url['host'],'.');
+		if($domain != FALSE)
+		{
+			// Redirect to the homepage if the subdomain isn't a valid deployment
+
+			$domain = ltrim($domain,'.');
+			url::redirect($url['scheme'].'://'.$domain);
+		}
+
 		Kohana::config_set('settings.subdomain', '');
 	}
 

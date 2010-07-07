@@ -14,13 +14,13 @@
  */
 class Main_Controller extends Template_Controller {
 
-    public $auto_render = TRUE;
+	public $auto_render = TRUE;
 
     // Main template
-    public $template = 'layout';
+	public $template = 'layout';
 
     // Cache instance
-    protected $cache;
+	protected $cache;
 
 	// Session instance
 	protected $session;
@@ -28,23 +28,23 @@ class Main_Controller extends Template_Controller {
 	// Table Prefix
 	protected $table_prefix;
 
-    public function __construct()
-    {
-        parent::__construct();
+	public function __construct()
+	{
+		parent::__construct();
 
         // Load cache
-        $this->cache = new Cache;
+		$this->cache = new Cache;
 
 		// Load Session
 		$this->session = Session::instance();
 
         // Load Header & Footer
-        $this->template->header  = new View('header');
-        $this->template->footer  = new View('footer');
+		$this->template->header  = new View('header');
+		$this->template->footer  = new View('footer');
 
         // In case js doesn't get set in the construct, initialize it here
 
-        $this->template->header->js = '';
+		$this->template->header->js = '';
 
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
@@ -61,10 +61,10 @@ class Main_Controller extends Template_Controller {
 			{
 				$site_name_style = "";
 			}
-        $this->template->header->site_name = $site_name;
+		$this->template->header->site_name = $site_name;
 		$this->template->header->site_name_style = $site_name_style;
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
-        $this->template->header->api_url = Kohana::config('settings.api_url');
+		$this->template->header->api_url = Kohana::config('settings.api_url');
 
 		// Display Contact Tab?
 		$this->template->header->site_contact_page = Kohana::config('settings.site_contact_page');
@@ -76,7 +76,7 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->pages = ORM::factory('page')->where('page_active', '1')->find_all();
 
         // Get custom CSS file from settings
-        $this->template->header->site_style = Kohana::config('settings.site_style');
+		$this->template->header->site_style = Kohana::config('settings.site_style');
 
 		// Javascript Header
 		$this->template->header->map_enabled = FALSE;
@@ -96,7 +96,19 @@ class Main_Controller extends Template_Controller {
 
 		// *** Locales/Languages ***
 		// First Get Available Locales
-		$this->template->header->locales_array = $this->cache->get('locales');
+
+		$locales = $this->cache->get('locales');
+
+		// If we didn't find any languages, we need to look them up and set the cache
+
+		if( ! $locales)
+		{
+			$locales = locale::get_i18n();
+			$this->cache->set('locales', $locales, array('locales'), 604800);
+		}
+
+
+		$this->template->header->locales_array = $locales;
 
 		// Locale form submitted?
 		if (isset($_GET['l']) && !empty($_GET['l']))
@@ -122,8 +134,9 @@ class Main_Controller extends Template_Controller {
         // $profiler = new Profiler;
 
         // Get tracking javascript for stats
-        $this->template->footer->ushahidi_stats = $this->_ushahidi_stats();
-    }
+		$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
+	}
+
 
     public function index()
     {
@@ -141,12 +154,12 @@ class Main_Controller extends Template_Controller {
 		$this->template->content->div_timeline = $div_timeline;
 
         // Get all active top level categories
-        $parent_categories = array();
-        foreach (ORM::factory('category')
+		$parent_categories = array();
+		foreach (ORM::factory('category')
 				->where('category_visible', '1')
 				->where('parent_id', '0')
 				->find_all() as $category)
-        {
+		{
             // Get The Children
 			$children = array();
 			foreach ($category->children as $child)
@@ -159,14 +172,14 @@ class Main_Controller extends Template_Controller {
 			}
 
 			// Put it all together
-            $parent_categories[$category->id] = array(
+			$parent_categories[$category->id] = array(
 				$category->category_title,
 				$category->category_color,
 				$category->category_image,
 				$children
 			);
-        }
-        $this->template->content->categories = $parent_categories;
+		}
+		$this->template->content->categories = $parent_categories;
 
 		// Get all active Layers (KMZ/KML)
 		$layers = array();
@@ -197,15 +210,15 @@ class Main_Controller extends Template_Controller {
 
         // Get Reports
         // XXX: Might need to replace magic no. 8 with a constant
-        $this->template->content->total_items = ORM::factory('incident')
-            ->where('incident_active', '1')
-            ->limit('8')->count_all();
-        $this->template->content->incidents = ORM::factory('incident')
-            ->where('incident_active', '1')
+		$this->template->content->total_items = ORM::factory('incident')
+			->where('incident_active', '1')
+			->limit('8')->count_all();
+		$this->template->content->incidents = ORM::factory('incident')
+			->where('incident_active', '1')
 			->limit('10')
-            ->orderby('incident_date', 'desc')
+			->orderby('incident_date', 'desc')
 			->with('location')
-            ->find_all();
+			->find_all();
 
 		// Get Default Color
 		$this->template->content->default_map_all = Kohana::config('settings.default_map_all');
@@ -237,14 +250,14 @@ class Main_Controller extends Template_Controller {
 		// Get RSS News Feeds
 		$this->template->content->feeds = ORM::factory('feed_item')
 			->limit('10')
-            ->orderby('item_date', 'desc')
-            ->find_all();
+			->orderby('item_date', 'desc')
+			->find_all();
 
 
 
         // Get The START, END and most ACTIVE Incident Dates
-        $startDate = "";
-        $endDate = "";
+		$startDate = "";
+		$endDate = "";
 		$active_month = 0;
 		$active_startDate = 0;
 		$active_endDate = 0;
@@ -262,48 +275,47 @@ class Main_Controller extends Template_Controller {
 		}
 
         // Next, Get the Range of Years
-        $query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y\') AS incident_date FROM '.$this->table_prefix.'incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y\') ORDER BY incident_date');
-        foreach ($query as $slider_date)
-        {
+		$query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y\') AS incident_date FROM '.$this->table_prefix.'incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y\') ORDER BY incident_date');
+		foreach ($query as $slider_date)
+		{
 			$years = $slider_date->incident_date;
-            $startDate .= "<optgroup label=\"" . $years . "\">";
-            for ( $i=1; $i <= 12; $i++ ) {
-                if ( $i < 10 )
-                {
-                    $i = "0" . $i;
-                }
-                $startDate .= "<option value=\"" . strtotime($years . "-" . $i . "-01") . "\"";
+			$startDate .= "<optgroup label=\"" . $years . "\">";
+			for ( $i=1; $i <= 12; $i++ ) {
+				if ( $i < 10 )
+				{
+					$i = "0" . $i;
+				}
+				$startDate .= "<option value=\"" . strtotime($years . "-" . $i . "-01") . "\"";
 				if ( $active_month &&
 						( (int) $i == ( $active_month - 1)) )
 				{
 					$startDate .= " selected=\"selected\" ";
 				}
 				$startDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $years . "</option>";
-            }
-            $startDate .= "</optgroup>";
+			}
+			$startDate .= "</optgroup>";
 
-            $endDate .= "<optgroup label=\"" . $years . "\">";
-            for ( $i=1; $i <= 12; $i++ )
-            {
-                if ( $i < 10 )
-                {
-                    $i = "0" . $i;
-                }
-                $endDate .= "<option value=\"" . strtotime($years . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))." 23:59:59") . "\"";
+			$endDate .= "<optgroup label=\"" . $years . "\">";
+			for ( $i=1; $i <= 12; $i++ )
+			{
+				if ( $i < 10 )
+				{
+					$i = "0" . $i;
+				}
+				$endDate .= "<option value=\"" . strtotime($years . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))." 23:59:59") . "\"";
                 // Focus on the most active month or set December as month of endDate
 				if ( $active_month &&
 						( ( (int) $i == ( $active_month + 1)) )
 						 	|| ($i == 12 && preg_match('/selected/', $endDate) == 0))
 				{
 					$endDate .= " selected=\"selected\" ";
-                }
-                $endDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $years . "</option>";
-            }
-            $endDate .= "</optgroup>";
-        }
-        $this->template->content->div_timeline->startDate = $startDate;
-        $this->template->content->div_timeline->endDate = $endDate;
-
+				}
+				$endDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $years . "</option>";
+			}
+			$endDate .= "</optgroup>";
+		}
+		$this->template->content->startDate = $startDate;
+		$this->template->content->endDate = $endDate;
 
 		// get graph data
 		// could not use DB query builder. It does not support parentheses yet
@@ -329,8 +341,8 @@ class Main_Controller extends Template_Controller {
 
 		// pdestefanis - allows to restrict the number of zoomlevels available
 		$numZoomLevels = Kohana::config('map.numZoomLevels');
-	    $minZoomLevel = Kohana::config('map.minZoomLevel');
-       	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
+		$minZoomLevel = Kohana::config('map.minZoomLevel');
+	   	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
 
 		// pdestefanis - allows to limit the extents of the map
 		$lonFrom = Kohana::config('map.lonFrom');
@@ -354,14 +366,14 @@ class Main_Controller extends Template_Controller {
 
            // pdestefanis - allows to restrict the number of zoomlevels available
 		$this->template->header->js->numZoomLevels = $numZoomLevels;
-	    $this->template->header->js->minZoomLevel = $minZoomLevel;
-	    $this->template->header->js->maxZoomLevel = $maxZoomLevel;
+		$this->template->header->js->minZoomLevel = $minZoomLevel;
+		$this->template->header->js->maxZoomLevel = $maxZoomLevel;
 
            // pdestefanis - allows to limit the extents of the map
-           $this->template->header->js->lonFrom = $lonFrom;
-           $this->template->header->js->latFrom = $latFrom;
-           $this->template->header->js->lonTo = $lonTo;
-           $this->template->header->js->latTo = $latTo;
+		   $this->template->header->js->lonFrom = $lonFrom;
+		   $this->template->header->js->latFrom = $latFrom;
+		   $this->template->header->js->lonTo = $lonTo;
+		   $this->template->header->js->latTo = $latTo;
 
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
@@ -381,55 +393,6 @@ class Main_Controller extends Template_Controller {
 		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
 		$this->template->header->js = $myPacker->pack();
 	}
-
-	/*
-	* Ushahidi Stats HTML/JavaScript
-    * @return mixed  Return ushahidi stats HTML code.
-	*/
-	private function _ushahidi_stats( )
-	{
-		// Make sure cURL is installed
-		if (!function_exists('curl_exec')) {
-			throw new Kohana_Exception('footer.cURL_not_installed');
-			return false;
-		}
-
-		$settings = ORM::factory('settings', 1);
-		$stat_id = $settings->stat_id;
-
-		if($stat_id == 0) return '';
-		$url = 'http://tracker.ushahidi.com/px.php?task=tc&siteid='.$stat_id;
-
-		$curl_handle = curl_init();
-		curl_setopt($curl_handle,CURLOPT_URL,$url);
-		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
-		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); // Set cURL to store data in variable instead of print
-		$buffer = curl_exec($curl_handle);
-		curl_close($curl_handle);
-
-		try {
-			$tag = @simplexml_load_string($buffer); // This works because the tracking code is only wrapped in one tag
-		} catch (Exception $e) {
-			// In case the xml was malformed for whatever reason, we will just guess what the tag should be here
-			$tag = '<!-- Piwik -->
-					<script type="text/javascript">
-					var pkBaseURL = (("https:" == document.location.protocol) ? "https://tracker.ushahidi.com/piwik/" : "http://tracker.ushahidi.com/piwik/");
-					document.write(unescape("%3Cscript src=\'" + pkBaseURL + "piwik.js\' type=\'text/javascript\'%3E%3C/script%3E"));
-					</script><script type="text/javascript">
-					try {
-					  var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", '.$stat_id.');
-					  piwikTracker.trackPageView();
-					  piwikTracker.enableLinkTracking();
-					} catch( err ) {}
-					</script><noscript><p><img src="http://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'" style="border:0" alt=""/></p></noscript>
-					<!-- End Piwik Tag -->
-					';
-		}
-
-		return $tag;
-
-	}
-
 
 	/*
 	* Google Analytics

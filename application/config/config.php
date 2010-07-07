@@ -89,7 +89,7 @@ $config['render_stats'] = TRUE;
 
 /**
  * Turn MHI on or off. This is an advanced feature that will drastically alter
- * the way your instance works. Please read documentation before proceeding.
+ * the way your deployment works. Please read documentation before proceeding.
  *
  * @see [A URL not yet created]
  */

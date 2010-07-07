@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 2.0b3
+-- version 26
 -- http://www.ushahidi.com
 
 
@@ -1538,7 +1538,7 @@ CREATE TABLE `mhi_log` (
 */
 
 CREATE TABLE `mhi_log_actions` (
-  `int` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY  (`int`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

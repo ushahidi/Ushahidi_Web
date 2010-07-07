@@ -33,6 +33,9 @@
         </div>
         <div style="clear:both;"></div>
     </div>
+
+    <?php echo $ushahidi_stats; ?>
+
 </body>
 </html>
 

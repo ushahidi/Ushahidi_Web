@@ -16,22 +16,22 @@
 		<div id="primary-content">
             <div class="twocol-left"><div class="content-shadow">
                 <h2>Features</h2>
-                <p class="intro-para">Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem. Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.</p>
+                <p class="intro-para">Crowdmap is the fastest, simplest installation of the Ushahidi platform.  Within minutes you'll be up and running with your own installation, mapping reports events and visualizing information.  </p>
                 <div id="f_no-install" class="feature">
                 	<h3>Nothing to Install</h3>
-                    <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima.</p>
+                    <p>Your site is hosted on our servers, so you have no installation to worry about.  Instead, just choose a name and start customizing your site.</p>
                 </div>
                 <div id="f_map" class="feature">
                 	<h3>Interactive Map</h3>
-                    <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima.</p>
+                    <p>One of the most powerful ways to visualize information is via a map.  Choose a location and start plotting reports, information and other data right away.</p>
                 </div>
                 <div id="f_timeline" class="feature">
                 	<h3>Dynamic Timeline</h3>
-                    <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima.</p>
+                    <p>Track your reports on the map and over time.  You can filter your data by time and then see when things happened and where, as it's also tied to the map.</p>
                 </div>
                 <div id="f_realtime" class="feature">
                 	<h3>"Real Time" Data Tracking</h3>
-                    <p>Mirum est notare quam littera gothica, quam nunc putamus parum claram, anteposuerit litterarum formas humanitatis per seacula quarta decima.</p>
+                    <p>The admin area of Crowdmap has analytical tools for you to make sense of your incoming data in real-time.</p>
                 </div>   
             </div></div>
             <div class="twocol-right">

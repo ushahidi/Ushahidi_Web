@@ -15,14 +15,14 @@
 ?>
 		<div id="primary-content">
             <div class="twocol-left"><div class="content-shadow">
-                <h2>Account Settings</h2>
-		
-				<a href="<?php echo url::site() ?>mhi/signup">Create New Instance</a>
-				
-				<a href="<?php echo url::site() ?>mhi/account">Account Settings</a>
-				
-				<a href="<?php echo url::site() ?>mhi/manage">Your Sites</a>
-				
+                <h2>Manage Your Account</h2>
+				<div class="tabs">
+                	<ul>
+                    	<li><a class="" href="<?php echo url::site() ?>mhi/manage">Your Deployments</a></li>
+                    	<li><a class="ab-active" href="<?php echo url::site() ?>mhi/account">Account Settings</a></li>
+                    </ul>
+                </div>
+				<h3>Account Settings</h3>
 				<?php if ($success_message != '') { ?>
 					<div style="background-color:#95C274;border:4px #8CB063 solid;padding:2px 8px 1px 8px;margin:10px;"><?php echo $success_message; ?></div>
 				<?php } ?>
@@ -80,12 +80,7 @@
                     
             </div></div>
             <div class="twocol-right">
-                <!-- CB: We'll just leave this empty for now.
-                
-                <div class="side-bar-module rounded shadow">
-                    <p>Sign-up Sidebar promo to go here</p>
-                </div>
-                -->
+                <p class="side-bar-buttons"><a class="admin-button green" href="<?php echo url::site() ?>mhi/signup">New Deployment</a></p>
             </div>
             <div style="clear:both;"></div>
         </div>

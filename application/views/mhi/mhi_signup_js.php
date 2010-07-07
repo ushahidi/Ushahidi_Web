@@ -44,8 +44,14 @@ $(function(){
 				alphanumeric: true,
 				rangelength: [4, 32]
 			},
-			signup_instance_name: "required",
-			signup_instance_tagline: "required",
+			signup_instance_name: {
+				required: true,
+				rangelength: [4, 100]
+			},
+			signup_instance_tagline: {
+				required: true,
+				rangelength: [4, 100]
+			},
 			signup_report_categories: {
 				required: true,
 				//csv: true
@@ -70,8 +76,14 @@ $(function(){
 				required: "Please enter your instance address.",
 				rangelength: "The name you use for your instance address must be between 4 and 32 characters."
 			},
-			signup_instance_name: "Please enter a name for your instance.",
-			signup_instance_tagline: "Please enter a tagline for your instance.",
+			signup_instance_name: {
+				required: "Please enter a name for your instance.",
+				rangelength: "Name must be between 4 and 100 characters."
+			},
+			signup_instance_tagline: {
+				required: "Please enter a tagline for your instance.",
+				rangelength: "Tagline must be between 4 and 100 characters."
+			},
 			signup_report_categories: {
 				required: "Please enter at least one category for your instance."
 			}

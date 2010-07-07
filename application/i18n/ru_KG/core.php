@@ -4,7 +4,7 @@
 */
 $lang = array
 (
-'there_can_be_only_one' => 'There can be only one instance of Ushahidi per page request',
+'there_can_be_only_one' => 'There can be only one deployment of Ushahidi per page request',
 'uncaught_exception' => 'Uncaught %s: %s in file %s on line %s',
 'invalid_method' => 'Invalid method %s called in %s',
 'invalid_property' => 'The %s property does not exist in the %s class.',

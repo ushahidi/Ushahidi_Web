@@ -35,7 +35,7 @@ $lang = array
     'database_name' => 'Database Name',
     'database_name_description' => 'The name of the database you want to run Ushahidi in',
     'default_language' => 'Default Language (Locale)',
-    'default_language_description' => 'Each instance of Ushahidi comes with a set of built in language translations. You can also <a href="http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages" target="_blank">add your own</a>',
+    'default_language_description' => 'Each deployment of Ushahidi comes with a set of built in language translations. You can also <a href="http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages" target="_blank">add your own</a>',
     'disable' => 'Disable',
     'enable' => 'Enable',
     'error_summary' => 'Listed below is a summary of the errors we encountered',

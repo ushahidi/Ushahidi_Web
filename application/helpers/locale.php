@@ -1,7 +1,7 @@
 <?php
 /**
  * Locale helper
- * 
+ *
  * @package    Locale
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
@@ -200,7 +200,7 @@ class locale_Core
 			"zh" => "中文 (Zhōngwén), 汉语, 漢語",
 			"zu" => "isiZulu",
 		);
-		
+
 		if (array_key_exists($iso639, $iso_array))
 		{
 			return $iso_array[$iso639];
@@ -210,7 +210,7 @@ class locale_Core
 			return "Unknown";
 		}
 	}
-	
+
 	/**
 	 * @param   string	 ISO-3166 country code
 	 */
@@ -462,7 +462,7 @@ class locale_Core
 			"ZM" => "Zambia",
 			"ZW" => "Zimbabwe"
 		);
-		
+
 		if (array_key_exists($iso3166, $iso_array))
 		{
 			return $iso_array[$iso3166];
@@ -471,5 +471,44 @@ class locale_Core
 		{
 			return "Unknown";
 		}
+	}
+
+	/**
+	 * checks the i18n folder to see what folders we have available
+	 */
+	public static function get_i18n()
+	{
+		$locales = array();
+
+		// i18n path
+		$i18n_path = APPPATH.'i18n/';
+
+		// i18n folder
+		$i18n_folder = @ opendir($i18n_path);
+
+		if ( !$i18n_folder )
+			return false;
+
+		while ( ($i18n_dir = readdir($i18n_folder)) !== false )
+		{
+			if ( is_dir($i18n_path.$i18n_dir) && is_readable($i18n_path.$i18n_dir) )
+			{
+				// Strip out .  and .. and any other stuff
+				if ( $i18n_dir{0} == '.' || $i18n_dir == '..'
+				 	|| $i18n_dir ==  '.DS_Store' || $i18n_dir == '.git')
+					continue;
+
+				$locale = explode("_", $i18n_dir);
+				if ( count($locale) < 2 )
+					continue;
+
+				$directories[$i18n_dir] = locale::language($locale[0])." (".$locale[1].")";
+			}
+		}
+
+		if ( is_dir( $i18n_dir ) )
+			@closedir( $i18n_dir );
+
+		return $directories;
 	}
 }

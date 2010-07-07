@@ -54,6 +54,8 @@ class MHI_Controller extends Template_Controller {
 			$this->template->footer  = new View('mhi/mhi_footer');
 		}
 
+		$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
+
 		$this->template->header->site_name = Kohana::config('settings.site_name');
 
 		// Initialize JS variables. js_files is an array of ex: html::script('media/js/jquery.validate.min');
@@ -132,7 +134,7 @@ class MHI_Controller extends Template_Controller {
 			if ($mhi_user_id != FALSE)
 			{
 
-				MhiLogger::log($mhi_user_id,1);
+				Mhi_Log_Model::log($mhi_user_id,1);
 
 				url::redirect('mhi/manage');
 
@@ -184,16 +186,19 @@ class MHI_Controller extends Template_Controller {
 		$this->template->content = new View('mhi/mhi_manage');
 		$this->template->content->sites_pw_changed = array();
 
+		// Manage JS
+
+		$this->template->header->js .= new View('mhi/mhi_manage_js');
+
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
 		$mhi_site = new Mhi_Site_Model;
-		$all_user_sites = $mhi_site->get_user_sites($mhi_user_id);
+		$all_user_sites = $mhi_site->get_user_sites($mhi_user_id,TRUE);
 		$this->template->content->sites = $all_user_sites;
 
 		if ($_POST)
 		{
 			$new_password = $_POST['admin_password'];
-			$site_domains = array($_POST['site_domain']);
 
 			if ($_POST['change_pw_for'] == 'all')
 			{
@@ -202,8 +207,10 @@ class MHI_Controller extends Template_Controller {
 				foreach($all_user_sites as $site) {
 					$site_domains[] = $site->site_domain;
 				}
+			}else{
+				// If we are only changing one domain
+				$site_domains = array($_POST['site_domain']);
 			}
-
 
 			$db_genesis = new DBGenesis;
 			$mhi_site = new Mhi_Site_Model;
@@ -358,7 +365,7 @@ class MHI_Controller extends Template_Controller {
 
 				$this->template->content->user = $mhi_user->get($mhi_user_id);
 
-				MhiLogger::log($mhi_user_id,7,'Updated to: '.$postdata_array['firstname'].' '.$postdata_array['lastname'].' '.$postdata_array['email'].' (hidden password)');
+				Mhi_Log_Model::log($mhi_user_id,7,'Updated to: '.$postdata_array['firstname'].' '.$postdata_array['lastname'].' '.$postdata_array['email'].' (hidden password)');
 
 			}else{
 				$errors = array('Something went wrong with form submission. Please try again.');
@@ -375,7 +382,7 @@ class MHI_Controller extends Template_Controller {
 	{
 		$session = Session::instance();
 		$mhi_user_id = $session->get('mhi_user_id');
-		MhiLogger::log($mhi_user_id,2);
+		Mhi_Log_Model::log($mhi_user_id,2);
 
 		$mhi_user = new Mhi_User_Model;
 		$mhi_user->logout();
@@ -424,7 +431,7 @@ class MHI_Controller extends Template_Controller {
 
 				email::send($to,$from,$subject,$message,FALSE);
 
-				MhiLogger::log($mhi_user_id,5);
+				Mhi_Log_Model::log($mhi_user_id,5);
 
 				$this->template->content->reset_flag = TRUE;
 			}else{
@@ -649,7 +656,7 @@ class MHI_Controller extends Template_Controller {
 					// Log new user in
 					$mhi_user_id = $mhi_user->login($email,$password);
 
-					MhiLogger::log($mhi_user_id,6);
+					Mhi_Log_Model::log($mhi_user_id,6);
 
 				}
 
@@ -687,15 +694,15 @@ class MHI_Controller extends Template_Controller {
 				{
 					$to = $email;
 					$from = $settings['site_email'];
-					$subject = 'You Deployment '.$settings['site_name'].' set up';
-					$message = 'You new site, '.$post->signup_instance_name.' has been set up.'."\n";
+					$subject = 'Your deployment at '.$settings['site_name'];
+					$message = 'Your new site, '.$post->signup_instance_name.' has been set up.'."\n";
 					$message .= 'Admin URL: '.$new_site_url.'admin'."\n";
 					$message .= 'Username: '.$email."\n";
 					$message .= 'Password: (hidden)'."\n";
 
 					email::send($to,$from,$subject,$message,FALSE);
 
-					MhiLogger::log($user_id,3,'Deployment Created: '.$post->signup_instance_name);
+					Mhi_Log_Model::log($user_id,3,'Deployment Created: '.$post->signup_subdomain);
 				}
 
 			}else{

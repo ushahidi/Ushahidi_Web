@@ -205,9 +205,9 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
 		
 		// Generate Available Locales
-		$locales = $this->_get_i18n();
+		$locales = locale::get_i18n();
 		$this->template->content->locales_array = $locales;
-		$this->cache->set('locales', $locales, array('locales'), 0);
+		$this->cache->set('locales', $locales, array('locales'), 604800);
 	}
 
 	/**
@@ -910,45 +910,6 @@ class Settings_Controller extends Admin_Controller
 	    	}
 		}
 
-	}
-	
-	/**
-	 * checks the i18n folder to see what folders we have available
-	 */
-	private function _get_i18n()
-	{
-		$locales = array();
-		
-		// i18n path
-		$i18n_path = APPPATH.'i18n/';
-		
-		// i18n folder
-		$i18n_folder = @ opendir($i18n_path);
-		
-		if ( !$i18n_folder )
-			return false;
-		
-		while ( ($i18n_dir = readdir($i18n_folder)) !== false )
-		{			
-			if ( is_dir($i18n_path.$i18n_dir) && is_readable($i18n_path.$i18n_dir) )
-			{				
-				// Strip out .  and .. and any other stuff
-				if ( $i18n_dir{0} == '.' || $i18n_dir == '..'
-				 	|| $i18n_dir ==  '.DS_Store' || $i18n_dir == '.git')
-					continue;
-				
-				$locale = explode("_", $i18n_dir);
-				if ( count($locale) < 2 )
-					continue;
-					
-				$directories[$i18n_dir] = locale::language($locale[0])." (".$locale[1].")";
-			}
-		}
-		
-		if ( is_dir( $i18n_dir ) )
-			@closedir( $i18n_dir );
-		
-		return $directories;
 	}
 	
 	/**
