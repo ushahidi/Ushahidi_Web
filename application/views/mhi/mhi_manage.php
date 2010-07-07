@@ -40,29 +40,19 @@
                     <div class="d-right">
                     	
                     </div>
-                    <p class="d-actions"><a target="_blank" href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>admin">Admin Dashboard</a> | Change admin password: <input type="text" class="text" /> <input type="button" value="go" /> | 
-                    <?php if($site->site_active == 1) { ?> <a class="active-link" href="?deactivate=<?php echo $site->site_domain; ?>">Deactivate</a> <?php }else{ ?> <a class="active-link" href="?activate=<?php echo $site->site_domain; ?>">Activate</a> <?php } ?>
+
+                    <?php echo form::open(url::site().'mhi/manage', array('id' => 'frm-MHI-Admin-PW-Single', 'name' => 'frm-MHI-Admin-PW-Single', 'class' => 'frm-content')); ?>
+                    <input type="hidden" name="change_pw_for" value="one"/>
+                    <input type="hidden" name="site_domain" value="<?php echo $site->site_domain; ?>"/>
+                    <p class="d-actions">
+                    	<a target="_blank" href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>admin">Admin Dashboard</a> | 
+                    	<label for="admin_password">Change admin password:</label> <input type="password" size="24" maxlength="32" name="admin_password" id="admin_password" value=""/> <input class="button" type="submit" value="go" /> | 
+						<?php if($site->site_active == 1) { ?> <a class="active-link" href="?deactivate=<?php echo $site->site_domain; ?>">Deactivate</a> <?php }else{ ?> <a class="active-link" href="?activate=<?php echo $site->site_domain; ?>">Activate</a> <?php } ?>
                 	</p>
+                	<?php echo form::close(); ?>
+
                 </div>
                
-                <!--CB: Hiding this... -->
-                <div style="display:none">
-				
-							<?php if(in_array($site->site_domain,$sites_pw_changed)) { ?>
-								<strong>* Password Changed</strong>
-							<?php } ?>
-							<?php print form::open(url::site().'mhi/manage', array('id' => 'frm-MHI-Admin-PW', 'name' => 'frm-MHI-Admin-PW')); ?>
-								<input type="password" size="24" name="admin_password" maxlength="32" id="admin_password"/>
-								Change password for 
-								<select name="change_pw_for">
-									<option value="one" selected="yes">just this deployment.</option>
-									<option value="all">all deployments.</option>
-								</select>
-								<input type="hidden" name="site_domain" value="<?php echo $site->site_domain; ?>"/>
-								<input class="button" type="submit" value="Change Password" />
-							<?php print form::close(); ?>
-				</div>
-                    
 				<?php } ?>
 				
                 <p class="no-results msg m-info">No results.</p>
@@ -71,29 +61,32 @@
                 <h3>Multi-Deployment Operations</h3>
                 <p>Use these functions to perform changes across all your deployments.</p>
                 
-                <h4>Change Admin Password</h4>
-                <form class="frm-content">
+                <h4>Change Admin Password On ALL Deployments</h4>
+                
+                <?php echo form::open(url::site().'mhi/manage', array('id' => 'frm-MHI-Admin-PW', 'name' => 'frm-MHI-Admin-PW', 'class' => 'frm-content')); ?>
+                
+                <input type="hidden" name="change_pw_for" value="all"/>
                 <table><tbody>
-                	<tr>
-				      <td><label for="account_password">Current Password</label></td>
-				      <td><input type="password" id="account_password" maxlength="32" name="account_password" size="24">
-				     </td>
-				    </tr>
+                
                     <tr>
-				      <td><label for="account_new_password">New Password</label></td>
-				      <td><input type="password" id="account_confirm_new_password" maxlength="32" name="account_new_password" size="24"></td>
+				      <td><label for="admin_password">New Password</label></td>
+				      <td><input type="password" size="24" maxlength="32" name="admin_password" id="admin_password" value=""/>
+				      <span>Use 4 to 32 characters.</span></td>
 				    </tr>
+				    
                     <tr>
-				      <td><label for="account_confirm_new_password">New Password Confirmation</label></td>
-				      <td><input type="password" id="account_confirm_new_password" maxlength="32" name="account_confirm_new_password" size="24"></td>
+				      <td><label for="confirm_admin_password">New Password Confirmation</label></td>
+				      <td><input type="password" size="24" maxlength="32" name="confirm_admin_password" id="confirm_admin_password" value=""/></td>
 				    </tr>
+				    
                     <tr>
 				      <td></td>
 				      <td><input class="button" type="submit" value="Save Password" /></td>
 				    </tr>
+				    
                  </tbody></table>
                 
-                 </form>
+                 <?php echo form::close(); ?>
                 
             
             </div></div>

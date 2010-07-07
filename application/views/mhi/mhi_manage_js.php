@@ -51,3 +51,53 @@ $(function(){
 	});
 	
 });
+
+$(function(){
+	/*Validate the All Deployment PW Form*/
+	$("#frm-MHI-Admin-PW").validate({
+		rules: {
+			admin_password: {
+				required: true,
+				rangelength: [4, 32]
+			},
+			confirm_admin_password: {
+				required: true,
+				equalTo: "#admin_password"
+			}
+		},
+		messages: {
+			admin_password: {
+				required: "Please enter a password.",
+				rangelength: "Your password must be between 4 and 32 characters."
+			},
+			confirm_admin_password: {
+				required: "Please confirm your password.",
+				equalTo: "Passwords do not match."
+			}
+		},
+		errorPlacement: function(error, element) {
+		 error.appendTo(element.parent());
+	    }
+	});
+});
+
+$(function(){
+	/*Validate the All Deployment PW Form*/
+	$("#frm-MHI-Admin-PW-Single").validate({
+		rules: {
+			admin_password: {
+				required: true,
+				rangelength: [4, 32]
+			}
+		},
+		messages: {
+			admin_password: {
+				required: "Please enter a password.",
+				rangelength: "Your password must be between 4 and 32 characters."
+			}
+		},
+		errorPlacement: function(error, element) {
+		 error.appendTo(element.parent());
+	    }
+	});
+});

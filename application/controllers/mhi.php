@@ -188,7 +188,7 @@ class MHI_Controller extends Template_Controller {
 
 		// Manage JS
 
-		$this->template->header->js = new View('mhi/mhi_manage_js');
+		$this->template->header->js .= new View('mhi/mhi_manage_js');
 
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
@@ -199,7 +199,6 @@ class MHI_Controller extends Template_Controller {
 		if ($_POST)
 		{
 			$new_password = $_POST['admin_password'];
-			$site_domains = array($_POST['site_domain']);
 
 			if ($_POST['change_pw_for'] == 'all')
 			{
@@ -208,8 +207,10 @@ class MHI_Controller extends Template_Controller {
 				foreach($all_user_sites as $site) {
 					$site_domains[] = $site->site_domain;
 				}
+			}else{
+				// If we are only changing one domain
+				$site_domains = array($_POST['site_domain']);
 			}
-
 
 			$db_genesis = new DBGenesis;
 			$mhi_site = new Mhi_Site_Model;
