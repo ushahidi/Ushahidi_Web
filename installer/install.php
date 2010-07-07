@@ -403,11 +403,15 @@ class Install
 		if( is_array( $htaccess_file ) ) {
 			foreach($htaccess_file as $line_number => $line ) {
 				if( !empty($base_path) && $base_path != "/" ) {
+					
 					if( strpos(" ".$line,"RewriteBase /") != 0 ) {
 						fwrite($handle, str_replace("/","/".$base_path,$line));			
 					} else {
 						fwrite($handle,$line);
-					}	
+					}
+						
+				} else {
+					fwrite($handle,$line);
 				}
 			}
 		}	
@@ -785,7 +789,7 @@ HTML;
 		
 	function _check_for_clean_url() {
 		
-		$url = $this->_get_url()."/help";
+		$url = $this->_get_url()."/installer/mod_rewrite/";
   		$curl_handle = curl_init();
        
    		curl_setopt($curl_handle, CURLOPT_URL, $url); 
@@ -795,7 +799,7 @@ HTML;
   	   	$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
  	   	curl_close($curl_handle);
   
- 	   	if( $return_code ==  404) {
+ 	   	if( $return_code ==  404 OR $return_code ==  403 ) {
  	    	return FALSE; 	
  	   	} else {
  	   		return TRUE;
