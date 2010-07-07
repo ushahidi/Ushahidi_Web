@@ -403,11 +403,15 @@ class Install
 		if( is_array( $htaccess_file ) ) {
 			foreach($htaccess_file as $line_number => $line ) {
 				if( !empty($base_path) && $base_path != "/" ) {
+					
 					if( strpos(" ".$line,"RewriteBase /") != 0 ) {
 						fwrite($handle, str_replace("/","/".$base_path,$line));			
 					} else {
 						fwrite($handle,$line);
-					}	
+					}
+						
+				} else {
+					fwrite($handle,$line);
 				}
 			}
 		}	
