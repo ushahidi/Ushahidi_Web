@@ -314,8 +314,8 @@ class Main_Controller extends Template_Controller {
 			}
 			$endDate .= "</optgroup>";
 		}
-		$this->template->content->startDate = $startDate;
-		$this->template->content->endDate = $endDate;
+		$this->template->content->div_timeline->startDate = $startDate;
+		$this->template->content->div_timeline->endDate = $endDate;
 
 		// get graph data
 		// could not use DB query builder. It does not support parentheses yet
