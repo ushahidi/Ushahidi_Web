@@ -23,6 +23,10 @@ class mhi_site_Model extends ORM
 
 	protected $primary_val = 'site_domain';
 
+	public $site_name;
+
+	public $site_tagline;
+
 	static function domain_exists($site_domain)
 	{
 
@@ -91,14 +95,50 @@ class mhi_site_Model extends ORM
 
 	// Get sites, user_id returns all of that users sites
 
-	static function get_user_sites($user_id=FALSE)
+	static function get_user_sites($user_id=FALSE,$detailed_data=FALSE)
 	{
 		$result = ORM::factory('mhi_site')->where('user_id',$user_id)->find_all();
 
 		$sites = array();
 		foreach ($result as $res)
+		{
+			if($detailed_data != FALSE)
+			{
+				// Go to the deployment's database and grab some additional details
+				$details = Mhi_Site_Model::get_site_details($res->site_domain);
+				$res->site_name = $details['site_name'];
+				$res->site_tagline = $details['site_tagline'];
+			}
 			$sites[] = $res;
+		}
 
 		return $sites;
+	}
+
+	function get_site_details($domain)
+	{
+		$mhi_db = Kohana::config('database.default');
+		$table_prefix = $mhi_db['table_prefix'];
+		$mhi_db_name = $mhi_db['connection']['database'];
+
+		// Switch to new DB for a moment
+
+		$base_db = DBGenesis::current_db();
+
+		mysql_query('USE '.$base_db.'_'.$domain.';');
+
+		// START: Everything that happens in the deployment DB happens below
+		$settings = ORM::factory('settings', 1);
+		$array = array(
+			'site_name' => $settings->site_name,
+			'site_tagline' => $settings->site_tagline
+			);
+
+		// END: Everything that happens in the deployment DB happens above
+
+		//Switch back to our db, otherwise we would be running off some other deployments DB and that wouldn't work
+		mysql_query('USE '.$mhi_db_name);
+
+		return $array;
 	}
 }
