@@ -362,31 +362,31 @@ class Install
 	/**
 	 * Removes index.php from index page variable in application/config.config.php file
 	 */
-	private function _remove_index_page() {
+	private function _remove_index_page($yes_or_no) {
 		$config_file = @file('../application/config/config.php');
 		$handle = @fopen('../application/config/config.php', 'w');
 		
 		if(is_array($config_file) ) {
-			foreach( $config_file as $line_number => $line )
+        	foreach( $config_file as $line_number => $line )
         	{
-        		if( $yes_or_no == 1 ) {
-            		if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
+            	if( $yes_or_no == 1 ) {
+                	if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
                 		fwrite($handle, str_replace("index.php","",$line ));    
             		} else {
                 		fwrite($handle, $line);
             		}
         	
-        		} else {
-        			if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
+            	} else {
+                	if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
         			
-        				fwrite($handle, str_replace("''","'index.php'",$line ));    
-            		} else {
-            		
-                		fwrite($handle, $line);
-            		}        		
-        		}
+                    	fwrite($handle, str_replace("''","'index.php'",$line ));    
+                	} else {
+                    	fwrite($handle, $line);
+                	}        		
+            	}
         	}
-		}
+    	}
+		
 		
 	}
 	
