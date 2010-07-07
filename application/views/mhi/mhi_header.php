@@ -79,14 +79,14 @@ $(function(){
             <div id="login-form" class="rounded shadow">
                 <?php print form::open(url::site().'mhi/', array('id' => 'frm-MHI-Login', 'name' => 'frm-Login')); ?>
                     <p>
-                        <label for="username">E-mail</label>
+                        <label for="username">Email</label>
                         <input type="text" name="username" class="text rounded" id="username" title="username" value="<?php echo $form['username'] ?>" />
                     </p>
                     <p>
                         <label for="password">Password</label>
                         <input type="password" name="password" class="text rounded" id="password" title="password" value="" />
                         <?php if($form_error === true) { ?>
-                        	<div class="error">Your username and/or<br/>password were incorrect.</div>
+                        	<div class="msg m-error-text">Invalid email or password, please try again</div>
                         <?php } ?>
                     </p>
                     <p>

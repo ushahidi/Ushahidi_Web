@@ -186,6 +186,10 @@ class MHI_Controller extends Template_Controller {
 		$this->template->content = new View('mhi/mhi_manage');
 		$this->template->content->sites_pw_changed = array();
 
+		//MHI JS
+
+		$this->template->header->js = new View('mhi/mhi_js_signin');
+
 		$this->template->content->domain_name = $_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
 		$mhi_site = new Mhi_Site_Model;

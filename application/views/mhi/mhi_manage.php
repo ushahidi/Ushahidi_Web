@@ -16,32 +16,38 @@
 		<div id="primary-content">
             <div class="twocol-left"><div class="content-shadow">
                 <h2>Manage Your Account</h2>
-		
-				<a href="<?php echo url::site() ?>mhi/signup">Create New Deployment</a>
+				<div class="tabs">
+                	<ul>
+                    	<li><a class="ab-active" href="<?php echo url::site() ?>mhi/manage">Your Deployments</a></li>
+                    	<li><a class="" href="<?php echo url::site() ?>mhi/account">Account Settings</a></li>
+                    </ul>
+                </div>
+				<h3>Your Deployments
+                	<span id="deployment-filter" class="one-line-select">
+                        <span id="site-filter-all" class="select-item selected first-child">All</span><span id="site-filter-active" class="select-item">Active</span><span id="site-filter-inactive" class="select-item last-child">Inactive</span>
+                    </span>
+                </h3>
+                <p>View and manage your deployments.</p>
 				
-				<a href="<?php echo url::site() ?>mhi/account">Account Settings</a>
+                <div id="deployments">
+                <?php foreach($sites as $site) { ?>
+                <div class="deployment <?php if($site->site_active == 1) { ?>d-active<?php }else{?>d-inactive<?php } ?> clearfix">
+                	<div class="d-left">
+                        <h4><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>">TODO: Add deployment Title here</a>  <span><?php if($site->site_active == 1) { ?>active<?php }else{?>inactive<?php } ?></span></h4>
+                        <p class="d-tagline">TODO: Add tagline here</p>
+                        
+                    </div>
+                    <div class="d-right">
+                    	
+                    </div>
+                    <p class="d-actions"><a target="_blank" href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>admin">Admin Dashboard</a> | Change admin password: <input type="text" class="text" /> <input type="button" value="go" /> | 
+                    <?php if($site->site_active == 1) { ?> <a class="active-link" href="?deactivate=<?php echo $site->site_domain; ?>">Deactivate</a> <?php }else{ ?> <a class="active-link" href="?activate=<?php echo $site->site_domain; ?>">Activate</a> <?php } ?>
+                	</p>
+                </div>
+               
+                <!--CB: Hiding this... -->
+                <div style="display:none">
 				
-				<a href="<?php echo url::site() ?>mhi/manage">Your Sites</a>
-				
-				<br/>
-				<h3>Your Sites</h3>
-				
-				<table><tbody>
-					<tr>
-						<th style="padding:2px;margin:0px;text-align:center;">Site</th>
-						<th style="padding:2px;margin:0px;text-align:center;">Go To</th>
-						<th style="padding:2px;margin:0px;text-align:center;">Status</th>
-						<th style="padding:2px;margin:0px;text-align:center;">Change Admin Password</th>
-					</tr>
-				<?php foreach($sites as $site) { ?>
-					<tr>
-						<td><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>" target="_blank"><?php echo $site->site_domain.'.'.$domain_name; ?></a></td>
-						<td><a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>" target="_blank">Homepage</a> <a href="http://<?php echo $site->site_domain.'.'.$domain_name; ?>admin" target="_blank">Admin</a></td>
-						<td>
-							<strong><?php if($site->site_active == 1) { ?> Active <?php }else{ ?> Deactivated <?php } ?></strong>
-							<div style="font-size:xx-small;"><?php if($site->site_active == 1) { ?> <a href="?deactivate=<?php echo $site->site_domain; ?>">Deactivate</a> <?php }else{ ?> <a href="?activate=<?php echo $site->site_domain; ?>">Activate</a> <?php } ?></div>
-						</td>
-						<td>
 							<?php if(in_array($site->site_domain,$sites_pw_changed)) { ?>
 								<strong>* Password Changed</strong>
 							<?php } ?>
@@ -55,20 +61,44 @@
 								<input type="hidden" name="site_domain" value="<?php echo $site->site_domain; ?>"/>
 								<input class="button" type="submit" value="Change Password" />
 							<?php print form::close(); ?>
-						</td>
-					</tr>
+				</div>
+                    
 				<?php } ?>
-				</tbody></table>
+				
+                <p class="no-results msg m-info">No results.</p>
+                </div>
+                <hr />
+                <h3>Multi-Deployment Opperations</h3>
+                <p>Use these functions to perform changes across all your deployments.</p>
                 
-                   
+                <h4>Change Admin Password</h4>
+                <form class="frm-content">
+                <table><tbody>
+                	<tr>
+				      <td><label for="account_password">Current Password</label></td>
+				      <td><input type="password" id="account_password" maxlength="32" name="account_password" size="24">
+				     </td>
+				    </tr>
+                    <tr>
+				      <td><label for="account_new_password">New Password</label></td>
+				      <td><input type="password" id="account_confirm_new_password" maxlength="32" name="account_new_password" size="24"></td>
+				    </tr>
+                    <tr>
+				      <td><label for="account_confirm_new_password">New Password Confirmation</label></td>
+				      <td><input type="password" id="account_confirm_new_password" maxlength="32" name="account_confirm_new_password" size="24"></td>
+				    </tr>
+                    <tr>
+				      <td></td>
+				      <td><input class="button" type="submit" value="Save Password" /></td>
+				    </tr>
+                 </tbody></table>
+                
+                 </form>
+                
+            
             </div></div>
             <div class="twocol-right">
-                <!-- CB: We'll just leave this empty for now.
-                
-                <div class="side-bar-module rounded shadow">
-                    <p>Sign-up Sidebar promo to go here</p>
-                </div>
-                -->
+                <p class="side-bar-buttons"><a class="admin-button green" href="<?php echo url::site() ?>mhi/signup">New Deployment</a></p>
             </div>
             <div style="clear:both;"></div>
         </div>

@@ -2,7 +2,7 @@
 /**
  * MHI Homepage JS file
  * 
- * Non-clustered map rendering (Please refer to main_cluster_js for Server Side Clusters)
+ * Initialization of slideshow on the homepage
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
