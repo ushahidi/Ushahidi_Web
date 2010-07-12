@@ -701,9 +701,9 @@ class MHI_Controller extends Template_Controller {
 					$message .= 'Password: (hidden)'."\n";
 
 					email::send($to,$from,$subject,$message,FALSE);
-
-					Mhi_Log_Model::log($user_id,3,'Deployment Created: '.$post->signup_subdomain);
 				}
+
+				Mhi_Log_Model::log($user_id,3,'Deployment Created: '.$post->signup_subdomain);
 
 			}else{
 				throw new Kohana_User_Exception('Validation Error', "Form not validating. Dev TODO: Come back later and clean up validation!");
