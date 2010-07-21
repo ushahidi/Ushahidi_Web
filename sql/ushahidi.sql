@@ -1473,7 +1473,7 @@ CREATE TABLE `mhi_site_database` (
     `pass` varchar(50) CHARACTER SET utf8 NOT NULL,                                 -- field description
     `host` varchar(100) CHARACTER SET utf8 NOT NULL,                                -- field description
     `port` smallint(6) NOT NULL,                                                    -- field description
-    `database` varchar(30) CHARACTER SET utf8 NOT NULL,                             -- field description
+    `database` varchar(100) CHARACTER SET utf8 NOT NULL,                             -- field description
   PRIMARY KEY (`mhi_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='This table holds DB credentials for MHI instances';
 
