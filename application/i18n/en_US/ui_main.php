@@ -392,6 +392,7 @@ $lang = array(
 	'sharing' => 'Sharing',
 	'show' => 'Show',
 	'show_all' => 'Show all',
+	'show_messages' => 'Show Messages',
 	'site' => 'Website',
 	'site_url' => 'Site URL',
 	'site_email_address' => 'site email address',
