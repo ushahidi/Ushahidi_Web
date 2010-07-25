@@ -34,7 +34,7 @@
 
 			echo html::script('media/js/OpenLayers', true);
 			echo html::script('media/js/OpenStreetMap.js', true);
-			echo "<script type=\"text/javascript\">OpenLayers.ImgPath = '".url::site().'media/img/openlayers/'."';</script>";
+			echo "<script type=\"text/javascript\">OpenLayers.ImgPath = 'http://js.mapbox.com/theme/dark/';</script>";
 		}
 
 		// Load jQuery
@@ -110,9 +110,6 @@
 		// Render CSS and Javascript Files from Plugins
 		plugin::render('stylesheet');
 		plugin::render('javascript');
-
-		// Action::header_scripts - Additional Inline Scripts
-		Event::run('ushahidi_action.header_scripts');
 	?>
 
 	<!--[if IE 6]>
@@ -125,6 +122,11 @@
 		}
 		<?php echo $js . "\n"; ?>
 	</script>
+	
+	<?php
+	// Action::header_scripts - Additional Inline Scripts
+	Event::run('ushahidi_action.header_scripts');
+	?>
 </head>
 
 <body id="page">
@@ -168,6 +170,9 @@
 			<!-- / logo -->
 			
 			<?php
+			// Action::pre_nav_submit - Add items before the submit button
+			Event::run('ushahidi_action.pre_nav_submit');
+			
 			if (Kohana::config('settings.allow_reports'))
 			{
 				?><!-- submit incident -->
@@ -176,6 +181,9 @@
 			</div>
 			<!-- / submit incident --><?php
 			}
+			
+			// Action::post_nav_submit - Add items after the submit button
+			Event::run('ushahidi_action.post_nav_submit');
 			?>
 		</div>
 		<!-- / header -->

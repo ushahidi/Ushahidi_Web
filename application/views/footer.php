@@ -69,5 +69,9 @@
  
         <!-- script for share button -->
         <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pub=ushahidi"></script>
+	<?php
+	// Action::main_footer - Add items before the </body> tag
+	Event::run('ushahidi_action.main_footer');
+	?>
 </body>
 </html>
