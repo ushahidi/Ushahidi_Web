@@ -34,7 +34,7 @@
 
 			echo html::script('media/js/OpenLayers', true);
 			echo html::script('media/js/OpenStreetMap.js', true);
-			echo "<script type=\"text/javascript\">OpenLayers.ImgPath = 'http://js.mapbox.com/theme/dark/';</script>";
+			echo "<script type=\"text/javascript\">OpenLayers.ImgPath = '".url::site().'media/img/openlayers/'."';</script>";
 		}
 
 		// Load jQuery
