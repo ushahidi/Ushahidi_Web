@@ -102,7 +102,7 @@ class mhi_site_Model extends ORM
 		$sites = array();
 		foreach ($result as $res)
 		{
-			if($detailed_data != FALSE)
+			if ($detailed_data != FALSE)
 			{
 				// Go to the deployment's database and grab some additional details
 				$details = Mhi_Site_Model::get_site_details($res->site_domain);
@@ -133,6 +133,35 @@ class mhi_site_Model extends ORM
 			'site_name' => $settings->site_name,
 			'site_tagline' => $settings->site_tagline
 			);
+
+		// END: Everything that happens in the deployment DB happens above
+
+		//Switch back to our db, otherwise we would be running off some other deployments DB and that wouldn't work
+		mysql_query('USE '.$mhi_db_name);
+
+		return $array;
+	}
+
+	function get_db_versions()
+	{
+		$mhi_db = Kohana::config('database.default');
+		$table_prefix = $mhi_db['table_prefix'];
+		$mhi_db_name = $mhi_db['connection']['database'];
+
+		$dbs = Mhi_Site_Database_Model::get_all_db_details();
+
+		// Switch to new DB for a moment
+
+		$array = array();
+
+		foreach($dbs as $db)
+		{
+			mysql_query('USE '.$db.';');
+
+			// START: Everything that happens in the deployment DB happens below
+			$settings = ORM::factory('settings', 1);
+			$array[$db] = $settings->db_version;
+		}
 
 		// END: Everything that happens in the deployment DB happens above
 
