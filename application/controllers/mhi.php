@@ -27,7 +27,7 @@ class MHI_Controller extends Template_Controller {
 
 		$beta_session_thing = $session->get('real_deal');
 
-		if ( ! isset($beta_session_thing))
+		if ( ! isset($beta_session_thing) || $beta_session_thing == NULL || $beta_session_thing == '')
 		{
 			$session->set('real_deal',2);
 			$beta_session_thing = 2;
