@@ -1526,7 +1526,7 @@ CREATE TABLE `mhi_log_actions` (
   PRIMARY KEY  (`int`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `mhi_log_actions` (`int`, `description`) VALUES
+INSERT INTO `mhi_log_actions` (`id`, `description`) VALUES
 (1, 'Logged in'),
 (2, 'Logged out'),
 (3, 'Created a deployment'),
