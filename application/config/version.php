@@ -11,4 +11,4 @@ $config['ushahidi_version'] = "2.0b3";
  */
 
 
-$config['ushahidi_db_version'] = "26";
+$config['ushahidi_db_version'] = "27";
