@@ -39,12 +39,12 @@ class Mhi_Controller extends Admin_Controller
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-	    if ($_POST)
-	    {
+		if ($_POST)
+		{
 			$post = Validation::factory($_POST);
 
 	         //  Add some filters
-	        $post->pre_filter('trim', TRUE);
+			$post->pre_filter('trim', TRUE);
 
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 			$post->add_rules('action','required', 'alpha', 'length[1,1]');
@@ -106,9 +106,9 @@ class Mhi_Controller extends Admin_Controller
 
 		// Pagination
 		$pagination = new Pagination(array(
-			'query_string'    => 'page',
+			'query_string'	=> 'page',
 			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-			'total_items'    => ORM::factory('mhi_site')->where($filter)->count_all()
+			'total_items'	=> ORM::factory('mhi_site')->where($filter)->count_all()
 		));
 		$this->template->content->pagination = $pagination;
 
@@ -136,6 +136,22 @@ class Mhi_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/mhi_activity');
 		$this->template->content->activity = Mhi_Log_Model::get_actions();
+	}
+
+	/**
+	* Lists the reports.
+    * @param int $page
+    */
+	function updatelist()
+	{
+		$this->template->content = new View('admin/mhi_updatelist');
+
+		$settings = kohana::config('settings');
+
+		if (isset($_POST['mhiupdatedb'])) Mhi_Site_Database_Model::update_db($_POST['db']);
+
+		$this->template->content->db_versions = Mhi_Site_Model::get_db_versions();
+		$this->template->content->current_version = $settings['db_version'];
 	}
 
 }

@@ -4,54 +4,57 @@ $lang = array
 (
 	'name' => array
 	(
-		'required'		=> 'The full name field is required.',
-		'length'		=> 'The full name field must be at least 3 and no more 100 characters long.',
-		'standard_text' => 'The username field contains disallowed characters.',
-		'login error'	=> 'Please check that you entered the correct name.'
+		'required'		=> 'Jina kwa ukamili linahitajika.',
+		'length'		=> 'Jina kwa ukamili lazima iwe baina ya herufi 3 na 100.',
+		'standard_text' => 'Jina la mtumizi limeandikwa kwa herufi zisizokubalika.',
+		'login error'	=> 'Tafadhali hakikisha umeandika jina sahihi.'
 	),
 	
 	'email' => array
 	(
-		'required'	  => 'The email field is required.',
-		'exists'	  => 'Sorry, a user account already exists for this email address.',
-		'login error' => 'Please check that you entered the correct email address.'
+		'required'	  => 'Anwani ya barua pepe inahitajika.',
+		'email'		  => 'Anwani ya barua pepe inaonekana kuwa na herufi zisizotakikana',
+		'length'	  => 'Anwani ya barua pepe lazima iwe baina ya herufi 4 na 64.',
+		'exists'	  => 'Pole, Anwani ya barua pepe uliopatia ilishasajilishwa.',
+		'login error' => 'Tafadhali hakikisha umeandika anwani ya barua pepe iliyo sahihi.'
 	),
 
 	'username' => array
 	(
-		'required'		=> 'The username field is required.',
-		'length'		=> 'The username field must be at least 2 and no more 16 characters long.',
-		'alpha' => 'The username field contains disallowed characters.',
-		'admin' 		=> 'The admin user role cannot be modified.',
-		'superadmin'	=> 'The super admin role cannot boe modified.',
-		'exists'		=> 'Sorry, this username is already in use.',
-		'login error'	=> 'Please check that you entered the correct username.'
+		'required'		=> 'Jina la mtumizi linahitajika.',
+		'length'		=> 'Jina la mtumizi lazma liwe na baina ya herufi 2 na 16.',
+		'standard_text' => 'Jina la mtumizi liko na herufi zisizotakikana.',
+		'admin' 		=> 'Jukumu la meneja haliwezi kubadilishwa.',
+		'superadmin'	=> 'Jukumu la meneja haliwezi kubadilishwa.',
+		'exists'		=> 'Pole, Jina la mtumizi lilishasajilishwa.',
+		'login error'	=> 'Tafadhali hakikisha umeandika jina la mtumizi kisahihi.'
 	),
 
 	'password' => array
 	(
-		'required'		=> 'The password field is required.',
-		'length'		=> 'The password field must be at least 5 and no more 16 characters long.',
-		'alpha_numeric' => 'The password field contains disallowed characters.',
-		'login error'	=> 'Please check that you entered the correct password.',
-		'matches'		=> 'Please enter the same password in the two password fields.'
+		'required'		=> 'Nywila inahitajika.',
+		'length'		=> 'Nywila lazima iwe baina ya herufi 5 na 16.',
+		'standard_text' => 'Nywila iko na herufi zisizotakikana.',
+		'login error'	=> 'Tafadhali hakikisha umeandika nywila sahihi.',
+		'matches'		=> 'Tafadhali andika nywila zilofanana kwenye sehemu ya nywila na kuthibitisha nywila.'
 	),
 
 	'password_confirm' => array
 	(
-		'matches' => 'The password confirmation field must match the password field.'
+		'matches' => 'Sehemu ya kuthibitisha nywila lazima iwe sawa na sehemu ya nywila.'
 	),
 
 	'roles' => array
 	(
-		'required' => 'Lazima baini jukumu moja.',
-		'values' => 'Lazima uchague aidha jukumu la Mtawala au Mtumiaji.'
+		'required' => 'Lazima ufasili jukumu lako.',
+		'values' => 'Lazima uchague jukumu la MENEJA au MTUMIZI.'
 	),
 	
 	'resetemail' => array
         (
-    	        'required' => 'The email field is required.',
+    	        'required' => 'Anwani ya barua pepe inahitajika.',
+       	        'invalid' => 'Pole, hatuna anwani yako ya barua pepe',
+                'email'  => 'Anwani ya barua pepe inaonekana si sahihi',
         ),
 
-        'forgot_password' => 'Forgot password?',
 );

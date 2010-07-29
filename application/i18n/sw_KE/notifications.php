@@ -12,36 +12,36 @@ $lang = array
 	/*** Administrator Email Notifications ***/
 	
 	// Message Footer
-	'admin_footer'			=> 'This message was sent from your website',
+	'admin_footer'			=> 'Ujumbe huu ulitumwa kutoka kwa tovuti yako',
 	
 	// Administrator Login
-	'admin_login_url'		=> 'Administrator Login',
+	'admin_login_url'		=> 'Kiingilizi cha meneja',
 	
 	// Notify Administrators that a new report has been submitted
 	'admin_new_report' => array
 	(
-		'subject'		=> 'New Report',
-		'message'		=> 'A new report has been submitted to your website.'
+		'subject'		=> 'Repoti mpya',
+		'message'		=> 'Repoti mpya imetumwa kwa tovuti yako.'
 	),
 	
 	// Notify Administrators that a new comment has been submitted
 	'admin_new_comment' => array
 	(
-		'subject'		=> 'Tafsiri Mpya',
-		'message'		=> 'A new comment has been submitted to your website in response to:'
+		'subject'		=> 'Fikira mpya',
+		'message'		=> 'Fikira mpya zimeletwa kwa tovuti yako kutokana na:'
 	),
 	
 	// Notify Administrators that a new sms has been received
 	'admin_new_sms' => array
 	(
-		'subject'		=> 'New Text Message',
-		'message'		=> 'A new text message has been submitted to your website.'
+		'subject'		=> 'Ujumbe mpya kutoka kwa simu ya rununu',
+		'message'		=> 'Ujumbe mpya kutoka kwa simu ya rununu umeletwa kwa tovuti yako.'
 	),
 	
 	// Notify Administrators that a new email has been received
 	'admin_new_email' => array
 	(
-		'subject'		=> 'New Email Message',
-		'message'		=> 'A new email message has been submitted to your website.'
+		'subject'		=> 'Ujumbe mpya kutoka kwa barua pepe',
+		'message'		=> 'Ujumbe mpya kutoka kwa simu ya rununu umeletwa kwa tovuti yako.'
 	)
 );

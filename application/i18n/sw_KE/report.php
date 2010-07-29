@@ -4,152 +4,154 @@ $lang = array
 (
 	'locale' => array
 	(
-		'required'		=> 'The locale is required.',
-		'length'		=> 'The locale field has an incorrect value. ',
-		'alpha_dash'	=> 'The locale field has an incorrect value. ',
-		'locale'		=> 'The Original Report and the Translation have the same locale (language)',
-		'exists'		=> 'This report already has a translation for this language'
+		'required'		=> 'Sehemu ya mandhari inahitajika.',
+		'length'		=> 'Sehemu ya mandhari haiko sahihi. ',
+		'alpha_dash'	=> 'Sehemu ya mandhari haiko sahihi. ',
+		'locale'		=> 'Repoti awali na tafsri yake iko na mandhari sawa (lugha)',
+		'exists'		=> 'Repoti hii iko na tafiri ya lugha hii tayari.'
 	),
 	
 	'incident_title' => array
 	(
-		'required'		=> 'The title field is required.',
-		'length'		=> 'The title field must be at least 3 and no more 200 characters long.'
+		'required'		=> 'Sehemu ya jina inahitajika.',
+		'length'		=> 'Sehemu ya jina lazima iwe na baina ya herufi 3 na 200.'
 	),
 	
 	'incident_description' => array
 	(
-		'required'		=> 'The description field is required.'
+		'required'		=> 'Sehemu ya maelezo inahitajika.'
 	),	
 	
 	'incident_date' => array
 	(
-		'required'		=> 'The date field is required.',
-		'date_mmddyyyy' => 'The date field does not appear to contain a valid date?',
-		'date_ddmmyyyy' => 'The date field does not appear to contain a valid date?'
+		'required'		=> 'Sehemu ya tarehe inahitajika.',
+		'date_mmddyyyy' => 'Sehemu ya tarehe inaonekana si sahihi',
+		'date_ddmmyyyy' => 'Sehemu ya tarehe inaonekana si sahihi'
 	),
 	
 	'incident_hour' => array
 	(
-		'required'		=> 'The hour field is required.',
-		'between' => 'The hour field does not appear to contain a valid hour?'
+		'required'		=> 'Sehemu ya saa inahitajika.',
+		'between' => 'Sehemu ya saa inaonekana si sahihi.'
 	),
 	
 	'incident_minute' => array
 	(
-		'required'		=> 'The hour field is required.',
-		'between' => 'The hour field does not appear to contain a valid hour?'
+		'required'		=> 'Sehemu ya dakika inahitajika.',
+		'between' => 'Sehemu ya dakika inaonekana si sahihi'
 	),
 	
 	'incident_ampm' => array
 	(
-		'validvalues' => 'The am/pm field does not appear to contain a valid value?'
+		'validvalues' => 'Sehemu ya am/pm inaonekana si sahihi'
 	),
 	
 	'latitude' => array
 	(
-		'required'		=> 'The latitude field is required. Please click on the map to pinpoint a location.',
-		'between' => 'The latitude field does not appear to contain a valid latitude?'
+		'required'		=> 'Sehemu ya latitudo inahitajika. Tafadhali binya kwenye ramani kuashiria eneo.',
+		'between' => 'Sehemu ya latitudo inaonekana si sahihi'
 	),
 	
 	'longitude' => array
 	(
-		'required'		=> 'The longitude field is required. Please click on the map to pinpoint a location.',
-		'between' => 'The longitude field does not appear to contain a valid longitude?'
+		'required'		=> 'Sehemu ya longitudo inahitajika. Tafadhali binya kwenye ramani kuashiria eneo.',
+		'between' => 'Sehemu ya longitudo inaonekana si sahihi'
 	),
 	
 	'location_name' => array
 	(
-		'required'		=> 'The location name field is required.',
-		'length'		=> 'The location name field must be at least 3 and no more 200 characters long.',
+		'required'		=> 'Jina la eneo linahitajika.',
+		'length'		=> 'Jina la eneo lazima liwe baina ya herufi 3 na 200.',
 	),
 			
 	'incident_category' => array
 	(
-		'required'		=> 'The category field is required.',
-		'numeric'		=> 'The category field does not appear to contain a valid category?'
+		'required'		=> 'Sehemu ya jamii inahitajika.',
+		'numeric'		=> 'Sehemu ya jamii inaonekana si sahihi'
 	),
 	
 	'incident_news' => array
 	(
-		'url'		=> 'The news source links field does not appear to contain a valid URL?'
+		'url'		=> 'Sehemu ya anwani ya habari inaonekana si sahihi'
 	),
 	
 	'incident_video' => array
 	(
-		'url'		=> 'The video links field does not appear to contain a valid URL?'
+		'url'		=> 'Sehemu ya anwani ya video inaonekana si sahihi'
 	),
 	
 	'incident_photo' => array
 	(
-		'valid'		=> 'The Upload Photos field does not appear to contain a valid file',
-		'type'		=> 'The Upload Photos field does not appear to contain a valid image. The only accepted formats are .JPG, .PNG and .GIF.',
-		'size'		=> 'Please ensure that photo uploads sizes are limited to 2MB.'
+		'valid'		=> 'Sehemu ya kupakia picha inaonekana haina faili sahihi',
+		'type'		=> 'Sehemu ya kupakia picha inaonekana haina faili sahihi. Faili zinazokubalika ni za .JPG, .PNG na .GIF.',
+		'size'		=> 'Tafadhali hakikisha picha zinazopakiwa hazizidi 2MB.'
 	),
 	
 	'person_first' => array
 	(
-		'length'		=> 'The first name field must be at least 3 and no more 100 characters long.'
+		'length'		=> 'Jina la kwanza lazma liwe baina ya herufi 3 na 100.'
 	),
 	
 	'person_last' => array
 	(
-		'length'		=> 'The last name field must be at least 3 and no more 100 characters long.'
+		'length'		=> 'Jina la mwisho lazma liwe baina ya herufi 3 na 100.'
 	),
 	
 	'person_email' => array
 	(
+		'email'		  => 'Sehemu ya anwani ya barua pepe inaonekana si sahihi',
+		'length'	  => 'Sehemu ya anwani ya barua pepe lazima iwe baina ya herufi 4 na 64.'
 	),
 	
 	// Admin - Report Download Validation
 	'data_point' => array
 	(
-		'required'		  => 'Please select a valid type of report to download',
-		'numeric'		  => 'Please select a valid type of report to download',
-		'between'		  => 'Please select a valid type of report to download'
+		'required'		  => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua',
+		'numeric'		  => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua',
+		'between'		  => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua'
 	),
 	'data_include' => array
 	(
-		'numeric'		  => 'Please select a valid item to include in the download',
-		'between'		  => 'Please select a valid item to include in the download'
+		'numeric'		  => 'Tafadhali chagua kipengele cha sahihi cha kupakua',
+		'between'		  => 'Tafadhali chagua kipengele cha sahihi cha kupakua'
 	),
 	'from_date' => array
 	(
-		'date_mmddyyyy'		  => 'The FROM date field does not appear to contain a valid date?',
-		'range'	  => 'Please enter a valid FROM date. It cannot be greater than today.'
+		'date_mmddyyyy'		  => 'Tarehe KUTOKA inaonekana si sahihi',
+		'range'	  => 'Tafadhali tumia tarehe ya sahihi katika sehemu ya tarehe KUTOKA.'
 	),
 	'to_date' => array
 	(
-		'date_mmddyyyy'		  => 'The TO date field does not appear to contain a valid date?',
-		'range'	  => 'Please enter a valid TO date. It cannot be greater than today.',
-		'range_greater'	=> 'Your FROM date cannot be greater than your TO date.'
+		'date_mmddyyyy'		  => 'Tarehe MPAKA inaonekana si sahihi',
+		'range'	  => 'Tafadhali tumia tarehe ya sahihi katika sehemu ya tarehe MPAKA.',
+		'range_greater'	=> 'Tarehe KUTOKA haiezi kuwa baada ya tarehe MPAKA.'
 	),
 	'custom_field' => array
 	(
-		'values'		  => 'Please enter a valid value for one of your custom form items'
+		'values'		  => 'Tafadhali jaza uga ya kidesturi kisahihi'
 	),
 	
 	'incident_active' => array
 	(
-		'required'		=> 'Please enter a valid value for Approve This Report',
-		'between'		=> 'Please enter a valid value for Approve This Report'
+		'required'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Pitisha Ripoti',
+		'between'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Guna Ripoti'
 	),
 	
 	'incident_verified' => array
 	(
-		'required'		=> 'Please enter a valid value for Verify This Report',
-		'between'		=> 'Please enter a valid value for Verify This Report'
+		'required'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Kuthibitisha Ripoti',
+		'between'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Kuthibitisha Ripoti'
 	),
 	
 	'incident_source' => array
 	(
-		'alpha'		=> 'Please enter a valid value for Source Reliability',
-		'length'		=> 'Please enter a valid value for Source Reliability'
+		'alpha'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Uaminifu wa Asili',
+		'length'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Uaminifu wa Asili'
 	),
 	
 	'incident_information' => array
 	(
-		'alpha'		=> 'Please enter a valid value for Information Probability',
-		'length'		=> 'Please enter a valid value for Information Probability'
+		'alpha'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Uwezekano wa Maarifa',
+		'length'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Uwezekano wa Maarifa'
 	)
 );
