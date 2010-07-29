@@ -14,7 +14,6 @@
  * Public License (LGPL)
  */
 ?>
-
 				<!-- main body -->
 				<div id="main" class="clearingfix">
 					<div id="mainmiddle" class="floatbox withright">

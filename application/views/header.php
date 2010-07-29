@@ -29,12 +29,13 @@
 
 		// Load OpenLayers before jQuery!
 
-		if ($map_enabled == 'streetmap')
+		if ($map_enabled)
 		{
 
 			echo html::script('media/js/OpenLayers', true);
 			echo html::script('media/js/OpenStreetMap.js', true);
 			echo "<script type=\"text/javascript\">OpenLayers.ImgPath = '".url::site().'media/img/openlayers/'."';</script>";
+			echo html::stylesheet('media/css/openlayers','',true);
 		}
 
 		// Load jQuery

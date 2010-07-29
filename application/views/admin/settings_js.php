@@ -33,26 +33,15 @@
 				, controls: [	new OpenLayers.Control.Navigation(),
 													new OpenLayers.Control.MouseDefaults(),
 													new OpenLayers.Control.PanZoom(),
-													new OpenLayers.Control.ArgParser() ]
+													new OpenLayers.Control.ArgParser(),
+													new OpenLayers.Control.MousePosition(),
+													new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) ]
 										};
 				
 				var map = new OpenLayers.Map('map', options);
-				var gmap_layer = new OpenLayers.Layer.Google(
-									"google",
-									{'isBaseLayer': true,'sphericalMercator': true });
-				var ve_layer = new OpenLayers.Layer.VirtualEarth(
-									"virtualearth",
-									{ 'type': VEMapStyle.Road, 'sphericalMercator': true });
-				var ymap_layer = new OpenLayers.Layer.Yahoo(
-									"yahoo",
-									{ 'sphericalMercator': true });
-				var osmap_layer = new OpenLayers.Layer.OSM.Mapnik(
-									"openstreetmap",
-									{ 'sphericalMercator': true });
 				
-				map.addLayers([gmap_layer, ve_layer, ymap_layer, osmap_layer]);
-				
-				map.addControl(new OpenLayers.Control.MousePosition());
+				<?php echo map::layers_js(TRUE); ?>
+				map.addLayers(<?php echo map::layers_array(TRUE); ?>);
 				
 				
 				// Transform feature point coordinate to Spherical Mercator
@@ -149,80 +138,91 @@
 				var i;
 				var api_go;
 
-				i = <?php print $default_map ?>;
-				if ( i == 1 ){
-					api_go = 'http://code.google.com/apis/maps/signup.html';
-					$('#api_link').attr('target', '_blank');
-					gmap_layer.setVisibility(true);
-					ve_layer.setVisibility(false);
-					ymap_layer.setVisibility(false);
-					osmap_layer.setVisibility(false);
-				}else if ( i == 2){
-					api_go = 'javascript:alert(\'Your current selection does not require an API key!\')';
-					$('#api_link').attr('target', '_top');
-					gmap_layer.setVisibility(false);
-					ve_layer.setVisibility(true);
-					ymap_layer.setVisibility(false);
-					osmap_layer.setVisibility(false);
-				}else if ( i == 3){
-					api_go = 'http://developer.yahoo.com/maps/simple/';
-					$('#api_link').attr('target', '_blank');
-					gmap_layer.setVisibility(false);
-					ve_layer.setVisibility(false);
-					ymap_layer.setVisibility(true);
-					osmap_layer.setVisibility(false);
-				}else if ( i == 4 ){
-					api_go = 'http://code.google.com/apis/maps/signup.html';
-					$('#api_link').attr('target', '_blank');
-					gmap_layer.setVisibility(false);
-					ve_layer.setVisibility(false);
-					ymap_layer.setVisibility(false);
-					osmap_layer.setVisibility(true);
-				}
-				$('#api_link').attr('href', api_go);
-
+				default_map = '<?php print $default_map ?>';
+				all_maps = <?php echo $all_maps_json; ?>;
+				for (var i in all_maps)
+				{
+					target = map.getLayersByName(all_maps[i].title);
+					if (i == default_map) {
+						target[0].setVisibility(true);
+						map.setBaseLayer(target[0]);
+						
+						if (all_maps[i].api_signup) {
+							$('#api_link').attr('href', all_maps[i].api_signup);
+							$('#api_link').attr('target', '_blank');
+						} else {
+							$('#api_link').attr('href', 'javascript:alert(\'Your current selection does not require an API key!\')');
+							$('#api_link').attr('target', '_top');
+						}
+						
+						if (all_maps[i].openlayers == 'Google') {
+							$("#api_div_google").show();
+						}
+						else
+						{
+							$("#api_div_google").hide();
+						}
+						
+						if (all_maps[i].openlayers == 'Yahoo') {
+							$("#api_div_yahoo").show();
+						}
+						else
+						{
+							$("#api_div_yahoo").hide();
+						}
+					}
+					else
+					{
+						if (target[0]) {
+							target[0].setVisibility(false);
+						};
+					}
+				};
 				
 				// detect map provider dropdown change
 				$('#default_map').change(function(){					
-					i = $('#default_map option:selected').val();
-					if ( i == 1 ){
-						api_go = 'http://code.google.com/apis/maps/signup.html';
-						$('#api_link').attr('target', '_blank');
-						gmap_layer.setVisibility(true);
-						ve_layer.setVisibility(false);
-						ymap_layer.setVisibility(false);
-						osmap_layer.setVisibility(false);
-						$("#api_div_google").show();
-						$("#api_div_yahoo").hide();
-					}else if ( i == 2){
-						api_go = 'javascript:alert(\'Your current selection does not require an API key!\')';
-						$('#api_link').attr('target', '_top');
-						gmap_layer.setVisibility(false);
-						ve_layer.setVisibility(true);
-						ymap_layer.setVisibility(false);
-						osmap_layer.setVisibility(false);
-						$("#api_div_google").hide();
-						$("#api_div_yahoo").hide();
-					}else if ( i == 3){
-						api_go = 'http://developer.yahoo.com/maps/simple/';
-						$('#api_link').attr('target', '_blank');
-						gmap_layer.setVisibility(false);
-						ve_layer.setVisibility(false);
-						ymap_layer.setVisibility(true);
-						osmap_layer.setVisibility(false);
-						$("#api_div_google").hide();
-						$("#api_div_yahoo").show();
-					}else if (i == 4){
-						api_go = 'http://code.google.com/apis/maps/signup.html';
-						$('#api_link').attr('target', '_blank');
-						gmap_layer.setVisibility(false);
-						ve_layer.setVisibility(false);
-						ymap_layer.setVisibility(false);
-						osmap_layer.setVisibility(true);
-						$("#api_div_google").show();
-						$("#api_div_yahoo").hide();
-					}
-					$('#api_link').attr('href', api_go);
+					selected_map = $('#default_map option:selected').val();
+					for (var i in all_maps)
+					{
+						target = map.getLayersByName(all_maps[i].title);
+						if (i == selected_map)
+						{
+							if (target[0]) {
+								target[0].setVisibility(true);
+								map.setBaseLayer(target[0]);
+
+								if (all_maps[i].api_signup) {
+									$('#api_link').attr('href', all_maps[i].api_signup);
+									$('#api_link').attr('target', '_blank');
+								} else {
+									$('#api_link').attr('href', 'javascript:alert(\'Your current selection does not require an API key!\')');
+									$('#api_link').attr('target', '_top');
+								}
+								
+								if (all_maps[i].openlayers == 'Google') {
+									$("#api_div_google").show();
+								}
+								else
+								{
+									$("#api_div_google").hide();
+								}
+								
+								if (all_maps[i].openlayers == 'Yahoo') {
+									$("#api_div_yahoo").show();
+								}
+								else
+								{
+									$("#api_div_yahoo").hide();
+								}
+							}
+						}
+						else
+						{
+							if (target[0]) {
+								target[0].setVisibility(false);
+							};
+						}
+					};
 				});
 				
 				

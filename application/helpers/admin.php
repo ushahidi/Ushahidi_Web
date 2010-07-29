@@ -2,8 +2,6 @@
 /**
  * Admin helper class.
  *
- * $Id: valid.php 3917 2009-01-21 03:06:22Z zombor $
- *
  * @package    Distance
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
@@ -17,15 +15,15 @@ class admin_Core {
 	public static function main_tabs()
 	{
 		// Change tabs for MHI
-	    if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '')
+		if (Kohana::config('config.enable_mhi') == TRUE AND Kohana::config('settings.subdomain') == '')
 		{
 	    	// Start from scratch on admin tabs since most are irrelevant
 
-	    	return array(
+			return array(
 				'mhi' => Kohana::lang('ui_admin.mhi'),
 				'stats' => Kohana::lang('ui_admin.stats'),
 			);
-	    }
+		}
 		else
 		{
 			return array(
@@ -47,29 +45,29 @@ class admin_Core {
 		$main_right_tabs = array();
 
 		// Change tabs for MHI
-        if(Kohana::config('config.enable_mhi') == TRUE AND Kohana::config('settings.subdomain') == '')
+		if (Kohana::config('config.enable_mhi') == TRUE AND Kohana::config('settings.subdomain') == '')
 		{
 			$main_right_tabs = array(
-        		'users' => Kohana::lang('ui_admin.users')
-        	);
-        }
+				'users' => Kohana::lang('ui_admin.users')
+			);
+		}
 		else
 		{
-			if($auth AND $auth->logged_in('superadmin'))
+			if ($auth AND $auth->logged_in('superadmin'))
 			{
-	        	$main_right_tabs = array(
-	        		'settings/site' => Kohana::lang('ui_admin.settings'),
-	        		'manage' => Kohana::lang('ui_admin.manage'),
-	        		'users' => Kohana::lang('ui_admin.users')
-	        	);
-	        }
-			elseif($auth AND $auth->logged_in('admin'))
+				$main_right_tabs = array(
+					'settings/site' => Kohana::lang('ui_admin.settings'),
+					'manage' => Kohana::lang('ui_admin.manage'),
+					'users' => Kohana::lang('ui_admin.users')
+				);
+			}
+			elseif ($auth AND $auth->logged_in('admin'))
 			{
-	        	$main_right_tabs = array(
-	        		'manage' => Kohana::lang('ui_admin.manage'),
-	        		'users' => Kohana::lang('ui_admin.users')
-	        	);
-	        }
+				$main_right_tabs = array(
+					'manage' => Kohana::lang('ui_admin.manage'),
+					'users' => Kohana::lang('ui_admin.users')
+				);
+			}
 		}
 
 		return $main_right_tabs;
@@ -87,6 +85,8 @@ class admin_Core {
 		$menu .= ($this_sub_page == "deployments") ? "Deployments" : "<a href=\"".url::base()."admin/mhi/\">Deployments</a>";
 
 		$menu .= ($this_sub_page == "activity") ? "Activity Stream" : "<a href=\"".url::base()."admin/mhi/activity\">Activity Stream</a>";
+
+		$menu .= ($this_sub_page == "updatelist") ? "Update List" : "<a href=\"".url::base()."admin/mhi/updatelist\">Update List</a>";
 
 		echo $menu;
 	}

@@ -60,9 +60,9 @@
 	</div>
 	<!-- / footer -->
  
-	<img src="<?php echo $tracker_url; ?>" />
-	<?php echo $ushahidi_stats; ?>
-	<?php echo $google_analytics; ?>
+	<img src="<?php // echo $tracker_url; ?>" />
+	<?php// echo $ushahidi_stats; ?>
+	<?php// echo $google_analytics; ?>
 	
 	<!-- Task Scheduler -->
 	<img src="<?php echo url::site() . 'scheduler'; ?>" height="1" width="1" border="0" />

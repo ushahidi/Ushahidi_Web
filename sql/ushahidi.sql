@@ -846,7 +846,7 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `allow_feed` tinyint(4) NOT NULL default '1',                                   -- field description
     `allow_stat_sharing` tinyint(4) NOT NULL default '1',                           -- field description
     `allow_clustering` tinyint(4) NOT NULL default '1',                             -- field description
-    `default_map` tinyint(4) NOT NULL default '1' COMMENT '1 - GOOGLE MAPS, 2 - LIVE MAPS, 3 - YAHOO MAPS, 4 - OPEN STREET MAPS',    -- field description
+    `default_map` varchar(100) NOT NULL DEFAULT 'google_satellite'
     `default_map_all` varchar(20) NOT NULL default 'CC0000',                        -- field description
     `api_google` varchar(200) default NULL,                                         -- field description
     `api_yahoo` varchar(200) default NULL,                                          -- field description
@@ -892,8 +892,8 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
 
 -- Dumping data for table `settings`
 
-INSERT INTO `settings` (`id`, `site_name`, `default_map`, `api_google`, `api_yahoo`, `api_live`, `default_country`, `default_city`, `default_lat`, `default_lon`, `default_zoom`, `items_per_page`, `items_per_page_admin`, `date_modify`) VALUES
-(1, 'Ushahidi Beta', 1, 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 20, 20, '2008-08-25 10:25:18');
+INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_yahoo`, `api_live`, `default_country`, `default_city`, `default_lat`, `default_lon`, `default_zoom`, `items_per_page`, `items_per_page_admin`, `date_modify`) VALUES
+(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 20, 20, '2008-08-25 10:25:18');
 
 
 /**
@@ -1490,7 +1490,7 @@ CREATE TABLE `mhi_site_database` (
     `pass` varchar(50) CHARACTER SET utf8 NOT NULL,                                 -- field description
     `host` varchar(100) CHARACTER SET utf8 NOT NULL,                                -- field description
     `port` smallint(6) NOT NULL,                                                    -- field description
-    `database` varchar(30) CHARACTER SET utf8 NOT NULL,                             -- field description
+    `database` varchar(100) CHARACTER SET utf8 NOT NULL,                             -- field description
   PRIMARY KEY (`mhi_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='This table holds DB credentials for MHI instances';
 
@@ -1543,7 +1543,7 @@ CREATE TABLE `mhi_log_actions` (
   PRIMARY KEY  (`int`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT INTO `mhi_log_actions` (`int`, `description`) VALUES
+INSERT INTO `mhi_log_actions` (`id`, `description`) VALUES
 (1, 'Logged in'),
 (2, 'Logged out'),
 (3, 'Created a deployment'),
@@ -1594,4 +1594,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0b3' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '26' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '27' WHERE `id`=1 LIMIT 1;

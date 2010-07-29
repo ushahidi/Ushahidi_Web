@@ -250,15 +250,7 @@ class Json_Controller extends Template_Controller
 
 		$query = $db->query("SELECT DISTINCT i.id, i.incident_title, l.`latitude`, l.`longitude` FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1 $filter ORDER BY i.`id` ASC ");	
 
-		$query->result(FALSE, MYSQL_ASSOC);
-
-		//*** There has to be a more efficient way to do this than to
-		// create a whole other array - to be examined later
-		$markers = array();
-		foreach ($query as $row)
-		{
-			$markers[] = $row;
-		}
+		$markers = $query->result_array(FALSE);
 
 		$clusters = array();	// Clustered
 		$singles = array();		// Non Clustered
@@ -441,35 +433,86 @@ class Json_Controller extends Template_Controller
 	/**
 	 * Retrieve timeline JSON
 	 */
-    public function timeline()
+    public function timeline( $category_id = 0 )
 	{
+		//$profiler = new Profiler;
         $this->auto_render = FALSE;
-        $this->template = new View('json/timeline');
-        
-        $interval = 'day';
-        $start_date = NULL;
-        $end_date = NULL;
-        $active = 'true';
-        $media_type = NULL;
-        if (isset($_GET['i'])) {
-            $interval = $_GET['i'];
-        }
-        if (isset($_GET['s'])) {
-            $start_date = $_GET['s'];
-        }
-        if (isset($_GET['e'])) {
-            $end_date = $_GET['e'];
-        }
-        if (isset($_GET['active'])) {
-            $active = $_GET['active'];
-        }
-        if (isset($_GET['m'])) {
-            $media_type = $_GET['m'];
-        }
-        // get graph data
-        $graph_data = array();
-        $all_graphs = Incident_Model::get_incidents_by_interval($interval,$start_date,$end_date,$active,$media_type);
-	    echo $all_graphs;
+		$db = new Database();
+		
+		$interval = (isset($_GET["i"]) AND !empty($_GET["i"])) ?
+			$_GET["i"] : "month";
+			
+		// Get Category Info
+		if ($category_id > 0)
+		{
+			$category = ORM::factory("category", $category_id);
+			if ($category->loaded)
+			{
+				$category_title = $category->category_title;
+				$category_color = "#".$category->category_color;
+			}
+			else
+			{
+				break;
+			}
+		}
+		else
+		{
+			$category_title = "All Categories";
+			$category_color = "#990000";
+		}
+		
+		// Get the Counts
+		$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-01')";
+		$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m')";
+		if ($interval == 'day')
+		{
+			$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d')";
+			$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d')";
+		}
+		elseif ($interval == 'hour')
+		{
+			$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d %H:%M')";
+			$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d%H')";
+		}
+		elseif ($interval == 'week')
+		{
+			$select_date_text = "STR_TO_DATE(CONCAT(CAST(YEARWEEK(incident_date) AS CHAR), ' Sunday'), '%X%V %W')";
+			$groupby_date_text = "YEARWEEK(incident_date)";
+		}
+		
+		if ($category_id)
+		{
+			$category_query = " AND (c.id = ".$category_id." OR c.parent_id = ".$category_id.") ";
+		}
+		else
+		{
+			$category_query = "";
+		}
+		
+		$graph_data = array();
+		$graph_data[0] = array();
+		$graph_data[0]['label'] = $category_title;
+		$graph_data[0]['color'] = $category_color;
+		$graph_data[0]['data'] = array();
+		
+		$query_text = "SELECT UNIX_TIMESTAMP(" . $select_date_text . ") AS time,
+			COUNT(*) AS number
+			FROM ".$this->table_prefix."incident AS i
+			INNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id
+			INNER JOIN ".$this->table_prefix."category AS c ON ic.category_id = c.id
+			WHERE incident_active = 1 ".$category_query." 
+			GROUP BY " . $groupby_date_text;				
+		
+		$query = $db->query($query_text);
+		
+		foreach ( $query as $items )
+		{
+			array_push($graph_data[0]['data'],
+				array($items->time * 1000, $items->number));
+		}
+		
+		echo json_encode($graph_data);
    	}
 
 
