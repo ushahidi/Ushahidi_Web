@@ -88,9 +88,8 @@
 								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 1: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.choose');?></span><br />
 								<div class="c_push">
 									<span class="my-sel-holder">
-										<?php 
-										$map_providers = array('1'=>'Google', '2'=>'Virtual Earth', '3'=>'Yahoo', '4'=>'Open Streetmaps');
-										print form::dropdown('default_map',$map_providers,$form['default_map']); 
+										<?php										
+										print form::dropdown('default_map',$map_array,$form['default_map']);
 										?>
 									</span>
 								</div>

@@ -230,8 +230,12 @@
 			{
 				endTime = gEndTime;
 			}
-			return $.grep(dailyGraphData[0][this.categoryId].data, function(n,i) {
-				return (n[0] >= gStartTime.getTime() && n[0] <= endTime.getTime());
+			$.getJSON( baseUrl + "json/timeline/" + this.categoryId + "?i=day", function(data) {
+				graphData = data[0];
+				
+				return $.grep(graphData.data, function(n,i) {
+					return (n[0] >= gStartTime.getTime() && n[0] <= endTime.getTime());
+				});
 			});
 		};
 		

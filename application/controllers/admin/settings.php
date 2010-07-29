@@ -263,7 +263,7 @@ class Settings_Controller extends Admin_Controller
 
 			$post->add_rules('default_country', 'required', 'numeric', 'length[1,4]');
 			$post->add_rules('multi_country', 'numeric', 'length[1,1]');
-			$post->add_rules('default_map', 'required', 'between[1,4]');
+			$post->add_rules('default_map', 'required', 'length[0,100]');
 			$post->add_rules('api_google','required', 'length[0,200]');
 			$post->add_rules('api_yahoo','required', 'length[0,200]');
 			$post->add_rules('default_zoom','required','between[0,21]');		// Validate for maximum and minimum zoom values
@@ -357,6 +357,15 @@ class Settings_Controller extends Admin_Controller
         }
         $this->template->content->default_zoom_array = $default_zoom_array;
 
+		// Get Map API Providers
+		$layers = map::base();
+		$map_array = array();
+		foreach ($layers as $layer)
+		{
+			$map_array[$layer->name] = $layer->title;
+		}
+		$this->template->content->map_array = $map_array;
+		
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
 		$this->template->js = new View('admin/settings_js');
@@ -364,6 +373,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->js->default_zoom = $form['default_zoom'];
 		$this->template->js->default_lat = $form['default_lat'];
 		$this->template->js->default_lon = $form['default_lon'];
+		$this->template->js->all_maps_json = $this->_generate_settings_map_js();
 	}
 
 
@@ -984,5 +994,27 @@ class Settings_Controller extends Admin_Controller
             return TRUE;
         }        
 			
+	}
+	
+	private function _generate_settings_map_js()
+	{
+		$map_layers = array();
+		$layers = map::base();
+		foreach ($layers as $layer)
+		{
+			$map_layers[$layer->name] = array();
+			$map_layers[$layer->name]['title'] = $layer->title;
+			$map_layers[$layer->name]['openlayers'] = $layer->openlayers; 
+			if (isset($layer->api_signup))
+			{
+				$map_layers[$layer->name]['api_signup'] = $layer->api_signup;
+			}
+			else
+			{
+				$map_layers[$layer->name]['api_signup'] = "";
+			}
+		}
+		
+		return json_encode($map_layers);
 	}
 }

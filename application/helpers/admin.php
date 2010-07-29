@@ -2,8 +2,6 @@
 /**
  * Admin helper class.
  *
- * $Id: valid.php 3917 2009-01-21 03:06:22Z zombor $
- *
  * @package    Distance
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team

@@ -1,0 +1,363 @@
+<?php defined('SYSPATH') OR die('No direct access allowed.');
+/**
+ * Map helper class
+ * 
+ * Portions of this class credited to: zzolo, phayes, tmcw, brynbellomy, bdragon
+ *
+ * @package    Map
+ * @author     Ushahidi Team
+ * @copyright  (c) 2008 Ushahidi Team
+ * @license    http://www.ushahidi.com/license.html
+ */
+
+
+class map_Core {
+	
+	/**
+	 * Generate the Javascript for Each Layer
+	 * .. new OpenLayers.Layer.XXXX
+	 * if $all is set to TRUE all maps are rendered
+	 * **caveat is that each mapping api js must be loaded**
+	 *
+	 * @param   bool  $all
+	 * @return  string $js
+	 */
+	public static function layers_js($all = FALSE)
+	{
+		// Javascript
+		$js = "";
+		
+		// Get All Layers
+		$layers = map::base();
+		
+		// Next get the default base layer
+		$default_map = Kohana::config('settings.default_map');
+		
+		if ( ! isset($layers[$default_map]))
+		{ // Map Layer Doesn't Exist - default to google
+			$default_map = "google_normal";
+		}
+			// Get openlayers type
+		$openlayers_type = $layers[$default_map]->openlayers;
+		foreach ($layers as $layer)
+		{
+			if ($layer->active)
+			{
+				if ($all == TRUE)
+				{
+					$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
+					$js .= (isset($layer->data['type']) AND !empty($layer->data['type'])) ? " type: ".$layer->data['type'].",\n"
+						: "";
+					$js .= " sphericalMercator: true,\n";
+					$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)\n});\n\n";
+				}
+				else
+				{
+					if ($layer->openlayers == $openlayers_type)
+					{
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
+						$js .= (isset($layer->data['type']) AND !empty($layer->data['type'])) ? " type: ".$layer->data['type'].",\n"
+							: "";
+						$js .= " sphericalMercator: true,\n";
+						$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)\n});\n\n";
+					}
+				}
+			}
+		}
+		
+		return $js;
+	}
+	
+	/**
+	 * Generate the Map Array.
+	 * These are the maps that show up in the Layer Switcher
+	 * if $all is set to TRUE all maps are rendered
+	 * **caveat is that each mapping api js must be loaded **
+	 * 
+	 * @param   bool  $all
+	 * @return  string $js
+	 */
+	public static function layers_array($all = FALSE)
+	{
+		// Javascript
+		$js = "[";
+
+		// Get All Layers
+		$layers = map::base();
+		
+		// Next get the default base layer
+		$default_map = Kohana::config('settings.default_map');
+		
+		if ( ! isset($layers[$default_map]))
+		{ // Map Layer Doesn't Exist - default to google
+			$default_map = "google_normal";
+		}
+		
+		// Get openlayers type
+		$openlayers_type = $layers[$default_map]->openlayers;
+		$js .= $default_map;
+		foreach ($layers as $layer)
+		{
+			if ($layer->name != $default_map AND $layer->active)
+			{
+				if ($all == TRUE)
+				{
+					$js .= ",".$layer->name;
+				}
+				else
+				{
+					if ($layer->openlayers == $openlayers_type)
+					{
+						$js .= ",".$layer->name;
+					}
+				}
+			}
+		}
+		$js .= "]";
+		
+		return $js;
+	}
+	
+	/**
+	 * Generate the Map Base Layer Object
+	 * If a layer name is passed, it will return only the object
+	 * for that layer
+	 *
+	 * @author
+	 * @param   string  $layer_name
+	 * @return  string $js
+	 */
+	public static function base($layer_name = NULL)
+	{	
+		$layers = array();
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'google_satellite';
+		$layer->openlayers = "Google";
+		$layer->title = 'Google Maps Satellite';
+		$layer->description = 'Google Maps Satellite Imagery.';
+		$layer->api_url = 'http://maps.google.com/maps?file=api&v=2&key='.Kohana::config('settings.api_google');
+		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'G_SATELLITE_MAP',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'google_hybrid';
+		$layer->openlayers = "Google";
+		$layer->title = 'Google Maps Hybrid';
+		$layer->description = 'Google Maps with roads and terrain.';
+		$layer->api_url = 'http://maps.google.com/maps?file=api&v=2&key='.Kohana::config('settings.api_google');
+		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'G_HYBRID_MAP',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'google_normal';
+		$layer->openlayers = "Google";
+		$layer->title = 'Google Maps Normal';
+		$layer->description = 'Standard Google Maps Roads';
+		$layer->api_url = 'http://maps.google.com/maps?file=api&v=2&key='.Kohana::config('settings.api_google');
+		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'G_NORMAL_MAP',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'google_physical';
+		$layer->openlayers = "Google";
+		$layer->title = 'Google Maps Physical';
+		$layer->description = 'Google Maps Hillshades';
+		$layer->api_url = 'http://maps.google.com/maps?file=api&v=2&key='.Kohana::config('settings.api_google');
+		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'G_PHYSICAL_MAP',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'yahoo_satellite';
+		$layer->openlayers = "Yahoo";
+		$layer->title = 'Yahoo Maps Satellite';
+		$layer->description = 'Yahoo satellite imagery tiles.';
+		$layer->api_url = 'http://api.maps.yahoo.com/ajaxymap?v=3.0&appid='.Kohana::config('settings.api_yahoo');
+		$layer->api_signup = 'http://developer.yahoo.com/maps/simple/';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'YAHOO_MAP_SAT',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'yahoo_street';
+		$layer->openlayers = "Yahoo";
+		$layer->title = 'Yahoo Maps Street';
+		$layer->description = 'Yahoo streets tiles.';
+		$layer->api_url = 'http://api.maps.yahoo.com/ajaxymap?v=3.0&appid='.Kohana::config('settings.api_yahoo');
+		$layer->api_signup = 'http://developer.yahoo.com/maps/simple/';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'YAHOO_MAP_REG',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'yahoo_hybrid';
+		$layer->openlayers = "Yahoo";
+		$layer->title = 'Yahoo Maps Hybrid';
+		$layer->description = 'Yahoo hybrid of streets and satellite tiles.';
+		$layer->api_url = 'http://api.maps.yahoo.com/ajaxymap?v=3.0&appid='.Kohana::config('settings.api_yahoo');
+		$layer->api_signup = 'http://developer.yahoo.com/maps/simple/';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'YAHOO_MAP_HYB',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = FALSE;
+		$layer->name = 'virtualearth_street';
+		$layer->openlayers = "VirtualEarth";
+		$layer->title = 'Virtual Earth Street';
+		$layer->description = 'Virtual Earth (Bing) street tiles.';
+		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'VEMapStyle.Road',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'virtualearth_satellite';
+		$layer->openlayers = "VirtualEarth";
+		$layer->title = 'Virtual Earth Satellite';
+		$layer->description = 'Virtual Earth (Bing) satellite tiles.';
+		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'VEMapStyle.Aerial',
+		);
+		$layers[$layer->name] = $layer;
+
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'virtualearth_hybrid';
+		$layer->openlayers = "VirtualEarth";
+		$layer->title = 'Virtual Earth Hybrid';
+		$layer->description = 'Virtual Earth (Bing) hybrid of streets and satellite tiles.';
+		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'VEMapStyle.Hybrid',
+		);
+		$layers[$layer->name] = $layer;
+
+		// OpenStreetMap Mapnik
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'osm_mapnik';
+		$layer->openlayers = "OSM.Mapnik";
+		$layer->title = 'OSM Mapnik';
+		$layer->description = 'The main OpenStreetMap map';
+		$layer->api_url = 'http://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
+				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
+			'url' => 'http://tile.openstreetmap.org/${z}/${x}/${y}.png',
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
+
+		// OpenStreetMap Tiles @ Home
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'osm_tah';
+		$layer->openlayers = "OSM.Mapnik";
+		$layer->title = 'OSM Tiles@Home';
+		$layer->description = 'Alternative, community-rendered OpenStreetMap';
+		$layer->api_url = 'http://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
+				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
+			'url' => 'http://tah.openstreetmap.org/Tiles/tile/${z}/${x}/${y}.png',
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
+
+		// OpenStreetMap Cycling Map
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'osm_cycle';
+		$layer->openlayers = "OSM.Mapnik";
+		$layer->title = 'OSM Cycling Map';
+		$layer->description = 'OpenStreetMap with highlighted bike lanes';
+		$layer->api_url = 'http://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
+				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
+			'url' => 'http://andy.sandbox.cloudmade.com/tiles/cycle/${z}/${x}/${y}.png',
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
+
+		// OpenStreetMap 426 hybrid overlay
+		$layer = new stdClass();
+		$layer->active = FALSE;
+		$layer->name = 'osm_4326_hybrid';
+		$layer->openlayers = "OSM.Mapnik";
+		$layer->title = 'OSM Overlay';
+		$layer->description = 'Semi-transparent hybrid overlay. Projected into 
+			WSG84 for use on non spherical-mercator maps.';
+		$layer->api_url = 'http://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->data = array(
+			'baselayer' => FALSE,
+			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
+				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
+			'url' => 'http://oam.hypercube.telascience.org/tiles',
+			'params' => array(
+				'layers' => 'osm-4326-hybrid',
+			),
+			'options' => array(
+				'isBaseLayer' => FALSE,
+				'buffer' => 1,
+			),
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
+		
+		if ($layer_name)
+		{
+			if (isset($layers[$layer_name]))
+			{
+				return $layers[$layer_name];
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			return $layers;
+		}
+	}
+}

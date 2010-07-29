@@ -69,66 +69,15 @@
 				    }
 				};
 			map = new OpenLayers.Map('map', options);
-//			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
+			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 			
-			/*
-			- Select A Mapping API
-			- Live/Yahoo/OSM/Google
-			- Set Bounds					
-			*/
-			var default_map = <?php echo $default_map; ?>;
-			
-				
-			if (default_map == 2)
-			{
-				map_layer = new OpenLayers.Layer.VirtualEarth("virtualearth", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			} 
-			else if (default_map == 3)
-			{
-				map_layer = new OpenLayers.Layer.Yahoo("yahoo", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			}
-			else if (default_map == 4)
-			{
-				map_layer = new OpenLayers.Layer.OSM.Mapnik("openstreetmap", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			} 
-			else if (default_map == 5)
-			{
-				map_layer = new OpenLayers.Layer.Google("Google Satellite", {
-					type: G_SATELLITE_MAP,
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			} 
-			else if (default_map == 6)
-			{
-				map_layer = new OpenLayers.Layer.OSM.Mapnik("Open Street Maps Satellite", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-
-			} 
-			else
-			{  // default is 1
-				map_layer = new OpenLayers.Layer.Google("Google Streets", {
-					sphericalMercator: true,
-					maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)
-					});
-			}
-			// Add the layer to the map object
-			map.addLayer(map_layer);
+			<?php echo map::layers_js(FALSE); ?>
+			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
 			
 			
 			// Add Controls
 			map.addControl(new OpenLayers.Control.Navigation());
+			map.addControl(new OpenLayers.Control.Attribution());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition(
 					{ div: 	document.getElementById('mapMousePosition'), numdigits: 5 
@@ -155,6 +104,7 @@
 				
 				currentCat = catID;
 				$("#currentCat").val(catID);
+
 				// setUrl not supported with Cluster Strategy
 				//markers.setUrl("<?php echo url::site(); ?>" json_url + '/?c=' + catID);
 				
@@ -167,17 +117,21 @@
 				// Get Current Center
 				currCenter = map.getCenter();
 				
-				graphData = dailyGraphData[0][catID];
 				gCategoryId = catID;
 				var startTime = new Date($("#startDate").val() * 1000);
 				var endTime = new Date($("#endDate").val() * 1000);
-				gTimeline = $.timeline({categoryId: catID, startTime: startTime, endTime: endTime,
-					graphData: graphData,
-					mediaType: gMediaType
-				});
-				gTimeline.plot();
-				
 				addMarkers(catID, $("#startDate").val(), $("#endDate").val(), currZoom, currCenter, gMediaType);
+								
+				graphData = "";
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+catID, function(data) {
+					graphData = data[0];
+
+					gTimeline = $.timeline({categoryId: catID, startTime: startTime, endTime: endTime,
+						graphData: graphData,
+						mediaType: gMediaType
+					});
+					gTimeline.plot();
+				});
 				
 				return false;
 			});
@@ -264,10 +218,6 @@
 			});
 		
 			// Graph
-			allGraphData = [<?php echo $all_graphs ?>];
-			dailyGraphData = [<?php echo $daily_graphs ?>];
-			weeklyGraphData = [<?php echo $weekly_graphs ?>];
-			hourlyGraphData = [<?php echo $hourly_graphs ?>];
 			var startTime = <?php echo $active_startDate ?>;	// Default to most active month
 			var endTime = <?php echo $active_endDate ?>;		// Default to most active month
 					
@@ -506,30 +456,53 @@
 			var startTime = new Date(startDate * 1000);
 			var endTime = new Date(endDate * 1000);
 			// daily
-			var graphData = dailyGraphData[0][currentCat];
+			var graphData = "";
 
 			// plot hourly incidents when period is within 2 days
 			if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 3)
 			{
-			    graphData = hourlyGraphData[0][currentCat];
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat+"?i=hour", function(data) {
+					graphData = data[0];
+					
+					gTimeline = $.timeline({categoryId: currentCat,
+						startTime: new Date(startDate * 1000),
+					    endTime: new Date(endDate * 1000), mediaType: gMediaType,
+						markerOptions: gMarkerOptions,
+						graphData: graphData
+					});
+					gTimeline.plot();
+				});
 			} 
 			else if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 124)
 			{
 			    // weekly if period > 2 months
-			    graphData = dailyGraphData[0][currentCat];
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat+"?i=day", function(data) {
+					graphData = data[0];
+					
+					gTimeline = $.timeline({categoryId: currentCat,
+						startTime: new Date(startDate * 1000),
+					    endTime: new Date(endDate * 1000), mediaType: gMediaType,
+						markerOptions: gMarkerOptions,
+						graphData: graphData
+					});
+					gTimeline.plot();
+				});
 			} 
 			else if ((endTime - startTime) / (1000 * 60 * 60 * 24) > 124)
 			{
 				// monthly if period > 4 months
-			    graphData = allGraphData[0][currentCat];
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat, function(data) {
+					graphData = data[0];
+					
+					gTimeline = $.timeline({categoryId: currentCat,
+						startTime: new Date(startDate * 1000),
+					    endTime: new Date(endDate * 1000), mediaType: gMediaType,
+						markerOptions: gMarkerOptions,
+						graphData: graphData
+					});
+					gTimeline.plot();
+				});
 			}
-			gTimeline = $.timeline({categoryId: currentCat,
-				startTime: new Date(startDate * 1000),
-			    endTime: new Date(endDate * 1000), mediaType: gMediaType,
-				markerOptions: gMarkerOptions,
-				graphData: graphData
-			});
-			gTimeline.plot();
 		}
 		
 		/*

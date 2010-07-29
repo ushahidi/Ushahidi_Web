@@ -306,17 +306,6 @@ class Main_Controller extends Template_Controller {
 		$this->template->content->startDate = $startDate;
 		$this->template->content->endDate = $endDate;
 
-
-		// get graph data
-		// could not use DB query builder. It does not support parentheses yet
-		$graph_data = array();
-		$all_graphs = Incident_Model::get_incidents_by_interval('month');
-		$daily_graphs = Incident_Model::get_incidents_by_interval('day');
-		$weekly_graphs = Incident_Model::get_incidents_by_interval('week');
-		$hourly_graphs = Incident_Model::get_incidents_by_interval('hour');
-		$this->template->content->all_graphs = $all_graphs;
-		$this->template->content->daily_graphs = $daily_graphs;
-
 		// Javascript Header
 		$this->template->header->map_enabled = TRUE;
 		$this->template->header->main_page = TRUE;
@@ -369,19 +358,14 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->header->js->latitude = Kohana::config('settings.default_lat');
 		$this->template->header->js->longitude = Kohana::config('settings.default_lon');
-		$this->template->header->js->graph_data = $graph_data;
-		$this->template->header->js->all_graphs = $all_graphs;
-		$this->template->header->js->daily_graphs = $daily_graphs;
-		$this->template->header->js->hourly_graphs = $hourly_graphs;
-		$this->template->header->js->weekly_graphs = $weekly_graphs;
 		$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
-
+		
 		//
 		$this->template->header->js->active_startDate = $active_startDate;
 		$this->template->header->js->active_endDate = $active_endDate;
 
-		$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
-		$this->template->header->js = $myPacker->pack();
+		//$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
+		//$this->template->header->js = $myPacker->pack();
 	}
 
 	/*
