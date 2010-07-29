@@ -2,7 +2,7 @@
 /**
  * The Ushahidi Engine version
  */
-$config['ushahidi_version'] = "2.0b3";
+$config['ushahidi_version'] = "2.0b4";
 
 
 /**

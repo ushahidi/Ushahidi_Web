@@ -344,6 +344,10 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 		
+		// Add Custom Layers
+		// Action::map_base_layer - Add New Map Base Layer
+		Event::run('ushahidi_action.map_base_layer');
+		
 		if ($layer_name)
 		{
 			if (isset($layers[$layer_name]))

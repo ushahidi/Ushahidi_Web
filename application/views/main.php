@@ -156,7 +156,7 @@
 									</div>
 									<?php
 									// Action::main_filters - Add items to the main_filters
-									Event::run('ushahidi_action.main_filters');
+									Event::run('ushahidi_action.map_main_filters');
 									?>
 								</div>
 								<!-- / filters -->
