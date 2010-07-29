@@ -17,6 +17,13 @@
 				<h2>
 					<?php admin::messages_subtabs($service_id); ?>
 				</h2>
+
+<?php
+	Event::run('ushahidi_action.admin_messages_custom_layout');
+	// Kill the rest of the page if this event has been utilized by a plugin
+	if( ! Event::has_run('ushahidi_action.admin_messages_custom_layout')){
+?>
+
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
@@ -187,3 +194,7 @@
 					</div>
 				<?php print form::close(); ?>
 			</div>
+
+<?php
+	}
+?>
