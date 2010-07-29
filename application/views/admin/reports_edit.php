@@ -102,6 +102,12 @@
 								<h4><?php echo Kohana::lang('ui_main.description');?> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span></h4>
 								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"') ?>
 							</div>
+
+							<?php
+							// Action::report_form_admin - Runs just after the report description
+							Event::run('ushahidi_action.report_form_admin', $id);
+							?>
+
 							<?php
 							if (!($id))
 							{ // Use default date for new report
@@ -186,11 +192,7 @@
 			                        </ul>
 								</div>
 							</div>
-							<?php
-							// Action::report_form_admin - Runs right before the end of the report submit form
-							// entry form
-							Event::run('ushahidi_action.report_form_admin', $id);
-							?>
+							
 							<div id="custom_forms">
 								<?php
 								foreach ($disp_custom_fields as $field_id => $field_property)
