@@ -846,7 +846,7 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `allow_feed` tinyint(4) NOT NULL default '1',                                   -- field description
     `allow_stat_sharing` tinyint(4) NOT NULL default '1',                           -- field description
     `allow_clustering` tinyint(4) NOT NULL default '1',                             -- field description
-    `default_map` varchar(100) NOT NULL DEFAULT 'google_satellite',
+    `default_map` varchar(100) NOT NULL DEFAULT 'google_normal',
     `default_map_all` varchar(20) NOT NULL default 'CC0000',                        -- field description
     `api_google` varchar(200) default NULL,                                         -- field description
     `api_yahoo` varchar(200) default NULL,                                          -- field description
