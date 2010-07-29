@@ -91,7 +91,6 @@ Kohana::config_set('settings.default_map', $settings->default_map);
 Kohana::config_set('settings.default_map_all', $settings->default_map_all);
 Kohana::config_set('settings.api_google', $settings->api_google);
 Kohana::config_set('settings.api_yahoo', $settings->api_yahoo);
-Kohana::config_set('settings.api_cloudmade', $settings->api_cloudmade);
 Kohana::config_set('settings.api_akismet', $settings->api_akismet);
 Kohana::config_set('settings.default_city', $settings->default_city);
 Kohana::config_set('settings.default_country', $settings->default_country);
@@ -124,7 +123,7 @@ if ($map_layer)
 // And in case you want to display all maps on one page...
 $api_google = $settings->api_google;
 $api_yahoo = $settings->api_yahoo;
-Kohana::config_set('settings.api_url_all', '<script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6"></script><script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script><script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_google . '" type="text/javascript"></script>'.html::script('http://www.openstreetmap.org/openlayers/OpenStreetMap.js').html::script('media/js/cloudmade'));
+Kohana::config_set('settings.api_url_all', '<script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6"></script><script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script><script src="http://maps.google.com/maps?file=api&v=2&key=' . $api_google . '" type="text/javascript"></script>'.html::script('http://www.openstreetmap.org/openlayers/OpenStreetMap.js'));
 
 // Additional Mime Types (KMZ/KML)
 Kohana::config_set('mimes.kml', array('text/xml'));
