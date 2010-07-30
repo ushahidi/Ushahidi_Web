@@ -211,10 +211,10 @@ Author Email: caleb@ushahidi.com
 
 /* Side Bar Module
 -------------------*/
-	.side-bar-module 		{ position:absolute; margin:11px 0 0 0; width:226px; padding:0 0 13px 0; background:#ededea; }
+	.side-bar-module 		{ margin:12px 0 0 0; width:226px; padding:0 0 13px 0; background:#fff; }
 		.fixed { position:fixed; top:0px; }
-	.side-bar-module h4		{ margin:0; padding:10px 0 7px 15px; font-size:18px; color:#81817f;  }
-	.side-bar-content		{ padding:0 13px 1px 18px; line-height:16px; font-size:12px; }
+	.side-bar-module h4		{ margin:0; padding:10px 0 7px 15px; font-size:18px; color:#81817f; font-family: 'Yanone Kaffeesatz', arial, serif;  }
+	.side-bar-content		{ padding:0 18px 1px 18px; line-height:16px; font-size:12px; }
 	
 	/*Sub-nav Links*/
 	ul.sub-nav-links { margin:0; padding:0; }
