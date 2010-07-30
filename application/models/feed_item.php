@@ -6,7 +6,7 @@
 
 class Feed_Item_Model extends ORM
 {
-	protected $belongs_to = array('feed');
+	protected $belongs_to = array('feed','location');
 	
 	// Database table name
 	protected $table_name = 'feed_item';
