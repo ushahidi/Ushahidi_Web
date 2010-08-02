@@ -25,38 +25,7 @@ class MHI_Controller extends Template_Controller {
 
 		$session = Session::instance();
 
-		/*
-		$beta_session_thing = $session->get('real_deal');
-
-		if ( ! isset($beta_session_thing) || $beta_session_thing == NULL || $beta_session_thing == '')
-		{
-			$session->set('real_deal',2);
-			$beta_session_thing = 2;
-		}
-		if (isset($_GET['go']))
-		{
-			$session->set('real_deal',3);
-			$beta_session_thing = 3;
-		}
-		if (isset($_GET['halt']))
-		{
-			$session->set('real_deal',2);
-			$beta_session_thing = 2;
-		}
-		*/
-
 		// Load Header & Footer
-
-		/*
-		if ($beta_session_thing == 2)
-		{
-			$this->template->header  = new View('mhi/mhi_header_beta');
-			$this->template->footer  = new View('mhi/mhi_footer_beta');
-		}else{
-			$this->template->header  = new View('mhi/mhi_header');
-			$this->template->footer  = new View('mhi/mhi_footer');
-		}
-		*/
 
 		$this->template->header  = new View('mhi/mhi_header');
 		$this->template->footer  = new View('mhi/mhi_footer');
@@ -90,16 +59,6 @@ class MHI_Controller extends Template_Controller {
 		$session = Session::instance();
 
 		$this->template->header->this_body = 'crowdmap-home';
-
-		/*
-		$beta_session_thing = $session->get('real_deal');
-		if ($beta_session_thing == 2)
-		{
-			$this->template->content = new View('mhi/beta_signup');
-		}else{
-			$this->template->content = new View('mhi/mhi');
-		}
-		*/
 
 		$this->template->content = new View('mhi/mhi');
 
