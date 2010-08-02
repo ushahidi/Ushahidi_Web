@@ -25,6 +25,7 @@ class MHI_Controller extends Template_Controller {
 
 		$session = Session::instance();
 
+		/*
 		$beta_session_thing = $session->get('real_deal');
 
 		if ( ! isset($beta_session_thing) || $beta_session_thing == NULL || $beta_session_thing == '')
@@ -42,9 +43,11 @@ class MHI_Controller extends Template_Controller {
 			$session->set('real_deal',2);
 			$beta_session_thing = 2;
 		}
+		*/
 
 		// Load Header & Footer
 
+		/*
 		if ($beta_session_thing == 2)
 		{
 			$this->template->header  = new View('mhi/mhi_header_beta');
@@ -53,6 +56,10 @@ class MHI_Controller extends Template_Controller {
 			$this->template->header  = new View('mhi/mhi_header');
 			$this->template->footer  = new View('mhi/mhi_footer');
 		}
+		*/
+
+		$this->template->header  = new View('mhi/mhi_header');
+		$this->template->footer  = new View('mhi/mhi_footer');
 
 		$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
 
@@ -84,6 +91,7 @@ class MHI_Controller extends Template_Controller {
 
 		$this->template->header->this_body = 'crowdmap-home';
 
+		/*
 		$beta_session_thing = $session->get('real_deal');
 		if ($beta_session_thing == 2)
 		{
@@ -91,6 +99,9 @@ class MHI_Controller extends Template_Controller {
 		}else{
 			$this->template->content = new View('mhi/mhi');
 		}
+		*/
+
+		$this->template->content = new View('mhi/mhi');
 
 		$this->template->header->js .= new View('mhi/mhi_js');
 		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
@@ -583,7 +594,7 @@ class MHI_Controller extends Template_Controller {
 				$new_db_name = $base_db.'_'.$post->signup_subdomain;
 
 				// Do some graceful validation
-				
+
 				if ( ! isset($post->signup_tos))
 				{
 					return array(
@@ -710,7 +721,8 @@ class MHI_Controller extends Template_Controller {
 						'email'=>$email),
 					array(
 						'site_name'=>$post->signup_instance_name,
-						'site_tagline'=>$post->signup_instance_tagline));
+						'site_tagline'=>$post->signup_instance_tagline,
+						'site_domain'=>$post->signup_subdomain));
 
 				// Congrats, everything has been set up. Send an email confirmation.
 
