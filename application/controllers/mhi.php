@@ -284,10 +284,29 @@ class MHI_Controller extends Template_Controller {
 		}
 	}
 
-	public function about()
+	public function about($page='about')
 	{
 		$this->template->header->this_body = 'crowdmap-about';
-		$this->template->content = new View('mhi/mhi_about');
+		if ($page == 'faq')
+		{
+			$this->template->content = new View('mhi/mhi_faq');
+		}else{
+			$this->template->content = new View('mhi/mhi_about');
+		}
+	}
+
+	public function legal($page='tos')
+	{
+		$this->template->header->this_body = 'crowdmap-legal';
+		if ($page == 'dmca')
+		{
+			$this->template->content = new View('mhi/mhi_legal_dmca');
+		}elseif ($page == 'privacy') {
+			$this->template->content = new View('mhi/mhi_legal_privacy');
+		}else{
+			// Terms of Service
+			$this->template->content = new View('mhi/mhi_legal');
+		}
 	}
 
 	public function contact()
@@ -301,7 +320,6 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->this_body = 'crowdmap-features';
 		$this->template->content = new View('mhi/mhi_features');
 	}
-
 
 	public function account()
 	{
@@ -565,6 +583,15 @@ class MHI_Controller extends Template_Controller {
 				$new_db_name = $base_db.'_'.$post->signup_subdomain;
 
 				// Do some graceful validation
+				
+				if ( ! isset($post->signup_tos))
+				{
+					return array(
+						'errors' => $errors,
+						'form' => $form,
+						'form_error' => array('signup_tos' => 'You must accept the Website Terms of Use.')
+					);
+				}
 
 				if (strlen($post->signup_subdomain) < 4 OR strlen($post->signup_subdomain) > 32)
 				{

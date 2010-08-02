@@ -20,12 +20,16 @@
                 <p>Crowdmap is a tool that allows you to crowdsource information and see it on a map and timeline.  It is the Ushahidi platform, built by the team who created Ushahidi as a way for anyone to run their own crowdsourcing site without having to know the intricacies of running their own server.  It's free and it's yours to use.</p>    
             </div></div>
             <div class="twocol-right">
-                <!-- CB: We'll just leave this empty for now.
-                
-                <div class="side-bar-module rounded shadow">
-                    <p>Sign-up Sidebar promo to go here</p>
-                </div>
-                -->
+				<!-- right nav -->
+				<div class="side-bar-module rounded shadow">
+					<h4><a href="<?php echo url::site(); ?>mhi/about/">About</a></h4>
+					<div class="side-bar-content">
+						<ul class="sub-nav-links">
+							<li><a href="<?php echo url::site(); ?>mhi/about/faq">FAQ</a></li>
+						</ul>
+					</div>
+				</div>
+				<!-- / right nav -->
             </div>
             <div style="clear:both;"></div>
         </div>
