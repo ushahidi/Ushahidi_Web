@@ -34,7 +34,7 @@
             	/applications/logs
           	</li>
           	<li>
-             	/media/uploads
+             	<?php echo Kohana::config('upload.relative_directory'); ?>
           	</li>
         </ul>
        	<p><?php echo Kohana::lang('upgrade.upgrade_text_4');?>.</p>

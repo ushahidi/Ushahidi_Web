@@ -140,7 +140,11 @@ class DBGenesis_Core {
 		$setgs->date_modify = date("Y-m-d H:i:s",time());
 		$setgs->save();
 
-		// Set up stats here.
+		// Set up stats
+
+		$domain = str_ireplace(array('http://','https://'),'',url::base());
+
+		Stats_Model::create_site( $settings['site_name'], 'http://'.$settings['site_domain'].'.'.$domain );
 
 		// Switch back to the appropriate DB
 

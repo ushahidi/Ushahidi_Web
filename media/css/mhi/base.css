@@ -214,6 +214,8 @@ Author Email: caleb@ushahidi.com
 	.side-bar-module 		{ margin:12px 0 0 0; width:226px; padding:0 0 13px 0; background:#fff; }
 		.fixed { position:fixed; top:0px; }
 	.side-bar-module h4		{ margin:0; padding:10px 0 7px 15px; font-size:18px; color:#81817f; font-family: 'Yanone Kaffeesatz', arial, serif;  }
+	.side-bar-module h4 a { color:inherit; text-decoration: none; }
+	.side-bar-module h4 a:hover { text-decoration: underline; }
 	.side-bar-content		{ padding:0 18px 1px 18px; line-height:16px; font-size:12px; }
 	
 	/*Sub-nav Links*/

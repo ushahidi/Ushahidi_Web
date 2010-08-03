@@ -116,7 +116,7 @@
 							foreach ($incident_photos as $photo)
 							{
 								$thumb = str_replace(".","_t.",$photo);
-				      	$prefix = url::base()."media/uploads";
+								$prefix = url::base().Kohana::config('upload.relative_directory');
 								echo("<a class='photothumb' rel='lightbox-group1' href='$prefix/$photo'><img src='$prefix/$thumb'/></a> ");
 							}
 							?>

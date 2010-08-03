@@ -365,8 +365,8 @@
                         					if ($photo->media_type == 1)
                         					{
                         						print "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
-                        						print "<img src=\"" . url::base() . "media/uploads/" . $photo->media_thumb . "\" >";
-                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deletePhoto('". $photo->id ."', 'photo_". $photo->id ."'); return false;\" >".Kohana::lang('ui_main.delete')."</a>";
+                        						print "<img src=\"".url::base().Kohana::config('upload.relative_directory')."/".$photo->media_thumb."\" >";
+                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deletePhoto('".$photo->id."', 'photo_".$photo->id."'); return false;\" >".Kohana::lang('ui_main.delete')."</a>";
                         						print "</div>";
                         					}
                         				}

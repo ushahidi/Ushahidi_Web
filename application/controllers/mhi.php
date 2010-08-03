@@ -25,34 +25,10 @@ class MHI_Controller extends Template_Controller {
 
 		$session = Session::instance();
 
-		$beta_session_thing = $session->get('real_deal');
-
-		if ( ! isset($beta_session_thing) || $beta_session_thing == NULL || $beta_session_thing == '')
-		{
-			$session->set('real_deal',2);
-			$beta_session_thing = 2;
-		}
-		if (isset($_GET['go']))
-		{
-			$session->set('real_deal',3);
-			$beta_session_thing = 3;
-		}
-		if (isset($_GET['halt']))
-		{
-			$session->set('real_deal',2);
-			$beta_session_thing = 2;
-		}
-
 		// Load Header & Footer
 
-		if ($beta_session_thing == 2)
-		{
-			$this->template->header  = new View('mhi/mhi_header_beta');
-			$this->template->footer  = new View('mhi/mhi_footer_beta');
-		}else{
-			$this->template->header  = new View('mhi/mhi_header');
-			$this->template->footer  = new View('mhi/mhi_footer');
-		}
+		$this->template->header  = new View('mhi/mhi_header');
+		$this->template->footer  = new View('mhi/mhi_footer');
 
 		$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
 
@@ -84,13 +60,7 @@ class MHI_Controller extends Template_Controller {
 
 		$this->template->header->this_body = 'crowdmap-home';
 
-		$beta_session_thing = $session->get('real_deal');
-		if ($beta_session_thing == 2)
-		{
-			$this->template->content = new View('mhi/beta_signup');
-		}else{
-			$this->template->content = new View('mhi/mhi');
-		}
+		$this->template->content = new View('mhi/mhi');
 
 		$this->template->header->js .= new View('mhi/mhi_js');
 		$this->template->header->js_files = array(html::script('media/js/mhi/jquery.cycle.min'));
@@ -284,10 +254,29 @@ class MHI_Controller extends Template_Controller {
 		}
 	}
 
-	public function about()
+	public function about($page='about')
 	{
 		$this->template->header->this_body = 'crowdmap-about';
-		$this->template->content = new View('mhi/mhi_about');
+		if ($page == 'faq')
+		{
+			$this->template->content = new View('mhi/mhi_faq');
+		}else{
+			$this->template->content = new View('mhi/mhi_about');
+		}
+	}
+
+	public function legal($page='tos')
+	{
+		$this->template->header->this_body = 'crowdmap-legal';
+		if ($page == 'dmca')
+		{
+			$this->template->content = new View('mhi/mhi_legal_dmca');
+		}elseif ($page == 'privacy') {
+			$this->template->content = new View('mhi/mhi_legal_privacy');
+		}else{
+			// Terms of Service
+			$this->template->content = new View('mhi/mhi_legal');
+		}
 	}
 
 	public function contact()
@@ -301,7 +290,6 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->this_body = 'crowdmap-features';
 		$this->template->content = new View('mhi/mhi_features');
 	}
-
 
 	public function account()
 	{
@@ -566,6 +554,15 @@ class MHI_Controller extends Template_Controller {
 
 				// Do some graceful validation
 
+				if ( ! isset($post->signup_tos))
+				{
+					return array(
+						'errors' => $errors,
+						'form' => $form,
+						'form_error' => array('signup_tos' => 'You must accept the Website Terms of Use.')
+					);
+				}
+
 				if (strlen($post->signup_subdomain) < 4 OR strlen($post->signup_subdomain) > 32)
 				{
 					// ERROR: subdomain length falls outside the char length bounds allowed.
@@ -683,7 +680,8 @@ class MHI_Controller extends Template_Controller {
 						'email'=>$email),
 					array(
 						'site_name'=>$post->signup_instance_name,
-						'site_tagline'=>$post->signup_instance_tagline));
+						'site_tagline'=>$post->signup_instance_tagline,
+						'site_domain'=>$post->signup_subdomain));
 
 				// Congrats, everything has been set up. Send an email confirmation.
 

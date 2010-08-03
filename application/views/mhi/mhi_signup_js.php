@@ -55,6 +55,9 @@ $(function(){
 			signup_report_categories: {
 				required: true,
 				//csv: true
+			},
+			signup_tos: {
+				required: true
 			}
 		},
 		messages: {
@@ -86,6 +89,9 @@ $(function(){
 			},
 			signup_report_categories: {
 				required: "Please enter at least one category for your instance."
+			},
+			signup_tos: {
+				required: "You must accept the Website Terms of Use."
 			}
 
 		},
