@@ -115,13 +115,6 @@
 		<div id="header">
 			<!-- top-area -->
 			<div class="top">
-				<strong>
-				<?php echo ucfirst(Kohana::lang('ui_admin.code')); ?> <?php echo Kohana::lang('ui_admin.version'); ?> <?php echo $code_version; ?>
-				<?php if($code_version != $actual_code_version) echo '<span>'.Kohana::lang('ui_admin.code_out_of_sync').' v'.$actual_code_version.'</span>'; ?>
-				 - 
-				<?php echo ucfirst(Kohana::lang('ui_admin.database')); ?> <?php echo Kohana::lang('ui_admin.version'); ?> <?php echo $actual_db_version; ?>
-				<?php if($db_version != $actual_db_version) echo '<span>'.Kohana::lang('ui_admin.db_out_of_sync').' v'.$db_version.'</span>'; ?>
-				</strong>
 				<ul>
 					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
 					<li class="none-separator"><a href="<?php echo url::site() ?>" title="View the home page">
