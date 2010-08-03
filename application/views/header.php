@@ -59,7 +59,7 @@
 				echo html::script('media/js/jquery.flot', true);
 				echo html::script('media/js/timeline', true);
 				echo "<!--[if IE]>".
-					html::script('media/js/excanvas.pack', true)
+					html::script('media/js/excanvas.min', true)
 					."<![endif]-->";
 			}
 		}
