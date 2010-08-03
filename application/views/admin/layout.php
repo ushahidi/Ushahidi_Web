@@ -56,7 +56,7 @@
 	if ($flot_enabled)
 	{
 		echo html::script('media/js/jquery.flot', true);
-		echo html::script('media/js/excanvas.pack', true);
+		echo html::script('media/js/excanvas.min', true);
 		echo html::script('media/js/timeline.js', true);
 	}
 	
