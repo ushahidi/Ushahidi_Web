@@ -62,14 +62,6 @@ class Admin_Controller extends Template_Controller
 
 		$this->template->version = $version_number;
 
-		// Get version coded numbers to display
-		$this->template->code_version = Kohana::config('version.ushahidi_version');
-		$this->template->db_version = Kohana::config('version.ushahidi_db_version');
-
-		// Get version from the db
-		$this->template->actual_code_version = Kohana::config('settings.ushahidi_version');
-		$this->template->actual_db_version = Kohana::config('settings.db_version');
-
 		// Get Session Information
 		$user = new User_Model($_SESSION['auth_user']->id);
 
