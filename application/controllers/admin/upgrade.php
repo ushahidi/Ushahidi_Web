@@ -88,8 +88,8 @@ class Upgrade_Controller extends Admin_Controller
 	private function _do_upgrade() {
     	$upgrade = new Upgrade;
         $url = "http://download.ushahidi.com/ushahidi.zip";
-        $working_dir = "media/uploads/";
-        $zip_file = "media/uploads/ushahidi.zip";
+        $working_dir = Kohana::config('upload.relative_directory')."/";
+        $zip_file = Kohana::config('upload.relative_directory')."/ushahidi.zip";
         
         //download the latest ushahidi
         $latest_ushahidi = $upgrade->download_ushahidi($url);
@@ -110,7 +110,7 @@ class Upgrade_Controller extends Admin_Controller
      		unlink($working_dir."ushahidi/application/config/config.php");
            	$upgrade->remove_recursively($working_dir."ushahidi/application/cache");
            	$upgrade->remove_recursively($working_dir."ushahidi/application/logs");
-        	$upgrade->remove_recursively($working_dir."ushahidi/media/uploads");
+        	$upgrade->remove_recursively($working_dir."ushahidi/".Kohana::config('upload.relative_directory'));
        	}
                 
        	if( $upgrade->success ) {

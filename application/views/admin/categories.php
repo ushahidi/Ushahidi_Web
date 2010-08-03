@@ -101,7 +101,7 @@
 											<td class="col-3">
 											<?php if (!empty($category_image))
 											{
-												echo "<img src=\"".url::base()."media/uploads/".$category_image."\">";
+												echo "<img src=\"".url::base().Kohana::config('upload.relative_directory')."/".$category_image."\">";
 												echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\"><?php echo Kohana::lang('ui_main.delete');?></a>]";
 											}
 											else
@@ -142,7 +142,7 @@
 												<td class="col-3">
 												<?php if (!empty($category_image))
 												{
-													echo "<img src=\"".url::base()."media/uploads/".$category_image."\">";
+													echo "<img src=\"".url::base().Kohana::config('upload.relative_directory')."/".$category_image."\">";
 													echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\">delete</a>]";
 												}
 												else

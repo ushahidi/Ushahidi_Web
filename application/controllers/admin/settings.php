@@ -16,7 +16,7 @@
 class Settings_Controller extends Admin_Controller
 {
 	protected $cache;
-	
+
 	function __construct()
 	{
 		parent::__construct();
@@ -27,7 +27,7 @@ class Settings_Controller extends Admin_Controller
         {
              url::redirect('admin/dashboard');
 		}
-		
+
 		$this->cache = Cache::instance();
 	}
 
@@ -138,14 +138,14 @@ class Settings_Controller extends Admin_Controller
 				$settings->api_akismet = $post->api_akismet;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
-				
+
 				// Delete Settings Cache
 				$this->cache->delete('settings');
 				$this->cache->delete_tag('settings');
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-					
+
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
 
@@ -195,7 +195,7 @@ class Settings_Controller extends Admin_Controller
 				'api_akismet' => $settings->api_akismet
 		    );
 		}
-		
+
 		$this->template->colorpicker_enabled = TRUE;
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
@@ -203,7 +203,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
-		
+
 		// Generate Available Locales
 		$locales = locale::get_i18n();
 		$this->template->content->locales_array = $locales;
@@ -285,7 +285,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->default_lon = $post->default_lon;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
-				
+
 				// Delete Settings Cache
 				$this->cache->delete('settings');
 				$this->cache->delete_tag('settings');
@@ -347,10 +347,10 @@ class Settings_Controller extends Admin_Controller
 			$countries[$country->id] = $this_country;
 		}
 		$this->template->content->countries = $countries;
-		
+
 		// Zoom Array for Slider
 		$default_zoom_array = array();
-        
+
 		for ($i=Kohana::config('map.minZoomLevel'); $i<Kohana::config('map.minZoomLevel')+Kohana::config('map.numZoomLevels') ; $i++)
         {
             $default_zoom_array[$i] = $i;
@@ -365,7 +365,7 @@ class Settings_Controller extends Admin_Controller
 			$map_array[$layer->name] = $layer->title;
 		}
 		$this->template->content->map_array = $map_array;
-		
+
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
 		$this->template->js = new View('admin/settings_js');
@@ -593,7 +593,7 @@ class Settings_Controller extends Admin_Controller
 		 	echo $mysms->getbalance();
 		}
 	}
-	
+
 	/**
 	* Email Settings
     */
@@ -635,7 +635,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('email_port', 'numeric[1,100]','length[1,20]');
 			$post->add_rules('email_host','required', 'length[3,100]');
 			$post->add_rules('email_servertype','required','length[3,100]');
-			
+
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -648,15 +648,15 @@ class Settings_Controller extends Admin_Controller
 				$settings->email_servertype = $post->email_servertype;
 				$settings->email_ssl = $post->email_ssl;
 				$settings->save();
-				
+
 				//add details to application/config/email.php
 				//$this->_add_email_settings($settings);
-				
+
 				// Delete Settings Cache
 				$this->cache->delete('settings');
 				$this->cache->delete_tag('settings');
-				
-				
+
+
 				// Everything is A-Okay!
 				$form_saved = TRUE;
 
@@ -671,7 +671,7 @@ class Settings_Controller extends Admin_Controller
 	        {
 	            // repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
-				
+
 	            // populate the error fields, if any
 	            $errors = arr::overwrite($errors, $post->errors('settings'));
 				$form_error = TRUE;
@@ -692,31 +692,38 @@ class Settings_Controller extends Admin_Controller
 				'email_ssl' => $settings->email_ssl
 		    );
 		}
-		
+
 		$this->template->colorpicker_enabled = TRUE;
 		$this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->email_ssl_array = array('1'=>Kohana::lang('ui_admin.yes'),'0'=>Kohana::lang('ui_admin.no'));
-		
+
 		// Javascript Header
 		$this->template->js = new View('admin/email_js');
 	}
-	
+
 		/**
 	 * Clean URLs settings
 	 */
 	function cleanurl() {
+
+		// We cannot allow cleanurl settings to be changed if MHI is enabled since it modifies a file in the config folder
+		if (Kohana::config('config.enable_mhi') == TRUE)
+		{
+			throw new Kohana_User_Exception('Access Error', "Please contact the administrator in order to use this feature.");
+		}
+
 		$this->template->content = new View('admin/cleanurl');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
-		
+
 		// setup and initialize form field names
 		$form = array
 	    (
 	    	'enable_clean_url' => '',
 	    );
-	    
+
 	    //  Copy the form as errors, so the errors will be stored with keys
         //  corresponding to the form field names
         $errors = $form;
@@ -736,21 +743,21 @@ class Settings_Controller extends Admin_Controller
 	        // Add some rules, the input field, followed by a list of checks, carried out in order
 
 			$post->add_rules('enable_clean_url','required','between[0,1]');
-			
+
 	    	// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
 	            // Yes! everything is valid
-				
+
 				// Delete Settings Cache
 				$this->cache->delete('settings');
 				$this->cache->delete_tag('settings');
-								
+
 				$this->_configure_index_page($post->enable_clean_url);
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-					
+
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
 
@@ -767,9 +774,9 @@ class Settings_Controller extends Admin_Controller
 	            $errors = arr::overwrite($errors, $post->errors('settings'));
 				$form_error = TRUE;
 	        }
-			
+
 	    } else {
-	    	
+
 	    	$yes_or_no = $this->_check_clean_url_on_ushahidi() == TRUE ? 1 : 0;
 	    	// initialize form
 	    	$form = array
@@ -777,16 +784,16 @@ class Settings_Controller extends Admin_Controller
 		        'enable_clean_url' => $yes_or_no,
 		    );
 	    }
-	    
+
 	    $this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
 		$this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
-		
+
 	}
-	
+
 
 
 	/**
@@ -875,7 +882,7 @@ class Settings_Controller extends Admin_Controller
 			echo json_encode(array("status"=>"error", "response"=>"0 ".Kohana::lang('ui_admin.cities_loaded').". ".Kohana::lang('ui_admin.country_not_found')));
 		}
 	}
-	
+
 	/**
 	 * adds the email settings to the application/config/email.php file
 	 */
@@ -883,37 +890,37 @@ class Settings_Controller extends Admin_Controller
 	{
 	    $email_file = @file('application/config/email.template.php');
         $handle = @fopen('application/config/email.php', 'w');
-		
+
         if(is_array($email_file) ) {
 	    	foreach( $email_file as $number_line => $line )
 	    	{
-	        
+
 	    		switch( $line ) {
 	        		case strpos($line,"\$config['username']"):
 	            		fwrite($handle,  str_replace("\$config['username'] = \"\"","\$config['username'] = ".'"'.$settings->email_username.'"',$line ));
 	           			break;
-				
+
 					case strpos($line,"\$config['password']"):
 		            	fwrite($handle,  str_replace("\$config['password'] = \"\"","\$config['password'] = ".'"'.$settings->email_password.'"',$line ));
-		           		break;	
-				
+		           		break;
+
 					case strpos($line,"\$config['port']"):
 		            	fwrite($handle,  str_replace("\$config['port'] = 25","\$config['port'] = ".'"'.$settings->email_port.'"',$line ));
 		           		break;
-				
+
 					case strpos($line,"\$config['server']"):
 		            	fwrite($handle,  str_replace("\$config['server'] = \"\"","\$config['server'] = ".'"'.$settings->email_host.'"',$line ));
 		          		break;
-		
+
 					case strpos($line,"\$config['servertype']"):
 		            	fwrite($handle,  str_replace("\$config['servertype'] = \"pop3\"","\$config['servertype'] = ".'"'.$settings->email_servertype.'"',$line ));
 		           		break;
-		
+
 					case strpos($line,"\$config['ssl']"):
 						$enable = $settings->email_ssl == 0? 'false':'true';
 			        	fwrite($handle,  str_replace("\$config['ssl'] = false","\$config['ssl'] = ".$enable,$line ));
 			        	break;
-					
+
 	            	default:
 	            		fwrite($handle, $line );
 	        	}
@@ -921,81 +928,81 @@ class Settings_Controller extends Admin_Controller
 		}
 
 	}
-	
+
 	/**
-	 * Check if clean url can be enabled on the server so 
+	 * Check if clean url can be enabled on the server so
 	 * Ushahidi can cough it.
-	 * 
+	 *
 	 * @return boolean
 	 */
-		
+
 	private function _check_for_clean_url() {
-		
+
 		$url = url::base()."help";
-		
+
   		$curl_handle = curl_init();
-       
-   		curl_setopt($curl_handle, CURLOPT_URL, $url); 
-  	   	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );     
+
+   		curl_setopt($curl_handle, CURLOPT_URL, $url);
+  	   	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );
   	  	curl_exec($curl_handle);
-   
+
   	   	$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
  	   	curl_close($curl_handle);
-  
+
  	   	if( $return_code ==  404) {
- 	    	return FALSE; 	
+ 	    	return FALSE;
  	   	} else {
  	   		return TRUE;
  	   	}
 	}
-	
+
 	/**
 	 * Removes / Adds index.php from / to index page variable in application/config.config.php file
-	 * 
+	 *
 	 * @param $yes_or_no
 	 */
 	private function _configure_index_page( $yes_or_no ) {
-		
+
 		$config_file = @file('application/config/config.php');
 		$handle = @fopen('application/config/config.php', 'w');
-		
+
 		if(is_array($config_file) ) {
 			foreach( $config_file as $line_number => $line )
         	{
         		if( $yes_or_no == 1 ) {
             		if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
-                		fwrite($handle, str_replace("index.php","",$line ));    
+                		fwrite($handle, str_replace("index.php","",$line ));
             		} else {
                 		fwrite($handle, $line);
             		}
-        	
+
         		} else {
         			if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
-        			
-        				fwrite($handle, str_replace("''","'index.php'",$line ));    
+
+        				fwrite($handle, str_replace("''","'index.php'",$line ));
             		} else {
-            		
+
                 		fwrite($handle, $line);
-            		}        		
+            		}
         		}
         	}
-		}	
+		}
 	}
-	
+
 	/**
-	 * Check if clean URL is enabled on Ushahidi 
+	 * Check if clean URL is enabled on Ushahidi
 	 */
 	private function _check_clean_url_on_ushahidi() {
 		$config_file = @file_get_contents('application/config/config.php');
-		
+
 		if( strpos( $config_file,"\$config['index_page'] = 'index.php';") != 0 ) {
             return FALSE;
         } else {
             return TRUE;
-        }        
-			
+        }
+
 	}
-	
+
 	private function _generate_settings_map_js()
 	{
 		$map_layers = array();
@@ -1004,7 +1011,7 @@ class Settings_Controller extends Admin_Controller
 		{
 			$map_layers[$layer->name] = array();
 			$map_layers[$layer->name]['title'] = $layer->title;
-			$map_layers[$layer->name]['openlayers'] = $layer->openlayers; 
+			$map_layers[$layer->name]['openlayers'] = $layer->openlayers;
 			if (isset($layer->api_signup))
 			{
 				$map_layers[$layer->name]['api_signup'] = $layer->api_signup;
@@ -1014,7 +1021,7 @@ class Settings_Controller extends Admin_Controller
 				$map_layers[$layer->name]['api_signup'] = "";
 			}
 		}
-		
+
 		return json_encode($map_layers);
 	}
 }

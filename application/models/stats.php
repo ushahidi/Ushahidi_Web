@@ -375,7 +375,7 @@ class Stats_Model extends ORM
 
 		// Ignore errors since we are error checking later
 
-		$xml = @simplexml_load_string($this->_curl_req($stat_url));
+		$xml = simplexml_load_string(Stats_Model::_curl_req($stat_url));
 		$stat_id = (string) $xml->id[0];
 		$stat_key = (string) $xml->key[0];
 

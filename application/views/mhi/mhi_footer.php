@@ -17,9 +17,9 @@
         	<div class="footer-block">
                 <ul>
                     <li class="first"><a href="<?php echo url::site() ?>mhi/">HOME</a></li>
-                    <li><a href="<?php echo url::site() ?>mhi/features">FEATURES</a></li>
-                    <li><a href="<?php echo url::site() ?>mhi/about">ABOUT</a></li>
-                    <li><a href="<?php echo url::site() ?>mhi/contact">CONTACT US</a></li>
+                    <li><a href="<?php echo url::site(); ?>mhi/features">FEATURES</a></li>
+                    <li><a href="<?php echo url::site(); ?>mhi/about">ABOUT</a></li>
+                    <li><a href="<?php echo url::site(); ?>mhi/contact">CONTACT US</a></li>
                 </ul>
             </div>
             <div class="footer-block fb_middle"><p>&nbsp;</p></div>
@@ -30,6 +30,17 @@
                     <li><a href="#">Copyright &copy; <script language="javascript" type="text/javascript">var today = new Date; document.write(today.getFullYear())</script> Ushahidi, Inc</a></li>
                 </ul>
             </div>
+            
+            <div class="footer-block fb_middle"><p>&nbsp;</p></div>
+            
+            <div class="footer-block">
+                <ul>
+                    <li class="first"><a href="<?php echo url::site(); ?>mhi/legal">TOS</a></li>
+					<li><a href="<?php echo url::site(); ?>mhi/legal/dmca">DMCA</a></li>
+					<li><a href="<?php echo url::site(); ?>mhi/legal/privacy">Privacy Notice</a></li>
+                </ul>
+            </div>
+            
         </div>
         <div style="clear:both;"></div>
     </div>

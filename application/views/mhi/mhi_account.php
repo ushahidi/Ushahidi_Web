@@ -57,7 +57,7 @@
 				    <tr>
 				      <td><label for="email">Email</label></td>
 				      <td><input type="text" size="24" name="email" maxlength="42" id="email" value="<?php echo $user->email; ?>" />
-				      <span><em>Required.</em> Also be your username.</span></td>
+				      <span><em>Required.</em> This is also your username.</span></td>
 				    </tr>
 				    <tr>
 				      <td><label for="account_password">Password</label></td>
