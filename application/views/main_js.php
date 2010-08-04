@@ -133,6 +133,15 @@
 					gTimeline.plot();
 				});
 				
+				dailyGraphData = "";
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+catID+"?i=day", function(data) {
+					dailyGraphData = data[0];
+				});
+				allGraphData = "";
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat, function(data) {
+					allGraphData = data[0];
+				});
+				
 				return false;
 			});
 			
@@ -216,8 +225,10 @@
 					}
 				}
 			});
-		
-			// Graph
+			
+			var allGraphData = "";
+			var dailyGraphData = "";
+			
 			var startTime = <?php echo $active_startDate ?>;	// Default to most active month
 			var endTime = <?php echo $active_endDate ?>;		// Default to most active month
 					
@@ -455,6 +466,7 @@
 			
 			var startTime = new Date(startDate * 1000);
 			var endTime = new Date(endDate * 1000);
+			
 			// daily
 			var graphData = "";
 
@@ -503,6 +515,17 @@
 					gTimeline.plot();
 				});
 			}
+
+			// Get dailyGraphData for All Categories
+			$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat+"?i=day", function(data) {
+				dailyGraphData = data[0];
+			});
+			
+			// Get allGraphData for All Categories
+			$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat, function(data) {
+				allGraphData = data[0];
+			});
+
 		}
 		
 		/*

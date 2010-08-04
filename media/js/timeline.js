@@ -230,12 +230,8 @@
 			{
 				endTime = gEndTime;
 			}
-			$.getJSON( baseUrl + "json/timeline/" + this.categoryId + "?i=day", function(data) {
-				graphData = data[0];
-				
-				return $.grep(graphData.data, function(n,i) {
-					return (n[0] >= gStartTime.getTime() && n[0] <= endTime.getTime());
-				});
+			return $.grep(dailyGraphData.data, function(n,i) {
+				return (n[0] >= gStartTime.getTime() && n[0] <= endTime.getTime());
 			});
 		};
 		
@@ -277,7 +273,7 @@
 			{
 				$('#playTimeline').html('PLAY');
 				$('#playTimeline').parent().attr('class', 'play');
-				this.graphData = allGraphData[0][gCategoryId];
+				this.graphData = allGraphData;
 			} 
 			else
 			{
@@ -330,7 +326,7 @@
 			{
 				$('#playTimeline').html('PLAY');
 				$('#playTimeline').parent().attr('class', 'play');
-				this.graphData = allGraphData[0][gCategoryId];
+				this.graphData = allGraphData;
 			}
 			else
 			{
