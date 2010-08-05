@@ -288,6 +288,37 @@ class MHI_Controller extends Template_Controller {
 	{
 		$this->template->header->this_body = 'crowdmap-contact';
 		$this->template->content = new View('mhi/mhi_contact');
+
+		$errors = FALSE;
+		$success_message = '';
+
+		if ($_POST)
+		{
+			$post = Validation::factory($_POST)
+				->pre_filter('trim')
+				->add_rules('contact_email', 'required', array('valid','email'))
+				->add_rules('contact_subject', 'required')
+				->add_rules('contact_message', 'required');
+
+			if ($post->validate())
+			{
+
+				email::send(Kohana::config('settings.site_email'),$post->contact_email,$post->contact_subject,$post->contact_message,FALSE);
+
+				$success_message = 'Email sent. We will get back to you as quickly as we can. Thank you!';
+
+			}else{
+
+				$errors = array('Please provide a valid email address and message. Please try again.');
+				$form_error = TRUE;
+
+			}
+
+		}
+
+		$this->template->content->errors = $errors;
+		$this->template->content->success_message = $success_message;
+
 	}
 
 	public function features()
