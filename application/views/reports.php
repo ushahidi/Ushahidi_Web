@@ -1,4 +1,4 @@
- m<?php
+<?php
 /**
  *  Reports view page.
  *
