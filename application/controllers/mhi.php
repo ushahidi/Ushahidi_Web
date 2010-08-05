@@ -40,6 +40,11 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->js = new View('mhi/mhi_js_signin');
 		$this->template->header->js_files = array();
 
+		// Google Analytics
+
+		$google_analytics = Kohana::config('settings.google_analytics');
+		$this->template->footer->google_analytics = $this->_google_analytics($google_analytics);
+
 		// If we aren't at the top level MHI site or MHI isn't enabled, don't allow access to any of this jazz
 
 		if (Kohana::config('config.enable_mhi') == FALSE OR Kohana::config('settings.subdomain') != '')
@@ -720,4 +725,31 @@ class MHI_Controller extends Template_Controller {
 			'form_error' => $form_error
 		);
 	}
+
+	/*
+	* Google Analytics
+	* @param text mixed  Input google analytics web property ID.
+    * @return mixed  Return google analytics HTML code.
+	*/
+	private function _google_analytics($google_analytics = false)
+	{
+		$html = "";
+		if (!empty($google_analytics)) {
+				$html = '<script type="text/javascript">
+
+				  var _gaq = _gaq || [];
+				  _gaq.push([\'_setAccount\', \''.$google_analytics.'\']);
+				  _gaq.push([\'_trackPageview\']);
+
+				  (function() {
+				    var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+				    ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+				    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+				  })();
+
+				</script>';
+		}
+		return $html;
+	}
+
 }

@@ -38,6 +38,7 @@
 						<li><a href="#14">Can I integrate Swift River into my account?</a></li>
 						<li><a href="#15">Is there a way to block spam reports?</a></li>
 						<li><a href="#16">Will it be possible for me to export my data?</a></li>
+						<li><a href="#17">Are some subdomains blocked or reserved?</a></li>
 					</ul>
                 </p>
                 
@@ -122,7 +123,7 @@
                 <p>
                 	<a name="14"></a>
                 	<h4>Can I integrate Swift River into my account?</h4>
-                	xxx
+                	Swift River is essentially a standalone product. In order to get it to work with your deployment, follow the instructions provided by <a href="http://swift.ushahidi.com">Swift River</a>.
                 </p>
                 
                 <p>
@@ -135,6 +136,12 @@
                 	<a name="16"></a>
                 	<h4>Will it be possible for me to export my data?</h4>
                 	In the admin panel, you can find the Download Reports options at http://[YOURDEPLOYMENT].crowdmap.com/admin/reports/download.
+                </p>
+                
+                <p>
+                	<a name="17"></a>
+                	<h4>Are some subdomains blocked or reserved?</h4>
+                	We have set aside and reserved some subdomains. If you make an attempt to set up a deployment and you find that it is blocked, please try another subdomain. If you feel it is essential that you have a specific blocked subdomain, send us a message on the <a href="http://crowdmap.com/mhi/contact">Contact Us</a> page and we will review your request.
                 </p>
             
             </div></div>
