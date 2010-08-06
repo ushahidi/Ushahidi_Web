@@ -25,6 +25,7 @@
 							<li class="none-separator"><?php echo Kohana::lang('ui_main.view');?>:<a href="<?php print url::site() ?>admin/dashboard/?range=1"><?php echo Kohana::lang('ui_main.today');?></a></li>
 							<li><a href="<?php print url::site() ?>admin/dashboard/?range=31"><?php echo Kohana::lang('ui_main.past_month');?></a></li>
 							<li><a href="<?php print url::site() ?>admin/dashboard/?range=365"><?php echo Kohana::lang('ui_main.past_year');?></a></li>
+							<li><a href="<?php print url::site() ?>admin/dashboard/?range=0"><?php echo Kohana::lang('ui_main.all');?></a></li>
 						</ul>
 						<div class="chart-holder" style="clear:both;padding-left:5px;">
 							<?php echo $report_chart; ?>
