@@ -125,7 +125,7 @@
 						<ul class="nav-list">
 							<li>
 								<a href="<?php echo url::site() . 'admin/reports' ?>" class="reports"><?php echo Kohana::lang('ui_main.reports');?></a>
-								<strong><?php echo $reports_total; ?></strong>
+								<strong><?php echo number_format($reports_total); ?></strong>
 								<ul>
 									<li><a href="<?php echo url::site() . 'admin/reports?status=a' ?>"><?php echo Kohana::lang('ui_main.not_approved');?></a><strong>(<?php echo $reports_unapproved; ?>)</strong></li>
 									
@@ -133,19 +133,19 @@
 							</li>
 							<li>
 								<a href="<?php echo url::site() . 'admin/manage' ?>" class="categories"><?php echo Kohana::lang('ui_main.categories');?></a>
-								<strong><?php echo $categories; ?></strong>
+								<strong><?php echo number_format($categories); ?></strong>
 							</li>
 							<li>
 								<a href="#" class="locations"><?php echo Kohana::lang('ui_main.locations');?></a>
-								<strong><?php echo $locations; ?></strong>
+								<strong><?php echo number_format($locations); ?></strong>
 							</li>
 							<li>
 								<a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="media"><?php echo Kohana::lang('ui_main.news_feeds');?></a>
-								<strong><?php echo $incoming_media; ?></strong>
+								<strong><?php echo number_format($incoming_media); ?></strong>
 							</li>
 							<li>
 								<a href="<?php echo url::site() . 'admin/messages' ?>" class="messages"><?php echo Kohana::lang('ui_main.messages');?></a>
-								<strong><?php echo $message_count; ?></strong>
+								<strong><?php echo number_format($message_count); ?></strong>
 								<ul>
 									<?php
 									foreach ($message_services as $service) {
