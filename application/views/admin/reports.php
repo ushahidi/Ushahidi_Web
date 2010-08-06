@@ -1,16 +1,16 @@
-<?php 
+<?php
 /**
  * Reports view page.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
 			<div class="bg">
@@ -86,7 +86,7 @@
 											<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 										</td>
 									</tr>
-								<?php	
+								<?php
 								}
 								foreach ($incidents as $incident)
 								{
@@ -96,7 +96,7 @@
 									$incident_date = $incident->incident_date;
 									$incident_date = date('Y-m-d', strtotime($incident->incident_date));
 									$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
-									
+
 									//XXX incident_Mode will be discontinued in favour of $service_id
 									if ($incident_mode == 1)	// Submitted via WEB
 									{
@@ -139,20 +139,20 @@
 										$submit_mode = "LACONICA";
 										$submit_by = $incident->message->message_from;
 									}
-									
-									$incident_location = $incident->location->location_name;
+
+									$incident_location = $locations[$incident->location_id];
 
 									// Retrieve Incident Categories
 									$incident_category = "";
-									foreach($incident->incident_category as $category) 
-									{ 
+									foreach($incident->incident_category as $category)
+									{
 										$incident_category .= "<a href=\"#\">" . $category->category->category_title . "</a>&nbsp;&nbsp;";
 									}
-									
+
 									// Incident Status
 									$incident_approved = $incident->incident_active;
 									$incident_verified = $incident->incident_verified;
-									
+
 									// Get Any Translations
 									$i = 1;
 									$incident_translation  = "<div class=\"post-trans-new\">";
@@ -161,7 +161,7 @@
 										$incident_translation .= "<div class=\"post-trans\">";
 										$incident_translation .= Kohana::lang('ui_main.translation'). $i . ": ";
 										$incident_translation .= "<a href=\"" . url::base() . 'admin/reports/translate/'. $translation->id .'/?iid=' . $incident_id . "\">"
-											. text::limit_chars($translation->incident_title, 150, "...", true) 
+											. text::limit_chars($translation->incident_title, 150, "...", true)
 											. "</a>";
 										$incident_translation .= "</div>";
 									}

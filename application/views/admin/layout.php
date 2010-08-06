@@ -122,6 +122,10 @@
 		<div id="header">
 			<!-- top-area -->
 			<div class="top">
+				<?php
+				// Action::admin_header_top_left - Admin Header Menu
+				Event::run('ushahidi_action.admin_header_top_left');
+				?>
 				<ul>
 					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
 					<li class="none-separator"><a href="<?php echo url::site() ?>" title="View the home page">
