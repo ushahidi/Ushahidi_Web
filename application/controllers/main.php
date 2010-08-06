@@ -217,7 +217,6 @@ class Main_Controller extends Template_Controller {
 			->where('incident_active', '1')
 			->limit('10')
 			->orderby('incident_date', 'desc')
-			->with('location')
 			->find_all();
 
 		// Get Default Color
