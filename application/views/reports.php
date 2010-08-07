@@ -1,4 +1,4 @@
- m<?php
+<?php
 /**
  *  Reports view page.
  *
@@ -59,7 +59,7 @@
 
 								$incident_description = text::limit_chars(strip_tags($incident_description), 150, "...", true);
 								$incident_date = date('Y-m-d', strtotime($incident->incident_date));
-								$incident_location = $incident->location_name;
+								$incident_location = $locations[$incident->location_id];
 								$incident_verified = $incident->incident_verified;
 								if ($incident_verified)
 								{
