@@ -490,6 +490,7 @@ class Json_Controller extends Template_Controller
 	public function timeline( $category_id = 0 )
 	{
 		//$profiler = new Profiler;
+
 		$this->auto_render = FALSE;
 		$db = new Database();
 
@@ -535,30 +536,36 @@ class Json_Controller extends Template_Controller
 			$groupby_date_text = "YEARWEEK(incident_date)";
 		}
 
-		if ($category_id)
-		{
-			$category_query = " AND (c.id = ".$category_id." OR c.parent_id = ".$category_id.") ";
-		}
-		else
-		{
-			$category_query = "";
-		}
-
 		$graph_data = array();
 		$graph_data[0] = array();
 		$graph_data[0]['label'] = $category_title;
 		$graph_data[0]['color'] = $category_color;
 		$graph_data[0]['data'] = array();
 
-		$query_text = "SELECT UNIX_TIMESTAMP(" . $select_date_text . ") AS time,
-			COUNT(*) AS number
-			FROM ".$this->table_prefix."incident AS i
-			INNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id
-			INNER JOIN ".$this->table_prefix."category AS c ON ic.category_id = c.id
-			WHERE incident_active = 1 ".$category_query."
-			GROUP BY " . $groupby_date_text;
+		// Gather allowed ids if we are looking at a specific category
 
-		$query = $db->query($query_text);
+		$allowed_ids = array();
+		if($category_id != 0)
+		{
+			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
+			$query = $db->query($query);
+
+			foreach ( $query as $items )
+			{
+				$allowed_ids[] = $items->incident_id;
+			}
+
+		}
+
+		// Add aditional filter here to only allow for incidents that are in the requested category
+		$incident_id_in = '';
+		if(count($allowed_ids) > 1)
+		{
+			$incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
+		}
+
+		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number FROM '.$this->table_prefix.'incident WHERE incident_active = 1 '.$incident_id_in.' GROUP BY '.$groupby_date_text;
+		$query = $db->query($query);
 
 		foreach ( $query as $items )
 		{
