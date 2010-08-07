@@ -38,43 +38,121 @@ class Reports_Controller extends Main_Controller {
 	/**
 	 * Displays all reports.
 	 */
+	// TODO: Do we need this $cluster_id var? I dont see it being used anywhere. (BH)
 	public function index($cluster_id = 0)
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
-		
+
 		$db = new Database;
-		
-		$filter = ( isset($_GET['c']) && !empty($_GET['c']) && $_GET['c']!=0 )
-			? " AND ( c.id='".$_GET['c']."' OR 
-				c.parent_id='".$_GET['c']."' )  "
-			: " AND 1 = 1";
 
-		if ( isset($_GET['sw']) && !empty($_GET['sw']) && 
-				count($southwest = explode(",",$_GET['sw'])) > 1 &&
-			isset($_GET['ne']) && !empty($_GET['ne']) && 
-				count($northeast = explode(",",$_GET['ne'])) > 1
-			)
- 		{
-			list($longitude_min, $latitude_min) = $southwest;
-			list($longitude_max, $latitude_max) = $northeast;
+		// Get incident_ids if we are to filter by category
 
-			$filter .= " AND l.latitude >=".$latitude_min.
-				" AND l.latitude <=".$latitude_max;
-			$filter .= " AND l.longitude >=".$longitude_min.
-				" AND l.longitude <=".$longitude_max;
+		$allowed_ids = array();
+		if (isset($_GET['c']) AND !empty($_GET['c']) AND $_GET['c']!=0)
+		{
+			$category_id = mysql_escape_string($_GET['c']);
+			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
+			$query = $db->query($query);
+
+			foreach ( $query as $items )
+			{
+				$allowed_ids[] = $items->incident_id;
+			}
 		}
-		
+
+		// Get location_ids if we are to filter by location
+
+		// Break apart location variables, if necessary
+
+		$southwest = array();
+		if (isset($_GET['sw']))
+		{
+			$southwest = explode(",",$_GET['sw']);
+		}
+
+		$northeast = array();
+		if (isset($_GET['ne']))
+		{
+			$northeast = explode(",",$_GET['ne']);
+		}
+
+		$location_ids = array();
+		if ( count($southwest) == 2 AND count($northeast) == 2 )
+		{
+			$lon_min = $southwest[0];
+			$lon_max = $northeast[0];
+			$lat_min = $southwest[1];
+			$lat_max = $northeast[1];
+
+			$query = 'SELECT id FROM '.$this->table_prefix.'location WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
+			$query = $db->query($query);
+
+			foreach ( $query as $items )
+			{
+				$location_ids[] =  $items->id;
+			}
+		}
+
+		// Get the count
+		$incident_id_in = '';
+		if (count($allowed_ids) > 0)
+		{
+			$incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
+		}
+
+		$location_id_in = '';
+		if (count($location_ids) > 0)
+		{
+			$location_id_in = ' AND location_id IN ('.implode(',',$location_ids).')';
+		}
+
+		// Get Count
+
+		$query = 'SELECT COUNT(id) as count FROM '.$this->table_prefix.'incident WHERE 1=1'.$location_id_in.''.$incident_id_in.'';
+		foreach ($db->query($query) as $item)
+		{
+			$total_incidents = $item->count;
+			break;
+		}
+
 		// Pagination
+
 		$pagination = new Pagination(array(
 				'query_string' => 'page',
 				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
-				'total_items' => $db->query("SELECT DISTINCT i.* FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) JOIN `".$this->table_prefix."location` AS l ON (i.`location_id` = l.`id`) WHERE `incident_active` = '1' $filter")->count()
+				'total_items' => $total_incidents
 				));
 
-		$incidents = $db->query("SELECT DISTINCT i.*, l.`location_name` FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) JOIN `".$this->table_prefix."location` AS l ON (i.`location_id` = l.`id`) WHERE `incident_active` = '1' $filter ORDER BY incident_date DESC LIMIT ". (int) Kohana::config('settings.items_per_page') . " OFFSET ".$pagination->sql_offset);
-			
+		// Get Incidents
+
+		$query = 'SELECT id, incident_title, incident_description, incident_date, location_id, incident_verified FROM '.$this->table_prefix.'incident WHERE 1=1'.$location_id_in.''.$incident_id_in.' ORDER BY incident_date DESC LIMIT '. (int) Kohana::config('settings.items_per_page').' OFFSET '.$pagination->sql_offset.';';
+
+		$incidents = $db->query($query);
+		$total_incidents = $incidents->count();
+
 		$this->template->content->incidents = $incidents;
+
+		// Gather the final list of location ids that turned up in the query
+
+		$location_in = array();
+		foreach ($incidents as $incident)
+		{
+			$location_in[] = $incident->location_id;
+		}
+
+		// Get location names
+
+		$query = 'SELECT id, location_name FROM '.$this->table_prefix.'location WHERE id IN ('.implode(',',$location_in).')';
+		$locations_query = $db->query($query);
+
+		$locations = array();
+		foreach ($locations_query as $loc)
+		{
+			$locations[$loc->id] = $loc->location_name;
+		}
+
+		$this->template->content->locations = $locations;
 
 		//Set default as not showing pagination. Will change below if necessary.
 		$this->template->content->pagination = '';
@@ -113,8 +191,7 @@ class Reports_Controller extends Main_Controller {
 			$incident_id = $incident->id;
 			if (ORM::factory('media')
 				->where('incident_id', $incident_id)->count_all() > 0) {
-				$medias = ORM::factory('media')
-												->where('incident_id', $incident_id)->find_all();
+				$medias = ORM::factory('media')->where('incident_id', $incident_id)->find_all();
 
 				//Modifying a tmp var prevents Kohona from throwing an error
 				$tmp = $this->template->content->media_icons;
@@ -128,7 +205,7 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Category Title, if Category ID available
-		$category_id = ( isset($_GET['c']) && !empty($_GET['c']) )
+		$category_id = ( isset($_GET['c']) AND !empty($_GET['c']) )
 			? $_GET['c'] : "0";
 		$category = ORM::factory('category')
 			->find($category_id);
@@ -150,7 +227,7 @@ class Reports_Controller extends Main_Controller {
 		// Round the number of days up to the nearest full day
 
 		$days_since = ceil((time() - $oldest_timestamp) / 86400);
-		if($days_since < 1) {
+		if ($days_since < 1) {
 			$avg_reports_per_day = $total_reports;
 		}else{
 			$avg_reports_per_day = round(($total_reports / $days_since),2);
@@ -176,7 +253,7 @@ class Reports_Controller extends Main_Controller {
 		{
 			url::redirect(url::site().'main');
 		}
-		
+
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit');
 
@@ -249,7 +326,7 @@ class Reports_Controller extends Main_Controller {
 			$post->add_rules('incident_hour', 'required', 'between[1,12]');
 			$post->add_rules('incident_minute', 'required', 'between[0,59]');
 
-			if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != "pm")
+			if ($_POST['incident_ampm'] != "am" AND $_POST['incident_ampm'] != "pm")
 			{
 				$post->add_error('incident_ampm','values');
 			}
@@ -343,7 +420,7 @@ class Reports_Controller extends Main_Controller {
 				$incident_time = $post->incident_hour
 					.":".$post->incident_minute
 					.":00 ".$post->incident_ampm;
-				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );				
+				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
 				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				$incident->save();
 
@@ -454,7 +531,7 @@ class Reports_Controller extends Main_Controller {
 				$person->person_email = $post->person_email;
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
-				
+
 				// Action::report_add - Added a New Report
 				Event::run('ushahidi_action.report_add', $incident);
 
@@ -497,7 +574,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->js = new View('reports_submit_js');
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-		if (!$form['latitude'] || !$form['latitude'])
+		if (!$form['latitude'] OR !$form['latitude'])
 		{
 			$this->template->header->js->latitude = Kohana::config('settings.default_lat');
 			$this->template->header->js->longitude = Kohana::config('settings.default_lon');
@@ -687,10 +764,10 @@ class Reports_Controller extends Main_Controller {
 					$form_error = TRUE;
 				}
 			}
-			
+
 			// Filters
 			$incident_title = $incident->incident_title;
-			$incident_description = nl2br($incident->incident_description);			
+			$incident_description = nl2br($incident->incident_description);
 			Event::run('ushahidi_filter.report_title', $incident_title);
 			Event::run('ushahidi_filter.report_description', $incident_description);
 
@@ -800,7 +877,7 @@ class Reports_Controller extends Main_Controller {
 
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
-		
+
 		// Are we allowed to submit comments?
 		$this->template->content->comments_form = "";
 		if (Kohana::config('settings.allow_comments'))
@@ -1091,13 +1168,13 @@ class Reports_Controller extends Main_Controller {
 			if ($field_param->loaded == true)
 			{
 				// Validate for required
-				if ($field_param->field_required == 1 && $field_response == "")
+				if ($field_param->field_required == 1 AND $field_response == "")
 				{
 					return false;
 				}
 
 				// Validate for date
-				if ($field_param->field_isdate == 1 && $field_response != "")
+				if ($field_param->field_isdate == 1 AND $field_response != "")
 				{
 					$myvalid = new Valid();
 					return $myvalid->date_mmddyyyy($field_response);
