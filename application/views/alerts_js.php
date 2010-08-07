@@ -42,6 +42,9 @@
 			- Live/Yahoo/OSM/Google
 			- Set Bounds					
 			*/
+
+			<?php echo $map_layers; ?>
+
 			var default_map = <?php echo $default_map; ?>;
 			if (default_map == 2)
 			{
