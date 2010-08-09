@@ -267,7 +267,7 @@ class Api_Controller extends Controller {
 				* there are several ways to get incidents by
 				*/
 				$by = '';
-				$sort = 'asc';
+				$sort = 'DESC';
 				$orderfield = 'incidentid';
 
 				if(!$this->_verifyArrayIndex($request, 'by')){
@@ -279,7 +279,7 @@ class Api_Controller extends Controller {
 				/*IF we have an order by, 0=default=asc 1=desc */
 				if($this->_verifyArrayIndex($request, 'sort')){
 					if ( $request['sort'] == '1' ){
-						$sort = 'desc';
+						$sort = 'DESC';
 					}
 				}
 
