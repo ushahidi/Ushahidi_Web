@@ -900,6 +900,28 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 	}
+	
+	public function geocode()
+	{
+		$this->template = "";
+		$this->auto_render = FALSE;
+		if (isset($_POST['address']) AND ! empty($_POST['address']))
+		{
+			$geocode = map::geocode($_POST['address']);
+			if ($geocode)
+			{
+				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon']))); 
+			}
+			else
+			{
+				echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+			}
+		}
+		else
+		{
+			echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+		}
+	}
 
 	/*
 	 * Retrieves Cities

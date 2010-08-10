@@ -360,4 +360,28 @@ class map_Core {
 			return $layers;
 		}
 	}
+	
+	/**
+	 * GeoCode An Address
+	 *
+	 * @author
+	 * @param   string  $address
+	 * @return  array $geocodes - lat/lon
+	 */
+	public static function geocode($address = NULL)
+	{
+		if ($address)
+		{
+			$map_object = new GoogleMapAPI;
+			//$map_object->_minify_js = isset($_REQUEST["min"]) ? FALSE : TRUE;
+			$geocodes = $map_object->getGeoCode($address);
+			//$geocodes = $MAP_OBJECT->geoGetCoordsFull($address);
+			
+			return $geocodes;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

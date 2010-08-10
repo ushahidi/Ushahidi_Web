@@ -202,43 +202,32 @@
 				$("#longitude").attr("value", lonlat2.lon);
 			});
 			
-			/* 
-			Google GeoCoder
-			TODO - Add Yahoo and Bing Geocoding Services
+			/**
+			 * Google GeoCoder
 			 */
 			$('.btn_find').live('click', function () {
+				$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
 				address = $("#location_find").val();
-				if ( typeof GBrowserIsCompatible == 'undefined' ) {
-					alert('GeoCoding is only currently supported by Google Maps.\n\nPlease pinpoint the location on the map\nusing your mouse.');
-				} else {
-					var geocoder = new GClientGeocoder();
-					if (geocoder) {
-						$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-						geocoder.getLatLng(
-							address,
-							function(point) {
-								if (!point) {
-									alert(address + " not found!\n\n***************************\nFind a city or town close by and zoom in\nto find your precise location");
-									$('#find_loading').html('');
-								} else {
-									var lonlat = new OpenLayers.LonLat(point.lng(), point.lat());
-									lonlat.transform(proj_4326,proj_900913);
-								
-									m = new OpenLayers.Marker(lonlat);
-									markers.clearMarkers();
-							    	markers.addMarker(m);
-									map.setCenter(lonlat, <?php echo $default_zoom; ?>);
-								
-									// Update form values (jQuery)
-									$("#latitude").attr("value", point.lat());
-									$("#longitude").attr("value", point.lng());
-									$("#location_name").attr("value", $("#location_find").val());
-									$('#find_loading').html('');
-								}
-							}
-						);
-					}
-				}
+				$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
+					function(data){
+						if (data.status == 'success'){
+							var lonlat = new OpenLayers.LonLat(data.message[1], data.message[0]);
+							lonlat.transform(proj_4326,proj_900913);
+						
+							m = new OpenLayers.Marker(lonlat);
+							markers.clearMarkers();
+					    	markers.addMarker(m);
+							map.setCenter(lonlat, <?php echo $default_zoom; ?>);
+							
+							// Update form values
+							$("#latitude").attr("value", data.message[0]);
+							$("#longitude").attr("value", data.message[1]);
+							$("#location_name").attr("value", $("#location_find").val());
+						} else {
+							alert(address + " not found!\n\n***************************\nEnter more details like city, town, country\nor find a city or town close by and zoom in\nto find your precise location");
+						}
+						$('#find_loading').html('');
+					}, "json");
 				return false;
 			});
 			
