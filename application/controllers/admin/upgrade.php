@@ -60,7 +60,18 @@ class Upgrade_Controller extends Admin_Controller
 	    $this->template->content->form_action = $form_action;
 		
 	}
-
+	
+	public function table() 
+	{
+		$this->template->content = new View('admin/upgrade_table');
+			
+	}
+	
+	public function status() 
+	{
+		$this->template->content = new View('admin/upgrade_status');
+	}
+	
 	private function _upgrade_tables() {
     	$db = new Database;
     	$db_schema = file_get_contents('sql/upgrade.sql');
