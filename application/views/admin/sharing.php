@@ -90,7 +90,7 @@
 						</script>
 					</div>
 					<div class="tab_form_item">
-						<strong><?php echo Kohana::lang('ui_main.access_imits');?>:</strong> (<?php echo Kohana::lang('ui_main.outgoing');?>)<br />
+						<strong><?php echo Kohana::lang('ui_main.access_limits');?>:</strong> (<?php echo Kohana::lang('ui_main.outgoing');?>)<br />
 						<?php print form::dropdown('sharing_limits', $sharing_limits_array, ''); ?>
 					</div>				
 					<div class="tab_form_item">

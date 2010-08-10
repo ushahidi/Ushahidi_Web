@@ -40,6 +40,11 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->js = new View('mhi/mhi_js_signin');
 		$this->template->header->js_files = array();
 
+		// Google Analytics
+
+		$google_analytics = Kohana::config('settings.google_analytics');
+		$this->template->footer->google_analytics = $this->_google_analytics($google_analytics);
+
 		// If we aren't at the top level MHI site or MHI isn't enabled, don't allow access to any of this jazz
 
 		if (Kohana::config('config.enable_mhi') == FALSE OR Kohana::config('settings.subdomain') != '')
@@ -283,6 +288,37 @@ class MHI_Controller extends Template_Controller {
 	{
 		$this->template->header->this_body = 'crowdmap-contact';
 		$this->template->content = new View('mhi/mhi_contact');
+
+		$errors = FALSE;
+		$success_message = '';
+
+		if ($_POST)
+		{
+			$post = Validation::factory($_POST)
+				->pre_filter('trim')
+				->add_rules('contact_email', 'required', array('valid','email'))
+				->add_rules('contact_subject', 'required')
+				->add_rules('contact_message', 'required');
+
+			if ($post->validate())
+			{
+
+				email::send(Kohana::config('settings.site_email'),$post->contact_email,$post->contact_subject,$post->contact_message,FALSE);
+
+				$success_message = 'Email sent. We will get back to you as quickly as we can. Thank you!';
+
+			}else{
+
+				$errors = array('Please provide a valid email address and message. Please try again.');
+				$form_error = TRUE;
+
+			}
+
+		}
+
+		$this->template->content->errors = $errors;
+		$this->template->content->success_message = $success_message;
+
 	}
 
 	public function features()
@@ -720,4 +756,31 @@ class MHI_Controller extends Template_Controller {
 			'form_error' => $form_error
 		);
 	}
+
+	/*
+	* Google Analytics
+	* @param text mixed  Input google analytics web property ID.
+    * @return mixed  Return google analytics HTML code.
+	*/
+	private function _google_analytics($google_analytics = false)
+	{
+		$html = "";
+		if (!empty($google_analytics)) {
+				$html = '<script type="text/javascript">
+
+				  var _gaq = _gaq || [];
+				  _gaq.push([\'_setAccount\', \''.$google_analytics.'\']);
+				  _gaq.push([\'_trackPageview\']);
+
+				  (function() {
+				    var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+				    ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+				    var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+				  })();
+
+				</script>';
+		}
+		return $html;
+	}
+
 }

@@ -16,7 +16,50 @@
 		<div id="primary-content">
             <div class="twocol-left"><div class="content-shadow">
                 <h2>Contact Us</h2>
-                <p class="intro-para">By the way, we are still working on this page.</p>    
+                
+                <?php if ($success_message != '') { ?>
+					<div style="background-color:#95C274;border:4px #8CB063 solid;padding:2px 8px 1px 8px;margin:10px;"><?php echo $success_message; ?></div>
+				<?php } ?>
+				
+				<?php if ($errors != '') { ?>
+					<div style="background-color:#C27474;border:4px #B06363 solid;padding:2px 8px 1px 8px;margin:10px;"><?php echo $errors; ?></div>
+				<?php } ?>
+                
+                <p class="intro-para">Before contacting us, please read our <a href="<?php echo url::site(); ?>mhi/about/faq">FAQ</a>.</p>
+                <p>If you are having an issue with your Crowdmap account or deployment, please provide as many details as possible including the URL to your deployment, your username, etc. Also, keep in mind that we will never ask for your password. This should be kept to yourself!</p>
+				
+                <?php print form::open(url::site().'mhi/contact', array('id' => 'frm-Contact', 'name' => 'frm-Contact', 'class' => 'frm-content')); ?>
+                	
+                	<p>
+			        	<label for="contact_email">Email</label><br/>
+			        	<input type="text" size="30" name="contact_email" maxlength="100" id="contact_email" autocomplete="off"/>
+			        </p>
+			        
+			        <p>
+			        	<!-- <label for="contact_subject">Topic</label><br/> -->
+			        	<select name="contact_subject" id="contact_subject">
+			        		<option value="Topic Not Selected">[ Select a Topic ]</option>
+			        		<option value="Bug Report">Bug Report</option>
+			        		<option value="Suggestion">Suggestion</option>
+			        		<option value="Other">Other</option>
+			        	</select>
+			        </p>
+                	
+                	<p>
+			        	<label for="contact_message">Message</label><br/>
+			        	<textarea type="text" rows="5" cols="50" name="contact_message" id="contact_message" autocomplete="off"/></textarea>
+			        </p>
+                	
+                	<p>
+			        	<input class="button" type="submit" value="Send" />
+			        </p>
+                
+                <?php print form::close(); ?>
+                
+                <p>You may also send us an email at <a href="mailto:support@crowdmap.com">support@crowdmap.com</a></p>
+                
+                
+                
             </div></div>
             <div class="twocol-right">
                 <!-- CB: We'll just leave this empty for now.

@@ -32,8 +32,8 @@
 				
 				<p>
 					Brian Herbert<br/>
-					Email: brian@ushahidi.com<br/>
-					Physical Mail: 1022 Cherokee Rd, Apt 1, Louisville, KY 40245
+					Email: dmca@crowdmap.com<br/>
+					Physical Mail: PO Box 782208, Orlando, FL 32878
 				</p>
 					
 				<p>Upon receipt of proper notification of claimed infringement, Crowdmap will follow the procedures outlined herein and in the DMCA.</p>
