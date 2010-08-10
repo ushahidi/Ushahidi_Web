@@ -36,15 +36,9 @@ CREATE TABLE IF NOT EXISTS `category` (                                         
 -- Dumping data for table `category`
 
 INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_description`, `category_color`, `category_visible`) VALUES
-(1, 5, 'RIOTS', 'RIOTS', '9900CC', 1),
-(2, 5, 'DEATHS', 'DEATHS', '3300FF', 1),
-(3, 5, 'PROPERTY LOSS', 'PROPERTY LOSS', '663300', 1),
-(4, 5, 'SEXUAL ASSAULT', 'SEXUAL ASSAULT', 'CC0000', 1),
-(5, 5, 'INTERNALLY DISPLACED PEOPLE ', 'INTERNALLY DISPLACED PEOPLE 	', 'CC9933', 1),
-(6, 5, 'GOVERNMENT FORCES', 'GOVERNMENT FORCES', '9999FF', 1),
-(7, 5, 'CIVILIANS', 'CIVILIANS', '66CC00', 1),
-(8, 5, 'LOOTING', 'LOOTING', 'FFCC00', 1),
-(9, 5, 'PEACE EFFORTS', 'PEACE EFFORTS', 'FAEBD7', 1);
+(1, 5, 'Category 1', 'Category 1', '9900CC', 1),
+(2, 5, 'Category 2', 'Category 2', '3300FF', 1),
+(3, 5, 'Category 3', 'Category 3', '663300', 1);
 
 
 
@@ -402,7 +396,7 @@ CREATE TABLE IF NOT EXISTS `incident` (                                         
 
 LOCK TABLES `incident` WRITE;
 /*!40000 ALTER TABLE `incident` DISABLE KEYS */;
-INSERT INTO `incident` VALUES (1,1,1,'en_US',1,'Hello Ushahidi!','Welcome to Ushahidi. Please replace this report with a valid incident','2009-06-30 12:00:00',1,1,1,'0','2009-06-30 12:00:00','0',NULL,NULL,NULL,'0');
+INSERT INTO `incident` VALUES (1,1,1,'en_US',1,'Hello Ushahidi!','Welcome to Ushahidi. Please replace this report with a valid incident','2010-01-01 12:00:00',1,1,1,'0','2010-01-01 12:00:00','0',NULL,NULL,NULL,'0');
 /*!40000 ALTER TABLE `incident` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -446,7 +440,7 @@ CREATE TABLE IF NOT EXISTS `incident_category` (                                
 -- Dumping data for table `incident_category`
 LOCK TABLES `incident_category` WRITE;
 /*!40000 ALTER TABLE `incident_category` DISABLE KEYS */;
-INSERT INTO `incident_category` VALUES (1,1,7);
+INSERT INTO `incident_category` VALUES (1,1,1);
 /*!40000 ALTER TABLE `incident_category` ENABLE KEYS */;
 UNLOCK TABLES;
 

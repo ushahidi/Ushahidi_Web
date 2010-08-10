@@ -66,9 +66,9 @@ class Incident_Model extends ORM
 	{
 		if($verified)
 		{
-			$count = ORM::factory('incident')->where('incident_verified', '1')->count_all();
+			$count = ORM::factory('incident')->where('incident_verified', '1')->where('incident_active', '1')->count_all();
 		}else{
-			$count = ORM::factory('incident')->where('incident_verified', '0')->count_all();
+			$count = ORM::factory('incident')->where('incident_verified', '0')->where('incident_active', '1')->count_all();
 		}
 
 		return $count;

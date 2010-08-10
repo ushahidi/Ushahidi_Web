@@ -45,12 +45,12 @@
 
 			<?php echo map::layers_js(FALSE); ?>
 			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-			
+
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.Attribution());
 			map.addControl(new OpenLayers.Control.MousePosition());
-			map.addControl(new OpenLayers.Control.LayerSwitcher());			
+			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
 			// Create the Circle/Radius layer
 			var radiusLayer = new OpenLayers.Layer.Vector("Radius Layer");

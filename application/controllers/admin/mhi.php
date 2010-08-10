@@ -129,7 +129,7 @@ class Mhi_Controller extends Admin_Controller
 	}
 
 	/**
-	* Lists the reports.
+	* Lists the activity.
     * @param int $page
     */
 	function activity()
@@ -152,6 +152,76 @@ class Mhi_Controller extends Admin_Controller
 
 		$this->template->content->db_versions = Mhi_Site_Model::get_db_versions();
 		$this->template->content->current_version = $settings['db_version'];
+	}
+
+	/**
+	* MHI Settings.
+    * @param int $page
+    */
+	function settings()
+	{
+		$this->template->content = new View('admin/mhi_settings');
+
+		// setup and initialize form field names
+		$this->template->content->form = array
+		(
+			'google_analytics' => ''
+		);
+
+	    //  Copy the form as errors, so the errors will be stored with keys
+        //  corresponding to the form field names
+		$this->template->content->errors = $this->template->content->form;
+		$this->template->content->form_error = FALSE;
+		$this->template->content->form_saved = FALSE;
+
+		// check, has the form been submitted, if so, setup validation
+		if ($_POST)
+		{
+            // Instantiate Validation, use $post, so we don't overwrite $_POST
+            // fields with our own things
+			$post = new Validation($_POST);
+
+	        // Add some filters
+			$post->pre_filter('trim', TRUE);
+
+			// Validation Rules
+			$post->add_rules('google_analytics','length[0,20]');
+
+			// Test to see if things passed the rule checks
+	        if ($post->validate())
+	        {
+
+	        	// Yes! everything is valid
+				$settings = new Settings_Model(1);
+	        	$settings->google_analytics = $post->google_analytics;
+	        	$settings->date_modify = date("Y-m-d H:i:s",time());
+				$settings->save();
+
+				$this->template->content->form_saved = TRUE;
+
+				$this->template->content->form = arr::overwrite($this->template->content->form, $post->as_array());
+
+	        }else{
+
+	        	// repopulate the form fields
+	            $this->template->content->form = arr::overwrite($this->template->content->form, $post->as_array());
+
+	            // populate the error fields, if any
+	            $this->template->content->errors = arr::overwrite($this->template->content->errors, $post->errors('settings'));
+				$this->template->content->form_error = TRUE;
+
+	        }
+		}else{
+
+			// Retrieve Current Settings
+			$settings = ORM::factory('settings', 1);
+			$this->template->content->form = array
+			(
+				'google_analytics' => $settings->google_analytics
+			);
+
+		}
+
 	}
 
 }

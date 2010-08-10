@@ -267,29 +267,33 @@ class Api_Controller extends Controller {
 				* there are several ways to get incidents by
 				*/
 				$by = '';
-				$sort = 'asc';
+				$sort = 'DESC';
 				$orderfield = 'incidentid';
-
+				
 				if(!$this->_verifyArrayIndex($request, 'by')){
 					$error = array("error" => $this->_getErrorMsg(001, 'by'));
 					break;
 				} else {
 					$by = $request['by'];
 				}
-				/*IF we have an order by, 0=default=asc 1=desc */
+				/*IF we have an order by, 0=default=desc 1=desc */
 				if($this->_verifyArrayIndex($request, 'sort')){
 					if ( $request['sort'] == '1' ){
-						$sort = 'desc';
+						$sort = 'DESC';
 					}
 				}
 
                 /*Specify how many incidents to return */
 				if($this->_verifyArrayIndex($request, 'limit')){
+					
 					if ( $request['limit'] > 0 ){
 						$limit = $request['limit'];
 					} else {
+						$limit = 20;
+					}
+				// Make limit variable optional	
+				} else {
 					$limit = 20;
-				}
 				}
 
 				/* Order field  */
@@ -312,7 +316,9 @@ class Api_Controller extends Controller {
 				}
 				switch ($by){
 					case "all": // incidents
+						
 						$ret = $this->_incidentsByAll($orderfield, $sort, $limit);
+						
 						break;
 
 					case "latlon": //latitude and longitude
@@ -477,7 +483,7 @@ class Api_Controller extends Controller {
 		$retJsonOrXml = ''; //will hold the json/xml string to return
 
 		$replar = array(); //assists in proper xml generation
-
+		
 		// Doing this manually. It was wasting my time trying to modularize it.
 		// Will have to visit this again after a good rest. I mean a good rest.
 
@@ -487,7 +493,7 @@ class Api_Controller extends Controller {
 		$xml->startDocument('1.0', 'UTF-8');
 		$xml->startElement('response');
 		$xml->startElement('payload');
-		$this->writeElement('domain',$this->domain);
+		$xml->writeElement('domain',$this->domain);
 		$xml->startElement('incidents');
 
 		//find incidents
@@ -504,8 +510,9 @@ class Api_Controller extends Controller {
 				."FROM ".$this->table_prefix."incident AS i "
                 ."INNER JOIN ".$this->table_prefix."location as l on l.id = i.location_id "
                 ."$where $limit";
-
+		
 		$items = $this->db->query($query);
+		
 		$i = 0;
 		foreach ($items as $item){
 
@@ -574,7 +581,7 @@ class Api_Controller extends Controller {
 
 			}
 			$xml->endElement(); // end incident
-
+			
 			//needs different treatment depending on the output
 			if($this->responseType == 'json'){
 				$json_incidents[] = array("incident" => $item, "media" => $json_incident_media);
@@ -587,7 +594,7 @@ class Api_Controller extends Controller {
 			"payload" => array("domain" => $this->domain,"incidents" => $json_incidents),
 			"error" => $this->_getErrorMsg(0)
 		);
-
+		
 		if($this->responseType == 'json'){
 			$retJsonOrXml = $this->_arrayAsJSON($data);
 			return $retJsonOrXml;
@@ -1502,9 +1509,11 @@ class Api_Controller extends Controller {
  	* Fetch all incidents
  	*/
 	function _incidentsByAll($orderfield,$sort,$limit) {
+		
 		$where = "\nWHERE i.incident_active = 1 ";
 		$sortby = "\nORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $limit";
+		
 		/* Not elegant but works */
 		return $this->_getIncidents($where.$sortby, $limit);
 	}

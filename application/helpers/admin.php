@@ -48,7 +48,8 @@ class admin_Core {
 		if (Kohana::config('config.enable_mhi') == TRUE AND Kohana::config('settings.subdomain') == '')
 		{
 			$main_right_tabs = array(
-				'users' => Kohana::lang('ui_admin.users')
+				'users' => Kohana::lang('ui_admin.users'),
+				'mhi/settings' => Kohana::lang('ui_admin.settings')
 			);
 		}
 		else
