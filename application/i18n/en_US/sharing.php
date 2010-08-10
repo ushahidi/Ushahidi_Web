@@ -12,7 +12,7 @@ $lang = array
     'date' => 'Ingress date',
     'date_added' => 'Date Added',
     'last_access' => 'Last Access',
-    'sent_info' => 'he following information will be sent with this request',
+    'sent_info' => 'The following information will be sent with this request',
     'sharing_key' => 'Key',
     'sharing_url' => array
 	(

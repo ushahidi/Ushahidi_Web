@@ -18,7 +18,9 @@
                 <h2>About Crowdmap</h2>
                 <h3>FAQ</h3>
                 
+                <!--
                 <p class="intro-para">This is where the FAQ is listed. Lorem and such. This page is under development and all answers to questions should be considered ridiculous and you shouldn't believe them.</p>
+                -->
                 
                 <p>
                 	<ul>
