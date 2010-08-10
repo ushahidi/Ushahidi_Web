@@ -40,7 +40,7 @@ class Upgrade_Controller extends Admin_Controller
 
 	    $form_action = "";
 		
-      	$this->template->content->title = Kohana::lang('ui_admin.upgrade');
+      	$this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi');
       	
       	//check if form has been submitted
       	if( $_POST ){  
@@ -137,6 +137,13 @@ class Upgrade_Controller extends Admin_Controller
         	
        	return $upgrade;
 
+	}
+	
+	/**
+	 * Upgrade the current database
+	 */
+	public function _do_db_backup() {
+		
 	}
 	
 }

@@ -13,8 +13,14 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
+<div id="ushahidi_install_container" class="advanced">
 <div class="bg">
 	<h2><?php echo $title; ?></h2>
+	<ol class="progress-meter clearfix">
+		<li class=""><span>Overview</span></li>
+		<li class="last"><span>Upgrade Table</span></li>
+		<li class=""><span>Review log</span></li>
+	</ol>
 	<div class="table-holder">
    		<p>
     	<?php print form::open(NULL, array('id' => 'upgradeMain', 'name' => 'upgradeMain')); ?>
@@ -44,4 +50,5 @@
         <?php print form::close();?>                           
       </p>
 	</div>
+</div>
 </div>
