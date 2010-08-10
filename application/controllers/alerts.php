@@ -114,6 +114,7 @@ class Alerts_Controller extends Main_Controller {
 		$this->template->header->js = new View('alerts_js');
 		
 		$this->template->header->js->default_map = Kohana::config('settings.default_map');
+		$this->template->header->js->map_layers = map::layers_js();
 		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->header->js->latitude = $form['alert_lat'];
 		$this->template->header->js->longitude = $form['alert_lon'];

@@ -56,7 +56,7 @@
 								<thead>
 									<tr>
 										<th class="col-1">&nbsp;</th>
-										<th class="col-2"><?php echo Kohana::lang('ui_main.layer');?></th>
+										<th class="col-2"><?php echo Kohana::lang('ui_main.layers');?></th>
 										<th class="col-3"><?php echo Kohana::lang('ui_main.color');?></th>
 										<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 									</tr>

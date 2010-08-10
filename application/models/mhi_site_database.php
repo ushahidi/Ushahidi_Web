@@ -122,7 +122,7 @@ class mhi_site_database_Model extends ORM
 
 		$queries = explode(';',$upgrade_schema);
 
-		@mysql_query(' ALTER TABLE `mhi_log` CHANGE `int` `id` BIGINT( 20 ) NOT NULL AUTO_INCREMENT  ');
+		//Put a custom mysql_query() here in case you want to run something outside of the sql files.
 
 		foreach ($queries as $query)
 		{
