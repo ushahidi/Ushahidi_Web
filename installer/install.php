@@ -443,7 +443,7 @@ class Install
 		}
 		
 		// Use todays date as the date for the first incident in the system
-		$db_schema = str_replace('2009-06-30 12:00:00',
+		$db_schema = str_replace('2010-01-01 12:00:00',
 			date("Y-m-d H:i:s",time()), $db_schema);
 		
 		$result = @mysql_query('CREATE DATABASE '.$db_name);
