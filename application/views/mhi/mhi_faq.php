@@ -41,6 +41,7 @@
 						<li><a href="#15">Is there a way to block spam reports?</a></li>
 						<li><a href="#16">Will it be possible for me to export my data?</a></li>
 						<li><a href="#17">Are some subdomains blocked or reserved?</a></li>
+						<li><a href="#18">What happens during a crisis and there are multiple crowdmap deployments?</a></li>
 					</ul>
                 </p>
                 
@@ -144,6 +145,12 @@
                 	<a name="17"></a>
                 	<h4>Are some subdomains blocked or reserved?</h4>
                 	We have set aside and reserved some subdomains. If you make an attempt to set up a deployment and you find that it is blocked, please try another subdomain. If you feel it is essential that you have a specific blocked subdomain, send us a message on the <a href="http://crowdmap.com/mhi/contact">Contact Us</a> page and we will review your request.
+                </p>
+
+                <p>
+                	<a name="18"></a>
+                	<h4>What happens during a crisis and there are multiple crowdmap deployments?</h4>
+                	We have created a document with guidelines and best practices for this situation. <a href="https://docs.google.com/View?docID=0Ae319lx23K5bZGQ2dGs1MnZfMTM4OWt6bWhnd213&revision=_latest">Read the document</a>.
                 </p>
             
             </div></div>
