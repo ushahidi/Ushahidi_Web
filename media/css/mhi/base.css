@@ -277,7 +277,7 @@ Author Email: caleb@ushahidi.com
 
 /* Features Page 
 -----------------*/
-	.feature { padding:1px 0; margin:0 -24px 0 -15px; height:198px; border-bottom:1px solid #b2b2b2; }
+	.feature { padding:1px 0; margin:0 -14px 0 -15px; height:198px; border-bottom:1px solid #b2b2b2; }
 		.feature h3 { margin-top:20px; }
 		.feature p { }
 	
@@ -292,6 +292,8 @@ Author Email: caleb@ushahidi.com
 --------------*/
 	#frm-MHI-Signup { margin-bottom:0; }
 		
+		.content form.frm-content { margin-bottom:0; }
+		#admin_password { font-size:12px; width:125px; }
 		.content .frm-content table,
 		.content .frm-content table td { border:0; }
 		
