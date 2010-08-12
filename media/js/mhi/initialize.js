@@ -13,4 +13,7 @@ $(function(){
 		$(this).removeClass("active")
 	});
 	
+	/* Colorbox Modal Windows */
+	$("a.cb-link-external-content").colorbox({width:"80%", height:"80%", iframe:true});
+	
 });
