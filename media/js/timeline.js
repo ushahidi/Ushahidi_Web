@@ -563,7 +563,7 @@
 						feature_icon = feature.attributes.icon;
 						if (feature_icon!="")
 						{
-							return baseUrl + "media/uploads/" + feature_icon;
+							return baseUrl + feature_icon;
 						} 
 						else
 						{
