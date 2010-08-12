@@ -121,7 +121,7 @@
       					<h4>Using Crowdmap for a crisis?</h4>
       					<div class="side-bar-content">
       						<ul class="sub-nav-links">
-      							<li><a class="cb-link-external-content" href="https://docs.google.com/View?docID=0Ae319lx23K5bZGQ2dGs1MnZfMTM4OWt6bWhnd213&revision=_latest">Follow these 5 easy steps &raquo;</a></li>
+      							<li><a href="http://ushahidi.com/media/c_Crowdmap-Emergency-Response-Strategy.pdf">Follow these 5 easy steps &raquo;</a></li>
       						</ul>
       					</div>
       				</div>
