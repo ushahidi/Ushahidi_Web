@@ -115,14 +115,18 @@
                       
             </div></div>
             <div class="twocol-right">
-                <!-- CB: Let's leave this empty for now
-                <div class="side-bar-module">
-                    <h4>Side Bar</h4>
-                    <div class="side-bar-content">
-                        <p>Content goes here.</p>
-                    </div>
-                </div>
-                -->
+              
+      				<!-- right nav -->
+      				<div class="side-bar-module rounded shadow" style="margin-top:410px">
+      					<h4>Using Crowdmap for a crisis?</h4>
+      					<div class="side-bar-content">
+      						<ul class="sub-nav-links">
+      							<li><a target="_blank" href="https://docs.google.com/View?docID=0Ae319lx23K5bZGQ2dGs1MnZfMTM4OWt6bWhnd213&revision=_latest">Follow these 5 easy steps &raquo;</a></li>
+      						</ul>
+      					</div>
+      				</div>
+      				<!-- / right nav -->
+
             </div>
             <div style="clear:both;"></div>
         </div>
