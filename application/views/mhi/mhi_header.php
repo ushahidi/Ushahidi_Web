@@ -29,11 +29,13 @@
 	echo html::link('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz','stylesheet','text/css', false);
 	
 	echo html::stylesheet('media/css/mhi/base','',true);
+	echo html::stylesheet('media/css/mhi/colorbox','',true);
 	
 	echo html::script(array(
 		    'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
 		    'http://ajax.microsoft.com/ajax/jquery.validate/1.6/jquery.validate.min.js',
 		    'media/js/mhi/jquery.cycle.min.js',
+		    'media/js/mhi/jquery.colorbox.min.js',
 		    'media/js/mhi/initialize.js'
 			), true);
 ?>
