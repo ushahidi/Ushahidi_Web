@@ -43,7 +43,7 @@
 						<li><a href="#17">Are some subdomains blocked or reserved?</a></li>
 						<li><a href="#18">What happens during a crisis and there are multiple crowdmap deployments?</a></li>
 						<li><a href="#19">Can Crowdmap update automatically from designated Twitter feeds, or just through #hashtags?</a></li>
-						<li><a href="#20">Do you think that we’ll be able to customize the look of our page more in the future? It could use some tweaking.</a></li>
+						<li><a href="#20">Do you think that we'll be able to customize the look of our page more in the future? It could use some tweaking.</a></li>
 					</ul>
                 </p>
                 
@@ -163,7 +163,7 @@
                 
                 <p>
                 	<a name="20"></a>
-                	<h4>Do you think that we’ll be able to customize the look of our page more in the future? It could use some tweaking.</h4>
+                	<h4>Do you think that we'll be able to customize the look of our page more in the future? It could use some tweaking.</h4>
                 	We are working on adding more themes in the future. However, if you require a customized deployment now, note that the Ushahidi application is available for <a href="http://download.ushahidi.com/">free download</a>. It allows for more customization as you can run it on your server and change it as you see fit.
                 </p>
             

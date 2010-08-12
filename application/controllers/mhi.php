@@ -541,7 +541,7 @@ class MHI_Controller extends Template_Controller {
 				'signup_last_name' => $sln,
 				'signup_email' => $sem,
 				'signup_password' => $spw,
-				'signup_subdomain' => $_POST['signup_subdomain'],
+				'signup_subdomain' => strtolower($_POST['signup_subdomain']),
 				'signup_instance_name' => $_POST['signup_instance_name'],
 				'signup_instance_tagline' => $_POST['signup_instance_tagline']
 			);
@@ -741,6 +741,7 @@ class MHI_Controller extends Template_Controller {
 				Mhi_Log_Model::log($user_id,3,'Deployment Created: '.strtolower($post->signup_subdomain));
 
 			}else{
+				Mhi_Log_Model::log($mhi_user_id,8,'Variables: '.print_r($_POST,true));
 				throw new Kohana_User_Exception('Validation Error', "Form not validating. Dev TODO: Come back later and clean up validation!");
 			}
 
