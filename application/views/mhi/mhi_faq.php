@@ -42,6 +42,8 @@
 						<li><a href="#16">Will it be possible for me to export my data?</a></li>
 						<li><a href="#17">Are some subdomains blocked or reserved?</a></li>
 						<li><a href="#18">What happens during a crisis and there are multiple crowdmap deployments?</a></li>
+						<li><a href="#19">Can Crowdmap update automatically from designated Twitter feeds, or just through #hashtags?</a></li>
+						<li><a href="#20">Do you think that we’ll be able to customize the look of our page more in the future? It could use some tweaking.</a></li>
 					</ul>
                 </p>
                 
@@ -151,6 +153,18 @@
                 	<a name="18"></a>
                 	<h4>What happens during a crisis and there are multiple crowdmap deployments?</h4>
                 	We have created a document with guidelines and best practices for this situation. <a href="https://docs.google.com/View?docID=0Ae319lx23K5bZGQ2dGs1MnZfMTM4OWt6bWhnd213&revision=_latest">Read the document</a>.
+                </p>
+                
+                <p>
+                	<a name="19"></a>
+                	<h4>Can Crowdmap update automatically from designated Twitter feeds, or just through #hashtags?</h4>
+                	Messages sent to the @username designated in settings and/or to the hashtags you designate in the admin setting of your deployment get pulled into your site.
+                </p>
+                
+                <p>
+                	<a name="20"></a>
+                	<h4>Do you think that we’ll be able to customize the look of our page more in the future? It could use some tweaking.</h4>
+                	We are working on adding more themes in the future. However, if you require a customized deployment now, note that the Ushahidi application is available for <a href="http://download.ushahidi.com/">free download</a>. It allows for more customization as you can run it on your server and change it as you see fit.
                 </p>
             
             </div></div>
