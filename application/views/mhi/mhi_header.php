@@ -17,6 +17,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="description" content="Crowdmap is a tool that allows you to crowdsource information and visualize it on a map and timeline" />
 <title>Crowdmap</title>
 <?php
 	echo html::stylesheet('media/css/mhi/reset','',true);
@@ -28,11 +29,13 @@
 	echo html::link('http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz','stylesheet','text/css', false);
 	
 	echo html::stylesheet('media/css/mhi/base','',true);
+	echo html::stylesheet('media/css/mhi/colorbox','',true);
 	
 	echo html::script(array(
 		    'http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
 		    'http://ajax.microsoft.com/ajax/jquery.validate/1.6/jquery.validate.min.js',
 		    'media/js/mhi/jquery.cycle.min.js',
+		    'media/js/mhi/jquery.colorbox.min.js',
 		    'media/js/mhi/initialize.js'
 			), true);
 ?>
@@ -65,6 +68,7 @@ $(function(){
             	<li><a href="<?php echo url::site() ?>mhi/"<?php if($this_body == 'crowdmap-home') { ?> class="active" <?php } ?>>Home</a></li>
             	<li><a href="<?php echo url::site() ?>mhi/features"<?php if($this_body == 'crowdmap-features') { ?> class="active" <?php } ?>>Features</a></li>
                 <li><a href="<?php echo url::site() ?>mhi/about"<?php if($this_body == 'crowdmap-about') { ?> class="active" <?php } ?>>About</a></li>
+                <li><a href="<?php echo url::site() ?>mhi/about/faq"<?php if($this_body == 'crowdmap-faq') { ?> class="active" <?php } ?>>FAQ</a></li>
                 <li><a href="<?php echo url::site() ?>mhi/contact"<?php if($this_body == 'crowdmap-contact') { ?> class="active" <?php } ?>>Contact Us</a></li>
             </ul>
             <?php if( ! is_int($mhi_user_id)) { ?>

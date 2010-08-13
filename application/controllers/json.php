@@ -97,7 +97,7 @@ class Json_Controller extends Template_Controller
 			// Retrieve children categories and category color
 			$category = ORM::factory('category', $category_id);
             $color = $category->category_color;
-			$icon = $category->category_image;
+			$icon = Kohana::config('upload.relative_directory').'/'.$category->category_image;
 			
 			$where_child = "";
 			$children = ORM::factory('category')
@@ -244,7 +244,7 @@ class Json_Controller extends Template_Controller
 			foreach ($query_cat as $cat)
 			{
 				$color = $cat->category_color;
-				$icon = $cat->category_image;
+				$icon = Kohana::config('upload.relative_directory').'/'.$cat->category_image;
 			}
 		}
 

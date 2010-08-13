@@ -46,10 +46,10 @@ class MHI_Controller extends Template_Controller {
 		$this->template->footer->google_analytics = $this->_google_analytics($google_analytics);
 
 		// If we aren't at the top level MHI site or MHI isn't enabled, don't allow access to any of this jazz
-
+		/*
 		if (Kohana::config('config.enable_mhi') == FALSE OR Kohana::config('settings.subdomain') != '')
 			throw new Kohana_User_Exception('MHI Access Error', "MHI disabled for this site.");
-
+		*/
 		// Login Form variables
 
 		$this->template->header->errors = '';
@@ -261,11 +261,12 @@ class MHI_Controller extends Template_Controller {
 
 	public function about($page='about')
 	{
-		$this->template->header->this_body = 'crowdmap-about';
 		if ($page == 'faq')
 		{
+			$this->template->header->this_body = 'crowdmap-faq';
 			$this->template->content = new View('mhi/mhi_faq');
 		}else{
+			$this->template->header->this_body = 'crowdmap-about';
 			$this->template->content = new View('mhi/mhi_about');
 		}
 	}
@@ -540,7 +541,7 @@ class MHI_Controller extends Template_Controller {
 				'signup_last_name' => $sln,
 				'signup_email' => $sem,
 				'signup_password' => $spw,
-				'signup_subdomain' => $_POST['signup_subdomain'],
+				'signup_subdomain' => strtolower($_POST['signup_subdomain']),
 				'signup_instance_name' => $_POST['signup_instance_name'],
 				'signup_instance_tagline' => $_POST['signup_instance_tagline']
 			);
@@ -586,7 +587,7 @@ class MHI_Controller extends Template_Controller {
 
 				$base_db = $db_genesis->current_db();
 
-				$new_db_name = $base_db.'_'.$post->signup_subdomain;
+				$new_db_name = $base_db.'_'.strtolower($post->signup_subdomain);
 
 				// Do some graceful validation
 
@@ -632,7 +633,7 @@ class MHI_Controller extends Template_Controller {
 					);
 				}
 
-				if(in_array($post->signup_subdomain,$blocked_subdomains))
+				if(in_array(strtolower($post->signup_subdomain),$blocked_subdomains))
 				{
 					// ERROR: Blocked Subdomain
 
@@ -699,7 +700,7 @@ class MHI_Controller extends Template_Controller {
 
 				$site_id = $mhi_site->save_site(array(
 					'user_id'=>$user_id,
-					'site_domain'=>$post->signup_subdomain,
+					'site_domain'=>strtolower($post->signup_subdomain),
 					'site_privacy'=>1,	// TODO: 1 is the hardcoded default for now. Needs to be changed?
 					'site_active'=>1	// TODO: 1 is the default. This needs to be a config item since this essentially "auto-approves" sites
 				));
@@ -717,12 +718,12 @@ class MHI_Controller extends Template_Controller {
 					array(
 						'site_name'=>$post->signup_instance_name,
 						'site_tagline'=>$post->signup_instance_tagline,
-						'site_domain'=>$post->signup_subdomain));
+						'site_domain'=>strtolower($post->signup_subdomain)));
 
 				// Congrats, everything has been set up. Send an email confirmation.
 
 				$settings = kohana::config('settings');
-				$new_site_url = 'http://'.$post->signup_subdomain.'.'.$_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
+				$new_site_url = 'http://'.strtolower($post->signup_subdomain).'.'.$_SERVER['HTTP_HOST'].Kohana::config('config.site_domain');
 
 				if ($settings['site_email'] != NULL)
 				{
@@ -737,9 +738,10 @@ class MHI_Controller extends Template_Controller {
 					email::send($to,$from,$subject,$message,FALSE);
 				}
 
-				Mhi_Log_Model::log($user_id,3,'Deployment Created: '.$post->signup_subdomain);
+				Mhi_Log_Model::log($user_id,3,'Deployment Created: '.strtolower($post->signup_subdomain));
 
 			}else{
+				Mhi_Log_Model::log($mhi_user_id,8,'Variables: '.print_r($_POST,true));
 				throw new Kohana_User_Exception('Validation Error', "Form not validating. Dev TODO: Come back later and clean up validation!");
 			}
 
