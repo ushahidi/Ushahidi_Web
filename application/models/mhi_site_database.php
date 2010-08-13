@@ -107,13 +107,15 @@ class mhi_site_database_Model extends ORM
 				'CREATE TABLE IF NOT EXISTS `',
 				'INSERT INTO `',
 				'ALTER TABLE `',
-				'UPDATE `'
+				'UPDATE `',
+				'DROP TABLE `',
 				);
 			$replace = array(
 				'CREATE TABLE IF NOT EXISTS `'.$table_prefix.'_',
 				'INSERT INTO `'.$table_prefix.'_',
 				'ALTER TABLE `'.$table_prefix.'_',
-				'UPDATE `'.$table_prefix.'_'
+				'UPDATE `'.$table_prefix.'_',
+				'DROP TABLE `'.$table_prefix.'_',
 				);
 			$upgrade_schema = str_replace($find, $replace, $upgrade_schema);
 		}

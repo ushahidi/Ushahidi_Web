@@ -60,7 +60,7 @@ class mhi_log_Model extends ORM
 				{
 					$array[$res->id]['email'] = 'unknown';
 				}else{
-					$array[$res->id]['email'] = 'deleted id '.$res->id;
+					$array[$res->id]['email'] = 'deleted id '.$res->user_id;
 				}
 			}
 			$array[$res->id]['action'] = $actions[$res->action_id];

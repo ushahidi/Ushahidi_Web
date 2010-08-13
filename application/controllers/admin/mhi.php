@@ -151,6 +151,7 @@ class Mhi_Controller extends Admin_Controller
 		if (isset($_POST['mhiupdatedb'])) Mhi_Site_Database_Model::update_db($_POST['db']);
 
 		$this->template->content->db_versions = Mhi_Site_Model::get_db_versions();
+		asort($this->template->content->db_versions);
 		$this->template->content->current_version = $settings['db_version'];
 	}
 
