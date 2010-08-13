@@ -557,36 +557,207 @@ class Json_Controller extends Template_Controller
 
 	/**
 	 * Read in new layer JSON from shared connection
-	 * @param int $share_id - ID of the new Share Layer
+	 * @param int $sharing_id - ID of the new Share Layer
 	 */
-	public function share( $share_id = false)
-	{
-		$this->template = "";
-		$this->auto_render = FALSE;
-		
+	public function share( $sharing_id = false )
+	{	
+		$json = "";
+        $json_item = "";
+        $json_array = array();
 		$sharing_data = "";
-		if ($share_id)
+		$clustering = Kohana::config('settings.allow_clustering');
+		
+		if ($sharing_id)
 		{
-			$cache = Cache::instance();
+			// Get This Sharing ID Color
+			$sharing = ORM::factory('sharing')
+				->find($sharing_id);
 			
-			$share = ORM::factory('sharing', $share_id)
-				->find();
-			if ($share->loaded)
+			if( ! $sharing->loaded )
+				return;
+			
+			$sharing_url = $sharing->sharing_url;
+			$sharing_color = $sharing->sharing_color;
+			
+			if ($clustering)
 			{
-				$sharing_key = $share->sharing_key;
-				$sharing_color = $share->sharing_color;
-				$sharing_cache = $share->id."_".$sharing_key;
+				// Database
+				$db = new Database();
 				
-				$sharing_data = utf8_decode($cache->get($sharing_cache));
+				// Start Date
+				$start_date = (isset($_GET['s']) && !empty($_GET['s'])) ?
+					$_GET['s'] : "0";
+
+				// End Date
+				$end_date = (isset($_GET['e']) && !empty($_GET['e'])) ?
+					$_GET['e'] : "0";
+
+				// SouthWest Bound
+				$southwest = (isset($_GET['sw']) && !empty($_GET['sw'])) ?
+					$_GET['sw'] : "0";
+
+				$northeast = (isset($_GET['ne']) && !empty($_GET['ne'])) ?
+					$_GET['ne'] : "0";
 				
-				// Perform color replacement
-				$sharing_data = str_replace("%%%COLOR%%%", $sharing_color, $sharing_data);
+				// Get Zoom Level
+				$zoomLevel = (isset($_GET['z']) && !empty($_GET['z'])) ?
+					$_GET['z'] : 8;
+
+				//$distance = 60;
+				$distance = (10000000 >> $zoomLevel) / 100000;
+				
+				$filter = "";
+				$filter .= ($start_date) ? 
+					" AND incident_date >= '" . date("Y-m-d H:i:s", $start_date) . "'" : "";
+				$filter .= ($end_date) ? 
+					" AND incident_date <= '" . date("Y-m-d H:i:s", $end_date) . "'" : "";
+
+				if ($southwest && $northeast)
+				{
+					list($latitude_min, $longitude_min) = explode(',', $southwest);
+					list($latitude_max, $longitude_max) = explode(',', $northeast);
+
+					$filter .= " AND latitude >=".$latitude_min.
+						" AND latitude <=".$latitude_max;
+					$filter .= " AND longitude >=".$longitude_min.
+						" AND longitude <=".$longitude_max;
+				}
+				
+				$query = $db->query("SELECT * FROM `".$this->table_prefix."sharing_incident` WHERE 1=1 $filter ORDER BY incident_id ASC ");	
+
+				$markers = $query->result_array(FALSE);
+
+				$clusters = array();	// Clustered
+				$singles = array();		// Non Clustered
+
+				// Loop until all markers have been compared
+				while (count($markers))
+				{
+					$marker  = array_pop($markers);
+					$cluster = array();
+
+					// Compare marker against all remaining markers.
+					foreach ($markers as $key => $target)
+					{
+						// This function returns the distance between two markers, at a defined zoom level.
+						// $pixels = $this->_pixelDistance($marker['latitude'], $marker['longitude'], 
+						// $target['latitude'], $target['longitude'], $zoomLevel);
+
+						$pixels = abs($marker['longitude']-$target['longitude']) + 
+							abs($marker['latitude']-$target['latitude']);
+						// echo $pixels."<BR>";
+						// If two markers are closer than defined distance, remove compareMarker from array and add to cluster.
+						if ($pixels < $distance)
+						{
+							unset($markers[$key]);
+							$target['distance'] = $pixels;
+							$cluster[] = $target;
+						}
+					}
+
+					// If a marker was added to cluster, also add the marker we were comparing to.
+					if (count($cluster) > 0)
+					{
+						$cluster[] = $marker;
+						$clusters[] = $cluster;
+					}
+					else
+					{
+						$singles[] = $marker;
+					}
+				}
+
+				// Create Json
+				foreach ($clusters as $cluster)
+				{
+					// Calculate cluster center
+					$bounds = $this->_calculateCenter($cluster);
+					$cluster_center = $bounds['center'];
+					$southwest = $bounds['sw'];
+					$northeast = $bounds['ne'];
+
+					// Number of Items in Cluster
+					$cluster_count = count($cluster);
+
+					$json_item = "{";
+				    $json_item .= "\"type\":\"Feature\",";
+				    $json_item .= "\"properties\": {";
+					$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/index/?c=0&sw=".$southwest."&ne=".$northeast."'>" . $cluster_count . " Reports</a>")) . "\",";			
+				    $json_item .= "\"category\":[0], ";
+					$json_item .= "\"icon\": \"\", ";
+					$json_item .= "\"color\": \"".$sharing_color."\", ";
+				    $json_item .= "\"timestamp\": \"0\", ";
+					$json_item .= "\"count\": \"" . $cluster_count . "\"";
+				    $json_item .= "},";
+				    $json_item .= "\"geometry\": {";
+				    $json_item .= "\"type\":\"Point\", ";
+				    $json_item .= "\"coordinates\":[" . $cluster_center . "]";
+				    $json_item .= "}";
+				    $json_item .= "}";
+
+				    array_push($json_array, $json_item);
+				}
+
+				foreach ($singles as $single)
+				{
+					$json_item = "{";
+				    $json_item .= "\"type\":\"Feature\",";
+				    $json_item .= "\"properties\": {";
+					$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/view/" . $single['id'] . "'>".$single['incident_title']."</a>")) . "\",";	
+				    $json_item .= "\"category\":[0], ";
+					$json_item .= "\"icon\": \"\", ";
+					$json_item .= "\"color\": \"".$sharing_color."\", ";
+				    $json_item .= "\"timestamp\": \"0\", ";
+					$json_item .= "\"count\": \"" . 1 . "\"";
+				    $json_item .= "},";
+				    $json_item .= "\"geometry\": {";
+				    $json_item .= "\"type\":\"Point\", ";
+				    $json_item .= "\"coordinates\":[" . $single['longitude'] . ", " . $single['latitude'] . "]";
+				    $json_item .= "}";
+				    $json_item .= "}";
+
+				    array_push($json_array, $json_item);
+				}
+
+				$json = implode(",", $json_array);
+				
+			}
+			else
+			{
+				// Retrieve all markers
+				$markers = ORM::factory('sharing_incident')
+					->where('sharing_id', $sharing_id)
+					->find_all();
+
+				foreach ($markers as $marker)
+		        {	
+		            $json_item = "{";
+		            $json_item .= "\"type\":\"Feature\",";
+		            $json_item .= "\"properties\": {";
+					$json_item .= "\"id\": \"".$marker->incident_id."\", \n";
+		            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/view/" . $marker->incident_id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
+
+					$json_item .= "\"icon\": \"\", ";
+					$json_item .= "\"color\": \"".$sharing_color ."\", \n";
+		            $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
+		            $json_item .= "},";
+		            $json_item .= "\"geometry\": {";
+		            $json_item .= "\"type\":\"Point\", ";
+		            $json_item .= "\"coordinates\":[" . $marker->longitude . ", " . $marker->latitude . "]";
+		            $json_item .= "}";
+		            $json_item .= "}";
+
+					array_push($json_array, $json_item);
+		        }
+
+		        $json = implode(",", $json_array);
 			}
 		}
 		
 		header('Content-type: application/json');
-		echo $sharing_data;
+        $this->template->json = $json;
 	}
+	
 	
 	/**
 	 * Convert Longitude to Cartesian (Pixels) value

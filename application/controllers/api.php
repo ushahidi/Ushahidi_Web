@@ -276,9 +276,14 @@ class Api_Controller extends Controller {
 				} else {
 					$by = $request['by'];
 				}
-				/*IF we have an order by, 0=default=desc 1=desc */
+				/*IF we have an order by, 0=asc 1=default=desc */
 				if($this->_verifyArrayIndex($request, 'sort')){
-					if ( $request['sort'] == '1' ){
+					if ( $request['sort'] == '0' )
+					{
+						$sort = 'ASC';
+					}
+					elseif ( $request['sort'] == '1' )
+					{
 						$sort = 'DESC';
 					}
 				}
@@ -299,18 +304,18 @@ class Api_Controller extends Controller {
 				/* Order field  */
 				if($this->_verifyArrayIndex($request, 'orderfield')){
 					switch ( $request['orderfield'] ){
-						case 'id':
-							$orderfield = 'id';
+						case 'incidentid':
+							$orderfield = 'i.id';
 							break;
-						case 'locid':
-							$orderfield = 'location_id';
+						case 'locationid':
+							$orderfield = 'l.location_id';
 							break;
-						case 'date':
-							$orderfield = 'incident_date';
+						case 'incidentdate':
+							$orderfield = 'i.incident_date';
 							break;
 						default:
 							/* Again... it's set but let's cast it in concrete */
-							$orderfield = 'id';
+							$orderfield = 'i.id';
 					}
 
 				}
@@ -1511,7 +1516,7 @@ class Api_Controller extends Controller {
 	function _incidentsByAll($orderfield,$sort,$limit) {
 		
 		$where = "\nWHERE i.incident_active = 1 ";
-		$sortby = "\nORDER BY $orderfield $sort";
+		$sortby = "\nGROUP BY i.id ORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $limit";
 		
 		/* Not elegant but works */
@@ -1544,7 +1549,7 @@ class Api_Controller extends Controller {
  	*/
 	function _incidentsByLocationId($locid,$orderfield,$sort){
 		$where = "\nWHERE i.location_id = $locid AND i.incident_active = 1 ";
-		$sortby = "\nORDER BY $orderfield $sort";
+		$sortby = "\nGROUP BY i.id ORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
 	}
@@ -1555,7 +1560,7 @@ class Api_Controller extends Controller {
 	function _incidentsByLocationName($locname,$orderfield,$sort){
 		$where = "\nWHERE l.location_name = '$locname' AND
 				i.incident_active = 1 ";
-		$sortby = "\nORDER BY $orderfield $sort";
+		$sortby = "\nGROUP BY i.id ORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
 	}
@@ -1596,7 +1601,7 @@ class Api_Controller extends Controller {
 		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id = ic.category_id";
 		$where = $join."\nWHERE i.id > $since_id AND
 				i.incident_active = 1";
-		$sortby = "\nORDER BY $orderfield $sort";
+		$sortby = "\nGROUP BY i.id ORDER BY $orderfield $sort";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_getIncidents($where.$sortby, $limit);
 

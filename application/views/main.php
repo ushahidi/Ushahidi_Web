@@ -23,10 +23,10 @@
 					
 							<!-- category filters -->
 							<div class="cat-filters clearingfix">
-								<strong><?php echo Kohana::lang('ui_main.category_filter');?></strong>
+								<strong><?php echo Kohana::lang('ui_main.category_filter');?> <span>[<a href="javascript:toggleLayer('category_switch_link', 'category_switch')" id="category_switch_link"><?php echo Kohana::lang('ui_main.hide'); ?></a>]</span></strong>
 							</div>
 						
-							<ul class="category-filters">
+							<ul id="category_switch" class="category-filters">
 								<li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></div></a></li>
 								<?php
 									foreach ($categories as $category => $category_info)
@@ -72,9 +72,9 @@
 								?>
 								<!-- Layers (KML/KMZ) -->
 								<div class="cat-filters clearingfix" style="margin-top:20px;">
-									<strong><?php echo Kohana::lang('ui_main.layers_filter');?></strong>
+									<strong><?php echo Kohana::lang('ui_main.layers_filter');?> <span>[<a href="javascript:toggleLayer('kml_switch_link', 'kml_switch')" id="kml_switch_link"><?php echo Kohana::lang('ui_main.hide'); ?></a>]</span></strong>
 								</div>
-								<ul class="category-filters">
+								<ul id="kml_switch" class="category-filters">
 									<?php
 									foreach ($layers as $layer => $layer_info)
 									{
@@ -88,6 +88,31 @@
 										echo '<li><a href="#" id="layer_'. $layer .'"
 										onclick="switchLayer(\''.$layer.'\',\''.$layer_link.'\',\''.$layer_color.'\'); return false;"><div class="swatch" style="background-color:#'.$layer_color.'"></div>
 										<div>'.$layer_name.'</div></a></li>';
+									}
+									?>
+								</ul>
+								<!-- /Layers -->
+								<?php
+							}
+							?>
+							
+							
+							<?php
+							if ($shares)
+							{
+								?>
+								<!-- Layers (Other Ushahidi Layers) -->
+								<div class="cat-filters clearingfix" style="margin-top:20px;">
+									<strong><?php echo Kohana::lang('ui_main.other_ushahidi_instances');?> <span>[<a href="javascript:toggleLayer('sharing_switch_link', 'sharing_switch')" id="sharing_switch_link"><?php echo Kohana::lang('ui_main.hide'); ?></a>]</span></strong>
+								</div>
+								<ul id="sharing_switch" class="category-filters">
+									<?php
+									foreach ($shares as $share => $share_info)
+									{
+										$sharing_name = $share_info[0];
+										$sharing_color = $share_info[1];
+										echo '<li><a href="#" id="share_'. $share .'"><div class="swatch" style="background-color:#'.$sharing_color.'"></div>
+										<div>'.$sharing_name.'</div></a></li>';
 									}
 									?>
 								</ul>

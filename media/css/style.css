@@ -506,6 +506,17 @@ div.cat-filters strong{
     padding: 0 0 0 10px;
 }
 
+div.cat-filters span{
+	font-weight:normal;
+	font-size:90%;
+	margin-left:5px;
+	color:#666;
+	letter-spacing:2px;
+}
+div.cat-filters span a{
+	color:#666;
+}
+
 ul.category-filters{
     background: #E7E3DA;
     border-top: #C7C2BC 7px solid;
