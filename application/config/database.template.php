@@ -48,7 +48,7 @@ if(substr_count($_SERVER["HTTP_HOST"],'.') > 1) $subdomain = substr($_SERVER["HT
 * If MHI is enabled, determine the appropriate database settings
 */
 
-if($subdomain != '')
+if($subdomain != '' && Kohana::config('config.enable_mhi') == TRUE)
 {
 	$mhi_db = $config['default'];
 	$new_connection_config = $mhi_db;
