@@ -2,6 +2,7 @@
 * Table structure for table `sharing`
 * 
 */
+DROP TABLE IF EXISTS `sharing`;
 
 CREATE TABLE IF NOT EXISTS `sharing` (                                              -- table description
 	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -17,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `sharing` (                                          
 * Table structure for table `sharing_log`
 * 
 */
+DROP TABLE IF EXISTS `sharing_incident`;
 
 CREATE TABLE IF NOT EXISTS `sharing_incident` (                                          -- table description
 	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
