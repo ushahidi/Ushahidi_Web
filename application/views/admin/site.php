@@ -81,10 +81,12 @@
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_display_contact"); ?>"><?php echo Kohana::lang('settings.site.display_contact_page');?></a></h4>
 							<?php print form::dropdown('site_contact_page', $yesno_array, $form['site_contact_page']); ?>
 						</div>
+						<!--
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_display_howtohelp"); ?>"><?php echo Kohana::lang('settings.site.display_howtohelp_page');?></a></h4>
-							<?php print form::dropdown('site_help_page', $yesno_array, $form['site_help_page']); ?>
+							<?php /* print form::dropdown('site_help_page', $yesno_array, $form['site_help_page']); */ ?>
 						</div>
+						-->
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_display_items_per_page"); ?>"><?php echo Kohana::lang('settings.site.items_per_page');?></a></h4>
 							<span class="sel-holder">

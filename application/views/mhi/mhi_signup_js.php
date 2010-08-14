@@ -58,6 +58,10 @@ $(function(){
 			},
 			signup_tos: {
 				required: true
+			},
+			verify_password: {
+				required: true,
+				rangelength: [4, 32]
 			}
 		},
 		messages: {
@@ -76,22 +80,26 @@ $(function(){
 				equalTo: "Passwords do not match."
 			},
 			signup_subdomain: {
-				required: "Please enter your instance address.",
-				rangelength: "The name you use for your instance address must be between 4 and 32 characters."
+				required: "Please enter your deployment address.",
+				rangelength: "The name you use for your deployment address must be between 4 and 32 characters."
 			},
 			signup_instance_name: {
-				required: "Please enter a name for your instance.",
+				required: "Please enter a name for your deployment.",
 				rangelength: "Name must be between 4 and 100 characters."
 			},
 			signup_instance_tagline: {
-				required: "Please enter a tagline for your instance.",
+				required: "Please enter a tagline for your deployment.",
 				rangelength: "Tagline must be between 4 and 100 characters."
 			},
 			signup_report_categories: {
-				required: "Please enter at least one category for your instance."
+				required: "Please enter at least one category for your deployment."
 			},
 			signup_tos: {
 				required: "You must accept the Website Terms of Use."
+			},
+			signup_password: {
+				required: "Please enter your password.",
+				rangelength: "Your password is between 4 and 32 characters."
 			}
 
 		},
