@@ -403,7 +403,14 @@ ul.nav-list li a.categories { background:url(../../img/admin/category-icon.gif) 
 ul.nav-list li a.locations { background:url(../../img/admin/locations-icon.gif) no-repeat 0 2px;}
 ul.nav-list li a.media { background:url(../../img/admin/media-icon.gif) no-repeat 0 2px;}
 ul.nav-list li a.messages { background:url(../../img/admin/messages-icon.gif) no-repeat 0 2px;}
-
+ul.nav-list li span.locations {
+	background:url(../../img/admin/locations-icon.gif) no-repeat 0 2px;
+	padding:0 0 5px 40px;
+	float:left;
+	font-size:18px;
+	line-height:20px;
+	color:#9b0000;
+}
 ul.nav-list li strong{
 	float:right;
 	font-weight:normal;

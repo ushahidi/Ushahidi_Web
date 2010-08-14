@@ -135,7 +135,7 @@
 								<strong><?php echo $categories; ?></strong>
 							</li>
 							<li>
-								<a href="#" class="locations"><?php echo Kohana::lang('ui_main.locations');?></a>
+								<span class="locations"><?php echo Kohana::lang('ui_main.locations');?></span>
 								<strong><?php echo $locations; ?></strong>
 							</li>
 							<li>
