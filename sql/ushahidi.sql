@@ -863,8 +863,6 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `clickatell_password` varchar(100) default NULL,                                -- field description
     `google_analytics` text,                                                        -- field description
     `twitter_hashtags` text default NULL,                                           -- field description
-    `twitter_username` varchar(50) default NULL,                                    -- field description
-    `twitter_password` varchar(50) default NULL,                                    -- field description
     `laconica_username` varchar(50) default NULL,                                   -- field description
     `laconica_password` varchar(50) default NULL,                                   -- field description
     `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',             -- field description

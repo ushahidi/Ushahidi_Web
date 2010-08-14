@@ -445,23 +445,6 @@ class Messages_Controller extends Admin_Controller
 					$page++;
 				}
 			}
-
-			//Perform Direct Reports Search
-			$username = $settings->twitter_username;
-			$password = $settings->twitter_password;
-			if (!empty($username) && !empty($password))
-			{
-				$twitter_url = 'http://twitter.com/statuses/replies.json';
-				$curl_handle = curl_init();
-				curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
-				curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,2);
-				curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-				curl_setopt($curl_handle,CURLOPT_USERPWD,"$username:$password"); //Authenticate!
-				$buffer = curl_exec($curl_handle);
-				curl_close($curl_handle);
-				//$this->add_tweets($buffer,null,$username);
-				$this->add_json_tweets($buffer);
-			}
 		}
 	}
 

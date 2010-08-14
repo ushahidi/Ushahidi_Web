@@ -162,14 +162,6 @@
 								<?php echo Kohana::lang('settings.site.twitter_hashtags');?>
 								<?php print form::input('twitter_hashtags', $form['twitter_hashtags'], ' class="text"'); ?>
 							</div>
-							<div class="row" style="padding-top:5px;">
-								<?php echo Kohana::lang('ui_main.username');?>
-								<?php print form::input('twitter_username', $form['twitter_username'], ' class="text"'); ?>
-							</div>
-							<div class="row" style="padding-top:5px;">
-								<?php echo Kohana::lang('ui_main.password');?>
-								<?php print form::password('twitter_password', $form['twitter_password'], ' class="text"'); ?>
-							</div>
 						</div>
 						<div class="row">
 							<h4><?php echo Kohana::lang('settings.site.laconica_configuration');?></h4>
