@@ -132,10 +132,12 @@ class Mhi_Controller extends Admin_Controller
 	* Lists the activity.
     * @param int $page
     */
-	function activity()
+	function activity($action_id=FALSE)
 	{
 		$this->template->content = new View('admin/mhi_activity');
-		$this->template->content->activity = Mhi_Log_Model::get_actions();
+		$this->template->content->activity = Mhi_Log_Model::get_actions(100,0,$action_id);
+		$this->template->content->log_actions = Mhi_Log_Model::get_log_actions();
+		$this->template->content->current_log_action_id = $action_id;
 	}
 
 	/**

@@ -771,6 +771,9 @@ class MHI_Controller extends Template_Controller {
 				Mhi_Log_Model::log($user_id,3,'Deployment Created: '.strtolower($post->signup_subdomain));
 
 			}else{
+				if (isset($_POST['signup_password'])) unset($_POST['signup_password']);
+				if (isset($_POST['signup_confirm_password'])) unset($_POST['signup_confirm_password']);
+				if (isset($_POST['verify_password'])) unset($_POST['verify_password']);
 				Mhi_Log_Model::log($mhi_user_id,8,'Variables: '.print_r($_POST,true).' * '.print_r($post->errors('form_error_messages'),true));
 				throw new Kohana_User_Exception('Validation Error', "Form not validating. Please go back and try again.");
 			}
