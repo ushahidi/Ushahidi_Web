@@ -150,7 +150,15 @@ class Mhi_Controller extends Admin_Controller
 
 		$settings = kohana::config('settings');
 
-		if (isset($_POST['mhiupdatedb'])) Mhi_Site_Database_Model::update_db($_POST['db']);
+		if (isset($_POST['mhiupdatedb']))
+		{
+			Mhi_Site_Database_Model::update_db($_POST['db']);
+		}
+
+		if (isset($_GET['mhimassupdatedb']) AND isset($_GET['from_version']))
+		{
+			Mhi_Site_Database_Model::mass_update_db($_GET['mhimassupdatedb'],$_GET['from_version']);
+		}
 
 		$this->template->content->db_versions = Mhi_Site_Model::get_db_versions();
 		asort($this->template->content->db_versions);
