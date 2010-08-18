@@ -581,6 +581,20 @@
 			}
 		}
 		
+		/*
+		Toggle Layer Switchers
+		*/
+		function toggleLayer(link, layer){
+			if ($("#"+link).text() == "<?php echo Kohana::lang('ui_main.show'); ?>")
+			{
+				$("#"+link).text("<?php echo Kohana::lang('ui_main.hide'); ?>");
+			}
+			else
+			{
+				$("#"+link).text("<?php echo Kohana::lang('ui_main.show'); ?>");
+			}
+			$('#'+layer).toggle(500);
+		}
 		
 		/*		
 		d = $('#startDate > optgroup > option').map(function()

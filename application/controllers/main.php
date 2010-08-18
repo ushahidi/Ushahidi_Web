@@ -190,10 +190,9 @@ class Main_Controller extends Template_Controller {
 		$shares = array();
 		foreach (ORM::factory('sharing')
 				  ->where('sharing_active', 1)
-				  ->where('sharing_type', 1)
 				  ->find_all() as $share)
 		{
-			$shares[$share->id] = array($share->sharing_site_name, $share->sharing_color);
+			$shares[$share->id] = array($share->sharing_name, $share->sharing_color);
 		}
 		$this->template->content->shares = $shares;
 

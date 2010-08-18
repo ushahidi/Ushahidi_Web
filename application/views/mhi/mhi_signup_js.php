@@ -1,8 +1,6 @@
 <?php
 /**
  * MHI Signup JS file
- * 
- * Non-clustered map rendering (Please refer to main_cluster_js for Server Side Clusters)
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -25,11 +23,21 @@ $(function(){
 	/*Validate the Form*/
 	$("#frm-MHI-Signup").validate({
 		rules: {
-			signup_first_name: "required",
-			signup_last_name: "required",
+			signup_first_name: {
+				required: true,
+				rangelength: [1, 30]
+			},
+			signup_last_name: {
+				required: true,
+				rangelength: [1, 30]
+			},
 			signup_email: {
 				required: true,
-				email: true
+				email: true,
+				remote: {
+			        url: "<?php echo url::base(); ?>mhi/checkemail/",
+			        type: "post"
+				}
 			},
 			signup_password: {
 				required: true,
@@ -42,7 +50,11 @@ $(function(){
 			signup_subdomain: {
 				required: true,
 				alphanumeric: true,
-				rangelength: [4, 32]
+				rangelength: [4, 32],
+				remote: {
+			        url: "<?php echo url::base(); ?>mhi/checksubdomain/",
+			        type: "post"
+				}
 			},
 			signup_instance_name: {
 				required: true,
@@ -52,20 +64,27 @@ $(function(){
 				required: true,
 				rangelength: [4, 100]
 			},
-			signup_report_categories: {
-				required: true,
-				//csv: true
-			},
 			signup_tos: {
 				required: true
+			},
+			verify_password: {
+				required: true,
+				rangelength: [4, 32]
 			}
 		},
 		messages: {
-			signup_first_name: "Please enter your first name.",
-			signup_last_name: "Please enter your first name.",
+			signup_first_name: {
+				required: "Please enter your first name.",
+				rangelength: "Your first name must be between 1 and 30 characters."
+			},
+			signup_last_name: {
+				required: "Please enter your last name.",
+				rangelength: "Your first last must be between 1 and 30 characters"
+			},
 			signup_email: {
 				required: "Please enter your email address.",
-				email: "Please enter a valid email address."
+				email: "Please enter a valid email address.",
+				remote: "This email address has already been taken."
 			},
 			signup_password: {
 				required: "Please enter a password.",
@@ -76,22 +95,24 @@ $(function(){
 				equalTo: "Passwords do not match."
 			},
 			signup_subdomain: {
-				required: "Please enter your instance address.",
-				rangelength: "The name you use for your instance address must be between 4 and 32 characters."
+				required: "Please enter your deployment address.",
+				rangelength: "The name you use for your deployment address must be between 4 and 32 characters.",
+				remote: "This subdomain has already been taken."
 			},
 			signup_instance_name: {
-				required: "Please enter a name for your instance.",
+				required: "Please enter a name for your deployment.",
 				rangelength: "Name must be between 4 and 100 characters."
 			},
 			signup_instance_tagline: {
-				required: "Please enter a tagline for your instance.",
+				required: "Please enter a tagline for your deployment.",
 				rangelength: "Tagline must be between 4 and 100 characters."
-			},
-			signup_report_categories: {
-				required: "Please enter at least one category for your instance."
 			},
 			signup_tos: {
 				required: "You must accept the Website Terms of Use."
+			},
+			signup_password: {
+				required: "Please enter your password.",
+				rangelength: "Your password is between 4 and 32 characters."
 			}
 
 		},

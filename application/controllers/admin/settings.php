@@ -47,7 +47,7 @@ class Settings_Controller extends Admin_Controller
 			'site_email' => '',
 			'alerts_email' =>  '',
 			'site_language' => '',
-			'site_help_page' => '',
+			//'site_help_page' => '',
 			'site_contact_page' => '',
 			'items_per_page' => '',
 			'items_per_page_admin' => '',
@@ -59,8 +59,6 @@ class Settings_Controller extends Admin_Controller
 			'default_map_all' => '',
 			'google_analytics' => '',
 			'twitter_hashtags' => '',
-			'twitter_username' => '',
-			'twitter_password' => '',
 			'laconica_username' => '',
 			'laconica_password' => '',
 			'laconica_site' => '',
@@ -89,7 +87,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_email', 'email', 'length[4,100]');
 			$post->add_rules('alerts_email', 'email', 'length[4,100]');
 			$post->add_rules('site_language','required', 'length[5, 5]');
-			$post->add_rules('site_help_page','required','between[0,1]');
+			//$post->add_rules('site_help_page','required','between[0,1]');
 			$post->add_rules('site_contact_page','required','between[0,1]');
 			$post->add_rules('items_per_page','required','between[10,50]');
 			$post->add_rules('items_per_page_admin','required','between[10,50]');
@@ -101,8 +99,6 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('twitter_hashtags','length[0,500]');
-			$post->add_rules('twitter_username','length[0,50]');
-			$post->add_rules('twitter_password','length[0,50]');
 			$post->add_rules('laconica_username','length[0,50]');
 			$post->add_rules('laconica_password','length[0,50]');
 			$post->add_rules('laconica_site','length[0,30]');
@@ -118,7 +114,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->site_email = $post->site_email;
 				$settings->alerts_email = $post->alerts_email;
 				$settings->site_language = $post->site_language;
-				$settings->site_help_page = $post->site_help_page;
+				//$settings->site_help_page = $post->site_help_page;
 				$settings->site_contact_page = $post->site_contact_page;
 				$settings->items_per_page = $post->items_per_page;
 				$settings->items_per_page_admin = $post->items_per_page_admin;
@@ -130,8 +126,6 @@ class Settings_Controller extends Admin_Controller
 				$settings->default_map_all = $post->default_map_all;
 				$settings->google_analytics = $post->google_analytics;
 				$settings->twitter_hashtags = $post->twitter_hashtags;
-				$settings->twitter_username = $post->twitter_username;
-				$settings->twitter_password = $post->twitter_password;
 				$settings->laconica_username = $post->laconica_username;
 				$settings->laconica_password = $post->laconica_password;
 				$settings->laconica_site = $post->laconica_site;
@@ -175,7 +169,7 @@ class Settings_Controller extends Admin_Controller
 				'site_email' => $settings->site_email,
 				'alerts_email' => $settings->alerts_email,
 				'site_language' => $settings->site_language,
-				'site_help_page' => $settings->site_help_page,
+				//'site_help_page' => $settings->site_help_page,
 				'site_contact_page' => $settings->site_contact_page,
 				'items_per_page' => $settings->items_per_page,
 				'items_per_page_admin' => $settings->items_per_page_admin,
@@ -187,8 +181,6 @@ class Settings_Controller extends Admin_Controller
 				'default_map_all' => $settings->default_map_all,
 				'google_analytics' => $settings->google_analytics,
 				'twitter_hashtags' => $settings->twitter_hashtags,
-				'twitter_username' => $settings->twitter_username,
-				'twitter_password' => $settings->twitter_password,
 				'laconica_username' => $settings->laconica_username,
 				'laconica_password' => $settings->laconica_password,
 				'laconica_site' => $settings->laconica_site,
