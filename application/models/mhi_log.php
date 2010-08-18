@@ -44,12 +44,19 @@ class mhi_log_Model extends ORM
 		return true;
 	}
 
-	public static function get_actions($limit='100',$offset='0')
+	public static function get_actions($limit='100',$offset='0',$action_id=FALSE)
 	{
 		$actions = Mhi_Log_Model::get_log_actions();
 		$users = Mhi_User_Model::get_all_users();
 
-		$result = ORM::factory('mhi_log')->find_all($limit,$offset);
+		if($action_id != FALSE AND is_numeric($action_id))
+		{
+			$result = ORM::factory('mhi_log')->where('action_id',$action_id)->find_all($limit,$offset);
+		}else{
+			$result = ORM::factory('mhi_log')->find_all($limit,$offset);
+		}
+
+		$array = array();
 		foreach ($result as $res)
 		{
 			if($res->user_id != 0 && isset($users[$res->user_id]))

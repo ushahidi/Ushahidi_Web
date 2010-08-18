@@ -863,8 +863,6 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `clickatell_password` varchar(100) default NULL,                                -- field description
     `google_analytics` text,                                                        -- field description
     `twitter_hashtags` text default NULL,                                           -- field description
-    `twitter_username` varchar(50) default NULL,                                    -- field description
-    `twitter_password` varchar(50) default NULL,                                    -- field description
     `laconica_username` varchar(50) default NULL,                                   -- field description
     `laconica_password` varchar(50) default NULL,                                   -- field description
     `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',             -- field description
@@ -1561,4 +1559,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '1.1.0' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '27' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '28' WHERE `id`=1 LIMIT 1;

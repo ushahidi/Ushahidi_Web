@@ -18,6 +18,11 @@
 					<?php admin::mhi_subtabs("updatelist"); ?>
 				</h2>
 				
+				<div>
+					Use a query like <?php echo url::base(); ?>admin/mhi/updatelist?mhimassupdatedb=100&from_version=27 to do a mass update. mhimassupdatedb is the number to update. from_version are the sites of that version to update.
+				</div>
+				<hr/>
+				
 				<table class="table-graph horizontal-bar">
 				<?php
 				foreach($db_versions as $db => $version) {

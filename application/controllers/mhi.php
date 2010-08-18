@@ -322,6 +322,36 @@ class MHI_Controller extends Template_Controller {
 
 	}
 
+	// Displays true if the email is free to be registered
+	public function checkemail()
+	{
+		$this->template->header = FALSE;
+		$this->template->footer = FALSE;
+		$this->template->content = FALSE;
+		$id = Mhi_User_Model::get_id($_POST['signup_email']);
+		if($id == NULL OR $id == FALSE OR $id == '')
+		{
+			echo 'true';
+		}else{
+			echo 'false';
+		}
+	}
+
+	// Displays true if the email is free to be registered
+	public function checksubdomain()
+	{
+		$this->template->header = FALSE;
+		$this->template->footer = FALSE;
+		$this->template->content = FALSE;
+		$exists = Mhi_Site_Model::domain_exists($_POST['signup_subdomain']);
+		if($exists == FALSE)
+		{
+			echo 'true';
+		}else{
+			echo 'false';
+		}
+	}
+
 	public function features()
 	{
 		$this->template->header->this_body = 'crowdmap-features';
@@ -562,8 +592,8 @@ class MHI_Controller extends Template_Controller {
 
 			if ($mhi_user_id == FALSE)
 			{
-				$post->add_rules('signup_first_name','required','alpha_dash');
-				$post->add_rules('signup_last_name','required','alpha_dash');
+				$post->add_rules('signup_first_name','required');
+				$post->add_rules('signup_last_name','required');
 				$post->add_rules('signup_email', 'required','email');
 				$post->add_rules('signup_password','required');
 			}else{
@@ -741,8 +771,11 @@ class MHI_Controller extends Template_Controller {
 				Mhi_Log_Model::log($user_id,3,'Deployment Created: '.strtolower($post->signup_subdomain));
 
 			}else{
-				Mhi_Log_Model::log($mhi_user_id,8,'Variables: '.print_r($_POST,true));
-				throw new Kohana_User_Exception('Validation Error', "Form not validating. Dev TODO: Come back later and clean up validation!");
+				if (isset($_POST['signup_password'])) unset($_POST['signup_password']);
+				if (isset($_POST['signup_confirm_password'])) unset($_POST['signup_confirm_password']);
+				if (isset($_POST['verify_password'])) unset($_POST['verify_password']);
+				Mhi_Log_Model::log($mhi_user_id,8,'Variables: '.print_r($_POST,true).' * '.print_r($post->errors('form_error_messages'),true));
+				throw new Kohana_User_Exception('Validation Error', "Form not validating. Please go back and try again.");
 			}
 
 		}else{
