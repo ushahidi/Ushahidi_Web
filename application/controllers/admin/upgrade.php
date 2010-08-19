@@ -8,7 +8,7 @@
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
- * @package    Ushahidi - http://source.ushahididev.com
+ * @package    Ushahidi - http://source .ushahididev.com
  * @module     Admin Messages Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
@@ -96,7 +96,8 @@ class Upgrade_Controller extends Admin_Controller
      * Delete the extracted ushahidi file.
      * 
      */
-	private function _do_upgrade() {
+	private function _do_upgrade() 
+	{
     	$upgrade = new Upgrade;
         $url = "http://download.ushahidi.com/ushahidi.zip";
         $working_dir = Kohana::config('upload.relative_directory')."/";
@@ -151,10 +152,181 @@ class Upgrade_Controller extends Admin_Controller
 	}
 	
 	/**
-	 * Upgrade the current database
+	 * Execute SQL statement to upgrade the necessary tables.
+	 * 
+	 * @param string - upgrade_sql - upgrade sql file
 	 */
-	public function _do_db_backup() {
+	private function _do_db_upgrade( $upgrade_sql ) 
+	{
+		
+		$upgrade_schema = @file_get_contents($upgrade_sql);
+
+		// If a table prefix is specified, add it to sql
+		$db_config = Kohana::config('database.default');
+		$table_prefix = $db_config['table_prefix'];
+		
+		if ($table_prefix)
+		{
+			$find = array(
+				'CREATE TABLE IF NOT EXISTS `',
+				'INSERT INTO `',
+				'ALTER TABLE `',
+				'UPDATE `'
+			);
+			
+			$replace = array(
+				'CREATE TABLE IF NOT EXISTS `'.$table_prefix.'_',
+				'INSERT INTO `'.$table_prefix.'_',
+				'ALTER TABLE `'.$table_prefix.'_',
+				'UPDATE `'.$table_prefix.'_'
+			);
+			
+			$upgrade_schema = str_replace($find, $replace, $upgrade_schema);
+		}
+
+		// Split by ; to get the sql statement for creating individual tables.
+		$queries = explode(';',$upgrade_schema);
+		
+		// get the database object.
+		$this->db = new Database();
+		
+		foreach ($queries as $query)
+		{
+			$result = $this->db->query($query);
+		}
+			
+			// Delete cache and reload the page
+			$cache = Cache::instance();
+			$cache->delete(Kohana::config('settings.subdomain').'_settings');
+		}
 		
 	}
 	
+	/**
+	 * Get the available sql update scripts from the 
+	 * sql folder.
+	 */
+	private function _read_upgrade_sql()
+	{
+        $dirPath = 'sql';
+        $upgrade_sql = '';
+
+        if($handle = opendir($dirPath)) {
+            while ( ( $file = readdir($handle) ) !== false ) {
+                $upgrade_sql = $this->_get_db_version();
+                if( $upgrade_sql == $file ) {
+                    $this->_do_db_upgrade($file);
+                }
+            }
+        }
+    }
+    
+    /**
+     * Gets the current db version of the ushahidi deployment.
+     * 
+     * @return the db version.
+     */
+    private function _get_db_version() 
+    {
+
+        $db_version = Kohana::config('settings.db_version');
+        
+        $version_in_db = $row->db_version;
+        
+        // Update DB
+        $db_version = $version_in_db;
+
+        $upgrade_to = $db_version + 1;
+        
+        return 'upgrade'.$db_version.'-'.$upgrade_to.'.sql';
+		
+    }
+    
+    /**
+     * Backup database
+     *
+     * @param boolean - gzip - set to false by default 
+	 * 
+	 * @return void or error message
+     */
+   	private function _do_db_backup( $gzip=FALSE ) 
+   	{
+   		$mysql_path = $this->detect_mysql();
+
+    	$backup = $this->config;
+       	$backup += $mysql_path;
+      	$backup['password'] = Kohana::config('database.default.connection.password');
+       	$backup['date'] = time();
+       	$backup['filepath'] = preg_replace('/\//', '/', Kohana::config('dbmanager.backup_filepath'));
+       	$backup['filename'] = $backup['filepath'].'/'.$backup['date'].'_-_'.$this->config['database'].'.sql';
+
+      	if ( $gzip ) {
+        	$backup['filename'] = $backup['filename'].'.gz';
+        	$query_string = $backup['mysqldump'].' --host="'.$this->config['host'].'" --user="'.$this->config['user'].'" --password="'.$backup['password'].'" --add-drop-table --skip-lock-tables '.$this->config['database'].' | gzip > '.$backup['filename'];
+        } 
+        else
+        {
+        	$backup['filename'] = $backup['filename'];
+        	$query_string = $backup['mysqldump'].' --host="'.$this->config['host'].'" --user="'.$this->config['user'].'" --password="'.$backup['password'].'" --add-drop-table --skip-lock-tables '.$this->config['database'].' > '.$backup['filename'];
+       	}
+       	
+        //Execute mysqldump command
+        if(substr(PHP_OS, 0, 3) == 'WIN') {
+        	
+        	$writable_dir = $backup['filepath'];
+          	$tmpnam = $writable_dir.'/dbmanager_script.bat';
+        	$fp = fopen($tmpnam, 'w');
+           	fwrite($fp, $query_string);
+          	fclose($fp);
+            system($tmpnam.' > NUL', $error);
+            unlink($tmpnam);
+            
+     	} else {
+     		
+        	passthru($command, $error);
+      	}
+                   
+    	return $error;
+    	
+   	}
+
+   	/**
+     * See if mysqldump exist.
+     *
+     * Most of the code here were borrowed from 
+     * @return (array) $paths - include mysql and mysqldump application's path.
+     */
+   	private function _detect_mysql()
+   	{
+   		$db = new Database;
+      	$paths = array('mysql' => '', 'mysqldump' => '');
+      	
+      	//check for platform
+      	if(substr(PHP_OS,0,3) == 'WIN') {
+       		
+      		$mysql_install = $db->query("SHOW VARIABLES LIKE 'basedir'")->as_array();
+
+        	if( is_array($mysql_install) && sizeof($mysql_install)>0 ) {
+            	$install_path = str_replace('\\', '/', $mysql_install[0]->Value);
+            	$paths['mysql'] = $install_path.'bin/mysql.exe';
+            	$paths['mysqldump'] = $install_path.'bin/mysqldump.exe';
+            	
+           	} else {
+             	$paths['mysql'] = 'mysql.exe';
+            	$paths['mysqldump'] = 'mysqldump.exe';
+            }
+        } else {
+        	
+        	if(function_exists('exec')) {
+            	$paths['mysql'] = @exec('which mysql');
+            	$paths['mysqldump'] = @exec('which mysqldump');
+          	} else {
+            	$paths['mysql'] = 'mysql';
+            	$paths['mysqldump'] = 'mysqldump';
+          	}
+                
+        	return $paths;
+    	}
+        
+   	}
 }
