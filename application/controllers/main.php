@@ -123,13 +123,6 @@ class Main_Controller extends Template_Controller {
 		}
 		$this->template->header->l = Kohana::config('locale.language');
 
-		//Set up tracking gif
-		if($_SERVER['SERVER_NAME'] != 'localhost' && $_SERVER['SERVER_NAME'] != '127.0.0.1'){
-			$track_url = $_SERVER['SERVER_NAME'].$_SERVER['PHP_SELF'];
-		}else{
-			$track_url = 'null';
-		}
-		$this->template->footer->tracker_url = 'http://tracker.ushahidi.com/track.php?url='.urlencode($track_url).'&lang='.$this->template->header->l.'&version='.Kohana::config('version.ushahidi_version');
         // Load profiler
         // $profiler = new Profiler;
 
