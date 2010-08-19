@@ -39,9 +39,11 @@ function formAction ( action, confirmAction, id )
 	var statusMessage;
 	var answer = confirm('Are You Sure You Want To ' 
 		+ confirmAction + ' items?');
+		
 	if (answer){
 		// Set Submit Type
 		$("#action_" + id).attr("value", action);		
+		
 		// Submit Form
 		$("#form_action_" + id).submit();			
 	

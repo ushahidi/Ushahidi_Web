@@ -87,7 +87,7 @@ class Forms_Controller extends Admin_Controller
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
-				else if($post->action == 'a')
+				else if($post->action == 'h')
 				{ // Active/Inactive Action
 					if ($custom_form->loaded==true)
 					{
