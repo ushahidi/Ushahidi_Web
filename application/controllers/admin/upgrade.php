@@ -16,10 +16,14 @@
 
 class Upgrade_Controller extends Admin_Controller
 {
+	public $db;
+	
 	function __construct()
 	{
 		parent::__construct();
-
+		
+		$this->db = new Database();
+		
     	$this->template->this_page = 'upgrade';
 		$upgrade = new Upgrade;
 		$latest_version = $upgrade->_fetch_core_version();
@@ -35,7 +39,7 @@ class Upgrade_Controller extends Admin_Controller
 	 * Upgrade page.
      *
      */
-	function index()
+	public function index()
 	{
 		$this->template->content = new View('admin/upgrade');
 
@@ -78,23 +82,20 @@ class Upgrade_Controller extends Admin_Controller
 			
 			if($post->validate()) {
 				$upgrade = new Upgrade;
-				if($post->chk_db_backup_box == 1) {
+				$this->template->content = new View('admin/upgrade_status');
+				$this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
 					
-					$this->template->content = new View('admin/upgrade_status');
-					$this->template->content = Kohana::lang('upgrade.upgrade_status');
-					$this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
+				if($post->chk_db_backup_box == 1) {
 					
 					//uprade tables.
 					$upgrade->log[] = sprintf("Upgrade table.");
-					$this->_execute_upgrade_script();
+					$this->_process_db_upgrade();
 					$upgrade->log[] = sprintf("Table upgrade successful.");
 					
 					// backup database.
 					//is gzip enabled ?
 					$gzip = Kohana::config('config.output_compression');
-					
 					$error = $this->_do_db_backup( $gzip );
-					
 					$upgrade->log[] = sprintf("Database backup in progress");		
 					
 					if( empty( $error ) ) {
@@ -111,9 +112,9 @@ class Upgrade_Controller extends Admin_Controller
 					
 					//uprade tables.
 					$upgrade->log[] = sprintf("Upgrade table.");
-					$this->_execute_upgrade_script();
+					$this->_process_db_upgrade();
 					$upgrade->log[] = sprintf("Table upgrade successful.");
-					
+					$this->template->content->logs = $upgrade->log;
 				}		
 			}
 			// No! We have validation errors, we need to show the form again, with the errors
@@ -147,14 +148,14 @@ class Upgrade_Controller extends Admin_Controller
 	}
 	
 	private function _upgrade_tables() {
-    	$db = new Database;
+    	
     	$db_schema = file_get_contents( 'sql/upgrade.sql' );
 		$result = "";
     	// get individual sql statement 
     	$sql_statements = explode( ';',$db_schema );
     	    
       	foreach( $sql_statements as $sql_statement ) {
-        	$result = $db->query( $sql_statement );
+        	$result = $this->db->query( $sql_statement );
     	}
     	
     	return $result;
@@ -233,7 +234,7 @@ class Upgrade_Controller extends Admin_Controller
 	private function _execute_upgrade_script( $upgrade_sql ) 
 	{
 		
-		$upgrade_schema = @file_get_contents( $upgrade_sql );
+		$upgrade_schema = @file_get_contents( 'sql/'.$upgrade_sql );
 
 		// If a table prefix is specified, add it to sql
 		$db_config = Kohana::config('database.default');
@@ -262,8 +263,7 @@ class Upgrade_Controller extends Admin_Controller
 		$queries = explode( ';',$upgrade_schema );
 		
 		// get the database object.
-		$this->db = new Database();
-		
+	
 		foreach ( $queries as $query )
 		{
 			$result = $this->db->query( $query );
@@ -284,14 +284,15 @@ class Upgrade_Controller extends Admin_Controller
         $dir_path = 'sql';
         $upgrade_sql = '';
 
-        if( $handle = opendir( $dir_path ) ) {
-            while( ( $file = readdir($handle) ) !== false ) {
-                $upgrade_sql = $this->_get_db_version();
-                if( $upgrade_sql == $file ) {
-                    $this->_execute_upgrade_script( $file );
-                }
-            }
-        }
+        $files = scandir($dir_path);
+        foreach( $files as $file ) {
+        	$upgrade_sql = $this->_get_db_version();
+          	if( $upgrade_sql == $file ) {
+           
+            	$this->_execute_upgrade_script( $upgrade_sql );
+                    
+          	} 
+      	}
         
         return "";
     }
@@ -303,10 +304,12 @@ class Upgrade_Controller extends Admin_Controller
      */
     private function _get_db_version() 
     {
-
-        $db_version = Kohana::config('settings.db_version');
-        
-        $version_in_db = $db_version;
+			
+       // get the db version from the settings page
+       	$db = new Database();
+       	$sql = 'SELECT db_version from '.Kohana::config('database.default.table_prefix').'settings';
+        $settings = $db->query($sql);
+        $version_in_db = $settings[0]->db_version;
         
         // Update DB
         $db_version = $version_in_db;
