@@ -39,14 +39,7 @@ class Api_Controller extends Controller {
 
 	// get the FQDN
 	function _getDomain() {
-		$subdomain = '';
-
-		if(substr_count($_SERVER["HTTP_HOST"],'.') > 1) $subdomain = substr($_SERVER["HTTP_HOST"],0,strpos($_SERVER["HTTP_HOST"],'.')).'.';
-
-		$domain = ((empty($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] === 'off') ?
-			'http' : 'https').'://'.$subdomain.''.$_SERVER['SERVER_NAME'];
-
-		return $domain;
+		return url::base();
 	}
 
 	/**
