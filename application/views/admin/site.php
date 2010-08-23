@@ -164,22 +164,6 @@
 							</div>
 						</div>
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.site.laconica_configuration');?></h4>
-
-							<div class="row">
-								<?php echo Kohana::lang('ui_main.username');?>
-								<?php print form::input('laconica_username', $form['laconica_username'], ' class="text"'); ?>
-							</div>
-								<div class="row" style="padding-top:5px;">
-								<?php echo Kohana::lang('ui_main.password');?>
-								<?php print form::password('laconica_password', $form['laconica_password'], ' class="text"'); ?>
-							</div>
-								<div class="row" style="padding-top:5px;">
-								<?php echo Kohana::lang('settings.site.laconica_site');?>
-								<?php print form::input('laconica_site', $form['laconica_site'], 'class="text long2"'); ?>
-							</div>
-						</div>
-						<div class="row">
 							<h4><?php echo Kohana::lang('settings.site.api_akismet');?></h4>
 							<?php echo Kohana::lang('settings.site.kismet_notice');?>.
 							<?php print form::input('api_akismet', $form['api_akismet'], ' class="text"'); ?>
