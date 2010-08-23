@@ -83,6 +83,7 @@ class Upgrade_Controller extends Admin_Controller
 					$this->template->content = new View('admin/upgrade_status');
 					$this->template->content = Kohana::lang('upgrade.upgrade_status');
 					$this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
+					
 					//uprade tables.
 					$upgrade->log[] = sprintf("Upgrade table.");
 					$this->_execute_upgrade_script();
@@ -108,7 +109,11 @@ class Upgrade_Controller extends Admin_Controller
 					
 				} else {
 					
-					//TODO don't backup database
+					//uprade tables.
+					$upgrade->log[] = sprintf("Upgrade table.");
+					$this->_execute_upgrade_script();
+					$upgrade->log[] = sprintf("Table upgrade successful.");
+					
 				}		
 			}
 			// No! We have validation errors, we need to show the form again, with the errors
