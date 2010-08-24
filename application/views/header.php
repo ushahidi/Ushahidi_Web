@@ -213,6 +213,8 @@
 							<?php
 						}
 
+						// Commenting out "How to Help" page for now
+						/*
 						// Help Page
 						if ($site_help_page)
 						{
@@ -220,6 +222,7 @@
 							<li><a href="<?php echo url::site() . "help" ?>" <?php if ($this_page == 'help') echo 'class="active"'; ?>><?php echo Kohana::lang('ui_main.help'); ?></a></li>
 							<?php
 						}
+						*/
 
 						// Custom Pages
 						foreach ($pages as $page)

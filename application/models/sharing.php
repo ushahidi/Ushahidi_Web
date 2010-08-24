@@ -16,7 +16,7 @@
 
 class Sharing_Model extends ORM
 {	
-	protected $has_many = array('incident', 'sharing_log');
+	protected $has_many = array('sharing_incident');
 	
 	// Database table name
 	protected $table_name = 'sharing';

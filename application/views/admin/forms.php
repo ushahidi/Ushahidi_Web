@@ -142,7 +142,7 @@
 										<td class="col-4">
 											<ul>
 												<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($form_id)); ?>','<?php echo(rawurlencode($form_title)); ?>','<?php echo(rawurlencode($form_description)); ?>')">Edit</a></li>
-												<li class="none-separator"><a href="javascript:formAction('a','SHOW/HIDE','<?php echo(rawurlencode($form_id)); ?>')"<?php if ($form_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.active');?></a></li>
+												<li class="none-separator"><a href="javascript:formAction('h','SHOW/HIDE','<?php echo(rawurlencode($form_id)); ?>')"<?php if ($form_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.active');?></a></li>
 												<li><a href="javascript:formAction('d','DELETE','<?php echo(rawurlencode($form_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>
 										</td>
@@ -194,7 +194,7 @@
 					<input type="hidden" id="form_active" 
 						name="form_active" vaule="" />
 					<input type="hidden" name="action" 
-						id="action" value=""/>
+						id="action" value="a"/>
 					<div class="tab_form_item">
 						<strong><?php echo Kohana::lang('ui_main.form_title');?>:</strong><br />
 						<?php print form::input('form_title', '', 

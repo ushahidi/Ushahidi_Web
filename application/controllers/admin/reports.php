@@ -95,7 +95,11 @@ class Reports_Controller extends Admin_Controller
 							$update->incident_active = '1';
 
 							// Tag this as a report that needs to be sent out as an alert
-							$update->incident_alert_status = '1';
+							if ($update->incident_alert_status != '2')
+							{ // 2 = report that has had an alert sent
+								$update->incident_alert_status = '1';
+							}
+							
 							$update->save();
 
 							$verify = new Verify_Model();
@@ -118,6 +122,13 @@ class Reports_Controller extends Admin_Controller
 						$update = new Incident_Model($item);
 						if ($update->loaded == true) {
 							$update->incident_active = '0';
+							
+							// If Alert hasn't been sent yet, disable it
+							if ($update->incident_alert_status == '1')
+							{
+								$update->incident_alert_status = '0';
+							}
+							
 							$update->save();
 
 							$verify = new Verify_Model();
@@ -374,7 +385,7 @@ class Reports_Controller extends Admin_Controller
 
 		//GET custom forms
 		$forms = array();
-		foreach (ORM::factory('form')->find_all() as $custom_forms)
+		foreach (ORM::factory('form')->where('form_active',1)->find_all() as $custom_forms)
 		{
 			$forms[$custom_forms->id] = $custom_forms->form_title;
 		}
@@ -602,6 +613,7 @@ class Reports_Controller extends Admin_Controller
 				{
 					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				}
+				
 				// Is this an Email, SMS, Twitter submitted report?
                 //XXX: We may get rid of incident_mode altogether... ???
                 //$_POST
@@ -631,6 +643,21 @@ class Reports_Controller extends Admin_Controller
 				$incident->incident_information = $post->incident_information;
 				//Save
 				$incident->save();
+				
+				// Tag this as a report that needs to be sent out as an alert
+				if ($incident->incident_active == '1' AND
+					 $incident->incident_alert_status != '2')
+				{ // 2 = report that has had an alert sent
+					$incident->incident_alert_status = '1';
+					$incident->save();
+				}
+				// Remove alert if report is unactivated and alert hasn't yet been sent
+				if ($incident->incident_active == '0' AND
+					 $incident->incident_alert_status == '1')
+				{
+					$incident->incident_alert_status = '0';
+					$incident->save();
+				}
 
 				// Record Approval/Verification Action
 				$verify = new Verify_Model();

@@ -18,6 +18,25 @@
 					<?php admin::mhi_subtabs("activity"); ?>
 				</h2>
 				
+				<form name="nav">
+					<div>
+						Select type of action: 
+						<select name="SelectURL" onChange="document.location.href=document.nav.SelectURL.options[document.nav.SelectURL.selectedIndex].value">
+						<option value="<?php echo url::base(); ?>admin/mhi/activity/"<?php if($current_log_action_id == FALSE) { ?> selected <?php } ?>>View All</option>
+						<?php
+							foreach($log_actions as $log_action_id => $action_name)
+							{
+								echo '<option value="'.url::base().'admin/mhi/activity/'.$log_action_id.'"';
+								if($current_log_action_id == $log_action_id) echo ' selected';
+								echo '>'.$action_name.'</option>';
+							}
+						?>
+						</select>
+					</div>
+				</form>
+				
+				<hr/>
+				
 				<table class="table-graph horizontal-bar">
 				<?php foreach($activity as $action) { ?>
 					<tr>
