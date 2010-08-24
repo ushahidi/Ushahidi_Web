@@ -60,7 +60,6 @@
 	</div>
 	<!-- / footer -->
  
-	<img src="<?php echo $tracker_url; ?>" />
 	<?php echo $ushahidi_stats; ?>
 	<?php echo $google_analytics; ?>
 	

@@ -136,8 +136,8 @@
 								<strong><?php echo number_format($categories); ?></strong>
 							</li>
 							<li>
-								<a href="#" class="locations"><?php echo Kohana::lang('ui_main.locations');?></a>
-								<strong><?php echo number_format($locations); ?></strong>
+								<span class="locations"><?php echo Kohana::lang('ui_main.locations');?></span>
+								<strong><?php echo $locations; ?></strong>
 							</li>
 							<li>
 								<a href="<?php echo url::site() . 'admin/manage/feeds' ?>" class="media"><?php echo Kohana::lang('ui_main.news_feeds');?></a>

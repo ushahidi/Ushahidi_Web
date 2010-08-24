@@ -54,7 +54,7 @@ Author Email: caleb@ushahidi.com
 	a.btn_play-slideshow { background:transparent url(../../img/mhi/btn_play-slideshow.png) 0 0 no-repeat; height:43px; width:190px; margin:170px 0 0 170px; } 
 		a.btn_play-slideshow:hover { background:transparent url(../../img/mhi/btn_play-slideshow.png) 0 bottom no-repeat; }
 	
-	.admin-button, .admin-button:visited {
+	a.admin-button, a.admin-button:visited {
 		background: #222 url(../../img/mhi/alert-overlay.png) repeat-x; 
 		display: inline-block; 
 		padding: 5px 10px 3px; 
@@ -70,8 +70,8 @@ Author Email: caleb@ushahidi.com
 		cursor: pointer;
 	}
 	
-	.admin-button:hover { background-color: #111; color: #fff; }
-	.admin-button:active { top: 1px; }
+	a.admin-button:hover { background-color: #111; color: #fff; }
+	a.admin-button:active { top: 1px; }
 		/* colors */
 		.green.admin-button, .green.admin-button:visited		{ background-color: #91bd09; }
 		.green.admin-button:hover								{ background-color: #749a02; }
@@ -87,7 +87,7 @@ Author Email: caleb@ushahidi.com
 			text-decoration: none;
 			position: relative;
 			cursor: pointer;
-			padding: 5px 10px 2px;
+			padding: 5px 10px 4px;
 			display: inline-block;
 			margin-right:3px;
 		}
@@ -96,6 +96,7 @@ Author Email: caleb@ushahidi.com
 			-webkit-border-radius: 5px; 
 			-moz-border-radius-bottomleft:0px; -moz-border-radius-bottomright:0px; 
 			-webkit-border-radius-bottom-left:0px; -webkit-border-radius-bottom-right:0px;
+			border-bottom-right-radius:0px; border-bottom-left-radius:0px;
 			background-color:#E5E5E5;
 		}
 		
@@ -106,6 +107,7 @@ Author Email: caleb@ushahidi.com
 			-webkit-border-radius: 5px;
 			-moz-border-radius-bottomleft:0px; -moz-border-radius-bottomright:0px; 
 			-webkit-border-radius-bottom-left:0px; -webkit-border-radius-bottom-right:0px;
+			border-bottom-right-radius:0px; border-bottom-left-radius:0px;
 			text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
 			background-color: #999;		
 		}
@@ -168,7 +170,7 @@ Author Email: caleb@ushahidi.com
 	/* Login Box */
 	#login-box { position: absolute; top:3px; right:0; color:#e3e3e3; font-size:12px;}
 	#login-box p { margin:0; }
-	#login-box a { background:#96a6a9; color:#f3f3f3; font-weight:bold; margin-left:4px; padding:4px 6px; text-decoration:none; }
+	#login-box a { background:#96a6a9; color:#f3f3f3; font-weight:bold; margin-left:4px; padding:4px 6px; text-decoration:none; display:inline-block; }
 	#login-box a.active { background:#f3f4f6; color:#666; padding-bottom:7px;}
 	
 	#login-form { z-index:1000;  background:#f3f4f6; position:absolute; top:23px; right:0px; font-size:12px;  padding:5px 8px; display:none; }
@@ -277,7 +279,7 @@ Author Email: caleb@ushahidi.com
 
 /* Features Page 
 -----------------*/
-	.feature { padding:1px 0; margin:0 -24px 0 -15px; height:198px; border-bottom:1px solid #b2b2b2; }
+	.feature { padding:1px 0; margin:0 -14px 0 -15px; height:198px; border-bottom:1px solid #b2b2b2; }
 		.feature h3 { margin-top:20px; }
 		.feature p { }
 	
@@ -292,6 +294,8 @@ Author Email: caleb@ushahidi.com
 --------------*/
 	#frm-MHI-Signup { margin-bottom:0; }
 		
+		.content form.frm-content { margin-bottom:0; }
+		#admin_password { font-size:12px; width:125px; }
 		.content .frm-content table,
 		.content .frm-content table td { border:0; }
 		

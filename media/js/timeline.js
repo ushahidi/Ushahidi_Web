@@ -563,7 +563,7 @@
 						feature_icon = feature.attributes.icon;
 						if (feature_icon!="")
 						{
-							return baseUrl + "media/uploads/" + feature_icon;
+							return baseUrl + feature_icon;
 						} 
 						else
 						{
@@ -632,7 +632,7 @@
 
 			if (thisLayer && thisLayerType == 'shares')
 			{
-				protocolUrl = baseUrl + "json/share/"+thisLayer+"/";
+				protocolUrl = baseUrl + "json/share/"+thisLayerID+"/";
 				thisLayer = "Share_"+thisLayerID;
 				newlayer = true;
 			} 
@@ -712,8 +712,9 @@
 
 			map.addLayer(markers);
 
-			if (!newlayer || thisLayerID==8)
-			{
+			
+//			if (!newlayer)
+//			{ // Keep the Base Layer in Focus
 				selectControl = new OpenLayers.Control.SelectFeature(markers);
 				map.addControl(selectControl);
 				selectControl.activate();
@@ -721,7 +722,7 @@
 					"featureselected": onFeatureSelect,
 					"featureunselected": onFeatureUnselect
 				});
-			}
+//			}
 
 			return markers;
 		};

@@ -11,7 +11,7 @@ CREATE TABLE `mhi_log` (
 CREATE TABLE `mhi_log_actions` (
   `id` int(11) NOT NULL,
   `description` text NOT NULL,
-  PRIMARY KEY  (`int`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `mhi_log_actions` (`id`, `description`) VALUES

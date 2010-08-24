@@ -61,6 +61,31 @@ class mhi_site_database_Model extends ORM
 		return $array;
 	}
 
+	static function mass_update_db($number_to_update,$from_version)
+	{
+		if( ! is_numeric($number_to_update) OR  ! is_numeric($from_version))
+		{
+			// All of these must be numbers so return false if any of them arent
+			return false;
+		}
+
+		$all_db_versions = Mhi_Site_Model::get_db_versions();
+
+		$i = 0;
+		foreach($all_db_versions as $db => $current_version)
+		{
+			if($i == $number_to_update) break;
+
+			if($current_version == $from_version)
+			{
+				Mhi_Site_Database_Model::update_db($db);
+				$i++;
+			}
+		}
+
+
+	}
+
 	static function update_db($db)
 	{
 		// Check if the db is even assigned to anyone. This is a requirement.
@@ -107,13 +132,15 @@ class mhi_site_database_Model extends ORM
 				'CREATE TABLE IF NOT EXISTS `',
 				'INSERT INTO `',
 				'ALTER TABLE `',
-				'UPDATE `'
+				'UPDATE `',
+				'DROP TABLE `',
 				);
 			$replace = array(
 				'CREATE TABLE IF NOT EXISTS `'.$table_prefix.'_',
 				'INSERT INTO `'.$table_prefix.'_',
 				'ALTER TABLE `'.$table_prefix.'_',
-				'UPDATE `'.$table_prefix.'_'
+				'UPDATE `'.$table_prefix.'_',
+				'DROP TABLE `'.$table_prefix.'_',
 				);
 			$upgrade_schema = str_replace($find, $replace, $upgrade_schema);
 		}

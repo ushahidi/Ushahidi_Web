@@ -32,7 +32,6 @@
 								<?php
 								foreach ($errors as $error_item => $error_description)
 								{
-									// print "<li>" . $error_description . "</li>";
 									print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
 								}
 								?>
@@ -206,15 +205,15 @@
 										{
 											echo form::input('custom_field['.$field_id.']', $form['custom_field'][$field_id],
 												' id="custom_field_'.$field_id.'" class="text"');
-											echo "<script type=\"text/javascript\">
+											echo '<script type="text/javascript">
 													$(document).ready(function() {
-													$(\"#custom_field_".$field_id."\").datepicker({ 
-													showOn: \"both\", 
-													buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\", 
+													$("#custom_field_'.$field_id.'").datepicker({ 
+													showOn: "both", 
+													buttonImage: "'.url::base().'media/img/icon-calendar.gif", 
 													buttonImageOnly: true 
 													});
 													});
-												</script>";
+												</script>';
 										}
 										else
 										{
@@ -365,7 +364,14 @@
                         					if ($photo->media_type == 1)
                         					{
                         						print "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
-                        						print "<img src=\"".url::base().Kohana::config('upload.relative_directory')."/".$photo->media_thumb."\" >";
+
+                        						$thumb = $photo->media_thumb;
+                        						$photo_link = $photo->media_link;
+												$prefix = url::base().Kohana::config('upload.relative_directory');
+                        						print "<a class='photothumb' rel='lightbox-group1' href='$prefix/$photo_link'>";
+                        						print "<img src=\"$prefix/$thumb\" >";
+                        						print "</a>";
+
                         						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deletePhoto('".$photo->id."', 'photo_".$photo->id."'); return false;\" >".Kohana::lang('ui_main.delete')."</a>";
                         						print "</div>";
                         					}

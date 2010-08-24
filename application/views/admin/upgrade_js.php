@@ -1,7 +1,7 @@
 /**
  * Upgrade js file.
  *
- * Handles javascript stuff related to dashboard function.
+ * Handles javascript stuff related to upgrade functions.
  * 
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -14,7 +14,12 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 // Ajax Submission
-function reportAction ()
+function continueAction ()
 {
 	$("#upgradeMain").submit();	
+}
+
+function dbUpgradeAction () 
+{
+	$("#upgradeDb").submit();
 }

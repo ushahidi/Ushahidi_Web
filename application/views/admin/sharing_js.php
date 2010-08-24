@@ -1,14 +1,27 @@
+<?php
+/**
+ * Sharing js file.
+ * 
+ * Handles javascript stuff related to sharing controller
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com> 
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @module     Sharing JS View
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ */
+?>
 // Sharing JS
 function fillFields(id, sharing_url, sharing_color, sharing_limits, sharing_type)
 {
-	$("#sharing_id_action").attr("value", unescape(id));
+	$("#sharing_id").attr("value", unescape(id));
+	$("#sharing_name").attr("value", unescape(sharing_name));
 	$("#sharing_url").attr("value", unescape(sharing_url));
-		// Disable This Field
-		$("#sharing_url").attr("readonly",true);
-		$("#sharing_url").css("background-color", "#ccc");
 	$("#sharing_color").attr("value", unescape(sharing_color));
-	$("#sharing_limits").attr("value", unescape(sharing_limits));
-	$("#sharing_type").attr("value", unescape(sharing_type));
 }
 
 // Ajax Submission
@@ -21,26 +34,8 @@ function sharingAction ( action, confirmAction, id )
 		// Set Category ID
 		$("#sharing_id_action").attr("value", id);
 		// Set Submit Type
-		$("#sharing_action").attr("value", action);		
+		$("#action").attr("value", action);		
 		// Submit Form
-		$("#sharingMain").submit();
+		$("#sharingListing").submit();
 	}
 }
-
-// Prevent multiple form submission
-$(document).ready(function() {
-	$('#sharingMain').submit(function() {
-		$('#sharing_loading').html('&nbsp;<br /><img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-		if(typeof jQuery.data(this, "disabledOnSubmit") == 'undefined') {
-			jQuery.data(this, "disabledOnSubmit", { submited: true });
-			$('input[type=submit], input[type=button]', this).each(function() {
-				$(this).attr("disabled", "disabled");
-				});
-				return true;
-		}
-			else
-		{
-			return false;
-		}
-	});
-});
