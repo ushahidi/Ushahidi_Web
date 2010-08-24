@@ -292,7 +292,13 @@ class Json_Controller extends Template_Controller
 
 		// Get locations
 
-		$locations_result = ORM::factory('location')->in('id',implode(',',$location_ids))->find_all();
+		if (count($location_ids) > 0)
+		{
+			$locations_result = ORM::factory('location')->in('id',implode(',',$location_ids))->find_all();
+		}else{
+			$locations_result = ORM::factory('location')->find_all();
+		}
+
 		$locations = array();
 		foreach ($locations_result as $loc)
 		{
