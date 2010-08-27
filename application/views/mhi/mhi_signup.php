@@ -103,7 +103,7 @@
 			        
 			        <img src="<?php echo url::site(); ?>media/img/mhi/step-4.gif" align="left" class="step" /> <h2 class="step-4">Accept Terms</h2>
 			        <p>
-			        	<input type="checkbox" name="signup_tos" id="signup_tos" value="1" /> <label for="signup_tos">I have read and agree</label> to the <a href="<?php echo url::site(); ?>mhi/legal">Website Terms of Use</a>
+			        	<input type="checkbox" name="signup_tos" id="signup_tos" value="1" /> <label for="signup_tos">I have read and agree</label> to the <a href="<?php echo url::site(); ?>mhi/legal" target="_blank">Website Terms of Use</a>
 			        </p>
 			        
 			        
