@@ -1226,7 +1226,7 @@ final class Kohana {
 				return $key;
 			}else{
 				// Try for English
-				return Kohana::lang($key, $args, 'EN_US');
+				return Kohana::lang($key, $args, 'en_US');
 			}
 		}
 
