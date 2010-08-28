@@ -1164,9 +1164,10 @@ final class Kohana {
 	 *
 	 * @param   string  language key to fetch
 	 * @param   array   additional information to insert into the line
+	 * @param   string  locale name to override settings
 	 * @return  string  i18n language string, or the requested key if the i18n item is not found
 	 */
-	public static function lang($key, $args = array())
+	public static function lang($key, $args = array(), $force_locale = NULL)
 	{
 		// Extract the main group from the key
 		$group = explode('.', $key, 2);
@@ -1174,6 +1175,12 @@ final class Kohana {
 
 		// Get locale name
 		$locale = self::config('locale.language.0');
+
+		// If we are overriding the language settings then do it here.
+		if ($force_locale != NULL)
+		{
+			$locale = $force_locale;
+		}
 
 		if ( ! isset(self::$internal_cache['language'][$locale][$group]))
 		{
@@ -1213,8 +1220,14 @@ final class Kohana {
 		{
 			self::log('error', 'Missing i18n entry '.$key.' for language '.$locale);
 
-			// Return the key string as fallback
-			return $key;
+			if ($force_locale != NULL)
+			{
+				// Return the key string as fallback
+				return $key;
+			}else{
+				// Try for English
+				return Kohana::lang($key, $args, 'en_US');
+			}
 		}
 
 		if (is_string($line) AND func_num_args() > 1)
