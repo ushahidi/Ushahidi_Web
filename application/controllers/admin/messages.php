@@ -68,6 +68,12 @@ class Messages_Controller extends Admin_Controller
 			$filter = 'message_type = 1';
 		}
 		
+		// Do we have a reporter ID?
+		if (isset($_GET['rid']) AND !empty($_GET['rid']))
+		{
+			$filter .= ' AND reporter_id=\''.$_GET['rid'].'\'';
+		}
+		
 		// Any time period filter?
 		$period = 'a';
 		if (!empty($_GET['period']))
