@@ -158,7 +158,7 @@
                 <p>
                 	<a name="19"></a>
                 	<h4>Can Crowdmap update automatically from designated Twitter feeds, or just through #hashtags?</h4>
-                	Messages sent to the @username designated in settings and/or to the hashtags you designate in the admin setting of your deployment get pulled into your site.
+                	Crowdmap is set up to allow you to search for specific hashtags only at this time.
                 </p>
                 
                 <p>
