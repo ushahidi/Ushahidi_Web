@@ -17,7 +17,7 @@ echo html::script('media/js/bugs', true);
 <h3><?php echo html::specialchars($error) ?></h3>
 <p><?php echo html::specialchars($description) ?></p>
 <?php if ( ! empty($line) AND ! empty($file)): ?>
-<p><?php echo Kohana::lang('core.error_file_line', $file, $line) ?></p>
+<p><?php echo Kohana::lang('core.error_file_line', array($file, $line)) ?></p>
 <?php endif ?>
 <p><code class="block"><?php echo $message ?></code></p>
 <p class="ushahidi_bugs"><?php echo Kohana::lang('core.report_bug',"#"); ?>
