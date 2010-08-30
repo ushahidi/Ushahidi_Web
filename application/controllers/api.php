@@ -2,7 +2,7 @@
 /**
  * This controller handles API requests.
  *
- * @version 18 - David Kobia 2010-03-11
+ * @version 22 - David Kobia 2010-08-30
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -518,8 +518,10 @@ class Api_Controller extends Controller {
 		$i = 0;
 		foreach ($items as $item){
 
-			if($this->responseType == 'json'){
+			if($this->responseType == 'json')
+			{
 				$json_incident_media = array();
+				$json_incident_categories = array();
 			}
 
 			//build xml file
@@ -546,12 +548,19 @@ class Api_Controller extends Controller {
 					"ic.category_id = c.id WHERE ic.incident_id =".$item->incidentid;
 			$category_items = $this->db->query( $query );
 
-			foreach( $category_items as $category_item ){
-				$xml->startElement('category');
-				$xml->writeElement('id',$category_item->cid);
-				$xml->writeElement('title',$category_item->categorytitle );
-				$xml->endElement();
-
+			foreach( $category_items as $category_item )
+			{
+				if($this->responseType == 'json'){
+					$json_incident_categories[] = array("category"=> array(
+							"id" => $category_item->cid,
+							"title" => $category_item->categorytitle
+						));
+				} else {
+					$xml->startElement('category');
+					$xml->writeElement('id',$category_item->cid);
+					$xml->writeElement('title',$category_item->categorytitle );
+					$xml->endElement();
+				}
 			}
 			$xml->endElement();//end categories
 
@@ -568,7 +577,11 @@ class Api_Controller extends Controller {
 				$xml->startElement('mediaItems');
 				foreach ($media_items as $media_item){
 					if($this->responseType == 'json'){
-						$json_incident_media[] = $media_item;
+						$json_incident_media[] = array(
+							"id" => $media_item->mediaid,
+							"type" => $media_item->mediatype,
+							"link" => $media_item->medialink
+							);
 					} else {
 						$xml->startElement('media');
 						if( $media_item->mediaid != "" ) $xml->writeElement('id',$media_item->mediaid);
@@ -585,8 +598,10 @@ class Api_Controller extends Controller {
 			$xml->endElement(); // end incident
 
 			//needs different treatment depending on the output
-			if($this->responseType == 'json'){
-				$json_incidents[] = array("incident" => $item, "media" => $json_incident_media);
+			if($this->responseType == 'json')
+			{
+				$json_incidents[] = array("incident" => $item, 
+					"categories" => $json_incident_categories, "media" => $json_incident_media);
 			}
 
 		}
