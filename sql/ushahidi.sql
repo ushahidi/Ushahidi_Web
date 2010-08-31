@@ -1201,7 +1201,7 @@ INSERT INTO `level` (`id`, `level_title`, `level_description`, `level_weight`) V
 (2, 'SPAM', 'SPAM', -1),
 (3, 'Untrusted', 'Untrusted', 0),
 (4, 'Trusted', 'Trusted', 1),
-(5, 'Trusted + Verifiy', 'Trusted + Verify', 2);
+(5, 'Trusted + Verify', 'Trusted + Verify', 2);
 
 
 
