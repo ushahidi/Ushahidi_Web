@@ -1575,5 +1575,5 @@ ALTER TABLE `user_tokens`
 * Version information for table `settings`
 * 
 */
-UPDATE `settings` SET `ushahidi_version` = '2.0b5' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `ushahidi_version` = '2.0b6' WHERE `id`=1 LIMIT 1;
 UPDATE `settings` SET `db_version` = '29' WHERE `id`=1 LIMIT 1;
