@@ -19,7 +19,7 @@ class Reporters_Controller extends Admin_Controller
 	function __construct()
 	{
 		parent::__construct();
-		$this->template->this_page = 'manage';
+		$this->template->this_page = 'messages';
 		
 		// If this is not a super-user account, redirect to dashboard
 		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
@@ -28,7 +28,7 @@ class Reporters_Controller extends Admin_Controller
 		}
 	}
 	
-	public function index()
+	public function index($service_id = 1)
 	{
 		$this->template->content = new View('admin/reporters');
 		$this->template->content->title = Kohana::lang('ui_admin.reporters');
@@ -37,10 +37,14 @@ class Reporters_Controller extends Admin_Controller
 		$search_type = "";
 		$keyword = "";
 		// Get Search Type (If Any)
-		if (isset($_GET['s']) AND !empty($_GET['s']))
+		if ($service_id)
 		{
-			$search_type = $_GET['s'];
-			$filter .= " AND (service_id='".$_GET['s']."')";
+			$search_type = $service_id;
+			$filter .= " AND (service_id='".$service_id."')";
+		}
+		else
+		{
+			$search_type = "0";
 		}
 		
 		// Get Search Keywords (If Any)
@@ -68,9 +72,9 @@ class Reporters_Controller extends Admin_Controller
 		$form_saved = FALSE;
 		$form_action = "";
 
-			// check, has the form been submitted, if so, setup validation
-			if ($_POST)
-			{
+		// check, has the form been submitted, if so, setup validation
+		if ($_POST)
+		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory($_POST);
 
@@ -78,8 +82,14 @@ class Reporters_Controller extends Admin_Controller
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('reporter_id','required','numeric');
-			if ($post->action == 'a')
+			$post->add_rules('action','required', 'alpha', 'length[1,1]');
+			$post->add_rules('reporter_id.*','required','numeric');
+			
+			if ($post->action == 'l')
+			{
+				$post->add_rules('level_id','required','numeric');
+			}
+			elseif ($post->action == 'a')
 			{
 				$post->add_rules('level_id','required','numeric');
 				// If any location data is provided, require all location parameters
@@ -93,46 +103,69 @@ class Reporters_Controller extends Admin_Controller
 
 			// Test to see if things passed the rule checks
 			if ($post->validate())
-			{
-				$reporter_id = $post->reporter_id;
-				$reporter = ORM::factory('reporter')->find($reporter_id);
-				
+			{	
 				if( $post->action == 'd' )				// Delete Action
 				{
-					// Delete Reporters Messages
-					ORM::factory('message')
-						->where('reporter_id', $reporter_id)
-						->delete_all();
+					foreach($post->reporter_id as $item)
+					{
+						// Delete Reporters Messages
+						ORM::factory('message')
+							->where('reporter_id', $item)
+							->delete_all();
 					
-					// Delete Reporter
-					$reporter->delete( $reporter_id );
+						// Delete Reporter
+						$reporter = ORM::factory('reporter')->find($item);
+						$reporter->delete( $item );
+					}
+					
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
+				elseif( $post->action == 'l' )			// Modify Level Action
+				{
+					foreach($post->reporter_id as $item)
+					{
+						// Update Reporter Level
+						$reporter = ORM::factory('reporter')->find($item);
+						if ($reporter->loaded)
+						{
+							$reporter->level_id = $post->level_id;
+							$reporter->save();
+						}
+					}
+					
+					$form_saved = TRUE;
+					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+				}
 				else if( $post->action == 'a' ) 		// Save Action
 				{
-					// SAVE Reporter only if loaded
-					if ($reporter->loaded)
+					foreach($post->reporter_id as $item)
 					{
-						$reporter->level_id = $post->level_id;
-
-						// SAVE Location if available
-						if ($post->latitude AND $post->longitude)
+						$reporter = ORM::factory('reporter')->find($item);
+					
+						// SAVE Reporter only if loaded
+						if ($reporter->loaded)
 						{
-							$location = new Location_Model($post->location_id);
-							$location->location_name = $post->location_name;
-							$location->latitude = $post->latitude;
-							$location->longitude = $post->longitude;
-							$location->location_date = date("Y-m-d H:i:s",time());
-							$location->save();
-							
-							$reporter->location_id = $location->id;
-						}
-						
-						$reporter->save();
+							$reporter->level_id = $post->level_id;
 
-						$form_saved = TRUE;
-						$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
+							// SAVE Location if available
+							if ($post->latitude AND $post->longitude)
+							{
+								$location = new Location_Model($post->location_id);
+								$location->location_name = $post->location_name;
+								$location->latitude = $post->latitude;
+								$location->longitude = $post->longitude;
+								$location->location_date = date("Y-m-d H:i:s",time());
+								$location->save();
+							
+								$reporter->location_id = $location->id;
+							}
+						
+							$reporter->save();
+
+							$form_saved = TRUE;
+							$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+						}
 					}
 				}
 			}
@@ -171,12 +204,16 @@ class Reporters_Controller extends Admin_Controller
 		$this->template->content->pagination = $pagination;
 		$this->template->content->total_items = $pagination->total_items;
 		$this->template->content->reporters = $reporters;
+		$this->template->content->service_id = $service_id;
 		$this->template->content->search_type = $search_type;
 		$search_type_array = Service_Model::get_array();
 		$search_type_array[0] = "All";
 		asort($search_type_array);
 		$this->template->content->search_type_array = $search_type_array;
 		$this->template->content->keyword = $keyword;
+		
+		$levels = ORM::factory('level')->orderby('level_weight')->find_all();
+		$this->template->content->levels = $levels;
 
 		// Level and Service Arrays
 		$this->template->content->level_array = Level_Model::get_array();

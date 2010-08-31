@@ -16,7 +16,7 @@
  */
 ?>
 // Reporter JS
-
+<?php require SYSPATH.'../application/views/admin/form_utils_js.php' ?>
 $().ready(function() {
 	<?php
 	if ($form_error)
@@ -63,6 +63,43 @@ function reporterAction ( action, confirmAction, id )
 function submitSearch()
 {
 	$("#searchReporters").submit();
+}
+
+function reportersAction ( action, confirmAction, reporter_id, level_id )
+{
+	var statusMessage;
+	if( !isChecked( "reporter" ) && reporter_id=='' )
+	{ 
+		alert('Please select at least one reporter.');
+	} else {
+		var answer = confirm('Are You Sure You Want To ' + confirmAction + ' items?')
+		if (answer){
+			
+			// Set Submit Type
+			$("#action").attr("value", action);
+			
+			// Set Level ID
+			$("#level_id_main").attr("value", level_id);
+			
+			if (reporter_id != '') 
+			{
+				// Submit Form For Single Item
+				$("#reporter_single").attr("value", reporter_id);
+				$("#reporterMain").submit();
+			}
+			else
+			{
+				// Set Hidden form item to 000 so that it doesn't return server side error for blank value
+				$("#reporter_single").attr("value", "000");
+				
+				// Submit Form For Multiple Items
+				$("#reporterMain").submit();
+			}
+		
+		} else {
+			return false;
+		}
+	}
 }
 
 var map;
