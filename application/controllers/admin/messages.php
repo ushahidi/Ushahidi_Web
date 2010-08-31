@@ -35,29 +35,17 @@ class Messages_Controller extends Admin_Controller
 		$service = ORM::factory('service', $service_id);
 		$this->template->content->title = $service->service_name;
 
-        //So far this assumes that selected 'message_id's are for deleting
-		if (isset($_POST['message_id']))
-		{
-			if ($_POST['action'] == 'rank') 
-			{
-				$this->rankMessages($_POST['message_id'], $_POST['level']);
-			} else 
-			{	
-				$this->deleteMessages($_POST['message_id']);
-			}
-		}
-
 		// Is this an Inbox or Outbox Filter?
 		if (!empty($_GET['type']))
 		{
 			$type = $_GET['type'];
 
 			if ($type == '2')
-			{
+			{ // OUTBOX
 				$filter = 'message_type = 2';
 			}
 			else
-			{
+			{ // INBOX
 				$type = "1";
 				$filter = 'message_type = 1';
 			}
@@ -68,29 +56,24 @@ class Messages_Controller extends Admin_Controller
 			$filter = 'message_type = 1';
 		}
 		
-		// Any time period filter?
-		$period = 'a';
-		if (!empty($_GET['period']))
+		// Do we have a reporter ID?
+		if (isset($_GET['rid']) AND !empty($_GET['rid']))
 		{
-			$period = $_GET['period'];
-			
-			if ($period == 'd')
+			$filter .= ' AND reporter_id=\''.$_GET['rid'].'\'';
+		}
+		
+		// ALL / Trusted / Spam
+		$level = '0';
+		if (isset($_GET['level']) AND !empty($_GET['level']))
+		{
+			$level = $_GET['level'];
+			if ($level == 4)
 			{
-				$message_date = date("Y-m-d 00:00:00", mktime(0, 0, 0,date("m"),date("d")-1,date("Y")));
-				$end_date = date("Y-m-d 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
-			} elseif ($period == 'm')
-			{
-				$message_date = date("Y-m-01 00:00:00", mktime(0, 0, 0, date("m")-1, date("d"), date("Y")));
-				$end_date = date("Y-m-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
-			} elseif ($period == 'y')
-			{
-				$message_date = date("Y-01-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")-1));
-				$end_date = date("Y-01-01 00:00:00", mktime(0, 0, 0, date("m"), date("d"), date("Y")));
+				$filter .= " AND ( reporter.level_id = '4' OR reporter.level_id = '5' ) AND ( message.message_level != '99' ) ";
 			}
-			
-			if (isset($message_date))
+			elseif ($level == 2)
 			{
-				$filter .= " AND message_date >= '" . $message_date . "' AND message_date < '" . $end_date ."'";
+				$filter .= " AND ( message.message_level = '99' ) ";
 			}
 		}
 
@@ -98,6 +81,80 @@ class Messages_Controller extends Admin_Controller
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
+		
+		// check, has the form been submitted, if so, setup validation
+		if ($_POST)
+		{
+			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+
+			    //  Add some filters
+			$post->pre_filter('trim', TRUE);
+
+			// Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('action','required', 'alpha', 'length[1,1]');
+			$post->add_rules('message_id.*','required','numeric');
+
+			// Test to see if things passed the rule checks
+			if ($post->validate())
+			{	
+				if( $post->action == 'd' )				// Delete Action
+				{
+					foreach($post->message_id as $item)
+					{
+						// Delete Message
+						$message = ORM::factory('message')->find($item);
+						$message->delete( $item );
+					}
+					
+					$form_saved = TRUE;
+					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+				}
+				elseif( $post->action == 'n' )			// Not Spam
+				{
+					foreach($post->message_id as $item)
+					{
+						// Update Message Level
+						$message = ORM::factory('message')->find($item);
+						if ($message->loaded)
+						{
+							$message->message_level = '1';
+							$message->save();
+						}
+					}
+					
+					$form_saved = TRUE;
+					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+				}
+				elseif( $post->action == 's' )			// Spam
+				{
+					foreach($post->message_id as $item)
+					{
+						// Update Message Level
+						$message = ORM::factory('message')->find($item);
+						if ($message->loaded)
+						{
+							$message->message_level = '99';
+							$message->save();
+						}
+					}
+					
+					$form_saved = TRUE;
+					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+				}
+			}
+			// No! We have validation errors, we need to show the form again, with the errors
+			else
+			{
+				// repopulate the form fields
+				$form = arr::overwrite($form, $post->as_array());
+
+				// populate the error fields, if any
+				$errors = arr::overwrite($errors, $post->errors('message'));
+				$form_error = TRUE;
+			}
+		}		
+		
 		
 		// Pagination
 		$pagination = new Pagination(array(
@@ -116,6 +173,25 @@ class Messages_Controller extends Admin_Controller
 			->where($filter)
 			->orderby('message_date','desc')
 			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+			
+		// Get Message Count
+		// ALL
+		$this->template->content->count_all = ORM::factory('message')
+			->join('reporter','message.reporter_id','reporter.id')
+			->where('service_id', $service_id)
+			->count_all();
+		// Trusted
+		$this->template->content->count_trusted = ORM::factory('message')
+			->join('reporter','message.reporter_id','reporter.id')
+			->where('service_id', $service_id)
+			->where("( reporter.level_id = '4' OR reporter.level_id = '5' ) AND ( message.message_level != '99' )")
+			->count_all();
+		// Spam
+		$this->template->content->count_spam = ORM::factory('message')
+			->join('reporter','message.reporter_id','reporter.id')
+			->where('service_id', $service_id)
+			->where("message.message_level = '99'")
+			->count_all();
 
 		$this->template->content->messages = $messages;
 		$this->template->content->service_id = $service_id;
@@ -133,7 +209,7 @@ class Messages_Controller extends Admin_Controller
 
 		// Message Type Tab - Inbox/Outbox
 		$this->template->content->type = $type;
-		$this->template->content->period = $period;
+		$this->template->content->level = $level;
 		
 		// Javascript Header
 		$this->template->js = new View('admin/messages_js');

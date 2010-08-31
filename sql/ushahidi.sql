@@ -674,7 +674,7 @@ CREATE TABLE IF NOT EXISTS `message`                                            
     `message_detail` text default NULL,                                             -- field description
     `message_type` TINYINT default 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',  -- field description
     `message_date` DATETIME default NULL,                                           -- field description
-    `message_level` TINYINT NULL DEFAULT 0,                                         -- field description
+    `message_level` TINYINT NULL DEFAULT 0 COMMENT '0 - UNREAD, 1 - READ, 99 - SPAM',                                         -- field description
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1522,7 +1522,7 @@ CREATE TABLE `mhi_log` (
 CREATE TABLE `mhi_log_actions` (
   `id` int(11) NOT NULL,
   `description` text NOT NULL,
-  PRIMARY KEY  (`int`)
+  PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `mhi_log_actions` (`id`, `description`) VALUES

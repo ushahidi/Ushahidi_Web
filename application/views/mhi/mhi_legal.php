@@ -117,6 +117,8 @@
 					</ol>
 				</p>
 
+				<p>We reserve the right to reclaim user names on behalf of businesses or individuals that hold legal claim or trademark on those user names. Accounts using business names and/or logos to mislead others will be permanently suspended.</p>
+
 				<p>Violations of system or network security may result in civil or criminal liability. You agree that it is your responsibility to install anti-virus software and related protections against viruses, Trojan horses, worms, time bombs, cancelbots, or other computer programming routines or engines that are intended to damage, destroy, disrupt, or otherwise impair a computer's functionality or operation.</p>
 
 				<h4>Parental Notice</h4>

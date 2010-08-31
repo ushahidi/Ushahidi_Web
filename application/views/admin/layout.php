@@ -34,6 +34,7 @@
 		echo "<script type=\"text/javascript\">
 			OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';
 			</script>";
+		echo html::stylesheet('media/css/openlayers','',true);
 	}
 	
 	// Load jQuery

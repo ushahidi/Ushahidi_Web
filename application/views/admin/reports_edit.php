@@ -177,7 +177,7 @@
                                     ?> 
                                 </div>
 
-			                    <div class="category">
+			                    <div class="report_category">
                         	    <?php
 															$selected_categories = array();
 															if (!empty($form['incident_category']) && is_array($form['incident_category'])) {
@@ -186,10 +186,7 @@
 															$columns = 2;
 															echo category::tree($categories, $selected_categories, 'incident_category', $columns);
 															?>
-			                        
-									<ul id="user_categories">
-			                        </ul>
-								</div>
+			                       								</div>
 							</div>
 							
 							<div id="custom_forms">

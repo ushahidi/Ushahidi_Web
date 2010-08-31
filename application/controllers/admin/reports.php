@@ -427,7 +427,15 @@ class Reports_Controller extends Admin_Controller
 				$form['incident_ampm'] = date('a', strtotime($message->message_date));
 				$form['person_first'] = $message->reporter->reporter_first;
 				$form['person_last'] = $message->reporter->reporter_last;
-
+				
+				// Does the sender of this message have a location?
+				if ($message->reporter->location->loaded)
+				{
+					$form['latitude'] = $message->reporter->location->latitude;
+					$form['longitude'] = $message->reporter->location->longitude;
+					$form['location_name'] = $message->reporter->location->location_name;
+				}
+				
 				// Retrieve Last 5 Messages From this account
 				$this->template->content->all_messages = ORM::factory('message')
 					->where('reporter_id', $message->reporter_id)

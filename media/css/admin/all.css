@@ -509,6 +509,10 @@ ul.tabset li a.active{
 	color:#636363;
 	background:#eee !important;
 }
+ul.tabset li a.active2{
+	color:#fff;
+	background:#C0C0C0 !important;
+}
 ul.tabset li a:hover{
 	color:#636363;
 	background:#f5f5f5;
@@ -1489,6 +1493,9 @@ table.p_replace td.special{
 	padding:2px;
 	display:none;
 }
+.spam_tr {
+	background-color:#ffffcc;
+}
 
 /*-- Forms --*/
 .forms_fields{
@@ -1934,6 +1941,59 @@ html[xmlns] .clearfix {
 * html .clearfix {
 	height: 1%;
 }
+
+/* Reporters */
+.reporters h3{
+	font-weight:bold;
+	color:#990000;
+	font-size:14px;
+	padding:0;
+	margin:0;
+}
+h4 span.highlight{
+	background-color:#ffffcc;
+	font-size: 15px;
+	font-weight:bold;
+	color:#000;
+}
+#reporter_location{
+	clear:both;
+	padding:10px;
+	margin:10px;
+	border:1px solid #ccc;
+}
+	#reporter_location h3{
+		color:#666;
+	}
+		#reporter_location h3 span{
+			font-weight:normal;
+			font-size:11px;
+		}
+	#reporter_location #ReporterMap{
+		height:250px;
+		width:600px;
+		border:1px solid #666;
+	}
+	/* Trusted Reporter */
+	ul.info li strong.reporters_4{
+		background-color:#005366;
+		color:#fff;
+		padding:2px;
+	}
+	.tab ul li a.reporters_tab_4{
+		background-color:#005366;
+		color:#fff;
+	}
+	/* Trusted + Verify Reporter */
+	ul.info li strong.reporters_5{
+		background-color:#339900;
+		color:#fff;
+		padding:2px;
+	}
+	.tab ul li a.reporters_tab_5{
+		background-color:#339900;
+		color:#fff;
+	}
 
 /*--  --*/
 /*--  --*/
