@@ -1935,5 +1935,38 @@ html[xmlns] .clearfix {
 	height: 1%;
 }
 
+/* Reporters */
+.reporters h3{
+	font-weight:bold;
+	color:#990000;
+	font-size:14px;
+	padding:0;
+	margin:0;
+}
+h4 span.highlight{
+	background-color:#ffffcc;
+	font-size: 15px;
+	font-weight:bold;
+	color:#000;
+}
+#reporter_location{
+	clear:both;
+	padding:10px;
+	margin:10px;
+	border:1px solid #ccc;
+}
+	#reporter_location h3{
+		color:#666;
+	}
+		#reporter_location h3 span{
+			font-weight:normal;
+			font-size:11px;
+		}
+	#reporter_location #ReporterMap{
+		height:250px;
+		width:600px;
+		border:1px solid #666;
+	}
+
 /*--  --*/
 /*--  --*/

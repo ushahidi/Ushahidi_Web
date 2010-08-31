@@ -2,6 +2,29 @@
 				<h2>
 					<?php admin::manage_subtabs("reporters"); ?>
 				</h2>
+				<!-- tabs -->
+				<div class="tabs">
+					<!-- tabset -->
+					<ul class="tabset">
+						<li><a href="#" class="active"><?php echo Kohana::lang('ui_admin.search');?> <?php echo Kohana::lang('ui_main.reporters'); ?></a></li>
+					</ul>
+
+					<!-- tab -->
+					<div class="tab">
+						<?php print form::open(NULL,array('method' => 'get',
+						 	'id' => 'searchReporters')); ?>
+						<div class="tab_form_item">
+							<?php print form::input('k', $keyword, ' class="text long"'); ?>
+						</div>
+						<div class="tab_form_item">
+							<?php print form::dropdown('s', $search_type_array, $search_type); ?>
+						</div>				
+						<div class="tab_form_item">
+							<a href="#" onclick="submitSearch()"><strong><?php echo Kohana::lang('ui_admin.search');?></strong></a>
+						</div>
+						<?php print form::close(); ?>			
+					</div>
+				</div>				
 				<?php
 				if ($form_error) {
 				?>
@@ -32,7 +55,7 @@
 				<!-- report-table -->
 				<div class="report-form">
 					<?php print form::open(NULL,array('id' => 'rptrListing',
-					 	'name' => 'orgListing')); ?>
+					 	'name' => 'rptrListing')); ?>
 						<input type="hidden" name="action" id="action" value="">
 						<input type="hidden" name="reporter_id" id="rptr_id_action" value="">
 						<div class="table-holder">
@@ -73,41 +96,60 @@
 								        $service_name = $service->service_name;
 							    		$service_userid = $reporter->service_userid;
 							    		$service_account = $reporter->service_account;
-							    		$reporter_first = $reporter->reporter_first;
-							    		$reporter_last = $reporter->reporter_last;
-							    		$reporter_email = $reporter->reporter_email;
-							    		$reporter_phone = $reporter->reporter_phone;
-							    		$reporter_ip = $reporter->reporter_ip;
-							    		$reporter_date = $reporter->reporter_date;
+											if ($keyword)
+											{
+												$service_account = str_ireplace($keyword,
+													"<span class=\"highlight\">$keyword</span>", $service_account);
+											}
+											
+							    		// Get Location Information
+										$location_id = "";
+										$location_name = "";
+										$latitude = "";
+										$longitude = "";
+										$location = $reporter->location;
+										if ($location->loaded)
+										{
+											$location_id = $location->id;
+											$location_name = $location->location_name;
+											$latitude = $location->latitude;
+											$longitude = $location->longitude;
+										}
+										
+										// Get Message Information
+										$message_count = $reporter->message->count();
+										
+										// Get Reporter Level
+										$reporter_level = $level_array[$level_id];
 										?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $reporter_first . ' ' . $reporter_last; ?></h4>
-													<p><?php echo $service_userid . ': ' . $service_account; ?>...</p>
+													<h4><?php echo $service_account; ?> <span>[<a href="<?php echo url::site()."admin/messages/index/".$service_id."?rid=".$reporter_id;?>">View Messages</a>]</span></h4>
 												</div>
+												<ul class="info">
+													<li class="none-separator"><?php echo Kohana::lang('ui_main.messages');?>: <strong><?php echo $message_count; ?></strong></li>
+													<li class="none-separator">Reporter Level: <strong><?php echo $reporter_level; ?></strong></li>
+												</ul>
 											</td>
 											<td class="col-3">
 												<div>
-													<h4><?php echo $service_name; ?></h4>
+													<?php echo $service_name; ?>
 												</div>
 											</td>
 											<td class="col-4">
 												<ul>
 													<li class="none-separator"><a href="#add" onClick="fillFields(
 	'<?php echo(rawurlencode($reporter_id)); ?>',
-	'<?php echo(rawurlencode($service_id)); ?>',
 	'<?php echo(rawurlencode($level_id)); ?>',
-	'<?php echo(rawurlencode($service_userid)); ?>',
-	'<?php echo(rawurlencode($service_account)); ?>',
-	'<?php echo(rawurlencode($reporter_first)); ?>',
-	'<?php echo(rawurlencode($reporter_last)); ?>',
-	'<?php echo(rawurlencode($reporter_email)); ?>',
-	'<?php echo(rawurlencode($reporter_phone)); ?>',
-	'<?php echo(rawurlencode($reporter_ip)); ?>',
-	'<?php echo(rawurlencode($reporter_date)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
-													<li><a href="javascript:orgAction('d','DELETE','<?php echo(rawurlencode($reporter_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
+	'<?php echo(rawurlencode($service_name)); ?>',
+	'<?php echo(rawurlencode($reporter->service_account)); ?>',
+	'<?php echo(rawurlencode($location_id)); ?>',
+	'<?php echo(rawurlencode($location_name)); ?>',	
+	'<?php echo(rawurlencode($latitude)); ?>',
+	'<?php echo(rawurlencode($longitude)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+													<li><a href="javascript:reporterAction('d','DELETE','<?php echo(rawurlencode($reporter_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>
 										</tr>
@@ -120,62 +162,61 @@
 					<?php print form::close(); ?>
 				</div>
 				
-				<div class="tabs">
+				<div class="tabs" id="add_edit_form" style="display:none;">
 					<!-- tabset -->
 					<a name="add"></a>
 					<ul class="tabset">
-						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
+						<li><a href="#add" class="active"><?php echo Kohana::lang('ui_main.edit');?></a></li>
 					</ul>
 					<!-- tab -->
-					<div class="tab">
+					<div class="tab reporters">
 						<?php print form::open(NULL,array('id' => 'rptrMain',
 						 	'name' => 'rptrMain')); ?>
+						<input type="hidden" name="action" 
+							id="action" value="a"/>
 						<input type="hidden" id="reporter_id" 
 							name="reporter_id" value="<?php echo $form['reporter_id']; ?>" />
-						<input type="hidden" name="action" 
-							id="action" value="a"/>							
+						<input type="hidden" id="service_account" name="service_account" value="">
+						<input type="hidden" id="service_name" name="service_name" value="">
+						<input type="hidden" id="location_id" name="location_id" value="">
+						<div style="clear:both;"></div>							
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.reporter');?>:</strong><br />
+							<h3 id="reporter_account"><?php echo $form['service_account']; ?></h3>
+						</div>
+						<div style="clear:both;"></div>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_main.service');?>:</strong><br />
-							<?php print form::dropdown('service_id', $service_array, ''); ?>
+							<h3 id="reporter_service"><?php echo $form['service_name']; ?></h3>
 						</div>
+						<div style="clear:both;"></div>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_main.reporter_level');?>:</strong><br />
-							<?php print form::dropdown('level_id', $level_array, ''); ?>
+							<?php print form::dropdown('level_id', $level_array, $form['level_id']); ?>
 						</div>
-						<!--div class="tab_form_item2">
-							<strong><?php echo Kohana::lang('ui_main.service_user_id');?>:</strong><br />
-							<?php //print form::input('service_userid', $form['service_userid'], ' class="text long"'); ?>
+						<div style="clear:both;"></div>
+						<div id="reporter_location">
+							<h3>Give this Reporter A Location <span>(Giving the reporter a location will allow their reports to be mapped immediately if they are trusted)</span></h3>
+							<div class="tab_form_item">
+								<strong><?php echo Kohana::lang('ui_main.location');?>:</strong><br />
+								<?php print form::input('location_name', $form['location_name'], ' class="text"'); ?>
+							</div>
+							<div class="tab_form_item">
+								<strong><?php echo Kohana::lang('ui_main.latitude');?>:</strong><br />
+								<?php print form::input('latitude', $form['latitude'], ' class="text"'); ?>
+							</div>
+							<div class="tab_form_item">
+								<strong><?php echo Kohana::lang('ui_main.longitude');?>:</strong><br />
+								<?php print form::input('longitude', $form['longitude'], ' class="text"'); ?>
+							</div>
+							<div style="clear:both;"></div>
+							<div class="tab_form_item">
+								<strong><?php echo Kohana::lang('ui_main.location');?>:</strong><br />
+								<div id="ReporterMap"></div>
+							</div>
+							<div style="clear:both;"></div>
 						</div>
-						<div class="tab_form_item2">
-							<strong><?php echo Kohana::lang('ui_main.service_username');?>:</strong><br />
-							<?php //print form::input('service_account', $form['service_account'], ' class="text long"'); ?>
-						</div-->
-						<!--div class="tab_form_item2">
-							<strong><?php echo Kohana::lang('ui_main.reporter_firstname');?>:</strong><br />
-							<?php //print form::input('reporter_first', $form['reporter_first'], ' class="text long"'); ?>
-						</div>
-						<div class="tab_form_item2">
-							<strong><?php echo Kohana::lang('ui_main.reporter_last_name');?>:</strong><br />
-							<?php //print form::input('reporter_last', $form['reporter_last'], ' class="text long"'); ?>
-						</div>
-						<div class="tab_form_item2">
-							<strong><?php echo Kohana::lang('ui_main.reporter_email');?>:</strong><br />
-							<?php //print form::input('reporter_email', $form['reporter_email'], ' class="text long"'); ?>
-						</div>
-						<div class="tab_form_item2">
-							<strong><?php echo Kohana::lang('ui_main.reporter_phone');?>:</strong><br />
-							<?php print form::input('reporter_phone', $form['reporter_phone'], ' class="text long"'); ?>
-						</div>
-						<div class="tab_form_item2">
-							<strong><?php echo Kohana::lang('ui_main.reporter_ip_address');?>:</strong><br />
-							<?php //print form::input('reporter_ip', $form['reporter_ip'], ' class="text long"'); ?>
-						</div>
-						<div class="tab_form_item2">
-							<strong><?php echo Kohana::lang('ui_main.reporter_date');?>:</strong><br />
-							<?php //print form::input('reporter_date', $form['reporter_date'], ' class="text long"'); ?>
-						</div-->
 						<div class="tab_form_item">
-							&nbsp;<br />
 							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
 						</div>
 						<?php print form::close(); ?>
@@ -183,24 +224,3 @@
 				</div>
 				
 			</div>
-			<script type="text/javascript">
-			// Levels JS
-			function fillFields(id, service_id, level_id, service_userid, service_account, 
-								reporter_first, reporter_last, 
-			                    reporter_email, reporter_phone, reporter_ip, 
-			                    reporter_date)
-			{
-				$("#reporter_id").attr("value", unescape(id));
-				$("#service_id").attr("value", unescape(service_id));
-				$("#level_id").attr("value", unescape(level_id));
-	    		$("#service_userid").attr("value", unescape(service_userid));
-	    		$("#service_account").attr("value", unescape(service_account));
-	    		$("#reporter_first").attr("value", unescape(reporter_first));
-	    		$("#reporter_last").attr("value", unescape(reporter_last));
-	    		$("#reporter_email").attr("value", unescape(reporter_email));
-	    		$("#reporter_phone").attr("value", unescape(reporter_phone));
-	    		$("#reporter_ip").attr("value", unescape(reporter_ip));
-	    		$("#reporter_date").attr("value", unescape(reporter_date));
-				
-			}
-			</script>

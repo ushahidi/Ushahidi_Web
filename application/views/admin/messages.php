@@ -155,7 +155,7 @@
 												}
 												else
 												{
-													?><li class="none-separator">From: <strong><?php echo $message_from; ?></strong><?php
+													?><li class="none-separator">From: <a href="<?php echo url::site()."admin/manage/reporters/?k=".urlencode($message_from);?>"><strong><?php echo $message_from; ?></strong></a><?php
 												}
 												?>
 											</ul>

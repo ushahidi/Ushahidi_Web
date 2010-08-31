@@ -16,7 +16,7 @@
 
 class Location_Model extends ORM
 {
-	protected $has_many = array('incident', 'media', 'incident_person', 'feed_item');
+	protected $has_many = array('incident', 'media', 'incident_person', 'feed_item', 'reporter');
 	protected $has_one = array('country');
 	
 	// Database table name

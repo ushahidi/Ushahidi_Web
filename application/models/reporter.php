@@ -16,7 +16,7 @@
 
 class Reporter_Model extends ORM
 {
-	protected $belongs_to = array('service','level');
+	protected $belongs_to = array('service','level','location');
 	protected $has_many = array('incident','message');
 	
 	// Database table name
