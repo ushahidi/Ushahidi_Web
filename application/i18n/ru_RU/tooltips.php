@@ -1,8 +1,8 @@
 <?php
 
 /**
- * FRONT END USER INTERFACE INTERNATIONALIZATION
- * Strings associated with the front end UI
+ * TOOLTIPS INTERNATIONALIZATION
+ * Helpful popup tips for admin and user interface
  *
  * translated by Ismailov A. altyni@gmail.com
  * 

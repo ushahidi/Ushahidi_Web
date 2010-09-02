@@ -1,8 +1,7 @@
 <?php
 
 /**
- * FRONT END USER INTERFACE INTERNATIONALIZATION
- * Strings associated with the front end UI
+ * SETTINGS INTERFACE INTERNATIONALIZATION
  *
  * translated by Ismailov A. altyni@gmail.com
  * 

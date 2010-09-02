@@ -1,8 +1,7 @@
 ﻿<?php
 
 /**
- * FRONT END USER INTERFACE INTERNATIONALIZATION
- * Strings associated with the front end UI
+ * INSTALLER INTERFACE INTERNATIONALIZATION
  *
  * Misprints, mistypes, language errors and mistakes, new vars are
  * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
