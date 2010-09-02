@@ -14,94 +14,11 @@
  */
 ?>
 			<div class="bg">
-				<h2><?php echo Kohana::lang('ui_admin.title')?></h2>
-				<!-- tabs -->
-				<div class="tabs">
-			
-				
-					<!-- tabset -->
-					<ul class="tabset">
-						<li>
-							<a href="#" class="active">
-								<?php echo Kohana::lang('ui_admin.header_add_edit'); ?>
-							</a>
-						</li>
-					</ul>
-					<!-- tab -->
-					<div class="tab">
-						<?php print form::open(NULL,array('id' => 'userMain',
-						 	'name' => 'userMain')); ?>
-						<input type="hidden" id="user_id" name="user_id" value="<?php echo $form['user_id']; ?>">
-						<?php if( $form['user_id'] == 1 ) echo '<input type="hidden" id="role" name="role" value="'.$form['user_id'].'">'; ?>
-						<input type="hidden" name="action" id="action" value="a">
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_admin.label_username');?></strong><br />
-							<?php print form::input('username', $form['username'], 
-								' class="text"'); ?>
-						</div>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_admin.label_password');?></strong><br />
-							<?php print form::password('password', $form['password'], 
-								' class="text"'); ?>
-						</div>
-						
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_admin.label_full_name');?></strong><br />
-							<?php print form::input('name', $form['name'], ' class="text"'); ?>
-						</div>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_admin.label_email');?></strong><br />
-							<?php print form::input('email', $form['email'], ' class="text"'); ?>
-						</div>
-						<?php if($form['user_id'] != 1) { ?>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_admin.label_role');?></strong><br />
-							<span class="my-sel-holder">
-								<?php print form::dropdown('role',
-									$roles,$form['role']); ?>
-							</span>
-						</div>
-						<?php } ?>
-						<div class="tab_form_item">
-							&nbsp;<br />
-							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
-						</div>
-						<?php print form::close(); ?>			
-					</div>
-				</div>
+				<h2>
+					<?php admin::user_subtabs("users"); ?>
+				</h2>
 				<!-- report-table -->
 				<div class="report-form">
-					<?php
-					if ($form_error) {
-						
-					?>
-						<!-- red-box -->
-						<div class="red-box">
-							<h3><?php echo Kohana::lang('ui_admin.error_msg');?></h3>
-							<ul>
-							<?php
-							foreach ($errors as $error_item => $error_description)
-							{
-								print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
-							}
-							?>
-							</ul>
-						</div>
-					<?php
-					}
-		
-					if ($form_saved) {
-					?>
-						<!-- green-box -->
-						<div class="green-box">
-							<h3>
-								<?php echo Kohana::lang('ui_admin.confirm_msg'); ?> 
-								<?php echo $form_action; ?>!
-							</h3>
-						</div>
-					<?php
-					}
-					?>
 					<!-- report-table -->
 					<?php print form::open(); ?>
 						<input type="hidden" name="action" id="action" value="">
@@ -110,10 +27,10 @@
 								<thead>
 									<tr>
 										<th class="col-1">
-											<?php echo Kohana::lang('ui_admin.header_user'); ?>
+											&nbsp;
 										</th>
 										<th class="col-2">
-											<?php echo Kohana::lang('ui_admin.header_email'); ?>
+											<?php echo Kohana::lang('ui_admin.header_user'); ?>
 										</th>
 										<th class="col-2">
 											<?php echo Kohana::lang('ui_admin.header_role');?>
@@ -159,32 +76,22 @@
 										<tr>
 											
 											<td class="col-1">
-												<div class="post">
-													<h4><?php echo $name; ?> (<?php echo $username; ?>)</h4>
-												</div>
+												&nbsp;
 											</td>
 											<td class="col-2">
-												<?php echo $email; ?>
+												<div class="post">
+													<h4><a href="<?php echo url::site() . 'admin/users/edit/' . $user_id; ?>"><?php echo $name; ?> (<?php echo $username; ?>)</a></h4>
+												</div>
+												<ul class="info">
+													<li class="none-separator"><?php echo Kohana::lang('ui_main.email');?>: <strong><?php echo $email; ?></strong></li>
+												</ul>
 											</td>
 											<td class="col-3">
-												<?php  
-													if( $role == "admin") 
-														echo Kohana::lang('ui_admin.admin_role');
-													else if ($role == "login")
-														echo Kohana::lang('ui_admin.login_role');
-													else 
-														echo Kohana::lang('ui_admin.superadmin_role');
-												?>
+												<?php echo strtoupper($role); ?>
 											</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#" 
-														onClick="fillFields(
-														'<?php echo(rawurlencode($user_id)); ?>',
-    													'<?php echo(rawurlencode($username)); ?>',
-														'<?php echo(rawurlencode($name)); ?>',
-														'<?php echo(rawurlencode($role));?>',
-														'<?php echo(rawurlencode($email)); ?>')">
+													<li class="none-separator"><a href="<?php echo url::site() . 'admin/users/edit/' . $user_id; ?>">
 														<?php echo Kohana::lang('ui_admin.edit_action');?>
 														</a></li>
 		<?php if($user_id != 1) { ?>
