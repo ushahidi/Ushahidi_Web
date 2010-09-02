@@ -355,6 +355,7 @@ $lang = array(
 	'requirements' => 'Requirements',
 	'reset_password' => 'Reset Password',
 	'retrieve_city_names' => 'Retrieve city names for the selected country',
+	'role' => 'Role',
 	'rss' => 'RSS',
 	'save' => 'Save',
 	'save_close' => 'Save & Close',

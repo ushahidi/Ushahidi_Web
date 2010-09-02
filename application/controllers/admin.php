@@ -50,7 +50,8 @@ class Admin_Controller extends Template_Controller
 		$this->session = Session::instance();
 		$this->auth->auto_login();
 		
-		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('login')) {
+		if ( ! $this->auth->logged_in('login'))
+		{
 			url::redirect('login');
 		}
 		
@@ -63,9 +64,9 @@ class Admin_Controller extends Template_Controller
 		$this->template->version = $version_number;
 
 		// Get Session Information
-		$user = new User_Model($_SESSION['auth_user']->id);
+		$this->user = new User_Model($_SESSION['auth_user']->id);
 
-		$this->template->admin_name = $user->name;
+		$this->template->admin_name = $this->user->name;
 
 		// Retrieve Default Settings
 		$this->template->site_name = Kohana::config('settings.site_name');

@@ -30,6 +30,12 @@ class Reports_Controller extends Admin_Controller
     */
 	function index($page = 1)
 	{
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "reports_view"))
+		{
+			url::redirect(url::site().'admin/dashboard');
+		}
+		
 		$this->template->content = new View('admin/reports');
 		$this->template->content->title = Kohana::lang('ui_admin.reports');
 
@@ -299,6 +305,12 @@ class Reports_Controller extends Admin_Controller
     */
 	function edit( $id = false, $saved = false )
 	{
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "reports_edit"))
+		{
+			url::redirect(url::site().'admin/dashboard');
+		}
+		
 		$this->template->content = new View('admin/reports_edit');
 		$this->template->content->title = Kohana::lang('ui_admin.create_report');
 
@@ -984,6 +996,12 @@ class Reports_Controller extends Admin_Controller
 
 	function download()
 	{
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "reports_download"))
+		{
+			url::redirect(url::site().'admin/dashboard');
+		}
+		
 		$this->template->content = new View('admin/reports_download');
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
@@ -1163,7 +1181,16 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js = new View('admin/reports_download_js');
 		$this->template->js->calendar_img = url::base() . "media/img/icon-calendar.gif";
 	}
-    function upload() {
+	
+	public function upload()
+	{
+	
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "reports_upload"))
+		{
+			url::redirect(url::site().'admin/dashboard');
+		}
+		
 		if($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->template->content = new View('admin/reports_upload');
 			$this->template->content->title = 'Upload Reports';
