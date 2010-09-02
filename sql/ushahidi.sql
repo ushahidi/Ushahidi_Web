@@ -674,7 +674,7 @@ CREATE TABLE IF NOT EXISTS `message`                                            
     `message_detail` text default NULL,                                             -- field description
     `message_type` TINYINT default 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',  -- field description
     `message_date` DATETIME default NULL,                                           -- field description
-    `message_level` TINYINT NULL DEFAULT 0,                                         -- field description
+    `message_level` TINYINT NULL DEFAULT 0 COMMENT '0 - UNREAD, 1 - READ, 99 - SPAM',                                         -- field description
 PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1201,7 +1201,7 @@ INSERT INTO `level` (`id`, `level_title`, `level_description`, `level_weight`) V
 (2, 'SPAM', 'SPAM', -1),
 (3, 'Untrusted', 'Untrusted', 0),
 (4, 'Trusted', 'Trusted', 1),
-(5, 'Trusted + Verifiy', 'Trusted + Verify', 2);
+(5, 'Trusted + Verify', 'Trusted + Verify', 2);
 
 
 

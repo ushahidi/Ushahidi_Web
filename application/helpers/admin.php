@@ -190,8 +190,6 @@ class admin_Core {
 
 		$menu .= ($this_sub_page == "layers") ? Kohana::lang('ui_main.layers')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/layers\">".Kohana::lang('ui_main.layers')."</a>";
 
-		$menu .= ($this_sub_page == "reporters") ? Kohana::lang('ui_main.reporters')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/reporters\">".Kohana::lang('ui_main.reporters')."</a>";
-
 		$menu .= ($this_sub_page == "scheduler") ? Kohana::lang('ui_main.scheduler') : "<a href=\"".url::site()."admin/manage/scheduler\">".Kohana::lang('ui_main.scheduler')."</a>";
 
 		echo $menu;
