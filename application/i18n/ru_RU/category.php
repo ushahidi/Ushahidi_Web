@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ *
+ * translated by Ismailov A. altyni@gmail.com
+ * 
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
+ */
+
 $lang = array
 (
 	'parent_id' => array
@@ -13,7 +26,7 @@ $lang = array
 	'category_title' => array
 	(
 		'required'		=> 'Введите название.',
-		'length'		=> 'Длинна Названия не может быть менее 3х и более 80 символов.',
+		'length'		=> 'Длина Названия не может быть менее 3х и более 80 символов.',
 	),
 
 	'category_description' => array
@@ -24,7 +37,7 @@ $lang = array
 	'category_color' => array
 	(
 		'required'		=> 'Задайте цвет категории.',
-		'length'		=> 'номер Цвета должен быть длинной 6 символов.',
+		'length'		=> 'Номер цвета должен быть длинной 6 символов.',
 	),
 
 	'category_image' => array
@@ -34,3 +47,4 @@ $lang = array
 		'size'		=> 'Файл не может быть больше 50КВ.'
 	),	
 );
+?>

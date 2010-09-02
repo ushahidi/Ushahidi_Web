@@ -1,11 +1,24 @@
 <?php
 
+/**
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ *
+ * translated by Ismailov A. altyni@gmail.com
+ * 
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
+ */
+
 $lang = array
 (
 	'layer_name' => array
 	(
-		'required'		=> 'Введите название наслоения.',
-		'length'		=> 'Длинна Названия наслоения не может быть менее 3х и более 80 символов.',
+		'required'	=> 'Введите название наслоения.',
+		'length'	=> 'Длина Названия наслоения не может быть менее 3х и более 80 символов.',
 	),
 
 	'layer_url' => array
@@ -17,8 +30,8 @@ $lang = array
 
 	'layer_color' => array
 	(
-		'required'		=> 'Введите цвет наслоения.',
-		'length'		=> 'Длинна цвета должна быть из 6 символов.',
+		'required'	=> 'Введите цвет наслоения.',
+		'length'	=> 'Длина цвета должна быть из 6 символов.',
 	),
 
 	'layer_file' => array
@@ -27,3 +40,4 @@ $lang = array
 		'type'		=> 'Файл повреждён или в неправильном формате. Правильные Форматы .KMZ, .KML.'
 	),	
 );
+?>

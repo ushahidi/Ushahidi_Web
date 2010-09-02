@@ -1,10 +1,16 @@
 <?php
 
 /**
- * SHARING INTERFACE INTERNATIONALIZATION
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
  *
-* translated by Ismailov A. altyni@gmail.com
- * ru_KG
+ * translated by Ismailov A. altyni@gmail.com
+ * 
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
  */
 
 $lang = array
@@ -17,33 +23,34 @@ $lang = array
     'sharing_key' => 'Ключ',
     'sharing_url' => array
 	(
-		'required'	=> 'Введите url сайта.',
-		'url'		=> 'Адрес Сайта введен неверно',
-		'valid'	=> 'Данный сайт не подходит по требованиям Ushahidi, или не был включен Sharing.',
+		'required'	=> 'Введите url сайта',
+		'url'		=> 'Адрес сайта введен неверно',
+		'valid'		=> 'Данный сайт не подходит по требованиям Ushahidi, или не был включен Sharing',
 		'exists'	=> 'URL сайта уже существует',
-		'edit'	=> 'Вы можете редактировать удаленно. Sharing может быть прерван или вы можете создать новый.'
+		'edit'		=> 'Вы можете редактировать удаленно. Sharing может быть прерван или Вы можете создать новый.'
 	),
 
-	'sharing_email' => array
+    'sharing_email' => array
 	(
-		'email'		  => 'Поле Email введен неверно.',
-		'required'	=> 'Введите Email Вашего Веб сайта. Зайдите а Параметры для добавления нового Email.',
+		'email'		=> 'Поле Email введен неверно.',
+		'required'	=> 'Введите Email Вашего веб сайта. Зайдите в Параметры для добавления нового Email.',
 	),	
 
-	'sharing_color' => array
+    'sharing_color' => array
 	(
-		'required'		=> 'Введите цвет.',
-		'length'		=> 'Длинна цвета должен быть 6 значным.',
+		'required'	=> 'Введите цвет',
+		'length'	=> 'Длина цвета должен быть 6 значным',
 	),
 
-	'sharing_limits' => array
+    'sharing_limits' => array
 	(
-		'required'		=> 'Введите уровень доступа.',
-		'between'		=> 'Уровень доступа введен неверно.',
+		'required'	=> 'Введите уровень доступа',
+		'between'	=> 'Уровень доступа введён неверно',
 	),
 
-	'sharing_type' => array
+    'sharing_type' => array
 	(
-		'between'		=> 'Тип Sharing введен неверно',
+		'between'	=> 'Тип Sharing введён неверно',
 	)	
 );
+?>

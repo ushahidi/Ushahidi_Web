@@ -1,9 +1,16 @@
 <?php
+
 /**
- * ADMIN INTERFACE INTERNATIONALIZATION
- * Strings associated with the Admin UI
-* translated by Ismailov A. altyni@gmail.com
- * ru_KG : russian_Kyrgyzstan
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ *
+ * translated by Ismailov A. altyni@gmail.com
+ * 
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
  */
 
 $lang = array
@@ -30,7 +37,7 @@ $lang = array
     'check_sms_settings' => 'Проверьте настройки СМС!',
     'cities_loaded' => 'Город переполнен',
     'code' => 'Код',
-    'code_out_of_sync' => 'Версия кода не синхронна.',
+    'code_out_of_sync' => 'Версия кода не синхронна',
     'comments' => 'Комменты',
     'confirm_msg' => 'Пользователь был',
     'confirmation_code' => 'Ваш код подтверждения уведомлений: ',
@@ -40,7 +47,7 @@ $lang = array
     'daily' => 'Ежедневный',
     'dashboard' => 'Доска',
     'database' => 'База данных',
-    'date_time' => 'Дата & Время',
+    'date_time' => 'Дата и время',
     'db_out_of_sync' => 'Версия БД не синхронна.',
     'delete_action' => 'удалить',
     'delete_action' => 'Удалить',
@@ -137,7 +144,7 @@ $lang = array
     'password_reset_subject' => 'Ushahidi пароль сброшен',
     'password_reset_message_line_1' => 'Дорогой/ая',
     'password_reset_message_line_2' => 'Мы получили просьбу сбросить пароль для',
-    'password_reset_message_line_3' => 'Чтобы поменять пароль, нажмите на ссылку ниже (или скопируйте и вставьте в URL броузера).',
+    'password_reset_message_line_3' => 'Чтобы поменять пароль, нажмите на ссылку ниже (или скопируйте и вставьте в URL браузера).',
     'password_reset_message_line_4' => 'Как вы просили, ваш пароль был изменен. Ваш новый пароль следующий',
     'phone' => 'Phone',
     'pm' => 'PM',

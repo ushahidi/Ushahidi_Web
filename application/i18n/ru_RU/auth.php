@@ -1,11 +1,24 @@
 <?php
 
+/**
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ *
+ * translated by Ismailov A. altyni@gmail.com
+ * 
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
+ */
+
 $lang = array
 (
 	'name' => array
 	(
 		'required'		=> 'Введите Имя.',
-		'length'		=> 'Длинна Поля Имени не может содержать менее 3х и более 100 символов.',
+		'length'		=> 'Длина Поля Имени не может содержать менее 3х и более 100 символов.',
 		'standard_text' => 'Поле имя пользователя содержит недопустимые символы.',
 		'login error'	=> 'Введите правильное имя пользователя.'
 	),
@@ -14,7 +27,7 @@ $lang = array
 	(
 		'required'	  => 'Введите Email.',
 		'email'		  => 'Ваш Email адрес введен неверно, введите правильно.',
-		'length'	  => 'Длинна Email адреса не может быть менее 4х и более 64 символов.',
+		'length'	  => 'Длина Email адреса не может быть менее 4х и более 64 символов.',
 		'exists'	  => 'Данный Email уже используется другим пользователем.',
 		'login error' => 'Введите правильный Email адрес.'
 	),
@@ -22,7 +35,7 @@ $lang = array
 	'username' => array
 	(
 		'required'		=> 'Введите имя пользователя.',
-		'length'		=> 'Длинна Имени пользователя не может быть менее 2х и более 16 символов.',
+		'length'		=> 'Длина Имени пользователя не может быть менее 2х и более 16 символов.',
 		'alpha' => 'Имя пользователя должна содержать только буквы.',
 		'admin' 		=> ' Роль пользователя Admin не может быть изменен.',
 		'superadmin'	=> 'Роль пользователя Super Admin не может быть изменен.',
@@ -33,7 +46,7 @@ $lang = array
 	'password' => array
 	(
 		'required'		=> 'Введите  пароль.',
-		'length'		=> 'Длинна Пароли должна быть не менее 5 и не более 16 символов.',
+		'length'		=> 'Длина Пароли должна быть не менее 5 и не более 16 символов.',
 		'alpha_numeric'		=> 'Пароль должен содержать только цифры и буквы.',
 		'login error'	=> 'Пароль введен неверно.',
 		'matches'		=> 'Введите идентичный пароль в двух полях для пароля.'
@@ -58,3 +71,4 @@ $lang = array
         ),
 
 );
+?>

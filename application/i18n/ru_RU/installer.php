@@ -1,9 +1,14 @@
 ﻿<?php
 
 /**
- * INSTALLER INTERFACE INTERNATIONALIZATION
- * translated by Ismailov A. altyni@gmail.com 
- * ru_KG
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ *
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
  */
 
 $lang = array
@@ -89,3 +94,4 @@ $lang = array
     'username_description' => 'Your database username',
     'view_site' => 'View your website'
 );
+?>

@@ -1,10 +1,16 @@
 <?php
 
 /**
- * STATS INTERFACE INTERNATIONALIZATION
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
  *
-* translated by Ismailov A. altyni@gmail.com
- * ru_KG
+ * translated by Ismailov A. altyni@gmail.com
+ * 
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
  */
 
 $lang = array
@@ -12,12 +18,12 @@ $lang = array
     'approved' => 'Подтверждено',
     'categories' => 'Категории',
     'category_impact' => 'Влияние категории',
-    'category_impact_description' => 'Данный график позволяет линейно видеть отчёты по категориям в промежутке времени.  Прокрутите с лева на право чтобы увидеть сравнительный обзор между разными категориями. Подведите мышкой чтобы увидеть детали.',
+    'category_impact_description' => 'Данный график позволяет линейно видеть отчёты по категориям в промежутке времени.  Прокрутите с лева на право чтобы увидеть сравнительный обзор между разными категориями. Подведите мышкой чтобы увидеть детали',
     'choose_date_range' => 'Выберите интервал даты',
     'countries' => 'Страны',
     'country' => 'Страна',
-    'country_breakdown' => 'Граница Страны',
-    'description' => 'Это отдел статистики. Описание будет добавлено скоро, пока посмотрите по ссылкам ниже.',
+    'country_breakdown' => 'Граница страны',
+    'description' => 'Это отдел статистики. Описание будет добавлено скоро, пока посмотрите по ссылкам ниже',
     'error' => 'Ошибка',
     'glossary' => 'Глоссарий',
     'hit_summary' => 'Статистика щелчков',
@@ -37,9 +43,10 @@ $lang = array
     'time_range_all' => 'Все',
     'unapproved' => 'Неподтверждено',
     'unique_visitors' => 'Уникальные посетители',
-    'unique_visitors_description' => 'Количество посетителей сайта которые зашли впервые; Уникальные посетители определены используя cookies. Если у посетителя не включен cookies, то они будут посчитаны по IP адресу, броузеру, по плагинам и по ОС',
+    'unique_visitors_description' => 'Количество посетителей сайта которые зашли впервые; Уникальные посетители определены с помощью cookies. Если у посетителя не включены cookies, то они будут посчитаны по IP адресу, браузеру, плагинам, и по ОС',
     'verified' => 'Проверен',
     'visitor_summary' => 'Статистика посетителей',
     'visits' => 'Посещения',
-    'visits_description' => 'Посещение - количество уникальных посетителей которые вернулись на сайт после 30 минут после заверщения'
+    'visits_description' => 'Посещение - количество уникальных посетителей которые вернулись на сайт после 30 минут после завершения'
 );
+?>

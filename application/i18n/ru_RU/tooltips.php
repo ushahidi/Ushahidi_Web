@@ -1,8 +1,16 @@
 <?php
+
 /**
- * TOOLTIPS INTERNATIONALIZATION
- * Helpful popup tips for admin and user interface
-* translated by Ismailov A. altyni@gmail.com
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ *
+ * translated by Ismailov A. altyni@gmail.com
+ * 
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
  */
 
 $lang = array
@@ -11,8 +19,8 @@ $lang = array
 	'settings_site_name' => 'Это название сайта который будет отображен в верхней части главной страницы.',
 	'settings_site_tagline' => 'Описание веб сайта в нескольких словах .',
 	'settings_site_email' => 'Это email на который будет отправлены все email уведомления и сообщения с формы контактов.',
-	'settings_alert_email' => 'Этот email будет использован для отправки уведомлений.',
-	'settings_locale' => 'Выствит язык на котором будет веб сайт.',
+	'settings_alert_email' => 'Этот email будет использован для отправки уведомлений',
+	'settings_locale' => 'Установить язык на котором будет веб сайт',
 	'settings_display_contact' => 'Включает и выключает панель контактов на главной странице.',
 	'settings_display_howtohelp' => 'Включает и выключает панель помощи на главной странице.',
 	'settings_display_items_per_page' => 'Количество сообщений которые будут показаны на одной странице (Главный).',
@@ -23,8 +31,8 @@ $lang = array
 	'settings_share_site_stats' => 'Позволяет получить статистику сообщений через API.',
 	'settings_allow_clustering' => 'Позволяет добавлять сообщения на одну и ту же точку на карте',
 	'settings_default_category_colors' => 'Выбрать один цвет для одной категории на сайте',
-	'settings_google_analytics' => 'Отслеживает посетителей Вашего сайта. Получите детальную статистику о посетителей',
-	'settings_twitter_configuration' => 'Выбрать хэштег который будет показан с твиттера',
+	'settings_google_analytics' => 'Отслеживает посетителей Вашего сайта. Получите детальную статистику о посетителях',
+	'settings_twitter_configuration' => 'Выбрать хэштег который будет показан из твиттера',
 
 	//Map Settings
 	'settings_default_location' => 'Страна где будет установлена платформа',
@@ -36,7 +44,6 @@ $lang = array
 	'settings_flsms_synchronize' => 'Синхронизирует сообщения с платформой Ushahidi',
 	'settings_flsms_text_1' => 'Телефонные номера через которые были получены сообщения',
 
-
 	//Email Settings
 	'settings_server_username' => 'Email адрес на который будет приходить сообщения',
 	'settings_server_password' => ' Пароль для Email адреса',
@@ -46,7 +53,7 @@ $lang = array
 	'settings_server_ssl_support' => 'Требуется для более безопасного обмена сообщениями',
 
 	// Admin Profile
-	'profile_username' => 'Имя пользователя не может быть изменен',
+	'profile_username' => 'Имя пользователя не может быть изменено',
 	'profile_name' => 'Полное имя',
 	'profile_email' => 'Ваш Email адрес',
 	'profile_password' => 'Ваш пароль. Оставьте пустым если вы хотите оставить старый пароль',

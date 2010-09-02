@@ -1,13 +1,22 @@
 <?php
 
+/**
+ * FRONT END USER INTERFACE INTERNATIONALIZATION
+ * Strings associated with the front end UI
+ *
+ * translated by Ismailov A. altyni@gmail.com
+ * 
+ * Misprints, mistypes, language errors and mistakes, new vars are
+ * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ *
+ * ru_RU
+ *
+ */
+
 $lang = array
 (
 	/*** User Email Notifications ***/
 	// Alerts
-
-
-
-
 
 	/*** Administrator Email Notifications ***/
 
@@ -27,15 +36,15 @@ $lang = array
 	// Notify Administrators that a new comment has been submitted
 	'admin_new_comment' => array
 	(
-		'subject'		=> 'Новый коммент',
-		'message'		=> 'Новый коммент был отправлен на Ваш веб сайт в ответ на:'
+		'subject'		=> 'Новый комментарий',
+		'message'		=> 'Новый комментарий был отправлен на Ваш веб сайт в ответ на:'
 	),
 
 	// Notify Administrators that a new sms has been received
 	'admin_new_sms' => array
 	(
-		'subject'		=> 'Новый СМС',
-		'message'		=> 'Новый СМС было отправлено на Ваш веб сайт.'
+		'subject'		=> 'Новое СМС',
+		'message'		=> 'Новое СМС было отправлено на Ваш веб сайт.'
 	),
 
 	// Notify Administrators that a new email has been received
@@ -45,3 +54,4 @@ $lang = array
 		'message'		=> 'Новое письмо было отправлено на Ваш веб сайт.'
 	)
 );
+?>
