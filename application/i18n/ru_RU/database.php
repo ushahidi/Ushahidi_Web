@@ -1,9 +1,9 @@
 <?php
 
 /**
+ * DATABASE INTERFACE INTERNATIONALIZATION
  *
- * Misprints, mistypes, language errors and mistakes, new vars are
- * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
+ * Translated by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
  *
  * ru_RU
  *
@@ -11,7 +11,7 @@
 
 $lang = array
 (
-	'table_not_found' => 'Table "%s" cannot be found in the database. Please make sure you are using the latest version of the database for this version of Ushahidi',
-	'error'           => 'Database error: %s'
+	'table_not_found' => 'Таблица "%s" не может быть найдена в базе данных. Пожалуйста убедитесь, что Вы используете последнюю версию Ushahidi',
+	'error'           => 'Ошибка базы данных: %s'
 );
 ?>
