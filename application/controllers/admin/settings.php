@@ -22,11 +22,11 @@ class Settings_Controller extends Admin_Controller
 		parent::__construct();
 		$this->template->this_page = 'settings';
 
-		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "settings"))
-		{
-			url::redirect(url::site().'admin/dashboard');
-		}
+		// If this is not a super-user account, redirect to dashboard
+		if(!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
+		        {
+			url::redirect('admin/dashboard');
+			}
 
 		$this->cache = Cache::instance();
 	}
@@ -767,14 +767,11 @@ class Settings_Controller extends Admin_Controller
 
 	    $this->template->content->form = $form;
 	    $this->template->content->errors = $errors;
-		$this->template->content->form_error = $form_error;
-		$this->template->content->form_saved = $form_saved;
-		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
-		$this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
-
+	    $this->template->content->form_error = $form_error;
+	    $this->template->content->form_saved = $form_saved;
+	    $this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+	    $this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
 	}
-
-
 
 	/**
 	 * Retrieves cities listing using GeoNames Service
@@ -797,7 +794,7 @@ class Settings_Controller extends Admin_Controller
 
 			// GeoNames WebService URL + Country ISO Code
 			$geonames_url = "http://ws.geonames.org/search?country="
-                            .$iso."&featureCode=PPL&featureCode=PPLA&featureCode=PPLC";
+                            .$iso."&language=ru&featureCode=PPL&featureCode=PPLA&featureCode=PPLC";
 
 			// Grabbing GeoNames requires cURL so we will check for that here.
 			if (!function_exists('curl_exec'))
@@ -816,8 +813,6 @@ class Settings_Controller extends Admin_Controller
 			$err = curl_errno( $ch );
 			curl_close($ch);
 
-			// $xmlstr = file_get_contents($geonames_url);
-
 			// No Timeout Error, so proceed
 			if ($err == 0) {
 				// Reset All Countries City Counts to Zero
@@ -833,7 +828,7 @@ class Settings_Controller extends Admin_Controller
 
 				$sitemap = new SimpleXMLElement($xmlstr);
 				foreach($sitemap as $city)
-	            {
+				{
 					if ($city->name && $city->lng && $city->lat)
 					{
 						$newcity = new City_Model();
