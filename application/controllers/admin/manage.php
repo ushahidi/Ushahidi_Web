@@ -36,10 +36,10 @@ class Manage_Controller extends Admin_Controller
 		parent::__construct();
 		$this->template->this_page = 'manage';
 		
-		// If this is not a super-user account, redirect to dashboard
-		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
-        {
-             url::redirect('admin/dashboard');
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "manage"))
+		{
+			url::redirect(url::site().'admin/dashboard');
 		}
 	}
 	

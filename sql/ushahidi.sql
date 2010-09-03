@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 27
+-- version 29
 -- http://www.ushahidi.com
 
 
@@ -764,7 +764,19 @@ CREATE TABLE IF NOT EXISTS `pending_users` (                                    
 CREATE TABLE IF NOT EXISTS `roles` (                                                -- table description
     `id` int(11) unsigned NOT NULL auto_increment,                                  -- field description
     `name` varchar(32) NOT NULL,                                                    -- field description
-    `description` varchar(255) NOT NULL,                                            -- field description
+    `description` varchar(255) NOT NULL,                                         -- field description
+	`reports_view` tinyint(4) NOT NULL default '0',
+	`reports_edit` tinyint(4) NOT NULL default '0',
+	`reports_evaluation` tinyint(4) NOT NULL default '0',
+	`reports_comments` tinyint(4) NOT NULL default '0',
+	`reports_download` tinyint(4) NOT NULL default '0',
+	`reports_upload` tinyint(4) NOT NULL default '0',
+	`messages` tinyint(4) NOT NULL default '0',
+	`messages_reporters` tinyint(4) NOT NULL default '0',
+	`stats` tinyint(4) NOT NULL default '0',
+	`settings` tinyint(4) NOT NULL default '0',
+	`manage` tinyint(4) NOT NULL default '0',
+	`users` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -773,10 +785,10 @@ CREATE TABLE IF NOT EXISTS `roles` (                                            
 
 -- Dumping data for table `roles`
 
-INSERT INTO `roles` (`id`, `name`, `description`) VALUES
-(1, 'login', 'Login privileges, granted after account confirmation'),
-(2, 'admin', 'Administrative user, has access to almost everything.'),
-(3, 'superadmin','Super administrative user, has access to everything.');
+INSERT INTO `roles` (`id`, `name`, `description`, `reports_view`, `reports_edit`, `reports_evaluation`, `reports_comments`, `reports_download`, `reports_upload`, `messages`, `messages_reporters`, `stats`, `settings`, `manage`, `users`) VALUES
+(1, 'login', 'Login privileges, granted after account confirmation', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(2, 'admin', 'Administrative user, has access to almost everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(3, 'superadmin','Super administrative user, has access to everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
 
 /**
@@ -1559,4 +1571,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '1.1.0' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '28' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '29' WHERE `id`=1 LIMIT 1;

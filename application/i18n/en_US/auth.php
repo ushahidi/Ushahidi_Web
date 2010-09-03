@@ -47,7 +47,9 @@ $lang = array
 	'roles' => array
 	(
 		'required' => 'You must define at least one role.',
-		'values' => 'You must select either ADMIN or USER role.'
+		'alpha_numeric' => 'Invalid role format.',
+		'values' => 'You must select either ADMIN or USER role.',
+		'length'		=> 'The role field must be at least 5 and no more than 30 characters long.',
 	),
 	
 	'resetemail' => array
