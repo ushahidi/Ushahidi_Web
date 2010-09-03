@@ -21,6 +21,12 @@ class Comments_Controller extends Admin_Controller
 		parent::__construct();
 	
 		$this->template->this_page = 'reports';
+		
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "reports_comments"))
+		{
+			url::redirect(url::site().'admin/dashboard');
+		}
 	}
 	
 	

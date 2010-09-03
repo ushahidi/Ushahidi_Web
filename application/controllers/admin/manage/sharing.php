@@ -22,10 +22,10 @@ class Sharing_Controller extends Admin_Controller
 		parent::__construct();
 		$this->template->this_page = 'settings';
 		
-		// If this is not a super-user account, redirect to dashboard
-		if (!$this->auth->logged_in('admin'))
-        {
-             url::redirect('admin/dashboard');
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "manage"))
+		{
+			url::redirect(url::site().'admin/dashboard');
 		}
 	}
 	

@@ -20,10 +20,10 @@ class Stats_Controller extends Admin_Controller
 		parent::__construct();
 		$this->template->this_page = 'stats';
 		
-		// If this is not a super-user account, redirect to dashboard
-		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "stats"))
 		{
-			 url::redirect('admin/dashboard');
+			url::redirect(url::site().'admin/dashboard');
 		}
 	}
 	
