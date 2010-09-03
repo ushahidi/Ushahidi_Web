@@ -21,9 +21,9 @@ The follwing is a list of PHP extensions that must be installed on your server i
 - mbstring (http://php.net/mbstring) which speeds up Kohana's UTF-8 functions.
 - cURL (http://php.net/curl) which is used to access remote sites.
 - filter (http://php.net/filter) filters data by either validating or sanitizing it.
-- JSON (php.net/json)implements the JavaScript Object Notation (JSON) data-interchange format.
-- ctype (php.net/ctype) the functions provided by this extension check whether a character or string falls into a certain character class according to the current locale.
-- hash (php.net/hash) Message Digest (hash) engine.
+- JSON (http://php.net/json)implements the JavaScript Object Notation (JSON) data-interchange format.
+- ctype (http://php.net/ctype) the functions provided by this extension check whether a character or string falls into a certain character class according to the current locale.
+- hash (http://php.net/hash) Message Digest (hash) engine.
 
 * Need to figure out what extensions you already have installed on your server? Here are instructions to do just that: http://jontangerine.com/silo/php/phpinfo/
 
