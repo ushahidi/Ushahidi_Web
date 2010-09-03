@@ -37,7 +37,13 @@ class Geocoder_Core {
 					$request_url = $base_url . "&q=" . urlencode($address);
 
 					//$xml = simplexml_load_file(utf8_encode($request_url)) or die("url not loading");
-					$page = file_get_contents($request_url);
+
+					$curl = curl_init();
+					curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+					curl_setopt($curl, CURLOPT_URL, $request_url);
+					$page = curl_exec($curl);
+					curl_close($curl);
+
 					$page = utf8_encode($page);
 					$xml = new SimpleXMLElement($page);
 
@@ -107,7 +113,12 @@ class Geocoder_Core {
 				$request_url = $feed_url;
 			}
 			
-			$georss = file_get_contents($request_url);
+			$curl = curl_init();
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($curl, CURLOPT_URL, $request_url);
+			$georss = curl_exec($curl);
+			curl_close($curl);
+
 			//$georss = utf8_encode($georss);
 
 			return $georss;

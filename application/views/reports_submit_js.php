@@ -195,15 +195,16 @@
 		{
 			$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
 			address = $("#location_find").val();
+
 			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
 				function(data){
 					if (data.status == 'success'){
 						var lonlat = new OpenLayers.LonLat(data.message[1], data.message[0]);
-						lonlat.transform(proj_4326,proj_900913);
+						lonlat.transform(proj_4326, proj_900913);
 					
 						m = new OpenLayers.Marker(lonlat);
 						markers.clearMarkers();
-				    	markers.addMarker(m);
+					    	markers.addMarker(m);
 						map.setCenter(lonlat, <?php echo $default_zoom; ?>);
 						
 						// Update form values
@@ -211,14 +212,14 @@
 						$("#longitude").attr("value", data.message[1]);
 						$("#location_name").attr("value", $("#location_find").val());
 					} else {
-						alert(address + " not found!\n\n***************************\nEnter more details like city, town, country\nor find a city or town close by and zoom in\nto find your precise location");
+						alert(address + "<?php echo Kohana::lang('report.geocode_not_found'); ?>");
 					}
 					$('#find_loading').html('');
 				}, "json");
+
 			return false;
 		}
-		
-		
+
 		var map;
 		var thisLayer;
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
@@ -286,7 +287,7 @@
 					l.transform(proj_4326, map.getProjectionObject());
 					m = new OpenLayers.Marker(l);
 					markers.clearMarkers();
-			    	markers.addMarker(m);
+			    		markers.addMarker(m);
 					map.setCenter(l, <?php echo $default_zoom; ?>);
 					
 					// Update form values (jQuery)

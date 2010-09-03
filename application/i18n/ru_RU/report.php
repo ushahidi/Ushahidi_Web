@@ -197,5 +197,7 @@ $lang = array
 	'view_incident_reports_title' => 'Краткое описание',
 	'view_incident_reports_location' => 'Местоположение',
 	'view_incident_reports_date' => 'Дата',
+
+	'geocode_not_found' => ' не найден!\nВведите больше информации,\nнапример, город и страну,\nили введите ближайщий город\nи переместите указатель к нужной позиции.'
 );
 ?>

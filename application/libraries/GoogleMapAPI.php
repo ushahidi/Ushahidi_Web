@@ -2512,7 +2512,13 @@ class GoogleMapAPI_Core {
      */
     function fetchURL($url) {
 
-        return file_get_contents($url);
+	$curl = curl_init();
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($curl, CURLOPT_URL, $url);
+	$url = curl_exec($curl);
+	curl_close($curl);
+
+	return($url);
 
     }
 

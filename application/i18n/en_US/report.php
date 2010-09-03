@@ -153,5 +153,8 @@ $lang = array
 	(
 		'alpha'		=> 'Please enter a valid value for Information Probability',
 		'length'		=> 'Please enter a valid value for Information Probability'
-	)
+	),
+
+	'geocode_not_found' => ' not found!\n\n***************************\nEnter more details like city, town, country\nor find a city or town close by and zoom in\nto find your precise location.'
 );
+?>
