@@ -108,7 +108,7 @@
 											</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($sharing_id)); ?>','<?php echo(rawurlencode($sharing_name)); ?>','<?php echo(rawurlencode($sharing_url)); ?>','<?php echo(rawurlencode($sharing_color)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($sharing_id)); ?>','<?php echo($sharing_name); ?>','<?php echo(rawurlencode($sharing_url)); ?>','<?php echo(rawurlencode($sharing_color)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
 													<li class="none-separator"><a href="javascript:sharingAction('v','SHOW/HIDE','<?php echo(rawurlencode($sharing_id)); ?>')"<?php if ($sharing_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
 <li><a href="javascript:sharingAction('d','DELETE','<?php echo(rawurlencode($sharing_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>

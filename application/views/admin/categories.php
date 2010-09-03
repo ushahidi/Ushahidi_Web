@@ -112,9 +112,9 @@
 											</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo($category_title); ?>','<?php echo($category_description); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
 													<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
-<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
+													<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>
 										</tr>
@@ -222,10 +222,8 @@
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_main.image_icon');?>:</strong><br />
 							<?php
-								
 								// I removed $category_image from the second parameter to fix bug #161
 								print form::upload('category_image', '', '');
-							
 							?>
 						</div>
 						<div style="clear:both"></div>
