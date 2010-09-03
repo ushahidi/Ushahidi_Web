@@ -99,11 +99,11 @@
 											<td class="col-4">
 												<ul>
 													<li class="none-separator"><a href="#add" onClick="fillFields(
-	'<?php echo(rawurlencode($page_id)); ?>',
-	'<?php echo($page_title); ?>',
-	'<?php echo($page_tab); ?>',
-	'<?php echo($page_description); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
-	<li class="none-separator"><a href="javascript:pageAction('v','SHOW/HIDE','<?php echo(rawurlencode($page_id)); ?>')"<?php if ($page_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
+														'<?php echo(rawurlencode($page_id)); ?>',
+														'<?php echo(rawurlencode($page_title)); ?>',
+														'<?php echo(rawurlencode($page_tab)); ?>',
+														'<?php echo(rawurlencode($page_description)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+													<li class="none-separator"><a href="javascript:pageAction('v','SHOW/HIDE','<?php echo(rawurlencode($page_id)); ?>')"<?php if ($page_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
 													<li><a href="javascript:pageAction('d','DELETE','<?php echo(rawurlencode($page_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
 											</td>

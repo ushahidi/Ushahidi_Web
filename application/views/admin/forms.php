@@ -141,7 +141,7 @@
 										<td>&nbsp;</td>
 										<td class="col-4">
 											<ul>
-												<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($form_id)); ?>','<?php echo($form_title); ?>','<?php echo($form_description); ?>')">Edit</a></li>
+												<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($form_id)); ?>','<?php echo(rawurlencode($form_title)); ?>','<?php echo(rawurlencode($form_description)); ?>')">Edit</a></li>
 												<li class="none-separator"><a href="javascript:formAction('h','SHOW/HIDE','<?php echo(rawurlencode($form_id)); ?>')"<?php if ($form_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.active');?></a></li>
 												<li><a href="javascript:formAction('d','DELETE','<?php echo(rawurlencode($form_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>

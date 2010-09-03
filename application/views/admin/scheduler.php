@@ -153,7 +153,7 @@
 											<td class="col-3">&nbsp;</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($scheduler_id)); ?>','<?php echo($scheduler_name); ?>','<?php echo $scheduler_weekday; ?>','<?php echo $scheduler_day; ?>','<?php echo $scheduler_hour; ?>','<?php echo $scheduler_minute; ?>')">Edit</a></li>
+													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($scheduler_id)); ?>','<?php echo(rawurlencode($scheduler_name)); ?>','<?php echo $scheduler_weekday; ?>','<?php echo $scheduler_day; ?>','<?php echo $scheduler_hour; ?>','<?php echo $scheduler_minute; ?>')">Edit</a></li>
 													<li class="none-separator"><a href="javascript:schedulerAction('v','ACTIVATE/DEACTIVATE','<?php echo(rawurlencode($scheduler_id)); ?>')"<?php if ($scheduler_active) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.active');?></a></li>
 												</ul>
 											</td>

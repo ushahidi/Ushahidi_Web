@@ -19,12 +19,12 @@
 function fillFields(id, page_title, page_tab,
  page_description )
 {
-	$("#page_id").attr("value", unescape(id));
-	$("#page_title").attr("value", unescape(page_title));
-	$("#page_tab").attr("value", unescape(page_tab));
+	$("#page_id").attr("value", decodeURIComponent(id));
+	$("#page_title").attr("value", decodeURIComponent(page_title));
+	$("#page_tab").attr("value", decodeURIComponent(page_tab));
 	$("#page_description").attr("value", 
-		unescape(page_description));
-	tinyMCE.getInstanceById("page_description").setContent(unescape(page_description));
+		decodeURIComponent(page_description));
+	tinyMCE.getInstanceById("page_description").setContent(decodeURIComponent(page_description));
 }
 
 // Ajax Submission

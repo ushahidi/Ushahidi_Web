@@ -17,12 +17,12 @@
 // Categories JS
 function fillFields(id, parent_id, category_title, category_description, category_color, locale)
 {
-	$("#category_id").attr("value", unescape(id));
-	$("#parent_id").attr("value", unescape(parent_id));
-	$("#category_title").attr("value", unescape(category_title));
-	$("#category_description").attr("value", unescape(category_description));
-	$("#category_color").attr("value", unescape(category_color));
-	$("#locale").attr("value", unescape(locale));
+	$("#category_id").attr("value", decodeURIComponent(id));
+	$("#parent_id").attr("value", decodeURIComponent(parent_id));
+	$("#category_title").attr("value", decodeURIComponent(category_title));
+	$("#category_description").attr("value", decodeURIComponent(category_description));
+	$("#category_color").attr("value", decodeURIComponent(category_color));
+	$("#locale").attr("value", decodeURIComponent(locale));
 }
 
 // Ajax Submission
