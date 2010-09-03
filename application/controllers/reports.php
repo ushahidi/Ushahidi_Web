@@ -202,7 +202,8 @@ class Reports_Controller extends Main_Controller {
 			'form_id'	  => '',
 			'custom_field' => array()
 		);
-		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+
+		// copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 
@@ -221,9 +222,11 @@ class Reports_Controller extends Main_Controller {
 		$form['incident_hour'] = "12";
 		$form['incident_minute'] = "00";
 		$form['incident_ampm'] = "pm";
+
 		// initialize custom field array
 		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
-		//GET custom forms
+
+		// GET custom forms
 		$forms = array();
 		foreach (ORM::factory('form')->find_all() as $custom_forms)
 		{

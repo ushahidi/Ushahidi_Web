@@ -73,7 +73,7 @@ class Upgrade_Controller extends Admin_Controller
 		if( $_POST ) {
 			
 			// For sanity sake, validate the data received from users.
-			$post = Validation::factory(array_merge($_POST,$_FILES));
+			$post = Validation::factory(array_merge($_POST, $_FILES));
 
 			// Add some filters
 			$post->pre_filter('trim', TRUE);
@@ -87,13 +87,13 @@ class Upgrade_Controller extends Admin_Controller
 					
 				if($post->chk_db_backup_box == 1) {
 					
-					//uprade tables.
+					// uprade tables
 					$upgrade->log[] = sprintf("Upgrade table.");
 					$this->_process_db_upgrade();
 					$upgrade->log[] = sprintf("Table upgrade successful.");
 					
-					// backup database.
-					//is gzip enabled ?
+					// backup database
+					// is gzip enabled ?
 					$gzip = Kohana::config('config.output_compression');
 					$error = $this->_do_db_backup( $gzip );
 					$upgrade->log[] = sprintf("Database backup in progress");		
@@ -101,11 +101,9 @@ class Upgrade_Controller extends Admin_Controller
 					if( empty( $error ) ) {
 						$upgrade->log[] = sprintf("Database backup went successful.");
 						$this->template->content->logs = $upgrade->log;
-      					
 					} else {
 						$upgrade->errors[] = sprintf("Oops, database backup failed");
-      					$this->template->content->errors = $upgrade->errors;
-      					
+      						$this->template->content->errors = $upgrade->errors;
 					}
 					
 				} else {

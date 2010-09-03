@@ -268,11 +268,13 @@
 			map.events.register("click", map, function(e){
 				var lonlat = map.getLonLatFromViewPortPx(e.xy);
 				var lonlat2 = map.getLonLatFromViewPortPx(e.xy);
-			    m = new OpenLayers.Marker(lonlat);
+
+				m = new OpenLayers.Marker(lonlat);
 				markers.clearMarkers();
-		    	markers.addMarker(m);
+			    	markers.addMarker(m);
 				
 				lonlat2.transform(proj_900913,proj_4326);	
+
 				// Update form values (jQuery)
 				$("#latitude").attr("value", lonlat2.lat);
 				$("#longitude").attr("value", lonlat2.lon);

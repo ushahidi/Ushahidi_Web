@@ -158,7 +158,7 @@
 														<?php echo form::open(url::site() . 'admin/manage/forms/field_add', array('id' => 'form_field_'.$form_id,
 																'name' => 'form_field_'.$form_id)); ?>
 															<strong><?php echo Kohana::lang('ui_main.select_field_type');?>:</strong>
-															<?php print form::dropdown('field_type',$form_field_types, '', ' onchange="showFormSelected(this.options[this.selectedIndex].value, \''.$form_id.'\', \'\', \'\')"'); ?>
+															<?php print form::dropdown('field_type', $form_field_types, '', ' onchange="showFormSelected(this.options[this.selectedIndex].value, \''.$form_id.'\', \'\', \'\')"'); ?>
 															<div id="form_fields_<?php echo $form_id; ?>" class="forms_fields_new"></div>
 														<?php echo form::close(); ?>
 													</div>		

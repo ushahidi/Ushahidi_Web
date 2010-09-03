@@ -182,7 +182,7 @@ $("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
 								?>
 								<div class="report_row">
 									<h4><?php echo Kohana::lang('ui_main.reports_find_location'); ?></h4>
-									<?php print form::dropdown('select_city',$cities,'', ' class="select" '); ?>
+									<?php print form::dropdown('select_city', $cities, '', ' class="select" '); ?>
 								</div>
 								<?php
 									 }

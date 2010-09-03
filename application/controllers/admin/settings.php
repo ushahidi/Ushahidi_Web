@@ -1005,3 +1005,4 @@ class Settings_Controller extends Admin_Controller
 		return json_encode($map_layers);
 	}
 }
+?>
