@@ -1843,13 +1843,13 @@ UL.mapNavigation LI A:focus {
 
 /* Time Period Selection*/
 #time-period-selector { text-align:right; margin-bottom:18px; }
-	input.dp { width:100px; margin:0 10px; font-weight:bold; font-size:10px; color:#5c5c5c;  }
+	input.dp { width:100px; margin:0 10px; font-weight:bold; font-size:10px; color:#5c5c5c; }
 	#time-period-selector a { padding:0 5px; }
 
 /* Stats Summary */
 .stats-wrapper { border:1px solid #eee; border-top:2px solid #898989; }
 .stats-summary { border-collapse: collapse; }
-	.statistic { border-right:1px solid #eee; padding:5px 8px; width:100px; height:50px; float:left;	 }
+	.statistic { border-right:1px solid #eee; padding:5px 8px; width:160px; height:50px; float:left; }
 		 
 	.statistic h4 { font-size:14px;  margin:0 0 0px; font-weight:normal; }
 	.statistic p { font-size:30px; font-weight:bold; margin:0; line-height:30px; }
