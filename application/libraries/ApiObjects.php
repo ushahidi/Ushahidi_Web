@@ -20,12 +20,16 @@ include Kohana::find_file('libraries/api','GetCategories');
 include Kohana::find_file('libraries/api', 'GetApiKey');
 include Kohana::find_file('libraries/api', 'GetCountries');
 include Kohana::find_file('libraries/api', 'GetLocations');
+include Kohana::find_file('libraries/api', 'GetReports');
+
+//include a new class here just like its done above
 
 class ApiObjects_Core
 {
     public $categories;
     public $api_key;
     public $api_actions;
+    //define a new variable to create an object for the new class
 
     public function __construct()
     {
@@ -35,6 +39,9 @@ class ApiObjects_Core
         $this->api_key = new GetApiKey;
         $this->countries = new GetCountries;
         $this->locations = new GetLocations;
+        $this->get_reports = new GetReports;
+        //create a new object
+
     }
 
 }
