@@ -548,7 +548,7 @@ class Reports_Controller extends Main_Controller {
 
 			// Check, has the form been submitted, if so, setup validation
 
-			if ($_POST)
+			if ($_POST AND Kohana::config('settings.allow_comments') )
 			{
 				// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 
@@ -642,14 +642,22 @@ class Reports_Controller extends Main_Controller {
 					$comment->comment_date = date("Y-m-d H:i:s",time());
 
 					// Activate comment for now
-
 					if ($comment_spam == 1)
 					{
 						$comment->comment_spam = 1;
 						$comment->comment_active = 0;
-					}else{
+					}
+					else
+					{
 						$comment->comment_spam = 0;
-						$comment->comment_active = 1;
+						if (Kohana::config('settings.allow_comments') == 1)
+						{ // Auto Approve
+							$comment->comment_active = 1;
+						}
+						else
+						{ // Manually Approve
+							$comment->comment_active = 0;
+						}
 					}
 					$comment->save();
 
