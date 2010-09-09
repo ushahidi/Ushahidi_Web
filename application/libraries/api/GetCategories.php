@@ -52,7 +52,7 @@ class GetCategories
      * @param int id - The category id.
      * @param string response_type - XML or JSON
  	 */
-	public function _category($id,$response)
+	public function _category($id,$response_type)
     {
 	
 	    //find incidents

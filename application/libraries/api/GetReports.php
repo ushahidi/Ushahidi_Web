@@ -319,7 +319,7 @@ class GetReports
 		
         $limit = "\nLIMIT 0, $this->list_limit";
 		
-        return $this->_get_reports($where.$sortby, $limit,$reponse_type);
+        return $this->_get_reports($where.$sortby, $limit,$response_type);
 	}
 
 	/**
@@ -450,7 +450,7 @@ class GetReports
                 _array_as_XML($this->data,$this->replar);
 		}
 
-		return $ret_json_or_xml;
+		return $this->ret_json_or_xml;
 	}
 
 }

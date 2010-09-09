@@ -133,7 +133,7 @@ class GetLocations
 		$where = "\n WHERE location_visible = 1 AND id=$id ";
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
-		return $this->_get_locations($where, $limit,$reponse_type));
+		return $this->_get_locations($where, $limit,$response_type);
 	}
 
 	/**
