@@ -96,6 +96,10 @@
 							<h4><?php echo Kohana::lang('ui_main.receive_notifications');?>?</h4>
 							<?php print form::dropdown('notify', $yesno_array, $form['notify']); ?>
 						</div>
+                        <?php 
+                        // users_form_admin - add content to users from
+                        Event::run('ushahidi_action.users_form_admin', $id);
+                        ?>
 					</div>
 		
 					<div class="simple_border"></div>
