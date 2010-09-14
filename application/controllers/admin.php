@@ -27,7 +27,7 @@ class Admin_Controller extends Template_Controller
 	protected $auth_required = FALSE;
 
 	protected $user;
-	
+
 	// Table Prefix
 	protected $table_prefix;
 
@@ -37,24 +37,24 @@ class Admin_Controller extends Template_Controller
 
 		// Load cache
 		$this->cache = new Cache;
-		
+
 		// Load session
 		$this->session = new Session;
-		
+
 		// Load database
 		$this->db = new Database();
-		
+
 		$upgrade = new Upgrade;
-		
+
 		$this->auth = new Auth();
 		$this->session = Session::instance();
 		$this->auth->auto_login();
-		
+
 		if ( ! $this->auth->logged_in('login'))
 		{
 			url::redirect('login');
 		}
-		
+
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
@@ -90,7 +90,7 @@ class Admin_Controller extends Template_Controller
 		$this->template->main_tabs = admin::main_tabs();
 		// Generate sub navigation list (in default layout, sits on right side).
         $this->template->main_right_tabs = admin::main_right_tabs($this->auth);
-		
+
 		// Load profiler
 		// $profiler = new Profiler;	
     }
@@ -109,8 +109,9 @@ class Admin_Controller extends Template_Controller
 	{
 		$auth = new Auth;
 		$auth->logout(TRUE);
-		
+
 		url::redirect('login');
 	}
-	
+
 } // End Admin
+

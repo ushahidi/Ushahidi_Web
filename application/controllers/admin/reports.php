@@ -35,7 +35,7 @@ class Reports_Controller extends Admin_Controller
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}
-		
+
 		$this->template->content = new View('admin/reports');
 		$this->template->content->title = Kohana::lang('ui_admin.reports');
 
@@ -105,7 +105,7 @@ class Reports_Controller extends Admin_Controller
 							{ // 2 = report that has had an alert sent
 								$update->incident_alert_status = '1';
 							}
-							
+
 							$update->save();
 
 							$verify = new Verify_Model();
@@ -128,13 +128,13 @@ class Reports_Controller extends Admin_Controller
 						$update = new Incident_Model($item);
 						if ($update->loaded == true) {
 							$update->incident_active = '0';
-							
+
 							// If Alert hasn't been sent yet, disable it
 							if ($update->incident_alert_status == '1')
 							{
 								$update->incident_alert_status = '0';
 							}
-							
+
 							$update->save();
 
 							$verify = new Verify_Model();
@@ -310,7 +310,7 @@ class Reports_Controller extends Admin_Controller
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}
-		
+
 		$this->template->content = new View('admin/reports_edit');
 		$this->template->content->title = Kohana::lang('ui_admin.create_report');
 
@@ -439,7 +439,7 @@ class Reports_Controller extends Admin_Controller
 				$form['incident_ampm'] = date('a', strtotime($message->message_date));
 				$form['person_first'] = $message->reporter->reporter_first;
 				$form['person_last'] = $message->reporter->reporter_last;
-				
+
 				// Does the sender of this message have a location?
 				if ($message->reporter->location->loaded)
 				{
@@ -447,7 +447,7 @@ class Reports_Controller extends Admin_Controller
 					$form['longitude'] = $message->reporter->location->longitude;
 					$form['location_name'] = $message->reporter->location->location_name;
 				}
-				
+
 				// Retrieve Last 5 Messages From this account
 				$this->template->content->all_messages = ORM::factory('message')
 					->where('reporter_id', $message->reporter_id)
@@ -633,7 +633,7 @@ class Reports_Controller extends Admin_Controller
 				{
 					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				}
-				
+
 				// Is this an Email, SMS, Twitter submitted report?
                 //XXX: We may get rid of incident_mode altogether... ???
                 //$_POST
@@ -663,7 +663,7 @@ class Reports_Controller extends Admin_Controller
 				$incident->incident_information = $post->incident_information;
 				//Save
 				$incident->save();
-				
+
 				// Tag this as a report that needs to be sent out as an alert
 				if ($incident->incident_active == '1' AND
 					 $incident->incident_alert_status != '2')
@@ -1001,7 +1001,7 @@ class Reports_Controller extends Admin_Controller
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}
-		
+
 		$this->template->content = new View('admin/reports_download');
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
@@ -1181,16 +1181,16 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js = new View('admin/reports_download_js');
 		$this->template->js->calendar_img = url::base() . "media/img/icon-calendar.gif";
 	}
-	
+
 	public function upload()
 	{
-	
+
 		// If user doesn't have access, redirect to dashboard
 		if ( ! admin::permissions($this->user, "reports_upload"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}
-		
+
 		if($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->template->content = new View('admin/reports_upload');
 			$this->template->content->title = 'Upload Reports';
@@ -1801,3 +1801,4 @@ class Reports_Controller extends Admin_Controller
 		return $text;
 	}
 }
+
