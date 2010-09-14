@@ -21,7 +21,7 @@
 					<div style="background-color:#95C274;border:4px #8CB063 solid;padding:2px 8px 1px 8px;margin:10px;"><?php echo $success_message; ?></div>
 				<?php } ?>
 				
-				<?php if (count( $errors ) > 0 ) { ?>
+				<?php if ($form_error) { ?>
 					<div style="background-color:#C27474;border:4px #B06363 solid;padding:2px 8px 1px 8px;margin:10px;"><ul><?php 
                         foreach ( $errors as $error_item => $error_description )
                         {
@@ -53,12 +53,13 @@
                 	
                 	<p>
 			        	<label for="contact_message">Message</label><br/>
-			        	<textarea type="text" rows="5" cols="50" name="contact_message" id="contact_message" autocomplete="off"/></textarea>
+                        <?php print form::textarea('contact_message', $form['contact_message'], ' rows="4" cols="40" id="contact_message" autocomplete="off"') ?>
+
 			        </p>
                     <p>
 					    <label for="contact_captcha">Security Code:</label><br />
 					    <?php print $captcha->render(); ?><br />
-						<input type="text" size="30" name="contact_captcha", id="contact_captcha" />
+						<?php print form::input('contact_captcha',$form['contact_captcha'], 'id="contact_captcha"');?>
                     </p>
                 	<p>
 			        	<input class="button" type="submit" value="Send" />

@@ -300,7 +300,7 @@ class MHI_Controller extends Template_Controller {
 		$errors = $form;
 		
         $success_message = '';
-        
+        $form_error = FALSE;
         $captcha = Captcha::factory();
 
 		if ($_POST)
