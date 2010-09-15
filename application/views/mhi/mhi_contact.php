@@ -21,8 +21,14 @@
 					<div style="background-color:#95C274;border:4px #8CB063 solid;padding:2px 8px 1px 8px;margin:10px;"><?php echo $success_message; ?></div>
 				<?php } ?>
 				
-				<?php if ($errors != '') { ?>
-					<div style="background-color:#C27474;border:4px #B06363 solid;padding:2px 8px 1px 8px;margin:10px;"><?php echo $errors; ?></div>
+				<?php if ($form_error) { ?>
+					<div style="background-color:#C27474;border:4px #B06363 solid;padding:2px 8px 1px 8px;margin:10px;"><ul><?php 
+                        foreach ( $errors as $error_item => $error_description )
+                        {
+                            print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+                        }?>
+                        </ul>
+                        </div>
 				<?php } ?>
                 
                 <p class="intro-para">Before contacting us, please read our <a href="<?php echo url::site(); ?>mhi/about/faq">FAQ</a>.</p>
@@ -32,7 +38,7 @@
                 	
                 	<p>
 			        	<label for="contact_email">Email</label><br/>
-			        	<input type="text" size="30" name="contact_email" maxlength="100" id="contact_email" autocomplete="off"/>
+			        	<?php print form::input('contact_email', $form['contact_email'], 'maxlength="100" id="contact_email" size="30" autocomplete="off"');?>
 			        </p>
 			        
 			        <p>
@@ -47,9 +53,14 @@
                 	
                 	<p>
 			        	<label for="contact_message">Message</label><br/>
-			        	<textarea type="text" rows="5" cols="50" name="contact_message" id="contact_message" autocomplete="off"/></textarea>
+                        <?php print form::textarea('contact_message', $form['contact_message'], ' rows="4" cols="40" id="contact_message" autocomplete="off"') ?>
+
 			        </p>
-                	
+                    <p>
+					    <label for="contact_captcha">Security Code:</label><br />
+					    <?php print $captcha->render(); ?><br />
+						<?php print form::input('contact_captcha',$form['contact_captcha'], 'id="contact_captcha"');?>
+                    </p>
                 	<p>
 			        	<input class="button" type="submit" value="Send" />
 			        </p>
