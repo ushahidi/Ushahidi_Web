@@ -67,7 +67,7 @@
                 
                 <?php print form::close(); ?>
                 
-                <p>You may also send us an email at <a href="mailto:support@crowdmap.com">support@crowdmap.com</a></p>
+                <p>You may also send us an email at support at crowdmap.com</p>
                 
                 
                 
