@@ -31,6 +31,12 @@ class Frontlinesms_Controller extends Controller
 		if (isset($_GET['m'])) {
 			$message_description = $_GET['m'];
 		}
+
+        //Filters to allow modification of the values from the SMS gateway
+        Event::run('ushahidi_filter.message_from',$message_from);
+        Event::run('ushahidi_filter.message_description',
+                $message_description);
+        Event::run('ushahidi_filter.message_key',$frontlinesms_key);
 		
 		if (!empty($frontlinesms_key) 
 			&& !empty($message_from) 
