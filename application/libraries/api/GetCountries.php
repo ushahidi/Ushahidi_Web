@@ -28,6 +28,7 @@ class GetCountries
     private $domain;
     private $table_prefix;
     private $list_limit;
+    private $ret_json_or_xml;
     private $api_actions;
 
     public function __construct()

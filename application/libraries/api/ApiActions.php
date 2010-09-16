@@ -119,29 +119,6 @@ class ApiActions
         return $this->table_prefix;
     }
 
-   	/**
-	 * FrontlineSMS Key Validation
-	 *
-	 * @param string $app_key FrontlineSMS Key
-	 * @return bool, false if authentication fails
-	 */
-	public function _chk_key($app_key = 0)
-	{
-		// Is this a valid FrontlineSMS Key?
-	    $keycheck = ORM::factory('settings', 1)
-			->where('frontlinesms_key', $app_key)
-			->find();
-
-		if ($keycheck->loaded)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
     /**
  	 * Makes sure the appropriate key is there in a given 
      * array (POST or GET) and that it is set
