@@ -53,7 +53,7 @@ class GetLocations
      *
      * @return string
  	 */
-	function _get_locations($where = '', $limit = '',$response_type)
+	private function _get_locations($where = '', $limit = '',$response_type)
     {
 	   
 		//fetch locations
@@ -113,7 +113,8 @@ class GetLocations
      *
      * @return string  
  	 */
-	function _locations($response_type){
+	public function _locations($response_type)
+    {
 		$where = "\n WHERE location_visible = 1 ";
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
@@ -128,7 +129,7 @@ class GetLocations
      *
      * @return string
  	 */
-	function _location_by_id($id,$response_type) 
+	public function _location_by_id($id,$response_type) 
     {
 		$where = "\n WHERE location_visible = 1 AND id=$id ";
 		$where .= "ORDER by id DESC";
@@ -144,9 +145,9 @@ class GetLocations
      *
      * @return string
  	 */
-	function _location_by_country_id($id,$response_type)
+	public function _location_by_country_id($id,$response_type)
     {
-		$where = "\n WHERE location_visible = 1 AND country_id=$idi ";
+		$where = "\n WHERE location_visible = 1 AND country_id=$id ";
 		$where .= "ORDER by id DESC";
 		$limit = "\nLIMIT 0, $this->list_limit";
 		return $this->_get_locations($where, $limit,$response_type);

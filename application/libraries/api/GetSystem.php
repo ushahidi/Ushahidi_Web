@@ -40,7 +40,6 @@ class GetSystem
         $this->domain = $this->api_actions->_get_domain();
         $this->db = $this->api_actions->_get_db();
 
-
     }
 
     /**

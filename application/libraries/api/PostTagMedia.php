@@ -29,6 +29,7 @@ class PostTagMedia
     private $list_limit;
     private $ret_json_or_xml;
     private $api_actions;
+    private $response_type;
 
     public function __construct()
     {
@@ -36,6 +37,7 @@ class PostTagMedia
         $this->data = array();
         $this->items = array();
         $this->ret_json_or_xml = '';
+        $this->response_type = '';
         $this->query = '';
         $this->replar = array();
         $this->domain = $this->api_actions->_get_domain();
@@ -44,21 +46,28 @@ class PostTagMedia
     }
 
     /**
- 	* Tag a news item to an incident
- 	*/
-	public function _tagMedia($incidentid, $mediatype, $reponse_type) 
+ 	 * Tag a news item to an incident.
+     * 
+     * @param int incidentid - The incident id.
+     * @param string mediatype - The media type,video, picture,etc
+     *
+     * @return Array
+ 	 */
+	public function _tag_media($incidentid, $mediatype, $reponse_type) 
     {
 	    if ($_POST) 
         {
 			//get the locationid for the incidentid
-			$locationid = 0;
+		    $locationid = 0;
 
-			$query = "SELECT location_id FROM ".$this->table_prefix."incident WHERE id=$incidentid";
+			$this->query = "SELECT location_id FROM ".$this->table_prefix.
+                "incident WHERE id=$incidentid";
 
-			$items = $this->db->query($query);
-			if(count($items) > 0)
+			$this->items = $this->db->query($this->query);
+
+			if(count($this->items) > 0)
             {
-				$locationid = $items[0]->location_id;
+				$locationid = $this->items[0]->location_id;
 			}
 
 			$media = new Media_Model(); //create media model object
@@ -70,16 +79,24 @@ class PostTagMedia
 			if($mediatype == 2 || $mediatype == 4)
             {
 				//require a url
-				if(!$this->_verifyArrayIndex($_POST, 'url'))
+				if(!$this->api_actions->_verify_array_index($_POST, 'url'))
                 {
-					if($this->responseType == 'json')
+					if($this->response_type == 'json')
                     {
-						json_encode(array("error" => $this->_getErrorMsg(001, 'url')));
+						json_encode(array(
+                            "error" => $this->api_actions->
+                                _get_error_msg(001, 'url'))
+                        );
 					} 
                     else 
                     {
-						$err = array("error" => $this->_getErrorMsg(001,'url'));
-						return $this->_arrayAsXML($err, array());
+						$err = array(
+                                "error" => $this->api_actions->
+                                    _get_error_msg(001,'url')
+                        );
+
+						return $this->api_actions->
+                            _array_as_XML($err, array());
 					}
 				} 
                 else 
@@ -90,20 +107,30 @@ class PostTagMedia
 			} 
             else 
             {
-			    if(!$this->_verifyArrayIndex($_POST, 'photo'))
+			    if(!$this->api_actions->
+                        _verify_array_index($_POST, 'photo'))
                 {
-					if($this->responseType == 'photo')
+					if($this->response_type == 'photo')
                     {
-						json_encode(array("error" => $this->_getErrorMsg(001, 'photo')));
+						json_encode(array(
+                            "error" => $this->api_actions->
+                                _get_error_msg(001, 'photo'))
+                        );
 					} 
                     else 
                     {
-						$err = array("error" => $this->_getErrorMsg(001, 'photo'));
-						return $this->_arrayAsXML($err, array());
+						$err = array(
+                            "error" => $this->api_actions->
+                                _get_error_msg(001, 'photo')
+                        );
+
+						return $this->api_actions->
+                            _array_as_XML($err, array());
 					}
 				}
 
-				$post->add_rules('photo', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[1M]');
+				$post->add_rules('photo', 'upload::valid', 
+                        'upload::type[gif,jpg,png]', 'upload::size[1M]');
 
 				if($post->validate())
                 {
@@ -112,10 +139,14 @@ class PostTagMedia
 					$new_filename = $incidentid . "_" . $i . "_" . time();
 
 					// Resize original file... make sure its max 408px wide
-					Image::factory($filename)->resize(408,248,Image::AUTO)->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
+					Image::factory($filename)->resize(408,248,Image::AUTO)->
+                        save(Kohana::config('upload.directory', TRUE) .
+                                $new_filename . ".jpg");
 
 					// Create thumbnail
-					Image::factory($filename)->resize(70,41,Image::HEIGHT)->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");
+					Image::factory($filename)->resize(70,41,Image::HEIGHT)->
+                        save(Kohana::config('upload.directory', TRUE) .
+                                $new_filename . "_t.jpg");
 
 					// Remove the temporary file
 					unlink($filename);
@@ -127,13 +158,14 @@ class PostTagMedia
 
 			//optional title & description
 			$title = '';
-			if($this->_verifyArrayIndex($_POST, 'title'))
+			if($this->api_actions->_verify_array_index($_POST, 'title'))
             {
 				$title = $_POST['title'];
 			}
 
 			$description = '';
-			if($this->_verifyArrayIndex($_POST, 'description'))
+			if($this->api_actions->_verify_array_index(
+                    $_POST, 'description'))
             {
 				$description = $_POST['description'];
 			}
@@ -148,27 +180,38 @@ class PostTagMedia
 			$media->save(); //save the thing
 
 			//SUCESS!!!
-			$ret = array("payload" => array("domain" => $this->domain,"success" => "true"),"error" => $this->_getErrorMsg(0));
+			$ret = array(
+                "payload" => array(
+                    "domain" => $this->domain,
+                    "success" => "true"
+                ),
+                "error" => $this->api_actions->_get_error_msg(0)
+            );
 
-			if($this->responseType == 'json')
+			if($this->response_type == 'json')
             {
 				return json_encode($ret);
 			} 
             else 
             {
-			    return $this->_arrayAsXML($ret, array());
+			    return $this->api_actions->_array_as_XML($ret, array());
 			}
 		} 
         else 
         {
-			if($this->responseType == 'json')
+			if($this->response_type == 'json')
             {
-				return json_encode(array("error" => $this->_getErrorMsg(003)));
+				return json_encode(array(
+                        "error" => $this->api_actions->
+                        _get_error_msg(003)));
 			} 
             else 
             {
-				$err = array("error" => $this->_getErrorMsg(003));
-			    return $this->_arrayAsXML($err, array());
+				$err = array(
+                    "error" => $this->api_actions->_get_error_msg(003)
+                );
+
+			    return $this->api_actions->_array_as_XML($err, array());
 			}
 		}
 	}

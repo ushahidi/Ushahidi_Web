@@ -45,6 +45,10 @@ class PostReport
 
     /**
  	 * Submit a report
+     *
+     * @param string response_type - JSON or XML
+     *
+     * @return Array
  	 */
 	public function _report($response_type)
     {
@@ -100,9 +104,12 @@ class PostReport
 	}
 
 	/**
- 	* the actual reporting - ***must find a cleaner way to do this than duplicating code verbatim - modify report***
- 	*/
-	function _submit() {
+ 	 * The actual reporting -
+     *
+     * @return int
+ 	 */
+	private function _submit() 
+    {
 		// setup and initialize form field names
 		$form = array
 		(
@@ -124,10 +131,12 @@ class PostReport
 			'person_last' => '',
 			'person_email' => ''
 		);
-		//copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		
 		$this->messages = $form;
-		// check, has the form been submitted, if so, setup validation
-		if ($_POST) {
+		
+        // check, has the form been submitted, if so, setup validation
+		if ($_POST) 
+        {
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory(array_merge($_POST,$_FILES));
 
@@ -141,32 +150,41 @@ class PostReport
 			$post->add_rules('incident_hour','required','between[0,23]');
 			//$post->add_rules('incident_minute','required','between[0,59]');
 
-			if($this->_verifyArrayIndex($_POST, 'incident_ampm')) {
-				if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != "pm") {
+			if($this->api_actions->_verify_array_index(
+                        $_POST, 'incident_ampm')) 
+            {
+				if ($_POST['incident_ampm'] != "am" && 
+                        $_POST['incident_ampm'] != "pm") 
+                {
 					$post->add_error('incident_ampm','values');
-				}
+			    }
 			}
 
-			$post->add_rules('latitude','required','between[-90,90]');	// Validate for maximum and minimum latitude values
-			$post->add_rules('longitude','required','between[-180,180]');// Validate for maximum and minimum longitude values
+			$post->add_rules('latitude','required','between[-90,90]');	
+			$post->add_rules('longitude','required','between[-180,180]');
 			$post->add_rules('location_name','required', 'length[3,200]');
-			$post->add_rules('incident_category','required','length[1,100]');
+			$post->add_rules('incident_category','required',
+                    'length[1,100]');
 
 			// Validate Personal Information
-			if (!empty($post->person_first)) {
+			if (!empty($post->person_first)) 
+            {
 				$post->add_rules('person_first', 'length[3,100]');
 			}
 
-			if (!empty($post->person_last)) {
+			if (!empty($post->person_last)) 
+            {
 				$post->add_rules('person_last', 'length[3,100]');
 			}
 
-			if (!empty($post->person_email)) {
+			if (!empty($post->person_email)) 
+            {
 				$post->add_rules('person_email', 'email', 'length[3,100]');
 			}
 
 			// Test to see if things passed the rule checks
-			if ($post->validate()) {
+			if ($post->validate()) 
+            {
 				// SAVE LOCATION (***IF IT DOES NOT EXIST***)
 				$location = new Location_Model();
 				$location->location_name = $post->location_name;
@@ -187,29 +205,40 @@ class PostReport
 		 		* where the $_POST['date'] is a value posted by form in
 		 		* mm/dd/yyyy format
 		 		*/
-				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
+				$incident_date=$incident_date[2]."-".$incident_date[0]."-".
+                    $incident_date[1];
 
-				$incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
-				$incident->incident_date = $incident_date . " " . $incident_time;
+				$incident_time = $post->incident_hour . ":" . 
+                    $post->incident_minute . ":00 " . $post->incident_ampm;
+				$incident->incident_date = $incident_date . " " .
+                    $incident_time;
 				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				$incident->save();
 
 				// SAVE CATEGORIES
 				//check if data is csv or a single value.
 				$pos = strpos($post->incident_category,",");
-				if( $pos === false ) {
+				if($pos === false)
+                {
 					//for backward compactibility. will drop support for it in the future.
-					if( @unserialize( $post->incident_category) ) {
-						$categories = unserialize( $post->incident_category);
-					} else {
-						$categories = array( $post->incident_category );
+					if(@unserialize($post->incident_category)) 
+                    {
+						$categories = unserialize($post->incident_category);
+					} 
+                    else 
+                    {
+						$categories = array($post->incident_category);
 					}
-				} else {
+				} 
+                else 
+                {
 					$categories = explode(",",$post->incident_category);
 				}
 
-				if(!empty($categories) && is_array($categories)) {
-					foreach($categories as $item){
+				if(!empty($categories) && is_array($categories)) 
+                {
+					foreach($categories as $item)
+                    {
 						$incident_category = new Incident_Category_Model();
 						$incident_category->incident_id = $incident->id;
 						$incident_category->category_id = $item;
@@ -219,9 +248,12 @@ class PostReport
 
 				// STEP 4: SAVE MEDIA
 				// a. News
-				if(!empty( $post->incident_news ) && is_array($post->incident_news)) {
-					foreach($post->incident_news as $item) {
-						if(!empty($item)) {
+				if(!empty( $post->incident_news ) && is_array(
+                            $post->incident_news)) {
+					foreach($post->incident_news as $item) 
+                    {
+						if(!empty($item)) 
+                        {
 							$news = new Media_Model();
 							$news->location_id = $location->id;
 							$news->incident_id = $incident->id;
@@ -234,10 +266,14 @@ class PostReport
 				}
 
 				// b. Video
-				if( !empty( $post->incident_video) && is_array( $post->incident_video)){
+				if( !empty( $post->incident_video) && is_array( 
+                            $post->incident_video))
+                {
 
-					foreach($post->incident_video as $item) {
-						if(!empty($item)) {
+					foreach($post->incident_video as $item) 
+                    {
+						if(!empty($item)) 
+                        {
 							$video = new Media_Model();
 							$video->location_id = $location->id;
 							$video->incident_id = $incident->id;
@@ -250,17 +286,26 @@ class PostReport
 				}
 
 				// c. Photos
-				if( !empty($post->incident_photo)){
+				if(!empty($post->incident_photo))
+                {
 					$filenames = upload::save('incident_photo');
 					$i = 1;
-					foreach ($filenames as $filename) {
-						$new_filename = $incident->id . "_" . $i . "_" . time();
+					foreach ($filenames as $filename) 
+                    {
+						$new_filename = $incident->id . "_" . $i . "_" .
+                            time();
 
 						// Resize original file... make sure its max 408px wide
-						Image::factory($filename)->resize(408,248,Image::AUTO)->save(Kohana::config('upload.directory', TRUE) . $new_filename . ".jpg");
+						Image::factory($filename)->resize(408,248,
+                                Image::AUTO)->save(
+                                    Kohana::config('upload.directory',
+                                        TRUE) . $new_filename . ".jpg");
 
 						// Create thumbnail
-						Image::factory($filename)->resize(70,41,Image::HEIGHT)->save(Kohana::config('upload.directory', TRUE) . $new_filename . "_t.jpg");
+						Image::factory($filename)->resize(70,41,
+                                Image::HEIGHT)->save(
+                                    Kohana::config('upload.directory',
+                                        TRUE) . $new_filename . "_t.jpg");
 
 						// Remove the temporary file
 						unlink($filename);
@@ -279,7 +324,9 @@ class PostReport
 				}
 
 				// SAVE PERSONAL INFORMATION IF ITS FILLED UP
-				if(!empty($post->person_first) || !empty($post->person_last)){
+				if(!empty($post->person_first) || !empty(
+                            $post->person_last))
+                {
 					$person = new Incident_Person_Model();
 					$person->location_id = $location->id;
 					$person->incident_id = $incident->id;
@@ -292,23 +339,32 @@ class PostReport
 
 				return 0; //success
 
-			} else { // No! We have validation errors, we need to show the form again, with the errors
-				// populate the error fields, if any
-				$this->messages = arr::overwrite($this->messages, $post->errors('report'));
+			} 
+            else 
+            { 				
+                // populate the error fields, if any
+				$this->messages = arr::overwrite($this->messages, 
+                        $post->errors('report'));
 
-				foreach ($this->messages as $error_item => $error_description) {
-					if( !is_array( $error_description ) ) {
+				foreach ($this->messages as $error_item => 
+                        $error_description) 
+                {
+					if(!is_array($error_description)) 
+                    {
 						$this->error_messages .= $error_description;
-						if( $error_description != end( $this->messages ) ) {
+						if($error_description != end($this->messages)) 
+                        {
 							$this->error_messages .= " - ";
    						}
   					}
 				}
 
-			//FAILED!!!
-			return 1; //validation error
+			    //FAILED!!!
+			    return 1; //validation error
 	  		}
-		} else {
+		} 
+        else 
+        {
 			return 2; // Not sent by post method.
 		}
 	}

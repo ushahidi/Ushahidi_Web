@@ -33,13 +33,11 @@ class GetReports
     private $media_items;
     private $json_report_categories;
     private $get_categories;
-    private $get_reports;
 
     public function __construct()
     {
         $this->api_actions = new ApiActions;
         $this->get_categories = new GetCategories;
-        $this->get_reports = new GetReports;
         $this->json_reports = array();
         $this->json_report_media = array();
         $this->json_report_categories = array();
