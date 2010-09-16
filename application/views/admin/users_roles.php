@@ -51,18 +51,17 @@
 				
 			<!-- tabs -->
 			<div class="tabs">
-
-
+				<a name="add"></a>
 				<!-- tabset -->
 				<ul class="tabset">
 					<li>
-						<a href="#" class="active">
+						<a href="#" class="active" onclick="show_addedit(true)">
 							<?php echo Kohana::lang('ui_admin.header_add_edit'); ?>
 						</a>
 					</li>
 				</ul>
 				<!-- tab -->
-				<div class="tab">
+				<div class="tab" id="addedit" style="display:none">
 					<?php print form::open(NULL,array('id' => 'rolesMain',
 					 	'name' => 'rolesMain')); ?>
 					<input type="hidden" name="action" id="action" value="a"/>

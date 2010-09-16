@@ -112,6 +112,25 @@
 		function info_search(){
 			$("#info-search").submit();
 		}
+		function show_addedit(toggle){
+			if (toggle) {
+				$("#addedit").toggle(400);
+				$(':input','#addedit')
+				 .not(':button, :submit, :reset, #action')
+				 .val('')
+				 .removeAttr('checked')
+				 .removeAttr('selected');
+				
+			}else{
+				$("#addedit").show(400);
+			}
+			$("a.add").focus();
+		}
+		<?php
+		if ($form_error) {
+			echo "$(document).ready(function() { $(\"#addedit\").show(); });";
+		}
+		?>
 	</script>
 </head>
 <body>

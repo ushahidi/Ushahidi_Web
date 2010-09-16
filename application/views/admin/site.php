@@ -108,7 +108,7 @@
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_comments"); ?>"><?php echo Kohana::lang('settings.site.allow_comments');?></a></h4>
 							<span class="sel-holder">
-								<?php print form::dropdown('allow_comments', $yesno_array, $form['allow_comments']); ?>
+								<?php print form::dropdown('allow_comments', $comments_array, $form['allow_comments']); ?>
 							</span>
 						</div>
 						<div class="row">
