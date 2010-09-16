@@ -289,9 +289,19 @@ class MHI_Controller extends Template_Controller {
 	{
 		$this->template->header->this_body = 'crowdmap-contact';
 		$this->template->content = new View('mhi/mhi_contact');
+        
+        $form = array(
+            'contact_email' => '',
+            'contact_subject' => '',
+            'contact_message' => '',
+            'contact_captcha' => '',
+        );
 
-		$errors = FALSE;
-		$success_message = '';
+		$errors = $form;
+		
+        $success_message = '';
+        $form_error = FALSE;
+        $captcha = Captcha::factory();
 
 		if ($_POST)
 		{
@@ -299,7 +309,8 @@ class MHI_Controller extends Template_Controller {
 				->pre_filter('trim')
 				->add_rules('contact_email', 'required', array('valid','email'))
 				->add_rules('contact_subject', 'required')
-				->add_rules('contact_message', 'required');
+				->add_rules('contact_message', 'required')
+                ->add_rules('contact_captcha', 'required','Captcha::valid');
 
 			if ($post->validate())
 			{
@@ -308,18 +319,25 @@ class MHI_Controller extends Template_Controller {
 
 				$success_message = 'Email sent. We will get back to you as quickly as we can. Thank you!';
 
-			}else{
+			}
+            else
+            {
 
-				$errors = array('Please provide a valid email address and message. Please try again.');
-				$form_error = TRUE;
+                $form = arr::overwrite($form, $post->as_array());
+
+                $errors = arr::overwrite( $errors, 
+                        $post->errors('mhi'));				
+                $form_error = TRUE;
 
 			}
 
 		}
-
+        
+        $this->template->content->form = $form;
+        $this->template->content->form_error = $form_error;
 		$this->template->content->errors = $errors;
 		$this->template->content->success_message = $success_message;
-
+        $this->template->content->captcha = $captcha;
 	}
 
 	// Displays true if the email is free to be registered
