@@ -523,11 +523,13 @@ class Reports_Controller extends Main_Controller {
 			url::redirect('main');
 
 		}else{
-			$incident = ORM::factory('incident', $id);
-
+			$incident = ORM::factory('incident')
+                ->where('id',$id)
+                ->where('incident_active',1)
+                ->find();
 			if ( $incident->id == 0 )	// Not Found
 			{
-				url::redirect('main');
+				url::redirect('reports/view/');
 			}
 
 			// Comment Post?
