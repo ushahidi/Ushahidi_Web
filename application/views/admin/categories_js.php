@@ -17,6 +17,7 @@
 // Categories JS
 function fillFields(id, parent_id, category_title, category_description, category_color, locale)
 {
+	show_addedit();
 	$("#category_id").attr("value", unescape(id));
 	$("#parent_id").attr("value", unescape(parent_id));
 	$("#category_title").attr("value", unescape(category_title));

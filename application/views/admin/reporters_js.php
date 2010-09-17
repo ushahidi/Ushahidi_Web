@@ -30,6 +30,7 @@ $().ready(function() {
 
 function fillFields(id, level_id, service_name, service_account, location_id, location_name, latitude, longitude)
 {
+	show_addedit();
 	$('#add_edit_form').show();
 	showMap();
 	$("#reporter_id").attr("value", unescape(id));

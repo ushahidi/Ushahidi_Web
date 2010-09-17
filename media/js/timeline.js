@@ -412,7 +412,7 @@
 				strokeColor: "${color}",
 				strokeWidth: "${strokeWidth}",
 				strokeOpacity: "0.3",
-				label:"${cluster_count}",
+				label:"${clusterCount}",
 				//labelAlign: "${labelalign}", // IE doesn't like this for some reason
 				fontWeight: "${fontweight}",
 				fontColor: "#ffffff",
@@ -441,7 +441,7 @@
 					fontsize: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="")
+						if (feature_icon!=="")
 						{
 							return "9px";
 						}
@@ -477,7 +477,7 @@
 					fontweight: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="")
+						if (feature_icon!=="")
 						{
 							return "normal";
 						}
@@ -561,7 +561,7 @@
 					icon: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="")
+						if (feature_icon!=="")
 						{
 							return baseUrl + feature_icon;
 						} 
@@ -570,12 +570,17 @@
 							return "";
 						}
 					},
-					cluster_count: function(feature)
+					clusterCount: function(feature)
 					{
 						if (feature.attributes.count > 1)
 						{
+							if($.browser.msie && $.browser.version=="6.0")
+							{ // IE6 Bug with Labels
+								return "";
+							}
+							
 							feature_icon = feature.attributes.icon;
-							if (feature_icon!="")
+							if (feature_icon!=="")
 							{
 								return "> " + feature.attributes.count;
 							} 
@@ -592,7 +597,7 @@
 					opacity: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="")
+						if (feature_icon!=="")
 						{
 							return "1";
 						}
@@ -604,9 +609,9 @@
 					labelalign: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!="")
+						if (feature_icon!=="")
 						{
-							return "lb";
+							return "c";
 						}
 						else
 						{

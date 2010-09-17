@@ -45,6 +45,41 @@
 			<?php
 			}
 			?>
+			
+			<!-- tabs -->
+			<div class="tabs">
+				<!-- tabset -->
+				<a name="add"></a>
+				<ul class="tabset">
+					<li><a href="#" class="active" onclick="show_addedit(true)"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
+				</ul>
+				<!-- tab -->
+				<div class="tab" id="addedit" style="display:none">
+					<?php print form::open(NULL,array('id' => 'formMain',
+					 	'name' => 'formMain')); ?>
+					<input type="hidden" id="form_id" 
+						name="form_id" value="<?php echo $form['form_id']; ?>" />
+					<input type="hidden" id="form_active" 
+						name="form_active" vaule="" />
+					<input type="hidden" name="action" 
+						id="action" value="a"/>
+					<div class="tab_form_item">
+						<strong><?php echo Kohana::lang('ui_main.form_title');?>:</strong><br />
+						<?php print form::input('form_title', $form['form_title'], 
+						' class="text"'); ?>
+					</div>
+					<div class="tab_form_item">
+						<strong><?php echo Kohana::lang('ui_main.form_description');?>:</strong><br />
+						<?php print form::input('form_description', $form['form_description'], ' class="text long"'); ?>
+					</div>						
+					<div class="tab_form_item">
+						&nbsp;<br />
+						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
+					</div>
+					<?php print form::close(); ?>			
+				</div>
+			</div>
+							
 			<!-- report-table -->
 			<div class="report-form">				
 				<div class="table-holder">
@@ -177,38 +212,5 @@
 					</table>
 				</div>
 			</div>
-	
-			<!-- tabs -->
-			<div class="tabs">
-				<!-- tabset -->
-				<a name="add"></a>
-				<ul class="tabset">
-					<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.create_edit');?> <?php echo Kohana::lang('ui_main.form');?></a></li>
-				</ul>
-				<!-- tab -->
-				<div class="tab">
-					<?php print form::open(NULL,array('id' => 'formMain',
-					 	'name' => 'formMain')); ?>
-					<input type="hidden" id="form_id" 
-						name="form_id" value="" />
-					<input type="hidden" id="form_active" 
-						name="form_active" vaule="" />
-					<input type="hidden" name="action" 
-						id="action" value="a"/>
-					<div class="tab_form_item">
-						<strong><?php echo Kohana::lang('ui_main.form_title');?>:</strong><br />
-						<?php print form::input('form_title', '', 
-						' class="text"'); ?>
-					</div>
-					<div class="tab_form_item">
-						<strong><?php echo Kohana::lang('ui_main.form_description');?>:</strong><br />
-						<?php print form::input('form_description', '', ' class="text long"'); ?>
-					</div>						
-					<div class="tab_form_item">
-						&nbsp;<br />
-						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
-					</div>
-					<?php print form::close(); ?>			
-				</div>
-			</div>
+
 		</div>

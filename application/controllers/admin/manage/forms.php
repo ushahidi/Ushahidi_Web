@@ -111,6 +111,9 @@ class Forms_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.created_edited'));
 				}
 				
+				// Empty $form array
+				array_fill_keys($form, '');
+				
 			} else {
 				// repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
@@ -143,7 +146,8 @@ class Forms_Controller extends Admin_Controller
 			// 4 => 'Add Attachments'
 		);
 
-        $this->template->content->form_error = $form_error;
+        $this->template->content->form = $form;
+		$this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
         $this->template->content->pagination = $pagination;
@@ -155,6 +159,7 @@ class Forms_Controller extends Admin_Controller
         // Javascript Header
         $this->template->js = new View('admin/forms_js');
 		$this->template->js->form_id = $form_id;
+		$this->template->form_error = $form_error;
 	}
 
 	
