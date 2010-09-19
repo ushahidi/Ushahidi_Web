@@ -90,7 +90,7 @@ class GetReports
 		foreach ($this->items as $item)
         {
 
-			if($this->response_type == 'json')
+			if($response_type == 'json')
 			{
 				$this->json_report_media = array();
 				$this->json_report_categories = array();
@@ -120,13 +120,13 @@ class GetReports
                 "category AS c INNER JOIN ".
                 $this->table_prefix."incident_category AS ic ON " .
 				"ic.category_id = c.id WHERE ic.incident_id =".
-                $this->item->incidentid;
+                $item->incidentid;
 
 			$category_items = $this->db->query( $this->query );
 
 			foreach( $category_items as $category_item )
 			{
-				if($this->response_type == 'json')
+				if($response_type == 'json')
                 {
 					$this->json_reports_categories[] = array(
                             "category"=> array(
@@ -153,7 +153,7 @@ class GetReports
 				"m.media_thumb AS mediathumb FROM ".$this->table_prefix.
                 "media AS m " . "INNER JOIN ".$this->table_prefix.
                 "incident AS i ON i.id = m.incident_id " .
-				"WHERE i.id =". $this->item->incidentid;
+				"WHERE i.id =". $item->incidentid;
 
 			$this->media_items = $this->db->query($this->query);
 
@@ -214,10 +214,10 @@ class GetReports
 			$xml->endElement(); // end incident
 
 			//needs different treatment depending on the output
-			if($this->response_type == 'json')
+			if($response_type == 'json')
 			{
 				$this->json_reports[] = array(
-                    "incident" => $this->item, 
+                    "incident" => $item, 
 					"categories" => $this->json_report_categories, 
                     "media" => $this->json_report_media);
 			}
@@ -232,7 +232,7 @@ class GetReports
 			"error" => $this->api_actions->_get_error_msg(0)
 		);
 
-		if($this->response_type == 'json')
+		if($response_type == 'json')
         {
 			$this->ret_json_or_xml = $this->api_actions->
                 _array_as_JSON($this->data);
@@ -408,7 +408,7 @@ class GetReports
      *
      * @return string
 	 */
-	public function _get_report_count($reponse_type)
+	public function _get_report_count($response_type)
     {
 	
 		$json_count = array();
@@ -424,7 +424,7 @@ class GetReports
 			break;
 		}
 
-		if($this->response_type == 'json')
+		if($response_type == 'json')
         {
 			$json_count[] = array("count" => $count);
 		}
@@ -440,15 +440,81 @@ class GetReports
                 "count" => $json_count),
                 "error" => $this->api_actions->_get_error_msg(0));
 
-		if($this->response_type == 'json') {
+		if($response_type == 'json') 
+        {
 			$this->ret_json_or_xml = $this->api_actions->
                 _array_as_JSON($this->data);
-		}else{
-			$this->ret_json_or_xml = $this->api_actions->
-                _array_as_XML($this->data,$this->replar);
+		}
+        else
+        {
+			$this->ret_json_or_xml = $this->api_actions
+                ->_array_as_XML($this->data,$this->replar);
 		}
 
 		return $this->ret_json_or_xml;
 	}
+    
+    /**
+     * Get an approximate geographic midpoint of al approved reports.
+     *
+     * @params string response_type - XML or JSON
+     *
+     * @return string
+     */
+    public function _get_geographic_midpoint($response_type)
+    {
+        $json_latlon = array();
+
+        $this->query = 'SELECT AVG( latitude ) AS avglat, AVG( longitude ) 
+            AS avglon FROM '.$this->table_prefix.'location WHERE id IN 
+            (SELECT location_id FROM '.$this->table_prefix.'incident WHERE 
+             incident_active = 1)';
+		
+        $this->items = $this->db->query($this->query);
+
+		foreach ($this->items as $item)
+        {
+			$latitude = $item->avglat;
+			$longitude = $item->avglon;
+			break;
+		}
+
+		if($response_type == 'json')
+        {
+			$json_latlon[] = array(
+                    "latitude" => $latitude, 
+                    "longitude" => $longitude
+            );
+		}
+        else
+        {
+			$json_latlon['geographic_midpoint'] = array(
+                    "latitude" => $latitude, 
+                    "longitude" => $longitude
+            );
+
+			$replar[] = 'geographic_midpoint';
+		}
+
+		//create the json array
+		$this->data = array("payload" => array(
+                    "domain" => $this->domain,
+                    "geographic_midpoint" => $json_latlon),
+                "error" => $this->api_actions->_get_error_msg(0)
+        );
+
+		if($response_type == 'json') 
+        {
+			$this->ret_json_or_xml = $this->api_actions->
+                _array_as_JSON($this->data);
+		}
+        else
+        {
+			$this->ret_json_or_xml =$this->api_actions
+                ->_array_as_XML($this->data,$this->replar);
+		}
+
+		return $this->ret_json_or_xml;
+    }
 
 }

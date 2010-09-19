@@ -49,7 +49,7 @@ class GetSystem
      *
      * @return string
  	 */
-	public function _get_version_number($response_stype)
+	public function _get_version_number($response_type)
     {
 		$json_version = array();
 		$version = Kohana::config('version.ushahidi_version');

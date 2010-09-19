@@ -318,4 +318,58 @@ class ApiPrivateFunc
 
 		return $ret_json_or_xml;
 	}
+
+    /**
+ 	 * Get the latitude and longitude for the default centre of the map.
+     *
+     * @param string response_type - XML or JSON
+     *
+     * @return string
+ 	 */
+	public function _map_center($response_type)
+    {
+		$json_mapcenters = array(); //lat and lon string to parse to json
+
+		//find incidents
+		$this->query = "SELECT default_lat AS latitude, default_lon AS 
+            longitude FROM `".$this->table_prefix."settings`
+			ORDER BY id DESC ;";
+
+		$this->items = $this->db->query($this->query);
+		$i = 0;
+
+		foreach ($this->items as $item)
+        {
+			//needs different treatment depending on the output
+			if($response_type == 'json')
+            {
+				$json_mapcenters[] = array("mapcenter" => $item);
+			} 
+            else 
+            {
+				$json_mapcenters['mapcenter'.$i] = array(
+                        "mapcenter" => $item) ;
+				$this->replar[] = 'mapcenter'.$i;
+			}
+
+			$i++;
+		}
+
+		//create the json array
+		$this->data = array("payload" => array(
+                    "domain" => $this->domain,
+                    "mapcenters" => $json_mapcenters),
+                "error" => $this->api_actions->_get_error_msg(0));
+
+		if($response_type == 'json')
+        {
+				$this->ret_json_or_xml = $this->api_actions
+                    ->_array_as_JSON($this->data);
+		} else {
+			$this->ret_json_or_xml = $this->api_actions
+                ->_array_as_XML($this->data, $this->replar);
+		}
+
+		return $this->ret_json_or_xml;
+	}
 }

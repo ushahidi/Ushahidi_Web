@@ -42,6 +42,7 @@ class ApiObjects_Core
     public $kml;
     public $tag_media;
     public $private_func;
+    public $get_system;
 
     //define a new variable to create an object for the new class
 
@@ -58,6 +59,8 @@ class ApiObjects_Core
         $this->system = new GetSystem;
         $this->tag_media = new PostTagMedia;
         $this->private_func = new ApiPrivateFunc;
+        $this->get_system = new GetSystem;
+        $this->kml = new GetKml;
 
         //create a new object
 
