@@ -3,7 +3,7 @@
  * This class handles private functions that not accessbile by the public 
  * via the API.
  *
- * @version 22 - David Kobia 2010-08-30
+ * @version 23 - Henry Addo 2010-09-20
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license

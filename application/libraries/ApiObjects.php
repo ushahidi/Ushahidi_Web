@@ -3,7 +3,7 @@
  * This class habours all the API objects and make them available to 
  * the API controller.
  *
- * @version 22 - David Kobia 2010-08-30
+ * @version 23 - Henry Addo 2010-09-20
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
