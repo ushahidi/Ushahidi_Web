@@ -2,7 +2,7 @@
 /**
  * This class handles countries activities via the API.
  *
- * @version 22 - David Kobia 2010-08-30
+ * @version 23 - Henry Addo 2010-09-20
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -28,6 +28,7 @@ class GetCountries
     private $domain;
     private $table_prefix;
     private $list_limit;
+    private $ret_json_or_xml;
     private $api_actions;
 
     public function __construct()

@@ -2,7 +2,7 @@
 /**
  * This class handles GET request for KML via the API.
  *
- * @version 22 - David Kobia 2010-08-30
+ * @version 23 - Henry Addo 2010-09-20
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -86,7 +86,7 @@ class GetKml
 		$incident_categories = $this->_report_categories();
 
 		// Get category colors in this format: $category_colors[id] = color
-		$categories = json_decode($this->get_categories_categories(
+		$categories = json_decode($this->get_categories->_categories(
                     $response_type));
 		$categories = $categories->payload->categories;
 		$category_colors = array();
@@ -99,7 +99,7 @@ class GetKml
 
 		// Finally, grab the incidents
 		$incidents = json_decode($this->get_reports->_get_reports(
-            'WHERE incident_active=1',$response_type));
+            'WHERE incident_active=1','',$response_type));
 
 		$incidents = $incidents->payload->incidents;
 
