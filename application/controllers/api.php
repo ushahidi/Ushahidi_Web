@@ -86,10 +86,9 @@ class Api_Controller extends Controller
         {
             $this->response_type = $this->request['resp'];
         }
-
+        
         // Get the various tasks
         $this->_get_tasks($this->task);
-
     }
 
     /**
