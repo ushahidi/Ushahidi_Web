@@ -141,17 +141,23 @@ class Reports_Controller extends Main_Controller {
 			$location_in[] = $incident->location_id;
 		}
 
-		// Get location names
+        //check if location_in is not empty
+        if( count($location_in ) > 0 ) 
+        {
+		    // Get location names
+		    $query = 'SELECT id, location_name FROM '.$this->table_prefix.'location WHERE id IN ('.implode(',',$location_in).')';
+		    $locations_query = $db->query($query);
 
-		$query = 'SELECT id, location_name FROM '.$this->table_prefix.'location WHERE id IN ('.implode(',',$location_in).')';
-		$locations_query = $db->query($query);
-
-		$locations = array();
-		foreach ($locations_query as $loc)
-		{
-			$locations[$loc->id] = $loc->location_name;
-		}
-
+		    $locations = array();
+		    foreach ($locations_query as $loc)
+		    {
+			    $locations[$loc->id] = $loc->location_name;
+		    }
+        }
+        else
+        {
+            $locations = array();
+        }
 		$this->template->content->locations = $locations;
 
 		//Set default as not showing pagination. Will change below if necessary.

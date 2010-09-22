@@ -257,13 +257,21 @@ class Reports_Controller extends Admin_Controller
 		{
 			$location_ids[] = $incident->location_id;
 		}
-
-		$locations_result = ORM::factory('location')->in('id',implode(',',$location_ids))->find_all();
-		$locations = array();
-		foreach ($locations_result as $loc)
-		{
-			$locations[$loc->id] = $loc->location_name;
-		}
+        
+        //check if location_ids is not empty
+        if( count($location_ids ) > 0 ) 
+        {
+		    $locations_result = ORM::factory('location')->in('id',implode(',',$location_ids))->find_all();
+		    $locations = array();
+		    foreach ($locations_result as $loc)
+		    {
+			    $locations[$loc->id] = $loc->location_name;
+		    }
+        }
+        else
+        {
+            $locations = array();
+        }
 
 		$this->template->content->locations = $locations;
 
