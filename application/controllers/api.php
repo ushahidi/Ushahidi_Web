@@ -598,6 +598,11 @@ class Api_Controller extends Controller
 			    $this->ret = $this->api_objects->get_system->
                         _get_version_number($this->response_type);
 				break;
+
+			case "mhienabled":
+			    $this->ret = $this->api_objects->get_system->
+                        _get_mhi_enabled($this->response_type);
+				break;
             
             //retrieve the geographic midpoint of incidents
 			case "geographicmidpoint": 				
