@@ -118,7 +118,7 @@
 				<div class="report-form">
 					<?php print form::open(NULL,array('id' => 'catListing',
 					 	'name' => 'catListing')); ?>
-						<input type="hidden" name="action" id="action" value="">
+						<input type="hidden" name="action" id="category_action" value="">
 						<input type="hidden" name="category_id" id="category_id_action" value="">
 						<div class="table-holder">
 							<table class="table">
