@@ -234,7 +234,6 @@ div#searchbox{
     border: #9F9F9F 2px solid;
     border-top: 0;
     height: 45px;
-/*    width: 290px;*/
 }
 
 /* languages */
@@ -242,30 +241,6 @@ div.language-box{
     padding: 0px;
     margin: 10px 0px 13px 15px;
     float: left;
-}
-
-div.language-box ul{
-    padding: 0px;
-    margin: 0;
-    list-style: none;
-}
-
-div.language-box li{
-    float: left;
-    display: block;
-    margin-right: 10px;
-}
-
-div.language-box li a img{
-    border: #BEBEBE 3px solid;
-}
-
-div.language-box li a:hover img{
-    border: #666666 3px solid;
-}
-
-div.language-box li a.active img{
-    border: #666666 3px solid;
 }
 
 div.language-box select{
@@ -529,7 +504,7 @@ ul.category-filters{
 ul.category-filters li{
     padding: 0;
     margin-bottom: 2px;
-	list-style-type:none; 
+	list-style-type:none;
 }
 
 ul.category-filters li a{
@@ -829,68 +804,6 @@ div.incident-notation ul li{
 	clear:both;
 	width:428px;
 	height:370px;
-}
-
-
-/* media files */
-div.content-media{
-    padding: 15px;
-    background: #FFFFFF;
-    margin: 0 0 15px 0;
-}
-
-div.content-media h5{
-    float: left;
-}
-
-div.content-media div.selectmedia{
-    color: #666;
-    margin: 5px;
-    margin-left: 75px;
-    text-transform: uppercase;
-    font-size: 10px;
-    font-weight: bold;
-}
-
-div.content-media div.selectmedia a{
-    color: #004276;
-    padding: 0 3px;
-}
-
-div.content-media ul{
-    margin: 10px 0;
-    list-style: none;
-}
-
-div.content-media ul li{
-    margin: 0 0 0 5px;
-    list-style: none;
-    font-size: 10px;
-    font-weight: bold;
-    float: left;
-    padding: 0 20px;
-}
-
-div.content-media ul li span{
-    color: #9B9B9B;
-}
-
-div.content-media ul li img{
-    margin: 0 0 5px 0;
-}
-
-div.content-media ul li a.media-type-image{
-    background: url(../img/media-type-image.jpg) 0 1px no-repeat;
-    padding: 1px 0 2px 20px;
-    color: #004276;
-    margin: 5px 0 0 0;
-}
-
-div.content-media ul li a.media-type-video{
-    background: url(../img/media-type-video.jpg) 0 1px no-repeat;
-    padding: 1px 0 2px 19px;
-    color: #004276;
-    margin: 5px 0 0 0;
 }
 
 

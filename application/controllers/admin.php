@@ -81,6 +81,7 @@ class Admin_Controller extends Template_Controller
 		$this->template->colorpicker_enabled = FALSE;
 		$this->template->editor_enabled = FALSE;
 		$this->template->js = '';
+		$this->template->form_error = FALSE;
 
 		// Initialize some variables for raphael impact charts
 		$this->template->raphael_enabled = FALSE;

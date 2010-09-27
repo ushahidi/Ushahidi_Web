@@ -60,7 +60,8 @@ class GetApiKey
 		$this->items = $this->db->query($this->query);
 		$i = 0;
 
-		foreach ($this->items as $item){
+		foreach ($this->items as $item)
+        {
 			//needs different treatment depending on the output
 			if( $this->response_type == 'json'){
 				$json_services[] = array("service" => $item);

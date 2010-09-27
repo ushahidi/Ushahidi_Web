@@ -26,6 +26,7 @@ $(document).ready(function() {
 function fillFields(id, form_title, form_description,
  form_visible )
 {
+	show_addedit();
 	$("#form_id").attr("value", unescape(id));
 	$("#form_title").attr("value", unescape(form_title));
 	$("#form_description").attr("value", unescape(form_description));

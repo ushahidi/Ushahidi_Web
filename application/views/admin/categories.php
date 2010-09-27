@@ -45,11 +45,80 @@
 				<?php
 				}
 				?>
+				
+				<!-- tabs -->
+				<div class="tabs">
+					<!-- tabset -->
+					<a name="add"></a>
+					<ul class="tabset">
+						<li><a href="#" class="active" onclick="show_addedit(true)"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
+					</ul>
+					<!-- tab -->
+					<div class="tab" id="addedit" style="display:none">
+						<?php print form::open(NULL,array('enctype' => 'multipart/form-data', 
+							'id' => 'catMain', 'name' => 'catMain')); ?>
+						<input type="hidden" id="category_id" 
+							name="category_id" value="<?php echo $form['category_id']; ?>" />
+						<input type="hidden" name="action" 
+							id="action" value="a"/>
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.category_name');?>:</strong><br />
+							<?php print form::input('category_title', $form['category_title'], ' class="text"'); ?>
+						</div>
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.description');?>:</strong><br />
+							<?php print form::input('category_description', $form['category_description'], ' class="text"'); ?>
+						</div>
+						<div class="tab_form_item">
+							<strong>Color:</strong><br />
+							<?php print form::input('category_color', $form['category_color'], ' class="text"'); ?>
+							<script type="text/javascript" charset="utf-8">
+								$(document).ready(function() {
+									$('#category_color').ColorPicker({
+										onSubmit: function(hsb, hex, rgb) {
+											$('#category_color').val(hex);
+										},
+										onChange: function(hsb, hex, rgb) {
+											$('#category_color').val(hex);
+										},
+										onBeforeShow: function () {
+											$(this).ColorPickerSetColor(this.value);
+										}
+									})
+									.bind('keyup', function(){
+										$(this).ColorPickerSetColor(this.value);
+									});
+								});
+							</script>
+						</div>
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.parent_category');?>:</strong><br />
+							<?php print form::dropdown('parent_id', $parents_array, '0'); ?>
+						</div>
+						<div style="clear:both"></div>
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.image_icon');?>:</strong><br />
+							<?php
+
+								// I removed $category_image from the second parameter to fix bug #161
+								print form::upload('category_image', '', '');
+
+							?>
+						</div>
+						<div style="clear:both"></div>
+						<div class="tab_form_item">
+							&nbsp;<br />
+							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
+						</div>
+						<?php print form::close(); ?>			
+					</div>
+				</div>
+				
 				<!-- report-table -->
 				<div class="report-form">
 					<?php print form::open(NULL,array('id' => 'catListing',
 					 	'name' => 'catListing')); ?>
-						<input type="hidden" name="action" id="action" value="">
+						<input type="hidden" name="action" id="category_action" value="">
 						<input type="hidden" name="category_id" id="category_id_action" value="">
 						<div class="table-holder">
 							<table class="table">
@@ -168,72 +237,5 @@
 						</div>
 					<?php print form::close(); ?>
 				</div>
-				
-				<!-- tabs -->
-				<div class="tabs">
-					<!-- tabset -->
-					<a name="add"></a>
-					<ul class="tabset">
-						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
-					</ul>
-					<!-- tab -->
-					<div class="tab">
-						<?php print form::open(NULL,array('enctype' => 'multipart/form-data', 
-							'id' => 'catMain', 'name' => 'catMain')); ?>
-						<input type="hidden" id="category_id" 
-							name="category_id" value="" />
-						<input type="hidden" name="action" 
-							id="action" value="a"/>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.category_name');?>:</strong><br />
-							<?php print form::input('category_title', '', ' class="text"'); ?>
-						</div>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.description');?>:</strong><br />
-							<?php print form::input('category_description', '', ' class="text"'); ?>
-						</div>
-						<div class="tab_form_item">
-							<strong>Color:</strong><br />
-							<?php print form::input('category_color', '', ' class="text"'); ?>
-							<script type="text/javascript" charset="utf-8">
-								$(document).ready(function() {
-									$('#category_color').ColorPicker({
-										onSubmit: function(hsb, hex, rgb) {
-											$('#category_color').val(hex);
-										},
-										onChange: function(hsb, hex, rgb) {
-											$('#category_color').val(hex);
-										},
-										onBeforeShow: function () {
-											$(this).ColorPickerSetColor(this.value);
-										}
-									})
-									.bind('keyup', function(){
-										$(this).ColorPickerSetColor(this.value);
-									});
-								});
-							</script>
-						</div>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.parent_category');?>:</strong><br />
-							<?php print form::dropdown('parent_id', $parents_array, '0'); ?>
-						</div>
-						<div style="clear:both"></div>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.image_icon');?>:</strong><br />
-							<?php
-								
-								// I removed $category_image from the second parameter to fix bug #161
-								print form::upload('category_image', '', '');
-							
-							?>
-						</div>
-						<div style="clear:both"></div>
-						<div class="tab_form_item">
-							&nbsp;<br />
-							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
-						</div>
-						<?php print form::close(); ?>			
-					</div>
-				</div>
+
 			</div>

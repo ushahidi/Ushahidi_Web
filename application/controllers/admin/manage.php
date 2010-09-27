@@ -166,6 +166,9 @@ class Manage_Controller extends Admin_Controller
 					
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
+					
+					// Empty $form array
+					array_fill_keys($form, '');
 				}
 	        }
             // No! We have validation errors, we need to show the form again, with the errors
@@ -200,6 +203,7 @@ class Manage_Controller extends Admin_Controller
         // add none to the list
         $parents_array[0] = "--- Top Level Category ---";
 		
+		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
@@ -216,6 +220,7 @@ class Manage_Controller extends Admin_Controller
         // Javascript Header
         $this->template->colorpicker_enabled = TRUE;
         $this->template->js = new View('admin/categories_js');
+		$this->template->form_error = $form_error;
     }
 
 	/*

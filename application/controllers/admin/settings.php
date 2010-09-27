@@ -89,7 +89,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('items_per_page','required','between[10,50]');
 			$post->add_rules('items_per_page_admin','required','between[10,50]');
 			$post->add_rules('allow_reports','required','between[0,1]');
-			$post->add_rules('allow_comments','required','between[0,1]');
+			$post->add_rules('allow_comments','required','between[0,2]');
 			$post->add_rules('allow_feed','required','between[0,1]');
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
 			$post->add_rules('allow_clustering','required','between[0,1]');
@@ -182,7 +182,13 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
-		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+		$this->template->content->yesno_array = array(
+			'1'=>strtoupper(Kohana::lang('ui_main.yes')),
+			'0'=>strtoupper(Kohana::lang('ui_main.no')));		
+		$this->template->content->comments_array = array(
+			'1'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_auto')),
+			'2'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_manual')),
+			'0'=>strtoupper(Kohana::lang('ui_main.no')));
 
 		// Generate Available Locales
 		$locales = locale::get_i18n();

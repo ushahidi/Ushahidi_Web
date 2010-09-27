@@ -54,7 +54,7 @@ class GetCategories
  	 */
 	public function _category($id,$response_type)
     {
-	
+
 	    //find incidents
 	    $this->query = "SELECT id, category_title, category_description,
             category_color FROM `".$this->table_prefix.
@@ -127,10 +127,12 @@ class GetCategories
 
 		$this->replar = array(); //assists in proper xml generation
 
-		foreach ($this->items as $item){
+		foreach ($this->items as $item)
+        {
 
 			//needs different treatment depending on the output
-			if($response_type == 'json'){
+			if($response_type == 'json')
+            {
 				$this->json_categories[] = array("category" => $item);
 			} else {
 				$this->json_categories['category'.$i] = array(
@@ -164,3 +166,4 @@ class GetCategories
 	}
 
 }
+

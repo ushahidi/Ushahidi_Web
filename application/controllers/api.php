@@ -69,7 +69,6 @@ class Api_Controller extends Controller
             
             $this->task = "";
         }
-
         else
         {
             
@@ -86,10 +85,9 @@ class Api_Controller extends Controller
         {
             $this->response_type = $this->request['resp'];
         }
-
+        
         // Get the various tasks
         $this->_get_tasks($this->task);
-
     }
 
     /**
@@ -598,6 +596,11 @@ class Api_Controller extends Controller
             case "version": 
 			    $this->ret = $this->api_objects->get_system->
                         _get_version_number($this->response_type);
+				break;
+
+			case "mhienabled":
+			    $this->ret = $this->api_objects->get_system->
+                        _get_mhi_enabled($this->response_type);
 				break;
             
             //retrieve the geographic midpoint of incidents

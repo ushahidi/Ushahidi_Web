@@ -28,7 +28,7 @@
 		echo "<!--[if IE 6]>".html::stylesheet('media/css/ie6hacks','',true)."<![endif]-->";
 
 		// Load OpenLayers before jQuery!
-
+			
 		if ($map_enabled)
 		{
 
@@ -41,6 +41,7 @@
 
 		echo html::script('media/js/jquery', true);
 		echo html::script('media/js/jquery.ui.min', true);
+		echo html::script('media/js/jquery.pngFix.pack', true);
 
 		// Other stuff to load only we have the map enabled
 
@@ -104,22 +105,19 @@
 		}
 
 		//Custom stylesheet
-
-		echo html::stylesheet(url::site().'themes/'.$site_style."/style.css");
+		if ($site_style != "default")
+		{
+			echo html::stylesheet(url::site().'themes/'.$site_style."/style.css");
+		}
 		
 		// Render CSS and Javascript Files from Plugins
 		plugin::render('stylesheet');
 		plugin::render('javascript');
 	?>
-
-	<!--[if IE 6]>
-	<script type="text/javascript" src="js/ie6pngfix.js"></script>
-	<script type="text/javascript">DD_belatedPNG.fix('img, ul, ol, li, div, p, a');</script>
-	<![endif]-->
 	<script type="text/javascript">
-		var addthis_config = {
-		   ui_click: true
-		}
+		$(document).ready(function(){ 
+			$(document).pngFix(); 
+		});	
 		<?php echo $js . "\n"; ?>
 	</script>
 	
@@ -138,8 +136,6 @@
 
 			<!-- searchbox -->
 			<div id="searchbox">
-				<a class="share addthis_button" href="http://www.addthis.com/bookmark.php?v=250&amp;pub=xa-4aee423643f8276e">Share</a>
-
 				<!-- languages -->
 				<div class="language-box">
 					<form>

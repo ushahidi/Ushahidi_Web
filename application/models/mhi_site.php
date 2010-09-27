@@ -142,7 +142,7 @@ class mhi_site_Model extends ORM
 		return $array;
 	}
 
-	function get_db_versions()
+	function get_db_versions($limit=100,$only_needs_upgrade=TRUE)
 	{
 		$mhi_db = Kohana::config('database.default');
 		$table_prefix = $mhi_db['table_prefix'];
@@ -154,13 +154,24 @@ class mhi_site_Model extends ORM
 
 		$array = array();
 
+		$settings = ORM::factory('settings', 1);
+		$current_version = $settings->db_version;
+
+		$i = 0;
 		foreach($dbs as $db)
 		{
+			if($i > $limit) break;
+
 			mysql_query('USE '.$db.';');
 
 			// START: Everything that happens in the deployment DB happens below
 			$settings = ORM::factory('settings', 1);
-			$array[$db] = $settings->db_version;
+
+			if($only_needs_upgrade == FALSE OR $settings->db_version != $current_version)
+			{
+				$array[$db] = $settings->db_version;
+				$i++;
+			}
 		}
 
 		// END: Everything that happens in the deployment DB happens above

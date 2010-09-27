@@ -44,7 +44,69 @@
 						</div>
 						<?php print form::close(); ?>			
 					</div>
+				</div>
+				
+				<div class="tabs" id="addedit" style="display:none">
+					<!-- tabset -->
+					<a name="add"></a>
+					<ul class="tabset">
+						<li><a href="#add" class="active"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+					</ul>
+					<!-- tab -->
+					<div class="tab reporters">
+						<?php print form::open(NULL,array('id' => 'reporterEdit',
+						 	'name' => 'reporterEdit')); ?>
+						<input type="hidden" name="action" 
+							id="action" value="a"/>
+						<input type="hidden" id="reporter_id" 
+							name="reporter_id[]" value="<?php echo $form['reporter_id']; ?>" />
+						<input type="hidden" id="service_account" name="service_account" value="">
+						<input type="hidden" id="service_name" name="service_name" value="">
+						<input type="hidden" id="location_id" name="location_id" value="">
+						<div style="clear:both;"></div>							
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.reporter');?>:</strong><br />
+							<h3 id="reporter_account"><?php echo $form['service_account']; ?></h3>
+						</div>
+						<div style="clear:both;"></div>
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.service');?>:</strong><br />
+							<h3 id="reporter_service"><?php echo $form['service_name']; ?></h3>
+						</div>
+						<div style="clear:both;"></div>
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.reporter_level');?>:</strong><br />
+							<?php print form::dropdown('level_id', $level_array, $form['level_id']); ?>
+						</div>
+						<div style="clear:both;"></div>
+						<div id="reporter_location">
+							<h3>Give this Reporter A Location <span>(Giving the reporter a location will allow their reports to be mapped immediately if they are trusted)</span></h3>
+							<div class="tab_form_item">
+								<strong><?php echo Kohana::lang('ui_main.location');?>:</strong><br />
+								<?php print form::input('location_name', $form['location_name'], ' class="text"'); ?>
+							</div>
+							<div class="tab_form_item">
+								<strong><?php echo Kohana::lang('ui_main.latitude');?>:</strong><br />
+								<?php print form::input('latitude', $form['latitude'], ' class="text"'); ?>
+							</div>
+							<div class="tab_form_item">
+								<strong><?php echo Kohana::lang('ui_main.longitude');?>:</strong><br />
+								<?php print form::input('longitude', $form['longitude'], ' class="text"'); ?>
+							</div>
+							<div style="clear:both;"></div>
+							<div class="tab_form_item">
+								<strong><?php echo Kohana::lang('ui_main.location');?>:</strong><br />
+								<div id="ReporterMap"></div>
+							</div>
+							<div style="clear:both;"></div>
+						</div>
+						<div class="tab_form_item">
+							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
+						</div>
+						<?php print form::close(); ?>
+					</div>
 				</div>				
+							
 				<?php
 				if ($form_error) {
 				?>
@@ -181,67 +243,6 @@
 							</table>
 						</div>
 					<?php print form::close(); ?>
-				</div>
-				
-				<div class="tabs" id="add_edit_form" style="display:none;">
-					<!-- tabset -->
-					<a name="add"></a>
-					<ul class="tabset">
-						<li><a href="#add" class="active"><?php echo Kohana::lang('ui_main.edit');?></a></li>
-					</ul>
-					<!-- tab -->
-					<div class="tab reporters">
-						<?php print form::open(NULL,array('id' => 'reporterEdit',
-						 	'name' => 'reporterEdit')); ?>
-						<input type="hidden" name="action" 
-							id="action" value="a"/>
-						<input type="hidden" id="reporter_id" 
-							name="reporter_id[]" value="<?php echo $form['reporter_id']; ?>" />
-						<input type="hidden" id="service_account" name="service_account" value="">
-						<input type="hidden" id="service_name" name="service_name" value="">
-						<input type="hidden" id="location_id" name="location_id" value="">
-						<div style="clear:both;"></div>							
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.reporter');?>:</strong><br />
-							<h3 id="reporter_account"><?php echo $form['service_account']; ?></h3>
-						</div>
-						<div style="clear:both;"></div>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.service');?>:</strong><br />
-							<h3 id="reporter_service"><?php echo $form['service_name']; ?></h3>
-						</div>
-						<div style="clear:both;"></div>
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.reporter_level');?>:</strong><br />
-							<?php print form::dropdown('level_id', $level_array, $form['level_id']); ?>
-						</div>
-						<div style="clear:both;"></div>
-						<div id="reporter_location">
-							<h3>Give this Reporter A Location <span>(Giving the reporter a location will allow their reports to be mapped immediately if they are trusted)</span></h3>
-							<div class="tab_form_item">
-								<strong><?php echo Kohana::lang('ui_main.location');?>:</strong><br />
-								<?php print form::input('location_name', $form['location_name'], ' class="text"'); ?>
-							</div>
-							<div class="tab_form_item">
-								<strong><?php echo Kohana::lang('ui_main.latitude');?>:</strong><br />
-								<?php print form::input('latitude', $form['latitude'], ' class="text"'); ?>
-							</div>
-							<div class="tab_form_item">
-								<strong><?php echo Kohana::lang('ui_main.longitude');?>:</strong><br />
-								<?php print form::input('longitude', $form['longitude'], ' class="text"'); ?>
-							</div>
-							<div style="clear:both;"></div>
-							<div class="tab_form_item">
-								<strong><?php echo Kohana::lang('ui_main.location');?>:</strong><br />
-								<div id="ReporterMap"></div>
-							</div>
-							<div style="clear:both;"></div>
-						</div>
-						<div class="tab_form_item">
-							<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
-						</div>
-						<?php print form::close(); ?>
-					</div>
 				</div>
 				
 			</div>

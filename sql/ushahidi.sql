@@ -683,53 +683,6 @@ PRIMARY KEY (`id`)
 -- Dumping data for table `message`
 
 
-/**
-* Table structure for table `twitter`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `twitter`                                                -- table description
-(
-    `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 -- field description
-    `incident_id` INTEGER DEFAULT 0,                                                -- field description
-    `tweet_from` VARCHAR(100) DEFAULT NULL,                                         -- field description
-    `tweet_to` VARCHAR(100) DEFAULT NULL,                                           -- field description
-    `tweet_hashtag` VARCHAR(50) DEFAULT NULL,                                       -- field description
-    `tweet_link` VARCHAR(100) DEFAULT NULL,                                         -- field description
-    `tweet` VARCHAR(255) DEFAULT NULL,                                              -- field description
-    `tweet_type` TINYINT DEFAULT 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',    -- field description
-    `tweet_date` DATETIME DEFAULT NULL,                                             -- field description
-    `hide` tinyint(1) NOT NULL default '0',                                         -- field description
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `twitter`
-
-
-
-/**
-* Table structure for table `laconica`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `laconica` (                                             -- table description
-    `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
-    `incident_id` int(11) default '0',                                              -- field description
-    `laconica_mesg_from` varchar(100) default NULL,                                 -- field description
-    `laconica_mesg_to` varchar(100) default NULL,                                   -- field description
-    `laconica_mesg_link` varchar(100) default NULL,                                 -- field description
-    `laconica_mesg` varchar(255) default NULL,                                      -- field description
-    `laconica_mesg_type` tinyint(4) default '1' COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',    -- field description
-    `laconica_mesg_date` datetime default NULL,                                     -- field description
-    `hide` tinyint(1) NOT NULL default '0',                                         -- field description
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
-
-
-
--- Dumping data for table `laconica`
 
 
 

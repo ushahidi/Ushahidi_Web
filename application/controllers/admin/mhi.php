@@ -160,7 +160,7 @@ class Mhi_Controller extends Admin_Controller
 			Mhi_Site_Database_Model::mass_update_db($_GET['mhimassupdatedb'],$_GET['from_version']);
 		}
 
-		$this->template->content->db_versions = Mhi_Site_Model::get_db_versions();
+		$this->template->content->db_versions = Mhi_Site_Model::get_db_versions(100);
 		asort($this->template->content->db_versions);
 		$this->template->content->current_version = $settings['db_version'];
 	}

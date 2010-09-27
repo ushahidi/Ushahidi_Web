@@ -17,6 +17,7 @@
 // Categories JS
 function fillFields(id, parent_id, category_title, category_description, category_color, locale)
 {
+	show_addedit();
 	$("#category_id").attr("value", unescape(id));
 	$("#parent_id").attr("value", unescape(parent_id));
 	$("#category_title").attr("value", unescape(category_title));
@@ -30,12 +31,12 @@ function catAction ( action, confirmAction, id )
 {
 	var statusMessage;
 	var answer = confirm('Are You Sure You Want To ' 
-		+ confirmAction)
+		+ confirmAction )
 	if (answer){
 		// Set Category ID
 		$("#category_id_action").attr("value", id);
 		// Set Submit Type
-		$("#action").attr("value", action);		
+		$("#category_action").attr("value", action);
 		// Submit Form
 		$("#catListing").submit();
 	}

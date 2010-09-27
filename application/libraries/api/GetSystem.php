@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * This class handles private functions that not accessbile by the public 
+ * This class handles private functions that not accessbile by the public
  * via the API.
  *
  * @version 23 - Henry Addo 2010-09-20
@@ -72,7 +73,45 @@ class GetSystem
             "error" => $this->api_actions->_get_error_msg(0)
         );
 
-		if($response_type == 'json') 
+		if($response_type == 'json')
+        {
+			$this->ret_json_or_xml = $this->api_actions->
+                _array_as_JSON($this->data);
+		}
+        else
+		{
+			$this->ret_json_or_xml = $this->api_actions->
+                _array_as_XML($this->data,$this->replar);
+		}
+
+		return $this->ret_json_or_xml;
+	}
+
+	/**
+ 	 * Get true or false depending on MHI being enabled or not
+     *
+     * @param string response_type - JSON or XML
+     *
+     * @return string
+ 	 */
+	public function _get_mhi_enabled($response_type)
+    {
+    	$enabled = 'FALSE';
+    	if (Kohana::config('config.enable_mhi') == TRUE)
+    	{
+    		$enabled = 'TRUE';
+    	}
+
+    	//create the json array
+		$this->data = array(
+            "payload" => array(
+                "domain" => $this->domain,
+                "mhienabled" => $enabled
+                ),
+            "error" => $this->api_actions->_get_error_msg(0)
+        );
+
+    	if($response_type == 'json')
         {
 			$this->ret_json_or_xml = $this->api_actions->
                 _array_as_JSON($this->data);
@@ -83,5 +122,5 @@ class GetSystem
 		}
 
 		return $this->ret_json_or_xml;
-	}
+    }
 }
