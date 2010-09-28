@@ -28,7 +28,7 @@ class Alerts_Controller extends Main_Controller {
 		// Create new session
 		$this->session->create();
 		
-		$this->template->header->this_page = 'alerts';
+		$this->template->header->this_page = $this->themes->this_page = 'alerts';
 		$this->template->content = new View('alerts');
 		
 		// Display news feeds?
@@ -110,13 +110,15 @@ class Alerts_Controller extends Main_Controller {
 		$this->template->content->form_saved = $form_saved;
 		
 		// Javascript Header
-		$this->template->header->map_enabled = TRUE;
-		$this->template->header->js = new View('alerts_js');
+		$this->themes->map_enabled = TRUE;
+		$this->themes->js = new View('alerts_js');
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->themes->js->latitude = $form['alert_lat'];
+		$this->themes->js->longitude = $form['alert_lon'];
 		
-		$this->template->header->js->default_map = Kohana::config('settings.default_map');
-		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-		$this->template->header->js->latitude = $form['alert_lat'];
-		$this->template->header->js->longitude = $form['alert_lon'];
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	

@@ -20,7 +20,7 @@ class Help_Controller extends Main_Controller
 		parent::__construct();
 
 		// Javascript Header
-		$this->template->header->validator_enabled = TRUE;
+		$this->themes->validator_enabled = TRUE;
 	}
 
 	/**
@@ -171,7 +171,10 @@ class Help_Controller extends Main_Controller
 			$this->template->content->form_error = $form_error;
 			
 			// Javascript Header
-			$this->template->header->js = new View('help_view_js');
+			$this->themes->js = new View('help_view_js');
+			
+			// Rebuild Header Block
+			$this->template->header->header_block = $this->themes->header_block();
 		}
 	}
 }

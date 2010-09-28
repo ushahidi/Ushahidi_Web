@@ -21,12 +21,8 @@ class Reports_Controller extends Main_Controller {
 	function __construct()
 	{
 		parent::__construct();
-
-		// Javascript Header
-
-		$this->template->header->validator_enabled = TRUE;
-
-		$this->template->header->js = '';
+		
+		$this->themes->validator_enabled = TRUE;
 
 		// Is the Admin Logged In?
 
@@ -247,6 +243,8 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->report_stats->total_reports = $total_reports;
 		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
 		$this->template->content->report_stats->percent_verified = $percent_verified;
+		
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	/**
@@ -574,20 +572,25 @@ class Reports_Controller extends Main_Controller {
 
 
 		// Javascript Header
-		$this->template->header->map_enabled = TRUE;
-		$this->template->header->datepicker_enabled = TRUE;
-		$this->template->header->treeview_enabled = TRUE;
-		$this->template->header->js = new View('reports_submit_js');
-		$this->template->header->js->default_map = Kohana::config('settings.default_map');
-		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->themes->map_enabled = TRUE;
+		$this->themes->datepicker_enabled = TRUE;
+		$this->themes->treeview_enabled = TRUE;
+		$this->themes->js = new View('reports_submit_js');
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
 		if (!$form['latitude'] OR !$form['latitude'])
 		{
-			$this->template->header->js->latitude = Kohana::config('settings.default_lat');
-			$this->template->header->js->longitude = Kohana::config('settings.default_lon');
-		}else{
-			$this->template->header->js->latitude = $form['latitude'];
-			$this->template->header->js->longitude = $form['longitude'];
+			$this->themes->js->latitude = Kohana::config('settings.default_lat');
+			$this->themes->js->longitude = Kohana::config('settings.default_lon');
 		}
+		else
+		{
+			$this->themes->js->latitude = $form['latitude'];
+			$this->themes->js->longitude = $form['longitude'];
+		}
+		
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	 /**
@@ -874,16 +877,16 @@ class Reports_Controller extends Main_Controller {
 
 		// Javascript Header
 
-		$this->template->header->map_enabled = TRUE;
-		$this->template->header->photoslider_enabled = TRUE;
-		$this->template->header->videoslider_enabled = TRUE;
-		$this->template->header->js = new View('reports_view_js');
-		$this->template->header->js->incident_id = $incident->id;
-		$this->template->header->js->default_map = Kohana::config('settings.default_map');
-		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-		$this->template->header->js->latitude = $incident->location->latitude;
-		$this->template->header->js->longitude = $incident->location->longitude;
-		$this->template->header->js->incident_photos = $incident_photo;
+		$this->themes->map_enabled = TRUE;
+		$this->themes->photoslider_enabled = TRUE;
+		$this->themes->videoslider_enabled = TRUE;
+		$this->themes->js = new View('reports_view_js');
+		$this->themes->js->incident_id = $incident->id;
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->themes->js->latitude = $incident->location->latitude;
+		$this->themes->js->longitude = $incident->location->longitude;
+		$this->themes->js->incident_photos = $incident_photo;
 
 		// Initialize custom field array
 
@@ -908,6 +911,9 @@ class Reports_Controller extends Main_Controller {
 
 		// If the Admin is Logged in - Allow for an edit link
 		$this->template->content->logged_in = $this->logged_in;
+		
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	/**

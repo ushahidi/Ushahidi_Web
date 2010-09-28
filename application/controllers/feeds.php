@@ -19,9 +19,6 @@ class Feeds_Controller extends Main_Controller {
 	function __construct()
 	{
 		parent::__construct();
-
-		// Javascript Header
-		$this->template->header->validator_enabled = TRUE;
 	}
 
 	/**

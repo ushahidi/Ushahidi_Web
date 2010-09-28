@@ -46,6 +46,8 @@ class plugin_Core {
 	public static function render($type)
 	{
 		$files = $type.'s';
+		
+		$html = '';
 
 		foreach (self::$$files as $key => $file)
 		{
@@ -57,7 +59,7 @@ class plugin_Core {
 						// Add the javascript suffix
 						$file .= '.css';
 					}
-					echo '<link rel="stylesheet" type="text/css" href="'.url::site()."plugins/".$file.'" />';
+					$html .= '<link rel="stylesheet" type="text/css" href="'.url::site()."plugins/".$file.'" />';
 					break;
 				case 'javascript':
 					if (substr_compare($file, '.js', -3, 3, FALSE) !== 0)
@@ -65,10 +67,12 @@ class plugin_Core {
 						// Add the javascript suffix
 						$file .= '.js';
 					}
-					echo '<script type="text/javascript" src="'.url::base()."plugins/".$file.'"></script>';
+					$html .= '<script type="text/javascript" src="'.url::base()."plugins/".$file.'"></script>';
 					break;
 			}
 		}
+		
+		return $html;
 	}	
 	
 	/**
