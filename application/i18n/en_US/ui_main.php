@@ -158,6 +158,7 @@ $lang = array(
 	'image' => 'Image',
 	'image_icon' => 'Image/Icon',
 	'in_response_to' => 'In response to',
+	'inactive' => 'Inactive',
 	'inbox' => 'Inbox',
 	'incoming_media' => 'Incoming Media',
 	'incident' => 'Incident',
