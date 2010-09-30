@@ -17,7 +17,13 @@
 				<!-- main body -->
 				<div id="main" class="clearingfix">
 					<div id="mainmiddle" class="floatbox withright">
-				
+
+					<?php if($site_message != '') { ?>
+						<div class="green-box">
+							<h3><?php echo $site_message; ?></h3>
+						</div>
+					<?php } ?>
+
 						<!-- right column -->
 						<div id="right" class="clearingfix">
 					
