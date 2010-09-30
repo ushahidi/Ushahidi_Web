@@ -33,6 +33,7 @@ $lang = array
         'email_notice' => '<span>In order to receive reports by email, please <a href="'.url::base().'admin/settings/email">configure your email account settings</a>.</span>',
         'email_site' => 'Site Email Address',
         'title'		=> 'Site Settings',
+        'message'	=> 'Site Message',
 		'name'		=> 'Site Name',
         'tagline'    => 'Site Tagline',
         'items_per_page'   => 'Items Per Page - Front End',

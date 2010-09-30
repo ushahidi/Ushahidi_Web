@@ -135,6 +135,14 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->this_page = 'home';
 		$this->template->content = new View('main');
 
+		// Check if there is a site message
+		$this->template->content->site_message = '';
+		$site_message = trim(Kohana::config('settings.site_message'));
+		if($site_message != '')
+		{
+			$this->template->content->site_message = $site_message;
+		}
+
         // Get all active top level categories
 		$parent_categories = array();
 		foreach (ORM::factory('category')
@@ -351,7 +359,7 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->js->latitude = Kohana::config('settings.default_lat');
 		$this->template->header->js->longitude = Kohana::config('settings.default_lon');
 		$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
-		
+
 		//
 		$this->template->header->js->active_startDate = $active_startDate;
 		$this->template->header->js->active_endDate = $active_endDate;
