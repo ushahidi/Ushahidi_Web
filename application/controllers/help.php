@@ -59,6 +59,9 @@ class Help_Controller extends Main_Controller
 		{
 			$this->template->content->pagination_stats = "";
 		}
+		
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 	
 	 /**
@@ -172,9 +175,9 @@ class Help_Controller extends Main_Controller
 			
 			// Javascript Header
 			$this->themes->js = new View('help_view_js');
-			
-			// Rebuild Header Block
-			$this->template->header->header_block = $this->themes->header_block();
 		}
+		
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 }

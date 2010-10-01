@@ -108,8 +108,8 @@
 	echo html::stylesheet('media/css/picbox/picbox');
 	
 	// Render CSS and Javascript Files from Plugins
-	plugin::render('stylesheet');
-	plugin::render('javascript');
+	echo plugin::render('stylesheet');
+	echo plugin::render('javascript');
 
 	// Action::header_scripts_admin - Additional Inline Scripts
 	Event::run('ushahidi_action.header_scripts_admin');

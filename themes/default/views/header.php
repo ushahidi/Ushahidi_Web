@@ -4,6 +4,12 @@
 	<title><?php echo $site_name; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<?php echo $header_block; ?>
+	<script>
+		<?php
+		// Action::header_scripts - Additional Inline Scripts from Plugins
+		Event::run('ushahidi_action.header_scripts');
+		?>
+	</script>
 </head>
 
 <body id="page">

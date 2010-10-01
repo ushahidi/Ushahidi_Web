@@ -923,6 +923,9 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit_thanks');
+		
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	/**

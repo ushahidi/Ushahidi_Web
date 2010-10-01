@@ -147,18 +147,12 @@ class Themes_Core {
 			$core_js .= html::script($this->js_url."media/js/coda-slider.pack");
 		}
 		
-		// PNG fix
-		$core_js .= '<script type="text/javascript">$(document).ready(function(){$(document).pngFix();});</script>';
-		
 		// Javascript files from plugins
 		$plugin_js = plugin::render('javascript');
 		
 		// Inline Javascript
-		$inline_js = "<script type=\"text/javascript\">";
-			$inline_js .= $this->js;
-			// Action::header_scripts - Additional Inline Scripts from Plugins
-			$inline_js .= Event::run('ushahidi_action.header_scripts');
-			$inline_js .= "</script>";
+		$inline_js = "<script type=\"text/javascript\">
+			".'$(document).ready(function(){$(document).pngFix();});'.$this->js."</script>";
 		
 		return $core_js.$plugin_js.$inline_js;
 	}

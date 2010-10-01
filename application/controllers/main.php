@@ -80,11 +80,6 @@ class Main_Controller extends Template_Controller {
 		// Get Custom Pages
 		$this->template->header->pages = ORM::factory('page')->where('page_active', '1')->find_all();
 
-        // Get custom CSS file from settings
-		$this->template->header->site_style = Kohana::config('settings.site_style');
-		
-		$this->template->header->header_block = $this->themes->header_block();
-
 		$this->template->header->this_page = "";
 
 		// Google Analytics

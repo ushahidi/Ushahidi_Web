@@ -90,6 +90,9 @@ class Contact_Controller extends Main_Controller
         $this->template->content->errors = $errors;
         $this->template->content->form_error = $form_error;
         $this->template->content->form_sent = $form_sent;
-		$this->template->content->captcha = $captcha;		
+		$this->template->content->captcha = $captcha;
+		
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();		
     }	
 }
