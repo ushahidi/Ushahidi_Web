@@ -109,6 +109,14 @@ class Main_Controller extends Template_Controller {
 		$this->template->content->div_map = $div_map;
 		$this->template->content->div_timeline = $div_timeline;
 
+		// Check if there is a site message
+		$this->template->content->site_message = '';
+		$site_message = trim(Kohana::config('settings.site_message'));
+		if($site_message != '')
+		{
+			$this->template->content->site_message = $site_message;
+		}
+
         // Get all active top level categories
 		$parent_categories = array();
 		foreach (ORM::factory('category')
@@ -283,7 +291,7 @@ class Main_Controller extends Template_Controller {
 		$marker_stroke_width = Kohana::config('map.marker_stroke_width');
 		$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
 
-		// pdestefanis - allows to restrict the number of zoomlevels available
+        // pdestefanis - allows to restrict the number of zoomlevels available
 		$numZoomLevels = Kohana::config('map.numZoomLevels');
 		$minZoomLevel = Kohana::config('map.minZoomLevel');
 	   	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
@@ -324,7 +332,6 @@ class Main_Controller extends Template_Controller {
 		$this->themes->js->latitude = Kohana::config('settings.default_lat');
 		$this->themes->js->longitude = Kohana::config('settings.default_lon');
 		$this->themes->js->default_map_all = Kohana::config('settings.default_map_all');
-		
 		//
 		$this->themes->js->active_startDate = $active_startDate;
 		$this->themes->js->active_endDate = $active_endDate;

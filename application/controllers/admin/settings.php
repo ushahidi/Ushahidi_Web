@@ -47,6 +47,7 @@ class Settings_Controller extends Admin_Controller
 			'site_email' => '',
 			'alerts_email' =>  '',
 			'site_language' => '',
+			'site_message' => '',
 			//'site_help_page' => '',
 			'site_contact_page' => '',
 			'items_per_page' => '',
@@ -83,6 +84,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_tagline', 'length[3,100]');
 			$post->add_rules('site_email', 'email', 'length[4,100]');
 			$post->add_rules('alerts_email', 'email', 'length[4,100]');
+			//$post->add_rules('site_message', 'standard_text');
 			$post->add_rules('site_language','required', 'length[5, 5]');
 			//$post->add_rules('site_help_page','required','between[0,1]');
 			$post->add_rules('site_contact_page','required','between[0,1]');
@@ -107,6 +109,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->site_tagline = $post->site_tagline;
 				$settings->site_email = $post->site_email;
 				$settings->alerts_email = $post->alerts_email;
+				$settings->site_message = $post->site_message;
 				$settings->site_language = $post->site_language;
 				//$settings->site_help_page = $post->site_help_page;
 				$settings->site_contact_page = $post->site_contact_page;
@@ -159,6 +162,7 @@ class Settings_Controller extends Admin_Controller
 				'site_tagline' => $settings->site_tagline,
 				'site_email' => $settings->site_email,
 				'alerts_email' => $settings->alerts_email,
+				'site_message' => $settings->site_message,
 				'site_language' => $settings->site_language,
 				//'site_help_page' => $settings->site_help_page,
 				'site_contact_page' => $settings->site_contact_page,
