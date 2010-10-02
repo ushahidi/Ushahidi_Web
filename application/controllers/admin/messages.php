@@ -185,17 +185,20 @@ class Messages_Controller extends Admin_Controller
 		$this->template->content->count_all = ORM::factory('message')
 			->join('reporter','message.reporter_id','reporter.id')
 			->where('service_id', $service_id)
+			->where('message_type', 1)
 			->count_all();
 		// Trusted
 		$this->template->content->count_trusted = ORM::factory('message')
 			->join('reporter','message.reporter_id','reporter.id')
 			->where('service_id', $service_id)
 			->where("( reporter.level_id = '4' OR reporter.level_id = '5' ) AND ( message.message_level != '99' )")
+			->where('message_type', 1)
 			->count_all();
 		// Spam
 		$this->template->content->count_spam = ORM::factory('message')
 			->join('reporter','message.reporter_id','reporter.id')
 			->where('service_id', $service_id)
+			->where('message_type', 1)
 			->where("message.message_level = '99'")
 			->count_all();
 

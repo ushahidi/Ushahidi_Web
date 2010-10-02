@@ -77,7 +77,7 @@ function reportersAction ( action, confirmAction, reporter_id, level_id )
 		if (answer){
 			
 			// Set Submit Type
-			$("#action").attr("value", action);
+			$("#reporter_action").attr("value", action);
 			
 			// Set Level ID
 			$("#level_id_main").attr("value", level_id);
