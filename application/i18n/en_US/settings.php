@@ -52,7 +52,7 @@ $lang = array
         'language' => 'Site Language',
         'api_akismet' => 'Akismet Key',
         'kismet_notice' => 'Prevent comment spam using <a href="http://akismet.com/" target="_blank">Akismet</a> from Automattic. <BR />You can get a free API key by registering for a <a href="http://en.wordpress.com/api-keys/" target="_blank">WordPress.com user account</a>',
-        'share_site_stats' => 'Share Site Statistics in API'
+        'share_site_stats' => 'Enable Statistics (Stored on Ushahidi\'s server)'
 	),
 	'cleanurl' => array 
 	(
