@@ -215,13 +215,6 @@ class Reports_Controller extends Admin_Controller
 								$updatemessage->save();
 							}
 
-							// Delete relationship to Twitter message
-							$updatemessage = ORM::factory('twitter')->where('incident_id',$incident_id)->find();
-							if ($updatemessage->loaded == true) {
-								$updatemessage->incident_id = 0;
-								$updatemessage->save();
-							}
-
 							// Delete Comments
 							ORM::factory('comment')->where('incident_id',$incident_id)->delete_all();
 						}					
