@@ -179,6 +179,26 @@ class admin_Core {
 
 
 	/**
+	 * Generate SMS Sub Tab Menus
+     * @param string $this_sub_page
+	 * @return string $menu
+     */
+	public static function settings_sms_subtabs($this_sub_page = FALSE)
+	{
+		$menu = "";
+		$menu .= ($this_sub_page == "sms") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::base()."admin/settings/sms\">".Kohana::lang('settings.sms.option_1')."</a>";
+		$menu .= ($this_sub_page == "smsglobal") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::base()."admin/settings/smsglobal\">".Kohana::lang('settings.sms.option_2')."</a>";
+		
+		echo $menu;
+		
+		// Action::nav_admin_settings_sms - Add items to the settings sms  navigation tabs
+		Event::run('ushahidi_action.sub_nav_admin_settings_sms', $this_sub_page);
+	}
+
+
+
+
+	/**
 	 * Generate Manage Sub Tab Menus
      * @param string $this_sub_page
 	 * @return string $menu
