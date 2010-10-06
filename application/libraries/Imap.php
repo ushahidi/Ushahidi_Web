@@ -41,15 +41,28 @@ class Imap_Core {
 			.Kohana::config('settings.email_servertype')
 			.$notls.$ssl.$novalidate."}";
 
-		$imap_stream =	imap_open($service, Kohana::config('settings.email_username')
-			,Kohana::config('settings.email_password'));
-
-		if (!$imap_stream)
+		// Check if the host name is valid, if not, set imap_stream as false and return false
+		if(count(dns_get_record("".Kohana::config('settings.email_host')."")) == 0)
 		{
-			throw new Kohana_Exception('imap.imap_stream_not_opened', imap_last_error());
+			$this->imap_stream = false;
+			return false;
 		}
 
-		$this->imap_stream = $imap_stream;
+		if ( $imap_stream = @imap_open($service, Kohana::config('settings.email_username')
+			,Kohana::config('settings.email_password')))
+		{
+
+			$this->imap_stream = $imap_stream;
+
+		} else {
+			// We don't usually want to break the entire scheduler process if email settings are off
+			//   so lets return false instead of halting the entire script with a Kohana Exception.
+
+			$this->imap_stream = false;
+			return false;
+
+			//throw new Kohana_Exception('imap.imap_stream_not_opened', $throwing_error);
+		}
 	}
 
 	/**
@@ -63,6 +76,14 @@ class Imap_Core {
 	public function get_messages($search_criteria="UNSEEN",
 								 $date_format="Y-m-d H:i:s")
 	{
+
+		// If our imap connection failed earlier, return no messages
+
+		if($this->imap_stream == false)
+		{
+			return array();
+		}
+
 		$no_of_msgs = imap_num_msg($this->imap_stream);
 		$max_imap_messages = Kohana::config('email.max_imap_messages');
 
@@ -180,7 +201,7 @@ class Imap_Core {
 	 */
 	public function close()
 	{
-		imap_close($this->imap_stream);
+		@imap_close($this->imap_stream);
 	}
 
 	private function _mime_decode($str)
