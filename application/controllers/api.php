@@ -105,7 +105,7 @@ class Api_Controller extends Controller
                 ->_report($this->response_type);
             break;
 
-            	case "3dkml": //report/add an incident
+            case "3dkml": //report/add an incident
 				$this->ret = $this->api_objects->kml
                     ->_3dkml($this->response_type);
 			break;
@@ -150,7 +150,25 @@ class Api_Controller extends Controller
                         $this->response_type);
                 
             break;
+
+            //add categories
+            case "admincategories":
+                if(!$this->api_objects->api_actions->_verify_array_index(
+                            $this->request,'action'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001, 'action'));
+
+                } 
+                else
+                {
+
+                    $this->ret = $this->api_objects->admin_categories->
+                        _admin_category($this->response_type);
+                }
             
+            break;
             //retrieve api keys
             case "apikeys":
                 $by = '';

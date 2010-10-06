@@ -26,6 +26,7 @@ include Kohana::find_file('libraries/api', 'GetKml');
 include Kohana::find_file('libraries/api', 'ApiPrivateFunc');
 include Kohana::find_file('libraries/api', 'PostReport');
 include Kohana::find_file('libraries/api', 'PostTagMedia');
+include Kohana::find_file('libraries/api', 'AdminCategory');
 
 //include a new class here just like its done above
 
@@ -60,6 +61,7 @@ class ApiObjects_Core
         $this->tag_media = new PostTagMedia;
         $this->private_func = new ApiPrivateFunc;
         $this->get_system = new GetSystem;
+        $this->admin_categories = new AdminCategory;
         $this->kml = new GetKml;
 
         //create a new object
