@@ -43,8 +43,11 @@ class Imap_Core {
 
 		$imap_stream =	imap_open($service, Kohana::config('settings.email_username')
 			,Kohana::config('settings.email_password'));
+
 		if (!$imap_stream)
+		{
 			throw new Kohana_Exception('imap.imap_stream_not_opened', imap_last_error());
+		}
 
 		$this->imap_stream = $imap_stream;
 	}
@@ -60,14 +63,28 @@ class Imap_Core {
 	public function get_messages($search_criteria="UNSEEN",
 								 $date_format="Y-m-d H:i:s")
 	{
-		//$msgs = imap_num_msg($this->imap_stream);
 		$no_of_msgs = imap_num_msg($this->imap_stream);
+		$max_imap_messages = Kohana::config('email.max_imap_messages');
+
+		// Check to see if the number of messages we want to sort through is greater than
+		//   the number of messages we want to allow. If there are too many messages, it
+		//   can fail and that's no good.
+		$msg_to_pull = $no_of_msgs;
+		if($msg_to_pull > $max_imap_messages){
+			$msg_to_pull = $max_imap_messages;
+		}
 
 		$messages = array();
 
-		for ($i = 1; $i <= $no_of_msgs; $i++)
+		for ($i = 1; $i <= $msg_to_pull; $i++)
 		{
 			$header = imap_headerinfo($this->imap_stream, $i);
+
+			if( ! isset($header->message_id) OR ! isset($header->udate))
+			{
+				continue;
+			}
+
 			$message_id = $header->message_id;
 			$date = date($date_format, $header->udate);
 
@@ -91,7 +108,10 @@ class Imap_Core {
 						$fromname = $object->personal;
 					}
 
-					$fromaddress = $object->mailbox."@".$object->host;
+					if (isset($object->mailbox) AND isset($object->host))
+					{
+						$fromaddress = $object->mailbox."@".$object->host;
+					}
 
 					if ($fromname == "")
 					{
