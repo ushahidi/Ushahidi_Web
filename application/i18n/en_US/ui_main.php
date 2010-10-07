@@ -283,6 +283,7 @@ $lang = array(
 	'receive_notifications' => 'Receive Notifications',
 	'recent_reports' => 'Recent Reports',
 	'refresh_news_feeds' => 'Refresh News Feeds',
+	'force_run_scheduler' => 'Force Run Scheduler',
 	'remove' => 'remove',
 	'reply' => 'Reply',
 	'report' => 'Report',
