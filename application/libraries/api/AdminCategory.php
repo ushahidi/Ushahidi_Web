@@ -47,63 +47,19 @@ class AdminCategory
     public function _add_category($response_type)
     {
         $ret_value = $this->_submit_categories();
-		
-        if($ret_value == 0 )
-        {
-			$reponse = array(
-				"payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "true"
-                ),
-				"error" => $this->api_actions->_get_error_msg(0)
-			);
-			
-		} 
-        else if( $ret_value == 1 ) 
-        {
-			$reponse = array(
-				"payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "false"
-                ),
-				"error" => $this->api_actions->
-                    _get_error_msg(003,'',$this->error_messages)
-			);
-		} 
-        else 
-        {
-			$reponse = array(
-				"payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "false"
-                ),
-				"error" => $this->api_actions->_get_error_msg(004)
-			);
-		}
+	    
+        return $this->_response($ret_value);
 
-		if($response_type == 'json')
-        {
-			$this->ret_json_or_xml = $this->api_actions->
-                _array_as_JSON($reponse);
-		} 
-        else 
-        {
-			$this->ret_json_or_xml = $this->api_actions->
-                _array_as_XML($reponse, array());
-		}
-
-		return $this->ret_json_or_xml;
     }
     
     /**
      * Edit existing category
      *
-     * @param int category_id - the category id to be edited.
      * @param string response_type - XML or JSON
      * 
      * @return array
      */
-    public function _edit_category($category_id,$response_type)
+    public function _edit_category($response_type)
     {
         // setup and initialize form field names
 		$form = array
@@ -224,7 +180,7 @@ class AdminCategory
             $ret_value = 2;
         }
 
-      	return $this->response($ret_value);
+      	return $this->_response($ret_value);
     }
 
     /**
@@ -234,12 +190,12 @@ class AdminCategory
      *
      * @return array
      */
-    public function _del_category($category_id)
+    public function _del_category($response_type)
     {
          // setup and initialize form field names
 		$form = array
 	    (
-			'category_id'      => '',
+			'category_id'   => '',
 	    );
 
         	// copy the form as errors, so the errors will be stored 
@@ -256,8 +212,6 @@ class AdminCategory
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
 	
-			//if ($post->action == 'a')		// Add Action
-			//{
 			// Add some rules, the input field, followed by a list 
             //of checks, carried out in order
 			$post->add_rules('category_id','required','numeric');
@@ -267,22 +221,43 @@ class AdminCategory
 	        {
 			    $category_id = $post->category_id;
 			    $category = new Category_Model($category_id);
-				
-			    if( $post->action == 'd' )
-			    { // Delete Action
-				    $category->delete( $category_id );
-			
-			    }
+			    $category->delete($category_id);	
+            } 
+            else
+            {
+                 // populate the error fields, if any
+                $errors = arr::overwrite($errors, 
+                    $post->errors('category'));
+                foreach($errors as $error_item => $error_description)
+                {
+                    if( !is_array($error_description))
+                    {
+                        $this->error_messages .= $error_description;
+                        
+                        if($error_description != end($errors))
+                        {
+                            $this->error_messages .= " - ";
+                        }
+                    }
+                }
+                
+                $ret_value = 1; // validation error
+
             }
         }
-
+        else
+        {
+            $ret_value = 2;
+        }
+        
+        return $this->_response($ret_value);
     }
 
     /**
      * Reponse
      * @param int ret_value
      */
-    public function responses($ret_value)
+    public function _responses($ret_value)
     {
         if($ret_value == 0 )
         {

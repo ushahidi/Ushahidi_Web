@@ -152,23 +152,20 @@ class Api_Controller extends Controller
             break;
 
             //add categories
-            case "admincategories":
-                if(!$this->api_objects->api_actions->_verify_array_index(
-                            $this->request,'action'))
-                {
-                    $this->error = array("errror" =>
-                            $this->api_objects->
-                                api_actions->_get_error_msg(001, 'action'));
+            case "addcategories":
+                $this->ret = $this->api_objects->admin_categories->
+                        _add_category($this->response_type);
 
-                } 
-                else
-                {
-
-                    $this->ret = $this->api_objects->admin_categories->
-                        _admin_category($this->response_type);
-                }
-            
             break;
+
+            case "editcategories":
+                $this->ret = $this->api_objects->admin_categories->
+                    _edit_category($this->response_type);
+            break;
+
+            case "delcategories":
+                $this->ret = $this->api_objects->admin_categories->
+                    _del_category($this->response_type);
             //retrieve api keys
             case "apikeys":
                 $by = '';
