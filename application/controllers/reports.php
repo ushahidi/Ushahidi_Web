@@ -105,7 +105,7 @@ class Reports_Controller extends Main_Controller {
 
 		// Get Count
 
-		$query = 'SELECT COUNT(id) as count FROM '.$this->table_prefix.'incident WHERE 1=1'.$location_id_in.''.$incident_id_in.'';
+		$query = 'SELECT COUNT(id) as count FROM '.$this->table_prefix.'incident WHERE 1=1'.$location_id_in.''.$incident_id_in.' AND (incident_active = 1)';
 		foreach ($db->query($query) as $item)
 		{
 			$total_incidents = $item->count;
@@ -122,7 +122,7 @@ class Reports_Controller extends Main_Controller {
 
 		// Get Incidents
 
-		$query = 'SELECT id, incident_title, incident_description, incident_date, location_id, incident_verified FROM '.$this->table_prefix.'incident WHERE 1=1'.$location_id_in.''.$incident_id_in.' ORDER BY incident_date DESC LIMIT '. (int) Kohana::config('settings.items_per_page').' OFFSET '.$pagination->sql_offset.';';
+		$query = 'SELECT id, incident_title, incident_description, incident_date, location_id, incident_verified, incident_active FROM '.$this->table_prefix.'incident WHERE 1=1'.$location_id_in.''.$incident_id_in.' AND (incident_active = 1) ORDER BY incident_date DESC LIMIT '. (int) Kohana::config('settings.items_per_page').' OFFSET '.$pagination->sql_offset.';';
 
 		$incidents = $db->query($query);
 		$total_incidents = $incidents->count();
