@@ -239,6 +239,11 @@ class Main_Controller extends Template_Controller {
 			$active_endDate = strtotime($active_year . "-" . $active_month .
 				"-" . date('t', mktime(0,0,0,$active_month,1))." 23:59:59");
 		}
+		
+		//run some custom events for the timeline plugin
+		Event::run('ushahidi_filter.active_startDate', $active_startDate);
+		Event::run('ushahidi_filter.active_endDate', $active_endDate);
+		Event::run('ushahidi_filter.active_month', $active_month);
 
         // Next, Get the Range of Years
 		$query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y\') AS incident_date FROM '.$this->table_prefix.'incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y\') ORDER BY incident_date');
@@ -280,6 +285,10 @@ class Main_Controller extends Template_Controller {
 			}
 			$endDate .= "</optgroup>";
 		}
+		
+		//run more custom events for the timeline plugin
+		Event::run('ushahidi_filter.startDate', $startDate);
+		Event::run('ushahidi_filter.endDate', $endDate);	
 		
 		$this->template->content->div_timeline->startDate = $startDate;
 		$this->template->content->div_timeline->endDate = $endDate;
