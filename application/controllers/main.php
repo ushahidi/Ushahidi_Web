@@ -90,7 +90,11 @@ class Main_Controller extends Template_Controller {
         // $profiler = new Profiler;
 
         // Get tracking javascript for stats
-		$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
+        if(Kohana::config('settings.allow_stat_sharing') == 1){
+			$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
+		}else{
+			$this->template->footer->ushahidi_stats = '';
+		}
 	}
 
 
