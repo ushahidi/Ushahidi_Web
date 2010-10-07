@@ -98,10 +98,12 @@ class Manage_Controller extends Admin_Controller
 				
 				if( $post->action == 'd' )
 				{ // Delete Action
-					$category->delete( $category_id );
+					ORM::factory('category')
+						->where('category_trusted != 1')
+						->delete($category_id);
+						
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
-			
 				}
 				else if( $post->action == 'v' )
 				{ // Show/Hide Action

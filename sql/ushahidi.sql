@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 29
+-- version 31
 -- http://www.ushahidi.com
 
 
@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `category` (                                         
     `category_image` varchar(100) default NULL,                                     -- field description
     `category_image_shadow` varchar(100) default NULL,                              -- field description
     `category_visible` tinyint(4) NOT NULL default '1',                             -- field description
+    `category_trusted` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `category_visible` (`category_visible`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -35,10 +36,11 @@ CREATE TABLE IF NOT EXISTS `category` (                                         
 
 -- Dumping data for table `category`
 
-INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_description`, `category_color`, `category_visible`) VALUES
-(1, 5, 'Category 1', 'Category 1', '9900CC', 1),
-(2, 5, 'Category 2', 'Category 2', '3300FF', 1),
-(3, 5, 'Category 3', 'Category 3', '663300', 1);
+INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_description`, `category_color`, `category_visible`, `category_trusted`) VALUES
+(1, 5, 'Category 1', 'Category 1', '9900CC', 1, 0),
+(2, 5, 'Category 2', 'Category 2', '3300FF', 1, 0),
+(3, 5, 'Category 3', 'Category 3', '663300', 1, 0),
+(4, 5, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1);
 
 
 
@@ -384,7 +386,7 @@ CREATE TABLE IF NOT EXISTS `incident` (                                         
     `incident_datemodify` datetime default NULL,                                    -- field description
     `incident_alert_status` TINYINT NOT NULL DEFAULT '0' COMMENT '0 - Not Tagged for Sending, 1 - Tagged for Sending, 2 - Alerts Have Been Sent',    -- field description
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `location_id` (`location_id`),
+  KEY `location_id` (`location_id`),
   KEY `incident_active` (`incident_active`),
   KEY `incident_date` (`incident_date`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -555,6 +557,7 @@ CREATE TABLE IF NOT EXISTS `media` (                                            
     `id` bigint(20) unsigned NOT NULL auto_increment,                               -- field description
     `location_id` bigint(20) default NULL,                                          -- field description
     `incident_id` bigint(20) default NULL,                                          -- field description
+    `message_id` bigint(20) NULL DEFAULT NULL,
     `media_type` tinyint(4) default NULL COMMENT '1 - IMAGES, 2 - VIDEO, 3 - AUDIO, 4 - NEWS, 5 - PODCAST',    -- field description
     `media_title` varchar(255) default NULL,                                        -- field description
     `media_description` longtext default NULL,                                      -- field description
@@ -1525,4 +1528,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '1.1.0' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '30' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '31' WHERE `id`=1 LIMIT 1;

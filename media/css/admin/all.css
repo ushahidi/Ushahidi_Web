@@ -1994,6 +1994,15 @@ h4 span.highlight{
 		background-color:#339900;
 		color:#fff;
 	}
+	
+.attachment_thumbs{
+	float:left;
+	margin:0 10px 10px 0;
+	border:1px solid #ccc;
+}
+	.attachment_thumbs img{
+		border-width:0;
+	}
 
 /*--  --*/
 /*--  --*/
