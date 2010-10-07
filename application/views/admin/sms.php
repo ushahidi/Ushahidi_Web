@@ -56,8 +56,8 @@
 					<!-- column -->
 		
 					<div class="sms_nav_holder">
-						<a href="<?php echo url::site() . 'admin/settings/sms' ?>" class="active"><?php echo Kohana::lang('settings.sms.option_1');?></a>
-						<a href="<?php echo url::site() . 'admin/settings/smsglobal' ?>"><?php echo Kohana::lang('settings.sms.option_2');?></a>
+					
+						<?php admin::settings_sms_subtabs(); ?>
 					</div>
 		
 					<div class="sms_holder">
