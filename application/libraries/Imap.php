@@ -40,12 +40,28 @@ class Imap_Core {
 			.Kohana::config('settings.email_servertype')
 			.$notls.$ssl.$novalidate."}";
 
-		$imap_stream =	imap_open($service, Kohana::config('settings.email_username')
-			,Kohana::config('settings.email_password'));
-		if (!$imap_stream)
-			throw new Kohana_Exception('imap.imap_stream_not_opened', imap_last_error());
+		// Check if the host name is valid, if not, set imap_stream as false and return false
+		if(count(dns_get_record("".Kohana::config('settings.email_host')."")) == 0)
+		{
+			$this->imap_stream = false;
+			return false;
+		}
 
-		$this->imap_stream = $imap_stream;
+		if ( $imap_stream = @imap_open($service, Kohana::config('settings.email_username')
+			,Kohana::config('settings.email_password')))
+		{
+
+			$this->imap_stream = $imap_stream;
+
+		} else {
+			// We don't usually want to break the entire scheduler process if email settings are off
+			//   so lets return false instead of halting the entire script with a Kohana Exception.
+
+			$this->imap_stream = false;
+			return false;
+
+			//throw new Kohana_Exception('imap.imap_stream_not_opened', $throwing_error);
+		}
 	}
 
 	/**
@@ -61,14 +77,35 @@ class Imap_Core {
 	{
 		global $htmlmsg,$plainmsg,$attachments;
 		
-		//$msgs = imap_num_msg($this->imap_stream);
+		// If our imap connection failed earlier, return no messages
+
+		if($this->imap_stream == false)
+		{
+			return array();
+		}
+
 		$no_of_msgs = imap_num_msg($this->imap_stream);
+		$max_imap_messages = Kohana::config('email.max_imap_messages');
+
+		// Check to see if the number of messages we want to sort through is greater than
+		//   the number of messages we want to allow. If there are too many messages, it
+		//   can fail and that's no good.
+		$msg_to_pull = $no_of_msgs;
+		if($msg_to_pull > $max_imap_messages){
+			$msg_to_pull = $max_imap_messages;
+		}
 
 		$messages = array();
 
-		for ($msgno = 1; $msgno <= $no_of_msgs; $msgno++)
+		for ($msgno = 1; $msgno <= $msg_to_pull; $msgno++)
 		{
 			$header = imap_headerinfo($this->imap_stream, $msgno);
+
+			if( ! isset($header->message_id) OR ! isset($header->udate))
+			{
+				continue;
+			}
+
 			$message_id = $header->message_id;
 			$date = date($date_format, $header->udate);
 
@@ -94,7 +131,10 @@ class Imap_Core {
 						$fromname = $object->personal;
 					}
 
-					$fromaddress = $object->mailbox."@".$object->host;
+					if (isset($object->mailbox) AND isset($object->host))
+					{
+						$fromaddress = $object->mailbox."@".$object->host;
+					}
 
 					if ($fromname == "")
 					{
@@ -156,7 +196,7 @@ class Imap_Core {
 	 */
 	public function close()
 	{
-		imap_close($this->imap_stream);
+		@imap_close($this->imap_stream);
 	}
 
 	private function _mime_decode($str)
