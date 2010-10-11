@@ -1,40 +1,45 @@
 <?php
-$lang = array
-(
-	'feedback_details' => 'Feedback Details',
-	'feedback_date' => 'Date',
+	$lang = array(
+	'delete' => '',
+	'error_msg' => '',
+	'error_title' => '',
+	'feedback' => '',
 	'feedback_actions' => 'Actions',
-			
-	'feedback_title' => array
-	(
-		'required'		=> 'A title is required.',
-		'length'		=> 'The title field must be at least 3 and no more 100 characters long.'
+	'feedback_captcha' => array(
+		'captcha' => '',
+		'default' => '',
+		'required' => 'Please enter the Security Code.',
+		'valid' => 'Please enter a valid security code',
 	),
-	
-	'feedback_message' => array
-	(
+	'feedback_confirm_mesg' => '',
+	'feedback_date' => 'Date',
+	'feedback_details' => 'Feedback Details',
+	'feedback_message' => array(
 		'required' => 'Please enter some information for the reply.',
 	),
-	
-	'person_name' => array
-	(
-		'required' => 'Please enter your full name.',
-		
+	'feedback_no_result' => '',
+	'feedback_page_title' => '',
+	'feedback_person_email' => '',
+	'feedback_person_ip' => '',
+	'feedback_person_name' => '',
+	'feedback_reply_message' => '',
+	'feedback_reply_send' => '',
+	'feedback_reply_title' => '',
+	'feedback_send_reply' => '',
+	'feedback_title' => array(
+		'length' => 'The title field must be at least 3 and no more 100 characters long.',
+		'required' => 'A title is required.',
 	),
-	
-	'person_email' => array
-	(
+	'hide_msg' => '',
+	'person_email' => array(
+		'email' => 'The email field does not appear to contain a valid email address?',
 		'required' => 'Please enter your email address',
-		'email'	=> 'The email field does not appear to contain a valid email address?',
 	),
-	
-	
-	'feedback_captcha' => array
-	(
-		'required' => 'Please enter the Security Code.',
-		'valid' => 'Please enter a valid security code'
-	)
-	
-);
+	'person_name' => array(
+		'required' => 'Please enter your full name.',
+	),
+	'read' => '',
+	'show_all' => '',
+	'unread' => '',
+	);
 ?>
-

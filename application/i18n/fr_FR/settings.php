@@ -1,99 +1,169 @@
 <?php
-
-$lang = array
-(
-	'site_name' => array
-	(
-		'required'		=> 'Veuillez entrer le nom du site.',
-		'length'		=> 'le nom du site doit comporter entre 3 et 50 caractères.',
+	$lang = array(
+	'allow_comments' => array(
+		'between' => 'Veuillez indiquer correctement si les commentaires sont autorisés.',
+		'required' => 'Veuillez indiquer si les commentaires sont autorisés.',
 	),
-	
-	'site_tagline' => array
-	(
-		'required'		=> 'Veuiller entrer un slogan.',
-		'length'		=> 'Le slogan doit comporter entre 3 et 100 caractères.'
+	'allow_feed' => array(
+		'between' => 'Veuillez indiquer correctement si le fil est inclus.',
+		'required' => 'Veuillez indiquer si le fil est inclus.',
 	),
-	
-	'site_email' => array
-	(
-		'email'		  => 'L\'adresse email du site n\'est pas valide.',
-		'length'	  => 'L\'adresse email du site doit comporter entre 4 et 100 caractères.'
+	'allow_reports' => array(
+		'between' => 'Veuillez indiquer correctement si les rapports sont autorisés.',
+		'required' => 'Veuillez indiquer si les rapports sont autorisés.',
 	),
-	
-	'items_per_page' => array
-	(
-		'required'		=> 'Veuillez indiquer le nombre d\'éléments par page (Frontend).',
-		'between' => 'Le nombre d\'éléments par page (Frontend) n\'est pas valide'
+	'allow_stat_sharing' => array(
+		'between' => 'Le champ «partage des statistiques» a une valeur incorrecte',
+		'required' => 'Veuillez indiquer une valeur pour le partage des statistiques.',
 	),
-	
-	'items_per_page_admin' => array
-	(
-		'required'		=> 'Veuillez indiquer le nombre d\'éléments par page (Admin).',
-		'between' => 'Le nombre d\'éléments par page (Admin) n\'est pas valide'
+	'api_akismet' => array(
+		'alpha_numeric' => '',
+		'length' => '',
 	),
-	
-	'allow_reports' => array
-	(
-		'required'		=> 'Veuillez indiquer si les rapports sont autorisés.',
-		'between' => 'Veuillez indiquer correctement si les rapports sont autorisés.'
+	'cleanurl' => array(
+		'clean_url_disabled' => '',
+		'clean_url_enabled' => '',
+		'enable_clean_url' => '',
+		'title' => '',
 	),
-	
-	'allow_comments' => array
-	(
-		'required'		=> 'Veuillez indiquer si les commentaires sont autorisés.',
-		'between' => 'Veuillez indiquer correctement si les commentaires sont autorisés.'
+	'clickatell_api' => array(
+		'length' => 'Le numéro d\'API Clickatell doit comporter moins de 20 caractères.',
+		'required' => 'Veuillez indiquer un numéro d\'API Clickatell.',
 	),
-	
-	'allow_stat_sharing' => array
-	(
-		'required'		=> 'Veuillez indiquer une valeur pour le partage des statistiques.',
-		'between' => 'Le champ «partage des statistiques» a une valeur incorrecte'
+	'clickatell_password' => array(
+		'length' => 'Le mot de passe Clickatell doit comporter entre 5 et 50 caractères.',
+		'required' => 'Veuillez indiquer un mot de passe Clickatell.',
 	),
-	
-	'allow_feed' => array
-	(
-		'required'		=> 'Veuillez indiquer si le fil est inclus.',
-		'between' => 'Veuillez indiquer correctement si le fil est inclus.'
+	'clickatell_username' => array(
+		'length' => 'Le nom d\'utilisateur Clickatell doit comporter moins de 20 caractères.',
+		'required' => 'Veuillez indiquer un nom d\'utilisateur Clickatell.',
 	),
-	
-	'sms_no1' => array
-	(
-		'numeric'		=> 'Le premier numéro de téléphone ne doit comporter que des chiffres.',
-		'length' => 'Le premier numéro de téléphone a un format invalide'
+	'configure_map' => '',
+	'default_location' => '',
+	'default_map_all' => array(
+		'alpha_numeric' => '',
+		'length' => '',
+		'required' => '',
 	),
-	
-	'sms_no2' => array
-	(
-		'numeric'		=> 'Le second numéro de téléphone ne doit comporter que des chiffres.',
-		'length' => 'Le second numéro de téléphone a un format invalide'
+	'default_map_view' => '',
+	'default_zoom_level' => '',
+	'download_city_list' => '',
+	'email_host' => array(
+		'length' => '',
+		'numeric' => '',
 	),
-	
-	'sms_no3' => array
-	(
-		'numeric'		=> 'Le troisième numéro de téléphone ne doit comporter que des chiffres.',
-		'length' => 'Le troisième numéro de téléphone a un format invalide'
+	'email_password' => array(
+		'length' => '',
+		'required' => '',
 	),
-	
-	'clickatell_api' => array
-	(
-		'required'		=> 'Veuillez indiquer un numéro d\'API Clickatell.',
-		'length'		=> 'Le numéro d\'API Clickatell doit comporter moins de 20 caractères.'
+	'email_port' => array(
+		'length' => '',
+		'numeric' => '',
 	),
-	
-	'clickatell_username' => array
-	(
-		'required'		=> 'Veuillez indiquer un nom d\'utilisateur Clickatell.',
-		'length'		=> 'Le nom d\'utilisateur Clickatell doit comporter moins de 20 caractères.'
+	'email_servertype' => array(
+		'length' => '',
+		'required' => '',
 	),
-	
-	'clickatell_password' => array
-	(
-		'required'		=> 'Veuillez indiquer un mot de passe Clickatell.',
-		'length'		=> 'Le mot de passe Clickatell doit comporter entre 5 et 50 caractères.'
+	'email_username' => array(
+		'length' => '',
+		'required' => '',
 	),
-
-	'google_analytics' => array
-	(
-		'length'		=> 'Le champ «Google Analytics» doit contenir un identifiant «Web Property» au format UA-XXXXX-XX.'
-	)
-);
+	'google_analytics' => array(
+		'length' => 'Le champ «Google Analytics» doit contenir un identifiant «Web Property» au format UA-XXXXX-XX.',
+	),
+	'items_per_page' => array(
+		'between' => 'Le nombre d\'éléments par page (Frontend) n\'est pas valide',
+		'required' => 'Veuillez indiquer le nombre d\'éléments par page (Frontend).',
+	),
+	'items_per_page_admin' => array(
+		'between' => 'Le nombre d\'éléments par page (Admin) n\'est pas valide',
+		'required' => 'Veuillez indiquer le nombre d\'éléments par page (Admin).',
+	),
+	'map' => array(
+		'default_location' => '',
+		'zoom' => '',
+	),
+	'map_provider' => array(
+		'choose' => '',
+		'enter_api' => '',
+		'get_api' => '',
+		'info' => '',
+		'name' => '',
+	),
+	'map_settings' => '',
+	'multiple_countries' => '',
+	'select_default_location' => '',
+	'set_location' => '',
+	'site' => array(
+		'allow_clustering' => '',
+		'allow_comments' => '',
+		'allow_feed' => '',
+		'allow_reports' => '',
+		'api_akismet' => '',
+		'default_category_colors' => '',
+		'display_contact_page' => '',
+		'display_howtohelp_page' => '',
+		'email_alerts' => '',
+		'email_notice' => '',
+		'email_site' => '',
+		'google_analytics' => '',
+		'google_analytics_example' => '',
+		'items_per_page' => '',
+		'items_per_page_admin' => '',
+		'kismet_notice' => '',
+		'laconica_configuration' => '',
+		'laconica_site' => '',
+		'language' => '',
+		'message' => '',
+		'name' => '',
+		'share_site_stats' => '',
+		'tagline' => '',
+		'title' => '',
+		'twitter_configuration' => '',
+		'twitter_hashtags' => '',
+	),
+	'site_email' => array(
+		'email' => 'L\'adresse email du site n\'est pas valide.',
+		'length' => 'L\'adresse email du site doit comporter entre 4 et 100 caractères.',
+	),
+	'site_name' => array(
+		'length' => 'le nom du site doit comporter entre 3 et 50 caractères.',
+		'required' => 'Veuillez entrer le nom du site.',
+	),
+	'site_tagline' => array(
+		'length' => 'Le slogan doit comporter entre 3 et 100 caractères.',
+		'required' => 'Veuiller entrer un slogan.',
+	),
+	'sms' => array(
+		'clickatell_api' => '',
+		'clickatell_check_balance' => '',
+		'clickatell_load_balance' => '',
+		'clickatell_password' => '',
+		'clickatell_text_1' => '',
+		'clickatell_text_2' => '',
+		'clickatell_username' => '',
+		'flsms_description' => '',
+		'flsms_download' => '',
+		'flsms_instructions' => '',
+		'flsms_key' => '',
+		'flsms_link' => '',
+		'flsms_synchronize' => '',
+		'flsms_text_1' => '',
+		'flsms_text_2' => '',
+		'option_1' => '',
+		'option_2' => '',
+		'title' => '',
+	),
+	'sms_no1' => array(
+		'length' => 'Le premier numéro de téléphone a un format invalide',
+		'numeric' => 'Le premier numéro de téléphone ne doit comporter que des chiffres.',
+	),
+	'sms_no2' => array(
+		'length' => 'Le second numéro de téléphone a un format invalide',
+		'numeric' => 'Le second numéro de téléphone ne doit comporter que des chiffres.',
+	),
+	'sms_no3' => array(
+		'length' => 'Le troisième numéro de téléphone a un format invalide',
+		'numeric' => 'Le troisième numéro de téléphone ne doit comporter que des chiffres.',
+	));
+?>

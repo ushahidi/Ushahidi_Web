@@ -1,45 +1,22 @@
 <?php
-
-/**
- *
- * translated by Ismailov A. altyni@gmail.com
- * 
- * Misprints, mistypes, language errors and mistakes, new vars are
- * fixed by Sergei 'the_toon' Plaxienko sergei.plaxienko@gmail.com
- *
- * ru_RU
- *
- */
-
-$lang = array
-(
-	'name' => array
-	(
-		'required'	=> 'Введите название сообщения.',
-		'length'	=> 'Длина названия сообщения не может быть менее 3х символов.',
+	$lang = array(
+	'captcha' => array(
+		'default' => 'Введите правильный защитный код',
+		'required' => 'Введите защитный код',
 	),
-
-	'email' => array
-	(
-		'required'	=> 'Нужно ввести адрес Email, или уберите галочку.',
-		'email'		=> 'Ваш Email адрес введен не правильно, введите правильно.',
-		'length'	=> 'Длина Email не может быть меньше 4х и более 64 символов.'
-	),	
-
-	'phone' => array
-	(
-		'length'	=> 'Номер телефона введен неверно.',
+	'email' => array(
+		'email' => 'Ваш Email адрес введен не правильно, введите правильно.',
+		'length' => 'Длина Email не может быть меньше 4х и более 64 символов.',
+		'required' => 'Нужно ввести адрес Email, или уберите галочку.',
 	),
-
-	'message' => array
-	(
-		'required'	=> 'Введите сообщение'
+	'message' => array(
+		'required' => 'Введите сообщение',
 	),
-
-	'captcha' => array
-	(
-		'required'	=> 'Введите защитный код', 
-		'default'	=> 'Введите правильный защитный код'
-	)
-);
+	'name' => array(
+		'length' => 'Длина названия сообщения не может быть менее 3х символов.',
+		'required' => 'Введите название сообщения.',
+	),
+	'phone' => array(
+		'length' => 'Номер телефона введен неверно.',
+	));
 ?>
