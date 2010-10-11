@@ -151,7 +151,7 @@ class Api_Controller extends Controller
                 
             break;
 
-            //add categories
+            //admin categories actions
             case "addcategories":
                 $this->ret = $this->api_objects->admin_categories->
                         _add_category($this->response_type);
@@ -166,6 +166,8 @@ class Api_Controller extends Controller
             case "delcategories":
                 $this->ret = $this->api_objects->admin_categories->
                     _del_category($this->response_type);
+            break;
+
             //retrieve api keys
             case "apikeys":
                 $by = '';

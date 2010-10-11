@@ -46,9 +46,9 @@ class AdminCategory
      */
     public function _add_category($response_type)
     {
+        
         $ret_value = $this->_submit_categories();
-	    
-        return $this->_response($ret_value);
+        return $this->_response($ret_value, $response_type);
 
     }
     
@@ -64,20 +64,21 @@ class AdminCategory
         // setup and initialize form field names
 		$form = array
 	    (
-			'category_id'      => '',
-			'parent_id'      => '',
-			'category_title'      => '',
-	        'category_description'    => '',
-	        'category_color'  => '',
-			'category_image'  => ''
+			'category_id' => '',
+			'parent_id' => '',
+			'category_title' => '',
+	        'category_description' => '',
+	        'category_color' => '',
+			'category_image' => ''
 	    );
 
-        	// copy the form as errors, so the errors will be stored 
+        // copy the form as errors, so the errors will be stored 
         //with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
+        $ret_value = 0;
 		$parents_array = array();
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -105,10 +106,10 @@ class AdminCategory
             // Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
-				$category_id = $post->category_id;
-				$category = new Category_Model($category_id);
                 
-                // Save Action				
+                // Update Action
+                $category_id = $post->category_id;
+			    $category = new Category_Model($category_id);
 				$category->parent_id = $post->parent_id;
 				$category->category_title = $post->category_title;
 				$category->category_description = 
@@ -180,13 +181,13 @@ class AdminCategory
             $ret_value = 2;
         }
 
-      	return $this->_response($ret_value);
+      	return $this->_response($ret_value,$response_type);
     }
 
     /**
      * Delete existing category
      *
-     * @param int category_id - the category id to be deleted.
+     * @param string response_type - XML or JSON.
      *
      * @return array
      */
@@ -198,10 +199,10 @@ class AdminCategory
 			'category_id'   => '',
 	    );
 
-        	// copy the form as errors, so the errors will be stored 
+        // copy the form as errors, so the errors will be stored 
         //with keys corresponding to the form field names
 	    $errors = $form;
-
+        $ret_value = 0;
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -219,9 +220,11 @@ class AdminCategory
             // Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
+
 			    $category_id = $post->category_id;
 			    $category = new Category_Model($category_id);
-			    $category->delete($category_id);	
+			    $category->delete($category_id);
+
             } 
             else
             {
@@ -250,14 +253,16 @@ class AdminCategory
             $ret_value = 2;
         }
         
-        return $this->_response($ret_value);
+        return $this->_response($ret_value,$response_type);
     }
 
     /**
      * Reponse
+     * 
      * @param int ret_value
+     * @param string response_type = XML or JSON
      */
-    public function _responses($ret_value)
+    public function _response($ret_value,$response_type)
     {
         if($ret_value == 0 )
         {
@@ -294,7 +299,7 @@ class AdminCategory
 
 		if($response_type == 'json')
         {
-			= $this->api_actions->
+			$this->ret_json_or_xml = $this->api_actions->
                 _array_as_JSON($reponse);
 		} 
         else 
@@ -302,7 +307,7 @@ class AdminCategory
 			$this->ret_json_or_xml = $this->api_actions->
                 _array_as_XML($reponse, array());
 		}
-
+        
 		return $this->ret_json_or_xml;
 
     }
@@ -316,8 +321,11 @@ class AdminCategory
 		// If add->rules validation found any errors, get me out of here!
 		if (array_key_exists('parent_id', $post->errors()))
 			return;
-		
-		$category_id = $post->category_id;
+	    if( isset($category_id) )
+        {
+		    $category_id = $post->category_id;
+        }
+
 		$parent_id = $post->parent_id;
 		// This is a parent category - exit
 		if ($parent_id == 0)
@@ -349,8 +357,6 @@ class AdminCategory
 		// setup and initialize form field names
 		$form = array
 	    (
-			'action' => '',
-			'category_id'      => '',
 			'parent_id'      => '',
 			'category_title'      => '',
 	        'category_description'    => '',
@@ -375,111 +381,70 @@ class AdminCategory
 	         //  Add some filters
 	        $post->pre_filter('trim', TRUE);
 	
-			if ($post->action == 'a')		// Add Action
-			{
-				// Add some rules, the input field, followed by a list 
-                //of checks, carried out in order
-				$post->add_rules('parent_id','required','numeric');
-				$post->add_rules('category_title','required', 
-                        'length[3,80]');
-				$post->add_rules('category_description','required');
-				$post->add_rules('category_color','required', 
-                        'length[6,6]');
-				$post->add_rules('category_image', 'upload::valid', 
+			// Add some rules, the input field, followed by a list 
+            //of checks, carried out in order
+			$post->add_rules('parent_id','required','numeric');
+		    $post->add_rules('category_title','required', 
+                    'length[3,80]');
+			$post->add_rules('category_description','required');
+			$post->add_rules('category_color','required', 
+                    'length[6,6]');
+			$post->add_rules('category_image', 'upload::valid', 
 					'upload::type[gif,jpg,png]', 'upload::size[50K]');
-				$post->add_callbacks('parent_id', array($this,
-                            'parent_id_chk'));
-			}
+			$post->add_callbacks('parent_id', array($this,
+                    'parent_id_chk'));
 			
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
-	        {
-				$category_id = $post->category_id;
-				$category = new Category_Model($category_id);
+	        {	
+                $category = new Category_Model();
+			    // Save Action				
+			    $category->parent_id = $post->parent_id;
+				$category->category_title = $post->category_title;
+				$category->category_description = 
+                $post->category_description;
+				$category->category_color = $post->category_color;
+				$category->save();
 				
-				if( $post->action == 'd' )
-				{ // Delete Action
-					$category->delete( $category_id );
-					$form_saved = TRUE;
-			
-				}
-				else if( $post->action == 'v' )
-				{ // Show/Hide Action
-	            	if ($category->loaded==true)
-					{
-						if ($category->category_visible == 1) {
-							$category->category_visible = 0;
-						}
-						else {
-							$category->category_visible = 1;
-						}
-						$category->save();
-						$form_saved = TRUE;
-					}
-				}
-				else if( $post->action == 'i' )
-				{ // Delete Image/Icon Action
-	            	if ($category->loaded==true)
-					{
-						$category_image = $category->category_image;
-						if (!empty($category_image)
-						&& file_exists(Kohana::config('upload.directory',
-                                TRUE).$category_image))
-							unlink(Kohana::config('upload.directory',
-                                        TRUE) . $category_image);
-						$category->category_image = null;
-						$category->save();
-						$form_saved = TRUE;
-					}
-				} 
-				else if( $post->action == 'a' )
-				{ // Save Action				
-					$category->parent_id = $post->parent_id;
-					$category->category_title = $post->category_title;
-					$category->category_description = 
-                        $post->category_description;
-					$category->category_color = $post->category_color;
-					$category->save();
-				
-                    //optional
-                    if(!empty($post->category_image))
-                    {
-					    // Upload Image/Icon
-					    $filename = upload::save('category_image');
-					    if ($filename)
-					    {
-						    $new_filename = "category_".
-                                $category->id."_".time();
+                //optional
+                if(!empty($post->category_image))
+                {
+				    // Upload Image/Icon
+				    $filename = upload::save('category_image');
+				    if ($filename)
+				    {
+					    $new_filename = "category_".
+                            $category->id."_".time();
 
-						    // Resize Image to 32px if greater
-						    Image::factory($filename)->resize(32,32,
+					    // Resize Image to 32px if greater
+					    Image::factory($filename)->resize(32,32,
                                 Image::HEIGHT)
 							    ->save(Kohana::config('upload.directory',
                                         TRUE) . $new_filename.".png");
 
-						    // Remove the temporary file
-						    unlink($filename);
+						// Remove the temporary file
+					    unlink($filename);
 						
-						    // Delete Old Image
-						    $category_old_image = $category->category_image;
-						    if (!empty($category_old_image)
-							    && file_exists(Kohana::config(
+					    // Delete Old Image
+					    $category_old_image = $category->category_image;
+					    if (!empty($category_old_image)
+						    && file_exists(Kohana::config(
                                     'upload.directory', TRUE).
                                     $category_old_image))
 							    unlink(Kohana::config('upload.directory', TRUE).
                                     $category_old_image);
 						
-						    // Save
+				            // Save
 						    $category->category_image = $new_filename.".png";
 						    $category->save();
-					    }
-                    }
+					}
+                }
 					
-					$form_saved = TRUE;
+				$form_saved = TRUE;
 					
-					// Empty $form array
-					array_fill_keys($form, '');
-				}
+				// Empty $form array
+				array_fill_keys($form, '');
+				
 	        }
             // No! We have validation errors, we need to show the form
             //again, with the errors
