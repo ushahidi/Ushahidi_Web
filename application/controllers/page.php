@@ -40,6 +40,8 @@ class Page_Controller extends Main_Controller {
 		{
 			url::redirect('main');
 		}
+		
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 }
