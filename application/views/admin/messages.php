@@ -111,7 +111,7 @@
 								foreach ($messages as $message)
 								{
 									$message_id = $message->id;
-									$message_from = $message->message_from;
+									$message_from = $message->reporter->service_account;
 									$message_to = $message->message_to;
 									$incident_id = $message->incident_id;
 									$message_description = text::auto_link($message->message);
@@ -136,6 +136,25 @@
 													<p><a href="javascript:preview('message_preview_<?php echo $message_id?>')"><?php echo Kohana::lang('ui_main.preview_message');?></a></p>
 													<div id="message_preview_<?php echo $message_id?>" style="display:none;">
 														<?php echo $message_detail; ?>
+														
+														<?php
+				                        				// Retrieve Attachments if any
+				                        				foreach($message->media as $photo) 
+				                        				{
+				                        					if ($photo->media_type == 1)
+				                        					{
+				                        						print "<div class=\"attachment_thumbs\" id=\"photo_". $photo->id ."\">";
+
+				                        						$thumb = $photo->media_thumb;
+				                        						$photo_link = $photo->media_link;
+																$prefix = url::base().Kohana::config('upload.relative_directory');
+				                        						print "<a class='photothumb' rel='lightbox-group".$message_id."' href='$prefix/$photo_link'>";
+				                        						print "<img src=\"$prefix/$thumb\" border=\"0\" >";
+				                        						print "</a>";
+				                        						print "</div>";
+				                        					}
+				                        				}
+									                    ?>
 													</div>
 													<?php
 												}

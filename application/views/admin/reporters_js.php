@@ -32,7 +32,6 @@ function fillFields(id, level_id, service_name, service_account, location_id, lo
 {
 	show_addedit();
 	$('#add_edit_form').show();
-	showMap();
 	$("#reporter_id").attr("value", unescape(id));
 	$("#level_id").attr("value", unescape(level_id));
 	$("#service_name").attr("value", unescape(service_name));
@@ -43,6 +42,7 @@ function fillFields(id, level_id, service_name, service_account, location_id, lo
 	$("#location_name").attr("value", unescape(location_name));
 	$("#latitude").attr("value", unescape(latitude));
 	$("#longitude").attr("value", unescape(longitude));
+	showMap();
 }
 
 // Ajax Submission
@@ -142,7 +142,15 @@ function showMap()
 	map.addLayer(markers);
 	
 	// create a lat/lon object
-	var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+	var latitude, longitude;
+	if ($("#latitude").val() != "" && $("#longitude").val() != "") {
+		latitude = $("#latitude").val();
+		longitude = $("#longitude").val();
+	} else {
+		latitude = "<?php echo $latitude; ?>";
+		longitude = "<?php echo $longitude; ?>";
+	}
+	var myPoint = new OpenLayers.LonLat(longitude, latitude);
 	myPoint.transform(proj_4326, map.getProjectionObject());
 	
 	// create a marker positioned at a lon/lat
