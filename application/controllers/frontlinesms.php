@@ -91,6 +91,7 @@ class Frontlinesms_Controller extends Controller
 				$message->message_type = 1; // Inbox
 				$message->message_date = date("Y-m-d H:i:s",time());
 				$message->service_messageid = null;
+				Event::run('ushahidi_filter.sms_new', $message);
 				$message->save();
 				
 				// Notify Admin Of New Email Message
