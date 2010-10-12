@@ -120,9 +120,11 @@ class Reports_Controller extends Main_Controller {
 				'total_items' => $total_incidents
 				));
 
-		// Get Incidents
-
-		$query = 'SELECT id, incident_title, incident_description, incident_date, location_id, incident_verified, incident_active FROM '.$this->table_prefix.'incident WHERE 1=1'.$location_id_in.''.$incident_id_in.' AND (incident_active = 1) ORDER BY incident_date DESC LIMIT '. (int) Kohana::config('settings.items_per_page').' OFFSET '.$pagination->sql_offset.';';
+		// Get Incidents - Only the approved reports should be fetched
+		$query = 'SELECT id, incident_title, incident_description, incident_date, location_id, incident_verified ';
+		$query .= 'FROM '.$this->table_prefix.'incident ';
+		$query .= 'WHERE 1=1'.$location_id_in.''.$incident_id_in.' AND incident_active = 1 ';
+		$query .= 'ORDER BY incident_date DESC LIMIT '. (int) Kohana::config('settings.items_per_page').' OFFSET '.$pagination->sql_offset.';';
 
 		$incidents = $db->query($query);
 		$total_incidents = $incidents->count();
@@ -498,8 +500,8 @@ class Reports_Controller extends Main_Controller {
 					$photo->save();
 					$i++;
 				}
-
-
+				
+				
 				// STEP 7: SAVE CUSTOM FORM FIELDS
 				if (isset($post->custom_field))
 				{
