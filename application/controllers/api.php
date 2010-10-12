@@ -105,7 +105,7 @@ class Api_Controller extends Controller
                 ->_report($this->response_type);
             break;
 
-            	case "3dkml": //report/add an incident
+            case "3dkml": //report/add an incident
 				$this->ret = $this->api_objects->kml
                     ->_3dkml($this->response_type);
 			break;
@@ -150,7 +150,97 @@ class Api_Controller extends Controller
                         $this->response_type);
                 
             break;
-            
+
+            //admin categories actions
+            case "addcategories":
+                if(!$this->api_objects->api_actions->_verify_array_index(
+                        $this->request,'username'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'username'));
+                    break;
+
+                } else if(!$this->api_objects->api_actions->
+                        _verify_array_index($this->request,'password'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'password'));
+                    break;
+
+                }
+                else
+                {
+                    $this->ret = $this->api_objects->admin_categories->
+                        _add_category($this->response_type,
+                                $this->request['username'],
+                                $this->request['password']);
+                    break;
+                }
+
+            break;
+
+            case "editcategories":
+                if(!$this->api_objects->api_actions->_verify_array_index(
+                        $this->request,'username'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'username'));
+                    break;
+
+                } else if(!$this->api_objects->api_actions->
+                        _verify_array_index($this->request,'password'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'password'));
+                    break;
+
+                }
+                
+                else
+                {
+                    $this->ret = $this->api_objects->admin_categories->
+                        _edit_category($this->response_type,
+                                $this->request['username'],
+                                $this->request['password']);
+                    break;
+                }
+
+            case "delcategories":
+                 if(!$this->api_objects->api_actions->_verify_array_index(
+                        $this->request,'username'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'username'));
+                    break;
+
+                } else if(!$this->api_objects->api_actions->
+                        _verify_array_index($this->request,'password'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'password'));
+                    break;
+
+                }
+                else
+                {
+                    $this->ret = $this->api_objects->admin_categories->
+                        _del_category($this->response_type,
+                                $this->request['username'],
+                                $this->request['password']);
+                    break;
+                }
             //retrieve api keys
             case "apikeys":
                 $by = '';

@@ -128,12 +128,75 @@ class S_Email_Controller extends Controller {
 				$email->service_messageid = $message['message_id'];
 				$email->save();
 				
+				// Attachments?			
+				foreach ($message['attachments'] as $attachment)
+				{
+					foreach ($attachment as $key => $value)
+					{
+						$media = new Media_Model();
+						$media->location_id = 0;
+						$media->incident_id = 0;
+						$media->message_id = $email->id;
+						$media->media_type = 1; // Images
+						$media->media_link = $key;
+						$media->media_thumb = $value;
+						$media->media_date = date("Y-m-d H:i:s",time());
+						$media->save();
+					}
+				}
+				
 				// Notify Admin Of New Email Message
 				$send = notifications::notify_admins(
 					"[".Kohana::config('settings.site_name')."] ".
 						Kohana::lang('notifications.admin_new_email.subject'),
 					Kohana::lang('notifications.admin_new_email.message')
 					);
+			}
+			
+			// Auto-Create A Report if Reporter is Trusted
+			$reporter_weight = $reporter->level->level_weight;
+			$reporter_location = $reporter->location;
+			if ($reporter_weight > 0 AND $reporter_location)
+			{
+				// Create Incident
+				$incident = new Incident_Model();
+				$incident->location_id = $reporter_location->id;
+				$incident->incident_title = $message['subject'];
+				$incident->incident_description = $message['body'];
+				$incident->incident_date = $message['date'];
+				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
+				$incident->incident_active = 1;
+				if ($reporter_weight == 2)
+				{
+					$incident->incident_verified = 1;
+				}
+				$incident->save();
+				
+				// Update Message with Incident ID
+				$email->incident_id = $incident->id;
+				$email->save();
+				
+				// Save Incident Category
+				$trusted_categories = ORM::factory("category")
+					->where("category_trusted", 1)
+					->find();
+				if ($trusted_categories->loaded)
+				{
+					$incident_category = new Incident_Category_Model();
+					$incident_category->incident_id = $incident->id;
+					$incident_category->category_id = $trusted_categories->id;
+					$incident_category->save();
+				}
+				
+				// Add Attachments
+				$attachments = ORM::factory("media")
+					->where("message_id", $email->id)
+					->find_all();
+				foreach ($attachments AS $attachment)
+				{
+					$attachment->incident_id = $incident->id;
+					$attachment->save();
+				}
 			}
 		}
 	}

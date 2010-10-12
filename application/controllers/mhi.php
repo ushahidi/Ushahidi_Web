@@ -289,7 +289,7 @@ class MHI_Controller extends Template_Controller {
 	{
 		$this->template->header->this_body = 'crowdmap-contact';
 		$this->template->content = new View('mhi/mhi_contact');
-        
+
         $form = array(
             'contact_email' => '',
             'contact_subject' => '',
@@ -298,7 +298,7 @@ class MHI_Controller extends Template_Controller {
         );
 
 		$errors = $form;
-		
+
         $success_message = '';
         $form_error = FALSE;
         $captcha = Captcha::factory();
@@ -325,14 +325,14 @@ class MHI_Controller extends Template_Controller {
 
                 $form = arr::overwrite($form, $post->as_array());
 
-                $errors = arr::overwrite( $errors, 
-                        $post->errors('mhi'));				
+                $errors = arr::overwrite( $errors,
+                        $post->errors('mhi'));
                 $form_error = TRUE;
 
 			}
 
 		}
-        
+
         $this->template->content->form = $form;
         $this->template->content->form_error = $form_error;
 		$this->template->content->errors = $errors;
@@ -468,6 +468,7 @@ class MHI_Controller extends Template_Controller {
 		$this->template->header->this_body = '';
 		$this->template->content = new View('mhi/mhi_reset_password');
 		$this->template->content->reset_flag = FALSE;
+		$this->template->content->email_exists = TRUE;
 
 		if ($_POST)
 		{
@@ -485,6 +486,14 @@ class MHI_Controller extends Template_Controller {
 				$email = $post->email;
 
 				$mhi_user_id = $mhi_user->get_id($email);
+
+				if($mhi_user_id == NULL)
+				{
+					// User doesn't exist
+					$this->template->content->email_exists = FALSE;
+					return;
+
+				}
 
 				$new_password = text::rand_str(15);
 
