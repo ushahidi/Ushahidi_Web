@@ -47,7 +47,6 @@ class AdminComment
      * 
      * @return array
  	 */
-
     public function _get_comment_list($item_id, $incident_id, 
             $spammed, $approved) 
     {

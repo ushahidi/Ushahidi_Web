@@ -58,11 +58,13 @@ class AdminCategory
         if($user_id = $this->api_prvt_func->_login($username,$password))
         {
             $this->ret_value = $this->_submit_categories();
-            return $this->_response($this->ret_value, $response_type);
+            return $this->api_actions->
+                _response($this->ret_value, $response_type);
         } else {
-            //Authentication failed. Invalid User or App Key
+            //Authentication failed. Invalid User
             $this->ret_value = 2;
-            return $this->_response($this->ret_value,$response_type);
+            return $this->api_actions->_response(
+                    $this->ret_value,$response_type);
         }
     }
     
@@ -70,271 +72,235 @@ class AdminCategory
      * Edit existing category
      *
      * @param string response_type - XML or JSON
+     * @param string username - the username to authenticate
+     * @param string password - the password for the user to be 
+     * authenticated
      * 
      * @return array
      */
-    public function _edit_category($response_type)
+    public function _edit_category($response_type,$username,$password)
     {
-        // setup and initialize form field names
-		$form = array
-	    (
-			'category_id' => '',
-			'parent_id' => '',
-			'category_title' => '',
-	        'category_description' => '',
-	        'category_color' => '',
-			'category_image' => ''
-	    );
+        if($user_id = $this->api_prvt_func->_login($username,$password))
+        {
 
-        // copy the form as errors, so the errors will be stored 
-        //with keys corresponding to the form field names
-	    $errors = $form;
-		$form_error = FALSE;
-		$form_saved = FALSE;
-		$form_action = "";
-		$parents_array = array();
-		// check, has the form been submitted, if so, setup validation
-	    if ($_POST)
-	    {
-	        // Instantiate Validation, use $post, so we don't 
-            //overwrite $_POST fields with our own things
-			$post = Validation::factory(array_merge($_POST,$_FILES));
+            // setup and initialize form field names
+		    $form = array
+	        (
+			    'category_id' => '',
+			    'parent_id' => '',
+			    'category_title' => '',
+	            'category_description' => '',
+	            'category_color' => '',
+			    'category_image' => ''
+	        );
+
+            // copy the form as errors, so the errors will be stored 
+            //with keys corresponding to the form field names
+	        $errors = $form;
+		    $form_error = FALSE;
+		    $form_saved = FALSE;
+		    $form_action = "";
+		    $parents_array = array();
+		    // check, has the form been submitted, if so, setup validation
+	        if ($_POST)
+	        {
+	            // Instantiate Validation, use $post, so we don't 
+                //overwrite $_POST fields with our own things
+			    $post = Validation::factory(array_merge($_POST,$_FILES));
 			
-	         //  Add some filters
-	        $post->pre_filter('trim', TRUE);
+	            //  Add some filters
+	            $post->pre_filter('trim', TRUE);
 	
-			// Add some rules, the input field, followed by a list 
-            //of checks, carried out in order
-			$post->add_rules('parent_id','required','numeric');
-			$post->add_rules('category_title','required', 
+			    // Add some rules, the input field, followed by a list 
+                //of checks, carried out in order
+			    $post->add_rules('parent_id','required','numeric');
+			    $post->add_rules('category_title','required', 
                         'length[3,80]');
-			$post->add_rules('category_description','required');
-			$post->add_rules('category_color','required', 
+			    $post->add_rules('category_description','required');
+			    $post->add_rules('category_color','required', 
                         'length[6,6]');
-			$post->add_rules('category_image', 'upload::valid', 
+			    $post->add_rules('category_image', 'upload::valid', 
 					'upload::type[gif,jpg,png]', 'upload::size[50K]');
-			$post->add_callbacks('parent_id', array($this,
+			    $post->add_callbacks('parent_id', array($this,
                         'parent_id_chk'));
 
-            // Test to see if things passed the rule checks
-	        if ($post->validate())
-	        {
+                // Test to see if things passed the rule checks
+	            if ($post->validate())
+	            {
                 
-                // Update Action
-                $category_id = $post->category_id;
-			    $category = new Category_Model($category_id);
-				$category->parent_id = $post->parent_id;
-				$category->category_title = $post->category_title;
-				$category->category_description = 
-                $post->category_description;
-				$category->category_color = $post->category_color;
-				$category->save();
+                    // Update Action
+                    $category_id = $post->category_id;
+			        $category = new Category_Model($category_id);
+				    $category->parent_id = $post->parent_id;
+				    $category->category_title = $post->category_title;
+				    $category->category_description = 
+                    $post->category_description;
+				    $category->category_color = $post->category_color;
+				    $category->save();
 				
-                //optional
-                if(!empty($post->category_image))
-                {
-				    // Upload Image/Icon
-					$filename = upload::save('category_image');
-					if ($filename)
-					{
-					    $new_filename = "category_".
+                    //optional
+                    if(!empty($post->category_image))
+                    {
+				        // Upload Image/Icon
+					    $filename = upload::save('category_image');
+					    if ($filename)
+					    {
+					        $new_filename = "category_".
                                 $category->id."_".time();
 
-						// Resize Image to 32px if greater
-						Image::factory($filename)->resize(32,32,
-                            Image::HEIGHT)->save(Kohana::config('upload.directory',
+						    // Resize Image to 32px if greater
+						    Image::factory($filename)->resize(32,32,
+                                Image::HEIGHT)->save(Kohana::config('upload.directory',
                                 TRUE) . $new_filename.".png");
 
-						// Remove the temporary file
-						unlink($filename);
+						    // Remove the temporary file
+						    unlink($filename);
 						
-						// Delete Old Image
-						$category_old_image = $category->category_image;
-						if (!empty($category_old_image)
-							&& file_exists(Kohana::config(
+						    // Delete Old Image
+						    $category_old_image = $category->category_image;
+						    if (!empty($category_old_image)
+							    && file_exists(Kohana::config(
                                 'upload.directory', TRUE).
                                 $category_old_image))
-							unlink(Kohana::config('upload.directory', TRUE).
+							    unlink(Kohana::config('upload.directory', TRUE).
                                 $category_old_image);
 						
 						    // Save
-						$category->category_image = $new_filename.".png";
-						$category->save();
+						    $category->category_image = $new_filename.".png";
+						    $category->save();
 
-                    }
-                }
-            }
-             // No! We have validation errors, we need to show the form
-            //again, with the errors
-	        else
-			{
-
-                // populate the error fields, if any
-                $errors = arr::overwrite($errors, 
-                        $post->errors('category'));
-                foreach($errors as $error_item => $error_description)
-                {
-                    if( !is_array($error_description))
-                    {
-                        $this->error_messages .= $error_description;
-                        
-                        if($error_description != end($errors))
-                        {
-                            $this->error_messages .= " - ";
                         }
                     }
                 }
+                // No! We have validation errors, we need to show the form
+                //again, with the errors
+	            else
+			    {
+
+                    // populate the error fields, if any
+                    $errors = arr::overwrite($errors, 
+                        $post->errors('category'));
+                    foreach($errors as $error_item => $error_description)
+                    {
+                        if( !is_array($error_description))
+                        {
+                            $this->error_messages .= $error_description;
+                        
+                            if($error_description != end($errors))
+                            {
+                                $this->error_messages .= " - ";
+                            }
+                        }
+                    }
                 
-                $this->ret_value = 1; // validation error
-            }
+                    $this->ret_value = 1; // validation error
+                }
     
+            }
+            else
+            {   
+                $this->ret_value = 3;
+            }
+
+      	    return $this->_response($this->ret_value,$response_type);
         }
         else
-        {   
-            $this->ret_value = 3;
+        {
+            //Authentication failed. Invalid User
+            $this->ret_value = 2;
+            return $this->api_actions->_response(
+                    $this->ret_value,$response_type);
         }
-
-      	return $this->_response($this->ret_value,$response_type);
     }
 
     /**
      * Delete existing category
      *
-     * @param string response_type - XML or JSON.
+     * @param string response_type - XML or JSON
+     * @param string username - the username to authenticate
+     * @param string password - the password for the user to be 
+     * authenticated
      *
-     * @return array
+     * @return string
      */
-    public function _del_category($response_type)
+    public function _del_category($response_type,$username,$password)
     {
-         // setup and initialize form field names
-		$form = array
-	    (
-			'category_id'   => '',
-	    );
+        if($user_id = $this->api_prvt_func->_login($username,$password))
+        {
 
-        // copy the form as errors, so the errors will be stored 
-        //with keys corresponding to the form field names
-	    $errors = $form;
-		// check, has the form been submitted, if so, setup validation
-	    if ($_POST)
-	    {
-	        // Instantiate Validation, use $post, so we don't 
-            //overwrite $_POST fields with our own things
-			$post = Validation::factory(array_merge($_POST,$_FILES));
-			
-	         //  Add some filters
-	        $post->pre_filter('trim', TRUE);
-	
-			// Add some rules, the input field, followed by a list 
-            //of checks, carried out in order
-			$post->add_rules('category_id','required','numeric');
+            // setup and initialize form field names
+		    $form = array
+	        (
+			    'category_id'   => '',
+	        );
 
-            // Test to see if things passed the rule checks
-	        if ($post->validate())
+            // copy the form as errors, so the errors will be stored 
+            //with keys corresponding to the form field names
+	        $errors = $form;
+		    // check, has the form been submitted, if so, setup validation
+	        if ($_POST)
 	        {
+	            // Instantiate Validation, use $post, so we don't 
+                //overwrite $_POST fields with our own things
+			    $post = Validation::factory(array_merge($_POST,$_FILES));
+			
+	            //  Add some filters
+	            $post->pre_filter('trim', TRUE);
+	
+			    // Add some rules, the input field, followed by a list 
+                //of checks, carried out in order
+			    $post->add_rules('category_id','required','numeric');
 
-			    $category_id = $post->category_id;
-			    $category = new Category_Model($category_id);
-			    $category->delete($category_id);
+                // Test to see if things passed the rule checks
+	            if ($post->validate())
+	            {
 
-            } 
-            else
-            {
-                 // populate the error fields, if any
-                $errors = arr::overwrite($errors, 
-                $post->errors('category'));
-                foreach($errors as $error_item => $error_description)
+			        $category_id = $post->category_id;
+			        $category = new Category_Model($category_id);
+			        $category->delete($category_id);
+
+                } 
+                else
                 {
-                    if( !is_array($error_description))
+                    // populate the error fields, if any
+                    $errors = arr::overwrite($errors, 
+                    $post->errors('category'));
+                    foreach($errors as $error_item => $error_description)
                     {
-                        $this->error_messages .= $error_description;
-                        
-                        if($error_description != end($errors))
+                        if( !is_array($error_description))
                         {
-                            $this->error_messages .= " - ";
+                            $this->error_messages .= $error_description;
+                        
+                            if($error_description != end($errors))
+                            {
+                                $this->error_messages .= " - ";
+                            }
                         }
                     }
-                }
                 
-                $this->ret_value = 1; // validation error
+                    $this->ret_value = 1; // validation error
 
+                }
             }
+            else
+            {
+                $this->ret_value = 3;
+            }
+        
+            return $this->api_actions->_response(
+                $this->ret_value,$response_type);
         }
         else
         {
-            $this->ret_value = 3;
+            //Authentication failed. Invalid User
+            $this->ret_value = 2;
+            return $this->api_actions->_response(
+                    $this->ret_value,$response_type);
         }
-        
-        return $this->_response($this->ret_value,$response_type);
-    }
-
-    /**
-     * Reponse
-     * 
-     * @param int ret_value
-     * @param string response_type = XML or JSON
-     */
-    public function _response($ret_value,$response_type)
-    {
-        if($ret_value == 0)
-        {
-			$reponse = array(
-				"payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "true"
-                ),
-				"error" => $this->api_actions->_get_error_msg(0)
-			);
-			
-		} 
-        else if($ret_value == 1) 
-        {
-			$reponse = array(
-				"payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "false"
-                ),
-				"error" => $this->api_actions->
-                    _get_error_msg(003,'',$this->error_messages)
-			);
-		} 
-        else if ($ret_value == 2)
-        {
-            // Authentication Failed. Invalid User or App Key
-			$reponse = array(
-				"payload" => array("domain" => $this->domain,"success" =>
-                    "false"),
-				"error" => $this->api_actions->_get_error_msg(005)
-			);
-
-        }
-
-        else 
-        {
-			$reponse = array(
-				"payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "false"
-                ),
-				"error" => $this->api_actions->_get_error_msg(004)
-			);
-		}
-
-		if($response_type == 'json')
-        {
-			$this->ret_json_or_xml = $this->api_actions->
-                _array_as_JSON($reponse);
-		} 
-        else 
-        {
-			$this->ret_json_or_xml = $this->api_actions->
-                _array_as_XML($reponse, array());
-		}
-        
-		return $this->ret_json_or_xml;
 
     }
 
+    
     /**
 	 * Checks if parent_id for this category exists
      * @param Validation $post $_POST variable with validation rules

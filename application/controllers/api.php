@@ -184,15 +184,63 @@ class Api_Controller extends Controller
             break;
 
             case "editcategories":
-                $this->ret = $this->api_objects->admin_categories->
-                    _edit_category($this->response_type);
-            break;
+                if(!$this->api_objects->api_actions->_verify_array_index(
+                        $this->request,'username'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'username'));
+                    break;
+
+                } else if(!$this->api_objects->api_actions->
+                        _verify_array_index($this->request,'password'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'password'));
+                    break;
+
+                }
+                
+                else
+                {
+                    $this->ret = $this->api_objects->admin_categories->
+                        _edit_category($this->response_type,
+                                $this->request['username'],
+                                $this->request['password']);
+                    break;
+                }
 
             case "delcategories":
-                $this->ret = $this->api_objects->admin_categories->
-                    _del_category($this->response_type);
-            break;
+                 if(!$this->api_objects->api_actions->_verify_array_index(
+                        $this->request,'username'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'username'));
+                    break;
 
+                } else if(!$this->api_objects->api_actions->
+                        _verify_array_index($this->request,'password'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'password'));
+                    break;
+
+                }
+                else
+                {
+                    $this->ret = $this->api_objects->admin_categories->
+                        _del_category($this->response_type,
+                                $this->request['username'],
+                                $this->request['password']);
+                    break;
+                }
             //retrieve api keys
             case "apikeys":
                 $by = '';
