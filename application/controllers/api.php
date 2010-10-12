@@ -153,8 +153,33 @@ class Api_Controller extends Controller
 
             //admin categories actions
             case "addcategories":
-                $this->ret = $this->api_objects->admin_categories->
-                        _add_category($this->response_type);
+                if(!$this->api_objects->api_actions->_verify_array_index(
+                        $this->request,'username'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'username'));
+                    break;
+
+                } else if(!$this->api_objects->api_actions->
+                        _verify_array_index($this->request,'password'))
+                {
+                    $this->error = array("errror" =>
+                            $this->api_objects->
+                                api_actions->_get_error_msg(001,
+                                    'password'));
+                    break;
+
+                }
+                else
+                {
+                    $this->ret = $this->api_objects->admin_categories->
+                        _add_category($this->response_type,
+                                $this->request['username'],
+                                $this->request['password']);
+                    break;
+                }
 
             break;
 

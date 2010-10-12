@@ -26,14 +26,18 @@ class AdminCategory
     private $api_actions;
     private $response_type;
     private $domain;
+    private $api_prvt_func;
+    private $ret_value;
 
     public function __construct()
     {
         $this->api_actions = new ApiActions;
+        $this->api_prvt_func = new ApiPrivateFunc;
         $this->data = array();
         $this->items = array();
         $this->ret_json_or_xml = '';
         $this->response_type = '';
+        $this->ret_value = 0;
         $this->domain = $this->api_actions->_get_domain();
     }
 
@@ -41,15 +45,25 @@ class AdminCategory
      * Add new category 
      *
      * @param string response_type - XML or JSON
+     * @param string username - the username to authenticate
+     * @param string password - the password for the user to be 
+     * authenticated
      *
      * @return Array
      */
-    public function _add_category($response_type)
+    public function _add_category($response_type,$username,$password)
     {
+        // authenticate user
         
-        $ret_value = $this->_submit_categories();
-        return $this->_response($ret_value, $response_type);
-
+        if($user_id = $this->api_prvt_func->_login($username,$password))
+        {
+            $this->ret_value = $this->_submit_categories();
+            return $this->_response($this->ret_value, $response_type);
+        } else {
+            //Authentication failed. Invalid User or App Key
+            $this->ret_value = 2;
+            return $this->_response($this->ret_value,$response_type);
+        }
     }
     
     /**
@@ -78,7 +92,6 @@ class AdminCategory
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
-        $ret_value = 0;
 		$parents_array = array();
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
@@ -172,16 +185,16 @@ class AdminCategory
                     }
                 }
                 
-                $ret_value = 1; // validation error
+                $this->ret_value = 1; // validation error
             }
     
         }
         else
         {   
-            $ret_value = 2;
+            $this->ret_value = 3;
         }
 
-      	return $this->_response($ret_value,$response_type);
+      	return $this->_response($this->ret_value,$response_type);
     }
 
     /**
@@ -202,7 +215,6 @@ class AdminCategory
         // copy the form as errors, so the errors will be stored 
         //with keys corresponding to the form field names
 	    $errors = $form;
-        $ret_value = 0;
 		// check, has the form been submitted, if so, setup validation
 	    if ($_POST)
 	    {
@@ -230,7 +242,7 @@ class AdminCategory
             {
                  // populate the error fields, if any
                 $errors = arr::overwrite($errors, 
-                    $post->errors('category'));
+                $post->errors('category'));
                 foreach($errors as $error_item => $error_description)
                 {
                     if( !is_array($error_description))
@@ -244,16 +256,16 @@ class AdminCategory
                     }
                 }
                 
-                $ret_value = 1; // validation error
+                $this->ret_value = 1; // validation error
 
             }
         }
         else
         {
-            $ret_value = 2;
+            $this->ret_value = 3;
         }
         
-        return $this->_response($ret_value,$response_type);
+        return $this->_response($this->ret_value,$response_type);
     }
 
     /**
@@ -264,7 +276,7 @@ class AdminCategory
      */
     public function _response($ret_value,$response_type)
     {
-        if($ret_value == 0 )
+        if($ret_value == 0)
         {
 			$reponse = array(
 				"payload" => array(
@@ -275,7 +287,7 @@ class AdminCategory
 			);
 			
 		} 
-        else if( $ret_value == 1 ) 
+        else if($ret_value == 1) 
         {
 			$reponse = array(
 				"payload" => array(
@@ -286,6 +298,17 @@ class AdminCategory
                     _get_error_msg(003,'',$this->error_messages)
 			);
 		} 
+        else if ($ret_value == 2)
+        {
+            // Authentication Failed. Invalid User or App Key
+			$reponse = array(
+				"payload" => array("domain" => $this->domain,"success" =>
+                    "false"),
+				"error" => $this->api_actions->_get_error_msg(005)
+			);
+
+        }
+
         else 
         {
 			$reponse = array(
@@ -472,7 +495,7 @@ class AdminCategory
         }
         else
         {
-            return 2; // Not sent by post method.
+            return 3; // Not sent by post method.
         }
 
     }
