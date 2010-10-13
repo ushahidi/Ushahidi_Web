@@ -810,6 +810,17 @@ ul.pager li a.active {background:#f2f7fa;}
 	line-height:24px;
 	float:left;
 }
+.head h4{
+	padding:0 0 0 20px;
+	font-weight:bold;
+	font-size:16px;
+	line-height:18px;
+	float:left;
+}
+	.head h4.version{
+		text-decoration:underline;
+		color:#37616F;
+	}
 .report-form input:focus, .report-form textarea:focus
 {
 	background: #EDF9EE;
