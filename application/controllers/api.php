@@ -46,8 +46,8 @@ class Api_Controller extends Controller
      */
     public function _switch_task()
     {
-        //determine if we are using GET or POST
-        if($_SERVER['REQUEST_METHOD'] == 'GET')
+        // Determine if we are using GET or POST
+        if ($_SERVER['REQUEST_METHOD'] == 'GET')
         {
             $this->request = $_GET;
         }
@@ -56,15 +56,13 @@ class Api_Controller extends Controller
             $this->request = $_POST;
         }
         
-        // make sure we have a task to work with
-        if(!$this->api_objects->api_actions->_verify_array_index(
-                    $this->request, 'task'))
+        // Make sure we have a task to work with
+        if ( ! $this->api_objects->api_actions->_verify_array_index($this->request, 'task'))
         {
         
             $this->error = array(
-                    "error" => $this->api_objects->
-                    api_actions->_get_error_msg(
-                        001, 'task'));
+                    "error" => $this->api_objects->api_actions->_get_error_msg(001, 'task')
+                );
             
             $this->task = "";
         }
@@ -75,8 +73,8 @@ class Api_Controller extends Controller
             $this->task = $this->request['task'];
         }
 
-        //response type
-        if(!$this->api_objects->api_actions->_verify_array_index(
+        // Response type
+        if ( ! $this->api_objects->api_actions->_verify_array_index(
                     $this->request, 'resp'))
         {
             $this->response_type = "json";
@@ -115,7 +113,7 @@ class Api_Controller extends Controller
             case "tagphoto": //report/add an incident
                 $incidentid = '';
                 
-                if(!$this->api_objects->api_actions->_verify_array_index($this->request, 'id')) 
+                if (!$this->api_objects->api_actions->_verify_array_index($this->request, 'id')) 
                 {
                     $error = array("error" =>
                         $this->api_objects->api_actions
@@ -129,11 +127,11 @@ class Api_Controller extends Controller
                 
                 $mediatype = 0;
                 
-                if($task == "tagnews") $mediatype = 4;
+                if ($task == "tagnews") $mediatype = 4;
                 
-                if($task == "tagvideo") $mediatype = 2;
+                if ($task == "tagvideo") $mediatype = 2;
                 
-                if($task == "tagphoto") $mediatype = 1;
+                if ($task == "tagphoto") $mediatype = 1;
                 
                 $this->ret = $this->api_objects->tag_media
                     ->_tag_media($incidentid, $mediatype,
@@ -147,7 +145,7 @@ class Api_Controller extends Controller
             
             //admin categories actions
             case "addcategories":
-                if(!$this->api_objects->api_actions->_verify_array_index(
+                if (!$this->api_objects->api_actions->_verify_array_index(
                         $this->request,'username'))
                 {
                     $this->error = array("error" =>
@@ -157,7 +155,7 @@ class Api_Controller extends Controller
                     break;
 
                 } 
-                elseif(!$this->api_objects->api_actions->
+                elseif ( ! $this->api_objects->api_actions->
                         _verify_array_index($this->request,'password'))
                 {
                     $this->error = array("error" =>
@@ -178,7 +176,7 @@ class Api_Controller extends Controller
                 break;
 
             case "editcategories":
-                if(!$this->api_objects->api_actions->_verify_array_index(
+                if ( ! $this->api_objects->api_actions->_verify_array_index(
                         $this->request,'username'))
                 {
                     $this->error = array("error" =>
@@ -188,7 +186,7 @@ class Api_Controller extends Controller
                     break;
 
                 } 
-                elseif(!$this->api_objects->api_actions->
+                elseif ( ! $this->api_objects->api_actions->
                         _verify_array_index($this->request,'password'))
                 {
                     $this->error = array("error" =>
@@ -209,7 +207,7 @@ class Api_Controller extends Controller
                 }
 
             case "delcategories":
-                if (!$this->api_objects->api_actions->_verify_array_index(
+                if ( ! $this->api_objects->api_actions->_verify_array_index(
                         $this->request,'username'))
                 {
                     $this->error = array("error" =>
@@ -219,7 +217,7 @@ class Api_Controller extends Controller
                     break;
 
                 } 
-                elseif (!$this->api_objects->api_actions->
+                elseif ( ! $this->api_objects->api_actions->
                         _verify_array_index($this->request,'password'))
                 {
                     $this->error = array("error" =>
@@ -237,43 +235,45 @@ class Api_Controller extends Controller
                                 $this->request['password']);
                     break;
                 }
+                
                 break;
                 
-            //retrieve api keys
+            // Retrieve api keys
             case "apikeys":
                 $by = '';
-                if(!$this->api_objects->api_actions->_verify_array_index($this->request,'by'))
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'by'))
                 {
                     $this->error = array(
-                        "error" => $this->api_objects->api_actions
-                            ->_get_error_msg(001, 'by'));
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'by')
+                        );
                     break;
                 }
                 else 
                 {
                     $by = $this->request['by'];
                 }
+                
                 switch($by)
                 {
                     case "google":
                         $this->ret = $this->api_objects->api_key->
-                        _api_key('api_google',$this->response_type);
-                    break;
+                            _api_key('api_google',$this->response_type);
+                        break;
 
                     case "yahoo":
                         $this->ret = $this->api_objects->api_key->
                             _api_key('api_yahoo',$this->response_type);
-                    break;
+                        break;
 
                     case "microsoft":
                         $this->ret = $this->api_objects->api_key->
-                        _api_key('api_live',$this->response_type);
-                    break;
+                            _api_key('api_live',$this->response_type);
+                        break;
 
                     default:
-                        $this->error = array("error" => 
-                                $this->api_objects->api_actions->
-                                _get_error_msg(002));
+                        $this->error = array(
+                                "error" => $this->api_objects->api_actions->_get_error_msg(002)
+                            );
                 }
                 
                 break;
@@ -289,8 +289,7 @@ class Api_Controller extends Controller
 				
                 $orderfield = 'incidentid';
                 
-                if(!$this->api_objects->api_actions->_verify_array_index(
-                            $this->request,'by'))
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'by'))
                 {
                     $this->error = array("error" =>
                             $this->api_objects->
@@ -303,7 +302,7 @@ class Api_Controller extends Controller
                 }
 
                 /*IF we have an order by, 0=asc 1=default=desc */
-                if($this->api_objects->api_actions->_verify_array_index(
+                if ($this->api_objects->api_actions->_verify_array_index(
                             $this->request, 'sort'))
                 {
                     if ( $this->request['sort'] == '0' )
@@ -365,7 +364,7 @@ class Api_Controller extends Controller
                         break;
 
 					case "latlon": //latitude and longitude
-                        if(($this->api_objects->api_actions->
+                        if (($this->api_objects->api_actions->
                             _verify_array_index(
                                 $this->request, 'latitude')) AND 
                                 ($this->api_objects->api_actions->
@@ -390,7 +389,7 @@ class Api_Controller extends Controller
                         break;
 						
                     case "locid": //Location Id
-                        if(($this->api_objects->api_actions->_verify_array_index($this->request, 'id')))
+                        if (($this->api_objects->api_actions->_verify_array_index($this->request, 'id')))
                         {
                             $this->ret = $this->api_objects
                                 ->get_reports->_reports_by_location_id(
@@ -409,7 +408,7 @@ class Api_Controller extends Controller
                         break;
 						
                     case "locname": //Location Name
-                        if(($this->api_objects->api_actions->
+                        if (($this->api_objects->api_actions->
                                     _verify_array_index(
                                         $this->request, 'name')))
                         {
@@ -424,15 +423,14 @@ class Api_Controller extends Controller
                         else 
                         {
                             $this->error = array(
-                                "error" => $this->api_objects->api_actions
-                                ->_get_error_msg(001, 'name')
-                            );
+                                    "error" => $this->api_objects->api_actions->_get_error_msg(001, 'name')
+                                );
                         }
 						
                         break;
                         
                     case "catid": //Category Id
-                        if(($this->api_objects->api_actions->_verify_array_index($this->request, 'id')))
+                        if (($this->api_objects->api_actions->_verify_array_index($this->request, 'id')))
                         {
                             $this->ret = $this->api_objects->get_reports
                                 ->_reports_by_category_id(
@@ -451,7 +449,7 @@ class Api_Controller extends Controller
                         break;
                     
                     case "catname": //Category Name
-                        if(($this->api_objects->api_actions->_verify_array_index($this->request, 'name')))
+                        if (($this->api_objects->api_actions->_verify_array_index($this->request, 'name')))
                         {
 							$this->ret = $this->api_objects->get_reports
                                 ->_reports_by_category_name(
@@ -470,7 +468,7 @@ class Api_Controller extends Controller
                         break;
                     
                     case "sinceid": //Since Id
-                        if(($this->api_objects->api_actions->
+                        if (($this->api_objects->api_actions->
                                     _verify_array_index(
                                         $this->request,'id')))
                         {
@@ -484,8 +482,8 @@ class Api_Controller extends Controller
                         else 
                         {
                             $this->error = array(
-                                "error" => $this->api_objects
-                                ->api_actions->_get_error_msg(001,'id'));
+                                    "error" => $this->api_objects->api_actions->_get_error_msg(001,'id')
+                                );
                         }
                         
                         break;
@@ -502,14 +500,11 @@ class Api_Controller extends Controller
             case "category":
                 $id = 0;
                 
-                if(!$this->api_objects->api_actions
-                    ->_verify_array_index(
-                        $this->request, 'id'))
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request, 'id'))
                 {
-                    $this->error = array( "error" => 
-                        $this->api_objects->api_actions
-                        ->_get_error_msg(001,'id')
-                    );
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001,'id')
+                        );
                     break;
                 }
                 else
@@ -529,11 +524,11 @@ class Api_Controller extends Controller
             case "location": //retrieve locations
                 $by = '';
 				
-                if(!$this->api_objects->api_actions
-                        ->_verify_array_index($this->request, 'by'))
+                if (!$this->api_objects->api_actions->_verify_array_index($this->request, 'by'))
                 {
-                    $this->error = array("error" => $this->api_objects->api_actions
-                            ->_get_error_msg(001, 'by'));
+                    $this->error = array(
+                                "error" => $this->api_objects->api_actions->_get_error_msg(001, 'by')
+                            );
                     break;
                 } 
                 else 
@@ -547,41 +542,37 @@ class Api_Controller extends Controller
 					    break;
 
                     case "locid": //id
-                        if(($this->api_objects->api_actions->
-                                _verify_array_index($this->request, 'id')))
+                        if (($this->api_objects->api_actions->_verify_array_index($this->request, 'id')))
                         {
-                            $this->ret = $this->api_objects->locations->
-                                _location_by_id($this->request['id'],
-                                        $this->response_type);
+                            $this->ret = $this->api_objects->locations->_location_by_id(
+                                        $this->request['id'], $this->response_type);
                         } 
                         else 
                         {
                             $this->error = array(
-                                "error" => $this->api_objects->api_actions->
-                                     _get_error_msg(001, 'id'));
+                                    "error" => $this->api_objects->api_actions->_get_error_msg(001, 'id')
+                                );
                         }
                         break;
 
 					case "country": //id
-                        if(($this->api_objects->api_actions->
-                                _verify_array_index($this->request,'id')))
+                        if (($this->api_objects->api_actions->_verify_array_index($this->request,'id')))
                         {
-                            $this->ret = $this->api_objects->locations->
-                                _location_by_country_id(
-                                        $this->request['id'],
-                                        $this->response_type);
+                            $this->ret = $this->api_objects->locations->_location_by_country_id(
+                                        $this->request['id'], $this->response_type);
                         } 
                         else
                         {
-							$this->error = array("error" => $this->
-                                    api_objects->api_actions->
-                                    _get_error_msg(001, 'id'));
+							$this->error = array(
+							        "error" => $this->api_objects->api_actions->_get_error_msg(001, 'id')
+							    );
                         }
                         break;
+                        
                     default:
                         $this->error = array(
-                                "error" => $this->api_objects->api_actions->
-                                    _get_error_msg(002));
+                                "error" => $this->api_objects->api_actions->_get_error_msg(002)
+                            );
                 }
                 break;
             
@@ -594,10 +585,11 @@ class Api_Controller extends Controller
             case "country":
                 $by = '';
                 
-                if (!$this->api_objects->api_actions->_verify_array_index($this->request, 'by'))
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request, 'by'))
                 {
-                    $this->error = array("error" =>$this->api_objects->
-                        api_actions->_get_error_msg(001, 'by'));
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'by')
+                        );
                     break;
                 }
                 else
@@ -610,9 +602,9 @@ class Api_Controller extends Controller
                     case "countryid": //id
                         if (($this->api_objects->api_actions->_verify_array_index($this->request, 'id')))
                         {
-						    $this->ret = $this->api_objects->
-                                countries->_country_by_id(
-                                    $this->request['id'],$this->response_type);
+                            $this->ret = $this->api_objects->countries->_country_by_id(
+                                            $this->request['id'], $this->response_type
+                                        );
                         }
                         else
                         {
@@ -623,14 +615,15 @@ class Api_Controller extends Controller
                         break;
 						
                     case "countryname": //name
-					    if (($this->api_objects->api_actions-> _verify_array_index($this->request, 'name')))
+                        if (($this->api_objects->api_actions-> _verify_array_index($this->request, 'name')))
                         {
                             $this->ret = $this->api_objects->countries->_country_by_name($this->request['name'], $this->response_type);
                         } 
                         else 
                         {
                             $this->error = array(
-                                "error" => $this->api_objects->api_actions->_get_error_msg(001, 'name'));
+                                    "error" => $this->api_objects->api_actions->_get_error_msg(001, 'name')
+                                );
                         }
                         break;
                     
@@ -644,13 +637,13 @@ class Api_Controller extends Controller
                             $this->error = array(
                                     "error" => $this->api_objects->api_actions->_get_error_msg(001, 'iso')
                                 );
-						}
-						break;
-
-					default:
-						$this->error = array(
-                            "error" => $this->api_objects->api_actions->
-                            _get_error_msg(002));
+                        }
+                        break;
+                        
+                    default:
+                        $this->error = array(
+                                "error" => $this->api_objects->api_actions->_get_error_msg(002)
+                            );
 				}
 				break;
             
@@ -658,11 +651,11 @@ class Api_Controller extends Controller
             case "version": 
                 $this->ret = $this->api_objects->get_system->_get_version_number($this->response_type);
                 break;
-
-			case "mhienabled":
-			    $this->ret = $this->api_objects->get_system->
+            
+            case "mhienabled":
+                $this->ret = $this->api_objects->get_system->
                         _get_mhi_enabled($this->response_type);
-				break;
+                break;
             
             // Retrieve the geographic midpoint of incidents
             case "geographicmidpoint":
@@ -670,9 +663,9 @@ class Api_Controller extends Controller
                 break;
             
             // Retrieve the number of approved incidents
-			case "incidentcount":				
-			    $this->ret = $this->api_objects->get_reports->_get_report_count($this->response_type);
-				break;
+            case "incidentcount":				
+                $this->ret = $this->api_objects->get_reports->_get_report_count($this->response_type);
+                break;
             
             // Retrieve lat and lon for map centre
             case "mapcenter": 				
@@ -688,9 +681,9 @@ class Api_Controller extends Controller
 
         // Create the response depending on the kind that was requested
         
-        if(!empty($this->error) || count( $this->error ) > 0 )
+        if ( ! empty($this->error) || count( $this->error ) > 0 )
         {
-            if( $this->response_type == 'json')
+            if ( $this->response_type == 'json')
             {
                 $this->ret = json_encode($this->error);
             }
@@ -707,7 +700,7 @@ class Api_Controller extends Controller
         header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
         header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the pas
 		
-        if($this->response_type == 'xml') 
+        if ($this->response_type == 'xml') 
         {
             header("Content-type: text/xml");
         }
