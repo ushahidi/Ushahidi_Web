@@ -423,6 +423,10 @@ class Manage_Controller extends Admin_Controller
 					$page->page_title = $post->page_title;
 					$page->page_tab = $post->page_tab;
 					$page->page_description = $post->page_description;
+
+					$page_post_info = array("page" => $page, "post" => $post, "id" => $page->id);
+					Event::run('ushahidi_action.page_edit', $page_post_info);
+					
 					$page->save();
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));

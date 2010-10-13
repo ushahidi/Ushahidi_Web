@@ -35,6 +35,7 @@ class Page_Controller extends Main_Controller {
 		{
 			$this->template->content->page_title = $page->page_title;
 			$this->template->content->page_description = $page->page_description;
+			$this->template->content->page_id = $page->id;
 		}
 		else
 		{

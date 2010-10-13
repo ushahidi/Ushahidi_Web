@@ -537,9 +537,12 @@ class Reports_Controller extends Main_Controller {
 				$person->person_email = $post->person_email;
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
-
+				
+				//special data structure to save all the details we'll need
+				$incident_post_info = array("incident" => $incident, "post" => $post, "id" => $id);
 				// Action::report_add - Added a New Report
-				Event::run('ushahidi_action.report_add', $incident);
+				Event::run('ushahidi_action.report_add', $incident_post_info);
+
 
 				url::redirect('reports/thanks');
 			}
