@@ -1,40 +1,45 @@
 <?php
-$lang = array
-(
-	'feedback_details' => 'Maelezo ya majibu',
-	'feedback_date' => 'Tarehe',
+	$lang = array(
+	'delete' => '',
+	'error_msg' => '',
+	'error_title' => '',
+	'feedback' => '',
 	'feedback_actions' => 'Vitendo',
-			
-	'feedback_title' => array
-	(
-		'required'		=> 'Jina linahitajika.',
-		'length'		=> 'Jina lazima liwe baina ya herufi 3 na 100.'
+	'feedback_captcha' => array(
+		'captcha' => '',
+		'default' => '',
+		'required' => 'Tafadhali andika ishara ya ulinzi.',
+		'valid' => 'Tafadhali andika ishara ya ulinzi iliyo sahihi',
 	),
-	
-	'feedback_message' => array
-	(
+	'feedback_confirm_mesg' => '',
+	'feedback_date' => 'Tarehe',
+	'feedback_details' => 'Maelezo ya majibu',
+	'feedback_message' => array(
 		'required' => 'Tafadhali jaza sehemu ya jawabu.',
 	),
-	
-	'person_name' => array
-	(
-		'required' => 'Tafadhali andika jina lako kwa ukamili.',
-		
+	'feedback_no_result' => '',
+	'feedback_page_title' => '',
+	'feedback_person_email' => '',
+	'feedback_person_ip' => '',
+	'feedback_person_name' => '',
+	'feedback_reply_message' => '',
+	'feedback_reply_send' => '',
+	'feedback_reply_title' => '',
+	'feedback_send_reply' => '',
+	'feedback_title' => array(
+		'length' => 'Jina lazima liwe baina ya herufi 3 na 100.',
+		'required' => 'Jina linahitajika.',
 	),
-	
-	'person_email' => array
-	(
+	'hide_msg' => '',
+	'person_email' => array(
+		'email' => 'Anwani ya barua pepe inaonekana si sahihi',
 		'required' => 'Tafadhali andika anwani yako ya barua pepe',
-		'email'	=> 'Anwani ya barua pepe inaonekana si sahihi',
 	),
-	
-	
-	'feedback_captcha' => array
-	(
-		'required' => 'Tafadhali andika ishara ya ulinzi.',
-		'valid' => 'Tafadhali andika ishara ya ulinzi iliyo sahihi'
-	)
-	
-);
+	'person_name' => array(
+		'required' => 'Tafadhali andika jina lako kwa ukamili.',
+	),
+	'read' => '',
+	'show_all' => '',
+	'unread' => '',
+	);
 ?>
-

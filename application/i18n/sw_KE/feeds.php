@@ -1,19 +1,15 @@
 <?php
-$lang = array
-(
-	'feed_name' => array
-	(
+	$lang = array(
+	'date' => 'TAREHE',
+	'feed_name' => array(
+		'length' => 'Jina la tawanyiko lazima liwe baina ya herufi 3 na 70.',
 		'required' => 'Tafadhali andika jina la tawanyiko.',
-		'length'   => 'Jina la tawanyiko lazima liwe baina ya herufi 3 na 70.'
 	),
-	
-	'feed_url' => array
-	(
+	'feed_url' => array(
 		'required' => 'Tafadhali andika anwani la tawanyiko.',
-		'url' => 'Tafadhali andikwa anwani iliyo sahihi. Kwa mfano: http://www.ushahidi.com'
+		'url' => 'Tafadhali andikwa anwani iliyo sahihi. Kwa mfano: http://www.ushahidi.com',
 	),
 	'source' => 'ASILI',
 	'title' => 'JINA',
-	'date' => 'TAREHE',
-);
+	);
 ?>

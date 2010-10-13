@@ -160,7 +160,7 @@ class mhi_site_Model extends ORM
 		$i = 0;
 		foreach($dbs as $db)
 		{
-			if($i > $limit) break;
+			if($i >= $limit) break;
 
 			mysql_query('USE '.$db.';');
 

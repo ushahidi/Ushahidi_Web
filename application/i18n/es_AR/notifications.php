@@ -1,47 +1,21 @@
 <?php
-
-$lang = array
-(
-	/*** User Email Notifications ***/
-	// Alerts
-	
-	
-	
-	
-	
-	/*** Administrator Email Notifications ***/
-	
-	// Message Footer
-	'admin_footer'			=> 'This message was sent from your website',
-	
-	// Administrator Login
-	'admin_login_url'		=> 'Administrator Login',
-	
-	// Notify Administrators that a new report has been submitted
-	'admin_new_report' => array
-	(
-		'subject'		=> 'New Report',
-		'message'		=> 'A new report has been submitted to your website.'
+	$lang = array(
+	'admin_footer' => 'This message was sent from your website',
+	'admin_login_url' => 'Administrator Login',
+	'admin_new_comment' => array(
+		'message' => 'A new comment has been submitted to your website in response to:',
+		'subject' => 'New Comment',
 	),
-	
-	// Notify Administrators that a new comment has been submitted
-	'admin_new_comment' => array
-	(
-		'subject'		=> 'New Comment',
-		'message'		=> 'A new comment has been submitted to your website in response to:'
+	'admin_new_email' => array(
+		'message' => 'A new email message has been submitted to your website.',
+		'subject' => 'New Email Message',
 	),
-	
-	// Notify Administrators that a new sms has been received
-	'admin_new_sms' => array
-	(
-		'subject'		=> 'New Text Message',
-		'message'		=> 'A new text message has been submitted to your website.'
+	'admin_new_report' => array(
+		'message' => 'A new report has been submitted to your website.',
+		'subject' => 'New Report',
 	),
-	
-	// Notify Administrators that a new email has been received
-	'admin_new_email' => array
-	(
-		'subject'		=> 'New Email Message',
-		'message'		=> 'A new email message has been submitted to your website.'
-	)
-);
+	'admin_new_sms' => array(
+		'message' => 'A new text message has been submitted to your website.',
+		'subject' => 'New Text Message',
+	));
+?>

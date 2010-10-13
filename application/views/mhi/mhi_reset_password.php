@@ -18,7 +18,7 @@
                 <h2>Password Reset</h2>
                 <p class="intro-para">
                 <?php
-					if($reset_flag == TRUE)
+					if($reset_flag == TRUE && $email_exists)
 					{
 				?>
 						<strong>Check your inbox over the next few minutes for your new password!</strong>
@@ -33,6 +33,12 @@
 								<td><label for="reset_email">Email</label></td>
 								<td><input type="text" size="24" name="email" maxlength="42" id="email"/></td>
 							</tr>
+							<?php if( ! $email_exists){ ?>
+							<tr>
+								<td></td>
+								<td style="color:red;">Account doesn't exist. Please try again.</td>
+							</tr>
+							<?php } ?>
 							</tbody></table>
 							<p>
 								<input class="button" type="submit" value="Reset Password" />

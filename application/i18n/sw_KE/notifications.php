@@ -1,47 +1,21 @@
 <?php
-
-$lang = array
-(
-	/*** User Email Notifications ***/
-	// Alerts
-	
-	
-	
-	
-	
-	/*** Administrator Email Notifications ***/
-	
-	// Message Footer
-	'admin_footer'			=> 'Ujumbe huu ulitumwa kutoka kwa tovuti yako',
-	
-	// Administrator Login
-	'admin_login_url'		=> 'Kiingilizi cha meneja',
-	
-	// Notify Administrators that a new report has been submitted
-	'admin_new_report' => array
-	(
-		'subject'		=> 'Repoti mpya',
-		'message'		=> 'Repoti mpya imetumwa kwa tovuti yako.'
+	$lang = array(
+	'admin_footer' => 'Ujumbe huu ulitumwa kutoka kwa tovuti yako',
+	'admin_login_url' => 'Kiingilizi cha meneja',
+	'admin_new_comment' => array(
+		'message' => 'Fikira mpya zimeletwa kwa tovuti yako kutokana na:',
+		'subject' => 'Fikira mpya',
 	),
-	
-	// Notify Administrators that a new comment has been submitted
-	'admin_new_comment' => array
-	(
-		'subject'		=> 'Fikira mpya',
-		'message'		=> 'Fikira mpya zimeletwa kwa tovuti yako kutokana na:'
+	'admin_new_email' => array(
+		'message' => 'Ujumbe mpya kutoka kwa simu ya rununu umeletwa kwa tovuti yako.',
+		'subject' => 'Ujumbe mpya kutoka kwa barua pepe',
 	),
-	
-	// Notify Administrators that a new sms has been received
-	'admin_new_sms' => array
-	(
-		'subject'		=> 'Ujumbe mpya kutoka kwa simu ya rununu',
-		'message'		=> 'Ujumbe mpya kutoka kwa simu ya rununu umeletwa kwa tovuti yako.'
+	'admin_new_report' => array(
+		'message' => 'Repoti mpya imetumwa kwa tovuti yako.',
+		'subject' => 'Repoti mpya',
 	),
-	
-	// Notify Administrators that a new email has been received
-	'admin_new_email' => array
-	(
-		'subject'		=> 'Ujumbe mpya kutoka kwa barua pepe',
-		'message'		=> 'Ujumbe mpya kutoka kwa simu ya rununu umeletwa kwa tovuti yako.'
-	)
-);
+	'admin_new_sms' => array(
+		'message' => 'Ujumbe mpya kutoka kwa simu ya rununu umeletwa kwa tovuti yako.',
+		'subject' => 'Ujumbe mpya kutoka kwa simu ya rununu',
+	));
+?>

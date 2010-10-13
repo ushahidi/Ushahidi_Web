@@ -1,20 +1,16 @@
 <?php
-$lang = array
-(
-	'feed_name' => array
-	(
+	$lang = array(
+	'date' => '',
+	'feed_name' => array(
+		'length' => 'Pole nazwy zasilania musi zawierać co najmniej 3 i nie więcej niż 
+			70 znaków.',
 		'required' => 'Wprowadź nazwę zasilania.',
-		'length'   => 'Pole nazwy zasilania musi zawierać co najmniej 3 i nie więcej niż 
-			70 znaków.'
 	),
-	
-	'feed_url' => array
-	(
+	'feed_url' => array(
 		'required' => 'Wprowadź URL zasilania.',
-		'url' => 'Wprowadź ważny URL. Np. http://www.ushahidi.com'
+		'url' => 'Wprowadź ważny URL. Np. http://www.ushahidi.com',
 	),
-	'source' => 'SOURCE',
-	'title' => 'TITLE',
-	'date' => 'DATE',
-);
+	'source' => '',
+	'title' => '',
+	);
 ?>

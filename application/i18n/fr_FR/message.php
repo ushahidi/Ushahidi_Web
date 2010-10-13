@@ -1,34 +1,22 @@
 <?php
-
-$lang = array
-(
-	'name' => array
-	(
-		'required'=> 'Veuillez indiquer un nom.',
-		'length'		=> 'Le nom doit comporter plus de 3 caractères.',
+	$lang = array(
+	'captcha' => array(
+		'default' => 'Veuillez taper un code de sécurité valide',
+		'required' => 'Veuillez taper le code de sécurité',
 	),
-	
-	'email' => array
-	(
-		'required'		=> 'Une adresse email est requise si la case est cochée.',
-		'email'		  => 'Adress email invalide',
-		'length'	  => 'L\'adresse email doit comporter entre 4 et 64 caractères.'
-	),	
-	
-	'phone' => array
-	(
-		'length'		=> 'Numéro de téléphone invalide.',
+	'email' => array(
+		'email' => 'Adress email invalide',
+		'length' => 'L\'adresse email doit comporter entre 4 et 64 caractères.',
+		'required' => 'Une adresse email est requise si la case est cochée.',
 	),
-		
-	'message' => array
-	(
-		'required'		=> 'Veuillez entrer un commentaire.'
+	'message' => array(
+		'required' => 'Veuillez entrer un commentaire.',
 	),
-	
-	'captcha' => array
-	(
-		'required' => 'Veuillez taper le code de sécurité', 
-		'default' => 'Veuillez taper un code de sécurité valide'
-	)
-	
-);
+	'name' => array(
+		'length' => 'Le nom doit comporter plus de 3 caractères.',
+		'required' => 'Veuillez indiquer un nom.',
+	),
+	'phone' => array(
+		'length' => 'Numéro de téléphone invalide.',
+	));
+?>
