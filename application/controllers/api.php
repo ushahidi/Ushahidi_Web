@@ -148,20 +148,18 @@ class Api_Controller extends Controller
                 if (!$this->api_objects->api_actions->_verify_array_index(
                         $this->request,'username'))
                 {
-                    $this->error = array("error" =>
-                            $this->api_objects->
-                                api_actions->_get_error_msg(001,
-                                    'username'));
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'username')
+                        );
                     break;
 
                 } 
                 elseif ( ! $this->api_objects->api_actions->
                         _verify_array_index($this->request,'password'))
                 {
-                    $this->error = array("error" =>
-                            $this->api_objects->
-                                api_actions->_get_error_msg(001,
-                                    'password'));
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'password')
+                        );
                     break;
                 }
                 else
@@ -179,20 +177,18 @@ class Api_Controller extends Controller
                 if ( ! $this->api_objects->api_actions->_verify_array_index(
                         $this->request,'username'))
                 {
-                    $this->error = array("error" =>
-                            $this->api_objects->
-                                api_actions->_get_error_msg(001,
-                                    'username'));
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'username')
+                        );
                     break;
 
                 } 
                 elseif ( ! $this->api_objects->api_actions->
                         _verify_array_index($this->request,'password'))
                 {
-                    $this->error = array("error" =>
-                            $this->api_objects->
-                                api_actions->_get_error_msg(001,
-                                    'password'));
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'password')
+                        );
                     break;
 
                 }
@@ -279,11 +275,11 @@ class Api_Controller extends Controller
                 break;
 
             case "incidents": //retrieve reports
-				/**
-				 *
-				 * there are several ways to get incidents by
-				 */
-				$by = '';
+                /**
+                 *
+                 * there are several ways to get incidents by
+                 */
+                $by = '';
 				
                 $sort = 'DESC';
 				
@@ -554,8 +550,7 @@ class Api_Controller extends Controller
                                 );
                         }
                         break;
-
-					case "country": //id
+                    case "country": //id
                         if (($this->api_objects->api_actions->_verify_array_index($this->request,'id')))
                         {
                             $this->ret = $this->api_objects->locations->_location_by_country_id(
@@ -563,9 +558,9 @@ class Api_Controller extends Controller
                         } 
                         else
                         {
-							$this->error = array(
-							        "error" => $this->api_objects->api_actions->_get_error_msg(001, 'id')
-							    );
+                            $this->error = array(
+                                    "error" => $this->api_objects->api_actions->_get_error_msg(001, 'id')
+                                );
                         }
                         break;
                         
@@ -644,8 +639,8 @@ class Api_Controller extends Controller
                         $this->error = array(
                                 "error" => $this->api_objects->api_actions->_get_error_msg(002)
                             );
-				}
-				break;
+                }
+                break;
             
             // Retrieve an ushahidi instance version
             case "version": 
@@ -690,8 +685,7 @@ class Api_Controller extends Controller
             else
             {
                 $this->ret = $this->api_objects->api_actions->
-                    _array_as_XML($this->error, 
-                    array());
+                    _array_as_XML($this->error, array());
             }
             
         }
