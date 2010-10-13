@@ -173,6 +173,8 @@ class ApiPrivateFunc
      *
      * @param array request - 
      * @param string response_type - XML or JSON
+     *
+     * @return string
  	 */
 	public function _sms($request,$response_type)
 	{
@@ -319,6 +321,8 @@ class ApiPrivateFunc
 		return $ret_json_or_xml;
 	}
 
+
+
     /**
  	 * Get the latitude and longitude for the default centre of the map.
      *
@@ -372,4 +376,5 @@ class ApiPrivateFunc
 
 		return $this->ret_json_or_xml;
 	}
+
 }

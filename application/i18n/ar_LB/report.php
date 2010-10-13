@@ -1,157 +1,137 @@
 <?php
-
-$lang = array
-(
-	'locale' => array
-	(
-		'required'		=> 'The locale is required.',
-		'length'		=> 'The locale field has an incorrect value. ',
-		'alpha_dash'	=> 'The locale field has an incorrect value. ',
-		'locale'		=> 'The Original Report and the Translation have the same locale (language)',
-		'exists'		=> 'This report already has a translation for this language'
+	$lang = array(
+	'comments_add' => '',
+	'comments_additional_reports' => '',
+	'comments_credibility' => '',
+	'comments_form_comment' => '',
+	'comments_form_email' => '',
+	'comments_form_error' => '',
+	'comments_form_leave_comment' => '',
+	'comments_form_name' => '',
+	'comments_form_security_code' => '',
+	'comments_form_submit_comment' => '',
+	'custom_field' => array(
+		'values' => 'Please enter a valid value for one of your custom form items',
 	),
-	
-	'incident_title' => array
-	(
-		'required'		=> 'The title field is required.',
-		'length'		=> 'The title field must be at least 3 and no more 200 characters long.'
+	'data_include' => array(
+		'between' => 'Please select a valid item to include in the download',
+		'numeric' => 'Please select a valid item to include in the download',
 	),
-	
-	'incident_description' => array
-	(
-		'required'		=> 'The description field is required.'
-	),	
-	
-	'incident_date' => array
-	(
-		'required'		=> 'The date field is required.',
+	'data_point' => array(
+		'between' => 'Please select a valid type of report to download',
+		'numeric' => 'Please select a valid type of report to download',
+		'required' => 'Please select a valid type of report to download',
+	),
+	'from_date' => array(
+		'date_mmddyyyy' => 'The FROM date field does not appear to contain a valid date?',
+		'range' => 'Please enter a valid FROM date. It cannot be greater than today.',
+	),
+	'geocode_not_found' => '',
+	'incident_active' => array(
+		'between' => 'Please enter a valid value for Approve This Report',
+		'required' => 'Please enter a valid value for Approve This Report',
+	),
+	'incident_ampm' => array(
+		'validvalues' => 'The am/pm field does not appear to contain a valid value?',
+	),
+	'incident_category' => array(
+		'numeric' => 'The category field does not appear to contain a valid category?',
+		'required' => 'The category field is required.',
+	),
+	'incident_date' => array(
+		'date_ddmmyyyy' => 'The date field does not appear to contain a valid date?',
 		'date_mmddyyyy' => 'The date field does not appear to contain a valid date?',
-		'date_ddmmyyyy' => 'The date field does not appear to contain a valid date?'
+		'required' => 'The date field is required.',
 	),
-	
-	'incident_hour' => array
-	(
-		'required'		=> 'The hour field is required.',
-		'between' => 'The hour field does not appear to contain a valid hour?'
+	'incident_description' => array(
+		'required' => 'The description field is required.',
 	),
-	
-	'incident_minute' => array
-	(
-		'required'		=> 'The hour field is required.',
-		'between' => 'The hour field does not appear to contain a valid hour?'
+	'incident_hour' => array(
+		'between' => 'The hour field does not appear to contain a valid hour?',
+		'required' => 'The hour field is required.',
 	),
-	
-	'incident_ampm' => array
-	(
-		'validvalues' => 'The am/pm field does not appear to contain a valid value?'
+	'incident_information' => array(
+		'alpha' => 'Please enter a valid value for Information Probability',
+		'length' => 'Please enter a valid value for Information Probability',
 	),
-	
-	'latitude' => array
-	(
-		'required'		=> 'The latitude field is required. Please click on the map to pinpoint a location.',
-		'between' => 'The latitude field does not appear to contain a valid latitude?'
+	'incident_minute' => array(
+		'between' => 'The hour field does not appear to contain a valid hour?',
+		'required' => 'The hour field is required.',
 	),
-	
-	'longitude' => array
-	(
-		'required'		=> 'The longitude field is required. Please click on the map to pinpoint a location.',
-		'between' => 'The longitude field does not appear to contain a valid longitude?'
+	'incident_news' => array(
+		'url' => 'The news source links field does not appear to contain a valid URL?',
 	),
-	
-	'location_name' => array
-	(
-		'required'		=> 'The location name field is required.',
-		'length'		=> 'The location name field must be at least 3 and no more 200 characters long.',
+	'incident_photo' => array(
+		'size' => 'Please ensure that photo uploads sizes are limited to 2MB.',
+		'type' => 'The Upload Photos field does not appear to contain a valid image. The only accepted formats are .JPG, .PNG and .GIF.',
+		'valid' => 'The Upload Photos field does not appear to contain a valid file',
 	),
-			
-	'incident_category' => array
-	(
-		'required'		=> 'The category field is required.',
-		'numeric'		=> 'The category field does not appear to contain a valid category?'
+	'incident_source' => array(
+		'alpha' => 'Please enter a valid value for Source Reliability',
+		'length' => 'Please enter a valid value for Source Reliability',
 	),
-	
-	'incident_news' => array
-	(
-		'url'		=> 'The news source links field does not appear to contain a valid URL?'
+	'incident_title' => array(
+		'length' => 'The title field must be at least 3 and no more 200 characters long.',
+		'required' => 'The title field is required.',
 	),
-	
-	'incident_video' => array
-	(
-		'url'		=> 'The video links field does not appear to contain a valid URL?'
+	'incident_verified' => array(
+		'between' => 'Please enter a valid value for Verify This Report',
+		'required' => 'Please enter a valid value for Verify This Report',
 	),
-	
-	'incident_photo' => array
-	(
-		'valid'		=> 'The Upload Photos field does not appear to contain a valid file',
-		'type'		=> 'The Upload Photos field does not appear to contain a valid image. The only accepted formats are .JPG, .PNG and .GIF.',
-		'size'		=> 'Please ensure that photo uploads sizes are limited to 2MB.'
+	'incident_video' => array(
+		'url' => 'The video links field does not appear to contain a valid URL?',
 	),
-	
-	'person_first' => array
-	(
-		'length'		=> 'The first name field must be at least 3 and no more 100 characters long.'
+	'latitude' => array(
+		'between' => 'The latitude field does not appear to contain a valid latitude?',
+		'required' => 'The latitude field is required. Please click on the map to pinpoint a location.',
 	),
-	
-	'person_last' => array
-	(
-		'length'		=> 'The last name field must be at least 3 and no more 100 characters long.'
+	'locale' => array(
+		'alpha_dash' => 'The locale field has an incorrect value. ',
+		'exists' => 'This report already has a translation for this language',
+		'length' => 'The locale field has an incorrect value. ',
+		'locale' => 'The Original Report and the Translation have the same locale (language)',
+		'required' => 'The locale is required.',
 	),
-	
-	'person_email' => array
-	(
-		'email'		  => 'The email field does not appear to contain a valid email address?',
-		'length'	  => 'The email field must be at least 4 and no more 64 characters long.'
+	'location_name' => array(
+		'length' => 'The location name field must be at least 3 and no more 200 characters long.',
+		'required' => 'The location name field is required.',
 	),
-	
-	// Admin - Report Download Validation
-	'data_point' => array
-	(
-		'required'		  => 'Please select a valid type of report to download',
-		'numeric'		  => 'Please select a valid type of report to download',
-		'between'		  => 'Please select a valid type of report to download'
+	'longitude' => array(
+		'between' => 'The longitude field does not appear to contain a valid longitude?',
+		'required' => 'The longitude field is required. Please click on the map to pinpoint a location.',
 	),
-	'data_include' => array
-	(
-		'numeric'		  => 'Please select a valid item to include in the download',
-		'between'		  => 'Please select a valid item to include in the download'
+	'person_email' => array(
+		'email' => 'The email field does not appear to contain a valid email address?',
+		'length' => 'The email field must be at least 4 and no more 64 characters long.',
 	),
-	'from_date' => array
-	(
-		'date_mmddyyyy'		  => 'The FROM date field does not appear to contain a valid date?',
-		'range'	  => 'Please enter a valid FROM date. It cannot be greater than today.'
+	'person_first' => array(
+		'length' => 'The first name field must be at least 3 and no more 100 characters long.',
 	),
-	'to_date' => array
-	(
-		'date_mmddyyyy'		  => 'The TO date field does not appear to contain a valid date?',
-		'range'	  => 'Please enter a valid TO date. It cannot be greater than today.',
-		'range_greater'	=> 'Your FROM date cannot be greater than your TO date.'
+	'person_last' => array(
+		'length' => 'The last name field must be at least 3 and no more 100 characters long.',
 	),
-	'custom_field' => array
-	(
-		'values'		  => 'Please enter a valid value for one of your custom form items'
+	'to_date' => array(
+		'date_mmddyyyy' => 'The TO date field does not appear to contain a valid date?',
+		'range' => 'Please enter a valid TO date. It cannot be greater than today.',
+		'range_greater' => 'Your FROM date cannot be greater than your TO date.',
 	),
-	
-	'incident_active' => array
-	(
-		'required'		=> 'Please enter a valid value for Approve This Report',
-		'between'		=> 'Please enter a valid value for Approve This Report'
-	),
-	
-	'incident_verified' => array
-	(
-		'required'		=> 'Please enter a valid value for Verify This Report',
-		'between'		=> 'Please enter a valid value for Verify This Report'
-	),
-	
-	'incident_source' => array
-	(
-		'alpha'		=> 'Please enter a valid value for Source Reliability',
-		'length'		=> 'Please enter a valid value for Source Reliability'
-	),
-	
-	'incident_information' => array
-	(
-		'alpha'		=> 'Please enter a valid value for Information Probability',
-		'length'		=> 'Please enter a valid value for Information Probability'
-	)
-);
+	'view_alt_incident' => '',
+	'view_alt_nearby_incident' => '',
+	'view_category' => '',
+	'view_credibility' => '',
+	'view_date' => '',
+	'view_images' => '',
+	'view_incident' => '',
+	'view_incident_reports' => '',
+	'view_incident_reports_date' => '',
+	'view_incident_reports_location' => '',
+	'view_incident_reports_title' => '',
+	'view_incident_report_description' => '',
+	'view_location' => '',
+	'view_nearby_incident' => '',
+	'view_time' => '',
+	'view_unverified' => '',
+	'view_verified' => '',
+	'view_videos' => '',
+	);
+?>

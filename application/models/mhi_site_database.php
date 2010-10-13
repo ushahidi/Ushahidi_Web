@@ -69,7 +69,7 @@ class mhi_site_database_Model extends ORM
 			return false;
 		}
 
-		$all_db_versions = Mhi_Site_Model::get_db_versions();
+		$all_db_versions = Mhi_Site_Model::get_db_versions($number_to_update);
 
 		$i = 0;
 		foreach($all_db_versions as $db => $current_version)
@@ -82,8 +82,6 @@ class mhi_site_database_Model extends ORM
 				$i++;
 			}
 		}
-
-
 	}
 
 	static function update_db($db)

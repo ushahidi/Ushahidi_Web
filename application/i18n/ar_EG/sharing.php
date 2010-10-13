@@ -1,48 +1,36 @@
-﻿<?php
-
-/**
- * SHARING INTERFACE INTERNATIONALIZATION
- *
- * en_US
- */
-
-$lang = array
-(
-    'contact' => 'اتصال',	
-    'date' => 'تاريخ الدخول',
-    'date_added' => 'تاريخ الإضافة',
-    'last_access' => 'آخر ميعاد تم فيه ولوج',
-    'sent_info' => 'سيتم ارسال المعلومات التالية مع هذا الطلب',
-    'sharing_key' => 'المفتاح',
-    'sharing_url' => array
-	(
-		'required'	=> 'يجب وضع رابط الموقع',
-		'url'		=> 'لايبدو ان حقل رابط الموقع يحتوى على رابط صالح',
-		'valid'	=> 'لايبدو ان رابط الموقع قابل للتنفيذ بواسطة أوشاهيدي, او انه غير قابل للمشاركة',
-		'exists'	=> 'رابط الموقع موجود بالفعل',
-		'edit'	=> 'لايمكنك تحرير رابط موقع بعيد. لايمكن حذف هذه المشاركة وتم انشاء طلب مشاركة جديد'
+<?php
+	$lang = array(
+	'contact' => '',
+	'date' => 'تاريخ الدخول',
+	'date_added' => 'تاريخ الإضافة',
+	'last_access' => 'آخر ميعاد تم فيه ولوج',
+	'sent_info' => '',
+	'sharing_color' => array(
+		'length' => 'حقل اللون يجب ان يحتوى على 6 حروف',
+		'required' => 'يجب ملء حقل اللون',
 	),
-	
-	'sharing_email' => array
-	(
-		'email'		  => 'لايبدو ان حقل البريد الإليكترونى يحتوى على عنوان صحيح',
-		'required'	=> 'مطلوب البريد الإليكترونى للموقع الخاص بك. رجاء إذهب للإعدادات لإضافة عنوان بريدى جديد',
-	),	
-	
-	'sharing_color' => array
-	(
-		'required'		=> 'يجب ملء حقل اللون',
-		'length'		=> 'حقل اللون يجب ان يحتوى على 6 حروف',
+	'sharing_email' => array(
+		'email' => '',
+		'required' => '',
 	),
-	
-	'sharing_limits' => array
-	(
-		'required'		=> 'يجب ملء حقل حدود الدخول',
-		'between'		=> 'لايبدو ان حقل حدود الدخول ذات قيمة صالحة',
+	'sharing_key' => '',
+	'sharing_limits' => array(
+		'between' => '',
+		'required' => '',
 	),
-
-	'sharing_type' => array
-	(
-		'between'		=> 'لايبدو ان حقل نوع المشاركة ذات قيمة صالحة',
-	)	
-);
+	'sharing_name' => array(
+		'length' => '',
+		'required' => '',
+	),
+	'sharing_type' => array(
+		'between' => '',
+	),
+	'sharing_url' => array(
+		'edit' => '',
+		'exists' => 'رابط الموقع موجود بالفعل',
+		'length' => '',
+		'required' => 'يجب وضع رابط الموقع',
+		'url' => 'لايبدو ان حقل رابط الموقع يحتوى على رابط صالح',
+		'valid' => '',
+	));
+?>

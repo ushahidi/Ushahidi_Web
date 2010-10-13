@@ -21,6 +21,9 @@ class Main_Controller extends Template_Controller {
 
     // Cache instance
 	protected $cache;
+	
+	// Cacheable Controller
+	public $is_cachable = FALSE;
 
 	// Session instance
 	protected $session;
@@ -97,11 +100,13 @@ class Main_Controller extends Template_Controller {
 		}
 	}
 
-
     public function index()
     {
         $this->template->header->this_page = 'home';
         $this->template->content = new View('main');
+		
+		// Cacheable Main Controller
+		$this->is_cachable = TRUE;
 		
 		// Map and Slider Blocks
 		$div_map = new View('main_map');
