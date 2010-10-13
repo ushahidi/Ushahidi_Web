@@ -24,9 +24,23 @@ class AdminReports
     private $table_prefix;
     private $api_actions;
     private $response_type;
+    private $domain;
+    private $api_prvt_func;
+    private $ret_value;
+    private $list_limit;
 
     public function __construct()
     {
+        $this->api_actions = new ApiActions;
+        $this->api_prvt_func = new ApiPrivateFunc;
+        $this->data = array();
+        $this->items = array();
+        $this->ret_json_or_xml = '';
+        $this->response_type = '';
+        $this->ret_value = 0;
+        $this->domain = $this->api_actions->_get_domain();
+        $this->list_limit = $this->api_actions->_get_list_limit();
+
     }
 
     /**

@@ -24,6 +24,7 @@ class AdminComment
     private $table_prefix;
     private $api_actions;
     private $response_type;
+    private $list_limit;
 
     public function __construct()
     {
@@ -34,63 +35,30 @@ class AdminComment
         $this->response_type = '';
         $this->query = '';
         $this->db = $this->api_actions->_get_db();
+        $this->list_limit = $this->api_actions->_get_list_limit();
     }
 
         
     /**
- 	 * Gets a list of comments
+ 	 * Gets a list of comments by
      * 
-     * @param int item_id - the comment id
-     * @param string incident_id, the incident id
-     * @param string spammed 
-     * @param string approved
+     * @param string status - List comments by status.
+     * @param string response_type - XML or JSON
      * 
      * @return array
  	 */
-    public function _get_comment_list($item_id, $incident_id, 
-            $spammed, $approved) 
+    private function _get_comment_list($where, $limit = '',
+            $response_type) 
     {
+       
         $xml = new XMLWriter();
         $json = array();
         $json_item = array();
 
-        $comments = new Database();
+        $this->query = "SELECT * FROM comment $where $limit";
 
-        $comments->select('*')->from('comment');
-
-        if($item_id > 0) 
-        {
-            if($incident_id > 0) 
-            {
-                $comments->where(array('id' => $item_id, 
-                    'incident_id' => $incident_id,
-                    'comment_spam' => $spammed, 
-                    'comment_active' => $approved));
-            }
-            else 
-            {
-                $comments->where(array('id' => $item_id, 
-                        'comment_spam' => $spammed,
-                        'comment_active' => $approved));
-            }
-        }
-        else 
-        {
-            if($incident_id > 0) 
-            {
-                $comments->where(array('incident_id' => $incident_id,
-                            'comment_spam' => $spammed,
-                            'comment_active' => $approved));
-            }
-            else 
-            {
-                $comments->where(array('comment_spam' => $spammed,
-                            'comment_active' => $approved));
-            }
-        }
-
-        $comments = $comments->get();
-
+        $this->items = $this->db_query($this->query);
+        
         if($response_type == "xml") 
         {
             $xml->openMemory();
@@ -100,7 +68,7 @@ class AdminComment
             $xml->startElement('comments');
         }
 
-        foreach($comments as $list_item) 
+        foreach($this->items as $list_item) 
         {
             if($this->response_type == "json") 
             {
@@ -144,135 +112,266 @@ class AdminComment
         {
             $json = array("payload" => array("comments" => $json_item));
 
-            return $this->_arrayAsJSON($json);
+            return $this->api_actions->_array_as_JSON($json);
         }
     }
 
+    /**
+     * List all comments marked as spam
+     *
+     * @return array
+     */
+    public function _get_spam_comments($response_type)
+    {
+        $where = "\nWHERE comment_spam = 1";
+        $where .= "\nORDER BY comment_date DESC";
+        $limt = "\nLIMIT 0, $this->list_limit";
+
+        return this->_get_comment_list($where, $limit,$response_type); 
+    }
+
+    /**
+     * List all comments submited to the Ushahidi
+     * 
+     * @param string response_type - The format of the response needed. 
+     * XML or JSON
+     *
+     * @return array
+     */
+    public function _get_all_comments($response_type)
+    {
+        $where = "\nWHERE comment_spam = 0";
+        $where .= "\nORDER BY comment_date DESC";
+        $limt = "\nLIMIT 0, $this->list_limit";
+
+        return this->_get_comment_list($where, $limit,$response_type); 
+    }
+    
+    /**
+     * List all approved comments
+     *
+     * @param string response_type - The format of the response needed.
+     * XML or JSON
+     *
+     * @return array
+     */
+    public function _get_approved_comments($response_type)
+    {
+        $where = "\nWHERE comment_active = 0 AND comment_spam = 0";
+        $where .= "\nORDER BY comment_date DESC";
+        $limt = "\nLIMIT 0, $this->list_limit";
+
+        return this->_get_comment_list($where, $limit,$response_type); 
+
+    }
+            
+    /**
+     * List all pending comments
+     * 
+     * @param string response_type - The format of the response needed.
+     * XML or JSON
+     *
+     * @return array
+     */
+    public function _get_pending_comments($pending,$response_type)
+    {
+        $where = "\nWHERE comment_active = 1 AND comment_spam = 0";
+        $where .= "\nORDER BY comment_date DESC";
+        $limt = "\nLIMIT 0, $this->list_limit";
+
+        return this->_get_comment_list($where, $limit,$response_type); 
+    }
 
     /**
  	 * Spams / Unspams a comment
      * 
      * @param int item_id - the comment to spammed / unspammed
-     * @param string spammed - the comment to be seen as spammed
+     * @param string spam - the comment to be seen as spammed
      *
      * @return array
      */
-    public function _spam_comment($item_id, $spammed,$response_type) 
+    public function _spam_comment($spam, $response_type) 
     {
-        $comment = ORM::factory('comment')->where('id', $item_id);
-
-        if($comment->count_all() < 1) 
+        
+        if($_POST)
         {
-            // Does not exist
-            if($this->responseType == "json") 
+            $post = Validation::factory($_POST);
+
+            // Add some filters
+            $post->pre_filter('trim', TRUE);
+            // Add some rules, the input field, followed by a list of 
+            //checks, carried out in order
+			$post->add_rules('action','required', 'alpha', 'length[1,1]');
+			$post->add_rules('comment_id.*','required','numeric');
+
+            if ($post->validate())
             {
-                return $this->_arrayAsJSON($this->_operationError(
-                            "itemid does not exist"));
+                $comment_id = $post->comment_id;
+                $comment = new Comment_Model($comment_id);
+                if ($comment->loaded == true)
+                {
+                    //spam
+                    if ( $spammed == strtolower('s'))
+                    {
+                        $comment->comment_active = '0';
+                        $comment->comment_spam = '1';
+                    } 
+                    //unspam
+                    elseif ($spam == strtolower('n')) 
+                    {
+                        $comment->comment_active = '1';
+                        $comment->comment_spam = '0';
+                    }
+
+                    $comment->save();
+                }
+                else
+                {
+                    //Comment id doesn't exist in DB
+                    //TODO i18nize the string
+                    $this->error_messages .= "Comment ID does not exist.";
+                    $this->ret_value = 1;
+
+                }
             }
-            else 
+            else
             {
-                    return $this->_arrayAsXML($this->
-                            _operationError("itemid does not exist"));
+                //TODO i18nize the string
+                $this->error_messages .= "Comment ID is required.";
+                $this->ret_value = 1;
             }
+
         }
-
-        $comment = ORM::factory("comment", $item_id);
-
-        $comment->comment_spam = $spammed;
-
-        $comment->save();
-
-        if($this->responseType == "json") 
+        else
         {
-            return $this->_arrayAsJSON(
-                    $this->_operationSuccess("operation successful"));
+            $this->ret_value = 3;
         }
-        else 
-        {
-                return $this->_arrayAsXML(
-                        $this->_operationSuccess("operation successful"));
-        }
+        
+        return $this->api_actions->_response($this->ret_value,
+                $response_type);
+
     }
 
     /**
  	 * Deletes a comment
+     *
+     * @param string response_type - The type of response to return XML or 
+     * JSON.
+     *
+     * @return Array
  	 */
-
-    public function _delete_comment($item_id,$response_type) 
+    public function _delete_comment($response_type) 
     {
-        $comment = ORM::factory('comment')->where('id', $item_id);
-
-        if($comment->count_all() < 1) 
+        if($_POST)
         {
-            // Does not exist
-            if($this->responseType == "json") 
+            $post = Validation::factory($_POST);
+
+            // Add some filters
+            $post->pre_filter('trim', TRUE);
+            // Add some rules, the input field, followed by a list of 
+            //checks, carried out in order
+			$post->add_rules('action','required', 'alpha', 'length[1,1]');
+			$post->add_rules('comment_id.*','required','numeric');
+
+            if ($post->validate())
             {
-                return $this->_arrayAsJSON(
-                        $this->_operationError("itemid does not exist"));
+                $comment_id = $post->comment_id;
+                $comment = new Comment_Model($comment_id);
+                if ($comment->loaded == true)
+                {
+                    $comment->delete();
+                }
+                else
+                {
+                    //Comment id doesn't exist in DB
+                    //TODO i18nize the string
+                    $this->error_messages .= "Comment ID does not exist.";
+                    $this->ret_value = 1;
+
+                }
             }
-            else 
+            else
             {
-                return $this->_arrayAsXML(
-                        $this->_operationError("itemid does not exist"));
+                //TODO i18nize the string
+                $this->error_messages .= "Comment ID is required.";
+                $this->ret_value = 1;
             }
+
         }
-
-        $comment = ORM::factory("comment", $item_id);
-
-        $comment->delete();
-
-        if($this->responseType == "json") 
+        else
         {
-            return $this->_arrayAsJSON(
-                    $this->_operationSuccess("operation successful"));
+            $this->ret_value = 3;
         }
-        else 
-        {
-            return $this->_arrayAsXML(
-                    $this->_operationSuccess("operation successful"));
-        }
+        
+        return $this->api_actions->_response($this->ret_value,
+                $response_type);
     }
     
     /**
  	 * Approves / Dissaproves a comment
+     * 
+     * @param string approve - Approve or Unapprove
+     * @param string response_type - The resposne format to return.XML 
+     * or JSON
+     *
+     * @return Array
  	 */
-
-    public function _approve_comment($item_id, $approved,$response_type) 
+    public function _approve_comment($approve,$response_type) 
     {
-        $comment = ORM::factory('comment')->where('id', $item_id);
-
-        if($comment->count_all() < 1) 
+        if($_POST)
         {
-            // Does not exist
-            if($response_type == "json") 
+            $post = Validation::factory($_POST);
+
+            // Add some filters
+            $post->pre_filter('trim', TRUE);
+            // Add some rules, the input field, followed by a list of 
+            //checks, carried out in order
+			$post->add_rules('action','required', 'alpha', 'length[1,1]');
+			$post->add_rules('comment_id.*','required','numeric');
+
+            if ($post->validate())
             {
-                return $this->_arrayAsJSON(
-                        $this->_operationError("itemid does not exist"));
+                $comment_id = $post->comment_id;
+                $comment = new Comment_Model($comment_id);
+                if ($comment->loaded == true)
+                {
+                    //approve
+                    if($approve == strtolower('a'))
+                    {
+                        $comment->comment_active = '1';
+                        $comment->comment_spam = '0';
+                    }
+                    else
+                    {
+                        $comment->comment_active = '0';
+                    }
+
+                    $comment->save();
+                }
+                else
+                {
+                    //Comment id doesn't exist in DB
+                    //TODO i18nize the string
+                    $this->error_messages .= "Comment ID does not exist.";
+                    $this->ret_value = 1;
+
+                }
             }
-            else 
+            else
             {
-                return $this->_arrayAsXML(
-                    $this->_operationError(
-                        "itemid does not exist"));
+                //TODO i18nize the string
+                $this->error_messages .= "Comment ID is required.";
+                $this->ret_value = 1;
             }
+
         }
-
-        $comment = ORM::factory("comment", $item_id);
-
-        $comment->comment_active = $approved;
-
-        $comment->save();
-
-        if($this->response_type == "json") 
+        else
         {
-            return $this->_arrayAsJSON(
-                $this->_operationSuccess("operation successful"));
+            $this->ret_value = 3;
         }
-        else 
-        {
-            return $this->_arrayAsXML(
-                $this->_operationSuccess("operation successful"));
-        }
+        
+        return $this->api_actions->_response($this->ret_value,
+                $response_type);
     }
 
 }
