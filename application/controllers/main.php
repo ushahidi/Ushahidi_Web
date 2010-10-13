@@ -142,6 +142,17 @@ class Main_Controller extends Template_Controller {
 					$child->category_color,
 					$child->category_image
 				);
+				
+				if ($child->category_trusted)
+				{ // Get Trusted Category Count
+					$trusted = ORM::factory("incident")
+						->join("incident_category","incident.id","incident_category.incident_id")
+						->where("category_id",$child->id);
+					if ( ! $trusted->count_all())
+					{
+						unset($children[$child->id]);
+					}
+				}
 			}
 
 			// Put it all together
@@ -151,6 +162,17 @@ class Main_Controller extends Template_Controller {
 				$category->category_image,
 				$children
 			);
+			
+			if ($category->category_trusted)
+			{ // Get Trusted Category Count
+				$trusted = ORM::factory("incident")
+					->join("incident_category","incident.id","incident_category.incident_id")
+					->where("category_id",$category->id);
+				if ( ! $trusted->count_all())
+				{
+					unset($parent_categories[$category->id]);
+				}
+			}
 		}
 		$this->template->content->categories = $parent_categories;
 
