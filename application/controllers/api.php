@@ -298,8 +298,7 @@ class Api_Controller extends Controller
                 }
 
                 /*IF we have an order by, 0=asc 1=default=desc */
-                if ($this->api_objects->api_actions->_verify_array_index(
-                            $this->request, 'sort'))
+                if ($this->api_objects->api_actions->_verify_array_index($this->request, 'sort'))
                 {
                     if ( $this->request['sort'] == '0' )
                     {
@@ -307,19 +306,17 @@ class Api_Controller extends Controller
                     }
                     elseif ( $this->request['sort'] == '1' )
                     {
-					    $sort = 'DESC';
+                        $sort = 'DESC';
                     }
                 }
 
                 /*Specify how many incidents to return */
-                if ($this->api_objects->api_actions->_verify_array_index(
-                            $this->request, 'limit'))
+                if ($this->api_objects->api_actions->_verify_array_index($this->request, 'limit'))
                 {
-                
                     if ( $this->request['limit'] > 0 )
                     {
                         $limit = $this->request['limit'];
-					} 
+                    } 
                     else 
                     {
                         $limit = 20;
@@ -335,7 +332,7 @@ class Api_Controller extends Controller
                 if ($this->api_objects->api_actions->_verify_array_index($this->request, 'orderfield'))
                 {
                     switch ( $this->request['orderfield'] )
-					{
+                    {
                         case 'incidentid':
                             $orderfield = 'i.id';
                             break;
@@ -351,15 +348,16 @@ class Api_Controller extends Controller
                     }
                 }
 				
-                switch ($by){
+                switch ($by)
+                {
                     case "all": // incidents
                     
                         $this->ret = $this->api_objects->get_reports
                             ->_reports_by_all($orderfield, $sort, $limit,
                                 $this->response_type );
                         break;
-
-					case "latlon": //latitude and longitude
+                    
+                    case "latlon": //latitude and longitude
                         if (($this->api_objects->api_actions->
                             _verify_array_index(
                                 $this->request, 'latitude')) AND 
@@ -414,8 +412,7 @@ class Api_Controller extends Controller
                                     $orderfield, $sort,
                                     $this->response_type
                             );
-                                
-						} 
+                        } 
                         else 
                         {
                             $this->error = array(
@@ -434,8 +431,7 @@ class Api_Controller extends Controller
                                         $orderfield, 
                                         $sort,$this->response_type
                                 );
-
-						} 
+                        } 
                         else 
                         {
                             $this->error = array(
@@ -447,7 +443,7 @@ class Api_Controller extends Controller
                     case "catname": //Category Name
                         if (($this->api_objects->api_actions->_verify_array_index($this->request, 'name')))
                         {
-							$this->ret = $this->api_objects->get_reports
+                            $this->ret = $this->api_objects->get_reports
                                 ->_reports_by_category_name(
                                         $this->request['name'], 
                                         $orderfield, 
@@ -513,8 +509,7 @@ class Api_Controller extends Controller
                 break;
 
             case "locations": //retrieve locations
-                $this->ret = $this->api_objects->locations->_locations(
-                        $this->response_type);
+                $this->ret = $this->api_objects->locations->_locations($this->response_type);
                 break;
             
             case "location": //retrieve locations
@@ -535,7 +530,7 @@ class Api_Controller extends Controller
                 switch ($by)
                 {
                     case "latlon": //latitude and longitude
-					    break;
+                        break;
 
                     case "locid": //id
                         if (($this->api_objects->api_actions->_verify_array_index($this->request, 'id')))
@@ -626,7 +621,7 @@ class Api_Controller extends Controller
                         if (($this->api_objects->api_actions->_verify_array_index($this->request, 'iso')))
                         {
                             $this->ret = $this->api_objects->countries->_country_by_iso($this->request['iso'], $this->response_type);
-						} 
+                        } 
                         else 
                         {
                             $this->error = array(
