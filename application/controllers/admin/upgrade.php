@@ -55,7 +55,8 @@ class Upgrade_Controller extends Admin_Controller
 		}
 		
 	    $this->template->content->form_action = $form_action;
-
+		$this->template->content->current_version = Kohana::config('settings.ushahidi_version');
+		$this->template->content->environment = $this->_environment();
 	}
 	
 	public function table() 
@@ -411,5 +412,14 @@ class Upgrade_Controller extends Admin_Controller
                    
         return $error;	
     }
+
+	private function _environment()
+	{
+		$environment = "";
+		$environment .= str_replace("/", "&nbsp;", preg_replace("/ .*$/", "", $_SERVER["SERVER_SOFTWARE"]));
+		$environment .= ", PHP&nbsp;".phpversion();
+		
+		return $environment;
+	}
 
 }
