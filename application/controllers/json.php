@@ -30,6 +30,9 @@ class Json_Controller extends Template_Controller
 		
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
+		
+		// Cacheable Json Controller
+		$this->is_cachable = TRUE;
 	}
 	
 	

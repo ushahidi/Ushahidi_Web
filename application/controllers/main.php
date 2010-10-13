@@ -21,6 +21,9 @@ class Main_Controller extends Template_Controller {
 
     // Cache instance
 	protected $cache;
+	
+	// Cacheable Controller
+	public $is_cachable = FALSE;
 
 	// Session instance
 	protected $session;
@@ -138,6 +141,9 @@ class Main_Controller extends Template_Controller {
 	{
 		$this->template->header->this_page = 'home';
 		$this->template->content = new View('main');
+		
+		// Cacheable Main Controller
+		$this->is_cachable = TRUE;
 
 		// Check if there is a site message
 		$this->template->content->site_message = '';
