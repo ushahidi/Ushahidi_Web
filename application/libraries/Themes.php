@@ -147,6 +147,12 @@ class Themes_Core {
 			$core_js .= html::script($this->js_url."media/js/coda-slider.pack");
 		}
 		
+		// Load TinyMCE
+		if ($this->editor_enabled)
+		{
+			echo html::script('media/js/tinymce/tiny_mce', true);
+		}
+		
 		// Javascript files from plugins
 		$plugin_js = plugin::render('javascript');
 		

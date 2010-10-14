@@ -974,6 +974,7 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->next_url = $next_url;
 
 		// Javascript Header
+		$this->template->editor_enabled = TRUE;
 		$this->template->map_enabled = TRUE;
         $this->template->colorpicker_enabled = TRUE;
 		$this->template->treeview_enabled = TRUE;

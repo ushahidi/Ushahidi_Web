@@ -577,6 +577,7 @@ class Reports_Controller extends Main_Controller {
 
 
 		// Javascript Header
+		$this->themes->editor_enabled = TRUE;
 		$this->themes->map_enabled = TRUE;
 		$this->themes->datepicker_enabled = TRUE;
 		$this->themes->treeview_enabled = TRUE;
