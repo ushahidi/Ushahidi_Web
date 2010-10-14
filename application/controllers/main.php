@@ -50,6 +50,7 @@ class Main_Controller extends Template_Controller {
 		
 		// Themes Helper
 		$this->themes = new Themes();
+		$this->themes->editor_enabled = false;
 		$this->themes->api_url = Kohana::config('settings.api_url');
 		$this->template->header->submit_btn = $this->themes->submit_btn();
 		$this->template->header->languages = $this->themes->languages();
