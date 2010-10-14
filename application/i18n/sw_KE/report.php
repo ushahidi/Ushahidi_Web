@@ -1,157 +1,137 @@
 <?php
-
-$lang = array
-(
-	'locale' => array
-	(
-		'required'		=> 'Sehemu ya mandhari inahitajika.',
-		'length'		=> 'Sehemu ya mandhari haiko sahihi. ',
-		'alpha_dash'	=> 'Sehemu ya mandhari haiko sahihi. ',
-		'locale'		=> 'Repoti awali na tafsri yake iko na mandhari sawa (lugha)',
-		'exists'		=> 'Repoti hii iko na tafiri ya lugha hii tayari.'
+	$lang = array(
+	'comments_add' => '',
+	'comments_additional_reports' => '',
+	'comments_credibility' => '',
+	'comments_form_comment' => '',
+	'comments_form_email' => '',
+	'comments_form_error' => '',
+	'comments_form_leave_comment' => '',
+	'comments_form_name' => '',
+	'comments_form_security_code' => '',
+	'comments_form_submit_comment' => '',
+	'custom_field' => array(
+		'values' => 'Tafadhali jaza uga ya kidesturi kisahihi',
 	),
-	
-	'incident_title' => array
-	(
-		'required'		=> 'Sehemu ya jina inahitajika.',
-		'length'		=> 'Sehemu ya jina lazima iwe na baina ya herufi 3 na 200.'
+	'data_include' => array(
+		'between' => 'Tafadhali chagua kipengele cha sahihi cha kupakua',
+		'numeric' => 'Tafadhali chagua kipengele cha sahihi cha kupakua',
 	),
-	
-	'incident_description' => array
-	(
-		'required'		=> 'Sehemu ya maelezo inahitajika.'
-	),	
-	
-	'incident_date' => array
-	(
-		'required'		=> 'Sehemu ya tarehe inahitajika.',
+	'data_point' => array(
+		'between' => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua',
+		'numeric' => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua',
+		'required' => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua',
+	),
+	'from_date' => array(
+		'date_mmddyyyy' => 'Tarehe KUTOKA inaonekana si sahihi',
+		'range' => 'Tafadhali tumia tarehe ya sahihi katika sehemu ya tarehe KUTOKA.',
+	),
+	'geocode_not_found' => '',
+	'incident_active' => array(
+		'between' => 'Tafadhali jaza kisahihi kwa sehemu ya Guna Ripoti',
+		'required' => 'Tafadhali jaza kisahihi kwa sehemu ya Pitisha Ripoti',
+	),
+	'incident_ampm' => array(
+		'validvalues' => 'Sehemu ya am/pm inaonekana si sahihi',
+	),
+	'incident_category' => array(
+		'numeric' => 'Sehemu ya jamii inaonekana si sahihi',
+		'required' => 'Sehemu ya jamii inahitajika.',
+	),
+	'incident_date' => array(
+		'date_ddmmyyyy' => 'Sehemu ya tarehe inaonekana si sahihi',
 		'date_mmddyyyy' => 'Sehemu ya tarehe inaonekana si sahihi',
-		'date_ddmmyyyy' => 'Sehemu ya tarehe inaonekana si sahihi'
+		'required' => 'Sehemu ya tarehe inahitajika.',
 	),
-	
-	'incident_hour' => array
-	(
-		'required'		=> 'Sehemu ya saa inahitajika.',
-		'between' => 'Sehemu ya saa inaonekana si sahihi.'
+	'incident_description' => array(
+		'required' => 'Sehemu ya maelezo inahitajika.',
 	),
-	
-	'incident_minute' => array
-	(
-		'required'		=> 'Sehemu ya dakika inahitajika.',
-		'between' => 'Sehemu ya dakika inaonekana si sahihi'
+	'incident_hour' => array(
+		'between' => 'Sehemu ya saa inaonekana si sahihi.',
+		'required' => 'Sehemu ya saa inahitajika.',
 	),
-	
-	'incident_ampm' => array
-	(
-		'validvalues' => 'Sehemu ya am/pm inaonekana si sahihi'
+	'incident_information' => array(
+		'alpha' => 'Tafadhali jaza kisahihi kwa sehemu ya Uwezekano wa Maarifa',
+		'length' => 'Tafadhali jaza kisahihi kwa sehemu ya Uwezekano wa Maarifa',
 	),
-	
-	'latitude' => array
-	(
-		'required'		=> 'Sehemu ya latitudo inahitajika. Tafadhali binya kwenye ramani kuashiria eneo.',
-		'between' => 'Sehemu ya latitudo inaonekana si sahihi'
+	'incident_minute' => array(
+		'between' => 'Sehemu ya dakika inaonekana si sahihi',
+		'required' => 'Sehemu ya dakika inahitajika.',
 	),
-	
-	'longitude' => array
-	(
-		'required'		=> 'Sehemu ya longitudo inahitajika. Tafadhali binya kwenye ramani kuashiria eneo.',
-		'between' => 'Sehemu ya longitudo inaonekana si sahihi'
+	'incident_news' => array(
+		'url' => 'Sehemu ya anwani ya habari inaonekana si sahihi',
 	),
-	
-	'location_name' => array
-	(
-		'required'		=> 'Jina la eneo linahitajika.',
-		'length'		=> 'Jina la eneo lazima liwe baina ya herufi 3 na 200.',
+	'incident_photo' => array(
+		'size' => 'Tafadhali hakikisha picha zinazopakiwa hazizidi 2MB.',
+		'type' => 'Sehemu ya kupakia picha inaonekana haina faili sahihi. Faili zinazokubalika ni za .JPG, .PNG na .GIF.',
+		'valid' => 'Sehemu ya kupakia picha inaonekana haina faili sahihi',
 	),
-			
-	'incident_category' => array
-	(
-		'required'		=> 'Sehemu ya jamii inahitajika.',
-		'numeric'		=> 'Sehemu ya jamii inaonekana si sahihi'
+	'incident_source' => array(
+		'alpha' => 'Tafadhali jaza kisahihi kwa sehemu ya Uaminifu wa Asili',
+		'length' => 'Tafadhali jaza kisahihi kwa sehemu ya Uaminifu wa Asili',
 	),
-	
-	'incident_news' => array
-	(
-		'url'		=> 'Sehemu ya anwani ya habari inaonekana si sahihi'
+	'incident_title' => array(
+		'length' => 'Sehemu ya jina lazima iwe na baina ya herufi 3 na 200.',
+		'required' => 'Sehemu ya jina inahitajika.',
 	),
-	
-	'incident_video' => array
-	(
-		'url'		=> 'Sehemu ya anwani ya video inaonekana si sahihi'
+	'incident_verified' => array(
+		'between' => 'Tafadhali jaza kisahihi kwa sehemu ya Kuthibitisha Ripoti',
+		'required' => 'Tafadhali jaza kisahihi kwa sehemu ya Kuthibitisha Ripoti',
 	),
-	
-	'incident_photo' => array
-	(
-		'valid'		=> 'Sehemu ya kupakia picha inaonekana haina faili sahihi',
-		'type'		=> 'Sehemu ya kupakia picha inaonekana haina faili sahihi. Faili zinazokubalika ni za .JPG, .PNG na .GIF.',
-		'size'		=> 'Tafadhali hakikisha picha zinazopakiwa hazizidi 2MB.'
+	'incident_video' => array(
+		'url' => 'Sehemu ya anwani ya video inaonekana si sahihi',
 	),
-	
-	'person_first' => array
-	(
-		'length'		=> 'Jina la kwanza lazma liwe baina ya herufi 3 na 100.'
+	'latitude' => array(
+		'between' => 'Sehemu ya latitudo inaonekana si sahihi',
+		'required' => 'Sehemu ya latitudo inahitajika. Tafadhali binya kwenye ramani kuashiria eneo.',
 	),
-	
-	'person_last' => array
-	(
-		'length'		=> 'Jina la mwisho lazma liwe baina ya herufi 3 na 100.'
+	'locale' => array(
+		'alpha_dash' => 'Sehemu ya mandhari haiko sahihi. ',
+		'exists' => 'Repoti hii iko na tafiri ya lugha hii tayari.',
+		'length' => 'Sehemu ya mandhari haiko sahihi. ',
+		'locale' => 'Repoti awali na tafsri yake iko na mandhari sawa (lugha)',
+		'required' => 'Sehemu ya mandhari inahitajika.',
 	),
-	
-	'person_email' => array
-	(
-		'email'		  => 'Sehemu ya anwani ya barua pepe inaonekana si sahihi',
-		'length'	  => 'Sehemu ya anwani ya barua pepe lazima iwe baina ya herufi 4 na 64.'
+	'location_name' => array(
+		'length' => 'Jina la eneo lazima liwe baina ya herufi 3 na 200.',
+		'required' => 'Jina la eneo linahitajika.',
 	),
-	
-	// Admin - Report Download Validation
-	'data_point' => array
-	(
-		'required'		  => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua',
-		'numeric'		  => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua',
-		'between'		  => 'Tafadhali chagua aina ya sahihi ya repoti ya kupakua'
+	'longitude' => array(
+		'between' => 'Sehemu ya longitudo inaonekana si sahihi',
+		'required' => 'Sehemu ya longitudo inahitajika. Tafadhali binya kwenye ramani kuashiria eneo.',
 	),
-	'data_include' => array
-	(
-		'numeric'		  => 'Tafadhali chagua kipengele cha sahihi cha kupakua',
-		'between'		  => 'Tafadhali chagua kipengele cha sahihi cha kupakua'
+	'person_email' => array(
+		'email' => 'Sehemu ya anwani ya barua pepe inaonekana si sahihi',
+		'length' => 'Sehemu ya anwani ya barua pepe lazima iwe baina ya herufi 4 na 64.',
 	),
-	'from_date' => array
-	(
-		'date_mmddyyyy'		  => 'Tarehe KUTOKA inaonekana si sahihi',
-		'range'	  => 'Tafadhali tumia tarehe ya sahihi katika sehemu ya tarehe KUTOKA.'
+	'person_first' => array(
+		'length' => 'Jina la kwanza lazma liwe baina ya herufi 3 na 100.',
 	),
-	'to_date' => array
-	(
-		'date_mmddyyyy'		  => 'Tarehe MPAKA inaonekana si sahihi',
-		'range'	  => 'Tafadhali tumia tarehe ya sahihi katika sehemu ya tarehe MPAKA.',
-		'range_greater'	=> 'Tarehe KUTOKA haiezi kuwa baada ya tarehe MPAKA.'
+	'person_last' => array(
+		'length' => 'Jina la mwisho lazma liwe baina ya herufi 3 na 100.',
 	),
-	'custom_field' => array
-	(
-		'values'		  => 'Tafadhali jaza uga ya kidesturi kisahihi'
+	'to_date' => array(
+		'date_mmddyyyy' => 'Tarehe MPAKA inaonekana si sahihi',
+		'range' => 'Tafadhali tumia tarehe ya sahihi katika sehemu ya tarehe MPAKA.',
+		'range_greater' => 'Tarehe KUTOKA haiezi kuwa baada ya tarehe MPAKA.',
 	),
-	
-	'incident_active' => array
-	(
-		'required'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Pitisha Ripoti',
-		'between'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Guna Ripoti'
-	),
-	
-	'incident_verified' => array
-	(
-		'required'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Kuthibitisha Ripoti',
-		'between'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Kuthibitisha Ripoti'
-	),
-	
-	'incident_source' => array
-	(
-		'alpha'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Uaminifu wa Asili',
-		'length'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Uaminifu wa Asili'
-	),
-	
-	'incident_information' => array
-	(
-		'alpha'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Uwezekano wa Maarifa',
-		'length'		=> 'Tafadhali jaza kisahihi kwa sehemu ya Uwezekano wa Maarifa'
-	)
-);
+	'view_alt_incident' => '',
+	'view_alt_nearby_incident' => '',
+	'view_category' => '',
+	'view_credibility' => '',
+	'view_date' => '',
+	'view_images' => '',
+	'view_incident' => '',
+	'view_incident_reports' => '',
+	'view_incident_reports_date' => '',
+	'view_incident_reports_location' => '',
+	'view_incident_reports_title' => '',
+	'view_incident_report_description' => '',
+	'view_location' => '',
+	'view_nearby_incident' => '',
+	'view_time' => '',
+	'view_unverified' => '',
+	'view_verified' => '',
+	'view_videos' => '',
+	);
+?>

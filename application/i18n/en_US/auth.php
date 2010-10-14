@@ -1,62 +1,49 @@
 <?php
-
-$lang = array
-(
-	'name' => array
-	(
-		'required'		=> 'The full name field is required.',
-		'length'		=> 'The full name field must be at least 3 and no more 100 characters long.',
+	$lang = array(
+	'email' => array(
+		'email' => 'The email field does not appear to contain a valid email address?',
+		'exists' => 'Sorry, a user account already exists for this email address.',
+		'length' => 'The email field must be at least 4 and no more 64 characters long.',
+		'login error' => 'Please check that you entered the correct email address.',
+		'required' => 'The email field is required.',
+	),
+	'forgot_password' => '',
+	'name' => array(
+		'length' => 'The full name field must be at least 3 and no more 100 characters long.',
+		'login error' => 'Please check that you entered the correct name.',
+		'required' => 'The full name field is required.',
 		'standard_text' => 'The username field contains disallowed characters.',
-		'login error'	=> 'Please check that you entered the correct name.'
 	),
-	
-	'email' => array
-	(
-		'required'	  => 'The email field is required.',
-		'email'		  => 'The email field does not appear to contain a valid email address?',
-		'length'	  => 'The email field must be at least 4 and no more 64 characters long.',
-		'exists'	  => 'Sorry, a user account already exists for this email address.',
-		'login error' => 'Please check that you entered the correct email address.'
+	'password' => array(
+		'alpha_numeric' => 'The password must only contain numbers and letters.',
+		'length' => 'The password field must be at least 5 and no more 16 characters long.',
+		'login error' => 'Please check that you entered the correct password.',
+		'matches' => 'Please enter the same password in the two password fields.',
+		'required' => 'The password field is required.',
+		'standard_text' => '',
 	),
-
-	'username' => array
-	(
-		'required'		=> 'The username field is required.',
-		'length'		=> 'The username field must be at least 2 and no more 16 characters long.',
-		'alpha' => 'The username field must only contain letters.',
-		'admin' 		=> 'The admin user role cannot be modified.',
-		'superadmin'	=> 'The super admin role cannot be modified.',
-		'exists'		=> 'Sorry, this username is already in use.',
-		'login error'	=> 'Please check that you entered the correct username.'
+	'password_confirm' => array(
+		'matches' => 'The password confirmation field must match the password field.',
 	),
-
-	'password' => array
-	(
-		'required'		=> 'The password field is required.',
-		'length'		=> 'The password field must be at least 5 and no more 16 characters long.',
-		'alpha_numeric'		=> 'The password must only contain numbers and letters.',
-		'login error'	=> 'Please check that you entered the correct password.',
-		'matches'		=> 'Please enter the same password in the two password fields.'
+	'resetemail' => array(
+		'email' => 'The email field does not appear to contain a valid email address?',
+		'invalid' => 'Sorry, we don\'t have your email address',
+		'required' => 'The email field is required.',
 	),
-
-	'password_confirm' => array
-	(
-		'matches' => 'The password confirmation field must match the password field.'
-	),
-
-	'roles' => array
-	(
-		'required' => 'You must define at least one role.',
+	'roles' => array(
 		'alpha_numeric' => 'Invalid role format.',
+		'length' => 'The role field must be at least 5 and no more than 30 characters long.',
+		'required' => 'You must define at least one role.',
 		'values' => 'You must select either ADMIN or USER role.',
-		'length'		=> 'The role field must be at least 5 and no more than 30 characters long.',
 	),
-	
-	'resetemail' => array
-        (
-    	        'required' => 'The email field is required.',
-       	        'invalid' => 'Sorry, we don\'t have your email address',
-                'email'  => 'The email field does not appear to contain a valid email address?',
-        ),
-
-);
+	'username' => array(
+		'admin' => 'The admin user role cannot be modified.',
+		'alpha' => 'The username field must only contain letters.',
+		'exists' => 'Sorry, this username is already in use.',
+		'length' => 'The username field must be at least 2 and no more 16 characters long.',
+		'login error' => 'Please check that you entered the correct username.',
+		'required' => 'The username field is required.',
+		'standard_text' => '',
+		'superadmin' => 'The super admin role cannot be modified.',
+	));
+?>

@@ -120,6 +120,77 @@ class ApiActions
     }
 
     /**
+     * Reponse
+     * 
+     * @param int ret_value
+     * @param string response_type = XML or JSON
+     * 
+     * @return string
+     */
+    public function _response($ret_value,$response_type)
+    {
+        $ret_json_or_xml = '';
+
+        if($ret_value == 0)
+        {
+			$reponse = array(
+				"payload" => array(
+                    "domain" => $this->domain,
+                    "success" => "true"
+                ),
+				"error" => $this->_get_error_msg(0)
+			);
+			
+		} 
+        else if($ret_value == 1) 
+        {
+			$reponse = array(
+				"payload" => array(
+                    "domain" => $this->domain,
+                    "success" => "false"
+                ),
+				"error" => $this->api_actions->
+                    _get_error_msg(003,'',$this->error_messages)
+			);
+		} 
+        else if ($ret_value == 2)
+        {
+            // Authentication Failed. Invalid User or App Key
+			$reponse = array(
+				"payload" => array("domain" => $this->domain,"success" =>
+                    "false"),
+				"error" => $this->_get_error_msg(005)
+			);
+
+        }
+
+        else 
+        {
+			$reponse = array(
+				"payload" => array(
+                    "domain" => $this->domain,
+                    "success" => "false"
+                ),
+				"error" => $this->_get_error_msg(004)
+			);
+		}
+
+		if($response_type == 'json')
+        {
+			$ret_json_or_xml = $this->_array_as_JSON($reponse);
+		} 
+        else 
+        {
+			$ret_json_or_xml = $this->
+                _array_as_XML($reponse, array());
+		}
+        
+		return $ret_json_or_xml;
+
+    }
+
+
+    /**
  	 * Makes sure the appropriate key is there in a given 
      * array (POST or GET) and that it is set
      * @param ar Array - The given array.

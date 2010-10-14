@@ -17,14 +17,23 @@ class hook_page_cache
 {
 	private $cache;
 	
+	private $subdomain;
+	
 	private $gzip = "";
 	
 	public function __construct()
 	{	
 		$this->cache = new Cache;
 		
-		// Account for Gzip compression
+		// Gzip compression
 		$this->gzip = Kohana::config('settings.gz');
+		
+		// Subdomain (MHI)?
+		$subdomain = Kohana::config('settings.subdomain');
+		if ( ! empty($subdomain))
+		{
+			$this->subdomain = $subdomain."_";
+		}
 		
 		// If this is a POST, disable cache
 		if (empty($_POST))
@@ -36,7 +45,7 @@ class hook_page_cache
 	
 	public function load_cache()
 	{
-		if ($cache = $this->cache->get('page_'.$this->gzip.'_'.$_SERVER['REQUEST_URI']))
+		if ($cache = $this->cache->get($this->subdomain.'page_'.$this->gzip.'_'.$_SERVER['REQUEST_URI']))
 		{
 			Kohana::render($cache);
 			exit;
@@ -48,14 +57,14 @@ class hook_page_cache
 	}
 	
 	public function save_cache()
-	{
+	{		
 		// If controller is cachable - cache
 		// If this is an error page - DO NOT cache
-		if ( !empty(Kohana::$instance->is_cachable)
-		 	&& Kohana::$instance->is_cachable == true
-		 	&& Kohana::$has_error == false )
+		if ( ! empty(Kohana::$instance->is_cachable)
+		 	AND Kohana::$instance->is_cachable == true
+		 	AND Kohana::$has_error == false )
 		{
-			$this->cache->set(Kohana::config('settings.subdomain').'_page_'.$this->gzip.'_'.$_SERVER['REQUEST_URI'], Event::$data);
+			$this->cache->set($this->subdomain.'page_'.$this->gzip.'_'.$_SERVER['REQUEST_URI'], Event::$data);
 		}
 	}
 }
