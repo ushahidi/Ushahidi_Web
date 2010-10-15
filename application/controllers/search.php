@@ -41,8 +41,9 @@ class Search_Controller extends Main_Controller {
         // Stop words that we won't search for
         // Add words as needed!!
         $stop_words = array('the', 'and', 'a', 'to', 'of', 'in', 'i', 'is', 'that', 'it', 
-        'on', 'you', 'this', 'for', 'but', 'with', 'are', 'have', 'be', 
-        'at', 'or', 'as', 'was', 'so', 'if', 'out', 'not');
+            'on', 'you', 'this', 'for', 'but', 'with', 'are', 'have', 'be', 
+            'at', 'or', 'as', 'was', 'so', 'if', 'out', 'not'
+        );
         
         if ($_GET)
         {
@@ -129,9 +130,11 @@ class Search_Controller extends Main_Controller {
                 $search_info .= "</div>";
             } else { 
                 $search_info .= "<div class=\"search_info\">0 ".Kohana::lang('ui_admin.results')."</div>";
-                $html .=	"<div class=\"search_result\">";
-                $html .= 	"<h3>".Kohana::lang('ui_admin.your_search_for')."<strong> ".$keyword_raw."</strong> ".Kohana::lang('ui_admin.match_no_documents')."</h3>";
-                $html .=	"</div>";
+                
+                $html .= "<div class=\"search_result\">";
+                $html .= "<h3>".Kohana::lang('ui_admin.your_search_for')."<strong> ".$keyword_raw."</strong> ".Kohana::lang('ui_admin.match_no_documents')."</h3>";
+                $html .= "</div>";
+                
                 $pagination = "";
             }
             
@@ -183,21 +186,23 @@ class Search_Controller extends Main_Controller {
                 
                 $incident_date = date('D M j Y g:i:s a', strtotime($search->incident_date));
                 
-                $html .=	"<div class=\"search_result\">";
-                $html .=	"<h3><a href=\"" . url::base() . "reports/view/" . $incident_id . "\">" . $highlight_title . "</a></h3>";
-                $html .=	$highlight_description . " ...";
-                $html .=	"<div class=\"search_date\">" . $incident_date . " | ".Kohana::lang('ui_admin.relevance').": <strong>+" . $search->relevance . "</strong></div>";
-                $html .=	"</div>";
+                $html .= "<div class=\"search_result\">";
+                $html .= "<h3><a href=\"" . url::base() . "reports/view/" . $incident_id . "\">" . $highlight_title . "</a></h3>";
+                $html .= $highlight_description . " ...";
+                $html .= "<div class=\"search_date\">" . $incident_date . " | ".Kohana::lang('ui_admin.relevance').": <strong>+" . $search->relevance . "</strong></div>";
+                $html .= "</div>";
             }
         }
         else
         {
             // Results Bar
             $search_info .= "<div class=\"search_info\">0 ".Kohana::lang('ui_admin.results')."</div>";
-            $html .=	"<div class=\"search_result\">";
-            $html .= 	"<h3>".Kohana::lang('ui_admin.your_search_for')."<strong>".$keyword_raw."</strong> ".Kohana::lang('ui_admin.match_no_documents')."</h3>";
-            $html .=	"</div>";
+            
+            $html .= "<div class=\"search_result\">";
+            $html .= "<h3>".Kohana::lang('ui_admin.your_search_for')."<strong>".$keyword_raw."</strong> ".Kohana::lang('ui_admin.match_no_documents')."</h3>";
+            $html .= "</div>";
         }
+        
         $html .= $pagination;
         
         $this->template->content->search_info = $search_info;
