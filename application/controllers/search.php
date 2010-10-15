@@ -15,16 +15,16 @@
 
 class Search_Controller extends Main_Controller {
 	
-	function __construct()
+    function __construct()
     {
-        parent::__construct();	
+        parent::__construct();
     }
 	
 	
-	/**
+    /**
   	 * Build a search query with relevancy
-	 * Stop word control included
-  	 */
+     * Stop word control included
+     */
     public function index($page = 1) 
     {
         $this->template->content = new View('search');
@@ -46,50 +46,55 @@ class Search_Controller extends Main_Controller {
         
         if ($_GET)
         {
-            if (isset($_GET['k']))
-            {
-                $keyword_raw = $_GET['k'];
-            }
-            else
-            {
-                $keyword_raw = "";
-            }
+            // Sterilize the search string
+            $keyword_raw = $this->input->xss_clean($_GET['k']);
+            
+            // Strip the search string of any HTML and PHP tags for additional safety            
+            /**
+              * NOTE: This is a necessary redundacy for now but Kohana's XSS cleaning mechanism
+              * may have to be modified or optionally, bundle the HTMLPurifier library into the platform
+              */
+            $keyword_raw = strip_tags($keyword_raw);
+            
         }
         else
         {
             $keyword_raw = "";
         }
-        
+                
         $keywords = explode(' ', $keyword_raw);
         if (is_array($keywords) && !empty($keywords)) 
         {
-		    array_change_key_case($keywords, CASE_LOWER);
-		    $i = 0;
-		    foreach($keywords as $value)
-		    {
-		        if ( ! in_array($value,$stop_words) && !empty($value))
-		        {
-		            $chunk = mysql_real_escape_string($value);
-		            if ($i > 0) 
-		            {
-		                $plus = ' + ';
-		                $or = ' OR ';
-		            }
-		            // Give relevancy weighting
-		            // Title weight = 2
-		            // Description weight = 1
-		            $keyword_string = $keyword_string.$plus."(CASE WHEN incident_title LIKE '%$chunk%' THEN 2 ELSE 0 END) + (CASE WHEN incident_description LIKE '%$chunk%' THEN 1 ELSE 0 END)";
-		            $where_string = $where_string.$or."incident_title LIKE '%$chunk%' OR incident_description LIKE '%$chunk%'";
-		            $i++;
-		        }
-		    }
-			
-			if (!empty($keyword_string) && !empty($where_string))
-			{
-			    // Limit the result set to only those reports that have been approved	
-			    $where_string .= ' AND incident_active = 1';
-			    $search_query = "SELECT *, (".$keyword_string.") AS relevance FROM ".$this->table_prefix."incident WHERE (".$where_string.") ORDER BY relevance DESC LIMIT ";
-			}
+            array_change_key_case($keywords, CASE_LOWER);
+            $i = 0;
+            
+            foreach($keywords as $value)
+            {
+                if ( ! in_array($value,$stop_words) && !empty($value))
+                {
+                    $chunk = mysql_real_escape_string($value);
+                    
+                    if ($i > 0)
+                    {
+                        $plus = ' + ';
+                        $or = ' OR ';
+                    }
+                    
+                    // Give relevancy weighting
+                    // Title weight = 2
+                    // Description weight = 1
+                    $keyword_string = $keyword_string.$plus."(CASE WHEN incident_title LIKE '%$chunk%' THEN 2 ELSE 0 END) + (CASE WHEN incident_description LIKE '%$chunk%' THEN 1 ELSE 0 END)";
+                    $where_string = $where_string.$or."incident_title LIKE '%$chunk%' OR incident_description LIKE '%$chunk%'";
+                    $i++;
+                }
+            }
+            
+            if (!empty($keyword_string) && !empty($where_string))
+            {
+                // Limit the result set to only those reports that have been approved	
+                $where_string .= ' AND incident_active = 1';
+                $search_query = "SELECT *, (".$keyword_string.") AS relevance FROM ".$this->table_prefix."incident WHERE (".$where_string.") ORDER BY relevance DESC LIMIT ";
+            }
         }
         
         if (!empty($search_query))
@@ -168,9 +173,9 @@ class Search_Controller extends Main_Controller {
                 
                 $html .=	"<div class=\"search_result\">";
                 $html .=	"<h3><a href=\"" . url::base() . "reports/view/" . $incident_id . "\">" . $highlight_title . "</a></h3>";
-	            $html .=	$highlight_description . " ...";
-	            $html .=	"<div class=\"search_date\">" . $incident_date . " | ".Kohana::lang('ui_admin.relevance').": <strong>+" . $search->relevance . "</strong></div>";
-				$html .=	"</div>";
+                $html .=	$highlight_description . " ...";
+                $html .=	"<div class=\"search_date\">" . $incident_date . " | ".Kohana::lang('ui_admin.relevance').": <strong>+" . $search->relevance . "</strong></div>";
+                $html .=	"</div>";
             }
         }
         else
