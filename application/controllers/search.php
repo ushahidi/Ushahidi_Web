@@ -46,15 +46,27 @@ class Search_Controller extends Main_Controller {
         
         if ($_GET)
         {
-            // Sterilize the search string
-            $keyword_raw = $this->input->xss_clean($_GET['k']);
-            
-            // Strip the search string of any HTML and PHP tags for additional safety            
             /**
-              * NOTE: This is a necessary redundacy for now but Kohana's XSS cleaning mechanism
-              * may have to be modified or optionally, bundle the HTMLPurifier library into the platform
+              * NOTES: 15/10/2010 - Emmanuel Kala <emmanuel@ushahidi.com>
+              *
+              * The search string undergoes a 3-phase sanitization process. This is not optimal
+              * but it works for now. The Kohana provided XSS cleaning mechanism does not expel
+              * content contained in between HTML tags this the "bruteforce" input sanitization.
+              *
+              * However, XSS is attempted using Javascript tags, Kohana's routing mechanism strips
+              * the "<script>" tags from the URL variables and passes inline text as part of the URL
+              * variable - This has to be fixed
               */
+              
+            // Phase 1 - Fetch the search string and perform initial sanitization
+            $keyword_raw = preg_replace('/[^\w+]\w*/', '', $_GET['k']);
+            
+            // Phase 2 - Strip the search string of any HTML and PHP tags that may be present for additional safety              
             $keyword_raw = strip_tags($keyword_raw);
+            
+            // Phase 3 - Apply Kohana's XSS cleaning mechanism
+            $keyword_raw = $this->input->xss_clean($keyword_raw);
+                        
             
         }
         else
