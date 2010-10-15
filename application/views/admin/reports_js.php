@@ -51,4 +51,8 @@
 			}
 		}
 		
+		function showLog(id)
+		{
+			$('#' + id).toggle(400);
+		}
 

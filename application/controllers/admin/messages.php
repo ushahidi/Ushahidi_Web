@@ -265,7 +265,7 @@ class Messages_Controller extends Admin_Controller
 				if ($reply_to->loaded == true) {
 					// Yes! Replyto Exists
 					// This is the message we're replying to
-					$sms_to = $reply_to->message_from;
+					$sms_to = intval($reply_to->message_from);
 
 					// Load Users Settings
 					$settings = new Settings_Model(1);

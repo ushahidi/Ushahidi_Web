@@ -152,6 +152,18 @@
 									// Incident Status
 									$incident_approved = $incident->incident_active;
 									$incident_verified = $incident->incident_verified;
+									
+									// Get Edit Log
+									$edit_count = $incident->verify->count();
+									$edit_css = ($edit_count == 0) ? "post-edit-log-red" : "post-edit-log-gray";
+									$edit_log  = "<div class=\"".$edit_css."\">";
+									$edit_log .= "<a href=\"javascript:showLog('edit_log_".$incident_id."')\">".Kohana::lang('ui_admin.edit_log').":</a> (".$edit_count.")</div>";
+									$edit_log .= "<div id=\"edit_log_".$incident_id."\" class=\"post-edit-log\"><ul>";
+									foreach ($incident->verify as $verify)
+									{
+										$edit_log .= "<li>".Kohana::lang('ui_admin.edited_by')." ".$verify->user->name." : ".$verify->verified_date."</li>";
+									}
+									$edit_log .= "</ul></div>";
 
 									// Get Any Translations
 									$i = 1;
@@ -181,6 +193,8 @@
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.categories');?>:<?php echo $incident_category; ?></li>
 											</ul>
 											<?php
+											echo $edit_log;
+											
 											// Action::report_extra_admin - Add items to the report list in admin
 											Event::run('ushahidi_action.report_extra_admin', $incident);
 											?>
