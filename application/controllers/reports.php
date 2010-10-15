@@ -42,17 +42,28 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
-		
+
 		$db = new Database;
-		
+
+		// Validate variables being passed via the query string
+
+		$get = Validation::factory( $_GET );
+		$get->pre_filter('trim', TRUE);
+		$get->add_rules('c','digit');
+
+		if( ! $get->validate() ){
+			// This variable is poison because it isn't a number. Unset it so the page loads with default categories
+			unset($_GET['c']);
+		}
+
 		$filter = ( isset($_GET['c']) && !empty($_GET['c']) && $_GET['c']!=0 )
-			? " AND ( c.id='".$_GET['c']."' OR 
+			? " AND ( c.id='".$_GET['c']."' OR
 				c.parent_id='".$_GET['c']."' )  "
 			: " AND 1 = 1";
 
-		if ( isset($_GET['sw']) && !empty($_GET['sw']) && 
+		if ( isset($_GET['sw']) && !empty($_GET['sw']) &&
 				count($southwest = explode(",",$_GET['sw'])) > 1 &&
-			isset($_GET['ne']) && !empty($_GET['ne']) && 
+			isset($_GET['ne']) && !empty($_GET['ne']) &&
 				count($northeast = explode(",",$_GET['ne'])) > 1
 			)
  		{
@@ -64,7 +75,7 @@ class Reports_Controller extends Main_Controller {
 			$filter .= " AND l.longitude >=".$longitude_min.
 				" AND l.longitude <=".$longitude_max;
 		}
-		
+
 		// Pagination
 		$pagination = new Pagination(array(
 				'query_string' => 'page',
@@ -73,7 +84,7 @@ class Reports_Controller extends Main_Controller {
 				));
 
 		$incidents = $db->query("SELECT DISTINCT i.*, l.`location_name` FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) JOIN `".$this->table_prefix."location` AS l ON (i.`location_id` = l.`id`) WHERE `incident_active` = '1' $filter ORDER BY incident_date DESC LIMIT ". (int) Kohana::config('settings.items_per_page') . " OFFSET ".$pagination->sql_offset);
-			
+
 		$this->template->content->incidents = $incidents;
 
 		//Set default as not showing pagination. Will change below if necessary.
@@ -175,7 +186,7 @@ class Reports_Controller extends Main_Controller {
 		{
 			url::redirect(url::site().'main');
 		}
-		
+
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit');
 
@@ -342,7 +353,7 @@ class Reports_Controller extends Main_Controller {
 				$incident_time = $post->incident_hour
 					.":".$post->incident_minute
 					.":00 ".$post->incident_ampm;
-				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );				
+				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
 				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				$incident->save();
 
@@ -798,7 +809,7 @@ class Reports_Controller extends Main_Controller {
 
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
-		
+
 		// Are we allowed to submit comments?
 		$this->template->content->comments_form = "";
 		if (Kohana::config('settings.allow_comments'))
@@ -910,7 +921,7 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 	}
-	
+
 	public function geocode()
 	{
 		$this->template = "";
@@ -920,7 +931,7 @@ class Reports_Controller extends Main_Controller {
 			$geocode = map::geocode($_POST['address']);
 			if ($geocode)
 			{
-				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon']))); 
+				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon'])));
 			}
 			else
 			{
