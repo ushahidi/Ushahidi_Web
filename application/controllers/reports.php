@@ -21,7 +21,7 @@ class Reports_Controller extends Main_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->themes->validator_enabled = TRUE;
 
 		// Is the Admin Logged In?
@@ -41,6 +41,17 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content = new View('reports');
 
 		$db = new Database;
+
+		// Validate variables being passed via the query string
+
+		$get = Validation::factory( $_GET );
+		$get->pre_filter('trim', TRUE);
+		$get->add_rules('c','digit');
+
+		if( ! $get->validate() ){
+			// This variable is poison because it isn't a number. Unset it so the page loads with default categories
+			unset($_GET['c']);
+		}
 
 		// Get incident_ids if we are to filter by category
 
@@ -140,7 +151,7 @@ class Reports_Controller extends Main_Controller {
 		}
 
         //check if location_in is not empty
-        if( count($location_in ) > 0 ) 
+        if( count($location_in ) > 0 )
         {
 		    // Get location names
 		    $query = 'SELECT id, location_name FROM '.$this->table_prefix.'location WHERE id IN ('.implode(',',$location_in).')';
@@ -245,7 +256,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->report_stats->total_reports = $total_reports;
 		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
 		$this->template->content->report_stats->percent_verified = $percent_verified;
-		
+
 		$this->template->header->header_block = $this->themes->header_block();
 	}
 
@@ -500,8 +511,8 @@ class Reports_Controller extends Main_Controller {
 					$photo->save();
 					$i++;
 				}
-				
-				
+
+
 				// STEP 7: SAVE CUSTOM FORM FIELDS
 				if (isset($post->custom_field))
 				{
@@ -594,7 +605,7 @@ class Reports_Controller extends Main_Controller {
 			$this->themes->js->latitude = $form['latitude'];
 			$this->themes->js->longitude = $form['longitude'];
 		}
-		
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
@@ -917,7 +928,7 @@ class Reports_Controller extends Main_Controller {
 
 		// If the Admin is Logged in - Allow for an edit link
 		$this->template->content->logged_in = $this->logged_in;
-		
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
@@ -929,7 +940,7 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit_thanks');
-		
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
@@ -1020,7 +1031,7 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 	}
-	
+
 	public function geocode()
 	{
 		$this->template = "";
@@ -1030,7 +1041,7 @@ class Reports_Controller extends Main_Controller {
 			$geocode = map::geocode($_POST['address']);
 			if ($geocode)
 			{
-				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon']))); 
+				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon'])));
 			}
 			else
 			{
