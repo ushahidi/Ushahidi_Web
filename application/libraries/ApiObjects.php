@@ -27,6 +27,11 @@ include Kohana::find_file('libraries/api', 'ApiPrivateFunc');
 include Kohana::find_file('libraries/api', 'PostReport');
 include Kohana::find_file('libraries/api', 'PostTagMedia');
 include Kohana::find_file('libraries/api', 'AdminCategory');
+include Kohana::find_file('libraries/api', 'AdminComment');
+include Kohana::find_file('libraries/api', 'AdminEmail');
+include Kohana::find_file('libraries/api', 'AdminReports');
+include Kohana::find_file('libraries/api', 'AdminSms');
+include Kohana::find_file('libraries/api', 'AdminTwitter');
 
 //include a new class here just like its done above
 
@@ -44,6 +49,12 @@ class ApiObjects_Core
     public $tag_media;
     public $private_func;
     public $get_system;
+    public $admin_categories;
+    public $admin_comment;
+    public $admin_email;
+    public $admin_reports;
+    public $admin_sms;
+    public $admin_twitter;
 
     //define a new variable to create an object for the new class
 
@@ -62,6 +73,11 @@ class ApiObjects_Core
         $this->private_func = new ApiPrivateFunc;
         $this->get_system = new GetSystem;
         $this->admin_categories = new AdminCategory;
+        $this->admin_comment = new AdminComment;
+        $this->admin_twitter = new AdminTwitter;
+        $this->admin_sms = new AdminSms;
+        $this->admin_email = new AdminEmail;
+        $this->admin_reports = new AdminReports;
         $this->kml = new GetKml;
 
         //create a new object

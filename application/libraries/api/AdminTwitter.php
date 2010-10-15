@@ -52,7 +52,7 @@ class AdminTwitter
      */
     public function _list_all_twitter_msgs($response_type)
     {
-        $this-items = ORM::factory('message')
+        $this->items = ORM::factory('message')
 			->where('service_id', '3')
 			->where('message_type','1')
 			->orderby('message_date','desc')

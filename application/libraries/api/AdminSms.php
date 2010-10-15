@@ -19,7 +19,7 @@ require_once('ApiActions.php');
 
 class AdminSms
 {
-     private $data;
+    private $data;
     private $items;
     private $table_prefix;
     private $api_actions;
@@ -54,7 +54,7 @@ class AdminSms
     public function _list_all_sms_msgs($response_type)
     {
         
-        $this-items = ORM::factory('message')
+        $this->items = ORM::factory('message')
 			->where('service_id', '1')
 			->where('message_type','1')
 			->orderby('message_date','desc')

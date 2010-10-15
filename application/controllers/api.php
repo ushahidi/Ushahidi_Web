@@ -233,7 +233,102 @@ class Api_Controller extends Controller
                 }
                 
                 break;
+
+            //admin comments actions
+            case "comments":
+                $by = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'by'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'by')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $by = $this->request['by'];
+                }
+
+                switch($by)
+                {
+                    case "all":
+
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_get_all_comments($this->response_type);
+                        break;
+                    case "spam":
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_get_spam_comments($this->response_type);
+                        break;
+                    case "approved":
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_get_pending_comments($this->response_type);
+                        break;
+                    case "pending":
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_get_pending_comments($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002));
+                    break;
+
+                }
+                break;
+            
+            case "admincomment":
+                $action = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'action'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'action')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $by = $this->request['action'];
+                }
                 
+                switch($by)
+                {
+                    case "a": // approve comments
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_approve_comment($this->response_type);
+                        break;
+
+                    case "u": // unapprove comments
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_approve_comment($this->response_type);
+                        break;
+
+                    case "d": // delete comments
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_delete_comment($this->response_type);
+                        break;
+
+                    case "s":// mark comment as spam
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_spam_comment($this->response_type);
+                        break;
+
+                    case "n": //umark comment as spam
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_spam_comment($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002)
+                        );
+                    break;
+
+                }
+                break;
+
             // Retrieve api keys
             case "apikeys":
                 $by = '';
