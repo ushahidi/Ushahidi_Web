@@ -45,17 +45,6 @@ class Reports_Controller extends Main_Controller {
 
 		$db = new Database;
 
-		// Validate variables being passed via the query string
-
-		$get = Validation::factory( $_GET );
-		$get->pre_filter('trim', TRUE);
-		$get->add_rules('c','digit');
-
-		if( ! $get->validate() ){
-			// This variable is poison because it isn't a number. Unset it so the page loads with default categories
-			unset($_GET['c']);
-		}
-
 		$category_id = ( isset($_GET['c']) AND ! empty($_GET['c']) ) ?
 			(int) $_GET['c'] : 0;
 			
