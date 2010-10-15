@@ -56,10 +56,11 @@ class Reports_Controller extends Main_Controller {
 			unset($_GET['c']);
 		}
 
-		$filter = ( isset($_GET['c']) && !empty($_GET['c']) && $_GET['c']!=0 )
-			? " AND ( c.id='".$_GET['c']."' OR
-				c.parent_id='".$_GET['c']."' )  "
-			: " AND 1 = 1";
+		$category_id = ( isset($_GET['c']) AND ! empty($_GET['c']) ) ?
+			(int) $_GET['c'] : 0;
+			
+		$filter = ( $category_id ) ? " AND ( c.id=".$category_id." OR
+				c.parent_id=".$category_id." )  " : " AND 1 = 1";
 
 		if ( isset($_GET['sw']) && !empty($_GET['sw']) &&
 				count($southwest = explode(",",$_GET['sw'])) > 1 &&
@@ -70,10 +71,10 @@ class Reports_Controller extends Main_Controller {
 			list($longitude_min, $latitude_min) = $southwest;
 			list($longitude_max, $latitude_max) = $northeast;
 
-			$filter .= " AND l.latitude >=".$latitude_min.
-				" AND l.latitude <=".$latitude_max;
-			$filter .= " AND l.longitude >=".$longitude_min.
-				" AND l.longitude <=".$longitude_max;
+			$filter .= " AND l.latitude >=".(float) $latitude_min.
+				" AND l.latitude <=".(float) $latitude_max;
+			$filter .= " AND l.longitude >=".(float) $longitude_min.
+				" AND l.longitude <=".(float) $longitude_max;
 		}
 
 		// Pagination

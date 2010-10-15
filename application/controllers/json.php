@@ -53,16 +53,8 @@ class Json_Controller extends Template_Controller
 		$neighboring = "";
 		$media_type = "";
 		
-		if (isset($_GET['c']) && !empty($_GET['c']))
-		{
-			$category_id = $_GET['c'];
-			if (!is_numeric($category_id)) {
-				$category_id = $markers = ORM::factory('category')
-				                                ->select('id')
-				                                ->where('category_title = "'. $category_id . '"')
-				                                ->find()->id;
-			}
-		}
+		$category_id = ( isset($_GET['c']) AND ! empty($_GET['c']) ) ?
+			(int) $_GET['c'] : 0;
 		
 		if (isset($_GET['i']) && !empty($_GET['i']))
 		{
