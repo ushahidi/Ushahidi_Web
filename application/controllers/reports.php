@@ -47,7 +47,7 @@ class Reports_Controller extends Main_Controller {
 		$allowed_ids = array();
 		if (isset($_GET['c']) AND !empty($_GET['c']) AND $_GET['c']!=0)
 		{
-			$category_id = mysql_escape_string($_GET['c']);
+			$category_id = (int) $_GET['c'];
 			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
 			$query = $db->query($query);
 
@@ -76,10 +76,10 @@ class Reports_Controller extends Main_Controller {
 		$location_ids = array();
 		if ( count($southwest) == 2 AND count($northeast) == 2 )
 		{
-			$lon_min = $southwest[0];
-			$lon_max = $northeast[0];
-			$lat_min = $southwest[1];
-			$lat_max = $northeast[1];
+			$lon_min = (float) $southwest[0];
+			$lon_max = (float) $northeast[0];
+			$lat_min = (float) $southwest[1];
+			$lat_max = (float) $northeast[1];
 
 			$query = 'SELECT id FROM '.$this->table_prefix.'location WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
 			$query = $db->query($query);
@@ -1016,7 +1016,7 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 	}
-	
+
 	public function geocode()
 	{
 		$this->template = "";
@@ -1026,7 +1026,7 @@ class Reports_Controller extends Main_Controller {
 			$geocode = map::geocode($_POST['address']);
 			if ($geocode)
 			{
-				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon']))); 
+				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon'])));
 			}
 			else
 			{

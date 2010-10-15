@@ -52,19 +52,11 @@ class Json_Controller extends Template_Controller
 		$incident_id = "";
 		$neighboring = "";
 		$media_type = "";
-
-		if (isset($_GET['c']) AND !empty($_GET['c']))
-		{
-			$category_id = $_GET['c'];
-			if (!is_numeric($category_id)) {
-				$category_id = $markers = ORM::factory('category')
-												->select('id')
-												->where('category_title = "'. $category_id . '"')
-												->find()->id;
-			}
-		}
-
-		if (isset($_GET['i']) AND !empty($_GET['i']))
+		
+		$category_id = ( isset($_GET['c']) AND ! empty($_GET['c']) ) ?
+			(int) $_GET['c'] : 0;
+		
+		if (isset($_GET['i']) && !empty($_GET['i']))
 		{
 			$incident_id = $_GET['i'];
 		}
@@ -124,12 +116,10 @@ class Json_Controller extends Template_Controller
 				->join('incident_category', 'incident.id', 'incident_category.incident_id','LEFT')
 				->join('media', 'incident.id', 'media.incident_id','LEFT')
 				->where('incident.incident_active = 1 AND ('.$this->table_prefix.'incident_category.category_id = ' . $category_id . ' ' . $where_child . ')' . $where_text)
-				->find_all();
-
-
-		}
-		else
-		{
+				->find_all(); 
+        }
+        else
+        {
 			// Retrieve all markers
 			$markers = ORM::factory('incident')
 				->select('DISTINCT incident.*')
@@ -203,24 +193,24 @@ class Json_Controller extends Template_Controller
 		$icon = "";
 
 		// Get Zoom Level
-		$zoomLevel = (isset($_GET['z']) AND !empty($_GET['z'])) ?
-			$_GET['z'] : 8;
+		$zoomLevel = (isset($_GET['z']) && !empty($_GET['z'])) ?
+			(int) $_GET['z'] : 8;
 
 		//$distance = 60;
 		$distance = (10000000 >> $zoomLevel) / 100000;
 
 		// Category ID
-		$category_id = (isset($_GET['c']) AND !empty($_GET['c']) &&
-			is_numeric($_GET['c']) AND $_GET['c'] != 0) ?
-			$_GET['c'] : 0;
+		$category_id = (isset($_GET['c']) && !empty($_GET['c']) && 
+			is_numeric($_GET['c']) && $_GET['c'] != 0) ?
+			(int) $_GET['c'] : 0;
 
 		// Start Date
-		$start_date = (isset($_GET['s']) AND !empty($_GET['s'])) ?
-			$_GET['s'] : "0";
+		$start_date = (isset($_GET['s']) && !empty($_GET['s'])) ?
+			(int) $_GET['s'] : "0";
 
 		// End Date
-		$end_date = (isset($_GET['e']) AND !empty($_GET['e'])) ?
-			$_GET['e'] : "0";
+		$end_date = (isset($_GET['e']) && !empty($_GET['e'])) ?
+			(int) $_GET['e'] : "0";
 
 		// SouthWest Bound
 		$southwest = (isset($_GET['sw']) AND !empty($_GET['sw'])) ?
@@ -240,15 +230,15 @@ class Json_Controller extends Template_Controller
 			list($latitude_min, $longitude_min) = explode(',', $southwest);
 			list($latitude_max, $longitude_max) = explode(',', $northeast);
 
-			$filter .= " AND l.latitude >=".$latitude_min.
-				" AND l.latitude <=".$latitude_max;
-			$filter .= " AND l.longitude >=".$longitude_min.
-				" AND l.longitude <=".$longitude_max;
+			$filter .= " AND l.latitude >=".(float) $latitude_min.
+				" AND l.latitude <=".(float) $latitude_max;
+			$filter .= " AND l.longitude >=".(float) $longitude_min.
+				" AND l.longitude <=".(float) $longitude_max;
 		}
 
 		if ($category_id > 0)
 		{
-			$query_cat = $db->query("SELECT `category_color`, `category_image` FROM `".$this->table_prefix."category` WHERE id=$category_id");
+			$query_cat = $db->query("SELECT `category_color`, `category_image` FROM `".$this->table_prefix."category` WHERE id = ?", array($category_id) );
 			foreach ($query_cat as $cat)
 			{
 				$color = $cat->category_color;
@@ -507,6 +497,8 @@ class Json_Controller extends Template_Controller
 	 */
 	public function timeline( $category_id = 0 )
 	{
+		$category_id = (int) $category_id;
+		
 		//$profiler = new Profiler;
 
 		$this->auto_render = FALSE;
@@ -666,11 +658,11 @@ class Json_Controller extends Template_Controller
 				
 				// Start Date
 				$start_date = (isset($_GET['s']) && !empty($_GET['s'])) ?
-					$_GET['s'] : "0";
+					(int) $_GET['s'] : "0";
 
 				// End Date
 				$end_date = (isset($_GET['e']) && !empty($_GET['e'])) ?
-					$_GET['e'] : "0";
+					(int) $_GET['e'] : "0";
 
 				// SouthWest Bound
 				$southwest = (isset($_GET['sw']) && !empty($_GET['sw'])) ?
@@ -681,7 +673,7 @@ class Json_Controller extends Template_Controller
 				
 				// Get Zoom Level
 				$zoomLevel = (isset($_GET['z']) && !empty($_GET['z'])) ?
-					$_GET['z'] : 8;
+					(int) $_GET['z'] : 8;
 
 				//$distance = 60;
 				$distance = (10000000 >> $zoomLevel) / 100000;
@@ -697,10 +689,10 @@ class Json_Controller extends Template_Controller
 					list($latitude_min, $longitude_min) = explode(',', $southwest);
 					list($latitude_max, $longitude_max) = explode(',', $northeast);
 
-					$filter .= " AND latitude >=".$latitude_min.
-						" AND latitude <=".$latitude_max;
-					$filter .= " AND longitude >=".$longitude_min.
-						" AND longitude <=".$longitude_max;
+					$filter .= " AND latitude >=".(float) $latitude_min.
+						" AND latitude <=".(float) $latitude_max;
+					$filter .= " AND longitude >=".(float) $longitude_min.
+						" AND longitude <=".(float) $longitude_max;
 				}
 				
 				$query = $db->query("SELECT * FROM `".$this->table_prefix."sharing_incident` WHERE 1=1 $filter ORDER BY incident_id ASC ");	
