@@ -4,13 +4,11 @@
 		'email' => 'The email field does not appear to contain a valid email address?',
 		'exists' => 'Sorry, a user account already exists for this email address.',
 		'length' => 'The email field must be at least 4 and no more 64 characters long.',
-		'login error' => 'Please check that you entered the correct email address.',
 		'required' => 'The email field is required.',
 	),
 	'forgot_password' => '',
 	'name' => array(
 		'length' => 'The full name field must be at least 3 and no more 100 characters long.',
-		'login error' => 'Please check that you entered the correct name.',
 		'required' => 'The full name field is required.',
 		'standard_text' => 'The username field contains disallowed characters.',
 	),

@@ -4,7 +4,6 @@
 		'email' => 'The Email field does not appear to contain a valid email address?',
 		'email_check' => 'That Email address has already been registered to receive alerts for that location',
 		'length' => 'The Email field must be at least 4 and no more 64 characters long.',
-		'one required' => '',
 		'one_required' => '',
 		'required' => 'The Email field is required if the checkbox is checked.',
 	),
