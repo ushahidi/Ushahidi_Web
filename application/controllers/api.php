@@ -485,7 +485,45 @@ class Api_Controller extends Controller
                 
                 break;
             case "reportaction";
+                $action = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'action'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'action')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $action = $this->request['action'];
+                }
                 
+                switch($action)
+                {
+                   
+                    case "d": // delete report
+                        $this->ret = $this->api_objects->admin_report
+                            ->_delete_report($this->response_type);
+                        break;
+                    case "a": // approve report
+                        $this->ret = $this->api_objects->admin_report
+                            ->_approve_report($this->response_type);
+                        break;
+
+                    case "v": // verify report
+                        $this->ret = $this->api_objects->admin_report
+                            ->_verify_report($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002)
+                        );
+                    break;
+
+                }
+
                 break;
             // Retrieve api keys
             case "apikeys":
