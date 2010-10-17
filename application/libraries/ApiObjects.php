@@ -77,7 +77,7 @@ class ApiObjects_Core
         $this->admin_twitter = new AdminTwitter;
         $this->admin_sms = new AdminSms;
         $this->admin_email = new AdminEmail;
-        $this->admin_reports = new AdminReports;
+        $this->admin_report = new AdminReports;
         $this->kml = new GetKml;
 
         //create a new object

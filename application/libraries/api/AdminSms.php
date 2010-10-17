@@ -29,6 +29,7 @@ class AdminSms
     private $ret_value;
     private $replar;
     private $list_limit;
+    private $error_messages;
 
     public function __construct()
     {
@@ -39,6 +40,7 @@ class AdminSms
         $this->replar = array();
         $this->ret_json_or_xml = '';
         $this->response_type = '';
+        $this->error_messages = '';
         $this->ret_value = 0;
         $this->domain = $this->api_actions->_get_domain();
         $this->list_limit = $this->api_actions->_get_list_limit();
@@ -51,7 +53,7 @@ class AdminSms
      *
      * @return array
      */
-    public function _list_all_sms_msgs($response_type)
+    public function _list_sms_msgs($response_type)
     {
         
         $this->items = ORM::factory('message')
@@ -101,7 +103,7 @@ class AdminSms
      *
      * @param string response_type - The response to return.XML or JSON.
      */
-    public function _del_sms_msg($response_type)
+    public function _delete_sms_msg($response_type)
     {
          if($_POST)
         {

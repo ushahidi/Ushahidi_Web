@@ -28,6 +28,7 @@ class AdminTwitter
     private $api_prvt_func;
     private $ret_value;
     private $list_limit;
+    private $error_messages;
 
     public function __construct()
     {
@@ -37,6 +38,7 @@ class AdminTwitter
         $this->items = array();
         $this->ret_json_or_xml = '';
         $this->response_type = '';
+        $this->error_messages = '';
         $this->ret_value = 0;
         $this->domain = $this->api_actions->_get_domain();
         $this->list_limit = $this->api_actions->_get_list_limit();
@@ -50,7 +52,7 @@ class AdminTwitter
      *
      * @return array
      */
-    public function _list_all_twitter_msgs($response_type)
+    public function _list_twitter_msgs($response_type)
     {
         $this->items = ORM::factory('message')
 			->where('service_id', '3')
@@ -103,7 +105,7 @@ class AdminTwitter
      *
      * @return Array
      */
-    public function _del_twitter_msg($response_type)
+    public function _delete_twitter_msg($response_type)
     {
         if($_POST)
         {
@@ -147,7 +149,7 @@ class AdminTwitter
         }
         
         return $this->api_actions->_response($this->ret_value,
-                $response_type);
+                $response_type,$this->error_messages);
 
     }
 

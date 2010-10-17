@@ -28,6 +28,7 @@ class AdminReports
     private $api_prvt_func;
     private $ret_value;
     private $list_limit;
+    private $error_messages;
 
     public function __construct()
     {
@@ -37,6 +38,7 @@ class AdminReports
         $this->items = array();
         $this->ret_json_or_xml = '';
         $this->response_type = '';
+        $this->error_messages = '';
         $this->ret_value = 0;
         $this->domain = $this->api_actions->_get_domain();
         $this->list_limit = $this->api_actions->_get_list_limit();
@@ -253,13 +255,20 @@ class AdminReports
      */
     public function _list_unapproved_reports($response_type)
     {
-        $where = "\nWHERE i.incident_active = 1 ";
+        if($_POST)
+        {
+            $where = "\nWHERE i.incident_active = 1 ";
         
-        $where .= "ORDER BY i.id DESC ";
+            $where .= "ORDER BY i.id DESC ";
 
-        $limit = "\nLIMIT 0, $this->list_limit";
+            $limit = "\nLIMIT 0, $this->list_limit";
 
-        return $this->_get_reports($where,$limit,$response_type);
+            return $this->_get_reports($where,$limit,$response_type);
+        }
+        else
+        {
+            return $this->api_actions->_response(3,$response_type);
+        }
     }
 
     /**
@@ -269,11 +278,70 @@ class AdminReports
      */
     public function _list_approved_reports()
     {
-        $where = "\nWHERE i.incident_active = 0 ";
+        if($_POST)
+        {
+            $where = "\nWHERE i.incident_active = 0 ";
         
-        $where .= "ORDER BY i.id DESC ";
+            $where .= "ORDER BY i.id DESC ";
 
-        $limit = "\nLIMIT 0, $this->list_limit";
+            $limit = "\nLIMIT 0, $this->list_limit";
+        
+            return $this->_get_reports($where,$limit,$response_type);
+        }
+        else
+        {
+            return $this->api_actions->_response(3,$response_type);
+        }
+
+    }
+
+    /**
+     * List first 15 approved reports
+     *
+     * @return array
+     */
+    public function _list_verified_reports()
+    {
+        if($_POST)
+        {
+            $where = "\nWHERE i.incident_verified = 1 ";
+        
+            $where .= "ORDER BY i.id DESC ";
+
+            $limit = "\nLIMIT 0, $this->list_limit";
+
+            return $this->_get_reports($where,$limit,$response_type);
+        } 
+        else 
+        {
+             return $this->api_actions->_response(3,$response_type);
+        }
+
+       
+    }
+    
+    /**
+     * List first 15 approved reports
+     *
+     * @return array
+     */
+    public function _list_unverified_reports()
+    {
+        if($_POST)
+        {
+            $where = "\nWHERE i.incident_verified = 0 ";
+        
+            $where .= "ORDER BY i.id DESC ";
+
+            $limit = "\nLIMIT 0, $this->list_limit";
+
+            return $this->_get_reports($where,$limit,$response_type);
+        }
+        else
+        {
+            return $this->api_actions->_response(3,$response_type);
+        }
+
     }
 
     /**
