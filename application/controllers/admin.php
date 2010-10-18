@@ -92,6 +92,8 @@ class Admin_Controller extends Template_Controller
 		// Generate sub navigation list (in default layout, sits on right side).
         $this->template->main_right_tabs = admin::main_right_tabs($this->auth);
 
+		$this->template->this_page = "";
+
 		// Load profiler
 		// $profiler = new Profiler;	
     }
