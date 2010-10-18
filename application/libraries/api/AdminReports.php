@@ -29,6 +29,8 @@ class AdminReports
     private $ret_value;
     private $list_limit;
     private $error_messages;
+    private $db;
+    private $json_reports;
 
     public function __construct()
     {
@@ -36,11 +38,13 @@ class AdminReports
         $this->api_prvt_func = new ApiPrivateFunc;
         $this->data = array();
         $this->items = array();
+        $this->json_reports = array();
         $this->ret_json_or_xml = '';
         $this->response_type = '';
         $this->error_messages = '';
         $this->ret_value = 0;
         $this->domain = $this->api_actions->_get_domain();
+        $this->db = $this->api_actions->_get_db();
         $this->list_limit = $this->api_actions->_get_list_limit();
 
     }
@@ -257,34 +261,36 @@ class AdminReports
     {
         if($_POST)
         {
-            $where = "\nWHERE i.incident_active = 1 ";
-        
-            $where .= "ORDER BY i.id DESC ";
-
-            $limit = "\nLIMIT 0, $this->list_limit";
-
-            return $this->_get_reports($where,$limit,$response_type);
-        }
-        else
-        {
-            return $this->api_actions->_response(3,$response_type);
-        }
-    }
-
-    /**
-     * List first 15 approved reports
-     *
-     * @return array
-     */
-    public function _list_approved_reports()
-    {
-        if($_POST)
-        {
             $where = "\nWHERE i.incident_active = 0 ";
         
             $where .= "ORDER BY i.id DESC ";
 
             $limit = "\nLIMIT 0, $this->list_limit";
+
+            return $this->_get_reports($where,$limit,$response_type);
+        }
+        else
+        {
+            return $this->api_actions->_response(3,$response_type);
+        }
+    }
+
+    /**
+     * List first 15 approved reports
+     * 
+     * @param string response_type - The response to return XML OR JSON
+     *
+     * @return array
+     */
+    public function _list_approved_reports($response_type)
+    {
+        if($_POST)
+        {
+            $where = "\nWHERE i.incident_active = 1 ";
+        
+            $where .= "ORDER BY i.id DESC ";
+
+            $limit = "\nLIMIT 0, $this->list_limit";
         
             return $this->_get_reports($where,$limit,$response_type);
         }
@@ -298,9 +304,11 @@ class AdminReports
     /**
      * List first 15 approved reports
      *
+     * @param string response_type - The response to return XML or JSON
+     *
      * @return array
      */
-    public function _list_verified_reports()
+    public function _list_verified_reports($response_type)
     {
         if($_POST)
         {
@@ -323,9 +331,11 @@ class AdminReports
     /**
      * List first 15 approved reports
      *
+     * @param string response_type - The response type to return XML or JSON
+     *
      * @return array
      */
-    public function _list_unverified_reports()
+    public function _list_unverified_reports($response_type)
     {
         if($_POST)
         {
@@ -365,7 +375,7 @@ class AdminReports
      *
      * @param int report_id - the id of the report to be deleted.
      */
-    public function _del_report($respone_type)
+    public function _delete_report($respone_type)
     {
         $form = array
         (
@@ -455,12 +465,19 @@ class AdminReports
      * Approve / unapprove an existing report
      *
      * @param int report_id - the id of the report to be approved.
-     * @param int status - approve or unapprove
      *
      * @return
      */
-    public function _approve_report($status,$response_type)
+    public function _approve_report($response_type)
     {
+        $form = array
+        (
+            'action' => '',
+            'report_id' => '',
+        );
+        
+        $errors = $form;
+
         if ($_POST)
 	    {
 			$post = Validation::factory($_POST);
@@ -471,11 +488,11 @@ class AdminReports
 	        // Add some rules, the input field, followed by a list 
             // of checks, carried out in order
 			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('incident_id.*','required','numeric');
+			$post->add_rules('report_id','required','numeric');
 
 			if ($post->validate())
 	        {
-                $incident_id = $post->incident_id;
+                $incident_id = $post->report_id;
                 $update = new Incident_Model($incident_id);
 
                 if ($update->loaded == true) 
@@ -498,7 +515,7 @@ class AdminReports
     
 					$update->save();
                     $verify = new Verify_Model();
-					$verify->incident_id = $item;
+					$verify->incident_id = $incident_id;
 					$verify->verified_status = '0';
 					$verify->user_id = $_SESSION['auth_user']->id;		
                     // Record 'Verified By' Action
@@ -508,6 +525,7 @@ class AdminReports
                 }
                 else
                 {
+                    
                     //TODO i18nize the string
                     $this->error_messages .= "Report ID is required.";
                     $this->ret_value = 1;
@@ -517,7 +535,7 @@ class AdminReports
             else
             {
                 //TODO i18nize the string
-                $this->error_messages .= "Incident ID is required.";
+                $this->error_messages .= "Report ID is required.";
                 $this->ret_value = 1;
             }
 
@@ -528,17 +546,16 @@ class AdminReports
         }
 
         return $this->api_actions->_response($this->ret_value,
-                $response_type);
+                $response_type,$this->error_messages);
 
     }
     
     /**
      * Verify or unverify an existing report
-     * @param int report_id - the id of the report to be verified / 
-                                unverified.
-     * @param int status - verify / unverify
+     * @param int report_id - the id of the report to be verified 
+     * unverified.
      */
-    public function _verify_report($status,$response_type)
+    public function _verify_report($response_type)
     {
         if ($_POST)
 	    {
@@ -550,11 +567,11 @@ class AdminReports
 	        // Add some rules, the input field, followed by a list of
             //checks, carried out in order
 			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('incident_id.*','required','numeric');
+			$post->add_rules('report_id','required','numeric');
 
 			if ($post->validate())
 	        {
-                $incident_id = $post->incident_id;
+                $incident_id = $post->report_id;
                 $update = new Incident_Model($incident_id);
 
                 if ($update->loaded == true) 

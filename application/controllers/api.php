@@ -332,7 +332,7 @@ class Api_Controller extends Controller
             //admin twitter
             case "twitter":
                  $this->ret = $this->api_objects->admin_twitter
-                 _list_twitter_msgs->($this->response_type);
+                 ->_list_twitter_msgs($this->response_type);
                 break;
             case "twitteraction":
                 $action = '';
@@ -367,7 +367,7 @@ class Api_Controller extends Controller
             //admin email
             case "email":
                  $this->ret = $this->api_objects->admin_twitter
-                 _list_email_msgs->($this->response_type);
+                    ->_list_email_msgs($this->response_type);
                 break;
             case "emailaction":
                 $action = '';
@@ -404,7 +404,7 @@ class Api_Controller extends Controller
             //admin sms
             case "sms":
                  $this->ret = $this->api_objects->admin_twitter
-                 _list_sms_msgs->($this->response_type);
+                    ->_list_sms_msgs($this->response_type);
                 break;
             case "smsaction":
                 $action = '';
@@ -460,7 +460,7 @@ class Api_Controller extends Controller
                         $this->ret = $this->api_objects->admin_report
                             ->_list_approved_reports($this->response_type);
                         break;
-                    case "unproved":
+                    case "unapproved":
                         $this->ret = $this->api_objects->admin_report
                             ->_list_unapproved_reports(
                                     $this->response_type);
@@ -486,10 +486,12 @@ class Api_Controller extends Controller
                 break;
             case "reportaction";
                 $action = '';
-                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'action'))
+                if ( ! $this->api_objects->api_actions
+                        ->_verify_array_index($this->request,'action'))
                 {
                     $this->error = array(
-                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'action')
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(001, 'action')
                         );
                     break;
                 }
@@ -513,6 +515,11 @@ class Api_Controller extends Controller
                     case "v": // verify report
                         $this->ret = $this->api_objects->admin_report
                             ->_verify_report($this->response_type);
+                        break;
+
+                    case "e": // edit existing report
+                        $this->ret = $this->api_objects->admin_report
+                            ->_edit_report($this->response_type);
                         break;
 
                     default:
