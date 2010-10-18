@@ -200,7 +200,8 @@ class Reports_Controller extends Admin_Controller
                     foreach($post->incident_id as $item)
                     {
                         $update = new Incident_Model($item);
-                        if ($update->loaded == true) {
+                        if ($update->loaded == true)
+                        {
                             $incident_id = $update->id;
                             $location_id = $update->location_id;
                             $update->delete();
@@ -421,6 +422,7 @@ class Reports_Controller extends Admin_Controller
         {
             $forms[$custom_forms->id] = $custom_forms->form_title;
         }
+        
         $this->template->content->forms = $forms;
 
         // Retrieve thumbnail photos (if edit);
@@ -474,11 +476,15 @@ class Reports_Controller extends Admin_Controller
                     ->orderby('message_date', 'desc')
                     ->limit(5)
                     ->find_all();
-            }else{
+            }
+            else
+            {
                 $message_id = "";
                 $this->template->content->show_messages = false;
             }
-        }else{
+        }
+        else
+        {
             $this->template->content->show_messages = false;
         }
 
@@ -540,10 +546,12 @@ class Reports_Controller extends Admin_Controller
             $post->add_rules('incident_date','required','date_mmddyyyy');
             $post->add_rules('incident_hour','required','between[1,12]');
             $post->add_rules('incident_minute','required','between[0,59]');
+            
             if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != "pm")
             {
                 $post->add_error('incident_ampm','values');
             }
+            
             $post->add_rules('latitude','required','between[-90,90]');      // Validate for maximum and minimum latitude values
             $post->add_rules('longitude','required','between[-180,180]');   // Validate for maximum and minimum longitude values
             $post->add_rules('location_name','required', 'length[3,200]');
@@ -640,10 +648,11 @@ class Reports_Controller extends Admin_Controller
 
                 $incident_date=explode("/",$post->incident_date);
                 // where the $_POST['date'] is a value posted by form in mm/dd/yyyy format
-                    $incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
+                $incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
 
                 $incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
                 $incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
+                
                 // Is this new or edit?
                 if ($id)    // edit
                 {
@@ -685,15 +694,13 @@ class Reports_Controller extends Admin_Controller
                 $incident->save();
 
                 // Tag this as a report that needs to be sent out as an alert
-                if ($incident->incident_active == '1' AND
-                     $incident->incident_alert_status != '2')
+                if ($incident->incident_active == '1' AND $incident->incident_alert_status != '2')
                 { // 2 = report that has had an alert sent
                     $incident->incident_alert_status = '1';
                     $incident->save();
                 }
                 // Remove alert if report is unactivated and alert hasn't yet been sent
-                if ($incident->incident_active == '0' AND
-                     $incident->incident_alert_status == '1')
+                if ($incident->incident_active == '0' AND $incident->incident_alert_status == '1')
                 {
                     $incident->incident_alert_status = '0';
                     $incident->save();
@@ -704,6 +711,7 @@ class Reports_Controller extends Admin_Controller
                 $verify->incident_id = $incident->id;
                 $verify->user_id = $_SESSION['auth_user']->id;          // Record 'Verified By' Action
                 $verify->verified_date = date("Y-m-d H:i:s",time());
+                
                 if ($post->incident_active == 1)
                 {
                     $verify->verified_status = '1';
@@ -839,9 +847,10 @@ class Reports_Controller extends Admin_Controller
                     foreach($post->custom_field as $key => $value)
                     {
                         $form_response = ORM::factory('form_response')
-                        ->where('form_field_id', $key)
-                        ->where('incident_id', $incident->id)
-                        ->find();
+                                                     ->where('form_field_id', $key)
+                                                     ->where('incident_id', $incident->id)
+                                                     ->find();
+                                                     
                         if ($form_response->loaded == true)
                         {
                             $form_response->form_field_id = $key;
@@ -1026,11 +1035,12 @@ class Reports_Controller extends Admin_Controller
         $this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
         $form = array(
-            'data_point'      => '',
-            'data_include'      => '',
+            'data_point'   => '',
+            'data_include' => '',
             'from_date'    => '',
-            'to_date'    => ''
+            'to_date'      => ''
         );
+        
         $errors = $form;
         $form_error = FALSE;
 
@@ -1107,18 +1117,22 @@ class Reports_Controller extends Admin_Controller
                     if ($item == 1) {
                         $report_csv .= ",LOCATION";
                     }
+                    
                     if ($item == 2) {
                         $report_csv .= ",DESCRIPTION";
                     }
+                    
                     if ($item == 3) {
                         $report_csv .= ",CATEGORY";
-                                        }
-                                        if ($item == 4) {
-                                                $report_csv .= ",LATITUDE";
-                                        }
-                                        if($item == 5) {
-                                                $report_csv .= ",LONGITUDE";
-                                        }
+                    }
+                    
+                    if ($item == 4) {
+                        $report_csv .= ",LATITUDE";
+                    }
+                    
+                    if($item == 5) {
+                        $report_csv .= ",LONGITUDE";
+                    }
                 }
                 $report_csv .= ",APPROVED,VERIFIED";
                 $report_csv .= "\n";
@@ -1131,44 +1145,57 @@ class Reports_Controller extends Admin_Controller
 
                     foreach($post->data_include as $item)
                     {
-                        if ($item == 1) {
-                                                        $report_csv .= ',"'.$this->_csv_text($incident->location->location_name).'"';
-                        }
-                        if ($item == 2) {
-                            $report_csv .= ',"'.$this->_csv_text($incident->incident_description).'"';
-                        }
-                        if ($item == 3) {
-                            $report_csv .= ',"';
-                            foreach($incident->incident_category as $category)
-                            {
-                                if ($category->category->category_title)
+                        switch ($item)
+                        {
+                            case 1:
+                                $report_csv .= ',"'.$this->_csv_text($incident->location->location_name).'"';
+                            break;
+
+                            case 2:
+                                $report_csv .= ',"'.$this->_csv_text($incident->incident_description).'"';
+                            break;
+
+                            case 3:
+                                $report_csv .= ',"';
+                            
+                                foreach($incident->incident_category as $category)
                                 {
-                                    $report_csv .= $this->_csv_text($category->category->category_title) . ", ";
+                                    if ($category->category->category_title)
+                                    {
+                                        $report_csv .= $this->_csv_text($category->category->category_title) . ", ";
+                                    }
                                 }
-                            }
-                            $report_csv .= '"';
-                                                }
-                                                if ($item == 4) {
-                                                        $report_csv .= ',"'.$this->_csv_text($incident->location->latitude).'"';
-                                                }
-                                                if ($item == 5) {
-                                                        $report_csv .= ',"'.$this->_csv_text($incident->location->longitude).'"';
-                                                }
+                                $report_csv .= '"';
+                            break;
+                        
+                            case 4:
+                                $report_csv .= ',"'.$this->_csv_text($incident->location->latitude).'"';
+                            break;
+                        
+                            case 5:
+                                $report_csv .= ',"'.$this->_csv_text($incident->location->longitude).'"';
+                            break;
+                        }
                     }
-                    if ($incident->incident_active) {
+                    
+                    if ($incident->incident_active)
+                    {
                         $report_csv .= ",YES";
                     }
                     else
                     {
                         $report_csv .= ",NO";
                     }
-                    if ($incident->incident_verified) {
+                    
+                    if ($incident->incident_verified)
+                    {
                         $report_csv .= ",YES";
                     }
                     else
                     {
                         $report_csv .= ",NO";
                     }
+                    
                     $report_csv .= "\n";
                 }
 
@@ -1216,36 +1243,49 @@ class Reports_Controller extends Admin_Controller
             $this->template->content->title = 'Upload Reports';
             $this->template->content->form_error = false;
         }
-        if($_SERVER['REQUEST_METHOD']=='POST') {
+        if ($_SERVER['REQUEST_METHOD']=='POST')
+        {
             $errors = array();
             $notices = array();
-             if(!$_FILES['csvfile']['error']) {
-            if(file_exists($_FILES['csvfile']['tmp_name'])) {
-            if($filehandle = fopen($_FILES['csvfile']['tmp_name'], 'r')) {
-            $importer = new ReportsImporter;
-            if($importer->import($filehandle)) {
-            $this->template->content = new View('admin/reports_upload_success');
-            $this->template->content->title = 'Upload Reports';
-            $this->template->content->rowcount = $importer->totalrows;
-            $this->template->content->imported = $importer->importedrows;
-            $this->template->content->notices = $importer->notices;
-            }
-            else {
-            $errors = $importer->errors;
-            }
-            }
-            else {
-            $errors[] = Kohana::lang('ui_admin.file_open_error');
-            }
-            } // file exists?
-            else {
-            $errors[] = Kohana::lang('ui_admin.file_not_found_upload');
-            }
+            
+            if (!$_FILES['csvfile']['error']) 
+            {
+                if (file_exists($_FILES['csvfile']['tmp_name']))
+                {
+                    if($filehandle = fopen($_FILES['csvfile']['tmp_name'], 'r'))
+                    {
+                        $importer = new ReportsImporter;
+                        
+                        if ($importer->import($filehandle))
+                        {
+                            $this->template->content = new View('admin/reports_upload_success');
+                            $this->template->content->title = 'Upload Reports';
+                            $this->template->content->rowcount = $importer->totalrows;
+                            $this->template->content->imported = $importer->importedrows;
+                            $this->template->content->notices = $importer->notices;
+                        }
+                        else
+                        {
+                            $errors = $importer->errors;
+                        }
+                    }
+                    else
+                    {
+                        $errors[] = Kohana::lang('ui_admin.file_open_error');
+                    }
+                } // file exists?
+                else
+                {
+                    $errors[] = Kohana::lang('ui_admin.file_not_found_upload');
+                }
             } // upload errors?
-            else {
-            $errors[] = $_FILES['csvfile']['error'];
+            else
+            {
+                $errors[] = $_FILES['csvfile']['error'];
             }
-            if(count($errors)) {
+
+            if(count($errors))
+            {
                 $this->template->content = new View('admin/reports_upload');
                 $this->template->content->title = Kohana::lang('ui_admin.upload_reports');
                 $this->template->content->errors = $errors;
@@ -1270,6 +1310,7 @@ class Reports_Controller extends Admin_Controller
         {
             $incident_id = $_GET['iid'];
             $incident = ORM::factory('incident', $incident_id);
+            
             if ($incident->loaded == true)
             {
                 $orig_locale = $incident->locale;
@@ -1464,10 +1505,15 @@ class Reports_Controller extends Admin_Controller
             $photo_thumb = $photo->media_thumb;
 
             // Delete Files from Directory
-            if (!empty($photo_large))
+            if ( ! empty($photo_large))
+            {
                 unlink(Kohana::config('upload.directory', TRUE) . $photo_large);
-            if (!empty($photo_thumb))
+            }
+            
+            if ( ! empty($photo_thumb))
+            {
                 unlink(Kohana::config('upload.directory', TRUE) . $photo_thumb);
+            }
 
             // Finally Remove from DB
             $photo->delete();
