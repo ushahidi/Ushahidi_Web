@@ -50,9 +50,12 @@ class Media_Controller extends Controller {
         $file_path = implode("/", $segments);
 
         $pos = strrpos($file, '.');
-        if ($pos === false) {
+        if ($pos === false)
+        {
             $ext = '';
-        }else{
+        }
+        else
+        {
             $ext = substr($file,$pos+1);
             $file = substr($file,0,$pos);
         }
@@ -64,7 +67,9 @@ class Media_Controller extends Controller {
             $file = false;
             $file_data = '';
 
-        }else{
+        }
+        else
+        {
 
             $mtime = filemtime($file);
             $file_data = file_get_contents($file);
