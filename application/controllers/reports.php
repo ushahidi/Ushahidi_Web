@@ -83,10 +83,10 @@ class Reports_Controller extends Main_Controller {
         if ( count($southwest) == 2 AND count($northeast) == 2 
              AND $this->_is_numeric_array($southwest) AND $this->_is_numeric_array($northwest))
         {
-            $lon_min = $southwest[0];
-            $lon_max = $northeast[0];
-            $lat_min = $southwest[1];
-            $lat_max = $northeast[1];
+            $lon_min = (float) $southwest[0];
+            $lon_max = (float) $northeast[0];
+            $lat_min = (float) $southwest[1];
+            $lat_max = (float) $northeast[1];
 
             $query = 'SELECT id FROM '.$this->table_prefix.'location ';
             $query .= 'WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
@@ -238,7 +238,7 @@ class Reports_Controller extends Main_Controller {
 
         // Category Title, if Category ID available
         $category_id = ( isset($_GET['c']) AND !empty($_GET['c']) )
-            ? $_GET['c'] : "0";
+            ? (int) $_GET['c'] : "0";
             
         $category = ORM::factory('category')
             ->find($category_id);
