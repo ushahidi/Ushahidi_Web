@@ -197,4 +197,19 @@ class Incident_Model extends ORM
 		$graphs = json_encode($all_graphs);
 		return $graphs;
 	}
+
+	/*
+	* return an array of the dates of all approved incidents
+	*/
+	static function get_incident_dates()
+	{
+		//$incidents = ORM::factory('incident')->where('incident_active',1)->incident_date->find_all();
+		$incidents = ORM::factory('incident')->where('incident_active',1)->select_list('id', 'incident_date');
+		$array = array();
+		foreach ($incidents as $id => $incident_date)
+		{
+			$array[] = $incident_date;
+		}
+		return $array;
+	}
 }

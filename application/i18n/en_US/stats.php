@@ -19,6 +19,7 @@
 	'reports_categories' => 'Reports Categories',
 	'reports_statistics' => 'Reports Statistics',
 	'reports_status' => 'Reports Status',
+	'report_punchcard' => 'Report Punchcard',
 	'report_stats' => 'Report Stats',
 	'stats_not_setup' => 'Stats Not Set Up',
 	'time_range_1' => '1 Month',
