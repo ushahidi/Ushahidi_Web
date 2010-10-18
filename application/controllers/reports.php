@@ -81,7 +81,7 @@ class Reports_Controller extends Main_Controller {
         $location_ids = array();
         
         if ( count($southwest) == 2 AND count($northeast) == 2 
-             AND $this->_is_numeric_array($southwest) AND $this->_is_numeric_array($northwest))
+             AND $this->_is_numeric_array($southwest) AND $this->_is_numeric_array($northeast))
         {
             $lon_min = (float) $southwest[0];
             $lon_max = (float) $northeast[0];
