@@ -438,6 +438,7 @@
 	'trustworthiness_option_5' => 'No, the source has (had) no access to information',
 	'twitter' => 'Twitter',
 	'unread' => 'unread',
+	'unverified' => 'Unverified',
 	'update_feeds' => 'Update feeds',
 	'upload' => 'Upload',
 	'upload_file' => 'File to upload',
