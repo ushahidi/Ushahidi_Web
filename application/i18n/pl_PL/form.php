@@ -26,7 +26,7 @@
 		'between' => 'Wprowadź wartość do 0 do 300 dla szerokości pola',
 	),
 	'form_description' => array(
-		'required' => 'Wprowadź opis formularza\formularzy.',
+		'required' => 'Wprowadź opis formularzaformularzy.',
 	),
 	'form_id' => array(
 		'default' => 'Domyślny formularz nie może być usunięty.',

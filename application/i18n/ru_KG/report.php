@@ -1,15 +1,5 @@
 <?php
 	$lang = array(
-	'comments_add' => '',
-	'comments_additional_reports' => '',
-	'comments_credibility' => '',
-	'comments_form_comment' => '',
-	'comments_form_email' => '',
-	'comments_form_error' => '',
-	'comments_form_leave_comment' => '',
-	'comments_form_name' => '',
-	'comments_form_security_code' => '',
-	'comments_form_submit_comment' => '',
 	'custom_field' => array(
 		'values' => 'Введите значения в формы в правильном формате',
 	),
@@ -26,7 +16,6 @@
 		'date_mmddyyyy' => 'Поле даты ОТ содержит неверные значения',
 		'range' => ' Введите правильный формат даты для ОТ поля. Он не может быть больше сегодняшнего числа.',
 	),
-	'geocode_not_found' => '',
 	'incident_active' => array(
 		'between' => 'Введите правильные значения для Подтверждения этого события',
 		'required' => 'Введите правильные значения для Подтверждения этого события',
@@ -114,24 +103,5 @@
 		'date_mmddyyyy' => 'Поле даты ДО содержит неверные значения',
 		'range' => 'Введите правильный формат даты для ДО поля. Он не может быть больше сегодняшнего числа.',
 		'range_greater' => 'Дата поля ОТ не может быть больше чем поля даты ДО.',
-	),
-	'view_alt_incident' => '',
-	'view_alt_nearby_incident' => '',
-	'view_category' => '',
-	'view_credibility' => '',
-	'view_date' => '',
-	'view_images' => '',
-	'view_incident' => '',
-	'view_incident_reports' => '',
-	'view_incident_reports_date' => '',
-	'view_incident_reports_location' => '',
-	'view_incident_reports_title' => '',
-	'view_incident_report_description' => '',
-	'view_location' => '',
-	'view_nearby_incident' => '',
-	'view_time' => '',
-	'view_unverified' => '',
-	'view_verified' => '',
-	'view_videos' => '',
-	);
+	));
 ?>

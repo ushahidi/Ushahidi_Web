@@ -11,7 +11,6 @@
 	'default_language_description' => 'Cada instancia de Ushahidi posee algunos idiomas. Ud también puede <a href="http://wiki.ushahidi.com/doku.php?id=localisation_l10n_internationlisation_i18n&s[]=language#enabling_new_languages" target="_blank">agreagar otros</a>',
 	'disable' => 'Deshabilitar',
 	'enable' => 'Habilitar',
-	'error' => '',
 	'error' => array(
 		'connection' => '<strong>Oops!</strong>, We could not make a connection to
 		    the database server with the credentials given. Please make sure they are correct.',
@@ -19,7 +18,7 @@
 		'host' => 'Please enter the <strong>host</strong> of the database server.',
 		'load_db_tpl' => '<strong>Oops!</strong> I need the file called <code>database.template.php</code> to work from. Please make sure this file is in the <code>application/config/</code> folder.',
 		'site_name' => 'Please make sure to enter a <strong>site name</strong>.',
-		'unable_to_write_end' => ' file. Please change the permissions of that file to allow write access (777) <p>Here are instructions for changing file permissions:</p><ul><li><a href=\"http://www.washington.edu/computing/unix/permissions.html\">Unix/Linux</a></li><li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li></ul>',
+		'unable_to_write_end' => ' file. Please change the permissions of that file to allow write access (777) <p>Here are instructions for changing file permissions:</p><ul><li><a href="http://www.washington.edu/computing/unix/permissions.html">Unix/Linux</a></li><li><a href="http://support.microsoft.com/kb/308419">Windows</a></li></ul>',
 		'unable_to_write_start' => '<strong>Oops!</strong> Ushahidi is unable to write to the <code>',
 		'username' => 'Please make sure to enter the <strong>username</strong> of the database server.',
 	),
@@ -79,9 +78,6 @@
 		'text_3' => 'Antes de comezar asegurese que el servidor web tenga permiso de escritura a los siguientes archivos y directorios. Puede ser necesario cambiar los permisos en forma manual',
 		'text_4' => 'La siguiente información será necesaria para el proceso de instalación',
 	),
-	'summary_text_1' => '',
-	'summary_text_2' => '',
-	'summary_text_3' => '',
 	'table_prefix' => 'Prefijo para las tablas',
 	'table_prefix_description' => 'Usualmente no se utiliza ningún prefijo. Sin embargo, si se utilizan múltiples instancias del sistema en la misma base de datos, se debe colocar un prefijo para cada una',
 	'title' => 'Título',

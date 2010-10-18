@@ -1,32 +1,12 @@
 <?php
 	$lang = array(
-	'comments_add' => '',
-	'comments_additional_reports' => '',
-	'comments_credibility' => '',
-	'comments_form_comment' => '',
-	'comments_form_email' => '',
-	'comments_form_error' => '',
-	'comments_form_leave_comment' => '',
-	'comments_form_name' => '',
-	'comments_form_security_code' => '',
-	'comments_form_submit_comment' => '',
 	'custom_field' => array(
 		'values' => 'Proszę wypełnij wszystkie wymagane pola.',
-	),
-	'data_include' => array(
-		'between' => '',
-		'numeric' => '',
-	),
-	'data_point' => array(
-		'between' => '',
-		'numeric' => '',
-		'required' => '',
 	),
 	'from_date' => array(
 		'date_mmddyyyy' => 'Pole DATA OD zawiera nieprawidłowe dane.',
 		'range' => 'Pole DATA OD zawiera nieprawidłowe dane (nie może być większe od dzisiejszej daty).',
 	),
-	'geocode_not_found' => '',
 	'incident_active' => array(
 		'between' => 'Proszę podaj właście dane przy akceptacji alertu.',
 		'required' => 'Proszę podaj właście dane przy akceptacji alertu.',
@@ -114,24 +94,5 @@
 		'date_mmddyyyy' => 'Pole DATA DO zawiera nieprawidłowe dane.',
 		'range' => 'Pole DATA DO zawiera nieprawidłowe dane (nie może być większe od dzisiejszej daty).',
 		'range_greater' => 'Pole DATA DO zawiera nieprawidłowe dane (nie może być większe od dzisiejszej daty).',
-	),
-	'view_alt_incident' => '',
-	'view_alt_nearby_incident' => '',
-	'view_category' => '',
-	'view_credibility' => '',
-	'view_date' => '',
-	'view_images' => '',
-	'view_incident' => '',
-	'view_incident_reports' => '',
-	'view_incident_reports_date' => '',
-	'view_incident_reports_location' => '',
-	'view_incident_reports_title' => '',
-	'view_incident_report_description' => '',
-	'view_location' => '',
-	'view_nearby_incident' => '',
-	'view_time' => '',
-	'view_unverified' => '',
-	'view_verified' => '',
-	'view_videos' => '',
-	);
+	));
 ?>

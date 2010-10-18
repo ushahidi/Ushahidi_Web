@@ -1,15 +1,5 @@
 <?php
 	$lang = array(
-	'comments_add' => '',
-	'comments_additional_reports' => '',
-	'comments_credibility' => '',
-	'comments_form_comment' => '',
-	'comments_form_email' => '',
-	'comments_form_error' => '',
-	'comments_form_leave_comment' => '',
-	'comments_form_name' => '',
-	'comments_form_security_code' => '',
-	'comments_form_submit_comment' => '',
 	'custom_field' => array(
 		'values' => 'Tafadhali jaza uga ya kidesturi kisahihi',
 	),
@@ -26,7 +16,6 @@
 		'date_mmddyyyy' => 'Tarehe KUTOKA inaonekana si sahihi',
 		'range' => 'Tafadhali tumia tarehe ya sahihi katika sehemu ya tarehe KUTOKA.',
 	),
-	'geocode_not_found' => '',
 	'incident_active' => array(
 		'between' => 'Tafadhali jaza kisahihi kwa sehemu ya Guna Ripoti',
 		'required' => 'Tafadhali jaza kisahihi kwa sehemu ya Pitisha Ripoti',
@@ -114,24 +103,5 @@
 		'date_mmddyyyy' => 'Tarehe MPAKA inaonekana si sahihi',
 		'range' => 'Tafadhali tumia tarehe ya sahihi katika sehemu ya tarehe MPAKA.',
 		'range_greater' => 'Tarehe KUTOKA haiezi kuwa baada ya tarehe MPAKA.',
-	),
-	'view_alt_incident' => '',
-	'view_alt_nearby_incident' => '',
-	'view_category' => '',
-	'view_credibility' => '',
-	'view_date' => '',
-	'view_images' => '',
-	'view_incident' => '',
-	'view_incident_reports' => '',
-	'view_incident_reports_date' => '',
-	'view_incident_reports_location' => '',
-	'view_incident_reports_title' => '',
-	'view_incident_report_description' => '',
-	'view_location' => '',
-	'view_nearby_incident' => '',
-	'view_time' => '',
-	'view_unverified' => '',
-	'view_verified' => '',
-	'view_videos' => '',
-	);
+	));
 ?>
