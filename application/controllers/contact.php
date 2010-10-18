@@ -28,13 +28,13 @@ class Contact_Controller extends Main_Controller
 		
 		// Setup and initialize form field names
         $form = array (
-			'contact_name' => '',
-			'contact_email' => '',
-			'contact_phone' => '',
-			'contact_subject' => '',			
-			'contact_message' => '',
-			'captcha' => ''
-			);
+            'contact_name' => '',
+            'contact_email' => '',
+            'contact_phone' => '',
+            'contact_subject' => '',			
+            'contact_message' => '',
+            'captcha' => ''
+        );
 
         // Copy the form as errors, so the errors will be stored with keys
         // corresponding to the form field names
@@ -44,35 +44,37 @@ class Contact_Controller extends Main_Controller
         $form_sent = FALSE;
 		
 		// Check, has the form been submitted, if so, setup validation
-		if ($_POST)
-		{
-			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-			$post = Validation::factory($_POST);
+        if ($_POST)
+        {
+            // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+            $post = Validation::factory($_POST);
 
-			// Add some filters
-			$post->pre_filter('trim', TRUE);
+            // Add some filters
+            $post->pre_filter('trim', TRUE);
 	
-			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('contact_name', 'required', 'length[3,100]');
+	        // Add some rules, the input field, followed by a list of checks, carried out in order
+            $post->add_rules('contact_name', 'required', 'length[3,100]');
 			$post->add_rules('contact_email', 'required','email', 'length[4,100]');
-			$post->add_rules('contact_subject', 'required', 'length[3,100]');
-			$post->add_rules('contact_message', 'required');
-			$post->add_rules('captcha', 'required', 'Captcha::valid');
+            $post->add_rules('contact_subject', 'required', 'length[3,100]');
+            $post->add_rules('contact_message', 'required');
+            $post->add_rules('captcha', 'required', 'Captcha::valid');
 			
 			// Test to see if things passed the rule checks
-			if ($post->validate())
-			{// Yes! everything is valid - Send email
-				$site_email = Kohana::config('settings.site_email');
-				$message = Kohana::lang('ui_admin.sender').": " . $post->contact_name . "\n";
-				$message .= Kohana::lang('ui_admin.email').": " . $post->contact_email . "\n";
-				$message .= Kohana::lang('ui_admin.phone').": " . $post->contact_phone . "\n\n";
-				$message .= Kohana::lang('ui_admin.message').": \n" . $post->contact_message . "\n\n\n";
-				$message .= "~~~~~~~~~~~~~~~~~~~~~~\n";
-				$message .= Kohana::lang('ui_admin.sent_from_website'). url::base();
-				// Send Admin Message
-				email::send( $site_email, $post->contact_email, $post->contact_subject, $message, FALSE );
+            if ($post->validate())
+            {
+                // Yes! everything is valid - Send email
+                $site_email = Kohana::config('settings.site_email');
+                $message = Kohana::lang('ui_admin.sender').": " . $post->contact_name . "\n";
+                $message .= Kohana::lang('ui_admin.email').": " . $post->contact_email . "\n";
+                $message .= Kohana::lang('ui_admin.phone').": " . $post->contact_phone . "\n\n";
+                $message .= Kohana::lang('ui_admin.message').": \n" . $post->contact_message . "\n\n\n";
+                $message .= "~~~~~~~~~~~~~~~~~~~~~~\n";
+                $message .= Kohana::lang('ui_admin.sent_from_website'). url::base();
+                
+                // Send Admin Message
+                email::send( $site_email, $post->contact_email, $post->contact_subject, $message, FALSE );
 				
-				$form_sent = TRUE;
+                $form_sent = TRUE;
             }
             // No! We have validation errors, we need to show the form again, with the errors
             else
@@ -90,9 +92,9 @@ class Contact_Controller extends Main_Controller
         $this->template->content->errors = $errors;
         $this->template->content->form_error = $form_error;
         $this->template->content->form_sent = $form_sent;
-		$this->template->content->captcha = $captcha;
+        $this->template->content->captcha = $captcha;
 		
-		// Rebuild Header Block
-		$this->template->header->header_block = $this->themes->header_block();		
+        // Rebuild Header Block
+        $this->template->header->header_block = $this->themes->header_block();		
     }	
 }
