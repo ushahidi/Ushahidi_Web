@@ -388,7 +388,7 @@ class Manage_Controller extends Admin_Controller
 				$post->add_rules('page_title','required', 'length[3,150]');
 				$post->add_rules('page_description','required');
 			}
-			
+			Event::run('ushahidi_action.page_submit', $post);
 			// Test to see if things passed the rule checks
 	        if ($post->validate())
 	        {
@@ -424,8 +424,8 @@ class Manage_Controller extends Admin_Controller
 					$page->page_tab = $post->page_tab;
 					$page->page_description = $post->page_description;
 
-					$page_post_info = array("page" => $page, "post" => $post, "id" => $page->id);
-					Event::run('ushahidi_action.page_edit', $page_post_info);
+					
+					Event::run('ushahidi_action.page_edit', $page);
 					
 					$page->save();
 					$form_saved = TRUE;

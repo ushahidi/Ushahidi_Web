@@ -410,6 +410,10 @@ class Reports_Controller extends Main_Controller {
 			{
 				$post->add_rules('person_email', 'email', 'length[3,100]');
 			}
+			
+			
+			// Action::report_submit - Report Posted
+			Event::run('ushahidi_action.report_submit', $post);
 
 			// Test to see if things passed the rule checks
 			if ($post->validate())
@@ -549,10 +553,7 @@ class Reports_Controller extends Main_Controller {
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
 				
-				//special data structure to save all the details we'll need
-				$incident_post_info = array("incident" => $incident, "post" => $post, "id" => $id);
-				// Action::report_add - Added a New Report
-				Event::run('ushahidi_action.report_add', $incident_post_info);
+				Event::run('ushahidi_action.report_add', $incident);
 
 
 				url::redirect('reports/thanks');
