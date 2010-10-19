@@ -247,6 +247,9 @@ class admin_Core {
 		$menu .= ($this_sub_page == "roles") ? Kohana::lang('ui_admin.manage_roles') : "<a href=\"".url::site()."admin/users/roles/\">".Kohana::lang('ui_admin.manage_roles')."</a>";
 		
 		echo $menu;
+		
+		// Action::nav_admin_users - Add items to the admin manage navigation tabs
+		Event::run('ushahidi_action.nav_admin_users', $this_sub_page);
 	}
 	
 	public static function permissions($user = FALSE, $section = FALSE)
