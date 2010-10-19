@@ -1216,6 +1216,7 @@ ul.treeview li.lastExpandable { width:155px; }
 .rating_loading{
 	margin:0 0 0 10px;
 }
+
 span.dots {
 	width:17px;
 	text-align:center;
@@ -1374,6 +1375,45 @@ a.show-more {
 .big-block .page_text p{
 	margin-bottom:15px;
 }
+
+/*---New Reports Styles CB:10.14.10 ---*/
+.reports-box {}
+	
+	.rb_report { position:relative; border-top:1px solid #c0c2b8; overflow:auto; padding-bottom:10px; }
+		.reports-box .hover { background:#fffded; }
+		.r_media { float:left; width:100px; margin:15px 15px 15px 0; }
+		.r_photo a { display:inline-block; padding: 2px; border:1px solid #c0c2b8;}
+		.r_video { }
+		.r_video a { display:inline-block; font-size:11px; background:transparent url(../img/icon_sprite.png) -3px -100px no-repeat; padding:4px 0 3px 23px; }
+		
+		.r_categories { position:relative; margin-top:10px; }
+		.r_categories h4 { font-size:10px; padding:0; margin:0 0 4px 0; border-bottom:1px solid #c0c2b8; text-transform: uppercase; }
+			a.r_category { display:block; position:relative; float:left; height:16px;	width:16px; margin:0 4px 4px 0; }
+			a.r_category span.r_cat-box { display:block; height:16px;	width:16px; background:#343434; }
+			span.r_cat-desc { display:none; }
+			
+			.r_cat_tooltip { display:none;  position:absolute; z-index:1000; background:transparent url(../img/tooltip-arrow.png) 8px bottom no-repeat; padding:0 0 6px; }
+			.r_cat_tooltip a { background:#282828; display:inline-block; padding:3px 8px; color:#fff; text-transform:uppercase; font-size:10px; }
+			.r_cat_tooltip a:hover { text-decoration:none; color:#fff; }
+		
+		.r_details { float:left; width:782px; margin:15px 0; }
+			.r_details h3 { margin-bottom:0px; width:670px; }
+			.r_details h3 a.r_title { font-size:14px; color:#353535; }
+			.hover .r_details h3 a.r_title { color:#3764AA; } 
+			.r_details h3 a.r_comments { color:#fff; font-size:11px; display:inline-block; text-align:center; height:19px; width:24px; padding:4px 0 3px; background:transparent url(../img/icon_sprite.png) 0 0 no-repeat; }
+			.r_details h3 a.r_comments:hover {  }
+			/*verified/unverified*/
+			.r_details h3 span { display:inline-block; color:#FFFFFF; font-size:9px; font-weight:normal; margin:0 0 0 7px; padding:1px 3px; text-align:center; text-transform:uppercase;
+				 									 -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; }
+			.r_details h3 span.r_verified { background:#368C00; }
+			.r_details h3 span.r_unverified { background:#A60003; }
+			
+			p.r_date { position:absolute; top:0px; right:0px; padding:3px 5px; background:#e3e3e3; color:#908b88; }
+			
+			div.r_description { margin-bottom:5px; }
+			
+			p.r_location a { color:#828784; font-size:11px; line-height:11px; padding:4px 0 6px 18px; background:transparent url(../img/icon_sprite.png) -6px -52px no-repeat; }
+
 /*---alerts-block---*/
 .step-1 {
 	float:left;
@@ -1798,3 +1838,14 @@ div.green-box ul, div.red-box ul{
 .alert_confirm .label{
 	margin-bottom:10px;
 }
+
+
+/* Rounded Corners */
+.r-3 { -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+.r-4 { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
+.r-5 { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.r-8 { -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; }
+.top-cap		{ -webkit-border-bottom-left-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; }
+.right-cap	{ -webkit-border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-topright: 0px; -moz-border-radius-bottomright: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; }
+.bottom-cap	{ -webkit-border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; -moz-border-radius-topleft: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px; }
+.left-cap		{ -webkit-border-top-left-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; }

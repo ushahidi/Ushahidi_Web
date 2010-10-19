@@ -42,6 +42,7 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
+		$this->template->header->js = new View('reports_js');
 
 		$db = new Database;
 
