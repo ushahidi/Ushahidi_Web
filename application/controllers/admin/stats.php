@@ -485,32 +485,6 @@ class Stats_Controller extends Admin_Controller
     }
     
     /**
-     * Creates a new site in centralized stat tracker
-     * @param sitename - name of the instance
-     * @param url - base url 
-     */
-    /*
-    public function _create_site( $sitename, $url ) 
-    {
-        $stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
-        
-        $xml = simplexml_load_string($this->_curl_req($stat_url));
-        $stat_id = (string)$xml->id[0];
-        $stat_key = (string)$xml->key[0];
-        
-        if($stat_id > 0){
-            $settings = ORM::factory('settings',1);
-            $settings->stat_id = $stat_id;
-            $settings->stat_key = $stat_key;
-            $settings->save();
-            return $stat_id;
-        }
-        
-        return false;
-    }
-    */
-    
-    /**
      * Helper function to send a cURL request
      * @param url - URL for cURL to hit
      */
