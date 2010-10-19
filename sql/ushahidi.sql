@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 31
+-- version 32
 -- http://www.ushahidi.com
 
 
@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `category` (                                         
     `category_description` text default NULL,                                       -- field description
     `category_color` varchar(20) default NULL,                                      -- field description
     `category_image` varchar(100) default NULL,                                     -- field description
+    `category_image_thumb` varchar(100) default NULL,                               -- field description
     `category_image_shadow` varchar(100) default NULL,                              -- field description
     `category_visible` tinyint(4) NOT NULL default '1',                             -- field description
     `category_trusted` tinyint(4) NOT NULL default '0',
@@ -1545,4 +1546,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0b10' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '31' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '32' WHERE `id`=1 LIMIT 1;

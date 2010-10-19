@@ -4,8 +4,6 @@
 		'email' => '邮件地址格式不正确',
 		'email_check' => '邮件地址已注册，可收取信息更新',
 		'length' => '邮件地址长度须在4至64个字符之间',
-		'one required' => '',
-		'one_required' => '',
 		'required' => '打钩将邮件地址设为必填项',
 	),
 	'alert_lat' => array(
@@ -37,7 +35,6 @@
 	'email_error_head' => '你的邮件灾害警报请求没有被保存',
 	'email_ok_head' => '你的邮件灾害警报请求已被保存',
 	'error' => '系统不能处理你的验证请求！',
-	'error_body' => '',
 	'mobile_alert_request_created' => '你的手机灾害警报请求已创建，验证码将发送到 ',
 	'mobile_code' => '请输入你收到的验证码 ',
 	'mobile_error_head' => '你的手机灾害警报请求没有被保存！',

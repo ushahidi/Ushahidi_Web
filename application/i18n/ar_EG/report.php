@@ -1,15 +1,5 @@
 <?php
 	$lang = array(
-	'comments_add' => '',
-	'comments_additional_reports' => '',
-	'comments_credibility' => '',
-	'comments_form_comment' => '',
-	'comments_form_email' => '',
-	'comments_form_error' => '',
-	'comments_form_leave_comment' => '',
-	'comments_form_name' => '',
-	'comments_form_security_code' => '',
-	'comments_form_submit_comment' => '',
 	'custom_field' => array(
 		'values' => 'الرجاء إدخال قيمة صالحة لأحد بنود النموذج المخصص الخاص بك',
 	),
@@ -26,7 +16,6 @@
 		'date_mmddyyyy' => 'حقل التاريخ من لايحتوى على قيمة صالحة',
 		'range' => 'أدخل قيمة صالحة فى حقل التاريخ من. لايمكن لهذه القيمة أن تتعدى اليوم',
 	),
-	'geocode_not_found' => '',
 	'incident_active' => array(
 		'between' => 'أدخل قيمة صالحة للموافقة على هذا التقرير',
 		'required' => 'أدخل قيمة صالحة للموافقة على هذا التقرير',
@@ -114,24 +103,5 @@
 		'date_mmddyyyy' => 'حقل التاريخ إلى لايحتوى على قيمة صالحة',
 		'range' => 'أدخل قيمة صالحة فى حقل التاريخ إلى. لايمكن لهذه القيمة ان تتعدى اليوم',
 		'range_greater' => 'حقل التاريخ من لايمكن أن يتعدى التاريخ الحالى',
-	),
-	'view_alt_incident' => '',
-	'view_alt_nearby_incident' => '',
-	'view_category' => '',
-	'view_credibility' => '',
-	'view_date' => '',
-	'view_images' => '',
-	'view_incident' => '',
-	'view_incident_reports' => '',
-	'view_incident_reports_date' => '',
-	'view_incident_reports_location' => '',
-	'view_incident_reports_title' => '',
-	'view_incident_report_description' => '',
-	'view_location' => '',
-	'view_nearby_incident' => '',
-	'view_time' => '',
-	'view_unverified' => '',
-	'view_verified' => '',
-	'view_videos' => '',
-	);
+	));
 ?>

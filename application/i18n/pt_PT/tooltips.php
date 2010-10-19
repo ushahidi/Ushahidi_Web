@@ -31,7 +31,6 @@
 	'settings_server_username' => 'This is the email address that receives reports',
 	'settings_share_site_stats' => 'This gives access to report statistics via the API.',
 	'settings_site_email' => 'This is the email address that will receive email reports and messages from the contact form.',
-	'settings_site_message' => '',
 	'settings_site_name' => 'This is the name of the site that appears at the top of the main site.',
 	'settings_site_tagline' => 'In a few words, explain what this site is about.',
 	'settings_twitter_configuration' => 'Set the twitter hashtag that will be used on a tweet',

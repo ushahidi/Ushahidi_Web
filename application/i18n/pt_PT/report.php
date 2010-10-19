@@ -1,15 +1,5 @@
 <?php
 	$lang = array(
-	'comments_add' => '',
-	'comments_additional_reports' => '',
-	'comments_credibility' => '',
-	'comments_form_comment' => '',
-	'comments_form_email' => '',
-	'comments_form_error' => '',
-	'comments_form_leave_comment' => '',
-	'comments_form_name' => '',
-	'comments_form_security_code' => '',
-	'comments_form_submit_comment' => '',
 	'custom_field' => array(
 		'values' => 'Please enter a valid value for one of your custom form items',
 	),
@@ -26,7 +16,6 @@
 		'date_mmddyyyy' => 'The FROM date field does not appear to contain a valid date?',
 		'range' => 'Please enter a valid FROM date. It cannot be greater than today.',
 	),
-	'geocode_not_found' => '',
 	'incident_active' => array(
 		'between' => 'Please enter a valid value for Approve This Report',
 		'required' => 'Please enter a valid value for Approve This Report',
@@ -114,24 +103,5 @@
 		'date_mmddyyyy' => 'The TO date field does not appear to contain a valid date?',
 		'range' => 'Please enter a valid TO date. It cannot be greater than today.',
 		'range_greater' => 'Your FROM date cannot be greater than your TO date.',
-	),
-	'view_alt_incident' => '',
-	'view_alt_nearby_incident' => '',
-	'view_category' => '',
-	'view_credibility' => '',
-	'view_date' => '',
-	'view_images' => '',
-	'view_incident' => '',
-	'view_incident_reports' => '',
-	'view_incident_reports_date' => '',
-	'view_incident_reports_location' => '',
-	'view_incident_reports_title' => '',
-	'view_incident_report_description' => '',
-	'view_location' => '',
-	'view_nearby_incident' => '',
-	'view_time' => '',
-	'view_unverified' => '',
-	'view_verified' => '',
-	'view_videos' => '',
-	);
+	));
 ?>

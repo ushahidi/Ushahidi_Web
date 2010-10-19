@@ -25,17 +25,23 @@ class AdminComment
     private $api_actions;
     private $response_type;
     private $list_limit;
-
+    private $domain;
+    private $api_prvt_func;
+    private $error_messages;
     public function __construct()
     {
         $this->api_actions = new ApiActions;
+        $this->api_prvt_func = new ApiPrivateFunc;
         $this->data = array();
         $this->items = array();
         $this->ret_json_or_xml = '';
         $this->response_type = '';
         $this->query = '';
+        $this->error_messages = '';
+        $this->ret_value = 0;
         $this->db = $this->api_actions->_get_db();
         $this->list_limit = $this->api_actions->_get_list_limit();
+        $this->domain = $this->api_actions->_get_domain();
     }
 
         
@@ -56,8 +62,8 @@ class AdminComment
         $json_item = array();
 
         $this->query = "SELECT * FROM comment $where $limit";
-
-        $this->items = $this->db_query($this->query);
+        
+        $this->items = $this->db->query($this->query);
         
         if($response_type == "xml") 
         {
@@ -65,12 +71,13 @@ class AdminComment
             $xml->startDocument('1.0', 'UTF-8');
             $xml->startElement('response');
             $xml->startElement('payload');
+            $xml->writeElement('domain',$this->domain);
             $xml->startElement('comments');
         }
-
+        
         foreach($this->items as $list_item) 
         {
-            if($this->response_type == "json") 
+            if($response_type == "json") 
             {
                 $json_item = (array) $list_item;
             }
@@ -93,18 +100,20 @@ class AdminComment
                 $xml->writeElement('comment_active',
                         $list_item->comment_active);
                 $xml->writeElement('comment_date',$list_item->comment_date);
-                $xml->writeElement('comment_date_gmt',
-                        $list_item->comment_date_gmt);
                     
                 $xml->endElement(); // comment
             }
         }
 
-        if($this->response_type == "xml") 
+        if($response_type == "xml") 
         {
             $xml->endElement(); // comments
             $xml->endElement(); // payload
-            $xml->endElement(); // response
+            $xml->startElement('error');
+			$xml->writeElement('code',0);
+			$xml->writeElement('message','No Error');
+			$xml->endElement();//end error
+			$xml->endElement(); // end response
 
             return $xml->outputMemory(true);
         }
@@ -125,13 +134,13 @@ class AdminComment
     {
         $where = "\nWHERE comment_spam = 1";
         $where .= "\nORDER BY comment_date DESC";
-        $limt = "\nLIMIT 0, $this->list_limit";
+        $limit = "\nLIMIT 0, $this->list_limit";
 
-        return this->_get_comment_list($where, $limit,$response_type); 
+        return $this->_get_comment_list($where, $limit,$response_type); 
     }
 
     /**
-     * List all comments submited to the Ushahidi
+     * List all comments submited to Ushahidi
      * 
      * @param string response_type - The format of the response needed. 
      * XML or JSON
@@ -142,9 +151,9 @@ class AdminComment
     {
         $where = "\nWHERE comment_spam = 0";
         $where .= "\nORDER BY comment_date DESC";
-        $limt = "\nLIMIT 0, $this->list_limit";
+        $limit = "\nLIMIT 0, $this->list_limit";
 
-        return this->_get_comment_list($where, $limit,$response_type); 
+        return $this->_get_comment_list($where, $limit,$response_type); 
     }
     
     /**
@@ -157,11 +166,11 @@ class AdminComment
      */
     public function _get_approved_comments($response_type)
     {
-        $where = "\nWHERE comment_active = 0 AND comment_spam = 0";
+        $where = "\nWHERE comment_active = 1 AND comment_spam = 0";
         $where .= "\nORDER BY comment_date DESC";
-        $limt = "\nLIMIT 0, $this->list_limit";
+        $limit = "\nLIMIT 0, $this->list_limit";
 
-        return this->_get_comment_list($where, $limit,$response_type); 
+        return $this->_get_comment_list($where, $limit,$response_type); 
 
     }
             
@@ -173,24 +182,23 @@ class AdminComment
      *
      * @return array
      */
-    public function _get_pending_comments($pending,$response_type)
+    public function _get_pending_comments($response_type)
     {
-        $where = "\nWHERE comment_active = 1 AND comment_spam = 0";
+        $where = "\nWHERE comment_active = 0 AND comment_spam = 0";
         $where .= "\nORDER BY comment_date DESC";
-        $limt = "\nLIMIT 0, $this->list_limit";
+        $limit = "\nLIMIT 0, $this->list_limit";
 
-        return this->_get_comment_list($where, $limit,$response_type); 
+        return $this->_get_comment_list($where, $limit,$response_type); 
     }
 
     /**
  	 * Spams / Unspams a comment
      * 
-     * @param int item_id - the comment to spammed / unspammed
-     * @param string spam - the comment to be seen as spammed
+     * @param string response_type - The response to return. XML or JSON
      *
      * @return array
      */
-    public function _spam_comment($spam, $response_type) 
+    public function _spam_comment($response_type) 
     {
         
         if($_POST)
@@ -202,7 +210,7 @@ class AdminComment
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
 			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('comment_id.*','required','numeric');
+			$post->add_rules('comment_id','required','numeric');
 
             if ($post->validate())
             {
@@ -211,13 +219,13 @@ class AdminComment
                 if ($comment->loaded == true)
                 {
                     //spam
-                    if ( $spammed == strtolower('s'))
+                    if ( $post->action == strtolower('s'))
                     {
                         $comment->comment_active = '0';
                         $comment->comment_spam = '1';
                     } 
                     //unspam
-                    elseif ($spam == strtolower('n')) 
+                    elseif ($post->action == strtolower('n')) 
                     {
                         $comment->comment_active = '1';
                         $comment->comment_spam = '0';
@@ -248,7 +256,7 @@ class AdminComment
         }
         
         return $this->api_actions->_response($this->ret_value,
-                $response_type);
+                $response_type,$this->error_messages);
 
     }
 
@@ -271,7 +279,7 @@ class AdminComment
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
 			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('comment_id.*','required','numeric');
+			$post->add_rules('comment_id','required','numeric');
 
             if ($post->validate())
             {
@@ -304,20 +312,26 @@ class AdminComment
         }
         
         return $this->api_actions->_response($this->ret_value,
-                $response_type);
+                $response_type,$this->error_messages);
     }
     
     /**
  	 * Approves / Dissaproves a comment
-     * 
-     * @param string approve - Approve or Unapprove
+     *
      * @param string response_type - The resposne format to return.XML 
      * or JSON
      *
      * @return Array
  	 */
-    public function _approve_comment($approve,$response_type) 
+    public function _approve_comment($response_type) 
     {
+        $form = array
+        (
+            'action' => '',
+            'comment_id' => '',
+        );
+
+        $errors = $form;
         if($_POST)
         {
             $post = Validation::factory($_POST);
@@ -327,7 +341,8 @@ class AdminComment
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
 			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('comment_id.*','required','numeric');
+			$post->add_rules('comment_id','required','numeric');
+            
 
             if ($post->validate())
             {
@@ -336,12 +351,12 @@ class AdminComment
                 if ($comment->loaded == true)
                 {
                     //approve
-                    if($approve == strtolower('a'))
+                    if($post->action == strtolower('a'))
                     {
                         $comment->comment_active = '1';
                         $comment->comment_spam = '0';
                     }
-                    else
+                    else if($post->action == strtolower('u'))
                     {
                         $comment->comment_active = '0';
                     }
@@ -371,7 +386,7 @@ class AdminComment
         }
         
         return $this->api_actions->_response($this->ret_value,
-                $response_type);
+                $response_type,$this->error_messages);
     }
 
 }

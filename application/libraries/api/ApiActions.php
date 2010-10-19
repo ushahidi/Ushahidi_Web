@@ -124,10 +124,11 @@ class ApiActions
      * 
      * @param int ret_value
      * @param string response_type = XML or JSON
+     * @param string error_message - The error message to display
      * 
      * @return string
      */
-    public function _response($ret_value,$response_type)
+    public function _response($ret_value,$response_type,$error_messages='')
     {
         $ret_json_or_xml = '';
 
@@ -149,8 +150,7 @@ class ApiActions
                     "domain" => $this->domain,
                     "success" => "false"
                 ),
-				"error" => $this->api_actions->
-                    _get_error_msg(003,'',$this->error_messages)
+				"error" => $this->_get_error_msg(003,'',$error_messages)
 			);
 		} 
         else if ($ret_value == 2)

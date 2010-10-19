@@ -114,7 +114,6 @@
 		'laconica_configuration' => 'Laconica Credentials',
 		'laconica_site' => 'Laconica Site ',
 		'language' => 'لغة الموقع',
-		'message' => '',
 		'name' => 'اسم الموقع',
 		'share_site_stats' => 'Share Site Statistics in API',
 		'tagline' => 'سطر الوسم',

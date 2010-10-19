@@ -31,7 +31,6 @@
 	'settings_server_username' => 'Email адрес на который будет приходить сообщения',
 	'settings_share_site_stats' => 'Позволяет получить статистику сообщений через API.',
 	'settings_site_email' => 'Это email на который будет отправлены все email уведомления и сообщения с формы контактов.',
-	'settings_site_message' => '',
 	'settings_site_name' => 'Это название сайта который будет отображен в верхней части главной страницы.',
 	'settings_site_tagline' => 'Описание веб сайта в нескольких словах .',
 	'settings_twitter_configuration' => 'Выбрать хэштег который будет показан с твиттера',

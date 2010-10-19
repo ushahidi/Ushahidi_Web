@@ -1,13 +1,6 @@
 <?php
 	$lang = array(
-	'upgrade' => array(
-		'between' => '',
-	),
-	'upgrade_continue_btn_text' => '',
-	'upgrade_db_btn_text' => '',
-	'upgrade_db_title' => '',
 	'upgrade_failed' => 'La actualizaci',
-	'upgrade_status' => '',
 	'upgrade_text_1' => 'Estas instrucciones lo guiar',
 	'upgrade_text_2' => 'Paso 1: Descarge la ',
 	'upgrade_text_3' => 'Paso 2: Utilizando Telnet, FTP, SSH u otro protocolo, reemplace los contenidos de los directorios del sistema por los de la versi',

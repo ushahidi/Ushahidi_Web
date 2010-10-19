@@ -35,6 +35,8 @@ class Category_Model extends ORM_Tree
 			$cats[$category->id]['category_id'] = $category->id;
 			$cats[$category->id]['category_title'] = $category->category_title;
 			$cats[$category->id]['category_color'] = $category->category_color;
+			$cats[$category->id]['category_image'] = $category->category_image;
+			$cats[$category->id]['category_image_thumb'] = $category->category_image_thumb;
 		}
 		
 		return $cats;

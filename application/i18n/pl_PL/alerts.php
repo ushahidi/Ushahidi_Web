@@ -4,8 +4,6 @@
 		'email' => 'Pole adresu emailowego prawdopodobnie nie zawiera ważnego adresu emailowego',
 		'email_check' => 'Pole adresu emailowego zostało już zarejestrowane jako otrzymujące alarmy dla tej lokalizacji.',
 		'length' => 'Pole adresu emailowego musi zawierać co najmniej 4 i nie więcej niż 64 znaki.',
-		'one required' => '',
-		'one_required' => '',
 		'required' => 'Pole adresu emailowego musi być wypełnione, jeśli zaznaczono pole wyboru.',
 	),
 	'alert_lat' => array(
@@ -37,7 +35,6 @@
 	'email_error_head' => 'Notyfikacja o alertach na Twój adres email NIE została zachowana!',
 	'email_ok_head' => 'Notyfikacja o alertach na Twój adres email została zachowana!',
 	'error' => 'Nastąpił błąd systemu. Zgłoś to proszę obsłudze systemu.',
-	'error_body' => '',
 	'mobile_alert_request_created' => 'Your Mobile Alert request has been created and verification message has been sent to ',
 	'mobile_code' => 'Please enter the SMS confirmation code you received on your mobile phone below: ',
 	'mobile_error_head' => 'Your Mobile Alert Request Has NOT Been Saved!',

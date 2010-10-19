@@ -114,7 +114,6 @@
 		'laconica_configuration' => 'Laconica аккаунт',
 		'laconica_site' => 'Laconica Сайт ',
 		'language' => 'Язык сайта',
-		'message' => '',
 		'name' => 'Название сайта',
 		'share_site_stats' => 'Отправлять статистику в API',
 		'tagline' => 'Заголовок сайта',
