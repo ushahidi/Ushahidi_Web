@@ -52,16 +52,17 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->title = Kohana::lang('ui_admin.categories');
 		
 		// setup and initialize form field names
-		$form = array
-	    (
-			'action' => '',
-			'category_id'      => '',
-			'parent_id'      => '',
-			'category_title'      => '',
-	        'category_description'    => '',
-	        'category_color'  => '',
-			'category_image'  => ''
-	    );
+    $form = array
+      (
+        'action' => '',
+        'category_id'      => '',
+        'parent_id'      => '',
+        'category_title'      => '',
+        'category_description'    => '',
+        'category_color'  => '',
+        'category_image'  => '',
+        'category_image_thumb'  => ''
+      );
 	    
 		// copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
@@ -85,8 +86,7 @@ class Manage_Controller extends Admin_Controller
 				$post->add_rules('category_title','required', 'length[3,80]');
 				$post->add_rules('category_description','required');
 				$post->add_rules('category_color','required', 'length[6,6]');
-				$post->add_rules('category_image', 'upload::valid', 
-					'upload::type[gif,jpg,png]', 'upload::size[50K]');
+				$post->add_rules('category_image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[50K]');
 				$post->add_callbacks('parent_id', array($this,'parent_id_chk'));
 			}
 			
@@ -125,13 +125,21 @@ class Manage_Controller extends Admin_Controller
 	            	if ($category->loaded==true)
 					{
 						$category_image = $category->category_image;
+						$category_image_thumb = $category->category_image_thumb;
 						if (!empty($category_image)
+						&& (!empty($category_image_thumb)
 						&& file_exists(Kohana::config('upload.directory', TRUE).$category_image))
-							unlink(Kohana::config('upload.directory', TRUE) . $category_image);
-						$category->category_image = null;
-						$category->save();
-						$form_saved = TRUE;
-						$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+						&& file_exists(Kohana::config('upload.directory', TRUE).$category_image_thumb))
+						{
+						  unlink(Kohana::config('upload.directory', TRUE) . $category_image);
+						  unlink(Kohana::config('upload.directory', TRUE) . $category_image_thumb);
+						}
+						  
+              $category->category_image = null;
+              $category->category_image_thumb = null;
+              $category->save();
+              $form_saved = TRUE;
+              $form_action = strtoupper(Kohana::lang('ui_admin.modified'));
 					}
 				} 
 				else if( $post->action == 'a' )
@@ -151,6 +159,9 @@ class Manage_Controller extends Admin_Controller
 						// Resize Image to 32px if greater
 						Image::factory($filename)->resize(32,32,Image::HEIGHT)
 							->save(Kohana::config('upload.directory', TRUE) . $new_filename.".png");
+						// Create a 16x16 version too
+						Image::factory($filename)->resize(16,16,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE) . $new_filename."_16x16.png");
 
 						// Remove the temporary file
 						unlink($filename);
@@ -163,6 +174,7 @@ class Manage_Controller extends Admin_Controller
 						
 						// Save
 						$category->category_image = $new_filename.".png";
+						$category->category_image_thumb = $new_filename."_16x16.png";
 						$category->save();
 					}
 					
@@ -199,30 +211,30 @@ class Manage_Controller extends Admin_Controller
                         ->orderby('category_title', 'asc')
                         ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                             $pagination->sql_offset);
-		 $parents_array = ORM::factory('category')
+		    $parents_array = ORM::factory('category')
             ->where('parent_id','0')
             ->select_list('id', 'category_title');
         // add none to the list
         $parents_array[0] = "--- Top Level Category ---";
 		
-		$this->template->content->form = $form;
-		$this->template->content->errors = $errors;
-        $this->template->content->form_error = $form_error;
-        $this->template->content->form_saved = $form_saved;
-		$this->template->content->form_action = $form_action;
-        $this->template->content->pagination = $pagination;
-        $this->template->content->total_items = $pagination->total_items;
-        $this->template->content->categories = $categories;
+		  $this->template->content->form = $form;
+  		$this->template->content->errors = $errors;
+      $this->template->content->form_error = $form_error;
+      $this->template->content->form_saved = $form_saved;
+  		$this->template->content->form_action = $form_action;
+      $this->template->content->pagination = $pagination;
+      $this->template->content->total_items = $pagination->total_items;
+      $this->template->content->categories = $categories;
 		
-		$this->template->content->parents_array = $parents_array;
+  		$this->template->content->parents_array = $parents_array;
 
-		// Locale (Language) Array
-		$this->template->content->locale_array = Kohana::config('locale.all_languages');
+  		// Locale (Language) Array
+  		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
-        // Javascript Header
-        $this->template->colorpicker_enabled = TRUE;
-        $this->template->js = new View('admin/categories_js');
-		$this->template->form_error = $form_error;
+      // Javascript Header
+      $this->template->colorpicker_enabled = TRUE;
+      $this->template->js = new View('admin/categories_js');
+  		$this->template->form_error = $form_error;
     }
 
 	/*
