@@ -803,7 +803,7 @@ class Reports_Controller extends Main_Controller {
 
 			// Filters
 			$incident_title = $incident->incident_title;
-			$incident_description = nl2br($incident->incident_description);
+			$incident_description = $incident->incident_description;
 			Event::run('ushahidi_filter.report_title', $incident_title);
 			Event::run('ushahidi_filter.report_description', $incident_description);
 
