@@ -363,11 +363,8 @@ class AdminReports
      */
     public function _edit_report($response_type)
     {
-        $this->ret_value = $this->_submit_report();
+        return $this->_submit_report($response_type);
         
-        return $this->api_actions
-                ->_response($this->ret_value, $response_type);
-
     }
 
     /**
@@ -626,11 +623,12 @@ class AdminReports
      *
      * @return int
  	 */
-	private function _submit_report() 
+	private function _submit_report($response_type) 
     {
 		// setup and initialize form field names
 		$form = array
 		(
+            'location_id' => '',
             'incident_id' => '',
 			'incident_title' => '',
 			'incident_description' => '',
@@ -648,7 +646,11 @@ class AdminReports
 			'incident_photo' => array(),
 			'person_first' => '',
 			'person_last' => '',
-			'person_email' => ''
+			'person_email' => '',
+            'incident_active ' => '',
+            'incident_verified' => '',
+            'incident_source' => '',
+            'incident_information' => ''
 		);
 		
 		$errors = $form;
@@ -664,6 +666,7 @@ class AdminReports
 
 			// Add some rules, the input field, followed by a list of 
             //checks, carried out in order
+            $post->add_rules('location_id','numeric');
             $post->add_rules('incident_id','required','numeric');
 			$post->add_rules('incident_title','required', 'length[3,200]');
 			$post->add_rules('incident_description','required');
@@ -702,54 +705,79 @@ class AdminReports
 				$post->add_rules('person_email', 'email', 'length[3,100]');
 			}
 
+            $post->add_rules('incident_active','required', 'between[0,1]');
+			$post->add_rules('incident_verified','required', 'length[0,1]');
+			$post->add_rules('incident_source','numeric', 'length[1,1]');
+			$post->add_rules('incident_information','numeric', 'length[1,1]');
+
+
 			// Test to see if things passed the rule checks
 			if ($post->validate()) 
             {
                 $incident_id = $post->incident_id;
+                $location_id = $post->location_id;
                 // SAVE INCIDENT
-				$incident = new Incident_Model($incident_id);
-                if($incident->loaded == true)
-                {
-				    $incident->location_id = $location->id;
-				    $incident->user_id = 0;
-				    $incident->incident_title = $post->incident_title;
-				    $incident->incident_description = 
-                        $post->incident_description;
-
-				    $incident_date=explode("/",$post->incident_date);
-				    /**
-		 		    * where the $_POST['date'] is a value posted by form in
-		 		    * mm/dd/yyyy format
-		 		    */
-				    $incident_date=$incident_date[2]."-".$incident_date[0]
-                        ."-".
-                    $incident_date[1];
-
-				    $incident_time = $post->incident_hour . ":" . 
-                    $post->incident_minute . ":00 " . $post->incident_ampm;
-				    $incident->incident_date = $incident_date . " " .
-                    $incident_time;
-				    $incident->incident_dateadd = date(
-                            "Y-m-d H:i:s",time());
-				    $incident->save();
-                }
-                else
-                {
-                    //Comment id doesn't exist in DB
-                    //TODO i18nize the string
-                    $this->error_messages .= "Incident ID does not exist.";
-                    return 1;
-
-                }
-
-				// SAVE LOCATION (***IF IT DOES NOT EXIST***)
-				$location = new Location_Model();
+				
+                // SAVE LOCATION (***IF IT DOES NOT EXIST***)
+				$location = new Location_Model($location_id);
 				$location->location_name = $post->location_name;
 				$location->latitude = $post->latitude;
 				$location->longitude = $post->longitude;
 				$location->location_date = date("Y-m-d H:i:s",time());
 				$location->save();
 
+                $incident = new Incident_Model($incident_id);
+				$incident->location_id = $location->id;
+				$incident->user_id = 0;
+				$incident->incident_title = $post->incident_title;
+				$incident->incident_description = 
+                    $post->incident_description;
+
+				$incident_date=explode("/",$post->incident_date);
+				/**
+		 		 * where the $_POST['date'] is a value posted by form in
+		 		 * mm/dd/yyyy format
+		 		 */
+				$incident_date=$incident_date[2]."-".$incident_date[0]
+                        ."-".
+                $incident_date[1];
+
+				$incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
+				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );	
+                $incident->incident_datemodify = date("Y-m-d H:i:s",time());
+                
+                // Incident Evaluation Info
+				$incident->incident_active = $post->incident_active;
+				$incident->incident_verified = $post->incident_verified;
+				$incident->incident_source = $post->incident_source;
+				$incident->incident_information = $post->incident_information;
+
+				$incident->save();
+
+                // Record Approval/Verification Action
+				$verify = new Verify_Model();
+				$verify->incident_id = $incident->id;
+				$verify->user_id = $_SESSION['auth_user']->id;// Record 'Verified By' Action
+				$verify->verified_date = date("Y-m-d H:i:s",time());
+				if ($post->incident_active == 1)
+				{
+					$verify->verified_status = '1';
+				}
+				elseif ($post->incident_verified == 1)
+				{
+					$verify->verified_status = '2';
+				}
+				elseif ($post->incident_active == 1 && $post->incident_verified == 1)
+				{
+					$verify->verified_status = '3';
+				}
+				else
+				{
+					$verify->verified_status = '0';
+				}
+				$verify->save();
+
+                	
 				// SAVE CATEGORIES
 				//check if data is csv or a single value.
 				$pos = strpos($post->incident_category,",");
@@ -772,6 +800,10 @@ class AdminReports
 
 				if(!empty($categories) && is_array($categories)) 
                 {
+                    // STEP 3: SAVE CATEGORIES
+				    ORM::factory('Incident_Category')->where('incident_id',
+                            $incident->id)->delete_all();
+                    // Delete Previous Entries
 					foreach($categories as $item)
                     {
 						$incident_category = new Incident_Category_Model();
@@ -784,7 +816,12 @@ class AdminReports
 				// STEP 4: SAVE MEDIA
 				// a. News
 				if(!empty( $post->incident_news ) && is_array(
-                            $post->incident_news)) {
+                            $post->incident_news)) 
+                {
+                    ORM::factory('Media')->where('incident_id',
+                    $incident->id)->where('media_type <> 1')
+                        ->delete_all();// Delete Previous Entries
+
 					foreach($post->incident_news as $item) 
                     {
 						if(!empty($item)) 
@@ -862,6 +899,8 @@ class AdminReports
 				if(!empty($post->person_first) || !empty(
                             $post->person_last))
                 {
+                    ORM::factory('Incident_Person')->where('incident_id',
+                            $incident->id)->delete_all();	
 					$person = new Incident_Person_Model();
 					$person->location_id = $location->id;
 					$person->incident_id = $incident->id;
@@ -881,26 +920,31 @@ class AdminReports
 				$errors = arr::overwrite($errors, 
                         $post->errors('report'));
 
-				foreach ($this->messages as $error_item => 
+				foreach ($errors as $error_item => 
                         $error_description) 
                 {
 					if(!is_array($error_description)) 
                     {
 						$this->error_messages .= $error_description;
-						if($error_description != end($this->messages)) 
+						if($error_description != end($errors)) 
                         {
 							$this->error_messages .= " - ";
    						}
   					}
 				}
 
-			    //FAILED!!!
-			    return 1; //validation error
+			    //FAILED!!! //validation error
+                return $this->api_actions->_response(1, $response_type,
+                        $this->error_messages);
+
+
 	  		}
 		} 
         else 
         {
-			return 3; // Not sent by post method.
+			 // Not sent by post method.
+            return $this->api_actions->_response(3, $response_type);
+
 		}
 	}
 
