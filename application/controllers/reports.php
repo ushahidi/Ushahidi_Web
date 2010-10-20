@@ -39,21 +39,16 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
-		$this->template->header->js = new View('reports_js');
+		$this->themes->js = new View('reports_js');
 
 		$db = new Database;
-
+		
 		// Get incident_ids if we are to filter by category
-
 		$allowed_ids = array();
-		if (isset($_GET['c']) AND !empty($_GET['c']) AND $_GET['c']!=0 AND is_int($_GET['c']))
+		if (isset($_GET['c']) AND !empty($_GET['c']) AND $_GET['c']!=0)
 		{
-			$category_id = (int) ($_GET['c']);
-			
-			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic ';
-			$query .= 'INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  ';
-			$query .= 'WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
-			
+			$category_id = $db->escape($_GET['c']);
+			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
 			$query = $db->query($query);
 
 			foreach ( $query as $items )
@@ -65,7 +60,6 @@ class Reports_Controller extends Main_Controller {
 		// Get location_ids if we are to filter by location
 
 		// Break apart location variables, if necessary
-
 		$southwest = array();
 		if (isset($_GET['sw']))
 		{
@@ -73,27 +67,23 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		$northeast = array();
-		
 		if (isset($_GET['ne']))
 		{
 			$northeast = explode(",",$_GET['ne']);
 		}
 
 		$location_ids = array();
-		
-		if ( count($southwest) == 2 AND count($northeast) == 2 
-			 AND $this->_is_numeric_array($southwest) AND $this->_is_numeric_array($northeast))
+		if ( count($southwest) == 2 AND count($northeast) == 2 )
 		{
 			$lon_min = (float) $southwest[0];
 			$lon_max = (float) $northeast[0];
 			$lat_min = (float) $southwest[1];
 			$lat_max = (float) $northeast[1];
 
-			$query = 'SELECT id FROM '.$this->table_prefix.'location ';
-			$query .= 'WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
+			$query = 'SELECT id FROM '.$this->table_prefix.'location WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
 			
-			$query = $db->query($query);
-
+			$query = $db->query($query);			
+			
 			foreach ( $query as $items )
 			{
 				$location_ids[] =  $items->id;
@@ -101,87 +91,50 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Get the count
-		$incident_id_in = '';
-		
+		$incident_id_in = '1=1';
 		if (count($allowed_ids) > 0)
 		{
-			$incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
+			$incident_id_in = 'id IN ('.implode(',',$allowed_ids).')';
 		}
 
-		$location_id_in = '';
-		
+		$location_id_in = '1=1';
 		if (count($location_ids) > 0)
 		{
-			$location_id_in = ' AND location_id IN ('.implode(',',$location_ids).')';
+			$location_id_in = 'location_id IN ('.implode(',',$location_ids).')';
 		}
-
-		// Get Count
-
-		$query = 'SELECT COUNT(id) as count FROM '.$this->table_prefix.'incident WHERE 1=1'.$location_id_in.''.$incident_id_in.'';
-		foreach ($db->query($query) as $item)
-		{
-			$total_incidents = $item->count;
-			break;
-		}
-
+		
 		// Pagination
-
 		$pagination = new Pagination(array(
 				'query_string' => 'page',
 				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
-				'total_items' => $total_incidents
+				'total_items' => ORM::factory("incident")
+					->where("incident_active", 1)
+					->where($location_id_in)
+					->where($incident_id_in)
+					->count_all()
 				));
-
-		// Get Incidents - Only the approved reports should be fetched
-		$query = 'SELECT id, incident_title, incident_description, incident_date, location_id, incident_verified ';
-		$query .= 'FROM '.$this->table_prefix.'incident ';
-		$query .= 'WHERE 1=1'.$location_id_in.''.$incident_id_in.' AND incident_active = 1 ';
-		$query .= 'ORDER BY incident_date DESC LIMIT '. (int) Kohana::config('settings.items_per_page').' OFFSET '.$pagination->sql_offset.';';
-
-		$incidents = $db->query($query);
-		$total_incidents = $incidents->count();
+		
+		// Reports
+		$incidents = ORM::factory("incident")
+			->where("incident_active", 1)
+			->where($location_id_in)
+			->where($incident_id_in)
+			->orderby("incident_date", "desc")
+			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
 		$this->template->content->incidents = $incidents;
 
-		// Gather the final list of location ids that turned up in the query
-
-		$location_in = array();
-		
-		foreach ($incidents as $incident)
-		{
-			$location_in[] = $incident->location_id;
-		}
-
-		//check if location_in is not empty
-		if( count($location_in ) > 0 ) 
-		{
-			// Get location names
-			$query = 'SELECT id, location_name FROM '.$this->table_prefix.'location WHERE id IN ('.implode(',',$location_in).')';
-			$locations_query = $db->query($query);
-
-			$locations = array();
-			
-			foreach ($locations_query as $loc)
-			{
-				$locations[$loc->id] = $loc->location_name;
-			}
-		}
-		else
-		{
-			$locations = array();
-		}
-		$this->template->content->locations = $locations;
-
 		//Set default as not showing pagination. Will change below if necessary.
-		$this->template->content->pagination = '';
+		$this->template->content->pagination = "";
 
 		// Pagination and Total Num of Report Stats
-		if ($pagination->total_items == 1) {
-			$plural = '';
+		if ($pagination->total_items == 1)
+		{
+			$plural = "";
 		}
 		else
 		{
-			$plural = 's';
+			$plural = "s";
 		}
 		
 		if ($pagination->total_items > 0)
@@ -190,15 +143,13 @@ class Reports_Controller extends Main_Controller {
 			$total_pages = ceil($pagination->total_items/ (int) Kohana::config('settings.items_per_page'));
 
 			if ($total_pages > 1)
-			{
-				// If we want to show pagination
+			{ // If we want to show pagination
 				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
 
 				$this->template->content->pagination = $pagination;
 			}
 			else
-			{
-				// If we don't want to show pagination
+			{ // If we don't want to show pagination
 				$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
 			}
 		}
@@ -207,50 +158,18 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
 		}
 
-		$icon_html = array();
-		$icon_html[1] = "<img src=\"".url::base()."media/img/image.png\">"; //image
-		$icon_html[2] = "<img src=\"".url::base()."media/img/video.png\">"; //video
-		$icon_html[3] = ""; //audio
-		$icon_html[4] = ""; //news
-		$icon_html[5] = ""; //podcast
-
-		//Populate media icon array
-		$this->template->content->media_icons = array();
-		
-		foreach($incidents as $incident)
-		{
-			$incident_id = $incident->id;
-			if (ORM::factory('media')
-				->where('incident_id', $incident_id)->count_all() > 0) 
-			{
-				$medias = ORM::factory('media')->where('incident_id', $incident_id)->find_all();
-
-				//Modifying a tmp var prevents Kohona from throwing an error
-				$tmp = $this->template->content->media_icons;
-				$tmp[$incident_id] = '';
-
-				foreach($medias as $media)
-				{
-					$tmp[$incident_id] .= $icon_html[$media->media_type];
-					$this->template->content->media_icons = $tmp;
-				}
-			}
-		}
-
 		// Category Title, if Category ID available
 		$category_id = ( isset($_GET['c']) AND !empty($_GET['c']) )
-			? (int) $_GET['c'] : "0";
-			
+			? $_GET['c'] : "0";
 		$category = ORM::factory('category')
 			->find($category_id);
-			
 		$this->template->content->category_title = ( $category->loaded ) ?
 			$category->category_title : "";
 
 		// Collect report stats
 		$this->template->content->report_stats = new View('reports_stats');
-		
 		// Total Reports
+
 		$total_reports = Incident_Model::get_total_reports(TRUE);
 
 		// Average Reports Per Day
@@ -258,13 +177,9 @@ class Reports_Controller extends Main_Controller {
 
 		// Round the number of days up to the nearest full day
 		$days_since = ceil((time() - $oldest_timestamp) / 86400);
-		
-		if ($days_since < 1)
-		{
+		if ($days_since < 1) {
 			$avg_reports_per_day = $total_reports;
-		}
-		else
-		{
+		}else{
 			$avg_reports_per_day = round(($total_reports / $days_since),2);
 		}
 

@@ -24,7 +24,7 @@
 					$incident_description = text::limit_chars(strip_tags($incident_description), 150, "...", true);
 					$incident_date = date('H:i M d, Y', strtotime($incident->incident_date));
 					//$incident_time = date('H:i', strtotime($incident->incident_date));
-					$incident_location = $incident->location_name;
+					$incident_location = $incident->location->location_name;
 					$incident_verified = $incident->incident_verified;
 
 					if ($incident_verified)
@@ -35,6 +35,8 @@
 					{
 						$incident_verified = '<span class="r_unverified">'.Kohana::lang('ui_main.unverified').'</span>';
 					}
+					
+					$comment_count = $incident->comment->count();
 					?>
 					<div class="rb_report">
 
@@ -60,10 +62,10 @@
 						</div>
 
 						<div class="r_details">
-							<h3><a class="r_title" href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>"><?php echo $incident_title; ?></a> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>#comments" class="r_comments" style="display:none">3</a> <?php echo $incident_verified; ?></h3>
+							<h3><a class="r_title" href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>"><?php echo $incident_title; ?></a> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>#comments" class="r_comments"><?php echo $comment_count; ?></a> <?php echo $incident_verified; ?></h3>
 							<p class="r_date r-3 bottom-cap"><?php echo $incident_date; ?></p>
 							<div class="r_description"> <?php echo $incident_description; ?> </div>
-							<p class="r_location"><?php echo $incident_location; ?></p>
+							<p class="r_location"><a href="#"><?php echo $incident_location; ?></a></p>
 						</div>
 					</div>
 				<?php } ?>
