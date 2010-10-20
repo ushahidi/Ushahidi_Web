@@ -24,7 +24,8 @@
 					$incident_description = text::limit_chars(strip_tags($incident_description), 150, "...", true);
 					$incident_date = date('H:i M d, Y', strtotime($incident->incident_date));
 					//$incident_time = date('H:i', strtotime($incident->incident_date));
-					$incident_location = $incident->location->location_name;
+					$location_id = $incident->location_id;
+					$location_name = $incident->location->location_name;
 					$incident_verified = $incident->incident_verified;
 
 					if ($incident_verified)
@@ -52,12 +53,28 @@
 
 							<!-- Only show this if the report has a video -->
 							<p class="r_video" style="display:none;"><a href="#">Video</a></p>
-							<div class="r_categories" style="display:none;">
+							
+							<!-- Category Selector -->
+							<div class="r_categories">
 								<h4><?php echo Kohana::lang('ui_main.categories'); ?></h4>
 								<!-- a default category -->
-								<a class="r_category" href="#"><span class="r_cat-box" style="background-color:#368C00;"></span> <span class="r_cat-desc">2a. Structures a risque | Structures at risk</span></a>
-								<!-- a category with an icon-->
-								<a class="r_category" href="#"><span class="r_cat-box"><img src="/media/uploads/_icon-1.jpg" height="16" width="16" /></span> <span class="r_cat-desc">1b. Incendie | Fire</span></a>
+								<?php
+								foreach ($incident->category AS $category)
+								{
+									if ($category->category_image_thumb)
+									{
+										?>
+										<a <a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>"><span class="r_cat-box"><img src="<?php echo url::base().Kohana::config('upload.relative_directory')."/".$category_image_thumb; ?>" height="16" width="16" /></span> <span class="r_cat-desc"><?php echo $category->category_title;?></span></a>
+										<?php
+									}
+									else
+									{
+										?>
+										<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>"><span class="r_cat-box" style="background-color:#<?php echo $category->category_color;?>;"></span> <span class="r_cat-desc"><?php echo $category->category_title;?></span></a>
+										<?php
+									}
+								}
+								?>
 							</div>
 						</div>
 
@@ -65,7 +82,7 @@
 							<h3><a class="r_title" href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>"><?php echo $incident_title; ?></a> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>#comments" class="r_comments"><?php echo $comment_count; ?></a> <?php echo $incident_verified; ?></h3>
 							<p class="r_date r-3 bottom-cap"><?php echo $incident_date; ?></p>
 							<div class="r_description"> <?php echo $incident_description; ?> </div>
-							<p class="r_location"><a href="#"><?php echo $incident_location; ?></a></p>
+							<p class="r_location"><a href="<?php echo url::site(); ?>reports/?l=<?php echo $location_id; ?>"><?php echo $location_name; ?></a></p>
 						</div>
 					</div>
 				<?php } ?>

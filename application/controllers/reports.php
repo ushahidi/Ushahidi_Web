@@ -58,7 +58,8 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Get location_ids if we are to filter by location
-
+		$location_ids = array();
+		
 		// Break apart location variables, if necessary
 		$southwest = array();
 		if (isset($_GET['sw']))
@@ -72,7 +73,6 @@ class Reports_Controller extends Main_Controller {
 			$northeast = explode(",",$_GET['ne']);
 		}
 
-		$location_ids = array();
 		if ( count($southwest) == 2 AND count($northeast) == 2 )
 		{
 			$lon_min = (float) $southwest[0];
@@ -88,6 +88,10 @@ class Reports_Controller extends Main_Controller {
 			{
 				$location_ids[] =  $items->id;
 			}
+		}
+		elseif (isset($_GET['l']) AND !empty($_GET['l']) AND $_GET['l']!=0)
+		{
+			$location_ids[] = (int) $_GET['l'];
 		}
 
 		// Get the count
