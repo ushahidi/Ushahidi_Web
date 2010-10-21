@@ -154,7 +154,19 @@
 									});
 								});
 							</script>
-						</div>						
+						</div>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_cache_pages"); ?>"><?php echo Kohana::lang('settings.site.cache_pages');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('cache_pages', $yesno_array, $form['cache_pages']); ?>
+							</span>
+						</div>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_cache_pages_lifetime"); ?>"><?php echo Kohana::lang('settings.site.cache_pages_lifetime');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('cache_pages_lifetime', $cache_pages_lifetime_array, $form['cache_pages_lifetime']); ?>
+							</span>
+						</div>					
 						<div class="row">
 						<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_google_analytics"); ?>"><?php echo Kohana::lang('settings.site.google_analytics');?></a></h4>
 							<?php echo Kohana::lang('settings.site.google_analytics_example');?> &nbsp;&nbsp;
