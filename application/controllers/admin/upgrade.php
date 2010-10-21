@@ -185,7 +185,7 @@ class Upgrade_Controller extends Admin_Controller
     private function _do_upgrade() 
     {
 
-        $url = "http://download.ushahidi.com/ushahidi.zip";
+        $url = "http://localhost/ushahidi.zip";
         $working_dir = Kohana::config('upload.relative_directory')."/";
         $zip_file = Kohana::config('upload.relative_directory')."/ushahidi.zip";
         
@@ -206,7 +206,7 @@ class Upgrade_Controller extends Admin_Controller
 
         if ($this->upgrade->success)
         {
-            //remove delete database.php and config.php files. we don't want to overwrite them.
+            //remove database.php and config.php files. we don't want to overwrite them.
             unlink($working_dir."ushahidi/application/config/database.php");
             unlink($working_dir."ushahidi/application/config/config.php");
             $this->upgrade->remove_recursively($working_dir."ushahidi/application/cache");
