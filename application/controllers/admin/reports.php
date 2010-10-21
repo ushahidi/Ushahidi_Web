@@ -948,7 +948,13 @@ class Reports_Controller extends Admin_Controller
 				}
 
 			}
+			else
+			{
+				//if this is a new report then default the incident_active field to true
+				$form['incident_active'] = 1;
+			}
 		}
+		
 
 		$this->template->content->id = $id;
 		$this->template->content->form = $form;
