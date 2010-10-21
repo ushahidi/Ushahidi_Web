@@ -189,5 +189,6 @@
 	'wiki' => 'Wiki',
 	'yes' => 'Yes',
 	'your_search_for' => 'Your search for',
+    'critical_upgrade' => ' This is a **critical** upgrade release.',
 	);
 ?>

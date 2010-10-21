@@ -23,14 +23,14 @@
 		<h4>Available Updates</h4>
 	</div>
 	<div class="settings_holder">
-		<strong><u>Ushahidi v.2.0.1</u></strong>
+		<strong><u>Ushahidi <?php echo $release_version ?></u></strong>
+        <?php if (is_array($changelogs)) { ?>
 		<ul>
-			<li>Lorem ipsum this is an example changelog item</li>
-			<li>Lorem ipsum this is an example changelog item</li>
-			<li>Lorem ipsum this is an example changelog item</li>
-			<li>Lorem ipsum this is an example changelog item</li>
-			<li>Lorem ipsum this is an example changelog item</li>
+            <?php foreach ( $changelogs as $changelog ) { ?>
+			<li><?php print $changelog ?></li>
+            <?php } ?>
 		</ul>
+        <?php } ?>
 	</div>
 	
 	<div class="head">
