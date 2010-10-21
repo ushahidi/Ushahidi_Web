@@ -64,7 +64,7 @@
 									if ($category->category_image_thumb)
 									{
 										?>
-										<a <a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>"><span class="r_cat-box"><img src="<?php echo url::base().Kohana::config('upload.relative_directory')."/".$category_image_thumb; ?>" height="16" width="16" /></span> <span class="r_cat-desc"><?php echo $category->category_title;?></span></a>
+										<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>"><span class="r_cat-box"><img src="<?php echo url::base().Kohana::config('upload.relative_directory')."/".$category_image_thumb; ?>" height="16" width="16" /></span> <span class="r_cat-desc"><?php echo $category->category_title;?></span></a>
 										<?php
 									}
 									else
