@@ -16,8 +16,10 @@
 
 class Upgrade_Controller extends Admin_Controller
 {
-    public $db;
-    
+    protected $db;
+    protected $upgrade;
+    protected $release;
+
     function __construct()
     {
         parent::__construct();
@@ -25,11 +27,12 @@ class Upgrade_Controller extends Admin_Controller
         $this->db = new Database();
         
         $this->template->this_page = 'upgrade';
-        $upgrade = new Upgrade;
-        $latest_version = $upgrade->_fetch_core_version();
+        $this->upgrade = new Upgrade;
+        $this->release = $this->upgrade->_fetch_core_release();
         
+        $release_version = $this->_get_release_version(); 
         // limit access to only superadmin
-        if ( ! $this->auth->logged_in('superadmin') && $latest_version != "" )
+        if ( ! $this->auth->logged_in('superadmin') AND ( $release_version != "" ) )
         {
             url::redirect('admin/dashboard');
         }
@@ -56,6 +59,8 @@ class Upgrade_Controller extends Admin_Controller
         $this->template->content->form_action = $form_action;
         $this->template->content->current_version = Kohana::config('settings.ushahidi_version');
         $this->template->content->environment = $this->_environment();
+        $this->template->content->release_version = $this->release->version;
+        $this->template->content->changelogs = $this->release->changelog;
     }
     
     public function table() 
@@ -83,40 +88,40 @@ class Upgrade_Controller extends Admin_Controller
             
             if ($post->validate())
             {
-                $upgrade = new Upgrade;
+
                 $this->template->content = new View('admin/upgrade_status');
                 $this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
                     
                 if ($post->chk_db_backup_box == 1)
                 {
                     //uprade tables.
-                    $upgrade->log[] = sprintf("Upgrade table.");
+                    $this->upgrade->log[] = sprintf("Upgrade table.");
                     $this->_process_db_upgrade();
-                    $upgrade->log[] = sprintf("Table upgrade successful.");
+                    $this->upgrade->log[] = sprintf("Table upgrade successful.");
                     
                     // backup database.
                     //is gzip enabled ?
                     $gzip = Kohana::config('config.output_compression');
                     $error = $this->_do_db_backup( $gzip );
-                    $upgrade->log[] = sprintf("Database backup in progress");       
+                    $this->upgrade->log[] = sprintf("Database backup in progress");       
                     
                     if (empty( $error ))
                     {
-                        $upgrade->log[] = sprintf("Database backup went successful.");
+                        $this->upgrade->log[] = sprintf("Database backup went successful.");
                         $this->template->content->logs = $upgrade->log;
                     }
                     else
                     {
-                        $upgrade->errors[] = sprintf("Oops, database backup failed");
+                        $this->upgrade->errors[] = sprintf("Oops, database backup failed");
                         $this->template->content->errors = $upgrade->errors;
                     }
                 }
                 else
                 {
                     //uprade tables.
-                    $upgrade->log[] = sprintf("Upgrade table.");
+                    $this->upgrade->log[] = sprintf("Upgrade table.");
                     $this->_process_db_upgrade();
-                    $upgrade->log[] = sprintf("Table upgrade successful.");
+                    $this->upgrade->log[] = sprintf("Table upgrade successful.");
                     $this->template->content->logs = $upgrade->log;
                 }       
             }
@@ -179,65 +184,65 @@ class Upgrade_Controller extends Admin_Controller
      */
     private function _do_upgrade() 
     {
-        $upgrade = new Upgrade;
+
         $url = "http://download.ushahidi.com/ushahidi.zip";
         $working_dir = Kohana::config('upload.relative_directory')."/";
         $zip_file = Kohana::config('upload.relative_directory')."/ushahidi.zip";
         
         //download the latest ushahidi
-        $latest_ushahidi = $upgrade->download_ushahidi($url);
+        $latest_ushahidi = $this->upgrade->download_ushahidi($url);
                     
         //download went successful
-        if ($upgrade->success)
+        if ($this->upgrade->success)
         {
-            $upgrade->write_to_file($latest_ushahidi, $zip_file);
+            $this->upgrade->write_to_file($latest_ushahidi, $zip_file);
         }
             
         //extract compressed file
-        if ($upgrade->success)
+        if ($this->upgrade->success)
         {
-            $upgrade->unzip_ushahidi($zip_file, $working_dir);
+            $this->upgrade->unzip_ushahidi($zip_file, $working_dir);
         }
 
-        if ($upgrade->success)
+        if ($this->upgrade->success)
         {
             //remove delete database.php and config.php files. we don't want to overwrite them.
             unlink($working_dir."ushahidi/application/config/database.php");
             unlink($working_dir."ushahidi/application/config/config.php");
-            $upgrade->remove_recursively($working_dir."ushahidi/application/cache");
-            $upgrade->remove_recursively($working_dir."ushahidi/application/logs");
-            $upgrade->remove_recursively($working_dir."ushahidi/".Kohana::config('upload.relative_directory'));
+            $this->upgrade->remove_recursively($working_dir."ushahidi/application/cache");
+            $this->upgrade->remove_recursively($working_dir."ushahidi/application/logs");
+            $this->upgrade->remove_recursively($working_dir."ushahidi/".Kohana::config('upload.relative_directory'));
         }
                 
-        if ($upgrade->success)
+        if ($this->upgrade->success)
         {
-            $upgrade->log[] = sprintf("Copying files...");
-            $upgrade->copy_recursively($working_dir."ushahidi",".");
-            $upgrade->log[] = sprintf("Successfully copied files");
+            $this->upgrade->log[] = sprintf("Copying files...");
+            $this->upgrade->copy_recursively($working_dir."ushahidi",".");
+            $this->upgrade->log[] = sprintf("Successfully copied files");
         }
         
-        if ($upgrade->success)
+        if ($this->upgrade->success)
         {
-            $upgrade->log[] = sprintf("Upgrading tables...");
+            $this->upgrade->log[] = sprintf("Upgrading tables...");
             if ($this->_upgrade_tables())
             {
-                $upgrade->log[] = sprintf("Tables upgrade went successful");
+                $this->upgrade->log[] = sprintf("Tables upgrade went successful");
             }
             else
             {
-                $upgrade->errors[] = sprintf("Tables upgrade failed");
+                $this->upgrade->errors[] = sprintf("Tables upgrade failed");
             }
         }
         
-        if ($upgrade->success)
+        if ($this->upgrade->success)
         {
-            $upgrade->remove_recursively( $working_dir."ushahidi" );
+            $this->upgrade->remove_recursively( $working_dir."ushahidi" );
             unlink($zip_file);
-            $upgrade->log[] = sprintf( "Upgrade went successful." );
+            $this->upgrade->log[] = sprintf( "Upgrade went successful." );
         }
 
             
-        return $upgrade;
+        return $this->upgrade;
 
     }
     
@@ -321,9 +326,9 @@ class Upgrade_Controller extends Admin_Controller
     {
             
        // get the db version from the settings page
-        $db = new Database();
+        $this->db = new Database();
         $sql = 'SELECT db_version from '.Kohana::config('database.default.table_prefix').'settings';
-        $settings = $db->query($sql);
+        $settings = $this->db->query($sql);
         $version_in_db = $settings[0]->db_version;
         
         // Update DB
@@ -435,7 +440,12 @@ class Upgrade_Controller extends Admin_Controller
                    
         return $error;  
     }
-
+    
+    /**
+     * Get the operating environment Ushahidi is on.
+     *
+     * @return string
+     */
     private function _environment()
     {
         $environment = "";
@@ -443,6 +453,30 @@ class Upgrade_Controller extends Admin_Controller
         $environment .= ", PHP&nbsp;".phpversion();
         
         return $environment;
+    }
+
+    /**
+     * Fetches the latest ushahidi release version number
+     *
+     * @return int or string
+     */
+    private function _get_release_version()
+    {
+        
+        $release_version = $this->release->version;
+		
+        $version_ushahidi = Kohana::config('settings.ushahidi_version');
+			
+        if($release_version > $version_ushahidi AND 
+                $release_version != "") 
+        {
+			return $release_version;
+		} 
+        else 
+        {
+			return "";
+		}
+
     }
 
 }

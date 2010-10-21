@@ -190,16 +190,7 @@
 		
         return $version_details;
 
-        /*$version_number = $version_details[0];
-		$latest_version = $version_number;
-		$settings = ORM::factory('settings', 1);
-		$version_ushahidi = $settings->ushahidi_version;
-		if($latest_version > $version_ushahidi && $latest_version !== false) {
-			return $latest_version;
-		} else {
-			return "";
-		}*/
-	}
+    }
  	
  }
 ?>
