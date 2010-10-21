@@ -58,11 +58,11 @@ class Admin_Controller extends Template_Controller
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
-		//fetch latest version of ushahidi
-		$version_number = $upgrade->_fetch_core_version();
+		//fetch latest release of ushahidi
+		$release = $upgrade->_fetch_core_release();
 
-		$this->template->version = $version_number;
-
+		$this->template->version = $release->version;
+        $this->template->critical = $release->critical;
 		// Get Session Information
 		$this->user = new User_Model($_SESSION['auth_user']->id);
 

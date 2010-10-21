@@ -50,7 +50,6 @@ class Upgrade_Controller extends Admin_Controller
         //check if form has been submitted
         if( $_POST )
         {  
-            //$upgrade = $this->_do_upgrade();
             url::redirect('admin/upgrade/table');
         }
         
