@@ -2,7 +2,7 @@
 /**
  * Admin helper class.
  *
- * @package    Distance
+ * @package    Admin
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
  * @license    http://www.ushahidi.com/license.html

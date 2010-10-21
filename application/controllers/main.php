@@ -74,15 +74,6 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->site_name_style = $site_name_style;
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
 
-		// Display Contact Tab?
-		$this->template->header->site_contact_page = Kohana::config('settings.site_contact_page');
-
-		// Display Help Tab?
-		$this->template->header->site_help_page = Kohana::config('settings.site_help_page');
-
-		// Get Custom Pages
-		$this->template->header->pages = ORM::factory('page')->where('page_active', '1')->find_all();
-
 		$this->template->header->this_page = "";
 
 		// Google Analytics
