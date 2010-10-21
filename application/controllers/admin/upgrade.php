@@ -185,7 +185,7 @@ class Upgrade_Controller extends Admin_Controller
     private function _do_upgrade() 
     {
 
-        $url = "http://localhost/ushahidi.zip";
+        $url = "http://download.ushahidi.com/ushahidi.zip";
         $working_dir = Kohana::config('upload.relative_directory')."/";
         $zip_file = Kohana::config('upload.relative_directory')."/ushahidi.zip";
         
