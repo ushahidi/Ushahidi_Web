@@ -185,11 +185,21 @@
 	*/
 	function _fetch_core_release() 
     {
-		$version_url = "http://version.ushahidi.com/2/";		
-		$version_json_string = @file_get_contents($version_url);
-		
+		// Current Version
+	    $current = urlencode(Kohana::config('settings.ushahidi_version'));
+
+	    // Extra Stats
+	    $url = urlencode(preg_replace("/^https?:\/\/(.+)$/i","\\1", 
+                    url::base()));
+	    $ip_address = (isset($_SERVER['REMOTE_ADDR'])) ?
+            urlencode($_SERVER['REMOTE_ADDR']) : "";
+
+	    $version_url = "http://version.ushahidi.com/2/?v=".$current.
+            "u=".$url."&ip=".$ip_address;		
+	    
+        $version_json_string = @file_get_contents($version_url);		
 		// If we didn't get anything back...
-		if(!$version_json_string)
+		if ( !$version_json_string )
         {
 			 return "";
 		}

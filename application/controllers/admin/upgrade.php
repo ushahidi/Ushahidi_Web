@@ -76,7 +76,7 @@ class Upgrade_Controller extends Admin_Controller
                 $this->template->content = new View('admin/upgrade_status');
                 $this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
 
-                $url = "http://demo.ushahidi.com/ushahidi.zip";
+                $url = $this->release->download;
                 $working_dir = Kohana::config('upload.relative_directory')."/";
                 @mkdir($working_dir."ushahidi", 0777);
                 $zip_file = Kohana::config('upload.relative_directory')."/ushahidi/ushahidi.zip";
@@ -412,8 +412,8 @@ class Upgrade_Controller extends Admin_Controller
 		
         $version_ushahidi = Kohana::config('settings.ushahidi_version');
 			
-        if($release_version > $version_ushahidi AND 
-                $release_version != "") 
+        if($this->_new_or_not($release_version > $version_ushahidi AND 
+                $release_version != "") )
         {
 			return $release_version;
 		} 
@@ -422,6 +422,49 @@ class Upgrade_Controller extends Admin_Controller
 			return "";
 		}
 
+    }
+    
+    /**
+     * Checks version sequence parts
+     *
+     * @param string release_version - The version released.
+     * @param string version_ushahidi - The version of ushahidi installed.
+     *
+     * @return boolean
+     */
+    private function _new_or_not($release_version=NULL,
+            $version_ushahidi=NULL )
+    {
+        if ($release_version AND $version_ushahidi)
+	    {
+		    // Split version numbers xx.xx.xx
+		    $remote_version = explode($release_version, ".");
+		    $local_version = explode($version_ushahidi, ".");
+
+		    // Check first part .. if its the same, move on to next part
+		    if (isset($remote_version[0]) AND isset($local_version[0])
+			    AND (int) $remote_version[0] > (int) $local_version[0])
+		    {
+			    return true;
+		    }
+
+		    // Check second part .. if its the same, move on to next part
+		    if (isset($remote_version[1]) AND isset($local_version[1])
+			    AND (int) $remote_version[1] > (int) $local_version[1])
+		    {
+			    return true;
+		    }
+
+		    // Check third part
+		    if (isset($remote_version[2]) AND isset($local_version[2])
+			    AND (int) $remote_version[2] > (int) $local_version[2])
+		    {
+			    return true;
+		    }
+
+		}
+
+        return false;
     }
 
 }
