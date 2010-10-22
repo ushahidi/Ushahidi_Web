@@ -105,7 +105,8 @@
  	 * 
  	 * @param String dir-- the directory to delete.
  	 */
- 	public function remove_recursively($dir) {
+ 	public function remove_recursively($dir) 
+    {
  		if (empty($dir) || !is_dir($dir))
 	        return false;
 	    if (substr($dir,-1) != "/")
@@ -143,7 +144,8 @@
  	 * @param String destdir-- destination directory
  	 */
  	
- 	public function unzip_ushahidi($zip_file, $destdir) {
+ 	public function unzip_ushahidi($zip_file, $destdir) 
+    {
  		$archive = new Pclzip($zip_file);
  		$this->log[] = sprintf("Unpacking %s ",$zip_file);
  		
@@ -164,7 +166,8 @@
  	 * @param String zip_file-- the zip file to be written.
  	 * @param String dest_file-- the file to write.
  	 */
- 	public function write_to_file($zip_file, $dest_file) {
+ 	public function write_to_file($zip_file, $dest_file) 
+    {
  		$handler = fopen( $dest_file,'w');
        	$fwritten = fwrite($handler,$zip_file);
        	$this->log[] = sprintf("Writting to a file ");
@@ -180,10 +183,10 @@
  	}
 
 	/**
-	* Fetch latest ushahidi version from a remote instance then 
-	* compare it with local instance version number.
-	*/
-	function _fetch_core_release() 
+	 * Fetch latest ushahidi version from a remote instance then 
+	 * compare it with local instance version number.
+	 */
+	public function _fetch_core_release() 
     {
 		// Current Version
 	    $current = urlencode(Kohana::config('settings.ushahidi_version'));

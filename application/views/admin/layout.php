@@ -158,7 +158,7 @@
 					<li><a href="<?php echo url::site()."admin/";?>log_out"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
 				</ul>
                         </div>
-                        <?php if ( ( $version != "" ) && ( url::current() != "admin/upgrade" ) ) { ?>
+                        <?php if ( isset($version) AND ( url::current() != "admin/upgrade" ) ) { ?>
                         <div id="update-info">
                         <?php echo Kohana::lang('ui_admin.ushahidi');?> <?php echo $version; ?> 
                             <?php echo Kohana::lang('ui_admin.version_available');?>
