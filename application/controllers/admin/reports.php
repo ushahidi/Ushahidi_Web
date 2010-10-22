@@ -569,7 +569,7 @@ class Reports_Controller extends Admin_Controller
 	        }
 
 			// Validate photo uploads
-			$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[2M]');
+			$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[7M]');
 
 
 			// Validate Personal Information
