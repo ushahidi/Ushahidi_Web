@@ -9,13 +9,15 @@
  * @license    http://www.ushahidi.com/license.html
  */
  
- class Upgrade {
+ class Upgrade 
+{
  	
  	public $notices;
 	public $errors;
  	public $success;
  	
- 	public function __construct() {
+ 	public function __construct() 
+    {
  		$this->log = array();
  		$this->errors = array();
  	}
@@ -32,13 +34,18 @@
     	$snoopy->gzip = false;
         $snoopy->fetch($url);
 		$this->log[] = "Starting to download the latest ushahidi build...";
-       	if( $snoopy->status == '200' ) {
+       	
+        if ( $snoopy->status == '200' ) 
+        {
         	
         	$this->log[] = "Download of latest ushahidi went successful.";
         	$this->success = true;        
           	return $snoopy->results;
             
-       	} else {        	
+       	} 
+        
+        else 
+        {        	
             $this->errors[] = sprintf(Kohana::lang('libraries.upgrade_failed').": %d", $snoopy->status);    
         	$this->success = false;
         	return $snoopy;
@@ -52,7 +59,8 @@
  	 * @param String srcdir-- the source directory.
  	 * @param String dstdir -- the destination directory.
  	 */
- 	public function copy_recursively($srcdir, $dstdir) {
+ 	public function copy_recursively($srcdir, $dstdir) 
+    {
  		if ( !is_dir($dstdir) && !@mkdir($dstdir) )
        	{
 	    	$this->errors[] = sprintf(Kohana::lang('libraries.upgrade_file_not_copied'),$dstdir);

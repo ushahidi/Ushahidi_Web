@@ -60,9 +60,13 @@ class Admin_Controller extends Template_Controller
 
 		//fetch latest release of ushahidi
 		$release = $upgrade->_fetch_core_release();
+        
+        if( ! empty($release) )
+        {
+		    $this->template->version = $release->version;
+            $this->template->critical = $release->critical;
+        }
 
-		$this->template->version = $release->version;
-        $this->template->critical = $release->critical;
 		// Get Session Information
 		$this->user = new User_Model($_SESSION['auth_user']->id);
 

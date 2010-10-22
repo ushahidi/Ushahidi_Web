@@ -49,35 +49,20 @@ class Upgrade_Controller extends Admin_Controller
         $form_action = "";
         
         $this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi');
-        
-        //check if form has been submitted
-        if( $_POST )
-        {  
-            url::redirect('admin/upgrade/table');
-        }
-        
-        $this->template->content->form_action = $form_action;
-        $this->template->content->current_version = Kohana::config('settings.ushahidi_version');
-        $this->template->content->environment = $this->_environment();
-        $this->template->content->release_version = $this->release->version;
-        $this->template->content->changelogs = $this->release->changelog;
-    }
-    
-    public function table() 
-    {
-        $this->template->content = new View('admin/upgrade_table');
-        $this->template->content->title = Kohana::lang('upgrade.upgrade_db_title'); 
-        $this->template->content->db_version =  Kohana::config('settings.db_version');
-        
-        //Setup and initialize form fields names
+
+        //$this->template->content->db_version =  Kohana::config('
+          //      settings.db_version');
+        $this->template->content->db_version = Kohana::config('settings.db_version');
+
+         //Setup and initialize form fields names
         $form = array 
         (
             'chk_db_backup_box' => ''
         );
-        
+
+        //check if form has been submitted
         if( $_POST )
         {
-            
             // For sanity sake, validate the data received from users.
             $post = Validation::factory(array_merge($_POST,$_FILES));
 
@@ -88,46 +73,85 @@ class Upgrade_Controller extends Admin_Controller
             
             if ($post->validate())
             {
-
                 $this->template->content = new View('admin/upgrade_status');
                 $this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
+
+                $url = "http://demo.ushahidi.com/ushahidi.zip";
+                $working_dir = Kohana::config('upload.relative_directory')."/";
+                @mkdir($working_dir."ushahidi", 0777);
+                $zip_file = Kohana::config('upload.relative_directory')."/ushahidi/ushahidi.zip";
+        
+                //download the latest ushahidi
+                $this->upgrade->log[] = sprintf("Downloading latest ushahidi...");
+                $latest_ushahidi = $this->upgrade->download_ushahidi($url);
                     
-                if ($post->chk_db_backup_box == 1)
+                //download went successful
+                if ($this->upgrade->success)
                 {
-                    //uprade tables.
-                    $this->upgrade->log[] = sprintf("Upgrade table.");
-                    $this->_process_db_upgrade();
-                    $this->upgrade->log[] = sprintf("Table upgrade successful.");
-                    
-                    // backup database.
-                    //is gzip enabled ?
-                    $gzip = Kohana::config('config.output_compression');
-                    $error = $this->_do_db_backup( $gzip );
-                    $this->upgrade->log[] = sprintf("Database backup in progress");       
-                    
-                    if (empty( $error ))
+                    $this->upgrade->write_to_file($latest_ushahidi, $zip_file);
+                }
+            
+                //extract compressed file
+                if ($this->upgrade->success)
+                {
+                    $this->upgrade->unzip_ushahidi($zip_file, $working_dir."ushahidi");
+                }
+                
+                if ($this->upgrade->success)
+                {
+                    $this->upgrade->log[] = sprintf("Copying files...");
+                    $this->upgrade->copy_recursively($working_dir."ushahidi",".");
+                    $this->upgrade->log[] = sprintf("Successfully copied files");
+                }
+        
+                if ($this->upgrade->success)
+                {
+                    if ($post->chk_db_backup_box == 1)
                     {
-                        $this->upgrade->log[] = sprintf("Database backup went successful.");
-                        $this->template->content->logs = $upgrade->log;
+                                        
+                        // backup database.
+                        //is gzip enabled ?
+                        $gzip = Kohana::config('config.output_compression');
+                        $error = $this->_do_db_backup( $gzip );
+                        $this->upgrade->log[] = sprintf("Database backup in progress.");       
+                    
+                        if (empty( $error ))
+                        {
+                            $this->upgrade->log[] = sprintf("Database backup went successful.");
+                                                    
+                            //uprade tables.
+                            $this->upgrade->log[] = sprintf("Upgrade table.");
+                            $this->_process_db_upgrade($working_dir."ushahidi/sql/");
+                            $this->upgrade->log[] = sprintf("Table upgrade successful.");
+
+                        }
+                        else
+                        {
+                            $this->upgrade->errors[] = sprintf("Oops, database backup failed.");
+                            $this->template->content->errors = $this->upgrade->errors;
+                        }
                     }
                     else
+                    {                 
+                        //uprade tables.
+                        $this->upgrade->log[] = sprintf("Upgrade table.");
+                        $this->_process_db_upgrade($working_dir."ushahidi/sql/");
+                        $this->upgrade->log[] = sprintf("Table upgrade successful.");
+
+                    }
+        
+                    if ($this->upgrade->success)
                     {
-                        $this->upgrade->errors[] = sprintf("Oops, database backup failed");
-                        $this->template->content->errors = $upgrade->errors;
+                        $this->upgrade->remove_recursively( $working_dir."ushahidi" );
+                        $this->upgrade->log[] = sprintf( "Upgrade went successful." );
                     }
                 }
-                else
-                {
-                    //uprade tables.
-                    $this->upgrade->log[] = sprintf("Upgrade table.");
-                    $this->_process_db_upgrade();
-                    $this->upgrade->log[] = sprintf("Table upgrade successful.");
-                    $this->template->content->logs = $upgrade->log;
-                }       
+
             }
-            // No! We have validation errors, we need to show the form again, with the errors
+             // No! We have validation errors, we need to show the form again, with the errors
             else
             {
+                
                 // repopulate the form fields
                 $form = arr::overwrite($form, $post->as_array());
 
@@ -135,16 +159,25 @@ class Upgrade_Controller extends Admin_Controller
                 $errors = arr::overwrite($errors, $post->errors('upgrade'));
                 $form_error = TRUE;
             }
-            
+
         }
+        
+        $this->template->content->form_action = $form_action;
+        $this->template->content->current_version = Kohana::config('settings.ushahidi_version');
+        $this->template->content->current_db_version = $this->release->version_db;
+        $this->template->content->environment = $this->_environment();
+        $this->template->content->release_version = $this->release->version;
+        $this->template->content->changelogs = $this->release->changelog;
+        $this->template->content->logs = $this->upgrade->log;
+
     }
-    
+        
     public function status() 
     {
         $this->template->content = new View('admin/upgrade_status');
         $this->template->cntent = Kohana::lang('upgrade.upgrade_status');
 
-        if(count( $upgrade->errors ) == 0 )
+        if( count( $upgrade->errors ) == 0 )
         {
             $this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
             $this->template->content->logs = $upgrade->log;
@@ -156,105 +189,16 @@ class Upgrade_Controller extends Admin_Controller
         }
             
     }
-    
-    private function _upgrade_tables()
-    {
-        $db_schema = file_get_contents( 'sql/upgrade.sql' );
-        $result = "";
-        // get individual sql statement 
-        $sql_statements = explode( ';',$db_schema );
-            
-        foreach( $sql_statements as $sql_statement )
-        {
-            $result = $this->db->query( $sql_statement );
-        }
-        
-        return $result;
-
-    }
-        
-    /**
-     * 
-     * Downloads the latest ushahidi file.
-     * Extracts the compressed folder.
-     * Delete the folders that needs to be preserved.
-     * Delete the downloaded ushahidi file.
-     * Delete the extracted ushahidi folder.
-     * 
-     */
-    private function _do_upgrade() 
-    {
-
-        $url = "http://download.ushahidi.com/ushahidi.zip";
-        $working_dir = Kohana::config('upload.relative_directory')."/";
-        $zip_file = Kohana::config('upload.relative_directory')."/ushahidi.zip";
-        
-        //download the latest ushahidi
-        $latest_ushahidi = $this->upgrade->download_ushahidi($url);
-                    
-        //download went successful
-        if ($this->upgrade->success)
-        {
-            $this->upgrade->write_to_file($latest_ushahidi, $zip_file);
-        }
-            
-        //extract compressed file
-        if ($this->upgrade->success)
-        {
-            $this->upgrade->unzip_ushahidi($zip_file, $working_dir);
-        }
-
-        if ($this->upgrade->success)
-        {
-            //remove database.php and config.php files. we don't want to overwrite them.
-            unlink($working_dir."ushahidi/application/config/database.php");
-            unlink($working_dir."ushahidi/application/config/config.php");
-            $this->upgrade->remove_recursively($working_dir."ushahidi/application/cache");
-            $this->upgrade->remove_recursively($working_dir."ushahidi/application/logs");
-            $this->upgrade->remove_recursively($working_dir."ushahidi/".Kohana::config('upload.relative_directory'));
-        }
-                
-        if ($this->upgrade->success)
-        {
-            $this->upgrade->log[] = sprintf("Copying files...");
-            $this->upgrade->copy_recursively($working_dir."ushahidi",".");
-            $this->upgrade->log[] = sprintf("Successfully copied files");
-        }
-        
-        if ($this->upgrade->success)
-        {
-            $this->upgrade->log[] = sprintf("Upgrading tables...");
-            if ($this->_upgrade_tables())
-            {
-                $this->upgrade->log[] = sprintf("Tables upgrade went successful");
-            }
-            else
-            {
-                $this->upgrade->errors[] = sprintf("Tables upgrade failed");
-            }
-        }
-        
-        if ($this->upgrade->success)
-        {
-            $this->upgrade->remove_recursively( $working_dir."ushahidi" );
-            unlink($zip_file);
-            $this->upgrade->log[] = sprintf( "Upgrade went successful." );
-        }
-
-            
-        return $this->upgrade;
-
-    }
-    
+           
     /**
      * Execute SQL statement to upgrade the necessary tables.
-     * 
+     *
      * @param string - upgrade_sql - upgrade sql file
      */
-    private function _execute_upgrade_script( $upgrade_sql ) 
+    private function _execute_upgrade_script($upgrade_sql) 
     {
         
-        $upgrade_schema = @file_get_contents( 'sql/'.$upgrade_sql );
+        $upgrade_schema = @file_get_contents($upgrade_sql);
 
         // If a table prefix is specified, add it to sql
         $db_config = Kohana::config('database.default');
@@ -299,21 +243,22 @@ class Upgrade_Controller extends Admin_Controller
      * Get the available sql update scripts from the 
      * sql folder then upgrade necessary tables.
      */
-    private function _process_db_upgrade()
+    private function _process_db_upgrade($dir_path)
     {
-        $dir_path = 'sql';
+    
         $upgrade_sql = '';
 
         $files = scandir($dir_path);
         foreach( $files as $file )
         {
             $upgrade_sql = $this->_get_db_version();
+            
             if( $upgrade_sql == $file )
             {
-                $this->_execute_upgrade_script( $upgrade_sql );
+                $this->_execute_upgrade_script( $dir_path.$upgrade_sql );
             } 
         }
-        
+        exit;
         return "";
     }
     
