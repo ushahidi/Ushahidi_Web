@@ -306,6 +306,23 @@ ul.inf li a{
 	clear:both;
 	overflow:hidden;
 }
+.post-edit-log-red{
+	padding:3px;
+	background-color:#FFE7D5;
+	border:1px solid #FFB782;
+}
+.post-edit-log-gray{
+	padding:3px;
+	background-color:#eee;
+	border:1px solid #ccc;
+}
+.post-edit-log-red a, .post-edit-log-gray a{
+	color:#666;
+}
+.post-edit-log{
+	display:none;
+	padding:5px;
+}
 .post-trans-new{
 	margin:5px 0 2px 20px;
 	font-size:80%;

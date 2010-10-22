@@ -12,20 +12,6 @@
 		'between' => 'El campo informes permitidos parece no contener un valor vÃ¡lido?',
 		'required' => 'El campo informes permitidos es obligatorio.',
 	),
-	'allow_stat_sharing' => array(
-		'between' => '',
-		'required' => '',
-	),
-	'api_akismet' => array(
-		'alpha_numeric' => '',
-		'length' => '',
-	),
-	'cleanurl' => array(
-		'clean_url_disabled' => '',
-		'clean_url_enabled' => '',
-		'enable_clean_url' => '',
-		'title' => '',
-	),
 	'clickatell_api' => array(
 		'length' => 'El campo nÃºmero Clickatell API debe no tener mÃ¡s de 20 caracteres de largo.',
 		'required' => 'El campo nÃºmero Clickatell API es obligatorio.',
@@ -40,34 +26,9 @@
 	),
 	'configure_map' => 'Configure el Mapa',
 	'default_location' => 'Ubicación Predeterminada',
-	'default_map_all' => array(
-		'alpha_numeric' => '',
-		'length' => '',
-		'required' => '',
-	),
 	'default_map_view' => 'Vista predeterminada',
 	'default_zoom_level' => 'Nivel de detalle predeterminado',
 	'download_city_list' => 'Descargar lista de ciudades',
-	'email_host' => array(
-		'length' => '',
-		'numeric' => '',
-	),
-	'email_password' => array(
-		'length' => '',
-		'required' => '',
-	),
-	'email_port' => array(
-		'length' => '',
-		'numeric' => '',
-	),
-	'email_servertype' => array(
-		'length' => '',
-		'required' => '',
-	),
-	'email_username' => array(
-		'length' => '',
-		'required' => '',
-	),
 	'google_analytics' => array(
 		'length' => 'El campo Google Analytics debe contener un ID Web Property vÃ¡lido en el formato UA-XXXXX-XX.',
 	),
@@ -114,7 +75,6 @@
 		'laconica_configuration' => 'Configuración de Laconica',
 		'laconica_site' => 'Website Laconica',
 		'language' => 'Idioma del sitio',
-		'message' => '',
 		'name' => 'Nombre del sitio',
 		'share_site_stats' => 'Compartir las estadísticas del sitio',
 		'tagline' => 'Subtítulo',

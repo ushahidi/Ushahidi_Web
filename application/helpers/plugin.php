@@ -11,6 +11,7 @@ class plugin_Core {
 	
 	protected static $javascripts = array();
 	protected static $stylesheets = array();
+	protected static $sms_providers = array();
 
 	public static function add_javascript($javascripts = array())
 	{
@@ -134,10 +135,10 @@ class plugin_Core {
 	public static function settings($plugin = NULL)
 	{
 		// Determine if readme.txt (Case Insensitive) exists
-		$file = PLUGINPATH.$plugin."/controllers/admin/".$plugin."_admin.php";
+		$file = PLUGINPATH.$plugin."/controllers/admin/".$plugin."_settings.php";
 		if ( file::file_exists_i($file) )
 		{
-			return $plugin."_admin";
+			return $plugin."_settings";
 		}
 		else
 		{

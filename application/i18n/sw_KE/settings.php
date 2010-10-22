@@ -20,12 +20,6 @@
 		'alpha_numeric' => 'Sehemu ya Akismet inaonekana si sahihi',
 		'length' => 'Sehemu ya Akismet inaonekana si sahihi',
 	),
-	'cleanurl' => array(
-		'clean_url_disabled' => '',
-		'clean_url_enabled' => '',
-		'enable_clean_url' => '',
-		'title' => '',
-	),
 	'clickatell_api' => array(
 		'length' => 'Sehemu ya nambari ya Clickatell API haiezi pitisha herufi 20.',
 		'required' => 'Sehemu ya nambari ya Clickatell API inahitajika.',
@@ -114,7 +108,6 @@
 		'laconica_configuration' => 'Sifa za Laconica',
 		'laconica_site' => 'Tovuti ya Laconica ',
 		'language' => 'Lugha ya tovuti',
-		'message' => '',
 		'name' => 'Jina la tovuti',
 		'share_site_stats' => 'Shriki na takwimu za API na wengine',
 		'tagline' => 'Tagline ya tovuti',

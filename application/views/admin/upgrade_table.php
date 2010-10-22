@@ -19,7 +19,7 @@
 	<div class="table-holder">
    		<p>I have detected that you have an old database version.</p>
        	<p>So, I'm going to upgrade your database from version <?php print $db_version; ?> to the newest database.</p>
-       	<p>Click on the "Upgade" button and just chilax as I perform the magic.</p>
+       	<p>Click on the "Upgrade" button and just chilax as I perform the magic.</p>
        	<p>Oh, also if you want me to backup your database, just thick the check button below and I will do that for you in a breeze.</p>
        	<?php print form::open(NULL, array('id' => 'upgradeDb', 'name' => 'upgradeDb')); ?>
        	<p>

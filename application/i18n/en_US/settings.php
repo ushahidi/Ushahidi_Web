@@ -20,6 +20,14 @@
 		'alpha_numeric' => 'The Akismet field does not appear to contain a valid value?',
 		'length' => 'The Akismet field does not appear to contain a valid value?',
 	),
+	'cache_pages' => array(
+		'between' => 'The cache pages field is required.',
+		'required' => 'The cache pages field does not appear to contain a valid value?',
+	),
+	'cache_pages_lifetime' => array(
+		'in_array' => 'The cache pages lifetime field does not appear to contain a valid value?',
+		'required' => 'The cache pages lifetime field is required.',
+	),
 	'cleanurl' => array(
 		'clean_url_disabled' => 'It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite" target="_blank">post</a>',
 		'clean_url_enabled' => 'This option makes Ushahidi to be accessed via "clean" URLs. Without "index.php" in the URL.',
@@ -100,6 +108,8 @@
 		'allow_feed' => 'Include RSS News Feed on Website',
 		'allow_reports' => 'Allow Users To Submit Reports',
 		'api_akismet' => 'Akismet Key',
+		'cache_pages' => 'Cache Pages',
+		'cache_pages_lifetime' => 'Cache Pages Lifetime',
 		'default_category_colors' => 'Default Color For All Categories',
 		'display_contact_page' => 'Display Contact Page',
 		'display_howtohelp_page' => 'Display "How to Help" Page',

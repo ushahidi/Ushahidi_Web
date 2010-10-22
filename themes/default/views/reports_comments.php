@@ -1,5 +1,5 @@
 <div class="orig-report">
-	<div class="discussion">
+	<div id="comments" class="discussion">
 		<h5>ADDITIONAL REPORTS AND DISCUSSION&nbsp;&nbsp;&nbsp;(<a href="#comments">Add</a>)</h5>
 		<?php
 		foreach($incident_comments as $comment)

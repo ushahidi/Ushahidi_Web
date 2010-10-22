@@ -7,19 +7,8 @@
 	'category_description' => array(
 		'required' => 'El campo descripciÃ³n es obligatorio.',
 	),
-	'category_image' => array(
-		'size' => '',
-		'type' => '',
-		'valid' => '',
-	),
 	'category_title' => array(
 		'length' => 'El campo titulo debe tener por lo menos 3 y no mas de 80 caracteres de largo.',
 		'required' => 'El campo titulo es obligatorio.',
-	),
-	'parent_id' => array(
-		'exists' => '',
-		'numeric' => '',
-		'required' => '',
-		'same' => '',
 	));
 ?>

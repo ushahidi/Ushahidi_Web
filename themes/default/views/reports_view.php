@@ -79,6 +79,7 @@
 				<a href="" id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></a>
 			</div>
 		</div>
+		<a name="discussion"></a>
 		<?php
 		// Action::report_extra - Add Items to the Report Extra block
 		Event::run('ushahidi_action.report_extra', $incident_id);

@@ -4,8 +4,6 @@
 		'email' => 'Anwani ya barua pepe si sahihi',
 		'email_check' => 'Anwani ya barua pepe unayotupatia imeshasajilishwa kwa eneo lenu.',
 		'length' => 'Anwani ya barua pepe lazima iwe na baina ya herifi 4 na 64.',
-		'one required' => '',
-		'one_required' => '',
 		'required' => 'Anwani ya barua pepe inahitajika ikiwa kisanduku tiki cha anwani ya baura pepe imewekwa tiki.',
 	),
 	'alert_lat' => array(
@@ -37,7 +35,6 @@
 	'email_error_head' => 'Hatujakusajili kutanabahishwa kwa anwani yako ya barua pepe!',
 	'email_ok_head' => 'Tumeshakusajilisha kutanabahishwa kwa anwani yako ya barua pepe!',
 	'error' => 'Kompyuta haijaweza kukusajilisha!',
-	'error_body' => '',
 	'mobile_alert_request_created' => 'Haja yako ya kutanabahishwa kwa rununu imeshasajilishwa na ujumbe wa kujithibitisha umepelekwa kwa ',
 	'mobile_code' => 'Tafadhali andika ishara ya uthibitisho uliopata kwenye ujumbe tuliotume kwa simu ya rununu hapa: ',
 	'mobile_error_head' => 'Hatujakusajili kutanabahishwa kwa simu yako!',

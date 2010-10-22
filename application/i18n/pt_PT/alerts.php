@@ -4,8 +4,6 @@
 		'email' => 'O campo de email parece estar mal preenchido?',
 		'email_check' => 'O seu email já se encontra registado na nossa base de dados para receber alertas nessa localização',
 		'length' => 'O campo de email deve ter entre 4 a 64 caracteres de comprimento.',
-		'one required' => '',
-		'one_required' => '',
 		'required' => 'É necessário inserir o seu email, caso tenha seleccionado essa opção.',
 	),
 	'alert_lat' => array(
@@ -37,7 +35,6 @@
 	'email_error_head' => 'O seu pedido de alertas por EMAIL NÃO FICOU registado!',
 	'email_ok_head' => 'O seu pedido de alertas por EMAIL foi registado!',
 	'error' => 'O sistema não consegui processar o seu pedido!',
-	'error_body' => '',
 	'mobile_alert_request_created' => 'O seu pedido de alerta sms foi registado e será enviado em breve uma mensagem de verificação para ',
 	'mobile_code' => 'Por favor, insira o código de verificação enviado por SMS para o seguinte número: ',
 	'mobile_error_head' => 'O seu pedido de alertas por SMS NÃO FICOU registado!',

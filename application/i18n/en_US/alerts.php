@@ -4,8 +4,6 @@
 		'email' => 'The Email field does not appear to contain a valid email address?',
 		'email_check' => 'That Email address has already been registered to receive alerts for that location',
 		'length' => 'The Email field must be at least 4 and no more 64 characters long.',
-		'one required' => '',
-		'one_required' => '',
 		'required' => 'The Email field is required if the checkbox is checked.',
 	),
 	'alert_lat' => array(
@@ -37,7 +35,6 @@
 	'email_error_head' => 'Your Email Alert Request Has NOT Been Saved!',
 	'email_ok_head' => 'Your Email Alert Request Has Been Saved!',
 	'error' => 'The system was not able to process your confirmation request!',
-	'error_body' => '',
 	'mobile_alert_request_created' => 'Your Mobile Alert request has been created and verification message has been sent to ',
 	'mobile_code' => 'Please enter the SMS confirmation code you received on your mobile phone below: ',
 	'mobile_error_head' => 'Your Mobile Alert Request Has NOT Been Saved!',

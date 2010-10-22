@@ -8,9 +8,10 @@
  * Enable or disable file caching. This makes pages display faster
  * but can take a large amount of storage space on larger sites
  */
-$config['cache_pages'] = TRUE;
+$config['cache_pages'] = FALSE;
 
-if (@!is_writable(APPPATH.'cache')) {
+if (@!is_writable(APPPATH.'cache'))
+{
 	$config["cache_pages"] = FALSE;
 }
 

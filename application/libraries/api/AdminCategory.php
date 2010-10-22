@@ -28,6 +28,7 @@ class AdminCategory
     private $domain;
     private $api_prvt_func;
     private $ret_value;
+    private $error_messages;
 
     public function __construct()
     {
@@ -38,6 +39,7 @@ class AdminCategory
         $this->ret_json_or_xml = '';
         $this->response_type = '';
         $this->ret_value = 0;
+        $this->error_messages = '';
         $this->domain = $this->api_actions->_get_domain();
     }
 
@@ -59,7 +61,8 @@ class AdminCategory
         {
             $this->ret_value = $this->_submit_categories();
             return $this->api_actions->
-                _response($this->ret_value, $response_type);
+                _response($this->ret_value, $response_type,
+                    $this->error_messages);
         } else {
             //Authentication failed. Invalid User
             $this->ret_value = 2;
@@ -202,7 +205,8 @@ class AdminCategory
                 $this->ret_value = 3;
             }
 
-      	    return $this->_response($this->ret_value,$response_type);
+      	    return $this->_response($this->ret_value,$response_type,
+                    $this->error_messages);
         }
         else
         {
@@ -288,7 +292,7 @@ class AdminCategory
             }
         
             return $this->api_actions->_response(
-                $this->ret_value,$response_type);
+                $this->ret_value,$response_type,$this->error_messages);
         }
         else
         {

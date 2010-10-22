@@ -16,7 +16,7 @@
 
 class Verify_Model extends ORM
 {
-	protected $belongs_to = array('incident', 'users');
+	protected $belongs_to = array('incident', 'user');
 	
 	// Database table name
 	protected $table_name = 'verified';

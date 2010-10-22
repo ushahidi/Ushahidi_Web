@@ -15,21 +15,21 @@
  */
 
 class Addons_Controller extends Admin_Controller {
-	
-	function __construct()
-	{
-		parent::__construct();
-		$this->template->this_page = 'addons';
+    
+    function __construct()
+    {
+        parent::__construct();
+        $this->template->this_page = 'addons';
 
-		// If this is not a super-user account, redirect to dashboard
-		if(!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
+        // If this is not a super-user account, redirect to dashboard
+        if(!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
         {
              url::redirect('admin/dashboard');
-		}
-	}
-	
-	public function index()
-	{
-		url::redirect(url::base().'admin/addons/plugins/');
-	}
+        }
+    }
+    
+    public function index()
+    {
+        url::redirect(url::base().'admin/addons/plugins/');
+    }
 }

@@ -7,19 +7,8 @@
 	'category_description' => array(
 		'required' => 'Veuillez indiquer une description.',
 	),
-	'category_image' => array(
-		'size' => '',
-		'type' => '',
-		'valid' => '',
-	),
 	'category_title' => array(
 		'length' => 'Le titre doit comporter entre 3 et 80 caractères.',
 		'required' => 'Veuillez indiquer un titre.',
-	),
-	'parent_id' => array(
-		'exists' => '',
-		'numeric' => '',
-		'required' => '',
-		'same' => '',
 	));
 ?>

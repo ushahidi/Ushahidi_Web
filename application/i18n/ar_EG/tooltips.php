@@ -31,7 +31,6 @@
 	'settings_server_username' => 'البريد الإليكترونى الذى يستقبل التقارير',
 	'settings_share_site_stats' => 'API يسمح بالوصول إلى التقارير الإحصائية باسنخدام',
 	'settings_site_email' => 'سيتم ارسال الرسائل والتقارير على هذا البريد الإليكترونى',
-	'settings_site_message' => '',
 	'settings_site_name' => 'هذا اسم الموقع والذى يظهر أعلى الموقع الرئيسي',
 	'settings_site_tagline' => 'فى خلاصة, قم بشرح معلومات عن هذا الموقع',
 	'settings_twitter_configuration' => 'يُعد الوسم المختلط لتويتر والذى يتم ارساله فى رسائل التويتر',

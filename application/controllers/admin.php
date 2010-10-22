@@ -58,10 +58,14 @@ class Admin_Controller extends Template_Controller
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
-		//fetch latest version of ushahidi
-		$version_number = $upgrade->_fetch_core_version();
-
-		$this->template->version = $version_number;
+		//fetch latest release of ushahidi
+		$release = $upgrade->_fetch_core_release();
+        
+        if( ! empty($release) )
+        {
+		    $this->template->version = $release->version;
+            $this->template->critical = $release->critical;
+        }
 
 		// Get Session Information
 		$this->user = new User_Model($_SESSION['auth_user']->id);
@@ -91,6 +95,8 @@ class Admin_Controller extends Template_Controller
 		$this->template->main_tabs = admin::main_tabs();
 		// Generate sub navigation list (in default layout, sits on right side).
         $this->template->main_right_tabs = admin::main_right_tabs($this->auth);
+
+		$this->template->this_page = "";
 
 		// Load profiler
 		// $profiler = new Profiler;	

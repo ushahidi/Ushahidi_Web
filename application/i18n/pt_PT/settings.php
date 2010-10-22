@@ -114,7 +114,6 @@
 		'laconica_configuration' => 'Laconica Credentials',
 		'laconica_site' => 'Laconica Site ',
 		'language' => 'Site Language',
-		'message' => '',
 		'name' => 'Site Name',
 		'share_site_stats' => 'Share Site Statistics in API',
 		'tagline' => 'Site Tagline',

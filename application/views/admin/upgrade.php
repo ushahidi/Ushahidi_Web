@@ -23,22 +23,29 @@
 		<h4>Available Updates</h4>
 	</div>
 	<div class="settings_holder">
-		<strong><u>Ushahidi v.2.0.1</u></strong>
+		<strong><u>Ushahidi <?php echo $release_version ?></u></strong>
+        <?php if (is_array($changelogs)) { ?>
 		<ul>
-			<li>Lorem ipsum this is an example changelog item</li>
-			<li>Lorem ipsum this is an example changelog item</li>
-			<li>Lorem ipsum this is an example changelog item</li>
-			<li>Lorem ipsum this is an example changelog item</li>
-			<li>Lorem ipsum this is an example changelog item</li>
+            <?php foreach ( $changelogs as $changelog ) { ?>
+			<li><?php print $changelog ?></li>
+            <?php } ?>
 		</ul>
+        <?php } ?>
+        <p>So, I'm going to upgrade your database from version <?php print $db_version; ?> to the newest database version <?php print $current_db_version?>.</p>
+       	<p>Click on the "Upgrade" button and just chilax as I perform the magic.</p>
+       	<p>Oh, also if you want me to backup your database, just thick the check button below and I will do that for you in a breeze.</p>
+       	<?php print form::open(NULL, array('id' => 'upgradeMain', 'name' => 'upgradeMain')); ?>
+       	<p>
+       	<?php print form::label('chk_db_backup_box', 'Backup database?(<strong style="color:#FF0000;"> Highly recommended. </strong>)');?>
+		   	<?php print form::checkbox('chk_db_backup_box', '1');?>
+		</p>	       
 	</div>
 	
 	<div class="head">
 		<h4>Automatic Upgrade</h4>
 	</div>
 	<div class="settings_holder">
-		<?php print form::open(NULL, array('id' => 'upgradeMain', 'name' => 'upgradeMain')); ?>
-			<input type="submit" id="upgrade" name="submit" value="<?php echo Kohana::lang('upgrade.upgrade_continue_btn_text');?>" class="login_btn" />
+	    <input type="submit" id="upgrade" name="submit" value="<?php echo Kohana::lang('upgrade.upgrade_continue_btn_text');?>" class="login_btn" />
 		<?php print form::close();?>
 	</div>
 	

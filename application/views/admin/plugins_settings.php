@@ -18,45 +18,55 @@
 					<a href="<?php echo url::base() . 'admin/addons/plugins' . '" class="active">' . Kohana::lang('ui_main.plugins') . '</a>' ?>
 					<a href="<?php echo url::base() . 'admin/addons/themes' . '">' . Kohana::lang('ui_main.themes') . '</a>' ?>
 				</h2>
-
+				
 				<?php print form::open(NULL, array('name'=>'plugin_settings')); ?>
 				<div class="report-form">
-					<div class="head">
-						<h3><?php echo (isset($title)) ? $title : Kohana::lang('ui_admin.settings');?></h3>
-					</div>
-					
-					<!-- tabs -->
-					<div class="tabs">
-						<!-- tab -->
-						<div class="tab">
+					<?php
+					if (isset($form_error) AND $form_error)
+					{
+					?>
+						<!-- red-box -->
+						<div class="red-box">
+							<h3><?php echo Kohana::lang('ui_main.error');?></h3>
 							<ul>
-								<li><a href="#" onClick="document.plugin_settings.submit();"><?php echo strtoupper(Kohana::lang('ui_admin.save'));?></a></li>
-								<li><a href="#" onClick="document.plugin_settings.reset();"><?php echo strtoupper(Kohana::lang('ui_admin.reset'));?></a></li>
-								<li><a href="<?php echo url::base() . 'admin/addons/plugins' ?>"><?php echo strtoupper(Kohana::lang('ui_admin.back'));?></a></li>
+							<?php
+							foreach ($errors as $error_item => $error_description)
+							{
+								print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+							}
+							?>
 							</ul>
 						</div>
+					<?php
+					}
+
+					if (isset($form_saved) AND $form_saved) {
+					?>
+						<!-- green-box -->
+						<div class="green-box">
+							<h3><?php echo Kohana::lang('ui_main.configuration_saved');?></h3>
+						</div>
+					<?php
+					}
+					?>			
+				
+					<div class="head">
+						<h3><?php echo (isset($title)) ? $title : Kohana::lang('ui_admin.settings');?></h3>
+						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" onclick="document.location.href='<?php echo url::site() . 'admin/addons/plugins/'; ?>'; return false;" />
+						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />	
 					</div>				
 					
 					<div class="settings_holder">
 						<?php
 						
-						echo $form;
+						echo $settings_form;
 						
 						?>
 					</div>
-					
-					<!-- tabs -->
-					<div class="tabs">
-						<!-- tab -->
-						<div class="tab">
-							<ul>
-								<li><a href="#"><?php echo strtoupper(Kohana::lang('ui_admin.save'));?></a></li>
-								<li><a href="#"><?php echo strtoupper(Kohana::lang('ui_admin.reset'));?></a></li>
-								<li><a href="#"><?php echo strtoupper(Kohana::lang('ui_admin.back'));?></a></li>
-							</ul>
-						</div>
-					</div>
-					
+					<div class="simple_border"></div>
+		
+					<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
+					<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" onclick="document.location.href='<?php echo url::site() . 'admin/addons/plugins/'; ?>'; return false;" />
 				</div>
 				<?php print form::close(); ?>
 			</div>

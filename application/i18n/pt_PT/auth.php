@@ -4,13 +4,10 @@
 		'email' => 'O campo de email, parece não conter um email válido?',
 		'exists' => 'Desculpe, mas já existe uma conta com este endereço de email.',
 		'length' => 'O campo email deve ter entre 4 a 64 caracteres.',
-		'login error' => 'Por favor certique que inseriu o email correcto.',
 		'required' => 'O Campo email é de preenchimento obrigatório.',
 	),
-	'forgot_password' => '',
 	'name' => array(
 		'length' => 'O Campo nome completo deve ser preenchido com 3 a 100 caracteres.',
-		'login error' => 'Por favor certique que inseriu o nome correcto.',
 		'required' => 'O Campo nome completo é de preenchimento obrigatório.',
 		'standard_text' => 'O Campo nome de utilizador contém caracteres não autorizados.',
 	),
@@ -20,7 +17,6 @@
 		'login error' => 'Por favor, certifique que colocou a password correcta.',
 		'matches' => 'Por favor, insira a mesma password nos dois campos.',
 		'required' => 'O Campo password é de preenchimento obrigatório.',
-		'standard_text' => '',
 	),
 	'password_confirm' => array(
 		'matches' => 'Os campos das passwords devem ser iguais.',
@@ -31,19 +27,14 @@
 		'required' => 'O Campo email é de preenchimento obrigatório.',
 	),
 	'roles' => array(
-		'alpha_numeric' => '',
-		'length' => '',
 		'required' => 'Você deve definir pelo menos um tipo de regra.',
 		'values' => 'Tem de seleccionar a regra ADMIN ou USER.',
 	),
 	'username' => array(
-		'admin' => '',
 		'alpha' => 'O nome de utilizador deve conter só letras.',
 		'exists' => 'Desculpe mas este nome já está a ser utilizado.',
 		'length' => 'O Campo nome de utilizador deve ser preenchido com 3 a 16 caracteres',
 		'login error' => 'Por favor certifique que inseriu o nome de utilizador correcto.',
 		'required' => 'O Campo nome de utilizador é de preenchimento obrigatório.',
-		'standard_text' => '',
-		'superadmin' => '',
 	));
 ?>

@@ -4,13 +4,10 @@
 		'email' => 'El campo email parece no contener una direcciÃ³n de correo electrónico valida?',
 		'exists' => 'Lo siento, ya existe una cuenta de usuario que usa ese correo electrÃ³nico.',
 		'length' => 'El campo email debe tener por lo menos 4 y no mas de 64 caracteres.',
-		'login error' => 'Por favor revise que ha ingresado la dirección de correo electrÃ³nico correcta.',
 		'required' => 'El campo email es obligatorio.',
 	),
-	'forgot_password' => '',
 	'name' => array(
 		'length' => 'El campo nombre completo debe tener por lo menos 3 y no mas de 100 caracteres.',
-		'login error' => 'Por favor revise que ha ingresado el nombre correcto.',
 		'required' => 'El campo nombre completo es obligatorio.',
 		'standard_text' => 'El campo nombre de usuario contiene caracteres no permitidos.',
 	),
@@ -20,7 +17,6 @@
 		'login error' => 'Por favor revise que ha ingresado la clave correcta.',
 		'matches' => 'Por favor ingrese la misma clave en ambos campos.',
 		'required' => 'El campo clave es obligatorio.',
-		'standard_text' => '',
 	),
 	'password_confirm' => array(
 		'matches' => 'El campo confirmación de la clave debe ser igual al campo clave..',
@@ -31,8 +27,6 @@
 		'required' => 'El campo email es obligatorio.',
 	),
 	'roles' => array(
-		'alpha_numeric' => '',
-		'length' => '',
 		'required' => 'Usted debe definir al menos un rol.',
 		'values' => 'Usted debe seleccionar el rol ADMIN o USUARIO.',
 	),
@@ -43,7 +37,6 @@
 		'length' => 'El campo nombre de usuario debe tener por lo menos 2 y no mas de 16 caracteres.',
 		'login error' => 'Por favor revise que ingreso el nombre de usuario correcto.',
 		'required' => 'El campo nombre de usuario es obligatorio.',
-		'standard_text' => '',
 		'superadmin' => 'El rol del usuario super-administrador no puede ser modificado.',
 	));
 ?>

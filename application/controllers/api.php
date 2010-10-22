@@ -232,7 +232,305 @@ class Api_Controller extends Controller
                 }
                 
                 break;
+
+            //admin comments actions
+            case "comments":
+                $by = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'by'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'by')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $by = $this->request['by'];
+                }
+
+                switch($by)
+                {
+                    case "all":
+
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_get_all_comments($this->response_type);
+                        break;
+                    case "spam":
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_get_spam_comments($this->response_type);
+                        break;
+                    case "approved":
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_get_pending_comments($this->response_type);
+                        break;
+                    case "pending":
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_get_pending_comments($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002));
+                    break;
+
+                }
+                break;
+            
+            case "commentaction":
+                $action = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'action'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'action')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $by = $this->request['action'];
+                }
                 
+                switch($by)
+                {
+                    case "a": // approve comments
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_approve_comment($this->response_type);
+                        break;
+
+                    case "u": // unapprove comments
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_approve_comment($this->response_type);
+                        break;
+
+                    case "d": // delete comments
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_delete_comment($this->response_type);
+                        break;
+
+                    case "s":// mark comment as spam
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_spam_comment($this->response_type);
+                        break;
+
+                    case "n": //umark comment as spam
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_spam_comment($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002)
+                        );
+                    break;
+
+                }
+                break;
+
+            //admin twitter
+            case "twitter":
+                 $this->ret = $this->api_objects->admin_twitter
+                 ->_list_twitter_msgs($this->response_type);
+                break;
+            case "twitteraction":
+                $action = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'action'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'action')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $action = $this->request['action'];
+                }
+                
+                switch($action)
+                {
+                    case "d": // delete twitter
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_delete_twitter_msg($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002)
+                        );
+                    break;
+
+                }
+                break;
+            //admin email
+            case "email":
+                 $this->ret = $this->api_objects->admin_twitter
+                    ->_list_email_msgs($this->response_type);
+                break;
+            case "emailaction":
+                $action = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'action'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'action')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $action = $this->request['action'];
+                }
+                
+                switch($action)
+                {
+                   
+                    case "d": // delete email
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_delete_email_msg($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002)
+                        );
+                    break;
+
+                }
+                break;
+
+            //admin sms
+            case "sms":
+                 $this->ret = $this->api_objects->admin_twitter
+                    ->_list_sms_msgs($this->response_type);
+                break;
+            case "smsaction":
+                $action = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'action'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'action')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $action = $this->request['action'];
+                }
+                
+                switch($action)
+                {
+                   
+                    case "d": // delete twitter
+                        $this->ret = $this->api_objects->admin_comment
+                            ->_delete_sms_msg($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002)
+                        );
+                    break;
+
+                }
+                break;
+            
+            //admin reports
+            case "reports":
+                $by = '';
+                if ( ! $this->api_objects->api_actions->_verify_array_index($this->request,'by'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions->_get_error_msg(001, 'by')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $by = $this->request['by'];
+                }
+
+                switch($by)
+                {
+                    case "approved":
+
+                        $this->ret = $this->api_objects->admin_report
+                            ->_list_approved_reports($this->response_type);
+                        break;
+                    case "unapproved":
+                        $this->ret = $this->api_objects->admin_report
+                            ->_list_unapproved_reports(
+                                    $this->response_type);
+                        break;
+                    case "verified":
+                        $this->ret = $this->api_objects->admin_report
+                            ->_list_verified_reports($this->response_type);
+                        break;
+                    case "unverified":
+                        $this->ret = $this->api_objects->admin_report
+                            ->_list_unverified_reports(
+                                    $this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002));
+                    break;
+
+                }
+                
+                break;
+            case "reportaction";
+                $action = '';
+                if ( ! $this->api_objects->api_actions
+                        ->_verify_array_index($this->request,'action'))
+                {
+                    $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(001, 'action')
+                        );
+                    break;
+                }
+                else 
+                {
+                    $action = $this->request['action'];
+                }
+                
+                switch($action)
+                {
+                   
+                    case "d": // delete report
+                        $this->ret = $this->api_objects->admin_report
+                            ->_delete_report($this->response_type);
+                        break;
+                    case "a": // approve report
+                        $this->ret = $this->api_objects->admin_report
+                            ->_approve_report($this->response_type);
+                        break;
+
+                    case "v": // verify report
+                        $this->ret = $this->api_objects->admin_report
+                            ->_verify_report($this->response_type);
+                        break;
+
+                    case "e": // edit existing report
+                        $this->ret = $this->api_objects->admin_report
+                            ->_edit_report($this->response_type);
+                        break;
+
+                    default:
+                        $this->error = array(
+                            "error" => $this->api_objects->api_actions
+                            ->_get_error_msg(002)
+                        );
+                    break;
+
+                }
+
+                break;
             // Retrieve api keys
             case "apikeys":
                 $by = '';
