@@ -64,6 +64,10 @@ Kohana::config_set('settings.alerts_email', $settings->alerts_email);
 Kohana::config_set('settings.db_version', $settings->db_version);
 Kohana::config_set('settings.ushahidi_version', $settings->ushahidi_version);
 
+// Cache Settings
+Kohana::config_set('cache.cache_pages', $settings->cache_pages);
+Kohana::config_set('cache.default.lifetime', $settings->cache_pages_lifetime);
+
 $default_map = $settings->default_map;
 $map_layer = map::base($default_map);
 if ($map_layer)
