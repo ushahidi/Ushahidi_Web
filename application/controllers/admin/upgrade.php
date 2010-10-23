@@ -79,9 +79,9 @@ class Upgrade_Controller extends Admin_Controller {
                 $this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
 
                 $url = $this->release->download;
-                $working_dir = Kohana::config('upload.relative_directory')."/";
+                $working_dir = Kohana::config('upload.relative_directory')."/upgrade/";
                 
-                $zip_file = Kohana::config('upload.relative_directory')."/ushahidi/ushahidi.zip";
+                $zip_file = Kohana::config('upload.relative_directory')."/upgrade/ushahidi.zip";
         
                 //download the latest ushahidi
                 $this->upgrade->log[] = sprintf("Downloading latest ushahidi...");
@@ -96,13 +96,13 @@ class Upgrade_Controller extends Admin_Controller {
                 //extract compressed file
                 if ($this->upgrade->success)
                 {
-                    $this->upgrade->unzip_ushahidi($zip_file, $working_dir."ushahidi");
+                    $this->upgrade->unzip_ushahidi($zip_file, $working_dir);
                 }
                 
                 if ($this->upgrade->success)
                 {
                     $this->upgrade->log[] = sprintf("Copying files...");
-                    $this->upgrade->copy_recursively($working_dir."ushahidi",".");
+                    $this->upgrade->copy_recursively($working_dir,".");
                     $this->upgrade->log[] = sprintf("Successfully copied files");
                 }
         
@@ -117,13 +117,13 @@ class Upgrade_Controller extends Admin_Controller {
                         $error = $this->_do_db_backup( $gzip );
                         $this->upgrade->log[] = sprintf("Database backup in progress.");       
                     
-                        if (empty( $error ))
+                        if (empty($error))
                         {
                             $this->upgrade->log[] = sprintf("Database backup went successful.");
                                                     
                             //uprade tables.
                             $this->upgrade->log[] = sprintf("Upgrade table.");
-                            $this->_process_db_upgrade($working_dir."ushahidi/sql/");
+                            $this->_process_db_upgrade($working_dir."sql/");
                             $this->upgrade->log[] = sprintf("Table upgrade successful.");
 
                         }
@@ -137,14 +137,14 @@ class Upgrade_Controller extends Admin_Controller {
                     {                 
                         //uprade tables.
                         $this->upgrade->log[] = sprintf("Upgrade table.");
-                        $this->_process_db_upgrade($working_dir."ushahidi/sql/");
+                        $this->_process_db_upgrade($working_dir."sql/");
                         $this->upgrade->log[] = sprintf("Table upgrade successful.");
 
                     }
         
                     if ($this->upgrade->success)
                     {
-                        $this->upgrade->remove_recursively( $working_dir."ushahidi" );
+                        $this->upgrade->remove_recursively( $working_dir);
                         $this->upgrade->log[] = sprintf( "Upgrade went successful." );
                     }
                 }
