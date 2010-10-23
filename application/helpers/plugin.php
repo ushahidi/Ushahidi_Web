@@ -43,6 +43,17 @@ class plugin_Core {
 			self::$stylesheets[] = $stylesheet;
 		}
 	}
+	
+	public static function add_sms_provider($sms_providers = array())
+	{
+		if ( ! is_array($sms_providers))
+			$sms_providers = array($sms_providers => $sms_providers);
+
+		foreach ($sms_providers as $key => $sms_provider)
+		{
+			self::$sms_providers[$key] = $sms_provider;
+		}
+	}	
 
 	public static function render($type)
 	{
@@ -74,6 +85,11 @@ class plugin_Core {
 		}
 		
 		return $html;
+	}
+	
+	public static function get_sms_providers()
+	{
+		return self::$sms_providers;
 	}	
 	
 	/**

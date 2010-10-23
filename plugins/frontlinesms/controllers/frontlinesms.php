@@ -100,6 +100,9 @@ class Frontlinesms_Controller extends Controller
                         Kohana::lang('notifications.admin_new_sms.subject'),
                     Kohana::lang('notifications.admin_new_sms.message')
                     );
+
+				// Action::message_sms_add - SMS Received!
+                Event::run('ushahidi_action.message_sms_add', $message);
             }
         }
     }

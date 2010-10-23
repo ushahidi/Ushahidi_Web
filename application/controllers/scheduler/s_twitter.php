@@ -132,6 +132,9 @@ class S_Twitter_Controller extends Controller {
 				$message->message_date = $tweet_date;
 				$message->service_messageid = $tweet->{'id'};
 				$message->save();
+				
+				// Action::message_twitter_add - SMS Received!
+                Event::run('ushahidi_action.message_twitter_add', $message);
 			}
 		}
 	}

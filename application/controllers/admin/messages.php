@@ -1,7 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Messages Controller.
- * View SMS Messages Received Via FrontlineSMS
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -227,7 +226,7 @@ class Messages_Controller extends Admin_Controller
     }
 
     /**
-    * Send A New Message Using Clickatell Library
+    * Send A New Message Using Default SMS Provider
     */
     function send()
     {
@@ -292,17 +291,11 @@ class Messages_Controller extends Admin_Controller
                             $sms_from = "000";      // User needs to set up an SMS number
                         }
 
-                        // Create Clickatell Object
-                        $mysms = new Clickatell();
-                        $mysms->api_id = $settings->clickatell_api;
-                        $mysms->user = $settings->clickatell_username;
-                        $mysms->password = $settings->clickatell_password;
-                        $mysms->use_ssl = false;
-                        $mysms->sms();
-                        $send_me = $mysms->send ($sms_to, $sms_from, $post->message);
+                        // Send Message
+						$response = sms::send($sms_to, $sms_from, $post->message);
 
                         // Message Went Through??
-                        if ($send_me == "OK")
+                        if ($response == true)
                         {
                             $newmessage = ORM::factory('message');
                             $newmessage->parent_id = $post->to_id;  // The parent message
@@ -318,7 +311,7 @@ class Messages_Controller extends Admin_Controller
                         }                        
                         else    // Message Failed 
                         {
-                            echo json_encode(array("status"=>"error", "message"=>Kohana::lang('ui_admin.error')." - " . $send_me));
+                            echo json_encode(array("status"=>"error", "message"=>Kohana::lang('ui_admin.error')." - " . $response));
                         }
                     }
                     else

@@ -55,66 +55,29 @@
 					</div>
 					<!-- column -->
 		
-					<div class="sms_nav_holder">
-					
-						<?php admin::settings_sms_subtabs(); ?>
-					</div>
-		
 					<div class="sms_holder">
-						<table style="width: 630px;" class="my_table">
-							<tr>
-								<td style="width:60px;">
-									<span class="big_blue_span"><?php echo Kohana::lang('ui_main.step');?> 1:</span>
-								</td>
-								<td>
-									<h4 class="fix"><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_flsms_download"); ?>"><?php echo Kohana::lang('settings.sms.flsms_download');?></a></h4>
-									<p>
-										<?php echo Kohana::lang('settings.sms.flsms_description');?>.
-									</p>
-									<a href="http://www.frontlinesms.com/download/" class="no_border">
-										<img src="<?php echo url::base() ?>media/img/admin/download_frontline_engine.gif" />
-									</a>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span class="big_blue_span"><?php echo Kohana::lang('ui_main.step');?> 2:</span>
-								</td>
-								<td>
-									<h4 class="fix"><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_flsms_synchronize"); ?>"><?php echo Kohana::lang('settings.sms.flsms_synchronize');?></a></h4>
-									<p>
-										<?php echo Kohana::lang('settings.sms.flsms_instructions');?>.
-									</p>
-									<p class="sync_key">
-										<?php echo Kohana::lang('settings.sms.flsms_key');?>: <span><?php echo $frontlinesms_key; ?></span><br /><br />
-										<?php echo Kohana::lang('settings.sms.flsms_link');?>:<br /><span><?php echo $frontlinesms_link; ?></span>
-									</p>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<span class="big_blue_span"><?php echo Kohana::lang('ui_main.step');?> 3:</span>
-								</td>
-								<td>
-									<h4 class="fix"><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_flsms_text_1"); ?>"><?php echo Kohana::lang('settings.sms.flsms_text_1');?>.</a></h4>
-									<p>
-										<?php echo Kohana::lang('settings.sms.flsms_text_2');?>.
-									</p>
-									<div class="row">
-										<h4><?php echo Kohana::lang('ui_main.phone');?> 1:</h4>
-										<?php print form::input('sms_no1', $form['sms_no1'], ' class="text title_2"'); ?>
-									</div>
-									<div class="row">
-										<h4><?php echo Kohana::lang('ui_main.phone');?> 2:</h4>
-										<?php print form::input('sms_no2', $form['sms_no2'], ' class="text title_2"'); ?>
-									</div>
-									<div class="row">
-										<h4><?php echo Kohana::lang('ui_main.phone');?> 3:</h4>
-										<?php print form::input('sms_no3', $form['sms_no3'], ' class="text title_2"'); ?>
-									</div>
-								</td>
-							</tr>
-						</table>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="Text Messages Sent From the System Will Use the Selected Provider. ***Provider text messaging rates may apply!">Default Sending Provider</a> <span>Provider text messaging rates may apply</span></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('sms_provider', $sms_provider_array, $form['sms_provider']); ?>
+							</span>
+						</div>
+
+						<div class="row" style="margin-top:20px;">
+							<h4>Enter all the phone numbers that users can use to send text messages into your system below.</h4>
+						</div>
+						<div class="row">
+							<h4><?php echo Kohana::lang('ui_main.phone');?> 1: <span><?php echo Kohana::lang('settings.sms.flsms_text_2');?></span></h4>
+							<?php print form::input('sms_no1', $form['sms_no1'], ' class="text title_2"'); ?>
+						</div>
+						<div class="row">
+							<h4><?php echo Kohana::lang('ui_main.phone');?> 2: <span><?php echo Kohana::lang('settings.sms.flsms_text_2');?></span></h4>
+							<?php print form::input('sms_no2', $form['sms_no2'], ' class="text title_2"'); ?>
+						</div>
+						<div class="row">
+							<h4><?php echo Kohana::lang('ui_main.phone');?> 3: <span><?php echo Kohana::lang('settings.sms.flsms_text_2');?></span></h4>
+							<?php print form::input('sms_no3', $form['sms_no3'], ' class="text title_2"'); ?>
+						</div>
 					</div>
 		
 					<div class="simple_border"></div>
