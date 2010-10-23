@@ -14,8 +14,8 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Upgrade_Controller extends Admin_Controller
-{
+class Upgrade_Controller extends Admin_Controller {
+
     protected $db;
     protected $upgrade;
     protected $release;
@@ -31,8 +31,10 @@ class Upgrade_Controller extends Admin_Controller
         $this->release = $this->upgrade->_fetch_core_release();
         
         $release_version = $this->_get_release_version(); 
+        
         // limit access to only superadmin
-        if ( ! $this->auth->logged_in('superadmin') AND ( $release_version != "" ) )
+        if ( ! $this->auth->logged_in('superadmin') OR 
+                ( $release_version == "" ) )
         {
             url::redirect('admin/dashboard');
         }
@@ -61,7 +63,7 @@ class Upgrade_Controller extends Admin_Controller
         );
 
         //check if form has been submitted
-        if( $_POST )
+        if ( $_POST )
         {
             // For sanity sake, validate the data received from users.
             $post = Validation::factory(array_merge($_POST,$_FILES));
@@ -78,7 +80,7 @@ class Upgrade_Controller extends Admin_Controller
 
                 $url = $this->release->download;
                 $working_dir = Kohana::config('upload.relative_directory')."/";
-                @mkdir($working_dir."ushahidi", 0777);
+                
                 $zip_file = Kohana::config('upload.relative_directory')."/ushahidi/ushahidi.zip";
         
                 //download the latest ushahidi
@@ -177,7 +179,7 @@ class Upgrade_Controller extends Admin_Controller
         $this->template->content = new View('admin/upgrade_status');
         $this->template->cntent = Kohana::lang('upgrade.upgrade_status');
 
-        if( count( $upgrade->errors ) == 0 )
+        if (count($upgrade->errors) == 0)
         {
             $this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
             $this->template->content->logs = $upgrade->log;
@@ -204,7 +206,7 @@ class Upgrade_Controller extends Admin_Controller
         $db_config = Kohana::config('database.default');
         $table_prefix = $db_config['table_prefix'];
         
-        if ( $table_prefix )
+        if ($table_prefix)
         {
             $find = array(
                 'CREATE TABLE IF NOT EXISTS `',
@@ -228,9 +230,9 @@ class Upgrade_Controller extends Admin_Controller
         
         // get the database object.
     
-        foreach ( $queries as $query )
+        foreach ($queries as $query)
         {
-            $result = $this->db->query( $query );
+            $result = $this->db->query($query);
         }
             
         // Delete cache
@@ -249,16 +251,15 @@ class Upgrade_Controller extends Admin_Controller
         $upgrade_sql = '';
 
         $files = scandir($dir_path);
-        foreach( $files as $file )
+        foreach ( $files as $file )
         {
             $upgrade_sql = $this->_get_db_version();
             
-            if( $upgrade_sql == $file )
+            if ($upgrade_sql == $file)
             {
-                $this->_execute_upgrade_script( $dir_path.$upgrade_sql );
+                $this->_execute_upgrade_script($dir_path.$upgrade_sql);
             } 
         }
-        exit;
         return "";
     }
     
@@ -297,7 +298,7 @@ class Upgrade_Controller extends Admin_Controller
         $paths = array('mysql' => '', 'mysqldump' => '');
         
         //check for platform
-        if(substr(PHP_OS,0,3) == 'WIN')
+        if (substr(PHP_OS,0,3) == 'WIN')
         {
             
             $result = mysql_query("SHOW VARIABLES LIKE 'basedir'");
@@ -411,9 +412,8 @@ class Upgrade_Controller extends Admin_Controller
         $release_version = $this->release->version;
 		
         $version_ushahidi = Kohana::config('settings.ushahidi_version');
-			
-        if($this->_new_or_not($release_version > $version_ushahidi AND 
-                $release_version != "") )
+	    	
+        if ($this->_new_or_not($release_version,$version_ushahidi))
         {
 			return $release_version;
 		} 
