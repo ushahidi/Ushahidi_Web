@@ -344,7 +344,7 @@ class Imap_Core {
 
 		// BODY
 		$s = imap_fetchstructure($mbox,$mid);
-		if (!$s->parts)	 // not multipart
+		if (@!$s->parts)	 // not multipart
 			$this->_getpart($mbox,$mid,$s,0);  // no part-number, so pass 0
 		else {	// multipart: iterate through each part
 			foreach ($s->parts as $partno0=>$p)
