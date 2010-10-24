@@ -119,20 +119,21 @@ class Clickatell_Settings_Controller extends Admin_Controller
         $this->template = "";
         $this->auto_render = FALSE;
 
-        $settings = new Settings_Model(1);
-        if ($settings->loaded == true) {
-            $clickatell_api = $settings->clickatell_api;
-            $clickatell_username = $settings->clickatell_username;
-            $clickatell_password = $settings->clickatell_password;
+        $clickatell = ORM::factory("clickatell")->find(1);
+        if ($clickatell->loaded)
+		{
+            $clickatell_api = $clickatell->clickatell_api;
+            $clickatell_username = $clickatell->clickatell_username;
+            $clickatell_password = $clickatell->clickatell_password;
 
-            $mysms = new Clickatell();
-            $mysms->api_id = $clickatell_api;
-            $mysms->user = $clickatell_username;
-            $mysms->password = $clickatell_password;
-            $mysms->use_ssl = false;
-            $mysms->sms();
+            $testsms = new Clickatell_API();
+            $testsms->api_id = $clickatell_api;
+            $testsms->user = $clickatell_username;
+            $testsms->password = $clickatell_password;
+            $testsms->use_ssl = false;
+            $testsms->sms();
             // echo $mysms->session;
-            echo $mysms->getbalance();
+            echo $testsms->getbalance();
         }
     }
 }

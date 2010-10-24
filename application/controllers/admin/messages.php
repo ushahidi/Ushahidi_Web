@@ -295,7 +295,7 @@ class Messages_Controller extends Admin_Controller
 						$response = sms::send($sms_to, $sms_from, $post->message);
 
                         // Message Went Through??
-                        if ($response == true)
+                        if ($response === true)
                         {
                             $newmessage = ORM::factory('message');
                             $newmessage->parent_id = $post->to_id;  // The parent message

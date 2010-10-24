@@ -295,17 +295,12 @@ class Alerts_Controller extends Main_Controller {
             $sms_from = "000";// User needs to set up an SMS number
         }
 
-        $sms = new Clickatell;
-        $sms->api_id = $settings->clickatell_api;
-        $sms->user = $settings->clickatell_username;
-        $sms->password = $settings->clickatell_password;
-        $sms->use_ssl = false;
-        $sms->sms();
-        $message = Kohana::lang('ui_admin.confirmation_code').$alert_code.'. '.Kohana::lang('ui_admin.not_case_sensitive');
-    
-        if ($sms->send($alert_mobile, $sms_from, $message) == "OK")
-        {
-            $alert = ORM::factory('alert'); 
+		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code
+			.'.'.Kohana::lang('ui_admin.not_case_sensitive');
+		
+		if (sms::send($alert_mobile, $sms_from, $message) === true)
+		{
+			$alert = ORM::factory('alert'); 
             $alert->alert_type = self::MOBILE_ALERT;
             $alert->alert_recipient = $alert_mobile;
             $alert->alert_code = $alert_code;
@@ -315,7 +310,7 @@ class Alerts_Controller extends Main_Controller {
             $alert->save();
 
             return TRUE;
-        }
+		}
 
         return FALSE;
     }
@@ -328,7 +323,10 @@ class Alerts_Controller extends Main_Controller {
         $settings = kohana::config('settings');
         
         $to = $alert_email;
-        $from = $settings['alerts_email'];
+		$from = array();
+        $from[] = ($settings['alerts_email']) ? $settings['alerts_email']
+			: $settings['site_email'];
+		$from[] = $settings['site_name'];
         $subject = $settings['site_name']." ".Kohana::lang('alerts.verification_email_subject');
         $message = Kohana::lang('alerts.confirm_request').url::site().'alerts/verify/?c='.$alert_code."&e=".$alert_email;
 

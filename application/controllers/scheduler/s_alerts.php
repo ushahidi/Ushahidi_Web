@@ -35,7 +35,6 @@ class S_Alerts_Controller extends Controller {
 
 		$settings = NULL;
 		$sms_from = NULL;
-		$clickatell = NULL;
 
 		$db = new Database();
 		
@@ -99,19 +98,11 @@ class S_Alerts_Controller extends Controller {
 								else
 									$sms_from = "000";      // Admin needs to set up an SMS number
 							}
-
-							$clickatell = new Clickatell();
-							$clickatell->api_id = $settings->clickatell_api;
-							$clickatell->user = $settings->clickatell_username;
-							$clickatell->password = $settings->clickatell_password;
-							$clickatell->use_ssl = false;
-							$clickatell->sms();
 						}	
 
 						$message = $incident->incident_description;
 						
-						// If Clickatell Is Set Up
-						if ($clickatell->send($alertee->alert_recipient, $sms_from, $message) == "OK")
+						if (sms::send($alertee->alert_recipient, $sms_from, $message) === true)
 						{
 							$alert = ORM::factory('alert_sent');
 							$alert->alert_id = $alertee->id;
@@ -124,7 +115,9 @@ class S_Alerts_Controller extends Controller {
 					elseif ($alert_type == 2) // Email alertee
 					{
 						$to = $alertee->alert_recipient;
-						$from = $alerts_email;
+						$from = array();
+							$from[] = $alerts_email;
+							$from[] = $site_name;
 						$subject = "[$site_name] ".$incident->incident_title;
 						$message = $incident->incident_description
 									."<p>".$unsubscribe_message

@@ -13,7 +13,9 @@ class notifications_Core
 			if ($subject && $message)
 			{
 				$settings = kohana::config('settings');
-				$from = $settings['site_email'];			
+				$from = array();
+					$from[] = $settings['site_email'];
+					$from[] = $settings['site_name'];
 				$users = ORM::factory('user')->where('notify', 1)->find_all();
 
 				foreach($users as $user) 
