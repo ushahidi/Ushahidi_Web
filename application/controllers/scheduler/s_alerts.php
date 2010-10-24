@@ -17,10 +17,40 @@ class S_Alerts_Controller extends Controller {
 	
 	public $table_prefix = '';
 	
-	public function __construct()
+	// Cache instance
+	protected $cache;
+	
+	function __construct()
     {
         parent::__construct();
-	}	
+
+		// Load cache
+		$this->cache = new Cache;
+		
+		// *************************************
+		// ** SAFEGUARD DUPLICATE SEND-OUTS **
+		// Create A 10 Minute SEND LOCK
+		// This lock is released at the end of execution
+		// Or expires automatically
+		$alerts_lock = $this->cache->get("alerts_lock");
+		if ( ! $alerts_lock)
+		{
+			// Lock doesn't exist
+			$timestamp = time();
+			$this->cache->set("alerts_lock", $timestamp, array("alerts"), 600);
+		}
+		else
+		{
+			// Lock Exists - End
+			exit("Other process is running - waiting 10 minutes");
+		}
+		// *************************************
+	}
+	
+	function __destruct()
+	{
+		$this->cache->delete("alerts_lock");
+	}
 	
 	public function index() 
 	{
