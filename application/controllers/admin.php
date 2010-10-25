@@ -30,6 +30,8 @@ class Admin_Controller extends Template_Controller
 
 	// Table Prefix
 	protected $table_prefix;
+    
+    protected $release;
 
 	public function __construct()
 	{
@@ -59,12 +61,12 @@ class Admin_Controller extends Template_Controller
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
 		//fetch latest release of ushahidi
-		$release = $upgrade->_fetch_core_release();
+		$this->release = $upgrade->_fetch_core_release();
         
-        if( ! empty($release) )
+        if( ! empty($this->release) )
         {
-		    $this->template->version = $release->version;
-            $this->template->critical = $release->critical;
+		    $this->template->version = $this->_get_release_version();
+            $this->template->critical = $this->release->critical;
         }
 
 		// Get Session Information
@@ -119,6 +121,73 @@ class Admin_Controller extends Template_Controller
 
 		url::redirect('login');
 	}
+
+    /**
+     * Fetches the latest ushahidi release version number
+     *
+     * @return int or string
+     */
+    private function _get_release_version()
+    {
+        
+        $release_version = $this->release->version;
+		
+        $version_ushahidi = Kohana::config('settings.ushahidi_version');
+	    	
+        if ($this->_new_or_not($release_version,$version_ushahidi))
+        {
+			return $release_version;
+		} 
+        else 
+        {
+			return "";
+		}
+
+    }
+    
+    /**
+     * Checks version sequence parts
+     *
+     * @param string release_version - The version released.
+     * @param string version_ushahidi - The version of ushahidi installed.
+     *
+     * @return boolean
+     */
+    private function _new_or_not($release_version=NULL,
+            $version_ushahidi=NULL )
+    {
+        if ($release_version AND $version_ushahidi)
+	    {
+		    // Split version numbers xx.xx.xx
+		    $remote_version = explode($release_version, ".");
+		    $local_version = explode($version_ushahidi, ".");
+
+		    // Check first part .. if its the same, move on to next part
+		    if (isset($remote_version[0]) AND isset($local_version[0])
+			    AND (int) $remote_version[0] > (int) $local_version[0])
+		    {
+			    return true;
+		    }
+
+		    // Check second part .. if its the same, move on to next part
+		    if (isset($remote_version[1]) AND isset($local_version[1])
+			    AND (int) $remote_version[1] > (int) $local_version[1])
+		    {
+			    return true;
+		    }
+
+		    // Check third part
+		    if (isset($remote_version[2]) AND isset($local_version[2])
+			    AND (int) $remote_version[2] > (int) $local_version[2])
+		    {
+			    return true;
+		    }
+
+		}
+
+        return false;
+    }
+
 
 } // End Admin
 

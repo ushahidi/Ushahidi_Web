@@ -101,7 +101,10 @@
 									// Do we have a settings page?
 									$settings = plugin::settings($plugin->plugin_name);
 									?>
-									<tr>
+									<tr <?php if ($plugin_active)
+									{
+										echo " class=\"addon_active\" ";
+									}?>>
 										<td class="col-1"><input name="plugin_id[]" id="plugin" value="<?php echo $plugin_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">

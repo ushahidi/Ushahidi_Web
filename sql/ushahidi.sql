@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 33
+-- version 34
 -- http://www.ushahidi.com
 
 
@@ -826,13 +826,10 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `default_zoom` tinyint(4) NOT NULL default '10',                                -- field description
     `items_per_page` smallint(6) NOT NULL default '20',                             -- field description
     `items_per_page_admin` smallint(6) NOT NULL default '20',                       -- field description
+	`sms_provider` varchar(100) NULL DEFAULT NULL,
     `sms_no1` varchar(100) default NULL,                                            -- field description
     `sms_no2` varchar(100) default NULL,                                            -- field description
     `sms_no3` varchar(100) default NULL,                                            -- field description
-    `frontlinesms_key` varchar(30) default NULL,                                    -- field description
-    `clickatell_api` varchar(30) default NULL,                                      -- field description
-    `clickatell_username` varchar(100) default NULL,                                -- field description
-    `clickatell_password` varchar(100) default NULL,                                -- field description
     `google_analytics` text,                                                        -- field description
     `twitter_hashtags` text default NULL,                                           -- field description
     `laconica_username` varchar(50) default NULL,                                   -- field description
@@ -1548,4 +1545,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0b11' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '33' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '34' WHERE `id`=1 LIMIT 1;

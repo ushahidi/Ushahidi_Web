@@ -2031,6 +2031,12 @@ h4 span.highlight{
 	.attachment_thumbs img{
 		border-width:0;
 	}
+	
+
+/* Plugins/Addons/Themes */
+tr.addon_active td{
+	background-color:#ffffcc;
+}
 
 /*--  --*/
 /*--  --*/

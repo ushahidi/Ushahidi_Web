@@ -1,4 +1,4 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * CLICKATELL SMS API
  *
@@ -35,7 +35,7 @@
  * @package sms_api
  */
 
-class Clickatell_Core {
+class Clickatell_API_Core {
 
     /**
     * Clickatell API-ID
