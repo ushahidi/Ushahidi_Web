@@ -15,7 +15,7 @@
  */
 
 // Categories JS
-function fillFields(id, parent_id, category_title, category_description, category_color, locale)
+function fillFields(id, parent_id, category_title, category_description, category_color, locale<?php foreach($locale_array as $lang_key => $lang_name) echo ', '.$lang_key; ?>)
 {
 	show_addedit();
 	$("#category_id").attr("value", unescape(id));
@@ -24,6 +24,11 @@ function fillFields(id, parent_id, category_title, category_description, categor
 	$("#category_description").attr("value", unescape(category_description));
 	$("#category_color").attr("value", unescape(category_color));
 	$("#locale").attr("value", unescape(locale));
+	<?php
+		foreach($locale_array as $lang_key => $lang_name) {
+			echo '$("#category_title_'.$lang_key.'").attr("value", unescape('.$lang_key.'));'."\n";
+		}
+	?>
 }
 
 // Ajax Submission
