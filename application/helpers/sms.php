@@ -122,7 +122,7 @@ class sms_Core
 			);
 
 		// Action::message_sms_add - SMS Received!
-		Event::run('ushahidi_action.message_sms_add', $message);
+		Event::run('ushahidi_action.message_sms_add', $sms);
 		
 		return TRUE;
 	}
