@@ -133,7 +133,12 @@ class Plugins_Controller extends Admin_Controller {
 						{
 							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH.$plugin->plugin_name)));
 							$class = ucfirst($plugin->plugin_name).'_Install';
-							if ($path = Kohana::find_file('libraries', $plugin->plugin_name.'_install'))
+							$path = Kohana::find_file('libraries', $plugin->plugin_name.'_install');
+							if ( ! $path)
+							{ //Check for filename with Capitalized [I]nstall
+								$path = Kohana::find_file('libraries', $plugin->plugin_name.'_Install');
+							}
+							if ($path)
 							{
 								include $path;
 
