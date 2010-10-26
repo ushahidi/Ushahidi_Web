@@ -112,6 +112,7 @@ class sms_Core
 		$sms->message_type = 1; // Inbox
 		$sms->message_date = date("Y-m-d H:i:s",time());
 		$sms->service_messageid = null;
+		Event::run('ushahidi_filter.sms_new', $sms);
 		$sms->save();
 		
 		// Notify Admin Of New Email Message
