@@ -105,6 +105,24 @@ class Clickatell_Settings_Controller extends Admin_Controller
 		// Pass the $form on to the settings_form variable in the view
 		$this->template->content->settings_form->form = $form;
 		
+		
+		// Do we have a frontlineSMS Key? If not create and save one on the fly
+        $clickatell = ORM::factory('clickatell', 1);
+		
+		if ($clickatell->loaded AND $clickatell->clickatell_key)
+		{
+			$clickatell_key = $clickatell->clickatell_key;
+		}
+		else
+		{
+			$clickatell_key = strtoupper(text::random('alnum',8));
+            $clickatell->clickatell_key = $clickatell_key;
+            $clickatell->save();
+		}
+
+		$this->template->content->settings_form->clickatell_key = $clickatell_key;
+		$this->template->content->settings_form->clickatell_link = url::site()."clickatell/?key=".$clickatell_key;
+		
 		// Other variables
 	    $this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;

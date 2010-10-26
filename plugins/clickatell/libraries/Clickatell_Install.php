@@ -29,6 +29,7 @@ class Clickatell_Install {
 			CREATE TABLE IF NOT EXISTS `".Kohana::config('database.default.table_prefix')."clickatell`
 			(
 				id int(11) unsigned NOT NULL AUTO_INCREMENT,
+				clickatell_key varchar(100) DEFAULT NULL,
 				clickatell_api varchar(100) DEFAULT NULL,
 				clickatell_username varchar(100) DEFAULT NULL,
 				clickatell_password varchar(100) DEFAULT NULL,
