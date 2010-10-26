@@ -71,9 +71,26 @@
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_alert_email"); ?>"><?php echo Kohana::lang('settings.site.email_alerts');?></a></h4>
 							<?php print form::input('alerts_email', $form['alerts_email'], ' class="text long2"'); ?>
 						</div>
+						<script type="text/javascript" charset="utf-8">
+						// Initialize tinyMCE Wysiwyg Editor
+						tinyMCE.init({
+						convert_urls : false,
+						relative_urls : false,
+						mode : "exact",
+						elements : "site_message",
+						theme : "advanced",
+						plugins : "pagebreak,advhr,advimage,advlink,iespell,inlinepopups,contextmenu,paste,directionality,noneditable,advlist",
+						// Theme options
+						theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,fontselect,fontsizeselect",
+						theme_advanced_buttons2 : "outdent,indent,blockquote,|,undo,redo,|,link,unlink,image,code,|,forecolor,backcolor",
+						theme_advanced_buttons3 : "cut,copy,paste,pastetext,pasteword,|,hr,removeformat,visualaid,|,sub,sup,|,advhr,|,ltr,rtl",
+						theme_advanced_toolbar_location : "top",
+						theme_advanced_toolbar_align : "left"
+						});
+						</script>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_message"); ?>"><?php echo Kohana::lang('settings.site.message');?></a></h4>
-							<?php print form::textarea('site_message', $form['site_message'], ' style="height:40px;"'); ?>
+							<?php print form::textarea('site_message', $form['site_message'], ' style="height:200px;width:400px;"'); ?>
 						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_locale"); ?>"><?php echo Kohana::lang('settings.site.language');?></a> (Locale)</h4>

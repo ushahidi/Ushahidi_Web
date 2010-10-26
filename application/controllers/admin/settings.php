@@ -189,6 +189,7 @@ class Settings_Controller extends Admin_Controller
         }
 
         $this->template->colorpicker_enabled = TRUE;
+	$this->template->editor_enabled = TRUE;
         $this->template->content->form = $form;
         $this->template->content->errors = $errors;
         $this->template->content->form_error = $form_error;
