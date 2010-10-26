@@ -21,7 +21,7 @@ class Reports_Controller extends Main_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		
+
 		$this->themes->validator_enabled = TRUE;
 
 		// Is the Admin Logged In?
@@ -41,8 +41,11 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content = new View('reports');
 		$this->themes->js = new View('reports_js');
 
+		// Get locale
+		$l = Kohana::config('locale.language.0');
+
 		$db = new Database;
-		
+
 		// Get incident_ids if we are to filter by category
 		$allowed_ids = array();
 		if (isset($_GET['c']) AND !empty($_GET['c']) AND $_GET['c']!=0)
@@ -59,7 +62,7 @@ class Reports_Controller extends Main_Controller {
 
 		// Get location_ids if we are to filter by location
 		$location_ids = array();
-		
+
 		// Break apart location variables, if necessary
 		$southwest = array();
 		if (isset($_GET['sw']))
@@ -81,9 +84,9 @@ class Reports_Controller extends Main_Controller {
 			$lat_max = (float) $northeast[1];
 
 			$query = 'SELECT id FROM '.$this->table_prefix.'location WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
-			
-			$query = $db->query($query);			
-			
+
+			$query = $db->query($query);
+
 			foreach ( $query as $items )
 			{
 				$location_ids[] =  $items->id;
@@ -106,7 +109,7 @@ class Reports_Controller extends Main_Controller {
 		{
 			$location_id_in = 'location_id IN ('.implode(',',$location_ids).')';
 		}
-		
+
 		// Pagination
 		$pagination = new Pagination(array(
 				'query_string' => 'page',
@@ -117,7 +120,7 @@ class Reports_Controller extends Main_Controller {
 					->where($incident_id_in)
 					->count_all()
 				));
-		
+
 		// Reports
 		$incidents = ORM::factory("incident")
 			->where("incident_active", 1)
@@ -125,6 +128,28 @@ class Reports_Controller extends Main_Controller {
 			->where($incident_id_in)
 			->orderby("incident_date", "desc")
 			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+
+		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
+
+		$localized_categories = array();
+		foreach ($incidents as $incident)
+		{
+			foreach ($incident->category AS $category)
+			{
+				$ct = (string)$category->category_title;
+				if( ! isset($localized_categories[$ct]))
+				{
+					$translated_title = Category_Lang_Model::category_title($category->id,$l);
+					$localized_categories[$ct] = $category->category_title;
+					if($translated_title)
+					{
+						$localized_categories[$ct] = $translated_title;
+					}
+				}
+			}
+		}
+
+		$this->template->content->localized_categories = $localized_categories;
 
 		$this->template->content->incidents = $incidents;
 
@@ -140,7 +165,7 @@ class Reports_Controller extends Main_Controller {
 		{
 			$plural = "s";
 		}
-		
+
 		if ($pagination->total_items > 0)
 		{
 			$current_page = ($pagination->sql_offset/ (int) Kohana::config('settings.items_per_page')) + 1;
@@ -163,12 +188,24 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Category Title, if Category ID available
+
 		$category_id = ( isset($_GET['c']) AND !empty($_GET['c']) )
 			? $_GET['c'] : "0";
 		$category = ORM::factory('category')
 			->find($category_id);
-		$this->template->content->category_title = ( $category->loaded ) ?
-			$category->category_title : "";
+
+		if($category->loaded)
+		{
+			$translated_title = Category_Lang_Model::category_title($category_id,$l);
+			if($translated_title)
+			{
+				$this->template->content->category_title = $translated_title;
+			}else{
+				$this->template->content->category_title = $category->category_title;
+			}
+		}else{
+			$this->template->content->category_title = "";
+		}
 
 		// Collect report stats
 		$this->template->content->report_stats = new View('reports_stats');
@@ -194,7 +231,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->report_stats->total_reports = $total_reports;
 		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
 		$this->template->content->report_stats->percent_verified = $percent_verified;
-		
+
 		$this->template->header->header_block = $this->themes->header_block();
 	}
 
@@ -449,8 +486,7 @@ class Reports_Controller extends Main_Controller {
 					$photo->save();
 					$i++;
 				}
-				
-				
+
 				// STEP 7: SAVE CUSTOM FORM FIELDS
 				if (isset($post->custom_field))
 				{
@@ -505,7 +541,6 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 
-
 		// Retrieve Country Cities
 		$default_country = Kohana::config('settings.default_country');
 		$this->template->content->cities = $this->_get_cities($default_country);
@@ -515,12 +550,13 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
-		$this->template->content->categories = $this->_get_categories($form['incident_category']);
+
+		$categories = $this->_get_categories($form['incident_category']);
+		$this->template->content->categories = $categories;
 
 		// Retrieve Custom Form Fields Structure
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
-
 
 		// Javascript Header
 		$this->themes->map_enabled = TRUE;
@@ -539,7 +575,7 @@ class Reports_Controller extends Main_Controller {
 			$this->themes->js->latitude = $form['latitude'];
 			$this->themes->js->longitude = $form['longitude'];
 		}
-		
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
@@ -862,7 +898,7 @@ class Reports_Controller extends Main_Controller {
 
 		// If the Admin is Logged in - Allow for an edit link
 		$this->template->content->logged_in = $this->logged_in;
-		
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
@@ -874,7 +910,7 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit_thanks');
-		
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
@@ -965,18 +1001,18 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 	}
-	
+
 	public function geocode()
 	{
 		$this->template = "";
 		$this->auto_render = FALSE;
-		
+
 		if (isset($_POST['address']) AND ! empty($_POST['address']))
 		{
 			$geocode = map::geocode($_POST['address']);
 			if ($geocode)
 			{
-				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon']))); 
+				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon'])));
 			}
 			else
 			{
@@ -1115,9 +1151,9 @@ class Reports_Controller extends Main_Controller {
 
 		if (!$form_id)
 			$form_id = 1;
-			
+
 		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
-		
+
 		foreach ($custom_form->form_field as $custom_formfield)
 		{
 			if ($data_only)
@@ -1164,7 +1200,7 @@ class Reports_Controller extends Main_Controller {
 		{
 			// Get the parameters for this field
 			$field_param = ORM::factory('form_field', $field_id);
-			
+
 			if ($field_param->loaded == true)
 			{
 				// Validate for required
@@ -1179,13 +1215,13 @@ class Reports_Controller extends Main_Controller {
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Validates a numeric array. All items contained in the array must be numbers or numeric strings
-	 * 
+	 *
 	 * @param array $nuemric_array Array to be verified
 	 */
 	private function _is_numeric_array($numeric_array=array())
@@ -1199,7 +1235,7 @@ class Reports_Controller extends Main_Controller {
 				if (! is_numeric($item))
 					return FALSE;
 			}
-			
+
 			return TRUE;
 		}
 	}

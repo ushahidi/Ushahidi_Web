@@ -21,7 +21,7 @@ class Main_Controller extends Template_Controller {
 
     // Cache instance
 	protected $cache;
-	
+
 	// Cacheable Controller
 	public $is_cachable = FALSE;
 
@@ -30,7 +30,7 @@ class Main_Controller extends Template_Controller {
 
 	// Table Prefix
 	protected $table_prefix;
-	
+
 	// Themes Helper
 	protected $themes;
 
@@ -47,7 +47,7 @@ class Main_Controller extends Template_Controller {
         // Load Header & Footer
 		$this->template->header  = new View('header');
 		$this->template->footer  = new View('footer');
-		
+
 		// Themes Helper
 		$this->themes = new Themes();
 		$this->themes->api_url = Kohana::config('settings.api_url');
@@ -95,10 +95,10 @@ class Main_Controller extends Template_Controller {
     {
         $this->template->header->this_page = 'home';
         $this->template->content = new View('main');
-		
+
 		// Cacheable Main Controller
 		$this->is_cachable = TRUE;
-		
+
 		// Map and Slider Blocks
 		$div_map = new View('main_map');
 		$div_timeline = new View('main_timeline');
@@ -117,6 +117,9 @@ class Main_Controller extends Template_Controller {
 			$this->template->content->site_message = $site_message;
 		}
 
+		// Get locale
+		$l = Kohana::config('locale.language.0');
+
         // Get all active top level categories
 		$parent_categories = array();
 		foreach (ORM::factory('category')
@@ -124,16 +127,27 @@ class Main_Controller extends Template_Controller {
 				->where('parent_id', '0')
 				->find_all() as $category)
 		{
-            // Get The Children
+			// Get The Children
 			$children = array();
 			foreach ($category->children as $child)
 			{
+				// Check for localization of child category
+
+				$translated_title = Category_Lang_Model::category_title($child->id,$l);
+
+				if($translated_title)
+				{
+					$display_title = $translated_title;
+				}else{
+					$display_title = $category->category_title;
+				}
+
 				$children[$child->id] = array(
-					$child->category_title,
+					$display_title,
 					$child->category_color,
 					$child->category_image
 				);
-				
+
 				if ($child->category_trusted)
 				{ // Get Trusted Category Count
 					$trusted = ORM::factory("incident")
@@ -146,14 +160,25 @@ class Main_Controller extends Template_Controller {
 				}
 			}
 
+			// Check for localization of parent category
+
+			$translated_title = Category_Lang_Model::category_title($category->id,$l);
+
+			if($translated_title)
+			{
+				$display_title = $translated_title;
+			}else{
+				$display_title = $category->category_title;
+			}
+
 			// Put it all together
 			$parent_categories[$category->id] = array(
-				$category->category_title,
+				$display_title,
 				$category->category_color,
 				$category->category_image,
 				$children
 			);
-			
+
 			if ($category->category_trusted)
 			{ // Get Trusted Category Count
 				$trusted = ORM::factory("incident")
@@ -230,14 +255,11 @@ class Main_Controller extends Template_Controller {
 		}
 		$this->template->content->phone_array = $phone_array;
 
-
 		// Get RSS News Feeds
 		$this->template->content->feeds = ORM::factory('feed_item')
 			->limit('10')
 			->orderby('item_date', 'desc')
 			->find_all();
-
-
 
         // Get The START, END and most ACTIVE Incident Dates
 		$startDate = "";
@@ -298,7 +320,7 @@ class Main_Controller extends Template_Controller {
 			}
 			$endDate .= "</optgroup>";
 		}
-		
+
 		$this->template->content->div_timeline->startDate = $startDate;
 		$this->template->content->div_timeline->endDate = $endDate;
 
@@ -360,7 +382,7 @@ class Main_Controller extends Template_Controller {
 
 		//$myPacker = new javascriptpacker($js , 'Normal', false, false);
 		//$js = $myPacker->pack();
-		
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
