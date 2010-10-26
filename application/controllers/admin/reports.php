@@ -999,6 +999,7 @@ class Reports_Controller extends Admin_Controller
         $this->template->map_enabled = TRUE;
         $this->template->colorpicker_enabled = TRUE;
         $this->template->treeview_enabled = TRUE;
+	$this->template->editor_enabled = TRUE;
         $this->template->js = new View('admin/reports_edit_js');
         $this->template->js->default_map = Kohana::config('settings.default_map');
         $this->template->js->default_zoom = Kohana::config('settings.default_zoom');
