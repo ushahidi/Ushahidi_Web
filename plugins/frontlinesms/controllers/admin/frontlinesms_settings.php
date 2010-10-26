@@ -29,15 +29,19 @@ class Frontlinesms_Settings_Controller extends Admin_Controller
 		
 		// Do we have a frontlineSMS Key? If not create and save one on the fly
         $frontlinesms = ORM::factory('frontlinesms', 1);
-        $frontlinesms_key = $frontlinesms->frontlinesms_key;
-        if ( ! $frontlinesms_key)
-        {
-            $frontlinesms_key = strtoupper(text::random('alnum',8));
+		
+		if ($frontlinesms->loaded AND $frontlinesms->frontlinesms_key)
+		{
+			$frontlinesms_key = $frontlinesms->frontlinesms_key;
+		}
+		else
+		{
+			$frontlinesms_key = strtoupper(text::random('alnum',8));
             $frontlinesms->frontlinesms_key = $frontlinesms_key;
             $frontlinesms->save();
-        }
+		}
 
 		$this->template->content->settings_form->frontlinesms_key = $frontlinesms_key;
-		$this->template->content->settings_form->frontlinesms_link = url::site(). "frontlinesms/?key=" . $frontlinesms_key . "&s=\${sender_number}&m=\${message_content}";		
+		$this->template->content->settings_form->frontlinesms_link = url::site()."frontlinesms/?key=".$frontlinesms_key."&s=\${sender_number}&m=\${message_content}";
 	}
 }
