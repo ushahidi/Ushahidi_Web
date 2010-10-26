@@ -136,7 +136,7 @@ class Plugins_Controller extends Admin_Controller {
 							$path = Kohana::find_file('libraries', $plugin->plugin_name.'_install');
 							if ( ! $path)
 							{ //Check for filename with Capitalized [I]nstall
-								$path = Kohana::find_file('libraries', $plugin->plugin_name.'_Install')
+								$path = Kohana::find_file('libraries', $plugin->plugin_name.'_Install');
 							}
 							if ($path)
 							{
