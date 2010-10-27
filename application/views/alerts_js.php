@@ -52,7 +52,6 @@
 			map.addControl(new OpenLayers.Control.MousePosition());
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
-			
 			// Create the Circle/Radius layer
 			var radiusLayer = new OpenLayers.Layer.Vector("Radius Layer");
 			

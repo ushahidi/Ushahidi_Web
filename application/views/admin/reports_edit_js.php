@@ -184,7 +184,7 @@
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
 		var markers;
-		$(document).ready(function() {			
+		$(document).ready(function() {
 			// Now initialise the map
 			var options = {
 			units: "m"

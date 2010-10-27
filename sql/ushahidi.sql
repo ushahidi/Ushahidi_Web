@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 31
+-- version 34
 -- http://www.ushahidi.com
 
 
@@ -810,6 +810,8 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `allow_feed` tinyint(4) NOT NULL default '1',                                   -- field description
     `allow_stat_sharing` tinyint(4) NOT NULL default '1',                           -- field description
     `allow_clustering` tinyint(4) NOT NULL default '0',                             -- field description
+	`cache_pages` tinyint(4) NOT NULL DEFAULT '0',
+	`cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
     `default_map` varchar(100) NOT NULL DEFAULT 'google_normal',
     `default_map_all` varchar(20) NOT NULL default 'CC0000',                        -- field description
     `api_google` varchar(200) default NULL,                                         -- field description
@@ -824,13 +826,10 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `default_zoom` tinyint(4) NOT NULL default '10',                                -- field description
     `items_per_page` smallint(6) NOT NULL default '20',                             -- field description
     `items_per_page_admin` smallint(6) NOT NULL default '20',                       -- field description
+	`sms_provider` varchar(100) NULL DEFAULT NULL,
     `sms_no1` varchar(100) default NULL,                                            -- field description
     `sms_no2` varchar(100) default NULL,                                            -- field description
     `sms_no3` varchar(100) default NULL,                                            -- field description
-    `frontlinesms_key` varchar(30) default NULL,                                    -- field description
-    `clickatell_api` varchar(30) default NULL,                                      -- field description
-    `clickatell_username` varchar(100) default NULL,                                -- field description
-    `clickatell_password` varchar(100) default NULL,                                -- field description
     `google_analytics` text,                                                        -- field description
     `twitter_hashtags` text default NULL,                                           -- field description
     `laconica_username` varchar(50) default NULL,                                   -- field description
@@ -1364,6 +1363,23 @@ CREATE TABLE IF NOT EXISTS `api_log` (                                          
 
 
 
+/**
+* Table structure for table `plugin`
+* 
+*/
+
+CREATE TABLE IF NOT EXISTS `plugin` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_name` varchar(100) NOT NULL,
+  `plugin_url` varchar(250) NULL,
+  `plugin_description` text NULL,
+  `plugin_active` tinyint(4) DEFAULT '0',
+  `plugin_installed` tinyint(4) DEFAULT '0',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `plugin_name` (`plugin_name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+
 
 /**
 * Table structure for table `mhi_category`
@@ -1528,5 +1544,5 @@ ALTER TABLE `user_tokens`
 * Version information for table `settings`
 * 
 */
-UPDATE `settings` SET `ushahidi_version` = '1.1.0' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '32' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `ushahidi_version` = '2.0b11' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '34' WHERE `id`=1 LIMIT 1;

@@ -65,6 +65,10 @@
 						</div>
 						<!-- f-col -->
 						<div class="f-col">
+							<?php
+							// Action::report_pre_form_admin - Runs right before report form is rendered
+							Event::run('ushahidi_action.report_pre_form_admin', $id);
+							?>
 							<?php if ($show_messages) { ?>
 							<div class="row">
 								<h4 style="margin:0;padding:0;"><a href="#" id="messages_toggle" class="show-messages"><?php echo Kohana::lang('ui_main.show_messages');?></a>&nbsp;</h4>
@@ -97,6 +101,12 @@
 								<h4><?php echo Kohana::lang('ui_main.description');?> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span></h4>
 								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"') ?>
 							</div>
+
+							<?php
+							// Action::report_form_admin - Runs just after the report description
+							Event::run('ushahidi_action.report_form_admin', $id);
+							?>
+
 							<?php
 							if (!($id))
 							{ // Use default date for new report
@@ -178,6 +188,7 @@
 															?>
 			                       								</div>
 							</div>
+							
 							<div id="custom_forms">
 								<?php
 								foreach ($disp_custom_fields as $field_id => $field_property)

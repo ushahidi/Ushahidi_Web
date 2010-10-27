@@ -15,31 +15,33 @@
 
 class Page_Controller extends Main_Controller {
 
-	function __construct()
-	{
-		parent::__construct();
-	}
+    function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function index($page_id = 1)
-	{
-		$this->template->header->this_page = "page_".$page_id;
-		$this->template->content = new View('page');
+    public function index($page_id = 1)
+    {
+        $this->template->header->this_page = "page_".$page_id;
+        $this->template->content = new View('page');
 
-		if ( ! $page_id)
-		{
-			url::redirect('main');
-		}
+        if ( ! $page_id)
+        {
+            url::redirect('main');
+        }
 
-		$page = ORM::factory('page',$page_id)->find($page_id);
-		if ($page->loaded)
-		{
-			$this->template->content->page_title = $page->page_title;
-			$this->template->content->page_description = $page->page_description;
-		}
-		else
-		{
-			url::redirect('main');
-		}
-	}
+        $page = ORM::factory('page',$page_id)->find($page_id);
+        if ($page->loaded)
+        {
+            $this->template->content->page_title = $page->page_title;
+            $this->template->content->page_description = $page->page_description;
+        }
+        else
+        {
+            url::redirect('main');
+        }
+        
+        $this->template->header->header_block = $this->themes->header_block();
+    }
 
 }

@@ -49,6 +49,13 @@ $kohana_system = 'system';
 $kohana_themes = 'themes';
 
 /**
+ * Plugin directory.
+ *
+ * This path can be absolute or relative to this file.
+ */
+$kohana_plugins = 'plugins';
+
+/**
  * Test to make sure that Kohana is running on PHP 5.2 or newer. Once you are
  * sure that your environment is compatible with Kohana, you can comment this
  * line out. When running an application on a new server, uncomment this line
@@ -91,11 +98,12 @@ is_link(KOHANA) and chdir(dirname(realpath(__FILE__)));
 // Define application and system paths
 define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
 define('THEMEPATH', str_replace('\\', '/', realpath($kohana_themes)).'/');
+define('PLUGINPATH', str_replace('\\', '/', realpath($kohana_plugins)).'/');
 define('MODPATH', str_replace('\\', '/', realpath($kohana_modules)).'/');
 define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).'/');
 
 // Clean up
-unset($kohana_application, $kohana_themes, $kohana_modules, $kohana_system);
+unset($kohana_application, $kohana_themes, $kohana_plugins, $kohana_modules, $kohana_system);
 
 if ( ! IN_PRODUCTION)
 {

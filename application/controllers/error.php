@@ -15,16 +15,16 @@
 
 class Error_Controller extends Controller
 {
-	/**
-	 * Render Custom 404 Error Page
-	 */
-	public function error_404()
-	{
-		Header("HTTP/1.0 404 Not Found");
+    /**
+     * Render Custom 404 Error Page
+     */
+    public function error_404()
+    {
+        Header("HTTP/1.0 404 Not Found");
 		
-		$this->layout = new View('error');
-		$this->layout->title = Kohana::lang('ui_admin.page_not_found');
-		$this->layout->content = Kohana::lang('ui_admin.page_not_found_message');
-		$this->layout->render(true);
-	}
+        $this->layout = new View('error');
+        $this->layout->title = Kohana::lang('ui_admin.page_not_found');
+        $this->layout->content = Kohana::lang('ui_admin.page_not_found_message');
+        $this->layout->render(true);
+    }
 }

@@ -46,20 +46,52 @@ class map_Core {
 				if ($all == TRUE)
 				{
 					$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
-					$js .= (isset($layer->data['type']) AND !empty($layer->data['type'])) ? " type: ".$layer->data['type'].",\n"
-						: "";
+					foreach ($layer->data AS $key => $value)
+					{
+						if ( ! empty($value)
+						 	AND $key != 'baselayer'
+						 	AND $key != 'attribution'
+							AND $key != 'url')
+						{
+							if ($key == "type")
+							{
+								$js .= " ".$key.": ".urlencode($value).",\n";
+							}
+							else
+							{
+								$js .= " ".$key.": '".urlencode($value)."',\n";
+							}
+						}
+					}
+					
 					$js .= " sphericalMercator: true,\n";
-					$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)\n});\n\n";
+					$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
 				}
 				else
 				{
 					if ($layer->openlayers == $openlayers_type)
 					{
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
-						$js .= (isset($layer->data['type']) AND !empty($layer->data['type'])) ? " type: ".$layer->data['type'].",\n"
-							: "";
+						foreach ($layer->data AS $key => $value)
+						{
+							if ( ! empty($value)
+							 	AND $key != 'baselayer'
+							 	AND $key != 'attribution'
+								AND $key != 'url')
+							{
+								if ($key == "type")
+								{
+									$js .= " ".$key.": ".urlencode($value).",\n";
+								}
+								else
+								{
+									$js .= " ".$key.": '".urlencode($value)."',\n";
+								}
+							}
+						}
+
 						$js .= " sphericalMercator: true,\n";
-						$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)\n});\n\n";
+						$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
 					}
 				}
 			}
@@ -344,6 +376,10 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 		
+		// Add Custom Layers
+		// Filter::map_base_layers
+		Event::run('ushahidi_filter.map_base_layers', $layers);
+		
 		if ($layer_name)
 		{
 			if (isset($layers[$layer_name]))
@@ -356,7 +392,7 @@ class map_Core {
 			}
 		}
 		else
-		{
+		{	
 			return $layers;
 		}
 	}

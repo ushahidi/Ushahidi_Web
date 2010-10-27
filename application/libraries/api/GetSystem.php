@@ -1,5 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
+ * This class handles private functions that not accessbile by the public 
  * This class handles private functions that not accessbile by the public
  * via the API.
  *
@@ -77,7 +78,8 @@ class GetSystem
 			$this->ret_json_or_xml = $this->api_actions->
                 _array_as_JSON($this->data);
 		}
-        else{
+        else
+		{
 			$this->ret_json_or_xml = $this->api_actions->
                 _array_as_XML($this->data,$this->replar);
 		}

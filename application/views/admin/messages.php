@@ -17,6 +17,13 @@
 				<h2>
 					<?php admin::messages_subtabs($service_id); ?>
 				</h2>
+
+<?php
+	Event::run('ushahidi_action.admin_messages_custom_layout');
+	// Kill the rest of the page if this event has been utilized by a plugin
+	if( ! Event::has_run('ushahidi_action.admin_messages_custom_layout')){
+?>
+
 				<!-- tabs -->
 				<div class="tabs">
 					<!-- tabset -->
@@ -151,6 +158,8 @@
 													</div>
 													<?php
 												}
+												// Action::message_extra_admin  - Message Additional/Extra Stuff
+												Event::run('ushahidi_action.message_extra_admin', $message_id);
 												?>
 												<?php
 												if ($service_id == 1 && $message_type == 1)
@@ -213,3 +222,7 @@
 					</div>
 				<?php print form::close(); ?>
 			</div>
+
+<?php
+	}
+?>

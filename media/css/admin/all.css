@@ -306,6 +306,23 @@ ul.inf li a{
 	clear:both;
 	overflow:hidden;
 }
+.post-edit-log-red{
+	padding:3px;
+	background-color:#FFE7D5;
+	border:1px solid #FFB782;
+}
+.post-edit-log-gray{
+	padding:3px;
+	background-color:#eee;
+	border:1px solid #ccc;
+}
+.post-edit-log-red a, .post-edit-log-gray a{
+	color:#666;
+}
+.post-edit-log{
+	display:none;
+	padding:5px;
+}
 .post-trans-new{
 	margin:5px 0 2px 20px;
 	font-size:80%;
@@ -810,6 +827,17 @@ ul.pager li a.active {background:#f2f7fa;}
 	line-height:24px;
 	float:left;
 }
+.head h4{
+	padding:0 0 0 20px;
+	font-weight:bold;
+	font-size:16px;
+	line-height:18px;
+	float:left;
+}
+	.head h4.version{
+		text-decoration:underline;
+		color:#37616F;
+	}
 .report-form input:focus, .report-form textarea:focus
 {
 	background: #EDF9EE;
@@ -2003,6 +2031,12 @@ h4 span.highlight{
 	.attachment_thumbs img{
 		border-width:0;
 	}
+	
+
+/* Plugins/Addons/Themes */
+tr.addon_active td{
+	background-color:#ffffcc;
+}
 
 /*--  --*/
 /*--  --*/

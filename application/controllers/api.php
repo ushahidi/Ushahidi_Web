@@ -66,7 +66,6 @@ class Api_Controller extends Controller
             
             $this->task = "";
         }
-
         else
         {
             

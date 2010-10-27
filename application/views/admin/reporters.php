@@ -138,7 +138,7 @@
 				<div class="report-form">
 					<?php print form::open(NULL,array('id' => 'reporterMain',
 					 	'name' => 'reporterMain')); ?>
-						<input type="hidden" name="action" id="action" value="">
+						<input type="hidden" name="action" id="reporter_action" value="">
 						<input type="hidden" name="reporter_id[]" id="reporter_single" value="">
 						<input type="hidden" name="level_id" id="level_id_main" value="">
 						<div class="table-holder">

@@ -102,10 +102,17 @@
 	{
 		echo html::script('media/js/tinymce/tiny_mce', true);
 	}
-
+	
 	// Turn on picbox
 	echo html::script('media/js/picbox', true);
 	echo html::stylesheet('media/css/picbox/picbox');
+	
+	// Render CSS and Javascript Files from Plugins
+	echo plugin::render('stylesheet');
+	echo plugin::render('javascript');
+
+	// Action::header_scripts_admin - Additional Inline Scripts
+	Event::run('ushahidi_action.header_scripts_admin');
 	?>
 	<script type="text/javascript" charset="utf-8">
 		<?php echo $js . "\n"; ?>
@@ -139,6 +146,10 @@
 		<div id="header">
 			<!-- top-area -->
 			<div class="top">
+				<?php
+				// Action::admin_header_top_left - Admin Header Menu
+				Event::run('ushahidi_action.admin_header_top_left');
+				?>
 				<ul>
 					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
 					<li class="none-separator"><a href="<?php echo url::site() ?>" title="View the home page">
@@ -147,10 +158,12 @@
 					<li><a href="<?php echo url::site()."admin/";?>log_out"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
 				</ul>
                         </div>
-                        <?php if( ( $version != "" ) && ( url::current() != "admin/upgrade" ) ) { ?>
+                        <?php if ( ( !empty($version)) AND ( url::current() != "admin/upgrade" ) ) { ?>
                         <div id="update-info">
-                        Ushahidi <?php echo $version; ?> 
-                            <?php echo Kohana::lang('ui_admin.version_available');?> 
+                            
+                        <?php echo Kohana::lang('ui_admin.ushahidi');?> <?php echo $version; ?> 
+                            <?php echo Kohana::lang('ui_admin.version_available');?>
+                            <?php if (isset($critical)) echo Kohana::lang('ui_admin.critical_upgrade');?>
         <a href="<?php echo url::site() ?>admin/upgrade" title="upgrade ushahidi">
                              <?php echo Kohana::lang('ui_admin.update_link');?>
                             </a>.

@@ -28,6 +28,11 @@ class Admin_Controller extends Template_Controller
 
 	protected $user;
 
+	// Table Prefix
+	protected $table_prefix;
+    
+    protected $release;
+
 	public function __construct()
 	{
 		parent::__construct();	
@@ -52,10 +57,17 @@ class Admin_Controller extends Template_Controller
 			url::redirect('login');
 		}
 
-		//fetch latest version of ushahidi
-		$version_number = $upgrade->_fetch_core_version();
+		// Set Table Prefix
+		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
-		$this->template->version = $version_number;
+		//fetch latest release of ushahidi
+		$this->release = $upgrade->_fetch_core_release();
+        
+        if( ! empty($this->release) )
+        {
+		    $this->template->version = $this->_get_release_version();
+            $this->template->critical = $this->release->critical;
+        }
 
 		// Get Session Information
 		$this->user = new User_Model($_SESSION['auth_user']->id);
@@ -86,6 +98,8 @@ class Admin_Controller extends Template_Controller
 		// Generate sub navigation list (in default layout, sits on right side).
         $this->template->main_right_tabs = admin::main_right_tabs($this->auth);
 
+		$this->template->this_page = "";
+
 		// Load profiler
 		// $profiler = new Profiler;	
     }
@@ -108,4 +122,72 @@ class Admin_Controller extends Template_Controller
 		url::redirect('login');
 	}
 
+    /**
+     * Fetches the latest ushahidi release version number
+     *
+     * @return int or string
+     */
+    private function _get_release_version()
+    {
+        
+        $release_version = $this->release->version;
+		
+        $version_ushahidi = Kohana::config('settings.ushahidi_version');
+	    	
+        if ($this->_new_or_not($release_version,$version_ushahidi))
+        {
+			return $release_version;
+		} 
+        else 
+        {
+			return "";
+		}
+
+    }
+    
+    /**
+     * Checks version sequence parts
+     *
+     * @param string release_version - The version released.
+     * @param string version_ushahidi - The version of ushahidi installed.
+     *
+     * @return boolean
+     */
+    private function _new_or_not($release_version=NULL,
+            $version_ushahidi=NULL )
+    {
+        if ($release_version AND $version_ushahidi)
+	    {
+		    // Split version numbers xx.xx.xx
+		    $remote_version = explode($release_version, ".");
+		    $local_version = explode($version_ushahidi, ".");
+
+		    // Check first part .. if its the same, move on to next part
+		    if (isset($remote_version[0]) AND isset($local_version[0])
+			    AND (int) $remote_version[0] > (int) $local_version[0])
+		    {
+			    return true;
+		    }
+
+		    // Check second part .. if its the same, move on to next part
+		    if (isset($remote_version[1]) AND isset($local_version[1])
+			    AND (int) $remote_version[1] > (int) $local_version[1])
+		    {
+			    return true;
+		    }
+
+		    // Check third part
+		    if (isset($remote_version[2]) AND isset($local_version[2])
+			    AND (int) $remote_version[2] > (int) $local_version[2])
+		    {
+			    return true;
+		    }
+
+		}
+
+        return false;
+    }
+
+
 } // End Admin
+

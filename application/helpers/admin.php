@@ -2,7 +2,7 @@
 /**
  * Admin helper class.
  *
- * @package    Distance
+ * @package    Admin
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
  * @license    http://www.ushahidi.com/license.html
@@ -30,7 +30,8 @@ class admin_Core {
 				'dashboard' => Kohana::lang('ui_admin.dashboard'),
 				'reports' => Kohana::lang('ui_admin.reports'),
 				'messages' => Kohana::lang('ui_admin.messages'),
-				'stats' => Kohana::lang('ui_admin.stats')
+				'stats' => Kohana::lang('ui_admin.stats'),
+				'addons' => Kohana::lang('ui_admin.addons')
 			);
 		}
 	}
@@ -112,6 +113,9 @@ class admin_Core {
 		$menu .= ($this_sub_page == "upload") ? Kohana::lang('ui_main.upload_reports') : "<a href=\"".url::base()."admin/reports/upload\">".Kohana::lang('ui_main.upload_reports')."</a>";
 
 		echo $menu;
+		
+		// Action::nav_admin_reports - Add items to the admin reports navigation tabs
+		Event::run('ushahidi_action.nav_admin_reports', $this_sub_page);
 	}
 
 
@@ -134,7 +138,11 @@ class admin_Core {
 				$menu .= "<a href=\"" . url::site() . "admin/messages/index/".$service->id."\">".$service->service_name."</a>";
 			}
 		}
+		
 		echo $menu;
+		
+		// Action::nav_admin_messages - Add items to the admin messages navigation tabs
+		Event::run('ushahidi_action.nav_admin_messages', $service_id);
 	}
 
 
@@ -164,7 +172,30 @@ class admin_Core {
 		}
 
 		echo $menu;
+		
+		// Action::nav_admin_settings - Add items to the admin settings navigation tabs
+		Event::run('ushahidi_action.nav_admin_settings', $this_sub_page);
 	}
+
+
+	/**
+	 * Generate SMS Sub Tab Menus
+     * @param string $this_sub_page
+	 * @return string $menu
+     */
+	public static function settings_sms_subtabs($this_sub_page = FALSE)
+	{
+		$menu = "";
+		$menu .= ($this_sub_page == "sms") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::base()."admin/settings/sms\">".Kohana::lang('settings.sms.option_1')."</a>";
+		$menu .= ($this_sub_page == "smsglobal") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::base()."admin/settings/smsglobal\">".Kohana::lang('settings.sms.option_2')."</a>";
+		
+		echo $menu;
+		
+		// Action::nav_admin_settings_sms - Add items to the settings sms  navigation tabs
+		Event::run('ushahidi_action.sub_nav_admin_settings_sms', $this_sub_page);
+	}
+
+
 
 
 	/**
@@ -194,7 +225,11 @@ class admin_Core {
 		$menu .= ($this_sub_page == "scheduler") ? Kohana::lang('ui_main.scheduler') : "<a href=\"".url::site()."admin/manage/scheduler\">".Kohana::lang('ui_main.scheduler')."</a>";
 
 		echo $menu;
+		
+		// Action::nav_admin_manage - Add items to the admin manage navigation tabs
+		Event::run('ushahidi_action.nav_admin_manage', $this_sub_page);
 	}
+	
 	
 	/**
 	 * Generate User Sub Tab Menus
@@ -212,6 +247,9 @@ class admin_Core {
 		$menu .= ($this_sub_page == "roles") ? Kohana::lang('ui_admin.manage_roles') : "<a href=\"".url::site()."admin/users/roles/\">".Kohana::lang('ui_admin.manage_roles')."</a>";
 		
 		echo $menu;
+		
+		// Action::nav_admin_users - Add items to the admin manage navigation tabs
+		Event::run('ushahidi_action.nav_admin_users', $this_sub_page);
 	}
 	
 	public static function permissions($user = FALSE, $section = FALSE)
@@ -234,5 +272,4 @@ class admin_Core {
 			return false;
 		}
 	}
-
 }

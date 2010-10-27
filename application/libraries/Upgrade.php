@@ -9,13 +9,15 @@
  * @license    http://www.ushahidi.com/license.html
  */
  
- class Upgrade {
+ class Upgrade 
+{
  	
  	public $notices;
 	public $errors;
  	public $success;
  	
- 	public function __construct() {
+ 	public function __construct() 
+    {
  		$this->log = array();
  		$this->errors = array();
  	}
@@ -32,13 +34,18 @@
     	$snoopy->gzip = false;
         $snoopy->fetch($url);
 		$this->log[] = "Starting to download the latest ushahidi build...";
-       	if( $snoopy->status == '200' ) {
+       	
+        if ( $snoopy->status == '200' ) 
+        {
         	
         	$this->log[] = "Download of latest ushahidi went successful.";
         	$this->success = true;        
           	return $snoopy->results;
             
-       	} else {        	
+       	} 
+        
+        else 
+        {        	
             $this->errors[] = sprintf(Kohana::lang('libraries.upgrade_failed').": %d", $snoopy->status);    
         	$this->success = false;
         	return $snoopy;
@@ -52,7 +59,8 @@
  	 * @param String srcdir-- the source directory.
  	 * @param String dstdir -- the destination directory.
  	 */
- 	public function copy_recursively($srcdir, $dstdir) {
+ 	public function copy_recursively($srcdir, $dstdir) 
+    {
  		if ( !is_dir($dstdir) && !@mkdir($dstdir) )
        	{
 	    	$this->errors[] = sprintf(Kohana::lang('libraries.upgrade_file_not_copied'),$dstdir);
@@ -97,7 +105,8 @@
  	 * 
  	 * @param String dir-- the directory to delete.
  	 */
- 	public function remove_recursively($dir) {
+ 	public function remove_recursively($dir) 
+    {
  		if (empty($dir) || !is_dir($dir))
 	        return false;
 	    if (substr($dir,-1) != "/")
@@ -135,7 +144,8 @@
  	 * @param String destdir-- destination directory
  	 */
  	
- 	public function unzip_ushahidi($zip_file, $destdir) {
+ 	public function unzip_ushahidi($zip_file, $destdir) 
+    {
  		$archive = new Pclzip($zip_file);
  		$this->log[] = sprintf("Unpacking %s ",$zip_file);
  		
@@ -156,7 +166,8 @@
  	 * @param String zip_file-- the zip file to be written.
  	 * @param String dest_file-- the file to write.
  	 */
- 	public function write_to_file($zip_file, $dest_file) {
+ 	public function write_to_file($zip_file, $dest_file) 
+    {
  		$handler = fopen( $dest_file,'w');
        	$fwritten = fwrite($handler,$zip_file);
        	$this->log[] = sprintf("Writting to a file ");
@@ -172,32 +183,36 @@
  	}
 
 	/**
-	* Fetch latest ushahidi version from a remote instance then 
-	* compare it with local instance version number.
-	*/
-	function _fetch_core_version() {
-		$version_url = "http://version.ushahidi.com";		
-		$version_string = @file_get_contents($version_url);
-		
+	 * Fetch latest ushahidi version from a remote instance then 
+	 * compare it with local instance version number.
+	 */
+	public function _fetch_core_release() 
+    {
+		// Current Version
+	    $current = urlencode(Kohana::config('settings.ushahidi_version'));
+
+	    // Extra Stats
+	    $url = urlencode(preg_replace("/^https?:\/\/(.+)$/i","\\1", 
+                    url::base()));
+	    $ip_address = (isset($_SERVER['REMOTE_ADDR'])) ?
+            urlencode($_SERVER['REMOTE_ADDR']) : "";
+
+	    $version_url = "http://version.ushahidi.com/2/?v=".$current.
+            "&u=".$url."&ip=".$ip_address;		
+	    
+        $version_json_string = @file_get_contents($version_url);
+        
 		// If we didn't get anything back...
-		if(!$version_string){
+		if ( ! $version_json_string )
+        {
 			 return "";
 		}
 
-		$version_details = explode(",",$version_string);
-		$version_number = $version_details[0];
+        $version_details = json_decode($version_json_string);
 		
-		$latest_version = $version_number;
-		
-		$settings = ORM::factory('settings', 1);
-		$version_ushahidi = $settings->ushahidi_version;
-		
-		if($latest_version > $version_ushahidi && $latest_version !== false) {
-			return $latest_version;
-		} else {
-			return "";
-		}
-	}
+        return $version_details;
+
+    }
  	
  }
 ?>

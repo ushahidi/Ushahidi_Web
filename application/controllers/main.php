@@ -21,7 +21,7 @@ class Main_Controller extends Template_Controller {
 
     // Cache instance
 	protected $cache;
-	
+
 	// Cacheable Controller
 	public $is_cachable = FALSE;
 
@@ -30,6 +30,9 @@ class Main_Controller extends Template_Controller {
 
 	// Table Prefix
 	protected $table_prefix;
+
+	// Themes Helper
+	protected $themes;
 
 	public function __construct()
 	{
@@ -45,9 +48,12 @@ class Main_Controller extends Template_Controller {
 		$this->template->header  = new View('header');
 		$this->template->footer  = new View('footer');
 
-        // In case js doesn't get set in the construct, initialize it here
-
-		$this->template->header->js = '';
+		// Themes Helper
+		$this->themes = new Themes();
+		$this->themes->api_url = Kohana::config('settings.api_url');
+		$this->template->header->submit_btn = $this->themes->submit_btn();
+		$this->template->header->languages = $this->themes->languages();
+		$this->template->header->search = $this->themes->search();
 
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
@@ -67,64 +73,12 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->site_name = $site_name;
 		$this->template->header->site_name_style = $site_name_style;
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
-		$this->template->header->api_url = Kohana::config('settings.api_url');
-
-		// Display Contact Tab?
-		$this->template->header->site_contact_page = Kohana::config('settings.site_contact_page');
-
-		// Display Help Tab?
-		$this->template->header->site_help_page = Kohana::config('settings.site_help_page');
-
-		// Get Custom Pages
-		$this->template->header->pages = ORM::factory('page')->where('page_active', '1')->find_all();
-
-        // Get custom CSS file from settings
-		$this->template->header->site_style = Kohana::config('settings.site_style');
-
-		// Javascript Header
-		$this->template->header->map_enabled = FALSE;
-		$this->template->header->validator_enabled = TRUE;
-		$this->template->header->treeview_enabled = FALSE;
-		$this->template->header->datepicker_enabled = FALSE;
-		$this->template->header->photoslider_enabled = FALSE;
-		$this->template->header->videoslider_enabled = FALSE;
-		$this->template->header->protochart_enabled = FALSE;
-		$this->template->header->main_page = FALSE;
 
 		$this->template->header->this_page = "";
 
 		// Google Analytics
 		$google_analytics = Kohana::config('settings.google_analytics');
-		$this->template->footer->google_analytics = $this->_google_analytics($google_analytics);
-
-		// *** Locales/Languages ***
-		// First Get Available Locales
-
-		$locales = $this->cache->get('locales');
-
-		// If we didn't find any languages, we need to look them up and set the cache
-
-		if( ! $locales)
-		{
-			$locales = locale::get_i18n();
-			$this->cache->set('locales', $locales, array('locales'), 604800);
-		}
-
-
-		$this->template->header->locales_array = $locales;
-
-		// Locale form submitted?
-		if (isset($_GET['l']) && !empty($_GET['l']))
-		{
-			$this->session->set('locale', $_GET['l']);
-		}
-		// Has a locale session been set?
-		if ($this->session->get('locale',FALSE))
-		{
-			// Change current locale
-			Kohana::config_set('locale.language', $_SESSION['locale']);
-		}
-		$this->template->header->l = Kohana::config('locale.language');
+		$this->template->footer->google_analytics = $this->themes->google_analytics($google_analytics);
 
         // Load profiler
         // $profiler = new Profiler;
@@ -137,13 +91,23 @@ class Main_Controller extends Template_Controller {
 		}
 	}
 
-	public function index()
-	{
-		$this->template->header->this_page = 'home';
-		$this->template->content = new View('main');
-		
+    public function index()
+    {
+        $this->template->header->this_page = 'home';
+        $this->template->content = new View('main');
+
 		// Cacheable Main Controller
 		$this->is_cachable = TRUE;
+
+		// Map and Slider Blocks
+		$div_map = new View('main_map');
+		$div_timeline = new View('main_timeline');
+			// Filter::map_main - Modify Main Map Block
+			Event::run('ushahidi_filter.map_main', $div_map);
+			// Filter::map_timeline - Modify Main Map Block
+			Event::run('ushahidi_filter.map_timeline', $div_timeline);
+		$this->template->content->div_map = $div_map;
+		$this->template->content->div_timeline = $div_timeline;
 
 		// Check if there is a site message
 		$this->template->content->site_message = '';
@@ -153,6 +117,9 @@ class Main_Controller extends Template_Controller {
 			$this->template->content->site_message = $site_message;
 		}
 
+		// Get locale
+		$l = Kohana::config('locale.language.0');
+
         // Get all active top level categories
 		$parent_categories = array();
 		foreach (ORM::factory('category')
@@ -160,16 +127,27 @@ class Main_Controller extends Template_Controller {
 				->where('parent_id', '0')
 				->find_all() as $category)
 		{
-            // Get The Children
+			// Get The Children
 			$children = array();
 			foreach ($category->children as $child)
 			{
+				// Check for localization of child category
+
+				$translated_title = Category_Lang_Model::category_title($child->id,$l);
+
+				if($translated_title)
+				{
+					$display_title = $translated_title;
+				}else{
+					$display_title = $category->category_title;
+				}
+
 				$children[$child->id] = array(
-					$child->category_title,
+					$display_title,
 					$child->category_color,
 					$child->category_image
 				);
-				
+
 				if ($child->category_trusted)
 				{ // Get Trusted Category Count
 					$trusted = ORM::factory("incident")
@@ -182,14 +160,25 @@ class Main_Controller extends Template_Controller {
 				}
 			}
 
+			// Check for localization of parent category
+
+			$translated_title = Category_Lang_Model::category_title($category->id,$l);
+
+			if($translated_title)
+			{
+				$display_title = $translated_title;
+			}else{
+				$display_title = $category->category_title;
+			}
+
 			// Put it all together
 			$parent_categories[$category->id] = array(
-				$category->category_title,
+				$display_title,
 				$category->category_color,
 				$category->category_image,
 				$children
 			);
-			
+
 			if ($category->category_trusted)
 			{ // Get Trusted Category Count
 				$trusted = ORM::factory("incident")
@@ -238,7 +227,6 @@ class Main_Controller extends Template_Controller {
 			->where('incident_active', '1')
 			->limit('10')
 			->orderby('incident_date', 'desc')
-			->with('location')
 			->find_all();
 
 		// Get Default Color
@@ -267,14 +255,11 @@ class Main_Controller extends Template_Controller {
 		}
 		$this->template->content->phone_array = $phone_array;
 
-
 		// Get RSS News Feeds
 		$this->template->content->feeds = ORM::factory('feed_item')
 			->limit('10')
 			->orderby('item_date', 'desc')
 			->find_all();
-
-
 
         // Get The START, END and most ACTIVE Incident Dates
 		$startDate = "";
@@ -335,13 +320,13 @@ class Main_Controller extends Template_Controller {
 			}
 			$endDate .= "</optgroup>";
 		}
-		$this->template->content->startDate = $startDate;
-		$this->template->content->endDate = $endDate;
+
+		$this->template->content->div_timeline->startDate = $startDate;
+		$this->template->content->div_timeline->endDate = $endDate;
 
 		// Javascript Header
-		$this->template->header->map_enabled = TRUE;
-		$this->template->header->main_page = TRUE;
-		$this->template->header->validator_enabled = TRUE;
+		$this->themes->map_enabled = TRUE;
+		$this->themes->main_page = TRUE;
 
 		// Map Settings
 		$clustering = Kohana::config('settings.allow_clustering');
@@ -350,75 +335,56 @@ class Main_Controller extends Template_Controller {
 		$marker_stroke_width = Kohana::config('map.marker_stroke_width');
 		$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
 
-           // pdestefanis - allows to restrict the number of zoomlevels available
+        // pdestefanis - allows to restrict the number of zoomlevels available
 		$numZoomLevels = Kohana::config('map.numZoomLevels');
 		$minZoomLevel = Kohana::config('map.minZoomLevel');
 	   	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
 
-           // pdestefanis - allows to limit the extents of the map
-		   $lonFrom = Kohana::config('map.lonFrom');
-		   $latFrom = Kohana::config('map.latFrom');
-		   $lonTo = Kohana::config('map.lonTo');
-		   $latTo = Kohana::config('map.latTo');
+		// pdestefanis - allows to limit the extents of the map
+		$lonFrom = Kohana::config('map.lonFrom');
+		$latFrom = Kohana::config('map.latFrom');
+		$lonTo = Kohana::config('map.lonTo');
+		$latTo = Kohana::config('map.latTo');
 
-		   $this->template->header->js = new View('main_js');
-		$this->template->header->js->json_url = ($clustering == 1) ?
+		$this->themes->js = new View('main_js');
+		$this->themes->js->json_url = ($clustering == 1) ?
 			"json/cluster" : "json";
-		$this->template->header->js->marker_radius =
+		$this->themes->js->marker_radius =
 			($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;
-		$this->template->header->js->marker_opacity =
+		$this->themes->js->marker_opacity =
 			($marker_opacity >=1 && $marker_opacity <= 10 )
 			? $marker_opacity * 0.1  : 0.9;
-		$this->template->header->js->marker_stroke_width =
+		$this->themes->js->marker_stroke_width =
 			($marker_stroke_width >=1 && $marker_stroke_width <= 5 ) ? $marker_stroke_width : 2;
-		$this->template->header->js->marker_stroke_opacity =
+		$this->themes->js->marker_stroke_opacity =
 			($marker_stroke_opacity >=1 && $marker_stroke_opacity <= 10 )
 			? $marker_stroke_opacity * 0.1  : 0.9;
 
-           // pdestefanis - allows to restrict the number of zoomlevels available
-		$this->template->header->js->numZoomLevels = $numZoomLevels;
-		$this->template->header->js->minZoomLevel = $minZoomLevel;
-		$this->template->header->js->maxZoomLevel = $maxZoomLevel;
+		// pdestefanis - allows to restrict the number of zoomlevels available
+		$this->themes->js->numZoomLevels = $numZoomLevels;
+		$this->themes->js->minZoomLevel = $minZoomLevel;
+		$this->themes->js->maxZoomLevel = $maxZoomLevel;
 
-           // pdestefanis - allows to limit the extents of the map
-		   $this->template->header->js->lonFrom = $lonFrom;
-		   $this->template->header->js->latFrom = $latFrom;
-		   $this->template->header->js->lonTo = $lonTo;
-		   $this->template->header->js->latTo = $latTo;
+		// pdestefanis - allows to limit the extents of the map
+		$this->themes->js->lonFrom = $lonFrom;
+		$this->themes->js->latFrom = $latFrom;
+		$this->themes->js->lonTo = $lonTo;
+		$this->themes->js->latTo = $latTo;
 
-		$this->template->header->js->default_map = Kohana::config('settings.default_map');
-		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-		$this->template->header->js->latitude = Kohana::config('settings.default_lat');
-		$this->template->header->js->longitude = Kohana::config('settings.default_lon');
-		$this->template->header->js->default_map_all = Kohana::config('settings.default_map_all');
-
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->themes->js->latitude = Kohana::config('settings.default_lat');
+		$this->themes->js->longitude = Kohana::config('settings.default_lon');
+		$this->themes->js->default_map_all = Kohana::config('settings.default_map_all');
 		//
-		$this->template->header->js->active_startDate = $active_startDate;
-		$this->template->header->js->active_endDate = $active_endDate;
+		$this->themes->js->active_startDate = $active_startDate;
+		$this->themes->js->active_endDate = $active_endDate;
 
-		//$myPacker = new javascriptpacker($this->template->header->js , 'Normal', false, false);
-		//$this->template->header->js = $myPacker->pack();
-	}
+		//$myPacker = new javascriptpacker($js , 'Normal', false, false);
+		//$js = $myPacker->pack();
 
-	/*
-	* Google Analytics
-	* @param text mixed  Input google analytics web property ID.
-    * @return mixed  Return google analytics HTML code.
-	*/
-	private function _google_analytics($google_analytics = false)
-	{
-		$html = "";
-		if (!empty($google_analytics)) {
-			$html = "<script type=\"text/javascript\">
-				var gaJsHost = ((\"https:\" == document.location.protocol) ? \"https://ssl.\" : \"http://www.\");
-				document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));
-				</script>
-				<script type=\"text/javascript\">
-				var pageTracker = _gat._getTracker(\"" . $google_analytics . "\");
-				pageTracker._trackPageview();
-				</script>";
-		}
-		return $html;
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 } // End Main

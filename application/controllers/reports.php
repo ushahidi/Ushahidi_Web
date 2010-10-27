@@ -8,10 +8,10 @@
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
  * @author	   Ushahidi Team <team@ushahidi.com>
- * @package    Ushahidi - http://source.ushahididev.com
+ * @package	   Ushahidi - http://source.ushahididev.com
  * @module	   Reports Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
+ * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Reports_Controller extends Main_Controller {
@@ -22,149 +22,217 @@ class Reports_Controller extends Main_Controller {
 	{
 		parent::__construct();
 
-		// Javascript Header
-
-		$this->template->header->validator_enabled = TRUE;
-
-		$this->template->header->js = '';
+		$this->themes->validator_enabled = TRUE;
 
 		// Is the Admin Logged In?
 
 		$this->logged_in = Auth::instance()->logged_in()
-			 ? TRUE
-			 : FALSE;
+			? TRUE
+			: FALSE;
 	}
 
 	/**
 	 * Displays all reports.
 	 */
+	// TODO: Do we need this $cluster_id var? I dont see it being used anywhere. (BH)
 	public function index($cluster_id = 0)
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
-		$this->template->header->js = new View('reports_js');
+		$this->themes->js = new View('reports_js');
+
+		// Get locale
+		$l = Kohana::config('locale.language.0');
 
 		$db = new Database;
 
-		$category_id = ( isset($_GET['c']) AND ! empty($_GET['c']) ) ?
-			(int) $_GET['c'] : 0;
-			
-		$filter = ( $category_id ) ? " AND ( c.id=".$category_id." OR
-				c.parent_id=".$category_id." )  " : " AND 1 = 1";
+		// Get incident_ids if we are to filter by category
+		$allowed_ids = array();
+		if (isset($_GET['c']) AND !empty($_GET['c']) AND $_GET['c']!=0)
+		{
+			$category_id = $db->escape($_GET['c']);
+			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
+			$query = $db->query($query);
 
-		if ( isset($_GET['sw']) && !empty($_GET['sw']) &&
-				count($southwest = explode(",",$_GET['sw'])) > 1 &&
-			isset($_GET['ne']) && !empty($_GET['ne']) &&
-				count($northeast = explode(",",$_GET['ne'])) > 1
-			)
- 		{
-			list($longitude_min, $latitude_min) = $southwest;
-			list($longitude_max, $latitude_max) = $northeast;
+			foreach ( $query as $items )
+			{
+				$allowed_ids[] = $items->incident_id;
+			}
+		}
 
-			$filter .= " AND l.latitude >=".(float) $latitude_min.
-				" AND l.latitude <=".(float) $latitude_max;
-			$filter .= " AND l.longitude >=".(float) $longitude_min.
-				" AND l.longitude <=".(float) $longitude_max;
+		// Get location_ids if we are to filter by location
+		$location_ids = array();
+
+		// Break apart location variables, if necessary
+		$southwest = array();
+		if (isset($_GET['sw']))
+		{
+			$southwest = explode(",",$_GET['sw']);
+		}
+
+		$northeast = array();
+		if (isset($_GET['ne']))
+		{
+			$northeast = explode(",",$_GET['ne']);
+		}
+
+		if ( count($southwest) == 2 AND count($northeast) == 2 )
+		{
+			$lon_min = (float) $southwest[0];
+			$lon_max = (float) $northeast[0];
+			$lat_min = (float) $southwest[1];
+			$lat_max = (float) $northeast[1];
+
+			$query = 'SELECT id FROM '.$this->table_prefix.'location WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
+
+			$query = $db->query($query);
+
+			foreach ( $query as $items )
+			{
+				$location_ids[] =  $items->id;
+			}
+		}
+		elseif (isset($_GET['l']) AND !empty($_GET['l']) AND $_GET['l']!=0)
+		{
+			$location_ids[] = (int) $_GET['l'];
+		}
+
+		// Get the count
+		$incident_id_in = '1=1';
+		if (count($allowed_ids) > 0)
+		{
+			$incident_id_in = 'id IN ('.implode(',',$allowed_ids).')';
+		}
+
+		$location_id_in = '1=1';
+		if (count($location_ids) > 0)
+		{
+			$location_id_in = 'location_id IN ('.implode(',',$location_ids).')';
 		}
 
 		// Pagination
 		$pagination = new Pagination(array(
 				'query_string' => 'page',
 				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
-				'total_items' => $db->query("SELECT DISTINCT i.* FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) JOIN `".$this->table_prefix."location` AS l ON (i.`location_id` = l.`id`) WHERE `incident_active` = '1' $filter")->count()
+				'total_items' => ORM::factory("incident")
+					->where("incident_active", 1)
+					->where($location_id_in)
+					->where($incident_id_in)
+					->count_all()
 				));
 
-		$incidents = $db->query("SELECT DISTINCT i.*, l.`location_name` FROM `".$this->table_prefix."incident` AS i JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) JOIN `".$this->table_prefix."category` AS c ON (c.`id` = ic.`category_id`) JOIN `".$this->table_prefix."location` AS l ON (i.`location_id` = l.`id`) WHERE `incident_active` = '1' $filter ORDER BY incident_date DESC LIMIT ". (int) Kohana::config('settings.items_per_page') . " OFFSET ".$pagination->sql_offset);
+		// Reports
+		$incidents = ORM::factory("incident")
+			->where("incident_active", 1)
+			->where($location_id_in)
+			->where($incident_id_in)
+			->orderby("incident_date", "desc")
+			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
-		$this->template->content->incidents = $incidents;
+		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
 
-		//Set default as not showing pagination. Will change below if necessary.
-		$this->template->content->pagination = '';
-
-		// Pagination and Total Num of Report Stats
-		if ($pagination->total_items == 1) {
-			$plural = '';
-		} else {
-			$plural = 's';
-		}
-		if ($pagination->total_items > 0) {
-			$current_page = ($pagination->sql_offset/ (int) Kohana::config('settings.items_per_page')) + 1;
-			$total_pages = ceil($pagination->total_items/ (int) Kohana::config('settings.items_per_page'));
-
-			if ($total_pages > 1) { // If we want to show pagination
-				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
-
-				$this->template->content->pagination = $pagination;
-			} else { // If we don't want to show pagination
-				$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
-			}
-		} else {
-			$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
-		}
-
-		$icon_html = array();
-		$icon_html[1] = "<img src=\"".url::base()."media/img/image.png\">"; //image
-		$icon_html[2] = "<img src=\"".url::base()."media/img/video.png\">"; //video
-		$icon_html[3] = ""; //audio
-		$icon_html[4] = ""; //news
-		$icon_html[5] = ""; //podcast
-
-		//Populate media icon array
-		$this->template->content->media_icons = array();
-		foreach($incidents as $incident) {
-			$incident_id = $incident->id;
-			if (ORM::factory('media')
-				->where('incident_id', $incident_id)->count_all() > 0) {
-				$medias = ORM::factory('media')
-												->where('incident_id', $incident_id)->find_all();
-
-				//Modifying a tmp var prevents Kohona from throwing an error
-				$tmp = $this->template->content->media_icons;
-				$tmp[$incident_id] = '';
-
-				foreach($medias as $media) {
-					$tmp[$incident_id] .= $icon_html[$media->media_type];
-					$this->template->content->media_icons = $tmp;
+		$localized_categories = array();
+		foreach ($incidents as $incident)
+		{
+			foreach ($incident->category AS $category)
+			{
+				$ct = (string)$category->category_title;
+				if( ! isset($localized_categories[$ct]))
+				{
+					$translated_title = Category_Lang_Model::category_title($category->id,$l);
+					$localized_categories[$ct] = $category->category_title;
+					if($translated_title)
+					{
+						$localized_categories[$ct] = $translated_title;
+					}
 				}
 			}
 		}
 
+		$this->template->content->localized_categories = $localized_categories;
+
+		$this->template->content->incidents = $incidents;
+
+		//Set default as not showing pagination. Will change below if necessary.
+		$this->template->content->pagination = "";
+
+		// Pagination and Total Num of Report Stats
+		if ($pagination->total_items == 1)
+		{
+			$plural = "";
+		}
+		else
+		{
+			$plural = "s";
+		}
+
+		if ($pagination->total_items > 0)
+		{
+			$current_page = ($pagination->sql_offset/ (int) Kohana::config('settings.items_per_page')) + 1;
+			$total_pages = ceil($pagination->total_items/ (int) Kohana::config('settings.items_per_page'));
+
+			if ($total_pages > 1)
+			{ // If we want to show pagination
+				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
+
+				$this->template->content->pagination = $pagination;
+			}
+			else
+			{ // If we don't want to show pagination
+				$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
+			}
+		}
+		else
+		{
+			$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
+		}
+
 		// Category Title, if Category ID available
-		$category_id = ( isset($_GET['c']) && !empty($_GET['c']) )
+
+		$category_id = ( isset($_GET['c']) AND !empty($_GET['c']) )
 			? $_GET['c'] : "0";
 		$category = ORM::factory('category')
 			->find($category_id);
-		$this->template->content->category_title = ( $category->loaded ) ?
-			$category->category_title : "";
 
+		if($category->loaded)
+		{
+			$translated_title = Category_Lang_Model::category_title($category_id,$l);
+			if($translated_title)
+			{
+				$this->template->content->category_title = $translated_title;
+			}else{
+				$this->template->content->category_title = $category->category_title;
+			}
+		}else{
+			$this->template->content->category_title = "";
+		}
 
 		// Collect report stats
-
+		$this->template->content->report_stats = new View('reports_stats');
 		// Total Reports
 
 		$total_reports = Incident_Model::get_total_reports(TRUE);
 
 		// Average Reports Per Day
-
 		$oldest_timestamp = Incident_Model::get_oldest_report_timestamp();
 
 		// Round the number of days up to the nearest full day
-
 		$days_since = ceil((time() - $oldest_timestamp) / 86400);
-		if($days_since < 1) {
+		if ($days_since < 1) {
 			$avg_reports_per_day = $total_reports;
 		}else{
 			$avg_reports_per_day = round(($total_reports / $days_since),2);
 		}
 
 		// Percent Verified
-
 		$total_verified = Incident_Model::get_total_reports_by_verified(true);
 		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
 
-		$this->template->content->total_reports = $total_reports;
-		$this->template->content->avg_reports_per_day = $avg_reports_per_day;
-		$this->template->content->percent_verified = $percent_verified;
+		$this->template->content->report_stats->total_reports = $total_reports;
+		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
+		$this->template->content->report_stats->percent_verified = $percent_verified;
+
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	/**
@@ -240,7 +308,7 @@ class Reports_Controller extends Main_Controller {
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory(array_merge($_POST,$_FILES));
 
-			 //  Add some filters
+			 //	 Add some filters
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
@@ -250,7 +318,7 @@ class Reports_Controller extends Main_Controller {
 			$post->add_rules('incident_hour', 'required', 'between[1,12]');
 			$post->add_rules('incident_minute', 'required', 'between[0,59]');
 
-			if ($_POST['incident_ampm'] != "am" && $_POST['incident_ampm'] != "pm")
+			if ($_POST['incident_ampm'] != "am" AND $_POST['incident_ampm'] != "pm")
 			{
 				$post->add_error('incident_ampm','values');
 			}
@@ -289,7 +357,7 @@ class Reports_Controller extends Main_Controller {
 				foreach ($_POST['incident_video'] as $key => $url)
 				{
 					if (!empty($url) AND
-						 	!(bool) filter_var($url, FILTER_VALIDATE_URL,
+							!(bool) filter_var($url, FILTER_VALIDATE_URL,
 																			 FILTER_FLAG_HOST_REQUIRED))
 					{
 						$post->add_error('incident_video', 'url');
@@ -419,7 +487,6 @@ class Reports_Controller extends Main_Controller {
 					$i++;
 				}
 
-
 				// STEP 7: SAVE CUSTOM FORM FIELDS
 				if (isset($post->custom_field))
 				{
@@ -456,6 +523,9 @@ class Reports_Controller extends Main_Controller {
 				$person->person_date = date("Y-m-d H:i:s",time());
 				$person->save();
 
+				// Action::report_add - Added a New Report
+				Event::run('ushahidi_action.report_add', $incident);
+
 				url::redirect('reports/thanks');
 			}
 
@@ -471,7 +541,6 @@ class Reports_Controller extends Main_Controller {
 			}
 		}
 
-
 		// Retrieve Country Cities
 		$default_country = Kohana::config('settings.default_country');
 		$this->template->content->cities = $this->_get_cities($default_country);
@@ -481,28 +550,34 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
-		$this->template->content->categories = $this->_get_categories($form['incident_category']);
+
+		$categories = $this->_get_categories($form['incident_category']);
+		$this->template->content->categories = $categories;
 
 		// Retrieve Custom Form Fields Structure
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
 
-
 		// Javascript Header
-		$this->template->header->map_enabled = TRUE;
-		$this->template->header->datepicker_enabled = TRUE;
-		$this->template->header->treeview_enabled = TRUE;
-		$this->template->header->js = new View('reports_submit_js');
-		$this->template->header->js->default_map = Kohana::config('settings.default_map');
-		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-		if (!$form['latitude'] || !$form['latitude'])
+		$this->themes->map_enabled = TRUE;
+		$this->themes->datepicker_enabled = TRUE;
+		$this->themes->treeview_enabled = TRUE;
+		$this->themes->js = new View('reports_submit_js');
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
+		if (!$form['latitude'] OR !$form['latitude'])
 		{
-			$this->template->header->js->latitude = Kohana::config('settings.default_lat');
-			$this->template->header->js->longitude = Kohana::config('settings.default_lon');
-		}else{
-			$this->template->header->js->latitude = $form['latitude'];
-			$this->template->header->js->longitude = $form['longitude'];
+			$this->themes->js->latitude = Kohana::config('settings.default_lat');
+			$this->themes->js->longitude = Kohana::config('settings.default_lon');
 		}
+		else
+		{
+			$this->themes->js->latitude = $form['latitude'];
+			$this->themes->js->longitude = $form['longitude'];
+		}
+
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	 /**
@@ -526,9 +601,9 @@ class Reports_Controller extends Main_Controller {
 
 		}else{
 			$incident = ORM::factory('incident')
-                ->where('id',$id)
-                ->where('incident_active',1)
-                ->find();
+				->where('id',$id)
+				->where('incident_active',1)
+				->find();
 			if ( $incident->id == 0 )	// Not Found
 			{
 				url::redirect('reports/view/');
@@ -665,8 +740,10 @@ class Reports_Controller extends Main_Controller {
 					}
 					$comment->save();
 
-					// Notify Admin Of New Comment
+					// Event::comment_add - Added a New Comment
+					Event::run('ushahidi_action.comment_add', $comment);
 
+					// Notify Admin Of New Comment
 					$send = notifications::notify_admins(
 						"[".Kohana::config('settings.site_name')."] ".
 							Kohana::lang('notifications.admin_new_comment.subject'),
@@ -694,9 +771,15 @@ class Reports_Controller extends Main_Controller {
 				}
 			}
 
+			// Filters
+			$incident_title = $incident->incident_title;
+			$incident_description = nl2br($incident->incident_description);
+			Event::run('ushahidi_filter.report_title', $incident_title);
+			Event::run('ushahidi_filter.report_description', $incident_description);
+
 			$this->template->content->incident_id = $incident->id;
-			$this->template->content->incident_title = $incident->incident_title;
-			$this->template->content->incident_description = nl2br($incident->incident_description);
+			$this->template->content->incident_title = $incident_title;
+			$this->template->content->incident_description = $incident_description;
 			$this->template->content->incident_location = $incident->location->location_name;
 			$this->template->content->incident_latitude = $incident->location->latitude;
 			$this->template->content->incident_longitude = $incident->location->longitude;
@@ -744,11 +827,11 @@ class Reports_Controller extends Main_Controller {
 				if ($id)
 				{
 					$incident_comments = ORM::factory('comment')
-																	->where('incident_id',$id)
-																	->where('comment_active','1')
-																	->where('comment_spam','0')
-																	->orderby('comment_date', 'asc')
-																	->find_all();
+													  ->where('incident_id',$id)
+													  ->where('comment_active','1')
+													  ->where('comment_spam','0')
+													  ->orderby('comment_date', 'asc')
+													  ->find_all();
 				}
 				$this->template->content->comments->incident_comments = $incident_comments;
 			}
@@ -757,7 +840,7 @@ class Reports_Controller extends Main_Controller {
 		// Add Neighbors
 
 		$this->template->content->incident_neighbors = $this->_get_neighbors($incident->location->latitude,
-																								 	 $incident->location->longitude);
+																									 $incident->location->longitude);
 
 		// Get RSS News Feeds
 
@@ -781,16 +864,16 @@ class Reports_Controller extends Main_Controller {
 
 		// Javascript Header
 
-		$this->template->header->map_enabled = TRUE;
-		$this->template->header->photoslider_enabled = TRUE;
-		$this->template->header->videoslider_enabled = TRUE;
-		$this->template->header->js = new View('reports_view_js');
-		$this->template->header->js->incident_id = $incident->id;
-		$this->template->header->js->default_map = Kohana::config('settings.default_map');
-		$this->template->header->js->default_zoom = Kohana::config('settings.default_zoom');
-		$this->template->header->js->latitude = $incident->location->latitude;
-		$this->template->header->js->longitude = $incident->location->longitude;
-		$this->template->header->js->incident_photos = $incident_photo;
+		$this->themes->map_enabled = TRUE;
+		$this->themes->photoslider_enabled = TRUE;
+		$this->themes->videoslider_enabled = TRUE;
+		$this->themes->js = new View('reports_view_js');
+		$this->themes->js->incident_id = $incident->id;
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->themes->js->latitude = $incident->location->latitude;
+		$this->themes->js->longitude = $incident->location->longitude;
+		$this->themes->js->incident_photos = $incident_photo;
 
 		// Initialize custom field array
 
@@ -815,6 +898,9 @@ class Reports_Controller extends Main_Controller {
 
 		// If the Admin is Logged in - Allow for an edit link
 		$this->template->content->logged_in = $this->logged_in;
+
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	/**
@@ -824,6 +910,9 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit_thanks');
+
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
 	}
 
 	/**
@@ -873,9 +962,9 @@ class Reports_Controller extends Main_Controller {
 					elseif ($type == 'comment')
 					{
 						$previous = ORM::factory('rating')
-						->where('comment_id',$id)
-						->where('rating_ip',$_SERVER['REMOTE_ADDR'])
-						->find();
+												->where('comment_id',$id)
+												->where('rating_ip',$_SERVER['REMOTE_ADDR'])
+												->find();
 					}
 
 					// If previous exits... update previous vote
@@ -917,6 +1006,7 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template = "";
 		$this->auto_render = FALSE;
+
 		if (isset($_POST['address']) AND ! empty($_POST['address']))
 		{
 			$geocode = map::geocode($_POST['address']);
@@ -935,7 +1025,7 @@ class Reports_Controller extends Main_Controller {
 		}
 	}
 
-	/*
+	/**
 	 * Retrieves Cities
 	 */
 	private function _get_cities()
@@ -951,7 +1041,7 @@ class Reports_Controller extends Main_Controller {
 		return $city_select;
 	}
 
-	/*
+	/**
 	 * Retrieves Categories
 	 */
 	private function _get_categories($selected_categories)
@@ -959,14 +1049,13 @@ class Reports_Controller extends Main_Controller {
 		$categories = ORM::factory('category')
 			->where('category_visible', '1')
 			->where('parent_id', '0')
-			->where('category_trusted != 1')
 			->orderby('category_title', 'ASC')
 			->find_all();
 
 		return $categories;
 	}
 
-	/*
+	/**
 	 * Retrieves Total Rating For Specific Post
 	 * Also Updates The Incident & Comment Tables (Ratings Column)
 	 */
@@ -990,9 +1079,9 @@ class Reports_Controller extends Main_Controller {
 			$total_rating = 0;
 
 			// Get All Ratings and Sum them up
-			foreach(ORM::factory('rating')
-												->where($which_count,$id)
-												->find_all() as $rating)
+			foreach (ORM::factory('rating')
+							->where($which_count,$id)
+							->find_all() as $rating)
 			{
 				$total_rating += $rating->rating;
 			}
@@ -1025,22 +1114,22 @@ class Reports_Controller extends Main_Controller {
 		}
 	}
 
-	/*
-	* Retrieves Neighboring Incidents
-	*/
+	/**
+	 * Retrieves Neighboring Incidents
+	 */
 	private function _get_neighbors($latitude = 0, $longitude = 0)
 	{
 		$proximity = new Proximity($latitude, $longitude, 100); // Within 100 Miles ( or Kms ;-) )
 
 		// Generate query from proximity calculator
-		$radius_query = "location.latitude >= '" . $proximity->minLat . "'
-			AND ".$this->table_prefix."location.latitude <= '" . $proximity->maxLat . "'
-			AND ".$this->table_prefix."location.longitude >= '" . $proximity->minLong . "'
-			AND ".$this->table_prefix."location.longitude <= '" . $proximity->maxLong . "'
-			AND incident_active = 1";
+		$radius_query = "location.latitude >= '" . $proximity->minLat . "' ";
+		$radius_query .= "AND ".$this->table_prefix."location.latitude <= '" . $proximity->maxLat . "' ";
+		$radius_query .= "AND ".$this->table_prefix."location.longitude >= '" . $proximity->minLong . "' ";
+		$radius_query .= "AND ".$this->table_prefix."location.longitude <= '" . $proximity->maxLong . "' ";
+		$radius_query .= "AND incident_active = 1";
 
 		$neighbors = ORM::factory('incident')
-							 	 ->join('location', 'incident.location_id', 'location.id','INNER')
+								 ->join('location', 'incident.location_id', 'location.id','INNER')
 								 ->select('incident.*')
 								 ->where($radius_query)
 								 ->limit('5')
@@ -1061,26 +1150,26 @@ class Reports_Controller extends Main_Controller {
 		$fields_array = array();
 
 		if (!$form_id)
-		{
 			$form_id = 1;
-		}
+
 		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
+
 		foreach ($custom_form->form_field as $custom_formfield)
 		{
 			if ($data_only)
-			{ // Return Data Only
+			{
+				// Return Data Only
 				$fields_array[$custom_formfield->id] = '';
 
 				foreach ($custom_formfield->form_response as $form_response)
 				{
 					if ($form_response->incident_id == $incident_id)
-					{
 						$fields_array[$custom_formfield->id] = $form_response->form_response;
-					}
 				}
 			}
 			else
-			{ // Return Field Structure
+			{
+				// Return Field Structure
 				$fields_array[$custom_formfield->id] = array(
 					'field_id' => $custom_formfield->id,
 					'field_name' => $custom_formfield->field_name,
@@ -1111,23 +1200,44 @@ class Reports_Controller extends Main_Controller {
 		{
 			// Get the parameters for this field
 			$field_param = ORM::factory('form_field', $field_id);
+
 			if ($field_param->loaded == true)
 			{
 				// Validate for required
-				if ($field_param->field_required == 1 && $field_response == "")
-				{
+				if ($field_param->field_required == 1 AND $field_response == "")
 					return false;
-				}
 
 				// Validate for date
-				if ($field_param->field_isdate == 1 && $field_response != "")
+				if ($field_param->field_isdate == 1 AND $field_response != "")
 				{
 					$myvalid = new Valid();
 					return $myvalid->date_mmddyyyy($field_response);
 				}
 			}
 		}
+
 		return true;
+	}
+
+	/**
+	 * Validates a numeric array. All items contained in the array must be numbers or numeric strings
+	 *
+	 * @param array $nuemric_array Array to be verified
+	 */
+	private function _is_numeric_array($numeric_array=array())
+	{
+		if (count($numeric_array) == 0)
+			return FALSE;
+		else
+		{
+			foreach ($numeric_array as $item)
+			{
+				if (! is_numeric($item))
+					return FALSE;
+			}
+
+			return TRUE;
+		}
 	}
 
 

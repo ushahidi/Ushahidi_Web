@@ -151,6 +151,9 @@ class S_Email_Controller extends Controller {
 						Kohana::lang('notifications.admin_new_email.subject'),
 					Kohana::lang('notifications.admin_new_email.message')
 					);
+					
+				// Action::message_email_add - Email Received!
+                Event::run('ushahidi_action.message_email_add', $email);
 			}
 			
 			// Auto-Create A Report if Reporter is Trusted

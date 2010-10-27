@@ -174,7 +174,7 @@ class Reporters_Controller extends Admin_Controller
 			{
 				// repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
-
+				
 				// populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('reporters'));
 				$form_error = TRUE;

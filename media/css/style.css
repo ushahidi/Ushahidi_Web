@@ -421,6 +421,7 @@ div.map {
     border: #999 1px solid;
     width: 573px;
     height: 366px;
+	position:relative;
 }
 #mapStatus
 {
@@ -633,7 +634,8 @@ div.verified{
     margin: 0 0 0 10px;
 }
 div.verified_yes{
-	background: #368c00; width:65px;
+	background: #368c00;
+	width:65px;
 }
 div.verified span{
     color: #FFF;
@@ -1113,6 +1115,7 @@ label.error {
 		padding:0 10px 0 0;
 	}
 	/*.w-03 {width:100px;}*/
+
 
 .report_bottom{
 	clear:both;

@@ -10,6 +10,8 @@
 	'settings_allow_comments' => 'Allow users to comment on reports on the main site.',
 	'settings_allow_feed' => 'This allows RSS News feeds to be displayed on the main site.',
 	'settings_allow_reports' => 'Allow users to submit information via the web form.',
+	'settings_cache_pages' => 'Enable or disable page caching. This makes pages display faster by cutting response times. We recommend using caching on high traffic sites. **Remember that reports will be populated on the front end based on the schedule you set below (Cache Lifetime).',
+	'settings_cache_pages_lifetime' => 'Set the lifetime of the cache.',
 	'settings_configure_map' => 'Set the map to cover a specific location ',
 	'settings_default_category_colors' => 'Set one color code for all the categories on the site',
 	'settings_default_location' => 'This is the country the site is being deployed',

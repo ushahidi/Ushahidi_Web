@@ -17,10 +17,40 @@ class S_Alerts_Controller extends Controller {
 	
 	public $table_prefix = '';
 	
-	public function __construct()
+	// Cache instance
+	protected $cache;
+	
+	function __construct()
     {
         parent::__construct();
-	}	
+
+		// Load cache
+		$this->cache = new Cache;
+		
+		// *************************************
+		// ** SAFEGUARD DUPLICATE SEND-OUTS **
+		// Create A 10 Minute SEND LOCK
+		// This lock is released at the end of execution
+		// Or expires automatically
+		$alerts_lock = $this->cache->get("alerts_lock");
+		if ( ! $alerts_lock)
+		{
+			// Lock doesn't exist
+			$timestamp = time();
+			$this->cache->set("alerts_lock", $timestamp, array("alerts"), 600);
+		}
+		else
+		{
+			// Lock Exists - End
+			exit("Other process is running - waiting 10 minutes");
+		}
+		// *************************************
+	}
+	
+	function __destruct()
+	{
+		$this->cache->delete("alerts_lock");
+	}
 	
 	public function index() 
 	{
@@ -35,7 +65,6 @@ class S_Alerts_Controller extends Controller {
 
 		$settings = NULL;
 		$sms_from = NULL;
-		$clickatell = NULL;
 
 		$db = new Database();
 		
@@ -99,19 +128,11 @@ class S_Alerts_Controller extends Controller {
 								else
 									$sms_from = "000";      // Admin needs to set up an SMS number
 							}
-
-							$clickatell = new Clickatell();
-							$clickatell->api_id = $settings->clickatell_api;
-							$clickatell->user = $settings->clickatell_username;
-							$clickatell->password = $settings->clickatell_password;
-							$clickatell->use_ssl = false;
-							$clickatell->sms();
 						}	
 
 						$message = $incident->incident_description;
 						
-						// If Clickatell Is Set Up
-						if ($clickatell->send($alertee->alert_recipient, $sms_from, $message) == "OK")
+						if (sms::send($alertee->alert_recipient, $sms_from, $message) === true)
 						{
 							$alert = ORM::factory('alert_sent');
 							$alert->alert_id = $alertee->id;
@@ -124,7 +145,9 @@ class S_Alerts_Controller extends Controller {
 					elseif ($alert_type == 2) // Email alertee
 					{
 						$to = $alertee->alert_recipient;
-						$from = $alerts_email;
+						$from = array();
+							$from[] = $alerts_email;
+							$from[] = $site_name;
 						$subject = "[$site_name] ".$incident->incident_title;
 						$message = $incident->incident_description
 									."<p>".$unsubscribe_message

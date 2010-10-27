@@ -110,6 +110,7 @@
 	'messages_twitter' => 'Twitter Messages',
 	'message_sent' => 'Your message has been sent!',
 	'mhi' => 'MHI',
+	'minutes' => 'Minutes',
 	'missing_parameter' => 'Missing Parameter',
 	'moderator' => 'Moderator',
 	'modified' => 'modified',
@@ -188,5 +189,6 @@
 	'wiki' => 'Wiki',
 	'yes' => 'Yes',
 	'your_search_for' => 'Your search for',
+    'critical_upgrade' => ' This is a **critical** upgrade release.',
 	);
 ?>
