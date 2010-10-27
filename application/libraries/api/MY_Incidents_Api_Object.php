@@ -206,12 +206,12 @@ class Incidents_Api_Object extends Api_Object_Core {
                 break;
                 
                 default:
-                    $this->order_field = 'i.id';
+                    $this->order_field = 'i.incident_date';
             }
         }
         else
         {
-            $this->order_field = 'i.id';
+            $this->order_field = 'i.incident_date';
         }
     }
     
