@@ -391,11 +391,11 @@ final class Api_Service {
             "editcategories"     => "Admin_Category_Api_Object",
             "delcategories"      => "Admin_Category_Api_Object",
 			
-			// Comments, twitter, email and sms actions
-            "commentaction"      => array("class" => "Comments_Api_Object", "method" => "comment_action"),
-			"twitteraction"		 => array("class" => "Twitter_Api_Object", "method" => "twitter_action"),
-			"emailaction"		 => array("class" => "Email_Api_Object", "method" => "email_action"),
-			"smsaction"			 => array("class" => "Sms_Api_Object", "method" => "sms_action")
+            // Comments, twitter, email and sms actions
+            "commentaction"		 => array("class" => "Comments_Api_Object", "method" => "comment_action"),
+            "twitteraction"		 => array("class" => "Twitter_Api_Object", "method" => "twitter_action"),
+            "emailaction"		 => array("class" => "Email_Api_Object", "method" => "email_action"),
+            "smsaction"			 => array("class" => "Sms_Api_Object", "method" => "sms_action")
         );
     }
     
