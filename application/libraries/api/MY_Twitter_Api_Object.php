@@ -144,7 +144,7 @@ class Twitter_Api_Object extends Api_Object_Core {
                     //Comment id doesn't exist in DB
                     //TODO i18nize the string
                     $this->error_messages .= "Twitter ID does not exist.";
-                    $this->ret_value = 1;
+                    $ret_value = 1;
 
                 }
             }
@@ -152,13 +152,13 @@ class Twitter_Api_Object extends Api_Object_Core {
             {
                 //TODO i18nize the string
                 $this->error_messages .= "Twitter ID is required.";
-                $this->ret_value = 1;
+                $ret_value = 1;
             }
 
         }
         else
         {
-            $this->ret_value = 3;
+            $ret_value = 3;
         }
         
         $this->response_data = $this->response($ret_value, $this->error_messages);
