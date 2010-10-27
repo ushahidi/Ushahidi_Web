@@ -14,5 +14,5 @@
 	'upgrade_text_4' => '<strong>Step 4:</strong> Click on the <strong>"Continue"</strong> button to upgrade the necessary tables.',
 	'upgrade_text_5' => 'For automatic upgrade, click on the button below.',
 	'upgrading' => 'Upgrading',
-   	);
+	);
 ?>
