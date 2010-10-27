@@ -3,7 +3,7 @@
  * This class handles private functions that not accessbile by the public 
  * via the API.
  *
- * @version 23 - Henry Addo 2010-09-20
+ * @version 24 - Emmanuel Kala 2010-10-25
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -16,34 +16,20 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-require_once('ApiActions.php');
+class Private_Func_Api_Object extends Api_Object_Core {
 
-class ApiPrivateFunc
-{
-    private $data; // items to parse to JSON.
-    private $items; // categories to parse to JSON.
-    private $query; // Holds the SQL query
-    private $replar; // assists in proper XML generation.
-    private $db;
-    private $domain;
-    private $table_prefix;
-    private $list_limit;
-    private $ret_json_or_xml;
-    private $api_actions;
-
-    public function __construct()
+    public function __construct($api_service)
     {
-        $this->api_actions = new ApiActions;
-        $this->data = array();
-        $this->items = array();
-        $this->ret_json_or_xml = '';
-        $this->query = '';
-        $this->replar = array();
-        $this->domain = $this->api_actions->_get_domain();
-        $this->db = $this->api_actions->_get_db();
-
+        parent::__construct($api_service);
     }
 
+    /**
+     * Empty declaration for OOP compliance
+     */
+    public function perform_task()
+    {
+    }
+    
     /**
 	 * FrontlineSMS Key Validation
 	 *
@@ -100,11 +86,8 @@ class ApiPrivateFunc
 	/**
  	 * Provide statistics for the deployment
      * 
-     * @param string response_type - XML or JSON
-     * 
-     * @return string
  	 */
-	public function _statistics($response_type)
+	public function statistics()
     {
 
 	    $messages_total = 0;
@@ -131,12 +114,13 @@ class ApiPrivateFunc
 		$incidents_total = ORM::factory('incident')->count_all();
 		$incidents_unapproved = ORM::factory('incident')->
             where('incident_active', '0')->count_all();
+            
 		$incidents_approved = $incidents_total - $incidents_unapproved;
 		$incomingmedia_total = ORM::factory('feed_item')->count_all();
 		$categories_total = ORM::factory('category')->count_all();
 		$locations_total = ORM::factory('location')->count_all();
 
-		$this->data = array(
+		$data = array(
 			    'incidents' => array(
 				'total' => $incidents_total,
 				'approved' => $incidents_approved,
@@ -160,33 +144,27 @@ class ApiPrivateFunc
 
 		);
 
-		if($response_type == 'json'){
-			return $this->api_actions->_array_as_JSON($this->data);
-		} else {
-			return $this->api_actions_array_as_XML($this->data);
-		}
+		$this->response_data = ($this->response_type == 'json')
+		    ? $this->array_as_json($data)
+		    : $this->array_as_xml($data);
 
 	}
 
 	/**
  	 * Receive SMS's via FrontlineSMS or via Mobile Phone Native Apps
      *
-     * @param array request - 
-     * @param string response_type - XML or JSON
-     *
      * @return string
  	 */
-	public function _sms($request,$response_type)
+	public function sms()
 	{
-		
 		$reponse = array();
 
 		// Validate User
 		// Should either be authenticated or have app_key
-		$username = isset($request['username']) ? $request['username'] : "";
-		$password = isset($request['password']) ? $request['password'] : "";
+		$username = isset($this->request['username']) ? $this->request['username'] : "";
+		$password = isset($this->request['password']) ? $this->request['password'] : "";
 
-		$app_key = isset($request['key']) ? $request['key'] : "";
+		$app_key = isset($this->request['key']) ? $this->request['key'] : "";
 
 		if ( $user_id = $this->_login($username, $password) ||
 		 	$this->_chk_key($app_key) )
@@ -264,9 +242,12 @@ class ApiPrivateFunc
 				$message->message_to = null;
 				$message->message = $post->message_description;
 				$message->message_type = 1; // Inbox
+				
 				$message->message_date = (isset($post->message_date)
-					&& !empty($post->message_date))
-					? $post->message_date : date("Y-m-d H:i:s",time());
+					AND !empty($post->message_date))
+					? $post->message_date 
+					: date("Y-m-d H:i:s",time());
+					
 				$message->service_messageid = null;
 				$message->save();
 
@@ -276,7 +257,7 @@ class ApiPrivateFunc
                         "domain" => $this->domain,
                         "success" => "true"
                     ),
-					"error" => $this->api_actions->_get_error_msg(0)
+					"error" => $this->api_service->get_error_msg(0)
 				);
 
 			}
@@ -289,7 +270,7 @@ class ApiPrivateFunc
                         "domain" => $this->domain,
                         "success" => "false"
                     ),
-					"error" => $this->api_actions->_get_error_msg(002)
+					"error" => $this->api_service->get_error_msg(002)
 				);
 			}
 
@@ -303,22 +284,14 @@ class ApiPrivateFunc
                     "domain" => $this->domain,
                     "success" => "false"
                 ),
-				"error" => $this->api_actions->_get_error_msg(005)
+				"error" => $this->api_service->get_error_msg(005)
 			);
 		}
-
-		if($response_type == 'json')
-		{
-			$this->ret_json_or_xml = $this->api_actions->
-                _array_as_JSON($reponse);
-		}
-		else
-		{
-			$this->ret_json_or_xml = $this->api_actions->
-                _array_as_XML($reponse, array());
-		}
-
-		return $ret_json_or_xml;
+		
+		// Set the response data
+		$this->response_data = ($response_type == 'json')
+		    ? $this->array_as_json($reponse)
+		    : $this->array_as_xml($reponse, array());
 	}
 
 
@@ -326,25 +299,23 @@ class ApiPrivateFunc
     /**
  	 * Get the latitude and longitude for the default centre of the map.
      *
-     * @param string response_type - XML or JSON
-     *
      * @return string
  	 */
-	public function _map_center($response_type)
+	public function map_center()
     {
 		$json_mapcenters = array(); //lat and lon string to parse to json
 
-		//find incidents
+		// Find incidents
 		$this->query = "SELECT default_lat AS latitude, default_lon AS 
             longitude FROM `".$this->table_prefix."settings`
 			ORDER BY id DESC ;";
 
-		$this->items = $this->db->query($this->query);
+		$items = $this->db->query($this->query);
 		$i = 0;
 
-		foreach ($this->items as $item)
+		foreach ($items as $item)
         {
-			//needs different treatment depending on the output
+			// Needs different treatment depending on the output
 			if($response_type == 'json')
             {
 				$json_mapcenters[] = array("mapcenter" => $item);
@@ -353,28 +324,24 @@ class ApiPrivateFunc
             {
 				$json_mapcenters['mapcenter'.$i] = array(
                         "mapcenter" => $item) ;
+                        
 				$this->replar[] = 'mapcenter'.$i;
 			}
 
 			$i++;
 		}
 
-		//create the json array
-		$this->data = array("payload" => array(
+		// Create the json array
+		$data = array("payload" => array(
                     "domain" => $this->domain,
-                    "mapcenters" => $json_mapcenters),
-                "error" => $this->api_actions->_get_error_msg(0));
+                    "mapcenters" => $json_mapcenters
+                ),
+                "error" => $this->api_service->get_error_msg(0));
 
-		if($response_type == 'json')
-        {
-				$this->ret_json_or_xml = $this->api_actions
-                    ->_array_as_JSON($this->data);
-		} else {
-			$this->ret_json_or_xml = $this->api_actions
-                ->_array_as_XML($this->data, $this->replar);
-		}
-
-		return $this->ret_json_or_xml;
+        // Set the response data
+		$this->response_data =($response_type == 'json')
+		    ? $this->array_as_json($data)
+		    : $this->array_as_xml($data, $this->replar);
 	}
 
 }

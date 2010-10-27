@@ -2,7 +2,7 @@
 /**
  * This class handles GET request for KML via the API.
  *
- * @version 24 - Henry Addo 2010-09-27
+ * @version 25 - Emmanuel Kala 2010-10-26
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -15,35 +15,106 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-require_once('ApiActions.php');
+class Comments_Api_Object extends Api_Object_Core {
 
-class AdminComment
-{
-    private $data;
-    private $items;
-    private $table_prefix;
-    private $api_actions;
-    private $response_type;
-    private $list_limit;
-    private $domain;
-    private $api_prvt_func;
-    private $error_messages;
-    public function __construct()
+    public function __construct($api_service)
     {
-        $this->api_actions = new ApiActions;
-        $this->api_prvt_func = new ApiPrivateFunc;
-        $this->data = array();
-        $this->items = array();
-        $this->ret_json_or_xml = '';
-        $this->response_type = '';
-        $this->query = '';
-        $this->error_messages = '';
-        $this->ret_value = 0;
-        $this->db = $this->api_actions->_get_db();
-        $this->list_limit = $this->api_actions->_get_list_limit();
-        $this->domain = $this->api_actions->_get_domain();
+        parent::__construct($api_service);
+    }
+    
+    public function perform_task()
+    {
+		$this->_get_comments();
+    }
+    
+    /**
+     * Handles comment listing API requests
+     */
+    public function get_comments()
+    {
+        if ( ! $this->api_service->verify_array_index($this->request, 'by'))
+        {
+            $this->set_error_message(array(
+                "error" => $this->api_service->get_error_msg(001, 'by')
+            ));
+            return;
+        }
+        else
+        {
+            $this->by = $this->request['by'];
+        }
+        
+        switch ($this->by)
+        {
+            case "all":
+                $this->response_data = $this->_get_all_comments();
+            break;
+            
+            case "spam":
+                $this->response_data = $this->_get_spam_comments();
+            break;
+            
+            case "pending":
+                $this->response_data = $this->_get_pending_comments();
+            break;
+            
+            case "approved":
+                $this->response_data = $this->_get_approved_comments();
+            break;
+            
+            default:
+                $this->set_error_message(array(
+                    "error" => $this->api_service->get_error_msg(002)
+                ));
+        }
+        
     }
 
+
+    /**
+     * Handles comment action API requests
+     */    
+    public function comment_action()
+    {
+        if ( ! $this->verify_array_index($this->request, 'action'))
+        {
+            $this->set_error_message(array(
+                "error" => $this->api_service->get_error_msg(001, 'action')
+            ));
+            return;
+        }
+        else
+        {
+            $this->by = $this->request['action'];
+        }
+        
+        switch ($this->by)
+        {
+            case "a":
+                $this->_approve_comment();
+            break;
+            
+            case "u":
+                //$this->_upapprove_commment();
+            break;
+            
+            case "d":
+                $this->_delete_comment();
+            break;
+            
+            case "s":
+                $this->_spam_comment();
+            break;
+            
+            case "n":               
+            break;
+            
+            default:
+                $this->set_error_message(array(
+                    "error" => $this->api_service->get_error_msg(002)
+                ));
+        }
+    }
         
     /**
  	 * Gets a list of comments by
@@ -53,8 +124,7 @@ class AdminComment
      * 
      * @return array
  	 */
-    private function _get_comment_list($where, $limit = '',
-            $response_type) 
+    private function _get_comment_list($where, $limit = '') 
     {
        
         $xml = new XMLWriter();
@@ -63,9 +133,9 @@ class AdminComment
 
         $this->query = "SELECT * FROM comment $where $limit";
         
-        $this->items = $this->db->query($this->query);
+        $items = $this->db->query($this->query);
         
-        if($response_type == "xml") 
+        if ($this->response_type == "xml") 
         {
             $xml->openMemory();
             $xml->startDocument('1.0', 'UTF-8');
@@ -75,9 +145,9 @@ class AdminComment
             $xml->startElement('comments');
         }
         
-        foreach($this->items as $list_item) 
+        foreach ($this->items as $list_item) 
         {
-            if($response_type == "json") 
+            if ($this->response_type == "json") 
             {
                 $json_item = (array) $list_item;
             }
@@ -105,7 +175,7 @@ class AdminComment
             }
         }
 
-        if($response_type == "xml") 
+        if ($this->response_type == "xml") 
         {
             $xml->endElement(); // comments
             $xml->endElement(); // payload
@@ -121,7 +191,7 @@ class AdminComment
         {
             $json = array("payload" => array("comments" => $json_item));
 
-            return $this->api_actions->_array_as_JSON($json);
+            return $this->array_as_xml($json);
         }
     }
 
@@ -130,13 +200,13 @@ class AdminComment
      *
      * @return array
      */
-    public function _get_spam_comments($response_type)
+    private function _get_spam_comments()
     {
         $where = "\nWHERE comment_spam = 1";
         $where .= "\nORDER BY comment_date DESC";
         $limit = "\nLIMIT 0, $this->list_limit";
 
-        return $this->_get_comment_list($where, $limit,$response_type); 
+        return $this->_get_comment_list($where, $limit); 
     }
 
     /**
@@ -147,13 +217,13 @@ class AdminComment
      *
      * @return array
      */
-    public function _get_all_comments($response_type)
+    private function _get_all_comments()
     {
         $where = "\nWHERE comment_spam = 0";
         $where .= "\nORDER BY comment_date DESC";
         $limit = "\nLIMIT 0, $this->list_limit";
 
-        return $this->_get_comment_list($where, $limit,$response_type); 
+        return $this->_get_comment_list($where, $limit); 
     }
     
     /**
@@ -164,13 +234,13 @@ class AdminComment
      *
      * @return array
      */
-    public function _get_approved_comments($response_type)
+    private function _get_approved_comments()
     {
         $where = "\nWHERE comment_active = 1 AND comment_spam = 0";
         $where .= "\nORDER BY comment_date DESC";
         $limit = "\nLIMIT 0, $this->list_limit";
 
-        return $this->_get_comment_list($where, $limit,$response_type); 
+        return $this->_get_comment_list($where, $limit); 
 
     }
             
@@ -182,13 +252,13 @@ class AdminComment
      *
      * @return array
      */
-    public function _get_pending_comments($response_type)
+    private function _get_pending_comments()
     {
         $where = "\nWHERE comment_active = 0 AND comment_spam = 0";
         $where .= "\nORDER BY comment_date DESC";
         $limit = "\nLIMIT 0, $this->list_limit";
 
-        return $this->_get_comment_list($where, $limit,$response_type); 
+        return $this->_get_comment_list($where, $limit); 
     }
 
     /**
@@ -198,10 +268,11 @@ class AdminComment
      *
      * @return array
      */
-    public function _spam_comment($response_type) 
+    private function _spam_comment() 
     {
+        $ret_val = 0;
         
-        if($_POST)
+        if ($_POST)
         {
             $post = Validation::factory($_POST);
 
@@ -216,6 +287,7 @@ class AdminComment
             {
                 $comment_id = $post->comment_id;
                 $comment = new Comment_Model($comment_id);
+                
                 if ($comment->loaded == true)
                 {
                     //spam
@@ -238,7 +310,7 @@ class AdminComment
                     //Comment id doesn't exist in DB
                     //TODO i18nize the string
                     $this->error_messages .= "Comment ID does not exist.";
-                    $this->ret_value = 1;
+                    $ret_value = 1;
 
                 }
             }
@@ -246,17 +318,16 @@ class AdminComment
             {
                 //TODO i18nize the string
                 $this->error_messages .= "Comment ID is required.";
-                $this->ret_value = 1;
+                $ret_value = 1;
             }
 
         }
         else
         {
-            $this->ret_value = 3;
+            $ret_value = 3;
         }
         
-        return $this->api_actions->_response($this->ret_value,
-                $response_type,$this->error_messages);
+        return $this->response($ret_value, $this->error_messages);
 
     }
 
@@ -268,9 +339,11 @@ class AdminComment
      *
      * @return Array
  	 */
-    public function _delete_comment($response_type) 
+    private function _delete_comment() 
     {
-        if($_POST)
+        $ret_value = 0;
+        
+        if ($_POST)
         {
             $post = Validation::factory($_POST);
 
@@ -302,17 +375,16 @@ class AdminComment
             {
                 //TODO i18nize the string
                 $this->error_messages .= "Comment ID is required.";
-                $this->ret_value = 1;
+                $ret_value = 1;
             }
 
         }
         else
         {
-            $this->ret_value = 3;
+            $ret_value = 3;
         }
         
-        return $this->api_actions->_response($this->ret_value,
-                $response_type,$this->error_messages);
+        return $this->response($ret_value, $this->error_messages);
     }
     
     /**
@@ -323,7 +395,7 @@ class AdminComment
      *
      * @return Array
  	 */
-    public function _approve_comment($response_type) 
+    private function _approve_comment() 
     {
         $form = array
         (
@@ -332,6 +404,9 @@ class AdminComment
         );
 
         $errors = $form;
+        
+        $ret_val = 0;
+        
         if($_POST)
         {
             $post = Validation::factory($_POST);
@@ -368,7 +443,7 @@ class AdminComment
                     //Comment id doesn't exist in DB
                     //TODO i18nize the string
                     $this->error_messages .= "Comment ID does not exist.";
-                    $this->ret_value = 1;
+                    $ret_value = 1;
 
                 }
             }
@@ -376,17 +451,16 @@ class AdminComment
             {
                 //TODO i18nize the string
                 $this->error_messages .= "Comment ID is required.";
-                $this->ret_value = 1;
+                $ret_value = 1;
             }
 
         }
         else
         {
-            $this->ret_value = 3;
+            $ret_value = 3;
         }
         
-        return $this->api_actions->_response($this->ret_value,
-                $response_type,$this->error_messages);
+        return $this->response($ret_value, $this->error_messages);
     }
 
 }

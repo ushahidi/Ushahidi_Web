@@ -2,7 +2,7 @@
 /**
  * This class handles GET request for KML via the API.
  *
- * @version 24 - Henry Addo 2010-09-27
+ * @version 25 - Emmanuel Kala 2010-10-27
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -15,46 +15,61 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-require_once('ApiActions.php');
+class Twitter_Api_Object extends Api_Object_Core {
 
-class AdminTwitter
-{
-    private $data;
-    private $items;
-    private $table_prefix;
-    private $api_actions;
-    private $response_type;
-    private $domain;
-    private $api_prvt_func;
-    private $ret_value;
-    private $list_limit;
-    private $error_messages;
-
-    public function __construct()
+    public function __construct($api_service)
     {
-        $this->api_actions = new ApiActions;
-        $this->api_prvt_func = new ApiPrivateFunc;
-        $this->data = array();
-        $this->items = array();
-        $this->ret_json_or_xml = '';
-        $this->response_type = '';
-        $this->error_messages = '';
-        $this->ret_value = 0;
-        $this->domain = $this->api_actions->_get_domain();
-        $this->list_limit = $this->api_actions->_get_list_limit();
+		parent::__construct($api_service);	
+    }  
 
-    }
-
+	/**
+	 * List all twitter messages by default
+	 */
+	public function perform_task()
+	{
+		$this->_list_twitter_msgs();
+	}
+	
+	/**
+	 * Handles actions for twitter messages
+	 */
+	public function twitter_action()
+	{
+		if ( ! $this->api_service->verify_array_index($this->request, 'action'))
+		{
+			$this->set_error_message(array(
+				"error" => $this->api_service->get_error_msg(001,'action')
+			));	
+			return;
+		}
+		else
+		{
+			$this->by = $this->request['action'];
+		}
+		
+		switch ($this->by)
+		{
+			case "d":
+				$this->_delete_twitter_msg();
+			break;
+			
+			default:
+				$this->set_error_message(array(
+					"error" => $this->api_service->get_error_msg(001)
+				));
+		}
+	}
+	
     /**
      * List first 15 twitter messages.
      *
-     * @param string response_type - The response to type to return.
-     *
      * @return array
      */
-    public function _list_twitter_msgs($response_type)
+    private function _list_twitter_msgs()
     {
-        $this->items = ORM::factory('message')
+		$ret_json_or_xml = ''; // Will hold the return JSON/XML string
+  
+      	$items = ORM::factory('message')
 			->where('service_id', '3')
 			->where('message_type','1')
 			->orderby('message_date','desc')
@@ -63,7 +78,7 @@ class AdminTwitter
         $json_categories = array();
         
         $i = 0;
-        foreach ( $this->items as $twitter)
+        foreach ($items as $twitter)
         {
             if ( $response_type == 'json')
             {
@@ -73,41 +88,39 @@ class AdminTwitter
             {
                 $json_categories['twitter'.$i] = array('twitter' => 
                         $twitter);
-                $this->replay[] = 'twitter'.$i;
+                $this->replar[] = 'twitter'.$i;
             }
         }
         
-        //create the json array
-		$this->data = array("payload" => array(
+        // Create the json array
+		$data = array("payload" => array(
             "domain" => $this->domain,
             "count" => $json_categories),
-            "error" => $this->api_actions->_get_error_msg(0));
+            "error" => $this->api_service->get_error_msg(0));
 
-		if($response_type == 'json') 
+		if ($this->response_type == 'json') 
         {
-			$this->ret_json_or_xml = $this->api_actions
-                ->_array_as_JSON($this->data);
+			$ret_json_or_xml = $this->array_as_json($data);
 		}
         else
         {
-			$this->ret_json_or_xml = $this->api_actions
-                ->_array_as_XML($this->data,$this->replar);
+			$ret_json_or_xml = $this->array_as_xml($data, $this->replar);
 		}
 
-		return $this->ret_json_or_xml;
+		$this->response_data = $ret_json_or_xml;
 
     }
 
     /**
      * Delete existing SMS message
      *
-     * @param string response_type.
-     *
      * @return Array
      */
-    public function _delete_twitter_msg($response_type)
+    private function _delete_twitter_msg()
     {
-        if($_POST)
+		$ret_value = 0;
+		
+        if ($_POST)
         {
             $post = Validation::factory($_POST);
 
@@ -148,8 +161,7 @@ class AdminTwitter
             $this->ret_value = 3;
         }
         
-        return $this->api_actions->_response($this->ret_value,
-                $response_type,$this->error_messages);
+        $this->response_data = $this->response($ret_value, $this->error_messages);
 
     }
 
