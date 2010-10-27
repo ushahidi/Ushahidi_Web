@@ -101,35 +101,35 @@ final class Api_Service {
     }
     
     /**
-	 * Log user in.
-	 *
-	 * This method is mainly used for admin tasks performed via the API 
-	 *
-	 * @param string $username User's username.
-	 * @param string $password User's password.
-	 * @return int user_id, false if authentication fails
-	 */
+     * Log user in.
+     *
+     * This method is mainly used for admin tasks performed via the API 
+     *
+     * @param string $username User's username.
+     * @param string $password User's password.
+     * @return int user_id, false if authentication fails
+     */
     public function _login($username, $password)
     {
-	    $auth = Auth::instance();
+        $auth = Auth::instance();
 
-		// Is user previously authenticated?
+        // Is user previously authenticated?
         if ($auth->logged_in())
         {
             return $auth->get_user()->id;
         }
-		else
-		{
-			// Attempt a login
-	        if ($auth->login($username, $password))
-	        {
-	            return $auth->get_user()->id;
-	        }
-	        else
-	        {
-	            return false;
-	        }
-		}
+        else
+        {
+            // Attempt a login
+            if ($auth->login($username, $password))
+            {
+                return $auth->get_user()->id;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
     
     /**
@@ -152,17 +152,13 @@ final class Api_Service {
             $this->task_name = ucfirst($this->request['task']);
         }
         
-        // Construct the class name of the API library
-        /** 
-         * NOTE: All API libraries must be suffixed with _Api_Object and must be
-         * subclasses of Api_Object_Core
-         */
-        
         // Load the base API library
         require_once Kohana::find_file('libraries/api', 'Api_Object');
-            
+        
+        // Get the task handler (from the api config file) for the requested task    
         $task_handler = $this->_get_task_handler(strtolower($this->task_name));
-            
+        
+        // Check if handler has been set   
         if (isset($task_handler))
         {
             // Check if the handler is an array
@@ -188,6 +184,7 @@ final class Api_Service {
         }
         else // Task handler not found in routing table therefore look the implementing library
         {
+            // All library file names *must* be suffixed with the value specified in API_LIBRARY_SUFFIX 
             $library_file_name = $this->task_name.API_LIBRARY_SUFFIX;
             
             if (Kohana::find_file('libraries/api', 
@@ -203,10 +200,12 @@ final class Api_Service {
                 $this->response = $this->api_object->get_response_data(); 
             }
             else
-            {
+            {   // Library not found
                 $this->response = json_encode(array(
                     "error" => $this->get_error_msg(999)
                 ));
+                
+                return;
             }
         }
         
@@ -245,6 +244,7 @@ final class Api_Service {
         $temp_api_object = new $class_name($this);
         
         // Check if the implementing library is an instance of Api_Object_Core
+        // NOTE: All API libraries *MUST* be subclasses of Api_Object_Core
         if ( ! $temp_api_object instanceof Api_Object_Core)
             throw new Kohana_Exception('libraries.invalid_api_library', $class_name, 'Api_Object_Core');
         
@@ -329,10 +329,10 @@ final class Api_Service {
     
     /**
      * Looks up the api config file for the library that handles the task
-     * specified in @param $task. The api config file acts as an API task routing
+     * specified in @param $task. The api config file is the API task routing
      * table
      *
-     * $task - Task whose handling library is to be retrieved
+     * @param $task - Task to be looked up in the routing table
      */
     private function _get_task_handler($task)
     {
