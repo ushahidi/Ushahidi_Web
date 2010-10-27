@@ -1220,10 +1220,7 @@ CREATE TABLE IF NOT EXISTS `service` (                                          
 
 INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url`, `service_api`) VALUES
 (1, 'SMS', 'Text messages from phones', NULL, NULL),
-(2, 'Email', 'Text messages from phones', NULL, NULL),
-(3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL),
-(4, 'Laconica', 'Tweets tweets tweets', NULL, NULL);
-
+(2, 'Email', 'Text messages from phones', NULL, NULL);
 /**
 * Table structure for table `feedback`
 * 
