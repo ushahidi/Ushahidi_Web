@@ -23,12 +23,14 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
- 
+
+// Suffix for all API library names
+define('API_LIBRARY_SUFFIX', '_Api_Object');
+
 final class Api_Service {    
     private $request = array();
     private $response; // Response to be returned to the calling controller
     private $response_type;
-    private $api_task_routing_table; // Routing table for api tasks
     private $api_object; // Handle for the API library to loaded
     private $task_name; // Name of the task to be routed
     
@@ -38,9 +40,9 @@ final class Api_Service {
         $this->request = ($_SERVER['REQUEST_METHOD'] == 'POST')
             ? $_POST
             : $_GET;
-                
-        // Initialize the API routing table
-        $this->_init_routing_table();
+        
+        // Load the API configuration file
+        Kohana::config_load('api');
     }
 
     /**
@@ -147,7 +149,7 @@ final class Api_Service {
         }
         else
         {
-            $this->task_name = $this->request['task'];
+            $this->task_name = ucfirst($this->request['task']);
         }
         
         // Construct the class name of the API library
@@ -155,51 +157,52 @@ final class Api_Service {
          * NOTE: All API libraries must be suffixed with _Api_Object and must be
          * subclasses of Api_Object_Core
          */
-        $library_file_name = ucfirst($this->task_name).'_Api_Object';
         
         // Load the base API library
         require_once Kohana::find_file('libraries/api', 'Api_Object');
             
-        if (Kohana::find_file('libraries/api', 
-            Kohana::config('config.extension_prefix').$library_file_name)) // Library file exists
+        $task_handler = $this->_get_task_handler(strtolower($this->task_name));
+            
+        if (isset($task_handler))
         {
-            // Initialize the API library
-            $this->_init_api_library($library_file_name);
-            
-            // Perform the requested task
-            $this->api_object->perform_task();
-            
-            // Set the response data
-            $this->response = $this->api_object->get_response_data(); 
-        }
-        else // Library file doesn't exist therefore lookup the task from routing table
-        {
-            $task_handler = $this->_get_task_handler($this->task_name);
-            
-            if (isset($task_handler))
+            // Check if the handler is an array
+            if (is_array($task_handler))
             {
-                // Check if the handler is an array
-                if (is_array($task_handler))
-                {
-                    // Load the library for the specified class
-                    $this->_init_api_library($task_handler["class"]);
+                // Load the library for the specified class
+                $this->_init_api_library($task_handler[0]);
                         
-                    // Execute the callback function
-                    call_user_func(array($this->api_object, $task_handler["method"]));
-                }
-                else
-                {
-                    // Load the library specified in $task_handler
-                    $this->_init_api_library($task_handler);
-                    
-                    // Perform the requested task
-                    $this->api_object->perform_task();
-                }
-                
-                // Set the response data
-                $this->response = $this->api_object->get_response_data();
+                // Execute the callback function
+                call_user_func(array($this->api_object, $task_handler[1]));
             }
-            else // No handler exists therefore return not found error
+            else
+            {
+                // Load the library specified in $task_handler
+                $this->_init_api_library($task_handler);
+                    
+                // Perform the requested task
+                $this->api_object->perform_task();
+            }
+                
+            // Set the response data
+            $this->response = $this->api_object->get_response_data();
+        }
+        else // Task handler not found in routing table therefore look the implementing library
+        {
+            $library_file_name = $this->task_name.API_LIBRARY_SUFFIX;
+            
+            if (Kohana::find_file('libraries/api', 
+                Kohana::config('config.extension_prefix').$library_file_name)) // Library file exists
+            {
+                // Initialize the API library
+                $this->_init_api_library($this->task_name);
+            
+                // Perform the requested task
+                $this->api_object->perform_task();
+            
+                // Set the response data
+                $this->response = $this->api_object->get_response_data(); 
+            }
+            else
             {
                 $this->response = json_encode(array(
                     "error" => $this->get_error_msg(999)
@@ -222,8 +225,11 @@ final class Api_Service {
      *
      * @param $class_name Name of the implementing class
      */    
-    private function _init_api_library($class_name)
+    private function _init_api_library($base_name)
     {
+        // Generate the name of the class
+        $class_name = $base_name.API_LIBRARY_SUFFIX;
+                    
         // Check if the implementing library exists
         if ( ! Kohana::find_file('libraries/api', 
                 Kohana::config('config.extension_prefix').$class_name))
@@ -322,93 +328,18 @@ final class Api_Service {
     }
     
     /**
-     * Initializes the API task routing table
-     * ------
-     * NOTES
-     * ------
-     * The task routing table faciliates handling of api tasks that don't have independent
-     * their own handling libraries. The format of the table is as follows:
-     *      $task => $library_name
-     * Where:
-     *    $task - The name of the API task
-     *    $library - Name of the library in which the task is to be handled or an associative array
-     *               specifying the library name and method to be executed
-     *
-     * TODO: Move routing table this to a config file 
-     */
-    private function _init_routing_table()
-    {
-        $this->api_task_routing_table = array(
-            "version"            => array(
-                                    "class" => "System_Api_Object",
-                                    "method" => "get_version_number"
-                                    ),
-            // MHI Enabled
-            "mhienabled"         => array(
-                                        "class" => "System_Api_Object",
-                                        "method" => "get_mhi_enabled"
-                                    ),
-            "mapcenter"          => array(
-                                        "class" => "Private_Func_Api_Object",
-                                        "method" => "map_center"
-                                    ),
-            // Statistics
-            "statistics"         => array(
-                                        "class" => "Private_Func_Api_Object",
-                                        "method" => "statistics"
-                                    ),
-            "sms"                => array(
-                                        "class" => "Private_Func_Api_Object",
-                                        "method" => "sms"
-                                    ),
-            "country"            => "Countries_Api_Object", 
-            "location"           => "Locations_Api_Object",
-            "3dkml"              => "Kml_Api_Object",
-            "geographicmidpoint" => array(
-                                        "class" => "Incidents_Api_Object",
-                                        "method" => "get_geographic_midpoint"
-                                    ),
-            "incidentcount"      => array(
-                                        "class" => "Incidents_Api_Object",
-                                        "method" => "get_incident_count"
-                                    ),
-            "apikeys"            => "Api_Key_Object",
-            
-            // Media tagging
-            "tagnews"            => "Tag_Media_Api_Object",
-            "tagvideo"           => "Tag_Media_Api_Object",
-            "tagphoto"           => "Tag_Media_Api_Object",
-            
-            // Admin report functions 
-            "reports"            => "Admin_Reports_Api_Object",
-            "reportaction"       => array(
-                                        "class" => "Admin_Reports_Api_Object",
-                                        "method" => "report_action"
-                                    ),
-                                    
-            // Admin functions for categories
-            "addcategories"      => "Admin_Category_Api_Object",
-            "editcategories"     => "Admin_Category_Api_Object",
-            "delcategories"      => "Admin_Category_Api_Object",
-			
-            // Comments, twitter, email and sms actions
-            "commentaction"		 => array("class" => "Comments_Api_Object", "method" => "comment_action"),
-            "twitteraction"		 => array("class" => "Twitter_Api_Object", "method" => "twitter_action"),
-            "emailaction"		 => array("class" => "Email_Api_Object", "method" => "email_action"),
-            "smsaction"			 => array("class" => "Sms_Api_Object", "method" => "sms_action")
-        );
-    }
-    
-    /**
-     * Looks up the task routing table for the library that handles the task
-     * specified in @param $task
+     * Looks up the api config file for the library that handles the task
+     * specified in @param $task. The api config file acts as an API task routing
+     * table
      *
      * $task - Task whose handling library is to be retrieved
      */
     private function _get_task_handler($task)
     {
-        return (array_key_exists($task, $this->api_task_routing_table))
-            ? $this->api_task_routing_table[$task]
+        $task_handler = Kohana::config('api.'.$task);
+        
+        return (isset($task_handler))
+            ? $task_handler
             : NULL;
     }
 }
