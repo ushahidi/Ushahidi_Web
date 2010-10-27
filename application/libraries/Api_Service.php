@@ -390,10 +390,12 @@ final class Api_Service {
             "addcategories"      => "Admin_Category_Api_Object",
             "editcategories"     => "Admin_Category_Api_Object",
             "delcategories"      => "Admin_Category_Api_Object",
-            
-            // Admin comments
-            "comments"           => array("class"=>"Admin_Comment_Api_Object", "method"=>"get_comments"),
-            "commentaction"      => array("class" => "Admin_Comment_Api_Object", "method"=>"comment_action")
+			
+			// Comments, twitter, email and sms actions
+            "commentaction"      => array("class" => "Comments_Api_Object", "method" => "comment_action"),
+			"twitteraction"		 => array("class" => "Twitter_Api_Object", "method" => "twitter_action"),
+			"emailaction"		 => array("class" => "Email_Api_Object", "method" => "email_action"),
+			"smsaction"			 => array("class" => "Sms_Api_Object", "method" => "sms_action")
         );
     }
     
