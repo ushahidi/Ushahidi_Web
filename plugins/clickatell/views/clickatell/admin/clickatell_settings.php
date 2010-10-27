@@ -37,5 +37,19 @@
 				<h4><a href="javascript:clickatellBalance()"><?php echo Kohana::lang('settings.sms.clickatell_load_balance');?></a>&nbsp;<span id="balance_loading"></span></h4>
 			</div>
 		</td>
-	</tr>							
+	</tr>
+	<tr>
+		<td>
+			<span class="big_blue_span"><?php echo Kohana::lang('ui_main.step');?> 4:</span>
+		</td>
+		<td>
+			<h4 class="fix"><a href="#" class="tooltip" title="">Working with Clickatell 2-Way</a></h4>
+			<p>
+				If you sign up for Clickatell 2-Way service they will ask you for a 'Primary Callback URL'. Use the URL below as the 'Target Address' and select 'HTTP POST' from the drop down.
+			</p>
+			<p class="sync_key">
+				<span><?php echo $clickatell_link; ?></span>
+			</p>
+		</td>
+	</tr>								
 </table>
