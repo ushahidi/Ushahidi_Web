@@ -17,7 +17,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Api_Key_Object extends Api_Object_Core {
+class Api_Keys_Api_Object extends Api_Object_Core {
 
     public function __construct($api_service)
     {
