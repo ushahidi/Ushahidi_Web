@@ -18,16 +18,16 @@ class Email_Api_Object extends Api_Object_Core {
 
     public function __construct($api_service)
     {
-		parent::__construct($api_service);
+        parent::__construct($api_service);
     }
 
-	/**
-	 * Empty declaration for OOP compliance
-	 */
-	public function perform_task()
-	{
-		
-	}
+    /**
+     * Empty declaration for OOP compliance
+     */
+    public function perform_task()
+    {
+        
+    }
 
     /**
      * List first 20 email messages
@@ -46,8 +46,8 @@ class Email_Api_Object extends Api_Object_Core {
      */
     public function delete_email_msg()
     {
-		$ret_val = 0; // Initialize a 0 return value; successful execution
-		
+        $ret_val = 0; // Initialize a 0 return value; successful execution
+        
         if($_POST)
         {
             $post = Validation::factory($_POST);
@@ -56,8 +56,8 @@ class Email_Api_Object extends Api_Object_Core {
             $post->pre_filter('trim', TRUE);
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
-			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('message_id.*','required','numeric');
+            $post->add_rules('action','required', 'alpha', 'length[1,1]');
+            $post->add_rules('message_id.*','required','numeric');
 
             if ($post->validate())
             {

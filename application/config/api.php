@@ -21,8 +21,6 @@
      // Statistics
      "statistics" => array("Private_Func", "statistics"),
      
-     "sms" => array("Private_Func", "sms"),
-                
      "country" => "Countries", 
      "location" => "Locations",
      "3dkml" => "Kml",
