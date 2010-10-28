@@ -30,7 +30,7 @@ class Comments_Api_Object extends Api_Object_Core {
     /**
      * Handles comment listing API requests
      */
-    public function get_comments()
+    public function _get_comments()
     {
         if ( ! $this->api_service->verify_array_index($this->request, 'by'))
         {
@@ -91,22 +91,19 @@ class Comments_Api_Object extends Api_Object_Core {
         switch ($this->by)
         {
             case "a":
-                $this->_approve_comment();
+                 $this->response_data = $this->_approve_comment();
             break;
             
-            case "u":
-                //$this->_upapprove_commment();
+            case "add":
+               $this->response_data = $this->_add_comment();
             break;
             
             case "d":
-                $this->_delete_comment();
+                $this->response_data = $this->_delete_comment();
             break;
             
             case "s":
-                $this->_spam_comment();
-            break;
-            
-            case "n":               
+                $this->response_data = $this->_spam_comment();
             break;
             
             default:
@@ -460,6 +457,202 @@ class Comments_Api_Object extends Api_Object_Core {
             $ret_value = 3;
         }
         
+        return $this->response($ret_value, $this->error_messages);
+    }
+
+    /**
+     * Submit comments
+     *
+     * @return int
+     */
+    private function _add_comment()
+    {
+        $api_akismet = Kohana::config('settings.api_akismet');
+
+		// Comment Post?
+		// Setup and initialize form field names
+        
+		$form = array
+		(
+            'incident_id' => '',
+			'comment_author' => '',
+			'comment_description' => '',
+			'comment_email' => '',
+			'comment_ip' => '',
+			'captcha' => ''
+		);
+
+		$captcha = Captcha::factory();
+		$errors = $form;
+		$form_error = FALSE;
+        $ret_value = 0;
+
+		// Check, has the form been submitted, if so, setup validation
+
+		if ($_POST AND Kohana::config('settings.allow_comments') )
+		{
+			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+
+			$post = Validation::factory($_POST);
+
+			// Add some filters
+
+			$post->pre_filter('trim', TRUE);
+
+			// Add some rules, the input field, followed by a list of checks, carried out in order
+            $post->add_rules('incident_id', 'required');
+			$post->add_rules('comment_author', 'required', 'length[3,100]');
+			$post->add_rules('comment_description', 'required');
+			$post->add_rules('comment_email', 'required','email', 'length[4,100]');
+			$post->add_rules('captcha', 'required', 'Captcha::valid');
+
+			// Test to see if things passed the rule checks
+
+			if ($post->validate())
+			{
+				// Yes! everything is valid
+                $incident = ORM::factory('incident')
+				->where('id',$post->incident_id)
+				->where('incident_active',1)
+				->find();
+			    if ( $incident->id == 0 )	// Not Found
+			    {
+				    return $this->response(1, "No incidents with that ID");
+			    }
+
+
+				if ($api_akismet != "")
+				{
+					// Run Akismet Spam Checker
+
+					$akismet = new Akismet();
+
+					// Comment data
+
+					$comment = array(
+						'author' => $post->comment_author,
+						'email' => $post->comment_email,
+						'website' => "",
+						'body' => $post->comment_description,
+						'user_ip' => $_SERVER['REMOTE_ADDR']
+					);
+
+					$config = array(
+						'blog_url' => url::site(),
+						'api_key' => $api_akismet,
+						'comment' => $comment
+					);
+
+					$akismet->init($config);
+
+					if ($akismet->errors_exist())
+					{
+						if ($akismet->is_error('AKISMET_INVALID_KEY'))
+						{
+							// throw new Kohana_Exception('akismet.api_key');
+
+						}elseif ($akismet->is_error('AKISMET_RESPONSE_FAILED')){
+
+							// throw new Kohana_Exception('akismet.server_failed');
+
+						}elseif ($akismet->is_error('AKISMET_SERVER_NOT_FOUND')){
+
+							// throw new Kohana_Exception('akismet.server_not_found');
+
+						}
+
+						// If the server is down, we have to post
+						// the comment :(
+						// $this->_post_comment($comment);
+
+						$comment_spam = 0;
+					}else{
+
+						if ($akismet->is_spam())
+						{
+							$comment_spam = 1;
+						}else{
+							$comment_spam = 0;
+						}
+					}
+				}else{
+
+					// No API Key!!
+
+					$comment_spam = 0;
+				}
+
+
+				$comment = new Comment_Model();
+				$comment->incident_id = $id;
+				$comment->comment_author = strip_tags($post->comment_author);
+				$comment->comment_description = strip_tags($post->comment_description);
+				$comment->comment_email = strip_tags($post->comment_email);
+				$comment->comment_ip = $_SERVER['REMOTE_ADDR'];
+				$comment->comment_date = date("Y-m-d H:i:s",time());
+
+				// Activate comment for now
+				if ($comment_spam == 1)
+				{
+					$comment->comment_spam = 1;
+					$comment->comment_active = 0;
+				}
+				else
+				{
+					$comment->comment_spam = 0;
+					if (Kohana::config('settings.allow_comments') == 1)
+					{ // Auto Approve
+						$comment->comment_active = 1;
+					}
+					else
+					{ // Manually Approve
+						$comment->comment_active = 0;
+					}
+				}
+				$comment->save();
+
+				// Notify Admin Of New Comment
+				$send = notifications::notify_admins(
+					"[".Kohana::config('settings.site_name')."] ".
+						Kohana::lang('notifications.admin_new_comment.subject'),
+						Kohana::lang('notifications.admin_new_comment.message')
+						."\n\n'".strtoupper($incident->incident_title)."'"
+						."\n".url::base().'reports/view/'.$post->incident_id
+					);
+
+			}else{
+
+				// No! We have validation errors, we need to show the form again, with the errors
+
+				// Repopulate the form fields
+
+				$form = arr::overwrite($form, $post->as_array());
+
+				// Populate the error fields, if any
+
+				$errors = arr::overwrite($errors, $post->errors('comments'));
+			    
+                foreach($errors as $error_item => $error_description)
+                {
+                    if( ! is_array($error_description))
+                    {
+                        $this->error_messages .= $error_description;
+                        
+                        if($error_description != end($errors))
+                        {
+                            $this->error_messages .= " - ";
+                        }
+                    }
+                }
+                 
+                $ret_value = 1; // Validation error
+			}
+		}
+        else
+        {   
+            $ret_value = 3;
+        }
+
         return $this->response($ret_value, $this->error_messages);
     }
 

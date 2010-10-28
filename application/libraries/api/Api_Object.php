@@ -158,7 +158,7 @@ abstract class Api_Object_Core {
         $ret_json_or_xml = '';
         $response = array();
 
-        if($ret_value == 0)
+        if ($ret_value == 0)
         {
             $response = array(
                 "payload" => array(
@@ -169,7 +169,7 @@ abstract class Api_Object_Core {
             );
             
         } 
-        elseif($ret_value == 1) 
+        elseif ($ret_value == 1) 
         {
             $response = array(
                 "payload" => array(
