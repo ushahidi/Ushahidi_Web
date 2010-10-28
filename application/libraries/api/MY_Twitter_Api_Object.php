@@ -19,47 +19,47 @@ class Twitter_Api_Object extends Api_Object_Core {
 
     public function __construct($api_service)
     {
-		parent::__construct($api_service);	
+        parent::__construct($api_service);  
     }  
 
-	/**
-	 * List all twitter messages by default
-	 */
-	public function perform_task()
-	{
-		$this->_list_twitter_msgs();
-	}
-	
-	/**
-	 * Handles actions for twitter messages
-	 */
-	public function twitter_action()
-	{
-		if ( ! $this->api_service->verify_array_index($this->request, 'action'))
-		{
-			$this->set_error_message(array(
-				"error" => $this->api_service->get_error_msg(001,'action')
-			));	
-			return;
-		}
-		else
-		{
-			$this->by = $this->request['action'];
-		}
-		
-		switch ($this->by)
-		{
-			case "d":
-				$this->_delete_twitter_msg();
-			break;
-			
-			default:
-				$this->set_error_message(array(
-					"error" => $this->api_service->get_error_msg(001)
-				));
-		}
-	}
-	
+    /**
+     * List all twitter messages by default
+     */
+    public function perform_task()
+    {
+        $this->_list_twitter_msgs();
+    }
+    
+    /**
+     * Handles actions for twitter messages
+     */
+    public function twitter_action()
+    {
+        if ( ! $this->api_service->verify_array_index($this->request, 'action'))
+        {
+            $this->set_error_message(array(
+                "error" => $this->api_service->get_error_msg(001,'action')
+            )); 
+            return;
+        }
+        else
+        {
+            $this->by = $this->request['action'];
+        }
+        
+        switch ($this->by)
+        {
+            case "d":
+                $this->_delete_twitter_msg();
+            break;
+            
+            default:
+                $this->set_error_message(array(
+                    "error" => $this->api_service->get_error_msg(001)
+                ));
+        }
+    }
+    
     /**
      * List first 15 twitter messages.
      *
@@ -67,13 +67,13 @@ class Twitter_Api_Object extends Api_Object_Core {
      */
     private function _list_twitter_msgs()
     {
-		$ret_json_or_xml = ''; // Will hold the return JSON/XML string
+        $ret_json_or_xml = ''; // Will hold the return JSON/XML string
   
-      	$items = ORM::factory('message')
-			->where('service_id', '3')
-			->where('message_type','1')
-			->orderby('message_date','desc')
-			->find_all($this->list_limit);
+        $items = ORM::factory('message')
+            ->where('service_id', '3')
+            ->where('message_type','1')
+            ->orderby('message_date','desc')
+            ->find_all($this->list_limit);
 
         $json_categories = array();
         
@@ -93,21 +93,21 @@ class Twitter_Api_Object extends Api_Object_Core {
         }
         
         // Create the json array
-		$data = array("payload" => array(
+        $data = array("payload" => array(
             "domain" => $this->domain,
             "count" => $json_categories),
             "error" => $this->api_service->get_error_msg(0));
 
-		if ($this->response_type == 'json') 
+        if ($this->response_type == 'json') 
         {
-			$ret_json_or_xml = $this->array_as_json($data);
-		}
+            $ret_json_or_xml = $this->array_as_json($data);
+        }
         else
         {
-			$ret_json_or_xml = $this->array_as_xml($data, $this->replar);
-		}
+            $ret_json_or_xml = $this->array_as_xml($data, $this->replar);
+        }
 
-		$this->response_data = $ret_json_or_xml;
+        $this->response_data = $ret_json_or_xml;
 
     }
 
@@ -118,8 +118,8 @@ class Twitter_Api_Object extends Api_Object_Core {
      */
     private function _delete_twitter_msg()
     {
-		$ret_value = 0;
-		
+        $ret_value = 0;
+        
         if ($_POST)
         {
             $post = Validation::factory($_POST);
@@ -128,8 +128,8 @@ class Twitter_Api_Object extends Api_Object_Core {
             $post->pre_filter('trim', TRUE);
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
-			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('message_id.*','required','numeric');
+            $post->add_rules('action','required', 'alpha', 'length[1,1]');
+            $post->add_rules('message_id.*','required','numeric');
 
             if ($post->validate())
             {

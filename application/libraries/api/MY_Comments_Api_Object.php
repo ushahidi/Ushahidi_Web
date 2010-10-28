@@ -24,7 +24,7 @@ class Comments_Api_Object extends Api_Object_Core {
     
     public function perform_task()
     {
-		$this->_get_comments();
+        $this->_get_comments();
     }
     
     /**
@@ -117,13 +117,13 @@ class Comments_Api_Object extends Api_Object_Core {
     }
         
     /**
- 	 * Gets a list of comments by
+     * Gets a list of comments by
      * 
      * @param string status - List comments by status.
      * @param string response_type - XML or JSON
      * 
      * @return array
- 	 */
+     */
     private function _get_comment_list($where, $limit = '') 
     {
        
@@ -180,10 +180,10 @@ class Comments_Api_Object extends Api_Object_Core {
             $xml->endElement(); // comments
             $xml->endElement(); // payload
             $xml->startElement('error');
-			$xml->writeElement('code',0);
-			$xml->writeElement('message','No Error');
-			$xml->endElement();//end error
-			$xml->endElement(); // end response
+            $xml->writeElement('code',0);
+            $xml->writeElement('message','No Error');
+            $xml->endElement();//end error
+            $xml->endElement(); // end response
 
             return $xml->outputMemory(true);
         }
@@ -262,7 +262,7 @@ class Comments_Api_Object extends Api_Object_Core {
     }
 
     /**
- 	 * Spams / Unspams a comment
+     * Spams / Unspams a comment
      * 
      * @param string response_type - The response to return. XML or JSON
      *
@@ -280,8 +280,8 @@ class Comments_Api_Object extends Api_Object_Core {
             $post->pre_filter('trim', TRUE);
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
-			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('comment_id','required','numeric');
+            $post->add_rules('action','required', 'alpha', 'length[1,1]');
+            $post->add_rules('comment_id','required','numeric');
 
             if ($post->validate())
             {
@@ -332,13 +332,13 @@ class Comments_Api_Object extends Api_Object_Core {
     }
 
     /**
- 	 * Deletes a comment
+     * Deletes a comment
      *
      * @param string response_type - The type of response to return XML or 
      * JSON.
      *
      * @return Array
- 	 */
+     */
     private function _delete_comment() 
     {
         $ret_value = 0;
@@ -351,8 +351,8 @@ class Comments_Api_Object extends Api_Object_Core {
             $post->pre_filter('trim', TRUE);
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
-			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('comment_id','required','numeric');
+            $post->add_rules('action','required', 'alpha', 'length[1,1]');
+            $post->add_rules('comment_id','required','numeric');
 
             if ($post->validate())
             {
@@ -388,13 +388,13 @@ class Comments_Api_Object extends Api_Object_Core {
     }
     
     /**
- 	 * Approves / Dissaproves a comment
+     * Approves / Dissaproves a comment
      *
      * @param string response_type - The resposne format to return.XML 
      * or JSON
      *
      * @return Array
- 	 */
+     */
     private function _approve_comment() 
     {
         $form = array
@@ -415,8 +415,8 @@ class Comments_Api_Object extends Api_Object_Core {
             $post->pre_filter('trim', TRUE);
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
-			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('comment_id','required','numeric');
+            $post->add_rules('action','required', 'alpha', 'length[1,1]');
+            $post->add_rules('comment_id','required','numeric');
             
 
             if ($post->validate())
