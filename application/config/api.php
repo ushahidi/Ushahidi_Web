@@ -20,7 +20,7 @@
      
      // Statistics
      "statistics" => array("Private_Func", "statistics"),
-     
+ 
      "country" => "Countries", 
      "location" => "Locations",
      "3dkml" => "Kml",
@@ -42,12 +42,10 @@
      // Admin report functions 
      "reports" => "Admin_Reports",
      "reportaction" => array("Admin_Reports", "report_action"),
-                         
-     // Admin functions for categories
-     "addcategories" => "Admin_Category",
-     "editcategories" => "Admin_Category",
-     "delcategories" => "Admin_Category",
-	
+                         	
+     // Category Action 
+     "categoryaction" => array("Admin_Category","category_action"),
+
      // Comment Action
      "commentaction" => array( "Comments","comment_action"),
      

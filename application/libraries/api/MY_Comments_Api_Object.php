@@ -76,7 +76,8 @@ class Comments_Api_Object extends Api_Object_Core {
      */    
     public function comment_action()
     {
-        if ( ! $this->verify_array_index($this->request, 'action'))
+        if ( ! $this->api_service->verify_array_index($this->request,
+                'action'))
         {
             $this->set_error_message(array(
                 "error" => $this->api_service->get_error_msg(001, 'action')

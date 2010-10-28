@@ -27,11 +27,20 @@ class Admin_Category_Api_Object extends Api_Object_Core {
      */
     public function perform_task()
     {
+    }
+
+    /**
+     * Handles admin category actions performed via the API service
+     */
+    public function category_action()
+    {
+        $action = ''; // Will hold the report action
+
         $username = ''; // Will hold the username
         $password = ''; // Will hold the password
         
         // Verify that the username and password have been specified
-        if ( ! $this->api_service->verify_array_index($this->requst, 'username'))
+        if ( ! $this->api_service->verify_array_index($this->request, 'username'))
         {
             $this->set_error_message(array(
                 "error" => $this->api_service->get_error_msg(001, 'username')
@@ -59,29 +68,64 @@ class Admin_Category_Api_Object extends Api_Object_Core {
             $this->set_error_message($this->response(2));
             return;
         }
-        
-        // Proceed with processing
-        switch ($this->api_service->get_task_name())
+
+
+        //Check if the action has been specified
+        if ( ! $this->api_service->verify_array_index($this->request,'action'))
         {
-            // Edit category
-            case "editcategories":
-                $this->_edit_category();
+            $this->set_error_message(array(
+                "error" => $this->api_service->get_error_msg(001,'action')));
+            
+            return;
+        }
+        else
+        {
+            $action = $this->request['action'];
+        }
+
+        // Route category actions to their various handlers
+        switch ($action)
+        {
+            // Delete category
+            case "d":
+                // Check if the category id has been specified
+                if ( ! $this->api_service->verify_array_index($this->request,'category_id'))
+                {
+                    $this->set_error_message(array(
+                        "error" => $this->api_service->get_error_msg(
+                            001, 'category_id')));
+                    return;
+                }
+                else
+                {
+                    $this->_del_category();
+                }
             break;
             
-            // Add category
-            case "addcategories":
+            // Edit category
+            case "e":
+                // Check if the category id has been specified
+                if ( ! $this->api_service->verify_array_index($this->request,'category_id'))
+                {
+                    $this->set_error_message(array(
+                        "error" => $this->api_service->get_error_msg(
+                            001, 'category_id')));
+                    return;
+                }
+                else
+                {
+                    $this->_edit_category();
+                }
+            break;
+
+            //Add category
+            case "add":
                 $this->_add_category();
             break;
-            
-            // Delete category
-            case "delcategories":
-                $this->_del_category();
-            break;
-            
+
             default:
                 $this->set_error_message(array(
-                    "error" => $this->api_service->get_error_msg(002)
-                ));
+                    "error" => $this->api_service->get_error_msg(002)));
         }
     }
     
@@ -95,7 +139,10 @@ class Admin_Category_Api_Object extends Api_Object_Core {
     private function _add_category()
     {
         // Authenticate user        
-        $this->response_data = $this->_submit_categories();
+        $ret_value = $this->_submit_categories();
+
+        $this->response_data = $this->response($ret_value, 
+            $this->error_messages);
     }
     
     /**
@@ -122,9 +169,6 @@ class Admin_Category_Api_Object extends Api_Object_Core {
         // Copy the form as errors, so the errors will be stored 
         // with keys corresponding to the form field names
         $errors = $form;
-        $form_error = FALSE;
-        $form_saved = FALSE;
-        $form_action = "";
         $parents_array = array();
         
         $ret_value = 0;
@@ -367,9 +411,6 @@ class Admin_Category_Api_Object extends Api_Object_Core {
         // copy the form as errors, so the errors will be stored 
         //with keys corresponding to the form field names
         $errors = $form;
-        $form_error = FALSE;
-        $form_saved = FALSE;
-        $form_action = "";
         $parents_array = array();
         
         // check, has the form been submitted, if so, setup validation
@@ -442,8 +483,6 @@ class Admin_Category_Api_Object extends Api_Object_Core {
                             $category->save();
                     }
                 }
-                    
-                $form_saved = TRUE;
                     
                 // Empty $form array
                 array_fill_keys($form, '');
