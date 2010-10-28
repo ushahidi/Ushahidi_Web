@@ -33,11 +33,11 @@ class Upgrade_Controller extends Admin_Controller {
         $release_version = $this->_get_release_version(); 
         
         // limit access to only superadmin
-        if ( ! $this->auth->logged_in('superadmin') OR 
+        /*if ( ! $this->auth->logged_in('superadmin') OR 
                 ( $release_version == "" ) )
         {
             url::redirect('admin/dashboard');
-        }
+        }*/
     }
 
     /**
@@ -166,11 +166,12 @@ class Upgrade_Controller extends Admin_Controller {
         
         $this->template->content->form_action = $form_action;
         $this->template->content->current_version = Kohana::config('settings.ushahidi_version');
-        $this->template->content->current_db_version = $this->release->version_db;
+        $this->template->content->current_db_version = ($this->release == true) ? $this->release->version_db : "";
         $this->template->content->environment = $this->_environment();
-        $this->template->content->release_version = $this->release->version;
-        $this->template->content->changelogs = $this->release->changelog;
+        $this->template->content->release_version = (is_object($this->release) == true) ? $this->release->version : "";
+        $this->template->content->changelogs = (is_object($this->release) == true) ? $this->release->changelog : array();
         $this->template->content->logs = $this->upgrade->log;
+        $this->template->content->download = (is_object($this->release) == true) ? $this->release->download : "";
 
     }
         
@@ -408,20 +409,25 @@ class Upgrade_Controller extends Admin_Controller {
      */
     private function _get_release_version()
     {
-        
-        $release_version = $this->release->version;
+        if (is_object($this->release))
+        {
+            $release_version = $this->release->version;
 		
-        $version_ushahidi = Kohana::config('settings.ushahidi_version');
+            $version_ushahidi = Kohana::config('settings.ushahidi_version');
 	    	
-        if ($this->_new_or_not($release_version,$version_ushahidi))
+            if ($this->_new_or_not($release_version,$version_ushahidi))
+            {
+			    return $release_version;
+		    } 
+            else 
+            {
+			    return "";
+		    }
+        }
+        else
         {
-			return $release_version;
-		} 
-        else 
-        {
-			return "";
-		}
-
+            return "";
+        }
     }
     
     /**
