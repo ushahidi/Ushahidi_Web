@@ -1,0 +1,1 @@
+Go to http://github.com/ushahidi/Ushahidi-Localizations to download up to date localizations.

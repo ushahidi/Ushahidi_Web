@@ -2,8 +2,8 @@
 	$lang = array(
 	'akismet_cannot_connect' => 'Could not connect to akismet server',
 	'akismet_cannot_retrieve' => 'The response from Akismet could not be retrieved',
-	'akismet_invalid_apikey' => 'Your Akismet API key is not valid',
 	'api_library_not_found' => 'The API library: <strong>%s</strong>, for the <strong>%s</strong> class could not be found. Please check your API task routing table.',
+	'askimet_invalid_apikey' => 'Your Akismet API key is not valid',
 	'clickatell_fopen_error' => 'Error while executing fopen sending method!<br>Please check does PHP have OpenSSL support and check does PHP version is greater than 5.2',
 	'clickatell_message_too_long' => 'Your unicode message is too long! (Current lenght=',
 	'clickatell_no_destination_address' => 'Please specify a destination address (TO)!',

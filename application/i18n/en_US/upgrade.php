@@ -24,5 +24,5 @@
     'upgrade_available' => 'Available Updates',
     'upgrade_automatic' => 'Automatic Upgrade',
     'upgrade_manual' => 'Manual Upgrade',
-   	);
+	);
 ?>
