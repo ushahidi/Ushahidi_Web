@@ -4,7 +4,7 @@
  *
  * This class handles reports activities via the API.
  *
- * @version 24 - Emmanuel Kala 2010-10-22
+ * @version 26 - Emmanuel Kala 2010-10-22
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -255,6 +255,12 @@ class Incidents_Api_Object extends Api_Object_Core {
         $items = $this->db->query($this->query);
 
         $i = 0;
+        
+        //No record found.
+        if ($items->count() == 0)
+        {
+            return $this->response(4, $this->error_messages);
+        }
 
         foreach ($items as $item)
         {

@@ -80,6 +80,12 @@ class Api_Keys_Api_Object extends Api_Object_Core {
 
         $this->items = $this->db->query($this->query);
         $i = 0;
+        
+        //No record found.
+        if ($items->count() == 0)
+        {
+            return $this->response(4);
+        }
 
         foreach ($this->items as $item)
         {

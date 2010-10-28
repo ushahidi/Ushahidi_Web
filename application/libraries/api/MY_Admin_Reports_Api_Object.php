@@ -170,6 +170,12 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
         $items = $this->db->query($this->query);
 
         $i = 0;
+        
+        //No record found.
+        if ($items->count() == 0)
+        {
+            return $this->response(4);
+        }
 
         foreach ($items as $item)
         {

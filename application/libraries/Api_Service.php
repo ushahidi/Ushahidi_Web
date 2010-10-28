@@ -107,6 +107,7 @@ final class Api_Service {
      *
      * @param string $username User's username.
      * @param string $password User's password.
+     *
      * @return int user_id, false if authentication fails
      */
     public function _login($username, $password)
@@ -320,6 +321,9 @@ final class Api_Service {
                 return array("code" => "006",
                              "message" => Kohana::lang('ui_admin.access_denied_others')
                          );
+            case 007:
+                return array("code" => "007",
+                        "message" => Kohana::lang('ui_admin.no_data'));
             default:
                 return array("code" => "999",
                              "message" => Kohana::lang('ui_admin.not_found')

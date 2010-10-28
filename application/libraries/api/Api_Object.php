@@ -188,6 +188,17 @@ abstract class Api_Object_Core {
                 "error" => $this->api_service->get_error_msg(005)
             );
         }
+        elseif ($ret_value == 4)
+        {
+            // No results got from the database query
+            $response = array(
+                "payload" => array(
+                    "domain" => $this->domain,
+                    "success" => "true"
+                ),
+                "error" => $this->api_service->get_error_msg(007)
+            );
+        }
         else 
         {
             $response = array(

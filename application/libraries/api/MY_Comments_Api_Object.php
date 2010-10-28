@@ -143,7 +143,13 @@ class Comments_Api_Object extends Api_Object_Core {
             $xml->startElement('comments');
         }
         
-        foreach ($this->items as $list_item) 
+        //No record found.
+        if ($items->count() == 0)
+        {
+            return $this->response(4);
+        }
+        
+        foreach ($items as $list_item) 
         {
             if ($this->response_type == "json") 
             {
@@ -552,11 +558,15 @@ class Comments_Api_Object extends Api_Object_Core {
 						{
 							// throw new Kohana_Exception('akismet.api_key');
 
-						}elseif ($akismet->is_error('AKISMET_RESPONSE_FAILED')){
+						}
+                        elseif ($akismet->is_error('AKISMET_RESPONSE_FAILED'))
+                        {
 
 							// throw new Kohana_Exception('akismet.server_failed');
 
-						}elseif ($akismet->is_error('AKISMET_SERVER_NOT_FOUND')){
+						}
+                        elseif ($akismet->is_error('AKISMET_SERVER_NOT_FOUND'))
+                        {
 
 							// throw new Kohana_Exception('akismet.server_not_found');
 
@@ -621,7 +631,9 @@ class Comments_Api_Object extends Api_Object_Core {
 						."\n".url::base().'reports/view/'.$post->incident_id
 					);
 
-			}else{
+			}
+            else
+            {
 
 				// No! We have validation errors, we need to show the form again, with the errors
 
@@ -633,13 +645,13 @@ class Comments_Api_Object extends Api_Object_Core {
 
 				$errors = arr::overwrite($errors, $post->errors('comments'));
 			    
-                foreach($errors as $error_item => $error_description)
+                foreach ($errors as $error_item => $error_description)
                 {
-                    if( ! is_array($error_description))
+                    if ( ! is_array($error_description))
                     {
                         $this->error_messages .= $error_description;
                         
-                        if($error_description != end($errors))
+                        if ($error_description != end($errors))
                         {
                             $this->error_messages .= " - ";
                         }

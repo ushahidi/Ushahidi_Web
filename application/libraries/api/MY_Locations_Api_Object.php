@@ -94,6 +94,12 @@ class Locations_Api_Object extends Api_Object_Core {
         $json_locations = array();
         $ret_json_or_xml = ''; // Will hold the json/xml string to return
         
+        //No record found.
+        if ($items->count() == 0)
+        {
+            return $this->response(4);
+        }
+
         foreach ($items as $item)
         {
             // Needs different treatment depending on the output

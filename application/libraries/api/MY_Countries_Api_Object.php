@@ -102,6 +102,12 @@ class Countries_Api_Object extends Api_Object_Core {
         $json_countries = array();
         $ret_json_or_xml = '';
         
+        //No record found.
+        if ($items->count() == 0)
+        {
+            return $this->response(4);
+        }
+
         foreach ($items as $item)
         {
 

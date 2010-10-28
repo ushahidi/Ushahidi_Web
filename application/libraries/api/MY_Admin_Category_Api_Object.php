@@ -137,8 +137,7 @@ class Admin_Category_Api_Object extends Api_Object_Core {
      * @return Array
      */
     private function _add_category()
-    {
-        // Authenticate user        
+    {        
         $ret_value = $this->_submit_categories();
 
         $this->response_data = $this->response($ret_value, 

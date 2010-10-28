@@ -76,6 +76,13 @@ class Sms_Api_Object extends Api_Object_Core {
         $json_categories = array();
         
         $i = 0;
+
+        //No record found.
+        if ($items->count() == 0)
+        {
+            return $this->response(4);
+        }
+
         foreach ($items as $sms)
         {
             if ( $this->response_type == 'json')
