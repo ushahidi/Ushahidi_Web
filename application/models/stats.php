@@ -33,8 +33,11 @@ class Stats_Model extends ORM
 		$settings = ORM::factory('settings', 1);
 		$stat_id = $settings->stat_id;
 
+		// If stats isn't set, ignore this
 		if($stat_id == 0) return '';
-		$url = 'http://tracker.ushahidi.com/px.php?task=tc&siteid='.$stat_id;
+
+		$val = 'http://'.$_SERVER["HTTP_HOST"].'/'.Kohana::config('config.site_domain');
+		$url = 'http://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.'&val='.base64_encode($val);
 
 		$curl_handle = curl_init();
 		curl_setopt($curl_handle,CURLOPT_URL,$url);
