@@ -91,19 +91,19 @@ class Comments_Api_Object extends Api_Object_Core {
         
         switch ($this->by)
         {
-            case "a":
+            case "a": //Aprrove / Unapprove comment
                  $this->response_data = $this->_approve_comment();
             break;
             
-            case "add":
+            case "add": // Add a new comment
                $this->response_data = $this->_add_comment();
             break;
             
-            case "d":
+            case "d": // Delete an existing comment
                 $this->response_data = $this->_delete_comment();
             break;
             
-            case "s":
+            case "s": // Spam or Unspam a comment
                 $this->response_data = $this->_spam_comment();
             break;
             
@@ -195,7 +195,7 @@ class Comments_Api_Object extends Api_Object_Core {
         {
             $json = array("payload" => array("comments" => $json_item));
 
-            return $this->array_as_xml($json);
+            return $this->array_as_json($json);
         }
     }
 
@@ -485,8 +485,6 @@ class Comments_Api_Object extends Api_Object_Core {
 			'comment_author' => '',
 			'comment_description' => '',
 			'comment_email' => '',
-			'comment_ip' => '',
-			'captcha' => ''
 		);
 
 		$captcha = Captcha::factory();
@@ -511,8 +509,6 @@ class Comments_Api_Object extends Api_Object_Core {
 			$post->add_rules('comment_author', 'required', 'length[3,100]');
 			$post->add_rules('comment_description', 'required');
 			$post->add_rules('comment_email', 'required','email', 'length[4,100]');
-			$post->add_rules('captcha', 'required', 'Captcha::valid');
-
 			// Test to see if things passed the rule checks
 
 			if ($post->validate())
@@ -595,7 +591,7 @@ class Comments_Api_Object extends Api_Object_Core {
 
 
 				$comment = new Comment_Model();
-				$comment->incident_id = $id;
+				$comment->incident_id = strip_tags($post->incident_id);
 				$comment->comment_author = strip_tags($post->comment_author);
 				$comment->comment_description = strip_tags($post->comment_description);
 				$comment->comment_email = strip_tags($post->comment_email);
