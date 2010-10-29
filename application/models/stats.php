@@ -36,8 +36,15 @@ class Stats_Model extends ORM
 		// If stats isn't set, ignore this
 		if($stat_id == 0) return '';
 
-		$val = 'http://'.$_SERVER["HTTP_HOST"].'/'.Kohana::config('config.site_domain');
-		$url = 'http://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.'&val='.base64_encode($val);
+		// Grabbing the URL to update stats URL on the stats server
+		$additional_query = '';
+		if(isset($_SERVER["HTTP_HOST"]))
+		{
+			$val = 'http://'.$_SERVER["HTTP_HOST"].'/'.Kohana::config('config.site_domain');
+			$additional_query = '&val='.base64_encode($val);
+		}
+
+		$url = 'http://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
 
 		$curl_handle = curl_init();
 		curl_setopt($curl_handle,CURLOPT_URL,$url);
