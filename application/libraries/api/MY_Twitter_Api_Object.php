@@ -53,6 +53,10 @@ class Twitter_Api_Object extends Api_Object_Core {
                 $this->_delete_twitter_msg();
             break;
             
+            case "s":
+                $this->_spam_twitter_msg();
+            break;
+
             default:
                 $this->set_error_message(array(
                     "error" => $this->api_service->get_error_msg(001)
@@ -82,7 +86,8 @@ class Twitter_Api_Object extends Api_Object_Core {
         //No record found.
         if ($items->count() == 0)
         {
-            return $this->response(4);
+            $this-response_data = $this->response(4);
+            return;
         }
 
         foreach ($items as $twitter)
@@ -119,7 +124,7 @@ class Twitter_Api_Object extends Api_Object_Core {
     }
 
     /**
-     * Delete existing SMS message
+     * Delete existing Twitter message
      *
      * @return Array
      */
@@ -140,7 +145,7 @@ class Twitter_Api_Object extends Api_Object_Core {
 
             if ($post->validate())
             {
-                $twitter_id = $post->twitter_id;
+                $twitter_id = $post->message_id;
                 $sms = new Message_Model($twitter_id);
                 if ($sms->loaded == true)
                 {
@@ -168,8 +173,71 @@ class Twitter_Api_Object extends Api_Object_Core {
             $ret_value = 3;
         }
         
-        $this->response_data = $this->response($ret_value, $this->error_messages);
+        $this->response_data = $this->response($ret_value, 
+            $this->error_messages);
 
+    }
+
+    /**
+     * Spam / Unspam existing email message
+     *
+     * @return Array
+     */
+    public function _spam_twitter_msg()
+    {
+        $ret_val = 0; // Initialize a 0 return value; successful execution
+        
+        if ($_POST)
+        {
+            $post = Validation::factory($_POST);
+
+            // Add some filters
+            $post->pre_filter('trim', TRUE);
+            // Add some rules, the input field, followed by a list of 
+            //checks, carried out in order
+            $post->add_rules('action','required', 'alpha', 'length[1,1]');
+            $post->add_rules('message_id','required','numeric');
+
+            if ($post->validate())
+            {
+                $twitter_id = $post->message_id;
+                $twitter = new Message_Model($twitter_id);
+                if ($twitter->loaded == true)
+                {
+                    if ($twitter->message_level == '1')
+                    {
+                        $twitter->message_level = '99';
+                    }
+                    else
+                    {
+                        $twitter->message_level = '1';
+                    }
+
+                    $twitter->save();
+                }
+                else
+                {
+                    //twitter id doesn't exist in DB
+                    //TODO i18nize the string
+                    $this->error_messages .= "Twitter ID does not exist.";
+                    $this->ret_value = 1;
+
+                }
+            }
+            else
+            {
+                //TODO i18nize the string
+                $this->error_messages .= "Twitter ID is required.";
+                $ret_value = 1;
+            }
+
+        }
+        else
+        {
+            $ret_value = 3;
+        }
+        
+        $this->response_data = $this->response($ret_value);
     }
 
 }

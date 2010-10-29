@@ -54,6 +54,10 @@ class Sms_Api_Object extends Api_Object_Core {
                 $this->_delete_sms_msg();
             break;
             
+            case "s":
+                $this->_spam_sms_msg();
+            break;
+
             default:
                 $this->set_error_message(array(
                     "error" => $this->api_service->get_error_msg(002)
@@ -129,7 +133,7 @@ class Sms_Api_Object extends Api_Object_Core {
 
             if ($post->validate())
             {
-                $sms_id = $post->sms_id;
+                $sms_id = $post->message_id;
                 $sms = new Message_Model($sms_id);
                 if ($sms->loaded == true)
                 {
@@ -157,11 +161,71 @@ class Sms_Api_Object extends Api_Object_Core {
             $ret_value = 3;
         }
         
-        return $this->response($ret_value);
+        $this->response_data = $this->response($ret_value);
 
     }
 
-    //TODO create reports out of the SMS
+    /**
+     * Spam / Unspam existing SMS message
+     *
+     * @return Array
+     */
+    public function _spam_sms_msg()
+    {
+        $ret_val = 0; // Initialize a 0 return value; successful execution
+        
+        if ($_POST)
+        {
+            $post = Validation::factory($_POST);
+
+            // Add some filters
+            $post->pre_filter('trim', TRUE);
+            // Add some rules, the input field, followed by a list of 
+            //checks, carried out in order
+            $post->add_rules('action','required', 'alpha', 'length[1,1]');
+            $post->add_rules('message_id','required','numeric');
+
+            if ($post->validate())
+            {
+                $sms_id = $post->message_id;
+                $sms = new Message_Model($sms_id);
+                if ($sms->loaded == true)
+                {
+                    if ($sms->message_level == '1')
+                    {
+                        $sms->message_level = '99';
+                    }
+                    else
+                    {
+                        $sms->message_level = '1';
+                    }
+
+                    $sms->save();
+                }
+                else
+                {
+                    //twitter id doesn't exist in DB
+                    //TODO i18nize the string
+                    $this->error_messages .= "SMS ID does not exist.";
+                    $this->ret_value = 1;
+
+                }
+            }
+            else
+            {
+                //TODO i18nize the string
+                $this->error_messages .= "SMS ID is required.";
+                $ret_value = 1;
+            }
+
+        }
+        else
+        {
+            $ret_value = 3;
+        }
+        
+        $this->response_data = $this->response($ret_value);
+    }
 
 }
 
