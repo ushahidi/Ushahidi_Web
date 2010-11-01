@@ -120,6 +120,7 @@
 	'my_profile' => 'My Profile',
 	'new_password' => 'New Password',
 	'no' => 'No',
+    'no_data' => 'No data. There are no results to show',
 	'notification' => 'Notification',
 	'not_case_sensitive' => 'This is not case sensitive.',
 	'not_found' => 'Not Found',
@@ -189,6 +190,5 @@
 	'wiki' => 'Wiki',
 	'yes' => 'Yes',
 	'your_search_for' => 'Your search for',
-    'critical_upgrade' => ' This is a **critical** upgrade release.',
 	);
 ?>

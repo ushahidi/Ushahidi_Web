@@ -38,8 +38,11 @@ class Themes_Core {
 		// Load Session
 		$this->session = Session::instance();
 		
-		$this->css_url = url::base();
-		$this->js_url = url::base();
+		// Load Local or CDN?
+		$this->css_url = (Kohana::config("cache.cdn_css")) ? 
+			Kohana::config("cache.cdn_css") : url::base();
+		$this->js_url = (Kohana::config("cache.cdn_js")) ? 
+			Kohana::config("cache.cdn_js") : url::base();
 	}
 	
 	/**
@@ -107,7 +110,7 @@ class Themes_Core {
 		}
 		
 		$core_js .= html::script($this->js_url."media/js/jquery", true);
-		$core_js .= html::script("media/js/jquery.ui.min", true);
+		$core_js .= html::script($this->js_url."media/js/jquery.ui.min", true);
 		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", true);
 		
 		if ($this->map_enabled)

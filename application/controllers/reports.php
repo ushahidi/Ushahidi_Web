@@ -37,6 +37,9 @@ class Reports_Controller extends Main_Controller {
 	// TODO: Do we need this $cluster_id var? I dont see it being used anywhere. (BH)
 	public function index($cluster_id = 0)
 	{
+		// Cacheable Controller
+		$this->is_cachable = TRUE;
+		
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
 		$this->themes->js = new View('reports_js');
