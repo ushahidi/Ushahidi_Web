@@ -40,7 +40,10 @@ class Stats_Model extends ORM
 		$additional_query = '';
 		if(isset($_SERVER["HTTP_HOST"]))
 		{
-			$val = 'http://'.$_SERVER["HTTP_HOST"].'/'.Kohana::config('config.site_domain');
+			$site_domain = Kohana::config('config.site_domain');
+			$slashornoslash = '';
+			if($site_domain{0} != '/') $slashornoslash = '/';
+			$val = 'http://'.$_SERVER["HTTP_HOST"].$slashornoslash.$site_domain;
 			$additional_query = '&val='.base64_encode($val);
 		}
 
