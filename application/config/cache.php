@@ -29,3 +29,12 @@ $config['default'] = array(
 	'lifetime' => 1800,
 	'requests' => -1
 );
+
+
+/**
+ * Content Distribution Network (CDN) Configuration
+ * Use a content distribution network to serve up
+ * JS or CSS files
+ */
+$config['cdn_css'] = "";
+$config['cdn_js'] = "";
