@@ -138,8 +138,10 @@ class Main_Controller extends Template_Controller {
 				if($translated_title)
 				{
 					$display_title = $translated_title;
-				}else{
-					$display_title = $category->category_title;
+				}
+				else
+				{
+					$display_title = $child->category_title;
 				}
 
 				$children[$child->id] = array(
