@@ -455,21 +455,7 @@ class Incidents_Api_Object extends Api_Object_Core {
         /* Not elegant but works */
         return $this->_get_incidents($where.$sortby, $limit);
     }
-
-    /**
-     * Get incident by id
-     */
-    private function _get_incident_by_id($id)
-    {
-        $where = "\nWHERE i.id = $id AND i.incident_active = 1 ";
-        
-        $where .= "ORDER BY i.id DESC ";
-        
-        $limit = "\nLIMIT 0, $this->list_limit";
-        
-        return $this->_get_incidents($where, $limit);
-    }
-
+    
     /**
      * Get the incidents by latitude and longitude.
      * TODO // write necessary codes to achieve this.
