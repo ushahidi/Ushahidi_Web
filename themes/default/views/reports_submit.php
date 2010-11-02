@@ -103,7 +103,7 @@
 					</div>
 				</div>
 				<?php
-				// Action::report_form - Runs right before the end of the report submit form
+				// Action::report_form - Runs right after the report categories
 				Event::run('ushahidi_action.report_form');
 				?>
 				<div id="custom_forms">
@@ -160,6 +160,10 @@
 						<h4><?php echo Kohana::lang('ui_main.reports_email'); ?></h4>
 						<?php print form::input('person_email', $form['person_email'], ' class="text long"'); ?>
 					</div>
+					<?php
+					// Action::report_form_optional - Runs in the optional information of the report form
+					Event::run('ushahidi_action.report_form_optional');
+					?>
 				</div>
 			</div>
 			<div class="report_right">

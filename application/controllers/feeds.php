@@ -77,6 +77,9 @@ class Feeds_Controller extends Main_Controller {
             $this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.feeds');
         }
         
+		// Rebuild Header Block
+        $this->template->header->header_block = $this->themes->header_block();
+
         /*$icon_html = array();
         $icon_html[1] = "<img src=\"".url::base()."media/img/image.png\">"; //image
         $icon_html[2] = "<img src=\"".url::base()."media/img/video.png\">"; //video
