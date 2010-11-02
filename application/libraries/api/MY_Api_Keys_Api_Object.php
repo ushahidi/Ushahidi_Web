@@ -78,7 +78,7 @@ class Api_Keys_Api_Object extends Api_Object_Core {
         $this->query = "SELECT id AS id, $service AS apikey FROM `".
             $this->table_prefix."settings` ORDER BY id DESC ;";
 
-        $this->items = $this->db->query($this->query);
+        $items = $this->db->query($this->query);
         $i = 0;
         
         //No record found.
@@ -87,7 +87,7 @@ class Api_Keys_Api_Object extends Api_Object_Core {
             return $this->response(4);
         }
 
-        foreach ($this->items as $item)
+        foreach ($items as $item)
         {
             //needs different treatment depending on the output
             if ($this->response_type == 'json')

@@ -57,6 +57,12 @@ class Countries_Api_Object extends Api_Object_Core {
                     
                     return;
                 }
+                else
+                {
+                    $this->response_data = $this->_get_country_by_name(
+                            $this->request['name']);
+
+                }
             break;
             
             // Get country by ISO
@@ -194,7 +200,7 @@ class Countries_Api_Object extends Api_Object_Core {
     }
 
     /**
-     * get a country by iso
+     * Get a country by iso
      *
      * @param string response_type - XML or JSON
      */
