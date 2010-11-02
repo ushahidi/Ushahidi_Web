@@ -175,7 +175,7 @@ class Incidents_Api_Object extends Api_Object_Core {
         // Check if the sort parameter has been specified
         if ($this->api_service->verify_array_index($this->request, 'sort'))
         {
-            $this->sort = ($this->request == '0') ? 'ASC' : 'DESC';
+            $this->sort = ($this->request['sort'] == '0') ? 'ASC' : 'DESC';
         }
         else
         {

@@ -37,7 +37,10 @@ class register_themes {
 		// 1. Load the default theme
 		Kohana::config_set('core.modules', array_merge(array(THEMEPATH."default"), 
 			Kohana::config("core.modules")));
-		$theme_css[] = url::base()."themes/default/css/style.css";
+			
+		$css_url = (Kohana::config("cache.cdn_css")) ? 
+			Kohana::config("cache.cdn_css") : url::base();
+		$theme_css[] = $css_url."themes/default/css/style.css";
 		
 		// 2. Extend the default theme
 		$settings = ORM::factory('settings', 1);

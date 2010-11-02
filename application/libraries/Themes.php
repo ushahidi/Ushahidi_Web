@@ -106,7 +106,7 @@ class Themes_Core {
 		if ($this->map_enabled)
 		{
 			$core_js .= html::script($this->js_url."media/js/OpenLayers", true);
-			$core_js .= "<script type=\"text/javascript\">OpenLayers.ImgPath = '".url::site()."media/img/openlayers/"."';</script>";
+			$core_js .= "<script type=\"text/javascript\">OpenLayers.ImgPath = '".$this->js_url."media/img/openlayers/"."';</script>";
 		}
 		
 		$core_js .= html::script($this->js_url."media/js/jquery", true);
