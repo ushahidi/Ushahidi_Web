@@ -691,7 +691,7 @@ class Incidents_Api_Object extends Api_Object_Core {
         // Return data
         $this->response_data =  ($this->response_type == 'json')
             ? $this->array_as_json($data)
-            : $this->array_as_xml($data, $this->replar);
+            : $this->array_as_xml($data, $replar);
     }
 
 }
