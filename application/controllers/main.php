@@ -139,7 +139,9 @@ class Main_Controller extends Template_Controller {
 				if($translated_title)
 				{
 					$display_title = $translated_title;
-				}else{
+				}
+				else
+				{
 					$display_title = $child->category_title;
 				}
 
