@@ -19,9 +19,12 @@
  */
 
 class System_Api_Object extends Api_Object_Core {
+    
+    protected $replar;
 
     public function __construct($api_service)
     {
+        $this->replar = array();
         parent::__construct($api_service);
     }
 
