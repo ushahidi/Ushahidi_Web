@@ -60,6 +60,21 @@ class Incidents_Api_Object extends Api_Object_Core {
                 $this->response_data = $this->get_incidents_by_all();
             break;
             
+            // Get specific incident by ID
+            case "incidentid":
+                if ( ! $this->api_service->verify_array_index($this->request, 'id'))
+                {
+                    $this->set_error_message(array(
+                            "error" => $this->api_service->get_error_msg(001, 'id')
+                        ));
+                    return;
+                }
+                else
+                {
+                    $this->ressponse_data = $this->_get_incident_by_id($this->request['id']);
+                }
+            break;
+            
             // Get incidents by latitude and longitude
             case "latlon":
                 if ($this->api_service->verify_array_index($this->request, 'latitude')
@@ -469,7 +484,7 @@ class Incidents_Api_Object extends Api_Object_Core {
         
         $limit = "\n LIMIT 0, $this->list_limit";
         
-        return $this->_get_incidents($where,$sortby, $limit);
+        return $this->_get_incidents($where.$sortby, $limit);
     }
 
     /**
@@ -542,6 +557,21 @@ class Incidents_Api_Object extends Api_Object_Core {
         $limit = "\nLIMIT 0, $this->list_limit";
         
         return $this->_get_incidents($where.$sortby, $limit);
+    }
+    
+    /**
+     * Get a single incident by its ID in the database
+     * @param incident_id ID of the incident in the databases
+     */
+    private function _get_incident_by_id($incident_id)
+    {
+        $where = "\nWHERE i.id = $incident_id AND i.incident_active = 1 ";
+        
+        $sortby = "\nORDER BY $this->order_field $this->sort ";
+        
+        $limit = "\n LIMIT 0, $this->list_limit";
+        
+        return $this->_get_incidents($where.$sortby, $limit);        
     }
 
     /**
