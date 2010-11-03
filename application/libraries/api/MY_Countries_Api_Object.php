@@ -43,7 +43,8 @@ class Countries_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_country_by_id($this->request['id']);
+                    $this->response_data = $this->_get_country_by_id(
+                        $this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -56,6 +57,12 @@ class Countries_Api_Object extends Api_Object_Core {
                     ));
                     
                     return;
+                }
+                else
+                {
+                    $this->response_data = $this->_get_country_by_name(
+                            $this->request['name']);
+
                 }
             break;
             
@@ -157,10 +164,8 @@ class Countries_Api_Object extends Api_Object_Core {
      */
     private function _get_countries_by_all()
     {
-        $where = "ORDER by id DESC ";
-        $limit = "\nLIMIT 0, $this->list_limit";
-        
-        return $this->_get_countries($where, $limit);
+        $where = "ORDER by id DESC "; 
+        return $this->_get_countries($where);
     }
 
     /**
@@ -194,7 +199,7 @@ class Countries_Api_Object extends Api_Object_Core {
     }
 
     /**
-     * get a country by iso
+     * Get a country by iso
      *
      * @param string response_type - XML or JSON
      */

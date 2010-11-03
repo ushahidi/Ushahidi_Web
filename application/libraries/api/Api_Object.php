@@ -29,6 +29,7 @@ abstract class Api_Object_Core {
     protected $query; // SQL query to be used to fetch the requested data
     protected $replar; // Assists in proper XML generation
     protected $by; // Mode by which to fetch the requested information
+    protected $id; // id of an item, usually from the URL
     
     public function __construct($api_service)    
     {    
@@ -317,6 +318,23 @@ abstract class Api_Object_Core {
 
         $xml->endElement();
         return $xml->outputMemory(true);
+    }
+
+    /**
+     * Check the id value receieved from the URL is of the right datatype
+     * int
+     *
+     * @param int id - The ID value
+     *
+     * @return int 
+     */
+    protected function check_id_value($id)
+    {
+        $this->id = (is_numeric($id) AND 
+            intval($id)>0) ? $id : 0;
+
+        return $this->id;
+
     }
 }
 

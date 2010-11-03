@@ -71,7 +71,8 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->ressponse_data = $this->_get_incident_by_id($this->request['id']);
+                    $this->response_data = $this->_get_incident_by_id(
+                            $this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -106,7 +107,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_incidents_by_location_id($this->request['id']);
+                    $this->response_data = $this->_get_incidents_by_location_id($this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -138,7 +139,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_incidents_by_category_id($this->request['id']);
+                    $this->response_data = $this->_get_incidents_by_category_id($this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -169,7 +170,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_incidents_by_since_id($this->request['id']);
+                    $this->response_data = $this->_get_incidents_by_since_id($this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -268,7 +269,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 "location as l on l.id = i.location_id "."$where $limit";
 
         $items = $this->db->query($this->query);
-
+        
         $i = 0;
         
         //No record found.
@@ -455,24 +456,10 @@ class Incidents_Api_Object extends Api_Object_Core {
         /* Not elegant but works */
         return $this->_get_incidents($where.$sortby, $limit);
     }
-
-    /**
-     * Get incident by id
-     */
-    private function _get_incident_by_id($id)
-    {
-        $where = "\nWHERE i.id = $id AND i.incident_active = 1 ";
-        
-        $where .= "ORDER BY i.id DESC ";
-        
-        $limit = "\nLIMIT 0, $this->list_limit";
-        
-        return $this->_get_incidents($where, $limit);
-    }
-
+    
     /**
      * Get the incidents by latitude and longitude.
-     * TODO // write necessary codes to achieve this.
+     * 
      */
     public function _get_incidents_by_lat_lon($lat, $long)
     {
@@ -565,11 +552,12 @@ class Incidents_Api_Object extends Api_Object_Core {
      */
     private function _get_incident_by_id($incident_id)
     {
+                 
         $where = "\nWHERE i.id = $incident_id AND i.incident_active = 1 ";
         
-        $sortby = "\nORDER BY $this->order_field $this->sort ";
+        $sortby = "\nORDER BY $this->order_field $this->sort";
         
-        $limit = "\n LIMIT 0, $this->list_limit";
+        $limit = "\nLIMIT 0, $this->list_limit";
         
         return $this->_get_incidents($where.$sortby, $limit);        
     }
@@ -579,6 +567,7 @@ class Incidents_Api_Object extends Api_Object_Core {
      */
     public function _get_incidents_by_since_id($since_id)
     {
+
         // Needs Extra Join
         $join = "\nINNER JOIN ".$this->table_prefix."incident_category AS 
             ic ON ic.incident_id = i.id";
@@ -705,7 +694,7 @@ class Incidents_Api_Object extends Api_Object_Core {
         // Return data
         $this->response_data =  ($this->response_type == 'json')
             ? $this->array_as_json($data)
-            : $this->array_as_xml($data, $this->replar);
+            : $this->array_as_xml($data, $replar);
     }
 
 }

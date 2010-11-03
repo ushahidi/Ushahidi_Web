@@ -47,7 +47,8 @@ class Locations_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_location_by_id($this->request['id']); 
+                    $this->response_data = $this->_get_location_by_id(
+                        $this->check_id_value($this->request['id'])); 
                 }
             break;
             
@@ -63,7 +64,7 @@ class Locations_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_locations_by_country_id($this->request['id']);
+                    $this->response_data = $this->_get_locations_by_country_id($this->check_id_value($this->request['id']));
                 }
             break;
             
