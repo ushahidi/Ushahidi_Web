@@ -11,14 +11,11 @@ if(substr_count($_SERVER["HTTP_HOST"],'.') > 1) $subdomain = substr($_SERVER["HT
 
 $cache = Cache::instance();
 $settings = $cache->get($subdomain.'_settings');
-if ($settings == NULL)
+if ( ! $settings)
 { // Cache is Empty so Re-Cache
 	$settings = ORM::factory('settings', 1);
 	$cache->set($subdomain.'_settings', $settings, array('settings'), 60); // 1 Day
 }
-
-$settings = ORM::factory('settings', 1);
-
 
 // Set Site Language
 Kohana::config_set('locale.language', $settings->site_language);

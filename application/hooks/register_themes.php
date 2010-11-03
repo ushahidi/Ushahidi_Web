@@ -43,10 +43,9 @@ class register_themes {
 		$theme_css[] = $css_url."themes/default/css/style.css";
 		
 		// 2. Extend the default theme
-		$settings = ORM::factory('settings', 1);
-		if ( $settings->loaded AND $settings->site_style != "default" )
+		if ( Kohana::config("settings.site_style") != "default" )
 		{
-			$theme = THEMEPATH.$settings->site_style;
+			$theme = THEMEPATH.Kohana::config("settings.site_style");
 			Kohana::config_set('core.modules', array_merge(array($theme),
 				Kohana::config("core.modules")));
 				
@@ -56,7 +55,7 @@ class register_themes {
 				while (($css_file = $css->read()) !== FALSE)
 					if (preg_match('/\.css/i', $css_file))
 					{
-						$theme_css[] = url::base()."themes/".$settings->site_style."/css/".$css_file;
+						$theme_css[] = url::base()."themes/".Kohana::config("settings.site_style")."/css/".$css_file;
 					}
 			}
 		}
