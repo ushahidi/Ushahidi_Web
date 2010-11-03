@@ -48,7 +48,7 @@ class Categories_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_categories_by_id($this->request['id']);
+                    $this->response_data = $this->_get_categories_by_id($this->check_id_value($this->request['id']));
                 }
                 
             break;

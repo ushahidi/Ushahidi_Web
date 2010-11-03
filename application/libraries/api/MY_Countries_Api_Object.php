@@ -43,7 +43,8 @@ class Countries_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_country_by_id($this->request['id']);
+                    $this->response_data = $this->_get_country_by_id(
+                        $this->check_id_value($this->request['id']));
                 }
             break;
             

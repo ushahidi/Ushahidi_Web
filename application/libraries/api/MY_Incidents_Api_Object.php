@@ -71,7 +71,8 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_incident_by_id($this->request['id']);
+                    $this->response_data = $this->_get_incident_by_id(
+                            $this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -106,7 +107,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_incidents_by_location_id($this->request['id']);
+                    $this->response_data = $this->_get_incidents_by_location_id($this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -138,7 +139,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_incidents_by_category_id($this->request['id']);
+                    $this->response_data = $this->_get_incidents_by_category_id($this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -169,7 +170,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_incidents_by_since_id($this->request['id']);
+                    $this->response_data = $this->_get_incidents_by_since_id($this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -458,7 +459,7 @@ class Incidents_Api_Object extends Api_Object_Core {
     
     /**
      * Get the incidents by latitude and longitude.
-     * TODO // write necessary codes to achieve this.
+     * 
      */
     public function _get_incidents_by_lat_lon($lat, $long)
     {
@@ -551,9 +552,7 @@ class Incidents_Api_Object extends Api_Object_Core {
      */
     private function _get_incident_by_id($incident_id)
     {
-        $incident_id = (is_numeric($incident_id) AND 
-                intval($incident_id)>0) ? $incident_id : 0;
-         
+                 
         $where = "\nWHERE i.id = $incident_id AND i.incident_active = 1 ";
         
         $sortby = "\nORDER BY $this->order_field $this->sort";
@@ -568,8 +567,6 @@ class Incidents_Api_Object extends Api_Object_Core {
      */
     public function _get_incidents_by_since_id($since_id)
     {
-        $since_id = (is_numeric($since_id) AND 
-                intval($since_id)>0) ? $since_id : 0;
 
         // Needs Extra Join
         $join = "\nINNER JOIN ".$this->table_prefix."incident_category AS 

@@ -40,7 +40,7 @@ class Tag_Media_Api_Object extends Api_Object_Core {
             $media_type = $this->api_service->get_task_name();
             
             // Tag the media and set the response data
-            $this->response_data = $this->_tag_media($this->request['id'], $media_type);
+            $this->response_data = $this->_tag_media($this->check_id_value($this->request['id'], $media_type));
         }
     }
     
