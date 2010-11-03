@@ -71,7 +71,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->ressponse_data = $this->_get_incident_by_id($this->request['id']);
+                    $this->response_data = $this->_get_incident_by_id($this->request['id']);
                 }
             break;
             
@@ -268,7 +268,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 "location as l on l.id = i.location_id "."$where $limit";
 
         $items = $this->db->query($this->query);
-
+        
         $i = 0;
         
         //No record found.
@@ -551,11 +551,14 @@ class Incidents_Api_Object extends Api_Object_Core {
      */
     private function _get_incident_by_id($incident_id)
     {
+        $incident_id = (is_numeric($incident_id) AND 
+                intval($incident_id)>0) ? $incident_id : 0;
+         
         $where = "\nWHERE i.id = $incident_id AND i.incident_active = 1 ";
         
-        $sortby = "\nORDER BY $this->order_field $this->sort ";
+        $sortby = "\nORDER BY $this->order_field $this->sort";
         
-        $limit = "\n LIMIT 0, $this->list_limit";
+        $limit = "\nLIMIT 0, $this->list_limit";
         
         return $this->_get_incidents($where.$sortby, $limit);        
     }
@@ -565,6 +568,9 @@ class Incidents_Api_Object extends Api_Object_Core {
      */
     public function _get_incidents_by_since_id($since_id)
     {
+        $since_id = (is_numeric($since_id) AND 
+                intval($since_id)>0) ? $since_id : 0;
+
         // Needs Extra Join
         $join = "\nINNER JOIN ".$this->table_prefix."incident_category AS 
             ic ON ic.incident_id = i.id";
