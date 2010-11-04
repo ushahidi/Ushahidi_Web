@@ -155,7 +155,10 @@ class Themes_Core {
 		
 		// Inline Javascript
 		$inline_js = "<script type=\"text/javascript\">
-			".'$(document).ready(function(){$(document).pngFix();});'.$this->js."</script>";
+                        <!--//
+			".'$(document).ready(function(){$(document).pngFix();});'.$this->js.
+                        "//-->
+                        </script>";
 		
 		return $core_js.$plugin_js.$inline_js;
 	}
@@ -202,9 +205,9 @@ class Themes_Core {
 		
 		$languages = "";
 		$languages .= "<div class=\"language-box\">";
-		$languages .= "<form>";
+		$languages .= "<form action=\"\">";
 		$languages .= form::dropdown('l', $locales, Kohana::config('locale.language'),
-			' onChange="this.form.submit()" ');
+			' onchange="this.form.submit()" ');
 		$languages .= "</form>";
 		$languages .= "</div>";
 		

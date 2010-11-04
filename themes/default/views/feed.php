@@ -25,7 +25,7 @@
 			<div class="step-1">
 				<h2><?php echo Kohana::lang('ui_main.alerts_step1_select_city'); ?></h2>
 				<div class="location">
-					<form>
+					<form action="">
 						<label><?php echo Kohana::lang('ui_main.alerts_alert_me'); ?></label>
 						<?php print form::dropdown('alert_city',$cities,''); ?>
 					</form>

@@ -707,7 +707,7 @@ class Forms_Controller extends Admin_Controller
 			->orderby('id', 'asc')
 			->find_all();
 		
-		$html = "<form>";
+		$html = "<form action=\"\">";
 		foreach ($fields as $field)
 		{
 			$field_id = $field->id;
