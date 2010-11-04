@@ -499,7 +499,7 @@ class Json_Controller extends Template_Controller
      */
     public function timeline( $category_id = 0 )
     {
-        $category_id = (int) $category_id;
+		$category_id = (int) $category_id;
 
         $this->auto_render = FALSE;
         $db = new Database();
@@ -569,7 +569,7 @@ class Json_Controller extends Template_Controller
 
         // Add aditional filter here to only allow for incidents that are in the requested category
         $incident_id_in = '';
-        if(count($allowed_ids) > 1)
+        if(count($allowed_ids))
         {
             $incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
         }
