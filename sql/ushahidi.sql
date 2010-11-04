@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 34
+-- version 35
 -- http://www.ushahidi.com
 
 
@@ -563,6 +563,7 @@ CREATE TABLE IF NOT EXISTS `media` (                                            
     `media_title` varchar(255) default NULL,                                        -- field description
     `media_description` longtext default NULL,                                      -- field description
     `media_link` varchar(255) default NULL,                                         -- field description
+    `media_medium` varchar(255) default NULL,                                        -- field description
     `media_thumb` varchar(255) default NULL,                                        -- field description
     `media_date` datetime default NULL,                                             -- field description
     `media_active` tinyint(4) NOT NULL default '1',                                 -- field description
@@ -1545,4 +1546,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0b11' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '34' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '35' WHERE `id`=1 LIMIT 1;

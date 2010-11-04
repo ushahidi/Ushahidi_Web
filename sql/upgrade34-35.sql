@@ -1,0 +1,1 @@
+ALTER TABLE `media` ADD `media_medium` varchar(255) default NULL  AFTER `media_link`;
