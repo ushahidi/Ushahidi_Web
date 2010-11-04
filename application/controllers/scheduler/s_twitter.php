@@ -142,7 +142,7 @@ class S_Twitter_Controller extends Controller {
 			$reporter_location = $reporter->location;
 			if ($reporter_weight > 0 AND $reporter_location)
 			{
-				$incident_title = text::limit_chars($message->message, 100, "...", false);
+				$incident_title = text::limit_chars($message->message, 50, "...", false);
 				
 				// Create Incident
 				$incident = new Incident_Model();

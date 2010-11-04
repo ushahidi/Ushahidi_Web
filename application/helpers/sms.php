@@ -129,7 +129,7 @@ class sms_Core
 		$reporter_location = $reporter->location;
 		if ($reporter_weight > 0 AND $reporter_location)
 		{
-			$incident_title = text::limit_chars($message, 100, "...", false);
+			$incident_title = text::limit_chars($message, 50, "...", false);
 			// Create Incident
 			$incident = new Incident_Model();
 			$incident->location_id = $reporter_location->id;
