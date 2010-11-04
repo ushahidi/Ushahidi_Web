@@ -467,19 +467,21 @@ class Reports_Controller extends Main_Controller {
 				{
 					$new_filename = $incident->id."_".$i."_".time();
 					
+					$file_type = strrev(substr(strrev($filename),0,4));
+					
 					// IMAGE SIZES: 800X600, 400X300, 89X59
 					
 					// Large size
 					Image::factory($filename)->resize(800,600,Image::AUTO)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename.".jpg");
+						->save(Kohana::config('upload.directory', TRUE).$new_filename.$file_type);
 
 					// Medium size
 					Image::factory($filename)->resize(400,300,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename."_m.jpg");
+						->save(Kohana::config('upload.directory', TRUE).$new_filename."_m".$file_type);
 					
 					// Thumbnail
 					Image::factory($filename)->resize(89,59,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename."_t.jpg");	
+						->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type);	
 
 					// Remove the temporary file
 					unlink($filename);
@@ -489,9 +491,9 @@ class Reports_Controller extends Main_Controller {
 					$photo->location_id = $location->id;
 					$photo->incident_id = $incident->id;
 					$photo->media_type = 1; // Images
-					$photo->media_link = $new_filename.".jpg";
-					$photo->media_medium = $new_filename."_m.jpg";
-					$photo->media_thumb = $new_filename."_t.jpg";
+					$photo->media_link = $new_filename.$file_type;
+					$photo->media_medium = $new_filename."_m".$file_type;
+					$photo->media_thumb = $new_filename."_t".$file_type;
 					$photo->media_date = date("Y-m-d H:i:s",time());
 					$photo->save();
 					$i++;

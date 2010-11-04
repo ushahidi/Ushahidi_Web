@@ -66,12 +66,17 @@ class S_Email_Controller extends Controller {
     */
 	private function add_email($messages)
 	{
-		$services = new Service_Model();	
-    	$service = $services->where('service_name', 'Email')->find();
-	   	if (!$service) {
+		$service = ORM::factory('service')
+			->where('service_name', 'Email')
+			->find();
+		
+	   	if ( ! $service->loaded)
+		{
  		    return;
 	    }
-		if (empty($messages) || !is_array($messages)) {
+	
+		if (empty($messages) OR ! is_array($messages))
+		{
 			return;
 		}
 		
@@ -129,17 +134,18 @@ class S_Email_Controller extends Controller {
 				$email->save();
 				
 				// Attachments?			
-				foreach ($message['attachments'] as $attachment)
+				foreach ($message['attachments'] as $attachments)
 				{
-					foreach ($attachment as $key => $value)
+					foreach ($attachments as $attachment)
 					{
 						$media = new Media_Model();
 						$media->location_id = 0;
 						$media->incident_id = 0;
 						$media->message_id = $email->id;
 						$media->media_type = 1; // Images
-						$media->media_link = $key;
-						$media->media_thumb = $value;
+						$media->media_link = $attachment[0];
+						$media->media_medium = $attachment[1];
+						$media->media_thumb = $attachment[2];
 						$media->media_date = date("Y-m-d H:i:s",time());
 						$media->save();
 					}

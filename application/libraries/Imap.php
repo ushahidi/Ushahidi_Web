@@ -298,17 +298,21 @@ class Imap_Core {
 			
 			// Large size
 			Image::factory($file)->resize(800,600,Image::AUTO)
-				->save(Kohana::config('upload.directory', TRUE).$file_name.".jpg");
+				->save(Kohana::config('upload.directory', TRUE).$file_name.$file_type);
 
 			// Medium size
 			Image::factory($file)->resize(400,300,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$file_name."_m.jpg");
+				->save(Kohana::config('upload.directory', TRUE).$file_name."_m".$file_type);
 			
 			// Thumbnail
 			Image::factory($file)->resize(89,59,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$file_name."_t.jpg");
+				->save(Kohana::config('upload.directory', TRUE).$file_name."_t".$file_type);
 				
-			$attachments[$file_name.$file_type] = $file_name."_t".$file_type;
+			$attachments[] = array(
+					$file_name.$file_type,
+					$file_name."_m".$file_type,
+					$file_name."_t".$file_type
+				);
 			return $attachments;
 		}
 		else
