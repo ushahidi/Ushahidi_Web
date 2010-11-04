@@ -65,8 +65,9 @@ class Incidents_Api_Object extends Api_Object_Core {
                 if ( ! $this->api_service->verify_array_index($this->request, 'id'))
                 {
                     $this->set_error_message(array(
-                            "error" => $this->api_service->get_error_msg(001, 'id')
-                        ));
+                        "error" => $this->api_service->get_error_msg(001, 'id')
+                    ));
+                    
                     return;
                 }
                 else
@@ -163,7 +164,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 if ( ! $this->api_service->verify_array_index($this->request, 'id'))
                 {
                     $this->set_error_message(array(
-                        "error" => $this->api_service->get_error_msg(001, id)
+                        "error" => $this->api_service->get_error_msg(001, 'id')
                     ));
                     
                     return;
@@ -171,6 +172,22 @@ class Incidents_Api_Object extends Api_Object_Core {
                 else
                 {
                     $this->response_data = $this->_get_incidents_by_since_id($this->check_id_value($this->request['id']));
+                }
+            break;
+            
+            // Get incidents less that a specific incident_id
+            case "maxid":
+                if ( ! $this->api_service->verify_array_index($this->request, 'id'))
+                {
+                    $this->set_error_message(array(
+                        "error" => $this->api_service->get_error_msg(001, 'id')
+                    ));
+                    
+                    return;
+                }
+                else
+                {
+                    $this->response_data = $this->_get_incidents_by_max_id($this->check_id_value($this->request['id']));
                 }
             break;
             
@@ -445,7 +462,7 @@ class Incidents_Api_Object extends Api_Object_Core {
      * @param string orderfield - the order in which to order query output
      * @param string sort
      */
-    public function get_incidents_by_all() 
+    private function get_incidents_by_all() 
     {
         $where = "\nWHERE i.incident_active = 1 ";
         
@@ -461,7 +478,7 @@ class Incidents_Api_Object extends Api_Object_Core {
      * Get the incidents by latitude and longitude.
      * 
      */
-    public function _get_incidents_by_lat_lon($lat, $long)
+    private function _get_incidents_by_lat_lon($lat, $long)
     {
         
         $where = "\nWHERE l.latitude = $lat AND l.longitude = $long AND 
@@ -477,7 +494,7 @@ class Incidents_Api_Object extends Api_Object_Core {
     /**
      * Get the incidents by location id
      */
-    public function _get_incidents_by_location_id($locid)
+    private function _get_incidents_by_location_id($locid)
     {
         $where = "\nWHERE i.location_id = $locid AND i.incident_active = 1 ";
         
@@ -491,7 +508,7 @@ class Incidents_Api_Object extends Api_Object_Core {
     /**
      * Get the incidents by location name
      */
-    public function _get_incidents_by_location_name($locname)
+    private function _get_incidents_by_location_name($locname)
     {
         $where = "\nWHERE l.location_name = '$locname' AND
                 i.incident_active = 1 ";
@@ -506,7 +523,7 @@ class Incidents_Api_Object extends Api_Object_Core {
     /**
      * Get the incidents by category id
      */
-    public function _get_incidents_by_category_id($catid)
+    private function _get_incidents_by_category_id($catid)
     {
         // Needs Extra Join
         $join = "\nINNER JOIN ".$this->table_prefix."incident_category AS 
@@ -527,7 +544,7 @@ class Incidents_Api_Object extends Api_Object_Core {
     /**
      * Get the incidents by category name
      */
-    public function _get_incidents_by_category_name($catname)
+    private function _get_incidents_by_category_name($catname)
     {
         // Needs Extra Join
         $join = "\nINNER JOIN ".$this->table_prefix."incident_category AS 
@@ -564,10 +581,11 @@ class Incidents_Api_Object extends Api_Object_Core {
 
     /**
      * Get the incidents by since an incidents was updated
+     *
+     * @param since_id Database id from which incidents are to be fetched
      */
-    public function _get_incidents_by_since_id($since_id)
+    private function _get_incidents_by_since_id($since_id)
     {
-
         // Needs Extra Join
         $join = "\nINNER JOIN ".$this->table_prefix."incident_category AS 
             ic ON ic.incident_id = i.id";
@@ -582,7 +600,30 @@ class Incidents_Api_Object extends Api_Object_Core {
         $limit = "\nLIMIT 0, $this->list_limit";
         
         return $this->_get_incidents($where.$sortby, $limit);
-
+    }
+    
+    /**
+     * Get incidents with a database id less than then one specified in $max_id
+     *
+     * @param max_id Maximum incident id
+     */
+    private function _get_incidents_by_max_id($max_id)
+    {
+        // Needs Extra Join
+        $join = "\nINNER JOIN ".$this->table_prefix."incident_category AS 
+            ic ON ic.incident_id = i.id";
+            
+        $join .= "\nINNER JOIN ".$this->table_prefix.
+            "category AS c ON c.id = ic.category_id";
+            
+        $where = $join."\nWHERE i.id < $max_id AND
+                i.incident_active = 1";
+                
+        $sortby = "\nGROUP BY i.id ORDER BY $this->order_field $this->sort";
+        $limit = "\nLIMIT 0, $this->list_limit";
+        
+        return $this->_get_incidents($where.$sortby, $limit);
+        
     }
 
     /**
