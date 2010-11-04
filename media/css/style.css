@@ -1413,7 +1413,7 @@ a.show-more {
 			
 			p.r_date { position:absolute; top:0px; right:0px; padding:3px 5px; background:#e3e3e3; color:#908b88; }
 			
-			div.r_description { margin-bottom:5px; }
+			div.r_description { margin-bottom:15px; }
 			
 			p.r_location a { color:#828784; font-size:11px; line-height:11px; padding:4px 0 6px 18px; background:transparent url(../img/icon_sprite.png) -6px -52px no-repeat; }
 
