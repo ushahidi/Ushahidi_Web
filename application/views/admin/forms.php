@@ -60,7 +60,7 @@
 					<input type="hidden" id="form_id" 
 						name="form_id" value="<?php echo $form['form_id']; ?>" />
 					<input type="hidden" id="form_active" 
-						name="form_active" vaule="" />
+						name="form_active" value="" />
 					<input type="hidden" name="action" 
 						id="action" value="a"/>
 					<div class="tab_form_item">
@@ -124,7 +124,7 @@
 									->orderby('id', 'asc')
 									->find_all();
 
-								$form_fields = "<form>";
+								$form_fields = "<form action=\"\">";
 								foreach ($fields as $field)
 								{
 									$field_id = $field->id;
@@ -169,7 +169,7 @@
 										<td class="col-1">&nbsp;</td>
 										<td class="col-2">
 											<div class="post">
-												<h4><?php echo $form_title; ?>&nbsp;&nbsp;&nbsp;[<a href="javascript:showForm('formDiv_<?php echo $form_id; ?>')"><?php echo Kohana::lang('ui_main.edit_form_fields');?></a></li>]</h4>
+												<h4><?php echo $form_title; ?>&nbsp;&nbsp;&nbsp;[<a href="javascript:showForm('formDiv_<?php echo $form_id; ?>')"><?php echo Kohana::lang('ui_main.edit_form_fields');?></a>]</h4>
 												<p><?php echo $form_description; ?></p>
 											</div>
 										</td>

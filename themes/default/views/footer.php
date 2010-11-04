@@ -15,7 +15,7 @@
  
 			<!-- footer credits -->
 			<div class="footer-credits">
-				Powered by the &nbsp;<a href="http://www.ushahidi.com/"><img src="<?php echo url::base(); ?>/media/img/footer-logo.png" alt="Ushahidi" align="absmiddle" /></a>&nbsp; Platform
+				Powered by the &nbsp;<a href="http://www.ushahidi.com/"><img src="<?php echo url::base(); ?>/media/img/footer-logo.png" alt="Ushahidi" style="vertical-align:middle" /></a>&nbsp; Platform
 			</div>
 			<!-- / footer credits -->
 		
@@ -54,7 +54,7 @@
 	<?php echo $google_analytics; ?>
 	
 	<!-- Task Scheduler -->
-	<img src="<?php echo url::site().'scheduler'; ?>" height="1" width="1" border="0" />
+	<img src="<?php echo url::site().'scheduler'; ?>" alt="" height="1" width="1" border="0" />
  
 	<?php
 	// Action::main_footer - Add items before the </body> tag

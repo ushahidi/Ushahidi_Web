@@ -11,7 +11,7 @@
 			</div>
 		
 			<ul id="category_switch" class="category-filters">
-				<li><a class="active" id="cat_0" href="#"><div class="swatch" style="background-color:#<?php echo $default_map_all;?>"></div><div class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></div></a></li>
+				<li><a class="active" id="cat_0" href="#"><span class="swatch" style="background-color:<?php echo "#".$default_map_all;?>"></span><span class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></span></a></li>
 				<?php
 					foreach ($categories as $category => $category_info)
 					{
@@ -26,25 +26,30 @@
 								));
 							$color_css = '';
 						}
-						echo '<li><a href="#" id="cat_'. $category .'"><div '.$color_css.'>'.$category_image.'</div><div class="category-title">'.$category_title.'</div></a>';
+						echo '<li><a href="#" id="cat_'. $category .'"><span '.$color_css.'>'.$category_image.'</span><span class="category-title">'.$category_title.'</span></a>';
 						// Get Children
-						echo '<div class="hide" id="child_'. $category .'"><ul>';
-						foreach ($category_info[3] as $child => $child_info)
-						{
-							$child_title = $child_info[0];
-							$child_color = $child_info[1];
-							$child_image = '';
-							$color_css = 'class="swatch" style="background-color:#'.$child_color.'"';
-							if($child_info[2] != NULL && file_exists(Kohana::config('upload.relative_directory').'/'.$child_info[2])) {
-								$child_image = html::image(array(
-									'src'=>Kohana::config('upload.relative_directory').'/'.$child_info[2],
-									'style'=>'float:left;padding-right:5px;'
-									));
-								$color_css = '';
-							}
-							echo '<li style="padding-left:20px;"><a href="#" id="cat_'. $child .'"><div '.$color_css.'>'.$child_image.'</div><div class="category-title">'.$child_title.'</div></a></li>';
-						}
-						echo '</ul></div></li>';
+						echo '<div class="hide" id="child_'. $category .'">';
+                                                if( sizeof($category_info[3]) != 0)
+                                                {
+                                                    echo '<ul>';
+                                                    foreach ($category_info[3] as $child => $child_info)
+                                                    {
+                                                            $child_title = $child_info[0];
+                                                            $child_color = $child_info[1];
+                                                            $child_image = '';
+                                                            $color_css = 'class="swatch" style="background-color:#'.$child_color.'"';
+                                                            if($child_info[2] != NULL && file_exists(Kohana::config('upload.relative_directory').'/'.$child_info[2])) {
+                                                                    $child_image = html::image(array(
+                                                                            'src'=>Kohana::config('upload.relative_directory').'/'.$child_info[2],
+                                                                            'style'=>'float:left;padding-right:5px;'
+                                                                            ));
+                                                                    $color_css = '';
+                                                            }
+                                                            echo '<li style="padding-left:20px;"><a href="#" id="cat_'. $child .'"><span '.$color_css.'>'.$child_image.'</span><span class="category-title">'.$child_title.'</span></a></li>';
+                                                    }
+                                                    echo '</ul>';
+                                                }
+						echo '</div></li>';
 					}
 				?>
 			</ul>
@@ -153,14 +158,14 @@
 			
 				<!-- filters -->
 				<div class="filters clearingfix">
-					<div style="float:left; width: 65%">
+					<div style="float:left; width: 100%">
 						<strong><?php echo Kohana::lang('ui_main.filters'); ?></strong>
 						<ul>
 							<li><a id="media_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
 							<li><a id="media_4" href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
 							<li><a id="media_1" href="#"><span><?php echo Kohana::lang('ui_main.pictures'); ?></span></a></li>
 							<li><a id="media_2" href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
-							<li><a id="media_0" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
+							<li><a id="media_3" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
 						</ul>
 					</div>
 					<?php
@@ -205,7 +210,7 @@
 						if ($total_items == 0)
 					{
 					?>
-					<tr><td colspan="3">No Reports In The System</td></tr>
+					<tr><td colspan="3"><?php echo Kohana::lang('ui_main.no_reports'); ?></td></tr>
 
 					<?php
 					}
@@ -228,7 +233,7 @@
 
 				</tbody>
 			</table>
-			<a class="more" href="<?php echo url::site() . 'reports/' ?>">View More...</a>
+			<a class="more" href="<?php echo url::site() . 'reports/' ?>"><?php echo Kohana::lang('ui_main.view_more'); ?></a>
 		</div>
 		<!-- / left content block -->
 
@@ -243,27 +248,34 @@
 						<th scope="col"><?php echo Kohana::lang('ui_main.date'); ?></th>
 					</tr>
 				</thead>
-				<tbody>
 					<?php
-					foreach ($feeds as $feed)
-					{
-						$feed_id = $feed->id;
-						$feed_title = text::limit_chars($feed->item_title, 40, '...', True);
-						$feed_link = $feed->item_link;
-						$feed_date = date('M j Y', strtotime($feed->item_date));
-						$feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
+                                        if ($feeds->count() != 0)
+                                        {
+                                            echo '<tbody>';
+                                            foreach ($feeds as $feed)
+                                            {
+                                                    $feed_id = $feed->id;
+                                                    $feed_title = text::limit_chars($feed->item_title, 40, '...', True);
+                                                    $feed_link = $feed->item_link;
+                                                    $feed_date = date('M j Y', strtotime($feed->item_date));
+                                                    $feed_source = text::limit_chars($feed->feed->feed_name, 15, "...");
+                                            ?>
+                                            <tr>
+                                                    <td><a href="<?php echo $feed_link; ?>" target="_blank"><?php echo $feed_title ?></a></td>
+                                                    <td><?php echo $feed_source; ?></td>
+                                                    <td><?php echo $feed_date; ?></td>
+                                            </tr>
+                                            <?php
+                                            }
+                                            echo '</tbody>';
+                                        }
+                                        else
+                                        {
+                                            echo '<tbody><tr><td></td><td></td><td></td></tr></tbody>';
+                                        }
 					?>
-					<tr>
-						<td><a href="<?php echo $feed_link; ?>" target="_blank"><?php echo $feed_title ?></a></td>
-						<td><?php echo $feed_source; ?></td>
-						<td><?php echo $feed_date; ?></td>
-					</tr>
-					<?php
-					}
-					?>
-				</tbody>
 			</table>
-			<a class="more" href="<?php echo url::site() . 'feeds' ?>">View More...</a>
+			<a class="more" href="<?php echo url::site() . 'feeds' ?>"><?php echo Kohana::lang('ui_main.view_more'); ?></a>
 		</div>
 		<!-- / right content block -->
 
