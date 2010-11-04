@@ -124,6 +124,43 @@ class sms_Core
 		// Action::message_sms_add - SMS Received!
 		Event::run('ushahidi_action.message_sms_add', $sms);
 		
+		// Auto-Create A Report if Reporter is Trusted
+		$reporter_weight = $reporter->level->level_weight;
+		$reporter_location = $reporter->location;
+		if ($reporter_weight > 0 AND $reporter_location)
+		{
+			$incident_title = text::limit_chars($message, 100, "...", false);
+			// Create Incident
+			$incident = new Incident_Model();
+			$incident->location_id = $reporter_location->id;
+			$incident->incident_title = $incident_title;
+			$incident->incident_description = $message;
+			$incident->incident_date = $sms->message_date;
+			$incident->incident_dateadd = date("Y-m-d H:i:s",time());
+			$incident->incident_active = 1;
+			if ($reporter_weight == 2)
+			{
+				$incident->incident_verified = 1;
+			}
+			$incident->save();
+			
+			// Update Message with Incident ID
+			$sms->incident_id = $incident->id;
+			$sms->save();
+			
+			// Save Incident Category
+			$trusted_categories = ORM::factory("category")
+				->where("category_trusted", 1)
+				->find();
+			if ($trusted_categories->loaded)
+			{
+				$incident_category = new Incident_Category_Model();
+				$incident_category->incident_id = $incident->id;
+				$incident_category->category_id = $trusted_categories->id;
+				$incident_category->save();
+			}
+		}
+		
 		return TRUE;
 	}
 }
