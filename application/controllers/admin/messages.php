@@ -35,11 +35,12 @@ class Messages_Controller extends Admin_Controller
     function index($service_id = 1)
     {
         $this->template->content = new View('admin/messages');
-
+        $level_id_filter = array();
+        $message_level_filter = array();
+        $reporter_filter = array();
         // Get Title
         $service = ORM::factory('service', $service_id);
         $this->template->content->title = $service->service_name;
-
         // Is this an Inbox or Outbox Filter?
         if (!empty($_GET['type']))
         {
@@ -47,24 +48,24 @@ class Messages_Controller extends Admin_Controller
 
             if ($type == '2')
             { // OUTBOX
-                $filter = 'message_type = 2';
+                $type_filter = array('message_type'=>2);
             }
             else
             { // INBOX
                 $type = "1";
-                $filter = 'message_type = 1';
+                $type_filter = array('message_type' => 1);
             }
         }
         else
         {
             $type = "1";
-            $filter = 'message_type = 1';
+            $type_filter = array('message_type' => 1);
         }
         
         // Do we have a reporter ID?
         if (isset($_GET['rid']) AND !empty($_GET['rid']))
         {
-            $filter .= ' AND reporter_id=\''.$_GET['rid'].'\'';
+            $reporter_filter = array('reporter_id'=>$_GET['rid']);
         }
         
         // ALL / Trusted / Spam
@@ -74,11 +75,12 @@ class Messages_Controller extends Admin_Controller
             $level = $_GET['level'];
             if ($level == 4)
             {
-                $filter .= " AND ( reporter.level_id = '4' OR reporter.level_id = '5' ) AND ( message.message_level != '99' ) ";
+                $level_id_filter = array('reporter.level_id' => '4', 'reporter.level_id' => '5');
+                $message_level_filter = array('message.message_level !='=>'99');
             }
             elseif ($level == 2)
             {
-                $filter .= " AND ( message.message_level = '99' ) ";
+                $message_level_filter = array('message.message_level'=>'99');
             }
         }
 
@@ -167,7 +169,10 @@ class Messages_Controller extends Admin_Controller
             'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
             'total_items'    => ORM::factory('message')
                                             ->join('reporter','message.reporter_id','reporter.id')
-                                            ->where($filter)
+                                            ->where($type_filter)
+                                            ->where($reporter_filter)
+                                            ->orwhere($level_id_filter)
+                                            ->where($message_level_filter)
                                             ->where('service_id', $service_id)
                                             ->count_all()
         ));
@@ -175,23 +180,27 @@ class Messages_Controller extends Admin_Controller
         $messages = ORM::factory('message')
                                 ->join('reporter','message.reporter_id','reporter.id')
                                 ->where('service_id', $service_id)
-                                ->where($filter)
+                                ->where($type_filter)
+                                ->where($reporter_filter)
+                                ->orwhere($level_id_filter)
+                                ->where($message_level_filter)
                                 ->orderby('message_date','desc')
                                 ->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
             
         // Get Message Count
         // ALL
         $this->template->content->count_all = ORM::factory('message')
-                                                        ->join('reporter','message.reporter_id','reporter.id')
-                                                        ->where('service_id', $service_id)
-                                                        ->where('message_type', 1)
-                                                        ->count_all();
+            ->join('reporter','message.reporter_id','reporter.id')
+            ->where('service_id', $service_id)
+            ->where('message_type', 1)
+            ->count_all();
             
         // Trusted
         $this->template->content->count_trusted = ORM::factory('message')
             ->join('reporter','message.reporter_id','reporter.id')
             ->where('service_id', $service_id)
-            ->where("( reporter.level_id = '4' OR reporter.level_id = '5' ) AND ( message.message_level != '99' )")
+            ->orwhere(array('reporter.level_id'=>'4','reporter.level_id'=>'5'))
+            ->where('message.message_level !=','99')
             ->where('message_type', 1)
             ->count_all();
         
