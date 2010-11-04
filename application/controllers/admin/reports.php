@@ -451,10 +451,10 @@ class Reports_Controller extends Admin_Controller
 
                 $this->template->content->show_messages = true;
                 $incident_description = $message->message;
-                if (!empty($message->message_detail))
+                if ( ! empty($message->message_detail))
                 {
-                    $incident_description .= "\n\n~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
-                        . $message->message_detail;
+					$form['incident_title'] = $message->message;
+                    $incident_description = $message->message_detail;
                 }
                 $form['incident_description'] = $incident_description;
                 $form['incident_date'] = date('m/d/Y', strtotime($message->message_date));
@@ -827,6 +827,17 @@ class Reports_Controller extends Admin_Controller
                     {
                         $savemessage->incident_id = $incident->id;
                         $savemessage->save();
+
+						// Does Message Have Attachments?
+						// Add Attachments
+						$attachments = ORM::factory("media")
+							->where("message_id", $savemessage->id)
+							->find_all();
+						foreach ($attachments AS $attachment)
+						{
+							$attachment->incident_id = $incident->id;
+							$attachment->save();
+						}
                     }
                 }
 

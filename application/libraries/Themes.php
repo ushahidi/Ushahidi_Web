@@ -83,6 +83,11 @@ class Themes_Core {
 		
 		if ($this->photoslider_enabled)
 		{
+			$core_css .= html::stylesheet($this->css_url."media/css/picbox/picbox","",true);
+		}
+		
+		if ($this->videoslider_enabled)
+		{
 			$core_css .= html::stylesheet($this->css_url."media/css/videoslider","",true);
 		}
 		
