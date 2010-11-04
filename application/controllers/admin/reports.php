@@ -1545,7 +1545,6 @@ class Reports_Controller extends Admin_Controller
         $categories = ORM::factory('category')
             ->where('category_visible', '1')
             ->where('parent_id', '0')
-			->where('category_trusted != 1')
             ->orderby('category_title', 'ASC')
             ->find_all();
 

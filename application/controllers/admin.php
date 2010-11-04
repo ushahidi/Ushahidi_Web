@@ -133,7 +133,7 @@ class Admin_Controller extends Template_Controller
         $release_version = $this->release->version;
 		
         $version_ushahidi = Kohana::config('settings.ushahidi_version');
-	    	
+		
         if ($this->_new_or_not($release_version,$version_ushahidi))
         {
 			return $release_version;
