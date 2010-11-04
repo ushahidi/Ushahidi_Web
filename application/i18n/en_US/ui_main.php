@@ -467,6 +467,7 @@
 	'view_all_feeds' => 'View all feeds',
 	'view_all_reports' => 'View all reports',
 	'view_items' => 'View Items',
+	'view_more' => 'View More',
 	'view_report' => 'View Report',
 	'view_reports' => 'View Reports',
 	'visible' => 'Visible',
