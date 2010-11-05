@@ -616,8 +616,8 @@ div.footer-credits{
 
 /* reports */
 div.report-details{
-    width: 450px;
-    float: left;
+    width: 300px;
+    float: right;
     margin: 20px 0 0 0;
 }
 
@@ -695,6 +695,13 @@ div.report-description{
     margin: 0px 30px 20px 30px;
 }
 
+div.report-description h5{
+    margin: 10px 0px 0px 15px;
+    padding: 0px;
+    text-transform: uppercase;
+    font-size:12px;
+}
+
 div.report-description h3{
     background: #C7C3BC;
     color: #393535;
@@ -706,7 +713,7 @@ div.report-description h3{
 div.report-description div.content{
     background: #F9F8F5;
     border: #DDDCDC 1px dashed;
-    margin: 15px;
+    margin: 5px 15px 15px 15px;
     padding: 10px 15px;
     font-size: 14px;
 }
@@ -722,6 +729,11 @@ div.report-description div.additional-reports{
 div.report-description div.additional-reports a{
     color: #004276;
     text-decoration: underline;
+}
+
+div.additional-reports{
+	margin: 15px;
+	padding: 0px;
 }
 
 /* table list */
@@ -771,12 +783,12 @@ table.table-list tbody tr td a{
 
 div.location{
     float: right;
-    width: 430px;
+    width: 302px;
 }
 
 div.report-map{
     border: #CCCCCC 1px solid;
-    width: 428px;
+    width: 300px;
 }
 
 div.incident-notation{
@@ -802,8 +814,8 @@ div.incident-notation ul li{
 .report-map .map-holder {
 	overflow:hidden;
 	clear:both;
-	width:428px;
-	height:370px;
+	width:300px;
+	height:300px;
 }
 
 
@@ -1097,22 +1109,24 @@ label.error {
 .report-description table { width: 100%; }
 
 	.report-description table tr th { text-align: left; padding:5px; background:#E8E4DB; border-collapse:collapse; }
-		th.w-01, th.w-02 { border-right:1px dotted #fff; }
+		th.w-01, th.w-02 { border-right:1px dotted #fff; text-transform:capitalize; }
 	
 	.report-description table tr td { padding:0 5px; }
 		.report-description table tr td a { display:block; padding:5px 0; }
 		
 	.report-description table tr:hover { background:#f8f6f2; }
-		td.w-01, td.w-02 { border-right:1px dotted #E8E4DB; border-bottom:1px dotted #E8E4DB;  }
-		td.w-03 { border-bottom:1px dotted #E8E4DB; }
+		td.w-01, td.w-02 { border-right:1px dotted #E8E4DB; border-bottom:1px dotted #E8E4DB; text-transform:capitalize;  }
+		td.w-03 { border-bottom:1px dotted #E8E4DB; text-transform:capitalize; }
 	
 	.w-01 {
 		width:50%;
 		padding:0 10px 0 0;
+		text-transform:capitalize;
 	}
 	.w-02 {
 		width:320px;
 		padding:0 10px 0 0;
+		text-transform:capitalize;
 	}
 	/*.w-03 {width:100px;}*/
 
@@ -1193,7 +1207,6 @@ ul.treeview li.lastExpandable { width:155px; }
 }
 .report_comment, .contact{
 	border:1px #ccc solid;
-	margin-bottom:15px;
 	padding:20px;
 	background:#eee;
 	clear:both;
@@ -1283,6 +1296,11 @@ a.show-more {
 	overflow:hidden;
 /*	width:930px; */
 	padding:16px 25px 10px;
+}
+.comment-block {
+	overflow:hidden;
+	padding:0px 15px;
+	display:none;
 }
 /* Min-Height */
 .big-block{
@@ -1412,7 +1430,7 @@ a.show-more {
 			
 			p.r_date { position:absolute; top:0px; right:0px; padding:3px 5px; background:#e3e3e3; color:#908b88; }
 			
-			div.r_description { margin-bottom:15px; }
+			div.r_description { margin-bottom:5px; }
 			
 			p.r_location a { color:#828784; font-size:11px; line-height:11px; padding:4px 0 6px 18px; background:transparent url(../images/icon_sprite.png) -6px -52px no-repeat; }
 
@@ -1706,9 +1724,8 @@ ul.pager li a.active {background:#f2f7fa;}
 
 .report-description .orig-report {
 	overflow:hidden;
-	border:1px solid #eee;
-	margin:15px;
-  padding:10px 15px;
+	margin: 15px;
+	padding: 0px;
 }
 .report-description .orig-report .report {
 	overflow:hidden;
@@ -1746,7 +1763,7 @@ ul.pager li a.active {background:#f2f7fa;}
 }
 .report-description .orig-report .discussion {
 	overflow:hidden;
-	padding:16px 20px 20px;
+	padding:0px;
 	width:798px;
 }
 .report-description .orig-report .discussion h5 {
@@ -1761,7 +1778,7 @@ ul.pager li a.active {background:#f2f7fa;}
 }
 .report-description .orig-report .discussion .discussion-box {
 	overflow:hidden;
-	width:778px;
+	width:100%;
 	margin:10px 0 0;
 	padding:10px;
 	background:#eee;
