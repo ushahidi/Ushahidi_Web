@@ -1310,13 +1310,6 @@ CREATE TABLE IF NOT EXISTS `page` (                                             
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 
-
--- Dumping data for table `page`
-
-INSERT INTO `page` (`id`, `page_title`, `page_description`, `page_tab`, `page_active`) VALUES
-(1, 'About Us', '<p>This is the default about us page.</p>', 'About Us', 1);
-
-
 /**
 * Table structure for table `layer`
 * 
