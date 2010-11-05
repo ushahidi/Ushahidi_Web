@@ -52,6 +52,7 @@
 				<div class="step-2">
 					<h2><?php echo Kohana::lang('ui_main.alerts_step2_send_alerts'); ?></h2>
 					<div class="holder">
+						<?php if($show_mobile == TRUE) { ?>
 						<div class="box">
 							<label>
 								<?php
@@ -68,6 +69,7 @@
 							</label>
 							<span><?php print form::input('alert_mobile', $form['alert_mobile'], ' class="text long"'); ?></span>
 						</div>
+						<?php } ?>
 						<div class="box">
 							<label>
 								<?php

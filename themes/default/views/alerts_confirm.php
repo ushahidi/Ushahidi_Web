@@ -5,6 +5,7 @@
 		<div class="big-block">
 			<h1>Get Alerts</h1>
 			
+			<?php if($show_mobile == TRUE) { ?>
 			<!-- Mobile Alert -->
 			<div class="green-box">
 				<?php
@@ -37,7 +38,7 @@
 				</div>
 			</div>
 			<!-- / Mobile Alert -->
-			
+			<?php } ?>
 			
 			<!-- Email Alert -->
 			<div class="green-box">

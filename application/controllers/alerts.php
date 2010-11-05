@@ -34,6 +34,15 @@ class Alerts_Controller extends Main_Controller {
         // Display news feeds?
         $this->template->content->allow_feed = Kohana::config('settings.allow_feed');
         
+        // Display Mobile Option?
+        $this->template->content->show_mobile = TRUE;
+        $settings = ORM::factory('settings', 1);
+        if ($settings->sms_no1 == '' AND $settings->sms_no2 == '' AND $settings->sms_no3 == '')
+        {
+            // Hide Mobile
+			$this->template->content->show_mobile = FALSE;
+        }
+
         // Retrieve default country, latitude, longitude
         $default_country = Kohana::config('settings.default_country');
         
@@ -138,6 +147,15 @@ class Alerts_Controller extends Main_Controller {
             (isset($_SESSION['alert_email']) AND ! empty($_SESSION['alert_email'])) ?
                 $_SESSION['alert_email'] : "";
             
+        // Display Mobile Option?
+        $this->template->content->show_mobile = TRUE;
+        $settings = ORM::factory('settings', 1);
+        if ($settings->sms_no1 == '' AND $settings->sms_no2 == '' AND $settings->sms_no3 == '')
+        {
+            // Hide Mobile
+			$this->template->content->show_mobile = FALSE;
+        }
+
         // Rebuild Header Block
         $this->template->header->header_block = $this->themes->header_block();
     }
