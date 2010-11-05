@@ -111,7 +111,7 @@ class Categories_Api_Object extends Api_Object_Core {
 
         if ($this->response_type == 'json')
         {
-            $ret_json_or_xml = $this->array_as_json($this->data);
+            $ret_json_or_xml = $this->array_as_json($data);
         } 
         else
         {
