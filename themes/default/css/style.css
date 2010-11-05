@@ -615,6 +615,123 @@ div.footer-credits{
 }
 
 /* reports */
+div.report-when-where {
+	padding:0px 0px 5px 0px;
+	border-bottom:#000000 dotted 1px;
+}
+
+div.report-category-list {
+	border-bottom:#000000 dotted 1px;
+	padding:10px 0px 10px 0px;
+}
+
+div.report-category-list a {
+	padding:1px 3px;
+	background-color:#E2E2E2;
+	border:#A8A8A8 solid 3px;
+	color:black;
+}
+
+div.report-description-text {
+	border-bottom:#000000 dotted 1px;
+	padding:5px 0px 5px 0px;
+}
+
+div.report-description-text h5 {
+	padding:0px 0px 5px 0px;
+	margin:0px;
+	font-size:14px;
+	text-transform: capitalize;
+}
+
+div.report-description-text .credibility {
+	padding-top:5px;
+}
+
+div.report-title {
+	padding-bottom:0px;
+}
+
+div.report-comments {
+	border-bottom:#000000 dotted 1px;
+	padding:5px 0px 5px 0px;
+}
+
+div.report-comments h5 {
+	padding:0px 0px 5px 0px;
+	margin:0px;
+	font-size:14px;
+	text-transform: capitalize;
+}
+
+div.report-comment-box {
+	margin-bottom:15px;
+}
+
+div.comment-block {
+	padding:5px 0px 5px 0px;
+}
+
+div.comment-block h5 {
+	padding:0px 0px 5px 0px;
+	margin:0px;
+	font-size:14px;
+	text-transform: capitalize;
+}
+
+div.report-media-box-tabs ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+div.report-media-box-tabs li {
+	float: left;
+	border: 1px solid;
+	border-bottom-width: 0;
+	margin: 0 0.5em 0 0;
+}
+
+div.report-media-box-tabs a {
+	display: block;
+	padding: 0 1em;
+}
+
+div.report-media-box-tabs .report-tab-selected {
+	position: relative;
+	top: 1px;
+	background: white;
+}
+
+div.report-media-box-content {
+	border-top:#000000 dotted 1px;
+	border-bottom:#000000 dotted 1px;
+	clear: both;
+	padding:5px 0px;
+}
+
+
+div.report-media-box {
+
+}
+
+div.report-additional-reports {
+	padding-top: 5px;
+}
+
+div.report-additional-reports h5 {
+	padding:0px 0px 5px 0px;
+	margin:0px;
+	font-size:14px;
+	text-transform: capitalize;
+}
+
+
+
+
+
+
+
 div.report-details{
     width: 300px;
     float: right;
@@ -623,8 +740,7 @@ div.report-details{
 
 div.verified{
     background: #A60003;
-    width: 85px;
-    padding: 6px 0;
+    padding: 6px;
     float: right;
     color: #FFF;
     text-transform: uppercase;
@@ -787,8 +903,8 @@ div.location{
 }
 
 div.report-map{
-    border: #CCCCCC 1px solid;
-    width: 300px;
+    /*border: #CCCCCC 1px solid;*/
+    /*width: 390px;*/
 }
 
 div.incident-notation{
@@ -812,10 +928,9 @@ div.incident-notation ul li{
 
 /* media files */
 .report-map .map-holder {
-	overflow:hidden;
 	clear:both;
-	width:300px;
-	height:300px;
+	width:390px;
+	height:200px;
 }
 
 
@@ -1296,11 +1411,6 @@ a.show-more {
 	overflow:hidden;
 /*	width:930px; */
 	padding:16px 25px 10px;
-}
-.comment-block {
-	overflow:hidden;
-	padding:0px 15px;
-	display:none;
 }
 /* Min-Height */
 .big-block{

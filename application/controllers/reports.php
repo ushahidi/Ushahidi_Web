@@ -854,13 +854,6 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->incident_neighbors = $this->_get_neighbors($incident->location->latitude,
 																									 $incident->location->longitude);
 
-		// Get RSS News Feeds
-
-		$this->template->content->feeds = ORM::factory('feed_item')
-										->limit('5')
-										->orderby('item_date', 'desc')
-										->find_all();
-
 		// Video links
 
 		$this->template->content->incident_videos = $incident_video;
