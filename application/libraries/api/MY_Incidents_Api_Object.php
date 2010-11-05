@@ -34,15 +34,11 @@ class Incidents_Api_Object extends Api_Object_Core {
      */
     public function perform_task()
     {
-        
         // Check if the 'by' parameter has been specified
         if ( ! $this->api_service->verify_array_index($this->request, 'by'))
         {
-            $this->set_error_message(array(
-                "error" => $this->api_service->get_error_msg(001, 'by')
-            ));
-            
-            return;
+            // Set "all" as the default method for fetching incidents
+            $this->by = 'all';
         }
         else
         {
@@ -83,8 +79,8 @@ class Incidents_Api_Object extends Api_Object_Core {
                     AND $this->api_service->verify_array_index($this->request, 'longitude'))
                 { 
                     $this->response_data = $this->_get_incidents_by_lat_lon(
-                        $this->request['latitude'],
-                        $this->request['longitude']);
+                        $this->check_id_value($this->request['latitude']),
+                        $this->check_id_value($this->request['longitude']));
                 }
                 else
                 {
@@ -231,7 +227,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 break;
                 
                 case "locationid":
-                    $this->order_field = 'l.location_id';
+                    $this->order_field = 'i.location_id';
                 break;
                 
                 case "incidentdate":
@@ -553,7 +549,7 @@ class Incidents_Api_Object extends Api_Object_Core {
         $join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON 
             c.id = ic.category_id";
         
-        $where = $join."\nWHERE c.category_title = '$catname' AND
+        $where = $join."\nWHERE c.category_title LIKE '%$catname%' AND
                 i.incident_active = 1";
         
         $sortby = "\nORDER BY $this->order_field $this->sort";
@@ -569,14 +565,9 @@ class Incidents_Api_Object extends Api_Object_Core {
      */
     private function _get_incident_by_id($incident_id)
     {
-                 
         $where = "\nWHERE i.id = $incident_id AND i.incident_active = 1 ";
         
-        $sortby = "\nORDER BY $this->order_field $this->sort";
-        
-        $limit = "\nLIMIT 0, $this->list_limit";
-        
-        return $this->_get_incidents($where.$sortby, $limit);        
+        return $this->_get_incidents($where);
     }
 
     /**
