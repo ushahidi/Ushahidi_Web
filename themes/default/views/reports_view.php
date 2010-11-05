@@ -123,7 +123,6 @@
 		<?php if( count($incident_photos) > 0 ) { ?>
 			<h5><?php echo Kohana::lang('ui_main.images');?></h5>
 			<div class="content">
-				<div class="photos">
 					<?php
 					foreach ($incident_photos as $photo)
 					{
@@ -132,7 +131,6 @@
 						echo '<a class="photothumb" rel="lightbox-group1" href="'.$prefix.'/'.$photo.'"><img src="'.$prefix.'/'.$thumb.'"/></a> ';
 					}
 					?>
-				</div>
 			</div>
 		<?php } ?>
 		<!-- end images -->
@@ -141,14 +139,12 @@
 		<?php if( count($incident_videos) > 0 ) { ?>
 			<h5><?php echo Kohana::lang('ui_main.video');?></h5>
 			<div class="content">
-				<div class="photos">
-					<?php
-						// embed the video codes
-						foreach( $incident_videos as $incident_video) {
-							$videos_embed->embed($incident_video,'');
-						}
-					?>
-				</div>
+				<?php
+					// embed the video codes
+					foreach( $incident_videos as $incident_video) {
+						$videos_embed->embed($incident_video,'');
+					}
+				?>
 			</div>
 		<?php } ?>
 		<!-- end videos -->
