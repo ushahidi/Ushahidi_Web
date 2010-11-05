@@ -96,8 +96,8 @@ class Geocoder_Core {
 		if ($feed_url)
 		{
 			// First check to make sure geonames webservice is running
-			$geonames_status = remote::status( $base_url );
-			
+			$geonames_status = @remote::status( $base_url );
+
 			if ($geonames_status == "200")
 			{ // Successful
 				$request_url = $base_url . "&feedUrl=" . urlencode($feed_url);
