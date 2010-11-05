@@ -11,7 +11,7 @@ class VideoEmbed{
       
       //get the code
       $hosts = array("http://www.youtube.com/watch?v=", "http://video.google.com/videoplay?docid=-",
-      "http://one.revver.com/watch/", "http://www.metacafe.com/watch/", "http://www.liveleak.com/view?i=","http://dotsub.com/media/");
+      "http://one.revver.com/watch/", "http://www.metacafe.com/watch/", "http://www.liveleak.com/view?i=","http://dotsub.com/media/","http://vimeo.com/");
       $code = str_replace($hosts, "", $raw);
       
    
@@ -22,6 +22,7 @@ class VideoEmbed{
       $host4 = strpos($raw, "www.metacafe.com", 1);
       $host5 = strpos($raw, "www.liveleak.com", 1);
 	  $host6 = strpos($raw, "dotsub.com", 1);
+	  $host7 = strpos($raw, "vimeo.com", 1);
       
       if($host1 != null) {$host .= "youtube";}
       if($host2 != null) {$host .= "google";}
@@ -29,12 +30,13 @@ class VideoEmbed{
       if($host4 != null) {$host .= "metacafe";}
       if($host5 != null) {$host .= "liveleak";}
 	  if($host6 != null) {$host .= "dotsub";}
+	  if($host7 != null) {$host .= "vimeo";}
       
       //error
-      if($host != "youtube" && $host != "google" && $host != "revver" && $host != "metacafe" && $host != "liveleak" && $host != "dotsub")
+      if($host != "youtube" && $host != "google" && $host != "revver" && $host != "metacafe" && $host != "liveleak" && $host != "dotsub" && $host != "vimeo")
       {
          $error = true;
-         echo "Error Embedding<br/>";
+         echo '<a href="'.$raw.'" target="_blank">'.Kohana::lang('ui_main.view').' '.Kohana::lang('ui_main.video').'</a><br/>';
       }
       
       if($host == "youtube")
@@ -101,6 +103,11 @@ class VideoEmbed{
 	  if( $host == "dotsub") 
 	  {
 		 echo "<iframe src='http://dotsub.com/media/$code' frameborder='0' width='320' height='500'></iframe>";
+	  }
+	  
+	  if( $host == "vimeo") 
+	  {
+		 echo "<iframe src=\"http://player.vimeo.com/video/$code\" width=\"100%\" height=\"300\" frameborder=\"0\"></iframe>";
 	  }
       
       //clean up varibles
