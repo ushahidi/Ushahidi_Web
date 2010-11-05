@@ -316,7 +316,7 @@ class Private_Func_Api_Object extends Api_Object_Core {
         foreach ($items as $item)
         {
             // Needs different treatment depending on the output
-            if($response_type == 'json')
+            if($this->response_type == 'json')
             {
                 $json_mapcenters[] = array("mapcenter" => $item);
             } 
