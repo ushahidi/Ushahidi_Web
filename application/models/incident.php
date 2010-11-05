@@ -203,25 +203,35 @@ class Incident_Model extends ORM
 	*/
 	public static function get_number_reports_by_date($range=NULL)
 	{
-		$db = new Database();
-		
 		if ($range == NULL)
 		{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM incident GROUP BY date ORDER BY incident_date ASC';
+                    $reports_by_date = ORM::factory('incident')
+                        ->groupby('incident_date')
+                        ->select('COUNT(*) as count',
+                                'DATE(incident_date) as date',
+                                'MONTH(incident_date) as month',
+                                'DAY(incident_date) as day',
+                                'YEAR(incident_date) as year')
+                        ->orderby('incident_date','ASC')->find_all();
+			//$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM incident GROUP BY date ORDER BY incident_date ASC';
 		}else{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM incident WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) GROUP BY date ORDER BY incident_date ASC';
+                    $reports_by_date = ORM::factory('incident')
+                        ->groupby('incident_date')
+                        ->where('incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY)')
+                        ->select('COUNT(*) as count',
+                                'DATE(incident_date) as date',
+                                'MONTH(incident_date) as month',
+                                'DAY(incident_date) as day',
+                                'YEAR(incident_date) as year')
+                        ->orderby('incident_date','ASC')->find_all();
+			//$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM incident WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) GROUP BY date ORDER BY incident_date ASC';
 		}
-		
-		$query = $db->query($sql);
-		$result = $query->result_array(FALSE);
-		
-		$array = array();
-		foreach ($result AS $row)
+                $array = array();
+		foreach ($reports_by_date AS $row)
 		{
-			$timestamp = mktime(0,0,0,$row['month'],$row['day'],$row['year'])*1000;
-			$array["$timestamp"] = $row['count'];
+                    $timestamp = mktime(0,0,0,$row->month,$row->day,$row->year)*1000;
+                    $array["$timestamp"] = $row->count;
 		}
-
 		return $array;
 	}
 

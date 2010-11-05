@@ -21,7 +21,7 @@
 				<form name="nav">
 					<div>
 						Select type of action: 
-						<select name="SelectURL" onChange="document.location.href=document.nav.SelectURL.options[document.nav.SelectURL.selectedIndex].value">
+						<select name="SelectURL" onchange="document.location.href=document.nav.SelectURL.options[document.nav.SelectURL.selectedIndex].value">
 						<option value="<?php echo url::base(); ?>admin/mhi/activity/"<?php if($current_log_action_id == FALSE) { ?> selected <?php } ?>>View All</option>
 						<?php
 							foreach($log_actions as $log_action_id => $action_name)
