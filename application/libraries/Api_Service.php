@@ -81,7 +81,9 @@ final class Api_Service {
      */
     public function set_response($response_data)
     {
-        $this->response = $response_data;
+        $this->response = (is_array($response_data))
+            ? json_encode($response_data)
+            : $response_data;
     }
     
     /**
@@ -143,9 +145,9 @@ final class Api_Service {
     private function _route_api_task()
     {
         // Make sure we have a task to work with
-        if (! $this->verify_array_index($this->request, 'task'))
+        if ( ! $this->verify_array_index($this->request, 'task'))
         {
-            $this->set_response($this->get_error_msg(002));
+            $this->set_response($this->get_error_msg(001, 'task'));
             return;
         }
         else
