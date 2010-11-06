@@ -1,6 +1,6 @@
 === About ===
 name: FrontlineSMS
-website: http://www.ushahidi.com
+website: http://www.frontlinesms.com
 description: Receive Messages from a FrontlineSMS Installations
 version: 0.5
 requires: 2.0
