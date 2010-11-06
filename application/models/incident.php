@@ -203,13 +203,16 @@ class Incident_Model extends ORM
 	*/
 	public static function get_number_reports_by_date($range=NULL)
 	{
+		// Table Prefix
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
 		$db = new Database();
 		
 		if ($range == NULL)
 		{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM incident GROUP BY date ORDER BY incident_date ASC';
+			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident GROUP BY date ORDER BY incident_date ASC';
 		}else{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM incident WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) GROUP BY date ORDER BY incident_date ASC';
+			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) GROUP BY date ORDER BY incident_date ASC';
 		}
 		
 		$query = $db->query($sql);
