@@ -59,10 +59,14 @@ class sms_Core
 	/**
 	 * Send The SMS Message Using Default Provider
 	 * @param from mixed  The source/sender address
-	 * @param text mixed  The text content of the message
+	 * @param message mixed  The text content of the message
+	 * @param to mixed  Optional... 'which number the message was sent to'
 	 */
-	public static function add($from = NULL, $message = NULL)
+	public static function add($from = NULL, $message = NULL, $to = NULL)
 	{
+		$from = preg_replace("#[^0-9]#", "", $from);
+		$to = preg_replace("#[^0-9]#", "", $to);
+		
 		if ( ! $from OR ! $message)
 			return "Missing Sender and/or Message";
 		
@@ -107,7 +111,7 @@ class sms_Core
 		$sms->user_id = 0;
 		$sms->reporter_id = $reporter->id;
 		$sms->message_from = $from;
-		$sms->message_to = null;
+		$sms->message_to = $to;
 		$sms->message = $message;
 		$sms->message_type = 1; // Inbox
 		$sms->message_date = date("Y-m-d H:i:s",time());

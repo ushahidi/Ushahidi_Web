@@ -13,37 +13,48 @@
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 */
 
-class Clickatell_Controller extends Controller
-{
-	function index()
+class Clickatell_Controller extends Controller {
+	
+	private $request = array();
+	
+	public function __construct()
+    {
+        $this->request = ($_SERVER['REQUEST_METHOD'] == 'POST')
+            ? $_POST
+            : $_GET;
+    }
+	
+	function index($key = NULL)
 	{
-		if (isset($_GET['key']))
+		if (isset($this->request['from']))
 		{
-			$clickatell_key = $_GET['key'];
-		}
-		
-		if (isset($_POST['s']))
-		{
-			$message_from = $_POST['s'];
+			$message_from = $this->request['from'];
 			// Remove non-numeric characters from string
 			$message_from = preg_replace("#[^0-9]#", "", $message_from);
 		}
 		
-		if (isset($_POST['m']))
+		if (isset($this->request['to']))
 		{
-			$message_description = $_POST['m'];
+			$message_to = $this->request['to'];
+			// Remove non-numeric characters from string
+			$message_to = preg_replace("#[^0-9]#", "", $message_to);
 		}
 		
-		if ( ! empty($clickatell_key) AND ! empty($message_from) AND ! empty($message_description))
+		if (isset($this->request['text']))
+		{
+			$message_description = $this->request['text'];
+		}
+		
+		if ( ! empty($message_from) AND ! empty($message_description))
 		{
 			// Is this a valid FrontlineSMS Key?
 			$keycheck = ORM::factory('clickatell')
-				->where('clickatell_key', $clickatell_key)
+				->where('clickatell_key', $key)
 				->find(1);
 
 			if ($keycheck->loaded == TRUE)
 			{
-				sms::add($message_from, $message_description);
+				sms::add($message_from, $message_description, $message_to);
 			}
 		}
 	}

@@ -132,12 +132,12 @@ class Plugins_Controller extends Admin_Controller {
 						if ($plugin->loaded AND $plugin->plugin_name)
 						{
 							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH.$plugin->plugin_name)));
+							
+							// Name of the class (First letter of class should be capitalized)
 							$class = ucfirst($plugin->plugin_name).'_Install';
-							$path = Kohana::find_file('libraries', $plugin->plugin_name.'_install');
-							if ( ! $path)
-							{ //Check for filename with Capitalized [I]nstall
-								$path = Kohana::find_file('libraries', $plugin->plugin_name.'_Install');
-							}
+							
+							// Find the Library File
+							$path = $this->_find_install($plugin->plugin_name);
 							if ($path)
 							{
 								include $path;
@@ -173,13 +173,19 @@ class Plugins_Controller extends Admin_Controller {
 						$plugin = ORM::factory('plugin', $item);
 						if ($plugin->loaded AND $plugin->plugin_name)
 						{
-							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(MODPATH.'argentum/'.$module)));
-							if ($path = Kohana::find_file('libraries', $plugin->plugin_name.'_install'))
+							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH.$plugin->plugin_name)));
+							
+							// Name of the class (First letter of class should be capitalized)
+							$class = ucfirst($plugin->plugin_name).'_Install';
+							
+							// Find the Library File
+							$path = $this->_find_install($plugin->plugin_name);
+							
+							if ($path)
 							{
 								include $path;
 
 								// Run the uninstaller
-								$class = ucfirst($module).'_Install';
 								$install = new $class;
 								$install->uninstall();
 							}
@@ -215,5 +221,33 @@ class Plugins_Controller extends Admin_Controller {
 		
 		// Javascript Header
 		$this->template->js = new View('admin/plugins_js');
+	}
+	
+	/**
+	 * Using this function because someone somewhere will name this file wrong!!!
+	 */
+	private function _find_install($plugin_name)
+	{
+		if ($path = Kohana::find_file('libraries', $plugin_name.'_install'))
+		{ // plugin_i
+			return $path;
+		}
+		elseif ($path = Kohana::find_file('libraries', $plugin_name.'_Install'))
+		{ // plugin_I
+			return $path;
+		}
+		elseif ($path = Kohana::find_file('libraries', ucfirst($plugin_name).'_install'))
+		{ // Plugin_i
+			return $path;
+		}
+		elseif ($path = Kohana::find_file('libraries', ucfirst($plugin_name).'_Install'))
+		{ // Plugin_I
+			return $path;
+		}
+		else
+		{
+			return false;
+		}
+		
 	}	
 }

@@ -121,7 +121,7 @@ class Clickatell_Settings_Controller extends Admin_Controller
 		}
 
 		$this->template->content->settings_form->clickatell_key = $clickatell_key;
-		$this->template->content->settings_form->clickatell_link = url::site()."clickatell/?key=".$clickatell_key;
+		$this->template->content->settings_form->clickatell_link = url::site()."clickatell/index/".$clickatell_key;
 		
 		// Other variables
 	    $this->template->content->errors = $errors;
