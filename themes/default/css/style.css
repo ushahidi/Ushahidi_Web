@@ -1519,7 +1519,7 @@ a.show-more {
 		.r_categories { position:relative; margin-top:10px; }
 		.r_categories h4 { font-size:10px; padding:0; margin:0 0 4px 0; border-bottom:1px solid #c0c2b8; text-transform: uppercase; }
 			a.r_category { display:block; position:relative; float:left; height:16px;	width:16px; margin:0 4px 4px 0; }
-			a.r_category span.r_cat-box { display:block; height:16px;	width:16px; background:#343434; }
+			a.r_category span.r_cat-box { display:block; height:16px;	width:16px; background:transparent; }
 			span.r_cat-desc { display:none; }
 			
 			.r_cat_tooltip { display:none;  position:absolute; z-index:1000; background:transparent url(../images/tooltip-arrow.png) 8px bottom no-repeat; padding:0 0 6px; }
