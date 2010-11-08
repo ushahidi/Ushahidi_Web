@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * This class handles posting report to ushahidi via the API.
+ * This class handles posting report to ushahidi via the API with the 
+ * report automatically approved.
  *
  * @version 24 - Emmanuel Kala 2010-10-25
  *
