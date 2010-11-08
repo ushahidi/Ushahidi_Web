@@ -56,5 +56,8 @@
      "emailaction" => array( "Email", "email_action"),
      
      // SMS action
-     "smsaction" => array( "Sms", "sms_action")
+     "smsaction" => array( "Sms", "sms_action"),
+
+     // Swiftriver action
+     "swiftriver" => "Swiftriver_Report",
  );
