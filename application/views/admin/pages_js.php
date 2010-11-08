@@ -56,5 +56,8 @@ tinyMCE.init({
 	theme_advanced_statusbar_location : "bottom",
 	toolbar_location : "top",
 	height:"400px",
-	width:"700px"
+	width:"700px",
+	encoding : "xml",
+	entity_encoding : "named"
+
 });

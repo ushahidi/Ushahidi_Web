@@ -2,7 +2,7 @@
 /**
  * This controller handles API requests.
  *
- * @version 27 - Henry Addo 2010-11-03
+ * @version 28 - Henry Addo 2010-11-08
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
