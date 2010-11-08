@@ -5,6 +5,10 @@
 		</td>
 		<td>
 			<h4 class="fix">Download the "SMSSync" app from the Android Market</h4>
+			<p>
+				Scan this QR Code with your phone to download the app from the Android Market
+			</p>
+			<div><img src="<?php echo url::base();?>plugins/smssync/views/images/smssync.png"></div>
 		</td>
 	</tr>
 	
