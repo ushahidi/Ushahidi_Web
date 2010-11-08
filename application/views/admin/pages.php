@@ -83,8 +83,7 @@
 										$page_id = $page->id;
 										$page_title = $page->page_title;
 										$page_tab = $page->page_tab;
-										$page_description =
-$page->htmlspecialchars(page_description);
+										$page_description = htmlspecialchars($page->page_description);
 										$page_description_short = strip_tags(text::limit_chars($page_description, "100", "..."));
 										$page_active = $page->page_active;
 										?>
