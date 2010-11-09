@@ -222,12 +222,6 @@
 				return false;
 			});
 
-			$('#showshortermap').click(function() {
-				$('.map-holder').css("height","200px");
-				$('#showshortermap').hide(0);
-				$('#showtallermap').show(0);
-				map.setCenter(myPoint, 10);
-			});
 		});
 		
 		function zoomToSelectedFeature(lon, lat, zoomfactor){
