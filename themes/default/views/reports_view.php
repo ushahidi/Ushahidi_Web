@@ -1,16 +1,18 @@
-<div id="main">
+<div id="main" class="report_detail">
 
-	<div style="float:left;width:500px">
+	<div class="left-col" style="float:left;width:520px; margin-right:20px">
 	
-		<div class="verified <?php
-		if ($incident_verified == 1)
-		{
-			echo " verified_yes";
-		}
-		?>">
-			<span><?php echo ($incident_verified == 1) ? Kohana::lang('ui_main.verified') : Kohana::lang('ui_main.unverified'); ?></span>
-		</div>
-	
+  	  <?php
+    	  if ($incident_verified)
+    		{
+    			echo '<p class="r_verified">'.Kohana::lang('ui_main.verified').'</p>';
+    		}
+    		else
+    		{
+    			echo '<p class="r_unverified">'.Kohana::lang('ui_main.unverified').'</p>';
+    		}
+  	  ?>	
+
 		<h1 class="report-title"><?php
 			echo $incident_title;
 			
@@ -21,19 +23,32 @@
 			}
 		?></h1>
 	
-		<div class="report-when-where">
-			<small><?php echo $incident_time.' '.$incident_date; ?> | <?php echo $incident_location; ?></small>
-		</div>
+		<p class="report-when-where">
+			<span class="r_date"><?php echo $incident_time.' '.$incident_date; ?> </span>
+			<span class="r_location"><?php echo $incident_location; ?></span>
+		</p>
 	
 		<div class="report-category-list">
-			<small>
+		<p>
 			<?php
 				foreach($incident_category as $category) 
 				{ 
-					echo "<a href=\"".url::site()."reports/?c=".$category->category->id."\" class=\"r-3\" style=\"border-color:#".$category->category->category_color."\">".$category->category->category_title."</a>&nbsp;&nbsp;&nbsp;";
+				  if ($category->category->category_image_thumb)
+					{
+					?>
+					<a href="<?php echo url::site()."reports/?c=".$category->category->id; ?>"><span class="r_cat-box" style="background:transparent url(<?php echo url::base().Kohana::config('upload.relative_directory')."/".$category->category->category_image_thumb; ?>) 0 0 no-repeat;">&nbsp;</span> <?php echo $category->category->category_title; ?></a>
+					
+					<?php 
+					}
+					else
+					{
+					?>
+					  <a href="<?php echo url::site()."reports/?c=".$category->category->id; ?>"><span class="r_cat-box" style="background-color:#<?php echo $category->category->category_color; ?>">&nbsp;</span> <?php echo $category->category->category_title; ?></a>
+				  <?php
+				  }
 				}
 			?>
-			</small>
+			</p>
 			<?php
 			// Action::report_meta - Add Items to the Report Meta (Location/Date/Time etc.)
 			Event::run('ushahidi_action.report_meta', $incident_id);
@@ -66,32 +81,36 @@
 	
 	</div>
 	
-	<div style="float:right;width:390px;">
+	<div style="float:right;width:350px;">
 
 		<div class="report-media-box-tabs">
 			<ul>
-				<li id="mapli" class="report-tab-selected"><a id="showmap"><?php echo Kohana::lang('ui_main.map');?></a></li>
+				<li class="report-tab-selected"><a class="tab-item" href="#report-map"><?php echo Kohana::lang('ui_main.map');?></a></li>
 				<?php if( count($incident_photos) > 0 ) { ?>
-					<li id="imagesli"><a id="showimages"><?php echo Kohana::lang('ui_main.images');?></a></li>
+					<li><a class="tab-item" href="#report-images"><?php echo Kohana::lang('ui_main.images');?></a></li>
 				<?php } ?>
 				<?php if( count($incident_videos) > 0 ) { ?>
-					<li id="videoli"><a id="showvideo"><?php echo Kohana::lang('ui_main.video');?></a></li>
+					<li><a class="tab-item" href="#report-video"><?php echo Kohana::lang('ui_main.video');?></a></li>
 				<?php } ?>
 			</ul>
 		</div>
 		
 		<div class="report-media-box-content">
 			
-			<div class="report-map">
+			<div id="report-map" class="report-map">
 				<div class="map-holder" id="map"></div>
-				<a id="showtallermap" style="float:right;margin-top:5px;font-size:12px;">&darr;&nbsp;&darr;&nbsp;&darr;&nbsp;&darr;</a>
-				<a id="showshortermap" style="float:right;margin-top:5px;font-size:12px;display:none;">&uarr;&nbsp;&uarr;&nbsp;&uarr;&nbsp;&uarr;</a>
-				<div style="clear:both;"></div>
+        <ul class="map-toggles">
+          <li><a href="#" class="smaller-map">Smaller map</a></li>
+          <li style="display:block;"><a href="#" class="wider-map">Wider map</a></li>
+          <li><a href="#" class="taller-map">Taller map</a></li>
+          <li><a href="#" class="shorter-map">Shorter Map</a></li>
+        </ul>
+        <div style="clear:both"></div>
 			</div>
 			
 			<!-- start images -->
 			<?php if( count($incident_photos) > 0 ) { ?>
-				<div class="report-images" style="display:none;">
+				<div id="report-images" style="display:none;">
 						<?php
 						foreach ($incident_photos as $photo)
 						{
@@ -106,7 +125,7 @@
 			
 			<!-- start videos -->
 			<?php if( count($incident_videos) > 0 ) { ?>
-				<div class="report-video" style="display:none;">
+				<div id="report-video" style="display:none;">
 					<?php
 						// embed the video codes
 						foreach( $incident_videos as $incident_video) {
@@ -120,47 +139,56 @@
 		</div>
 		
 		<script type="text/javascript">
-			
-			$('#showmap').click(function() {
-				$('.report-images').slideUp('slow', function() {
-					$('#imagesli').removeClass('report-tab-selected');
-				});
-				$('.report-video').slideUp('slow', function() {
-					$('#videoli').removeClass('report-tab-selected');
-				});
-				$('.report-map').show('slow', function() {
-					$('#mapli').addClass('report-tab-selected');
-				});
-			});
-			
-			$('#showimages').click(function() {
-				$('.report-map').slideUp('slow', function() {
-					$('#mapli').removeClass('report-tab-selected')
-				});
-				$('.report-video').slideUp('slow', function() {
-					$('#videoli').removeClass('report-tab-selected');
-				});
-				$('.report-images').show('slow', function() {
-					$('#imagesli').addClass('report-tab-selected');
-				});
-			});
-			
-			$('#showvideo').click(function() {
-				$('.report-map').slideUp('slow', function() {
-					$('#mapli').removeClass('report-tab-selected')
-				});
-				$('.report-images').slideUp('slow', function() {
-					$('#imagesli').removeClass('report-tab-selected');
-				});
-				$('.report-video').show('slow', function() {
-					$('#videoli').addClass('report-tab-selected');
-				});
-			});
-			
-			$('#showtallermap').click(function() {
-				$('.map-holder').css("height","600px");
-				$('#showtallermap').hide(0);
-				$('#showshortermap').show(0);
+		  // Handles the tab functionality for the map, images, and video content
+		  $('a.tab-item').click(function(){
+        $('a.tab-item').parent().removeClass("report-tab-selected");  // first remove the "selected" class from everything
+		    $(this).parent().addClass("report-tab-selected");             // now add it back to the parent of the element which was clicked
+		    $('.report-media-box-content > div').hide();                  // then hide all tab content boxes
+		    $($(this).attr("href")).show();                               // finally, show the appropriate tab content boxes
+		    return false;                                                 // stop the browser from jumping back to the top of the page
+		  });
+		  
+		  // Handles the functionality for changing the size of the map
+		  // TODO: make the CSS widths dynamic... instead of hardcoding, grab the width's
+		  // from the appropriate parent divs
+			$('.map-toggles a').click(function() {
+				var action = $(this).attr("class");
+				$('ul.map-toggles li').hide();
+				switch(action)
+				{
+				  case "wider-map":
+				    $('.report-map').insertBefore($('.left-col'));
+				    $('.map-holder').css({"height":"300px", "width": "900px"});
+    				$('a[href=#report-map]').parent().hide();
+    				$('a.taller-map').parent().show();
+    				$('a.smaller-map').parent().show();
+				  break;
+				  case "taller-map":
+				    $('.map-holder').css("height","600px");
+				    $('a.shorter-map').parent().show();
+				    $('a.smaller-map').parent().show();
+				  break;
+				  case "shorter-map":
+				    $('.map-holder').css("height","300px");
+				    $('a.taller-map').parent().show();
+				    $('a.smaller-map').parent().show();
+				  break;
+				  case "smaller-map":
+				    $('.report-map').hide().prependTo($('.report-media-box-content'));
+				    $('.map-holder').css({"height":"350px", "width": "348px"});
+				    $('a.wider-map').parent().show();
+				    $('a.tab-item').parent().removeClass("report-tab-selected");
+				    $('.report-media-box-content > div').hide(); // hide everything incase video/images were showing
+				    $('a[href=#report-map]').parent().addClass('report-tab-selected').show();
+				    $('.report-map').show()
+				  break;
+				};
+				
+				
+
+				//TODO For DAVID: reload the map tiles here
+
+				return false;
 			});
 			
 			$('#showshortermap').click(function() {
@@ -172,21 +200,14 @@
 		</script>
 
 		<div class="report-additional-reports">
-			<h5><?php echo Kohana::lang('ui_main.additional_reports');?></h5>
-			<table cellpadding="0" cellspacing="0">
-				<tr class="title">
-					<th class="w-01"><?php echo Kohana::lang('ui_main.title');?></th>
-					<th class="w-02"><?php echo Kohana::lang('ui_main.location');?></th>
-					<th class="w-03"><?php echo Kohana::lang('ui_main.date');?></th>
-				</tr>
-				<?php foreach($incident_neighbors as $neighbor) { ?>
-				<tr>
-					<td class="w-01"><a href="<?php echo url::site(); ?>reports/view/<?php echo $neighbor->id; ?>"><?php echo $neighbor->incident_title; ?></a></td>
-					<td class="w-02" style="width:300px;"><?php echo $neighbor->location->location_name; ?></td>
-					<td class="w-03" style="padding-left:5px;" nowrap><?php echo date('M j Y', strtotime($neighbor->incident_date)); ?></td>
-				</tr>
-				<?php } ?>
-			</table>
+			<h4><?php echo Kohana::lang('ui_main.additional_reports');?></h4>
+			<?php foreach($incident_neighbors as $neighbor) { ?>
+			  <div class="rb_report">
+  			  <h5><a href="<?php echo url::site(); ?>reports/view/<?php echo $neighbor->id; ?>"><?php echo $neighbor->incident_title; ?></a></h5>
+  			  <p class="r_date r-3 bottom-cap"><?php echo date('H:i M d, Y', strtotime($neighbor->incident_date)); ?></p>
+  			  <p class="r_location"><?php echo $neighbor->location->location_name; ?></p>
+  			</div>
+      <?php } ?>
 		</div>
 
 	</div>
