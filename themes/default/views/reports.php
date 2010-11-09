@@ -67,7 +67,6 @@
 							<!-- Category Selector -->
 							<div class="r_categories">
 								<h4><?php echo Kohana::lang('ui_main.categories'); ?></h4>
-								<!-- a default category -->
 								<?php
 								foreach ($incident->category AS $category)
 								{
