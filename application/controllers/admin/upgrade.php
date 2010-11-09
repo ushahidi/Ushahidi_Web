@@ -79,8 +79,16 @@ class Upgrade_Controller extends Admin_Controller {
                 $this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
 
                 $url = $this->release->download;
+
                 $working_dir = Kohana::config('upload.relative_directory')."/upgrade/";
-                
+                // Create the Directory if it doesn't exist
+				if ( ! file_exists(DOCROOT."media/uploads/upgrade"))
+				{
+					mkdir(DOCROOT."media/uploads/upgrade");
+					chmod(DOCROOT."media/uploads/upgrade",0777);
+				}
+
+
                 $zip_file = Kohana::config('upload.relative_directory')."/upgrade/ushahidi.zip";
         
                 //download the latest ushahidi
@@ -102,45 +110,48 @@ class Upgrade_Controller extends Admin_Controller {
                 if ($this->upgrade->success)
                 {
                     $this->upgrade->log[] = sprintf("Copying files...");
-                    $this->upgrade->copy_recursively($working_dir,".");
+                    $this->upgrade->copy_recursively($working_dir."/ushahidi",DOCROOT);
                     $this->upgrade->log[] = sprintf("Successfully copied files");
                 }
         
                 if ($this->upgrade->success)
                 {
-                    if ($post->chk_db_backup_box == 1)
-                    {
+					if (file_exists($working_dir."/ushahidi/sql"))
+					{
+                    	if ($post->chk_db_backup_box == 1)
+	                    {
                                         
-                        // backup database.
-                        //is gzip enabled ?
-                        $gzip = Kohana::config('config.output_compression');
-                        $error = $this->_do_db_backup( $gzip );
-                        $this->upgrade->log[] = sprintf("Database backup in progress.");       
+	                        // backup database.
+	                        //is gzip enabled ?
+	                        $gzip = Kohana::config('config.output_compression');
+	                        $error = $this->_do_db_backup( $gzip );
+	                        $this->upgrade->log[] = sprintf("Database backup in progress.");       
                     
-                        if (empty($error))
-                        {
-                            $this->upgrade->log[] = sprintf("Database backup went successful.");
+	                        if (empty($error))
+	                        {
+	                            $this->upgrade->log[] = sprintf("Database backup went successful.");
                                                     
-                            //uprade tables.
-                            $this->upgrade->log[] = sprintf("Upgrade table.");
-                            $this->_process_db_upgrade($working_dir."sql/");
-                            $this->upgrade->log[] = sprintf("Table upgrade successful.");
+	                            //uprade tables.
+	                            $this->upgrade->log[] = sprintf("Upgrade table.");
+	                            $this->_process_db_upgrade($working_dir."/ushahidi/sql/");
+	                            $this->upgrade->log[] = sprintf("Table upgrade successful.");
 
-                        }
-                        else
-                        {
-                            $this->upgrade->errors[] = sprintf("Oops, database backup failed.");
-                            $this->template->content->errors = $this->upgrade->errors;
-                        }
-                    }
-                    else
-                    {                 
-                        //uprade tables.
-                        $this->upgrade->log[] = sprintf("Upgrade table.");
-                        $this->_process_db_upgrade($working_dir."sql/");
-                        $this->upgrade->log[] = sprintf("Table upgrade successful.");
+	                        }
+	                        else
+	                        {
+	                            $this->upgrade->errors[] = sprintf("Oops, database backup failed.");
+	                            $this->template->content->errors = $this->upgrade->errors;
+	                        }
+	                    }
+	                    else
+	                    {                 
+	                        //uprade tables.
+	                        $this->upgrade->log[] = sprintf("Upgrade table.");
+	                        $this->_process_db_upgrade($working_dir."/ushahidi/sql/");
+	                        $this->upgrade->log[] = sprintf("Table upgrade successful.");
 
-                    }
+	                    }
+					}
         
                     if ($this->upgrade->success)
                     {
@@ -444,8 +455,8 @@ class Upgrade_Controller extends Admin_Controller {
         if ($release_version AND $version_ushahidi)
 	    {
 		    // Split version numbers xx.xx.xx
-		    $remote_version = explode($release_version, ".");
-		    $local_version = explode($version_ushahidi, ".");
+		    $remote_version = explode(".", $release_version);
+		    $local_version = explode(".", $version_ushahidi);
 
 		    // Check first part .. if its the same, move on to next part
 		    if (isset($remote_version[0]) AND isset($local_version[0])

@@ -159,8 +159,8 @@ class Admin_Controller extends Template_Controller
         if ($release_version AND $version_ushahidi)
 	    {
 		    // Split version numbers xx.xx.xx
-		    $remote_version = explode($release_version, ".");
-		    $local_version = explode($version_ushahidi, ".");
+		    $remote_version = explode(".", $release_version);
+		    $local_version = explode(".", $version_ushahidi);
 
 		    // Check first part .. if its the same, move on to next part
 		    if (isset($remote_version[0]) AND isset($local_version[0])
