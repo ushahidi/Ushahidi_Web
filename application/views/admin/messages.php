@@ -161,6 +161,9 @@
 												// Action::message_extra_admin  - Message Additional/Extra Stuff
 												Event::run('ushahidi_action.message_extra_admin', $message_id);
 												?>
+
+												<?php if($reply_to == TRUE) { ?>
+
 												<?php
 												if ($service_id == 1 && $message_type == 1)
 												{
@@ -184,6 +187,8 @@
 													<?php
 												}
 												?>
+
+											<?php } ?>
 											</div>
 											<ul class="info">
 												<?php
