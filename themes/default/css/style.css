@@ -1355,6 +1355,8 @@ ul.treeview li.lastExpandable { width:155px; }
 .rating_loading{
 	margin:0 0 0 10px;
 }
+
+table.rating-table td { padding-right:3px; }
 span.dots {
 	width:17px;
 	text-align:center;

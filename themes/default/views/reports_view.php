@@ -59,11 +59,15 @@
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
 			<?php echo $incident_description; ?>
 			<div class="credibility">
-				<?php echo Kohana::lang('ui_main.credibility');?>:
-				<a href="javascript:rating('<?php echo $incident_id; ?>','add','original','oloader_<?php echo $incident_id; ?>')"><img id="oup_<?php echo $incident_id; ?>" src="<?php echo url::base() . 'media/img/'; ?>thumb-up.jpg" alt="UP" title="UP" border="0" /></a>&nbsp;
-				<a href="javascript:rating('<?php echo $incident_id; ?>','subtract','original')"><img id="odown_<?php echo $incident_id; ?>" src="<?php echo url::base() . 'media/img/'; ?>thumb-down.jpg" alt="DOWN" title="DOWN" border="0" /></a>&nbsp;
-				<a href="" class="rating_value" id="orating_<?php echo $incident_id; ?>"><?php echo $incident_rating; ?></a>
-				<a href="" id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></a>
+				<table class="rating-table" cellspacing="0" cellpadding="0" border="0">
+          <tr>
+            <td><?php echo Kohana::lang('ui_main.credibility');?>:</td>
+            <td><a href="javascript:rating('<?php echo $incident_id; ?>','add','original','oloader_<?php echo $incident_id; ?>')"><img id="oup_<?php echo $incident_id; ?>" src="<?php echo url::base() . 'media/img/'; ?>up.png" alt="UP" title="UP" border="0" /></a></td>
+            <td><a href="javascript:rating('<?php echo $incident_id; ?>','subtract','original')"><img id="odown_<?php echo $incident_id; ?>" src="<?php echo url::base() . 'media/img/'; ?>down.png" alt="DOWN" title="DOWN" border="0" /></a></td>
+            <td><a href="" class="rating_value" id="orating_<?php echo $incident_id; ?>"><?php echo $incident_rating; ?></a></td>
+            <td><a href="" id="oloader_<?php echo $incident_id; ?>" class="rating_loading" ></a></td>
+          </tr>
+        </table>
 			</div>
 		</div>
 		
@@ -137,68 +141,6 @@
 			<!-- end videos -->
 		
 		</div>
-		
-		<script type="text/javascript">
-		  // Handles the tab functionality for the map, images, and video content
-		  $('a.tab-item').click(function(){
-        $('a.tab-item').parent().removeClass("report-tab-selected");  // first remove the "selected" class from everything
-		    $(this).parent().addClass("report-tab-selected");             // now add it back to the parent of the element which was clicked
-		    $('.report-media-box-content > div').hide();                  // then hide all tab content boxes
-		    $($(this).attr("href")).show();                               // finally, show the appropriate tab content boxes
-		    return false;                                                 // stop the browser from jumping back to the top of the page
-		  });
-		  
-		  // Handles the functionality for changing the size of the map
-		  // TODO: make the CSS widths dynamic... instead of hardcoding, grab the width's
-		  // from the appropriate parent divs
-			$('.map-toggles a').click(function() {
-				var action = $(this).attr("class");
-				$('ul.map-toggles li').hide();
-				switch(action)
-				{
-				  case "wider-map":
-				    $('.report-map').insertBefore($('.left-col'));
-				    $('.map-holder').css({"height":"300px", "width": "900px"});
-    				$('a[href=#report-map]').parent().hide();
-    				$('a.taller-map').parent().show();
-    				$('a.smaller-map').parent().show();
-				  break;
-				  case "taller-map":
-				    $('.map-holder').css("height","600px");
-				    $('a.shorter-map').parent().show();
-				    $('a.smaller-map').parent().show();
-				  break;
-				  case "shorter-map":
-				    $('.map-holder').css("height","300px");
-				    $('a.taller-map').parent().show();
-				    $('a.smaller-map').parent().show();
-				  break;
-				  case "smaller-map":
-				    $('.report-map').hide().prependTo($('.report-media-box-content'));
-				    $('.map-holder').css({"height":"350px", "width": "348px"});
-				    $('a.wider-map').parent().show();
-				    $('a.tab-item').parent().removeClass("report-tab-selected");
-				    $('.report-media-box-content > div').hide(); // hide everything incase video/images were showing
-				    $('a[href=#report-map]').parent().addClass('report-tab-selected').show();
-				    $('.report-map').show()
-				  break;
-				};
-				
-				
-
-				//TODO For DAVID: reload the map tiles here
-
-				return false;
-			});
-			
-			$('#showshortermap').click(function() {
-				$('.map-holder').css("height","200px");
-				$('#showshortermap').hide(0);
-				$('#showtallermap').show(0);
-			});
-
-		</script>
-
 		<div class="report-additional-reports">
 			<h4><?php echo Kohana::lang('ui_main.additional_reports');?></h4>
 			<?php foreach($incident_neighbors as $neighbor) { ?>
