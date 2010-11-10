@@ -33,19 +33,19 @@
         <?php } ?>
         <p><?php print Kohana::lang('upgrade.upgrade_db_text_1'); ?> <?php print $db_version; ?> <?php print Kohana::lang('upgrade.upgrade_db_text_2');?> <?php print $current_db_version?>.</p>
        	<p><?php print Kohana::lang('upgrade.upgrade_db_text_3'); ?></p>
-       	<p><?php print Kohana::lang('upgrade.upgrade_db_text_4'); ?></p>
-       	<?php print form::open(NULL, array('id' => 'upgradeMain', 'name' => 'upgradeMain')); ?>
-       	<p>
-       	<?php print form::label('chk_db_backup_box', Kohana::lang('upgrade.upgrade_db_text_5'));?>
-		   	<?php print form::checkbox('chk_db_backup_box', '1');?>
-		</p>	       
+       	<p><?php print Kohana::lang('upgrade.upgrade_db_text_4'); ?></p>	       
 	</div>
 	
 	<div class="head">
 		<h4><?php print Kohana::lang('upgrade.upgrade_automatic'); ?></h4>
 	</div>
 	<div class="settings_holder">
-	    <input type="submit" id="upgrade" name="submit" value="<?php echo Kohana::lang('upgrade.upgrade_continue_btn_text');?>" class="login_btn" />
+		<?php print form::open(NULL, array('id' => 'upgradeMain', 'name' => 'upgradeMain')); ?>
+			<p>
+		   		<?php print form::label('chk_db_backup_box', Kohana::lang('upgrade.upgrade_db_text_5'));?>
+			   	<?php print form::checkbox('chk_db_backup_box', '1');?>
+			</p>
+		    <input type="submit" id="upgrade" name="submit" value="<?php echo Kohana::lang('upgrade.upgrade_continue_btn_text');?>" class="login_btn" />
 		<?php print form::close();?>
 	</div>
 	
