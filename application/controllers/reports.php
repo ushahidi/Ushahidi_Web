@@ -1124,22 +1124,14 @@ class Reports_Controller extends Main_Controller {
 	 * Retrieves Neighboring Incidents
 	 */
 	private function _get_neighbors($latitude = 0, $longitude = 0)
-	{
-		$proximity = new Proximity($latitude, $longitude, 100); // Within 100 Miles ( or Kms ;-) )
-
-		// Generate query from proximity calculator
-		$radius_query = "location.latitude >= '" . $proximity->minLat . "' ";
-		$radius_query .= "AND ".$this->table_prefix."location.latitude <= '" . $proximity->maxLat . "' ";
-		$radius_query .= "AND ".$this->table_prefix."location.longitude >= '" . $proximity->minLong . "' ";
-		$radius_query .= "AND ".$this->table_prefix."location.longitude <= '" . $proximity->maxLong . "' ";
-		$radius_query .= "AND incident_active = 1";
-
-		$neighbors = ORM::factory('incident')
-								 ->join('location', 'incident.location_id', 'location.id','INNER')
-								 ->select('incident.*')
-								 ->where($radius_query)
-								 ->limit('5')
-								 ->find_all();
+	{	
+		// Database
+        $db = new Database();
+		
+		$neighbors = $db->query("SELECT DISTINCT i.*, l.location_name,
+        ((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance
+         FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1
+         ORDER BY distance ASC LIMIT 5 ");
 
 		return $neighbors;
 	}
