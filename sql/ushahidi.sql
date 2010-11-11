@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 35
+-- version 36
 -- http://www.ushahidi.com
 
 
@@ -1325,6 +1325,19 @@ CREATE TABLE IF NOT EXISTS `layer` (                                            
 ) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
 
 
+--
+-- Definition of table `api_settings`
+--
+
+CREATE TABLE  IF NOT EXISTS `api_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `default_record_limit` int(11) NOT NULL DEFAULT '20',
+  `max_record_limit` int(11) DEFAULT NULL,
+  `max_requests_per_ip_address` int(11) DEFAULT NULL,
+  `max_requests_quota_basis` int(11) DEFAULT NULL,
+  `modification_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='For storing API logging settings';
 
 /**
 * Table structure for table `api_banned`
@@ -1539,4 +1552,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0b11' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '35' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '36' WHERE `id`=1 LIMIT 1;
