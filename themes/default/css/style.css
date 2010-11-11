@@ -648,7 +648,7 @@ div.report-category-list a:hover { text-decoration:none; color:#333; }
 div.report-category-list a span.r_cat-box { height:16px; width:16px; display:inline-block; margin:3px 3px 3px 0; }
 
 div.report-description-text {
-	border-bottom:1px dotted #C0C2B8;
+	/* border-bottom:1px dotted #C0C2B8; */
 	padding:10px 0;
 	margin-bottom:18px;
 }
@@ -660,8 +660,10 @@ div.report-description-text h5 {
 	text-transform: capitalize;
 }
 
-div.report-description-text .credibility {
-	padding-top:5px;
+div.credibility {
+	margin-top:10px;
+	padding:3px;
+	border-top:1px dotted #C0C2B8;
 }
 
 div.report-title {
@@ -1356,7 +1358,7 @@ ul.treeview li.lastExpandable { width:155px; }
 	margin:0 0 0 10px;
 }
 
-table.rating-table td { padding-right:3px; }
+table.rating-table td { padding-right:3px;}
 span.dots {
 	width:17px;
 	text-align:center;
