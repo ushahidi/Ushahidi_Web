@@ -83,12 +83,21 @@ class Main_Controller extends Template_Controller {
         // Load profiler
         // $profiler = new Profiler;
 
-        // Get tracking javascript for stats
-        if(Kohana::config('settings.allow_stat_sharing') == 1){
+		// Get tracking javascript for stats
+		if(Kohana::config('settings.allow_stat_sharing') == 1){
 			$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
 		}else{
 			$this->template->footer->ushahidi_stats = '';
 		}
+		
+		// add copyright info
+		$this->template->footer->site_copyright_statement = '';
+		$site_copyright_statement = trim(Kohana::config('settings.site_copyright_statement'));
+		if($site_copyright_statement != '')
+		{
+			$this->template->footer->site_copyright_statement = $site_copyright_statement;
+		}
+		
 	}
 
     public function index()

@@ -76,6 +76,10 @@
 							<?php print form::textarea('site_message', $form['site_message'], ' style="height:40px;"'); ?>
 						</div>
 						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_copyright_statement"); ?>"><?php echo Kohana::lang('settings.site.copyright_statement');?></a></h4>
+							<?php print form::textarea('site_copyright_statement', $form['site_copyright_statement'], ' style="height:40px;"'); ?>
+						</div>
+						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_locale"); ?>"><?php echo Kohana::lang('settings.site.language');?></a> (Locale)</h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('site_language', $locales_array, $form['site_language']); ?>

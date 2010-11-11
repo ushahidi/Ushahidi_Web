@@ -15,15 +15,15 @@
 ?>
             <div class="bg">
                 <h2>
-                    <?php admin::manage_subtabs("api"); ?>
+                    <?php admin::settings_subtabs("api"); ?>
                 </h2>
                 <!-- tabs -->
                 <div class="tabs">
                     <!-- tabset -->
                     <ul class="tabset">
-                        <li><a href="<?php echo url::site() . 'admin/manage/api' ?>" class="active"><?php echo Kohana::lang('ui_admin.api_settings'); ?></a></li>
-                        <li><a href="<?php echo url::site() . 'admin/manage/api/log' ?>"><?php echo Kohana::lang('ui_admin.api_logs');?></a></li>
-                        <li><a href="<?php echo url::site() . 'admin/manage/api/apibanned'?>"><?php echo Kohana::lang('ui_admin.api_banned'); ?></a></li>
+                        <li><a href="<?php echo url::site() . 'admin/settings/api' ?>" class="active"><?php echo Kohana::lang('ui_admin.api_settings'); ?></a></li>
+                        <li><a href="<?php echo url::site() . 'admin/settings/api/log' ?>"><?php echo Kohana::lang('ui_admin.api_logs');?></a></li>
+                        <li><a href="<?php echo url::site() . 'admin/settings/api/apibanned'?>"><?php echo Kohana::lang('ui_admin.api_banned'); ?></a></li>
                     </ul>
                     <!-- /tabset -->
                     

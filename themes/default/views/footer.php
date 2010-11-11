@@ -32,7 +32,9 @@
 					Event::run('ushahidi_action.nav_main_bottom');
 					?>
 				</ul>
-				<p><?php echo Kohana::lang('ui_main.copyright'); ?></p>
+				<?php if($site_copyright_statement != '') { ?>
+      		<p><?php echo $site_copyright_statement; ?></p>
+      	<?php } ?>
 			</div>
 			<!-- / footer menu -->
 
