@@ -29,7 +29,7 @@ class S_Alerts_Controller extends Controller {
 		
 		// *************************************
 		// ** SAFEGUARD DUPLICATE SEND-OUTS **
-		// Create A 10 Minute SEND LOCK
+		// Create A 15 Minute SEND LOCK
 		// This lock is released at the end of execution
 		// Or expires automatically
 		$alerts_lock = $this->cache->get("alerts_lock");
@@ -37,12 +37,12 @@ class S_Alerts_Controller extends Controller {
 		{
 			// Lock doesn't exist
 			$timestamp = time();
-			$this->cache->set("alerts_lock", $timestamp, array("alerts"), 600);
+			$this->cache->set("alerts_lock", $timestamp, array("alerts"), 900);
 		}
 		else
 		{
 			// Lock Exists - End
-			exit("Other process is running - waiting 10 minutes");
+			exit("Other process is running - waiting 15 minutes!");
 		}
 		// *************************************
 	}
@@ -56,7 +56,8 @@ class S_Alerts_Controller extends Controller {
 	{
 		$settings = kohana::config('settings');
 		$site_name = $settings['site_name'];
-		$alerts_email = $settings['alerts_email'];
+		$alerts_email = ($settings['alerts_email']) ? $settings['alerts_email']
+			: $settings['site_email'];
 		$unsubscribe_message = Kohana::lang('alerts.unsubscribe')
 								.url::site().'alerts/unsubscribe/';
 
@@ -113,22 +114,15 @@ class S_Alerts_Controller extends Controller {
 				{
 					if ($alert_type == 1) // SMS alertee
 					{
-						if ($settings == null)
-						{
-							$settings = ORM::factory('settings', 1);
-							if ($settings->loaded == true)
-							{
-								// Get SMS Numbers
-								if (!empty($settings->sms_no3))
-									$sms_from = $settings->sms_no3;
-								elseif (!empty($settings->sms_no2))
-									$sms_from = $settings->sms_no2;
-								elseif (!empty($settings->sms_no1))
-									$sms_from = $settings->sms_no1;
-								else
-									$sms_from = "000";      // Admin needs to set up an SMS number
-							}
-						}	
+						// Get SMS Numbers
+						if (Kohana::config("settings.sms_no3"))
+							$sms_from = Kohana::config("settings.sms_no3");
+						elseif (Kohana::config("settings.sms_no2"))
+							$sms_from = Kohana::config("settings.sms_no2");
+						elseif (Kohana::config("settings.sms_no1"))
+							$sms_from = Kohana::config("settings.sms_no1");
+						else
+							$sms_from = "000";      // Admin needs to set up an SMS number	
 
 						$message = $incident->incident_description;
 						
