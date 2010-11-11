@@ -806,13 +806,14 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `site_contact_page` TINYINT NOT NULL DEFAULT '1',                               -- field description
     `site_help_page` TINYINT NOT NULL DEFAULT '1',                                  -- field description
     `site_message` TEXT NOT NULL DEFAULT '',                                        -- field description
+    `site_copyright_statement` TEXT NULL DEFAULT NULL '',                           -- field description
     `allow_reports` tinyint(4) NOT NULL default '1',                                -- field description
     `allow_comments` tinyint(4) NOT NULL default '1',                               -- field description
     `allow_feed` tinyint(4) NOT NULL default '1',                                   -- field description
     `allow_stat_sharing` tinyint(4) NOT NULL default '1',                           -- field description
     `allow_clustering` tinyint(4) NOT NULL default '0',                             -- field description
-	`cache_pages` tinyint(4) NOT NULL DEFAULT '0',
-	`cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
+    `cache_pages` tinyint(4) NOT NULL DEFAULT '0',
+    `cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
     `default_map` varchar(100) NOT NULL DEFAULT 'google_normal',
     `default_map_all` varchar(20) NOT NULL default 'CC0000',                        -- field description
     `api_google` varchar(200) default NULL,                                         -- field description
@@ -827,7 +828,7 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `default_zoom` tinyint(4) NOT NULL default '10',                                -- field description
     `items_per_page` smallint(6) NOT NULL default '20',                             -- field description
     `items_per_page_admin` smallint(6) NOT NULL default '20',                       -- field description
-	`sms_provider` varchar(100) NULL DEFAULT NULL,
+    `sms_provider` varchar(100) NULL DEFAULT NULL,
     `sms_no1` varchar(100) default NULL,                                            -- field description
     `sms_no2` varchar(100) default NULL,                                            -- field description
     `sms_no3` varchar(100) default NULL,                                            -- field description

@@ -48,6 +48,7 @@ class Settings_Controller extends Admin_Controller
             'alerts_email' =>  '',
             'site_language' => '',
             'site_message' => '',
+            'site_copyright_statement' => '',
             //'site_help_page' => '',
             'site_contact_page' => '',
             'items_per_page' => '',
@@ -57,8 +58,8 @@ class Settings_Controller extends Admin_Controller
             'allow_feed' => '',
             'allow_stat_sharing' => '',
             'allow_clustering' => '',
-			'cache_pages' => '',
-			'cache_pages_lifetime' => '',
+            'cache_pages' => '',
+            'cache_pages_lifetime' => '',
             'default_map_all' => '',
             'google_analytics' => '',
             'twitter_hashtags' => '',
@@ -87,6 +88,7 @@ class Settings_Controller extends Admin_Controller
             $post->add_rules('site_email', 'email', 'length[4,100]');
             $post->add_rules('alerts_email', 'email', 'length[4,100]');
             //$post->add_rules('site_message', 'standard_text');
+            $post->add_rules('site_copyright_statement', 'required', 'length[4,600]');
             $post->add_rules('site_language','required', 'length[5, 5]');
             //$post->add_rules('site_help_page','required','between[0,1]');
             $post->add_rules('site_contact_page','required','between[0,1]');
@@ -97,8 +99,8 @@ class Settings_Controller extends Admin_Controller
             $post->add_rules('allow_feed','required','between[0,1]');
             $post->add_rules('allow_stat_sharing','required','between[0,1]');
             $post->add_rules('allow_clustering','required','between[0,1]');
-			$post->add_rules('cache_pages','required','between[0,1]');
-			$post->add_rules('cache_pages_lifetime','required','in_array[300,600,900,1800]');
+            $post->add_rules('cache_pages','required','between[0,1]');
+            $post->add_rules('cache_pages_lifetime','required','in_array[300,600,900,1800]');
             $post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
             $post->add_rules('google_analytics','length[0,20]');
             $post->add_rules('twitter_hashtags','length[0,500]');
@@ -114,6 +116,7 @@ class Settings_Controller extends Admin_Controller
                 $settings->site_email = $post->site_email;
                 $settings->alerts_email = $post->alerts_email;
                 $settings->site_message = $post->site_message;
+                $settings->site_copyright_statement = $post->site_copyright_statement;
                 $settings->site_language = $post->site_language;
                 //$settings->site_help_page = $post->site_help_page;
                 $settings->site_contact_page = $post->site_contact_page;
@@ -124,8 +127,8 @@ class Settings_Controller extends Admin_Controller
                 $settings->allow_feed = $post->allow_feed;
                 $settings->allow_stat_sharing = $post->allow_stat_sharing;
                 $settings->allow_clustering = $post->allow_clustering;
-				$settings->cache_pages = $post->cache_pages;
-				$settings->cache_pages_lifetime = $post->cache_pages_lifetime;
+                $settings->cache_pages = $post->cache_pages;
+                $settings->cache_pages_lifetime = $post->cache_pages_lifetime;
                 $settings->default_map_all = $post->default_map_all;
                 $settings->google_analytics = $post->google_analytics;
                 $settings->twitter_hashtags = $post->twitter_hashtags;
@@ -169,6 +172,7 @@ class Settings_Controller extends Admin_Controller
                 'site_email' => $settings->site_email,
                 'alerts_email' => $settings->alerts_email,
                 'site_message' => $settings->site_message,
+                'site_copyright_statement' => $settings->site_copyright_statement,
                 'site_language' => $settings->site_language,
                 //'site_help_page' => $settings->site_help_page,
                 'site_contact_page' => $settings->site_contact_page,
@@ -179,8 +183,8 @@ class Settings_Controller extends Admin_Controller
                 'allow_feed' => $settings->allow_feed,
                 'allow_stat_sharing' => $settings->allow_stat_sharing,
                 'allow_clustering' => $settings->allow_clustering,
-				'cache_pages' => $settings->cache_pages,
-				'cache_pages_lifetime' => $settings->cache_pages_lifetime,
+                'cache_pages' => $settings->cache_pages,
+                'cache_pages_lifetime' => $settings->cache_pages_lifetime,
                 'default_map_all' => $settings->default_map_all,
                 'google_analytics' => $settings->google_analytics,
                 'twitter_hashtags' => $settings->twitter_hashtags,
