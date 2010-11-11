@@ -11,3 +11,5 @@ CREATE TABLE  IF NOT EXISTS `api_settings` (
   `modification_date` datetime NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='For storing API logging settings';
+
+UPDATE `settings` SET `db_version` = '36' WHERE `id`=1 LIMIT 1;
