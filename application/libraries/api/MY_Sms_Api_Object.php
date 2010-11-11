@@ -71,13 +71,16 @@ class Sms_Api_Object extends Api_Object_Core {
      */
     private function _list_sms_msgs()
     {
-        $tems = ORM::factory('message')
+        $items = ORM::factory('message')
             ->where('service_id', '1')
             ->where('message_type','1')
             ->orderby('message_date','desc')
             ->find_all($this->list_limit);
 
         $json_categories = array();
+        
+        // Set the no. of records fetched
+        $this->record_count = $items->count();
         
         $i = 0;
 

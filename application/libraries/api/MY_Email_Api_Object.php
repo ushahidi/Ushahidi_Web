@@ -79,6 +79,9 @@ class Email_Api_Object extends Api_Object_Core {
             ->orderby('message_date','desc')
             ->find_all($this->list_limit);
 
+        // Set the no. of records fetched
+        $this->record_count = $items->count();
+        
         $json_categories = array();
         
         $i = 0;
@@ -218,7 +221,7 @@ class Email_Api_Object extends Api_Object_Core {
                     //email id doesn't exist in DB
                     //TODO i18nize the string
                     $this->error_messages .= "Email ID does not exist.";
-                    $this->ret_value = 1;
+                    $ret_value = 1;
 
                 }
             }

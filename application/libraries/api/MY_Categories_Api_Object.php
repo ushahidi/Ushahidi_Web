@@ -73,6 +73,9 @@ class Categories_Api_Object extends Api_Object_Core {
 
         $items = $this->db->query($this->query);
         
+        // Set the no. of records fetched
+        $this->record_count = $items->count();
+        
         $i = 0;
         
         $json_categories = array();
@@ -142,6 +145,10 @@ class Categories_Api_Object extends Api_Object_Core {
                 category_visible = 1 ORDER BY id DESC";
         
         $items = $this->db->query($this->query);
+        
+        // Set the no. of records fetched
+        $this->record_count = $items->count();
+        
         $i = 0;
         
         $this->replar = array(); //assists in proper xml generation

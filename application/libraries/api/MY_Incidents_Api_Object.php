@@ -283,6 +283,9 @@ class Incidents_Api_Object extends Api_Object_Core {
 
         $items = $this->db->query($this->query);
         
+        // Set the no. of records returned
+        $this->record_count = $items->count();
+        
         $i = 0;
         
         //No record found.

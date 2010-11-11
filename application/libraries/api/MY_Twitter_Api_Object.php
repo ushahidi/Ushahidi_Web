@@ -79,6 +79,9 @@ class Twitter_Api_Object extends Api_Object_Core {
             ->orderby('message_date','desc')
             ->find_all($this->list_limit);
 
+        // Set the no. of records fetched
+        $this->record_count = $items->count();
+        
         $json_categories = array();
         
         $i = 0;

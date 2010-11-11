@@ -29,13 +29,23 @@ abstract class Api_Object_Core {
     protected $query; // SQL query to be used to fetch the requested data
     protected $replar; // Assists in proper XML generation
     protected $by; // Mode by which to fetch the requested information
-    protected $id; // id of an item, usually from the URL
+    protected $id; // Id of an item, usually from the URL
+    protected $record_count; // No. of records fetched by the API object
+    private $api_settings;
     
     public function __construct($api_service)    
     {    
-        $this->db = new Database();        
-        $this->list_limit = 20;
+        $this->db = new Database();
+        
+        $this->api_settings = new Api_Settings_Model(1);
+
+        // Set the list limit
+        $this->list_limit = ((int) $this->api_settings->default_record_limit > 0)
+            ? $this->api_settings->default_record_limit
+            : (int) Kohana::config('settings.items_per_api_request');
+        
         $this->domain = url::base();
+        $this->record_count = 1;
         $this->table_prefix = Kohana::config('database.default.table_prefix');
         $this->api_service = $api_service;
         
@@ -108,6 +118,26 @@ abstract class Api_Object_Core {
     }
     
     /**
+     * Gets the number of records fetched by the API library. If the error message
+     * property has been set, a zero (0) will always be returned
+     *
+     * @return int
+     */
+    public function get_record_count()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'GET') // For get methods, more than one record may be returned
+        {
+            return ((int) $this->record_count > 0 AND ! isset($this->error_message)) 
+                ? $this->record_count 
+                : 0;
+        }
+        elseif ($_SERVER['REQUEST_METHOD'] == 'POST') // For post, only 1 record can be can worked on
+        {
+            return $this->record_count;
+        }
+    }
+    
+    /**
      * Sets the error message
      */    
     public function set_error_message($error_message)
@@ -139,14 +169,25 @@ abstract class Api_Object_Core {
      */
     protected function set_list_limit($limit)
     {
-        // TODO: Check the specified limit against the system wide list limit
+        // Check if the specified limit (@patam limit) is more than the specified system setting
+        if ((isset($this->api_settings->max_record_limit)))
+        {
+            if ((int)$limit > $this->api_settings->max_record_limit)
+            {
+                // Limit exceeds maximum therefore scale it down to the allowed maximum
+                $limit = $this->api_settings->max_record_limit;
+            }
+        }
         
+        // Check if the specified limit is 
         // Set the list limit
-        $this->list_limit = (is_numeric($limit) AND intval($limit) > 0) ? $limit : 20;
+        $this->list_limit = (is_numeric($limit) AND intval($limit) > 0) 
+            ? $limit 
+            : $this->list_limit;
     }
     
     /**
-     * Reponse
+     * Response
      * 
      * @param int ret_value
      * @param string response_type = XML or JSON
@@ -159,6 +200,9 @@ abstract class Api_Object_Core {
         $ret_json_or_xml = '';
         $response = array();
 
+        // Set the record count to zero where the value of @param ret_val <> 0
+        $this->record_count = ($ret_value != 0) ? 0 : 1;
+        
         if ($ret_value == 0)
         {
             $response = array(
