@@ -24,16 +24,14 @@
 	</div>
 	<div class="settings_holder">
 		<strong><u>Ushahidi <?php echo $release_version ?></u></strong>
+		<?php if (isset($critical)) echo "(<strong style=\"color:#FF0000\">".Kohana::lang('ui_admin.critical_upgrade')."</strong>)";?>
         <?php if (is_array($changelogs)) { ?>
 		<ul>
             <?php foreach ( $changelogs as $changelog ) { ?>
 			<li><?php print $changelog ?></li>
             <?php } ?>
 		</ul>
-        <?php } ?>
-        <p><?php print Kohana::lang('upgrade.upgrade_db_text_1'); ?> <?php print $db_version; ?> <?php print Kohana::lang('upgrade.upgrade_db_text_2');?> <?php print $current_db_version?>.</p>
-       	<p><?php print Kohana::lang('upgrade.upgrade_db_text_3'); ?></p>
-       	<p><?php print Kohana::lang('upgrade.upgrade_db_text_4'); ?></p>	       
+        <?php } ?>	       
 	</div>
 	
 	<div class="head">
@@ -54,7 +52,7 @@
 	</div>
 	<div class="settings_holder">
 		<p><?php echo Kohana::lang('upgrade.upgrade_text_1');?>.</p>
-		<p><?php echo Kohana::lang('upgrade.upgrade_text_2');?><img src="<?php echo url::base() ?>media/img/admin/icon-zip.gif" />&nbsp;<a href="<?php print $download;?>">Download (.zip)</a>
+		<p><?php echo Kohana::lang('upgrade.upgrade_text_2');?>
 .</p>
 		<p><?php echo Kohana::lang('upgrade.upgrade_text_3');?>:</p>
 		<ul>

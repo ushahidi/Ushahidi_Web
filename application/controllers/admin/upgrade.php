@@ -104,7 +104,7 @@ class Upgrade_Controller extends Admin_Controller {
 		$this->template->content->release_version = (is_object($this->release) == true) ? $this->release->version : "";
 		$this->template->content->changelogs = (is_object($this->release) == true) ? $this->release->changelog : array();
 		$this->template->content->download = (is_object($this->release) == true) ? $this->release->download : "";
-
+		$this->template->content->critical = (is_object($this->release) == true) ? $this->release->critical : "";
 	}
 		
 	public function status($step = 0) 
