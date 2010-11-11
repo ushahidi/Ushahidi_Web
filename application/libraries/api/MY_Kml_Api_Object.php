@@ -109,6 +109,9 @@ class Kml_Api_Object extends Api_Object_Core {
 
         $incidents = $incidents->payload->incidents;
         
+        // Set the no. of incidents fetched
+        $this->record_count = sizeof($incidents);
+        
         // Calculate times for relative altitudes (
         // This is the whole idea behind 3D maps)
 

@@ -104,6 +104,10 @@ class Countries_Api_Object extends Api_Object_Core {
             FROM `".$this->table_prefix."country` $where $limit";
 
         $items = $this->db->query($this->query);
+        
+        // Set the record count
+        $this->record_count = $items->count();
+        
         $i = 0;
 
         $json_countries = array();

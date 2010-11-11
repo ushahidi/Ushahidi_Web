@@ -28,64 +28,11 @@ class Report_Api_Object extends Api_Object_Core {
      */
     public function perform_task()
     {
-        $this->response_data  = $this->_report();
-    }
-    
-    /**
-     * Submit a report
-     *
-     * @param string response_type - JSON or XML
-     *
-     * @return Array
-     */
-    private function _report()
-    {
-        $reponse = array(); // Will hold the response data
-        
         $ret_value = $this->_submit();
         
-        $ret_json_or_xml = ''; // Will hold the XML/JSON string to return
-        
-        if ($ret_value == 0 )
-        {
-            $reponse = array(
-                "payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "true"
-                ),
-                "error" => $this->api_service->get_error_msg(0)
-            );
-            
-        } 
-        elseif ($ret_value == 1) 
-        {
-            $reponse = array(
-                "payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "false"
-                ),
-                "error" => $this->api_service->get_error_msg(003, '', $this->error_string)
-            );
-        } 
-        else 
-        {
-            $reponse = array(
-                "payload" => array(
-                    "domain" => $this->domain,
-                    "success" => "false"
-                ),
-                "error" => $this->api_service->get_error_msg(004)
-            );
-        }
-
-        // Generate the return JSON/XML string
-        $ret_json_or_xml = ($this->response_type == 'json')
-            ? $this->array_as_json($reponse)
-            : $this->array_as_xml($reponse, array());
-
-        return $ret_json_or_xml;
+        $this->response_data =  $this->response($ret_value, $this->error_string);
     }
-
+    
     /**
      * The actual reporting -
      *

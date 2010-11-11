@@ -311,6 +311,10 @@ class Private_Func_Api_Object extends Api_Object_Core {
             ORDER BY id DESC ;";
 
         $items = $this->db->query($this->query);
+        
+        // Set the no. of records fetched
+        $this->record_count = $items->count();
+        
         $i = 0;
 
         foreach ($items as $item)
@@ -339,7 +343,7 @@ class Private_Func_Api_Object extends Api_Object_Core {
                 "error" => $this->api_service->get_error_msg(0));
 
         // Set the response data
-        $this->response_data =($response_type == 'json')
+        $this->response_data =($this->response_type == 'json')
             ? $this->array_as_json($data)
             : $this->array_as_xml($data, $this->replar);
     }

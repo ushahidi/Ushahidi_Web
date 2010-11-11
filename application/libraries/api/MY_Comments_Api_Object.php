@@ -132,6 +132,9 @@ class Comments_Api_Object extends Api_Object_Core {
         $this->query = "SELECT * FROM comment $where $limit";
         
         $items = $this->db->query($this->query);
+
+        // Set the no. of records returned
+        $this->record_count = $items->count();
         
         if ($this->response_type == "xml") 
         {
