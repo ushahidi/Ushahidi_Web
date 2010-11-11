@@ -2032,6 +2032,24 @@ h4 span.highlight{
 		border-width:0;
 	}
 	
+/* Upgrade Process */
+#upgrade_log .upgrade_log_message{
+	font-size:14px;
+	font-weight:bold;
+	border:2px solid #ccc;
+	background-color:#eee;
+	padding:8px;
+	margin-bottom:5px;
+}
+	#upgrade_log .log_success{
+		background-color:#d8f1d8;
+		border-color: #a7d1a7;
+	}
+	#upgrade_log .log_error{
+		background-color:#FFD8D9;
+		border-color: #990000;
+	}
+
 
 /* Plugins/Addons/Themes */
 tr.addon_active td{

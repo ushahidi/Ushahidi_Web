@@ -40,6 +40,15 @@ class Messages_Controller extends Admin_Controller
         $service = ORM::factory('service', $service_id);
         $this->template->content->title = $service->service_name;
 
+        // Display Reply to Option?
+        $this->template->content->reply_to = TRUE;
+        $settings = ORM::factory('settings', 1);
+        if ($settings->sms_provider == '')
+        {
+            // Hide Reply to option
+			$this->template->content->reply_to = FALSE;
+        }
+
         // Is this an Inbox or Outbox Filter?
         if (!empty($_GET['type']))
         {
