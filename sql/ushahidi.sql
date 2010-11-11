@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 36
+-- version 38
 -- http://www.ushahidi.com
 
 
@@ -1381,6 +1381,7 @@ CREATE TABLE IF NOT EXISTS `plugin` (
   `plugin_name` varchar(100) NOT NULL,
   `plugin_url` varchar(250) NULL,
   `plugin_description` text NULL,
+  `plugin_priority` tinyint(4) DEFAULT '0',
   `plugin_active` tinyint(4) DEFAULT '0',
   `plugin_installed` tinyint(4) DEFAULT '0',
   PRIMARY KEY  (`id`),
@@ -1553,4 +1554,4 @@ ALTER TABLE `user_tokens`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0b11' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '36' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '38' WHERE `id`=1 LIMIT 1;
