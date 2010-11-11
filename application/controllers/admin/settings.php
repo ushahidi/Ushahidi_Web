@@ -88,7 +88,7 @@ class Settings_Controller extends Admin_Controller
             $post->add_rules('site_email', 'email', 'length[4,100]');
             $post->add_rules('alerts_email', 'email', 'length[4,100]');
             //$post->add_rules('site_message', 'standard_text');
-            $post->add_rules('site_copyright_statement', 'required', 'length[4,600]');
+            $post->add_rules('site_copyright_statement', 'length[4,600]');
             $post->add_rules('site_language','required', 'length[5, 5]');
             //$post->add_rules('site_help_page','required','between[0,1]');
             $post->add_rules('site_contact_page','required','between[0,1]');
@@ -436,6 +436,10 @@ class Settings_Controller extends Admin_Controller
                 $settings->sms_no3 = $post->sms_no3;
                 $settings->date_modify = date("Y-m-d H:i:s",time());
                 $settings->save();
+
+				// Delete Settings Cache
+                $this->cache->delete('settings');
+                $this->cache->delete_tag('settings');
 
                 // Everything is A-Okay!
                 $form_saved = TRUE;

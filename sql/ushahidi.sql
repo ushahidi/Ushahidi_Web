@@ -806,7 +806,7 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `site_contact_page` TINYINT NOT NULL DEFAULT '1',                               -- field description
     `site_help_page` TINYINT NOT NULL DEFAULT '1',                                  -- field description
     `site_message` TEXT NOT NULL DEFAULT '',                                        -- field description
-    `site_copyright_statement` TEXT NULL DEFAULT NULL '',                           -- field description
+    `site_copyright_statement` TEXT DEFAULT NULL,                           -- field description
     `allow_reports` tinyint(4) NOT NULL default '1',                                -- field description
     `allow_comments` tinyint(4) NOT NULL default '1',                               -- field description
     `allow_feed` tinyint(4) NOT NULL default '1',                                   -- field description
