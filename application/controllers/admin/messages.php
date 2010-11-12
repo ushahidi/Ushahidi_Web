@@ -42,8 +42,7 @@ class Messages_Controller extends Admin_Controller
 
         // Display Reply to Option?
         $this->template->content->reply_to = TRUE;
-        $settings = ORM::factory('settings', 1);
-        if ($settings->sms_provider == '')
+        if ( ! Kohana::config("settings.sms_provider"))
         {
             // Hide Reply to option
 			$this->template->content->reply_to = FALSE;

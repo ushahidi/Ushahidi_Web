@@ -131,6 +131,7 @@
 		'laconica_site' => 'Laconica Site ',
 		'language' => 'Site Language',
 		'message' => 'Site Message',
+		'copyright_statement' => 'Site Copyright Statement',
 		'name' => 'Site Name',
 		'share_site_stats' => 'Enable Statistics (Stored on Ushahidi\'s server)',
 		'tagline' => 'Site Tagline',

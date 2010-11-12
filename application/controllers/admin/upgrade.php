@@ -104,7 +104,7 @@ class Upgrade_Controller extends Admin_Controller {
 		$this->template->content->release_version = (is_object($this->release) == true) ? $this->release->version : "";
 		$this->template->content->changelogs = (is_object($this->release) == true) ? $this->release->changelog : array();
 		$this->template->content->download = (is_object($this->release) == true) ? $this->release->download : "";
-
+		$this->template->content->critical = (is_object($this->release) == true) ? $this->release->critical : "";
 	}
 		
 	public function status($step = 0) 
@@ -240,7 +240,7 @@ class Upgrade_Controller extends Admin_Controller {
 		{
 			$this->upgrade->remove_recursively($working_dir);
 			$this->upgrade->logger("UPGRADE SUCCESSFUL");
-			echo json_encode(array("status"=>"success", "message"=>"UPGRADE SUCCESSFUL <a href=\"".url::site(). "admin/upgrade/logfile?f=".$this->session->get('upgrade_session').".txt"."\" target=\"_blank\">Log File</a>"));
+			echo json_encode(array("status"=>"success", "message"=>"UPGRADE SUCCESSFUL. View <a href=\"".url::site(). "admin/upgrade/logfile?f=".$this->session->get('upgrade_session').".txt"."\" target=\"_blank\">Log File</a>"));
 			
 			$this->session->delete('upgrade_session');
 		}

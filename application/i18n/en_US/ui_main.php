@@ -70,7 +70,7 @@
 	'configuration_saved' => 'Your Settings Have Been Saved!',
 	'configure' => 'Configure',
 	'contact' => 'Contact Us',
-	'copyright' => 'Copyright © 2010 Ushahidi.com. All Rights Reserved.',
+	'copyright' => 'Copyright ©',
 	'create' => 'Create',
 	'create_edit' => 'Create/Edit',
 	'create_new' => 'Create New',

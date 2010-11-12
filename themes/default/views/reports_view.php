@@ -147,7 +147,7 @@
 			  <div class="rb_report">
   			  <h5><a href="<?php echo url::site(); ?>reports/view/<?php echo $neighbor->id; ?>"><?php echo $neighbor->incident_title; ?></a></h5>
   			  <p class="r_date r-3 bottom-cap"><?php echo date('H:i M d, Y', strtotime($neighbor->incident_date)); ?></p>
-  			  <p class="r_location"><?php echo $neighbor->location->location_name; ?></p>
+  			  <p class="r_location"><?php echo $neighbor->location_name.", ".round($neighbor->distance, 2); ?> Kms</p>
   			</div>
       <?php } ?>
 		</div>

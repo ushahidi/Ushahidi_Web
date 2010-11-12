@@ -6,11 +6,11 @@
  * LICENSE: This source file is subject to LGPL license 
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
- * @package    Ushahidi - http://source.ushahididev.com
- * @module     Alerts Controller  
+ * @author	   Ushahidi Team <team@ushahidi.com> 
+ * @package	   Ushahidi - http://source.ushahididev.com
+ * @module	   Alerts Controller  
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 */
 
 class S_Alerts_Controller extends Controller {
@@ -21,15 +21,15 @@ class S_Alerts_Controller extends Controller {
 	protected $cache;
 	
 	function __construct()
-    {
-        parent::__construct();
+	{
+		parent::__construct();
 
 		// Load cache
 		$this->cache = new Cache;
 		
 		// *************************************
 		// ** SAFEGUARD DUPLICATE SEND-OUTS **
-		// Create A 10 Minute SEND LOCK
+		// Create A 15 Minute SEND LOCK
 		// This lock is released at the end of execution
 		// Or expires automatically
 		$alerts_lock = $this->cache->get("alerts_lock");
@@ -37,12 +37,12 @@ class S_Alerts_Controller extends Controller {
 		{
 			// Lock doesn't exist
 			$timestamp = time();
-			$this->cache->set("alerts_lock", $timestamp, array("alerts"), 600);
+			$this->cache->set("alerts_lock", $timestamp, array("alerts"), 900);
 		}
 		else
 		{
 			// Lock Exists - End
-			exit("Other process is running - waiting 10 minutes");
+			exit("Other process is running - waiting 15 minutes!");
 		}
 		// *************************************
 	}
@@ -56,12 +56,13 @@ class S_Alerts_Controller extends Controller {
 	{
 		$settings = kohana::config('settings');
 		$site_name = $settings['site_name'];
-		$alerts_email = $settings['alerts_email'];
+		$alerts_email = ($settings['alerts_email']) ? $settings['alerts_email']
+			: $settings['site_email'];
 		$unsubscribe_message = Kohana::lang('alerts.unsubscribe')
 								.url::site().'alerts/unsubscribe/';
 
-                $database_settings = kohana::config('database'); //around line 33
-                $this->table_prefix = $database_settings['default']['table_prefix']; //around line 34
+				$database_settings = kohana::config('database'); //around line 33
+				$this->table_prefix = $database_settings['default']['table_prefix']; //around line 34
 
 		$settings = NULL;
 		$sms_from = NULL;
@@ -78,14 +79,31 @@ class S_Alerts_Controller extends Controller {
 		  - 2, Incident has been tagged as sent. No need to resend again
 		*/
 		$incidents = $db->query("SELECT i.id, incident_title, 
-								 incident_description, incident_verified, 
-								 l.latitude, l.longitude, a.alert_id, a.incident_id
-								 FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
-								 LEFT OUTER JOIN ".$this->table_prefix."alert_sent AS a ON i.id = a.incident_id WHERE
-								 i.incident_active=1 AND i.incident_alert_status = 1 ");
+			incident_description, incident_verified, 
+			l.latitude, l.longitude, a.alert_id, a.incident_id
+			FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
+			LEFT OUTER JOIN ".$this->table_prefix."alert_sent AS a ON i.id = a.incident_id WHERE
+			i.incident_active=1 AND i.incident_alert_status = 1 ");
 		
 		foreach ($incidents as $incident)
 		{
+			// ** Pre-Formatting Message ** //
+			// Convert HTML to Text
+			$incident_description = $incident->incident_description;
+			$html2text = new Html2Text($incident_description);
+			$incident_description = $html2text->get_text();
+
+			// EMAIL MESSAGE
+			$email_message = $incident_description;
+
+			// SMS MESSAGE
+			$sms_message = $incident_description;
+			// Remove line breaks
+			$sms_message = str_replace("\n", " ", $sms_message);
+			// Shorten to text message size
+			$sms_message = text::limit_chars($sms_message, 150, "...");
+			
+			
 			
 			$latitude = (double) $incident->latitude;
 			$longitude = (double) $incident->longitude;
@@ -113,32 +131,30 @@ class S_Alerts_Controller extends Controller {
 				{
 					if ($alert_type == 1) // SMS alertee
 					{
-						if ($settings == null)
-						{
-							$settings = ORM::factory('settings', 1);
-							if ($settings->loaded == true)
-							{
-								// Get SMS Numbers
-								if (!empty($settings->sms_no3))
-									$sms_from = $settings->sms_no3;
-								elseif (!empty($settings->sms_no2))
-									$sms_from = $settings->sms_no2;
-								elseif (!empty($settings->sms_no1))
-									$sms_from = $settings->sms_no1;
-								else
-									$sms_from = "000";      // Admin needs to set up an SMS number
-							}
-						}	
-
-						$message = $incident->incident_description;
+						// Get SMS Numbers
+						if (Kohana::config("settings.sms_no3"))
+							$sms_from = Kohana::config("settings.sms_no3");
+						elseif (Kohana::config("settings.sms_no2"))
+							$sms_from = Kohana::config("settings.sms_no2");
+						elseif (Kohana::config("settings.sms_no1"))
+							$sms_from = Kohana::config("settings.sms_no1");
+						else
+							$sms_from = "12053705050";		// Admin needs to set up an SMS number	
 						
-						if (sms::send($alertee->alert_recipient, $sms_from, $message) === true)
+						
+						
+						if ($response = sms::send($alertee->alert_recipient, $sms_from, $sms_message) === true)
 						{
 							$alert = ORM::factory('alert_sent');
 							$alert->alert_id = $alertee->id;
 							$alert->incident_id = $incident->id;
 							$alert->alert_date = date("Y-m-d H:i:s");
 							$alert->save();
+						}
+						else
+						{
+							// The gateway couldn't send for some reason
+							// in future we'll keep a record of this
 						}
 					}
 
@@ -149,11 +165,11 @@ class S_Alerts_Controller extends Controller {
 							$from[] = $alerts_email;
 							$from[] = $site_name;
 						$subject = "[$site_name] ".$incident->incident_title;
-						$message = $incident->incident_description
-									."<p>".$unsubscribe_message
-									.$alertee->alert_code."</p>";
+						$message = $email_message
+									."\n\n".$unsubscribe_message
+									.$alertee->alert_code."\n";
 
-						if (email::send($to, $from, $subject, $message, TRUE) == 1)
+						if (email::send($to, $from, $subject, $message, FALSE) == 1)
 						{
 							$alert = ORM::factory('alert_sent');
 							$alert->alert_id = $alertee->id;
