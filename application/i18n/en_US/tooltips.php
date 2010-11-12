@@ -35,6 +35,7 @@
 	'settings_server_type' => 'This is required to retrieve e-mails from the host server',
 	'settings_server_username' => 'This is the email address that receives reports',
 	'settings_share_site_stats' => 'Hit statistics are stored on a server controlled by Ushahidi. By enabling this option, you gain access to hit statistics directly in your admin panel. By disabling it, you will stop collecting statistics and will be unable to recover traffic stats collected while this is turned off.',
+	'settings_site_copyright_statement' => 'It is always a good idea to claim copyright on your work. For help in determining the right license for your needs, visit http://creativecommons.org/choose/.',
 	'settings_site_email' => 'This is the email address that will receive email reports and messages from the contact form.',
 	'settings_site_message' => 'This is text that will appear above the map on the homepage. This is useful for giving important information to visitors on the site. To remove the box, simply delete the message here.',
 	'settings_site_name' => 'This is the name of the site that appears at the top of the main site.',

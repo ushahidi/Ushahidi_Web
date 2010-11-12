@@ -1,5 +1,6 @@
 <?php
 	$lang = array(
+	'comments_form_error' => 'error!',
 	'custom_field' => array(
 		'values' => 'Please enter a valid value for one of your custom form items',
 	),

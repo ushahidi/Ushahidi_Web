@@ -37,6 +37,7 @@
 	'country_not_found' => 'Country Not Found',
 	'created_edited' => 'created/edited',
 	'create_report' => 'Create a Report',
+	'critical_upgrade' => 'Critical Upgrade',
 	'daily' => 'Daily',
 	'dashboard' => 'Dashboard',
 	'database' => 'database',
