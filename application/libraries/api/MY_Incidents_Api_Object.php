@@ -364,8 +364,13 @@ class Incidents_Api_Object extends Api_Object_Core {
                 
                 foreach ($media_items as $media_item)
                 {
+	                if ($media_item->mediatype != 1)
+					{
+                        $upload_path = "";
+                    }
+
                     if($this->response_type == 'json')
-                    {
+                    {	
                         $json_report_media[] = array(
                             "id" => $media_item->mediaid,
                             "type" => $media_item->mediatype,
