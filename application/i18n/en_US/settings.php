@@ -16,6 +16,11 @@
 		'between' => 'The stat sharing field does not appear to contain a valid value?',
 		'required' => 'The stat sharing field is required.',
 	),
+	'api' => array(
+		'default_record_limit' => 'Default no. of records to be fetched per API request',
+		'maximum_record_limit' => 'Maximum no. of records to be fetched per API request',
+		'maximum_requests_per_ip_address' => 'Maximum no. of API requests per IP address',
+	),
 	'api_akismet' => array(
 		'alpha_numeric' => 'The Akismet field does not appear to contain a valid value?',
 		'length' => 'The Akismet field does not appear to contain a valid value?',
@@ -110,6 +115,7 @@
 		'api_akismet' => 'Akismet Key',
 		'cache_pages' => 'Cache Pages',
 		'cache_pages_lifetime' => 'Cache Pages Lifetime',
+		'copyright_statement' => 'Site Copyright Statement',
 		'default_category_colors' => 'Default Color For All Categories',
 		'display_contact_page' => 'Display Contact Page',
 		'display_howtohelp_page' => 'Display "How to Help" Page',
@@ -125,7 +131,6 @@
 		'laconica_site' => 'Laconica Site ',
 		'language' => 'Site Language',
 		'message' => 'Site Message',
-		'copyright_statement' => 'Site Copyright Statement',
 		'name' => 'Site Name',
 		'share_site_stats' => 'Enable Statistics (Stored on Ushahidi\'s server)',
 		'tagline' => 'Site Tagline',
