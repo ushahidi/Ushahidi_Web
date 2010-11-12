@@ -214,7 +214,7 @@
 			error_reporting($this->error_level);
 			return false;
 		}
-		
+
 		// Set FTP Server
 		if ( ! $this->ftp->SetServer($this->ftp_server))
 		{
@@ -256,6 +256,12 @@
 		$absolute_parts = explode('/', DOCROOT);
 		$ushahidi_folder = end($absolute_parts);
 		$ftp_parts = $this->ftp->nlist();
+		
+		// Are we already in the Ushahidi directory?
+		if ($this->ftp->is_exists("application/config/config.php"))
+		{
+			return "./";
+		}
 		
 		// We'll cycle through both to find out which
 		// part of the DOCROOT we're in
