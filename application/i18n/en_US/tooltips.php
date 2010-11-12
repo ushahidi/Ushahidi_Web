@@ -38,7 +38,6 @@
 	'settings_site_copyright_statement' => 'It is always a good idea to claim copyright on your work. For help in determining the right license for your needs, visit http://creativecommons.org/choose/.',
 	'settings_site_email' => 'This is the email address that will receive email reports and messages from the contact form.',
 	'settings_site_message' => 'This is text that will appear above the map on the homepage. This is useful for giving important information to visitors on the site. To remove the box, simply delete the message here.',
-	'settings_site_copyright_statement' => 'It is always a good idea to claim copyright on your work. For help in determining the right license for your needs, visit http://creativecommons.org/choose/.',
 	'settings_site_name' => 'This is the name of the site that appears at the top of the main site.',
 	'settings_site_tagline' => 'In a few words, explain what this site is about.',
 	'settings_twitter_configuration' => 'Set the twitter hashtag that will be used on a tweet',
