@@ -255,7 +255,7 @@ class Incidents_Api_Object extends Api_Object_Core {
         $json_report_media = array();
         $json_report_categories = array();
         $json_incident_media = array();
-        
+        $upload_path = str_replace("media/uploads/", "", Kohana::config('upload.relative_directory')."/");        
         //XML elements
         $xml = new XmlWriter();
         $xml->openMemory();
@@ -369,8 +369,8 @@ class Incidents_Api_Object extends Api_Object_Core {
                         $json_report_media[] = array(
                             "id" => $media_item->mediaid,
                             "type" => $media_item->mediatype,
-                            "link" => $media_item->medialink,
-                            "thumb" => $media_item->mediathumb,
+                            "link" => $upload_path.$media_item->medialink,
+                            "thumb" => $upload_path.$media_item->mediathumb,
                         );
                     } 
                     else 
@@ -397,13 +397,13 @@ class Incidents_Api_Object extends Api_Object_Core {
                         if( $media_item->medialink != "" ) 
                         {
                             $xml->writeElement('link',
-                                $media_item->medialink);
+                                $upload_path.$media_item->medialink);
                         }
 
                         if( $media_item->mediathumb != "" ) 
                         {
                             $xml->writeElement('thumb',
-                                $media_item->mediathumb);
+                                $upload_path.$media_item->mediathumb);
                         }
 
                         $xml->endElement();
