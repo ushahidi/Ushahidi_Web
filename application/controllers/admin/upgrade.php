@@ -81,9 +81,14 @@ class Upgrade_Controller extends Admin_Controller {
 				$this->template->js->backup = $post->chk_db_backup_box;
 				$this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
 				
-				$this->upgrade->ftp_server = $post->ftp_server;
-				$this->upgrade->ftp_user_name = $post->ftp_user_name;
-				$this->upgrade->ftp_user_pass = $post->ftp_user_pass;
+				$this->session->set('ftp_server', $post->ftp_server);
+				$this->session->set('ftp_user_name', $post->ftp_user_name);
+				$this->session->set('ftp_user_pass', $post->ftp_user_pass);
+				
+				$settings = ORM::factory("settings")->find(1);
+				$settings->ftp_server = $post->ftp_server;
+				$settings->ftp_user_name = $post->ftp_user_name;
+				$settings->save();
 				
 				// Log file location
 				$this->template->js->log_file = url::site(). "admin/upgrade/logfile?f=".$this->session->get('upgrade_session').".txt";

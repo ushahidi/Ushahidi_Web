@@ -33,28 +33,6 @@
 		{
 			$this->session->set('upgrade_session', date("Y_m_d-H_i_s"));
 		}
-		
-		$settings = ORM::factory("settings")->find(1);
-		if ( ! $this->session->get('ftp_server')
-			AND $this->ftp_server)
-		{
-			$this->session->set('ftp_server', $this->ftp_server);
-			$settings->ftp_server = $this->ftp_server;
-		}
-		
-		if ( ! $this->session->get('ftp_user_name')
-			AND $this->ftp_server)
-		{
-			$this->session->set('ftp_user_name', $this->ftp_user_name);
-			$settings->ftp_server = $this->ftp_server;
-		}
-		
-		if ( ! $this->session->get('ftp_user_pass')
-			AND $this->ftp_server)
-		{
-			$this->session->set('ftp_user_pass', $this->ftp_user_pass);
-		}
-		$settings->save();
 	}
 	
 	/**
