@@ -59,16 +59,16 @@ class Api_Controller extends Admin_Controller {
 
             // Add validation rules
             // All values must be positive values; no (-ve) values are allowed
-            $post->add_rules('api_default_record_limit', 'required', 'numeric', 'length[1,20]');
-            $post->add_rules('api_max_record_limit', 'numeric', 'length[1,20]');
-            $post->add_rules('api_max_requests_per_ip_address', 'numeric', 'length[1,20]');
-            $post->add_rules('api_max_requests_quota_basis', 'numeric', 'between[0,2]');
+            $post->add_rules('api_default_record_limit', 'required', 'numeric', 'length[1,20]')
+                 ->add_rules('api_max_record_limit', 'numeric', 'length[0,20]')
+                 ->add_rules('api_max_requests_per_ip_address', 'depends_on[api_max_requests_quota_basis]', 'numeric', 'length[0,20]')
+                 ->add_rules('api_max_requests_quota_basis', 'depends_on[api_max_requests_per_ip_address]', 'numeric', 'between[0,1]');
 
             // Test to see if rule checks have beens satisfied
             if ($post->validate() AND $post->action == 's')
             {
                 // Check if the maximum record limit is less than the default
-                if (isset($post->api_max_record_limit))
+                if (isset($post->api_max_record_limit) AND strlen($post->api_max_record_limit > 0))
                 {
                     if ((int) $post->api_default_record_limit > (int) $post->api_max_record_limit)
                     {
@@ -143,6 +143,7 @@ class Api_Controller extends Admin_Controller {
         
         // API request quota options (per day, month)
         $this->template->content->max_requests_quota_array = array(
+            '' => '-- Select --',
             '0' => Kohana::lang('ui_main.day'), 
             '1' => Kohana::lang('ui_main.month')
         );
