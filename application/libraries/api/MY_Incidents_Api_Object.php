@@ -328,7 +328,7 @@ class Incidents_Api_Object extends Api_Object_Core {
             {
                 if ($this->response_type == 'json')
                 {
-                    $json_reports_categories[] = array(
+                    $json_report_categories[] = array(
                             "category"=> array(
                                 "id" => $category_item->cid,
                                 "title" => $category_item->categorytitle
@@ -366,10 +366,11 @@ class Incidents_Api_Object extends Api_Object_Core {
                 {
                     if($this->response_type == 'json')
                     {
-                        $json_incident_media[] = array(
+                        $json_report_media[] = array(
                             "id" => $media_item->mediaid,
                             "type" => $media_item->mediatype,
-                            "link" => $media_item->medialink
+                            "link" => $media_item->medialink,
+                            "thumb" => $media_item->mediathumb,
                         );
                     } 
                     else 
