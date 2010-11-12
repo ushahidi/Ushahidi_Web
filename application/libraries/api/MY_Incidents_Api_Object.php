@@ -321,14 +321,14 @@ class Incidents_Api_Object extends Api_Object_Core {
                 $this->table_prefix."incident_category AS ic ON " .
                 "ic.category_id = c.id WHERE ic.incident_id =".
                 $item->incidentid;
-            
+
             $category_items = $this->db->query( $this->query );
-            
+            $json_report_categories[$item->incidentid] = array();           
             foreach ($category_items as $category_item)
             {
                 if ($this->response_type == 'json')
                 {
-                    $json_report_categories[] = array(
+                    $json_report_categories[$item->incidentid][] = array(
                             "category"=> array(
                                 "id" => $category_item->cid,
                                 "title" => $category_item->categorytitle
@@ -357,6 +357,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                 "WHERE i.id =". $item->incidentid;
 
             $media_items = $this->db->query($this->query);
+            $json_report_media[$item->incidentid] = array();
 
             if (count($media_items) > 0)
             {
@@ -371,7 +372,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 
                     if($this->response_type == 'json')
                     {	
-                        $json_report_media[] = array(
+                        $json_report_media[$item->incidentid] = array(
                             "id" => $media_item->mediaid,
                             "type" => $media_item->mediatype,
                             "link" => $upload_path.$media_item->medialink,
@@ -426,8 +427,8 @@ class Incidents_Api_Object extends Api_Object_Core {
             {
                 $json_reports[] = array(
                     "incident" => $item, 
-                    "categories" => $json_report_categories, 
-                    "media" => $json_report_media
+                    "categories" => $json_report_categories[$item->incidentid], 
+                    "media" => $json_report_media[$item->incidentid]
                 );
             }
         }
