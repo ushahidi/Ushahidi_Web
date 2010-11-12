@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 38
+-- version 39
 -- http://www.ushahidi.com
 
 
@@ -846,6 +846,8 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `email_host` VARCHAR(100) NOT NULL ,                                            -- field description
     `email_servertype` VARCHAR(100) NOT NULL ,                                      -- field description
     `email_ssl` INT(5) NOT NULL,                                                    -- field description
+	`ftp_server` varchar(100) NULL DEFAULT NULL,
+	`ftp_user_name` varchar(100) NULL DEFAULT NULL,
     `alerts_email` VARCHAR(120) NOT NULL,                                           -- field description
     `db_version` varchar(20) default NULL,                                          -- field description
     `ushahidi_version` varchar(20) default NULL,                                    -- field description
@@ -1553,5 +1555,5 @@ ALTER TABLE `user_tokens`
 * Version information for table `settings`
 * 
 */
-UPDATE `settings` SET `ushahidi_version` = '2.0b11' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '38' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `ushahidi_version` = '2.0' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '39' WHERE `id`=1 LIMIT 1;

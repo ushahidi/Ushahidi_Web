@@ -153,40 +153,45 @@ class Admin_Controller extends Template_Controller
      *
      * @return boolean
      */
-    private function _new_or_not($release_version=NULL,
-            $version_ushahidi=NULL )
-    {
-        if ($release_version AND $version_ushahidi)
-	    {
-		    // Split version numbers xx.xx.xx
-		    $remote_version = explode(".", $release_version);
-		    $local_version = explode(".", $version_ushahidi);
+	private function _new_or_not($release_version=NULL,
+			$version_ushahidi=NULL )
+	{
+		if ($release_version AND $version_ushahidi)
+		{
+			// Split version numbers xx.xx.xx
+			$remote_version = explode(".", $release_version);
+			$local_version = explode(".", $version_ushahidi);
+		
+			// Check first part .. if its the same, move on to next part
+			if (isset($remote_version[0]) AND isset($local_version[0])
+				AND (int) $remote_version[0] > (int) $local_version[0])
+			{
+				return true;
+			}
 
-		    // Check first part .. if its the same, move on to next part
-		    if (isset($remote_version[0]) AND isset($local_version[0])
-			    AND (int) $remote_version[0] > (int) $local_version[0])
-		    {
-			    return true;
-		    }
-
-		    // Check second part .. if its the same, move on to next part
-		    if (isset($remote_version[1]) AND isset($local_version[1])
-			    AND (int) $remote_version[1] > (int) $local_version[1])
-		    {
-			    return true;
-		    }
-
-		    // Check third part
-		    if (isset($remote_version[2]) AND isset($local_version[2])
-			    AND (int) $remote_version[2] > (int) $local_version[2])
-		    {
-			    return true;
-		    }
-
+			// Check second part .. if its the same, move on to next part
+			if (isset($remote_version[1]) AND isset($local_version[1])
+				AND (int) $remote_version[1] > (int) $local_version[1])
+			{
+				return true;
+			}
+			
+			// Check third part
+			if (isset($remote_version[2]) AND (int) $remote_version[2] > 0)
+			{
+				if ( ! isset($local_version[2]))
+				{
+					return true;
+				}
+				elseif( (int) $remote_version[2] > (int) $local_version[2] )
+				{
+					return true;
+				}
+			}
 		}
 
-        return false;
-    }
+		return false;
+	}
 
 
 } // End Admin
