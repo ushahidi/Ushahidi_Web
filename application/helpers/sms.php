@@ -38,9 +38,11 @@ class sms_Core
 				
 				// 3. Does this plugin have the SMS Library in place?
 				$class = ucfirst($provider).'_SMS';
-				if (Kohana::find_file('libraries', $provider.'_SMS'))
+				
+				$path = sms::find_provider($provider);
+				
+				if ($path)
 				{ // File Exists
-					
 					$sender = new $class;
 					// 4. Does the send method exist in this class?
 					if (method_exists($sender, 'send'))
@@ -166,5 +168,32 @@ class sms_Core
 		}
 		
 		return TRUE;
+	}
+	
+	/**
+	 * Using this function because someone somewhere will name this file wrong!!!
+	 */
+	public static function find_provider($provider)
+	{
+		if ($path = Kohana::find_file('libraries', $provider.'_sms'))
+		{ // provider_sms
+			return $path;
+		}
+		elseif ($path = Kohana::find_file('libraries', $provider.'_SMS'))
+		{ // provider_SMS
+			return $path;
+		}
+		elseif ($path = Kohana::find_file('libraries', ucfirst($provider).'_sms'))
+		{ // Provider_sms
+			return $path;
+		}
+		elseif ($path = Kohana::find_file('libraries', ucfirst($provider).'_SMS'))
+		{ // Provider_SMS
+			return $path;
+		}
+		else
+		{
+			return false;
+		}	
 	}
 }
