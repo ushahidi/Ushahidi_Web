@@ -16,7 +16,7 @@
  */
 ?>
 		var map;
-		jQuery(function() {
+		jQuery(window).load(function() {
 			var moved=false;
 
 			/*
@@ -97,40 +97,8 @@
 			
 			// display the map centered on a latitude and longitude (Google zoom levels)
 
-			map.setCenter(myPoint, 10);			
-			
-			function onPopupClose(evt) {
-	            selectControl.unselect(selectedFeature);
-	        }
-	        function onFeatureSelect(feature) {
-	            selectedFeature = feature;
-				// Lon/Lat Spherical Mercator
-				zoom_point = feature.geometry.getBounds().getCenterLonLat();
-				lon = zoom_point.lon;
-				lat = zoom_point.lat;
-	            var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+feature.attributes.name + "</li></ul></div>";
-				content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
-				content = content + "</div>";
-				// Since KML is user-generated, do naive protection against
-	            // Javascript.
-	            if (content.search("<script") != -1) {
-	                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
-	            }
-	            popup = new OpenLayers.Popup.FramedCloud("chicken", 
-	                                     feature.geometry.getBounds().getCenterLonLat(),
-	                                     new OpenLayers.Size(100,100),
-	                                     content,
-	                                     null, true, onPopupClose);
-	            feature.popup = popup;
-	            map.addPopup(popup);
-	        }
-	        function onFeatureUnselect(feature) {
-	            map.removePopup(feature.popup);
-	            feature.popup.destroy();
-	            feature.popup = null;
-	        }
-			
-			
+			map.setCenter(myPoint, 10);
+						
 			/*
 			Add Comments JS
 			*/			
@@ -223,6 +191,39 @@
 			});
 
 		});
+		
+		function onPopupClose(evt) {
+            selectControl.unselect(selectedFeature);
+        }
+
+        function onFeatureSelect(feature) {
+            selectedFeature = feature;
+			// Lon/Lat Spherical Mercator
+			zoom_point = feature.geometry.getBounds().getCenterLonLat();
+			lon = zoom_point.lon;
+			lat = zoom_point.lat;
+            var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+feature.attributes.name + "</li></ul></div>";
+			content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
+			content = content + "</div>";
+			// Since KML is user-generated, do naive protection against
+            // Javascript.
+            if (content.search("<script") != -1) {
+                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
+            }
+            popup = new OpenLayers.Popup.FramedCloud("chicken", 
+                                     feature.geometry.getBounds().getCenterLonLat(),
+                                     new OpenLayers.Size(100,100),
+                                     content,
+                                     null, true, onPopupClose);
+            feature.popup = popup;
+            map.addPopup(popup);
+        }
+
+        function onFeatureUnselect(feature) {
+            map.removePopup(feature.popup);
+            feature.popup.destroy();
+            feature.popup = null;
+        }
 		
 		function zoomToSelectedFeature(lon, lat, zoomfactor){
 			var lonlat = new OpenLayers.LonLat(lon,lat);
