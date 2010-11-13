@@ -16,6 +16,7 @@
  */
 ?>
 		var map;
+		var myPoint;
 		jQuery(window).load(function() {
 			var moved=false;
 
@@ -92,13 +93,15 @@
 			selectControl.activate();
 
 			// create a lat/lon object
-			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+			myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
 			myPoint.transform(proj_4326, map.getProjectionObject());
 			
 			// display the map centered on a latitude and longitude (Google zoom levels)
 
 			map.setCenter(myPoint, 10);
-						
+		});
+		
+		$(document).ready(function(){
 			/*
 			Add Comments JS
 			*/			
@@ -189,7 +192,6 @@
 				
 				return false;
 			});
-
 		});
 		
 		function onPopupClose(evt) {
