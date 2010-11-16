@@ -372,7 +372,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 
                     if($this->response_type == 'json')
                     {	
-                        $json_report_media[$item->incidentid] = array(
+                        $json_report_media[$item->incidentid][] = array(
                             "id" => $media_item->mediaid,
                             "type" => $media_item->mediatype,
                             "link" => $upload_path.$media_item->medialink,
