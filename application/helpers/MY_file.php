@@ -14,7 +14,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 class file extends file_Core {
-	
+
 	/**
 	 * Case Insensitive file_exists
 	 *
@@ -25,7 +25,9 @@ class file extends file_Core {
 	{
 		$path=pathinfo($file);
 		$dir=$path['dirname']!='' ? $path['dirname'] : '.' ;
-		return in_array(strtolower($file),array_map('strtolower',glob($path['dirname'].'/*')))
+		$path_array = glob($path['dirname'].'/*');
+		$path_array = (is_array($path_array)) ? $path_array : array();
+		return in_array(strtolower($file),array_map('strtolower',$path_array))
 		 	? true : false;
 	}
 }
