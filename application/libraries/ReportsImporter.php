@@ -76,8 +76,10 @@ class ReportsImporter {
 		if(isset($row['LOCATION'])) {
 			$location = new Location_Model();
 			$location->location_name = isset($row['LOCATION']) ? $row['LOCATION'] : '';
-			$location->latitude = isset($row['LATITUDE']) ? $row['LATITUDE'] : '';
-			$location->longitude = isset($row['LONGITUDE']) ? $row['LONGITUDE'] : '';
+			$location_geocoded = array() ;
+			$location_geocoded = Geocoder_Core::geocode_location($location->location_name) ;
+			$location->latitude = $location_geocoded[1] ;
+			$location->longitude = $location_geocoded[0] ;
 			$location->location_date = $this->time;
 			$location->save();
 			$this->locations_added[] = $location->id;
