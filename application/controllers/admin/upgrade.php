@@ -32,12 +32,12 @@ class Upgrade_Controller extends Admin_Controller {
 		
 		$release_version = $this->_get_release_version();
 		
-		// limit access to only superadmin
-		/*if ( ! $this->auth->logged_in('superadmin') OR 
-				( $release_version == "" ) )
-		{
-			url::redirect('admin/dashboard');
-		}*/
+		// Don't show auto-upgrader when disabled.
+        if (Kohana::config('config.enable_auto_upgrader') == FALSE)
+        {
+            url::redirect('admin/dashboard');
+        }
+		
 	}
 
 	/**
