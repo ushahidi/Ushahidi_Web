@@ -272,64 +272,101 @@ class Main_Controller extends Template_Controller {
 			->orderby('item_date', 'desc')
 			->find_all();
 
-        // Get The START, END and most ACTIVE Incident Dates
-		$startDate = "";
+        // Get The START, END and Incident Dates
+        $startDate = "";
 		$endDate = "";
-		$active_month = 0;
-		$active_startDate = 0;
-		$active_endDate = 0;
+		$display_startDate = 0;
+		$display_endDate = 0;
 
 		$db = new Database();
-		// First Get The Most Active Month
-		$query = $db->query('SELECT incident_date, count(*) AS incident_count FROM '.$this->table_prefix.'incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y-%m\') ORDER BY incident_count DESC LIMIT 1');
-		foreach ($query as $query_active)
+        // Next, Get the Range of Years
+		$query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y-%c\') AS dates FROM incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y-%c\') ORDER BY incident_date');
+
+		$first_year = date('Y');
+		$last_year = date('Y');
+		$first_month = 1;
+		$last_month = 12;
+		$i = 0;
+
+		foreach ($query as $data)
 		{
-			$active_month = date('n', strtotime($query_active->incident_date));
-			$active_year = date('Y', strtotime($query_active->incident_date));
-			$active_startDate = strtotime($active_year . "-" . $active_month . "-01");
-			$active_endDate = strtotime($active_year . "-" . $active_month .
-				"-" . date('t', mktime(0,0,0,$active_month,1))." 23:59:59");
+			$date = explode('-',$data->dates);
+
+			$year = $date[0];
+			$month = $date[1];
+
+			// Set first year
+			if($i == 0)
+			{
+				$first_year = $year;
+				$first_month = $month;
+			}
+
+			// Set last dates
+			$last_year = $year;
+			$last_month = $month;
+
+			$i++;
 		}
 
-        // Next, Get the Range of Years
-		$query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y\') AS incident_date FROM '.$this->table_prefix.'incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y\') ORDER BY incident_date');
-		foreach ($query as $slider_date)
+		$show_year = $first_year;
+		$selected_start_flag = TRUE;
+		while($show_year <= $last_year)
 		{
-			$years = $slider_date->incident_date;
-			$startDate .= "<optgroup label=\"" . $years . "\">";
-			for ( $i=1; $i <= 12; $i++ ) {
+			$startDate .= "<optgroup label=\"".$show_year."\">";
+
+			$s_m = 1;
+			if($show_year == $first_year)
+			{
+				// If we are showing the first year, the starting month may not be January
+				$s_m = $first_month;
+			}
+
+			$l_m = 12;
+			if($show_year == $last_year)
+			{
+				// If we are showing the last year, the ending month may not be December
+				$l_m = $last_month;
+			}
+
+			for ( $i=$s_m; $i <= $l_m; $i++ ) {
 				if ( $i < 10 )
 				{
-					$i = "0" . $i;
+					// All months need to be two digits
+					$i = "0".$i;
 				}
-				$startDate .= "<option value=\"" . strtotime($years . "-" . $i . "-01") . "\"";
-				if ( $active_month &&
-						( (int) $i == ( $active_month - 1)) )
+				$startDate .= "<option value=\"".strtotime($show_year."-".$i."-01")."\"";
+				if($selected_start_flag == TRUE)
 				{
+					$display_startDate = strtotime($show_year."-".$i."-01");
 					$startDate .= " selected=\"selected\" ";
+					$selected_start_flag = FALSE;
 				}
-				$startDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $years . "</option>";
+				$startDate .= ">".date('M', mktime(0,0,0,$i,1))." ".$show_year."</option>";
 			}
 			$startDate .= "</optgroup>";
 
-			$endDate .= "<optgroup label=\"" . $years . "\">";
-			for ( $i=1; $i <= 12; $i++ )
+			$endDate .= "<optgroup label=\"".$show_year."\">";
+			for ( $i=$s_m; $i <= $l_m; $i++ )
 			{
 				if ( $i < 10 )
 				{
-					$i = "0" . $i;
+					// All months need to be two digits
+					$i = "0".$i;
 				}
-				$endDate .= "<option value=\"" . strtotime($years . "-" . $i . "-" . date('t', mktime(0,0,0,$i,1))." 23:59:59") . "\"";
-                // Focus on the most active month or set December as month of endDate
-				if ( $active_month &&
-						( ( (int) $i == ( $active_month + 1)) )
-						 	|| ($i == 12 && preg_match('/selected/', $endDate) == 0))
+				$endDate .= "<option value=\"".strtotime($show_year."-".$i."-".date('t', mktime(0,0,0,$i,1))." 23:59:59")."\"";
+
+                if($i == $l_m AND $show_year == $last_year)
 				{
+					$display_endDate = strtotime($show_year."-".$i."-".date('t', mktime(0,0,0,$i,1))." 23:59:59");
 					$endDate .= " selected=\"selected\" ";
 				}
-				$endDate .= ">" . date('M', mktime(0,0,0,$i,1)) . " " . $years . "</option>";
+				$endDate .= ">".date('M', mktime(0,0,0,$i,1))." ".$show_year."</option>";
 			}
 			$endDate .= "</optgroup>";
+
+			// Show next year
+			$show_year++;
 		}
 
 		$this->template->content->div_timeline->startDate = $startDate;
@@ -387,9 +424,9 @@ class Main_Controller extends Template_Controller {
 		$this->themes->js->latitude = Kohana::config('settings.default_lat');
 		$this->themes->js->longitude = Kohana::config('settings.default_lon');
 		$this->themes->js->default_map_all = Kohana::config('settings.default_map_all');
-		//
-		$this->themes->js->active_startDate = $active_startDate;
-		$this->themes->js->active_endDate = $active_endDate;
+
+		$this->themes->js->active_startDate = $display_startDate;
+		$this->themes->js->active_endDate = $display_endDate;
 
 		//$myPacker = new javascriptpacker($js , 'Normal', false, false);
 		//$js = $myPacker->pack();
