@@ -98,6 +98,10 @@
 									// Retrieve Plugin Header Information from readme.txt
 									$plugin_meta = plugin::meta($plugin->plugin_name);
 									
+									// Do not show this plugin in the list of plugins if "hide" is true
+									$hide = strtolower($plugin_meta["hide"]);
+									if($hide == true OR $hide == 1) continue;
+
 									// Do we have a settings page?
 									$settings = plugin::settings($plugin->plugin_name);
 									?>
