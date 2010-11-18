@@ -107,7 +107,6 @@ class plugin_Core {
 			"plugin_uri" => "website",
 			"plugin_author" => "author",
 			"plugin_version" => "version",
-			"hide" => "hide",
 			);
 			
 		// Determine if readme.txt (Case Insensitive) exists
