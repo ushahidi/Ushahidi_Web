@@ -16,7 +16,7 @@
  */
 class Sms_Api_Object extends Api_Object_Core {
 
-    public function __construct($ai_service)
+    public function __construct($api_service)
     {
         parent::__construct($api_service);
     }
@@ -112,8 +112,8 @@ class Sms_Api_Object extends Api_Object_Core {
         $this->response_data = ($this->response_type == 'json') 
             ? $this->array_as_xml($data)
             : $this->array_as_xml($data, $this->replar);
-        }
     }
+   
 
     /**
      * Delete existing SMS message
