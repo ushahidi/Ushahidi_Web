@@ -737,7 +737,7 @@ CREATE TABLE IF NOT EXISTS `roles` (                                            
 	`users` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -759,7 +759,7 @@ CREATE TABLE IF NOT EXISTS `roles_users` (                                      
     `role_id` int(11) unsigned NOT NULL,                                            -- field description
   PRIMARY KEY  (`user_id`,`role_id`),
   KEY `fk_role_id` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -879,7 +879,7 @@ CREATE TABLE IF NOT EXISTS `users` (                                            
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -904,7 +904,7 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (                                      
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -1395,14 +1395,6 @@ CREATE TABLE IF NOT EXISTS `plugin` (
 */
 
 /**
-* Constraints for table `roles_users`
-* 
-*/
-ALTER TABLE `roles_users`
-  ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
-
-/**
 * Constraints for table `form_field`
 * 
 */
@@ -1415,18 +1407,10 @@ ALTER TABLE `form_field`
 */
 ALTER TABLE `form_response`
   ADD CONSTRAINT `form_response_ibfk_1` FOREIGN KEY (`form_field_id`) REFERENCES `form_field` (`id`) ON DELETE CASCADE;
-
-/**
-* Constraints for table `user_tokens`
-* 
-*/
-ALTER TABLE `user_tokens`
-  ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
   
 /**
 * Version information for table `settings`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '39' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '40' WHERE `id`=1 LIMIT 1;
