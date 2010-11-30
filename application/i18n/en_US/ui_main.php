@@ -236,6 +236,7 @@
 	'not_approved_singular' => 'Not Approved',
 	'not_spam' => 'not spam',
 	'not_specified' => 'Not Specified',
+	'no_reports' => 'There are no reports',
 	'no_results' => 'There are no results',
 	'official_news' => 'Official &amp; mainstream news',
 	'option' => 'Option',
