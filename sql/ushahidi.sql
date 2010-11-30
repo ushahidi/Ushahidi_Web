@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 38
+-- version 39
 -- http://www.ushahidi.com
 
 
@@ -737,7 +737,7 @@ CREATE TABLE IF NOT EXISTS `roles` (                                            
 	`users` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -759,7 +759,7 @@ CREATE TABLE IF NOT EXISTS `roles_users` (                                      
     `role_id` int(11) unsigned NOT NULL,                                            -- field description
   PRIMARY KEY  (`user_id`,`role_id`),
   KEY `fk_role_id` (`role_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -846,6 +846,8 @@ CREATE TABLE IF NOT EXISTS `settings` (                                         
     `email_host` VARCHAR(100) NOT NULL ,                                            -- field description
     `email_servertype` VARCHAR(100) NOT NULL ,                                      -- field description
     `email_ssl` INT(5) NOT NULL,                                                    -- field description
+	`ftp_server` varchar(100) NULL DEFAULT NULL,
+	`ftp_user_name` varchar(100) NULL DEFAULT NULL,
     `alerts_email` VARCHAR(120) NOT NULL,                                           -- field description
     `db_version` varchar(20) default NULL,                                          -- field description
     `ushahidi_version` varchar(20) default NULL,                                    -- field description
@@ -877,7 +879,7 @@ CREATE TABLE IF NOT EXISTS `users` (                                            
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -902,7 +904,7 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (                                      
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
 
@@ -1369,8 +1371,6 @@ CREATE TABLE IF NOT EXISTS `api_log` (                                          
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='For logging API activities' AUTO_INCREMENT=19 ;
 
-
-
 /**
 * Table structure for table `plugin`
 * 
@@ -1389,143 +1389,10 @@ CREATE TABLE IF NOT EXISTS `plugin` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 
-
-/**
-* Table structure for table `mhi_category`
-* 
-*/
-
-CREATE TABLE `mhi_category` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                  -- field description
-    `parent_id` int(11) unsigned DEFAULT NULL,                                      -- field description
-    `category_title` varchar(100) CHARACTER SET utf8 NOT NULL,                      -- field description
-    `category_active` tinyint(4) DEFAULT '1',                                       -- field description
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-
-
-/**
-* Table structure for table `mhi_site`
-* 
-*/
-
-CREATE TABLE `mhi_site` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                  -- field description
-    `user_id` int(11) NOT NULL,                                                     -- field description
-    `site_domain` varchar(32) NOT NULL,                                            -- field description
-    `site_privacy` tinyint(4) NOT NULL DEFAULT '0',                                 -- field description
-    `site_active` tinyint(4) DEFAULT '1',                                           -- field description
-    `site_dateadd` datetime NOT NULL,                                               -- field description
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-
-
-/**
-* Table structure for table `mhi_site_category`
-* 
-*/
-
-CREATE TABLE `mhi_site_category` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                  -- field description
-    `site_id` int(11) unsigned NOT NULL,                                            -- field description
-    `category_id` int(11) unsigned NOT NULL,                                        -- field description
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-
-
-/**
-* Table structure for table `mhi_site_database`
-* 
-*/
-
-CREATE TABLE `mhi_site_database` (
-    `mhi_id` int(11) NOT NULL AUTO_INCREMENT,                                       -- field description
-    `user` varchar(50) CHARACTER SET utf8 NOT NULL,                                 -- field description
-    `pass` varchar(50) CHARACTER SET utf8 NOT NULL,                                 -- field description
-    `host` varchar(100) CHARACTER SET utf8 NOT NULL,                                -- field description
-    `port` smallint(6) NOT NULL,                                                    -- field description
-    `database` varchar(100) CHARACTER SET utf8 NOT NULL,                             -- field description
-  PRIMARY KEY (`mhi_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 COMMENT='This table holds DB credentials for MHI instances';
-
-
-
-
-/**
-* Table structure for table `mhi_users`
-* 
-*/
-
-CREATE TABLE `mhi_users` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,                                           -- field description
-    `email` varchar(50) CHARACTER SET utf8 NOT NULL,                                -- field description
-    `firstname` varchar(30) CHARACTER SET utf8 NOT NULL,                            -- field description
-    `lastname` varchar(30) CHARACTER SET utf8 NOT NULL,                             -- field description
-    `password` varchar(40) CHARACTER SET utf8 NOT NULL,                             -- field description
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-
-
-/**
-* Table structure for table `mhi_log`
-* 
-*/
-
-CREATE TABLE `mhi_log` (
-  `id` bigint(20) NOT NULL auto_increment,
-  `user_id` int(11) NOT NULL,
-  `action_id` int(11) NOT NULL,
-  `notes` varchar(255) NOT NULL,
-  `ip` int(10) NOT NULL,
-  `time` timestamp NOT NULL default CURRENT_TIMESTAMP,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-
-
-/**
-* Table structure for table `mhi_log_actions`
-* 
-*/
-
-CREATE TABLE `mhi_log_actions` (
-  `id` int(11) NOT NULL,
-  `description` text NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-INSERT INTO `mhi_log_actions` (`id`, `description`) VALUES
-(1, 'Logged in'),
-(2, 'Logged out'),
-(3, 'Created a deployment'),
-(4, 'Disabled a deployment'),
-(5, 'Password reset'),
-(6, 'New user created'),
-(7, 'Updated account information');
-
-
-
 /**
 * Constraints for dumped tables
 * 
 */
-
-/**
-* Constraints for table `roles_users`
-* 
-*/
-ALTER TABLE `roles_users`
-  ADD CONSTRAINT `roles_users_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `roles_users_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 
 /**
 * Constraints for table `form_field`
@@ -1540,18 +1407,10 @@ ALTER TABLE `form_field`
 */
 ALTER TABLE `form_response`
   ADD CONSTRAINT `form_response_ibfk_1` FOREIGN KEY (`form_field_id`) REFERENCES `form_field` (`id`) ON DELETE CASCADE;
-
-/**
-* Constraints for table `user_tokens`
-* 
-*/
-ALTER TABLE `user_tokens`
-  ADD CONSTRAINT `user_tokens_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
   
 /**
 * Version information for table `settings`
 * 
 */
-UPDATE `settings` SET `ushahidi_version` = '2.0b11' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '38' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `ushahidi_version` = '2.0.1' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '40' WHERE `id`=1 LIMIT 1;

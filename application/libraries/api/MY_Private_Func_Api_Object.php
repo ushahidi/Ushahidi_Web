@@ -166,8 +166,7 @@ class Private_Func_Api_Object extends Api_Object_Core {
 
         $app_key = isset($this->request['key']) ? $this->request['key'] : "";
 
-        if ( $user_id = $this->_login($username, $password) ||
-            $this->_chk_key($app_key) )
+        if ( $user_id = $this->_login($username, $password))
         {
             // Process POST
             // setup and initialize form field names
@@ -183,7 +182,7 @@ class Private_Func_Api_Object extends Api_Object_Core {
              * use $post, so we don't overwrite $_POST fields with our 
              * own things
              */
-            $post = Validation::factory($request);
+            $post = Validation::factory($_POST);
 
             //  Add some filters
             $post->pre_filter('trim', TRUE);
@@ -201,56 +200,8 @@ class Private_Func_Api_Object extends Api_Object_Core {
             // Test to see if things passed the rule checks
             if ($post->validate())
             {
-                // Validates so Save Message
-                $services = new Service_Model();
-                $service = $services->where('service_name','SMS')->find();
-                if (!$service)
-                    return;
 
-                $reporter = ORM::factory('reporter')
-                    ->where('service_id', $service->id)
-                    ->where('service_account', $post->message_from)
-                    ->find();
-
-                if (!$reporter->loaded == TRUE)
-                {
-                    // get default reporter level (Untrusted)
-                    $level = ORM::factory('level')
-                        ->where('level_weight', 0)
-                        ->find();
-
-                    $reporter->service_id = $service->id;
-                    $reporter->level_id = $level->id;
-                    $reporter->service_userid = null;
-                    $reporter->service_account = $post->message_from;
-                    $reporter->reporter_first = null;
-                    $reporter->reporter_last = null;
-                    $reporter->reporter_email = null;
-                    $reporter->reporter_phone = null;
-                    $reporter->reporter_ip = null;
-                    $reporter->reporter_date = date('Y-m-d');
-                    $reporter->save();
-                }
-
-                // Save Message
-                $message = new Message_Model();
-                $message->parent_id = 0;
-                $message->incident_id = 0;
-                $message->user_id = ( $user_id ) ? $user_id : 0;
-                $message->reporter_id = $reporter->id;
-                $message->message_from = $post->message_from;
-                $message->message_to = null;
-                $message->message = $post->message_description;
-                $message->message_type = 1; // Inbox
-                
-                $message->message_date = (isset($post->message_date)
-                    AND !empty($post->message_date))
-                    ? $post->message_date 
-                    : date("Y-m-d H:i:s",time());
-                    
-                $message->service_messageid = null;
-                $message->save();
-
+                sms::add($post->message_from, $post->message_description);
                 // success!
                 $reponse = array(
                     "payload" => array(
@@ -289,7 +240,7 @@ class Private_Func_Api_Object extends Api_Object_Core {
         }
         
         // Set the response data
-        $this->response_data = ($response_type == 'json')
+        $this->response_data = ($this->response_type == 'json')
             ? $this->array_as_json($reponse)
             : $this->array_as_xml($reponse, array());
     }

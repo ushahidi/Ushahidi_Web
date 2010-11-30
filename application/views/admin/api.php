@@ -72,7 +72,7 @@
                                     <?php echo Kohana::lang('settings.api.default_record_limit'); ?>
                                 </a>
                             </h4>
-                            <?php print form::input('api_default_record_limit', $form['api_default_record_limit']); ?>
+                            <?php print form::input('api_default_record_limit', $form['api_default_record_limit'], ' class="text"'); ?>
                         </div>
                         <div class="row">
                             <h4>
@@ -80,7 +80,7 @@
                                     <?php echo Kohana::lang('settings.api.maximum_record_limit'); ?>
                                 </a>
                             </h4>
-                            <?php print form::input('api_max_record_limit', $form['api_max_record_limit']); ?>
+                            <?php print form::input('api_max_record_limit', $form['api_max_record_limit'], ' class="text"'); ?>
                         </div>
                         <div class="row">
                             <h4>
@@ -89,8 +89,8 @@
                                 </a>
                             </h4>
                             
-                            <?php print form::input('api_max_requests_per_ip_address', $form['api_max_requests_per_ip_address']); ?>
-                            <strong><?php echo Kohana::lang('ui_main.per'); ?></strong>
+                            <?php print form::input('api_max_requests_per_ip_address', $form['api_max_requests_per_ip_address'], ' class="text"'); ?>
+                            <strong> <?php echo Kohana::lang('ui_main.per'); ?> </strong>
                             <?php print form::dropdown('api_max_requests_quota_basis', $max_requests_quota_array, $form['api_max_requests_quota_basis']); ?>
                         </div>
                     </div>                    

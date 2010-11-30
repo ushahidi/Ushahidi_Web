@@ -32,12 +32,12 @@ class Upgrade_Controller extends Admin_Controller {
 		
 		$release_version = $this->_get_release_version();
 		
-		// limit access to only superadmin
-		/*if ( ! $this->auth->logged_in('superadmin') OR 
-				( $release_version == "" ) )
-		{
-			url::redirect('admin/dashboard');
-		}*/
+		// Don't show auto-upgrader when disabled.
+        if (Kohana::config('config.enable_auto_upgrader') == FALSE)
+        {
+            url::redirect('admin/dashboard');
+        }
+		
 	}
 
 	/**
@@ -81,12 +81,23 @@ class Upgrade_Controller extends Admin_Controller {
 				$this->template->js->backup = $post->chk_db_backup_box;
 				$this->template->content->title = Kohana::lang('ui_admin.upgrade_ushahidi_status');
 				
+				$this->session->set('ftp_server', $post->ftp_server);
+				$this->session->set('ftp_user_name', $post->ftp_user_name);
+				$this->session->set('ftp_user_pass', $post->ftp_user_pass);
+				
+				$settings = ORM::factory("settings")->find(1);
+				$settings->ftp_server = $post->ftp_server;
+				$settings->ftp_user_name = $post->ftp_user_name;
+				$settings->save();
+				
 				// Log file location
 				$this->template->js->log_file = url::site(). "admin/upgrade/logfile?f=".$this->session->get('upgrade_session').".txt";
 			}
 			 // No! We have validation errors, we need to show the form again, with the errors
 			else
 			{
+				$this->template->js = new View('admin/upgrade_js');
+				
 				// repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
@@ -94,8 +105,15 @@ class Upgrade_Controller extends Admin_Controller {
 				$errors = arr::overwrite($errors, $post->errors('upgrade'));
 				$form_error = TRUE;
 			}
-
 		}
+		else
+		{
+			$this->template->js = new View('admin/upgrade_js');
+		}
+		
+		$settings = ORM::factory("settings")->find(1);
+		$this->template->content->ftp_server = $settings->ftp_server;
+		$this->template->content->ftp_user_name = $settings->ftp_user_name;
 		
 		$this->template->content->form_action = $form_action;
 		$this->template->content->current_version = Kohana::config('settings.ushahidi_version');
@@ -171,7 +189,7 @@ class Upgrade_Controller extends Admin_Controller {
 		if ($step == 3)
 		{
 			//copy files
-			$this->upgrade->copy_recursively($working_dir."ushahidi/",DOCROOT);
+			$this->upgrade->ftp_recursively($working_dir."ushahidi/",DOCROOT);
 			
 			//copying was successful
 			if ($this->upgrade->success)
@@ -323,14 +341,16 @@ class Upgrade_Controller extends Admin_Controller {
 		$upgrade_sql = '';
 
 		$files = scandir($dir_path);
+		sort($files);
 		foreach ( $files as $file )
 		{
-			$upgrade_sql = $this->_get_db_version();
-			
-			if ($upgrade_sql == $file)
+			// We're going to try and execute each of the sql files in order
+			$file_ext = strrev(substr(strrev($file),0,4));
+			if ($file_ext == ".sql")
 			{
-				$this->_execute_upgrade_script($dir_path.$upgrade_sql);
-			} 
+				$this->upgrade->logger("Database imported ".$dir_path.$file);
+				$this->_execute_upgrade_script($dir_path.$file);
+			}
 		}
 		return "";
 	}
@@ -340,7 +360,7 @@ class Upgrade_Controller extends Admin_Controller {
 	 * 
 	 * @return the db version.
 	 */
-	private function _get_db_version() 
+	private function _get_db_version()
 	{
 			
 	   // get the db version from the settings page
@@ -546,12 +566,17 @@ class Upgrade_Controller extends Admin_Controller {
 			}
 
 			// Check third part
-			if (isset($remote_version[2]) AND isset($local_version[2])
-				AND (int) $remote_version[2] > (int) $local_version[2])
+			if (isset($remote_version[2]) AND (int) $remote_version[2] > 0)
 			{
-				return true;
+				if ( ! isset($local_version[2]))
+				{
+					return true;
+				}
+				elseif( (int) $remote_version[2] > (int) $local_version[2] )
+				{
+					return true;
+				}
 			}
-
 		}
 
 		return false;

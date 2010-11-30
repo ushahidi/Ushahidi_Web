@@ -40,7 +40,7 @@
 
       
 			<h2 class="feedback_title" style="clear:both">
-				<a href="http://feedback.ushahidi.com/fillsurvey.php?sid=5"><?php echo Kohana::lang('ui_main.feedback'); ?></a>
+				<a href="http://feedback.ushahidi.com/fillsurvey.php?sid=2"><?php echo Kohana::lang('ui_main.feedback'); ?></a>
 			</h2>
 
  
@@ -54,7 +54,7 @@
 	<?php echo $google_analytics; ?>
 	
 	<!-- Task Scheduler -->
-	<img src="<?php echo url::site().'scheduler'; ?>" alt="" height="1" width="1" border="0" />
+	<img src="<?php echo url::base(); ?>media/img/spacer.gif" alt="" height="1" width="1" border="0" onload="runScheduler(this)" />
  
 	<?php
 	// Action::main_footer - Add items before the </body> tag

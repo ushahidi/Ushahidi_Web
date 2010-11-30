@@ -219,6 +219,7 @@
 	'modify_date' => 'Modify Date',
 	'month' => 'month',
 	'more' => 'More',
+    'more_information' => 'More Information',
 	'multi_country_instance' => 'Does this Ushahidi Deployment Span Multiple Countries',
 	'name' => 'Name',
 	'nearby_report' => 'Nearby Report',

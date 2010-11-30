@@ -97,7 +97,7 @@
 									
 									// Retrieve Plugin Header Information from readme.txt
 									$plugin_meta = plugin::meta($plugin->plugin_name);
-									
+
 									// Do we have a settings page?
 									$settings = plugin::settings($plugin->plugin_name);
 									?>

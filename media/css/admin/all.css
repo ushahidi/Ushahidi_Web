@@ -2049,8 +2049,14 @@ h4 span.highlight{
 		background-color:#FFD8D9;
 		border-color: #990000;
 	}
-
-
+	.ftp-settings{
+		display:none;
+		width:600px;
+		margin-top:10px;
+		padding:10px;
+		background-color:#ffffcc;
+	}
+	
 /* Plugins/Addons/Themes */
 tr.addon_active td{
 	background-color:#ffffcc;

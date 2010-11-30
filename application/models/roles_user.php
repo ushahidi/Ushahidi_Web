@@ -19,7 +19,6 @@ class Roles_User_Model extends Model {
 	public function __construct($id = NULL)
 	{
 		parent::__construct($id);
-		
 	}
 	
 	/**
@@ -49,10 +48,9 @@ class Roles_User_Model extends Model {
 		$this->db->update('roles_users',$data);
 	}
 	
-	public function delete_role( $user_id)
+	public function delete_role($user_id)
 	{
-		
-		$this->db->where('user_id', $user_id );
-		$this->db->delete('roles_users' );
+		$this->db->where('user_id', $user_id);
+		$this->db->delete('roles_users');
 	}
 }

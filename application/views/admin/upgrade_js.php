@@ -14,12 +14,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 // Ajax Submission
-function continueAction ()
+function showFTP()
 {
-	$("#upgradeMain").submit();	
-}
-
-function dbUpgradeAction () 
-{
-	$("#upgradeDb").submit();
+	$("#ftp_settings").toggle(400);
 }

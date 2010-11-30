@@ -16,7 +16,8 @@
  */
 ?>
 		var map;
-		jQuery(function() {
+		var myPoint;
+		jQuery(window).load(function() {
 			var moved=false;
 
 			/*
@@ -92,45 +93,15 @@
 			selectControl.activate();
 
 			// create a lat/lon object
-			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+			myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
 			myPoint.transform(proj_4326, map.getProjectionObject());
 			
 			// display the map centered on a latitude and longitude (Google zoom levels)
 
-			map.setCenter(myPoint, 10);			
-			
-			function onPopupClose(evt) {
-	            selectControl.unselect(selectedFeature);
-	        }
-	        function onFeatureSelect(feature) {
-	            selectedFeature = feature;
-				// Lon/Lat Spherical Mercator
-				zoom_point = feature.geometry.getBounds().getCenterLonLat();
-				lon = zoom_point.lon;
-				lat = zoom_point.lat;
-	            var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+feature.attributes.name + "</li></ul></div>";
-				content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
-				content = content + "</div>";
-				// Since KML is user-generated, do naive protection against
-	            // Javascript.
-	            if (content.search("<script") != -1) {
-	                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
-	            }
-	            popup = new OpenLayers.Popup.FramedCloud("chicken", 
-	                                     feature.geometry.getBounds().getCenterLonLat(),
-	                                     new OpenLayers.Size(100,100),
-	                                     content,
-	                                     null, true, onPopupClose);
-	            feature.popup = popup;
-	            map.addPopup(popup);
-	        }
-	        function onFeatureUnselect(feature) {
-	            map.removePopup(feature.popup);
-	            feature.popup.destroy();
-	            feature.popup = null;
-	        }
-			
-			
+			map.setCenter(myPoint, 10);
+		});
+		
+		$(document).ready(function(){
 			/*
 			Add Comments JS
 			*/			
@@ -221,8 +192,40 @@
 				
 				return false;
 			});
-
 		});
+		
+		function onPopupClose(evt) {
+            selectControl.unselect(selectedFeature);
+        }
+
+        function onFeatureSelect(feature) {
+            selectedFeature = feature;
+			// Lon/Lat Spherical Mercator
+			zoom_point = feature.geometry.getBounds().getCenterLonLat();
+			lon = zoom_point.lon;
+			lat = zoom_point.lat;
+            var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+feature.attributes.name + "</li></ul></div>";
+			content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
+			content = content + "</div>";
+			// Since KML is user-generated, do naive protection against
+            // Javascript.
+            if (content.search("<script") != -1) {
+                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
+            }
+            popup = new OpenLayers.Popup.FramedCloud("chicken", 
+                                     feature.geometry.getBounds().getCenterLonLat(),
+                                     new OpenLayers.Size(100,100),
+                                     content,
+                                     null, true, onPopupClose);
+            feature.popup = popup;
+            map.addPopup(popup);
+        }
+
+        function onFeatureUnselect(feature) {
+            map.removePopup(feature.popup);
+            feature.popup.destroy();
+            feature.popup = null;
+        }
 		
 		function zoomToSelectedFeature(lon, lat, zoomfactor){
 			var lonlat = new OpenLayers.LonLat(lon,lat);

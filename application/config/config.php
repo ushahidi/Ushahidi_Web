@@ -96,6 +96,11 @@ $config['render_stats'] = TRUE;
 $config['enable_mhi'] = FALSE;
 
 /**
+ * Add the ability to turn on / off auto upgrader
+ */
+$config['enable_auto_upgrader'] = TRUE;
+
+/**
  * Filename prefixed used to determine extensions. For example, an
  * extension to the Controller class would be named MY_Controller.php.
  */

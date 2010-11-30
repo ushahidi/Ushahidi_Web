@@ -26,11 +26,47 @@ class Users_Controller extends Admin_Controller
             url::redirect(url::site().'admin/dashboard');
         }
     }
-    
+
     function index()
     {   
         $this->template->content = new View('admin/users');
-        
+        $this->template->js = new View('admin/users_js');
+
+        // Check, has the form been submitted, if so, setup validation
+
+		if ($_POST)
+		{
+			$post = Validation::factory(array_merge($_POST,$_FILES));
+
+			// Add some filters
+
+			$post->pre_filter('trim', TRUE);
+
+			// As far as I know, the only time we submit a form here is to delete a user
+
+			if ($post->action == 'd')
+			{
+				// We don't want to delete the first user
+
+				if($post->user_id_action != 1)
+				{
+					// Delete the user
+
+					$user = ORM::factory('user',$post->user_id_action)
+								->delete();
+
+					// Remove the roles assigned to the now deleted user to clean up
+
+					$roles_user_model = new Roles_User_Model;
+					$roles_user_model->delete_role($post->user_id_action);
+
+				}
+
+				$form_saved = TRUE;
+				$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+			}
+		}
+
         // Pagination
         $pagination = new Pagination(array(
                             'query_string' => 'page',

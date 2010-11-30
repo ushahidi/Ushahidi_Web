@@ -17,6 +17,10 @@
 	public $success;
 	public $error_level;
 	public $session;
+	public $ftp;
+	public $ftp_server;
+	public $ftp_user_name;
+	public $ftp_user_pass;
 	
 	public function __construct() 
 	{
@@ -59,6 +63,249 @@
 		}
 			
 	}
+	
+	
+	/**
+	 * FTP files recursively. 
+	 * 
+	 * @param String source-- the source directory.
+	 * @param String dest -- the destination directory.
+	 * @param $options //folderPermission,filePermission
+	 * @return boolean 
+	 */
+	function ftp_recursively($source, $dest, $options=array('folderPermission'=>0775,'filePermission'=>0664))
+	{		
+		if ( ! $this->ftp_connect() )
+		{
+			$this->success = false;
+			return false;
+		}
+		
+		if ( ! $ftp_base_path = $this->ftp_base_path())
+		{
+			$this->success = false;
+			return false;
+		}
+		
+		$this->ftp->chdir($ftp_base_path);
+		
+		if (is_file($source))
+		{	
+			$__dest=$dest;
+			
+			// Turn off error reporting temporarily
+			error_reporting(0);
+			$result = $this->ftp_copy($source, $__dest, $options);
+			if ($result)
+			{
+				$this->success = true;
+				$this->logger("Copied to ".$__dest);
+				//Turn on error reporting again
+				error_reporting($this->error_level);
+			}
+			else
+			{
+				$this->success = false;
+				$this->logger("** Failed writing ".$__dest);
+				//Turn on error reporting again
+				error_reporting($this->error_level);
+				return false;
+			}
+
+		}
+		elseif(is_dir($source))
+		{
+			if ($dest[strlen($dest)-1] == '/')
+			{
+				if ($source[strlen($source)-1] == '/')
+				{
+					//Copy only contents
+				}
+				else
+				{
+					//Change parent itself and its contents
+					$dest = $dest.basename($source);
+					if ( ! $this->ftp->mkdir(str_replace(DOCROOT,"",$dest)))
+					{
+						$this->logger("** Failed creating directory ".$dest.". It might already exist.");
+					}
+					else
+					{
+						$this->logger("Created directory ".$dest);
+					}
+					$this->ftp->chmod(str_replace(DOCROOT,"",$dest),$options['folderPermission']);
+				}
+			}
+			else
+			{	
+				if ($source[strlen($source)-1] == '/')
+				{
+					//Copy parent directory with new name and all its content
+					if ( ! $this->ftp->mkdir(str_replace(DOCROOT,"",$dest)))
+					{
+						$this->logger("** Failed creating directory ".$dest.". It might already exist.");
+					}
+					else
+					{
+						$this->logger("Created directory ".$dest);
+					}
+					$this->ftp->chmod(str_replace(DOCROOT,"",$dest),$options['folderPermission']);
+				}
+				else
+				{
+					//Copy parent directory with new name and all its content
+					if ( ! $this->ftp->mkdir(str_replace(DOCROOT,"",$dest)))
+					{
+						$this->logger("** Failed creating directory ".$dest.". It might already exist.");
+					}
+					else
+					{
+						$this->logger("Created directory ".$dest);
+					}
+					$this->ftp->chmod(str_replace(DOCROOT,"",$dest),$options['folderPermission']);
+				}
+			}
+			
+			
+			$dirHandle=opendir($source);
+			while($file=readdir($dirHandle))
+			{
+				if($file != "." AND $file != ".." AND substr($file, 0, 1) != '.')
+				{
+					if( ! is_dir($source."/".$file))
+					{
+						$__dest=$dest."/".$file;
+						$__dest=str_replace("//", "/", $__dest);
+					}
+					else
+					{
+						$__dest=$dest."/".$file;
+						$__dest=str_replace("//", "/", $__dest);
+					}
+					$source_file = $source."/".$file;
+					$source_file = str_replace("//", "/", $source_file);
+					$result = $this->ftp_recursively($source_file, $__dest, $options);
+				}
+			}
+			closedir($dirHandle);
+		}
+	}
+	
+	
+	function ftp_connect()
+	{
+		//** temporary
+		$this->ftp_server = $this->session->get('ftp_server');
+		$this->ftp_user_name = $this->session->get('ftp_user_name');
+		$this->ftp_user_pass = $this->session->get('ftp_user_pass');
+		
+		// Turn off error reporting temporarily
+		//error_reporting(0);
+		
+		$ftp_init = new PemFtp();
+		$this->ftp = new ftp();
+		
+		if ( ! $this->ftp_server OR
+			 ! $this->ftp_user_name OR
+			 ! $this->ftp_user_pass)
+		{
+			// Failed Connecting
+			$this->logger("** Can't connect to FTP Server. Server, Username and/or Password not specified.");
+			error_reporting($this->error_level);
+			return false;
+		}
+
+		// Set FTP Server
+		if ( ! $this->ftp->SetServer($this->ftp_server))
+		{
+			// Failed Connecting
+			$this->logger("** Can't connect to FTP Server");
+			error_reporting($this->error_level);
+			return false;
+		}
+		
+		// Connect to FTP Server
+		if ( ! $this->ftp->connect() )
+		{
+			// Failed Connecting
+			$this->logger("** Can't connect to FTP Server");
+			error_reporting($this->error_level);
+			return false;
+		}
+		
+		// Authenticate at FTP Server
+		if ( ! $this->ftp->login($this->ftp_user_name, $this->ftp_user_pass) )
+		{
+			// Failed Connecting
+			$this->logger("** Can't connect to FTP Server - Incorrect Username or Password");
+			error_reporting($this->error_level);
+			return false;
+		}
+		
+		$this->ftp->setTimeout(30);
+		$this->ftp->SetType(-1);
+		$this->ftp->Passive(true);
+		
+		error_reporting($this->error_level);
+		
+		return true;
+	}
+	
+	function ftp_base_path()
+	{
+		$absolute_parts = explode('/', DOCROOT);
+		$ushahidi_folder = end($absolute_parts);
+		$ftp_parts = $this->ftp->nlist();
+		
+		// Are we already in the Ushahidi directory?
+		if ($this->ftp->is_exists("application/config/config.php"))
+		{
+			return "./";
+		}
+		
+		// We'll cycle through both to find out which
+		// part of the DOCROOT we're in
+		$ftp_base = "";
+		foreach ($absolute_parts as $part)
+		{
+			foreach ($ftp_parts as $key => $value)
+			{
+				if ($value == $part)
+				{
+					$ftp_base .= $value."/";
+					if ($this->ftp->is_exists($ftp_base."application/config/config.php"))
+					{ // We've arrived at the right folder
+						break;
+					}
+				}
+			}
+		}
+		
+		// Verify once again that we're in the right directory
+		if ($this->ftp->is_exists($ftp_base."application/config/config.php"))
+		{ // We've arrived at the right folder
+			return $ftp_base;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	function ftp_copy($source, $dest, $options)
+	{
+		$dest = str_replace(DOCROOT,"",$dest);
+		
+		if ( ! $this->ftp->put($source, $dest) )
+		{
+			return false;			
+		}
+		
+		$this->ftp->chmod($dest,$options['filePermission']);
+		
+		return true;
+	}
+	
 	
 	/**
 	 * Copy files recursively. 
@@ -175,6 +422,7 @@
 			closedir($dirHandle);
 		}
 	}
+	
 	
 	/**
 	 * Remove files recursively.
