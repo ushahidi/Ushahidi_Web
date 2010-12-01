@@ -1,9 +1,9 @@
 <div id="report_stats">
 	<table>
 		<tr>
-			<th>Total Reports</th>
-			<th>Avg Reports Per Day</th>
-			<th>% Verified</th>
+			<th><?php echo Kohana::lang('ui_main.total_reports');?></th>
+			<th><?php echo Kohana::lang('ui_main.avg_reports_per_day');?></th>
+			<th>% <?php echo Kohana::lang('ui_main.verified');?></th>
 		</tr>
 		<tr>
 			<td><?php echo $total_reports; ?></td>
