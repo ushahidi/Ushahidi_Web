@@ -2,10 +2,10 @@
 	<div class="content-bg">
 		<!-- start block -->
 		<div class="big-block">
-			<h1>How To Help <?php echo $pagination_stats; ?></h1>
+			<h1><?php echo Kohana::lang('ui_main.help').' '.$pagination_stats; ?></h1>
 			<div class="org_rowtitle">
 				<div class="org_col1">
-					<strong>Organization</strong>
+					<strong><?php echo Kohana::lang('ui_main.organization'); ?></strong>
 				</div>
 			</div>
 								<?php
