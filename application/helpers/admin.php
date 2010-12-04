@@ -22,6 +22,7 @@ class admin_Core {
 			return array(
 				'mhi' => Kohana::lang('ui_admin.mhi'),
 				'stats' => Kohana::lang('ui_admin.stats'),
+				'manage/pages' => Kohana::lang('ui_main.pages')
 			);
 		}
 		else

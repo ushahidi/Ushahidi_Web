@@ -4,7 +4,7 @@
 * SITE CONFIGURATIONS
 */
 
-// Find the subdomain (for MHI)
+// Find the subdomain
 $subdomain = '';
 if(substr_count($_SERVER["HTTP_HOST"],'.') > 1) $subdomain = substr($_SERVER["HTTP_HOST"],0,strpos($_SERVER["HTTP_HOST"],'.'));
 
