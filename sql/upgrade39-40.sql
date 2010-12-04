@@ -80,4 +80,4 @@ RENAME TABLE `user_tokens_temporary` TO `user_tokens`;
 
 /* Step up the database version number */
 
-UPDATE `settings` SET `db_version` = '39' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '40' WHERE `id`=1 LIMIT 1;
