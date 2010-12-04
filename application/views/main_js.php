@@ -40,6 +40,8 @@
 		var defaultZoom = <?php echo $default_zoom; ?>;
 		var markerRadius = <?php echo $marker_radius; ?>;
 		var markerOpacity = "<?php echo $marker_opacity; ?>";
+		
+		var activeZoom = null;
 
 		var gMarkerOptions = {baseUrl: baseUrl, longitude: longitude,
 		                     latitude: latitude, defaultZoom: defaultZoom,
@@ -53,14 +55,33 @@
 		function addMarkers(catID,startDate,endDate, currZoom, currCenter,
 			mediaType, thisLayerID, thisLayerType, thisLayerUrl, thisLayerColor)
 		{
-			return $.timeline({categoryId: catID,
-			                   startTime: new Date(startDate * 1000),
-			                   endTime: new Date(endDate * 1000),
-							   mediaType: mediaType
-							  }).addMarkers(
-								startDate, endDate, gMap.getZoom(),
-								gMap.getCenter(), thisLayerID, thisLayerType, 
-								thisLayerUrl, thisLayerColor, json_url);
+			activeZoom = currZoom;
+			
+			if(activeZoom == ''){
+				return $.timeline({categoryId: catID,
+		                   startTime: new Date(startDate * 1000),
+		                   endTime: new Date(endDate * 1000),
+						   mediaType: mediaType
+						  }).addMarkers(
+							startDate, endDate, gMap.getZoom(),
+							gMap.getCenter(), thisLayerID, thisLayerType, 
+							thisLayerUrl, thisLayerColor, json_url);
+			}
+			
+			setTimeout(function(){
+				if(currZoom == activeZoom){
+					return $.timeline({categoryId: catID,
+		                   startTime: new Date(startDate * 1000),
+		                   endTime: new Date(endDate * 1000),
+						   mediaType: mediaType
+						  }).addMarkers(
+							startDate, endDate, gMap.getZoom(),
+							gMap.getCenter(), thisLayerID, thisLayerType, 
+							thisLayerUrl, thisLayerColor, json_url);
+				}else{
+					return true;
+				}
+			}, 2000);
 		}
 
 		/*
