@@ -962,7 +962,7 @@ class Reports_Controller extends Admin_Controller
                         'incident_date' => date('m/d/Y', strtotime($incident->incident_date)),
                         'incident_hour' => date('h', strtotime($incident->incident_date)),
                         'incident_minute' => date('i', strtotime($incident->incident_date)),
-                        'incident_ampm' => date('A', strtotime($incident->incident_date)),
+                        'incident_ampm' => date('a', strtotime($incident->incident_date)),
                         'latitude' => $incident->location->latitude,
                         'longitude' => $incident->location->longitude,
                         'location_name' => $incident->location->location_name,
