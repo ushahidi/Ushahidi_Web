@@ -11,26 +11,32 @@
 class Csvtable_Core {
 	var $columnnames = array();
 	
-	function __construct($filehandle) {
+	function __construct($filehandle)
+	{
 		$this->filehandle = $filehandle;
 		if(($fields = fgetcsv($filehandle, 1000)) !== FALSE) { // 1000 chars is max line length
 			$colnum = 0;
-			foreach($fields as $field) {
+			foreach($fields as $field)
+			{
 				$this->colnames[$field] = $colnum;
 				$colnum++;
 			} // fields
 		}		
 	}
 	
-	function hasColumn($name) {
+	function hasColumn($name)
+	{
 		return isset($this->colnames[$name]);
 	}
 	
-	function getRows() {
+	function getRows()
+	{
 		$rows = array();
 		$numcols = count($this->columnnames);
-		while (($fields = fgetcsv($this->filehandle, 1000, ",")) !== FALSE) {
-			foreach ($this->colnames as $colname => $colnum) {
+		while (($fields = fgetcsv($this->filehandle, 4000, ",")) !== FALSE)
+		{
+			foreach ($this->colnames as $colname => $colnum)
+			{
 				$row[$colname] = isset($fields[$colnum]) ? $fields[$colnum] : '';
 			}
 			$rows[] = $row;
