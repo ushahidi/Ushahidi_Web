@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 39
+-- version 41
 -- http://www.ushahidi.com
 
 
@@ -1359,7 +1359,7 @@ CREATE TABLE IF NOT EXISTS `api_banned` (                                       
 * Table structure for table 'alert_category'
 *
 */
-CREATE TABLE `alert_category` (
+CREATE TABLE IF NOT EXISTS `alert_category` (
   `id` int(11) NOT NULL auto_increment,
   `alert_id` int(11),
   `category_id` int(11),
@@ -1439,4 +1439,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '40' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '41' WHERE `id`=1 LIMIT 1;

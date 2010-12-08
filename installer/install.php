@@ -431,13 +431,15 @@ class Install
 				'CREATE TABLE IF NOT EXISTS `',
 				'INSERT INTO `',
 				'ALTER TABLE `',
-				'UPDATE `'
+				'UPDATE `',
+				'DELETE FROM `'
 				);
 			$replace = array(
 				'CREATE TABLE IF NOT EXISTS `'.$table_prefix.'_',
 				'INSERT INTO `'.$table_prefix.'_',
 				'ALTER TABLE `'.$table_prefix.'_',
-				'UPDATE `'.$table_prefix.'_'
+				'UPDATE `'.$table_prefix.'_',
+				'DELETE FROM `'.$table_prefix.'_'
 				);
 			$db_schema = str_replace($find, $replace, $db_schema);
 		}
