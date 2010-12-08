@@ -34,6 +34,10 @@ class Messages_Controller extends Admin_Controller
     */
     function index($service_id = 1)
     {
+	// If a table prefix is specified
+	$db_config = Kohana::config('database.default');
+	$table_prefix = $db_config['table_prefix'];
+	
         $this->template->content = new View('admin/messages');
 
         // Get Title
@@ -55,24 +59,24 @@ class Messages_Controller extends Admin_Controller
 
             if ($type == '2')
             { // OUTBOX
-                $filter = 'message_type = 2';
+                $filter = 'message.message_type = 2';
             }
             else
             { // INBOX
                 $type = "1";
-                $filter = 'message_type = 1';
+                $filter = 'message.message_type = 1';
             }
         }
         else
         {
             $type = "1";
-            $filter = 'message_type = 1';
+            $filter = 'message.message_type = 1';
         }
         
         // Do we have a reporter ID?
         if (isset($_GET['rid']) AND !empty($_GET['rid']))
         {
-            $filter .= ' AND reporter_id=\''.$_GET['rid'].'\'';
+            $filter .= ' AND message.reporter_id=\''.$_GET['rid'].'\'';
         }
         
         // ALL / Trusted / Spam
@@ -82,11 +86,11 @@ class Messages_Controller extends Admin_Controller
             $level = $_GET['level'];
             if ($level == 4)
             {
-                $filter .= " AND ( reporter.level_id = '4' OR reporter.level_id = '5' ) AND ( message.message_level != '99' ) ";
+                $filter .= " AND ( ".$table_prefix."reporter.level_id = '4' OR ".$table_prefix."reporter.level_id = '5' ) AND ( ".$table_prefix."message.message_level != '99' ) ";
             }
             elseif ($level == 2)
             {
-                $filter .= " AND ( message.message_level = '99' ) ";
+                $filter .= " AND ( ".$table_prefix."message.message_level = '99' ) ";
             }
         }
 
@@ -199,8 +203,8 @@ class Messages_Controller extends Admin_Controller
         $this->template->content->count_trusted = ORM::factory('message')
             ->join('reporter','message.reporter_id','reporter.id')
             ->where('service_id', $service_id)
-            ->where("( reporter.level_id = '4' OR reporter.level_id = '5' ) AND ( message.message_level != '99' )")
             ->where('message_type', 1)
+            ->where("message.message_level != '99' AND ( ".$table_prefix."reporter.level_id = '4' OR ".$table_prefix."reporter.level_id = '5' )")
             ->count_all();
         
         // Spam

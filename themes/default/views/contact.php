@@ -28,39 +28,39 @@
 					?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3>Your Message Has Been Sent!</h3>
+						<h3><?php echo Kohana::lang('ui_main.contact_message_has_send'); ?></h3>
 					</div>
 					<?php
 				}								
 				?>
 				<?php print form::open(NULL, array('id' => 'contactForm', 'name' => 'contactForm')); ?>
 				<div class="report_row">
-					<strong>Your Name:</strong><br />
+					<strong><?php echo Kohana::lang('ui_main.contact_name'); ?>:</strong><br />
 					<?php print form::input('contact_name', $form['contact_name'], ' class="text"'); ?>
 				</div>
 				<div class="report_row">
-					<strong>Your E-Mail Address:</strong><br />
+					<strong><?php echo Kohana::lang('ui_main.contact_email'); ?>:</strong><br />
 					<?php print form::input('contact_email', $form['contact_email'], ' class="text"'); ?>
 				</div>
 				<div class="report_row">
-					Your Phone Number:<br />
+					<?php echo Kohana::lang('ui_main.contact_phone'); ?>:<br />
 					<?php print form::input('contact_phone', $form['contact_phone'], ' class="text"'); ?>
 				</div>
 				<div class="report_row">
-					<strong>Message Subject:</strong><br />
+					<strong><?php echo Kohana::lang('ui_main.contact_subject'); ?>:</strong><br />
 					<?php print form::input('contact_subject', $form['contact_subject'], ' class="text"'); ?>
 				</div>								
 				<div class="report_row">
-					<strong>Message:</strong><br />
+					<strong><?php echo Kohana::lang('ui_main.contact_message'); ?>:</strong><br />
 					<?php print form::textarea('contact_message', $form['contact_message'], ' rows="4" cols="40" class="textarea long" ') ?>
 				</div>		
 				<div class="report_row">
-					<strong>Security Code:</strong><br />
+					<strong><?php echo Kohana::lang('ui_main.contact_code'); ?>:</strong><br />
 					<?php print $captcha->render(); ?><br />
 					<?php print form::input('captcha', $form['captcha'], ' class="text"'); ?>
 				</div>
 				<div class="report_row">
-					<input name="submit" type="submit" value="Send Message" class="btn_submit" />
+					<input name="submit" type="submit" value="<?php echo Kohana::lang('ui_main.contact_send'); ?>" class="btn_submit" />
 				</div>
 				<?php print form::close(); ?>
 			</div>
