@@ -88,6 +88,22 @@
 						</div>
 					</div>
 				</div>
+				<div class="step-3">
+					<h2><?php echo Kohana::lang('ui_main.alerts_step3_select_catgories'); ?></h2>
+					<div class="holder">
+						<div class="box">
+					                <div class="report_category" id="categories">
+						                <?php
+						                        $selected_categories = array();
+                                                                        if (!empty($form['alert_category']) && is_array($form['alert_category'])) {
+							                  $selected_categories = $form['alert_category'];
+						                        }
+						                        echo category::tree($categories, $selected_categories, 'alert_category', 2, true);
+						                ?>
+					                </div>
+					        </div>
+				        </div>
+				</div>
 				<input id="btn-send-alerts" class="btn_submit" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
 				<BR /><BR />
 				<a href="<?php echo url::site()."alerts/confirm";?>"><?php echo Kohana::lang('ui_main.alert_confirm_previous'); ?></a>

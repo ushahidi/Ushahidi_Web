@@ -108,6 +108,9 @@ class S_Alerts_Controller extends Controller {
 			$latitude = (double) $incident->latitude;
 			$longitude = (double) $incident->longitude;
 			
+			// Find all the catecories including parents
+			$category_ids = $this->_find_categories($incident->id);
+
 			// Get all alertees
 			$alertees = ORM::factory('alert')
 				->where('alert_confirmed','1')
@@ -119,6 +122,11 @@ class S_Alerts_Controller extends Controller {
 				if ($alertee->id == $incident->alert_id)
 					continue;
 				
+				// Check the categories
+				if (!$this->_check_categories($alertee, $category_ids)) {
+				  continue;
+				}
+
 				$alert_radius = (int) $alertee->alert_radius;
 				$alert_type = (int) $alertee->alert_type;
 				$latitude2 = (double) $alertee->alert_lat;
@@ -190,5 +198,62 @@ class S_Alerts_Controller extends Controller {
 				$update_incident->save();
 			}
 		}
+	}
+
+	private function _find_categories($incident_id) {
+	  $ret = array();
+	  $incident_categories = ORM::factory('incident_category')
+	    ->where('incident_id', $incident_id)
+	    ->find_all();
+
+	  foreach ($incident_categories as $ic) {
+	    $category = ORM::factory('category')
+	      ->where('id', $ic->category_id)
+	      ->find();
+	    $this->_add_category($ret, $category);
+	  }
+
+	  return $ret;
+	}
+
+	private function _add_category(array & $ids, Category_Model $category) {
+	  if ($category == null) {
+	    return;
+	  }
+
+	  $id = (string)$category->id;
+
+	  if (!array_key_exists($id, $ids)) {
+	    $ids[$id] = 1;
+	  }
+
+	  if ($category->parent_id != 0) {
+	    $parent = ORM::factory('category')
+	      ->where('id', $category->parent_id)
+	      ->find();
+
+	    $this->_add_category($ids, $parent);
+	  }
+	}
+
+	private function _check_categories(Alert_Model $alertee, array $category_ids) {
+	  $ret = false;
+
+	  $alert_categories = ORM::factory('alert_category')
+	    ->where('alert_id', $alertee->id)
+	    ->find_all();
+
+	  if (count($alert_categories) == 0) {
+	    $ret = true;
+	  }
+	  else {
+	    foreach ($alert_categories as $ac) {
+	      if (array_key_exists((string)$ac->category_id, $category_ids)) {
+		$ret = true;
+	      }
+	    }
+	  }
+
+	  return $ret;
 	}
 }

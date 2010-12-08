@@ -12,7 +12,7 @@ class category_Core {
 	/**
 	 * Displays a single category checkbox.
 	 */
-	public static function display_category_checkbox($category, $selected_categories, $form_field)
+        public static function display_category_checkbox($category, $selected_categories, $form_field, $enable_parents = false)
 	{
 		$html = '';
 
@@ -36,7 +36,7 @@ class category_Core {
 		$category_checked = in_array($cid, $selected_categories);
 
 		$disabled = "";
-		if ($category->children->count() > 0)
+		if (!$enable_parents && $category->children->count() > 0)
 		{
 			$disabled = " disabled=\"disabled\"";
 		}
@@ -51,7 +51,7 @@ class category_Core {
 	/**
 	 * Display category tree with input checkboxes.
 	 */
-	public static function tree($categories, array $selected_categories, $form_field, $columns = 1)
+	public static function tree($categories, array $selected_categories, $form_field, $columns = 1, $enable_parents = false)
 	{
 		$html = '';
 
@@ -79,7 +79,7 @@ class category_Core {
 
 			// Display parent category.
 			$html .= '<li>';
-			$html .= category::display_category_checkbox($category, $selected_categories, $form_field);
+			$html .= category::display_category_checkbox($category, $selected_categories, $form_field, $enable_parents);
 
 			// Display child categories.
 			if ($category->children->count() > 0)
@@ -88,7 +88,7 @@ class category_Core {
 				foreach ($category->children as $child)
 				{
 					$html .= '<li>';
-					$html .= category::display_category_checkbox($child, $selected_categories, $form_field);
+					$html .= category::display_category_checkbox($child, $selected_categories, $form_field, $enable_parents);
 				}
 				$html .= '</ul>';
 			}
