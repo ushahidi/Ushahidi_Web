@@ -189,7 +189,7 @@ class Stats_Controller extends Admin_Controller
         $this->template->content->failure = '';
         
         // Set the date range (how many days in the past from today?)       
-        $range = (isset($_GET['range'])) 
+        $range = (isset($_GET['range']) AND is_int($_GET['range'])) 
             ? $_GET['range']
             : 10000; // Get all reports so go back far into the past
         
