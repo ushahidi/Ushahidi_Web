@@ -1609,7 +1609,8 @@ a.show-more {
 	float:right;
 	width:450px;
 }
-.step-2 {
+.step-2,
+.step-3 {
 	overflow:hidden;
 	width:430px;
 	margin:10px 0 0;
@@ -1627,15 +1628,18 @@ a.show-more {
   padding: 20px;
 }
 
-.step-2 h2 {
+.step-2 h2,
+.step-3 h2 {
 	margin:0;
 	padding:0 0 0 10px;
 }
-.step-2 .holder {
+.step-2 .holder,
+.step-3 .holder {
 	overflow:hidden;
 	width:100%;
 }
-.step-2 .box {
+.step-2 .box,
+.step-3 .box {
 	overflow:hidden;
 	width:388px;
 	padding:10px;
