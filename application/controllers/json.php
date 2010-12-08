@@ -553,7 +553,7 @@ class Json_Controller extends Template_Controller
         $graph_data[0]['data'] = array();
 
         // Gather allowed ids if we are looking at a specific category
-
+	
         $allowed_ids = array();
 	$incident_id_in = '';
         if($category_id != 0)
@@ -567,7 +567,7 @@ class Json_Controller extends Template_Controller
 		}
 		// Add aditional filter here to only allow for incidents that are in the requested category
 
-		if(count($allowed_ids) > 1)
+		if(count($allowed_ids) > 0)
 		{
 			$incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
 		}
@@ -576,6 +576,11 @@ class Json_Controller extends Template_Controller
 			$incident_id_in = ' AND (id = 1 AND id = 2) '; //impossible since id is a unqiue, key column.
 		}
 	}
+	
+	
+	
+	  
+	
 
 
 
