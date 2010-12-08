@@ -31,6 +31,7 @@
 	'alerts_select_city' => 'Select a city',
 	'alerts_step1_select_city' => '<strong>Step 1:</strong> Select your city or location:',
 	'alerts_step2_send_alerts' => '<strong>Step 2:</strong> Send alerts to my:',
+	'alerts_step3_select_catgories' => '<strong>Step 3 (Optional):</strong> Select Categories',
 	'alert_confirm_previous' => 'Confirm A Previous Alert Request',
 	'alert_saved' => 'Your Alert Has Been Saved!',
 	'all' => 'All',

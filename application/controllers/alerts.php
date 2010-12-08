@@ -49,6 +49,9 @@ class Alerts_Controller extends Main_Controller {
         // Retrieve Country Cities
         $this->template->content->cities = $this->_get_cities($default_country);
         
+				// Get all active top level categories
+	$this->template->content->categories = $this->get_categories('foo');
+
         // Setup and initialize form field names
         $form = array (
             'alert_mobile' => '',
@@ -69,25 +72,19 @@ class Alerts_Controller extends Main_Controller {
         // If there is a post and $_POST is not empty
         if ($post = $this->input->post())
         {
-            // Create a new alert
-            $alert = ORM::factory('alert');         
-            
-            // Test to see if things passed the rule checks
-            if ($alert->validate($post))
+            if ($this->_valid($post))
             {
                 // Yes! everything is valid
                 // Save alert and send out confirmation code
 
                 if ( ! empty($post->alert_mobile))
                 {
-                    $this->_send_mobile_alert($post->alert_mobile, $post->alert_lon,
-                        $post->alert_lat, $post->alert_radius);
+                    $this->_send_mobile_alert($post);
                 }
 
                 if ( ! empty($post->alert_email))
                 {
-                    $this->_send_email_alert($post->alert_email, $post->alert_lon,
-                        $post->alert_lat, $post->alert_radius);
+		  $this->_send_email_alert($post);
                 }
 
                 $this->session->set('alert_mobile', $post->alert_mobile);
@@ -111,6 +108,7 @@ class Alerts_Controller extends Main_Controller {
             $form['alert_lat'] = Kohana::config('settings.default_lat');
             $form['alert_lon'] = Kohana::config('settings.default_lon');
             $form['alert_radius'] = 20;
+	    $form['alert_category'] = array();
         }
         
         $this->template->content->form = $form;
@@ -121,6 +119,7 @@ class Alerts_Controller extends Main_Controller {
         // Javascript Header
         $this->themes->map_enabled = TRUE;
         $this->themes->js = new View('alerts_js');
+	$this->themes->treeview_enabled = TRUE;
         $this->themes->js->default_map = Kohana::config('settings.default_map');
         $this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
         $this->themes->js->latitude = $form['alert_lat'];
@@ -258,6 +257,8 @@ class Alerts_Controller extends Main_Controller {
         // XXX Might need to validate $code as well
         if ($code != NULL)
         {
+				// XXX The alert_category table has to cleaned by a
+				// Trigger!!!
             $alert_code = ORM::factory('alert')
                 ->where('alert_code', $code)
                 ->delete_all();
@@ -284,9 +285,13 @@ class Alerts_Controller extends Main_Controller {
     }
 
 
-    private function _send_mobile_alert($alert_mobile, $alert_lon, $alert_lat, $alert_radius)
-    {
+    private function _send_mobile_alert($post) {
         // For Mobile Alerts, Confirmation Code
+      $alert_mobile = $post->alert_mobile;
+      $alert_lon = $post->alert_lon;
+      $alert_lat = $post->alert_lat;
+      $alert_radius = $post->alert_radius;
+
         // Should be 6 distinct characters
         $alert_code = text::random('distinct', 8);
                     
@@ -327,15 +332,22 @@ class Alerts_Controller extends Main_Controller {
             $alert->alert_radius = $alert_radius;
             $alert->save();
 
+	  $this->_add_categories($alert, $post);
+
             return TRUE;
 		}
 
         return FALSE;
     }
 
-    private function _send_email_alert($alert_email, $alert_lon, $alert_lat, $alert_radius)
+    private function _send_email_alert($post)
     {
         // Email Alerts, Confirmation Code
+      $alert_email = $post->alert_email;
+      $alert_lon = $post->alert_lon;
+      $alert_lat = $post->alert_radius;
+      $alert_radius = $post->alert_radius;
+
         $alert_code = text::random('alnum', 20);
         
         $settings = kohana::config('settings');
@@ -359,9 +371,55 @@ class Alerts_Controller extends Main_Controller {
             $alert->alert_radius = $alert_radius;
             $alert->save();
             
+	  $this->_add_categories($alert, $post);
+
             return TRUE;
         }
 
         return FALSE;
     }   
+
+    private function _add_categories(Alert_Model $alert, $post) {
+      if (isset($post->alert_category)) {
+	foreach($post->alert_category as $item) {
+	  $category = ORM::factory('category')
+	    ->find($item);
+
+	  if($category->loaded) {
+	    $alert_category = new Alert_Category_Model();
+	    $alert_category->alert_id = $alert->id;
+	    $alert_category->category_id = $category->id;
+	    $alert_category->save();
+	  }
+	}
+      }
+    }
+
+    private function _valid(array & $post) {
+				// Create a new alert
+      $alert = ORM::factory('alert');         
+            
+				// Test to see if things passed the rule checks
+      if (!$alert->validate($post)) {
+	return false;
+      }
+
+				// Instantiate Validation
+      $valid = Validation::factory($_POST);
+
+				//	 Add some filters
+      $valid->pre_filter('trim', TRUE);
+      $valid->add_rules('alert_category.*', 'numeric');
+
+      if (!isset($_POST['alert_category'])) {
+				// That's OK.
+	$valid->alert_category = "";
+      }
+
+      if ($valid->validate()) {
+	return true;
+      }
+
+      return false;
+    }
 }

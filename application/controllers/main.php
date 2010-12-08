@@ -100,6 +100,21 @@ class Main_Controller extends Template_Controller {
 		
 	}
 
+	/**
+	 * Retrieves Categories
+	 */
+	protected function get_categories($selected_categories)
+	{
+	  $categories = ORM::factory('category')
+	    ->where('category_visible', '1')
+	    ->where('parent_id', '0')
+	    ->where('category_trusted != 1')
+	    ->orderby('category_title', 'ASC')
+	    ->find_all();
+
+	  return $categories;
+	}
+
     public function index()
     {
         $this->template->header->this_page = 'home';

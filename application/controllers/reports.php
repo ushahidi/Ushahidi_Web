@@ -563,7 +563,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 
-		$categories = $this->_get_categories($form['incident_category']);
+		$categories = $this->get_categories($form['incident_category']);
 		$this->template->content->categories = $categories;
 
 		// Retrieve Custom Form Fields Structure
@@ -1044,21 +1044,6 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		return $city_select;
-	}
-
-	/**
-	 * Retrieves Categories
-	 */
-	private function _get_categories($selected_categories)
-	{
-		$categories = ORM::factory('category')
-			->where('category_visible', '1')
-			->where('parent_id', '0')
-			->where('category_trusted != 1')
-			->orderby('category_title', 'ASC')
-			->find_all();
-
-		return $categories;
 	}
 
 	/**
