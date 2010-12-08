@@ -555,24 +555,29 @@ class Json_Controller extends Template_Controller
         // Gather allowed ids if we are looking at a specific category
 
         $allowed_ids = array();
+	$incident_id_in = '';
         if($category_id != 0)
         {
-            $query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
-            $query = $db->query($query);
+		$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
+		$query = $db->query($query);
 
-            foreach ( $query as $items )
-            {
-                $allowed_ids[] = $items->incident_id;
-            }
+		foreach ( $query as $items )
+		{
+			$allowed_ids[] = $items->incident_id;
+		}
+		// Add aditional filter here to only allow for incidents that are in the requested category
 
-        }
+		if(count($allowed_ids) > 1)
+		{
+			$incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
+		}
+		else //don't return anything
+		{
+			$incident_id_in = ' AND (id = 1 AND id = 2) '; //impossible since id is a unqiue, key column.
+		}
+	}
 
-        // Add aditional filter here to only allow for incidents that are in the requested category
-        $incident_id_in = '';
-        if(count($allowed_ids) > 1)
-        {
-            $incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
-        }
+
 
         $query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number FROM '.$this->table_prefix.'incident WHERE incident_active = 1 '.$incident_id_in.' GROUP BY '.$groupby_date_text;
         $query = $db->query($query);
