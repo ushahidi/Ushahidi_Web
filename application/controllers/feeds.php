@@ -109,6 +109,8 @@ class Feeds_Controller extends Main_Controller {
                 }
             }
         }*/
+	// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
     } 
     
 } // End Reports
