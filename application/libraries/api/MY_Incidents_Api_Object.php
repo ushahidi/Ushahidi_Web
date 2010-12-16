@@ -367,7 +367,7 @@ class Incidents_Api_Object extends Api_Object_Core {
             if (count($media_items) > 0)
             {
                 $xml->startElement('mediaItems');
-                
+
                 foreach ($media_items as $media_item)
                 {
 	                if ($media_item->mediatype != 1)
@@ -375,22 +375,34 @@ class Incidents_Api_Object extends Api_Object_Core {
                         $upload_path = "";
                     }
 
+					$url_prefix = url::base().Kohana::config('upload.relative_directory').'/';
                     if($this->response_type == 'json')
                     {
-                    	$url_prefix = url::base().Kohana::config('upload.relative_directory').'/';
                         $json_report_media[$item->incidentid][] = array(
                             "id" => $media_item->mediaid,
                             "type" => $media_item->mediatype,
                             "link" => $upload_path.$media_item->medialink,
-                            "link_url" => $url_prefix.$upload_path.$media_item->medialink,
                             "thumb" => $upload_path.$media_item->mediathumb,
-                            "thumb_url" => $url_prefix.$upload_path.$media_item->mediathumb,
                         );
+
+                        // If we are look at certain types of media, add some fields
+                        if($media_item->mediatype == 1)
+                        {
+                        	// Grab that last key up there
+                        	$add_to_key = key($json_report_media[$item->incidentid]) + 1;
+
+                        	// Give a full absolute URL to the image 
+                        	$json_report_media[$item->incidentid][$add_to_key]["thumb_url"] = 
+                        		$url_prefix.$upload_path.$media_item->mediathumb;
+
+                        	$json_report_media[$item->incidentid][$add_to_key]["link_url"] = 
+                        		$url_prefix.$upload_path.$media_item->medialink;
+                        }
                     } 
                     else 
                     {
                         $xml->startElement('media');
-                        
+
                         if( $media_item->mediaid != "" )
                         {
                             $xml->writeElement('id',$media_item->mediaid);
@@ -418,6 +430,16 @@ class Incidents_Api_Object extends Api_Object_Core {
                         {
                             $xml->writeElement('thumb',
                                 $upload_path.$media_item->mediathumb);
+                        }
+
+                        if( $media_item->mediathumb != "" AND $media_item->mediatype == 1 )
+                        {
+                        	$add_to_key = key($json_report_media[$item->incidentid]) + 1;
+                        	$xml->writeElement('thumb_url',
+                                $url_prefix.$upload_path.$media_item->mediathumb);
+
+                            $xml->writeElement('link_url',
+                                $url_prefix.$upload_path.$media_item->medialink);
                         }
 
                         $xml->endElement();
