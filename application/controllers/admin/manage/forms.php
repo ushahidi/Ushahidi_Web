@@ -608,7 +608,7 @@ class Forms_Controller extends Admin_Controller
 		
 		$html = "";
 		$html .="<input type=\"hidden\" name=\"form_id\" id=\"form_id\" value=\"".$form_id."\">";
-		$html .="<input type=\"hidden\" name=\"field_id\" id=\"field_id\" value=\"\">";
+		$html .="<input type=\"hidden\" name=\"field_id\" id=\"field_id\" value=\"".$field_id."\">";
 		$html .="<input type=\"hidden\" name=\"field_isdate\" id=\"field_id\" value=\"0\">";
 		$html .="<div id=\"form_result_".$form_id."\" class=\"forms_fields_result\"></div>";
 		$html .="<div class=\"forms_item\">"; 
