@@ -376,12 +376,15 @@ class Incidents_Api_Object extends Api_Object_Core {
                     }
 
                     if($this->response_type == 'json')
-                    {	
+                    {
+                    	$url_prefix = url::base().Kohana::config('upload.relative_directory').'/';
                         $json_report_media[$item->incidentid][] = array(
                             "id" => $media_item->mediaid,
                             "type" => $media_item->mediatype,
                             "link" => $upload_path.$media_item->medialink,
+                            "link_url" => $url_prefix.$upload_path.$media_item->medialink,
                             "thumb" => $upload_path.$media_item->mediathumb,
+                            "thumb_url" => $url_prefix.$upload_path.$media_item->mediathumb,
                         );
                     } 
                     else 
