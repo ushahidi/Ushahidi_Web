@@ -138,7 +138,7 @@ class Json_Controller extends Template_Controller
             $json_item .= "\"type\":\"Feature\",";
             $json_item .= "\"properties\": {";
             $json_item .= "\"id\": \"".$marker->id."\", \n";
-            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
+            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title,null,"UTF-8") . "</a>")) . "\",";
 
             if (isset($category)) {
                 $json_item .= "\"category\":[" . $category_id . "], ";
