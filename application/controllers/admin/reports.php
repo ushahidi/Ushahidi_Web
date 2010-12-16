@@ -1563,7 +1563,7 @@ class Reports_Controller extends Admin_Controller
     private function _get_categories()
     {
         $categories = ORM::factory('category')
-            ->where('category_visible', '1')
+            //->where('category_visible', '1')
             ->where('parent_id', '0')
             ->orderby('category_title', 'ASC')
             ->find_all();
