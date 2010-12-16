@@ -498,5 +498,7 @@
 	'weight' => 'Weight',
 	'yes' => 'Yes',
 	'yesterday' => 'Yesterday',
+	'zoom_in' => 'Zoom In',
+	'zoom_out' => 'Zoom Out'
 	);
 ?>

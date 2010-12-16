@@ -141,8 +141,8 @@
 			lon = zoom_point.lon;
 			lat = zoom_point.lat;
 
-			var content = "<div class=\"infowindow\"><div class=\"infowindow_list\">"+event.feature.attributes.name + "<div style=\"clear:both;\"></div></div>";
-		    content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
+			var content = "<div class=\"infowindow\"><div class=\"infowindow_list\">"+event.feature.attributes.name+"<div style=\"clear:both;\"></div></div>";
+		    content = content + "\n<div class=\"infowindow_meta\"><a href='"+event.feature.attributes.link+"'><?php echo Kohana::lang('ui_main.more_information');?></a><br/><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'><?php echo Kohana::lang('ui_main.zoom_in');?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'><?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
 			content = content + "</div>";			
 
 			if (content.search("<script") != -1)
