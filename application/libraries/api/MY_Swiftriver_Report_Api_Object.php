@@ -149,6 +149,11 @@ class Swiftriver_Report_Api_Object extends Api_Object_Core {
                 $incident->incident_date = $incident_date . " " .
                     $incident_time;
                 $incident->incident_dateadd = date("Y-m-d H:i:s",time());
+
+                // SwiftRiver automatically verifies reports
+                $incident->incident_verified = 1;
+
+                // Save the dataset
                 $incident->save();
 
                 // SAVE CATEGORIES
