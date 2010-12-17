@@ -130,6 +130,8 @@ class Json_Controller extends Template_Controller
                                     ->where('incident.incident_active = 1 '.$where_text)
                                     ->find_all();
         }
+        
+        
 
         $json_item_first = "";  // Variable to store individual item for report detail page
         foreach ($markers as $marker)
@@ -138,7 +140,8 @@ class Json_Controller extends Template_Controller
             $json_item .= "\"type\":\"Feature\",";
             $json_item .= "\"properties\": {";
             $json_item .= "\"id\": \"".$marker->id."\", \n";
-            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title,null,"UTF-8") . "</a>")) . "\",";
+            $encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
+            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='".url::base()."reports/view/".$marker->id."'>".$encoded_title)."</a>") . "\",";
             $json_item .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
 
             if (isset($category)) {
@@ -173,7 +176,7 @@ class Json_Controller extends Template_Controller
         }
         $json = implode(",", $json_array);
 
-        header('Content-type: application/json');
+         header('Content-type: application/json; charset=utf-8');
         $this->template->json = $json;
     }
 
@@ -306,7 +309,7 @@ class Json_Controller extends Template_Controller
         $markers = array();
         foreach ($incidents as $id => $incident)
         {
-            if (isset($allowed_ids[$id]))
+            if (isset($allowed_ids[$id]) && isset($locations[$incident['location_id']]))
             {
                 $markers[] = array(
                     'id' => $id,
@@ -413,7 +416,7 @@ class Json_Controller extends Template_Controller
 
         $json = implode(",", $json_array);
 
-        header('Content-type: application/json');
+         header('Content-type: application/json; charset=utf-8');
         $this->template->json = $json;
 
     }
@@ -494,8 +497,8 @@ class Json_Controller extends Template_Controller
 
 
         $json = implode(",", $json_array);
-
-        header('Content-type: application/json');
+		
+        header('Content-type: application/json; charset=utf-8');
         $this->template->json = $json;
     }
 
@@ -833,7 +836,7 @@ class Json_Controller extends Template_Controller
             }
         }
         
-        header('Content-type: application/json');
+         header('Content-type: application/json; charset=utf-8');
         $this->template->json = $json;
     }
 
