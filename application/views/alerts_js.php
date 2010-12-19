@@ -19,7 +19,18 @@
 		var map_layer;
 		var radius = 20000;
 		
-		jQuery(function() {
+		jQuery(function($) {
+			
+			$(window).load(function(){
+			<?php 
+				
+				/*OpenLayers uses IE's VML for vector graphics.
+					We need to wait for IE's engine to finish loading all namespaces (document.namespaces) for VML.
+					jQuery.ready is executing too soon for IE to complete it's loading process.
+				 */
+			?>
+			
+			
 			/*
 			- Initialize Map
 			- Uses Spherical Mercator Projection
@@ -45,17 +56,23 @@
 
 			<?php echo map::layers_js(FALSE); ?>
 			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-
+			
 			map.addControl(new OpenLayers.Control.Navigation());
+			
 			map.addControl(new OpenLayers.Control.PanZoomBar());
+			
 			map.addControl(new OpenLayers.Control.Attribution());
+			
 			map.addControl(new OpenLayers.Control.MousePosition());
+			
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
+			
+			
 			
 			// Create the Circle/Radius layer
 			var radiusLayer = new OpenLayers.Layer.Vector("Radius Layer");
 			
-			
+					
 			// Create the markers layer
 			var markers = new OpenLayers.Layer.Markers("Markers");
 			map.addLayers([radiusLayer, markers]);
@@ -193,15 +210,14 @@
 					$("#alert_email_yes").attr("checked",false);
 				}
 			});
-		});
-
-		$(document).ready(function() {
+		
+		
 			// Category treeview
-				    $("#category-column-1,#category-column-2").treeview({
-				      persist: "location",
-					  collapsed: true,
-					  unique: false
-					  });
-				  });
-	
+		    $("#category-column-1,#category-column-2").treeview({
+		      persist: "location",
+			  collapsed: true,
+			  unique: false
+			  });
+			});
+		});
 			
