@@ -140,7 +140,12 @@ class Json_Controller extends Template_Controller
             $json_item .= "\"type\":\"Feature\",";
             $json_item .= "\"properties\": {";
             $json_item .= "\"id\": \"".$marker->id."\", \n";
+
             $encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
+			$encoded_title = str_ireplace('"','&#34;',$encoded_title);
+			$encoded_title = json_encode($encoded_title);
+			$encoded_title = str_ireplace('"','',$encoded_title);
+
             $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='".url::base()."reports/view/".$marker->id."'>".$encoded_title)."</a>") . "\",";
             $json_item .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
 
@@ -465,6 +470,9 @@ class Json_Controller extends Template_Controller
                 $json_item .= "\"id\": \"".$row->id."\", ";
 
 				$encoded_title = utf8tohtml::convert($row->incident_title,TRUE);
+				$encoded_title = str_ireplace('"','&#34;',$encoded_title);
+				$encoded_title = json_encode($encoded_title);
+				$encoded_title = str_ireplace('"','',$encoded_title);
 
                 $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $row->id . "'>".$encoded_title."</a>")) . "\",";
                 $json_item .= "\"link\": \"".url::base()."reports/view/".$row->id."\", ";
@@ -959,5 +967,4 @@ class Json_Controller extends Template_Controller
             "ne"=>$ne
         );
     }
-
 }
