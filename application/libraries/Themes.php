@@ -217,13 +217,13 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		 * E.Kala - 05/01/2011
 		 *
 		 * Fix to ensure to ensure that a change in language loads the page with the same data
-		 * Assumption is that previously submitted data had already been sanitized!
+		 * 
+		 * Only fetch the $_GET data to prevent double submission of data already submitted via $_POST
+		 * and create hidden form fields for each variable so that these are submitted along with the selected language
+		 *
+		 * The assumption is that previously submitted data had already been sanitized!
 		 */
-		// Merge all POST and GET variables for the current page
-		$url_data = arr::merge($_POST, $_GET);
-		
-		// Create hidden form fields for each variable so that these are submitted along with the selected language
-		foreach ($url_data as $name => $value)
+		foreach ($_GET as $name => $value)
 		{
 		    $languages .= form::hidden($name, $value);
 		}
