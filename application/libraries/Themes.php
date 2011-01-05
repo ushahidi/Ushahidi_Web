@@ -212,6 +212,22 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		$languages = "";
 		$languages .= "<div class=\"language-box\">";
 		$languages .= "<form action=\"\">";
+		
+		/**
+		 * E.Kala - 05/01/2011
+		 *
+		 * Fix to ensure to ensure that a change in language loads the page with the same data
+		 * Assumption is that previously submitted data had already been sanitized!
+		 */
+		// Merge all POST and GET variables for the current page
+		$url_data = arr::merge($_POST, $_GET);
+		
+		// Create hidden form fields for each variable so that these are submitted along with the selected language
+		foreach ($url_data as $name => $value)
+		{
+		    $languages .= form::hidden($name, $value);
+		}
+		
 		$languages .= form::dropdown('l', $locales, Kohana::config('locale.language'),
 			' onchange="this.form.submit()" ');
 		$languages .= "</form>";
