@@ -228,6 +228,10 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		    $languages .= form::hidden($name, $value);
 		}
 		
+		// Do a case insensitive sort of locales so it comes up in a rough alphabetical order
+
+		natcasesort($locales);
+
 		$languages .= form::dropdown('l', $locales, Kohana::config('locale.language'),
 			' onchange="this.form.submit()" ');
 		$languages .= "</form>";
