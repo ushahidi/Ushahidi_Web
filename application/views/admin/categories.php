@@ -125,7 +125,6 @@
 
 								// I removed $category_image from the second parameter to fix bug #161
 								print form::upload('category_image', '', '');
-
 							?>
 						</div>
 						<div style="clear:both"></div>
@@ -198,7 +197,7 @@
 											<?php if (!empty($category_image))
 											{
 												echo "<img src=\"".url::base().Kohana::config('upload.relative_directory')."/".$category_image."\">";
-												echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\"><?php echo Kohana::lang('ui_main.delete');?></a>]";
+												echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\">".Kohana::lang('ui_main.delete')."</a>]";
 											}
 											else
 											{
