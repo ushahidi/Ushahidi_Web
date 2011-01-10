@@ -42,18 +42,40 @@ class Stats_Model extends ORM
 		if ( ! $tag)
 		{ // Cache is Empty so Re-Cache
 
-			// Grabbing the URL to update stats URL on the stats server
+			// Grabbing the URL to update stats URL, Name, Reports, etc on the stats server
 			$additional_query = '';
 			if(isset($_SERVER["HTTP_HOST"]))
 			{
 				$site_domain = Kohana::config('config.site_domain');
 				$slashornoslash = '';
 				if($site_domain{0} != '/') $slashornoslash = '/';
+				
+				// URL
 				$val = 'http://'.$_SERVER["HTTP_HOST"].$slashornoslash.$site_domain;
 				$additional_query = '&val='.base64_encode($val);
+				
+				// Site Name
+				$site_name = Kohana::config('settings.site_name');
+				$additional_query .= '&sitename='.base64_encode($site_name);
+				
+				// Version
+				$version = Kohana::config('settings.ushahidi_version');
+				$additional_query .= '&version='.base64_encode($version);
+				
+				// Report Count
+				$number_reports = ORM::factory("incident")->where("incident_active", 1)->count_all();
+				$additional_query .= '&reports='.base64_encode($number_reports);
+				
+				// Latitude
+				$latitude = Kohana::config('settings.default_lat');
+				$additional_query .= '&lat='.base64_encode($latitude);
+				
+				// Longitude
+				$longitude = Kohana::config('settings.default_lon');
+				$additional_query .= '&lon='.base64_encode($longitude);
 			}
 
-			$url = 'http://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
+			$url = 'http://tracker.ushahidi.com/px.php?task=tc&siteid='.$stat_id.$additional_query;
 
 			$curl_handle = curl_init();
 			curl_setopt($curl_handle,CURLOPT_URL,$url);
