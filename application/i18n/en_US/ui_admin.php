@@ -146,6 +146,7 @@
 	'phone' => 'Phone',
 	'pm' => 'PM',
 	'post_method_not_used' => 'Data was not sent by post method',
+	'public_listing' => 'Public Listing',
 	'read' => 'read',
 	'relevance' => 'Relevance',
 	'reporters' => 'Reporters',

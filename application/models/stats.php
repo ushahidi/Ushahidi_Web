@@ -55,7 +55,7 @@ class Stats_Model extends ORM
 				$additional_query = '&val='.base64_encode($val);
 				
 				// Site Name
-				$site_name = Kohana::config('settings.site_name');
+				$site_name = utf8tohtml::convert(Kohana::config('settings.site_name'),TRUE);
 				$additional_query .= '&sitename='.base64_encode($site_name);
 				
 				// Version
