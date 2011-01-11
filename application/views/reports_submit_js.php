@@ -54,7 +54,7 @@
 		  });
 		};
 
-		$().ready(function() {
+		/*$().ready(function() {
 			// validate signup form on keyup and submit
 			$("#reportForm").validate({
 				rules: {
@@ -166,7 +166,7 @@
 					}
 				}
 			});
-		});
+		});*/
 		
 		function addFormField(div, field, hidden_id, field_type) {
 			var id = document.getElementById(hidden_id).value;
