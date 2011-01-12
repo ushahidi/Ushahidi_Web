@@ -1377,7 +1377,7 @@ CREATE TABLE IF NOT EXISTS `alert_category` (
 CREATE TABLE IF NOT EXISTS `api_log` (                                              -- table description
     `id` int(11) unsigned NOT NULL AUTO_INCREMENT,                                  -- field description
     `api_task` varchar(10) NOT NULL,                                                -- field description
-    `api_parameters` varchar(50) NOT NULL,                                          -- field description
+    `api_parameters` varchar(100) NOT NULL,                                          -- field description
     `api_records` tinyint(11) NOT NULL,                                             -- field description
     `api_ipaddress` varchar(50) NOT NULL,                                           -- field description
     `api_date` datetime NOT NULL,                                                   -- field description
@@ -1424,4 +1424,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '41' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '42' WHERE `id`=1 LIMIT 1;
