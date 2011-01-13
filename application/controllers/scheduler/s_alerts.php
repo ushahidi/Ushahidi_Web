@@ -148,7 +148,7 @@ class S_Alerts_Controller extends Controller {
 						$from = array();
 							$from[] = $alerts_email;
 							$from[] = $site_name;
-						$subject = "[$site_name] ".$incident->incident_title;
+						$subject = substr("[$site_name] ".$incident->incident_title, 0, 63);
 						$message = $incident->incident_description
 									."<p>".$unsubscribe_message
 									.$alertee->alert_code."</p>";
