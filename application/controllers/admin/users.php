@@ -15,6 +15,8 @@
 
 class Users_Controller extends Admin_Controller
 {
+    private $display_roles = false;
+    
     function __construct()
     {
         parent::__construct();
@@ -25,13 +27,15 @@ class Users_Controller extends Admin_Controller
         {
             url::redirect(url::site().'admin/dashboard');
         }
+        
+        $this->display_roles = admin::permissions($this->user, 'manage_roles');
     }
 
     function index()
     {   
         $this->template->content = new View('admin/users');
         $this->template->js = new View('admin/users_js');
-
+        
         // Check, has the form been submitted, if so, setup validation
 
 		if ($_POST)
@@ -78,6 +82,9 @@ class Users_Controller extends Admin_Controller
                     ->orderby('name', 'asc')
                     ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
                         $pagination->sql_offset);
+
+        // Set the flag for displaying the roles link
+        $this->template->content->display_roles = $this->display_roles;
 
         $this->template->content->pagination = $pagination;
         $this->template->content->total_items = $pagination->total_items;
@@ -249,6 +256,7 @@ class Users_Controller extends Admin_Controller
             $role_array[$role->name] = strtoupper($role->name);
         }
         
+        $this->template->content->display_roles = $this->display_roles;
         $this->template->content->user = $user;
         $this->template->content->form = $form;
         $this->template->content->errors = $errors;
@@ -393,6 +401,7 @@ class Users_Controller extends Admin_Controller
             "users" => "Manage Users"
         );
         
+        $this->template->content->display_roles = $this->display_roles;
         $this->template->content->roles = $roles;
         $this->template->content->permissions = $permissions;
         $this->template->content->form = $form;

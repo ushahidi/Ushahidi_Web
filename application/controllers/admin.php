@@ -96,7 +96,7 @@ class Admin_Controller extends Template_Controller
 		// Generate main tab navigation list.
 		$this->template->main_tabs = admin::main_tabs();
 		// Generate sub navigation list (in default layout, sits on right side).
-        $this->template->main_right_tabs = admin::main_right_tabs($this->auth);
+        $this->template->main_right_tabs = admin::main_right_tabs($this->user);
 
 		$this->template->this_page = "";
 
