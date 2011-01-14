@@ -28,7 +28,7 @@
 		function userAction ( action, confirmAction, id )
 		{
 			var statusMessage;
-			var answer = confirm('Are You Sure You Want To ' 
+			var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' 
 				+ confirmAction + ' user with ID: ' + id + '?')
 			if (answer){
 				// Set User ID

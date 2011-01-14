@@ -33,8 +33,7 @@ function fillFields(id, page_title, page_tab,
 function pageAction ( action, confirmAction, id )
 {
 	var statusMessage;
-	var answer = confirm('Are You Sure You Want To ' 
-		+ confirmAction + ' items?')
+	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 	if (answer){
 		// Set Category ID
 		$("#page_id_action").attr("value", id);
