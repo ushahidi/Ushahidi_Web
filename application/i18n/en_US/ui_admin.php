@@ -169,6 +169,8 @@
 	'settings' => 'Settings',
 	'showing_page' => 'Showing page',
 	'showing_results' => 'Showing results',
+	'special_category' => 'Special Category',
+	'special_category_explanation' => 'This is a special category that will not show up on the report submission form for users submitting reports. This is used in conjunction with the "Trusted Reporters" feature.',
 	'statistics' => 'Statistics',
 	'stats' => 'Stats',
 	'stats_collection_error' => 'Stat Collection Failed! Either our stats server is down or something is misconfigured in your deployment of Ushahidi. Try back in a bit to see if the server is up and running. To manually reset your stats, modify stat_id (set to null) and stat_key (set to 0) in the settings table of your database. WARNING: You will lose access to your statistics if you do this!',

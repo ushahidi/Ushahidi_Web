@@ -180,6 +180,7 @@
 										$category_color = $category->category_color;
 										$category_image = $category->category_image;
 										$category_visible = $category->category_visible;
+										$category_trusted = $category->category_trusted;
 										$category_locals = array();
 										foreach($category->category_lang as $category_lang){
 											$category_locals[$category_lang->locale] = $category_lang->category_title;
@@ -190,7 +191,7 @@
 											<td class="col-2">
 												<div class="post">
 													<h4><?php echo $category_title; ?></h4>
-													<p><?php echo $category_description; ?>...</p>
+													<p><?php echo $category_description; ?></p>
 												</div>
 											</td>
 											<td class="col-3">
@@ -220,6 +221,13 @@
 													<li class="none-separator"><a href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"<?php if ($category_visible) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
 <li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>
+												
+												<?php if($category_trusted == 1) { ?>
+												<div class="right">
+													<a href="#" class="tooltip" title="<?php echo htmlentities(Kohana::lang('ui_admin.special_category_explanation'),ENT_QUOTES);?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
+												</div>
+												<?php } ?>
+												
 											</td>
 										</tr>
 										<?php
