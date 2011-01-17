@@ -2062,5 +2062,13 @@ tr.addon_active td{
 	background-color:#ffffcc;
 }
 
+/* floaties */
+.right {
+	float:right;
+}
+.left {
+	float:left;
+}
+
 /*--  --*/
 /*--  --*/

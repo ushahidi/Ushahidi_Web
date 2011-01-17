@@ -49,8 +49,7 @@ function fillFields(id, level_id, service_name, service_account, location_id, lo
 function reporterAction ( action, confirmAction, id )
 {
 	var statusMessage;
-	var answer = confirm('Are You Sure You Want To ' 
-		+ confirmAction + ' items?')
+	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 	if (answer){
 		// Set Reporter ID
 		$("#rptr_id_action").attr("value", id);
@@ -73,7 +72,7 @@ function reportersAction ( action, confirmAction, reporter_id, level_id )
 	{ 
 		alert('Please select at least one reporter.');
 	} else {
-		var answer = confirm('Are You Sure You Want To ' + confirmAction + ' items?')
+		var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 		if (answer){
 			
 			// Set Submit Type

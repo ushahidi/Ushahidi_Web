@@ -150,8 +150,12 @@ class Swiftriver_Report_Api_Object extends Api_Object_Core {
                     $incident_time;
                 $incident->incident_dateadd = date("Y-m-d H:i:s",time());
 
-                // SwiftRiver automatically verifies reports
+                // SwiftRiver automatically verifies reports - if the location (lat / lon) is set
                 $incident->incident_verified = 1;
+
+                if(($location->latitude == "0") && ($location->longitude == "0")) {
+                    $incident->incident_verified = 0;
+                }
 
                 // Save the dataset
                 $incident->save();

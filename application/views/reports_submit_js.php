@@ -54,7 +54,7 @@
 		  });
 		};
 
-		$().ready(function() {
+		/*$().ready(function() {
 			// validate signup form on keyup and submit
 			$("#reportForm").validate({
 				rules: {
@@ -166,7 +166,7 @@
 					}
 				}
 			});
-		});
+		});*/
 		
 		function addFormField(div, field, hidden_id, field_type) {
 			var id = document.getElementById(hidden_id).value;
@@ -179,7 +179,7 @@
 		}
 
 		function removeFormField(id) {
-			var answer = confirm("Are You Sure You Want To Delete This Item?");
+			var answer = confirm("<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to_delete_this_item'); ?>?");
 		    if (answer){
 				$(id).remove();
 		    }

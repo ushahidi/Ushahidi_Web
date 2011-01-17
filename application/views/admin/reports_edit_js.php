@@ -127,7 +127,7 @@
 		}
 
 		function removeFormField(id) {
-			var answer = confirm("Are You Sure You Want To Delete This Item?");
+			var answer = confirm("<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to_delete_this_item'); ?>?");
 		    if (answer){
 				$(id).remove();
 		    }
@@ -138,7 +138,7 @@
 		
 		function deletePhoto (id, div)
 		{
-			var answer = confirm("Are You Sure You Want To Delete This Photo?");
+			var answer = confirm("<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to_delete_this_photo'); ?>?");
 		    if (answer){
 				$("#" + div).effect("highlight", {}, 800);
 				$.get("<?php echo url::base() . 'admin/reports/deletePhoto/' ?>" + id);
@@ -279,7 +279,7 @@
 			
 			// Delete Action
 			$('.btn_delete').live('click', function () {
-				var agree=confirm("Are You Sure You Want To DELETE item?");
+				var agree=confirm("<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> <?php echo Kohana::lang('ui_admin.delete_action'); ?>?");
 				if (agree){
 					$('#reportMain').submit();
 				}
@@ -305,7 +305,7 @@
 		
 		function formSwitch(form_id, incident_id)
 		{
-			var answer = confirm('Are You Sure You Want To SWITCH Forms?');
+			var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to_switch_forms'); ?>?');
 			if (answer){
 				$('#form_loader').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
 				$.post("<?php echo url::base() . 'admin/reports/switch_form' ?>", { form_id: form_id, incident_id: incident_id },

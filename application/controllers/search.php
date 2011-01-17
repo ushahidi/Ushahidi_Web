@@ -60,7 +60,7 @@ class Search_Controller extends Main_Controller {
               */
               
             // Phase 1 - Fetch the search string and perform initial sanitization
-            $keyword_raw = preg_replace('/[^\w+]\w*/', '', $_GET['k']);
+            $keyword_raw = (isset($_GET['k']))? preg_replace('/[^\w+]\w*/', '', $_GET['k']) : "";
             
             // Phase 2 - Strip the search string of any HTML and PHP tags that may be present for additional safety              
             $keyword_raw = strip_tags($keyword_raw);

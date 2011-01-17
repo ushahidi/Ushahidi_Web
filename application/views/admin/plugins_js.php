@@ -25,7 +25,7 @@ function pluginAction ( action, pluginAction, plugin_id )
 	{ 
 		alert('Please select at least one plugin.');
 	} else {
-		var answer = confirm('Are You Sure You Want To ' + pluginAction + "?")
+		var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + pluginAction + '?')
 		if (answer){
 			// Set Submit Type
 			$("#action").attr("value", action);

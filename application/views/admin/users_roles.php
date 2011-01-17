@@ -15,7 +15,7 @@
 ?>
 		<div class="bg">
 			<h2>
-				<?php admin::user_subtabs("roles"); ?>
+				<?php admin::user_subtabs("roles", $display_roles); ?>
 			</h2>
 
 			<?php

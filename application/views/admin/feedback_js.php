@@ -23,7 +23,7 @@ function feedbackAction ( action, confirmAction, feedback_id )
 	{ 
 		alert('Please select at least one feedback item.');
 	} else {
-		var answer = confirm('Are You Sure You Want To ' + confirmAction + ' items?')
+		var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 		if (answer){
 			
 			// Set Submit Type

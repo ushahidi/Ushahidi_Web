@@ -687,14 +687,16 @@ class Install
 			OR ! $modules->isLoaded('iconv')
 			OR ! $modules->isLoaded('mcrypt')
 			OR ! $modules->isLoaded('SPL')
+			OR ! $modules->isLoaded('mysql')
 		) {
 			$form->set_error('modules',
 			"<strong>Oops!</strong> Send an email to your system administrator or web host saying: \"I'm installing an application which requires  
 			<a href=\"http://php.net/curl\" target=\"_blank\">cURL</a>, 
 			<a href=\"http://php.net/pcre\" target=\"_blank\">PCRE</a>, 
 			<a href=\"http://php.net/iconv\" target=\"_blank\">iconv</a>, 
-			<a href=\"http://php.net/mcrypt\" target=\"_blank\">mcrypt</a> and 
-			<a href=\"http://php.net/spl\" target=\"_blank\">SPL</a>. 
+			<a href=\"http://php.net/mcrypt\" target=\"_blank\">mcrypt</a>, 
+			<a href=\"http://php.net/spl\" target=\"_blank\">SPL</a> and
+			<a href=\"http://php.net/mysql\" target=\"_blank\">MySQL</a>.
 			Can you ensure that these PHP libraries are installed?\"");
 		}
 		
@@ -741,6 +743,10 @@ class Install
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/spl\" target=\"_blank\">SPL</a> for several core libraries. ");
 		}
 		
+		if ( ! $modules->isLoaded('mysql')) {
+		    $form->set_error('mysql',
+		    "<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/mysql\" target=\"_blank\">MySQL</a> for database access. ");
+		}
 		/**
 		 * error exists, have user correct them.
 		 */
