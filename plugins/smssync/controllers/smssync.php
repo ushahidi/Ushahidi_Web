@@ -68,7 +68,16 @@ class Smssync_Controller extends Controller {
 			if ($secret_match)
 			{
 				sms::add($message_from, $message_description);
+				echo json_encode(array("payload" => array("success" => "true")));
 			}
+			else
+			{
+				echo json_encode(array("payload" => array("success" => "false")));
+			}
+		}
+		else
+		{
+			echo json_encode(array("payload" => array("success" => "false")));
 		}
 	}
 }
