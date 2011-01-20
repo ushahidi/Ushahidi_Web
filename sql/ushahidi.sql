@@ -677,7 +677,7 @@ CREATE TABLE IF NOT EXISTS `message`                                            
     `message_to` VARCHAR(100) DEFAULT NULL,                                         -- field description
     `message` TEXT default NULL,                                                    -- field description
     `message_detail` text default NULL,                                             -- field description
-    `message_type` TINYINT default 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin)',  -- field description
+    `message_type` TINYINT default 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin), 3 - DELETED',
     `message_date` DATETIME default NULL,                                           -- field description
     `message_level` TINYINT NULL DEFAULT 0 COMMENT '0 - UNREAD, 1 - READ, 99 - SPAM',                                         -- field description
 PRIMARY KEY (`id`)
