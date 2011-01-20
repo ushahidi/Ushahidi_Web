@@ -81,7 +81,7 @@
 	'contact_phone' => 'Your Phone Number',
 	'contact_send' => 'Send Message',
 	'contact_subject' => 'Message Subject',
-	'copyright' => 'Copyright © 2010 Ushahidi.com. All Rights Reserved.',
+	'copyright' => 'Copyright ©',
 	'create' => 'Create',
 	'create_edit' => 'Create/Edit',
 	'create_new' => 'Create New',
@@ -230,7 +230,7 @@
 	'modify_date' => 'Modify Date',
 	'month' => 'month',
 	'more' => 'More',
-    'more_information' => 'More Information',
+	'more_information' => 'More Information',
 	'multi_country_instance' => 'Does this Ushahidi Deployment Span Multiple Countries',
 	'name' => 'Name',
 	'nearby_report' => 'Nearby Report',
@@ -499,6 +499,6 @@
 	'yes' => 'Yes',
 	'yesterday' => 'Yesterday',
 	'zoom_in' => 'Zoom In',
-	'zoom_out' => 'Zoom Out'
+	'zoom_out' => 'Zoom Out',
 	);
 ?>

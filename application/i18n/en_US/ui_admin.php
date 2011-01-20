@@ -1,7 +1,7 @@
 <?php
 	$lang = array(
 	'access_denied_credentials' => 'Access denied. Either your credentials are not valid or your request has been refused',
-	'access_denied_others' => 'Access denied. Your request has been understood, but denied due to access limits like time. Try Back Later',
+	'access_denied_others' => 'Access denied. Your request has been understood, but denied due to access limits like time. Try back later',
 	'actions' => 'Actions',
 	'added' => 'added',
 	'added_edited' => 'added/edited',
@@ -173,7 +173,7 @@
 	'special_category_explanation' => 'This is a special category that will not show up on the report submission form for users submitting reports. This is used in conjunction with the "Trusted Reporters" feature.',
 	'statistics' => 'Statistics',
 	'stats' => 'Stats',
-	'stats_collection_error' => 'Stat Collection Failed! Either our stats server is down or something is misconfigured in your deployment of Ushahidi. Try back in a bit to see if the server is up and running. To manually reset your stats, modify stat_id (set to null) and stat_key (set to 0) in the settings table of your database. WARNING: You will lose access to your statistics if you do this!',
+	'stats_collection_error' => 'Stat collection failed! Please try again later.',
 	'stats_collection_error_short' => 'Stat Collection Failed!',
 	'superadmin_role' => 'Super Admin',
 	'task_performed' => 'Task Performed',
