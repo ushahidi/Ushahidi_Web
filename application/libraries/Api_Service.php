@@ -49,7 +49,21 @@ final class Api_Service {
         Kohana::config_load('api');
         
         // Get the IP Address of the client submitting the API request
-        $this->request_ip_address = $_SERVER['REMOTE_ADDR'];
+        
+        // Check if the IP is from a shared internet connection
+        if ( ! empty($_SERVER['HTTP_CLIENT_IP']))
+        {
+            $this->request_ip_address = $_SERVER['HTTP_CLIENT_IP'];
+        }
+        // Check if the IP address is passed from a proxy server such as Nginx
+        elseif ( ! empty($_SERVER['HTTP_X_FORWARDED_FOR']))
+        {
+            $this->request_ip_address  = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        }
+        else
+        {
+            $this->request_ip_address = $_SERVER['REMOTE_ADDR'];
+        }
         
         // Unpack the URL parameters
         $this->api_parameters = serialize(array_keys($this->request));
