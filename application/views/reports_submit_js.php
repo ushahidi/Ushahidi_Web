@@ -229,7 +229,7 @@
 			// Now initialise the map
 			var options = {
 			units: "m"
-			, numZoomLevels: 16
+			, numZoomLevels: 18
 			, controls:[],
 			projection: proj_900913,
 			'displayProjection': proj_4326
