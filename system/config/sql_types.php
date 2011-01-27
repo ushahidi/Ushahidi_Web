@@ -26,7 +26,8 @@ $config = array
 	'varchar'			=> array('type' => 'string'),
 	'varbinary'			=> array('type' => 'string', 'binary' => TRUE),
 	'blob'				=> array('type' => 'string', 'binary' => TRUE),
-	'text'				=> array('type' => 'string')
+	'text'				=> array('type' => 'string'),
+	'geometry'			=> array('type' => 'string', 'binary' => TRUE)
 );
 
 // DOUBLE

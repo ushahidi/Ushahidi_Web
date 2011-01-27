@@ -487,24 +487,48 @@ class Json_Controller extends Template_Controller
 
                 array_push($json_array, $json_item);
             }
+			
+			// Single Main Incident
+			$json_single = "{";
+			$json_single .= "\"type\":\"Feature\",";
+			$json_single .= "\"properties\": {";
+			$json_single .= "\"id\": \"".$marker->id."\", ";
 
-            $json_item = "{";
-            $json_item .= "\"type\":\"Feature\",";
-            $json_item .= "\"properties\": {";
-            $json_item .= "\"id\": \"".$marker->id."\", ";
+			$encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
 
-            $encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
-
-            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
-            $json_item .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
-            $json_item .= "\"category\":[0], ";
-            $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
-            $json_item .= "},";
-            $json_item .= "\"geometry\": {";
-            $json_item .= "\"type\":\"Point\", ";
-            $json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
-            $json_item .= "}";
-            $json_item .= "}";
+			$json_single .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
+			$json_single .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
+			$json_single .= "\"category\":[0], ";
+			$json_single .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
+			$json_single .= "},";
+			$json_single .= "\"geometry\":";
+			
+			// Get Incident Geometries via SQL query as ORM can't handle Spatial Data
+			$sql = "SELECT AsText(geometry) as geometry FROM ".$this->table_prefix."geometry
+				 WHERE incident_id=".$marker->id;
+			$query = $db->query($sql);
+			$geometry = array();
+			$wkt = new WKT();
+			foreach ( $query as $item )
+			{
+				$geom = $wkt->read($item->geometry);
+				$geom_array = $geom->getGeoInterface();
+				$geometry[] = $json_single.json_encode($geom_array)."}";
+			}
+			
+			// If there are no geometries, use Single Incident Marker
+			if ( ! count($geometry))
+			{
+				$json_item = $json_single;
+				$json_item .= "{\"type\":\"Point\", ";
+				$json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
+				$json_item .= "}";
+				$json_item .= "}";
+			}
+			else
+			{
+				$json_item = implode(",", $geometry);
+			}
 
             array_push($json_array, $json_item);
         }

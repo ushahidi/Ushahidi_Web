@@ -240,6 +240,15 @@
 								<div id="divMap" class="map_holder_reports"></div>
 							</div>
 							<div class="incident-find-location">
+								<div id="panel" class="olControlEditingToolbar"></div>
+								<div class="btns" style="float:left;">
+									<ul style="padding:4px;">
+										<li><a href="#" class="btn_del_last"><?php echo strtoupper(Kohana::lang('ui_main.delete_last'));?></a></li>
+										<li><a href="#" class="btn_del_sel"><?php echo strtoupper(Kohana::lang('ui_main.delete_selected'));?></a></li>
+										<li><a href="#" class="btn_clear"><?php echo strtoupper(Kohana::lang('ui_main.clear_map'));?></a></li>
+									</ul>
+								</div>
+								<div style="clear:both;"></div>
 								<?php print form::input('location_find', '', ' title="'.Kohana::lang('ui_main.location_example').'" class="findtext"'); ?>
 								<div class="btns" style="float:left;">
 									<ul>

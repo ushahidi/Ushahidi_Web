@@ -1041,6 +1041,7 @@ ul.treeview li.lastExpandable { width:155px; }
 	float:left;
 }
 .incident-find-location {
+	margin-top:3px;
 	margin-right:6px;
 	padding:0 9px 9px 9px;
 	background-color:#eee;

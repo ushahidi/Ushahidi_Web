@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 41
+-- version 44
 -- http://www.ushahidi.com
 
 
@@ -1404,6 +1404,18 @@ CREATE TABLE IF NOT EXISTS `plugin` (
 
 
 /**
+* Table structure for table `geometry`
+*/
+CREATE TABLE IF NOT EXISTS `geometry` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `incident_id` bigint(20) NOT NULL,
+  `geometry` geometry NOT NULL,
+  `geometry_color` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  SPATIAL KEY `geometry` (`geometry`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/**
 * Constraints for dumped tables
 * 
 */
@@ -1425,4 +1437,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '43' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '44' WHERE `id`=1 LIMIT 1;

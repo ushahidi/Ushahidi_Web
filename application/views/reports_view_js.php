@@ -52,25 +52,31 @@
 			// Set Feature Styles
 			style = new OpenLayers.Style({
 				pointRadius: "8",
-				fillColor: "${color}",
-				fillOpacity: "1",
-				strokeColor: "#000000",
-				strokeWidth: 1,
-				strokeOpacity: 0.8
+				fillColor: "#ffcc66",
+				fillOpacity: "0.7",
+				strokeColor: "#CC0000",
+				strokeWidth: 2.5,
+				graphicZIndex: 1,
+				externalGraphic: "${graphic}",
+				graphicOpacity: 1,
+				graphicWidth: 21,
+				graphicHeight: 25,
+				graphicXOffset: -14,
+				graphicYOffset: -27
 			},
 			{
 				context: 
 				{
-					color: function(feature)
+					graphic: function(feature)
 					{
 						if ( typeof(feature) != 'undefined' && 
 							feature.data.id == <?php echo $incident_id; ?>)
 						{
-							return "#CC0000";
+							return "<?php echo url::base().'media/img/openlayers/marker.png' ;?>";
 						}
 						else
 						{
-							return "#FF9933";
+							return "<?php echo url::base().'media/img/openlayers/marker-gold.png' ;?>";
 						}
 					}
 				}
@@ -162,7 +168,7 @@
 				{
 					case "wider-map":
 						$('.report-map').insertBefore($('.left-col'));
-						$('.map-holder').css({"height":"300px", "width": "900px"});
+						$('.map-holder').css({"height":"350px", "width": "900px"});
 						$('a[href=#report-map]').parent().hide();
 						$('a.taller-map').parent().show();
 						$('a.smaller-map').parent().show();
@@ -173,7 +179,7 @@
 						$('a.smaller-map').parent().show();
 						break;
 					case "shorter-map":
-						$('.map-holder').css("height","300px");
+						$('.map-holder').css("height","350px");
 						$('a.taller-map').parent().show();
 						$('a.smaller-map').parent().show();
 						break;
@@ -188,7 +194,7 @@
 						break;
 				};
 				
-				map.setCenter(myPoint, 10);
+				map.setCenter(myPoint, map.getZoom());
 				
 				return false;
 			});

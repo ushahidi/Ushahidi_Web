@@ -169,11 +169,11 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Satellite';
 		$layer->description = 'Google Maps Satellite Imagery.';
-		$layer->api_url = 'http://maps.google.com/maps?file=api&amp;v=2&amp;key='.Kohana::config('settings.api_google');
+		$layer->api_url = 'http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
 		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
 		$layer->data = array(
 			'baselayer' => TRUE,
-			'type' => 'G_SATELLITE_MAP',
+			'type' => 'google.maps.MapTypeId.SATELLITE',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -183,11 +183,11 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Hybrid';
 		$layer->description = 'Google Maps with roads and terrain.';
-		$layer->api_url = 'http://maps.google.com/maps?file=api&amp;v=2&amp;key='.Kohana::config('settings.api_google');
+		$layer->api_url = 'http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
 		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
 		$layer->data = array(
 			'baselayer' => TRUE,
-			'type' => 'G_HYBRID_MAP',
+			'type' => 'google.maps.MapTypeId.HYBRID',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -197,11 +197,11 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Normal';
 		$layer->description = 'Standard Google Maps Roads';
-		$layer->api_url = 'http://maps.google.com/maps?file=api&amp;v=2&amp;key='.Kohana::config('settings.api_google');
+		$layer->api_url = 'http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
 		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
 		$layer->data = array(
 			'baselayer' => TRUE,
-			'type' => 'G_NORMAL_MAP',
+			'type' => '',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -211,11 +211,11 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Physical';
 		$layer->description = 'Google Maps Hillshades';
-		$layer->api_url = 'http://maps.google.com/maps?file=api&amp;v=2&amp;key='.Kohana::config('settings.api_google');
+		$layer->api_url = 'http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
 		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
 		$layer->data = array(
 			'baselayer' => TRUE,
-			'type' => 'G_PHYSICAL_MAP',
+			'type' => 'google.maps.MapTypeId.TERRAIN',
 		);
 		$layers[$layer->name] = $layer;
 
