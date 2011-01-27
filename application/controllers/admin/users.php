@@ -120,6 +120,8 @@ class Users_Controller extends Admin_Controller
             $post->add_rules('role','required','length[3,30]', 'alpha_numeric');
             
             $post->add_rules('notify','between[0,1]');
+	    
+	    Event::run('ushahidi_action.user_submit_admin', $post);
             
             if ($post->validate())
             {
@@ -160,6 +162,9 @@ class Users_Controller extends Admin_Controller
                     $user->add(ORM::factory('role', $post->role));
                 }
                 $user->save();
+		
+		// Action::report_edit - Edited a Report
+                Event::run('ushahidi_action.user_edit', $user);
                 
                 // Redirect
                 url::redirect(url::site().'admin/users/');
@@ -213,6 +218,7 @@ class Users_Controller extends Admin_Controller
             $role_array[$role->name] = strtoupper($role->name);
         }
         
+	$this->template->content->id = $user_id;
         $this->template->content->user = $user;
         $this->template->content->form = $form;
         $this->template->content->errors = $errors;
@@ -367,7 +373,7 @@ class Users_Controller extends Admin_Controller
         $this->template->js = new View('admin/users_roles_js');         
     }
     
-    
+
     /**
      * Checks if username already exists.
      * @param Validation $post $_POST variable with validation rules 
