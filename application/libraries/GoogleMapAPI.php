@@ -2450,7 +2450,7 @@ class GoogleMapAPI_Core {
     function geoGetCoords($address,$depth=0) {
         switch($this->lookup_service) {
             case 'GOOGLE':
-                $_url = sprintf('http://%s/maps/api/geocode/json?sensor=%s&address=%s',$this->lookup_server['GOOGLE'], $this->mobile==true?"true":"false", rawurlencode($address));
+                $_url = sprintf('http://%s/maps/api/geocode/json?sensor=%s&address=%s&region=lr',$this->lookup_server['GOOGLE'], $this->mobile==true?"true":"false", rawurlencode($address));
                 $_result = false;
                 if($_result = $this->fetchURL($_url)) {
                     $_result_parts = json_decode($_result);
