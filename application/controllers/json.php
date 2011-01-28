@@ -508,7 +508,7 @@ class Json_Controller extends Template_Controller
 				 WHERE incident_id=".$marker->id;
 			$query = $db->query($sql);
 			$geometry = array();
-			$wkt = new WKT();
+			$wkt = new Wkt();
 			foreach ( $query as $item )
 			{
 				$geom = $wkt->read($item->geometry);
