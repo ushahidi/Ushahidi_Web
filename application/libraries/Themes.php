@@ -153,7 +153,7 @@ class Themes_Core {
 		// Load TinyMCE
 		if ($this->editor_enabled)
 		{
-			echo html::script('media/js/tinymce/tiny_mce', true);
+			$core_js .= html::script('media/js/tinymce/tiny_mce', true);
 		}
 		
 		// Javascript files from plugins
