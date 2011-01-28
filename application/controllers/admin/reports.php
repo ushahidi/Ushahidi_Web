@@ -367,7 +367,8 @@ class Reports_Controller extends Admin_Controller
 			'incident_active' => '',
 			'incident_verified' => '',
 			'incident_source' => '',
-			'incident_information' => ''
+			'incident_information' => '',
+			'incident_zoom' => ''
 		);
 
 		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -695,6 +696,7 @@ class Reports_Controller extends Admin_Controller
 				$incident->incident_verified = $post->incident_verified;
 				$incident->incident_source = $post->incident_source;
 				$incident->incident_information = $post->incident_information;
+				$incident->incident_zoom = (int) $post->incident_zoom;
 				//Save
 				$incident->save();
 
@@ -1005,7 +1007,8 @@ class Reports_Controller extends Admin_Controller
 						'incident_active' => $incident->incident_active,
 						'incident_verified' => $incident->incident_verified,
 						'incident_source' => $incident->incident_source,
-						'incident_information' => $incident->incident_information
+						'incident_information' => $incident->incident_information,
+						'incident_zoom' => $incident->incident_zoom
 					);
 
 					// Merge To Form Array For Display
@@ -1054,14 +1057,15 @@ class Reports_Controller extends Admin_Controller
 		{
 			$this->template->js->latitude = Kohana::config('settings.default_lat');
 			$this->template->js->longitude = Kohana::config('settings.default_lon');
-			$this->template->js->geometries = $form['geometry'];
 		}
 		else
 		{
 			$this->template->js->latitude = $form['latitude'];
 			$this->template->js->longitude = $form['longitude'];
-			$this->template->js->geometries = $form['geometry'];
 		}
+		
+		$this->template->js->incident_zoom = $form['incident_zoom'];
+		$this->template->js->geometries = $form['geometry'];
 
 		// Inline Javascript
 		$this->template->content->date_picker_js = $this->_date_picker_js();

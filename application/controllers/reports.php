@@ -878,6 +878,7 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->themes->js->latitude = $incident->location->latitude;
 		$this->themes->js->longitude = $incident->location->longitude;
+		$this->themes->js->incident_zoom = $incident->incident_zoom;
 		$this->themes->js->incident_photos = $incident_photo;
 
 		// Initialize custom field array

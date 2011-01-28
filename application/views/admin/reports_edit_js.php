@@ -70,7 +70,10 @@
 			, numZoomLevels: 18
 			, controls:[],
 			projection: proj_900913,
-			'displayProjection': proj_4326
+			'displayProjection': proj_4326,
+			eventListeners: {
+					"zoomend": incidentZoom
+			    },
 			};
 			map = new OpenLayers.Map('divMap', options);
 			
@@ -204,7 +207,7 @@
 			startPoint.transform(proj_4326, map.getProjectionObject());
 			
 			// display the map centered on a latitude and longitude (Google zoom levels)
-			map.setCenter(startPoint, <?php echo $default_zoom; ?>);
+			map.setCenter(startPoint, <?php echo ($incident_zoom) ? $incident_zoom : $default_zoom; ?>);
 			
 			// Create the Editing Toolbar
 			var container = document.getElementById("panel");
@@ -368,6 +371,48 @@
 			    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
 			    buttonImageOnly: true 
 			});
+			
+			// Handles the functionality for changing the size of the map
+			// TODO: make the CSS widths dynamic... instead of hardcoding, grab the width's
+			// from the appropriate parent divs
+			$('.map-toggles a').click(function() {
+				var action = $(this).attr("class");
+				$('ul.map-toggles li').hide();
+				switch(action)
+				{
+					case "wider-map":
+						$('.incident-location').insertBefore($('.f-col'));
+						$('.map_holder_reports').css({"height":"350px", "width": "935px"});
+						$('.incident-location h4').css({"margin-left":"10px"});
+						$('.location-info').css({"margin-right":"14px"});
+						$('a[href=#report-map]').parent().hide();
+						$('a.taller-map').parent().show();
+						$('a.smaller-map').parent().show();
+						break;
+					case "taller-map":
+						$('.map_holder_reports').css("height","600px");
+						$('a.shorter-map').parent().show();
+						$('a.smaller-map').parent().show();
+						break;
+					case "shorter-map":
+						$('.map_holder_reports').css("height","350px");
+						$('a.taller-map').parent().show();
+						$('a.smaller-map').parent().show();
+						break;
+					case "smaller-map":
+						$('.incident-location').hide().prependTo($('.f-col-1'));
+						$('.map_holder_reports').css({"height":"350px", "width": "494px"});
+						$('a.wider-map').parent().show();
+						$('.incident-location').show();
+						$('.incident-location h4').css({"margin-left":"0"});
+						$('.location-info').css({"margin-right":"0"});
+						break;
+				};
+				
+				map.setCenter(map.getCenter(), map.getZoom());
+				
+				return false;
+			});
 		});
 		
 		
@@ -513,4 +558,9 @@
 			centroid = geoCollection.getCentroid(true);
 			$("#latitude").val(centroid.y);
 			$("#longitude").val(centroid.x);
+		}
+		
+		function incidentZoom(event)
+		{
+			$("#incident_zoom").val(map.getZoom())
 		}

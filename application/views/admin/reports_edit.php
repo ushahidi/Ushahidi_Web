@@ -20,6 +20,7 @@
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">
 					<input type="hidden" name="location_id" id="location_id" value="<?php print $form['location_id']; ?>">
+					<input type="hidden" name="incident_zoom" id="incident_zoom" value="<?php print $form['incident_zoom']; ?>">
 					<!-- report-form -->
 					<div class="report-form">
 						<?php
@@ -237,6 +238,12 @@
 									<span><?php echo Kohana::lang('ui_main.longitude');?>:</span>
 									<?php print form::input('longitude', $form['longitude'], ' class="text"'); ?>
 								</div>
+								<ul class="map-toggles">
+						          <li><a href="#" class="smaller-map">Smaller map</a></li>
+						          <li style="display:block;"><a href="#" class="wider-map">Wider map</a></li>
+						          <li><a href="#" class="taller-map">Taller map</a></li>
+						          <li><a href="#" class="shorter-map">Shorter Map</a></li>
+						        </ul>
 								<div id="divMap" class="map_holder_reports"></div>
 							</div>
 							<div class="incident-find-location">

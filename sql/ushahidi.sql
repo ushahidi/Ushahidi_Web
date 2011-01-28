@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 44
+-- version 45
 -- http://www.ushahidi.com
 
 
@@ -385,7 +385,8 @@ CREATE TABLE IF NOT EXISTS `incident` (                                         
     `incident_dateadd` datetime default NULL,                                       -- field description
     `incident_dateadd_gmt` datetime default NULL,                                   -- field description
     `incident_datemodify` datetime default NULL,                                    -- field description
-    `incident_alert_status` TINYINT NOT NULL DEFAULT '0' COMMENT '0 - Not Tagged for Sending, 1 - Tagged for Sending, 2 - Alerts Have Been Sent',    -- field description
+    `incident_alert_status` TINYINT NOT NULL DEFAULT '0' COMMENT '0 - Not Tagged for Sending, 1 - Tagged for Sending, 2 - Alerts Have Been Sent',
+	`incident_zoom` tinyint NULL DEFAULT NULL
   PRIMARY KEY  (`id`),
   KEY `location_id` (`location_id`),
   KEY `incident_active` (`incident_active`),
@@ -1437,4 +1438,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '44' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '45' WHERE `id`=1 LIMIT 1;

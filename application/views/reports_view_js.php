@@ -104,7 +104,7 @@
 			
 			// display the map centered on a latitude and longitude (Google zoom levels)
 
-			map.setCenter(myPoint, 10);
+			map.setCenter(myPoint, <?php echo ($incident_zoom) ? $incident_zoom : 10; ?>);
 		});
 		
 		$(document).ready(function(){
@@ -190,7 +190,7 @@
 						$('a.tab-item').parent().removeClass("report-tab-selected");
 						$('.report-media-box-content > div').hide(); // hide everything incase video/images were showing
 						$('a[href=#report-map]').parent().addClass('report-tab-selected').show();
-						$('.report-map').show()
+						$('.report-map').show();
 						break;
 				};
 				
