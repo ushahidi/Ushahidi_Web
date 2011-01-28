@@ -157,10 +157,13 @@
 					// vlayer.removeFeatures(vlayer.features);
 				},
 				featuresadded: function(event) {
-					refreshFeatures(event)
+					refreshFeatures(event);
+				},
+				featuremodified: function(event) {
+					refreshFeatures(event);
 				},
 				featuresremoved: function(event) {
-					refreshFeatures(event)
+					refreshFeatures(event);
 				}
 			});
 			
@@ -532,6 +535,7 @@
 		    for (f in selectedFeatures) {
 		        f.state = OpenLayers.State.UPDATE;
 		    }
+			refreshFeatures();
 		}
 		
 		function refreshFeatures(event)
