@@ -386,7 +386,7 @@ CREATE TABLE IF NOT EXISTS `incident` (                                         
     `incident_dateadd_gmt` datetime default NULL,                                   -- field description
     `incident_datemodify` datetime default NULL,                                    -- field description
     `incident_alert_status` TINYINT NOT NULL DEFAULT '0' COMMENT '0 - Not Tagged for Sending, 1 - Tagged for Sending, 2 - Alerts Have Been Sent',
-	`incident_zoom` tinyint NULL DEFAULT NULL
+	`incident_zoom` tinyint NULL DEFAULT NULL,
   PRIMARY KEY  (`id`),
   KEY `location_id` (`location_id`),
   KEY `incident_active` (`incident_active`),
@@ -400,7 +400,7 @@ CREATE TABLE IF NOT EXISTS `incident` (                                         
 
 LOCK TABLES `incident` WRITE;
 /*!40000 ALTER TABLE `incident` DISABLE KEYS */;
-INSERT INTO `incident` VALUES (1,1,1,'en_US',1,'Hello Ushahidi!','Welcome to Ushahidi. Please replace this report with a valid incident','2010-01-01 12:00:00',1,1,1,'0','2010-01-01 12:00:00','0',NULL,NULL,NULL,'0');
+INSERT INTO `incident` VALUES (1,1,1,'en_US',1,'Hello Ushahidi!','Welcome to Ushahidi. Please replace this report with a valid incident','2010-01-01 12:00:00',1,1,1,'0','2010-01-01 12:00:00','0',NULL,NULL,NULL,'0',NULL);
 /*!40000 ALTER TABLE `incident` ENABLE KEYS */;
 UNLOCK TABLES;
 
