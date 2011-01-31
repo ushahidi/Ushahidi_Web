@@ -47,6 +47,7 @@ class Settings_Controller extends Admin_Controller
             'site_email' => '',
             'alerts_email' =>  '',
             'site_language' => '',
+			'site_timezone' => '',
             'site_message' => '',
             'site_copyright_statement' => '',
             //'site_help_page' => '',
@@ -90,6 +91,7 @@ class Settings_Controller extends Admin_Controller
             //$post->add_rules('site_message', 'standard_text');
             $post->add_rules('site_copyright_statement', 'length[4,600]');
             $post->add_rules('site_language','required', 'length[5, 5]');
+			//$post->add_rules('site_timezone','required', 'between[10,50]');
             //$post->add_rules('site_help_page','required','between[0,1]');
             $post->add_rules('site_contact_page','required','between[0,1]');
             $post->add_rules('items_per_page','required','between[10,50]');
@@ -118,6 +120,7 @@ class Settings_Controller extends Admin_Controller
                 $settings->site_message = $post->site_message;
                 $settings->site_copyright_statement = $post->site_copyright_statement;
                 $settings->site_language = $post->site_language;
+				$settings->site_timezone = $post->site_timezone;
                 //$settings->site_help_page = $post->site_help_page;
                 $settings->site_contact_page = $post->site_contact_page;
                 $settings->items_per_page = $post->items_per_page;
@@ -174,6 +177,7 @@ class Settings_Controller extends Admin_Controller
                 'site_message' => $settings->site_message,
                 'site_copyright_statement' => $settings->site_copyright_statement,
                 'site_language' => $settings->site_language,
+				'site_timezone' => $settings->site_timezone,
                 //'site_help_page' => $settings->site_help_page,
                 'site_contact_page' => $settings->site_contact_page,
                 'items_per_page' => $settings->items_per_page,
@@ -192,6 +196,8 @@ class Settings_Controller extends Admin_Controller
             );
         }
 
+		
+
         $this->template->colorpicker_enabled = TRUE;
         $this->template->content->form = $form;
         $this->template->content->errors = $errors;
@@ -201,7 +207,7 @@ class Settings_Controller extends Admin_Controller
         $this->template->content->yesno_array = array(
             '1'=>strtoupper(Kohana::lang('ui_main.yes')),
             '0'=>strtoupper(Kohana::lang('ui_main.no')));
-            
+           
         $this->template->content->comments_array = array(
             '1'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_auto')),
             '2'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_manual')),
@@ -212,6 +218,34 @@ class Settings_Controller extends Admin_Controller
 			'600'=>'10 '.Kohana::lang('ui_admin.minutes'),
 			'900'=>'15 '.Kohana::lang('ui_admin.minutes'),
 			'1800'=>'30 '.Kohana::lang('ui_admin.minutes'));
+
+		//Generate all timezones
+		$site_timezone_array = timezone_identifiers_list();		
+
+		$this->template->content->site_timezone_array = $site_timezone_array;
+	
+			
+		//add timezone to the kohana locale file
+	
+		$config_file = @file('application/config/locale.php');		
+		$handle = @fopen('application/config/locale.php', 'w');
+
+		if(is_array($config_file) )
+        {   
+            foreach ($config_file as $line_number => $line)
+            {   
+                if(strpos(" ".$line, "\$config['timezone'] = '") != 0 ) 
+				{
+					$line ="\$config['timezone'] = '';";  
+                    fwrite($handle,str_replace("''","'".$site_timezone_array[$settings->site_timezone]."'",$line)); 
+                }   
+                else
+                {   
+					fwrite($handle, $line);
+                }   
+
+			}
+		}
 
         // Generate Available Locales
         $locales = locale::get_i18n();
