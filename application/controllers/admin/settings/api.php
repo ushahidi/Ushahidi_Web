@@ -245,7 +245,7 @@ class Api_Controller extends Admin_Controller {
                 SELECT al.id, al.api_task, ab.id AS ban_id, al.api_parameters, al.api_records, al.api_ipaddress, al.api_date 
                 FROM '.$this->table_prefix.'api_log al
                 LEFT JOIN '.$this->table_prefix.'api_banned AS ab ON (ab.banned_ipaddress = al.api_ipaddress)
-                ORDER BY al.api_date ASC
+                ORDER BY al.api_date DESC
                 LIMIT ' . $pagination->sql_offset. ', '.(int) Kohana::config('settings.items_per_page_admin')
             );
         

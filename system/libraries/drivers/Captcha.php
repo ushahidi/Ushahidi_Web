@@ -56,6 +56,7 @@ abstract class Captcha_Driver {
 	 */
 	public function update_response_session()
 	{
+		Kohana::log('info'," Captcha--> updateresponse= " . strtoupper($this->response));
 		Session::instance()->set('captcha_response', sha1(strtoupper($this->response)));
 	}
 
@@ -211,7 +212,7 @@ abstract class Captcha_Driver {
 	{
 		// Output html element
 		if ($html)
-			return '<img alt="Captcha" src="'.url::site('captcha/'.Captcha::$config['group']).'" width="'.Captcha::$config['width'].'" height="'.Captcha::$config['height'].'" />';
+			return '<img alt="Captcha" src="'.url::site('captcha/'.Captcha::$config['group']).'/'.rand(10000,99999).'" width="'.Captcha::$config['width'].'" height="'.Captcha::$config['height'].'" />';
 
 		// Send the correct HTTP header
 		header('Content-Type: image/'.$this->image_type);

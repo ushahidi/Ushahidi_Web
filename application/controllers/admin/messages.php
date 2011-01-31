@@ -121,7 +121,8 @@ class Messages_Controller extends Admin_Controller
                     {
                         // Delete Message
                         $message = ORM::factory('message')->find($item);
-                        $message->delete( $item );
+                        $message->message_type = 3; // Tag As Deleted/Trash
+						$message->save();
                     }
                     
                     $form_saved = TRUE;

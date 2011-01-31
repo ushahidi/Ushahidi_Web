@@ -22,7 +22,7 @@
     function apiSettingsAction(action, confirmAction)
     {
         // Display confirm dialog
-        var answer = confirm('Are you sure you want to ' + confirmAction + "?");
+        var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?');
 
         if (answer) {
             $("#action").attr("value", action);

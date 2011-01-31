@@ -38,8 +38,7 @@ function fillFields(id, form_title, form_description,
 function formAction ( action, confirmAction, id )
 {
 	var statusMessage;
-	var answer = confirm('Are You Sure You Want To ' 
-		+ confirmAction + ' items?');
+	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?');
 		
 	if (answer){
 		// Set Submit Type
@@ -109,8 +108,7 @@ function fieldAction( action, confirmAction, field_id, form_id, field_type )
 		});
 		break;
 	case 'd':
-		var answer = confirm('Are You Sure You Want To ' 
-			+ confirmAction + ' Field?');
+		var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?');
 		if (answer){
 			$.post("<?php echo url::site() . 'admin/manage/forms/field_delete' ?>", { form_id: form_id, field_id: field_id },
 				function(data){

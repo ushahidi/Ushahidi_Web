@@ -28,8 +28,7 @@ function fillFields(id, layer_name, layer_url, layer_color, layer_file_old)
 function layerAction ( action, confirmAction, id )
 {
 	var statusMessage;
-	var answer = confirm('Are You Sure You Want To ' 
-		+ confirmAction)
+	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 	if (answer){
 		// Set Category ID
 		$("#layer_id_action").attr("value", id);

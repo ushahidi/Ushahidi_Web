@@ -257,13 +257,20 @@ class Alerts_Controller extends Main_Controller {
         // XXX Might need to validate $code as well
         if ($code != NULL)
         {
-				// XXX The alert_category table has to cleaned by a
-				// Trigger!!!
-            $alert_code = ORM::factory('alert')
-                ->where('alert_code', $code)
-                ->delete_all();
+			$alerts = ORM::factory('alert')
+				->where('alert_code', $code)
+				->find_all();
+				
+			foreach ($alerts as $alert)
+			{
+				ORM::factory('alert_category')
+					->where('alert_id', $alert->id)
+					->delete_all();
+					
+				$alert->delete();
+			}
 
-            $this->template->content->unsubscribed = TRUE;
+			$this->template->content->unsubscribed = TRUE;
         }
         
         // Rebuild Header Block

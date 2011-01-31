@@ -130,6 +130,8 @@ class Json_Controller extends Template_Controller
                                     ->where('incident.incident_active = 1 '.$where_text)
                                     ->find_all();
         }
+        
+        
 
         $json_item_first = "";  // Variable to store individual item for report detail page
         foreach ($markers as $marker)
@@ -138,7 +140,14 @@ class Json_Controller extends Template_Controller
             $json_item .= "\"type\":\"Feature\",";
             $json_item .= "\"properties\": {";
             $json_item .= "\"id\": \"".$marker->id."\", \n";
-            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
+
+            $encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
+			$encoded_title = str_ireplace('"','&#34;',$encoded_title);
+			$encoded_title = json_encode($encoded_title);
+			$encoded_title = str_ireplace('"','',$encoded_title);
+
+            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='".url::base()."reports/view/".$marker->id."'>".$encoded_title)."</a>") . "\",";
+            $json_item .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
 
             if (isset($category)) {
                 $json_item .= "\"category\":[" . $category_id . "], ";
@@ -172,7 +181,7 @@ class Json_Controller extends Template_Controller
         }
         $json = implode(",", $json_array);
 
-        header('Content-type: application/json');
+         header('Content-type: application/json; charset=utf-8');
         $this->template->json = $json;
     }
 
@@ -305,7 +314,7 @@ class Json_Controller extends Template_Controller
         $markers = array();
         foreach ($incidents as $id => $incident)
         {
-            if (isset($allowed_ids[$id]))
+            if (isset($allowed_ids[$id]) && isset($locations[$incident['location_id']]))
             {
                 $markers[] = array(
                     'id' => $id,
@@ -372,6 +381,7 @@ class Json_Controller extends Template_Controller
             $json_item .= "\"type\":\"Feature\",";
             $json_item .= "\"properties\": {";
             $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.">" . $cluster_count . " Reports</a>")) . "\",";
+            $json_item .= "\"link\": \"".url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast."\", ";
             $json_item .= "\"category\":[0], ";
             $json_item .= "\"color\": \"".$color."\", ";
             $json_item .= "\"icon\": \"".$icon."\", ";
@@ -392,7 +402,8 @@ class Json_Controller extends Template_Controller
             $json_item = "{";
             $json_item .= "\"type\":\"Feature\",";
             $json_item .= "\"properties\": {";
-            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/view/" . $single['id'] . "/>".str_replace('"','\"',$single['incident_title'])."</a>")) . "\",";   
+            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/view/" . $single['id'] . "/>".str_replace('"','\"',$single['incident_title'])."</a>")) . "\",";
+            $json_item .= "\"link\": \"".url::base()."reports/view/".$single['id']."\", ";
             $json_item .= "\"category\":[0], ";
             $json_item .= "\"color\": \"".$color."\", ";
             $json_item .= "\"icon\": \"".$icon."\", ";
@@ -410,7 +421,7 @@ class Json_Controller extends Template_Controller
 
         $json = implode(",", $json_array);
 
-        header('Content-type: application/json');
+         header('Content-type: application/json; charset=utf-8');
         $this->template->json = $json;
 
     }
@@ -457,7 +468,14 @@ class Json_Controller extends Template_Controller
                 $json_item .= "\"type\":\"Feature\",";
                 $json_item .= "\"properties\": {";
                 $json_item .= "\"id\": \"".$row->id."\", ";
-                $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $row->id . "'>" . htmlentities($row->incident_title) . "</a>")) . "\",";
+
+				$encoded_title = utf8tohtml::convert($row->incident_title,TRUE);
+				$encoded_title = str_ireplace('"','&#34;',$encoded_title);
+				$encoded_title = json_encode($encoded_title);
+				$encoded_title = str_ireplace('"','',$encoded_title);
+
+                $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $row->id . "'>".$encoded_title."</a>")) . "\",";
+                $json_item .= "\"link\": \"".url::base()."reports/view/".$row->id."\", ";
                 $json_item .= "\"category\":[0], ";
                 $json_item .= "\"timestamp\": \"" . strtotime($row->incident_date) . "\"";
                 $json_item .= "},";
@@ -469,28 +487,56 @@ class Json_Controller extends Template_Controller
 
                 array_push($json_array, $json_item);
             }
+			
+			// Single Main Incident
+			$json_single = "{";
+			$json_single .= "\"type\":\"Feature\",";
+			$json_single .= "\"properties\": {";
+			$json_single .= "\"id\": \"".$marker->id."\", ";
 
-            $json_item = "{";
-            $json_item .= "\"type\":\"Feature\",";
-            $json_item .= "\"properties\": {";
-            $json_item .= "\"id\": \"".$marker->id."\", ";
-            $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
-            $json_item .= "\"category\":[0], ";
-            $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
-            $json_item .= "},";
-            $json_item .= "\"geometry\": {";
-            $json_item .= "\"type\":\"Point\", ";
-            $json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
-            $json_item .= "}";
-            $json_item .= "}";
+			$encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
+
+			$json_single .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
+			$json_single .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
+			$json_single .= "\"category\":[0], ";
+			$json_single .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
+			$json_single .= "},";
+			$json_single .= "\"geometry\":";
+			
+			// Get Incident Geometries via SQL query as ORM can't handle Spatial Data
+			$sql = "SELECT AsText(geometry) as geometry FROM ".$this->table_prefix."geometry
+				 WHERE incident_id=".$marker->id;
+			$query = $db->query($sql);
+			$geometry = array();
+			$wkt = new Wkt();
+			foreach ( $query as $item )
+			{
+				$geom = $wkt->read($item->geometry);
+				$geom_array = $geom->getGeoInterface();
+				$geometry[] = $json_single.json_encode($geom_array)."}";
+			}
+			
+			// If there are no geometries, use Single Incident Marker
+			if ( ! count($geometry))
+			{
+				$json_item = $json_single;
+				$json_item .= "{\"type\":\"Point\", ";
+				$json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
+				$json_item .= "}";
+				$json_item .= "}";
+			}
+			else
+			{
+				$json_item = implode(",", $geometry);
+			}
 
             array_push($json_array, $json_item);
         }
 
 
         $json = implode(",", $json_array);
-
-        header('Content-type: application/json');
+		
+        header('Content-type: application/json; charset=utf-8');
         $this->template->json = $json;
     }
 
@@ -754,7 +800,8 @@ class Json_Controller extends Template_Controller
                     $json_item = "{";
                     $json_item .= "\"type\":\"Feature\",";
                     $json_item .= "\"properties\": {";
-                    $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/index/?c=0&sw=".$southwest."&ne=".$northeast."'>" . $cluster_count . " Reports</a>")) . "\",";          
+                    $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/index/?c=0&sw=".$southwest."&ne=".$northeast."'>" . $cluster_count . " Reports</a>")) . "\",";
+                    $json_item .= "\"link\": \"http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast."\", ";        
                     $json_item .= "\"category\":[0], ";
                     $json_item .= "\"icon\": \"\", ";
                     $json_item .= "\"color\": \"".$sharing_color."\", ";
@@ -775,7 +822,8 @@ class Json_Controller extends Template_Controller
                     $json_item = "{";
                     $json_item .= "\"type\":\"Feature\",";
                     $json_item .= "\"properties\": {";
-                    $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/view/" . $single['id'] . "'>".$single['incident_title']."</a>")) . "\",";   
+                    $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/view/" . $single['id'] . "'>".$single['incident_title']."</a>")) . "\",";
+                    $json_item .= "\"link\": \"http://".$sharing_url."reports/view/".$single['id']."\", ";
                     $json_item .= "\"category\":[0], ";
                     $json_item .= "\"icon\": \"\", ";
                     $json_item .= "\"color\": \"".$sharing_color."\", ";
@@ -807,8 +855,11 @@ class Json_Controller extends Template_Controller
                     $json_item .= "\"type\":\"Feature\",";
                     $json_item .= "\"properties\": {";
                     $json_item .= "\"id\": \"".$marker->incident_id."\", \n";
-                    $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/view/" . $marker->incident_id . "'>" . htmlentities($marker->incident_title) . "</a>")) . "\",";
 
+                    $encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
+
+                    $json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/view/" . $marker->incident_id . "'>".$encoded_title."</a>")) . "\",";
+					$json_item .= "\"link\": \"http://".$sharing_url."reports/view/".$marker->incident_id."\", ";
                     $json_item .= "\"icon\": \"\", ";
                     $json_item .= "\"color\": \"".$sharing_color ."\", \n";
                     $json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
@@ -826,7 +877,7 @@ class Json_Controller extends Template_Controller
             }
         }
         
-        header('Content-type: application/json');
+         header('Content-type: application/json; charset=utf-8');
         $this->template->json = $json;
     }
 
@@ -940,5 +991,4 @@ class Json_Controller extends Template_Controller
             "ne"=>$ne
         );
     }
-
 }

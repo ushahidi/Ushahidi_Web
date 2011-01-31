@@ -15,9 +15,38 @@
 
 class S_Twitter_Controller extends Controller {
 
+	// Cache instance
+	protected $cache;
+	
 	public function __construct()
 	{
 		parent::__construct();
+		
+		// Load cache
+		$this->cache = new Cache;
+		
+		// *************************************
+		// Create A 10 Minute RETRIEVE LOCK
+		// This lock is released at the end of execution
+		// Or expires automatically
+		$twitter_lock = $this->cache->get("twitter_lock");
+		if ( ! $twitter_lock)
+		{
+			// Lock doesn't exist
+			$timestamp = time();
+			$this->cache->set("twitter_lock", $timestamp, array("alerts"), 900);
+		}
+		else
+		{
+			// Lock Exists - End
+			exit("Other process is running - waiting 10 minutes!");
+		}
+		// *************************************
+	}
+	
+	public function __destruct()
+	{
+		$this->cache->delete("twitter_lock");
 	}
 
 	public function index()
@@ -51,9 +80,10 @@ class S_Twitter_Controller extends Controller {
 			{
 				$page = 1;
 				$have_results = TRUE; //just starting us off as true, although there may be no results
-				while($have_results == TRUE AND $page <= 2){ //This loop is for pagination of rss results
+				while($have_results == TRUE AND $page <= 2)
+				{ //This loop is for pagination of rss results
 					$hashtag = trim(str_replace('#','',$hashtag));
-					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page;
+					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page.$last_tweet_id;
 					$curl_handle = curl_init();
 					curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
 					curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,4); //Since Twitter is down a lot, set timeout to 4 secs

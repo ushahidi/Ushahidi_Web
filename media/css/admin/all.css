@@ -1041,6 +1041,7 @@ ul.treeview li.lastExpandable { width:155px; }
 	float:left;
 }
 .incident-find-location {
+	margin-top:0;
 	margin-right:6px;
 	padding:0 9px 9px 9px;
 	background-color:#eee;
@@ -2061,6 +2062,26 @@ h4 span.highlight{
 tr.addon_active td{
 	background-color:#ffffcc;
 }
+
+/* floaties */
+.right {
+	float:right;
+}
+.left {
+	float:left;
+}
+
+/* Map Toggles */
+ul.map-toggles { overflow:auto; clear:both; margin:3px 0 0 0; padding:0; }
+ul.map-toggles li { display:none; float:right; list-style-type: none; }
+
+ul.map-toggles li a, 
+ul.map-toggles li a:active { display:inline-block; padding:3px 5px 3px 17px; outline:none; }
+
+	a.wider-map		{ background:transparent url(../../img/admin/icon_sprite.png) -4px -202px no-repeat;  }
+	a.taller-map	{ background:transparent url(../../img/admin/icon_sprite.png) -4px -221px no-repeat;  }
+	a.shorter-map	{ background:transparent url(../../img/admin/icon_sprite.png) -4px -241px no-repeat;  }
+	a.smaller-map	{ background:transparent url(../../img/admin/icon_sprite.png) -4px -182px no-repeat;  }
 
 /*--  --*/
 /*--  --*/

@@ -307,6 +307,19 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->locale_array = $locales;
 		$this->template->js->locale_array = $locales;
 	}
+	
+	/*
+	Manage Public Listing for External Applications
+	*/
+	function publiclisting()
+	{
+		$this->template->content = new View('admin/publiclisting');
+		
+		$settings = ORM::factory('settings', 1);
+		
+		$this->template->content->encoded_stat_id = base64_encode($settings->stat_id);
+		$this->template->content->encoded_stat_key = base64_encode($settings->stat_key);
+	}
 
 	/*
 	Add Edit Organizations

@@ -105,9 +105,9 @@
             							    <input name="api_log_id[]" id="api_log" value="<?php echo $api_log_id; ?>" type="checkbox" class="check-box"/>
             							</td>
             							<td class="col-2">
-            							    <?php echo (is_array(unserialize($api_parameters)))
-            							        ? implode(",",unserialize($api_parameters)) 
-            							        : unserialize($api_parameters); 
+            							    <?php echo (is_array(@unserialize($api_parameters)))
+            							        ? implode(",",@unserialize($api_parameters))
+            							        : @unserialize($api_parameters); 
             							    ?>
             							</td>
             							<td class="col-3"><?php echo $api_task;?></td>

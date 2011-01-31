@@ -49,12 +49,12 @@ class Smssync_Controller extends Controller {
 			$secret_match = TRUE;
 			
 			// Is this a valid Secret?
-			$smssync = ORM::factory('smssync')
+			$smssync = ORM::factory('smssync_settings')
 				->find(1);
 			
 			if ($smssync->loaded)
 			{
-				$smssync_secret = $smssync->secret;
+				$smssync_secret = $smssync->smssync_secret;
 				if ($smssync_secret AND $secret != $smssync_secret)
 				{ // A Secret has been set and they don't match
 					$secret_match = FALSE;
@@ -68,7 +68,16 @@ class Smssync_Controller extends Controller {
 			if ($secret_match)
 			{
 				sms::add($message_from, $message_description);
+				echo json_encode(array("payload" => array("success" => "true")));
 			}
+			else
+			{
+				echo json_encode(array("payload" => array("success" => "false")));
+			}
+		}
+		else
+		{
+			echo json_encode(array("payload" => array("success" => "false")));
 		}
 	}
 }

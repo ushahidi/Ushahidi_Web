@@ -43,7 +43,7 @@
 					<?php print form::input('contact_email', $form['contact_email'], ' class="text"'); ?>
 				</div>
 				<div class="report_row">
-					<?php echo Kohana::lang('ui_main.contact_phone'); ?>:<br />
+					<strong><?php echo Kohana::lang('ui_main.contact_phone'); ?>:</strong><br />
 					<?php print form::input('contact_phone', $form['contact_phone'], ' class="text"'); ?>
 				</div>
 				<div class="report_row">

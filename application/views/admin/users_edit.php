@@ -15,7 +15,7 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php admin::user_subtabs("users_edit"); ?>
+					<?php admin::user_subtabs("users_edit", $display_roles); ?>
 				</h2>
 				<?php
 				if ($form_error) {

@@ -20,6 +20,7 @@
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm')); ?>
 					<input type="hidden" name="save" id="save" value="">
 					<input type="hidden" name="location_id" id="location_id" value="<?php print $form['location_id']; ?>">
+					<input type="hidden" name="incident_zoom" id="incident_zoom" value="<?php print $form['incident_zoom']; ?>">
 					<!-- report-form -->
 					<div class="report-form">
 						<?php
@@ -237,9 +238,24 @@
 									<span><?php echo Kohana::lang('ui_main.longitude');?>:</span>
 									<?php print form::input('longitude', $form['longitude'], ' class="text"'); ?>
 								</div>
+								<ul class="map-toggles">
+						          <li><a href="#" class="smaller-map">Smaller map</a></li>
+						          <li style="display:block;"><a href="#" class="wider-map">Wider map</a></li>
+						          <li><a href="#" class="taller-map">Taller map</a></li>
+						          <li><a href="#" class="shorter-map">Shorter Map</a></li>
+						        </ul>
 								<div id="divMap" class="map_holder_reports"></div>
 							</div>
 							<div class="incident-find-location">
+								<div id="panel" class="olControlEditingToolbar"></div>
+								<div class="btns" style="float:left;">
+									<ul style="padding:4px;">
+										<li><a href="#" class="btn_del_last"><?php echo strtoupper(Kohana::lang('ui_main.delete_last'));?></a></li>
+										<li><a href="#" class="btn_del_sel"><?php echo strtoupper(Kohana::lang('ui_main.delete_selected'));?></a></li>
+										<li><a href="#" class="btn_clear"><?php echo strtoupper(Kohana::lang('ui_main.clear_map'));?></a></li>
+									</ul>
+								</div>
+								<div style="clear:both;"></div>
 								<?php print form::input('location_find', '', ' title="'.Kohana::lang('ui_main.location_example').'" class="findtext"'); ?>
 								<div class="btns" style="float:left;">
 									<ul>

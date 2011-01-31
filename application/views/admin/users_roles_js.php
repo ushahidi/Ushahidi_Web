@@ -23,8 +23,7 @@ function fillFields(id, name, description, reports_view, reports_edit, reports_e
 function rolesAction ( action, confirmAction, id )
 {
 	var statusMessage;
-	var answer = confirm('Are You Sure You Want To ' 
-		+ confirmAction)
+	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction)
 	if (answer){
 		// Set Role ID
 		$("#role_id_main").attr("value", id);
