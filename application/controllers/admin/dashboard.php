@@ -25,7 +25,7 @@ class Dashboard_Controller extends Admin_Controller
         $this->template->content = new View('admin/dashboard');
         $this->template->content->title = Kohana::lang('ui_admin.dashboard');
         $this->template->this_page = 'dashboard';
-
+        
         // Retrieve Dashboard Count...
 
         // Total Reports

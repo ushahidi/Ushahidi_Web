@@ -35,7 +35,7 @@ class Admin_Controller extends Template_Controller
 
 	public function __construct()
 	{
-		parent::__construct();	
+		parent::__construct();
 
 		// Load cache
 		$this->cache = new Cache;
@@ -71,6 +71,13 @@ class Admin_Controller extends Template_Controller
 
 		// Get Session Information
 		$this->user = new User_Model($_SESSION['auth_user']->id);
+		
+		// Check if user has the right to see the admin panel
+		if(admin::admin_access($this->user) == FALSE)
+		{
+			// This user isn't allowed in the admin panel
+			url::redirect('/');
+		}
 
 		$this->template->admin_name = $this->user->name;
 
@@ -113,15 +120,7 @@ class Admin_Controller extends Template_Controller
 			url::redirect('admin/dashboard');
 		}
 	}
-
-	public function log_out()
-	{
-		$auth = new Auth;
-		$auth->logout(TRUE);
-
-		url::redirect('login');
-	}
-
+	
     /**
      * Fetches the latest ushahidi release version number
      *
