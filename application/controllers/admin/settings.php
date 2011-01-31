@@ -234,7 +234,7 @@ class Settings_Controller extends Admin_Controller
         {   
             foreach ($config_file as $line_number => $line)
             {   
-                if(strpos(" ".$line, "\$config['timezone'] = '") != 0 ) 
+                if(strpos(" ".$line, "\$config['timezone'] = '") != 0 AND isset($settings->site_timezone)) 
 				{
 					$line ="\$config['timezone'] = '';";  
                     fwrite($handle,str_replace("''","'".$site_timezone_array[$settings->site_timezone]."'",$line)); 
