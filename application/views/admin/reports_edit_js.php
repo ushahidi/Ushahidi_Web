@@ -115,6 +115,7 @@
 				graphicYOffset: -27
 			});
 			style3 = new OpenLayers.Style({
+				pointRadius: "8",
 				fillColor: "#30E900",
 				fillOpacity: "0.7",
 				strokeColor: "#197700",
