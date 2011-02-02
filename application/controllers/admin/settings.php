@@ -61,6 +61,7 @@ class Settings_Controller extends Admin_Controller
             'allow_clustering' => '',
             'cache_pages' => '',
             'cache_pages_lifetime' => '',
+            'private_deployment' => '',
             'default_map_all' => '',
             'google_analytics' => '',
             'twitter_hashtags' => '',
@@ -103,6 +104,7 @@ class Settings_Controller extends Admin_Controller
             $post->add_rules('allow_clustering','required','between[0,1]');
             $post->add_rules('cache_pages','required','between[0,1]');
             $post->add_rules('cache_pages_lifetime','required','in_array[300,600,900,1800]');
+            $post->add_rules('private_deployment','required','between[0,1]');
             $post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
             $post->add_rules('google_analytics','length[0,20]');
             $post->add_rules('twitter_hashtags','length[0,500]');
@@ -132,6 +134,7 @@ class Settings_Controller extends Admin_Controller
                 $settings->allow_clustering = $post->allow_clustering;
                 $settings->cache_pages = $post->cache_pages;
                 $settings->cache_pages_lifetime = $post->cache_pages_lifetime;
+                $settings->private_deployment = $post->private_deployment;
                 $settings->default_map_all = $post->default_map_all;
                 $settings->google_analytics = $post->google_analytics;
                 $settings->twitter_hashtags = $post->twitter_hashtags;
@@ -189,6 +192,7 @@ class Settings_Controller extends Admin_Controller
                 'allow_clustering' => $settings->allow_clustering,
                 'cache_pages' => $settings->cache_pages,
                 'cache_pages_lifetime' => $settings->cache_pages_lifetime,
+                'private_deployment' => $settings->private_deployment,
                 'default_map_all' => $settings->default_map_all,
                 'google_analytics' => $settings->google_analytics,
                 'twitter_hashtags' => $settings->twitter_hashtags,
@@ -234,7 +238,7 @@ class Settings_Controller extends Admin_Controller
         {   
             foreach ($config_file as $line_number => $line)
             {   
-                if(strpos(" ".$line, "\$config['timezone'] = '") != 0 ) 
+                if(strpos(" ".$line, "\$config['timezone'] = '") != 0 AND isset($settings->site_timezone)) 
 				{
 					$line ="\$config['timezone'] = '';";  
                     fwrite($handle,str_replace("''","'".$site_timezone_array[$settings->site_timezone]."'",$line)); 
