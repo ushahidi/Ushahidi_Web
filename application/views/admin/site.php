@@ -86,6 +86,13 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_timezone"); ?>"><?php echo Kohana::lang('settings.site.timezone');?></a> (Admin Timezone)</h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('site_timezone',$site_timezone_array, $form['site_timezone']); ?>
+							</span>
+						</div>
+
+						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_display_contact"); ?>"><?php echo Kohana::lang('settings.site.display_contact_page');?></a></h4>
 							<?php print form::dropdown('site_contact_page', $yesno_array, $form['site_contact_page']); ?>
 						</div>
@@ -170,7 +177,13 @@
 							<span class="sel-holder">
 								<?php print form::dropdown('cache_pages_lifetime', $cache_pages_lifetime_array, $form['cache_pages_lifetime']); ?>
 							</span>
-						</div>					
+						</div>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_private_deployment"); ?>"><?php echo Kohana::lang('settings.site.private_deployment');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('private_deployment', $yesno_array, $form['private_deployment']); ?>
+							</span>
+						</div>				
 						<div class="row">
 						<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_google_analytics"); ?>"><?php echo Kohana::lang('settings.site.google_analytics');?></a></h4>
 							<?php echo Kohana::lang('settings.site.google_analytics_example');?> &nbsp;&nbsp;

@@ -233,7 +233,14 @@ div#searchbox{
     background: #BEBEBE;
     border: #9F9F9F 2px solid;
     border-top: 0;
-    height: 45px;
+    /*height: 45px;*/
+}
+
+div#loggedin_user_action{
+	float:right;
+	width:100%;
+	text-align:right;
+	padding:5px 15px 0px 0px;
 }
 
 /* languages */

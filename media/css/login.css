@@ -6,7 +6,7 @@
 
 * { margin: 0; padding: 0; }
 body {
-	background-image:url(../../img/bkg_login.gif);
+	background-image:url(../img/bkg_login.gif);
 }
 body, td {
 	font: 13px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana, sans-serif;
@@ -47,15 +47,27 @@ dl {}
 
 /* LOGIN BOX */
 /*****************************/
-#ushahidi_login_container{
+#ushahidi_login_container {
 	width:400px;
 	margin:50px auto;
 }
-#ushahidi_login_logo {
+
+#ushahidi_site_name {
+	border:3px solid #cb0000;
 	text-align:center;
+	padding:20px;
+	background-color: #ddd;
 	margin-bottom:20px;
 }
-#ushahidi_login_logo img { width:400px; height:80px;  }
+
+#ushahidi_site_name h1 {
+	padding:0px;
+	margin:0px;
+}
+
+#ushahidi_site_name span {
+	font-style:italic;
+}
 
 #ushahidi_login {
 	border:3px solid #cb0000;
@@ -133,10 +145,10 @@ dl {}
 
 	/* Progress Meter*/
 	/*****************************/
-	ol.progress-meter { padding:16px 0 19px 15px; margin-left:0; background:transparent url(../../img/install_bg-progress-bar.gif) top repeat-x; list-style-position:inside; }
-	ol.progress-meter li { margin:0 28px 0 0px; padding:3px 0 5px 7px; float:left; color:#777; font-size:14px; background:transparent url(../../img/install_bg-progress-item-number.gif) 0px 0px no-repeat; }
+	ol.progress-meter { padding:16px 0 19px 15px; margin-left:0; background:transparent url(../img/install_bg-progress-bar.gif) top repeat-x; list-style-position:inside; }
+	ol.progress-meter li { margin:0 28px 0 0px; padding:3px 0 5px 7px; float:left; color:#777; font-size:14px; background:transparent url(../img/install_bg-progress-item-number.gif) 0px 0px no-repeat; }
 	ol.progress-meter li.active { color:#000;  }
-	ol.progress-meter li.active span { text-decoration:underline; font-weight:bold; padding:0 0 35px; background:transparent url(../../img/install_bg-progress-active.gif) bottom center no-repeat; }
+	ol.progress-meter li.active span { text-decoration:underline; font-weight:bold; padding:0 0 35px; background:transparent url(../img/install_bg-progress-active.gif) bottom center no-repeat; }
 	ol.progress-meter li:hover {}
 	ol.progress-meter li.last { margin-right:0px; }
 	ol.progress-meter li span {}
@@ -177,9 +189,9 @@ dl {}
 	
 	.feedback h1,
 	.feedback h2 { margin-top:5px; }
-		.error { background:#F6D273 url(../../img/ico-warning.png) no-repeat 10px 10px; border:1px solid #F6B200; }
-		.success { background:#C4DF9B url(../../img/ico-check.png) no-repeat 10px 10px; border:1px solid #A5BC83; }
-		.info { background:#DEEDFF url(../../img/ico-info.png) no-repeat 10px 10px; border:1px solid #A1CCFF; }
+		.error { background:#F6D273 url(../img/ico-warning.png) no-repeat 10px 10px; border:1px solid #F6B200; }
+		.success { background:#C4DF9B url(../img/ico-check.png) no-repeat 10px 10px; border:1px solid #A5BC83; }
+		.info { background:#DEEDFF url(../img/ico-info.png) no-repeat 10px 10px; border:1px solid #A1CCFF; }
 		.info-light { border-left:2px solid #A1CCFF;  background:#DEEDFf; margin:0 0 18px 40px; padding:10px 14px; }
 		
 	a.btn-close { color:#004A80;display:block;float:right;line-height:12px;padding:0 3px 2px;text-decoration:none; margin:1px 1px 0 0; }

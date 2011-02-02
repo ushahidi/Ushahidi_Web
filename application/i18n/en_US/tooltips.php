@@ -28,6 +28,7 @@
 	'settings_google_analytics' => 'Tracks visitors of your site. Get detailed visitor statistics',
 	'settings_locale' => 'Sets the language that will be used in the site.',
 	'settings_map_provider' => 'This defines which map is to be used on the site',
+	'settings_private_deployment' => 'Setting this value to true or yes will make your deployment private so only users with accounts that you specify will be able to access the deployment.',
 	'settings_server_host' => 'This is where the emails reside',
 	'settings_server_password' => 'This is the password for the email address that receives reports',
 	'settings_server_port' => 'This is required to accept incoming connections from the email address',

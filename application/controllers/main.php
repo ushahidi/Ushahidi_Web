@@ -38,6 +38,18 @@ class Main_Controller extends Template_Controller {
 	{
 		parent::__construct();
 
+		if(Kohana::config('settings.private_deployment'))
+		{
+			$this->auth = new Auth();
+			$this->session = Session::instance();
+			$this->auth->auto_login();
+	
+			if ( ! $this->auth->logged_in('login'))
+			{
+				url::redirect('login/front');
+			}
+		}
+		
         // Load cache
 		$this->cache = new Cache;
 
@@ -70,6 +82,17 @@ class Main_Controller extends Template_Controller {
 			{
 				$site_name_style = "";
 			}
+			
+		$this->template->header->private_deployment = Kohana::config('settings.private_deployment');
+		$this->template->header->loggedin_username = FALSE;
+		$this->template->header->loggedin_userid = FALSE;
+		
+		if( isset(Auth::instance()->get_user()->username) AND isset(Auth::instance()->get_user()->id) )
+		{
+			$this->template->header->loggedin_username = html::specialchars(Auth::instance()->get_user()->username);
+			$this->template->header->loggedin_userid = Auth::instance()->get_user()->id;
+		}
+		
 		$this->template->header->site_name = $site_name;
 		$this->template->header->site_name_style = $site_name_style;
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');

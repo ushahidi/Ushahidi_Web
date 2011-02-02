@@ -132,6 +132,7 @@
 		'language' => 'Site Language',
 		'message' => 'Site Message',
 		'name' => 'Site Name',
+		'private_deployment' => 'Private Deployment',
 		'share_site_stats' => 'Enable Statistics (Stored on Ushahidi\'s server)',
 		'tagline' => 'Site Tagline',
 		'title' => 'Site Settings',

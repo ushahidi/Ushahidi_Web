@@ -19,6 +19,15 @@
 
 			<!-- searchbox -->
 			<div id="searchbox">
+				
+				<!-- user actions -->
+				<?php if($loggedin_username != FALSE){ ?>
+				<div id="loggedin_user_action" class="clearingfix">
+					<?php echo $loggedin_username; ?> [<a href="<?php echo url::site();?>logout/front"><?php echo Kohana::lang('ui_admin.logout');?></a>]
+				</div><br/>
+				<?php } ?>
+				<!-- / user actions -->
+				
 				<!-- languages -->
 				<?php echo $languages;?>
 				<!-- / languages -->
@@ -29,7 +38,7 @@
 
 			</div>
 			<!-- / searchbox -->
-
+			
 			<!-- logo -->
 			<div id="logo">
 				<h1><?php echo $site_name; ?></h1>
