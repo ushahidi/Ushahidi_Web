@@ -177,7 +177,13 @@
 							<span class="sel-holder">
 								<?php print form::dropdown('cache_pages_lifetime', $cache_pages_lifetime_array, $form['cache_pages_lifetime']); ?>
 							</span>
-						</div>					
+						</div>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_private_deployment"); ?>"><?php echo Kohana::lang('settings.site.private_deployment');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('private_deployment', $yesno_array, $form['private_deployment']); ?>
+							</span>
+						</div>				
 						<div class="row">
 						<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_google_analytics"); ?>"><?php echo Kohana::lang('settings.site.google_analytics');?></a></h4>
 							<?php echo Kohana::lang('settings.site.google_analytics_example');?> &nbsp;&nbsp;

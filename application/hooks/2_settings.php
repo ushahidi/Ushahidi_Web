@@ -20,6 +20,10 @@ if ( ! $settings)
 // Set Site Language
 Kohana::config_set('locale.language', $settings->site_language);
 
+
+// Set Site Timezone 
+Kohana::config_set('locale.timezone', $settings->site_timezone);
+
 // Main Site Settings
 Kohana::config_set('settings.site_name', $settings->site_name);
 Kohana::config_set('settings.site_email', $settings->site_email);
@@ -62,6 +66,7 @@ Kohana::config_set('settings.email_ssl', $settings->email_ssl);
 Kohana::config_set('settings.alerts_email', $settings->alerts_email);
 Kohana::config_set('settings.db_version', $settings->db_version);
 Kohana::config_set('settings.ushahidi_version', $settings->ushahidi_version);
+Kohana::config_set('settings.private_deployment', $settings->private_deployment);
 
 // Cache Settings
 $cache_pages = ($settings->cache_pages) ? TRUE : FALSE;

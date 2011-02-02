@@ -12,41 +12,63 @@ class nav_Core {
 	/**
 	 * Generate Main Tabs
      * @param string $this_page
+     * @param array $dontshow
 	 * @return string $menu
      */
-	public static function main_tabs($this_page = FALSE)
+	public static function main_tabs($this_page = FALSE, $dontshow = FALSE)
 	{
 		$menu = "";
 		
+		if( ! is_array($dontshow))
+		{
+			// Set $dontshow as an array to prevent errors
+			$dontshow = array();
+		}
+		
 		// Home
-		$menu .= "<li><a href=\"".url::site()."main\" ";
-		$menu .= ($this_page == 'home') ? " class=\"active\"" : "";
-	 	$menu .= ">".Kohana::lang('ui_main.home')."</a></li>";
+		if( ! in_array('home',$dontshow))
+		{
+			$menu .= "<li><a href=\"".url::site()."main\" ";
+			$menu .= ($this_page == 'home') ? " class=\"active\"" : "";
+		 	$menu .= ">".Kohana::lang('ui_main.home')."</a></li>";
+		 }
 
 		// Reports List
-		$menu .= "<li><a href=\"".url::site()."reports\" ";
-		$menu .= ($this_page == 'reports') ? " class=\"active\"" : "";
-	 	$menu .= ">".Kohana::lang('ui_main.reports')."</a></li>";
+		if( ! in_array('reports',$dontshow))
+		{
+			$menu .= "<li><a href=\"".url::site()."reports\" ";
+			$menu .= ($this_page == 'reports') ? " class=\"active\"" : "";
+		 	$menu .= ">".Kohana::lang('ui_main.reports')."</a></li>";
+		 }
 		
 		// Reports Submit
-		if (Kohana::config('settings.allow_reports'))
+		if( ! in_array('reports_submit',$dontshow))
 		{
-			$menu .= "<li><a href=\"".url::site()."reports/submit\" ";
-			$menu .= ($this_page == 'reports_submit') ? " class=\"active\"":"";
-		 	$menu .= ">".Kohana::lang('ui_main.submit')."</a></li>";
+			if (Kohana::config('settings.allow_reports'))
+			{
+				$menu .= "<li><a href=\"".url::site()."reports/submit\" ";
+				$menu .= ($this_page == 'reports_submit') ? " class=\"active\"":"";
+			 	$menu .= ">".Kohana::lang('ui_main.submit')."</a></li>";
+			}
 		}
 		
 		// Alerts
-		$menu .= "<li><a href=\"".url::site()."alerts\" ";
-		$menu .= ($this_page == 'alerts') ? " class=\"active\"" : "";
-	 	$menu .= ">".Kohana::lang('ui_main.alerts')."</a></li>";
+		if( ! in_array('alerts',$dontshow))
+		{
+			$menu .= "<li><a href=\"".url::site()."alerts\" ";
+			$menu .= ($this_page == 'alerts') ? " class=\"active\"" : "";
+		 	$menu .= ">".Kohana::lang('ui_main.alerts')."</a></li>";
+		 }
 		
 		// Contacts
-		if (Kohana::config('settings.site_contact_page'))
+		if( ! in_array('contact',$dontshow))
 		{
-			$menu .= "<li><a href=\"".url::site()."contact\" ";
-			$menu .= ($this_page == 'contact') ? " class=\"active\"" : "";
-		 	$menu .= ">".Kohana::lang('ui_main.contact')."</a></li>";	
+			if (Kohana::config('settings.site_contact_page'))
+			{
+				$menu .= "<li><a href=\"".url::site()."contact\" ";
+				$menu .= ($this_page == 'contact') ? " class=\"active\"" : "";
+			 	$menu .= ">".Kohana::lang('ui_main.contact')."</a></li>";	
+			}
 		}
 		
 		// Custom Pages

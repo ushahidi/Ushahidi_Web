@@ -53,4 +53,31 @@ class Roles_User_Model extends Model {
 		$this->db->where('user_id', $user_id);
 		$this->db->delete('roles_users');
 	}
+	
+	/**
+	 * Returns true if any of the roles in the roles table are marked as 1, 
+	 *   essentially saying there's a good chance that there are features
+	 *   in the admin panel they could access.
+	 */
+	public function role_allow_admin($roll_id)
+	{
+		$roles = ORM::factory("role")->find($roll_id)->as_array();
+
+		foreach($roles as $key => $allowed)
+		{
+			
+			// Ignore these fields because they contain data that doesn't involve access
+			
+			if($key == 'id' OR $key == 'name' OR $key == 'description') continue;
+			
+			if($allowed == 1)
+			{
+				return TRUE;
+			}
+		}
+		
+		// None of the fields allowed access to anything specific. This is just a login account.
+		
+		return FALSE;
+	}
 }
