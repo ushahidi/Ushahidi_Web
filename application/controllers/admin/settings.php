@@ -36,7 +36,7 @@ class Settings_Controller extends Admin_Controller
     */
     function site()
     {
-        $this->template->content = new View('admin/site');
+		$this->template->content = new View('admin/site');
         $this->template->content->title = Kohana::lang('ui_admin.settings');
 
         // setup and initialize form field names
@@ -224,8 +224,11 @@ class Settings_Controller extends Admin_Controller
 			'1800'=>'30 '.Kohana::lang('ui_admin.minutes'));
 
 		//Generate all timezones
-		$site_timezone_array = timezone_identifiers_list();		
-
+		$site_timezone_array = array();
+		foreach (timezone_identifiers_list() as $timezone)
+		{
+			$site_timezone_array[$timezone] = $timezone;
+		}
 		$this->template->content->site_timezone_array = $site_timezone_array;
 	
 	

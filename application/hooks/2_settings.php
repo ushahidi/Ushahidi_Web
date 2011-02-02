@@ -20,10 +20,6 @@ if ( ! $settings)
 // Set Site Language
 Kohana::config_set('locale.language', $settings->site_language);
 
-
-// Set Site Timezone 
-Kohana::config_set('locale.timezone', $settings->site_timezone);
-
 // Main Site Settings
 Kohana::config_set('settings.site_name', $settings->site_name);
 Kohana::config_set('settings.site_email', $settings->site_email);
@@ -67,6 +63,15 @@ Kohana::config_set('settings.alerts_email', $settings->alerts_email);
 Kohana::config_set('settings.db_version', $settings->db_version);
 Kohana::config_set('settings.ushahidi_version', $settings->ushahidi_version);
 Kohana::config_set('settings.private_deployment', $settings->private_deployment);
+
+// Set Site Timezone 
+if (function_exists('date_default_timezone_set'))
+{
+	$timezone = $settings->site_timezone;
+	// Set default timezone, due to increased validation of date settings
+	// which cause massive amounts of E_NOTICEs to be generated in PHP 5.2+
+	date_default_timezone_set(empty($timezone) ? date_default_timezone_get() : $timezone);
+}
 
 // Cache Settings
 $cache_pages = ($settings->cache_pages) ? TRUE : FALSE;
