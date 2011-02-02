@@ -463,6 +463,10 @@
 			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
 				function(data){
 					if (data.status == 'success'){
+						// Clear the map first
+						vlayer.removeFeatures(vlayer.features);
+						$('input[name="geometry[]"]').remove();
+						
 						point = new OpenLayers.Geometry.Point(data.message[1], data.message[0]);
 						OpenLayers.Projection.transform(point, proj_4326,proj_900913);
 						
