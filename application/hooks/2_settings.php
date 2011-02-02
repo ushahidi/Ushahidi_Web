@@ -20,6 +20,10 @@ if ( ! $settings)
 // Set Site Language
 Kohana::config_set('locale.language', $settings->site_language);
 
+
+// Set Site Timezone 
+Kohana::config_set('locale.timezone', $settings->site_timezone);
+
 // Main Site Settings
 Kohana::config_set('settings.site_name', $settings->site_name);
 Kohana::config_set('settings.site_email', $settings->site_email);

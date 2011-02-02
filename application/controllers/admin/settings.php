@@ -228,29 +228,7 @@ class Settings_Controller extends Admin_Controller
 
 		$this->template->content->site_timezone_array = $site_timezone_array;
 	
-			
-		//add timezone to the kohana locale file
 	
-		$config_file = @file('application/config/locale.php');		
-		$handle = @fopen('application/config/locale.php', 'w');
-
-		if(is_array($config_file) )
-        {   
-            foreach ($config_file as $line_number => $line)
-            {   
-                if(strpos(" ".$line, "\$config['timezone'] = '") != 0 AND isset($settings->site_timezone)) 
-				{
-					$line ="\$config['timezone'] = '';";  
-                    fwrite($handle,str_replace("''","'".$site_timezone_array[$settings->site_timezone]."'",$line)); 
-                }   
-                else
-                {   
-					fwrite($handle, $line);
-                }   
-
-			}
-		}
-
         // Generate Available Locales
         $locales = locale::get_i18n();
         $this->template->content->locales_array = $locales;
