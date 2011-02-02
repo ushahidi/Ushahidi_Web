@@ -157,7 +157,7 @@ class Themes_Controller extends Admin_Controller {
 		if ( is_dir( $theme_dir ) )
 			@closedir( $theme_dir );
 
-		if ( !$themes_dir || !$theme_files || !$found_stylesheet )
+		if ( !$themes_dir || !$theme_files )
 			return $themes;
 		
 		sort($theme_files);
