@@ -770,7 +770,7 @@ class Install
 			<head>
 				<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 				<title>Database Connections / Ushahidi Web Installer</title>
-				<link href="../media/css/login.css" rel="stylesheet" type="text/css" />
+				<link href="../media/css/installer.css" rel="stylesheet" type="text/css" />
 			</head>
 			<script src="../media/js/jquery.js" type="text/javascript" charset="utf-8"></script>
 			<script src="../media/js/login.js" type="text/javascript" charset="utf-8"></script>

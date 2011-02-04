@@ -115,6 +115,7 @@
 				graphicYOffset: -27
 			});
 			style3 = new OpenLayers.Style({
+				pointRadius: "8",
 				fillColor: "#30E900",
 				fillOpacity: "0.7",
 				strokeColor: "#197700",
@@ -462,6 +463,10 @@
 			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
 				function(data){
 					if (data.status == 'success'){
+						// Clear the map first
+						vlayer.removeFeatures(vlayer.features);
+						$('input[name="geometry[]"]').remove();
+						
 						point = new OpenLayers.Geometry.Point(data.message[1], data.message[0]);
 						OpenLayers.Projection.transform(point, proj_4326,proj_900913);
 						

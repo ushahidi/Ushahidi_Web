@@ -1,0 +1,210 @@
+/*****************************
+ USHAHIDI STYLES
+ v1.0
+ David Kobia - 07/08/2008
+*****************************/
+
+* { margin: 0; padding: 0; }
+body {
+	background-image:url(../img/bkg_login.gif);
+}
+body, td {
+	font: 13px "Lucida Grande", "Lucida Sans Unicode", Tahoma, Verdana, sans-serif;
+}
+
+
+h1, h2 { margin-bottom:18px; }
+
+h3 { margin-bottom:8px; } 
+	h3 a { font-size:10px; font-weight:normal; }
+a:link,
+a:visited {
+	color:#003399;
+}
+a:visited {
+	color:#0066CC;
+}
+a:hover,
+a:focus,
+a:active {
+	text-decoration:none;
+	color:#003399;
+}
+
+
+
+p, ul, ol { margin-bottom:18px; }
+
+ul, ol { margin-left:18px; }
+ul li, ol li { padding:0 0 5px;  }
+.last { margin-bottom:0; }
+
+ul, ol { list-style-position:inside; }
+
+dl {}
+	dt {}
+	dd {}
+
+/* LOGIN BOX */
+/*****************************/
+#ushahidi_login_container{
+	width:400px;
+	margin:50px auto;
+}
+#ushahidi_login_logo {
+	text-align:center;
+	margin-bottom:20px;
+}
+#ushahidi_login_logo img { width:400px; height:80px;  }
+
+#ushahidi_login {
+	border:3px solid #cb0000;
+	text-align:left;
+	padding: 20px;
+	background-color: #ddd;
+}
+#ushahidi_loginbox td{
+	padding:5px;
+	vertical-align:top;
+}
+
+/* Installer Container	 */
+/*****************************/
+#ushahidi_install_container { 
+    width:800px;
+    margin:50px auto;
+}
+
+/* Content Area */
+/*****************************/
+.two-col { padding:20px 30px; width:306px; float:left;  }
+.two-col-box { 
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	/*-moz-border-radius-bottomleft:4px;
+	-moz-border-radius-bottomright:4px;
+	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;*/
+	-moz-box-shadow:0 1px 3px #999999;
+	border-top:1px solid #FFFFFF;
+	background:#F5F5F5;
+	padding:20px 30px;
+	width:306px;
+	float:left;
+}
+
+	a.btn-box { display:block; font-size:inherit; cursor:pointer; text-decoration:none; }
+		a.btn-box span { display:block; text-decoration:none; }
+		a.btn-box:hover span { text-decoration:none; }
+		span.btn-box-title 		{ margin-bottom:0px; font-size:20px; font-weight:bold; color:#000; }
+		span.btn-box-content	{ margin-bottom:18px; color:#000; }
+		span.btn-action			{ color:#000; }
+	
+	a.btn-box:hover { background:#e0f2ff; }
+		a.btn-box:hover	span.btn-action	 { text-decoration:underline; }
+		
+	a.btn-box:active { outline:none; }
+
+	.tc-left { margin-right:20px; }
+	.tc-right { }
+
+
+
+	/* BUTTONS*/
+	/*****************************/
+	a.button,
+	input.button {
+		/*-moz-border-radius-bottomleft:10px;
+		-moz-border-radius-bottomright:10px;
+		-moz-border-radius-topleft:10px;
+		-moz-border-radius-topright:10px;*/
+		background:#F5F5F5;
+		color:#464646;
+		border:1px solid #F5F5F5;
+		cursor:pointer;
+		font-size:14px !important;
+		line-height:16px;
+		padding:6px 12px;
+		text-decoration:none;
+	}
+	a.button:hover,
+	input.button:hover { color:#000; border:1px solid #a1a1a1; background:#e0f2ff; }
+
+	/* Progress Meter*/
+	/*****************************/
+	ol.progress-meter { padding:16px 0 19px 15px; margin-left:0; background:transparent url(../img/install_bg-progress-bar.gif) top repeat-x; list-style-position:inside; }
+	ol.progress-meter li { margin:0 28px 0 0px; padding:3px 0 5px 7px; float:left; color:#777; font-size:14px; background:transparent url(../img/install_bg-progress-item-number.gif) 0px 0px no-repeat; }
+	ol.progress-meter li.active { color:#000;  }
+	ol.progress-meter li.active span { text-decoration:underline; font-weight:bold; padding:0 0 35px; background:transparent url(../img/install_bg-progress-active.gif) bottom center no-repeat; }
+	ol.progress-meter li:hover {}
+	ol.progress-meter li.last { margin-right:0px; }
+	ol.progress-meter li span {}
+	
+	
+	
+/*****************************/
+
+
+
+/* FORM */
+/*****************************/
+
+.form-table { border-collapse: collapse; margin: 1em 0; width: 100%; }
+
+.form-table td { margin-bottom: 9px; padding: 10px; border-bottom: 4px solid #eee; font-size: 12px; }
+	.form-table td.next { text-align:left; border:none; }
+	.form-table td.prev { text-align:right; border:none; }
+.fields th { font-size: 13px; text-align: left; line-height:18px; padding: 16px 10px 10px 10px; border-bottom: 4px solid #eee; width: 140px; vertical-align: middle;}
+
+.form-table tr { background: #DDDDDD; }
+	.fields tr:hover { background:#EFEFEF; }
+	.fields tr.hover { background:#e0f2ff; }
+
+.form-table code { line-height: 18px; font-size: 18px; }
+
+.form-table p {	margin: 4px 0 0 0;font-size: 11px; }
+
+.form-table input { line-height: 20px; font-size: 15px; padding: 2px; }
+
+
+	/* System Messages */
+	/*****************************/
+	.feedback { padding:10px 10px 10px 48px; color:#4D4D4D; margin-bottom:10px; }
+	
+	.feedback p, 
+	.feedback ul { margin-bottom:10px }
+	
+	.feedback h1,
+	.feedback h2 { margin-top:5px; }
+		.error { background:#F6D273 url(../img/ico-warning.png) no-repeat 10px 10px; border:1px solid #F6B200; }
+		.success { background:#C4DF9B url(../img/ico-check.png) no-repeat 10px 10px; border:1px solid #A5BC83; }
+		.info { background:#DEEDFF url(../img/ico-info.png) no-repeat 10px 10px; border:1px solid #A1CCFF; }
+		.info-light { border-left:2px solid #A1CCFF;  background:#DEEDFf; margin:0 0 18px 40px; padding:10px 14px; }
+		
+	a.btn-close { color:#004A80;display:block;float:right;line-height:12px;padding:0 3px 2px;text-decoration:none; margin:1px 1px 0 0; }
+	a.btn-close:hover { border:1px solid; margin:0; }
+
+
+
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: inline-block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}

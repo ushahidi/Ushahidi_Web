@@ -50,12 +50,13 @@
 			
 			
 			// Set Feature Styles
-			style = new OpenLayers.Style({
+			style1 = new OpenLayers.Style({
 				pointRadius: "8",
 				fillColor: "#ffcc66",
 				fillOpacity: "0.7",
 				strokeColor: "#CC0000",
-				strokeWidth: 2.5,
+				strokeOpacity: "0.7",
+				strokeWidth: 4,
 				graphicZIndex: 1,
 				externalGraphic: "${graphic}",
 				graphicOpacity: 1,
@@ -81,22 +82,39 @@
 					}
 				}
 			});
+			style2 = new OpenLayers.Style({
+				pointRadius: "8",
+				fillColor: "#30E900",
+				fillOpacity: "0.7",
+				strokeColor: "#197700",
+				strokeWidth: 3,
+				graphicZIndex: 1
+			});
 			
 			// Create the single marker layer
 			var markers = new OpenLayers.Layer.GML("single report", "<?php echo url::site() . 'json/single/' . $incident_id; ?>", 
 			{
 				format: OpenLayers.Format.GeoJSON,
 				projection: map.displayProjection,
-				styleMap: new OpenLayers.StyleMap({"default":style, "select": style})
+				styleMap: new OpenLayers.StyleMap({"default":style1, "select": style1, "temporary": style2})
 			});
 			
 			map.addLayer(markers);
 			
-			selectControl = new OpenLayers.Control.SelectFeature(markers,
-															{onSelect: onFeatureSelect, onUnselect: onFeatureUnselect});			
+			selectCtrl = new OpenLayers.Control.SelectFeature(markers, {
+				onSelect: onFeatureSelect, 
+				onUnselect: onFeatureUnselect
+			});
+			highlightCtrl = new OpenLayers.Control.SelectFeature(markers, {
+			    hover: true,
+			    highlightOnly: true,
+			    renderIntent: "temporary"
+			});		
 
-			map.addControl(selectControl);
-			selectControl.activate();
+			map.addControl(selectCtrl);
+			map.addControl(highlightCtrl);
+			selectCtrl.activate();
+			//highlightCtrl.activate();
 
 			// create a lat/lon object
 			myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
@@ -201,7 +219,7 @@
 		});
 		
 		function onPopupClose(evt) {
-            selectControl.unselect(selectedFeature);
+            selectCtrl.unselect(selectedFeature);
         }
 
         function onFeatureSelect(feature) {
