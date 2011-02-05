@@ -65,7 +65,9 @@
 			
 			map.addControl(new OpenLayers.Control.MousePosition());
 			
-			map.addControl(new OpenLayers.Control.LayerSwitcher());
+			map.addControl(new OpenLayers.Control.LayerSwitcher({
+                                roundedCornerColor : '#000'
+                        }));
 			
 			
 			

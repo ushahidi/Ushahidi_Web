@@ -134,7 +134,9 @@ function showMap()
 	map.addControl(new OpenLayers.Control.Navigation());
 	map.addControl(new OpenLayers.Control.PanZoom());
 	map.addControl(new OpenLayers.Control.MousePosition());
-	map.addControl(new OpenLayers.Control.LayerSwitcher());
+	map.addControl(new OpenLayers.Control.LayerSwitcher({
+		roundedCornerColor : '#000'
+	}));
 	
 	// Create the markers layer
 	markers = new OpenLayers.Layer.Markers("Markers");

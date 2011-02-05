@@ -46,7 +46,9 @@
 				}));    
 			map.addControl(new OpenLayers.Control.Scale('mapScale'));
 			map.addControl(new OpenLayers.Control.ScaleLine());
-			map.addControl(new OpenLayers.Control.LayerSwitcher());
+			map.addControl(new OpenLayers.Control.LayerSwitcher({
+                                roundedCornerColor : '#000'
+                        }));
 			
 			
 			// Set Feature Styles

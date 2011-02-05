@@ -83,7 +83,9 @@
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition());
-			map.addControl(new OpenLayers.Control.LayerSwitcher());
+			map.addControl(new OpenLayers.Control.LayerSwitcher({
+                                roundedCornerColor : '#000'
+                        }));
 			
 			// Vector/Drawing Layer Styles
 			style1 = new OpenLayers.Style({
