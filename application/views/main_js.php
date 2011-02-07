@@ -122,7 +122,7 @@
 		function onPopupClose(evt)
 		{
             // selectControl.unselect(selectedFeature);
-			for (var i=0; i<map.popups.length; ++i)
+			for (var i=0; i<?php echo '<'; ?>map.popups.length; ++i)
 			{
 				map.removePopup(map.popups[i]);
 			}
@@ -142,12 +142,12 @@
 			lat = zoom_point.lat;
 
 			var content = "<div class=\"infowindow\"><div class=\"infowindow_list\">"+event.feature.attributes.name+"<div style=\"clear:both;\"></div></div>";
-		    content = content + "\n<div class=\"infowindow_meta\"><a href='"+event.feature.attributes.link+"'><?php echo Kohana::lang('ui_main.more_information');?></a><br/><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'><?php echo Kohana::lang('ui_main.zoom_in');?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'><?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
+		    content = content + "\n<div class=\"infowindow_meta\"><a href='"+event.feature.attributes.link+"'><?php echo Kohana::lang('ui_main.more_information');?></a><br/><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",1)'><?php echo Kohana::lang('ui_main.zoom_in');?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",-1)'><?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
 			content = content + "</div>";			
 
-			if (content.search("<script") != -1)
+			if (content.search("<?php echo '<'; ?>script") != -1)
 			{
-                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/</g, "&lt;");
+                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/<?php echo '<'; ?>/g, "&lt;");
             }
             popup = new OpenLayers.Popup.FramedCloud("chicken", 
 				event.feature.geometry.getBounds().getCenterLonLat(),
@@ -242,7 +242,7 @@
 			var graphData = "";
 
 			// plot hourly incidents when period is within 2 days
-			if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 3)
+			if ((endTime - startTime) / (1000 * 60 * 60 * 24) <?php echo '<'; ?>= 3)
 			{
 				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat+"?i=hour", function(data) {
 					graphData = data[0];
@@ -256,7 +256,7 @@
 					gTimeline.plot();
 				});
 			} 
-			else if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 124)
+			else if ((endTime - startTime) / (1000 * 60 * 60 * 24) <?php echo '<'; ?>= 124)
 			{
 			    // weekly if period > 2 months
 				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat+"?i=day", function(data) {
@@ -313,10 +313,21 @@
 			// Center and Zoom
 			map.setCenter(lonlat, newZoom);
 			// Remove Popups
-			for (var i=0; i<map.popups.length; ++i)
+			for (var i=0; i<?php echo '<'; ?>map.popups.length; ++i)
 			{
 				map.removePopup(map.popups[i]);
 			}
+		}
+		
+		/*
+		Zoom to Selected Feature from outside Popup
+		*/
+		function externalZeroIn(lon, lat, newZoom)
+		{	
+			var point = new OpenLayers.LonLat(lon,lat);
+			point.transform(proj_4326, map.getProjectionObject());
+			// Center and Zoom
+			map.setCenter(point, newZoom);
 		}
 
 		/*
@@ -329,7 +340,7 @@
 				new_layer = map.getLayersByName("Layer_"+layerID);
 				if (new_layer)
 				{
-					for (var i = 0; i < new_layer.length; i++)
+					for (var i = 0; i <?php echo '<'; ?> new_layer.length; i++)
 					{
 						map.removeLayer(new_layer[i]);
 					}
@@ -478,7 +489,7 @@
 					share_layer = map.getLayersByName("Share_"+shareID);
 					if (share_layer)
 					{
-						for (var i = 0; i < share_layer.length; i++)
+						for (var i = 0; i <?php echo '<'; ?> share_layer.length; i++)
 						{
 							map.removeLayer(share_layer[i]);
 						}
@@ -532,7 +543,7 @@
 						// non-clustered mode. Default interval is monthly
 						var startTime = new Date(startDate * 1000);
 						var endTime = new Date(endDate * 1000);
-						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <= 32)
+						if ((endTime - startTime) / (1000 * 60 * 60 * 24) <?php echo '<'; ?>= 32)
 						{
 							json_url = "json";
 						} 
