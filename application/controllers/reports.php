@@ -291,9 +291,9 @@ class Reports_Controller extends Main_Controller {
 
 		// Initialize Default Values
 		$form['incident_date'] = date("m/d/Y",time());
-		$form['incident_hour'] = "12";
-		$form['incident_minute'] = "00";
-		$form['incident_ampm'] = "pm";
+		$form['incident_hour'] = date('g');
+		$form['incident_minute'] = date('i');
+		$form['incident_ampm'] = date('a');
 		// initialize custom field array
 		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
 		//GET custom forms
@@ -565,6 +565,9 @@ class Reports_Controller extends Main_Controller {
 
 		$categories = $this->get_categories($form['incident_category']);
 		$this->template->content->categories = $categories;
+		
+		// Pass timezone
+		$this->template->content->site_timezone = Kohana::config('settings.site_timezone');
 
 		// Retrieve Custom Form Fields Structure
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);

@@ -50,7 +50,6 @@ class Settings_Controller extends Admin_Controller
 			'site_timezone' => '',
             'site_message' => '',
             'site_copyright_statement' => '',
-            //'site_help_page' => '',
             'site_contact_page' => '',
             'items_per_page' => '',
             'items_per_page_admin' => '',
@@ -93,7 +92,6 @@ class Settings_Controller extends Admin_Controller
             $post->add_rules('site_copyright_statement', 'length[4,600]');
             $post->add_rules('site_language','required', 'length[5, 5]');
 			//$post->add_rules('site_timezone','required', 'between[10,50]');
-            //$post->add_rules('site_help_page','required','between[0,1]');
             $post->add_rules('site_contact_page','required','between[0,1]');
             $post->add_rules('items_per_page','required','between[10,50]');
             $post->add_rules('items_per_page_admin','required','between[10,50]');
@@ -123,7 +121,11 @@ class Settings_Controller extends Admin_Controller
                 $settings->site_copyright_statement = $post->site_copyright_statement;
                 $settings->site_language = $post->site_language;
 				$settings->site_timezone = $post->site_timezone;
-                //$settings->site_help_page = $post->site_help_page;
+				if($settings->site_timezone == "0")
+				{
+					// "0" is the "Server Timezone" setting and it needs to be null in the db
+					$settings->site_timezone = NULL;
+				}
                 $settings->site_contact_page = $post->site_contact_page;
                 $settings->items_per_page = $post->items_per_page;
                 $settings->items_per_page_admin = $post->items_per_page_admin;
@@ -181,7 +183,6 @@ class Settings_Controller extends Admin_Controller
                 'site_copyright_statement' => $settings->site_copyright_statement,
                 'site_language' => $settings->site_language,
 				'site_timezone' => $settings->site_timezone,
-                //'site_help_page' => $settings->site_help_page,
                 'site_contact_page' => $settings->site_contact_page,
                 'items_per_page' => $settings->items_per_page,
                 'items_per_page_admin' => $settings->items_per_page_admin,
@@ -225,6 +226,7 @@ class Settings_Controller extends Admin_Controller
 
 		//Generate all timezones
 		$site_timezone_array = array();
+		$site_timezone_array[0] = Kohana::lang('ui_admin.server_time');
 		foreach (timezone_identifiers_list() as $timezone)
 		{
 			$site_timezone_array[$timezone] = $timezone;
