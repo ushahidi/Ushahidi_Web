@@ -1439,4 +1439,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '45' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '46' WHERE `id`=1 LIMIT 1;
