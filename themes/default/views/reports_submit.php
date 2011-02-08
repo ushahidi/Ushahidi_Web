@@ -40,12 +40,15 @@
 				<div class="report_row" id="datetime_default">
 					<h4><a href="#" id="date_toggle" class="show-more"><?php echo Kohana::lang('ui_main.modify_date'); ?></a><?php echo Kohana::lang('ui_main.date_time'); ?>: 
 						<?php echo Kohana::lang('ui_main.today_at')." "."<span id='current_time'>".$form['incident_hour']
-							.":".$form['incident_minute']." ".$form['incident_ampm']."</span>"; ?></h4>
+							.":".$form['incident_minute']." ".$form['incident_ampm']."</span>"; ?>
+						<?php if($site_timezone != NULL) { ?>
+							<small>(<?php echo $site_timezone; ?>)</small>
+						<?php } ?></h4>
 				</div>
 				<div class="report_row hide" id="datetime_edit">
 					<div class="date-box">
 						<h4><?php echo Kohana::lang('ui_main.reports_date'); ?></h4>
-						<?php print form::input('incident_date', $form['incident_date'], ' class="text short"'); ?>								
+						<?php print form::input('incident_date', $form['incident_date'], ' class="text short"'); ?>
 						<script type="text/javascript">
 							$().ready(function() {
 								$("#incident_date").datepicker({ 
@@ -72,23 +75,12 @@
 							print '<span class="dots">:</span>';
 							print form::dropdown('incident_ampm',$ampm_array,$form['incident_ampm']);
 						?>
+						<?php if($site_timezone != NULL) { ?>
+							<small>(<?php echo $site_timezone; ?>)</small>
+						<?php } ?>
 					</div>
 					<div style="clear:both; display:block;" id="incident_date_time"></div>
 				</div>
-				<script type="text/javascript">
-					var now = new Date();
-					var h=now.getHours();
-					var m=now.getMinutes();
-					var ampm="am";
-					if (h>=12) ampm="pm"; 
-					if (h>12) h-=12;
-					var hs=(h<10)?("0"+h):h;
-					var ms=(m<10)?("0"+m):m;
-					$("#current_time").text(hs+":"+ms+" "+ampm);
-					$("#incident_hour option[value='"+hs+"']").attr("selected","true");
-					$("#incident_minute option[value='"+ms+"']").attr("selected","true");
-					$("#incident_ampm option[value='"+ampm+"']").attr("selected","true");
-				</script>
 				<div class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?></h4>
 					<div class="report_category" id="categories">

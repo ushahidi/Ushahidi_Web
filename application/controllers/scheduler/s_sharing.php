@@ -14,27 +14,27 @@
 */
 
 class S_Sharing_Controller extends Controller {
-	
+
 	public function __construct()
     {
         parent::__construct();
 	}
-	
+
 	public function index()
 	{
 		// Get all currently active shares
 		$shares = ORM::factory('sharing')
 			->where('sharing_active', 1)
 			->find_all();
-		
+
 		foreach ($shares as $share)
 		{
 			$sharing_url = "http://".$share->sharing_url;
-			
+
 			$this->_parse_json($share->id, $sharing_url);
 		}
 	}
-	
+
 	/**
 	 * Use remote Ushahidi deployments API to get Incident Data
 	 * Limit to 20 not to kill remote server
@@ -45,51 +45,85 @@ class S_Sharing_Controller extends Controller {
 		{
 			return false;
 		}
-		
-		$since_id = 0;
-		// Use any existing incidents from remote url as a starter
-		$existing = ORM::factory('sharing_incident')
-			->where('sharing_id', $sharing_id)
-			->orderby('incident_id', 'DESC')
-			->find_all(1);
-		
-		foreach ($existing as $item)
-		{
-			$since_id = $item->incident_id;
-		}
-		
-		$ch = curl_init();
+
 		$timeout = 5;
-		$api_url = "/api?task=incidents&limit=20&resp=json&orderfield=incidentid&sort=0&by=sinceid&id=".$since_id;
-		
-		curl_setopt($ch,CURLOPT_URL,$sharing_url.$api_url);
-		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
-		$json = curl_exec($ch);
-		curl_close($ch);
-		
-		$all_data = json_decode($json, false);
-		if ( ! $all_data)
+		$limit = 20;
+		$since_id = 0;
+		$modified_ids = array(); // this is an array of our primary keys
+		$more_reports_to_pull = TRUE;
+
+		while($more_reports_to_pull == TRUE)
 		{
-			return false;
+			$api_url = "/api?task=incidents&limit=".$limit."&resp=json&orderfield=incidentid&sort=0&by=sinceid&id=".$since_id;
+
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_URL,$sharing_url.$api_url);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+			$json = curl_exec($ch);
+			curl_close($ch);
+
+			$all_data = json_decode($json, false);
+			if ( ! $all_data)
+			{
+				return false;
+			}
+
+			if ( ! isset($all_data->payload->incidents))
+			{
+				return false;
+			}
+
+			// Parse Incidents Into Database
+
+			$count = 0;
+			foreach($all_data->payload->incidents as $incident)
+			{
+				// See if this incident already exists so we can edit it
+
+				$item_check = ORM::factory('sharing_incident')
+							->where('sharing_id', $sharing_id)
+							->where('incident_id',$incident->incident->incidentid)
+							->find();
+
+				if ($item_check->loaded==TRUE)
+				{
+					$item = ORM::factory('sharing_incident',$item_check->id);
+				}else{
+					$item = ORM::factory('sharing_incident');
+				}
+				$item->sharing_id = $sharing_id;
+				$item->incident_id = $incident->incident->incidentid;
+				$item->incident_title = $incident->incident->incidenttitle;
+				$item->latitude = $incident->incident->locationlatitude;
+				$item->longitude = $incident->incident->locationlongitude;
+				$item->incident_date = $incident->incident->incidentdate;
+				$item->save();
+
+				// Save the primary key of the row we touched. We will be deleting ones that weren't touched.
+
+				$modified_ids[] = $item->id;
+
+				// Save the highest pulled incident id so we can grab the next set from that id on
+
+				$since_id = $incident->incident->incidentid;
+
+				// Save count so we know if we need to pull any more reports or not
+
+				$count++;
+			}
+
+			if($count < $limit)
+			{
+				$more_reports_to_pull = FALSE;
+			}
 		}
-		
-		if ( ! isset($all_data->payload->incidents))
-		{
-			return false;
-		}
-		
-		// Parse Incidents Into Database
-		foreach($all_data->payload->incidents as $incident)
-		{
-			$item = ORM::factory('sharing_incident');
-			$item->sharing_id = $sharing_id;
-			$item->incident_id = $incident->incident->incidentid;
-			$item->incident_title = $incident->incident->incidenttitle;
-			$item->latitude = $incident->incident->locationlatitude;
-			$item->longitude = $incident->incident->locationlongitude;
-			$item->incident_date = $incident->incident->incidentdate;
-			$item->save();
-		}
+
+		// Delete the reports that are no longer being displayed on the shared site
+
+		ORM::factory('sharing_incident')
+			->notin('id',$modified_ids)
+			->where('sharing_id', $sharing_id)
+			->delete_all();
 	}
 }

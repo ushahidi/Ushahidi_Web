@@ -166,6 +166,7 @@
 	'select_item' => 'Please select an item',
 	'sender' => 'Sender',
 	'sent_from_website' => 'This message was sent from your website at ',
+	'server_time' => 'Server Time',
 	'settings' => 'Settings',
 	'showing_page' => 'Showing page',
 	'showing_results' => 'Showing results',
