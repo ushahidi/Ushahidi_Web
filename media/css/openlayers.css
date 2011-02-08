@@ -374,6 +374,15 @@ div.olControlSaveFeaturesItemInactive {
 }
 
 /**
+ * Loading Panel
+ */
+.olControlLoadingPanel {
+	background-image:url(../img/loading.gif);
+	background-position:center;
+	background-repeat:no-repeat;
+}
+
+/**
  * Cursor styles
  */
 

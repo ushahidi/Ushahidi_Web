@@ -17,6 +17,7 @@
 ?>
 		var map;
 		var myPoint;
+		var selectedFeature;
 		jQuery(window).load(function() {
 			var moved=false;
 
