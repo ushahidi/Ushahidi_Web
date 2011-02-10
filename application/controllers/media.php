@@ -43,8 +43,9 @@ class Media_Controller extends Controller {
     // Method retrieves file data via file_get_contents
     public function _send()
     {
-        $gzip = false;  // Enable/Disable GZip Compression
-
+        //$gzip = false;  // Enable/Disable GZip Compression
+	$gzip = true;  // Enable/Disable GZip Compression
+	$mtime = time();
         $segments = $this->uri->segment_array();    // URI Segments
         $file = array_pop($segments);
         $file_path = implode("/", $segments);
@@ -93,7 +94,6 @@ class Media_Controller extends Controller {
         $oldetag = isset($_SERVER['HTTP_IF_NONE_MATCH'])?trim($_SERVER['HTTP_IF_NONE_MATCH']):'';
         $oldmtime = isset($_SERVER['HTTP_IF_MODIFIED_SINCE'])?$_SERVER['HTTP_IF_MODIFIED_SINCE']:'';
         $accencoding = isset($_SERVER['HTTP_ACCEPT_ENCODING'])?$_SERVER['HTTP_ACCEPT_ENCODING']:'';
-
         if (($oldmtime AND strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $oldmtime) OR $oldetag == $mtime)
         {
             header('HTTP/1.1 304 Not Modified');
@@ -101,9 +101,9 @@ class Media_Controller extends Controller {
         else
         {
             if (strpos($accencoding, 'gzip') !== false AND $gzip)
-            {
+            {		
                 header('Content-Encoding: gzip');
-                echo gzencode($file_data);
+                echo gzencode($file_data);		
             }
             else echo $file_data;
         }
