@@ -70,6 +70,13 @@ class Roles_User_Model extends Model {
 			
 			if($key == 'id' OR $key == 'name' OR $key == 'description') continue;
 			
+			if($key == 'checkin')
+			{
+				// Checkin is a special case because they are allowed access to the front end
+				//   but not necessarily the back end so we will continue looping
+				continue;
+			}
+			
 			if($allowed == 1)
 			{
 				return TRUE;
