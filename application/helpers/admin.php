@@ -30,6 +30,7 @@ class admin_Core {
             return array(
                 'dashboard' => Kohana::lang('ui_admin.dashboard'),
                 'reports' => Kohana::lang('ui_admin.reports'),
+                'checkins' => Kohana::lang('ui_admin.checkins'),
                 'messages' => Kohana::lang('ui_admin.messages'),
                 'stats' => Kohana::lang('ui_admin.stats'),
                 'addons' => Kohana::lang('ui_admin.addons')

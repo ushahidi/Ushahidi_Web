@@ -741,6 +741,8 @@ class Json_Controller extends Template_Controller
                         " AND longitude <=".(float) $longitude_max;
                 }
                 
+                $filter .= " AND sharing_id = ".(int)$sharing_id;
+
                 $query = $db->query("SELECT * FROM `".$this->table_prefix."sharing_incident` WHERE 1=1 $filter ORDER BY incident_id ASC "); 
 
                 $markers = $query->result_array(FALSE);

@@ -40,7 +40,7 @@ final class Api_Service {
     
     public function __construct()
     {
-        // Set the request data
+    	// Set the request data
         $this->request = ($_SERVER['REQUEST_METHOD'] == 'POST')
             ? $_POST
             : $_GET;
