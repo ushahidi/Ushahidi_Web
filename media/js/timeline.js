@@ -254,7 +254,7 @@
 			{
 				return this;
 			}
-
+			
 			playTimeline = $.timeline({
 				graphData: {
 					color: plotData.color,
@@ -289,6 +289,7 @@
 		this.playRainDrops = function()
 		{
 			this.graphData = this.graphData || gTimelineData;
+
 			var plotData = this.graphData;
 			gPlayEndDate = gStartTime.getTime()/1000 + (this.playCount * 60*60*24);
 			var playEndDateTime = new Date(gPlayEndDate * 1000);
@@ -324,6 +325,7 @@
 			this.playCount++;
 			if (gPlayEndDate >= gEndTime.getTime()/1000)
 			{
+				alert('test 1');
 				$('#playTimeline').html('PLAY');
 				$('#playTimeline').parent().attr('class', 'play');
 				this.graphData = allGraphData;
@@ -333,7 +335,7 @@
 				$('#playTimeline').html('PAUSE');
 				$('#playTimeline').parent().attr('class', 'play pause');
 				gTimeline = this;
-				gTimelinePlayHandle = window.setTimeout("gTimeline.playRainDrops()",500);
+				gTimelinePlayHandle = window.setTimeout("gTimeline.playRainDrops()",800);
 			}
 
 			return this;
@@ -366,7 +368,7 @@
 				})
 			});
 			style.rules = [];
-			style.addRules(sliderfilter);					
+			style.addRules([sliderfilter]);					
 			markers.styleMap.styles["default"] = style;
 			markers.redraw();
 			return this;

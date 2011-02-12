@@ -41,6 +41,9 @@
 		var markerRadius = <?php echo $marker_radius; ?>;
 		var markerOpacity = "<?php echo $marker_opacity; ?>";
 		var selectedFeature;
+		var allGraphData = "";
+		var dailyGraphData = "";
+		var timeout = 1500;
 		
 		var activeZoom = null;
 
@@ -82,7 +85,7 @@
 				}else{
 					return true;
 				}
-			}, 2000);
+			}, timeout);
 		}
 
 		/*
@@ -223,7 +226,7 @@
 		function refreshGraph(startDate, endDate)
 		{
 			var currentCat = gCategoryId;
-
+			
 			// refresh graph
 			if (!currentCat || currentCat == '0')
 			{
@@ -449,6 +452,7 @@
 				currCenter = map.getCenter();
 				
 				gCategoryId = catID;
+				
 				var startTime = new Date($("#startDate").val() * 1000);
 				var endTime = new Date($("#endDate").val() * 1000);
 				addMarkers(catID, $("#startDate").val(), $("#endDate").val(), currZoom, currCenter, gMediaType);
@@ -556,9 +560,6 @@
 					}
 				}
 			});
-			
-			var allGraphData = "";
-			var dailyGraphData = "";
 			
 			var startTime = <?php echo $active_startDate ?>;	// Default to most active month
 			var endTime = <?php echo $active_endDate ?>;		// Default to most active month
