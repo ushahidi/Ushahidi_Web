@@ -325,7 +325,6 @@
 			this.playCount++;
 			if (gPlayEndDate >= gEndTime.getTime()/1000)
 			{
-				alert('test 1');
 				$('#playTimeline').html('PLAY');
 				$('#playTimeline').parent().attr('class', 'play');
 				this.graphData = allGraphData;
