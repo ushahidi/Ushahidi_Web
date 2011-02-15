@@ -632,7 +632,7 @@ div.report-details{
 
 .report_detail .r_verified,
 .report_detail .r_unverified {color:#FFFFFF; font-size:11px; font-weight:bold; display:block; float:right; margin:4px 0 0 18px; padding:3px 5px; text-align:center; text-transform:uppercase;
-	 									 -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; }
+	 									 -khtml-border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; }
 .report_detail .r_verified { background:#368C00; }
 .report_detail .r_unverified { background:#A60003; }
 
@@ -728,8 +728,9 @@ div.report-media-box-tabs a {
 	display: inline-block;
 	padding: 2px 7px;
 	font-weight:bold;
-	-webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
-	-webkit-border-bottom-left-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px;
+	-khtml-border-radius:3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;
+	-khtml-border-bottom-left-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-left-radius: 0px;
+	-khtml-border-bottom-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; border-bottom-right-radius: 0px;
 	border-bottom:0;
 }
 div.report-media-box-tabs a:hover { text-decoration:none; cursor:pointer; color:#333; }
@@ -800,7 +801,9 @@ div.report-details ul.details li a{
     background: #E2E2E2;
     padding: 1px 4px 2px 4px;
     -moz-border-radius: 3px;
+    -khtml-border-radius: 3px;
     -webkit-border-radius: 3px;
+    border-radius: 3px;
     color: #004276;
     text-transform: uppercase;
     font-weight: bold;
@@ -1555,7 +1558,7 @@ a.show-more {
 			.r_details h3 a.r_comments:hover {  }
 			/*verified/unverified*/
 			.r_details h3 span { display:inline-block; color:#FFFFFF; font-size:9px; font-weight:normal; margin:0 0 0 7px; padding:1px 3px; text-align:center; text-transform:uppercase;
-				 									 -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; }
+				 									 -khtml-border-radius:3px; -webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px; }
 			.r_details h3 span.r_verified { background:#368C00; }
 			.r_details h3 span.r_unverified { background:#A60003; }
 			
@@ -1995,11 +1998,11 @@ div.green-box ul, div.red-box ul{
 }
 
 /* Rounded Corners */
-.r-3 { -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
-.r-4 { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
-.r-5 { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
-.r-8 { -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; }
-.top-cap		{ -webkit-border-bottom-left-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; }
-.right-cap	{ -webkit-border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-topright: 0px; -moz-border-radius-bottomright: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; }
-.bottom-cap	{ -webkit-border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; -moz-border-radius-topleft: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px; }
-.left-cap		{ -webkit-border-top-left-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; }
+.r-3 { -khtml-border-radius: 3px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
+.r-4 { -khtml-border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
+.r-5 { -khtml-border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
+.r-8 { -khtml-border-radius: 8px; -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; }
+.top-cap		{ -khtml-border-bottom-left-radius: 0px; -khtml-border-bottom-right-radius: 0px; -webkit-border-bottom-left-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-bottomright: 0px; -moz-border-radius-bottomleft: 0px; border-bottom-right-radius: 0px; border-bottom-left-radius: 0px; }
+.right-cap	{ -khtml-border-top-right-radius: 0px; -khtml-border-bottom-right-radius: 0px; -webkit-border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-topright: 0px; -moz-border-radius-bottomright: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; }
+.bottom-cap	{ -khtml-border-top-left-radius: 0px; -khtml-border-top-right-radius: 0px; -webkit-border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; -moz-border-radius-topleft: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px; }
+.left-cap		{ -khtml-border-top-left-radius: 0px; -khtml-border-bottom-left-radius: 0px; -webkit-border-top-left-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; }
