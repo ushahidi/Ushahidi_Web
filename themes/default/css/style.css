@@ -114,7 +114,7 @@ div#logo span{
 /* main body setup */
 div#middle{
     width: auto;
-    margin: 0px 0px 0px 0px;
+    margin: 0px;
     clear: both;
     background: #FFF;
 }
@@ -139,37 +139,37 @@ div#left{
 
 div#middle .layoutleft div#left{
     float: left;
-    padding: 0px 0px 0px 0px;
+    padding: 0px;
 }
 
 div#middle .layoutright div#left{
     float: right;
-    padding: 0px 0px 0px 0px;
+    padding: 0px;
 }
 
 /* right column */
 div#right{
     width: 285px;
-    padding: 0px 0px 0px 0px;
+    padding: 0px;
     float: right;
 }
 
 /* right column (width: 50%) */
 div#equalright{
     width: 50%;
-    padding: 0px 0px 0px 0px;
+    padding: 0px;
     float: right;
 }
 
 /* content column */
 div#main{
     width: auto;
-    margin: 0px 0px 0px 0px;
+    margin: 0px;
     padding: 15px 29px;
 }
 
 div#mainmiddle{
-    margin: 0px 0px 0px 0px;
+    margin: 0px;
 }
 
 div#main .withoutright{
@@ -180,15 +180,15 @@ div#content{
     width: auto;
 }
 
-div#main .withright div#content{
-    margin: 0px 325px 0px 0px;
-    padding: 0px 0px 0px 0px;
+div#main div#content{
+    margin: 0px;
+    padding: 0px;
 }
 
-div#main .withoutright div#content{
-    margin: 0px 0px 0px 0px;
-    padding: 0px 0px 0px 0px;
+div#main .withright div#content{
+    margin-right: 325px;
 }
+
 
 /* footer */
 div#footer{
@@ -357,21 +357,9 @@ div#mainmenu a{
     font-size: 120%;
 }
 
-div#mainmenu a:hover{
-    text-decoration: none;
-    color: #fff;
-    background: #2E8AB8;
-}
-
+div#mainmenu a:hover,
 div#mainmenu a.active{
-    display: block;
-    position: relative;
-    padding: 7px 12px;
-    overflow: hidden;
-    text-transform: uppercase;
-    font-weight: bold;
     text-decoration: none;
-    color: #fff;
     background: #2E8AB8;
 }
 
@@ -1197,15 +1185,16 @@ label.error {
 #report_stats table{
 	width:100%
 }
-#report_stats th{
+#report_stats th,
+#report_stats td{
 	width:33%;
 	text-align:center;
+}
+#report_stats th{
 	color:#4C6499;
 	font-size:12px;
 }
 #report_stats td{
-	width:33%;
-	text-align:center;
 	color:#585858;
 	font-size:16px;
 }
@@ -1214,12 +1203,6 @@ label.error {
 	width:450px;
 	margin:20px 0 0;
 	padding:0 0 10px;
-}
-.report_left table {
-	width: 100%;
-}
-.report_left table tr th {
-	text-align: left;
 }
 .report_right{
 	overflow:hidden;
@@ -1230,12 +1213,12 @@ label.error {
 .report_block{
   margin: 20px 0 20px 25px;
 }
-.report_block table tr th {
-  text-align: left;
-}
+.report_left table,
 .report_right table {
 	width: 100%;
 }
+.report_left table tr th,
+.report_block table tr th,
 .report_right table tr th {
 	text-align: left;
 }
@@ -1952,21 +1935,20 @@ ul.pager li a.active {background:#f2f7fa;}
 }
 
 /*--error/success--*/
-div.green-box {
-	margin:10px 0 25px 0;
-	padding:9px 0 8px;
-	background:#d8f1d8;
-	border:2px solid #a7d1a7;
-	clear:both;
-	overflow:hidden;
-}
+div.green-box,
 div.red-box {
 	margin:10px 0 25px 0;
 	padding:9px 0 8px;
-	background:#FFD8D9;
-	border:2px solid #990000;
 	clear:both;
 	overflow:hidden;
+}
+div.green-box {
+	background:#d8f1d8;
+	border:2px solid #a7d1a7;
+}
+div.red-box {
+	background:#FFD8D9;
+	border:2px solid #990000;
 }
 div.green-box h3, div.red-box h3{
 	margin:0;
