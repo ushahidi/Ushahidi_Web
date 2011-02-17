@@ -40,65 +40,65 @@ class ssl_check {
 
     	if ($ssl_enabled)
     	{
-    		// Initialize session and set cURL
-    		$ch = curl_init();
+            // Initialize session and set cURL
+            $ch = curl_init();
 
-    		// Set the URL
-    		curl_setopt($ch, CURLOPT_URL, url::base());
-		
-    		// Disable following every "Location:" that is sent as part of the HTTP(S) header
-    		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+            // Set the URL
+            curl_setopt($ch, CURLOPT_URL, url::base());
 
-    		// Suppress verification of the SSL certificate
-    		/** 
-    		 * E.Kala - 17th Feb 2011
-    		 * This currently causes an inifinte re-direct loop therefore
-    		 */
-    		// curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-		
-    		// Disable checking of the Common Name (CN) in the SSL certificate; Certificate may not be X.509
-    		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+            // Disable following every "Location:" that is sent as part of the HTTP(S) header
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
 
-    		// Suppress the header in the output
-    		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            // Suppress verification of the SSL certificate
+            /** 
+             * E.Kala - 17th Feb 2011
+             * This currently causes an inifinte re-direct loop therefore
+             */
+            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+
+            // Disable checking of the Common Name (CN) in the SSL certificate; Certificate may not be X.509
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+
+            // Suppress the header in the output
+            curl_setopt($ch, CURLOPT_HEADER, FALSE);
 		
-    		// Perform cURL session, check if successful
-    		if ( ! curl_exec($ch))
-    		{
-    			// Set the protocol in the config
-    			Kohana::config_set('core.site_protocol', 'http');
+            // Perform cURL session, check if successful
+            if ( ! curl_exec($ch))
+            {
+                // Set the protocol in the config
+                Kohana::config_set('core.site_protocol', 'http');
+
+                // Re-write the config file and set $config['site_protocol'] back to HTTP
+                $config_file = @file('application/config/config.php');
+                $handle = @fopen('application/config/config.php', 'w');
 			
-    			// Re-write the config file and set $config['site_protocol'] back to HTTP
-    			$config_file = @file('application/config/config.php');
-    			$handle = @fopen('application/config/config.php', 'w');
-			
-    	        if(is_array($config_file) AND $handle )
-    	        {
-    				// Read each line in the file
-    	            foreach ($config_file as $line_number => $line)
-    	            {               
-    		             if( strpos(" ".$line,"\$config['site_protocol'] = 'https';") != 0 )
-    		             {
-    		                 fwrite($handle, str_replace("https","http", $line));
-    		             }
-    		             else
-    		             {
-    		                 fwrite($handle, $line);
-    		             }
-    	            }
+                if(is_array($config_file) AND $handle )
+                {
+                    // Read each line in the file
+                    foreach ($config_file as $line_number => $line)
+                    {               
+                         if( strpos(" ".$line,"\$config['site_protocol'] = 'https';") != 0 )
+                         {
+                            fwrite($handle, str_replace("https","http", $line));
+                        }
+                        else
+                        {
+                            fwrite($handle, $line);
+                        }
+                    }
 						
-    				// Close the file
-    				fclose($handle);
-    	        }
-    		}
+                    // Close the file
+                    @fclose($handle);
+                }
+            }
 
-    		// Close the cURL resource
-    		curl_close($ch);
-    		unset($ch);
+            // Close the cURL resource
+            curl_close($ch);
+            unset($ch);
 		
-    		// Redirect using the new site protocol
-    		url::redirect(url::base().url::current());
-    	}
+            // Redirect using the new site protocol
+            url::redirect(url::base().url::current());
+        }
     }
 }
 
