@@ -58,6 +58,21 @@
 		<div class="report-description-text">
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
 			<?php echo $incident_description; ?>
+			
+			<?php if ($features_count)
+			{
+				?>
+				<br /><br /><h5><?php echo Kohana::lang('ui_main.reports_features');?></h5>
+				<?php
+				foreach ($features as $feature)
+				{
+					echo ($feature->geometry_label) ?
+					 	"<div class=\"feature_label\"><a href=\"javascript:getFeature($feature->id)\">$feature->geometry_label</a></div>" : "";
+					echo ($feature->geometry_comment) ?
+						"<div class=\"feature_comment\">$feature->geometry_comment</div>" : "";
+				}
+			}?>
+			
 			<div class="credibility">
 				<table class="rating-table" cellspacing="0" cellpadding="0" border="0">
           <tr>

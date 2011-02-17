@@ -791,7 +791,11 @@ class Reports_Controller extends Main_Controller {
 			$incident_description = nl2br($incident->incident_description);
 			Event::run('ushahidi_filter.report_title', $incident_title);
 			Event::run('ushahidi_filter.report_description', $incident_description);
-
+			
+			// Add Features
+			$this->template->content->features_count = $incident->geometry->count();
+			$this->template->content->features = $incident->geometry;
+			
 			$this->template->content->incident_id = $incident->id;
 			$this->template->content->incident_title = $incident_title;
 			$this->template->content->incident_description = $incident_description;
@@ -1226,8 +1230,7 @@ class Reports_Controller extends Main_Controller {
 			return TRUE;
 		}
 	}
-
-
+	
 	/**
 	 * Ajax call to update Incident Reporting Form
 	 */

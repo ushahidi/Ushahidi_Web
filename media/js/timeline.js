@@ -157,8 +157,8 @@
 					{
 						gTimelineData = data;
 						//plotPeriod = $.timelinePeriod(gTimelineData[0].data);
-						gStartTime = gStartTime // || new Date(plotPeriod[0]);
-						gEndTime   = gEndTime // || new Date(plotPeriod[1]);
+						gStartTime = gStartTime; // || new Date(plotPeriod[0]);
+						gEndTime   = gEndTime; // || new Date(plotPeriod[1]);
 						if (!gTimelineData[gCategoryId])
 						{
 							gTimelineData[gCategoryId] = {};
@@ -315,7 +315,7 @@
 				categoryId: this.categoryId,
 				startTime: gStartTime,
 				endTime: gEndTime
-			}
+			};
 
 			playTimeline = $.timeline(playOptions);
 			var style = playTimeline.markerStyle();
@@ -410,7 +410,7 @@
 				pointRadius: "${radius}",
 				fillColor: "${color}",
 				fillOpacity: "${opacity}",
-				strokeColor: "${color}",
+				strokeColor: "${strokeColor}",
 				strokeWidth: "${strokeWidth}",
 				strokeOpacity: "0.3",
 				label:"${clusterCount}",
@@ -525,39 +525,59 @@
 					},
 					strokeWidth: function(feature)
 					{
-						feature_count = feature.attributes.count;
-						if (feature_count > 10000)
+						if ( typeof(feature.attributes.strokewidth) != 'undefined' && 
+							feature.attributes.strokewidth != '')
 						{
-							return 45;
-						}
-						else if (feature_count > 5000)
-						{
-							return 30;
-						}
-						else if (feature_count > 1000)
-						{
-							return 22;
-						}
-						else if (feature_count > 100)
-						{
-							return 15;
-						}
-						else if (feature_count > 10)
-						{
-							return 10;
-						}
-						else if (feature_count >= 2)
-						{
-							return 5;
+							return feature.attributes.strokewidth;
 						}
 						else
 						{
-							return 1;
+							feature_count = feature.attributes.count;
+							if (feature_count > 10000)
+							{
+								return 45;
+							}
+							else if (feature_count > 5000)
+							{
+								return 30;
+							}
+							else if (feature_count > 1000)
+							{
+								return 22;
+							}
+							else if (feature_count > 100)
+							{
+								return 15;
+							}
+							else if (feature_count > 10)
+							{
+								return 10;
+							}
+							else if (feature_count >= 2)
+							{
+								return 5;
+							}
+							else
+							{
+								return 1;
+							}
 						}
 					},
 					color: function(feature)
 					{
 						return "#" + feature.attributes.color;
+					},
+					strokeColor: function(feature)
+					{
+						if ( typeof(feature.attributes.strokecolor) != 'undefined' && 
+							feature.attributes.strokecolor != '')
+						{
+							return "#"+feature.attributes.strokecolor;
+						}
+						else
+						{
+							return "#"+feature.attributes.color;
+						}
 					},
 					icon: function(feature)
 					{
@@ -777,7 +797,7 @@
 	{
 		timeline = new Timeline(options);
 		return timeline;
-	}
+	};
 	
 	$.timelinePeriod = function(plotData)
 	{
