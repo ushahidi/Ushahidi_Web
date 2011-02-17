@@ -1091,8 +1091,7 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
 		
 		// Pack Javascript
-		$js = $this->template->js;
-		$myPacker = new javascriptpacker($js , 'Normal', false, false);
+		$myPacker = new javascriptpacker($this->template->js , 'Normal', false, false);
 		$this->template->js = $myPacker->pack();
 	}
 

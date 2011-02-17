@@ -766,6 +766,7 @@
 					var lon = '';
 					var lat = '';
 					var color = '';
+					var strokewidth = '';
 					if ( typeof(vlayer.features[i].label) != 'undefined') {
 						label = vlayer.features[i].label;
 					}
