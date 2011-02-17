@@ -1543,7 +1543,7 @@ class Reports_Controller extends Admin_Controller
     private function _get_categories()
     {
         $categories = ORM::factory('category')
-            ->where('category_visible', '1')
+            //->where('category_visible', '1') //since we're on the backend we want to see hidden stuff.
             ->where('parent_id', '0')
 			->where('category_trusted != 1')
             ->orderby('category_title', 'ASC')
