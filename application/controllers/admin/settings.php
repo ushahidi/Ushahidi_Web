@@ -372,7 +372,7 @@ class Settings_Controller extends Admin_Controller
             $this_country = $country->country;
             if (strlen($this_country) > 35)
             {
-                $this_country = substr($this_country, 0, 35) . "...";
+                $this_country = substr($this_country, 0, 30) . "...";
             }
             $countries[$country->id] = $this_country;
         }
