@@ -710,6 +710,96 @@ class Settings_Controller extends Admin_Controller
 
     }
 
+	/**
+	 * SSL settings
+	 */
+	public function ssl()
+	{
+        // We cannot allow cleanurl settings to be changed if MHI is enabled since it modifies a file in the config folder
+        if (Kohana::config('config.enable_mhi') == TRUE)
+        {
+            throw new Kohana_User_Exception('Access Error', "Please contact the administrator in order to use this feature.");
+        }
+
+        $this->template->content = new View('admin/ssl');
+        $this->template->content->title = Kohana::lang('ui_admin.settings');
+
+        // setup and initialize form field names
+        $form = array
+        (
+            'enable_ssl' => '',
+        );
+
+        //  Copy the form as errors, so the errors will be stored with keys
+        //  corresponding to the form field names
+        $errors = $form;
+        $form_error = FALSE;
+        $form_saved = FALSE;
+
+        // check, has the form been submitted, if so, setup validation
+        if ($_POST)
+        {
+            // Instantiate Validation, use $post, so we don't overwrite $_POST
+            // fields with our own things
+            $post = new Validation($_POST);
+
+            // Add some filters
+            $post->pre_filter('trim', TRUE);
+
+            // Add some rules, the input field, followed by a list of checks, carried out in order
+
+            $post->add_rules('enable_ssl','required','between[0,1]');
+
+            // Test to see if things passed the rule checks
+            if ($post->validate())
+            {
+                // Yes! everything is valid
+
+                // Delete Settings Cache
+                $this->cache->delete('settings');
+                $this->cache->delete_tag('settings');
+
+                $this->_configure_index_page($post->enable_ssl);
+
+                // Everything is A-Okay!
+                $form_saved = TRUE;
+
+                // repopulate the form fields
+                $form = arr::overwrite($form, $post->as_array());
+
+            }
+
+            // No! We have validation errors, we need to show the form again,
+            // with the errors
+            else
+            {
+                // repopulate the form fields
+                $form = arr::overwrite($form, $post->as_array());
+
+                // populate the error fields, if any
+                $errors = arr::overwrite($errors, $post->errors('settings'));
+                $form_error = TRUE;
+            }
+
+        }
+        else
+        {
+
+            $yes_or_no = $this->_is_ssl_enabled() == TRUE ? 1 : 0;
+            // initialize form
+            $form = array
+            (
+                'enable_ssl' => $yes_or_no,
+            );
+        }
+
+        $this->template->content->form = $form;
+        $this->template->content->errors = $errors;
+        $this->template->content->form_error = $form_error;
+        $this->template->content->form_saved = $form_saved;
+        $this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+        $this->template->content->is_ssl_enabled = $this->_is_ssl_enabled();
+	}
 
 
     /**
@@ -941,5 +1031,15 @@ class Settings_Controller extends Admin_Controller
         }
 
         return json_encode($map_layers);
+    }
+    /**
+     * Check if SSL is enabled on Ushahidi
+     */
+    private function _is_ssl_enabled() {
+        $config_file = @file_get_contents('application/config/config.php');
+
+        return (strpos( $config_file,"\$config['site_protocol'] = 'http';") != 0 )
+            ? FALSE
+            : TRUE;
     }
 }
