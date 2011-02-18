@@ -124,13 +124,13 @@ class System_Api_Object extends Api_Object_Core {
     }
     
     /**
-     * Get true or false depending on SSL being enabled or not
+     * Get true or false depending on whether HTTPS has been enabled or not
      *
      * @param string response_type - JSON or XML
      *
      * @return string
      */
-    public function get_ssl_enabled()
+    public function get_https_enabled()
     {
         $enabled = 'FALSE';
         $ret_json_or_xml = ''; // Will hold the JSON/XML string to return
@@ -144,7 +144,7 @@ class System_Api_Object extends Api_Object_Core {
         $data = array(
             "payload" => array(
                 "domain" => $this->domain,
-                "sslenabled" => $enabled
+                "httpsenabled" => $enabled
                 ),
             "error" => $this->api_service->get_error_msg(0)
         );
