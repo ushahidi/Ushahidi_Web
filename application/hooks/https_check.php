@@ -40,7 +40,7 @@ class https_check {
      */
     public function verify_https_mode()
     {
-    	// Is SSL enabled, check if Web Server is SSL capable
+    	// Is HTTPS enabled, check if Web Server is HTTPS capable
     	$this->https_enabled = (Kohana::config('core.site_protocol') == 'https')? TRUE : FALSE;
 
     	if ($this->https_enabled)
@@ -84,7 +84,7 @@ class https_check {
                 // Set the protocol in the config
                 Kohana::config_set('core.site_protocol', 'http');
 
-                // Re-write the config file and set $config['site_protocol'] back to HTTP
+                // Re-write the config file and set $config['site_protocol'] back to 'http'
                 $config_file = @file('application/config/config.php');
                 $handle = @fopen('application/config/config.php', 'w');
 			
@@ -92,9 +92,9 @@ class https_check {
                 {
                     // Read each line in the file
                     foreach ($config_file as $line_number => $line)
-                    {               
-                         if( strpos(" ".$line,"\$config['site_protocol'] = 'https';") != 0 )
-                         {
+                    {
+                        if( strpos(" ".$line,"\$config['site_protocol'] = 'https';") != 0 )
+                        {
                             fwrite($handle, str_replace("https","http", $line));
                         }
                         else
