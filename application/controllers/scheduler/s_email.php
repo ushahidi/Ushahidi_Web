@@ -6,18 +6,18 @@
  * LICENSE: This source file is subject to LGPL license 
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
- * @package    Ushahidi - http://source.ushahididev.com
- * @module     Email Controller  
+ * @author	   Ushahidi Team <team@ushahidi.com> 
+ * @package	   Ushahidi - http://source.ushahididev.com
+ * @module	   Email Controller	 
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
 */
 
 class S_Email_Controller extends Controller {
 	
 	public function __construct()
-    {
-        parent::__construct();
+	{
+		parent::__construct();
 	}	
 	
 	public function index() 
@@ -45,7 +45,7 @@ class S_Email_Controller extends Controller {
 				$check_email->close();
 
 				// Add Messages
-		        $this->add_email($messages);
+				$this->add_email($messages);
 			}
 			else
 			{
@@ -56,24 +56,24 @@ class S_Email_Controller extends Controller {
 		{
 			echo "You Do Not Have the IMAP PHP Library installed. Email will not be retrieved.<BR/ ><BR/ >";
 		}
-    }
+	}
 
 
 	/**
 	* Adds email to the database and saves the sender as a new
 	* Reporter if they don't already exist
-    * @param string $messages
-    */
+	* @param string $messages
+	*/
 	private function add_email($messages)
 	{
 		$service = ORM::factory('service')
 			->where('service_name', 'Email')
 			->find();
 		
-	   	if ( ! $service->loaded)
+		if ( ! $service->loaded)
 		{
- 		    return;
-	    }
+			return;
+		}
 	
 		if (empty($messages) OR ! is_array($messages))
 		{
@@ -89,28 +89,28 @@ class S_Email_Controller extends Controller {
 			if (!$reporter->loaded == true)
 			{
 				// Add new reporter
-	    		$names = explode(' ', $message['from'], 2);
-	    		$last_name = '';
-	    		if (count($names) == 2) {
-	    			$last_name = $names[1]; 
-	    		}
-	    		
-	    		// get default reporter level (Untrusted)
+				$names = explode(' ', $message['from'], 2);
+				$last_name = '';
+				if (count($names) == 2) {
+					$last_name = $names[1]; 
+				}
+				
+				// get default reporter level (Untrusted)
 				$level = ORM::factory('level')
 					->where('level_weight', 0)
 					->find();
-		    	
-	    		$reporter->service_id       = $service->id;
-				$reporter->level_id	        = $level->id;
-	    		$reporter->service_userid   = null;
-	    		$reporter->service_account  = $message['email']; 
-	    		$reporter->reporter_first   = $names[0];
-	    		$reporter->reporter_last    = $last_name;
-	    		$reporter->reporter_email   = $message['email'];
-	    		$reporter->reporter_phone   = null;
-	    		$reporter->reporter_ip      = null;
-	    		$reporter->reporter_date    = date('Y-m-d');
-	    		$reporter->save();
+				
+				$reporter->service_id		= $service->id;
+				$reporter->level_id			= $level->id;
+				$reporter->service_userid	= null;
+				$reporter->service_account	= $message['email']; 
+				$reporter->reporter_first	= $names[0];
+				$reporter->reporter_last	= $last_name;
+				$reporter->reporter_email	= $message['email'];
+				$reporter->reporter_phone	= null;
+				$reporter->reporter_ip		= null;
+				$reporter->reporter_date	= date('Y-m-d');
+				$reporter->save();
 			}
 			
 			if ($reporter->level_id > 1 && 
@@ -151,6 +151,54 @@ class S_Email_Controller extends Controller {
 					}
 				}
 				
+				
+				// Auto-Create A Report if Reporter is Trusted
+				$reporter_weight = $reporter->level->level_weight;
+				$reporter_location = $reporter->location;
+				if ($reporter_weight > 0 AND $reporter_location)
+				{
+					// Create Incident
+					$incident = new Incident_Model();
+					$incident->location_id = $reporter_location->id;
+					$incident->incident_title = $message['subject'];
+					$incident->incident_description = $message['body'];
+					$incident->incident_date = $message['date'];
+					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
+					$incident->incident_active = 1;
+					if ($reporter_weight == 2)
+					{
+						$incident->incident_verified = 1;
+					}
+					$incident->save();
+
+					// Update Message with Incident ID
+					$email->incident_id = $incident->id;
+					$email->save();
+
+					// Save Incident Category
+					$trusted_categories = ORM::factory("category")
+						->where("category_trusted", 1)
+						->find();
+					if ($trusted_categories->loaded)
+					{
+						$incident_category = new Incident_Category_Model();
+						$incident_category->incident_id = $incident->id;
+						$incident_category->category_id = $trusted_categories->id;
+						$incident_category->save();
+					}
+
+					// Add Attachments
+					$attachments = ORM::factory("media")
+						->where("message_id", $email->id)
+						->find_all();
+					foreach ($attachments AS $attachment)
+					{
+						$attachment->incident_id = $incident->id;
+						$attachment->save();
+					}
+				}
+				
+				
 				// Notify Admin Of New Email Message
 				$send = notifications::notify_admins(
 					"[".Kohana::config('settings.site_name')."] ".
@@ -159,53 +207,7 @@ class S_Email_Controller extends Controller {
 					);
 					
 				// Action::message_email_add - Email Received!
-                Event::run('ushahidi_action.message_email_add', $email);
-			}
-			
-			// Auto-Create A Report if Reporter is Trusted
-			$reporter_weight = $reporter->level->level_weight;
-			$reporter_location = $reporter->location;
-			if ($reporter_weight > 0 AND $reporter_location)
-			{
-				// Create Incident
-				$incident = new Incident_Model();
-				$incident->location_id = $reporter_location->id;
-				$incident->incident_title = $message['subject'];
-				$incident->incident_description = $message['body'];
-				$incident->incident_date = $message['date'];
-				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
-				$incident->incident_active = 1;
-				if ($reporter_weight == 2)
-				{
-					$incident->incident_verified = 1;
-				}
-				$incident->save();
-				
-				// Update Message with Incident ID
-				$email->incident_id = $incident->id;
-				$email->save();
-				
-				// Save Incident Category
-				$trusted_categories = ORM::factory("category")
-					->where("category_trusted", 1)
-					->find();
-				if ($trusted_categories->loaded)
-				{
-					$incident_category = new Incident_Category_Model();
-					$incident_category->incident_id = $incident->id;
-					$incident_category->category_id = $trusted_categories->id;
-					$incident_category->save();
-				}
-				
-				// Add Attachments
-				$attachments = ORM::factory("media")
-					->where("message_id", $email->id)
-					->find_all();
-				foreach ($attachments AS $attachment)
-				{
-					$attachment->incident_id = $incident->id;
-					$attachment->save();
-				}
+				Event::run('ushahidi_action.message_email_add', $email);
 			}
 		}
 	}
