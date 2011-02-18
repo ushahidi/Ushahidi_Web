@@ -759,14 +759,13 @@ class Settings_Controller extends Admin_Controller
                 $this->cache->delete('settings');
                 $this->cache->delete_tag('settings');
 
-                $this->_configure_index_page($post->enable_ssl);
+                $this->_configure_ssl_mode($post->enable_ssl);
 
                 // Everything is A-Okay!
                 $form_saved = TRUE;
 
                 // repopulate the form fields
                 $form = arr::overwrite($form, $post->as_array());
-
             }
 
             // No! We have validation errors, we need to show the form again,
@@ -798,7 +797,7 @@ class Settings_Controller extends Admin_Controller
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
         $this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
-        $this->template->content->is_ssl_enabled = $this->_is_ssl_enabled();
+        $this->template->content->is_ssl_capable = $this->_is_ssl_capable();
 	}
 
 
@@ -1032,14 +1031,96 @@ class Settings_Controller extends Admin_Controller
 
         return json_encode($map_layers);
     }
+    
     /**
-     * Check if SSL is enabled on Ushahidi
+     * Check if SSL is currently enabled on the instance
      */
-    private function _is_ssl_enabled() {
+    private function _is_ssl_enabled()
+    {
         $config_file = @file_get_contents('application/config/config.php');
 
         return (strpos( $config_file,"\$config['site_protocol'] = 'http';") != 0 )
             ? FALSE
             : TRUE;
+    }
+    
+    /**
+     * Check if the Webserver is SSL capable
+     */
+    private function _is_ssl_capable()
+    {
+        // Get the current site protocol
+        $protocol = Kohana::config('core.site_protocol');
+        
+        // Build an SSL URL
+        $url = ($protocol == 'https')? url::base() : str_replace('http://', $protocol.'://', url::base());
+        
+        // Initialize cURL
+        $ch = curl_init();
+        
+        // Set cURL options
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HEADER, FALSE);
+
+        // Perform cURL session
+        curl_exec($ch);
+        
+        // Get the cURL error number
+        $error_no = curl_errno($ch);
+        
+        // Close the cURL handle
+        curl_close($ch);
+        
+        // Check if the connection went through
+        return ($error_no == 71)? FALSE : TRUE;
+    }
+
+    /**
+     * Configures the SSL mode for the Ushahidi instance
+     *
+     * @param int $yes_or_no
+     */
+    private function _configure_ssl_mode($yes_or_no)
+    {
+        $config_file = @file('application/config/config.php');
+        $handle = @fopen('application/config/config.php', 'w');
+
+        if(is_array($config_file) AND $handle)
+        {
+            foreach ($config_file as $line_number => $line)
+            {               
+                if ($yes_or_no == 1)
+                {
+                    if( strpos(" ".$line,"\$config['site_protocol'] = 'http';") != 0 )
+                    {
+                        fwrite($handle, str_replace("http", "https", $line ));
+                        
+                        // Enable HTTPS on the config
+                        Kohana::config_set('core.site_protocol', 'https');
+                    }
+                    else
+                    {
+                        fwrite($handle, $line);
+                    }
+                }
+                else
+                {
+                    if( strpos(" ".$line,"\$config['site_protocol'] = 'https';") != 0 )
+                    {
+                        fwrite($handle, str_replace("https", "http", $line ));
+                        
+                        // Enable HTTP on the config
+                        Kohana::config_set('core.site_protocol', 'http');
+                    }
+                    else
+                    {
+                        fwrite($handle, $line);
+                    }
+                }
+            }
+        }
+        
     }
 }
