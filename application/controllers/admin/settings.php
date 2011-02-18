@@ -976,6 +976,9 @@ class Settings_Controller extends Admin_Controller
                     if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 )
                     {
                         fwrite($handle, str_replace("index.php","",$line ));
+                        
+                        // Set the 'index_page' property in the configuration
+                        Kohana::config_set('core.index_page', '');
                     }
                     else
                     {
@@ -988,6 +991,9 @@ class Settings_Controller extends Admin_Controller
                     if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 )
                     {
                         fwrite($handle, str_replace("''","'index.php'",$line ));
+                        
+                        // Set the 'index_page' property in the configuration
+                        Kohana::config_set('core.index_page', 'index.php');
                     }
                     else
                     {
