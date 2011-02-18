@@ -136,7 +136,6 @@
 		'share_site_stats' => 'Enable Statistics (Stored on Ushahidi\'s server)',
 		'tagline' => 'Site Tagline',
 		'title' => 'Site Settings',
-		'timezone' => 'Site Timezone',
 		'twitter_configuration' => 'Twitter Search Terms',
 		'twitter_hashtags' => 'Hashtags - Separate with commas ',
 	),
@@ -183,5 +182,11 @@
 	'sms_no3' => array(
 		'length' => 'The phone 3 field is too long',
 		'numeric' => 'The phone 3 field should contain numbers only.',
+	),
+	'ssl' => array(
+		'enable_ssl' => 'Enable SSL',
+		'ssl_disabled' => 'Ushahidi is only accessible using the default protocol; "http"',
+		'ssl_enabled' => 'This option makes Ushahidi be accessed via SSL i.e. with "https" in the URL',
+		'title' => 'SSL Support',
 	));
 ?>

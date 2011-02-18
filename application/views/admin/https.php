@@ -15,9 +15,9 @@
 ?>
 			<div class="bg">
 				<h2>
-					<?php admin::settings_subtabs("ssl"); ?>
+					<?php admin::settings_subtabs("https"); ?>
 				</h2>
-				<?php print form::open(NULL, array('id' => 'sslForm', 'name' => 'sslForm','action'=> url::site().'admin/settings/ssl')); ?>
+				<?php print form::open(NULL, array('id' => 'httpsForm', 'name' => 'httpsForm','action'=> url::site().'admin/settings/https')); ?>
 				<div class="report-form">
 					<?php
 					if ($form_error) {
@@ -47,23 +47,23 @@
 					}
 					?>				
 					<div class="head">
-						<h3><?php echo Kohana::lang('settings.ssl.title');?></h3>
+						<h3><?php echo Kohana::lang('settings.https.title');?></h3>
 						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 					</div>
 					<!-- column -->		
 					<div class="sms_holder">
 						<div class="row">
-							<h4><?php echo Kohana::lang('settings.ssl.enable_ssl');?>?</h4>
-								<?php if ( ! $is_ssl_enabled): ?>
-								<?php print form::dropdown(array('name'=>'enable_ssl','disabled' =>'true'), $yesno_array, '0'); ?>
+							<h4><?php echo Kohana::lang('settings.https.enable_https');?>?</h4>
+								<?php if ( ! $is_https_capable): ?>
+								<?php print form::dropdown(array('name'=>'enable_https','disabled' =>'true'), $yesno_array, '0'); ?>
 								<p>
-								<?php echo Kohana::lang('settings.ssl.ssl_disabled');?>
+								<?php echo Kohana::lang('settings.https.https_disabled');?>
 								</p>
 								<?php else: ?>
-								<?php print form::dropdown('enable_ssl', $yesno_array, $form['enable_ssl']); ?>
+								<?php print form::dropdown('enable_https', $yesno_array, $form['enable_https']); ?>
 								<p>
-								<?php echo Kohana::lang('settings.ssl.ssl_enabled');?>
+								<?php echo Kohana::lang('settings.https.https_enabled');?>
 								</p>
 								<?php endif; ?>
 						</div>						

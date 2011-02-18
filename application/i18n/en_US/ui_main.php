@@ -428,6 +428,7 @@
 	'source_name' => 'Source name',
 	'source_url' => 'Source URL',
 	'spam' => 'Spam',
+	'ssl' => 'SSL',
 	'ssl_support' => 'SSL Support?',
 	'start_point' => 'From',
 	'step' => 'Step',

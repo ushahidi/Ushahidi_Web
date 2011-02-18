@@ -13,7 +13,7 @@
 							?><li><a href="<?php echo url::site()."admin/messages/index/".$service_id; ?>?type=2"><?php echo Kohana::lang('ui_main.outbox');?></a></li><?php
 						}
 						?>
-						<li><a href="<?php echo url::site()."admin/messages/reporters/?s=".$service_id; ?>" class="active">Reporters</a></li>
+						<li><a href="<?php echo url::site()."admin/messages/reporters/?s=".$service_id; ?>" class="active">Reporters (<?php echo $total_items; ?>)</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">

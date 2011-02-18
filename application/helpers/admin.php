@@ -175,7 +175,7 @@ class admin_Core {
             $menu .= ($this_sub_page == "cleanurl") ? Kohana::lang('ui_main.cleanurl'):  "<a href=\"".url::site() ."admin/settings/cleanurl\">".Kohana::lang('ui_main.cleanurl')."</a>";
 
             // SSL subtab
-            $menu .= ($this_sub_page == "ssl") ? Kohana::lang('ui_main.ssl'):  "<a href=\"".url::site() ."admin/settings/ssl\">".Kohana::lang('ui_main.ssl')."</a>";
+            $menu .= ($this_sub_page == "https") ? Kohana::lang('ui_main.https'):  "<a href=\"".url::site() ."admin/settings/https\">".Kohana::lang('ui_main.https')."</a>";
         }
         
         $menu .= ($this_sub_page == "api") ? Kohana::lang('ui_main.api') : "<a href=\"".url::site()."admin/settings/api\">".Kohana::lang('ui_main.api')."</a>";        
