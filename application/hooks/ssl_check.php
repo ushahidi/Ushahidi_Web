@@ -19,13 +19,17 @@
 
 class ssl_check {
 	
+	private $ssl_enabled;   // Flag to denote whether SSL is enabled/disabled
     /**
      * Constructor
      */
     public function __construct()
     {
+        $this->ssl_enabled = FALSE;
+        
         // Hook into routing
         Event::add_after('system.routing', array('Router', 'find_uri'), array($this, 'verify_ssl_mode'));
+        Event::add_after('system.routing', array('Router', 'setup'), array($this, 'rewrite_url'));
     }
 	
     /**
@@ -36,9 +40,9 @@ class ssl_check {
     public function verify_ssl_mode()
     {
     	// Is SSL enabled, check if Web Server is SSL capable
-    	$ssl_enabled = (Kohana::config('core.site_protocol') == 'https')? TRUE : FALSE;
+    	$this->ssl_enabled = (Kohana::config('core.site_protocol') == 'https')? TRUE : FALSE;
 
-    	if ($ssl_enabled)
+    	if ($this->ssl_enabled)
     	{
             // Initialize session and set cURL
             $ch = curl_init();
@@ -65,9 +69,16 @@ class ssl_check {
             
             // Perform cURL session
             curl_exec($ch);
-		
+            
+            // Get the cURL error no. returned; 71 => Connection failed, 0 => Success, 601=>SSL Cert validation failed
+		    $curl_error_no = curl_errno($ch);
+		    
+            // Close the cURL resource
+            curl_close($ch);
+            unset($ch);
+            
             // Check if connection succeeded
-            if (curl_errno($ch) == 71)
+            if ($curl_error_no == 71)
             {
                 // Set the protocol in the config
                 Kohana::config_set('core.site_protocol', 'http');
@@ -94,14 +105,27 @@ class ssl_check {
                     // Close the file
                     @fclose($handle);
                 }
-                
-                // Redirect using the new site protocol
-                url::redirect(url::base().url::current());
             }
-
-            // Close the cURL resource
-            curl_close($ch);
-            unset($ch);
+        }
+    }
+    
+    /**
+     * Rewrites the URL depending on whether SSL is enabled/disabled
+     *
+     * NOTES: - Emmanuel Kala, 18th Feb 2011
+     * This may bring issues with accessing the API (querying or posting) via mobile and/or external applications
+     * as they may not support querying information via HTTPS
+     *
+     */
+    public function rewrite_url()
+    {
+        $is_ssl_request = (array_key_exists('HTTPS', $_SERVER) AND $_SERVER['HTTPS'] == 'on')
+            ? TRUE 
+            : FALSE;
+            
+        if (($this->ssl_enabled AND ! $is_ssl_request) OR ( ! $this->ssl_enabled AND $is_ssl_request))
+        {
+            url::redirect(url::base().url::current().Router::$query_string);
         }
     }
 }

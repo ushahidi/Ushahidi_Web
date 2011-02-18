@@ -15,6 +15,9 @@
      // MHI Enabled
      "mhienabled" => array("System", "get_mhi_enabled"),
      
+     // SSL Enabled
+     "sslenabled" => array("System", "get_ssl_enabled"),
+     
      // Map center
      "mapcenter" => array("Private_Func", "map_center"),
      
