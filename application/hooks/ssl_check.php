@@ -48,6 +48,7 @@ class ssl_check {
 
             // Disable following every "Location:" that is sent as part of the HTTP(S) header
             curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
             // Suppress verification of the SSL certificate
             /** 
@@ -61,9 +62,12 @@ class ssl_check {
 
             // Suppress the header in the output
             curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            
+            // Perform cURL session
+            curl_exec($ch);
 		
-            // Perform cURL session, check if successful
-            if ( ! curl_exec($ch))
+            // Check if connection succeeded
+            if (curl_errno($ch) == 71)
             {
                 // Set the protocol in the config
                 Kohana::config_set('core.site_protocol', 'http');
@@ -72,7 +76,7 @@ class ssl_check {
                 $config_file = @file('application/config/config.php');
                 $handle = @fopen('application/config/config.php', 'w');
 			
-                if(is_array($config_file) AND $handle )
+                if(is_array($config_file) AND $handle)
                 {
                     // Read each line in the file
                     foreach ($config_file as $line_number => $line)
@@ -90,14 +94,14 @@ class ssl_check {
                     // Close the file
                     @fclose($handle);
                 }
+                
+                // Redirect using the new site protocol
+                url::redirect(url::base().url::current());
             }
 
             // Close the cURL resource
             curl_close($ch);
             unset($ch);
-		
-            // Redirect using the new site protocol
-            url::redirect(url::base().url::current());
         }
     }
 }

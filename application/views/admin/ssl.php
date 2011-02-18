@@ -55,7 +55,7 @@
 					<div class="sms_holder">
 						<div class="row">
 							<h4><?php echo Kohana::lang('settings.ssl.enable_ssl');?>?</h4>
-								<?php if ( ! $is_ssl_enabled): ?>
+								<?php if ( ! $is_ssl_capable): ?>
 								<?php print form::dropdown(array('name'=>'enable_ssl','disabled' =>'true'), $yesno_array, '0'); ?>
 								<p>
 								<?php echo Kohana::lang('settings.ssl.ssl_disabled');?>
