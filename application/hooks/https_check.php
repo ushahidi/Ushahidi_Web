@@ -1,8 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * SSL Check Hook
+ * HTTPS Check Hook
  * 
- * This hook checks if SSL has been enabled and whether the Webserver is SSL capable
+ * This hook checks if HTTPS has been enabled and whether the Webserver is HTTPS capable
  * If the sanity check fails, $config['site_protocol'] is set back to 'http'
  * and a redirect is performed so as to re-load the URL using the newly set protocol
  *
@@ -12,37 +12,38 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author	   Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module	   SSL Check Hook
+ * @module	   HTTPS Check Hook
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class ssl_check {
+class https_check {
 	
-	private $ssl_enabled;   // Flag to denote whether SSL is enabled/disabled
+	private $https_enabled;   // Flag to denote whether HTTPS is enabled/disabled
+	
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->ssl_enabled = FALSE;
+        $this->https_enabled = FALSE;
         
         // Hook into routing
-        Event::add_after('system.routing', array('Router', 'find_uri'), array($this, 'verify_ssl_mode'));
+        Event::add_after('system.routing', array('Router', 'find_uri'), array($this, 'verify_https_mode'));
         Event::add_after('system.routing', array('Router', 'setup'), array($this, 'rewrite_url'));
     }
 	
     /**
-     * Verifies if the WebServer is SSL enabled and that the certificate is valid
+     * Verifies if the WebServer is HTTPS enabled and that the certificate is valid
      * If not, $config['site_protocol'] is set back to 'http' and a redirect is
      * performed
      */
-    public function verify_ssl_mode()
+    public function verify_https_mode()
     {
     	// Is SSL enabled, check if Web Server is SSL capable
-    	$this->ssl_enabled = (Kohana::config('core.site_protocol') == 'https')? TRUE : FALSE;
+    	$this->https_enabled = (Kohana::config('core.site_protocol') == 'https')? TRUE : FALSE;
 
-    	if ($this->ssl_enabled)
+    	if ($this->https_enabled)
     	{
             // Initialize session and set cURL
             $ch = curl_init();
@@ -110,7 +111,7 @@ class ssl_check {
     }
     
     /**
-     * Rewrites the URL depending on whether SSL is enabled/disabled
+     * Rewrites the URL depending on whether HTTPS is enabled/disabled
      *
      * NOTES: - Emmanuel Kala, 18th Feb 2011
      * This may bring issues with accessing the API (querying or posting) via mobile and/or external applications
@@ -119,15 +120,15 @@ class ssl_check {
      */
     public function rewrite_url()
     {
-        $is_ssl_request = (array_key_exists('HTTPS', $_SERVER) AND $_SERVER['HTTPS'] == 'on')
+        $is_https_request = (array_key_exists('HTTPS', $_SERVER) AND $_SERVER['HTTPS'] == 'on')
             ? TRUE 
             : FALSE;
             
-        if (($this->ssl_enabled AND ! $is_ssl_request) OR ( ! $this->ssl_enabled AND $is_ssl_request))
+        if (($this->https_enabled AND ! $is_https_request) OR ( ! $this->https_enabled AND $is_https_request))
         {
             url::redirect(url::base().url::current().Router::$query_string);
         }
     }
 }
 
-new ssl_check();
+new https_check();

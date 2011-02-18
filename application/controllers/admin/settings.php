@@ -711,9 +711,9 @@ class Settings_Controller extends Admin_Controller
     }
 
 	/**
-	 * SSL settings
+	 * HTTPS settings
 	 */
-	public function ssl()
+	public function https()
 	{
         // We cannot allow cleanurl settings to be changed if MHI is enabled since it modifies a file in the config folder
         if (Kohana::config('config.enable_mhi') == TRUE)
@@ -721,13 +721,13 @@ class Settings_Controller extends Admin_Controller
             throw new Kohana_User_Exception('Access Error', "Please contact the administrator in order to use this feature.");
         }
 
-        $this->template->content = new View('admin/ssl');
+        $this->template->content = new View('admin/https');
         $this->template->content->title = Kohana::lang('ui_admin.settings');
 
         // setup and initialize form field names
         $form = array
         (
-            'enable_ssl' => '',
+            'enable_https' => '',
         );
 
         //  Copy the form as errors, so the errors will be stored with keys
@@ -748,7 +748,7 @@ class Settings_Controller extends Admin_Controller
 
             // Add some rules, the input field, followed by a list of checks, carried out in order
 
-            $post->add_rules('enable_ssl','required','between[0,1]');
+            $post->add_rules('enable_https','required','between[0,1]');
 
             // Test to see if things passed the rule checks
             if ($post->validate())
@@ -759,7 +759,7 @@ class Settings_Controller extends Admin_Controller
                 $this->cache->delete('settings');
                 $this->cache->delete_tag('settings');
 
-                $this->_configure_ssl_mode($post->enable_ssl);
+                $this->_configure_https_mode($post->enable_https);
 
                 // Everything is A-Okay!
                 $form_saved = TRUE;
@@ -784,11 +784,11 @@ class Settings_Controller extends Admin_Controller
         else
         {
 
-            $yes_or_no = $this->_is_ssl_enabled() == TRUE ? 1 : 0;
+            $yes_or_no = $this->_is_https_enabled() == TRUE ? 1 : 0;
             // initialize form
             $form = array
             (
-                'enable_ssl' => $yes_or_no,
+                'enable_https' => $yes_or_no,
             );
         }
 
@@ -797,7 +797,7 @@ class Settings_Controller extends Admin_Controller
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
         $this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
-        $this->template->content->is_ssl_capable = $this->_is_ssl_capable();
+        $this->template->content->is_https_capable = $this->_is_https_capable();
 	}
 
 
@@ -1041,7 +1041,7 @@ class Settings_Controller extends Admin_Controller
     /**
      * Check if SSL is currently enabled on the instance
      */
-    private function _is_ssl_enabled()
+    private function _is_https_enabled()
     {
         $config_file = @file_get_contents('application/config/config.php');
 
@@ -1051,9 +1051,9 @@ class Settings_Controller extends Admin_Controller
     }
     
     /**
-     * Check if the Webserver is SSL capable
+     * Check if the Webserver is HTTPS capable
      */
-    private function _is_ssl_capable()
+    private function _is_https_capable()
     {
         // Get the current site protocol
         $protocol = Kohana::config('core.site_protocol');
@@ -1084,11 +1084,11 @@ class Settings_Controller extends Admin_Controller
     }
 
     /**
-     * Configures the SSL mode for the Ushahidi instance
+     * Configures the HTTPS mode for the Ushahidi instance
      *
      * @param int $yes_or_no
      */
-    private function _configure_ssl_mode($yes_or_no)
+    private function _configure_https_mode($yes_or_no)
     {
         $config_file = @file('application/config/config.php');
         $handle = @fopen('application/config/config.php', 'w');
