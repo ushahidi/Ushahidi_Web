@@ -860,6 +860,10 @@ class Reports_Controller extends Main_Controller {
 
 		$this->template->content->incident_neighbors = $this->_get_neighbors($incident->location->latitude,
 																									 $incident->location->longitude);
+		// News Source links
+
+		$this->template->content->incident_news = $incident_news;
+
 
 		// Video links
 
