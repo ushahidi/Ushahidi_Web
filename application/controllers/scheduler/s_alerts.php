@@ -80,21 +80,29 @@ class S_Alerts_Controller extends Controller {
 		*/
 		$incidents = $db->query("SELECT i.id, incident_title, 
 			incident_description, incident_verified, 
-			l.latitude, l.longitude, a.alert_id, a.incident_id
+			l.latitude, l.longitude, l.location_name, a.alert_id, a.incident_id
 			FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
 			LEFT OUTER JOIN ".$this->table_prefix."alert_sent AS a ON i.id = a.incident_id WHERE
 			i.incident_active=1 AND i.incident_alert_status = 1 ");
-		
+
 		foreach ($incidents as $incident)
 		{
 			// ** Pre-Formatting Message ** //
 			// Convert HTML to Text
+			$incident_url = url::site().'reports/view/'.$incident->id;
 			$incident_description = $incident->incident_description;
 			$html2text = new Html2Text($incident_description);
 			$incident_description = $html2text->get_text();
+			$html2text = new Html2Text($incident->location_name);
+			$location = $html2text->get_text();
 
 			// EMAIL MESSAGE
-			$email_message = $incident_description;
+			$email_message = "
+".Kohana::lang('alerts.report_url').": $incident_url \n
+".Kohana::lang('alerts.location').": $location\n
+($incident->latitude, $incident->longitude)\n 
+\n
+".Kohana::lang('alerts.location').": $incident_description\n";
 
 			// SMS MESSAGE
 			$sms_message = $incident_description;
