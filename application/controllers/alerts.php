@@ -352,7 +352,7 @@ class Alerts_Controller extends Main_Controller {
         // Email Alerts, Confirmation Code
       $alert_email = $post->alert_email;
       $alert_lon = $post->alert_lon;
-      $alert_lat = $post->alert_radius;
+      $alert_lat = $post->alert_lat;
       $alert_radius = $post->alert_radius;
 
         $alert_code = text::random('alnum', 20);
