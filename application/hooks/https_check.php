@@ -49,6 +49,7 @@ class https_check {
             $ch = curl_init();
 
             // Set the URL
+            $url = url::base().'index.php';
             curl_setopt($ch, CURLOPT_URL, url::base());
 
             // Disable following every "Location:" that is sent as part of the HTTP(S) header
@@ -72,14 +73,23 @@ class https_check {
             curl_exec($ch);
             
             // Get the cURL error no. returned; 71 => Connection failed, 0 => Success, 601=>SSL Cert validation failed
-		    $curl_error_no = curl_errno($ch);
+            $curl_error_no = curl_errno($ch);
 		    
             // Close the cURL resource
             curl_close($ch);
             unset($ch);
+		    
+            // Get the headers for the URL in $url
+            $headers = get_headers($url);
+            
+            // To hold the HTTP status codes
+            $http_status = array();
+            
+            // Strip HTTP* strings from the $headers
+            preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
             
             // Check if connection succeeded
-            if ($curl_error_no == 71)
+            if ($curl_error_no == 71 OR $http_status[1] == 404)
             {
                 // Set the protocol in the config
                 Kohana::config_set('core.site_protocol', 'http');
