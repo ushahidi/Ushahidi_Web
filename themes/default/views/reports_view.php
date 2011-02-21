@@ -58,7 +58,24 @@
 		<div class="report-description-text">
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
 			<?php echo $incident_description; ?>
-			
+			<br/>	
+			<!-- start news source link -->
+			<div class="credibility">
+			<h5><?php echo Kohana::lang('ui_main.reports_news');?></h5>
+			<?php if( count($incident_news) > 0 ) { ?>
+					<?php
+						foreach( $incident_news as $incident_new) 
+						{
+							?>
+							<a href="<?php echo $incident_new; ?>"><?php
+							echo $incident_new;?></a>
+							<br/>
+							<?php	
+						}
+					} ?>
+			<!-- end news source link -->
+			</div>
+
 			<?php if ($features_count)
 			{
 				?>

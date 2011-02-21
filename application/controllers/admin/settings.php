@@ -1059,15 +1059,23 @@ class Settings_Controller extends Admin_Controller
         $protocol = Kohana::config('core.site_protocol');
         
         // Build an SSL URL
-        $url = ($protocol == 'https')? url::base() : str_replace('http://', $protocol.'://', url::base());
+        $url = ($protocol == 'https')? url::base() : str_replace('http://', 'https://', url::base());
+        
+        $url .= 'index.php';
         
         // Initialize cURL
         $ch = curl_init();
         
         // Set cURL options
         curl_setopt($ch, CURLOPT_URL, $url);
+        
+        // Disable following any "Location:" sent as part of the HTTP header
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
+        
+        // Return the output of curl_exec() as a string instead of outputting it directly
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        
+        // Suppress header information from the output
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
 
         // Perform cURL session
@@ -1079,8 +1087,17 @@ class Settings_Controller extends Admin_Controller
         // Close the cURL handle
         curl_close($ch);
         
+        // Get the HTTP headers
+        $headers = get_headers($url);
+        
+        // To hold the HTTP status code contained in $headers
+        $http_status = array();
+        
+        // Grab HTTP* strings from $headers
+        preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
+        
         // Check if the connection went through
-        return ($error_no == 71)? FALSE : TRUE;
+        return ($error_no == 71 OR $http_status[1] == 404)? FALSE : TRUE;
     }
 
     /**
