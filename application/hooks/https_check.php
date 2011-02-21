@@ -45,11 +45,18 @@ class https_check {
 
     	if ($this->https_enabled)
     	{
+            // URL to be used for fetching the headers
+            /** 
+             * Comments By: E.Kala  - 21/02/2011
+             * Not an optimal solution but works for now; index.php with cause get_headers to follow the "Location:"
+             * headers and this has an impedance on the page load time
+             */
+            $url = url::base().'media/css/error.css';
+            
             // Initialize session and set cURL
             $ch = curl_init();
-
-            // Set the URL
-            $url = url::base().'index.php';
+            
+            // Set URL to test HTTPS connectivity
             curl_setopt($ch, CURLOPT_URL, url::base());
 
             // Disable following every "Location:" that is sent as part of the HTTP(S) header
@@ -87,6 +94,8 @@ class https_check {
             
             // Strip HTTP* strings from the $headers
             preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
+            
+            // $page_exists = $this->_page_exists($url);
             
             // Check if connection succeeded
             if ($curl_error_no == 71 OR $http_status[1] == 404)
