@@ -667,6 +667,21 @@ div.report-description-text h5 {
 	text-transform: capitalize;
 }
 
+div.report-description-text .feature_label,
+div.report-description-text .feature_comment{
+	font-size:90%;
+	margin:0 0 0 10px;
+	padding:3px;
+	background-color:#fffded;
+}
+div.report-description-text .feature_label{
+	font-weight:bold;	
+}
+
+div.report-description-text .feature_comment{
+	font-size:90%;
+}
+
 div.credibility {
 	margin-top:10px;
 	padding:3px;

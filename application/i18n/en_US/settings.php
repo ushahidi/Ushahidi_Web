@@ -84,6 +84,12 @@
 	'google_analytics' => array(
 		'length' => 'The Google Analytics field must contain a valid Web Property ID in the format UA-XXXXX-XX.',
 	),
+	'https' => array(
+	   'enable_https' => 'Enable HTTPS',
+	   'https_disabled' => 'This option makes Ushahidi be accessed in unsecure mode; <strong>without</strong> "https://" in the URL prefix',
+	   'https_enabled' => 'This option makes Ushahidi be accessed in secure mode; with <strong>https</strong> in the URL prefix',
+	   'title' => 'HTTPS'
+	),
 	'items_per_page' => array(
 		'between' => 'The items per page (Frontend) field does not appear to contain a valid value?',
 		'required' => 'The items per page (Frontend) field is required.',
@@ -136,7 +142,6 @@
 		'share_site_stats' => 'Enable Statistics (Stored on Ushahidi\'s server)',
 		'tagline' => 'Site Tagline',
 		'title' => 'Site Settings',
-		'timezone' => 'Site Timezone',
 		'twitter_configuration' => 'Twitter Search Terms',
 		'twitter_hashtags' => 'Hashtags - Separate with commas ',
 	),

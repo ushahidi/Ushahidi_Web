@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 45
+-- version 48
 -- http://www.ushahidi.com
 
 
@@ -1412,7 +1412,10 @@ CREATE TABLE IF NOT EXISTS `geometry` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `incident_id` bigint(20) NOT NULL,
   `geometry` geometry NOT NULL,
+  `geometry_label` varchar(150) DEFAULT NULL,
+  `geometry_comment` varchar(255) DEFAULT NULL,
   `geometry_color` varchar(20) DEFAULT NULL,
+  `geometry_strokewidth` varchar(5) DEFAULT NULL,
   PRIMARY KEY (`id`),
   SPATIAL KEY `geometry` (`geometry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1463,4 +1466,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '47' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '48' WHERE `id`=1 LIMIT 1;

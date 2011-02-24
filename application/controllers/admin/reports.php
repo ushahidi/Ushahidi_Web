@@ -407,6 +407,8 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->hour_array = $this->_hour_array();
 		$this->template->content->minute_array = $this->_minute_array();
 		$this->template->content->ampm_array = $this->_ampm_array();
+		
+		$this->template->content->stroke_width_array = $this->_stroke_width_array();
 
 		// Get Countries
 		$countries = array();
@@ -745,10 +747,23 @@ class Reports_Controller extends Admin_Controller
 					{
 						if(!empty($item))
 						{
-							//++ Can't Use ORM for this
-							$sql = "INSERT INTO ".Kohana::config('database.default.table_prefix')."geometry ( incident_id, geometry ) 
-								VALUES( ".$incident->id.", GeomFromText( '".mysql_escape_string($item)."' ))";
-							$db->query($sql);
+							//Decode JSON
+							$item = json_decode($item);
+							//++ TODO - validate geometry
+							$geometry = (isset($item->geometry)) ? mysql_escape_string($item->geometry) : "";
+							$label = (isset($item->label)) ? mysql_escape_string(substr($item->label, 0, 150)) : "";
+							$comment = (isset($item->comment)) ? mysql_escape_string(substr($item->comment, 0, 255)) : "";
+							$color = (isset($item->color)) ? mysql_escape_string(substr($item->color, 0, 6)) : "";
+							$strokewidth = (isset($item->strokewidth) AND (float) $item->strokewidth) ? (float) $item->strokewidth : "2.5";
+							if ($geometry)
+							{
+								//++ Can't Use ORM for this
+								$sql = "INSERT INTO ".Kohana::config('database.default.table_prefix')."geometry (
+									incident_id, geometry, geometry_label, geometry_comment, geometry_color, geometry_strokewidth ) 
+									VALUES( ".$incident->id.",
+									GeomFromText( '".$geometry."' ),'".$label."','".$comment."','".$color."','".$strokewidth."')";
+								$db->query($sql);
+							}
 						}
 					}
 				}
@@ -972,12 +987,14 @@ class Reports_Controller extends Admin_Controller
 					}
 					
 					// Get Geometries via SQL query as ORM can't handle Spatial Data
-					$sql = "SELECT AsText(geometry) as geometry FROM ".Kohana::config('database.default.table_prefix')."geometry
-						 WHERE incident_id=".$id;
+					$sql = "SELECT AsText(geometry) as geometry, geometry_label, 
+						geometry_comment, geometry_color, geometry_strokewidth 
+						FROM ".Kohana::config('database.default.table_prefix')."geometry 
+						WHERE incident_id=".$id;
 					$query = $db->query($sql);
 					foreach ( $query as $item )
 					{
-						$form['geometry'][] = $item->geometry;
+						$form['geometry'][] = $item;
 					}
 					
 					// Combine Everything
@@ -1049,6 +1066,7 @@ class Reports_Controller extends Admin_Controller
 		$this->template->map_enabled = TRUE;
 		$this->template->colorpicker_enabled = TRUE;
 		$this->template->treeview_enabled = TRUE;
+		
 		$this->template->js = new View('admin/reports_edit_js');
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
@@ -1071,6 +1089,10 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->date_picker_js = $this->_date_picker_js();
 		$this->template->content->color_picker_js = $this->_color_picker_js();
 		$this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
+		
+		// Pack Javascript
+		$myPacker = new javascriptpacker($this->template->js , 'Normal', false, false);
+		$this->template->js = $myPacker->pack();
 	}
 
 
@@ -1638,6 +1660,16 @@ class Reports_Controller extends Admin_Controller
 	private function _ampm_array()
 	{
 		return $ampm_array = array('pm'=>Kohana::lang('ui_admin.pm'),'am'=>Kohana::lang('ui_admin.am'));
+	}
+	
+	private function _stroke_width_array()
+	{
+		for ($i = 0.5; $i <= 8 ; $i += 0.5)
+		{
+			$stroke_width_array["$i"] = $i;
+		}
+		
+		return $stroke_width_array;
 	}
 
 	// Javascript functions

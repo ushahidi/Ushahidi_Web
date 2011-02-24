@@ -122,4 +122,43 @@ class System_Api_Object extends Api_Object_Core {
 
         $this->response_data = $ret_json_or_xml;
     }
+    
+    /**
+     * Get true or false depending on whether HTTPS has been enabled or not
+     *
+     * @param string response_type - JSON or XML
+     *
+     * @return string
+     */
+    public function get_https_enabled()
+    {
+        $enabled = 'FALSE';
+        $ret_json_or_xml = ''; // Will hold the JSON/XML string to return
+        
+        if (Kohana::config('core.site_protocol') == 'https')
+        {
+            $enabled = 'TRUE';
+        }
+
+        //create the json array
+        $data = array(
+            "payload" => array(
+                "domain" => $this->domain,
+                "httpsenabled" => $enabled
+                ),
+            "error" => $this->api_service->get_error_msg(0)
+        );
+
+        if ($this->response_type == 'json')
+        {
+            $ret_json_or_xml = $this->array_as_json($data);
+        }
+        else
+        {
+            $ret_json_or_xml = $this->array_as_xml($data, $this->replar);
+        }
+
+        $this->response_data = $ret_json_or_xml;
+        
+    }
 }
