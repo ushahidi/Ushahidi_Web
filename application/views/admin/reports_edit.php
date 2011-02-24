@@ -57,6 +57,7 @@
 								<ul>
 									<li><a href="#" class="btn_save"><?php echo strtoupper(Kohana::lang('ui_main.save_report'));?></a></li>
 									<li><a href="#" class="btn_save_close"><?php echo strtoupper(Kohana::lang('ui_main.save_close'));?></a></li>
+									<li><a href="#" class="btn_save_add_new"><?php echo strtoupper(Kohana::lang('ui_main.save_add_new'));?></a></li>
 									<li><a href="<?php echo url::base().'admin/reports/';?>" class="btns_red"><?php echo strtoupper(Kohana::lang('ui_main.cancel'));?></a>&nbsp;&nbsp;&nbsp;</li>
 									<?php if ($id) {?>
 									<li><a href="<?php echo $previous_url;?>" class="btns_gray">&laquo; <?php echo strtoupper(Kohana::lang('ui_main.previous'));?></a></li>
@@ -476,6 +477,7 @@
 							<ul>
 								<li><a href="#" class="btn_save"><?php echo strtoupper(Kohana::lang('ui_main.save_report'));?></a></li>
 								<li><a href="#" class="btn_save_close"><?php echo strtoupper(Kohana::lang('ui_main.save_close'));?></a></li>
+									<li><a href="#" class="btn_save_add_new"><?php echo strtoupper(Kohana::lang('ui_main.save_add_new'));?></a></li>
 								<?php 
 								if($id)
 								{
