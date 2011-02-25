@@ -96,7 +96,7 @@ class Media_Controller extends Controller {
 
         if (($oldmtime AND strtotime($_SERVER['HTTP_IF_MODIFIED_SINCE']) == $oldmtime) OR $oldetag == $mtime)
         {
-            header('HTTP/1.1 304 Not Modified');
+            header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
         }
         else
         {
