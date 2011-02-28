@@ -16,59 +16,62 @@
 
 class Alert_Model extends ORM
 {	
-  protected $has_many = array('incident' => 'alert_sent', 'category' => 'alert_category');
+	protected $has_many = array('incident' => 'alert_sent', 'category' => 'alert_category');
     
-    // Database table name
-    protected $table_name = 'alert';
-	
+	// Database table name
+	protected $table_name = 'alert';
+
 	// Ignored columns - alert_mobile & alert_email will be replaced with alert_recipient
 	// These are columns not contained in the Model itself
 	protected $ignored_columns = array('alert_mobile', 'alert_email'); 	
+
+	/**
+	 * Method that provides the functionality of the magic method, __set, without the overhead
+	 * of having to instantiate a Reflection class to realize it, and provides for object chaining
+	 * 
+	 * @param string $column
+	 * @param mixed $value
+	 * @return Alert_Model $this for a fluent interface
+	 */
+	public function set ($column, $value)
+	{
+		// CALL the magic method __set, with the parameters provided
+		$this->__set($column, $value);
+
+		// RETURN $this for a fluent interface
+		return $this;
+
+	} // END function set
     
-    /**
-     * Method that provides the functionality of the magic method, __set, without the overhead
-     * of having to instantiate a Reflection class to realize it, and provides for object chaining
-     * 
-     * @param string $column
-     * @param mixed $value
-     * @return Alert_Model $this for a fluent interface
-     */
-    public function set ($column, $value)
-    {   // CALL the magic method __set, with the parameters provided
-        $this->__set($column, $value);
-        
-        // RETURN $this for a fluent interface
-        return $this;
-        
-    } // END function set
     
-    
-    /**
-     * Method that allows for the use of the set method, en masse
-     * 
-     * @param array $params
-     * @return Alert_Model $this for a fluent interface
-     */
-    public function assign (array $params = array())
-    {   // ITERATE through all of the column/value pairs provided ...
-        foreach ($params as $column => $value)
-        {   // CALL the set method with the column/value pair
-            $this->set($column, $value);
-        }
+	/**
+	 * Method that allows for the use of the set method, en masse
+	 * 
+	 * @param array $params
+	 * @return Alert_Model $this for a fluent interface
+	 */
+	public function assign (array $params = array())
+	{
+		// ITERATE through all of the column/value pairs provided ...
+		foreach ($params as $column => $value)
+		{
+			// CALL the set method with the column/value pair
+			$this->set($column, $value);
+		}
         
-        // RETURN $this for a fluent interface
-        return $this;
-        
-    } // END function assign
+		// RETURN $this for a fluent interface
+		return $this;
+
+	} // END function assign
 
 
-    /**
-     * Model Validation
-     * 
-     * @param array $array values to check
-     * @param boolean $save save[Optional] the record when validation succeeds
-     * @return boolean
-     */
+	/**
+	 * Model Validation
+	 * 
+	 * @param array $array values to check
+	 * @param boolean $save save[Optional] the record when validation succeeds
+	 * @return boolean
+	 */
 	public function validate(array & $array, $save = FALSE)
 	{
 		// Initialise the validation library and setup some rules
@@ -114,42 +117,42 @@ class Alert_Model extends ORM
     } // END function _mobile_check
 
 	
-    /**
-     * Callback tests if an email accounts exists in the database for this alert
+	/**
+	 * Callback tests if an email accounts exists in the database for this alert
 	 * @param   mixed mobile number to check
 	 * @return  boolean
-     */
-    public function _email_check(Validation $array)
-    {
+	 */
+	public function _email_check(Validation $array)
+	{
 		// If add->rules validation found any errors, get me out of here!
-        if (array_key_exists('alert_email', $array->errors()) 
-            || array_key_exists('alert_lat', $array->errors()) 
-            || array_key_exists('alert_lon', $array->errors()))
-            return;
+		if (array_key_exists('alert_email', $array->errors()) 
+			OR array_key_exists('alert_lat', $array->errors()) 
+			OR array_key_exists('alert_lon', $array->errors()))
+			return;
 
-        if ( $array->alert_email && (bool) $this->db
+		if ( $array->alert_email && (bool) $this->db
 			->where(array(
-				'alert_type' => 2,
-				'alert_recipient' => $array->alert_email,
-				'alert_lat' => $array->alert_lat,
-				'alert_lon' => $array->alert_lon
+					'alert_type' => 2,
+					'alert_recipient' => $array->alert_email,
+					'alert_lat' => $array->alert_lat,
+					'alert_lon' => $array->alert_lon
 				))
 			->count_records($this->table_name) )
 		{
 			$array->add_error( 'alert_email', 'email_check');
 		}
-    } // END function _email_check
+	} // END function _email_check
 
 
-    /**
-     * Tests if an email accounts exists in the database for this alert
+	/**
+	 * Tests if an email accounts exists in the database for this alert
 	 * @param   mixed mobile number to check
 	 * @return  boolean
-     */
-    public function _mobile_or_email(Validation $array)
-    {
+	 */
+	public function _mobile_or_email(Validation $array)
+	{
 		if ( empty($array->alert_mobile) && empty($array->alert_email) )
 			$array->add_error( 'alert_mobile', 'one_required');
-    } // END function _mobile_or_email
+	} // END function _mobile_or_email
 
 } // END class Alert_Model
