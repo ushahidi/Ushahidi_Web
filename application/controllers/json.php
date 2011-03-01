@@ -34,6 +34,9 @@ class Json_Controller extends Template_Controller
 	 */
 	protected $table_prefix;
 
+	// Geometry data
+	private static $geometry_data = array();
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -788,15 +791,10 @@ class Json_Controller extends Template_Controller
 		$geometry = array();
 		if ($incident_id)
 		{
-			$db = new Database();
-			// Get Incident Geometries via SQL query as ORM can't handle Spatial Data
-			$sql = "SELECT id, AsText(geometry) as geometry, geometry_label, 
-				geometry_comment, geometry_color, geometry_strokewidth FROM ".$this->table_prefix."geometry 
-				WHERE incident_id=".$incident_id;
-			$query = $db->query($sql);
+			$geom_data = $this->_get_geometry_data_for_incident($incident_id);
 			$wkt = new Wkt();
 
-			foreach ( $query as $item )
+			foreach ( $geom_data as $item )
 			{
 				$geom = $wkt->read($item->geometry);
 				$geom_array = $geom->getGeoInterface();
@@ -834,6 +832,34 @@ class Json_Controller extends Template_Controller
 		}
 		
 		return $geometry;
+	}
+
+
+	/**
+	 * Get geometry records from the database and cache 'em.
+	 *
+	 * They're heavily read from, no point going back to the db constantly to
+	 * get them.
+	 * @param int $incident_id - Incident to get geometry for
+	 * @return array
+	 */
+	public function _get_geometry_data_for_incident($incident_id) {
+		if (self::$geometry_data) {
+			return isset(self::$geometry_data[$incident_id]) ? self::$geometry_data[$incident_id] : array();
+		}
+
+		$db = new Database();
+		// Get Incident Geometries via SQL query as ORM can't handle Spatial Data
+		$sql = "SELECT id, incident_id, AsText(geometry) as geometry, geometry_label, 
+			geometry_comment, geometry_color, geometry_strokewidth FROM ".$this->table_prefix."geometry";
+		$query = $db->query($sql);
+
+		foreach ( $query as $item )
+		{
+			self::$geometry_data[$item->incident_id][] = $item;
+		}
+
+		return isset(self::$geometry_data[$incident_id]) ? self::$geometry_data[$incident_id] : array();
 	}
 
 
