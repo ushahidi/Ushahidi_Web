@@ -256,19 +256,7 @@ class Alerts_Controller extends Main_Controller {
 		// XXX Might need to validate $code as well
 		if ($code != NULL)
 		{
-			$alerts = ORM::factory('alert')
-				->where('alert_code', $code)
-				->find_all();
-				
-			foreach ($alerts as $alert)
-			{
-				ORM::factory('alert_category')
-					->where('alert_id', $alert->id)
-					->delete_all();
-
-				$alert->delete();
-			}
-
+			Alert_Model::unsubscribe($code);
 			$this->template->content->unsubscribed = TRUE;
 		}
         
@@ -418,7 +406,7 @@ class Alerts_Controller extends Main_Controller {
 		$alert = ORM::factory('alert');         
             
 		// Test to see if things passed the rule checks
-		if (!$alert->validate($post))
+		if ( ! $alert->validate($post))
 		{
 			return false;
 		}

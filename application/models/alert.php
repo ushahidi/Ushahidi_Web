@@ -154,5 +154,42 @@ class Alert_Model extends ORM
 		if ( empty($array->alert_mobile) && empty($array->alert_email) )
 			$array->add_error( 'alert_mobile', 'one_required');
 	} // END function _mobile_or_email
+	
+	/**
+	 * Checks if the alert subscription in @param $alert_code exists
+	 *
+	 * @param string $alert_code
+	 */
+	public static function alert_code_exists($alert_code)
+	{
+		return (ORM::factory('alert')
+					->where('alert_code', $alert_code)
+					->count_all() > 0
+				) ? TRUE : FALSE;
+	}
+	
+	/**
+	 * Removes the alert code in @param $alert_code from the list of alerts
+	 *
+	 * @param string $alert_code
+	 */
+	public static function unsubscribe($alert_code)
+	{
+		// Fetch all alerts with the specified code
+		$alerts = ORM::factory('alert')
+			->where('alert_code', $code)
+			->find_all();
+			
+		foreach ($alerts as $alert)
+		{
+			// Delete all alert categories with the specified code
+			ORM::factory('alert_category')
+				->where('alert_id', $alert->id)
+				->delete_all();
+
+			$alert->delete();
+		}
+		
+	}
 
 } // END class Alert_Model
