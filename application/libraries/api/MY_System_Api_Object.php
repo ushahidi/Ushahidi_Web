@@ -68,7 +68,8 @@ class System_Api_Object extends Api_Object_Core {
         $data = array(
             "payload" => array(
                 "domain" => $this->domain,
-                "version" => $json_version
+                "version" => $json_version,
+                "checkins" => 1
                 ),
             "error" => $this->api_service->get_error_msg(0)
         );

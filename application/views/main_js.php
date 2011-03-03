@@ -219,6 +219,55 @@
 			}
 		}
 
+		/*
+		Display Checkin Points
+		Note: This function totally ignores the timeline
+		*/
+		function showCheckins()
+		{
+			$(document).ready(function(){
+			
+				var ci_styles = new OpenLayers.StyleMap({
+					"default": new OpenLayers.Style({
+						pointRadius: "5", // sized according to type attribute
+						fillColor: "${fillcolor}",
+						strokeColor: "${strokecolor}",
+						fillOpacity: "${fillopacity}",
+						strokeOpacity: 0.75,
+						strokeWidth: 1.5,
+						graphicZIndex: 1
+					})
+				});
+				
+				var checkinLayer = new OpenLayers.Layer.Vector('Checkins', {styleMap: ci_styles});
+				map.addLayers([checkinLayer]);
+				
+				$.getJSON("<?php echo url::site()."api/?task=checkin&action=get_ci&mapdata=1&sqllimit=1000&orderby=checkin.checkin_date&sort=ASC"?>", function(data) {
+					var user_colors = new Array();
+					// Get colors
+					$.each(data["payload"]["users"], function(i, payl) {
+						user_colors[payl.id] = payl.color;
+					});
+					
+					// Get checkins
+					$.each(data["payload"]["checkins"], function(key, ci) {
+						
+						var cipoint = new OpenLayers.Geometry.Point(parseFloat(ci.lon), parseFloat(ci.lat));
+						cipoint.transform(proj_4326, proj_900913);
+						var checkinPoint = new OpenLayers.Feature.Vector(cipoint, {
+	                        	fillcolor: "#"+user_colors[ci.user],
+	                        	strokecolor: "#FFFFFF",
+	                        	fillopacity: ci.opacity
+		                    }
+		                );
+		                
+						checkinLayer.addFeatures([checkinPoint]);
+
+					});
+				});
+			
+			});			
+		}
 
 		/*
 		Refresh Graph on Slider Change
