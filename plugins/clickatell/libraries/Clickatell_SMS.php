@@ -19,7 +19,7 @@ class Clickatell_SMS_Core {
 	        $new_sms->password = $clickatell->clickatell_password;
 	        $new_sms->use_ssl = false;
 	        $new_sms->sms();
-	        $response = $new_sms->send ($to, $from, $message);
+	        $response = $new_sms->send($to, $from, $message);
 
 			// Message Went Through??
 	        if ($response == "OK")
