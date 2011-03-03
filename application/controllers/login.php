@@ -31,7 +31,6 @@ class Login_Controller extends Template_Controller {
     public function __construct()
     {
         parent::__construct();
-		
         $this->session = new Session();
 		// $profiler = new Profiler;
     }
@@ -66,12 +65,18 @@ class Login_Controller extends Template_Controller {
         $_POST = Validation::factory($_POST)
             ->pre_filter('trim')
             ->add_rules('username', 'required')
-            ->add_rules('password', 'required');
+            ->add_rules('password', 'required')
+            ->add_rules('redirect_to', 'url');
 		
         if ($_POST->validate())
         {
             // Sanitize $_POST data removing all inputs without rules
             $postdata_array = $_POST->safe_array();
+            
+            // Change redirect location if set in form
+            if(isset($postdata_array['redirect_to'])){
+            	$this->destination = $postdata_array['redirect_to'];
+            }
 
             // Load the user
             $user = ORM::factory('user', $postdata_array['username']);

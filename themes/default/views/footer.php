@@ -52,8 +52,7 @@
 	<?php echo $ushahidi_stats; ?>
 	<?php echo $google_analytics; ?>
 	
-	<!-- Task Scheduler -->
-	<img src="<?php echo url::base(); ?>media/img/spacer.gif" alt="" height="1" width="1" border="0" onload="runScheduler(this)" />
+	<!-- Task Scheduler --><script type="text/javascript">$(document).ready(function(){$('#schedulerholder').html('<img src="<?php echo url::base(); ?>scheduler" />');});</script><div id="schedulerholder"></div><!-- End Task Scheduler -->
  
 	<?php
 	// Action::main_footer - Add items before the </body> tag

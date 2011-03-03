@@ -878,7 +878,8 @@ CREATE TABLE IF NOT EXISTS `users` (
     `logins` int(10) unsigned NOT NULL default '0',                                 
     `last_login` int(10) unsigned default NULL,                                     
     `notify` tinyint(1) NOT NULL default '0' COMMENT 'Flag incase admin opts in for email notifications',    
-    `updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,    
+    `updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+    `color` varchar(6) NOT NULL DEFAULT 'FF0000',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
@@ -1466,4 +1467,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '48' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '49' WHERE `id`=1 LIMIT 1;

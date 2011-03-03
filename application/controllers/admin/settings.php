@@ -1083,7 +1083,13 @@ class Settings_Controller extends Admin_Controller
         
         // Get the cURL error number
         $error_no = curl_errno($ch);
-        
+
+		// If connection refused, i.e. connect() failed, return FALSE
+		if ($error_no == 7)
+		{
+			return FALSE;
+		}
+		
         // Close the cURL handle
         curl_close($ch);
         
@@ -1097,7 +1103,7 @@ class Settings_Controller extends Admin_Controller
         preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
         
         // Check if the connection went through
-        return ($error_no == 71 OR $http_status[1] == 404)? FALSE : TRUE;
+        return ($error_no == 7 OR $http_status[1] == 404)? FALSE : TRUE;
     }
 
     /**

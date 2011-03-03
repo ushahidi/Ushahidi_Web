@@ -22,10 +22,12 @@ class Checkin_Api_Object extends Api_Object_Core {
     private $sort; // Sort descriptor ASC or DESC
     private $order_field; // Column name by which to order the records
     private $checkin_photo = FALSE;
+    private $abs_upload_url = FALSE;
     
     public function __construct($api_service)
     {
         parent::__construct($api_service);
+        $this->abs_upload_url = url::site().Kohana::config('upload.relative_directory', TRUE);
     }
     
     /**
@@ -34,12 +36,7 @@ class Checkin_Api_Object extends Api_Object_Core {
      * Handles the API task parameters
      */
     public function perform_task()
-    {
-    	if(isset($_FILES['photo']))
-    	{
-    		$checkin_photo = $_FILES['photo'];
-    	}
-    	
+    {	
 		// Check if the 'by' parameter has been specified
         if ( ! $this->api_service->verify_array_index($this->request, 'action'))
         {
@@ -60,38 +57,11 @@ class Checkin_Api_Object extends Api_Object_Core {
             
             // Add a checkin
             case "ci":
-            	
-            	// Check if mobileid is set
-            	
-                if ( ! $this->api_service->verify_array_index($this->request, 'mobileid'))
-                {
-                    $this->set_error_message(array(
-                        "error" => $this->api_service->get_error_msg(001, 'mobileid')
-                    ));
-                    return;
-                }
-                
-                // Check if lat, lon is set
-            	
-                if ( ! $this->api_service->verify_array_index($this->request, 'lat')
-                	AND  ! $this->api_service->verify_array_index($this->request, 'lon'))
-                {
-                    $this->set_error_message(array(
-                        "error" => $this->api_service->get_error_msg(001, 'lat, lon')
-                    ));
-                    return;
-                }
-				
-				$this->response_data = $this->register_checkin(
-											$this->request['mobileid'],
-											$this->request['lat'],
-											$this->request['lon'],
-											@$this->request['message'],
-											@$checkin_photo,
-											@$this->request['firstname'],
-											@$this->request['lastname'],
-											@$this->request['email']
-										);
+            	$this->_do_ci();
+            break;
+            
+            case "get_ci":
+            	$this->_do_get_ci();
             break;
 
             // Error therefore set error message 
@@ -100,6 +70,158 @@ class Checkin_Api_Object extends Api_Object_Core {
                     "error" => $this->api_service->get_error_msg(002)
                 ));
         }
+        
+        $this->show_response();
+	}
+	
+	public function _do_get_ci()
+	{
+		$data = $this->gather_checkins(
+					@$this->request['id'],
+					@$this->request['userid'],
+					@$this->request['mobileid'],
+					@$this->request['email']
+				);
+					
+					
+		if(count($data) > 0)
+		{
+			// Data!
+			$this->response = array(
+					"payload" => array(
+						"checkins" => $data,
+						"domain" => $this->domain,
+						"success" => "true"
+					),
+					"error" => $this->api_service->get_error_msg(0)
+					);
+		}else{
+			// No data
+			$this->response = array(
+					"payload" => array(
+						"domain" => $this->domain,
+						"success" => "false"
+					),
+					"error" => $this->api_service->get_error_msg(007)
+					);
+		}		
+		
+	}
+	
+	public function gather_checkins($id,$user_id,$mobileid,$email)
+	{
+		$data = array();
+		
+		if($mobileid != '')
+		{
+			$find_user = ORM::factory('user_devices')->find($mobileid);
+			$user_id = $find_user->user_id;
+		}
+		
+		if($user_id == '')
+		{
+			$where_user_id = array('checkin.user_id !=' => '-1');
+		}else{
+			$where_user_id = array('checkin.user_id' => $user_id);
+		}
+		
+		if($id == '')
+		{
+			$where_id = array('checkin.id !=' => '-1');
+		}else{
+			$where_id = array('checkin.id' => $id);
+		}
+		
+		$checkins = ORM::factory('checkin')
+					//->select('DISTINCT checkin.*, media.id as media:media_id, media.media_type as media:media_type, media.media_link as media:media_link, media.media_medium as media:media_medium, media.media_thumb as media:media_thumb')
+					->select('DISTINCT checkin.*')
+					->where($where_id)
+					->where($where_user_id)
+					//->join('media', 'checkin.id', 'media.checkin_id','LEFT')
+					//->join('users', 'checkin.id', 'users.id','LEFT')
+					->with('user')
+					->with('location')
+					->find_all();
+		
+		$i = 0;
+		foreach($checkins as $checkin)
+		{	
+			$data[$i] = array(
+				"id" => $checkin->id,
+				"user_id" => $checkin->user_id,
+				"location_id" => $checkin->location_id,
+				"checkin_description" => $checkin->checkin_description,
+				"checkin_date" => $checkin->checkin_date,
+				"latitude" => $checkin->location->latitude,
+				"longitude" => $checkin->location->longitude
+			);
+
+			foreach ($checkin->media as $media)
+			{
+			    $data[$i]['media'][$media->id] = array(
+			    	"id" => $media->id,
+			    	"media_type" => $media->media_type,
+			    	"media_link" => $this->abs_upload_url.$media->media_link,
+			    	"media_medium" => $this->abs_upload_url.$media->media_medium,
+			    	"media_thumb" => $this->abs_upload_url.$media->media_thumb
+			    );
+			}
+
+			
+			/*
+			if( isset($checkin->media->id) )
+			{
+				var_dump($checkin->media);
+				echo '<br/><br/><br/><br/>';
+			}
+			*/
+			
+			$i++;
+		}
+		
+		return $data;
+	}
+	
+	public function _do_ci()
+	{
+		// Check if mobileid is set
+            	
+        if ( ! $this->api_service->verify_array_index($this->request, 'mobileid'))
+        {
+            $this->set_error_message(array(
+                "error" => $this->api_service->get_error_msg(001, 'mobileid')
+            ));
+            return;
+        }
+        
+        // Check if lat, lon is set
+    	
+        if ( ! $this->api_service->verify_array_index($this->request, 'lat')
+        	AND  ! $this->api_service->verify_array_index($this->request, 'lon'))
+        {
+            $this->set_error_message(array(
+                "error" => $this->api_service->get_error_msg(001, 'lat, lon')
+            ));
+            return;
+        }
+
+		$this->register_checkin(
+					$this->request['mobileid'],
+					$this->request['lat'],
+					$this->request['lon'],
+					@$this->request['message'],
+					@$this->request['firstname'],
+					@$this->request['lastname'],
+					@$this->request['email']
+				);
+		
+		$this->response = array(
+				"payload" => array(
+					"domain" => $this->domain,
+					"success" => "true"
+				),
+				"error" => $this->api_service->get_error_msg(0)
+				);
 	}
 	
 	/**
@@ -111,7 +233,7 @@ class Checkin_Api_Object extends Api_Object_Core {
      *
      * Handles the API task parameters
      */
-	public function register_checkin($mobileid,$lat,$lon,$message=FALSE,$photo=FALSE,$firstname=FALSE,$lastname=FALSE,$email=FALSE)
+	public function register_checkin($mobileid,$lat,$lon,$message=FALSE,$firstname=FALSE,$lastname=FALSE,$email=FALSE)
 	{
 		// Check if this device has been registered yet
 		
@@ -201,7 +323,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 		
 		// THIRD, save the photo, if there is a photo
 		
-		if( is_array($photo) AND $photo != FALSE)
+		if( isset($_FILES['photo']))
 		{
 			$filename = upload::save('photo');
 			
@@ -235,7 +357,6 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$media_photo->media_thumb = $new_filename."_t".$file_type;
 			$media_photo->media_date = date("Y-m-d H:i:s",time());
 			$media_photo->save();
-			
 		}
 		
 	}
@@ -245,5 +366,17 @@ class Checkin_Api_Object extends Api_Object_Core {
 	private function getRandomString($length = 31)
 	{
 		return substr(md5(uniqid(rand(), true)), 0, $length);
+	}
+	
+	public function show_response()
+	{
+		if ($this->response_type == 'json')
+        {
+            echo json_encode($this->response);
+        } 
+        else 
+        {
+            echo $this->array_as_xml($this->response, array());
+        }
 	}
 }
