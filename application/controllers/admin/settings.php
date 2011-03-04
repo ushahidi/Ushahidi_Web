@@ -1084,8 +1084,8 @@ class Settings_Controller extends Admin_Controller
         // Get the cURL error number
         $error_no = curl_errno($ch);
 
-		// If connection refused, i.e. connect() failed, return FALSE
-		if ($error_no == 7)
+		// Only proceed if connection failed or the cert could not be verified with known CA certificates
+		if ($error_no > 0 AND $error_no != 60)
 		{
 			return FALSE;
 		}
@@ -1103,7 +1103,7 @@ class Settings_Controller extends Admin_Controller
         preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
         
         // Check if the connection went through
-        return ($error_no == 7 OR $http_status[1] == 404)? FALSE : TRUE;
+        return ($http_status[1] == 404)? FALSE : TRUE;
     }
 
     /**

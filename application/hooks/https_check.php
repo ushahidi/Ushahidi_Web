@@ -97,8 +97,8 @@ class https_check {
             
             // $page_exists = $this->_page_exists($url);
             
-            // Check if connection succeeded
-            if ($curl_error_no == 7 OR $http_status[1] == 404)
+            // Check if connection succeeded or there was an error (except authentication of cert with known CA certificates)
+            if (($curl_error_no > 0 AND $curl_error_no != 60) OR $http_status[1] == 404)
             {
                 // Set the protocol in the config
                 Kohana::config_set('core.site_protocol', 'http');
