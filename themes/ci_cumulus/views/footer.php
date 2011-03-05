@@ -1,6 +1,6 @@
 
 
-<p id="footer"><small>Theme hacked away by Ushahidi using the Wordpress theme, Cumulus by <a href="http://empirethemes.com">Empire Themes</a>.</small></p>
+<p id="footer"><small>Theme hacked away by <a href="http://ushahidi.com">Ushahidi</a> using the Wordpress theme, Cumulus by <a href="http://empirethemes.com">Empire Themes</a>.</small></p>
 	<?php echo $ushahidi_stats; ?>
 	<?php echo $google_analytics; ?>
 	

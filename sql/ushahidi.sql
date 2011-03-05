@@ -851,7 +851,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `email_ssl` INT(5) NOT NULL,                                                    
 	`ftp_server` varchar(100) NULL DEFAULT NULL,
 	`ftp_user_name` varchar(100) NULL DEFAULT NULL,
-    `alerts_email` VARCHAR(120) NOT NULL,                                           
+    `alerts_email` VARCHAR(120) NOT NULL,
+    `checkins` tinyint(4) NOT NULL default '0', 
     `db_version` varchar(20) default NULL,                                          
     `ushahidi_version` varchar(20) default NULL,                                    
   PRIMARY KEY  (`id`)
@@ -1467,4 +1468,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '49' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '50' WHERE `id`=1 LIMIT 1;

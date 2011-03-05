@@ -28,6 +28,21 @@ class Checkin_Api_Object extends Api_Object_Core {
     {
         parent::__construct($api_service);
         $this->abs_upload_url = url::site().Kohana::config('upload.relative_directory', TRUE);
+        
+        // If Checkins aren't enabled, we want to essentially shut off this API library
+        
+        if(Kohana::config('settings.checkins') != 1)
+        {
+        	// Say what is going on
+        	$this->set_ci_error_message(array(
+                "error" => $this->api_service->get_error_msg(010)
+            ));
+			$this->show_response();
+        	
+        	// TODO: What would be a more appropriate way of doing this?
+        	
+        	die();
+        }
     }
     
     /**

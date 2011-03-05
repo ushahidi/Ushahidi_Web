@@ -27,14 +27,20 @@ class admin_Core {
         }
         else
         {
-            return array(
-                'dashboard' => Kohana::lang('ui_admin.dashboard'),
-                'reports' => Kohana::lang('ui_admin.reports'),
-                'checkins' => Kohana::lang('ui_admin.checkins'),
-                'messages' => Kohana::lang('ui_admin.messages'),
-                'stats' => Kohana::lang('ui_admin.stats'),
-                'addons' => Kohana::lang('ui_admin.addons')
-            );
+			$tabs = array();
+			$tabs['dashboard'] = Kohana::lang('ui_admin.dashboard');
+			$tabs['reports'] = Kohana::lang('ui_admin.reports');
+
+			if(Kohana::config('settings.checkins'))
+			{
+				$tabs['checkins'] = Kohana::lang('ui_admin.checkins');
+			}
+
+			$tabs['messages'] = Kohana::lang('ui_admin.messages');
+			$tabs['stats'] = Kohana::lang('ui_admin.stats');
+			$tabs['addons'] = Kohana::lang('ui_admin.addons');
+
+			return $tabs;
         }
     }
 

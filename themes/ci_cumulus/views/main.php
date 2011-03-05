@@ -88,9 +88,9 @@
 						
 						if(i == 0)
 						{
-							$('div#cilist').append("<div class=\"checkin\" style=\"border:none\">");
+							$('div#cilist').append("<div class=\"checkin\" class=\"ci_id_"+item.id+"\"style=\"border:none\"><a name=\"ci_id_"+item.id+"\" />");
 						}else{
-							$('div#cilist').append("<div class=\"checkin\" style=\"padding-bottom:5px;margin-bottom:5px;\">");
+							$('div#cilist').append("<div class=\"checkin\" class=\"ci_id_"+item.id+"\" style=\"padding-bottom:5px;margin-bottom:5px;\"><a name=\"ci_id_"+item.id+"\" />");
 						}
 						
 						if(item.media === undefined)
@@ -102,7 +102,7 @@
 							$('div#cilist').append("<div style=\"width:110px;height:55px;float:left;margin:0px 10px 0px 0px;background-color:#"+user_colors[item.user]+";\"><div style=\"width:100px;height:55px;overflow:hidden;float:left;margin:0px;\"><a href=\""+item.media[0].link+"\" rel=\"lightbox-group1\" title=\""+item.msg+"\"><img src=\""+item.media[0].thumb+"\" width=\"100\" /></a></div></div>");
 						}
 						
-						$('div#cilist').append("<div style=\"float:right;width:24px;height:24px;margin-right:10px;\"><a class=\"moredetails\" reportid=\""+item.id+"\" href=\"javascript:externalZeroIn("+item.lon+","+item.lat+",16);\"><img src=\"<?php echo url::site(); ?>/themes/ci_cumulus/images/earth_trans.png\" width=\"24\" height=\"24\" /></a></div>");
+						$('div#cilist').append("<div style=\"float:right;width:24px;height:24px;margin-right:10px;\"><a class=\"moredetails\" reportid=\""+item.id+"\" href=\"javascript:externalZeroIn("+item.lon+","+item.lat+",16,"+item.id+");\"><img src=\"<?php echo url::site(); ?>/themes/ci_cumulus/images/earth_trans.png\" width=\"24\" height=\"24\" /></a></div>");
 						
 						$.each(data.payload.users, function(j,useritem){
 							if(useritem.id == item.user){
@@ -110,11 +110,13 @@
 							}
 						});
 						
+						var utcDate = item.date.replace(" ","T")+"Z";
+						
 						if(item.msg == "")
 						{
-							$('div#cilist').append("<div style=\"padding-left:120px;\"><small><em>"+$.timeago(item.date)+"</em></small></div>");
+							$('div#cilist').append("<div style=\"padding-left:120px;\"><small><em>"+$.timeago(utcDate)+"</em></small></div>");
 						}else{
-							$('div#cilist').append("<div style=\"padding-left:120px;\">"+item.msg+"<br/><small><em>"+$.timeago(item.date)+"</em></small></div>");
+							$('div#cilist').append("<div style=\"padding-left:120px;\">"+item.msg+"<br/><small><em>"+$.timeago(utcDate)+"</em></small></div>");
 						}
 						$('div#cilist').append("<div style=\"clear:both\"></div></div>");
 					});

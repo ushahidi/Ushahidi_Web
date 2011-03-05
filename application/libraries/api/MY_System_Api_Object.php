@@ -69,7 +69,7 @@ class System_Api_Object extends Api_Object_Core {
             "payload" => array(
                 "domain" => $this->domain,
                 "version" => $json_version,
-                "checkins" => 1
+                "checkins" => Kohana::config('settings.checkins')
                 ),
             "error" => $this->api_service->get_error_msg(0)
         );
