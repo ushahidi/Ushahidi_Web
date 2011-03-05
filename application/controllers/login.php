@@ -25,7 +25,7 @@ class Login_Controller extends Template_Controller {
     // Main template
     public $template = 'login';
     
-    protected $destination = 'admin/dashboard';
+    protected $destination = 'admin/';
 	
 
     public function __construct()
@@ -38,7 +38,7 @@ class Login_Controller extends Template_Controller {
     public function index()
     {
         $auth = Auth::instance();
-		
+
         // If already logged in redirect to user account page
         // Otherwise attempt to auto login if autologin cookie can be found
         // (Set when user previously logged in and ticked 'stay logged in')
@@ -74,8 +74,8 @@ class Login_Controller extends Template_Controller {
             $postdata_array = $_POST->safe_array();
             
             // Change redirect location if set in form
-            if(isset($postdata_array['redirect_to'])){
-            	$this->destination = $postdata_array['redirect_to'];
+            if(isset($postdata_array['redirect_to']) AND $postdata_array['redirect_to'] != ''){
+        		$this->destination = $postdata_array['redirect_to'];
             }
 
             // Load the user
