@@ -86,19 +86,23 @@ class https_check {
             curl_close($ch);
             unset($ch);
 		    
-            // Get the headers for the URL in $url
-            $headers = get_headers($url);
-            
             // To hold the HTTP status codes
             $http_status = array();
+			
+            // Check if the openSSL module is installed/enabled
+            $module_check = new Modulecheck();
+            $openssl_enabled = $module_check->isLoaded('openssl');
+            if ($openssl_enabled)
+            {
+                // Get the headers for the URL in $url
+                $headers = get_headers($url);
             
-            // Strip HTTP* strings from the $headers
-            preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
-            
-            // $page_exists = $this->_page_exists($url);
+                // Strip HTTP* strings from the $headers
+                preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
+            }
             
             // Check if connection succeeded or there was an error (except authentication of cert with known CA certificates)
-            if (($curl_error_no > 0 AND $curl_error_no != 60) OR $http_status[1] == 404)
+            if (($curl_error_no > 0 AND $curl_error_no != 60) OR (count($http_status) > 0 AND $http_status[1] == 404) OR $openssl_enabled == FALSE)
             {
                 // Set the protocol in the config
                 Kohana::config_set('core.site_protocol', 'http');

@@ -1087,9 +1087,12 @@ class Settings_Controller extends Admin_Controller
         
         // Get the cURL error number
         $error_no = curl_errno($ch);
-
+		
+		// Check if the openssl module is installed and enabled
+		$module_check = new Modulecheck();
+		
 		// Only proceed if connection failed or the cert could not be verified with known CA certificates
-		if ($error_no > 0 AND $error_no != 60)
+		if ( ($error_no > 0 AND $error_no != 60) OR $module_check->isLoaded('openssl') == FALSE)
 		{
 			return FALSE;
 		}
