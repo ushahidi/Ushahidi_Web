@@ -396,6 +396,7 @@ class Checkin_Api_Object extends Api_Object_Core {
             }
             
             $user_id = $user->save();
+            $user_id = $user_id->id;
 		}
 		
 		// Get our user id if it hasn't already been set by one of the processes above
