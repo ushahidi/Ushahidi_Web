@@ -184,7 +184,7 @@ class Themes_Controller extends Admin_Controller {
 			
 			if(isset($theme_data['Checkins']))
 			{
-				$checkins = $theme_data['Checkins'];
+				$checkins = (int)$theme_data['Checkins'];
 			}else{
 				$checkins = 0;
 			}
