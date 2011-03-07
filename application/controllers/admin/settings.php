@@ -1088,29 +1088,16 @@ class Settings_Controller extends Admin_Controller
         // Get the cURL error number
         $error_no = curl_errno($ch);
 		
-		// Check if the openssl module is installed and enabled
-		$module_check = new Modulecheck();
-		
-		// Only proceed if connection failed or the cert could not be verified with known CA certificates
-		if ( ($error_no > 0 AND $error_no != 60) OR $module_check->isLoaded('openssl') == FALSE)
-		{
-			return FALSE;
-		}
-		
+        // Get the return code
+        $http_return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        
         // Close the cURL handle
         curl_close($ch);
-        
-        // Get the HTTP headers
-        $headers = get_headers($url);
-        
-        // To hold the HTTP status code contained in $headers
-        $http_status = array();
-        
-        // Grab HTTP* strings from $headers
-        preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
-        
-        // Check if the connection went through
-        return ($http_status[1] == 404)? FALSE : TRUE;
+		
+        // Check if the cURL session succeeded
+        return (($error_no > 0 AND $error_no != 60) OR $http_return_code == 404)
+            ? FALSE
+            : TRUE;
     }
 
     /**
