@@ -287,7 +287,7 @@ class Checkin_Api_Object extends Api_Object_Core {
             return;
         }
 
-		$checkin_id = $this->register_checkin(
+		$checkedin = $this->register_checkin(
 					$this->request['mobileid'],
 					$this->request['lat'],
 					$this->request['lon'],
@@ -300,7 +300,8 @@ class Checkin_Api_Object extends Api_Object_Core {
 
 		$this->response = array(
 				"payload" => array(
-					"checkin_id" => $checkin_id,
+					"checkin_id" => $checkedin['checkin_id'],
+					"user_id" => $checkedin['user_id'],
 					"domain" => $this->domain,
 					"success" => "true"
 				),
@@ -467,7 +468,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$media_photo->save();
 		}
 		
-		return $checkin_id->id;
+		return array("checkin_id" => $checkin_id->id, "user_id" => $user_id);
 		
 	}
 	
