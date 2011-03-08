@@ -37,6 +37,19 @@ class Smssync_Install {
 				PRIMARY KEY (`id`)
 			);
 		");
+		
+		$this->db->query("
+			CREATE TABLE IF NOT EXISTS `".Kohana::config('database.default.table_prefix')."smssync_message` (
+				id int(11) unsigned NOT NULL AUTO_INCREMENT,
+				smssync_to varchar(100) DEFAULT NULL,
+				smssync_from varchar(100) DEFAULT NULL,
+				smssync_message text,
+				smssync_message_date datetime DEFAULT NULL,
+				smssync_sent tinyint(4) NOT NULL DEFAULT '0',
+				smssync_sent_date datetime DEFAULT NULL,
+				PRIMARY KEY (id)
+			);
+		");
 	}
 
 	/**
@@ -45,5 +58,6 @@ class Smssync_Install {
 	public function uninstall()
 	{
 		$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'smssync_settings`');
+		$this->db->query('DROP TABLE `'.Kohana::config('database.default.table_prefix').'smssync_message`');
 	}
 }
