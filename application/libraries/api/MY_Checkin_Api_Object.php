@@ -28,6 +28,21 @@ class Checkin_Api_Object extends Api_Object_Core {
     {
         parent::__construct($api_service);
         $this->abs_upload_url = url::site().Kohana::config('upload.relative_directory', TRUE);
+        
+        // If Checkins aren't enabled, we want to essentially shut off this API library
+        
+        if(Kohana::config('settings.checkins') != 1)
+        {
+        	// Say what is going on
+        	$this->set_ci_error_message(array(
+                "error" => $this->api_service->get_error_msg(010)
+            ));
+			$this->show_response();
+        	
+        	// TODO: What would be a more appropriate way of doing this?
+        	
+        	die();
+        }
     }
     
     /**
@@ -66,7 +81,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 
             // Error therefore set error message 
             default:
-                $this->set_error_message(array(
+                $this->set_ci_error_message(array(
                     "error" => $this->api_service->get_error_msg(002)
                 ));
         }
@@ -80,7 +95,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 					@$this->request['id'],
 					@$this->request['userid'],
 					@$this->request['mobileid'],
-					@$this->request['email']
+					@$this->request['mapdata']
 				);
 					
 					
@@ -89,7 +104,8 @@ class Checkin_Api_Object extends Api_Object_Core {
 			// Data!
 			$this->response = array(
 					"payload" => array(
-						"checkins" => $data,
+						"checkins" => $data["checkins"],
+						"users" => $data["users"],
 						"domain" => $this->domain,
 						"success" => "true"
 					),
@@ -108,9 +124,22 @@ class Checkin_Api_Object extends Api_Object_Core {
 		
 	}
 	
-	public function gather_checkins($id,$user_id,$mobileid,$email)
+	public function gather_checkins($id,$user_id,$mobileid,$mapdata)
 	{
 		$data = array();
+		
+		if($mapdata != '')
+		{
+			// If this is set, then we are going to pass along more data to make it easier
+			//   to plot this on the front end
+			$query = 'SELECT MAX(checkin_date) AS max_date, MIN(checkin_date) AS min_date FROM '.$this->table_prefix.'checkin LIMIT 1';
+			$map_dates = $this->db->query($query);
+			
+			$max_date = strtotime($map_dates[0]->max_date);
+			$min_date = strtotime($map_dates[0]->min_date);
+			
+			$range_date = $max_date - $min_date;
+		}
 		
 		if($mobileid != '')
 		{
@@ -132,51 +161,104 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$where_id = array('checkin.id' => $id);
 		}
 		
+		$orderby = 'checkin.id';
+		if(isset($this->request['orderby']))
+		{
+			$orderby = $this->request['orderby'];
+		}
+		
+		$sort = 'ASC';
+		if(isset($this->request['sort']))
+		{
+			$sort = $this->request['sort'];
+		}
+		
+		
+		$since_id = 0;
+		if(isset($this->request['sinceid']))
+		{
+			$since_id = $this->request['sinceid'];
+		}
+		
+		//echo $this->request['sqllimit'];
+		$limit = 20;
+		if(isset($this->request['sqllimit']))
+		{
+			$limit = $this->request['sqllimit'];
+		}
+		
+		$offset = 0;
+		if(isset($this->request['sqloffset']))
+		{
+			$offset = $this->request['sqloffset'];
+		}
+		
 		$checkins = ORM::factory('checkin')
-					//->select('DISTINCT checkin.*, media.id as media:media_id, media.media_type as media:media_type, media.media_link as media:media_link, media.media_medium as media:media_medium, media.media_thumb as media:media_thumb')
 					->select('DISTINCT checkin.*')
 					->where($where_id)
 					->where($where_user_id)
-					//->join('media', 'checkin.id', 'media.checkin_id','LEFT')
-					//->join('users', 'checkin.id', 'users.id','LEFT')
+					->where('checkin.id >=',$since_id)
 					->with('user')
 					->with('location')
-					->find_all();
+					->orderby($orderby,$sort)
+					->find_all($limit,$offset);
 		
+		$users_names = array();
 		$i = 0;
 		foreach($checkins as $checkin)
 		{	
-			$data[$i] = array(
+			$data["checkins"][$i] = array(
 				"id" => $checkin->id,
-				"user_id" => $checkin->user_id,
-				"location_id" => $checkin->location_id,
-				"checkin_description" => $checkin->checkin_description,
-				"checkin_date" => $checkin->checkin_date,
-				"latitude" => $checkin->location->latitude,
-				"longitude" => $checkin->location->longitude
+				"user" => $checkin->user_id,
+				"loc" => $checkin->location_id,
+				"msg" => $checkin->checkin_description,
+				"date" => $checkin->checkin_date,
+				"lat" => $checkin->location->latitude,
+				"lon" => $checkin->location->longitude
 			);
-
+			
+			$users_names[(int)$checkin->user_id] = array("id"=>$checkin->user_id,"name"=>$checkin->user->name,"color"=>$checkin->user->color);
+			
+			$j = 0;
 			foreach ($checkin->media as $media)
 			{
-			    $data[$i]['media'][$media->id] = array(
+			    $data["checkins"][$i]['media'][(int)$j] = array(
 			    	"id" => $media->id,
-			    	"media_type" => $media->media_type,
-			    	"media_link" => $this->abs_upload_url.$media->media_link,
-			    	"media_medium" => $this->abs_upload_url.$media->media_medium,
-			    	"media_thumb" => $this->abs_upload_url.$media->media_thumb
+			    	"type" => $media->media_type,
+			    	"link" => $this->abs_upload_url.$media->media_link,
+			    	"medium" => $this->abs_upload_url.$media->media_medium,
+			    	"thumb" => $this->abs_upload_url.$media->media_thumb
 			    );
+			    $j++;
 			}
-
 			
-			/*
-			if( isset($checkin->media->id) )
+			// If we are displaying some extra map data...
+			
+			if( isset($range_date) AND isset($max_date) AND isset($min_date) )
 			{
-				var_dump($checkin->media);
-				echo '<br/><br/><br/><br/>';
+				$checkin_date = strtotime($checkin->checkin_date);
+				$difference_date = $max_date - $checkin_date;
+				if($difference_date <= 0) {
+					$opacity = 1;
+				}else{
+					$opacity = round(($difference_date / $range_date),2);
+				}
+				
+				if($opacity < .25)
+				{
+					// We don't want checkins to go away entirely
+					$opacity = .25;
+				}
+				$data["checkins"][$i]['opacity'] = $opacity;
+				
 			}
-			*/
 			
 			$i++;
+		}
+		
+		foreach($users_names as $user_data)
+		{
+			$data["users"][] = $user_data;
 		}
 		
 		return $data;
@@ -185,10 +267,10 @@ class Checkin_Api_Object extends Api_Object_Core {
 	public function _do_ci()
 	{
 		// Check if mobileid is set
-            	
+		
         if ( ! $this->api_service->verify_array_index($this->request, 'mobileid'))
         {
-            $this->set_error_message(array(
+            $this->set_ci_error_message(array(
                 "error" => $this->api_service->get_error_msg(001, 'mobileid')
             ));
             return;
@@ -199,24 +281,27 @@ class Checkin_Api_Object extends Api_Object_Core {
         if ( ! $this->api_service->verify_array_index($this->request, 'lat')
         	AND  ! $this->api_service->verify_array_index($this->request, 'lon'))
         {
-            $this->set_error_message(array(
+            $this->set_ci_error_message(array(
                 "error" => $this->api_service->get_error_msg(001, 'lat, lon')
             ));
             return;
         }
 
-		$this->register_checkin(
+		$checkedin = $this->register_checkin(
 					$this->request['mobileid'],
 					$this->request['lat'],
 					$this->request['lon'],
 					@$this->request['message'],
 					@$this->request['firstname'],
 					@$this->request['lastname'],
-					@$this->request['email']
+					@$this->request['email'],
+					@$this->request['color']
 				);
-		
+
 		$this->response = array(
 				"payload" => array(
+					"checkin_id" => $checkedin['checkin_id'],
+					"user_id" => $checkedin['user_id'],
 					"domain" => $this->domain,
 					"success" => "true"
 				),
@@ -233,7 +318,7 @@ class Checkin_Api_Object extends Api_Object_Core {
      *
      * Handles the API task parameters
      */
-	public function register_checkin($mobileid,$lat,$lon,$message=FALSE,$firstname=FALSE,$lastname=FALSE,$email=FALSE)
+	public function register_checkin($mobileid,$lat,$lon,$message=FALSE,$firstname=FALSE,$lastname=FALSE,$email=FALSE,$color=FALSE)
 	{
 		// Check if this device has been registered yet
 		
@@ -248,7 +333,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 			{
 				$user_name = $firstname.' '.$lastname;	
 			}else{
-				$user_name = 'Not Fully Registered Checkin User';
+				$user_name = '';
 			}
 			
 			if($email)
@@ -258,16 +343,34 @@ class Checkin_Api_Object extends Api_Object_Core {
 				$user_email = $this->getRandomString();
 			}
 			
-			// Create a new user
+			if($color)
+			{
+				$user_color = $color;
+			}else{
+				$user_color = $this->random_color();
+			}
 			
-			$user = ORM::factory('user');
-            $user->name = $user_name;
-            $user->email = $user_email;
-            $user->username = $this->getRandomString();
-            $user->password = 'checkinuserpw';
-            $user->add(ORM::factory('role', 'login'));
-            $user_id = $user->save();
+			// Check if email exists
 			
+			$query = 'SELECT id FROM '.$this->table_prefix.'users WHERE `email` = \''.$user_email.'\' LIMIT 1;';
+			$usercheck = $this->db->query($query);
+			
+			if ( isset($usercheck[0]->id) )
+			{
+				$user_id = $usercheck[0]->id;
+			}else{
+				// Create a new user
+				
+				$user = ORM::factory('user');
+	            $user->name = $user_name;
+	            $user->email = $user_email;
+	            $user->username = $this->getRandomString();
+	            $user->password = 'checkinuserpw';
+	            $user->color = $user_color;
+	            $user->add(ORM::factory('role', 'login'));
+	            $user_id = $user->save();
+
+			}			
 			
 			
 			//   TODO: When we have user registration down, we need to pass a user id here
@@ -283,10 +386,17 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$user_name = $firstname.' '.$lastname;
 			$user_email = $email;
 			
-			$user = ORM::factory('user');
+			$user = ORM::factory('user',$user_id);
             $user->name = $user_name;
             $user->email = $user_email;
+            
+            if($color)
+            {
+            	$user->color = $color;
+            }
+            
             $user_id = $user->save();
+            $user_id = $user_id->id;
 		}
 		
 		// Get our user id if it hasn't already been set by one of the processes above
@@ -359,6 +469,8 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$media_photo->save();
 		}
 		
+		return array("checkin_id" => $checkin_id->id, "user_id" => $user_id);
+		
 	}
 	
 	// This function helps support some random string action for user accounts and filenames
@@ -378,5 +490,19 @@ class Checkin_Api_Object extends Api_Object_Core {
         {
             echo $this->array_as_xml($this->response, array());
         }
+	}
+	
+	public function random_color()
+	{
+		$hex = array("00","33","66","99","CC","FF");
+		$r1 = array_rand($hex);
+		$r2 = array_rand($hex);
+		$r3 = array_rand($hex);
+		return $hex[$r1].$hex[$r2].$hex[$r3];
+	}
+	
+	public function set_ci_error_message($resp)
+	{
+		$this->response = $resp;
 	}
 }

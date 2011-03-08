@@ -15,6 +15,7 @@
 	'settings_api_max_requests_per_ip' => 'Maximum no. of API requests per IP Address',
 	'settings_cache_pages' => 'Enable or disable page caching. This makes pages display faster by cutting response times. We recommend using caching on high traffic sites. **Remember that reports will be populated on the front end based on the schedule you set below (Cache Lifetime).',
 	'settings_cache_pages_lifetime' => 'Set the lifetime of the cache.',
+	'settings_checkins' => 'This setting enables checkins on your deployment. This is a simplified report type that is not moderated before it goes on the homepage and requires your site to be configured a certain way. When you enable this, make sure your timezone setting is on UTC and your theme supports checkins. When you enable this, checkin only themes will become enabled under your addons/themes settings page.',
 	'settings_configure_map' => 'Set the map to cover a specific location ',
 	'settings_default_category_colors' => 'Set one color code for all the categories on the site',
 	'settings_default_location' => 'This is the country the site is being deployed',

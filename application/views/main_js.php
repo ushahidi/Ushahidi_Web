@@ -218,7 +218,124 @@
 				addMarkers(currCat, currStartDate, currEndDate, currZoom, currCenter);
 			}
 		}
+		
+		/*
+		Display info window for checkin data
+		*/
+		function showCheckinData(event)
+		{
 
+            selectedFeature = event.feature;
+			zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
+			lon = zoom_point.lon;
+			lat = zoom_point.lat;
+			
+			var content = "<div class=\"infowindow\" style=\"color:#000000\"><div class=\"infowindow_list\">";
+			
+			if(event.feature.attributes.ci_media_medium !== ""){
+				content = content + "<a href=\""+event.feature.attributes.ci_media_link+"\" rel=\"lightbox-group1\" title=\""+event.feature.attributes.ci_msg+"\"><img src=\""+event.feature.attributes.ci_media_medium+"\" /><br/>";
+			}
+
+			content = content + event.feature.attributes.ci_msg+"</div><div style=\"clear:both;\"></div>";
+		    content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",1)'><?php echo Kohana::lang('ui_main.zoom_in');?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",-1)'><?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
+			content = content + "</div>";			
+
+			if (content.search("<?php echo '<'; ?>script") != -1)
+			{
+                content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/<?php echo '<'; ?>/g, "&lt;");
+            }
+            popup = new OpenLayers.Popup.FramedCloud("chicken", 
+				event.feature.geometry.getBounds().getCenterLonLat(),
+				new OpenLayers.Size(100,100),
+				content,
+				null, true, onPopupClose);
+            event.feature.popup = popup;
+            map.addPopup(popup);
+		}
+
+		/*
+		Display Checkin Points
+		Note: This function totally ignores the timeline
+		*/
+		function showCheckins()
+		{
+			$(document).ready(function(){
+
+				var ci_styles = new OpenLayers.StyleMap({
+					"default": new OpenLayers.Style({
+						pointRadius: "5", // sized according to type attribute
+						fillColor: "${fillcolor}",
+						strokeColor: "${strokecolor}",
+						fillOpacity: "${fillopacity}",
+						strokeOpacity: 0.75,
+						strokeWidth: 1.5,
+						graphicZIndex: 1
+					})
+				});
+
+				var checkinLayer = new OpenLayers.Layer.Vector('Checkins', {styleMap: ci_styles});
+				map.addLayers([checkinLayer]);
+
+				highlightCtrl = new OpenLayers.Control.SelectFeature(checkinLayer, {
+				    hover: true,
+				    highlightOnly: true,
+				    renderIntent: "temporary"
+				});
+				map.addControl(highlightCtrl);
+				highlightCtrl.activate();
+				
+				selectControl = new OpenLayers.Control.SelectFeature(checkinLayer);
+				map.addControl(selectControl);
+				selectControl.activate();
+				checkinLayer.events.on({
+					"featureselected": showCheckinData,
+					"featureunselected": onFeatureUnselect
+				});
+
+				$.getJSON("<?php echo url::site()."api/?task=checkin&action=get_ci&mapdata=1&sqllimit=1000&orderby=checkin.checkin_date&sort=ASC"?>", function(data) {
+					var user_colors = new Array();
+					// Get colors
+					$.each(data["payload"]["users"], function(i, payl) {
+						user_colors[payl.id] = payl.color;
+					});
+
+					// Get checkins
+					$.each(data["payload"]["checkins"], function(key, ci) {
+
+						var cipoint = new OpenLayers.Geometry.Point(parseFloat(ci.lon), parseFloat(ci.lat));
+						cipoint.transform(proj_4326, proj_900913);
+
+						var media_link = '';
+						var media_medium = '';
+						var media_thumb = '';
+
+						if(ci.media === undefined){
+							// No image
+						}else{
+							// Image!
+							media_link = ci.media[0].link;
+							media_medium = ci.media[0].medium;
+							media_thumb = ci.media[0].thumb;
+						}
+
+						var checkinPoint = new OpenLayers.Feature.Vector(cipoint, {
+	                        	fillcolor: "#"+user_colors[ci.user],
+	                        	strokecolor: "#FFFFFF",
+	                        	fillopacity: ci.opacity,
+	                        	ci_id: ci.id,
+	                        	ci_msg: ci.msg,
+	                        	ci_media_link: media_link,
+	                        	ci_media_medium: media_medium,
+	                        	ci_media_thumb: media_thumb
+		                    }
+		                );
+
+						checkinLayer.addFeatures([checkinPoint]);
+
+					});
+				});
+			});			
+		}
 
 		/*
 		Refresh Graph on Slider Change
@@ -320,12 +437,20 @@
 		/*
 		Zoom to Selected Feature from outside Popup
 		*/
-		function externalZeroIn(lon, lat, newZoom)
-		{	
+		function externalZeroIn(lon, lat, newZoom, cipopup)
+		{
+			
 			var point = new OpenLayers.LonLat(lon,lat);
 			point.transform(proj_4326, map.getProjectionObject());
 			// Center and Zoom
 			map.setCenter(point, newZoom);
+			
+			if(cipopup === undefined){
+				// A checkin id was not passed so we won't bother showing the info window
+			}else{
+				// An id was passed, so lets show an info window
+				// TODO: Do this.
+			}
 		}
 
 		/*

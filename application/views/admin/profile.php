@@ -65,7 +65,7 @@
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_password"); ?>"><?php echo Kohana::lang('ui_main.new_password');?></a></h4>
 							<?php print form::password('password', $form['password'], ' class="text"'); ?>
 							<div style="clear:both;"></div>
-							<?php echo Kohana::lang('ui_main.password_again');?>:<br />
+							<h4><?php echo Kohana::lang('ui_main.password_again');?></h4>
 							<?php print form::password('password_again', $form['password_again'], ' class="text"'); ?>
 						</div>
 						<div class="row">
