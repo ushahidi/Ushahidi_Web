@@ -51,30 +51,20 @@ class https_check {
              * Not an optimal solution but works for now; index.php with cause get_headers to follow the "Location:"
              * headers and this has an impedance on the page load time
              */
-            $url = url::base().'media/css/error.css';
+            
+            // cURL options
+            $curl_options = array(
+                CURLOPT_URL => url::base().'media/css/error.css',
+                CURLOPT_FOLLOWLOCATION => FALSE,
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_HEADER, FALSE
+            );
             
             // Initialize session and set cURL
             $ch = curl_init();
             
-            // Set URL to test HTTPS connectivity
-            curl_setopt($ch, CURLOPT_URL, url::base());
-
-            // Disable following every "Location:" that is sent as part of the HTTP(S) header
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-            // Suppress verification of the SSL certificate
-            /** 
-             * E.Kala - 17th Feb 2011
-             * This currently causes an inifinte re-direct loop therefore
-             */
-            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-            // Disable checking of the Common Name (CN) in the SSL certificate; Certificate may not be X.509
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-
-            // Suppress the header in the output
-            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            // Set the cURL options in the $curl_options array
+            curl_setopt_array($ch, $curl_options);
             
             // Perform cURL session
             curl_exec($ch);
