@@ -1,4 +1,5 @@
 
+<iframe src="https://spreadsheets.google.com/embeddedform?formkey=dE9CbGFHTURIS3RjLWd2aGJlX0Q2aHc6MQ" width="952" height="625" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" id="feedbackform">Loading...</iframe>
 
 <p id="footer"><small>Theme hacked away by <a href="http://ushahidi.com">Ushahidi</a> using the Wordpress theme, Cumulus by <a href="http://empirethemes.com">Empire Themes</a>.</small></p>
 	<?php echo $ushahidi_stats; ?>

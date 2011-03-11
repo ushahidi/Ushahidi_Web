@@ -83,3 +83,6 @@ h3 {
 a.fullsite {
 	position:absolute;
 }
+#feedbackform {
+	display:none;
+}
