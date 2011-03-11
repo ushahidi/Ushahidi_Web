@@ -374,7 +374,6 @@ p.link span a:hover {
 
 .checkins{
 	float:left;
-	/*width:545px;*/
 	width: 395px;
 }
 
@@ -840,20 +839,15 @@ img.alignleft {
 
 div.map {
     border: #999 1px solid;
-    /*width: 100%;*/
     width: 553px;
     float:right;
-    /*height: 389px;*/
-    /*height:200px;*/
     height:600px;
 	position:relative;
 	padding:0px;
 	margin:0px;
-	/*display:none;*/
 }
 
 div.showcase {
-	/*display:none;*/
 	background:#eee;
 	width:100%;
 }
@@ -873,6 +867,36 @@ div.graph-holder {
 div.checkin {
 	border-bottom:1px solid #B3B3B3;
 	
+}
+
+div.colorblock {
+	width:110px;
+	float:left;
+	margin:0px 10px 0px 0px;
+}
+div.colorfade {
+	width:100px;
+	height:20px;
+	float:left;
+	margin:0px;
+	background-color:#FFFFFF;
+	opacity:.5;
+}
+div.cimsg {
+	padding-left:120px;
+}
+div.imgblock {
+	width:100px;
+	height:55px;
+	overflow:hidden;
+	float:left;
+	margin:0px;
+}
+div.shorterblock {
+	height:20px;
+}
+div.tallerblock {
+	height:55px;
 }
 
 div#cilist {

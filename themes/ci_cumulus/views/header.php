@@ -12,14 +12,13 @@
 	<script type="text/javascript" src="<?php echo url::site(); ?>themes/ci_cumulus/js/jquery.timeago.js"></script>
 	
 	<?php
-	
-		
-		
 		// Action::header_scripts - Additional Inline Scripts from Plugins
 		Event::run('ushahidi_action.header_scripts');
-		
-	?>
 
+		if(isset($_GET['widget'])){
+			echo '<link rel="stylesheet" type="text/css" href="'.url::site().'themes/ci_cumulus/css/widget/widget.css" />';
+		}
+	?>
 </head>
 <body>
 
