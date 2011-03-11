@@ -49,7 +49,8 @@ div.olLayerDiv {
 .olLayerGoogleCopyright {
     right: 3px;
     bottom: 2px;
-    left: auto;  
+    left: auto;
+    display: none;
 }
 .olLayerGoogleV3.olLayerGoogleCopyright {
     bottom: 0px;
