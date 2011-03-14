@@ -897,6 +897,12 @@ ul.pager li a.active {background:#f2f7fa;}
 	line-height:12px;
 	color:#a1a1a1;
 }
+div.experimental{
+	float:left;
+	padding-left:20px;
+	font-weight:bold;
+	text-transform: uppercase;
+}
 /*-- f-col --*/
 .f-col {
 	padding:0 10px 14px 20px;

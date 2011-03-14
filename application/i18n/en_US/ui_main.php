@@ -167,6 +167,7 @@
 	'hashtag' => 'Hashtag',
 	'has_been' => 'Has Been',
 	'help' => 'How to Help',
+	'hidden' => 'Hidden',
 	'hide' => 'Hide',
 	'hide_this_message' => 'hide this message',
 	'home' => 'Home',

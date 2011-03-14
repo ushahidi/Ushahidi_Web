@@ -51,30 +51,20 @@ class https_check {
              * Not an optimal solution but works for now; index.php with cause get_headers to follow the "Location:"
              * headers and this has an impedance on the page load time
              */
-            $url = url::base().'media/css/error.css';
+            
+            // cURL options
+            $curl_options = array(
+                CURLOPT_URL => url::base().'media/css/error.css',
+                CURLOPT_FOLLOWLOCATION => FALSE,
+                CURLOPT_RETURNTRANSFER => TRUE,
+                CURLOPT_HEADER, FALSE
+            );
             
             // Initialize session and set cURL
             $ch = curl_init();
             
-            // Set URL to test HTTPS connectivity
-            curl_setopt($ch, CURLOPT_URL, url::base());
-
-            // Disable following every "Location:" that is sent as part of the HTTP(S) header
-            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-            // Suppress verification of the SSL certificate
-            /** 
-             * E.Kala - 17th Feb 2011
-             * This currently causes an inifinte re-direct loop therefore
-             */
-            // curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-            // Disable checking of the Common Name (CN) in the SSL certificate; Certificate may not be X.509
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-
-            // Suppress the header in the output
-            curl_setopt($ch, CURLOPT_HEADER, FALSE);
+            // Set the cURL options in the $curl_options array
+            curl_setopt_array($ch, $curl_options);
             
             // Perform cURL session
             curl_exec($ch);
@@ -82,23 +72,15 @@ class https_check {
             // Get the cURL error no. returned; 71 => Connection failed, 0 => Success, 601=>SSL Cert validation failed
             $curl_error_no = curl_errno($ch);
 		    
+            // Get the HTTP return code
+            $http_return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+		    
             // Close the cURL resource
             curl_close($ch);
             unset($ch);
 		    
-            // Get the headers for the URL in $url
-            $headers = get_headers($url);
-            
-            // To hold the HTTP status codes
-            $http_status = array();
-            
-            // Strip HTTP* strings from the $headers
-            preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
-            
-            // $page_exists = $this->_page_exists($url);
-            
-            // Check if connection succeeded
-            if ($curl_error_no == 71 OR $http_status[1] == 404)
+            // Check if connection succeeded or there was an error (except authentication of cert with known CA certificates)
+            if (($curl_error_no > 0 AND $curl_error_no != 60) OR $http_return_code == 404)
             {
                 // Set the protocol in the config
                 Kohana::config_set('core.site_protocol', 'http');

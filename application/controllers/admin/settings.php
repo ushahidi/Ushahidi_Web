@@ -61,6 +61,7 @@ class Settings_Controller extends Admin_Controller
             'cache_pages' => '',
             'cache_pages_lifetime' => '',
             'private_deployment' => '',
+            'checkins' => '',
             'default_map_all' => '',
             'google_analytics' => '',
             'twitter_hashtags' => '',
@@ -103,6 +104,7 @@ class Settings_Controller extends Admin_Controller
             $post->add_rules('cache_pages','required','between[0,1]');
             $post->add_rules('cache_pages_lifetime','required','in_array[300,600,900,1800]');
             $post->add_rules('private_deployment','required','between[0,1]');
+            $post->add_rules('checkins','required','between[0,1]');
             $post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
             $post->add_rules('google_analytics','length[0,20]');
             $post->add_rules('twitter_hashtags','length[0,500]');
@@ -137,6 +139,7 @@ class Settings_Controller extends Admin_Controller
                 $settings->cache_pages = $post->cache_pages;
                 $settings->cache_pages_lifetime = $post->cache_pages_lifetime;
                 $settings->private_deployment = $post->private_deployment;
+                $settings->checkins = $post->checkins;
                 $settings->default_map_all = $post->default_map_all;
                 $settings->google_analytics = $post->google_analytics;
                 $settings->twitter_hashtags = $post->twitter_hashtags;
@@ -194,6 +197,7 @@ class Settings_Controller extends Admin_Controller
                 'cache_pages' => $settings->cache_pages,
                 'cache_pages_lifetime' => $settings->cache_pages_lifetime,
                 'private_deployment' => $settings->private_deployment,
+                'checkins' => $settings->checkins,
                 'default_map_all' => $settings->default_map_all,
                 'google_analytics' => $settings->google_analytics,
                 'twitter_hashtags' => $settings->twitter_hashtags,
@@ -1083,21 +1087,17 @@ class Settings_Controller extends Admin_Controller
         
         // Get the cURL error number
         $error_no = curl_errno($ch);
+		
+        // Get the return code
+        $http_return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         
         // Close the cURL handle
         curl_close($ch);
-        
-        // Get the HTTP headers
-        $headers = get_headers($url);
-        
-        // To hold the HTTP status code contained in $headers
-        $http_status = array();
-        
-        // Grab HTTP* strings from $headers
-        preg_match('/HTTP\/.* ([0-9]+) */', $headers[0], $http_status);
-        
-        // Check if the connection went through
-        return ($error_no == 71 OR $http_status[1] == 404)? FALSE : TRUE;
+		
+        // Check if the cURL session succeeded
+        return (($error_no > 0 AND $error_no != 60) OR $http_return_code == 404)
+            ? FALSE
+            : TRUE;
     }
 
     /**

@@ -18,15 +18,34 @@ class Smssync_Controller extends Controller {
 	private $request = array();
 	
 	public function __construct()
-    {
-        $this->request = ($_SERVER['REQUEST_METHOD'] == 'POST')
-            ? $_POST
-            : $_GET;
-    }
+	{
+		$this->request = ($_SERVER['REQUEST_METHOD'] == 'POST')
+			? $_POST
+			: $_GET;
+	}
 	
 	function index()
 	{
-		$secret = "";		
+		$task = (isset($this->request['task'])) ? $this->request['task'] : "";
+		
+		switch ($task) {
+			// Send
+			case "send":
+				$this->_send();
+				break;
+			
+			// Receive
+			default:
+				$this->_receive();
+				break;
+		}
+	}
+	
+	private function _receive()
+	{
+		$secret = "";
+		$success = "false";
+		
 		if (isset($this->request['secret']))
 		{
 			$secret = $this->request['secret'];
@@ -61,23 +80,41 @@ class Smssync_Controller extends Controller {
 				}
 			}
 			else
-			{ // Can't load table
-				$secret_match = FALSE;
+			{ // No Secret Set
+				$secret_match = TRUE;
 			}
 			
 			if ($secret_match)
 			{
 				sms::add($message_from, $message_description);
-				echo json_encode(array("payload" => array("success" => "true")));
-			}
-			else
-			{
-				echo json_encode(array("payload" => array("success" => "false")));
+				$success = "true";
 			}
 		}
-		else
+		
+		echo json_encode(array("payload"=>array("success"=>$success)));
+	}
+	
+	private function _send()
+	{
+		$all_messages =  array();
+		
+		// Find all unsent messages
+		$messages = ORM::factory("smssync_message")
+			->where("smssync_sent", 0)
+			->find_all();
+			
+		foreach ($messages as $message)
 		{
-			echo json_encode(array("payload" => array("success" => "false")));
+			$all_messages[] = array(
+				"to"=>$message->smssync_to,
+				"message"=>$message->smssync_message
+			);
+			
+			$message->smssync_sent = 1;
+			$message->smssync_sent_date = date("Y-m-d H:i:s",time());
+			$message->save();
 		}
+		
+		echo json_encode(array("payload"=>array("task"=>"send","messages"=>$all_messages)));
 	}
 }
