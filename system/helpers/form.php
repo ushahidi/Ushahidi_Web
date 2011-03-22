@@ -144,10 +144,9 @@ class form_Core {
 	 * @param   string|array  input name or an array of HTML attributes
 	 * @param   string        input value, when using a name
 	 * @param   string        a string to be attached to the end of the attributes
-	 * @param   boolean       encode existing entities
 	 * @return  string
 	 */
-	public static function input($data, $value = '', $extra = '', $double_encode = TRUE )
+	public static function input($data, $value = '', $extra = '')
 	{
 		if ( ! is_array($data))
 		{
@@ -160,9 +159,6 @@ class form_Core {
 			'type'  => 'text',
 			'value' => $value
 		);
-
-		// For safe form data
-		$data['value'] = html::specialchars($data['value'], $double_encode);
 
 		return '<input'.form::attributes($data).' '.$extra.' />';
 	}
