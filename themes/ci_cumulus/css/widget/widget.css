@@ -1,0 +1,88 @@
+html, body {
+	color:#000000;
+	background:#EDE6D0;
+	/*font-family:arial, verdana;*/
+	font-family: Verdana,sans-serif;
+	font-size:12px;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	width:100%;
+}
+#header {
+	height:0px;
+	display:none;
+}
+#container {
+	width:auto;
+	float:left;
+	background:none;
+}
+div.map {
+    border: #999 0px solid;
+    width: 225px;
+    float:left;
+    height:200px;
+	position:relative;
+	padding:0px;
+	margin:0px;
+	clear:both;
+}
+.checkins{
+	float:right;
+	position:absolute;
+	background:#EDE6D0;
+	font-size:10px;
+	width:auto;
+	padding-left:225px;
+}
+div#downloads {
+	text-align:center;
+	margin-top:0px;
+	display:none;
+}
+#footer {
+	display:none;
+}
+div.colorblock {
+	width:10px;
+}
+div.colorfade {
+	width:0px;
+	height:0px;
+	float:left;
+	margin:0px;
+	background-color:#FFFFFF;
+	opacity:.5;
+	display:none;
+}
+div.cimsg {
+	padding-left:20px;
+}
+div.imgblock {
+	display:none;
+}
+div.shorterblock {
+	height:20px;
+}
+div.tallerblock {
+	height:20px;
+}
+div#cilist {
+	overflow:scroll;
+	height:200px;
+	overflow-x:hidden;
+	width:auto;
+}
+div.showcase {
+	background:none;
+	width:auto;
+}
+h3 {
+	color:#000000;
+}
+a.fullsite {
+	position:absolute;
+}
+#feedbackform {
+	display:none;
+}

@@ -2,7 +2,7 @@
 name: SMSSync
 website: http://www.ushahidi.com
 description: Receive text messages from the SMSSync SMS Gateway App for Android
-version: 0.5
+version: 0.8
 requires: 2.0
 tested up to: 2.0
 author: Ushahidi Team
@@ -17,3 +17,6 @@ Receive text messages from the SMSSync SMS Gateway App for Android
 3. Click on the [settings] to set the 'secret'
 
 == Changelog ==
+0.8
+* Added sendsms task -- allows you to use sms gateway as sender
+* Other bugfixes

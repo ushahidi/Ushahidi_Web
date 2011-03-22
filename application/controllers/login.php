@@ -25,13 +25,12 @@ class Login_Controller extends Template_Controller {
     // Main template
     public $template = 'login';
     
-    protected $destination = 'admin/dashboard';
+    protected $destination = 'admin/';
 	
 
     public function __construct()
     {
         parent::__construct();
-		
         $this->session = new Session();
 		// $profiler = new Profiler;
     }
@@ -39,7 +38,7 @@ class Login_Controller extends Template_Controller {
     public function index()
     {
         $auth = Auth::instance();
-		
+
         // If already logged in redirect to user account page
         // Otherwise attempt to auto login if autologin cookie can be found
         // (Set when user previously logged in and ticked 'stay logged in')
@@ -66,12 +65,18 @@ class Login_Controller extends Template_Controller {
         $_POST = Validation::factory($_POST)
             ->pre_filter('trim')
             ->add_rules('username', 'required')
-            ->add_rules('password', 'required');
+            ->add_rules('password', 'required')
+            ->add_rules('redirect_to', 'url');
 		
         if ($_POST->validate())
         {
             // Sanitize $_POST data removing all inputs without rules
             $postdata_array = $_POST->safe_array();
+            
+            // Change redirect location if set in form
+            if(isset($postdata_array['redirect_to']) AND $postdata_array['redirect_to'] != ''){
+        		$this->destination = $postdata_array['redirect_to'];
+            }
 
             // Load the user
             $user = ORM::factory('user', $postdata_array['username']);

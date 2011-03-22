@@ -15,7 +15,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-		var map;
+		var map, markers;
 		var myPoint;
 		var selectedFeature;
 		jQuery(window).load(function() {
@@ -53,11 +53,11 @@
 			// Set Feature Styles
 			style1 = new OpenLayers.Style({
 				pointRadius: "8",
-				fillColor: "#ffcc66",
+				fillColor: "${fillcolor}",
 				fillOpacity: "0.7",
-				strokeColor: "#CC0000",
+				strokeColor: "${strokecolor}",
 				strokeOpacity: "0.7",
-				strokeWidth: 4,
+				strokeWidth: "${strokewidth}",
 				graphicZIndex: 1,
 				externalGraphic: "${graphic}",
 				graphicOpacity: 1,
@@ -80,6 +80,42 @@
 						{
 							return "<?php echo url::base().'media/img/openlayers/marker-gold.png' ;?>";
 						}
+					},
+					fillcolor: function(feature)
+					{
+						if ( typeof(feature.attributes.color) != 'undefined' && 
+							feature.attributes.color != '' )
+						{
+							return "#"+feature.attributes.color;
+						}
+						else
+						{
+							return "#ffcc66";
+						}
+					},
+					strokecolor: function(feature)
+					{
+						if ( typeof(feature.attributes.strokecolor) != 'undefined' && 
+							feature.attributes.strokecolor != '')
+						{
+							return "#"+feature.attributes.strokecolor;
+						}
+						else
+						{
+							return "#CC0000";
+						}
+					},					
+					strokewidth: function(feature)
+					{
+						if ( typeof(feature.attributes.strokewidth) != 'undefined' && 
+							feature.attributes.strokewidth != '')
+						{
+							return feature.attributes.strokewidth;
+						}
+						else
+						{
+							return "3";
+						}
 					}
 				}
 			});
@@ -93,7 +129,7 @@
 			});
 			
 			// Create the single marker layer
-			var markers = new OpenLayers.Layer.GML("single report", "<?php echo url::site() . 'json/single/' . $incident_id; ?>", 
+			markers = new OpenLayers.Layer.GML("single report", "<?php echo url::site() . 'json/single/' . $incident_id; ?>", 
 			{
 				format: OpenLayers.Format.GeoJSON,
 				projection: map.displayProjection,
@@ -221,6 +257,7 @@
 		
 		function onPopupClose(evt) {
             selectCtrl.unselect(selectedFeature);
+			selectedFeature = '';
         }
 
         function onFeatureSelect(feature) {
@@ -290,4 +327,19 @@
 					}
 					$('#' + loader).html('');
 			  	}, "json");
+		}
+		
+		function getFeature(feature_id) {
+			var features = markers.features;
+			for(var i=0; i<features.length; i++) {
+				var feature = features[i];
+				if(typeof(feature.attributes.feature_id) != 'undefined' && 
+					feature.attributes.feature_id == feature_id)
+				{
+					if (typeof(selectedFeature) != 'undefined' && selectedFeature !='' ) {
+						selectCtrl.unselect(selectedFeature);
+					}
+					selectCtrl.select(feature);
+				}
+			}
 		}

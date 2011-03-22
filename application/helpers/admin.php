@@ -27,14 +27,20 @@ class admin_Core {
         }
         else
         {
-            return array(
-                'dashboard' => Kohana::lang('ui_admin.dashboard'),
-                'reports' => Kohana::lang('ui_admin.reports'),
-                'checkins' => Kohana::lang('ui_admin.checkins'),
-                'messages' => Kohana::lang('ui_admin.messages'),
-                'stats' => Kohana::lang('ui_admin.stats'),
-                'addons' => Kohana::lang('ui_admin.addons')
-            );
+			$tabs = array();
+			$tabs['dashboard'] = Kohana::lang('ui_admin.dashboard');
+			$tabs['reports'] = Kohana::lang('ui_admin.reports');
+
+			if(Kohana::config('settings.checkins'))
+			{
+				$tabs['checkins'] = Kohana::lang('ui_admin.checkins');
+			}
+
+			$tabs['messages'] = Kohana::lang('ui_admin.messages');
+			$tabs['stats'] = Kohana::lang('ui_admin.stats');
+			$tabs['addons'] = Kohana::lang('ui_admin.addons');
+
+			return $tabs;
         }
     }
 
@@ -173,6 +179,9 @@ class admin_Core {
         if (Kohana::config('config.enable_mhi') == FALSE)
         {
             $menu .= ($this_sub_page == "cleanurl") ? Kohana::lang('ui_main.cleanurl'):  "<a href=\"".url::site() ."admin/settings/cleanurl\">".Kohana::lang('ui_main.cleanurl')."</a>";
+
+            // SSL subtab
+            $menu .= ($this_sub_page == "https") ? Kohana::lang('ui_main.https'):  "<a href=\"".url::site() ."admin/settings/https\">".Kohana::lang('ui_main.https')."</a>";
         }
         
         $menu .= ($this_sub_page == "api") ? Kohana::lang('ui_main.api') : "<a href=\"".url::site()."admin/settings/api\">".Kohana::lang('ui_main.api')."</a>";        

@@ -73,7 +73,7 @@
 			'displayProjection': proj_4326,
 			eventListeners: {
 					"zoomend": incidentZoom
-			    },
+			    }
 			};
 			map = new OpenLayers.Map('divMap', options);
 			
@@ -175,12 +175,14 @@
 			    renderIntent: "temporary"
 			});
 			selectCtrl = new OpenLayers.Control.SelectFeature(vlayer, {
-				clickout: true, toggle: true,
-				multiple: true, hover: false,
+				clickout: true, toggle: false,
+				multiple: false, hover: false,
 				renderIntent: "select",
 				onSelect: addSelected,
 				onUnselect: clearSelected
 			});
+			map.addControl(highlightCtrl);
+			map.addControl(selectCtrl);
 			
 			// Insert Saved Geometries
 			wkt = new OpenLayers.Format.WKT();
@@ -199,12 +201,19 @@
 			{
 				foreach ($geometries as $geometry)
 				{
-					echo "wktFeature = wkt.read('$geometry');\n";
+					echo "wktFeature = wkt.read('$geometry->geometry');\n";
 					echo "wktFeature.geometry.transform(proj_4326,proj_900913);\n";
+					echo "wktFeature.label = '$geometry->geometry_label';\n";
+					echo "wktFeature.comment = '$geometry->geometry_comment';\n";
+					echo "wktFeature.color = '$geometry->geometry_color';\n";
+					echo "wktFeature.strokewidth = '$geometry->geometry_strokewidth';\n";
 					echo "vlayer.addFeatures(wktFeature);\n";
+					echo "var color = '$geometry->geometry_color';if (color) {updateFeature(wktFeature, color, '');};";
+					echo "var strokewidth = '$geometry->geometry_strokewidth';if (strokewidth) {updateFeature(wktFeature, '', strokewidth);};";
 				}
 			}
 			?>
+			
 			
 			// create a lat/lon object
 			var startPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
@@ -221,12 +230,15 @@
 			map.addControl(panel);
 			panel.activateControl(panel.controls[0]);
 			
-			// Highlight / Select Controls
-			map.addControl(highlightCtrl);
-			map.addControl(selectCtrl);
+			
 			drag.activate();
 			highlightCtrl.activate();
 			selectCtrl.activate();
+			
+			map.events.register("click", map, function(e){
+				selectCtrl.deactivate();
+				selectCtrl.activate();
+			});
 			
 			// Undo Action Removes Most Recent Marker
 			$('.btn_del_last').live('click', function () {
@@ -234,6 +246,9 @@
 					x = vlayer.features.length - 1;
 					vlayer.removeFeatures(vlayer.features[x]);
 				}
+				$('#geometry_color').ColorPickerHide();
+				$('#geometryLabelerHolder').hide(400);
+				selectCtrl.activate();
 			});
 			
 			// Delete Selected Features
@@ -241,6 +256,9 @@
 				for(var y=0; y < selectedFeatures.length; y++) {
 					vlayer.removeFeatures(selectedFeatures);
 				}
+				$('#geometry_color').ColorPickerHide();
+				$('#geometryLabelerHolder').hide(400);
+				selectCtrl.activate();
 			});
 			
 			// Clear Map
@@ -249,6 +267,14 @@
 				$('input[name="geometry[]"]').remove();
 				$("#latitude").val("");
 				$("#longitude").val("");
+				$('#geometry_label').val("");
+				$('#geometry_comment').val("");
+				$('#geometry_color').val("");
+				$('#geometry_lat').val("");
+				$('#geometry_lon').val("");
+				$('#geometry_color').ColorPickerHide();
+				$('#geometryLabelerHolder').hide(400);
+				selectCtrl.activate();
 			});
 			
 			// GeoCode
@@ -417,6 +443,132 @@
 				
 				return false;
 			});
+			
+			
+			// Prevent Map Effects in the Geometry Labeler
+			$('#geometryLabelerHolder').click(function(evt) {
+				var e = evt ? evt : window.event; 
+				OpenLayers.Event.stop(e);
+				return false;
+			});
+			
+			// Geometry Label Text Boxes
+			$('#geometry_label').click(function() {
+				$('#geometry_label').focus();
+				$('#geometry_color').ColorPickerHide();
+			}).bind("change keyup blur", function(){
+				for (f in selectedFeatures) {
+					selectedFeatures[f].label = this.value;
+				}
+				refreshFeatures();
+			});
+			
+			$('#geometry_comment').click(function() {
+				$('#geometry_comment').focus();
+				$('#geometry_color').ColorPickerHide();
+			}).bind("change keyup blur", function(){
+				for (f in selectedFeatures) {
+					selectedFeatures[f].comment = this.value;
+			    }
+				refreshFeatures();
+			});
+			
+			$('#geometry_lat').click(function() {
+				$('#geometry_lat').focus();
+				$('#geometry_color').ColorPickerHide();
+			}).bind("change keyup blur", function(){
+				for (f in selectedFeatures) {
+					selectedFeatures[f].lat = this.value;
+			    }
+				refreshFeatures();
+			});
+			
+			$('#geometry_lon').click(function() {
+				$('#geometry_lon').focus();
+				$('#geometry_color').ColorPickerHide();
+			}).bind("change keyup blur", function(){
+				for (f in selectedFeatures) {
+					selectedFeatures[f].lon = this.value;
+			    }
+				refreshFeatures();
+			});
+			
+			// Event on Latitude/Longitude Typing Change
+			$('#geometry_lat, #geometry_lon').bind("change keyup", function() {
+				var newlat = $("#geometry_lat").val();
+				var newlon = $("#geometry_lon").val();
+				if (!isNaN(newlat) && !isNaN(newlon))
+				{
+					var lonlat = new OpenLayers.LonLat(newlon, newlat);
+					lonlat.transform(proj_4326,proj_900913);
+					for (f in selectedFeatures) {
+						selectedFeatures[f].geometry.x = lonlat.lon;
+						selectedFeatures[f].geometry.y = lonlat.lat;
+						selectedFeatures[f].lon = newlat;
+						selectedFeatures[f].lat = newlon;
+						vlayer.drawFeature(selectedFeatures[f]);
+				    }
+				}
+				else
+				{
+					alert('Invalid value!')
+				}
+			});
+				
+			// Event on Color Change
+			$('#geometry_color').ColorPicker({
+				onSubmit: function(hsb, hex, rgb) {
+					$('#geometry_color').val(hex);
+					for (f in selectedFeatures) {
+						selectedFeatures[f].color = hex;
+						updateFeature(selectedFeatures[f], hex, '');
+				    }
+					refreshFeatures();
+				},
+				onChange: function(hsb, hex, rgb) {
+					$('#geometry_color').val(hex);
+					for (f in selectedFeatures) {
+						selectedFeatures[f].color = hex;
+						updateFeature(selectedFeatures[f], hex, '');
+				    }
+					refreshFeatures();
+				},
+				onBeforeShow: function () {
+					$(this).ColorPickerSetColor(this.value);
+					for (f in selectedFeatures) {
+						selectedFeatures[f].color = this.value;
+						updateFeature(selectedFeatures[f], this.value, '');
+				    }
+					refreshFeatures();
+				}
+			}).bind('keyup', function(){
+				$(this).ColorPickerSetColor(this.value);
+				for (f in selectedFeatures) {
+					selectedFeatures[f].color = this.value;
+					updateFeature(selectedFeatures[f], this.value, '');
+			    }
+				refreshFeatures();
+			});
+			
+			// Event on StrokeWidth Change
+			$('#geometry_strokewidth').bind("change keyup", function() {
+				if (parseFloat(this.value) && parseFloat(this.value) <= 8) {
+					for (f in selectedFeatures) {
+						selectedFeatures[f].strokewidth = this.value;
+						updateFeature(selectedFeatures[f], '', parseFloat(this.value));
+					}
+					refreshFeatures();
+				}
+			});
+			
+			// Close Labeler
+			$('#geometryLabelerClose').click(function() {
+				$('#geometryLabelerHolder').hide(400);
+				for (f in selectedFeatures) {
+					selectCtrl.unselect(selectedFeatures[f]);
+				}
+				selectCtrl.activate();
+			});
 		});
 		
 		
@@ -510,12 +662,62 @@
 		
 		/* Keep track of the selected features */
 		function addSelected(feature) {
-		    selectedFeatures.push(feature);
+			selectedFeatures.push(feature);
+			selectCtrl.activate();
+			if (vlayer.features.length == 1 && feature.geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
+				// This is a single point, no need for geometry metadata
+			} else {
+				$('#geometryLabelerHolder').show(400);
+				if (feature.geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
+					$('#geometryLat').show();
+					$('#geometryLon').show();
+					$('#geometryColor').hide();
+					$('#geometryStrokewidth').hide();
+					thisPoint = feature.clone();
+					thisPoint.geometry.transform(proj_900913,proj_4326);
+					$('#geometry_lat').val(thisPoint.geometry.y);
+					$('#geometry_lon').val(thisPoint.geometry.x);
+				} else {
+					$('#geometryLat').hide();
+					$('#geometryLon').hide();
+					$('#geometryColor').show();
+					$('#geometryStrokewidth').show();
+				}
+				if ( typeof(feature.label) != 'undefined') {
+					$('#geometry_label').val(feature.label);
+				}
+				if ( typeof(feature.comment) != 'undefined') {
+					$('#geometry_comment').val(feature.comment);
+				}
+				if ( typeof(feature.lon) != 'undefined') {
+					$('#geometry_lon').val(feature.lon);
+				}
+				if ( typeof(feature.lat) != 'undefined') {
+					$('#geometry_lat').val(feature.lat);
+				}
+				if ( typeof(feature.color) != 'undefined') {
+					$('#geometry_color').val(feature.color);
+				}
+				if ( typeof(feature.strokewidth) != 'undefined' && feature.strokewidth != '') {
+					$('#geometry_strokewidth').val(feature.strokewidth);
+				} else {
+					$('#geometry_strokewidth').val("2.5");
+				}
+			}
 		}
 
 		/* Clear the list of selected features */
 		function clearSelected(feature) {
 		    selectedFeatures = [];
+			$('#geometryLabelerHolder').hide(400);
+			$('#geometry_label').val("");
+			$('#geometry_comment').val("");
+			$('#geometry_color').val("");
+			$('#geometry_lat').val("");
+			$('#geometry_lon').val("");
+			selectCtrl.deactivate();
+			selectCtrl.activate();
+			$('#geometry_color').ColorPickerHide();
 		}
 
 		/* Feature starting to move */
@@ -543,22 +745,48 @@
 			refreshFeatures();
 		}
 		
-		function refreshFeatures(event)
-		{
+		function refreshFeatures(event) {
 			var geoCollection = new OpenLayers.Geometry.Collection;
 			$('input[name="geometry[]"]').remove();
 			for(i=0; i < vlayer.features.length; i++) {
+				//vlayer.features[i].label = "XXXX";
+				//vlayer.features[i].color = "ZZZZ";
 				newFeature = vlayer.features[i].clone();
 				newFeature.geometry.transform(proj_900913,proj_4326);
 				geoCollection.addComponents(newFeature.geometry);
-				
 				if (vlayer.features.length == 1 && vlayer.features[i].geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
 					// If feature is a Single Point - save as lat/lon
 				} else {
 					// Otherwise, save geometry values
 					// Convert to Well Known Text
 					var format = new OpenLayers.Format.WKT();
-					$('#reportForm').append($('<input></input>').attr('name','geometry[]').attr('type','hidden').attr('value',format.write(newFeature)));
+					var geometry = format.write(newFeature);
+					var label = '';
+					var comment = '';
+					var lon = '';
+					var lat = '';
+					var color = '';
+					var strokewidth = '';
+					if ( typeof(vlayer.features[i].label) != 'undefined') {
+						label = vlayer.features[i].label;
+					}
+					if ( typeof(vlayer.features[i].comment) != 'undefined') {
+						comment = vlayer.features[i].comment;
+					}
+					if ( typeof(vlayer.features[i].lon) != 'undefined') {
+						lon = vlayer.features[i].lon;
+					}
+					if ( typeof(vlayer.features[i].lat) != 'undefined') {
+						lat = vlayer.features[i].lat;
+					}
+					if ( typeof(vlayer.features[i].color) != 'undefined') {
+						color = vlayer.features[i].color;
+					}
+					if ( typeof(vlayer.features[i].strokewidth) != 'undefined') {
+						strokewidth = vlayer.features[i].strokewidth;
+					}
+					geometryAttributes = JSON.stringify({ geometry: geometry, label: label, comment: comment,lat: lat, lon: lon, color: color, strokewidth: strokewidth});
+					$('#reportForm').append($('<input></input>').attr('name','geometry[]').attr('type','hidden').attr('value',geometryAttributes));
 				}
 			}
 			
@@ -569,7 +797,39 @@
 			$("#longitude").val(centroid.x);
 		}
 		
-		function incidentZoom(event)
-		{
-			$("#incident_zoom").val(map.getZoom())
+		function incidentZoom(event) {
+			$("#incident_zoom").val(map.getZoom());
+		}
+		
+		function updateFeature(feature, color, strokeWidth){
+			// create a symbolizer from exiting stylemap
+			var symbolizer = feature.layer.styleMap.createSymbolizer(feature);
+			
+			// color available?
+			if (color) {
+				symbolizer['fillColor'] = "#"+color;
+				symbolizer['strokeColor'] = "#"+color;
+				symbolizer['fillOpacity'] = "0.7";
+			} else {
+				if ( typeof(feature.color) != 'undefined' && feature.color != '' ) {
+					symbolizer['fillColor'] = "#"+feature.color;
+					symbolizer['strokeColor'] = "#"+feature.color;
+					symbolizer['fillOpacity'] = "0.7";
+				}
+			}
+			
+			// stroke available?
+			if (parseFloat(strokeWidth)) {
+				symbolizer['strokeWidth'] = parseFloat(strokeWidth);
+			} else if ( typeof(feature.strokewidth) != 'undefined' && feature.strokewidth !='' ) {
+				symbolizer['strokeWidth'] = feature.strokewidth;
+			} else {
+				symbolizer['strokeWidth'] = "2.5";
+			}
+			
+			// set the unique style to the feature
+			feature.style = symbolizer;
+
+			// redraw the feature with its new style
+			feature.layer.drawFeature(feature);
 		}

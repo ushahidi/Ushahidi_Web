@@ -51,7 +51,8 @@ class Reports_Controller extends Main_Controller {
 
 		// Get incident_ids if we are to filter by category
 		$allowed_ids = array();
-		if (isset($_GET['c']) AND !empty($_GET['c']) AND $_GET['c']!=0)
+		
+		if (isset($_GET['c']) AND !empty($_GET['c']) AND is_int($_GET['c']) AND (int)$_GET['c'] > 0)
 		{
 			$category_id = $db->escape($_GET['c']);
 			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
@@ -61,6 +62,10 @@ class Reports_Controller extends Main_Controller {
 			{
 				$allowed_ids[] = $items->incident_id;
 			}
+		}
+		elseif ( ! empty($_GET['c']) AND !is_int($_GET['c']))
+		{
+			$allowed_ids[] = -1;
 		}
 
 		// Get location_ids if we are to filter by location
@@ -791,7 +796,11 @@ class Reports_Controller extends Main_Controller {
 			$incident_description = nl2br($incident->incident_description);
 			Event::run('ushahidi_filter.report_title', $incident_title);
 			Event::run('ushahidi_filter.report_description', $incident_description);
-
+			
+			// Add Features
+			$this->template->content->features_count = $incident->geometry->count();
+			$this->template->content->features = $incident->geometry;
+			
 			$this->template->content->incident_id = $incident->id;
 			$this->template->content->incident_title = $incident_title;
 			$this->template->content->incident_description = $incident_description;
@@ -856,6 +865,10 @@ class Reports_Controller extends Main_Controller {
 
 		$this->template->content->incident_neighbors = $this->_get_neighbors($incident->location->latitude,
 																									 $incident->location->longitude);
+		// News Source links
+
+		$this->template->content->incident_news = $incident_news;
+
 
 		// Video links
 
@@ -1226,8 +1239,7 @@ class Reports_Controller extends Main_Controller {
 			return TRUE;
 		}
 	}
-
-
+	
 	/**
 	 * Ajax call to update Incident Reporting Form
 	 */

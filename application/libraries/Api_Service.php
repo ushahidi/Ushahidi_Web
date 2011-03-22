@@ -393,6 +393,9 @@ final class Api_Service {
             case 007:
                 return array("code" => "007",
                         "message" => Kohana::lang('ui_admin.no_data'));
+            case 010:
+                return array("code" => "010",
+                        "message" => Kohana::lang('ui_admin.disabled'));
             default:
                 return array("code" => "999",
                              "message" => Kohana::lang('ui_admin.not_found')

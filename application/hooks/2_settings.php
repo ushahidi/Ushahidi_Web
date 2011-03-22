@@ -60,6 +60,7 @@ Kohana::config_set('settings.email_host', $settings->email_host);
 Kohana::config_set('settings.email_servertype', $settings->email_servertype);
 Kohana::config_set('settings.email_ssl', $settings->email_ssl);
 Kohana::config_set('settings.alerts_email', $settings->alerts_email);
+Kohana::config_set('settings.checkins', $settings->checkins);
 Kohana::config_set('settings.db_version', $settings->db_version);
 Kohana::config_set('settings.ushahidi_version', $settings->ushahidi_version);
 Kohana::config_set('settings.private_deployment', $settings->private_deployment);

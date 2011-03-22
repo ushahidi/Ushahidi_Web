@@ -22,10 +22,27 @@ class Checkin_Api_Object extends Api_Object_Core {
     private $sort; // Sort descriptor ASC or DESC
     private $order_field; // Column name by which to order the records
     private $checkin_photo = FALSE;
+    private $abs_upload_url = FALSE;
     
     public function __construct($api_service)
     {
         parent::__construct($api_service);
+        $this->abs_upload_url = url::site().Kohana::config('upload.relative_directory', TRUE);
+        
+        // If Checkins aren't enabled, we want to essentially shut off this API library
+        
+        if(Kohana::config('settings.checkins') != 1)
+        {
+        	// Say what is going on
+        	$this->set_ci_error_message(array(
+                "error" => $this->api_service->get_error_msg(010)
+            ));
+			$this->show_response();
+        	
+        	// TODO: What would be a more appropriate way of doing this?
+        	
+        	die();
+        }
     }
     
     /**
@@ -34,12 +51,7 @@ class Checkin_Api_Object extends Api_Object_Core {
      * Handles the API task parameters
      */
     public function perform_task()
-    {
-    	if(isset($_FILES['photo']))
-    	{
-    		$checkin_photo = $_FILES['photo'];
-    	}
-    	
+    {	
 		// Check if the 'by' parameter has been specified
         if ( ! $this->api_service->verify_array_index($this->request, 'action'))
         {
@@ -60,46 +72,241 @@ class Checkin_Api_Object extends Api_Object_Core {
             
             // Add a checkin
             case "ci":
-            	
-            	// Check if mobileid is set
-            	
-                if ( ! $this->api_service->verify_array_index($this->request, 'mobileid'))
-                {
-                    $this->set_error_message(array(
-                        "error" => $this->api_service->get_error_msg(001, 'mobileid')
-                    ));
-                    return;
-                }
-                
-                // Check if lat, lon is set
-            	
-                if ( ! $this->api_service->verify_array_index($this->request, 'lat')
-                	AND  ! $this->api_service->verify_array_index($this->request, 'lon'))
-                {
-                    $this->set_error_message(array(
-                        "error" => $this->api_service->get_error_msg(001, 'lat, lon')
-                    ));
-                    return;
-                }
-				
-				$this->response_data = $this->register_checkin(
-											$this->request['mobileid'],
-											$this->request['lat'],
-											$this->request['lon'],
-											@$this->request['message'],
-											@$checkin_photo,
-											@$this->request['firstname'],
-											@$this->request['lastname'],
-											@$this->request['email']
-										);
+            	$this->_do_ci();
+            break;
+            
+            case "get_ci":
+            	$this->_do_get_ci();
             break;
 
             // Error therefore set error message 
             default:
-                $this->set_error_message(array(
+                $this->set_ci_error_message(array(
                     "error" => $this->api_service->get_error_msg(002)
                 ));
         }
+        
+        $this->show_response();
+	}
+	
+	public function _do_get_ci()
+	{
+		$data = $this->gather_checkins(
+					@$this->request['id'],
+					@$this->request['userid'],
+					@$this->request['mobileid'],
+					@$this->request['mapdata']
+				);
+					
+					
+		if(count($data) > 0)
+		{
+			// Data!
+			$this->response = array(
+					"payload" => array(
+						"checkins" => $data["checkins"],
+						"users" => $data["users"],
+						"domain" => $this->domain,
+						"success" => "true"
+					),
+					"error" => $this->api_service->get_error_msg(0)
+					);
+		}else{
+			// No data
+			$this->response = array(
+					"payload" => array(
+						"domain" => $this->domain,
+						"success" => "false"
+					),
+					"error" => $this->api_service->get_error_msg(007)
+					);
+		}		
+		
+	}
+	
+	public function gather_checkins($id,$user_id,$mobileid,$mapdata)
+	{
+		$data = array();
+		
+		if($mapdata != '')
+		{
+			// If this is set, then we are going to pass along more data to make it easier
+			//   to plot this on the front end
+			$query = 'SELECT MAX(checkin_date) AS max_date, MIN(checkin_date) AS min_date FROM '.$this->table_prefix.'checkin LIMIT 1';
+			$map_dates = $this->db->query($query);
+			
+			$max_date = strtotime($map_dates[0]->max_date);
+			$min_date = strtotime($map_dates[0]->min_date);
+			
+			$range_date = $max_date - $min_date;
+		}
+		
+		if($mobileid != '')
+		{
+			$find_user = ORM::factory('user_devices')->find($mobileid);
+			$user_id = $find_user->user_id;
+		}
+		
+		if($user_id == '')
+		{
+			$where_user_id = array('checkin.user_id !=' => '-1');
+		}else{
+			$where_user_id = array('checkin.user_id' => $user_id);
+		}
+		
+		if($id == '')
+		{
+			$where_id = array('checkin.id !=' => '-1');
+		}else{
+			$where_id = array('checkin.id' => $id);
+		}
+		
+		$orderby = 'checkin.id';
+		if(isset($this->request['orderby']))
+		{
+			$orderby = $this->request['orderby'];
+		}
+		
+		$sort = 'ASC';
+		if(isset($this->request['sort']))
+		{
+			$sort = $this->request['sort'];
+		}
+		
+		
+		$since_id = 0;
+		if(isset($this->request['sinceid']))
+		{
+			$since_id = $this->request['sinceid'];
+		}
+		
+		//echo $this->request['sqllimit'];
+		$limit = 20;
+		if(isset($this->request['sqllimit']))
+		{
+			$limit = $this->request['sqllimit'];
+		}
+		
+		$offset = 0;
+		if(isset($this->request['sqloffset']))
+		{
+			$offset = $this->request['sqloffset'];
+		}
+		
+		$checkins = ORM::factory('checkin')
+					->select('DISTINCT checkin.*')
+					->where($where_id)
+					->where($where_user_id)
+					->where('checkin.id >=',$since_id)
+					->with('user')
+					->with('location')
+					->orderby($orderby,$sort)
+					->find_all($limit,$offset);
+		
+		$users_names = array();
+		$i = 0;
+		foreach($checkins as $checkin)
+		{	
+			$data["checkins"][$i] = array(
+				"id" => $checkin->id,
+				"user" => $checkin->user_id,
+				"loc" => $checkin->location_id,
+				"msg" => $checkin->checkin_description,
+				"date" => $checkin->checkin_date,
+				"lat" => $checkin->location->latitude,
+				"lon" => $checkin->location->longitude
+			);
+			
+			$users_names[(int)$checkin->user_id] = array("id"=>$checkin->user_id,"name"=>$checkin->user->name,"color"=>$checkin->user->color);
+			
+			$j = 0;
+			foreach ($checkin->media as $media)
+			{
+			    $data["checkins"][$i]['media'][(int)$j] = array(
+			    	"id" => $media->id,
+			    	"type" => $media->media_type,
+			    	"link" => $this->abs_upload_url.$media->media_link,
+			    	"medium" => $this->abs_upload_url.$media->media_medium,
+			    	"thumb" => $this->abs_upload_url.$media->media_thumb
+			    );
+			    $j++;
+			}
+			
+			// If we are displaying some extra map data...
+			
+			if( isset($range_date) AND isset($max_date) AND isset($min_date) )
+			{
+				$checkin_date = strtotime($checkin->checkin_date);
+				$difference_date = $max_date - $checkin_date;
+				if($difference_date <= 0) {
+					$opacity = 1;
+				}else{
+					$opacity = round(($difference_date / $range_date),2);
+				}
+				
+				if($opacity < .25)
+				{
+					// We don't want checkins to go away entirely
+					$opacity = .25;
+				}
+				$data["checkins"][$i]['opacity'] = $opacity;
+				
+			}
+			
+			$i++;
+		}
+		
+		foreach($users_names as $user_data)
+		{
+			$data["users"][] = $user_data;
+		}
+		
+		return $data;
+	}
+	
+	public function _do_ci()
+	{
+		// Check if mobileid is set
+		
+        if ( ! $this->api_service->verify_array_index($this->request, 'mobileid'))
+        {
+            $this->set_ci_error_message(array(
+                "error" => $this->api_service->get_error_msg(001, 'mobileid')
+            ));
+            return;
+        }
+        
+        // Check if lat, lon is set
+    	
+        if ( ! $this->api_service->verify_array_index($this->request, 'lat')
+        	AND  ! $this->api_service->verify_array_index($this->request, 'lon'))
+        {
+            $this->set_ci_error_message(array(
+                "error" => $this->api_service->get_error_msg(001, 'lat, lon')
+            ));
+            return;
+        }
+
+		$checkedin = $this->register_checkin(
+					$this->request['mobileid'],
+					$this->request['lat'],
+					$this->request['lon'],
+					@$this->request['message'],
+					@$this->request['firstname'],
+					@$this->request['lastname'],
+					@$this->request['email'],
+					@$this->request['color']
+				);
+
+		$this->response = array(
+				"payload" => array(
+					"checkin_id" => $checkedin['checkin_id'],
+					"user_id" => $checkedin['user_id'],
+					"domain" => $this->domain,
+					"success" => "true"
+				),
+				"error" => $this->api_service->get_error_msg(0)
+				);
 	}
 	
 	/**
@@ -111,7 +318,7 @@ class Checkin_Api_Object extends Api_Object_Core {
      *
      * Handles the API task parameters
      */
-	public function register_checkin($mobileid,$lat,$lon,$message=FALSE,$photo=FALSE,$firstname=FALSE,$lastname=FALSE,$email=FALSE)
+	public function register_checkin($mobileid,$lat,$lon,$message=FALSE,$firstname=FALSE,$lastname=FALSE,$email=FALSE,$color=FALSE)
 	{
 		// Check if this device has been registered yet
 		
@@ -126,7 +333,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 			{
 				$user_name = $firstname.' '.$lastname;	
 			}else{
-				$user_name = 'Not Fully Registered Checkin User';
+				$user_name = '';
 			}
 			
 			if($email)
@@ -136,16 +343,34 @@ class Checkin_Api_Object extends Api_Object_Core {
 				$user_email = $this->getRandomString();
 			}
 			
-			// Create a new user
+			if($color)
+			{
+				$user_color = $color;
+			}else{
+				$user_color = $this->random_color();
+			}
 			
-			$user = ORM::factory('user');
-            $user->name = $user_name;
-            $user->email = $user_email;
-            $user->username = $this->getRandomString();
-            $user->password = 'checkinuserpw';
-            $user->add(ORM::factory('role', 'login'));
-            $user_id = $user->save();
+			// Check if email exists
 			
+			$query = 'SELECT id FROM '.$this->table_prefix.'users WHERE `email` = \''.$user_email.'\' LIMIT 1;';
+			$usercheck = $this->db->query($query);
+			
+			if ( isset($usercheck[0]->id) )
+			{
+				$user_id = $usercheck[0]->id;
+			}else{
+				// Create a new user
+				
+				$user = ORM::factory('user');
+	            $user->name = $user_name;
+	            $user->email = $user_email;
+	            $user->username = $this->getRandomString();
+	            $user->password = 'checkinuserpw';
+	            $user->color = $user_color;
+	            $user->add(ORM::factory('role', 'login'));
+	            $user_id = $user->save();
+
+			}			
 			
 			
 			//   TODO: When we have user registration down, we need to pass a user id here
@@ -161,10 +386,17 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$user_name = $firstname.' '.$lastname;
 			$user_email = $email;
 			
-			$user = ORM::factory('user');
+			$user = ORM::factory('user',$user_id);
             $user->name = $user_name;
             $user->email = $user_email;
+            
+            if($color)
+            {
+            	$user->color = $color;
+            }
+            
             $user_id = $user->save();
+            $user_id = $user_id->id;
 		}
 		
 		// Get our user id if it hasn't already been set by one of the processes above
@@ -201,7 +433,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 		
 		// THIRD, save the photo, if there is a photo
 		
-		if( is_array($photo) AND $photo != FALSE)
+		if( isset($_FILES['photo']))
 		{
 			$filename = upload::save('photo');
 			
@@ -235,8 +467,9 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$media_photo->media_thumb = $new_filename."_t".$file_type;
 			$media_photo->media_date = date("Y-m-d H:i:s",time());
 			$media_photo->save();
-			
 		}
+		
+		return array("checkin_id" => $checkin_id->id, "user_id" => $user_id);
 		
 	}
 	
@@ -245,5 +478,31 @@ class Checkin_Api_Object extends Api_Object_Core {
 	private function getRandomString($length = 31)
 	{
 		return substr(md5(uniqid(rand(), true)), 0, $length);
+	}
+	
+	public function show_response()
+	{
+		if ($this->response_type == 'json')
+        {
+            echo json_encode($this->response);
+        } 
+        else 
+        {
+            echo $this->array_as_xml($this->response, array());
+        }
+	}
+	
+	public function random_color()
+	{
+		$hex = array("00","33","66","99","CC","FF");
+		$r1 = array_rand($hex);
+		$r2 = array_rand($hex);
+		$r3 = array_rand($hex);
+		return $hex[$r1].$hex[$r2].$hex[$r3];
+	}
+	
+	public function set_ci_error_message($resp)
+	{
+		$this->response = $resp;
 	}
 }
