@@ -837,9 +837,6 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `sms_no3` varchar(100) default NULL,                                            
     `google_analytics` text,                                                        
     `twitter_hashtags` text default NULL,                                           
-    `laconica_username` varchar(50) default NULL,                                   
-    `laconica_password` varchar(50) default NULL,                                   
-    `laconica_site` varchar(30) default NULL COMMENT 'a laconica site',             
     `date_modify` datetime default NULL,                                            
     `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',           
     `stat_key` VARCHAR(30) NOT NULL ,                                               
@@ -1230,8 +1227,7 @@ CREATE TABLE IF NOT EXISTS `service` (
 INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url`, `service_api`) VALUES
 (1, 'SMS', 'Text messages from phones', NULL, NULL),
 (2, 'Email', 'Text messages from phones', NULL, NULL),
-(3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL),
-(4, 'Laconica', 'Tweets tweets tweets', NULL, NULL);
+(3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL);
 
 /**
 * Table structure for table `feedback`
@@ -1468,4 +1464,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '50' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '51' WHERE `id`=1 LIMIT 1;
