@@ -241,6 +241,12 @@
 			</table>
 			<a class="more" href="<?php echo url::site() . 'reports/' ?>"><?php echo Kohana::lang('ui_main.view_more'); ?></a>
 		</div>
+		<?php
+
+			// Action::left_content_block - Add Items to the Entry Page Left content block
+			Event::run('ushahidi_action.main_left_content_block');
+				
+		?>
 		<!-- / left content block -->
 
 		<!-- right content block -->
