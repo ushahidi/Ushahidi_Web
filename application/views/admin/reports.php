@@ -91,8 +91,8 @@
 								foreach ($incidents as $incident)
 								{
 									$incident_id = $incident->id;
-									$incident_title = $incident->incident_title;
-									$incident_description = text::limit_chars($incident->incident_description, 150, "...", true);
+									$incident_title = strip_tags($incident->incident_title);
+									$incident_description = text::limit_chars(strip_tags($incident->incident_description), 150, "...", true);
 									$incident_date = $incident->incident_date;
 									$incident_date = date('Y-m-d', strtotime($incident->incident_date));
 									$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
