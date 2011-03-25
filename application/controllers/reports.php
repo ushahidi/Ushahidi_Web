@@ -52,9 +52,9 @@ class Reports_Controller extends Main_Controller {
 		// Get incident_ids if we are to filter by category
 		$allowed_ids = array();
 		
-		if (isset($_GET['c']) AND !empty($_GET['c']) AND is_int($_GET['c']) AND (int)$_GET['c'] > 0)
+		if (isset($_GET['c']) AND (int) $_GET['c']!=0)
 		{
-			$category_id = $db->escape($_GET['c']);
+			$category_id = (int) $_GET['c'];
 			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
 			$query = $db->query($query);
 
@@ -62,10 +62,6 @@ class Reports_Controller extends Main_Controller {
 			{
 				$allowed_ids[] = $items->incident_id;
 			}
-		}
-		elseif ( ! empty($_GET['c']) AND !is_int($_GET['c']))
-		{
-			$allowed_ids[] = -1;
 		}
 
 		// Get location_ids if we are to filter by location
