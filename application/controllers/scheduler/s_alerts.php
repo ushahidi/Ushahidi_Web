@@ -32,7 +32,7 @@ class S_Alerts_Controller extends Controller {
 		// Create A 15 Minute SEND LOCK
 		// This lock is released at the end of execution
 		// Or expires automatically
-		$alerts_lock = $this->cache->get("alerts_lock");
+		$alerts_lock = $this->cache->get(Kohana::config('settings.subdomain')."_alerts_lock");
 		if ( ! $alerts_lock)
 		{
 			// Lock doesn't exist

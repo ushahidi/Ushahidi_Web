@@ -29,7 +29,7 @@ class S_Twitter_Controller extends Controller {
 		// Create A 10 Minute RETRIEVE LOCK
 		// This lock is released at the end of execution
 		// Or expires automatically
-		$twitter_lock = $this->cache->get("twitter_lock");
+		$twitter_lock = $this->cache->get(Kohana::config('settings.subdomain')."_twitter_lock");
 		if ( ! $twitter_lock)
 		{
 			// Lock doesn't exist
