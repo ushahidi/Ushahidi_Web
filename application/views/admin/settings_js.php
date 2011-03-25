@@ -110,23 +110,34 @@
 				// detect country dropdown change, then zoom to selected country
 				$('#default_country').change(function(){
 					address = $('#default_country :selected').text();
-					var geocoder = new GClientGeocoder();
+					
+					//>
+					//> 25/03/2011 - E.Kala <emmanuel(at)ushahidi.com>
+					//> Switched to Google v3 API
+					//>
+					
+					var geocoder = new google.maps.Geocoder();
+					
 					if (geocoder) {
-						geocoder.getLatLng(
-							address,
-							function(point) {
-								if (!point) {
+						geocoder.geocode({ 'address': address },
+							function(results, status) {
+								if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
 									alert(address + " not found");
-								} else {
+								} else if (status == google.maps.GeocoderStatus.OK) {
+									
+									// Get the lat/lon from the result; accuracy of the map center is off because the lookup
+									// address does not include the name of the capital city
+									var point = results[0].geometry.location;
 									myPoint = new OpenLayers.LonLat(point.lng(), point.lat()).transform(DispProj, MapProj);
-									map.setCenter(myPoint, 3);
+									
+									map.setCenter(myPoint, map.getZoom());
 									markers.removeMarker(marker);
 									marker = new OpenLayers.Marker(myPoint);
-							    	markers.addMarker(marker);
+									markers.addMarker(marker);
 									
 									// Update form lat/lon values
 									$("#default_lat").attr("value", point.lat());
-								    $("#default_lon").attr("value", point.lng());
+									$("#default_lon").attr("value", point.lng());
 								}
 						});
 					}
