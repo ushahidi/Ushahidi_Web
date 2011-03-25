@@ -34,7 +34,7 @@ class S_Twitter_Controller extends Controller {
 		{
 			// Lock doesn't exist
 			$timestamp = time();
-			$this->cache->set("twitter_lock", $timestamp, array("alerts"), 900);
+			$this->cache->set(Kohana::config('settings.subdomain')."_twitter_lock", $timestamp, array("alerts"), 900);
 		}
 		else
 		{

@@ -37,7 +37,7 @@ class S_Alerts_Controller extends Controller {
 		{
 			// Lock doesn't exist
 			$timestamp = time();
-			$this->cache->set("alerts_lock", $timestamp, array("alerts"), 900);
+			$this->cache->set(Kohana::config('settings.subdomain')."_alerts_lock", $timestamp, array("alerts"), 900);
 		}
 		else
 		{
