@@ -128,19 +128,6 @@ class Checkin_Api_Object extends Api_Object_Core {
 	{
 		$data = array();
 		
-		if($mapdata != '')
-		{
-			// If this is set, then we are going to pass along more data to make it easier
-			//   to plot this on the front end
-			$query = 'SELECT MAX(checkin_date) AS max_date, MIN(checkin_date) AS min_date FROM '.$this->table_prefix.'checkin LIMIT 1';
-			$map_dates = $this->db->query($query);
-			
-			$max_date = strtotime($map_dates[0]->max_date);
-			$min_date = strtotime($map_dates[0]->min_date);
-			
-			$range_date = $max_date - $min_date;
-		}
-		
 		if($mobileid != '')
 		{
 			$find_user = ORM::factory('user_devices')->find($mobileid);
@@ -203,6 +190,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 					->orderby($orderby,$sort)
 					->find_all($limit,$offset);
 		
+		$seen_latest_ci = array();
 		$users_names = array();
 		$i = 0;
 		foreach($checkins as $checkin)
@@ -234,21 +222,17 @@ class Checkin_Api_Object extends Api_Object_Core {
 			
 			// If we are displaying some extra map data...
 			
-			if( isset($range_date) AND isset($max_date) AND isset($min_date) )
+			if($mapdata != '')
 			{
-				$checkin_date = strtotime($checkin->checkin_date);
-				$difference_date = $max_date - $checkin_date;
-				if($difference_date <= 0) {
+				
+				if( ! isset($seen_latest_ci[$checkin->user_id]))
+				{
 					$opacity = 1;
 				}else{
-					$opacity = round(($difference_date / $range_date),2);
+					$opacity = .5;
 				}
 				
-				if($opacity < .25)
-				{
-					// We don't want checkins to go away entirely
-					$opacity = .25;
-				}
+				$seen_latest_ci[$checkin->user_id] = $checkin->user_id;
 				$data["checkins"][$i]['opacity'] = $opacity;
 				
 			}

@@ -133,7 +133,10 @@ class Swift_Plugin_MailSend implements Swift_Events_SendListener, Swift_Events_B
     $body_data = $message->buildData();
     $message_body = $body_data->readFull();
     
-    $subject_enc = $message->headers->has("Subject") ? $message->headers->getEncoded("Subject") : "";
+    // BH: Assume all subjects are UTF-8 and encode for it. the getEncode function was returning bad encoding
+
+    //$subject_enc = $message->headers->has("Subject") ? $message->headers->getEncoded("Subject") : "";
+    $subject_enc = $message->headers->has("Subject") ? '=?UTF-8?B?'.base64_encode($message->headers->get("Subject")).'?=' : "";
     
     $message->headers->set("To", null);
     $message->headers->set("Subject", null);
