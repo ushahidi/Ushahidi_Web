@@ -125,7 +125,7 @@ div#middle .background{
 
 div#middle .layoutleft{
     background: none;
-	padding-bottom:15px;
+	padding-bottom:0;
 }
 
 div#middle .layoutright{
