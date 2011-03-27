@@ -6,11 +6,11 @@
  * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com>
- * @package    Ushahidi - http://source.ushahididev.com
- * @module     Twitter Controller
+ * @author	   Ushahidi Team <team@ushahidi.com>
+ * @package	   Ushahidi - http://source.ushahididev.com
+ * @module	   Twitter Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
+ * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
 */
 
 class S_Twitter_Controller extends Controller {
@@ -24,29 +24,6 @@ class S_Twitter_Controller extends Controller {
 		
 		// Load cache
 		$this->cache = new Cache;
-		
-		// *************************************
-		// Create A 10 Minute RETRIEVE LOCK
-		// This lock is released at the end of execution
-		// Or expires automatically
-		$twitter_lock = $this->cache->get(Kohana::config('settings.subdomain')."_twitter_lock");
-		if ( ! $twitter_lock)
-		{
-			// Lock doesn't exist
-			$timestamp = time();
-			$this->cache->set(Kohana::config('settings.subdomain')."_twitter_lock", $timestamp, array("alerts"), 900);
-		}
-		else
-		{
-			// Lock Exists - End
-			exit("Other process is running - waiting 10 minutes!");
-		}
-		// *************************************
-	}
-	
-	public function __destruct()
-	{
-		$this->cache->delete("twitter_lock");
 	}
 
 	public function index()
@@ -83,14 +60,16 @@ class S_Twitter_Controller extends Controller {
 				while($have_results == TRUE AND $page <= 2)
 				{ //This loop is for pagination of rss results
 					$hashtag = trim(str_replace('#','',$hashtag));
-					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page.$last_tweet_id;
+					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page; //.$last_tweet_id;
 					$curl_handle = curl_init();
 					curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
 					curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,4); //Since Twitter is down a lot, set timeout to 4 secs
 					curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
 					$buffer = curl_exec($curl_handle);
 					curl_close($curl_handle);
+					
 					$have_results = $this->add_hash_tweets($buffer); //if FALSE, we will drop out of the loop
+					
 					$page++;
 				}
 			}
@@ -100,26 +79,38 @@ class S_Twitter_Controller extends Controller {
 	/**
 	* Adds hash tweets in JSON format to the database and saves the sender as a new
 	* Reporter if they don't already exist
-    * @param string $data - Twitter JSON results
-    */
+	* @param string $data - Twitter JSON results
+	*/
 	private function add_hash_tweets($data)
 	{
+		if ($this->_lock())
+		{
+			return false;
+		}
+		
 		$services = new Service_Model();
 		$service = $services->where('service_name', 'Twitter')->find();
-	   	if (!$service) {
- 			return;
+		if ( ! $service)
+		{
+			$this->_unlock();
+			return false;
 		}
 		$tweets = json_decode($data, false);
-		if (!$tweets) {
-			return;
+		if ( ! $tweets)
+		{
+			$this->_unlock();
+			return false;
 		}
-		if (isset($tweets->{'error'})) {
-			return;
+		if (isset($tweets->{'error'}))
+		{
+			$this->_unlock();
+			return false;
 		}
 
 		$tweet_results = $tweets->{'results'};
 
-		foreach($tweet_results as $tweet) {
+		foreach($tweet_results as $tweet)
+		{
 			$reporter = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_account', $tweet->{'from_user'})
@@ -127,27 +118,29 @@ class S_Twitter_Controller extends Controller {
 
 			if (!$reporter->loaded)
 			{
-	    		// get default reporter level (Untrusted)
+				// get default reporter level (Untrusted)
 				$level = ORM::factory('level')
 					->where('level_weight', 0)
 					->find();
 
 				$reporter->service_id	   = $service->id;
 				$reporter->level_id			= $level->id;
-				$reporter->service_userid   = null;
-				$reporter->service_account  = $tweet->{'from_user'};
-				$reporter->reporter_first   = null;
+				$reporter->service_userid	= null;
+				$reporter->service_account	= $tweet->{'from_user'};
+				$reporter->reporter_first	= null;
 				$reporter->reporter_last	= null;
-				$reporter->reporter_email   = null;
-				$reporter->reporter_phone   = null;
+				$reporter->reporter_email	= null;
+				$reporter->reporter_phone	= null;
 				$reporter->reporter_ip	  = null;
 				$reporter->reporter_date	= date('Y-m-d');
 				$reporter->save();
 			}
 
-			if ($reporter->level_id > 1 &&
-				count(ORM::factory('message')->where('service_messageid', $tweet->{'id'})
-									   ->find_all()) == 0) {
+			if ($reporter->level_id > 1 && 
+				count(ORM::factory("message")
+					->where("service_messageid = '".$tweet->{'id'}."'")
+					->find_all()) == 0)
+			{
 				// Save Tweet as Message
 				$message = new Message_Model();
 				$message->parent_id = 0;
@@ -164,7 +157,7 @@ class S_Twitter_Controller extends Controller {
 				$message->save();
 				
 				// Action::message_twitter_add - Twitter Message Received!
-                Event::run('ushahidi_action.message_twitter_add', $message);
+				Event::run('ushahidi_action.message_twitter_add', $message);
 			}
 			
 			// Auto-Create A Report if Reporter is Trusted
@@ -205,5 +198,34 @@ class S_Twitter_Controller extends Controller {
 				}
 			}
 		}
+		
+		$this->_unlock();
+		return true;
+	}
+	
+	private function _lock()
+	{
+		// *************************************
+		// Create A 15 Minute RETRIEVE LOCK
+		// This lock is released at the end of execution
+		// Or expires automatically
+		$twitter_lock = $this->cache->get(Kohana::config('settings.subdomain')."_twitter_lock");
+		if ( ! $twitter_lock)
+		{
+			// Lock doesn't exist
+			$timestamp = time();
+			$this->cache->set(Kohana::config('settings.subdomain')."_twitter_lock", $timestamp, array("twitter"), 900);
+			return false;
+		}
+		else
+		{
+			// Lock Exists - End
+			return true;
+		}
+	}
+	
+	private function _unlock()
+	{
+		$this->cache->delete(Kohana::config('settings.subdomain')."_twitter_lock");
 	}
 }

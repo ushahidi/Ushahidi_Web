@@ -49,7 +49,7 @@ class S_Alerts_Controller extends Controller {
 	
 	function __destruct()
 	{
-		$this->cache->delete("alerts_lock");
+		$this->cache->delete(Kohana::config('settings.subdomain')."_alerts_lock");
 	}
 	
 	public function index() 
