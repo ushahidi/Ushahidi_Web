@@ -140,15 +140,17 @@ class Themes_Controller extends Admin_Controller
 					continue;
 				
 				$stylish_dir = @ opendir($themes_path.$theme_dir);
+				
 				$found_stylesheet = false;
 				while ( ($theme_file = readdir($stylish_dir)) !== false )
 				{
-					if ( $theme_file == 'style.css' )
+					if ( $theme_file == 'readme.txt' )
 					{
 						$theme_files[] = $theme_dir . '/' . $theme_file;
 						$found_stylesheet = true;
 						break;
 					}
+					
 				}
 				
 				@closedir($stylish_dir);
