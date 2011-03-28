@@ -39,7 +39,7 @@
 					
 					$comment_count = $incident->comment->count();
 					
-					$incident_thumb = url::site()."media/img/report-thumb-default.jpg";
+					$incident_thumb = url::base()."media/img/report-thumb-default.jpg";
 					$media = $incident->media;
 					if ($media->count())
 					{
