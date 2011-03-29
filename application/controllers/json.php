@@ -149,11 +149,9 @@ class Json_Controller extends Template_Controller
 			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='".url::base()."reports/view/".$marker->id."'>".$encoded_title)."</a>") . "\",";
 			$json_item .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
 
-			if (isset($category)) {
-				$json_item .= "\"category\":[" . $category_id . "], ";
-			} else {
-				$json_item .= "\"category\":[0], ";
-			}
+			$json_item .= (isset($category))
+				? "\"category\":[" . $category_id . "], "
+				: "\"category\":[0], ";
 
 			$json_item .= "\"color\": \"".$color."\", \n";
 			$json_item .= "\"icon\": \"".$icon."\", \n";
@@ -183,13 +181,16 @@ class Json_Controller extends Template_Controller
 				array_push($json_array, $json_item);
 			}
 		}
+		
 		if ($json_item_first)
-		{ // Push individual marker in last so that it is layered on top when pulled into map
+		{
+			// Push individual marker in last so that it is layered on top when pulled into map
 			array_push($json_array, $json_item_first);
 		}
+		
 		$json = implode(",", $json_array);
 
-		 header('Content-type: application/json; charset=utf-8');
+		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
 	}
 
@@ -271,7 +272,6 @@ class Json_Controller extends Template_Controller
 		}
 
 		// Get incidents
-
 		$incidents_result = $db->query('SELECT i.id AS id, i.incident_title AS incident_title, i.incident_date AS incident_date, i.location_id as location_id FROM '.$this->table_prefix.'incident AS i WHERE i.incident_active = 1 '.$filter.' ORDER BY i.id ASC');
 		$incidents_result = $incidents_result->result_array(FALSE);
 
@@ -296,7 +296,7 @@ class Json_Controller extends Template_Controller
 				}
 			}
 		}
-
+		
 		// Get categories if we need to
 		if ($category_id != 0)
 		{
@@ -310,23 +310,31 @@ class Json_Controller extends Template_Controller
 				$allowed_ids[$cat->incident_id] = 1;
 			}
 		}
-
+		
 		// Get locations
+		
+		// NOTES: E.Kala 29th March, 2011
+		// After benchmarking the execution time based on ORM and straight DB queries, straight queries have better performance times
+		// Credits: Nigel McNie (http://nigel.mcnie.name/blog)
+		// 
+		$sql = 'SELECT id, latitude, longitude FROM '.$this->table_prefix.'location';
+		
+		$sql .= (count($location_ids) > 0)
+			? ' WHERE id IN ('.implode(',', $location_ids).')'
+			: '';
 
-		if (count($location_ids) > 0)
-		{
-			$locations_result = ORM::factory('location')->in('id',implode(',',$location_ids))->find_all();
-		}else{
-			$locations_result = ORM::factory('location')->find_all();
-		}
-
+		// Straight DB query
+		$locations_result = $db->query($sql);
+		
+		// To hold the locations in $locations_result
 		$locations = array();
+		
 		foreach ($locations_result as $loc)
 		{
 			$locations[$loc->id]['lat'] = $loc->latitude;
 			$locations[$loc->id]['lon'] = $loc->longitude;
 		}
-
+		
 		// Create markers by marrying the locations and incidents
 		$markers = array();
 		foreach ($incidents as $id => $incident)
@@ -441,8 +449,8 @@ class Json_Controller extends Template_Controller
 		{
 			$json = implode(",", $geometry_array).",".$json;
 		}
-
-		 header('Content-type: application/json; charset=utf-8');
+		
+		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
 
 	}
