@@ -266,7 +266,7 @@
 			zoom_point = feature.geometry.getBounds().getCenterLonLat();
 			lon = zoom_point.lon;
 			lat = zoom_point.lat;
-            var content = "<div class=\"infowindow\"><div class=\"infowindow_list\"><ul><li>"+feature.attributes.name + "</li></ul></div>";
+            var content = "<div class=\"infowindow\"><div class=\"infowindow_list\">"+feature.attributes.name + "</div>";
 			content = content + "\n<div class=\"infowindow_meta\"><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", 1)'>Zoom&nbsp;In</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +", -1)'>Zoom&nbsp;Out</a></div>";
 			content = content + "</div>";
 			// Since KML is user-generated, do naive protection against
