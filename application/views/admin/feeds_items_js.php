@@ -23,7 +23,7 @@ function preview ( id ){
 // Categories JS
 function fillFields(id )
 {
-	$("#feed_id").attr("value", unescape(id));
+	$("#feed_id").attr("value", decodeURIComponent(id));
 	
 }
 

@@ -18,14 +18,14 @@
 function fillFields(id, organization_name, organization_website,
  organization_description, organization_email, organization_phone1, organization_phone2 )
 {
-	$("#organization_id").attr("value", unescape(id));
-	$("#organization_name").attr("value", unescape(organization_name));
-	$("#organization_website").attr("value", unescape(organization_website));
+	$("#organization_id").attr("value", decodeURIComponent(id));
+	$("#organization_name").attr("value", decodeURIComponent(organization_name));
+	$("#organization_website").attr("value", decodeURIComponent(organization_website));
 	$("#organization_description").attr("value", 
-		unescape(organization_description));
-	$("#organization_email").attr("value", unescape(organization_email));
-	$("#organization_phone1").attr("value", unescape(organization_phone1));
-	$("#organization_phone2").attr("value", unescape(organization_phone2));
+		decodeURIComponent(organization_description));
+	$("#organization_email").attr("value", decodeURIComponent(organization_email));
+	$("#organization_phone1").attr("value", decodeURIComponent(organization_phone1));
+	$("#organization_phone2").attr("value", decodeURIComponent(organization_phone2));
 }
 
 // Ajax Submission

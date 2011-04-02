@@ -17,10 +17,10 @@
 function fillFields(id, feed_name, feed_url,
  feed_visible )
 {
-	$("#feed_id").attr("value", unescape(id));
-	$("#feed_name").attr("value", unescape(feed_name));
-	$("#feed_url").attr("value", unescape(feed_url));
-	$("#feed_visible").attr("value", unescape(feed_visible));
+	$("#feed_id").attr("value", decodeURIComponent(id));
+	$("#feed_name").attr("value", decodeURIComponent(feed_name));
+	$("#feed_url").attr("value", decodeURIComponent(feed_url));
+	$("#feed_visible").attr("value", decodeURIComponent(feed_visible));
 	
 }
 

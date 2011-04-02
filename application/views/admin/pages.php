@@ -100,9 +100,9 @@
 												<ul>
 													<li class="none-separator"><a href="#add" onClick="fillFields(
 	'<?php echo(rawurlencode($page_id)); ?>',
-	'<?php echo(base64_encode($page_title)); ?>',
-	'<?php echo(base64_encode($page_tab)); ?>',
-	'<?php echo(base64_encode($page_description)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+	'<?php echo(rawurlencode($page_title)); ?>',
+	'<?php echo(rawurlencode($page_tab)); ?>',
+	'<?php echo(rawurlencode($page_description)); ?>')"><?php echo Kohana::lang('ui_main.edit');?></a></li>
 	<li class="none-separator"><a href="javascript:pageAction('v','SHOW/HIDE','<?php echo(rawurlencode($page_id)); ?>')"<?php if ($page_active) echo " class=\"status_yes\"" ?>><?php if ($page_active) { echo Kohana::lang('ui_main.visible'); }else{ echo Kohana::lang('ui_main.hidden'); }?></a></li>
 													<li><a href="javascript:pageAction('d','DELETE','<?php echo(rawurlencode($page_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 												</ul>

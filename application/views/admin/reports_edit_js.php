@@ -653,7 +653,7 @@
 					function(data){
 						if (data.status == 'success'){
 							$('#custom_forms').html('');
-							$('#custom_forms').html(unescape(data.response));
+							$('#custom_forms').html(decodeURIComponent(data.response));
 							$('#form_loader').html('');
 						}
 				  	}, "json");

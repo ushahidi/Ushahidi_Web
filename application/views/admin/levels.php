@@ -143,9 +143,9 @@
 			// Levels JS
 			function fillFields(id, level_title, level_description, level_weight)
 			{
-				$("#level_id").attr("value", unescape(id));
-				$("#level_title").attr("value", unescape(level_title));
-				$("#level_description").attr("value", unescape(level_description));
-				$("#level_weight").attr("value", unescape(level_weight));
+				$("#level_id").attr("value", decodeURIComponent(id));
+				$("#level_title").attr("value", decodeURIComponent(level_title));
+				$("#level_description").attr("value", decodeURIComponent(level_description));
+				$("#level_weight").attr("value", decodeURIComponent(level_weight));
 			}
 			</script>
