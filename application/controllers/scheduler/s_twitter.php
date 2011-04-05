@@ -158,43 +158,43 @@ class S_Twitter_Controller extends Controller {
 				
 				// Action::message_twitter_add - Twitter Message Received!
 				Event::run('ushahidi_action.message_twitter_add', $message);
-			}
-			
-			// Auto-Create A Report if Reporter is Trusted
-			$reporter_weight = $reporter->level->level_weight;
-			$reporter_location = $reporter->location;
-			if ($reporter_weight > 0 AND $reporter_location)
-			{
-				$incident_title = text::limit_chars($message->message, 50, "...", false);
 				
-				// Create Incident
-				$incident = new Incident_Model();
-				$incident->location_id = $reporter_location->id;
-				$incident->incident_title = $incident_title;
-				$incident->incident_description = $message->message;
-				$incident->incident_date = $tweet_date;
-				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
-				$incident->incident_active = 1;
-				if ($reporter_weight == 2)
+				// Auto-Create A Report if Reporter is Trusted
+				$reporter_weight = $reporter->level->level_weight;
+				$reporter_location = $reporter->location;
+				if ($reporter_weight > 0 AND $reporter_location)
 				{
-					$incident->incident_verified = 1;
-				}
-				$incident->save();
+					$incident_title = text::limit_chars($message->message, 50, "...", false);
 
-				// Update Message with Incident ID
-				$message->incident_id = $incident->id;
-				$message->save();
+					// Create Incident
+					$incident = new Incident_Model();
+					$incident->location_id = $reporter_location->id;
+					$incident->incident_title = $incident_title;
+					$incident->incident_description = $message->message;
+					$incident->incident_date = $tweet_date;
+					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
+					$incident->incident_active = 1;
+					if ($reporter_weight == 2)
+					{
+						$incident->incident_verified = 1;
+					}
+					$incident->save();
 
-				// Save Incident Category
-				$trusted_categories = ORM::factory("category")
-					->where("category_trusted", 1)
-					->find();
-				if ($trusted_categories->loaded)
-				{
-					$incident_category = new Incident_Category_Model();
-					$incident_category->incident_id = $incident->id;
-					$incident_category->category_id = $trusted_categories->id;
-					$incident_category->save();
+					// Update Message with Incident ID
+					$message->incident_id = $incident->id;
+					$message->save();
+
+					// Save Incident Category
+					$trusted_categories = ORM::factory("category")
+						->where("category_trusted", 1)
+						->find();
+					if ($trusted_categories->loaded)
+					{
+						$incident_category = new Incident_Category_Model();
+						$incident_category->incident_id = $incident->id;
+						$incident_category->category_id = $trusted_categories->id;
+						$incident_category->save();
+					}
 				}
 			}
 		}
