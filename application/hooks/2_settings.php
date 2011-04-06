@@ -1,8 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-$subdomain = '';
-if(substr_count($_SERVER["HTTP_HOST"],'.') > 1) $subdomain = substr($_SERVER["HTTP_HOST"],0,strpos($_SERVER["HTTP_HOST"],'.'));
-
 /**
 * Default Settings From Database
 */
@@ -10,6 +7,7 @@ if(substr_count($_SERVER["HTTP_HOST"],'.') > 1) $subdomain = substr($_SERVER["HT
 // Retrieve Cached Settings
 
 $cache = Cache::instance();
+$subdomain = Kohana::config('settings.subdomain');
 $settings = $cache->get($subdomain.'_settings');
 if ( ! $settings)
 { // Cache is Empty so Re-Cache
