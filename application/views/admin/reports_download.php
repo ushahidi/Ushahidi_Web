@@ -68,6 +68,7 @@
                                 </tr>
                                 <tr>
                                         <td><?php print form::checkbox('data_include[]','5',TRUE); ?><?php echo Kohana::lang('ui_main.include_longitude');?></td>
+					<td><?php print form::checkbox('data_include[]','6',TRUE); ?>Include News Links</td>
                                 </tr>
 				<tr>
 					<td colspan="2">

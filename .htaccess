@@ -4,7 +4,7 @@
 	RewriteEngine On
 
 	# Installation directory
-	RewriteBase /
+	RewriteBase /ushahidi-1/Ushahidi_Web
 
 	# Protect application and system files from being viewed
 	RewriteRule ^(application|modules|system) - [F,L]

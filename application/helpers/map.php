@@ -190,6 +190,34 @@ class map_Core {
 			'type' => 'G_HYBRID_MAP',
 		);
 		$layers[$layer->name] = $layer;
+		
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'google_mapmaker';
+		$layer->openlayers = "Google";
+		$layer->title = 'Google Map Maker';
+		$layer->description = 'Google Map Maker, user contributed content.';
+		$layer->api_url = 'http://maps.google.com/maps?file=api&v=2&key='.Kohana::config('settings.api_google');
+		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'G_MAPMAKER_NORMAL_MAP',
+		);
+		$layers[$layer->name] = $layer;
+		
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'google_mapmaker_hybrid';
+		$layer->openlayers = "Google";
+		$layer->title = 'Google Map Maker Hybrid';
+		$layer->description = 'Google Map Maker, user contributed content, overlayed on satellite imagery.';
+		$layer->api_url = 'http://maps.google.com/maps?file=api&v=2&key='.Kohana::config('settings.api_google');
+		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'type' => 'G_MAPMAKER_HYBRID_MAP',
+		);
+		$layers[$layer->name] = $layer;
 
 		$layer = new stdClass();
 		$layer->active = TRUE;

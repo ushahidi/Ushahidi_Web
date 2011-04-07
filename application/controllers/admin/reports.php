@@ -1126,6 +1126,7 @@ class Reports_Controller extends Admin_Controller
                     
                     if ($item == 3) {
                         $report_csv .= ",CATEGORY";
+			$report_csv .= ",NEWS LINKS";
                     }
                     
                     if ($item == 4) {
@@ -1165,6 +1166,18 @@ class Reports_Controller extends Admin_Controller
                                     if ($category->category->category_title)
                                     {
                                         $report_csv .= $this->_csv_text($category->category->category_title) . ", ";
+                                    }
+                                }
+                                $report_csv .= '"';
+				
+				//
+				$report_csv .= ',"';
+                            
+                                foreach($incident->media as $media)
+                                {
+                                    if ($media->media_type == 4)
+                                    {
+                                        $report_csv .= $this->_csv_text($media->media_link) . ", ";
                                     }
                                 }
                                 $report_csv .= '"';
