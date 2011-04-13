@@ -161,7 +161,7 @@
 		<!-- content column -->
 		<div id="content" class="clearingfix">
 			<div class="floatbox">
-			
+
 				<!-- filters -->
 				<div class="filters clearingfix">
 					<div style="float:left; width: 100%">
@@ -180,7 +180,7 @@
 					?>
 				</div>
 				<!-- / filters -->
-				
+
 				<?php								
 				// Map and Timeline Blocks
 				echo $div_map;
