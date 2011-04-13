@@ -33,6 +33,8 @@ class Json_Controller extends Template_Controller
 
 		// Cacheable JSON Controller
 		$this->is_cachable = TRUE;
+		
+		//$profile = new Profiler;
 	}
 
 
@@ -111,12 +113,12 @@ class Json_Controller extends Template_Controller
 			// Retrieve markers by category
 			// XXX: Might need to replace magic numbers
 			$markers = ORM::factory('incident')
-									->select('DISTINCT incident.*')
-									->with('location')
-									->join('incident_category', 'incident.id', 'incident_category.incident_id','LEFT')
-									->join('media', 'incident.id', 'media.incident_id','LEFT')
-									->where('incident.incident_active = 1 AND ('.$this->table_prefix.'incident_category.category_id = ' . $category_id . ' ' . $where_child . ')' . $where_text)
-									->find_all();
+				->select('DISTINCT incident.*')
+				->with('location')
+				->join('incident_category', 'incident.id', 'incident_category.incident_id','LEFT')
+				->join('media', 'incident.id', 'media.incident_id','LEFT')
+				->where('incident.incident_active = 1 AND ('.$this->table_prefix.'incident_category.category_id = ' . $category_id . ' ' . $where_child . ')' . $where_text)
+				->find_all();
 
 
 		}
@@ -124,11 +126,11 @@ class Json_Controller extends Template_Controller
 		{
 			// Retrieve all markers
 			$markers = ORM::factory('incident')
-									->select('DISTINCT incident.*')
-									->with('location')
-									->join('media', 'incident.id', 'media.incident_id','LEFT')
-									->where('incident.incident_active = 1 '.$where_text)
-									->find_all();
+				->select('DISTINCT incident.*')
+				->with('location')
+				->join('media', 'incident.id', 'media.incident_id','LEFT')
+				->where('incident.incident_active = 1 '.$where_text)
+				->find_all();
 		}
 		
 		
@@ -136,6 +138,24 @@ class Json_Controller extends Template_Controller
 		$json_item_first = "";	// Variable to store individual item for report detail page
 		foreach ($markers as $marker)
 		{
+			$thumb = "";
+			if ($media_type == 1)
+			{
+				$media = $marker->media;
+				if ($media->count())
+				{
+					foreach ($media as $photo)
+					{
+						if ($photo->media_thumb)
+						{ // Get the first thumb
+							$prefix = url::base().Kohana::config('upload.relative_directory');
+							$thumb = $prefix."/".$photo->media_thumb;
+							break;
+						}
+					}
+				}
+			}
+			
 			$json_item = "{";
 			$json_item .= "\"type\":\"Feature\",";
 			$json_item .= "\"properties\": {";
@@ -155,6 +175,7 @@ class Json_Controller extends Template_Controller
 
 			$json_item .= "\"color\": \"".$color."\", \n";
 			$json_item .= "\"icon\": \"".$icon."\", \n";
+			$json_item .= "\"thumb\": \"".$thumb."\", \n";
 			$json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
 			$json_item .= "},";
 			$json_item .= "\"geometry\": {";
@@ -232,7 +253,12 @@ class Json_Controller extends Template_Controller
 		// End Date
 		$end_date = (isset($_GET['e']) AND !empty($_GET['e'])) ?
 			(int) $_GET['e'] : "0";
-
+			
+		// Media Type
+		$media_type = (isset($_GET['m']) AND !empty($_GET['m']) &&
+			is_numeric($_GET['m']) AND $_GET['m'] != 0) ?
+			(int) $_GET['m'] : 0;
+			
 		// SouthWest Bound
 		$southwest = (isset($_GET['sw']) AND !empty($_GET['sw'])) ?
 			$_GET['sw'] : "0";
@@ -283,7 +309,9 @@ class Json_Controller extends Template_Controller
 			foreach ($incidents_result as $key => $incident)
 			{
 				$location_ids[] = $incident['location_id'];
-				$incidents[$incident['id']] = array('title'=>$incident['incident_title'],'location_id'=>$incident['location_id']);
+				$incidents[$incident['id']] = array('title'=>$incident['incident_title'],
+					'location_id'=>$incident['location_id'],
+					'thumb'=>'');
 				unset($incidents_result[$key]);
 				$allowed_ids[$incident['id']] = 1;
 
@@ -297,19 +325,50 @@ class Json_Controller extends Template_Controller
 			}
 		}
 		
-		// Get categories if we need to
+		// Filter by Categories
+		$cat_allowed_ids = array();
 		if ($category_id != 0)
 		{
 			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
-			$categories_result = $db->query($query);
-
+			
+			$category_result = $db->query($query);
 			// Find the allowed incident ids
-			$allowed_ids = array();
-			foreach ($categories_result as $cat)
+			foreach ($category_result as $cat)
 			{
-				$allowed_ids[$cat->incident_id] = 1;
+				$cat_allowed_ids[$cat->incident_id] = 1;
 			}
+			
+			$allowed_ids = $cat_allowed_ids;
 		}
+		
+		// Filter by Media
+		$media_allowed_ids = array();
+		if ($media_type != 0)
+		{
+			$query = 'SELECT incident_id, media_thumb FROM '.$this->table_prefix.'media WHERE media_type='.$media_type.';';
+			
+			$media_result = $db->query($query);
+			// Find the allowed incident ids
+			foreach ($media_result as $media)
+			{
+				$media_allowed_ids[$media->incident_id] = 1;
+				if (isset($incidents[$media->incident_id]) AND 
+					$media->media_thumb AND ! $incidents[$media->incident_id]['thumb'])
+				{ // Get the first thumb
+					$prefix = url::base().Kohana::config('upload.relative_directory');
+					$incidents[$media->incident_id]['thumb'] = $prefix."/".$media->media_thumb;
+				}
+			}
+			
+			$allowed_ids = $media_allowed_ids;
+		}
+		
+		// Combine Category and Media Filters
+		if (count($cat_allowed_ids) AND count($media_allowed_ids))
+		{
+			$allowed_ids = array_intersect_key($cat_allowed_ids, $media_allowed_ids);
+		}
+		
 		
 		// Get locations
 		
@@ -345,7 +404,8 @@ class Json_Controller extends Template_Controller
 					'id' => $id,
 					'incident_title' => $incident['title'],
 					'latitude' => $locations[$incident['location_id']]['lat'],
-					'longitude' => $locations[$incident['location_id']]['lon']
+					'longitude' => $locations[$incident['location_id']]['lon'],
+					'thumb' => $incident['thumb']
 					);
 			}
 		}
@@ -410,6 +470,7 @@ class Json_Controller extends Template_Controller
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
 			$json_item .= "\"icon\": \"".$icon."\", ";
+			$json_item .= "\"thumb\": \"\", ";
 			$json_item .= "\"timestamp\": \"0\", ";
 			$json_item .= "\"count\": \"" . $cluster_count . "\"";
 			$json_item .= "},";
@@ -432,6 +493,7 @@ class Json_Controller extends Template_Controller
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
 			$json_item .= "\"icon\": \"".$icon."\", ";
+			$json_item .= "\"thumb\": \"".$single['thumb']."\", ";
 			$json_item .= "\"timestamp\": \"0\", ";
 			$json_item .= "\"count\": \"" . 1 . "\"";
 			$json_item .= "},";
@@ -452,7 +514,6 @@ class Json_Controller extends Template_Controller
 		
 		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
-
 	}
 
 	/**
@@ -659,7 +720,7 @@ class Json_Controller extends Template_Controller
 
 		echo json_encode($graph_data);
 	}
-
+	
 
 	/**
 	 * Read in new layer KML via file_get_contents

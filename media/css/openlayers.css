@@ -3,6 +3,10 @@
 	position:relative;
 	padding:0;
 }
+.infowindow .infowindow_content{
+	width:250px;
+	float:left;
+}
 .infowindow h2{
 	margin:0 0 8px 0;
 	padding:0;
@@ -14,6 +18,13 @@
 	font-size:14px;
 	font-weight:bold;
 }
+.infowindow .infowindow_image{
+	float:left;
+	margin-right:10px;
+}
+	.infowindow .infowindow_image img{
+		border:1px solid #3764aa;
+	}
 .infowindow ul{
 	font-weight:bold;
 	margin:0 0 0 1em;
@@ -33,6 +44,7 @@
 }
 .infowindow .infowindow_meta{
 	font-size:90%;
+	clear:both;
 }
 .infowindow_meta a, .infowindow_meta a:visited{
 	color:#000;

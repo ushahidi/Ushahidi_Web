@@ -390,9 +390,9 @@
 			{
 				params.push('e=' + endDate);
 			}
-			if (typeof(mediaType) != 'undefined')
+			if (typeof(this.mediaType) != 'undefined')
 			{
-			//params.push('m=' + mediaType);
+				params.push('m=' + this.mediaType);
 			}
 			return params;
 		};

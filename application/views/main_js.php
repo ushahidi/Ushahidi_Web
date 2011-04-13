@@ -43,6 +43,7 @@
 		var selectedFeature;
 		var allGraphData = "";
 		var dailyGraphData = "";
+		var gMediaType = 0
 		var timeout = 1500;
 		
 		var activeZoom = null;
@@ -138,10 +139,18 @@
 			zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
 			lon = zoom_point.lon;
 			lat = zoom_point.lat;
+			
+			
+			var thumb = "";
+			if ( typeof(event.feature.attributes.thumb) != 'undefined' && 
+				event.feature.attributes.thumb != ''){
+				thumb = "<div class=\"infowindow_image\"><a href='"+event.feature.attributes.link+"'><img src=\""+event.feature.attributes.thumb+"\" height=\"59\" width=\"89\" /></a></div>";
+			}
 
-			var content = "<div class=\"infowindow\"><div class=\"infowindow_list\">"+event.feature.attributes.name+"<div style=\"clear:both;\"></div></div>";
+			var content = "<div class=\"infowindow\">" + thumb;
+			content = content + "<div class=\"infowindow_content\"><div class=\"infowindow_list\">"+event.feature.attributes.name+"</div>";
 		    content = content + "\n<div class=\"infowindow_meta\"><a href='"+event.feature.attributes.link+"'><?php echo Kohana::lang('ui_main.more_information');?></a><br/><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",1)'><?php echo Kohana::lang('ui_main.zoom_in');?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",-1)'><?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
-			content = content + "</div>";			
+			content = content + "</div><div style=\"clear:both;\"></div></div>";		
 
 			if (content.search("<?php echo '<'; ?>script") != -1)
 			{
@@ -215,7 +224,7 @@
 				currCenter = map.getCenter();
 
 				// Refresh Map
-				addMarkers(currCat, currStartDate, currEndDate, currZoom, currCenter);
+				addMarkers(currCat, currStartDate, currEndDate, currZoom, currCenter, gMediaType);
 			}
 		}
 		
@@ -720,11 +729,17 @@
 			// Media Filter Action
 			$('.filters li a').click(function()
 			{
+				// Destroy any open popups
+				if (selectedFeature) {
+					onPopupClose();
+				};
+				
 				var startTimestamp = $("#startDate").val();
 				var endTimestamp = $("#endDate").val();
 				var startTime = new Date(startTimestamp * 1000);
 				var endTime = new Date(endTimestamp * 1000);
 				gMediaType = parseFloat(this.id.replace('media_', '')) || 0;
+				currentCat = $("#currentCat").val();
 				
 				// Get Current Zoom
 				currZoom = map.getZoom();
@@ -738,11 +753,28 @@
 				
 				$('.filters li a').attr('class', '');
 				$(this).addClass('active');
-				gTimeline = $.timeline({categoryId: gCategoryId, startTime: startTime, 
-				    endTime: endTime, mediaType: gMediaType,
-					url: "<?php echo url::site(); ?>json_url+'/timeline/'"
+				
+				graphData = "";
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat, function(data) {
+					graphData = data[0];
+
+					gTimeline = $.timeline({categoryId: currentCat, startTime: startTime, endTime: endTime,
+						graphData: graphData,
+						mediaType: gMediaType
+					});
+					gTimeline.plot();
 				});
-				gTimeline.plot();
+				
+				dailyGraphData = "";
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat+"?i=day", function(data) {
+					dailyGraphData = data[0];
+				});
+				allGraphData = "";
+				$.getJSON("<?php echo url::site()."json/timeline/"?>"+currentCat, function(data) {
+					allGraphData = data[0];
+				});
+				
+				return false;
 			});
 			
 			$('#playTimeline').click(function()
