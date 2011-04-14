@@ -131,7 +131,7 @@ class Reports_Controller extends Main_Controller {
 			->where($location_id_in)
 			->where($incident_id_in)
 			->orderby("incident_date", "desc")
-			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+			->find_all((int) Kohana::config('settings.items_per_page'), $pagination->sql_offset);
 
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
 
