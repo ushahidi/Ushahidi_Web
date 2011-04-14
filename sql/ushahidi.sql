@@ -332,34 +332,6 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 
 
 /**
-* Table structure for table `idp`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `idp` (                                                  
-    `id` bigint(20) unsigned NOT NULL auto_increment,                               
-    `incident_id` bigint(20) NOT NULL,                                              
-    `verified_id` bigint(20) default NULL,                                          
-    `idp_idnumber` varchar(100) default NULL,                                       
-    `idp_orig_idnumber` varchar(100) default NULL,                                  
-    `idp_fname` varchar(50) default NULL,                                           
-    `idp_lname` varchar(50) default NULL,                                           
-    `idp_email` varchar(100) default NULL,                                          
-    `idp_phone` varchar(50) default NULL,                                           
-    `current_location_id` bigint(20) default NULL,                                  
-    `displacedfrom_location_id` bigint(20) default NULL,                            
-    `movedto_location_id` bigint(20) default NULL,                                  
-    `idp_move_date` datetime default NULL,                                          
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `idp`
-
-
-
-/**
 * Table structure for table `incident`
 * 
 */
@@ -689,30 +661,6 @@ PRIMARY KEY (`id`)
 
 
 
-
-/**
-* Table structure for table `pending_users`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `pending_users` (                                        
-    `id` int(11) unsigned NOT NULL auto_increment,                                  
-    `key` varchar(32) NOT NULL,                                                     
-    `email` varchar(127) NOT NULL,                                                  
-    `username` varchar(31) NOT NULL default '',                                     
-    `password` char(50) default NULL,                                               
-    `created` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,    
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `uniq_username` (`username`),
-  UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `pending_users`
-
-
-
 /**
 * Table structure for table `roles`
 * 
@@ -922,7 +870,6 @@ CREATE TABLE IF NOT EXISTS `user_tokens` (
 CREATE TABLE IF NOT EXISTS `verified` (                                             
     `id` bigint(20) unsigned NOT NULL auto_increment,                               
     `incident_id` bigint(20) default NULL,                                          
-    `idp_id` bigint(20) default NULL,                                               
     `user_id` int(11) default NULL,                                                 
     `verified_comment` longtext default NULL,                                       
     `verified_date` datetime default NULL,                                          
@@ -1229,39 +1176,6 @@ INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url
 (2, 'Email', 'Text messages from phones', NULL, NULL),
 (3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL);
 
-/**
-* Table structure for table `feedback`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `feedback` (                                             
-    `id` tinyint(11) NOT NULL auto_increment,                                       
-    `feedback_mesg` text NOT NULL,                                                  
-    `feedback_status` tinyint(3) NOT NULL,                                          
-    `feedback_dateadd` datetime default NULL,                                       
-    `feedback_datemodify` datetime default NULL,                                    
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
-
-
-/**
-* Table structure for table `feedback_person`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `feedback_person` (                                      
-    `id` tinyint(11) NOT NULL auto_increment,                                       
-    `feedback_id` tinyint(11) NOT NULL,                                             
-    `person_email` varchar(30) NOT NULL,                                            
-    `person_date` datetime default NULL,                                            
-    `person_ip` varchar(50) default NULL,                                           
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
 
 
 /**
@@ -1464,4 +1378,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '51' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '52' WHERE `id`=1 LIMIT 1;
