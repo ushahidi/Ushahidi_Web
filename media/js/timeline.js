@@ -409,10 +409,10 @@
 				'graphicTitle': "${cluster_count}",
 				pointRadius: "${radius}",
 				fillColor: "${color}",
-				fillOpacity: "${opacity}",
+				fillOpacity: "0.7",
 				strokeColor: "${strokeColor}",
 				strokeWidth: "${strokeWidth}",
-				strokeOpacity: "0.3",
+				strokeOpacity: "0.7",
 				label:"${clusterCount}",
 				//labelAlign: "${labelalign}", // IE doesn't like this for some reason
 				fontWeight: "${fontweight}",
@@ -584,7 +584,7 @@
 						feature_icon = feature.attributes.icon;
 						if (feature_icon!=="")
 						{
-							return baseUrl + feature_icon;
+							return baseUrl + 'media/img/openlayers/marker.png';
 						} 
 						else
 						{
