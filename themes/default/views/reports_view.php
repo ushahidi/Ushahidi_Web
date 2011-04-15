@@ -33,6 +33,13 @@
 			<?php
 				foreach($incident_category as $category) 
 				{ 
+				
+					//don't show hidden categories
+					if($category->category->category_visible == 0)
+					{
+						continue;
+					}
+				
 				  if ($category->category->category_image_thumb)
 					{
 					?>
