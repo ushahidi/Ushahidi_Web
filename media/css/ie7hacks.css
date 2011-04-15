@@ -1,0 +1,28 @@
+/* Handcoded by RapidxHTML - http://www.rapidxhtml.com */
+
+div.search-form{
+    padding: 0px;
+    margin: 10px 15px 10px 5px;
+    float: left;
+}
+
+div.search-form input.text{
+    padding: 1px 0px 2px 0px;
+    border: #9E9E9E 1px solid;
+    margin: 0;
+    background: #EEEEEE;
+    width: 160px;
+}
+
+div.search-form input.searchbtn{
+    border: #868686 1px solid;
+    background: #EEEEEE url(../img/search-button.jpg) 5px 4px no-repeat;
+    width: 24px;
+    height: 21px;
+    margin: 1px 0 0 -4px;
+    text-indent: 0px;
+    cursor: pointer;
+    padding: 1px 0 19px 0;
+    font-size: 0px;
+    line-height: 7px;
+}

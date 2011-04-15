@@ -1,0 +1,53 @@
+#kohana-profiler .kp-table
+{
+	font-size: 1.0em;
+	color: #4D6171;
+	width: 100%;
+	border-collapse: collapse;
+	border-top: 1px solid #E5EFF8;
+	border-right: 1px solid #E5EFF8;
+	border-left: 1px solid #E5EFF8;
+	margin-bottom: 10px;
+}
+#kohana-profiler .kp-table td
+{
+	background-color: #FFFFFF;
+	border-bottom: 1px solid #E5EFF8;
+	padding: 3px;
+	vertical-align: top;
+}
+#kohana-profiler .kp-table .kp-title td
+{
+	font-weight: bold;
+	background-color: inherit;
+}
+#kohana-profiler .kp-table .kp-altrow td
+{
+	background-color: #F7FBFF;
+}
+#kohana-profiler .kp-table .kp-totalrow td
+{
+	background-color: #FAFAFA;
+	border-top: 1px solid #D2DCE5;
+	font-weight: bold;
+}
+#kohana-profiler .kp-table .kp-column
+{
+	width: 100px;
+	border-left: 1px solid #E5EFF8;
+	text-align: center;
+}
+#kohana-profiler .kp-table .kp-data, #kohana-profiler .kp-table .kp-name
+{
+	background-color: #FAFAFB;
+	vertical-align: top;
+}
+#kohana-profiler .kp-table .kp-name
+{
+	width: 200px;
+	border-right: 1px solid #E5EFF8;
+}
+#kohana-profiler .kp-table .kp-altrow .kp-data, #kohana-profiler .kp-table .kp-altrow .kp-name
+{
+	background-color: #F6F8FB;
+}

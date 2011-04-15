@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Ushahidi - Readme</title>
+<link href="media/css/admin/login.css" rel="stylesheet" type="text/css" />
+<link href="media/css/readme.css" rel="stylesheet" type="text/css" />
+</head>
+<html>
+    <body>
+        <div id="ushahidi_readme_container">
+            <div id="ushahidi_login_logo">
+                <img src="media/img/admin/logo_login.gif" width="400" 
+                height="80" />
+            </div>
+        <div id="ushahidi_readme">
+            <h1>Welcome!</h1>
+            <p>Thanks for using Ushahidi. We hope that you find the setup and installation process as smooth as possible. We have an active community so if you get stuck along the way, head over to the forums and <a href="http://forums.ushahidi.com/">get some help</a>. In addition to the forums, we have a wiki with <a href="http://wiki.ushahidi.com/doku.php">more detailed information</a> about the platform.</p>
+          <h1>System Requirements</h1>
+<ol>
+      <li>A server with <a href="http://www.alanwood.net/unicode/">Unicode support</a>.</li>
+                    <li> <a href="http://www.mysql.com/" title="http://www.mysql.com/" rel="nofollow">MySQL</a> version 5.0 or greater.</li>
+                    <li>PHP version 5.2.3 or greater.</li>
+                    <li>An HTTP Server. <a href="http://kohanaframework.org/">Kohana</a> which Ushahidi is built upon is known to work with the following web servers: <a href="http://httpd.apache.org/docs/1.3/">Apache 1.3</a>+, <a href="http://httpd.apache.org/">Apache2.0</a>+, <a href="http://www.lighttpd.net/">lighttpd</a>, and <a href="http://www.iis.net/" title="Microsoft Internet Information Services">MS IIS</a>.</li>
+          </ol>
+          <h2>Required Extensions</h2>
+          <p>The follwing is a list of PHP extensions that must be installed on your server in order for Ushahidi to run properly.</p>
+                <ol>
+                <li><a href="http://php.net/pcre">PCRE</a> must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.</li>
+                    <li> <a href="http://php.net/iconv">iconv</a> is required for UTF-8 transliteration.</li>
+                    <li><a href="http://php.net/mcrypt">mcrypt</a> is required for encryption.</li>
+                    <li><a href="http://php.net/spl">SPL</a> is required for several core libraries</li>
+                    <li> <a href="http://php.net/mbstring">mbstring</a> which speeds up Kohana's UTF-8 functions.</li>
+                    <li><a href="http://php.net/mysql">MySQL</a> which is required for database access</li>
+          </ol>
+                <p class="feedback info-light"><em> Need to figure out what extensions you already have installed on your server? </em><a href="http://jontangerine.com/silo/php/phpinfo/"><em>Here are instructions to do just that</em></a>.</p>
+
+<h1>Preliminary Setup</h1>
+            <p>Before installing Ushahidi you will need to give your server authority to write to certian files and folders.  Please make sure the following files and folders are writable by your server:</p>
+            <ul>
+                <li><code>application/config/config.php</code></li>
+                <li><code>application/config</code></li>
+                <li><code>application/cache</code></li>
+                <li><code>application/logs</code></li>
+                <li><code>media/uploads</code></li>
+                <li><code>.htaccess</code></li>
+            </ul>
+            <p class="feedback info-light"><em>The process of configuring file permissions is different for various opperating systems. Here are some helpful links about permissions for the <a href="http://www.washington.edu/computing/unix/permissions.html">Unix</a> and <a href="http://support.microsoft.com/kb/308419">Windows</a> opperating systems.</em></p>
+          <h1>Installation Guide</h1>
+          <p>Ushahidi can be installed manually or via the web installer. The easiest way to install Ushahidi is to use the web installer as it takes you through everything step by step.</p>
+<h2> Web Installer</h2>
+                <ol>
+                    <li>Upload the unpacked/unzipped Ushahidi files to your server.</li>
+                    <li>Make sure the appropriate files are writable by your web server (see &quot;Preliminary Setup&quot; above).</li>
+                    <li>Point your browser to the <code>http://[Your Ushahidi URL]/installer</code> and follow the step by step instructions. </li>
+                </ol>
+
+          <h2>Manual Installation</h2>
+                <ol>
+                    <li>Upload the unpacked/unzipped Ushahidi files to your server.</li>
+                    <li>Create a database and note the connection credentials.</li>
+                    <li>Make sure the appropriate files are writable by your web server (see &quot;Preliminary Setup&quot; above).</li>
+                    <li>Copy or rename <code>./application/config/database.template.php</code> to <code>./application/config/database.php</code>.</li>
+                    <li>Edit <code>database.php</code> and provide it with your database credentials.</li>
+                    <li>Copy or rename <code>./application/config/config.template.php</code> to <code>./application/config/config.php</code>.</li>
+                    <li>Edit <code>config.php</code> and provide it with the appropriate values. The comments in the file will tell you exactly what to provide. In most cases, you won't need to change many of them.</li>
+                    <li>Create the appropriate tables into your database by executing the sql statements in the following file: <code>./sql/ushahidi.sql</code></li>
+                    <li>Browse to your site:
+                      <Ul>
+<li> URL: <code>http://[Your Ushahidi URL]/</code></li>
+<li>Admin Area: <code>http://[Your Ushahidi URL]/admin</code></li>
+                        <li>User: <code>admin</code></li>
+                        <li>Password: <code>admin</code></li>
+                      </ul>
+                    </li>
+                </ol>
+                <p class="feedback info-light"><em><strong>Please note:</strong> There are still more settings and configurations that you will still need to complete in order to get your instance fully opporational. More information about these settings can be found <a href="http://wiki.ushahidi.com/doku.php?id=how_to_use_ushahidi_alpha">on our wiki</a>.</em></p>
+          
+          
+          <h1>Online Resources</h1>
+          <p>For further references and documentation, head over to <a href="http://wiki.ushahidi.com/doku.php">our wiki</a>. Also, we encourage you to drop by <a href="http://forums.ushahidi.com/">our forums</a> if you have any additional questions or concerns.</p>
+</div>
+        </div>
+</body>
+</html>

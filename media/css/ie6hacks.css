@@ -1,0 +1,33 @@
+div.language-box{
+    margin: 11px 0px 13px 15px;
+}
+
+div.search-form{
+    padding: 0px;
+    margin: 10px 15px 10px 5px;
+    float: left;
+}
+
+div.search-form input.text{
+    padding: 1px 0px 2px 0px;
+}
+
+div.search-form input.searchbtn{
+    background: #EEEEEE url(../img/search-button.jpg) 5px 4px no-repeat;
+    margin: 1px 0 0 -1px;
+    text-indent: 0px;
+    font-size: 0px;
+    line-height: 7px;
+}
+
+ul.category-filters li{
+    margin-bottom: 2px;
+}
+
+div.map{
+	width: 571px;
+}
+#mapStatus
+{
+	width: 571px;
+}
