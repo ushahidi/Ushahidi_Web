@@ -172,7 +172,7 @@ class S_Alerts_Controller extends Controller {
 						$from = array();
 							$from[] = $alerts_email;
 							$from[] = $site_name;
-						$subject = "[$site_name] ".$incident->incident_title;
+						$subject = substr("[$site_name] ".$incident->incident_title, 0, 63); //you can't send emails with subjects longer than 63 chars. trust me.
 						$message = $email_message
 									."\n\n".$unsubscribe_message
 									.$alertee->alert_code."\n";
