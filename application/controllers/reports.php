@@ -58,9 +58,16 @@ class Reports_Controller extends Main_Controller {
 			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
 			$query = $db->query($query);
 
-			foreach ( $query as $items )
+			if ($query->count())
 			{
-				$allowed_ids[] = $items->incident_id;
+				foreach ( $query as $items )
+				{
+					$allowed_ids[] = $items->incident_id;
+				}
+			}
+			else
+			{
+				$allowed_ids[] = "-1";
 			}
 		}
 
