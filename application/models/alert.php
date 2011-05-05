@@ -177,7 +177,7 @@ class Alert_Model extends ORM
 	{
 		// Fetch all alerts with the specified code
 		$alerts = ORM::factory('alert')
-			->where('alert_code', $code)
+			->where('alert_code', $alert_code)
 			->find_all();
 			
 		foreach ($alerts as $alert)
