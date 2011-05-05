@@ -90,13 +90,12 @@ class VideoEmbed{
       
       if($host == "liveleak")
       {
-         //clean the code
-         $code = str_replace("&p=1", "", $code);
-      
+         //no need to clean the code, so commented the line below out.
+        // $code = str_replace("&p=1", "", $code);
       
          echo "<object type='application/x-shockwave-flash' width='320' height='272'='transparent'
-         data='http://www.liveleak.com/player.swf?autostart=$live_auto&token=$code'>
-         <param name='movie' value='http://www.liveleak.com/player.swf?autostart=$live_auto&token=$code'>
+         data='http://www.liveleak.com/e/$code'>
+         <param name='movie' value='http://www.liveleak.com/e/$code'>
          <param name='wmode' value='transparent'><param name='quality' value='high'></object>";
       }
 
