@@ -90,7 +90,7 @@ class VideoEmbed{
       
       if($host == "liveleak")
       {
-         //no need to clean the code, so commented the line below out.
+         //No need to clean the code, so commented the line below out.
         // $code = str_replace("&p=1", "", $code);
       
          echo "<object type='application/x-shockwave-flash' width='320' height='272'='transparent'
