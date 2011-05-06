@@ -4,7 +4,7 @@
  * then a full URL will be used, eg: http://localhost/ushahidi/. If it only includes
  * the path, and a site_protocol is specified, the domain will be auto-detected.
  */
-$config['site_domain'] = '/';
+$config['site_domain'] = '/Ushahidi_Web/';
 
 /**
  * Force a default protocol to be used by the site. If no site_protocol is
@@ -18,7 +18,7 @@ $config['site_protocol'] = 'http';
  *
  * This can be removed by using URL rewriting.
  */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /**
  * Fake file extension that will be added to all generated URLs. Example: .html
@@ -89,16 +89,11 @@ $config['render_stats'] = TRUE;
 
 /**
  * Turn MHI on or off. This is an advanced feature that will drastically alter
- * the way your deployment works. Please read documentation before proceeding.
+ * the way your instance works. Please read documentation before proceeding.
  *
  * @see [A URL not yet created]
  */
 $config['enable_mhi'] = FALSE;
-
-/**
- * Add the ability to turn on / off auto upgrader
- */
-$config['enable_auto_upgrader'] = TRUE;
 
 /**
  * Filename prefixed used to determine extensions. For example, an
