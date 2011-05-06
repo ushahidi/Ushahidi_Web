@@ -165,6 +165,13 @@ class Imap_Core {
 			// Fetch Attachments
 			$attachments = $this->_extract_attachments($this->imap_stream, $msgno);
 
+			// This isn't the perfect solution but windows-1256 encoding doesn't work with mb_detect_encoding()
+			//   so if it doesn't return an encoding, lets assume it's arabic. (sucks)
+			if(mb_detect_encoding($body, 'auto', true) == '')
+			{
+				$body = iconv("windows-1256", "UTF-8", $body);
+			}
+
 			// Convert to valid UTF8
 			$body = htmlentities($body,NULL,mb_detect_encoding($body, "auto"));
 			$subject = htmlentities(strip_tags($subject),NULL,'UTF-8');
