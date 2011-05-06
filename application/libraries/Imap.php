@@ -166,8 +166,8 @@ class Imap_Core {
 			$attachments = $this->_extract_attachments($this->imap_stream, $msgno);
 
 			// Convert to valid UTF8
-			$body = htmlentities($body);
-			$subject = htmlentities(strip_tags($subject));
+			$body = htmlentities($body,NULL,mb_detect_encoding($body, "auto"));
+			$subject = htmlentities(strip_tags($subject),NULL,'UTF-8');
 
 			array_push($messages, array('message_id' => $message_id,
 										'date' => $date,
@@ -208,6 +208,13 @@ class Imap_Core {
 
 		foreach ($elements as $element)
 		{
+			
+			// Make sure Arabic characters can be passed through as UTF-8
+			
+			if(strtoupper($element->charset) == 'WINDOWS-1256'){
+				$element->text = iconv("windows-1256", "UTF-8", $element->text);
+			}
+			
 			$text.= $element->text;
 		}
 
