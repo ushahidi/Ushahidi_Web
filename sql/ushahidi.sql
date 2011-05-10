@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 48
+-- version 53
 -- http://www.ushahidi.com
 
 
@@ -17,7 +17,8 @@ CREATE TABLE IF NOT EXISTS `category` (
     `id` int(11) unsigned NOT NULL auto_increment,                                  
     `parent_id` INT NOT NULL DEFAULT '0',                                           
     `locale` varchar(10) NOT NULL default 'en_US',                                  
-    `category_type` tinyint(4) default NULL,                                        
+    `category_type` tinyint(4) default NULL,
+	`category_position` tinyint(4) NOT NULL DEFAULT '0',
     `category_title` varchar(255) default NULL,                                     
     `category_description` text default NULL,                                       
     `category_color` varchar(20) default NULL,                                      
@@ -1378,4 +1379,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '52' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '53' WHERE `id`=1 LIMIT 1;

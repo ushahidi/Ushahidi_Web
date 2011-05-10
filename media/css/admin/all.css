@@ -679,8 +679,8 @@ table td{
 .table .col-2{ width:539px;}
 .table .col-2_sub{
 	width:519px;
-	padding-left:20px;
-	background:url(../../img/admin/arrow.gif) no-repeat 3px 17px;
+	padding-left:30px;
+	background:url(../../img/admin/arrow.gif) no-repeat 13px 22px;
 }
 .table .col-3{
 	width:103px;
@@ -699,6 +699,15 @@ table td{
 	border-left:2px solid #bbb;
 	padding:12px 0 10px 10px;
 	border-right:2px solid #bbb;
+}
+.table .col-drag{
+	background-color:#ffffcc;
+}
+.table .col-show-handle{
+	background-image: url(../../img/admin/drag.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: move;
 }
 .table .post{
 	margin:0;
