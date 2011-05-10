@@ -264,23 +264,23 @@ class Manage_Controller extends Admin_Controller
 
 		// Pagination
 		$pagination = new Pagination(array(
-							'query_string' => 'page',
-							'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-							'total_items'	 => ORM::factory('category')
-													->where('parent_id','0')
-													->count_all()
-						));
+			'query_string' => 'page',
+			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'total_items'	 => ORM::factory('category')
+			->where('parent_id','0')
+			->count_all()
+		));
 
 		$categories = ORM::factory('category')
-									->with('category_lang')
-									->where('parent_id','0')
-									->orderby('category_title', 'asc')
-									->find_all((int) Kohana::config('settings.items_per_page_admin'),
-												$pagination->sql_offset);
+			->with('category_lang')
+			->where('parent_id','0')
+			->orderby('category_position', 'asc')
+			->orderby('category_title', 'asc')
+			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
 		$parents_array = ORM::factory('category')
-									 ->where('parent_id','0')
-									 ->select_list('id', 'category_title');
+			->where('parent_id','0')
+			->select_list('id', 'category_title');
 
 		// add none to the list
 		$parents_array[0] = "--- Top Level Category ---";
@@ -301,11 +301,62 @@ class Manage_Controller extends Admin_Controller
 
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
+		$this->template->tablerowsort_enabled = TRUE;
 		$this->template->js = new View('admin/categories_js');
 		$this->template->form_error = $form_error;
 
 		$this->template->content->locale_array = $locales;
 		$this->template->js->locale_array = $locales;
+	}
+	
+	public function category_sort()
+	{
+		$this->auto_render = FALSE;
+		$this->template = "";
+		
+		if ($_POST)
+		{
+			if (isset($_POST['categories'])
+				AND ! empty($_POST['categories'])
+				)
+			{
+				$categories = array_map('trim', explode(',', $_POST['categories']));
+				$i = 0;
+				$parent_id = 0;
+				foreach ($categories as $category_id)
+				{
+					if ($category_id)
+					{
+						$category = ORM::factory('category', $category_id);
+						if ($category->loaded)
+						{
+							if ($i == 0 AND $category->parent_id != 0)
+							{ // ERROR!!!!!!!! WHY ARE YOU TRYING TO PLACE A SUBCATEGORY ABOVE A CATEGORY???
+								echo "ERROR";
+								return;
+							}
+							
+							if ($category->parent_id == 0)
+							{
+								// Set Parent ID
+								$parent_id = $category->id;
+							}
+							else
+							{
+								if ($parent_id)
+								{
+									$category->parent_id = $parent_id;
+								}
+							}							
+							
+							$category->category_position = $i;
+							$category->save();
+						}
+					}
+					$i++;
+				}
+			}
+		}
 	}
 	
 	/*
