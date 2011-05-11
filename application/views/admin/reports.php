@@ -134,11 +134,6 @@
 										$submit_mode = "TWITTER";
 										$submit_by = $incident->message->message_from;
 									}
-									elseif ($incident_mode == 5) 	// Submitted via Laconica
-									{
-										$submit_mode = "LACONICA";
-										$submit_by = $incident->message->message_from;
-									}
 
 									$incident_location = $locations[$incident->location_id];
 

@@ -619,10 +619,10 @@ class Reports_Controller extends Main_Controller {
 
 		if ( !$id )
 		{
-
 			url::redirect('main');
-
-		}else{
+		}
+		else
+		{
 			$incident = ORM::factory('incident')
 				->where('id',$id)
 				->where('incident_active',1)
@@ -702,15 +702,14 @@ class Reports_Controller extends Main_Controller {
 							if ($akismet->is_error('AKISMET_INVALID_KEY'))
 							{
 								// throw new Kohana_Exception('akismet.api_key');
-
-							}elseif ($akismet->is_error('AKISMET_RESPONSE_FAILED')){
-
+							}
+							elseif ($akismet->is_error('AKISMET_RESPONSE_FAILED'))
+							{
 								// throw new Kohana_Exception('akismet.server_failed');
-
-							}elseif ($akismet->is_error('AKISMET_SERVER_NOT_FOUND')){
-
+							}
+							elseif ($akismet->is_error('AKISMET_SERVER_NOT_FOUND'))
+							{
 								// throw new Kohana_Exception('akismet.server_not_found');
-
 							}
 
 							// If the server is down, we have to post
@@ -718,22 +717,17 @@ class Reports_Controller extends Main_Controller {
 							// $this->_post_comment($comment);
 
 							$comment_spam = 0;
-						}else{
-
-							if ($akismet->is_spam())
-							{
-								$comment_spam = 1;
-							}else{
-								$comment_spam = 0;
-							}
 						}
-					}else{
-
+						else
+						{
+							$comment_spam = ($akismet->is_spam()) ? 1 : 0;
+						}
+					}
+					else
+					{
 						// No API Key!!
-
 						$comment_spam = 0;
 					}
-
 
 					$comment = new Comment_Model();
 					$comment->incident_id = $id;
@@ -779,8 +773,9 @@ class Reports_Controller extends Main_Controller {
 
 					url::redirect('reports/view/'.$id);
 
-				}else{
-
+				}
+				else
+				{
 					// No! We have validation errors, we need to show the form again, with the errors
 
 					// Repopulate the form fields
@@ -814,15 +809,12 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->incident_time = date('H:i', strtotime($incident->incident_date));
 			$this->template->content->incident_category = $incident->incident_category;
 
-			if ($incident->incident_rating == '')
-			{
-				$this->template->content->incident_rating = 0;
-			}else{
-				$this->template->content->incident_rating = $incident->incident_rating;
-			}
+			// Incident rating
+			$this->template->content->incident_rating = ($incident->incident_rating == '')
+				? 0
+				: $incident->incident_rating;
 
 			// Retrieve Media
-
 			$incident_news = array();
 			$incident_video = array();
 			$incident_photo = array();

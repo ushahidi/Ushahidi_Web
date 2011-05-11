@@ -688,10 +688,6 @@ class Reports_Controller extends Admin_Controller
 					{ // Twitter
 						$incident->incident_mode = 4;
 					}
-					elseif ($service_id == 4)
-					{ // Laconica
-						$incident->incident_mode = 5;
-					}
 				}
 				// Incident Evaluation Info
 				$incident->incident_active = $post->incident_active;
