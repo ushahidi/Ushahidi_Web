@@ -143,9 +143,9 @@
 						<input type="hidden" name="action" id="category_action" value="">
 						<input type="hidden" name="category_id" id="category_id_action" value="">
 						<div class="table-holder">
-							<table class="table">
+							<table class="table" id="categorySort">
 								<thead>
-									<tr>
+									<tr class="nodrag">
 										<th class="col-1">&nbsp;</th>
 										<th class="col-2"><?php echo Kohana::lang('ui_main.category');?></th>
 										<th class="col-3"><?php echo Kohana::lang('ui_main.color');?></th>
@@ -153,7 +153,7 @@
 									</tr>
 								</thead>
 								<tfoot>
-									<tr class="foot">
+									<tr class="foot nodrag">
 										<td colspan="4">
 											<?php echo $pagination; ?>
 										</td>
@@ -164,8 +164,8 @@
 									if ($total_items == 0)
 									{
 									?>
-										<tr>
-											<td colspan="4" class="col">
+										<tr class="nodrag">
+											<td colspan="4" class="col" id="row1">
 												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 											</td>
 										</tr>
@@ -186,8 +186,8 @@
 											$category_locals[$category_lang->locale] = $category_lang->category_title;
 										}
 										?>
-										<tr>
-											<td class="col-1">&nbsp;</td>
+										<tr id="<?php echo $category_id; ?>">
+											<td class="col-1 col-drag-handle">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
 													<h4><?php echo $category_title; ?></h4>
@@ -233,7 +233,7 @@
 										<?php
 										
 										// Get All Category Children
-										foreach ($category->children as $child)
+										foreach ( $category->orderby('category_position', 'asc')->children as $child)
 										{
 											$category_id = $child->id;
 											$parent_id = $child->parent_id;
@@ -249,8 +249,8 @@
 											}
 
 											?>
-											<tr>
-												<td class="col-1">&nbsp;</td>
+											<tr id="<?php echo $category_id; ?>">
+												<td class="col-1 col-drag-handle">&nbsp;</td>
 												<td class="col-2_sub">
 													<div class="post">
 														<h4><?php echo $category_title; ?></h4>

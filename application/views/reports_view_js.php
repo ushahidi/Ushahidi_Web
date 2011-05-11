@@ -249,7 +249,8 @@
 						break;
 				};
 				
-				map.setCenter(myPoint, map.getZoom());
+				map.updateSize();
+				map.pan(0,1);
 				
 				return false;
 			});

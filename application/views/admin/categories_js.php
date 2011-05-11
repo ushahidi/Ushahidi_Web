@@ -14,6 +14,36 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
+$(document).ready(function() {
+    // Initialise the table
+	$("#categorySort").tableDnD({
+		dragHandle: "col-drag-handle",
+		onDragClass: "col-drag",
+		onDrop: function(table, row) {
+			var rows = table.tBodies[0].rows;
+			var categoriesArray = [];
+			for (var i=0; i<rows.length; i++) {
+				categoriesArray[i] = rows[i].id;
+			}
+			var categories = categoriesArray.join(',');
+			$.post("<?php echo url::site() . 'admin/manage/category_sort/' ?>", { categories: categories },
+				function(data){
+					if (data == "ERROR") {
+						alert("Invalid Placement!!\n You cannot place a subcategory on top of a category.");
+					} else {
+						$("#categorySort"+" tbody tr td").effect("highlight", {}, 500);
+					}
+			});
+		}
+	});
+	
+	$("#categorySort tr").hover(function() {
+		$(this.cells[0]).addClass('col-show-handle');
+	}, function() {
+		$(this.cells[0]).removeClass('col-show-handle');
+	});
+});
+
 // Categories JS
 function fillFields(id, parent_id, category_title, category_description, category_color, locale<?php foreach($locale_array as $lang_key => $lang_name) echo ', '.$lang_key; ?>)
 {
