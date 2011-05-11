@@ -60,63 +60,63 @@ class VideoEmbed
 		}
 		
 		// Print the HTML embed code depending on the video service
-		if($service_name == "youtube")
+		if ($service_name == "youtube")
 		{
-			// Autoplay
+			// Check for autoplay
 			$you_auto = ($auto == "play")? "&autoplay=1" : "";
 			
 			echo "<object width='320' height='265'>"
-				. "		<param name='movie' value='http://www.youtube.com/v/$code$you_auto'></param>"
-				. "		<param name='wmode' value='transparent'></param>"
-				. "		<embed src='http://www.youtube.com/v/$code$you_auto' type='application/x-shockwave-flash' "
-				. "			wmode='transparent' width='320' height='265'>"
-				. "		</embed>"
+				. "	<param name='movie' value='http://www.youtube.com/v/$code$you_auto'></param>"
+				. "	<param name='wmode' value='transparent'></param>"
+				. "	<embed src='http://www.youtube.com/v/$code$you_auto' type='application/x-shockwave-flash' "
+				. "		wmode='transparent' width='320' height='265'>"
+				. "	</embed>"
 				. "</object>";
 		}
-		elseif($service_name == "google")
+		elseif ($service_name == "google")
 		{
-			// Autoplay
+			// Check for autoplay
 			$google_auto = ($auto == "play")? "&autoPlay=true" : "";
 
 			echo "<embed style='width:320px; height:265px;' id='VideoPlayback' type='application/x-shockwave-flash'"
-				. "		src='http://video.google.com/googleplayer.swf?docId=-$code$google_auto&hl=en' flashvars=''>"
+				. "	src='http://video.google.com/googleplayer.swf?docId=-$code$google_auto&hl=en' flashvars=''>"
 				. "</embed>";
 		}
-		elseif($service_name == "revver")
+		elseif ($service_name == "revver")
 		{
-			//clean the code
+			// Sanitization
 			$code = str_replace("/flv", "", $code);
 
-			//autoplay
+			// Check for autoplay
 			$rev_auto = ($auto == "play")? "&autoStart=true" : "";
 
 			echo "<script src='http://flash.revver.com/player/1.0/player.js?mediaId:$code;affiliateId:0;height:320;width:265;'"
-				. "		type='text/javascript'>"
+				. "	type='text/javascript'>"
 				. "</script>";
 		}
-		elseif($service_name == "metacafe")
+		elseif ($service_name == "metacafe")
 		{
 			// Sanitize input
 			$code = strrev(trim(strrev($code), "/"));
 			
 			echo "<embed src='http://www.metacafe.com/fplayer/$code.swf'"
-				. "		width='320' height='265' wmode='transparent' pluginspage='http://get.adobe.com/flashplayer/'"
-				. "		type='application/x-shockwave-flash'> "
+				. "	width='320' height='265' wmode='transparent' pluginspage='http://get.adobe.com/flashplayer/'"
+				. "	type='application/x-shockwave-flash'> "
 				. "</embed>";
 		}
 		elseif($service_name == "liveleak")
 		{
 			echo "<object type='application/x-shockwave-flash' width='320' height='272'='transparent'"
-				. "		data='http://www.liveleak.com/e/$code'>"
-				. "		<param name='movie' value='http://www.liveleak.com/e/$code'>"
-				. "		<param name='wmode' value='transparent'><param name='quality' value='high'>"
+				. "	data='http://www.liveleak.com/e/$code'>"
+				. "	<param name='movie' value='http://www.liveleak.com/e/$code'>"
+				. "	<param name='wmode' value='transparent'><param name='quality' value='high'>"
 				. "</object>";
 		}
-		elseif( $service_name == "dotsub") 
+		elseif ($service_name == "dotsub") 
 		{
 			echo "<iframe src='http://dotsub.com/media/$code' frameborder='0' width='320' height='500'></iframe>";
 		}
-		elseif( $service_name == "vimeo") 
+		elseif ($service_name == "vimeo") 
 		{
 			echo "<iframe src=\"http://player.vimeo.com/video/$code\" width=\"100%\" height=\"300\" frameborder=\"0\">"
 				. "</iframe>";
@@ -125,6 +125,5 @@ class VideoEmbed
 		// Free memory - though this is done implicitly by the PHP interpreter
 		unset($raw, $code, $service_name);
 	}
-
 }
 ?>
