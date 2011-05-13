@@ -34,6 +34,13 @@
 		// Current json_url, if map is switched dynamically between json and json_cluster
 		var json_url = default_json_url;
 		
+		/* 
+		 - Part of #2168 fix
+		 - Added by E.Kala <emmanuel(at)ushahidi.com>
+		*/
+		// Global list for current KML overlays in display
+		var kmlOverlays = [];
+		
 		var baseUrl = "<?php echo url::base(); ?>";
 		var longitude = <?php echo $longitude; ?>;
 		var latitude = <?php echo $latitude; ?>;
@@ -161,7 +168,14 @@
 			{
                 content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/<?php echo '<'; ?>/g, "&lt;");
             }
-            popup = new OpenLayers.Popup.FramedCloud("chicken", 
+            
+			// Destroy existing popups before opening a new one
+			if (event.feature.popup != null)
+			{
+				map.removePopup(event.feature.popup);
+			}
+			
+			popup = new OpenLayers.Popup.FramedCloud("chicken", 
 				event.feature.geometry.getBounds().getCenterLonLat(),
 				new OpenLayers.Size(100,100),
 				content,
@@ -175,9 +189,12 @@
 		*/
         function onFeatureUnselect(event)
 		{
-            map.removePopup(event.feature.popup);
-            event.feature.popup.destroy();
-            event.feature.popup = null;
+			// Safety check
+			if (event.feature.popup != null)
+	            map.removePopup(event.feature.popup);
+	            event.feature.popup.destroy();
+	            event.feature.popup = null;
+			}
         }
 
 		// Refactor Clusters On Zoom
@@ -227,9 +244,55 @@
 
 				// Get Current Center
 				currCenter = map.getCenter();
-
+				
+				// Part of #2168 fix
+				// Remove the KML overlays
+				if (kmlOverlays.length > 0)
+				{
+					for (var i = 0; i < kmlOverlays.length; i++)
+					{
+						map.removeLayer(kmlOverlays[i]);
+					}
+				}
+				
 				// Refresh Map
 				addMarkers(currCat, currStartDate, currEndDate, currZoom, currCenter, gMediaType);
+				
+				// Part of #2168 fix
+				// E.Kala <emmanuel(at)ushahidi.com>
+				// Add back the KML overlays
+				
+				/* 
+				  - The timout is so that the cluster markers are given time to load before
+				  - the overlays can be rendered
+				*/
+				setTimeout(
+					function()
+					{
+						if (kmlOverlays.length > 0)
+						{
+							for (var i = 0; i < kmlOverlays.length; i++)
+							{
+								kmlItem = kmlOverlays[i];
+								map.addLayer(kmlItem);
+								
+								// Add feature selection events to the last item
+								if (i == kmlOverlays.length -1)
+								{
+									selectControl = new OpenLayers.Control.SelectFeature(kmlItem);
+									map.addControl(selectControl);
+									selectControl.activate();
+									kmlItem.events.on({
+										"featureselected": onFeatureSelect,
+										"featureunselected": onFeatureUnselect
+									});
+								}
+								
+							}
+						}
+					},
+					timeout
+				);
 			}
 		}
 		
@@ -480,6 +543,33 @@
 					for (var i = 0; i <?php echo '<'; ?> new_layer.length; i++)
 					{
 						map.removeLayer(new_layer[i]);
+					}
+					
+					// Part of #2168 fix
+					// Added by E.Kala <emmanuel(at)ushahidi.com>
+					// Remove the layer from the list of KML overlays - kmlOverlays
+					if (kmlOverlays.length == 1)
+					{
+						kmlOverlays.pop();
+					}
+					else if (kmlOverlays.length > 1)
+					{
+						// Temporarily store the current list of overlays
+						tempKmlOverlays = kmlOverlays;
+						
+						// Re-initialize the list of overlays
+						kmlOverlays = [];
+						
+						// Search for the overlay that has just been removed from display
+						for (var i = 0; i < tempKmlOverlays.length; i ++)
+						{
+							if (tempKmlOverlays[i].name != "Layer_"+layerID)
+							{
+								kmlOverlays.push(tempKmlOverlays[i]);
+							}
+						}
+						// Unset the working list
+						tempKmlOverlays = null;
 					}
 				}
 				$("#layer_" + layerID).removeClass("active");

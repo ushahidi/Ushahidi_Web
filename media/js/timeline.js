@@ -759,16 +759,26 @@
 
 			map.addLayer(markers);
 			
-//			if (!newlayer)
-//			{ // Keep the Base Layer in Focus
-				selectControl = new OpenLayers.Control.SelectFeature(markers);
-				map.addControl(selectControl);
-				selectControl.activate();
-				markers.events.on({
-					"featureselected": onFeatureSelect,
-					"featureunselected": onFeatureUnselect
-				});
-//			}
+			/*
+			 - Added by E.Kala <emmanuel(at)ushahidi.com>
+			 - Part of the fix to issue #2168
+			*/
+			
+			// Check if the the new layer is a KML layer
+			if (thisLayer && thisLayerType == 'layers')
+			{
+				// Add layer object to the kmlOvelays array
+				kmlOverlays.push(markers);
+			}
+			
+			selectControl = new OpenLayers.Control.SelectFeature(markers);
+			map.addControl(selectControl);
+			selectControl.activate();
+			markers.events.on({
+				"featureselected": onFeatureSelect,
+				"featureunselected": onFeatureUnselect
+			});
+			
 			return markers;
 		};
 		
