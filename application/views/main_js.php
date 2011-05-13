@@ -149,7 +149,12 @@
 
 			var content = "<div class=\"infowindow\">" + thumb;
 			content = content + "<div class=\"infowindow_content\"><div class=\"infowindow_list\">"+event.feature.attributes.name+"</div>";
-		    content = content + "\n<div class=\"infowindow_meta\"><a href='"+event.feature.attributes.link+"'><?php echo Kohana::lang('ui_main.more_information');?></a><br/><a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",1)'><?php echo Kohana::lang('ui_main.zoom_in');?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",-1)'><?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
+		    content = content + "\n<div class=\"infowindow_meta\">";
+			if ( typeof(event.feature.attributes.link) != 'undefined' &&
+				event.feature.attributes.link != ''){
+				content = content + "<a href='"+event.feature.attributes.link+"'><?php echo Kohana::lang('ui_main.more_information');?></a><br/>";
+			};
+			content = content + "<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",1)'><?php echo Kohana::lang('ui_main.zoom_in');?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",-1)'><?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
 			content = content + "</div><div style=\"clear:both;\"></div></div>";		
 
 			if (content.search("<?php echo '<'; ?>script") != -1)
