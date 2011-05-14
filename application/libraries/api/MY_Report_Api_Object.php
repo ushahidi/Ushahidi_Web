@@ -139,8 +139,7 @@ class Report_Api_Object extends Api_Object_Core {
 
                 $incident_time = $post->incident_hour . ":" . 
                     $post->incident_minute . ":00 " . $post->incident_ampm;
-                $incident->incident_date = $incident_date . " " .
-                    $incident_time;
+                $incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
                 $incident->incident_dateadd = date("Y-m-d H:i:s",time());
                 $incident->save();
 

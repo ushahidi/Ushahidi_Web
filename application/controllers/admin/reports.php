@@ -389,7 +389,7 @@ class Reports_Controller extends Admin_Controller
 		//$form['longitude'] = Kohana::config('settings.default_lon');
 		$form['country_id'] = Kohana::config('settings.default_country');
 		$form['incident_date'] = date("m/d/Y",time());
-		$form['incident_hour'] = date('g');
+		$form['incident_hour'] = date('h');
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
 		// initialize custom field array

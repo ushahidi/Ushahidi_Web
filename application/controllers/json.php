@@ -107,7 +107,7 @@ class Json_Controller extends Template_Controller
 				->find_all();
 			foreach ($children as $child)
 			{
-				$where_child .= " OR incident_category.category_id = ".$child->id." ";
+				$where_child .= " OR ".$this->table_prefix."incident_category.category_id = ".$child->id." ";
 			}
 
 			// Retrieve markers by category
