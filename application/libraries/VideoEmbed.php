@@ -104,7 +104,7 @@ class VideoEmbed
 				. "	type='application/x-shockwave-flash'> "
 				. "</embed>";
 		}
-		elseif($service_name == "liveleak")
+		elseif ($service_name == "liveleak")
 		{
 			echo "<object type='application/x-shockwave-flash' width='320' height='272'='transparent'"
 				. "	data='http://www.liveleak.com/e/$code'>"
