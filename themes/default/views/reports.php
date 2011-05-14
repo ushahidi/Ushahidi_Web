@@ -58,7 +58,7 @@
 
 						<div class="r_media">
 							<p class="r_photo"> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>">
-								<img src="<?php echo $incident_thumb; ?>"/> </a>
+								<img src="<?php echo $incident_thumb; ?>" height="59" width="89" /> </a>
 							</p>
 
 							<!-- Only show this if the report has a video -->
