@@ -191,6 +191,7 @@
 		{
 			// Safety check
 			if (event.feature.popup != null)
+			{
 	            map.removePopup(event.feature.popup);
 	            event.feature.popup.destroy();
 	            event.feature.popup = null;
