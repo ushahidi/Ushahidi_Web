@@ -140,8 +140,8 @@ class Categories_Api_Object extends Api_Object_Core {
         $ret_json_or_xml = ''; //will hold the json/xml string to return
 
         //find incidents
-        $this->query = "SELECT id, category_title AS title, category_description AS
-                description, category_color AS color FROM `".$this->table_prefix."category` WHERE
+        $this->query = "SELECT id, category_title, category_description, 
+        	category_color FROM `".$this->table_prefix."category` WHERE
                 category_visible = 1 ORDER BY id DESC";
         
         $items = $this->db->query($this->query);
