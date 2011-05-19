@@ -23,6 +23,25 @@ class members_Core {
 		);
 	}
 	
+	/**
+     * Generate Report Sub Tab Menus
+     * @param string $this_sub_page
+     * @return string $menu
+     */
+    public static function reports_subtabs($this_sub_page = FALSE)
+    {
+        $menu = "";
+
+        $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_main.view_reports') : "<a href=\"".url::base()."members/reports\">".Kohana::lang('ui_main.view_reports')."</a>";
+
+        $menu .= ($this_sub_page == "edit") ? Kohana::lang('ui_main.create_report') : "<a href=\"".url::base()."members/reports/edit\">".Kohana::lang('ui_main.create_report')."</a>";
+
+        echo $menu;
+        
+        // Action::nav_admin_reports - Add items to the admin reports navigation tabs
+        Event::run('ushahidi_action.nav_members_reports', $this_sub_page);
+    }
+	
 	
 	/**
 	 * Get either a Gravatar URL or complete image tag for a specified email address.
