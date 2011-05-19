@@ -697,7 +697,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 INSERT INTO `roles` (`id`, `name`, `description`, `reports_view`, `reports_edit`, `reports_evaluation`, `reports_comments`, `reports_download`, `reports_upload`, `messages`, `messages_reporters`, `stats`, `settings`, `manage`, `users`, `manage_roles`, `checkin`, `checkin_admin`) VALUES
 (1, 'login', 'Login privileges, granted after account confirmation', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
 (2, 'admin', 'Administrative user, has access to almost everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1),
-(3, 'superadmin','Super administrative user, has access to everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+(3, 'superadmin','Super administrative user, has access to everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+(4, 'member','Regular user with access only to the member area', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 
 /**
@@ -837,7 +838,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 
 INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `last_login`, `updated`) VALUES
-(1, 'Administrator', 'david@ushahidi.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22');
+(1, 'Administrator', 'myemail@example.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22');
 
 
 /**
@@ -890,8 +891,9 @@ CREATE TABLE IF NOT EXISTS `verified` (
 */
 
 CREATE TABLE IF NOT EXISTS `alert` (                                                
-    `id` bigint(20) unsigned NOT NULL auto_increment,                               
-    `alert_type` tinyint(4) NOT NULL COMMENT '1 - MOBILE, 2 - EMAIL',               
+    `id` bigint(20) unsigned NOT NULL auto_increment,
+	`user_id` int(11) DEFAULT '0',
+    `alert_type` tinyint(4) NOT NULL COMMENT '1 - MOBILE, 2 - EMAIL',
     `alert_recipient` varchar(200) default NULL,                                    
     `alert_code` varchar(30) default NULL,                                          
     `alert_confirmed` tinyint(4) NOT NULL default '0',                              
@@ -1356,6 +1358,19 @@ CREATE TABLE `user_devices` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+/**
+* Table structure for table `openid`
+*/
+CREATE TABLE `openid` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `openid` varchar(255) NOT NULL,
+  `openid_email` varchar(127) NOT NULL,
+  `openid_server` varchar(255) NOT NULL,
+  `openid_date` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `openid` (`openid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /**
 * Constraints for dumped tables

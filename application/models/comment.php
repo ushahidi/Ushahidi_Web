@@ -7,7 +7,7 @@
 class Comment_Model extends ORM
 {
 	protected $has_many = array('rating');
-	protected $belongs_to = array('incident');
+	protected $belongs_to = array('incident','user');
 	
 	// Database table name
 	protected $table_name = 'comment';

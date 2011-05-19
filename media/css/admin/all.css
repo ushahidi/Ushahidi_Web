@@ -420,6 +420,8 @@ ul.nav-list li a.categories { background:url(../../img/admin/category-icon.gif) 
 ul.nav-list li a.locations { background:url(../../img/admin/locations-icon.gif) no-repeat 0 2px;}
 ul.nav-list li a.media { background:url(../../img/admin/media-icon.gif) no-repeat 0 2px;}
 ul.nav-list li a.messages { background:url(../../img/admin/messages-icon.gif) no-repeat 0 2px;}
+ul.nav-list li a.alerts { background:url(../../img/admin/alerts-icon.png) no-repeat 0 2px;}
+ul.nav-list li a.checkins { background:url(../../img/admin/checkins-icon.png) no-repeat 0 2px;}
 ul.nav-list li span.locations {
 	background:url(../../img/admin/locations-icon.gif) no-repeat 0 2px;
 	padding:0 0 5px 40px;
@@ -2142,5 +2144,22 @@ ul.map-toggles li a:active { display:inline-block; padding:3px 5px 3px 17px; out
 			background: url("../../img/openlayers/layer-switcher-minimize.png") no-repeat;
 			cursor: pointer;
 		}
+		
+		
+/* Members */
+.member_profile{
+	clear:both;
+}
+	.member_photo{
+		float:left;
+		margin:0 20px 0 20px;
+	}
+	.member_photo img{
+		border:2px solid #f5f5f5;
+		padding:3px;
+	}
+	.member_info{
+		float:left;
+	}
 /*--  --*/
 /*--  --*/

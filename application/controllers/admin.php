@@ -51,8 +51,9 @@ class Admin_Controller extends Template_Controller
 		$this->auth = new Auth();
 		$this->session = Session::instance();
 		$this->auth->auto_login();
-
-		if ( ! $this->auth->logged_in('login'))
+		
+		// Admin is not logged in, or this is a member (not admin)
+		if ( ! $this->auth->logged_in('login') OR $this->auth->logged_in('member'))
 		{
 			url::redirect('login');
 		}

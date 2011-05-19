@@ -17,6 +17,6 @@
 
 class User_Model extends Auth_User_Model {
 
-	// Use this actual model (rather than extending it) when needing to write a custom user model
+	protected $has_many = array('alert', 'comment', 'openid');
 
 } // End User_Model

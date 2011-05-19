@@ -15,7 +15,8 @@
  */
 
 class Alert_Model extends ORM
-{	
+{
+	protected $belongs_to = array('user');
 	protected $has_many = array('incident' => 'alert_sent', 'category' => 'alert_category');
     
 	// Database table name
