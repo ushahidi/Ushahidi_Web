@@ -104,6 +104,13 @@
 		echo html::script('media/js/tinymce/tiny_mce', true);
 	}
 	
+	// Load AutoComplete Plugin
+	if ($autocomplete_enabled)
+	{
+		echo html::stylesheet('media/css/jquery.autocomplete', '', true);
+		echo html::script('media/js/jquery.autocomplete.pack', true);
+	}
+	
 	// Turn on picbox
 	echo html::script('media/js/picbox', true);
 	echo html::stylesheet('media/css/picbox/picbox');

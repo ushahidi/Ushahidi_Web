@@ -22,7 +22,7 @@ class Profile_Controller extends Members_Controller
         parent::__construct();
         $this->template->this_page = 'profile';
         
-        $this->user_id = $_SESSION['auth_user']->id;
+        $this->user_id = $this->user->id;
     }
     
     public function index()

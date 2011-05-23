@@ -12,7 +12,7 @@ INSERT INTO `roles` (`name`,`description`, `reports_view`, `reports_edit`, `repo
 /**
 * Table structure for table `openid`
 */
-CREATE TABLE `openid` (
+CREATE TABLE IF NOT EXISTS `openid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `openid` varchar(255) NOT NULL,
@@ -22,5 +22,20 @@ CREATE TABLE `openid` (
   PRIMARY KEY (`id`),
   KEY `openid` (`openid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+/**
+* Table structure for table `private_message`
+*/
+CREATE TABLE IF NOT EXISTS `private_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
+  `from_user_id` int(11) DEFAULT '0',
+  `private_subject` varchar(255) NOT NULL,
+  `private_message` text NOT NULL,
+  `private_message_date` datetime NOT NULL,
+  `private_message_new` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 UPDATE `settings` SET `db_version` = '54' WHERE `id`=1 LIMIT 1;

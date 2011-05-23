@@ -1,8 +1,7 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
+
 /**
- * Model for users for the Auth Module
- *
- * $Id: user.php 3352 2008-08-18 09:43:56BST atomless $
+* Model for Private Messages
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -10,13 +9,15 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     User Model  
+ * @module     Private_Message Model  
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class User_Model extends Auth_User_Model {
-
-	protected $has_many = array('alert', 'comment', 'openid', 'private_message');
-
-} // End User_Model
+class Private_Message_Model extends ORM
+{
+	protected $belongs_to = array('user_id');
+	
+	// Database table name
+	protected $table_name = 'private_message';
+}

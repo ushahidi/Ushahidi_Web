@@ -1352,7 +1352,7 @@ PRIMARY KEY (`id`)
 /**
 * Table structure for table `user_devices`
 */
-CREATE TABLE `user_devices` (
+CREATE TABLE IF NOT EXISTS `user_devices` (
   `id` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -1361,7 +1361,7 @@ CREATE TABLE `user_devices` (
 /**
 * Table structure for table `openid`
 */
-CREATE TABLE `openid` (
+CREATE TABLE IF NOT EXISTS `openid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `openid` varchar(255) NOT NULL,
@@ -1371,6 +1371,22 @@ CREATE TABLE `openid` (
   PRIMARY KEY (`id`),
   KEY `openid` (`openid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/**
+* Table structure for table `private_message`
+*/
+CREATE TABLE IF NOT EXISTS `private_message` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL,
+  `from_user_id` int(11) DEFAULT '0',
+  `private_subject` varchar(255) NOT NULL,
+  `private_message` text NOT NULL,
+  `private_message_date` datetime NOT NULL,
+  `private_message_new` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 
 /**
 * Constraints for dumped tables

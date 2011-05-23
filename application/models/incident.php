@@ -202,18 +202,27 @@ class Incident_Model extends ORM
 	/*
 	* get the number of reports by date for dashboard chart
 	*/
-	public static function get_number_reports_by_date($range=NULL)
+	public static function get_number_reports_by_date($range=NULL, $user_id=NULL)
 	{
 		// Table Prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
 		$db = new Database();
 		
+		// Filter by User
+		$user_id = (int) $user_id;
+		$u_sql = " ";
+		if ($user_id)
+		{
+			$u_sql = " AND user_id = ".$user_id." ";
+		}
+		
+		// Filter by Range
 		if ($range == NULL)
 		{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident GROUP BY date ORDER BY incident_date ASC';
+			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.' incident WHERE 1=1 '.$u_sql.' GROUP BY date ORDER BY incident_date ASC';
 		}else{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) GROUP BY date ORDER BY incident_date ASC';
+			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) '.$u_sql.' GROUP BY date ORDER BY incident_date ASC';
 		}
 		
 		$query = $db->query($sql);

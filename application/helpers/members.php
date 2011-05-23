@@ -16,10 +16,10 @@ class members_Core {
 	{
 		return array(
 			'dashboard' => Kohana::lang('ui_admin.dashboard'),
-			'reports' => Kohana::lang('ui_admin.reports'),
-			'checkins' => Kohana::lang('ui_admin.checkins'),
-			'alerts' => Kohana::lang('ui_admin.alerts'),
-			'messages' => Kohana::lang('ui_admin.messages')
+			'reports' => Kohana::lang('ui_admin.my_reports'),
+			'checkins' => Kohana::lang('ui_admin.my_checkins'),
+			'alerts' => Kohana::lang('ui_admin.my_alerts'),
+			'private' => Kohana::lang('ui_admin.private_messages')
 		);
 	}
 	
@@ -40,6 +40,26 @@ class members_Core {
         
         // Action::nav_admin_reports - Add items to the admin reports navigation tabs
         Event::run('ushahidi_action.nav_members_reports', $this_sub_page);
+    }
+
+
+	/**
+     * Generate Private Messages Sub Tab Menus
+     * @param string $this_sub_page
+     * @return string $menu
+     */
+    public static function private_subtabs($this_sub_page = FALSE)
+    {
+        $menu = "";
+
+        $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_main.view_private') : "<a href=\"".url::base()."members/private\">".Kohana::lang('ui_main.view_private')."</a>";
+
+        $menu .= ($this_sub_page == "new") ? Kohana::lang('ui_main.new_private') : "<a href=\"".url::base()."members/private/send\">".Kohana::lang('ui_main.new_private')."</a>";
+
+        echo $menu;
+        
+        // Action::nav_members_private - Add items to the members private messages navigation tabs
+        Event::run('ushahidi_action.nav_members_private', $this_sub_page);
     }
 	
 	

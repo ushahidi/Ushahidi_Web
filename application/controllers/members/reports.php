@@ -102,7 +102,7 @@ class Reports_Controller extends Members_Controller {
 					foreach($post->incident_id as $item)
 					{
 						$update = ORM::factory('incident')
-							->where('user_id', $_SESSION['auth_user']->id)
+							->where('user_id', $this->user->id)
 							->find($item);
 						if ($update->loaded == true)
 						{
@@ -162,14 +162,14 @@ class Reports_Controller extends Members_Controller {
 			'total_items'	 => ORM::factory('incident')
 				->join('location', 'incident.location_id', 'location.id','INNER')
 				->where($filter)
-				->where('user_id', $_SESSION['auth_user']->id)
+				->where('user_id', $this->user->id)
 				->count_all()
 			));
 
 		$incidents = ORM::factory('incident')
 			->join('location', 'incident.location_id', 'location.id','INNER')
 			->where($filter)
-			->where('user_id', $_SESSION['auth_user']->id)
+			->where('user_id', $this->user->id)
 			->orderby('incident_dateadd', 'desc')
 			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
@@ -441,7 +441,7 @@ class Reports_Controller extends Members_Controller {
 				$incident->location_id = $location->id;
 				//$incident->locale = $post->locale;
 				$incident->form_id = $post->form_id;
-				$incident->user_id = $_SESSION['auth_user']->id;
+				$incident->user_id = $this->user->id;
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
 
@@ -490,7 +490,7 @@ class Reports_Controller extends Members_Controller {
 				// Record Approval/Verification Action
 				$verify = new Verify_Model();
 				$verify->incident_id = $incident->id;
-				$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+				$verify->user_id = $this->user->id;			// Record 'Verified By' Action
 				$verify->verified_date = date("Y-m-d H:i:s",time());
 				$verify->verified_status = '0';
 				$verify->save();
@@ -676,7 +676,7 @@ class Reports_Controller extends Members_Controller {
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident')
-					->where('user_id', $_SESSION['auth_user']->id)
+					->where('user_id', $this->user->id)
 					->find($id);
 				if ($incident->loaded == true)
 				{

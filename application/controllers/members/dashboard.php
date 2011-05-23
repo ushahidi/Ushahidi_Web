@@ -78,11 +78,10 @@ class Dashboard_Controller extends Members_Controller {
 		
 		$this->template->content->range = $range;
 
-		$incident_data = Incident_Model::get_number_reports_by_date($range);
+		$incident_data = Incident_Model::get_number_reports_by_date($range, $this->user->id);
 		$data = array('Reports'=>$incident_data);
 		$options = array('xaxis'=>array('mode'=>'"time"'));
 		$this->template->content->report_chart = protochart::chart('report_chart',$data,$options,array('Reports'=>'CC0000'),410,310);
-
 	}
 }
 ?>

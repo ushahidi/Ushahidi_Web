@@ -128,8 +128,8 @@
 						<div class="member_profile">
 							<div class="member_photo"><img src="<?php echo members::gravatar($user->email); ?>" width="80" /></div>
 							<div class="member_info">
-								<strong>Name:</strong> <?php echo $user->name; ?><BR />
-								<strong>OpenID's'</strong>:
+								<div class="member_info_row"><span class="member_info_label">Name:</span> <?php echo $user->name; ?></div>
+								<div class="member_info_row"><span class="member_info_label">OpenID's'</span>:
 									<ul>
 										<?php
 										foreach ($user->openid as $openid)
@@ -139,8 +139,9 @@
 										}
 										?>
 									</ul>
-								<strong>Checkins:</strong> 0<BR />
-								<strong>RiverID Score:</strong> 511<BR />
+								</div>
+								<div class="member_info_row"><span class="member_info_label">Checkins:</span> 0</div>
+								<div class="member_info_row"><span class="member_info_label">RiverID Score:</span> 511</div>
 							</div>
 						</div>
 					</div>
@@ -150,7 +151,7 @@
 						<h3><?php echo Kohana::lang('ui_main.quick_stats');?></h3>
 						<ul class="nav-list">
 							<li>
-								<a href="<?php echo url::site() . 'members/reports' ?>" class="reports"><?php echo Kohana::lang('ui_main.reports');?></a>
+								<a href="<?php echo url::site() . 'members/reports' ?>" class="reports"><?php echo Kohana::lang('ui_main.my_reports');?></a>
 								<strong><?php echo number_format($reports_total); ?></strong>
 								<ul>
 									<li><a href="<?php echo url::site() . 'members/reports?status=a' ?>"><?php echo Kohana::lang('ui_main.not_approved');?></a><strong>(<?php echo $reports_unapproved; ?>)</strong></li>
@@ -158,15 +159,15 @@
 								</ul>
 							</li>
 							<li>
-								<a href="<?php echo url::site() . 'members/alerts' ?>" class="checkins"><?php echo Kohana::lang('ui_admin.checkins');?></a>
+								<a href="<?php echo url::site() . 'members/checkins' ?>" class="checkins"><?php echo Kohana::lang('ui_admin.my_checkins');?></a>
 								<strong><?php echo "0"; ?></strong>
 							</li>
 							<li>
-								<a href="<?php echo url::site() . 'members/alerts' ?>" class="alerts"><?php echo Kohana::lang('ui_admin.alerts');?></a>
+								<a href="<?php echo url::site() . 'members/alerts' ?>" class="alerts"><?php echo Kohana::lang('ui_admin.my_alerts');?></a>
 								<strong><?php echo "0"; ?></strong>
 							</li>
 							<li>
-								<a href="<?php echo url::site() . 'members/messages' ?>" class="messages"><?php echo Kohana::lang('ui_main.messages');?></a>
+								<a href="<?php echo url::site() . 'members/private' ?>" class="messages"><?php echo Kohana::lang('ui_admin.private_messages');?></a>
 								<strong><?php echo "0"; ?></strong>
 							</li>
 						</ul>
