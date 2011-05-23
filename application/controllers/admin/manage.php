@@ -750,6 +750,12 @@ class Manage_Controller extends Admin_Controller
 	function feeds_items()
 	{
 		$this->template->content = new View('admin/feeds_items');
+		//Grab the feed_id from the URI
+		$feed_id = $this->uri->last_segment();
+		//check if the last segment is a numeric value
+		if( !is_numeric($feed_id)){
+			$feed_id = "";
+		}
 
 		if ( isset($feed_id)  AND !empty($feed_id) )
 		{
