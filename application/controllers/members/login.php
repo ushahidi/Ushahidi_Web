@@ -80,8 +80,15 @@ class Login_Controller extends Template_Controller {
 						
 					if ($openid_user->loaded AND $openid_user->user)
 					{
+						// First log all other sessions out
+						$auth->logout();
+						
 						// Initiate Ushahidi side login + AutoLogin
 						$auth->force_login($openid_user->user->username);
+						
+						echo ($auth->logged_in('member'))
+						     ? 'logged_in'
+						     : 'logged_out';
 						
 						// Exists Redirect to Dashboard
 						url::redirect("members/dashboard");
@@ -154,5 +161,8 @@ class Login_Controller extends Template_Controller {
 		}
 		
 		$this->template->openid_error = $openid_error;
+		
+		$this->template->site_name = Kohana::config('settings.site_name');
+		$this->template->site_tagline = Kohana::config('settings.site_tagline');
 	}
 }

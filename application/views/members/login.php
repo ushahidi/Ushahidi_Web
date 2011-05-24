@@ -18,7 +18,14 @@ $(document).ready(function() {
 
 <body>
 <div id="openid_login_container">
-	<div id="ushahidi_login_logo"><img src="<?php echo url::base() ?>media/img/admin/logo_login.gif" width="400" height="80" /></div>
+
+	<div id="ushahidi_site_name">
+    	<div id="logo">
+			<h1><?php echo $site_name; ?></h1>
+			<span><?php echo $site_tagline; ?></span>
+		</div>
+    </div>
+
 	<div id="openid_login">
 		<form method="post" action="<?php echo url::base();?>members/login" id="openid_form">
 			<input type="hidden" name="action" value="verify" />

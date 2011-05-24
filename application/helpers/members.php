@@ -52,9 +52,9 @@ class members_Core {
     {
         $menu = "";
 
-        $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_main.view_private') : "<a href=\"".url::base()."members/private\">".Kohana::lang('ui_main.view_private')."</a>";
+        $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_admin.view_private') : "<a href=\"".url::base()."members/private\">".Kohana::lang('ui_admin.view_private')."</a>";
 
-        $menu .= ($this_sub_page == "new") ? Kohana::lang('ui_main.new_private') : "<a href=\"".url::base()."members/private/send\">".Kohana::lang('ui_main.new_private')."</a>";
+        $menu .= ($this_sub_page == "new") ? Kohana::lang('ui_admin.new_private') : "<a href=\"".url::base()."members/private/send\">".Kohana::lang('ui_admin.new_private')."</a>";
 
         echo $menu;
         

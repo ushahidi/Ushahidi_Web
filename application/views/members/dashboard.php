@@ -128,8 +128,8 @@
 						<div class="member_profile">
 							<div class="member_photo"><img src="<?php echo members::gravatar($user->email); ?>" width="80" /></div>
 							<div class="member_info">
-								<div class="member_info_row"><span class="member_info_label">Name:</span> <?php echo $user->name; ?></div>
-								<div class="member_info_row"><span class="member_info_label">OpenID's'</span>:
+								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.name');?>:</span> <?php echo $user->name; ?></div>
+								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.openids');?></span>:
 									<ul>
 										<?php
 										foreach ($user->openid as $openid)
@@ -140,8 +140,8 @@
 										?>
 									</ul>
 								</div>
-								<div class="member_info_row"><span class="member_info_label">Checkins:</span> 0</div>
-								<div class="member_info_row"><span class="member_info_label">RiverID Score:</span> 511</div>
+								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.checkins');?>:</span> 0</div>
+								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.reputation');?>:</span> 0</div>
 							</div>
 						</div>
 					</div>
@@ -151,7 +151,7 @@
 						<h3><?php echo Kohana::lang('ui_main.quick_stats');?></h3>
 						<ul class="nav-list">
 							<li>
-								<a href="<?php echo url::site() . 'members/reports' ?>" class="reports"><?php echo Kohana::lang('ui_main.my_reports');?></a>
+								<a href="<?php echo url::site() . 'members/reports' ?>" class="reports"><?php echo Kohana::lang('ui_admin.my_reports');?></a>
 								<strong><?php echo number_format($reports_total); ?></strong>
 								<ul>
 									<li><a href="<?php echo url::site() . 'members/reports?status=a' ?>"><?php echo Kohana::lang('ui_main.not_approved');?></a><strong>(<?php echo $reports_unapproved; ?>)</strong></li>

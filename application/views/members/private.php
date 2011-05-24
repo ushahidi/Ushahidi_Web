@@ -27,10 +27,17 @@
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<ul>
-							<li><a href="#" onClick="messagesAction('d', 'DELETE', '')"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
-							<li><a href="#" onClick="messagesAction('s', 'READ', '')"><?php echo strtoupper(Kohana::lang('ui_main.mark_read'));?></a></li>
-						</ul>
+						<?php
+						if ($type != '2')
+						{
+							?>
+							<ul>
+								<li><a href="#" onClick="messagesAction('d', 'DELETE', '')"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+								<li><a href="#" onClick="messagesAction('r', 'MARK READ', '')"><?php echo strtoupper(Kohana::lang('ui_main.mark_read'));?></a></li>
+							</ul>
+							<?php
+						}
+						?>
 					</div>
 				</div>
 				<?php
@@ -87,10 +94,19 @@
 									</tr>
 								<?php	
 								}
-								foreach ($messages as $message)
+								foreach ($messages as $priv_message)
 								{
-									$message_id = $message->id;
-									$message_from_user = ORM::factory("user", $message->from_user_id);
+									$message_id = $priv_message->id;
+									$parent_id = ($priv_message->parent_id) ? $priv_message->parent_id : $message_id;
+									if ($priv_message->user_id == $user_id)
+									{
+										$message_from_user = ORM::factory("user", $priv_message->from_user_id);
+									}
+									else
+									{
+										$message_from_user = ORM::factory("user", $priv_message->user_id);
+									}
+									
 									if ($message_from_user->loaded)
 									{
 										$message_from = $message_from_user->name;
@@ -99,18 +115,17 @@
 									{
 										$message_from = "Unknown";
 									}
-									$message = text::auto_link($message->private_message);
+									$subject = $priv_message->private_subject;
+									$message = text::auto_link($priv_message->private_message);
 									$message_preview = text::limit_chars(strip_tags($message), 150, "...", true);
-									$message_date = date('Y-m-d', strtotime($message->private_message_date));
-									$message_new = $message->private_message_new;
-									
-									$message_type = 1;
+									$message_date = date('Y-m-d', strtotime($priv_message->private_message_date));
+									$message_new = $priv_message->private_message_new;
 									?>
 									<tr>
 										<td class="col-1"><input name="message_id[]" id="message" value="<?php echo $message_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<p><?php echo $message_preview; ?></p>
+												<p><?php echo $subject; ?></p>
 												<p><a href="javascript:preview('message_preview_<?php echo $message_id?>')"><?php echo Kohana::lang('ui_main.preview_message');?></a></p>
 												<div id="message_preview_<?php echo $message_id?>" style="display:none;">
 													<?php echo $message; ?>
@@ -118,22 +133,34 @@
 											</div>
 											<ul class="info">
 												<?php
-												if ($message_type == 2)
+												if ($type == 2)
 												{
-													?><li class="none-separator">To: <strong><?php echo $message_to; ?></strong><?php
+													?><li class="none-separator">To: <strong><?php echo $message_from; ?></strong><?php
 												}
 												else
 												{
-													?><li class="none-separator">From: <a href="<?php echo url::site()."admin/messages/reporters/index/".$service_id."?k=".urlencode($message_from);?>"><strong class="reporters_<?php echo $level_id?>"><?php echo $message_from; ?></strong></a><?php
+													?><li class="none-separator">From: <strong><a href="<?php echo  url::site()."members/private/send?to=".urlencode($message_from)."&p=".$parent_id ;?>"><?php echo $message_from; ?></a></strong><?php
 												}
 												?>
 											</ul>
 										</td>
 										<td class="col-3"><?php echo $message_date; ?></td>
 										<td class="col-4">
-											<ul>
-												<li><a href="javascript:messagesAction('d','DELETE','<?php echo(rawurlencode($message_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
-											</ul>
+											<?php
+											if ($type != '2')
+											{
+												?>
+												<ul>
+													<li class="none-separator"><a href="javascript:messagesAction('r','MARK READ','<?php echo(rawurlencode($message_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.mark_read');?></a></li>
+													<li><a href="javascript:messagesAction('d','DELETE','<?php echo(rawurlencode($message_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
+												</ul>
+												<?php
+											}
+											else
+											{
+												echo "&nbsp;";
+											}
+											?>
 										</td>
 									</tr>
 									<?php

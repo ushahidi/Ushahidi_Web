@@ -61,7 +61,62 @@ class Private_Controller extends Members_Controller {
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
-	
+			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
+
+				//	Add some filters
+			$post->pre_filter('trim', TRUE);
+
+			// Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('action','required', 'alpha', 'length[1,1]');
+			$post->add_rules('message_id.*','required','numeric');
+
+			// Test to see if things passed the rule checks
+			if ($post->validate())
+			{	
+				if( $post->action == 'd' )				// Delete Action
+				{
+					foreach($post->message_id as $item)
+					{
+						// Delete Message
+						$message = ORM::factory('private_message')
+							->where("user_id", $this->user->id)
+							->find($item);
+						$message->delete();
+					}
+					
+					$form_saved = TRUE;
+					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+				}
+				elseif( $post->action == 'r' )			// Mark As Read
+				{
+					foreach($post->message_id as $item)
+					{
+						// Update Message Level
+						$message = ORM::factory('private_message')
+							->where("user_id", $this->user->id)
+							->find($item);
+						if ($message->loaded)
+						{
+							$message->private_message_new = '0';
+							$message->save();
+						}
+					}
+					
+					$form_saved = TRUE;
+					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+				}
+			}
+			// No! We have validation errors, we need to show the form again, with the errors
+			else
+			{
+				// repopulate the form fields
+				$form = arr::overwrite($form, $post->as_array());
+
+				// populate the error fields, if any
+				$errors = arr::overwrite($errors, $post->errors('private_message'));
+				$form_error = TRUE;
+			}
 		}
 		
 		// Pagination
@@ -84,10 +139,13 @@ class Private_Controller extends Members_Controller {
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
+		$this->template->content->user_id = $this->user->id;
 
 		// Total Messages
 		$this->template->content->total_items = $pagination->total_items;
-
+		
+		// Javascript Header
+		$this->template->js = new View('members/private_js');
 	}
 	
 	/**
@@ -101,6 +159,7 @@ class Private_Controller extends Members_Controller {
 		// setup and initialize form field names
 		$form = array
 		(
+			'parent_id'  => '',
 			'private_to'  => '',
 			'private_subject'  => '',
 			'private_message'  => ''
@@ -112,6 +171,9 @@ class Private_Controller extends Members_Controller {
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		
+		$form['private_to'] = (isset($_GET['to']) AND ! empty($_GET['to'])) ? $_GET['to'] : "";
+		$form['parent_id'] = (isset($_GET['p']) AND ! empty($_GET['p'])) ? $_GET['p'] : "";
+		
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
@@ -119,6 +181,7 @@ class Private_Controller extends Members_Controller {
 			
 			 //	 Add some filters
 			$post->pre_filter('trim', TRUE);
+			$post->add_rules('parent_id','numeric');
 			$post->add_rules('private_to','required');
 			if ( ! empty($_POST['private_to']))
 			{
@@ -144,6 +207,7 @@ class Private_Controller extends Members_Controller {
 					if ($account->loaded)
 					{
 						$message = ORM::factory('private_message');
+						$message->parent_id = $post->parent_id;
 						$message->user_id = $account->id;
 						$message->from_user_id = $this->user->id;
 						$message->private_subject = $post->private_subject;
@@ -154,9 +218,6 @@ class Private_Controller extends Members_Controller {
 				}
 				
 				$form_saved = TRUE;
-				
-				// repopulate the form fields
-				$form = arr::overwrite($form, $post->as_array());
 			}
 			else 
 			{
