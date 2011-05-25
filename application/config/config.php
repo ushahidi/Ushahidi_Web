@@ -89,11 +89,16 @@ $config['render_stats'] = TRUE;
 
 /**
  * Turn MHI on or off. This is an advanced feature that will drastically alter
- * the way your instance works. Please read documentation before proceeding.
+ * the way your deployment works. Please read documentation before proceeding.
  *
  * @see [A URL not yet created]
  */
 $config['enable_mhi'] = FALSE;
+
+/**
+ * Add the ability to turn on / off auto upgrader
+ */
+$config['enable_auto_upgrader'] = TRUE;
 
 /**
  * Filename prefixed used to determine extensions. For example, an
