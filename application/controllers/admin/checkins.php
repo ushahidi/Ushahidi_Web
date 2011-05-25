@@ -90,7 +90,7 @@ class Checkins_Controller extends Admin_Controller
         // Pagination
         $pagination = new Pagination(array(
             'query_string'   => 'page',
-            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+            'items_per_page' => $this->items_per_page,
             'total_items'    => ORM::factory('checkin')
             								->join('users','checkin.user_id','users.id','INNER')
                                             ->where($filter)
@@ -101,7 +101,7 @@ class Checkins_Controller extends Admin_Controller
         						->join('users','checkin.user_id','users.id','INNER')
                                 ->where($filter)
                                 ->orderby('checkin_date','desc')
-                                ->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+                                ->find_all($this->items_per_page, $pagination->sql_offset);
         
         $this->template->content->checkins = $checkins;
         $this->template->content->pagination = $pagination;

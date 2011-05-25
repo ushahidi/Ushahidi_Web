@@ -147,15 +147,14 @@ class Sharing_Controller extends Admin_Controller
 		// Pagination
         $pagination = new Pagination(array(
 			'query_string' => 'page',
-			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-			'total_items'    => ORM::factory('sharing')->where($filter)->count_all()
+			'items_per_page' => $this->items_per_page,
+			'total_items'  => ORM::factory('sharing')->where($filter)->count_all()
 			));
 		
         $shares = ORM::factory('sharing')
 			->where($filter)
 			->orderby('sharing_name', 'asc')
-			->find_all((int) Kohana::config('settings.items_per_page_admin'), 
-				$pagination->sql_offset);
+			->find_all($this->items_per_page,  $pagination->sql_offset);
 		
 		$this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;

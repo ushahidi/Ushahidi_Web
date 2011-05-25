@@ -177,7 +177,7 @@ class Messages_Controller extends Admin_Controller
         // Pagination
         $pagination = new Pagination(array(
             'query_string'   => 'page',
-            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+            'items_per_page' => $this->items_per_page,
             'total_items'    => ORM::factory('message')
                                             ->join('reporter','message.reporter_id','reporter.id')
                                             ->where($filter)
@@ -190,7 +190,7 @@ class Messages_Controller extends Admin_Controller
                                 ->where('service_id', $service_id)
                                 ->where($filter)
                                 ->orderby('message_date','desc')
-                                ->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+                                ->find_all($this->items_per_page, $pagination->sql_offset);
             
         // Get Message Count
         // ALL
