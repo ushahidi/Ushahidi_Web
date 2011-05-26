@@ -32,9 +32,7 @@
 						</ul>
 					</div>
 				</div>
-				<?php
-				if ($form_error) {
-				?>
+				<?php if ($form_error): ?>
 					<!-- red-box -->
 					<div class="red-box">
 						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
@@ -48,22 +46,18 @@
 						?>
 						</ul>
 					</div>
-				<?php
-				}
-
-				if ($form_saved) {
-				?>
+				<?php endif; ?>
+				
+				<?php if ($form_saved): ?>
 					<!-- green-box -->
 					<div class="green-box">
 						<h3><?php echo Kohana::lang('ui_main.feed_has_been');?> <?php echo $form_action; ?>!</h3>
 					</div>
-				<?php
-				}
-				?>
+				<?php endif; ?>
+				
 				<!-- report-table -->
 				<div class="report-form">
-					<?php print form::open(NULL,array('id' => 'feedListing',
-					 	'name' => 'feedListing')); ?>
+					<?php print form::open(NULL,array('id' => 'feedListing', 'name' => 'feedListing')); ?>
 						<input type="hidden" name="action" id="action" value="">
 						<input type="hidden" name="feed_id" id="feed_id_action" value="">
 						<div class="table-holder">
@@ -78,23 +72,18 @@
 								</thead>
 								<tfoot>
 									<tr class="foot">
-										<td colspan="4">
-											<?php echo $pagination; ?>
-										</td>
+										<td colspan="4"><?php echo $pagination; ?></td>
 									</tr>
 								</tfoot>
 								<tbody>
-									<?php
-									if ($total_items == 0)
-									{
-									?>
+									<?php if ($total_items == 0): ?>
 										<tr>
 											<td colspan="4" class="col">
 												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 											</td>
 										</tr>
-									<?php	
-									}
+									<?php endif; ?>
+									<?php
 									foreach ($feeds as $feed)
 									{
 										$feed_id = $feed->id;
@@ -102,7 +91,7 @@
 										$feed_url = $feed->feed_url;
 										$feed_active = $feed->feed_active;
 										$feed_count = ORM::factory('feed_item')->where('feed_id',$feed->id)->count_all();
-										?>
+									?>
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
@@ -138,18 +127,13 @@
 					</ul>
 					<!-- tab -->
 					<div class="tab">
-						<?php print form::open(NULL,array('id' => 'feedMain',
-						 	'name' => 'feedMain')); ?>
-						<input type="hidden" id="feed_id" 
-							name="feed_id" value="" />
-						<input type="hidden" id="feed_active" 
-							name="feed_active" vaule="" />
-						<input type="hidden" name="action" 
-							id="action" value=""/>
+						<?php print form::open(NULL,array('id' => 'feedMain', 'name' => 'feedMain')); ?>
+						<input type="hidden" id="feed_id"  name="feed_id" value="" />
+						<input type="hidden" id="feed_active" name="feed_active" vaule="" />
+						<input type="hidden" name="action" id="action" value="a"/>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_main.feed_name');?>:</strong><br />
-							<?php print form::input('feed_name', '', 
-							' class="text"'); ?>
+							<?php print form::input('feed_name', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_main.feed_url');?>:</strong><br />

@@ -254,7 +254,7 @@ class Reports_Controller extends Admin_Controller
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'	 => 'page',
-			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'items_per_page' => $this->items_per_page,
 			'total_items'	 => ORM::factory('incident')
 				->join('location', 'incident.location_id', 'location.id','INNER')
 				->where($filter)
@@ -265,7 +265,7 @@ class Reports_Controller extends Admin_Controller
 			->join('location', 'incident.location_id', 'location.id','INNER')
 			->where($filter)
 			->orderby('incident_dateadd', 'desc')
-			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+			->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$location_ids = array();
 		foreach ($incidents as $incident)

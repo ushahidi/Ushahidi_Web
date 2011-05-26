@@ -15,24 +15,55 @@
 
 class Admin_Controller extends Template_Controller
 {
+	/**
+	 * Automatically display the views
+	 * @var bool
+	 */
 	public $auto_render = TRUE;
 
-	// Main template
+	/**
+	 * Path to the parent view for the pages in the admin console
+	 * @var string
+	 */
 	public $template = 'admin/layout';
 
-	// Cache instance
+	/**
+	 * Cache instance
+	 * @var Cache
+	 */
 	protected $cache;
 
-	// Enable auth
+	/**
+	 * Whether authentication is required
+	 * @var bool
+	 */
 	protected $auth_required = FALSE;
 
+	/**
+	 * ORM reference for the currently logged in user
+	 * @var object
+	 */
 	protected $user;
 
-	// Table Prefix
+	/**
+	 * Configured table prefix in the database config file
+	 * @var string
+	 */
 	protected $table_prefix;
-    
-    protected $release;
-
+	
+	/**
+	 * Release name of the platform
+	 * @var string
+	 */
+	protected $release;
+	
+	/**
+	 * No. of items to display per page - to be used for paginating lists
+	 * @var int
+	 */
+	protected $items_per_page;
+	
+	
 	public function __construct()
 	{
 		parent::__construct();
@@ -69,7 +100,10 @@ class Admin_Controller extends Template_Controller
 		    $this->template->version = $this->_get_release_version();
             $this->template->critical = $this->release->critical;
         }
-
+		
+		// Get the no. of items to display setting
+		$this->items_per_page = (int) Kohana::config('settings.items_per_page_admin');
+		
 		// Get Session Information
 		$this->user = new User_Model($_SESSION['auth_user']->id);
 		
@@ -116,9 +150,12 @@ class Admin_Controller extends Template_Controller
 	public function index()
 	{
 		// Send them to the right page
-		if(Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '') {
+		if (Kohana::config('config.enable_mhi') == TRUE && Kohana::config('settings.subdomain') == '')
+		{
 			url::redirect('admin/mhi');
-		}else{
+		}
+		else
+		{
 			url::redirect('admin/dashboard');
 		}
 	}

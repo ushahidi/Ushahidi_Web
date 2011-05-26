@@ -38,4 +38,11 @@ CREATE TABLE IF NOT EXISTS `private_message` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-UPDATE `settings` SET `db_version` = '54' WHERE `id`=1 LIMIT 1;
+/**
+* Drop organization-related tables
+*/
+DROP TABLE IF EXISTS `organization_incident`;
+DROP TABLE IF EXISTS `organization`;
+
+
+UPDATE `settings` SET `db_version` = 54 WHERE `id` = 1 LIMIT 1;

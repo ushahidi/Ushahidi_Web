@@ -74,14 +74,13 @@ class Users_Controller extends Admin_Controller
         // Pagination
         $pagination = new Pagination(array(
                             'query_string' => 'page',
-                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+                            'items_per_page' => $this->items_per_page,
                             'total_items'  => ORM::factory('user')->count_all()
                         ));
 
         $users = ORM::factory('user')
                     ->orderby('name', 'asc')
-                    ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
-                        $pagination->sql_offset);
+                    ->find_all($this->items_per_page, $pagination->sql_offset);
 
         // Set the flag for displaying the roles link
         $this->template->content->display_roles = $this->display_roles;

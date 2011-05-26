@@ -547,47 +547,6 @@ CREATE TABLE IF NOT EXISTS `media` (
 -- Dumping data for table `media`
 
 
-
-/**
-* Table structure for table `organization`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `organization` (                                         
-    `id` bigint(20) unsigned NOT NULL auto_increment,                               
-    `organization_name` varchar(255) default NULL,                                  
-    `organization_description` longtext default NULL,                               
-    `organization_website` varchar(255) default NULL,                               
-    `organization_email` varchar(120) default NULL,                                 
-    `organization_phone1` varchar(50) default NULL,                                 
-    `organization_phone2` varchar(50) default NULL,                                 
-    `organization_address` varchar(255) default NULL,                               
-    `organization_country` varchar(100) default NULL,                               
-    `organization_active` tinyint(4) NOT NULL default '1',                          
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `organization`
-
-
-
-/**
-* Table structure for table `organization_incident`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `organization_incident` (                                
-    `organization_id` bigint(20) default NULL,                                      
-    `incident_id` bigint(20) default NULL                                           
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `organization_incident`
-
-
 /**
 * Table structure for table `feed`
 * 
@@ -1410,4 +1369,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '53' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '54' WHERE `id`=1 LIMIT 1;
