@@ -20,7 +20,7 @@ define('IN_PRODUCTION', TRUE);
  *
  * This path can be absolute or relative to this file.
  */
-$kohana_application = '../../application';
+$kohana_application = 'application';
 
 /**
  * Kohana modules directory. This directory should contain all the modules used
@@ -29,7 +29,7 @@ $kohana_application = '../../application';
  *
  * This path can be absolute or relative to this file.
  */
-$kohana_modules = '../../modules';
+$kohana_modules = 'modules';
 
 /**
  * Kohana system directory. This directory should contain the core/ directory,
@@ -37,26 +37,27 @@ $kohana_modules = '../../modules';
  *
  * This path can be absolute or relative to this file.
  */
-$kohana_system = '../../system';
+$kohana_system = 'system';
 
 /**
  * Themes directory.
  *
  * This path can be absolute or relative to this file.
  */
-$kohana_themes = '../../themes';
+$kohana_themes = 'themes';
 
 /**
  * Plugin directory.
  *
  * This path can be absolute or relative to this file.
  */
-$kohana_plugins = '../../plugins';
+$kohana_plugins = 'plugins';
 
 /**
- * Tests path
+ * Location of the PHPUnit unit tests
  */
-$phpunit_tests = '../../tests';
+$phpunit_tests = 'tests/phpunit';
+
 /**
  * Test to make sure that Kohana is running on PHP 5.2 or newer. Once you are
  * sure that your environment is compatible with Kohana, you can comment this
@@ -91,22 +92,25 @@ define('EXT', '.php');
 //
 
 // Define the front controller name and docroot
-define('DOCROOT', '../..'.DIRECTORY_SEPARATOR);
+define('DOCROOT', substr($current_dir, 0, strlen($current_dir) - strlen($phpunit_tests)));
 define('KOHANA',  basename(__FILE__));
+
+// Get the current directory
+$current_dir =  str_replace('\\', '/', dirname(realpath(__FILE__)));
 
 // If the front controller is a symlink, change to the real docroot
 is_link(KOHANA) and chdir(dirname(realpath(__FILE__)));
 
 // Define application and system paths
-define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
-define('THEMEPATH', str_replace('\\', '/', realpath($kohana_themes)).'/');
-define('PLUGINPATH', str_replace('\\', '/', realpath($kohana_plugins)).'/');
-define('MODPATH', str_replace('\\', '/', realpath($kohana_modules)).'/');
-define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).'/');
-define('TESTSPATH', str_replace('\\', '/', realpath($phpunit_tests)).'/');
+define('APPPATH', str_replace('\\', '/', DOCROOT.$kohana_application).'/');
+define('THEMEPATH', str_replace('\\', '/', DOCROOT.$kohana_themes).'/');
+define('PLUGINPATH', str_replace('\\', '/', DOCROOT.$kohana_plugins).'/');
+define('MODPATH', str_replace('\\', '/', DOCROOT.$kohana_modules).'/');
+define('SYSPATH', str_replace('\\', '/', DOCROOT.$kohana_system).'/');
+define('TESTS_PATH', str_replace('\\', '/', DOCROOT.$phpunit_tests).'/');
 
 // Clean up
-unset($kohana_application, $kohana_themes, $kohana_plugins, $kohana_modules, $kohana_system);
+unset($kohana_application, $kohana_themes, $kohana_plugins, $kohana_modules, $kohana_system, $phpunit_tests);
 
 // Bootstrap the Kohana project, Ushahidi_Web in this case
-require TESTSPATH.'phpunit/testbootstrap'.EXT;
+require TESTS_PATH.'testbootstrap'.EXT;
