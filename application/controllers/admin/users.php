@@ -258,6 +258,7 @@ class Users_Controller extends Admin_Controller
             $role_array[$role->name] = strtoupper($role->name);
         }
         
+        $this->template->content->id = $user_id;
         $this->template->content->display_roles = $this->display_roles;
         $this->template->content->user = $user;
         $this->template->content->form = $form;
