@@ -49,6 +49,7 @@
 	'archived' => 'Archived',
 	'at' => 'at',
 	'author' => 'Author',
+	'auto_checkin' => 'Auto Checkin',
 	'avg_reports_per_day' => 'Avg Reports Per Day',
 	'awaiting_approval' => 'Awaiting Approval',
 	'awaiting_verification' => 'Awaiting Verification',

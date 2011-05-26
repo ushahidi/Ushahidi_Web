@@ -61,6 +61,26 @@ class members_Core {
         // Action::nav_members_private - Add items to the members private messages navigation tabs
         Event::run('ushahidi_action.nav_members_private', $this_sub_page);
     }
+
+
+	/**
+     * Generate Alerts Sub Tab Menus
+     * @param string $this_sub_page
+     * @return string $menu
+     */
+    public static function alerts_subtabs($this_sub_page = FALSE)
+    {
+        $menu = "";
+
+        $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_admin.my_alerts') : "<a href=\"".url::base()."members/alerts\">".Kohana::lang('ui_admin.my_alerts')."</a>";
+
+        $menu .= ($this_sub_page == "edit") ? Kohana::lang('ui_admin.new_alert') : "<a href=\"".url::base()."members/alerts/edit\">".Kohana::lang('ui_admin.new_alert')."</a>";
+
+        echo $menu;
+        
+        // Action::nav_members_alerts - Add items to the members alerts navigation tabs
+        Event::run('ushahidi_action.nav_members_alerts', $this_sub_page);
+    }
 	
 	
 	/**

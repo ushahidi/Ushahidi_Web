@@ -1,5 +1,8 @@
 <?php
 	$lang = array(
+	'private_to' => 'Start typing to list members',
+	'private_subject' => 'Private message subject',
+	'private_message' => 'Private message',
 	'profile_email' => 'Your email address',
 	'profile_name' => 'Your full name',
 	'profile_notify' => 'Selecting YES lets you get alerts via email when new reports or comments are posted on your website',

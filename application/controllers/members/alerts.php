@@ -25,7 +25,71 @@ class Alerts_Controller extends Members_Controller {
 	
 	public function index()
 	{
-		$this->template = "";
-		$this->auto_render = FALSE;
+		$this->template->content = new View('members/alerts');
+		$this->template->content->title = Kohana::lang('ui_admin.my_alerts');
+		
+		// Is this an Inbox or Outbox Filter?
+		if (!empty($_GET['type']))
+		{
+			$type = $_GET['type'];
+
+			if ($type == '1')
+			{ // SMS
+				$filter = 'alert_type=1';
+			}
+			elseif ($type == '2')
+			{ // EMAIL
+				$filter = 'alert_type=2';
+			}
+			else
+			{ // ALL
+				$filter = '1=1';
+			}
+		}
+		else
+		{
+			$type = "0";
+			$filter = '1=1';
+		}
+		
+		// check, has the form been submitted?
+		$form_error = FALSE;
+		$form_saved = FALSE;
+		$form_action = "";
+		
+		// check, has the form been submitted, if so, setup validation
+		if ($_POST)
+		{
+			
+		}
+		
+		// Pagination
+		$pagination = new Pagination(array(
+			'query_string'	 => 'page',
+			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'total_items'	 => ORM::factory('alert')
+				->where("user_id", $this->user->id)
+				->where($filter)
+				->count_all()
+			));
+
+		$alerts = ORM::factory('alert')
+			->where("user_id", $this->user->id)
+			->where($filter)
+			->orderby('id', 'asc')
+			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+			
+		$this->template->content->alerts = $alerts;
+		$this->template->content->pagination = $pagination;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_saved = $form_saved;
+		$this->template->content->form_action = $form_action;
+		$this->template->content->type = $type;
+
+		// Total Messages
+		$this->template->content->total_items = $pagination->total_items;
+		
+		// Javascript Header
+		$this->template->js = new View('members/private_js');
 	}	
 }

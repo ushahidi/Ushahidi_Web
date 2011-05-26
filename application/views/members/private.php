@@ -127,7 +127,7 @@
 											<div class="post">
 												<p><?php echo $subject; ?></p>
 												<p><a href="javascript:preview('message_preview_<?php echo $message_id?>')"><?php echo Kohana::lang('ui_main.preview_message');?></a></p>
-												<div id="message_preview_<?php echo $message_id?>" style="display:none;">
+												<div id="message_preview_<?php echo $message_id?>" class="preview_div">
 													<?php echo $message; ?>
 												</div>
 											</div>

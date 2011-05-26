@@ -33,17 +33,22 @@ class Main_Controller extends Template_Controller {
 
 	// Themes Helper
 	protected $themes;
+	
+	// User Object
+	protected $user;
 
 	public function __construct()
 	{
 		parent::__construct();
-
+		
+		$this->auth = new Auth();
+		$this->auth->auto_login();
+		
+		// Load Session
+		$this->session = Session::instance();
+		
 		if(Kohana::config('settings.private_deployment'))
 		{
-			$this->auth = new Auth();
-			$this->session = Session::instance();
-			$this->auth->auto_login();
-	
 			if ( ! $this->auth->logged_in('login'))
 			{
 				url::redirect('login/front');
@@ -52,9 +57,6 @@ class Main_Controller extends Template_Controller {
 		
         // Load cache
 		$this->cache = new Cache;
-
-		// Load Session
-		$this->session = Session::instance();
 
         // Load Header & Footer
 		$this->template->header  = new View('header');
@@ -89,6 +91,8 @@ class Main_Controller extends Template_Controller {
 		
 		if( isset(Auth::instance()->get_user()->username) AND isset(Auth::instance()->get_user()->id) )
 		{
+			// Load User
+			$this->user = Auth::instance()->get_user();
 			$this->template->header->loggedin_username = html::specialchars(Auth::instance()->get_user()->username);
 			$this->template->header->loggedin_userid = Auth::instance()->get_user()->id;
 		}

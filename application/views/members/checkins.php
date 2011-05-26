@@ -103,7 +103,7 @@
 										<td class="col-2">
 											<div class="post">
 												<p><?php echo $preview; ?></p>
-												<p><a href="javascript:showCheckin('checkin_preview_<?php echo $checkin_id?>', '<?php echo $longitude?>', '<?php echo $latitude?>')"><?php echo Kohana::lang('ui_main.preview_message');?></a></p>
+												<p><a href="javascript:showCheckin('checkin_preview_<?php echo $checkin_id?>', '<?php echo $longitude?>', '<?php echo $latitude?>')"><?php echo Kohana::lang('ui_admin.preview');?></a></p>
 												<div id="checkin_preview_<?php echo $checkin_id?>" class="preview_div">
 													<?php echo $description; ?>
 													<div id="checkin_preview_<?php echo $checkin_id?>_map" class="checkin_map"></div>
