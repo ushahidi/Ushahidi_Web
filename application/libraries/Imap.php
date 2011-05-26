@@ -173,7 +173,9 @@ class Imap_Core {
 			}
 
 			// Convert to valid UTF8
-			$body = htmlentities($body,NULL,mb_detect_encoding($body, "auto"));
+			$detected_encoding = mb_detect_encoding($body, "auto");
+			if($detected_encoding == 'ASCII') $detected_encoding = 'iso-8859-1';
+			$body = htmlentities($body,NULL,$detected_encoding);
 			$subject = htmlentities(strip_tags($subject),NULL,'UTF-8');
 
 			array_push($messages, array('message_id' => $message_id,
