@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit colors="true" bootstrap="bootstrap.php">
+    <testsuites>
+    	<testsuite name="Ushahidi_Web Tests">
+    		<directory>./classes</directory>
+    	</testsuite>
+    </testsuites>
+    
+    <php>
+        <server name="HTTP_HOST" value="localhost" />
+    </php>
+    
+</phpunit>
