@@ -51,14 +51,5 @@ Benchmark::start(SYSTEM_BENCHMARK.'_system_initialization');
 // Prepare the system
 Event::run('system.ready');
 
-// Determine routing
-// Event::run('system.routing');
-
-// End system_initialization
-// Benchmark::stop(SYSTEM_BENCHMARK.'_system_initialization');
-
-// Make the magic happen!
-// Event::run('system.execute');
-
 // Clean up and exit
 Event::run('system.shutdown');
