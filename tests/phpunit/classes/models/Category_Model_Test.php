@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access allowed.');
 /**
- * Unit test for the cateory model
+ * Unit tests for the category model
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -8,7 +8,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author	   Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module	   Test
+ * @module	   Unit Tests
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */

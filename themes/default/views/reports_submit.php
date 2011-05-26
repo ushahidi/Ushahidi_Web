@@ -178,7 +178,7 @@
 						<div style="clear:both;" id="find_text"><?php echo Kohana::lang('ui_main.pinpoint_location'); ?>.</div>
 					</div>
 				</div>
-				<?php Event::run('ushahidi_action.report_form_admin_location', $id); ?>
+				<?php Event::run('ushahidi_action.report_form_location', $id); ?>
 				<div class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span class="example"><?php echo Kohana::lang('ui_main.detailed_location_example'); ?></span></h4>
 					<?php print form::input('location_name', $form['location_name'], ' class="text long"'); ?>
