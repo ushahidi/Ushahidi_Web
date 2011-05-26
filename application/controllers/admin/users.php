@@ -163,6 +163,8 @@ class Users_Controller extends Admin_Controller
             
             $post->add_rules('notify','between[0,1]');
             
+            Event::run('ushahidi_action.user_submit_admin', $post);
+            
             if ($post->validate())
             {
                 $user = ORM::factory('user',$user_id);
@@ -202,6 +204,7 @@ class Users_Controller extends Admin_Controller
                     $user->add(ORM::factory('role', $post->role));
                 }
                 $user->save();
+                Event::run('ushahidi_action.user_edit', $user);
                 
                 // Redirect
                 url::redirect(url::site().'admin/users/');
@@ -255,6 +258,7 @@ class Users_Controller extends Admin_Controller
             $role_array[$role->name] = strtoupper($role->name);
         }
         
+        $this->template->content->id = $user_id;
         $this->template->content->display_roles = $this->display_roles;
         $this->template->content->user = $user;
         $this->template->content->form = $form;

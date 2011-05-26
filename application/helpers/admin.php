@@ -39,7 +39,7 @@ class admin_Core {
 			$tabs['messages'] = Kohana::lang('ui_admin.messages');
 			$tabs['stats'] = Kohana::lang('ui_admin.stats');
 			$tabs['addons'] = Kohana::lang('ui_admin.addons');
-
+			Event::run('ushahidi_action.nav_admin_main_top', $tabs);
 			return $tabs;
         }
     }
