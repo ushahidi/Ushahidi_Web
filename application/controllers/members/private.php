@@ -214,6 +214,28 @@ class Private_Controller extends Members_Controller {
 						$message->private_message = $post->private_message;
 						$message->private_message_date = date("Y-m-d H:i:s",time());
 						$message->save();
+						
+						// Email Private Message
+						$to = $account->email;
+						$from = array();
+							$settings = kohana::config('settings');
+							$from[] = $settings['site_email'];
+							$from[] = $settings['site_name'];
+						$subject = "[".Kohana::config('settings.site_name')."] - ".$post->private_subject;
+						$body = Kohana::lang('notifications.member_new_message.message').
+							"\n\n~~~~~~~~~~~~~~~~~~~~~~~~~\n".
+							$post->private_message.
+							"\n\n".Kohana::lang('notifications.member_new_message.footer').
+							"\n ".url::base()."members/";
+							
+						if ( ! email::send($to,
+							$from,
+							$subject,
+							$body,
+							FALSE))
+						{
+							Kohana::log('error', "email to $to could not be sent");
+						}
 					}
 				}
 				
