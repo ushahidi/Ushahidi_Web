@@ -74,7 +74,7 @@ class Manage_Controller extends Admin_Controller
 			$form['category_title_'.$lang_key] = '';
 		}
 
-		// copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
@@ -125,16 +125,12 @@ class Manage_Controller extends Admin_Controller
 					$category->save();
 					
 					// Get the category localization
-					$category_lang = ($category->loaded)
-										? Category_Lang_Model::category_langs($category->id)
-										: FALSE;
+					$languages = ($category->loaded) ? Category_Lang_Model::category_langs($category->id) : FALSE;
 					
-					$category_lang = (isset($category_lang[$category->id]))
-										? $category_lang[$category->id]
-										: FALSE;
+					$category_lang = (isset($languages[$category->id])) ? $languages[$category->id] : FALSE;
 					
 					// Save localizations
-					foreach($post->category_title_lang as $lang_key => $localized_category_name)
+					foreach ($post->category_title_lang as $lang_key => $localized_category_name)
 					{
 						$cl = (isset($category_lang[$lang_key]['id']))
 							? ORM::factory('category_lang',$category_lang[$lang_key]['id'])
@@ -183,16 +179,15 @@ class Manage_Controller extends Admin_Controller
 				else
 				{
 					// Validation failed
-					
+
 					// Repopulate the form fields
 					$form = arr::overwrite($form, array_merge($category_data->as_array(), $post->as_array()));
 
-				   // populate the error fields, if any
+					// populate the error fields, if any
 					$errors = arr::overwrite($errors, 
 						array_merge($cateory_data->errors('category'), $post->errors('category')));
-						
+
 					$form_error = TRUE;
-					
 				}
 				
 			}
@@ -216,7 +211,7 @@ class Manage_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 			}
-			elseif( $post->action == 'v' )
+			elseif( $post->action == 'v')
 			{ 
 				// Show/Hide Action
 				if ($category->loaded)
@@ -228,7 +223,7 @@ class Manage_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
-			elseif( $post->action == 'i' )
+			elseif( $post->action == 'i')
 			{ 
 				// Delete Image/Icon Action
 				if ($category->loaded)
@@ -248,8 +243,8 @@ class Manage_Controller extends Admin_Controller
 						unlink(Kohana::config('upload.directory', TRUE) . $category_image_thumb);
 					}
 
-					$category->category_image = null;
-					$category->category_image_thumb = null;
+					$category->category_image = NULL;
+					$category->category_image_thumb = NULL;
 					$category->save();
 					
 					$form_saved = TRUE;
@@ -263,21 +258,21 @@ class Manage_Controller extends Admin_Controller
 		$pagination = new Pagination(array(
 			'query_string' => 'page',
 			'items_per_page' => $this->items_per_page,
-			'total_items'	 => ORM::factory('category')
+			'total_items' => ORM::factory('category')
 			->where('parent_id','0')
 			->count_all()
 		));
 
 		$categories = ORM::factory('category')
-			->with('category_lang')
-			->where('parent_id','0')
-			->orderby('category_position', 'asc')
-			->orderby('category_title', 'asc')
-			->find_all($this->items_per_page, $pagination->sql_offset);
+						->with('category_lang')
+						->where('parent_id','0')
+						->orderby('category_position', 'asc')
+						->orderby('category_title', 'asc')
+						->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$parents_array = ORM::factory('category')
-			->where('parent_id','0')
-			->select_list('id', 'category_title');
+							->where('parent_id','0')
+							->select_list('id', 'category_title');
 
 		// add none to the list
 		$parents_array[0] = "--- Top Level Category ---";
@@ -353,6 +348,7 @@ class Manage_Controller extends Admin_Controller
 							$category->save();
 						}
 					}
+					
 					$i++;
 				}
 			}
@@ -390,7 +386,7 @@ class Manage_Controller extends Admin_Controller
 			'page_description' => ''
 		);
 		
-		//	Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
@@ -453,15 +449,14 @@ class Manage_Controller extends Admin_Controller
 
 		// Pagination
 		$pagination = new Pagination(array(
-							'query_string' => 'page',
-							'items_per_page' => $this->items_per_page,
-							'total_items'	 =>
-							ORM::factory('page')->count_all()
-						));
+			'query_string' => 'page',
+			'items_per_page' => $this->items_per_page,
+			'total_items' => ORM::factory('page')->count_all()
+		));
 
 		$pages = ORM::factory('page')
-						->orderby('page_title', 'asc')
-						->find_all($this->items_per_page, $pagination->sql_offset);
+					->orderby('page_title', 'asc')
+					->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$this->template->content->form = $form;
 		$this->template->content->form_error = $form_error;
@@ -489,10 +484,10 @@ class Manage_Controller extends Admin_Controller
 		$form = array
 		(
 			'action' => '',
-			'feed_id'	   => '',
-			'feed_name'		 => '',
-			'feed_url'	  => '',
-			'feed_active'  => ''
+			'feed_id' => '',
+			'feed_name' => '',
+			'feed_url' => '',
+			'feed_active' => ''
 		);
 		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
@@ -523,8 +518,8 @@ class Manage_Controller extends Admin_Controller
 				{
 					// Repopulate the form fields
 					$form = arr::overwrite($form, $data->as_array());
-					
-				   // Populate the error fields, if any
+
+					// Populate the error fields, if any
 					$errors = arr::overwrite($errors, $data->errors('feeds'));
 					$form_error = TRUE;
 				}
@@ -551,7 +546,7 @@ class Manage_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
-			elseif ($_POST['action'] == 'r' )
+			elseif ($_POST['action'] == 'r')
 			{
 				$this->_parse_feed();
 			}
@@ -559,14 +554,14 @@ class Manage_Controller extends Admin_Controller
 
 		// Pagination
 		$pagination = new Pagination(array(
-							'query_string' => 'page',
-							'items_per_page' => $this->items_per_page,
-							'total_items'	 => ORM::factory('feed')->count_all()
-						));
+			'query_string' => 'page',
+			'items_per_page' => $this->items_per_page,
+			'total_items'	 => ORM::factory('feed')->count_all()
+		));
 
 		$feeds = ORM::factory('feed')
-						->orderby('feed_name', 'asc')
-						->find_all($this->items_per_page, $pagination->sql_offset);
+					->orderby('feed_name', 'asc')
+					->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
@@ -808,15 +803,14 @@ class Manage_Controller extends Admin_Controller
 
 		// Pagination
 		$pagination = new Pagination(array(
-							'query_string' => 'page',
-							'items_per_page' => $this->items_per_page,
-							'total_items' => ORM::factory('layer')
-												->count_all()
-						));
+			'query_string' => 'page',
+			'items_per_page' => $this->items_per_page,
+			'total_items' => ORM::factory('layer')->count_all()
+		));
 
 		$layers = ORM::factory('layer')
-						->orderby('layer_name', 'asc')
-						->find_all($this->items_per_page, $pagination->sql_offset);
+					->orderby('layer_name', 'asc')
+					->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
@@ -899,14 +893,14 @@ class Manage_Controller extends Admin_Controller
 
 		// Pagination
 		$pagination = new Pagination(array(
-							'query_string' => 'page',
-							'items_per_page' => $this->items_per_page,
-							'total_items' => ORM::factory('level')->count_all()
-						));
+			'query_string' => 'page',
+			'items_per_page' => $this->items_per_page,
+			'total_items' => ORM::factory('level')->count_all()
+		));
 
 		$levels = ORM::factory('level')
-						->orderby('level_weight', 'asc')
-						->find_all($this->items_per_page, $pagination->sql_offset);
+					->orderby('level_weight', 'asc')
+					->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
