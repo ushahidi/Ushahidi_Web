@@ -4,6 +4,12 @@
 ALTER TABLE `alert` ADD `user_id` int(11) DEFAULT '0'  AFTER `id`;
 
 /**
+* Add new column to Checkin table. Associates checkin to incident
+*/
+ALTER TABLE `checkin` ADD `incident_id` int(11) NULL DEFAULT '0'  AFTER `location_id`;
+
+
+/**
 * Create new Member Role
 */
 INSERT INTO `roles` (`name`,`description`, `reports_view`, `reports_edit`, `reports_evaluation`, `reports_comments`, `reports_download`, `reports_upload`, `messages`, `messages_reporters`, `stats`, `settings`, `manage`, `users`, `manage_roles`, `checkin`, `checkin_admin`) VALUES

@@ -473,6 +473,7 @@ class Reports_Controller extends Admin_Controller
 				// Does the sender of this message have a location?
 				if ($message->reporter->location->loaded)
 				{
+					$form['location_id'] = $message->reporter->location->id;
 					$form['latitude'] = $message->reporter->location->latitude;
 					$form['longitude'] = $message->reporter->location->longitude;
 					$form['location_name'] = $message->reporter->location->location_name;

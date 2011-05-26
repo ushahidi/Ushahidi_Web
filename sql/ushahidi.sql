@@ -1302,6 +1302,7 @@ CREATE TABLE IF NOT EXISTS `checkin`
 `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 `user_id` INT UNSIGNED NOT NULL,
 `location_id` BIGINT UNSIGNED NOT NULL,
+`incident_id` int(11) DEFAULT '0',
 `checkin_description` VARCHAR(255),
 `checkin_date` DATETIME NOT NULL,
 `checkin_auto` ENUM('0','1') DEFAULT '0',

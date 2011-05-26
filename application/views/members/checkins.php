@@ -88,6 +88,7 @@
 								foreach ($checkins as $checkin)
 								{
 									$checkin_id = $checkin->id;
+									$incident_id = $checkin->incident_id;
 									$location = $checkin->location->location_name;
 									$latitude = $checkin->location->latitude;
 									$longitude = $checkin->location->longitude;
@@ -135,6 +136,16 @@
 										<td class="col-3"><?php echo $checkin_date; ?></td>
 										<td class="col-4">
 											<ul>
+												<?php
+												if ((int) $incident_id)
+												{
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'members/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_admin.view_report')."</strong></a></li>";
+												}
+												else
+												{
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'members/reports/edit?cid=' . $checkin_id ."\">".Kohana::lang('ui_admin.create_report')."?</a></li>";
+												}
+												?>
 												<li class="none-separator"><a href="javascript:checkinAction('d','DELETE','<?php echo(rawurlencode($checkin_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>
 										</td>

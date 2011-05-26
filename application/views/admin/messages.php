@@ -6,11 +6,11 @@
  * LICENSE: This source file is subject to LGPL license 
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
- * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
+ * @author	   Ushahidi Team <team@ushahidi.com> 
+ * @package	   Ushahidi - http://source.ushahididev.com
+ * @module	   API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
 			<div class="bg">
@@ -138,27 +138,27 @@
 														<?php echo $message_detail; ?>
 														
 														<?php
-				                        				// Retrieve Attachments if any
-				                        				foreach($message->media as $photo) 
-				                        				{
-				                        					if ($photo->media_type == 1)
-				                        					{
-				                        						print "<div class=\"attachment_thumbs\" id=\"photo_". $photo->id ."\">";
+														// Retrieve Attachments if any
+														foreach($message->media as $photo) 
+														{
+															if ($photo->media_type == 1)
+															{
+																print "<div class=\"attachment_thumbs\" id=\"photo_". $photo->id ."\">";
 
-				                        						$thumb = $photo->media_thumb;
-				                        						$photo_link = $photo->media_link;
+																$thumb = $photo->media_thumb;
+																$photo_link = $photo->media_link;
 																$prefix = url::base().Kohana::config('upload.relative_directory');
-				                        						print "<a class='photothumb' rel='lightbox-group".$message_id."' href='$prefix/$photo_link'>";
-				                        						print "<img src=\"$prefix/$thumb\" border=\"0\" >";
-				                        						print "</a>";
-				                        						print "</div>";
-				                        					}
-				                        				}
-									                    ?>
+																print "<a class='photothumb' rel='lightbox-group".$message_id."' href='$prefix/$photo_link'>";
+																print "<img src=\"$prefix/$thumb\" border=\"0\" >";
+																print "</a>";
+																print "</div>";
+															}
+														}
+														?>
 													</div>
 													<?php
 												}
-												// Action::message_extra_admin  - Message Additional/Extra Stuff
+												// Action::message_extra_admin	- Message Additional/Extra Stuff
 												Event::run('ushahidi_action.message_extra_admin', $message_id);
 												?>
 
@@ -174,7 +174,7 @@
 													<a href="javascript:showReply('reply_<?php echo $message_id; ?>')" class="more">+<?php echo Kohana::lang('ui_main.reply');?></a>
 													<div id="reply_<?php echo $message_id; ?>" class="reply">
 														<?php print form::open(url::site() . 'admin/messages/send/',array('id' => 'newreply_' . $message_id,
-														 	'name' => 'newreply_' . $message_id)); ?>
+															'name' => 'newreply_' . $message_id)); ?>
 														<div class="reply_can"><a href="javascript:cannedReply('1', 'message_<?php echo $message_id; ?>')">+<?php echo Kohana::lang('ui_main.request_location');?></a>&nbsp;&nbsp;&nbsp;<a href="javascript:cannedReply('2', 'message_<?php echo $message_id; ?>')">+<?php echo Kohana::lang('ui_main.request_information');?></a></div>
 														<div id="replyerror_<?php echo $message_id; ?>" class="reply_error"></div>
 														<div class="reply_input"><?php print form::input('message_' .  $message_id, '', ' class="text long2" onkeyup="limitChars(this.id, \'160\', \'replyleft_' . $message_id . '\')" '); ?></div>
@@ -208,11 +208,11 @@
 											<ul>
 												<?php
 												if ($incident_id != 0 && $message_type != 2) {
-													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_admin.view_report')."</strong></a></li>";
 												}
 												elseif ($message_type != 2)
 												{
-													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $message_id ."\">Create Report?</a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $message_id ."\">".Kohana::lang('ui_admin.create_report')."?</a></li>";
 												}
 												?>
 												<li><a href="javascript:messagesAction('d','DELETE','<?php echo(rawurlencode($message_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>

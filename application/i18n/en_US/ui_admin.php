@@ -214,6 +214,7 @@
 	'version_available' => ' is available for upgrade.',
 	'view_private' => 'Private Messages',
 	'view_site' => 'View Site',
+	'view_report' => 'View Report',
 	'welcome' => 'Welcome, ',
 	'wiki' => 'Wiki',
 	'yes' => 'Yes',
