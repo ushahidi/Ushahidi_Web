@@ -2051,6 +2051,13 @@ h4 span.highlight{
 		border-width:0;
 	}
 	
+.preview_div{
+	margin:5px 0 0 0;
+	border:1px dotted #ccc;
+	padding:10px;
+	display:none;
+}	
+	
 /* Upgrade Process */
 #upgrade_log .upgrade_log_message{
 	font-size:14px;
@@ -2183,6 +2190,12 @@ ul.map-toggles li a:active { display:inline-block; padding:3px 5px 3px 17px; out
 			.member_info_row ul li{
 				margin:2px 0 2px 0;
 			}
+.checkin_map{
+	margin-top:10px;
+	width:460px;
+	height:300px;
+	border: 2px solid #ccc;
+}
 
 /*--  --*/
 /*--  --*/

@@ -32,6 +32,7 @@
 	'check_message_valid' => 'Please make sure your message is valid',
 	'check_number' => 'Please make sure the number is valid',
 	'check_sms_settings' => 'Please check your SMS settings!',
+	'checkin_details' => 'Checkin Details',
 	'checkins' => 'Checkins',
 	'cities_loaded' => 'Cities loaded',
 	'code' => 'code',

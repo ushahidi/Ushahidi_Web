@@ -140,7 +140,6 @@
 										?>
 									</ul>
 								</div>
-								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.checkins');?>:</span> 0</div>
 								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.reputation');?>:</span> 0</div>
 							</div>
 						</div>
@@ -160,7 +159,7 @@
 							</li>
 							<li>
 								<a href="<?php echo url::site() . 'members/checkins' ?>" class="checkins"><?php echo Kohana::lang('ui_admin.my_checkins');?></a>
-								<strong><?php echo "0"; ?></strong>
+								<strong><?php echo $checkins; ?></strong>
 							</li>
 							<li>
 								<a href="<?php echo url::site() . 'members/alerts' ?>" class="alerts"><?php echo Kohana::lang('ui_admin.my_alerts');?></a>
