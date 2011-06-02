@@ -94,15 +94,14 @@ class Dashboard_Controller extends Admin_Controller
 
 		// Set the date range (how many days in the past from today?)
 		// Default to one year if invalid or not set
-		$range = (isset($_GET['range']) AND preg_match('/^[1-9](\d{0,2})$/', $_GET['range']) > 0)
+		$range = (isset($_GET['range']) AND preg_match('/^\d+$/', $_GET['range']) > 0)
 			? (int) $_GET['range'] 
 			: 365;
                 
-		$this->template->content->range = $range;
-
 		$incident_data = Incident_Model::get_number_reports_by_date($range);
 		$data = array('Reports'=>$incident_data);
 		$options = array('xaxis'=>array('mode'=>'"time"'));
+		
 		$this->template->content->report_chart = protochart::chart('report_chart',$data,$options,array('Reports'=>'CC0000'),410,310);
     }
 }
