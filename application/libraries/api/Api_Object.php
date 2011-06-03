@@ -283,6 +283,7 @@ abstract class Api_Object_Core
 	 */
 	protected function object_to_array($object)
 	{
+		$array = array();
 		if (is_object($object))
 		{
 			foreach ($object as $key => $value)

@@ -64,7 +64,7 @@ class Comments_Api_Object extends Api_Object_Core {
                 $this->response_data = $this->_get_approved_comments();
             break;
 
-			case "show":
+			case "reportid":
 				if ( ! $this->api_service->verify_array_index($this->request, 'id'))
                 {
                     $this->set_error_message(array(
@@ -76,7 +76,7 @@ class Comments_Api_Object extends Api_Object_Core {
                 {
                     $this->response_data = $this->_get_comment_by_report_id($this->check_id_value($this->request['id']));
                 }
-            
+            	break;
             default:
                 $this->set_error_message(array(
                     "error" => $this->api_service->get_error_msg(002)
@@ -693,7 +693,7 @@ class Comments_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_comment_by_report_id($id) 
 	{
-		$json_categories = array();
+		$json_comments = array();
         $ret_json_or_xml = '';
 		$i = 0;
 		
@@ -704,13 +704,14 @@ class Comments_Api_Object extends Api_Object_Core {
 			$incident_comments = array();
 			if ($id)
 			{
-				$incident_comments = ORM::factory('comment')
-												  ->where('incident_id',$id)
-												  ->where('comment_active','1')
-												  ->where('comment_spam','0')
-												  ->orderby('comment_date', 'asc')
-												  ->find_all();
-				if (count($incident_comments))
+				$this->query = "SELECT id, incident_id, comment_author, comment_email, ";
+				$this->query .= "comment_description,comment_rating,comment_date ";
+				$this->query .= "FROM ".$this->table_prefix."`comment`" ;
+				$this->query .= " WHERE `incident_id` = $id AND `comment_active` = '1' ";
+				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
+				$incident_comments = $this->db->query($this->query);
+												
+				if ($incident_comments->count() == 0)
 				{
 					return $this->response(4);
 				}
@@ -724,7 +725,7 @@ class Comments_Api_Object extends Api_Object_Core {
 		            } 
 		            else
 		            {
-		                $json_coments['comment'.$i] = array("comment" => $comment);
+		                $json_comments['comment'.$i] = array("comment" => $comment);
 		                $this->replar[] = 'comment'.$i;
 		            }
 
