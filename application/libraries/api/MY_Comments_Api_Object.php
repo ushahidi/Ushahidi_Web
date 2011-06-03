@@ -1,6 +1,8 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * This class handles GET request for KML via the API.
+ * Comments_Api_Object
+ * 
+ * This class handles commenting activities via the API.
  *
  * @version 25 - Emmanuel Kala 2010-10-26
  *
@@ -61,7 +63,20 @@ class Comments_Api_Object extends Api_Object_Core {
             case "approved":
                 $this->response_data = $this->_get_approved_comments();
             break;
-            
+
+			case "reportid":
+				if ( ! $this->api_service->verify_array_index($this->request, 'id'))
+                {
+                    $this->set_error_message(array(
+                        "error" => $this->api_service->get_error_msg(001, 'id')
+                    ));
+                    return;
+                }
+                else
+                {
+                    $this->response_data = $this->_get_comment_by_report_id($this->check_id_value($this->request['id']));
+                }
+            	break;
             default:
                 $this->set_error_message(array(
                     "error" => $this->api_service->get_error_msg(002)
@@ -667,5 +682,87 @@ class Comments_Api_Object extends Api_Object_Core {
 
         return $this->response($ret_value, $this->error_messages);
     }
+
+	/**
+	 * 
+	 * Get comments by report id
+	 * 
+	 * @param int id - The report id
+	 * 
+	 * @return String XML or JSON string
+	 */
+	private function _get_comment_by_report_id($id) 
+	{
+		$json_comments = array();
+        $ret_json_or_xml = '';
+		$i = 0;
+		
+		//Check if comments are enabled by that deployments
+		if (Kohana::config('settings.allow_comments'))
+		{
+			
+			$incident_comments = array();
+			if ($id)
+			{
+				$this->query = "SELECT id, incident_id, comment_author, comment_email, ";
+				$this->query .= "comment_description,comment_rating,comment_date ";
+				$this->query .= "FROM ".$this->table_prefix."`comment`" ;
+				$this->query .= " WHERE `incident_id` = ".mysql_escape_string($id)." AND `comment_active` = '1' ";
+				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
+				$incident_comments = $this->db->query($this->query);
+												
+				if ($incident_comments->count() == 0)
+				{
+					return $this->response(4);
+				}
+				
+				foreach ($incident_comments as $comment)
+				{
+					// Needs different treatment depending on the output
+		            if ($this->response_type == 'json')
+		            {
+		                $json_comments[] = array("comment" => $comment);
+		            } 
+		            else
+		            {
+		                $json_comments['comment'.$i] = array("comment" => $comment);
+		                $this->replar[] = 'comment'.$i;
+		            }
+
+		            $i++;
+				}
+				// Create the json array
+		        $data = array(
+		                "payload" => array(
+		                    "domain" => $this->domain,
+		                    "comments" => $json_comments
+		                ),
+		                "error" => $this->api_service->get_error_msg(0)
+		        );
+
+		        if ($this->response_type == 'json')
+		        {
+		            $ret_json_or_xml = $this->array_as_json($data);
+		        } 
+		        else
+		        {
+		            $ret_json_or_xml = $this->array_as_xml($data, $this->replar);
+		        }
+
+		        return $ret_json_or_xml;
+			}
+			else 
+			{
+				//prompt user for a valid ID
+				return $this->response(1, "No report with that ID");
+			}
+		
+		}
+		else 
+		{
+			//prompt user about commenting not enabled on this deployment
+			return $this->response(1, "Commenting is not activated on this deployment");
+		}
+	}
 
 }
