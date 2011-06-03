@@ -97,7 +97,9 @@ class Dashboard_Controller extends Admin_Controller
 		$range = (isset($_GET['range']) AND preg_match('/^\d+$/', $_GET['range']) > 0)
 			? (int) $_GET['range'] 
 			: 365;
-                
+		
+		// Phase 3 - Invoke Kohana's XSS cleaning mechanism just incase an outlier wasn't caught	
+        $range = $this->input->xss_clean($range);        
 		$incident_data = Incident_Model::get_number_reports_by_date($range);
 		$data = array('Reports'=>$incident_data);
 		$options = array('xaxis'=>array('mode'=>'"time"'));

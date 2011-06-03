@@ -707,7 +707,7 @@ class Comments_Api_Object extends Api_Object_Core {
 				$this->query = "SELECT id, incident_id, comment_author, comment_email, ";
 				$this->query .= "comment_description,comment_rating,comment_date ";
 				$this->query .= "FROM ".$this->table_prefix."`comment`" ;
-				$this->query .= " WHERE `incident_id` = $id AND `comment_active` = '1' ";
+				$this->query .= " WHERE `incident_id` = ".mysql_escape_string($id)." AND `comment_active` = '1' ";
 				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
 				$incident_comments = $this->db->query($this->query);
 												
