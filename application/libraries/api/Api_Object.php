@@ -372,7 +372,8 @@ abstract class Api_Object_Core
 	 */
 	protected function check_id_value($id)
 	{
-		$this->id = (is_numeric($id) AND intval($id) > 0) ? $id : 0;
+		// The id value must be positive and non-zero
+		$this->id = (preg_match('/^[1-9](\d*)$/', $id) > 0) ? (int) $id : 0;
 
 		return $this->id;
 	}
