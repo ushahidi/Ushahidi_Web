@@ -202,19 +202,27 @@ class Incident_Model extends ORM
 	/*
 	* get the number of reports by date for dashboard chart
 	*/
-	public static function get_number_reports_by_date($range=NULL)
+	public static function get_number_reports_by_date($range = NULL)
 	{
 		// Table Prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
+		// Database instance
 		$db = new Database();
 		
-		if ($range == NULL)
+		// Query to generate the report count
+		$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, '
+			. 'YEAR(incident_date) as year '
+			. 'FROM '.$table_prefix.'incident ';
+		
+		// Check if the range has been specified and is non-zero then add predicates to the query
+		if ($range != NULL AND $range > 0)
 		{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident GROUP BY date ORDER BY incident_date ASC';
-		}else{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) GROUP BY date ORDER BY incident_date ASC';
+			$sql .= 'WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) ';
 		}
+		
+		// Group and order the records
+		$sql .= 'GROUP BY date ORDER BY incident_date ASC';
 		
 		$query = $db->query($sql);
 		$result = $query->result_array(FALSE);
@@ -222,7 +230,7 @@ class Incident_Model extends ORM
 		$array = array();
 		foreach ($result AS $row)
 		{
-			$timestamp = mktime(0,0,0,$row['month'],$row['day'],$row['year'])*1000;
+			$timestamp = mktime(0, 0, 0, $row['month'], $row['day'], $row['year']) * 1000;
 			$array["$timestamp"] = $row['count'];
 		}
 

@@ -91,12 +91,12 @@ define('EXT', '.php');
 // $Id: index.php 3168 2008-07-21 01:34:36Z Shadowhand $
 //
 
+// Get the current directory
+$current_dir =  str_replace('\\', '/', dirname(realpath(__FILE__)));
+
 // Define the front controller name and docroot
 define('DOCROOT', substr($current_dir, 0, strlen($current_dir) - strlen($phpunit_tests)));
 define('KOHANA',  basename(__FILE__));
-
-// Get the current directory
-$current_dir =  str_replace('\\', '/', dirname(realpath(__FILE__)));
 
 // If the front controller is a symlink, change to the real docroot
 is_link(KOHANA) and chdir(dirname(realpath(__FILE__)));
