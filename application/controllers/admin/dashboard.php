@@ -22,11 +22,11 @@ class Dashboard_Controller extends Admin_Controller
 
 	public function index()
 	{
-        $this->template->content = new View('admin/dashboard');
-        $this->template->content->title = Kohana::lang('ui_admin.dashboard');
-        $this->template->this_page = 'dashboard';
-        
-        // Retrieve Dashboard Count...
+		$this->template->content = new View('admin/dashboard');
+		$this->template->content->title = Kohana::lang('ui_admin.dashboard');
+		$this->template->this_page = 'dashboard';
+
+		// Retrieve Dashboard Count...
 
 		// Total Reports
 		$this->template->content->reports_total = ORM::factory('incident')->count_all();
@@ -54,10 +54,10 @@ class Dashboard_Controller extends Admin_Controller
 		foreach ($services as $service)
 		{
 			$message_count = ORM::factory('message')
-								->join('reporter','message.reporter_id','reporter.id')
-								->where('service_id', $service->id)
-								->where('message_type', '1')
-								->count_all();
+							->join('reporter','message.reporter_id','reporter.id')
+							->where('service_id', $service->id)
+							->where('message_type', '1')
+							->count_all();
 
 			$message_services[] = array(
 				'id'    => $service->id,
@@ -90,7 +90,7 @@ class Dashboard_Controller extends Admin_Controller
 
 		$this->template->content->failure = '';
 
-        // Build dashboard chart
+		// Build dashboard chart
 
 		// Set the date range (how many days in the past from today?)
 		// Default to one year if invalid or not set
@@ -99,7 +99,7 @@ class Dashboard_Controller extends Admin_Controller
 			: 365;
 		
 		// Phase 3 - Invoke Kohana's XSS cleaning mechanism just incase an outlier wasn't caught	
-        $range = $this->input->xss_clean($range);        
+		$range = $this->input->xss_clean($range);        
 		$incident_data = Incident_Model::get_number_reports_by_date($range);
 		$data = array('Reports'=>$incident_data);
 		$options = array('xaxis'=>array('mode'=>'"time"'));
