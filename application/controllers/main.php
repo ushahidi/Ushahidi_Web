@@ -272,17 +272,6 @@ class Main_Controller extends Template_Controller {
 		}
 		$this->template->content->shares = $shares;
 
-        // Get Reports
-        // XXX: Might need to replace magic no. 8 with a constant
-		$this->template->content->total_items = ORM::factory('incident')
-			->where('incident_active', '1')
-			->limit('8')->count_all();
-		$this->template->content->incidents = ORM::factory('incident')
-			->where('incident_active', '1')
-			->limit('10')
-			->orderby('incident_date', 'desc')
-			->find_all();
-
 		// Get Default Color
 		$this->template->content->default_map_all = Kohana::config('settings.default_map_all');
 
@@ -308,12 +297,6 @@ class Main_Controller extends Template_Controller {
 			$phone_array[] = $sms_no3;
 		}
 		$this->template->content->phone_array = $phone_array;
-
-		// Get RSS News Feeds
-		$this->template->content->feeds = ORM::factory('feed_item')
-			->limit('10')
-			->orderby('item_date', 'desc')
-			->find_all();
 
         // Get The START, END and Incident Dates
         $startDate = "";
@@ -470,6 +453,8 @@ class Main_Controller extends Template_Controller {
 
 		$this->themes->js->active_startDate = $display_startDate;
 		$this->themes->js->active_endDate = $display_endDate;
+		
+		$this->themes->js->blocks_per_row = Kohana::config('settings.blocks_per_row');
 
 		//$myPacker = new javascriptpacker($js , 'Normal', false, false);
 		//$js = $myPacker->pack();

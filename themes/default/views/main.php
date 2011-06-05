@@ -200,18 +200,7 @@
 	<!-- content blocks -->
 	<div class="content-blocks clearingfix">
 		<ul class="content-column">
-			<li>
-				<div class="content-block">
-					<h5><?php echo Kohana::lang('ui_main.reports'); ?></h5>
-
-				</div>
-			</li>
-			<li>
-				<div class="content-block">
-					<h5><?php echo Kohana::lang('ui_main.official_news'); ?></h5>
-
-				</div>
-			</li>
+			<?php blocks::render(); ?>
 		</ul>
 	</div>
 	<!-- /content blocks -->

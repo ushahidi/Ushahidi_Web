@@ -119,6 +119,7 @@
 		'allow_feed' => 'Include RSS News Feed on Website',
 		'allow_reports' => 'Allow Users To Submit Reports',
 		'api_akismet' => 'Akismet Key',
+		'blocks_per_row' => 'Blocks Per Row',
 		'cache_pages' => 'Cache Pages',
 		'cache_pages_lifetime' => 'Cache Pages Lifetime',
 		'checkins' => 'Checkins',

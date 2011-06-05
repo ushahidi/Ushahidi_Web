@@ -636,7 +636,7 @@
 
 			var colWrap = $("ul.content-column").width(); //Get the width of row
 			//var colNum = Math.floor(colWrap / 460); //Find how many columns of 200px can fit per row / then round it down to a whole number
-			var colNum = 1;
+			var colNum = <?php echo $blocks_per_row; ?>;
 			var colFixed = Math.floor(colWrap / colNum); //Get the width of the row and divide it by the number of columns it can fit / then round it down to a whole number. This value will be the exact width of the re-adjusted column
 
 			$("ul.content-column").css({ 'width' : colWrap}); //Set exact width of row in pixels instead of using % - Prevents cross-browser bugs that appear in certain view port resolutions.

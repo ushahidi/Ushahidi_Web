@@ -28,6 +28,7 @@
 	'author_email' => 'Author email',
 	'back' => 'Back',
 	'banip_action' => 'Ban IP',
+	'blocks' => 'Blocks',
 	'cancel' => 'Cancel',
 	'categories' => 'Categories',
 	'chart_display_error' => 'Error displaying chart',
