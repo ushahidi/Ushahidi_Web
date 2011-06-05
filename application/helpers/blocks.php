@@ -9,14 +9,6 @@
  */
 class blocks_Core {
 	
-	private $_blocks = array();
-	
-	public function __construct()
-	{
-		// Filter::register_main_blocks
-		Event::run('ushahidi_filter.register_main_blocks', $this->_blocks);
-	}
-	
 	/**
 	 * Open A Block
 	 */
@@ -90,7 +82,8 @@ class blocks_Core {
 	}
 	
 	/**
-	 * Return a sorted array of blocks
+	 * Sort Active and Non-Active Blocks
+	 * @param array $block sorted
 	 */
 	public static function sort($active = array(), $registered = array())
 	{
