@@ -74,7 +74,7 @@ class members_Core {
 
         $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_admin.my_alerts') : "<a href=\"".url::base()."members/alerts\">".Kohana::lang('ui_admin.my_alerts')."</a>";
 
-        $menu .= ($this_sub_page == "edit") ? Kohana::lang('ui_admin.new_alert') : "<a href=\"".url::base()."members/alerts/edit\">".Kohana::lang('ui_admin.new_alert')."</a>";
+        //$menu .= ($this_sub_page == "edit") ? Kohana::lang('ui_admin.new_alert') : "<a href=\"".url::base()."members/alerts/edit\">".Kohana::lang('ui_admin.new_alert')."</a>";
 
         echo $menu;
         

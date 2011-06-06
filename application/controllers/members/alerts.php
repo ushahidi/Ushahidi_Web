@@ -60,7 +60,41 @@ class Alerts_Controller extends Members_Controller {
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
-			
+			$post = Validation::factory($_POST);
+
+			 //	 Add some filters
+			$post->pre_filter('trim', TRUE);
+
+			// Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('action','required', 'alpha', 'length[1,1]');
+			$post->add_rules('alert_id.*','required','numeric');
+
+			if ($post->validate())
+			{
+				if ($post->action == 'd')	//Delete Action
+				{
+					foreach($post->alert_id as $item)
+					{
+						$update = ORM::factory('alert')
+							->where('user_id', $this->user->id)
+							->find($item);
+						if ($update->loaded == true)
+						{
+							$alert_id = $update->id;
+							$update->delete();
+
+							// Delete Media
+							ORM::factory('alert_category')->where('alert_id',$alert_id)->delete_all();
+						}
+					}
+					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+				}
+				$form_saved = TRUE;
+			}
+			else
+			{
+				$form_error = TRUE;
+			}
 		}
 		
 		// Pagination
@@ -90,6 +124,7 @@ class Alerts_Controller extends Members_Controller {
 		$this->template->content->total_items = $pagination->total_items;
 		
 		// Javascript Header
-		$this->template->js = new View('members/private_js');
+		$this->template->map_enabled = TRUE;
+		$this->template->js = new View('members/alerts_js');
 	}	
 }

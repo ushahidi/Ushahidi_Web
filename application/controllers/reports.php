@@ -412,7 +412,14 @@ class Reports_Controller extends Main_Controller {
 				$incident = new Incident_Model();
 				$incident->location_id = $location->id;
 				$incident->form_id = $post->form_id;
-				$incident->user_id = 0;
+				if ($this->user)
+				{
+					$incident->user_id = $this->user->id;
+				}
+				else
+				{
+					$incident->user_id = 0;
+				}
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
 
@@ -489,7 +496,7 @@ class Reports_Controller extends Main_Controller {
 					
 					// Thumbnail
 					Image::factory($filename)->resize(89,59,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type);	
+						->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type); 
 
 					// Remove the temporary file
 					unlink($filename);
@@ -661,10 +668,13 @@ class Reports_Controller extends Main_Controller {
 				$post->pre_filter('trim', TRUE);
 
 				// Add some rules, the input field, followed by a list of checks, carried out in order
-
-				$post->add_rules('comment_author', 'required', 'length[3,100]');
+				
+				if ( ! $this->user)
+				{
+					$post->add_rules('comment_author', 'required', 'length[3,100]');
+					$post->add_rules('comment_email', 'required','email', 'length[4,100]');
+				}
 				$post->add_rules('comment_description', 'required');
-				$post->add_rules('comment_email', 'required','email', 'length[4,100]');
 				$post->add_rules('captcha', 'required', 'Captcha::valid');
 
 				// Test to see if things passed the rule checks
@@ -682,12 +692,21 @@ class Reports_Controller extends Main_Controller {
 						// Comment data
 
 						$comment = array(
-							'author' => $post->comment_author,
-							'email' => $post->comment_email,
 							'website' => "",
 							'body' => $post->comment_description,
 							'user_ip' => $_SERVER['REMOTE_ADDR']
 						);
+						
+						if ($this->user)
+						{
+							$comment['author'] = $this->user->name;
+							$comment['email'] = $this->user->email;
+						}
+						else
+						{
+							$comment['author'] = $post->comment_author;
+							$comment['email'] = $post->comment_email;
+						}
 
 						$config = array(
 							'blog_url' => url::site(),
@@ -731,9 +750,18 @@ class Reports_Controller extends Main_Controller {
 
 					$comment = new Comment_Model();
 					$comment->incident_id = $id;
-					$comment->comment_author = strip_tags($post->comment_author);
+					if ($this->user)
+					{
+						$comment->user_id = $this->user->id;
+						$comment->comment_author = $this->user->name;
+						$comment->comment_email = $this->user->email;
+					}
+					else
+					{
+						$comment->comment_author = strip_tags($post->comment_author);
+						$comment->comment_email = strip_tags($post->comment_email);
+					}
 					$comment->comment_description = strip_tags($post->comment_description);
-					$comment->comment_email = strip_tags($post->comment_email);
 					$comment->comment_ip = $_SERVER['REMOTE_ADDR'];
 					$comment->comment_date = date("Y-m-d H:i:s",time());
 
@@ -906,6 +934,7 @@ class Reports_Controller extends Main_Controller {
 		if (Kohana::config('settings.allow_comments'))
 		{
 			$this->template->content->comments_form = new View('reports_comments_form');
+			$this->template->content->comments_form->user = $this->user;
 			$this->template->content->comments_form->form = $form;
 			$this->template->content->comments_form->form_field_names = $form_field_names;
 			$this->template->content->comments_form->captcha = $captcha;
@@ -1123,12 +1152,12 @@ class Reports_Controller extends Main_Controller {
 	private function _get_neighbors($latitude = 0, $longitude = 0)
 	{	
 		// Database
-        $db = new Database();
+		$db = new Database();
 		
 		$neighbors = $db->query("SELECT DISTINCT i.*, l.location_name,
-        ((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance
-         FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1
-         ORDER BY distance ASC LIMIT 5 ");
+		((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance
+		 FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1
+		 ORDER BY distance ASC LIMIT 5 ");
 
 		return $neighbors;
 	}

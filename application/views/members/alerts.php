@@ -29,7 +29,7 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onClick="checkinAction('d', 'DELETE', '')"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+							<li><a href="#" onClick="alertsAction('d', 'DELETE', '')"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 						</ul>
 					</div>
 				</div>
@@ -57,7 +57,7 @@
 				<?php print form::open(NULL, array('id' => 'alertsMain', 'name' => 'alertsMain')); ?>
 					<input type="hidden" name="action" id="action" value="">
 					<input type="hidden" name="level"  id="level"  value="">
-					<input type="hidden" name="alert_id[]" id="message_single" value="">
+					<input type="hidden" name="alert_id[]" id="alert_single" value="">
 					<div class="table-holder">
 						<table class="table">
 							<thead>
@@ -99,13 +99,13 @@
 									$categories = $alert->alert_category;
 									?>
 									<tr>
-										<td class="col-1"><input name="alert_id[]" id="message" value="<?php echo $alert_id; ?>" type="checkbox" class="check-box"/></td>
+										<td class="col-1"><input name="alert_id[]" id="alert" value="<?php echo $alert_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
 												<p><?php echo $alert_lat.", ".$alert_lon; ?></p>
-												<p><a href="javascript:preview('alert_preview_<?php echo $alert_id?>')"><?php echo Kohana::lang('ui_admin.preview');?></a></p>
+												<p><a href="javascript:showAlert('alert_preview_<?php echo $alert_id?>', '<?php echo $alert_lon?>', '<?php echo $alert_lat?>', '<?php echo $alert_radius?>')"><?php echo Kohana::lang('ui_admin.preview');?></a></p>
 												<div id="alert_preview_<?php echo $alert_id?>" class="preview_div">
-													<?php echo "XXXXXXXX"; ?>
+													<div id="alert_preview_<?php echo $alert_id?>_map" class="checkin_map"></div>
 												</div>
 											</div>
 											<ul class="info">
@@ -122,8 +122,7 @@
 										<td class="col-3"><?php echo $alert_count; ?></td>
 										<td class="col-4">
 											<ul>
-												<li class="none-separator"><a href="#" class="del"><?php echo Kohana::lang('ui_main.edit');?></a></li>
-												<li><a href="javascript:messagesAction('d','DELETE','<?php echo(rawurlencode($alert_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
+												<li class="none-separator"><a href="javascript:alertsAction('d','DELETE','<?php echo(rawurlencode($alert_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 											</ul>
 										</td>
 									</tr>
