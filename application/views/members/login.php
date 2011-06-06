@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?php echo Kohana::lang('ui_main.ushahidi_members');?></title>
+<title><?php echo Kohana::lang('ui_main.members');?></title>
 <link href="<?php echo url::base() ?>media/css/login.css" rel="stylesheet" type="text/css" />
 <link rel="stylesheet" href="<?php echo url::base() ?>media/css/openid.css" />
 <script type="text/javascript" src="<?php echo url::base() ?>media/js/openid/jquery-1.2.6.min.js"></script>

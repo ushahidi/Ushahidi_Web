@@ -232,6 +232,7 @@
 	'mark_unread' => 'Mark as Unread',
 	'media' => 'Media',
 	'media_filter' => 'Media Filter',
+	'members' => 'Members',
 	'message' => 'Message',
 	'messages' => 'Messages',
 	'message_details' => 'Message Details',
