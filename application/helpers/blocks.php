@@ -11,6 +11,8 @@ class blocks_Core {
 	
 	/**
 	 * Open A Block
+	 *
+	 * @return string
 	 */
 	public static function open()
 	{
@@ -19,6 +21,8 @@ class blocks_Core {
 	
 	/**
 	 * Close A Block
+	 *
+	 * @return string
 	 */
 	public static function close()
 	{
@@ -27,6 +31,8 @@ class blocks_Core {
 	
 	/**
 	 * Block Title
+	 *
+	 * @return string
 	 */
 	public static function title($title = NULL)
 	{
@@ -38,7 +44,8 @@ class blocks_Core {
 	
 	/**
 	 * Register A Block
-	 * @param array $block
+	 *
+	 * @param array $block an array with classname, name and description
 	 */
 	public static function register($block = array())
 	{
@@ -68,7 +75,9 @@ class blocks_Core {
 	
 	/**
 	 * Render all the active blocks
-	 */
+	 *
+	 * @return string block html
+	 */	
 	public static function render()
 	{
 		// Get Active Blocks
@@ -83,7 +92,10 @@ class blocks_Core {
 	
 	/**
 	 * Sort Active and Non-Active Blocks
-	 * @param array $block sorted
+	 * 
+	 * @param array $active array of active blocks
+	 * @param array $registered array of all blocks
+	 * @return array merged and sorted array of active and inactive blocks
 	 */
 	public static function sort($active = array(), $registered = array())
 	{

@@ -11,6 +11,7 @@ class members_Core {
 
 	/**
 	 * Generate Main Tab Menus
+	 * @return array array of all the main tabs
 	 */
 	public static function main_tabs()
 	{

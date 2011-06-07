@@ -23,6 +23,9 @@ class Alerts_Controller extends Members_Controller {
 		$this->template->this_page = 'alerts';
 	}
 	
+	/**
+	 * Lists all the alerts
+	 */
 	public function index()
 	{
 		$this->template->content = new View('members/alerts');
