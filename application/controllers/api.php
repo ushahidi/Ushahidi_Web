@@ -17,31 +17,35 @@
 
 class Api_Controller extends Controller {
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
+	public function __construct()
+	{
+		parent::__construct();
+	}
     
-    /**
-     * Starting point
-     */
-    public function index()
-    {
-        // Instantiate the API service
-        $api_service = new Api_Service();
-        
-        // Run the service
-        $api_service->run_service();
+	/**
+	 * Starting point
+	 */
+	public function index()
+	{
+		// Instantiate the API service
+		$api_service = new Api_Service();
 
-        // Avoid caching
-        header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-        header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the pas
-                
-        if ($api_service->get_response_type() == 'xml')
-        {
-            header("Content-type: text/xml");    
-        }
-        
-        print $api_service->get_response();
-    }
+		// Run the service
+		$api_service->run_service();
+
+		// Avoid caching
+		header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the pas
+
+		if ($api_service->get_response_type() == 'xml')
+		{
+			header("Content-type: text/xml");    
+		}
+		else
+		{
+			header("Content-type: application/json; charset=utf-8");
+		}
+
+		print $api_service->get_response();
+	}
 }

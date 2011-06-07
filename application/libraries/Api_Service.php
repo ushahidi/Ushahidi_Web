@@ -19,7 +19,6 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
@@ -27,16 +26,60 @@
 // Suffix for all API library names
 define('API_LIBRARY_SUFFIX', '_Api_Object');
 
-final class Api_Service {    
-    private $request = array();
-    private $response; // Response to be returned to the calling controller
-    private $response_type;
-    private $api_object; // Handle for the API library to loaded
-    private $task_name; // Name of the task to be routed
-    private $request_ip_address; // IP Address of the client making the API request
-    private $api_parameters; // API request parameters
-    private $api_logger; // API_Log Model
-    private $db; // Database object
+final class Api_Service {
+	/**
+	 * The API request parameters
+	 * @var array
+	 */
+	private $request = array();
+	
+	/**
+	 * Response to be returned to the calling controller
+	 * @var string
+	 */
+	private $response;
+	
+	/**
+	 * Format in which the response is returned to the client - defaults to JSON
+	 * @var string
+	 */
+	private $response_type;
+	
+	/**
+	 * API library object to handle the requested task
+	 * @var Api_Object
+	 */
+	private $api_object;
+	
+	/**
+	 * Name of the API task to be routed
+	 * @var string
+	 */
+	private $task_name;
+	
+	/**
+	 * IP Address of the client making the API request
+	 * @var string
+	 */
+	private $request_ip_address;
+	
+	/**
+	 * API request parameters
+	 * @var array
+	 */
+	private $api_parameters;
+	
+	/**
+	 * Api_Log_Model object
+	 * @var Api_Log_Model
+	 */
+	private $api_logger;
+	
+	/**
+	 * Database object
+	 * @var Database
+	 */
+	private $db;
     
     public function __construct()
     {
@@ -125,54 +168,51 @@ final class Api_Service {
             : $response_data;
     }
     
-    /**
-     * Gets the response data
-     */
-    public function get_response()
-    {
-        return $this->response;
-    }    
+	/**
+	 * Gets the response data
+	 *
+	 * @return string The response to the API request
+	 */
+	public function get_response()
+	{
+		return $this->response;
+	}    
     
-    /**
-     * Gets the name of the task being handled by the API service
-     */                 
-    public function get_task_name()
-    {
-        return $this->task_name;
-    }
+	/**
+	 * Gets the name of the task being handled by the API service
+	 *
+	 * @return string
+	 */        
+	public function get_task_name()
+	{
+		return $this->task_name;
+	}
     
-    /**
-     * Log user in.
-     *
-     * This method is mainly used for admin tasks performed via the API 
-     *
-     * @param string $username User's username.
-     * @param string $password User's password.
-     *
-     * @return int user_id, false if authentication fails
-     */
-    public function _login($username, $password)
-    {
-        $auth = Auth::instance();
+	/**
+	 * Log user in.
+	 * This method is mainly used for admin tasks performed via the API 
+	 *
+	 * @param string $username User's username.
+	 * @param string $password User's password.
+	 * @return mixed user_id, FALSE if authentication fails
+	 */
+	public function _login($username, $password)
+	{
+		$auth = Auth::instance();
 
-        // Is user previously authenticated?
-        if ($auth->logged_in())
-        {
-            return $auth->get_user()->id;
-        }
-        else
-        {
-            // Attempt a login
-            if ($auth->login($username, $password))
-            {
-                return $auth->get_user()->id;
-            }
-            else
-            {
-                return false;
-            }
-        }
-    }
+		// Is user previously authenticated?
+		if ($auth->logged_in())
+		{
+			return $auth->get_user()->id;
+		}
+		else
+		{
+			// Attempt a login
+			return ($auth->login($username, $password))
+				? $auth->get_user()->id
+				: FALSE;
+		}
+	}
     
     /**
      * Routes the API task requests to their respective API libraries
@@ -292,7 +332,7 @@ final class Api_Service {
      * The name of API library file containing the class implementation is
      * constructed/inferred from the @param $class_name
      *
-     * @param $class_name Name of the implementing class
+     * @param string $base_name Name of the implementing class
      */    
     private function _init_api_library($base_name)
     {
@@ -323,30 +363,20 @@ final class Api_Service {
         
         // Instaniate a fresh copy of the API library
         $this->api_object = new $class_name($this);
-        
-        // TODO: Log API requests
-    
     }
     
     /**
      * Makes sure the appropriate key is there in a given 
      * array (POST or GET) and that it is set
-     * @param ar Array - The given array.
-     * @param index String - The index array
-     * 
-     * @return Boolean
+	 * 
+     * @param arrray $arr - The given array.
+     * @param string $index  The array key index to lookup
+     * @return bool
      */
-    public function verify_array_index(&$arr, $index)
+    public function verify_array_index(array & $arr, $index)
     {
         
-        if (isset($arr[$index]) AND array_key_exists($index, $arr))
-        {
-            return true;
-        } 
-        else 
-        {
-            return false;
-        }
+       return (isset($arr[$index]) AND array_key_exists($index, $arr));
     }
     
     /**
@@ -354,11 +384,11 @@ final class Api_Service {
      * returns an array error - array("code" => "CODE", 
      * "message" => "MESSAGE") based on the given code
      * 
-     * @param errcode String - The error code to be displayed.
-     * @param param String - The missing parameter.
-     * @param message String - The error message to be displayed.
+     * @param string $errcode  - The error code to be displayed.
+     * @param string $param - The missing parameter.
+     * @param string $message - The error message to be displayed.
      *
-     * @return - Array      
+     * @return array      
      */
     public function get_error_msg($errcode, $param = '', $message='')
     {
@@ -408,7 +438,7 @@ final class Api_Service {
      * specified in @param $task. The api config file is the API task routing
      * table
      *
-     * @param $task - Task to be looked up in the routing table
+     * @param string $task - Task to be looked up in the routing table
      */
     private function _get_task_handler($task)
     {
@@ -423,7 +453,7 @@ final class Api_Service {
      * Logs API requests
      * If @param task_library_found == FALSE the no. of records returned is 0
      *
-     * @param task_library_found
+     * @param bool $task_library_found
      */
     private function _log_api_request($task_library_found)
     {
@@ -434,14 +464,7 @@ final class Api_Service {
         $this->api_logger->api_parameters = $this->api_parameters;
         $this->api_logger->api_ipaddress = $this->request_ip_address;
         
-        if ($task_library_found)
-        {
-            $this->api_logger->api_records = $this->api_object->get_record_count();
-        }
-        else
-        {
-            $this->api_logger->api_records = 0;
-        }
+        $this->api_logger->api_records = ($task_library_found)? $this->api_object->get_record_count() : 0;
         
         $this->api_logger->api_date = date('Y-m-d H:i:s', time());        
         $this->api_logger->save();        

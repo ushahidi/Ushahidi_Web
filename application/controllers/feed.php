@@ -29,13 +29,13 @@ class Feed_Controller extends Controller
             throw new Kohana_404_Exception();
         }
         
-        if ($feedtype!='atom' AND $feedtype!= 'rss2')
+        if ($feedtype != 'atom' AND $feedtype!= 'rss2')
         {
             throw new Kohana_404_Exception();
         }
 
         // How Many Items Should We Retrieve?
-        $limit = ( isset($_GET['l']) && !empty($_GET['l']) AND (int) $_GET['l'] <= 200)
+        $limit = ( isset($_GET['l']) AND !empty($_GET['l']) AND (int) $_GET['l'] <= 200)
             ? (int) $_GET['l'] : 20;
 
         // Start at which page?
@@ -43,7 +43,7 @@ class Feed_Controller extends Controller
             ? (int) $_GET['p'] 
             : 1;
             
-        $page_position = ( $page == 1 ) ? 0 : ( $page * $limit ) ; // Query position
+        $page_position = ($page == 1) ? 0 : ( $page * $limit ) ; // Query position
 
         $site_url = url::base();
 

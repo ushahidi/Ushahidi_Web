@@ -111,7 +111,9 @@ class Checkin_Api_Object extends Api_Object_Core {
 					),
 					"error" => $this->api_service->get_error_msg(0)
 					);
-		}else{
+		}
+		else
+		{
 			// No data
 			$this->response = array(
 					"payload" => array(

@@ -591,19 +591,15 @@ class Comments_Api_Object extends Api_Object_Core {
 						// $this->_post_comment($comment);
 
 						$comment_spam = 0;
-					}else{
-
-						if ($akismet->is_spam())
-						{
-							$comment_spam = 1;
-						}else{
-							$comment_spam = 0;
-						}
 					}
-				}else{
-
+					else
+					{
+						$comment_span = ($akismet->is_spam())? 1 : 0;
+					}
+				}
+				else
+				{
 					// No API Key!!
-
 					$comment_spam = 0;
 				}
 
@@ -625,14 +621,8 @@ class Comments_Api_Object extends Api_Object_Core {
 				else
 				{
 					$comment->comment_spam = 0;
-					if (Kohana::config('settings.allow_comments') == 1)
-					{ // Auto Approve
-						$comment->comment_active = 1;
-					}
-					else
-					{ // Manually Approve
-						$comment->comment_active = 0;
-					}
+					// 1 - Auto-approve, 0 - Manually approve
+					$comment->comment_active = (Kohana::config('settings.allow_comments') == 1)? 1 : 0;
 				}
 				$comment->save();
 
@@ -644,7 +634,6 @@ class Comments_Api_Object extends Api_Object_Core {
 						."\n\n'".strtoupper($incident->incident_title)."'"
 						."\n".url::base().'reports/view/'.$post->incident_id
 					);
-
 			}
             else
             {
@@ -707,7 +696,7 @@ class Comments_Api_Object extends Api_Object_Core {
 				$this->query = "SELECT id, incident_id, comment_author, comment_email, ";
 				$this->query .= "comment_description,comment_rating,comment_date ";
 				$this->query .= "FROM ".$this->table_prefix."`comment`" ;
-				$this->query .= " WHERE `incident_id` = ".$this->db->escape($id)." AND `comment_active` = '1' ";
+				$this->query .= " WHERE `incident_id` = ".$this->db->escape_str($id)." AND `comment_active` = '1' ";
 				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
 				$incident_comments = $this->db->query($this->query);
 												

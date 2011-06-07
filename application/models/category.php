@@ -9,13 +9,11 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Category Model  
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class Category_Model extends ORM_Tree
-{	
+class Category_Model extends ORM_Tree {	
 	/**
 	 * One-to-many relationship definition
 	 * @var array
@@ -77,7 +75,7 @@ class Category_Model extends ORM_Tree
 	 *
 	 * @param int $category_id Database id of the category
 	 * @param string $local Localization to use
-	 * @return mixed
+	 * @return array
 	 */
 	public static function categories($category_id = NULL, $locale='en_US')
 	{
@@ -103,7 +101,7 @@ class Category_Model extends ORM_Tree
 	/**
 	 * Checks if the specified category ID is of type INT and exists in the database
 	 *
-	 * @param	int	$category_id 
+	 * @param	int	$category_id Database id of the category to be looked up
 	 * @return	bool
 	 */
 	public static function is_valid_category($category_id)
