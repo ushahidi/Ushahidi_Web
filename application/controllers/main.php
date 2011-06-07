@@ -95,6 +95,7 @@ class Main_Controller extends Template_Controller {
 			$this->user = Auth::instance()->get_user();
 			$this->template->header->loggedin_username = html::specialchars(Auth::instance()->get_user()->username);
 			$this->template->header->loggedin_userid = Auth::instance()->get_user()->id;
+			$this->template->header->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
 		}
 		
 		$this->template->header->site_name = $site_name;
