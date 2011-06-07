@@ -997,20 +997,29 @@ class Reports_Controller extends Main_Controller {
 
 				if (!empty($action) AND ($type == 'original' OR $type == 'comment'))
 				{
-					// Has this IP Address rated this post before?
+					// Has this User or IP Address rated this post before?
+					if ($this->user)
+					{
+						$filter = "user_id = ".$this->user->id;
+					}
+					else
+					{
+						$filter = "rating_ip = '".$_SERVER['REMOTE_ADDR']."' ";
+					}
+					
 					if ($type == 'original')
 					{
 						$previous = ORM::factory('rating')
-												->where('incident_id',$id)
-												->where('rating_ip',$_SERVER['REMOTE_ADDR'])
-												->find();
+							->where('incident_id',$id)
+							->where($filter)
+							->find();
 					}
 					elseif ($type == 'comment')
 					{
 						$previous = ORM::factory('rating')
-												->where('comment_id',$id)
-												->where('rating_ip',$_SERVER['REMOTE_ADDR'])
-												->find();
+							->where('comment_id',$id)
+							->where($filter)
+							->find();
 					}
 
 					// If previous exits... update previous vote
@@ -1024,6 +1033,12 @@ class Reports_Controller extends Main_Controller {
 					elseif ($type == 'comment')
 					{
 						$rating->comment_id = $id;
+					}
+					
+					// Is there a user?
+					if ($this->user)
+					{
+						$rating->user_id = $this->user->id;
 					}
 
 					$rating->rating = $action;

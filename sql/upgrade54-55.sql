@@ -4,6 +4,11 @@
 ALTER TABLE `alert` ADD `user_id` int(11) DEFAULT '0'  AFTER `id`;
 
 /**
+* Add new column to Ratings table. Associates alert to user
+*/
+ALTER TABLE `rating` ADD `user_id` int(11) DEFAULT '0'  AFTER `id`;
+
+/**
 * Add new column to Checkin table. Associates checkin to incident
 */
 ALTER TABLE `checkin` ADD `incident_id` int(11) NULL DEFAULT '0'  AFTER `location_id`;

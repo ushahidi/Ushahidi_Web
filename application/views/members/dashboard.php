@@ -163,7 +163,15 @@
 							</li>
 							<li>
 								<a href="<?php echo url::site() . 'members/alerts' ?>" class="alerts"><?php echo Kohana::lang('ui_admin.my_alerts');?></a>
-								<strong><?php echo "0"; ?></strong>
+								<strong><?php echo $alerts; ?></strong>
+							</li>
+							<li>
+								<a href="#" class="votes"><?php echo Kohana::lang('ui_admin.my_votes');?></a>
+								<strong><?php echo $votes; ?></strong>
+								<ul>
+									<li><a href="#"><?php echo Kohana::lang('ui_admin.my_votes_up');?></a><strong>(<?php echo $votes_up; ?>)</strong></li>
+									<li><a href="#"><?php echo Kohana::lang('ui_admin.my_votes_down');?></a><strong>(<?php echo $votes_down; ?>)</strong></li>
+								</ul>
 							</li>
 							<li>
 								<a href="<?php echo url::site() . 'members/private' ?>" class="messages"><?php echo Kohana::lang('ui_admin.private_messages');?></a>

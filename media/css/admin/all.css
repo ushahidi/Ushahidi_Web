@@ -421,6 +421,7 @@ ul.nav-list li a.locations { background:url(../../img/admin/locations-icon.gif) 
 ul.nav-list li a.media { background:url(../../img/admin/media-icon.gif) no-repeat 0 2px;}
 ul.nav-list li a.messages { background:url(../../img/admin/messages-icon.gif) no-repeat 0 2px;}
 ul.nav-list li a.alerts { background:url(../../img/admin/alerts-icon.png) no-repeat 0 2px;}
+ul.nav-list li a.votes { background:url(../../img/admin/votes-icon.png) no-repeat 0 2px;}
 ul.nav-list li a.checkins { background:url(../../img/admin/checkins-icon.png) no-repeat 0 2px;}
 ul.nav-list li span.locations {
 	background:url(../../img/admin/locations-icon.gif) no-repeat 0 2px;

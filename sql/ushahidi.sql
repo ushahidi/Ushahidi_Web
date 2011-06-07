@@ -479,7 +479,8 @@ PRIMARY KEY (`id`)
 
 CREATE TABLE IF NOT EXISTS `rating`                                                 
 (
-    `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 
+    `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT,
+	`user_id` int(11) DEFAULT '0',
     `incident_id` BIGINT default NULL,                                              
     `comment_id` BIGINT default NULL,                                               
     `rating` TINYINT DEFAULT 0,                                                     
@@ -1372,4 +1373,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '54' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '55' WHERE `id`=1 LIMIT 1;

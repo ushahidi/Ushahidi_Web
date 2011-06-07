@@ -17,6 +17,6 @@
 
 class User_Model extends Auth_User_Model {
 
-	protected $has_many = array('alert', 'comment', 'openid', 'private_message');
+	protected $has_many = array('alert', 'comment', 'openid', 'private_message', 'user');
 
 } // End User_Model

@@ -48,11 +48,26 @@ class Dashboard_Controller extends Members_Controller {
 			->count_all();
 			
 		// Total Alerts
-		$this->template->content->reports_unapproved = ORM::factory('incident')
-			->where('incident_active', '0')
+		$this->template->content->alerts = ORM::factory('alert')
 			->where("user_id", $this->user->id)
 			->count_all();
-
+			
+		// Total Votes
+		$this->template->content->votes = ORM::factory('rating')
+			->where("user_id", $this->user->id)
+			->count_all();
+			
+		// Total Votes Positive
+		$this->template->content->votes_up = ORM::factory('rating')
+			->where("user_id", $this->user->id)
+			->where("rating", "1")
+			->count_all();
+			
+		// Total Votes Negative
+		$this->template->content->votes_down = ORM::factory('rating')
+			->where("user_id", $this->user->id)
+			->where("rating", "-1")
+			->count_all();
 
 		// Get reports for display
 		$this->template->content->incidents = ORM::factory('incident')
