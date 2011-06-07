@@ -339,7 +339,7 @@ class Reports_Controller extends Members_Controller {
 		// Are we creating this report from a Checkin?
 		if ( isset($_GET['cid']) && !empty($_GET['cid']) ) {
 
-			$checkin_id = $_GET['cid'];
+			$checkin_id = (int) $_GET['cid'];
 			$checkin = ORM::factory('checkin', $checkin_id);
 
 			if ($checkin->loaded)
@@ -683,16 +683,20 @@ class Reports_Controller extends Members_Controller {
 				}
 				
 				// If creating a report from a checkin
-				if ($checkin->loaded)
+				if(isset($checkin_id) AND $checkin_id != "")
 				{
-					$checkin->incident_id = $incident->id;
-					$checkin->save();
-					
-					// Attach all the media items in this checkin to the report
-					foreach ($checkin->media as $media)
+					$checkin = ORM::factory('checkin', $checkin_id);
+					if ($checkin->loaded)
 					{
-						$media->incident_id = $incident->id;
-						$media->save();
+						$checkin->incident_id = $incident->id;
+						$checkin->save();
+					
+						// Attach all the media items in this checkin to the report
+						foreach ($checkin->media as $media)
+						{
+							$media->incident_id = $incident->id;
+							$media->save();
+						}
 					}
 				}
 
