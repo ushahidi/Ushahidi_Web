@@ -104,6 +104,12 @@
 		echo html::script('media/js/tinymce/tiny_mce', true);
 	}
 	
+	// JSON2 for IE+
+	if ($json2_enabled)
+	{
+		echo html::script('media/js/json2', true);
+	}
+	
 	// Load AutoComplete Plugin
 	if ($autocomplete_enabled)
 	{
