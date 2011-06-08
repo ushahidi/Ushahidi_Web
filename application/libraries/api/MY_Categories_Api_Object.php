@@ -68,8 +68,8 @@ class Categories_Api_Object extends Api_Object_Core {
     {
         // Find incidents
         $this->query = "SELECT id, parent_id, category_title, category_description, ";
-        $this->query .= "category_color FROM `".$this->table_prefix."category` ";
-        $this->query .= "WHERE category_visible = 1 AND id=$id ORDER BY id DESC";
+        $this->query .= "category_color, category_position FROM `".$this->table_prefix."category` ";
+        $this->query .= "WHERE category_visible = 1 AND id=$id ORDER BY category_position ASC";
 
         $items = $this->db->query($this->query);
         
@@ -142,8 +142,8 @@ class Categories_Api_Object extends Api_Object_Core {
         //find incidents
         $this->query = "SELECT id, parent_id, category_title, category_description, 
         	category_color, category_title as title, category_description as description,
-        	category_color as color FROM `".$this->table_prefix."category` WHERE
-                category_visible = 1 ORDER BY id DESC";
+        	category_color as color, category_position FROM `".$this->table_prefix."category` WHERE
+                category_visible = 1 ORDER BY category_position ASC";
         
         $items = $this->db->query($this->query);
         
