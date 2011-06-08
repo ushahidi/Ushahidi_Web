@@ -620,12 +620,23 @@ class Incidents_Api_Object extends Api_Object_Core {
         {
         	$category_counts[] = array('category_id' => $item->category_id, 'reports' => $item->reports);
         }
-
+        
+        $this->query = 'SELECT COUNT(id) AS total_count FROM '.$this->table_prefix.'incident WHERE incident_active = 1;';
+        
+        $count = $this->db->query($this->query);
+        
+        foreach($count as $c)
+        {
+        	$total_count = $c->total_count;
+        	break;
+        }
+        
         //create the json array
         $data = array(
                 "payload" => array(
                     "domain" => $this->domain,
-                    "category_counts" => $category_counts
+                    "category_counts" => $category_counts,
+                    "total_reports" => $total_count
                 ),
                 "error" => $this->api_service->get_error_msg(0)
         );
