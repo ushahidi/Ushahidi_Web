@@ -62,11 +62,13 @@ class Themes_Core {
 	private function _header_css()
 	{
 		$core_css = "";
+		$core_css .= html::stylesheet($this->css_url."media/css/jquery-ui-themeroller", "", true);
+		
 		foreach (Kohana::config("settings.site_style_css") as $theme_css)
 		{
 			$core_css .= html::stylesheet($theme_css,"",true);
 		}
-		$core_css .= html::stylesheet($this->css_url."media/css/jquery-ui-themeroller", "", true);
+		
 		$core_css .= "<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",true)."<![endif]-->";
 		$core_css .= "<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",true)."<![endif]-->";
 		$core_css .= "<!--[if IE 6]>".html::stylesheet($this->css_url."media/css/ie6hacks","",true)."<![endif]-->";
@@ -115,7 +117,8 @@ class Themes_Core {
 		}
 		
 		$core_js .= html::script($this->js_url."media/js/jquery", true);
-		$core_js .= html::script($this->js_url."media/js/jquery.ui.min", true);
+		//$core_js .= html::script($this->js_url."media/js/jquery.ui.min", true);
+		$core_js .= html::script("https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", true);
 		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", true);
 		
 		if ($this->map_enabled)
