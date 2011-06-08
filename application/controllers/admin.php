@@ -82,8 +82,9 @@ class Admin_Controller extends Template_Controller
 		$this->auth = new Auth();
 		$this->session = Session::instance();
 		$this->auth->auto_login();
-
-		if ( ! $this->auth->logged_in('login'))
+		
+		// Admin is not logged in, or this is a member (not admin)
+		if ( ! $this->auth->logged_in('login') OR $this->auth->logged_in('member'))
 		{
 			url::redirect('login');
 		}
@@ -128,6 +129,7 @@ class Admin_Controller extends Template_Controller
 		$this->template->colorpicker_enabled = FALSE;
 		$this->template->editor_enabled = FALSE;
 		$this->template->tablerowsort_enabled = FALSE;
+		$this->template->json2_enabled = FALSE;
 		$this->template->js = '';
 		$this->template->form_error = FALSE;
 

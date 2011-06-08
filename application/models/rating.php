@@ -16,7 +16,7 @@
 
 class Rating_Model extends ORM
 {
-	protected $belongs_to = array('incident', 'comment');
+	protected $belongs_to = array('incident', 'comment', 'user');
 	
 	// Database table name
 	protected $table_name = 'rating';

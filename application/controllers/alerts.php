@@ -21,14 +21,10 @@ class Alerts_Controller extends Main_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->session = Session::instance();
 	}
 
     public function index()
     {
-		// Create new session
-		$this->session->create();
-
 		$this->template->header->this_page = $this->themes->this_page = 'alerts';
 		$this->template->content = new View('alerts');
 
@@ -64,7 +60,12 @@ class Alerts_Controller extends Main_Controller {
 			'alert_lon' => '',
 			'alert_radius' => ''
 		);
-
+		
+		if ($this->user)
+		{
+			$form['alert_email'] = $this->user->email;
+		}
+	
 		// Copy the form as errors, so the errors will be stored with keys
 		// corresponding to the form field names
 		$errors = $form;
@@ -325,6 +326,10 @@ class Alerts_Controller extends Main_Controller {
 			$alert->alert_lon = $alert_lon;
 			$alert->alert_lat = $alert_lat;
 			$alert->alert_radius = $alert_radius;
+			if ($this->user)
+			{
+				$alert->user_id = $this->user->id;
+			}
 			$alert->save();
 
 			$this->_add_categories($alert, $post);
@@ -370,6 +375,10 @@ class Alerts_Controller extends Main_Controller {
 			$alert->alert_lon = $alert_lon;
 			$alert->alert_lat = $alert_lat;
 			$alert->alert_radius = $alert_radius;
+			if ($this->user)
+			{
+				$alert->user_id = $this->user->id;
+			}
 			$alert->save();
 
 			$this->_add_categories($alert, $post);

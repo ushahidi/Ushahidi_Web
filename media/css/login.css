@@ -79,6 +79,16 @@ dl {}
 	padding:5px;
 	vertical-align:top;
 }
+#openid_login_container{
+	margin:50px auto;
+	width:626px;
+}
+#openid_login {
+	border:3px solid #cb0000;
+	text-align:left;
+	padding: 20px;
+	background-color: #ddd;
+}
 
 /* Installer Container	 */
 /*****************************/

@@ -109,6 +109,12 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_blocks_per_row"); ?>"><?php echo Kohana::lang('settings.site.blocks_per_row');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('blocks_per_row', $blocks_per_row_array, $form['blocks_per_row']); ?>
+							</span>
+						</div>						
+						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_reports"); ?>"><?php echo Kohana::lang('settings.site.allow_reports');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_reports', $yesno_array, $form['allow_reports']); ?>

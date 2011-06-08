@@ -11,7 +11,7 @@ PRIMARY KEY (`id`)
 );
 
 # Mobile devices will be going here
-CREATE TABLE `user_devices` (
+CREATE TABLE IF NOT EXISTS `user_devices` (
   `id` varchar(255) NOT NULL,
   `user_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)

@@ -3,33 +3,49 @@
 	
 	<h5><?php echo Kohana::lang('ui_main.leave_a_comment');?></h5>
 	<?php
-		if ($form_error) {
-	?>
-	<!-- red-box -->
-	<div class="red-box">
-		<h3><?php echo Kohana::lang('ui_main.error');?></h3>
-		<ul>
-			<?php
-				foreach ($errors as $error_item => $error_description)
-				{
-					print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
-				}
-			?>
-		</ul>
-	</div>
-	<?php
+	if ($form_error)
+	{
+		?>
+		<!-- red-box -->
+		<div class="red-box">
+			<h3><?php echo Kohana::lang('ui_main.error');?></h3>
+			<ul>
+				<?php
+					foreach ($errors as $error_item => $error_description)
+					{
+						print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+					}
+				?>
+			</ul>
+		</div>
+		<?php
 	}
 	?>
 	<?php print form::open(NULL, array('id' => 'commentForm', 'name' => 'commentForm')); ?>
-	<div class="report_row">
-		<strong><?php echo Kohana::lang('ui_main.name');?>:</strong><br />
-		<?php print form::input('comment_author', $form['comment_author'], ' class="text"'); ?>
-		</div>
-
+	<?php
+	if ( ! $user)
+	{
+		?>
 		<div class="report_row">
-		<strong><?php echo Kohana::lang('ui_main.email'); ?>:</strong><br />
-		<?php print form::input('comment_email', $form['comment_email'], ' class="text"'); ?>
-	</div>
+			<strong><?php echo Kohana::lang('ui_main.name');?>:</strong><br />
+			<?php print form::input('comment_author', $form['comment_author'], ' class="text"'); ?>
+			</div>
+
+			<div class="report_row">
+			<strong><?php echo Kohana::lang('ui_main.email'); ?>:</strong><br />
+			<?php print form::input('comment_email', $form['comment_email'], ' class="text"'); ?>
+		</div>
+		<?php
+	}
+	else
+	{
+		?>
+		<div class="report_row">
+			<strong><?php echo $user->name; ?></strong>
+		</div>
+		<?php
+	}
+	?>
 	<div class="report_row">
 		<strong><?php echo Kohana::lang('ui_main.comments'); ?>:</strong><br />
 		<?php print form::textarea('comment_description', $form['comment_description'], ' rows="4" cols="40" class="textarea long" ') ?>

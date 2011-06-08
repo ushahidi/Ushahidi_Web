@@ -624,7 +624,25 @@
 				$("#"+link).text("<?php echo Kohana::lang('ui_main.show'); ?>");
 			}
 			$('#'+layer).toggle(500);
-		}							
+		}
+		
+		/**
+		 * Create a function that calculates the smart columns
+		 */
+		function smartColumns()
+		{
+			//Reset column size to a 100% once view port has been adjusted
+			$("ul.content-column").css({ 'width' : "100%"});
+
+			var colWrap = $("ul.content-column").width(); //Get the width of row
+			//var colNum = Math.floor(colWrap / 460); //Find how many columns of 200px can fit per row / then round it down to a whole number
+			var colNum = <?php echo $blocks_per_row; ?>;
+			var colFixed = Math.floor(colWrap / colNum); //Get the width of the row and divide it by the number of columns it can fit / then round it down to a whole number. This value will be the exact width of the re-adjusted column
+
+			$("ul.content-column").css({ 'width' : colWrap}); //Set exact width of row in pixels instead of using % - Prevents cross-browser bugs that appear in certain view port resolutions.
+			$("ul.content-column li").css({ 'width' : colFixed}); //Set exact width of the re-adjusted column	
+
+		}						
 
 		jQuery(function() {
 			var map_layer;
@@ -901,4 +919,11 @@
 					gMap.getCenter(),null,null,null,null,"json");
 				gTimeline.playOrPause('raindrops');
 			});
+			
+			smartColumns();//Execute the function when page loads
+		});
+		
+		$(window).resize(function ()
+		{ //Each time the viewport is adjusted/resized, execute the function
+			smartColumns();
 		});
