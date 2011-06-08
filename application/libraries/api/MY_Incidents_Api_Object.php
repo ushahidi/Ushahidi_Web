@@ -155,6 +155,11 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
             break;
             
+            // Get the number of reports in each category
+            case "catcount":
+				$this->response_data = $this->_get_incident_counts_per_category();
+            break;
+            
             // Get incidents greater than a specific incident_id in the DB
             case "sinceid":
                 if ( ! $this->api_service->verify_array_index($this->request, 'id'))
@@ -597,6 +602,40 @@ class Incidents_Api_Object extends Api_Object_Core {
         $limit = "\nLIMIT 0, $this->list_limit";
         
         return $this->_get_incidents($where.$sortby, $limit);
+    }
+    
+    /**
+     * Returns the number of reports in each category
+     *
+     */
+    private function _get_incident_counts_per_category()
+    {       
+		$this->query = 'SELECT category_id, COUNT(category_id) AS reports FROM '.$this->table_prefix.'incident_category WHERE incident_id IN (SELECT id FROM '.$this->table_prefix.'incident WHERE incident_active = 1) GROUP BY category_id';
+        
+        $items = $this->db->query($this->query);
+		
+		$category_counts = array();
+		
+        foreach ($items as $item)
+        {
+        	$category_counts[] = array('category_id' => $item->category_id, 'reports' => $item->reports);
+        }
+
+        //create the json array
+        $data = array(
+                "payload" => array(
+                    "domain" => $this->domain,
+                    "category_counts" => $category_counts
+                ),
+                "error" => $this->api_service->get_error_msg(0)
+        );
+        
+        // Return data
+        $this->response_data =  ($this->response_type == 'json')
+            ? $this->array_as_json($data)
+            : $this->array_as_xml($data, $replar);
+
+        echo $this->response_data;
     }
     
     /**
