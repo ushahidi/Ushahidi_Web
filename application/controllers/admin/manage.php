@@ -185,7 +185,7 @@ class Manage_Controller extends Admin_Controller
 
 					// populate the error fields, if any
 					$errors = arr::overwrite($errors, 
-						array_merge($cateory_data->errors('category'), $post->errors('category')));
+						array_merge($category_data->errors('category'), $post->errors('category')));
 
 					$form_error = TRUE;
 				}
