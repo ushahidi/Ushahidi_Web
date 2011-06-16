@@ -39,7 +39,7 @@
 					
 					$comment_count = $incident->comment->count();
 					
-					$incident_thumb = url::site()."media/img/report-thumb-default.jpg";
+					$incident_thumb = url::base()."media/img/report-thumb-default.jpg";
 					$media = $incident->media;
 					if ($media->count())
 					{
@@ -70,6 +70,13 @@
 								<?php
 								foreach ($incident->category AS $category)
 								{
+								
+									//don't show hidden categories
+									if($category->category_visible == 0)
+									{
+										continue;
+									}
+									
 									if ($category->category_image_thumb)
 									{
 										?>

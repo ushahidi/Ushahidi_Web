@@ -10,28 +10,106 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
-abstract class Api_Object_Core
-{
-
-	protected $db; // Database instance for the queries
-	protected $table_preix; // Table prefix
-	protected $messages = array(); // Form validation error messages
-	protected $error_messages = ''; // API Validation error messages
-	protected $domain; // Domain name of the calling site
-	protected $request = array(); // POST/GET data requested/submitted via the API service
-	protected $response_type; // Format in which the data is to be returned to the client
-	protected $response_data; // Response data to be returned to the client
-	protected $list_limit; // Max number of records to be returned
-	protected $api_service; // Instance of the API service
-	protected $query; // SQL query to be used to fetch the requested data
-	protected $replar; // Assists in proper XML generation
-	protected $by; // Mode by which to fetch the requested information
-	protected $id; // Id of an item, usually from the URL
-	protected $record_count; // No. of records fetched by the API object
+abstract class Api_Object_Core {
+	
+	/**
+	 * Database object for processing queries
+	 * @var Database
+	 */
+	protected $db;
+	/**
+	 * Prefix for the database tables
+	 * @var string
+	 */
+	protected $table_preix;
+	
+	/**
+	 * Form validation error messages
+	 * @var array
+	 */
+	protected $messages = array();
+	
+	/**
+	 * API validation error message
+	 * @var mixed
+	 */
+	protected $error_messages = '';
+	
+	/**
+	 * Domain name of the URL accessing the API
+	 * @var string
+	 */
+	protected $domain;
+	
+	/**
+	 * HTTP POST and/or GET data submitted via the API
+	 * @var array
+	 */
+	protected $request = array();
+	
+	/**
+	 * Format in which the data is to be returned to the client - defaults to JSON
+	 * if none has been specified
+	 * @var string
+	 */
+	protected $response_type;
+	
+	/**
+	 * Response data to be returned to the client
+	 * @var string
+	 */
+	protected $response_data;
+	
+	/**
+	 * Maximum number of records that can be returned by a single API request
+	 * @var int
+	 */
+	protected $list_limit;
+	
+	/**
+	 * Api_Service object
+	 * @var Api_Service
+	 */
+	protected $api_service;
+	
+	/**
+	 * SQL query for fetching teh requested data
+	 * @var string
+	 */
+	protected $query;
+	
+	/**
+	 * Assists in proper XML generation
+	 * @todo Review the value of having this has a class property
+	 * @var mixed
+	 */
+	protected $replar;
+	
+	/**
+	 * Attribute to be used for fetching the requested data
+	 * @var string
+	 */
+	protected $by;
+	
+	/**
+	 * Database ID of the requested item
+	 * @var int
+	 */
+	protected $id;
+	
+	/**
+	 * No. of records returned by the API request
+	 * @var int
+	 */
+	protected $record_count;
+	
+	/**
+	 * Api_Settings_Model object
+	 * @var Api_Settings_Model
+	 */
 	private $api_settings;
 
 	public function __construct($api_service)
@@ -106,9 +184,10 @@ abstract class Api_Object_Core
 	}
 
 	/**
-	 * Gets the response data
-	 *
+	 * Gets the response data 
 	 * If the error message has already been set, the error is returned instead
+	 *
+	 * @return mixed The data fetched by the API request
 	 */
 	public function get_response_data()
 	{
@@ -121,7 +200,7 @@ abstract class Api_Object_Core
 	 * Gets the number of records fetched by the API library. If the error message
 	 * property has been set, a zero (0) will always be returned
 	 *
-	 * @return int
+	 * @return int The number of records returned by the API request
 	 */
 	public function get_record_count()
 	{
@@ -139,6 +218,8 @@ abstract class Api_Object_Core
 
 	/**
 	 * Sets the error message
+	 *
+	 * @param string $error_message Error message for the Api request
 	 */
 	public function set_error_message($error_message)
 	{
@@ -195,7 +276,6 @@ abstract class Api_Object_Core
 	 */
 	protected function response($ret_value, $error_messages='')
 	{
-		$ret_json_or_xml = '';
 		$response = array();
 
 		// Set the record count to zero where the value of @param ret_val <> 0
@@ -252,24 +332,16 @@ abstract class Api_Object_Core
 			);
 		}
 
-		if ($this->response_type == 'json')
-		{
-			$ret_json_or_xml = $this->array_as_json($response);
-		}
-		else
-		{
-			$ret_json_or_xml = $this->array_as_xml($response, array());
-		}
-
-		return $ret_json_or_xml;
+		return ($this->response_type == 'json')
+			? $this->array_as_json($response)
+			: $this->array_as_xml($response, array());
 	}
 
 	/**
 	 * Creates a JSON response given an array.
 	 *
-	 * @param array data - The array.
-	 *
-	 * @return array - The json code.
+	 * @param array $data Array to be converted to JSON
+	 * @return string JSON representation of the data in @param $array
 	 */
 	protected function array_as_json($data)
 	{
@@ -279,10 +351,12 @@ abstract class Api_Object_Core
 	/**
 	 * Converts an object to an array.
 	 *
-	 * @param object object - The object to be converted into array.
+	 * @param object $object The object to be converted into array.
+	 * @return array Array representation of the object
 	 */
 	protected function object_to_array($object)
 	{
+		$array = array();
 		if (is_object($object))
 		{
 			foreach ($object as $key => $value)
@@ -371,7 +445,8 @@ abstract class Api_Object_Core
 	 */
 	protected function check_id_value($id)
 	{
-		$this->id = (is_numeric($id) AND intval($id) > 0) ? $id : 0;
+		// The id value must be positive and non-zero
+		$this->id = (preg_match('/^[1-9](\d*)$/', $id) > 0) ? (int) $id : 0;
 
 		return $this->id;
 	}

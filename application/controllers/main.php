@@ -33,17 +33,22 @@ class Main_Controller extends Template_Controller {
 
 	// Themes Helper
 	protected $themes;
+	
+	// User Object
+	protected $user;
 
 	public function __construct()
 	{
 		parent::__construct();
-
+		
+		$this->auth = new Auth();
+		$this->auth->auto_login();
+		
+		// Load Session
+		$this->session = Session::instance();
+		
 		if(Kohana::config('settings.private_deployment'))
 		{
-			$this->auth = new Auth();
-			$this->session = Session::instance();
-			$this->auth->auto_login();
-	
 			if ( ! $this->auth->logged_in('login'))
 			{
 				url::redirect('login/front');
@@ -52,9 +57,6 @@ class Main_Controller extends Template_Controller {
 		
         // Load cache
 		$this->cache = new Cache;
-
-		// Load Session
-		$this->session = Session::instance();
 
         // Load Header & Footer
 		$this->template->header  = new View('header');
@@ -72,25 +74,22 @@ class Main_Controller extends Template_Controller {
 
 		// Retrieve Default Settings
 		$site_name = Kohana::config('settings.site_name');
-			// Prevent Site Name From Breaking up if its too long
-			// by reducing the size of the font
-			if (strlen($site_name) > 20)
-			{
-				$site_name_style = " style=\"font-size:21px;\"";
-			}
-			else
-			{
-				$site_name_style = "";
-			}
+		
+		// Prevent Site Name From Breaking up if its too long
+		// by reducing the size of the font
+		$site_name_style = (strlen($site_name) > 20) ? " style=\"font-size:21px;\"" : "";
 			
 		$this->template->header->private_deployment = Kohana::config('settings.private_deployment');
 		$this->template->header->loggedin_username = FALSE;
 		$this->template->header->loggedin_userid = FALSE;
 		
-		if( isset(Auth::instance()->get_user()->username) AND isset(Auth::instance()->get_user()->id) )
+		if ( isset(Auth::instance()->get_user()->username) AND isset(Auth::instance()->get_user()->id) )
 		{
+			// Load User
+			$this->user = Auth::instance()->get_user();
 			$this->template->header->loggedin_username = html::specialchars(Auth::instance()->get_user()->username);
 			$this->template->header->loggedin_userid = Auth::instance()->get_user()->id;
+			$this->template->header->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
 		}
 		
 		$this->template->header->site_name = $site_name;
@@ -107,11 +106,9 @@ class Main_Controller extends Template_Controller {
         // $profiler = new Profiler;
 
 		// Get tracking javascript for stats
-		if(Kohana::config('settings.allow_stat_sharing') == 1){
-			$this->template->footer->ushahidi_stats = Stats_Model::get_javascript();
-		}else{
-			$this->template->footer->ushahidi_stats = '';
-		}
+		$this->template->footer->ushahidi_stats = (Kohana::config('settings.allow_stat_sharing') == 1)
+			? Stats_Model::get_javascript()
+			: '';
 		
 		// add copyright info
 		$this->template->footer->site_copyright_statement = '';
@@ -172,11 +169,12 @@ class Main_Controller extends Template_Controller {
 		foreach (ORM::factory('category')
 				->where('category_visible', '1')
 				->where('parent_id', '0')
+				->orderby('category_position', 'asc')
 				->find_all() as $category)
 		{
 			// Get The Children
 			$children = array();
-			foreach ($category->children as $child)
+			foreach ($category->orderby('category_position', 'asc')->children as $child)
 			{
 				// Check for localization of child category
 
@@ -267,17 +265,6 @@ class Main_Controller extends Template_Controller {
 		}
 		$this->template->content->shares = $shares;
 
-        // Get Reports
-        // XXX: Might need to replace magic no. 8 with a constant
-		$this->template->content->total_items = ORM::factory('incident')
-			->where('incident_active', '1')
-			->limit('8')->count_all();
-		$this->template->content->incidents = ORM::factory('incident')
-			->where('incident_active', '1')
-			->limit('10')
-			->orderby('incident_date', 'desc')
-			->find_all();
-
 		// Get Default Color
 		$this->template->content->default_map_all = Kohana::config('settings.default_map_all');
 
@@ -303,12 +290,6 @@ class Main_Controller extends Template_Controller {
 			$phone_array[] = $sms_no3;
 		}
 		$this->template->content->phone_array = $phone_array;
-
-		// Get RSS News Feeds
-		$this->template->content->feeds = ORM::factory('feed_item')
-			->limit('10')
-			->orderby('item_date', 'desc')
-			->find_all();
 
         // Get The START, END and Incident Dates
         $startDate = "";
@@ -465,6 +446,8 @@ class Main_Controller extends Template_Controller {
 
 		$this->themes->js->active_startDate = $display_startDate;
 		$this->themes->js->active_endDate = $display_endDate;
+		
+		$this->themes->js->blocks_per_row = Kohana::config('settings.blocks_per_row');
 
 		//$myPacker = new javascriptpacker($js , 'Normal', false, false);
 		//$js = $myPacker->pack();

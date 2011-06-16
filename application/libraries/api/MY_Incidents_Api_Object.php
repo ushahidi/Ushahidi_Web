@@ -155,6 +155,11 @@ class Incidents_Api_Object extends Api_Object_Core {
                 }
             break;
             
+            // Get the number of reports in each category
+            case "catcount":
+				$this->response_data = $this->_get_incident_counts_per_category();
+            break;
+            
             // Get incidents greater than a specific incident_id in the DB
             case "sinceid":
                 if ( ! $this->api_service->verify_array_index($this->request, 'id'))
@@ -600,6 +605,51 @@ class Incidents_Api_Object extends Api_Object_Core {
     }
     
     /**
+     * Returns the number of reports in each category
+     *
+     */
+    private function _get_incident_counts_per_category()
+    {       
+		$this->query = 'SELECT category_id, COUNT(category_id) AS reports FROM '.$this->table_prefix.'incident_category WHERE incident_id IN (SELECT id FROM '.$this->table_prefix.'incident WHERE incident_active = 1) GROUP BY category_id';
+        
+        $items = $this->db->query($this->query);
+		
+		$category_counts = array();
+		
+        foreach ($items as $item)
+        {
+        	$category_counts[] = array('category_id' => $item->category_id, 'reports' => $item->reports);
+        }
+        
+        $this->query = 'SELECT COUNT(id) AS total_count FROM '.$this->table_prefix.'incident WHERE incident_active = 1;';
+        
+        $count = $this->db->query($this->query);
+        
+        foreach($count as $c)
+        {
+        	$total_count = $c->total_count;
+        	break;
+        }
+        
+        //create the json array
+        $data = array(
+                "payload" => array(
+                    "domain" => $this->domain,
+                    "category_counts" => $category_counts,
+                    "total_reports" => $total_count
+                ),
+                "error" => $this->api_service->get_error_msg(0)
+        );
+        
+        // Return data
+        $this->response_data =  ($this->response_type == 'json')
+            ? $this->array_as_json($data)
+            : $this->array_as_xml($data, $replar);
+
+        echo $this->response_data;
+    }
+    
+    /**
      * Get a single incident by its ID in the database
      * @param incident_id ID of the incident in the databases
      */
@@ -664,7 +714,7 @@ class Incidents_Api_Object extends Api_Object_Core {
      * @param ne is the northeast lat,lon of the box
      * @param c is the categoryid
      */
-    private function _get_incidents_by_bounds($sw,$ne,$c=NULL)
+    private function _get_incidents_by_bounds($sw, $ne, $c = 0)
     {
 		// Get location_ids if we are to filter by location
 		$location_ids = array();
@@ -691,23 +741,38 @@ class Incidents_Api_Object extends Api_Object_Core {
 
 			$query = 'SELECT id FROM '.$this->table_prefix.'location WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
 
-			$query = $this->db->query($query);
+			$items = $this->db->query($query);
 
-			foreach ( $query as $items )
+			foreach ( $items as $item )
 			{
-				$location_ids[] =  $items->id;
+				$location_ids[] =  $item->id;
 			}
 		}
-
+		
 		$location_id_in = '1=1';
+		
 		if (count($location_ids) > 0)
 		{
 			$location_id_in = 'l.id IN ('.implode(',',$location_ids).')';
 		}
 		
 		$where = ' WHERE i.incident_active = 1 AND '.$location_id_in.' ';
+
+		// Fix for pulling categories using the bounding box
+		// Credits to Antonoio Lettieri http://github.com/alettieri
+		// Check if the specified category id is valid
+		if (Category_Model::is_valid_category($c))
+		{
+			// Filter incidents by the specified category
+			$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id ";
+			$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id=ic.category_id ";
+
+			// Overwrite the current where clause in $where
+			$where = $join."\nWHERE c.id = $c AND i.incident_active = 1 AND $location_id_in";
+		}
+		
 		$sortby = " GROUP BY i.id ORDER BY $this->order_field $this->sort";
-        $limit = " LIMIT 0, $this->list_limit";
+		$limit = " LIMIT 0, $this->list_limit";
 		
 		return $this->_get_incidents($where.$sortby, $limit);
         

@@ -18,6 +18,10 @@
 		var map;
 		var map_layer;
 		var radius = 20000;
+		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
+		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
+		var markers;
+		var radiusLayer;
 		
 		jQuery(function($) {
 			
@@ -36,8 +40,6 @@
 			- Uses Spherical Mercator Projection
 			- Units in Metres instead of Degrees					
 			*/
-			var proj_4326 = new OpenLayers.Projection('EPSG:4326');
-			var proj_900913 = new OpenLayers.Projection('EPSG:900913');
 			var options = {
 				units: "m",
 				numZoomLevels: 18,
@@ -70,11 +72,10 @@
 			
 			
 			// Create the Circle/Radius layer
-			var radiusLayer = new OpenLayers.Layer.Vector("Radius Layer");
-			
+			radiusLayer = new OpenLayers.Layer.Vector("Radius Layer");
 					
 			// Create the markers layer
-			var markers = new OpenLayers.Layer.Markers("Markers");
+			markers = new OpenLayers.Layer.Markers("Markers");
 			map.addLayers([radiusLayer, markers]);
 			
 			// create a lat/lon object
@@ -112,65 +113,12 @@
 			});
 			
 			
-			// Draw circle around point
-			function drawCircle(lon,lat,radius)
-			{
-				radiusLayer.destroyFeatures();
-				var circOrigin = new OpenLayers.Geometry.Point(lon,lat);
-				circOrigin.transform(proj_4326, proj_900913);
-				
-				var circStyle = OpenLayers.Util.extend( {},OpenLayers.Feature.Vector.style["default"] );
-				var circleFeature = new OpenLayers.Feature.Vector(
-					OpenLayers.Geometry.Polygon.createRegularPolygon( circOrigin, radius, 40, 0 ),
-					null,
-					circStyle
-				);
-				radiusLayer.addFeatures( [circleFeature] );
-			}			
-			
 			/* 
 			Google GeoCoder
 			TODO - Add Yahoo and Bing Geocoding Services
 			 */
 			$('.btn_find').live('click', function () {
-				address = $("#location_find").val();
-				if ( typeof GBrowserIsCompatible == 'undefined' ) {
-					alert('GeoCoding is only currently supported by Google Maps.\n\nPlease pinpoint the location on the map\nusing your mouse.');
-				} else {
-					var geocoder = new GClientGeocoder();
-					if (geocoder) {
-						$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-						geocoder.getLatLng(
-							address,
-							function(point) {
-								if (!point) {
-									alert(address + " not found!\n\n***************************\nFind a city or town close by and zoom in\nto find your precise location");
-									$('#find_loading').html('');
-								} else {
-									var lonlat = new OpenLayers.LonLat(point.lng(), point.lat());
-									lonlat.transform(proj_4326,proj_900913);
-								
-									m = new OpenLayers.Marker(lonlat);
-									markers.clearMarkers();
-							    	markers.addMarker(m);
-									map.setCenter(lonlat, <?php echo $default_zoom; ?>);
-								
-									newRadius = $("#alert_radius").val();
-									radius = newRadius * 1000
-
-									drawCircle(point.lng(),point.lat(), radius);
-								
-									// Update form values (jQuery)
-									$("#alert_lat").attr("value", point.lat());
-									$("#alert_lon").attr("value", point.lng());
-								
-									$('#find_loading').html('');
-								}
-							}
-						);
-					}
-				}
-				return false;
+				geoCode();
 			});
 			
 			
@@ -220,4 +168,57 @@
 			  });
 			});
 		});
+		
+
+		/**
+		 * Draw circle around point
+		 */
+		function drawCircle(lon,lat,radius)
+		{
+			radiusLayer.destroyFeatures();
+			var circOrigin = new OpenLayers.Geometry.Point(lon,lat);
+			circOrigin.transform(proj_4326, proj_900913);
 			
+			var circStyle = OpenLayers.Util.extend( {},OpenLayers.Feature.Vector.style["default"] );
+			var circleFeature = new OpenLayers.Feature.Vector(
+				OpenLayers.Geometry.Polygon.createRegularPolygon( circOrigin, radius, 40, 0 ),
+				null,
+				circStyle
+			);
+			radiusLayer.addFeatures( [circleFeature] );
+		}
+		
+		
+		/**
+		 * Google GeoCoder
+		 */
+		function geoCode()
+		{
+			$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+			address = $("#location_find").val();
+			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
+				function(data){
+					if (data.status == 'success'){
+						var lonlat = new OpenLayers.LonLat(data.message[1], data.message[0]);
+						lonlat.transform(proj_4326,proj_900913);
+					
+						m = new OpenLayers.Marker(lonlat);
+						markers.clearMarkers();
+				    	markers.addMarker(m);
+						map.setCenter(lonlat, 9);
+					
+						newRadius = $("#alert_radius").val();
+						radius = newRadius * 1000
+
+						drawCircle(data.message[1],data.message[0], radius);
+					
+						// Update form values (jQuery)
+						$("#alert_lat").attr("value", data.message[0]);
+						$("#alert_lon").attr("value", data.message[1]);
+					} else {
+						alert(address + " not found!\n\n***************************\nEnter more details like city, town, country\nor find a city or town close by and zoom in\nto find your precise location");
+					}
+					$('#find_loading').html('');
+				}, "json");
+			return false;
+		}		

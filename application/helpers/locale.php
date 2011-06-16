@@ -48,6 +48,7 @@ class locale_Core
 			"cy" => "Cymraeg",
 			"da" => "dansk",
 			"de" => "Deutsch",
+			"dr" => "دری",
 			"dv" => "ދިވެހި",
 			"dz" => "རྫོང་ཁ",
 			"ee" => "Eʋegbe",

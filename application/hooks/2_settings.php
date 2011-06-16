@@ -1,8 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-$subdomain = '';
-if(substr_count($_SERVER["HTTP_HOST"],'.') > 1) $subdomain = substr($_SERVER["HTTP_HOST"],0,strpos($_SERVER["HTTP_HOST"],'.'));
-
 /**
 * Default Settings From Database
 */
@@ -10,6 +7,7 @@ if(substr_count($_SERVER["HTTP_HOST"],'.') > 1) $subdomain = substr($_SERVER["HT
 // Retrieve Cached Settings
 
 $cache = Cache::instance();
+$subdomain = Kohana::config('settings.subdomain');
 $settings = $cache->get($subdomain.'_settings');
 if ( ! $settings)
 { // Cache is Empty so Re-Cache
@@ -51,6 +49,7 @@ Kohana::config_set('settings.default_lon', $settings->default_lon);
 Kohana::config_set('settings.default_zoom', $settings->default_zoom);
 Kohana::config_set('settings.items_per_page', $settings->items_per_page);
 Kohana::config_set('settings.items_per_page_admin', $settings->items_per_page_admin);
+Kohana::config_set('settings.blocks_per_row', $settings->blocks_per_row);
 Kohana::config_set('settings.google_analytics', $settings->google_analytics);
 Kohana::config_set('settings.twitter_hashtags', $settings->twitter_hashtags);
 Kohana::config_set('settings.email_username', $settings->email_username);

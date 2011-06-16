@@ -6,9 +6,7 @@
 		<input type="hidden" name="longitude" id="longitude" value="<?php echo $form['longitude']; ?>">
 		<div class="big-block">
 			<h1><?php echo Kohana::lang('ui_main.reports_submit_new'); ?></h1>
-			<?php
-				if ($form_error) {
-			?>
+			<?php if ($form_error): ?>
 			<!-- red-box -->
 			<div class="red-box">
 				<h3>Error!</h3>
@@ -22,9 +20,7 @@
 					?>
 				</ul>
 			</div>
-			<?php
-				}
-			?>
+			<?php endif; ?>
 			<div class="row">
 				<input type="hidden" name="form_id" id="form_id" value="<?php echo $id?>">
 			</div>
@@ -38,12 +34,15 @@
 					<?php print form::textarea('incident_description', $form['incident_description'], ' rows="10" class="textarea long" ') ?>
 				</div>
 				<div class="report_row" id="datetime_default">
-					<h4><a href="#" id="date_toggle" class="show-more"><?php echo Kohana::lang('ui_main.modify_date'); ?></a><?php echo Kohana::lang('ui_main.date_time'); ?>: 
+					<h4>
+						<a href="#" id="date_toggle" class="show-more"><?php echo Kohana::lang('ui_main.modify_date'); ?></a>
+						<?php echo Kohana::lang('ui_main.date_time'); ?>: 
 						<?php echo Kohana::lang('ui_main.today_at')." "."<span id='current_time'>".$form['incident_hour']
 							.":".$form['incident_minute']." ".$form['incident_ampm']."</span>"; ?>
-						<?php if($site_timezone != NULL) { ?>
+						<?php if($site_timezone != NULL): ?>
 							<small>(<?php echo $site_timezone; ?>)</small>
-						<?php } ?></h4>
+						<?php endif; ?>
+					</h4>
 				</div>
 				<div class="report_row hide" id="datetime_edit">
 					<div class="date-box">
@@ -62,10 +61,12 @@
 					<div class="time">
 						<h4><?php echo Kohana::lang('ui_main.reports_time'); ?></h4>
 						<?php
-							for ($i=1; $i <= 12 ; $i++) { 
+							for ($i=1; $i <= 12 ; $i++)
+							{ 
 								$hour_array[sprintf("%02d", $i)] = sprintf("%02d", $i);	 // Add Leading Zero
 							}
-							for ($j=0; $j <= 59 ; $j++) { 
+							for ($j=0; $j <= 59 ; $j++)
+							{ 
 								$minute_array[sprintf("%02d", $j)] = sprintf("%02d", $j);	// Add Leading Zero
 							}
 							$ampm_array = array('pm'=>'pm','am'=>'am');
@@ -75,20 +76,20 @@
 							print '<span class="dots">:</span>';
 							print form::dropdown('incident_ampm',$ampm_array,$form['incident_ampm']);
 						?>
-						<?php if($site_timezone != NULL) { ?>
+						<?php if ($site_timezone != NULL): ?>
 							<small>(<?php echo $site_timezone; ?>)</small>
-						<?php } ?>
+						<?php endif; ?>
 					</div>
 					<div style="clear:both; display:block;" id="incident_date_time"></div>
 				</div>
 				<div class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_categories'); ?></h4>
 					<div class="report_category" id="categories">
-						<?php
-						$selected_categories = array();
-                if (!empty($form['incident_category']) && is_array($form['incident_category'])) {
-							$selected_categories = $form['incident_category'];
-						}
+					<?php
+						$selected_categories = (!empty($form['incident_category']) AND is_array($form['incident_category']))
+							? $selected_categories = $form['incident_category']
+							:array();
+							
 						$columns = 2;
 						echo category::tree($categories, $selected_categories, 'incident_category', $columns);
 						?>
@@ -99,9 +100,7 @@
 				Event::run('ushahidi_action.report_form');
 				?>
 				<div id="custom_forms">
-					
-                                <?php
-                                
+				<?php
 					foreach ($disp_custom_fields as $field_id => $field_property)
 					{
 						echo "<div class=\"report_row\">";
@@ -141,8 +140,8 @@
 				<div class="report_optional">
 					<h3><?php echo Kohana::lang('ui_main.reports_optional'); ?></h3>
 					<div class="report_row">
-							 <h4><?php echo Kohana::lang('ui_main.reports_first'); ?></h4>
-							 <?php print form::input('person_first', $form['person_first'], ' class="text long"'); ?>
+						<h4><?php echo Kohana::lang('ui_main.reports_first'); ?></h4>
+						<?php print form::input('person_first', $form['person_first'], ' class="text long"'); ?>
 					</div>
 					<div class="report_row">
 						<h4><?php echo Kohana::lang('ui_main.reports_last'); ?></h4>
@@ -159,16 +158,12 @@
 				</div>
 			</div>
 			<div class="report_right">
-				<?php if (!$multi_country)
-							{
-				?>
+				<?php if (!$multi_country): ?>
 				<div class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_find_location'); ?></h4>
 					<?php print form::dropdown('select_city',$cities,'', ' class="select" '); ?>
 				</div>
-				<?php
-					 }
-				?>
+				<?php endif; ?>
 				<div class="report_row">
 					<div id="divMap" class="report_map"></div>
 					<div class="report-find-location">
@@ -178,7 +173,7 @@
 						<div style="clear:both;" id="find_text"><?php echo Kohana::lang('ui_main.pinpoint_location'); ?>.</div>
 					</div>
 				</div>
-				
+				<?php Event::run('ushahidi_action.report_form_location', $id); ?>
 				<div class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_location_name'); ?><br /><span class="example"><?php echo Kohana::lang('ui_main.detailed_location_example'); ?></span></h4>
 					<?php print form::input('location_name', $form['location_name'], ' class="text long"'); ?>

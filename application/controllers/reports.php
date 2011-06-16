@@ -9,26 +9,25 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author	   Ushahidi Team <team@ushahidi.com>
  * @package	   Ushahidi - http://source.ushahididev.com
- * @module	   Reports Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Reports_Controller extends Main_Controller {
-
+	/**
+	 * Whether an admin console user is logged in
+	 * @var bool
+	 */
 	var $logged_in;
 
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 
 		$this->themes->validator_enabled = TRUE;
 
 		// Is the Admin Logged In?
-
-		$this->logged_in = Auth::instance()->logged_in()
-			? TRUE
-			: FALSE;
+		$this->logged_in = Auth::instance()->logged_in();
 	}
 
 	/**
@@ -52,20 +51,26 @@ class Reports_Controller extends Main_Controller {
 		// Get incident_ids if we are to filter by category
 		$allowed_ids = array();
 		
-		if (isset($_GET['c']) AND !empty($_GET['c']) AND is_int($_GET['c']) AND (int)$_GET['c'] > 0)
+		if (isset($_GET['c']) AND (int) $_GET['c']!=0)
 		{
-			$category_id = $db->escape($_GET['c']);
-			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
+			$category_id = (int) $_GET['c'];
+			$query = 'SELECT ic.incident_id AS incident_id '
+					. 'FROM '.$this->table_prefix.'incident_category AS ic '
+					. 'INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  '
+					. 'WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
 			$query = $db->query($query);
 
-			foreach ( $query as $items )
+			if ($query->count())
 			{
-				$allowed_ids[] = $items->incident_id;
+				foreach ( $query as $items )
+				{
+					$allowed_ids[] = $items->incident_id;
+				}
 			}
-		}
-		elseif ( ! empty($_GET['c']) AND !is_int($_GET['c']))
-		{
-			$allowed_ids[] = -1;
+			else
+			{
+				$allowed_ids[] = "-1";
+			}
 		}
 
 		// Get location_ids if we are to filter by location
@@ -91,7 +96,11 @@ class Reports_Controller extends Main_Controller {
 			$lat_min = (float) $southwest[1];
 			$lat_max = (float) $northeast[1];
 
-			$query = 'SELECT id FROM '.$this->table_prefix.'location WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
+			$query = 'SELECT id FROM '.$this->table_prefix.'location '
+					. 'WHERE latitude >='.$lat_min.' '
+					. 'AND latitude <='.$lat_max.' '
+					. 'AND longitude >='.$lon_min.' '
+					. 'AND longitude <='.$lon_max;
 
 			$query = $db->query($query);
 
@@ -106,17 +115,9 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Get the count
-		$incident_id_in = '1=1';
-		if (count($allowed_ids) > 0)
-		{
-			$incident_id_in = 'id IN ('.implode(',',$allowed_ids).')';
-		}
+		$incident_id_in = (count($allowed_ids) > 0)? 'id IN ('.implode(',',$allowed_ids).')' : '1=1';
 
-		$location_id_in = '1=1';
-		if (count($location_ids) > 0)
-		{
-			$location_id_in = 'location_id IN ('.implode(',',$location_ids).')';
-		}
+		$location_id_in = (count($location_ids) > 0)? 'location_id IN ('.implode(',',$location_ids).')' : '1=1';
 
 		// Pagination
 		$pagination = new Pagination(array(
@@ -135,7 +136,7 @@ class Reports_Controller extends Main_Controller {
 			->where($location_id_in)
 			->where($incident_id_in)
 			->orderby("incident_date", "desc")
-			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+			->find_all((int) Kohana::config('settings.items_per_page'), $pagination->sql_offset);
 
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
 
@@ -165,14 +166,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->pagination = "";
 
 		// Pagination and Total Num of Report Stats
-		if ($pagination->total_items == 1)
-		{
-			$plural = "";
-		}
-		else
-		{
-			$plural = "s";
-		}
+		$plural = ($pagination->total_items == 1)? "" : "s";
 
 		if ($pagination->total_items > 0)
 		{
@@ -196,22 +190,22 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Category Title, if Category ID available
+		$category_id = (isset($_GET['c']) AND !empty($_GET['c'])) ? $_GET['c'] : "0";
+		
+		// Load the category
+		$category = ORM::factory('category', $category_id);
 
-		$category_id = ( isset($_GET['c']) AND !empty($_GET['c']) )
-			? $_GET['c'] : "0";
-		$category = ORM::factory('category')
-			->find($category_id);
-
-		if($category->loaded)
+		if ($category->loaded)
 		{
 			$translated_title = Category_Lang_Model::category_title($category_id,$l);
-			if($translated_title)
-			{
-				$this->template->content->category_title = $translated_title;
-			}else{
-				$this->template->content->category_title = $category->category_title;
-			}
-		}else{
+			
+			// Set the category title
+			$this->template->content->category_title = ($translated_title)
+				? $translated_title
+				: $category->category_title;
+		}
+		else
+		{
 			$this->template->content->category_title = "";
 		}
 
@@ -226,12 +220,8 @@ class Reports_Controller extends Main_Controller {
 
 		// Round the number of days up to the nearest full day
 		$days_since = ceil((time() - $oldest_timestamp) / 86400);
-		if ($days_since < 1) {
-			$avg_reports_per_day = $total_reports;
-		}else{
-			$avg_reports_per_day = round(($total_reports / $days_since),2);
-		}
-
+		$avg_reports_per_day = ($days_since < 1)? $total_reports : round(($total_reports / $days_since),2);
+		
 		// Percent Verified
 		$total_verified = Incident_Model::get_total_reports_by_verified(true);
 		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
@@ -284,15 +274,7 @@ class Reports_Controller extends Main_Controller {
 		$errors = $form;
 		$form_error = FALSE;
 
-		if ($saved == 'saved')
-		{
-			$form_saved = TRUE;
-		}
-		else
-		{
-			$form_saved = FALSE;
-		}
-
+		$form_saved = ($saved == 'saved');
 
 		// Initialize Default Values
 		$form['incident_date'] = date("m/d/Y",time());
@@ -409,7 +391,7 @@ class Reports_Controller extends Main_Controller {
 				$incident = new Incident_Model();
 				$incident->location_id = $location->id;
 				$incident->form_id = $post->form_id;
-				$incident->user_id = 0;
+				$incident->user_id = ($this->user)? $this->user->id : 0;
 				$incident->incident_title = $post->incident_title;
 				$incident->incident_description = $post->incident_description;
 
@@ -486,7 +468,7 @@ class Reports_Controller extends Main_Controller {
 					
 					// Thumbnail
 					Image::factory($filename)->resize(89,59,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type);	
+						->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type); 
 
 					// Remove the temporary file
 					unlink($filename);
@@ -510,10 +492,10 @@ class Reports_Controller extends Main_Controller {
 					foreach($post->custom_field as $key => $value)
 					{
 						$form_response = ORM::factory('form_response')
-						->where('form_field_id', $key)
-						->where('incident_id', $incident->id)
-						->find();
-						if ($form_response->loaded == true)
+										->where('form_field_id', $key)
+										->where('incident_id', $incident->id)
+										->find();
+						if ($form_response->loaded == TRUE)
 						{
 							$form_response->form_field_id = $key;
 							$form_response->form_response = $value;
@@ -616,10 +598,10 @@ class Reports_Controller extends Main_Controller {
 
 		if ( !$id )
 		{
-
 			url::redirect('main');
-
-		}else{
+		}
+		else
+		{
 			$incident = ORM::factory('incident')
 				->where('id',$id)
 				->where('incident_active',1)
@@ -658,10 +640,13 @@ class Reports_Controller extends Main_Controller {
 				$post->pre_filter('trim', TRUE);
 
 				// Add some rules, the input field, followed by a list of checks, carried out in order
-
-				$post->add_rules('comment_author', 'required', 'length[3,100]');
+				
+				if ( ! $this->user)
+				{
+					$post->add_rules('comment_author', 'required', 'length[3,100]');
+					$post->add_rules('comment_email', 'required','email', 'length[4,100]');
+				}
 				$post->add_rules('comment_description', 'required');
-				$post->add_rules('comment_email', 'required','email', 'length[4,100]');
 				$post->add_rules('captcha', 'required', 'Captcha::valid');
 
 				// Test to see if things passed the rule checks
@@ -679,12 +664,21 @@ class Reports_Controller extends Main_Controller {
 						// Comment data
 
 						$comment = array(
-							'author' => $post->comment_author,
-							'email' => $post->comment_email,
 							'website' => "",
 							'body' => $post->comment_description,
 							'user_ip' => $_SERVER['REMOTE_ADDR']
 						);
+						
+						if ($this->user)
+						{
+							$comment['author'] = $this->user->name;
+							$comment['email'] = $this->user->email;
+						}
+						else
+						{
+							$comment['author'] = $post->comment_author;
+							$comment['email'] = $post->comment_email;
+						}
 
 						$config = array(
 							'blog_url' => url::site(),
@@ -699,15 +693,14 @@ class Reports_Controller extends Main_Controller {
 							if ($akismet->is_error('AKISMET_INVALID_KEY'))
 							{
 								// throw new Kohana_Exception('akismet.api_key');
-
-							}elseif ($akismet->is_error('AKISMET_RESPONSE_FAILED')){
-
+							}
+							elseif ($akismet->is_error('AKISMET_RESPONSE_FAILED'))
+							{
 								// throw new Kohana_Exception('akismet.server_failed');
-
-							}elseif ($akismet->is_error('AKISMET_SERVER_NOT_FOUND')){
-
+							}
+							elseif ($akismet->is_error('AKISMET_SERVER_NOT_FOUND'))
+							{
 								// throw new Kohana_Exception('akismet.server_not_found');
-
 							}
 
 							// If the server is down, we have to post
@@ -715,28 +708,32 @@ class Reports_Controller extends Main_Controller {
 							// $this->_post_comment($comment);
 
 							$comment_spam = 0;
-						}else{
-
-							if ($akismet->is_spam())
-							{
-								$comment_spam = 1;
-							}else{
-								$comment_spam = 0;
-							}
 						}
-					}else{
-
+						else
+						{
+							$comment_spam = ($akismet->is_spam()) ? 1 : 0;
+						}
+					}
+					else
+					{
 						// No API Key!!
-
 						$comment_spam = 0;
 					}
 
-
 					$comment = new Comment_Model();
 					$comment->incident_id = $id;
-					$comment->comment_author = strip_tags($post->comment_author);
+					if ($this->user)
+					{
+						$comment->user_id = $this->user->id;
+						$comment->comment_author = $this->user->name;
+						$comment->comment_email = $this->user->email;
+					}
+					else
+					{
+						$comment->comment_author = strip_tags($post->comment_author);
+						$comment->comment_email = strip_tags($post->comment_email);
+					}
 					$comment->comment_description = strip_tags($post->comment_description);
-					$comment->comment_email = strip_tags($post->comment_email);
 					$comment->comment_ip = $_SERVER['REMOTE_ADDR'];
 					$comment->comment_date = date("Y-m-d H:i:s",time());
 
@@ -749,14 +746,7 @@ class Reports_Controller extends Main_Controller {
 					else
 					{
 						$comment->comment_spam = 0;
-						if (Kohana::config('settings.allow_comments') == 1)
-						{ // Auto Approve
-							$comment->comment_active = 1;
-						}
-						else
-						{ // Manually Approve
-							$comment->comment_active = 0;
-						}
+						$comment->comment_active = (Kohana::config('settings.allow_comments') == 1)? 1 : 0;
 					}
 					$comment->save();
 
@@ -776,8 +766,9 @@ class Reports_Controller extends Main_Controller {
 
 					url::redirect('reports/view/'.$id);
 
-				}else{
-
+				}
+				else
+				{
 					// No! We have validation errors, we need to show the form again, with the errors
 
 					// Repopulate the form fields
@@ -811,15 +802,12 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->incident_time = date('H:i', strtotime($incident->incident_date));
 			$this->template->content->incident_category = $incident->incident_category;
 
-			if ($incident->incident_rating == '')
-			{
-				$this->template->content->incident_rating = 0;
-			}else{
-				$this->template->content->incident_rating = $incident->incident_rating;
-			}
+			// Incident rating
+			$this->template->content->incident_rating = ($incident->incident_rating == '')
+				? 0
+				: $incident->incident_rating;
 
 			// Retrieve Media
-
 			$incident_news = array();
 			$incident_video = array();
 			$incident_photo = array();
@@ -866,20 +854,16 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->incident_neighbors = $this->_get_neighbors($incident->location->latitude,
 																									 $incident->location->longitude);
 		// News Source links
-
 		$this->template->content->incident_news = $incident_news;
 
 
 		// Video links
-
 		$this->template->content->incident_videos = $incident_video;
 
 		// Images
-
 		$this->template->content->incident_photos = $incident_photo;
 
 		// Create object of the video embed class
-
 		$video_embed = new VideoEmbed();
 		$this->template->content->videos_embed = $video_embed;
 
@@ -898,12 +882,10 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->js->incident_photos = $incident_photo;
 
 		// Initialize custom field array
-
-		$form_field_names = $this->_get_custom_form_fields($id,$incident->form_id,false);
+		$form_field_names = $this->_get_custom_form_fields($id, $incident->form_id, FALSE);
 
 		// Retrieve Custom Form Fields Structure
-
-		$disp_custom_fields = $this->_get_custom_form_fields($id,$incident->form_id,true);
+		$disp_custom_fields = $this->_get_custom_form_fields($id, $incident->form_id, TRUE);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
 
 		// Are we allowed to submit comments?
@@ -911,6 +893,7 @@ class Reports_Controller extends Main_Controller {
 		if (Kohana::config('settings.allow_comments'))
 		{
 			$this->template->content->comments_form = new View('reports_comments_form');
+			$this->template->content->comments_form->user = $this->user;
 			$this->template->content->comments_form->form = $form;
 			$this->template->content->comments_form->form_field_names = $form_field_names;
 			$this->template->content->comments_form->captcha = $captcha;
@@ -928,7 +911,7 @@ class Reports_Controller extends Main_Controller {
 	/**
 	 * Report Thanks Page
 	 */
-	function thanks()
+	public function thanks()
 	{
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit_thanks');
@@ -973,20 +956,29 @@ class Reports_Controller extends Main_Controller {
 
 				if (!empty($action) AND ($type == 'original' OR $type == 'comment'))
 				{
-					// Has this IP Address rated this post before?
+					// Has this User or IP Address rated this post before?
+					if ($this->user)
+					{
+						$filter = "user_id = ".$this->user->id;
+					}
+					else
+					{
+						$filter = "rating_ip = '".$_SERVER['REMOTE_ADDR']."' ";
+					}
+					
 					if ($type == 'original')
 					{
 						$previous = ORM::factory('rating')
-												->where('incident_id',$id)
-												->where('rating_ip',$_SERVER['REMOTE_ADDR'])
-												->find();
+							->where('incident_id',$id)
+							->where($filter)
+							->find();
 					}
 					elseif ($type == 'comment')
 					{
 						$previous = ORM::factory('rating')
-												->where('comment_id',$id)
-												->where('rating_ip',$_SERVER['REMOTE_ADDR'])
-												->find();
+							->where('comment_id',$id)
+							->where($filter)
+							->find();
 					}
 
 					// If previous exits... update previous vote
@@ -1000,6 +992,12 @@ class Reports_Controller extends Main_Controller {
 					elseif ($type == 'comment')
 					{
 						$rating->comment_id = $id;
+					}
+					
+					// Is there a user?
+					if ($this->user)
+					{
+						$rating->user_id = $this->user->id;
 					}
 
 					$rating->rating = $action;
@@ -1128,12 +1126,12 @@ class Reports_Controller extends Main_Controller {
 	private function _get_neighbors($latitude = 0, $longitude = 0)
 	{	
 		// Database
-        $db = new Database();
+		$db = new Database();
 		
 		$neighbors = $db->query("SELECT DISTINCT i.*, l.location_name,
-        ((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance
-         FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1
-         ORDER BY distance ASC LIMIT 5 ");
+		((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance
+		 FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1
+		 ORDER BY distance ASC LIMIT 5 ");
 
 		return $neighbors;
 	}
@@ -1240,81 +1238,4 @@ class Reports_Controller extends Main_Controller {
 		}
 	}
 	
-	/**
-	 * Ajax call to update Incident Reporting Form
-	 */
-	/*public function switch_form()
-	{
-		$this->template = "";
-		$this->auto_render = FALSE;
-
-		isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
-		isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
-
-		$html = "";
-		$fields_array = array();
-		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
-
-		foreach ($custom_form->form_field as $custom_formfield)
-		{
-			$fields_array[$custom_formfield->id] = array(
-				'field_id' => $custom_formfield->id,
-				'field_name' => $custom_formfield->field_name,
-				'field_type' => $custom_formfield->field_type,
-				'field_required' => $custom_formfield->field_required,
-				'field_maxlength' => $custom_formfield->field_maxlength,
-				'field_height' => $custom_formfield->field_height,
-				'field_width' => $custom_formfield->field_width,
-				'field_isdate' => $custom_formfield->field_isdate,
-				'field_response' => ''
-				);
-
-			// Load Data, if Any
-			foreach ($custom_formfield->form_response as $form_response)
-			{
-				if ($form_response->incident_id = $incident_id)
-				{
-					$fields_array[$custom_formfield->id]['field_response'] = $form_response->form_response;
-				}
-			}
-		}
-
-		foreach ($fields_array as $field_property)
-		{
-			$html .= "<div class=\"row\">";
-			$html .= "<h4>" . $field_property['field_name'] . "</h4>";
-			if ($field_property['field_type'] == 1)
-			{ // Text Field
-				// Is this a date field?
-				if ($field_property['field_isdate'] == 1)
-				{
-					$html .= form::input('custom_field['.$field_property['field_id'].']', $field_property['field_response'],
-						' id="custom_field_'.$field_property['field_id'].'" class="text"');
-					$html .= "<script type=\"text/javascript\">
-							$(document).ready(function() {
-							$(\"#custom_field_".$field_property['field_id']."\").datepicker({
-							showOn: \"both\",
-							buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\",
-							buttonImageOnly: true
-							});
-							});
-						</script>";
-				}
-				else
-				{
-					$html .= form::input('custom_field['.$field_property['field_id'].']', $field_property['field_response'],
-						' id="custom_field_'.$field_property['field_id'].'" class="text custom_text"');
-				}
-			}
-			elseif ($field_property['field_type'] == 2)
-			{ // TextArea Field
-				$html .= form::textarea('custom_field['.$field_property['field_id'].']',
-					$field_property['field_response'], ' class="custom_text" rows="3"');
-			}
-			$html .= "</div>";
-		}
-
-		echo json_encode(array("status"=>"success", "response"=>$html));
-	}*/
-
 } // End Reports

@@ -128,13 +128,13 @@ class Forms_Controller extends Admin_Controller
         // Pagination
         $pagination = new Pagination(array(
                             'query_string' => 'page',
-                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+                            'items_per_page' => $this->items_per_page,
                             'total_items'    => ORM::factory('form')->count_all()
                         ));
 
         $forms = ORM::factory('form')
                         ->orderby('id', 'asc')
-                        ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                        ->find_all($this->items_per_page, 
                             $pagination->sql_offset);
 
 		// Form Field Types

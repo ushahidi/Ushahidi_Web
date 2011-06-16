@@ -100,16 +100,10 @@ class Scheduler_Controller extends Admin_Controller
 				$scheduler = new Scheduler_Model($scheduler_id);
 				if ($post->action == 'v')
 				{ // Active/Inactive Action
-					if ($scheduler->loaded==true)
+					if ($scheduler->loaded == TRUE)
 					{
-						if ($scheduler->scheduler_active == 1)
-						{
-							$scheduler->scheduler_active = 0;
-						}
-						else
-						{
-							$scheduler->scheduler_active = 1;
-						}
+						$scheduler->scheduler_active = ($scheduler->scheduler_active == 1) ? 0 : 1;
+						
 						$scheduler->save();
 						$form_saved = TRUE;
 						$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
@@ -139,14 +133,13 @@ class Scheduler_Controller extends Admin_Controller
         // Pagination
 		$pagination = new Pagination(array(
 			'query_string' => 'page',
-			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'items_per_page' => $this->items_per_page,
 			'total_items'	=> ORM::factory('scheduler')->count_all()
 			));
 
 		$schedules = ORM::factory('scheduler')
 			->orderby('scheduler_name', 'asc')
-			->find_all((int) Kohana::config('settings.items_per_page_admin'),
-				$pagination->sql_offset);
+			->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$this->template->content->weekday_array = array(
 			"-1"=>"ALL",
@@ -209,7 +202,7 @@ class Scheduler_Controller extends Admin_Controller
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'   => 'page',
-			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'items_per_page' => $this->items_per_page,
 			'total_items'	=> ORM::factory('scheduler_log')
 				->count_all()
 		));
@@ -217,7 +210,7 @@ class Scheduler_Controller extends Admin_Controller
 
 		$scheduler_logs = ORM::factory('scheduler_log')
 			->orderby('scheduler_date','desc')
-			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+			->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$this->template->content->scheduler_logs = $scheduler_logs;
 		$this->template->content->pagination = $pagination;

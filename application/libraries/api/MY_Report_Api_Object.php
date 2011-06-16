@@ -139,8 +139,7 @@ class Report_Api_Object extends Api_Object_Core {
 
                 $incident_time = $post->incident_hour . ":" . 
                     $post->incident_minute . ":00 " . $post->incident_ampm;
-                $incident->incident_date = $incident_date . " " .
-                    $incident_time;
+                $incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
                 $incident->incident_dateadd = date("Y-m-d H:i:s",time());
                 $incident->save();
 
@@ -252,14 +251,23 @@ class Report_Api_Object extends Api_Object_Core {
                 }
 
                 // SAVE PERSONAL INFORMATION IF ITS FILLED UP
-                if ( ! empty($post->person_first) OR ! empty($post->person_last))
+                if ( !empty($post->person_first) || !empty($post->person_last) || !empty($post->person_email))
                 {
                     $person = new Incident_Person_Model();
                     $person->location_id = $location->id;
                     $person->incident_id = $incident->id;
-                    $person->person_first = $post->person_first;
-                    $person->person_last = $post->person_last;
-                    $person->person_email = $post->person_email;
+                    if(!empty($post->person_first))
+                    {
+						$person->person_first = $post->person_first;
+                    }
+                    if(!empty($post->person_last))
+                	{
+                    	$person->person_last = $post->person_last;
+                	}
+                    if(!empty($post->person_email))
+                    {
+                    	$person->person_email = $post->person_email;
+                    }
                     $person->person_date = date("Y-m-d H:i:s",time());
                     $person->save();
                 }

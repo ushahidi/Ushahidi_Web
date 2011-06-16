@@ -74,14 +74,13 @@ class Users_Controller extends Admin_Controller
         // Pagination
         $pagination = new Pagination(array(
                             'query_string' => 'page',
-                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+                            'items_per_page' => $this->items_per_page,
                             'total_items'  => ORM::factory('user')->count_all()
                         ));
 
         $users = ORM::factory('user')
                     ->orderby('name', 'asc')
-                    ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
-                        $pagination->sql_offset);
+                    ->find_all($this->items_per_page, $pagination->sql_offset);
 
         // Set the flag for displaying the roles link
         $this->template->content->display_roles = $this->display_roles;
@@ -164,6 +163,8 @@ class Users_Controller extends Admin_Controller
             
             $post->add_rules('notify','between[0,1]');
             
+            Event::run('ushahidi_action.user_submit_admin', $post);
+            
             if ($post->validate())
             {
                 $user = ORM::factory('user',$user_id);
@@ -203,6 +204,7 @@ class Users_Controller extends Admin_Controller
                     $user->add(ORM::factory('role', $post->role));
                 }
                 $user->save();
+                Event::run('ushahidi_action.user_edit', $user);
                 
                 // Redirect
                 url::redirect(url::site().'admin/users/');
@@ -256,6 +258,7 @@ class Users_Controller extends Admin_Controller
             $role_array[$role->name] = strtoupper($role->name);
         }
         
+        $this->template->content->id = $user_id;
         $this->template->content->display_roles = $this->display_roles;
         $this->template->content->user = $user;
         $this->template->content->form = $form;

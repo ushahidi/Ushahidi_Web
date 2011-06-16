@@ -9,7 +9,6 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Reports Controller  
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
@@ -22,7 +21,7 @@ class Feeds_Controller extends Main_Controller {
     }
 
     /**
-     * Displays all reports.
+     * Displays all feeds.
      */
     public function index() 
     {
@@ -48,20 +47,14 @@ class Feeds_Controller extends Main_Controller {
         $this->template->content->pagination = ''; 
         
         // Pagination and Total Num of Report Stats
-        if($pagination->total_items == 1)
-        {
-            $plural = '';
-        }
-        else
-        {
-            $plural = 's';
-        }
+        $plural = ($pagination->total_items == 1)? '' : 's';
+
         if ($pagination->total_items > 0)
         {
             $current_page = ($pagination->sql_offset/ (int) Kohana::config('settings.items_per_page')) + 1;
             $total_pages = ceil($pagination->total_items/ (int) Kohana::config('settings.items_per_page'));
             
-            if($total_pages > 1)
+            if ($total_pages > 1)
             { // If we want to show pagination
                 $this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
                 
@@ -80,35 +73,6 @@ class Feeds_Controller extends Main_Controller {
 		// Rebuild Header Block
         $this->template->header->header_block = $this->themes->header_block();
 
-        /*$icon_html = array();
-        $icon_html[1] = "<img src=\"".url::base()."media/img/image.png\">"; //image
-        $icon_html[2] = "<img src=\"".url::base()."media/img/video.png\">"; //video
-        $icon_html[3] = ""; //audio
-        $icon_html[4] = ""; //news
-        $icon_html[5] = ""; //podcast
-        
-        //Populate media icon array
-        $this->template->content->media_icons = array();
-        foreach($incidents as $incident)
-        {
-            $incident_id = $incident->id;
-            if(ORM::factory('media')
-               ->where('incident_id', $incident_id)->count_all() > 0)
-            {
-                $medias = ORM::factory('media')
-                          ->where('incident_id', $incident_id)->find_all();
-                
-                //Modifying a tmp var prevents Kohona from throwing an error
-                $tmp = $this->template->content->media_icons;
-                $tmp[$incident_id] = '';
-                
-                foreach($medias as $media)
-                {
-                    $tmp[$incident_id] .= $icon_html[$media->media_type];
-                    $this->template->content->media_icons = $tmp;
-                }
-            }
-        }*/
     } 
     
 } // End Reports

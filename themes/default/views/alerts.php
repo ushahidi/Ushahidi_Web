@@ -3,25 +3,21 @@
 		<!-- start block -->
 		<div class="big-block">
 			<h1><?php echo Kohana::lang('ui_main.alerts_get'); ?></h1>
-			<?php
-			if ($form_error) {
-			?>
+			<?php if ($form_error): ?>
 			<!-- red-box -->
 			<div class="red-box">
 				<h3>Error!</h3>
 				<ul>
-					<?php
+				<?php
 					foreach ($errors as $error_item => $error_description)
 					{
-					// print "<li>" . $error_description . "</li>";
-					print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+						// print "<li>" . $error_description . "</li>";
+						print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
 					}
-					?>
+				?>
 				</ul>
 			</div>
-			<?php
-			}
-			?>
+			<?php endif; ?>
 			<?php print form::open() ?>
 			<div class="step-1">
 				<h2><?php echo Kohana::lang('ui_main.alerts_step1_select_city'); ?></h2>
@@ -41,7 +37,9 @@
 						</select>
 					</div>
 					<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
-					<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" /></div>
+					<div style="float:left;margin:9px 0 0 5px;">
+						<input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" />
+					</div>
 					<div id="find_loading" class="report-find-loading"></div>
 					<div style="clear:both;" id="find_text">* <?php echo Kohana::lang('ui_main.alerts_place_spot2'); ?></div>
 				</div>
@@ -52,37 +50,27 @@
 				<div class="step-2">
 					<h2><?php echo Kohana::lang('ui_main.alerts_step2_send_alerts'); ?></h2>
 					<div class="holder">
-						<?php if($show_mobile == TRUE) { ?>
+						<?php if ($show_mobile == TRUE): ?>
 						<div class="box">
 							<label>
-								<?php
-									if ($form['alert_mobile_yes'] == 1) {
-										$checked = true;
-									}
-									else
-									{
-									 	$checked = false;
-									}
-									print form::checkbox('alert_mobile_yes', '1', $checked);
-								?>
-								<span><strong><?php echo Kohana::lang('ui_main.alerts_mobile_phone'); ?></strong><br /><?php echo Kohana::lang('ui_main.alerts_enter_mobile'); ?></span>
+								<?php $checked = ($form['alert_mobile_yes'] == 1); ?>
+								<?php print form::checkbox('alert_mobile_yes', '1', $checked); ?>
+								<span>
+									<strong><?php echo Kohana::lang('ui_main.alerts_mobile_phone'); ?></strong><br />
+									<?php echo Kohana::lang('ui_main.alerts_enter_mobile'); ?>
+								</span>
 							</label>
 							<span><?php print form::input('alert_mobile', $form['alert_mobile'], ' class="text long"'); ?></span>
 						</div>
-						<?php } ?>
+						<?php endif; ?>
 						<div class="box">
 							<label>
-								<?php
-									if ($form['alert_email_yes'] == 1) {
-										$checked = true;
-									}
-									else
-									{
-										$checked = false;
-									}
-									print form::checkbox('alert_email_yes', '1', $checked);
-								?>
-								<span><strong><?php echo Kohana::lang('ui_main.alerts_email'); ?></strong><br /><?php echo Kohana::lang('ui_main.alerts_enter_email'); ?></span>
+								<?php $checked = ($form['alert_email_yes'] == 1) ?> 
+								<?php print form::checkbox('alert_email_yes', '1', $checked); ?>
+								<span>
+									<strong><?php echo Kohana::lang('ui_main.alerts_email'); ?></strong><br />
+									<?php echo Kohana::lang('ui_main.alerts_enter_email'); ?>
+								</span>
 							</label>
 							<span><?php print form::input('alert_email', $form['alert_email'], ' class="text long"'); ?></span>
 						</div>
@@ -92,27 +80,24 @@
 					<h2><?php echo Kohana::lang('ui_main.alerts_step3_select_catgories'); ?></h2>
 					<div class="holder">
 						<div class="box">
-					                <div class="report_category" id="categories">
-						                <?php
-						                        $selected_categories = array();
-                                                                        if (!empty($form['alert_category']) && is_array($form['alert_category'])) {
-							                  $selected_categories = $form['alert_category'];
-						                        }
-						                        echo category::tree($categories, $selected_categories, 'alert_category', 2, true);
-						                ?>
-					                </div>
-					        </div>
-				        </div>
+							<div class="report_category" id="categories">
+							<?php 
+								$selected_categories = (!empty($form['alert_category']) AND is_array($form['alert_category']))
+									? $selected_categories = $form['alert_category']
+									: array();
+									
+								echo category::tree($categories, $selected_categories, 'alert_category', 2, TRUE);
+							?>
+							</div>
+						</div>
+					</div>
 				</div>
 				<input id="btn-send-alerts" class="btn_submit" type="submit" value="<?php echo Kohana::lang('ui_main.alerts_btn_send'); ?>" />
 				<BR /><BR />
 				<a href="<?php echo url::site()."alerts/confirm";?>"><?php echo Kohana::lang('ui_main.alert_confirm_previous'); ?></a>
 			</div>
 			<?php print form::close(); ?>
-										<?php
-				if ($allow_feed == 1 )
-				{
-			?>
+			<?php if ($allow_feed == 1): ?>
 			<div class="step-2-holder">
 				<div class="feed">
 					<h2><?php echo Kohana::lang('ui_main.alerts_rss'); ?></h2>
@@ -123,9 +108,7 @@
 					</div>
 				</div>
 			</div>
-			<?php
-				}
-			?>
+			<?php endif; ?>
 		</div>
 		<!-- end block -->
 	</div>

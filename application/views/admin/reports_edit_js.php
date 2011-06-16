@@ -439,7 +439,8 @@
 						break;
 				};
 				
-				map.setCenter(map.getCenter(), map.getZoom());
+				map.updateSize();
+				map.pan(0,1);
 				
 				return false;
 			});

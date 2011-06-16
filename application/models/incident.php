@@ -10,26 +10,49 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Incident Model
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Incident_Model extends ORM
-{
+class Incident_Model extends ORM {
+	/**
+	 * One-to-may relationship definition
+	 * @var array
+	 */
 	protected $has_many = array('category' => 'incident_category', 'media', 'verify', 'comment',
 		'rating', 'alert' => 'alert_sent', 'incident_lang', 'form_response','cluster' => 'cluster_incident',
 		'geometry');
+	
+	/**
+	 * One-to-one relationship definition
+	 * @var array
+	 */	
 	protected $has_one = array('location','incident_person','user','message','twitter','form');
+	
+	/**
+	 * Many-to-one relationship definition
+	 * @var array
+	 */
 	protected $belongs_to = array('sharing');
 
-	// Database table name
+	/**
+	 * Database table name
+	 * @var string
+	 */
 	protected $table_name = 'incident';
 
-	// Prevents cached items from being reloaded
+	/**
+	 * Prevents cached items from being reloaded
+	 * @var bool
+	 */
 	protected $reload_on_wakeup   = FALSE;
-
-	static function get_active_categories()
+	
+	/**
+	 * Gets a list of all visible categories
+	 *
+	 * @return array
+	 */
+	public static function get_active_categories()
 	{
 		// Get all active categories
 		$categories = array();
@@ -43,50 +66,43 @@ class Incident_Model extends ORM
 		return $categories;
 	}
 
-	/*
-	* get the total number of reports
-	* @param approved - Only count approved reports if true
-	*/
-	public static function get_total_reports($approved=false)
+	/**
+	 * Get the total number of reports
+	 *
+	 * @param boolean $approved - Only count approved reports if true
+	 * @return int
+	 */
+	public static function get_total_reports($approved = FALSE)
 	{
-		if($approved)
-		{
-			$count = ORM::factory('incident')->where('incident_active', '1')->count_all();
-		}else{
-			$count = ORM::factory('incident')->count_all();
-		}
-
-		return $count;
+		return ($approved)
+			? ORM::factory('incident')->where('incident_active', '1')->count_all()
+			: ORM::factory('incident')->count_all();
 	}
 
-	/*
-	* get the total number of verified or unverified reports
-	* @param verified - Only count verified reports if true, unverified if false
-	*/
-	public static function get_total_reports_by_verified($verified=false)
+	/**
+	 * Get the total number of verified or unverified reports
+	 *
+	 * @param boolean $verified - Only count verified reports if true, unverified if false
+	 * @return int
+	 */
+	public static function get_total_reports_by_verified($verified = FALSE)
 	{
-		if($verified)
-		{
-			$count = ORM::factory('incident')->where('incident_verified', '1')->where('incident_active', '1')->count_all();
-		}else{
-			$count = ORM::factory('incident')->where('incident_verified', '0')->where('incident_active', '1')->count_all();
-		}
-
-		return $count;
+		return ($verified)
+			? ORM::factory('incident')->where('incident_verified', '1')->where('incident_active', '1')->count_all()
+			: ORM::factory('incident')->where('incident_verified', '0')->where('incident_active', '1')->count_all();
 	}
 
-	/*
-	* get the total number of verified or unverified reports
-	* @param approved - Oldest approved report timestamp if true (oldest overall if false)
-	*/
-	public static function get_oldest_report_timestamp($approved=true)
+	/**
+	 * Get the total number of verified or unverified reports
+	 *
+	 * @param boolean $approved - Oldest approved report timestamp if true (oldest overall if false)
+	 * @return string
+	 */
+	public static function get_oldest_report_timestamp($approved = TRUE)
 	{
-		if($approved)
-		{
-			$result = ORM::factory('incident')->where('incident_active', '1')->orderby(array('incident_date'=>'ASC'))->find_all(1,0);
-		}else{
-			$result = ORM::factory('incident')->where('incident_active', '0')->orderby(array('incident_date'=>'ASC'))->find_all(1,0);
-		}
+		$result = ($approved)
+			? ORM::factory('incident')->where('incident_active', '1')->orderby(array('incident_date'=>'ASC'))->find_all(1,0)
+			: ORM::factory('incident')->where('incident_active', '0')->orderby(array('incident_date'=>'ASC'))->find_all(1,0);
 
 		foreach($result as $report)
 		{
@@ -110,7 +126,7 @@ class Incident_Model extends ORM
 		return $graph;
 	}
 
-	static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL,$active='true',$media_type=NULL)
+	public static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL,$active='true',$media_type=NULL)
 	{
 		// Table Prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
@@ -121,33 +137,35 @@ class Incident_Model extends ORM
 
 		$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-01')";
 		$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m')";
-		if ($interval == 'day') {
+		if ($interval == 'day')
+		{
 			$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d')";
 			$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d')";
-		} elseif ($interval == 'hour') {
+		}
+		elseif ($interval == 'hour')
+		{
 			$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d %H:%M')";
 			$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d%H')";
-		} elseif ($interval == 'week') {
+		}
+		elseif ($interval == 'week')
+		{
 			$select_date_text = "STR_TO_DATE(CONCAT(CAST(YEARWEEK(incident_date) AS CHAR), ' Sunday'), '%X%V %W')";
 			$groupby_date_text = "YEARWEEK(incident_date)";
 		}
 
-		$date_filter = "";
-		if ($start_date) {
-			$date_filter .= ' AND incident_date >= "' . $start_date . '"';
-		}
-		if ($end_date) {
+		$date_filter = ($start_date) ? ' AND incident_date >= "' . $start_date . '"' : "";
+		
+		if ($end_date)
+		{
 			$date_filter .= ' AND incident_date <= "' . $end_date . '"';
 		}
 
-		$active_filter = '1';
-		if ($active == 'all' || $active == 'false') {
-			$active_filter = '0,1';
-		}
+		$active_filter = ($active == 'all' || $active == 'false')? $active_filter = '0,1' : '1';
 
 		$joins = '';
 		$general_filter = '';
-		if (isset($media_type) && is_numeric($media_type)) {
+		if (isset($media_type) AND is_numeric($media_type))
+		{
 			$joins = 'INNER JOIN '.$table_prefix.'media AS m ON m.incident_id = i.id';
 			$general_filter = ' AND m.media_type IN ('. $media_type  .')';
 		}
@@ -182,7 +200,7 @@ class Incident_Model extends ORM
 								  ' . $general_filter . '
 							GROUP BY ' . $groupby_date_text . ', category_id ';
 		$query = $db->query($query_text);
-		foreach ( $query as $month_count )
+		foreach ($query as $month_count)
 		{
 			$category_id = $month_count->category_id;
 			if (!isset($all_graphs[$category_id]))
@@ -199,22 +217,42 @@ class Incident_Model extends ORM
 		return $graphs;
 	}
 
-	/*
-	* get the number of reports by date for dashboard chart
-	*/
-	public static function get_number_reports_by_date($range=NULL)
+	/**
+	 * Get the number of reports by date for dashboard chart
+	 *
+	 * @param int $range No. of days in the past
+	 * @param int $user_id
+	 * @return array
+	 */
+	public static function get_number_reports_by_date($range = NULL, $user_id = NULL)
 	{
 		// Table Prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
+		// Database instance
 		$db = new Database();
 		
-		if ($range == NULL)
+		// Filter by User
+		$user_id = (int) $user_id;
+		$u_sql = ($user_id)? " AND user_id = ".$user_id." " : "";
+		
+		// Query to generate the report count
+		$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, '
+			. 'YEAR(incident_date) as year '
+			. 'FROM '.$table_prefix.'incident ';
+		
+		// Check if the range has been specified and is non-zero then add predicates to the query
+		if ($range != NULL AND $range > 0)
 		{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident GROUP BY date ORDER BY incident_date ASC';
-		}else{
-			$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, YEAR(incident_date) as year FROM '.$table_prefix.'incident WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.mysql_escape_string($range).' DAY) GROUP BY date ORDER BY incident_date ASC';
+			$sql .= 'WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.$db->escape_str($range).' DAY) ';
 		}
+		else
+		{
+			$sql .= 'WHERE 1=1 ';
+		}
+		
+		// Group and order the records
+		$sql .= $u_sql.'GROUP BY date ORDER BY incident_date ASC';
 		
 		$query = $db->query($sql);
 		$result = $query->result_array(FALSE);
@@ -222,17 +260,19 @@ class Incident_Model extends ORM
 		$array = array();
 		foreach ($result AS $row)
 		{
-			$timestamp = mktime(0,0,0,$row['month'],$row['day'],$row['year'])*1000;
+			$timestamp = mktime(0, 0, 0, $row['month'], $row['day'], $row['year']) * 1000;
 			$array["$timestamp"] = $row['count'];
 		}
 
 		return $array;
 	}
 
-	/*
-	* return an array of the dates of all approved incidents
-	*/
-	static function get_incident_dates()
+	/**
+	 * Gets a list of dates of all approved incidents
+	 *
+	 * @return array
+	 */
+	public static function get_incident_dates()
 	{
 		//$incidents = ORM::factory('incident')->where('incident_active',1)->incident_date->find_all();
 		$incidents = ORM::factory('incident')->where('incident_active',1)->select_list('id', 'incident_date');

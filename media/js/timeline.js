@@ -292,6 +292,7 @@
 
 			var plotData = this.graphData;
 			gPlayEndDate = gStartTime.getTime()/1000 + (this.playCount * 60*60*24);
+			gPlayStartDate = gPlayEndDate - (60*60*24);
 			var playEndDateTime = new Date(gPlayEndDate * 1000);
 			var data = this.filteredData(new Date(gPlayEndDate * 1000));
 
@@ -321,7 +322,7 @@
 			var style = playTimeline.markerStyle();
 			var markers = gTimelineMarkers;
 			playTimeline.plot();
-			playTimeline.plotMarkers(style, markers, gPlayEndDate);
+			playTimeline.plotMarkers(style, markers, gPlayStartDate, gPlayEndDate);
 			this.playCount++;
 			if (gPlayEndDate >= gEndTime.getTime()/1000)
 			{
@@ -340,9 +341,9 @@
 			return this;
 		};
 		
-		this.plotMarkers = function(style, markers, endDate)
+		this.plotMarkers = function(style, markers, startDate, endDate)
 		{
-			var startDate = this.startTime.getTime() / 1000;
+			//var startDate = this.startTime.getTime() / 1000;
 			endDate = endDate || this.endTime.getTime() / 1000;
 
 			// Uncomment to play at monthly intervals
@@ -364,10 +365,30 @@
 					property: "timestamp",
 					lowerBoundary: startDate,
 					upperBoundary: endDate
-				})
+				}),
+				symbolizer: {
+					fillOpacity: 1,
+					strokeColor: "black"
+				}
 			});
+			
+			var sliderfilter2 = new OpenLayers.Rule({
+				filter: new OpenLayers.Filter.Comparison(
+				{
+					type: OpenLayers.Filter.Comparison.BETWEEN,
+					property: "timestamp",
+					lowerBoundary: 0,
+					upperBoundary: endDate
+				}),
+				symbolizer: {
+					fillOpacity: 0.3,
+					strokeColor: "white",
+					strokeOpacity: 1
+				}
+			});
+			
 			style.rules = [];
-			style.addRules([sliderfilter]);					
+			style.addRules([sliderfilter2, sliderfilter]);
 			markers.styleMap.styles["default"] = style;
 			markers.redraw();
 			return this;
@@ -390,9 +411,9 @@
 			{
 				params.push('e=' + endDate);
 			}
-			if (typeof(mediaType) != 'undefined')
+			if (typeof(this.mediaType) != 'undefined')
 			{
-			//params.push('m=' + mediaType);
+				params.push('m=' + this.mediaType);
 			}
 			return params;
 		};
@@ -737,19 +758,27 @@
 				});
 
 			map.addLayer(markers);
-
 			
-//			if (!newlayer)
-//			{ // Keep the Base Layer in Focus
-				selectControl = new OpenLayers.Control.SelectFeature(markers);
-				map.addControl(selectControl);
-				selectControl.activate();
-				markers.events.on({
-					"featureselected": onFeatureSelect,
-					"featureunselected": onFeatureUnselect
-				});
-//			}
-
+			/*
+			 - Added by E.Kala <emmanuel(at)ushahidi.com>
+			 - Part of the fix to issue #2168
+			*/
+			
+			// Check if the the new layer is a KML layer
+			if (thisLayer && thisLayerType == 'layers')
+			{
+				// Add layer object to the kmlOvelays array
+				kmlOverlays.push(markers);
+			}
+			
+			selectControl = new OpenLayers.Control.SelectFeature(markers);
+			map.addControl(selectControl);
+			selectControl.activate();
+			markers.events.on({
+				"featureselected": onFeatureSelect,
+				"featureunselected": onFeatureUnselect
+			});
+			
 			return markers;
 		};
 		

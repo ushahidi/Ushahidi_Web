@@ -1,15 +1,30 @@
-.infowindow h2{
-	margin:0 0 5px 0;
+.infowindow{
+	margin:20px 0 0 0;
+	position:relative;
 	padding:0;
-	font-size:12px;
+}
+.infowindow .infowindow_content{
+	width:250px;
+	float:left;
+}
+.infowindow h2{
+	margin:0 0 8px 0;
+	padding:0;
 	font-weight:bold;
 	font-size:14px;
 }
 .infowindow .infowindow_list{
-	padding:10px 0 10px 0;
-	border:1px solid #ccc;
-	border-width:1px 0 1px 0;
+	margin-bottom:10px;
+	font-size:14px;
+	font-weight:bold;
 }
+.infowindow .infowindow_image{
+	float:left;
+	margin-right:10px;
+}
+	.infowindow .infowindow_image img{
+		border:1px solid #3764aa;
+	}
 .infowindow ul{
 	font-weight:bold;
 	margin:0 0 0 1em;
@@ -19,15 +34,20 @@
 	list-style-type: square;
 }
 .infowindow a, .infowindow a:visited{
-	color:#000;
+	color:#3764aa;
 }
 .infowindow a:hover{
 	text-decoration:none;
 }
+.infowindow a:hover{
+	text-decoration:underline;
+}
 .infowindow .infowindow_meta{
-	background-color:#eee;
 	font-size:90%;
-	padding:1px 5px 3px 5px;
+	clear:both;
+}
+.infowindow_meta a, .infowindow_meta a:visited{
+	color:#000;
 }
 
 div.olMap {
@@ -356,10 +376,12 @@ div.olControlSaveFeaturesItemInactive {
 .olPopupCloseBox {
   background: url("../img/openlayers/close.gif") no-repeat;
   cursor: pointer;
+  margin-right:-5px;
+  margin-top:-7px;
 }
 
 .olFramedCloudPopupContent {
-    padding: 5px;
+    padding: 3px;
     overflow: auto;
 }
 

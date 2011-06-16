@@ -107,6 +107,11 @@ div#logo h1{
 	padding:0;
 	font-size: 20px;
 }
+
+div#logo a {
+	text-decoration: none;
+}
+
 div#logo span{
 	font-size:14px;
 }
@@ -125,7 +130,7 @@ div#middle .background{
 
 div#middle .layoutleft{
     background: none;
-	padding-bottom:15px;
+	padding-bottom:0;
 }
 
 div#middle .layoutright{
@@ -551,10 +556,39 @@ div.additional-content ol {
 
 /* content blocks */
 div.content-container{
-    padding: 15px;
+    padding: 0 0 15px 15px;
     background: #E2E2E2;
 }
-
+ul.content-column{
+	width: 100%;
+	padding: 0;
+	margin: 10px 0;
+	list-style: none;
+}
+ul.content-column li {
+	float: left;
+	width: 460px; /*Set default width*/
+	padding: 0;
+	margin: 15px 0 0 0;
+	display: inline;
+}
+div.content-block {
+	margin-right: 15px; /*Creates the 10px gap between each column*/
+	padding: 15px;
+	background-color: #FFFFFF;
+}
+	div.content-block h5 span {
+	    font-size: 75%;
+	}
+div.content-block img {
+	/*Flexible image size with border*/
+	width: 89%;	 /*Took 1% off of the width to prevent IE6 bug*/
+	padding: 5%;
+	background:#fff;
+	margin: 0 auto;
+	display: block;
+	-ms-interpolation-mode: bicubic; /*prevents image pixelation for IE 6/7 */
+}
 div.content-block-left{
     padding: 15px;
     background: #FFFFFF;

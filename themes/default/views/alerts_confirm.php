@@ -5,15 +5,12 @@
 		<div class="big-block">
 			<h1>Get Alerts</h1>
 			
-			<?php if($show_mobile == TRUE) { ?>
+			<?php if($show_mobile == TRUE): ?>
 			<!-- Mobile Alert -->
 			<div class="green-box">
-				<?php
-				if ($alert_mobile)
-				{
-					echo "<h3>".Kohana::lang('alerts.mobile_ok_head')."</h3>";
-				}
-				?>
+				<?php if ($alert_mobile): ?>
+				<?php	echo "<h3>".Kohana::lang('alerts.mobile_ok_head')."</h3>"; ?>
+				<?php endif; ?>
 				<div class="alert_response">
 					<?php 
 					if ($alert_mobile)
@@ -38,7 +35,7 @@
 				</div>
 			</div>
 			<!-- / Mobile Alert -->
-			<?php } ?>
+			<?php endif; ?>
 			
 			<!-- Email Alert -->
 			<div class="green-box">
@@ -78,9 +75,7 @@
 			<!-- Return -->
 			<div class="green-box">
 				<div class="alert_response">
-					<a href="<?php echo url::site().'alerts'?>">
-					<?php echo Kohana::lang('alerts.create_more_alerts'); ?>
-					</a>
+					<a href="<?php echo url::site().'alerts'?>"><?php echo Kohana::lang('alerts.create_more_alerts'); ?></a>
 				</div>
 			</div>
 			<!-- / Return -->

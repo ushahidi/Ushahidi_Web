@@ -254,7 +254,7 @@ class Reports_Controller extends Admin_Controller
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'	 => 'page',
-			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'items_per_page' => $this->items_per_page,
 			'total_items'	 => ORM::factory('incident')
 				->join('location', 'incident.location_id', 'location.id','INNER')
 				->where($filter)
@@ -265,7 +265,7 @@ class Reports_Controller extends Admin_Controller
 			->join('location', 'incident.location_id', 'location.id','INNER')
 			->where($filter)
 			->orderby('incident_dateadd', 'desc')
-			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+			->find_all($this->items_per_page, $pagination->sql_offset);
 
 		$location_ids = array();
 		foreach ($incidents as $incident)
@@ -389,7 +389,7 @@ class Reports_Controller extends Admin_Controller
 		//$form['longitude'] = Kohana::config('settings.default_lon');
 		$form['country_id'] = Kohana::config('settings.default_country');
 		$form['incident_date'] = date("m/d/Y",time());
-		$form['incident_hour'] = date('g');
+		$form['incident_hour'] = date('h');
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
 		// initialize custom field array
@@ -439,9 +439,9 @@ class Reports_Controller extends Admin_Controller
 
 		// Are we creating this report from SMS/Email/Twitter?
 		// If so retrieve message
-		if ( isset($_GET['mid']) && !empty($_GET['mid']) ) {
+		if ( isset($_GET['mid']) && ! empty($_GET['mid']) ) {
 
-			$message_id = $_GET['mid'];
+			$message_id = (int) $_GET['mid'];
 			$service_id = "";
 			$message = ORM::factory('message', $message_id);
 
@@ -473,6 +473,7 @@ class Reports_Controller extends Admin_Controller
 				// Does the sender of this message have a location?
 				if ($message->reporter->location->loaded)
 				{
+					$form['location_id'] = $message->reporter->location->id;
 					$form['latitude'] = $message->reporter->location->latitude;
 					$form['longitude'] = $message->reporter->location->longitude;
 					$form['location_name'] = $message->reporter->location->location_name;
@@ -499,7 +500,7 @@ class Reports_Controller extends Admin_Controller
 		// Are we creating this report from a Newsfeed?
 		if ( isset($_GET['fid']) && !empty($_GET['fid']) )
 		{
-			$feed_item_id = $_GET['fid'];
+			$feed_item_id = (int) $_GET['fid'];
 			$feed_item = ORM::factory('feed_item', $feed_item_id);
 
 			if ($feed_item->loaded == true)
@@ -687,10 +688,6 @@ class Reports_Controller extends Admin_Controller
 					elseif ($service_id == 3)
 					{ // Twitter
 						$incident->incident_mode = 4;
-					}
-					elseif ($service_id == 4)
-					{ // Laconica
-						$incident->incident_mode = 5;
 					}
 				}
 				// Incident Evaluation Info
@@ -1066,6 +1063,7 @@ class Reports_Controller extends Admin_Controller
 		$this->template->map_enabled = TRUE;
 		$this->template->colorpicker_enabled = TRUE;
 		$this->template->treeview_enabled = TRUE;
+		$this->template->json2_enabled = TRUE;
 		
 		$this->template->js = new View('admin/reports_edit_js');
 		$this->template->js->default_map = Kohana::config('settings.default_map');
@@ -1385,7 +1383,7 @@ class Reports_Controller extends Admin_Controller
 		// Which incident are we adding this translation for?
 		if (isset($_GET['iid']) && !empty($_GET['iid']))
 		{
-			$incident_id = $_GET['iid'];
+			$incident_id = (int) $_GET['iid'];
 			$incident = ORM::factory('incident', $incident_id);
 			
 			if ($incident->loaded == true)
@@ -1733,7 +1731,7 @@ class Reports_Controller extends Admin_Controller
 		if (array_key_exists('locale', $post->errors()))
 			return;
 
-		$iid = $_GET['iid'];
+		$iid = (int) $_GET['iid'];
 		if (empty($iid)) {
 			$iid = 0;
 		}

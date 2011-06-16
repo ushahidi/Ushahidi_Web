@@ -32,12 +32,12 @@ class S_Alerts_Controller extends Controller {
 		// Create A 15 Minute SEND LOCK
 		// This lock is released at the end of execution
 		// Or expires automatically
-		$alerts_lock = $this->cache->get("alerts_lock");
+		$alerts_lock = $this->cache->get(Kohana::config('settings.subdomain')."_alerts_lock");
 		if ( ! $alerts_lock)
 		{
 			// Lock doesn't exist
 			$timestamp = time();
-			$this->cache->set("alerts_lock", $timestamp, array("alerts"), 900);
+			$this->cache->set(Kohana::config('settings.subdomain')."_alerts_lock", $timestamp, array("alerts"), 900);
 		}
 		else
 		{
@@ -49,7 +49,7 @@ class S_Alerts_Controller extends Controller {
 	
 	function __destruct()
 	{
-		$this->cache->delete("alerts_lock");
+		$this->cache->delete(Kohana::config('settings.subdomain')."_alerts_lock");
 	}
 	
 	public function index() 

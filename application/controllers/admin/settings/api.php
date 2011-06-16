@@ -246,13 +246,13 @@ class Api_Controller extends Admin_Controller {
                 FROM '.$this->table_prefix.'api_log al
                 LEFT JOIN '.$this->table_prefix.'api_banned AS ab ON (ab.banned_ipaddress = al.api_ipaddress)
                 ORDER BY al.api_date DESC
-                LIMIT ' . $pagination->sql_offset. ', '.(int) Kohana::config('settings.items_per_page_admin')
+                LIMIT ' . $pagination->sql_offset. ', '.$this->items_per_page
             );
         
         /*    
         $api_logs = ORM::factory('api_log')
                         ->orderby('api_date', 'asc')
-                        ->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+                        ->find_all($this->items_per_page, $pagination->sql_offset);
         */
         
         // Set the total no. of items
@@ -327,14 +327,14 @@ class Api_Controller extends Admin_Controller {
         // Set up pagination
         $pagination = new Pagination(array(
             'query_string' => 'page',
-            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+            'items_per_page' => $this->items_per_page,
             'total_items' => ORM::factory('api_banned')->count_all()
         ));
         
         // Fetch all the IP addresses banned from accessing the API
         $api_bans = ORM::factory('api_banned')
                         ->orderby('banned_date', 'desc')
-                        ->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+                        ->find_all($this->items_per_page, $pagination->sql_offset);
         
         
         // Set the total no. of items
@@ -351,5 +351,4 @@ class Api_Controller extends Admin_Controller {
         // Javascript header
         $this->template->js = new View('admin/api_banned_js');
     }
-    
 }

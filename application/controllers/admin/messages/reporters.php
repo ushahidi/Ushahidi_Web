@@ -184,8 +184,8 @@ class Reporters_Controller extends Admin_Controller
 		// Pagination
 		$pagination = new Pagination(array(
 		                    'query_string' => 'page',
-		                    'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
-		                    'total_items'    => ORM::factory('reporter')
+		                    'items_per_page' => $this->items_per_page,
+		                    'total_items' => ORM::factory('reporter')
 								->where($filter)
 								->count_all()
 		                ));
@@ -193,8 +193,7 @@ class Reporters_Controller extends Admin_Controller
 		$reporters = ORM::factory('reporter')
 						->where($filter)
 		                ->orderby('service_account', 'asc')
-		                ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
-		                    $pagination->sql_offset);
+		                ->find_all($this->items_per_page,  $pagination->sql_offset);
 
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;

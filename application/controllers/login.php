@@ -44,7 +44,8 @@ class Login_Controller extends Template_Controller {
         // (Set when user previously logged in and ticked 'stay logged in')
         if ($auth->logged_in() OR $auth->auto_login())
         {
-            if ($user = Session::instance()->get('auth_user',FALSE))
+            if ($user = Session::instance()->get('auth_user',FALSE) AND
+				! $auth->logged_in('member') )
             {
                 url::redirect($this->destination);
             }

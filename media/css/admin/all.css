@@ -420,6 +420,9 @@ ul.nav-list li a.categories { background:url(../../img/admin/category-icon.gif) 
 ul.nav-list li a.locations { background:url(../../img/admin/locations-icon.gif) no-repeat 0 2px;}
 ul.nav-list li a.media { background:url(../../img/admin/media-icon.gif) no-repeat 0 2px;}
 ul.nav-list li a.messages { background:url(../../img/admin/messages-icon.gif) no-repeat 0 2px;}
+ul.nav-list li a.alerts { background:url(../../img/admin/alerts-icon.png) no-repeat 0 2px;}
+ul.nav-list li a.votes { background:url(../../img/admin/votes-icon.png) no-repeat 0 2px;}
+ul.nav-list li a.checkins { background:url(../../img/admin/checkins-icon.png) no-repeat 0 2px;}
 ul.nav-list li span.locations {
 	background:url(../../img/admin/locations-icon.gif) no-repeat 0 2px;
 	padding:0 0 5px 40px;
@@ -679,8 +682,8 @@ table td{
 .table .col-2{ width:539px;}
 .table .col-2_sub{
 	width:519px;
-	padding-left:20px;
-	background:url(../../img/admin/arrow.gif) no-repeat 3px 17px;
+	padding-left:30px;
+	background:url(../../img/admin/arrow.gif) no-repeat 13px 22px;
 }
 .table .col-3{
 	width:103px;
@@ -699,6 +702,15 @@ table td{
 	border-left:2px solid #bbb;
 	padding:12px 0 10px 10px;
 	border-right:2px solid #bbb;
+}
+.table .col-drag{
+	background-color:#ffffcc;
+}
+.table .col-show-handle{
+	background-image: url(../../img/admin/drag.gif);
+	background-repeat: no-repeat;
+	background-position: center center;
+	cursor: move;
 }
 .table .post{
 	margin:0;
@@ -2040,6 +2052,13 @@ h4 span.highlight{
 		border-width:0;
 	}
 	
+.preview_div{
+	margin:5px 0 0 0;
+	border:1px dotted #ccc;
+	padding:10px;
+	display:none;
+}	
+	
 /* Upgrade Process */
 #upgrade_log .upgrade_log_message{
 	font-size:14px;
@@ -2133,5 +2152,51 @@ ul.map-toggles li a:active { display:inline-block; padding:3px 5px 3px 17px; out
 			background: url("../../img/openlayers/layer-switcher-minimize.png") no-repeat;
 			cursor: pointer;
 		}
+		
+		
+/* Members */
+.member_profile{
+	clear:both;
+}
+	.member_photo{
+		float:left;
+		margin:0 15px 0 15px;
+	}
+	.member_photo img{
+		border:2px solid #f5f5f5;
+		padding:3px;
+	}
+	.member_info{
+		float:left;
+		width:295px;
+		font-size:110%;
+	}
+	.member_info_row{
+		margin-bottom:3px;
+		padding:3px;
+		border-bottom:1px dotted #ccc;
+	}
+		.member_info_row:hover{
+			background-color:#ffffcc;
+		}
+		.member_info_label{
+			font-weight:bold;
+		}
+		.member_info_row ul {
+			margin:0;
+			padding:0;
+			margin-left: 10px;
+			padding-left: 15px;
+		}
+			.member_info_row ul li{
+				margin:2px 0 2px 0;
+			}
+.checkin_map{
+	margin-top:10px;
+	width:460px;
+	height:300px;
+	border: 2px solid #ccc;
+}
+
 /*--  --*/
 /*--  --*/

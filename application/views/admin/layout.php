@@ -104,6 +104,18 @@
 		echo html::script('media/js/tinymce/tiny_mce', true);
 	}
 	
+	// Table Row Sort
+	if ($tablerowsort_enabled)
+	{
+		echo html::script('media/js/jquery.tablednd_0_5', true);
+	}
+	
+	// JSON2 for IE+
+	if ($json2_enabled)
+	{
+		echo html::script('media/js/json2', true);
+	}
+	
 	// Turn on picbox
 	echo html::script('media/js/picbox', true);
 	echo html::stylesheet('media/css/picbox/picbox');

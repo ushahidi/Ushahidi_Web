@@ -15,7 +15,8 @@
  */
 
 class Alert_Model extends ORM
-{	
+{
+	protected $belongs_to = array('user');
 	protected $has_many = array('incident' => 'alert_sent', 'category' => 'alert_category');
     
 	// Database table name
@@ -177,7 +178,7 @@ class Alert_Model extends ORM
 	{
 		// Fetch all alerts with the specified code
 		$alerts = ORM::factory('alert')
-			->where('alert_code', $code)
+			->where('alert_code', $alert_code)
 			->find_all();
 			
 		foreach ($alerts as $alert)

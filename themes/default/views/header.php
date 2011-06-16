@@ -23,7 +23,7 @@
 				<!-- user actions -->
 				<?php if($loggedin_username != FALSE){ ?>
 				<div id="loggedin_user_action" class="clearingfix">
-					<?php echo $loggedin_username; ?> [<a href="<?php echo url::site();?>logout/front"><?php echo Kohana::lang('ui_admin.logout');?></a>]
+					<a href="<?php echo url::site().$loggedin_role;?>"><?php echo $loggedin_username; ?></a> [<a href="<?php echo url::site();?>logout/front"><?php echo Kohana::lang('ui_admin.logout');?></a>]
 				</div><br/>
 				<?php } ?>
 				<!-- / user actions -->
@@ -41,7 +41,7 @@
 			
 			<!-- logo -->
 			<div id="logo">
-				<h1><?php echo $site_name; ?></h1>
+				<h1><a href="<?php echo url::site();?>"><?php echo $site_name; ?></a></h1>
 				<span><?php echo $site_tagline; ?></span>
 			</div>
 			<!-- / logo -->
