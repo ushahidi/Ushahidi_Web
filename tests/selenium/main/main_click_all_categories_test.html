@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>cluster map marker report</title>
+<title>Main Click All Categories</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">cluster map marker report</td></tr>
+<tr><td rowspan="1" colspan="3">Main Click All Categories</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -17,24 +17,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>OpenLayers.Geometry.Point_100</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
-	<td>OpenLayers.Geometry.Point_100</td>
+	<td>id=cat_0</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=23 Reports</td>
-	<td></td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Assistance needed in Carrefour</td>
-	<td></td>
+	<td>assertEval</td>
+	<td>this.browserbot.getUserWindow().map.getLayersByName(&quot;Reports&quot;)[0]</td>
+	<td>[object Object]</td>
 </tr>
 
 </tbody></table>
