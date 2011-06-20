@@ -398,7 +398,7 @@ class Json_Controller extends Template_Controller
 		$markers = array();
 		foreach ($incidents as $id => $incident)
 		{
-			if (isset($allowed_ids[$id]) && isset($locations[$incident['location_id']]))
+			if (isset($allowed_ids[$id]) AND isset($locations[$incident['location_id']]))
 			{
 				$markers[] = array(
 					'id' => $id,
