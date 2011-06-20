@@ -771,7 +771,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 -- Dumping data for table `settings`
 
 INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_yahoo`, `api_live`, `default_country`, `default_city`, `default_lat`, `default_lon`, `default_zoom`, `items_per_page`, `items_per_page_admin`, `blocks`, `date_modify`) VALUES
-(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 20, 20, 'reports_block;news_block', '2008-08-25 10:25:18');
+(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 20, 20, 'reports_block|news_block', '2008-08-25 10:25:18');
 
 
 /**
@@ -1373,4 +1373,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '55' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '56' WHERE `id`=1 LIMIT 1;
