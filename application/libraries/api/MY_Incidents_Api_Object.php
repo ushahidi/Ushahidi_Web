@@ -18,39 +18,50 @@
  */
 
 class Incidents_Api_Object extends Api_Object_Core {
-
-    private $sort; // Sort descriptor ASC or DESC
-    private $order_field; // Column name by which to order the records    
+	/**
+	 * Record sorting order ASC or DESC
+	 * @var string
+	 */
+	private $sort;
+	
+	/**
+	 * Column name by which to order the records
+	 * @var string
+	 */
+	private $order_field;
+	
+	/**
+	 * Constructor
+	 */
+	public function __construct($api_service)
+	{
+		parent::__construct($api_service);
+	}
     
-    public function __construct($api_service)
-    {
-        parent::__construct($api_service);
-    }
-    
-    /**
-     * Implementation of abstract method in parent
-     *
-     * Handles the API task parameters
-     */
-    public function perform_task()
-    {
-        // Check if the 'by' parameter has been specified
-        if ( ! $this->api_service->verify_array_index($this->request, 'by'))
-        {
-            // Set "all" as the default method for fetching incidents
-            $this->by = 'all';
-        }
-        else
-        {
-            $this->by = $this->request['by'];
-        }
-
-        // Check optional parameters
-        $this->_check_optional_parameters();
-        
-        // Begin task switching
-        switch ($this->by)
-        {
+	/**
+	 * Implementation of abstract method in parent
+	 *
+	 * Handles the API task parameters
+	 */
+	public function perform_task()
+	{
+		// Check if the 'by' parameter has been specified
+		if ( ! $this->api_service->verify_array_index($this->request, 'by'))
+		{
+			// Set "all" as the default method for fetching incidents
+			$this->by = 'all';
+		}
+		else
+		{
+			$this->by = $this->request['by'];
+		}
+		
+		// Check optional parameters
+		$this->_check_optional_parameters();
+		
+		// Begin task switching
+		switch ($this->by)
+		{
             // Get all incidents
             case "all":
                 $this->response_data = $this->get_incidents_by_all();
@@ -254,245 +265,291 @@ class Incidents_Api_Object extends Api_Object_Core {
         }
     }
     
-    /**
-     * Generic function to get reports by given set of parameters
-     */
+	/**
+	 * Generic function to get reports by given set of parameters
+	 *
+	 * @param string $where SQL where clause
+	 * @param int $limit No. of records to return - set to 20 by default
+	 * @return string XML or JSON string
+	 */
     public function _get_incidents($where = '',$limit = '')
     {
-        $ret_json_or_xml = ''; // Will hold the XML/JSON string to return
-        
-        $json_reports = array();
-        $json_report_media = array();
-        $json_report_categories = array();
-        $json_incident_media = array();
-        $upload_path = str_replace("media/uploads/", "", Kohana::config('upload.relative_directory')."/");        
-        //XML elements
-        $xml = new XmlWriter();
-        $xml->openMemory();
-        $xml->startDocument('1.0', 'UTF-8');
-        $xml->startElement('response');
-        $xml->startElement('payload');
-        $xml->writeElement('domain',$this->domain);
-        $xml->startElement('incidents');
+		$ret_json_or_xml = ''; // Will hold the XML/JSON string to return
 
-        // Find incidents
-        $this->query = "SELECT i.id AS incidentid,
-                i.incident_title AS incidenttitle,"
-                ."i.incident_description AS incidentdescription, "
-                ."i.incident_date AS incidentdate, "
-                ."i.incident_mode AS incidentmode, "
-                ."i.incident_active AS incidentactive, "
-                ."i.incident_verified AS incidentverified, "
-                ."l.id AS locationid, "
-                ."l.location_name AS locationname, "
-                ."l.latitude AS locationlatitude, "
-                ."l.longitude AS locationlongitude "
-                ."FROM ".$this->table_prefix."incident AS i "
-                ."INNER JOIN ".$this->table_prefix.
-                "location as l on l.id = i.location_id "."$where $limit";
+		$json_reports = array();
+		$json_report_media = array();
+		$json_report_categories = array();
+		$json_incident_media = array();
+		$upload_path = str_replace("media/uploads/", "", Kohana::config('upload.relative_directory')."/");
+		
+		//XML elements
+		$xml = new XmlWriter();
+		$xml->openMemory();
+		$xml->startDocument('1.0', 'UTF-8');
+		$xml->startElement('response');
+		$xml->startElement('payload');
+		$xml->writeElement('domain',$this->domain);
+		$xml->startElement('incidents');
+		
+		// 
+		// STEP 1.
+		// Fetch the incidents
+		// 
+		$this->query = "SELECT i.id AS incidentid, i.incident_title AS incidenttitle,"
+					."i.incident_description AS incidentdescription, "
+					."i.incident_date AS incidentdate, "
+					."i.incident_mode AS incidentmode, "
+					."i.incident_active AS incidentactive, "
+					."i.incident_verified AS incidentverified, "
+					."l.id AS locationid, "
+					."l.location_name AS locationname, "
+					."l.latitude AS locationlatitude, "
+					."l.longitude AS locationlongitude "
+					."FROM ".$this->table_prefix."incident AS i "
+					."INNER JOIN ".$this->table_prefix.
+					"location as l on l.id = i.location_id "."$where $limit";
 
-        $items = $this->db->query($this->query);
-        
-        // Set the no. of records returned
-        $this->record_count = $items->count();
-        
-        $i = 0;
+		$items = $this->db->query($this->query);
+
+		// Set the no. of records returned
+		$this->record_count = $items->count();
         
         //No record found.
-        if ($items->count() == 0)
-        {
-            return $this->response(4, $this->error_messages);
-        }
+		if ($items->count() == 0)
+		{
+			return $this->response(4, $this->error_messages);
+		}
+		
+		// Records found, proceed
+		// Store the incident ids
+		$incidents_ids = array();
+		foreach ($items as $item)
+		{
+			$incident_ids[] = $item->incidentid;
+		}
+		
+		// 
+		// STEP 2.
+		// Fetch the incident categories
+		// 
+		$this->query = "SELECT c.category_title AS categorytitle, ic.incident_id, "
+					. "c.id AS cid "
+					. "FROM ".$this->table_prefix."category AS c "
+					. "INNER JOIN ". $this->table_prefix."incident_category AS ic ON ic.category_id = c.id "
+					. "WHERE ic.incident_id IN (".implode(',', $incident_ids).")";
+		
+		// Execute the query
+		$incident_categories = $this->db->query($this->query);
+		
+		// To hold the incident category items
+		$category_items = array();
+		
+		// Temporary counter
+		$i = 1;
+		
+		// Fetch items into array
+		foreach ($incident_categories as $incident_category)
+		{
+			$category_items[$incident_category->incident_id][$i]['cid'] = $incident_category->cid;
+			$category_items[$incident_category->incident_id][$i]['categorytitle'] = $incident_category->categorytitle;
+			$i++;
+		}
+		
+		// Free temporary variables from memory
+		unset ($incident_categories);
+		
+		
+		// 
+		// STEP 3.
+		// Fetch the media associated with all the incidents
+		// 
+		$this->query = "SELECT i.id AS incident_id, m.id AS mediaid, m.media_title AS mediatitle, "
+					. "m.media_type AS mediatype, m.media_link AS medialink, m.media_thumb AS mediathumb "
+					. "FROM ".$this->table_prefix."media AS m " 
+					. "INNER JOIN ".$this->table_prefix."incident AS i ON i.id = m.incident_id "
+					. "WHERE i.id IN (".implode(",", $incident_ids).")";
+		
+		$media_items_result = $this->db->query($this->query);
+		
+		// To store the fetched media items
+		$media_items = array();
+		
+		// Reset the temporary counter
+		$i = 1;
+		
+		// Fetch items into array
+		foreach ($media_items_result as $media_item)
+		{
+			$media_items[$media_item->incident_id][$i]['mediaid'] = $media_item->mediaid;
+			$media_items[$media_item->incident_id][$i]['mediatitle'] = $media_item->media_title;
+			$media_items[$media_item->incident_id][$i]['mediatype'] = $media_item->mediatype;
+			$media_items[$media_item->incident_id][$i]['medialink'] = $media_item->medialink;
+			$media_items[$media_item->incident_id][$i]['mediathumb'] = $media_item->mediathumb;
+			$i++;
+		}
+		
+		// Free temporary variables
+		unset ($media_items_result, $i);
+		
+		foreach ($items as $item)
+		{
+			// Build xml file
+			$xml->startElement('incident');
 
-        foreach ($items as $item)
-        {
-            // Build xml file
-            $xml->startElement('incident');
+			$xml->writeElement('id',$item->incidentid);
+			$xml->writeElement('title',$item->incidenttitle);
+			$xml->writeElement('description',$item->incidentdescription);
+			$xml->writeElement('date',$item->incidentdate);
+			$xml->writeElement('mode',$item->incidentmode);
+			$xml->writeElement('active',$item->incidentactive);
+			$xml->writeElement('verified',$item->incidentverified);
+			$xml->startElement('location');
+			$xml->writeElement('id',$item->locationid);
+			$xml->writeElement('name',$item->locationname);
+			$xml->writeElement('latitude',$item->locationlatitude);
+			$xml->writeElement('longitude',$item->locationlongitude);
+			$xml->endElement();
+			$xml->startElement('categories');
 
-            $xml->writeElement('id',$item->incidentid);
-            $xml->writeElement('title',$item->incidenttitle);
-            $xml->writeElement('description',$item->incidentdescription);
-            $xml->writeElement('date',$item->incidentdate);
-            $xml->writeElement('mode',$item->incidentmode);
-            $xml->writeElement('active',$item->incidentactive);
-            $xml->writeElement('verified',$item->incidentverified);
-            $xml->startElement('location');
-            $xml->writeElement('id',$item->locationid);
-            $xml->writeElement('name',$item->locationname);
-            $xml->writeElement('latitude',$item->locationlatitude);
-            $xml->writeElement('longitude',$item->locationlongitude);
-            $xml->endElement();
-            $xml->startElement('categories');
+			$json_report_categories[$item->incidentid] = array();
+			foreach ($category_items[$item->incidentid] as $category_item)
+			{
+				if ($this->response_type == 'json')
+				{
+					$json_report_categories[$item->incidentid][] = array(
+						"category"=> array(
+							"id" => $category_item['cid'],
+							"title" => $category_item['categorytitle']
+						)
+					);
+				} 
+				else 
+				{
+					$xml->startElement('category');
+					$xml->writeElement('id',$category_item['cid']);
+					$xml->writeElement('title', $category_item['categorytitle'] );
+					$xml->endElement();
+				}
+			}
 
-            // Fetch categories
-            $this->query = " SELECT c.category_title AS categorytitle, 
-                c.id AS cid " . "FROM ".$this->table_prefix.
-                "category AS c INNER JOIN ".
-                $this->table_prefix."incident_category AS ic ON " .
-                "ic.category_id = c.id WHERE ic.incident_id =".
-                $item->incidentid;
+			// End categories
+			$xml->endElement();
+			
+			$json_report_media[$item->incidentid] = array();
+			
+			if (count($media_items) > 0)
+			{
+				$xml->startElement('mediaItems');
 
-            $category_items = $this->db->query( $this->query );
-            $json_report_categories[$item->incidentid] = array();           
-            foreach ($category_items as $category_item)
-            {
-                if ($this->response_type == 'json')
-                {
-                    $json_report_categories[$item->incidentid][] = array(
-                            "category"=> array(
-                                "id" => $category_item->cid,
-                                "title" => $category_item->categorytitle
-                            )
-                        );
-                } 
-                else 
-                {
-                    $xml->startElement('category');
-                    $xml->writeElement('id',$category_item->cid);
-                    $xml->writeElement('title', $category_item->categorytitle );
-                    $xml->endElement();
-                }
-                
-            }
-
-            $xml->endElement();//end categories
-
-            //fetch media associated with an incident
-            $this->query = "SELECT m.id as mediaid, m.media_title AS 
-                mediatitle, " .
-                "m.media_type AS mediatype, m.media_link AS medialink, " .
-                "m.media_thumb AS mediathumb FROM ".$this->table_prefix.
-                "media AS m " . "INNER JOIN ".$this->table_prefix.
-                "incident AS i ON i.id = m.incident_id " .
-                "WHERE i.id =". $item->incidentid;
-
-            $media_items = $this->db->query($this->query);
-            $json_report_media[$item->incidentid] = array();
-
-            if (count($media_items) > 0)
-            {
-                $xml->startElement('mediaItems');
-
-                foreach ($media_items as $media_item)
-                {
-	                if ($media_item->mediatype != 1)
+				foreach ($media_items[$item->incidentid] as $media_item)
+				{
+					if ($media_item['mediatype'] != 1)
 					{
-                        $upload_path = "";
-                    }
+						$upload_path = "";
+					}
 
 					$url_prefix = url::base().Kohana::config('upload.relative_directory').'/';
-                    if($this->response_type == 'json')
-                    {
-                        $json_report_media[$item->incidentid][] = array(
-                            "id" => $media_item->mediaid,
-                            "type" => $media_item->mediatype,
-                            "link" => $upload_path.$media_item->medialink,
-                            "thumb" => $upload_path.$media_item->mediathumb,
-                        );
+					if($this->response_type == 'json')
+					{
+						$json_report_media[$item->incidentid][] = array(
+							"id" => $media_item['mediaid'],
+							"type" => $media_item['mediatype'],
+							"link" => $upload_path.$media_item['medialink'],
+							"thumb" => $upload_path.$media_item['mediathumb'],
+						);
 
-                        // If we are look at certain types of media, add some fields
-                        if($media_item->mediatype == 1)
-                        {
-                        	// Grab that last key up there
-                        	$add_to_key = key($json_report_media[$item->incidentid]) + 1;
+						// If we are look at certain types of media, add some fields
+						if($media_item['mediatype'] == 1)
+						{
+							// Grab that last key up there
+							$add_to_key = key($json_report_media[$item->incidentid]) + 1;
 
-                        	// Give a full absolute URL to the image 
-                        	$json_report_media[$item->incidentid][$add_to_key]["thumb_url"] = 
-                        		$url_prefix.$upload_path.$media_item->mediathumb;
+							// Give a full absolute URL to the image 
+							$json_report_media[$item->incidentid][$add_to_key]["thumb_url"] =  $url_prefix.$upload_path.$media_item['mediathumb'];
 
-                        	$json_report_media[$item->incidentid][$add_to_key]["link_url"] = 
-                        		$url_prefix.$upload_path.$media_item->medialink;
+							$json_report_media[$item->incidentid][$add_to_key]["link_url"] = $url_prefix.$upload_path.$media_item['medialink'];
+						}
+					} 
+					else 
+					{
+						$xml->startElement('media');
+
+						if( $media_item['mediaid'] != "" )
+						{
+							$xml->writeElement('id',$media_item['mediaid']);
+						}
+						
+						if( $media_item['mediatitle'] != "" )
+						{
+							$xml->writeElement('title', $media_item['mediatitle']);
+						}
+						
+						if( $media_item['mediatype'] != "" )
+						{
+							$xml->writeElement('type', $media_item['mediatype']);
+						}
+						
+						if( $media_item['medialink'] != "" ) 
+						{
+							$xml->writeElement('link', $upload_path.$media_item['medialink']);
+						}
+						
+						if( $media_item->mediathumb != "" ) 
+						{
+							$xml->writeElement('thumb', $upload_path.$media_item['mediathumb']);
+						}
+						
+						if( $media_item['mediathumb'] != "" AND $media_item['mediatype'] == 1 )
+						{
+							$add_to_key = key($json_report_media[$item->incidentid]) + 1;
+							
+							$xml->writeElement('thumb_url', $url_prefix.$upload_path.$media_item['mediathumb']);
+
+							$xml->writeElement('link_url', $url_prefix.$upload_path.$media_item['medialink']);
                         }
-                    } 
-                    else 
-                    {
-                        $xml->startElement('media');
+						$xml->endElement();
+					}
+				}
+				$xml->endElement(); // Media
+			}
+			
+			$xml->endElement(); // End incident
+			
+			// Check for response type
+			if ($this->response_type == 'json')
+			{
+				$json_reports[] = array(
+					"incident" => $item, 
+					"categories" => $json_report_categories[$item->incidentid], 
+					"media" => $json_report_media[$item->incidentid]
+				);
+			}
+		}
+		
+		// Create the JSON array
+		$data = array(
+			"payload" => array(
+				"domain" => $this->domain,
+				"incidents" => $json_reports
+			),
+			"error" => $this->api_service->get_error_msg(0)
+		);
+		
+		if ($this->response_type == 'json')
+		{
+			return $this->array_as_json($data);
 
-                        if( $media_item->mediaid != "" )
-                        {
-                            $xml->writeElement('id',$media_item->mediaid);
-                        }
-
-                        if( $media_item->mediatitle != "" )
-                        {
-                            $xml->writeElement('title',
-                                $media_item->mediatitle);
-                        }
-
-                        if( $media_item->mediatype != "" )
-                        {
-                            $xml->writeElement('type',
-                                $media_item->mediatype);
-                        }
-
-                        if( $media_item->medialink != "" ) 
-                        {
-                            $xml->writeElement('link',
-                                $upload_path.$media_item->medialink);
-                        }
-
-                        if( $media_item->mediathumb != "" ) 
-                        {
-                            $xml->writeElement('thumb',
-                                $upload_path.$media_item->mediathumb);
-                        }
-
-                        if( $media_item->mediathumb != "" AND $media_item->mediatype == 1 )
-                        {
-                        	$add_to_key = key($json_report_media[$item->incidentid]) + 1;
-                        	$xml->writeElement('thumb_url',
-                                $url_prefix.$upload_path.$media_item->mediathumb);
-
-                            $xml->writeElement('link_url',
-                                $url_prefix.$upload_path.$media_item->medialink);
-                        }
-
-                        $xml->endElement();
-                    }
-                }
-
-                $xml->endElement(); // media
-
-            }
-
-            $xml->endElement(); // end incident
-
-            //needs different treatment depending on the output
-            if ($this->response_type == 'json')
-            {
-                $json_reports[] = array(
-                    "incident" => $item, 
-                    "categories" => $json_report_categories[$item->incidentid], 
-                    "media" => $json_report_media[$item->incidentid]
-                );
-            }
-        }
-
-        //create the json array
-        $data = array(
-            "payload" => array(
-                "domain" => $this->domain,
-                "incidents" => $json_reports
-            ),
-            "error" => $this->api_service->get_error_msg(0)
-        );
-
-        if ($this->response_type == 'json')
-        {
-            $ret_json_or_xml = $this->array_as_json($data);
-            
-            return $ret_json_or_xml;
-        } 
-        else 
-        {
-            $xml->endElement(); //end incidents
-            $xml->endElement(); // end payload
-            $xml->startElement('error');
-            $xml->writeElement('code',0);
-            $xml->writeElement('message','No Error');
-            $xml->endElement();//end error
-            $xml->endElement(); // end response
-            return $xml->outputMemory(true);
+		} 
+		else 
+		{
+			$xml->endElement(); //end incidents
+			$xml->endElement(); // end payload
+			$xml->startElement('error');
+			$xml->writeElement('code',0);
+			$xml->writeElement('message','No Error');
+			$xml->endElement();//end error
+			$xml->endElement(); // end response
+			return $xml->outputMemory(true);
         }
 
     }
