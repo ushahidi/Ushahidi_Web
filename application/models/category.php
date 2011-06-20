@@ -106,7 +106,8 @@ class Category_Model extends ORM_Tree {
 	 */
 	public static function is_valid_category($category_id)
 	{
-		return (preg_match('/^[1-9](\d*)$/', $category_id) > 0)
+		// Hiding errors/warnings here because child categories are seeing category_id as an obj and this fails poorly
+		return (@preg_match('/^[1-9](\d*)$/', $category_id) > 0)
 				? self::factory('category', $category_id)->loaded
 				: FALSE;
 	}
