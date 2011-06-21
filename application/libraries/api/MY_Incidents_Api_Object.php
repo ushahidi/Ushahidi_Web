@@ -412,23 +412,28 @@ class Incidents_Api_Object extends Api_Object_Core {
 			$xml->startElement('categories');
 
 			$json_report_categories[$item->incidentid] = array();
-			foreach ($category_items[$item->incidentid] as $category_item)
+			
+			// Check if the incident id exists
+			if (isset($category_items[$item->incidentid]))
 			{
-				if ($this->response_type == 'json')
+				foreach ($category_items[$item->incidentid] as $category_item)
 				{
-					$json_report_categories[$item->incidentid][] = array(
-						"category"=> array(
-							"id" => $category_item['cid'],
-							"title" => $category_item['categorytitle']
-						)
-					);
-				} 
-				else 
-				{
-					$xml->startElement('category');
-					$xml->writeElement('id',$category_item['cid']);
-					$xml->writeElement('title', $category_item['categorytitle'] );
-					$xml->endElement();
+					if ($this->response_type == 'json')
+					{
+						$json_report_categories[$item->incidentid][] = array(
+							"category"=> array(
+								"id" => $category_item['cid'],
+								"title" => $category_item['categorytitle']
+							)
+						);
+					} 
+					else 
+					{
+						$xml->startElement('category');
+						$xml->writeElement('id',$category_item['cid']);
+						$xml->writeElement('title', $category_item['categorytitle'] );
+						$xml->endElement();
+					}
 				}
 			}
 
