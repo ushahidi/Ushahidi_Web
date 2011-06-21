@@ -19,13 +19,8 @@ class Countries_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	 */
 	private $api_controller;
 	
-	/**
-	 * Constructor
-	 */
-	public function __construct()
+	protected function setUp()
 	{
-		parent::__construct();
-		
 		// $_SERVER values
 		$_SERVER = array_merge($_SERVER, array(
 			'REQUEST_METHOD' => 'GET',
@@ -34,6 +29,12 @@ class Countries_Api_Object_Test extends PHPUnit_Framework_TestCase {
 		
 		// Instantiate the API controller
 		$this->api_controller = new Api_Controller();
+	}
+	
+	protected function tearDown()
+	{
+		// Garbage collection
+		unset ($this->api_controller);
 	}
 	
 	/**

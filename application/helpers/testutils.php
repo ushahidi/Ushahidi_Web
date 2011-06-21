@@ -23,16 +23,16 @@ class testutils_Core {
 	 * @param string $table_name Database table name from which to fetch the id
 	 * @return int
 	 */
-	public static function get_random_id($table_name)
+	public static function get_random_id($table_name, $where = '')
 	{
 		// Database instance for the query
 		$db = new Database();
 		
 		// Fetch all values from the ID column of the table
-		$result = $db->query('SELECT id FROM '.TABLE_PREFIX.$table_name)->as_array();
+		$result = $db->query('SELECT id FROM '.TABLE_PREFIX.$table_name.' '.$where)->as_array();
 		
 		// Get a random id
-		return $result[array_rand($result)]->id;
+		return (count($result) > 0) ? $result[array_rand($result)]->id : count($result);
 	}
 }
 ?>
