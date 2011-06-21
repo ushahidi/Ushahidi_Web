@@ -39,13 +39,13 @@ class Layer_Model extends ORM
 				->add_rules('layer_url','url');
 		
 		// Ensure at least a layer URL or layer file has been specified
-		if ( empty($array->layer_url) AND empty($array->layer_file->name) AND empty($array->layer_file_old))
+		if ( empty($array->layer_url) AND empty($array->layer_file) AND empty($array->layer_file_old))
 		{
 			$array->add_error('layer_url', 'atleast');
 		}
 		
 		if ( ! empty($array->layer_url) AND
-			( ! empty($array->layer_file->name) OR !empty($array->layer_file_old)) )
+			( ! empty($array->layer_file) OR !empty($array->layer_file_old)) )
 		{
 			$array->add_error('layer_url', 'both');
 		}
