@@ -609,7 +609,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_incidents_by_location_name($locname)
 	{
-		$where = "\nWHERE l.location_name = '$locname' AND i.incident_active = 1 ";
+		$where = "\nWHERE l.location_name = \"$locname\" AND i.incident_active = 1 ";
 
 		$sortby = "\nGROUP BY i.id ORDER BY $this->order_field $this->sort";
 
@@ -628,7 +628,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 
 		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON  c.id = ic.category_id ";
 
-		$where = $join."\nWHERE c.id = $catid AND i.incident_active = 1";
+		$where = $join."\nWHERE c.id = $catid AND i.incident_active = 1 AND c.category_visible = 1 ";
 
 		$sortby = "\nORDER BY $this->order_field $this->sort";
 
@@ -647,7 +647,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 
 		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON  c.id = ic.category_id";
 
-		$where = $join."\nWHERE c.category_title LIKE '%$catname%' AND i.incident_active = 1";
+		$where = $join."\nWHERE c.category_title LIKE '%$catname%' AND i.incident_active = 1 AND c.category_visible = 1";
 
 		$sortby = "\nORDER BY $this->order_field $this->sort";
 
