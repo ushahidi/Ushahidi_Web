@@ -283,4 +283,17 @@ class Incident_Model extends ORM {
 		}
 		return $array;
 	}
+	
+	/**
+	 * Checks if a specified incident id is numeric and exists in the database
+	 *
+	 * @param int $incident_id ID of the incident to be looked up
+	 * @return bool
+	 */
+	public static function is_valid_incident($incident_id)
+	{
+		return (preg_match('/^[1-9](\d*)$/', $incident_id) > 0)
+			? self::factory('incident', $incident_id)->loaded
+			: FALSE;
+	}
 }

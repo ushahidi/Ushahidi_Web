@@ -83,10 +83,11 @@ class blocks_Core {
 		// Get Active Blocks
 		$settings = ORM::factory('settings', 1);
 		$active_blocks = $settings->blocks;
-		$active_blocks = array_filter(explode(";", $active_blocks));
+		$active_blocks = array_filter(explode("|", $active_blocks));
 		foreach ($active_blocks as $block)
 		{
-			$block::block();
+			$block = new $block();
+			$block->block();
 		}
 	}
 	

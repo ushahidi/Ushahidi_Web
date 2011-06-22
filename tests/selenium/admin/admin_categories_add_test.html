@@ -4,79 +4,83 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>radius slider</title>
+<title>Admin Categories Add</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">radius slider</td></tr>
+<tr><td rowspan="1" colspan="3">Admin Categories Add</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/alerts</td>
+	<td>/logout</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>/login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>username</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>password</td>
+	<td>admin</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>remember</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.nav-holder</td>
+	<td></td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Manage</td>
 	<td></td>
 </tr>
 <tr>
 	<td>click</td>
-	<td>alert_radius</td>
+	<td>link=Add/Edit</td>
 	<td></td>
 </tr>
 <tr>
-	<td>select</td>
-	<td>alert_radius</td>
-	<td>label=10 KM</td>
+	<td>type</td>
+	<td>category_title</td>
+	<td>Test Category</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>//option[@value='10']</td>
+	<td>type</td>
+	<td>category_description</td>
+	<td>Test Description</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>category_color</td>
+	<td>780078</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.save-rep-btn</td>
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>alert_radius</td>
+	<td>verifyElementPresent</td>
+	<td>css=div.green-box</td>
 	<td></td>
 </tr>
-<tr>
-	<td>select</td>
-	<td>alert_radius</td>
-	<td>label=100 KM</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//option[@value='100']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>alert_radius</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>alert_radius</td>
-	<td>label=50 KM</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//option[@value='50']</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>alert_radius</td>
-	<td></td>
-</tr>
-<tr>
-	<td>select</td>
-	<td>alert_radius</td>
-	<td>label=20 KM</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>//option[@value='20']</td>
-	<td></td>
-</tr>
-
 </tbody></table>
 </body>
 </html>
