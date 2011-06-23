@@ -1,5 +1,5 @@
 <?php blocks::open();?>
-<?php blocks::title(Kohana::lang('ui_main.official_news'));?>
+<?php blocks::title(Kohana::lang('ui_main.incidents_listed'));?>
 <table class="table-list">
 	<thead>
 		<tr>
