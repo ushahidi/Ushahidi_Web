@@ -237,7 +237,7 @@ class Reports_Controller extends Admin_Controller
 							ORM::factory('comment')->where('incident_id',$incident_id)->delete_all();
 
 							// Action::report_delete - Deleted a Report
-							Event::run('ushahidi_action.report_delete', $update);
+							Event::run('ushahidi_action.report_delete', $incident_id);
 						}
 					}
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
