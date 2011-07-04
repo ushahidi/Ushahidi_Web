@@ -26,9 +26,6 @@ class S_Cleanup_Controller extends Controller {
 	 */
 	public function index()
 	{
-		
-		if(Kohana::config('settings.subdomain') != 'brian') die();		
-				
 		// open the images directory
 		$dhandle = opendir(Kohana::config('upload.relative_directory'));
 		// define an array to hold the files
