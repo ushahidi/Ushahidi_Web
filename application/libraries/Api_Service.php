@@ -206,8 +206,8 @@ final class Api_Service {
 	 * @param string $password User's password.
 	 * @return mixed user_id, FALSE if authentication fails
 	 */
-	public function _login($username, $password)
-	{
+	public function _login()
+    {        
 		$auth = Auth::instance();
 
 		// Is user previously authenticated?
@@ -216,13 +216,47 @@ final class Api_Service {
 			return $auth->get_user()->id;
 		}
 		else
-		{
-			// Attempt a login
-			return ($auth->login($username, $password))
-				? $auth->get_user()->id
-				: FALSE;
-		}
-	}
+        {
+            //Get username and password
+            if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) 
+            {
+                $username = filter_var($_SERVER['PHP_AUTH_USER'], 
+                    FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+                
+                $password = filter_var($_SERVER['PHP_AUTH_PW'], 
+                    FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+                
+                if ($auth->login($username, $password)) 
+                {
+                    return $auth->get_user()->id;
+                }
+                else 
+                {
+                    //prompt user to login
+                    $this->_prompt_login();
+                    return FALSE;
+                }
+
+            }
+            //prompt user to login
+            $this->_prompt_login();
+            return FALSE;
+        }
+    }
+
+    /**
+     * Prompts user to login.
+     * 
+     * @param int user_id - The currently logged in user id
+     *
+     * @return void
+     */
+    private function _prompt_login($user_id = 0)
+    {
+        header('WWW-Authenticate: Basic realm="'.$user_id.'"');
+        header('HTTP/1.0 401 Unauthorized');
+
+    }
     
 	/**
 	 * Routes the API task requests to their respective API libraries

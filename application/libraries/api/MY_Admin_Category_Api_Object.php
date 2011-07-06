@@ -35,35 +35,9 @@ class Admin_Category_Api_Object extends Api_Object_Core {
     public function category_action()
     {
         $action = ''; // Will hold the report action
-
-        $username = ''; // Will hold the username
-        $password = ''; // Will hold the password
-        
-        // Verify that the username and password have been specified
-        if ( ! $this->api_service->verify_array_index($this->request, 'username'))
-        {
-            $this->set_error_message(array(
-                "error" => $this->api_service->get_error_msg(001, 'username')
-            ));
-            
-            return;
-        }
-        elseif ( ! $this->api_service->verify_array_index($this->request, 'password'))
-        {
-            $this->set_error_message(array(
-                "error" => $this->api_service->get_error_msg(001, 'password')
-            ));
-            
-            return;
-        }
-        else
-        {
-            $username = $this->request['username'];
-            $password = $this->request['password'];
-        }
         
         // Authenticate the user
-        if ( ! $this->api_service->_login($username, $password))
+        if ( ! $this->api_service->_login())
         {
             $this->set_error_message($this->response(2));
             return;

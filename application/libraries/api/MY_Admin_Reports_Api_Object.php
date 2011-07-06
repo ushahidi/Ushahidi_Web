@@ -27,6 +27,13 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
      */
     public function perform_task()
     {
+        // Authenticate the user
+        if ( ! $this->api_service->_login())
+        {
+            $this->set_error_message($this->response(2));
+            return;
+        }
+
         if ( ! $this->api_service->verify_array_index($this->request, 'by'))
         {
             $this->set_error_message(array(
