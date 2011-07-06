@@ -1,15 +1,22 @@
 <?php
 /**
  * Report Importer Library
+ *
  * Imports reports within CSV file referenced by filehandle.
  * 
- * @package    Reports
- * @author     Ushahidi Team
- * @copyright  (c) 2008 Ushahidi Team
- * @license    http://www.ushahidi.com/license.html
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team <team@ushahidi.com>
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
+ *
  */
 class ReportsImporter {
-	function __construct() {
+	function __construct() 
+	{
 		$this->notices = array();
 		$this->errors = array();		
 		$this->totalrows = 0;
@@ -19,7 +26,9 @@ class ReportsImporter {
 		$this->locations_added = array();
 		$this->incident_categories_added = array();
 	}
-	function import($filehandle) {
+	
+	function import($filehandle) 
+	{
 		$csvtable = new Csvtable($filehandle);
 		$requiredcolumns = array('INCIDENT TITLE','INCIDENT DATE');
 		foreach($requiredcolumns as $requiredcolumn)
@@ -30,17 +39,20 @@ class ReportsImporter {
 			}
 		}
 		
-		if(count($this->errors)) {
+		if(count($this->errors))
+		{
 			return false;
 		}
-		
-		$this->category_ids = ORM::factory('category')->select_list('category_title','id'); // so we can assign category id to incidents, based on category title
-		$this->incident_ids = ORM::factory('incident')->select_list('id','id'); // so we can check if incident already exists in database
+		// So we can assign category id to incidents, based on category title
+		$this->category_ids = ORM::factory('category')->select_list('category_title','id'); 
+		// So we can check if incident already exists in database
+		$this->incident_ids = ORM::factory('incident')->select_list('id','id'); 
 		$this->time = date("Y-m-d H:i:s",time());
 		$rows = $csvtable->getRows();
 		$this->totalrows = count($rows);
 		$this->rownumber = 0;
 	 	
+		// Loop through CSV rows
 	 	foreach($rows as $row)
 	 	{
 			$this->rownumber++;
@@ -60,7 +72,7 @@ class ReportsImporter {
 					return false;
 				}
 			}
-		} // loop through CSV rows
+		} 
 		return true;
 	}
 	
@@ -74,16 +86,20 @@ class ReportsImporter {
 	
 	function importreport($row)
 	{
-		if(!strtotime($row['INCIDENT DATE'])) {
+		if(!strtotime($row['INCIDENT DATE']))
+		{
 			$this->errors[] = 'Could not parse incident date "'.htmlspecialchars($row['INCIDENT DATE']).'" on line '.($this->rownumber+1);
 		}
-		if(isset($row["APPROVED"]) AND !in_array($row["APPROVED"],array('NO','YES'))) {
+		if(isset($row["APPROVED"]) AND !in_array($row["APPROVED"],array('NO','YES')))
+		{
 			$this->errors[] = 'APPROVED must be either YES or NO on line '.($this->rownumber+1);
 		}
-		if(isset($row["VERIFIED"]) AND !in_array($row["VERIFIED"],array('NO','YES'))) {
+		if(isset($row["VERIFIED"]) AND !in_array($row["VERIFIED"],array('NO','YES'))) 
+		{
 			$this->errors[] = 'VERIFIED must be either YES or NO on line '.($this->rownumber+1);
 		}
-		if(count($this->errors)) {
+		if(count($this->errors)) 
+		{
 			return false;
 		}
 		
@@ -113,12 +129,16 @@ class ReportsImporter {
 		$this->incidents_added[] = $incident->id;
 		
 		// STEP 3: SAVE CATEGORIES
+		// If CATEGORIES column exists
 		if (isset($row['CATEGORY']))
 		{
 			$categorynames = explode(',',trim($row['CATEGORY']));
+			// Add categories to incident
 			foreach($categorynames as $categoryname)
 			{
-				$categoryname = strtoupper(trim($categoryname)); // There seems to be an uppercase convention for categories... Don't know why.
+				// There seems to be an uppercase convention for categories... Don't know why
+				$categoryname = strtoupper(trim($categoryname)); 
+				// Empty categoryname not allowed
 				if($categoryname != '')
 				{
 					if(!isset($this->category_ids[$categoryname]))
@@ -126,22 +146,25 @@ class ReportsImporter {
 						$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet. Added to database.';
 						$category = new Category_Model;
 						$category->category_title = $categoryname;
-						$category->category_color = '000000'; // We'll just use black for now. Maybe something random?
-						$category->category_type = 5; // because all current categories are of type '5'
+						// We'll just use black for now. Maybe something random?
+						$category->category_color = '000000'; 
+						// because all current categories are of type '5'
+						$category->category_type = 5; 
 						$category->category_visible = 1;
 						$category->category_description = $categoryname;
 						$category->save();
 						$this->categories_added[] = $category->id;
-						$this->category_ids[$categoryname] = $category->id; // Now category_id is known: This time, and for the rest of the import.
+						// Now category_id is known: This time, and for the rest of the import.
+						$this->category_ids[$categoryname] = $category->id; 
 					}
 					$incident_category = new Incident_Category_Model();
 					$incident_category->incident_id = $incident->id;
 					$incident_category->category_id = $this->category_ids[$categoryname];
 					$incident_category->save();
 					$this->incident_categories_added[] = $incident_category->id;
-				} // empty categoryname not allowed
-			} // add categories to incident
-		} // if CATEGORIES column exists
+				} 
+			} 
+		} 
 		return true;
 	}
 }
