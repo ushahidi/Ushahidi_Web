@@ -16,26 +16,41 @@
  *
  */
 class Csvtable_Core {
-	var $columnnames = array();
+	/**
+	 * Column names
+	 * @var array
+	 */
+	private $columnnames = array();
 	
 	function __construct($filehandle)
 	{
 		$this->filehandle = $filehandle;
-		if(($fields = fgetcsv($filehandle, 1000)) !== FALSE) { // 1000 chars is max line length
+		// 1000 chars is max line length
+		if(($fields = fgetcsv($filehandle, 1000)) !== FALSE) 
+		{ 
 			$colnum = 0;
 			foreach($fields as $field)
 			{
 				$this->colnames[$field] = $colnum;
 				$colnum++;
-			} // fields
+			}
 		}		
 	}
 	
+	/**
+	 * Function to check if the CSV File has a column in the name given
+	 * @param string $name Name of column to be checked
+	 * @return bool
+	 */
 	function hasColumn($name)
 	{
 		return isset($this->colnames[$name]);
 	}
 	
+	/**
+	 * Function to get rows in the CSV files
+	 * @return array
+	 */
 	function getRows()
 	{
 		$rows = array();
