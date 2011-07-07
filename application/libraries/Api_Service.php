@@ -238,6 +238,7 @@ final class Api_Service {
                 }
 
             }
+
             //prompt user to login
             $this->_prompt_login();
             return FALSE;
@@ -247,8 +248,8 @@ final class Api_Service {
     /**
      * Prompts user to login.
      * 
-     * @param int user_id - The currently logged in user id
-     *
+     * @param int user_id - The currently logged in user id to be passed as the 
+     *                      realm value.
      * @return void
      */
     private function _prompt_login($user_id = 0)

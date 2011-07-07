@@ -111,22 +111,22 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
         switch ($action)
         {
             // Delete report
-            case "d":
+            case "del":
                 $this->_delete_report($incident_id); 
             break;
             
             // Approve report
-            case "a":
+            case "approve":
                 $this->_approve_report($incident_id);
             break;
             
             // Verify report
-            case "v":
+            case "verify":
                 $this->_verify_report($incident_id);
             break;
             
             // Edit report
-            case "e":
+            case "edit":
                 $this->_edit_report($incident_id);
             break;
             
