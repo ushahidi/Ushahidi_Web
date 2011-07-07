@@ -80,7 +80,6 @@ class Modulecheck {
 		$this->Modules = $vModules; 
 	}
 	
-	
 	/**
 	 * Quick check if module is loaded. Returns true if loaded, false if not
 	 * @param string $moduleName
@@ -94,7 +93,6 @@ class Modulecheck {
 		}
 		return false;
 	} 
-	
 	
 	/**
 	 * Get a module setting
@@ -126,7 +124,6 @@ class Modulecheck {
 		// If setting specified and no value found return error
 		return 'Setting not found';
 	} 
-	
 	
 	/**
 	 * List all php modules installed with no settings

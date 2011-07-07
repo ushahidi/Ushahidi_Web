@@ -15,6 +15,7 @@
  *
  */
 class ReportsImporter {
+	
 	function __construct() 
 	{
 		$this->notices = array();
@@ -27,12 +28,19 @@ class ReportsImporter {
 		$this->incident_categories_added = array();
 	}
 	
+	/**
+	 * Function to import CSV file referenced by the file handle
+	 * @param string $filehandle
+	 * @return bool 
+	 */
 	function import($filehandle) 
 	{
 		$csvtable = new Csvtable($filehandle);
+		// Set the required columns of the CSV file
 		$requiredcolumns = array('INCIDENT TITLE','INCIDENT DATE');
 		foreach($requiredcolumns as $requiredcolumn)
 		{
+			// If the CSV file is missing any required column, return an error
 			if(!$csvtable->hasColumn($requiredcolumn))
 			{
 				$this->errors[] = 'CSV file is missing required column "'.$requiredcolumn.'"';
@@ -76,6 +84,9 @@ class ReportsImporter {
 		return true;
 	}
 	
+	/**
+	 * Function to undo import of reports
+	 */
 	function rollback()
 	{
 		if(count($this->incidents_added)) ORM::factory('incident')->delete_all($this->incidents_added);
@@ -84,16 +95,25 @@ class ReportsImporter {
 		if(count($this->incident_categories_added)) ORM::factory('location')->delete_all($this->incident_categories_added);
 	}
 	
+	/**
+	 * Function to import a report form a row in the CSV file
+	 * @param array $row
+	 * @return bool
+	 */
 	function importreport($row)
 	{
+		// If the date is not in proper date format
 		if(!strtotime($row['INCIDENT DATE']))
 		{
-			$this->errors[] = 'Could not parse incident date "'.htmlspecialchars($row['INCIDENT DATE']).'" on line '.($this->rownumber+1);
+			$this->errors[] = 'Could not parse incident date "'.htmlspecialchars($row['INCIDENT DATE']).'" on line '
+			.($this->rownumber+1);
 		}
+		// If a value of Yes or No is NOT set for approval status for the imported row
 		if(isset($row["APPROVED"]) AND !in_array($row["APPROVED"],array('NO','YES')))
 		{
 			$this->errors[] = 'APPROVED must be either YES or NO on line '.($this->rownumber+1);
 		}
+		// If a value of Yes or No is NOT set for verified status for the imported row 
 		if(isset($row["VERIFIED"]) AND !in_array($row["VERIFIED"],array('NO','YES'))) 
 		{
 			$this->errors[] = 'VERIFIED must be either YES or NO on line '.($this->rownumber+1);
@@ -143,7 +163,8 @@ class ReportsImporter {
 				{
 					if(!isset($this->category_ids[$categoryname]))
 					{
-						$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet. Added to database.';
+						$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet.'
+						.' Added to database.';
 						$category = new Category_Model;
 						$category->category_title = $categoryname;
 						// We'll just use black for now. Maybe something random?

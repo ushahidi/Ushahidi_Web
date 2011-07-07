@@ -1095,8 +1095,8 @@ class Reports_Controller extends Admin_Controller
 
 
 	/**
-	* Download Reports in CSV format
-	*/
+	 * Download Reports in CSV format
+	 */
 
 	function download()
 	{
@@ -1119,7 +1119,7 @@ class Reports_Controller extends Admin_Controller
 		$errors = $form;
 		$form_error = FALSE;
 
-		// check, has the form been submitted, if so, setup validation
+		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
