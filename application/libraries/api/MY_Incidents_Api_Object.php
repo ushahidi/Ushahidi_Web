@@ -501,7 +501,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 								$xml->writeElement('link', $upload_path.$media_item['medialink']);
 							}
 						
-							if( $media_item->mediathumb != "" ) 
+							if( $media_item['mediathumb'] != "" ) 
 							{
 								$xml->writeElement('thumb', $upload_path.$media_item['mediathumb']);
 							}
