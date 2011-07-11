@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 53
+-- version 57
 -- http://www.ushahidi.com
 
 
@@ -765,7 +765,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `db_version` varchar(20) default NULL,                                          
     `ushahidi_version` varchar(20) default NULL,                                    
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ; 
+) ENGINE=MyISAM DEFAULT CHARSET=utf8; 
 
 
 -- Dumping data for table `settings`
@@ -940,7 +940,8 @@ INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_we
 (2, 'Alerts', 0, -1, -1, -1, -1, 's_alerts', 1),
 (3, 'Email', 0, -1, -1, -1, 0, 's_email', 1),
 (4, 'Twitter', 0, -1, -1, -1, 0, 's_twitter', 1),
-(5, 'Sharing', 0, -1, -1, -1, 0, 's_sharing', 1);
+(5, 'Sharing', 0, -1, -1, -1, 0, 's_sharing', 1),
+(6, 'Cleanup', 0, -1, -1, -1, 0, 's_cleanup', 1);
 
 
 /**
@@ -1373,4 +1374,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '56' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '57' WHERE `id`=1 LIMIT 1;
