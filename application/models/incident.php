@@ -49,7 +49,7 @@ class Incident_Model extends ORM {
 	
 	/**
 	 * Gets a list of all visible categories
-	 *
+	 * @todo Move this to the category model
 	 * @return array
 	 */
 	public static function get_active_categories()
@@ -292,8 +292,68 @@ class Incident_Model extends ORM {
 	 */
 	public static function is_valid_incident($incident_id)
 	{
-		return (preg_match('/^[1-9](\d*)$/', $incident_id) > 0)
-			? self::factory('incident', $incident_id)->loaded
+		return (intval($incident_id) > 0)
+			? self::factory('incident', intval($incident_id))->loaded
 			: FALSE;
+	}
+	
+	/**
+	 * Gets the reports that match the conditions specified in the $where parameter
+	 * The conditions must relate to columns in the incident, location, incident_category
+	 * category and media tables
+	 *
+	 * @param array $where List of conditions to apply to the query
+	 * @param int $limit No. of records to fetch
+	 * @param string $order_field Column by which to order the records
+	 * @param string $sort How to order the records - only ASC or DESC are allowed
+	 * @return Result
+	 */
+	public static function get_incidents($where = array(), $limit = 0, $order_field = NULL, $sort = NULL)
+	{
+		$table_prefix = Kohana::config('database.table_prefix');
+		
+		// Query
+		$sql = 'SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, i.incident_mode, i.incident_active, '
+			. 'i.incident_verified, i.location_id, l.location_name, l.latitude, l.longitude '
+			. 'FROM '.$table_prefix.'incident i '
+			. 'INNER JOIN '.$table_prefix.'location l ON (i.location_id = l.id) '
+			. 'INNER JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
+			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) '
+			. 'LEFT JOIN '.$table_prefix.'media m ON (m.incident_id = i.id) '
+			. 'WHERE i.incident_active = 1 '
+			. 'AND c.category_visible = 1 ';
+		
+		// Check for the additional conditions for the query
+		if ( ! empty($where) AND count($where) > 0)
+		{
+			foreach ($where as $predicate)
+			{
+				$sql .= 'AND '.$predicate.' ';
+			}
+		}
+		
+		// Check for the order field and sort parameters
+		if ( ! empty($order_field) AND ! empty($sort) AND (strtoupper($sort) == 'ASC' OR strtoupper($sort) == 'DESC'))
+		{
+			$sql .= 'ORDER BY '.$order_field.' '.$sort.' ';
+		}
+		else
+		{
+			$sql .= 'ORDER BY i.incident_date DESC ';
+		}
+		
+		// Check if the record limit has been specified
+		if ($limit > 0)
+		{
+			$sql .= 'LIMIT 0, '.$limit;
+		}
+		
+		// Kohana::log('debug', 'SQL Query: '.$sql);
+		
+		// Database instance for the query
+		$db = new Database();
+		
+		// Return
+		return $db->query($sql);
 	}
 }
