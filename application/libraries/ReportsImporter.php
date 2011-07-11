@@ -38,16 +38,16 @@ class ReportsImporter {
 		$csvtable = new Csvtable($filehandle);
 		// Set the required columns of the CSV file
 		$requiredcolumns = array('INCIDENT TITLE','INCIDENT DATE');
-		foreach($requiredcolumns as $requiredcolumn)
+		foreach ($requiredcolumns as $requiredcolumn)
 		{
 			// If the CSV file is missing any required column, return an error
-			if(!$csvtable->hasColumn($requiredcolumn))
+			if (!$csvtable->hasColumn($requiredcolumn))
 			{
 				$this->errors[] = 'CSV file is missing required column "'.$requiredcolumn.'"';
 			}
 		}
 		
-		if(count($this->errors))
+		if (count($this->errors))
 		{
 			return false;
 		}
@@ -89,10 +89,10 @@ class ReportsImporter {
 	 */
 	function rollback()
 	{
-		if(count($this->incidents_added)) ORM::factory('incident')->delete_all($this->incidents_added);
-		if(count($this->categories_added)) ORM::factory('category')->delete_all($this->categories_added);
-		if(count($this->locations_added)) ORM::factory('location')->delete_all($this->locations_added);
-		if(count($this->incident_categories_added)) ORM::factory('location')->delete_all($this->incident_categories_added);
+		if (count($this->incidents_added)) ORM::factory('incident')->delete_all($this->incidents_added);
+		if (count($this->categories_added)) ORM::factory('category')->delete_all($this->categories_added);
+		if (count($this->locations_added)) ORM::factory('location')->delete_all($this->locations_added);
+		if (count($this->incident_categories_added)) ORM::factory('location')->delete_all($this->incident_categories_added);
 	}
 	
 	/**
@@ -103,22 +103,22 @@ class ReportsImporter {
 	function importreport($row)
 	{
 		// If the date is not in proper date format
-		if(!strtotime($row['INCIDENT DATE']))
+		if (!strtotime($row['INCIDENT DATE']))
 		{
 			$this->errors[] = 'Could not parse incident date "'.htmlspecialchars($row['INCIDENT DATE']).'" on line '
 			.($this->rownumber+1);
 		}
 		// If a value of Yes or No is NOT set for approval status for the imported row
-		if(isset($row["APPROVED"]) AND !in_array($row["APPROVED"],array('NO','YES')))
+		if (isset($row["APPROVED"]) AND !in_array($row["APPROVED"],array('NO','YES')))
 		{
 			$this->errors[] = 'APPROVED must be either YES or NO on line '.($this->rownumber+1);
 		}
 		// If a value of Yes or No is NOT set for verified status for the imported row 
-		if(isset($row["VERIFIED"]) AND !in_array($row["VERIFIED"],array('NO','YES'))) 
+		if (isset($row["VERIFIED"]) AND !in_array($row["VERIFIED"],array('NO','YES'))) 
 		{
 			$this->errors[] = 'VERIFIED must be either YES or NO on line '.($this->rownumber+1);
 		}
-		if(count($this->errors)) 
+		if (count($this->errors)) 
 		{
 			return false;
 		}
@@ -154,14 +154,14 @@ class ReportsImporter {
 		{
 			$categorynames = explode(',',trim($row['CATEGORY']));
 			// Add categories to incident
-			foreach($categorynames as $categoryname)
+			foreach ($categorynames as $categoryname)
 			{
 				// There seems to be an uppercase convention for categories... Don't know why
 				$categoryname = strtoupper(trim($categoryname)); 
 				// Empty categoryname not allowed
-				if($categoryname != '')
+				if ($categoryname != '')
 				{
-					if(!isset($this->category_ids[$categoryname]))
+					if (!isset($this->category_ids[$categoryname]))
 					{
 						$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet.'
 						.' Added to database.';
