@@ -64,7 +64,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 		{
 			// Get all incidents
 			case "all":
-				$this->response_data = $this->get_incidents_by_all();
+				$this->response_data = $this->_get_incidents();
 			break;
 
 			// Get specific incident by ID
@@ -79,8 +79,8 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$this->response_data = $this->_get_incident_by_id(
-					$this->check_id_value($this->request['id']));
+					$params = array('i.id = '.$this->check_id_value($this->request['id']));
+					$this->response_data = $this->_get_incidents($params);
 				}
 			break;
 
@@ -89,9 +89,14 @@ class Incidents_Api_Object extends Api_Object_Core {
 				if ($this->api_service->verify_array_index($this->request, 'latitude')
 					AND $this->api_service->verify_array_index($this->request, 'longitude'))
 				{ 
-					$this->response_data = $this->_get_incidents_by_lat_lon(
-					$this->check_id_value($this->request['latitude']),
-					$this->check_id_value($this->request['longitude']));
+					// Build out the parameters
+					$params = array(
+						'l.latitude = '.$this->check_id_value($this->request['latitude']),
+						'l.longitude ='.$this->check_id_value($this->request['longitude'])
+					);
+					
+					// Fetch the incidents
+					$this->response_data = $this->_get_incidents($params);
 				}
 				else
 				{
@@ -115,7 +120,11 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$this->response_data = $this->_get_incidents_by_location_id($this->check_id_value($this->request['id']));
+					$params = array(
+						'i.location_id = '.$this->check_id_value($this->request['id'])
+					);
+					
+					$this->response_data = $this->_get_incidents($params);
 				}
 			break;
 
@@ -131,7 +140,11 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$this->response_data = $this->_get_incidents_by_location_name($this->request['name']);
+					$params = array(
+						'l.location_name = "'.$this->request['name'].'"'
+					);
+					
+					$this->response_data = $this->_get_incidents($params);
 				}
 			break;
 
@@ -147,7 +160,9 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$this->response_data = $this->_get_incidents_by_category_id($this->check_id_value($this->request['id']));
+					$params = array('c.id = '.$this->check_id_value($this->request['id']));
+					
+					$this->response_data = $this->_get_incidents($params);
 				}
 			break;
 
@@ -162,7 +177,11 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$this->response_data = $this->_get_incidents_by_category_name($this->request['name']);
+					$params = array(
+						'c.category_title LIKE "%'.$this->request['name'].'%"'
+					);
+					
+					$this->response_data = $this->_get_incidents($params);
 				}
 			break;
 
@@ -183,7 +202,11 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$this->response_data = $this->_get_incidents_by_since_id($this->check_id_value($this->request['id']));
+					$params = array(
+						'i.id > '.$this->check_id_value($this->request['id'])
+					);
+					
+					$this->response_data = $this->_get_incidents($params);
 				}
 			break;
 
@@ -199,7 +222,11 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$this->response_data = $this->_get_incidents_by_max_id($this->check_id_value($this->request['id']));
+					$params = array(
+						'i.id < '.$this->check_id_value($this->request['id'])
+					);
+					
+					$this->response_data = $this->_get_incidents($params);
 				}
 			break;
 
@@ -272,9 +299,25 @@ class Incidents_Api_Object extends Api_Object_Core {
 	 * @param int $limit No. of records to return - set to 20 by default
 	 * @return string XML or JSON string
 	 */
-	public function _get_incidents($where = '',$limit = '')
+	public function _get_incidents($where = array())
 	{
-		$ret_json_or_xml = ''; // Will hold the XML/JSON string to return
+		// STEP 1.
+		// Get the incidents
+		$items = Incident_Model::get_incidents($where, $this->list_limit, $this->order_field, $this->sort);
+		
+		//No record found.
+		if ($items->count() == 0)
+		{
+			return $this->response(4, $this->error_messages);
+		}
+		
+		// Records found - proceed
+		
+		// Set the no. of records returned
+		$this->record_count = $items->count();
+		
+		// Will hold the XML/JSON string to return
+		$ret_json_or_xml = '';
 
 		$json_reports = array();
 		$json_report_media = array();
@@ -291,41 +334,12 @@ class Incidents_Api_Object extends Api_Object_Core {
 		$xml->writeElement('domain',$this->domain);
 		$xml->startElement('incidents');
 		
-		// 
-		// STEP 1.
-		// Fetch the incidents
-		// 
-		$this->query = "SELECT i.id AS incidentid, i.incident_title AS incidenttitle,"
-					."i.incident_description AS incidentdescription, "
-					."i.incident_date AS incidentdate, "
-					."i.incident_mode AS incidentmode, "
-					."i.incident_active AS incidentactive, "
-					."i.incident_verified AS incidentverified, "
-					."l.id AS locationid, "
-					."l.location_name AS locationname, "
-					."l.latitude AS locationlatitude, "
-					."l.longitude AS locationlongitude "
-					."FROM ".$this->table_prefix."incident AS i "
-					."INNER JOIN ".$this->table_prefix.
-					"location as l on l.id = i.location_id "."$where $limit";
-
-		$items = $this->db->query($this->query);
-
-		// Set the no. of records returned
-		$this->record_count = $items->count();
-
-		//No record found.
-		if ($items->count() == 0)
-		{
-			return $this->response(4, $this->error_messages);
-		}
-		
 		// Records found, proceed
 		// Store the incident ids
 		$incidents_ids = array();
 		foreach ($items as $item)
 		{
-			$incident_ids[] = $item->incidentid;
+			$incident_ids[] = $item->incident_id;
 		}
 		
 		// 
@@ -357,7 +371,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 		
 		// Free temporary variables from memory
 		unset ($incident_categories);
-		
 		
 		// 
 		// STEP 3.
@@ -396,31 +409,31 @@ class Incidents_Api_Object extends Api_Object_Core {
 			// Build xml file
 			$xml->startElement('incident');
 
-			$xml->writeElement('id',$item->incidentid);
-			$xml->writeElement('title',$item->incidenttitle);
-			$xml->writeElement('description',$item->incidentdescription);
-			$xml->writeElement('date',$item->incidentdate);
-			$xml->writeElement('mode',$item->incidentmode);
-			$xml->writeElement('active',$item->incidentactive);
-			$xml->writeElement('verified',$item->incidentverified);
+			$xml->writeElement('id',$item->incident_id);
+			$xml->writeElement('title',$item->incident_title);
+			$xml->writeElement('description',$item->incident_description);
+			$xml->writeElement('date',$item->incident_date);
+			$xml->writeElement('mode',$item->incident_mode);
+			$xml->writeElement('active',$item->incident_active);
+			$xml->writeElement('verified',$item->incident_verified);
 			$xml->startElement('location');
-			$xml->writeElement('id',$item->locationid);
-			$xml->writeElement('name',$item->locationname);
-			$xml->writeElement('latitude',$item->locationlatitude);
-			$xml->writeElement('longitude',$item->locationlongitude);
+			$xml->writeElement('id',$item->location_id);
+			$xml->writeElement('name',$item->location_name);
+			$xml->writeElement('latitude',$item->latitude);
+			$xml->writeElement('longitude',$item->longitude);
 			$xml->endElement();
 			$xml->startElement('categories');
 
-			$json_report_categories[$item->incidentid] = array();
+			$json_report_categories[$item->incident_id] = array();
 			
 			// Check if the incident id exists
-			if (isset($category_items[$item->incidentid]))
+			if (isset($category_items[$item->incident_id]))
 			{
-				foreach ($category_items[$item->incidentid] as $category_item)
+				foreach ($category_items[$item->incident_id] as $category_item)
 				{
 					if ($this->response_type == 'json')
 					{
-						$json_report_categories[$item->incidentid][] = array(
+						$json_report_categories[$item->incident_id][] = array(
 							"category"=> array(
 								"id" => $category_item['cid'],
 								"title" => $category_item['categorytitle']
@@ -440,15 +453,15 @@ class Incidents_Api_Object extends Api_Object_Core {
 			// End categories
 			$xml->endElement();
 			
-			$json_report_media[$item->incidentid] = array();
+			$json_report_media[$item->incident_id] = array();
 			
 			if (count($media_items) > 0)
 			{
-				if (isset($media_items[$item->incidentid]) AND count($media_items[$item->incidentid]) > 0)
+				if (isset($media_items[$item->incident_id]) AND count($media_items[$item->incident_id]) > 0)
 				{
 					$xml->startElement('mediaItems');
 
-					foreach ($media_items[$item->incidentid] as $media_item)
+					foreach ($media_items[$item->incident_id] as $media_item)
 					{
 						if ($media_item['mediatype'] != 1)
 						{
@@ -458,7 +471,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 						$url_prefix = url::base().Kohana::config('upload.relative_directory').'/';
 						if($this->response_type == 'json')
 						{
-							$json_report_media[$item->incidentid][] = array(
+							$json_report_media[$item->incident_id][] = array(
 								"id" => $media_item['mediaid'],
 								"type" => $media_item['mediatype'],
 								"link" => $upload_path.$media_item['medialink'],
@@ -469,12 +482,12 @@ class Incidents_Api_Object extends Api_Object_Core {
 							if($media_item['mediatype'] == 1)
 							{
 								// Grab that last key up there
-								$add_to_key = key($json_report_media[$item->incidentid]) + 1;
+								$add_to_key = key($json_report_media[$item->incident_id]) + 1;
 
 								// Give a full absolute URL to the image 
-								$json_report_media[$item->incidentid][$add_to_key]["thumb_url"] =  $url_prefix.$upload_path.$media_item['mediathumb'];
+								$json_report_media[$item->incident_id][$add_to_key]["thumb_url"] =  $url_prefix.$upload_path.$media_item['mediathumb'];
 
-								$json_report_media[$item->incidentid][$add_to_key]["link_url"] = $url_prefix.$upload_path.$media_item['medialink'];
+								$json_report_media[$item->incident_id][$add_to_key]["link_url"] = $url_prefix.$upload_path.$media_item['medialink'];
 							}
 						} 
 						else 
@@ -508,7 +521,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 						
 							if( $media_item['mediathumb'] != "" AND $media_item['mediatype'] == 1 )
 							{
-								$add_to_key = key($json_report_media[$item->incidentid]) + 1;
+								$add_to_key = key($json_report_media[$item->incident_id]) + 1;
 							
 								$xml->writeElement('thumb_url', $url_prefix.$upload_path.$media_item['mediathumb']);
 
@@ -527,9 +540,21 @@ class Incidents_Api_Object extends Api_Object_Core {
 			if ($this->response_type == 'json')
 			{
 				$json_reports[] = array(
-					"incident" => $item, 
-					"categories" => $json_report_categories[$item->incidentid], 
-					"media" => $json_report_media[$item->incidentid]
+					"incident" => array(
+						"incidentid" => $item->incident_id,
+						"incidenttitle" => $item->incident_title,
+						"incidentdescription" => $item->incident_description,
+						"incidentdate" => $item->incident_date,
+						"incidentmode" => $item->incident_mode,
+						"incidentactive" => $item->incident_active,
+						"incidentverified" => $item->incident_verified,
+						"locationid" => $item->location_id,
+						"locationname" => $item->location_name,
+						"locationlatitude" => $item->latitude,
+						"locationlongitude" => $item->longitude
+					), 
+					"categories" => $json_report_categories[$item->incident_id], 
+					"media" => $json_report_media[$item->incident_id]
 				);
 			}
 		}
@@ -562,105 +587,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 
     }
 
-	/**
-	 * Fetch all incidents
-	 * 
-	 * @param string orderfield - the order in which to order query output
-	 * @param string sort
-	 */
-	private function get_incidents_by_all() 
-	{
-		$where = "\nWHERE i.incident_active = 1 ";
-
-		$sortby = "\nGROUP BY i.id ORDER BY $this->order_field $this->sort";
-
-		$limit = "\nLIMIT 0, $this->list_limit";
-
-		/* Not elegant but works */
-		return $this->_get_incidents($where.$sortby, $limit);
-	}
-
-	/**
-	 * Get the incidents by latitude and longitude.
-	 * 
-	 */
-	private function _get_incidents_by_lat_lon($lat, $long)
-	{
-		$where = "\nWHERE l.latitude = $lat AND l.longitude = $long AND  i.incident_active = 1 ";
-
-		$sortby = "\nORDER BY $this->order_field $this->sort ";
-
-		$limit = "\n LIMIT 0, $this->list_limit";
-
-		return $this->_get_incidents($where.$sortby, $limit);
-	}
-
-	/**
-	 * Get the incidents by location id
-	 */
-	private function _get_incidents_by_location_id($locid)
-	{
-		$where = "\nWHERE i.location_id = $locid AND i.incident_active = 1 ";
-
-		$sortby = "\nGROUP BY i.id ORDER BY $this->order_field $this->sort";
-
-		$limit = "\nLIMIT 0, $this->list_limit";
-
-		return $this->_get_incidents($where.$sortby, $limit);
-	}
-
-	/**
-	 * Get the incidents by location name
-	 */
-	private function _get_incidents_by_location_name($locname)
-	{
-		$where = "\nWHERE l.location_name = \"$locname\" AND i.incident_active = 1 ";
-
-		$sortby = "\nGROUP BY i.id ORDER BY $this->order_field $this->sort";
-
-		$limit = "\nLIMIT 0, $this->list_limit";
-
-		return $this->_get_incidents($where.$sortby, $limit);
-	}
-
-	/**
-	 * Get the incidents by category id
-	 */
-	private function _get_incidents_by_category_id($catid)
-	{
-		// Needs Extra Join
-		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS  ic ON ic.incident_id = i.id";
-
-		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON  c.id = ic.category_id ";
-
-		$where = $join."\nWHERE c.id = $catid AND i.incident_active = 1 AND c.category_visible = 1 ";
-
-		$sortby = "\nORDER BY $this->order_field $this->sort";
-
-		$limit = "\nLIMIT 0, $this->list_limit";
-
-		return $this->_get_incidents($where.$sortby, $limit);
-	}
-
-	/**
-	 * Get the incidents by category name
-	 */
-	private function _get_incidents_by_category_name($catname)
-	{
-		// Needs Extra Join
-		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS  ic ON ic.incident_id = i.id";
-
-		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON  c.id = ic.category_id";
-
-		$where = $join."\nWHERE c.category_title LIKE '%$catname%' AND i.incident_active = 1 AND c.category_visible = 1";
-
-		$sortby = "\nORDER BY $this->order_field $this->sort";
-
-		$limit = "\nLIMIT 0, $this->list_limit";
-
-		return $this->_get_incidents($where.$sortby, $limit);
-	}
-	
 	/**
 	 * Returns the number of reports in each category
 	 */
@@ -707,57 +633,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 		echo $this->response_data;
 	}
 	
-	/**
-	 * Get a single incident by its ID in the database
-	 * @param incident_id ID of the incident in the databases
-	 */
-	private function _get_incident_by_id($incident_id)
-	{
-		$where = "\nWHERE i.id = $incident_id AND i.incident_active = 1 ";
-
-		return $this->_get_incidents($where);
-	}
-
-	/**
-	 * Get the incidents by since an incidents was updated
-	 *
-	 * @param since_id Database id from which incidents are to be fetched
-	 */
-	private function _get_incidents_by_since_id($since_id)
-	{
-		// Needs Extra Join
-		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS  ic ON ic.incident_id = i.id";
-
-		$join .= "\nINNER JOIN ".$this->table_prefix. "category AS c ON c.id = ic.category_id";
-
-		$where = $join."\nWHERE i.id > $since_id AND i.incident_active = 1";
-
-		$sortby = "\nGROUP BY i.id ORDER BY $this->order_field $this->sort";
-		$limit = "\nLIMIT 0, $this->list_limit";
-
-		return $this->_get_incidents($where.$sortby, $limit);
-	}
-	
-	/**
-	 * Get incidents with a database id less than then one specified in $max_id
-	 *
-	 * @param max_id Maximum incident id
-	 * @return string
-	 */
-	private function _get_incidents_by_max_id($max_id)
-	{
-		// Needs Extra Join
-		$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS  ic ON ic.incident_id = i.id";
-
-		$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id = ic.category_id";
-
-		$where = $join."\nWHERE i.id < $max_id AND i.incident_active = 1";
-
-		$sortby = "\nGROUP BY i.id ORDER BY $this->order_field $this->sort";
-		$limit = "\nLIMIT 0, $this->list_limit";
-
-		return $this->_get_incidents($where.$sortby, $limit);
-	}
     
 	/**
 	 * Get incidents within a certain lat,lon bounding box
@@ -769,9 +644,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_incidents_by_bounds($sw, $ne, $c = 0)
 	{
-		// Get location_ids if we are to filter by location
-		$location_ids = array();
-
 		// Break apart location variables, if necessary
 		$southwest = array();
 		if (isset($sw))
@@ -784,50 +656,34 @@ class Incidents_Api_Object extends Api_Object_Core {
 		{
 			$northeast = explode(",",$ne);
 		}
-
+		
+		// To hold the parameters
+		$params = array();
 		if ( count($southwest) == 2 AND count($northeast) == 2 )
 		{
 			$lon_min = (float) $southwest[0];
 			$lon_max = (float) $northeast[0];
 			$lat_min = (float) $southwest[1];
 			$lat_max = (float) $northeast[1];
-
-			$query = 'SELECT id FROM '.$this->table_prefix.'location WHERE latitude >='.$lat_min.' AND latitude <='.$lat_max.' AND longitude >='.$lon_min.' AND longitude <='.$lon_max;
-
-			$items = $this->db->query($query);
-
-			foreach ( $items as $item )
-			{
-				$location_ids[] =  $item->id;
-			}
+			
+			// Add parameters
+			array_push($params,
+				'l.latitude >= '.$lat_min,
+				'l.latitude <= '.$lat_max,
+				'l.longitude >= '.$lon_min,
+				'l.longitude <= '.$lon_max
+			);
 		}
 		
-		$location_id_in = '1=1';
-		
-		if (count($location_ids) > 0)
-		{
-			$location_id_in = 'l.id IN ('.implode(',',$location_ids).')';
-		}
-		
-		$where = ' WHERE i.incident_active = 1 AND '.$location_id_in.' ';
-
 		// Fix for pulling categories using the bounding box
 		// Credits to Antonoio Lettieri http://github.com/alettieri
 		// Check if the specified category id is valid
 		if (Category_Model::is_valid_category($c))
 		{
-			// Filter incidents by the specified category
-			$join = "\nINNER JOIN ".$this->table_prefix."incident_category AS ic ON ic.incident_id = i.id ";
-			$join .= "\nINNER JOIN ".$this->table_prefix."category AS c ON c.id=ic.category_id ";
-
-			// Overwrite the current where clause in $where
-			$where = $join."\nWHERE c.id = $c AND i.incident_active = 1 AND $location_id_in";
+			array_push($params, 'c.id = '.$c);
 		}
 		
-		$sortby = " GROUP BY i.id ORDER BY $this->order_field $this->sort";
-		$limit = " LIMIT 0, $this->list_limit";
-		
-		return $this->_get_incidents($where.$sortby, $limit);
+		return $this->_get_incidents($params);
         
     }
 
