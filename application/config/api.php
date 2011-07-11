@@ -45,7 +45,7 @@
      "tagphoto" => "Tag_Media",
  
      // Admin report functions 
-     "reports" => "Admin_Reports",
+     //"reports" => "Admin_Reports",
      "reportaction" => array("Admin_Reports", "report_action"),
                          	
      // Category Action 
