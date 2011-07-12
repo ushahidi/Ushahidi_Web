@@ -17,6 +17,10 @@
 ?>
 	// Tracks the current URL parameters
 	var urlParameters = <?php echo $url_params; ?>;
+	if (urlParameters.length == 0)
+	{
+		urlParameters = {};
+	}
 	
 	$(document).ready(function() {
 		  
@@ -80,26 +84,6 @@
 		});
 		
 		/**
-		 * List/map view toggle
-		 */
-		$("#reports-box .report-list-toggle a").click(function(){
-			// Hide both divs
-			$("#rb_list-view, #rb_map-view").hide();
-			
-			// Show the appropriate div
-			$($(this).attr("href")).show();
-			
-			// Remove the class "selected" from all parent li's
-			$("#reports-box .report-list-toggle a").parent().removeClass("active");
-			
-			// Add class "selected" to both instances of the clicked link toggle
-			$("."+$(this).attr("class")).parent().addClass("active");
-			
-			return false;
-		});
-			
-		  
-		/**
 		 * Hover functionality for each report
 		 */
 		$(".rb_report").hover(
@@ -160,10 +144,19 @@
 
 		// Initialize accordion for Report Filters
 		$( "#accordion" ).accordion({autoHeight: false});
-			
-			
-		//---For DEMO PURPOSES ONLY-----//
-
+		
+		// 	Events for toggling the report filters
+		addToggleReportsFilterEvents();
+		
+		// Attach paging events to the paginator
+		attachPagingEvents();
+		
+		// Attach the "Filter Reports" action
+		attachFilterReportsAction();
+	});
+	
+	function addToggleReportsFilterEvents()
+	{
 		/**
 		 * onclick, remove all highlighting on filter list items and hide the item clicked
 		 */
@@ -181,18 +174,38 @@
 				$(this).removeClass("selected"); 
 			}
 		);
-
-		//---------END DEMO CODE---------//
-		
-		// Attach paging events to the paginator
-		attachPagingEvents();
-	});
+	}
+	
+	/**
+	 * List/map view toggle
+	 */
+	function addToggleViewOptionEvents()
+	{
+		$("#reports-box .report-list-toggle a").click(function(){
+			// Hide both divs
+			$("#rb_list-view, #rb_map-view").hide();
+			
+			// Show the appropriate div
+			$($(this).attr("href")).show();
+			
+			// Remove the class "selected" from all parent li's
+			$("#reports-box .report-list-toggle a").parent().removeClass("active");
+			
+			// Add class "selected" to both instances of the clicked link toggle
+			$("."+$(this).attr("class")).parent().addClass("active");
+			
+			return false;
+		});
+	}
 	
 	/**
 	 * Attaches paging events to the paginator
 	 */	
 	function attachPagingEvents()
 	{
+		// Add event handler that allows switching between list view and map view
+		addToggleViewOptionEvents();
+		
 		// Remove page links for the metadata pager
 		$("ul.pager a").attr("href", "#");
 		
@@ -200,39 +213,63 @@
 			
 			
 			// Add the clicked page to the url parameters
-			if (urlParameters.length > 0)
-			{
-				urlParameters["page"] = $(this).html();
-			}
-			else
-			{
-				urlParameters = { page: $(this).html() };
-			}
+			urlParameters["page"] = $(this).html();
 			
-			var loadingURL = "<?php echo url::base().'media/img/loading_g.gif'; ?>"
-			var statusHtml = "<div style=\"width: 100%; margin-top: 100px;\" align=\"center\">" + 
-						"<div><img src=\""+loadingURL+"\" border=\"0\"></div>" + 
-						"<p style=\"padding: 10px 2px;\"><h3><?php echo Kohana::lang('ui_main.loading_reports'); ?>...</h3></p>"
-						"</div>";
+			// Fetch the reports
+			fetchReports(urlParameters);
 			
-			$("#reports-box").html(statusHtml);
-			// $("#reports-box").fadeOut('slow');
-			
-			// Get the content for the new page
-			$.get('<?php echo url::site().'reports/fetch_reports'?>',
-				urlParameters,
-				function(data) {
-					if (data != null && data != "" && data.length > 0) {
-						
-						// Animation delay
-						setTimeout(function(){
-							// $("#reports-box").fadeIn('slow');
-							$("#reports-box").html(data);
-						
-							attachPagingEvents();
-						}, 400);
-					}
+		});
+	}
+	
+	/**
+	 * Gets the reports using the specified parameters
+	 */
+	function fetchReports(parameters)
+	{
+		var loadingURL = "<?php echo url::base().'media/img/loading_g.gif'; ?>"
+		var statusHtml = "<div style=\"width: 100%; margin-top: 100px;\" align=\"center\">" + 
+					"<div><img src=\""+loadingURL+"\" border=\"0\"></div>" + 
+					"<p style=\"padding: 10px 2px;\"><h3><?php echo Kohana::lang('ui_main.loading_reports'); ?>...</h3></p>"
+					"</div>";
+		
+		$("#reports-box").html(statusHtml);
+		// $("#reports-box").fadeOut('slow');
+		
+		// Get the content for the new page
+		$.get('<?php echo url::site().'reports/fetch_reports'?>',
+			urlParameters,
+			function(data) {
+				if (data != null && data != "" && data.length > 0) {
+					
+					// Animation delay
+					setTimeout(function(){
+						// $("#reports-box").fadeIn('slow');
+						$("#reports-box").html(data);
+					
+						attachPagingEvents();
+					}, 400);
 				}
-			);
+			}
+		);
+	}
+	
+	/**
+	 * Adds an event handler for the "Filter reports" button
+	 */
+	function attachFilterReportsAction()
+	{
+		$("#applyFilters").click(function(){
+			// Get all the selected categories
+			var category_ids = [];
+			$.each($(".fl-categories li a.selected"), function(i, item){
+				itemId = item.id.substring("filter_link_cat_".length);
+				category_ids.push(itemId);
+			});
+			
+			urlParameters = {"c[]" : category_ids};
+			
+			// Fetch the reports
+			fetchReports(urlParameters);
+			
 		});
 	}

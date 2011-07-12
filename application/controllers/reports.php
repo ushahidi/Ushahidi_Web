@@ -114,8 +114,11 @@ class Reports_Controller extends Main_Controller {
 		// Initialize the category id
 		$category_id = 0;
 		
+		// Fetch the URL data into a local variable
+		$url_data = array_merge($_GET);
+		
 		// Check for the category parameter
-		if (isset($_GET['c']) AND intval($_GET['c']) > 0)
+		if ( isset($url_data['c']) AND !is_array($url_data['c']) AND intval($url_data['c']) > 0)
 		{
 			// Get the category ID
 			$category_id = intval($_GET['c']);
@@ -125,18 +128,40 @@ class Reports_Controller extends Main_Controller {
 				'c.id = '.$category_id.' OR c.parent_id = '.$category_id
 			);
 		}
+		elseif (isset($url_data['c']) AND is_array($url_data['c']))
+		{
+			// Sanitize each of the category ids
+			$category_ids = array();
+			foreach ($url_data['c'] as $c_id)
+			{
+				if (intval($c_id) > 0)
+				{
+					$category_ids[] = $c_id;
+				}
+			}
+			
+			// Check if there are any category ids
+			if (count($category_ids) > 0)
+			{
+				$category_ids = implode(",", $category_ids);
+			
+				array_push($params,
+					'c.id IN ('.$category_ids.') OR c.parent_id IN ('.$category_ids.')'
+				);
+			}
+		}
 
 		// Break apart location variables, if necessary
 		$southwest = array();
-		if (isset($_GET['sw']))
+		if (isset($url_data['sw']))
 		{
-			$southwest = explode(",",$_GET['sw']);
+			$southwest = explode(",", $url_data['sw']);
 		}
 
 		$northeast = array();
-		if (isset($_GET['ne']))
+		if (isset($url_data['ne']))
 		{
-			$northeast = explode(",",$_GET['ne']);
+			$northeast = explode(",",$url_data['ne']);
 		}
 
 		if ( count($southwest) == 2 AND count($northeast) == 2 )
@@ -209,12 +234,10 @@ class Reports_Controller extends Main_Controller {
 				$report_listing->pagination = $pagination;
 				
 				// Show the total of report
-				$current_offset = $pagination->sql_offset;
-				
 				// @todo This is only specific to the frontend reports theme
-				$report_listing->stats_breadcrumb = ($current_offset + 1).'-'
-													. ($current_offset+$pagination->items_per_page).' of '.$pagination->total_items.' '
-													. Kohana::lang('ui_main.reports');
+				$report_listing->stats_breadcrumb = $pagination->current_first_item.'-'
+											. $pagination->current_last_item.' of '.$pagination->total_items.' '
+											. Kohana::lang('ui_main.reports');
 			}
 			else
 			{ // If we don't want to show pagination
