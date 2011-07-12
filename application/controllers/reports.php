@@ -41,9 +41,72 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
 		$this->themes->js = new View('reports_js');
-
+		$this->themes->js->url_params = json_encode($_GET);
+		
 		// Get locale
 		$l = Kohana::config('locale.language.0');
+		
+		// Get the report listing view
+		$report_listing_view = $this->_get_report_listing_view($l);
+		
+		// Set the view
+		$this->template->content->report_listing_view = $report_listing_view;
+		
+		// Load the category
+		$category_id = (isset($_GET['c']) AND intval($_GET['c']) > 0)? intval($_GET['c']) : 0;
+		$category = ORM::factory('category', $category_id);
+
+		if ($category->loaded)
+		{
+			$translated_title = Category_Lang_Model::category_title($category_id,$l);
+			
+			// Set the category title
+			$this->template->content->category_title = ($translated_title)
+				? $translated_title
+				: $category->category_title;
+		}
+		else
+		{
+			$this->template->content->category_title = "";
+		}
+
+		// Collect report stats
+		$this->template->content->report_stats = new View('reports_stats');
+		// Total Reports
+
+		$total_reports = Incident_Model::get_total_reports(TRUE);
+
+		// Average Reports Per Day
+		$oldest_timestamp = Incident_Model::get_oldest_report_timestamp();
+
+		// Round the number of days up to the nearest full day
+		$days_since = ceil((time() - $oldest_timestamp) / 86400);
+		$avg_reports_per_day = ($days_since < 1)? $total_reports : round(($total_reports / $days_since),2);
+		
+		// Percent Verified
+		$total_verified = Incident_Model::get_total_reports_by_verified(true);
+		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
+
+		$this->template->content->report_stats->total_reports = $total_reports;
+		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
+		$this->template->content->report_stats->percent_verified = $percent_verified;
+
+		$this->template->header->header_block = $this->themes->header_block();
+	}
+	
+	/**
+	 * Helper method to load the report listing view
+	 */
+	private function _get_report_listing_view($locale = '')
+	{
+		// Check if the local is empty
+		if (empty($locale))
+		{
+			$locale = Kohana::config('locale.language.0');
+		}
+		
+		// Load the report listing view
+		$report_listing = new View('reports_listing');
 		
 		// To hold the parameters for fetching the incidents
 		$params = array();
@@ -91,7 +154,7 @@ class Reports_Controller extends Main_Controller {
 				'l.longitude <= '.$lon_max
 			);
 		}
-		
+				
 		// Fetch all incidents
 		$all_incidents = Incident_Model::get_incidents($params);
 
@@ -105,7 +168,7 @@ class Reports_Controller extends Main_Controller {
 
 		// Reports
 		$incidents = Incident_Model::get_incidents($params, $pagination);
-
+		
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
 
 		$localized_categories = array();
@@ -117,7 +180,7 @@ class Reports_Controller extends Main_Controller {
 				$ct = (string)$category->category_title;
 				if( ! isset($localized_categories[$ct]))
 				{
-					$translated_title = Category_Lang_Model::category_title($category->id, $l);
+					$translated_title = Category_Lang_Model::category_title($category->id, $locale);
 					$localized_categories[$ct] = $category->category_title;
 					if($translated_title)
 					{
@@ -126,13 +189,12 @@ class Reports_Controller extends Main_Controller {
 				}
 			}
 		}
-
-		$this->template->content->localized_categories = $localized_categories;
-
-		$this->template->content->incidents = $incidents;
-
+		// Set the view content
+		$report_listing->incidents = $incidents;
+		$report_listing->localized_categories = $localized_categories;
+		
 		//Set default as not showing pagination. Will change below if necessary.
-		$this->template->content->pagination = "";
+		$report_listing->pagination = "";
 
 		// Pagination and Total Num of Report Stats
 		$plural = ($pagination->total_items == 1)? "" : "s";
@@ -143,70 +205,48 @@ class Reports_Controller extends Main_Controller {
 			$total_pages = ceil($pagination->total_items/ $pagination->items_per_page);
 
 			if ($total_pages > 1)
-			{ // If we want to show pagination
-				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '
-															.$current_page.' '.Kohana::lang('ui_admin.of').' '
-															.$total_pages.' '.Kohana::lang('ui_admin.pages');
-
-				$this->template->content->pagination = $pagination;
+			{
+				$report_listing->pagination = $pagination;
 				
 				// Show the total of report
 				$current_offset = $pagination->sql_offset;
 				
 				// @todo This is only specific to the frontend reports theme
-				$this->template->content->stats_breadcrumb = ($current_offset + 1).'-'
-															. ($current_offset+$pagination->items_per_page).' of '.$pagination->total_items.' '
-															. Kohana::lang('ui_main.reports');
+				$report_listing->stats_breadcrumb = ($current_offset + 1).'-'
+													. ($current_offset+$pagination->items_per_page).' of '.$pagination->total_items.' '
+													. Kohana::lang('ui_main.reports');
 			}
 			else
 			{ // If we don't want to show pagination
-				$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
+				$report_listing->stats_breadcrumb = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
 			}
 		}
 		else
 		{
-			$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
+			$report_listing->stats_breadcrumb = '('.$pagination->total_items.' report'.$plural.')';
 		}
-
-		// Load the category
-		$category = ORM::factory('category', $category_id);
-
-		if ($category->loaded)
+		
+		// Return
+		return $report_listing;
+	}
+	
+	public function fetch_reports()
+	{
+		$this->template = "";
+		$this->auto_render = FALSE;
+		
+		if ($_GET)
 		{
-			$translated_title = Category_Lang_Model::category_title($category_id,$l);
+			// Kohana::log('debug', Kohana::debug($_GET));
 			
-			// Set the category title
-			$this->template->content->category_title = ($translated_title)
-				? $translated_title
-				: $category->category_title;
+			$report_listing_view = $this->_get_report_listing_view();
+			
+			print $report_listing_view;
 		}
 		else
 		{
-			$this->template->content->category_title = "";
+			print "";
 		}
-
-		// Collect report stats
-		$this->template->content->report_stats = new View('reports_stats');
-		// Total Reports
-
-		$total_reports = Incident_Model::get_total_reports(TRUE);
-
-		// Average Reports Per Day
-		$oldest_timestamp = Incident_Model::get_oldest_report_timestamp();
-
-		// Round the number of days up to the nearest full day
-		$days_since = ceil((time() - $oldest_timestamp) / 86400);
-		$avg_reports_per_day = ($days_since < 1)? $total_reports : round(($total_reports / $days_since),2);
-		
-		// Percent Verified
-		$total_verified = Incident_Model::get_total_reports_by_verified(true);
-		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
-
-		$this->template->content->report_stats->total_reports = $total_reports;
-		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
-		$this->template->content->report_stats->percent_verified = $percent_verified;
-
-		$this->template->header->header_block = $this->themes->header_block();
 	}
 		
 	/**

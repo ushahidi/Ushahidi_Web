@@ -1,6 +1,15 @@
 <?php
 /**
  * View file for updating the reports display
+ *
+ * PHP version 5
+ * LICENSE: This source file is subject to LGPL license 
+ * that is available through the world-wide-web at the following URI:
+ * http://www.gnu.org/copyleft/lesser.html
+ * @author     Ushahidi Team - http://www.ushahidi.com
+ * @package    Ushahidi - http://source.ushahididev.com
+ * @copyright  Ushahidi - http://www.ushahidi.com
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
 		<!-- Top reportbox section-->
@@ -94,7 +103,7 @@
 								<?php if($category->category_visible == 0) continue; ?>
 						
 								<?php if ($category->category_image_thumb): ?>
-									<?php $category_image = url::base().Kohana::config('upload.relative_directory').."/".$category->category_image_thumb; ?>
+									<?php $category_image = url::base().Kohana::config('upload.relative_directory')."/".$category->category_image_thumb; ?>
 									<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>">
 										<span class="r_cat-box"><img src="<?php echo $category_image; ?>" height="16" width="16" /></span> 
 										<span class="r_cat-desc"><?php echo $localized_categories[(string)$category->category_title];?></span>

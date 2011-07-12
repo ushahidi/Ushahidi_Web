@@ -222,6 +222,7 @@
 	'level_name' => 'Level Name',
 	'limited' => 'Limited',
 	'link' => 'Link',
+	'loading_reports' => 'Loading Reports',
 	'location' => 'Location',
 	'locations' => 'Locations',
 	'location_example' => 'City, State and/or Country',
