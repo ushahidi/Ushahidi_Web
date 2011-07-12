@@ -62,8 +62,8 @@ class Layer_Model extends ORM
 	 */
 	public static function is_valid_layer($layer_id)
 	{
-		return (preg_match('/^[1-9](\d*)$/', $layer_id) > 0)
-				? self::factory('layer', $layer_id)->loaded
+		return (intval($layer_id) > 0)
+				? self::factory('layer', intval($layer_id))->loaded
 				: FALSE;
 	}
 }

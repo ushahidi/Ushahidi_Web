@@ -449,7 +449,22 @@ abstract class Api_Object_Core {
 		$this->id = (preg_match('/^[1-9](\d*)$/', $id) > 0) ? (int) $id : 0;
 
 		return $this->id;
-	}
+    }
+
+    /**
+     * Performs login to the server to prevent any unauthorized access
+     * the admin api
+     * 
+     * @param string username - The user's username as it has been registered on 
+     *                          the ushahidi platform.
+     * @param string password - The user's password on the ushahidi platform.
+     *
+     * @return string session_id - Session ID or status message.
+     */
+    protected function perfom_login($username, $password) 
+    {
+        
+    }
 
 }
 

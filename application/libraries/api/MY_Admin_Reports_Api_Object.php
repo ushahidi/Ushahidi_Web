@@ -27,6 +27,13 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
      */
     public function perform_task()
     {
+        // Authenticate the user
+        if ( ! $this->api_service->_login())
+        {
+            $this->set_error_message($this->response(2));
+            return;
+        }
+
         if ( ! $this->api_service->verify_array_index($this->request, 'by'))
         {
             $this->set_error_message(array(
@@ -104,22 +111,22 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
         switch ($action)
         {
             // Delete report
-            case "d":
+            case "del":
                 $this->_delete_report($incident_id); 
             break;
             
             // Approve report
-            case "a":
+            case "approve":
                 $this->_approve_report($incident_id);
             break;
             
             // Verify report
-            case "v":
+            case "verify":
                 $this->_verify_report($incident_id);
             break;
             
             // Edit report
-            case "e":
+            case "edit":
                 $this->_edit_report($incident_id);
             break;
             
