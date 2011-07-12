@@ -303,12 +303,12 @@ class Incident_Model extends ORM {
 	 * category and media tables
 	 *
 	 * @param array $where List of conditions to apply to the query
-	 * @param int $limit No. of records to fetch
+	 * @param mixed $limit No. of records to fetch or an instance of Pagination
 	 * @param string $order_field Column by which to order the records
 	 * @param string $sort How to order the records - only ASC or DESC are allowed
 	 * @return Result
 	 */
-	public static function get_incidents($where = array(), $limit = 0, $order_field = NULL, $sort = NULL)
+	public static function get_incidents($where = array(), $limit = NULL, $order_field = NULL, $sort = NULL)
 	{
 		$table_prefix = Kohana::config('database.table_prefix');
 		
@@ -320,8 +320,8 @@ class Incident_Model extends ORM {
 			. 'INNER JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
 			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) '
 			. 'LEFT JOIN '.$table_prefix.'media m ON (m.incident_id = i.id) '
-			. 'WHERE i.incident_active = 1 '
-			. 'AND c.category_visible = 1 ';
+			. 'WHERE i.incident_active = 1 ';
+			// . 'AND c.category_visible = 1 ';
 		
 		// Check for the additional conditions for the query
 		if ( ! empty($where) AND count($where) > 0)
@@ -343,17 +343,46 @@ class Incident_Model extends ORM {
 		}
 		
 		// Check if the record limit has been specified
-		if ($limit > 0)
+		if ( ! empty($limit) AND is_int($limit) AND intval($limit) > 0)
 		{
 			$sql .= 'LIMIT 0, '.$limit;
 		}
-		
-		// Kohana::log('debug', 'SQL Query: '.$sql);
+		elseif ( ! empty($limit) AND $limit instanceof Pagination_Core)
+		{
+			$sql .= 'LIMIT '.$limit->sql_offset.', '.$limit->items_per_page;
+		}
 		
 		// Database instance for the query
 		$db = new Database();
 		
 		// Return
 		return $db->query($sql);
+	}
+	
+	/**
+	 * Gets the comments for an incident
+	 * @param int $incident_id Database ID of the incident
+	 * @return mixed FALSE if the incident id is non-existent, ORM_Iterator if it exists
+	 */
+	public static function get_comments($incident_id)
+	{
+		if (self::is_valid_incident($incident_id))
+		{
+			$where = array(
+				'incident_id' => $incident_id,
+				'comment_active' => '1',
+				'comment_spam' => '0'
+			);
+			
+			// Fetch the comments
+			return ORM::factory('comment')
+					->where($where)
+					->orderby('comment_date', 'asc')
+					->find_all();
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 }

@@ -160,7 +160,10 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$params = array('c.id = '.$this->check_id_value($this->request['id']));
+					$category_id = $this->check_id_value($this->request['id']);
+					$params = array(
+						'c.id = '.$category_id.' OR c.parent_id = '.$category_id
+					);
 					
 					$this->response_data = $this->_get_incidents($params);
 				}

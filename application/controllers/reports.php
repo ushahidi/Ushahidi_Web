@@ -33,8 +33,7 @@ class Reports_Controller extends Main_Controller {
 	/**
 	 * Displays all reports.
 	 */
-	// TODO: Do we need this $cluster_id var? I dont see it being used anywhere. (BH)
-	public function index($cluster_id = 0)
+	public function index()
 	{
 		// Cacheable Controller
 		$this->is_cachable = TRUE;
@@ -45,36 +44,24 @@ class Reports_Controller extends Main_Controller {
 
 		// Get locale
 		$l = Kohana::config('locale.language.0');
-
-		$db = new Database;
-
-		// Get incident_ids if we are to filter by category
-		$allowed_ids = array();
 		
-		if (isset($_GET['c']) AND (int) $_GET['c']!=0)
+		// To hold the parameters for fetching the incidents
+		$params = array();
+		
+		// Initialize the category id
+		$category_id = 0;
+		
+		// Check for the category parameter
+		if (isset($_GET['c']) AND intval($_GET['c']) > 0)
 		{
-			$category_id = (int) $_GET['c'];
-			$query = 'SELECT ic.incident_id AS incident_id '
-					. 'FROM '.$this->table_prefix.'incident_category AS ic '
-					. 'INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  '
-					. 'WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
-			$query = $db->query($query);
-
-			if ($query->count())
-			{
-				foreach ( $query as $items )
-				{
-					$allowed_ids[] = $items->incident_id;
-				}
-			}
-			else
-			{
-				$allowed_ids[] = "-1";
-			}
+			// Get the category ID
+			$category_id = intval($_GET['c']);
+			
+			// Add category parameter to the parameter list
+			array_push($params,
+				'c.id = '.$category_id.' OR c.parent_id = '.$category_id
+			);
 		}
-
-		// Get location_ids if we are to filter by location
-		$location_ids = array();
 
 		// Break apart location variables, if necessary
 		$southwest = array();
@@ -95,60 +82,42 @@ class Reports_Controller extends Main_Controller {
 			$lon_max = (float) $northeast[0];
 			$lat_min = (float) $southwest[1];
 			$lat_max = (float) $northeast[1];
-
-			$query = 'SELECT id FROM '.$this->table_prefix.'location '
-					. 'WHERE latitude >='.$lat_min.' '
-					. 'AND latitude <='.$lat_max.' '
-					. 'AND longitude >='.$lon_min.' '
-					. 'AND longitude <='.$lon_max;
-
-			$query = $db->query($query);
-
-			foreach ( $query as $items )
-			{
-				$location_ids[] =  $items->id;
-			}
+			
+			// Add the location conditions to the parameter list
+			array_push($params, 
+				'l.latitude >= '.$lat_min,
+				'l.latitude <= '.$lat_max,
+				'l.longitude >= '.$lon_min,
+				'l.longitude <= '.$lon_max
+			);
 		}
-		elseif (isset($_GET['l']) AND !empty($_GET['l']) AND $_GET['l']!=0)
-		{
-			$location_ids[] = (int) $_GET['l'];
-		}
-
-		// Get the count
-		$incident_id_in = (count($allowed_ids) > 0)? 'id IN ('.implode(',',$allowed_ids).')' : '1=1';
-
-		$location_id_in = (count($location_ids) > 0)? 'location_id IN ('.implode(',',$location_ids).')' : '1=1';
+		
+		// Fetch all incidents
+		$all_incidents = Incident_Model::get_incidents($params);
 
 		// Pagination
 		$pagination = new Pagination(array(
+				'style' => 'front-end-reports',
 				'query_string' => 'page',
 				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
-				'total_items' => ORM::factory("incident")
-					->where("incident_active", 1)
-					->where($location_id_in)
-					->where($incident_id_in)
-					->count_all()
+				'total_items' => $all_incidents->count()
 				));
 
 		// Reports
-		$incidents = ORM::factory("incident")
-			->where("incident_active", 1)
-			->where($location_id_in)
-			->where($incident_id_in)
-			->orderby("incident_date", "desc")
-			->find_all((int) Kohana::config('settings.items_per_page'), $pagination->sql_offset);
+		$incidents = Incident_Model::get_incidents($params, $pagination);
 
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
 
 		$localized_categories = array();
 		foreach ($incidents as $incident)
 		{
+			$incident = ORM::factory('incident', $incident->incident_id);
 			foreach ($incident->category AS $category)
 			{
 				$ct = (string)$category->category_title;
 				if( ! isset($localized_categories[$ct]))
 				{
-					$translated_title = Category_Lang_Model::category_title($category->id,$l);
+					$translated_title = Category_Lang_Model::category_title($category->id, $l);
 					$localized_categories[$ct] = $category->category_title;
 					if($translated_title)
 					{
@@ -170,14 +139,24 @@ class Reports_Controller extends Main_Controller {
 
 		if ($pagination->total_items > 0)
 		{
-			$current_page = ($pagination->sql_offset/ (int) Kohana::config('settings.items_per_page')) + 1;
-			$total_pages = ceil($pagination->total_items/ (int) Kohana::config('settings.items_per_page'));
+			$current_page = ($pagination->sql_offset/ $pagination->items_per_page) + 1;
+			$total_pages = ceil($pagination->total_items/ $pagination->items_per_page);
 
 			if ($total_pages > 1)
 			{ // If we want to show pagination
-				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '.$current_page.' '.Kohana::lang('ui_admin.of').' '.$total_pages.' '.Kohana::lang('ui_admin.pages');
+				$this->template->content->pagination_stats = Kohana::lang('ui_admin.showing_page').' '
+															.$current_page.' '.Kohana::lang('ui_admin.of').' '
+															.$total_pages.' '.Kohana::lang('ui_admin.pages');
 
 				$this->template->content->pagination = $pagination;
+				
+				// Show the total of report
+				$current_offset = $pagination->sql_offset;
+				
+				// @todo This is only specific to the frontend reports theme
+				$this->template->content->stats_breadcrumb = ($current_offset + 1).'-'
+															. ($current_offset+$pagination->items_per_page).' of '.$pagination->total_items.' '
+															. Kohana::lang('ui_main.reports');
 			}
 			else
 			{ // If we don't want to show pagination
@@ -189,9 +168,6 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->pagination_stats = '('.$pagination->total_items.' report'.$plural.')';
 		}
 
-		// Category Title, if Category ID available
-		$category_id = (isset($_GET['c']) AND !empty($_GET['c'])) ? $_GET['c'] : "0";
-		
 		// Load the category
 		$category = ORM::factory('category', $category_id);
 
@@ -232,7 +208,7 @@ class Reports_Controller extends Main_Controller {
 
 		$this->template->header->header_block = $this->themes->header_block();
 	}
-
+		
 	/**
 	 * Submits a new report.
 	 */
@@ -838,12 +814,7 @@ class Reports_Controller extends Main_Controller {
 				$incident_comments = array();
 				if ($id)
 				{
-					$incident_comments = ORM::factory('comment')
-													  ->where('incident_id',$id)
-													  ->where('comment_active','1')
-													  ->where('comment_spam','0')
-													  ->orderby('comment_date', 'asc')
-													  ->find_all();
+					$incident_comments = Incident_Model::get_comments($id);
 				}
 				$this->template->content->comments->incident_comments = $incident_comments;
 			}
