@@ -25,12 +25,12 @@
 	$(document).ready(function() {
 		  
 		// "Choose Date Range"" Datepicker
-		var dates = $( "#from, #to" ).datepicker({
+		var dates = $( "#report_date_from, #report_date_to" ).datepicker({
 			defaultDate: "+1w",
 			changeMonth: true,
 			numberOfMonths: 1,
 			onSelect: function( selectedDate ) {
-				var option = this.id == "from" ? "minDate" : "maxDate",
+				var option = this.id == "report_date_from" ? "minDate" : "maxDate",
 				instance = $( this ).data( "datepicker" ),
 				date = $.datepicker.parseDate(
 				instance.settings.dateFormat ||
@@ -75,10 +75,23 @@
 		
 		$("#tooltip-box a.filter-button").click(function(){
 			// Change the text
-			$(".time-period").text($("#from").val()+" to "+$("#to").val());
+			$(".time-period").text($("#report_date_from").val()+" to "+$("#report_date_to").val());
 			
 			// Hide the box
 			$("#tooltip-box").hide();
+			
+			report_date_from = $("#report_date_from").val();
+			report_date_to = $("#report_date_to").val();
+			
+			if (report_date_from != '' && report_date_to != '')
+			{
+				// Add the parameters
+				urlParameters["from"] = report_date_from;
+				urlParameters["to"] = report_date_to;
+				
+				// Fetch the reports
+				fetchReports(urlParameters);
+			}
 			
 			return false;
 		});
@@ -263,10 +276,11 @@
 			var category_ids = [];
 			$.each($(".fl-categories li a.selected"), function(i, item){
 				itemId = item.id.substring("filter_link_cat_".length);
+				// Check if category 0, "All categories" has been selected
 				category_ids.push(itemId);
 			});
 			
-			urlParameters = {"c[]" : category_ids};
+			urlParameters["c"] = category_ids;
 			
 			// Fetch the reports
 			fetchReports(urlParameters);

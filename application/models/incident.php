@@ -93,7 +93,7 @@ class Incident_Model extends ORM {
 	}
 
 	/**
-	 * Get the total number of verified or unverified reports
+	 * Get the earliest report date
 	 *
 	 * @param boolean $approved - Oldest approved report timestamp if true (oldest overall if false)
 	 * @return string
@@ -103,6 +103,22 @@ class Incident_Model extends ORM {
 		$result = ($approved)
 			? ORM::factory('incident')->where('incident_active', '1')->orderby(array('incident_date'=>'ASC'))->find_all(1,0)
 			: ORM::factory('incident')->where('incident_active', '0')->orderby(array('incident_date'=>'ASC'))->find_all(1,0);
+
+		foreach($result as $report)
+		{
+			return strtotime($report->incident_date);
+		}
+	}
+	
+	/**
+	 * Get the latest report date
+	 * @return string
+	 */
+	public static function get_latest_report_timestamp($approved = TRUE)
+	{
+		$result = ($approved)
+			? ORM::factory('incident')->where('incident_active', '1')->orderby(array('incident_date'=>'DESC'))->find_all(1,0)
+			: ORM::factory('incident')->where('incident_active', '0')->orderby(array('incident_date'=>'DESC'))->find_all(1,0);
 
 		foreach($result as $report)
 		{

@@ -76,8 +76,11 @@ class Reports_Controller extends Main_Controller {
 
 		$total_reports = Incident_Model::get_total_reports(TRUE);
 
-		// Average Reports Per Day
+		// Get the date of the oldest report
 		$oldest_timestamp = Incident_Model::get_oldest_report_timestamp();
+		
+		// Get the date of the latest report
+		$latest_timestamp = Incident_Model::get_latest_report_timestamp();
 
 		// Round the number of days up to the nearest full day
 		$days_since = ceil((time() - $oldest_timestamp) / 86400);
@@ -86,7 +89,9 @@ class Reports_Controller extends Main_Controller {
 		// Percent Verified
 		$total_verified = Incident_Model::get_total_reports_by_verified(true);
 		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
-
+		
+		$this->template->content->oldest_timestamp = $oldest_timestamp;
+		$this->template->content->latest_timestamp = $latest_timestamp;
 		$this->template->content->report_stats->total_reports = $total_reports;
 		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
 		$this->template->content->report_stats->percent_verified = $percent_verified;
@@ -179,6 +184,18 @@ class Reports_Controller extends Main_Controller {
 				'l.longitude <= '.$lon_max
 			);
 		}
+		
+		// Check for incident date range
+		if (isset($url_data['from']) AND isset($url_data['to']))
+		{
+			$date_from = date('Y-m-d', strtotime($url_data['from']));
+			$date_to = date('Y-m-d', strtotime($url_data['to']));
+			
+			array_push($params, 
+				'i.incident_date >= "'.$date_from.'"',
+				'i.incident_date <= "'.$date_to.'"'
+			);
+		}
 				
 		// Fetch all incidents
 		$all_incidents = Incident_Model::get_incidents($params);
@@ -229,7 +246,7 @@ class Reports_Controller extends Main_Controller {
 			$current_page = ($pagination->sql_offset/ $pagination->items_per_page) + 1;
 			$total_pages = ceil($pagination->total_items/ $pagination->items_per_page);
 
-			if ($total_pages > 1)
+			if ($total_pages >= 1)
 			{
 				$report_listing->pagination = $pagination;
 				

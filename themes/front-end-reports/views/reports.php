@@ -3,14 +3,17 @@
 		<!-- start reports block -->
 		<div class="big-block">
 			<h1 class="heading">
-				Showing Reports from <span class="time-period">Oct 4, 2010 through Jan 23, 2012</span> 
+				<?php $timeframe_title =  date('M d, Y', $oldest_timestamp).' through '.date('M d, Y', $latest_timestamp); ?>
+				Showing Reports from <span class="time-period">
+					<?php echo $timeframe_title; ?>
+					</span> 
 				<a href="#" class="btn-change-time ic-time">change date range</a>
 			</h1>
 			
 			<div id="tooltip-box">
 				<div class="tt-arrow"></div>
 				<ul class="inline-links">
-					<li><a title="Oct 4, 2010 through Jan 23, 2012" class="btn-date-range active" href="#">All Time</a></li>
+					<li><a title="<?php echo $timeframe_title; ?>" class="btn-date-range active" href="#">All Time</a></li>
 					<li><a title="Today" class="btn-date-range" href="#">Today</a></li>
 					<li><a title="This Week" class="btn-date-range" href="#">This Week</a></li>
 					<li><a title="This Month" class="btn-date-range" href="#">This Month</a></li>
@@ -20,9 +23,16 @@
 				<form>
 					<table>
 						<tr>
-							<td><strong>From:</strong><input id="from" type="text" style="width:78px" /></td>
-							<td><strong>To:</strong><input id="to" type="text" style="width:78px" /></td>
-							<td valign="bottom"><a href="#" class="filter-button" style="position:static;">Go</a></td>
+							<td><strong>
+								<?php echo Kohana::lang('ui_admin.from')?>:</strong><input id="report_date_from" type="text" style="width:78px" />
+							</td>
+							<td>
+								<strong><?php echo ucfirst(strtolower(Kohana::lang('ui_admin.to'))); ?>:</strong>
+								<input id="report_date_to" type="text" style="width:78px" />
+							</td>
+							<td valign="bottom">
+								<a href="#" id="applyDateFilter" class="filter-button" style="position:static;"><?php echo Kohana::lang('ui_main.go')?></a>
+							</td>
 						</tr>
 					</table>              
 				</form>
