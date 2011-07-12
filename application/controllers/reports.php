@@ -301,226 +301,30 @@ class Reports_Controller extends Main_Controller {
 			 //	 Add some filters
 			$post->pre_filter('trim', TRUE);
 
-			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('incident_title', 'required', 'length[3,200]');
-			$post->add_rules('incident_description', 'required');
-			$post->add_rules('incident_date', 'required', 'date_mmddyyyy');
-			$post->add_rules('incident_hour', 'required', 'between[1,12]');
-			$post->add_rules('incident_minute', 'required', 'between[0,59]');
-
-			if ($_POST['incident_ampm'] != "am" AND $_POST['incident_ampm'] != "pm")
-			{
-				$post->add_error('incident_ampm','values');
-			}
-
-			// Validate for maximum and minimum latitude values
-			$post->add_rules('latitude', 'required', 'between[-90,90]');
-			$post->add_rules('longitude', 'required', 'between[-180,180]');
-			$post->add_rules('location_name', 'required', 'length[3,200]');
-
-			//XXX: Hack to validate for no checkboxes checked
-			if (!isset($_POST['incident_category'])) {
-				$post->incident_category = "";
-				$post->add_error('incident_category', 'required');
-			}
-			else
-			{
-				$post->add_rules('incident_category.*', 'required', 'numeric');
-			}
-
-			// Validate only the fields that are filled in
-			if (!empty($_POST['incident_news']))
-			{
-				foreach ($_POST['incident_news'] as $key => $url)
-				{
-					if (!empty($url) AND
-					!(bool) filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED))
-					{
-						$post->add_error('incident_news', 'url');
-					}
-				}
-			}
-
-			// Validate only the fields that are filled in
-			if (!empty($_POST['incident_video']))
-			{
-				foreach ($_POST['incident_video'] as $key => $url)
-				{
-					if (!empty($url) AND
-							!(bool) filter_var($url, FILTER_VALIDATE_URL,
-																			 FILTER_FLAG_HOST_REQUIRED))
-					{
-						$post->add_error('incident_video', 'url');
-					}
-				}
-			}
-
-			// Validate photo uploads
-			$post->add_rules('incident_photo', 'upload::valid',
-											 'upload::type[gif,jpg,png]', 'upload::size[2M]');
-
-
-			// Validate Personal Information
-			if (!empty($_POST['person_first']))
-			{
-				$post->add_rules('person_first', 'length[3,100]');
-			}
-
-			if (!empty($_POST['person_last']))
-			{
-				$post->add_rules('person_last', 'length[3,100]');
-			}
-
-			if (!empty($_POST['person_email']))
-			{
-				$post->add_rules('person_email', 'email', 'length[3,100]');
-			}
-
+			reports::validate($post);
 			// Test to see if things passed the rule checks
 			if ($post->validate())
 			{
 				// STEP 1: SAVE LOCATION
 				$location = new Location_Model();
-				$location->location_name = $post->location_name;
-				$location->latitude = $post->latitude;
-				$location->longitude = $post->longitude;
-				$location->location_date = date("Y-m-d H:i:s",time());
-				$location->save();
-
+				reports::save_location($location, $post);
+				
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model();
-				$incident->location_id = $location->id;
-				$incident->form_id = $post->form_id;
-				$incident->user_id = ($this->user)? $this->user->id : 0;
-				$incident->incident_title = $post->incident_title;
-				$incident->incident_description = $post->incident_description;
-
-				$incident_date=explode("/",$post->incident_date);
-
-				// The $_POST['date'] is a value posted by form in mm/dd/yyyy format
-				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
-				$incident_time = $post->incident_hour
-					.":".$post->incident_minute
-					.":00 ".$post->incident_ampm;
-				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
-				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
+				reports::check_incident($incident, $location, $post);
 				$incident->save();
 
 				// STEP 3: SAVE CATEGORIES
-				foreach($post->incident_category as $item)
-				{
-					$incident_category = new Incident_Category_Model();
-					$incident_category->incident_id = $incident->id;
-					$incident_category->category_id = $item;
-					$incident_category->save();
-				}
+				reports::save_category($post, $incident);
 
 				// STEP 4: SAVE MEDIA
-				// a. News
-				foreach($post->incident_news as $item)
-				{
-					if (!empty($item))
-					{
-						$news = new Media_Model();
-						$news->location_id = $location->id;
-						$news->incident_id = $incident->id;
-						$news->media_type = 4;		// News
-						$news->media_link = $item;
-						$news->media_date = date("Y-m-d H:i:s",time());
-						$news->save();
-					}
-				}
+				reports::save_media($location, $incident, $post);
 
-				// b. Video
-				foreach($post->incident_video as $item)
-				{
-					if (!empty($item))
-					{
-						$video = new Media_Model();
-						$video->location_id = $location->id;
-						$video->incident_id = $incident->id;
-						$video->media_type = 2;		// Video
-						$video->media_link = $item;
-						$video->media_date = date("Y-m-d H:i:s",time());
-						$video->save();
-					}
-				}
+				// STEP 5: SAVE CUSTOM FORM FIELDS
+				reports::save_custom_fields($incident, $post);
 
-				// c. Photos
-				$filenames = upload::save('incident_photo');
-				$i = 1;
-
-				foreach ($filenames as $filename)
-				{
-					$new_filename = $incident->id."_".$i."_".time();
-					
-					$file_type = strrev(substr(strrev($filename),0,4));
-					
-					// IMAGE SIZES: 800X600, 400X300, 89X59
-					
-					// Large size
-					Image::factory($filename)->resize(800,600,Image::AUTO)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename.$file_type);
-
-					// Medium size
-					Image::factory($filename)->resize(400,300,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename."_m".$file_type);
-					
-					// Thumbnail
-					Image::factory($filename)->resize(89,59,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type); 
-
-					// Remove the temporary file
-					unlink($filename);
-
-					// Save to DB
-					$photo = new Media_Model();
-					$photo->location_id = $location->id;
-					$photo->incident_id = $incident->id;
-					$photo->media_type = 1; // Images
-					$photo->media_link = $new_filename.$file_type;
-					$photo->media_medium = $new_filename."_m".$file_type;
-					$photo->media_thumb = $new_filename."_t".$file_type;
-					$photo->media_date = date("Y-m-d H:i:s",time());
-					$photo->save();
-					$i++;
-				}
-
-				// STEP 7: SAVE CUSTOM FORM FIELDS
-				if (isset($post->custom_field))
-				{
-					foreach($post->custom_field as $key => $value)
-					{
-						$form_response = ORM::factory('form_response')
-										->where('form_field_id', $key)
-										->where('incident_id', $incident->id)
-										->find();
-						if ($form_response->loaded == TRUE)
-						{
-							$form_response->form_field_id = $key;
-							$form_response->form_response = $value;
-							$form_response->save();
-						}
-						else
-						{
-							$form_response = new Form_Response_Model();
-							$form_response->form_field_id = $key;
-							$form_response->incident_id = $incident->id;
-							$form_response->form_response = $value;
-							$form_response->save();
-						}
-					}
-				}
-
-				// STEP 5: SAVE PERSONAL INFORMATION
-				$person = new Incident_Person_Model();
-				$person->location_id = $location->id;
-				$person->incident_id = $incident->id;
-				$person->person_first = $post->person_first;
-				$person->person_last = $post->person_last;
-				$person->person_email = $post->person_email;
-				$person->person_date = date("Y-m-d H:i:s",time());
-				$person->save();
+				// STEP 6: SAVE PERSONAL INFORMATION
+				reports::save_personal_info($incident, $location, $post);
 
 				// Action::report_add - Added a New Report
 				Event::run('ushahidi_action.report_add', $incident);
