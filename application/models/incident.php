@@ -326,7 +326,7 @@ class Incident_Model extends ORM {
 	 */
 	public static function get_incidents($where = array(), $limit = NULL, $order_field = NULL, $sort = NULL)
 	{
-		$table_prefix = Kohana::config('database.table_prefix');
+		$table_prefix = Kohana::config('database.default.table_prefix');
 		
 		// Query
 		$sql = 'SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, i.incident_mode, i.incident_active, '
@@ -335,7 +335,6 @@ class Incident_Model extends ORM {
 			. 'INNER JOIN '.$table_prefix.'location l ON (i.location_id = l.id) '
 			. 'INNER JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
 			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) '
-			. 'LEFT JOIN '.$table_prefix.'media m ON (m.incident_id = i.id) '
 			. 'WHERE i.incident_active = 1 ';
 			// . 'AND c.category_visible = 1 ';
 		

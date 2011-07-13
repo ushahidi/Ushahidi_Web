@@ -272,7 +272,10 @@
 	function attachFilterReportsAction()
 	{
 		$("#applyFilters").click(function(){
+			
+			// 
 			// Get all the selected categories
+			// 
 			var category_ids = [];
 			$.each($(".fl-categories li a.selected"), function(i, item){
 				itemId = item.id.substring("filter_link_cat_".length);
@@ -280,7 +283,39 @@
 				category_ids.push(itemId);
 			});
 			
-			urlParameters["c"] = category_ids;
+			if (category_ids.length > 0)
+			{
+				urlParameters["c"] = category_ids;
+			}
+			
+			// 
+			// Get the incident modes
+			// 
+			var incidentModes = [];
+			$.each($(".fl-incident-mode li a.selected"), function(i, item){
+				modeId = item.id.substring("filter_link_mode_".length);
+				incidentModes.push(modeId);
+			});
+			
+			if (incidentModes.length > 0)
+			{
+				urlParameters["mode"] = incidentModes;
+			}
+			
+			// 
+			// Get the media type
+			// 
+			var mediaTypes = [];
+			$.each($(".fl-media li a.selected"), function(i, item){
+				mediaId = item.id.substring("filter_link_media_".length);
+				mediaTypes.push(mediaId);
+			});
+			
+			if (mediaTypes.length > 0)
+			{
+				urlParameters["media"] = mediaTypes;
+			}
+			
 			
 			// Fetch the reports
 			fetchReports(urlParameters);

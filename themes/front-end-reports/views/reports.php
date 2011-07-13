@@ -65,104 +65,52 @@
 						
 						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#">Type</a></h3>
 						<div class="f-type-box">
-							<ul class="filter-list fl-type">
-							<?php // Get the list of services ?>
+							<ul class="filter-list fl-incident-mode">
 								<li>
-									<a href="#">
-										<span class="item-icon ic-sms">&nbsp;</span>
-										<span class="item-title">SMS</span>
-										<span class="item-count">42342</span>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="selected">
-										<span class="item-icon ic-email">&nbsp;</span>
-										<span class="item-title">Email</span>
-										<span class="item-count">66</span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="item-icon ic-twitter">&nbsp;</span>
-										<span class="item-title">Twitter</span>
-										<span class="item-count">634</span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
+									<a href="#" id="filter_link_mode_1">
 										<span class="item-icon ic-webform">&nbsp;</span>
-										<span class="item-title">Web Form</span>
-										<span class="item-count">367</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.web_form'); ?></span>
 									</a>
 								</li>
+							
+							<?php foreach ($services as $id => $name): ?>
+								<?php
+									$item_class = "";
+									if ($id == 1) $item_class = "ic-sms";
+									if ($id == 2) $item_class = "ic-email";
+									if ($id == 3) $item_class = "ic-twitter";
+								?>
 								<li>
-									<a href="#" class="selected">
-										<span class="item-icon ic-facebook">&nbsp;</span>
-										<span class="item-title">Facebook</span>
-										<span class="item-count">367</span>
+									<a href="#" id="filter_link_mode_<?php echo ($id + 1); ?>">
+										<span class="item-icon <?php echo $item_class; ?>">&nbsp;</span>
+										<span class="item-title"><?php echo $name; ?></span>
 									</a>
 								</li>
-								<li>
-									<a href="#">
-										<span class="item-icon ic-youtube">&nbsp;</span>
-										<span class="item-title">Youtube</span>
-										<span class="item-count">367</span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="item-icon ic-rss">&nbsp;</span>
-										<span class="item-title">RSS</span>
-										<span class="item-count">367</span>
-									</a>
-								</li>
-							</ul>
-						</div>
-						
-						<h3><a class="f-title" href="#">Verification</a></h3>
-						
-						<div class="f-verification-box">
-							<ul class="filter-list fl-verification">
-								<li>
-									<a href="#">
-										<span class="item-icon ic-verified">&nbsp;</span>
-										<span class="item-title">Verified</span>
-										<span class="item-count">42342</span>
-									</a>
-								</li>
-								<li>
-									<a href="#">
-										<span class="item-icon ic-unverified">&nbsp;</span>
-										<span class="item-title">Unverified</span>
-										<span class="item-count">22452</span>
-									</a>
-								</li>
+							<?php endforeach; ?>
+
 							</ul>
 						</div>
 						
 						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#">Media</a></h3>
 						<div class="f-media-box">
-							<p>Filter reports that contain...</p>
+							<p><?php echo Kohana::lang('ui_main.filter_reports_contain'); ?>&hellip;</p>
 							<ul class="filter-list fl-media">
 								<li>
-									<a href="#">
+									<a href="#" id="filter_link_media_1">
 										<span class="item-icon ic-photos">&nbsp;</span>
-										<span class="item-title">Photos</span>
-										<span class="item-count">0</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.photos'); ?></span>
 									</a>
 								</li>
 								<li>
-									<a href="#" class="selected">
+									<a href="#" id="filter_link_media_2">
 										<span class="item-icon ic-videos">&nbsp;</span>
-										<span class="item-title">Videos</span>
-										<span class="item-count">252</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.video'); ?></span>
 									</a>
 								</li>
 								<li>
-									<a href="#">
+									<a href="#" id="filter_link_media_4">
 										<span class="item-icon ic-news">&nbsp;</span>
-										<span class="item-title">News Source Links</span>
-										<span class="item-count">4</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.reports_news')?></span>
 									</a>
 								</li>
 							</ul>

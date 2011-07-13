@@ -95,6 +95,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->report_stats->total_reports = $total_reports;
 		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
 		$this->template->content->report_stats->percent_verified = $percent_verified;
+		$this->template->content->services = Service_Model::get_array();
 
 		$this->template->header->header_block = $this->themes->header_block();
 	}
@@ -122,7 +123,11 @@ class Reports_Controller extends Main_Controller {
 		// Fetch the URL data into a local variable
 		$url_data = array_merge($_GET);
 		
+		//> BEGIN PAAMETER FETCH
+		
+		// 
 		// Check for the category parameter
+		// 
 		if ( isset($url_data['c']) AND !is_array($url_data['c']) AND intval($url_data['c']) > 0)
 		{
 			// Get the category ID
@@ -141,7 +146,7 @@ class Reports_Controller extends Main_Controller {
 			{
 				if (intval($c_id) > 0)
 				{
-					$category_ids[] = $c_id;
+					$category_ids[] = intval($c_id);
 				}
 			}
 			
@@ -155,8 +160,35 @@ class Reports_Controller extends Main_Controller {
 				);
 			}
 		}
-
-		// Break apart location variables, if necessary
+		
+		// 
+		// Incident modes
+		// 
+		if (isset($url_data['mode']) AND is_array($url_data['mode']))
+		{
+			$incident_modes = array();
+			
+			// Sanitize the modes
+			foreach ($url_data['mode'] as $mode)
+			{
+				if (intval($mode) > 0)
+				{
+					$incident_modes[] = intval($mode);
+				}
+			}
+			
+			// Check if any modes exist and add them to the parameter list
+			if (count($incident_modes) > 0)
+			{
+				array_push($params, 
+					'i.incident_mode IN ('.implode(",", $incident_modes).')'
+				);
+			}
+		}
+		
+		// 
+		// Location bounds parameters
+		// 
 		$southwest = array();
 		if (isset($url_data['sw']))
 		{
@@ -185,7 +217,9 @@ class Reports_Controller extends Main_Controller {
 			);
 		}
 		
-		// Check for incident date range
+		// 
+		// Check for incident date range parameters
+		// 
 		if (isset($url_data['from']) AND isset($url_data['to']))
 		{
 			$date_from = date('Y-m-d', strtotime($url_data['from']));
@@ -196,6 +230,31 @@ class Reports_Controller extends Main_Controller {
 				'i.incident_date <= "'.$date_to.'"'
 			);
 		}
+		
+		// 
+		// Check for media type parameter
+		// 
+		if (isset($url_data['media']) AND is_array($url_data['media']))
+		{
+			// Validate the media types
+			foreach ($url_data['media'] as $media_type)
+			{
+				$media_types = array();
+				if (intval($media_type) > 0)
+				{
+					$media_types[] = intval($media_type);
+				}
+				
+				if (count($media_types) > 0)
+				{
+					array_push($params, 
+						'i.id IN (SELECT DISTINCT incident_id FROM '.$this->table_prefix.'media WHERE media_type IN ('.implode(",", $media_types).'))'
+					);
+				}
+			}
+		}
+		
+		//> END PARAMETER FETCH
 				
 		// Fetch all incidents
 		$all_incidents = Incident_Model::get_incidents($params);
