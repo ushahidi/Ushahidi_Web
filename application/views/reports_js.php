@@ -17,6 +17,8 @@
 ?>
 	// Tracks the current URL parameters
 	var urlParameters = <?php echo $url_params; ?>;
+	var deSelectedFilters = [];
+	
 	if (urlParameters.length == 0)
 	{
 		urlParameters = {};
@@ -73,6 +75,9 @@
 			return false;
 		});
 		
+		/**
+		 * When the date filter button is clicked
+		 */
 		$("#tooltip-box a.filter-button").click(function(){
 			// Change the text
 			$(".time-period").text($("#report_date_from").val()+" to "+$("#report_date_to").val());
@@ -90,7 +95,7 @@
 				urlParameters["to"] = report_date_to;
 				
 				// Fetch the reports
-				fetchReports(urlParameters);
+				fetchReports();
 			}
 			
 			return false;
@@ -108,7 +113,9 @@
 			}
 		);
 		
-		// category tooltip functionality
+		/**
+		 * Category tooltip functionality
+		 */
 		var $tt = $('.r_cat_tooltip');
 		$("a.r_category").hover(
 			function () {
@@ -184,7 +191,13 @@
 				$(this).addClass("selected");
 			},
 			function(){
-				$(this).removeClass("selected"); 
+				if ($(this).hasClass("selected"))
+				{
+					// Add the id of the deselected filter
+					deSelectedFilters.push($(this).attr("id"));
+				}
+				
+				$(this).removeClass("selected");
 			}
 		);
 	}
@@ -192,7 +205,7 @@
 	/**
 	 * List/map view toggle
 	 */
-	function addToggleViewOptionEvents()
+	function addReportViewOptionsEvents()
 	{
 		$("#reports-box .report-list-toggle a").click(function(){
 			// Hide both divs
@@ -207,6 +220,12 @@
 			// Add class "selected" to both instances of the clicked link toggle
 			$("."+$(this).attr("class")).parent().addClass("active");
 			
+			// Check if the map view is active
+			if ($("#rb_map-view").css("display") == "block")
+			{
+				// Load the map
+				showIncidentMap();
+			}
 			return false;
 		});
 	}
@@ -217,7 +236,7 @@
 	function attachPagingEvents()
 	{
 		// Add event handler that allows switching between list view and map view
-		addToggleViewOptionEvents();
+		addReportViewOptionsEvents();
 		
 		// Remove page links for the metadata pager
 		$("ul.pager a").attr("href", "#");
@@ -229,7 +248,7 @@
 			urlParameters["page"] = $(this).html();
 			
 			// Fetch the reports
-			fetchReports(urlParameters);
+			fetchReports();
 			
 		});
 	}
@@ -237,33 +256,108 @@
 	/**
 	 * Gets the reports using the specified parameters
 	 */
-	function fetchReports(parameters)
+	function fetchReports()
 	{
+		// Remove the deselected report filters
+		removeDeselectedReportFilters();
+	
 		var loadingURL = "<?php echo url::base().'media/img/loading_g.gif'; ?>"
 		var statusHtml = "<div style=\"width: 100%; margin-top: 100px;\" align=\"center\">" + 
 					"<div><img src=\""+loadingURL+"\" border=\"0\"></div>" + 
 					"<p style=\"padding: 10px 2px;\"><h3><?php echo Kohana::lang('ui_main.loading_reports'); ?>...</h3></p>"
 					"</div>";
-		
+	
 		$("#reports-box").html(statusHtml);
-		// $("#reports-box").fadeOut('slow');
+		
+		// Check if there are any parameters
+		if ($.isEmptyObject(urlParameters))
+		{
+			urlParameters = {show: "all"}
+		} 
 		
 		// Get the content for the new page
 		$.get('<?php echo url::site().'reports/fetch_reports'?>',
 			urlParameters,
 			function(data) {
 				if (data != null && data != "" && data.length > 0) {
-					
+				
 					// Animation delay
 					setTimeout(function(){
-						// $("#reports-box").fadeIn('slow');
 						$("#reports-box").html(data);
-					
+				
 						attachPagingEvents();
 					}, 400);
 				}
 			}
 		);
+	}
+	
+	/** 
+	 * Removes the deselected report filters from the list
+	 * of filters for fetching the reports
+	 */
+	function removeDeselectedReportFilters()
+	{
+		// Removes a parameter item from urlParameters
+		removeParameterItem = function(key, val) {
+			if (! $.isEmptyObject(urlParameters))
+			{
+				// Get the object type
+				objectType = Object.prototype.toString.call(urlParameters[key]);
+				
+				if (objectType == "[object Array]")
+				{
+					currentItems  = urlParameters[key];
+					newItems = [];
+					for (var j=0; j < currentItems.length; j++)
+					{
+						if (currentItems[j] != val)
+						{
+							newItems.push(currentItems[j]);
+						}
+					}
+					
+					if (newItems.length > 0)
+					{
+						urlParameters[key] = newItems;
+					}
+					else
+					{
+						delete urlParameters[key];
+					}
+				}
+				else if (objectType == "[object String]")
+				{
+					delete urlParameters[key];
+				}
+			}
+		}
+		
+		if (deSelectedFilters.length > 0)
+		{
+			for (var i=0; i< deSelectedFilters.length; i++)
+			{
+				currentItem = deSelectedFilters[i];
+				if (currentItem != null && currentItem != '')
+				{
+					// Check for category filter
+					if (currentItem.indexOf('filter_link_cat_') != -1){
+						catId = currentItem.substring('filter_link_cat_'.length);
+						removeParameterItem("c", catId);
+					}
+					else if (currentItem.indexOf('filter_link_mode_') != -1)
+					{
+						modeId = currentItem.substring('filter_link_mode_'.length);
+						removeParameterItem("mode", modeId);
+					}
+					else if (currentItem.indexOf('filter_link_media_') != -1)
+					{
+						mediaType = currentItem.substring('filter_link_media_'.length);
+						removeParameterItem("media", mediaType);
+					}
+				}
+			}
+		}
 	}
 	
 	/**
@@ -321,4 +415,13 @@
 			fetchReports(urlParameters);
 			
 		});
+	}
+	
+	/**
+	 * Handles display of the incidents current incidents on the map
+	 * This method is only called when the map view is selected
+	 */
+	function showIncidentMap()
+	{
+		
 	}

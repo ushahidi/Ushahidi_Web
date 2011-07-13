@@ -41,7 +41,12 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports');
 		$this->themes->js = new View('reports_js');
+		
+		// Store any exisitng URL parameters
 		$this->themes->js->url_params = json_encode($_GET);
+		
+		// Enable the map
+		$this->themes->map_enabled = TRUE;
 		
 		// Get locale
 		$l = Kohana::config('locale.language.0');

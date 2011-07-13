@@ -136,9 +136,8 @@
 				</div>
 			<?php } ?>
 			</div>
-			<div id="rb_map-view" style="display:none;">
+			<div id="rb_map-view" style="display:none; width: 600px; height: 390px;">
 				<?php //@todo Display the map ?>
-				<img src="/ushahidi/themes/front-end-reports/images/map-placeholder.jpg" />
 			</div>
 		</div>
 		<!-- /Report listing -->
