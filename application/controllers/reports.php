@@ -119,150 +119,8 @@ class Reports_Controller extends Main_Controller {
 		// Load the report listing view
 		$report_listing = new View('reports_listing');
 		
-		// To hold the parameters for fetching the incidents
-		$params = array();
-		
-		// Initialize the category id
-		$category_id = 0;
-		
-		// Fetch the URL data into a local variable
-		$url_data = array_merge($_GET);
-		
-		//> BEGIN PAAMETER FETCH
-		
-		// 
-		// Check for the category parameter
-		// 
-		if ( isset($url_data['c']) AND !is_array($url_data['c']) AND intval($url_data['c']) > 0)
-		{
-			// Get the category ID
-			$category_id = intval($_GET['c']);
-			
-			// Add category parameter to the parameter list
-			array_push($params,
-				'c.id = '.$category_id.' OR c.parent_id = '.$category_id
-			);
-		}
-		elseif (isset($url_data['c']) AND is_array($url_data['c']))
-		{
-			// Sanitize each of the category ids
-			$category_ids = array();
-			foreach ($url_data['c'] as $c_id)
-			{
-				if (intval($c_id) > 0)
-				{
-					$category_ids[] = intval($c_id);
-				}
-			}
-			
-			// Check if there are any category ids
-			if (count($category_ids) > 0)
-			{
-				$category_ids = implode(",", $category_ids);
-			
-				array_push($params,
-					'c.id IN ('.$category_ids.') OR c.parent_id IN ('.$category_ids.')'
-				);
-			}
-		}
-		
-		// 
-		// Incident modes
-		// 
-		if (isset($url_data['mode']) AND is_array($url_data['mode']))
-		{
-			$incident_modes = array();
-			
-			// Sanitize the modes
-			foreach ($url_data['mode'] as $mode)
-			{
-				if (intval($mode) > 0)
-				{
-					$incident_modes[] = intval($mode);
-				}
-			}
-			
-			// Check if any modes exist and add them to the parameter list
-			if (count($incident_modes) > 0)
-			{
-				array_push($params, 
-					'i.incident_mode IN ('.implode(",", $incident_modes).')'
-				);
-			}
-		}
-		
-		// 
-		// Location bounds parameters
-		// 
-		$southwest = array();
-		if (isset($url_data['sw']))
-		{
-			$southwest = explode(",", $url_data['sw']);
-		}
-
-		$northeast = array();
-		if (isset($url_data['ne']))
-		{
-			$northeast = explode(",",$url_data['ne']);
-		}
-
-		if ( count($southwest) == 2 AND count($northeast) == 2 )
-		{
-			$lon_min = (float) $southwest[0];
-			$lon_max = (float) $northeast[0];
-			$lat_min = (float) $southwest[1];
-			$lat_max = (float) $northeast[1];
-			
-			// Add the location conditions to the parameter list
-			array_push($params, 
-				'l.latitude >= '.$lat_min,
-				'l.latitude <= '.$lat_max,
-				'l.longitude >= '.$lon_min,
-				'l.longitude <= '.$lon_max
-			);
-		}
-		
-		// 
-		// Check for incident date range parameters
-		// 
-		if (isset($url_data['from']) AND isset($url_data['to']))
-		{
-			$date_from = date('Y-m-d', strtotime($url_data['from']));
-			$date_to = date('Y-m-d', strtotime($url_data['to']));
-			
-			array_push($params, 
-				'i.incident_date >= "'.$date_from.'"',
-				'i.incident_date <= "'.$date_to.'"'
-			);
-		}
-		
-		// 
-		// Check for media type parameter
-		// 
-		if (isset($url_data['media']) AND is_array($url_data['media']))
-		{
-			// Validate the media types
-			foreach ($url_data['media'] as $media_type)
-			{
-				$media_types = array();
-				if (intval($media_type) > 0)
-				{
-					$media_types[] = intval($media_type);
-				}
-				
-				if (count($media_types) > 0)
-				{
-					array_push($params, 
-						'i.id IN (SELECT DISTINCT incident_id FROM '.$this->table_prefix.'media WHERE media_type IN ('.implode(",", $media_types).'))'
-					);
-				}
-			}
-		}
-		
-		//> END PARAMETER FETCH
-				
 		// Fetch all incidents
-		$all_incidents = Incident_Model::get_incidents($params);
+		$all_incidents = reports::fetch_incidents();
 
 		// Pagination
 		$pagination = new Pagination(array(
@@ -273,7 +131,7 @@ class Reports_Controller extends Main_Controller {
 				));
 
 		// Reports
-		$incidents = Incident_Model::get_incidents($params, $pagination);
+		$incidents = Incident_Model::get_incidents(reports::$params, $pagination);
 		
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
 

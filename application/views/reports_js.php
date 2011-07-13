@@ -353,7 +353,7 @@
 					else if (currentItem.indexOf('filter_link_media_') != -1)
 					{
 						mediaType = currentItem.substring('filter_link_media_'.length);
-						removeParameterItem("media", mediaType);
+						removeParameterItem("m", mediaType);
 					}
 				}
 			}
@@ -407,7 +407,7 @@
 			
 			if (mediaTypes.length > 0)
 			{
-				urlParameters["media"] = mediaTypes;
+				urlParameters["m"] = mediaTypes;
 			}
 			
 			

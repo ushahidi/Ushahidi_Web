@@ -221,8 +221,6 @@ class Json_Controller extends Template_Controller
 	 */
 	public function cluster()
 	{
-		//$profiler = new Profiler;
-
 		// Database
 		$db = new Database();
 
@@ -240,174 +238,26 @@ class Json_Controller extends Template_Controller
 
 		//$distance = 60;
 		$distance = (10000000 >> $zoomLevel) / 100000;
-
+		
+		// Fetch the incidents using the specified parameters
+		$incidents = reports::fetch_incidents();
+		
+		Kohana::log('info', 'Fetched '.$incidents->count().' reports for clustering');
+		
 		// Category ID
-		$category_id = (isset($_GET['c']) AND !empty($_GET['c']) &&
-			is_numeric($_GET['c']) AND $_GET['c'] != 0) ?
-			(int) $_GET['c'] : 0;
+		$category_id = (isset($_GET['c']) AND intval($_GET['c']) > 0) ? intval($_GET['c']) : 0;
 
-		// Start Date
-		$start_date = (isset($_GET['s']) AND !empty($_GET['s'])) ?
-			(int) $_GET['s'] : "0";
-
-		// End Date
-		$end_date = (isset($_GET['e']) AND !empty($_GET['e'])) ?
-			(int) $_GET['e'] : "0";
-			
-		// Media Type
-		$media_type = (isset($_GET['m']) AND !empty($_GET['m']) &&
-			is_numeric($_GET['m']) AND $_GET['m'] != 0) ?
-			(int) $_GET['m'] : 0;
-			
-		// SouthWest Bound
-		$southwest = (isset($_GET['sw']) AND !empty($_GET['sw'])) ?
-			$_GET['sw'] : "0";
-
-		$northeast = (isset($_GET['ne']) AND !empty($_GET['ne'])) ?
-			$_GET['ne'] : "0";
-
-		$filter = "";
-		$filter .= ($start_date) ?
-			" AND i.incident_date >= '" . date("Y-m-d H:i:s", $start_date) . "'" : "";
-		$filter .= ($end_date) ?
-			" AND i.incident_date <= '" . date("Y-m-d H:i:s", $end_date) . "'" : "";
-
-		if ($southwest AND $northeast)
-		{
-			list($latitude_min, $longitude_min) = explode(',', $southwest);
-			list($latitude_max, $longitude_max) = explode(',', $northeast);
-
-			$filter .= " AND l.latitude >=".(float) $latitude_min.
-				" AND l.latitude <=".(float) $latitude_max;
-			$filter .= " AND l.longitude >=".(float) $longitude_min.
-				" AND l.longitude <=".(float) $longitude_max;
-		}
-
-		if ($category_id > 0)
-		{
-			$query_cat = $db->query("SELECT `category_color`, `category_image` FROM `".$this->table_prefix."category` WHERE id=$category_id");
-			foreach ($query_cat as $cat)
-			{
-				$color = $cat->category_color;
-				$icon = $cat->category_image;
-				if ($icon)
-				{
-					$icon = Kohana::config('upload.relative_directory').'/'.$icon;
-				}
-			}
-		}
-
-		// Get incidents
-		$incidents_result = $db->query('SELECT i.id AS id, i.incident_title AS incident_title, i.incident_date AS incident_date, i.location_id as location_id FROM '.$this->table_prefix.'incident AS i WHERE i.incident_active = 1 '.$filter.' ORDER BY i.id ASC');
-		$incidents_result = $incidents_result->result_array(FALSE);
-
-		$location_ids = array();
-		$incidents = array();
-		$allowed_ids = array();
-		while (count($incidents_result))
-		{
-			foreach ($incidents_result as $key => $incident)
-			{
-				$location_ids[] = $incident['location_id'];
-				$incidents[$incident['id']] = array('title'=>$incident['incident_title'],
-					'location_id'=>$incident['location_id'],
-					'thumb'=>'');
-				unset($incidents_result[$key]);
-				$allowed_ids[$incident['id']] = 1;
-
-				// Get Incident Geometries
-				$geometry = $this->_get_geometry($incident['id'], $incident['incident_title'], $incident['incident_date']);
-				if (count($geometry))
-				{
-					$json_item = implode(",", $geometry);
-					array_push($geometry_array, $json_item);
-				}
-			}
-		}
-		
-		// Filter by Categories
-		$cat_allowed_ids = array();
-		if ($category_id != 0)
-		{
-			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
-			
-			$category_result = $db->query($query);
-			// Find the allowed incident ids
-			foreach ($category_result as $cat)
-			{
-				$cat_allowed_ids[$cat->incident_id] = 1;
-			}
-			
-			$allowed_ids = $cat_allowed_ids;
-		}
-		
-		// Filter by Media
-		$media_allowed_ids = array();
-		if ($media_type != 0)
-		{
-			$query = 'SELECT incident_id, media_thumb FROM '.$this->table_prefix.'media WHERE media_type='.$media_type.';';
-			
-			$media_result = $db->query($query);
-			// Find the allowed incident ids
-			foreach ($media_result as $media)
-			{
-				$media_allowed_ids[$media->incident_id] = 1;
-				if (isset($incidents[$media->incident_id]) AND 
-					$media->media_thumb AND ! $incidents[$media->incident_id]['thumb'])
-				{ // Get the first thumb
-					$prefix = url::base().Kohana::config('upload.relative_directory');
-					$incidents[$media->incident_id]['thumb'] = $prefix."/".$media->media_thumb;
-				}
-			}
-			
-			$allowed_ids = $media_allowed_ids;
-		}
-		
-		// Combine Category and Media Filters
-		if (count($cat_allowed_ids) AND count($media_allowed_ids))
-		{
-			$allowed_ids = array_intersect_key($cat_allowed_ids, $media_allowed_ids);
-		}
-		
-		
-		// Get locations
-		
-		// NOTES: E.Kala 29th March, 2011
-		// After benchmarking the execution time based on ORM and straight DB queries, straight queries have better performance times
-		// Credits: Nigel McNie (http://nigel.mcnie.name/blog)
-		// 
-		$sql = 'SELECT id, latitude, longitude FROM '.$this->table_prefix.'location';
-		
-		$sql .= (count($location_ids) > 0)
-			? ' WHERE id IN ('.implode(',', $location_ids).')'
-			: '';
-
-		// Straight DB query
-		$locations_result = $db->query($sql);
-		
-		// To hold the locations in $locations_result
-		$locations = array();
-		
-		foreach ($locations_result as $loc)
-		{
-			$locations[$loc->id]['lat'] = $loc->latitude;
-			$locations[$loc->id]['lon'] = $loc->longitude;
-		}
-		
 		// Create markers by marrying the locations and incidents
 		$markers = array();
-		foreach ($incidents as $id => $incident)
+		foreach ($incidents as $incident)
 		{
-			if (isset($allowed_ids[$id]) AND isset($locations[$incident['location_id']]))
-			{
-				$markers[] = array(
-					'id' => $id,
-					'incident_title' => $incident['title'],
-					'latitude' => $locations[$incident['location_id']]['lat'],
-					'longitude' => $locations[$incident['location_id']]['lon'],
-					'thumb' => $incident['thumb']
-					);
-			}
+			$markers[] = array(
+				'id' => $incident->incident_id,
+				'incident_title' => $incident->incident_title,
+				'latitude' => $incident->latitude,
+				'longitude' => $incident->longitude,
+				'thumb' => ''
+				);
 		}
 
 		$clusters = array();	// Clustered
@@ -470,7 +320,7 @@ class Json_Controller extends Template_Controller
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
 			$json_item .= "\"icon\": \"".$icon."\", ";
-			$json_item .= "\"thumb\": \"\", ";
+			// $json_item .= "\"thumb\": \"\", ";
 			$json_item .= "\"timestamp\": \"0\", ";
 			$json_item .= "\"count\": \"" . $cluster_count . "\"";
 			$json_item .= "},";
@@ -493,7 +343,7 @@ class Json_Controller extends Template_Controller
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
 			$json_item .= "\"icon\": \"".$icon."\", ";
-			$json_item .= "\"thumb\": \"".$single['thumb']."\", ";
+			// $json_item .= "\"thumb\": \"".$single['thumb']."\", ";
 			$json_item .= "\"timestamp\": \"0\", ";
 			$json_item .= "\"count\": \"" . 1 . "\"";
 			$json_item .= "},";
@@ -507,10 +357,11 @@ class Json_Controller extends Template_Controller
 		}
 
 		$json = implode(",", $json_array);
-		if (count($geometry_array))
-		{
-			$json = implode(",", $geometry_array).",".$json;
-		}
+		
+		// if (count($geometry_array))
+		// {
+		// 	$json = implode(",", $geometry_array).",".$json;
+		// }
 		
 		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
