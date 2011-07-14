@@ -20,6 +20,18 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	 */
 	private $api_controller;
 	
+	/**
+	 * Database object for straight SQL queries
+	 * @var Database
+	 */
+	private $db;
+	
+	/**
+	 * Database table prefix
+	 * @var string
+	 */
+	private $table_prefix;
+	
 	protected function setUp()
 	{
 		if (ORM::factory('incident')->count_all() == 0)
@@ -36,13 +48,19 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 
 			// Instantiate the API controller
 			$this->api_controller = new Api_Controller();
+			
+			// Instantiate the DB object
+			$this->db = new Database();
+			
+			// Table prefix
+			$this->table_prefix = Kohana::config('database.table_prefix');
 		}
 	}
 	
 	protected function tearDown()
 	{
 		// Garbage collection
-		unset ($this->api_controller);
+		unset ($this->api_controller, $this->db, $this->table_prefix);
 	}
 	
 	/**
@@ -71,7 +89,7 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function testGetIncidentsByLimit()
 	{
 		// Randomly generate the record limit
-		$limit = rand(1, ORM::factory('incident')->count_all());
+		$limit = rand(1, Incident_Model::get_incidents()->count());
 		
 		// HTTP GET data
 		$_GET = array('task' => 'incidents', 'limit' => $limit);
@@ -167,7 +185,7 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 		$contents = json_decode(ob_get_clean());
 		
 		// Vary test depending on the incident status
-		$this->assertEquals("0", $contents->error->code);
+		$this->assertEquals("0", $contents->error->code, sprintf("No records found for location id: %d", $location_id));
 		
 		// Garbage collection
 		unset($location_id);
@@ -193,7 +211,7 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 		$contents = json_decode(ob_get_clean());
 		
 		// Vary test depending on the incident status
-		$this->assertEquals("0", $contents->error->code);
+		$this->assertEquals("0", $contents->error->code, sprintf("No data found for location :%s", $location_name));
 		
 		// Garbage collection
 		unset ($location_id, $location_name);

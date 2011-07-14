@@ -54,8 +54,8 @@ class Feed_Model extends ORM
 	 */
 	public static function is_valid_feed($feed_id)
 	{
-		return (preg_match('/[1-9](\d*)/', $feed_id) > 0)
-			? self::factory('feed', $feed_id)->loaded
+		return (intval($feed_id)) > 0)
+			? self::factory('feed', intval($feed_id))->loaded
 			: FALSE;
 	}
 }

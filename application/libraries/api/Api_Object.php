@@ -449,8 +449,9 @@ abstract class Api_Object_Core {
 		$this->id = (preg_match('/^[1-9](\d*)$/', $id) > 0) ? (int) $id : 0;
 
 		return $this->id;
-	}
+    }
 
+    
 }
 
 ?>

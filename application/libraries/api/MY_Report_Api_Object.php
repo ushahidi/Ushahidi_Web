@@ -300,7 +300,7 @@ class Report_Api_Object extends Api_Object_Core {
         } 
         else 
         {
-            return 2; // Not sent by post method.
+            return 3; // Not sent by post method.
         }
     }
 

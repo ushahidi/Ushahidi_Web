@@ -2,7 +2,7 @@
 /**
  * This class handles locations activities via the API.
  *
- * @version 24 - Emmanuel Kala 2010-10-222
+ * @version 25- Emmanuel Kala 2011-07-08
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -47,8 +47,9 @@ class Locations_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_location_by_id(
-                        $this->check_id_value($this->request['id'])); 
+                    $this->response_data = $this->_get_locations(array(
+                    	'id = '.$this->request['id']
+                    ));
                 }
             break;
             
@@ -64,134 +65,66 @@ class Locations_Api_Object extends Api_Object_Core {
                 }
                 else
                 {
-                    $this->response_data = $this->_get_locations_by_country_id($this->check_id_value($this->request['id']));
+                    $this->response_data = $this->_get_locations(array('country_id' => $this->request['id']));
                 }
             break;
             
             default:
-                $this->response_data = $this->_get_locations_by_all();
+                $this->response_data = $this->_get_locations();
         }        
     }
 
-    /**
-     * Get a list of locations
-     * 
-     * @param string where - the where clause for sql
-     * @param string limit - the limit number.
-     * @param string response_type - XML or JSON
-     *
-     * @return string
-     */
-    private function _get_locations($where = '', $limit = '')
-    {
-        // Fetch locations
-        $this->query = "SELECT id, location_name AS name, country_id ,
-            latitude,longitude FROM `".
-                $this->table_prefix."location` $where $limit ";
-
-        $items = $this->db->query($this->query);
+	/**
+	 * Get a list of locations
+	 * 
+	 * @param array $where Key->value array of the set of filters to apply
+	 * @return string JSON/XML string with the location data
+	 */
+	private function _get_locations($where = array())
+	{
+		// Fetch the location items
+		$items = Location_Model::get_locations($where, $this->list_limit);
         
-        // Set the no. of records fetched
-        $this->record_count = $items->count();
-        
-        $i = 0;
+		//No record found.
+		if ($items->count() == 0)
+		{
+			return $this->response(4);
+		}
+		
+		// Counter
+		$i = 0;
+		
+		// To hold the json data
+		$json_locations = array();
+		
+		foreach ($items as $item)
+		{
+			// Needs different treatment depending on the output
+			if ($this->response_type == 'json')
+			{
+				$json_locations[] = array("location" => $item);
+			} 
+			else 
+			{
+				$json_locations['location'.$i] = array("location" => $item);
 
-        $json_locations = array();
-        $ret_json_or_xml = ''; // Will hold the json/xml string to return
-        
-        //No record found.
-        if ($items->count() == 0)
-        {
-            return $this->response(4);
-        }
+				$this->replar[] = 'location'.$i;
+			}
 
-        foreach ($items as $item)
-        {
-            // Needs different treatment depending on the output
-            if ($this->response_type == 'json')
-            {
-                $json_locations[] = array("location" => $item);
-            } 
-            else 
-            {
-                $json_locations['location'.$i] = array(
-                        "location" => $item) ;
-                        
-                $this->replar[] = 'location'.$i;
-            }
+			$i++;
+		}
+		
+		// Array to be converted to either JSON or xml
+		$data = array(
+			"payload" => array(
+			"domain" => $this->domain,
+			"locations" => $json_locations),
+			"error" => $this->api_service->get_error_msg(0)
+		);
 
-            $i++;
-        }
-
-        //create the json array
-        $data = array(
-                "payload" => array(
-                "domain" => $this->domain,
-                "locations" => $json_locations),
-                "error" => $this->api_service->get_error_msg(0)
-        );
-
-        if ($this->response_type == 'json')
-        {
-            $ret_json_or_xml = $this->array_as_json($data);
-        } 
-        else 
-        {
-            
-            $ret_json_or_xml = $this->array_as_xml($data, $this->replar);
-        }
-
-        return $ret_json_or_xml;
-    }
-
-
-    /**
-     * Get a list of all location
-     *
-     * @return string  
-     */
-    public function _get_locations_by_all()
-    {
-        $where = "\n WHERE location_visible = 1 ";
-        $where .= "ORDER by id DESC";
-        $limit = "\nLIMIT 0, $this->list_limit";
-        
-        return $this->_get_locations($where, $limit);
-    }
-
-    /**
-     * Get location by an id
-     * 
-     * @param int id - the location id
-     * @param string response_type - XML or JSON
-     *
-     * @return string
-     */
-    private function _get_location_by_id($id) 
-    {
-        $where = "\n WHERE location_visible = 1 AND id=$id ";
-        $where .= "ORDER by id DESC";
-        $limit = "\nLIMIT 0, $this->list_limit";
-        
-        return $this->_get_locations($where, $limit);
-    }
-
-    /**
-     * Get a location by country id
-     *
-     * @param int id - the id of the country
-     * @param string response_type - XML or JSON
-     *
-     * @return string
-     */
-    private function _get_locations_by_country_id($id)
-    {
-        $where = "\n WHERE location_visible = 1 AND country_id=$id ";
-        $where .= "ORDER by id DESC";
-        $limit = "\nLIMIT 0, $this->list_limit";
-        
-        return $this->_get_locations($where, $limit);
-    }
-
+		return ($this->response_type == 'json') 
+			? $this->array_as_json($data)
+			: $this->array_as_xml($data, $this->replar);
+	}
 }
 ?>

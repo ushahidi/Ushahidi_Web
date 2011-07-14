@@ -94,12 +94,14 @@ class Dashboard_Controller extends Admin_Controller
 
 		// Set the date range (how many days in the past from today?)
 		// Default to one year if invalid or not set
-		$range = (isset($_GET['range']) AND preg_match('/^\d+$/', $_GET['range']) > 0)
-			? (int) $_GET['range'] 
-			: 365;
+		$range = 0;
+		if (isset($_GET['range']))
+		{
+			// Sanitize the range parameter
+			$range = $this->input->xss_clean($_GET['range']);
+			$range = (intval($range) > 0)? intval($range) : 0;
+		}
 		
-		// Phase 3 - Invoke Kohana's XSS cleaning mechanism just incase an outlier wasn't caught	
-		$range = $this->input->xss_clean($range);        
 		$incident_data = Incident_Model::get_number_reports_by_date($range);
 		$data = array('Reports'=>$incident_data);
 		$options = array('xaxis'=>array('mode'=>'"time"'));

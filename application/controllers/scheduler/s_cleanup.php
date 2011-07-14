@@ -36,6 +36,30 @@ class S_Cleanup_Controller extends Controller {
 
 		if ($dhandle)
 		{
+			
+			// Get all the media files from the database so we can check if the file isn't orphaned
+			
+			$images = ORM::factory("media")->find_all();
+			
+			// Turn this into an array that we can easily check against
+			
+			$image_list = array();
+			foreach($images as $image)
+			{
+				if($image->media_link != NULL) $image_list[] = $image->media_link;
+				if($image->media_medium != NULL) $image_list[] = $image->media_medium;
+				if($image->media_thumb != NULL) $image_list[] = $image->media_thumb;
+			}
+			
+			// Get all the categroy image files from the database to add to the list
+			
+			$category_images = ORM::factory("category")->find_all();
+			foreach($category_images as $image)
+			{
+				if($image->category_image != NULL) $image_list[] = $image->category_image;
+				if($image->category_image_thumb != NULL) $image_list[] = $image->category_image_thumb;
+			}
+
 			// loop through all of the files
 			while (false !== ($fname = readdir($dhandle)))
 			{
@@ -51,20 +75,11 @@ class S_Cleanup_Controller extends Controller {
 						$extension = strtolower( substr($fname, strrpos ($fname, '.')) );
 						if ( in_array($extension, $img_extensions) )
 						{
-							// Find out if this image is orphaned (or not)
-							$images = ORM::factory("media")
-								->orwhere(array(
-									"media_link" => $fname,
-									"media_medium" => $fname,
-									"media_thumb" => $fname
-								))
-								->find();
-							
-							if ( ! $images->loaded)
+							if( ! in_array($fname, $image_list))
 							{
 								// This is an orphan... so delete it
 								$orphan = Kohana::config('upload.relative_directory')."/".$fname;
-								//echo "-- ".$orphan."<BR>";
+								//echo '-- '.$orphan.'<br/><br/>';
 								unlink($orphan);
 							}
 						}
