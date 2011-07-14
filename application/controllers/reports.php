@@ -48,6 +48,12 @@ class Reports_Controller extends Main_Controller {
 		// Enable the map
 		$this->themes->map_enabled = TRUE;
 		
+		// Set the latitude and longitude
+		$this->themes->js->latitude = Kohana::config('settings.default_lat');
+		$this->themes->js->longitude = Kohana::config('settings.default_lon');
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
+		
 		// Get locale
 		$l = Kohana::config('locale.language.0');
 		
@@ -378,7 +384,7 @@ class Reports_Controller extends Main_Controller {
 
 		$api_akismet = Kohana::config('settings.api_akismet');
 
-		if ( !$id )
+		if ( ! Incident_Model::is_valid_incident($id, TRUE))
 		{
 			url::redirect('main');
 		}
@@ -627,9 +633,8 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Add Neighbors
-
-		$this->template->content->incident_neighbors = $this->_get_neighbors($incident->location->latitude,
-																									 $incident->location->longitude);
+		$this->template->content->incident_neighbors = Incident_Model::get_neighbouring_incidents($id, TRUE, 0, 5);
+		
 		// News Source links
 		$this->template->content->incident_news = $incident_news;
 
@@ -895,22 +900,6 @@ class Reports_Controller extends Main_Controller {
 		{
 			return 0;
 		}
-	}
-
-	/**
-	 * Retrieves Neighboring Incidents
-	 */
-	private function _get_neighbors($latitude = 0, $longitude = 0)
-	{	
-		// Database
-		$db = new Database();
-		
-		$neighbors = $db->query("SELECT DISTINCT i.*, l.location_name,
-		((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance
-		 FROM `".$this->table_prefix."incident` AS i INNER JOIN `".$this->table_prefix."location` AS l ON (l.`id` = i.`location_id`) INNER JOIN `".$this->table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) INNER JOIN `".$this->table_prefix."category` AS c ON (ic.`category_id` = c.`id`) WHERE i.incident_active=1
-		 ORDER BY distance ASC LIMIT 5 ");
-
-		return $neighbors;
 	}
 
 	/**

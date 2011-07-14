@@ -19,6 +19,31 @@
 	var urlParameters = <?php echo $url_params; ?>;
 	var deSelectedFilters = [];
 	
+	// Lat/lon and zoom for the map
+	var latitude = <?php echo $latitude; ?>;
+	var longitude = <?php echo $longitude; ?>;
+	var defaultZoom = <?php echo $default_zoom; ?>;
+	
+	// Tracks whether the map has already been loaded
+	var mapLoaded = 0;
+	
+	// Map object
+	var map = null;
+	
+	// Map projections
+	var proj_4326 = new OpenLayers.Projection('EPSG:4326');
+	var proj_900913 = new OpenLayers.Projection('EPSG:900913');
+	
+	// Map options
+	var options = {
+		units: "dd",
+		numZoomLevels: 18,
+		controls:[],
+		projection: proj_900913,
+		'displayProjection': proj_4326
+	};
+	
+	
 	if (urlParameters.length == 0)
 	{
 		urlParameters = {};
@@ -173,7 +198,36 @@
 		
 		// Attach the "Filter Reports" action
 		attachFilterReportsAction();
+
 	});
+	
+	function createMap()
+	{
+		// Creates the map
+		// Load the map
+		map = new OpenLayers.Map('rb_map-view', options);
+		map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
+		
+		<?php echo map::layers_js(FALSE); ?>
+		map.addLayers(<?php echo map::layers_array(FALSE); ?>);
+		map.addControl(new OpenLayers.Control.Navigation());
+		map.addControl(new OpenLayers.Control.PanZoomBar());
+		map.addControl(new OpenLayers.Control.MousePosition(
+				{ div: 	document.getElementById('mapMousePosition'), numdigits: 5 
+			}));    
+		map.addControl(new OpenLayers.Control.Scale('mapScale'));
+		map.addControl(new OpenLayers.Control.ScaleLine());
+		map.addControl(new OpenLayers.Control.LayerSwitcher());
+		
+		// Create a lat/lon object
+		myPoint = new OpenLayers.LonLat(longitude, latitude);
+		myPoint.transform(proj_4326, map.getProjectionObject());
+		
+		// Display the map centered on a latitude and longitude
+		map.setCenter(myPoint, defaultZoom);
+		
+		mapLoaded = 1;
+	}
 	
 	function addToggleReportsFilterEvents()
 	{
@@ -223,8 +277,17 @@
 			// Check if the map view is active
 			if ($("#rb_map-view").css("display") == "block")
 			{
+				// Check if the map has already been created
+				if (mapLoaded == 0)
+				{
+					createMap();
+				}
+				
+				// Set the current page
+				urlParameters["page"] = $(".pager li a.active").html();
+				
 				// Load the map
-				showIncidentMap();
+				setTimeout(function(){ showIncidentMap() }, 400);
 			}
 			return false;
 		});
@@ -242,8 +305,6 @@
 		$("ul.pager a").attr("href", "#");
 		
 		$("ul.pager a").click(function() {
-			
-			
 			// Add the clicked page to the url parameters
 			urlParameters["page"] = $(this).html();
 			
@@ -258,6 +319,9 @@
 	 */
 	function fetchReports()
 	{
+		// Reset the map loading tracker
+		mapLoaded = 0;
+		
 		// Remove the deselected report filters
 		removeDeselectedReportFilters();
 	
@@ -423,5 +487,67 @@
 	 */
 	function showIncidentMap()
 	{
+		// URL to be used for fetching the incidents
+		fetchURL = '<?php echo url::site().'json/index' ;?>';
 		
+		// Generate the url parameter string
+		parameterStr = "";
+		$.each(urlParameters, function(key, value){
+			if (parameterStr == "")
+			{
+				parameterStr += key + "=" + value.toString();
+			}
+			else
+			{
+				parameterStr += "&" + key + "=" + value.toString();
+			}
+		});
+		
+		// Add the parameters to the fetch URL
+		fetchURL += '?' + parameterStr;
+		
+		// Fetch the incidents
+		
+		// Set the layer name
+		var layerName = '<?php echo Kohana::lang('ui_main.reports')?>';
+				
+		// Get all current layers with the same name and remove them from the map
+		currentLayers = map.getLayersByName(layerName);
+		for (var i = 0; i < currentLayers.length; i++)
+		{
+			map.removeLayer(currentLayers[i]);
+		}
+				
+		// Styling for the incidents
+		reportStyle = new OpenLayers.Style({
+			pointRadius: "8",
+			fillColor: "#30E900",
+			fillOpacity: "0.7",
+			strokeColor: "#197700",
+			strokeWidth: 3,
+			graphicZIndex: 1
+		});
+				
+		// Apply transform to each feature before adding it to the layer
+		preFeatureInsert = function(feature)
+		{
+			var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
+			OpenLayers.Projection.transform(point, proj_4326, proj_900913);
+		};
+				
+		// Create vector layer
+		vLayer = new OpenLayers.Layer.Vector(layerName, {
+			projection: map.displayProjection,
+			preFeatureInsert: preFeatureInsert,
+			extractAttributes: true,
+			styleMap: new OpenLayers.StyleMap({'default' : reportStyle}),
+			strategies: [new OpenLayers.Strategy.Fixed()],
+			protocol: new OpenLayers.Protocol.HTTP({
+				url: fetchURL,
+				format: new OpenLayers.Format.GeoJSON()
+			})
+		});
+				
+		// Add the vector layer to the map
+		map.addLayer(vLayer);
 	}

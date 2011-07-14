@@ -400,17 +400,19 @@ class reports_Core {
 	}
 	
 	/**
-	 * Helper function to fetch the list of incidents/reports via the Incident Model
-	 * using one or all of the following URL parameters
+	 * Helper function to fetch and optionally paginate the list of 
+	 * incidents/reports via the Incident Model using one or all of the 
+	 * following URL parameters
 	 *	- category
 	 *	- location bounds
 	 *	- incident mode
 	 *	- media
 	 *	- location radius
 	 *
+	 * @param $paginate Optionally paginate the incidents - Default is FALSE
 	 * @return Result
 	 */
-	public static function fetch_incidents()
+	public static function fetch_incidents($paginate = FALSE)
 	{
 		// Reset the paramters
 		self::$params = array();
@@ -420,6 +422,18 @@ class reports_Core {
 		
 		// Fetch the URL data into a local variable
 		$url_data = array_merge($_GET);
+		
+		// Check if some parameter values are separated by "," except the location bounds
+		foreach ($url_data as $key => $value)
+		{
+			if ($key != 'sw' AND $key != 'ne' AND ! is_array($value))
+			{
+				if (is_array(explode(",", $value)))
+				{
+					$url_data[$key] = explode(",", $value);
+				}
+			}
+		}
 		
 		//> BEGIN PAAMETER FETCH
 		
@@ -594,8 +608,28 @@ class reports_Core {
 		
 		//> END PARAMETER FETCH
 		
-		// Return
-		return Incident_Model::get_incidents(self::$params);
+		// Fetch all the incidents
+		$all_incidents = Incident_Model::get_incidents(self::$params);
+		
+		if ($paginate)
+		{
+			// Set up pagination
+			// Pagination
+			$pagination = new Pagination(array(
+					'style' => 'front-end-reports',
+					'query_string' => 'page',
+					'items_per_page' => (int) Kohana::config('settings.items_per_page'),
+					'total_items' => $all_incidents->count()
+					));
+			
+			// Return paginated results
+			return Incident_Model::get_incidents(self::$params, $pagination);
+		}
+		else
+		{
+			// Return
+			return $all_incidents;
+		}
 	}
 }
 ?>

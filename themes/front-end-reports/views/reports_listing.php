@@ -136,8 +136,7 @@
 				</div>
 			<?php } ?>
 			</div>
-			<div id="rb_map-view" style="display:none; width: 600px; height: 390px;">
-				<?php //@todo Display the map ?>
+			<div id="rb_map-view" style="display:none; width: 590px; height: 384px; border:1px solid #CCCCCC; margin: 3px auto;">
 			</div>
 		</div>
 		<!-- /Report listing -->
