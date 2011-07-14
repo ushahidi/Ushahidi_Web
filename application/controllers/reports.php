@@ -54,6 +54,14 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->js->default_map = Kohana::config('settings.default_map');
 		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
 		
+		// Load the alert radius view
+		$alert_radius_view = new View('alert_radius_view');
+		$alert_radius_view->show_usage_info = FALSE;
+		$alert_radius_view->enable_find_location = FALSE;
+		$alert_radius_view->css_class = "rb_location-radius";
+		
+		$this->template->content->alert_radius_view = $alert_radius_view;
+		
 		// Get locale
 		$l = Kohana::config('locale.language.0');
 		

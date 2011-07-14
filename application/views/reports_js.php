@@ -15,6 +15,8 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
+	<?php @require_once(APPPATH.'views/map_common_js.php'); ?>
+	
 	// Tracks the current URL parameters
 	var urlParameters = <?php echo $url_params; ?>;
 	var deSelectedFilters = [];
@@ -24,25 +26,15 @@
 	var longitude = <?php echo $longitude; ?>;
 	var defaultZoom = <?php echo $default_zoom; ?>;
 	
+	// Track the current latitude and longitude on the alert radius map
+	var currLat, currLon;
+	
 	// Tracks whether the map has already been loaded
 	var mapLoaded = 0;
 	
 	// Map object
 	var map = null;
-	
-	// Map projections
-	var proj_4326 = new OpenLayers.Projection('EPSG:4326');
-	var proj_900913 = new OpenLayers.Projection('EPSG:900913');
-	
-	// Map options
-	var options = {
-		units: "dd",
-		numZoomLevels: 18,
-		controls:[],
-		projection: proj_900913,
-		'displayProjection': proj_4326
-	};
-	
+	var radiusMap = null;
 	
 	if (urlParameters.length == 0)
 	{
@@ -198,33 +190,69 @@
 		
 		// Attach the "Filter Reports" action
 		attachFilterReportsAction();
+		
+		// Show the map holder the hide it
+		$(".f-location-box").show();
+		
+		radiusMap = createMap("divMap", latitude, longitude);
+		
+		$(".f-location-box").hide();
+		
+		addRadiusLayer(radiusMap, latitude, longitude);
+		drawCircle(radiusMap, latitude, longitude);
+		
+		// Detect map clicks
+		radiusMap.events.register("click", radiusMap, function(e){
+			var lonlat = radiusMap.getLonLatFromViewPortPx(e.xy);
+			var lonlat2 = radiusMap.getLonLatFromViewPortPx(e.xy);
+		    m = new OpenLayers.Marker(lonlat);
+			markers.clearMarkers();
+			markers.addMarker(m);
+			
+			currRadius = $("#alert_radius").val();
+			radius = currRadius * 1000
+			
+			lonlat2.transform(proj_900913, proj_4326);
+			
+			// Store the current latitude and longitude
+			currLat = lonlat2.lat;
+			currLon = lonlat2.lon;
+			
+			drawCircle(radiusMap, currLat, currLon);
+			
+			// Store the radius and start locations
+			urlParameters["radius"] = currRadius;
+			urlParameters["start_loc"] = currLat + "," + currLat;
+		});
+		
+		// Radius selector
+		$("select#alert_radius").change(function(e, ui) {
+			var newRadius = $("#alert_radius").val();
+			
+			// Convert to Meters
+			radius = newRadius * 1000;	
+			
+			// Redraw Circle
+			currLat = (currLat == null)? latitude : currLat;
+			currLon = (currLon == null)? longitude : currLon;
+			
+			drawCircle(radiusMap, currLat, currLon, radius);
+			
+			// Store the radius and start locations
+			urlParameters["radius"] = newRadius;
+			urlParameters["start_loc"] = currLat+ "," + currLon;
+		});
 
 	});
 	
-	function createMap()
+	/**
+	 * Creates the map and sets the loaded status to 1
+	 */
+	function createIncidentMap()
 	{
 		// Creates the map
-		// Load the map
-		map = new OpenLayers.Map('rb_map-view', options);
+		map = createMap('rb_map-view', latitude, longitude);
 		map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
-		
-		<?php echo map::layers_js(FALSE); ?>
-		map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-		map.addControl(new OpenLayers.Control.Navigation());
-		map.addControl(new OpenLayers.Control.PanZoomBar());
-		map.addControl(new OpenLayers.Control.MousePosition(
-				{ div: 	document.getElementById('mapMousePosition'), numdigits: 5 
-			}));    
-		map.addControl(new OpenLayers.Control.Scale('mapScale'));
-		map.addControl(new OpenLayers.Control.ScaleLine());
-		map.addControl(new OpenLayers.Control.LayerSwitcher());
-		
-		// Create a lat/lon object
-		myPoint = new OpenLayers.LonLat(longitude, latitude);
-		myPoint.transform(proj_4326, map.getProjectionObject());
-		
-		// Display the map centered on a latitude and longitude
-		map.setCenter(myPoint, defaultZoom);
 		
 		mapLoaded = 1;
 	}
@@ -280,7 +308,7 @@
 				// Check if the map has already been created
 				if (mapLoaded == 0)
 				{
-					createMap();
+					createIncidentMap();
 				}
 				
 				// Set the current page

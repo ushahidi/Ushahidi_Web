@@ -2,109 +2,213 @@
 	<div class="content-bg">
 		<!-- start reports block -->
 		<div class="big-block">
-			<?php
-			// Filter::report_stats - The block that contains reports list statistics
-			Event::run('ushahidi_filter.report_stats', $report_stats);
-			echo $report_stats;
-			?>
-			<h1><?php echo Kohana::lang('ui_main.reports').": ";?> <?php echo ($category_title) ? " in $category_title" : ""?> <?php echo $pagination_stats; ?></h1>
-			<div style="clear:both;"></div>
-			<div class="r_cat_tooltip"> <a href="#" class="r-3">2a. Structures a risque | Structures at risk</a> </div>
-			<div class="reports-box">
-				<?php
-				foreach ($incidents as $incident)
-				{
-					$incident_id = $incident->id;
-					$incident_title = $incident->incident_title;
-					$incident_description = $incident->incident_description;
-					//$incident_category = $incident->incident_category;
-					// Trim to 150 characters without cutting words
-					// XXX: Perhaps delcare 150 as constant
+			<h1 class="heading">
+				<?php $timeframe_title =  date('M d, Y', $oldest_timestamp).' through '.date('M d, Y', $latest_timestamp); ?>
+				Showing Reports from <span class="time-period">
+					<?php echo $timeframe_title; ?>
+					</span> 
+				<a href="#" class="btn-change-time ic-time">change date range</a>
+			</h1>
+			
+			<div id="tooltip-box">
+				<div class="tt-arrow"></div>
+				<ul class="inline-links">
+					<li><a title="<?php echo $timeframe_title; ?>" class="btn-date-range active" href="#">All Time</a></li>
+					<li><a title="Today" class="btn-date-range" href="#">Today</a></li>
+					<li><a title="This Week" class="btn-date-range" href="#">This Week</a></li>
+					<li><a title="This Month" class="btn-date-range" href="#">This Month</a></li>
+				</ul>
+				
+				<p class="labeled-divider"><span>Or choose your own date range:</span></p>
+				<form>
+					<table>
+						<tr>
+							<td><strong>
+								<?php echo Kohana::lang('ui_admin.from')?>:</strong><input id="report_date_from" type="text" style="width:78px" />
+							</td>
+							<td>
+								<strong><?php echo ucfirst(strtolower(Kohana::lang('ui_admin.to'))); ?>:</strong>
+								<input id="report_date_to" type="text" style="width:78px" />
+							</td>
+							<td valign="bottom">
+								<a href="#" id="applyDateFilter" class="filter-button" style="position:static;"><?php echo Kohana::lang('ui_main.go')?></a>
+							</td>
+						</tr>
+					</table>              
+				</form>
+			</div>
 
-					$incident_description = text::limit_chars(strip_tags($incident_description), 150, "...", true);
-					$incident_date = date('H:i M d, Y', strtotime($incident->incident_date));
-					//$incident_time = date('H:i', strtotime($incident->incident_date));
-					$location_id = $incident->location_id;
-					$location_name = $incident->location->location_name;
-					$incident_verified = $incident->incident_verified;
-
-					if ($incident_verified)
-					{
-						$incident_verified = '<span class="r_verified">'.Kohana::lang('ui_main.verified').'</span>';
-					}
-					else
-					{
-						$incident_verified = '<span class="r_unverified">'.Kohana::lang('ui_main.unverified').'</span>';
-					}
-					
-					$comment_count = $incident->comment->count();
-					
-					$incident_thumb = url::base()."media/img/report-thumb-default.jpg";
-					$media = $incident->media;
-					if ($media->count())
-					{
-						foreach ($media as $photo)
-						{
-							if ($photo->media_thumb)
-							{ // Get the first thumb
-								$prefix = url::base().Kohana::config('upload.relative_directory');
-								$incident_thumb = $prefix."/".$photo->media_thumb;
-								break;
-							}
-						}
-					}
-					?>
-					<div class="rb_report">
-
-						<div class="r_media">
-							<p class="r_photo"> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>">
-								<img src="<?php echo $incident_thumb; ?>" height="59" width="89" /> </a>
-							</p>
-
-							<!-- Only show this if the report has a video -->
-							<p class="r_video" style="display:none;"><a href="#">Video</a></p>
-							
-							<!-- Category Selector -->
-							<div class="r_categories">
-								<h4><?php echo Kohana::lang('ui_main.categories'); ?></h4>
-								<?php
-								foreach ($incident->category AS $category)
-								{
-								
-									//don't show hidden categories
-									if($category->category_visible == 0)
-									{
-										continue;
-									}
-									
-									if ($category->category_image_thumb)
-									{
-										?>
-										<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>"><span class="r_cat-box"><img src="<?php echo url::base().Kohana::config('upload.relative_directory')."/".$category->category_image_thumb; ?>" height="16" width="16" /></span> <span class="r_cat-desc"><?php echo $localized_categories[(string)$category->category_title];?></span></a>
-										<?php
-									}
-									else
-									{
-										?>
-										<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>"><span class="r_cat-box" style="background-color:#<?php echo $category->category_color;?>;"></span> <span class="r_cat-desc"><?php echo $localized_categories[(string)$category->category_title];?></span></a>
-										<?php
-									}
-								}
-								?>
-							</div>
+			<div style="overflow:auto;">
+				<!-- reports-box -->
+				<div id="reports-box">
+					<?php echo $report_listing_view; ?>
+				</div>
+				<!-- end #reports-box -->
+				
+				<div id="filters-box">
+					<h2>Filter Reports By</h2>
+					<div id="accordion">
+						
+						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#">Category</a></h3>
+						<div class="f-category-box">
+			          		<ul class="filter-list fl-categories" id="category-filter-list">
+							</ul>
 						</div>
+						
+						<h3><a class="f-title" href="#">Location</a></h3>
+						
+						<div class="f-location-box">
+							<?php echo $alert_radius_view; ?>
+							<p><a class="reset" href="#">Reset</a></p>
+						</div>
+						
+						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#">Type</a></h3>
+						<div class="f-type-box">
+							<ul class="filter-list fl-incident-mode">
+								<li>
+									<a href="#" id="filter_link_mode_1">
+										<span class="item-icon ic-webform">&nbsp;</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.web_form'); ?></span>
+									</a>
+								</li>
+							
+							<?php foreach ($services as $id => $name): ?>
+								<?php
+									$item_class = "";
+									if ($id == 1) $item_class = "ic-sms";
+									if ($id == 2) $item_class = "ic-email";
+									if ($id == 3) $item_class = "ic-twitter";
+								?>
+								<li>
+									<a href="#" id="filter_link_mode_<?php echo ($id + 1); ?>">
+										<span class="item-icon <?php echo $item_class; ?>">&nbsp;</span>
+										<span class="item-title"><?php echo $name; ?></span>
+									</a>
+								</li>
+							<?php endforeach; ?>
 
-						<div class="r_details">
-							<h3><a class="r_title" href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>"><?php echo $incident_title; ?></a> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>#discussion" class="r_comments"><?php echo $comment_count; ?></a> <?php echo $incident_verified; ?></h3>
-							<p class="r_date r-3 bottom-cap"><?php echo $incident_date; ?></p>
-							<div class="r_description"> <?php echo $incident_description; ?> </div>
-							<p class="r_location"><a href="<?php echo url::site(); ?>reports/?l=<?php echo $location_id; ?>"><?php echo $location_name; ?></a></p>
+							</ul>
+						</div>
+						
+						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#">Media</a></h3>
+						<div class="f-media-box">
+							<p><?php echo Kohana::lang('ui_main.filter_reports_contain'); ?>&hellip;</p>
+							<ul class="filter-list fl-media">
+								<li>
+									<a href="#" id="filter_link_media_1">
+										<span class="item-icon ic-photos">&nbsp;</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.photos'); ?></span>
+									</a>
+								</li>
+								<li>
+									<a href="#" id="filter_link_media_2">
+										<span class="item-icon ic-videos">&nbsp;</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.video'); ?></span>
+									</a>
+								</li>
+								<li>
+									<a href="#" id="filter_link_media_4">
+										<span class="item-icon ic-news">&nbsp;</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.reports_news')?></span>
+									</a>
+								</li>
+							</ul>
 						</div>
 					</div>
-				<?php } ?>
+					<!-- end #accordion -->
+					
+					<div id="filter-controls">
+						<p><a href="#" class="small-link-button reset">reset all filters</a> <a href="#" id="applyFilters" class="filter-button">Filter Reports</a></p>
+					</div>          
+				</div>
+				<!-- end #filters-box -->
 			</div>
-			<?php echo $pagination; ?>
+      
+			<div style="display:none">
+				<?php
+					// Filter::report_stats - The block that contains reports list statistics
+					Event::run('ushahidi_filter.report_stats', $report_stats);
+					echo $report_stats;
+				?>
+			</div>
+
 		</div>
 		<!-- end reports block -->
+		
 	</div>
+	<!-- end content-bg -->
 </div>
+
+
+<!-- Begin Reports Listing Javascript -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		// START: Populate category filter list
+		function populateCategoryFilter()
+		{
+			var cat_class = '';
+			var cat_selected = '';
+			
+			var categoryHtml = "<li>" + 
+						"<a href=\"#\"><span class=\"item-swatch\" style=\"background-color:#CC0000\">&nbsp;</span>" + 
+						"<span class=\"item-title\">All Categories</span><span class=\"item-count\" id=\"all_report_count\">0</span>" +
+						"</a></li>";
+		
+			$('#category-filter-list').html(categoryHtml);
+			
+			// Grab all the categories
+			categories_json_url = '<?php echo url::site(); ?>api/?task=categories';
+			
+			$.getJSON(categories_json_url, function(data) {
+				$.each(data.payload.categories, function(i,item){
+					
+					// 	Get the category class
+					cat_class = (item.category.parent_id != 0)? 'report-listing-category-child' : '';
+					
+					// TODO: set var cat_selected to "selected" if it has been selected
+					
+					categoryHtml = "<li class=\""+cat_class+"\">" +
+							"<a href=\"#\" class=\""+cat_selected+"\" id=\"filter_link_cat_"+item.category.id+"\">" +
+							"<span class=\"item-swatch\" style=\"background-color:#"+item.category.color+"\">&nbsp;</span>" +
+							"<span class=\"item-title\">"+item.category.title+"</span>" +
+							"<span class=\"item-count\" id=\"report_count_cat_"+item.category.id+"\">0</span>" +
+							"</a></li>";
+					
+					$('#category-filter-list').append(categoryHtml);
+					
+					addToggleReportsFilterEvents();
+					
+				},populateCategoryFilterCounts());
+			});
+		}
+		
+		populateCategoryFilter();
+		// END: Populate category filter list
+		
+		// START: Populate report counts for category filter
+		function populateCategoryFilterCounts()
+		{
+			// Grab report counts for the categories
+			catcount_json_url = '<?php echo url::site(); ?>api/?task=incidents&by=catcount';
+			$.getJSON(catcount_json_url, function(data) {
+				$.each(data.payload.category_counts, function(i,item){
+					$('#report_cat_count_'+item.category_id).ready(function(){
+						$('#report_count_cat_'+item.category_id).html(item.reports);
+					});
+				});
+				
+				// Display total
+				$('#all_report_count').html(data.payload.total_reports);
+				
+			});
+		}
+		
+		//populateCategoryFilterCounts();
+		// END: Populate report counts for category filter
+		
+	});
+</script>
+<!-- End Reports Listing Javascript -->
+
+

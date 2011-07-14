@@ -426,7 +426,7 @@ class reports_Core {
 		// Check if some parameter values are separated by "," except the location bounds
 		foreach ($url_data as $key => $value)
 		{
-			if ($key != 'sw' AND $key != 'ne' AND ! is_array($value))
+			if ($key != 'sw' AND $key != 'ne' AND $key != "from_loc" AND ! is_array($value))
 			{
 				if (is_array(explode(",", $value)))
 				{
@@ -527,6 +527,30 @@ class reports_Core {
 				'l.longitude >= '.$lon_min,
 				'l.longitude <= '.$lon_max
 			);
+		}
+		
+		// 
+		// Location bounds - based on start location and radius
+		// 
+		if (isset($url_data['radius']) AND isset($url_data['start_loc']))
+		{
+			if (intval($url_data['radius']) > 0 AND is_array($url_data['start_loc']))
+			{
+				$bounds = $url_data['start_loc'];
+				if (count($bounds) == 2 AND is_numeric($bounds[0]) AND is_numeric($bounds[1]))
+				{
+					// Get the maximum and minimum lat/lon via the proximity class
+					$proximity = new Proximity($bounds[0], $bounds[1], intval($url_data['radius']));
+					
+					// Build the parameters
+					array_push(self::$params, 
+						'l.latitude >= '.$proximity->minLat,
+						'l.latitude <= '.$proximity->maxLat,
+						'l.longitude >= '.$proximity->minLong,
+						'l.longitude <= '.$proximity->maxLong
+					);
+				}
+			}
 		}
 		
 		// 

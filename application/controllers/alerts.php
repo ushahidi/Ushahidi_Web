@@ -27,6 +27,13 @@ class Alerts_Controller extends Main_Controller {
     {
 		$this->template->header->this_page = $this->themes->this_page = 'alerts';
 		$this->template->content = new View('alerts');
+		
+		// Load the alert radius map view
+		$alert_radius_view = new View('alert_radius_view');
+		$alert_radius_view->show_usage_info = TRUE;
+		$alert_radius_view->enable_find_location = TRUE;
+		
+		$this->template->content->alert_radius_view = $alert_radius_view;
 
 		// Display news feeds?
 		$this->template->content->allow_feed = Kohana::config('settings.allow_feed');
