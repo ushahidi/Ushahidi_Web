@@ -298,12 +298,22 @@
 				var newlon = $("#longitude").val();
 				if (!isNaN(newlat) && !isNaN(newlon))
 				{
-					var lonlat = new OpenLayers.LonLat(newlon, newlat);
-					lonlat.transform(proj_4326,proj_900913);
-					m = new OpenLayers.Marker(lonlat);
-					markers.clearMarkers();
-			    	markers.addMarker(m);
-					map.setCenter(lonlat, <?php echo $default_zoom; ?>);
+					// Clear the map first
+					vlayer.removeFeatures(vlayer.features);
+					$('input[name="geometry[]"]').remove();
+					
+					point = new OpenLayers.Geometry.Point(newlon, newlat);
+					OpenLayers.Projection.transform(point, proj_4326,proj_900913);
+					
+					f = new OpenLayers.Feature.Vector(point);
+					vlayer.addFeatures(f);
+					
+					// create a new lat/lon object
+					myPoint = new OpenLayers.LonLat(newlon, newlat);
+					myPoint.transform(proj_4326, map.getProjectionObject());
+
+					// display the map centered on a latitude and longitude
+					map.setCenter(myPoint, <?php echo $default_zoom; ?>);
 				}
 				else
 				{
