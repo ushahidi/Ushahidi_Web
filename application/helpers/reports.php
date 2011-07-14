@@ -549,6 +549,8 @@ class reports_Core {
 						'l.longitude >= '.$proximity->minLong,
 						'l.longitude <= '.$proximity->maxLong
 					);
+					
+					Kohana::log('debug', Kohana::debug($proximity));
 				}
 			}
 		}

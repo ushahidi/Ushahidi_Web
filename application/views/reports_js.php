@@ -191,57 +191,64 @@
 		// Attach the "Filter Reports" action
 		attachFilterReportsAction();
 		
-		// Show the map holder the hide it
-		$(".f-location-box").show();
-		
-		radiusMap = createMap("divMap", latitude, longitude);
-		
-		$(".f-location-box").hide();
-		
-		addRadiusLayer(radiusMap, latitude, longitude);
-		drawCircle(radiusMap, latitude, longitude);
-		
-		// Detect map clicks
-		radiusMap.events.register("click", radiusMap, function(e){
-			var lonlat = radiusMap.getLonLatFromViewPortPx(e.xy);
-			var lonlat2 = radiusMap.getLonLatFromViewPortPx(e.xy);
-		    m = new OpenLayers.Marker(lonlat);
-			markers.clearMarkers();
-			markers.addMarker(m);
-			
-			currRadius = $("#alert_radius").val();
-			radius = currRadius * 1000
-			
-			lonlat2.transform(proj_900913, proj_4326);
-			
-			// Store the current latitude and longitude
-			currLat = lonlat2.lat;
-			currLon = lonlat2.lon;
-			
-			drawCircle(radiusMap, currLat, currLon);
-			
-			// Store the radius and start locations
-			urlParameters["radius"] = currRadius;
-			urlParameters["start_loc"] = currLat + "," + currLat;
-		});
-		
-		// Radius selector
-		$("select#alert_radius").change(function(e, ui) {
-			var newRadius = $("#alert_radius").val();
-			
-			// Convert to Meters
-			radius = newRadius * 1000;	
-			
-			// Redraw Circle
-			currLat = (currLat == null)? latitude : currLat;
-			currLon = (currLon == null)? longitude : currLon;
-			
-			drawCircle(radiusMap, currLat, currLon, radius);
-			
-			// Store the radius and start locations
-			urlParameters["radius"] = newRadius;
-			urlParameters["start_loc"] = currLat+ "," + currLon;
-		});
+		$("#accordion").accordion({change: function(event, ui){
+			if ($(ui.newContent).hasClass("f-location-box"))
+			{
+				if (typeof radiusMap == 'undefined' || radiusMap == null)
+				{
+					// Create the map
+					radiusMap = createMap("divMap", latitude, longitude);
+					
+					// Add the radius layer
+					addRadiusLayer(radiusMap, latitude, longitude);
+					
+					drawCircle(radiusMap, latitude, longitude);
+					
+					// Detect map clicks
+					radiusMap.events.register("click", radiusMap, function(e){
+						var lonlat = radiusMap.getLonLatFromViewPortPx(e.xy);
+						var lonlat2 = radiusMap.getLonLatFromViewPortPx(e.xy);
+					    m = new OpenLayers.Marker(lonlat);
+						markers.clearMarkers();
+						markers.addMarker(m);
+
+						currRadius = $("#alert_radius").val();
+						radius = currRadius * 1000
+
+						lonlat2.transform(proj_900913, proj_4326);
+
+						// Store the current latitude and longitude
+						currLat = lonlat2.lat;
+						currLon = lonlat2.lon;
+
+						drawCircle(radiusMap, currLat, currLon);
+
+						// Store the radius and start locations
+						urlParameters["radius"] = currRadius;
+						urlParameters["start_loc"] = currLat + "," + currLon;
+					});
+
+					// Radius selector
+					$("select#alert_radius").change(function(e, ui) {
+						var newRadius = $("#alert_radius").val();
+
+						// Convert to Meters
+						radius = newRadius * 1000;	
+
+						// Redraw Circle
+						currLat = (currLat == null)? latitude : currLat;
+						currLon = (currLon == null)? longitude : currLon;
+
+						drawCircle(radiusMap, currLat, currLon, radius);
+
+						// Store the radius and start locations
+						urlParameters["radius"] = newRadius;
+						urlParameters["start_loc"] = currLat+ "," + currLon;
+					});
+				}
+			}
+		}});
+
 
 	});
 	

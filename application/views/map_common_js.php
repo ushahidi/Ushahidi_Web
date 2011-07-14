@@ -13,7 +13,7 @@
 	 * @param targetElement ID of the element to be used for creating the map
 	 * @param options Options to be used for creating the map
 	 */
-	function createMap(targetElement, latitude, longitude, zoomLevel, options)
+	function createMap(targetElement, lat, lon, zoomLevel, options)
 	{
 		if (typeof targetElement == 'undefined' || $("#"+targetElement) == null)
 		{
@@ -58,7 +58,7 @@
 		var zoom = (typeof zoomLevel == 'undefined' || zoomLevel < 1)? 9 : zoomLevel;
 		
 		// Create a lat/lon object and center the map
-		var myPoint = new OpenLayers.LonLat(longitude, latitude);
+		var myPoint = new OpenLayers.LonLat(lon, lat);
 		myPoint.transform(proj_4326, proj_900913);
 		
 		// Display the map centered on a latitude and longitude
@@ -71,9 +71,9 @@
 	/**
 	 * Creates a radius layer and adds it on the map object
 	 */
-	function addRadiusLayer(map, latitude, longitude, radius)
+	function addRadiusLayer(map, lat, lon, radius)
 	{
-		if (typeof map == 'undefined' || typeof latitude == 'undefined' || typeof longitude == 'undefined')
+		if (typeof map == 'undefined' || typeof lat == 'undefined' || typeof lon == 'undefined')
 		{
 			return;
 		}
@@ -92,7 +92,7 @@
 		map.addLayers([radiusLayer, markers]);
 		
 		// Create a marker positioned at the map center
-		var myPoint = new OpenLayers.LonLat(longitude, latitude);
+		var myPoint = new OpenLayers.LonLat(lon, lat);
 		
 		myPoint.transform(proj_4326, proj_900913);
 		var marker = new OpenLayers.Marker(myPoint);
