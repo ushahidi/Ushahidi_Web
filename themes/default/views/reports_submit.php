@@ -165,8 +165,33 @@
 				</div>
 				<?php endif; ?>
 				<div class="report_row">
-					<div id="divMap" class="report_map"></div>
+					<div id="divMap" class="report_map">
+						<div id="geometryLabelerHolder" class="olControlNoSelect">
+							<div id="geometryLabeler">
+								<div id="geometryLabelComment">
+									<span id="geometryLabel"><label><?php echo Kohana::lang('ui_main.geometry_label');?>:</label> <?php print form::input('geometry_label', '', ' class="lbl_text"'); ?></span>
+									<span id="geometryComment"><label><?php echo Kohana::lang('ui_main.geometry_comments');?>:</label> <?php print form::input('geometry_comment', '', ' class="lbl_text2"'); ?></span>
+								</div>
+								<div>
+									<span id="geometryColor"><label><?php echo Kohana::lang('ui_main.geometry_color');?>:</label> <?php print form::input('geometry_color', '', ' class="lbl_text"'); ?></span>
+									<span id="geometryStrokewidth"><label><?php echo Kohana::lang('ui_main.geometry_strokewidth');?>:</label> <?php print form::dropdown('geometry_strokewidth', $stroke_width_array, ''); ?></span>
+									<span id="geometryLat"><label><?php echo Kohana::lang('ui_main.latitude');?>:</label> <?php print form::input('geometry_lat', '', ' class="lbl_text"'); ?></span>
+									<span id="geometryLon"><label><?php echo Kohana::lang('ui_main.longitude');?>:</label> <?php print form::input('geometry_lon', '', ' class="lbl_text"'); ?></span>
+								</div>
+							</div>
+							<div id="geometryLabelerClose"></div>
+						</div>
+					</div>
 					<div class="report-find-location">
+					    <div id="panel" class="olControlEditingToolbar"></div>
+						<div class="btns" style="float:left;">
+							<ul style="padding:4px;">
+								<li><a href="#" class="btn_del_last"><?php echo strtoupper(Kohana::lang('ui_main.delete_last'));?></a></li>
+								<li><a href="#" class="btn_del_sel"><?php echo strtoupper(Kohana::lang('ui_main.delete_selected'));?></a></li>
+								<li><a href="#" class="btn_clear"><?php echo strtoupper(Kohana::lang('ui_main.clear_map'));?></a></li>
+							</ul>
+						</div>
+						<div style="clear:both;"></div>
 						<?php print form::input('location_find', '', ' title="'.Kohana::lang('ui_main.location_example').'" class="findtext"'); ?>
 						<div style="float:left;margin:9px 0 0 5px;"><input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" /></div>
 						<div id="find_loading" class="report-find-loading"></div>

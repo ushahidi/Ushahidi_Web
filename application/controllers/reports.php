@@ -258,6 +258,7 @@ class Reports_Controller extends Main_Controller {
 			'incident_ampm' => '',
 			'latitude' => '',
 			'longitude' => '',
+			'geometry' => array(),
 			'location_name' => '',
 			'country_id' => '',
 			'incident_category' => array(),
@@ -405,6 +406,35 @@ class Reports_Controller extends Main_Controller {
 				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
 				$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 				$incident->save();
+				
+				// STEP 2b: SAVE INCIDENT GEOMETRIES
+				ORM::factory('geometry')->where('incident_id',$incident->id)->delete_all();
+				if (isset($post->geometry)) 
+				{
+					foreach($post->geometry as $item)
+					{
+						if(!empty($item))
+						{
+							//Decode JSON
+							$item = json_decode($item);
+							//++ TODO - validate geometry
+							$geometry = (isset($item->geometry)) ? mysql_escape_string($item->geometry) : "";
+							$label = (isset($item->label)) ? mysql_escape_string(substr($item->label, 0, 150)) : "";
+							$comment = (isset($item->comment)) ? mysql_escape_string(substr($item->comment, 0, 255)) : "";
+							$color = (isset($item->color)) ? mysql_escape_string(substr($item->color, 0, 6)) : "";
+							$strokewidth = (isset($item->strokewidth) AND (float) $item->strokewidth) ? (float) $item->strokewidth : "2.5";
+							if ($geometry)
+							{
+								//++ Can't Use ORM for this
+								$sql = "INSERT INTO ".Kohana::config('database.default.table_prefix')."geometry (
+									incident_id, geometry, geometry_label, geometry_comment, geometry_color, geometry_strokewidth ) 
+									VALUES( ".$incident->id.",
+									GeomFromText( '".$geometry."' ),'".$label."','".$comment."','".$color."','".$strokewidth."')";
+								$db->query($sql);
+							}
+						}
+					}
+				}
 
 				// STEP 3: SAVE CATEGORIES
 				foreach($post->incident_category as $item)
@@ -559,11 +589,15 @@ class Reports_Controller extends Main_Controller {
 		// Retrieve Custom Form Fields Structure
 		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
+		
+		$this->template->content->stroke_width_array = $this->_stroke_width_array();
 
 		// Javascript Header
 		$this->themes->map_enabled = TRUE;
 		$this->themes->datepicker_enabled = TRUE;
 		$this->themes->treeview_enabled = TRUE;
+		$this->themes->colorpicker_enabled = TRUE;
+		
 		$this->themes->js = new View('reports_submit_js');
 		$this->themes->js->default_map = Kohana::config('settings.default_map');
 		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
@@ -577,7 +611,9 @@ class Reports_Controller extends Main_Controller {
 			$this->themes->js->latitude = $form['latitude'];
 			$this->themes->js->longitude = $form['longitude'];
 		}
+		$this->themes->js->geometries = $form['geometry'];
 
+		
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
 	}
@@ -1236,6 +1272,16 @@ class Reports_Controller extends Main_Controller {
 
 			return TRUE;
 		}
+	}
+	
+	private function _stroke_width_array()
+	{
+		for ($i = 0.5; $i <= 8 ; $i += 0.5)
+		{
+			$stroke_width_array["$i"] = $i;
+		}
+		
+		return $stroke_width_array;
 	}
 	
 } // End Reports

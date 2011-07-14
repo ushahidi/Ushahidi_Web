@@ -1,6 +1,7 @@
 .*swp
 .htaccess
 *~
+*.DS_Store
 application/logs/*
 application/cache/*
 media/uploads/*

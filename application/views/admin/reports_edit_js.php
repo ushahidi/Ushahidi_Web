@@ -83,6 +83,8 @@
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition());
+			map.addControl(new OpenLayers.Control.ScaleLine());
+			map.addControl(new OpenLayers.Control.Scale('mapScale'));
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
 			// Vector/Drawing Layer Styles
@@ -201,15 +203,16 @@
 			{
 				foreach ($geometries as $geometry)
 				{
+					$geometry = json_decode($geometry);
 					echo "wktFeature = wkt.read('$geometry->geometry');\n";
 					echo "wktFeature.geometry.transform(proj_4326,proj_900913);\n";
-					echo "wktFeature.label = '$geometry->geometry_label';\n";
-					echo "wktFeature.comment = '$geometry->geometry_comment';\n";
-					echo "wktFeature.color = '$geometry->geometry_color';\n";
-					echo "wktFeature.strokewidth = '$geometry->geometry_strokewidth';\n";
+					echo "wktFeature.label = '$geometry->label';\n";
+					echo "wktFeature.comment = '$geometry->comment';\n";
+					echo "wktFeature.color = '$geometry->color';\n";
+					echo "wktFeature.strokewidth = '$geometry->strokewidth';\n";
 					echo "vlayer.addFeatures(wktFeature);\n";
-					echo "var color = '$geometry->geometry_color';if (color) {updateFeature(wktFeature, color, '');};";
-					echo "var strokewidth = '$geometry->geometry_strokewidth';if (strokewidth) {updateFeature(wktFeature, '', strokewidth);};";
+					echo "var color = '$geometry->color';if (color) {updateFeature(wktFeature, color, '');};";
+					echo "var strokewidth = '$geometry->strokewidth';if (strokewidth) {updateFeature(wktFeature, '', strokewidth);};";
 				}
 			}
 			?>

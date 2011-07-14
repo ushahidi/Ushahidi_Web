@@ -24,6 +24,7 @@ class Themes_Core {
 	public $validator_enabled = false;
 	public $photoslider_enabled = false;
 	public $videoslider_enabled = false;
+	public $colorpicker_enabled = false;
 	public $site_style = false;
 	public $js = null;
 	
@@ -93,6 +94,11 @@ class Themes_Core {
 			$core_css .= html::stylesheet($this->css_url."media/css/videoslider","",true);
 		}
 		
+		if ($this->colorpicker_enabled)
+		{
+			$core_css .= html::stylesheet($this->css_url."media/css/colorpicker","",true);
+		}
+		
 		if ($this->site_style AND $this->site_style != "default")
 		{
 			$core_css .= html::stylesheet($this->css_url."themes/".$site_style."/style.css");
@@ -156,6 +162,11 @@ class Themes_Core {
 		if($this->videoslider_enabled )
 		{
 			$core_js .= html::script($this->js_url."media/js/coda-slider.pack");
+		}
+		
+		if ($this->colorpicker_enabled)
+		{
+			$core_js .= html::script($this->js_url."media/js/colorpicker");
 		}
 		
 		// Javascript files from plugins
