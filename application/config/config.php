@@ -4,21 +4,21 @@
  * then a full URL will be used, eg: http://localhost/ushahidi/. If it only includes
  * the path, and a site_protocol is specified, the domain will be auto-detected.
  */
-$config['site_domain'] = '/';
+$config['site_domain'] = '/ushahidi/';
 
 /**
  * Force a default protocol to be used by the site. If no site_protocol is
  * specified, then the current protocol is used, or when possible, only an
  * absolute path (with no protocol/domain) is used.
  */
-$config['site_protocol'] = 'http';
+$config['site_protocol'] = 'https';
 
 /**
  * Name of the front controller for this application. Default: index.php
  *
  * This can be removed by using URL rewriting.
  */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /**
  * Fake file extension that will be added to all generated URLs. Example: .html
@@ -62,7 +62,7 @@ $config['enable_hooks'] = TRUE;
  *  3 - Notices
  *  4 - Debugging
  */
-$config['log_threshold'] = 1;
+$config['log_threshold'] = 4;
 
 /**
  * Message logging directory.

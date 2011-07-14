@@ -383,7 +383,7 @@ class Reports_Controller extends Main_Controller {
 	 * @param boolean $id If id is supplied, a report with that id will be
 	 * retrieved.
 	 */
-	public function view($id = false)
+	public function view($id = FALSE)
 	{
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports_view');
@@ -855,7 +855,7 @@ class Reports_Controller extends Main_Controller {
 	 * Retrieves Total Rating For Specific Post
 	 * Also Updates The Incident & Comment Tables (Ratings Column)
 	 */
-	private function _get_rating($id = false, $type = NULL)
+	private function _get_rating($id = FALSE, $type = NULL)
 	{
 		if (!empty($id) AND ($type == 'original' OR $type == 'comment'))
 		{
@@ -886,7 +886,7 @@ class Reports_Controller extends Main_Controller {
 			if ($type == 'original')
 			{
 				$incident = ORM::factory('incident', $id);
-				if ($incident->loaded==true)
+				if ($incident->loaded == TRUE)
 				{
 					$incident->incident_rating = $total_rating;
 					$incident->save();
@@ -895,7 +895,7 @@ class Reports_Controller extends Main_Controller {
 			elseif ($type == 'comment')
 			{
 				$comment = ORM::factory('comment', $id);
-				if ($comment->loaded==true)
+				if ($comment->loaded == TRUE)
 				{
 					$comment->comment_rating = $total_rating;
 					$comment->save();
@@ -917,11 +917,11 @@ class Reports_Controller extends Main_Controller {
 	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
 	 * @param bool $data_only Whether or not to include just data
 	 */
-	private function _get_custom_form_fields($incident_id = false, $form_id = 1, $data_only = false)
+	private function _get_custom_form_fields($incident_id = FALSE, $form_id = 1, $data_only = FALSE)
 	{
 		$fields_array = array();
 
-		if (!$form_id)
+		if ( ! $form_id)
 			$form_id = 1;
 
 		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
@@ -977,7 +977,7 @@ class Reports_Controller extends Main_Controller {
 			{
 				// Validate for required
 				if ($field_param->field_required == 1 AND $field_response == "")
-					return false;
+					return FALSE;
 
 				// Validate for date
 				if ($field_param->field_isdate == 1 AND $field_response != "")
