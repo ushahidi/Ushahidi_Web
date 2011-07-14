@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Model for Form Fields
+ * Model for Form Field Options
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -14,11 +14,10 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class Form_Field_Model extends ORM
+class Form_Field_Option_Model extends ORM
 {
-	protected $belongs_to = array('form');
-	protected $has_many = array('form_response', 'form_field_options');
+	protected $belongs_to = array('form_field');
 	
 	// Database table name
-	protected $table_name = 'form_field';
+	protected $table_name = 'form_field_option';
 }
