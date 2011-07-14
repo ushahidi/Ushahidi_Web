@@ -238,6 +238,8 @@ class Reports_Controller extends Main_Controller {
 	 */
 	public function submit($id = false, $saved = false)
 	{
+		$db = new Database();
+		
 		// First, are we allowed to submit new reports?
 		if ( ! Kohana::config('settings.allow_reports'))
 		{
