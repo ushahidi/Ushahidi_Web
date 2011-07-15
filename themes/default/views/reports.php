@@ -49,20 +49,20 @@
 					<h2>Filter Reports By</h2>
 					<div id="accordion">
 						
-						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#">Category</a></h3>
+						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.category')?></a></h3>
 						<div class="f-category-box">
 			          		<ul class="filter-list fl-categories" id="category-filter-list">
 							</ul>
 						</div>
 						
-						<h3><a class="f-title" href="#">Location</a></h3>
+						<h3><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.location'); ?></a></h3>
 						
 						<div class="f-location-box">
 							<?php echo $alert_radius_view; ?>
 							<p><a class="reset" href="#">Reset</a></p>
 						</div>
 						
-						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#">Type</a></h3>
+						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.type')?></a></h3>
 						<div class="f-type-box">
 							<ul class="filter-list fl-incident-mode">
 								<li>
@@ -90,7 +90,7 @@
 							</ul>
 						</div>
 						
-						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#">Media</a></h3>
+						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.media');?></a></h3>
 						<div class="f-media-box">
 							<p><?php echo Kohana::lang('ui_main.filter_reports_contain'); ?>&hellip;</p>
 							<ul class="filter-list fl-media">
@@ -114,11 +114,36 @@
 								</li>
 							</ul>
 						</div>
+						
+						<h3>
+							<a href="#" class="small-link-button f-clear reset">clear</a>
+							<a class="f-title" href="#"><?php echo Kohana::lang('ui_main.verification'); ?></a>
+						</h3>
+						<div class="f-verification-box">
+							<ul class="filter-list fl-verification">
+								<li>
+									<a href="#" id="filter_verification_link_1">
+										<span class="item-icon ic-verified">&nbsp;</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.verified'); ?></span>
+									</a>
+								</li>
+								<li>
+									<a href="#" id="filter_verification_link_0">
+										<span class="item-icon ic-unverified">&nbsp;</span>
+										<span class="item-title"><?php echo Kohana::lang('ui_main.unverified'); ?></span>
+									</a>
+								</li>
+								
+							</ul>
+						</div>
 					</div>
 					<!-- end #accordion -->
 					
 					<div id="filter-controls">
-						<p><a href="#" class="small-link-button reset">reset all filters</a> <a href="#" id="applyFilters" class="filter-button">Filter Reports</a></p>
+						<p>
+							<a href="#" class="small-link-button reset" id="reset_all_filters"><?php echo Kohana::lang('ui_main.reset_all_filters'); ?></a> 
+							<a href="#" id="applyFilters" class="filter-button">Filter Reports</a>
+						</p>
 					</div>          
 				</div>
 				<!-- end #filters-box -->

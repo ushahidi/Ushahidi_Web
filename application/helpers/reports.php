@@ -426,13 +426,15 @@ class reports_Core {
 		// Initialize the category id
 		$category_id = 0;
 		
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
 		// Fetch the URL data into a local variable
 		$url_data = array_merge($_GET);
 		
 		// Check if some parameter values are separated by "," except the location bounds
 		foreach ($url_data as $key => $value)
 		{
-			if ($key != 'sw' AND $key != 'ne' AND $key != "from_loc" AND $key != "radius" AND ! is_array($value))
+			if ($key != 'sw' AND $key != 'ne' AND $key != "from_loc" AND $key != "radius" AND !is_array($value))
 			{
 				if (is_array(explode(",", $value)))
 				{
@@ -609,21 +611,21 @@ class reports_Core {
 		{
 			// An array of media filters has been specified
 			// Validate the media types
+			$media_types = array();
 			foreach ($url_data['m'] as $media_type)
 			{
-				$media_types = array();
 				if (intval($media_type) > 0)
 				{
 					$media_types[] = intval($media_type);
 				}
-				
-				if (count($media_types) > 0)
-				{
-					array_push(self::$params, 
-						'i.id IN (SELECT DISTINCT incident_id FROM '.$this->table_prefix.'media WHERE media_type IN ('.implode(",", $media_types).'))'
-					);
-				}
 			}
+			if (count($media_types) > 0)
+			{
+				array_push(self::$params, 
+					'i.id IN (SELECT DISTINCT incident_id FROM '.$table_prefix.'media WHERE media_type IN ('.implode(",", $media_types).'))'
+				);
+			}
+			
 		}
 		elseif (isset($url_data['m']) AND !is_array($url_data['m']))
 		{
@@ -634,18 +636,35 @@ class reports_Core {
 			if (intval($media_type) > 0)
 			{
 				array_push(self::$params, 
-					'i.id IN (SELECT DISTINCT incident_id FROM '.$this->table_prefix.'media WHERE media_type = '.$media_type.')'
+					'i.id IN (SELECT DISTINCT incident_id FROM '.$table_prefix.'media WHERE media_type = '.$media_type.')'
 				);
 			}
 		}
 		
 		// 
 		// Check if the verification status has been specified
-		// The verification flags have to be explicit
 		// 
-		if (isset($url_data['v']) AND (intval($url_data['v']) == 0 OR intval($url_data['v']) == 1))
+		if (isset($url_data['v']) AND is_array($url_data['v']))
 		{
-			array_push(self::$params, 
+			$verified_status = array();
+			foreach ($url_data['v'] as $verified)
+			{
+				if (intval($verified) >= 0)
+				{
+					$verified_status[] = intval($verified);
+				}
+			}
+			
+			if (count($verified_status) > 0)
+			{
+				array_push(self::$params, 
+					'i.incident_verified IN ('.implode(",", $verified_status).')'
+				);
+			}
+		}
+		elseif (isset($url_data['v']) AND !is_array($url_data['v']) AND intval($url_data) >= 0)
+		{
+			array_push(self::$param, 
 				'i.incident_verified = '.intval($url_data['v'])
 			);
 		}

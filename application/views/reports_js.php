@@ -133,6 +133,17 @@
 		// Attach the "Filter Reports" action
 		attachFilterReportsAction();
 		
+		// When all the filters are reset
+		$("#reset_all_filters").click(function(){
+			// Deselect all filters
+			$.each($(".filter-list li a"), function(i, item){
+				$(item).removeClass("selected");
+			});
+			
+			// Reset the url parameters
+			urlParameters = {};
+		});
+		
 		$("#accordion").accordion({change: function(event, ui){
 			if ($(ui.newContent).hasClass("f-location-box"))
 			{
@@ -459,6 +470,11 @@
 						mediaType = currentItem.substring('filter_link_media_'.length);
 						removeParameterItem("m", mediaType);
 					}
+					else if (currentItem.indexOf('filter_link_verification_') != -1)
+					{
+						verification = currentItem.substring('filter_link_verification.length');
+						removeParameterItem("v", verification);
+					}
 				}
 			}
 		}
@@ -512,6 +528,17 @@
 			if (mediaTypes.length > 0)
 			{
 				urlParameters["m"] = mediaTypes;
+			}
+			
+			// Get the verification status
+			var verificationStatus = [];
+			$.each($(".fl-verification li a.selected"), function(i, item){
+				statusVal = item.id.substring("filter_link_verification_".length);
+				verificationStatus.push(statusVal);
+			});
+			if (verificationStatus.length > 0)
+			{
+				urlParameters["v"] = verificationStatus;
 			}
 			
 			

@@ -369,6 +369,7 @@ class Incident_Model extends ORM {
 			$sql .= 'LIMIT '.$limit->sql_offset.', '.$limit->items_per_page;
 		}
 		
+		// Kohana::log('debug', $sql);
 		// Database instance for the query
 		$db = new Database();
 		
