@@ -605,7 +605,6 @@
 		// Create vector layer
 		vLayer = new OpenLayers.Layer.Vector(layerName, {
 			projection: map.displayProjection,
-			preFeatureInsert: preFeatureInsert,
 			extractAttributes: true,
 			styleMap: new OpenLayers.StyleMap({'default' : reportStyle}),
 			strategies: [new OpenLayers.Strategy.Fixed()],
