@@ -166,6 +166,7 @@
 	'geometry_comments' => 'Comments',
 	'geometry_label' => 'Label',
 	'geometry_strokewidth' => 'Stroke Width',
+	'go' => 'Go',
 	'hashtag' => 'Hashtag',
 	'has_been' => 'Has Been',
 	'help' => 'How to Help',
