@@ -37,6 +37,7 @@
 		<!-- /Top reportbox section-->
 		
 		<!-- Report listing -->
+		<div class="r_cat_tooltip"><a href="#" class="r-3"></a></div>
 		<div class="rb_list-and-map-box">
 			<div id="rb_list-view">
 			<?php
@@ -97,8 +98,8 @@
 						<!-- Category Selector -->
 						<div class="r_categories">
 							<h4><?php echo Kohana::lang('ui_main.categories'); ?></h4>
-							<?php foreach ($incident->category AS $category): ?>
-					
+							<?php foreach ($incident->category as $category): ?>
+								
 								<?php // Don't show hidden categories ?>
 								<?php if($category->category_visible == 0) continue; ?>
 						
@@ -109,6 +110,7 @@
 										<span class="r_cat-desc"><?php echo $localized_categories[(string)$category->category_title];?></span>
 									</a>
 								<?php else:	?>
+									<?php Kohana::log('debug', Kohana::debug($category->category_color)); ?>
 									<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>">
 										<span class="r_cat-box" style="background-color:#<?php echo $category->category_color;?>;"></span> 
 										<span class="r_cat-desc"><?php echo $localized_categories[(string)$category->category_title];?></span>

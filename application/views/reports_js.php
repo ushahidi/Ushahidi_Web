@@ -118,69 +118,11 @@
 			return false;
 		});
 		
-		/**
-		 * Hover functionality for each report
-		 */
-		$(".rb_report").hover(
-			function () {
-				$(this).addClass("hover");
-			}, 
-			function () {
-				$(this).removeClass("hover");
-			}
-		);
-		
-		/**
-		 * Category tooltip functionality
-		 */
-		var $tt = $('.r_cat_tooltip');
-		$("a.r_category").hover(
-			function () {
-				// Place the category text inside the category tooltip
-				$tt.find('a').html($(this).find('.r_cat-desc').html());
-				
-				// Display the category tooltip
-				$tt.css({
-					'left': ($(this).offset().left - 6),
-					'top': ($(this).offset().top - 27)
-				}).show();
-			}, 
-			
-			function () {
-				$tt.hide();
-			}
-		);
-
-		/**
-		 * Show/hide categories and location for a report
-		 */
-		$("a.btn-show").click(function(){
-			var $reportBox = $(this).attr("href");
-		
-			// Hide self
-			$(this).hide();
-			if ($(this).hasClass("btn-more"))
-			{
-				// Show categories and location
-				$($reportBox + " .r_categories, " + $reportBox + " .r_location").slideDown();
-			
-				// Show the "show less" link
-				$($reportBox + " a.btn-less").show();
-			}
-			else if ($(this).hasClass("btn-less"))
-			{
-				// Hide categories and location
-				$($reportBox + " .r_categories, " + $reportBox + " .r_location").slideUp();
-			
-				// Show the "show more" link
-				$($reportBox + " a.btn-more").attr("style","");
-			};
-		
-			return false;		    
-		});
-
 		// Initialize accordion for Report Filters
 		$( "#accordion" ).accordion({autoHeight: false});
+		
+		// Report hovering events
+		addReportHoverEvents();
 		
 		// 	Events for toggling the report filters
 		addToggleReportsFilterEvents();
@@ -251,6 +193,67 @@
 
 
 	});
+	
+	/**
+	 * Registers the report hover event
+	 */
+	function addReportHoverEvents()
+	{
+		 // Hover functionality for each report
+		$(".rb_report").hover(
+			function () {
+				$(this).addClass("hover");
+			}, 
+			function () {
+				$(this).removeClass("hover");
+			}
+		);
+		
+		// Category tooltip functionality
+		var $tt = $('.r_cat_tooltip');
+		$("a.r_category").hover(
+			function () {
+				// Place the category text inside the category tooltip
+				$tt.find('a').html($(this).find('.r_cat-desc').html());
+				
+				// Display the category tooltip
+				$tt.css({
+					'left': ($(this).offset().left - 6),
+					'top': ($(this).offset().top - 27)
+				}).show();
+			}, 
+			
+			function () {
+				$tt.hide();
+			}
+		);
+
+		// Show/hide categories and location for a report
+		$("a.btn-show").click(function(){
+			var $reportBox = $(this).attr("href");
+		
+			// Hide self
+			$(this).hide();
+			if ($(this).hasClass("btn-more"))
+			{
+				// Show categories and location
+				$($reportBox + " .r_categories, " + $reportBox + " .r_location").slideDown();
+			
+				// Show the "show less" link
+				$($reportBox + " a.btn-less").show();
+			}
+			else if ($(this).hasClass("btn-less"))
+			{
+				// Hide categories and location
+				$($reportBox + " .r_categories, " + $reportBox + " .r_location").slideUp();
+			
+				// Show the "show more" link
+				$($reportBox + " a.btn-more").attr("style","");
+			};
+		
+			return false;		    
+		});
+	}
 	
 	/**
 	 * Creates the map and sets the loaded status to 1
@@ -385,6 +388,8 @@
 						$("#reports-box").html(data);
 				
 						attachPagingEvents();
+						addReportHoverEvents();
+						
 					}, 400);
 				}
 			}

@@ -171,6 +171,12 @@ class Json_Controller extends Template_Controller
 		
 		// Category ID
 		$category_id = (isset($_GET['c']) AND intval($_GET['c']) > 0) ? intval($_GET['c']) : 0;
+		
+		if (Category_Model::is_valid_category($category_id))
+		{
+			// Get the color
+			$color = ORM::factory('category', $category_id)->category_color;
+		}
 
 		// Create markers by marrying the locations and incidents
 		$markers = array();
@@ -245,7 +251,7 @@ class Json_Controller extends Template_Controller
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
 			$json_item .= "\"icon\": \"".$icon."\", ";
-			// $json_item .= "\"thumb\": \"\", ";
+			$json_item .= "\"thumb\": \"\", ";
 			$json_item .= "\"timestamp\": \"0\", ";
 			$json_item .= "\"count\": \"" . $cluster_count . "\"";
 			$json_item .= "},";

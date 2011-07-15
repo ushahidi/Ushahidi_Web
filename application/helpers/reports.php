@@ -26,10 +26,14 @@ class reports_Core {
 	/**
 	 * Validation of form fields
 	 *
-	 * @param mixed $post Variable that holds all that is submitted
+	 * @param Validation $post Validation object to be used for adding the validation rules
 	 */
 	public static function validate($post)
 	{
+		// Type checks
+		if ( ! $post instanceof Validation_Core)
+			return FALSE;
+		
 		$post->add_rules('incident_title','required', 'length[3,200]');
 		$post->add_rules('incident_description','required');
 		$post->add_rules('incident_date','required','date_mmddyyyy');
@@ -102,6 +106,8 @@ class reports_Core {
 			$post->add_rules('person_email', 'email', 'length[3,100]');
 		}
 		
+		// Return
+		return $post->validate();
 	}
 	
 	/**
@@ -426,7 +432,7 @@ class reports_Core {
 		// Check if some parameter values are separated by "," except the location bounds
 		foreach ($url_data as $key => $value)
 		{
-			if ($key != 'sw' AND $key != 'ne' AND $key != "from_loc" AND ! is_array($value))
+			if ($key != 'sw' AND $key != 'ne' AND $key != "from_loc" AND $key != "radius" AND ! is_array($value))
 			{
 				if (is_array(explode(",", $value)))
 				{
@@ -539,6 +545,7 @@ class reports_Core {
 				$bounds = $url_data['start_loc'];
 				if (count($bounds) == 2 AND is_numeric($bounds[0]) AND is_numeric($bounds[1]))
 				{
+					Kohana::log('debug', Kohana::debug($bounds));
 					// Get the maximum and minimum lat/lon via the proximity class
 					$proximity = new Proximity($bounds[0], $bounds[1], intval($url_data['radius']));
 					
@@ -630,6 +637,17 @@ class reports_Core {
 					'i.id IN (SELECT DISTINCT incident_id FROM '.$this->table_prefix.'media WHERE media_type = '.$media_type.')'
 				);
 			}
+		}
+		
+		// 
+		// Check if the verification status has been specified
+		// The verification flags have to be explicit
+		// 
+		if (isset($url_data['v']) AND (intval($url_data['v']) == 0 OR intval($url_data['v']) == 1))
+		{
+			array_push(self::$params, 
+				'i.incident_verified = '.intval($url_data['v'])
+			);
 		}
 		
 		//> END PARAMETER FETCH

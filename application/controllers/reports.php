@@ -288,14 +288,13 @@ class Reports_Controller extends Main_Controller {
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-			$post = Validation::factory(array_merge($_POST,$_FILES));
+			$post = Validation::factory(array_merge($_POST, $_FILES));
 
 			 //	 Add some filters
 			$post->pre_filter('trim', TRUE);
-
-			reports::validate($post);
+			
 			// Test to see if things passed the rule checks
-			if ($post->validate())
+			if (reports::validate($post))
 			{
 				// STEP 1: SAVE LOCATION
 				$location = new Location_Model();
