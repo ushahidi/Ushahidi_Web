@@ -312,6 +312,7 @@
 	'preview_item' => 'Preview Item',
 	'preview_message' => 'Preview Message',
 	'previous' => 'Previous',
+	'private' => 'Private',
 	'profile_saved' => 'Your Profile Has Been Saved',
 	'quick_stats' => 'Quick Stats',
 	'rating' => 'Rating',
