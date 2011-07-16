@@ -112,4 +112,13 @@ class Category_Model extends ORM_Tree {
 				: FALSE;
 	}
 	
+	/**
+	 * Gets the parent categories
+	 *
+	 * @return ORM_Iterator
+	 */
+	public static function get_parent_categories()
+	{
+		return self::factory('category')->where('parent_id', 0)->orderby('category_title', 'ASC')->find_all();
+	}
 }

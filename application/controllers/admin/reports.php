@@ -342,14 +342,14 @@ class Reports_Controller extends Admin_Controller
 		// setup and initialize form field names
 		$form = array
 		(
-			'location_id'	   => '',
-			'form_id'	   => '',
-			'locale'		   => '',
-			'incident_title'	  => '',
-			'incident_description'	  => '',
-			'incident_date'	 => '',
-			'incident_hour'		 => '',
-			'incident_minute'	   => '',
+			'location_id' => '',
+			'form_id' => '',
+			'locale' => '',
+			'incident_title' => '',
+			'incident_description' => '',
+			'incident_date' => '',
+			'incident_hour' => '',
+			'incident_minute' => '',
 			'incident_ampm' => '',
 			'latitude' => '',
 			'longitude' => '',
@@ -374,14 +374,7 @@ class Reports_Controller extends Admin_Controller
 		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
-		if ($saved == 'saved')
-		{
-			$form_saved = TRUE;
-		}
-		else
-		{
-			$form_saved = FALSE;
-		}
+		$form_saved = ($saved == 'saved');
 
 		// Initialize Default Values
 		$form['locale'] = Kohana::config('locale.language');
@@ -392,15 +385,15 @@ class Reports_Controller extends Admin_Controller
 		$form['incident_hour'] = date('h');
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
+		
 		// initialize custom field array
-		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
-
+		$form['custom_field'] = $this->_get_custom_form_fields($id, '', TRUE);
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
 		// Create Categories
-		$this->template->content->categories = $this->_get_categories();
+		$this->template->content->categories = Category_Model::get_parent_categories();
 		$this->template->content->new_categories_form = $this->_new_categories_form_arr();
 
 		// Time formatting
@@ -432,20 +425,23 @@ class Reports_Controller extends Admin_Controller
 		}
 		
 		$this->template->content->forms = $forms;
-
-		// Retrieve thumbnail photos (if edit);
-		//XXX: fix _get_thumbnails
-		$this->template->content->incident = $this->_get_thumbnails($id);
+		
+		// Get the incident media
+		$incident_media =  Incident_Model::is_valid_incident($id)
+			? ORM::factory('incident', $id)->media
+			: FALSE;
+		
+		$this->template->content->incident_media = $incident_media;
 
 		// Are we creating this report from SMS/Email/Twitter?
 		// If so retrieve message
-		if ( isset($_GET['mid']) && ! empty($_GET['mid']) ) {
+		if ( isset($_GET['mid']) AND intval($_GET['mid']) > 0 ) {
 
-			$message_id = (int) $_GET['mid'];
+			$message_id = intval($_GET['mid']);
 			$service_id = "";
 			$message = ORM::factory('message', $message_id);
 
-			if ($message->loaded == true && $message->message_type == 1)
+			if ($message->loaded AND $message->message_type == 1)
 			{
 				$service_id = $message->reporter->service_id;
 
@@ -462,6 +458,7 @@ class Reports_Controller extends Admin_Controller
 					$form['incident_title'] = $message->message;
 					$incident_description = $message->message_detail;
 				}
+				
 				$form['incident_description'] = $incident_description;
 				$form['incident_date'] = date('m/d/Y', strtotime($message->message_date));
 				$form['incident_hour'] = date('h', strtotime($message->message_date));
@@ -498,12 +495,12 @@ class Reports_Controller extends Admin_Controller
 		}
 
 		// Are we creating this report from a Newsfeed?
-		if ( isset($_GET['fid']) && !empty($_GET['fid']) )
+		if ( isset($_GET['fid']) AND intval($_GET['fid']) > 0 )
 		{
-			$feed_item_id = (int) $_GET['fid'];
+			$feed_item_id = intval($_GET['fid']);
 			$feed_item = ORM::factory('feed_item', $feed_item_id);
 
-			if ($feed_item->loaded == true)
+			if ($feed_item->loaded)
 			{
 				// Has a report already been created for this Feed item?
 				if ($feed_item->incident_id != 0)
@@ -541,117 +538,57 @@ class Reports_Controller extends Admin_Controller
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-			$post = Validation::factory(array_merge($_POST,$_FILES));
-
-			 //	 Add some filters
-			$post->pre_filter('trim', TRUE);
-
-			// Add some rules, the input field, followed by a list of checks, carried out in order
-			// $post->add_rules('locale','required','alpha_dash','length[5]');
-			$post->add_rules('location_id','numeric');
-			$post->add_rules('message_id','numeric');
+			$post = array_merge($_POST, $_FILES);
 			
-			reports::validate($post);
-			// Validate Custom Fields
-			if (isset($post->custom_field) && !$this->_validate_custom_form_fields($post->custom_field))
+			// Check if the service id exists
+			if (isset($service_id) AND intval($service_id) > 0)
 			{
-				$post->add_error('custom_field', 'values');
+				$post = array_merge($post, array('service_id' => $service_id));
 			}
-
-			$post->add_rules('incident_active','required', 'between[0,1]');
-			$post->add_rules('incident_verified','required', 'length[0,1]');
-			$post->add_rules('incident_source','numeric', 'length[1,1]');
-			$post->add_rules('incident_information','numeric', 'length[1,1]');
-
-
+			
+			// 
+			// Notes: E.Kala 16th July 2011
+			// @todo Will have to rethink this event call
+			// 
 			// Action::report_submit_admin - Report Posted
-			Event::run('ushahidi_action.report_submit_admin', $post);
+			// Event::run('ushahidi_action.report_submit_admin', $post);
 
-
-			// Test to see if things passed the rule checks
-			if ($post->validate())
+			// Validate
+			if (reports::validate($post, TRUE))
 			{
 				// Yes! everything is valid
 				$location_id = $post->location_id;
+				
 				// STEP 1: SAVE LOCATION
 				$location = new Location_Model($location_id);
-				reports::save_location($location, $post);
+				reports::save_location($post, $location);
 
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model($id);
-				reports::check_incident($incident, $location, $post, $id);
+				reports::save_incident($post, $incident, $location_id, $_SESSION["auth_user"]->id);
 				
-				// Is this an Email, SMS, Twitter submitted report?
-				if(!empty($service_id))
-				{
-					// SMS
-					if ($service_id == 1)
-					{ 
-						$incident->incident_mode = 2;
-					}
-					// Email
-					elseif ($service_id == 2)
-					{ 
-						$incident->incident_mode = 3;
-					}
-					// Twitter
-					elseif ($service_id == 3)
-					{ 
-						$incident->incident_mode = 4;
-					}
-				}
-				// Incident Evaluation Info
-				$incident->incident_active = $post->incident_active;
-				$incident->incident_verified = $post->incident_verified;
-				$incident->incident_source = $post->incident_source;
-				$incident->incident_information = $post->incident_information;
-				$incident->incident_zoom = (int) $post->incident_zoom;
-
-				// Tag this as a report that needs to be sent out as an alert
-				if ($incident->incident_active == '1' AND $incident->incident_alert_status != '2')
-				{ // 2 = report that has had an alert sent
-					$incident->incident_alert_status = '1';
-					$incident->save();
-				}
-				// Remove alert if report is unactivated and alert hasn't yet been sent
-				if ($incident->incident_active == '0' AND $incident->incident_alert_status == '1')
-				{
-					$incident->incident_alert_status = '0';
-					$incident->save();
-				}
-
 				// STEP 2b: Record Approval/Verification Action
 				$verify = new Verify_Model();
-				reports::verify_approve($verify, $incident, $post);
+				reports::verify_approve($post, $verify, $incident);
 				
 				// STEP 2c: SAVE INCIDENT GEOMETRIES
-				reports::save_inc_geometry($incident);
-				
+				reports::save_inc_geometry($post, $incident);
 
 				// STEP 3: SAVE CATEGORIES
-				// Delete Previous Entries
-				ORM::factory('Incident_Category')->where('incident_id',$incident->id)->delete_all();		
 				reports::save_category($post, $incident);
 
-
 				// STEP 4: SAVE MEDIA
-				// Delete Previous Entries
-				ORM::factory('Media')->where('incident_id',$incident->id)->where('media_type <> 1')->delete_all();		
-				reports::save_media($location, $incident, $post);
-
+				reports::save_media($post, $incident);
 
 				// STEP 5: SAVE PERSONAL INFORMATION
-				// Delete Previous Entries
-				ORM::factory('Incident_Person')->where('incident_id',$incident->id)->delete_all();		
-				reports::save_personal_info($incident, $location, $post);
-
+				reports::save_personal_info($post, $incident);
 
 				// STEP 6a: SAVE LINK TO REPORTER MESSAGE
 				// We're creating a report from a message with this option
-				if(isset($message_id) && $message_id != "")
+				if (isset($message_id) AND intval($message_id) > 0)
 				{
 					$savemessage = ORM::factory('message', $message_id);
-					if ($savemessage->loaded == true)
+					if ($savemessage->loaded)
 					{
 						$savemessage->incident_id = $incident->id;
 						$savemessage->save();
@@ -671,10 +608,10 @@ class Reports_Controller extends Admin_Controller
 
 				// STEP 6b: SAVE LINK TO NEWS FEED
 				// We're creating a report from a newsfeed with this option
-				if(isset($feed_item_id) && $feed_item_id != "")
+				if (isset($feed_item_id) AND intval($feed_item_id) > 0)
 				{
 					$savefeed = ORM::factory('feed_item', $feed_item_id);
-					if ($savefeed->loaded == true)
+					if ($savefeed->loaded)
 					{
 						$savefeed->incident_id = $incident->id;
 						$savefeed->location_id = $location->id;
@@ -700,8 +637,8 @@ class Reports_Controller extends Admin_Controller
 					// Save and close
 					url::redirect('admin/reports/');
 				}
+				
 			}
-
 			// No! We have validation errors, we need to show the form again, with the errors
 			else
 			{
@@ -715,7 +652,7 @@ class Reports_Controller extends Admin_Controller
 		}
 		else
 		{
-			if ( $id )
+			if (Incident_Model::is_valid_incident($id))
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident', $id);
@@ -834,7 +771,7 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
 
-		if (!$form['latitude'] || !$form['latitude'])
+		if ( ! $form['latitude'] OR !$form['latitude'])
 		{
 			$this->template->js->latitude = Kohana::config('settings.default_lat');
 			$this->template->js->longitude = Kohana::config('settings.default_lon');
@@ -900,15 +837,15 @@ class Reports_Controller extends Admin_Controller
 			$post->add_rules('to_date','date_mmddyyyy');
 
 			// Validate the report dates, if included in report filter
-			if (!empty($_POST['from_date']) || !empty($_POST['to_date']))
+			if (!empty($_POST['from_date']) OR !empty($_POST['to_date']))
 			{
 				// Valid FROM Date?
-				if (empty($_POST['from_date']) || (strtotime($_POST['from_date']) > strtotime("today"))) {
+				if (empty($_POST['from_date']) OR (strtotime($_POST['from_date']) > strtotime("today"))) {
 					$post->add_error('from_date','range');
 				}
 
 				// Valid TO date?
-				if (empty($_POST['to_date']) || (strtotime($_POST['to_date']) > strtotime("today"))) {
+				if (empty($_POST['to_date']) OR (strtotime($_POST['to_date']) > strtotime("today"))) {
 					$post->add_error('to_date','range');
 				}
 
@@ -926,23 +863,30 @@ class Reports_Controller extends Admin_Controller
 				// Report Type Filter
 				foreach($post->data_point as $item)
 				{
-					if ($item == 1) {
+					if ($item == 1)
+					{
 						$filter .= " OR incident_active = 1 ";
 					}
-					if ($item == 2) {
+					
+					if ($item == 2)
+					{
 						$filter .= " OR incident_verified = 1 ";
 					}
-					if ($item == 3) {
+					
+					if ($item == 3)
+					{
 						$filter .= " OR incident_active = 0 ";
 					}
-					if ($item == 4) {
+					
+					if ($item == 4)
+					{
 						$filter .= " OR incident_verified = 0 ";
 					}
 				}
 				$filter .= ") ";
 
 				// Report Date Filter
-				if (!empty($post->from_date) && !empty($post->to_date))
+				if (!empty($post->from_date) AND !empty($post->to_date))
 				{
 					$filter .= " AND ( incident_date >= '" . date("Y-m-d H:i:s",strtotime($post->from_date)) . "' AND incident_date <= '" . date("Y-m-d H:i:s",strtotime($post->to_date)) . "' ) ";
 				}
@@ -1362,33 +1306,6 @@ class Reports_Controller extends Admin_Controller
 
 	/* private functions */
 
-	// Return thumbnail photos
-	//XXX: This needs to be fixed, it's probably ok to return an empty iterable instead of "0"
-	private function _get_thumbnails( $id )
-	{
-		$incident = ORM::factory('incident', $id);
-
-		if ( $id )
-		{
-			$incident = ORM::factory('incident', $id);
-
-			return $incident;
-
-		}
-		return "0";
-	}
-
-	private function _get_categories()
-	{
-		$categories = ORM::factory('category')
-			//->where('category_visible', '1')
-			->where('parent_id', '0')
-			->orderby('category_title', 'ASC')
-			->find_all();
-
-		return $categories;
-	}
-
 	// Dynamic categories form fields
 	private function _new_categories_form_arr()
 	{
@@ -1496,15 +1413,21 @@ class Reports_Controller extends Admin_Controller
 		if (array_key_exists('locale', $post->errors()))
 			return;
 
-		$iid = (int) $_GET['iid'];
-		if (empty($iid)) {
-			$iid = 0;
-		}
-		$translate = ORM::factory('incident_lang')->where('incident_id',$iid)->where('locale',$post->locale)->find();
-		if ($translate->loaded == true) {
+		$iid = (isset($_GET['iid']) AND intval($_GTE['iid'] > 0))? intval($_GET['iid']) : 0;
+		
+		// Load translation
+		$translate = ORM::factory('incident_lang')
+						->where('incident_id',$iid)
+						->where('locale',$post->locale)
+						->find();
+		
+		if ($translate->loaded)
+		{
 			$post->add_error( 'locale', 'exists');
-		// Not found
-		} else {
+		}
+		else
+		{
+			// Not found
 			return;
 		}
 	}
@@ -1512,12 +1435,14 @@ class Reports_Controller extends Admin_Controller
 
 	/**
 	 * Retrieve Custom Form Fields
+	 * @todo Purge this and make use of the custom forms helper
+	 *
 	 * @param bool|int $incident_id The unique incident_id of the original report
 	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
 	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
 	 * @param bool $data_only Whether or not to include just data
 	 */
-	private function _get_custom_form_fields($incident_id = false, $form_id = 1, $data_only = false)
+	private function _get_custom_form_fields($incident_id = FALSE, $form_id = 1, $data_only = FALSE)
 	{
 		$fields_array = array();
 
@@ -1557,38 +1482,6 @@ class Reports_Controller extends Admin_Controller
 		}
 
 		return $fields_array;
-	}
-
-
-	/**
-	 * Validate Custom Form Fields
-	 * @param array $custom_fields Array
-	 */
-	private function _validate_custom_form_fields($custom_fields = array())
-	{
-		$custom_fields_error = "";
-
-		foreach ($custom_fields as $field_id => $field_response)
-		{
-			// Get the parameters for this field
-			$field_param = ORM::factory('form_field', $field_id);
-			if ($field_param->loaded == true)
-			{
-				// Validate for required
-				if ($field_param->field_required == 1 && $field_response == "")
-				{
-					return false;
-				}
-
-				// Validate for date
-				if ($field_param->field_isdate == 1 && $field_response != "")
-				{
-					$myvalid = new Valid();
-					return $myvalid->date_mmddyyyy($field_response);
-				}
-			}
-		}
-		return true;
 	}
 
 

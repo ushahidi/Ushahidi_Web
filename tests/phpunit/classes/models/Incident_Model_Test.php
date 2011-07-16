@@ -57,6 +57,12 @@ class Incident_Model_Test extends PHPUnit_Framework_TestCase {
 		// Get active incident
 		$active_incident = testutils::get_random_id('incident', 'WHERE incident_active = 1');
 		$this->assertEquals(TRUE, Incident_Model::is_valid_incident($active_incident, TRUE));
+		
+		// Null incident value
+		$this->assertEquals(FALSE, Incident_Model::is_valid_incident(NULL));
+		
+		// Non numeric incident value
+		$this->assertEquals(FALSE, Incident_Model::is_valid_incident('0.999'));
 	}
 }
 ?>

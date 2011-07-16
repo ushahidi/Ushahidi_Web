@@ -239,7 +239,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit');
 
-		// setup and initialize form field names
+		// Setup and initialize form field names
 		$form = array
 		(
 			'incident_title' => '',
@@ -288,34 +288,30 @@ class Reports_Controller extends Main_Controller {
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-			$post = Validation::factory(array_merge($_POST, $_FILES));
+			$post = array_merge($_POST, $_FILES);
 
-			 //	 Add some filters
-			$post->pre_filter('trim', TRUE);
-			
 			// Test to see if things passed the rule checks
 			if (reports::validate($post))
 			{
 				// STEP 1: SAVE LOCATION
 				$location = new Location_Model();
-				reports::save_location($location, $post);
+				reports::save_location($post, $location);
 				
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model();
-				reports::check_incident($incident, $location, $post);
-				$incident->save();
+				reports::save_incident($post, $incident, $location->id, $_SESSION['auth_user']->id);
 
 				// STEP 3: SAVE CATEGORIES
 				reports::save_category($post, $incident);
 
 				// STEP 4: SAVE MEDIA
-				reports::save_media($location, $incident, $post);
+				reports::save_media($post, $incident);
 
 				// STEP 5: SAVE CUSTOM FORM FIELDS
-				reports::save_custom_fields($incident, $post);
+				reports::save_custom_fields($post, $incident);
 
 				// STEP 6: SAVE PERSONAL INFORMATION
-				reports::save_personal_info($incident, $location, $post);
+				reports::save_personal_info($post, $incident);
 
 				// Action::report_add - Added a New Report
 				Event::run('ushahidi_action.report_add', $incident);

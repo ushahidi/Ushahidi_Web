@@ -386,10 +386,10 @@
 							<div class="row link-row">
 								<h4><?php echo Kohana::lang('ui_main.reports_photos');?></h4>
 								<?php								
-    								if ($incident != "0")
+    								if ($incident_media)
                         			{
                         				// Retrieve Media
-                        				foreach($incident->media as $photo) 
+                        				foreach($incident_media as $photo) 
                         				{
                         					if ($photo->media_type == 1)
                         					{
