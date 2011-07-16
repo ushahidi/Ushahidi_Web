@@ -274,15 +274,15 @@ class Reports_Controller extends Main_Controller {
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
 		// initialize custom field array
-		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
+		$form['custom_field'] = customforms::get_custom_form_fields($id,'',true);
 		//GET custom forms
 		$forms = array();
-		foreach (ORM::factory('form')->find_all() as $custom_forms)
+		foreach (customforms::get_custom_forms() as $custom_forms)
 		{
 			$forms[$custom_forms->id] = $custom_forms->form_title;
 		}
 		$this->template->content->forms = $forms;
-
+		
 
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
@@ -327,6 +327,7 @@ class Reports_Controller extends Main_Controller {
 
 				// populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('report'));
+				$errors = array_merge($errors,$custom_errors);
 				$form_error = TRUE;
 			}
 		}
@@ -348,8 +349,11 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->site_timezone = Kohana::config('settings.site_timezone');
 
 		// Retrieve Custom Form Fields Structure
-		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
+		$this->template->content->custom_forms = new View('reports_submit_custom_forms');
+		$disp_custom_fields = customforms::get_custom_form_fields($id,$form['form_id'],false);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
+		$this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
+		$this->template->content->custom_forms->form = $form;
 
 		// Javascript Header
 		$this->themes->map_enabled = TRUE;
@@ -667,11 +671,13 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->js->incident_photos = $incident_photo;
 
 		// Initialize custom field array
-		$form_field_names = $this->_get_custom_form_fields($id, $incident->form_id, FALSE);
+		$this->template->content->custom_forms = new View('reports_view_custom_forms');
+		$form_field_names = customforms::get_custom_form_fields($id,$incident->form_id,false, "view");
+		$this->template->content->custom_forms->form_field_names = $form_field_names;
 
 		// Retrieve Custom Form Fields Structure
-		$disp_custom_fields = $this->_get_custom_form_fields($id, $incident->form_id, TRUE);
-		$this->template->content->disp_custom_fields = $disp_custom_fields;
+		$disp_custom_fields =customforms::get_custom_form_fields($id,$incident->form_id,true, "view");
+		$this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
 
 		// Are we allowed to submit comments?
 		$this->template->content->comments_form = "";
@@ -1006,5 +1012,20 @@ class Reports_Controller extends Main_Controller {
 			return TRUE;
 		}
 	}
+	   
 	
+	/**
+	 * Ajax call to update Incident Reporting Form
+    */
+    public function switch_form()
+    {
+        $this->template = "";
+        $this->auto_render = FALSE;
+        isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
+        isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
+
+		$form_fields = customforms::switcheroo($incident_id,$form_id);
+        echo json_encode(array("status"=>"success", "response"=>$form_fields));
+    }
+
 } // End Reports

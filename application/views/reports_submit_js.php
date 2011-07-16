@@ -327,3 +327,20 @@
 	      });
 	
 		});
+        
+		function formSwitch(form_id, incident_id)
+        {
+            var answer = confirm('Are You Sure You Want To SWITCH Forms?');
+            if (answer){
+                $('#form_loader').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+                $.post("<?php echo url::base() . '/reports/switch_form' ?>", { form_id: form_id, incident_id: incident_id },
+                    function(data){
+                        if (data.status == 'success'){
+                            $('#custom_forms').html('');
+                            $('#custom_forms').html(unescape(data.response));
+                            $('#form_loader').html('');
+                        }
+                    }, "json");
+            }
+        }
+
