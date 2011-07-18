@@ -157,7 +157,8 @@ class customforms_Core {
 				if ($split[1] == 'BLANKHACK')
 				{
 					if(!isset($custom_fields[$split[0]]))
-					{ // then no checkboxes were checked
+					{ 
+						// then no checkboxes were checked
 						$custom_fields[$split[0]] = ''; 
 					}
 					// E.Kala - Removed the else {} block; either way continue is still invoked
@@ -207,9 +208,9 @@ class customforms_Core {
 			{
 				foreach ($field_options as $option => $value)
 				{
-					if($option == 'field_datatype')
+					if ($option == 'field_datatype')
 					{
-						if($value == 'email' AND !valid::email($field_response))
+						if ($value == 'email' AND !valid::email($field_response))
 							array_push($errors,"The $custom_name field requires a valid email address");
 
 						if ($value == 'phonenumber' AND !valid::phone($field_response))
@@ -251,9 +252,9 @@ class customforms_Core {
 				}
 				
 				$responses = explode(',',$field_response);
-				foreach($responses as $response)
+				foreach ($responses as $response)
 				{
-					if( ! in_array($response, $options) AND $response != '')
+					if ( ! in_array($response, $options) AND $response != '')
 					{
 						array_push($errors,"The $custom_name field does not include $response as an option");
 					}

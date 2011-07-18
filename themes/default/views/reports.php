@@ -49,20 +49,35 @@
 					<h2>Filter Reports By</h2>
 					<div id="accordion">
 						
-						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.category')?></a></h3>
+						<h3>
+							<a href="#" class="small-link-button f-clear reset" onclick="removeParameterKey('c', 'fl-categories');"><?php echo Kohana::lang('ui_main.clear')?></a>
+							<a class="f-title" href="#"><?php echo Kohana::lang('ui_main.category')?></a>
+						</h3>
 						<div class="f-category-box">
-			          		<ul class="filter-list fl-categories" id="category-filter-list">
+							<ul class="filter-list fl-categories" id="category-filter-list">
+								<li>
+									<a href="#">
+									<span class="item-swatch" style="background-color: #<?php echo Kohana::config('settings.default_map_all'); ?>">&nbsp;</span>
+									<span class="item-title"><?php echo Kohana::lang('ui_main.all_categories'); ?></span>
+									<span class="item-count" id="all_report_count"><?php echo Incident_Model::get_incidents()->count(); ?></span>
+									</a>
+								</li>
+								<?php echo $category_tree_view; ?>
 							</ul>
 						</div>
 						
 						<h3><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.location'); ?></a></h3>
-						
 						<div class="f-location-box">
 							<?php echo $alert_radius_view; ?>
 							<p><a class="reset" href="#">Reset</a></p>
 						</div>
 						
-						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.type')?></a></h3>
+						<h3>
+							<a href="#" class="small-link-button f-clear reset" onclick="removeParameterKey('mode', 'fl-incident-mode');">
+								<?php echo Kohana::lang('ui_main.clear')?>
+							</a>
+							<a class="f-title" href="#"><?php echo Kohana::lang('ui_main.type')?></a>
+						</h3>
 						<div class="f-type-box">
 							<ul class="filter-list fl-incident-mode">
 								<li>
@@ -90,7 +105,10 @@
 							</ul>
 						</div>
 						
-						<h3><a href="#" class="small-link-button f-clear reset">clear</a><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.media');?></a></h3>
+						<h3>
+							<a href="#" class="small-link-button f-clear reset" onclick="removeParameterKey('m', 'fl-media');"><?php echo Kohana::lang('ui_main.clear')?></a>
+							<a class="f-title" href="#"><?php echo Kohana::lang('ui_main.media');?></a>
+						</h3>
 						<div class="f-media-box">
 							<p><?php echo Kohana::lang('ui_main.filter_reports_contain'); ?>&hellip;</p>
 							<ul class="filter-list fl-media">
@@ -116,7 +134,9 @@
 						</div>
 						
 						<h3>
-							<a href="#" class="small-link-button f-clear reset">clear</a>
+							<a href="#" class="small-link-button f-clear reset" onclick="removeParameterKey('v', 'fl-verification');">
+								<?php echo Kohana::lang('ui_main.clear'); ?>
+							</a>
 							<a class="f-title" href="#"><?php echo Kohana::lang('ui_main.verification'); ?></a>
 						</h3>
 						<div class="f-verification-box">
@@ -163,77 +183,3 @@
 	</div>
 	<!-- end content-bg -->
 </div>
-
-
-<!-- Begin Reports Listing Javascript -->
-<script type="text/javascript">
-	$(document).ready(function(){
-		
-		// START: Populate category filter list
-		function populateCategoryFilter()
-		{
-			var cat_class = '';
-			var cat_selected = '';
-			
-			var categoryHtml = "<li>" + 
-						"<a href=\"#\"><span class=\"item-swatch\" style=\"background-color:#CC0000\">&nbsp;</span>" + 
-						"<span class=\"item-title\">All Categories</span><span class=\"item-count\" id=\"all_report_count\">0</span>" +
-						"</a></li>";
-		
-			$('#category-filter-list').html(categoryHtml);
-			
-			// Grab all the categories
-			categories_json_url = '<?php echo url::site(); ?>api/?task=categories';
-			
-			$.getJSON(categories_json_url, function(data) {
-				$.each(data.payload.categories, function(i,item){
-					
-					// 	Get the category class
-					cat_class = (item.category.parent_id != 0)? 'report-listing-category-child' : '';
-					
-					// TODO: set var cat_selected to "selected" if it has been selected
-					
-					categoryHtml = "<li class=\""+cat_class+"\">" +
-							"<a href=\"#\" class=\""+cat_selected+"\" id=\"filter_link_cat_"+item.category.id+"\">" +
-							"<span class=\"item-swatch\" style=\"background-color:#"+item.category.color+"\">&nbsp;</span>" +
-							"<span class=\"item-title\">"+item.category.title+"</span>" +
-							"<span class=\"item-count\" id=\"report_count_cat_"+item.category.id+"\">0</span>" +
-							"</a></li>";
-					
-					$('#category-filter-list').append(categoryHtml);
-					
-					addToggleReportsFilterEvents();
-					
-				},populateCategoryFilterCounts());
-			});
-		}
-		
-		populateCategoryFilter();
-		// END: Populate category filter list
-		
-		// START: Populate report counts for category filter
-		function populateCategoryFilterCounts()
-		{
-			// Grab report counts for the categories
-			catcount_json_url = '<?php echo url::site(); ?>api/?task=incidents&by=catcount';
-			$.getJSON(catcount_json_url, function(data) {
-				$.each(data.payload.category_counts, function(i,item){
-					$('#report_cat_count_'+item.category_id).ready(function(){
-						$('#report_count_cat_'+item.category_id).html(item.reports);
-					});
-				});
-				
-				// Display total
-				$('#all_report_count').html(data.payload.total_reports);
-				
-			});
-		}
-		
-		//populateCategoryFilterCounts();
-		// END: Populate report counts for category filter
-		
-	});
-</script>
-<!-- End Reports Listing Javascript -->
-
-

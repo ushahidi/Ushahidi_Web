@@ -65,6 +65,7 @@
 	'choose_data_points' => 'Choose data points to download',
 	'choose_field_type' => 'Choose field type',
 	'cleanurl' => 'Clean URLs',
+	'clear' => 'Clear',
 	'clear_map' => 'Clear Map',
 	'close' => 'Close',
 	'clusters' => 'clusters',

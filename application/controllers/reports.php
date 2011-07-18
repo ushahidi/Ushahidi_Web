@@ -109,6 +109,10 @@ class Reports_Controller extends Main_Controller {
 		$total_verified = Incident_Model::get_total_reports_by_verified(true);
 		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
 		
+		// Category tree view
+		$this->template->content->category_tree_view = category::get_category_tree_view(0, TRUE);
+		
+		// Additional view content
 		$this->template->content->oldest_timestamp = $oldest_timestamp;
 		$this->template->content->latest_timestamp = $latest_timestamp;
 		$this->template->content->report_stats->total_reports = $total_reports;

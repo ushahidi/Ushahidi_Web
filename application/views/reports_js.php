@@ -105,7 +105,7 @@
 			report_date_from = $("#report_date_from").val();
 			report_date_to = $("#report_date_to").val();
 			
-			if (report_date_from != '' && report_date_to != '')
+			if ($(this).id == "applyDateFilter" && report_date_from != '' && report_date_to != '')
 			{
 				// Add the parameters
 				urlParameters["from"] = report_date_from;
@@ -142,6 +142,9 @@
 			
 			// Reset the url parameters
 			urlParameters = {};
+		
+			// Fetch all reports
+			fetchReports();
 		});
 		
 		$("#accordion").accordion({change: function(event, ui){
@@ -280,14 +283,6 @@
 	
 	function addToggleReportsFilterEvents()
 	{
-		/**
-		 * onclick, remove all highlighting on filter list items and hide the item clicked
-		 */
-		$("a.f-clear").click(function(){
-			$(".filter-list li a").removeClass("selected");
-			$(this).addClass("hide");
-		});
-
 		// toggle highlighting on the filter lists
 		$(".filter-list li a").toggle(
 			function(){
@@ -499,6 +494,7 @@
 			
 			if (category_ids.length > 0)
 			{
+				console.log(category_ids);
 				urlParameters["c"] = category_ids;
 			}
 			
@@ -541,9 +537,8 @@
 				urlParameters["v"] = verificationStatus;
 			}
 			
-			
 			// Fetch the reports
-			fetchReports(urlParameters);
+			fetchReports();
 			
 		});
 	}
@@ -616,4 +611,26 @@
 				
 		// Add the vector layer to the map
 		map.addLayer(vLayer);
+	}
+	
+	/**
+	 * Clears the filter for a particular section
+	 * @param {string} parameterKey: Key of the parameter remove from the list of url parameters
+	 * @param {string} filterClass: CSS class of the section containing the filters
+	 */
+	function removeParameterKey(parameterKey, filterClass)
+	{
+		if (typeof parameterKey == 'undefined' || typeof parameterKey != 'string')
+			return;
+		
+		if (typeof $("."+filterClass) == 'undefined')
+			return;
+		
+		// Deselect
+		$.each($("." + filterClass +" li a.selected"), function(i, item){
+			$(item).removeClass("selected");
+		});
+		
+		// Remove the parameter key from urlParameters
+		delete urlParameters[parameterKey];
 	}

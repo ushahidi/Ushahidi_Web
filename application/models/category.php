@@ -113,12 +113,51 @@ class Category_Model extends ORM_Tree {
 	}
 	
 	/**
-	 * Gets the parent categories
+	 * Given a parent id, gets the immediate children for the category, else gets the list
+	 * of all categories with parent id 0
 	 *
+	 * @param int $parent_id
 	 * @return ORM_Iterator
 	 */
-	public static function get_parent_categories()
+	public static function get_categories($parent_id = 0, $exclude_trusted = TRUE)
 	{
-		return self::factory('category')->where('parent_id', 0)->orderby('category_title', 'ASC')->find_all();
+		// Check if the specified parent is valid
+		$where = (intval($parent_id) > 0 AND self::is_valid_category($parent_id))
+			? array('parent_id' => $parent_id)
+			: array('parent_id' => 0);
+		
+		// Exclude trusted reports
+		if ($exclude_trusted)
+		{
+			$where = array_merge($where, array('category_title !=' => 'Trusted Reports'));
+		}
+		
+		// Return
+		return self::factory('category')->where($where)->orderby('category_title', 'ASC')->find_all();
+	}
+	
+	/**
+	 * Gets the report count for a specific category
+	 *
+	 * @param int $category_id Category id
+	 * @param bool $approved Whether to get the list of approved or unapproved reports only
+	 * @return int
+	 */
+	public static function get_report_count($category_id, $approved = TRUE)
+	{
+		if (self::is_valid_category($category_id))
+		{
+			// Parameters
+			$params = array(
+				'c.id = '.$category_id.' OR c.parent_id = '.$category_id
+			);
+			
+			// Return the count
+			return Incident_Model::get_incidents($params)->count();
+		}
+		else
+		{
+			return 0;
+		}
 	}
 }
