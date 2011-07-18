@@ -319,8 +319,6 @@ class Reports_Controller extends Admin_Controller
 		// Javascript Header
 		$this->template->js = new View('admin/reports_js');
 	}
-
-
 	/**
 	* Edit a report
 	* @param bool|int $id The id no. of the report
@@ -393,7 +391,7 @@ class Reports_Controller extends Admin_Controller
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
 		// initialize custom field array
-		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
+        $form['custom_field'] = customforms::get_custom_form_fields($id,'',true);
 
 
 		// Locale (Language) Array
@@ -617,11 +615,9 @@ class Reports_Controller extends Admin_Controller
 				$post->add_rules('person_email', 'email', 'length[3,100]');
 			}
 
-			// Validate Custom Fields
-			if (isset($post->custom_field) && !$this->_validate_custom_form_fields($post->custom_field))
-			{
-				$post->add_error('custom_field', 'values');
-			}
+            // Validate Custom Fields
+			$custom_errors = array();
+			$custom_errors = customforms::validate_custom_form_fields($post);
 
 			$post->add_rules('incident_active','required', 'between[0,1]');
 			$post->add_rules('incident_verified','required', 'length[0,1]');
@@ -634,7 +630,7 @@ class Reports_Controller extends Admin_Controller
 
 
 			// Test to see if things passed the rule checks
-			if ($post->validate())
+            if ($post->validate() && count($custom_errors) == 0)
 			{
 				// Yes! everything is valid
 				$location_id = $post->location_id;
@@ -1017,7 +1013,7 @@ class Reports_Controller extends Admin_Controller
 						'person_first' => $incident->incident_person->person_first,
 						'person_last' => $incident->incident_person->person_last,
 						'person_email' => $incident->incident_person->person_email,
-						'custom_field' => $this->_get_custom_form_fields($id,$incident->form_id,true),
+						'custom_field' => customforms::get_custom_form_fields($id,$incident->form_id,true),
 						'incident_active' => $incident->incident_active,
 						'incident_verified' => $incident->incident_verified,
 						'incident_source' => $incident->incident_source,
@@ -1044,8 +1040,12 @@ class Reports_Controller extends Admin_Controller
 		$this->template->content->form_saved = $form_saved;
 
 		// Retrieve Custom Form Fields Structure
-		$disp_custom_fields = $this->_get_custom_form_fields($id,$form['form_id'],false);
-		$this->template->content->disp_custom_fields = $disp_custom_fields;
+		$this->template->content->custom_forms = new View('reports_submit_custom_forms');
+        $disp_custom_fields = customforms::get_custom_form_fields($id,$form['form_id'],false,"view");
+		$custom_field_mismatch = customforms::get_edit_mismatch($form['form_id']);
+        $this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
+		$this->template->content->custom_forms->custom_field_mismatch = $custom_field_mismatch;
+		$this->template->content->custom_forms->form = $form;
 
 		// Retrieve Previous & Next Records
 		$previous = ORM::factory('incident')->where('id < ', $id)->orderby('id','desc')->find();
@@ -1130,7 +1130,8 @@ class Reports_Controller extends Admin_Controller
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
 			$post->add_rules('data_point.*','required','numeric','between[1,4]');
-			$post->add_rules('data_include.*','numeric','between[1,5]');
+			//$post->add_rules('data_include.*','numeric','between[1,5]');
+			$post->add_rules('data_include.*','numeric','between[1,6]');
 			$post->add_rules('from_date','date_mmddyyyy');
 			$post->add_rules('to_date','date_mmddyyyy');
 
@@ -1208,8 +1209,22 @@ class Reports_Controller extends Admin_Controller
 					if($item == 5) {
 						$report_csv .= ",LONGITUDE";
 					}
+					if($item == 6)
+					{
+						$custom_titles = ORM::factory('form_field')->orderby('field_position','desc')->find_all();
+						foreach($custom_titles as $field_name)
+						{
+
+							$report_csv .= ",".$field_name->field_name;
+						}	
+
+					}
+
 				}
+				
 				$report_csv .= ",APPROVED,VERIFIED";
+				
+				
 				$report_csv .= "\n";
 
 				foreach ($incidents as $incident)
@@ -1250,6 +1265,16 @@ class Reports_Controller extends Admin_Controller
 							case 5:
 								$report_csv .= ',"'.$this->_csv_text($incident->location->longitude).'"';
 							break;
+
+							case 6:
+								$incident_id = $incident->id;
+								$custom_fields = ORM::factory('form_response')->where('incident_id',$incident_id)->orderby('form_field_id','desc')->find_all();
+								foreach($custom_fields as $custom_field)
+								{
+									$report_csv .=',"'.$this->_csv_text($custom_field->form_response).'"';
+								}	
+								break;
+
 						}
 					}
 					
@@ -1746,163 +1771,19 @@ class Reports_Controller extends Admin_Controller
 
 
 	/**
-	 * Retrieve Custom Form Fields
-	 * @param bool|int $incident_id The unique incident_id of the original report
-	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
-	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
-	 * @param bool $data_only Whether or not to include just data
-	 */
-	private function _get_custom_form_fields($incident_id = false, $form_id = 1, $data_only = false)
-	{
-		$fields_array = array();
-
-		if (!$form_id)
-		{
-			$form_id = 1;
-		}
-		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
-		foreach ($custom_form->form_field as $custom_formfield)
-		{
-			if ($data_only)
-			{ // Return Data Only
-				$fields_array[$custom_formfield->id] = '';
-
-				foreach ($custom_formfield->form_response as $form_response)
-				{
-					if ($form_response->incident_id == $incident_id)
-					{
-						$fields_array[$custom_formfield->id] = $form_response->form_response;
-					}
-				}
-			}
-			else
-			{ // Return Field Structure
-				$fields_array[$custom_formfield->id] = array(
-					'field_id' => $custom_formfield->id,
-					'field_name' => $custom_formfield->field_name,
-					'field_type' => $custom_formfield->field_type,
-					'field_required' => $custom_formfield->field_required,
-					'field_maxlength' => $custom_formfield->field_maxlength,
-					'field_height' => $custom_formfield->field_height,
-					'field_width' => $custom_formfield->field_width,
-					'field_isdate' => $custom_formfield->field_isdate,
-					'field_response' => ''
-					);
-			}
-		}
-
-		return $fields_array;
-	}
-
-
-	/**
-	 * Validate Custom Form Fields
-	 * @param array $custom_fields Array
-	 */
-	private function _validate_custom_form_fields($custom_fields = array())
-	{
-		$custom_fields_error = "";
-
-		foreach ($custom_fields as $field_id => $field_response)
-		{
-			// Get the parameters for this field
-			$field_param = ORM::factory('form_field', $field_id);
-			if ($field_param->loaded == true)
-			{
-				// Validate for required
-				if ($field_param->field_required == 1 && $field_response == "")
-				{
-					return false;
-				}
-
-				// Validate for date
-				if ($field_param->field_isdate == 1 && $field_response != "")
-				{
-					$myvalid = new Valid();
-					return $myvalid->date_mmddyyyy($field_response);
-				}
-			}
-		}
-		return true;
-	}
-
-
-	/**
 	 * Ajax call to update Incident Reporting Form
 	 */
-	public function switch_form()
-	{
-		$this->template = "";
-		$this->auto_render = FALSE;
+    public function switch_form()
+    {
+        $this->template = "";
+        $this->auto_render = FALSE;
 
-		isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
-		isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
-
-		$html = "";
-		$fields_array = array();
-		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
-
-		foreach ($custom_form->form_field as $custom_formfield)
-		{
-			$fields_array[$custom_formfield->id] = array(
-				'field_id' => $custom_formfield->id,
-				'field_name' => $custom_formfield->field_name,
-				'field_type' => $custom_formfield->field_type,
-				'field_required' => $custom_formfield->field_required,
-				'field_maxlength' => $custom_formfield->field_maxlength,
-				'field_height' => $custom_formfield->field_height,
-				'field_width' => $custom_formfield->field_width,
-				'field_isdate' => $custom_formfield->field_isdate,
-				'field_response' => ''
-				);
-
-			// Load Data, if Any
-			foreach ($custom_formfield->form_response as $form_response)
-			{
-				if ($form_response->incident_id = $incident_id)
-				{
-					$fields_array[$custom_formfield->id]['field_response'] = $form_response->form_response;
-				}
-			}
-		}
-
-		foreach ($fields_array as $field_property)
-		{
-			$html .= "<div class=\"row\">";
-			$html .= "<h4>" . $field_property['field_name'] . "</h4>";
-			if ($field_property['field_type'] == 1)
-			{ // Text Field
-				// Is this a date field?
-				if ($field_property['field_isdate'] == 1)
-				{
-					$html .= form::input('custom_field['.$field_property['field_id'].']', $field_property['field_response'],
-						' id="custom_field_'.$field_property['field_id'].'" class="text"');
-					$html .= "<script type=\"text/javascript\">
-							$(document).ready(function() {
-							$(\"#custom_field_".$field_property['field_id']."\").datepicker({
-							showOn: \"both\",
-							buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\",
-							buttonImageOnly: true
-							});
-							});
-						</script>";
-				}
-				else
-				{
-					$html .= form::input('custom_field['.$field_property['field_id'].']', $field_property['field_response'],
-						' id="custom_field_'.$field_property['field_id'].'" class="text custom_text"');
-				}
-			}
-			elseif ($field_property['field_type'] == 2)
-			{ // TextArea Field
-				$html .= form::textarea('custom_field['.$field_property['field_id'].']',
-					$field_property['field_response'], ' class="custom_text" rows="3"');
-			}
-			$html .= "</div>";
-		}
-
-		echo json_encode(array("status"=>"success", "response"=>$html));
-	}
+        isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
+        isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
+		$form_fields = customforms::switcheroo($incident_id,$form_id);
+	
+        echo json_encode(array("status"=>"success", "response"=>$form_fields));
+    }
 
 	/**
 	 * Creates a SQL string from search keywords
