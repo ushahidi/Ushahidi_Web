@@ -11,7 +11,7 @@ $config['site_domain'] = '';
  * specified, then the current protocol is used, or when possible, only an
  * absolute path (with no protocol/domain) is used.
  */
-$config['site_protocol'] = 'https';
+$config['site_protocol'] = 'http';
 
 /**
  * Name of the front controller for this application. Default: index.php

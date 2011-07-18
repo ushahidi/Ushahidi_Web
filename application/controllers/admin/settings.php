@@ -150,6 +150,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
 
+
 				// Delete Settings Cache
 				$this->cache->delete('settings');
 				$this->cache->delete_tag('settings');

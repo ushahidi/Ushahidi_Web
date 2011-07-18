@@ -866,8 +866,23 @@ ul.pager li a.active {background:#f2f7fa;}
 	width:363px;
 	padding:10px 5px;
 }
+div.custom_div {
+	width: 100%;
+    padding: 5px;
+    border: 1px dotted #C0C2B0;
+    margin-bottom: 20px;
+}
+div.custom_div h2 {
+    font-size: 150%;
+    margin-bottom: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 5px;
+    background: #E8E8E8;
+}
 .report-form input.custom_text {
 	width:363px;
+	margin-bottom: 10px;
 }
 .report-form textarea{
 	width:368px;
@@ -1583,6 +1598,8 @@ a.new-form_field{
 .forms_fields_edit{
 	font-size:10px;
 	margin:5px 0 0 0;
+	padding-bottom:10px;
+	border-bottom:1px solid #ccc;
 }
 .forms_fields_loading{
 	float:left;

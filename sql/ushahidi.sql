@@ -1370,8 +1370,38 @@ ALTER TABLE `form_response`
   ADD CONSTRAINT `form_response_ibfk_1` FOREIGN KEY (`form_field_id`) REFERENCES `form_field` (`id`) ON DELETE CASCADE;
   
 /**
+* Table Structure for table `form_field_option`
+*/
+CREATE TABLE IF NOT EXISTS `form_field_option` (
+	`id` int(11) NOT NULL auto_increment,
+	`form_field_id` int(11) NOT NULL default '0',
+	`option_name` varchar(200) default NULL,
+	`option_value` text default NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+
+
+/**
+* Add fields to table `form_field`
+*/
+
+ALTER TABLE `form_field` ADD `field_ispublic_visible` tinyint(4) NOT NULL default '0';
+ 
+ALTER TABLE `form_field` ADD  `field_ispublic_submit` tinyint(4) NOT NULL default '0';
+
+
+/**
+* Add field to table `roles`
+*/
+
+ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
+
+
+/**
 * Version information for table `settings`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '57' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '58' WHERE `id`=1 LIMIT 1;

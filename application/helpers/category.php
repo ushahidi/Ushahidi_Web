@@ -9,10 +9,10 @@
  */
 class category_Core {
 
-	/**
-	 * Displays a single category checkbox.
-	 */
-        public static function display_category_checkbox($category, $selected_categories, $form_field, $enable_parents = false)
+		/**
+		 * Displays a single category checkbox.
+		 */
+	public static function display_category_checkbox($category, $selected_categories, $form_field, $enable_parents = FALSE)
 	{
 		$html = '';
 
@@ -21,13 +21,9 @@ class category_Core {
 		// Get locale
 		$l = Kohana::config('locale.language.0');
 
-		$translated_title = Category_Lang_Model::category_title($cid,$l);
-		if($translated_title)
-		{
-			$category_title = $translated_title;
-		}else{
-			$category_title = $category->category_title;
-		}
+		$translated_title = Category_Lang_Model::category_title($cid, $l);
+		
+		$category_title = ($translated_title)? $translated_title :  $category->category_title;
 
 		//$category_title = $category->category_title;
 		$category_color = $category->category_color;
@@ -36,7 +32,7 @@ class category_Core {
 		$category_checked = in_array($cid, $selected_categories);
 
 		$disabled = "";
-		if (!$enable_parents && $category->children->count() > 0)
+		if (!$enable_parents AND $category->children->count() > 0)
 		{
 			$disabled = " disabled=\"disabled\"";
 		}
@@ -51,7 +47,7 @@ class category_Core {
 	/**
 	 * Display category tree with input checkboxes.
 	 */
-	public static function tree($categories, array $selected_categories, $form_field, $columns = 1, $enable_parents = false)
+	public static function tree($categories, array $selected_categories, $form_field, $columns = 1, $enable_parents = FALSE)
 	{
 		$html = '';
 
@@ -104,5 +100,47 @@ class category_Core {
 		}
 
 		return $html;
+	}
+	
+	/**
+	 * Generates a category tree view - recursively iterates
+	 *
+	 * @param int $parent_id Parent category whose tree is to be generated
+	 * @param bool $show_incident_count When TRUE, shows the no. of reports under each category
+	 * @return string
+	 */
+	public static function get_category_tree_view($parent_id = 0, $show_report_count = FALSE)
+	{
+		// To hold the return string
+		$category_tree_html = "";
+		
+		// Get the the child categories
+		$categories = Category_Model::get_categories($parent_id);
+		foreach ($categories as $category)
+		{
+			// Get the category class
+			$category_class = ($category->parent_id > 0)? " class=\"report-listing-category-child\"" : "";
+			
+			$category_tree_html .= "<li".$category_class.">"
+							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$category->id."\">"
+							. "<span class=\"item-swatch\" style=\"background-color: #".$category->category_color."\">&nbsp;</span>"
+							. "<span class=\"item-title\">".$category->category_title."</span>";
+			
+			// Check if the report count is to be shown alongside each category
+			if ($show_report_count)
+			{
+				$category_tree_html .= "<span class=\"item-count\" id=\"report_cat_count_".$category->id."\">".Category_Model::get_report_count($category->id)."</span>";
+			}
+			
+			// Close the category link
+			$category_tree_html .= "</a></li>";
+			
+			// Fetch the children
+			$category_tree_html .= self::get_category_tree_view($category->id, $show_report_count);
+			
+			// $category_tree_html .= "</li>";
+		}
+		// Return the listing
+		return $category_tree_html;
 	}
 }
