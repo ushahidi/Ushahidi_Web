@@ -133,7 +133,9 @@ class category_Core {
 		foreach (Database::instance()->query($sql) as $category)
 		{
 			// Extend the category data array
-			if (self::_extend_category_data($category_data, $category))
+			self::_extend_category_data($category_data, $category);
+			
+			if (array_key_exists($category->parent_id, $category_data))
 			{
 				// Add children
 				$category_data[$category->parent_id]['children'][$category->id] = array(
@@ -145,7 +147,7 @@ class category_Core {
 				);
 			
 				// Update the report count
-				Kohana::log('debug', Kohana::debug($category));
+				// Kohana::log('debug', Kohana::debug($category));
 				$category_data[$category->parent_id]['report_count'] += $category->report_count;
 			}
 		}
@@ -165,9 +167,9 @@ class category_Core {
 		// Check if the category is a top-level parent category
 		$temp_category = ($category->parent_id == 0)? $category : ORM::factory('category', $category->parent_id);
 		
-		if ( ! $temp_category->loaded)
+		if ($temp_category instanceof CategoryModel AND ! $temp_category->loaded)
 			return FALSE;
-		
+			
 		// Extend the array
 		if ( ! array_key_exists($temp_category->id, $array))
 		{
@@ -179,12 +181,12 @@ class category_Core {
 				'report_count' => $report_count,
 				'children' => array()
 			);
+			
+			return TRUE;
 		}
 		
 		// Garbage collection
-		unset ($temp_category);
-		
-		return TRUE;
+		return FALSE;
 	}
 	
 	/**
