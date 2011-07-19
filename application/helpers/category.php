@@ -105,42 +105,115 @@ class category_Core {
 	/**
 	 * Generates a category tree view - recursively iterates
 	 *
-	 * @param int $parent_id Parent category whose tree is to be generated
-	 * @param bool $show_incident_count When TRUE, shows the no. of reports under each category
 	 * @return string
 	 */
-	public static function get_category_tree_view($parent_id = 0, $show_report_count = FALSE)
+	public static function get_category_tree_view()
 	{
-		// To hold the return string
-		$category_tree_html = "";
+		// To hold the category data
+		$category_data = array();
 		
-		// Get the the child categories
-		$categories = Category_Model::get_categories($parent_id);
-		foreach ($categories as $category)
+		// Fetch all the top level parent categories
+		foreach (Category_Model::get_categories() as $category)
 		{
-			// Get the category class
-			$category_class = ($category->parent_id > 0)? " class=\"report-listing-category-child\"" : "";
-			
-			$category_tree_html .= "<li".$category_class.">"
-							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$category->id."\">"
-							. "<span class=\"item-swatch\" style=\"background-color: #".$category->category_color."\">&nbsp;</span>"
-							. "<span class=\"item-title\">".$category->category_title."</span>";
-			
-			// Check if the report count is to be shown alongside each category
-			if ($show_report_count)
-			{
-				$category_tree_html .= "<span class=\"item-count\" id=\"report_cat_count_".$category->id."\">".Category_Model::get_report_count($category->id)."</span>";
-			}
-			
-			// Close the category link
-			$category_tree_html .= "</a></li>";
-			
-			// Fetch the children
-			$category_tree_html .= self::get_category_tree_view($category->id, $show_report_count);
-			
-			// $category_tree_html .= "</li>";
+			self::_extend_category_data($category_data, $category);
 		}
-		// Return the listing
-		return $category_tree_html;
+		
+		// Get the table prefix
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
+		// Fetch the other categories
+		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, COUNT(ic.incident_id) report_count "
+			. "FROM ".$table_prefix."category c "
+			. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
+			. "WHERE c.category_visible = 1 "
+			. "GROUP BY c.category_title "
+			. "ORDER BY c.category_title ASC";
+		
+		// Add child categories
+		foreach (Database::instance()->query($sql) as $category)
+		{
+			// Extend the category data array
+			if (self::_extend_category_data($category_data, $category))
+			{
+				// Add children
+				$category_data[$category->parent_id]['children'][$category->id] = array(
+					'category_title' => $category->category_title,
+					'parent_id' => $category->parent_id,
+					'category_color' => $category->category_color,
+					'report_count' => $category->report_count,
+					'children' => array()
+				);
+			
+				// Update the report count
+				Kohana::log('debug', Kohana::debug($category));
+				$category_data[$category->parent_id]['report_count'] += $category->report_count;
+			}
+		}
+		
+		// Generate and return the HTML
+		return self::_generate_treeview_html($category_data);
+	}
+	
+	/**
+	 * Helper method for adding parent categories to the category data
+	 *
+	 * @param array $array Pointer to the array containing the category data
+	 * @param mixed $category Object Category object to be added tot he array
+	 */
+	private static function _extend_category_data(array & $array, $category)
+	{
+		// Check if the category is a top-level parent category
+		$temp_category = ($category->parent_id == 0)? $category : ORM::factory('category', $category->parent_id);
+		
+		if ( ! $temp_category->loaded)
+			return FALSE;
+		
+		// Extend the array
+		if ( ! array_key_exists($temp_category->id, $array))
+		{
+			$report_count = property_exists($temp_category, 'report_count')? $temp_category->report_count : 0;
+			$array[$temp_category->id] = array(
+				'category_title' => $temp_category->category_title,
+				'parent_id' => $temp_category->parent_id,
+				'category_color' => $temp_category->category_color,
+				'report_count' => $report_count,
+				'children' => array()
+			);
+		}
+		
+		// Garbage collection
+		unset ($temp_category);
+		
+		return TRUE;
+	}
+	
+	/**
+	 * Traverses an array containing category data and returns a tree view
+	 *
+	 * @param array $category_data
+	 * @return string
+	 */
+	private static function _generate_treeview_html($category_data)
+	{
+		// To hold the treeview HTMl
+		$tree_html = "";
+		
+		foreach ($category_data as $id => $category)
+		{
+			// Determine the category class
+			$category_class = ($category['parent_id'] > 0)? " class=\"report-listing-category-child\"" : "";
+			
+			$tree_html .= "<li".$category_class.">"
+							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$id."\">"
+							. "<span class=\"item-swatch\" style=\"background-color: #".$category['category_color']."\">&nbsp;</span>"
+							. "<span class=\"item-title\">".htmlspecialchars($category['category_title'])."</span>"
+							. "<span class=\"item-count\">".$category['report_count']."</span>"
+							. "</a></li>";
+							
+			$tree_html .= self::_generate_treeview_html($category['children']);
+		}
+		
+		// Return
+		return $tree_html;
 	}
 }

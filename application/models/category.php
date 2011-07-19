@@ -135,29 +135,4 @@ class Category_Model extends ORM_Tree {
 		// Return
 		return self::factory('category')->where($where)->orderby('category_title', 'ASC')->find_all();
 	}
-	
-	/**
-	 * Gets the report count for a specific category
-	 *
-	 * @param int $category_id Category id
-	 * @param bool $approved Whether to get the list of approved or unapproved reports only
-	 * @return int
-	 */
-	public static function get_report_count($category_id, $approved = TRUE)
-	{
-		if (self::is_valid_category($category_id))
-		{
-			// Parameters
-			$params = array(
-				'c.id = '.$category_id.' OR c.parent_id = '.$category_id
-			);
-			
-			// Return the count
-			return Incident_Model::get_incidents($params)->count();
-		}
-		else
-		{
-			return 0;
-		}
-	}
 }
