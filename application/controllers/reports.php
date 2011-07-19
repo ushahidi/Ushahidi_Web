@@ -106,11 +106,11 @@ class Reports_Controller extends Main_Controller {
 		$avg_reports_per_day = ($days_since < 1)? $total_reports : round(($total_reports / $days_since),2);
 		
 		// Percent Verified
-		$total_verified = Incident_Model::get_total_reports_by_verified(true);
+		$total_verified = Incident_Model::get_total_reports_by_verified(TRUE);
 		$percent_verified = ($total_reports == 0) ? '-' : round((($total_verified / $total_reports) * 100),2).'%';
 		
 		// Category tree view
-		$this->template->content->category_tree_view = category::get_category_tree_view(0, TRUE);
+		$this->template->content->category_tree_view = category::get_category_tree_view();
 		
 		// Additional view content
 		$this->template->content->oldest_timestamp = $oldest_timestamp;

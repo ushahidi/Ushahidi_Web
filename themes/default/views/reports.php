@@ -59,7 +59,7 @@
 									<a href="#">
 									<span class="item-swatch" style="background-color: #<?php echo Kohana::config('settings.default_map_all'); ?>">&nbsp;</span>
 									<span class="item-title"><?php echo Kohana::lang('ui_main.all_categories'); ?></span>
-									<span class="item-count" id="all_report_count"><?php echo Incident_Model::get_incidents()->count(); ?></span>
+									<span class="item-count" id="all_report_count"><?php echo $report_stats->total_reports; ?></span>
 									</a>
 								</li>
 								<?php echo $category_tree_view; ?>
