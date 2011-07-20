@@ -86,9 +86,11 @@
 					<li><span><a href="<?php echo str_replace('{page}', $i, $url) ?>"><?php echo $i ?></a></span></li>
 				<?php endif ?>
 			<?php endfor ?>
-
-			<li>&hellip;</li>
-			<li><span><a href="<?php echo str_replace('{page}', $total_pages, $url) ?>"><?php echo $total_pages ?></a></span></li>
+			
+			<?php if (($current_page + 1) < $total_pages): ?>
+				<li>&hellip;</li>
+				<li><span><a href="<?php echo str_replace('{page}', $total_pages, $url) ?>"><?php echo $total_pages ?></a></span></li>
+			<?php endif; ?>
 
 		<?php endif ?>
 
