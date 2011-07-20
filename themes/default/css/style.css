@@ -2264,6 +2264,8 @@ ul.filter-list li a { display:block; position:relative; overflow:auto; padding:3
 	
 	#accordion .ui-accordion-header a.hide { display:none; }
 	
+	.ui-datepicker { display:none; } /* fixes bug where an empty datepicker div was showing up on the bottom of the reports page */
+	
 	
 /* Rounded Corners */
 .r-3 { -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
