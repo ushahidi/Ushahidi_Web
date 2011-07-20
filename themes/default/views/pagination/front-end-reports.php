@@ -44,12 +44,24 @@
 			<li>&hellip;</li>
 			<li><span><a href="<?php echo str_replace('{page}', $total_pages - 1, $url) ?>"><?php echo $total_pages - 1 ?></a></span></li>
 			<li><span><a href="<?php echo str_replace('{page}', $total_pages, $url) ?>"><?php echo $total_pages ?></a></span></li>
-
-		<?php elseif ($current_page < 50): ?>	
+		
+		<?php elseif ($current_page < 100): ?>	
 			<li><span><a href="<?php echo str_replace('{page}', 1, $url) ?>">1</a></span></li>
 			<li>&hellip;</li>
-			<?php $num_subtract = ($current_page > 10)? 1:  2; ?>	
-			<?php for ($i = $current_page - $num_subtract; $i <= $current_page + 2; $i++): ?>
+			
+			<?php
+				$num_pages_substract = 0;
+				$num_pages_add = 0;
+				$num_pages_subtract = ($total_pages == $current_page)? 3 : 2;
+				
+				if ($current_page < $total_pages)
+				{
+					$num_pages_subtract = ($current_page > 10) ? 1 : 2;
+					$num_pages_add = (($total_pages - $current_page) > 4) ? 2 : ($total_pages - $current_page);
+				}
+			?>
+			
+			<?php for ($i = $current_page - $num_pages_subtract; $i <= $current_page + $num_pages_add; $i++): ?>
 				<?php if ($i == $current_page): ?>
 					<li><span><a href="#" class="active"><?php echo $i ?></a></span></li>
 				<?php else: ?>
@@ -57,27 +69,17 @@
 				<?php endif ?>
 			<?php endfor; ?>
 			
-			<li>&hellip;</li>
-			<li><span><a href="<?php echo str_replace('{page}', $total_pages, $url) ?>"><?php echo $total_pages ?></a></span></li>
-			
-		<?php elseif ($current_page >= $total_pages - 3): /* « Previous  1 2 … 17 18 19 20 21 22 23 24 25 26  Next » */ ?>
-			<li><span><a href="<?php echo str_replace('{page}', 1, $url) ?>">1</a></span></li>
-			<li>&hellip;</li>
-			<?php $start_page = ($current_page == $total_pages)? 5 : 2; ?>	
-			<?php for ($i = $current_page - $start_page; $i <= $total_pages; $i++): ?>
-				<?php if ($i == $current_page): ?>
-					<li><span><a href="#" class="active"><?php echo $i ?></a></span></li>
-				<?php else: ?>
-					<li><span><a href="<?php echo str_replace('{page}', $i, $url) ?>"><?php echo $i ?></a></span></li>
-				<?php endif ?>
-			<?php endfor ?>
+			<?php if (($current_page + ($num_pages_add + 1)) < $total_pages): ?>
+				<li>&hellip;</li>
+				<li><span><a href="<?php echo str_replace('{page}', $total_pages, $url) ?>"><?php echo $total_pages ?></a></span></li>
+			<?php endif; ?>
 			
 		<?php else: /* « Previous  1 2 … 5 6 7 8 9 10 11 12 13 14 … 25 26  Next » */ ?>
 
 			<li><span><a href="<?php echo str_replace('{page}', 1, $url) ?>">1</a></span></li>
 			<li>&hellip;</li>
 
-			<?php for ($i = $current_page - 2; $i <= $current_page + 1; $i++): ?>
+			<?php for ($i = $current_page - 1; $i <= $current_page + 1; $i++): ?>
 				<?php if ($i == $current_page): ?>
 					<li><span><a class="active" href="#"><?php echo $i ?></a></span></li>
 				<?php else: ?>
