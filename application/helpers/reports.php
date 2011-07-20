@@ -200,7 +200,7 @@ class reports_Core {
 		// Verify that the location id exists
 		if ( ! Location_Model::is_valid_location($location_id))
 		{
-			throw new Kohana_Exception(sprintf('Invalid location id specified: ', $locatio_id));
+			throw new Kohana_Exception(sprintf('Invalid location id specified: ', $location_id));
 		}
 		
 		// Is this new or edit?
