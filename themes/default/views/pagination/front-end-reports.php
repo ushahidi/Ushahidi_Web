@@ -48,8 +48,8 @@
 		<?php elseif ($current_page < 50): ?>	
 			<li><span><a href="<?php echo str_replace('{page}', 1, $url) ?>">1</a></span></li>
 			<li>&hellip;</li>
-
-			<?php for ($i = $current_page - 2; $i <= $current_page + 2; $i++): ?>
+			<?php $num_subtract = ($current_page > 10)? 1:  2; ?>	
+			<?php for ($i = $current_page - $num_subtract; $i <= $current_page + 2; $i++): ?>
 				<?php if ($i == $current_page): ?>
 					<li><span><a href="#" class="active"><?php echo $i ?></a></span></li>
 				<?php else: ?>
