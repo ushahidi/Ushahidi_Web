@@ -78,8 +78,8 @@
 
 			<li><span><a href="<?php echo str_replace('{page}', 1, $url) ?>">1</a></span></li>
 			<li>&hellip;</li>
-
-			<?php for ($i = $current_page - 1; $i <= $current_page + 1; $i++): ?>
+			<?php $num_pages_add = ($current_page == $total_pages): 0 : 1; ?>	
+			<?php for ($i = $current_page - 1; $i <= $current_page + $num_pages_add; $i++): ?>
 				<?php if ($i == $current_page): ?>
 					<li><span><a class="active" href="#"><?php echo $i ?></a></span></li>
 				<?php else: ?>
