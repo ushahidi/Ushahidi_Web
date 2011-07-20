@@ -567,7 +567,7 @@ class reports_Core {
 	 *	- location radius
 	 *
 	 * @param $paginate Optionally paginate the incidents - Default is FALSE
-	 * @return Result
+	 * @return Database_Result
 	 */
 	public static function fetch_incidents($paginate = FALSE)
 	{
@@ -689,19 +689,14 @@ class reports_Core {
 		if (isset($url_data['radius']) AND isset($url_data['start_loc']))
 		{
 			if (intval($url_data['radius']) > 0 AND is_array($url_data['start_loc']))
-			{
+			{				
 				$bounds = $url_data['start_loc'];
 				if (count($bounds) == 2 AND is_numeric($bounds[0]) AND is_numeric($bounds[1]))
 				{
-					// Get the maximum and minimum lat/lon via the proximity class
-					$proximity = new Proximity($bounds[0], $bounds[1], intval($url_data['radius']));
-					
-					// Build the parameters
-					array_push(self::$params, 
-						'l.latitude >= '.$proximity->minLat,
-						'l.latitude <= '.$proximity->maxLat,
-						'l.longitude >= '.$proximity->minLong,
-						'l.longitude <= '.$proximity->maxLong
+					self::$params['radius'] = array(
+						'distance' => intval($url_data['radius']),
+						'latitude' => $bounds[0],
+						'longitude' => $bounds[1]
 					);
 				}
 			}
@@ -836,6 +831,6 @@ class reports_Core {
 			// Return
 			return $all_incidents;
 		}
-	}
+	}	
 }
 ?>

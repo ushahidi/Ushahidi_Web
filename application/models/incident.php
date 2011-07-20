@@ -258,7 +258,7 @@ class Incident_Model extends ORM {
 			. 'FROM '.$table_prefix.'incident ';
 		
 		// Check if the range has been specified and is non-zero then add predicates to the query
-		if ($range != NULL AND $range > 0)
+		if ($range != NULL AND intval($range) > 0)
 		{
 			$sql .= 'WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.$db->escape_str($range).' DAY) ';
 		}
@@ -324,16 +324,44 @@ class Incident_Model extends ORM {
 	 * @param mixed $limit No. of records to fetch or an instance of Pagination
 	 * @param string $order_field Column by which to order the records
 	 * @param string $sort How to order the records - only ASC or DESC are allowed
-	 * @return Result
+	 * @return Database_Result
 	 */
 	public static function get_incidents($where = array(), $limit = NULL, $order_field = NULL, $sort = NULL)
 	{
+		// Get the table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
+		
+		// To store radius parameters
+		$radius = array();
+		$having_clause = "";
+		if (array_key_exists('radius', $where))
+		{
+			// Grab the radius parameter
+			$radius = $where['radius'];
+			
+			// Delete radius parameter from the list of predicates
+			unset ($where['radius']);
+		}
 		
 		// Query
 		$sql = 'SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, i.incident_mode, i.incident_active, '
-			. 'i.incident_verified, i.location_id, l.location_name, l.latitude, l.longitude '
-			. 'FROM '.$table_prefix.'incident i '
+			. 'i.incident_verified, i.location_id, l.location_name, l.latitude, l.longitude ';
+		
+		// Check if all the parameters exist
+		if (count($radius) > 0 AND array_key_exists('latitude', $radius) AND array_key_exists('longitude', $radius) 
+			AND array_key_exists('distance', $radius))
+		{
+			// Calculate the distance of each point from the starting point
+			$sql .= ", ((ACOS(SIN(%s * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS(%s * PI() / 180) * "
+				. "	COS(l.`latitude` * PI() / 180) * COS((%s - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance ";
+			
+			$sql = sprintf($sql, $radius['latitude'], $radius['latitude'], $radius['longitude']);
+			
+			// Set the "HAVING" clause
+			$having_clause = "HAVING distance <= ".intval($radius['distance'])." ";
+		}
+		
+		$sql .=  'FROM '.$table_prefix.'incident i '
 			. 'INNER JOIN '.$table_prefix.'location l ON (i.location_id = l.id) '
 			. 'INNER JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
 			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) '
@@ -348,6 +376,9 @@ class Incident_Model extends ORM {
 				$sql .= 'AND '.$predicate.' ';
 			}
 		}
+		
+		// Add the having clause
+		$sql .= $having_clause;
 		
 		// Check for the order field and sort parameters
 		if ( ! empty($order_field) AND ! empty($sort) AND (strtoupper($sort) == 'ASC' OR strtoupper($sort) == 'DESC'))
