@@ -100,6 +100,10 @@
 				// Clear the date range values
 				$("#report_date_from").val("");
 				$("#report_date_to").val("");
+				
+				// Clear the url parameters
+				delete urlParameters['from'];
+				delete urlParameters['to'];
 			}
 			else if ($(this).attr("id") == 'dateRangeToday')
 			{
