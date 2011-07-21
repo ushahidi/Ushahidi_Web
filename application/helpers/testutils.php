@@ -13,7 +13,7 @@
  */
 
 // Table prefix for the tables
-define('TABLE_PREFIX', Kohana::config('database.table_prefix'));
+define('TABLE_PREFIX', Kohana::config('database.default.table_prefix'));
 
 class testutils_Core {	
 	

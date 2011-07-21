@@ -112,4 +112,27 @@ class Category_Model extends ORM_Tree {
 				: FALSE;
 	}
 	
+	/**
+	 * Given a parent id, gets the immediate children for the category, else gets the list
+	 * of all categories with parent id 0
+	 *
+	 * @param int $parent_id
+	 * @return ORM_Iterator
+	 */
+	public static function get_categories($parent_id = 0, $exclude_trusted = TRUE)
+	{
+		// Check if the specified parent is valid
+		$where = (intval($parent_id) > 0 AND self::is_valid_category($parent_id))
+			? array('parent_id' => $parent_id)
+			: array('parent_id' => 0);
+		
+		// Exclude trusted reports
+		if ($exclude_trusted)
+		{
+			$where = array_merge($where, array('category_title !=' => 'Trusted Reports'));
+		}
+		
+		// Return
+		return self::factory('category')->where($where)->orderby('category_title', 'ASC')->find_all();
+	}
 }

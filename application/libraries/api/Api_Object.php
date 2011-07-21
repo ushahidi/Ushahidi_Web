@@ -262,7 +262,7 @@ abstract class Api_Object_Core {
 
 		// Check if the specified limit is
 		// Set the list limit
-		$this->list_limit = (is_numeric($limit) AND intval($limit) > 0) ? $limit : $this->list_limit;
+		$this->list_limit = (intval($limit) > 0) ? intval($limit) : $this->list_limit;
 	}
 
 	/**

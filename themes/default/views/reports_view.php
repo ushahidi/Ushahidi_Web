@@ -65,7 +65,9 @@
 		<div class="report-description-text">
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
 			<?php echo $incident_description; ?>
-			<br/>	
+			<br/>
+			
+				
 			<!-- start news source link -->
 			<div class="credibility">
 			<h5><?php echo Kohana::lang('ui_main.reports_news');?></h5>
@@ -81,6 +83,18 @@
 						}
 					} ?>
 			<!-- end news source link -->
+			</div>
+
+			<!-- start additional fields -->
+			<div class="credibility">
+			<h5>Additional Information</a>
+			</h5>
+			<?php
+				echo $custom_forms;
+
+			?>
+			<br/>
+			<!-- end additional fields -->
 			</div>
 
 			<?php if ($features_count)
@@ -181,6 +195,9 @@
 				</div>
 			<?php } ?>
 			<!-- end videos -->
+
+
+
 		
 		</div>
 		<div class="report-additional-reports">

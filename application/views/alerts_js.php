@@ -15,14 +15,10 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-		var map;
-		var map_layer;
-		var radius = 20000;
-		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
-		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
-		var markers;
-		var radiusLayer;
+		<?php require_once(APPPATH.'views/map_common_js.php'); ?>
 		
+		var map;
+		var radiusLayer;
 		jQuery(function($) {
 			
 			$(window).load(function(){
@@ -34,64 +30,17 @@
 				 */
 			?>
 			
+			// Create the map
+			var latitude = <?php echo $latitude; ?>;
+			var longitude = <?php echo $longitude; ?>;
 			
-			/*
-			- Initialize Map
-			- Uses Spherical Mercator Projection
-			- Units in Metres instead of Degrees					
-			*/
-			var options = {
-				units: "m",
-				numZoomLevels: 18,
-				controls:[],
-				projection: proj_900913,
-				'displayProjection': proj_4326
-				};
-				
-			map = new OpenLayers.Map('divMap', options);
+			map = createMap('divMap', latitude, longitude);
 			
-			/*
-			- Select A Mapping API
-			- Live/Yahoo/OSM/Google
-			- Set Bounds					
-			*/
-
-			<?php echo map::layers_js(FALSE); ?>
-			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
+			// Add the radius layer
+			addRadiusLayer(map, latitude, longitude);
 			
-			map.addControl(new OpenLayers.Control.Navigation());
-			
-			map.addControl(new OpenLayers.Control.PanZoomBar());
-			
-			map.addControl(new OpenLayers.Control.Attribution());
-			
-			map.addControl(new OpenLayers.Control.MousePosition());
-			
-			map.addControl(new OpenLayers.Control.LayerSwitcher());
-			
-			
-			
-			// Create the Circle/Radius layer
-			radiusLayer = new OpenLayers.Layer.Vector("Radius Layer");
-					
-			// Create the markers layer
-			markers = new OpenLayers.Layer.Markers("Markers");
-			map.addLayers([radiusLayer, markers]);
-			
-			// create a lat/lon object
-			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
-			myPoint.transform(proj_4326, proj_900913);
-			
-			// create a marker positioned at a lon/lat
-			var marker = new OpenLayers.Marker(myPoint);
-			markers.addMarker(marker);
-			
-			// draw circle around point
-			drawCircle(<?php echo $longitude; ?>,<?php echo $latitude; ?>,radius);
-			
-			// display the map centered on a latitude and longitude (Google zoom levels)
-			map.setCenter(myPoint, 9);
-			
+			// Draw circle around point
+			drawCircle(map, latitude, longitude);
 			
 			// Detect Map Clicks
 			map.events.register("click", map, function(e){
@@ -104,14 +53,13 @@
 				currRadius = $("#alert_radius").val();
 				radius = currRadius * 1000
 				
-				lonlat2.transform(proj_900913,proj_4326);
-				drawCircle(lonlat2.lon,lonlat2.lat, radius);
+				lonlat2.transform(proj_900913, proj_4326);
+				drawCircle(map, lonlat2.lat, lonlat2.lon, radius);
 							
 				// Update form values (jQuery)
 				$("#alert_lat").attr("value", lonlat2.lat);
 				$("#alert_lon").attr("value", lonlat2.lon);
 			});
-			
 			
 			/* 
 			Google GeoCoder
@@ -136,7 +84,7 @@
 						// Redraw Circle
 						currLon = $("#alert_lon").val();
 						currLat = $("#alert_lat").val();
-						drawCircle(currLon,currLat,radius);
+						drawCircle(map, currLat, currLon, radius);
 					}
 				}
 			}).hide();
@@ -168,25 +116,6 @@
 			  });
 			});
 		});
-		
-
-		/**
-		 * Draw circle around point
-		 */
-		function drawCircle(lon,lat,radius)
-		{
-			radiusLayer.destroyFeatures();
-			var circOrigin = new OpenLayers.Geometry.Point(lon,lat);
-			circOrigin.transform(proj_4326, proj_900913);
-			
-			var circStyle = OpenLayers.Util.extend( {},OpenLayers.Feature.Vector.style["default"] );
-			var circleFeature = new OpenLayers.Feature.Vector(
-				OpenLayers.Geometry.Polygon.createRegularPolygon( circOrigin, radius, 40, 0 ),
-				null,
-				circStyle
-			);
-			radiusLayer.addFeatures( [circleFeature] );
-		}
 		
 		
 		/**

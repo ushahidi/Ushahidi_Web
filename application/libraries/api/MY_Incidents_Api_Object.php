@@ -160,7 +160,11 @@ class Incidents_Api_Object extends Api_Object_Core {
 				}
 				else
 				{
-					$params = array('c.id = '.$this->check_id_value($this->request['id']));
+					$category_id = $this->check_id_value($this->request['id']);
+					$params = array(
+						'c.id = '.$category_id,
+						'c.category_visible = 1'
+					);
 					
 					$this->response_data = $this->_get_incidents($params);
 				}
@@ -178,7 +182,8 @@ class Incidents_Api_Object extends Api_Object_Core {
 				else
 				{
 					$params = array(
-						'c.category_title LIKE "%'.$this->request['name'].'%"'
+						'c.category_title LIKE "%'.$this->request['name'].'%"',
+						'c.category_visible = 1'
 					);
 					
 					$this->response_data = $this->_get_incidents($params);

@@ -44,7 +44,7 @@ class Location_Model extends ORM
 	public static function get_locations($where = array(), $limit = 0)
 	{
 		// Database table prefix
-		$table_prefix = Kohana::config('database.table_prefix');
+		$table_prefix = Kohana::config('database.default.table_prefix');
 		
 		// SQL query
 		$sql = 'SELECT id, location_name AS name, country_id, latitude, longitude '

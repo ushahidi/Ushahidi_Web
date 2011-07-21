@@ -739,24 +739,30 @@
 					map.removeLayer(markers[i]);
 				}
 			}
-
-			//markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?z='+ myZoom +'&sw='+ southwest +'&ne='+ northeast +'&' + params.join('&'),
-			markers = new OpenLayers.Layer.GML(thisLayer, protocolUrl + '?z=' +
-				myZoom + '&' + this.markerUrlParams(startDate, endDate).join('&'),
-				{
-					preFeatureInsert:preFeatureInsert,
-					format: protocolFormat,
-					projection: proj_4326,
-					formatOptions: {
-						extractStyles: true,
-						extractAttributes: true
-					},
-					styleMap: new OpenLayers.StyleMap({
-						"default":style,
-						"select": style
-					})
-				});
-
+			
+			// Build the URL for fetching the data
+			fetchURL = protocolUrl + '?z=' + myZoom + '&' + this.markerUrlParams(startDate, endDate).join('&');
+			
+			// Create the reports layer
+			markers = new OpenLayers.Layer.Vector(thisLayer, {
+				preFeatureInsert:preFeatureInsert,
+				projection: proj_4326,
+				formatOptions: {
+					extractStyles: true,
+					extractAttributes: true
+				},
+				styleMap: new OpenLayers.StyleMap({
+					"default":style,
+					"select": style
+				}),
+				strategies: [new OpenLayers.Strategy.Fixed()],
+				protocol: new OpenLayers.Protocol.HTTP({
+					url: fetchURL,
+					format: new OpenLayers.Format.GeoJSON()
+				})
+				
+			});
+			
 			map.addLayer(markers);
 			
 			/*

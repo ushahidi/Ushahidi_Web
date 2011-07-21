@@ -174,6 +174,8 @@
 							<li><a id="media_0" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
 						</ul>
 					</div>
+
+
 					<?php
 					// Action::main_filters - Add items to the main_filters
 					Event::run('ushahidi_action.map_main_filters');
