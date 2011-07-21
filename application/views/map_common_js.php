@@ -138,3 +138,82 @@
 		
 		radiusLayer.addFeatures( [circleFeature] );
 	}
+	
+	function addFeatureSelectionEvents(map, layer) {
+		var selectedFeature = null;
+		featureSelect = function(event) {
+			selectedFeature = event.feature;
+			zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
+			lon = zoom_point.lon;
+			lat = zoom_point.lat;
+			
+			var thumb = "";
+			if ( typeof(event.feature.attributes.thumb) != 'undefined' && 
+				event.feature.attributes.thumb != '')
+			{
+				thumb = "<div class=\"infowindow_image\"><a href='"+event.feature.attributes.link+"'>";
+				thumb += "<img src=\""+event.feature.attributes.thumb+"\" height=\"59\" width=\"89\" /></a></div>";
+			}
+
+			var content = "<div class=\"infowindow\">" + thumb;
+			content += "<div class=\"infowindow_content\"><div class=\"infowindow_list\">"+event.feature.attributes.name+"</div>";
+			content += "\n<div class=\"infowindow_meta\">";
+			if ( typeof(event.feature.attributes.link) != 'undefined' &&
+				event.feature.attributes.link != '')
+			{
+				content += "<a href='"+event.feature.attributes.link+"'><?php echo Kohana::lang('ui_main.more_information');?></a><br/>";
+			}
+			
+			content += "<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",1)'>";
+			content += "<?php echo Kohana::lang('ui_main.zoom_in');?></a>";
+			content += "&nbsp;&nbsp;|&nbsp;&nbsp;";
+			content += "<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",-1)'>";
+			content += "<?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
+			content += "</div><div style=\"clear:both;\"></div></div>";		
+
+			if (content.search("<?php echo '<'; ?>script") != -1)
+			{
+				content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/<?php echo '<'; ?>/g, "&lt;");
+			}
+            
+			// Destroy existing popups before opening a new one
+			if (event.feature.popup != null)
+			{
+				map.removePopup(event.feature.popup);
+			}
+			
+			popup = new OpenLayers.Popup.FramedCloud("chicken", 
+				event.feature.geometry.getBounds().getCenterLonLat(),
+				new OpenLayers.Size(100,100),
+				content,
+				null, true, onPopupClose);
+
+			event.feature.popup = popup;
+			map.addPopup(popup);
+		};
+		
+		
+		featureUnselect = function(event) {
+			// Safety check
+			if (event.feature.popup != null)
+			{
+				map.removePopup(event.feature.popup);
+				event.feature.popup.destroy();
+				event.feature.popup = null;
+			}
+		}
+		
+		onPopupClose = function(event){
+			selectControl.unselect(selectedFeature);
+			selectedFeature = null;
+		};
+		
+		selectControl = new OpenLayers.Control.SelectFeature(layer);
+		map.addControl(selectControl);
+		selectControl.activate();
+		layer.events.on({
+			"featureselected": featureSelect,
+			"featureunselected": featureUnselect
+		});
+		
+	}

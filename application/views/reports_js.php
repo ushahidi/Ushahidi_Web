@@ -650,7 +650,7 @@
 		reportStyle = new OpenLayers.Style({
 			pointRadius: "8",
 			fillColor: "#30E900",
-			fillOpacity: "0.7",
+			fillOpacity: "0.8",
 			strokeColor: "#197700",
 			strokeWidth: 3,
 			graphicZIndex: 1
@@ -677,6 +677,9 @@
 				
 		// Add the vector layer to the map
 		map.addLayer(vLayer);
+		
+		// Add feature selection events
+		addFeatureSelectionEvents(map, vLayer);
 	}
 	
 	/**
