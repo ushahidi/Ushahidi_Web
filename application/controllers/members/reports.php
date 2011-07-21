@@ -771,7 +771,14 @@ class Reports_Controller extends Members_Controller {
 					$query = $db->query($sql);
 					foreach ( $query as $item )
 					{
-						$form['geometry'][] = $item;
+						$geometry = array(
+							"geometry" => $item->geometry,
+							"label" => $item->geometry_label,
+							"comment" => $item->geometry_comment,
+							"color" => $item->geometry_color,
+							"strokewidth" => $item->geometry_strokewidth
+						);
+						$form['geometry'][] = json_encode($geometry);
 					}
 					
 					// Combine Everything
