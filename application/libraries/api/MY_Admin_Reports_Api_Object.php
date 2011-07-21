@@ -34,41 +34,49 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
             return;
         }
 
-        if ( ! $this->api_service->verify_array_index($this->request, 'by'))
-        {
-            $this->set_error_message(array(
-                "error" => $this->api_service->get_error_msg(001, 'by')
-            ));
-            
-            return;
-        }
-        else
+        // by request
+        if($this->api_service->verify_array_index($this->request, 'by') )
         {
             $this->by = $this->request['by'];
+
+            switch ($this->by)
+            {
+                case "approved":
+                    $this->response_data = $this->_get_approved_reports();
+                break;
+            
+                case "unapproved":
+                    $this->response_data = $this->_get_unapproved_reports();
+                break;
+            
+                case "verified":
+                    $this->response_data = $this->_get_verified_reports();
+                break;
+            
+                case "unverified":
+                    $this->response_data = $this->_get_unverified_reports();
+                break;
+            
+                default:
+                    $this->set_error_message(array(
+                        "error" => $this->api_service->get_error_msg(002)
+                    ));
+            }
+            return;
         }
-        
-        switch ($this->by)
+
+        //action request
+        else if($this->api_service->verify_array_index($this->request, 'action'))
         {
-            case "approved":
-                $this->response_data = $this->_get_approved_reports();
-            break;
-            
-            case "unapproved":
-                $this->response_data = $this->_get_unapproved_reports();
-            break;
-            
-            case "verified":
-                $this->response_data = $this->_get_verified_reports();
-            break;
-            
-            case "unverified":
-                $this->response_data = $this->_get_unverified_reports();
-            break;
-            
-            default:
-                $this->set_error_message(array(
-                    "error" => $this->api_service->get_error_msg(002)
-                ));
+            $this->report_action();
+            return;
+        }
+        else 
+        {
+             $this->set_error_message(array(
+                "error" => $this->api_service->get_error_msg(001, 'by or action')
+            ));
+             return;
         }
     }
     
@@ -118,7 +126,7 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
         switch ($action)
         {
             // Delete report
-            case "del":
+            case "delete":
                 $this->_delete_report($incident_id); 
             break;
             

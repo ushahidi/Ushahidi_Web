@@ -61,7 +61,7 @@ class Admin_Category_Api_Object extends Api_Object_Core {
         switch ($action)
         {
             // Delete category
-            case "del":
+            case "delete":
                 // Check if the category id has been specified
                 if ( ! $this->api_service->verify_array_index($this->request,'category_id'))
                 {
