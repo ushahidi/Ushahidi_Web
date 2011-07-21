@@ -137,7 +137,7 @@ class Users_Controller extends Admin_Controller
             //  Add some filters
             $post->pre_filter('trim', TRUE);
     
-            $post->add_rules('username','required','length[3,16]', 'alpha');
+            $post->add_rules('username','required','length[3,16]', 'alpha_numeric');
         
             //only validate password as required when user_id has value.
             $user_id == '' ? $post->add_rules('password','required',
@@ -155,7 +155,7 @@ class Users_Controller extends Admin_Controller
             // If Password field is not blank
             if (!empty($post->password))
             {
-                $post->add_rules('password','required','length[5,16]'
+                $post->add_rules('password','required','length[5,30]'
                     ,'alpha_numeric','matches[password_again]');
             }
             

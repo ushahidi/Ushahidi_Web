@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 57
+-- version 58
 -- http://www.ushahidi.com
 
 
@@ -790,6 +790,8 @@ CREATE TABLE IF NOT EXISTS `users` (
     `notify` tinyint(1) NOT NULL default '0' COMMENT 'Flag incase admin opts in for email notifications',    
     `updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     `color` varchar(6) NOT NULL DEFAULT 'FF0000',
+    `code` VARCHAR(30) NULL DEFAULT NULL,
+    `confirmed` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
@@ -1374,4 +1376,4 @@ ALTER TABLE `form_response`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '57' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '58' WHERE `id`=1 LIMIT 1;

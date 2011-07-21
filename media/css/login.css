@@ -13,7 +13,8 @@ body, td {
 }
 
 
-h1, h2 { margin-bottom:18px; }
+h1 { margin-bottom:18px; }
+h2 { margin-bottom:15px; }
 
 h3 { margin-bottom:8px; } 
 	h3 a { font-size:10px; font-weight:normal; }
@@ -53,7 +54,7 @@ dl {}
 }
 
 #ushahidi_site_name {
-	border:3px solid #cb0000;
+	border:3px solid #999;
 	text-align:center;
 	padding:20px;
 	background-color: #ddd;
@@ -70,7 +71,7 @@ dl {}
 }
 
 #ushahidi_login {
-	border:3px solid #cb0000;
+	border:3px solid #999;
 	text-align:left;
 	padding: 20px;
 	background-color: #ddd;
@@ -84,10 +85,15 @@ dl {}
 	width:626px;
 }
 #openid_login {
-	border:3px solid #cb0000;
+	border:3px solid #999;
 	text-align:left;
 	padding: 20px;
 	background-color: #ddd;
+}
+.login_text{
+	padding:3px 7px 3px 7px;
+	border:1px #ccc solid;
+	width:180px;
 }
 
 /* Installer Container	 */
@@ -207,8 +213,19 @@ dl {}
 	a.btn-close { color:#004A80;display:block;float:right;line-height:12px;padding:0 3px 2px;text-decoration:none; margin:1px 1px 0 0; }
 	a.btn-close:hover { border:1px solid; margin:0; }
 
-
-
+/* Error */
+/*****************************/
+.login_error,
+.login_success{
+	margin-bottom:15px;
+	padding:10px;
+	background-color:#eee;
+	color:#990000;
+	font-weight:bold;
+}
+.login_success{
+	color:#336600;
+}
 
 .clearfix:after {
 	content: ".";
@@ -229,4 +246,11 @@ html[xmlns] .clearfix {
  
 * html .clearfix {
 	height: 1%;
+}
+
+.signin_select{
+	display:none;
+	margin-bottom:15px;
+	padding:10px;
+	background-color:#eee;
 }
