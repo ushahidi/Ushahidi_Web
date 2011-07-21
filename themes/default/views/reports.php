@@ -13,10 +13,26 @@
 			<div id="tooltip-box">
 				<div class="tt-arrow"></div>
 				<ul class="inline-links">
-					<li><a title="<?php echo $timeframe_title; ?>" class="btn-date-range active" href="#">All Time</a></li>
-					<li><a title="Today" class="btn-date-range" href="#">Today</a></li>
-					<li><a title="This Week" class="btn-date-range" href="#">This Week</a></li>
-					<li><a title="This Month" class="btn-date-range" href="#">This Month</a></li>
+					<li>
+						<a title="<?php echo $timeframe_title; ?>" class="btn-date-range active" id="dateRangeAll" href="#">
+							<?php echo Kohana::lang('ui_main.all_time')?>
+						</a>
+					</li>
+					<li>
+						<a title="<?php echo Kohana::lang('ui_main.today'); ?>" class="btn-date-range" id="dateRangeToday" href="#">
+							<?php echo Kohana::lang('ui_main.today'); ?>
+						</a>
+					</li>
+					<li>
+						<a title="<?php echo Kohana::lang('ui_main.this_week'); ?>" class="btn-date-range" id="dateRangeWeek" href="#">
+							<?php echo Kohana::lang('ui_main.this_week'); ?>
+						</a>
+					</li>
+					<li>
+						<a title="<?php echo Kohana::lang('ui_main.this_month'); ?>" class="btn-date-range" id="dateRangeMonth" href="#">
+							<?php echo Kohana::lang('ui_main.this_month'); ?>
+						</a>
+					</li>
 				</ul>
 				
 				<p class="labeled-divider"><span>Or choose your own date range:</span></p>

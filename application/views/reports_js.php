@@ -86,11 +86,65 @@
 			
 			$(this).addClass("active");
 			
+			// Date object
+			var d = new Date();
+			
+			var month = d.getMonth() + 1;
+			if (month < 10)
+			{
+				month = "0" + month;
+			}
+			
+			if ($(this).attr("id") == 'dateRangeAll')
+			{
+				// Clear the date range values
+				$("#report_date_from").val("");
+				$("#report_date_to").val("");
+			}
+			else if ($(this).attr("id") == 'dateRangeToday')
+			{
+				// Set today's date
+				currentDate = (d.getDate() < 10)? "0"+d.getDate() : d.getDate();
+				var dateString = month + '/' + currentDate + '/' + d.getFullYear();
+				$("#report_date_from").val(dateString);
+				$("#report_date_to").val(dateString);
+			}
+			else if ($(this).attr("id") == 'dateRangeWeek')
+			{
+				// Get first day of the week
+				var diff = d.getDate() - d.getDay();
+				var d1 = new Date(d.setDate(diff));
+				var d2 = new Date(d.setDate(diff + 6));
+				
+				// Get the first and last days of the week
+				firstWeekDay = (d1.getDate() < 10)? ("0" + d1.getDate()) : d1.getDate();
+				lastWeekDay = (d2.getDate() < 10)? ("0" + d2.getDate()) : d2.getDate();
+				
+				$("#report_date_from").val(month + '/' + firstWeekDay + '/' + d1.getFullYear());
+				$("#report_date_to").val(month + '/' + lastWeekDay + '/' + d2.getFullYear());
+			}
+			else if ($(this).attr("id") == 'dateRangeMonth')
+			{
+				d1 = new Date(d.setDate(32));
+				lastMonthDay = 32 - d1.getDay();
+				
+				$("#report_date_from").val(month + '/01/' + d.getFullYear());
+				$("#report_date_to").val(month + '/' + lastMonthDay +'/' + d.getFullYear());
+			}
+			
+			// Update the url parameters
+			if ($("#report_date_from").val() != '' && $("#report_date_to").val() != '')
+			{
+				urlParameters['from'] = $("#report_date_from").val();
+				urlParameters['to'] = $("#report_date_to").val();
+			}
+			
 			// Hide the box
 			$("#tooltip-box").hide();
 			
 			return false;
 		});
+		
 		
 		/**
 		 * When the date filter button is clicked
@@ -356,6 +410,15 @@
 			fetchReports();
 			
 		});
+		
+		$("td.last li a").click(function(){
+			pageNumber = $(this).attr("id").substr("page_".length);
+			if (Number(pageNumber) > 0)
+			{
+				urlParameters["page"] = Number(pageNumber);
+				fetchReports();
+			}
+		});
 	}
 	
 	/**
@@ -381,7 +444,7 @@
 		if ($.isEmptyObject(urlParameters))
 		{
 			urlParameters = {show: "all"}
-		} 
+		}
 		
 		// Get the content for the new page
 		$.get('<?php echo url::site().'reports/fetch_reports'?>',
@@ -494,7 +557,6 @@
 			
 			if (category_ids.length > 0)
 			{
-				console.log(category_ids);
 				urlParameters["c"] = category_ids;
 			}
 			
@@ -634,3 +696,4 @@
 		// Remove the parameter key from urlParameters
 		delete urlParameters[parameterKey];
 	}
+	

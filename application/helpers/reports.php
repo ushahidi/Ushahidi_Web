@@ -583,10 +583,10 @@ class reports_Core {
 		$url_data = array_merge($_GET);
 		
 		// Check if some parameter values are separated by "," except the location bounds
-		$exclude_params = array('radius' => '', 'page' => '');
+		$exclude_params = array('c' => '', 'v' => '', 'm' => '', 'mode' => '');
 		foreach ($url_data as $key => $value)
 		{
-			if ( ! array_key_exists($key, $exclude_params) AND !is_array($value))
+			if (array_key_exists($key, $exclude_params) AND !is_array($value))
 			{
 				if (is_array(explode(",", $value)))
 				{
