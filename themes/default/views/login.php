@@ -18,20 +18,21 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?php echo Kohana::lang('ui_main.ushahidi_admin');?></title>
+<link href="<?php echo url::base() ?>media/css/jquery-ui-themeroller.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo url::base() ?>media/css/login.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 <div id="ushahidi_login_container">
 
-    <div id="ushahidi_site_name">
+    <div id="ushahidi_site_name" class="ui-corner-all">
     	<div id="logo">
 			<h1><?php echo $site_name; ?></h1>
 			<span><?php echo $site_tagline; ?></span>
 		</div>
     </div>
     
-	<div id="ushahidi_login">
+	<div id="ushahidi_login" class="ui-corner-all">
 		<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
 			<form method="POST" name="frm_login" style="line-height: 100%; margin-top: 0; margin-bottom: 0">     
 				<?php

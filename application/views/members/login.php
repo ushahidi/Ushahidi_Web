@@ -4,6 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?php echo Kohana::lang('ui_main.members');?></title>
 <?php
+echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
 echo html::stylesheet('media/css/login', '', true);
 echo html::stylesheet('media/css/openid', '', true);
 echo html::script('media/js/jquery', true);
@@ -18,14 +19,14 @@ echo html::script('media/js/openid/openid-jquery-en', true);
 <body>
 <div id="openid_login_container">
 
-	<div id="ushahidi_site_name">
+	<div id="ushahidi_site_name" class="ui-corner-all">
     	<div id="logo">
 			<h1><?php echo $site_name; ?></h1>
 			<span><?php echo $site_tagline; ?></span>
 		</div>
     </div>
 
-	<div id="openid_login">
+	<div id="openid_login" class="ui-corner-all">
 		<?php
 		if ($form_error)
 		{
@@ -48,7 +49,7 @@ echo html::script('media/js/openid/openid-jquery-en', true);
 		}
 		?>
 		<h2><a href="javascript:toggle('signin_userpass');"><?php echo Kohana::lang('ui_main.login_signin_userpass'); ?></a></h2>
-		<div id="signin_userpass" class="signin_select">
+		<div id="signin_userpass" class="signin_select ui-corner-all">
 			<form method="post" id="userpass_form">
 				<input type="hidden" name="action" value="signin">
 				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
@@ -74,7 +75,7 @@ echo html::script('media/js/openid/openid-jquery-en', true);
 		</div>
 		
 		<h2><a href="javascript:toggle('signin_openid');"><?php echo Kohana::lang('ui_main.login_signin_openid'); ?></a></h2>
-		<div id="signin_openid" class="signin_select">
+		<div id="signin_openid" class="signin_select ui-corner-all">
 			<form method="post" id="openid_form">
 				<input type="hidden" name="action" value="openid">
 				<div id="openid_choice">
@@ -94,7 +95,7 @@ echo html::script('media/js/openid/openid-jquery-en', true);
 		</div>
 
 		<?php echo Kohana::lang('ui_main.login_signup_text'); ?>, <a href="javascript:toggle('signin_new');"><?php echo Kohana::lang('ui_main.login_signup_click'); ?></a>
-		<div id="signin_new" class="signin_select" style="margin-top:10px;">
+		<div id="signin_new" class="signin_select ui-corner-all" style="margin-top:10px;">
 			<form method="post" id="usernew_form">
 				<input type="hidden" name="action" value="new">
 				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">

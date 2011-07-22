@@ -336,6 +336,52 @@ class Login_Controller extends Template_Controller {
 	}
 	
 	/**
+	 * Facebook connect function
+	 */
+	public function facebook()
+	{
+		$appid = '131775580242413';
+		$appsecret = '99124310944ff12f52e5e051d35ba44f';
+		$cancel_url = url::site()."members/login";
+		
+		// Create our Application instance.
+		$facebook = new Facebook(array(
+		  'appId'  => $appid,
+		  'secret' => $appsecret
+		));
+		
+		// Get User ID
+		$fb_user = $facebook->getUser();
+		if ($fb_user)
+		{
+			try
+			{
+		    	// Proceed knowing you have a logged in user who's authenticated.
+				$user_profile = $facebook->api('/me');
+			}
+			catch (FacebookApiException $e)
+			{
+				error_log($e);
+				$user = null;
+			}
+		}
+		else
+		{
+			$login_url = $facebook->getLoginUrl(
+				array(
+					'canvas' => 1,
+					'fbconnect' => 0,
+					'req_perms' => 'email, publish_stream',
+					'next' => $cancel_url,
+					'cancel_url' => $cancel_url
+				)
+			);
+			
+			url::redirect($login_url);
+		}
+	}
+	
+	/**
 	 * Checks if username already exists.
 	 * @param Validation $post $_POST variable with validation rules 
 	 */

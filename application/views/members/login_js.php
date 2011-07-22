@@ -19,3 +19,6 @@ $(document).ready(function() {
 function toggle(thisDiv) {
 	$("#"+thisDiv).toggle(400);
 }
+function facebook_click() {
+	top.location.href = "<?php echo url::site()."members/login/facebook" ;?>"
+}
