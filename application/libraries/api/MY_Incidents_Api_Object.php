@@ -30,6 +30,13 @@ class Incidents_Api_Object extends Api_Object_Core {
 	 */
 	private $order_field;
 	
+	
+	/**
+	 * Should the response include comments
+	 * @var string
+	 */
+	private $comments;
+	
 	/**
 	 * Constructor
 	 */
@@ -295,6 +302,18 @@ class Incidents_Api_Object extends Api_Object_Core {
 		{
 			$this->order_field = 'i.incident_date';
 		}
+		
+		
+		// Check if the 'comments' parameter has been specified
+		if ( ! $this->api_service->verify_array_index($this->request, 'comments'))
+		{
+			// Default to not including comments
+			$this->comments = 0;
+		}
+		else
+		{
+			$this->comments = $this->request['comments'];
+		}
 	}
 
 	/**
@@ -409,6 +428,46 @@ class Incidents_Api_Object extends Api_Object_Core {
 		// Free temporary variables
 		unset ($media_items_result, $i);
 		
+		// 
+		// STEP 4.
+		// Fetch the comments associated with the incidents
+		// 
+		if ($this->comments) {
+			$this->query = "SELECT id, incident_id, comment_author, comment_email, "
+						. "comment_description, comment_rating, comment_date "
+						. "FROM ".$this->table_prefix."comment AS c "
+						. "WHERE c.incident_id IN (".implode(',', $incident_ids).")";
+			
+			// Execute the query
+			$incident_comments = $this->db->query($this->query);
+			
+			// To hold the incident category items
+			$comment_items = array();
+			
+			// Temporary counter
+			$i = 1;
+			
+			// Fetch items into array
+			foreach ($incident_comments as $incident_comment)
+			{
+				$comment_items[$incident_comment->incident_id][$i]['id'] = $incident_comment->id;
+				$comment_items[$incident_comment->incident_id][$i]['incident_id'] = $incident_comment->incident_id;
+				$comment_items[$incident_comment->incident_id][$i]['comment_author'] = $incident_comment->comment_author;
+				$comment_items[$incident_comment->incident_id][$i]['comment_email'] = $incident_comment->comment_email;
+				$comment_items[$incident_comment->incident_id][$i]['comment_description'] = $incident_comment->comment_description;
+				$comment_items[$incident_comment->incident_id][$i]['comment_rating'] = $incident_comment->comment_rating;
+				$comment_items[$incident_comment->incident_id][$i]['comment_date'] = $incident_comment->comment_date;
+				$i++;
+			}
+			//echo Kohana::debug($comment_items);exit();
+			// Free temporary variables from memory
+			unset ($incident_comments);
+		}
+
+		// 
+		// STEP 5.
+		// Return XML
+		// 
 		foreach ($items as $item)
 		{
 			// Build xml file
@@ -457,6 +516,39 @@ class Incidents_Api_Object extends Api_Object_Core {
 
 			// End categories
 			$xml->endElement();
+
+			$xml->startElement('comments');
+
+			$json_report_comments[$item->incident_id] = array();
+			
+			// Check if the incident id exists
+			if (isset($comment_items[$item->incident_id]))
+			{
+				foreach ($comment_items[$item->incident_id] as $comment_item)
+				{
+					if ($this->response_type == 'json')
+					{
+						$json_report_comments[$item->incident_id][] = array(
+							"comment"=> $comment_item
+						);
+					} 
+					else 
+					{
+						$xml->startElement('comment');
+						$xml->writeElement('id',$comment_item['id']);
+						$xml->writeElement('comment_author',$comment_item['comment_author']);
+						$xml->writeElement('comment_email',$comment_item['comment_email']);
+						$xml->writeElement('comment_description',$comment_item['comment_description']);
+						$xml->writeElement('comment_rating',$comment_item['comment_rating']);
+						$xml->writeElement('comment_date',$comment_item['comment_date']);
+						$xml->endElement();
+					}
+				}
+			}
+
+			// End comments
+			$xml->endElement();
+			
 			
 			$json_report_media[$item->incident_id] = array();
 			
@@ -531,7 +623,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 								$xml->writeElement('thumb_url', $url_prefix.$upload_path.$media_item['mediathumb']);
 
 								$xml->writeElement('link_url', $url_prefix.$upload_path.$media_item['medialink']);
-	                        }
+							}
 							$xml->endElement();
 						}
 					}
@@ -557,9 +649,10 @@ class Incidents_Api_Object extends Api_Object_Core {
 						"locationname" => $item->location_name,
 						"locationlatitude" => $item->latitude,
 						"locationlongitude" => $item->longitude
-					), 
+					),  
 					"categories" => $json_report_categories[$item->incident_id], 
-					"media" => $json_report_media[$item->incident_id]
+					"media" => $json_report_media[$item->incident_id],
+					"comments" => $json_report_comments[$item->incident_id]
 				);
 			}
 		}
