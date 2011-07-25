@@ -62,6 +62,41 @@
 			?>
 		</div>
 		
+		<!-- start report media -->
+		<div class="<?php if( count($incident_photos) > 0 || count($incident_videos) > 0){ echo "report-media";}?>">
+	    <?php 
+	    // if there are images, show them
+	    if( count($incident_photos) > 0 )
+	    { 
+	      echo '<div id="report-images">';
+          foreach ($incident_photos as $photo)
+          {
+          	$thumb = str_replace(".","_t.",$photo);
+          	$prefix = url::base().Kohana::config('upload.relative_directory');
+          	echo '<a class="photothumb" rel="lightbox-group1" href="'.$prefix.'/'.$photo.'"><img src="'.$prefix.'/'.$thumb.'"/></a> ';
+          };
+				echo '</div>';  
+	    }
+	    
+	    // if there are videos, show those too
+	    if( count($incident_videos) > 0 ) 
+	    { 
+	      echo '<div id="report-video"><ol>';
+
+          // embed the video codes
+          foreach( $incident_videos as $incident_video) 
+          {
+            echo '<li>';
+            $videos_embed->embed($incident_video,'');
+            echo '</li>';
+          };
+  			echo '</ol></div>';
+        
+	    } 
+	    ?>
+		</div>
+		
+		<!-- start report description -->
 		<div class="report-description-text">
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
 			<?php echo $incident_description; ?>
@@ -143,18 +178,6 @@
 	
 	<div style="float:right;width:350px;">
 
-		<div class="report-media-box-tabs">
-			<ul>
-				<li class="report-tab-selected"><a class="tab-item" href="#report-map"><?php echo Kohana::lang('ui_main.map');?></a></li>
-				<?php if( count($incident_photos) > 0 ) { ?>
-					<li><a class="tab-item" href="#report-images"><?php echo Kohana::lang('ui_main.images');?></a></li>
-				<?php } ?>
-				<?php if( count($incident_videos) > 0 ) { ?>
-					<li><a class="tab-item" href="#report-video"><?php echo Kohana::lang('ui_main.video');?></a></li>
-				<?php } ?>
-			</ul>
-		</div>
-		
 		<div class="report-media-box-content">
 			
 			<div id="report-map" class="report-map">
@@ -166,39 +189,7 @@
           <li><a href="#" class="shorter-map">Shorter Map</a></li>
         </ul>
         <div style="clear:both"></div>
-			</div>
-			
-			<!-- start images -->
-			<?php if( count($incident_photos) > 0 ) { ?>
-				<div id="report-images" style="display:none;">
-						<?php
-						foreach ($incident_photos as $photo)
-						{
-							$thumb = str_replace(".","_t.",$photo);
-							$prefix = url::base().Kohana::config('upload.relative_directory');
-							echo '<a class="photothumb" rel="lightbox-group1" href="'.$prefix.'/'.$photo.'"><img src="'.$prefix.'/'.$thumb.'"/></a> ';
-						}
-						?>
-				</div>
-			<?php } ?>
-			<!-- end images -->
-			
-			<!-- start videos -->
-			<?php if( count($incident_videos) > 0 ) { ?>
-				<div id="report-video" style="display:none;">
-					<?php
-						// embed the video codes
-						foreach( $incident_videos as $incident_video) {
-							$videos_embed->embed($incident_video,'');
-						}
-					?>
-				</div>
-			<?php } ?>
-			<!-- end videos -->
-
-
-
-		
+			</div>			
 		</div>
 		<div class="report-additional-reports">
 			<h4><?php echo Kohana::lang('ui_main.additional_reports');?></h4>

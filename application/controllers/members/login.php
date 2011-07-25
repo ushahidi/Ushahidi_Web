@@ -340,14 +340,19 @@ class Login_Controller extends Template_Controller {
 	 */
 	public function facebook()
 	{
+		$this->template = "";
+		$this->auto_render = FALSE;
+		
 		$appid = '131775580242413';
 		$appsecret = '99124310944ff12f52e5e051d35ba44f';
+		$next_url = url::site()."members/login/facebook";
 		$cancel_url = url::site()."members/login";
 		
 		// Create our Application instance.
 		$facebook = new Facebook(array(
-		  'appId'  => $appid,
-		  'secret' => $appsecret
+			'appId'  => $appid,
+			'secret' => $appsecret,
+			'cookie' => true
 		));
 		
 		// Get User ID
@@ -357,7 +362,8 @@ class Login_Controller extends Template_Controller {
 			try
 			{
 		    	// Proceed knowing you have a logged in user who's authenticated.
-				$user_profile = $facebook->api('/me');
+				$user = $facebook->api('/me');
+				print_r($user);
 			}
 			catch (FacebookApiException $e)
 			{
@@ -372,7 +378,7 @@ class Login_Controller extends Template_Controller {
 					'canvas' => 1,
 					'fbconnect' => 0,
 					'req_perms' => 'email, publish_stream',
-					'next' => $cancel_url,
+					'next' => $next_url,
 					'cancel_url' => $cancel_url
 				)
 			);

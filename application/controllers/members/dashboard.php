@@ -18,6 +18,8 @@ class Dashboard_Controller extends Members_Controller {
 	function __construct()
 	{
 		parent::__construct();
+		
+		$profiler = new Profiler;
 	}
 
 	function index()
@@ -28,9 +30,11 @@ class Dashboard_Controller extends Members_Controller {
 		
 		// User
 		$this->template->content->user = $this->user;
+		
+		// User Reputation Score
+		$this->template->content->reputation = reputation::calculate($this->user->id);
 
-		// Retrieve Dashboard Count...
-
+		// Retrieve Dashboard Counts...
 		// Total Reports
 		$this->template->content->reports_total = ORM::factory('incident')
 			->where("user_id", $this->user->id)

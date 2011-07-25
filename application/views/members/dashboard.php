@@ -140,7 +140,7 @@
 										?>
 									</ul>
 								</div>
-								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.reputation');?>:</span> 0</div>
+								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.reputation');?>:</span> <?php echo $reputation; ?></div>
 							</div>
 						</div>
 					</div>

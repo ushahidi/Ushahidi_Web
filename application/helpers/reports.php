@@ -375,14 +375,13 @@ class reports_Core {
 					$label = (isset($item->label)) ? $db->escape_str(substr($item->label, 0, 150)) : "";
 					$comment = (isset($item->comment)) ? $db->escape_str(substr($item->comment, 0, 255)) : "";
 					$color = (isset($item->color)) ? $db->escape_str(substr($item->color, 0, 6)) : "";
-					$strokewidth = (isset($item->strokewidth) AND (float) $item->strokewidth) ? 
-					(float) $item->strokewidth : "2.5";
+					$strokewidth = (isset($item->strokewidth) AND (float) $item->strokewidth) ? (float) $item->strokewidth : "2.5";
 					if ($geometry)
 					{
 						//++ Can't Use ORM for this
 						$sql = "INSERT INTO ".Kohana::config('database.default.table_prefix')."geometry "
 							. "(incident_id, geometry, geometry_label, geometry_comment, geometry_color, geometry_strokewidth) "
-							. "VALUES(%d, '%s', '%s', '%s', '%s', %s)";
+							. "VALUES(%d, GeomFromText('%s'), '%s', '%s', '%s', %s)";
 						
 						// 	Format the SQL string
 						$sql = sprintf($sql, $incident->id, $geometry, $label, $comment, $color, $strokewidth);
