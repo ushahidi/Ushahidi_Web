@@ -112,25 +112,55 @@ class category_Core {
 		// To hold the category data
 		$category_data = array();
 		
+		// Database instance
+		$db = new Database();
+		
 		// Fetch all the top level parent categories
 		foreach (Category_Model::get_categories() as $category)
 		{
 			self::_extend_category_data($category_data, $category);
 		}
 		
+		// Query to fetch the report totals for the parent categories
+		$sql = "SELECT c2.id, COUNT(DISTINCT ic.incident_id) report_count "
+			. "FROM category c2, incident_category ic "
+			. "INNER JOIN category c ON (ic.category_id = c.id) "
+			. "INNER JOIN incident i ON (ic.incident_id = i.id) "
+			. "WHERE c.parent_id = c2.id "
+			. "AND i.incident_active = 1 "
+			. "AND c2.category_visible = 1 "
+			. "AND c.category_visible = 1 "
+			. "AND c2.parent_id = 0 "
+			. "AND c2.category_title != \"Trusted Reports\" "
+			. "GROUP BY c2.id "
+			. "ORDER BY c2.category_title ASC";
+		
+		// Update the report_count field of each top-level category
+		foreach ($db->query($sql) as $category_total)
+		{
+			// Check if the category exists
+			if (array_key_exists($category_total->id, $category_data))
+			{
+				// Update
+				$category_data[$category_total->id]['report_count'] = $category_total->report_count;
+			}
+		}
+		
 		// Get the table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
 		// Fetch the other categories
-		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, COUNT(ic.incident_id) report_count "
+		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, COUNT(c.id) report_count "
 			. "FROM ".$table_prefix."category c "
 			. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
+			. "INNER JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id) "
 			. "WHERE c.category_visible = 1 "
+			. "AND i.incident_active = 1 "
 			. "GROUP BY c.category_title "
 			. "ORDER BY c.category_title ASC";
 		
 		// Add child categories
-		foreach (Database::instance()->query($sql) as $category)
+		foreach ($db->query($sql) as $category)
 		{
 			// Extend the category data array
 			self::_extend_category_data($category_data, $category);
@@ -145,10 +175,6 @@ class category_Core {
 					'report_count' => $category->report_count,
 					'children' => array()
 				);
-			
-				// Update the report count
-				// Kohana::log('debug', Kohana::debug($category));
-				$category_data[$category->parent_id]['report_count'] += $category->report_count;
 			}
 		}
 		
@@ -185,7 +211,6 @@ class category_Core {
 			return TRUE;
 		}
 		
-		// Garbage collection
 		return FALSE;
 	}
 	

@@ -594,7 +594,7 @@ class reports_Core {
 			}
 		}
 		
-		//> BEGIN PAAMETER FETCH
+		//> BEGIN PARAMETER FETCH
 		
 		// 
 		// Check for the category parameter
