@@ -390,6 +390,8 @@ class Login_Controller extends Template_Controller {
 	 */
 	public function facebook()
 	{
+		$auth = Auth::instance();
+		
 		$this->template = "";
 		$this->auto_render = FALSE;
 		
@@ -412,8 +414,84 @@ class Login_Controller extends Template_Controller {
 			try
 			{
 		    	// Proceed knowing you have a logged in user who's authenticated.
-				$user = $facebook->api('/me');
-				print_r($user);
+				$new_openid = $facebook->api('/me');
+				
+				// Does User Exist?
+				$openid_user = ORM::factory("openid")
+					->where("openid", "facebook_".$new_openid["id"])
+					->find();
+					
+				if ($openid_user->loaded AND $openid_user->user)
+				{
+					// First log all other sessions out
+					$auth->logout();
+					
+					// Initiate Ushahidi side login + AutoLogin
+					$auth->force_login($openid_user->user->username);
+					
+					// Exists Redirect to Dashboard
+					url::redirect("members/dashboard");
+				}
+				else
+				{
+					// Does this login have the required email??
+					if ( ! isset($new_openid["email"]) OR 
+						empty($new_openid["email"]))
+					{
+						$openid_error = "User has not been logged in. No Email Address Found.";
+
+						// Redirect back to login
+						url::redirect("members/login");
+					}
+					else
+					{
+						// Create new User and save OpenID
+						$user = ORM::factory("user");
+
+						// But first... does this email address already exist
+						// in the system?
+						if ($user->email_exists($new_openid["email"]))
+						{
+							$openid_error = $new_openid["email"] . " is already registered in our system.";
+
+							// Redirect back to login
+							url::redirect("members/login");
+						}
+						else
+						{
+							$username = "user".time(); // Random User Name from TimeStamp - can be changed later
+							$password = text::random("alnum", 16); // Create Random Strong Password
+
+							// Name Available?
+							$user->name = (isset($new_openid["name"]) AND ! empty($new_openid["name"]))
+								? $new_openid["name"]
+								: $username;
+							$user->username = $username;
+							$user->password = $password;
+							$user->email = $new_openid["email"];
+
+							// Add New Roles
+							$user->add(ORM::factory('role', 'login'));
+							$user->add(ORM::factory('role', 'member'));
+
+							$user->save();
+
+							// Save OpenID and Association
+							$openid_user->user_id = $user->id;
+							$openid_user->openid = "facebook_".$new_openid["id"];
+							$openid_user->openid_email = $new_openid["email"];
+							$openid_user->openid_server = "http://www.facebook.com";
+							$openid_user->openid_date = date("Y-m-d H:i:s");
+							$openid_user->save();
+
+							// Initiate Ushahidi side login + AutoLogin
+							$auth->login($username, $password, TRUE);
+
+							// Redirect to Dashboard
+							url::redirect("members/dashboard");
+						}
+					}
+				}
 			}
 			catch (FacebookApiException $e)
 			{
@@ -427,12 +505,12 @@ class Login_Controller extends Template_Controller {
 				array(
 					'canvas' => 1,
 					'fbconnect' => 0,
-					'req_perms' => 'email, publish_stream',
+					'scope' => "email,publish_stream",
 					'next' => $next_url,
 					'cancel_url' => $cancel_url
 				)
 			);
-			
+
 			url::redirect($login_url);
 		}
 	}
