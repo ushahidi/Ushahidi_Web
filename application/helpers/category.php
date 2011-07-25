@@ -122,18 +122,18 @@ class category_Core {
 		}
 		
 		// Query to fetch the report totals for the parent categories
-		$sql = "SELECT c2.id, COUNT(DISTINCT ic.incident_id) report_count "
-			. "FROM category c2, incident_category ic "
-			. "INNER JOIN category c ON (ic.category_id = c.id) "
+		$sql = "SELECT c2.id,  COUNT(DISTINCT ic.incident_id)  report_count "
+			. "FROM category c, category c2, incident_category ic "
 			. "INNER JOIN incident i ON (ic.incident_id = i.id) "
-			. "WHERE c.parent_id = c2.id "
+			. "WHERE (ic.category_id = c.id OR ic.category_id = c2.id) "
+			. "AND c.parent_id = c2.id "
 			. "AND i.incident_active = 1 "
 			. "AND c2.category_visible = 1 "
 			. "AND c.category_visible = 1 "
 			. "AND c2.parent_id = 0 "
 			. "AND c2.category_title != \"Trusted Reports\" "
 			. "GROUP BY c2.id "
-			. "ORDER BY c2.category_title ASC";
+			. "ORDER BY c2.id ASC";
 		
 		// Update the report_count field of each top-level category
 		foreach ($db->query($sql) as $category_total)
