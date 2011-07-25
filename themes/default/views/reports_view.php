@@ -63,7 +63,7 @@
 		</div>
 		
 		<!-- start report media -->
-		<div class="report-media">
+		<div class="<?php if( count($incident_photos) > 0 || count($incident_videos) > 0){ echo "report-media";}?>">
 	    <?php 
 	    // if there are images, show them
 	    if( count($incident_photos) > 0 )
