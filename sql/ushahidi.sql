@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 59
+-- version 60
 -- http://www.ushahidi.com
 
 
@@ -761,7 +761,9 @@ CREATE TABLE IF NOT EXISTS `settings` (
 	`ftp_server` varchar(100) NULL DEFAULT NULL,
 	`ftp_user_name` varchar(100) NULL DEFAULT NULL,
     `alerts_email` VARCHAR(120) NOT NULL,
-    `checkins` tinyint(4) NOT NULL default '0', 
+    `checkins` tinyint(4) NOT NULL default '0',
+    `facebook_appid` VARCHAR(150) NULL DEFAULT NULL,
+    `facebook_appsecret` VARCHAR(150) NULL DEFAULT NULL,
     `db_version` varchar(20) default NULL,                                          
     `ushahidi_version` varchar(20) default NULL,                                    
   PRIMARY KEY  (`id`)
@@ -1405,5 +1407,5 @@ ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
 * Version information for table `settings`
 * 
 */
-UPDATE `settings` SET `ushahidi_version` = '2.0.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '59' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '60' WHERE `id`=1 LIMIT 1;

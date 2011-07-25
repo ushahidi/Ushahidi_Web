@@ -395,8 +395,10 @@ class Login_Controller extends Template_Controller {
 		$this->template = "";
 		$this->auto_render = FALSE;
 		
-		$appid = '131775580242413';
-		$appsecret = '99124310944ff12f52e5e051d35ba44f';
+		$settings = ORM::factory("settings")->find(1);
+		
+		$appid = $settings->facebook_appid;
+		$appsecret = $settings->facebook_appsecret;
 		$next_url = url::site()."members/login/facebook";
 		$cancel_url = url::site()."members/login";
 		
