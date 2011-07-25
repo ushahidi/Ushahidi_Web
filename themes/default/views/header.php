@@ -21,11 +21,13 @@
 			<div id="searchbox">
 				
 				<!-- user actions -->
-				<?php if($loggedin_username != FALSE){ ?>
 				<div id="loggedin_user_action" class="clearingfix">
-					<a href="<?php echo url::site().$loggedin_role;?>"><?php echo $loggedin_username; ?></a> [<a href="<?php echo url::site();?>logout/front"><?php echo Kohana::lang('ui_admin.logout');?></a>]
+					<?php if($loggedin_username != FALSE){ ?>
+						<a href="<?php echo url::site().$loggedin_role;?>"><?php echo $loggedin_username; ?></a> [<a href="<?php echo url::site();?>logout/front"><?php echo Kohana::lang('ui_admin.logout');?></a>]
+					<?php } else { ?>
+						<a href="<?php echo url::site()."members/";?>"><?php echo Kohana::lang('ui_main.login'); ?></a>
+					<?php } ?>
 				</div><br/>
-				<?php } ?>
 				<!-- / user actions -->
 				
 				<!-- languages -->
