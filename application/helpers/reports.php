@@ -606,7 +606,8 @@ class reports_Core {
 			
 			// Add category parameter to the parameter list
 			array_push(self::$params,
-				'c.id = '.$category_id.' OR c.parent_id = '.$category_id
+				'c.id = '.$category_id.' OR c.parent_id = '.$category_id,
+				'c.category_visible = 1'
 			);
 		}
 		elseif (isset($url_data['c']) AND is_array($url_data['c']))
@@ -627,7 +628,8 @@ class reports_Core {
 				$category_ids = implode(",", $category_ids);
 			
 				array_push(self::$params,
-					'c.id IN ('.$category_ids.') OR c.parent_id IN ('.$category_ids.')'
+					'c.id IN ('.$category_ids.') OR c.parent_id IN ('.$category_ids.')',
+					'c.category_visible = 1'
 				);
 			}
 		}
