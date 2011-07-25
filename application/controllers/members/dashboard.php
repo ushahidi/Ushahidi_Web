@@ -18,8 +18,6 @@ class Dashboard_Controller extends Members_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		
-		$profiler = new Profiler;
 	}
 
 	function index()

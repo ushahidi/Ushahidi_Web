@@ -2208,6 +2208,14 @@ ul.map-toggles li a:active { display:inline-block; padding:3px 5px 3px 17px; out
 			.member_info_row ul li{
 				margin:2px 0 2px 0;
 			}
+			
+		.member_reputation{
+			font-size:120%;
+			font-weight:bold;
+			color:#888;
+			background-color:#eee;
+			padding:3px;
+		}
 .checkin_map{
 	margin-top:10px;
 	width:460px;

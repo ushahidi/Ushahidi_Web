@@ -805,6 +805,24 @@ class Reports_Controller extends Main_Controller {
 					if ($this->user)
 					{
 						$rating->user_id = $this->user->id;
+						
+						// User can't rate their own stuff
+						if ($type == 'original')
+						{
+							if ($rating->incident->user_id == $this->user->id)
+							{
+								echo json_encode(array("status"=>"error", "message"=>"Can't rate your own Reports!"));
+								exit;
+							}
+						}
+						elseif ($type == 'comment')
+						{
+							if ($rating->comment->user_id == $this->user->id)
+							{
+								echo json_encode(array("status"=>"error", "message"=>"Can't rate your own Comments!"));
+								exit;
+							}
+						}
 					}
 
 					$rating->rating = $action;
@@ -819,12 +837,12 @@ class Reports_Controller extends Main_Controller {
 				}
 				else
 				{
-					echo json_encode(array("status"=>"error1", "message"=>"ERROR!"));
+					echo json_encode(array("status"=>"error", "message"=>"Nothing To Do!"));
 				}
 			}
 			else
 			{
-				echo json_encode(array("status"=>"error2", "message"=>"ERROR!"));
+				echo json_encode(array("status"=>"error", "message"=>"Nothing To Do!"));
 			}
 		}
 	}

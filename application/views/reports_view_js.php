@@ -312,7 +312,9 @@
 							$('#crating_' + id).html(data.rating);
 						}
 					} else {
-						alert('ERROR!');
+						if(typeof(data.message) != 'undefined') {
+							alert(data.message);
+						}
 					}
 					$('#' + loader).html('');
 			  	}, "json");
