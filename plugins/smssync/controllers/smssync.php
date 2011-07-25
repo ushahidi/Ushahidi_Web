@@ -46,6 +46,13 @@ class Smssync_Controller extends Controller {
 		$secret = "";
 		$success = "false";
 		
+		//Sometimes user send blank SMSs or GSM operators will
+		//send promotional SMSs with no phone number, so this way
+		//these messages will always end up on the backend and not float around
+		//on the phones forever.
+		$message_description = "---EMPTY---";		
+		$message_from = "---EMPTY---";
+		
 		if (isset($this->request['secret']))
 		{
 			$secret = $this->request['secret'];
