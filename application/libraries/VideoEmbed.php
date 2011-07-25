@@ -53,7 +53,7 @@ class VideoEmbed
 		// Check for valid hostnames
 		if ( ! array_key_exists($service_name, $services))
 		{
-			echo '<a href="'.$raw.'" target="_blank">'.Kohana::lang('ui_main.view').' '.Kohana::lang('ui_main.video').'</a><br/>';
+			echo '<a href="'.$raw.'" target="_blank">'.Kohana::lang('ui_main.view').' '.Kohana::lang('ui_main.video').'</a>';
 			
 			// No point in proceeding past this point therefore return
 			return;
