@@ -68,7 +68,21 @@ echo html::script('media/js/openid/openid-jquery-en', true);
 						<td><input type="submit" id="submit" name="submit" value="Log In" class="login_btn" /></td>
 					</tr>
 					<tr>
-						<td><a href="<?php echo url::site()?>login/resetpassword"> <?php echo Kohana::lang('ui_main.forgot_password');?></a></td>
+						<td><a href="javascript:toggle('signin_forgot');"> <?php echo Kohana::lang('ui_main.forgot_password');?></a></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div id="signin_forgot" class="signin_select ui-corner-all" style="margin-top:10px;">
+			<form method="post" id="userforgot_form">
+				<input type="hidden" name="action" value="forgot">
+				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.password_reset_prompt');?></strong><br />
+						<?php print form::input('resetemail', $form['resetemail'], ' class="login_text"'); ?></td>
+					</tr>
+					<tr>
+						<td><input type="submit" id="submit" name="submit" value="Reset password" class="login_btn" /></td>
 					</tr>
 				</table>
 			</form>

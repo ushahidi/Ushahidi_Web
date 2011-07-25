@@ -2,7 +2,7 @@ $(document).ready(function() {
     openid.init('openid_identifier');
     openid.setDemoMode(false);
 	<?php
-	if ($action == "signin")
+	if ($action == "signin" OR $action == "forgot")
 	{
 		echo '$("#signin_userpass").show(400);';
 	}

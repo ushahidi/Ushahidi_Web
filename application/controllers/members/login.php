@@ -34,7 +34,7 @@ class Login_Controller extends Template_Controller {
 		// $profiler = new Profiler;
 	}
 	
-	public function index()
+	public function index($user_id = 0)
 	{
 		$auth = Auth::instance();
 		
@@ -59,6 +59,7 @@ class Login_Controller extends Template_Controller {
 			'password_again'  => '',
 			'name'		=> '',
 			'email'		=> '',
+			'resetemail' => ''
 		);
 		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
@@ -66,6 +67,13 @@ class Login_Controller extends Template_Controller {
 		$openid_error = FALSE;
 		$success = FALSE;
 		$action = (isset($_POST["action"])) ? $_POST["action"] : "";
+		
+		// Is this a password reset request?
+		if (isset($_GET["reset"]))
+		{
+			$this->_new_password($user_id, $this->uri->segment(5));
+			$success = TRUE;
+		}
 		
 		// Regular Form Post for Signin
 		// check, has the form been submitted, if so, setup validation
@@ -166,6 +174,48 @@ class Login_Controller extends Template_Controller {
 				
 				$success = TRUE;
 				$action = "";
+			}
+			else 
+			{
+				// repopulate the form fields
+				$form = arr::overwrite($form, $post->as_array());
+
+				// populate the error fields, if any
+				$errors = arr::overwrite($errors, $post->errors('auth'));
+				$form_error = TRUE;
+			}
+		}
+		elseif ($_POST AND isset($_POST["action"])
+			AND $_POST["action"] == "forgot")
+		{
+			$post = Validation::factory($_POST);
+
+			//	Add some filters
+			$post->pre_filter('trim', TRUE);
+			$post->add_callbacks('resetemail', array($this,'email_exists_chk'));
+			
+			if ($post->validate())
+			{
+				$user = ORM::factory('user',$post->resetemail);
+				
+				// Existing User??
+				if ($user->loaded==true)
+				{
+					// Secret consists of email and the last_login field.
+					// So as soon as the user logs in again, 
+					// the reset link expires automatically.
+					$secret = $auth->hash_password($user->email.$user->last_login);
+					$secret_link = url::site('members/login/index/'.$user->id.'/'.$secret."?reset");
+					
+					$details_sent = $this->_email_resetlink($post->resetemail,$user->name,$secret_link);
+					if( $details_sent )
+					{
+						$password_reset = TRUE;
+					}
+					
+					$success = TRUE;
+					$action = "";	
+				}
 			}
 			else 
 			{
@@ -409,12 +459,41 @@ class Login_Controller extends Template_Controller {
 	public function email_exists_chk( Validation $post )
 	{
 		$users = ORM::factory('user');
-		if (array_key_exists('email',$post->errors()))
-			return;
-			
-		if ($users->email_exists( $post->email ) )
-			$post->add_error('email','exists');
+		if ($post->action == "new")
+		{
+			if (array_key_exists('email',$post->errors()))
+				return;
+
+			if ($users->email_exists( $post->email ) )
+				$post->add_error('email','exists');
+		}
+		elseif($post->action == "forgot")
+		{
+			if (array_key_exists('resetemail',$post->errors()))
+				return;
+
+			if ( ! $users->email_exists( $post->resetemail ) )
+				$post->add_error('resetemail','invalid');
+		}
 	}
+	
+    /**
+     * Create New password upon user request.
+     */
+    private function _new_password($user_id = 0, $secret)
+    {
+    	$auth = Auth::instance();
+		$user = ORM::factory('user',$user_id);
+		if ($user->loaded == true && 
+			$auth->hash_password($user->email.$user->last_login, $auth->find_salt($secret)) == $secret)
+		{ // Email New Password
+			$new_password = $this->_generate_password();
+			$user->password = $new_password;
+			$user->save();
+			
+			$this->_email_newpassword($user->email, $user->name, $user->username, $new_password);
+		}	
+	}	
 	
 	/**
 	 * Sends an email confirmation
@@ -439,4 +518,76 @@ class Login_Controller extends Template_Controller {
 		
 		email::send($to, $from, $subject, $message, FALSE);
 	}
+	
+	/**
+	 * Generate random password for the user.
+	 *
+ 	 * @return the new password
+	 */
+	private function _generate_password()
+	{
+		$password_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		$chars_length = strlen( $password_chars ) - 1;
+		$password = NULL;
+		for( $i = 0; $i < 8; $i++ )
+		{
+			$position = mt_rand(0,$chars_length);
+			$password .= $password_chars[$position];
+		}
+		return $password;
+	}	
+	
+	/**
+	 * Email reset link to the user.
+	 * 
+	 * @param the email address of the user requesting a password reset.
+	 * @param the username of the user requesting a password reset.
+	 * @param the new generated password.
+	 * 
+	 * @return void.
+	 */
+	private function _email_resetlink( $email, $name, $secret_url )
+	{
+		$to = $email;
+		$from = Kohana::lang('ui_admin.password_reset_from');
+		$subject = Kohana::lang('ui_admin.password_reset_subject');
+		$message = Kohana::lang('ui_admin.password_reset_message_line_1').' '.$name.",\n";
+		$message .= Kohana::lang('ui_admin.password_reset_message_line_2').' '.$name.". ";
+		$message .= Kohana::lang('ui_admin.password_reset_message_line_3')."\n\n";
+		$message .= $secret_url."\n\n";
+		
+		//email details
+		if( email::send( $to, $from, $subject, $message, FALSE ) == 1 )
+		{
+			return TRUE;
+		}
+		else 
+		{
+			return FALSE;
+		}
+	
+	}
+	
+	private function _email_newpassword( $email, $name, $username, $password )
+	{
+		$to = $email;
+		$from = Kohana::lang('ui_admin.password_reset_from');
+		$subject = Kohana::lang('ui_admin.password_reset_subject');
+		
+		$message = Kohana::lang('ui_admin.password_reset_message_line_1').' '.$name.",\n";
+		$message .= Kohana::lang('ui_admin.password_reset_message_line_4').":\n\n";
+		$message .= Kohana::lang('ui_admin.label_username').": ".$username."\n";
+		$message .= Kohana::lang('ui_admin.password').": ".$password;
+		
+		//email details
+		if( email::send( $to, $from, $subject, $message, FALSE ) == 1 )
+		{
+			return TRUE;
+		}
+		else 
+		{
+			return FALSE;
+		}
+	
+	}	
 }

@@ -62,6 +62,7 @@
 	'category_filter' => 'Category Filter',
 	'category_has_been' => 'The category has been ',
 	'category_name' => 'Category Name',
+	'change_picture' => 'Change My Picture',
 	'choose' => 'Choose a',
 	'choose_data_points' => 'Choose data points to download',
 	'choose_field_type' => 'Choose field type',
