@@ -172,6 +172,13 @@ class Json_Controller extends Template_Controller
 		// Category ID
 		$category_id = (isset($_GET['c']) AND intval($_GET['c']) > 0) ? intval($_GET['c']) : 0;
 		
+		//start date
+		// Category ID
+		$start_date = (isset($_GET['s']) AND intval($_GET['s']) > 0) ? intval($_GET['s']) : null;
+		
+		//end date
+		$end_date = (isset($_GET['e']) AND intval($_GET['e']) > 0) ? intval($_GET['e']) : null;
+		
 		if (Category_Model::is_valid_category($category_id))
 		{
 			// Get the color
@@ -243,11 +250,17 @@ class Json_Controller extends Template_Controller
 			// Number of Items in Cluster
 			$cluster_count = count($cluster);
 
+			$time_filter = "";
+			if($start_date != null && $end_date != null)
+			{
+				$time_filter = "&s=".$start_date."&e=".$end_date;
+			}
+			
 			$json_item = "{";
 			$json_item .= "\"type\":\"Feature\",";
 			$json_item .= "\"properties\": {";
-			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.">" . $cluster_count . " Reports</a>")) . "\",";
-			$json_item .= "\"link\": \"".url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast."\", ";
+			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter.">" . $cluster_count . " Reports</a>")) . "\",";
+			$json_item .= "\"link\": \"".url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter."\", ";
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
 			$json_item .= "\"icon\": \"".$icon."\", ";

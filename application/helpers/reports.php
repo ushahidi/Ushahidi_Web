@@ -667,6 +667,16 @@ class reports_Core {
 			$southwest = $url_data['sw'];
 			$northeast = $url_data['ne'];
 
+			//if sw and ne are just comma delimited strings, then make them into arrays
+			if(!is_array($southwest))
+			{
+					$southwest = explode(",", $southwest);
+			}
+			if(!is_array($northeast))
+			{
+					$northeast = explode(",", $northeast);
+			}
+			
 			if ( count($southwest) == 2 AND count($northeast) == 2 )
 			{
 				$lon_min = (float) $southwest[0];
