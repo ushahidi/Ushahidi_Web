@@ -82,10 +82,14 @@
 							</ul>
 						</div>
 						
-						<h3><a class="f-title" href="#"><?php echo Kohana::lang('ui_main.location'); ?></a></h3>
+						<h3>	
+							<a href="#" class="small-link-button f-clear reset" onclick="removeParameterKey('radius', 'f-location-box');removeParameterKey('start_loc', 'f-location-box');">
+								<?php echo Kohana::lang('ui_main.clear')?>
+							</a>
+							<a class="f-title" href="#"><?php echo Kohana::lang('ui_main.location'); ?></a></h3>
 						<div class="f-location-box">
 							<?php echo $alert_radius_view; ?>
-							<p><a class="reset" href="#">Reset</a></p>
+							<p></p>
 						</div>
 						
 						<h3>
