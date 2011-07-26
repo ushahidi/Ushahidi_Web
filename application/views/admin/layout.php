@@ -191,10 +191,10 @@
 					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('ui_admin.forum');?></a></li>
 				</ul>
 				<div class="info-search"><form action="<?php echo url::site() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn"><?php echo Kohana::lang('ui_admin.search');?></a></form></div>
+				<div style="clear:both;"></div>
+				<div class="info-buttons"><a class="button" href="<?php echo url::site().'admin/manage/publiclisting'; ?>">Manage Your <?php echo Kohana::lang('ui_admin.public_listing'); ?></a></div>
 				
-				<a href="<?php echo url::site().'admin/manage/publiclisting'; ?>" style="background-color:#F7F8E0;display:block;clear:both;padding:4px;border-bottom:solid 1px #898989;text-decoration:none;font-weight:bold;text-align:center;color:#00699b;">Manage Your <?php echo Kohana::lang('ui_admin.public_listing'); ?>.</a>
 				
-				<div style="clear:both"></div>
 			</div>
 			<!-- title -->
 			<h1><?php echo $site_name ?></h1>

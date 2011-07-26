@@ -153,9 +153,12 @@ a:hover{ text-decoration:none;}
 	vertical-align: middle;
 	width:100px;
 }
+
+.info-buttons { clear:both; margin:10px 0 0 0; text-align:right; }
+
 /*-- nav-holder --*/
 .nav-holder {
-	padding:43px 0 0;
+	padding:18px 0 0;
 	width:100%;
 	clear:both;
 	overflow:hidden;
@@ -2223,5 +2226,42 @@ ul.map-toggles li a:active { display:inline-block; padding:3px 5px 3px 17px; out
 	border: 2px solid #ccc;
 }
 
-/*--  --*/
-/*--  --*/
+/*
+Button Styles
+*/
+a.button 
+/* button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] */ {
+	background: #eee; /* Old browsers */
+	
+  border: 1px solid #aaa;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  padding: 2px 10px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  color: #444;
+  display: inline-block;
+  font-size: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0 1px rgba(255, 255, 255, .75);
+  cursor: pointer;
+  margin-bottom: 20px;
+  line-height: 21px;
+  font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  
+a.button:hover
+/* button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover */ {
+	color: #222;
+	background: #eee; /* Old browsers */
+	
+  border: 1px solid #888;
+  border-top: 1px solid #aaa;
+  border-left: 1px solid #aaa; }
