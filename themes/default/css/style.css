@@ -238,7 +238,9 @@ div#searchbox{
     background: #BEBEBE;
     border: #9F9F9F 2px solid;
     border-top: 0;
-    /*height: 45px;*/
+    width:380px;
+    padding:0 0 10px 0;
+    
 }
 
 div#loggedin_user_action{
@@ -251,7 +253,7 @@ div#loggedin_user_action{
 /* languages */
 div.language-box{
     padding: 0px;
-    margin: 10px 0px 13px 15px;
+    margin: 10px 0 0 15px;
     float: left;
 }
 
@@ -266,7 +268,7 @@ div.language-box select{
 /* searchform */
 div.search-form{
     padding: 0px;
-    margin: 10px 15px 10px 5px;
+    margin: 10px 15px 0 5px;
     float: left;
 }
 
