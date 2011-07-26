@@ -509,7 +509,7 @@ class Login_Controller extends Template_Controller {
 					'fbconnect' => 0,
 					'scope' => "email,publish_stream",
 					'next' => $next_url,
-					'cancel_url' => $cancel_url
+					'cancel' => $cancel_url
 				)
 			);
 
