@@ -306,10 +306,10 @@ ul.inf li a{
 	clear:both;
 	overflow:hidden;
 }
-.post-edit-log-red{
+.post-edit-log-blue{
 	padding:3px;
-	background-color:#FFE7D5;
-	border:1px solid #FFB782;
+	background-color:#F2F7FA;
+	border:1px solid #A8CADE;
 }
 .post-edit-log-gray{
 	padding:3px;
