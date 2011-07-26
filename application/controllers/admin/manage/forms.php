@@ -897,22 +897,23 @@ class Forms_Controller extends Admin_Controller {
 			$field_ispublic_submit = "0";
 		}
 		
-		$html = "";
-		$html .="<input type=\"hidden\" name=\"form_id\" id=\"form_id\" value=\"".$form_id."\">";
-		$html .="<input type=\"hidden\" name=\"field_id\" id=\"field_id\" value=\"".$field_id."\">";
-		$html .="<input type=\"hidden\" name=\"field_ispublic_visible\" id=\"field_id\" value=\"0\">";
-		$html .="<input type=\"hidden\" name=\"field_ispublic_submit\" id=\"field_id\" value=\"0\">";
-		$html .="<div id=\"form_result_".$form_id."\" class=\"forms_fields_result\"></div>";
-		$html .="<div class=\"forms_item\">"; 
-		$html .="	<strong>".Kohana::lang('ui_admin.field_name').":</strong><br />"; 
-		$html .= 	form::input('field_name', $field_name, ' class="text"');
-		$html .="</div>"; 
-		$html .="<div class=\"forms_item\">"; 
-		$html .="	<strong>".Kohana::lang('ui_admin.field_default').":</strong><br />"; 
-		$html .= 	form::textarea('field_default', $field_default, ' class="text"');
-		$html .="</div>"; 
-		$html .="<div class=\"forms_item\">"; 
-		$html .="	<strong>".Kohana::lang('ui_admin.required').":</strong><br />"; 
+		$html = "<input type=\"hidden\" name=\"form_id\" id=\"form_id\" value=\"".$form_id."\">"
+			. "<input type=\"hidden\" name=\"field_id\" id=\"field_id\" value=\"".$field_id."\">"
+			. "<input type=\"hidden\" name=\"field_ispublic_visible\" id=\"field_id\" value=\"0\">"
+			. "<input type=\"hidden\" name=\"field_ispublic_submit\" id=\"field_id\" value=\"0\">"
+			. "<div id=\"form_result_".$form_id."\" class=\"forms_fields_result\"></div>"
+			. "<div class=\"forms_item\">"
+			. "		<strong>".Kohana::lang('ui_admin.field_name').":</strong><br />" 
+			.		form::input('field_name', $field_name, ' class="text"')
+			. "</div>" 
+			. "<div class=\"forms_item\">" 
+			. "		<strong>".Kohana::lang('ui_admin.field_default').":<a href=\"#\" class=\"tooltip\""
+			. "		title=\"".Kohana::lang('tooltips.default_value')."\"></a><br />" 
+			.		form::textarea('field_default', $field_default, ' class="text"')
+			. "</div>" 
+			. "<div class=\"forms_item\">" 
+			. "		<strong>".Kohana::lang('ui_admin.required').":</strong><br />"; 
+		
 		if ($field_required != 1)
 		{
 			$html .= 	Kohana::lang('ui_admin.yes')." " . form::radio('field_required', '1', FALSE) . "&nbsp;&nbsp;";
