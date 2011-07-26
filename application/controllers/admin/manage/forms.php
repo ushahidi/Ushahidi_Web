@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * This controller is used to add/ remove categories
+ * This controller is used to add/ remove Custom Forms
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -254,12 +254,13 @@ class Forms_Controller extends Admin_Controller {
 		{
 			// @todo Manually extract the data to be validated
 			$form_field_data = arr::extract($_POST, 'form_id', 'field_type', 'field_name', 'field_default', 'field_required', 
-				'field_width', 'field_height', 'field_isdate', 'field_ispublic_visible', 'field_is_public_submit');
+				'field_width', 'field_height', 'field_isdate', 'field_ispublic_visible', 'field_ispublic_submit');
 			
 			// Form_Field_Model instance
-			$form_field = (Form_Field_Model::is_valid_form_field($field_id))
-				? ORM::factory('form_field', $field_id)
+			$form_field = Form_Field_Model::is_valid_form_field($_POST['field_id'])
+				? ORM::factory('form_field', $_POST['field_id'])
 				: new Form_Field_Model();
+
 			
 			// Validate the form field data
 			if ($form_field->validate($form_field_data))
@@ -284,7 +285,7 @@ class Forms_Controller extends Admin_Controller {
 						
 						$option_entry = ($option_exists->loaded == TRUE)
 							? ORM::factory('form_field_option', $option_exists->id)
-							: Form_Field_Option_Model();
+							: new Form_Field_Option_Model();
 						
 						$option_entry->form_field_id = $field_id;
 						$option_entry->option_name = $name;
@@ -322,6 +323,7 @@ class Forms_Controller extends Admin_Controller {
 				$field_add_status = "error";
 				$field_add_response  = "";
 				$field_add_response .= "<ul>";
+				
 				foreach ($errors as $error_item => $error_description)
 				{
 					$field_add_response .= (!$error_description) ? '' : "<li>" . $error_description . "</li>";

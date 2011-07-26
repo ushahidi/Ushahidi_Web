@@ -49,15 +49,32 @@ class Form_Field_Model extends ORM {
 					->add_rules('form_id','required', 'numeric', array('Form_Model', 'is_valid_form'))
 					->add_rules('field_type','required', 'numeric')
 					->add_rules('field_name','required', 'length[1,1000]')
-					->add_rules('field_default', 'length[1,10000]')
 					->add_rules('field_required','required', 'between[0,1]')
-					->add_rules('field_width', 'between[0,300]')
-					->add_rules('field_height', 'between[0,50]')
-					->add_rules('field_isdate', 'between[0,1]')
 					->add_rules('field_ispublic_visible','required', 'numeric')
 					->add_rules('field_ispublic_submit','required', 'numeric');
-				
-		// Rrturn
+	
+		// Check if field width and height have been specified	
+		if ( ! empty($array->field_width))
+		{
+			$array->add_rules('field_width', 'between[0,300]');
+		}
+
+		if ( ! empty($array->field_height))
+		{
+			$array->add_rules('field_height', 'between[0,50]');
+		}
+
+		if(! empty($array->field_isdate))
+		{
+			$array->add_rules('field_isdate', 'between[0,1]');
+		}
+
+		if(! empty($array->field_default))
+		{
+			$array->add_rules('field_default', 'length[1,10000]');	
+		}
+
+		// Return
 		return parent::validate($array, $save);
 	}
 	
