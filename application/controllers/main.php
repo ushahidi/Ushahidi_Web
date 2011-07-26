@@ -404,6 +404,11 @@ class Main_Controller extends Template_Controller {
 			$show_year++;
 		}
 
+		Event::run('ushahidi_filter.active_startDate', $display_startDate);
+		Event::run('ushahidi_filter.active_endDate', $display_endDate);
+		Event::run('ushahidi_filter.startDate', $startDate);
+		Event::run('ushahidi_filter.endDate', $endDate);
+		
 		$this->template->content->div_timeline->startDate = $startDate;
 		$this->template->content->div_timeline->endDate = $endDate;
 

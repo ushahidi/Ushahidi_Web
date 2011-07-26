@@ -151,6 +151,7 @@
 									?>
 								</div>
 							</div>
+							<?php Event::run('ushahidi_action.report_form_admin_after_time', $id); ?>
 							<div class="row">
 								<h4><a href="#" id="category_toggle" class="new-cat"><?php echo Kohana::lang('ui_main.new_category');?></a><?php echo Kohana::lang('ui_main.categories');?> 
 								<span><?php echo Kohana::lang('ui_main.select_multiple');?>.</span></h4>

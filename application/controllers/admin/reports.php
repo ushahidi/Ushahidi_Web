@@ -547,9 +547,12 @@ class Reports_Controller extends Admin_Controller
 			// 
 			// Notes: E.Kala 16th July 2011
 			// @todo Will have to rethink this event call
-			// 
+			// More Notes: John Etherton 26th July 2011
+			// A lot of the plugins we use in the Liberia deployment rely on this event call,
+			// so I after talking with David I added it back in. 
+			 
 			// Action::report_submit_admin - Report Posted
-			// Event::run('ushahidi_action.report_submit_admin', $post);
+			Event::run('ushahidi_action.report_submit_admin', $post);
 
 			// Validate
 			if (reports::validate($post, TRUE))
