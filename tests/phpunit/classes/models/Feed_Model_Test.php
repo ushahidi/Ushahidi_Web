@@ -33,6 +33,11 @@ class Feed_Model_Test extends PHPUnit_Framework_TestCase {
 	 */
 	public function testIsValidFeed()
 	{
+		if (ORM::factory('feed')->count_all() == 0)
+		{
+			$this->markTestSkipped('There are no records in the feeds table');
+		}
+		
 		// Test with a valid feed id
 		$random_feed_id = testutils::get_random_id('feed');
 		
