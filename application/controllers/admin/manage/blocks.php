@@ -77,20 +77,20 @@ class Blocks_Controller extends Admin_Controller
 			
 			if ($post->validate())
 			{
-				if ($post->action == 'v')
-				{ // Visible Action
-					if ( ! in_array($post->block, $active_blocks))
-					{ // Not Active -- Activate
-						array_push($active_blocks, $post->block);
-						$settings->blocks = implode("|", $active_blocks);
-						$settings->save();
-					}
-					else
-					{ // Active - Deactivate
-						$active_blocks = array_diff($active_blocks, array($post->block));
-						$settings->blocks = implode("|", $active_blocks);
-						$settings->save();
-					}
+				// Activate a block
+				if ($post->action == 'a')
+				{
+					array_push($active_blocks, $post->block);
+					$settings->blocks = implode("|", $active_blocks);
+					$settings->save();
+				}
+				
+				// Deactivate a block
+				elseif ($post->action =='d')
+				{
+					$active_blocks = array_diff($active_blocks, array($post->block));
+					$settings->blocks = implode("|", $active_blocks);
+					$settings->save();
 				}
 			}
 			else
