@@ -389,6 +389,10 @@
 					{
 						deSelectedFilters.push(elementId);
 					}
+					
+					// Update the parameter value for the deselected filter
+					removeDeselectedReportFilter(elementId);
+					
 				}
 				
 				$(this).removeClass("selected");
@@ -471,9 +475,6 @@
 		// Reset the map loading tracker
 		mapLoaded = 0;
 		
-		// Remove the deselected report filters
-		removeDeselectedReportFilters();
-	
 		var loadingURL = "<?php echo url::base().'media/img/loading_g.gif'; ?>"
 		var statusHtml = "<div style=\"width: 100%; margin-top: 100px;\" align=\"center\">" + 
 					"<div><img src=\""+loadingURL+"\" border=\"0\"></div>" + 
@@ -500,6 +501,7 @@
 				
 						attachPagingEvents();
 						addReportHoverEvents();
+						deSelectedFilters = [];
 						
 					}, 400);
 				}
@@ -511,7 +513,7 @@
 	 * Removes the deselected report filters from the list
 	 * of filters for fetching the reports
 	 */
-	function removeDeselectedReportFilters()
+	function removeDeselectedReportFilter(elementId)
 	{
 		// Removes a parameter item from urlParameters
 		removeParameterItem = function(key, val) {
@@ -550,32 +552,26 @@
 		
 		if (deSelectedFilters.length > 0)
 		{
-			for (var i=0; i< deSelectedFilters.length; i++)
+			// Check for category filter
+			if (elementId.indexOf('filter_link_cat_') != -1){
+				catId = elementId.substring('filter_link_cat_'.length);
+				removeParameterItem("c", catId);
+			}
+			else if (elementId.indexOf('filter_link_mode_') != -1)
 			{
-				currentItem = deSelectedFilters[i];
-				if (currentItem != null && currentItem != '')
-				{
-					// Check for category filter
-					if (currentItem.indexOf('filter_link_cat_') != -1){
-						catId = currentItem.substring('filter_link_cat_'.length);
-						removeParameterItem("c", catId);
-					}
-					else if (currentItem.indexOf('filter_link_mode_') != -1)
-					{
-						modeId = currentItem.substring('filter_link_mode_'.length);
-						removeParameterItem("mode", modeId);
-					}
-					else if (currentItem.indexOf('filter_link_media_') != -1)
-					{
-						mediaType = currentItem.substring('filter_link_media_'.length);
-						removeParameterItem("m", mediaType);
-					}
-					else if (currentItem.indexOf('filter_link_verification_') != -1)
-					{
-						verification = currentItem.substring('filter_link_verification.length');
-						removeParameterItem("v", verification);
-					}
-				}
+				modeId = elementId.substring('filter_link_mode_'.length);
+				removeParameterItem("mode", modeId);
+			}
+			else if (elementId.indexOf('filter_link_media_') != -1)
+			{
+				mediaType = elementId.substring('filter_link_media_'.length);
+				removeParameterItem("m", mediaType);
+			}
+			else if (elementId.indexOf('filter_link_verification_') != -1)
+			{
+				verification = elementId.substring('filter_link_verification_'.length);
+				removeParameterItem("v", verification);
+				
 			}
 		}
 	}

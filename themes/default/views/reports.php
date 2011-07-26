@@ -158,13 +158,13 @@
 						<div class="f-verification-box">
 							<ul class="filter-list fl-verification">
 								<li>
-									<a href="#" id="filter_verification_link_1">
+									<a href="#" id="filter_link_verification_1">
 										<span class="item-icon ic-verified">&nbsp;</span>
 										<span class="item-title"><?php echo Kohana::lang('ui_main.verified'); ?></span>
 									</a>
 								</li>
 								<li>
-									<a href="#" id="filter_verification_link_0">
+									<a href="#" id="filter_link_verification_0">
 										<span class="item-icon ic-unverified">&nbsp;</span>
 										<span class="item-title"><?php echo Kohana::lang('ui_main.unverified'); ?></span>
 									</a>
