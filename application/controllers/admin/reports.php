@@ -618,7 +618,7 @@ class Reports_Controller extends Admin_Controller
 				}
 
 				// STEP 7: SAVE CUSTOM FORM FIELDS
-				reports::save_custom_fields($incident, $post);
+				reports::save_custom_fields($post, $incident);
 
 				// Action::report_edit - Edited a Report
 				Event::run('ushahidi_action.report_edit', $incident);
@@ -752,7 +752,7 @@ class Reports_Controller extends Admin_Controller
 		
 		// Retrieve Custom Form Fields Structure
 		$this->template->content->custom_forms = new View('reports_submit_custom_forms');
-        $disp_custom_fields = customforms::get_custom_form_fields($id,$form['form_id'],false,"view");
+		$disp_custom_fields = customforms::get_custom_form_fields($id, $form['form_id'], FALSE, "view");
 		$custom_field_mismatch = customforms::get_edit_mismatch($form['form_id']);
         $this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
 		$this->template->content->custom_forms->custom_field_mismatch = $custom_field_mismatch;
