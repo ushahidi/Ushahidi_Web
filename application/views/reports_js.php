@@ -341,16 +341,54 @@
 	
 	function addToggleReportsFilterEvents()
 	{
+		// Checks if a filter exists in the list of deselected items
+		filterExists = function(itemId) {
+			if (deSelectedFilters.length == 0)
+			{
+				return false;
+			}
+			else
+			{
+				for (var i=0; i < deSelectedFilters.length; i++)
+				{
+					if (deSelectedFilters[i] == itemId)
+					{
+						return true;
+					}
+				}
+				return false;
+			}
+		};
+		
 		// toggle highlighting on the filter lists
 		$(".filter-list li a").toggle(
 			function(){
 				$(this).addClass("selected");
+				
+				// Check if the element is in the list of de-selected items and remove it
+				if (deSelectedFilters.length > 0)
+				{
+					var temp = [];
+					for (var i = 0; i<deSelectedFilters.length; i++)
+					{
+						if (deSelectedFilters[i] != $(this).attr("id"))
+						{
+							temp.push(deSelectedFilters[i]);
+						}
+					}
+					
+					deSelectedFilters = temp;
+				}
 			},
 			function(){
 				if ($(this).hasClass("selected"))
 				{
+					elementId = $(this).attr("id");
 					// Add the id of the deselected filter
-					deSelectedFilters.push($(this).attr("id"));
+					if ( ! filterExists(elementId))
+					{
+						deSelectedFilters.push(elementId);
+					}
 				}
 				
 				$(this).removeClass("selected");
