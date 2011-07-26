@@ -4,12 +4,12 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>Admin Categories Add</title>
+<title>admin_blocks_hide_test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Admin Categories Add</td></tr>
+<tr><td rowspan="1" colspan="3">admin_blocks_hide_test</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -52,40 +52,26 @@
 	<td></td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>link=Add/Edit</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>category_title</td>
-	<td>Test Category</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>category_description</td>
-	<td>Test Description</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>category_color</td>
-	<td>780078</td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
-	<td>css=input.save-rep-btn</td>
+	<td>link=Blocks</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>css=div.green-box</td>
+	<td>css=div.table-holder</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyTextPresent</td>
+	<td>clickAndWait</td>
+	<td>link=Visible</td>
 	<td></td>
-	<td>The category has been ADDED/EDITED!</td>
 </tr>
+<tr>
+	<td>verifyConfirmation</td>
+	<td></td>
+	<td>Are you sure you want to HIDE?</td>
+</tr>
+
 </tbody></table>
 </body>
 </html>
