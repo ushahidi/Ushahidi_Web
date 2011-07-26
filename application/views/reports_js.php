@@ -226,7 +226,7 @@
 						markers.clearMarkers();
 						markers.addMarker(m);
 
-						currRadius = $("#alert_radius").val();
+						currRadius = $("#alert_radius option:selected").val();
 						radius = currRadius * 1000
 
 						lonlat2.transform(proj_900913, proj_4326);
@@ -235,7 +235,7 @@
 						currLat = lonlat2.lat;
 						currLon = lonlat2.lon;
 
-						drawCircle(radiusMap, currLat, currLon);
+						drawCircle(radiusMap, currLat, currLon, radius);
 
 						// Store the radius and start locations
 						urlParameters["radius"] = currRadius;
