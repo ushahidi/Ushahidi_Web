@@ -56,7 +56,7 @@ class Reports_Helper_Test extends PHPUnit_Framework_TestCase {
 		$incident = new Incident_Model();
 		
 		// STEP 2: Save the incident
-		reports::save_incident($this->post, $incident, $location->id);
+		reports::save_report($this->post, $incident, $location->id);
 		$this->assertEquals($location->id, $incident->location_id, 'Incident not associated with location');
 		
 		// Test if the incident has been saved
@@ -69,7 +69,7 @@ class Reports_Helper_Test extends PHPUnit_Framework_TestCase {
 		$category_count = ORM::factory('incident_category')->where('incident_id',$incident->id)->find_all()->count();
 		$this->assertEquals(TRUE, $category_count > 0, 'No entries in incident_categorgy for incident');
 		
-		// Save personal informatino
+		// Save personal information
 		 reports::save_personal_info($this->post, $incident);
 		
 		// Test
@@ -83,6 +83,70 @@ class Reports_Helper_Test extends PHPUnit_Framework_TestCase {
 		ORM::factory('incident_person')->where('incident_id', $incident->id)->delete_all();
 		$incident->delete();
 		$location->delete();
+	}
+	
+	/**
+	 * Tests reports::fetch_incidents()
+	 * @test
+	 *
+	 * This tests compares the output SQL of fetch_incidents against a pre-defined SQL
+	 * statement based on dummy values. The objective of this test is to check whether
+	 * reports::fetch_incidents processes the parameters property
+	 */
+	public function testFetchIncidents()
+	{
+		// Get random location and fetch the latitude and longitude
+		$location = ORM::factory('location', testutils::get_random_id('location'));
+		
+		$longitude = $location->longitude;
+		$latitude = $location->latitude;
+		
+		// Build the list of HTTP_GET parameters
+		$filter_params = array(
+			'c' => array(3, 4, 5),			// Category filters
+			'start_loc' => $latitude.",".$longitude, 		// Start location
+			'radius' => '20', 				// Location radius
+			'mode' => array(1,2),			// Incident mode
+			'm' => array(1),				// Media filter
+			'from' => '07/07/2011',			// Start date
+			'to' => '07/21/2011',			// End date
+			'v' => 1						// Verification filter
+		);
+		
+		// Add the report filter params to the list of HTTP_GET parameters
+		$_GET = array_merge($_GET, $filter_params);
+		
+		// Get the incidents
+		$incidents = reports::fetch_incidents();
+		
+		// Get the table prefix
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
+		// Expected SQL statement; based on the $filter_params above
+		$expected_sql = "SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, "
+				. "i.incident_mode, i.incident_active, i.incident_verified, i.location_id, l.location_name, l.latitude, l.longitude "
+				. ", ((ACOS(SIN(".$latitude." * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS(".$latitude." * PI() / 180) * "
+				. "	COS(l.`latitude` * PI() / 180) * COS((".$longitude." - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance "
+				. "FROM ".$table_prefix."incident i "
+				. "INNER JOIN ".$table_prefix."location l ON (i.location_id = l.id) "
+				. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.incident_id = i.id) "
+				. "INNER JOIN ".$table_prefix."category c ON (ic.category_id = c.id) "
+				. "WHERE i.incident_active = 1 "
+				. "AND (c.id IN (".implode(",", $filter_params['c']).") OR c.parent_id IN (".implode(",", $filter_params['c']).")) "
+				. "AND c.category_visible = 1 "
+				. "AND i.incident_mode IN (".implode(",", $filter_params['mode']).") "
+				. "AND i.incident_date >= \"2011-07-07\" "
+				. "AND i.incident_date <= \"2011-07-21\" "
+				. "AND i.id IN (SELECT DISTINCT incident_id FROM ".$table_prefix."media WHERE media_type IN (".implode(",", $filter_params['m']).")) "
+				. "AND i.incident_verified IN (".$filter_params['v'].") "
+				. "HAVING distance <= ".$filter_params['radius']." "
+				. "ORDER BY i.incident_date DESC ";
+		
+		// Test the expected SQL against the returned
+		$this->assertEquals($expected_sql, $incidents->sql());
+		
+		// Garbage collection
+		unset ($location, $latitude, $longitude, $incidents, $filter_params);
 	}
 }
 ?>

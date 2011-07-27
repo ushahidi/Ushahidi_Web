@@ -125,39 +125,17 @@ class reports_Core {
 		}
 		
 		// Custom form fields validation
-		if ( ! empty($post->custom_form_field))
-		{
-			// To track custom form field validation errors
-			$custom_form_field_error = FALSE;
-			
-			// Valdation rules for the custom form fields
-			foreach ($post->custom_fields as $field_id => $field_response)
-			{
-				// Get the parameters for this field
-				$field_param = ORM::factory('form_field', $field_id);
-				if ($field_param->loaded == true)
-				{
-					// Validate for required
-					if ($field_param->field_required == 1 AND field_response == "")
-					{
-						$custom_form_field_error = TRUE;
-					}
+		$errors = customforms::validate_custom_form_fields($post);
 
-					// Validate for date
-					if ($field_param->field_isdate == 1 AND $field_response != "")
-					{
-						// Add validation rule for date
-						$post->add_rules($field_param->field_name, 'date_mmddyyyy');
-					}
-				}
-				
-				// Check if there is a custom form fields error
-				if ($custom_form_field_error)
-				{
-					$post->add_error('custom_field', 'values');
-				}
+		// Check if any errors have been returned
+		if (count($errors) > 0)
+		{
+			foreach ($errors as $field_name => $error)
+			{
+				$post->add_error($field_name, $error);
 			}
 		}
+
 		//> END custom form fields validation
 		
 		// Return
@@ -180,7 +158,7 @@ class reports_Core {
 	}
 	
 	/**
-	 * Initiates the Incident Saving process
+	 * Saves an incident
 	 *
 	 * @param Validation $post Validation object with the data to be saved
 	 * @param Incident_Model $incident Incident_Model instance to be modified
@@ -188,7 +166,7 @@ class reports_Core {
 	 * @param int $id ID no. of the report
 	 *
 	 */
-	public static function save_incident($post, $incident, $location_id, $user_id = NULL)
+	public static function save_report($post, $incident, $location_id)
 	{
 		// Exception handling
 		if ( ! $post instanceof Validation_Core AND  ! $incident instanceof Incident_Model)
@@ -220,9 +198,9 @@ class reports_Core {
 		$incident->form_id = $post->form_id;
 		
 		// Check if the user id has been specified
-		if (isset($user_id))
+		if (isset($_SESSION['auth_user']))
 		{
-			$incident->user_id = $user_id;
+			$incident->user_id = $_SESSION['auth_user']->id;
 		}
 		
 		$incident->incident_title = $post->incident_title;
@@ -354,7 +332,7 @@ class reports_Core {
 	 * @param mixed $incident
 	 *
 	 */
-	public static function save_inc_geometry($post, $incident)
+	public static function save_report_geometry($post, $incident)
 	{
 		// Delete all current geometry
 		ORM::factory('geometry')->where('incident_id',$incident->id)->delete_all();
@@ -582,7 +560,7 @@ class reports_Core {
 		$url_data = array_merge($_GET);
 		
 		// Check if some parameter values are separated by "," except the location bounds
-		$exclude_params = array('c' => '', 'v' => '', 'm' => '', 'mode' => '');
+		$exclude_params = array('c' => '', 'v' => '', 'm' => '', 'mode' => '', 'sw'=> '', 'ne'=> '');
 		foreach ($url_data as $key => $value)
 		{
 			if (array_key_exists($key, $exclude_params) AND !is_array($value))
@@ -666,16 +644,6 @@ class reports_Core {
 		{
 			$southwest = $url_data['sw'];
 			$northeast = $url_data['ne'];
-
-			//if sw and ne are just comma delimited strings, then make them into arrays
-			if(!is_array($southwest))
-			{
-					$southwest = explode(",", $southwest);
-			}
-			if(!is_array($northeast))
-			{
-					$northeast = explode(",", $northeast);
-			}
 			
 			if ( count($southwest) == 2 AND count($northeast) == 2 )
 			{

@@ -139,7 +139,7 @@ class Reports_Controller extends Main_Controller {
 		
 		// Fetch all incidents
 		$all_incidents = reports::fetch_incidents();
-
+		
 		// Pagination
 		$pagination = new Pagination(array(
 				'style' => 'front-end-reports',
@@ -152,7 +152,6 @@ class Reports_Controller extends Main_Controller {
 		$incidents = Incident_Model::get_incidents(reports::$params, $pagination);
 		
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
-
 		$localized_categories = array();
 		foreach ($incidents as $incident)
 		{
@@ -310,7 +309,7 @@ class Reports_Controller extends Main_Controller {
 				
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model();
-				reports::save_incident($post, $incident, $location->id, $_SESSION['auth_user']->id);
+				reports::save_report($post, $incident, $location->id);
 
 				// STEP 3: SAVE CATEGORIES
 				reports::save_category($post, $incident);
@@ -333,12 +332,11 @@ class Reports_Controller extends Main_Controller {
 			// No! We have validation errors, we need to show the form again, with the errors
 			else
 			{
-				// repopulate the form fields
+				// Repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
-				// populate the error fields, if any
+				// Populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('report'));
-				$errors = array_merge($errors,$custom_errors);
 				$form_error = TRUE;
 			}
 		}

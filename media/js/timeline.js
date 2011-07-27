@@ -674,7 +674,7 @@
 
 			var	protocolUrl = baseUrl + json_url + "/"; // Default Json
 			var thisLayer = "Reports"; // Default Layer Name
-			var protocolFormat = OpenLayers.Format.GeoJSON;
+			var protocolFormat = new OpenLayers.Format.GeoJSON();
 			newlayer = false;
 
 			if (thisLayer && thisLayerType == 'shares')
@@ -687,25 +687,27 @@
 			{
 				protocolUrl = baseUrl + "json/layer/"+thisLayerID+"/";
 				thisLayer = "Layer_"+thisLayerID;
-				protocolFormat = OpenLayers.Format.KML;
-				//protocolFormat = OpenLayers.Format.GeoJSON;
+				protocolFormat = new OpenLayers.Format.KML({
+					extractStyles: true,
+					extractAttributes: true,
+					maxDepth: 5
+				});
 				newlayer = true;
 			}
 
 			var myPoint;
-			if ( currZoom && currCenter &&
-				typeof(currZoom) != 'undefined' && typeof(currCenter) != 'undefined')
+			if (currZoom && currCenter && typeof(currZoom) != 'undefined' && typeof(currCenter) != 'undefined')
 			{
 				myPoint = currCenter;
 				myZoom = currZoom;
 			}
 			else
 			{
-				// create a lat/lon object
+				// Create a lat/lon object
 				myPoint = new OpenLayers.LonLat(longitude, latitude);
 				myPoint.transform(proj_4326, map.getProjectionObject());
 
-				// display the map centered on a latitude and longitude (Google zoom levels)
+				// Display the map centered on a latitude and longitude (Google zoom levels)
 				myZoom = defaultZoom;
 			}
 
@@ -741,7 +743,9 @@
 			}
 			
 			// Build the URL for fetching the data
-			fetchURL = protocolUrl + '?z=' + myZoom + '&' + this.markerUrlParams(startDate, endDate).join('&');
+			fetchUrl = (thisLayer && thisLayerType == 'layers')
+				? protocolUrl
+				: protocolUrl + '?z=' + myZoom + '&' + this.markerUrlParams(startDate, endDate).join('&');
 			
 			// Create the reports layer
 			markers = new OpenLayers.Layer.Vector(thisLayer, {
@@ -757,12 +761,13 @@
 				}),
 				strategies: [new OpenLayers.Strategy.Fixed()],
 				protocol: new OpenLayers.Protocol.HTTP({
-					url: fetchURL,
-					format: new OpenLayers.Format.GeoJSON()
+					url: fetchUrl,
+					format: protocolFormat
 				})
 				
 			});
 			
+			// Add the layer to the map
 			map.addLayer(markers);
 			
 			/*
