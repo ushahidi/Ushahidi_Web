@@ -573,7 +573,7 @@ class Reports_Controller extends Admin_Controller
 
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model($id);
-				reports::save_report($post, $incident, $location->id, $_SESSION["auth_user"]->id);
+				reports::save_report($post, $incident, $location->id);
 				
 				// STEP 2b: Record Approval/Verification Action
 				$verify = new Verify_Model();

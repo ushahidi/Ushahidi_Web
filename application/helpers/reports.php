@@ -166,7 +166,7 @@ class reports_Core {
 	 * @param int $id ID no. of the report
 	 *
 	 */
-	public static function save_report($post, $incident, $location_id, $user_id = NULL)
+	public static function save_report($post, $incident, $location_id)
 	{
 		// Exception handling
 		if ( ! $post instanceof Validation_Core AND  ! $incident instanceof Incident_Model)
@@ -198,9 +198,9 @@ class reports_Core {
 		$incident->form_id = $post->form_id;
 		
 		// Check if the user id has been specified
-		if (isset($user_id))
+		if (isset($_SESSION['auth_user']))
 		{
-			$incident->user_id = $user_id;
+			$incident->user_id = $_SESSION['auth_user']->id;
 		}
 		
 		$incident->incident_title = $post->incident_title;

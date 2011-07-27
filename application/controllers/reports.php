@@ -309,7 +309,7 @@ class Reports_Controller extends Main_Controller {
 				
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model();
-				reports::save_report($post, $incident, $location->id, $_SESSION['auth_user']->id);
+				reports::save_report($post, $incident, $location->id);
 
 				// STEP 3: SAVE CATEGORIES
 				reports::save_category($post, $incident);
