@@ -180,7 +180,7 @@ class reports_Core {
 	}
 	
 	/**
-	 * Initiates the Incident Saving process
+	 * Saves an incident
 	 *
 	 * @param Validation $post Validation object with the data to be saved
 	 * @param Incident_Model $incident Incident_Model instance to be modified
@@ -188,7 +188,7 @@ class reports_Core {
 	 * @param int $id ID no. of the report
 	 *
 	 */
-	public static function save_incident($post, $incident, $location_id, $user_id = NULL)
+	public static function save_report($post, $incident, $location_id, $user_id = NULL)
 	{
 		// Exception handling
 		if ( ! $post instanceof Validation_Core AND  ! $incident instanceof Incident_Model)
@@ -354,7 +354,7 @@ class reports_Core {
 	 * @param mixed $incident
 	 *
 	 */
-	public static function save_inc_geometry($post, $incident)
+	public static function save_report_geometry($post, $incident)
 	{
 		// Delete all current geometry
 		ORM::factory('geometry')->where('incident_id',$incident->id)->delete_all();
@@ -582,7 +582,7 @@ class reports_Core {
 		$url_data = array_merge($_GET);
 		
 		// Check if some parameter values are separated by "," except the location bounds
-		$exclude_params = array('c' => '', 'v' => '', 'm' => '', 'mode' => '');
+		$exclude_params = array('c' => '', 'v' => '', 'm' => '', 'mode' => '', 'sw'=> '', 'ne'=> '');
 		foreach ($url_data as $key => $value)
 		{
 			if (array_key_exists($key, $exclude_params) AND !is_array($value))
@@ -666,16 +666,6 @@ class reports_Core {
 		{
 			$southwest = $url_data['sw'];
 			$northeast = $url_data['ne'];
-
-			//if sw and ne are just comma delimited strings, then make them into arrays
-			if(!is_array($southwest))
-			{
-					$southwest = explode(",", $southwest);
-			}
-			if(!is_array($northeast))
-			{
-					$northeast = explode(",", $northeast);
-			}
 			
 			if ( count($southwest) == 2 AND count($northeast) == 2 )
 			{

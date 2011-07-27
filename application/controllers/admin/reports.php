@@ -320,11 +320,11 @@ class Reports_Controller extends Admin_Controller
 		$this->template->js = new View('admin/reports_js');
 	}
 	/**
-	* Edit a report
-	* @param bool|int $id The id no. of the report
-	* @param bool|string $saved
-	*/
-	function edit( $id = false, $saved = false )
+	 * Edit a report
+	 * @param bool|int $id The id no. of the report
+	 * @param bool|string $saved
+	 */
+	public function edit($id = FALSE, $saved = FALSE)
 	{
 		$db = new Database();
 		
@@ -369,7 +369,7 @@ class Reports_Controller extends Admin_Controller
 			'incident_zoom' => ''
 		);
 
-		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 		$form_saved = ($saved == 'saved');
@@ -544,13 +544,20 @@ class Reports_Controller extends Admin_Controller
 				$post = array_merge($post, array('service_id' => $service_id));
 			}
 			
-			// 
-			// Notes: E.Kala 16th July 2011
-			// @todo Will have to rethink this event call
-			// More Notes: John Etherton 26th July 2011
-			// A lot of the plugins we use in the Liberia deployment rely on this event call,
-			// so I after talking with David I added it back in. 
-			 
+			// Check if the incident id is valid an add it to the post data
+			if (Incident_Model::is_valid_incident($id))
+			{
+				$post = array_merge($post, array('incident_id' => $id));
+			}
+			
+			/**
+			 * NOTES - E.Kala July 27, 2011
+			 *
+			 * Previously, the $post parameter for this event was a Validation
+			 * object. Now it's an array (i.e. the raw data without any validation rules applied to them). 
+			 * As such, all plugins making use of this event shall have to be updated
+			 */
+			
 			// Action::report_submit_admin - Report Posted
 			Event::run('ushahidi_action.report_submit_admin', $post);
 
@@ -566,14 +573,14 @@ class Reports_Controller extends Admin_Controller
 
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model($id);
-				reports::save_incident($post, $incident, $location->id, $_SESSION["auth_user"]->id);
+				reports::save_report($post, $incident, $location->id, $_SESSION["auth_user"]->id);
 				
 				// STEP 2b: Record Approval/Verification Action
 				$verify = new Verify_Model();
 				reports::verify_approve($post, $verify, $incident);
 				
 				// STEP 2c: SAVE INCIDENT GEOMETRIES
-				reports::save_inc_geometry($post, $incident);
+				reports::save_report_geometry($post, $incident);
 
 				// STEP 3: SAVE CATEGORIES
 				reports::save_category($post, $incident);
@@ -643,10 +650,10 @@ class Reports_Controller extends Admin_Controller
 			// No! We have validation errors, we need to show the form again, with the errors
 			else
 			{
-				// repopulate the form fields
+				// Repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
-				// populate the error fields, if any
+				// Populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}

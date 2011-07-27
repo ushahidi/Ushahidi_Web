@@ -16,12 +16,22 @@
 
 class Json_Controller extends Template_Controller
 {
+	/**
+	 * Automatically render the views
+	 * @var bool
+	 */
 	public $auto_render = TRUE;
 
-	// Main template
+	/**
+	 * Name of the view template for this controller
+	 * @var string
+	 */
 	public $template = 'json';
 
-	// Table Prefix
+	/**
+	 * Database table prefix
+	 * @var string
+	 */
 	protected $table_prefix;
 
 	public function __construct()
@@ -33,15 +43,13 @@ class Json_Controller extends Template_Controller
 
 		// Cacheable JSON Controller
 		$this->is_cachable = TRUE;
-		
-		//$profile = new Profiler;
 	}
 
 
 	/**
 	 * Generate JSON in NON-CLUSTER mode
 	 */
-	function index()
+	public function index()
 	{
 		$json = "";
 		$json_item = "";
@@ -163,21 +171,17 @@ class Json_Controller extends Template_Controller
 		//$distance = 60;
 		$distance = (10000000 >> $zoomLevel) / 100000;
 		
-		// Start Benchmarking
-		Benchmark::start('report_clustering');
-		
 		// Fetch the incidents using the specified parameters
 		$incidents = reports::fetch_incidents();
 		
 		// Category ID
 		$category_id = (isset($_GET['c']) AND intval($_GET['c']) > 0) ? intval($_GET['c']) : 0;
 		
-		//start date
-		// Category ID
-		$start_date = (isset($_GET['s']) AND intval($_GET['s']) > 0) ? intval($_GET['s']) : null;
+		// Start date
+		$start_date = (isset($_GET['s']) AND intval($_GET['s']) > 0) ? intval($_GET['s']) : NULL;
 		
-		//end date
-		$end_date = (isset($_GET['e']) AND intval($_GET['e']) > 0) ? intval($_GET['e']) : null;
+		// End date
+		$end_date = (isset($_GET['e']) AND intval($_GET['e']) > 0) ? intval($_GET['e']) : NULL;
 		
 		if (Category_Model::is_valid_category($category_id))
 		{
@@ -216,7 +220,7 @@ class Json_Controller extends Template_Controller
 
 				$pixels = abs($marker['longitude']-$target['longitude']) +
 					abs($marker['latitude']-$target['latitude']);
-				// echo $pixels."<BR>";
+					
 				// If two markers are closer than defined distance, remove compareMarker from array and add to cluster.
 				if ($pixels < $distance)
 				{
@@ -249,17 +253,18 @@ class Json_Controller extends Template_Controller
 
 			// Number of Items in Cluster
 			$cluster_count = count($cluster);
-
-			$time_filter = "";
-			if($start_date != null && $end_date != null)
-			{
-				$time_filter = "&s=".$start_date."&e=".$end_date;
-			}
 			
+			// Get the time filter
+			$time_filter = ( ! empty($start_date) AND ! empty($end_date))
+				? "&s=".$start_date."&e=".$end_date
+				: "";
+			
+			// Build out the JSON string
 			$json_item = "{";
 			$json_item .= "\"type\":\"Feature\",";
 			$json_item .= "\"properties\": {";
-			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter.">" . $cluster_count . " Reports</a>")) . "\",";
+			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base()
+				 . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter.">" . $cluster_count . " Reports</a>")) . "\",";
 			$json_item .= "\"link\": \"".url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter."\", ";
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
@@ -282,7 +287,8 @@ class Json_Controller extends Template_Controller
 			$json_item = "{";
 			$json_item .= "\"type\":\"Feature\",";
 			$json_item .= "\"properties\": {";
-			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base() . "reports/view/" . $single['id'] . "/>".str_replace('"','\"',$single['incident_title'])."</a>")) . "\",";
+			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base()
+					. "reports/view/" . $single['id'] . "/>".str_replace('"','\"',$single['incident_title'])."</a>")) . "\",";
 			$json_item .= "\"link\": \"".url::base()."reports/view/".$single['id']."\", ";
 			$json_item .= "\"category\":[0], ";
 			$json_item .= "\"color\": \"".$color."\", ";
@@ -302,6 +308,11 @@ class Json_Controller extends Template_Controller
 
 		$json = implode(",", $json_array);
 		
+		// 
+		// E.Kala July 27, 2011
+		// @todo Parking this geometry business for review
+		// 
+		
 		// if (count($geometry_array))
 		// {
 		// 	$json = implode(",", $geometry_array).",".$json;
@@ -309,12 +320,6 @@ class Json_Controller extends Template_Controller
 		
 		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
-		
-		// Stop benchmarking and log the statistics
-		Benchmark::stop('report_clustering');
-		$benchmark_data = Benchmark::get('report_clustering');
-		Kohana::log('info', sprintf('Benchmark Results -- Memory Usage(bytes): %s Execution time: %s', $benchmark_data['memory'], $benchmark_data['time']));
-		
 	}
 
 	/**
@@ -350,7 +355,8 @@ class Json_Controller extends Template_Controller
 				$encoded_title = json_encode($encoded_title);
 				$encoded_title = str_ireplace('"','',$encoded_title);
 
-				$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $row->id . "'>".$encoded_title."</a>")) . "\",";
+				$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base()
+						. "reports/view/" . $row->id . "'>".$encoded_title."</a>")) . "\",";
 				$json_item .= "\"link\": \"".url::base()."reports/view/".$row->id."\", ";
 				$json_item .= "\"category\":[0], ";
 				$json_item .= "\"timestamp\": \"" . strtotime($row->incident_date) . "\"";
@@ -372,7 +378,8 @@ class Json_Controller extends Template_Controller
 
 			$encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
 
-			$json_single .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
+			$json_single .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base()
+					. "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
 			$json_single .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
 			$json_single .= "\"category\":[0], ";
 			$json_single .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
@@ -390,7 +397,8 @@ class Json_Controller extends Template_Controller
 
 				$encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
 
-				$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
+				$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base()
+					. "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
 				$json_item .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
 				$json_item .= "\"category\":[0], ";
 				$json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";

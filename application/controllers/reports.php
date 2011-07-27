@@ -139,7 +139,7 @@ class Reports_Controller extends Main_Controller {
 		
 		// Fetch all incidents
 		$all_incidents = reports::fetch_incidents();
-
+		
 		// Pagination
 		$pagination = new Pagination(array(
 				'style' => 'front-end-reports',
@@ -152,7 +152,6 @@ class Reports_Controller extends Main_Controller {
 		$incidents = Incident_Model::get_incidents(reports::$params, $pagination);
 		
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
-
 		$localized_categories = array();
 		foreach ($incidents as $incident)
 		{
@@ -310,7 +309,7 @@ class Reports_Controller extends Main_Controller {
 				
 				// STEP 2: SAVE INCIDENT
 				$incident = new Incident_Model();
-				reports::save_incident($post, $incident, $location->id, $_SESSION['auth_user']->id);
+				reports::save_report($post, $incident, $location->id, $_SESSION['auth_user']->id);
 
 				// STEP 3: SAVE CATEGORIES
 				reports::save_category($post, $incident);
