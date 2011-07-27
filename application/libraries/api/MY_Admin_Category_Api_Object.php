@@ -247,7 +247,8 @@ class Admin_Category_Api_Object extends Api_Object_Core {
         }
 
         // Set the response data
-        $this->response_data = $this->response($ret_value, $this->error_messages);
+        $this->response_data = $this->response($ret_value, 
+            $this->error_messages);
     }
 
     /**
