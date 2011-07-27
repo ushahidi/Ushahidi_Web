@@ -26,71 +26,79 @@ class Comments_Api_Object extends Api_Object_Core {
     
     public function perform_task()
     {
-        $this->_get_comments();
-    }
-    
-    /**
-     * Handles comment listing API requests
-     */
-    public function _get_comments()
-    {
-        if ( ! $this->api_service->verify_array_index($this->request, 'by'))
-        {
-            $this->set_error_message(array(
-                "error" => $this->api_service->get_error_msg(001, 'by')
-            ));
-            return;
-        }
-        else
+        // by request
+        if($this->api_service->verify_array_index($this->request, 'by') )
         {
             $this->by = $this->request['by'];
-        }
-        
-        switch ($this->by)
-        {
-            case "all":
-                $this->response_data = $this->_get_all_comments();
-            break;
-            
-            case "spam":
-                $this->response_data = $this->_get_spam_comments();
-            break;
-            
-            case "pending":
-                $this->response_data = $this->_get_pending_comments();
-            break;
-            
-            case "approved":
-                $this->response_data = $this->_get_approved_comments();
-            break;
 
-			case "reportid":
-				if ( ! $this->api_service->verify_array_index($this->request, 'id'))
-                {
-                    $this->set_error_message(array(
-                        "error" => $this->api_service->get_error_msg(001, 'id')
+            switch ($this->by)
+            {
+                case "all":
+                    $this->response_data = $this->_get_all_comments();
+                break;
+            
+                case "spam":
+                    $this->response_data = $this->_get_spam_comments();
+                break;
+            
+                case "pending":
+                    $this->response_data = $this->_get_pending_comments();
+                break;
+            
+                case "approved":
+                    $this->response_data = $this->_get_approved_comments();
+                break;
+
+			    case "reportid":
+				    if ( ! $this->api_service->verify_array_index($this->request, 'id'))
+                    {
+                        $this->set_error_message(array(
+                            "error" => $this->api_service->get_error_msg(001, 'id')
                     ));
-                    return;
-                }
-                else
-                {
-                    $this->response_data = $this->_get_comment_by_report_id($this->check_id_value($this->request['id']));
-                }
+                        return;
+                    }
+                    else
+                    {
+                        $this->response_data = $this->_get_comment_by_report_id($this->check_id_value($this->request['id']));
+                    }
             	break;
             default:
                 $this->set_error_message(array(
                     "error" => $this->api_service->get_error_msg(002)
                 ));
+            }
+
+            return;
         }
         
-    }
+        //action request
+        else if($this->api_service->verify_array_index(
+            $this->request, 'action'))
+        {
+            $this->comment_action();
+            return;
+        }
+        else
+        {
 
+            $this->set_error_message(array(
+                "error" => $this->api_service->get_error_msg(001, 
+                'by or action')
+            ));
+            return;
+
+        }
+
+    }
+    
 
     /**
      * Handles comment action API requests
      */    
     public function comment_action()
     {
+        $action = ''; //Will hold comment action
+
         if ( ! $this->api_service->verify_array_index($this->request,
                 'action'))
         {
@@ -101,12 +109,12 @@ class Comments_Api_Object extends Api_Object_Core {
         }
         else
         {
-            $this->by = $this->request['action'];
+            $action = $this->request['action'];
         }
         
-        switch ($this->by)
+        switch ($action)
         {
-            case "a": //Aprrove / Unapprove comment
+            case "approve": //Aprrove / Unapprove comment
                  $this->response_data = $this->_approve_comment();
             break;
             
@@ -114,11 +122,11 @@ class Comments_Api_Object extends Api_Object_Core {
                $this->response_data = $this->_add_comment();
             break;
             
-            case "d": // Delete an existing comment
+            case "delete": // Delete an existing comment
                 $this->response_data = $this->_delete_comment();
             break;
             
-            case "s": // Spam or Unspam a comment
+            case "spam": // Spam or Unspam a comment
                 $this->response_data = $this->_spam_comment();
             break;
             
