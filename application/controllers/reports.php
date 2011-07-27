@@ -337,7 +337,7 @@ class Reports_Controller extends Main_Controller {
 
 				// populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('report'));
-				$errors = array_merge($errors,$custom_errors);
+				//$errors = array_merge($errors,$custom_errors);
 				$form_error = TRUE;
 			}
 		}

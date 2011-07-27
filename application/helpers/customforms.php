@@ -185,20 +185,23 @@ class customforms_Core {
 			// Validate that this custom field already exists
 			if ( ! $field_param->loaded)
 			{
-				array_push($errors,"The $custom_name field does not exist");
+				// Populate the error field
+				$errors[$custom_name] = "The $custom_name field does not exist";
 				return $errors;
 			}
 
 			$max_auth = self::get_user_max_auth();
 			if ($field_param->field_ispublic_submit > $max_auth)
 			{
-				array_push($errors, "The $custom_name field cannot be edited by your account");
+				//populate the error field
+				$errors[$custom_name] = "The $custom_name field cannot be edited by your account";
 				return $errors;
 			}
 
 			// Validate that the field is required
 			if ( $field_param->field_required == 1 AND $field_response == "")
-				array_push($errors,"The $custom_name field is required");
+				
+				$errors[$custom_name] = "The $custom_name field is required";
 
 			// Grab the custom field options for this field
 			$field_options = self::get_custom_field_options($field_id);
@@ -211,13 +214,13 @@ class customforms_Core {
 					if ($option == 'field_datatype')
 					{
 						if ($value == 'email' AND !valid::email($field_response))
-							array_push($errors,"The $custom_name field requires a valid email address");
+							$errors[$custom_name] = "The $custom_name field requires a valid email address";
 
 						if ($value == 'phonenumber' AND !valid::phone($field_response))
-							array_push($errors,"The $custom_name field requires a valid email address");
+							$errors[$custom_name] = "The $custom_name field requires a valid email address";
 
 						if ($value == 'numeric' AND !valid::numeric($field_response))
-							array_push($errors,"The $custom_name field must be numeric");
+							$errors[$custom_name] = "The $custom_name field must be numeric";
 					}
 				}
 			}
@@ -229,7 +232,7 @@ class customforms_Core {
 				$myvalid->date_mmddyyyy($field_response);
 				if ( ! $myvalid->date_mmddyyyy($field_response))
 				{
-					array_push($errors,"The $custom_name field is not a valid date (MM/DD/YYYY)");
+					$errors[$custom_name] = "The $custom_name field is not a valid date (MM/DD/YYYY)";
 				}
 			}
 
@@ -256,7 +259,7 @@ class customforms_Core {
 				{
 					if ( ! in_array($response, $options) AND $response != '')
 					{
-						array_push($errors,"The $custom_name field does not include $response as an option");
+						$errors[$custom_name] = "The $custom_name field does not include $response as an option";
 					}
 				}
 			}
@@ -264,7 +267,7 @@ class customforms_Core {
 			// Validate that a required checkbox is checked
 			if ($field_param->field_type == 6 AND $field_response == 'BLANKHACK' AND $field_param->field_required == 1)
 			{
-				array_push($errors,"The $custom_name field is required");
+				$errors[$custom_name] = "The $custom_name field is required";
 			}
 		}
 

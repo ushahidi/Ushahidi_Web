@@ -125,39 +125,17 @@ class reports_Core {
 		}
 		
 		// Custom form fields validation
-		if ( ! empty($post->custom_form_field))
-		{
-			// To track custom form field validation errors
-			$custom_form_field_error = FALSE;
-			
-			// Valdation rules for the custom form fields
-			foreach ($post->custom_fields as $field_id => $field_response)
-			{
-				// Get the parameters for this field
-				$field_param = ORM::factory('form_field', $field_id);
-				if ($field_param->loaded == true)
-				{
-					// Validate for required
-					if ($field_param->field_required == 1 AND field_response == "")
-					{
-						$custom_form_field_error = TRUE;
-					}
+		$errors = customforms::validate_custom_form_fields($post);
 
-					// Validate for date
-					if ($field_param->field_isdate == 1 AND $field_response != "")
-					{
-						// Add validation rule for date
-						$post->add_rules($field_param->field_name, 'date_mmddyyyy');
-					}
-				}
-				
-				// Check if there is a custom form fields error
-				if ($custom_form_field_error)
-				{
-					$post->add_error('custom_field', 'values');
-				}
+		// Check if any errors have been returned
+		if (count($errors) > 0)
+		{
+			foreach ($errors as $field_name => $error)
+			{
+				$post->add_error($field_name, $error);
 			}
 		}
+
 		//> END custom form fields validation
 		
 		// Return
