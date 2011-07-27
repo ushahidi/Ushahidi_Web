@@ -35,20 +35,26 @@ class Layer_Model extends ORM
 		$array = Validation::factory($array)
 				->pre_filter('trim')
 				->add_rules('layer_name','required', 'length[3,80]')
-				->add_rules('layer_color','required', 'length[6,6]')
-				->add_rules('layer_url','url');
+				->add_rules('layer_color','required', 'length[6,6]');
 		
 		// Ensure at least a layer URL or layer file has been specified
-		if ( empty($array->layer_url) AND empty($array->layer_file) AND empty($array->layer_file_old))
+		if ( empty($array->layer_url) AND empty($array->layer_file->name) AND empty($array->layer_file_old))
 		{
 			$array->add_error('layer_url', 'atleast');
 		}
 		
-		if ( ! empty($array->layer_url) AND
-			( ! empty($array->layer_file) OR !empty($array->layer_file_old)) )
+		// Add validation rule for the layer URL if specified
+		if ( ! empty($array->layer_url) AND (empty($array->layer_file) OR empty($array->layer_file_old)))
+		{
+			$array->add_rules('layer_url', 'url');
+		}
+		
+		// Check if both the layer URL and the layer file have been specified
+		if ( ! empty($array->layer_url) AND ( ! empty($array->layer_file_old) OR ! empty($array->layer_file->name)))
 		{
 			$array->add_error('layer_url', 'both');
 		}
+		
 		
 		// Pass validation to parent and return
 		return parent::validate($array, $save);

@@ -163,7 +163,7 @@
 			report_date_from = $("#report_date_from").val();
 			report_date_to = $("#report_date_to").val();
 			
-			if ($(this).id == "applyDateFilter" && report_date_from != '' && report_date_to != '')
+			if ($(this).attr("id") == "applyDateFilter" && report_date_from != '' && report_date_to != '')
 			{
 				// Add the parameters
 				urlParameters["from"] = report_date_from;
