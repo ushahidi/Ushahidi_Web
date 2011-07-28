@@ -175,7 +175,8 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function testGetIncidentsByLocationId()
 	{
 		// Get location_id from a randomly selected incident
-		$location_id = testutils::get_random_id('location', 'WHERE id IN (SELECT location_id FROM incident WHERE incident_active = 1)');
+		$location_id = testutils::get_random_id('location', 
+			'WHERE id IN (SELECT location_id FROM '.$this->table_prefix.'incident WHERE incident_active = 1)');
 		
 		// HTTP GET data
 		$_GET = array('task' => 'incidents', 'by' => 'locid', 'id'=> $location_id);
@@ -198,7 +199,8 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function testGetIncidentsByLocationName()
 	{
 		// Get random location id
-		$location_id = testutils::get_random_id('location', 'WHERE id IN (SELECT location_id FROM incident WHERE incident_active = 1)');
+		$location_id = testutils::get_random_id('location', 
+			'WHERE id IN (SELECT location_id FROM '.$this->table_prefix.'incident WHERE incident_active = 1)');
 		
 		// Get the location name
 		$location_name = ORM::factory('location', $location_id)->location_name;
@@ -315,7 +317,8 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function testGetIncidentsByCategoryName()
 	{
 		// Get random incident category record
-		$category_id = testutils::get_random_id('category', 'WHERE category_visible = 1 AND id IN (SELECT category_id FROM incident_category)');
+		$category_id = testutils::get_random_id('category', 
+			'WHERE category_visible = 1 AND id IN (SELECT category_id FROM '.$this->table_prefix.'incident_category)');
 
 		// Get the category name
 		$category_name = ORM::factory('category', $category_id)->category_title;
