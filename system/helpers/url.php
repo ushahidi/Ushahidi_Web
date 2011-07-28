@@ -81,6 +81,33 @@ class url_Core {
 	}
 
 	/**
+	 * Returns the base URL of the CDN or the standard base URL if no CDN is configured.
+	 *
+	 * @param   boolean  type of cdn url. Acceptable values are img, css, js
+	 * @return  string
+	 */
+	public static function file_loc($type)
+	{
+		// Pull CDN URL from the cache settings if it's set. Otherwise use the base URL by default
+		switch($type){
+			case 'img':
+				$url = (Kohana::config("cache.cdn_img")) ? Kohana::config("cache.cdn_img") : url::base();
+				break;
+			case 'css':
+				$url = (Kohana::config("cache.cdn_css")) ? Kohana::config("cache.cdn_css") : url::base();
+				break;
+			case 'js':
+				$url = (Kohana::config("cache.cdn_js")) ? Kohana::config("cache.cdn_js") : url::base();
+				break;
+			default:
+				$url = url::base();
+		}
+
+		// Force a slash on the end of the URL
+		return rtrim($url, '/').'/';
+	}
+
+	/**
 	 * Fetches an absolute site URL based on a URI segment.
 	 *
 	 * @param   string  site URI to convert
