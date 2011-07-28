@@ -267,7 +267,8 @@ final class Api_Service {
 	 * lookup fails, the API task request returns a "not found"(404) error
 	 */
 	private function _route_api_task()
-	{
+    {
+        
 		// Make sure we have a task to work with
 		if ( ! $this->verify_array_index($this->request, 'task'))
 		{

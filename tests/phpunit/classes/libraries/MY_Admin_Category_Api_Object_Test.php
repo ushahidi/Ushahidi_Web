@@ -40,14 +40,10 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
     {
         $_SERVER = array_merge($_SERVER, array(
             'REQUEST_METHOD' => 'POST',
-            'REQUEST_URI' => url::base().'api/?task=category',
+            'PHP_AUTH_USER' => 'admin',
+            'PHP_AUTH_PW' => 'admin',
+            'REQUEST_URI' => url::base().'api',
         ));
-
-        // Category fields to be submitted
-        $_POST = array
-        (
-
-        );
 
         // Instantiate the API controller
         $this->api_controller = new Api_Controller();
@@ -74,29 +70,29 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
         // * compare new total with old total
         // * if is new total is greater than old total by 1, then 
         // * new category was submitted.
-        $old_total = ORM::factory('category')->count_all();
 
         $_POST = array(
-            'task' => 'category',
-            'action' => 'add',
-            'parent_id' => 0,
-            'category_description' => 'Testing admin category',
-            'category_color' => '0FFFF',
+            'action' => urlencode('add'),
+            'parent_id' => urlencode('0'),
+            'category_title' => urlencode('Test Category Title'),
+            'category_description' => urlencode('Testing admin category'),
+            'category_color' => urlencode('00FF00'),
+            'task' => urlencode('category'),
         );
         
         ob_start();
         $this->api_controller->index();
         $contents = json_decode(ob_get_clean());
-
-        $this->assertEquals(0, $contents->error->code);
-
-        $new_total = ORM::factory('category')->count_all();
-
-        $this->assertEquals(TRUE, $new_total > $old_total,
-            'Could not add test category ');
-
+        $this->assertEquals(0, $contents->error->code,
+            $contents->error->message);
+        
         //Clean up
-        ORM::factory()->where('category_id',0)->delete_all();
+        $test_cat_id = 0;
+        $test_cat_id = ORM::factory('category')->orderby('id', 
+            'desc')->limit(1)->find();
+        
+        ORM::factory('category')->where('id',
+            $test_cat_id)->delete_all();
     }
 
     /**
@@ -105,22 +101,6 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
      */
     public function testDeleteCategory()
     {
-        /*$_POST = array(
-            'task' => 'category',
-            'action' => 'delete',
-            'category_id' => 2,
-            'parent_id' => 1,
-            'category_description' => 'Testing admin category',
-            'category_color' => '0FFFF',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-
-        $this->assertEquals('0', $content->error->code);*/
-
-
     }
 
     /**
@@ -129,30 +109,6 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
      */
     public function testEditCategory()
     {
-        // * count the number of existing categories in the db
-        // * keep a record of the total
-        // * submit dummy category
-        // * count the number of categories again for new total
-        // * compare new total with old total
-        // * if is new total is greater than old total by 1, then 
-        // * new category was submitted.
-        /* $_POST = array(
-            'task' => 'category',
-            'action' => 'edit',
-            'category_id' => 2,
-            'parent_id' => 1,
-            'category_description' => 'Testing admin category',
-            'category_color' => '0FFFF',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-
-        $this->assertEquals('0', $content->error->code);
-
-        //Clean up*/
-
     }
 
 }
