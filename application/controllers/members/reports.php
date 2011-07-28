@@ -464,223 +464,25 @@ class Reports_Controller extends Members_Controller {
 			// Test to see if things passed the rule checks
 			if ($post->validate())
 			{
-				// Yes! everything is valid
-				$location_id = $post->location_id;
-				// STEP 1a: SAVE LOCATION
-				$location = new Location_Model($location_id);
-				$location->location_name = $post->location_name;
-				$location->latitude = $post->latitude;
-				$location->longitude = $post->longitude;
-				$location->location_date = date("Y-m-d H:i:s",time());
-				$location->save();
+				// STEP 1: SAVE LOCATION
+				$location = new Location_Model();
+				reports::save_location($post, $location);
 
 				// STEP 2: SAVE INCIDENT
-				$incident = new Incident_Model($id);
-				$incident->location_id = $location->id;
-				//$incident->locale = $post->locale;
-				$incident->form_id = $post->form_id;
-				$incident->user_id = $this->user->id;
-				$incident->incident_title = $post->incident_title;
-				$incident->incident_description = $post->incident_description;
-
-				$incident_date=explode("/",$post->incident_date);
-				// where the $_POST['date'] is a value posted by form in mm/dd/yyyy format
-				$incident_date=$incident_date[2]."-".$incident_date[0]."-".$incident_date[1];
-
-				$incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
-				$incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
-				
-				// Is this new or edit?
-				if ($id)	// edit
-				{
-					$incident->incident_datemodify = date("Y-m-d H:i:s",time());
-				}
-				else		// new
-				{
-					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
-				}
-
-				// Is this an Email, SMS, Twitter submitted report?
-				//XXX: We may get rid of incident_mode altogether... ???
-				//$_POST
-				if(!empty($service_id))
-				{
-					if ($service_id == 1)
-					{ // SMS
-						$incident->incident_mode = 2;
-					}
-					elseif ($service_id == 2)
-					{ // Email
-						$incident->incident_mode = 3;
-					}
-					elseif ($service_id == 3)
-					{ // Twitter
-						$incident->incident_mode = 4;
-					}
-				}
-				// Incident Evaluation Info
-				$incident->incident_source = $post->incident_source;
-				$incident->incident_information = $post->incident_information;
-				$incident->incident_zoom = (int) $post->incident_zoom;
-				//Save
-				$incident->save();
-				
-				// Record Approval/Verification Action
-				$verify = new Verify_Model();
-				$verify->incident_id = $incident->id;
-				$verify->user_id = $this->user->id;			// Record 'Verified By' Action
-				$verify->verified_date = date("Y-m-d H:i:s",time());
-				$verify->verified_status = '0';
-				$verify->save();
-				
-				// STEP 2b: SAVE INCIDENT GEOMETRIES
-				ORM::factory('geometry')->where('incident_id',$incident->id)->delete_all();
-				if (isset($post->geometry)) 
-				{
-					foreach($post->geometry as $item)
-					{
-						if(!empty($item))
-						{
-							//Decode JSON
-							$item = json_decode($item);
-							//++ TODO - validate geometry
-							$geometry = (isset($item->geometry)) ? mysql_escape_string($item->geometry) : "";
-							$label = (isset($item->label)) ? mysql_escape_string(substr($item->label, 0, 150)) : "";
-							$comment = (isset($item->comment)) ? mysql_escape_string(substr($item->comment, 0, 255)) : "";
-							$color = (isset($item->color)) ? mysql_escape_string(substr($item->color, 0, 6)) : "";
-							$strokewidth = (isset($item->strokewidth) AND (float) $item->strokewidth) ? (float) $item->strokewidth : "2.5";
-							if ($geometry)
-							{
-								//++ Can't Use ORM for this
-								$sql = "INSERT INTO ".Kohana::config('database.default.table_prefix')."geometry (
-									incident_id, geometry, geometry_label, geometry_comment, geometry_color, geometry_strokewidth ) 
-									VALUES( ".$incident->id.",
-									GeomFromText( '".$geometry."' ),'".$label."','".$comment."','".$color."','".$strokewidth."')";
-								$db->query($sql);
-							}
-						}
-					}
-				}
+				$incident = new Incident_Model();
+				reports::save_report($post, $incident, $location->id);
 
 				// STEP 3: SAVE CATEGORIES
-				ORM::factory('Incident_Category')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
-				foreach($post->incident_category as $item)
-				{
-					$incident_category = new Incident_Category_Model();
-					$incident_category->incident_id = $incident->id;
-					$incident_category->category_id = $item;
-					$incident_category->save();
-				}
-
+				reports::save_category($post, $incident);
 
 				// STEP 4: SAVE MEDIA
-				ORM::factory('Media')->where('incident_id',$incident->id)->where('media_type <> 1')->delete_all();		// Delete Previous Entries
-				// a. News
-				foreach($post->incident_news as $item)
-				{
-					if(!empty($item))
-					{
-						$news = new Media_Model();
-						$news->location_id = $location->id;
-						$news->incident_id = $incident->id;
-						$news->media_type = 4;		// News
-						$news->media_link = $item;
-						$news->media_date = date("Y-m-d H:i:s",time());
-						$news->save();
-					}
-				}
+				reports::save_media($post, $incident);
 
-				// b. Video
-				foreach($post->incident_video as $item)
-				{
-					if(!empty($item))
-					{
-						$video = new Media_Model();
-						$video->location_id = $location->id;
-						$video->incident_id = $incident->id;
-						$video->media_type = 2;		// Video
-						$video->media_link = $item;
-						$video->media_date = date("Y-m-d H:i:s",time());
-						$video->save();
-					}
-				}
+				// STEP 5: SAVE CUSTOM FORM FIELDS
+				reports::save_custom_fields($post, $incident);
 
-				// c. Photos
-				$filenames = upload::save('incident_photo');
-				$i = 1;
-				foreach ($filenames as $filename) {
-					$new_filename = $incident->id . "_" . $i . "_" . time();
-
-					$file_type = strrev(substr(strrev($filename),0,4));
-					
-					// IMAGE SIZES: 800X600, 400X300, 89X59
-					
-					// Large size
-					Image::factory($filename)->resize(800,600,Image::AUTO)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename.$file_type);
-
-					// Medium size
-					Image::factory($filename)->resize(400,300,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename."_m".$file_type);
-					
-					// Thumbnail
-					Image::factory($filename)->resize(89,59,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type);
-
-					// Remove the temporary file
-					unlink($filename);
-
-					// Save to DB
-					$photo = new Media_Model();
-					$photo->location_id = $location->id;
-					$photo->incident_id = $incident->id;
-					$photo->media_type = 1; // Images
-					$photo->media_link = $new_filename.$file_type;
-					$photo->media_medium = $new_filename."_m".$file_type;
-					$photo->media_thumb = $new_filename."_t".$file_type;
-					$photo->media_date = date("Y-m-d H:i:s",time());
-					$photo->save();
-					$i++;
-				}
-
-
-				// STEP 5: SAVE PERSONAL INFORMATION
-				ORM::factory('Incident_Person')->where('incident_id',$incident->id)->delete_all();		// Delete Previous Entries
-				$person = new Incident_Person_Model();
-				$person->location_id = $location->id;
-				$person->incident_id = $incident->id;
-				$person->person_first = $post->person_first;
-				$person->person_last = $post->person_last;
-				$person->person_email = $post->person_email;
-				$person->person_date = date("Y-m-d H:i:s",time());
-				$person->save();
-
-				// STEP 6: SAVE CUSTOM FORM FIELDS
-				if(isset($post->custom_field))
-				{
-					foreach($post->custom_field as $key => $value)
-					{
-						$form_response = ORM::factory('form_response')
-													 ->where('form_field_id', $key)
-													 ->where('incident_id', $incident->id)
-													 ->find();
-													 
-						if ($form_response->loaded == true)
-						{
-							$form_response->form_field_id = $key;
-							$form_response->form_response = $value;
-							$form_response->save();
-						}
-						else
-						{
-							$form_response = new Form_Response_Model();
-							$form_response->form_field_id = $key;
-							$form_response->incident_id = $incident->id;
-							$form_response->form_response = $value;
-							$form_response->save();
-						}
-					}
-				}
+				// STEP 6: SAVE PERSONAL INFORMATION
+				reports::save_personal_info($post, $incident);
 				
 				// If creating a report from a checkin
 				if(isset($checkin_id) AND $checkin_id != "")
@@ -700,8 +502,10 @@ class Reports_Controller extends Members_Controller {
 					}
 				}
 
-				// Action::report_add - Added a New Report
+				// Action::report_add / report_submit_members - Added a New Report
+				//++ Do we need two events for this? Or will one suffice?
 				Event::run('ushahidi_action.report_add', $incident);
+				Event::run('ushahidi_action.report_submit_members', $post);
 
 
 				// SAVE AND CLOSE?
