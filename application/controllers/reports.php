@@ -323,8 +323,10 @@ class Reports_Controller extends Main_Controller {
 				// STEP 6: SAVE PERSONAL INFORMATION
 				reports::save_personal_info($post, $incident);
 
-				// Action::report_add - Added a New Report
+				// Action::report_add/report_submit - Added a New Report
+				//++ Do we need two events for this? Or will one suffice?
 				Event::run('ushahidi_action.report_add', $incident);
+				Event::run('ushahidi_action.report_submit', $post);
 
 				url::redirect('reports/thanks');
 			}

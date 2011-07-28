@@ -74,11 +74,11 @@
 						if ( typeof(feature) != 'undefined' && 
 							feature.data.id == <?php echo $incident_id; ?>)
 						{
-							return "<?php echo url::base().'media/img/openlayers/marker.png' ;?>";
+							return "<?php echo url::file_loc('img').'media/img/openlayers/marker.png' ;?>";
 						}
 						else
 						{
-							return "<?php echo url::base().'media/img/openlayers/marker-gold.png' ;?>";
+							return "<?php echo url::file_loc('img').'media/img/openlayers/marker-gold.png' ;?>";
 						}
 					},
 					fillcolor: function(feature)
@@ -296,19 +296,19 @@
 		
 		function rating(id,action,type,loader)
 		{
-			$('#' + loader).html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-			$.post("<?php echo url::site() . 'reports/rating/' ?>" + id, { action: action, type: type },
+			$('#' + loader).html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
+			$.post("<?php echo url::site().'reports/rating/' ?>" + id, { action: action, type: type },
 				function(data){
 					if (data.status == 'saved'){
 						if (type == 'original') {
-							$('#oup_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_up.png");
-							$('#odown_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_down.png");
+							$('#oup_' + id).attr("src","<?php echo url::file_loc('img').'media/img/'; ?>gray_up.png");
+							$('#odown_' + id).attr("src","<?php echo url::file_loc('img').'media/img/'; ?>gray_down.png");
 							$('#orating_' + id).html(data.rating);
 						}
 						else if (type == 'comment')
 						{
-							$('#cup_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_up.png");
-							$('#cdown_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_down.png");
+							$('#cup_' + id).attr("src","<?php echo url::file_loc('img').'media/img/'; ?>gray_up.png");
+							$('#cdown_' + id).attr("src","<?php echo url::file_loc('img').'media/img/'; ?>gray_down.png");
 							$('#crating_' + id).html(data.rating);
 						}
 					} else {

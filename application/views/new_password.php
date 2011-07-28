@@ -19,12 +19,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?php echo Kohana::lang('ui_main.reset_password');?></title>
-<link href="<?php echo url::base() ?>media/css/login.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo url::file_loc('css'); ?>media/css/login.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
 <div id="ushahidi_login_container">
-    <div id="ushahidi_login_logo"><img src="<?php echo url::base() ?>media/img/admin/logo_login.gif" width="400" height="80" /></div>
+    <div id="ushahidi_login_logo"><img src="<?php echo url::file_loc('img'); ?>media/img/admin/logo_login.gif" width="400" height="80" /></div>
     <div id="ushahidi_login">
       <table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
 			<tr>

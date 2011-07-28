@@ -251,7 +251,7 @@
 			}
 			else
 			{
-				$('#cities_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+				$('#cities_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 				$.getJSON("<?php echo url::site() . 'admin/settings/updateCities/' ?>" + country,
 					function(data){
 						if (data.status == 'success'){
