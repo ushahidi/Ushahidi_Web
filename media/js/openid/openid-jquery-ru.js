@@ -2,7 +2,7 @@
 	Simple OpenID Plugin
 	http://code.google.com/p/openid-selector/
 	
-	This code is licenced under the New BSD License.
+	This code is licensed under the New BSD License.
 */
 
 var providers_large = {
@@ -67,7 +67,8 @@ var providers_small = {
 	}
 };
 
-openid.lang = 'ru';
+openid.locale = 'ru';
+openid.sprite = 'ru'; // reused in ukrainian localization
 openid.demo_text = 'В демонстрационном режиме на клиенте. В действительности произошел бы сабмит следующего OpenID:';
 openid.signin_text = 'Войти';
 openid.image_title = 'войти c {provider}';

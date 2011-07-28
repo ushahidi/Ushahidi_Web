@@ -81,6 +81,12 @@
 		'length' => 'The Mail Server Username field must be no more 50 characters long.',
 		'required' => 'The Mail Server Username field is required.',
 	),
+	'facebook' => array(
+		'title' => 'Facebook Setup Options',
+		'description' => 'To get the information below you will need to create a new facebook application at',
+		'app_id' => 'Facebook App ID',
+		'app_secret' => 'Facebook App Secret'
+	),
 	'google_analytics' => array(
 		'length' => 'The Google Analytics field must contain a valid Web Property ID in the format UA-XXXXX-XX.',
 	),

@@ -20,32 +20,32 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
 	<title><?php echo $site_name ?></title>
 	<?php
-	echo html::stylesheet('media/css/admin/all', '', true);
-	echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
+	echo html::stylesheet(url::file_loc('css').'media/css/admin/all', '', true);
+	echo html::stylesheet(url::file_loc('css').'media/css/jquery-ui-themeroller', '', true);
 	echo "<!--[if lt IE 7]>".
-		html::stylesheet('media/css/ie6', '', true)
+		html::stylesheet(url::file_loc('css').'media/css/ie6', '', true)
 		."<![endif]-->";
 	
 	// Load OpenLayers
 	if ($map_enabled)
 	{
-		echo html::script('media/js/OpenLayers', true);
+		echo html::script(url::file_loc('js').'media/js/OpenLayers', true);
 		echo $api_url . "\n";
 		echo "<script type=\"text/javascript\">
-			OpenLayers.ImgPath = '".url::base().'media/img/openlayers/'."';
+			OpenLayers.ImgPath = '".url::file_loc('img').'media/img/openlayers/'."';
 			</script>";
-		echo html::stylesheet('media/css/openlayers','',true);
+		echo html::stylesheet(url::file_loc('css').'media/css/openlayers','',true);
 	}
 	
 	// Load jQuery
-	echo html::script('media/js/jquery', true);
-	echo html::script('media/js/jquery.form', true);
-	echo html::script('media/js/jquery.validate.min', true);
-	echo html::script('media/js/jquery.ui.min', true);
-	echo html::script('media/js/selectToUISlider.jQuery', true);
-	echo html::script('media/js/jquery.hovertip-1.0', true);
-	echo html::script('media/js/jquery.base64', true);
-	echo html::stylesheet('media/css/jquery.hovertip-1.0', '', true);
+	echo html::script(url::file_loc('js').'media/js/jquery', true);
+	echo html::script(url::file_loc('js').'media/js/jquery.form', true);
+	echo html::script(url::file_loc('js').'media/js/jquery.validate.min', true);
+	echo html::script(url::file_loc('js').'media/js/jquery.ui.min', true);
+	echo html::script(url::file_loc('js').'media/js/selectToUISlider.jQuery', true);
+	echo html::script(url::file_loc('js').'media/js/jquery.hovertip-1.0', true);
+	echo html::script(url::file_loc('js').'media/js/jquery.base64', true);
+	echo html::stylesheet(url::file_loc('css').'media/css/jquery.hovertip-1.0', '', true);
 	
 	echo "<script type=\"text/javascript\">
 		$(function() {
@@ -57,68 +57,68 @@
 	// Load Flot
 	if ($flot_enabled)
 	{
-		echo html::script('media/js/jquery.flot', true);
-		echo html::script('media/js/excanvas.min', true);
-		echo html::script('media/js/timeline.js', true);
+		echo html::script(url::file_loc('js').'media/js/jquery.flot', true);
+		echo html::script(url::file_loc('js').'media/js/excanvas.min', true);
+		echo html::script(url::file_loc('js').'media/js/timeline.js', true);
 	}
 	
 	// Load TreeView
 	if ($treeview_enabled) {
-		echo html::script('media/js/jquery.treeview');
-		echo html::stylesheet('media/css/jquery.treeview');
+		echo html::script(url::file_loc('js').'media/js/jquery.treeview');
+		echo html::stylesheet(url::file_loc('css').'media/css/jquery.treeview');
 	}
 	
 	// Load ProtoChart
 	if ($protochart_enabled)
 	{
 		echo "<script type=\"text/javascript\">jQuery.noConflict()</script>";
-		echo html::script('media/js/protochart/prototype', true);
+		echo html::script(url::file_loc('js').'media/js/protochart/prototype', true);
 		echo '<!--[if IE]>';
-		echo html::script('media/js/protochart/excanvas-compressed', true);
+		echo html::script(url::file_loc('js').'media/js/protochart/excanvas-compressed', true);
 		echo '<![endif]-->';
-		echo html::script('media/js/protochart/ProtoChart', true);
+		echo html::script(url::file_loc('js').'media/js/protochart/ProtoChart', true);
 	}
 	
 	// Load Raphael
 	if($raphael_enabled)
 	{
 		// The only reason we include prototype is to keep the div element naming convention consistent
-		//echo html::script('media/js/protochart/prototype', true);
-		echo html::script('media/js/raphael', true);
+		//echo html::script(url::file_loc('js').'media/js/protochart/prototype', true);
+		echo html::script(url::file_loc('js').'media/js/raphael', true);
 		echo '<script type="text/javascript" charset="utf-8">';
 		echo 'var impact_json = { '.$impact_json .' };';
 		echo '</script>';
-		echo html::script('media/js/raphael-ushahidi-impact', true);
+		echo html::script(url::file_loc('js').'media/js/raphael-ushahidi-impact', true);
 	}
 	
 	// Load ColorPicker
 	if ($colorpicker_enabled)
 	{
-		echo html::stylesheet('media/css/colorpicker', '', true);
-		echo html::script('media/js/colorpicker', true);
+		echo html::stylesheet(url::file_loc('css').'media/css/colorpicker', '', true);
+		echo html::script(url::file_loc('js').'media/js/colorpicker', true);
 	}
 	
 	// Load TinyMCE
 	if ($editor_enabled)
 	{
-		echo html::script('media/js/tinymce/tiny_mce', true);
+		echo html::script(url::file_loc('js').'media/js/tinymce/tiny_mce', true);
 	}
 	
 	// Table Row Sort
 	if ($tablerowsort_enabled)
 	{
-		echo html::script('media/js/jquery.tablednd_0_5', true);
+		echo html::script(url::file_loc('js').'media/js/jquery.tablednd_0_5', true);
 	}
 	
 	// JSON2 for IE+
 	if ($json2_enabled)
 	{
-		echo html::script('media/js/json2', true);
+		echo html::script(url::file_loc('js').'media/js/json2', true);
 	}
 	
 	// Turn on picbox
-	echo html::script('media/js/picbox', true);
-	echo html::stylesheet('media/css/picbox/picbox');
+	echo html::script(url::file_loc('js').'media/js/picbox', true);
+	echo html::stylesheet(url::file_loc('css').'media/css/picbox/picbox');
 	
 	// Render CSS and Javascript Files from Plugins
 	echo plugin::render('stylesheet');
@@ -191,10 +191,10 @@
 					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('ui_admin.forum');?></a></li>
 				</ul>
 				<div class="info-search"><form action="<?php echo url::site() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn"><?php echo Kohana::lang('ui_admin.search');?></a></form></div>
+				<div style="clear:both;"></div>
+				<div class="info-buttons"><a class="button" href="<?php echo url::site().'admin/manage/publiclisting'; ?>">Manage Your <?php echo Kohana::lang('ui_admin.public_listing'); ?></a></div>
 				
-				<a href="<?php echo url::site().'admin/manage/publiclisting'; ?>" style="background-color:#F7F8E0;display:block;clear:both;padding:4px;border-bottom:solid 1px #898989;text-decoration:none;font-weight:bold;text-align:center;color:#00699b;">Manage Your <?php echo Kohana::lang('ui_admin.public_listing'); ?>.</a>
 				
-				<div style="clear:both"></div>
 			</div>
 			<!-- title -->
 			<h1><?php echo $site_name ?></h1>

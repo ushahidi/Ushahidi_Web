@@ -604,7 +604,7 @@
 
 				// Get Current Center
 				currCenter = map.getCenter();
-
+				
 				// Add New Layer
 				addMarkers('', '', '', currZoom, currCenter, '', layerID, 'layers', layerURL, layerColor);
 			}

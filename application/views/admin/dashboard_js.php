@@ -33,7 +33,7 @@ function graphSwitch(timeframe)
     var startTime;
     var endTime;
 
-	$('#graph').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+	$('#graph').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 	if (timeframe == 'day') {
 		startTime = new Date("<?php echo date('Y/m/d'); ?>");
 		endTime = new Date("<?php echo date('Y/m/d 23:59:59'); ?>");

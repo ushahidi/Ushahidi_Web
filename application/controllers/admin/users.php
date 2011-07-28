@@ -74,13 +74,14 @@ class Users_Controller extends Admin_Controller
         // Pagination
         $pagination = new Pagination(array(
                             'query_string' => 'page',
-                            'items_per_page' => $this->items_per_page,
+                            'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
                             'total_items'  => ORM::factory('user')->count_all()
                         ));
 
         $users = ORM::factory('user')
                     ->orderby('name', 'asc')
-                    ->find_all($this->items_per_page, $pagination->sql_offset);
+                    ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                        $pagination->sql_offset);
 
         // Set the flag for displaying the roles link
         $this->template->content->display_roles = $this->display_roles;
@@ -137,7 +138,7 @@ class Users_Controller extends Admin_Controller
             //  Add some filters
             $post->pre_filter('trim', TRUE);
     
-            $post->add_rules('username','required','length[3,16]', 'alpha');
+            $post->add_rules('username','required','length[3,16]', 'alpha_numeric');
         
             //only validate password as required when user_id has value.
             $user_id == '' ? $post->add_rules('password','required',
@@ -155,7 +156,7 @@ class Users_Controller extends Admin_Controller
             // If Password field is not blank
             if (!empty($post->password))
             {
-                $post->add_rules('password','required','length[5,16]'
+                $post->add_rules('password','required','length[5,30]'
                     ,'alpha_numeric','matches[password_again]');
             }
             
@@ -290,7 +291,8 @@ class Users_Controller extends Admin_Controller
             'stats' => '',
             'settings' => '',
             'manage' => '',
-            'users' => ''
+            'users' => '',
+            'access_level' => ''
         );
         //copy the form as errors, so the errors will be stored with keys corresponding to the form field names
         $errors = $form;
@@ -310,6 +312,7 @@ class Users_Controller extends Admin_Controller
             {
                 $post->add_rules('name','required','length[3,30]', 'alpha_numeric');
                 $post->add_rules('description','required','length[3,100]');
+                $post->add_rules('access_level','required','between[0,100]', 'numeric');
                 $post->add_rules('reports_view','between[0,1]');
                 $post->add_rules('reports_edit','between[0,1]');
                 $post->add_rules('reports_evaluation','between[0,1]');
@@ -340,6 +343,7 @@ class Users_Controller extends Admin_Controller
                 {
                     $role->name = $post->name;
                     $role->description = $post->description;
+                    $role->access_level = $post->access_level;
                     $role->reports_view = $post->reports_view;
                     $role->reports_edit = $post->reports_edit;
                     $role->reports_evaluation = $post->reports_evaluation;
@@ -385,8 +389,7 @@ class Users_Controller extends Admin_Controller
         
         
         $roles = ORM::factory('role')
-            ->where('id != 1')
-            ->orderby('name', 'asc')
+            ->orderby('access_level', 'desc')
             ->find_all();
             
         $permissions = array(
@@ -401,7 +404,7 @@ class Users_Controller extends Admin_Controller
             "stats" => "View Stats",
             "settings" => "Modify Settings",
             "manage" => "Manage Panel",
-            "users" => "Manage Users"
+            "users" => "Manage Users",
         );
         
         $this->template->content->display_roles = $this->display_roles;

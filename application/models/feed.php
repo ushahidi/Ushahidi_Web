@@ -54,7 +54,7 @@ class Feed_Model extends ORM
 	 */
 	public static function is_valid_feed($feed_id)
 	{
-		return (intval($feed_id)) > 0)
+		return (intval($feed_id) > 0)
 			? self::factory('feed', intval($feed_id))->loaded
 			: FALSE;
 	}

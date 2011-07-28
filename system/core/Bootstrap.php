@@ -54,5 +54,8 @@ Benchmark::stop(SYSTEM_BENCHMARK.'_system_initialization');
 // Make the magic happen!
 Event::run('system.execute');
 
+// Save benchmark results
+Benchmark::save_results();
+
 // Clean up and exit
 Event::run('system.shutdown');

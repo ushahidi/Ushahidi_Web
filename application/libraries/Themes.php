@@ -24,6 +24,7 @@ class Themes_Core {
 	public $validator_enabled = false;
 	public $photoslider_enabled = false;
 	public $videoslider_enabled = false;
+	public $colorpicker_enabled = false;
 	public $site_style = false;
 	public $js = null;
 	
@@ -38,11 +39,9 @@ class Themes_Core {
 		// Load Session
 		$this->session = Session::instance();
 		
-		// Load Local or CDN?
-		$this->css_url = (Kohana::config("cache.cdn_css")) ? 
-			Kohana::config("cache.cdn_css") : url::base();
-		$this->js_url = (Kohana::config("cache.cdn_js")) ? 
-			Kohana::config("cache.cdn_js") : url::base();
+		// Grab the proper URL for the css and js files
+		$this->css_url = url::file_loc('css');
+		$this->js_url = url::file_loc('js');
 	}
 	
 	/**
@@ -91,6 +90,11 @@ class Themes_Core {
 		if ($this->videoslider_enabled)
 		{
 			$core_css .= html::stylesheet($this->css_url."media/css/videoslider","",true);
+		}
+		
+		if ($this->colorpicker_enabled)
+		{
+			$core_css .= html::stylesheet($this->css_url."media/css/colorpicker","",true);
 		}
 		
 		if ($this->site_style AND $this->site_style != "default")
@@ -156,6 +160,11 @@ class Themes_Core {
 		if($this->videoslider_enabled )
 		{
 			$core_js .= html::script($this->js_url."media/js/coda-slider.pack");
+		}
+		
+		if ($this->colorpicker_enabled)
+		{
+			$core_js .= html::script($this->js_url."media/js/colorpicker");
 		}
 		
 		// Javascript files from plugins

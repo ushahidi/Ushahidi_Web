@@ -98,7 +98,7 @@
 		'length' => 'The first name field must be at least 3 and no more 100 characters long.',
 	),
 	'person_last' => array(
-		'length' => 'The last name field must be at least 3 and no more 100 characters long.',
+		'length' => 'The last name field must be at least 2 and no more 100 characters long.',
 	),
 	'to_date' => array(
 		'date_mmddyyyy' => 'The TO date field does not appear to contain a valid date?',

@@ -83,6 +83,8 @@
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition());
+			map.addControl(new OpenLayers.Control.ScaleLine());
+			map.addControl(new OpenLayers.Control.Scale('mapScale'));
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
 			// Vector/Drawing Layer Styles
@@ -93,7 +95,7 @@
 				strokeColor: "#CC0000",
 				strokeWidth: 2.5,
 				graphicZIndex: 1,
-				externalGraphic: "<?php echo url::base().'media/img/openlayers/marker.png' ;?>",
+				externalGraphic: "<?php echo url::file_loc('img').'media/img/openlayers/marker.png' ;?>",
 				graphicOpacity: 1,
 				graphicWidth: 21,
 				graphicHeight: 25,
@@ -107,7 +109,7 @@
 				strokeColor: "#197700",
 				strokeWidth: 2.5,
 				graphicZIndex: 1,
-				externalGraphic: "<?php echo url::base().'media/img/openlayers/marker-green.png' ;?>",
+				externalGraphic: "<?php echo url::file_loc('img').'media/img/openlayers/marker-green.png' ;?>",
 				graphicOpacity: 1,
 				graphicWidth: 21,
 				graphicHeight: 25,
@@ -201,15 +203,16 @@
 			{
 				foreach ($geometries as $geometry)
 				{
+					$geometry = json_decode($geometry);
 					echo "wktFeature = wkt.read('$geometry->geometry');\n";
 					echo "wktFeature.geometry.transform(proj_4326,proj_900913);\n";
-					echo "wktFeature.label = '$geometry->geometry_label';\n";
-					echo "wktFeature.comment = '$geometry->geometry_comment';\n";
-					echo "wktFeature.color = '$geometry->geometry_color';\n";
-					echo "wktFeature.strokewidth = '$geometry->geometry_strokewidth';\n";
+					echo "wktFeature.label = '$geometry->label';\n";
+					echo "wktFeature.comment = '$geometry->comment';\n";
+					echo "wktFeature.color = '$geometry->color';\n";
+					echo "wktFeature.strokewidth = '$geometry->strokewidth';\n";
 					echo "vlayer.addFeatures(wktFeature);\n";
-					echo "var color = '$geometry->geometry_color';if (color) {updateFeature(wktFeature, color, '');};";
-					echo "var strokewidth = '$geometry->geometry_strokewidth';if (strokewidth) {updateFeature(wktFeature, '', strokewidth);};";
+					echo "var color = '$geometry->color';if (color) {updateFeature(wktFeature, color, '');};";
+					echo "var strokewidth = '$geometry->strokewidth';if (strokewidth) {updateFeature(wktFeature, '', strokewidth);};";
 				}
 			}
 			?>
@@ -295,12 +298,22 @@
 				var newlon = $("#longitude").val();
 				if (!isNaN(newlat) && !isNaN(newlon))
 				{
-					var lonlat = new OpenLayers.LonLat(newlon, newlat);
-					lonlat.transform(proj_4326,proj_900913);
-					m = new OpenLayers.Marker(lonlat);
-					markers.clearMarkers();
-			    	markers.addMarker(m);
-					map.setCenter(lonlat, <?php echo $default_zoom; ?>);
+					// Clear the map first
+					vlayer.removeFeatures(vlayer.features);
+					$('input[name="geometry[]"]').remove();
+					
+					point = new OpenLayers.Geometry.Point(newlon, newlat);
+					OpenLayers.Projection.transform(point, proj_4326,proj_900913);
+					
+					f = new OpenLayers.Feature.Vector(point);
+					vlayer.addFeatures(f);
+					
+					// create a new lat/lon object
+					myPoint = new OpenLayers.LonLat(newlon, newlat);
+					myPoint.transform(proj_4326, map.getProjectionObject());
+
+					// display the map centered on a latitude and longitude
+					map.setCenter(myPoint, <?php echo $default_zoom; ?>);
 				}
 				else
 				{
@@ -398,7 +411,7 @@
 			// Date Picker JS
 			$("#incident_date").datepicker({ 
 			    showOn: "both", 
-			    buttonImage: "<?php echo url::base() ?>media/img/icon-calendar.gif", 
+			    buttonImage: "<?php echo url::file_loc('img') ?>media/img/icon-calendar.gif", 
 			    buttonImageOnly: true 
 			});
 			
@@ -611,7 +624,7 @@
 		 */
 		function geoCode()
 		{
-			$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+			$('#find_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 			address = $("#location_find").val();
 			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
 				function(data){
@@ -649,7 +662,7 @@
 		{
 			var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to_switch_forms'); ?>?');
 			if (answer){
-				$('#form_loader').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+				$('#form_loader').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 				$.post("<?php echo url::base() . 'admin/reports/switch_form' ?>", { form_id: form_id, incident_id: incident_id },
 					function(data){
 						if (data.status == 'success'){

@@ -11,8 +11,9 @@ class customforms_Core {
 
 	/**
 	 * Retrieve Custom Forms
+	 * @return ORM_Iterator
 	 */
-	public function get_custom_forms()
+	public static function get_custom_forms()
 	{
 		$custom_forms = ORM::factory('form')->find_all();
 		return $custom_forms;
@@ -25,24 +26,25 @@ class customforms_Core {
 	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
 	 * @param bool $data_only Whether or not to include just data
 	 * @param string $action If this is being used to grab fields for submit or view of data
-	 * @return arrray
 	 */
-	public function get_custom_form_fields($incident_id = FALSE, $form_id = 1, $data_only = FALSE, $action = "submit")
+	public static function get_custom_form_fields($incident_id = FALSE, $form_id = 1, $data_only = FALSE, $action = "submit")
 	{
 		$fields_array = array();
 
-		if ( ! $form_id)
+		if (!$form_id)
 			$form_id = 1;
-
+		
 		//NOTE will probably need to add a user_level variable for non-web based requests
 		$user_level = self::get_user_max_auth();
-
+		
+		// Get the public state predicate
 		$public_state = ($action == "view")
 			? array('field_ispublic_visible <=' => $user_level)
 			: array('field_ispublic_submit <=' => $user_level);
-
+		
+		// Get the custom forms
 		$custom_form = ORM::factory('form', $form_id)->where($public_state)->orderby('field_position','asc');
-
+		
 		foreach ($custom_form->form_field as $custom_formfield)
 		{
 			if ($data_only)
@@ -74,7 +76,7 @@ class customforms_Core {
 					'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
 					'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
 					'field_response' => ''
-				);
+					);
 			}
 		}
 
@@ -83,40 +85,39 @@ class customforms_Core {
 
 	/**
 	 * Returns a list of the field names and values for a given userlevel
+	 *
 	 * @param int $id incident id
 	 * @param int $user_level the user's role level
+	 * @return Result
 	 */
-	public function view_everything($id,$user_level)
+	public static function view_everything($id, $user_level)
 	{
 		$db = new Database();
+		$db->select('form_response.form_response', 'form_field.field_name');
+		$db->from('form_response');
+		$db->join('form_field','form_response.form_field_id','form_field.id');
+		$db->where(array('form_response.incident_id'=>$id,'form_field.field_ispublic_visible <='=>$user_level));
+		$db->orderby('form_field.field_position');
 		
-		$custom_fields = $db->select('form_response.form_response', 'form_field.field_name')
-						->from('form_response')
-						->join('form_field','form_response.form_field_id','form_field.id')
-						->where(array(
-							'form_response.incident_id' => $id, 
-							'form_field.field_ispublic_visible <=' => $user_level))
-						->orderby('form_field.field_position')
-						->get();
-			
-		return $custom_fields;
+		return $db->get();
 	}
 
 	/**
 	 * Returns the user's maximum role id number
+	 *
 	 * @param array $user the current user object
+	 * @return int
 	 */
-	public function get_user_max_auth()
-	{
-        if ( ! isset($_SESSION['auth_user']))
+	public static function get_user_max_auth(){
+        if( ! isset($_SESSION['auth_user']))
 			return 0;
 
 		$user = new User_Model($_SESSION['auth_user']->id);
-
+		
 		if ($user->loaded == TRUE)
 		{
 			$r = array();
-			foreach ($user->roles as $role)
+			foreach($user->roles as $role)
 			{
 				array_push($r,$role->access_level);
 			}
@@ -124,7 +125,7 @@ class customforms_Core {
 		}
 		return 0;
 	}
-
+	
 	/**
 	 * Validate Custom Form Fields
 	 * @param array $custom_fields Array
@@ -132,12 +133,12 @@ class customforms_Core {
 	 * Need to pull the list of custom form fields first
 	 * Then look through them to see if they're set, not the other way around.
 	 */
-	public function validate_custom_form_fields(&$post)
+	public static function validate_custom_form_fields(&$post)
 	{
 		$errors = array();
 		$custom_fields = array();
 
-		if ( ! isset($post->custom_field))
+		if (!isset($post->custom_field))
 			return;
 
 		/* XXX Checkboxes hackery 
@@ -155,49 +156,60 @@ class customforms_Core {
 				// The view sets a hidden field for blankhack
 				if ($split[1] == 'BLANKHACK')
 				{
-					if ( ! isset($custom_fields[$split[0]]))
-					{ // Then no checkboxes were checked
-						$custom_fields[$split[0]] = '';
+					if(!isset($custom_fields[$split[0]]))
+					{ 
+						// then no checkboxes were checked
+						$custom_fields[$split[0]] = ''; 
 					}
 					// E.Kala - Removed the else {} block; either way continue is still invoked
 					continue;
 				}
 
-				$custom_fields[$split[0]] = (isset($custom_fields[$split[0]]))
-					? $custom_fields[$split[0]] .",$field_response"
-					: $field_response;
+				if (isset($custom_fields[$split[0]]))
+				{
+					$custom_fields[$split[0]] .= ",$field_response";
+				}
+				else
+				{
+					$custom_fields[$split[0]] = $field_response;
+				}
 			}
 			else
 			{
 				$custom_fields[$split[0]] = $field_response;
 			}
 		}
-
+	
 		$post->custom_field = $custom_fields;
 
 		foreach ($post->custom_field  as $field_id => $field_response)
 		{
-
+		
 			$field_param = ORM::factory('form_field',$field_id);
 			$custom_name = $field_param->field_name;
 
 			// Validate that this custom field already exists
 			if ( ! $field_param->loaded)
 			{
-				array_push($errors,"The $custom_name field does not exist");
+				// Populate the error field
+				$errors[$custom_name] = "The $custom_name field does not exist";
 				return $errors;
 			}
 
 			$max_auth = self::get_user_max_auth();
 			if ($field_param->field_ispublic_submit > $max_auth)
 			{
-				array_push($errors, "The $custom_name field cannot be edited by your account");
+				// Populate the error field
+				$errors[$custom_name] = "The $custom_name field cannot be edited by your account";
 				return $errors;
 			}
 
 			// Validate that the field is required
 			if ( $field_param->field_required == 1 AND $field_response == "")
-				array_push($errors,"The $custom_name field is required");
+			{
+				$errors[$custom_name] = "The $custom_name field is required";
+				return $errors;
+			}
 
 			// Grab the custom field options for this field
 			$field_options = self::get_custom_field_options($field_id);
@@ -207,16 +219,22 @@ class customforms_Core {
 			{
 				foreach ($field_options as $option => $value)
 				{
-					if($option == 'field_datatype')
+					if ($option == 'field_datatype')
 					{
 						if ($value == 'email' AND !valid::email($field_response))
-							array_push($errors,"The $custom_name field requires a valid email address");
+						{
+							$errors[$custom_name] = "The $custom_name field requires a valid email address";
+						}
 
 						if ($value == 'phonenumber' AND !valid::phone($field_response))
-							array_push($errors,"The $custom_name field requires a valid email address");
+						{
+							$errors[$custom_name] = "The $custom_name field requires a valid email address";
+						}
 
 						if ($value == 'numeric' AND !valid::numeric($field_response))
-							array_push($errors,"The $custom_name field must be numeric");
+						{
+							$errors[$custom_name] = "The $custom_name field must be numeric";
+						}
 					}
 				}
 			}
@@ -228,12 +246,12 @@ class customforms_Core {
 				$myvalid->date_mmddyyyy($field_response);
 				if ( ! $myvalid->date_mmddyyyy($field_response))
 				{
-					array_push($errors,"The $custom_name field is not a valid date (MM/DD/YYYY)");
+					$errors[$custom_name] = "The $custom_name field is not a valid date (MM/DD/YYYY)";
 				}
 			}
 
 			// Validate multi-value boxes only have acceptable values
-			if ($field_param->field_type >= 5 AND $field_param->field_type <= 7)
+			if ($field_param->field_type >= 5 AND $field_param->field_type <=7)
 			{
 				$defaults = explode('::',$field_param->field_default);
 				$options = array();
@@ -242,8 +260,7 @@ class customforms_Core {
 					$dashsplit = explode('-',$defaults[0]);
 					$start = $dashsplit[0];
 					$end = $dashsplit[1];
-					
-					for ($i = $start; $i <= $end; $i++)
+					for($i = $start; $i <= $end; $i++)
 					{
 						array_push($options,$i);
 					}
@@ -254,54 +271,56 @@ class customforms_Core {
 				}
 				
 				$responses = explode(',',$field_response);
-				foreach($responses as $response)
+				foreach ($responses as $response)
 				{
-					if( ! in_array($response, $options) AND $response != '')
-						array_push($errors,"The $custom_name field does not include $response as an option");
+					if ( ! in_array($response, $options) AND $response != '')
+					{
+						$errors[$custom_name] = "The $custom_name field does not include $response as an option";
+					}
 				}
 			}
 
 			// Validate that a required checkbox is checked
 			if ($field_param->field_type == 6 AND $field_response == 'BLANKHACK' AND $field_param->field_required == 1)
 			{
-				array_push($errors,"The $custom_name field is required");
+				$errors[$custom_name] = "The $custom_name field is required";
 			}
-
-
 		}
 
 		return $errors;
 	}
 
-    /**
-    * Generate list of currently created Form Fields for the admin interface
-    * @param int $form_id The id no. of the form
-    */
-    public function get_current_fields($form_id = 0)
+	/**
+	 * Generate list of currently created Form Fields for the admin interface
+	 * @param int $form_id The id no. of the form
+	 * @return string
+	 */
+    public static function get_current_fields($form_id = 0)
     {  
 		$form_fields = "<form action=\"\">";
 		$form = array();
-		$form['custom_field'] = self::get_custom_form_fields('', $form_id, TRUE);
+		$form['custom_field'] = self::get_custom_form_fields('',$form_id, true);
 		$form['id'] = $form_id;
 		$custom_forms = new View('reports_submit_custom_forms');
-		$disp_custom_fields = self::get_custom_form_fields('', $form_id, TRUE);
+		$disp_custom_fields = self::get_custom_form_fields('', $form_id,false);
 		$custom_forms->disp_custom_fields = $disp_custom_fields;
 		$custom_forms->form = $form;
-		$custom_forms->editor = TRUE;
+		$custom_forms->editor = true;
 		$form_fields.= $custom_forms->render();
 		$form_fields .= "</form>";
-
+	
 		return $form_fields;
 	}
 
 	/** 
-	* Generates the html that's passed back in the json switch_Action form switcher
-	* @param int $incident_id The Incident Id
-	* @param int $form_id Form Id
-	* @param int $public_visible If this form should be publicly visible
-	* @param int $pubilc_submit If this form is allowed to be submitted by anyone on the internets.
-	*/
-	public function switcheroo($incident_id = '', $form_id = '')
+	 * Generates the html that's passed back in the json switch_Action form switcher
+	 * @param int $incident_id The Incident Id
+	 * @param int $form_id Form Id
+	 * @param int $public_visible If this form should be publicly visible
+	 * @param int $pubilc_submit If this form is allowed to be submitted by anyone on the internets.
+	 * @return string
+	 */
+	public static function switcheroo($incident_id = '', $form_id = '')
 	{
 		$form_fields = '';
 
@@ -318,12 +337,14 @@ class customforms_Core {
 
 		return $form_fields;	
 	}
-
+	
 	/** 
-	* Generates an array of fields that an admin can see but can't edit
-	* @param int $form_id The form id
-	**/
-	public function get_edit_mismatch($form_id = 0)
+	 * Generates an array of fields that an admin can see but can't edit
+	 *
+	 * @param int $form_id The form id
+	 * @return array
+	 */
+	public static function get_edit_mismatch($form_id = 0)
 	{
 		$user_level = self::get_user_max_auth();
 		$public_state = array('field_ispublic_submit >'=>$user_level, 'field_ispublic_visible <='=>$user_level);
@@ -335,15 +356,20 @@ class customforms_Core {
 		}
 		return $mismatches;
 	}
-
-
-	public function field_is_multi_value($field)
-	{
+	
+	
+	/**
+	 * Checks if a field type has multiple values
+	 *
+	 * @param array $field
+	 * @return bool
+	 */
+	public static function field_is_multi_value($field){
 		$is_multi = FALSE;
 
 		switch ($field["field_type"])
 		{
-			case 5: // Radio
+			case 5: //Radio
 				$is_multi = TRUE;
 			break;
 			
@@ -356,26 +382,27 @@ class customforms_Core {
 			break;
 			
 			default:
-				$is_multi = FALSE;
+			$is_multi = FALSE;
 		}
 		return $is_multi;
 	}
 
 	/**
-	* Returns the form field options associated with this form field
-	* @param int $field_id The Field Id
-	*/
-	public function get_custom_field_options($field_id)
+	 * Returns the form field options associated with this form field
+	 *
+	 * @param int $field_id The Field Id
+	 * @return array
+	 */
+	public static function get_custom_field_options($field_id)
 	{
 		//XXX should be able to use the model for this, right?
 		$field_options = array();
 		$field_option_query = ORM::factory('form_field_option')->where('form_field_id',$field_id)->find_all();
-		
 		foreach($field_option_query as $option)
 		{
 			$field_options[$option->option_name] = $option->option_value;
 		}
-			
+		
 		return $field_options;
 	}
 }

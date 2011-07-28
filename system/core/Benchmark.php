@@ -35,6 +35,24 @@ final class Benchmark {
 	}
 
 	/**
+	 * Config checked version of start()
+	 *
+	 * @param   string  benchmark name
+	 * @return  void
+	 */
+	public static function f_start($name)
+	{
+		if (Kohana::config('benchmark.enable') === TRUE)
+		{
+			self::start($name);
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	/**
 	 * Set a benchmark stop point.
 	 *
 	 * @param   string  benchmark name
@@ -46,6 +64,24 @@ final class Benchmark {
 		{
 			self::$marks[$name]['stop'] = microtime(TRUE);
 			self::$marks[$name]['memory_stop'] = function_exists('memory_get_usage') ? memory_get_usage() : 0;
+		}
+	}
+
+	/**
+	 * Config checked version of stop()
+	 *
+	 * @param   string  benchmark name
+	 * @return  void
+	 */
+	public static function f_stop($name)
+	{
+		if (Kohana::config('benchmark.enable') === TRUE)
+		{
+			self::stop($name);
+		}
+		else
+		{
+			return FALSE;
 		}
 	}
 
@@ -89,6 +125,41 @@ final class Benchmark {
 			'time'   => number_format(self::$marks[$name]['stop'] - self::$marks[$name]['start'], $decimals),
 			'memory' => (self::$marks[$name]['memory_stop'] - self::$marks[$name]['memory_start'])
 		);
+	}
+
+	/**
+	 * Saves the benchmark results to a database
+	 * @todo Use the database libraries for this instead of platform-specific DB calls
+	 *
+	 * @return void
+	 */
+	public static function save_results(){
+
+		// Ignore all of these actions if we have benchmarking disabled
+		if (Kohana::config('benchmark.enable') === FALSE) return FALSE;
+
+		// Connect to the benchmark database
+		$db = Kohana::config('benchmark.db');
+		$link = mysql_connect($db['host'], $db['user'], $db['pass']) or die('Could not connect to benchmark database.');
+		mysql_select_db($db['database']) or die('Could not select benchmark database.');
+		$table = mysql_real_escape_string($db['table_prefix']).'benchmark';
+
+		$benchmark_results = Benchmark::get(TRUE);
+		foreach ($benchmark_results as $name => $data)
+		{
+			// Don't save the generic system benchmark results
+			if (strstr($name,'system_benchmark_') === FALSE)
+			{
+				$query = 'INSERT INTO '.$table.' (`name`, `time`, `memory`) VALUES (\''.mysql_real_escape_string($name)
+				. '\', \''.mysql_real_escape_string($data['time']).'\', \''.mysql_real_escape_string($data['memory']).'\');';
+				
+				// Execute the query
+				mysql_query($query,$link);
+			}
+		}
+		
+		// Close the connection to the Benchmar DB
+		mysql_close($link);
 	}
 
 } // End Benchmark

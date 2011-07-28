@@ -8,30 +8,50 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Main Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 class Main_Controller extends Template_Controller {
-
+	/**
+	 * Automatically render the views loaded in this controller
+	 * @var bool
+	 */
 	public $auto_render = TRUE;
-
-    // Main template
+	
+	/**
+	 * Name of the template view
+	 * @var string
+	 */
 	public $template = 'layout';
-
-    // Cache instance
+	
+	/**
+	 * Cache object - to be used for caching content
+	 * @var Cache
+	 */
 	protected $cache;
-
-	// Cacheable Controller
+	
+	/**
+	 * Whether the current controller is cacheable - defaults to FALSE
+	 * @var bool
+	 */
 	public $is_cachable = FALSE;
-
-	// Session instance
+	
+	/**
+	 * Session object
+	 * @var Session
+	 */
 	protected $session;
-
-	// Table Prefix
+	
+	/**
+	 * Prefix for the database tables
+	 * @var string
+	 */
 	protected $table_prefix;
-
-	// Themes Helper
+	
+	/**
+	 * Themes helper library object
+	 * @var Themes
+	 */
 	protected $themes;
 	
 	// User Object
@@ -146,10 +166,13 @@ class Main_Controller extends Template_Controller {
 		// Map and Slider Blocks
 		$div_map = new View('main_map');
 		$div_timeline = new View('main_timeline');
-			// Filter::map_main - Modify Main Map Block
-			Event::run('ushahidi_filter.map_main', $div_map);
-			// Filter::map_timeline - Modify Main Map Block
-			Event::run('ushahidi_filter.map_timeline', $div_timeline);
+		
+		// Filter::map_main - Modify Main Map Block
+		Event::run('ushahidi_filter.map_main', $div_map);
+		
+		// Filter::map_timeline - Modify Main Map Block
+		Event::run('ushahidi_filter.map_timeline', $div_timeline);
+		
 		$this->template->content->div_map = $div_map;
 		$this->template->content->div_timeline = $div_timeline;
 
@@ -180,14 +203,7 @@ class Main_Controller extends Template_Controller {
 
 				$translated_title = Category_Lang_Model::category_title($child->id,$l);
 
-				if($translated_title)
-				{
-					$display_title = $translated_title;
-				}
-				else
-				{
-					$display_title = $child->category_title;
-				}
+				$display_title = ($translated_title)? $translated_title : $child->category_title;
 
 				$children[$child->id] = array(
 					$display_title,
@@ -208,15 +224,9 @@ class Main_Controller extends Template_Controller {
 			}
 
 			// Check for localization of parent category
-
 			$translated_title = Category_Lang_Model::category_title($category->id,$l);
 
-			if($translated_title)
-			{
-				$display_title = $translated_title;
-			}else{
-				$display_title = $category->category_title;
-			}
+			$display_title  = ($translated_title)? $translated_title : $category->category_title;
 
 			// Put it all together
 			$parent_categories[$category->id] = array(
@@ -250,7 +260,9 @@ class Main_Controller extends Template_Controller {
 				$layers[$layer->id] = array($layer->layer_name, $layer->layer_color,
 					$layer->layer_url, $layer->layer_file);
 			}
-		} else {
+		}
+		else
+		{
 			$layers = $config_layers;
 		}
 		$this->template->content->layers = $layers;
@@ -280,13 +292,16 @@ class Main_Controller extends Template_Controller {
 		$sms_no1 = Kohana::config('settings.sms_no1');
 		$sms_no2 = Kohana::config('settings.sms_no2');
 		$sms_no3 = Kohana::config('settings.sms_no3');
-		if (!empty($sms_no1)) {
+		if ( ! empty($sms_no1))
+		{
 			$phone_array[] = $sms_no1;
 		}
-		if (!empty($sms_no2)) {
+		if ( ! empty($sms_no2))
+		{
 			$phone_array[] = $sms_no2;
 		}
-		if (!empty($sms_no3)) {
+		if ( ! empty($sms_no3))
+		{
 			$phone_array[] = $sms_no3;
 		}
 		$this->template->content->phone_array = $phone_array;
@@ -348,7 +363,8 @@ class Main_Controller extends Template_Controller {
 				$l_m = $last_month;
 			}
 
-			for ( $i=$s_m; $i <= $l_m; $i++ ) {
+			for ( $i=$s_m; $i <= $l_m; $i++ )
+			{
 				if ( $i < 10 )
 				{
 					// All months need to be two digits
@@ -388,6 +404,11 @@ class Main_Controller extends Template_Controller {
 			$show_year++;
 		}
 
+		Event::run('ushahidi_filter.active_startDate', $display_startDate);
+		Event::run('ushahidi_filter.active_endDate', $display_endDate);
+		Event::run('ushahidi_filter.startDate', $startDate);
+		Event::run('ushahidi_filter.endDate', $endDate);
+		
 		$this->template->content->div_timeline->startDate = $startDate;
 		$this->template->content->div_timeline->endDate = $endDate;
 

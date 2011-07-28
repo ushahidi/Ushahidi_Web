@@ -52,8 +52,8 @@
 				
 					<div class="head">
 						<h3><?php echo (isset($title)) ? $title : Kohana::lang('ui_admin.settings');?></h3>
-						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" onclick="document.location.href='<?php echo url::site() . 'admin/addons/plugins/'; ?>'; return false;" />
-						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />	
+						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" onclick="document.location.href='<?php echo url::site() . 'admin/addons/plugins/'; ?>'; return false;" />
+						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />	
 					</div>				
 					
 					<div class="settings_holder">
@@ -65,8 +65,8 @@
 					</div>
 					<div class="simple_border"></div>
 		
-					<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
-					<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" onclick="document.location.href='<?php echo url::site() . 'admin/addons/plugins/'; ?>'; return false;" />
+					<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
+					<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" onclick="document.location.href='<?php echo url::site() . 'admin/addons/plugins/'; ?>'; return false;" />
 				</div>
 				<?php print form::close(); ?>
 			</div>

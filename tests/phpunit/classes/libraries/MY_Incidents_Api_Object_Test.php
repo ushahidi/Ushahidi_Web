@@ -53,7 +53,7 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 			$this->db = new Database();
 			
 			// Table prefix
-			$this->table_prefix = Kohana::config('database.table_prefix');
+			$this->table_prefix = Kohana::config('database.default.table_prefix');
 		}
 	}
 	

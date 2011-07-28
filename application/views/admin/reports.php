@@ -150,7 +150,7 @@
 									
 									// Get Edit Log
 									$edit_count = $incident->verify->count();
-									$edit_css = ($edit_count == 0) ? "post-edit-log-red" : "post-edit-log-gray";
+									$edit_css = ($edit_count == 0) ? "post-edit-log-gray" : "post-edit-log-blue";
 									$edit_log  = "<div class=\"".$edit_css."\">";
 									$edit_log .= "<a href=\"javascript:showLog('edit_log_".$incident_id."')\">".Kohana::lang('ui_admin.edit_log').":</a> (".$edit_count.")</div>";
 									$edit_log .= "<div id=\"edit_log_".$incident_id."\" class=\"post-edit-log\"><ul>";

@@ -1,9 +1,10 @@
-function fillFields(id, name, description, reports_view, reports_edit, reports_evaluation, reports_comments, reports_download, reports_upload, messages, messages_reporters, stats, settings, manage, users)
+function fillFields(id, name, description, access_level, reports_view, reports_edit, reports_evaluation, reports_comments, reports_download, reports_upload, messages, messages_reporters, stats, settings, manage, users)
 {
 	show_addedit();
 	$("#role_id").attr("value", unescape(id));
 	$("#name").attr("value", unescape(name));
 	$("#description").attr("value", unescape(description));
+	$("#access_level").attr("value", unescape(access_level));
 
 	$("#reports_view").attr("checked", B(unescape(reports_view)));
 	$("#reports_edit").attr("checked", B(unescape(reports_edit)));

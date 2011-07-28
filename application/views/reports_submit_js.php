@@ -193,18 +193,27 @@
 		 */
 		function geoCode()
 		{
-			$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+			$('#find_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 			address = $("#location_find").val();
 			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
 				function(data){
 					if (data.status == 'success'){
-						var lonlat = new OpenLayers.LonLat(data.message[1], data.message[0]);
-						lonlat.transform(proj_4326,proj_900913);
-					
-						m = new OpenLayers.Marker(lonlat);
-						markers.clearMarkers();
-				    	markers.addMarker(m);
-						map.setCenter(lonlat, <?php echo $default_zoom; ?>);
+						// Clear the map first
+						vlayer.removeFeatures(vlayer.features);
+						$('input[name="geometry[]"]').remove();
+						
+						point = new OpenLayers.Geometry.Point(data.message[1], data.message[0]);
+						OpenLayers.Projection.transform(point, proj_4326,proj_900913);
+						
+						f = new OpenLayers.Feature.Vector(point);
+						vlayer.addFeatures(f);
+						
+						// create a new lat/lon object
+						myPoint = new OpenLayers.LonLat(data.message[1], data.message[0]);
+						myPoint.transform(proj_4326, map.getProjectionObject());
+
+						// display the map centered on a latitude and longitude
+						map.setCenter(myPoint, <?php echo $default_zoom; ?>);
 						
 						// Update form values
 						$("#latitude").attr("value", data.message[0]);
@@ -218,12 +227,188 @@
 			return false;
 		}
 		
+		/* Keep track of the selected features */
+		function addSelected(feature) {
+			selectedFeatures.push(feature);
+			selectCtrl.activate();
+			if (vlayer.features.length == 1 && feature.geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
+				// This is a single point, no need for geometry metadata
+			} else {
+				$('#geometryLabelerHolder').show(400);
+				if (feature.geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
+					$('#geometryLat').show();
+					$('#geometryLon').show();
+					$('#geometryColor').hide();
+					$('#geometryStrokewidth').hide();
+					thisPoint = feature.clone();
+					thisPoint.geometry.transform(proj_900913,proj_4326);
+					$('#geometry_lat').val(thisPoint.geometry.y);
+					$('#geometry_lon').val(thisPoint.geometry.x);
+				} else {
+					$('#geometryLat').hide();
+					$('#geometryLon').hide();
+					$('#geometryColor').show();
+					$('#geometryStrokewidth').show();
+				}
+				if ( typeof(feature.label) != 'undefined') {
+					$('#geometry_label').val(feature.label);
+				}
+				if ( typeof(feature.comment) != 'undefined') {
+					$('#geometry_comment').val(feature.comment);
+				}
+				if ( typeof(feature.lon) != 'undefined') {
+					$('#geometry_lon').val(feature.lon);
+				}
+				if ( typeof(feature.lat) != 'undefined') {
+					$('#geometry_lat').val(feature.lat);
+				}
+				if ( typeof(feature.color) != 'undefined') {
+					$('#geometry_color').val(feature.color);
+				}
+				if ( typeof(feature.strokewidth) != 'undefined' && feature.strokewidth != '') {
+					$('#geometry_strokewidth').val(feature.strokewidth);
+				} else {
+					$('#geometry_strokewidth').val("2.5");
+				}
+			}
+		}
+
+		/* Clear the list of selected features */
+		function clearSelected(feature) {
+		    selectedFeatures = [];
+			$('#geometryLabelerHolder').hide(400);
+			$('#geometry_label').val("");
+			$('#geometry_comment').val("");
+			$('#geometry_color').val("");
+			$('#geometry_lat').val("");
+			$('#geometry_lon').val("");
+			selectCtrl.deactivate();
+			selectCtrl.activate();
+			$('#geometry_color').ColorPickerHide();
+		}
+
+		/* Feature starting to move */
+		function startDrag(feature, pixel) {
+		    lastPixel = pixel;
+		}
+
+		/* Feature moving */
+		function doDrag(feature, pixel) {
+		    for (f in selectedFeatures) {
+		        if (feature != selectedFeatures[f]) {
+		            var res = map.getResolution();
+		            selectedFeatures[f].geometry.move(res * (pixel.x - lastPixel.x), res * (lastPixel.y - pixel.y));
+		            vlayer.drawFeature(selectedFeatures[f]);
+		        }
+		    }
+		    lastPixel = pixel;
+		}
+
+		/* Featrue stopped moving */
+		function endDrag(feature, pixel) {
+		    for (f in selectedFeatures) {
+		        f.state = OpenLayers.State.UPDATE;
+		    }
+			refreshFeatures();
+		}
+		
+		function refreshFeatures(event) {
+			var geoCollection = new OpenLayers.Geometry.Collection;
+			$('input[name="geometry[]"]').remove();
+			for(i=0; i < vlayer.features.length; i++) {
+				//vlayer.features[i].label = "XXXX";
+				//vlayer.features[i].color = "ZZZZ";
+				newFeature = vlayer.features[i].clone();
+				newFeature.geometry.transform(proj_900913,proj_4326);
+				geoCollection.addComponents(newFeature.geometry);
+				if (vlayer.features.length == 1 && vlayer.features[i].geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
+					// If feature is a Single Point - save as lat/lon
+				} else {
+					// Otherwise, save geometry values
+					// Convert to Well Known Text
+					var format = new OpenLayers.Format.WKT();
+					var geometry = format.write(newFeature);
+					var label = '';
+					var comment = '';
+					var lon = '';
+					var lat = '';
+					var color = '';
+					var strokewidth = '';
+					if ( typeof(vlayer.features[i].label) != 'undefined') {
+						label = vlayer.features[i].label;
+					}
+					if ( typeof(vlayer.features[i].comment) != 'undefined') {
+						comment = vlayer.features[i].comment;
+					}
+					if ( typeof(vlayer.features[i].lon) != 'undefined') {
+						lon = vlayer.features[i].lon;
+					}
+					if ( typeof(vlayer.features[i].lat) != 'undefined') {
+						lat = vlayer.features[i].lat;
+					}
+					if ( typeof(vlayer.features[i].color) != 'undefined') {
+						color = vlayer.features[i].color;
+					}
+					if ( typeof(vlayer.features[i].strokewidth) != 'undefined') {
+						strokewidth = vlayer.features[i].strokewidth;
+					}
+					geometryAttributes = JSON.stringify({ geometry: geometry, label: label, comment: comment,lat: lat, lon: lon, color: color, strokewidth: strokewidth});
+					$('#reportForm').append($('<input></input>').attr('name','geometry[]').attr('type','hidden').attr('value',geometryAttributes));
+				}
+			}
+			
+			// Centroid of location will constitute the Location
+			// if its not a point
+			centroid = geoCollection.getCentroid(true);
+			$("#latitude").val(centroid.y);
+			$("#longitude").val(centroid.x);
+		}
+		
+		function incidentZoom(event) {
+			$("#incident_zoom").val(map.getZoom());
+		}
+		
+		function updateFeature(feature, color, strokeWidth){
+			// create a symbolizer from exiting stylemap
+			var symbolizer = feature.layer.styleMap.createSymbolizer(feature);
+			
+			// color available?
+			if (color) {
+				symbolizer['fillColor'] = "#"+color;
+				symbolizer['strokeColor'] = "#"+color;
+				symbolizer['fillOpacity'] = "0.7";
+			} else {
+				if ( typeof(feature.color) != 'undefined' && feature.color != '' ) {
+					symbolizer['fillColor'] = "#"+feature.color;
+					symbolizer['strokeColor'] = "#"+feature.color;
+					symbolizer['fillOpacity'] = "0.7";
+				}
+			}
+			
+			// stroke available?
+			if (parseFloat(strokeWidth)) {
+				symbolizer['strokeWidth'] = parseFloat(strokeWidth);
+			} else if ( typeof(feature.strokewidth) != 'undefined' && feature.strokewidth !='' ) {
+				symbolizer['strokeWidth'] = feature.strokewidth;
+			} else {
+				symbolizer['strokeWidth'] = "2.5";
+			}
+			
+			// set the unique style to the feature
+			feature.style = symbolizer;
+
+			// redraw the feature with its new style
+			feature.layer.drawFeature(feature);
+		}
 		
 		var map;
 		var thisLayer;
 		var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 		var proj_900913 = new OpenLayers.Projection('EPSG:900913');
-		var markers;
+		var vlayer;
+		var highlightCtrl;
+		var selectCtrl;
+		var selectedFeatures = [];
 		$(document).ready(function() {
 			
 			// Now initialise the map
@@ -240,61 +425,206 @@
 			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
 			
 			map.addControl(new OpenLayers.Control.Navigation());
-			map.addControl(new OpenLayers.Control.PanZoom());
-			map.addControl(new OpenLayers.Control.MousePosition(
-					{ div: 	document.getElementById('mapMousePosition'), numdigits: 5 
-				}));    
+			map.addControl(new OpenLayers.Control.PanZoomBar());
+			map.addControl(new OpenLayers.Control.MousePosition());
+			map.addControl(new OpenLayers.Control.ScaleLine());
 			map.addControl(new OpenLayers.Control.Scale('mapScale'));
-            map.addControl(new OpenLayers.Control.ScaleLine());
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
-			// Create the markers layer
-			markers = new OpenLayers.Layer.Markers("Markers");
-			map.addLayer(markers);
 			
-			// create a lat/lon object
-			var myPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
-			myPoint.transform(proj_4326, map.getProjectionObject());
-			
-			// create a marker positioned at a lon/lat
-			var marker = new OpenLayers.Marker(myPoint);
-			markers.addMarker(marker);
-			
-			// display the map centered on a latitude and longitude (Google zoom levels)
-			map.setCenter(myPoint, <?php echo $default_zoom; ?>);
-			
-			// Detect Map Clicks
-			map.events.register("click", map, function(e){
-				var lonlat = map.getLonLatFromViewPortPx(e.xy);
-				var lonlat2 = map.getLonLatFromViewPortPx(e.xy);
-			    m = new OpenLayers.Marker(lonlat);
-				markers.clearMarkers();
-		    	markers.addMarker(m);
-				
-				lonlat2.transform(proj_900913,proj_4326);	
-				// Update form values (jQuery)
-				$("#latitude").attr("value", lonlat2.lat);
-				$("#longitude").attr("value", lonlat2.lon);
+			/********************/
+			/********************/
+			/********************/
+			// Vector/Drawing Layer Styles
+			style1 = new OpenLayers.Style({
+				pointRadius: "8",
+				fillColor: "#ffcc66",
+				fillOpacity: "0.7",
+				strokeColor: "#CC0000",
+				strokeWidth: 2.5,
+				graphicZIndex: 1,
+				externalGraphic: "<?php echo url::file_loc('img').'media/img/openlayers/marker.png' ;?>",
+				graphicOpacity: 1,
+				graphicWidth: 21,
+				graphicHeight: 25,
+				graphicXOffset: -14,
+				graphicYOffset: -27
+			});
+			style2 = new OpenLayers.Style({
+				pointRadius: "8",
+				fillColor: "#30E900",
+				fillOpacity: "0.7",
+				strokeColor: "#197700",
+				strokeWidth: 2.5,
+				graphicZIndex: 1,
+				externalGraphic: "<?php echo url::file_loc('img').'media/img/openlayers/marker-green.png' ;?>",
+				graphicOpacity: 1,
+				graphicWidth: 21,
+				graphicHeight: 25,
+				graphicXOffset: -14,
+				graphicYOffset: -27
+			});
+			style3 = new OpenLayers.Style({
+				pointRadius: "8",
+				fillColor: "#30E900",
+				fillOpacity: "0.7",
+				strokeColor: "#197700",
+				strokeWidth: 2.5,
+				graphicZIndex: 1
 			});
 			
-			// Detect Dropdown Select
-			$("#select_city").change(function() {
-				var lonlat = $(this).val().split(",");
-				if ( lonlat[0] && lonlat[1] )
-				{
-					l = new OpenLayers.LonLat(lonlat[0], lonlat[1]);
-					l.transform(proj_4326, map.getProjectionObject());
-					m = new OpenLayers.Marker(l);
-					markers.clearMarkers();
-			    	markers.addMarker(m);
-					map.setCenter(l, <?php echo $default_zoom; ?>);
+			var vlayerStyles = new OpenLayers.StyleMap({
+				"default": style1,
+				"select": style2,
+				"temporary": style3
+			});
+			
+			// Create Vector/Drawing layer
+			vlayer = new OpenLayers.Layer.Vector( "Editable", {
+				styleMap: vlayerStyles,
+				rendererOptions: {zIndexing: true}
+			});
+			map.addLayer(vlayer);
+			
+			
+			// Drag Control
+			var drag = new OpenLayers.Control.DragFeature(vlayer, {
+				onStart: startDrag,
+				onDrag: doDrag,
+				onComplete: endDrag
+			});
+			map.addControl(drag);
+			
+			// Vector Layer Events
+			vlayer.events.on({
+				beforefeaturesadded: function(event) {
+					//for(i=0; i < vlayer.features.length; i++) {
+					//	if (vlayer.features[i].geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
+					//		vlayer.removeFeatures(vlayer.features);
+					//	}
+					//}
 					
-					// Update form values (jQuery)
-					$("#location_name").attr("value", $('#select_city :selected').text());
-										
-					$("#latitude").attr("value", lonlat[1]);
-					$("#longitude").attr("value", lonlat[0]);
+					// Disable this to add multiple points
+					// vlayer.removeFeatures(vlayer.features);
+				},
+				featuresadded: function(event) {
+					refreshFeatures(event);
+				},
+				featuremodified: function(event) {
+					refreshFeatures(event);
+				},
+				featuresremoved: function(event) {
+					refreshFeatures(event);
 				}
+			});
+			
+			// Vector Layer Highlight Features
+			highlightCtrl = new OpenLayers.Control.SelectFeature(vlayer, {
+			    hover: true,
+			    highlightOnly: true,
+			    renderIntent: "temporary"
+			});
+			selectCtrl = new OpenLayers.Control.SelectFeature(vlayer, {
+				clickout: true, toggle: false,
+				multiple: false, hover: false,
+				renderIntent: "select",
+				onSelect: addSelected,
+				onUnselect: clearSelected
+			});
+			map.addControl(highlightCtrl);
+			map.addControl(selectCtrl);
+			
+			// Insert Saved Geometries
+			wkt = new OpenLayers.Format.WKT();
+			<?php
+			if ( ! count($geometries))
+			{
+				?>
+				// Default Point
+				point = new OpenLayers.Geometry.Point(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+				OpenLayers.Projection.transform(point, proj_4326, map.getProjectionObject());
+				var origFeature = new OpenLayers.Feature.Vector(point);
+				vlayer.addFeatures(origFeature);
+				<?php
+			}
+			else
+			{
+				foreach ($geometries as $geometry)
+				{
+					$geometry = json_decode($geometry);
+					echo "wktFeature = wkt.read('$geometry->geometry');\n";
+					echo "wktFeature.geometry.transform(proj_4326,proj_900913);\n";
+					echo "wktFeature.label = '$geometry->label';\n";
+					echo "wktFeature.comment = '$geometry->comment';\n";
+					echo "wktFeature.color = '$geometry->color';\n";
+					echo "wktFeature.strokewidth = '$geometry->strokewidth';\n";
+					echo "vlayer.addFeatures(wktFeature);\n";
+					echo "var color = '$geometry->color';if (color) {updateFeature(wktFeature, color, '');};";
+					echo "var strokewidth = '$geometry->strokewidth';if (strokewidth) {updateFeature(wktFeature, '', strokewidth);};";
+				}
+			}
+			?>
+			
+			// create a lat/lon object
+			var startPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
+			startPoint.transform(proj_4326, map.getProjectionObject());
+			
+			// display the map centered on a latitude and longitude (Google zoom levels)
+			map.setCenter(startPoint, <?php echo $default_zoom; ?>);
+			
+			// Create the Editing Toolbar
+			var container = document.getElementById("panel");
+			var panel = new OpenLayers.Control.EditingToolbar(
+				vlayer, {div: container}
+			);
+			map.addControl(panel);
+			panel.activateControl(panel.controls[0]);
+			
+			
+			drag.activate();
+			highlightCtrl.activate();
+			selectCtrl.activate();
+			
+			map.events.register("click", map, function(e){
+				selectCtrl.deactivate();
+				selectCtrl.activate();
+			});
+			
+			// Undo Action Removes Most Recent Marker
+			$('.btn_del_last').live('click', function () {
+				if (vlayer.features.length > 0) {
+					x = vlayer.features.length - 1;
+					vlayer.removeFeatures(vlayer.features[x]);
+				}
+				$('#geometry_color').ColorPickerHide();
+				$('#geometryLabelerHolder').hide(400);
+				selectCtrl.activate();
+			});
+			
+			// Delete Selected Features
+			$('.btn_del_sel').live('click', function () {
+				for(var y=0; y < selectedFeatures.length; y++) {
+					vlayer.removeFeatures(selectedFeatures);
+				}
+				$('#geometry_color').ColorPickerHide();
+				$('#geometryLabelerHolder').hide(400);
+				selectCtrl.activate();
+			});
+			
+			// Clear Map
+			$('.btn_clear').live('click', function () {
+				vlayer.removeFeatures(vlayer.features);
+				$('input[name="geometry[]"]').remove();
+				$("#latitude").val("");
+				$("#longitude").val("");
+				$('#geometry_label').val("");
+				$('#geometry_comment').val("");
+				$('#geometry_color').val("");
+				$('#geometry_lat').val("");
+				$('#geometry_lon').val("");
+				$('#geometry_color').ColorPickerHide();
+				$('#geometryLabelerHolder').hide(400);
+				selectCtrl.activate();
 			});
 			
 			// GeoCode
@@ -306,6 +636,211 @@
 				if(code == 13) { //Enter keycode
 					geoCode();
 					return false;
+				}
+			});
+			
+			// Handles the functionality for changing the size of the map
+			// TODO: make the CSS widths dynamic... instead of hardcoding, grab the width's
+			// from the appropriate parent divs
+			$('.map-toggles a').click(function() {
+				var action = $(this).attr("class");
+				$('ul.map-toggles li').hide();
+				switch(action)
+				{
+					case "wider-map":
+						$('.incident-location').insertBefore($('.f-col'));
+						$('.map_holder_reports').css({"height":"350px", "width": "935px"});
+						$('.incident-location h4').css({"margin-left":"10px"});
+						$('.location-info').css({"margin-right":"14px"});
+						$('a[href=#report-map]').parent().hide();
+						$('a.taller-map').parent().show();
+						$('a.smaller-map').parent().show();
+						break;
+					case "taller-map":
+						$('.map_holder_reports').css("height","600px");
+						$('a.shorter-map').parent().show();
+						$('a.smaller-map').parent().show();
+						break;
+					case "shorter-map":
+						$('.map_holder_reports').css("height","350px");
+						$('a.taller-map').parent().show();
+						$('a.smaller-map').parent().show();
+						break;
+					case "smaller-map":
+						$('.incident-location').hide().prependTo($('.f-col-1'));
+						$('.map_holder_reports').css({"height":"350px", "width": "494px"});
+						$('a.wider-map').parent().show();
+						$('.incident-location').show();
+						$('.incident-location h4').css({"margin-left":"0"});
+						$('.location-info').css({"margin-right":"0"});
+						break;
+				};
+				
+				map.updateSize();
+				map.pan(0,1);
+				
+				return false;
+			});
+			
+			
+			// Prevent Map Effects in the Geometry Labeler
+			$('#geometryLabelerHolder').click(function(evt) {
+				var e = evt ? evt : window.event; 
+				OpenLayers.Event.stop(e);
+				return false;
+			});
+			
+			// Geometry Label Text Boxes
+			$('#geometry_label').click(function() {
+				$('#geometry_label').focus();
+				$('#geometry_color').ColorPickerHide();
+			}).bind("change keyup blur", function(){
+				for (f in selectedFeatures) {
+					selectedFeatures[f].label = this.value;
+				}
+				refreshFeatures();
+			});
+			
+			$('#geometry_comment').click(function() {
+				$('#geometry_comment').focus();
+				$('#geometry_color').ColorPickerHide();
+			}).bind("change keyup blur", function(){
+				for (f in selectedFeatures) {
+					selectedFeatures[f].comment = this.value;
+			    }
+				refreshFeatures();
+			});
+			
+			$('#geometry_lat').click(function() {
+				$('#geometry_lat').focus();
+				$('#geometry_color').ColorPickerHide();
+			}).bind("change keyup blur", function(){
+				for (f in selectedFeatures) {
+					selectedFeatures[f].lat = this.value;
+			    }
+				refreshFeatures();
+			});
+			
+			$('#geometry_lon').click(function() {
+				$('#geometry_lon').focus();
+				$('#geometry_color').ColorPickerHide();
+			}).bind("change keyup blur", function(){
+				for (f in selectedFeatures) {
+					selectedFeatures[f].lon = this.value;
+			    }
+				refreshFeatures();
+			});
+			
+			// Event on Latitude/Longitude Typing Change
+			$('#geometry_lat, #geometry_lon').bind("change keyup", function() {
+				var newlat = $("#geometry_lat").val();
+				var newlon = $("#geometry_lon").val();
+				if (!isNaN(newlat) && !isNaN(newlon))
+				{
+					var lonlat = new OpenLayers.LonLat(newlon, newlat);
+					lonlat.transform(proj_4326,proj_900913);
+					for (f in selectedFeatures) {
+						selectedFeatures[f].geometry.x = lonlat.lon;
+						selectedFeatures[f].geometry.y = lonlat.lat;
+						selectedFeatures[f].lon = newlat;
+						selectedFeatures[f].lat = newlon;
+						vlayer.drawFeature(selectedFeatures[f]);
+				    }
+				}
+				else
+				{
+					alert('Invalid value!')
+				}
+			});
+				
+			// Event on Color Change
+			$('#geometry_color').ColorPicker({
+				onSubmit: function(hsb, hex, rgb) {
+					$('#geometry_color').val(hex);
+					for (f in selectedFeatures) {
+						selectedFeatures[f].color = hex;
+						updateFeature(selectedFeatures[f], hex, '');
+				    }
+					refreshFeatures();
+				},
+				onChange: function(hsb, hex, rgb) {
+					$('#geometry_color').val(hex);
+					for (f in selectedFeatures) {
+						selectedFeatures[f].color = hex;
+						updateFeature(selectedFeatures[f], hex, '');
+				    }
+					refreshFeatures();
+				},
+				onBeforeShow: function () {
+					$(this).ColorPickerSetColor(this.value);
+					for (f in selectedFeatures) {
+						selectedFeatures[f].color = this.value;
+						updateFeature(selectedFeatures[f], this.value, '');
+				    }
+					refreshFeatures();
+				}
+			}).bind('keyup', function(){
+				$(this).ColorPickerSetColor(this.value);
+				for (f in selectedFeatures) {
+					selectedFeatures[f].color = this.value;
+					updateFeature(selectedFeatures[f], this.value, '');
+			    }
+				refreshFeatures();
+			});
+			
+			// Event on StrokeWidth Change
+			$('#geometry_strokewidth').bind("change keyup", function() {
+				if (parseFloat(this.value) && parseFloat(this.value) <= 8) {
+					for (f in selectedFeatures) {
+						selectedFeatures[f].strokewidth = this.value;
+						updateFeature(selectedFeatures[f], '', parseFloat(this.value));
+					}
+					refreshFeatures();
+				}
+			});
+			
+			// Close Labeler
+			$('#geometryLabelerClose').click(function() {
+				$('#geometryLabelerHolder').hide(400);
+				for (f in selectedFeatures) {
+					selectCtrl.unselect(selectedFeatures[f]);
+				}
+				selectCtrl.activate();
+			});
+			
+			
+			/********************/
+			/********************/
+			/********************/
+			
+			
+			// Detect Dropdown Select
+			$("#select_city").change(function() {
+				var lonlat = $(this).val().split(",");
+				if ( lonlat[0] && lonlat[1] )
+				{
+					// Clear the map first
+					vlayer.removeFeatures(vlayer.features);
+					$('input[name="geometry[]"]').remove();
+					
+					point = new OpenLayers.Geometry.Point(lonlat[0], lonlat[1]);
+					OpenLayers.Projection.transform(point, proj_4326,proj_900913);
+					
+					f = new OpenLayers.Feature.Vector(point);
+					vlayer.addFeatures(f);
+					
+					// create a new lat/lon object
+					myPoint = new OpenLayers.LonLat(lonlat[0], lonlat[1]);
+					myPoint.transform(proj_4326, map.getProjectionObject());
+
+					// display the map centered on a latitude and longitude
+					map.setCenter(myPoint, <?php echo $default_zoom; ?>);
+					
+					// Update form values (jQuery)
+					$("#location_name").attr("value", $('#select_city :selected').text());
+										
+					$("#latitude").attr("value", lonlat[1]);
+					$("#longitude").attr("value", lonlat[0]);
 				}
 			});
 			
@@ -327,3 +862,20 @@
 	      });
 	
 		});
+        
+		function formSwitch(form_id, incident_id)
+        {
+            var answer = confirm('Are You Sure You Want To SWITCH Forms?');
+            if (answer){
+                $('#form_loader').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
+                $.post("<?php echo url::base() . '/reports/switch_form' ?>", { form_id: form_id, incident_id: incident_id },
+                    function(data){
+                        if (data.status == 'success'){
+                            $('#custom_forms').html('');
+                            $('#custom_forms').html(unescape(data.response));
+                            $('#form_loader').html('');
+                        }
+                    }, "json");
+            }
+        }
+

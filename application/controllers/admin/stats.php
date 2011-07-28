@@ -27,103 +27,109 @@ class Stats_Controller extends Admin_Controller
         }
     }
     
-    function index()
-    {   
-        $this->template->content = new View('admin/stats_hits');
-        $this->template->content->title = Kohana::lang('ui_admin.statistics');
-        
-        // Retrieve Current Settings
-        $settings = ORM::factory('settings', 1);
-        
-        if($settings->stat_id === null || $settings->stat_id == 0)
-        {
-            $sitename = $settings->site_name;
-            $url = url::base();
-            $this->template->content->stat_id = Stats_Model::create_site( $sitename, $url );
-        }
-        
-        // Show the hits page since stats are already set up
-        $this->hits();
-        
-    }
-    
-    function reports()
-    {
-        $this->template->content = new View('admin/stats_reports');
-        $this->template->content->title = Kohana::lang('ui_admin.statistics');
-        
-        // Javascript Header
-        $this->template->protochart_enabled = TRUE;
-        $this->template->js = new View('admin/stats_js');
-        
-        $this->template->content->failure = '';
-        
-        // Set the date range (how many days in the past from today?)        
-        $range = (isset($_GET['range']))
-            ? $_GET['range']
-            : 10000; // Get all reports so go back far into the past
-            
-        $this->template->content->range = $range;
-        
-        // Get an arbitrary date range
-        $dp1 = (isset($_GET['dp1'])) ? $_GET['dp1'] : null;
-        $dp2 = (isset($_GET['dp2'])) ? $_GET['dp2'] : null;
-        
-        // Report Data
-        $data = Stats_Model::get_report_stats(false,false,$range,$dp1,$dp2);
-        
-        $reports_chart = new protochart;
-        
-        // This makes the chart a delicious pie chart
-        $options = array(
-            'pies'=>array('show'=>'true')
-            );
-        
-        // Grab category data
-        $cats = Category_Model::categories();
-        
-        $this->template->content->category_data = $cats;
+	public function index()
+	{   
+		$this->template->content = new View('admin/stats_hits');
+		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 
-        $report_data = array();
-        $colors = array();
-        $reports_per_cat = array();
-        foreach ($data['category_counts'] as $category_id => $count)
-        {
-            // Verify if the array key $category_id exists before attempting to fetch
-            if (array_key_exists($category_id, $cats))
-            {
-                $category_name = $cats[$category_id]['category_title'];
-                $report_data[$category_name] = $count;
+		// Retrieve Current Settings
+		$settings = ORM::factory('settings', 1);
+
+		if($settings->stat_id === null || $settings->stat_id == 0)
+		{
+			$sitename = $settings->site_name;
+			$url = url::base();
+			$this->template->content->stat_id = Stats_Model::create_site( $sitename, $url );
+		}
+
+		// Show the hits page since stats are already set up
+		$this->hits();
+	}
+	
+	/**
+	 * Report statistics
+	 */
+	public function reports()
+	{
+		$this->template->content = new View('admin/stats_reports');
+		$this->template->content->title = Kohana::lang('ui_admin.statistics');
+
+		// Javascript Header
+		$this->template->protochart_enabled = TRUE;
+		$this->template->js = new View('admin/stats_js');
+
+		$this->template->content->failure = '';
+
+		// Set the date range (how many days in the past from today?)
+		$range = 10000;
+		if ( isset($_GET['range']))
+		{
+			$range = $this->input->xss_clean($_GET['range']);
+			$range = (intval($range) > 0)? intval($range) : 10000;
+		}
+
+		$this->template->content->range = $range;
+        
+		// Get an arbitrary date range
+		$dp1 = (isset($_GET['dp1'])) ? $_GET['dp1'] : null;
+		$dp2 = (isset($_GET['dp2'])) ? $_GET['dp2'] : null;
+
+		// Report Data
+		$data = Stats_Model::get_report_stats(false,false,$range,$dp1,$dp2);
+		
+		$reports_chart = new protochart;
+		
+		// This makes the chart a delicious pie chart
+		$options = array(
+			'pies'=>array('show'=>'true')
+		);
+		
+		// Grab category data
+		$cats = Category_Model::categories();
+
+		$this->template->content->category_data = $cats;
+
+		$report_data = array();
+		$colors = array();
+		$reports_per_cat = array();
+		
+		foreach ($data['category_counts'] as $category_id => $count)
+		{
+			// Verify if the array key $category_id exists before attempting to fetch
+			if (array_key_exists($category_id, $cats))
+			{
+				$category_name = $cats[$category_id]['category_title'];
+				$report_data[$category_name] = $count;
             
-                $colors[$category_name] = (isset($cats[$category_id]['category_color']))
-                    ? $cats[$category_id]['category_color']
-                    : 'FFFFFF';
-            
-                foreach($count as $c)
-                {             
-                    // Count up the total number of reports per category
-                    if( ! isset($reports_per_cat[$category_id]))
-                    {
+				$colors[$category_name] = (isset($cats[$category_id]['category_color']))
+					? $cats[$category_id]['category_color']
+					: 'FFFFFF';
+
+				foreach($count as $c)
+				{             
+					// Count up the total number of reports per category
+					if( ! isset($reports_per_cat[$category_id]))
+					{
                         $reports_per_cat[$category_id] = 0;
                     }
-                
-                    $reports_per_cat[$category_id] += $c;
-                }
-            }
-        }
-        
-        $this->template->content->num_categories = $data['total_categories'];
-        $this->template->content->reports_per_cat = $reports_per_cat;
-        
-        $this->template->content->reports_chart = $reports_chart->chart('reports',$report_data,$options,$colors,350,350);
-        
-        $this->template->content->verified = 0;
-        $this->template->content->unverified = 0;
-        $this->template->content->approved = 0;
-        $this->template->content->unapproved = 0;
-        
-        $report_status_chart = new protochart;
-        $report_staus_data = array();
+
+					$reports_per_cat[$category_id] += $c;
+				}
+			}
+		}
+		
+		$this->template->content->num_categories = $data['total_categories'];
+		$this->template->content->reports_per_cat = $reports_per_cat;
+
+		$this->template->content->reports_chart = $reports_chart->chart('reports',$report_data,$options,$colors,350,350);
+
+		$this->template->content->verified = 0;
+		$this->template->content->unverified = 0;
+		$this->template->content->approved = 0;
+		$this->template->content->unapproved = 0;
+
+		$report_status_chart = new protochart;
+		$report_staus_data = array();
         
         foreach($data['verified_counts'] as $ver_or_un => $arr)
         {

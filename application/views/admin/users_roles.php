@@ -74,6 +74,12 @@
 						<strong><?php echo Kohana::lang('ui_main.description');?>:</strong><br />
 						<?php print form::input('description', '', ' class="text long"'); ?>
 					</div>
+					<div class="tab_form_item">
+						<strong>
+							<a href="#" class="tooltip" style="background-position-y:0px" title="<?php echo Kohana::lang("tooltips.settings_access_level"); ?>">
+								<?php echo  Kohana::lang('ui_admin.access_level'); ?>: </a></h4>
+						<?php print form::input('access_level','', ' class="text"'); ?>
+					</div>
 					<div style="clear:both;"></div>
 					<div class="tab_form_item">
 					<?php
@@ -92,7 +98,7 @@
 					<div style="clear:both;"></div>
 					<div class="tab_form_item">
 						&nbsp;<br />
-						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
+						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 					</div>
 					<?php print form::close(); ?>			
 				</div>
@@ -150,6 +156,7 @@
 									$settings = $role->settings;
 									$manage = $role->manage;
 									$users = $role->users;
+									$access_level = $role->access_level;
 									?>
 									<tr>
 										
@@ -164,7 +171,7 @@
 										</td>
 										<td class="col-3">&nbsp;</td>
 										<td class="col-4">
-											<?php if($role_id == 1 OR $role_id == 3) { echo "&nbsp;";
+											<?php if($role_id == 1 OR $role_id == 3 OR $role->name == "member") { echo "&nbsp;";
 											
 											} else {?>
 											<ul>
@@ -173,6 +180,7 @@
 													'<?php echo(rawurlencode($role_id)); ?>',
 													'<?php echo(rawurlencode($name)); ?>',
 													'<?php echo(rawurlencode($description)); ?>',
+													'<?php echo(rawurlencode($access_level)); ?>',
 													<?php echo(rawurlencode($reports_view)); ?>,
 													<?php echo(rawurlencode($reports_edit)); ?>,
 													<?php echo(rawurlencode($reports_evaluation)); ?>,

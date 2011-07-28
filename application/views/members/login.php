@@ -3,60 +3,141 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?php echo Kohana::lang('ui_main.members');?></title>
-<link href="<?php echo url::base() ?>media/css/login.css" rel="stylesheet" type="text/css" />
-<link rel="stylesheet" href="<?php echo url::base() ?>media/css/openid.css" />
-<script type="text/javascript" src="<?php echo url::base() ?>media/js/openid/jquery-1.2.6.min.js"></script>
-<script type="text/javascript" src="<?php echo url::base() ?>media/js/openid/openid-jquery.js"></script>
-<script type="text/javascript" src="<?php echo url::base() ?>media/js/openid/openid-jquery-en.js"></script>
+<?php
+echo html::stylesheet(url::file_loc('css').'media/css/jquery-ui-themeroller', '', true);
+echo html::stylesheet(url::file_loc('css').'media/css/login', '', true);
+echo html::stylesheet(url::file_loc('css').'media/css/openid', '', true);
+echo html::script(url::file_loc('js').'media/js/jquery', true);
+echo html::script(url::file_loc('js').'media/js/openid/openid-jquery', true);
+echo html::script(url::file_loc('js').'media/js/openid/openid-jquery-en', true);
+?>
 <script type="text/javascript">
-$(document).ready(function() {
-    openid.init('openid_identifier');
-    openid.setDemoMode(false);
-});
+	<?php echo $js; ?>
 </script>
 </head>
 
 <body>
 <div id="openid_login_container">
 
-	<div id="ushahidi_site_name">
+	<div id="ushahidi_site_name" class="ui-corner-all">
     	<div id="logo">
 			<h1><?php echo $site_name; ?></h1>
 			<span><?php echo $site_tagline; ?></span>
 		</div>
     </div>
 
-	<div id="openid_login">
-		<form method="post" action="<?php echo url::base();?>members/login" id="openid_form">
-			<input type="hidden" name="action" value="verify" />
-			
-			<?php
-			if ($openid_error)
+	<div id="openid_login" class="ui-corner-all">
+		<?php
+		if ($form_error)
+		{
+			?><div class="login_error"><?php
+			foreach ($errors as $error_item => $error_description)
 			{
-				?><div id="openid_error"><?php echo $openid_error;?></div>
-				<?php
-			}?>
-			
-			<h2>Sign-in or Create New Account</h2>
+				echo (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
+			}
+			?></div><?php
+		}
+		
+		if ($openid_error)
+		{
+			?><div class="login_error"><?php echo "&#8226;&nbsp;" . $openid_error;?></div><?php
+		}
+		
+		if ($success)
+		{
+			?><div class="login_success"><?php echo "&#8226;&nbsp;" . Kohana::lang('ui_main.login_confirmation_sent');?></div><?php
+		}
+		?>
+		<h2><a href="javascript:toggle('signin_userpass');"><?php echo Kohana::lang('ui_main.login_signin_userpass'); ?></a></h2>
+		<div id="signin_userpass" class="signin_select ui-corner-all">
+			<form method="post" id="userpass_form">
+				<input type="hidden" name="action" value="signin">
+				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.username');?>:</strong><br />
+						<input type="text" name="username" id="username" class="login_text" /></td>
+					</tr>
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.password');?>:</strong><br />
+						<input name="password" type="password" class="login_text" id="password" size="20" /></td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" id="remember" name="remember" value="1" checked="checked" /><?php echo Kohana::lang('ui_main.password_save');?></td>
+					</tr>
+					<tr>
+						<td><input type="submit" id="submit" name="submit" value="Log In" class="login_btn" /></td>
+					</tr>
+					<tr>
+						<td><a href="javascript:toggle('signin_forgot');"> <?php echo Kohana::lang('ui_main.forgot_password');?></a></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div id="signin_forgot" class="signin_select ui-corner-all" style="margin-top:10px;">
+			<form method="post" id="userforgot_form">
+				<input type="hidden" name="action" value="forgot">
+				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.password_reset_prompt');?></strong><br />
+						<?php print form::input('resetemail', $form['resetemail'], ' class="login_text"'); ?></td>
+					</tr>
+					<tr>
+						<td><input type="submit" id="submit" name="submit" value="Reset password" class="login_btn" /></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<h2><a href="javascript:toggle('signin_openid');"><?php echo Kohana::lang('ui_main.login_signin_openid'); ?></a></h2>
+		<div id="signin_openid" class="signin_select ui-corner-all">
+			<form method="post" id="openid_form">
+				<input type="hidden" name="action" value="openid">
+				<div id="openid_choice">
+					<p><?php echo Kohana::lang('ui_main.login_select_openid'); ?>:</p>
+					<div id="openid_btns"></div>
+				</div>
 
-			<div id="openid_choice">
-				<p>Please click your account provider:</p>
-				<div id="openid_btns"></div>
-			</div>
+				<div id="openid_input_area">
+					<input id="openid_identifier" name="openid_identifier" type="text" value="http://" />
+					<input id="openid_submit" type="submit" value="Sign-In"/>
+				</div>
+				<noscript>
+					<p>OpenID is service that allows you to log-on to many different websites using a single indentity.
+					Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
+				</noscript>
+			</form>
+		</div>
 
-			<div id="openid_input_area">
-				<input id="openid_identifier" name="openid_identifier" type="text" value="http://" />
-				<input id="openid_submit" type="submit" value="Sign-In"/>
-			</div>
-			<noscript>
-				<p>OpenID is service that allows you to log-on to many different websites using a single indentity.
-				Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
-			</noscript>
-		</form>
-		<div id="openid_signup">
-			If you don't already have an account on any of the above, <a href="https://www.myopenid.com/signup">Click here to sign up</a>
-			<br /><br />
-			If you've forgotten or lost your login information <a href="#">Click here to recover your account</a>
+		<?php echo Kohana::lang('ui_main.login_signup_text'); ?>, <a href="javascript:toggle('signin_new');"><?php echo Kohana::lang('ui_main.login_signup_click'); ?></a>
+		<div id="signin_new" class="signin_select ui-corner-all" style="margin-top:10px;">
+			<form method="post" id="usernew_form">
+				<input type="hidden" name="action" value="new">
+				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.name');?>:</strong><br />
+						<?php print form::input('name', $form['name'], ' class="login_text"'); ?></td>
+					</tr>
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.email');?>:</strong><br />
+						<?php print form::input('email', $form['email'], ' class="login_text"'); ?></td>
+					</tr>
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.username');?>:</strong><br />
+						<?php print form::input('username', $form['username'], ' class="login_text"'); ?></td>
+					</tr>
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.password');?>:</strong><br />
+						<?php print form::password('password', $form['password'], ' class="login_text"'); ?></td>
+					</tr>
+					<tr>
+						<td><strong><?php echo Kohana::lang('ui_main.password_again');?>:</strong><br />
+						<?php print form::password('password_again', $form['password_again'], ' class="login_text"'); ?></td>
+					</tr>
+					<tr>
+						<td><input type="submit" id="submit" name="submit" value="Sign Up" class="login_btn" /></td>
+					</tr>
+				</table>
+			</form>
 		</div>
 	</div>
 </div>

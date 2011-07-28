@@ -99,7 +99,13 @@
 											<td class="col-3">&nbsp;</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="javascript:blockAction('v','SHOW/HIDE','<?php echo(rawurlencode($key)); ?>')"<?php if ($block_visible) echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a></li>
+													<li class="none-separator">
+													<?php if ($block_visible) { ?>
+													<a href="javascript:blockAction('d','HIDE','<?php echo(rawurlencode($key)); ?>')"<?php echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.visible');?></a>
+													<?php } else { ?>
+													<a href="javascript:blockAction('a','SHOW','<?php echo(rawurlencode($key)); ?>')"<?php echo " class=\"status_yes\"" ?>><?php echo Kohana::lang('ui_main.hidden');?></a>
+													<?php } ?>
+													</li>
 												</ul>
 											</td>
 										</tr>

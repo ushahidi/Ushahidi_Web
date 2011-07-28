@@ -85,7 +85,7 @@ class Feed_Controller extends Controller
                 }
             }
 
-            $cache->set('feed_'.$limit.'_'.$page, $items, array('feed'), 3600); // 1 Hour
+            $cache->set($subdomain.'_feed_'.$limit.'_'.$page, $items, array('feed'), 3600); // 1 Hour
             $feed_items = $items;
         }
 

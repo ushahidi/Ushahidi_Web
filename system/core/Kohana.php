@@ -231,8 +231,14 @@ final class Kohana {
 			// Run system.pre_controller
 			Event::run('system.pre_controller');
 
+			// Begin benchmark for the controller
+			Benchmark::f_start(ucfirst(Router::$controller).'_Controller');
+
 			// Create a new controller instance
 			$controller = $class->newInstance();
+
+			// End benchmark for the controller
+			Benchmark::f_stop(ucfirst(Router::$controller).'_Controller');
 
 			// Controller constructor has been executed
 			Event::run('system.post_controller_constructor');

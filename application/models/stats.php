@@ -44,11 +44,12 @@ class Stats_Model extends ORM
 
 			// Grabbing the URL to update stats URL, Name, Reports, etc on the stats server
 			$additional_query = '';
-			if(isset($_SERVER["HTTP_HOST"]))
+			if (isset($_SERVER["HTTP_HOST"]))
 			{
-				$site_domain = Kohana::config('config.site_domain');
+				// Grab the site domain from the config and trim any whitespaces
+				$site_domain = trim(Kohana::config('config.site_domain'));
 				$slashornoslash = '';
-				if($site_domain{0} != '/') $slashornoslash = '/';
+				if (empty($site_domain) OR $site_domain{0} != '/') $slashornoslash = '/';
 				
 				// URL
 				$val = 'http://'.$_SERVER["HTTP_HOST"].$slashornoslash.$site_domain;

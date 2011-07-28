@@ -10,7 +10,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
+ * @module     Reports Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
@@ -74,11 +74,11 @@
 						if ( typeof(feature) != 'undefined' && 
 							feature.data.id == <?php echo $incident_id; ?>)
 						{
-							return "<?php echo url::base().'media/img/openlayers/marker.png' ;?>";
+							return "<?php echo url::file_loc('img').'media/img/openlayers/marker.png' ;?>";
 						}
 						else
 						{
-							return "<?php echo url::base().'media/img/openlayers/marker-gold.png' ;?>";
+							return "<?php echo url::file_loc('img').'media/img/openlayers/marker-gold.png' ;?>";
 						}
 					},
 					fillcolor: function(feature)
@@ -204,15 +204,6 @@
 				}
 			});
 			
-			// Handles the tab functionality for the map, images, and video content
-			$('a.tab-item').click(function(){
-				$('a.tab-item').parent().removeClass("report-tab-selected");  // first remove the "selected" class from everything
-				$(this).parent().addClass("report-tab-selected");             // now add it back to the parent of the element which was clicked
-				$('.report-media-box-content > div').hide();                  // then hide all tab content boxes
-				$($(this).attr("href")).show();                               // finally, show the appropriate tab content boxes
-				return false;                                                 // stop the browser from jumping back to the top of the page
-			});
-
 			// Handles the functionality for changing the size of the map
 			// TODO: make the CSS widths dynamic... instead of hardcoding, grab the width's
 			// from the appropriate parent divs
@@ -242,9 +233,6 @@
 						$('.report-map').hide().prependTo($('.report-media-box-content'));
 						$('.map-holder').css({"height":"350px", "width": "348px"});
 						$('a.wider-map').parent().show();
-						$('a.tab-item').parent().removeClass("report-tab-selected");
-						$('.report-media-box-content > div').hide(); // hide everything incase video/images were showing
-						$('a[href=#report-map]').parent().addClass('report-tab-selected').show();
 						$('.report-map').show();
 						break;
 				};
@@ -308,23 +296,25 @@
 		
 		function rating(id,action,type,loader)
 		{
-			$('#' + loader).html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
-			$.post("<?php echo url::site() . 'reports/rating/' ?>" + id, { action: action, type: type },
+			$('#' + loader).html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
+			$.post("<?php echo url::site().'reports/rating/' ?>" + id, { action: action, type: type },
 				function(data){
 					if (data.status == 'saved'){
 						if (type == 'original') {
-							$('#oup_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_up.png");
-							$('#odown_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_down.png");
+							$('#oup_' + id).attr("src","<?php echo url::file_loc('img').'media/img/'; ?>gray_up.png");
+							$('#odown_' + id).attr("src","<?php echo url::file_loc('img').'media/img/'; ?>gray_down.png");
 							$('#orating_' + id).html(data.rating);
 						}
 						else if (type == 'comment')
 						{
-							$('#cup_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_up.png");
-							$('#cdown_' + id).attr("src","<?php echo url::base() . 'media/img/'; ?>gray_down.png");
+							$('#cup_' + id).attr("src","<?php echo url::file_loc('img').'media/img/'; ?>gray_up.png");
+							$('#cdown_' + id).attr("src","<?php echo url::file_loc('img').'media/img/'; ?>gray_down.png");
 							$('#crating_' + id).html(data.rating);
 						}
 					} else {
-						alert('ERROR!');
+						if(typeof(data.message) != 'undefined') {
+							alert(data.message);
+						}
 					}
 					$('#' + loader).html('');
 			  	}, "json");
