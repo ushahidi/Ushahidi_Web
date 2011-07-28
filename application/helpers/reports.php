@@ -104,7 +104,7 @@ class reports_Core {
 
 		if ( ! empty($post->person_last))
 		{
-			$post->add_rules('person_last', 'length[3,100]');
+			$post->add_rules('person_last', 'length[2,100]');
 		}
 
 		if ( ! empty($post->person_email))
