@@ -48,8 +48,8 @@
 						}
 						?>
 						<div class="head">
-							<input type="image" src="<?php print url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
-							<input type="image" src="<?php print url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
+							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
 						</div>
 						<!-- f-col -->
 						<div class="f-col-full">
@@ -81,9 +81,9 @@
 							</div>
 						</div>
 						
-						<input id="save_only" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
-						<input id="save_close" type="image" src="<?php print url::base() ?>media/img/admin/btn-save-and-close.gif" class="save-close-btn" />
-						<input id="cancel" type="image" src="<?php print url::base() ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+						<input id="save_only" type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
+						<input id="save_close" type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-and-close.gif" class="save-close-btn" />
+						<input id="cancel" type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 					</div>
 				<?php print form::close(); ?>
 			</div>

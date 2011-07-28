@@ -12,7 +12,7 @@ echo html::script('media/js/bugs', true);
 ?>
 </head>
 <body>
-<div id="ushahidi_login_logo"><img src="<?php echo url::base(); ?>media/img/admin/logo_login.gif" /></div>
+<div id="ushahidi_login_logo"><img src="<?php echo url::file_loc('img'); ?>media/img/admin/logo_login.gif" /></div>
 <div id="framework_error" style="width:42em;margin:20px auto;">
 <h3><?php echo html::specialchars($error) ?></h3>
 <p><?php echo html::specialchars($description) ?></p>

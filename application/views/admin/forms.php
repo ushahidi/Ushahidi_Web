@@ -74,7 +74,7 @@
 					</div>						
 					<div class="tab_form_item">
 						&nbsp;<br />
-						<input type="image" src="<?php echo url::base() ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
+						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
 					</div>
 					<?php print form::close(); ?>			
 				</div>
@@ -150,7 +150,7 @@
 									}
 									if ($field_isdate == 1) 
 									{
-										$form_fields .= "&nbsp;<a href=\"#\"><img src = \"".url::base()."media/img/icon-calendar.gif\"  align=\"middle\" border=\"0\"></a>";
+										$form_fields .= "&nbsp;<a href=\"#\"><img src = \"".url::file_loc('img')."media/img/icon-calendar.gif\"  align=\"middle\" border=\"0\"></a>";
 									}
 									$form_fields .= "	<div class=\"forms_fields_edit\">
 									<a href=\"javascript:fieldAction('e','EDIT',".$field_id.",".$form_id.",".$field_type.");\">EDIT</a>&nbsp;|&nbsp;

@@ -193,7 +193,7 @@
 		 */
 		function geoCode()
 		{
-			$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+			$('#find_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 			address = $("#location_find").val();
 			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
 				function(data){
@@ -443,7 +443,7 @@
 				strokeColor: "#CC0000",
 				strokeWidth: 2.5,
 				graphicZIndex: 1,
-				externalGraphic: "<?php echo url::base().'media/img/openlayers/marker.png' ;?>",
+				externalGraphic: "<?php echo url::file_loc('img').'media/img/openlayers/marker.png' ;?>",
 				graphicOpacity: 1,
 				graphicWidth: 21,
 				graphicHeight: 25,
@@ -457,7 +457,7 @@
 				strokeColor: "#197700",
 				strokeWidth: 2.5,
 				graphicZIndex: 1,
-				externalGraphic: "<?php echo url::base().'media/img/openlayers/marker-green.png' ;?>",
+				externalGraphic: "<?php echo url::file_loc('img').'media/img/openlayers/marker-green.png' ;?>",
 				graphicOpacity: 1,
 				graphicWidth: 21,
 				graphicHeight: 25,
@@ -867,7 +867,7 @@
         {
             var answer = confirm('Are You Sure You Want To SWITCH Forms?');
             if (answer){
-                $('#form_loader').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+                $('#form_loader').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
                 $.post("<?php echo url::base() . '/reports/switch_form' ?>", { form_id: form_id, incident_id: incident_id },
                     function(data){
                         if (data.status == 'success'){

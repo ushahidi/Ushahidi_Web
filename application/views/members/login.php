@@ -4,12 +4,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?php echo Kohana::lang('ui_main.members');?></title>
 <?php
-echo html::stylesheet('media/css/jquery-ui-themeroller', '', true);
-echo html::stylesheet('media/css/login', '', true);
-echo html::stylesheet('media/css/openid', '', true);
-echo html::script('media/js/jquery', true);
-echo html::script('media/js/openid/openid-jquery', true);
-echo html::script('media/js/openid/openid-jquery-en', true);
+echo html::stylesheet(url::file_loc('css').'media/css/jquery-ui-themeroller', '', true);
+echo html::stylesheet(url::file_loc('css').'media/css/login', '', true);
+echo html::stylesheet(url::file_loc('css').'media/css/openid', '', true);
+echo html::script(url::file_loc('js').'media/js/jquery', true);
+echo html::script(url::file_loc('js').'media/js/openid/openid-jquery', true);
+echo html::script(url::file_loc('js').'media/js/openid/openid-jquery-en', true);
 ?>
 <script type="text/javascript">
 	<?php echo $js; ?>

@@ -123,7 +123,7 @@
 		 */
 		function geoCode()
 		{
-			$('#find_loading').html('<img src="<?php echo url::base() . "media/img/loading_g.gif"; ?>">');
+			$('#find_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 			address = $("#location_find").val();
 			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
 				function(data){

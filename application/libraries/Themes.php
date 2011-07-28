@@ -39,11 +39,9 @@ class Themes_Core {
 		// Load Session
 		$this->session = Session::instance();
 		
-		// Load Local or CDN?
-		$this->css_url = (Kohana::config("cache.cdn_css")) ? 
-			Kohana::config("cache.cdn_css") : url::base();
-		$this->js_url = (Kohana::config("cache.cdn_js")) ? 
-			Kohana::config("cache.cdn_js") : url::base();
+		// Grab the proper URL for the css and js files
+		$this->css_url = url::file_loc('css');
+		$this->js_url = url::file_loc('js');
 	}
 	
 	/**

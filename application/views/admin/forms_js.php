@@ -93,7 +93,7 @@ function showFormSelected(id, form_id, field_id, select_disable)
 function fieldAction( action, confirmAction, field_id, form_id, field_type )
 {
 	$('#form_fields_current_' + form_id).css({
-	"background-image" : "url('<?php echo url::base() . "media/img/loading_g2.gif"; ?>')",
+	"background-image" : "url('<?php echo url::file_loc('img')."media/img/loading_g2.gif"; ?>')",
 	"background-position" : "center center",
 	"background-repeat" : "no-repeat"
 	});
