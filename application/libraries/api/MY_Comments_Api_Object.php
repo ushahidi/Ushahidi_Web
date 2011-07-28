@@ -300,7 +300,11 @@ class Comments_Api_Object extends Api_Object_Core {
      */
     private function _spam_comment() 
     {
-        $ret_val = 0;
+        $form = array(
+            'comment_id' => ''
+        );
+
+        $ret_value = 0;
         
         if ($_POST)
         {
@@ -310,7 +314,6 @@ class Comments_Api_Object extends Api_Object_Core {
             $post->pre_filter('trim', TRUE);
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
-            $post->add_rules('action','required', 'alpha', 'length[1,1]');
             $post->add_rules('comment_id','required','numeric');
 
             if ($post->validate())
@@ -371,6 +374,13 @@ class Comments_Api_Object extends Api_Object_Core {
      */
     private function _delete_comment() 
     {
+        $form = array (
+            'comment_id' => ''
+        );
+
+        $errors = $form;
+		$form_error = FALSE;
+
         $ret_value = 0;
         
         if ($_POST)
@@ -381,7 +391,6 @@ class Comments_Api_Object extends Api_Object_Core {
             $post->pre_filter('trim', TRUE);
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
-            $post->add_rules('action','required', 'alpha', 'length[1,1]');
             $post->add_rules('comment_id','required','numeric');
 
             if ($post->validate())
@@ -429,13 +438,13 @@ class Comments_Api_Object extends Api_Object_Core {
     {
         $form = array
         (
-            'action' => '',
             'comment_id' => '',
         );
 
         $errors = $form;
+		$form_error = FALSE;
         
-        $ret_val = 0;
+        $ret_value = 0;
         
         if($_POST)
         {
@@ -445,7 +454,6 @@ class Comments_Api_Object extends Api_Object_Core {
             $post->pre_filter('trim', TRUE);
             // Add some rules, the input field, followed by a list of 
             //checks, carried out in order
-            $post->add_rules('action','required', 'alpha', 'length[1,1]');
             $post->add_rules('comment_id','required','numeric');
             
 
