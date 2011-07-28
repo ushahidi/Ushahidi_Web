@@ -51,7 +51,7 @@
      "category" => array("Admin_Category","category_action"),
 
      // Comment Action
-     "comments" => array( "Comments","comment_action"),
+     "comments" => "Comments",
      
      // Twitter action
      "twitteraction" => array( "Twitter", "twitter_action"),
