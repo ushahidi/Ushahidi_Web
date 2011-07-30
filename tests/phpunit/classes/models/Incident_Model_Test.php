@@ -35,9 +35,17 @@ class Incident_Model_Test extends PHPUnit_Framework_TestCase {
 	{
 		// Get the neighbouring incidents
 		$neighbours = Incident_Model::get_neighbouring_incidents($incident_id, FALSE, 0, $num_neighbours);
-		
-		// Check if the no. of returned incidents matches the no. of neighbours specified in @param $neighbours
-		$this->assertEquals($num_neighbours, $neighbours->count());
+
+        if (empty($neighbours))
+        {
+            $this->markTestSkipped('The incident table is empty.');
+        }
+        else
+        {
+		    // Check if the no. of returned incidents matches the no. of neighbours specified in @param $neighbours
+            $this->assertEquals($num_neighbours, $neighbours->count());
+        }
+
 	}
 	
 	/**
@@ -47,22 +55,31 @@ class Incident_Model_Test extends PHPUnit_Framework_TestCase {
 	public function testIsValidIncident()
 	{
 		// Get any incident
-		$random_incident = testutils::get_random_id('incident');
-		$this->assertEquals(TRUE, Incident_Model::is_valid_incident($random_incident));
+        $random_incident = testutils::get_random_id('incident');
+
+        //Test to see if there are data in the incident table to test with.
+        if (empty($random_incident))
+        {
+            $this->markTestSkipped('The incident table is empty.');
+        }
+        else
+        {
+		    $this->assertEquals(TRUE, Incident_Model::is_valid_incident($random_incident));
 		
-		// Get inactive incident
-		$inactive_incident = testutils::get_random_id('incident', 'WHERE incident_active = 0');
-		$this->assertEquals(FALSE, Incident_Model::is_valid_incident($inactive_incident, TRUE));
+		    // Get inactive incident
+		    $inactive_incident = testutils::get_random_id('incident', 'WHERE incident_active = 0');
+		    $this->assertEquals(FALSE, Incident_Model::is_valid_incident($inactive_incident, TRUE));
 		
-		// Get active incident
-		$active_incident = testutils::get_random_id('incident', 'WHERE incident_active = 1');
-		$this->assertEquals(TRUE, Incident_Model::is_valid_incident($active_incident, TRUE));
+		    // Get active incident
+		    $active_incident = testutils::get_random_id('incident', 'WHERE incident_active = 1');
+		    $this->assertEquals(TRUE, Incident_Model::is_valid_incident($active_incident, TRUE));
 		
-		// Null incident value
-		$this->assertEquals(FALSE, Incident_Model::is_valid_incident(NULL));
+		    // Null incident value
+		    $this->assertEquals(FALSE, Incident_Model::is_valid_incident(NULL));
 		
-		// Non numeric incident value
-		$this->assertEquals(FALSE, Incident_Model::is_valid_incident('0.999'));
+		    // Non numeric incident value
+            $this->assertEquals(FALSE, Incident_Model::is_valid_incident('0.999'));
+        }
 	}
 }
 ?>

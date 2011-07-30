@@ -36,7 +36,7 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	{
 		if (ORM::factory('incident')->count_all() == 0)
 		{
-			$this->markTestSkipped('The categories table is empty.');
+			$this->markTestSkipped('The incident table is empty.');
 		}
 		else
 		{
