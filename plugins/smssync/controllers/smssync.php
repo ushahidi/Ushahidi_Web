@@ -50,24 +50,37 @@ class Smssync_Controller extends Controller {
 		//send promotional SMSs with no phone number, so this way
 		//these messages will always end up on the backend and not float around
 		//on the phones forever.
-		$message_description = "---EMPTY---";		
-		$message_from = "---EMPTY---";
+		$message_description = Kohana::lang("ui_main.empty");		
+		$message_from = "00000000";
+		$non_numeric_source = false;
+		
 		
 		if (isset($this->request['secret']))
 		{
 			$secret = $this->request['secret'];
 		}
 		
-		if (isset($this->request['from']))
+		if(isset($this->request['from']) &&  strlen($this->request['from']) > 0)
 		{
 			$message_from = $this->request['from'];
-			// Remove non-numeric characters from string
+			$original_from = $message_from;
 			$message_from = preg_replace("#[^0-9]#", "", $message_from);
+
+			if(strlen($message_from) == 0)
+			{
+				$message_from = "00000000";
+				$non_numeric_source = true;
+			}
 		}
 		
-		if (isset($this->request['message']))
+		if (isset($this->request['message']) && strlen($this->request['message']) > 0)
 		{
 			$message_description = $this->request['message'];
+		}
+		
+		if($non_numeric_source)
+		{
+			$message_description = '<div style="color:red;">'.Kohana::lang("ui_main.message_non_numeric_source")." \"".$original_from."\" </div>".$message_description;			
 		}
 		
 		if ( ! empty($message_from) AND ! empty($message_description))
