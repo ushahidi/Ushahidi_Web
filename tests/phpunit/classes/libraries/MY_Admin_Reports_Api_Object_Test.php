@@ -187,7 +187,8 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 
     /**
      * Test report verification.
-     * @test approveReport
+     * @test 
+     * @depends approveReport
      */
     public function verifyReport($report_id)
     {
@@ -229,7 +230,8 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
             
     /**
      * Test editing of report.
-     * @test verifyReport
+     * @test 
+     * @depends verifyReport
      */
     public function editReport($report_id)
     {
@@ -268,7 +270,8 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 
     /**
      * Test report deletion.
-     * @test editReport
+     * @test 
+     * @depends editReport
      */
     public function deleteReport($report_id)
     {
