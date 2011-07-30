@@ -238,7 +238,7 @@ class Reports_Controller extends Admin_Controller
 							
 							// Delete form responses
 							ORM::factory('form_response')->where('incident_id', $incident_id)->delete_all();
-
+							
 							// Action::report_delete - Deleted a Report
 							Event::run('ushahidi_action.report_delete', $incident_id);
 						}
