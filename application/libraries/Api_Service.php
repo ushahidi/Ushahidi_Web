@@ -218,13 +218,16 @@ final class Api_Service {
 		else
         {
             //Get username and password
-            if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])) 
+            if (isset($_SERVER['PHP_AUTH_USER']) && 
+                isset($_SERVER['PHP_AUTH_PW'])) 
             {
                 $username = filter_var($_SERVER['PHP_AUTH_USER'], 
-                    FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+                    FILTER_SANITIZE_STRING,
+                    FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
                 
                 $password = filter_var($_SERVER['PHP_AUTH_PW'], 
-                    FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+                    FILTER_SANITIZE_STRING,
+                    FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
                 
                 if ($auth->login($username, $password)) 
                 {

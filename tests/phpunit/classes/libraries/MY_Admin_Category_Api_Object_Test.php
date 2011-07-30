@@ -13,6 +13,11 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
+
+/**
+ * 
+ * @backupGlobals disabled
+ */
 class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
 
     /**
@@ -61,23 +66,19 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
      * Tests category submission
      * @test
      */
-    public function testSubmitCategory()
+    public function submitCategory()
     {
-        // * count the number of existing categories in the db
-        // * keep a record of the total
-        // * submit dummy category
-        // * count the number of categories again for new total
-        // * compare new total with old total
-        // * if is new total is greater than old total by 1, then 
-        // * new category was submitted.
 
-        $_POST = array(
-            'action' => urlencode('add'),
-            'parent_id' => urlencode('0'),
-            'category_title' => urlencode('Test Category Title'),
-            'category_description' => urlencode('Testing admin category'),
-            'category_color' => urlencode('00FF00'),
-            'task' => urlencode('category'),
+        $category_id = 0;
+        
+        $_POST = array
+        (
+            'action' => 'add',
+            'parent_id' => '0',
+            'category_title' => 'Test Category Title',
+            'category_description' => 'Testing admin category',
+            'category_color' => '00FF00',
+            'task' => 'category',
         );
         
         ob_start();
@@ -86,29 +87,64 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, $contents->error->code,
             $contents->error->message);
         
-        //Clean up
-        $test_cat_id = 0;
-        $test_cat_id = ORM::factory('category')->orderby('id', 
+        //return the id of the test category for use in other test
+        $category_id = ORM::factory('category')->orderby('id', 
             'desc')->limit(1)->find();
         
-        ORM::factory('category')->where('id',
-            $test_cat_id)->delete_all();
+        return $category_id;
+    }
+
+    
+    /**
+     * Tests edit category
+     * @test
+     * @depends submitCategory
+     */
+    public function editCategory($category_id)
+    {
+        $_POST = array
+        (
+            'action' => 'edit',
+            'parent_id' => '0',
+            'category_id' => $category_id,
+            'category_title' => 'Test Category Title Edited 2',
+            'category_description' => 'Testing admin category Edited',
+            'category_color' => '00FF00',
+            'task' => 'category',
+        );
+        
+        ob_start();
+        $this->api_controller->index();
+        $contents = json_decode(ob_get_clean());
+        $this->assertEquals(0, $contents->error->code,
+            $contents->error->message);
+
+
+        return $category_id;
     }
 
     /**
      * Tests Category deletion
      * @test
+     * @depends editCategory
      */
-    public function testDeleteCategory()
+    public function deleteCategory($category_id)
     {
-    }
+        
+        $_POST = array
+        (
+            'action' => 'delete',
+            'category_id' => $category_id,
+            'task' => 'category',
+        );
+        
+        ob_start();
+        $this->api_controller->index();
+        $contents = json_decode(ob_get_clean());
+        $this->assertEquals(0, $contents->error->code,
+            $contents->error->message);
+        
 
-    /**
-     * Tests edit category
-     * @test
-     */
-    public function testEditCategory()
-    {
     }
 
 }

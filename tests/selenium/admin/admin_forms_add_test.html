@@ -4,13 +4,13 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>admin_blocks_hide_test</title>
+<title>admin_forms_add_test</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
 <tr>
-				<td rowspan="1" colspan="3">Admin Blocks List</td></tr>
+				<td rowspan="1" colspan="3">Admin Forms Add</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -33,13 +33,8 @@
 	<td>admin</td>
 </tr>
 <tr>
-	<td>click</td>
-	<td>remember</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
-	<td>submit</td>
+	<td>id=submit</td>
 	<td></td>
 </tr>
 <tr>
@@ -54,14 +49,40 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Blocks</td>
+	<td>link=Forms</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Add/Edit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>form_title</td>
+	<td>Test Form</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>form_description</td>
+	<td>Test Form description</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.save-rep-btn</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
-	<td>css=div.table-holder</td>
+	<td>css=div.green-box</td>
 	<td></td>
 </tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td></td>
+	<td>The form has been CREATED/EDITED!</td>
+</tr>
+
 </tbody></table>
 </body>
 </html>
