@@ -62,85 +62,6 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * Tests retrieval of approved reports
-     * @test
-     */
-    public function retrieveApproveReports()
-    {
-
-        $_POST = array(
-            'by' => 'approved',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-    }
-
-    
-    /**
-     * Tests retrieval of unapproved reports
-     * @test
-     */
-    public function retrieveUnapprovedReports()
-    {
-        $_POST = array(
-            'by' => 'unapproved',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-
-    }
-
-    /**
-     * Tests retrieval of verified reports
-     * @test
-     */
-    public function retrieveVerifiedReports()
-    {
-        
-        $_POST = array(
-            'by' => 'verified',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-        
-    }
-
-    /**
-     * Tests retrieval of unverified reports
-     * @test
-     */
-    public function retrieveUnverifiedReports()
-    {
-        
-        $_POST = array(
-            'by' => 'unverified',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-        
-    }
-
-    /**
      * Test report submission
      * @test
      */
@@ -178,10 +99,29 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
         $report_id = ORM::factory('report')->orderby('id', 
             'desc')->limit(1)->find();
 
-
         return $report_id;
     }
-    
+
+    /**
+     * Tests retrieval of unapproved reports
+     * @test
+     */
+    public function retrieveUnapprovedReports()
+    {
+        $_POST = array(
+            'by' => 'unapproved',
+            'task' => 'reports',
+        );
+        
+        ob_start();
+        $this->api_controller->index();
+        $contents = json_decode(ob_get_clean());
+        $this->assertEquals(0, $contents->error->code,
+            $contents->error->message);
+
+    }
+
+
     /**
      * Test report approval.
      * @test
@@ -202,11 +142,52 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, $contents->error->code,
             $contents->error->message);
 
+        return $report_id;
+
+    }
+
+    /**
+     * Tests retrieval of approved reports
+     * @test
+     */
+    public function retrieveApproveReports()
+    {
+
+        $_POST = array(
+            'by' => 'approved',
+            'task' => 'reports',
+        );
+        
+        ob_start();
+        $this->api_controller->index();
+        $contents = json_decode(ob_get_clean());
+        $this->assertEquals(0, $contents->error->code,
+            $contents->error->message);
+    }
+
+    /**
+     * Tests retrieval of unverified reports
+     * @test
+     */
+    public function retrieveUnverifiedReports()
+    {
+        
+        $_POST = array(
+            'by' => 'unverified',
+            'task' => 'reports',
+        );
+        
+        ob_start();
+        $this->api_controller->index();
+        $contents = json_decode(ob_get_clean());
+        $this->assertEquals(0, $contents->error->code,
+            $contents->error->message);
+        
     }
 
     /**
      * Test report verification.
-     * @test submitReport
+     * @test approveReport
      */
     public function verifyReport($report_id)
     {
@@ -223,11 +204,32 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, $contents->error->code,
             $contents->error->message);
 
+        return $report_id;
     }
+
+    /**
+     * Tests retrieval of verified reports
+     * @test
+     */
+    public function retrieveVerifiedReports()
+    {
         
+        $_POST = array(
+            'by' => 'verified',
+            'task' => 'reports',
+        );
+        
+        ob_start();
+        $this->api_controller->index();
+        $contents = json_decode(ob_get_clean());
+        $this->assertEquals(0, $contents->error->code,
+            $contents->error->message);
+        
+    }     
+            
     /**
      * Test editing of report.
-     * @test submitReport
+     * @test verifyReport
      */
     public function editReport($report_id)
     {
@@ -260,11 +262,13 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
         $this->assertEquals(0, $contents->error->code,
             $contents->error->message);
 
+        return $report_id;
+
     }
 
     /**
      * Test report deletion.
-     * @test submitReport
+     * @test editReport
      */
     public function deleteReport($report_id)
     {
@@ -282,6 +286,5 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
             $contents->error->message);
 
    }
-
 
 }
