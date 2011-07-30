@@ -69,13 +69,16 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
     public function submitCategory()
     {
 
-        $_POST = array(
-            'action' => urlencode('add'),
-            'parent_id' => urlencode('0'),
-            'category_title' => urlencode('Test Category Title'),
-            'category_description' => urlencode('Testing admin category'),
-            'category_color' => urlencode('00FF00'),
-            'task' => urlencode('category'),
+        $category_id = 0;
+        
+        $_POST = array
+        (
+            'action' => 'add',
+            'parent_id' => '0',
+            'category_title' => 'Test Category Title',
+            'category_description' => 'Testing admin category',
+            'category_color' => '00FF00',
+            'task' => 'category',
         );
         
         ob_start();
@@ -85,12 +88,10 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
             $contents->error->message);
         
         //return the id of the test category for use in other test
-        
-        $test_cat_id = 0;
-        $test_cat_id = ORM::factory('category')->orderby('id', 
+        $category_id = ORM::factory('category')->orderby('id', 
             'desc')->limit(1)->find();
         
-        return $test_cat_id;
+        return $category_id;
     }
 
     
@@ -99,16 +100,17 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
      * @test
      * @depends submitCategory
      */
-    public function editCategory($test_cat_id)
+    public function editCategory($category_id)
     {
-        $_POST = array(
-            'action' => urlencode('edit'),
-            'parent_id' => urlencode('0'),
-            'category_id' => urlencode($test_cat_id),
-            'category_title' => urlencode('Test Category Title Edited 2'),
-            'category_description' => urlencode('Testing admin category Edited'),
-            'category_color' => urlencode('00FF00'),
-            'task' => urlencode('category'),
+        $_POST = array
+        (
+            'action' => 'edit',
+            'parent_id' => '0',
+            'category_id' => $category_id,
+            'category_title' => 'Test Category Title Edited 2',
+            'category_description' => 'Testing admin category Edited',
+            'category_color' => '00FF00',
+            'task' => 'category',
         );
         
         ob_start();
@@ -118,7 +120,7 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
             $contents->error->message);
 
 
-        return $test_cat_id;
+        return $category_id;
     }
 
     /**
@@ -126,13 +128,14 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
      * @test
      * @depends editCategory
      */
-    public function deleteCategory($cat_test_id)
+    public function deleteCategory($category_id)
     {
         
-        $_POST = array(
-            'action' => urlencode('delete'),
-            'category_id' => urlencode($cat_test_id),
-            'task' => urlencode('category'),
+        $_POST = array
+        (
+            'action' => 'delete',
+            'category_id' => $category_id,
+            'task' => 'category',
         );
         
         ob_start();
