@@ -96,7 +96,7 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
             $contents->error->message);
         
         //return the id of the test report for use in other test
-        $report_id = ORM::factory('report')->orderby('id', 
+        $report_id = ORM::factory('incident')->orderby('id', 
             'desc')->limit(1)->find();
 
         return $report_id;
