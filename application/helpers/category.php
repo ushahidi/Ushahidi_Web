@@ -112,6 +112,9 @@ class category_Core {
 		// To hold the category data
 		$category_data = array();
 		
+		// Database table prefix
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
 		// Database instance
 		$db = new Database();
 		
@@ -122,9 +125,9 @@ class category_Core {
 		}
 		
 		// Query to fetch the report totals for the parent categories
-		$sql = "SELECT c2.id,  COUNT(DISTINCT ic.incident_id)  report_count "
-			. "FROM category c, category c2, incident_category ic "
-			. "INNER JOIN incident i ON (ic.incident_id = i.id) "
+		$sql = "SELECT c2.id,  COUNT(DISTINCT ic.incident_id)  AS report_count "
+			. "FROM ".$table_prefix."category c, ".$table_prefix."category c2, ".$table_prefix."incident_category ic "
+			. "INNER ".$table_prefix."JOIN incident i ON (ic.incident_id = i.id) "
 			. "WHERE (ic.category_id = c.id OR ic.category_id = c2.id) "
 			. "AND c.parent_id = c2.id "
 			. "AND i.incident_active = 1 "
@@ -193,13 +196,16 @@ class category_Core {
 		// Check if the category is a top-level parent category
 		$temp_category = ($category->parent_id == 0)? $category : ORM::factory('category', $category->parent_id);
 		
-		if ($temp_category instanceof CategoryModel AND ! $temp_category->loaded)
+		if ($temp_category instanceof Category_Model AND ! $temp_category->loaded)
 			return FALSE;
 			
 		// Extend the array
 		if ( ! array_key_exists($temp_category->id, $array))
 		{
-			$report_count = property_exists($temp_category, 'report_count')? $temp_category->report_count : 0;
+			$report_count = property_exists($temp_category, 'report_count')
+				? $temp_category->report_count 
+				: $temp_category->incident_category->count();
+			
 			$array[$temp_category->id] = array(
 				'category_title' => $temp_category->category_title,
 				'parent_id' => $temp_category->parent_id,
