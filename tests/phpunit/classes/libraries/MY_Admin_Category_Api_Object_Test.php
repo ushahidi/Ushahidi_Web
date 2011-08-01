@@ -27,18 +27,6 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
     private $api_controller;
 
     /**
-     * Database object for raw SQL queries
-     * @var Database
-     */
-    private $db;
-
-    /**
-     * Database table prefix
-     * @var string
-     */
-    private $table_prefix;
-
-    /**
      * Initialize objects
      */
     protected function setUp()
@@ -59,7 +47,7 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
      */
     protected function tearDown()
     {
-        unset ($this->api_controller, $this->db, $this->table_prefix);
+        unset ($this->api_controller);
     }
 
     /**
@@ -68,83 +56,71 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
      */
     public function submitCategory()
     {
+		$category_id = 0;
 
-        $category_id = 0;
-        
-        $_POST = array
-        (
-            'action' => 'add',
-            'parent_id' => '0',
-            'category_title' => 'Test Category Title',
-            'category_description' => 'Testing admin category',
-            'category_color' => '00FF00',
-            'task' => 'category',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-        
-        //return the id of the test category for use in other test
-        $category_id = ORM::factory('category')->orderby('id', 
-            'desc')->limit(1)->find();
-        
-        return $category_id;
+		$_POST = array(
+			'action' => 'add',
+			'parent_id' => '0',
+			'category_title' => 'Test Category Title',
+			'category_description' => 'Testing admin category',
+			'category_color' => '00FF00',
+			'task' => 'category',
+		);
+
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
+
+		// Return the id of the test category for use in other test
+		$category_id = ORM::factory('category')->orderby('id',  'desc')->limit(1)->find();
+
+		return $category_id;
     }
 
     
-    /**
-     * Tests edit category
-     * @test
-     * @depends submitCategory
-     */
-    public function editCategory($category_id)
-    {
-        $_POST = array
-        (
-            'action' => 'edit',
-            'parent_id' => '0',
-            'category_id' => $category_id,
-            'category_title' => 'Test Category Title Edited 2',
-            'category_description' => 'Testing admin category Edited',
-            'category_color' => '00FF00',
-            'task' => 'category',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
+	/**
+	 * Tests edit category
+	 * @test
+	 * @depends submitCategory
+	 */
+	public function editCategory($category_id)
+	{
+		$_POST = array(
+			'action' => 'edit',
+			'parent_id' => '0',
+			'category_id' => $category_id,
+			'category_title' => 'Test Category Title Edited 2',
+			'category_description' => 'Testing admin category Edited',
+			'category_color' => '00FF00',
+			'task' => 'category',
+		);
 
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
 
-        return $category_id;
-    }
+		return $category_id;
+	}
 
-    /**
-     * Tests Category deletion
-     * @test
-     * @depends editCategory
-     */
-    public function deleteCategory($category_id)
-    {
-        
-        $_POST = array
-        (
-            'action' => 'delete',
-            'category_id' => $category_id,
-            'task' => 'category',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-        
+	/**
+	 * Tests Category deletion
+	 * @test
+	 * @depends editCategory
+	 */
+	public function deleteCategory($category_id)
+	{
+		$_POST = array(
+			'action' => 'delete',
+			'category_id' => $category_id,
+			'task' => 'category',
+		);
 
-    }
-
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
+	}
 }

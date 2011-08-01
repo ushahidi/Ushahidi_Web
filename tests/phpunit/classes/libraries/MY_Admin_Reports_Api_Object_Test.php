@@ -19,275 +19,239 @@
  */
 class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 
-    /**
-     * API controller object to run the tests
-     * @var Api_Controller
-     */
-    private $api_controller;
+	/**
+	 * API controller object to run the tests
+	 * @var Api_Controller
+	 */
+	private $api_controller;
+	
+	/**
+	 * Initialize objects
+	 */
+	protected function setUp()
+	{
+		$_SERVER = array_merge($_SERVER, array(
+			'REQUEST_METHOD' => 'POST',
+			'PHP_AUTH_USER' => 'admin',
+			'PHP_AUTH_PW' => 'admin',
+			'REQUEST_URI' => url::base().'api',
+		));
 
-    /**
-     * Database object for raw SQL queries
-     * @var Database
-     */
-    private $db;
+		// Instantiate the API controller
+		$this->api_controller = new Api_Controller();
+	}
 
-    /**
-     * Database table prefix
-     * @var string
-     */
-    private $table_prefix;
+	/**
+	 * Unset objects and variables aka Garbage collection
+	 */
+	protected function tearDown()
+	{
+		unset ($this->api_controller);
+	}
 
-    /**
-     * Initialize objects
-     */
-    protected function setUp()
-    {
-        $_SERVER = array_merge($_SERVER, array(
-            'REQUEST_METHOD' => 'POST',
-            'PHP_AUTH_USER' => 'admin',
-            'PHP_AUTH_PW' => 'admin',
-            'REQUEST_URI' => url::base().'api',
-        ));
+	/**
+	 * Test report submission
+	 * @test
+	 */
+	public function submitReport()
+	{
+		$report_id = 0;
 
-        // Instantiate the API controller
-        $this->api_controller = new Api_Controller();
-    }
+		$_POST = array(
+			'incident_title' => 'Test Sample Report Title',
+			'incident_description' => 'Test Sampe Report Description',
+			'incident_date' => '03/18/2011',
+			'incident_hour' => '10', 
+			'incident_minute' => '10',
+			'incident_ampm' => 'pm',
+			'incident_category' => '1,2,',
+			'latitude' => -1.28730007,
+			'longitude' => 36.82145118200820,
+			'location_name' => 'Accra',
+			'person_first' => 'Henry Addo',
+			'person_last' => 'Addo',
+			'person_email' => 'henry@ushahidi.com',
+			'incident_active' => 1,
+			'incident_verified' => 1,
+			'task' => 'report',
+		);
 
-    /**
-     * Unset objects and variables aka Garbage collection
-     */
-    protected function tearDown()
-    {
-        unset ($this->api_controller, $this->db, $this->table_prefix);
-    }
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
 
-    /**
-     * Test report submission
-     * @test
-     */
-    public function submitReport()
-    {
-        $report_id = 0;
+		// Return the id of the test report for use in other test
+		$report_id = ORM::factory('incident')->orderby('id', 'desc')->limit(1)->find();
 
-        $_POST = array
-        (
-            'incident_title' => 'Test Sample Report Title',
-            'incident_description' => 'Test Sampe Report Description',
-            'incident_date' => '03/18/2011',
-            'incident_hour' => '10', 
-            'incident_minute' => '10',
-            'incident_ampm' => 'pm',
-            'incident_category' => '1,2,',
-            'latitude' => -1.28730007,
-            'longitude' => 36.82145118200820,
-            'location_name' => 'Accra',
-            'person_first' => 'Henry Addo',
-            'person_last' => 'Addo',
-            'person_email' => 'henry@ushahidi.com',
-            'incident_active' => 1,
-            'incident_verified' => 1,
-            'task' => 'report',
-        );
+		return $report_id;
+	}
 
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-        
-        //return the id of the test report for use in other test
-        $report_id = ORM::factory('incident')->orderby('id', 
-            'desc')->limit(1)->find();
+	/**
+	 * Tests retrieval of unapproved reports
+	 * @test
+	 */
+	public function retrieveUnapprovedReports()
+	{
+		$_POST = array(
+			'by' => 'unapproved',
+			'task' => 'reports',
+		);
 
-        return $report_id;
-    }
-
-    /**
-     * Tests retrieval of unapproved reports
-     * @test
-     */
-    public function retrieveUnapprovedReports()
-    {
-        $_POST = array(
-            'by' => 'unapproved',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-
-    }
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
+	}
 
 
-    /**
-     * Test report approval.
-     * @test
-     * @depends submitReport
-     */
-    public function approveReport($report_id)
-    {
-        $_POST = array
-        (
-            'action' => 'approve',
-            'incident_id' => $report_id,
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
+	/**
+	 * Test report approval.
+	 * @test
+	 * @depends submitReport
+	 */
+	public function approveReport($report_id)
+	{
+		$_POST = array(
+			'action' => 'approve',
+			'incident_id' => $report_id,
+			'task' => 'reports',
+		);
 
-        return $report_id;
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
 
-    }
+		return $report_id;
+	}
 
-    /**
-     * Tests retrieval of approved reports
-     * @test
-     */
-    public function retrieveApproveReports()
-    {
+	/**
+	 * Tests retrieval of approved reports
+	 * @test
+	 */
+	public function retrieveApproveReports()
+	{
+		$_POST = array(
+			'by' => 'approved',
+			'task' => 'reports',
+		);
 
-        $_POST = array(
-            'by' => 'approved',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-    }
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
+	}
 
-    /**
-     * Tests retrieval of unverified reports
-     * @test
-     */
-    public function retrieveUnverifiedReports()
-    {
-        
-        $_POST = array(
-            'by' => 'unverified',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-        
-    }
+	/**
+	 * Tests retrieval of unverified reports
+	 * @test
+	 */
+	public function retrieveUnverifiedReports()
+	{
+		$_POST = array(
+			'by' => 'unverified',
+			'task' => 'reports',
+		);
 
-    /**
-     * Test report verification.
-     * @test 
-     * @depends approveReport
-     */
-    public function verifyReport($report_id)
-    {
-        $_POST = array
-        (
-            'action' => 'verify',
-            'incident_id' => $report_id,
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
+	}
 
-        return $report_id;
-    }
+	/**
+	 * Test report verification.
+	 * @test 
+	 * @depends approveReport
+	 */
+	public function verifyReport($report_id)
+	{
+		$_POST = array(
+			'action' => 'verify',
+			'incident_id' => $report_id,
+			'task' => 'reports',
+		);
 
-    /**
-     * Tests retrieval of verified reports
-     * @test
-     */
-    public function retrieveVerifiedReports()
-    {
-        
-        $_POST = array(
-            'by' => 'verified',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
-        
-    }     
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
+
+		return $report_id;
+	}
+
+	/**
+	 * Tests retrieval of verified reports
+	 * @test
+	 */
+	public function retrieveVerifiedReports()
+	{
+		$_POST = array(
+			'by' => 'verified',
+			'task' => 'reports',
+		);
+
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
+	}     
             
-    /**
-     * Test editing of report.
-     * @test 
-     * @depends verifyReport
-     */
-    public function editReport($report_id)
-    {
-        $_POST = array
-        (
-            'action' => 'edit',
-            'incident_id' => $report_id,
-            'incident_title' => 'Hello Ushahidi Edited',
-            'incident_description' => 'Description Edited',
-            'incident_date' => '03/18/2009',
-            'incident_hour' => '10', 
-            'incident_minute' => '10',
-            'incident_ampm' => 'pm',
-            'incident_category' => '1,2,',
-            'latitude' => -1.28730007,
-            'longitude' => 36.82145118200820,
-            'location_id'=> 2,
-            'location_name' => 'accra',
-            'person_first' => 'Henry Addo',
-            'person_last' => 'Addo',
-            'incident_active' => 1,
-            'incident_verified' => 1,
-            'person_email' => 'henry@ushahidi.com',
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
+	/**
+	 * Test editing of report.
+	 * @test 
+	 * @depends verifyReport
+	 */
+	public function editReport($report_id)
+	{
+		$_POST = array(
+			'action' => 'edit',
+			'incident_id' => $report_id,
+			'incident_title' => 'Hello Ushahidi Edited',
+			'incident_description' => 'Description Edited',
+			'incident_date' => '03/18/2009',
+			'incident_hour' => '10', 
+			'incident_minute' => '10',
+			'incident_ampm' => 'pm',
+			'incident_category' => '1,2,',
+			'latitude' => -1.28730007,
+			'longitude' => 36.82145118200820,
+			'location_id'=> 2,
+			'location_name' => 'accra',
+			'person_first' => 'Henry Addo',
+			'person_last' => 'Addo',
+			'incident_active' => 1,
+			'incident_verified' => 1,
+			'person_email' => 'henry@ushahidi.com',
+			'task' => 'reports',
+		);
 
-        return $report_id;
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
 
-    }
+		return $report_id;
+	}
 
-    /**
-     * Test report deletion.
-     * @test 
-     * @depends editReport
-     */
-    public function deleteReport($report_id)
-    {
-        $_POST = array
-        (
-            'action' => 'delete',
-            'incident_id' => $report_id,
-            'task' => 'reports',
-        );
-        
-        ob_start();
-        $this->api_controller->index();
-        $contents = json_decode(ob_get_clean());
-        $this->assertEquals(0, $contents->error->code,
-            $contents->error->message);
+	/**
+	 * Test report deletion.
+	 * @test 
+	 * @depends editReport
+	 */
+	public function deleteReport($report_id)
+	{
+		$_POST = array(
+			'action' => 'delete',
+			'incident_id' => $report_id,
+			'task' => 'reports',
+		);
 
-   }
+		ob_start();
+		$this->api_controller->index();
+		$contents = json_decode(ob_get_clean());
+		$this->assertEquals(0, $contents->error->code, $contents->error->message);
+	}
 
 }
