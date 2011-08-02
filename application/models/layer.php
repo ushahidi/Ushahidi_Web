@@ -37,8 +37,9 @@ class Layer_Model extends ORM
 				->add_rules('layer_name','required', 'length[3,80]')
 				->add_rules('layer_color','required', 'length[6,6]');
 		
+		
 		// Ensure at least a layer URL or layer file has been specified
-		if ( empty($array->layer_url) AND empty($array->layer_file->name) AND empty($array->layer_file_old))
+		if (empty($array->layer_url) AND empty($array->layer_file) AND empty($array->layer_file_old))
 		{
 			$array->add_error('layer_url', 'atleast');
 		}
@@ -50,7 +51,7 @@ class Layer_Model extends ORM
 		}
 		
 		// Check if both the layer URL and the layer file have been specified
-		if ( ! empty($array->layer_url) AND ( ! empty($array->layer_file_old) OR ! empty($array->layer_file->name)))
+		if ( ! empty($array->layer_url) AND ( ! empty($array->layer_file_old) OR ! empty($array->layer_file)))
 		{
 			$array->add_error('layer_url', 'both');
 		}

@@ -684,8 +684,10 @@ class Manage_Controller extends Admin_Controller
 			if ($post_data['action'] == 'a')
 			{
 				// Manually extract the primary layer data
-				$layer_data = arr::extract($post_data, 'layer_name', 'layer_color', 'layer_url', 'layer_file', 
-					'layer_file_old');
+				$layer_data = arr::extract($post_data, 'layer_name', 'layer_color', 'layer_url', 'layer_file_old');
+				
+				// Grab the layer file to be uploaded
+				$layer_data['layer_file'] = isset($post_data['layer_file']['name'])? $post_data['layer_file']['name'] : NULL;
 				
 				// Extract the layer file for upload validation
 				$other_data = arr::extract($post_data, 'layer_file');
