@@ -239,7 +239,7 @@ class category_Core {
 			$tree_html .= "<li".$category_class.">"
 							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$id."\">"
 							. "<span class=\"item-swatch\" style=\"background-color: #".$category['category_color']."\">&nbsp;</span>"
-							. "<span class=\"item-title\">".htmlspecialchars($category['category_title'])."</span>"
+							. "<span class=\"item-title\">".strip_tags($category['category_title'])."</span>"
 							. "<span class=\"item-count\">".$category['report_count']."</span>"
 							. "</a></li>";
 							
