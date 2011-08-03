@@ -141,8 +141,7 @@ class Categories_Api_Object extends Api_Object_Core {
 
         //find incidents
         $this->query = "SELECT id, parent_id, category_title, category_description, 
-        	category_color, category_title as title, category_description as description,
-        	category_color as color, category_position FROM `".$this->table_prefix."category` WHERE
+        	category_color, category_position FROM `".$this->table_prefix."category` WHERE
                 category_visible = 1 ORDER BY category_position ASC";
         
         $items = $this->db->query($this->query);
