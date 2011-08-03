@@ -454,6 +454,7 @@
 			
 			// Fetch the reports
 			fetchReports();
+			return false;
 			
 		});
 		
@@ -463,8 +464,11 @@
 			{
 				urlParameters["page"] = Number(pageNumber);
 				fetchReports();
+				return false;
 			}
 		});
+		
+		return false;
 	}
 	
 	/**
