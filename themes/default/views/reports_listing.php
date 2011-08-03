@@ -157,8 +157,8 @@
 					<td class="last">
 						<ul class="link-toggle lt-icons-only">
 							<?php //@todo Toggle the status of these links depending on the current page ?>
-							<li><a href="#" class="prev">Previous</a></li>
-							<li><a href="#" class="next">Next</a></li>
+							<li><a href="#" class="prev" id="page_<?php echo $previous_page; ?>"><?php echo Kohana::lang('ui_main.previous'); ?></a></li>
+							<li><a href="#" class="next" id="page_<?php echo $next_page; ?>"><?php echo Kohana::lang('ui_main.next'); ?></a></li>
 						</ul>
 					</td>
 				</tr>
