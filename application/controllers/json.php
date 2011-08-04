@@ -63,6 +63,12 @@ class Json_Controller extends Template_Controller
 		$category_id = (isset($_GET['c']) AND intval($_GET['c']) > 0)? intval($_GET['c']) : 0;
 		$incident_id = (isset($_GET['i']) AND intval($_GET['i']) > 0)? intval($_GET['i']) : 0;
 		
+		// Get the category colour
+		if (Category_Model::is_valid_category($category_id))
+		{
+			$color = ORM::factory('category', $category_id)->category_color;
+		}
+		
 		// Fetch the incidents
 		$markers = (isset($_GET['page']) AND intval($_GET['page']) > 0)? reports::fetch_incidents(TRUE) : reports::fetch_incidents();
 		
@@ -99,8 +105,9 @@ class Json_Controller extends Template_Controller
 			$encoded_title = json_encode($encoded_title);
 			$encoded_title = str_ireplace('"', '', $encoded_title);
 
-			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='".url::base()."reports/view/".$marker->incident_id."'>".$encoded_title)."</a>") . "\",";
-			$json_item .= "\"link\": \"".url::base()."reports/view/".$marker->incident_id."\", ";
+			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a "
+					. "href='".url::base()."reports/view/".$marker->incident_id."'>".$encoded_title)."</a>") . "\","
+					. "\"link\": \"".url::base()."reports/view/".$marker->incident_id."\", ";
 
 			$json_item .= (isset($category))
 				? "\"category\":[" . $category_id . "], "
