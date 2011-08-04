@@ -1315,7 +1315,7 @@ CREATE TABLE IF NOT EXISTS `checkin`
 `checkin_date` DATETIME NOT NULL,
 `checkin_auto` ENUM('0','1') DEFAULT '0',
 PRIMARY KEY (`id`)
-);
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 /**
 * Table structure for table `user_devices`
