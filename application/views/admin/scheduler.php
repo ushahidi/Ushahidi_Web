@@ -57,7 +57,7 @@
 				?>
 					<!-- green-box -->
 					<div class="green-box">
-						<h3><?php echo Kohana::lang('ui_main.feed_has_been');?> <?php echo $form_action; ?>!</h3>
+						<h3><?php echo Kohana::lang('ui_main.schedule');?> <?php echo $form_action; ?>!</h3>
 					</div>
 				<?php
 				}

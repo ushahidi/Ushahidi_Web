@@ -242,9 +242,8 @@ class customforms_Core {
 			// Validate for date
 			if ($field_param->field_type == 3 AND $field_response != "")
 			{
-				$myvalid = new Valid();
-				$myvalid->date_mmddyyyy($field_response);
-				if ( ! $myvalid->date_mmddyyyy($field_response))
+				$field_default = $field_param->field_default;
+				if ( ! valid::date_mmddyyyy($field_response))
 				{
 					$errors[$custom_name] = "The $custom_name field is not a valid date (MM/DD/YYYY)";
 				}

@@ -64,14 +64,22 @@ class Form_Field_Model extends ORM {
 			$array->add_rules('field_height', 'between[0,50]');
 		}
 
-		if(! empty($array->field_isdate))
+		// Check if it is a date field
+		if( ! empty($array->field_isdate))
 		{
 			$array->add_rules('field_isdate', 'between[0,1]');
 		}
 
-		if(! empty($array->field_default))
+		if( ! empty($array->field_default))
 		{
 			$array->add_rules('field_default', 'length[1,10000]');	
+		}
+
+		// If date field, and default value is not empty, add date validation rules
+		if ( ! empty($array->field_default) AND !empty($array->field_isdate))
+		{
+			$array->add_rules('field_default', array('valid', 'date_mmddyyyy'));
+			//$array->add_rules('field_default', array('valid', 'date'));
 		}
 
 		// Return
