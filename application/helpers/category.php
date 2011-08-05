@@ -127,7 +127,7 @@ class category_Core {
 		// Query to fetch the report totals for the parent categories
 		$sql = "SELECT c2.id,  COUNT(DISTINCT ic.incident_id)  AS report_count "
 			. "FROM ".$table_prefix."category c, ".$table_prefix."category c2, ".$table_prefix."incident_category ic "
-			. "INNER ".$table_prefix."JOIN incident i ON (ic.incident_id = i.id) "
+			. "INNER JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id) "
 			. "WHERE (ic.category_id = c.id OR ic.category_id = c2.id) "
 			. "AND c.parent_id = c2.id "
 			. "AND i.incident_active = 1 "
@@ -148,9 +148,6 @@ class category_Core {
 				$category_data[$category_total->id]['report_count'] = $category_total->report_count;
 			}
 		}
-		
-		// Get the table prefix
-		$table_prefix = Kohana::config('database.default.table_prefix');
 		
 		// Fetch the other categories
 		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, COUNT(c.id) report_count "
@@ -194,18 +191,25 @@ class category_Core {
 	private static function _extend_category_data(array & $array, $category)
 	{
 		// Check if the category is a top-level parent category
-		$temp_category = ($category->parent_id == 0)? $category : ORM::factory('category', $category->parent_id);
-		
+		$temp_category = ($category->parent_id == 0) ? $category : ORM::factory('category', $category->parent_id);
+
 		if ($temp_category instanceof Category_Model AND ! $temp_category->loaded)
 			return FALSE;
-			
+
 		// Extend the array
 		if ( ! array_key_exists($temp_category->id, $array))
 		{
-			$report_count = property_exists($temp_category, 'report_count')
-				? $temp_category->report_count 
-				: $temp_category->incident_category->count();
-			
+			$report_count = 0;
+			foreach($temp_category->incident_category as $incident_category){
+				if(Incident_Model::is_valid_incident($incident_category->incident_id, TRUE) == TRUE)
+				{
+					// Only if it's a valid incident, do we want to consider it in the report count
+					//   TODO: There must be a more efficient way to do this. is_valid_incident makes
+					//         a query to the db for every call. 
+					$report_count++;
+				}
+			}
+
 			$array[$temp_category->id] = array(
 				'category_title' => $temp_category->category_title,
 				'parent_id' => $temp_category->parent_id,
@@ -213,10 +217,10 @@ class category_Core {
 				'report_count' => $report_count,
 				'children' => array()
 			);
-			
+
 			return TRUE;
 		}
-		
+
 		return FALSE;
 	}
 	
