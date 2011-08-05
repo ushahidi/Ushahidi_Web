@@ -124,6 +124,12 @@ class category_Core {
 			self::_extend_category_data($category_data, $category);
 		}
 		
+		// NOTES: Emmanuel Kala - Aug 5, 2011
+		// Initialize the report totals for the parent categories just in case
+		// the deployment does not have sub-categories in which case the query
+		// below won't return a result
+		self::_init_parent_category_report_totals($category_data, $table_prefix);
+		
 		// Query to fetch the report totals for the parent categories
 		$sql = "SELECT c2.id,  COUNT(DISTINCT ic.incident_id)  AS report_count "
 			. "FROM ".$table_prefix."category c, ".$table_prefix."category c2, ".$table_prefix."incident_category ic "
@@ -199,17 +205,9 @@ class category_Core {
 		// Extend the array
 		if ( ! array_key_exists($temp_category->id, $array))
 		{
-			$report_count = 0;
-			foreach($temp_category->incident_category as $incident_category){
-				if(Incident_Model::is_valid_incident($incident_category->incident_id, TRUE) == TRUE)
-				{
-					// Only if it's a valid incident, do we want to consider it in the report count
-					//   TODO: There must be a more efficient way to do this. is_valid_incident makes
-					//         a query to the db for every call. 
-					$report_count++;
-				}
-			}
-
+			// Get the report count
+			$report_count = property_exists($temp_category, 'report_count')? $temp_category->report_count : 0;
+			
 			$array[$temp_category->id] = array(
 				'category_title' => $temp_category->category_title,
 				'parent_id' => $temp_category->parent_id,
@@ -252,5 +250,38 @@ class category_Core {
 		
 		// Return
 		return $tree_html;
+	}
+	
+	/**
+	 * Initializes the report totals for the parent categories
+	 *
+	 * @param array $category_data Array of the parent categories
+	 * @param string $table_prefix Database table prefix
+	 */
+	private static function _init_parent_category_report_totals(array & $category_data, $table_prefix)
+	{
+		// Query to fetch the report totals for the parent categories
+		$sql = "SELECT c.id, COUNT(DISTINCT ic.incident_id) AS report_count "
+			. "FROM ".$table_prefix."category c "
+			. "INNER JOIN ".$table_prefix." incident_category ic ON (ic.category_id = c.id) "
+			. "INNER JOIN ".$table_prefix." incident i ON (ic.incident_id = i.id) "
+			. "WHERE c.category_visible = 1 "
+			. "AND i.incident_active = 1 "
+			. "AND c.parent_id = 0";
+		
+		// Fetch the records
+		$result = Database::instance()->query($sql);
+		
+		// Set the report totals for each of the parent categorie
+		foreach ($result as $category)
+		{
+			if (array_key_exists($category->id, $category_data))
+			{
+				$category_data[$category->id]['report_count'] = $category->report_count;
+			}
+		}
+		
+		// Garbage collection
+		unset ($sql, $result);
 	}
 }
