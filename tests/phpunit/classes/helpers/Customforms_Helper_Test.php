@@ -56,7 +56,7 @@ class Customforms_Helper_Test extends PHPUnit_Framework_TestCase
 			)
 		));
 	}
-	
+
 	/**
 	 * Tests customforms::validate_custom_form_fields()
 	 *
