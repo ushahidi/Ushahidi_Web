@@ -118,7 +118,7 @@ class reports_Core {
 			$post->add_rules('location_id','numeric');
 			$post->add_rules('message_id','numeric');
 			$post->add_rules('incident_active','required', 'between[0,1]');
-			$post->add_rules('incident_verified','required', 'length[0,1]');
+			$post->add_rules('incident_verified','required', 'between[0,1]');
 			$post->add_rules('incident_source','numeric', 'length[1,1]');
 			$post->add_rules('incident_information','numeric', 'length[1,1]');
 			$post->add_rules('incident_zoom', 'numeric');
@@ -246,7 +246,7 @@ class reports_Core {
 		}
 		
 		// Verification status
-		if ( ! empty($post->incient_verified))
+		if ( ! empty($post->incident_verified))
 		{
 			$incident->incident_verified = $post->incident_verified;
 		}
