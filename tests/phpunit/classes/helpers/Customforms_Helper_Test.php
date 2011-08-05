@@ -29,11 +29,11 @@ class Customforms_Helper_Test extends PHPUnit_Framework_TestCase
 	}
 
 
-
+	/**
 	 * Data provider for testValidateCustomFormFields
 	 *
 	 * @dataProvider
-	 
+	 */
 	public function providerTestValidateCustomFormFields()
 	{
 		return array(array(
@@ -57,42 +57,6 @@ class Customforms_Helper_Test extends PHPUnit_Framework_TestCase
 		));
 	}
 	
-
-	/**
-	 * Data provider for testValidateCustomFormFields
-	 *
-	 *@dataProvider
-	 */
-	 /*
-	 public function providerTestValidateCustomFormFieldsDate()
-	 {
-		 return array(array(
-			 // Valid date field data
-			 array(
-				'custom_field' => array(
-					'id' => '2',
-					'field_name' => 'Test Default Date',
-					'field_type' => '3',
-					'field_default' => '07/20/2011'
-				)
-			),
-
-			 // Invalid date field data
-			 array(
-				'custom_field' => array(
-					'id' => '2',
-					'field_name' => 'Test Default Date',
-					'field_type' => '3',
-					'field_default' => 'Test Date'
-				)
-			 )
-		 
-		 
-		 ));
-		 
-	 }
-	 */
-
 	/**
 	 * Tests customforms::validate_custom_form_fields()
 	 *
@@ -118,7 +82,7 @@ class Customforms_Helper_Test extends PHPUnit_Framework_TestCase
 		$errors = customforms::validate_custom_form_fields($invalid_validator);
 
 		// Assert that the validation of the invalid data returns some errors
-		$this->assertEquals(TRUE, count($errors) > 0, "Some errors have been found: ".Kohana::debug($errors));
+		$this->assertEquals(TRUE, count($errors) > 0, "Expected to encounter errors. None found: ".count($errors));
 
 		// Garbage collection
 		unset ($valid_validator, $invalid_validator, $errors);

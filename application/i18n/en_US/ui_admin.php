@@ -239,6 +239,8 @@
 	'upload_reports' => 'Upload Reports',
 	'users' => 'Users',
 	'ushahidi' => 'Ushahidi',
+	'verified_unverified' => 'Verified/Unverified',
+	'verify_unverify' => 'Verify/Unverify',
 	'version' => 'Version',
 	'version_available' => ' is available for upgrade.',
 	'view_private' => 'Private Messages',
