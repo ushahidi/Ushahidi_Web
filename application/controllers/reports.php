@@ -159,11 +159,11 @@ class Reports_Controller extends Main_Controller {
 			foreach ($incident->category AS $category)
 			{
 				$ct = (string)$category->category_title;
-				if( ! isset($localized_categories[$ct]))
+				if ( ! isset($localized_categories[$ct]))
 				{
 					$translated_title = Category_Lang_Model::category_title($category->id, $locale);
 					$localized_categories[$ct] = $category->category_title;
-					if($translated_title)
+					if ($translated_title)
 					{
 						$localized_categories[$ct] = $translated_title;
 					}
@@ -235,7 +235,7 @@ class Reports_Controller extends Main_Controller {
 	/**
 	 * Submits a new report.
 	 */
-	public function submit($id = false, $saved = false)
+	public function submit($id = FALSE, $saved = FALSE)
 	{
 		$db = new Database();
 		
@@ -311,6 +311,9 @@ class Reports_Controller extends Main_Controller {
 				$incident = new Incident_Model();
 				reports::save_report($post, $incident, $location->id);
 
+				// STEP 2b: SAVE INCIDENT GEOMETRIES
+				reports::save_report_geometry($post, $incident);
+				
 				// STEP 3: SAVE CATEGORIES
 				reports::save_category($post, $incident);
 
@@ -943,87 +946,6 @@ class Reports_Controller extends Main_Controller {
 		{
 			return 0;
 		}
-	}
-
-	/**
-	 * Retrieve Custom Form Fields
-	 * @param bool|int $incident_id The unique incident_id of the original report
-	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
-	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
-	 * @param bool $data_only Whether or not to include just data
-	 */
-	private function _get_custom_form_fields($incident_id = FALSE, $form_id = 1, $data_only = FALSE)
-	{
-		$fields_array = array();
-
-		if ( ! $form_id)
-			$form_id = 1;
-
-		$custom_form = ORM::factory('form', $form_id)->orderby('field_position','asc');
-
-		foreach ($custom_form->form_field as $custom_formfield)
-		{
-			if ($data_only)
-			{
-				// Return Data Only
-				$fields_array[$custom_formfield->id] = '';
-
-				foreach ($custom_formfield->form_response as $form_response)
-				{
-					if ($form_response->incident_id == $incident_id)
-						$fields_array[$custom_formfield->id] = $form_response->form_response;
-				}
-			}
-			else
-			{
-				// Return Field Structure
-				$fields_array[$custom_formfield->id] = array(
-					'field_id' => $custom_formfield->id,
-					'field_name' => $custom_formfield->field_name,
-					'field_type' => $custom_formfield->field_type,
-					'field_required' => $custom_formfield->field_required,
-					'field_maxlength' => $custom_formfield->field_maxlength,
-					'field_height' => $custom_formfield->field_height,
-					'field_width' => $custom_formfield->field_width,
-					'field_isdate' => $custom_formfield->field_isdate,
-					'field_response' => ''
-					);
-			}
-		}
-
-		return $fields_array;
-	}
-
-
-	/**
-	 * Validate Custom Form Fields
-	 * @param array $custom_fields Array
-	 */
-	private function _validate_custom_form_fields($custom_fields = array())
-	{
-		$custom_fields_error = "";
-
-		foreach ($custom_fields as $field_id => $field_response)
-		{
-			// Get the parameters for this field
-			$field_param = ORM::factory('form_field', $field_id);
-
-			if ($field_param->loaded == true)
-			{
-				// Validate for required
-				if ($field_param->field_required == 1 AND $field_response == "")
-					return FALSE;
-
-				// Validate for date
-				if ($field_param->field_isdate == 1 AND $field_response != "")
-				{
-					$myvalid = new Valid();
-					return $myvalid->date_mmddyyyy($field_response);
-				}
-			}
-		}
-
-		return true;
 	}
 
 	/**

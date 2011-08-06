@@ -756,7 +756,7 @@ class Forms_Controller extends Admin_Controller {
 		$datatype_options = array(
 			'text' => Kohana::lang('ui_admin.field_datatype_text'),
 			'markup' => Kohana::lang('ui_admin.field_datatype_markup'),
-			'javascript' => Kohana::lang('ui_admin.field_datatype_javascript')
+			// 'javascript' => Kohana::lang('ui_admin.field_datatype_javascript')
 		);
 		$html .="<div class=\"forms_item\">"; 
 		$html .="<strong>" . Kohana::lang('ui_admin.field_datatype') . ":</strong><br />";

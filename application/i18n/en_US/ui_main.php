@@ -446,6 +446,7 @@
 	'sharing' => 'Sharing',
 	'show' => 'Show',
 	'show_all' => 'Show all',
+	'show_messages' => 'Show Messages',
 	'site' => 'Website',
 	'site_email_address' => 'site email address',
 	'site_url' => 'Site URL',
