@@ -1,8 +1,9 @@
 <?php
 	$lang = array(
 	'field_default' => array(
+		'default' => 'The default value you have provided for the field is invalid.',
 		'length' => 'The Field Name must be at least 3 and no more 
-				200 characters long.',
+				200 characters long.'
 	),
 	'field_height' => array(
 		'between' => 'Please enter a value 0 to 50 for the Field Height',
