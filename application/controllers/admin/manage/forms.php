@@ -301,10 +301,10 @@ class Forms_Controller extends Admin_Controller {
 						->orderby('field_position','desc')
 						->find();
 						
-					$field_postition = ($get_position->loaded)? $get_position->field_position + 1 : 1;
+					$field_position = ($get_position->loaded)? $get_position->field_position + 1 : 1;
 						
-					$field_form->field_position = $field_position;
-					$field_form->save($field_id);
+					$form_field->field_position = $field_position;
+					$form_field->save($field_id);
 				}
 
 				$field_add_status = "success";
