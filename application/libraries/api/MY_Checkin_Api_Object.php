@@ -455,7 +455,12 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$media_photo->save();
 		}
 		
-		return array("checkin_id" => $checkin_id->id, "user_id" => $user_id);
+		$return = array("checkin_id" => $checkin_id->id, "user_id" => $user_id);
+		
+		// Hook on successful checkin
+		Event::run('ushahidi_action.checkin_recorded', $checkin);
+		
+		return $return;
 		
 	}
 	

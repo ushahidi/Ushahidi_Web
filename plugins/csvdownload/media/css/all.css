@@ -1,0 +1,24 @@
+div.download_container{
+    width: 900px;
+    padding: 0 0 100px 0;
+    margin: 0 0 10px 20px;
+    float: left;
+    border-bottom: 2px solid #dcdcdc;
+}
+.bg{
+    width:940px;
+    background:#fff;
+    clear:both;
+    overflow:hidden;
+    padding-bottom:29px;
+}
+table.data_points{
+    width: 580px;
+    border-width: 3px 0 3px;
+    border-color: #669eb9;
+    border-style: solid;
+}  
+table.data_points td{
+		padding: 10px;
+		background-color: #f2f7fa;
+}
