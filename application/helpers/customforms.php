@@ -245,7 +245,7 @@ class customforms_Core {
 				$field_default = $field_param->field_default;
 				if ( ! valid::date_mmddyyyy($field_response))
 				{
-					$errors[$custom_name] = "The $custom_name field is not a valid date (MM/DD/YYYY)";
+					$errors[$custom_name] = "The value for $custom_name is not a valid date (MM/DD/YYYY)";
 				}
 			}
 

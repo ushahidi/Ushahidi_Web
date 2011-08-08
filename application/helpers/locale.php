@@ -180,7 +180,6 @@ class locale_Core
 			"tl" => "Wikang Tagalog, ᜏᜒᜃᜅ᜔ ᜆᜄᜎᜓᜄ᜔",
 			"tn" => "Setswana",
 			"to" => "faka Tonga",
-			"tq" => "tlhIngan Hol (Klingon)",
 			"tr" => "Türkçe",
 			"ts" => "Xitsonga",
 			"tt" => "татарча, tatarça, تاتارچا‎",
