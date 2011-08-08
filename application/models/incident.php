@@ -499,17 +499,4 @@ class Incident_Model extends ORM {
 			return FALSE;
 		}
 	}
-	
-	/**
-	 * Sets approval of an incident
-	 * @param int $incident_id
-	 * @param int $val Set to 1 or 0 for approved or not approved
-	 * @return bool
-	 */
-	public static function set_approve($incident_id,$val)
-	{
-		$incident = ORM::factory('incident',$incident_id);
-		$incident->incident_active = $val;
-		return $incident->save();
-	}
 }
