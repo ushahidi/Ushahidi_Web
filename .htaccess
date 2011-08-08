@@ -4,10 +4,10 @@
 	RewriteEngine On
 
 	# Installation directory
-	RewriteBase /ushahidi
+	RewriteBase /
 
 	# Protect application and system files from being viewed
-	RewriteRule ^(application|modules|system) - [F,L]
+	RewriteRule ^(application|modules|system|tests) - [F,L]
 
 	# Prevent schedulers from being accessed remotely
 	RewriteCond %{REMOTE_ADDR} !^127.0.0.1$
