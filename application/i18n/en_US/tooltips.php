@@ -1,6 +1,7 @@
 <?php
 	$lang = array(
 	'default_value' => 'Separate each value with a comma e.g value1, value2',
+	'dropdown_choices' => 'Separate each choice item with a comma e.g. Item 1, Item 2 etc',
 	'private_to' => 'Start typing to list members',
 	'private_subject' => 'Private message subject',
 	'private_message' => 'Private message',

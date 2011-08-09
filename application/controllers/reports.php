@@ -364,7 +364,7 @@ class Reports_Controller extends Main_Controller {
 
 		// Retrieve Custom Form Fields Structure
 		$this->template->content->custom_forms = new View('reports_submit_custom_forms');
-		$disp_custom_fields = customforms::get_custom_form_fields($id,$form['form_id'],false);
+		$disp_custom_fields = customforms::get_custom_form_fields($id,$form['form_id'], FALSE);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
 		$this->template->content->stroke_width_array = $this->_stroke_width_array();
 		$this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
@@ -691,12 +691,8 @@ class Reports_Controller extends Main_Controller {
 
 		// Initialize custom field array
 		$this->template->content->custom_forms = new View('reports_view_custom_forms');
-		$form_field_names = customforms::get_custom_form_fields($id,$incident->form_id,false, "view");
+		$form_field_names = customforms::get_custom_form_fields($id, $incident->form_id, FALSE, "view");
 		$this->template->content->custom_forms->form_field_names = $form_field_names;
-
-		// Retrieve Custom Form Fields Structure
-		$disp_custom_fields =customforms::get_custom_form_fields($id,$incident->form_id,true, "view");
-		$this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
 
 		// Are we allowed to submit comments?
 		$this->template->content->comments_form = "";
