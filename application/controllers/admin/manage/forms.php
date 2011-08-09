@@ -897,6 +897,12 @@ class Forms_Controller extends Admin_Controller {
 			$field_ispublic_submit = "0";
 		}
 		
+		// Prompt/label for the values
+		$values_prompt = (intval($type) == 7)? Kohana::lang('ui_admin.dropdown_choices') : Kohana::lang('ui_admin.field_choices');
+		
+		// Tooltip display value
+		$tooltip = (intval($type) == 7)? Kohana::lang('tooltips.dropdown_choices') : Kohana::lang('tooltips.default_value');
+		
 		$html = "<input type=\"hidden\" name=\"form_id\" id=\"form_id\" value=\"".$form_id."\">"
 			. "<input type=\"hidden\" name=\"field_id\" id=\"field_id\" value=\"".$field_id."\">"
 			. "<input type=\"hidden\" name=\"field_ispublic_visible\" id=\"field_id\" value=\"0\">"
@@ -907,8 +913,8 @@ class Forms_Controller extends Admin_Controller {
 			.		form::input('field_name', $field_name, ' class="text"')
 			. "</div>" 
 			. "<div class=\"forms_item\">" 
-			. "		<strong>".Kohana::lang('ui_admin.field_default').":<a href=\"#\" class=\"tooltip\""
-			. "		title=\"".Kohana::lang('tooltips.default_value')."\"></a><br />" 
+			. "		<strong>".$values_prompt.":<a href=\"#\" class=\"tooltip\""
+			. "		title=\"".$tooltip."\"></a><br />" 
 			.		form::textarea('field_default', $field_default, ' class="text"')
 			. "</div>" 
 			. "<div class=\"forms_item\">" 

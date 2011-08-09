@@ -157,12 +157,13 @@
 
 						$html .= "<span style=\"margin-right: 15px\">";
 						$html .= form::label('custom_field['.$field_id.']'," ".$option." ");
-						$html .= form::radio('custom_field['.$field_id.']',$option,$set_default, $id_name);
+						$html .= form::radio('custom_field['.$field_id.']',$option, $set_default, $id_name);
 						$html .= "</span>";
 					}
 					break;
 				case 6:
-					$multi_defaults = explode(',',$default);
+					$multi_defaults = !empty($field_property['field_response'])? explode(',', $field_property['field_response']) : NULL;
+					
 					$cnt = 0;
 					$html .= "<table border=\"0\">";
 					foreach($options as $option)
@@ -175,12 +176,18 @@
 						$html .= "<td>";
 						$set_default = FALSE;
 						
-						foreach($multi_defaults as $def)
+						if (!empty($multi_defaults))
 						{
-							$set_default = ($option == $def);
+							foreach($multi_defaults as $key => $def)
+							{
+								$set_default = (trim($option) == trim($def));
+								if ($set_default)
+									break;
+							}
 						}
+						
 						$html .= "<span style=\"margin-right: 15px\">";
-						$html .= form::checkbox("custom_field[".$field_id.'-'.$cnt.']',$option,$set_default,$id_name);
+						$html .= form::checkbox("custom_field[".$field_id.'-'.$cnt.']', $option, $set_default, $id_name);
 						$html .= form::label("custom_field[".$field_id.']'," ".$option);
 						$html .= "</span>";
 

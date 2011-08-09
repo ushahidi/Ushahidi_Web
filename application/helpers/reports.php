@@ -484,7 +484,7 @@ class reports_Core {
 	 */
 	public static function save_custom_fields($post, $incident)
 	{
-		if(isset($post->custom_field))
+		if (isset($post->custom_field))
 		{
 			foreach($post->custom_field as $key => $value)
 			{
