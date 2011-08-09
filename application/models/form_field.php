@@ -59,7 +59,7 @@ class Form_Field_Model extends ORM {
 		// Ensure that checkboxes and radio buttons have a default value
 		if ($array->field_type == 5 OR $array->field_type == 6 OR $array->field_type == 7)
 		{
-			$array->add_rules('field_default', 'required');
+			$array->add_rules('field_default', 'required', 'standard_text');
 		}
 				
 		// Check if field width and height have been specified	

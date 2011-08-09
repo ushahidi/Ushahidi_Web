@@ -256,9 +256,9 @@ class Forms_Controller extends Admin_Controller {
 			$form_field_data = arr::extract($_POST, 'form_id', 'field_type', 'field_name', 'field_default', 'field_required', 
 				'field_width', 'field_height', 'field_isdate', 'field_ispublic_visible', 'field_ispublic_submit');
 			
-			// Add a blank field position - This will be set in the model during validation
-			$form_field_data['field_position'] = '';
-
+			// Sanitize the default value (if provided)
+			$form_field_data['field_default'] = $this->input->xss_clean($form_field_data['field_default']);
+			
 			// Form_Field_Model instance
 			$form_field = Form_Field_Model::is_valid_form_field($_POST['field_id'])
 				? ORM::factory('form_field', $_POST['field_id'])
