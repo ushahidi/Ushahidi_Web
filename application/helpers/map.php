@@ -265,8 +265,8 @@ class map_Core {
 		$layer->active = FALSE;
 		$layer->name = 'virtualearth_street';
 		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Virtual Earth Street';
-		$layer->description = 'Virtual Earth (Bing) street tiles.';
+		$layer->title = 'Bing Street';
+		$layer->description = 'Bing Street Tiles.';
 		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
 		$layer->data = array(
 			'baselayer' => TRUE,
@@ -278,8 +278,8 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'virtualearth_satellite';
 		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Virtual Earth Satellite';
-		$layer->description = 'Virtual Earth (Bing) satellite tiles.';
+		$layer->title = 'Bing Satellite';
+		$layer->description = 'Bing Satellite Tiles.';
 		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
 		$layer->data = array(
 			'baselayer' => TRUE,
@@ -291,8 +291,8 @@ class map_Core {
 		$layer->active = TRUE;
 		$layer->name = 'virtualearth_hybrid';
 		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Virtual Earth Hybrid';
-		$layer->description = 'Virtual Earth (Bing) hybrid of streets and satellite tiles.';
+		$layer->title = 'Bing Hybrid';
+		$layer->description = 'Bing hybrid of streets and satellite tiles.';
 		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
 		$layer->data = array(
 			'baselayer' => TRUE,
