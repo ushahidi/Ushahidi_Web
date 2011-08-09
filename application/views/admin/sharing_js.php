@@ -16,7 +16,7 @@
  */
 ?>
 // Sharing JS
-function fillFields(id, sharing_url, sharing_color, sharing_limits, sharing_type)
+function fillFields(id, sharing_url, sharing_name, sharing_color)
 {
 	$("#sharing_id").attr("value", unescape(id));
 	$("#sharing_name").attr("value", unescape(sharing_name));
