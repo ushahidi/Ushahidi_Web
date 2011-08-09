@@ -10,7 +10,7 @@
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
 <tr>
-				<td rowspan="1" colspan="3">Admin Blocks Show</td></tr>
+				<td rowspan="1" colspan="3">Admin Sharing Add</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -54,7 +54,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Blocks</td>
+	<td>link=Sharing</td>
 	<td></td>
 </tr>
 <tr>
@@ -63,14 +63,34 @@
 	<td></td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>sharing_name</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>sharing_url</td>
+	<td>http://ushahidi.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>sharing_color</td>
+	<td>780099</td>
+</tr>
+<tr>
 	<td>clickAndWait</td>
-	<td>link=Hidden</td>
+	<td>css=input.save-rep-btn</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyConfirmation</td>
-	<td>Are you sure you want to SHOW?</td>
+	<td>verifyElementPresent</td>
+	<td>css=div.green-box</td>
 	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td></td>
+	<td>CREATED/EDITED!</td>
 </tr>
 </tbody></table>
 </body>
