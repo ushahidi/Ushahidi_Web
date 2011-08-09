@@ -56,6 +56,12 @@ class Form_Field_Model extends ORM {
 		// Get the field type
 		$array->field_isdate = ($array->field_type == 3)? 1 : 0;
 		
+		// Ensure that checkboxes and radio buttons have a default value
+		if ($array->field_type == 5 OR $array->field_type == 6)
+		{
+			$array->add_rules('field_default', 'required');
+		}
+				
 		// Check if field width and height have been specified	
 		if ( ! empty($array->field_width))
 		{
