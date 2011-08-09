@@ -52,7 +52,7 @@ class Form_Field_Model extends ORM {
 					->add_rules('field_required','required', 'between[0,1]')
 					->add_rules('field_ispublic_visible','required', 'numeric')
 					->add_rules('field_ispublic_submit','required', 'numeric');
-		
+	
 		// Get the field type
 		$array->field_isdate = ($array->field_type == 3)? 1 : 0;
 		

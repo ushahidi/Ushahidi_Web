@@ -256,6 +256,9 @@ class Forms_Controller extends Admin_Controller {
 			$form_field_data = arr::extract($_POST, 'form_id', 'field_type', 'field_name', 'field_default', 'field_required', 
 				'field_width', 'field_height', 'field_isdate', 'field_ispublic_visible', 'field_ispublic_submit');
 			
+			// Add a blank field position - This will be set in the model during validation
+			$form_field_data['field_position'] = '';
+
 			// Form_Field_Model instance
 			$form_field = Form_Field_Model::is_valid_form_field($_POST['field_id'])
 				? ORM::factory('form_field', $_POST['field_id'])
@@ -294,17 +297,16 @@ class Forms_Controller extends Admin_Controller {
 					}
 				}
 
-				// Assign Position
-				if ($new_field)
+				// If a new field, calculate the field position
+				if (empty($new_field))
 				{
-					$get_position = ORM::factory('form_field')
-						->orderby('field_position','desc')
-						->find();
-						
-					$field_position = ($get_position->loaded)? $get_position->field_position + 1 : 1;
-						
+					// Calculate the field position
+					$field_position = ORM::factory('form_field')
+										->where(array('form_id' => $form_field->form_id, 'id != ' => $field_id))
+										->count_all() + 1;
+					
 					$form_field->field_position = $field_position;
-					$form_field->save($field_id);
+					$form_field->save();
 				}
 
 				$field_add_status = "success";
@@ -389,48 +391,37 @@ class Forms_Controller extends Admin_Controller {
 		
 		if ($field_position == 'u' OR $field_position == 'd')
 		{
-			$total_fields = ORM::factory('form_field')->count_all();
 			
 			// Load This Field
 			$field = ORM::factory('form_field', $field_id);
 			if ($field->loaded == TRUE)
 			{
-				// Get Current Position
+				// Get the total number of fields for the form
+				$total_fields = ORM::factory('form_field')->where('form_id', $field->form_id)->count_all();
+				
+				// Get current position
 			    $current_position = $field->field_position;
 				
-				if ($field_position == 'u' AND $current_position != 1)
-				{ // Are we moving UP?
-					$ahead = ORM::factory('form_field')
-						->where('form_id',$form_id)
-						->where('field_position < '.$current_position)
-						->orderby('field_position','desc')
-						->find();
-					if ($ahead->loaded == true)
-					{
-						$ahead_position = $ahead->field_position;
-						$ahead->field_position = $current_position;
-						$ahead->save();
-						
-						$field->field_position = $ahead_position;
-						$field->save();
-					}
+				if ($field_position == 'u' AND $current_position > 1)
+				{
+					// Move down the fields whose position value is greater
+					// than that of the selected field 
+					$sql = "UPDATE %sform_field SET field_position = field_position + 1 WHERE id != %d";
+					$this->db->query(sprintf($sql, $this->table_prefix, $field_id));
+
+					// Move the selected field upwards
+					$field->field_position = $current_position - 1;
+					$field->save();
 				}
 				elseif ($field_position == 'd' AND $current_position != $total_fields)
-				{ // Are we moving DOWN?
-					$behind = ORM::factory('form_field')
-						->where('form_id',$form_id)
-						->where('field_position >'.$current_position)
-						->orderby('field_position','asc')
-						->find();
-					if ($behind->loaded == true)
-					{
-						$behind_position = $behind->field_position;
-						$behind->field_position = $current_position;
-						$behind->save();
-						
-						$field->field_position = $behind_position;
-						$field->save();
-					}
+				{ 
+					// Move all other form fields upwards
+					$sql = "UPDATE %sform_field SET field_position = field_position - 1 WHERE id != %d";
+					$this->db->query(sprintf($sql, $this->table_prefix, $field_id));
+					
+					// Move the selected field downwards - increase its field position in the database
+					$field->field_position = $current_position + 1;
+					$field->save();
 				}
 			}
 			
