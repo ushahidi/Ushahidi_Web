@@ -60,7 +60,7 @@ class Sharing_Controller extends Admin_Controller
 			$filter = "1=1";
 		}	
 		
-		// setup and initialize form field names
+		// Setup and initialize form field names
 		$form = array
 	    (
 			'sharing_name' => '',
@@ -68,7 +68,7 @@ class Sharing_Controller extends Admin_Controller
 			'sharing_color' => '',
 			'sharing_active' => ''
 	    );
-		//  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		//  Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
@@ -83,7 +83,8 @@ class Sharing_Controller extends Admin_Controller
 			 //  Add some filters
 	        $post->pre_filter('trim', TRUE);
 	
-			if ($post->action == 'a')		// Add Action
+			// Add Action
+			if ($post->action == 'a')		
 			{
 				// Add some rules, the input field, followed by a list of checks, carried out in order
 				$post->add_rules('sharing_name','required', 'length[3,150]');
@@ -97,31 +98,42 @@ class Sharing_Controller extends Admin_Controller
 				$sharing_id = $post->sharing_id;
 				
 				$sharing = new Sharing_Model($sharing_id);
+				
+				// Delete Action
 				if ( $post->action == 'd' )
-				{ // Delete Action
+				{ 
 					$sharing->delete( $sharing_id );
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
-				else if($post->action == 'v')
-				{ // Active/Inactive Action
-					if ($sharing->loaded)
+				
+				// Hide Action
+				else if ($post->action=='h')
+				{
+					if($sharing->loaded)
 					{
-						if ($sharing->sharing_active == 1)
-						{
-							$sharing->sharing_active = 0;
-						}
-						else
-						{ // Make Share Active
-							$sharing->sharing_active = 1;
-						}
+						$sharing->sharing_active = 0;
 						$sharing->save();
 						$form_saved = TRUE;
-						$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+						$form_action = strtoupper(Kohana::lang('ui_main.hidden'));
+					}	
+				}
+				
+				// Show Action
+				else if ($post->action == 'v')
+				{ 
+					if ($sharing->loaded)
+					{
+						$sharing->sharing_active = 1;
+						$sharing->save();
+						$form_saved = TRUE;
+						$form_action = strtoupper(Kohana::lang('ui_admin.shown'));
 					}
 				}
+				
+				// Save Action
 				else
-				{ // Save Action
+				{ 
 					$sharing->sharing_name = $post->sharing_name;
 					$sharing->sharing_url = $this->_clean_urls($post->sharing_url);
 					$sharing->sharing_color = $post->sharing_color;
@@ -134,10 +146,10 @@ class Sharing_Controller extends Admin_Controller
 			}
 			else
 			{
-				// repopulate the form fields
+				// Repopulate the form fields
 	            $form = arr::overwrite($form, $post->as_array());
 	
-               // populate the error fields, if any
+               // Populate the error fields, if any
                 $errors = arr::overwrite($errors, $post->errors('sharing'));
                 $form_error = TRUE;
 			}

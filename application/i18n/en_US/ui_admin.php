@@ -217,6 +217,7 @@
 	'settings' => 'Settings',
 	'showing_page' => 'Showing page',
 	'showing_results' => 'Showing results',
+	'shown'=>'shown',
 	'special_category' => 'Special Category',
 	'special_category_explanation' => 'This is a special category that will not show up on the report submission form for users submitting reports. This is used in conjunction with the "Trusted Reporters" feature.',
 	'statistics' => 'Statistics',
