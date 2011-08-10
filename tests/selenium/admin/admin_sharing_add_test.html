@@ -4,13 +4,13 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>Admin Forms List</title>
+<title>Admin Sharing Add</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
 <tr>
-				<td rowspan="1" colspan="3">Admin Forms List</td></tr>
+				<td rowspan="1" colspan="3">Admin Sharing Add</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
@@ -54,13 +54,43 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Forms</td>
+	<td>link=Sharing</td>
 	<td></td>
 </tr>
 <tr>
 	<td>verifyElementPresent</td>
 	<td>css=div.table-holder</td>
 	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>sharing_name</td>
+	<td>Test</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>sharing_url</td>
+	<td>http://ushahidi.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>sharing_color</td>
+	<td>780099</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input.save-rep-btn</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyElementPresent</td>
+	<td>css=div.green-box</td>
+	<td></td>
+</tr>
+<tr>
+	<td>verifyTextPresent</td>
+	<td></td>
+	<td>CREATED/EDITED!</td>
 </tr>
 </tbody></table>
 </body>

@@ -52,14 +52,14 @@ class Form_Field_Model extends ORM {
 					->add_rules('field_required','required', 'between[0,1]')
 					->add_rules('field_ispublic_visible','required', 'numeric')
 					->add_rules('field_ispublic_submit','required', 'numeric');
-		
+	
 		// Get the field type
 		$array->field_isdate = ($array->field_type == 3)? 1 : 0;
 		
 		// Ensure that checkboxes and radio buttons have a default value
-		if ($array->field_type == 5 OR $array->field_type == 6)
+		if ($array->field_type == 5 OR $array->field_type == 6 OR $array->field_type == 7)
 		{
-			$array->add_rules('field_default', 'required');
+			$array->add_rules('field_default', 'required', 'standard_text');
 		}
 				
 		// Check if field width and height have been specified	

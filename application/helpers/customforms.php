@@ -34,31 +34,47 @@ class customforms_Core {
 		if (!$form_id)
 			$form_id = 1;
 		
+		// Validation
+		if (!Form_Model::is_valid_form($form_id))
+		{
+			return $fields_array;
+		}
+		
+		// Database table prefix
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
 		//NOTE will probably need to add a user_level variable for non-web based requests
 		$user_level = self::get_user_max_auth();
+
+		// Get the predicates for the public state
+		$public_state = ($action == "view") ? '<='.$user_level : ' <= '.$user_level;
+			
+		// Query to fetch the form fields and their responses
+		$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff WHERE 1=1 ";
 		
-		// Get the public state predicate
-		$public_state = ($action == "view")
-			? array('field_ispublic_visible <=' => $user_level)
-			: array('field_ispublic_submit <=' => $user_level);
+		// Check if the provided incident exists
+		if (Incident_Model::is_valid_incident($incident_id))
+		{
+			// Overwrite the previous query
+			$sql = "SELECT ff.*, fr.form_response "
+				. "FROM ".$table_prefix."form_field ff "
+				. "RIGHT JOIN ".$table_prefix."form_response fr ON (fr.form_field_id = ff.id) "
+				. "WHERE fr.incident_id = ".$incident_id." ";
+		}
 		
-		// Get the custom forms
-		$custom_form = ORM::factory('form', $form_id)->where($public_state)->orderby('field_position','asc');
+		$sql .= "AND ff.form_id = ".$form_id." "
+			. "AND ff.field_ispublic_visible ".$public_state." "
+			. "ORDER BY ff.field_position ASC";
 		
-		foreach ($custom_form->form_field as $custom_formfield)
+		// Execute the SQL to fetch the custom form fields
+		$form_fields = Database::instance()->query($sql);
+		
+		foreach ($form_fields as $custom_formfield)
 		{
 			if ($data_only)
 			{
 				// Return Data Only
-				$fields_array[$custom_formfield->id] = '';
-
-				foreach ($custom_formfield->form_response as $form_response)
-				{
-					if ($form_response->incident_id == $incident_id)
-					{
-						$fields_array[$custom_formfield->id] = $form_response->form_response;
-					}
-				}
+				$fields_array[$custom_formfield->id] = $custom_formfield->form_response;
 			}
 			else
 			{
@@ -75,11 +91,15 @@ class customforms_Core {
 					'field_isdate' => $custom_formfield->field_isdate,
 					'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
 					'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
-					'field_response' => ''
+					'field_response' => $custom_formfield->form_response
 					);
 			}
 		}
-
+		
+		// Garbage collection
+		unset ($form_fields);
+		
+		// Return
 		return $fields_array;
 	}
 
@@ -181,6 +201,7 @@ class customforms_Core {
 		}
 	
 		$post->custom_field = $custom_fields;
+		// Kohana::log('debug', Kohana::debug($custom_fields));
 
 		foreach ($post->custom_field  as $field_id => $field_response)
 		{
