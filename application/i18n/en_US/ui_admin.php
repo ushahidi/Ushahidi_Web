@@ -218,6 +218,8 @@
 	'searching_for' => 'searching for',
 	'select_field_type' => '--- Select A Field Type ---',
 	'select_item' => 'Please select an item',
+	'select_trigger_before_response' => 'You must select a Trigger before you can select a Response.',
+	'select_trigger_before_qualifiers' => 'You must select a Trigger before you can define Qualifiers.',
 	'sender' => 'Sender',
 	'sent_from_website' => 'This message was sent from your website at ',
 	'server_time' => 'Server Time',

@@ -152,6 +152,7 @@ $(document).ready(function() {
 
 	function show_response(){
 		$('#action_form_response').slideDown();
+		hide_trigger_select_messages();
 	}
 	
 	function build_response_select(trigger){
@@ -160,13 +161,25 @@ $(document).ready(function() {
 			$('#action_response').append('<option value="'+response_key+'">'+response_options[response_key]+'</option>');
 		});
 	}
+	
+	function hide_trigger_select_messages(){
+		$('#trigger_first_response').hide();
+		$('#trigger_first_qualifiers').hide();
+	}
+	
+	function show_trigger_select_messages(){
+		$('#trigger_first_response').show();
+		$('#trigger_first_qualifiers').show();
+	}
 
 });
 </script>
+
 			<div class="bg">
 				<h2>
 					<?php admin::manage_subtabs("actions"); ?>
 				</h2>
+				<div style="width:100%;background-color:#FFD8D9;padding:4px 0px;"><img src="<?php echo url::file_loc('img'); ?>media/img/experimental.png" alt="<?php echo Kohana::lang('ui_admin.experimental');?>" style="position:relative;float:left;padding-left:250px;padding-right:5px;"/>This is an experimental feature. The Ushahidi and Crowdmap Teams cannot be <br/>responsible for any mishaps, bugs or quirks that show up when using Actions.</div>
 				<?php
 				if ($form_error) {
 				?>
@@ -207,7 +220,8 @@ $(document).ready(function() {
 										<th class="col-1" style="width:125px;"><?php echo Kohana::lang('ui_admin.triggers'); ?></th>
 										<th class="col-2" style="width:275px;"><?php echo Kohana::lang('ui_admin.qualifiers');?></th>
 										<th class="col-3" style="width:125px;"><?php echo Kohana::lang('ui_admin.response');?></th>
-										<th class="col-4" style="width:375px;"><?php echo Kohana::lang('ui_admin.actions');?></th>
+										<th class="col-4" style="width:275px;"><?php echo Kohana::lang('ui_admin.actions');?></th>
+										<th class="col-5" style="width:100px;"><?php echo Kohana::lang('ui_main.delete');?></th>
 									</tr>
 								</thead>
 								<tfoot>
@@ -284,17 +298,20 @@ $(document).ready(function() {
 										
 										?>
 										<tr>
-											<td class="col-1" style="font-weight:bold;">
+											<td class="col-1" style="width:125px;font-weight:bold;background-color:green;">
 												<?php echo $trigger_options[$trigger]; ?>
 											</td>
-											<td class="col-2">
+											<td class="col-2" style="width:275px;background-color:yellow">
 												<?php echo $qualifier_string; ?>
 											</td>
-											<td class="col-3">
+											<td class="col-3" style="width:125px;background-color:blue">
 												<?php echo $response_options[$response]; ?>
 											</td>
-											<td class="col-4">
+											<td class="col-4" style="width:275px;background-color:orange">
 												<?php echo $response_string; ?>
+											</td>
+											<td class="col-5" style="width:100px;background-color:pink">
+												Delete
 											</td>
 										</tr>
 										<?php
@@ -362,9 +379,11 @@ $(document).ready(function() {
 
 						<div style="clear:both"></div>
 
-						<div id="actions_qualifier_section">
+						<div id="actions_qualifier_section" style="padding-top:10px;">
 
 							<h3><?php echo Kohana::lang('ui_admin.qualifiers'); ?></h3>
+							
+							<div class="tab_form_item" id="trigger_first_qualifiers"><?php echo Kohana::lang('ui_admin.select_trigger_before_qualifiers'); ?></div>
 
 							<div class="tab_form_item" id="action_form_user">
 								<strong><?php echo Kohana::lang('ui_admin.user');?>:</strong><br />
@@ -386,9 +405,11 @@ $(document).ready(function() {
 
 						<div style="clear:both"></div>
 
-						<div id="actions_response_section">
+						<div id="actions_response_section" style="padding-top:10px;">
 
 							<h3><?php echo Kohana::lang('ui_admin.response'); ?></h3>
+							
+							<div class="tab_form_item" id="trigger_first_response"><?php echo Kohana::lang('ui_admin.select_trigger_before_response'); ?></div>
 
 							<div class="tab_form_item" id="action_form_response">
 								<strong><?php echo Kohana::lang('ui_admin.response');?>:</strong><br />
