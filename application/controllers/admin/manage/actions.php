@@ -94,7 +94,7 @@ class Actions_Controller extends Admin_Controller
 			// Since our form is dynamic, we need to set validation dynamically
 			foreach($expected_fileds as $field)
 			{
-				$this->_form_field_rules($field,&$post);
+				$this->_form_field_rules($field,$post);
 			}				
 
 			if( $post->validate() )

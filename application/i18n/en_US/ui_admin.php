@@ -225,6 +225,7 @@
 	'select_trigger_before_response' => 'You must select a Trigger before you can select a Response.',
 	'select_trigger_before_qualifiers' => 'You must select a Trigger before you can define Qualifiers.',
 	'sender' => 'Sender',
+	'send_to' => 'Send To',
 	'sent_from_website' => 'This message was sent from your website at ',
 	'server_time' => 'Server Time',
 	'settings' => 'Settings',
