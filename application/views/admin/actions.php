@@ -220,7 +220,7 @@ $(document).ready(function() {
 										<th class="col-2" style="width:275px;"><?php echo Kohana::lang('ui_admin.qualifiers');?></th>
 										<th class="col-3" style="width:125px;"><?php echo Kohana::lang('ui_admin.response');?></th>
 										<th class="col-4" style="width:275px;text-align:left;"><?php echo Kohana::lang('ui_admin.actions');?></th>
-										<th class="col-5" style="width:100px;"><?php echo Kohana::lang('ui_main.delete');?></th>
+										<th class="col-5" style="width:100px;"><?php echo Kohana::lang('ui_admin.state');?></th>
 									</tr>
 								</thead>
 								<tfoot>
