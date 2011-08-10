@@ -54,7 +54,7 @@ class actioner {
 		$this->data = Event::$data;
 
 		// Grab all action triggers that involve this fired action
-		$actions = $this->db->from('actions')->where('action','report_add')->get();
+		$actions = $this->db->from('actions')->where(array('action' => 'report_add', 'active' => 1))->get();
 
 		// Get out of here as fast as possible if there are no actions.
 		if($actions->count() <= 0) return false;
@@ -115,7 +115,7 @@ class actioner {
 		$this->data = Event::$data;
 		
 		// Grab all action triggers that involve this fired action
-		$actions = $this->db->from('actions')->where('action','checkin_recorded')->get();
+		$actions = $this->db->from('actions')->where(array('action' => 'checkin_recorded', 'active' => 1))->get();
 
 		// Get out of here as fast as possible if there are no actions.
 		if($actions->count() <= 0) return false;

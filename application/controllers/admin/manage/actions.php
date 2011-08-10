@@ -125,6 +125,7 @@ class Actions_Controller extends Admin_Controller
 				$action->qualifiers = $qualifiers;
 				$action->response = $post->action_response;
 				$action->response_vars = $response_vars;
+				$action->active = 1;
 				$action->save();
 				
 			}else{
@@ -170,6 +171,30 @@ class Actions_Controller extends Admin_Controller
         $this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
 		$this->template->content->errors = $errors;
+	}
+	
+	function changestate(){
+		if ($_POST)
+		{
+			$post = Validation::factory($_POST);
+			
+			// Trim all of the fields to get rid of errant spaces
+			$post->pre_filter('trim', TRUE);
+			$post->add_rules('action_id','required', 'digit');
+			$post->add_rules('action_switch_to','required', 'digit');
+			
+			if( $post->validate())
+			{
+				$action = ORM::factory('actions',$post->action_id);
+				$action->active = $post->action_switch_to;
+				$action->save();
+			}
+		}
+		
+		// This controller doesn't display anything so send the user back
+
+		url::redirect(url::site().'admin/manage/actions');
+		
 	}
 	
 	public function _form_field_rules($field,&$post){

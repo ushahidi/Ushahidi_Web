@@ -209,10 +209,9 @@ $(document).ready(function() {
 				?>
 				<!-- report-table -->
 				<div class="report-form">
-					<?php echo form::open(NULL,array('id' => 'sharingListing',
-					 	'name' => 'sharingListing')); ?>
-						<input type="hidden" name="action" id="action" value="">
-						<input type="hidden" name="sharing_id" id="sharing_id_action" value="">
+					<?php echo form::open('/admin/manage/actions/changestate',array('id' => 'actionListing', 'name' => 'actionListing')); ?>
+						<input type="hidden" name="action_id" id="action_id" value="">
+						<input type="hidden" name="action_switch_to" id="action_switch_to" value="">
 						<div class="table-holder">
 							<table class="table">
 								<thead>
@@ -220,13 +219,13 @@ $(document).ready(function() {
 										<th class="col-1" style="width:125px;"><?php echo Kohana::lang('ui_admin.triggers'); ?></th>
 										<th class="col-2" style="width:275px;"><?php echo Kohana::lang('ui_admin.qualifiers');?></th>
 										<th class="col-3" style="width:125px;"><?php echo Kohana::lang('ui_admin.response');?></th>
-										<th class="col-4" style="width:275px;"><?php echo Kohana::lang('ui_admin.actions');?></th>
+										<th class="col-4" style="width:275px;text-align:left;"><?php echo Kohana::lang('ui_admin.actions');?></th>
 										<th class="col-5" style="width:100px;"><?php echo Kohana::lang('ui_main.delete');?></th>
 									</tr>
 								</thead>
 								<tfoot>
 									<tr class="foot">
-										<td colspan="4">
+										<td colspan="5">
 											Pagination used to go here.
 										</td>
 									</tr>
@@ -237,8 +236,8 @@ $(document).ready(function() {
 									{
 									?>
 										<tr>
-											<td colspan="4" class="col">
-												<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
+											<td colspan="5" class="col">
+												<h3><?php echo Kohana::lang('ui_main.no_results'); ?></h3>
 											</td>
 										</tr>
 									<?php
@@ -251,6 +250,7 @@ $(document).ready(function() {
 										$qualifiers = unserialize($action->qualifiers);
 										$response = $action->response;
 										$response_vars = unserialize($action->response_vars);
+										$active = $action->active;
 										
 										$qualifier_string = '';
 										foreach($qualifiers as $qkey => $qval){
@@ -293,25 +293,42 @@ $(document).ready(function() {
 										
 										$response_string ='';
 										foreach($response_vars as $rkey => $rval){
-											$response_string .= '<strong>'.$rkey.'</strong>: '.$rval.'<br/>';
+											
+											$display_val = $rval;
+											if(is_array($rval))
+											{
+												$display_val = implode(',',$rval);
+											}
+											
+											$response_string .= '<strong>'.$rkey.'</strong>: '.$display_val.'<br/>';
 										}
 										
 										?>
 										<tr>
-											<td class="col-1" style="width:125px;font-weight:bold;background-color:green;">
+											<td class="col-1" style="width:125px;font-weight:bold;">
 												<?php echo $trigger_options[$trigger]; ?>
 											</td>
-											<td class="col-2" style="width:275px;background-color:yellow">
+											<td class="col-2" style="width:275px;">
 												<?php echo $qualifier_string; ?>
 											</td>
-											<td class="col-3" style="width:125px;background-color:blue">
+											<td class="col-3" style="width:125px;">
 												<?php echo $response_options[$response]; ?>
 											</td>
-											<td class="col-4" style="width:275px;background-color:orange">
+											<td class="col-4" style="width:275px;border-right:0px;">
 												<?php echo $response_string; ?>
 											</td>
-											<td class="col-5" style="width:100px;background-color:pink">
-												Delete
+											<td class="col" style="width:100px;border-left:0px;">
+												
+												
+												<?php if($active) {?>
+													<?php echo Kohana::lang('ui_admin.currently_active'); ?><br/><a href="javascript:actionsAction('0','DEACTIVATE',<?php echo rawurlencode($action_id);?>)" class="status_yes"><?php echo Kohana::lang('ui_main.deactivate'); ?></a>
+												<?php } else {?>
+													<?php echo Kohana::lang('ui_admin.currently_inactive'); ?><br/><a href="javascript:actionsAction('1','ACTIVATE',<?php echo rawurlencode($action_id);?>)" class="status_no"><?php echo Kohana::lang('ui_main.activate'); ?></a>
+												<?php } ?>
+												
+												
+												
+												
 											</td>
 										</tr>
 										<?php

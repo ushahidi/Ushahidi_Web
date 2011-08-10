@@ -53,6 +53,8 @@
 	'create_report' => 'Create a Report',
 	'critical_upgrade' => 'Critical Upgrade',
 	'csv' => 'CSV',
+	'currently_active' => 'Currently Active',
+	'currently_inactive' => 'Currently Inactive',
 	'daily' => 'Daily',
 	'dashboard' => 'Dashboard',
 	'database' => 'database',

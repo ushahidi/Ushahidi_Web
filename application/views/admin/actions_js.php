@@ -393,16 +393,13 @@ function show_map() {
 }
 
 // Ajax Submission
-function schedulerAction ( action, confirmAction, id )
+function actionsAction ( action, confirmAction, id )
 {
 	var statusMessage;
 	var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 	if (answer){
-		// Set Category ID
-		$("#scheduler_id_action").attr("value", id);
-		// Set Submit Type
-		$("#action").attr("value", action);		
-		// Submit Form
-		$("#schedulerListing").submit();
+		$("#action_id").attr("value", id);
+		$("#action_switch_to").attr("value", action);
+		$("#actionListing").submit();
 	}
 }
