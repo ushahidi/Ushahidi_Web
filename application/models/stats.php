@@ -17,6 +17,7 @@
 
 class Stats_Model extends ORM
 {
+	static $time_out = 1;
 
 	/*
 	*
@@ -80,7 +81,7 @@ class Stats_Model extends ORM
 
 			$curl_handle = curl_init();
 			curl_setopt($curl_handle,CURLOPT_URL,$url);
-			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
+			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,self::$time_out); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
 			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); // Set cURL to store data in variable instead of print
 			$buffer = curl_exec($curl_handle);
 			curl_close($curl_handle);
@@ -441,7 +442,7 @@ class Stats_Model extends ORM
 
 		// Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
 
-		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15);
+		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,self::$time_out);
 
 		// Set curl to store data in variable instead of print
 
