@@ -21,6 +21,13 @@ $config['site_protocol'] = 'http';
 $config['index_page'] = 'index.php';
 
 /**
+ * Whether or not you want to have the auto upgrader enabled.
+ * TRUE will ping Ushahidi.com for the latest version.
+ * FALSE will require you to check manually and do upgrades by hand.
+ */
+$config['enable_auto_upgrader'] = TRUE;
+
+/**
  * Fake file extension that will be added to all generated URLs. Example: .html
  */
 $config['url_suffix'] = '';
