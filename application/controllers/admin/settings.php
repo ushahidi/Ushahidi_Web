@@ -38,6 +38,7 @@ class Settings_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/site');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
+		$this->template->js = new View('admin/site_js');
 
 		// setup and initialize form field names
 		$form = array

@@ -54,6 +54,7 @@
 					</div>
 					<!-- column -->		
 					<div class="sms_holder">
+						<div id="need_to_upgrade" style="display:none;"></div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_name"); ?>"><?php echo Kohana::lang('settings.site.name');?></a></h4>
 							<?php print form::input('site_name', $form['site_name'], ' class="text long2"'); ?>

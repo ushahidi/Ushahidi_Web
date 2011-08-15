@@ -282,6 +282,28 @@ class Upgrade_Controller extends Admin_Controller {
 		}
 	}
 	
+	public function check_current_version()
+	{
+		//This is an AJAX call, so none of this fancy templating, just render the data
+		$this->template = "";
+		$this->auto_render = FALSE;
+		$view = View::factory('admin/current_version');
+				
+		
+		$upgrade = new Upgrade;
+		
+		//fetch latest release of ushahidi
+		$this->release = $upgrade->_fetch_core_release();		
+		
+		if(!empty($this->release) )
+        {
+		    $view->version = $this->_get_release_version();
+            $view->critical = $this->release->critical;        
+        }
+     
+        $view->render(TRUE);
+	}
+	
 	/**
 	 * Execute SQL statement to upgrade the necessary tables.
 	 *
@@ -533,6 +555,8 @@ class Upgrade_Controller extends Admin_Controller {
 			return "";
 		}
 	}
+	
+	
 	
 	/**
 	 * Checks version sequence parts

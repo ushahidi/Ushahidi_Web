@@ -442,7 +442,7 @@ class Stats_Model extends ORM
 
 		// Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
 
-		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,self::$time_out);
+		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT, 15);
 
 		// Set curl to store data in variable instead of print
 

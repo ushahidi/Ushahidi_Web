@@ -77,8 +77,7 @@ class Admin_Controller extends Template_Controller
 		// Load database
 		$this->db = new Database();
 
-		$upgrade = new Upgrade;
-
+		
 		$this->auth = new Auth();
 		$this->session = Session::instance();
 		$this->auth->auto_login();
@@ -92,15 +91,7 @@ class Admin_Controller extends Template_Controller
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
-		//fetch latest release of ushahidi
-		$this->release = $upgrade->_fetch_core_release();
-        
-        if( ! empty($this->release) )
-        {
-		    $this->template->version = $this->_get_release_version();
-            $this->template->critical = $this->release->critical;
-        }
-		
+				
 		// Get the no. of items to display setting
 		$this->items_per_page = (int) Kohana::config('settings.items_per_page_admin');
 		
@@ -161,28 +152,7 @@ class Admin_Controller extends Template_Controller
 		}
 	}
 	
-    /**
-     * Fetches the latest ushahidi release version number
-     *
-     * @return int or string
-     */
-    private function _get_release_version()
-    {
-        
-        $release_version = $this->release->version;
-		
-        $version_ushahidi = Kohana::config('settings.ushahidi_version');
-		
-        if ($this->_new_or_not($release_version,$version_ushahidi))
-        {
-			return $release_version;
-		} 
-        else 
-        {
-			return "";
-		}
 
-    }
     
     /**
      * Checks version sequence parts
