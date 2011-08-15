@@ -1,5 +1,19 @@
 <?php
 	$lang = array(
+	'actions' => array(
+		'add_to_category' => 'This adds the report to additional categories. If you select Category 1 here and the report already has Category 2 attached to it, the report will then have both Category 1 and Category 2.',
+		'category' => 'If you would like to activate triggers only when a certain category is being used, you can set that here. This will allow a trigger to be activated if only one of the categories is used. For instace, if you select Category 1 and Category 2 here and a report is submitted using Category 2 and Category 3, it will pass the test.',
+		'email_body' => 'Body of the email that will be sent.',
+		'email_subject' => 'Subject of email that will be sent.',
+		'keywords' => 'You can choose to leave this blank if you do not want to check against keywords. If you add words here, you will need to separate them with a comma (,). For example, if you want to activate a trigger when someone mentions "love" or "peace" in their message, you will want to add "love, peace" in the keywords box.',
+		'location' => 'You can either select anywhere or a specific location. If you select a specific location, you will be asked to draw a box around the area that qualifies an action. For example, if you want this trigger to be activated when someone submits a report in Brazil, you will select "specific area" and then draw the box around Brazil. You can make these boxes as small or as large as you would like. You can also draw multiple boxes.',
+		'on_specific_count' => 'This qualifier will activate the trigger on the N-th count either for the entire collective user base or for each individual user.',
+		'response' => 'If all of the qualifiers above are passed, the trigger will initiate a response. This can range from approving a report to emailing a user. Select the response here to activate additional options for the specific responses.',
+		'send_to' => 'If you select "Triggering User", the email will be sent to the user who performed the action. If you select the radio button next to the input box, you will be able to enter a custom email address. This is useful if you are setting up triggers to notify people when certain parts of the map are seeing reports, check ins or some other activity.',
+		'trigger' => 'The trigger is the core component of setting up your Action Triggers. This is where you determine if you would like something to happen when someone submits a report, performs a check in, etc. You will be able to filter responses to these actions after selecting one.',
+		'user' => 'The user can be anyone or a specific user. If you would only like specific users to activate a trigger, you will want to select them here. Otherwise, you will want to leave this as "anyone" since most triggers are set up for all users interacting with the system',
+		'verify' => 'Marks a report as verified or not.'
+	),
 	'default_value' => 'Separate each value with a comma e.g value1, value2',
 	'dropdown_choices' => 'Separate each choice item with a comma e.g. Item 1, Item 2 etc',
 	'private_to' => 'Start typing to list members',

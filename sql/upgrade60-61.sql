@@ -7,5 +7,5 @@ CREATE TABLE `actions` (
 	`active` TINYINT NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-UPDATE `settings` SET `db_version` = '60' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '61' WHERE `id`=1 LIMIT 1;
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;

@@ -22,13 +22,13 @@ class Incident_Model extends ORM {
 	protected $has_many = array('category' => 'incident_category', 'media', 'verify', 'comment',
 		'rating', 'alert' => 'alert_sent', 'incident_lang', 'form_response','cluster' => 'cluster_incident',
 		'geometry');
-	
+
 	/**
 	 * One-to-one relationship definition
 	 * @var array
-	 */	
+	 */
 	protected $has_one = array('location','incident_person','user','message','twitter','form');
-	
+
 	/**
 	 * Many-to-one relationship definition
 	 * @var array
@@ -46,7 +46,7 @@ class Incident_Model extends ORM {
 	 * @var bool
 	 */
 	protected $reload_on_wakeup   = FALSE;
-	
+
 	/**
 	 * Gets a list of all visible categories
 	 * @todo Move this to the category model
@@ -109,7 +109,7 @@ class Incident_Model extends ORM {
 			return strtotime($report->incident_date);
 		}
 	}
-	
+
 	/**
 	 * Get the latest report date
 	 * @return string
@@ -170,7 +170,7 @@ class Incident_Model extends ORM {
 		}
 
 		$date_filter = ($start_date) ? ' AND incident_date >= "' . $start_date . '"' : "";
-		
+
 		if ($end_date)
 		{
 			$date_filter .= ' AND incident_date <= "' . $end_date . '"';
@@ -244,19 +244,19 @@ class Incident_Model extends ORM {
 	{
 		// Table Prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
-		
+
 		// Database instance
 		$db = new Database();
-		
+
 		// Filter by User
 		$user_id = (int) $user_id;
 		$u_sql = ($user_id)? " AND user_id = ".$user_id." " : "";
-		
+
 		// Query to generate the report count
 		$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, '
 			. 'YEAR(incident_date) as year '
 			. 'FROM '.$table_prefix.'incident ';
-		
+
 		// Check if the range has been specified and is non-zero then add predicates to the query
 		if ($range != NULL AND intval($range) > 0)
 		{
@@ -266,13 +266,13 @@ class Incident_Model extends ORM {
 		{
 			$sql .= 'WHERE 1=1 ';
 		}
-		
+
 		// Group and order the records
 		$sql .= $u_sql.'GROUP BY date ORDER BY incident_date ASC';
-		
+
 		$query = $db->query($sql);
 		$result = $query->result_array(FALSE);
-		
+
 		$array = array();
 		foreach ($result AS $row)
 		{
@@ -299,7 +299,7 @@ class Incident_Model extends ORM {
 		}
 		return $array;
 	}
-	
+
 	/**
 	 * Checks if a specified incident id is numeric and exists in the database
 	 *
@@ -314,7 +314,7 @@ class Incident_Model extends ORM {
 			? ORM::factory('incident')->where($where)->find(intval($incident_id))->loaded
 			: FALSE;
 	}
-	
+
 	/**
 	 * Gets the reports that match the conditions specified in the $where parameter
 	 * The conditions must relate to columns in the incident, location, incident_category
@@ -330,7 +330,7 @@ class Incident_Model extends ORM {
 	{
 		// Get the table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
-		
+
 		// To store radius parameters
 		$radius = array();
 		$having_clause = "";
@@ -338,36 +338,36 @@ class Incident_Model extends ORM {
 		{
 			// Grab the radius parameter
 			$radius = $where['radius'];
-			
+
 			// Delete radius parameter from the list of predicates
 			unset ($where['radius']);
 		}
-		
+
 		// Query
 		$sql = 'SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, i.incident_mode, i.incident_active, '
 			. 'i.incident_verified, i.location_id, l.location_name, l.latitude, l.longitude ';
-		
+
 		// Check if all the parameters exist
-		if (count($radius) > 0 AND array_key_exists('latitude', $radius) AND array_key_exists('longitude', $radius) 
+		if (count($radius) > 0 AND array_key_exists('latitude', $radius) AND array_key_exists('longitude', $radius)
 			AND array_key_exists('distance', $radius))
 		{
 			// Calculate the distance of each point from the starting point
 			$sql .= ", ((ACOS(SIN(%s * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS(%s * PI() / 180) * "
 				. "	COS(l.`latitude` * PI() / 180) * COS((%s - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance ";
-			
+
 			$sql = sprintf($sql, $radius['latitude'], $radius['latitude'], $radius['longitude']);
-			
+
 			// Set the "HAVING" clause
 			$having_clause = "HAVING distance <= ".intval($radius['distance'])." ";
 		}
-		
+
 		$sql .=  'FROM '.$table_prefix.'incident i '
 			. 'INNER JOIN '.$table_prefix.'location l ON (i.location_id = l.id) '
 			. 'INNER JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
 			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) '
 			. 'WHERE i.incident_active = 1 ';
 			// . 'AND c.category_visible = 1 ';
-		
+
 		// Check for the additional conditions for the query
 		if ( ! empty($where) AND count($where) > 0)
 		{
@@ -376,10 +376,10 @@ class Incident_Model extends ORM {
 				$sql .= 'AND '.$predicate.' ';
 			}
 		}
-		
+
 		// Add the having clause
 		$sql .= $having_clause;
-		
+
 		// Check for the order field and sort parameters
 		if ( ! empty($order_field) AND ! empty($sort) AND (strtoupper($sort) == 'ASC' OR strtoupper($sort) == 'DESC'))
 		{
@@ -389,7 +389,7 @@ class Incident_Model extends ORM {
 		{
 			$sql .= 'ORDER BY i.incident_date DESC ';
 		}
-		
+
 		// Check if the record limit has been specified
 		if ( ! empty($limit) AND is_int($limit) AND intval($limit) > 0)
 		{
@@ -399,15 +399,15 @@ class Incident_Model extends ORM {
 		{
 			$sql .= 'LIMIT '.$limit->sql_offset.', '.$limit->items_per_page;
 		}
-		
+
 		// Kohana::log('debug', $sql);
 		// Database instance for the query
 		$db = new Database();
-		
+
 		// Return
 		return $db->query($sql);
 	}
-	
+
 	/**
 	 * Gets the comments for an incident
 	 * @param int $incident_id Database ID of the incident
@@ -422,7 +422,7 @@ class Incident_Model extends ORM {
 				'comment_active' => '1',
 				'comment_spam' => '0'
 			);
-			
+
 			// Fetch the comments
 			return ORM::factory('comment')
 					->where($where)
@@ -434,7 +434,7 @@ class Incident_Model extends ORM {
 			return FALSE;
 		}
 	}
-	
+
 	/**
 	 * Given an incident, gets the list of incidents within a specified radius
 	 *
@@ -449,15 +449,15 @@ class Incident_Model extends ORM {
 		{
 			// Get the table prefix
 			$table_prefix = Kohana::config('database.default.table_prefix');
-			
+
 			// Get the location object and extract the latitude and longitude
 			$location = self::factory('incident', $incident_id)->location;
 			$latitude = $location->latitude;
 			$longitude = $location->longitude;
-			
+
 			// Garbage collection
 			unset ($location);
-			
+
 			// Query to fetch the neighbour
 			$sql = "SELECT DISTINCT i.*, l.`latitude`, l.`longitude`, l.location_name, "
 				. "((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * "
@@ -468,13 +468,13 @@ class Incident_Model extends ORM {
 				. "INNER JOIN `".$table_prefix."category` AS c ON (ic.`category_id` = c.`id`) "
 				. "WHERE i.incident_active = 1 "
 				. "AND i.id <> ".$incident_id." ";
-			
+
 			// Check if the distance has been specified
 			if (intval($distance) > 0)
 			{
 				$sql .= "HAVING distance <= ".intval($distance)." ";
 			}
-			
+
 			// If the order by distance parameter is TRUE
 			if ($order_by_distance)
 			{
@@ -484,13 +484,13 @@ class Incident_Model extends ORM {
 			{
 				$sql .= "ORDER BY i.`incident_date` DESC ";
 			}
-			
+
 			// Has the no. of neigbours been specified
 			if (intval($num_neighbours) > 0)
 			{
 				$sql .= "LIMIT ".intval($num_neighbours);
 			}
-			
+
 			// Fetch records and return
 			return Database::instance()->query($sql);
 		}
@@ -499,7 +499,7 @@ class Incident_Model extends ORM {
 			return FALSE;
 		}
 	}
-	
+
 	/**
 	 * Sets approval of an incident
 	 * @param int $incident_id
@@ -510,6 +510,19 @@ class Incident_Model extends ORM {
 	{
 		$incident = ORM::factory('incident',$incident_id);
 		$incident->incident_active = $val;
+		return $incident->save();
+	}
+
+	/**
+	 * Sets incident as verified or not
+	 * @param int $incident_id
+	 * @param int $val Set to 1 or 0 for verified or not verified
+	 * @return bool
+	 */
+	public static function set_verification($incident_id,$val)
+	{
+		$incident = ORM::factory('incident',$incident_id);
+		$incident->incident_verified = $val;
 		return $incident->save();
 	}
 }

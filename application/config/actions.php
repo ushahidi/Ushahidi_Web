@@ -23,13 +23,13 @@ $config['trigger_options'] = array
 
 // This is a list of the advanced option areas for the qualifiers
 
-$config['advanced_option_areas'] = array('user','location','keyword');
+$config['advanced_option_areas'] = array('user','location','keyword','category','on_specific_count');
 
 // This shows which advanced options are relevant to the triggers
 
 $config['trigger_advanced_options'] = array(
-	'report_add' => array('user','location','keyword'),
-	'checkin_recorded' => array('user','location','keyword')
+	'report_add' => array('user','location','keyword','category','on_specific_count'),
+	'checkin_recorded' => array('user','location','keyword','on_specific_count')
 );
 
 // ----- RESPONSES -----
@@ -38,23 +38,25 @@ $config['trigger_advanced_options'] = array(
 
 $config['response_options'] = array(
 	'email' => 'Email',
-	'approve_report' => 'Approve Report'
+	'approve_report' => 'Approve Report',
+	'log_it' => 'Log it'
 );
 
 // This is a list of the advanced option areas for the qualifiers
 
-$config['response_advanced_option_areas'] = array('email_send_address','email_subject','email_body','add_category');
+$config['response_advanced_option_areas'] = array('email_send_address','email_subject','email_body','add_category','verify');
 
 // Andanced response options
 
 $config['response_advanced_options'] = array(
 	'email' => array('email_send_address','email_subject','email_body'),
-	'approve_report' => array('add_category') 
+	'approve_report' => array('add_category','verify'),
+	'log_it' =>array()
 );
 
 // Allowed responses for triggere
 
 $config['trigger_allowed_responses'] = array(
-	'report_add' => array('email','approve_report'),
-	'checkin_recorded' => array('email')
+	'report_add' => array('email','approve_report','log_it'),
+	'checkin_recorded' => array('email','log_it')
 );
