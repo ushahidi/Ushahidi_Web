@@ -119,7 +119,6 @@ class actioner {
 			// Qapla! Begin response phase since we passed all of the qualifier tests
 			$this->__perform_response($response,$response_vars);
 		}
-		die();
 	}
 
 	/**
