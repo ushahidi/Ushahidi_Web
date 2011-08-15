@@ -30,4 +30,17 @@ jQuery(document).ready(function() {
 	    buttonImage: "<?php echo url::file_loc('img'); ?>media/img/icon-calendar.gif", 
 	    buttonImageOnly: true 
 	});
+	
+	
+	
+	<?php if (Router::$controller == 'dashboard') {?>
+		//check if we need to upgrade this instance of Ushahidi
+		//if we're on the dashbboard, check for a new version
+		jQuery.get("<?php echo url::base() . 'admin/upgrade/check_current_version' ?>", function(data){
+				jQuery('#need_to_upgrade').html(data);
+				jQuery('#need_to_upgrade').removeAttr("style");
+			});
+	<?php }?>
+	
+	
 });

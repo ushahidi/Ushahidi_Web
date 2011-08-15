@@ -121,6 +121,7 @@
 				<div class="column-1">
 					<!-- box -->
 					<div class="box">
+						<div id="need_to_upgrade" style="display:none;"></div>
 						<h3><?php echo Kohana::lang('ui_main.quick_stats');?></h3>
 						<ul class="nav-list">
 							<li>
