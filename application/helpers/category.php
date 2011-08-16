@@ -267,7 +267,8 @@ class category_Core {
 			. "INNER JOIN ".$table_prefix." incident i ON (ic.incident_id = i.id) "
 			. "WHERE c.category_visible = 1 "
 			. "AND i.incident_active = 1 "
-			. "AND c.parent_id = 0";
+			. "AND c.parent_id = 0 "
+			. "GROUP BY c.id";
 		
 		// Fetch the records
 		$result = Database::instance()->query($sql);
