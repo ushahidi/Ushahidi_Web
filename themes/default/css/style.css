@@ -2359,3 +2359,12 @@ ul.filter-list li a { display:block; position:relative; overflow:auto; padding:3
 .right-cap	{ -webkit-border-top-right-radius: 0px; -webkit-border-bottom-right-radius: 0px; -moz-border-radius-topright: 0px; -moz-border-radius-bottomright: 0px; border-top-right-radius: 0px; border-bottom-right-radius: 0px; }
 .bottom-cap	{ -webkit-border-top-left-radius: 0px; -webkit-border-top-right-radius: 0px; -moz-border-radius-topright: 0px; -moz-border-radius-topleft: 0px; border-top-right-radius: 0px; border-top-left-radius: 0px; }
 .left-cap		{ -webkit-border-top-left-radius: 0px; -webkit-border-bottom-left-radius: 0px; -moz-border-radius-topleft: 0px; -moz-border-radius-bottomleft: 0px; border-top-left-radius: 0px; border-bottom-left-radius: 0px; }
+
+.badge {
+	float:left;
+	width:100px;
+	text-align:center;
+	background-color:#E9E9E9;
+	padding:5px;
+	margin:0px 5px;
+}

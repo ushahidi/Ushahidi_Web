@@ -93,7 +93,7 @@
 							<?php print form::input('category_description', $form['category_description'], ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							<strong>Color:</strong><br />
+							<strong><?php echo Kohana::lang('ui_admin.color');?>:</strong><br />
 							<?php print form::input('category_color', $form['category_color'], ' class="text"'); ?>
 							<script type="text/javascript" charset="utf-8">
 								$(document).ready(function() {

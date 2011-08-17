@@ -39,24 +39,26 @@ $config['trigger_advanced_options'] = array(
 $config['response_options'] = array(
 	'email' => 'Email',
 	'approve_report' => 'Approve Report',
-	'log_it' => 'Log it'
+	'log_it' => 'Log it',
+	'assign_badge' => 'Assign Badge'
 );
 
 // This is a list of the advanced option areas for the qualifiers
 
-$config['response_advanced_option_areas'] = array('email_send_address','email_subject','email_body','add_category','verify');
+$config['response_advanced_option_areas'] = array('email_send_address','email_subject','email_body','add_category','verify','badge');
 
 // Andanced response options
 
 $config['response_advanced_options'] = array(
 	'email' => array('email_send_address','email_subject','email_body'),
 	'approve_report' => array('add_category','verify'),
-	'log_it' =>array()
+	'log_it' => array(),
+	'assign_badge' => array('badge')
 );
 
-// Allowed responses for triggere
+// Allowed responses for trigger
 
 $config['trigger_allowed_responses'] = array(
-	'report_add' => array('email','approve_report','log_it'),
-	'checkin_recorded' => array('email','log_it')
+	'report_add' => array('email','approve_report','log_it','assign_badge'),
+	'checkin_recorded' => array('email','log_it','assign_badge')
 );
