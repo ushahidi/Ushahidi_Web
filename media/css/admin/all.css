@@ -2265,3 +2265,14 @@ input[type="button"]:hover */ {
   border: 1px solid #888;
   border-top: 1px solid #aaa;
   border-left: 1px solid #aaa; }
+  
+.badge {
+	float:left;
+	width:100px;
+	text-align:center;
+	background-color:#E9E9E9;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	padding:5px;
+	margin:0px 5px;
+}

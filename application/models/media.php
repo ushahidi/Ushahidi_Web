@@ -16,7 +16,7 @@
 
 class Media_Model extends ORM
 {
-	protected $belongs_to = array('location', 'incident', 'message');
+	protected $belongs_to = array('location', 'incident', 'message', 'badge');
 	
 	// Database table name
 	protected $table_name = 'media';

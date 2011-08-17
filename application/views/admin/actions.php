@@ -145,6 +145,7 @@ $(document).ready(function() {
 		$('#action_form_email_send_address').slideUp();
 		$('#action_form_add_category').slideUp();
 		$('#action_form_verify').slideUp();
+		$('#action_form_badge').slideUp();
 	}
 	hide_response_advanced_options();
 
@@ -496,6 +497,13 @@ $(document).ready(function() {
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.verify")); ?>"><?php echo Kohana::lang('ui_admin.mark_as');?>:</a></h4>
 								<?php echo form::radio('action_verify', '0', TRUE).' '.Kohana::lang('ui_main.unverified'); ?><br/>
 								<?php echo form::radio('action_verify', '1', FALSE).' '.Kohana::lang('ui_main.verified'); ?>
+							</div>
+							
+							<div class="tab_form_item" id="action_form_badge">
+								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.assign_badge")); ?>"><?php echo Kohana::lang('ui_admin.assign_badge'); ?>:</a></h4>
+								<?php
+									echo form::dropdown('action_badge', $badges, 'standard');
+								?>
 							</div>
 
 						</div>

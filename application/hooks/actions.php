@@ -348,6 +348,8 @@ class actioner {
 				// This response is special in that it does nothing and allows
 				//   a line to be written to the action log
 				return TRUE;
+			case 'assign_badge':
+				return $this->__response_assign_badge($response_vars);
 			default:
 				return FALSE;
 		}
@@ -401,6 +403,22 @@ class actioner {
 		// Set Verification
 		Incident_Model::set_verification($incident_id,$verify);
 
+		return TRUE;
+	}
+
+	/**
+	 * Assigns a badge to the triggering user
+	 */
+	public function __response_assign_badge($vars)
+	{
+		$count = ORM::factory('badge_user')->where(array('badge_id' => (int)$vars['badge'], 'user_id' => (int)$this->data->user_id))->count_all();
+		if($count == 0)
+		{
+			$badge_user = new Badge_User_Model();
+			$badge_user->badge_id = $vars['badge']; // badge id
+			$badge_user->user_id = $this->data->user_id;
+			$badge_user->save();
+		}
 		return TRUE;
 	}
 

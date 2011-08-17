@@ -21,12 +21,32 @@ class User_Model extends Auth_User_Model {
 
 	/**
 	 * Gets the email address of a user
-	 * @return array
+	 * @return string
 	 */
 	public static function get_email($user_id)
 	{
 		$user = ORM::factory('user')->find($user_id);
 		return $user->email;
+	}
+
+	/**
+	 * Returns data for a user based on username
+	 * @return object
+	 */
+	public static function get_user_by_username($username)
+	{
+		$user = ORM::factory('user')->where(array('username'=>$username))->find();
+		return $user;
+	}
+
+	/**
+	 * Returns all users with public profiles
+	 * @return object
+	 */
+	public static function get_public_users()
+	{
+		$users = ORM::factory('user')->where(array('public_profile'=>1))->find_all();
+		return $users;
 	}
 
 } // End User_Model
