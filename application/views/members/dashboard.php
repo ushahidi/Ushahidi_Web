@@ -145,6 +145,33 @@
 						</div>
 					</div>
 					
+					<!-- badge box -->
+					<div class="box">
+		
+						<h3><?php echo Kohana::lang('ui_main.badges');?></h3>
+						<div style="clear:both;"></div>
+						<div style="text-align:center;">
+						<?php
+							if(count($badges) > 0) {
+								foreach($badges as $badge) {
+						?>
+		
+								<div class="badge">
+									<center><img src="<?php echo url::base().Kohana::config('upload.relative_directory').'/'.$badge['img_m']; ?>" alt="<?php echo Kohana::lang('ui_main.badge').' '.$badge['id'];?>" width="80" height="80" style="margin:5px;" /></center>
+									<br/><strong><?php echo $badge['name']; ?></strong>
+								</div>
+		
+						<?php
+								}
+							}else{
+								echo Kohana::lang('ui_main.sorry_no_badges');
+							}
+						?>
+						</div>
+						<div style="clear:both;"></div>
+		
+					</div>
+					
 					<!-- box -->
 					<div class="box">
 						<h3><?php echo Kohana::lang('ui_main.quick_stats');?></h3>

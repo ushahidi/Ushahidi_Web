@@ -73,8 +73,39 @@
 							<?php print form::dropdown('notify', $yesno_array, $form['notify']); ?>
 						</div>
 						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_public"); ?>"><?php echo Kohana::lang('ui_main.public_profile');?>:</a></h4>
+							<?php
+								print form::label('profile_public', Kohana::lang('ui_main.on').': ');
+								print form::radio('public_profile', '1', $profile_public, 'id="profile_public"').'&nbsp;&nbsp;&nbsp;&nbsp;';
+								print form::label('profile_private', Kohana::lang('ui_main.off').': ');
+								print form::radio('public_profile', '0', $profile_private, 'id="profile_private"').'<br />';
+							?>
+						</div>
+						<div class="row">
 							<h4><a href="http://www.gravatar.com/" target="_blank" class="tooltip" title="<?php echo Kohana::lang("tooltips.change_picture"); ?>"><?php echo Kohana::lang('ui_main.change_picture');?></a></h4>
 							<a href="http://www.gravatar.com/" target="_blank"><img src="<?php echo members::gravatar($form['email']); ?>" width="80" border="0" /></a>
+						</div>
+						<div class="row">
+							<h4><a href="http://www.gravatar.com/" target="_blank" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_color"); ?>"><?php echo Kohana::lang('ui_main.profile_color');?></a></h4>
+							<?php print form::input('color', $form['color'], ' class="text"'); ?>
+							<script type="text/javascript" charset="utf-8">
+								$(document).ready(function() {
+									$('#color').ColorPicker({
+										onSubmit: function(hsb, hex, rgb) {
+											$('#color').val(hex);
+										},
+										onChange: function(hsb, hex, rgb) {
+											$('#color').val(hex);
+										},
+										onBeforeShow: function () {
+											$(this).ColorPickerSetColor(this.value);
+										}
+									})
+									.bind('keyup', function(){
+										$(this).ColorPickerSetColor(this.value);
+									});
+								});
+							</script>
 						</div>
 					</div>
 		

@@ -8,7 +8,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Admin Forms Controller
+ * @module     Actions Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
@@ -72,7 +72,8 @@ class Actions_Controller extends Admin_Controller
 			'action_email_subject' => '',
 			'action_email_body' => '',
 			'action_add_category' => array(),
-			'action_verify' => ''
+			'action_verify' => '',
+			'action_badge' => ''
 	    );
 
 	    // Process form submission
@@ -176,12 +177,14 @@ class Actions_Controller extends Admin_Controller
 		$this->template->content->trigger_allowed_responses = $trigger_allowed_responses;
 
 		// Build user options list
-
 		$this->template->content->user_options = $this->_user_options();
 
 		// Grab categories for category advanced options
 		$this->template->content->categories = Category_Model::get_categories();
 
+		// Grab badges for dropdown
+		$this->template->content->badges = Badge_Model::badge_names();
+		
 		$this->template->content->form = $form;
 		$this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;

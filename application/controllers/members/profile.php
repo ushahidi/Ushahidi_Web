@@ -40,7 +40,9 @@ class Profile_Controller extends Members_Controller
 			'password_again'  => '',
 			'name'		=> '',
 			'email'		=> '',
-			'notify'	=> ''
+			'notify'	=> '',
+			'public_profile' => '',
+			'color' => ''
 		);
 		
 		//	Copy the form as errors, so the errors will be stored with keys
@@ -74,6 +76,8 @@ class Profile_Controller extends Members_Controller
 					$user->name = $post->name;
 					$user->email = $post->email;
 					$user->notify = $post->notify;
+					$user->public_profile = $post->public_profile;
+					$user->color = $post->color;
 					$post->password !='' ? $user->password=$post->password : '';
 					$user->save();
 				}
@@ -102,6 +106,17 @@ class Profile_Controller extends Members_Controller
 			$form['name'] = $user->name;
 			$form['email'] = $user->email;
 			$form['notify'] = $user->notify;
+			$form['public_profile'] = $user->public_profile;
+			$form['color'] = $user->color;
+		}
+		
+		if($user->public_profile == 1)
+		{
+			$this->template->content->profile_public = TRUE;
+			$this->template->content->profile_private = FALSE;
+		}else{
+			$this->template->content->profile_public = FALSE;
+			$this->template->content->profile_private = TRUE;
 		}
 
 		$this->template->content->form = $form;
@@ -111,6 +126,7 @@ class Profile_Controller extends Members_Controller
 		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
 		
 		// Javascript Header
+		$this->template->colorpicker_enabled = TRUE;
 	}
 	
 	
