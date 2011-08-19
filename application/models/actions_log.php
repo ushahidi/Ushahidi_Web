@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
-* Model for Media files: photos, videos of incidents or locations
+ * Model to record "actions" actions
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
@@ -9,15 +9,13 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Media Model  
+ * @module     Scheduler Log Model  
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class Media_Model extends ORM
-{
-	protected $belongs_to = array('location', 'incident', 'message', 'badge');
-	
+class Actions_Log_Model extends ORM
+{	
 	// Database table name
-	protected $table_name = 'media';
+	protected $table_name = 'actions_log';
 }

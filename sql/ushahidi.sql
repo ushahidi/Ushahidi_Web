@@ -22,7 +22,39 @@ CREATE TABLE `actions` (
 	`active` TINYINT NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+/**
+ * Table structure for table `actions_log`
+ * 
+ */
 
+CREATE TABLE `actions_log` (
+`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`action_id` INT NOT NULL ,
+`user_id` INT NOT NULL ,
+`time` INT( 10 ) NOT NULL
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+
+/**
+ * Table structure for table `badge`
+ * 
+ */
+
+CREATE TABLE `badge` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 250 ) NOT NULL ,
+`description` TEXT NOT NULL
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+/**
+ * Table structure for table `badge_assignment`
+ * 
+ */
+
+CREATE TABLE `badge_users` (
+`user_id` INT NOT NULL ,
+`badge_id` INT NOT NULL ,
+PRIMARY KEY ( `user_id` , `badge_id` )
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 /**
  * Table structure for table `category`
@@ -548,6 +580,7 @@ CREATE TABLE IF NOT EXISTS `media` (
     `incident_id` bigint(20) default NULL,
     `checkin_id` bigint(20) default NULL,
     `message_id` bigint(20) NULL DEFAULT NULL,
+    `badge_id` int(11) default NULL,
     `media_type` tinyint(4) default NULL COMMENT '1 - IMAGES, 2 - VIDEO, 3 - AUDIO, 4 - NEWS, 5 - PODCAST',    
     `media_title` varchar(255) default NULL,                                        
     `media_description` longtext default NULL,                                      
@@ -810,6 +843,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `color` varchar(6) NOT NULL DEFAULT 'FF0000',
     `code` VARCHAR(30) NULL DEFAULT NULL,
     `confirmed` TINYINT(1) NOT NULL DEFAULT '0',
+    `public_profile` TINYINT(1) NOT NULL DEFAULT '1',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
@@ -819,8 +853,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Dumping data for table `users`
 
-INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `last_login`, `updated`) VALUES
-(1, 'Administrator', 'myemail@example.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22');
+INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `last_login`, `updated`, `public_profile`) VALUES
+(1, 'Administrator', 'myemail@example.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22', 0);
 
 
 /**
@@ -1424,4 +1458,4 @@ ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '61' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '63' WHERE `id`=1 LIMIT 1;

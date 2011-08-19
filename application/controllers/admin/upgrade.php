@@ -35,7 +35,7 @@ class Upgrade_Controller extends Admin_Controller {
 		// Don't show auto-upgrader when disabled.
         if (Kohana::config('config.enable_auto_upgrader') == FALSE)
         {
-            url::redirect('admin/dashboard');
+			die(Kohana::lang('ui_main.disabled'));
         }
 		
 	}

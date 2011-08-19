@@ -32,15 +32,27 @@ jQuery(document).ready(function() {
 	});
 	
 	
-	
-	<?php if (Router::$controller == 'dashboard') {?>
-		//check if we need to upgrade this instance of Ushahidi
-		//if we're on the dashbboard, check for a new version
-		jQuery.get("<?php echo url::base() . 'admin/upgrade/check_current_version' ?>", function(data){
-				jQuery('#need_to_upgrade').html(data);
-				jQuery('#need_to_upgrade').removeAttr("style");
-			});
-	<?php }?>
+<?php
+	// Prevent an HTTP call if auto upgrading isn't enabled and
+	//   make sure we are looking at the dashboard
+	if (Kohana::config('config.enable_auto_upgrader') == TRUE
+		AND Router::$controller == 'dashboard'){
+?>
+
+// Check for a new version of the Ushahidi Software
+jQuery(document).ready(function() {
+	// Check if we need to upgrade this deployment of Ushahidi
+	//   if we're on the dashboard, check for a new version
+	jQuery.get("<?php echo url::base().'admin/upgrade/check_current_version' ?>", function(data){
+			jQuery('#need_to_upgrade').html(data);
+			jQuery('#need_to_upgrade').removeAttr("style");
+		});
+		
+});
+
+<?php
+	}
+?>
 	
 	
 });

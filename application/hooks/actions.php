@@ -21,8 +21,12 @@
 class actioner {
 
 	protected $db;
-	
+
 	protected $data;
+
+	protected $qualifiers;
+
+	protected $action_id;
 
 	/**
 	 * Registers the main event add method
@@ -43,7 +47,7 @@ class actioner {
 		Event::add('ushahidi_action.report_add', array($this, '_report_add'));
 		Event::add('ushahidi_action.checkin_recorded', array($this, '_checkin_recorded'));
 	}
-	
+
 	// START ACTION TRIGGER FUNCTIONS
 
 	/**
@@ -62,113 +66,126 @@ class actioner {
 		foreach ($actions as $action)
 		{
 			// Collect variables for this action
-			$action_id = $action->action_id;
+			$this->action_id = $action->action_id;
 			$trigger = $action->action;
-			$qualifiers = unserialize($action->qualifiers);
+			$this->qualifiers = unserialize($action->qualifiers);
 			$response = $action->response;
 			$response_vars = unserialize($action->response_vars);
-			
+
 			// If geometry isn't set because we didn't have any geometry to pass, set it as false
 			//   to prevent errors when we need to call the variable later in the script.
-			if( ! isset($qualifiers['geometry'])) $qualifiers['geometry'] = FALSE;
+			if( ! isset($this->qualifiers['geometry'])) $this->qualifiers['geometry'] = FALSE;
 
 			// Check if we qualify for performing the response
 
+			// --- Check User
+
 			// If it's not for everyone and the user submitting isn't the user specified, then
 			//   move on to the next action
-			if( ! $this->__check_user($qualifiers['user'],$this->data->user_id)){
+			if( ! $this->__check_user($this->qualifiers['user'],$this->data->user_id)){
 				// Not the correct user
 				continue;
 			}
-			
-			// Passed User Qualifier
 
-			// Now check location
-			if( ! $this->__check_location($qualifiers['location'],$qualifiers['geometry']))
+			// --- Check Category
+			if( isset($this->qualifiers['category'])
+				AND ! $this->__check_category($this->qualifiers['category']) ){
+				// Not in the correct category
+				continue;
+			}
+
+			// --- Check Location
+			if( ! $this->__check_location($this->qualifiers['location'],$this->qualifiers['geometry']))
 			{
 				// Not the right location
 				continue;
 			}
-			
-			// Passed Location Qualifier
-			
-			// Check keywords against subject and body. If both fail, then this action doesn't qualify
-			if( ! $this->__check_keywords($qualifiers['keyword'],$this->data->incident_title)
-				AND ! $this->__check_keywords($qualifiers['keyword'],$this->data->incident_description))
+
+			// --- Check Keywords
+			//     against subject and body. If both fail, then this action doesn't qualify
+
+			if( ! $this->__check_keywords($this->qualifiers['keyword'],$this->data->incident_title)
+				AND ! $this->__check_keywords($this->qualifiers['keyword'],$this->data->incident_description))
 			{
 				// Not the right keyword
 				continue;
 			}
-			
-			// Passed Keyword Qualifier
-			
+
+			// --- Begin Response
+
+			// Record that the magic happened
+			$this->__record_log($this->action_id,$this->data->user_id);
+
 			// Qapla! Begin response phase since we passed all of the qualifier tests
 			$this->__perform_response($response,$response_vars);
 		}
 	}
-	
+
 	/**
 	 * Perform actions for checkin_recorded
 	 */
 	public function _checkin_recorded()
 	{
 		$this->data = Event::$data;
-		
+
 		// Grab all action triggers that involve this fired action
 		$actions = $this->db->from('actions')->where(array('action' => 'checkin_recorded', 'active' => 1))->get();
 
 		// Get out of here as fast as possible if there are no actions.
 		if($actions->count() <= 0) return false;
-		
+
 		foreach ($actions as $action)
 		{
 			// Collect variables for this action
-			$action_id = $action->action_id;
+			$this->action_id = $action->action_id;
 			$trigger = $action->action;
-			$qualifiers = unserialize($action->qualifiers);
+			$this->qualifiers = unserialize($action->qualifiers);
 			$response = $action->response;
 			$response_vars = unserialize($action->response_vars);
-			
+
 			// If geometry isn't set because we didn't have any geometry to pass, set it as false
 			//   to prevent errors when we need to call the variable later in the script.
-			if( ! isset($qualifiers['geometry'])) $qualifiers['geometry'] = FALSE;
+			if( ! isset($this->qualifiers['geometry'])) $this->qualifiers['geometry'] = FALSE;
 
 			// Check if we qualify for performing the response
 
 			// If it's not for everyone and the user submitting isn't the user specified, then
 			//   move on to the next action
-			if( ! $this->__check_user($qualifiers['user'],$this->data->user_id)){
+			if( ! $this->__check_user($this->qualifiers['user'],$this->data->user_id)){
 				// Not the correct user
 				continue;
 			}
-			
+
 			// Passed User Qualifier
 
 			// Now check location
-			if( ! $this->__check_location($qualifiers['location'],$qualifiers['geometry']))
+			if( ! $this->__check_location($this->qualifiers['location'],$this->qualifiers['geometry']))
 			{
 				// Not the right location
 				continue;
 			}
-			
+
 			// Passed Location Qualifier
-			
+
 			// Check keywords against subject and body. If both fail, then this action doesn't qualify
-			if( ! $this->__check_keywords($qualifiers['keyword'],$this->data->checkin_description))
+			if( ! $this->__check_keywords($this->qualifiers['keyword'],$this->data->checkin_description))
 			{
 				// Not the right keyword
 				continue;
 			}
-			
+
 			// Passed Keyword Qualifier
-			
+
+			// Record that the magic happened
+			$this->__record_log($this->action_id,$this->data->user_id);
+
 			// Qapla! Begin response phase since we passed all of the qualifier tests
 			$this->__perform_response($response,$response_vars);
 		}
 	}
-	
+
 	// START QUALIFIER CHECK FUNCTIONS
-	
+
 	// Checks if user is global and matches the data passed for userid
 	public function __check_user($user,$user_check_against)
 	{
@@ -177,7 +194,30 @@ class actioner {
 		}
 		return true;
 	}
-	
+
+	// Checks if the data has any categories in the qualifier set of categories
+	public function __check_category($categories)
+	{
+		$data_id = $this->data->id;
+
+		$report_categories = $this->db->from('incident_category')->where(array('incident_id' => $data_id))->get();
+
+		// This data doesn't seem to have any category
+		if($report_categories->count() <= 0) return FALSE;
+
+		foreach ($report_categories as $report_category)
+		{
+			if(in_array($report_category->category_id,$categories))
+			{
+				// Category Match!
+				return TRUE;
+			}
+		}
+
+		// Never matched a category
+		return FALSE;
+	}
+
 	/**
 	 * Takes a location as "lon lat" and checks if it is inside a polygon which
 	 *   is passed as an array like array("lon lat","lon lat","lon lat","lon lat",. . .);
@@ -185,7 +225,7 @@ class actioner {
 	 */
 	public function __check_location($location,$m_geometry)
 	{
-		
+
 		if($location == 'specific')
 		{
 			// So location now needs to be in a specific spot. Gotta crunch the numbers to see if the
@@ -211,15 +251,15 @@ class actioner {
 					return true;
 				}
 			}
-			
+
 			// It's not inside the fence. Sorry, bro.
 			return false;
-			
+
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Takes a CSV list of keywords and checks each of them against a string
 	 */
@@ -230,75 +270,178 @@ class actioner {
 			// Okay, keywords were defined so lets check to see if the keywords match
 			$exploded_kw = explode(',',$keywords);
 			foreach($exploded_kw as $kw){
-				echo 'Check against: '.$kw.'<br/>';
 				// if we found it, get out of the function
 				if(stripos($string,$kw) !== FALSE) {
-					echo 'Found it, boss<br/>';
-					return true;
+					return TRUE;
 				}
 			}
 		}else{
 			// If no keywords were set, then you can simply pass this test
-			echo 'No keywords set, passing test.<br/>';
-			return true;
+			return TRUE;
 		}
 	}
-	
+
+	// START COUNT / QUALIFIER / RESPONSE FUNCTIONS
+
+	/**
+	 * Returns TRUE if this is the specific count or if we aren't counting
+	 */
+	public function __pre_response_on_specific_count()
+	{
+		if( ! isset($this->qualifiers['on_specific_count'])
+			OR $this->qualifiers['on_specific_count'] == ''
+			OR $this->qualifiers['on_specific_count'] == 0)
+		{
+			// We arent checking
+			return TRUE;
+		}
+
+		// Count is the specific count we need to hit
+		$count = $this->qualifiers['on_specific_count'];
+
+		// Collective determines if we look up count by user_id or by action_id
+		$collective = FALSE;
+		if(isset($this->qualifiers['on_specific_count_collective'])
+			AND $this->qualifiers['on_specific_count_collective'] == 1)
+		{
+			$collective = TRUE;
+		}
+
+		// Look up count
+		if($collective)
+		{
+			// Search by action_id
+			$check_count = $this->db->where(array('action_id' => $this->action_id))->count_records('actions_log');
+		}else{
+			// Search by user_id
+			$check_count = $this->db->where(array('action_id' => $this->action_id, 'user_id' => $this->data->user_id))->count_records('actions_log');
+		}
+
+		// Count matches
+		if($check_count == $count) return TRUE;
+
+		// We never matched the counts
+		return FALSE;
+	}
+
 	// START RESPONSE FUNCTIONS
-	
+
 	/**
 	 * Routes the response to the appropriate response function for processing
 	 */
 	public function __perform_response($response,$response_vars)
 	{
-		echo '<h3>Performing Response: '.$response.'</h3>';
-		
+		// Go through the list of count qualifiers to see if we should be performing a response or not
+
+		// on_specific_count
+		if( ! $this->__pre_response_on_specific_count()) return FALSE;
+		//if( ! $this->__pre_response_on_specific_count()) return FALSE;
+		// etc ...
+
+		// Route and perform the response
 		switch ($response) {
 			case 'email':
 				return $this->__response_email($response_vars);
 			case 'approve_report':
 				return $this->__response_approve_report($response_vars);
+			case 'log_it':
+				// This response is special in that it does nothing and allows
+				//   a line to be written to the action log
+				return TRUE;
+			case 'assign_badge':
+				return $this->__response_assign_badge($response_vars);
 			default:
-				return false;
+				return FALSE;
 		}
-		
+
+		return FALSE;
+
 	}
-	
+
+	/**
+	 * Saves this action to the log, which is used as a qualifier in some cases
+	 */
+	public function __record_log($action_id,$user_id)
+	{
+		$actions_log = new Actions_Log_Model();
+		$actions_log->action_id = $action_id;
+		$actions_log->user_id = $user_id;
+		$actions_log->time = time();
+		$actions_log->save();
+
+		return TRUE;
+	}
+
 	/**
 	 * Approve a report and assign it to one or more categories
 	 */
 	public function __response_approve_report($vars)
-	{	
-		echo '<h1>Add category!111!!!!</h1>';
-		$categories = $vars['add_category'];
+	{
 		$incident_id = $this->data->id;
-		
+
+		$categories = array();
+		if( isset($vars['add_category']))
+		{
+			$categories = $vars['add_category'];
+		}
+
+		$verify = 0;
+		if( isset($vars['verify']))
+		{
+			$verify = (int)$vars['verify'];
+		}
+
 		foreach($categories as $category_id)
 		{
 			// Assign Category
 			Incident_Category_Model::assign_category_to_incident($incident_id,$category_id);
 		}
-		
+
 		// Approve Report
 		Incident_Model::set_approve($incident_id,1);
-		
-		return true;
+
+		// Set Verification
+		Incident_Model::set_verification($incident_id,$verify);
+
+		return TRUE;
 	}
-	
+
+	/**
+	 * Assigns a badge to the triggering user
+	 */
+	public function __response_assign_badge($vars)
+	{
+		$count = ORM::factory('badge_user')->where(array('badge_id' => (int)$vars['badge'], 'user_id' => (int)$this->data->user_id))->count_all();
+		if($count == 0)
+		{
+			$badge_user = new Badge_User_Model();
+			$badge_user->badge_id = $vars['badge']; // badge id
+			$badge_user->user_id = $this->data->user_id;
+			$badge_user->save();
+		}
+		return TRUE;
+	}
+
 	/**
 	 * Shoots an email to the defined person
 	 */
 	public function __response_email($vars)
-	{	
+	{
 		$settings = kohana::config('settings');
-		
-		$to = $vars['email_send_address'];
+
+		if($vars['email_send_address'] == '0')
+		{
+			// If our send address is 0, then it means we need to send the email to
+			//   the triggering user
+			$to = User_Model::get_email($this->data->user_id);
+		}else{
+			$to = $vars['email_send_address'];
+		}
+
 		$from = array($settings['site_email'], $settings['site_name']);
 		$subject = $vars['email_subject'];
 		$message = $vars['email_body'];
-		
-		echo 'email sent';
-		
+
 		return email::send($to, $from, $subject, $message, FALSE);
 	}
 }

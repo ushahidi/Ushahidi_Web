@@ -195,7 +195,10 @@ class reports_Core {
 		
 		$incident->location_id = $location_id;
 		//$incident->locale = $post->locale;
-		$incident->form_id = $post->form_id;
+		if (isset($post->form_id))
+		{
+			$incident->form_id = $post->form_id;
+		}
 		
 		// Check if the user id has been specified
 		if (isset($_SESSION['auth_user']))

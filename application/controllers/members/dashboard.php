@@ -31,6 +31,9 @@ class Dashboard_Controller extends Members_Controller {
 		
 		// User Reputation Score
 		$this->template->content->reputation = reputation::calculate($this->user->id);
+		
+		// Get Badges
+		$this->template->content->badges = Badge_Model::users_badges($this->user->id);
 
 		// Retrieve Dashboard Counts...
 		// Total Reports
