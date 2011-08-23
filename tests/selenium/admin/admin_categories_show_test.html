@@ -4,48 +4,30 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost/" />
-<title>Admin Login Valid</title>
+<title>Admin Categories Show</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">Admin Login Valid</td></tr>
+<tr>
+				<td rowspan="1" colspan="3">Admin Categories Show</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>Ushahidi_Web/logout</td>
-	<td></td>
-</tr>
-<tr>
-	<td>open</td>
-	<td>Ushahidi_Web/login</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>username</td>
-	<td>admin</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>password</td>
-	<td>admin</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>remember</td>
-	<td></td>
-</tr>
-<tr>
 	<td>clickAndWait</td>
-	<td>submit</td>
+	<td>link=Hidden</td>
 	<td></td>
 </tr>
 <tr>
-	<td>verifyElementPresent</td>
-	<td>css=div.nav-holder</td>
+	<td>verifyConfirmation</td>
+	<td>Are you sure you want to SHOW/HIDE?</td>
 	<td></td>
+</tr>
+<tr>
+<td>verifyTextPresent</td>
+<td></td>
+<td>The category has been MODIFIED!</td>
 </tr>
 </tbody></table>
 </body>
 </html>
+

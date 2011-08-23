@@ -217,7 +217,6 @@ class Manage_Controller extends Admin_Controller
 				if ($category->loaded)
 				{
 					$category->category_visible = ($category->category_visible == 1)? 0 : 1;
-
 					$category->save();
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
