@@ -45,6 +45,24 @@
 	echo html::script(url::file_loc('js').'media/js/selectToUISlider.jQuery', true);
 	echo html::script(url::file_loc('js').'media/js/jquery.hovertip-1.0', true);
 	echo html::script(url::file_loc('js').'media/js/jquery.base64', true);
+	if($datepicker_enabled)
+	{
+		?>
+		<script type="text/javascript">
+		Date.dayNames = ['<?php echo Kohana::lang('datetime.sunday.full'); ?>', '<?php echo Kohana::lang('datetime.monday.full'); ?>', '<?php echo Kohana::lang('datetime.tuesday.full'); ?>', '<?php echo Kohana::lang('datetime.wednesday.full'); ?>', '<?php echo Kohana::lang('datetime.thursday.full'); ?>', '<?php echo Kohana::lang('datetime.friday.full'); ?>', '<?php echo Kohana::lang('datetime.saturday.full'); ?>'];
+		Date.abbrDayNames = ['<?php echo Kohana::lang('datetime.sunday.abbv'); ?>', '<?php echo Kohana::lang('datetime.monday.abbv'); ?>', '<?php echo Kohana::lang('datetime.tuesday.abbv'); ?>', '<?php echo Kohana::lang('datetime.wednesday.abbv'); ?>', '<?php echo Kohana::lang('datetime.thursday.abbv'); ?>', '<?php echo Kohana::lang('datetime.friday.abbv'); ?>', '<?php echo Kohana::lang('datetime.saturday.abbv'); ?>'];
+		Date.monthNames = ['<?php echo Kohana::lang('datetime.january.full'); ?>', '<?php echo Kohana::lang('datetime.february.full'); ?>', '<?php echo Kohana::lang('datetime.march.full'); ?>', '<?php echo Kohana::lang('datetime.april.full'); ?>', '<?php echo Kohana::lang('datetime.may.full'); ?>', '<?php echo Kohana::lang('datetime.june.full'); ?>', '<?php echo Kohana::lang('datetime.july.full'); ?>', '<?php echo Kohana::lang('datetime.august.full'); ?>', '<?php echo Kohana::lang('datetime.september.full'); ?>', '<?php echo Kohana::lang('datetime.october.full'); ?>', '<?php echo Kohana::lang('datetime.november.full'); ?>', '<?php echo Kohana::lang('datetime.december.full'); ?>'];
+		Date.abbrMonthNames = ['<?php echo Kohana::lang('datetime.january.abbv'); ?>', '<?php echo Kohana::lang('datetime.february.abbv'); ?>', '<?php echo Kohana::lang('datetime.march.abbv'); ?>', '<?php echo Kohana::lang('datetime.april.abbv'); ?>', '<?php echo Kohana::lang('datetime.may.abbv'); ?>', '<?php echo Kohana::lang('datetime.june.abbv'); ?>', '<?php echo Kohana::lang('datetime.july.abbv'); ?>', '<?php echo Kohana::lang('datetime.august.abbv'); ?>', '<?php echo Kohana::lang('datetime.september.abbv'); ?>', '<?php echo Kohana::lang('datetime.october.abbv'); ?>', '<?php echo Kohana::lang('datetime.november.abbv'); ?>', '<?php echo Kohana::lang('datetime.december.abbv'); ?>'];
+		Date.firstDayOfWeek = 1;
+		Date.format = 'mm/dd/yyyy';
+		</script>
+		
+		<?php
+		echo html::script(url::file_loc('js').'media/js/jquery.datePicker', true);
+		echo '<!--[if IE]>'.
+			html::script(url::file_loc('js').'media/js/jquery.bgiframe.min', true)
+			.'<![endif]-->';
+	}
 	echo html::stylesheet(url::file_loc('css').'media/css/jquery.hovertip-1.0', '', true);
 	
 	echo "<script type=\"text/javascript\">
