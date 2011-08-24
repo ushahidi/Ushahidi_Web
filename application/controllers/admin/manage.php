@@ -217,7 +217,6 @@ class Manage_Controller extends Admin_Controller
 				if ($category->loaded)
 				{
 					$category->category_visible = ($category->category_visible == 1)? 0 : 1;
-
 					$category->save();
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
@@ -398,7 +397,12 @@ class Manage_Controller extends Admin_Controller
 			$page = (isset($_POST['page_id']) AND Page_Model::is_valid_page($_POST['page_id']))
 				? ORM::factory('page', $_POST['page_id'])
 				: new Page_Model();
-
+				
+			
+			$post = array_merge($_POST, $_FILES);
+			$post = array_merge($post, array("id"=>$page->id));
+			Event::run('ushahidi_action.page_submit', $post);
+			
 			// Check for the specified action
 			if ($_POST['action'] == 'a')
 			{
@@ -408,7 +412,7 @@ class Manage_Controller extends Admin_Controller
 				if ($page->validate($data))
 				{
 					$page->save();
-					
+					Event::run('ushahidi_action.page_edit', $page);
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
 					array_fill_keys($form, '');
