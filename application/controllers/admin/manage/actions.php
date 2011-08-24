@@ -66,6 +66,12 @@ class Actions_Controller extends Admin_Controller
 			'action_category' => array(),
 			'action_on_specific_count' => '',
 			'action_on_specific_count_collective' => '',
+			'action_days_of_the_week' => array(),
+			'action_specific_days' => array(),
+			'action_between_times_hour_1' => '',
+			'action_between_times_hour_2' => '',
+			'action_between_times_minute_1' => '',
+			'action_between_times_minute_2' => '',
 			'action_response' => '',
 			'action_email_send_address' => '',
 			'action_email_send_address_specific' => '',
@@ -99,20 +105,76 @@ class Actions_Controller extends Admin_Controller
 				$qualifiers = array();
 				foreach($expected_qualifier_fields as $field){
 					$form_field = 'action_'.$field;
+
+					// 1. Standard field population
 					if( isset($post->$form_field) )
 					{
 						$qualifiers[$field] = $post->$form_field;
 					}
+
+					// 2. Check additional field population
+
+					// Populate additional geometry field
 					if($field == 'location' && $post->$form_field == 'specific')
 					{
 						// Add geometry if this is a specific location
 						$qualifiers['geometry'] = $post->geometry;
 					}
+
+					// Populate additional specific count collective boolean
 					if($field == 'on_specific_count')
 					{
 						// Grab if we are counting everyone or just the individual users themselves
 						$qualifiers['on_specific_count_collective'] = $post->action_on_specific_count_collective;
 					}
+
+					// Change the specific_days field to an array of timestamps
+					if($field == 'specific_days')
+					{
+						// Grab if we are counting everyone or just the individual users themselves
+						$qualifiers['specific_days'] = explode(',',$qualifiers['specific_days']);
+						foreach($qualifiers['specific_days'] as $key => $specific_day){
+							$qualifiers['specific_days'][$key] = strtotime($specific_day);
+						}
+						if($qualifiers['specific_days'][0] == false) {
+							// Just get rid of it if we aren't using it
+							unset($qualifiers['specific_days']);
+						}
+					}
+
+					// Grab dropdowns for between_times
+					if($field == 'between_times')
+					{
+						// Do everything for between times here
+
+						if($post->action_between_times_hour_1 != 0 OR $post->action_between_times_minute_1 != 0
+							OR $post->action_between_times_hour_2 != 0 OR $post->action_between_times_minute_2 != 0)
+						{
+							// We aren't all zeroed out so the user is not ignoring between_times. Now we need
+							//   to calculate seconds into the day for each and put the lower count in the first
+							//   variable and the higher in the second so the check in the hook doesn't have to
+							//   do so much work. Also, set between_times to true so the hook knows to check it.
+
+							$qualifiers['between_times'] = 1;
+
+							$time1 = ((int)$post->action_between_times_hour_1 * 3600) + ((int)$post->action_between_times_minute_1 * 60);
+							$time2 = ((int)$post->action_between_times_hour_2 * 3600) + ((int)$post->action_between_times_minute_2 * 60);
+
+							if($time1 < $time2){
+								$qualifiers['between_times_1'] = $time1;
+								$qualifiers['between_times_2'] = $time2;
+							}else{
+								$qualifiers['between_times_1'] = $time2;
+								$qualifiers['between_times_2'] = $time1;
+							}
+
+						}else{
+							// Between_times is being ignored, set it that way here
+							$qualifiers['between_times'] = 0;
+						}
+
+					}
+
 				}
 
 				$qualifiers = serialize($qualifiers);
@@ -184,12 +246,27 @@ class Actions_Controller extends Admin_Controller
 
 		// Grab badges for dropdown
 		$this->template->content->badges = Badge_Model::badge_names();
-		
+
+		// Timezone
+		$this->template->content->site_timezone = Kohana::config('settings.site_timezone');
+
+		// Days of the week
+		$this->template->content->days = array('mon' => Kohana::lang('datetime.monday.full'),
+												'tue' => Kohana::lang('datetime.tuesday.full'),
+												'wed' => Kohana::lang('datetime.wednesday.full'),
+												'thu' => Kohana::lang('datetime.thursday.full'),
+												'fri' => Kohana::lang('datetime.friday.full'),
+												'sat' => Kohana::lang('datetime.saturday.full'),
+												'sun' => Kohana::lang('datetime.sunday.full'));
+
 		$this->template->content->form = $form;
 		$this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
 		$this->template->content->errors = $errors;
+
+		// Enable date picker
+		$this->template->datepicker_enabled = TRUE;
 	}
 
 	function changestate(){
@@ -272,8 +349,7 @@ class Actions_Controller extends Admin_Controller
 
 	public function _response_options()
 	{
-		$response_options = array('0'=>Kohana::lang('ui_admin.please_select'));
-		return array_merge($response_options,Kohana::config('actions.response_options'));
+		return Kohana::config('actions.response_options');
 	}
 
 	public function _user_options()
