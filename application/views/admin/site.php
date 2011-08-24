@@ -91,6 +91,8 @@
 							<span class="sel-holder">
 								<?php print form::dropdown('site_timezone',$site_timezone_array, $form['site_timezone']); ?>
 							</span>
+							<div style="clear:both;"></div>
+							<small><?php echo Kohana::lang('ui_admin.server_time').' '.date("m/d/Y H:i:s",time()).' ('.$form['site_timezone'].')'; ?></small>
 						</div>
 
 						<div class="row">
