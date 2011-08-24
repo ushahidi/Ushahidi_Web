@@ -111,6 +111,20 @@ class actioner {
 				continue;
 			}
 
+			// --- Check Between Times
+			if( ! $this->__check_between_times(strtotime($this->data->incident_date)))
+			{
+				// Not the right time
+				continue;
+			}
+
+			// --- Check Specific Days
+			if( ! $this->__check_specific_days(strtotime($this->data->incident_date)))
+			{
+				// Not the right day
+				continue;
+			}
+
 			// --- Begin Response
 
 			// Record that the magic happened
@@ -176,6 +190,20 @@ class actioner {
 
 			// Passed Keyword Qualifier
 
+			// --- Check Between Times
+			if( ! $this->__check_between_times(strtotime($this->data->checkin_date)))
+			{
+				// Not the right time
+				continue;
+			}
+
+			// --- Check Specific Days
+			if( ! $this->__check_specific_days(strtotime($this->data->checkin_date)))
+			{
+				// Not the right day
+				continue;
+			}
+
 			// Record that the magic happened
 			$this->__record_log($this->action_id,$this->data->user_id);
 
@@ -217,6 +245,95 @@ class actioner {
 		// Never matched a category
 		return FALSE;
 	}
+
+	/**
+	 * Checks if the item is on one of the qualified days
+	 *   Accepts a timestamp for $time
+	 */
+	public function __check_specific_days($time)
+	{
+
+		if( ! isset($this->qualifiers['specific_days'])
+			OR ! is_array($this->qualifiers['specific_days']))
+		{
+			// We aren't checking this so pass the test
+			return TRUE;
+		}
+
+		$time = date('Y-m-d',$time);
+		foreach($this->qualifiers['specific_days'] as $day){
+			// Check if the dates match up
+			$day = date('Y-m-d',$day);
+			if($time == $day)
+			{
+				// Found it
+				return TRUE;
+			}
+		}
+
+		// Never matched
+		return FALSE;
+	}
+
+	/**
+	 * Checks if the item is on qualified days of the week
+	 */
+	public function __check_days_of_the_week($time)
+	{
+
+		if( ! isset($this->qualifiers['days_of_the_week'])
+			OR ! is_array($this->qualifiers['days_of_the_week']))
+		{
+			// We aren't checking days_of_the_week so pass the test
+			return TRUE;
+		}
+
+		$days_of_the_week = $this->qualifiers['days_of_the_week'];
+
+		// Make sure everything is lowercase
+		array_walk($days_of_the_week,'strtolower');
+
+		$day = strtolower(date('D'),$time);
+
+		if(in_array($day,$days_of_the_week))
+		{
+			// Found it
+			return TRUE;
+		}
+
+		// Never matched
+		return FALSE;
+	}
+
+	/**
+	 * Checks if the item is between two times, set as the number of seconds from the start of the day
+	 *   The variable being passed, time, is a full timestamp, not the number of seconds from the start
+	 *   of the day.
+	 */
+	public function __check_between_times($time)
+	{
+
+		if( ! isset($this->qualifiers['between_times']) OR $this->qualifiers['between_times'] != 1)
+		{
+			// We aren't checking between_times so pass the test
+			return TRUE;
+		}
+
+		// Convert time to seconds from the start of the day
+		$time_at_beginning_of_today = mktime(0,0,0,date('n'),date('j'),date('Y'));
+
+		$seconds_from_start_of_day = $time - $time_at_beginning_of_today;
+
+		if($this->qualifiers['between_times_1'] <= $seconds_from_start_of_day
+			AND $this->qualifiers['between_times_2'] >= $seconds_from_start_of_day)
+		{
+			return TRUE;
+		}
+
+		// Never matched
+		return FALSE;
+	}
+
 
 	/**
 	 * Takes a location as "lon lat" and checks if it is inside a polygon which
