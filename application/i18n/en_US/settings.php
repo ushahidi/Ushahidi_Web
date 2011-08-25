@@ -25,6 +25,10 @@
 		'alpha_numeric' => 'The Akismet field does not appear to contain a valid value?',
 		'length' => 'The Akismet field does not appear to contain a valid value?',
 	),
+	'banner_image' => array(
+		'default' => 'Something went wrong with your banner image upload.',
+		'size' => 'The size of your banner exceeds the size limit for this upload.'
+	),
 	'cache_pages' => array(
 		'between' => 'The cache pages field is required.',
 		'required' => 'The cache pages field does not appear to contain a valid value?',
@@ -125,12 +129,14 @@
 		'allow_feed' => 'Include RSS News Feed on Website',
 		'allow_reports' => 'Allow Users To Submit Reports',
 		'api_akismet' => 'Akismet Key',
+		'banner' => 'Site Banner',
 		'blocks_per_row' => 'Blocks Per Row',
 		'cache_pages' => 'Cache Pages',
 		'cache_pages_lifetime' => 'Cache Pages Lifetime',
 		'checkins' => 'Checkins',
 		'copyright_statement' => 'Site Copyright Statement',
 		'default_category_colors' => 'Default Color For All Categories',
+		'delete_banner_image' => 'Delete Banner Image',
 		'display_contact_page' => 'Display Contact Page',
 		'display_howtohelp_page' => 'Display "How to Help" Page',
 		'email_alerts' => 'Alerts Email Address',
@@ -147,6 +153,7 @@
 		'message' => 'Site Message',
 		'name' => 'Site Name',
 		'private_deployment' => 'Private Deployment',
+		'submit_report_message' => 'Submit Report Message',
 		'share_site_stats' => 'Enable Statistics (Stored on Ushahidi\'s server)',
 		'tagline' => 'Site Tagline',
 		'timezone' => 'Timezone',
