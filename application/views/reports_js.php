@@ -401,39 +401,50 @@
 	}
 	
 	/**
+	 * Switch Views map, or list
+	 */
+	 function switchViews(view)
+	 {
+		 // Hide both divs
+		$("#rb_list-view, #rb_map-view").hide();
+		
+		// Show the appropriate div
+		$($(view).attr("href")).show();
+		
+		// Remove the class "selected" from all parent li's
+		$("#reports-box .report-list-toggle a").parent().removeClass("active");
+		
+		// Add class "selected" to both instances of the clicked link toggle
+		$("."+$(view).attr("class")).parent().addClass("active");
+		
+		// Check if the map view is active
+		if ($("#rb_map-view").css("display") == "block")
+		{
+			// Check if the map has already been created
+			if (mapLoaded == 0)
+			{
+				createIncidentMap();
+			}
+			
+			// Set the current page
+			urlParameters["page"] = $(".pager li a.active").html();
+			
+			// Load the map
+			setTimeout(function(){ showIncidentMap() }, 400);
+		}
+		return false;
+	 }
+	
+	
+	
+	
+	/**
 	 * List/map view toggle
 	 */
 	function addReportViewOptionsEvents()
 	{
 		$("#reports-box .report-list-toggle a").click(function(){
-			// Hide both divs
-			$("#rb_list-view, #rb_map-view").hide();
-			
-			// Show the appropriate div
-			$($(this).attr("href")).show();
-			
-			// Remove the class "selected" from all parent li's
-			$("#reports-box .report-list-toggle a").parent().removeClass("active");
-			
-			// Add class "selected" to both instances of the clicked link toggle
-			$("."+$(this).attr("class")).parent().addClass("active");
-			
-			// Check if the map view is active
-			if ($("#rb_map-view").css("display") == "block")
-			{
-				// Check if the map has already been created
-				if (mapLoaded == 0)
-				{
-					createIncidentMap();
-				}
-				
-				// Set the current page
-				urlParameters["page"] = $(".pager li a.active").html();
-				
-				// Load the map
-				setTimeout(function(){ showIncidentMap() }, 400);
-			}
-			return false;
+			return switchViews($(this));						
 		});
 	}
 	
@@ -464,8 +475,8 @@
 			{
 				urlParameters["page"] = Number(pageNumber);
 				fetchReports();
-				return false;
 			}
+			return false;
 		});
 		
 		return false;
@@ -476,6 +487,9 @@
 	 */
 	function fetchReports()
 	{
+		//check and see what view was last viewed: list, or map.
+		var lastDisplyedWasMap = $("#rb_map-view").css("display") != "none";
+		
 		// Reset the map loading tracker
 		mapLoaded = 0;
 		
@@ -506,6 +520,13 @@
 						attachPagingEvents();
 						addReportHoverEvents();
 						deSelectedFilters = [];
+						
+						//if the map was the last thing the user was looking at:
+						if(lastDisplyedWasMap)
+						{
+							switchViews($("#reports-box .report-list-toggle a.map"));
+							//$('ul.report-list-toggle li a.map').trigger('click');
+						}
 						
 					}, 400);
 				}
