@@ -18,7 +18,7 @@
 					<?php admin::settings_subtabs("site"); ?>
 
 				</h2>
-				<?php print form::open(); ?>
+				<?php print form::open(NULL,array('enctype' => 'multipart/form-data')); ?>
 				<div class="report-form">
 					<?php
 					if ($form_error) {
@@ -64,6 +64,19 @@
 							<?php print form::input('site_tagline', $form['site_tagline'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_banner"); ?>"><?php echo Kohana::lang('settings.site.banner');?></a></h4>
+							<?php if($banner_m != NULL) { ?>
+								<img src="<?php echo url::base().Kohana::config('upload.relative_directory')."/".$banner_m; ?>" alt="<?php Kohana::lang('settings.site.banner'); ?>" /><br/>
+							<?php } ?>
+							<?php echo form::upload('banner_image', '', ''); ?> (&lt;&#61; 250k)
+							<br/>
+							<?php
+								echo form::checkbox('delete_banner_image', '1');
+								echo form::label('delete_banner_image', Kohana::lang("settings.site.delete_banner_image"));
+								
+							?>
+						</div>
+						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_email"); ?>"><?php echo Kohana::lang('settings.site.email_site');?></a> 
 							<br /><?php echo Kohana::lang('settings.site.email_notice');?></h4>
 							<?php print form::input('site_email', $form['site_email'], ' class="text long2"'); ?>
@@ -79,6 +92,10 @@
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_copyright_statement"); ?>"><?php echo Kohana::lang('settings.site.copyright_statement');?></a></h4>
 							<?php print form::textarea('site_copyright_statement', $form['site_copyright_statement'], ' style="height:40px;"'); ?>
+						</div>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_submit_report_message"); ?>"><?php echo Kohana::lang('settings.site.submit_report_message');?></a></h4>
+							<?php print form::textarea('site_submit_report_message', $form['site_submit_report_message'], ' style="height:40px;"'); ?>
 						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_locale"); ?>"><?php echo Kohana::lang('settings.site.language');?></a> (Locale)</h4>

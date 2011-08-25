@@ -1,5 +1,12 @@
 <div id="content">
 	<div class="content-bg">
+
+		<?php if($site_submit_report_message != '') { ?>
+			<div class="green-box" style="margin: 25px 25px 0px 25px">
+				<h3><?php echo $site_submit_report_message; ?></h3>
+			</div>
+		<?php } ?>
+
 		<!-- start report form block -->
 		<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm', 'class' => 'gen_forms')); ?>
 		<input type="hidden" name="latitude" id="latitude" value="<?php echo $form['latitude']; ?>">
@@ -136,12 +143,12 @@
 				</div>
 			</div>
 			<div class="report_right">
-				<?php if (!$multi_country): ?>
+				<?php if ( ! $multi_country AND count($cities) > 1){ ?>
 				<div class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_find_location'); ?></h4>
 					<?php print form::dropdown('select_city',$cities,'', ' class="select" '); ?>
 				</div>
-				<?php endif; ?>
+				<?php } ?>
 				<div class="report_row">
 					<div id="divMap" class="report_map">
 						<div id="geometryLabelerHolder" class="olControlNoSelect">

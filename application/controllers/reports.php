@@ -361,6 +361,9 @@ class Reports_Controller extends Main_Controller {
 		
 		// Pass timezone
 		$this->template->content->site_timezone = Kohana::config('settings.site_timezone');
+		
+		// Pass the submit report message
+		$this->template->content->site_submit_report_message = Kohana::config('settings.site_submit_report_message');
 
 		// Retrieve Custom Form Fields Structure
 		$this->template->content->custom_forms = new View('reports_submit_custom_forms');

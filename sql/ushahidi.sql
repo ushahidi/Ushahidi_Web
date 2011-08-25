@@ -758,8 +758,9 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 CREATE TABLE IF NOT EXISTS `settings` (                                             
     `id` int(10) unsigned NOT NULL auto_increment,                                  
     `site_name` varchar(255) default NULL,                                          
-    `site_tagline` varchar(255) default NULL,                                       
-    `site_email` varchar(120) default NULL,                                         
+    `site_tagline` varchar(255) default NULL,
+    `site_banner_id` int(11) default NULL,
+    `site_email` varchar(120) default NULL,
     `site_key` varchar(100) default NULL,                                           
     `site_language` varchar(10) NOT NULL default 'en_US',                           
     `site_style` varchar(50) NOT NULL default 'default',                            
@@ -767,7 +768,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `site_contact_page` TINYINT NOT NULL DEFAULT '1',                               
     `site_help_page` TINYINT NOT NULL DEFAULT '1',                                  
     `site_message` TEXT NOT NULL DEFAULT '',                                        
-    `site_copyright_statement` TEXT DEFAULT NULL,                           
+    `site_copyright_statement` TEXT DEFAULT NULL,
+    `site_submit_report_message` TEXT NOT NULL DEFAULT '',
     `allow_reports` tinyint(4) NOT NULL default '1',                                
     `allow_comments` tinyint(4) NOT NULL default '1',                               
     `allow_feed` tinyint(4) NOT NULL default '1',                                   
@@ -1458,4 +1460,4 @@ ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '63' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '64' WHERE `id`=1 LIMIT 1;

@@ -95,6 +95,14 @@ class Main_Controller extends Template_Controller {
 		// Retrieve Default Settings
 		$site_name = Kohana::config('settings.site_name');
 		
+		// Get banner image and pass to the header
+		if(Kohana::config('settings.site_banner_id') != NULL){
+			$banner = ORM::factory('media')->find(Kohana::config('settings.site_banner_id'));
+			$this->template->header->banner = $banner->media_link;
+		}else{
+			$this->template->header->banner = NULL;
+		}
+		
 		// Prevent Site Name From Breaking up if its too long
 		// by reducing the size of the font
 		$site_name_style = (strlen($site_name) > 20) ? " style=\"font-size:21px;\"" : "";

@@ -45,12 +45,15 @@ class Settings_Controller extends Admin_Controller
 		(
 			'site_name' => '',
 			'site_tagline' => '',
+			'banner_image' => '',
+			'delete_banner_image' => '',
 			'site_email' => '',
 			'alerts_email' =>  '',
 			'site_language' => '',
 			'site_timezone' => '',
 			'site_message' => '',
 			'site_copyright_statement' => '',
+			'site_submit_report_message' => '',
 			'site_contact_page' => '',
 			'items_per_page' => '',
 			'items_per_page_admin' => '',
@@ -112,9 +115,13 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('twitter_hashtags','length[0,500]');
 			$post->add_rules('api_akismet','length[0,100]', 'alpha_numeric');
+			
+			// Add rules for file upload
+			$files = Validation::factory($_FILES);
+			$files->add_rules('banner_image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[250K]');
 
 			// Test to see if things passed the rule checks
-			if ($post->validate())
+			if ($post->validate() AND $files->validate())
 			{
 				// Yes! everything is valid
 				$settings = new Settings_Model(1);
@@ -124,6 +131,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->alerts_email = $post->alerts_email;
 				$settings->site_message = $post->site_message;
 				$settings->site_copyright_statement = $post->site_copyright_statement;
+				$settings->site_submit_report_message = $post->site_submit_report_message;
 				$settings->site_language = $post->site_language;
 				$settings->site_timezone = $post->site_timezone;
 				if($settings->site_timezone == "0")
@@ -150,7 +158,60 @@ class Settings_Controller extends Admin_Controller
 				$settings->api_akismet = $post->api_akismet;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
-
+				
+				// Deal with banner image now
+				
+				// Check if deleting or updating a new image (or doing nothing)
+				if( isset($post->delete_banner_image) AND $post->delete_banner_image == 1)
+				{	
+					// Delete old badge image
+					ORM::factory('media')->delete($settings->site_banner_id);
+					
+					// Remove from DB table
+					$settings = new Settings_Model(1);
+					$settings->site_banner_id = NULL;
+					$settings->save();
+					
+				}else{
+					// We aren't deleting, so try to upload if we are uploading an image
+					$filename = upload::save('banner_image');
+					if ($filename)
+					{
+						$new_filename = "banner";
+						$file_type = strrev(substr(strrev($filename),0,4));
+	
+						// Large size
+						$l_name = $new_filename.$file_type;
+						Image::factory($filename)->save(Kohana::config('upload.directory', TRUE).$l_name);
+						
+						// Medium size
+						$m_name = $new_filename."_m".$file_type;
+						Image::factory($filename)->resize(80,80,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE).$m_name);
+	
+						// Thumbnail
+						$t_name = $new_filename."_t".$file_type;
+						Image::factory($filename)->resize(60,60,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE).$t_name);
+	
+						// Remove the temporary file
+						unlink($filename);
+						
+						// Save banner image in the media table
+						$media = new Media_Model();
+						$media->media_type = 1; // Image
+						$media->media_link = $l_name;
+						$media->media_medium = $m_name;
+						$media->media_thumb = $t_name;
+						$media->media_date = date("Y-m-d H:i:s",time());
+						$media->save();
+	
+						// Save new banner image in settings
+						$settings = new Settings_Model(1);
+						$settings->site_banner_id = $media->id;
+						$settings->save();
+					}
+				}
 
 				// Delete Settings Cache
 				$this->cache->delete('settings');
@@ -172,7 +233,14 @@ class Settings_Controller extends Admin_Controller
 				$form = arr::overwrite($form, $post->as_array());
 
 				// populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('settings'));
+				if(is_array($files->errors()) AND count($files->errors()) > 0){
+					// Error with file upload
+					$errors = arr::overwrite($errors, $files->errors('settings'));
+				}else{
+					// Error with other form filed
+					$errors = arr::overwrite($errors, $post->errors('settings'));
+				}
+				
 				$form_error = TRUE;
 			}
 		}
@@ -185,10 +253,12 @@ class Settings_Controller extends Admin_Controller
 			(
 				'site_name' => $settings->site_name,
 				'site_tagline' => $settings->site_tagline,
+				'site_banner_id' => $settings->site_banner_id,
 				'site_email' => $settings->site_email,
 				'alerts_email' => $settings->alerts_email,
 				'site_message' => $settings->site_message,
 				'site_copyright_statement' => $settings->site_copyright_statement,
+				'site_submit_report_message' => $settings->site_submit_report_message,
 				'site_language' => $settings->site_language,
 				'site_timezone' => $settings->site_timezone,
 				'site_contact_page' => $settings->site_contact_page,
@@ -210,9 +280,20 @@ class Settings_Controller extends Admin_Controller
 				'api_akismet' => $settings->api_akismet
 			);
 		}
-
 		
-
+		// Get banner image
+		if($settings->site_banner_id != NULL){
+			$banner = ORM::factory('media')->find($settings->site_banner_id);
+			$this->template->content->banner = $banner->media_link;
+			$this->template->content->banner_m = $banner->media_medium;
+			$this->template->content->banner_t = $banner->media_thumb;
+		}else{
+			$this->template->content->banner = NULL;
+			$this->template->content->banner_m = NULL;
+			$this->template->content->banner_t = NULL;
+		}
+		
+		
 		$this->template->colorpicker_enabled = TRUE;
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
