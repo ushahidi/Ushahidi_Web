@@ -211,7 +211,7 @@
 				if (typeof radiusMap == 'undefined' || radiusMap == null)
 				{
 					// Create the map
-					radiusMap = createMap("divMap", latitude, longitude);
+					radiusMap = createMap("divMap", latitude, longitude, defaultZoom);
 					
 					// Add the radius layer
 					addRadiusLayer(radiusMap, latitude, longitude);
@@ -333,7 +333,7 @@
 	function createIncidentMap()
 	{
 		// Creates the map
-		map = createMap('rb_map-view', latitude, longitude);
+		map = createMap('rb_map-view', latitude, longitude, defaultZoom);
 		map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );
 		
 		mapLoaded = 1;
