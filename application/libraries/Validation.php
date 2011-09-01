@@ -109,7 +109,7 @@ class Validation_Core extends ArrayObject {
 		// Load choices
 		$choices = func_get_args();
 		$choices = empty($choices) ? NULL : array_combine($choices, $choices);
-
+		
 		$safe = array();
 		foreach ($all_fields as $i => $field)
 		{

@@ -37,7 +37,22 @@ class Layer_Model extends ORM
 				->add_rules('layer_name','required', 'length[3,80]')
 				->add_rules('layer_color','required', 'length[6,6]');
 		
+		// Add callbacks for the layer url and layer file
+		$array->add_callbacks('layer_url', array($this, 'layer_url_file_check'));
+		$array->add_callbacks('layer_file', array($this, 'layer_url_file_check'));
 		
+		// Pass validation to parent and return
+		return parent::validate($array, $save);
+	}
+	
+	/**
+	 * Performs validation checks on the layer url and layer file - Checks that at least
+	 * one of them has been specified using the applicable validation rules
+	 *
+	 * @param Validation $array Validation object containing the field names to be checked
+	 */
+	public function layer_url_file_check(Validation $array)
+	{
 		// Ensure at least a layer URL or layer file has been specified
 		if (empty($array->layer_url) AND empty($array->layer_file) AND empty($array->layer_file_old))
 		{
@@ -55,10 +70,6 @@ class Layer_Model extends ORM
 		{
 			$array->add_error('layer_url', 'both');
 		}
-		
-		
-		// Pass validation to parent and return
-		return parent::validate($array, $save);
 	}
 	
 	/**
