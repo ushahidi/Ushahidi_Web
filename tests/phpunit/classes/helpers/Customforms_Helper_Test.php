@@ -43,8 +43,6 @@ class Customforms_Helper_Test extends PHPUnit_Framework_TestCase {
 		
 		// Run setup
 		$this->databaseTester->onSetUp();
-		
-		// print customforms::get_custom_forms()->count();
 	}
 	
 	/**

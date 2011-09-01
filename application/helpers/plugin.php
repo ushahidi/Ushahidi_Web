@@ -2,17 +2,34 @@
 /**
  * Plugins helper
  * 
- * @package    Plugin
+ * @package    Ushahidi
+ * @subpackage Helpers
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
  * @license    http://www.ushahidi.com/license.html
  */
 class plugin_Core {
 	
+	/**
+	 * @var array
+	 */
 	protected static $javascripts = array();
+	
+	/**
+	 * @var array
+	 */
 	protected static $stylesheets = array();
+	
+	/**
+	 * @var array
+	 */
 	protected static $sms_providers = array();
-
+	
+	/**
+	 * Adds an array of javascript items to the list of javascript sources
+	 *
+	 * @param array $javascripts
+	 */
 	public static function add_javascript($javascripts = array())
 	{
 		if ( ! is_array($javascripts))
@@ -23,7 +40,13 @@ class plugin_Core {
 			self::$javascripts[] = $javascript;
 		}
 	}
-
+	
+	/**
+	 * Removes a list of javascript items from the list of javascript
+	 * sources
+	 *
+	 * @param array $javascripts
+	 */
 	public static function remove_javascript($javascripts = array())
 	{
 		foreach (self::$javascripts as $key => $javascript)
@@ -32,7 +55,13 @@ class plugin_Core {
 				unset(self::$javascripts[$key]);
 		}
 	}
-
+	
+	/**
+	 * Adds a list of stylesheet items to the list of stylesheets for the
+	 * plugin
+	 *
+	 * @param array $stylesheets
+	 */
 	public static function add_stylesheet($stylesheets = array())
 	{
 		if ( ! is_array($stylesheets))
@@ -44,6 +73,11 @@ class plugin_Core {
 		}
 	}
 	
+	/**
+	 * Adds an SMS provider to the list of available SMS providers
+	 *
+	 * @param array $sms_providers
+	 */
 	public static function add_sms_provider($sms_providers = array())
 	{
 		if ( ! is_array($sms_providers))
@@ -53,8 +87,13 @@ class plugin_Core {
 		{
 			self::$sms_providers[$key] = $sms_provider;
 		}
-	}	
-
+	}
+	
+	/**
+	 * Adds a the stylesheet/javascript to the header of the view file
+	 *
+	 * @param string $type
+	 */
 	public static function render($type)
 	{
 		$files = $type.'s';
@@ -87,6 +126,11 @@ class plugin_Core {
 		return $html;
 	}
 	
+	/**
+	 * Rettuns the list of SMS providers
+	 *
+	 * @return array
+	 */
 	public static function get_sms_providers()
 	{
 		return self::$sms_providers;
@@ -146,7 +190,7 @@ class plugin_Core {
 	 * Discover Plugin Settings Controller
 	 *
 	 * @param   string plugin name
-	 * @return  string plugin settings page
+	 * @return  mixed Plugin settings page on success, FALSE otherwise
 	 */
 	public static function settings($plugin = NULL)
 	{
@@ -158,21 +202,22 @@ class plugin_Core {
 		}
 		else
 		{
-			return false;
+			return FALSE;
 		}
 	}
 	
 	/**
 	 * Delete plugin from Plugin Folder
 	 *
-	 * @param   string   plugin name/folder
+	 * @param string  plugin name/folder
 	 */
 	public static function delete($folder = NULL)
 	{
 		if ($folder)
 		{
 			if (is_dir(PLUGINPATH.$folder))
-			{ // First Delete Files Recursively
+			{ 
+				// First Delete Files Recursively
 				$files = scandir(PLUGINPATH.$folder);
 				array_shift($files);    // remove '.' from array
 				array_shift($files);    // remove '..' from array
@@ -189,7 +234,8 @@ class plugin_Core {
 						}
 						catch (Kohana_Database_Exception $e)
 						{
-							echo 'Caught exception: ',  $e->getMessage(), "\n";
+							// Log exceptions
+							Kohana::log('error', 'Caught exception: '.$e->getMessage());
 						}
 					}
 					else
@@ -200,7 +246,8 @@ class plugin_Core {
 						}
 						catch (Kohana_Database_Exception $e)
 						{
-							echo 'Caught exception: ',  $e->getMessage(), "\n";
+							// Log exceptions
+							Kohana::log('error', 'Caught exception: '.$e->getMessage());
 						}
 					}
 				}
@@ -211,9 +258,9 @@ class plugin_Core {
 	/**
 	 * Temporarily load a config file.
 	 *
-	 * @param   string   config filename, without extension
-	 * @param   boolean  is the file required?
-	 * @return  array
+	 * @param string $name config filename, without extension
+	 * @param boolean $required is the file required?
+	 * @return array
 	 */
 	public static function config_load($name, $required = TRUE)
 	{
