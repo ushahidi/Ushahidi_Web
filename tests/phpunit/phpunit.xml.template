@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit colors="true" bootstrap="bootstrap.php">
     <testsuites>
-    	<testsuite name="Ushahidi_Web Tests">
+    	<testsuite name="Ushahidi_Web_Tests">
     		<directory>./classes</directory>
     	</testsuite>
     </testsuites>

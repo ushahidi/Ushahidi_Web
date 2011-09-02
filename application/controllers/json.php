@@ -505,9 +505,13 @@ class Json_Controller extends Template_Controller
 
 		// Add aditional filter here to only allow for incidents that are in the requested category
 		$incident_id_in = '';
-		if(count($allowed_ids))
+		if(count($allowed_ids) AND $category_id != 0)
 		{
 			$incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
+		}
+		elseif(count($allowed_ids) == 0 AND $category_id != 0)
+		{
+			$incident_id_in = ' AND 3 = 4';
 		}
 
 		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number FROM '.$this->table_prefix.'incident WHERE incident_active = 1 '.$incident_id_in.' GROUP BY '.$groupby_date_text;

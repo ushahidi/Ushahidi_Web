@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 /**
-* Model for Actions
+ * Model for Actions
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -9,7 +9,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     Sharing Model
+ * @subpackage Models
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */

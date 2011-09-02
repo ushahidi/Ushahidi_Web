@@ -832,7 +832,9 @@
 			
 			var startTime = <?php echo $active_startDate ?>;	// Default to most active month
 			var endTime = <?php echo $active_endDate ?>;		// Default to most active month
-					
+			
+			console.log("StartTime is: " + startTime);
+			console.log("endTime is: " + endTime);
 			// get the closest existing dates in the selection options
 			options = $('#startDate > optgroup > option').map(function()
 			{
@@ -840,8 +842,10 @@
 			});
 			startTime = $.grep(options, function(n,i)
 			{
-			  return n >= ('' + startTime) ;
+			  return parseInt(n) >= startTime;
 			})[0];
+			
+			console.log("StartTime is now: " + startTime);
 			
 			options = $('#endDate > optgroup > option').map(function()
 			{
@@ -849,8 +853,10 @@
 			});
 			endTime = $.grep(options, function(n,i)
 			{
-			  return n >= ('' + endTime) ;
+			  return parseInt(n) >= endTime ;
 			})[0];
+			
+			console.log("endTime is now: " + endTime);
 			
 			gCategoryId = '0';
 			gMediaType = 0;
