@@ -51,8 +51,19 @@ class ReportsImporter {
 		{
 			return false;
 		}
+		
 		// So we can assign category id to incidents, based on category title
 		$this->category_ids = ORM::factory('category')->select_list('category_title','id'); 
+		//Since we capitalize the category names from the CSV file, we should also capitlize the 
+		//category titles here so we get case insensative behavior. For some reason users don't
+		//always captilize the cateogry names as they enter them in
+		$temp_cat = array();
+		foreach($this->category_ids as $key=>$value)
+		{
+			$temp_cat[strtoupper($key)] = $value;
+		}
+		$this->category_ids = $temp_cat;
+		
 		// So we can check if incident already exists in database
 		$this->incident_ids = ORM::factory('incident')->select_list('id','id'); 
 		$this->time = date("Y-m-d H:i:s",time());
