@@ -68,13 +68,21 @@ class Feed_Controller extends Controller
 
             foreach($incidents as $incident)
             {
+                $categories = Array();
+                foreach ($incident->category AS $category)
+                {
+                  $categories[] = (string)$category->category_title;
+                }
+              
+              
                 $item = array();
                 $item['id'] = $incident->id;
                 $item['title'] = $incident->incident_title;
                 $item['link'] = $site_url.'reports/view/'.$incident->id;
                 $item['description'] = $incident->incident_description;
                 $item['date'] = $incident->incident_date;
-
+                $item['categories'] = $categories;
+                
                 if($incident->location_id != 0
                     AND $incident->location->longitude
                     AND $incident->location->latitude)
