@@ -315,7 +315,10 @@ div.submit-incident{
 
 div.submit-incident a{
     padding: 8px 10px 8px 35px;
-    background: #368C00 url(../images/submit-incident.jpg) 10px 8px no-repeat;
+    background-color: #368C00;
+    background-image: url(../images/submit-incident.png);
+    background-position:10px 8px;
+    background-repeat:no-repeat;
     color: #FFF;
     text-transform: uppercase;
     font-weight: bold;
@@ -326,7 +329,10 @@ div.submit-incident a{
 
 div.submit-incident a:hover{
     padding: 8px 10px 8px 35px;
-    background: #368C00 url(../images/submit-incident.jpg) 10px 8px no-repeat;
+    background-color: #368C00;
+    background-image: url(../images/submit-incident.png);
+    background-position:10px 8px;
+    background-repeat:no-repeat;
     color: #FFF;
     text-transform: uppercase;
     font-weight: bold;
