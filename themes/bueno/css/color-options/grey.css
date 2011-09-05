@@ -1,0 +1,30 @@
+/* Grey Theme
+--------------------*/
+
+/* Primary Color */
+h1, a,
+table.table-list tbody tr td a,
+.hover .r_details h3 a.r_title,
+div.search-form input.text  { color: #333333; }
+div.search-form input.text:focus,{ border-color: #333333; }
+div.submit-incident a, .btn_submit,
+div.filters ul li a:hover, div.filters ul li a.active,
+ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#333333; }
+
+/* Lighter Primary Color - for hover effects */
+div.submit-incident a:hover, .btn_submit:hover,
+div.search-form input.searchbtn { background-color:#515151; }
+div#mainmenu ul li a:hover, div#mainmenu a.active { border-color:#515151; }
+
+/* Accent Color - used on the primary nav and in the footer area */
+div#mainmenu,
+div#mainmenu ul li a,
+div.footermenu ul li a,
+div.additional-content { border-color:#B0B0B0; }
+div#underfooter { background:#B0B0B0; }
+div.footermenu ul li a,
+div#loggedin_user_action a, div#loggedin_user_action a:visited { color:#B0B0B0; }
+
+/* Page Background Pattern */
+/*-------------------------*/
+body#page { background: transparent url("../images/color-options/grey/bodytile.jpg") repeat; }
