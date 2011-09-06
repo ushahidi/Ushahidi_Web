@@ -16,7 +16,7 @@
 			<!-- footer credits -->
 			<div class="footer-credits">
 				<div class="ushahidi-credits">Powered by the &nbsp;<a href="http://www.ushahidi.com/"><img src="<?php echo url::file_loc('img'); ?>media/img/footer-logo.png" alt="Ushahidi" style="vertical-align:middle" /></a>&nbsp; Platform</div>
-				<div class="additional-credits">Theme inspired by <a href="www.woothemes.com/2009/11/bueno/"><img src="<?php echo url::file_loc('img'); ?>themes/bueno/images/woothemes.png" alt="Woo Themes" style="vertical-align:middle" /></a>  "Bueno"</div>
+				<div class="additional-credits">Theme inspired by <a href="www.woothemes.com/2009/11/bueno/"><img src="<?php echo url::site(); ?>themes/bueno/images/woothemes.png" alt="Woo Themes" style="vertical-align:middle" /></a>  "Bueno"</div>
 			</div>
 			<!-- / footer credits -->
 		
