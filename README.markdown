@@ -7,6 +7,7 @@ via SMS, Web Forms, Email or Twitter. For more information about the platform an
 System Requirements
 -------------------
 To install the platform on your computer/server, the target system must meet the following requirements:
+
 * PHP version 5.2.3 or greater
 * MySQL version 5.0 or greater
 * An HTTP Server. Kohana, which Ushahidi is built on, is known to work with the following web servers: Apache 1.3+, Apache2.0+, lighttpd, and MS IIS.
@@ -15,7 +16,8 @@ To install the platform on your computer/server, the target system must meet the
 
 Required Extensions
 -------------------
-The follwing is a list of PHP extensions that must be installed on your server in order for Ushahidi to run properly.
+The follwing is a list of PHP extensions that must be installed on your server in order for Ushahidi to run properly:
+
 * PCRE (http://php.net/pcre) must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.
 * iconv (http://php.net/iconv) is required for UTF-8 transliteration.
 * mcrypt (http://php.net/mcrypt) is required for encryption.
@@ -51,14 +53,14 @@ Installation
     
     On Unix/Linux, you can change the permissions as follows:
     
-    `cd path-to-webserver-document-root directory`
-    `chmod -R 777 application/config`
-    `chmod -R 777 application/cache`
-    `chmod -R 777 application/logs`
-    `chmod -R 777 media/uploads`
-    `chmod 777 .htaccess`
+    - `cd path-to-webserver-document-root-directory`
+    - `chmod -R 777 application/config`
+    - `chmod -R 777 application/cache`
+    - `chmod -R 777 application/logs`
+    - `chmod -R 777 media/uploads`
+    - `chmod 777 .htaccess`
     
-    The process of configuring file permissions is different for various operating systems. Here are some helpful links about permissions for the Windows (http://support.microsoft.com/kb/308419) and Unix (http://www.washington.edu/computing/unix/permissions.html) operating systems.
+    NOTE: The process of configuring file permissions is different for various operating systems. Here are some helpful links about permissions for the Windows (http://support.microsoft.com/kb/308419) and Unix (http://www.washington.edu/computing/unix/permissions.html) operating systems.
 
 * Create the Ushahidi database
     Ushahidi stores all its information in a database. You must therefore create this database in order to install Ushahidi. This is done as follows:
@@ -70,7 +72,7 @@ Installation
     
     `mysql -u 'username' -p`
     
-    Again, you will be prompted for the <username> database password. At the MySQL prompt, enter the following command:
+    Again, you will be prompted for the 'username' database password. At the MySQL prompt, enter the following command:
     
     `GRANT SELECT, INSERT, DELETE, UPDATE, CREATE, DROP, ALTER, INDEX on 'databasename'.* TO 'username'@'localhost' IDENFIFIED BY 'password';`
     
