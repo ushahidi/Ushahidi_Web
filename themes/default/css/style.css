@@ -297,7 +297,7 @@ div.search-form input.text{
 
 div.search-form input.searchbtn{
     border: #868686 1px solid;
-    background: #EEEEEE url(../images/search-buton.jpg) 5px 5px no-repeat;
+    background: #EEEEEE url(../images/search-button.jpg) 5px 5px no-repeat;
     width: 24px;
     height: 21px;
     margin: 0 0 0 -4px;
@@ -661,8 +661,8 @@ div.report-details{
 .report_detail .r_verified { background:#368C00; }
 .report_detail .r_unverified { background:#A60003; }
 
-.report_detail .r_location { background:transparent url(../images/icon_sprite.png) -5px -163px no-repeat; }
-.report_detail .r_date { background:transparent url(../images/icon_sprite.png) -4px -133px no-repeat; }
+.report_detail .r_location { background: transparent url(../images/icon_sprite.png) -5px -163px no-repeat; }
+.report_detail .r_date { background: transparent url(../images/icon_sprite.png) -4px -133px no-repeat; }
 
 .report-when-where { color:#908B88; margin-bottom:10px; }
 .report-when-where span { padding:3px 5px 3px 18px;  } 
@@ -801,10 +801,10 @@ ul.map-toggles li { display:none; float:right; list-style-type: none; }
 ul.map-toggles li a, 
 ul.map-toggles li a:active { display:inline-block; padding:3px 5px 3px 17px; outline:none; }
 
-a.wider-map { background:transparent url(../images/icon_sprite.png) -4px -202px no-repeat;  }
-a.taller-map { background:transparent url(../images/icon_sprite.png) -4px -221px no-repeat;  }
-a.shorter-map { background:transparent url(../images/icon_sprite.png) -4px -241px no-repeat;  }
-a.smaller-map { background:transparent url(../images/icon_sprite.png) -4px -182px no-repeat;  }
+a.wider-map { background:transparent url(../images/icon_sprite.png) -4px -202px no-repeat; }
+a.taller-map { background:transparent url(../images/icon_sprite.png) -4px -221px no-repeat; }
+a.shorter-map { background:transparent url(../images/icon_sprite.png) -4px -241px no-repeat; }
+a.smaller-map { background:transparent url(../images/icon_sprite.png) -4px -182px no-repeat; }
     
 div.report-additional-reports { padding-top: 5px; border-bottom:1px dotted #C0C2B8; }
 div.report-additional-reports .rb_report {  }
@@ -1005,16 +1005,9 @@ div.incident-notation ul li{
 
 
 /*-----UI Slider CSS-----*/
-.ui-slider {clear: both; top: 5px;}
-.ui-slider  {
-    text-decoration: none !important;
-}
-.ui-slider .ui-slider-handle  {
-    overflow: visible !important;
-}
-.ui-slider .ui-slider-tooltip {
-    display: none;
-}
+.ui-slider { clear: both; top: 5px; text-decoration: none !important; }
+.ui-slider .ui-slider-handle  { overflow: visible !important; }
+.ui-slider .ui-slider-tooltip { display: none; }
 .ui-slider .screenReaderContext {
     position: absolute;
     width: 0;
@@ -1366,11 +1359,7 @@ a.show-more {
     border-bottom:2px #000 solid;
     overflow:auto;
 }
-.report_col1,
-.report_col2,
-.report_col3,
-.report_col4,
-.report_col5{
+.report_col1, .report_col2, .report_col3, .report_col4, .report_col5 {
     float:left;
     padding-right:15px;
 }
@@ -1579,7 +1568,7 @@ ul.pager li a.active {background:#f2f7fa;}
     border : 1px solid #996;
 }
 
-.feedback_forms buton {
+.feedback_forms button {
     height : 22px;
     border : 1px solid #000;
     background : #ccc;
@@ -2072,6 +2061,7 @@ p.labeled-divider { text-align:center; border-top:1px solid #a4a4a4; margin:10px
 p.labeled-divider span { position:relative; top:-8px; display:inline-block; background:#f2f2f2; padding:0 8px; }
         
 /* Report List View */
+.rb_report { position:relative; border-top:1px solid #c0c2b8; overflow:auto; padding-bottom:10px; }
 #rb_list-view { padding:18px 10px 0 0; height:415px; overflow:auto; }
 #rb_list-view .rb_report { 
     position:relative; 
@@ -2147,7 +2137,7 @@ span.r_cat-desc { display:none; }
 .r_details h3 span.r_verified { background:#368C00; }
 .r_details h3 span.r_unverified { background:#A60003; }
 
-/* show on hover */
+/* Show on hover */
 .hover .r_details h3 span { display:inline-block; }  
         
 p.r_date {
@@ -2185,7 +2175,7 @@ a.btn-show { display:none; }
 /* jquery UI theme overrides for accordion */
 #accordion .ui-accordion-header .ui-icon { right:.5em; }
 .ui-accordion .ui-accordion-header a { padding:0.5em 2.2em 0.5em 0.5em; color:#797979; font-weight:bold; }
-#accordion .ui-accordion-header .small-link-buton { 
+#accordion .ui-accordion-header .small-link-button { 
     position:absolute; 
     top:0;
     right:0;
@@ -2195,18 +2185,17 @@ a.btn-show { display:none; }
     text-decoration:underline;
 }
 
-/*active state */
+/* Active state */
 .ui-state-active, .ui-widget-content .ui-state-active { background:#efefef url(../images/bg_filter-accordion-title.png) top repeat-x; }
 .ui-state-active a.f-title { color:#2f4079; }
 .ui-accordion .ui-accordion-content { background:#efefef; }
 
-/* content area */
+/* Content area */
 .ui-accordion .ui-accordion-content { padding:0 8px 18px 8px; font-size:11px; }
 .ui-accordion .ui-accordion-content p { margin-bottom:8px; } 
 .ui-accordion .ui-accordion-content a { color:#1f5e82;  }
 .ui-accordion .ui-accordion-content a.reset,
-.ui-accordion .ui-accordion-header a.reset,
-a.reset { color:#981e01;  }
+.ui-accordion .ui-accordion-header a.reset, a.reset { color:#981e01;  }
 
 /* Filter content boxes */
 .f-category-box { height:258px; }
@@ -2266,7 +2255,7 @@ li.report-listing-category-child { padding-left:20px; }
 #filter-controls    { position:relative; padding:15px; margin-top:-2px; }
 .expected-results {  }
 
-a.filter-buton    { 
+a.filter-button    { 
     position:absolute;  
     right:0px;
     top:11px; 
@@ -2281,7 +2270,7 @@ a.filter-buton    {
     border-radius: 3px;
 }
 
-a:hover.filter-buton { text-decoration:none; background:#707070;  }
+a.filter-button:hover { text-decoration:none; background:#707070;  }
 
 
 /* Icons */
@@ -2293,8 +2282,8 @@ a:hover.filter-buton { text-decoration:none; background:#707070;  }
 .ic-photos { background:transparent url(../images/icons/images.png) no-repeat; }
 .ic-videos { background:transparent url(../images/icons/films.png) no-repeat; }
 .ic-news { background:transparent url(../images/icons/newspapers.png) no-repeat; }
-.ic-verified { background:transparent url(../images/icons/tick-buton.png) no-repeat; }
-.ic-unverified { background:transparent url(../images/icons/cross-buton.png) no-repeat; }
+.ic-verified { background:transparent url(../images/icons/tick-button.png) no-repeat; }
+.ic-unverified { background:transparent url(../images/icons/cross-button.png) no-repeat; }
 
 /* social */
 .ic-twiter { background:transparent url(../images/icons/twiter.png) no-repeat; }
