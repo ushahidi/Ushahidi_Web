@@ -34,13 +34,14 @@ Installation
     of the from [Github, https://github.com/ushahidi/Ushahidi_Web/archives/master] - the files are available in .zip and .tar.gz
     
     To unzip/extract the archive on a typical Unix/Linux command line:
+    
     tar -xvf Ushahidi_Web-xxxx.tar.gz
     unzip Ushahidi_Web-xxxx.zip
     
     This will create a new directory Ushahidi_Web-xxxx containing all the Ushahidi platform files and directories - Move the contents of this directory
     into a directory within your webserver's document root or your public HTML directory.
     
-* Ensure the following directories are writable i.e. have their permission values set to 777
+* Ensure the following directories are writable (i.e. have their permission values set to 777):
     - application/config/config.php
     - application/config
     - application/cache
@@ -49,7 +50,8 @@ Installation
     - .htaccess
     
     On Unix/Linux, you can change the permissions as follows:
-    cd <path-to-webserver-document-root directory>
+    
+    cd path-to-webserver-document-root directory
     chmod -R 777 application/config
     chmod -R 777 application/cache
     chmod -R 777 application/logs
@@ -61,21 +63,21 @@ Installation
 * Create the Ushahidi database
     Ushahidi stores all its information in a database. You must therefore create this database in order to install Ushahidi. This is done as follows:
     
-    mysqladmin -u <username> -p create <databasename>
+    mysqladmin -u 'username' -p create 'databasename'
     
     MySQL will prompt for the password for the <username> database password and then create the initial database files. Next, you must log in and set the 
     database access rights:
     
-    mysql -u <username> -p
+    mysql -u 'username' -p
     
     Again, you will be prompted for the <username> database password. At the MySQL prompt, enter the following command:
     
-    GRANT SELECT, INSERT, DELETE, UPDATE, CREATE, DROP, ALTER, INDEX on <databasename>.* TO '<username>'@'localhost' IDENFIFIED BY '<password>';
+    GRANT SELECT, INSERT, DELETE, UPDATE, CREATE, DROP, ALTER, INDEX on 'databasename'.* TO 'username'@'localhost' IDENFIFIED BY 'password';
     
     Where:
-    - <databasename> is the name of your database
-    - '<username@localhost>' is the name of your MySQL account
-    - '<password>' is the password required for that username
+    - 'databasename' is the name of your database
+    - 'username@localhost' is the name of your MySQL account
+    - 'password' is the password required for that username
 
     Note: Your account must have all the privileges listed above in order to run Ushahidi on your webserver.
 
