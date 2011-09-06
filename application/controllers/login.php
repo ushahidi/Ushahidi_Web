@@ -80,7 +80,9 @@ class Login_Controller extends Template_Controller {
             }
 
             // Load the user
-            $user = ORM::factory('user', $postdata_array['username']);
+            $user = ORM::factory('user')
+            		->orwhere(array('username'=>$postdata_array['username'],'email'=>$postdata_array['username']))
+            		->find();
 
             // If no user with that username found
             if (! $user->id)
