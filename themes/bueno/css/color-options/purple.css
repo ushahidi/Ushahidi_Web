@@ -1,0 +1,29 @@
+/* Purple Theme
+--------------------*/
+
+/* Primary Color */
+h1, a,
+table.table-list tbody tr td a,
+.hover .r_details h3 a.r_title,
+div.footermenu ul li a,
+div.search-form input.text  { color: #3B0466; }
+div.search-form input.text:focus,{ border-color: #3B0466; }
+div.submit-incident a, .btn_submit,
+div.filters ul li a:hover, div.filters ul li a.active,
+ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#3B0466; }
+
+/* Lighter Primary Color - for hover effects */
+div#loggedin_user_action a, div#loggedin_user_action a:visited { color:#560694; }
+div.submit-incident a:hover, .btn_submit:hover,
+div.search-form input.searchbtn { background-color:#560694; }
+div#mainmenu ul li a:hover, div#mainmenu a.active { border-color:#560694; }
+
+/* Accent Color - used on the primary nav and in the footer area */
+div#mainmenu,
+div#mainmenu ul li a,
+div.additional-content { border-color:#D7BCED; }
+div#underfooter { background:#D7BCED; }
+
+/* Page Background Pattern */
+/*-------------------------*/
+body#page { background: transparent url("../images/color-options/purple/bodytile.jpg") repeat; }

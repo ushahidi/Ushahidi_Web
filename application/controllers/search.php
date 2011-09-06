@@ -59,7 +59,7 @@ class Search_Controller extends Main_Controller {
 			 */
               
 			// Phase 1 - Fetch the search string and perform initial sanitization
-			$keyword_raw = (isset($_GET['k']))? preg_replace('/[^\w+]\w*/', '', $_GET['k']) : "";
+			$keyword_raw = (isset($_GET['k']))? preg_replace('#/\w+/#', '', $_GET['k']) : "";
 
 			// Phase 2 - Strip the search string of any HTML and PHP tags that may be present for additional safety              
 			$keyword_raw = strip_tags($keyword_raw);
@@ -136,7 +136,7 @@ class Search_Controller extends Main_Controller {
 							. ' '.Kohana::lang('ui_admin.to')
 							. ' '.( (int) Kohana::config('settings.items_per_page') + $pagination->sql_offset )
 							. ' '.Kohana::lang('ui_admin.of').' '. $pagination->total_items
-							. ' '.Kohana::lang('ui_admin.searching_for').'<strong>'. $keyword_raw . "</strong>"
+							. ' '.Kohana::lang('ui_admin.searching_for').' <strong>'. $keyword_raw . "</strong>"
 							. "</div>";
 			}
 			else

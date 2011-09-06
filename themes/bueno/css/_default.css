@@ -1,0 +1,240 @@
+/*
+Theme Name: Bueno
+Description: Repurposing the woothemes.com's Bueno Wordpress theme into an Ushahidi Theme. 
+Demo: http://www.woothemes.com/2009/11/bueno/
+Version: 1.0
+Author: Caleb Bell
+Author Email: caleb@ushahidi.com
+*/
+
+
+/* Theme Settings
+--------------------*/
+  
+  /* Primary Color */
+  h1, a,
+  table.table-list tbody tr td a,
+  .hover .r_details h3 a.r_title,
+  div.footermenu ul li a,
+  div.search-form input.text  { color: #d75c60; }
+  div.search-form input.text:focus,{ border-color: #d75c60; }
+  div.submit-incident a, .btn_submit,
+  div.filters ul li a:hover, div.filters ul li a.active,
+  ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#d75c60; }
+  
+  /* Lighter Primary Color - for hover effects */
+  div#loggedin_user_action a, div#loggedin_user_action a:visited { color:#f3686d; }
+  div.submit-incident a:hover, .btn_submit:hover,
+  div.search-form input.searchbtn { background-color:#f3686d; }
+  div#mainmenu ul,
+  div#mainmenu ul li a:hover,
+  div#mainmenu a.active { border-color:#f3686d; }
+  
+  /* Accent Color - used on the primary nav and in the footer area */
+  div#mainmenu,
+  div#mainmenu ul li a,
+  div.additional-content { border-color:#FBDDDF; }
+  div#underfooter { background:#FBDDDF; }
+  
+  /* Page Background Pattern */
+  /*----------------------*/
+  body#page { background: transparent url("../images/bodytile.jpg") repeat; }
+
+
+/* Feel free to edit these, but you don't have to. */
+
+/* general styles */
+h1 {
+  font-family: 'PT Sans Narrow', arial, sans-serif;
+  font-size: 25px;
+}
+h2 {
+  color: #666;
+}
+h5, h4 {
+  color: #666;
+  font-family: 'PT Sans Narrow', arial, sans-serif;
+  font-size: 22px;
+  text-transform: uppercase;
+}
+
+/* structural divs */
+div#middle {
+  background: none;
+}
+.big-block {
+  margin-bottom: 26px;
+  padding: 16px 0px 10px;
+}
+div#main {
+  background: #fff;
+  padding: 15px 18px;
+  border: 5px solid #EFEFEF;
+  margin-top: 18px;
+}
+/* top-bar */
+#top-bar {
+  width: 100%;
+  background: #000;
+  height: 40px;
+  position: relative;
+}
+div#searchbox {
+  position: absolute;
+  right: 0;
+  border: none;
+  background: transparent;
+  width: auto;
+}
+div#loggedin_user_action {
+  float: left;
+  width: auto;
+}
+div#loggedin_user_action a, div#loggedin_user_action a:visited {
+  font-weight: bold;
+  padding: 6px;
+  margin-top: 2px;
+  width: auto;
+  display: block;
+  float: left;
+}
+div.search-form input.text {
+  border: 1px solid;
+}
+div.search-form input.text:focus {
+  border: 1px solid;
+}
+div.search-form input.searchbtn {
+  width: auto;
+  height: auto;
+  border: 0;
+  text-indent: 0;
+  color: #FFFFFF;
+  display: block;
+  font-size: 12px;
+  background-image:none;
+  margin-left: 10px;
+  line-height: 17px;
+  padding: 2px 5px 3px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 #424242;
+}
+
+/* header */
+/* logo box */
+div#logo {
+  background-color: transparent;
+  padding-left: 0;
+}
+div#logo h1 a {
+  color: #222222;
+  font-family: 'PT Sans Narrow', arial, sans-serif;
+  font-size: 48px;
+}
+div#logo span {
+  font-style: italic;
+  color: #999;
+  font-family: 'Georgia', serif;
+}
+/* submit report button (in the site header and on the "submit a report" page) */
+div.submit-incident a, .btn_submit {
+  text-shadow: 1px 1px 0 #424242;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+/* primary nav */
+div#mainmenu {
+  background: none;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+  padding: 0;
+  position: relative;
+}
+div#mainmenu ul {
+  position: relative;
+  bottom: -4px;
+}
+div#mainmenu ul li {
+  margin: 0;
+}
+div#mainmenu ul li a {
+  font-family: arial, sans-serif;
+  color: #000;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom-width: 4px;
+  border-bottom-style: solid;
+}
+div#mainmenu ul li a:hover, div#mainmenu a.active {
+  color: inherit;
+  background: transparent;
+}
+/* home page map filters */
+div.filters ul li a {
+  color: #666;
+}
+div.filters ul li a:hover, div.filters ul li a.active {
+  text-shadow: 1px 1px 0 #424242;
+  color:#fff;
+}
+/* home page category filter */
+div.cat-filters {
+  /*border-bottom:1px solid #F3686D;*/
+}
+ul.category-filters {
+  border: 5px solid #C4C4C4;
+}
+.swatch, .item-swatch {
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+ul.category-filters li a:hover, ul.category-filters li a.active {
+  border: 0;
+}
+/* home page how to report */
+div.additional-content {
+  border-width: 5px;
+  border-style: solid;
+}
+/* Home Page incidents/Mainstream News blocks */
+div.content-container {
+  background: none;
+  color: #666;
+}
+div.content-block {
+  background: transparent;
+}
+
+/* reports listing page */
+#reports-box {
+  width: 655px;
+}
+
+#rb_list-view .rb_report {
+  background: #fff;
+}
+/* single report page */
+div.report-additional-reports h5 {
+  font-family: Arial, sans-serif;
+}
+/* get alerts page */
+.step-1 h2 {
+  padding: 0;
+}
+/* footer */
+div#footer {
+  background: #000;
+}
+
+div.footermenu ul li a {
+  text-transform: uppercase;
+  font-weight: bold;
+  border-left: 1px solid #666;
+}
+.additional-credits {
+  margin-top: 18px;
+}

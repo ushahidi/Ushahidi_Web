@@ -1,0 +1,33 @@
+/* Blue Theme
+--------------------*/
+  
+/* Primary Color 17517B */
+/* Lighter Primary Color - for hover effects 1a5d8d */
+/* Accent Color - used on the primary nav and in the footer area  9FCEF1*/
+
+/* Primary Color */
+h1, a,
+table.table-list tbody tr td a,
+.hover .r_details h3 a.r_title,
+div.footermenu ul li a,
+div.search-form input.text  { color: #17517B; }
+div.search-form input.text:focus,{ border-color: #17517B; }
+div.submit-incident a, .btn_submit,
+div.filters ul li a:hover, div.filters ul li a.active,
+ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#17517B; }
+
+/* Lighter Primary Color - for hover effects */
+div#loggedin_user_action a, div#loggedin_user_action a:visited { color:#1a5d8d; }
+div.submit-incident a:hover, .btn_submit:hover,
+div.search-form input.searchbtn { background-color:#1a5d8d; }
+div#mainmenu ul li a:hover, div#mainmenu a.active { border-color:#1a5d8d; }
+
+/* Accent Color - used on the primary nav and in the footer area */
+div#mainmenu,
+div#mainmenu ul li a,
+div.additional-content { border-color:#9FCEF1; }
+div#underfooter { background:#9FCEF1; }
+
+/* Page Background Pattern */
+/*-------------------------*/
+body#page { background: transparent url("../images/color-options/blue/bodytile.jpg") repeat; }

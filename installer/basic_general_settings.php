@@ -47,12 +47,12 @@
 					<tbody>
 						<tr>
 							<th scope="row"><label for="site_name">Site Name</label></th>
-							<td><input type="text" value="<?php print $form->value('site_name') == "" ? $_SESSION['site_name'] : $form->value('site_name'); ?>" size="25" id="site_name" name="site_name"/></td>
+							<td><input type="text" value="<?php print $form->value('site_name') == "" ? (empty($_SESSION['site_name'])?null:$_SESSION['site_name']) : $form->value('site_name'); ?>" size="25" id="site_name" name="site_name"/></td>
 							<td>The name of your site.</td>
 						</tr>
 						<tr>
 							<th scope="row"><label for="site_tagline">Site Tagline.</label></th>
-							<td><input type="text" value="<?php print $form->value('site_tagline') == "" ? $_SESSION['site_tagline'] : $form->value('site_tagline'); ?>" size="25" id="site_tagline" name="site_tagline"/></td>
+							<td><input type="text" value="<?php print $form->value('site_tagline') == "" ? (empty($_SESSION['site_tagline'])?null:$_SESSION['site_tagline']) : $form->value('site_tagline'); ?>" size="25" id="site_tagline" name="site_tagline"/></td>
 							<td>Your tagline </td>
 						</tr>
 						 <tr>
@@ -67,7 +67,7 @@
 						</tr>
 						<tr>
 							<th scope="row"><label for="site_email">Site Email Address</label></th>
-							<td><input type="text" value="<?php print $form->value('site_email') == "" ? $_SESSION['site_email'] : $form->value('site_email'); ?>" size="25" id="site_email" name="site_email"/></td>
+							<td><input type="text" value="<?php print $form->value('site_email') == "" ? (empty($_SESSION['site_email'])?null:$_SESSION['site_email']) : $form->value('site_email'); ?>" size="25" id="site_email" name="site_email"/></td>
 							<td>Site wide email communication will be funneled through this address.</td>
 						</tr>
 					   	<tr>

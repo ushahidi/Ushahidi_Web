@@ -68,17 +68,17 @@
 						</tr>
 						<tr>
 							<th scope="row"><label for="db_name">Database Name</label></th>
-							<td><input type="text" value="<?php print $form->value('db_name') == "" ? $_SESSION['db_name'] : $form->value('db_name'); ?>" size="25" id="db_name" name="db_name"/></td>
+							<td><input type="text" value="<?php print $form->value('db_name') == "" ? !empty($_SESSION['db_name']) : $form->value('db_name'); ?>" size="25" id="db_name" name="db_name"/></td>
 							<td>The name of the database you want to run Ushahidi in. </td>
 						</tr>
 						<tr>
 							<th scope="row"><label for="username">User Name</label></th>
-							<td><input type="text" value="<?php print $form->value('username') == "" ? $_SESSION['username'] : $form->value('username'); ?>" size="25" id="username" name="username"/></td>
+							<td><input type="text" value="<?php print $form->value('username') == "" ? !empty($_SESSION['username']) : $form->value('username'); ?>" size="25" id="username" name="username"/></td>
 							<td>Your database username.</td>
 						</tr>
 						<tr>
 							<th scope="row"><label for="pwd">Password</label></th>
-							<td><input type="password" value="<?php print $form->value('password') == "" ? $_SESSION['password'] : $form->value('password'); ?>" size="25" id="password" name="password"/></td>
+							<td><input type="password" value="<?php print $form->value('password') == "" ? !empty($_SESSION['password']) : $form->value('password'); ?>" size="25" id="password" name="password"/></td>
 							<td>Your database password.</td>
 						</tr>
 						
@@ -89,7 +89,7 @@
 						</tr>
 						<tr>
 							<th scope="row"><label for="table_prefix">Table Prefix</label></th>
-							<td><input type="text" size="25" value="<?php print $form->value('table_prefix') == "" ? $_SESSION['table_prefix'] : $form->value('table_prefix'); ?>" id="table_prefix" name="table_prefix"/></td>
+							<td><input type="text" size="25" value="<?php print $form->value('table_prefix') == "" ? !empty($_SESSION['table_prefix']) : $form->value('table_prefix'); ?>" id="table_prefix" name="table_prefix"/></td>
 							<td>Normally you won't change the table prefix.	 However, If you want to run multiple Ushahidi installations from a single database you can do that by changing the prefix here.</td>
 						</tr>
 						<input type="hidden" name="connection" />
