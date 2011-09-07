@@ -31,7 +31,7 @@ NOTE: Need to figure out what extensions you already have installed on your serv
 
 Installation
 ------------
-* Download and extract Ushahidi
+* Download and extract Ushahidi:
     You can obtain the official release of the software from [http://download.ushahidi.com] Alternatively, you can obtain the release running the latest version 
     of the from [Github, https://github.com/ushahidi/Ushahidi_Web/archives/master] - the files are available in .zip and .tar.gz
     
@@ -62,7 +62,7 @@ Installation
         
     NOTE: The process of configuring file permissions is different for various operating systems. Here are some helpful links about permissions for the Windows (http://support.microsoft.com/kb/308419) and Unix (http://www.washington.edu/computing/unix/permissions.html) operating systems.
 
-* Create the Ushahidi database
+* Create the Ushahidi database:
     Ushahidi stores all its information in a database. You must therefore create this database in order to install Ushahidi. This is done as follows:
     
     `mysqladmin -u 'username' -p create 'databasename'`
@@ -83,7 +83,7 @@ Installation
 
     Note: Your account must have all the privileges listed above in order to run Ushahidi on your webserver.
 
-* Run the install script
+* Run the install script:
     To run the install script, point your browser to the base url of your website: (e.g. http://www.example.com).
     
     You will be guided through a series of screens to set up the database and site settings depending on the installation method you choose (Basic or Advanced)
