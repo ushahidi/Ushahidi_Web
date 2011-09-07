@@ -12,7 +12,7 @@ Ushahidi 2.1 (Tunis), 09-08-2011
     - Streamlined the list of parameters for filtering reports on the frontend
     - Implemented category sorting in a drag and drop fashion
     - A new blocks feature to allow the user to toggle the display of certain sections on the front-end
-    - Custom forms feature for augmenting data collection via the reports submission page
+    - Enhanced the custom forms feature (courtesy of the Konpa Group) to better augment data collection via the reports submission page
     - Ability to add geometries (polygons) to a report
     - Option to get a taller/wider map in the report viewing page
 * Checkins (Experimental)
@@ -49,10 +49,20 @@ Ushahidi 2.0 (Luanda), 22-11-2010
     - SMSSync plugin for the SMSSync Android application
 * Scheduler
     - Ability to schedule tasks in cron like fashion
-
-Ushahidi 1.2
-------------------------------
-[This was right after Haiti in 2010. A shitload of stuff got added that time]
+* Upgrader
+    - An upgrader to automatically update the platform the latest release
+    
+Ushahidi 1.2 (After Haiti in Jan 2010)
+--------------------------------------
+*Usability
+    - A collapsible category tree on the submit report page
+* Clustering
+    - Clustering of reports is now on the server side. It was previously being done on the client side via JavaScript
+* Custom Forms
+    - A custom forms feature to collect additional information in addition to that in the "Submit Report" page
+* Report Edit Logs
+    - Edit logs for a report are now available so a user of the admin console can see the series of changes/revisions/edits 
+      that have been made to a report
 
 Ushahidi 1.0 (Mogadishu) 10-12-2009
 -----------------------------------
