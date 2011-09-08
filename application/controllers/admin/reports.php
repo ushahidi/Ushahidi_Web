@@ -806,10 +806,11 @@ class Reports_Controller extends Admin_Controller
 		$this->template->treeview_enabled = TRUE;
 		$this->template->json2_enabled = TRUE;
 		
-		$this->template->js = new View('admin/reports_edit_js');
+		$this->template->js = new View('reports_submit_edit_js');
+		$this->template->js->edit_mode = TRUE;
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
-
+		
 		if ( ! $form['latitude'] OR !$form['latitude'])
 		{
 			$this->template->js->latitude = Kohana::config('settings.default_lat');
@@ -823,7 +824,7 @@ class Reports_Controller extends Admin_Controller
 		
 		$this->template->js->incident_zoom = $form['incident_zoom'];
 		$this->template->js->geometries = $form['geometry'];
-
+		
 		// Inline Javascript
 		$this->template->content->date_picker_js = $this->_date_picker_js();
 		$this->template->content->color_picker_js = $this->_color_picker_js();
@@ -1505,22 +1506,6 @@ class Reports_Controller extends Admin_Controller
 			return;
 		}
 	}
-
-
-	/**
-	 * Ajax call to update Incident Reporting Form
-	 */
-    public function switch_form()
-    {
-        $this->template = "";
-        $this->auto_render = FALSE;
-
-        isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
-        isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
-		$form_fields = customforms::switcheroo($incident_id,$form_id);
-	
-        echo json_encode(array("status"=>"success", "response"=>$form_fields));
-    }
 
 	/**
 	 * Creates a SQL string from search keywords

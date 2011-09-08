@@ -390,7 +390,9 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->treeview_enabled = TRUE;
 		$this->themes->colorpicker_enabled = TRUE;
 		
-		$this->themes->js = new View('reports_submit_js');
+		$this->themes->js = new View('reports_submit_edit_js');
+		$this->themes->js->edit_mode = FALSE;
+		$this->themes->js->incident_zoom = FALSE;
 		$this->themes->js->default_map = Kohana::config('settings.default_map');
 		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
 		if (!$form['latitude'] OR !$form['latitude'])
