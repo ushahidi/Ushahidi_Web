@@ -11,6 +11,7 @@
 		<?php print form::open(NULL, array('enctype' => 'multipart/form-data', 'id' => 'reportForm', 'name' => 'reportForm', 'class' => 'gen_forms')); ?>
 		<input type="hidden" name="latitude" id="latitude" value="<?php echo $form['latitude']; ?>">
 		<input type="hidden" name="longitude" id="longitude" value="<?php echo $form['longitude']; ?>">
+		<input type="hidden" name="country_name" id="country_name" value="<?php echo $form['country_name'];?>" />
 		<div class="big-block">
 			<h1><?php echo Kohana::lang('ui_main.reports_submit_new'); ?></h1>
 			<?php if ($form_error): ?>

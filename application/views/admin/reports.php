@@ -103,7 +103,9 @@
 									$incident_description = text::limit_chars(strip_tags($incident->incident_description), 150, "...", true);
 									$incident_date = $incident->incident_date;
 									$incident_date = date('Y-m-d', strtotime($incident->incident_date));
-									$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
+									
+									// Mode of submission... WEB/SMS/EMAIL?
+									$incident_mode = $incident->incident_mode;								
 
 									//XXX incident_Mode will be discontinued in favour of $service_id
 									if ($incident_mode == 1)	// Submitted via WEB
@@ -144,7 +146,8 @@
 									}
 
 									$incident_location = $locations[$incident->location_id];
-
+									$country_id = $country_ids[$incident->location_id]['country_id'];
+							
 									// Retrieve Incident Categories
 									$incident_category = "";
 									foreach($incident->incident_category as $category)
@@ -189,7 +192,7 @@
 												<p><?php echo $incident_description; ?>... <a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
 											</div>
 											<ul class="info">
-												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: <strong><?php echo $incident_location; ?></strong>, <strong><?php if(Kohana::config('settings.default_country') != '') { echo $countries[Kohana::config('settings.default_country')]; } ?></strong></li>
+												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: <strong><?php echo $incident_location; ?></strong>,<strong><?php if ($country_id !=0) { echo $countries[$country_id];}?></strong></li>
 												<li><?php echo Kohana::lang('ui_main.submitted_by');?> <strong><?php echo $submit_by; ?></strong> via <strong><?php echo $submit_mode; ?></strong></li>
 											</ul>
 											<ul class="links">

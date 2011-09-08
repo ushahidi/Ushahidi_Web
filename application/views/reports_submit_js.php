@@ -26,7 +26,7 @@
 		    // get jQuery version of 'this'
 		    var $input = jQuery(this),
 
-		    // capture the rest of the variable to allow for reuse
+		    // Capture the rest of the variable to allow for reuse
 		      title = $input.attr('title'),
 		      $form = jQuery(this.form),
 		      $win = jQuery(window);
@@ -37,16 +37,17 @@
 		      }
 		    }
 
-		    // only apply logic if the element has the attribute
+		    // Only apply logic if the element has the attribute
 		    if (title) { 
-		      // on blur, set value to title attr if text is blank
+			
+		      // On blur, set value to title attr if text is blank
 		      $input.blur(function () {
 		        if (this.value === '') {
 		          $input.val(title).addClass(blurClass);
 		        }
 		      }).focus(remove).blur(); // now change all inputs to title
 
-		      // clear the pre-defined text when form is submitted
+		      // Clear the pre-defined text when form is submitted
 		      $form.submit(remove);
 		      $win.unload(remove); // handles Firefox's autocomplete
 			  $(".btn_find").click(remove);
@@ -190,12 +191,20 @@
 		    lastPixel = pixel;
 		}
 
-		/* Featrue stopped moving */
+		/* Feature stopped moving */
 		function endDrag(feature, pixel) {
 		    for (f in selectedFeatures) {
 		        f.state = OpenLayers.State.UPDATE;
 		    }
 			refreshFeatures();
+			
+			// Fetching Lat Lon Values
+		  	var latitude = parseFloat($("#latitude").val());
+			var longitude = parseFloat($("#longitude").val());
+			
+			// Looking up country name using reverse geocoding
+			var latlng = new google.maps.LatLng(latitude, longitude);
+			reverseGeocode(latlng);
 		}
 		
 		function refreshFeatures(event) {
@@ -208,6 +217,7 @@
 				if (vlayer.features.length == 1 && vlayer.features[i].geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
 					// If feature is a Single Point - save as lat/lon
 				} else {
+				
 					// Otherwise, save geometry values
 					// Convert to Well Known Text
 					var format = new OpenLayers.Format.WKT();
@@ -253,10 +263,11 @@
 		}
 		
 		function updateFeature(feature, color, strokeWidth){
-			// create a symbolizer from exiting stylemap
+		
+			// Create a symbolizer from exiting stylemap
 			var symbolizer = feature.layer.styleMap.createSymbolizer(feature);
 			
-			// color available?
+			// Color available?
 			if (color) {
 				symbolizer['fillColor'] = "#"+color;
 				symbolizer['strokeColor'] = "#"+color;
@@ -269,7 +280,7 @@
 				}
 			}
 			
-			// stroke available?
+			// Stroke available?
 			if (parseFloat(strokeWidth)) {
 				symbolizer['strokeWidth'] = parseFloat(strokeWidth);
 			} else if ( typeof(feature.strokewidth) != 'undefined' && feature.strokewidth !='' ) {
@@ -307,7 +318,6 @@
 
 			<?php echo map::layers_js(FALSE); ?>
 			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-			
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition());
@@ -315,10 +325,6 @@
 			map.addControl(new OpenLayers.Control.Scale('mapScale'));
 			map.addControl(new OpenLayers.Control.LayerSwitcher());
 			
-			
-			/********************/
-			/********************/
-			/********************/
 			// Vector/Drawing Layer Styles
 			style1 = new OpenLayers.Style({
 				pointRadius: "8",
@@ -449,11 +455,11 @@
 			}
 			?>
 			
-			// create a lat/lon object
+			// Create a lat/lon object
 			var startPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
 			startPoint.transform(proj_4326, map.getProjectionObject());
 			
-			// display the map centered on a latitude and longitude (Google zoom levels)
+			// Display the map centered on a latitude and longitude (Google zoom levels)
 			map.setCenter(startPoint, <?php echo $default_zoom; ?>);
 			
 			// Create the Editing Toolbar
@@ -512,9 +518,10 @@
 			});
 			
 			// GeoCode
-			$('.btn_find').live('click', function () {
+			$('.btn_find').live('click', function () {	
 				geoCode();
 			});
+			
 			$('#location_find').bind('keypress', function(e) {
 				var code = (e.keyCode ? e.keyCode : e.which);
 				if(code == 13) { //Enter keycode
@@ -629,7 +636,8 @@
 						selectedFeatures[f].lon = newlat;
 						selectedFeatures[f].lat = newlon;
 						vlayer.drawFeature(selectedFeatures[f]);
-				    }
+				    }	
+				
 				}
 				else
 				{
@@ -744,9 +752,23 @@
 	        collapsed: true,
 	        unique: false
 	      });
-	
+		 
 		});
-        
+		
+		// Reverse GeoCoder
+		function reverseGeocode(latlng)
+		{
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({'latLng': latlng}, function(results, status){
+				if (status == google.maps.GeocoderStatus.OK) {
+						var country = results[0].address_components.pop().long_name;
+						$("#country_name").val(country);
+      			} else {
+        			console.log("Geocoder failed due to: " + status);
+      			}
+			});
+		}
+	
 		function formSwitch(form_id, incident_id)
         {
             var answer = confirm('Are You Sure You Want To SWITCH Forms?');

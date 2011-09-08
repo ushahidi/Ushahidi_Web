@@ -86,7 +86,7 @@ class Reports_Controller extends Admin_Controller
 			$keyword_raw = "";
 		}
 
-		// check, has the form been submitted?
+		// Check, has the form been submitted?
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
@@ -95,7 +95,7 @@ class Reports_Controller extends Admin_Controller
 		{
 			$post = Validation::factory($_POST);
 
-			 //	 Add some filters
+			 //	Add some filters
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
@@ -104,7 +104,8 @@ class Reports_Controller extends Admin_Controller
 
 			if ($post->validate())
 			{
-				if ($post->action == 'a')		// Approve Action
+				// Approve Action
+				if ($post->action == 'a')		
 				{
 					foreach($post->incident_id as $item)
 					{
@@ -115,7 +116,8 @@ class Reports_Controller extends Admin_Controller
 
 							// Tag this as a report that needs to be sent out as an alert
 							if ($update->incident_alert_status != '2')
-							{ // 2 = report that has had an alert sent
+							{ 
+								// 2 = report that has had an alert sent
 								$update->incident_alert_status = '1';
 							}
 
@@ -124,7 +126,9 @@ class Reports_Controller extends Admin_Controller
 							$verify = new Verify_Model();
 							$verify->incident_id = $item;
 							$verify->verified_status = '1';
-							$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+							
+							// Record 'Verified By' Action
+							$verify->user_id = $_SESSION['auth_user']->id;			
 							$verify->verified_date = date("Y-m-d H:i:s",time());
 							$verify->save();
 
@@ -134,9 +138,10 @@ class Reports_Controller extends Admin_Controller
 					}
 					$form_action = strtoupper(Kohana::lang('ui_admin.approved'));
 				}
-				elseif ($post->action == 'u')	// Unapprove Action
+				// Unapprove Action
+				elseif ($post->action == 'u')	
 				{
-					foreach($post->incident_id as $item)
+					foreach ($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
 						if ($update->loaded == true) {
@@ -153,7 +158,9 @@ class Reports_Controller extends Admin_Controller
 							$verify = new Verify_Model();
 							$verify->incident_id = $item;
 							$verify->verified_status = '0';
-							$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+							
+							// Record 'Verified By' Action
+							$verify->user_id = $_SESSION['auth_user']->id;			
 							$verify->verified_date = date("Y-m-d H:i:s",time());
 							$verify->save();
 
@@ -163,9 +170,10 @@ class Reports_Controller extends Admin_Controller
 					}
 					$form_action = strtoupper(Kohana::lang('ui_admin.unapproved'));
 				}
-				elseif ($post->action == 'v')	// Verify Action
+				// Verify Action
+				elseif ($post->action == 'v')	
 				{
-					foreach($post->incident_id as $item)
+					foreach ($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
 						$verify = new Verify_Model();
@@ -182,15 +190,19 @@ class Reports_Controller extends Admin_Controller
 							$update->save();
 
 							$verify->incident_id = $item;
-							$verify->user_id = $_SESSION['auth_user']->id;			// Record 'Verified By' Action
+							// Record 'Verified By' Action
+							$verify->user_id = $_SESSION['auth_user']->id;			
 							$verify->verified_date = date("Y-m-d H:i:s",time());
 							$verify->save();
 						}
 					}
+					
 					// Set the form action
 					$form_action = strtoupper(Kohana::lang('ui_admin.verified_unverified'));
 				}
-				elseif ($post->action == 'd')	//Delete Action
+				
+				//Delete Action
+				elseif ($post->action == 'd')	
 				{
 					foreach($post->incident_id as $item)
 					{
@@ -258,7 +270,7 @@ class Reports_Controller extends Admin_Controller
 				->where($filter)
 				->count_all()
 			));
-
+			
 		$incidents = ORM::factory('incident')
 			->join('location', 'incident.location_id', 'location.id','INNER')
 			->where($filter)
@@ -269,26 +281,30 @@ class Reports_Controller extends Admin_Controller
 		foreach ($incidents as $incident)
 		{
 			$location_ids[] = $incident->location_id;
+				
 		}
-		
-		//check if location_ids is not empty
+		// Check if location_ids is not empty
 		if( count($location_ids ) > 0 ) 
 		{
-			$locations_result = ORM::factory('location')->in('id',implode(',',$location_ids))->find_all();
+			$locations_result = ORM::factory('location')
+				->in('id',implode(',',$location_ids))
+				->find_all();
 			$locations = array();
+			$country_ids = array();
 			foreach ($locations_result as $loc)
 			{
 				$locations[$loc->id] = $loc->location_name;
-			}
+				$country_ids[$loc->id]['country_id'] = $loc->country_id;		 
+			}	
 		}
 		else
 		{
 			$locations = array();
 		}
-
 		$this->template->content->locations = $locations;
-
-		//GET countries
+		$this->template->content->country_ids = $country_ids;
+	
+		// GET countries
 		$countries = array();
 		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
 		{
@@ -352,6 +368,7 @@ class Reports_Controller extends Admin_Controller
 			'geometry' => array(),
 			'location_name' => '',
 			'country_id' => '',
+			'country_name' =>'',
 			'incident_category' => array(),
 			'incident_news' => array(),
 			'incident_video' => array(),
@@ -376,11 +393,11 @@ class Reports_Controller extends Admin_Controller
 		$form['locale'] = Kohana::config('locale.language');
 		//$form['latitude'] = Kohana::config('settings.default_lat');
 		//$form['longitude'] = Kohana::config('settings.default_lon');
-		$form['country_id'] = Kohana::config('settings.default_country');
 		$form['incident_date'] = date("m/d/Y",time());
 		$form['incident_hour'] = date('h');
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
+		$form['country_id'] = Kohana::config('settings.default_country');
 		
 		// initialize custom field array
         $form['custom_field'] = customforms::get_custom_form_fields($id,'',true);
@@ -411,6 +428,10 @@ class Reports_Controller extends Admin_Controller
 			}
 			$countries[$country->id] = $this_country;
 		}
+		
+		// Initialize Default Value for Hidden Field Country Name, just incase Reverse Geo coding yields no result
+		$form['country_name'] = $countries[$form['country_id']];
+		
 		$this->template->content->countries = $countries;
 
 		//GET custom forms
@@ -443,6 +464,7 @@ class Reports_Controller extends Admin_Controller
 
 				// Has a report already been created for this Message?
 				if ($message->incident_id != 0) {
+					
 					// Redirect to report
 					url::redirect('admin/reports/edit/'. $message->incident_id);
 				}
@@ -530,7 +552,7 @@ class Reports_Controller extends Admin_Controller
 			}
 		}
 
-		// check, has the form been submitted, if so, setup validation
+		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
@@ -843,7 +865,7 @@ class Reports_Controller extends Admin_Controller
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory($_POST);
 
-			 //	 Add some filters
+			 //	Add some filters
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
@@ -877,6 +899,7 @@ class Reports_Controller extends Admin_Controller
 			{
 				// Add Filters
 				$filter = " ( 1=1";
+				
 				// Report Type Filter
 				foreach($post->data_point as $item)
 				{
@@ -1033,13 +1056,14 @@ class Reports_Controller extends Admin_Controller
 				exit;
 
 			}
+			
 			// No! We have validation errors, we need to show the form again, with the errors
 			else
 			{
-				// repopulate the form fields
+				// Repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
-				// populate the error fields, if any
+				// Populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
@@ -1056,18 +1080,18 @@ class Reports_Controller extends Admin_Controller
 
 	public function upload()
 	{
-
 		// If user doesn't have access, redirect to dashboard
 		if ( ! admin::permissions($this->user, "reports_upload"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}
 
-		if($_SERVER['REQUEST_METHOD'] == 'GET') {
+		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->template->content = new View('admin/reports_upload');
 			$this->template->content->title = 'Upload Reports';
 			$this->template->content->form_error = false;
 		}
+		
 		if ($_SERVER['REQUEST_METHOD']=='POST')
 		{
 			$errors = array();
@@ -1098,12 +1122,16 @@ class Reports_Controller extends Admin_Controller
 					{
 						$errors[] = Kohana::lang('ui_admin.file_open_error');
 					}
-				} // file exists?
+				} 
+				
+				// File exists?
 				else
 				{
 					$errors[] = Kohana::lang('ui_admin.file_not_found_upload');
 				}
-			} // upload errors?
+			} 
+			
+			// Upload errors?
 			else
 			{
 				$errors[] = $_FILES['csvfile']['error'];
@@ -1116,7 +1144,7 @@ class Reports_Controller extends Admin_Controller
 				$this->template->content->errors = $errors;
 				$this->template->content->form_error = 1;
 			}
-		} // _POST
+		}
 	}
 
 	/**
@@ -1155,14 +1183,14 @@ class Reports_Controller extends Admin_Controller
 		}
 
 
-		// setup and initialize form field names
+		// Setup and initialize form field names
 		$form = array
 		(
 			'locale'	  => '',
 			'incident_title'	  => '',
 			'incident_description'	  => ''
 		);
-		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 		if ($saved == 'saved')
@@ -1177,13 +1205,13 @@ class Reports_Controller extends Admin_Controller
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
-		// check, has the form been submitted, if so, setup validation
+		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory($_POST);
 
-			 //	 Add some filters
+			 //	Add some filters
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
@@ -1211,11 +1239,14 @@ class Reports_Controller extends Admin_Controller
 
 
 				// SAVE AND CLOSE?
-				if ($post->save == 1)		// Save but don't close
+				// Save but don't close
+				if ($post->save == 1)		
 				{
 					url::redirect('admin/reports/translate/'. $incident_l->id .'/saved/?iid=' . $incident_id);
 				}
-				else						// Save and close
+				
+				// Save and close
+				else						
 				{
 					url::redirect('admin/reports/');
 				}
@@ -1224,10 +1255,10 @@ class Reports_Controller extends Admin_Controller
 			// No! We have validation errors, we need to show the form again, with the errors
 			else
 			{
-				// repopulate the form fields
+				// Repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
-				// populate the error fields, if any
+				// Populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
@@ -1273,13 +1304,13 @@ class Reports_Controller extends Admin_Controller
 		$this->auto_render = FALSE;
 		$this->template = "";
 
-		// check, has the form been submitted, if so, setup validation
+		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = Validation::factory($_POST);
 
-			 //	 Add some filters
+			 //	Add some filters
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
@@ -1363,7 +1394,8 @@ class Reports_Controller extends Admin_Controller
 	{
 		for ($i=1; $i <= 12 ; $i++)
 		{
-			$hour_array[sprintf("%02d", $i)] = sprintf("%02d", $i);		// Add Leading Zero
+			// Add Leading Zero
+			$hour_array[sprintf("%02d", $i)] = sprintf("%02d", $i);		
 		}
 		return $hour_array;
 	}
@@ -1372,7 +1404,8 @@ class Reports_Controller extends Admin_Controller
 	{
 		for ($j=0; $j <= 59 ; $j++)
 		{
-			$minute_array[sprintf("%02d", $j)] = sprintf("%02d", $j);	// Add Leading Zero
+			// Add Leading Zero
+			$minute_array[sprintf("%02d", $j)] = sprintf("%02d", $j);	
 		}
 
 		return $minute_array;

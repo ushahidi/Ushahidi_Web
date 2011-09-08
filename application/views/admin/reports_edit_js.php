@@ -32,10 +32,10 @@
 		  }
 
 		  return this.each(function () {
-		    // get jQuery version of 'this'
+		    // Get jQuery version of 'this'
 		    var $input = jQuery(this),
 
-		    // capture the rest of the variable to allow for reuse
+		    // Capture the rest of the variable to allow for reuse
 		      title = $input.attr('title'),
 		      $form = jQuery(this.form),
 		      $win = jQuery(window);
@@ -46,16 +46,17 @@
 		      }
 		    }
 
-		    // only apply logic if the element has the attribute
+		    // Only apply logic if the element has the attribute
 		    if (title) { 
-		      // on blur, set value to title attr if text is blank
+			
+		      // On blur, set value to title attr if text is blank
 		      $input.blur(function () {
 		        if (this.value === '') {
 		          $input.val(title).addClass(blurClass);
 		        }
 		      }).focus(remove).blur(); // now change all inputs to title
 
-		      // clear the pre-defined text when form is submitted
+		      // Clear the pre-defined text when form is submitted
 		      $form.submit(remove);
 		      $win.unload(remove); // handles Firefox's autocomplete
 			  $(".btn_find").click(remove);
@@ -79,7 +80,6 @@
 			
 			<?php echo map::layers_js(FALSE); ?>
 			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-			
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition());
@@ -218,11 +218,11 @@
 			?>
 			
 			
-			// create a lat/lon object
+			// Create a lat/lon object
 			var startPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
 			startPoint.transform(proj_4326, map.getProjectionObject());
 			
-			// display the map centered on a latitude and longitude (Google zoom levels)
+			// Display the map centered on a latitude and longitude (Google zoom levels)
 			map.setCenter(startPoint, <?php echo ($incident_zoom) ? $incident_zoom : $default_zoom; ?>);
 			
 			// Create the Editing Toolbar
@@ -232,8 +232,6 @@
 			);
 			map.addControl(panel);
 			panel.activateControl(panel.controls[0]);
-			
-			
 			drag.activate();
 			highlightCtrl.activate();
 			selectCtrl.activate();
@@ -757,6 +755,12 @@
 		        f.state = OpenLayers.State.UPDATE;
 		    }
 			refreshFeatures();
+			// Fetching Lat Lon Values
+		  	var latitude = parseFloat($("#latitude").val());
+			var longitude = parseFloat($("#longitude").val());
+			// Looking up country name using reverse geocoding
+			var latlng = new google.maps.LatLng(latitude, longitude);
+			reverseGeocode(latlng);
 		}
 		
 		function refreshFeatures(event) {
@@ -816,10 +820,11 @@
 		}
 		
 		function updateFeature(feature, color, strokeWidth){
-			// create a symbolizer from exiting stylemap
+		
+			// Create a symbolizer from exiting stylemap
 			var symbolizer = feature.layer.styleMap.createSymbolizer(feature);
 			
-			// color available?
+			// Color available?
 			if (color) {
 				symbolizer['fillColor'] = "#"+color;
 				symbolizer['strokeColor'] = "#"+color;
@@ -832,7 +837,7 @@
 				}
 			}
 			
-			// stroke available?
+			// Stroke available?
 			if (parseFloat(strokeWidth)) {
 				symbolizer['strokeWidth'] = parseFloat(strokeWidth);
 			} else if ( typeof(feature.strokewidth) != 'undefined' && feature.strokewidth !='' ) {
@@ -841,9 +846,23 @@
 				symbolizer['strokeWidth'] = "2.5";
 			}
 			
-			// set the unique style to the feature
+			// Set the unique style to the feature
 			feature.style = symbolizer;
 
-			// redraw the feature with its new style
+			// Redraw the feature with its new style
 			feature.layer.drawFeature(feature);
+		}
+		
+		// Reverse GeoCoder
+		function reverseGeocode(latlng)
+		{
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({'latLng': latlng}, function(results, status){
+				if (status == google.maps.GeocoderStatus.OK) {
+						var country = results[0].address_components.pop().long_name;
+						$("#country_name").val(country);
+      			} else {
+        			console.log("Geocoder failed due to: " + status);
+      			}
+			});
 		}

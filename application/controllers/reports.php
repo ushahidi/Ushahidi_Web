@@ -220,10 +220,7 @@ class Reports_Controller extends Main_Controller {
 		
 		if ($_GET)
 		{
-			// Kohana::log('debug', Kohana::debug($_GET));
-			
 			$report_listing_view = $this->_get_report_listing_view();
-			
 			print $report_listing_view;
 		}
 		else
@@ -247,6 +244,9 @@ class Reports_Controller extends Main_Controller {
 
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit');
+		
+		//Retrieve API URL
+		$this->template->api_url = Kohana::config('settings.api_url');
 
 		// Setup and initialize form field names
 		$form = array
@@ -262,6 +262,7 @@ class Reports_Controller extends Main_Controller {
 			'geometry' => array(),
 			'location_name' => '',
 			'country_id' => '',
+			'country_name'=>'',
 			'incident_category' => array(),
 			'incident_news' => array(),
 			'incident_video' => array(),
@@ -272,7 +273,8 @@ class Reports_Controller extends Main_Controller {
 			'form_id'	  => '',
 			'custom_field' => array()
 		);
-		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		
+		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 
@@ -283,18 +285,26 @@ class Reports_Controller extends Main_Controller {
 		$form['incident_hour'] = date('g');
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
-		// initialize custom field array
+		$form['country_id'] = Kohana::config('settings.default_country');
+		
+		// Initialize Default Value for Hidden Field Country Name, just incase Reverse Geo coding yields no result
+		$country_name = ORM::factory('country',$form['country_id']);
+		$form['country_name'] = $country_name->country;
+		
+		// Initialize custom field array
 		$form['custom_field'] = customforms::get_custom_form_fields($id,'',true);
+		
 		//GET custom forms
 		$forms = array();
 		foreach (customforms::get_custom_forms() as $custom_forms)
 		{
 			$forms[$custom_forms->id] = $custom_forms->form_title;
 		}
+		
 		$this->template->content->forms = $forms;
 		
 
-		// check, has the form been submitted, if so, setup validation
+		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
@@ -303,6 +313,7 @@ class Reports_Controller extends Main_Controller {
 			// Test to see if things passed the rule checks
 			if (reports::validate($post))
 			{
+				
 				// STEP 1: SAVE LOCATION
 				$location = new Location_Model();
 				reports::save_location($post, $location);
@@ -475,11 +486,9 @@ class Reports_Controller extends Main_Controller {
 					if ($api_akismet != "")
 					{
 						// Run Akismet Spam Checker
-
 						$akismet = new Akismet();
 
 						// Comment data
-
 						$comment = array(
 							'website' => "",
 							'body' => $post->comment_description,
@@ -580,20 +589,16 @@ class Reports_Controller extends Main_Controller {
 						);
 
 					// Redirect
-
 					url::redirect('reports/view/'.$id);
 
 				}
 				else
 				{
 					// No! We have validation errors, we need to show the form again, with the errors
-
 					// Repopulate the form fields
-
 					$form = arr::overwrite($form, $post->as_array());
 
 					// Populate the error fields, if any
-
 					$errors = arr::overwrite($errors, $post->errors('comments'));
 					$form_error = TRUE;
 				}
@@ -608,7 +613,6 @@ class Reports_Controller extends Main_Controller {
 			// Add Features
 			$this->template->content->features_count = $incident->geometry->count();
 			$this->template->content->features = $incident->geometry;
-			
 			$this->template->content->incident_id = $incident->id;
 			$this->template->content->incident_title = $incident_title;
 			$this->template->content->incident_description = $incident_description;
@@ -679,7 +683,6 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->videos_embed = $video_embed;
 
 		// Javascript Header
-
 		$this->themes->map_enabled = TRUE;
 		$this->themes->photoslider_enabled = TRUE;
 		$this->themes->videoslider_enabled = TRUE;
@@ -995,4 +998,4 @@ class Reports_Controller extends Main_Controller {
         echo json_encode(array("status"=>"success", "response"=>$form_fields));
     }
 
-} // End Reports
+}
