@@ -25,7 +25,7 @@
 
 			<?php foreach ($item['categories'] as $category): ?>
 				<category><?php echo $category; ?></category>
-			<?php endforeach; ? ?>
+			<?php endforeach; ?>
 
 			<?php // Event::feed_rss_item - Add to the feed item ?>
 			<?php Event::run('ushahidi_action.feed_rss_item', $item['id']); ?>
