@@ -23,12 +23,13 @@
 		// To hold the map options
 		var mapOptions;
 		
-		if (typeof targetElement == 'undefined')
+		if (typeof(options) == 'undefined')
 		{
 			// Create the default options
 			mapOptions = {
 				units: "mi",
 				numZoomLevels: 18,
+				theme: false,
 				controls:[],
 				projection: proj_900913,
 				'displayProjection': proj_4326

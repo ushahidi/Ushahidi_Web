@@ -64,17 +64,20 @@
 		};
 
 		jQuery(window).load(function() {
-			// Now initialise the map
+			// Map options
 			var options = {
-			units: "m"
-			, numZoomLevels: 18
-			, controls:[],
-			projection: proj_900913,
-			'displayProjection': proj_4326,
-			eventListeners: {
+				units: "m",
+				numZoomLevels: 18, 
+				controls:[],
+				theme: false,
+				projection: proj_900913,
+				'displayProjection': proj_4326,
+				eventListeners: {
 					"zoomend": incidentZoom
-			    }
+				}
 			};
+			
+			// Now initialise the map
 			map = new OpenLayers.Map('divMap', options);
 			
 			<?php echo map::layers_js(FALSE); ?>
@@ -364,8 +367,8 @@
 		        var category_description = $("input#category_description").val();
 		        var category_color = $("input#category_color").val();
 
-		        //trim the form fields
-                        //Removed ".toUpperCase()" from name and desc for Ticket #38
+				//trim the form fields
+				//Removed ".toUpperCase()" from name and desc for Ticket #38
 		        category_name = category_name.replace(/^\s+|\s+$/g, '');
 		        category_description = category_description.replace(/^\s+|\s+$/g,'');
 		        category_color = category_color.replace(/^\s+|\s+$/g, '').toUpperCase();
@@ -859,7 +862,7 @@
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({'latLng': latlng}, function(results, status){
 				if (status == google.maps.GeocoderStatus.OK) {
-					var country = results[0].address_components.pop().long_name;
+					var country = results[0].address_components[4].long_name;
 					$("#country_name").val(country);
       			} else {
         			console.log("Geocoder failed due to: " + status);
