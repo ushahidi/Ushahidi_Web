@@ -150,19 +150,25 @@ class reports_Core {
 	 */
 	public static function save_location($post, $location)
 	{
-		// Get country_id corresponding to results of reverse geocoding i.e using Country Name result
-		$c_id = ORM::factory('country')
-			->where('country',$post->country_name)
-			->find();
-			
+		// Load the country
+		$country = isset($post->country_name)
+			? Country_Model::get_country_by_name($post->country_name)
+			: Country_Model::get_country_by_name(Kohana::config('settings.default_country'));
+		
+		// Fetch the country id
+		$country_id = ($country)? $country->id : 0;
+		
 		// Assign country_id retrieved
-		$post->country_id = $c_id->id;
+		$post->country_id = $country_id;
 		$location->location_name = $post->location_name;
 		$location->latitude = $post->latitude;
 		$location->longitude = $post->longitude;
-		$location->country_id = $post->country_id;
+		$location->country_id = $country_id;
 		$location->location_date = date("Y-m-d H:i:s",time());
 		$location->save();
+		
+		// Garbage collection
+		unset ($country, $country_id);
 	}
 	
 	/**

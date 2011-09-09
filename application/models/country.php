@@ -16,9 +16,44 @@
 
 class Country_Model extends ORM
 {
+	/**
+	 * Many-to-one relationship definition
+	 *
+	 * @var array
+	 */
 	protected $belongs_to = array('location');
+	
+	/**
+	 * One-to-many relationship definition
+	 * @var array
+	 */
 	protected $has_many = array('city');
 	
-	// Database table name
+	/**
+	 * Database table name
+	 *
+	 * @var string
+	 */
 	protected $table_name = 'country';
+	
+	/**
+	 * Given a country name, returns a country model object reference
+	 *
+	 * @param string $country_name The name of the country
+	 * @return mixed ORM reference if country exists, FALSE otherwise
+	 */
+	public static function get_country_by_name($country_name)
+	{
+		$country = self::factory('country')->where('country', $country_name)->find();
+		
+		if ($country->count_all() == 1)
+		{
+			return $country[0];
+		}
+		else
+		{
+			// No matches found or more than one record found
+			return FALSE;
+		}
+	}
 }
