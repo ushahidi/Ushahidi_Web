@@ -11,7 +11,28 @@
 	?>
 </head>
 
-<body id="page">
+<?php 
+  // Add a class to the body tag according to the page URI
+  
+  // we're on the home page
+  if (count($uri_segments) == 0) 
+  {
+    $body_class = "page-main";
+  }
+  // 1st tier pages
+  elseif (count($uri_segments) == 1) 
+  {
+    $body_class = "page-".$uri_segments[0];
+  }
+  // 2nd tier pages... ie "/reports/submit"
+  elseif (count($uri_segments) >= 2) 
+  {
+    $body_class = "page-".$uri_segments[0]."-".$uri_segments[1];
+  };
+    
+  echo '<body id="page" class="'.$body_class.'" />';
+  
+?>
   <!-- top bar-->
   <div id="top-bar">
     <!-- searchbox -->
