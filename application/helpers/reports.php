@@ -163,10 +163,10 @@ class reports_Core {
 		// Load the country
 		$country = isset($post->country_name)
 			? Country_Model::get_country_by_name($post->country_name)
-			: Country_Model::get_country_by_name(Kohana::config('settings.default_country'));
+			: new Country_Model(Kohana::config('settings.default_country'));
 			
 		// Fetch the country id
-		$country_id = ($country)? $country->id : 0;
+		$country_id = ($country->loaded)? $country->id : 0;
 		
 		// Assign country_id retrieved
 		$post->country_id = $country_id;
