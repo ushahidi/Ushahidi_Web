@@ -862,7 +862,7 @@
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({'latLng': latlng}, function(results, status){
 				if (status == google.maps.GeocoderStatus.OK) {
-					var country = results[0].address_components[4].long_name;
+					var country = results[results.length - 1].formatted_address;
 					$("#country_name").val(country);
       			} else {
         			console.log("Geocoder failed due to: " + status);

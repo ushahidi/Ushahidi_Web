@@ -154,7 +154,7 @@ class reports_Core {
 		$country = isset($post->country_name)
 			? Country_Model::get_country_by_name($post->country_name)
 			: Country_Model::get_country_by_name(Kohana::config('settings.default_country'));
-		
+			
 		// Fetch the country id
 		$country_id = ($country)? $country->id : 0;
 		
