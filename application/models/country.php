@@ -52,4 +52,17 @@ class Country_Model extends ORM
 		return ($country->loaded)? $country : FALSE;
 
 	}
+	
+	/**
+	 * Return a country's name based on its country_id
+	 *
+	 * @param int $id The ID of the country
+	 * @return string country
+	 */
+	public static function get_country_name($id)
+	{
+		$country = self::factory('country')->where('id',$id)->find();
+		return ($country->loaded)? $country->country : FALSE;
+		
+	}
 }
