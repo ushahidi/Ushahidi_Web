@@ -91,7 +91,17 @@ class reports_Core {
 				}
 			}
 		}
-
+		
+		// If deployment is a single country deployment, check that the location mapped is in the default country
+		if ( ! Kohana::config('settings.multi_country'))
+		{
+			$country = Country_Model::get_country_by_name($post->country_name);
+			if ($country->id != Kohana::config('settings.multi_country'))
+			{
+				$post->add_error('country_name','single_country');
+			}
+		}
+		
 		// Validate photo uploads
 		$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[2M]');
 

@@ -1,6 +1,9 @@
 <?php
 	$lang = array(
 	'comments_form_error' => 'error!',
+	'country_name' => array(
+		'single_country' => 'This deployment spans within one country only. Please make sure the report location is within the default country.'
+	),
 	'custom_field' => array(
 		'values' => 'Please enter a valid value for one of your custom form items',
 	),
