@@ -303,7 +303,7 @@
 	'original' => 'Original',
 	'original_description' => 'Original Description',
 	'original_title' => 'Original Title',
-	'other_ushahidi_instances' => 'OTHER USHAHIDI DEPLOYMENTS',
+	'other_ushahidi_instances' => 'Other Deployments',
 	'outbox' => 'Outbox',
 	'outgoing' => 'Outgoing',
 	'page' => 'Page',
