@@ -14,9 +14,17 @@ class blocks_Core {
 	 *
 	 * @return string
 	 */
-	public static function open()
+	public static function open($id = NULL)
 	{
-		echo "<li><div class=\"content-block\">";
+		if ($id)
+		{
+			echo "<li><div id=\"blk_".$id."\" class=\"content-block\">";
+		}
+		else
+		{
+		  echo "<li><div class=\"content-block\">";
+		}
+		
 	}
 	
 	/**
