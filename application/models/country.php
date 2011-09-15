@@ -63,6 +63,27 @@ class Country_Model extends ORM
 	{
 		$country = self::factory('country')->where('id',$id)->find();
 		return ($country->loaded)? $country->country : FALSE;
+	}
+	
+	/**
+	 * Returns a key=>value array of the list of countries in the database
+	 * ordered by the country name
+	 *
+	 * @return array
+	 */
+	public static function get_countries_list()
+	{
+		$countries = array();
+		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
+		{
+			// Check the length of the country name before adding it to the list
+			$country_name = strlen($country->country) > 35
+				? substr($country->country, 0, 35) . "..."
+				: $country->country;
+				
+			$countries[$country->id] = $country_name;
+		}
 		
+		return $countries;
 	}
 }

@@ -14,8 +14,7 @@
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Reports_Controller extends Admin_Controller
-{
+class Reports_Controller extends Admin_Controller {
 	public function __construct()
 	{
 		parent::__construct();
@@ -25,9 +24,10 @@ class Reports_Controller extends Admin_Controller
 
 
 	/**
-	* Lists the reports.
-	* @param int $page
-	*/
+	 * Lists the reports.
+	 *
+	 * @param int $page
+	 */
 	public function index($page = 1)
 	{
 		// If user doesn't have access, redirect to dashboard
@@ -38,30 +38,28 @@ class Reports_Controller extends Admin_Controller
 
 		$this->template->content = new View('admin/reports');
 		$this->template->content->title = Kohana::lang('ui_admin.reports');
-
-
-		if (!empty($_GET['status']))
+		
+		// To 
+		$params = array('all_reports' => TRUE);
+		
+		$status = "0";
+		
+		if ( !empty($_GET['status']))
 		{
 			$status = $_GET['status'];
 
 			if (strtolower($status) == 'a')
 			{
-				$filter = 'incident_active = 0';
+				array_push($params, 'i.incident_active = 0');
 			}
 			elseif (strtolower($status) == 'v')
 			{
-				$filter = 'incident_verified = 0';
+				array_push($params, 'i.incident_verified = 0');
 			}
 			else
 			{
 				$status = "0";
-				$filter = '1=1';
 			}
-		}
-		else
-		{
-			$status = "0";
-			$filter = "1=1";
 		}
 
 		// Get Search Keywords (If Any)
@@ -70,7 +68,7 @@ class Reports_Controller extends Admin_Controller
 			//	Brute force input sanitization
 			
 			// Phase 1 - Strip the search string of all non-word characters 
-			$keyword_raw = preg_replace('/[^\w+]\w*/', '', $_GET['k']);
+			$keyword_raw = (isset($_GET['k']))? preg_replace('#/\w+/#', '', $_GET['k']) : "";
 			
 			// Strip any HTML tags that may have been missed in Phase 1
 			$keyword_raw = strip_tags($keyword_raw);
@@ -144,7 +142,8 @@ class Reports_Controller extends Admin_Controller
 					foreach ($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						if ($update->loaded == true) {
+						if ($update->loaded == TRUE)
+						{
 							$update->incident_active = '0';
 
 							// If Alert hasn't been sent yet, disable it
@@ -177,7 +176,8 @@ class Reports_Controller extends Admin_Controller
 					{
 						$update = new Incident_Model($item);
 						$verify = new Verify_Model();
-						if ($update->loaded == true) {
+						if ($update->loaded == TRUE)
+						{
 							if ($update->incident_verified == '1')
 							{
 								$update->incident_verified = '0';
@@ -207,7 +207,7 @@ class Reports_Controller extends Admin_Controller
 					foreach($post->incident_id as $item)
 					{
 						$update = new Incident_Model($item);
-						if ($update->loaded == true)
+						if ($update->loaded == TRUE)
 						{
 							$incident_id = $update->id;
 							$location_id = $update->location_id;
@@ -223,7 +223,8 @@ class Reports_Controller extends Admin_Controller
 							ORM::factory('incident_lang')->where('incident_id',$incident_id)->delete_all();
 
 							// Delete Photos From Directory
-							foreach (ORM::factory('media')->where('incident_id',$incident_id)->where('media_type', 1) as $photo) {
+							foreach (ORM::factory('media')->where('incident_id',$incident_id)->where('media_type', 1) as $photo)
+							{
 								deletePhoto($photo->id);
 							}
 
@@ -235,7 +236,8 @@ class Reports_Controller extends Admin_Controller
 
 							// Delete relationship to SMS message
 							$updatemessage = ORM::factory('message')->where('incident_id',$incident_id)->find();
-							if ($updatemessage->loaded == true) {
+							if ($updatemessage->loaded == TRUE)
+							{
 								$updatemessage->incident_id = 0;
 								$updatemessage->save();
 							}
@@ -261,63 +263,20 @@ class Reports_Controller extends Admin_Controller
 
 		}
 
+		$all_reports = Incident_Model::get_incidents($params);
+		
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'	 => 'page',
 			'items_per_page' => $this->items_per_page,
-			'total_items'	 => ORM::factory('incident')
-				->join('location', 'incident.location_id', 'location.id','INNER')
-				->where($filter)
-				->count_all()
-			));
-			
-		$incidents = ORM::factory('incident')
-			->join('location', 'incident.location_id', 'location.id','INNER')
-			->where($filter)
-			->orderby('incident_dateadd', 'desc')
-			->find_all($this->items_per_page, $pagination->sql_offset);
-
-		$location_ids = array();
-		foreach ($incidents as $incident)
-		{
-			$location_ids[] = $incident->location_id;
-				
-		}
-		// Check if location_ids is not empty
-		if( count($location_ids ) > 0 ) 
-		{
-			$locations_result = ORM::factory('location')
-				->in('id',implode(',',$location_ids))
-				->find_all();
-			$locations = array();
-			$country_ids = array();
-			foreach ($locations_result as $loc)
-			{
-				$locations[$loc->id] = $loc->location_name;
-				$country_ids[$loc->id]['country_id'] = $loc->country_id;		 
-			}	
-		}
-		else
-		{
-			$locations = array();
-		}
-		$this->template->content->locations = $locations;
-		$this->template->content->country_ids = $country_ids;
+			'total_items'	 => $all_reports->count()
+			)
+		);
+		
+		// Get the paginated reports
+		$incidents = Incident_Model::get_incidents($params, $pagination);
 	
-		// GET countries
-		$countries = array();
-		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
-		{
-			// Create a list of all categories
-			$this_country = $country->country;
-			if (strlen($this_country) > 35)
-			{
-				$this_country = substr($this_country, 0, 35) . "...";
-			}
-			$countries[$country->id] = $this_country;
-		}
-
-		$this->template->content->countries = $countries;
+		$this->template->content->countries = Country_Model::get_countries_list();
 		$this->template->content->incidents = $incidents;
 		$this->template->content->pagination = $pagination;
 		$this->template->content->form_error = $form_error;
@@ -333,6 +292,7 @@ class Reports_Controller extends Admin_Controller
 		// Javascript Header
 		$this->template->js = new View('admin/reports_js');
 	}
+	
 	/**
 	 * Edit a report
 	 * @param bool|int $id The id no. of the report

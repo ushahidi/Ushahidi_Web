@@ -573,7 +573,7 @@ class reports_Core {
 	 * @param $paginate Optionally paginate the incidents - Default is FALSE
 	 * @return Database_Result
 	 */
-	public static function fetch_incidents($paginate = FALSE)
+	public static function fetch_incidents($paginate = FALSE, $items_per_page = 0)
 	{
 		// Reset the paramters
 		self::$params = array();
@@ -826,11 +826,12 @@ class reports_Core {
 		if ($paginate)
 		{
 			// Set up pagination
-			// Pagination
+			$page_limit = (intval($items_per_page) > 0)? $items_per_page : intval (Kohana::config('settings.items_per_page'));
+			
 			$pagination = new Pagination(array(
 					'style' => 'front-end-reports',
 					'query_string' => 'page',
-					'items_per_page' => (int) Kohana::config('settings.items_per_page'),
+					'items_per_page' => $page_limit,
 					'total_items' => $all_incidents->count()
 					));
 			
