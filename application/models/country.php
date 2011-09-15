@@ -54,18 +54,6 @@ class Country_Model extends ORM
 	}
 	
 	/**
-	 * Return a country's name based on its country_id
-	 *
-	 * @param int $id The ID of the country
-	 * @return string country
-	 */
-	public static function get_country_name($id)
-	{
-		$country = self::factory('country')->where('id',$id)->find();
-		return ($country->loaded)? $country->country : FALSE;
-	}
-	
-	/**
 	 * Returns a key=>value array of the list of countries in the database
 	 * ordered by the country name
 	 *
