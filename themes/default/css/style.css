@@ -639,6 +639,7 @@ div.footer-credits{
 /* Reports */
 
 #main .left-col { float:left; width:520px; margin-right:20px }
+#main .right-col { float:right;width:350px; }
 
 div.report-details{
     width: 300px;

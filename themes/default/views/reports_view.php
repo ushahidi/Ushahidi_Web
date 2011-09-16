@@ -177,7 +177,7 @@
 	
 	</div>
 	
-	<div style="float:right;width:350px;">
+	<div class="right-col">
 
 		<div class="report-media-box-content">
 			
