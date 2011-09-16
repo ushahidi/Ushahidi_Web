@@ -26,12 +26,10 @@ div.search-form input.searchbtn{
     line-height: 7px;
 }
 
-#filters-box {
-	width: 270px !important;
-}
-
 .link-toggle li { 
 	float: left; 
 	display: inline-block; 
 	padding: 6px 0;
 }
+
+.rb_report { position: static !important; }
