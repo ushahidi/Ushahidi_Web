@@ -1,4 +1,4 @@
-<?php blocks::open();?>
+<?php blocks::open("news");?>
 <?php blocks::title(Kohana::lang('ui_main.official_news'));?>
 <table class="table-list">
 	<thead>
