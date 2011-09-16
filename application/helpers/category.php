@@ -263,8 +263,8 @@ class category_Core {
 		// Query to fetch the report totals for the parent categories
 		$sql = "SELECT c.id, COUNT(DISTINCT ic.incident_id) AS report_count "
 			. "FROM ".$table_prefix."category c "
-			. "INNER JOIN ".$table_prefix." incident_category ic ON (ic.category_id = c.id) "
-			. "INNER JOIN ".$table_prefix." incident i ON (ic.incident_id = i.id) "
+			. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
+			. "INNER JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id) "
 			. "WHERE c.category_visible = 1 "
 			. "AND i.incident_active = 1 "
 			. "AND c.parent_id = 0 "
