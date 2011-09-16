@@ -1,3 +1,22 @@
+
+<script type="text/javascript">
+$(function(){
+  
+  // show/hide report filters and layers boxes on home page map
+  $("a.toggle").toggle(
+    function() { 
+      $($(this).attr("href")).show();
+      $(this).find(".btn-icon").addClass("ic-down");
+    },
+    function() { 
+      $($(this).attr("href")).hide();
+      $(this).find(".btn-icon").removeClass("ic-down");
+    }
+  );
+  
+});
+
+</script>
 <!-- main body -->
 <div id="main" class="clearingfix">
 	<div id="mainmiddle">
