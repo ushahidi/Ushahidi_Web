@@ -1,6 +1,6 @@
 <div id="main" class="report_detail">
 
-	<div class="left-col" style="float:left;width:520px; margin-right:20px">
+	<div class="left-col">
 	
   	  <?php
     	  if ($incident_verified)
