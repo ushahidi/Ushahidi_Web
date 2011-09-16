@@ -18,7 +18,7 @@ class blocks_Core {
 	{
 		if ($id)
 		{
-			echo "<li><div id=\"block-".$id."\" class=\"content-block\">";
+			echo "<li id=\"block-".$id."\"><div class=\"content-block\">";
 		}
 		else
 		{
