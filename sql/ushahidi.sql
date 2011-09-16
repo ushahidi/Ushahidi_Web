@@ -1,4 +1,4 @@
--- Ushahidi Engine
+﻿-- Ushahidi Engine
 -- version 60
 -- http://www.ushahidi.com
 
@@ -551,7 +551,7 @@ PRIMARY KEY (`id`)
 CREATE TABLE IF NOT EXISTS `location` (                                             
     `id` bigint(20) unsigned NOT NULL auto_increment,                               
     `location_name` varchar(255) default NULL,                                      
-    `country_id` int(11) default NULL,                                              
+    `country_id` int(11) NOT NULL default '0',                                              
     `latitude` DOUBLE NOT NULL default '0',                                         
     `longitude` DOUBLE NOT NULL default '0',                                        
     `location_visible` tinyint(4) NOT NULL default '1',                             
@@ -565,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `location` (
 
 LOCK TABLES `location` WRITE;
 /*!40000 ALTER TABLE `location` DISABLE KEYS */;
-INSERT INTO `location` VALUES (1,'Nairobi',NULL,-1.2873000707050097, 36.821451182008204,1,'2009-06-30 00:00:00');
+INSERT INTO `location` VALUES (1,'Nairobi',115,-1.2873000707050097, 36.821451182008204,1,'2009-06-30 00:00:00');
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1460,4 +1460,4 @@ ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '64' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '65' WHERE `id`=1 LIMIT 1;

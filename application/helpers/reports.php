@@ -91,7 +91,17 @@ class reports_Core {
 				}
 			}
 		}
-
+		
+		// If deployment is a single country deployment, check that the location mapped is in the default country
+		if ( ! Kohana::config('settings.multi_country'))
+		{
+			$country = Country_Model::get_country_by_name($post->country_name);
+			if ($country->id != Kohana::config('settings.default_country'))
+			{
+				$post->add_error('country_name','single_country');
+			}
+		}
+		
 		// Validate photo uploads
 		$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[2M]');
 
@@ -150,11 +160,25 @@ class reports_Core {
 	 */
 	public static function save_location($post, $location)
 	{
+		// Load the country
+		$country = isset($post->country_name)
+			? Country_Model::get_country_by_name($post->country_name)
+			: new Country_Model(Kohana::config('settings.default_country'));
+			
+		// Fetch the country id
+		$country_id = ($country->loaded)? $country->id : 0;
+		
+		// Assign country_id retrieved
+		$post->country_id = $country_id;
 		$location->location_name = $post->location_name;
 		$location->latitude = $post->latitude;
 		$location->longitude = $post->longitude;
+		$location->country_id = $country_id;
 		$location->location_date = date("Y-m-d H:i:s",time());
 		$location->save();
+		
+		// Garbage collection
+		unset ($country, $country_id);
 	}
 	
 	/**
@@ -549,7 +573,7 @@ class reports_Core {
 	 * @param $paginate Optionally paginate the incidents - Default is FALSE
 	 * @return Database_Result
 	 */
-	public static function fetch_incidents($paginate = FALSE)
+	public static function fetch_incidents($paginate = FALSE, $items_per_page = 0)
 	{
 		// Reset the paramters
 		self::$params = array();
@@ -802,11 +826,12 @@ class reports_Core {
 		if ($paginate)
 		{
 			// Set up pagination
-			// Pagination
+			$page_limit = (intval($items_per_page) > 0)? $items_per_page : intval (Kohana::config('settings.items_per_page'));
+			
 			$pagination = new Pagination(array(
 					'style' => 'front-end-reports',
 					'query_string' => 'page',
-					'items_per_page' => (int) Kohana::config('settings.items_per_page'),
+					'items_per_page' => $page_limit,
 					'total_items' => $all_incidents->count()
 					));
 			

@@ -345,7 +345,7 @@ class Incident_Model extends ORM {
 
 		// Query
 		$sql = 'SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, i.incident_mode, i.incident_active, '
-			. 'i.incident_verified, i.location_id, l.location_name, l.latitude, l.longitude ';
+			. 'i.incident_verified, i.location_id, l.country_id, l.location_name, l.latitude, l.longitude ';
 
 		// Check if all the parameters exist
 		if (count($radius) > 0 AND array_key_exists('latitude', $radius) AND array_key_exists('longitude', $radius)
@@ -364,9 +364,18 @@ class Incident_Model extends ORM {
 		$sql .=  'FROM '.$table_prefix.'incident i '
 			. 'INNER JOIN '.$table_prefix.'location l ON (i.location_id = l.id) '
 			. 'INNER JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
-			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) '
-			. 'WHERE i.incident_active = 1 ';
-			// . 'AND c.category_visible = 1 ';
+			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) ';
+		
+		// Check if the all reports flag has been specified
+		if (array_key_exists('all_reports', $where) AND $where['all_reports'] == TRUE)
+		{
+			unset ($where['all_reports']);
+			$sql .= 'WHERE 1=1 ';
+		}
+		else
+		{
+			$sql .= 'WHERE i.incident_active = 1 ';
+		}
 
 		// Check for the additional conditions for the query
 		if ( ! empty($where) AND count($where) > 0)

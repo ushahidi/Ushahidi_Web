@@ -1,16 +1,15 @@
 <?php
 /**
- * Edit reports js file.
- *
- * Handles javascript stuff related to edit report function.
+ * Handles javascript stuff related to report creation and editing
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
+ *
  * @author     Ushahidi Team <team@ushahidi.com> 
  * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
+ * @subpackage Reports
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
@@ -32,10 +31,10 @@
 		  }
 
 		  return this.each(function () {
-		    // get jQuery version of 'this'
+		    // Get jQuery version of 'this'
 		    var $input = jQuery(this),
 
-		    // capture the rest of the variable to allow for reuse
+		    // Capture the rest of the variable to allow for reuse
 		      title = $input.attr('title'),
 		      $form = jQuery(this.form),
 		      $win = jQuery(window);
@@ -46,16 +45,17 @@
 		      }
 		    }
 
-		    // only apply logic if the element has the attribute
+		    // Only apply logic if the element has the attribute
 		    if (title) { 
-		      // on blur, set value to title attr if text is blank
+			
+		      // On blur, set value to title attr if text is blank
 		      $input.blur(function () {
 		        if (this.value === '') {
 		          $input.val(title).addClass(blurClass);
 		        }
 		      }).focus(remove).blur(); // now change all inputs to title
 
-		      // clear the pre-defined text when form is submitted
+		      // Clear the pre-defined text when form is submitted
 		      $form.submit(remove);
 		      $win.unload(remove); // handles Firefox's autocomplete
 			  $(".btn_find").click(remove);
@@ -63,23 +63,25 @@
 		  });
 		};
 
-		$(document).ready(function() {
-			// Now initialise the map
+		jQuery(window).load(function() {
+			// Map options
 			var options = {
-			units: "m"
-			, numZoomLevels: 18
-			, controls:[],
-			projection: proj_900913,
-			'displayProjection': proj_4326,
-			eventListeners: {
+				units: "m",
+				numZoomLevels: 18, 
+				controls:[],
+				theme: false,
+				projection: proj_900913,
+				'displayProjection': proj_4326,
+				eventListeners: {
 					"zoomend": incidentZoom
-			    }
+				}
 			};
+			
+			// Now initialise the map
 			map = new OpenLayers.Map('divMap', options);
 			
 			<?php echo map::layers_js(FALSE); ?>
 			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-			
 			map.addControl(new OpenLayers.Control.Navigation());
 			map.addControl(new OpenLayers.Control.PanZoomBar());
 			map.addControl(new OpenLayers.Control.MousePosition());
@@ -218,11 +220,11 @@
 			?>
 			
 			
-			// create a lat/lon object
+			// Create a lat/lon object
 			var startPoint = new OpenLayers.LonLat(<?php echo $longitude; ?>, <?php echo $latitude; ?>);
 			startPoint.transform(proj_4326, map.getProjectionObject());
 			
-			// display the map centered on a latitude and longitude (Google zoom levels)
+			// Display the map centered on a latitude and longitude (Google zoom levels)
 			map.setCenter(startPoint, <?php echo ($incident_zoom) ? $incident_zoom : $default_zoom; ?>);
 			
 			// Create the Editing Toolbar
@@ -232,8 +234,6 @@
 			);
 			map.addControl(panel);
 			panel.activateControl(panel.controls[0]);
-			
-			
 			drag.activate();
 			highlightCtrl.activate();
 			selectCtrl.activate();
@@ -360,14 +360,15 @@
 			$("#location_find").hint();
 			
 			/* Dynamic categories */
+			<?php if ($edit_mode): ?>
 			$('#category_add').hide();
 		    $('#add_new_category').click(function() { 
 		        var category_name = $("input#category_name").val();
 		        var category_description = $("input#category_description").val();
 		        var category_color = $("input#category_color").val();
 
-		        //trim the form fields
-                        //Removed ".toUpperCase()" from name and desc for Ticket #38
+				//trim the form fields
+				//Removed ".toUpperCase()" from name and desc for Ticket #38
 		        category_name = category_name.replace(/^\s+|\s+$/g, '');
 		        category_description = category_description.replace(/^\s+|\s+$/g,'');
 		        category_color = category_color.replace(/^\s+|\s+$/g, '').toUpperCase();
@@ -385,7 +386,8 @@
 		            return false;
 		        }
 		
-				$.post("<?php echo url::base() . 'admin/reports/save_category/' ?>", { category_title: category_name, category_description: category_description, category_color: category_color },
+				$.post("<?php echo url::base() . 'admin/reports/save_category/' ?>", 
+					{ category_title: category_name, category_description: category_description, category_color: category_color },
 					function(data){
 						if ( data.status == 'saved')
 						{
@@ -400,6 +402,7 @@
 					}, "json");
 		        return false; 
 		    });
+			<?php endif; ?>
 		
 			// Category treeview
 			$("#category-column-1,#category-column-2").treeview({
@@ -663,7 +666,7 @@
 			var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to_switch_forms'); ?>?');
 			if (answer){
 				$('#form_loader').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
-				$.post("<?php echo url::base() . 'admin/reports/switch_form' ?>", { form_id: form_id, incident_id: incident_id },
+				$.post("<?php echo url::site().'reports/switch_form'; ?>", { form_id: form_id, incident_id: incident_id },
 					function(data){
 						if (data.status == 'success'){
 							$('#custom_forms').html('');
@@ -757,14 +760,18 @@
 		        f.state = OpenLayers.State.UPDATE;
 		    }
 			refreshFeatures();
+			// Fetching Lat Lon Values
+		  	var latitude = parseFloat($("#latitude").val());
+			var longitude = parseFloat($("#longitude").val());
+			// Looking up country name using reverse geocoding
+			var latlng = new google.maps.LatLng(latitude, longitude);
+			reverseGeocode(latlng);
 		}
 		
 		function refreshFeatures(event) {
 			var geoCollection = new OpenLayers.Geometry.Collection;
 			$('input[name="geometry[]"]').remove();
 			for(i=0; i < vlayer.features.length; i++) {
-				//vlayer.features[i].label = "XXXX";
-				//vlayer.features[i].color = "ZZZZ";
 				newFeature = vlayer.features[i].clone();
 				newFeature.geometry.transform(proj_900913,proj_4326);
 				geoCollection.addComponents(newFeature.geometry);
@@ -816,10 +823,11 @@
 		}
 		
 		function updateFeature(feature, color, strokeWidth){
-			// create a symbolizer from exiting stylemap
+		
+			// Create a symbolizer from exiting stylemap
 			var symbolizer = feature.layer.styleMap.createSymbolizer(feature);
 			
-			// color available?
+			// Color available?
 			if (color) {
 				symbolizer['fillColor'] = "#"+color;
 				symbolizer['strokeColor'] = "#"+color;
@@ -832,7 +840,7 @@
 				}
 			}
 			
-			// stroke available?
+			// Stroke available?
 			if (parseFloat(strokeWidth)) {
 				symbolizer['strokeWidth'] = parseFloat(strokeWidth);
 			} else if ( typeof(feature.strokewidth) != 'undefined' && feature.strokewidth !='' ) {
@@ -841,9 +849,22 @@
 				symbolizer['strokeWidth'] = "2.5";
 			}
 			
-			// set the unique style to the feature
+			// Set the unique style to the feature
 			feature.style = symbolizer;
 
-			// redraw the feature with its new style
+			// Redraw the feature with its new style
 			feature.layer.drawFeature(feature);
+		}
+		
+		// Reverse GeoCoder
+		function reverseGeocode(latlng) {
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({'latLng': latlng}, function(results, status){
+				if (status == google.maps.GeocoderStatus.OK) {
+					var country = results[results.length - 1].formatted_address;
+					$("#country_name").val(country);
+				} else {
+					console.log("Geocoder failed due to: " + status);
+				}
+			});
 		}

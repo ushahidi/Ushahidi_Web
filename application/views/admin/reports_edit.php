@@ -21,6 +21,7 @@
 					<input type="hidden" name="save" id="save" value="">
 					<input type="hidden" name="location_id" id="location_id" value="<?php print $form['location_id']; ?>">
 					<input type="hidden" name="incident_zoom" id="incident_zoom" value="<?php print $form['incident_zoom']; ?>">
+					<input type="hidden" name="country_name" id="country_name" value="<?php echo $form['country_name'];?>" />
 					<!-- report-form -->
 					<div class="report-form">
 						<?php

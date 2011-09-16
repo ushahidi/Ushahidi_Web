@@ -1,5 +1,4 @@
 /* Handcoded by RapidxHTML - http://www.rapidxhtml.com */
-
 div.search-form{
     padding: 0px;
     margin: 10px 15px 10px 5px;
@@ -26,3 +25,11 @@ div.search-form input.searchbtn{
     font-size: 0px;
     line-height: 7px;
 }
+
+.link-toggle li { 
+	float: left; 
+	display: inline-block; 
+	padding: 6px 0;
+}
+
+.rb_report { position: static !important; }

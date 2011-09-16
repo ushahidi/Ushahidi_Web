@@ -124,6 +124,9 @@ class Main_Controller extends Template_Controller {
 		$this->template->header->site_name_style = $site_name_style;
 		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
 
+		//pass the URI to the header so we can dynamically add css classes to the "body" tag
+		$this->template->header->uri_segments = Router::$segments;
+
 		$this->template->header->this_page = "";
 
 		// Google Analytics

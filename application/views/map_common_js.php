@@ -23,12 +23,13 @@
 		// To hold the map options
 		var mapOptions;
 		
-		if (typeof targetElement == 'undefined')
+		if (typeof(options) == 'undefined')
 		{
 			// Create the default options
 			mapOptions = {
 				units: "mi",
 				numZoomLevels: 18,
+				theme: false,
 				controls:[],
 				projection: proj_900913,
 				'displayProjection': proj_4326
@@ -49,7 +50,7 @@
 		
 		// Add controls
 		map.addControl(new OpenLayers.Control.Navigation());
-		// map.addControl(new OpenLayers.Control.PanZoomBar());
+		map.addControl(new OpenLayers.Control.PanZoom());
 		map.addControl(new OpenLayers.Control.Attribution());
 		map.addControl(new OpenLayers.Control.MousePosition());
 		map.addControl(new OpenLayers.Control.LayerSwitcher());

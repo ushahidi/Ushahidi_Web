@@ -1,0 +1,76 @@
+Ushahidi 2.1.x (Development version)
+------------------------------------
+* Themes
+    - Added bueno theme to the list of stock themes
+
+Ushahidi 2.1 (Tunis), 09-08-2011
+---------------------------------
+* Usability
+    - A new multi-faceted reports listing page that provides the user with the ability
+    to filter reports using a variety of options such as categories, verification status, report submission channel
+    - Centralized the validation and saving of reports. This is now handled by the reports helper
+    - Streamlined the list of parameters for filtering reports on the frontend
+    - Implemented category sorting in a drag and drop fashion
+    - A new blocks feature to allow the user to toggle the display of certain sections on the front-end
+    - Enhanced the custom forms feature (courtesy of the Konpa Group) to better augment data collection via the reports submission page
+    - Ability to add geometries (polygons) to a report
+    - Option to get a taller/wider map in the report viewing page
+* Checkins (Experimental)
+    - Checkins system
+* Facebook Module
+* Member Module
+    - New member module that allows people to log in to a deployment via OpenID or a username/password
+    pair specific to the deployment
+* Performance
+    - Refactored the json controller to fetch all the reports via a single query instead of using multiple
+    queries
+    - Switched to straight SQL instead of ORM for fetching the reports
+* Security
+    - Plugged SQL injection vulnerabilites
+* Testing
+    - Added test framework (PHPUnit for unit tests and Selenium for functional tests) and tests
+* JavaScript
+    - Switched from GML to Vector layers in timline.js for both the reports and KML layers on the main map
+* Features removed from the core
+    - Removed Laconica from the list of message services. No longer supported
+
+Ushahidi 2.0 (Luanda), 22-11-2010
+---------------------------------
+* Usability
+    - Improved reports listing to convey different sets of information quickly and in a practical way
+* Themes
+    - Themes can now be created without having to tamper with the code.
+* API
+    - Refactored the API controller and implemented the API system in a modular fashion. 
+      API tasks/features are now availed by way of libraries
+* Plugins
+    - New plugin architecture based on Kohana Events
+    - Implemented FrontlineSMS and Clickatell SMS services as plugins and added them to the list of stock plugins
+    - SMSSync plugin for the SMSSync Android application
+* Scheduler
+    - Ability to schedule tasks in cron like fashion
+* Upgrader
+    - An upgrader to automatically update the platform the latest release
+    
+Ushahidi 1.2 (After Haiti in Jan 2010)
+--------------------------------------
+*Usability
+    - A collapsible category tree on the submit report page
+* Clustering
+    - Clustering of reports is now on the server side. It was previously being done on the client side via JavaScript
+* Custom Forms
+    - A custom forms feature to collect additional information in addition to that in the "Submit Report" page
+* Report Edit Logs
+    - Edit logs for a report are now available so a user of the admin console can see the series of changes/revisions/edits 
+      that have been made to a report
+
+Ushahidi 1.0 (Mogadishu) 10-12-2009
+-----------------------------------
+* A web installer is now bundled with the platform to ease the process of deploying/installing the platform
+* New CSS based design that is easier to skin
+* Admin email notifications on emails and comments
+* Site statistics and analytics
+* Feature to add custom pages and tabs
+* Auto-geotagging of news feeds
+* Ability to create reports from news feeds
+* Feature to add KML/KMZ overlays on the map

@@ -637,6 +637,10 @@ div.footer-credits{
 }
 
 /* Reports */
+
+#main .left-col { float:left; width:520px; margin-right:20px }
+#main .right-col { float:right;width:350px; }
+
 div.report-details{
     width: 300px;
     float: right;
@@ -2286,7 +2290,7 @@ a.filter-button:hover { text-decoration:none; background:#707070;  }
 .ic-unverified { background:transparent url(../images/icons/cross-button.png) no-repeat; }
 
 /* social */
-.ic-twiter { background:transparent url(../images/icons/twiter.png) no-repeat; }
+.ic-twitter { background:transparent url(../images/icons/twitter.png) no-repeat; }
 .ic-facebook { background:transparent url(../images/icons/facebook.png) no-repeat; }
 .ic-youtube { background:transparent url(../images/icons/youtube.png) no-repeat; }
 .ic-foursquare { background:transparent url(../images/icons/foursquare.png) no-repeat; }        

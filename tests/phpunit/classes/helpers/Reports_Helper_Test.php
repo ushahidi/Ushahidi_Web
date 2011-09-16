@@ -15,8 +15,8 @@ class Reports_Helper_Test extends PHPUnit_Framework_TestCase {
 			'latitude' => '-2.18250',
 			'longitude' => '35.92056',
 			'location_name' => 'Random location for the unit test',
-			'country_id' => testutils::get_random_id('country'),
-			'incident_category' => array(testutils::get_random_id('category', 'WHERE category_visible = 1')),
+			'country_name' => ORM::factory('country', Kohana::config('settings.default_country'))->country,
+			'incident_category' =>array(testutils::get_random_id('category', 'WHERE category_visible = 1')),
 			'incident_news' => array(),
 			'incident_video' => array(),
 			'incident_photo' => array(),
@@ -124,7 +124,7 @@ class Reports_Helper_Test extends PHPUnit_Framework_TestCase {
 		
 		// Expected SQL statement; based on the $filter_params above
 		$expected_sql = "SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, "
-				. "i.incident_mode, i.incident_active, i.incident_verified, i.location_id, l.location_name, l.latitude, l.longitude "
+				. "i.incident_mode, i.incident_active, i.incident_verified, i.location_id, l.country_id, l.location_name, l.latitude, l.longitude "
 				. ", ((ACOS(SIN(".$latitude." * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS(".$latitude." * PI() / 180) * "
 				. "	COS(l.`latitude` * PI() / 180) * COS((".$longitude." - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance "
 				. "FROM ".$table_prefix."incident i "
