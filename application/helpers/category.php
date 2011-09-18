@@ -9,9 +9,9 @@
  */
 class category_Core {
 
-		/**
-		 * Displays a single category checkbox.
-		 */
+	/**
+	 * Displays a single category checkbox.
+	 */
 	public static function display_category_checkbox($category, $selected_categories, $form_field, $enable_parents = FALSE)
 	{
 		$html = '';

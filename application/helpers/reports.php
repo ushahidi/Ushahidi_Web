@@ -96,7 +96,7 @@ class reports_Core {
 		if ( ! Kohana::config('settings.multi_country'))
 		{
 			$country = Country_Model::get_country_by_name($post->country_name);
-			if ($country->id != Kohana::config('settings.default_country'))
+			if ($country AND $country->id != Kohana::config('settings.default_country'))
 			{
 				$post->add_error('country_name','single_country');
 			}
