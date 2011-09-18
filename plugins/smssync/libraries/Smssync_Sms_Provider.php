@@ -3,7 +3,7 @@
 /**
  * The smssync sender
  */
-class Smssync_Sms_Provider extends Sms_Provider_Core {
+class Smssync_Sms_Provider implements Sms_Provider_Core {
 	
 	public function send($to = NULL, $from = NULL, $message = NULL)
 	{

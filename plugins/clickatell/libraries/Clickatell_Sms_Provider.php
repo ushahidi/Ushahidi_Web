@@ -9,7 +9,7 @@
  * @copyright   (c) 2008-2011 Ushahidi Team
  * @license     http://www.gnu.org/copyleft/lesser.html GNU Less Public General License (LGPL)
  */
-class Clickatell_Sms_Provider extends Sms_Provider_Core {
+class Clickatell_Sms_Provider implements Sms_Provider_Core {
 	
 	/**
 	 * Sends a text message (SMS) using the Clickatell API
