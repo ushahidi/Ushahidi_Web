@@ -6,11 +6,11 @@ $(function(){
   $("a.toggle").toggle(
     function() { 
       $($(this).attr("href")).show();
-      $(this).find(".btn-icon").addClass("ic-down");
+      $(this).addClass("active-toggle");
     },
     function() { 
       $($(this).attr("href")).hide();
-      $(this).find(".btn-icon").removeClass("ic-down");
+      $(this).removeClass("active-toggle");
     }
   );
   
@@ -168,8 +168,8 @@ $(function(){
 			if (Kohana::config('settings.allow_reports'))
 			{
 				?>
-				<div class="additional-content">
-					<h5><?php echo Kohana::lang('ui_main.how_to_report'); ?></h5>
+				<a class="btn toggle" id="how-to-report-menu-toggle" class="" href="#how-to-report-box"><?php echo Kohana::lang('ui_main.how_to_report'); ?> <span class="btn-icon ic-question">&raquo;</span></a>
+				<div id="how-to-report-box" class="map-menu-box">
 					<ol>
 						<?php if (!empty($phone_array)) 
 						{ ?><li><?php echo Kohana::lang('ui_main.report_option_1')." "; ?> <?php foreach ($phone_array as $phone) {

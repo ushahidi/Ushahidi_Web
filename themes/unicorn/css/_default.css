@@ -189,10 +189,15 @@ div#right { position:absolute; z-index:1000; }
   /*toggle buttons */
   #layers-menu-toggle { position:absolute; top:20px; left:220px; width:60px; }
   #other-deployments-menu-toggle { position:absolute; top:20px; left:322px; width:130px; }
+  #how-to-report-menu-toggle { position:absolute; top:20px; left:780px; width:100px; }
   
   #kml_switch,
-  #sharing_switch { display:none; position:absolute; top:49px; padding:5px; left:220px; background:#f9f7f8; width:175px;}
+  #sharing_switch,
+  #how-to-report-box { display:none; position:absolute; top:49px; padding:5px; left:220px; background:#f9f7f8; width:175px;}
   #sharing_switch { left:322px; }
+  #how-to-report-box { left:724px; padding-top:10px; }
+    #how-to-report-box ol { margin-left:22px; }
+    #how-to-report-box ol li { margin-bottom:5px; }
   
 
 /* home page map */
@@ -298,7 +303,10 @@ a.btn:hover {
 }
 
 span.btn-icon { display:block; position:absolute; height:16px; width:16px; overflow:hidden; text-indent:-234324px; top:6px; right:5px; }
-  .ic-right { background:transparent url(../images/bg_category-filter-controls.png) -32px -41px no-repeat; }
-  .ic-down { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
+  .ic-right     { background:transparent url(../images/bg_category-filter-controls.png) -32px -41px no-repeat; }
+  .ic-down      { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
+  .ic-question  { background:transparent url(../images/bg_category-filter-controls.png) 0px -49px no-repeat; }
   
+  /* active state */
+  .active-toggle .ic-right { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
   
