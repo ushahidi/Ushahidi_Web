@@ -125,6 +125,9 @@ class Category_Model extends ORM_Tree {
 		$where = (intval($parent_id) > 0 AND self::is_valid_category($parent_id))
 			? array('parent_id' => $parent_id)
 			: array('parent_id' => 0);
+			
+		// Make sure the category is visible
+		$where = array_merge($where, array('category_visible' =>'1'));
 		
 		// Exclude trusted reports
 		if ($exclude_trusted)

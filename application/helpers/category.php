@@ -34,7 +34,7 @@ class category_Core {
 		$disabled = "";
 		if (!$enable_parents AND $category->children->count() > 0)
 		{
-			$disabled = " disabled=\"disabled\"";
+			$disabled = " disabled=\"disabled\"";	
 		}
 
 		$html .= form::checkbox($form_field.'[]', $cid, $category_checked, ' class="check-box"'.$disabled);
@@ -83,8 +83,12 @@ class category_Core {
 				$html .= '<ul>';
 				foreach ($category->children as $child)
 				{
-					$html .= '<li>';
-					$html .= category::display_category_checkbox($child, $selected_categories, $form_field, $enable_parents);
+					$child_visible = $child->category_visible;
+					if ($child_visible)
+					{
+						$html .= '<li>';
+						$html .= category::display_category_checkbox($child, $selected_categories, $form_field, $enable_parents);
+					}
 				}
 				$html .= '</ul>';
 			}
