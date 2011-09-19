@@ -33,6 +33,8 @@ class register_themes {
 	{
 		// Array to hold all the CSS files
 		$theme_css = array();
+		// Array to hold all the Javascript files
+		$theme_js = array();
 		
 		// 1. Load the default theme
 		Kohana::config_set('core.modules', array_merge(array(THEMEPATH."default"), 
@@ -58,9 +60,20 @@ class register_themes {
 						$theme_css[] = url::base()."themes/".Kohana::config("settings.site_style")."/css/".$css_file;
 					}
 			}
+			
+			if ( is_dir($theme.'/js') )
+			{				
+				$js = dir($theme.'/js'); // Load all the themes js files
+				while (($js_file = $js->read()) !== FALSE)
+					if (preg_match('/\.js/i', $js_file))
+					{
+						$theme_js[] = url::base()."themes/".Kohana::config("settings.site_style")."/js/".$js_file;
+					}
+			}
 		}
 		
 		Kohana::config_set('settings.site_style_css',$theme_css);
+		Kohana::config_set('settings.site_style_js',$theme_js);
 	}
 }
 
