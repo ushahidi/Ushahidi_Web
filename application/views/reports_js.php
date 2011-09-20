@@ -42,6 +42,13 @@
 	}
 	
 	$(document).ready(function() {
+	
+	
+		//add Not Selected values to the custom form fields that are drop downs
+		$("select[id^='custom_field_']").prepend('<option value="---NOT_SELECTED---"><?php echo Kohana::lang("ui_main.not_selected"); ?></option>');
+		$("select[id^='custom_field_']").val("---NOT_SELECTED---");
+		$("input[id^='custom_field_']:checkbox").removeAttr("checked");
+		$("input[id^='custom_field_']:radio").removeAttr("checked");		
 		  
 		// "Choose Date Range"" Datepicker
 		var dates = $( "#report_date_from, #report_date_to" ).datepicker({
@@ -662,6 +669,73 @@
 				urlParameters["v"] = verificationStatus;
 			}
 			
+			//
+			// Get the Custom Form Fields
+			// 
+			var customFields = new Array();
+			var checkBoxId = null;
+			var checkBoxArray = new Array();
+			$.each($("input[id^='custom_field_']"), function(i, item) {
+				var cffId = item.id.substring("custom_field_".length);
+				var value = $(item).val();
+				var type = $(item).attr("type");
+				if(type == "text")
+				{
+					if(value != "" && value != undefined && value != null)
+					{
+						console.log("assinging values:");
+						customFields.push([cffId, value]);
+					}
+				}
+				else if(type == "radio")
+				{
+					if($(item).attr("checked"))
+					{
+						customFields.push([cffId, value]);
+					}
+				}
+				else if(type == "checkbox")
+				{
+					if($(item).attr("checked"))
+					{
+						checkBoxId = cffId;
+						checkBoxArray.push(value);
+					}
+				}
+				
+				if(type != "checkbox" && checkBoxId != null)
+				{
+					customFields.push([checkBoxId, checkBoxArray]);
+					checkBoxId = null;
+					checkBoxArray = new Array();
+				}
+				
+			});
+			//incase the last field was a checkbox
+			if(checkBoxId != null)
+			{
+				customFields.push([checkBoxId, checkBoxArray]);				
+			}
+			
+			//now selects
+			$.each($("select[id^='custom_field_']"), function(i, item) {
+				var cffId = item.id.substring("custom_field_".length);
+				var value = $(item).val();
+				if(value != "---NOT_SELECTED---")
+				{
+					customFields.push([cffId, value]);
+				}
+			});
+			if(customFields.length > 0)
+			{
+				urlParameters["cff"] = customFields;
+			}
+			else
+			{
+				delete urlParameters["cff"];
+			}
+			
+			
 			// Fetch the reports
 			fetchReports();
 			
@@ -754,10 +828,27 @@
 		if (typeof $("."+filterClass) == 'undefined')
 			return;
 		
-		// Deselect
-		$.each($("." + filterClass +" li a.selected"), function(i, item){
-			$(item).removeClass("selected");
-		});
+		if(parameterKey == "cff") //It's Cutom Form Fields baby
+		{
+			$.each($("input[id^='custom_field_']"), function(i, item){
+				if($(item).attr("type") == "checkbox" || $(item).attr("type") == "radio")
+				{
+					$(item).removeAttr("checked");
+				}
+				else
+				{
+					$(item).val("");
+				}
+			});			
+			$("select[id^='custom_field_']").val("---NOT_SELECTED---");
+		}
+		else //it's just some simple removing of a class
+		{
+			// Deselect
+			$.each($("." + filterClass +" li a.selected"), function(i, item){
+				$(item).removeClass("selected");
+			});			
+		}
 		
 		// Remove the parameter key from urlParameters
 		delete urlParameters[parameterKey];
