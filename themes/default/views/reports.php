@@ -176,6 +176,17 @@
 								
 							</ul>
 						</div>
+						<h3>
+							<a href="#" class="small-link-button f-clear reset" onclick="removeParameterKey('cff', 'fl-customFields');">
+								<?php echo Kohana::lang('ui_main.clear'); ?>
+							</a>
+							<a class="f-title" href="#"><?php echo Kohana::lang('ui_main.custom_fields'); ?></a>
+						</h3>
+						<div class="f-customFields-box">
+							<ul class="filter-list fl-customFields">
+								<?php echo $custom_forms_filter; ?>
+							</ul>
+						</div>
 					</div>
 					<!-- end #accordion -->
 					

@@ -154,6 +154,7 @@
 					foreach($options as $option)
 					{
 						$set_default = ($option == $default);
+						$option = trim($option);
 
 						$html .= "<span style=\"margin-right: 15px\">";
 						$html .= form::label('custom_field['.$field_id.']'," ".$option." ");
@@ -185,7 +186,7 @@
 									break;
 							}
 						}
-						
+						$option = trim($option);
 						$html .= "<span style=\"margin-right: 15px\">";
 						$html .= form::checkbox("custom_field[".$field_id.'-'.$cnt.']', $option, $set_default, $id_name);
 						$html .= form::label("custom_field[".$field_id.']'," ".$option);
@@ -220,6 +221,7 @@
 					{
 						foreach($options as $op)
 						{
+							$op = trim($op);
 							$ddoptions[$op] = $op;
 						}
 					}
