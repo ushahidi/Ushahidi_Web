@@ -30,9 +30,21 @@ class category_Core {
 
 		// Category is selected.
 		$category_checked = in_array($cid, $selected_categories);
+		
+		// Visible Child Count
+		$vis_child_count = 0;
+		foreach ($category->children as $child)
+		{
+			$child_visible = $child->category_visible;
+			if ($child_visible)
+			{
+				// Increment Visible Child count
+				++$vis_child_count;
+			}
+		}
 
 		$disabled = "";
-		if (!$enable_parents AND $category->children->count() > 0)
+		if (!$enable_parents AND $category->children->count() > 0 AND $vis_child_count >0)
 		{
 			$disabled = " disabled=\"disabled\"";	
 		}
@@ -76,9 +88,20 @@ class category_Core {
 			// Display parent category.
 			$html .= '<li>';
 			$html .= category::display_category_checkbox($category, $selected_categories, $form_field, $enable_parents);
-
+			
+			// Visible Child Count
+			$vis_child_count = 0;
+			foreach ($category->children as $child)
+			{
+				$child_visible = $child->category_visible;
+				if ($child_visible)
+				{
+					// Increment Visible Child count
+					++$vis_child_count;
+				}
+			}
 			// Display child categories.
-			if ($category->children->count() > 0)
+			if ($category->children->count() > 0 AND $vis_child_count > 0)
 			{
 				$html .= '<ul>';
 				foreach ($category->children as $child)
