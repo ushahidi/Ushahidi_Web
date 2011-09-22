@@ -225,9 +225,7 @@ class Main_Controller extends Template_Controller {
 				if ($child_visible)
 				{
 					// Check for localization of child category
-					$translated_title = Category_Lang_Model::category_title($child->id,$l);
-
-					$display_title = ($translated_title)? $translated_title : $child->category_title;
+					$display_title = Category_Lang_Model::category_title($child->id,$l);
 
 					$children[$child->id] = array(
 						$display_title,
@@ -248,9 +246,7 @@ class Main_Controller extends Template_Controller {
 			}
 
 			// Check for localization of parent category
-			$translated_title = Category_Lang_Model::category_title($category->id,$l);
-
-			$display_title  = ($translated_title)? $translated_title : $category->category_title;
+			$display_title = Category_Lang_Model::category_title($category->id,$l);
 
 			// Put it all together
 			$parent_categories[$category->id] = array(

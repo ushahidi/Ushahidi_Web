@@ -20,10 +20,8 @@ class category_Core {
 
 		// Get locale
 		$l = Kohana::config('locale.language.0');
-
-		$translated_title = Category_Lang_Model::category_title($cid, $l);
 		
-		$category_title = ($translated_title)? $translated_title :  $category->category_title;
+		$category_title = Category_Lang_Model::category_title($cid, $l);
 
 		//$category_title = $category->category_title;
 		$category_color = $category->category_color;
@@ -202,7 +200,7 @@ class category_Core {
 			{
 				// Add children
 				$category_data[$category->parent_id]['children'][$category->id] = array(
-					'category_title' => $category->category_title,
+					'category_title' => Category_Lang_Model::category_title($category->id,Kohana::config('locale.language.0')),
 					'parent_id' => $category->parent_id,
 					'category_color' => $category->category_color,
 					'report_count' => $category->report_count,
@@ -236,7 +234,7 @@ class category_Core {
 			$report_count = property_exists($temp_category, 'report_count')? $temp_category->report_count : 0;
 			
 			$array[$temp_category->id] = array(
-				'category_title' => $temp_category->category_title,
+				'category_title' => Category_Lang_Model::category_title($temp_category->id,Kohana::config('locale.language.0')),
 				'parent_id' => $temp_category->parent_id,
 				'category_color' => $temp_category->category_color,
 				'report_count' => $report_count,

@@ -77,12 +77,8 @@ class Reports_Controller extends Main_Controller {
 
 		if ($category->loaded)
 		{
-			$translated_title = Category_Lang_Model::category_title($category_id,$l);
-			
 			// Set the category title
-			$this->template->content->category_title = ($translated_title)
-				? $translated_title
-				: $category->category_title;
+			$this->template->content->category_title = Category_Lang_Model::category_title($category_id,$l);
 		}
 		else
 		{
@@ -164,12 +160,7 @@ class Reports_Controller extends Main_Controller {
 				$ct = (string)$category->category_title;
 				if ( ! isset($localized_categories[$ct]))
 				{
-					$translated_title = Category_Lang_Model::category_title($category->id, $locale);
-					$localized_categories[$ct] = $category->category_title;
-					if ($translated_title)
-					{
-						$localized_categories[$ct] = $translated_title;
-					}
+					$localized_categories[$ct] = Category_Lang_Model::category_title($category->id, $locale);
 				}
 			}
 		}
