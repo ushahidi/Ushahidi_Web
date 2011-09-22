@@ -459,7 +459,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 				$comment_items[$incident_comment->incident_id][$i]['comment_date'] = $incident_comment->comment_date;
 				$i++;
 			}
-			//echo Kohana::debug($comment_items);exit();
 			// Free temporary variables from memory
 			unset ($incident_comments);
 		}
