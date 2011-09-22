@@ -113,6 +113,9 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->category_tree_view = category::get_category_tree_view();
 		
 		// Additional view content
+		$this->template->content->custom_forms_filter = new View('reports_submit_custom_forms');
+		$disp_custom_fields = customforms::get_custom_form_fields();		
+		$this->template->content->custom_forms_filter->disp_custom_fields = $disp_custom_fields;
 		$this->template->content->oldest_timestamp = $oldest_timestamp;
 		$this->template->content->latest_timestamp = $latest_timestamp;
 		$this->template->content->report_stats->total_reports = $total_reports;

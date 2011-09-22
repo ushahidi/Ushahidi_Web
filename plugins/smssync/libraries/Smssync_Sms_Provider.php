@@ -3,7 +3,7 @@
 /**
  * The smssync sender
  */
-class Smssync_SMS_Core {
+class Smssync_Sms_Provider implements Sms_Provider_Core {
 	
 	public function send($to = NULL, $from = NULL, $message = NULL)
 	{
@@ -14,7 +14,7 @@ class Smssync_SMS_Core {
 		$smssync->smssync_message_date = date("Y-m-d H:i:s",time());
 		$smssync->save();
 		
-		return true;
+		return TRUE;
 	}
 	
 }

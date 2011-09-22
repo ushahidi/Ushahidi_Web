@@ -96,7 +96,7 @@ class reports_Core {
 		if ( ! Kohana::config('settings.multi_country'))
 		{
 			$country = Country_Model::get_country_by_name($post->country_name);
-			if ($country->id != Kohana::config('settings.default_country'))
+			if ($country AND $country->id != Kohana::config('settings.default_country'))
 			{
 				$post->add_error('country_name','single_country');
 			}
@@ -817,6 +817,42 @@ class reports_Core {
 				'i.incident_verified = '.intval($url_data['v'])
 			);
 		}
+		
+		//
+		// Check if they're filtering over custom form fields
+		//
+		if (isset($url_data['cff']) AND is_array($url_data['cff']))
+		{
+			$whereText = "";
+			$i = 0;
+			foreach($url_data['cff'] as $field)
+			{
+				$field_id = $field[0];
+				$field_value = $field[1];
+				if(is_array($field_value))
+				{
+					$field_value = implode(",", $field_value);
+				}
+								
+				$i++;
+				if($i > 1)
+				{
+					$whereText .= " OR ";
+				}
+				
+				$whereText .= "(form_field_id = ".$field_id." AND form_response = '".trim($field_value)."')";
+			}
+			
+			//make sure there was some valid input in there
+			if($i > 0)
+			{
+				array_push(self::$params, 'i.id IN (SELECT DISTINCT incident_id FROM '.$table_prefix.'form_response WHERE '.$whereText.')');
+			}
+			
+		} //end of handling cff
+		
+		//in case a plugin or something wants to get in on the parameter fetching fun
+		Event::run('ushahidi_filter.fetch_incidents_set_params', self::$params);
 		
 		//> END PARAMETER FETCH
 		

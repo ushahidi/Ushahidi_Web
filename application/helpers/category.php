@@ -9,9 +9,9 @@
  */
 class category_Core {
 
-		/**
-		 * Displays a single category checkbox.
-		 */
+	/**
+	 * Displays a single category checkbox.
+	 */
 	public static function display_category_checkbox($category, $selected_categories, $form_field, $enable_parents = FALSE)
 	{
 		$html = '';
@@ -30,11 +30,23 @@ class category_Core {
 
 		// Category is selected.
 		$category_checked = in_array($cid, $selected_categories);
+		
+		// Visible Child Count
+		$vis_child_count = 0;
+		foreach ($category->children as $child)
+		{
+			$child_visible = $child->category_visible;
+			if ($child_visible)
+			{
+				// Increment Visible Child count
+				++$vis_child_count;
+			}
+		}
 
 		$disabled = "";
-		if (!$enable_parents AND $category->children->count() > 0)
+		if (!$enable_parents AND $category->children->count() > 0 AND $vis_child_count >0)
 		{
-			$disabled = " disabled=\"disabled\"";
+			$disabled = " disabled=\"disabled\"";	
 		}
 
 		$html .= form::checkbox($form_field.'[]', $cid, $category_checked, ' class="check-box"'.$disabled);
@@ -76,15 +88,30 @@ class category_Core {
 			// Display parent category.
 			$html .= '<li>';
 			$html .= category::display_category_checkbox($category, $selected_categories, $form_field, $enable_parents);
-
+			
+			// Visible Child Count
+			$vis_child_count = 0;
+			foreach ($category->children as $child)
+			{
+				$child_visible = $child->category_visible;
+				if ($child_visible)
+				{
+					// Increment Visible Child count
+					++$vis_child_count;
+				}
+			}
 			// Display child categories.
-			if ($category->children->count() > 0)
+			if ($category->children->count() > 0 AND $vis_child_count > 0)
 			{
 				$html .= '<ul>';
 				foreach ($category->children as $child)
 				{
-					$html .= '<li>';
-					$html .= category::display_category_checkbox($child, $selected_categories, $form_field, $enable_parents);
+					$child_visible = $child->category_visible;
+					if ($child_visible)
+					{
+						$html .= '<li>';
+						$html .= category::display_category_checkbox($child, $selected_categories, $form_field, $enable_parents);
+					}
 				}
 				$html .= '</ul>';
 			}
@@ -263,8 +290,8 @@ class category_Core {
 		// Query to fetch the report totals for the parent categories
 		$sql = "SELECT c.id, COUNT(DISTINCT ic.incident_id) AS report_count "
 			. "FROM ".$table_prefix."category c "
-			. "INNER JOIN ".$table_prefix." incident_category ic ON (ic.category_id = c.id) "
-			. "INNER JOIN ".$table_prefix." incident i ON (ic.incident_id = i.id) "
+			. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
+			. "INNER JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id) "
 			. "WHERE c.category_visible = 1 "
 			. "AND i.incident_active = 1 "
 			. "AND c.parent_id = 0 "

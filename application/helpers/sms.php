@@ -1,22 +1,22 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * SMS helper class
- * 
  *
- * @package	   SMS
- * @author	   Ushahidi Team
- * @copyright  (c) 2008 Ushahidi Team
- * @license	   http://www.ushahidi.com/license.html
+ * @package     Ushahidi
+ * @category    Helpers
+ * @author      Ushahidi Team
+ * @copyright   (c) 2008 Ushahidi Team
+ * @license     http://www.ushahidi.com/license.html
  */
 
-class sms_Core 
-{
+class sms_Core {
+
 	/**
 	 * Send The SMS Message Using Default Provider
+	 *
 	 * @param to mixed	The destination address.
 	 * @param from mixed  The source/sender address
 	 * @param text mixed  The text content of the message
-	 *
 	 * @return mixed/bool (returns TRUE if sent FALSE or other text for fail)
 	 */
 	public static function send($to = NULL, $from = NULL, $message = NULL)	
@@ -33,24 +33,29 @@ class sms_Core
 				->where("plugin_name", $provider)
 				->where("plugin_active", 1)
 				->find();
+			
+			// Plugin loaded
 			if ($plugin->loaded)
-			{ // Plugin exists and is active
-				
+			{
 				// 3. Does this plugin have the SMS Library in place?
-				$class = ucfirst($provider).'_SMS';
+				// SMS libaries should be suffixed with "_Sms_Provider"
+				$class = ucfirst($provider).'_Sms_Provider';
 				
-				$path = sms::find_provider($provider);
-				
-				if ($path)
-				{ // File Exists
-					$sender = new $class;
-					// 4. Does the send method exist in this class?
-					if (method_exists($sender, 'send'))
+				if (Kohana::find_file('libraries', $class))
+				{
+					$provider  = new $class;
+					
+					// Sanity check - Ensure all SMS providers are sub-classes of Sms_Provider_Core
+					if ( ! $provider instanceof Sms_Provider_Core)
 					{
-						$response = $sender->send($to, $from, $message);
-						
-						return $response;
+						throw new Kohana_Exception('All SMS Provider libraries must be be sub-classes of Sms_Provider_Core');
 					}
+					
+					// Proceed
+					$response = $sender->send($to, $from, $message);
+					
+					// Return
+					return $response;
 				}
 			}
 		}
@@ -168,32 +173,5 @@ class sms_Core
 		}
 		
 		return TRUE;
-	}
-	
-	/**
-	 * Using this function because someone somewhere will name this file wrong!!!
-	 */
-	public static function find_provider($provider)
-	{
-		if ($path = Kohana::find_file('libraries', $provider.'_sms'))
-		{ // provider_sms
-			return $path;
-		}
-		elseif ($path = Kohana::find_file('libraries', $provider.'_SMS'))
-		{ // provider_SMS
-			return $path;
-		}
-		elseif ($path = Kohana::find_file('libraries', ucfirst($provider).'_sms'))
-		{ // Provider_sms
-			return $path;
-		}
-		elseif ($path = Kohana::find_file('libraries', ucfirst($provider).'_SMS'))
-		{ // Provider_SMS
-			return $path;
-		}
-		else
-		{
-			return false;
-		}	
 	}
 }

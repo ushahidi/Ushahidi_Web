@@ -1,3 +1,22 @@
+
+<script type="text/javascript">
+$(function(){
+  
+  // show/hide report filters and layers boxes on home page map
+  $("a.toggle").toggle(
+    function() { 
+      $($(this).attr("href")).show();
+      $(this).addClass("active-toggle");
+    },
+    function() { 
+      $($(this).attr("href")).hide();
+      $(this).removeClass("active-toggle");
+    }
+  );
+  
+});
+
+</script>
 <!-- main body -->
 <div id="main" class="clearingfix">
 	<div id="mainmiddle">
@@ -149,8 +168,8 @@
 			if (Kohana::config('settings.allow_reports'))
 			{
 				?>
-				<div class="additional-content">
-					<h5><?php echo Kohana::lang('ui_main.how_to_report'); ?></h5>
+				<a class="btn toggle" id="how-to-report-menu-toggle" class="" href="#how-to-report-box"><?php echo Kohana::lang('ui_main.how_to_report'); ?> <span class="btn-icon ic-question">&raquo;</span></a>
+				<div id="how-to-report-box" class="map-menu-box">
 					<ol>
 						<?php if (!empty($phone_array)) 
 						{ ?><li><?php echo Kohana::lang('ui_main.report_option_1')." "; ?> <?php foreach ($phone_array as $phone) {

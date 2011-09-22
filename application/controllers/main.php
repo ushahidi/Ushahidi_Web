@@ -166,6 +166,17 @@ class Main_Controller extends Template_Controller {
 	  return $categories;
 	}
 
+	/**
+	 * Get Trusted Category Count
+	 */
+	public function get_trusted_category_count($id)
+	{
+		$trusted = ORM::factory("incident")
+						->join("incident_category","incident.id","incident_category.incident_id")
+						->where("category_id",$id);
+		return $trusted;
+	} 
+	 
     public function index()
     {
         $this->template->header->this_page = 'home';
@@ -210,26 +221,28 @@ class Main_Controller extends Template_Controller {
 			$children = array();
 			foreach ($category->orderby('category_position', 'asc')->children as $child)
 			{
-				// Check for localization of child category
+				$child_visible = $child->category_visible;
+				if ($child_visible)
+				{
+					// Check for localization of child category
+					$translated_title = Category_Lang_Model::category_title($child->id,$l);
 
-				$translated_title = Category_Lang_Model::category_title($child->id,$l);
+					$display_title = ($translated_title)? $translated_title : $child->category_title;
 
-				$display_title = ($translated_title)? $translated_title : $child->category_title;
+					$children[$child->id] = array(
+						$display_title,
+						$child->category_color,
+						$child->category_image
+					);
 
-				$children[$child->id] = array(
-					$display_title,
-					$child->category_color,
-					$child->category_image
-				);
-
-				if ($child->category_trusted)
-				{ // Get Trusted Category Count
-					$trusted = ORM::factory("incident")
-						->join("incident_category","incident.id","incident_category.incident_id")
-						->where("category_id",$child->id);
-					if ( ! $trusted->count_all())
-					{
-						unset($children[$child->id]);
+					if ($child->category_trusted)
+					{ 
+						// Get Trusted Category Count
+						$trusted = $this->get_trusted_category_count($child->id);
+						if ( ! $trusted->count_all())
+						{
+							unset($children[$child->id]);
+						}
 					}
 				}
 			}
@@ -248,10 +261,9 @@ class Main_Controller extends Template_Controller {
 			);
 
 			if ($category->category_trusted)
-			{ // Get Trusted Category Count
-				$trusted = ORM::factory("incident")
-					->join("incident_category","incident.id","incident_category.incident_id")
-					->where("category_id",$category->id);
+			{ 
+				// Get Trusted Category Count
+				$trusted = $this->get_trusted_category_count($category->id);
 				if ( ! $trusted->count_all())
 				{
 					unset($parent_categories[$category->id]);
