@@ -76,6 +76,7 @@
 						</div>
 						<!-- / Default Theme -->				
 						<?php
+						$i = 2; // Start at 2 because the default theme isn't in this array
 						foreach ($themes as $theme)
 						{
 							?>
@@ -87,7 +88,7 @@
 										$theme['Screenshot']."\" width=240 height=150 border=0>";
 									}
 								?></div>
-								<strong><?php echo $theme['Title']." by ".$theme['Author']; ?></strong><BR />
+								<strong><?php echo $theme['Title']." $i by ".$theme['Author']; ?></strong><BR />
 								<?php echo $theme['Description'] ?><BR />
 								<strong><u><?php echo Kohana::lang('ui_main.version');?></u></strong>: <?php echo $theme['Version'] ?><BR />
 								<strong><u><?php echo Kohana::lang('ui_main.demo');?></u></strong>: <?php echo $theme['Demo'] ?><BR />
@@ -100,9 +101,14 @@
 										echo "checked = \"checked\"";
 									}
 									?> /><?php echo Kohana::lang('ui_main.select_theme');?>
-								</div>												
+								</div>
 							</div>
 							<?php
+							// Make sure the themes don't get bunched up
+							if($i % 3 == 0) {
+								?><div style="clear:both;"></div><?php
+							}
+							$i++;
 						}						
 						?>
 						<div style="clear:both;"></div>

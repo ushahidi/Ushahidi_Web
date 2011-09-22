@@ -1380,6 +1380,7 @@ div.sms_holder, div.settings_holder{
 	div.theme_holder{
 		width:243px;
 		margin-right:20px;
+		margin-bottom:20px;
 		border:1px solid #ccc;
 		float:left;
 		padding:10px;
