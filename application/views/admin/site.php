@@ -57,11 +57,11 @@
 						<div id="need_to_upgrade" style="display:none;"></div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_name"); ?>"><?php echo Kohana::lang('settings.site.name');?></a></h4>
-							<?php print form::input('site_name', $form['site_name'], ' class="text long2"'); ?>
+							<?php print form::input('site_name', $form['site_name'], ' class="text long2" maxlength="250"'); ?>
 						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_tagline"); ?>"><?php echo Kohana::lang('settings.site.tagline');?></a></h4>
-							<?php print form::input('site_tagline', $form['site_tagline'], ' class="text long2"'); ?>
+							<?php print form::input('site_tagline', $form['site_tagline'], ' class="text long2" maxlength="250"'); ?>
 						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_banner"); ?>"><?php echo Kohana::lang('settings.site.banner');?></a></h4>

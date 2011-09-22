@@ -78,6 +78,9 @@ class Settings_Controller extends Admin_Controller
 		$form_error = FALSE;
 		$form_saved = FALSE;
 
+		// Retrieve Current Settings
+		$settings = ORM::factory('settings', 1);
+
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
@@ -90,8 +93,8 @@ class Settings_Controller extends Admin_Controller
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
 
-			$post->add_rules('site_name', 'required', 'length[3,50]');
-			$post->add_rules('site_tagline', 'length[3,100]');
+			$post->add_rules('site_name', 'required', 'length[3,250]');
+			$post->add_rules('site_tagline', 'length[3,250]');
 			$post->add_rules('site_email', 'email', 'length[4,100]');
 			$post->add_rules('alerts_email', 'email', 'length[4,100]');
 			//$post->add_rules('site_message', 'standard_text');
@@ -246,9 +249,6 @@ class Settings_Controller extends Admin_Controller
 		}
 		else
 		{
-			// Retrieve Current Settings
-			$settings = ORM::factory('settings', 1);
-
 			$form = array
 			(
 				'site_name' => $settings->site_name,
