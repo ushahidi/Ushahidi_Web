@@ -1458,7 +1458,7 @@ ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
 * Add field to table `settings`
 */
 
-ALTER TABLE `settings` ADD `alerts_email` tinyint(4) NOT NULL DEFAULT '0';
+ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 
 
 /**
