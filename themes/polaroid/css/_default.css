@@ -1,0 +1,269 @@
+/*
+Theme Name: Travelogger
+Description: This theme is specifically geared toward people wanting to keep a travelog.
+Demo: http://www.ushahidi.com
+Version: 1.0
+Author: Caleb Bell
+Author Email: caleb@ushahidi.com
+
+*/
+
+
+/* Theme Settings
+--------------------*/
+  /* Primary Color */
+  h1, a,
+  table.table-list tbody tr td a,
+  .hover .r_details h3 a.r_title,
+  div.footermenu ul li a,
+  div.search-form input.text  { color: #dc6d00; }
+  div.search-form input.text:focus { border-color: #dc6d00; }
+  div.submit-incident a, .btn_submit,
+  div.filters ul li a:hover, div.filters ul li a.active,
+  ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#dc6d00; }
+  
+  /* Lighter Primary Color - for hover effects */
+  div#loggedin_user_action a, 
+  div#loggedin_user_action a:visited,
+  div#mainmenu ul li a { color:#dc8a3b; }
+  div.submit-incident a:hover, .btn_submit:hover,
+  div.search-form input.searchbtn,
+  div#mainmenu ul li a:hover,
+  div#mainmenu a.active { background-color:#dc8a3b; }
+  div#mainmenu ul li a.active,
+  div#mainmenu ul li a:hover { color:#ffffff; }
+
+
+/* general styles */
+h1 {
+  
+}
+h2 {
+  
+}
+h5, h4 {
+  
+}
+
+/* structural divs */
+
+body { background:transparent url(../images/bg_body_alt.png) repeat; }
+
+
+.big-block {   }
+.page-main #main { padding:0px 10px; display:none; }
+.page-main #middle { background:none; }
+div#middle .background { min-height:inherit; }
+
+/* top-bar */
+#top-bar {
+  width: 960px;
+  height: 40px;
+  position: relative;
+  margin:0 auto;
+}
+div#searchbox {
+  position: absolute;
+  right: 0;
+  background: #3d3c3b;
+  border: none;
+  width: auto;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+div#loggedin_user_action {
+  float: left;
+  width: auto;
+}
+div#loggedin_user_action a, div#loggedin_user_action a:visited {
+  font-weight: bold;
+  padding: 6px;
+  margin-top: 2px;
+  width: auto;
+  display: block;
+  float: left;
+  color:#5396ff;
+}
+div.search-form input.text {
+  border: 1px solid;
+}
+div.search-form input.text:focus {
+  border: 1px solid;
+}
+div.search-form input.searchbtn {
+  width: auto;
+  height: auto;
+  border: 0;
+  text-indent: 0;
+  color: #FFFFFF;
+  display: block;
+  font-size: 12px;
+  background-image:none;
+  background-color:#3764AA;
+  margin-left: 10px;
+  line-height: 17px;
+  padding: 2px 5px 3px;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0 #424242;
+}
+
+/* header */
+div#header { height:auto; margin:18px 0; }
+
+/* logo box */
+div#logo {
+  background-color: transparent;
+  float:none;
+  padding: 0;
+  margin: 0;
+}
+div#logo h1 a {
+  color: #222222;
+  font-size: 28px;
+}
+div#logo span {
+  font-style: italic;
+  color: #999;
+  font-family: 'Georgia', serif;
+}
+
+/* submit report button */
+div.submit-incident { margin:0; top:20%; }
+div.submit-incident a, .btn_submit {
+  text-shadow: 1px 1px 0 #424242;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+
+/* primary nav */
+div#mainmenu { background:none; border:none; height:27px; }
+div#mainmenu ul {
+  
+}
+div#mainmenu ul li {
+  margin:0 8px 0 0;
+}
+div#mainmenu ul li a { padding:3px 5px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+div#mainmenu ul li a:hover, div#mainmenu a.active {
+  
+}
+
+
+/* home page reports */
+div#middle {}
+div.content-container { background:none; }
+
+.polaroids { }
+.polaroid { margin:0 10px 10px 0; padding:5px; height:150px; float:left;  }
+.picture { width:100px; font:10px/18px "Monaco","Courier New","Courier",monospace; padding:5px; background:#dedbdf url(../images/bg_polaroid-pic.png) repeat; -moz-box-shadow:0px 1px 1px #9a9a9a; -webkit-box-shadow:0px 1px 1px #9a9a9a; box-shadow:0px 1px 1px #9a9a9a; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
+.picture img { display:block; border:1px solid #eeebef; -moz-border-radius:3px; -webkit-border-radius:3px; border-radius:3px; }
+.picture span { display:block; }   
+/* reports listing page */
+#content .big-block { border:1px solid #fff; border-top:0; margin:0 10px; background:#EEEDEA; padding:18px; }
+#reports-box { }
+#rb_list-view .rb_report {
+  background: #fff;
+}
+
+/* single report page */
+body.page-reports-view { background:#ffffff; background-image:none; }
+.page-reports-view div#header,
+.page-reports-view div#mainmenu,
+.page-reports-view div#footer,
+.page-reports-view div#top-bar,
+.report_detail .r_location,
+div.credibility { display:none; }
+
+.page-reports-view div.rapidxwpr { width:740px; }
+.page-reports-view div#main { padding:0; }
+#main .left-col { width:150px; margin-right:45px; }
+#main .middle-col { width:350px; margin-right:45px; float:left; }
+#main .right-col { width:150px; }
+#main .right-col .polaroid { padding:0; height:auto; margin-bottom:18px; }
+#main .right-col .photothumb { display:block; margin-bottom:18px; }
+#main .right-col .photothumb img { width:110px }
+
+
+.report_detail .r_date { background:none; font-size:14px; font-weight:bold; margin:65px 0 0 0; padding:0; display:block; text-align:right; }
+
+div.report-category-list p a { display:block; text-align:right; float:none; background:none; position:relative; margin:0 0 5px 0; padding:0 20px 0 0; }
+div.report-category-list a span.r_cat-box { height:10px; width:10px; line-height:10px; position:absolute; right:0; top:1px;}
+
+.report-map .map-holder { width:auto; height:100px; }
+
+h1.report-title { height:45px; }
+
+div.report-media-box-content { display:none; }
+div.report-additional-reports { display:none; }
+
+/* Submit Report */
+.page-reports-submit div#middle { background:transparent; }
+
+/* reports page */
+.report_right { width:450px;}
+
+/* get alerts page */
+.step-1 h2 {
+  padding: 0;
+}
+/* footer */
+div#footer { background:#000; width:960px; margin:0 auto; -moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px; }
+
+div#underfooter { background:transparent; }
+div.footermenu { margin:0 18px}
+
+
+div.footermenu ul li a {
+  text-transform: uppercase;
+  font-weight: bold;
+  border-left: 1px solid #666;
+}
+.additional-credits {
+  margin-top: 18px;
+}
+
+/* button styles */
+a.btn {
+    cursor: pointer;
+    display: inline-block;
+    background-color: #e6e6e6;
+    background-repeat: no-repeat;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), color-stop(25%, #ffffff), to(#e6e6e6));
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -moz-linear-gradient(top, #ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -ms-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: -o-linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    background-image: linear-gradient(#ffffff, #ffffff 25%, #e6e6e6);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
+    padding: 5px 14px 6px;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    color: #333;
+    font-size: 13px;
+    line-height: normal;
+    border: 1px solid #ccc;
+    border-bottom-color: #bbb;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+    -webkit-transition: 0.1s linear all;
+    -moz-transition: 0.1s linear all;
+    transition: 0.1s linear all;
+}
+
+a.btn:hover {
+  background-position: 0 -15px;
+  color: #333;
+  text-decoration: none;
+}
+
+span.btn-icon { display:block; position:absolute; height:16px; width:16px; overflow:hidden; text-indent:-234324px; top:6px; right:5px; }
+  .ic-right     { background:transparent url(../images/bg_category-filter-controls.png) -32px -41px no-repeat; }
+  .ic-down      { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
+  .ic-question  { background:transparent url(../images/bg_category-filter-controls.png) 0px -49px no-repeat; }
+  
+  /* active state */
+  .active-toggle .ic-right { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
+  
