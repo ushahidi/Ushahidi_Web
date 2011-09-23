@@ -29,8 +29,56 @@ jQuery(document).ready(function() {
 			jQuery('#need_to_upgrade').html(data);
 			jQuery('#need_to_upgrade').removeAttr("style");
 		});
+	
+	showhide();
+
+
+	// onChange event handler for the alerts dropdown
+	$("#allow_alerts").change(function(){
+	showhide();
+	
+	});
 		
 });
+
+
+function showhide()
+{
+	var allow_alerts = $("#allow_alerts").val();
+	if (allow_alerts > 0)
+	{   
+		// Show the alerts email textbox
+		$("#alerts_selector").show('slow'); 
+
+		$("#siteForm").validate({
+			rules: {
+				alerts_email: {
+					required: true,
+					email: true
+				}
+			},
+			messages: {
+				alerts_email: {
+				required: "Please enter an alerts email address",
+				email: "Please enter a valid email address"
+				}
+			}
+		});
+	}    
+	else
+	{
+		// Hide the alerts email textbox
+		$("#alerts_selector").hide('slow');
+		
+		jQuery('#siteForm').validate({
+			   onsubmit : false
+		});
+
+		
+	}
+	
+	
+}
 
 <?php
 	}

@@ -58,6 +58,7 @@ class Settings_Controller extends Admin_Controller
 			'items_per_page' => '',
 			'items_per_page_admin' => '',
 			'blocks_per_row' => '',
+			'allow_alerts' => '',
 			'allow_reports' => '',
 			'allow_comments' => '',
 			'allow_feed' => '',
@@ -84,6 +85,7 @@ class Settings_Controller extends Admin_Controller
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
+			//print_r($_POST);exit;
 			// Instantiate Validation, use $post, so we don't overwrite $_POST
 			// fields with our own things
 			$post = new Validation($_POST);
@@ -96,7 +98,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_name', 'required', 'length[3,250]');
 			$post->add_rules('site_tagline', 'length[3,250]');
 			$post->add_rules('site_email', 'email', 'length[4,100]');
-			$post->add_rules('alerts_email', 'email', 'length[4,100]');
+			//$post->add_rules('alerts_email','required', 'email', 'length[4,100]');
 			//$post->add_rules('site_message', 'standard_text');
 			$post->add_rules('site_copyright_statement', 'length[4,600]');
 			$post->add_rules('site_language','required', 'length[5, 5]');
@@ -105,6 +107,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('items_per_page','required','between[10,50]');
 			$post->add_rules('items_per_page_admin','required','between[10,50]');
 			$post->add_rules('blocks_per_row','required','numeric');
+			$post->add_rules('allow_alerts','required','between[0,1]');
 			$post->add_rules('allow_reports','required','between[0,1]');
 			$post->add_rules('allow_comments','required','between[0,2]');
 			$post->add_rules('allow_feed','required','between[0,1]');
@@ -146,6 +149,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->items_per_page = $post->items_per_page;
 				$settings->items_per_page_admin = $post->items_per_page_admin;
 				$settings->blocks_per_row = $post->blocks_per_row;
+				$settings->allow_alerts = $post->allow_alerts;
 				$settings->allow_reports = $post->allow_reports;
 				$settings->allow_comments = $post->allow_comments;
 				$settings->allow_feed = $post->allow_feed;
@@ -265,6 +269,7 @@ class Settings_Controller extends Admin_Controller
 				'items_per_page' => $settings->items_per_page,
 				'items_per_page_admin' => $settings->items_per_page_admin,
 				'blocks_per_row' => $settings->blocks_per_row,
+				'allow_alerts' => $settings->allow_alerts,
 				'allow_reports' => $settings->allow_reports,
 				'allow_comments' => $settings->allow_comments,
 				'allow_feed' => $settings->allow_feed,

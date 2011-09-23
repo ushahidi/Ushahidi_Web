@@ -18,7 +18,7 @@
 					<?php admin::settings_subtabs("site"); ?>
 
 				</h2>
-				<?php print form::open(NULL,array('enctype' => 'multipart/form-data')); ?>
+				<?php print form::open(NULL,array('enctype' => 'multipart/form-data', 'id' => 'siteForm', 'name' => 'siteForm')); ?>
 				<div class="report-form">
 					<?php
 					if ($form_error) {
@@ -82,10 +82,6 @@
 							<?php print form::input('site_email', $form['site_email'], ' class="text long2"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_alert_email"); ?>"><?php echo Kohana::lang('settings.site.email_alerts');?></a></h4>
-							<?php print form::input('alerts_email', $form['alerts_email'], ' class="text long2"'); ?>
-						</div>
-						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_message"); ?>"><?php echo Kohana::lang('settings.site.message');?></a></h4>
 							<?php print form::textarea('site_message', $form['site_message'], ' style="height:40px;"'); ?>
 						</div>
@@ -139,6 +135,16 @@
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_reports', $yesno_array, $form['allow_reports']); ?>
 							</span>
+						</div>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_alerts"); ?>"><?php echo Kohana::lang('settings.site.allow_alerts');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('allow_alerts', $yesno_array, $form['allow_alerts']); ?>
+							</span>
+						</div>
+						<div class="row" id="alerts_selector">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_alert_email"); ?>"><?php echo Kohana::lang('settings.site.email_alerts');?></a></h4>
+							<?php print form::input('alerts_email', $form['alerts_email'], ' class="text long2"', 'id = alert_email'); ?>
 						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_comments"); ?>"><?php echo Kohana::lang('settings.site.allow_comments');?></a></h4>

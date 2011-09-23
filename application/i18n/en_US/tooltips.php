@@ -33,6 +33,7 @@
 	'profile_username' => 'Your username cannot be changed',
 	'settings_access_level' => 'Access Levels are used to restrict access to custom form field data.  Higher access levels can access fields from lower levels. Superadmin has the highest access level - 100.  Public data is displayed at the lowest access level - 0.',
 	'settings_alert_email' => 'This is the email address that will be used to send email alerts.',
+	'settings_allow_alerts' => 'Allow users to subscribe for alerts via the web.',
 	'settings_allow_clustering' => 'This allows bundling of similar reports into a single dot on the map',
 	'settings_allow_comments' => 'Allow users to comment on reports on the main site.',
 	'settings_allow_feed' => 'This allows RSS News feeds to be displayed on the main site.',

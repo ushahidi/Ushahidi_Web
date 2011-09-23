@@ -76,18 +76,6 @@
 				<a href="<?php echo url::site()."alerts/confirm";?>"><?php echo Kohana::lang('ui_main.alert_confirm_previous'); ?></a>
 			</div>
 			<?php print form::close(); ?>
-			<?php if ($allow_feed == 1): ?>
-			<div class="step-2-holder">
-				<div class="feed">
-					<h2><?php echo Kohana::lang('ui_main.alerts_rss'); ?></h2>
-					<div class="holder">
-						<div class="box" style="text-align:center;">
-							<a href="<?php echo url::site(); ?>feed/"><img src="<?php echo url::file_loc('img'); ?>media/img/icon-feed.png" style="vertical-align: middle;" border="0"></a>&nbsp;<strong><a href="<?php echo url::site(); ?>feed/"><?php echo url::site(); ?>feed/</a></strong>
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php endif; ?>
 		</div>
 		<!-- end block -->
 	</div>
