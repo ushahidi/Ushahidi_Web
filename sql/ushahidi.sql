@@ -1454,10 +1454,16 @@ ALTER TABLE `form_field` ADD  `field_ispublic_submit` tinyint(4) NOT NULL defaul
 
 ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
 
+/**
+* Add field to table `settings`
+*/
+
+ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
+
 
 /**
 * Version information for table `settings`
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '65' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '66' WHERE `id`=1 LIMIT 1;
