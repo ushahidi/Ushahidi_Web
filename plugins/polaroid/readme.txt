@@ -12,7 +12,9 @@ author website: http://www.ushahidi.com
 Holds custom blocks and javascript for the travelogger theme
 
 == Installation ==
-1. Copy the entire "travelogger" directory into your /plugins/ directory.
+1. Assuming you've already activated the "Polaroid" theme, copy the entire "travelogger" directory into your /plugins/ directory.
 2. Activate the plugin.
+3. Go to the Manage -> Blocks section in the admin panel and make sure that the Polaroid block is the only one visible. (https://img.skitch.com/20110923-jg1irgc27pntqbtkr47k3dgqe2.png)
+4. Enjoy!
 
 == Changelog ==
