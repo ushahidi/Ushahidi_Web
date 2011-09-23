@@ -55,6 +55,7 @@
 	{
 		/* Add my JS */
     plugin::add_javascript('polaroid/js/jquery.colorbox-min');
+    plugin::add_javascript('polaroid/js/jquery.isotope.min');
 		plugin::add_javascript('polaroid/js/initialize');
 	}
 }
