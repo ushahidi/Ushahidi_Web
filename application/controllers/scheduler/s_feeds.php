@@ -61,7 +61,7 @@ class S_Feeds_Controller extends Controller {
 						// Does this feed have a location??
 						$location_id = 0;
 						// STEP 1: SAVE LOCATION
-						if ($latitude && $longitude)
+						if ($latitude AND $longitude)
 						{
 							$location = new Location_Model();
 							$location->location_name = "Unknown";
@@ -76,15 +76,15 @@ class S_Feeds_Controller extends Controller {
 						$newitem->feed_id = $feed->id;
 						$newitem->location_id = $location_id;
 						$newitem->item_title = $title;
-						if (isset($description) && !empty($description))
+						if (isset($description) AND !empty($description))
 						{
 							$newitem->item_description = $description;
 						}
-						if (isset($link) && !empty($link))
+						if (isset($link) AND !empty($link))
 						{
 							$newitem->item_link = $link;
 						}
-						if (isset($date) && !empty($date))
+						if (isset($date) AND !empty($date))
 						{
 							$newitem->item_date = date("Y-m-d H:i:s",strtotime($date));
 						}
@@ -100,20 +100,10 @@ class S_Feeds_Controller extends Controller {
 			
 			// Get Feed Item Count
 			$feed_count = ORM::factory('feed_item')->where('feed_id', $feed->id)->count_all();
-			if ($feed_count > $max_feeds) {
+			if ($feed_count > $max_feeds) 
+			{
 				// Excess Feeds
 				$feed_excess = $feed_count - $max_feeds;
-
-				// Delete Excess Feeds
-				/**** DISABLED FOR NOW ****/
-//				foreach (ORM::factory('feed_item')
-//					->where('feed_id', $feed->id)
-//					->orderby('id', 'ASC')
-//					->limit($feed_excess)
-//					->find_all() as $del_feed)
-//				{
-//					$del_feed->delete($del_feed->id);
-//				}
 			}
 
 			// Set feed update date

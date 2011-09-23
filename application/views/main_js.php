@@ -41,7 +41,7 @@
 		// Global list for current KML overlays in display
 		var kmlOverlays = [];
 		
-		var baseUrl = "<?php echo url::base(); ?>";
+		var baseUrl = "<?php echo url::site(); ?>";
 		var longitude = <?php echo $longitude; ?>;
 		var latitude = <?php echo $latitude; ?>;
 		var defaultZoom = <?php echo $default_zoom; ?>;

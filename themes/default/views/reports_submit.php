@@ -107,7 +107,7 @@
 					<?php
 						$selected_categories = (!empty($form['incident_category']) AND is_array($form['incident_category']))
 							? $selected_categories = $form['incident_category']
-							:array();
+							: array();
 							
 						$columns = 2;
 						echo category::tree($categories, $selected_categories, 'incident_category', $columns);
