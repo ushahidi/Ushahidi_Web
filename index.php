@@ -8,6 +8,17 @@
  */
 
 /**
+ * This checks to see if the site is in maintenance mode. Put your site
+ * in maintenance mode by putting a 'maintenance.php' file in the root
+ * directory of your site. (Same directory as this index.php file)
+ *
+ */
+if(file_exists('maintenance.php')){
+	header("Status: 503 Service Temporarily Unavailable");
+	die(file_get_contents('maintenance.php'));
+}
+
+/**
  * Define the website environment status. When this flag is set to TRUE, some
  * module demonstration controllers will result in 404 errors. For more information
  * about this option, read the documentation about deploying Kohana.
