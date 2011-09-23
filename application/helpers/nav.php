@@ -53,12 +53,15 @@ class nav_Core {
 		}
 		
 		// Alerts
-		if( ! in_array('alerts',$dontshow))
+		if(! in_array('alerts',$dontshow))
 		{
-			$menu .= "<li><a href=\"".url::site()."alerts\" ";
-			$menu .= ($this_page == 'alerts') ? " class=\"active\"" : "";
-		 	$menu .= ">".Kohana::lang('ui_main.alerts')."</a></li>";
-		 }
+			if(Kohana::config('settings.allow_alerts'))
+			{
+				$menu .= "<li><a href=\"".url::site()."alerts\" ";
+				$menu .= ($this_page == 'alerts') ? " class=\"active\"" : "";
+				$menu .= ">".Kohana::lang('ui_main.alerts')."</a></li>";
+			}
+		}
 		
 		// Contacts
 		if( ! in_array('contact',$dontshow))

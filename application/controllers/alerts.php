@@ -25,6 +25,13 @@ class Alerts_Controller extends Main_Controller {
 
     public function index()
     {
+
+		// First, are we allowed to subscribe for alerts via web?
+		if ( ! Kohana::config('settings.allow_alerts'))
+		{
+			url::redirect(url::site().'main');
+		}
+
 		$this->template->header->this_page = $this->themes->this_page = 'alerts';
 		$this->template->content = new View('alerts');
 		
@@ -35,8 +42,6 @@ class Alerts_Controller extends Main_Controller {
 		
 		$this->template->content->alert_radius_view = $alert_radius_view;
 
-		// Display news feeds?
-		$this->template->content->allow_feed = Kohana::config('settings.allow_feed');
 
 		// Display Mobile Option?
 		$this->template->content->show_mobile = TRUE;

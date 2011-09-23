@@ -29,6 +29,7 @@ Kohana::config_set('settings.site_help_page', $settings->site_help_page);
 Kohana::config_set('settings.site_message', $settings->site_message);
 Kohana::config_set('settings.site_copyright_statement', $settings->site_copyright_statement);
 Kohana::config_set('settings.site_submit_report_message', $settings->site_submit_report_message);
+Kohana::config_set('settings.allow_alerts', $settings->allow_alerts);
 Kohana::config_set('settings.allow_reports', $settings->allow_reports);
 Kohana::config_set('settings.allow_comments', $settings->allow_comments);
 Kohana::config_set('settings.allow_feed', $settings->allow_feed);
