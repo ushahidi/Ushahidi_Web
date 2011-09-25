@@ -49,7 +49,7 @@ class Country_Model extends ORM
 		$country = self::factory('country')->where('country', $country_name)->find();
 		
 		// Return
-		return ($country->loaded)? $country : FALSE;
+		return ($country->loaded)? $country : NULL;
 
 	}
 	
