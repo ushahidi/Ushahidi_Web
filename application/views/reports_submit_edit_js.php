@@ -649,6 +649,9 @@
 						// display the map centered on a latitude and longitude
 						map.setCenter(myPoint, <?php echo $default_zoom; ?>);
 						
+						// Looking up country name using reverse geocoding					
+						reverseGeocode(data.message[0], data.message[1]);
+						
 						// Update form values
 						$("#latitude").attr("value", data.message[0]);
 						$("#longitude").attr("value", data.message[1]);
@@ -760,12 +763,13 @@
 		        f.state = OpenLayers.State.UPDATE;
 		    }
 			refreshFeatures();
+			
 			// Fetching Lat Lon Values
 		  	var latitude = parseFloat($("#latitude").val());
 			var longitude = parseFloat($("#longitude").val());
+			
 			// Looking up country name using reverse geocoding
-			var latlng = new google.maps.LatLng(latitude, longitude);
-			reverseGeocode(latlng);
+			reverseGeocode(latitude, longitude);
 		}
 		
 		function refreshFeatures(event) {
@@ -857,7 +861,8 @@
 		}
 		
 		// Reverse GeoCoder
-		function reverseGeocode(latlng) {
+		function reverseGeocode(latitude, longitude) {		
+			var latlng = new google.maps.LatLng(latitude, longitude);
 			var geocoder = new google.maps.Geocoder();
 			geocoder.geocode({'latLng': latlng}, function(results, status){
 				if (status == google.maps.GeocoderStatus.OK) {
