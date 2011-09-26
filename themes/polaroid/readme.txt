@@ -1,8 +1,5 @@
 Theme Name: Polaroid
-Description: a individual map-focused landing page with a streamlined report detail page. 
-NOTE: You'll need to adjust the "blocks" configuration for this theme function properly...
-check out http://goo.gl/Mw3o9 for complete instructions. 
-Demo: http://www.ushahidi.com
+Description: NOTE: Polaroid requires you to change additional settings -> http://goo.gl/Mw3o9
 Version: 1.0
 Author: Caleb Bell
 Author Email: caleb@ushahidi.com
