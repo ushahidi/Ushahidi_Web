@@ -43,9 +43,9 @@ class register_themes {
 		$theme_css[] = $css_url."themes/default/css/style.css";
 		
 		// 2. Extend the default theme
+		$theme = THEMEPATH.Kohana::config("settings.site_style");
 		if ( Kohana::config("settings.site_style") != "default" )
 		{
-			$theme = THEMEPATH.Kohana::config("settings.site_style");
 			Kohana::config_set('core.modules', array_merge(array($theme),
 				Kohana::config("core.modules")));
 				
@@ -58,6 +58,18 @@ class register_themes {
 						$theme_css[] = url::base()."themes/".Kohana::config("settings.site_style")."/css/".$css_file;
 					}
 			}
+		}
+		
+		// 3. Find and add hooks
+		// We need to manually include the hook file for each theme
+		if (file_exists($theme.'/hooks'))
+		{
+			$d = dir($theme.'/hooks'); // Load all the hooks
+			while (($entry = $d->read()) !== FALSE)
+				if ($entry[0] != '.')
+				{
+					include $theme.'/hooks/'.$entry;
+				}
 		}
 		
 		Kohana::config_set('settings.site_style_css',$theme_css);
