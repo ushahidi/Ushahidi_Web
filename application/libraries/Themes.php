@@ -170,6 +170,12 @@ class Themes_Core {
 		// Javascript files from plugins
 		$plugin_js = plugin::render('javascript');
 		
+		// Javascript files from themes
+		foreach (Kohana::config("settings.site_style_js") as $theme_js)
+		{
+			$core_js .= html::script($theme_js,"",true);
+		}
+		
 		// Inline Javascript
 		$inline_js = "<script type=\"text/javascript\">
                         <!--//
