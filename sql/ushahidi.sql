@@ -1,5 +1,5 @@
 ﻿-- Ushahidi Engine
--- version 60
+-- version 66
 -- http://www.ushahidi.com
 
 
@@ -7,54 +7,6 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 
 -- --------------------------------------------------------
-
-/**
- * Table structure for table `actions`
- * 
- */
-
-CREATE TABLE `actions` (
-	`action_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`action` VARCHAR( 75 ) NOT NULL ,
-	`qualifiers` TEXT NOT NULL ,
-	`response` VARCHAR( 75 ) NOT NULL ,
-	`response_vars` TEXT NOT NULL,
-	`active` TINYINT NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/**
- * Table structure for table `actions_log`
- * 
- */
-
-CREATE TABLE `actions_log` (
-`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`action_id` INT NOT NULL ,
-`user_id` INT NOT NULL ,
-`time` INT( 10 ) NOT NULL
-) ENGINE = MYISAM DEFAULT CHARSET=utf8;
-
-/**
- * Table structure for table `badge`
- * 
- */
-
-CREATE TABLE `badge` (
-`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`name` VARCHAR( 250 ) NOT NULL ,
-`description` TEXT NOT NULL
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
-
-/**
- * Table structure for table `badge_assignment`
- * 
- */
-
-CREATE TABLE `badge_users` (
-`user_id` INT NOT NULL ,
-`badge_id` INT NOT NULL ,
-PRIMARY KEY ( `user_id` , `badge_id` )
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
 
 /**
  * Table structure for table `category`
@@ -1455,9 +1407,52 @@ ALTER TABLE `form_field` ADD  `field_ispublic_submit` tinyint(4) NOT NULL defaul
 ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
 
 /**
+ * Table structure for table `actions`
+ * 
+ */
+CREATE TABLE IF NOT EXITS `actions` (
+	`action_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`action` VARCHAR( 75 ) NOT NULL ,
+	`qualifiers` TEXT NOT NULL ,
+	`response` VARCHAR( 75 ) NOT NULL ,
+	`response_vars` TEXT NOT NULL,
+	`active` TINYINT NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+/**
+ * Table structure for table `actions_log`
+ * 
+ */
+CREATE TABLE IF NOT EXISTS `actions_log` (
+	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`action_id` INT NOT NULL ,
+	`user_id` INT NOT NULL ,
+	`time` INT( 10 ) NOT NULL
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+
+/**
+ * Table structure for table `badge`
+ * 
+ */
+CREATE TABLE IF NOT EXISTS `badge` (
+	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+	`name` VARCHAR( 250 ) NOT NULL ,
+	`description` TEXT NOT NULL
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+/**
+ * Table structure for table `badge_assignment`
+ * 
+ */
+CREATE TABLE IF NOT EXISTS `badge_users` (
+	`user_id` INT NOT NULL ,
+	`badge_id` INT NOT NULL ,
+	PRIMARY KEY (`user_id` , `badge_id`)
+) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+/**
 * Add field to table `settings`
 */
-
 ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 
 
