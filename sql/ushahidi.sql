@@ -1410,7 +1410,7 @@ ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
  * Table structure for table `actions`
  * 
  */
-CREATE TABLE IF NOT EXITS `actions` (
+CREATE TABLE IF NOT EXISTS `actions` (
 	`action_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 	`action` VARCHAR( 75 ) NOT NULL ,
 	`qualifiers` TEXT NOT NULL ,
