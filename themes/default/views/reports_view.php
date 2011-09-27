@@ -105,9 +105,9 @@
 			
 				
 			<!-- start news source link -->
+			<?php if( count($incident_news) > 0 ) { ?>
 			<div class="credibility">
 			<h5><?php echo Kohana::lang('ui_main.reports_news');?></h5>
-			<?php if( count($incident_news) > 0 ) { ?>
 					<?php
 						foreach( $incident_news as $incident_new) 
 						{
@@ -117,21 +117,24 @@
 							<br/>
 							<?php	
 						}
-					} ?>
-			<!-- end news source link -->
+			?>
 			</div>
+			<?php } ?>
+			<!-- end news source link -->
 
 			<!-- start additional fields -->
+			<?php if(strlen($custom_forms) > 0) { ?>
 			<div class="credibility">
-			<h5>Additional Information</a>
-			</h5>
+			<h5><?php echo Kohana::lang('ui_main.additional_data');?></h5>
 			<?php
+
 				echo $custom_forms;
 
 			?>
-			<br/>
-			<!-- end additional fields -->
+			<br/>			
 			</div>
+			<?php } ?>
+			<!-- end additional fields -->
 
 			<?php if ($features_count)
 			{

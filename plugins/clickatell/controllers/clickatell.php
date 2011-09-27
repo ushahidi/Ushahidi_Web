@@ -24,6 +24,11 @@ class Clickatell_Controller extends Controller {
             : $_GET;
     }
 	
+	/**
+     * Clickatell 2 way callback handler
+     * @param string $key (Unique key that prevents unauthorized access)
+     * @return void
+     */
 	function index($key = NULL)
 	{
 		if (isset($this->request['from']))
@@ -47,7 +52,7 @@ class Clickatell_Controller extends Controller {
 		
 		if ( ! empty($message_from) AND ! empty($message_description))
 		{
-			// Is this a valid FrontlineSMS Key?
+			// Is this a valid Clickatell Key?
 			$keycheck = ORM::factory('clickatell')
 				->where('clickatell_key', $key)
 				->find(1);

@@ -173,8 +173,6 @@ class admin_Core {
 
 		$menu .= ($this_sub_page == "email") ? Kohana::lang('ui_main.email') : "<a href=\"".url::site()."admin/settings/email\">".Kohana::lang('ui_main.email')."</a>";
 
-		$menu .= ($this_sub_page == "themes") ? Kohana::lang('ui_main.themes') : "<a href=\"".url::site()."admin/settings/themes\">".Kohana::lang('ui_main.themes')."</a>";
-
 		// We cannot allow cleanurl settings to be changed if MHI is enabled since it modifies a file in the config folder
 		if (Kohana::config('config.enable_mhi') == FALSE)
 		{
