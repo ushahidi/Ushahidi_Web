@@ -5,7 +5,8 @@
  * Calculates the distance between two points given latitude/longitude
  * co-ordinates of both. Returns KMs or Miles
  * 
- * @package    Proximity
+ * @package    Ushahidi
+ * @category   Libraries
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
  * @license    http://www.ushahidi.com/license.html
@@ -23,18 +24,13 @@ class Distance_Core
 	 * @param	string	longitude2 of second point
 	 * @param	bool	True if the distance is in Kms, otherwise returns Miles
 	 */
-	function __construct(
-		$latitude = 0,
-		$longitude = 0,
-		$latitude2 = 0,
-		$longitude2 = 0,
-		$in_kms = TRUE
-	) {
+	public function __construct($latitude = 0, $longitude = 0, $latitude2 = 0, $longitude2 = 0,$in_kms = TRUE)
+	{
 		$EARTH_RADIUS_MILES = 3963;	// Miles
 		$miles2kms = 1.609;
 		$dist = 0;
 
-		//convert degrees to radians
+		// Convert degrees to radians
 		$latitude = $latitude * M_PI / 180;
 		$longitude = $longitude * M_PI / 180;
 		$latitude2 = $latitude2 * M_PI / 180;
@@ -42,15 +38,17 @@ class Distance_Core
 
 		if ($latitude != $latitude2 || $longitude != $longitude2) 
 		{
-			//the two points are not the same
+			// The two points are not the same
 			$dist = 
 				sin($latitude) * sin($latitude2)
 				+ cos($latitude) * cos($latitude2)
 				* cos($longitude2 - $longitude);
-
-			$dist = 
-				$EARTH_RADIUS_MILES
-				* (-1 * atan($dist / sqrt(1 - $dist * $dist)) + M_PI / 2);
+			
+			// Safety check
+			if ($dist > 0)
+			{
+				$dist = $EARTH_RADIUS_MILES * (-1 * atan($dist / sqrt(1 - $dist * $dist)) + M_PI / 2);
+			}
 		}
 		
 		if ($in_kms)
