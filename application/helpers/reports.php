@@ -826,8 +826,13 @@ class reports_Core {
 			$where_text = "";
 			$i = 0;
 			foreach ($url_data['cff'] as $field)
-			{
+			{			
 				$field_id = $field[0];
+				if(intval($field_id) < 1)
+				{
+					break;
+				}
+
 				$field_value = $field[1];
 				if (is_array($field_value))
 				{
@@ -840,7 +845,7 @@ class reports_Core {
 					$where_text .= " OR ";
 				}
 				
-				$where_text .= "(form_field_id = ".$field_id." AND form_response = '".trim($field_value)."')";
+				$whereText .= "(form_field_id = ".intval($field_id)." AND form_response = '".mysql_real_escape_string(trim($field_value))."')";
 			}
 			
 			// Make sure there was some valid input in there
