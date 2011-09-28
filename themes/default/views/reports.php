@@ -186,6 +186,10 @@
 								<?php echo $custom_forms_filter; ?>
 							</ul>
 						</div>
+						<?php
+							// Action, allows plugins to add custom filters
+							Event::run('ushahidi_action.report_filters_ui');
+						?>
 					</div>
 					<!-- end #accordion -->
 					
