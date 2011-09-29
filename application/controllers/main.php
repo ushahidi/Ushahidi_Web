@@ -141,6 +141,11 @@ class Main_Controller extends Template_Controller {
 			? Stats_Model::get_javascript()
 			: '';
 		
+		// Add scheduler JS, if enabled
+		$this->template->footer->scheduler = ( Kohana::config('settings.enable_scheduler_js') == 1)
+			? Scheduler_Model::get_javascript()
+			: '';
+		
 		// add copyright info
 		$this->template->footer->site_copyright_statement = '';
 		$site_copyright_statement = trim(Kohana::config('settings.site_copyright_statement'));

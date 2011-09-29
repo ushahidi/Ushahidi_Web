@@ -63,6 +63,7 @@ class Settings_Controller extends Admin_Controller
 			'allow_comments' => '',
 			'allow_feed' => '',
 			'allow_stat_sharing' => '',
+			'enable_scheduler_js' => '',
 			'allow_clustering' => '',
 			'cache_pages' => '',
 			'cache_pages_lifetime' => '',
@@ -112,6 +113,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_comments','required','between[0,2]');
 			$post->add_rules('allow_feed','required','between[0,1]');
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
+			$post->add_rules('enable_scheduler_js','required','between[0,1]');
 			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('cache_pages','required','between[0,1]');
 			$post->add_rules('cache_pages_lifetime','required','in_array[300,600,900,1800]');
@@ -154,6 +156,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->allow_comments = $post->allow_comments;
 				$settings->allow_feed = $post->allow_feed;
 				$settings->allow_stat_sharing = $post->allow_stat_sharing;
+				$settings->enable_scheduler_js = $post->enable_scheduler_js;
 				$settings->allow_clustering = $post->allow_clustering;
 				$settings->cache_pages = $post->cache_pages;
 				$settings->cache_pages_lifetime = $post->cache_pages_lifetime;
@@ -274,6 +277,7 @@ class Settings_Controller extends Admin_Controller
 				'allow_comments' => $settings->allow_comments,
 				'allow_feed' => $settings->allow_feed,
 				'allow_stat_sharing' => $settings->allow_stat_sharing,
+				'enable_scheduler_js' => $settings->enable_scheduler_js,
 				'allow_clustering' => $settings->allow_clustering,
 				'cache_pages' => $settings->cache_pages,
 				'cache_pages_lifetime' => $settings->cache_pages_lifetime,

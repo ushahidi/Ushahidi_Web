@@ -147,6 +147,7 @@
 		'email_alerts' => 'Alerts Email Address',
 		'email_notice' => '<span>In order to receive reports by email, please configure your email account settings.</span>',
 		'email_site' => 'Site Email Address',
+		'enable_scheduler_js' => 'Run Scheduler on every page load',
 		'google_analytics' => 'Google Analytics',
 		'google_analytics_example' => 'Web Property ID - Formato: UA-XXXXX-XX',
 		'items_per_page' => 'Items Per Page - Front End',

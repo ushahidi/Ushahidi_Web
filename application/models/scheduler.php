@@ -20,4 +20,14 @@ class Scheduler_Model extends ORM
 	
 	// Database table name
 	protected $table_name = 'scheduler';
+	
+	/*
+	* Get Scheduler JS for inclusion in footer
+	*/
+	static function get_javascript()
+	{
+		$tag = '<!-- Task Scheduler --><script type="text/javascript">$(document).ready(function(){$(\'#schedulerholder\').html(\'<img src="<?php echo url::base(); ?>scheduler" />\');});</script><div id="schedulerholder"></div><!-- End Task Scheduler -->';
+		
+		return $tag;
+	}
 }
