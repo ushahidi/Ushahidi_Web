@@ -79,6 +79,7 @@
 	'divider_class' => 'div class',
 	'download_reports' => 'Download Reports',
 	'dropdown_choices' => 'Dropdown Choices',
+	'edited' => 'EDITED',
 	'edited_by' => 'Edited By',
 	'edit_action' => 'Edit',
 	'edit_log' => 'Edit Log',
