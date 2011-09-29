@@ -463,6 +463,16 @@ class Reports_Controller extends Members_Controller {
 			{
 				$post->add_error('custom_field', 'values');
 			}
+			
+			// If deployment is a single country deployment, check that the location mapped is in the default country
+			if ( ! Kohana::config('settings.multi_country'))
+			{
+				$country = Country_Model::get_country_by_name($post->country_name);
+				if ($country AND $country->id != Kohana::config('settings.default_country'))
+				{
+					$post->add_error('country_name','single_country');
+				}
+			}
 
 			$post->add_rules('incident_source','numeric', 'length[1,1]');
 			$post->add_rules('incident_information','numeric', 'length[1,1]');
@@ -510,7 +520,7 @@ class Reports_Controller extends Members_Controller {
 
 				// Action::report_add / report_submit_members - Added a New Report
 				//++ Do we need two events for this? Or will one suffice?
-				Event::run('ushahidi_action.report_add', $incident);
+				//Event::run('ushahidi_action.report_add', $incident);
 				Event::run('ushahidi_action.report_submit_members', $post);
 
 
