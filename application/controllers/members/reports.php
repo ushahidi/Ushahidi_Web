@@ -302,7 +302,7 @@ class Reports_Controller extends Members_Controller {
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
 		// Create Categories
-		$this->template->content->categories = $this->_get_categories();
+		$this->template->content->categories =Category_Model::get_categories();
 
 		// Time formatting
 		$this->template->content->hour_array = $this->_hour_array();
