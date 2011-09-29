@@ -175,6 +175,7 @@ class Reports_Controller extends Members_Controller {
 			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
 		$location_ids = array();
+		$country_ids = array();
 		foreach ($incidents as $incident)
 		{
 			$location_ids[] = $incident->location_id;
@@ -188,6 +189,7 @@ class Reports_Controller extends Members_Controller {
 			foreach ($locations_result as $loc)
 			{
 				$locations[$loc->id] = $loc->location_name;
+				$country_ids[$loc->id]['country_id'] = $loc->country_id;
 			}
 		}
 		else
@@ -196,6 +198,7 @@ class Reports_Controller extends Members_Controller {
 		}
 
 		$this->template->content->locations = $locations;
+		$this->template->content->country_ids = $country_ids;
 
 		//GET countries
 		$countries = array();
@@ -257,6 +260,7 @@ class Reports_Controller extends Members_Controller {
 			'geometry' => array(),
 			'location_name' => '',
 			'country_id' => '',
+			'country_name' => '',
 			'incident_category' => array(),
 			'incident_news' => array(),
 			'incident_video' => array(),
@@ -294,7 +298,6 @@ class Reports_Controller extends Members_Controller {
 		// initialize custom field array
 		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
 
-
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
@@ -321,6 +324,9 @@ class Reports_Controller extends Members_Controller {
 			$countries[$country->id] = $this_country;
 		}
 		$this->template->content->countries = $countries;
+		
+		// Initialize Default Value for Hidden Field Country Name, just incase Reverse Geo coding yields no result
+		$form['country_name'] = $countries[$form['country_id']];
 
 		//GET custom forms
 		$forms = array();
@@ -654,7 +660,8 @@ class Reports_Controller extends Members_Controller {
 		$this->template->treeview_enabled = TRUE;
 		$this->template->json2_enabled = TRUE;
 		
-		$this->template->js = new View('admin/reports_edit_js');
+		$this->template->js = new View('reports_submit_edit_js');
+		$this->template->js->edit_mode = FALSE;
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
 
