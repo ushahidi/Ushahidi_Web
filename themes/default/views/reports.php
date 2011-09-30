@@ -13,7 +13,7 @@
 				<div class="tt-arrow"></div>
 				<ul class="inline-links">
 					<li>
-						<a title="<?php echo $timeframe_title; ?>" class="btn-date-range active" id="dateRangeAll" href="#">
+						<a title="<?php echo Kohana::lang('ui_main.all_time'); ?>" class="btn-date-range active" id="dateRangeAll" href="#">
 							<?php echo Kohana::lang('ui_main.all_time')?>
 						</a>
 					</li>
@@ -186,6 +186,10 @@
 								<?php echo $custom_forms_filter; ?>
 							</ul>
 						</div>
+						<?php
+							// Action, allows plugins to add custom filters
+							Event::run('ushahidi_action.report_filters_ui');
+						?>
 					</div>
 					<!-- end #accordion -->
 					

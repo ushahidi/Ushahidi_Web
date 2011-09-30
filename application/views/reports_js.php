@@ -111,6 +111,8 @@
 				// Clear the url parameters
 				delete urlParameters['from'];
 				delete urlParameters['to'];
+				delete urlParameters['s'];
+				delete urlParameters['e'];
 			}
 			else if ($(this).attr("id") == 'dateRangeToday')
 			{
@@ -148,6 +150,8 @@
 			{
 				urlParameters['from'] = $("#report_date_from").val();
 				urlParameters['to'] = $("#report_date_to").val();
+				delete urlParameters['s'];
+				delete urlParameters['e'];
 			}
 			
 			// Hide the box
@@ -175,6 +179,8 @@
 				// Add the parameters
 				urlParameters["from"] = report_date_from;
 				urlParameters["to"] = report_date_to;
+				delete urlParameters['s'];
+				delete urlParameters['e'];
 				
 				// Fetch the reports
 				fetchReports();

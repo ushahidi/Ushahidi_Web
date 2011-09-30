@@ -1469,14 +1469,13 @@ a.show-more {
 }
 .feed {
     overflow:hidden;
-    width:400px;
     margin:50px 0 0;
     padding: 15px;
     border: 1px solid #c2c2c2;
 }
 
 .feed .holder .box {
-  padding: 20px;
+  padding-top: 10px;
 }
 
 .step-2 h2, .step-3 h2 {

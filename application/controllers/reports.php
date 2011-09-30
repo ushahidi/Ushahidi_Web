@@ -92,10 +92,25 @@ class Reports_Controller extends Main_Controller {
 		$total_reports = Incident_Model::get_total_reports(TRUE);
 
 		// Get the date of the oldest report
-		$oldest_timestamp = Incident_Model::get_oldest_report_timestamp();
+		if (isset($_GET['s']) AND !empty($_GET['s']) AND intval($_GET['s']) > 0)
+		{
+			$oldest_timestamp =  intval($_GET['s']);
+		}
+		else
+		{
+			$oldest_timestamp = Incident_Model::get_oldest_report_timestamp();
+		}
 		
-		// Get the date of the latest report
-		$latest_timestamp = Incident_Model::get_latest_report_timestamp();
+		//Get the date of the latest report
+		if (isset($_GET['e']) AND !empty($_GET['e']) AND intval($_GET['e']) > 0)
+		{
+			$latest_timestamp = intval($_GET['e']);
+		}
+		else
+		{
+			$latest_timestamp = Incident_Model::get_latest_report_timestamp();
+		}
+
 
 		// Round the number of days up to the nearest full day
 		$days_since = ceil((time() - $oldest_timestamp) / 86400);

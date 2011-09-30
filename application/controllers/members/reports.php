@@ -175,6 +175,7 @@ class Reports_Controller extends Members_Controller {
 			->find_all((int) Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
 		$location_ids = array();
+		$country_ids = array();
 		foreach ($incidents as $incident)
 		{
 			$location_ids[] = $incident->location_id;
@@ -188,6 +189,7 @@ class Reports_Controller extends Members_Controller {
 			foreach ($locations_result as $loc)
 			{
 				$locations[$loc->id] = $loc->location_name;
+				$country_ids[$loc->id]['country_id'] = $loc->country_id;
 			}
 		}
 		else
@@ -196,6 +198,7 @@ class Reports_Controller extends Members_Controller {
 		}
 
 		$this->template->content->locations = $locations;
+		$this->template->content->country_ids = $country_ids;
 
 		//GET countries
 		$countries = array();
@@ -257,6 +260,7 @@ class Reports_Controller extends Members_Controller {
 			'geometry' => array(),
 			'location_name' => '',
 			'country_id' => '',
+			'country_name' => '',
 			'incident_category' => array(),
 			'incident_news' => array(),
 			'incident_video' => array(),
@@ -294,12 +298,11 @@ class Reports_Controller extends Members_Controller {
 		// initialize custom field array
 		$form['custom_field'] = $this->_get_custom_form_fields($id,'',true);
 
-
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
 		// Create Categories
-		$this->template->content->categories = $this->_get_categories();
+		$this->template->content->categories =Category_Model::get_categories();
 
 		// Time formatting
 		$this->template->content->hour_array = $this->_hour_array();
@@ -321,6 +324,9 @@ class Reports_Controller extends Members_Controller {
 			$countries[$country->id] = $this_country;
 		}
 		$this->template->content->countries = $countries;
+		
+		// Initialize Default Value for Hidden Field Country Name, just incase Reverse Geo coding yields no result
+		$form['country_name'] = $countries[$form['country_id']];
 
 		//GET custom forms
 		$forms = array();
@@ -457,6 +463,16 @@ class Reports_Controller extends Members_Controller {
 			{
 				$post->add_error('custom_field', 'values');
 			}
+			
+			// If deployment is a single country deployment, check that the location mapped is in the default country
+			if ( ! Kohana::config('settings.multi_country'))
+			{
+				$country = Country_Model::get_country_by_name($post->country_name);
+				if ($country AND $country->id != Kohana::config('settings.default_country'))
+				{
+					$post->add_error('country_name','single_country');
+				}
+			}
 
 			$post->add_rules('incident_source','numeric', 'length[1,1]');
 			$post->add_rules('incident_information','numeric', 'length[1,1]');
@@ -504,7 +520,7 @@ class Reports_Controller extends Members_Controller {
 
 				// Action::report_add / report_submit_members - Added a New Report
 				//++ Do we need two events for this? Or will one suffice?
-				Event::run('ushahidi_action.report_add', $incident);
+				//Event::run('ushahidi_action.report_add', $incident);
 				Event::run('ushahidi_action.report_submit_members', $post);
 
 
@@ -654,7 +670,8 @@ class Reports_Controller extends Members_Controller {
 		$this->template->treeview_enabled = TRUE;
 		$this->template->json2_enabled = TRUE;
 		
-		$this->template->js = new View('admin/reports_edit_js');
+		$this->template->js = new View('reports_submit_edit_js');
+		$this->template->js->edit_mode = FALSE;
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
 
