@@ -188,8 +188,11 @@
 					<li class="none-separator"><a href="<?php echo url::site()."admin/profile/" ?>"><?php echo Kohana::lang('ui_admin.my_profile');?></a></li>
 					<li><a href="<?php echo url::site();?>logout"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
 				</ul>
-                        </div>
-
+			</div>
+			<?php
+				// Action::admin_secondary_header_bar - Admin Secondary Menu
+				Event::run('ushahidi_action.admin_secondary_header_bar');
+			?>
 
 			<!-- info-nav -->
 			<div class="info-nav">
