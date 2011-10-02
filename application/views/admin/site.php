@@ -165,6 +165,12 @@
 							</span>
 						</div>
 						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_enable_scheduler_js"); ?>"><?php echo Kohana::lang('settings.site.enable_scheduler_js');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('enable_scheduler_js', $yesno_array, $form['enable_scheduler_js']); ?>
+							</span>
+						</div>
+						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_clustering"); ?>"><?php echo Kohana::lang('settings.site.allow_clustering');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_clustering', $yesno_array, $form['allow_clustering']); ?>

@@ -53,6 +53,7 @@
 	'settings_display_howtohelp' => 'Turn the How to Help Tab on or off on the main site.',
 	'settings_display_items_per_page' => 'This is the number of reports displayed per page on the main site.',
 	'settings_display_items_per_page_admin' => 'This is the number of reports displayed per page on the admin Back End.',
+	'settings_enable_scheduler_js' => 'Include JS callback to run the scheduler on every page',
 	'settings_flsms_download' => 'This is the hub for incoming messages',
 	'settings_flsms_synchronize' => 'This synchronizes the messages in the hub with the Ushahidi platform',
 	'settings_flsms_text_1' => 'Phone numbers through which the text messages are received',
