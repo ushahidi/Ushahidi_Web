@@ -33,6 +33,11 @@
 										<th class="col-2">
 											<?php echo Kohana::lang('ui_admin.header_user'); ?>
 										</th>
+																				<?php
+											//Add header item to users listing page
+											Event::run('ushahidi_action.users_listing_header');
+										?>
+
 										<th class="col-2">
 											<?php echo Kohana::lang('ui_admin.header_role');?>
 										</th>
@@ -87,6 +92,11 @@
 													<li class="none-separator"><?php echo Kohana::lang('ui_main.email');?>: <strong><?php echo $email; ?></strong></li>
 												</ul>
 											</td>
+																						<?php
+												//Add item to users listing page
+												Event::run('ushahidi_action.users_listing_item',$user_id);
+											?>
+
 											<td class="col-3">
 												<?php echo strtoupper($role); ?>
 											</td>

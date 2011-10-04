@@ -59,6 +59,9 @@
 				// Update form values (jQuery)
 				$("#alert_lat").attr("value", lonlat2.lat);
 				$("#alert_lon").attr("value", lonlat2.lon);
+				
+				// Looking up country name using reverse geocoding					
+				reverseGeocode(lonlat2.lat, lonlat2.lon);
 			});
 			
 			/* 
@@ -140,6 +143,9 @@
 						radius = newRadius * 1000
 
 						drawCircle(data.message[1],data.message[0], radius);
+						
+						// Looking up country name using reverse geocoding					
+						reverseGeocode(data.message[0], data.message[1]);
 					
 						// Update form values (jQuery)
 						$("#alert_lat").attr("value", data.message[0]);
@@ -150,4 +156,18 @@
 					$('#find_loading').html('');
 				}, "json");
 			return false;
-		}		
+		}	
+			
+		// Reverse GeoCoder
+		function reverseGeocode(latitude, longitude) {		
+			var latlng = new google.maps.LatLng(latitude, longitude);
+			var geocoder = new google.maps.Geocoder();
+			geocoder.geocode({'latLng': latlng}, function(results, status){
+				if (status == google.maps.GeocoderStatus.OK) {
+					var country = results[results.length - 1].formatted_address;
+					$("#alert_country").val(country);
+				} else {
+					console.log("Geocoder failed due to: " + status);
+				}
+			});
+		}

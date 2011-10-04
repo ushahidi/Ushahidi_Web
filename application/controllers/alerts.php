@@ -70,13 +70,32 @@ class Alerts_Controller extends Main_Controller {
 			'alert_email_yes' => '',
 			'alert_lat' => '',
 			'alert_lon' => '',
-			'alert_radius' => ''
+			'alert_radius' => '',
+			'alert_country' => ''
 		);
 		
 		if ($this->user)
 		{
 			$form['alert_email'] = $this->user->email;
 		}
+		
+		// Get Countries
+		$countries = array();
+		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
+		{
+			// Create a list of all countries
+			$this_country = $country->country;
+			if (strlen($this_country) > 35)
+			{
+				$this_country = substr($this_country, 0, 35) . "...";
+			}
+			$countries[$country->id] = $this_country;
+		}
+		
+		// Initialize Default Value for Hidden Field Country Name, just incase Reverse Geo coding yields no result
+		$form['alert_country'] = $countries[$default_country];
+		
+		$this->template->content->countries = $countries;
 	
 		// Copy the form as errors, so the errors will be stored with keys
 		// corresponding to the form field names

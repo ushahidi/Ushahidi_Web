@@ -204,7 +204,11 @@ class Users_Controller extends Admin_Controller
                     $user->add(ORM::factory('role', 'login'));
                     $user->add(ORM::factory('role', $post->role));
                 }
-                $user->save();
+				$user->save();
+
+				//Event for adding user admin details
+				Event::run('ushahidi_action.users_add_admin', $post);
+
                 Event::run('ushahidi_action.user_edit', $user);
                 
                 // Redirect

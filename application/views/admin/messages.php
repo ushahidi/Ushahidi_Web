@@ -160,6 +160,7 @@
 												}
 												// Action::message_extra_admin	- Message Additional/Extra Stuff
 												Event::run('ushahidi_action.message_extra_admin', $message_id);
+												Event::run('ushahidi_action.message_from_admin', $message_from);
 												?>
 
 												<?php if($reply_to == TRUE) { ?>

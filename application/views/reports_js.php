@@ -854,6 +854,13 @@
 			$.each($("." + filterClass +" li a.selected"), function(i, item){
 				$(item).removeClass("selected");
 			});			
+			
+			//if it's the location filter be sure to get rid of sw and ne
+			if(parameterKey == "start_loc" || parameterKey == "radius")
+			{
+				delete urlParameters["sw"];
+				delete urlParameters["ne"];
+			}
 		}
 		
 		// Remove the parameter key from urlParameters

@@ -272,10 +272,12 @@ class Reports_Controller extends Admin_Controller {
 			'total_items'	 => $all_reports->count()
 			)
 		);
+		Event::run('ushahidi_filter.pagination',$pagination);
 		
 		// Get the paginated reports
 		$incidents = Incident_Model::get_incidents($params, $pagination);
 	
+		Event::run('ushahidi_filter.filter_incidents',$incidents);
 		$this->template->content->countries = Country_Model::get_countries_list();
 		$this->template->content->incidents = $incidents;
 		$this->template->content->pagination = $pagination;
@@ -453,6 +455,15 @@ class Reports_Controller extends Admin_Controller {
 					$form['longitude'] = $message->reporter->location->longitude;
 					$form['location_name'] = $message->reporter->location->location_name;
 				}
+
+				//Events to manipulate an already known location
+
+				Event::run('ushahidi_action.location_from',$message_from = $message->message_from);
+				//filter location name
+				Event::run('ushahidi_filter.location_name',$form['location_name']);
+				//filter //location find
+				Event::run('ushahidi_filter.location_find',$form['location_find']);
+
 
 				// Retrieve Last 5 Messages From this account
 				$this->template->content->all_messages = ORM::factory('message')
