@@ -467,7 +467,7 @@ class reports_Core {
 		$i = 1;
 		foreach ($filenames as $filename)
 		{
-			$new_filename = $incident->id . "_" . $i . "_" . time();
+			$new_filename = $incident->id.'_'.$i.'_'.time();
 
 			$file_type = strrev(substr(strrev($filename),0,4));
 					
@@ -479,11 +479,33 @@ class reports_Core {
 
 			// Medium size
 			Image::factory($filename)->resize(400,300,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$new_filename."_m".$file_type);
+				->save(Kohana::config('upload.directory', TRUE).$new_filename.'_m'.$file_type);
 					
 			// Thumbnail
 			Image::factory($filename)->resize(89,59,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$new_filename."_t".$file_type);
+				->save(Kohana::config('upload.directory', TRUE).$new_filename.'_t'.$file_type);
+				
+			// Name the files for the DB
+			$media_link = $new_filename.$file_type;
+			$media_medium = $new_filename.'_m'.$file_type;
+			$media_thumb = $new_filename.'_t'.$file_type;
+				
+			// Okay, now we have these three different files on the server, now check to see
+			//   if we should be dropping them on the CDN
+			
+			if(Kohana::config("cdn.cdn_store_dynamic_content"))
+			{
+				$cdn = new cdn;
+				$media_link = $cdn->upload($media_link);
+				$media_medium = $cdn->upload($media_medium);
+				$media_thumb = $cdn->upload($media_thumb);
+				
+				// We no longer need the files we created on the server. Remove them.
+				$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+				unlink($local_directory.$new_filename.$file_type);
+				unlink($local_directory.$new_filename.'_m'.$file_type);
+				unlink($local_directory.$new_filename.'_t'.$file_type);
+			}
 
 			// Remove the temporary file
 			unlink($filename);
@@ -493,9 +515,9 @@ class reports_Core {
 			$photo->location_id = $incident->location_id;
 			$photo->incident_id = $incident->id;
 			$photo->media_type = 1; // Images
-			$photo->media_link = $new_filename.$file_type;
-			$photo->media_medium = $new_filename."_m".$file_type;
-			$photo->media_thumb = $new_filename."_t".$file_type;
+			$photo->media_link = $media_link;
+			$photo->media_medium = $media_medium;
+			$photo->media_thumb = $media_thumb;
 			$photo->media_date = date("Y-m-d H:i:s",time());
 			$photo->save();
 			$i++;

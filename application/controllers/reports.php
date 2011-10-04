@@ -656,7 +656,10 @@ class Reports_Controller extends Main_Controller {
 				}
 				elseif ($media->media_type == 1)
 				{
-					$incident_photo[] = $media->media_link;
+					$incident_photo[] = array(
+											'large' => url::convert_uploaded_to_abs($media->media_link),
+											'thumb' => url::convert_uploaded_to_abs($media->media_thumb)
+											);
 				}
 			}
 

@@ -75,7 +75,7 @@ class Main_Controller extends Template_Controller {
 			}
 		}
 		
-        // Load cache
+		// Load cache
 		$this->cache = new Cache;
 
         // Load Header & Footer
@@ -141,6 +141,11 @@ class Main_Controller extends Template_Controller {
 			? Stats_Model::get_javascript()
 			: '';
 		
+		// Enable CDN gradual upgrader
+		$this->template->footer->cdn_gradual_upgrade = (Kohana::config('cdn.cdn_gradual_upgrade') != false)
+			? cdn::cdn_gradual_upgrade_js()
+			: '';
+		
 		// add copyright info
 		$this->template->footer->site_copyright_statement = '';
 		$site_copyright_statement = trim(Kohana::config('settings.site_copyright_statement'));
@@ -148,7 +153,6 @@ class Main_Controller extends Template_Controller {
 		{
 			$this->template->footer->site_copyright_statement = $site_copyright_statement;
 		}
-		
 	}
 
 	/**
@@ -230,11 +234,12 @@ class Main_Controller extends Template_Controller {
 				{
 					// Check for localization of child category
 					$display_title = Category_Lang_Model::category_title($child->id,$l);
-
+					
+					$ca_img = ($child->category_image != NULL) ? url::convert_uploaded_to_abs($child->category_image) : NULL;
 					$children[$child->id] = array(
 						$display_title,
 						$child->category_color,
-						$child->category_image
+						$ca_img
 					);
 
 					if ($child->category_trusted)
@@ -253,10 +258,11 @@ class Main_Controller extends Template_Controller {
 			$display_title = Category_Lang_Model::category_title($category->id,$l);
 
 			// Put it all together
+			$ca_img = ($category->category_image != NULL) ? url::convert_uploaded_to_abs($category->category_image) : NULL;
 			$parent_categories[$category->id] = array(
 				$display_title,
 				$category->category_color,
-				$category->category_image,
+				$ca_img,
 				$children
 			);
 
@@ -498,6 +504,17 @@ class Main_Controller extends Template_Controller {
 
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
+	}
+	
+	public function cdn_gradual_upgrade()
+	{
+		$this->auto_render = FALSE;
+		$this->template = "";
+		if(Kohana::config('cdn.cdn_gradual_upgrade') != false)
+		{
+			$cdn = new cdn;
+			$cdn->gradual_upgrade();
+		}
 	}
 
 } // End Main

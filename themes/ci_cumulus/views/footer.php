@@ -4,6 +4,7 @@
 <p id="footer"><small>Theme hacked away by <a href="http://ushahidi.com">Ushahidi</a> using the Wordpress theme, Cumulus by <a href="http://empirethemes.com">Empire Themes</a>.</small></p>
 	<?php echo $ushahidi_stats; ?>
 	<?php echo $google_analytics; ?>
+	<?php echo $cdn_gradual_upgrade; ?>
 	
 	<!-- Task Scheduler -->
 	<img src="<?php echo url::base(); ?>media/img/spacer.gif" alt="" height="1" width="1" border="0" onload="runScheduler(this)" />

@@ -18,8 +18,8 @@
 				<tr>
 					<td>
 						<ul class="link-toggle report-list-toggle lt-icons-and-text">
-							<li class="active"><a href="#rb_list-view" class="list">List</a></li>
-							<li><a href="#rb_map-view" class="map">Map</a></li>
+							<li class="active"><a href="#rb_list-view" class="list"><?php echo Kohana::lang('ui_main.list'); ?></a></li>
+							<li><a href="#rb_map-view" class="map"><?php echo Kohana::lang('ui_main.map'); ?></a></li>
 						</ul>
 					</td>
 					<td><?php echo $pagination; ?></td>
@@ -79,8 +79,7 @@
 						{
 							if ($photo->media_thumb)
 							{ // Get the first thumb
-								$prefix = url::base().Kohana::config('upload.relative_directory');
-								$incident_thumb = $prefix."/".$photo->media_thumb;
+								$incident_thumb = url::convert_uploaded_to_abs($photo->media_thumb);
 								break;
 							}
 						}
@@ -88,12 +87,12 @@
 				?>
 				<div id="<?php echo $incident_id ?>" class="rb_report <?php echo $incident_verified_class; ?>">
 					<div class="r_media">
-						<p class="r_photo"> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>">
-							<img src="<?php echo $incident_thumb; ?>" height="59" width="89" /> </a>
+						<p class="r_photo" style="text-align:center;"> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>">
+							<img src="<?php echo $incident_thumb; ?>" style="max-width:89px;max-height:59px;" /> </a>
 						</p>
 
 						<!-- Only show this if the report has a video -->
-						<p class="r_video" style="display:none;"><a href="#">Video</a></p>
+						<p class="r_video" style="display:none;"><a href="#"><?php echo Kohana::lang('ui_main.video'); ?></a></p>
 
 						<!-- Category Selector -->
 						<div class="r_categories">
@@ -129,8 +128,8 @@
 							</h3>
 						<p class="r_date r-3 bottom-cap"><?php echo $incident_date; ?></p>
 						<div class="r_description"> <?php echo $incident_description; ?>  
-						  <a class="btn-show btn-more" href="#<?php echo $incident_id ?>">More Info &raquo;</a> 
-						  <a class="btn-show btn-less" href="#<?php echo $incident_id ?>">&laquo; Less Info</a> 
+						  <a class="btn-show btn-more" href="#<?php echo $incident_id ?>"><?php echo Kohana::lang('ui_main.more_information'); ?> &raquo;</a> 
+						  <a class="btn-show btn-less" href="#<?php echo $incident_id ?>">&laquo; <?php echo Kohana::lang('ui_main.less_information'); ?></a> 
 						</div>
 						<p class="r_location"><a href="<?php echo url::site(); ?>reports/?l=<?php echo $location_id; ?>"><?php echo $location_name; ?></a></p>
 					</div>
@@ -148,8 +147,8 @@
 				<tr>
 					<td>
 						<ul class="link-toggle report-list-toggle lt-icons-and-text">
-							<li class="active"><a href="#rb_list-view" class="list">List</a></li>
-							<li><a href="#rb_map-view" class="map">Map</a></li>
+							<li class="active"><a href="#rb_list-view" class="list"><?php echo Kohana::lang('ui_main.list'); ?></a></li>
+							<li><a href="#rb_map-view" class="map"><?php echo Kohana::lang('ui_main.map'); ?></a></li>
 						</ul>
 					</td>
 					<td><?php echo $pagination; ?></td>
