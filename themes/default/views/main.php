@@ -25,9 +25,9 @@
 						$category_color = $category_info[1];
 						$category_image = '';
 						$color_css = 'class="swatch" style="background-color:#'.$category_color.'"';
-						if($category_info[2] != NULL && file_exists(Kohana::config('upload.relative_directory').'/'.$category_info[2])) {
+						if($category_info[2] != NULL) {
 							$category_image = html::image(array(
-								'src'=>Kohana::config('upload.relative_directory').'/'.$category_info[2],
+								'src'=>$category_info[2],
 								'style'=>'float:left;padding-right:5px;'
 								));
 							$color_css = '';

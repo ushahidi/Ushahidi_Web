@@ -178,7 +178,7 @@
 										$category_title = $category->category_title;
 										$category_description = substr($category->category_description, 0, 150);
 										$category_color = $category->category_color;
-										$category_image = $category->category_image;
+										$category_image = ($category->category_image != NULL) ? url::convert_uploaded_to_abs($category->category_image) : NULL;
 										$category_visible = $category->category_visible;
 										$category_trusted = $category->category_trusted;
 										$category_locals = array();
@@ -197,7 +197,7 @@
 											<td class="col-3">
 											<?php if (!empty($category_image))
 											{
-												echo "<img src=\"".url::base().Kohana::config('upload.relative_directory')."/".$category_image."\">";
+												echo "<img src=\"".$category_image."\">";
 												echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\">".Kohana::lang('ui_main.delete')."</a>]";
 											}
 											else
@@ -240,7 +240,7 @@
 											$category_title = $child->category_title;
 											$category_description = substr($child->category_description, 0, 150);
 											$category_color = $child->category_color;
-											$category_image = $child->category_image;
+											$category_image = ($child->category_image != NULL) ? url::convert_uploaded_to_abs($child->category_image) : NULL;
 											$category_visible = $child->category_visible;
 
 											$child_category_locals = array();
@@ -260,7 +260,7 @@
 												<td class="col-3">
 												<?php if (!empty($category_image))
 												{
-													echo "<img src=\"".url::base().Kohana::config('upload.relative_directory')."/".$category_image."\">";
+													echo "<img src=\"".$category_image."\">";
 													echo "&nbsp;[<a href=\"javascript:catAction('i','DELETE ICON','".rawurlencode($category_id)."')\">delete</a>]";
 												}
 												else

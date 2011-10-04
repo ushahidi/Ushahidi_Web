@@ -68,15 +68,13 @@
 	    <?php 
 	    // if there are images, show them
 	    if( count($incident_photos) > 0 )
-	    { 
-	      echo '<div id="report-images">';
-          foreach ($incident_photos as $photo)
-          {
-          	$thumb = str_replace(".","_t.",$photo);
-          	$prefix = url::base().Kohana::config('upload.relative_directory');
-          	echo '<a class="photothumb" rel="lightbox-group1" href="'.$prefix.'/'.$photo.'"><img src="'.$prefix.'/'.$thumb.'"/></a> ';
-          };
-				echo '</div>';  
+	    {
+			echo '<div id="report-images">';
+			foreach ($incident_photos as $photo)
+			{
+				echo '<a class="photothumb" rel="lightbox-group1" href="'.$photo['large'].'"><img src="'.$photo['thumb'].'"/></a> ';
+			};
+			echo '</div>';  
 	    }
 	    
 	    // if there are videos, show those too

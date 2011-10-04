@@ -359,17 +359,17 @@
                         				{
                         					if ($photo->media_type == 1)
                         					{
-                        						print "<div class=\"report_thumbs\" id=\"photo_". $photo->id ."\">";
-
-                        						$thumb = $photo->media_thumb;
-                        						$photo_link = $photo->media_link;
-												$prefix = url::base().Kohana::config('upload.relative_directory');
-                        						print "<a class='photothumb' rel='lightbox-group1' href='$prefix/$photo_link'>";
-                        						print "<img src=\"$prefix/$thumb\" >";
-                        						print "</a>";
-
-                        						print "&nbsp;&nbsp;<a href=\"#\" onClick=\"deletePhoto('".$photo->id."', 'photo_".$photo->id."'); return false;\" >".Kohana::lang('ui_main.delete')."</a>";
-                        						print "</div>";
+                        						$thumb = url::convert_uploaded_to_abs($photo->media_thumb);
+                        						$large_photo = url::convert_uploaded_to_abs($photo->media_link);
+                        						?>
+                        						<div class="report_thumbs" id="photo_<?php echo $photo->id; ?>">
+	                        						<a class="photothumb" rel="lightbox-group1" href="<?php echo $large_photo; ?>">
+	                        						<img src="<?php echo $thumb; ?>" />
+	                        						</a>
+													&nbsp;&nbsp;
+													<a href="#" onClick="deletePhoto('<?php echo $photo->id; ?>', 'photo_<?php echo $photo->id; ?>'); return false;" ><?php echo Kohana::lang('ui_main.delete'); ?></a>
+                        						</div>
+                        						<?php
                         					}
                         				}
                         			}
