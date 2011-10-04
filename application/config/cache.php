@@ -30,13 +30,4 @@ $config['default'] = array(
 	'requests' => -1
 );
 
-
-/**
- * Content Distribution Network (CDN) Configuration
- * Use a content distribution network to serve up
- * CSS, JS and static IMG files
- */
-
-$config['cdn_css'] = "";
-$config['cdn_js'] = "";
-$config['cdn_img'] = "";
+?>

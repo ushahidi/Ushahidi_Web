@@ -147,26 +147,52 @@ class Manage_Controller extends Admin_Controller
 					if ($filename)
 					{
 						$new_filename = "category_".$category->id."_".time();
+						
+						// Name the files for the DB
+						$cat_img_file = $new_filename.".png";
+						$cat_img_thumb_file = $new_filename."_16x16.png";
 
 						// Resize Image to 32px if greater
 						Image::factory($filename)->resize(32,32,Image::HEIGHT)
-							->save(Kohana::config('upload.directory', TRUE) . $new_filename.".png");
+							->save(Kohana::config('upload.directory', TRUE) . $cat_img_file);
 						// Create a 16x16 version too
 						Image::factory($filename)->resize(16,16,Image::HEIGHT)
-							->save(Kohana::config('upload.directory', TRUE) . $new_filename."_16x16.png");
+							->save(Kohana::config('upload.directory', TRUE) . $cat_img_thumb_file);
+							
+						// Okay, now we have these three different files on the server, now check to see
+						//   if we should be dropping them on the CDN
+						
+						if(Kohana::config("cdn.cdn_store_dynamic_content"))
+						{
+							$cdn = new cdn;
+							$cat_img_file = $cdn->upload($cat_img_file);
+							$cat_img_thumb_file = $cdn->upload($cat_img_thumb_file);
+							
+							// We no longer need the files we created on the server. Remove them.
+							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+							unlink($local_directory.$new_filename.".png");
+							unlink($local_directory.$new_filename."_16x16.png");
+						}
 
 						// Remove the temporary file
 						unlink($filename);
 
 						// Delete Old Image
 						$category_old_image = $category->category_image;
-						if ( ! empty($category_old_image)
-							AND file_exists(Kohana::config('upload.directory', TRUE).$category_old_image))
-							unlink(Kohana::config('upload.directory', TRUE).$category_old_image);
+						if ( ! empty($category_old_image))
+						{
+							if(file_exists(Kohana::config('upload.directory', TRUE).$category_old_image))
+							{
+								unlink(Kohana::config('upload.directory', TRUE).$category_old_image);
+							}elseif(Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($category_old_image)){
+								$cdn = new cdn;
+								$cdn->delete($category_old_image);
+							}
+						}
 
 						// Save
-						$category->category_image = $new_filename.".png";
-						$category->category_image_thumb = $new_filename."_16x16.png";
+						$category->category_image = $cat_img_file;
+						$category->category_image_thumb = $cat_img_thumb_file;
 						$category->save();
 					}
 

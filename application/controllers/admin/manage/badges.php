@@ -86,14 +86,36 @@ class Badges_Controller extends Admin_Controller
 						Image::factory($filename)->save(Kohana::config('upload.directory', TRUE).$l_name);
 
 						// Medium size
-						$m_name = $new_filename."_m".$file_type;
+						$m_name = $new_filename.'_m'.$file_type;
 						Image::factory($filename)->resize(80,80,Image::HEIGHT)
 							->save(Kohana::config('upload.directory', TRUE).$m_name);
 
 						// Thumbnail
-						$t_name = $new_filename."_t".$file_type;
+						$t_name = $new_filename.'_t'.$file_type;
 						Image::factory($filename)->resize(60,60,Image::HEIGHT)
 							->save(Kohana::config('upload.directory', TRUE).$t_name);
+						
+						// Name the files for the DB
+						$media_link = $l_name;
+						$media_medium = $m_name;
+						$media_thumb = $t_name;
+						
+						// Okay, now we have these three different files on the server, now check to see
+						//   if we should be dropping them on the CDN
+						
+						if(Kohana::config("cdn.cdn_store_dynamic_content"))
+						{
+							$cdn = new cdn;
+							$media_link = $cdn->upload($media_link);
+							$media_medium = $cdn->upload($media_medium);
+							$media_thumb = $cdn->upload($media_thumb);
+							
+							// We no longer need the files we created on the server. Remove them.
+							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+							unlink($local_directory.$new_filename.$file_type);
+							unlink($local_directory.$new_filename.'_m'.$file_type);
+							unlink($local_directory.$new_filename.'_t'.$file_type);
+						}
 
 						// Remove the temporary file
 						unlink($filename);
@@ -105,9 +127,9 @@ class Badges_Controller extends Admin_Controller
 						$media = new Media_Model();
 						$media->badge_id = $badge->id;
 						$media->media_type = 1; // Image
-						$media->media_link = $l_name;
-						$media->media_medium = $m_name;
-						$media->media_thumb = $t_name;
+						$media->media_link = $media_link;
+						$media->media_medium = $media_medium;
+						$media->media_thumb = $media_thumb;
 						$media->media_date = date("Y-m-d H:i:s",time());
 						$media->save();
 					}

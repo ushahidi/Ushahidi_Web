@@ -37,9 +37,9 @@ class Badge_Model extends ORM
 			$arr[$badge->id] = array('id'=>$badge->id,
 									'name'=>$badge->name,
 									'description'=>$badge->description,
-									'img'=>$badge->media->media_link,
-									'img_m'=>$badge->media->media_medium,
-									'img_t'=>$badge->media->media_thumb,
+									'img'=>url::convert_uploaded_to_abs($badge->media->media_link),
+									'img_m'=>url::convert_uploaded_to_abs($badge->media->media_medium),
+									'img_t'=>url::convert_uploaded_to_abs($badge->media->media_thumb),
 									'users'=>array());
 			foreach($badge->users as $user)
 			{
@@ -86,9 +86,9 @@ class Badge_Model extends ORM
 				$arr[$badge->id] = array('id'=>$badge->id,
 										'name'=>$badge->name,
 										'description'=>$badge->description,
-										'img'=>$badge->media->media_link,
-										'img_m'=>$badge->media->media_medium,
-										'img_t'=>$badge->media->media_thumb);
+										'img'=>url::convert_uploaded_to_abs($badge->media->media_link),
+										'img_m'=>url::convert_uploaded_to_abs($badge->media->media_medium),
+										'img_t'=>url::convert_uploaded_to_abs($badge->media->media_thumb));
 			}
 		}
 

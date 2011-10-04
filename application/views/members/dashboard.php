@@ -157,7 +157,7 @@
 						?>
 		
 								<div class="badge">
-									<center><img src="<?php echo url::base().Kohana::config('upload.relative_directory').'/'.$badge['img_m']; ?>" alt="<?php echo Kohana::lang('ui_main.badge').' '.$badge['id'];?>" width="80" height="80" style="margin:5px;" /></center>
+									<center><img src="<?php echo $badge['img_m']; ?>" alt="<?php echo Kohana::lang('ui_main.badge').' '.$badge['id'];?>" width="80" height="80" style="margin:5px;" /></center>
 									<br/><strong><?php echo $badge['name']; ?></strong>
 								</div>
 		

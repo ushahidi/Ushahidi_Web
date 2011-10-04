@@ -121,7 +121,7 @@
 										<tr>
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2" style="width:80px;">
-												<img src="<?php echo url::base().Kohana::config('upload.relative_directory').'/'.$badge['img_m']; ?>" alt="<?php echo Kohana::lang('ui_main.badge').' '.$badge['id'];?>" width="80" height="80" />
+												<img src="<?php echo $badge['img_m']; ?>" alt="<?php echo Kohana::lang('ui_main.badge').' '.$badge['id'];?>" width="80" height="80" />
 											</td>
 											<td class="col-3" style="width:600px;font-weight:normal;">
 												<strong><?php echo $badge['name']; ?></strong>
