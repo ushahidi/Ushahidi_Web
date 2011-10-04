@@ -73,10 +73,10 @@ class Alert_Model extends ORM
 	 * @param boolean $save save[Optional] the record when validation succeeds
 	 * @return boolean
 	 */
-	public function validate(array & $array, $save = FALSE)
+	public function validate(array & $post, $save = FALSE)
 	{
 		// Initialise the validation library and setup some rules
-		$array = Validation::factory($array)
+		$post = Validation::factory($post)
 			->pre_filter('trim')
 			->add_rules('alert_mobile', 'numeric', 'length[6,20]')
 			->add_rules('alert_email', 'email', 'length[3,64]')
@@ -86,8 +86,19 @@ class Alert_Model extends ORM
 			->add_callbacks('alert_mobile', array($this, '_mobile_or_email'))
 			->add_callbacks('alert_mobile', array($this, '_mobile_check'))
 			->add_callbacks('alert_email', array($this, '_email_check'));
+			
+		// If deployment is a single country deployment, check that the location mapped is in the default country
+		if ( ! Kohana::config('settings.multi_country'))
+		{
+			$country = Country_Model::get_country_by_name($post->alert_country);
+			if ($country AND $country->id != Kohana::config('settings.default_country'))
+			{
+				$post->add_error('alert_country','single_country');
+			}
+		}
 
-		return parent::validate($array, $save);
+		return parent::validate($post, $save);
+		
 	} // END function validate
 
 
@@ -96,24 +107,24 @@ class Alert_Model extends ORM
 	 * @param   mixed mobile number to check
 	 * @return  boolean
      */
-    public function _mobile_check(Validation $array)
+    public function _mobile_check(Validation $post)
     {
 		// If add->rules validation found any errors, get me out of here!
-        if (array_key_exists('alert_mobile', $array->errors()) 
-            || array_key_exists('alert_lat', $array->errors()) 
-            || array_key_exists('alert_lon', $array->errors()))
+        if (array_key_exists('alert_mobile', $post->errors()) 
+            || array_key_exists('alert_lat', $post->errors()) 
+            || array_key_exists('alert_lon', $post->errors()))
             return;
 
-        if ($array->alert_mobile && (bool) $this->db
+        if ($post->alert_mobile && (bool) $this->db
 			->where(array(
 				'alert_type' => 1,
-				'alert_recipient' => $array->alert_mobile,
-				'alert_lat' => $array->alert_lat,
-				'alert_lon' => $array->alert_lon
+				'alert_recipient' => $post->alert_mobile,
+				'alert_lat' => $post->alert_lat,
+				'alert_lon' => $post->alert_lon
 				))
 			->count_records($this->table_name) )
 		{
-			$array->add_error( 'alert_mobile', 'mobile_check');
+			$post->add_error( 'alert_mobile', 'mobile_check');
 		}
     } // END function _mobile_check
 
@@ -123,24 +134,24 @@ class Alert_Model extends ORM
 	 * @param   mixed mobile number to check
 	 * @return  boolean
 	 */
-	public function _email_check(Validation $array)
+	public function _email_check(Validation $post)
 	{
 		// If add->rules validation found any errors, get me out of here!
-		if (array_key_exists('alert_email', $array->errors()) 
-			OR array_key_exists('alert_lat', $array->errors()) 
-			OR array_key_exists('alert_lon', $array->errors()))
+		if (array_key_exists('alert_email', $post->errors()) 
+			OR array_key_exists('alert_lat', $post->errors()) 
+			OR array_key_exists('alert_lon', $post->errors()))
 			return;
 
-		if ( $array->alert_email && (bool) $this->db
+		if ( $post->alert_email && (bool) $this->db
 			->where(array(
 					'alert_type' => 2,
-					'alert_recipient' => $array->alert_email,
-					'alert_lat' => $array->alert_lat,
-					'alert_lon' => $array->alert_lon
+					'alert_recipient' => $post->alert_email,
+					'alert_lat' => $post->alert_lat,
+					'alert_lon' => $post->alert_lon
 				))
 			->count_records($this->table_name) )
 		{
-			$array->add_error( 'alert_email', 'email_check');
+			$post->add_error('alert_email', 'email_check');
 		}
 	} // END function _email_check
 
@@ -150,10 +161,10 @@ class Alert_Model extends ORM
 	 * @param   mixed mobile number to check
 	 * @return  boolean
 	 */
-	public function _mobile_or_email(Validation $array)
+	public function _mobile_or_email(Validation $post)
 	{
-		if ( empty($array->alert_mobile) && empty($array->alert_email) )
-			$array->add_error( 'alert_mobile', 'one_required');
+		if ( empty($post->alert_mobile) && empty($post->alert_email) )
+			$post->add_error('alert_mobile', 'one_required');
 	} // END function _mobile_or_email
 	
 	/**
