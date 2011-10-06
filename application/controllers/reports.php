@@ -258,8 +258,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->api_url = Kohana::config('settings.api_url');
 
 		// Setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'incident_title' => '',
 			'incident_description' => '',
 			'incident_date' => '',
@@ -276,6 +275,7 @@ class Reports_Controller extends Main_Controller {
 			'incident_news' => array(),
 			'incident_video' => array(),
 			'incident_photo' => array(),
+			'incident_zoom' => intval(Kohana::config('settings.default_zoom')),
 			'person_first' => '',
 			'person_last' => '',
 			'person_email' => '',
@@ -453,8 +453,7 @@ class Reports_Controller extends Main_Controller {
 			// Comment Post?
 			// Setup and initialize form field names
 
-			$form = array
-			(
+			$form = array(
 				'comment_author' => '',
 				'comment_description' => '',
 				'comment_email' => '',
