@@ -73,7 +73,7 @@ class Form_Field_Model extends ORM {
 			$array->add_rules('field_height', 'between[0,50]');
 		}
 
-		if( ! empty($array->field_default))
+		if ( ! empty($array->field_default))
 		{
 			$array->add_rules('field_default', 'length[1,10000]');	
 		}
@@ -97,5 +97,17 @@ class Form_Field_Model extends ORM {
 	public static function is_valid_form_field($field_id)
 	{
 		return (intval($field_id) > 0)? ORM::factory('form_field', $field_id)->loaded : FALSE;
+	}
+	
+	/**
+	 * Deletes the a form field and all its associated data
+	 */
+	public function delete()
+	{
+		// Delete all responses associated with this field
+		ORM::factory('form_response')->where('form_field_id', $this->id)->delete_all();
+		
+		// Delete the field
+		parent::delete();
 	}
 }
