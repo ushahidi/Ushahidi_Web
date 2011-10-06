@@ -48,5 +48,62 @@ class User_Model extends Auth_User_Model {
 		$users = ORM::factory('user')->where(array('public_profile'=>1))->find_all();
 		return $users;
 	}
+	
+	/**
+	 * Custom validation for this model - complements the default validate()
+	 *
+	 * @return bool TRUE if validation succeeds, FALSE otherwise
+	 */
+	public static function custom_validate(array & $post)
+	{
+		// Initalize validation
+		$post = Validation::factory($post)
+				->pre_filter('trim', TRUE);
+		
+		$post->add_rules('username','required','length[3,16]', 'alpha_numeric');
+		$post->add_rules('name','required','length[3,100]');
+        $post->add_rules('email','required','email','length[4,64]');
+		
+		// If user id is not specified, check if the username already exists
+		if (empty($post->user_id))
+		{
+			$post->add_callbacks('username', array('User_Model', 'unique_value_exists'));
+			$post->add_callbacks('email', array('User_Model', 'unique_value_exists'));
+		}
+		
+		// Only check for the password if the user id has been specified
+		if ( ! empty($post->user_id))
+		{
+			$post->add_rules('password','required', 'length[5,50]','alpha_numeric');
+		}
+		
+		// If Password field is not blank
+        if ( ! empty($post->password))
+        {
+            $post->add_rules('password','required','length[5,50]', 'alpha_numeric', 'matches[password_again]');
+        }
+        
+		$post->add_rules('role','required','length[3,30]', 'alpha_numeric');
+		$post->add_rules('notify','between[0,1]');
+		
+		// Additional validation checks
+		Event::run('ushahidi_action.user_submit_admin', $post);
+				
+		// Return
+		return $post->validate();
+	}
+	
 
+	/**
+	 * Checks if the value in the specified field exists in database
+	 */
+	public static function unique_value_exists(Validation $post, $field)
+	{
+		$exists = (bool) ORM::factory('user')->where($field, $post[$field])->count_all();
+		if ($exists)
+		{
+			$post->add_error($field, 'exists');
+		}
+	}
+	
 } // End User_Model
