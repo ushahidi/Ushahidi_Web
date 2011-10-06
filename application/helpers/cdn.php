@@ -15,8 +15,8 @@ class cdn_Core {
 	 * @var mixed
 	 */
 	private static $cdn = (Kohana::config('cdn.cdn_provider') == 'cloudfiles')
-							? new Cloudfiles()
-							: FALSE;
+				? new Cloudfiles()
+				: FALSE;
 	
 	/**
 	 * Uploads a file to the CDN
