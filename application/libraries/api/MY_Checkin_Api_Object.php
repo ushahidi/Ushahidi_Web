@@ -448,12 +448,11 @@ class Checkin_Api_Object extends Api_Object_Core {
 			// Okay, now we have these three different files on the server, now check to see
 			//   if we should be dropping them on the CDN
 			
-			if(Kohana::config("cdn.cdn_store_dynamic_content"))
+			if (Kohana::config("cdn.cdn_store_dynamic_content"))
 			{
-				$cdn = new cdn;
-				$media_link = $cdn->upload($media_link);
-				$media_medium = $cdn->upload($media_medium);
-				$media_thumb = $cdn->upload($media_thumb);
+				$media_link = cdn::upload($media_link);
+				$media_medium = cdn::upload($media_medium);
+				$media_thumb = cdn::upload($media_thumb);
 				
 				// We no longer need the files we created on the server. Remove them.
 				$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';

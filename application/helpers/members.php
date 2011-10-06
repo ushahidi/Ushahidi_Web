@@ -33,9 +33,13 @@ class members_Core {
     {
         $menu = "";
 
-        $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_main.view_reports') : "<a href=\"".url::base()."members/reports\">".Kohana::lang('ui_main.view_reports')."</a>";
+        $menu .= ($this_sub_page == "view")
+			? Kohana::lang('ui_main.view_reports')
+			: "<a href=\"".url::base()."members/reports\">".Kohana::lang('ui_main.view_reports')."</a>";
 
-        $menu .= ($this_sub_page == "edit") ? Kohana::lang('ui_main.create_report') : "<a href=\"".url::base()."members/reports/edit\">".Kohana::lang('ui_main.create_report')."</a>";
+        $menu .= ($this_sub_page == "edit")
+			? Kohana::lang('ui_main.create_report')
+			: "<a href=\"".url::base()."members/reports/edit\">".Kohana::lang('ui_main.create_report')."</a>";
 
         echo $menu;
         
@@ -53,9 +57,13 @@ class members_Core {
     {
         $menu = "";
 
-        $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_admin.view_private') : "<a href=\"".url::base()."members/private\">".Kohana::lang('ui_admin.view_private')."</a>";
+        $menu .= ($this_sub_page == "view")
+			? Kohana::lang('ui_admin.view_private') 
+			: "<a href=\"".url::base()."members/private\">".Kohana::lang('ui_admin.view_private')."</a>";
 
-        $menu .= ($this_sub_page == "new") ? Kohana::lang('ui_admin.new_private') : "<a href=\"".url::base()."members/private/send\">".Kohana::lang('ui_admin.new_private')."</a>";
+        $menu .= ($this_sub_page == "new")
+			? Kohana::lang('ui_admin.new_private') 
+			: "<a href=\"".url::base()."members/private/send\">".Kohana::lang('ui_admin.new_private')."</a>";
 
         echo $menu;
         
@@ -73,9 +81,13 @@ class members_Core {
     {
         $menu = "";
 
-        $menu .= ($this_sub_page == "view") ? Kohana::lang('ui_admin.my_alerts') : "<a href=\"".url::base()."members/alerts\">".Kohana::lang('ui_admin.my_alerts')."</a>";
+        $menu .= ($this_sub_page == "view")
+			? Kohana::lang('ui_admin.my_alerts') 
+			: "<a href=\"".url::base()."members/alerts\">".Kohana::lang('ui_admin.my_alerts')."</a>";
 
-        //$menu .= ($this_sub_page == "edit") ? Kohana::lang('ui_admin.new_alert') : "<a href=\"".url::base()."members/alerts/edit\">".Kohana::lang('ui_admin.new_alert')."</a>";
+			// $menu .= ($this_sub_page == "edit")
+			// 	? Kohana::lang('ui_admin.new_alert') 
+			// 	: "<a href=\"".url::base()."members/alerts/edit\">".Kohana::lang('ui_admin.new_alert')."</a>";
 
         echo $menu;
         
@@ -96,16 +108,19 @@ class members_Core {
 	 * @return String containing either just a URL or a complete image tag
 	 * @source http://gravatar.com/site/implement/images/php/
 	 */
-	public function gravatar( $email, $s = 80, $d = 'mm', $r = 'g', $img = false, $atts = array() )
+	public function gravatar($email, $s = 80, $d = 'mm', $r = 'g', $img = FALSE, $atts = array())
 	{
-		$url = 'http://www.gravatar.com/avatar/';
-		$url .= md5( strtolower( trim( $email ) ) );
-		$url .= "?s=$s&d=$d&r=$r";
-		if ( $img )
+		$url = 'http://www.gravatar.com/avatar/'
+			. md5(strtolower(trim( $email)))
+			. "?s=$s&d=$d&r=$r";
+			
+		if ($img)
 		{
 			$url = '<img src="' . $url . '"';
-			foreach ( $atts as $key => $val )
+			foreach ($atts as $key => $val)
+			{
 				$url .= ' ' . $key . '="' . $val . '"';
+			}
 			$url .= ' />';
 		}
 		return $url;

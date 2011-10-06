@@ -510,10 +510,9 @@ class Main_Controller extends Template_Controller {
 	{
 		$this->auto_render = FALSE;
 		$this->template = "";
-		if(Kohana::config('cdn.cdn_gradual_upgrade') != false)
+		if (Kohana::config('cdn.cdn_gradual_upgrade') != FALSE)
 		{
-			$cdn = new cdn;
-			$cdn->gradual_upgrade();
+			cdn::gradual_upgrade();
 		}
 	}
 
