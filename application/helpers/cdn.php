@@ -14,9 +14,23 @@ class cdn_Core {
 	 * Reference to the CDN provider library
 	 * @var mixed
 	 */
-	private static $cdn = (Kohana::config('cdn.cdn_provider') == 'cloudfiles')
-				? new Cloudfiles()
-				: FALSE;
+	private static $cdn = NULL;
+	/**
+	 * Connect to the right CDN provider library
+	 */
+	private static function connection()
+	{
+		if (self::$cdn == NULL)
+		{
+			if(Kohana::config("cdn.cdn_provider") == 'cloudfiles')
+			{
+				// Okay, configured properly to use a supported provider.
+				self::$cdn = new Cloudfiles;
+			}else{
+				return FALSE;
+			}
+		}
+	}
 	
 	/**
 	 * Uploads a file to the CDN
@@ -26,6 +40,8 @@ class cdn_Core {
 	 */
 	public static function upload($filename)
 	{
+		self::connection();
+
 		// Upload to the CDN and return new filename	
 		return self::$cdn->upload($filename);
 	}
@@ -38,6 +54,7 @@ class cdn_Core {
 	 */
 	public static function delete($url)
 	{
+		self::connection();
 		return self::$cdn->delete($url);
 	}
 	
@@ -49,12 +66,14 @@ class cdn_Core {
 	 */
 	public static function gradual_upgrade()
 	{
+		self::connection();
+
 		if ( ! self::$cdn)
-			throw new Kohana_Exception('CDN provider not specified')
-			
+			throw new Kohana_Exception('CDN provider not specified');
+
 		// Get the table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
-		
+
 		// Select at random since admin may not want every user to initiate a CDN upload
 		if (rand(1, intval(Kohana::config('cdn.cdn_gradual_upgrade'))) == 1)
 		{
@@ -74,7 +93,7 @@ class cdn_Core {
 				$new_thumb = self::$cdn->upload($row->media_thumb);
 				
 				// Update the entry for the media file in the DB
-				$db->update('media_link', 
+				$db->update('media', 
 					// Columns to update and their new values
 					array(
 						'media_link' => $new_large, 
