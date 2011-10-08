@@ -52,7 +52,7 @@ class sms_Core {
 					}
 					
 					// Proceed
-					$response = $sender->send($to, $from, $message);
+					$response = $provider->send($to, $from, $message);
 					
 					// Return
 					return $response;
