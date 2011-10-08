@@ -200,6 +200,27 @@ class Settings_Controller extends Admin_Controller
 						$t_name = $new_filename."_t".$file_type;
 						Image::factory($filename)->resize(60,60,Image::HEIGHT)
 							->save(Kohana::config('upload.directory', TRUE).$t_name);
+						
+						// Name the files for the DB
+						$media_link = $l_name;
+						$media_medium = $m_name;
+						$media_thumb = $t_name;
+						
+						// Okay, now we have these three different files on the server, now check to see
+						//   if we should be dropping them on the CDN
+						
+						if (Kohana::config("cdn.cdn_store_dynamic_content"))
+						{
+							$media_link = cdn::upload($media_link);
+							$media_medium = cdn::upload($media_medium);
+							$media_thumb = cdn::upload($media_thumb);
+							
+							// We no longer need the files we created on the server. Remove them.
+							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+							unlink($local_directory.$l_name);
+							unlink($local_directory.$m_name);
+							unlink($local_directory.$t_name);
+						}
 	
 						// Remove the temporary file
 						unlink($filename);
@@ -207,9 +228,9 @@ class Settings_Controller extends Admin_Controller
 						// Save banner image in the media table
 						$media = new Media_Model();
 						$media->media_type = 1; // Image
-						$media->media_link = $l_name;
-						$media->media_medium = $m_name;
-						$media->media_thumb = $t_name;
+						$media->media_link = $media_link;
+						$media->media_medium = $media_medium;
+						$media->media_thumb = $media_thumb;
 						$media->media_date = date("Y-m-d H:i:s",time());
 						$media->save();
 	
