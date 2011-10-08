@@ -164,9 +164,8 @@ class Manage_Controller extends Admin_Controller
 						
 						if(Kohana::config("cdn.cdn_store_dynamic_content"))
 						{
-							$cdn = new cdn;
-							$cat_img_file = $cdn->upload($cat_img_file);
-							$cat_img_thumb_file = $cdn->upload($cat_img_thumb_file);
+							$cat_img_file = cdn::upload($cat_img_file);
+							$cat_img_thumb_file = cdn::upload($cat_img_thumb_file);
 							
 							// We no longer need the files we created on the server. Remove them.
 							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
@@ -185,8 +184,7 @@ class Manage_Controller extends Admin_Controller
 							{
 								unlink(Kohana::config('upload.directory', TRUE).$category_old_image);
 							}elseif(Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($category_old_image)){
-								$cdn = new cdn;
-								$cdn->delete($category_old_image);
+								cdn::delete($category_old_image);
 							}
 						}
 
@@ -739,6 +737,8 @@ class Manage_Controller extends Admin_Controller
 						$path_parts = pathinfo($path_info);
 						$file_name = $path_parts['filename'];
 						$file_ext = $path_parts['extension'];
+						$layer_file = $file_name.".".$file_ext;
+						$layer_url = '';
 
 						if (strtolower($file_ext) == "kmz")
 						{ 
@@ -763,7 +763,24 @@ class Manage_Controller extends Admin_Controller
 							}
 						}
 
-						$layer->layer_file = $file_name.".".$file_ext;
+						
+						// Upload the KML to the CDN server if configured
+						if (Kohana::config("cdn.cdn_store_dynamic_content"))
+						{
+							// Upload the file to the CDN
+							$layer_url = cdn::upload($layer_file);
+
+							// We no longer need the files we created on the server. Remove them.
+							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+							unlink($local_directory.$layer_file);
+
+							// We no longer need to store the file name for the local file since it's gone
+							$layer_file = '';
+						}
+
+						// Set the final variables for the DB
+						$layer->layer_url = $layer_url;
+						$layer->layer_file = $layer_file;
 						$layer->save();
 					}
 					

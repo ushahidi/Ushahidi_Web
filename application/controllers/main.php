@@ -98,7 +98,7 @@ class Main_Controller extends Template_Controller {
 		// Get banner image and pass to the header
 		if(Kohana::config('settings.site_banner_id') != NULL){
 			$banner = ORM::factory('media')->find(Kohana::config('settings.site_banner_id'));
-			$this->template->header->banner = $banner->media_link;
+			$this->template->header->banner = url::convert_uploaded_to_abs($banner->media_link);
 		}else{
 			$this->template->header->banner = NULL;
 		}
