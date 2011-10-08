@@ -164,9 +164,8 @@ class Manage_Controller extends Admin_Controller
 						
 						if(Kohana::config("cdn.cdn_store_dynamic_content"))
 						{
-							$cdn = new cdn;
-							$cat_img_file = $cdn->upload($cat_img_file);
-							$cat_img_thumb_file = $cdn->upload($cat_img_thumb_file);
+							$cat_img_file = cdn::upload($cat_img_file);
+							$cat_img_thumb_file = cdn::upload($cat_img_thumb_file);
 							
 							// We no longer need the files we created on the server. Remove them.
 							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
@@ -185,8 +184,7 @@ class Manage_Controller extends Admin_Controller
 							{
 								unlink(Kohana::config('upload.directory', TRUE).$category_old_image);
 							}elseif(Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($category_old_image)){
-								$cdn = new cdn;
-								$cdn->delete($category_old_image);
+								cdn::delete($category_old_image);
 							}
 						}
 
