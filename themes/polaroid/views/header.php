@@ -73,7 +73,7 @@
 				<span><?php echo $site_tagline; ?></span>
 			</div>
 			<?php }else{ ?>
-			<a href="<?php echo url::site();?>"><img src="<?php echo url::base().Kohana::config('upload.relative_directory')."/".$banner; ?>" alt="<?php echo $site_name; ?>" /></a>
+			<a href="<?php echo url::site();?>"><img src="<?php echo $banner; ?>" alt="<?php echo $site_name; ?>" /></a>
 			<?php } ?>
 			<!-- / logo -->
 			

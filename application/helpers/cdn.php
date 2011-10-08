@@ -85,6 +85,7 @@ class cdn_Core {
 			$db = Database::instance();
 			
 			$media_links = $db->query($query);
+			$uploaded_flag = false;
 			foreach ($media_links as $row)
 			{
 				// Upload files to the CDN
@@ -110,37 +111,71 @@ class cdn_Core {
 				unlink($local_directory.$row->media_link);
 				unlink($local_directory.$row->media_medium);
 				unlink($local_directory.$row->media_thumb);
+				
+				$uploaded_flag = true;
 			}
 			
-			// Since category images are so small, we might as well have them go ahead and upload one of those
-			$query = 'SELECT id, category_image, category_image_thumb '
-					. 'FROM '.$table_prefix.'category '
-					. 'WHERE category_image NOT LIKE \'http%\' LIMIT 1';
-			
-			// Fetch		
-			$category_images = $db->query($query);
-			foreach ($category_images as $row)
+			// If we didn't have any more user uploaded images to upload, move on to category images
+			if($uploaded_flag == false)
 			{
-				// Upload files to the CDN
-				$new_category_image = $this->cdn->upload($row->category_image);
-				$new_category_image_thumb = $this->cdn->upload($row->category_image_thumb);
+				$query = 'SELECT id, category_image, category_image_thumb '
+						. 'FROM '.$table_prefix.'category '
+						. 'WHERE category_image NOT LIKE \'http%\' LIMIT 1';
 				
-				// Update the entry for the media file in the DB
-				$db->update('category', 
-					// Columns to be updated
-					array(
-						'category_image' => $new_category_image, 
-						'category_image_thumb' => $new_category_image_thumb
-					), 
-					// WHERE clause to update on
-					array('id' => $row->id)
-				);
+				// Fetch		
+				$category_images = $db->query($query);
+				foreach ($category_images as $row)
+				{
+					// Upload files to the CDN
+					$new_category_image = $this->cdn->upload($row->category_image);
+					$new_category_image_thumb = $this->cdn->upload($row->category_image_thumb);
+					
+					// Update the entry for the media file in the DB
+					$db->update('category', 
+						// Columns to be updated
+						array(
+							'category_image' => $new_category_image, 
+							'category_image_thumb' => $new_category_image_thumb
+						), 
+						// WHERE clause to update on
+						array('id' => $row->id)
+					);
+					
+					// Remove old files
+					$local_directory = Kohana::config('upload.directory', TRUE);
+					$local_directory = rtrim($local_directory, '/').'/';
+					unlink($local_directory.$row['category_image']);
+					unlink($local_directory.$row['category_image_thumb']);
+					
+					$uploaded_flag = true;
+				}
+			}
+			
+			// If we are done with category images, move on to KML layers
+			if($uploaded_flag == false)
+			{
+				// Grab a KML file we have locally that isn't linking to an external URL
+				$query = 'SELECT id, layer_file '
+						. 'FROM '.$table_prefix.'layer '
+						. 'WHERE layer_url = \'\' LIMIT 1';
+				$layers = $db->query($query);
+				foreach ($layers as $row)
+				{
+					$layer_file = $row->layer_file;
+					
+					// Upload the file to the CDN
+					$layer_url = cdn::upload($layer_file);
+					
+					// We no longer need the files we created on the server. Remove them.
+					$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+					unlink($local_directory.$layer_file);
+							
+					$layer = new Layer_Model($row->id);
+					$layer->layer_url = $layer_url;
+					$layer->layer_file = '';
+					$layer->save();
+				}
 				
-				// Remove old files
-				$local_directory = Kohana::config('upload.directory', TRUE);
-				$local_directory = rtrim($local_directory, '/').'/';
-				unlink($local_directory.$row['category_image']);
-				unlink($local_directory.$row['category_image_thumb']);
 			}
 			
 			// Garbage collection
