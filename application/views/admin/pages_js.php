@@ -59,8 +59,8 @@ tinyMCE.init({
 	height:"400px",
 	width:"700px",
 	encoding : "xml",
-	entity_encoding : "named"
-
+	entity_encoding : "named",
+	extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling]"
 });
 
 

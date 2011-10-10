@@ -119,7 +119,7 @@
 										<td class="col-1"><input name="comment_id[]" id="comment" value="<?php echo $comment_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<h4><?php echo $comment_author; ?></h4>
+												<h4><a href="<?php echo url::base() . 'reports/view/' . $incident_id; ?>"><?php echo $comment_author; ?></a></h4>
 												<?php
 												if ($incident_title != "")
 												{
