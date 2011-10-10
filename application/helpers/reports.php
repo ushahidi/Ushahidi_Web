@@ -10,6 +10,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
+ * @category   Helpers
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
@@ -319,7 +320,6 @@ class reports_Core {
 	 * @param mixed $post
 	 * @param mixed $verify Instance of the verify model
 	 * @param mixed $incident
-	 *
 	 */
 	public static function verify_approve($post, $verify, $incident)
 	{
@@ -404,7 +404,6 @@ class reports_Core {
 	 *
 	 * @param mixed $post
 	 * @param mixed $incident_model
-	 *
 	 */
 	public static function save_category($post, $incident)
 	{
@@ -849,10 +848,8 @@ class reports_Core {
 			foreach ($url_data['cff'] as $field)
 			{			
 				$field_id = $field[0];
-				if(intval($field_id) < 1)
-				{
+				if (intval($field_id) < 1)
 					break;
-				}
 
 				$field_value = $field[1];
 				if (is_array($field_value))
@@ -866,7 +863,8 @@ class reports_Core {
 					$where_text .= " OR ";
 				}
 				
-				$whereText .= "(form_field_id = ".intval($field_id)." AND form_response = '".mysql_real_escape_string(trim($field_value))."')";
+				$where_text .= "(form_field_id = ".intval($field_id)
+					. " AND form_response = '".Database::instance()->escape_str(trim($field_value))."')";
 			}
 			
 			// Make sure there was some valid input in there
@@ -881,6 +879,7 @@ class reports_Core {
 		Event::run('ushahidi_filter.fetch_incidents_set_params', self::$params);
 		
 		//> END PARAMETER FETCH
+
 		
 		// Fetch all the incidents
 		$all_incidents = Incident_Model::get_incidents(self::$params);

@@ -15,6 +15,7 @@ class cdn_Core {
 	 * @var mixed
 	 */
 	private static $cdn = NULL;
+	
 	/**
 	 * Connect to the right CDN provider library
 	 */
@@ -22,15 +23,16 @@ class cdn_Core {
 	{
 		if (self::$cdn == NULL)
 		{
-			if(Kohana::config("cdn.cdn_provider") == 'cloudfiles')
+			if (Kohana::config("cdn.cdn_provider") == 'cloudfiles')
 			{
 				// Okay, configured properly to use a supported provider.
 				self::$cdn = new Cloudfiles;
-			}else{
+			}
+			else
+			{
 				return FALSE;
 			}
 		}
-	}
 	
 	/**
 	 * Uploads a file to the CDN
@@ -70,7 +72,7 @@ class cdn_Core {
 
 		if ( ! self::$cdn)
 			throw new Kohana_Exception('CDN provider not specified');
-
+			
 		// Get the table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
 
