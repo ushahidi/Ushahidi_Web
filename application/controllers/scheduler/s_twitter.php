@@ -138,7 +138,7 @@ class S_Twitter_Controller extends Controller {
 
 			if ($reporter->level_id > 1 && 
 				count(ORM::factory("message")
-					->where("service_messageid = '".$tweet->{'id'}."'")
+					->where("service_messageid = '".$tweet->{'id_str'}."'")
 					->find_all()) == 0)
 			{
 				// Save Tweet as Message
@@ -153,7 +153,7 @@ class S_Twitter_Controller extends Controller {
 				$message->message_type = 1; // Inbox
 				$tweet_date = date("Y-m-d H:i:s",strtotime($tweet->{'created_at'}));
 				$message->message_date = $tweet_date;
-				$message->service_messageid = $tweet->{'id'};
+				$message->service_messageid = $tweet->{'id_str'};
 				$message->save();
 				
 				// Action::message_twitter_add - Twitter Message Received!
