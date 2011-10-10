@@ -137,7 +137,7 @@ class alert_Core {
 		 */
 			$message_details = explode(" ",$message_description);
 			$message = $message_details[1].",".Kohana::config('settings.default_country');
-			$geocoder = self::geocode($message);
+			$geocoder = map::geocode($message);
 			
 		/**
 		 * Generate alert code
@@ -163,14 +163,6 @@ class alert_Core {
 
 		$register_sms_alerts = self::_send_mobile_alert($p);																			    
 
-	}
-
-	public function geocode($message)
-	{
-		$this->template = "";
-		$this->auto_render = FALSE;
-
-		return map::geocode($message);
 	}
 
 
