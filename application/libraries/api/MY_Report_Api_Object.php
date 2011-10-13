@@ -69,6 +69,9 @@ class Report_Api_Object extends Api_Object_Core {
         {
             // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
             $post = Validation::factory(array_merge($_POST, $_FILES));
+            
+            //in case there's a plugin that would like to know about this new incident, I mean report
+            Event::run('ushahidi_action.report_submit_api', $post);
 
             //  Add some filters
             $post->pre_filter('trim', TRUE);
@@ -271,6 +274,9 @@ class Report_Api_Object extends Api_Object_Core {
                     $person->person_date = date("Y-m-d H:i:s",time());
                     $person->save();
                 }
+                
+                // Action::report_edit_api - Edited a Report
+                Event::run('ushahidi_action.report_edit_api', $incident);
 
                 return 0; //success
 
