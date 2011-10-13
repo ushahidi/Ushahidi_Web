@@ -282,7 +282,7 @@ class url_Core {
 		}
 		else
 		{
-			header('HTTP/1.1 '.$method.' '.$codes[$method]);
+			header($_SERVER['SERVER_PROTOCOL'] . ' '.$method.' '.$codes[$method]);
 			header('Location: '.$uri);
 		}
 

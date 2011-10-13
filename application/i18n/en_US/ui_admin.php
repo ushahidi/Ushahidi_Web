@@ -166,6 +166,7 @@
 	'messages_twitter' => 'Twitter Messages',
 	'message_sent' => 'Your message has been sent!',
 	'mhi' => 'MHI',
+	'minute' => 'Minute',
 	'minutes' => 'Minutes',
 	'missing_parameter' => 'Missing Parameter',
 	'moderator' => 'Moderator',
