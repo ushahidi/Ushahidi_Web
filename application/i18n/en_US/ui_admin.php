@@ -282,6 +282,7 @@
 	'verify_unverify' => 'Verify/Unverify',
 	'version' => 'Version',
 	'version_available' => ' is available for upgrade.',
+	'video_encoding' => 'Video Encoding',
 	'view_private' => 'Private Messages',
 	'view_site' => 'View Site',
 	'view_report' => 'View Report',
