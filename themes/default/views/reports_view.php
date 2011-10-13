@@ -63,6 +63,11 @@
 			?>
 		</div>
 		
+		<?php
+		// Action::report_display_media - Add content just above media section
+	    Event::run('ushahidi_action.report_display_media', $incident_id);
+		?>
+
 		<!-- start report media -->
 		<div class="<?php if( count($incident_photos) > 0 || count($incident_videos) > 0){ echo "report-media";}?>">
 	    <?php 
@@ -91,7 +96,7 @@
           };
   			echo '</ol></div>';
         
-	    } 
+	    }
 	    ?>
 		</div>
 		
