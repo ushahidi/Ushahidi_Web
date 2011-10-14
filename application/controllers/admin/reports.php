@@ -341,8 +341,6 @@ class Reports_Controller extends Admin_Controller {
 			'custom_field' => array(),
 			'incident_active' => '',
 			'incident_verified' => '',
-			'incident_source' => '',
-			'incident_information' => '',
 			'incident_zoom' => ''
 		);
 
@@ -728,8 +726,6 @@ class Reports_Controller extends Admin_Controller {
 						'custom_field' => customforms::get_custom_form_fields($id,$incident->form_id,true),
 						'incident_active' => $incident->incident_active,
 						'incident_verified' => $incident->incident_verified,
-						'incident_source' => $incident->incident_source,
-						'incident_information' => $incident->incident_information,
 						'incident_zoom' => $incident->incident_zoom
 					);
 
