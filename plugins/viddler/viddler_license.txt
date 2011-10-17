@@ -1,3 +1,5 @@
+This license is for the Viddler API wrapper in plugins/viddler/libraries/ViddlerV2.php
+
 https://github.com/viddler/phpviddler/blob/master/MITlicense.txt
 
 

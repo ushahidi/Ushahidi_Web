@@ -37,17 +37,24 @@ class viddlerevents {
 
 	public function add()
 	{
-		Event::add('ushahidi_action.report_form_admin_after_video_link', array($this, 'show_upload_form_field'));
+		Event::add('ushahidi_action.report_form_admin_after_video_link', array($this, 'show_admin_upload_form_field'));
+		Event::add('ushahidi_action.report_form_after_video_link', array($this, 'show_upload_form_field'));
 		Event::add('ushahidi_action.report_edit',  array($this, 'upload_video'));
+		Event::add('ushahidi_action.report_add',  array($this, 'upload_video'));
 		Event::add('ushahidi_action.report_display_media', array($this, 'display_videos'));
 	}
 	
-	public function show_upload_form_field()
+	public function show_admin_upload_form_field()
 	{
-		$view = View::factory('upload_form_field');
+		$view = View::factory('admin_upload_form_field');
 		
 		$incident_id = Event::$data;
-		$view->videos = $this->get_videos($incident_id);
+		if($incident_id != FALSE)
+		{
+			$view->videos = $this->get_videos($incident_id);
+		}else{
+			$view->videos = array();
+		}
 		
 		// Set maximum filesize
 		$view->maximum_filesize = Kohana::config('viddler.maximum_filesize');
@@ -55,15 +62,27 @@ class viddlerevents {
 		$view->render(TRUE);
 	}
 	
-	public function get_videos($incident_id)
+	public function show_upload_form_field()
+	{
+		$view = View::factory('upload_form_field');
+		
+		// Set maximum filesize
+		$view->maximum_filesize = Kohana::config('viddler.maximum_filesize');
+		
+		$view->render(TRUE);
+	}
+	
+	public function get_videos($incident_id=FALSE)
 	{
 		// First check if any videos need to be updated with embed codes
 		$this->check_for_embed();
 		
 		$db = Database::instance();
-		$query = 'SELECT viddler_id, url, embed, embed_small '
-				. 'FROM '.$this->table_prefix.'viddler '
-				. 'WHERE incident_id = '.(int)$incident_id.';';
+		$query = 'SELECT viddler_id, url, embed, embed_small, incident_id '
+				. 'FROM '.$this->table_prefix.'viddler';
+		if($incident_id != FALSE){
+			$query .= ' WHERE incident_id = '.(int)$incident_id.';';
+		}
 		
 		return $db->query($query);
 	}
@@ -131,10 +150,10 @@ class viddlerevents {
 		
 	}
 	
-	public function upload_video()
+	public function upload_video($incident_id=FALSE)
 	{	
 		// First, save our upload
-		
+
 		$filename = upload::save('incident_video_file');
 		
 		if($filename == false) return FALSE;
@@ -143,19 +162,22 @@ class viddlerevents {
 		$viddler = new ViddlerV2($this->api_key);
 		$user = $viddler->viddler_users_auth(array('user'=>$this->username, 'password'=>$this->password));
 		
+		if($incident_id == FALSE)
+		{
+			$incident_id = Event::$data->id;
+		}
+		
 		$params = array(
 			'sessionid'=>$user['auth']['sessionid'],
-			'title'=>'thisisatest'.rand(0,9999),
-			'tags'=>'tag1,tag2,tag3',
-			'description'=>'desc here dude',
+			'title'=>Kohana::config('settings.site_name').'_'.$incident_id.'_'.time(),
+			'tags'=>date('MY').','.Kohana::config('settings.subdomain'),
+			'description'=>'none',
 			'file'=>'@'.$filename
 		);
 		
 		// Prepare and upload the video
 		$prepare = $viddler->viddler_videos_prepareUpload(array('sessionid' => $user['auth']['sessionid']));
 		$results = $viddler->viddler_videos_upload($params, $prepare['upload']['endpoint']);
-		
-		$incident_id = Event::$data->id;
 		
 		// Save video details to the database
 		$this->save_video($incident_id,$results);
@@ -165,6 +187,11 @@ class viddlerevents {
 	
 	public function save_video($incident_id,$video_details)
 	{
+		if(isset($video_details['error']))
+		{
+			return FALSE;
+		}
+		
 		$viddler_id = $video_details['video']['id'];
 		$url = $video_details['video']['url'];
 		
