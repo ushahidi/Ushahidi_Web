@@ -73,6 +73,11 @@ class Plugins_Controller extends Admin_Controller {
 			$filter = '1=1';
 		}
 		
+		// Add the hidden plugins to the list of plugins to filter out
+		if(count(Kohana::config('plugins.hide_from_list')) != 0){
+			$filter .= ' AND plugin_name NOT IN (\''.mysql_real_escape_string(implode('\',\'',Kohana::config('plugins.hide_from_list'))).'\')';
+		}
+
 		$db = new Database();
 
 		// Update the plugin list in the database
