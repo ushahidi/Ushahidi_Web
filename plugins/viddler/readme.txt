@@ -1,7 +1,7 @@
 === About ===
 name: Viddler
 website: http://www.ushahidi.com
-description: Allow users to upload videos to a Viddler account
+description: Allow users to upload videos to a Viddler account. Before enabling, you must configure the plugin manually in the plugins/viddler/config/viddler.php file.
 version: 0.1
 requires: 2.1
 tested up to: 2.1
