@@ -230,7 +230,7 @@
 
 				<!-- Video Fields -->
 				<div id="divVideo" class="report_row">
-					<h4><?php echo Kohana::lang('ui_main.reports_video'); ?></h4>
+					<h4><?php echo Kohana::lang('ui_main.external_video_link'); ?></h4>
 					<?php
 						$this_div = "divVideo";
 						$this_field = "incident_video";
@@ -264,6 +264,8 @@
 						print "<input type=\"hidden\" name=\"$this_startid\" value=\"$i\" id=\"$this_startid\">";
 					?>
 				</div>
+				
+				<?php Event::run('ushahidi_action.report_form_after_video_link'); ?>
 
 				<!-- Photo Fields -->
 				<div id="divPhoto" class="report_row">
