@@ -271,6 +271,7 @@
 	'triggers' => 'Triggers',
 	'unapproved' => 'unapproved',
 	'unknown' => 'Unknown',
+	'unknown_failure' => 'Unknown Failure',
 	'unread' => 'unread',
 	'update_link' => ' Click here to upgrade now',
 	'upgrade_ushahidi' => 'Upgrade Ushahidi',
