@@ -130,8 +130,6 @@ class reports_Core {
 			$post->add_rules('message_id','numeric');
 			$post->add_rules('incident_active','required', 'between[0,1]');
 			$post->add_rules('incident_verified','required', 'between[0,1]');
-			$post->add_rules('incident_source','numeric', 'length[1,1]');
-			$post->add_rules('incident_information','numeric', 'length[1,1]');
 			$post->add_rules('incident_zoom', 'numeric');
 		}
 		
@@ -277,18 +275,6 @@ class reports_Core {
 		if ( ! empty($post->incident_verified))
 		{
 			$incident->incident_verified = $post->incident_verified;
-		}
-		
-		// Incident source
-		if ( ! empty($post->incident_source))
-		{
-			$incident->incident_source = $post->incident_source;
-		}
-		
-		// Incident information
-		if ( ! empty($post->incident_information))
-		{
-			$incident->incident_information = $post->incident_information;
 		}
 		
 		// Incident zoom

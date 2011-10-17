@@ -760,13 +760,16 @@
 		// Generate the url parameter string
 		parameterStr = "";
 		$.each(urlParameters, function(key, value){
-			if (parameterStr == "")
+			if(value != null)
 			{
-				parameterStr += key + "=" + value.toString();
-			}
-			else
-			{
-				parameterStr += "&" + key + "=" + value.toString();
+				if (parameterStr == "")
+				{
+					parameterStr += key + "=" + value.toString();
+				}
+				else
+				{
+					parameterStr += "&" + key + "=" + value.toString();
+				}
 			}
 		});
 		

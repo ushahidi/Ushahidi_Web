@@ -349,8 +349,6 @@ CREATE TABLE IF NOT EXISTS `incident` (
     `incident_mode` tinyint(4) NOT NULL default '1' COMMENT '1 - WEB, 2 - SMS, 3 - EMAIL, 4 - TWITTER',    
     `incident_active` tinyint(4) NOT NULL default '0',                              
     `incident_verified` tinyint(4) NOT NULL default '0',                            
-    `incident_source` varchar(5) default NULL,                                      
-    `incident_information` varchar(5) default NULL,                                 
     `incident_rating` VARCHAR(15) DEFAULT '0' NOT NULL,                             
     `incident_dateadd` datetime default NULL,                                       
     `incident_dateadd_gmt` datetime default NULL,                                   
