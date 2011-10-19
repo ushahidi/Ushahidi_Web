@@ -96,10 +96,13 @@ class Main_Controller extends Template_Controller {
 		$site_name = Kohana::config('settings.site_name');
 		
 		// Get banner image and pass to the header
-		if(Kohana::config('settings.site_banner_id') != NULL){
+		if (Kohana::config('settings.site_banner_id') != NULL)
+		{
 			$banner = ORM::factory('media')->find(Kohana::config('settings.site_banner_id'));
 			$this->template->header->banner = url::convert_uploaded_to_abs($banner->media_link);
-		}else{
+		}
+		else
+		{
 			$this->template->header->banner = NULL;
 		}
 		
@@ -149,7 +152,7 @@ class Main_Controller extends Template_Controller {
 		// add copyright info
 		$this->template->footer->site_copyright_statement = '';
 		$site_copyright_statement = trim(Kohana::config('settings.site_copyright_statement'));
-		if($site_copyright_statement != '')
+		if ($site_copyright_statement != '')
 		{
 			$this->template->footer->site_copyright_statement = $site_copyright_statement;
 		}

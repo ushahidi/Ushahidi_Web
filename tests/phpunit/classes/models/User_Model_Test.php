@@ -8,13 +8,13 @@
  * @copyright 	(c) 2008-2011 Ushahidi Inc <http://www.ushahidi.com>
  * @license 	For license information, see License.txt
  */
-class Unit_Model_Test extends PHPUnit_Framework_TestCase {
+class User_Model_Test extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Provides dummy data for testing User_Model::custom_validate
 	 * @dataProvider
 	 */
-	public function providerCustomValidate()
+	public function provider_custom_validate()
 	{
 		return array(array(
 			array(
@@ -42,9 +42,9 @@ class Unit_Model_Test extends PHPUnit_Framework_TestCase {
 	 * Tests User_Model::custom_validate
 	 *
 	 * @test
-	 * @dataProvider providerCustomValidate
+	 * @dataProvider provider_custom_validate
 	 */
-	public function testCustomValidate($valid, $invalid)
+	public function test_custom_validate($valid, $invalid)
 	{
 		// Test with valid data
 		$response = User_Model::custom_validate($valid);

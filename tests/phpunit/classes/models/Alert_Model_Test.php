@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access allowed.');
 /**
- * Unit test for the alerts model
+ * Alert_Model Unit test
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license 
