@@ -266,12 +266,12 @@ class reports_Core {
 		}
 		
 		// Approval Status
-		if ($post->incident_active != '')
+		if (isset($post->incident_active))
 		{
 			$incident->incident_active = $post->incident_active;
 		}
 		// Verification status
-		if ($post->incident_verified != '')
+		if (isset($post->incident_verified))
 		{
 			$incident->incident_verified = $post->incident_verified;
 		}
