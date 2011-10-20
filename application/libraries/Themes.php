@@ -265,7 +265,7 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		$search .= "<form method=\"get\" id=\"search\" action=\"".url::site()."search/\">";
 		$search .= "<ul>";
 		$search .= "<li><input type=\"text\" name=\"k\" value=\"\" class=\"text\" /></li>";
-		$search .= "<li><input type=\"submit\" name=\"b\" class=\"searchbtn\" value=\"search\" /></li>";
+		$search .= "<li><input type=\"submit\" name=\"b\" class=\"searchbtn\" value=\"".Kohana::lang('ui_main.search')."\" /></li>";
 		$search .= "</ul>";
 		$search .= "</form>";
 		$search .= "</div>";
