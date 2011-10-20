@@ -265,23 +265,14 @@ class reports_Core {
 			}
 		}
 		
-		// Check for incident evaluation info
-		if ( ! empty($post->incident_active))
-		{
-			$incident->incident_active = $post->incident_active;
-		}
+		// Approval Status
+		$incident->incident_active = $post->incident_active;
 		
 		// Verification status
-		if ( ! empty($post->incident_verified))
-		{
-			$incident->incident_verified = $post->incident_verified;
-		}
+		$incident->incident_verified = $post->incident_verified;
 		
 		// Incident zoom
-		if ( ! empty($post->incident_zoom))
-		{
-			$incident->incident_zoom = intval($post->incident_zoom);
-		}
+		$incident->incident_zoom = intval($post->incident_zoom);
 		
 		// Tag this as a report that needs to be sent out as an alert
 		if ($incident->incident_active == 1 AND $incident->incident_alert_status != 2)
