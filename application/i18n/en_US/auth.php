@@ -26,6 +26,9 @@
 		'invalid' => 'Sorry, we don\'t have your email address',
 		'required' => 'The email field is required.',
 	),
+	'role' => array(
+		'superadmin_modify' => 'Only a superadmin may modify a superadmin or upgrade a user to admin.',
+	),
 	'roles' => array(
 		'alpha_numeric' => 'Invalid role format.',
 		'length' => 'The role field must be at least 5 and no more than 30 characters long.',
