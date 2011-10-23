@@ -52,14 +52,20 @@ class User_Model extends Auth_User_Model {
 	/**
 	 * Custom validation for this model - complements the default validate()
 	 *
+	 * @param   array  array to validate
+	 * @param   Auth   instance of Auth class; used for testing purposes
 	 * @return bool TRUE if validation succeeds, FALSE otherwise
 	 */
-	public static function custom_validate(array & $post)
+	public static function custom_validate(array & $post, Auth $auth = null)
 	{
 		// Initalize validation
 		$post = Validation::factory($post)
 				->pre_filter('trim', TRUE);
-		
+
+		if ($auth === null) {
+			$auth = new Auth;
+		}
+
 		$post->add_rules('username','required','length[3,16]', 'alpha_numeric');
 		$post->add_rules('name','required','length[3,100]');
         $post->add_rules('email','required','email','length[4,64]');
@@ -85,7 +91,12 @@ class User_Model extends Auth_User_Model {
         
 		$post->add_rules('role','required','length[3,30]', 'alpha_numeric');
 		$post->add_rules('notify','between[0,1]');
-		
+
+		if ( ! $auth->logged_in('superadmin'))
+		{
+			$post->add_callbacks('role', array('User_Model', 'prevent_superadmin_modification'));
+		}
+
 		// Additional validation checks
 		Event::run('ushahidi_action.user_submit_admin', $post);
 				
@@ -105,5 +116,17 @@ class User_Model extends Auth_User_Model {
 			$post->add_error($field, 'exists');
 		}
 	}
-	
+
+	/**
+	 * Ensures that only a superadmin can modify superadmin users, or upgrade a user to superadmin
+	 * @note this assumes the currently logged-in user isn't a superadmin
+	 */
+	public static function prevent_superadmin_modification(Validation $post, $field)
+	{
+		if ($post[$field] == 'superadmin')
+		{
+			$post->add_error($field, 'superadmin_modify');
+		}
+	}
+
 } // End User_Model
