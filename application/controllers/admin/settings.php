@@ -516,6 +516,11 @@ class Settings_Controller extends Admin_Controller
 		$map_array = array();
 		foreach ($layers as $layer)
 		{
+			if( stripos($layer->name,'yahoo') !== false )
+			{
+				// We are depreciating yahoo so skip it as a selectable option
+				continue;
+			}
 			$map_array[$layer->name] = $layer->title;
 		}
 		$this->template->content->map_array = $map_array;
@@ -1146,6 +1151,12 @@ class Settings_Controller extends Admin_Controller
 		
 		foreach ($layers as $layer)
 		{
+			if( stripos($layer->name,'yahoo') !== false )
+			{
+				// We are depreciating yahoo so skip it as a selectable option
+				continue;
+			}
+			
 			$map_layers[$layer->name] = array();
 			$map_layers[$layer->name]['title'] = $layer->title;
 			$map_layers[$layer->name]['openlayers'] = $layer->openlayers;

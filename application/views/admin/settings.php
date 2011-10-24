@@ -105,12 +105,6 @@
 										<?php print form::input('api_google', $form['api_google'], ' class="text"'); ?>
 									</div>
 								</div>
-								<div id="api_div_yahoo" <?php if ($form['default_map'] != 3) echo "style=\"display:none\""; ?>>
-									<span class="blue_span">Step 3: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.enter_api');?></span><br />
-									<div class="c_push">
-										<?php print form::input('api_yahoo', $form['api_yahoo'], ' class="text"'); ?>
-									</div>
-								</div>
 							</div>
 	
 								<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="margin-left: 0px;" />
