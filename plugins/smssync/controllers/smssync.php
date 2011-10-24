@@ -133,8 +133,22 @@ class Smssync_Controller extends Controller {
 			$message->smssync_sent = 1;
 			$message->smssync_sent_date = date("Y-m-d H:i:s",time());
 			$message->save();
-		}
+        }
+        
+        //get the secret key
+		$smssync = ORM::factory('smssync_settings')->find(1);
+			
+		if ($smssync->loaded)
+		{
+		    $smssync_secret = $smssync->smssync_secret;
+		} 
+        else 
+        {
+            //set to empty, because secret key wasn't set.
+            $smssync_secret = "";
+        }
 		
-		echo json_encode(array("payload"=>array("task"=>"send","messages"=>$all_messages)));
+        echo json_encode(array("payload"=>array("task"=>"send", 
+            "secret"=>$smssync_secret,"messages"=>$all_messages)));
 	}
 }
