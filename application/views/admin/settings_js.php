@@ -181,14 +181,6 @@
 						{
 							$("#api_div_google").hide();
 						}
-						
-						if (all_maps[i].openlayers == 'Yahoo') {
-							$("#api_div_yahoo").show();
-						}
-						else
-						{
-							$("#api_div_yahoo").hide();
-						}
 					}
 					else
 					{
@@ -224,14 +216,6 @@
 								else
 								{
 									$("#api_div_google").hide();
-								}
-								
-								if (all_maps[i].openlayers == 'Yahoo') {
-									$("#api_div_yahoo").show();
-								}
-								else
-								{
-									$("#api_div_yahoo").hide();
 								}
 							}
 						}

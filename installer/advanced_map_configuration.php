@@ -51,11 +51,10 @@
 								<select id="select_map_provider" name="select_map_provider">
 									<option value="1" url="http://code.google.com/apis/maps/signup.html" selected="selected">Google</option>
 									<option value="2" url="https://www.bingmapsportal.com/">Bing</option>
-									<option value="3" url="http://developer.yahoo.com/maps/">Yahoo</option>
 									<option value="4" url="http://www.openstreetmap.org/user/new">OpenStreetMap</option>
 								</select>								 
 							</td>
-							<td>Ushahidi works equally well with any of these four mapping providers: Google, Bing, Yahoo or OpenStreetMap.  Choose the one that has the most detail in your area.</td>
+							<td>Ushahidi works equally well with any of these three mapping providers: Google, Bing or OpenStreetMap.  Choose the one that has the most detail in your area.</td>
 						</tr>
 						<tr>
 							<th scope="row"><label id="map-provider-label" for="map_provider_api_key"><span>Google</span> API Key</label></th>
