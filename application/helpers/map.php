@@ -169,7 +169,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Satellite';
 		$layer->description = 'Google Maps Satellite Imagery.';
-		$layer->api_url = 'http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
 		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
 		$layer->data = array(
 			'baselayer' => TRUE,
@@ -183,7 +183,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Hybrid';
 		$layer->description = 'Google Maps with roads and terrain.';
-		$layer->api_url = 'http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
 		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
 		$layer->data = array(
 			'baselayer' => TRUE,
@@ -197,7 +197,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Normal';
 		$layer->description = 'Standard Google Maps Roads';
-		$layer->api_url = 'http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
 		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
 		$layer->data = array(
 			'baselayer' => TRUE,
@@ -211,7 +211,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Physical';
 		$layer->description = 'Google Maps Hillshades';
-		$layer->api_url = 'http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.2&amp;sensor=false';
 		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
 		$layer->data = array(
 			'baselayer' => TRUE,
@@ -267,7 +267,7 @@ class map_Core {
 		$layer->openlayers = "VirtualEarth";
 		$layer->title = 'Bing Street';
 		$layer->description = 'Bing Street Tiles.';
-		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'VEMapStyle.Road',
@@ -280,7 +280,7 @@ class map_Core {
 		$layer->openlayers = "VirtualEarth";
 		$layer->title = 'Bing Satellite';
 		$layer->description = 'Bing Satellite Tiles.';
-		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'VEMapStyle.Aerial',
@@ -293,7 +293,7 @@ class map_Core {
 		$layer->openlayers = "VirtualEarth";
 		$layer->title = 'Bing Hybrid';
 		$layer->description = 'Bing hybrid of streets and satellite tiles.';
-		$layer->api_url = 'http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'VEMapStyle.Hybrid',
@@ -307,7 +307,7 @@ class map_Core {
 		$layer->openlayers = "OSM.Mapnik";
 		$layer->title = 'OSM Mapnik';
 		$layer->description = 'The main OpenStreetMap map';
-		$layer->api_url = 'http://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
@@ -324,7 +324,7 @@ class map_Core {
 		$layer->openlayers = "OSM.Mapnik";
 		$layer->title = 'OSM Tiles@Home';
 		$layer->description = 'Alternative, community-rendered OpenStreetMap';
-		$layer->api_url = 'http://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
@@ -341,7 +341,7 @@ class map_Core {
 		$layer->openlayers = "OSM.Mapnik";
 		$layer->title = 'OSM Cycling Map';
 		$layer->description = 'OpenStreetMap with highlighted bike lanes';
-		$layer->api_url = 'http://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
@@ -359,7 +359,7 @@ class map_Core {
 		$layer->title = 'OSM Overlay';
 		$layer->description = 'Semi-transparent hybrid overlay. Projected into 
 			WSG84 for use on non spherical-mercator maps.';
-		$layer->api_url = 'http://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => FALSE,
 			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010

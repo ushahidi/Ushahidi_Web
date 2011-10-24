@@ -92,7 +92,7 @@ if ($map_layer)
 // And in case you want to display all maps on one page...
 $api_google = $settings->api_google;
 $api_yahoo = $settings->api_yahoo;
-Kohana::config_set('settings.api_url_all', '<script src="http://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6"></script><script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script><script src="http://maps.google.com/maps/api/js?v=3.2&amp;sensor=false" type="text/javascript"></script>'.html::script('http://www.openstreetmap.org/openlayers/OpenStreetMap.js'));
+Kohana::config_set('settings.api_url_all', '<script src="https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6"></script><script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script><script src="https://maps.google.com/maps/api/js?v=3.2&amp;sensor=false" type="text/javascript"></script>'.html::script('https://www.openstreetmap.org/openlayers/OpenStreetMap.js'));
 
 // Additional Mime Types (KMZ/KML)
 Kohana::config_set('mimes.kml', array('text/xml'));

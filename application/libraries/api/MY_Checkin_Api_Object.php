@@ -212,7 +212,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 			$j = 0;
 			foreach ($checkin->media as $media)
 			{
-				$data["checkins"][$i]['media'][(int)$j] = array(
+			    $data["checkins"][$i]['media'][(int)$j] = array(
 			    	"id" => $media->id,
 			    	"type" => $media->media_type,
 			    	"link" => url::convert_uploaded_to_abs($media->media_link),

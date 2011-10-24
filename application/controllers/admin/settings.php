@@ -114,7 +114,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
 			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('cache_pages','required','between[0,1]');
-			$post->add_rules('cache_pages_lifetime','required','in_array[60,300,600,900,1800]');
+			$post->add_rules('cache_pages_lifetime','required','in_array[300,600,900,1800]');
 			$post->add_rules('private_deployment','required','between[0,1]');
 			$post->add_rules('checkins','required','between[0,1]');
 			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
@@ -184,7 +184,7 @@ class Settings_Controller extends Admin_Controller
 					$filename = upload::save('banner_image');
 					if ($filename)
 					{
-						$new_filename = "banner";
+						$new_filename = "banner_".time();
 						$file_type = strrev(substr(strrev($filename),0,4));
 	
 						// Large size
@@ -310,9 +310,9 @@ class Settings_Controller extends Admin_Controller
 		// Get banner image
 		if($settings->site_banner_id != NULL){
 			$banner = ORM::factory('media')->find($settings->site_banner_id);
-			$this->template->content->banner = $banner->media_link;
-			$this->template->content->banner_m = $banner->media_medium;
-			$this->template->content->banner_t = $banner->media_thumb;
+			$this->template->content->banner = url::convert_uploaded_to_abs($banner->media_link);
+			$this->template->content->banner_m = url::convert_uploaded_to_abs($banner->media_medium);
+			$this->template->content->banner_t = url::convert_uploaded_to_abs($banner->media_thumb);
 		}else{
 			$this->template->content->banner = NULL;
 			$this->template->content->banner_m = NULL;
@@ -342,7 +342,6 @@ class Settings_Controller extends Admin_Controller
 			'0'=>strtoupper(Kohana::lang('ui_main.no')));
 		
 		$this->template->content->cache_pages_lifetime_array = array(
-			'60'=>'1 '.Kohana::lang('ui_admin.minute'),
 			'300'=>'5 '.Kohana::lang('ui_admin.minutes'),
 			'600'=>'10 '.Kohana::lang('ui_admin.minutes'),
 			'900'=>'15 '.Kohana::lang('ui_admin.minutes'),
@@ -516,11 +515,6 @@ class Settings_Controller extends Admin_Controller
 		$map_array = array();
 		foreach ($layers as $layer)
 		{
-			if( stripos($layer->name,'yahoo') !== false )
-			{
-				// We are depreciating yahoo so skip it as a selectable option
-				continue;
-			}
 			$map_array[$layer->name] = $layer->title;
 		}
 		$this->template->content->map_array = $map_array;
@@ -966,6 +960,7 @@ class Settings_Controller extends Admin_Controller
 			curl_setopt ($ch, CURLOPT_URL, $geonames_url);
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+			curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
 			$xmlstr = curl_exec($ch);
 			$err = curl_errno( $ch );
 			curl_close($ch);
@@ -1078,6 +1073,7 @@ class Settings_Controller extends Admin_Controller
 
 		curl_setopt($curl_handle, CURLOPT_URL, $url);
 		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
 		curl_exec($curl_handle);
 
 		$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
@@ -1151,12 +1147,6 @@ class Settings_Controller extends Admin_Controller
 		
 		foreach ($layers as $layer)
 		{
-			if( stripos($layer->name,'yahoo') !== false )
-			{
-				// We are depreciating yahoo so skip it as a selectable option
-				continue;
-			}
-			
 			$map_layers[$layer->name] = array();
 			$map_layers[$layer->name]['title'] = $layer->title;
 			$map_layers[$layer->name]['openlayers'] = $layer->openlayers;
@@ -1212,6 +1202,9 @@ class Settings_Controller extends Admin_Controller
 		
 		// Suppress header information from the output
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		
+		// Allow connection to HTTPS
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 
 		// Perform cURL session
 		curl_exec($ch);
