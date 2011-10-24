@@ -122,7 +122,7 @@ class Cloudfiles {
 		$uri = $container->make_public();
 		
 		// Return the file path URL
-		return $file->public_uri();
+		return $file->public_ssl_uri();
 	}
 	
 	public function delete($url)

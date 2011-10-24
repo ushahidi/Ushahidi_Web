@@ -60,6 +60,7 @@ class S_Sharing_Controller extends Controller {
 			curl_setopt($ch,CURLOPT_URL,$sharing_url.$api_url);
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
 			$json = curl_exec($ch);
 			curl_close($ch);
 

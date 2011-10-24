@@ -83,7 +83,7 @@ class J2me_Controller extends Controller
 		// On the fly GeoCoding with Google Maps
 		$key = Kohana::config('settings.api_google');
 		
-		$url = "http://maps.google.com/maps/geo?q=".urlencode($location_name)."&output=csv&key=".$key;
+		$url = "https://maps.google.com/maps/geo?q=".urlencode($location_name)."&output=csv&key=".$key;
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
@@ -91,6 +91,7 @@ class J2me_Controller extends Controller
 		curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 
 		$data = curl_exec($ch);
 		curl_close($ch);
@@ -133,6 +134,7 @@ class J2me_Controller extends Controller
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1 );
 	   		curl_setopt($ch, CURLOPT_POSTFIELDS, $mobile_post);
 	   		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	   		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 	   		$postResult = curl_exec($ch);
 
 	   		if (curl_errno($ch))
