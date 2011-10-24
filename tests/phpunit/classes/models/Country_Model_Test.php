@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
- * Country Model Unit Test
+ * Country_Model Test
  *
  * @package Ushahidi
  * @category Unit Tests
@@ -8,7 +8,7 @@
  * @copyright (c) Ushahidi Inc 2008-2011
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
-class Country_Model_Test extends PHPUnit_Framework_TestCase {
+class Country_ModelTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Tests CountyModel::get_country_by_name

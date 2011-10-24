@@ -61,7 +61,7 @@ class Reports_Controller extends Admin_Controller {
 				$status = "0";
 			}
 		}
-
+		
 		// Get Search Keywords (If Any)
 		if (isset($_GET['k']))
 		{
@@ -77,7 +77,7 @@ class Reports_Controller extends Admin_Controller {
 			// in the first 2 steps
 			$keyword_raw = $this->input->xss_clean($keyword_raw);
 			
-			$filter .= " AND (".$this->_get_searchstring($keyword_raw).")";
+			$filter = " AND (".$this->_get_searchstring($keyword_raw).")";
 		}
 		else
 		{
@@ -183,7 +183,8 @@ class Reports_Controller extends Admin_Controller {
 								$update->incident_verified = '0';
 								$verify->verified_status = '0';
 							}
-							else {
+							else
+							{
 								$update->incident_verified = '1';
 								$verify->verified_status = '2';
 							}
@@ -701,8 +702,7 @@ class Reports_Controller extends Admin_Controller {
 					}
 					
 					// Combine Everything
-					$incident_arr = array
-					(
+					$incident_arr = array(
 						'location_id' => $incident->location->id,
 						'form_id' => $incident->form_id,
 						'locale' => $incident->locale,
@@ -806,7 +806,7 @@ class Reports_Controller extends Admin_Controller {
 	/**
 	 * Download Reports in CSV format
 	 */
-	function download()
+	public function download()
 	{
 		// If user doesn't have access, redirect to dashboard
 		if ( ! admin::permissions($this->user, "reports_download"))
@@ -847,17 +847,20 @@ class Reports_Controller extends Admin_Controller {
 			if (!empty($_POST['from_date']) OR !empty($_POST['to_date']))
 			{
 				// Valid FROM Date?
-				if (empty($_POST['from_date']) OR (strtotime($_POST['from_date']) > strtotime("today"))) {
+				if (empty($_POST['from_date']) OR (strtotime($_POST['from_date']) > strtotime("today")))
+				{
 					$post->add_error('from_date','range');
 				}
 
 				// Valid TO date?
-				if (empty($_POST['to_date']) OR (strtotime($_POST['to_date']) > strtotime("today"))) {
+				if (empty($_POST['to_date']) OR (strtotime($_POST['to_date']) > strtotime("today")))
+				{
 					$post->add_error('to_date','range');
 				}
 
 				// TO Date not greater than FROM Date?
-				if (strtotime($_POST['from_date']) > strtotime($_POST['to_date'])) {
+				if (strtotime($_POST['from_date']) > strtotime($_POST['to_date']))
+				{
 					$post->add_error('to_date','range_greater');
 				}
 			}
@@ -894,9 +897,10 @@ class Reports_Controller extends Admin_Controller {
 				$filter .= ") ";
 
 				// Report Date Filter
-				if (!empty($post->from_date) AND !empty($post->to_date))
+				if ( ! empty($post->from_date) AND !empty($post->to_date))
 				{
-					$filter .= " AND ( incident_date >= '" . date("Y-m-d H:i:s",strtotime($post->from_date)) . "' AND incident_date <= '" . date("Y-m-d H:i:s",strtotime($post->to_date)) . "' ) ";
+					$filter .= " AND ( incident_date >= '" . date("Y-m-d H:i:s",strtotime($post->from_date))
+							. "' AND incident_date <= '" . date("Y-m-d H:i:s",strtotime($post->to_date)) . "' ) ";
 				}
 
 				// Retrieve reports
@@ -1121,7 +1125,7 @@ class Reports_Controller extends Admin_Controller {
 	* @param bool|string $saved
 	*/
 
-	function translate( $id = false, $saved = false )
+	public function translate( $id = false, $saved = FALSE)
 	{
 		$this->template->content = new View('admin/reports_translate');
 		$this->template->content->title = Kohana::lang('ui_admin.translate_reports');
@@ -1152,23 +1156,17 @@ class Reports_Controller extends Admin_Controller {
 
 
 		// Setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'locale'	  => '',
 			'incident_title'	  => '',
 			'incident_description'	  => ''
 		);
+		
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
-		if ($saved == 'saved')
-		{
-			$form_saved = TRUE;
-		}
-		else
-		{
-			$form_saved = FALSE;
-		}
+		
+		$form_saved = ($saved == 'saved')? TRUE : FALSE;
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
@@ -1233,7 +1231,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 		else
 		{
-			if ( $id )
+			if ($id)
 			{
 				// Retrieve Current Incident
 				$incident_l = ORM::factory('incident_lang', $id)->where('incident_id', $incident_id)->find();
@@ -1267,7 +1265,7 @@ class Reports_Controller extends Admin_Controller {
 	/**
 	* Save newly added dynamic categories
 	*/
-	function save_category()
+	public function save_category()
 	{
 		$this->auto_render = FALSE;
 		$this->template = "";
@@ -1300,7 +1298,6 @@ class Reports_Controller extends Admin_Controller {
 
 				echo json_encode(array("status"=>"saved", "id"=>$category->id));
 			}
-
 			else
 
 			{
@@ -1317,36 +1314,42 @@ class Reports_Controller extends Admin_Controller {
 	* Delete Photo
 	* @param int $id The unique id of the photo to be deleted
 	*/
-	function deletePhoto ( $id )
+	public function deletePhoto ($id)
 	{
 		$this->auto_render = FALSE;
 		$this->template = "";
 
-		if ( $id )
+		if ($id)
 		{
 			$photo = ORM::factory('media', $id);
 			$photo_large = $photo->media_link;
 			$photo_medium = $photo->media_medium;
 			$photo_thumb = $photo->media_thumb;
 			
-			if(file_exists(Kohana::config('upload.directory', TRUE).$photo_large))
+			if (file_exists(Kohana::config('upload.directory', TRUE).$photo_large))
 			{
 				unlink(Kohana::config('upload.directory', TRUE).$photo_large);
-			}elseif(Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_large)){
+			}
+			elseif (Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_large))
+			{
 				cdn::delete($photo_large);
 			}
 			
-			if(file_exists(Kohana::config('upload.directory', TRUE).$photo_medium))
+			if (file_exists(Kohana::config('upload.directory', TRUE).$photo_medium))
 			{
 				unlink(Kohana::config('upload.directory', TRUE).$photo_medium);
-			}elseif(Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_medium)){
+			}
+			elseif (Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_medium))
+			{
 				cdn::delete($photo_medium);
 			}
 
-			if(file_exists(Kohana::config('upload.directory', TRUE).$photo_thumb))
+			if (file_exists(Kohana::config('upload.directory', TRUE).$photo_thumb))
 			{
 				unlink(Kohana::config('upload.directory', TRUE).$photo_thumb);
-			}elseif(Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_thumb)){
+			}
+			elseif (Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_thumb))
+			{
 				cdn::delete($photo_thumb);
 			}
 
@@ -1360,8 +1363,7 @@ class Reports_Controller extends Admin_Controller {
 	// Dynamic categories form fields
 	private function _new_categories_form_arr()
 	{
-		return array
-		(
+		return array(
 			'category_name' => '',
 			'category_description' => '',
 			'category_color' => '',
@@ -1406,26 +1408,26 @@ class Reports_Controller extends Admin_Controller {
 	}
 
 	// Javascript functions
-	 private function _color_picker_js()
+	private function _color_picker_js()
 	{
-	 return "<script type=\"text/javascript\">
-				$(document).ready(function() {
-				$('#category_color').ColorPicker({
-						onSubmit: function(hsb, hex, rgb) {
-							$('#category_color').val(hex);
-						},
-						onChange: function(hsb, hex, rgb) {
-							$('#category_color').val(hex);
-						},
-						onBeforeShow: function () {
-							$(this).ColorPickerSetColor(this.value);
-						}
-					})
-				.bind('keyup', function(){
-					$(this).ColorPickerSetColor(this.value);
-				});
-				});
-			</script>";
+		 return "<script type=\"text/javascript\">
+					$(document).ready(function() {
+					$('#category_color').ColorPicker({
+							onSubmit: function(hsb, hex, rgb) {
+								$('#category_color').val(hex);
+							},
+							onChange: function(hsb, hex, rgb) {
+								$('#category_color').val(hex);
+							},
+							onBeforeShow: function () {
+								$(this).ColorPickerSetColor(this.value);
+							}
+						})
+					.bind('keyup', function(){
+						$(this).ColorPickerSetColor(this.value);
+					});
+					});
+				</script>";
 	}
 
 	private function _date_picker_js()
@@ -1502,33 +1504,30 @@ class Reports_Controller extends Admin_Controller {
 
 		$keywords = explode(' ', $keyword_raw);
 		
-		if (is_array($keywords) && !empty($keywords))
+		if (is_array($keywords) AND !empty($keywords))
 		{
 			array_change_key_case($keywords, CASE_LOWER);
 			$i = 0;
 			
-			foreach($keywords as $value)
+			foreach ($keywords as $value)
 			{
-				if (!in_array($value,$stop_words) && !empty($value))
+				if (!in_array($value,$stop_words) AND !empty($value))
 				{
-					$chunk = mysql_real_escape_string($value);
-					if ($i > 0) {
+					$chunk = $this->db->escape_str($value);
+					if ($i > 0)
+					{
 						$or = ' OR ';
 					}
-					$where_string = $where_string.$or."incident_title LIKE '%$chunk%' OR incident_description LIKE '%$chunk%'  OR location_name LIKE '%$chunk%'";
+					$where_string = $where_string
+									.$or
+									."incident_title LIKE '%$chunk%' OR incident_description LIKE '%$chunk%'  OR location_name LIKE '%$chunk%'";
 					$i++;
 				}
 			}
 		}
-
-		if ($where_string)
-		{
-			return $where_string;
-		}
-		else
-		{
-			return "1=1";
-		}
+		
+		// Return
+		return (!empty($where_string)) ? $where_string :  "1=1";
 	}
 
 	private function _csv_text($text)
