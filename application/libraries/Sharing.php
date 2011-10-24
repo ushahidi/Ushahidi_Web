@@ -454,12 +454,13 @@ class Sharing
 			curl_setopt($curl_handle,	CURLOPT_URL,$curl_url);
 		}
 		
-		curl_setopt($curl_handle, 		CURLOPT_HEADER, FALSE);			// don't return headers
-		curl_setopt($curl_handle,		CURLOPT_CONNECTTIMEOUT,60);		// timeout on connect
-		curl_setopt($curl_handle,		CURLOPT_TIMEOUT, 60);			// timeout on response
-		curl_setopt($curl_handle,		CURLOPT_MAXREDIRS, 10);			// stop after 10 redirects
-		curl_setopt($curl_handle,		CURLOPT_RETURNTRANSFER,TRUE);	// return web page
-		curl_setopt($curl_handle,		CURLOPT_ENCODING,"");			// handle all encodings
+		curl_setopt($curl_handle, CURLOPT_HEADER, FALSE); // don't return headers
+		curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT,60); // timeout on connect
+		curl_setopt($curl_handle, CURLOPT_TIMEOUT, 60); // timeout on response
+		curl_setopt($curl_handle, CURLOPT_MAXREDIRS, 10); // stop after 10 redirects
+		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER,TRUE); // return web page
+		curl_setopt($curl_handle, CURLOPT_ENCODING,""); // handle all encodings
+		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, FALSE); // allow connection to HTTPS
 		curl_exec($curl_handle);
 		
 		$response = curl_exec( $curl_handle );

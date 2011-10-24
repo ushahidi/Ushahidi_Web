@@ -351,7 +351,7 @@ $(document).ready(function() {
 												$polygon = explode(',',$geometry[0]);
 
 												$qval = 'Geofenced<br/>';
-												$qval .= '<img src ="http://maps.googleapis.com/maps/api/staticmap?size=275x200&path=color:0xff0000ff|weight:2|fillcolor:0xFFFF0033';
+												$qval .= '<img src ="https://maps.googleapis.com/maps/api/staticmap?size=275x200&path=color:0xff0000ff|weight:2|fillcolor:0xFFFF0033';
 												foreach($polygon as $pk => $pv)
 												{
 													$point = str_ireplace(' ',',',$pv);

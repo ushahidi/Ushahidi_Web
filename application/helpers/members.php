@@ -110,7 +110,7 @@ class members_Core {
 	 */
 	public function gravatar($email, $s = 80, $d = 'mm', $r = 'g', $img = FALSE, $atts = array())
 	{
-		$url = 'http://www.gravatar.com/avatar/'
+		$url = 'https://secure.gravatar.com/avatar/'
 			. md5(strtolower(trim( $email)))
 			. "?s=$s&d=$d&r=$r";
 			
