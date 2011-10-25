@@ -26,7 +26,7 @@ class Viddler_Install {
 		// ****************************************
 		// DATABASE STUFF
 		$this->db->query("
-			CREATE TABLE `".Kohana::config('database.default.table_prefix')."viddler` (
+			CREATE TABLE IF NOT EXISTS `".Kohana::config('database.default.table_prefix')."viddler` (
 			  `viddler_id` varchar(16) NOT NULL,
 			  `incident_id` int(11) DEFAULT NULL,
 			  `checkin_id` int(11) DEFAULT NULL,
@@ -44,8 +44,6 @@ class Viddler_Install {
 	 */
 	public function uninstall()
 	{
-		$this->db->query("
-			DROP TABLE `".Kohana::config('database.default.table_prefix')."viddler`;
-			");
+		$this->db->query("DROP TABLE `".Kohana::config('database.default.table_prefix')."viddler`;");
 	}
 }
