@@ -944,6 +944,8 @@ class Reports_Controller extends Admin_Controller {
 				
 				$report_csv .= ",APPROVED,VERIFIED";
 				
+				//Incase a plugin would like to add some custom fields
+				Event::run('ushahidi_filter.report_download_csv_header', $report_csv);
 				
 				$report_csv .= "\n";
 
@@ -1015,6 +1017,11 @@ class Reports_Controller extends Admin_Controller {
 					{
 						$report_csv .= ",NO";
 					}
+					
+					//Incase a plugin would like to add some custom data for an incident
+					$event_data = array("report_csv"=>$report_csv, "incident"=>$incident);
+					Event::run('ushahidi_filter.report_download_csv_incident', $event_data);
+					$report_csv = $event_data['report_csv'];
 					
 					$report_csv .= "\n";
 				}
