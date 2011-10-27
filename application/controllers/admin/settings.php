@@ -382,7 +382,7 @@ class Settings_Controller extends Admin_Controller
 		(
 			'default_map' => '',
 			'api_google' => '',
-			'api_yahoo' => '',
+			//'api_yahoo' => '',
 			'default_country' => '',
 			'multi_country' => '',
 			'default_lat' => '',
@@ -418,7 +418,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('multi_country', 'numeric', 'length[1,1]');
 			$post->add_rules('default_map', 'required', 'length[0,100]');
 			$post->add_rules('api_google','required', 'length[0,200]');
-			$post->add_rules('api_yahoo','required', 'length[0,200]');
+			//$post->add_rules('api_yahoo','required', 'length[0,200]');
 			$post->add_rules('default_zoom','required','between[0,21]');		// Validate for maximum and minimum zoom values
 			$post->add_rules('default_lat','required','between[-85,85]');		// Validate for maximum and minimum latitude values
 			$post->add_rules('default_lon','required','between[-180,180]');		// Validate for maximum and minimum longitude values
@@ -432,7 +432,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->multi_country = $post->multi_country;
 				$settings->default_map = $post->default_map;
 				$settings->api_google = $post->api_google;
-				$settings->api_yahoo = $post->api_yahoo;
+				//$settings->api_yahoo = $post->api_yahoo;
 				$settings->default_zoom = $post->default_zoom;
 				$settings->default_lat = $post->default_lat;
 				$settings->default_lon = $post->default_lon;
