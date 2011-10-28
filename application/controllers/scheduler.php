@@ -134,8 +134,8 @@ class Scheduler_Controller extends Controller
             }
             if (isset($_GET['debug']) AND $_GET['debug'] == 1)
             {
-                //$debug .= "<BR /><BR />CRON DEBUG:<BR \>".nl2br($cron->getDebug());
-                $debug .= "<BR \>~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR />~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR /><BR /><BR />";
+                //$debug .= "<BR /><BR />CRON DEBUG:<BR />".nl2br($cron->getDebug());
+                $debug .= "<BR />~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR />~~~~~~~~~~~~~~~~~~~~~~~~~~~<BR /><BR /><BR />";
             }
         }
         
