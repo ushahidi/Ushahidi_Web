@@ -69,6 +69,18 @@
                                 <tr>
                                         <td><?php print form::checkbox('data_include[]','5',TRUE); ?><?php echo Kohana::lang('ui_main.include_longitude');?></td>
                                 </tr>
+				<!-- Including custom fields in the download process -->
+				<tr>
+					<td colspan="2"> 
+						<div  style="font-weight: bold; color:#00699b; display: block;padding-bottom: 5px;"><?php echo Kohana::lang('ui_main.additional_data');?><div>
+					</td>
+				</tr>
+
+				 <tr>
+                    <td><?php print form::checkbox('data_include[]','6',FALSE); ?><?php echo Kohana::lang('ui_main.include_custom_fields');?></td>
+                </tr>
+
+
 				<tr>
 					<td colspan="2">
 						<div class="date-box">

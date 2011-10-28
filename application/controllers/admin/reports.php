@@ -807,7 +807,7 @@ class Reports_Controller extends Admin_Controller {
 	 * Download Reports in CSV format
 	 */
 	public function download()
-	{
+	{		
 		// If user doesn't have access, redirect to dashboard
 		if ( ! admin::permissions($this->user, "reports_download"))
 		{
@@ -907,27 +907,28 @@ class Reports_Controller extends Admin_Controller {
 				$incidents = ORM::factory('incident')->where($filter)->orderby('incident_dateadd', 'desc')->find_all();
 
 				// Column Titles
-				$report_csv = "#,INCIDENT TITLE,INCIDENT DATE";
+				ob_start();
+				echo "#,INCIDENT TITLE,INCIDENT DATE";
 				foreach($post->data_include as $item)
 				{
 					if ($item == 1) {
-						$report_csv .= ",LOCATION";
+						echo ",LOCATION";
 					}
 					
 					if ($item == 2) {
-						$report_csv .= ",DESCRIPTION";
+						echo ",DESCRIPTION";
 					}
 					
 					if ($item == 3) {
-						$report_csv .= ",CATEGORY";
+						echo ",CATEGORY";
 					}
 					
 					if ($item == 4) {
-						$report_csv .= ",LATITUDE";
+						echo ",LATITUDE";
 					}
 					
 					if($item == 5) {
-						$report_csv .= ",LONGITUDE";
+						echo ",LONGITUDE";
 					}
 					if($item == 6)
 					{
@@ -935,55 +936,59 @@ class Reports_Controller extends Admin_Controller {
 						foreach($custom_titles as $field_name)
 						{
 
-							$report_csv .= ",".$field_name->field_name;
+							echo ",".$field_name->field_name;
 						}	
 
 					}
 
 				}
 				
-				$report_csv .= ",APPROVED,VERIFIED";
+				echo ",APPROVED,VERIFIED";
 				
+				//Incase a plugin would like to add some custom fields
+				$custom_headers = "";
+				Event::run('ushahidi_filter.report_download_csv_header', $custom_headers);
+				echo $custom_headers;
 				
-				$report_csv .= "\n";
+				echo "\n";
 
 				foreach ($incidents as $incident)
 				{
-					$report_csv .= '"'.$incident->id.'",';
-					$report_csv .= '"'.$this->_csv_text($incident->incident_title).'",';
-					$report_csv .= '"'.$incident->incident_date.'"';
+					echo '"'.$incident->id.'",';
+					echo '"'.$this->_csv_text($incident->incident_title).'",';
+					echo '"'.$incident->incident_date.'"';
 
 					foreach($post->data_include as $item)
 					{
 						switch ($item)
 						{
 							case 1:
-								$report_csv .= ',"'.$this->_csv_text($incident->location->location_name).'"';
+								echo ',"'.$this->_csv_text($incident->location->location_name).'"';
 							break;
 
 							case 2:
-								$report_csv .= ',"'.$this->_csv_text($incident->incident_description).'"';
+								echo ',"'.$this->_csv_text($incident->incident_description).'"';
 							break;
 
 							case 3:
-								$report_csv .= ',"';
+								echo ',"';
 							
 								foreach($incident->incident_category as $category)
 								{
 									if ($category->category->category_title)
 									{
-										$report_csv .= $this->_csv_text($category->category->category_title) . ", ";
+										echo $this->_csv_text($category->category->category_title) . ", ";
 									}
 								}
-								$report_csv .= '"';
+								echo '"';
 							break;
 						
 							case 4:
-								$report_csv .= ',"'.$this->_csv_text($incident->location->latitude).'"';
+								echo ',"'.$this->_csv_text($incident->location->latitude).'"';
 							break;
 						
 							case 5:
-								$report_csv .= ',"'.$this->_csv_text($incident->location->longitude).'"';
+								echo ',"'.$this->_csv_text($incident->location->longitude).'"';
 							break;
 
 							case 6:
@@ -991,7 +996,7 @@ class Reports_Controller extends Admin_Controller {
 								$custom_fields = ORM::factory('form_response')->where('incident_id',$incident_id)->orderby('form_field_id','desc')->find_all();
 								foreach($custom_fields as $custom_field)
 								{
-									$report_csv .=',"'.$this->_csv_text($custom_field->form_response).'"';
+									echo',"'.$this->_csv_text($custom_field->form_response).'"';
 								}	
 								break;
 
@@ -1000,24 +1005,30 @@ class Reports_Controller extends Admin_Controller {
 					
 					if ($incident->incident_active)
 					{
-						$report_csv .= ",YES";
+						echo ",YES";
 					}
 					else
 					{
-						$report_csv .= ",NO";
+						echo ",NO";
 					}
 					
 					if ($incident->incident_verified)
 					{
-						$report_csv .= ",YES";
+						echo ",YES";
 					}
 					else
 					{
-						$report_csv .= ",NO";
+						echo ",NO";
 					}
 					
-					$report_csv .= "\n";
+					//Incase a plugin would like to add some custom data for an incident
+					$event_data = array("report_csv" => "", "incident" => $incident);
+					Event::run('ushahidi_filter.report_download_csv_incident', $event_data);
+					echo $event_data['report_csv'];
+					
+					echo "\n";
 				}
+				$report_csv = ob_get_clean();
 
 				// Output to browser
 				header("Content-type: text/x-csv");
