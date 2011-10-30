@@ -38,22 +38,23 @@
 				<?php
 				foreach ($errors as $error_item => $error_description)
 				{
-					// print "<li>" . $error_description . "</li>";
-					print (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
+					if ($error_description)
+					{
+						echo '&#8226;&nbsp;'.$error_description.'<br />';
+					}
 				}
 				?>
 				</td>
             </tr>
-			<?php } ?>
-			<?php
-			if( $password_reset ) { ?>
+			<?php }
+			if ($password_reset) { ?>
 			<tr>
 				<td align="left">
 					<!-- green-box -->
 					<div class="green-box">
 						<h3><?php echo Kohana::lang('ui_main.password_reset_confirm'); ?></h3>
 						<br />
-						<a href="<?php echo url::base().'login'?>"><?php echo Kohana::lang('ui_main.login');?></a>
+						<a href="<?php echo url::site().'login'?>"><?php echo Kohana::lang('ui_main.login');?></a>
 					</div>
 				</td>
 			</tr>
