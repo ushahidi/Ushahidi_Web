@@ -33,6 +33,7 @@ class cdn_Core {
 				return FALSE;
 			}
 		}
+	}
 	
 	/**
 	 * Uploads a file to the CDN
