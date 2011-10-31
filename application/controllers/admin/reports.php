@@ -932,11 +932,11 @@ class Reports_Controller extends Admin_Controller {
 					}
 					if($item == 6)
 					{
-						$custom_titles = ORM::factory('form_field')->orderby('field_position','desc')->find_all();
+						$custom_titles = customforms::get_custom_form_fields('','',false);
 						foreach($custom_titles as $field_name)
 						{
 
-							echo ",".$field_name->field_name;
+							echo ",".$field_name['field_name'];
 						}	
 
 					}
@@ -993,10 +993,21 @@ class Reports_Controller extends Admin_Controller {
 
 							case 6:
 								$incident_id = $incident->id;
-								$custom_fields = ORM::factory('form_response')->where('incident_id',$incident_id)->orderby('form_field_id','desc')->find_all();
-								foreach($custom_fields as $custom_field)
+								$custom_fields = customforms::get_custom_form_fields($incident_id,'',false);
+								if ( ! empty($custom_fields))
 								{
-									echo',"'.$this->_csv_text($custom_field->form_response).'"';
+									foreach($custom_fields as $custom_field)
+									{
+										echo',"'.$this->_csv_text($custom_field['field_response']).'"';
+									}
+								}
+								else
+								{
+									$custom_field = customforms::get_custom_form_fields('','',false);
+									foreach ($custom_field as $custom)
+									{
+										echo',"'.$this->_csv_text("").'"';
+									}
 								}	
 								break;
 
