@@ -66,7 +66,7 @@ class User_Model extends Auth_User_Model {
 			$auth = new Auth;
 		}
 
-		$post->add_rules('username','required','length[3,16]', 'alpha_numeric');
+		$post->add_rules('username','required','length[3,100]', 'alpha_numeric');
 		$post->add_rules('name','required','length[3,100]');
         $post->add_rules('email','required','email','length[4,64]');
 		

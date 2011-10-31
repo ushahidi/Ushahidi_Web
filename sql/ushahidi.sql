@@ -711,7 +711,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `site_tagline` varchar(255) default NULL,
     `site_banner_id` int(11) default NULL,
     `site_email` varchar(120) default NULL,
-    `site_key` varchar(100) default NULL,                                           
+    `site_key` varchar(100) default NULL,
     `site_language` varchar(10) NOT NULL default 'en_US',                           
     `site_style` varchar(50) NOT NULL default 'default',                            
     `site_timezone` varchar(80) default NULL,                                       
@@ -729,7 +729,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
     `private_deployment` tinyint(4) NOT NULL DEFAULT '0',
     `default_map` varchar(100) NOT NULL DEFAULT 'google_normal',
-    `default_map_all` varchar(20) NOT NULL default 'CC0000',                        
+    `default_map_all` varchar(20) NOT NULL default 'CC0000',
     `api_google` varchar(200) default NULL,                                         
     `api_yahoo` varchar(200) default NULL,                                          
     `api_live` varchar(200) default NULL,                                           
@@ -741,7 +741,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `default_lon` varchar(100) default NULL,                                        
     `default_zoom` tinyint(4) NOT NULL default '10',                                
     `items_per_page` smallint(6) NOT NULL default '20',                             
-    `items_per_page_admin` smallint(6) NOT NULL default '20',                       
+    `items_per_page_admin` smallint(6) NOT NULL default '20',
     `sms_provider` varchar(100) NULL DEFAULT NULL,
     `sms_no1` varchar(100) default NULL,                                            
     `sms_no2` varchar(100) default NULL,                                            
@@ -753,8 +753,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `date_modify` datetime default NULL,                                            
     `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',           
     `stat_key` VARCHAR(30) NOT NULL ,                                               
-    `email_username` VARCHAR(100) NOT NULL ,                                        
-    `email_password` VARCHAR(100) NOT NULL ,                                        
+    `email_username` VARCHAR(100) NOT NULL ,
+    `email_password` VARCHAR(100) NOT NULL ,
     `email_port` INT(11) NOT NULL ,                                                 
     `email_host` VARCHAR(100) NOT NULL ,                                            
     `email_servertype` VARCHAR(100) NOT NULL ,                                      
@@ -783,11 +783,11 @@ INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_yahoo`, `api_live`
 */
 
 CREATE TABLE IF NOT EXISTS `users` (                                                
-    `id` int(11) unsigned NOT NULL auto_increment,                                  
-    `name` varchar(200) default NULL,                                               
-    `email` varchar(127) NOT NULL,                                                  
-    `username` varchar(31) NOT NULL default '',                                     
-    `password` char(50) NOT NULL,                                                   
+    `id` int(11) unsigned NOT NULL auto_increment,
+    `name` varchar(200) default NULL,
+    `email` varchar(127) NOT NULL,
+    `username` varchar(100) NOT NULL default '',
+    `password` char(50) NOT NULL,
     `logins` int(10) unsigned NOT NULL default '0',                                 
     `last_login` int(10) unsigned default NULL,                                     
     `notify` tinyint(1) NOT NULL default '0' COMMENT 'Flag incase admin opts in for email notifications',    
@@ -1459,4 +1459,4 @@ ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '68' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '69' WHERE `id`=1 LIMIT 1;

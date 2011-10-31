@@ -39,7 +39,7 @@
 		'admin' => 'The admin user role cannot be modified.',
 		'alpha' => 'The username field must only contain letters.',
 		'exists' => 'Sorry, this username is already in use.',
-		'length' => 'The username field must be at least 2 and no more 16 characters long.',
+		'length' => 'The username field must be at least 2 and no more 100 characters long.',
 		'login error' => 'Please check that you entered the correct username.',
 		'required' => 'The username field is required.',
 		'superadmin' => 'The super admin role cannot be modified.',
