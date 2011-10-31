@@ -220,48 +220,6 @@ class map_Core {
 		$layers[$layer->name] = $layer;
 
 		$layer = new stdClass();
-		$layer->active = TRUE;
-		$layer->name = 'yahoo_satellite';
-		$layer->openlayers = "Yahoo";
-		$layer->title = 'Yahoo Maps Satellite';
-		$layer->description = 'Yahoo satellite imagery tiles.';
-		$layer->api_url = 'http://api.maps.yahoo.com/ajaxymap?v=3.0&appid='.Kohana::config('settings.api_yahoo');
-		$layer->api_signup = 'http://developer.yahoo.com/maps/simple/';
-		$layer->data = array(
-			'baselayer' => TRUE,
-			'type' => 'YAHOO_MAP_SAT',
-		);
-		$layers[$layer->name] = $layer;
-
-		$layer = new stdClass();
-		$layer->active = TRUE;
-		$layer->name = 'yahoo_street';
-		$layer->openlayers = "Yahoo";
-		$layer->title = 'Yahoo Maps Street';
-		$layer->description = 'Yahoo streets tiles.';
-		$layer->api_url = 'http://api.maps.yahoo.com/ajaxymap?v=3.0&appid='.Kohana::config('settings.api_yahoo');
-		$layer->api_signup = 'http://developer.yahoo.com/maps/simple/';
-		$layer->data = array(
-			'baselayer' => TRUE,
-			'type' => 'YAHOO_MAP_REG',
-		);
-		$layers[$layer->name] = $layer;
-
-		$layer = new stdClass();
-		$layer->active = TRUE;
-		$layer->name = 'yahoo_hybrid';
-		$layer->openlayers = "Yahoo";
-		$layer->title = 'Yahoo Maps Hybrid';
-		$layer->description = 'Yahoo hybrid of streets and satellite tiles.';
-		$layer->api_url = 'http://api.maps.yahoo.com/ajaxymap?v=3.0&appid='.Kohana::config('settings.api_yahoo');
-		$layer->api_signup = 'http://developer.yahoo.com/maps/simple/';
-		$layer->data = array(
-			'baselayer' => TRUE,
-			'type' => 'YAHOO_MAP_HYB',
-		);
-		$layers[$layer->name] = $layer;
-
-		$layer = new stdClass();
 		$layer->active = FALSE;
 		$layer->name = 'virtualearth_street';
 		$layer->openlayers = "VirtualEarth";
