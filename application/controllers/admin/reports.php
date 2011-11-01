@@ -869,7 +869,7 @@ class Reports_Controller extends Admin_Controller {
 			if ($post->validate())
 			{
 				// Add Filters
-				$filter = " ( 1=1";
+				$filter = " ( 1 !=1";
 				
 				// Report Type Filter
 				foreach($post->data_point as $item)
