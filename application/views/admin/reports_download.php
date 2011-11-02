@@ -68,6 +68,7 @@
                                 </tr>
                                 <tr>
                                         <td><?php print form::checkbox('data_include[]','5',FALSE); ?><?php echo Kohana::lang('ui_main.include_longitude');?></td>
+										<td></td>
                                 </tr>
 				<!-- Including custom fields in the download process -->
 				<tr>
@@ -78,6 +79,7 @@
 
 				 <tr>
                     <td><?php print form::checkbox('data_include[]','6',FALSE); ?><?php echo Kohana::lang('ui_main.include_custom_fields');?></td>
+					<td></td>
                 </tr>
 
 
