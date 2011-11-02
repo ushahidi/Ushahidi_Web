@@ -78,11 +78,11 @@ class Stats_Model extends ORM
 			}
 
 			$url = 'https://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
-
 			$curl_handle = curl_init();
 			curl_setopt($curl_handle,CURLOPT_URL,$url);
 			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,self::$time_out); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
 			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); // Set cURL to store data in variable instead of print
+			curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
 			$buffer = curl_exec($curl_handle);
 			curl_close($curl_handle);
 
