@@ -450,7 +450,8 @@ CREATE TABLE IF NOT EXISTS `incident_person` (
 CREATE TABLE IF NOT EXISTS `comment`                                                
 (
     `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 
-    `incident_id` BIGINT NOT NULL,                                                  
+    `incident_id` BIGINT DEFAULT NULL,
+  	`checkin_id` BIGINT DEFAULT NULL,                                                  
     `user_id` INT(11) DEFAULT 0,                                                    
     `comment_author` VARCHAR(100) default NULL,                                     
     `comment_email` VARCHAR(120) default NULL,                                      
@@ -1459,4 +1460,4 @@ ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '69' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '70' WHERE `id`=1 LIMIT 1;
