@@ -42,7 +42,7 @@
 		<script type="text/javascript">
 				
 			function cilisting() {
-				jsonurl = '<?php echo url::site()."api/?task=checkin&action=get_ci&sqllimit=1000&orderby=checkin.checkin_date&sort=DESC"; ?>';
+				jsonurl = '<?php echo url::site()."api/?task=checkin&action=get_ci&sqllimit=1000&orderby=checkin.checkin_date&sort=DESC&comments=1"; ?>';
 				$.getJSON(jsonurl, function(data) {
 					$('div#cilist').html("");
 					
@@ -86,6 +86,22 @@
 						}else{
 							$('div#cilist').append("<div class=\"cimsg\">"+item.msg+"<br/><small><em>"+$.timeago(utcDate)+"</em></small></div>");
 						}
+						
+						if(item.comments !== undefined)
+						{
+							var user_link = '';
+							var comment_utcDate = '';
+							$.each(item.comments, function(j,comment){
+								comment_utcDate = comment.date.replace(" ","T")+"Z";
+								if(item.user_id != 0){
+									user_link = '<a href=\"<?php echo url::site(); ?>profile/user/'+comment.username+'\">'+comment.author+'</a>';
+								}else{
+									user_link = ''+comment.author+'';
+								}
+								$('div#cilist').append("<div style=\"clear:both\"></div>"+user_link+": "+comment.description+" <small>(<em>"+$.timeago(comment_utcDate)+"</em>)</small></div>");
+							});
+						}
+						
 						$('div#cilist').append("<div style=\"clear:both\"></div></div>");
 					});
 				});

@@ -18,7 +18,7 @@
 class Checkin_Model extends ORM
 {	
 	protected $belongs_to = array('user');
-	protected $has_many = array('media');
+	protected $has_many = array('media','comment');
 	protected $has_one = array('location','user');
 
 	// Database table name
