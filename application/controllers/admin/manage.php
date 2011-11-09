@@ -749,18 +749,23 @@ class Manage_Controller extends Admin_Controller
 								foreach ($archive_files as $file)
 								{
 									$ext_file_name = $file['filename'];
+									$archive_file_parts = pathinfo($ext_file_name);
+									//because there can be more than one file in a KMZ
+									if ($archive_file_parts['extension'] == 'kml' AND $ext_file_name AND $archive->extract(PCLZIP_OPT_PATH, Kohana::config('upload.directory')) == TRUE)
+									{ 
+										// Okay, so we have an extracted KML - Rename it and delete KMZ file
+										rename($path_parts['dirname']."/".$ext_file_name, 
+											$path_parts['dirname']."/".$file_name.".kml");
+			
+										$file_ext = "kml";
+										unlink($path_info);
+										$layer_file = $file_name.".".$file_ext;
+									}
+									
 								}
 							}
 
-							if ($ext_file_name AND $archive->extract(PCLZIP_OPT_PATH, Kohana::config('upload.directory')) == TRUE)
-							{ 
-								// Okay, so we have an extracted KML - Rename it and delete KMZ file
-								rename($path_parts['dirname']."/".$ext_file_name, 
-									$path_parts['dirname']."/".$file_name.".kml");
-
-								$file_ext = "kml";
-								unlink($path_info);
-							}
+							
 						}
 
 						

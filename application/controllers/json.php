@@ -545,9 +545,7 @@ class Json_Controller extends Template_Controller
 			$layer_url = $layer->layer_url;
 			$layer_file = $layer->layer_file;
 
-			$layer_link = (!$layer_url) ?
-				url::base().Kohana::config('upload.relative_directory').'/'.$layer_file :
-				$layer_url;
+			$layer_link = Kohana::config('upload.directory').'/'.$layer_file;
 
 			$content = file_get_contents($layer_link);
 
