@@ -21,6 +21,7 @@ class alert_Core {
 		$alert_lon = $post->alert_lon;
 		$alert_lat = $post->alert_lat;
 		$alert_radius = $post->alert_radius;
+		$alert_confirmed = $post->alert_confirmed;
 
 		// Should be 6 distinct characters
 		$alert_code = text::random('distinct', 8);
@@ -50,7 +51,7 @@ class alert_Core {
 
 		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code
 			.'.'.Kohana::lang('ui_admin.not_case_sensitive');
-		
+	
 		if (sms::send($alert_mobile, $sms_from, $message) === true)
 		{
 			$alert = ORM::factory('alert'); 
@@ -60,6 +61,7 @@ class alert_Core {
 			$alert->alert_lon = $alert_lon;
 			$alert->alert_lat = $alert_lat;
 			$alert->alert_radius = $alert_radius;
+			$alert->alert_confirmed = $alert_confirmed;
 			if (isset($_SESSION['auth_user']))
 			{
 				$alert->user_id = $_SESSION['auth_user']->id;
@@ -84,6 +86,7 @@ class alert_Core {
 		$alert_lon = $post->alert_lon;
 		$alert_lat = $post->alert_lat;
 		$alert_radius = $post->alert_radius;
+		$alert_confirmed = $post->alert_confirmed;
 
 		$alert_code = text::random('alnum', 20);
 
@@ -109,6 +112,7 @@ class alert_Core {
 			$alert->alert_lon = $alert_lon;
 			$alert->alert_lat = $alert_lat;
 			$alert->alert_radius = $alert_radius;
+			$alert->alert_confirmed = $alert_confirmed;
 			if (isset($_SESSION['auth_user']))
 			{
 				$alert->user_id = $_SESSION['auth_user']->id;
@@ -144,6 +148,7 @@ class alert_Core {
 		 */
 			$alert_code = text::random('distinct', 8);
 
+
 		/* POST variable with items to save */
 			
 			$post = array(
@@ -152,17 +157,68 @@ class alert_Core {
 				'alert_code'=>$alert_code,
 				'alert_lon'=>$geocoder['lon'],
 				'alert_lat'=>$geocoder['lat'],
-				'alert_radius'=>'20'
+				'alert_radius'=>'20',
+				'alert_confirmed'=>'1'
 			);
 
-			//convert the array to object
-			$p = (object) $post;
-		/** 
-		 * Save alert details
-		 */
+				//convert the array to object
+				$p = (object) $post;
 
-		$register_sms_alerts = self::_send_mobile_alert($p);																			    
+				/** 
+				* Save alert details
+				*/
+				self::_send_mobile_alert($p);																			    
 
+	}
+
+
+	public function mobile_alerts_unsubscribe($message_from, $message_description)
+	{
+
+		$settings = ORM::factory('settings', 1);
+
+		if ( ! $settings->loaded)
+			return FALSE;
+
+        // Get SMS Numbers
+		if ( ! empty($settings->sms_no3)) 
+		{
+			$sms_from = $settings->sms_no3;
+		}
+		elseif ( ! empty($settings->sms_no2)) 
+		{
+			$sms_from = $settings->sms_no2;
+		}
+		elseif ( ! empty($settings->sms_no1)) 
+		{
+			$sms_from = $settings->sms_no1;
+		}
+		else
+		{
+			$sms_from = "000";// User needs to set up an SMS number
+		}
+
+		$site_name = $settings->site_name;
+		$message = Kohana::lang('ui_admin.unsubscribe_message').' ' .$site_name;
+
+		if (sms::send($message_from, $sms_from, $message) === true)
+		{
+			// Fetch all alerts with the specified code
+				$alerts = ORM::factory('alert')
+					->where('alert_recipient', $message_from)
+					->find_all();
+		
+			foreach ($alerts as $alert)
+			{
+				// Delete all alert categories with the specified phone number
+				ORM::factory('alert_category')
+					->where('alert_id', $alert->id)
+					->delete_all();
+
+				$alert->delete();
+			
+			}
+		}	
 	}
 
 
