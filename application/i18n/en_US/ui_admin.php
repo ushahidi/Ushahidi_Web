@@ -273,6 +273,7 @@
 	'unknown' => 'Unknown',
 	'unknown_failure' => 'Unknown Failure',
 	'unread' => 'unread',
+	'unsubscribe_message' => 'You will no longer receive alerts from',
 	'update_link' => ' Click here to upgrade now',
 	'upgrade_ushahidi' => 'Upgrade Ushahidi',
 	'upgrade_ushahidi_status' => 'Upgrade Ushahidi Status',

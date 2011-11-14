@@ -106,8 +106,21 @@ class Smssync_Controller extends Controller {
 			
 			if ($secret_match)
 			{
-				sms::add($message_from, $message_description);
-				$success = "true";
+				if(stristr($message_description,"alert"))
+				{
+					alert::mobile_alerts_register($message_from, $message_description);
+					$success = "true";
+				}
+				elseif(stristr($message_description,"off"))
+				{
+					alert::mobile_alerts_unsubscribe($message_from, $message_description);
+					$success = "true";
+				}
+				else
+				{
+					sms::add($message_from, $message_description);
+					$success = "true";
+				}
 			}
 		}
 		
