@@ -833,7 +833,7 @@ class reports_Core {
 			{			
 				$field_id = $field[0];
 				if (intval($field_id) < 1)
-					break;
+					continue;
 
 				$field_value = $field[1];
 				if (is_array($field_value))
@@ -854,7 +854,17 @@ class reports_Core {
 			// Make sure there was some valid input in there
 			if ($i > 0)
 			{
-				array_push(self::$params, 'i.id IN (SELECT DISTINCT incident_id FROM '.$table_prefix.'form_response WHERE '.$where_text.')');
+				// I run a database query here because it's way faster to get the valid IDs in a seperate database query than it is
+				//to run this query nested in the main query. 
+				$db = new Database();
+				$rows = $db->query('SELECT DISTINCT incident_id FROM '.$table_prefix.'form_response WHERE '.$where_text);
+				$incident_ids = '';
+				foreach($rows as $row)
+				{
+					if($incident_ids != ''){$incident_ids .= ',';}
+					$incident_ids .= $row->incident_id;
+				}
+				array_push(self::$params, 'i.id IN ('.$incident_ids.')');
 			}
 			
 		} // End of handling cff
