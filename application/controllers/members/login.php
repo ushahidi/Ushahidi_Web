@@ -105,6 +105,9 @@ class Login_Controller extends Template_Controller {
 					// Attempt a login
 					if ($auth->login($user, $postdata_array['password'], $remember))
 					{
+						// Action::user_login - User Logged In
+						Event::run('ushahidi_action.user_login',$user);
+
 						// Exists Redirect to Dashboard
 						url::redirect("members/dashboard");
 					}
