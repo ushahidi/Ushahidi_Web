@@ -50,7 +50,8 @@ class Themes_Core {
 	 */
 	public function header_block()
 	{
-		return $this->_header_css().
+		return Kohana::config("globalcode.head").
+			$this->_header_css().
 			$this->_header_feeds().
 			$this->_header_js();
 	}
