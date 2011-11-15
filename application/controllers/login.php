@@ -50,8 +50,7 @@ class Login_Controller extends Template_Controller {
                 url::redirect($this->destination);
             }
         }
-				
-		
+
         $form = array(
 	        'username' => '',
 	        'password' => '',
@@ -60,20 +59,19 @@ class Login_Controller extends Template_Controller {
         //  copy the form as errors, so the errors will be stored with keys corresponding to the form field names
         $errors = $form;
         $form_error = FALSE;
-		
-		
+
         // Set up the validation object
         $_POST = Validation::factory($_POST)
             ->pre_filter('trim')
             ->add_rules('username', 'required')
             ->add_rules('password', 'required')
             ->add_rules('redirect_to', 'url');
-		
+
         if ($_POST->validate())
         {
             // Sanitize $_POST data removing all inputs without rules
             $postdata_array = $_POST->safe_array();
-            
+
             // Change redirect location if set in form
             if(isset($postdata_array['redirect_to']) AND $postdata_array['redirect_to'] != ''){
         		$this->destination = $postdata_array['redirect_to'];
@@ -96,7 +94,9 @@ class Login_Controller extends Template_Controller {
                 // Attempt a login
                 if ($auth->login($user, $postdata_array['password'], $remember))
                 {
-                    url::redirect($this->destination);
+					// Action::user_login - User Logged In
+					Event::run('ushahidi_action.user_login',$user);
+					url::redirect($this->destination);
                 }
                 else
                 {
