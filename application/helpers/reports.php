@@ -864,7 +864,15 @@ class reports_Core {
 					if($incident_ids != ''){$incident_ids .= ',';}
 					$incident_ids .= $row->incident_id;
 				}
-				array_push(self::$params, 'i.id IN ('.$incident_ids.')');
+				//make sure there are IDs found
+				if($incident_ids != '')
+				{
+					array_push(self::$params, 'i.id IN ('.$incident_ids.')');
+				}
+				else
+				{
+					array_push(self::$params, 'i.id IN (0)');
+				}
 			}
 			
 		} // End of handling cff
