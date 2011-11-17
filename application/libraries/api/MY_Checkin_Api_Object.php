@@ -207,7 +207,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 				"lon" => $checkin->location->longitude
 			);
 			
-			$users_names[(int)$checkin->user_id] = array("id"=>$checkin->user_id,"name"=>$checkin->user->name,"color"=>$checkin->user->color);
+			$users_names[(int)$checkin->user_id] = array("id"=>$checkin->user_id,"name"=>$checkin->user->name,"color"=>$checkin->user->color,"username"=>$checkin->user->username);
 			
 			$j = 0;
 			foreach ($checkin->media as $media)

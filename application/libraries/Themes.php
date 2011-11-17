@@ -120,12 +120,13 @@ class Themes_Core {
 			$core_js .= html::script($this->js_url."media/js/OpenLayers", true);
 			$core_js .= "<script type=\"text/javascript\">OpenLayers.ImgPath = '".$this->js_url."media/img/openlayers/"."';</script>";
 		}
-		
+
 		$core_js .= html::script($this->js_url."media/js/jquery", true);
 		//$core_js .= html::script($this->js_url."media/js/jquery.ui.min", true);
 		$core_js .= html::script("https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", true);
 		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", true);
-		
+		$core_js .= html::script($this->js_url."media/js/jquery.timeago", true);
+
 		if ($this->map_enabled)
 		{
 			$core_js .= $this->api_url;

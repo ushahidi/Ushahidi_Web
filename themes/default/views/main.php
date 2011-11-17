@@ -10,12 +10,12 @@
 
 		<!-- right column -->
 		<div id="right" class="clearingfix">
-	
+
 			<!-- category filters -->
 			<div class="cat-filters clearingfix">
 				<strong><?php echo Kohana::lang('ui_main.category_filter');?> <span>[<a href="javascript:toggleLayer('category_switch_link', 'category_switch')" id="category_switch_link"><?php echo Kohana::lang('ui_main.hide'); ?></a>]</span></strong>
 			</div>
-		
+
 			<ul id="category_switch" class="category-filters">
 				<li><a class="active" id="cat_0" href="#"><span class="swatch" style="background-color:<?php echo "#".$default_map_all;?>"></span><span class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></span></a></li>
 				<?php
@@ -60,7 +60,7 @@
 				?>
 			</ul>
 			<!-- / category filters -->
-			
+
 			<?php
 			if ($layers)
 			{
@@ -90,8 +90,7 @@
 				<?php
 			}
 			?>
-			
-			
+
 			<?php
 			if ($shares)
 			{
@@ -115,10 +114,9 @@
 				<?php
 			}
 			?>
-			
-			
+
 			<br />
-		
+
 			<!-- additional content -->
 			<?php
 			if (Kohana::config('settings.allow_reports'))
@@ -148,21 +146,18 @@
 
 				</div>
 			<?php } ?>
-			<?php if ($allow_feed == 1): ?>
-			<div class="holder">
-				<div class="feed">
-					<h2><?php echo Kohana::lang('ui_main.alerts_rss'); ?></h2>
-					<div class="holder">
-						<div class="box">
-							<a href="<?php echo url::site(); ?>feed/"><img src="<?php echo url::file_loc('img'); ?>media/img/icon-feed.png" style="vertical-align: middle;" border="0"></a>&nbsp;<strong><a href="<?php echo url::site(); ?>feed/"><?php echo url::site(); ?>feed/</a></strong>
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php endif; ?>
-
 
 			<!-- / additional content -->
+			
+			<!-- Checkins -->
+			<?php if ( Kohana::config('settings.checkins') ) { ?>
+			<br/>
+			<div class="additional-content">
+				<h5><?php echo Kohana::lang('ui_admin.checkins'); ?></h5>
+				<div id="cilist"></div>
+			</div>
+			<?php } ?>
+			<!-- /Checkins -->
 			
 			<?php
 			// Action::main_sidebar - Add Items to the Entry Page Sidebar

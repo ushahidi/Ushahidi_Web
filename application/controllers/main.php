@@ -156,6 +156,9 @@ class Main_Controller extends Template_Controller {
 		{
 			$this->template->footer->site_copyright_statement = $site_copyright_statement;
 		}
+		
+		// Display news feeds?
+		$this->template->header->allow_feed = Kohana::config('settings.allow_feed');
 	}
 
 	/**
@@ -215,10 +218,6 @@ class Main_Controller extends Template_Controller {
 
 		// Get locale
 		$l = Kohana::config('locale.language.0');
-
-		// Display news feeds?
-		$this->template->content->allow_feed = Kohana::config('settings.allow_feed');
-
 
         // Get all active top level categories
 		$parent_categories = array();

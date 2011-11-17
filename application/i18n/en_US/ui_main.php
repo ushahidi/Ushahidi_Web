@@ -284,6 +284,7 @@
 	'new_report' => 'New Report',
 	'next' => 'Next',
 	'no' => 'No',
+	'no_checkins' => 'No checkins to display.',
 	'notices' => 'Notices',
 	'not_approved' => 'Not Approved',
 	'not_approved_singular' => 'Not Approved',

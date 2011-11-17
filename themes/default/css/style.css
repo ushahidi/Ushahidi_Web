@@ -2356,3 +2356,34 @@ a.filter-button:hover { text-decoration:none; background:#707070;  }
     padding:5px;
     margin:0px 5px;
 }
+
+/*----- Checkins -----*/
+div.ci_imgblock {
+	width:59px;
+	height:59px;
+	overflow:hidden;
+	float:left;
+	margin:0px;
+}
+div.ci_shorterblock {
+	height:16px;
+}
+div.ci_tallerblock {
+	height:59px;
+}
+div.ci_colorblock {
+	width:69px;
+	float:left;
+	margin:0px 10px 0px 0px;
+}
+div.ci_colorfade {
+	width:59px;
+	height:20px;
+	float:left;
+	margin:0px;
+	background-color:#FFFFFF;
+	opacity:.5;
+}
+div.ci_checkin {
+	border-bottom:1px solid #B3B3B3;
+}

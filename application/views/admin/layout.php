@@ -18,6 +18,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
+	<?php echo Kohana::config("globalcode.head"); ?>
 	<title><?php echo $site_name ?></title>
 	<?php
 	echo html::stylesheet(url::file_loc('css').'media/css/admin/all', '', true);
