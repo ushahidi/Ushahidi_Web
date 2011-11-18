@@ -248,6 +248,9 @@ class Settings_Controller extends Admin_Controller
 				// Everything is A-Okay!
 				$form_saved = TRUE;
 
+				// Action::site_settings_modified - Site settings have changed
+				Event::run('ushahidi_action.site_settings_modified');
+
 				// repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
@@ -434,6 +437,9 @@ class Settings_Controller extends Admin_Controller
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
+				
+				// Action::map_settings_modified - Map settings have changed
+				Event::run('ushahidi_action.map_settings_modified');
 
 				// Redirect to reload everything over again
 				url::redirect('admin/settings/index/saved');

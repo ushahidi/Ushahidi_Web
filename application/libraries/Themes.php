@@ -186,6 +186,9 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
                         "//-->
                         </script>";
 		
+		// Filter::header_js - Modify Header Javascript
+		Event::run('ushahidi_filter.header_js', $inline_js);
+		
 		return $core_js.$plugin_js.$inline_js;
 	}
 	
