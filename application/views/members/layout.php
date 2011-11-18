@@ -124,6 +124,9 @@
 	// Render CSS and Javascript Files from Plugins
 	echo plugin::render('stylesheet');
 	echo plugin::render('javascript');
+	
+	// Action::header_scripts_member - Additional Inline Scripts
+	Event::run('ushahidi_action.header_scripts_member');
 	?>
 	<script type="text/javascript" charset="utf-8">
 		<?php echo $js . "\n"; ?>
