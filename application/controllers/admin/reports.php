@@ -20,6 +20,7 @@ class Reports_Controller extends Admin_Controller {
 		parent::__construct();
 
 		$this->template->this_page = 'reports';
+		$this->params = array('all_reports' => TRUE);
 	}
 
 
@@ -39,8 +40,9 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content = new View('admin/reports');
 		$this->template->content->title = Kohana::lang('ui_admin.reports');
 		
-		// To 
-		$params = array('all_reports' => TRUE);
+		//hook into the event for the reports::fetch_incidents() method
+		Event::add('ushahidi_filter.fetch_incidents_set_params', array($this,'_add_incident_filters'));
+
 		
 		$status = "0";
 		
@@ -50,11 +52,11 @@ class Reports_Controller extends Admin_Controller {
 
 			if (strtolower($status) == 'a')
 			{
-				array_push($params, 'i.incident_active = 0');
+				array_push($this->params, 'i.incident_active = 0');
 			}
 			elseif (strtolower($status) == 'v')
 			{
-				array_push($params, 'i.incident_verified = 0');
+				array_push($this->params, 'i.incident_verified = 0');
 			}
 			else
 			{
@@ -77,7 +79,9 @@ class Reports_Controller extends Admin_Controller {
 			// in the first 2 steps
 			$keyword_raw = $this->input->xss_clean($keyword_raw);
 			
-			$filter = " AND (".$this->_get_searchstring($keyword_raw).")";
+			$filter = " (".$this->_get_searchstring($keyword_raw).")";
+			
+			array_push($this->params, $filter);
 		}
 		else
 		{
@@ -264,19 +268,23 @@ class Reports_Controller extends Admin_Controller {
 
 		}
 
-		$all_reports = Incident_Model::get_incidents($params);
+	
+		// Fetch all incidents
+		$all_incidents = reports::fetch_incidents();
 		
 		// Pagination
 		$pagination = new Pagination(array(
-			'query_string'	 => 'page',
-			'items_per_page' => $this->items_per_page,
-			'total_items'	 => $all_reports->count()
-			)
-		);
-		Event::run('ushahidi_filter.pagination',$pagination);
+				'style' => 'front-end-reports',
+				'query_string' => 'page',
+				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
+				'total_items' => $all_incidents->count()
+				));
+				
+		Event::run('ushahidi_filter.pagination',$pagination);				
+
+		// Reports
+		$incidents = Incident_Model::get_incidents(reports::$params, $pagination);
 		
-		// Get the paginated reports
-		$incidents = Incident_Model::get_incidents($params, $pagination);
 	
 		Event::run('ushahidi_filter.filter_incidents',$incidents);
 		$this->template->content->countries = Country_Model::get_countries_list();
@@ -1517,7 +1525,10 @@ class Reports_Controller extends Admin_Controller {
 		$or = '';
 		$where_string = '';
 
-
+		/**
+		 * NOTES: 2011-11-17 - John Etherton <john@ethertontech.com> I'm pretty sure this needs to be
+		 * internationalized, seems rather biased towards English.
+		 * */
 		// Stop words that we won't search for
 		// Add words as needed!!
 		$stop_words = array('the', 'and', 'a', 'to', 'of', 'in', 'i', 'is', 'that', 'it',
@@ -1556,5 +1567,21 @@ class Reports_Controller extends Admin_Controller {
 	{
 		$text = stripslashes(htmlspecialchars($text));
 		return $text;
+	}
+	
+	
+	/**
+	 * Adds extra filter paramters to the reports::fetch_incidents()
+	 * method. This way we can add 'all_reports=>true and other filters
+	 * that don't come standard sinc we are on the backend. 
+	 * Works by simply adding in SQL conditions to the params
+	 * array of the reprots::fetch_incidents() method
+	 * @return none
+	 */
+	public function _add_incident_filters()
+	{
+		$params = Event::$data;
+		$params = array_merge($params, $this->params);
+		Event::$data = $params;
 	}
 }
