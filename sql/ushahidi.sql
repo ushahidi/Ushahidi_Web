@@ -741,7 +741,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `default_lat` varchar(100) default NULL,                                        
     `default_lon` varchar(100) default NULL,                                        
     `default_zoom` tinyint(4) NOT NULL default '10',                                
-    `items_per_page` smallint(6) NOT NULL default '20',                             
+    `items_per_page` smallint(6) NOT NULL default '5',
     `items_per_page_admin` smallint(6) NOT NULL default '20',
     `sms_provider` varchar(100) NULL DEFAULT NULL,
     `sms_no1` varchar(100) default NULL,                                            
@@ -775,7 +775,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 -- Dumping data for table `settings`
 
 INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_yahoo`, `api_live`, `default_country`, `default_city`, `default_lat`, `default_lon`, `default_zoom`, `items_per_page`, `items_per_page_admin`, `blocks`, `date_modify`) VALUES
-(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 20, 20, 'reports_block|news_block', '2008-08-25 10:25:18');
+(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 5, 20, 'reports_block|news_block', '2008-08-25 10:25:18');
 
 
 /**
