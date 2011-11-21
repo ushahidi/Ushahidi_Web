@@ -37,7 +37,7 @@
 	),
 	'username' => array(
 		'admin' => 'The admin user role cannot be modified.',
-		'alpha' => 'The username field must only contain letters.',
+		'alpha_numeric' => 'The username field must only contain numbers and letters.',
 		'exists' => 'Sorry, this username is already in use.',
 		'length' => 'The username field must be at least 2 and no more 100 characters long.',
 		'login error' => 'Please check that you entered the correct username.',
