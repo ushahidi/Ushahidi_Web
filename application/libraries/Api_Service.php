@@ -556,7 +556,17 @@ final class Api_Service {
 	 */
 	private function _is_api_request_allowed()
 	{
-		// STEP 1: Check if the IP has been banned
+		// STEP 1: Check to see if site is private
+		if(Kohana::config('settings.private_deployment'))
+		{
+			if ( ! $this->_login())
+			{
+				// @todo better error message
+				return FALSE;
+			}
+		}
+
+		// STEP 2: Check if the IP has been banned
 		$banned_count = ORM::factory('api_banned')
 						->where('banned_ipaddress', $this->request_ip_address)
 						->count_all();
@@ -564,7 +574,7 @@ final class Api_Service {
 		if ($banned_count > 0)
 			return FALSE;
 
-		// STEP 2: Check if the IP address has exceeded the request quota
+		// STEP 3: Check if the IP address has exceeded the request quota
 
 		// Get the API settings
 		$api_settings = new Api_Settings_Model(1);
