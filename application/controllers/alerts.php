@@ -15,9 +15,6 @@
 
 class Alerts_Controller extends Main_Controller {
 	
-	const MOBILE_ALERT = 1;
-	const EMAIL_ALERT = 2;    
-
 	public function __construct()
 	{
 		parent::__construct();
@@ -109,24 +106,23 @@ class Alerts_Controller extends Main_Controller {
 		// If there is a post and $_POST is not empty
 		if ($post = $this->input->post())
 		{
-			$alerts = new Alert_Model();
-			if ($alerts->validate($post))
+			$alert_orm = new Alert_Model();
+			if ($alert_orm->validate($post))
 			{
-                // Yes! everything is valid
-                // Save alert and send out confirmation code
+				// Yes! everything is valid
+				// Save alert and send out confirmation code
 
 				if ( ! empty($post->alert_mobile))
 				{
-					alert::_send_mobile_alert($post);
+					alert::_send_mobile_alert($post, $alert_orm);
+					$this->session->set('alert_mobile', $post->alert_mobile);
 				}
 
 				if ( ! empty($post->alert_email))
 				{
-					alert::_send_email_alert($post);
+					alert::_send_email_alert($post, $alert_orm);
+					$this->session->set('alert_email', $post->alert_email);
 				}
-
-				$this->session->set('alert_mobile', $post->alert_mobile);
-				$this->session->set('alert_email', $post->alert_email);
 
 				url::redirect('alerts/confirm');                    
             }

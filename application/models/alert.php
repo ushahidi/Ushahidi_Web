@@ -14,16 +14,31 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class Alert_Model extends ORM
-{
+class Alert_Model extends ORM {
+	
+	/**
+	 * Many-to-one relationship definition
+	 * @var array
+	 */
 	protected $belongs_to = array('user');
+	
+	/**
+	 * One-to-many relationship definition
+	 * @var array
+	 */
 	protected $has_many = array('incident' => 'alert_sent', 'category' => 'alert_category');
     
-	// Database table name
+	/**
+	 * Database table name
+	 * @var string
+	 */
 	protected $table_name = 'alert';
 
-	// Ignored columns - alert_mobile & alert_email will be replaced with alert_recipient
-	// These are columns not contained in the Model itself
+	/**
+	 * Ignored columns - alert_mobile & alert_email will be replaced with alert_recipient
+	 * These are columns not contained in the Model itself
+	 * @var array
+	 */
 	protected $ignored_columns = array('alert_mobile', 'alert_email'); 	
 
 	/**
@@ -32,9 +47,9 @@ class Alert_Model extends ORM
 	 * 
 	 * @param string $column
 	 * @param mixed $value
-	 * @return Alert_Model $this for a fluent interface
+	 * @return Alert_Model
 	 */
-	public function set ($column, $value)
+	public function set($column, $value)
 	{
 		// CALL the magic method __set, with the parameters provided
 		$this->__set($column, $value);
@@ -49,9 +64,9 @@ class Alert_Model extends ORM
 	 * Method that allows for the use of the set method, en masse
 	 * 
 	 * @param array $params
-	 * @return Alert_Model $this for a fluent interface
+	 * @return Alert_Model
 	 */
-	public function assign (array $params = array())
+	public function assign(array $params = array())
 	{
 		// ITERATE through all of the column/value pairs provided ...
 		foreach ($params as $column => $value)
@@ -71,7 +86,7 @@ class Alert_Model extends ORM
 	 * 
 	 * @param array $array values to check
 	 * @param boolean $save save[Optional] the record when validation succeeds
-	 * @return boolean
+	 * @return bool TRUE when validation succeeds, FALSE otherwise
 	 */
 	public function validate(array & $post, $save = FALSE)
 	{
@@ -83,10 +98,20 @@ class Alert_Model extends ORM
 			->add_rules('alert_lat', 'required', 'between[-90,90]')
 			->add_rules('alert_lon', 'required', 'between[-180,180]')
 			->add_rules('alert_radius', 'required', 'in_array[1,5,10,20,50,100]')
-			->add_callbacks('alert_mobile', array($this, '_mobile_or_email'))
-			->add_callbacks('alert_mobile', array($this, '_mobile_check'))
-			->add_callbacks('alert_email', array($this, '_email_check'));
-			
+			->add_rules('alert_confirmed', 'required', 'in_array[0,1]');
+				
+		// TODO Callbacks to check for duplicate alert subscription - same
+		// subscriber for the same lat/lon
+		//$post->add_callbacks('alert_mobile', array($this, '_mobile_check'));
+		//$post->add_callbacks('alert_email', array($this, '_email_check'));
+
+		// Check if a recipient mobile phone no. or email address has been
+		// specified	
+		if (empty($post->alert_mobile) AND empty($post->alert_email))
+		{
+			$post->add_rules('alert_recipient', 'required');
+		}
+
 		// If deployment is a single country deployment, check that the location mapped is in the default country
 		if ( ! Kohana::config('settings.multi_country'))
 		{
@@ -94,6 +119,7 @@ class Alert_Model extends ORM
 			if ($country AND $country->id != Kohana::config('settings.default_country'))
 			{
 				$post->add_error('alert_country','single_country');
+				return FALSE;
 			}
 		}
 
@@ -111,11 +137,11 @@ class Alert_Model extends ORM
     {
 		// If add->rules validation found any errors, get me out of here!
         if (array_key_exists('alert_mobile', $post->errors()) 
-            || array_key_exists('alert_lat', $post->errors()) 
-            || array_key_exists('alert_lon', $post->errors()))
+            OR array_key_exists('alert_lat', $post->errors()) 
+            OR array_key_exists('alert_lon', $post->errors()))
             return;
 
-        if ($post->alert_mobile && (bool) $this->db
+        if ($post->alert_mobile AND (bool) $this->db
 			->where(array(
 				'alert_type' => 1,
 				'alert_recipient' => $post->alert_mobile,
@@ -142,7 +168,7 @@ class Alert_Model extends ORM
 			OR array_key_exists('alert_lon', $post->errors()))
 			return;
 
-		if ( $post->alert_email && (bool) $this->db
+		if ( $post->alert_email AND (bool) $this->db
 			->where(array(
 					'alert_type' => 2,
 					'alert_recipient' => $post->alert_email,
@@ -155,53 +181,51 @@ class Alert_Model extends ORM
 		}
 	} // END function _email_check
 
-
-	/**
-	 * Tests if an email accounts exists in the database for this alert
-	 * @param   mixed mobile number to check
-	 * @return  boolean
-	 */
-	public function _mobile_or_email(Validation $post)
-	{
-		if ( empty($post->alert_mobile) && empty($post->alert_email) )
-			$post->add_error('alert_mobile', 'one_required');
-	} // END function _mobile_or_email
 	
 	/**
 	 * Checks if the alert subscription in @param $alert_code exists
 	 *
 	 * @param string $alert_code
+	 * @return bool TRUE if the alert code exists, FALSE otherwise
 	 */
 	public static function alert_code_exists($alert_code)
 	{
 		return (ORM::factory('alert')
 					->where('alert_code', $alert_code)
 					->count_all() > 0
-				) ? TRUE : FALSE;
+				);
 	}
 	
 	/**
 	 * Removes the alert code in @param $alert_code from the list of alerts
 	 *
 	 * @param string $alert_code
+	 * @return bool TRUE if succeeds, FALSE otherwise
 	 */
 	public static function unsubscribe($alert_code)
 	{
-		// Fetch all alerts with the specified code
+		// Fetch the alerts with the specified code
 		$alerts = ORM::factory('alert')
 			->where('alert_code', $alert_code)
-			->find_all();
-			
-		foreach ($alerts as $alert)
-		{
-			// Delete all alert categories with the specified code
-			ORM::factory('alert_category')
-				->where('alert_id', $alert->id)
-				->delete_all();
-
-			$alert->delete();
-		}
+			->find();
 		
+		// Check if the alert exists
+		if ($alerts->loaded)
+		{
+			// Delete all categories linked to the alert
+			ORM::factory('alert_category')->where('alert_id', $alert->id)->delete_all();
+			
+			// Delete the alert
+			$alert->delete();
+
+			// Success!
+			return TRUE;
+		}
+		else
+		{
+			// Alert code not found. FAIL
+			return FALSE;
+		}
 	}
 
 } // END class Alert_Model

@@ -1,46 +1,70 @@
 <?php
 class Alerts_Helper_Test extends PHPUnit_Framework_TestCase {
 
-	public function setUp()
+	/**
+	 * Data provider for test_alert_code_exists()
+	 *
+	 * @return array
+	 */
+	public function providerValidate()
 	{
-		// Alert fields to be validated and saved
-		$this->post = array
-		(
-			'alert_type' => '1',
-			'alert_mobile' => '0723674180',
-			'alert_code' => 'CDS0KJDS',
-			'alert_lon' => '35.92056',
-			'alert_lat' => '-2.18250',
-			'alert_radius' => '20',
-			'alert_confirmed' => '1',
-			'alert_country' => ORM::factory('country', Kohana::config('settings.default_country'))->id
+		return array(
+			array(
+					'3WUXACJZ'
+			)
 		);
 		
 	}
 	
-	public function tearDown()
+	/**
+	 * Tests Alert_Model->alert_code_exist() where the alert_code exists
+	 *
+	 * @test
+	 * @dataProvider providerValidate
+	 * @param array $data Input data to be validated
+	 */
+	public function test_alert_code_exists($data)
 	{
-		unset ($this->post);
+		// Create instance for the Alert_Model class
+		$model = new Alert_Model();
+		
+		// Check if the alert code exists
+		$this->assertEquals(TRUE, $model->alert_code_exists($data), 'Alert Code exists');
+
+	}
+
+	/**
+	 * Data provider for test_alert_code_not_exists()
+	 *
+	 * @return array
+	 */
+	public function providerValidateAlertCode()
+	{
+		return array(
+			array(
+					'3WUXAPRT'
+			)
+		);
+		
 	}
 	
 	/**
-	 * Tests the send mobile alerts action
+	 * Tests Alert_Model->alert_code_exist() where the alert_code is
+	 * non-existent
+	 *
 	 * @test
+	 * @dataProvider providerValidateAlertCode
+	 * @param array $data Input data to be validated
 	 */
-	public function testSendMobileAlerts()
+	public function test_alert_code_non_exists($data)
 	{
-		// Test if validation succeeds
+		// Create instance for the Alert_Model class
+		$model = new Alert_Model();
 		
-		// Alert Model
-		$alert = new Alert_Model();
-		$this->assertTrue($alert->validate($this->post), 'Alert validation failed');
-
-		//Check for duplicate alerts subscriptons
-		$mobile_check = $alert->_mobile_check($this->post);
-		$this->assertTrue(TRUE,count($mobile_check) > 0, 'Duplicate subscription');
+		// Check if the alert code exists
+		$this->assertEquals(FALSE, $model->alert_code_exists($data), 'Alert Code does not exist');
 
 	}
 
-	
 }
 ?>
