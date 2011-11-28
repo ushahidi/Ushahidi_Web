@@ -209,7 +209,7 @@ class locale_Core
 		}
 		else
 		{
-			return "Unknown";
+			return Kohana::lang('ui_admin.unknown');
 		}
 	}
 
@@ -471,7 +471,7 @@ class locale_Core
 		}
 		else
 		{
-			return "Unknown";
+			return Kohana::lang('ui_admin.unknown');
 		}
 	}
 

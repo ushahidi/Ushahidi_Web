@@ -112,7 +112,7 @@
 											}
 											else
 											{
-												$submit_by = 'Unknown';
+												$submit_by = Kohana::lang('ui_admin.unknown');
 											}
 										}
 									}
