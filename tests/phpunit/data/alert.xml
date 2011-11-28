@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" ?><dataset>    <alert id="1" alert_type="2" alert_recipient="test@ushahidi.com" alert_code="2khrEDTyOAySQ3YMiOI5" alert_confirmed="1" alert_lat="-0.023559" alert_lon="37.90619300000003" alert_radius="20" />
+    <alert id="2" alert_type="1" alert_recipient="0725609789" alert_code="SAEF9JWX" alert_confirmed="1" alert_lat="-0.023559" alert_lon="37.90619300000003" alert_radius="20" /></dataset>

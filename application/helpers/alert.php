@@ -14,16 +14,21 @@ class alert_Core {
 	const MOBILE_ALERT = 1;
 	const EMAIL_ALERT = 2;
 
-	public static function _send_mobile_alert($post)
+	/**
+	 * Sends an alert to a mobile phone
+	 *
+	 * @param Validation_Core $post
+	 * @param Alert_Model $alert
+	 * @return bool
+	 */
+	public static function _send_mobile_alert($post, $alert)
 	{
-		// For Mobile Alerts, Confirmation Code
-		$alert_mobile = $post->alert_mobile;
-		$alert_lon = $post->alert_lon;
-		$alert_lat = $post->alert_lat;
-		$alert_radius = $post->alert_radius;
-		$alert_confirmed = $post->alert_confirmed;
+		if ( ! $post instanceof Validation_Core AND !$alert instanceof Alert_Model)
+		{
+			throw new Kohana_Exception('Invalid parameter types');
+		}
 
-		// Should be 6 distinct characters
+		// Should be 8 distinct characters
 		$alert_code = text::random('distinct', 8);
           
 		$settings = ORM::factory('settings', 1);
@@ -52,16 +57,11 @@ class alert_Core {
 		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code
 			.'.'.Kohana::lang('ui_admin.not_case_sensitive');
 	
-		if (sms::send($alert_mobile, $sms_from, $message) === true)
+		if (sms::send($post->alert_mobile, $sms_from, $message) === true)
 		{
-			$alert = ORM::factory('alert'); 
 			$alert->alert_type = self::MOBILE_ALERT;
-			$alert->alert_recipient = $alert_mobile;
+			$alert->alert_recipient = $post->alert_mobile;
 			$alert->alert_code = $alert_code;
-			$alert->alert_lon = $alert_lon;
-			$alert->alert_lat = $alert_lat;
-			$alert->alert_radius = $alert_radius;
-			$alert->alert_confirmed = $alert_confirmed;
 			if (isset($_SESSION['auth_user']))
 			{
 				$alert->user_id = $_SESSION['auth_user']->id;
@@ -78,16 +78,20 @@ class alert_Core {
 
 	/**
 	 * Sends an email alert
+	 *
+	 * @param Validation_Core $post
+	 * @param Alert_Model $alert
+	 * @return bool 
 	 */
-	public static function _send_email_alert($post)
+	public static function _send_email_alert($post, $alert)
 	{
+		if ( ! $post instanceof Validation_Core AND !$alert instanceof Alert_Model)
+		{
+			throw new Kohana_Exception('Invalid parameter types');
+		}
+
 		// Email Alerts, Confirmation Code
 		$alert_email = $post->alert_email;
-		$alert_lon = $post->alert_lon;
-		$alert_lat = $post->alert_lat;
-		$alert_radius = $post->alert_radius;
-		$alert_confirmed = $post->alert_confirmed;
-
 		$alert_code = text::random('alnum', 20);
 
 		$settings = kohana::config('settings');
@@ -105,14 +109,9 @@ class alert_Core {
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{
-			$alert = ORM::factory('alert');
 			$alert->alert_type = self::EMAIL_ALERT;
 			$alert->alert_recipient = $alert_email;
 			$alert->alert_code = $alert_code;
-			$alert->alert_lon = $alert_lon;
-			$alert->alert_lat = $alert_lat;
-			$alert->alert_radius = $alert_radius;
-			$alert->alert_confirmed = $alert_confirmed;
 			if (isset($_SESSION['auth_user']))
 			{
 				$alert->user_id = $_SESSION['auth_user']->id;
@@ -130,50 +129,72 @@ class alert_Core {
 
 	/**
 	 * This handles sms alerts subscription via phone
-	 * @params alert,location (city) - required
-	 * @params distance, category - optional
+	 *
+	 * @param string $message_from Subscriber MSISDN (mobile phone number)
+	 * @param string $message_description Message content
+	 * @return bool
 	 */
-	public function mobile_alerts_register($message_from, $message_description)
+	public static function mobile_alerts_register($message_from, $message_description)
 	{
-
-		/**
-		 * Get the message details (location, category, distance)
-		 */
-			$message_details = explode(" ",$message_description);
-			$message = $message_details[1].",".Kohana::config('settings.default_country');
-			$geocoder = map::geocode($message);
+		// Preliminary validation
+		if (empty($message_from) OR empty($message_description))
+		{
+			// Log the error
+			Kohana::log('info', 'Insufficient data to proceed with subscription via mobile phone');
 			
-		/**
-		 * Generate alert code
-		 */
-			$alert_code = text::random('distinct', 8);
+			// Return
+			return FALSE;
+		}
 
-
-		/* POST variable with items to save */
+		//Get the message details (location, category, distance)
+		$message_details = explode(" ",$message_description);
+		$message = $message_details[1].",".Kohana::config('settings.default_country');
+		$geocoder = map::geocode($message);
 			
-			$post = array(
-				'alert_type'=> self::MOBILE_ALERT,
-				'alert_mobile'=>$message_from,
-				'alert_code'=>$alert_code,
-				'alert_lon'=>$geocoder['lon'],
-				'alert_lat'=>$geocoder['lat'],
-				'alert_radius'=>'20',
-				'alert_confirmed'=>'1'
-			);
+		// Generate alert code
+		$alert_code = text::random('distinct', 8);
 
-				//convert the array to object
-				$p = (object) $post;
+		// POST variable with items to save
+		$post = array(
+			'alert_type'=> self::MOBILE_ALERT,
+			'alert_mobile'=>$message_from,
+			'alert_code'=>$alert_code,
+			'alert_lon'=>$geocoder['lon'],
+			'alert_lat'=>$geocoder['lat'],
+			'alert_radius'=>'20',
+			'alert_confirmed'=>'1'
+		);
 
-				/** 
-				* Save alert details
-				*/
-				self::_send_mobile_alert($p);																			    
+		// Create ORM object for the alert and validate
+		$alert_orm = new Alert_Model();
+		if ($alert_orm->validate($post))
+		{
+			return self::_send_mobile_alert($post, $alert_orm);
+		}
+
+		return FALSE;
 
 	}
 
-
-	public function mobile_alerts_unsubscribe($message_from, $message_description)
+	/**
+	 * This handles unsubscription from alerts via the mobile phone
+	 * 
+	 * @param string $message_from Phone number of subscriber
+	 * @param string $message_description Message content
+	 * @return bool
+	 */
+	public static function mobile_alerts_unsubscribe($message_from, $message_description)
 	{
+		// Validate parameters
+		
+		if (empty($message_from) OR empty($message_description))
+		{
+			// Log the error
+			Kohana::log('info', 'Cannot unsubscribe from alerts via the mobile phone - insufficient data');
+			
+			// Return
+			return FALSE;
+		}
 
 		$settings = ORM::factory('settings', 1);
 
@@ -204,7 +225,7 @@ class alert_Core {
 		if (sms::send($message_from, $sms_from, $message) === true)
 		{
 			// Fetch all alerts with the specified code
-				$alerts = ORM::factory('alert')
+			$alerts = ORM::factory('alert')
 					->where('alert_recipient', $message_from)
 					->find_all();
 		
@@ -216,14 +237,19 @@ class alert_Core {
 					->delete_all();
 
 				$alert->delete();
-			
 			}
-		}	
+			return TRUE;
+		}
+		return FALSE;	
 	}
 
 
+	/* This handles saving alert categories that a subscriber has subscribed for 
+	 *
+	 * @param $Alert_Model $alert 
+	*/
 
-	private function _add_categories(Alert_Model $alert, $post)
+	private static function _add_categories(Alert_Model $alert, $post)
 	{
 		if (isset($post->alert_category))
 		{
@@ -241,7 +267,5 @@ class alert_Core {
 			}
 		}
 	}
-
-
 
 }
