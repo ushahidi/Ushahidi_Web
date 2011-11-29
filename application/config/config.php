@@ -18,7 +18,7 @@ $config['site_protocol'] = 'http';
  *
  * This can be removed by using URL rewriting.
  */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /**
  * Whether or not you want to have the auto upgrader enabled.
