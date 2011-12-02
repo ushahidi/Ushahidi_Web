@@ -83,10 +83,13 @@ class Admin_Controller extends Template_Controller
 		$this->session = Session::instance();
 		$this->auth->auto_login();
 
-		// Admin is not logged in, or this is a member (not admin)
-		if ( ! $this->auth->logged_in('login') OR $this->auth->logged_in('member'))
+		// Admin is not logged in
+		if ( ! $this->auth->logged_in('login') )
 		{
 			url::redirect('login');
+		// or this is a member (not admin)
+		} else if ( $this->auth->logged_in('member') ) {
+			url::redirect('members');
 		}
 
 		// Set Table Prefix

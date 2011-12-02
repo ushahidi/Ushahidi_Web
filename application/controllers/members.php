@@ -51,9 +51,13 @@ class Members_Controller extends Template_Controller
 		$this->session = Session::instance();
 		$this->auth->auto_login();
 		
-		if ( ! $this->auth->logged_in('login') OR ! $this->auth->logged_in('member'))
+		// User not logged in send to members/login
+		if ( ! $this->auth->logged_in('login') )
 		{
 			url::redirect('members/login');
+		// or not a member try sending to admin
+		} elseif ( ! $this->auth->logged_in('member') ) {
+			url::redirect('admin');
 		}
 
 		// Set Table Prefix
