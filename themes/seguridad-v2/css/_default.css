@@ -33,21 +33,17 @@ Author Email: antikathistemi@gmail.com
   ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#467926; }
     /* hover */
     div.submit-incident a:hover, .btn_submit:hover { background-color:#528237; }
+
 /* general styles */
-h1 {
-  
-}
-h2 {
-  
-}
-h5, h4 {
-  
-}
+h1 { }
+h2 { }
+h5, h4 { }
+
 
 /* structural divs */
 html { background:#728c99 url(../images/bg-body.jpg) repeat; }
 body#page { background:transparent url(../images/bg-header.jpg) 0 -20px repeat-x; }
-
+div.rapidxwpr { width:80%; }
 div#middle { background:transparent url(../images/bg_top-cap.png) top no-repeat; }
 
 .big-block {   }
@@ -200,8 +196,8 @@ div.map { width:auto; border:1px solid #fff; border-top:0; position:relative; he
 
 /* home page timeline */
 .page-main div.slider-holder,
-.page-main div.graph-holder { background:#fff; display:block; width:900px; margin:0; padding:20px; }
-.page-main div.graph-holder  { width:940px; padding:0; }
+.page-main div.graph-holder { background:#fff; display:block; width:auto; margin:0; padding:20px; }
+.page-main div.graph-holder  { width:auto; padding:0; overflow-x:scroll; }
 
 /* home page how to report */
 div.additional-content { display:none; }
