@@ -59,6 +59,7 @@ div#middle { background:transparent url(../images/bg_top-cap.png) top no-repeat;
   height: 40px;
   position: relative;
   margin:0 auto;
+  z-index:1000;
 }
 div#searchbox {
   position: absolute;
