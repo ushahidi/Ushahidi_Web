@@ -95,7 +95,7 @@ class Plugins_Controller extends Admin_Controller {
 		{
 			// Only include the plugin if it contains readme.txt
 			$file = PLUGINPATH.$dir."/readme.txt";
-			if ( file::file_exists_i($file) && ! count($db->from('plugin')->where('plugin_name', $dir)->limit(1)->get()))
+			if ( file::file_exists_i($file) AND ! count($db->from('plugin')->where('plugin_name', $dir)->limit(1)->get()))
 			{
 				$plugin = ORM::factory('plugin');
 				$plugin->plugin_name = $dir;
@@ -107,7 +107,7 @@ class Plugins_Controller extends Admin_Controller {
 		foreach (ORM::factory('plugin')->find_all() as $plugin)
 		{
 			$file = PLUGINPATH.$plugin->plugin_name."/readme.txt";
-			if ( ! array_key_exists($plugin->plugin_name, $directories) || ! file::file_exists_i($file) )
+			if ( ! array_key_exists($plugin->plugin_name, $directories) OR ! file::file_exists_i($file) )
 			{
 				$plugin->delete();
 			}
