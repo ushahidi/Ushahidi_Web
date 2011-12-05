@@ -136,10 +136,8 @@ div#mainmenu { border:none; position:relative;
   background: linear-gradient(top,  #f6941e 0%,#c97818 100%); /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6941e', endColorstr='#c97818',GradientType=0 ); /* IE6-9 */  
 }
-div#mainmenu ul { margin-top:3px; }
-div#mainmenu ul li {
-  margin:0 8px 0 0;
-}
+div#mainmenu ul { }
+div#mainmenu ul li { margin:0 8px 0 0; }
 div#mainmenu ul li a { padding:3px 5px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 div#mainmenu ul li a:hover, div#mainmenu a.active { background:#fff; color:#a24e3b; }
 
@@ -236,6 +234,13 @@ table.table-list thead th.date { width:20%; }
   background: #fff;
 }
 
+#reports-box { width:65% }
+#filters-box { width:31%; }
+.r_details { width:75%; }
+.r_details h3 { width:68%; }
+div.r_description { width:97%; }
+.rb_nav-controls { height:auto; padding:5px; }
+
 /* single report page */
 div#main { padding:15px 10px; }
 #main .left-col { background:#EEEDEA; position:relative; padding:35px 10px 10px; margin:4px 0 0 18px; width:525px; }
@@ -250,7 +255,16 @@ div.report-additional-reports h4 { position:absolute; float:left; top:-18px; lef
 div.report-additional-reports h5 { font-family: Arial, sans-serif;  }
 
 /* reports page */
-.report_right { width:450px;}
+#main .left-col { width:55%; }
+#main .right-col { width:38%; }
+.report-media-box-content { width:100%; }
+.report-additional-reports { width:89%; }
+.report-map .map-holder { width:100%; }
+
+/* submit report */
+.report_left { width:55%; }
+.report_right { width:40%; margin:0; float:left; }
+.report_map { width:100%; }
 
 /* get alerts page */
 .step-1 h2 {
@@ -281,6 +295,25 @@ div.footermenu ul li a {
   
   /* align the "View Full Map" button properly inside the map filters box */
   .bigmaplinkbox { border-top:1px solid #a4a4a4; text-align:center; margin:5px 10px 0; padding:3px 0; }
+
+
+  @media (max-width: 500px) {
+    /* home page */
+    ul.content-column li { float:none; }
+    ul.content-column li div.content-block { margin-top:18px; } 
+    
+    /* reports listing */
+    #reports-box,
+    #filters-box { display:block; width:100%; margin:0; }
+    
+    /* report detail */
+    #main .left-col,
+    #main .right-col { display:block; width:100%; margin:18px 0 0 0; }
+    
+    /* submit report */
+    .report_left, 
+    .report_right { width:100%; float:none; }
+  }
 
 /* miscellaneous */
 .floatbox { clear:both; }
