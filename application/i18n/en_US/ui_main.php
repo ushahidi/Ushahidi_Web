@@ -70,7 +70,7 @@
 	'change_picture' => 'Change My Picture',
 	'choose' => 'Choose a',
 	'choose_data_points' => 'Choose data points to download',
-    'choose_date_range' => 'Elija un rango de fechas',
+    'choose_date_range' => 'Or choose your own date range',
 	'choose_field_type' => 'Choose field type',
 	'cleanurl' => 'Clean URLs',
 	'clear' => 'Clear',
