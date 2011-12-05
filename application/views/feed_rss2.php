@@ -24,7 +24,7 @@
 			<?php endif; ?>
 
 			<?php foreach ($item['categories'] as $category): ?>
-				<category><?php echo $category; ?></category>
+				<category><?php echo htmlspecialchars($category); ?></category>
 			<?php endforeach; ?>
 
 			<?php // Event::feed_rss_item - Add to the feed item ?>

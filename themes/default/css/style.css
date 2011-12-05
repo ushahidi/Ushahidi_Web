@@ -2063,7 +2063,7 @@ p.labeled-divider span { position:relative; top:-8px; display:inline-block; back
         
 /* Report List View */
 .rb_report { position:relative; border-top:1px solid #c0c2b8; overflow:auto; padding-bottom:10px; }
-#rb_list-view { padding:18px 10px 0 0; height:415px; overflow:auto; }
+#rb_list-view { padding:18px 0 0 0; overflow:auto; }
 #rb_list-view .rb_report { 
     position:relative; 
     border:1px solid #c0c2b8; 

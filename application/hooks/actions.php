@@ -1,7 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Actions Hook
- * Determines the capabilities of the users browser
+ * This file processes all of the administrator defined actions
+ * in the actions section of the admin panel.
+ * The "actioner" class waits for events to be fired
+ * and then performs user defined actions
  *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
@@ -13,10 +16,6 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
-
-// This file processes all of the administrator defined actions in the actions section of the
-//   admin panel. The "actioner" class waits for events to be fired and then performs user
-//   defined actions
 
 class actioner {
 
