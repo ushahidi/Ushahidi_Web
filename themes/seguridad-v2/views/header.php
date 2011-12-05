@@ -91,9 +91,12 @@
 
 				<!-- mainmenu -->
 				<div id="mainmenu" class="clearingfix">
-					<ul>
+					<ul class="clearingfix">
 						<?php nav::main_tabs($this_page); ?>
 					</ul>
-
+					<div id="menu-left-cap"></div>
+  				<div id="menu-right-cap"></div>
 				</div>
+				
 				<!-- / mainmenu -->
+				

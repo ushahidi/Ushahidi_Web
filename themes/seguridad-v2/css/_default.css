@@ -33,36 +33,35 @@ Author Email: antikathistemi@gmail.com
   ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#467926; }
     /* hover */
     div.submit-incident a:hover, .btn_submit:hover { background-color:#528237; }
+    
+  /* Site Width */
+  div.rapidxwpr,
+  #top-bar { width:80%; }
+
 /* general styles */
-h1 {
-  
-}
-h2 {
-  
-}
-h5, h4 {
-  
-}
+h1 { }
+h2 { }
+h5, h4 { }
+
 
 /* structural divs */
 html { background:#728c99 url(../images/bg-body.jpg) repeat; }
-body#page { background:transparent url(../images/bg-header.jpg) 0 -20px repeat-x; }
-
-div#middle { background:transparent url(../images/bg_top-cap.png) top no-repeat; }
+body#page { background:transparent url(../images/bg-header.jpg) 0 -9px repeat-x; }
+div#middle { background:transparent; position:relative; }
 
 .big-block {   }
 .page-main #main { padding:0px 10px; }
 
 /* top-bar */
 #top-bar {
-  width: 960px;
-  height: 40px;
+  overflow:auto;
   position: relative;
   margin:0 auto;
+  z-index:1000;
 }
 div#searchbox {
-  position: absolute;
-  right: 0;
+  position: static;
+  float:right;
   border: none;
   background:#3d3c3b;
   width: auto;
@@ -104,7 +103,7 @@ div.search-form input.searchbtn {
 }
 
 /* header */
-div#header { height:80px; margin:0 0 13px; }
+div#header { height:80px; margin:0 0 25px; top:-30px; }
 
 /* logo box */
 div#logo {
@@ -113,13 +112,12 @@ div#logo {
   padding: 0;
   margin: 0;
   position:relative;
-  top:-30px;
 }
-div#logo h1,
-div#logo span { display:none; }
+div#logo h1 { display:none; }
+div#logo span { position:absolute; margin-left:13px; bottom:-20px;  }
 
 /* submit report button */
-div.submit-incident { margin:0; top:40%; }
+div.submit-incident { margin:0; top:70%; }
 div.submit-incident a, .btn_submit {
   text-shadow: 1px 1px 0 #424242;
   -moz-border-radius: 3px;
@@ -127,17 +125,28 @@ div.submit-incident a, .btn_submit {
 }
 
 /* primary nav */
-div#mainmenu { background:none; border:none; height:27px; }
-div#mainmenu ul { margin-top:3px; }
-div#mainmenu ul li {
-  margin:0 8px 0 0;
+div#mainmenu { border:none; position:relative;
+  
+  background: #f6941e; /* Old browsers */
+  background: -moz-linear-gradient(top,  #f6941e 0%, #c97818 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6941e), color-stop(100%,#c97818)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  #f6941e 0%,#c97818 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  #f6941e 0%,#c97818 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  #f6941e 0%,#c97818 100%); /* IE10+ */
+  background: linear-gradient(top,  #f6941e 0%,#c97818 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6941e', endColorstr='#c97818',GradientType=0 ); /* IE6-9 */  
 }
+div#mainmenu ul { }
+div#mainmenu ul li { margin:0 8px 0 0; }
 div#mainmenu ul li a { padding:3px 5px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 div#mainmenu ul li a:hover, div#mainmenu a.active { background:#fff; color:#a24e3b; }
 
-
+  #menu-left-cap,
+  #menu-right-cap { position:absolute; z-index:10000; width:10px; height:14px; background:transparent url(../images/bg_main-menu-caps.png); bottom:-14px; }
+  #menu-left-cap { left:0px; background-position:bottom;}
+  #menu-right-cap { right:0px; }
 /* filter box */
-#report-map-filter-box { position:absolute; z-index:1000; }
+#report-map-filter-box { position:absolute; z-index:1000; width:100%; }
 
 div#right { position:absolute; z-index:1000; }
 
@@ -182,7 +191,7 @@ div#right { position:absolute; z-index:1000; }
   /*toggle buttons */
   #layers-menu-toggle { position:absolute; top:20px; left:220px; width:60px; }
   #other-deployments-menu-toggle { position:absolute; top:20px; left:322px; width:130px; }
-  #how-to-report-menu-toggle { position:absolute; top:20px; left:780px; width:100px; }
+  #how-to-report-menu-toggle { position:absolute; top:20px; right:50px; width:100px; }
   
   #kml_switch,
   #sharing_switch,
@@ -191,6 +200,8 @@ div#right { position:absolute; z-index:1000; }
   #how-to-report-box { left:724px; padding-top:10px; }
     #how-to-report-box ol { margin-left:22px; }
     #how-to-report-box ol li { margin-bottom:5px; }
+    
+  #page .olControlLayerSwitcher .maximizeDiv, #page .olControlLayerSwitcher .minimizeDiv { top:25px; }
 
 /* home page map */
 .page-main div#content { position:relative; }
@@ -200,8 +211,8 @@ div.map { width:auto; border:1px solid #fff; border-top:0; position:relative; he
 
 /* home page timeline */
 .page-main div.slider-holder,
-.page-main div.graph-holder { background:#fff; display:block; width:900px; margin:0; padding:20px; }
-.page-main div.graph-holder  { width:940px; padding:0; }
+.page-main div.graph-holder { background:#fff; display:block; width:auto; margin:0; padding:20px; }
+.page-main div.graph-holder  { width:auto; padding:0; overflow-x:scroll; }
 
 /* home page how to report */
 div.additional-content { display:none; }
@@ -223,6 +234,13 @@ table.table-list thead th.date { width:20%; }
   background: #fff;
 }
 
+#reports-box { width:65% }
+#filters-box { width:31%; }
+.r_details { width:75%; }
+.r_details h3 { width:68%; }
+div.r_description { width:97%; }
+.rb_nav-controls { height:auto; padding:5px; }
+
 /* single report page */
 div#main { padding:15px 10px; }
 #main .left-col { background:#EEEDEA; position:relative; padding:35px 10px 10px; margin:4px 0 0 18px; width:525px; }
@@ -237,7 +255,16 @@ div.report-additional-reports h4 { position:absolute; float:left; top:-18px; lef
 div.report-additional-reports h5 { font-family: Arial, sans-serif;  }
 
 /* reports page */
-.report_right { width:450px;}
+#main .left-col { width:55%; }
+#main .right-col { width:38%; }
+.report-media-box-content { width:100%; }
+.report-additional-reports { width:89%; }
+.report-map .map-holder { width:100%; }
+
+/* submit report */
+.report_left { width:55%; }
+.report_right { width:40%; margin:0; float:left; }
+.report_map { width:100%; }
 
 /* get alerts page */
 .step-1 h2 {
@@ -268,6 +295,25 @@ div.footermenu ul li a {
   
   /* align the "View Full Map" button properly inside the map filters box */
   .bigmaplinkbox { border-top:1px solid #a4a4a4; text-align:center; margin:5px 10px 0; padding:3px 0; }
+
+
+  @media (max-width: 500px) {
+    /* home page */
+    ul.content-column li { float:none; }
+    ul.content-column li div.content-block { margin-top:18px; } 
+    
+    /* reports listing */
+    #reports-box,
+    #filters-box { display:block; width:100%; margin:0; }
+    
+    /* report detail */
+    #main .left-col,
+    #main .right-col { display:block; width:100%; margin:18px 0 0 0; }
+    
+    /* submit report */
+    .report_left, 
+    .report_right { width:100%; float:none; }
+  }
 
 /* miscellaneous */
 .floatbox { clear:both; }
