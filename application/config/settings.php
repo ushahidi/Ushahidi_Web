@@ -20,7 +20,7 @@ $config = array
 	'default_lat' => '',
 	'default_lon' => '',
 	'default_zoom' => '',
-	'items_per_page' => '20',
+	'items_per_page' => '5',
 	'items_per_page_admin' => '20',
 	'items_per_api_request' => '20',
 	'api_url' => '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=" type="text/javascript"></script>',

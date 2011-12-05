@@ -104,8 +104,8 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_language','required', 'length[5, 5]');
 			//$post->add_rules('site_timezone','required', 'between[10,50]');
 			$post->add_rules('site_contact_page','required','between[0,1]');
-			$post->add_rules('items_per_page','required','between[10,50]');
-			$post->add_rules('items_per_page_admin','required','between[10,50]');
+			$post->add_rules('items_per_page','required','between[5,50]');
+			$post->add_rules('items_per_page_admin','required','between[5,50]');
 			$post->add_rules('blocks_per_row','required','numeric');
 			$post->add_rules('allow_alerts','required','between[0,1]');
 			$post->add_rules('allow_reports','required','between[0,1]');
@@ -114,7 +114,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
 			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('cache_pages','required','between[0,1]');
-			$post->add_rules('cache_pages_lifetime','required','in_array[300,600,900,1800]');
+			$post->add_rules('cache_pages_lifetime','required','in_array[60,300,600,900,1800]');
 			$post->add_rules('private_deployment','required','between[0,1]');
 			$post->add_rules('checkins','required','between[0,1]');
 			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
@@ -328,7 +328,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
+		$this->template->content->items_per_page_array = array('5'=>'5 Items','10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$blocks_per_row_array = array();
 		for ($i=1; $i <= 21; $i++)
 		{
@@ -345,6 +345,7 @@ class Settings_Controller extends Admin_Controller
 			'0'=>strtoupper(Kohana::lang('ui_main.no')));
 		
 		$this->template->content->cache_pages_lifetime_array = array(
+			'60'=>'1 '.Kohana::lang('ui_admin.minute'),
 			'300'=>'5 '.Kohana::lang('ui_admin.minutes'),
 			'600'=>'10 '.Kohana::lang('ui_admin.minutes'),
 			'900'=>'15 '.Kohana::lang('ui_admin.minutes'),
