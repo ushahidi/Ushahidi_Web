@@ -80,13 +80,15 @@ class User_Model extends Auth_User_Model {
 		// Only check for the password if the user id has been specified
 		if (empty($post->user_id))
 		{
-			$post->add_rules('password','required', 'length[8,255]');
+			$post->add_rules('password','required', 'length[8,255]'/*, 'alpha_dash'*/);
+			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
 		
 		// If Password field is not blank
 		if ( ! empty($post->password) OR (empty($post->password) AND ! empty($post->password_again)))
 		{
-			$post->add_rules('password','required','length[8,255]', 'matches[password_again]');
+			$post->add_rules('password','required','length[8,255]', 'matches[password_again]'/*, 'alpha_dash'*/);
+			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
 		
         
@@ -129,5 +131,22 @@ class User_Model extends Auth_User_Model {
 			$post->add_error($field, 'superadmin_modify');
 		}
 	}
+	
+	public static function validate_password(Validation $post, $field)
+	{
+		$_is_valid = User_Model::password_rule($post[$field]);
+		if (! $_is_valid)
+		{
+			$post->add_error($field,'alpha_dash');
+		}
+	}
+	
+	public static function password_rule($password, $utf8 = FALSE)
+	{
+		return ($utf8 === TRUE)
+			? (bool) preg_match('/^[-\pL\pN#@_]++$/uD', (string) $password)
+			: (bool) preg_match('/^[-a-z0-9#@_]++$/iD', (string) $password);
+	}
+
 
 } // End User_Model

@@ -16,6 +16,7 @@
 		'login error' => 'Please check that you entered the correct password.',
 		'matches' => 'Please enter the same password in the two password fields.',
 		'required' => 'The password field is required.',
+		'alpha_dash' => 'The password field must have alphabetical characters, numbers, underscores and dashes only',
 	),
 	'password_confirm' => array(
 		'matches' => 'The password confirmation field must match the password field.',
