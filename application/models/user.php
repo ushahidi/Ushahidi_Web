@@ -80,14 +80,14 @@ class User_Model extends Auth_User_Model {
 		// Only check for the password if the user id has been specified
 		if (empty($post->user_id))
 		{
-			$post->add_rules('password','required', 'length[8,255]'/*, 'alpha_dash'*/);
+			$post->add_rules('password','required', 'length[8,255]');
 			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
 		
 		// If Password field is not blank
 		if ( ! empty($post->password) OR (empty($post->password) AND ! empty($post->password_again)))
 		{
-			$post->add_rules('password','required','length[8,255]', 'matches[password_again]'/*, 'alpha_dash'*/);
+			$post->add_rules('password','required','length[8,255]', 'matches[password_again]');
 			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
 		
