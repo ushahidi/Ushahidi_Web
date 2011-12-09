@@ -2,8 +2,8 @@
     require_once('install.php');
     global $install;
     
-    if(!isset( $_SESSION['advanced_finished']) && $_SESSION['advanced_finished'] != "advanced_map"){
-    	header('Location:advanced_mail_server.php');
+    if(!isset( $_SESSION['advanced_finished']) && $_SESSION['advanced_finished'] != "advanced_admin_pass"){
+    	header('Location:advanced_admin_pass.php');
     }
     
     if( $install->_check_for_clean_url() ) {
@@ -24,6 +24,7 @@
 		<li class=""><span>General</span></li>
 		<li class=""><span>Mail Server</span></li>
 		<li class=""><span>Map</span></li>
+		<li class=""><span>Admin Password</span></li>
 		<li class="active last"><span>Finished</span></li>
 	</ol>
 
@@ -31,9 +32,9 @@
                 <div class="feedback success">
                 	<h2>Installation Successful!</h2>
 				</div>
-                <p>To login, go to <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin";?>" target="_blank">http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]).$index."/admin";?></a> and use the following credentials:<br /><br />
+                <p>To login, go to <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin";?>" target="_blank">http://<?php echo " ".$_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]).$index."/admin";?></a> and use the following credentials:<br /><br />
 			<strong>Username:</strong> admin<br />
-			<strong>Password:</strong> admin</p>
+			<strong>Password:</strong><?php echo $_SESSION['admin_password']; ?></p>
 			<p><strong>Other next steps...</strong></p>
 			<ul>
 				<li><a href="http://<?php echo $_SERVER['SERVER_NAME'].":".$_SERVER["SERVER_PORT"]."/".$install->_get_base_path($_SERVER["REQUEST_URI"]); ?>" target="_blank">View your website</a></li>
@@ -46,7 +47,11 @@
 </div>
 <?php
 	// clear all set sessions
+	unset($_SESSION['advanced_db_info']);
 	unset($_SESSION['advanced_mail_server_settings']);
+	unset($_SESSION['map_settings']);
+	unset($_SESSION['advanced_admin_pass']);
+	unset($_SESSION['advanced_finished']);
 	// send the database info to the next page for updating the settings table.
 	unset($_SESSION['select_map_provider']);
 	unset($_SESSION['map_provider_api_key']);
@@ -76,6 +81,8 @@
 	unset($_SESSION['host']);
 	unset($_SESSION['db_name']);
 	unset($_SESSION['table_prefix']); 
+	unset($_SESSION['admin_password']);
+	unset($_SESSION['admin_password_again']);
 	          
 ?>
 </body>

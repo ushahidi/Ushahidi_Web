@@ -2,7 +2,7 @@
 	require_once('install.php');
 	global $install;
 	
-	if(!isset( $_SESSION['map_settings']) && $_SESSION['map_settings'] != "map_settings"){
+	if(!isset( $_SESSION['map_settings']) && $_SESSION['map_settings'] != "mail_server"){
 		header('Location:advanced_mail_server_settings.php');
 	}
 	
@@ -18,6 +18,7 @@
 		<li class=""><span>General</span></li>
 		<li class=""><span>Mail Server</span></li>
 		<li class="active"><span>Map</span></li>
+		<li class=""><span>Admin Password</span></li>
 		<li class="last"><span>Finished</span></li>
 	</ol>
 

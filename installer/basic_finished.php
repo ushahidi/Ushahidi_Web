@@ -2,8 +2,8 @@
 	require_once('install.php');
 	global $install;
 	
-	if(!isset( $_SESSION['basic_general_settings']) && $_SESSION['basic_general_settings'] != "basic_finished"){
-		header('Location:.');
+	if(!isset( $_SESSION['basic_finished']) && $_SESSION['basic_finished'] != "basic_admin_pass"){
+		header('Location:basic_admin_pass.php');
 	}
 	
 	if( $install->_check_for_clean_url() ) {
@@ -22,6 +22,7 @@
 	<ol class="progress-meter clearfix">
 		<li class=""><span>Database</span></li>
 		<li class=""><span>General</span></li>
+		<li class=""><span>Admin Password</span></li>
 		<li class="active last"><span>Finished</span></li>
 	</ol>
 		<div class="feedback success">
@@ -29,7 +30,7 @@
 		</div>
 		<p>To login, go to <a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"])."/admin";?>" target="_blank">http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]).$index."/admin";?></a> and use the following credentials:<br /><br />
 			<strong>Username:</strong> admin<br />
-			<strong>Password:</strong> admin</p>
+			<strong>Password:</strong><?php echo $_SESSION['admin_password']; ?></p>
 			<p><strong>Other next steps...</strong></p>
 			<ul>
 				<li><a href="http://<?php echo $_SERVER['SERVER_NAME'].":".$_SERVER["SERVER_PORT"]."/".$install->_get_base_path($_SERVER["REQUEST_URI"]); ?>" target="_blank">View your website</a></li>
@@ -49,12 +50,16 @@
 	unset($_SESSION['select_language']);
 	unset($_SESSION['site_email']);
 	unset($_SESSION['basic_general_settings']);
+	unset($_SESSION['basic_db_info']);
+	unset($_SESSION['basic_admin_pass']);
 
 	unset($_SESSION['username']);
 	unset($_SESSION['password']);
 	unset($_SESSION['host']);
 	unset($_SESSION['db_name']);
 	unset($_SESSION['table_prefix']); 
+	unset($_SESSION['admin_password']);
+	unset($_SESSION['admin_password_again']);
 ?>
 </body>
 </html>

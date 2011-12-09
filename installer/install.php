@@ -814,6 +814,133 @@ HTML;
  	   	}
 	}
 	
+	function _password_info($password,$password_confirm,$table_prefix = NULL)
+	{
+		global $form;
+		
+		// Check for empty password fields
+		
+		// Password field is empty
+		if ( !$password || strlen($password = trim($password)) == 0)
+		{
+			$form->set_error('password',"You must enter a password.");
+		}
+		
+		// Password confirmation field is empty
+		if (( !$password_confirm || strlen($password_confirm = trim($password_confirm)) == 0) && !empty($password))
+		{
+			$form->set_error('confirm',"You must enter the password confirmation.");
+		}
+		
+		// Passwords don't match
+		if (((!empty($password) && !empty($password_confirm)) && ($password != $password_confirm)) || (empty($password) && !empty($password_confirm)))
+		{
+			$form->set_error('match',"Your passwords don't match.");
+		}
+		
+		// Password length issues
+		if (strlen($password) < 8 || strlen($password) > 255)
+		{
+			$form->set_error('length',"Your password should not be less than 8 characters long or more than 255 characters long.");
+		}
+		
+		// Password invalid
+		if( !($this->password_rule($password)))
+		{
+			$form->set_error('invalid',"Your password should have aplhabetical characters, the # and @symbol, numbers, dashes and underscores only.");
+		}
+		
+		if ( $form->num_errors > 0)
+		{
+			return 1;
+		}
+		else
+		{
+			$this->_add_password_info($password);
+			return 0;
+		}
+		// check for errors, otherwise, call _add_password_info()
+	}
+	
+	function _add_password_info($password)
+	{
+		$admin_pass = $this->hash_password($password);
+		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		@mysql_query('UPDATE `'.$table_prefix.'users` SET `password` = \''.mysql_escape_string($admin_pass).
+		'\' WHERE `id` =1 LIMIT 1;');
+		@mysql_close($connection);
+		// make connection to db and add the hashed password
+	}
+	
+	/**
+	 * Creates a hashed password from a plaintext password, inserting salt
+	 * based on the configured salt pattern.
+	 *
+	 * @param   string  plaintext password
+	 * @return  string  hashed password string
+	 */
+	public function hash_password($password, $salt = FALSE)
+	{
+		$salt_pattern = array(3, 5, 6, 10, 24, 26, 35, 36, 37, 40);
+		 //array(1, 3, 5, 9, 14, 15, 20, 21, 28, 30);
+		if ($salt === FALSE)
+		{
+			// Create a salt seed, same length as the number of offsets in the pattern
+			$salt = substr($this->hash(uniqid(NULL, TRUE)), 0, count($salt_pattern));
+		}
+		
+		// Password hash that the salt will be inserted into
+		$hash = $this->hash($salt.$password);
+
+		// Change salt to an array
+		$salt = str_split($salt, 1);
+
+		// Returned password
+		$password = '';
+
+		// Used to calculate the length of splits
+		$last_offset = 0;
+
+		foreach ($salt_pattern as $offset)
+		{
+			// Split a new part of the hash off
+			$part = substr($hash, 0, $offset - $last_offset);
+
+			// Cut the current part out of the hash
+			$hash = substr($hash, $offset - $last_offset);
+
+			// Add the part to the password, appending the salt character
+			$password .= $part.array_shift($salt);
+
+			// Set the last offset to the current offset
+			$last_offset = $offset;
+		}
+		
+		// Return the password, with the remaining hash appended
+		return $password.$hash;
+		
+	}
+	
+	/**
+	 * Perform a hash, using the configured method.
+	 *
+	 * @param   string  string to hash
+	 * @return  string
+	 */
+	public function hash($str)
+	{
+		return hash('sha1', $str);
+	}
+	
+	
+	public function password_rule($password, $utf8 = FALSE)
+	{
+		return ($utf8 === TRUE)
+			? (bool) preg_match('/^[-\pL\pN#@_]++$/uD', (string) $password)
+			: (bool) preg_match('/^[-a-z0-9#@_]++$/iD', (string) $password);
+	}
 	
 }
 

@@ -40,10 +40,14 @@
 			$this->_proc_general_settings();
 		}else if(isset($_POST['basic_general_settings'])){ 
 			$this->_proc_basic_general_settings();
+		}else if(isset($_POST['basic_admin_pass'])){
+			$this->_proc_basic_admin_pass();
 		}else if(isset($_POST['advanced_mail_server_settings'])){ 
 			$this->_proc_mail_server();
 		}else if(isset($_POST['advanced_map_config'])){ 
 			$this->_proc_map();
+		}else if(isset($_POST['advanced_admin_pass'])){
+			$this->_proc_advanced_admin_pass();
 		}else if(isset($_POST['advanced_perm_pre_check'])){ 
 			$this->_proc_advanced_pre_perm_check();
 		}else if(isset($_POST['basic_perm_pre_check'])){ 
@@ -71,18 +75,23 @@
 		);
 		
 		
-		//no errors
-		if( $status == 0 ) {
-			$_SESSION['basic_db_info'] = 'basic_general_settings'; 
-			// send the database info to the next page for updating the settings table.
+		// No errors
+		if ($status == 0) 
+		{
+			$_SESSION['basic_general_settings'] = 'basic_db_info'; 
+			
+			// Send the database info to the next page for updating the settings table.
 			$_SESSION['username'] = $_POST['username'];
 			$_SESSION['password'] = $_POST['password'];
 			$_SESSION['host'] = $_POST['host'];
 			$_SESSION['db_name'] = $_POST['db_name'];
-			$_SESSION['table_prefix'] = $_POST['table_prefix'];
-			
+			$_SESSION['table_prefix'] = $_POST['table_prefix'];	
 			header("Location:basic_general_settings.php");
-		}else if($status == 1 ) {
+		}
+		
+		// Errors exist
+		else if ($status == 1 ) 
+		{
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
 			header("Location:basic_db_info.php");
@@ -108,7 +117,7 @@
 		//no errors
 		if( $status == 0 ) {
 			// make sure users get to the general setting from advanced db info page.
-			$_SESSION['general_settings'] = 'general_settings';
+			$_SESSION['general_settings'] = 'advanced_db_info';
 			
 			// send the database info to the next page for updating the settings table.
 			$_SESSION['username'] = $_POST['username'];
@@ -144,7 +153,7 @@
 		//no errors
 		if( $status == 0 ) {
 			// make sure users get to the general setting from advanced db info page.
-			$_SESSION['mail_server'] = 'mail_server';
+			$_SESSION['mail_server'] = 'general_settings';
 			
 			// set it up in case someone wants to go to the previous page.
 			$_SESSION['site_name'] = $_POST['site_name'];
@@ -180,7 +189,7 @@
 		//no errors
 		if( $status == 0 ) {
 			// make sure users get to the general setting from advanced db info page.
-			$_SESSION['basic_general_settings'] = 'basic_finished';
+			$_SESSION['basic_admin_pass'] = 'basic_general_settings';
 			
 			// set it up in case someone want to goes the previous page.
 			$_SESSION['site_name'] = $_POST['site_name'];
@@ -189,7 +198,7 @@
 			$_SESSION['site_email'] = $_POST['site_email'];
 			$_SESSION['table_prefix'] = $_POST['table_prefix'];
 			
-			header("Location:basic_finished.php");
+			header("Location:basic_admin_pass.php");
 		}else if($status == 1 ) {
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
@@ -218,7 +227,7 @@
 		//no errors
 		if( $status == 0 ) {
 			// make sure users get to the general setting from advanced db info page.
-			$_SESSION['map_settings'] = 'map_settings';
+			$_SESSION['map_settings'] = 'mail_server';
 			
 			// send the database info to the next page for updating the settings table.
 			$_SESSION['site_alert_email'] = $_POST['site_alert_email'];
@@ -253,14 +262,14 @@
 		//no errors
 		if( $status == 0 ) {
 			// make sure users get to the general setting from advanced db info page.
-			$_SESSION['advanced_finished'] = 'advanced_map';
+			$_SESSION['advanced_admin_pass'] = 'map_settings';
 			
 			// send the database info to the next page for updating the settings table.
 			$_SESSION['select_map_provider'] = $_POST['select_map_provider'];
 			$_SESSION['map_provider_api_key'] = $_POST['map_provider_api_key'];
 			$_SESSION['table_prefix'] = $_POST['table_prefix'];
 			 
-			header("Location:advanced_finished.php");
+			header("Location:advanced_admin_pass.php");
 		}else if($status == 1 ) {
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
@@ -302,6 +311,78 @@
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
 			header("Location:advanced_summary.php");
+		}
+	}
+	
+	/**
+	 * Process the admin password for the basic installer mode
+	 *
+	 */
+	public function _proc_basic_admin_pass()
+	{
+		global $install, $form;
+		$status = $install->_password_info(
+			$_POST['admin_password'],
+			$_POST['admin_password_again'],
+			$_POST['table_prefix']
+		);
+		
+		// No errors
+		if ($status == 0)
+		{
+			$_SESSION['basic_finished'] = 'basic_admin_pass';
+			// add the info
+			
+			// Set this info just incase someone wants to go to the previous page from the finished page
+			$_SESSION['admin_password'] = $_POST['admin_password'];
+			$_SESSION['admin_password_again'] = $_POST['admin_password_again'];
+			$_SESSION['table_prefix'] = $_POST['table_prefix'];
+			header("Location: basic_finished.php");
+		}
+		
+		// We have errors
+		else if($status ==1)
+		{
+			$_SESSION['value_array'] = $_POST;
+			$_SESSION['error_array'] = $form->get_error_array();
+			header("Location: basic_admin_pass.php");
+		}
+		
+		
+	}
+	
+	/**
+	 *
+	 *
+	 */
+	public function _proc_advanced_admin_pass()
+	{
+		global $install, $form;
+		$status = $install->_password_info(
+			$_POST['admin_password'],
+			$_POST['admin_password_again'],
+			$_POST['table_prefix']
+		);
+		
+		// No errors
+		if ($status == 0)
+		{
+			$_SESSION['advanced_finished'] = 'advanced_admin_pass';
+			// add the info
+			
+			// Set this info just incase someone wants to go to the previous page from the finished page
+			$_SESSION['admin_password'] = $_POST['admin_password'];
+			$_SESSION['admin_password_again'] = $_POST['admin_password_again'];
+			$_SESSION['table_prefix'] = $_POST['table_prefix'];
+			header("Location: advanced_finished.php");
+		}
+		
+		// We have errors
+		else if($status ==1)
+		{
+			$_SESSION['value_array'] = $_POST;
+			$_SESSION['error_array'] = $form->get_error_array();
+			header("Location: advanced_admin_pass.php");
 		}
 	}
 	
