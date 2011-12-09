@@ -482,7 +482,7 @@ class Install
 		'\', site_tagline = \''.mysql_escape_string($site_tagline).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
 		@mysql_close($connection);	
 		
-		//enable / disable clean url 
+		// Enable / disable clean url 
 		$this->_remove_index_page($clean_url);
 		
 	}
@@ -814,6 +814,9 @@ HTML;
  	   	}
 	}
 	
+	/**
+	 * Validate password information
+	 */
 	function _password_info($password,$password_confirm,$table_prefix = NULL)
 	{
 		global $form;
@@ -859,19 +862,25 @@ HTML;
 			$this->_add_password_info($password);
 			return 0;
 		}
-		// check for errors, otherwise, call _add_password_info()
 	}
+	
+	/**
+	 * Add the hashed password to the users table
+	 *
+	 * @param  string  password to be encrypted
+	 */
 	
 	function _add_password_info($password)
 	{
+		// Encrypt the password
 		$admin_pass = $this->hash_password($password);
+		
 		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
 		@mysql_query('UPDATE `'.$table_prefix.'users` SET `password` = \''.mysql_escape_string($admin_pass).
 		'\' WHERE `id` =1 LIMIT 1;');
 		@mysql_close($connection);
-		// make connection to db and add the hashed password
 	}
 	
 	/**
@@ -934,6 +943,12 @@ HTML;
 		return hash('sha1', $str);
 	}
 	
+	/**
+	 * Check that password contains alphabetical letters, numbers, the # and @ symbol, hashes and underscores only
+	 *
+	 * @param  string  string that needs checking
+	 * @return  boolean
+	 */
 	
 	public function password_rule($password, $utf8 = FALSE)
 	{

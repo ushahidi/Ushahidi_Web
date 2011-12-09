@@ -78,6 +78,7 @@
 		// No errors
 		if ($status == 0) 
 		{
+			// Make sure users get to the basic general settings page from the basic db info page
 			$_SESSION['basic_general_settings'] = 'basic_db_info'; 
 			
 			// Send the database info to the next page for updating the settings table.
@@ -116,10 +117,11 @@
 		
 		//no errors
 		if( $status == 0 ) {
-			// make sure users get to the general setting from advanced db info page.
+		
+			// Make sure users get to the advanced general settings page from the advanced db info page
 			$_SESSION['general_settings'] = 'advanced_db_info';
 			
-			// send the database info to the next page for updating the settings table.
+			// Send the database info to the next page for updating the settings table.
 			$_SESSION['username'] = $_POST['username'];
 			$_SESSION['password'] = $_POST['password'];
 			$_SESSION['host'] = $_POST['host'];
@@ -152,7 +154,7 @@
 		
 		//no errors
 		if( $status == 0 ) {
-			// make sure users get to the general setting from advanced db info page.
+			// Make sure users get to the mail settings page from the advanced general settings page
 			$_SESSION['mail_server'] = 'general_settings';
 			
 			// set it up in case someone wants to go to the previous page.
@@ -188,7 +190,7 @@
 		
 		//no errors
 		if( $status == 0 ) {
-			// make sure users get to the general setting from advanced db info page.
+			// Make sure users get to the basic password info from the general settings page.
 			$_SESSION['basic_admin_pass'] = 'basic_general_settings';
 			
 			// set it up in case someone want to goes the previous page.
@@ -226,10 +228,10 @@
 		
 		//no errors
 		if( $status == 0 ) {
-			// make sure users get to the general setting from advanced db info page.
+			
+			// Make sure users get to the map settings page from the mail server page
 			$_SESSION['map_settings'] = 'mail_server';
 			
-			// send the database info to the next page for updating the settings table.
 			$_SESSION['site_alert_email'] = $_POST['site_alert_email'];
 			$_SESSION['mail_server_username'] = $_POST['mail_server_username'];
 			$_SESSION['mail_server_pwd'] = $_POST['mail_server_pwd'];
@@ -261,7 +263,8 @@
 		
 		//no errors
 		if( $status == 0 ) {
-			// make sure users get to the general setting from advanced db info page.
+			
+			// Make sure users get to the advanced password info page from the advanced map settings page
 			$_SESSION['advanced_admin_pass'] = 'map_settings';
 			
 			// send the database info to the next page for updating the settings table.
@@ -284,10 +287,14 @@
 		global $install,$form;
 		$status = $install->_check_writable_dir();
 		$status += $install->_check_modules();
-		if($status == 0 ) {
+		if($status == 0 ) 
+		{
+			// Make sure users get to the basic db info page from the basic summary page
 			$_SESSION['basic_db_info'] = 'basic_summary';
 			header("Location:basic_db_info.php");
-		}else {
+		}
+		else
+		{
 			$_SESSION['value_array'] = $_POST;
 			$_SESSION['error_array'] = $form->get_error_array();
 			header("Location:basic_summary.php");
@@ -303,7 +310,8 @@
 		$status = $install->_check_writable_dir();
 		$status += $install->_check_modules_advanced();
 		if($status == 0 ) {
-			// make sure users get to the general setting from advanced db info page.
+			
+			// Make sure users get to the advanced db info page from the advanced summary page
 			$_SESSION['advanced_db_info'] = 'advanced_summary';
 			
 			header("Location:advanced_db_info.php");
@@ -330,8 +338,8 @@
 		// No errors
 		if ($status == 0)
 		{
+			// Make sure that we're moving from the password information page before moving to the finished page
 			$_SESSION['basic_finished'] = 'basic_admin_pass';
-			// add the info
 			
 			// Set this info just incase someone wants to go to the previous page from the finished page
 			$_SESSION['admin_password'] = $_POST['admin_password'];
@@ -352,7 +360,7 @@
 	}
 	
 	/**
-	 *
+	 * Process password information for the advanced installer mode
 	 *
 	 */
 	public function _proc_advanced_admin_pass()
@@ -367,8 +375,8 @@
 		// No errors
 		if ($status == 0)
 		{
+			// Make sure that we're moving from the password information page before moving to the finished page
 			$_SESSION['advanced_finished'] = 'advanced_admin_pass';
-			// add the info
 			
 			// Set this info just incase someone wants to go to the previous page from the finished page
 			$_SESSION['admin_password'] = $_POST['admin_password'];

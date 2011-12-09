@@ -23,7 +23,7 @@
 		</ol>
 		<form method="POST" name="frm_install" action="process.php" style="line-height: 100%; margin-top: 0; margin-bottom: 0;">  
 			<input type="hidden" name="table_prefix" value="<?php echo $_SESSION['table_prefix']; ?>">
-			<?php if($form->num_errors > 0) { ?>
+			<?php if($form->num_errors > 0): ?>
 				<div class="feedback error"><a class="btn-close" href="#">x</a>
 					<p>Listed below is a summary of all the errors we encountered:</p>
 					<ul id="error-list">
@@ -42,7 +42,7 @@
 						?>
 					</ul>
 				</div>
-			<?php } ?>
+			<?php endif ?>
 			<div class="feedback info">
 			 	<p>You can make use of this <a href="http://strongpasswordgenerator.com/">strong password generator</a>. Please note that the only allowable symbols in your password are the # and @symbol.</p> 
 			</div> 
