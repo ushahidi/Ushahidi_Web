@@ -37,9 +37,15 @@ class Geocoder_Core {
 					$request_url = $base_url . "&q=" . urlencode($address);
 
 					//$xml = simplexml_load_file(utf8_encode($request_url)) or die("url not loading");
-					$page = file_get_contents($request_url);
+					// Get XML from geocoder. Squashing errors in case internet connection is down
+					$page = @file_get_contents($request_url);
 					$page = utf8_encode($page);
-					$xml = new SimpleXMLElement($page);
+					// Try to parse XML - assume geocoder is not accessible if we can't
+					try {
+						$xml = new SimpleXMLElement($page);
+					} catch ( Exception $e ) {
+						return false;
+					}
 
 					$status = $xml->Response->Status->code;
 					if (strcmp($status, "200") == 0)
