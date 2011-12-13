@@ -689,7 +689,6 @@
 				{
 					if(value != "" && value != undefined && value != null)
 					{
-						console.log("assinging values:");
 						customFields.push([cffId, value]);
 					}
 				}
@@ -764,7 +763,6 @@
 		var separator = "";
 		for(i in params)
 		{
-			console.log(i + " = " + params + " arrayLevel: " + arrayLevelStr + " str: " + str);
 			//do we need to insert a separator?
 			if(str.length > 0)
 			{
