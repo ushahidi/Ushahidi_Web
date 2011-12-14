@@ -103,6 +103,11 @@ $config['render_stats'] = TRUE;
 $config['enable_mhi'] = FALSE;
 
 /**
+ * Allow members to sign in with OpenID providers, excluding RiverID
+ */
+$config['allow_openid'] = FALSE;
+
+/**
  * Filename prefixed used to determine extensions. For example, an
  * extension to the Controller class would be named MY_Controller.php.
  */

@@ -82,13 +82,24 @@ dl {}
 }
 #openid_login_container{
 	margin:50px auto;
-	width:626px;
+	/*width:626px;*/
+	width:750px;
 }
 #openid_login {
 	border:3px solid #999;
 	text-align:left;
 	padding: 20px;
 	background-color: #ddd;
+	float:left;
+	width:340px;
+}
+#create_account {
+	border:3px solid #999;
+	text-align:left;
+	padding: 20px;
+	background-color: #ddd;
+	float:right;
+	width:300px;
 }
 .login_text{
 	padding:3px 7px 3px 7px;

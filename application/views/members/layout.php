@@ -165,7 +165,7 @@
 					<li class="none-separator"><a href="<?php echo url::site() ?>" title="View the home page">
 						<?php echo Kohana::lang('ui_admin.view_site');?></a>					
 					<li class="none-separator"><a href="<?php echo url::site()."members/profile/" ?>"><?php echo Kohana::lang('ui_admin.my_profile');?></a></li>
-					<li><a href="<?php echo url::site()."members/";?>log_out"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
+					<li><a href="<?php echo url::site();?>logout"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
 				</ul>
 			</div>
 

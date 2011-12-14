@@ -53,7 +53,7 @@ class Members_Controller extends Template_Controller
 		
 		if ( ! $this->auth->logged_in('login') OR ! $this->auth->logged_in('member'))
 		{
-			url::redirect('members/login');
+			url::redirect('login');
 		}
 
 		// Set Table Prefix
@@ -97,14 +97,6 @@ class Members_Controller extends Template_Controller
 	public function index()
 	{
 		url::redirect('members/dashboard');
-	}
-
-	public function log_out()
-	{
-		$auth = new Auth;
-		$auth->logout(TRUE);
-
-		url::redirect('members/login');
 	}
 
 } // End Admin
