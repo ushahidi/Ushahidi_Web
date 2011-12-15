@@ -115,7 +115,7 @@
 						foreach( $incident_news as $incident_new) 
 						{
 							?>
-							<a href="<?php echo $incident_new; ?>"><?php
+							<a href="<?php echo $incident_new; ?> " target="_blank"><?php
 							echo $incident_new;?></a>
 							<br/>
 							<?php	
