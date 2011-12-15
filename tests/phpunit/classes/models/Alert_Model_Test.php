@@ -16,7 +16,7 @@ class Alert_Model_Test extends PHPUnit_Framework_TestCase
 {
 	
 	/**
-	 * Data provider for testValidate()
+	 * Data provider for test_validate_email_mobile()
 	 *
 	 * @return array
 	 */
@@ -27,10 +27,12 @@ class Alert_Model_Test extends PHPUnit_Framework_TestCase
 				array(
 					'alert_lat' => -1.2821515239557,
 					'alert_lon' => 36.819734568238,
-					'alert_category' => array(40, 20),
 					'alert_radius' => 10,
 					'alert_email' => 'test@ushahidi.com',
-					'alert_mobile' => '254721247824'
+					'alert_mobile' => '254721247824',
+					'alert_country' => ORM::factory('country',Kohana::config('settings.default_country'))->id,
+					'alert_confirmed' => 1
+
 				),
 				FALSE
 			)
@@ -39,21 +41,137 @@ class Alert_Model_Test extends PHPUnit_Framework_TestCase
 	}
 	
 	/**
-	 * Tests Alert_Model->validate()
+	 * Tests Alert_Model->validate() where both a subscriber email address and
+	 * mobile phone no. have been specified
 	 *
 	 * @test
 	 * @dataProvider providerValidate
 	 * @param array $data Input data to be validated
-	 * @param boolean $save Toggles the saving of the alert data 
 	 */
-	public function testValidate($data, $save)
+	public function test_validate_email_mobile($data)
 	{
 		// Create instance for the Alert_Model class
-		// $model = new Alert_Model();
+		$model = new Alert_Model();
 		
 		// Check if the validation	succeeded
-		// $this->assertEquals(TRUE, $model->validate($data, $save));
+		$this->assertEquals(TRUE, $model->validate($data), 'Alert Validation Failed');
+
 	}
+
+	/**
+	 * Data provider for test_validate_mobile()
+	 *
+	 * @return array
+	 */
+	public function providerValidateMobile()
+	{
+		return array(
+			array(
+				array(
+					'alert_lat' => -1.2821515239557,
+					'alert_lon' => 36.819734568238,
+					'alert_radius' => 10,
+					'alert_mobile' => '254721247824',
+					'alert_country' => ORM::factory('country',Kohana::config('settings.default_country'))->id,
+					'alert_confirmed' => 1
+
+				),
+				FALSE
+			)
+		);
+		
+	}
+
+	/**
+	 * When only the subscriber's mobile phone no. has been specified
+	 *
+	 * @dataProvider providerValidateMobile
+	 */
+	public function test_validate_mobile_only($data)
+	{
+		// Create an instance for the Alert_Model class
+		$alert = new Alert_Model();
+
+		//Check if validation succeeded
+		$this->assertEquals(TRUE,$alert->validate($data), 'Alert Mobile phone number not specified');
+
+	}
+
+	/**
+	 * Data provider for test_validate_email()
+	 *
+	 * @return array
+	 */
+	public function providerValidateEmail()
+	{
+		return array(
+			array(
+				array(
+					'alert_lat' => -1.2821515239557,
+					'alert_lon' => 36.819734568238,
+					'alert_radius' => 10,
+					'alert_email' => 'test@ushahidi.com',
+					'alert_country' => ORM::factory('country',Kohana::config('settings.default_country'))->id,
+					'alert_confirmed' => 1
+
+				),
+				FALSE
+			)
+		);
+		
+	}
+
+	/**
+	 * When only the subscriber's email address has been specified
+	 *
+	 * @dataProvider providerValidateEmail
+	 */
+	public function test_validate_email_only($data)
+	{
+		//Create an instance for the Alert_Model class
+		$alert = new Alert_Model();
+
+		//Check if validation succeeded
+		$this->assertEquals(TRUE,$alert->validate($data), 'Alert Email adddress not specified');
+	}
+
+	/**
+	 * Data provider for test_validate_no_subscriber()
+	 *
+	 * @return array
+	 */
+	public function providerValidateSubscriber()
+	{
+		return array(
+			array(
+				array(
+					'alert_lat' => -1.2821515239557,
+					'alert_lon' => 36.819734568238,
+					'alert_radius' => 10,
+					'alert_country' => ORM::factory('country',Kohana::config('settings.default_country'))->id,
+					'alert_confirmed' => 1
+
+				),
+				FALSE
+			)
+		);
+		
+	}
+
+	/**
+	 * Tests where no subscriber email address or phone no. has been specified
+	 * 
+	 * @dataProvider providerValidateSubscriber
+ 	 */
+	public function test_validate_no_subscriber($data)
+	{
+		// Create an instance for the Alert_Model class
+		$alert = new Alert_Model();
+
+		//Check if validation succeeded
+		$this->assertFalse($alert->validate($data), 'Neither Alert Email address or Alert Mobile phone number has been specified');
+	}
+
 	
 }
 ?>

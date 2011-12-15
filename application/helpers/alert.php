@@ -105,7 +105,28 @@ class alert_Core {
 		
 		$from[] = $settings['site_name'];
 		$subject = $settings['site_name']." ".Kohana::lang('alerts.verification_email_subject');
-		$message = Kohana::lang('alerts.confirm_request').url::site().'alerts/verify?c='.$alert_code."&e=".$alert_email;
+		
+
+		$message = Kohana::lang('ui_admin.confirmation_code'). $alert_code."\n\n";
+		if(!empty($post->alert_category))
+		{
+			$message .= Kohana::lang('alerts.alerts_subscribed')."\n";
+			foreach ($post->alert_category as $item)
+			{
+				$category = ORM::factory('category')
+								->where('id',$item)
+								->find();
+
+				if($category->loaded)
+				{
+
+					$message .= "<ul><li>".$category->category_title ."</li></ul>";
+				}
+			}
+			
+		}
+
+		$message .= Kohana::lang('alerts.confirm_request').url::site().'alerts/verify?c='.$alert_code."&e=".$alert_email;
 
 		if (email::send($to, $from, $subject, $message, TRUE) == 1)
 		{

@@ -28,6 +28,7 @@
 		'in_array' => 'You have not set a valid radius on the map.',
 		'required' => 'You have not set your radius on the map.',
 	),
+	'alerts_subscribed' => 'You have subscribed for alerts with the following categories',
 	'code_already_verified' => 'This code has been verified before!',
 	'code_not_found' => 'This verification code was not found! Please confirm that you have the correct URL.',
 	'code_verified' => ' Your code was verified correctly. You will now receive alerts about incidents as they happen.',
