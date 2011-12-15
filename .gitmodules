@@ -1,3 +1,0 @@
-[submodule "plugins/adminmap"]
-	path = plugins/adminmap
-	url = git@github.com:antikathistemi/adminmap.git
