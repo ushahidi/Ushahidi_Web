@@ -170,6 +170,7 @@ class Main_Controller extends Template_Controller {
 	    ->where('category_visible', '1')
 	    ->where('parent_id', '0')
 	    ->where('category_trusted != 1')
+	    ->orderby('category_position', 'ASC')
 	    ->orderby('category_title', 'ASC')
 	    ->find_all();
 

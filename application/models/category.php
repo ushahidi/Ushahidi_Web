@@ -138,6 +138,10 @@ class Category_Model extends ORM_Tree {
 		}
 		
 		// Return
-		return self::factory('category')->where($where)->orderby('category_title', 'ASC')->find_all();
+		return self::factory('category')
+			->where($where)
+			->orderby('category_position', 'ASC')
+			->orderby('category_title', 'ASC')
+			->find_all();
 	}
 }
