@@ -233,7 +233,7 @@
 										<?php
 										
 										// Get All Category Children
-										foreach ( $category->orderby('category_position', 'asc')->children as $child)
+										foreach ( $category->children as $child)
 										{
 											$category_id = $child->id;
 											$parent_id = $child->parent_id;
