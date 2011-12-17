@@ -97,11 +97,11 @@
 								<div id="form_loader" style="float:left;"></div>
 							</div>
 							<div class="row">
-								<h4><?php echo Kohana::lang('ui_main.title');?></h4>
+								<h4><?php echo Kohana::lang('ui_main.title');?> <span class="required">*</span></h4>
 								<?php print form::input('incident_title', $form['incident_title'], ' class="text title"'); ?>
 							</div>
 							<div class="row">
-								<h4><?php echo Kohana::lang('ui_main.description');?> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span></h4>
+								<h4><?php echo Kohana::lang('ui_main.description');?> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span> <span class="required">*</span></h4>
 								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"') ?>
 							</div>
 
@@ -156,7 +156,7 @@
 							<?php Event::run('ushahidi_action.report_form_admin_after_time', $id); ?>
 							<div class="row">
 								<h4><a href="#" id="category_toggle" class="new-cat"><?php echo Kohana::lang('ui_main.new_category');?></a><?php echo Kohana::lang('ui_main.categories');?> 
-								<span><?php echo Kohana::lang('ui_main.select_multiple');?>.</span></h4>
+								<span><?php echo Kohana::lang('ui_main.select_multiple');?>.</span>  <span class="required">*</span></h4>
 								<?php print $new_category_toggle_js; ?>
 								<!--category_add form goes here-->
 			                    <div id="category_add" class="category_add">
@@ -251,7 +251,7 @@
 							<?php Event::run('ushahidi_action.report_form_admin_location', $id); ?>
 							<div class="row">
 								<div class="town">
-									<h4><?php echo Kohana::lang('ui_main.reports_location_name');?> <br /><span><?php echo Kohana::lang('ui_main.detailed_location_example');?></span></h4>
+									<h4><?php echo Kohana::lang('ui_main.reports_location_name');?>  <span class="required">*</span><br /><span><?php echo Kohana::lang('ui_main.detailed_location_example');?></span></h4>
 									<?php print form::input('location_name', $form['location_name'], ' class="text long"'); ?>
 								</div>
 							</div>
