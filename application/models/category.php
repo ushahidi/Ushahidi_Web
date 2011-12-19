@@ -33,6 +33,12 @@ class Category_Model extends ORM_Tree {
 	protected $children = "category";
 	
 	/**
+	 * Default sort order
+	 * @var array
+	 */
+	protected $sorting = array("category_position" => "asc");
+	
+	/**
 	 * Validates and optionally saves a category record from an array
 	 *
 	 * @param array $array Values to check
