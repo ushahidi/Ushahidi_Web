@@ -107,7 +107,7 @@ class alert_Core {
 		$subject = $settings['site_name']." ".Kohana::lang('alerts.verification_email_subject');
 		
 
-		$message = Kohana::lang('ui_admin.confirmation_code'). $alert_code."\n\n";
+		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code."<br><br>";
 		if(!empty($post->alert_category))
 		{
 			$message .= Kohana::lang('alerts.alerts_subscribed')."\n";
