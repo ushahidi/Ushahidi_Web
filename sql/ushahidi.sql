@@ -729,7 +729,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `cache_pages` tinyint(4) NOT NULL DEFAULT '0',
     `cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
     `private_deployment` tinyint(4) NOT NULL DEFAULT '0',
-    `default_map` varchar(100) NOT NULL DEFAULT 'google_normal',
+    `default_map` varchar(100) NOT NULL DEFAULT 'osm_mapnik',
     `default_map_all` varchar(20) NOT NULL default 'CC0000',
     `api_google` varchar(200) default NULL,                                         
     `api_yahoo` varchar(200) default NULL,                                          
