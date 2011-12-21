@@ -289,7 +289,6 @@ class Manage_Controller extends Admin_Controller
 		$categories = ORM::factory('category')
 						->with('category_lang')
 						->where('parent_id','0')
-						->orderby('category_position', 'asc')
 						->orderby('category_title', 'asc')
 						->find_all($this->items_per_page, $pagination->sql_offset);
 

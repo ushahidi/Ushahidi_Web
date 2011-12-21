@@ -225,12 +225,11 @@ class Main_Controller extends Template_Controller {
 		foreach (ORM::factory('category')
 				->where('category_visible', '1')
 				->where('parent_id', '0')
-				->orderby('category_position', 'asc')
 				->find_all() as $category)
 		{
 			// Get The Children
 			$children = array();
-			foreach ($category->orderby('category_position', 'asc')->children as $child)
+			foreach ($category->children as $child)
 			{
 				$child_visible = $child->category_visible;
 				if ($child_visible)
