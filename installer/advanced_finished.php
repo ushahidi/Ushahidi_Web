@@ -17,7 +17,7 @@
 
 	$adminURL = (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' ? 'https' : 'http') .
 				'://' . $_SERVER['SERVER_NAME'] .
-				$adminURL = (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443 ? ":{$_SERVER['SERVER_PORT']}" : '') .
+				(isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] != 80 && $_SERVER['SERVER_PORT'] != 443 ? ":{$_SERVER['SERVER_PORT']}" : '') .
 				str_replace('//', '/', '/' . $install->_get_base_path($_SERVER["REQUEST_URI"]) . '/admin/');
  ?>
 <body>
