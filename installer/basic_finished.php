@@ -38,10 +38,10 @@
 			<strong>Password: </strong><?php echo $_SESSION['admin_password']; ?></p>
 			<p><strong>Other next steps...</strong></p>
 			<ul>
-				<li><a href="http://<?php echo $_SERVER['SERVER_NAME'].":".$_SERVER["SERVER_PORT"]."/".$install->_get_base_path($_SERVER["REQUEST_URI"]); ?>" target="_blank">View your website</a></li>
-				<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]).$index;?>/admin/reports/edit" target="_blank">Upload report data</a></li>
-				<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]).$index;?>/admin/settings" target="_blank">Configure your map</a></li>
-				<li><a href="http://<?php echo $_SERVER['SERVER_NAME']."/".$install->_get_base_path($_SERVER["REQUEST_URI"]).$index;?>/admin/settings/sms" target="_blank">Setup your SMS server</a></li>
+				<li><a href="<?php echo substr($adminURL, 0, -6); ?>" target="_blank">View your website</a></li>
+				<li><a href="<?php echo $adminURL; ?>reports/edit" target="_blank">Upload report data</a></li>
+				<li><a href="<?php echo $adminURL; ?>settings" target="_blank">Configure your map</a></li>
+				<li><a href="<?php echo $adminURL; ?>settings/sms" target="_blank">Setup your SMS server</a></li>
 			</ul>
 
   </div>
