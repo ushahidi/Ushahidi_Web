@@ -120,7 +120,11 @@
 	// Load TinyMCE
 	if ($editor_enabled)
 	{
-		echo html::script(url::file_loc('js').'media/js/tinymce/tiny_mce', true);
+		if(isset(Kohana::config("cdn.cdn_ignore_tinymce")) && Kohana::config("cdn.cdn_ignore_tinymce") == true) {
+			echo html::script(url::file_loc('ignore').'media/js/tinymce/tiny_mce', true);
+		} else {
+			echo html::script(url::file_loc('js').'media/js/tinymce/tiny_mce', true);
+		}
 	}
 	
 	// Table Row Sort
