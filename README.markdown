@@ -26,10 +26,11 @@ The follwing is a list of PHP extensions that must be installed on your server i
 * PCRE (http://php.net/pcre) must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.
 * iconv (http://php.net/iconv) is required for UTF-8 transliteration.
 * mcrypt (http://php.net/mcrypt) is required for encryption.
-* SPL (http://php.net/spl) is required for several core libraries
+* SPL (http://php.net/spl) is required for several core libraries.
 * mbstring (http://php.net/mbstring) which speeds up Kohana's UTF-8 functions.
 * cURL (http://php.net/curl) which is used to access remote sites.
 * MySQL (http://php.net/mysql) is required for database access.
+* IMAP (http://php.net/imap) is required for email functionality.
 
 #####NOTE: Need to figure out what extensions you already have installed on your server? Here are instructions to do just that: http://jontangerine.com/silo/php/phpinfo/
 
