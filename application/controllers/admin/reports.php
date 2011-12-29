@@ -57,6 +57,7 @@ class Reports_Controller extends Admin_Controller {
 			elseif (strtolower($status) == 'v')
 			{
 				array_push($this->params, 'i.incident_verified = 0');
+				array_push($this->params, 'i.incident_active = 1');
 			}
 			else
 			{
