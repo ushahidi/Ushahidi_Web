@@ -551,7 +551,6 @@ ul.tabset li a:hover{
 .tab ul{
 	margin:0;
 	padding:9px 10px 0;
-	clear:both;
 	overflow:hidden;
 }
 .tab ul li{
@@ -575,6 +574,14 @@ ul.tabset li a:hover{
 }
 .tab .tab_form_item2{
 	margin:10px 10px 0 10px;
+}
+.tab .tab_extra {
+  float: right;
+	padding:9px 10px 0 10px;
+}
+.tab .tab_extra a {
+  float: right;
+	padding:5px 15px 0 15px;
 }
 /*-- tabs --*/
 /*-- btns --*/

@@ -22,13 +22,21 @@
 					<!-- tabset -->
 					<ul class="tabset">
 						<li>
-							<a href="?status=0" <?php if ($status != 'a' AND $status !='v') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.show_all');?></a>
+							<a href="?status=0" <?php if ($status != 'a' AND $status !='v' AND $status !='av') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.show_all');?></a>
 						</li>
 						<li><a href="?status=a" <?php if ($status == 'a') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.awaiting_approval');?></a></li>
-						<li><a href="?status=v" <?php if ($status == 'v') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.awaiting_verification');?></a></li>
+						<li><a href="?status=v" <?php if ($status == 'v' || $status == 'av') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.awaiting_verification');?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
+						<div class="tab_extra">
+						<?php if ($status == 'v'): ?>
+							<a href="?status=av"><?php echo Kohana::lang('ui_main.show_unapproved_reports');?></a>
+						<? endif; ?>
+						<?php if ($status == 'av'): ?>
+							<a href="?status=v"><?php echo Kohana::lang('ui_main.hide_unapproved_reports');?></a>
+						<? endif; ?>
+						</div>
 						<ul>
 							<li><a href="#" onclick="reportAction('a','<?php echo strtoupper(Kohana::lang('ui_main.approve')); ?>', '');">
 								<?php echo Kohana::lang('ui_main.approve');?></a>
