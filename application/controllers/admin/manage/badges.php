@@ -51,7 +51,7 @@ class Badges_Controller extends Admin_Controller
 		{
 
 			$post = Validation::factory($_POST);
-
+			
 			 //	 Add some filters
 			$post->pre_filter('trim', TRUE);
 
@@ -59,7 +59,24 @@ class Badges_Controller extends Admin_Controller
 			$post->add_rules('action', 'required', 'alpha', 'length[1,1]');
 			$post->add_rules('name', 'standard_text', 'length[1,250]');
 			$post->add_rules('description', 'standard_text');
-			$post->add_rules('image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[100K]');
+			
+			// Add some additional rules for adding a new badge
+			if (isset($_POST['action']) AND $_POST['action'] == 'a')
+			{
+				// Users can select a badge or upload one. See what they are doing.
+				if ($_FILES['image']['error'] == 0)
+				{
+					// Uploading an image, if uploaded, it overrules a selection
+					$uploading_custom_badge = true;
+					$post->add_rules('image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[100K]');
+				}
+				else
+				{
+					// Selecting one
+					$uploading_custom_badge = false;
+					$post->add_rules('selected_badge', 'required');
+				}
+			}
 
 			if ($post->validate())
 			{
@@ -74,8 +91,19 @@ class Badges_Controller extends Admin_Controller
 					$badge->save();
 
 					// Step 2. Save badge image
-
-					$filename = upload::save('image');
+					
+					if ($uploading_custom_badge)
+					{
+						$filename = upload::save('image');
+					}
+					else
+					{
+						// We already have this on the filesystem! Use that one.
+						$bp_path = MEDIAPATH.'img/badge_packs/';
+						$selected_badge = base64_decode(str_ireplace('badge_','',$post->selected_badge));
+						$filename = $bp_path.$selected_badge;
+					}
+					
 					if ($filename)
 					{
 						$new_filename = "badge_".$badge->id."_".time();
@@ -116,9 +144,14 @@ class Badges_Controller extends Admin_Controller
 							unlink($local_directory.$new_filename.'_m'.$file_type);
 							unlink($local_directory.$new_filename.'_t'.$file_type);
 						}
-
-						// Remove the temporary file
-						unlink($filename);
+						
+						// Only perform this operation if it's not coming from a badge pack,
+						//   otherwise we would lose badges every time we selected them!
+						if ($uploading_custom_badge)
+						{
+							// Remove the temporary file
+							unlink($filename);
+						}
 
 						// Delete old badge image
 						ORM::factory('media')->where(array('badge_id' => $badge->id))->delete_all();
@@ -169,6 +202,9 @@ class Badges_Controller extends Admin_Controller
 				$form_error = TRUE;
 			}
 		}
+		
+		// Badge Pack stuff
+		$this->template->content->badge_packs = badges::get_packs();
 
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
