@@ -16,73 +16,91 @@
 class Profile_Controller extends Admin_Controller
 {
     protected $user_id;
-    
+
     function __construct()
     {
         parent::__construct();
         $this->template->this_page = 'profile';
-        
+
         $this->user_id = $_SESSION['auth_user']->id;
     }
-    
+
     public function index()
     {
         $this->template->content = new View('admin/profile');
-        
+
         // setup and initialize form field names
         $form = array
         (
-            'username'  => '',
-            'password'  => '',
+            'current_password'  => '',
+            'new_password'  => '',
             'password_again'  => '',
             'name'      => '',
             'email'     => '',
             'notify'    => ''
         );
-        
+
         //  Copy the form as errors, so the errors will be stored with keys
         //  corresponding to the form field names
         $errors = $form;
         $form_error = FALSE;
         $form_saved = FALSE;
-        
+
         // check, has the form been submitted, if so, setup validation
         if ($_POST)
         {
-            $post = Validation::factory($_POST);
-            
-             //  Add some filters
-            $post->pre_filter('trim', TRUE);
-            $post->add_rules('name','required','length[3,100]');
-            $post->add_rules('email','required','email','length[4,64]');
-            $post->add_callbacks('email',array($this,'email_exists_chk'));
-            
+			$post = Validation::factory($_POST);
+
+			 //  Add some filters
+			$post->pre_filter('trim', TRUE);
+			$post->add_rules('name','required','length[3,100]');
+			$post->add_rules('email','required','email','length[4,64]');
+			$post->add_rules('current_password','required');
+			$post->add_callbacks('email',array($this,'email_exists_chk'));
+			$post->add_callbacks('current_password',array($this,'current_pw_valid_chk'));
+
             // If Password field is not blank
-            if ( ! empty($post->password))
+            if ( ! empty($post->new_password))
             {
-                $post->add_rules('password','required','length[5,16]' ,'alpha_numeric','matches[password_again]');
+                $post->add_rules('new_password','required','length[5,30]','alpha_numeric','matches[password_again]');
             }
-            
-            if ($post->validate())
-            {
-                $user = ORM::factory('user',$this->user_id);
-                if ($user->loaded)
-                {
-                    $user->name = $post->name;
-                    $user->email = $post->email;
-                    $user->notify = $post->notify;
-                    $post->password !='' ? $user->password=$post->password : '';
-                    $user->save();
-                }
-                
+
+			if ($post->validate())
+			{
+				$user = ORM::factory('user',$this->user_id);
+				if ($user->loaded)
+				{
+					$user->name = $post->name;
+					$user->email = $post->email;
+					$user->notify = $post->notify;
+					$post->new_password != '' ? $user->password = $post->new_password : '';
+					$user->save();
+
+	                // We also need to update the RiverID server with the new password if
+	                //    we are using RiverID and a password is being passed
+	                if (kohana::config('riverid.enable') == TRUE
+	                	AND ! empty($user->riverid)
+	                	AND $post->new_password != '')
+					{
+						$riverid = new RiverID;
+						$riverid->email = $user->email;
+						$riverid->password = $post->current_password;
+						$riverid->new_password = $post->new_password;
+						if ($riverid->changepassword() == FALSE)
+						{
+							// TODO: Something went wrong. Tell the user.
+						}
+					}
+				}
+
                 $form_saved = TRUE;
-                
-                // repopulate the form fields
+
+                // Repopulate the form fields
                 $form = arr::overwrite($form, $post->as_array());
-                $form['password'] = "";
+                $form['new_password'] = "";
                 $form['password_again'] = "";
             }
-            else 
+            else
             {
                 // repopulate the form fields
                 $form = arr::overwrite($form, $post->as_array());
@@ -95,7 +113,7 @@ class Profile_Controller extends Admin_Controller
         else
         {
             $user = ORM::factory('user',$this->user_id);
-            $form['username'] = $user->username;
+            $form['username'] = $user->email;
             $form['name'] = $user->name;
             $form['email'] = $user->email;
             $form['notify'] = $user->notify;
@@ -106,24 +124,43 @@ class Profile_Controller extends Admin_Controller
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
         $this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
-        
+
         // Javascript Header
     }
-    
-    
+
+
     /**
      * Checks if email address is associated with an account.
-     * @param Validation $post $_POST variable with validation rules 
+     * @param Validation $post $_POST variable with validation rules
      */
     public function email_exists_chk( Validation $post )
     {
-        if (array_key_exists('email',$post->errors()))
-            return;
-        
-        $users = ORM::factory('user')
-            ->where('id <> '.$this->user_id);
-                
-        if ($users->email_exists( $post->email ) )
-            $post->add_error('email','exists');
-    }
+		if (array_key_exists('email',$post->errors()))
+			return;
+
+		$users = ORM::factory('user')
+		    ->where('id <> '.$this->user_id);
+
+		if ($users->email_exists( $post->email ))
+		{
+			$post->add_error('email','exists');
+		}
+	}
+
+	/**
+	 * Checks if current password being passed is correct
+	 * @param Validation $post $_POST variable with validation rules
+	 */
+	public function current_pw_valid_chk( Validation $post )
+	{
+		if (array_key_exists('current_password',$post->errors()))
+			return;
+
+		$user = User_Model::get_user_by_email($post->email);
+
+		if ( ! User_Model::check_password($user->email,$post->current_password) )
+		{
+			$post->add_error('current_password','incorrect');
+		}
+	}
 }

@@ -67,7 +67,7 @@ Kohana::config_set('settings.db_version', $settings->db_version);
 Kohana::config_set('settings.ushahidi_version', $settings->ushahidi_version);
 Kohana::config_set('settings.private_deployment', $settings->private_deployment);
 
-// Set Site Timezone 
+// Set Site Timezone
 if (function_exists('date_default_timezone_set'))
 {
 	$timezone = $settings->site_timezone;

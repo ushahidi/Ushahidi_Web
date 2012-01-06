@@ -32,9 +32,10 @@ class Auth_File_Driver extends Auth_Driver {
 	 * @param   string   username
 	 * @param   string   password
 	 * @param   boolean  enable auto-login (not supported)
+	 * @param   string   email (ignored but kept for consistency across login driver functions)
 	 * @return  boolean
 	 */
-	public function login($username, $password, $remember)
+	public function login($username, $password, $remember, $email)
 	{
 		if (isset($this->users[$username]) AND $this->users[$username] === $password)
 		{

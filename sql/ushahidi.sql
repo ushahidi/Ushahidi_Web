@@ -785,6 +785,7 @@ INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_yahoo`, `api_live`
 
 CREATE TABLE IF NOT EXISTS `users` (                                                
     `id` int(11) unsigned NOT NULL auto_increment,
+    `riverid` VARCHAR( 128 ) NOT NULL,
     `name` varchar(200) default NULL,
     `email` varchar(127) NOT NULL,
     `username` varchar(100) NOT NULL default '',
@@ -797,11 +798,12 @@ CREATE TABLE IF NOT EXISTS `users` (
     `code` VARCHAR(30) NULL DEFAULT NULL,
     `confirmed` TINYINT(1) NOT NULL DEFAULT '0',
     `public_profile` TINYINT(1) NOT NULL DEFAULT '1',
+    `approved` TINYINT(1) NOT NULL DEFAULT '1',
+    `needinfo` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 
 -- Dumping data for table `users`
@@ -818,10 +820,10 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `l
 CREATE TABLE IF NOT EXISTS `user_tokens` (                                          
     `id` int(11) unsigned NOT NULL auto_increment,                                  
     `user_id` int(11) unsigned NOT NULL,                                            
-    `user_agent` varchar(40) NOT NULL,                                              
-    `token` varchar(32) NOT NULL,                                                   
-    `created` int(10) unsigned NOT NULL,                                            
-    `expires` int(10) unsigned NOT NULL,                                            
+    `user_agent` varchar(40) NOT NULL,
+    `token` varchar(64) NOT NULL,
+    `created` int(10) unsigned NOT NULL,
+    `expires` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
@@ -1460,4 +1462,4 @@ ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '70' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '71' WHERE `id`=1 LIMIT 1;

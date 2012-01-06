@@ -3,39 +3,39 @@
  * This controller is used to manage users
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @subpackage Admin
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Users_Controller extends Admin_Controller
 {
     private $display_roles = false;
-    
+
     function __construct()
     {
         parent::__construct();
         $this->template->this_page = 'users';
-        
+
         // If user doesn't have access, redirect to dashboard
         if ( ! admin::permissions($this->user, "users"))
         {
             url::redirect(url::site().'admin/dashboard');
         }
-        
+
         $this->display_roles = admin::permissions($this->user, 'manage_roles');
     }
 
     function index()
-    {   
+    {
         $this->template->content = new View('admin/users');
         $this->template->js = new View('admin/users_js');
-        
+
         // Check, has the form been submitted, if so, setup validation
 
 		if ($_POST)
@@ -80,7 +80,7 @@ class Users_Controller extends Admin_Controller
 
         $users = ORM::factory('user')
                     ->orderby('name', 'asc')
-                    ->find_all((int) Kohana::config('settings.items_per_page_admin'), 
+                    ->find_all((int) Kohana::config('settings.items_per_page_admin'),
                         $pagination->sql_offset);
 
         // Set the flag for displaying the roles link
@@ -90,14 +90,14 @@ class Users_Controller extends Admin_Controller
         $this->template->content->total_items = $pagination->total_items;
         $this->template->content->users = $users;
     }
-    
+
     /**
     * Edit a user
     * @param bool|int $user_id The id no. of the user
     * @param bool|string $saved
     */
 	public function edit($user_id = FALSE, $saved = FALSE)
-	{       
+	{
 		$this->template->content = new View('admin/users_edit');
 
 		if ($user_id)
@@ -109,18 +109,25 @@ class Users_Controller extends Admin_Controller
 				url::redirect(url::site().'admin/users/');
 			}
 		}
-		
+
 		// Setup and initialize form field names
 		$form = array(
 			'username'  => '',
-			'password'  => '',
-			'password_again'  => '',
 			'name'      => '',
 			'email'     => '',
 			'notify'    => '',
 			'role'      => ''
 		);
-        
+
+		$this->template->content->user_id = $user_id;
+
+		if ($user_id == FALSE)
+		{
+			// Tack this on when adding a new user
+			$form['password'] = '';
+			$form['password_again'] = '';
+		}
+
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
@@ -133,18 +140,23 @@ class Users_Controller extends Admin_Controller
 		{
 			// Get the submitted data
 			$post = $_POST;
-			
+
 			// Add the user_id to the $_POST data
-			$user_id = ($user_id)? $user_id : NULL;
+			$user_id = ($user_id) ? $user_id : NULL;
 			$post =  array_merge($post, array('user_id' => $user_id));
-			
+
 			if (User_Model::custom_validate($post))
 			{
 				$user = ORM::factory('user',$user_id);
 				$user->name = $post->name;
 				$user->email = $post->email;
 				$user->notify = $post->notify;
-                
+
+				if ($user_id == NULL)
+				{
+					$user->password = $post->password;
+				}
+
 				// Existing User??
 				if ($user->loaded==true)
 				{
@@ -156,28 +168,25 @@ class Users_Controller extends Admin_Controller
 						// Remove Old Roles
 						foreach ($user->roles as $role)
 						{
-							$user->remove($role); 
+							$user->remove($role);
 						}
-                        
+
 						// Add New Roles
 						$user->add(ORM::factory('role', 'login'));
 						$user->add(ORM::factory('role', $post->role));
 					}
-					
-					$post->password !='' ? $user->password=$post->password : '';
 				}
 				// New User
-				else 
+				else
 				{
 					$user->username = $post->username;
-					$user->password = $post->password;
 
 					// Add New Roles
 					$user->add(ORM::factory('role', 'login'));
 					$user->add(ORM::factory('role', $post->role));
 				}
 				$user->save();
-				
+
 				//Event for adding user admin details
 				Event::run('ushahidi_action.users_add_admin', $post);
 
@@ -186,7 +195,7 @@ class Users_Controller extends Admin_Controller
 				// Redirect
 				url::redirect(url::site().'admin/users/');
 			}
-			else 
+			else
 			{
 				// repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
@@ -208,12 +217,10 @@ class Users_Controller extends Admin_Controller
 					{
 						$role = $user_role->name;
 					}
-                    
+
 					$form = array(
 						'user_id'   => $user->id,
 						'username'  => $user->username,
-						'password'  => '',
-						'password_again'  => '',
 						'name'      => $user->name,
 						'email'     => $user->email,
 						'notify'    => $user->notify,
@@ -222,18 +229,18 @@ class Users_Controller extends Admin_Controller
 				}
 			}
 		}
-        
+
 		$roles = ORM::factory('role')
 			->where('id != 1')
 			->orderby('name', 'asc')
 			->find_all();
-        
+
 		$role_array = array("login" => "NONE");
 		foreach ($roles as $role)
 		{
 			$role_array[$role->name] = strtoupper($role->name);
 		}
-        
+
 		$this->template->content->id = $user_id;
 		$this->template->content->display_roles = $this->display_roles;
 		$this->template->content->user = $user;
@@ -247,11 +254,11 @@ class Users_Controller extends Admin_Controller
 		);
 		$this->template->content->role_array = $role_array;
 	}
-    
+
     public function roles()
     {
         $this->template->content = new View('admin/users_roles');
-        
+
         $form = array
         (
             'role_id'   => '',
@@ -277,43 +284,43 @@ class Users_Controller extends Admin_Controller
         $form_error = FALSE;
         $form_saved = FALSE;
         $form_action = "";
-        
+
         // check, has the form been submitted, if so, setup validation
         if ($_POST)
         {
             $post = Validation::factory($_POST);
-            
+
             //  Add some filters
             $post->pre_filter('trim', TRUE);
-            
+
             if ($post->action == 'a')       // Add / Edit Action
             {
-                $post->add_rules('name','required','length[3,30]', 'alpha_numeric');
-                $post->add_rules('description','required','length[3,100]');
-                $post->add_rules('access_level','required','between[0,100]', 'numeric');
-                $post->add_rules('reports_view','between[0,1]');
-                $post->add_rules('reports_edit','between[0,1]');
-                $post->add_rules('reports_evaluation','between[0,1]');
-                $post->add_rules('reports_comments','between[0,1]');
-                $post->add_rules('reports_download','between[0,1]');
-                $post->add_rules('reports_upload','between[0,1]');
-                $post->add_rules('messages','between[0,1]');
-                $post->add_rules('messages_reporters','between[0,1]');
-                $post->add_rules('stats','between[0,1]');
-                $post->add_rules('settings','between[0,1]');
-                $post->add_rules('manage','between[0,1]');
-                $post->add_rules('users','between[0,1]');
-            
+				$post->add_rules('name','required','length[3,30]', 'alpha_numeric');
+				$post->add_rules('description','required','length[3,100]');
+				$post->add_rules('access_level','required','between[0,100]', 'numeric');
+				$post->add_rules('reports_view','between[0,1]');
+				$post->add_rules('reports_edit','between[0,1]');
+				$post->add_rules('reports_evaluation','between[0,1]');
+				$post->add_rules('reports_comments','between[0,1]');
+				$post->add_rules('reports_download','between[0,1]');
+				$post->add_rules('reports_upload','between[0,1]');
+				$post->add_rules('messages','between[0,1]');
+				$post->add_rules('messages_reporters','between[0,1]');
+				$post->add_rules('stats','between[0,1]');
+				$post->add_rules('settings','between[0,1]');
+				$post->add_rules('manage','between[0,1]');
+				$post->add_rules('users','between[0,1]');
+
                 if ($post->role_id == "3")
                 {
                     $post->add_error('name', 'nomodify');
                 }
-                
+
                 // Unique Role Name
                 $post->role_id == '' ? $post->add_callbacks('name',
                     array($this,'role_exists_chk')) : '';
             }
-            
+
             if ($post->validate())
             {
                 $role = ORM::factory('role',$post->role_id);
@@ -334,9 +341,9 @@ class Users_Controller extends Admin_Controller
                     $role->settings = $post->settings;
                     $role->manage = $post->manage;
                     $role->users = $post->users;
-                    
+
                     $role->save();
-                    
+
                     $form_saved = TRUE;
                     $form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
                 }
@@ -345,7 +352,7 @@ class Users_Controller extends Admin_Controller
                     if($post->role_id != 1
                         AND $post->role_id != 2
                         AND $post->role_id != 3)
-                    {   
+                    {
                         // Delete the role
                         $role->delete();
                     }
@@ -364,12 +371,12 @@ class Users_Controller extends Admin_Controller
                 $form_error = TRUE;
             }
         }
-        
-        
+
+
         $roles = ORM::factory('role')
             ->orderby('access_level', 'desc')
             ->find_all();
-            
+
         $permissions = array(
             "reports_view" => "View Reports",
             "reports_edit" => "Create/Edit Reports",
@@ -384,7 +391,7 @@ class Users_Controller extends Admin_Controller
             "manage" => "Manage Panel",
             "users" => "Manage Users",
         );
-        
+
         $this->template->content->display_roles = $this->display_roles;
         $this->template->content->roles = $roles;
         $this->template->content->permissions = $permissions;
@@ -393,13 +400,13 @@ class Users_Controller extends Admin_Controller
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
         $this->template->content->form_action = $form_action;
-        $this->template->js = new View('admin/users_roles_js');         
+        $this->template->js = new View('admin/users_roles_js');
     }
-    
-    
+
+
     /**
      * Checks if username already exists.
-     * @param Validation $post $_POST variable with validation rules 
+     * @param Validation $post $_POST variable with validation rules
      */
     public function username_exists_chk(Validation $post)
     {
@@ -407,46 +414,46 @@ class Users_Controller extends Admin_Controller
         // If add->rules validation found any errors, get me out of here!
         if (array_key_exists('username', $post->errors()))
             return;
-                
+
         if ($users->username_exists($post->username))
             $post->add_error( 'username', 'exists');
     }
-    
+
     /**
-     * Check if 
+     * Check if
      */
-    
+
     /**
      * Checks if email address is associated with an account.
-     * @param Validation $post $_POST variable with validation rules 
+     * @param Validation $post $_POST variable with validation rules
      */
     public function email_exists_chk( Validation $post )
     {
         $users = ORM::factory('user');
         if (array_key_exists('email',$post->errors()))
             return;
-            
+
         if ($users->email_exists( $post->email ) )
             $post->add_error('email','exists');
     }
-    
+
     /**
      * Checks if role already exists.
-     * @param Validation $post $_POST variable with validation rules 
+     * @param Validation $post $_POST variable with validation rules
      */
     public function role_exists_chk(Validation $post)
     {
         $roles = ORM::factory('role')
             ->where('name', $post->name)
             ->find();
-            
+
         // If add->rules validation found any errors, get me out of here!
         if (array_key_exists('name', $post->errors()))
             return;
-                
+
         if ($roles->loaded)
         {
             $post->add_error( 'name', 'exists');
         }
-    }   
+    }
 }

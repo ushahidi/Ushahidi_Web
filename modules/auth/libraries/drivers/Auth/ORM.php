@@ -71,14 +71,65 @@ class Auth_ORM_Driver extends Auth_Driver {
 	}
 
 	/**
-	 * Logs a user in.
+	 * Determines the function to use when logging in a user
+	 *
+	 * @param   string   username
+	 * @param   string   password
+	 * @param   boolean  enable auto-login
+	 * @param   string   email
+	 * @return  boolean
+	 */
+	public function login($user, $password, $remember, $email = FALSE)
+	{
+		if(kohana::config('riverid.enable') == true)
+		{
+			return $this->login_riverid($user, $password, $remember, $email);
+		}
+		else
+		{
+			return $this->login_standard($user, $password, $remember);
+		}
+	}
+
+	/**
+	 * Performs a login by setting token, etc.
 	 *
 	 * @param   string   username
 	 * @param   string   password
 	 * @param   boolean  enable auto-login
 	 * @return  boolean
 	 */
-	public function login($user, $password, $remember)
+	public function perform_login($user,$remember)
+	{
+		if ($remember === TRUE)
+		{
+			// Create a new autologin token
+			$token = ORM::factory('user_token');
+
+			// Set token data
+			$token->user_id = $user->id;
+			$token->expires = time() + $this->config['lifetime'];
+			$token->save();
+
+			// Set the autologin cookie
+			cookie::set('authautologin', $token->token, $this->config['lifetime']);
+		}
+
+		// Finish the login
+		$this->complete_login($user);
+
+		return TRUE;
+	}
+
+	/**
+	 * Logs a user in using the standard method.
+	 *
+	 * @param   string   username
+	 * @param   string   password
+	 * @param   boolean  enable auto-login
+	 * @return  boolean
+	 */
+	public function login_standard($user, $password, $remember)
 	{
 		if ( ! is_object($user))
 		{
@@ -86,31 +137,232 @@ class Auth_ORM_Driver extends Auth_Driver {
 			$user = ORM::factory('user', $user);
 		}
 
+		if ( ! $user->id)
+		{
+			// user doesn't exist. Login Failed.
+			return FALSE;
+		}
+
 		// If the passwords match, perform a login
 		if ($user->has(ORM::factory('role', 'login')) AND $user->password === $password)
 		{
-			if ($remember === TRUE)
-			{
-				// Create a new autologin token
-				$token = ORM::factory('user_token');
-
-				// Set token data
-				$token->user_id = $user->id;
-				$token->expires = time() + $this->config['lifetime'];
-				$token->save();
-
-				// Set the autologin cookie
-				cookie::set('authautologin', $token->token, $this->config['lifetime']);
-			}
-
-			// Finish the login
-			$this->complete_login($user);
-
-			return TRUE;
+			return $this->perform_login($user,$remember);
 		}
 
-		// Login failed
+		// Passwords don't match. Login Failed.
 		return FALSE;
+	}
+
+	/**
+	 * Logs a user in using the RiverID method.
+	 *
+	 * @param   string   username
+	 * @param   string   password
+	 * @param   boolean  enable auto-login
+	 * @param   string   email
+	 * @return  boolean
+	 */
+	public function login_riverid($user, $password, $remember, $email)
+	{
+		// First check for exemptions
+
+		if ( ! is_object($user))
+		{
+			// Load the user
+			$user = ORM::factory('user', $user);
+		}
+
+		if (isset($user->id) AND in_array($user->id,kohana::config('riverid.exempt')))
+		{
+			// Looks like this is an exempted account
+			return $this->login_standard($user, $password, $remember);
+		}
+
+		// Get down to business since there were no exemptions
+
+		$riverid = new RiverID;
+		$riverid->email = $email;
+		$riverid->password = $password;
+		$is_registered = $riverid->is_registered();
+
+		// See if the request even fired off.
+		if ($riverid->error)
+		{
+			throw new Exception($riverid->error[0]);
+		}
+
+		if($is_registered == true)
+		{
+			// RiverID is registered on RiverID Server
+
+			// Attempt to sign in
+			$riverid->signin();
+
+			if($riverid->authenticated == true)
+			{
+				// Correct email/pass
+
+				// Collect the RiverID user_id and connect that with a user in the local system
+
+				$user = User_Model::get_user_by_river_id($riverid->user_id);
+
+				if ( ! $user->id)
+				{
+					// User not found locally with that RiverID, we need to see if they are already registered
+					//   and convert their account or add them as a new user to the system
+
+					// This may be a brand new user, but we need to figure out if
+					//    the email has already been registered
+					$user = User_Model::get_user_by_email($riverid->email);
+
+					if ( ! $user->id)
+					{
+						// Email isn't in our system, create a new user.
+						$user = User_Model::create_user($riverid->email,$riverid->password,$riverid->user_id);
+					}
+					else
+					{
+						// Email already exists. Put the RiverID on that account.
+						$user->riverid = $riverid->user_id;
+						$user->save();
+					}
+
+				}
+				else
+				{
+					// We authenticated and we matched a RiverID, lets just makes sure the email
+					//   addresses are both up to date
+
+					if ($user->email != $riverid->email)
+					{
+						// We don't have a match for this user account. We need to see if we should
+						//   be updating this account by first checking to see if another account
+						//   already uses this email address
+						$user_check = User_Model::get_user_by_email($riverid->email);
+						if ( ! $user_check->id)
+						{
+							$user->email = $riverid->email;
+							$user->username = $riverid->email;
+							$user->save();
+						}
+						else
+						{
+							// Conflicting accounts
+
+							// TODO: Figure out what to do when we need to update an email address on
+							//   one account but it's already in use on another.
+						}
+					}
+				}
+
+				// Now that we have our user account tied to their RiverID, approve their authentication
+
+				return $this->perform_login($user,$remember);
+
+			}
+			else
+			{
+				// Incorrect email/pass, but registered on RiverID. Failed login.
+
+				if ($riverid->error)
+				{
+					throw new Exception($riverid->error[0]);
+				}
+
+				return FALSE;
+			}
+		}
+		else
+		{
+
+			// Email is not registerd on RiverID Server, could be registered locally
+
+			// First see if they used the correct user/pass on their local account
+
+			$user = User_Model::get_user_by_email($riverid->email);
+
+			if ( ! $user->id)
+			{
+				// User doesn't exist locally or on RiverID. Fail login.
+
+				if ($riverid->error)
+				{
+					throw new Exception($riverid->error[0]);
+				}
+
+				return FALSE;
+			}
+			else
+			{
+				// User exists locally but doesn't yet exist on the RiverID server
+
+				// Check if they got the password correct
+
+				if ($user->has(ORM::factory('role', 'login'))
+					AND User_Model::check_password($user->id,$password,TRUE))
+				{
+					// Correct password! Create RiverID account
+					$riverid->register();
+
+					// If something went wrong with registration, catch it here
+					if ($riverid->error)
+					{
+						throw new Exception($riverid->error[0]);
+					}
+
+					// Our user is now registered, let's assign the riverid user to the db.
+					$user->riverid = $riverid->user_id;
+
+					// Now lets sign them in
+					$riverid->signin();
+
+					// If something went wrong with signin, catch it here
+					if ($riverid->error)
+					{
+						throw new Exception($riverid->error[0]);
+					}
+
+					return $this->perform_login($user,$remember);
+
+				}
+				else
+				{
+					// Incorrect user/pass. Fail login.
+
+					if ($riverid->error)
+					{
+						throw new Exception($riverid->error[0]);
+					}
+
+					return FALSE;
+				}
+			}
+		}
+	}
+
+	/**
+	 * Simply check to see if a password is valid for a user. NOT COMPATIBLE WITH RIVERID.
+	 *
+	 * @param   integer  user id of the user to check
+	 * @param   string   password to check against
+	 * @return  boolean
+	 */
+	public function check_password($user_id, $password)
+	{
+		$user = ORM::factory('user', $user_id);
+
+		if ( ! $user->id OR empty($password) )
+		{
+			return FALSE;
+		}
+
+		// If the passwords match, return true
+		if ($user->password === $password)
+		{
+			return TRUE;
+		}else{
+			return FALSE;
+		}
 	}
 
 	/**

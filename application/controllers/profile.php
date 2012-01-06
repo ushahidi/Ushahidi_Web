@@ -46,13 +46,19 @@ class Profile_Controller extends Main_Controller {
 
 		$this->template->header->this_page = 'profile';
 
-		// Check if we are looking for a user
+		// Check if we are looking for a user. Argument must be set to continue.
 		if( ! isset(Router::$arguments[0]))
 		{
 			url::redirect('profile');
 		}
 
 		$username = Router::$arguments[0];
+
+		// We won't allow profiles to be public if the username is an email address
+		if (valid::email($username))
+		{
+			url::redirect('profile');
+		}
 
 		$user = User_Model::get_user_by_username($username);
 

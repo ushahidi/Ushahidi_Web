@@ -149,7 +149,7 @@
 		}
 		<?php
 		if ($form_error) {
-			echo "$(document).ready(function() { $(\"#addedit\").show(); });";
+			echo '$(document).ready(function() { $("#addedit").show(); });';
 		}
 		?>
 	</script>

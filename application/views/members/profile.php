@@ -1,16 +1,16 @@
-<?php 
+<?php
 /**
  * Site view page.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
 			<div class="bg">
@@ -43,35 +43,49 @@
 						</div>
 					<?php
 					}
-					?>				
+					?>
 					<div class="head">
 						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 					</div>
-					<!-- column -->		
+					<!-- column -->
 					<div class="sms_holder">
+
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_username"); ?>"><?php echo Kohana::lang('ui_main.username');?></a></h4>
-							<?php print form::input('username', $form['username'], ' class="text long2" readonly="readonly"'); ?>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_password"); ?>"><?php echo Kohana::lang('ui_main.current_password'); ?></a> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
+							<?php print form::password('current_password', '', ' class="text"'); ?>
 						</div>
+
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_name"); ?>"><?php echo Kohana::lang('ui_main.full_name');?></a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_name"); ?>"><?php echo Kohana::lang('ui_main.full_name');?></a> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
 							<?php print form::input('name', $form['name'], ' class="text long2"'); ?>
 						</div>
+
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_email"); ?>"><?php echo Kohana::lang('ui_main.email');?></a></h4>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_email"); ?>"><?php echo Kohana::lang('ui_main.email');?></a> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
 							<?php print form::input('email', $form['email'], ' class="text long2"'); ?>
 						</div>
+
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_password"); ?>"><?php echo Kohana::lang('ui_main.new_password');?></a></h4>
-							<?php print form::password('password', $form['password'], ' class="text"'); ?>
-							<div style="clear:both;"></div>
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_new_password"); ?>"><?php echo Kohana::lang('ui_main.new_password');?></a></h4>
+							<?php print form::password('new_password', $form['new_password'], ' class="text"'); ?>
+						</div>
+
+						<div class="row">
 							<h4><?php echo Kohana::lang('ui_main.password_again');?></h4>
 							<?php print form::password('password_again', $form['password_again'], ' class="text"'); ?>
 						</div>
+
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_notify"); ?>"><?php echo Kohana::lang('ui_main.receive_notifications');?>?</a></h4>
 							<?php print form::dropdown('notify', $yesno_array, $form['notify']); ?>
 						</div>
+
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_public_url"); ?>"><?php echo Kohana::lang('ui_main.public_profile_url');?></a></h4>
+							<span style="float:left;"><?php echo url::base().'profile/user/'; ?></span>
+							<?php print form::input('username', $form['username'], ' class="text short3"'); ?>
+						</div>
+
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_public"); ?>"><?php echo Kohana::lang('ui_main.public_profile');?>:</a></h4>
 							<?php
@@ -81,10 +95,12 @@
 								print form::radio('public_profile', '0', $profile_private, 'id="profile_private"').'<br />';
 							?>
 						</div>
+
 						<div class="row">
 							<h4><a href="http://www.gravatar.com/" target="_blank" class="tooltip" title="<?php echo Kohana::lang("tooltips.change_picture"); ?>"><?php echo Kohana::lang('ui_main.change_picture');?></a></h4>
 							<a href="http://www.gravatar.com/" target="_blank"><img src="<?php echo members::gravatar($form['email']); ?>" width="80" border="0" /></a>
 						</div>
+
 						<div class="row">
 							<h4><a href="http://www.gravatar.com/" target="_blank" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_color"); ?>"><?php echo Kohana::lang('ui_main.profile_color');?></a></h4>
 							<?php print form::input('color', $form['color'], ' class="text"'); ?>
@@ -107,10 +123,11 @@
 								});
 							</script>
 						</div>
+
 					</div>
-		
+
 					<div class="simple_border"></div>
-		
+
 					<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 				</div>
 				<?php print form::close(); ?>

@@ -109,7 +109,7 @@ class Validation_Core extends ArrayObject {
 		// Load choices
 		$choices = func_get_args();
 		$choices = empty($choices) ? NULL : array_combine($choices, $choices);
-		
+
 		$safe = array();
 		foreach ($all_fields as $i => $field)
 		{
@@ -598,7 +598,7 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function add_error($field, $name)
 	{
-		if (isset($this[$field]))
+		if (isset($this[$field]) OR $field == 'custom')
 		{
 			$this->errors[$field] = $name;
 		}
@@ -668,11 +668,16 @@ class Validation_Core extends ArrayObject {
 
 				if (($errors[$input] = Kohana::lang($key)) === $key)
 				{
-					// Get the default error message
-					$errors[$input] = Kohana::lang("$file.$input.default");
+					// Get the default error message.      Note: commented out by BH
+					//$errors[$input] = Kohana::lang("$file.$input.default");
+
+					// Don't get the default message because we rarely set it. Pass the key since it will
+					//   provide more clues as to the problem than what we are currently providing. Also,
+					//   this allows "custom" inputs to pass through, bypassing localization by design
+					$errors[$input] = $error;
 				}
 			}
-			
+
 			return $errors;
 		}
 	}

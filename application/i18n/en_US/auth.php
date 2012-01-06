@@ -1,28 +1,45 @@
 <?php
 	$lang = array(
 	'email' => array(
-		'email' => 'The email field does not appear to contain a valid email address?',
+		'email' => 'The email you entered is not a valid email address.',
 		'exists' => 'Sorry, a user account already exists for this email address.',
 		'length' => 'The email field must be at least 4 and no more 64 characters long.',
 		'required' => 'The email field is required.',
 	),
 	'name' => array(
-		'length' => 'The full name field must be at least 3 and no more 100 characters long.',
-		'required' => 'The full name field is required.',
+		'length' => 'The name field must be at least 3 and no more 100 characters long.',
+		'required' => 'The name field is required.',
 		'standard_text' => 'The username field contains disallowed characters.',
 	),
-	'password' => array(
+	'current_password' => array(
 		'length' => 'The password field must be at least 8 characters long.',
-		'login error' => 'Please check that you entered the correct password.',
+		'login error' => 'Please check that you entered the correct email and password.',
 		'matches' => 'Please enter the same password in the two password fields.',
 		'required' => 'The password field is required.',
+		'alpha_dash' => 'The password field must have alphabetical characters, the # and @ symbols, numbers, underscores and dashes only',
+		'incorrect' => 'The current password you entered for your account is incorrect. Please try again.',
+	),
+	'new_password' => array(
+		'length' => 'The password field must be at least 8 characters long.',
+		'login error' => 'Please check that you entered the correct email and password.',
+		'matches' => 'Please enter the same password in the two password fields.',
+		'required' => 'The password field is required.',
+		'alpha_dash' => 'The password field must have alphabetical characters, the # and @ symbols, numbers, underscores and dashes only',
+	),
+	'password' => array(
+		'default' => 'There has been an error attempting to log you in.',
+		'length' => 'The password field must be at least 8 characters long.',
+		'login error' => 'Please check that you entered the correct email and password.',
+		'matches' => 'Please enter the same password in the two password fields.',
+		'required' => 'The password field is required.',
+		'riverid server down' => 'The authentication server is down. Please try again later.',
 		'alpha_dash' => 'The password field must have alphabetical characters, the # and @ symbols, numbers, underscores and dashes only',
 	),
 	'password_confirm' => array(
 		'matches' => 'The password confirmation field must match the password field.',
 	),
 	'resetemail' => array(
-		'email' => 'The email field does not appear to contain a valid email address?',
+		'email' => 'The email you entered is not a valid email address.',
 		'invalid' => 'Sorry, we don\'t have your email address',
 		'required' => 'The email field is required.',
 	),

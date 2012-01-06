@@ -19,7 +19,7 @@
 			</div>
 
 			<div style="float:left;padding-left:25px;width:400px;">
-				<h4><?php echo $user->username; ?> <span style="background-color:#585858;font-size:18px;padding:6px;-moz-border-radius:15px;border-radius:15px;color:#FFFFFF;"><?php echo $reputation; ?></span></h4>
+				<h4><?php echo $user->name; ?></h4>
 
 				<div class="report-additional-reports">
 					<h4><?php echo Kohana::lang('ui_main.reports_by_this_user');?></h4>
