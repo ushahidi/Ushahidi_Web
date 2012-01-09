@@ -242,6 +242,7 @@ div#underfooter{
 div#searchbox{
     position: absolute;
     top: 0px;
+	right: auto;
     left: 0px;
     background: #BEBEBE;
     border: #9F9F9F 2px solid;
@@ -317,7 +318,7 @@ div.search-form input.searchbtn{
 div.submit-incident{
     margin: 80px 0 0 0;
     position:absolute;
-    top:0; left:0;
+    top:0; left: 0; right: auto;
     width: 300px;
 }
 
@@ -352,6 +353,7 @@ div#mainmenu ul{
 div#mainmenu li{
     float: right;
     display: block;
+	margin-right: auto;
     margin-left: 15px;
 }
 
@@ -392,6 +394,7 @@ div.filters ul{
 div.filters li{
     float: right;
     display: block;
+	margin-right: auto;
     margin-left: 10px;
 }
 
@@ -410,6 +413,7 @@ div.filters ul li a:hover, div.filters ul li a.active{
 
 a.share{
     float: right;
+	border-right: auto;
     border-left: 1px solid #999;
     margin-top:7px;
     padding:5px 5px 5px 25px;
@@ -463,6 +467,7 @@ div.slider-holder {
     margin-top:15px;
     width:554px;
     padding-right: 11px;
+	padding-left: auto;
 }
 
 div.slider-holder label{
@@ -486,6 +491,7 @@ div.cat-filters strong{
 div.cat-filters span{
     font-weight:normal;
     font-size:90%;
+	margin-left: auto;
     margin-right:5px;
     color:#666;
     letter-spacing:2px;
@@ -539,7 +545,8 @@ div.additional-content{
 }
 
 div.additional-content ol {
-    margin-right: 2em;
+    margin-left: auto;
+	margin-right: 2em;	
 }
 
 /* content blocks */
@@ -561,6 +568,7 @@ ul.content-column li {
     display: inline;
 }
 div.content-block {
+	margin-right: auto;
     margin-left: 15px; /*Creates the 10px gap between each column*/
     padding: 15px;
     background-color: #FFFFFF;
@@ -582,6 +590,7 @@ div.content-block-left{
     background: #FFFFFF;
     width: 427px;
     float: right;
+	margin-right: auto;
     margin-left: 15px;
 }
 
@@ -620,6 +629,7 @@ div.footermenu ul li{
 
 div.footermenu ul li a{
     color: #FFFDCC;
+	border-left: auto;
     border-right: #FFFDCC 1px solid;
     padding: 0 10px;
     text-decoration: underline;
@@ -627,6 +637,7 @@ div.footermenu ul li a{
 
 div.footermenu ul li a.item1{
     border: none;
+	padding-left: auto;
     padding-right: 0;
 }
 
@@ -645,7 +656,7 @@ div.footer-credits{
 
 /* Reports */
 
-#main .left-col { float:right; width:520px; margin-left:20px }
+#main .left-col { float:right; width:520px; margin-right: auto; margin-left:20px }
 #main .right-col { float:left;width:350px; }
 
 div.report-details{
@@ -704,7 +715,7 @@ div.report-media { padding:10px 0; border-bottom:1px dotted #C0C2B8;; }
 #report-images { } 
 #report-video { padding:10px 0 0 0; } 
 #report-video ol { overflow:auto; }
-#report-video ol li { float:right; display:list-item; list-style-position:inside; margin-left:10px; }
+#report-video ol li { float:right; display:list-item; list-style-position:inside; margin-right: auto; margin-left:10px; }
 
 div.report-description-text {
     padding:10px 0;
@@ -977,6 +988,7 @@ div.incident-notation ul{
 div.incident-notation ul li{
     list-style: none;
     float: right;
+	margin-left: auto;
     margin-right: 20px;
     color: #999966;
     text-transform: uppercase;
@@ -1005,12 +1017,14 @@ div.incident-notation ul li{
 .swatch {
     float:right;
     height:16px;
+	margin-right: auto;
     margin-left: 8px;
     width:16px;
     border:1px solid white;
 }
 
 .category-title {
+	padding-left: auto;
     padding-right: 0;
 }
 
@@ -1024,6 +1038,7 @@ div.incident-notation ul li{
     width: 0;
     height: 0;
     overflow: hidden;
+	left: auto;
     right: -999999999px;
 }
 .ui-slider .ui-state-active .ui-slider-tooltip, .ui-slider .ui-state-focus .ui-slider-tooltip, .ui-slider .ui-state-hover .ui-slider-tooltip {
@@ -1034,6 +1049,7 @@ div.incident-notation ul li{
     padding: .3em .2em .4em;
     font-size: .9em;
     width: 8em;
+	margin-left: auto;
     margin-right: -3.7em;
 }
 .ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down, .ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down-inner {
@@ -1051,6 +1067,7 @@ div.incident-notation ul li{
     bottom:    -8px;
     left: auto;
     right: 50%;
+    margin-left: auto;
     margin-right: -7px;
 }
 .ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down-inner {
@@ -1059,6 +1076,7 @@ div.incident-notation ul li{
     border-top: 7px solid #fff;
     bottom:    auto;
     top: -9px;
+	left: auto;
     right: -6px;
 }
 .ui-slider a {
@@ -1103,11 +1121,13 @@ div.incident-notation ul li{
 }
 .ui-slider span.ui-slider-tic {
     position: absolute;
+	left: auto;
     right: 0;
     height: .8em;
     top: -1.3em;
 }
 .ui-slider li span.ui-widget-content, .ui-slider dd span.ui-widget-content {
+	border-right: auto;
     border-left: 0;
     border-right-width: 1px;
     border-right-style: solid;
@@ -1157,6 +1177,7 @@ form {
 }
 
 label.error {
+	margin-left: auto;
     margin-right: 10px;
     color:red;
     /*font-style: italic;*/
@@ -1223,8 +1244,8 @@ label.error {
 .report-description table tr td a { display:block; padding:5px 0; }
 .report-description table tr:hover { background:#f8f6f2; }
 
-th.w-01, th.w-02 { border-left:1px dotted #fff; text-transform:capitalize; }
-td.w-01, td.w-02 { border-left:1px dotted #E8E4DB; border-bottom:1px dotted #E8E4DB; text-transform:capitalize;  }
+th.w-01, th.w-02 { border-right: auto;border-left:1px dotted #fff; text-transform:capitalize; }
+td.w-01, td.w-02 { border-right: auto;border-left:1px dotted #E8E4DB; border-bottom:1px dotted #E8E4DB; text-transform:capitalize;  }
 td.w-03 { border-bottom:1px dotted #E8E4DB; text-transform:capitalize; }
 
 .w-01 { width:50%; padding:0 0 0 10px; text-transform:capitalize; }
@@ -1235,10 +1256,10 @@ td.w-03 { border-bottom:1px dotted #E8E4DB; text-transform:capitalize; }
 .report_row { margin:0 0 15px 0; clear:both; }
 .report_row h4 { margin:0 0 5px 0; padding:0; font-size:120%; font-weight:bold; }
 .report_row h4 .example{ font-weight: normal; font-size: 10px; line-height: 12px; color: #a1a1a1; }
-.report_row .date-box{ float:right; margin-left:10px; }
+.report_row .date-box{ float:right; margin-right: auto; margin-left:10px; }
 .report_row .date-box img{ padding:0 5px 0 5px; }
 .report_row .time{ float:right; }
-.report_row .optional-info{ float:right; margin-left:10px; }
+.report_row .optional-info{ float:right; margin-right: auto; margin-left:10px; }
 
 .report_category { clear:both; overflow:hidden; font-size:90%; }
 .report_category ul{ width:50%; float:right; margin:0; padding:0 0 11px; }
@@ -1247,7 +1268,7 @@ td.w-03 { border-bottom:1px dotted #E8E4DB; text-transform:capitalize; }
 
 /*Categories Tree*/
 .report_category ul ul { width: auto; float: none; }
-.report_category ul li.sub_category { padding-right: 47px; }
+.report_category ul li.sub_category { padding-left: auto; padding-right: 47px; }
 .report_category ul li.sub_category_last { background-position: 16px -1766px; }
 .report_category ul li input.check-box { margin: 0 0 0 3px; }
 .report_category ul li.hover,
@@ -1276,7 +1297,7 @@ ul.treeview li.lastExpandable { width:155px; }
     overflow:hidden;
 }
 .report_rating{ margin:15px 10px 0 0; font-size:90%; }
-.report_rating div{ float:right; margin-left:3px; }
+.report_rating div{ float:right; margin-right: auto; margin-left:3px; }
 
 .rating_value{
     height:14px;
@@ -1290,7 +1311,7 @@ ul.treeview li.lastExpandable { width:155px; }
     margin:0 10px 0 0;
 }
 
-table.rating-table td { padding-left:3px; }
+table.rating-table td { padding-right: auto; padding-left:3px; }
 span.dots {
     width:17px;
     text-align:center;
@@ -1317,6 +1338,7 @@ a.rem { background:url(../images/icon-minus.gif) no-repeat;}
     position:relative;
 }
 .report-find-location {
+	margin-right: auto;
     margin-left:1px;
     padding:10px 9px 9px 9px;
     background-color:#eee;
@@ -1347,6 +1369,7 @@ a.show-more {
     padding:1px 18px 0 0;
     background:url(../images/icon-plus.gif) no-repeat 0 2px;
     float:left;
+	margin-right: auto;
     margin-left:23px;
 }
 
@@ -1372,6 +1395,7 @@ a.show-more {
 }
 .report_col1, .report_col2, .report_col3, .report_col4, .report_col5 {
     float:right;
+	padding-right: auto;
     padding-left:15px;
 }
 .report_col1{
@@ -1566,6 +1590,7 @@ ul.pager li a.active {background:#f2f7fa;}
     display:none;
     position: relative;
     top: -350px;
+	left: auto;
     right: 25px;
     border: 5px solid black;
     background: #bbb;
@@ -1816,6 +1841,8 @@ div.green-box h3, div.red-box h3{
     color:#555;
 }
 div.green-box ul, div.red-box ul{
+    margin-left: auto;
+    padding-left: auto;
     margin-right:2em;
     padding-right:2em;
 }
@@ -1921,10 +1948,12 @@ div.green-box ul, div.red-box ul{
 #geometryLabeler label {
     font-weight:bold;
     color:#fff;
+	margin-right: auto;
     margin-left:5px;
 }
 #geometryLabeler .lbl_text{
     width:80px;
+	margin-right: auto;
     margin-left:15px;
 }
 #geometryLabeler .lbl_text2{
@@ -1942,7 +1971,8 @@ div.green-box ul, div.red-box ul{
     z-index:5001;
     position:absolute;
     top:2px;
-    left:0;
+	right: auto;
+    left: 0;
     width:18px;
     height:18px;
     background: url("../img/openlayers/layer-switcher-minimize.png") no-repeat;
@@ -1958,17 +1988,17 @@ version: 1
 
 /* Reports/Filters Layout */
 #reports-box { float:right; width:600px; }
-#filters-box { float:right; width:280px; margin-right:20px; }
+#filters-box { float:right; width:280px; margin-right:20px; margin-left:auto;}
 
 
 /* Report Box Navigation Controls (pagination, view/map toggle...etc) */
 .rb_nav-controls { background:#404040; border:1px solid #ccc; height:35px; color:#dedede; }
 .rb_nav-controls table { height:inherit; }
-.rb_nav-controls td { border-left:1px solid #ccc; vertical-align:middle; padding:0 6px; }
+.rb_nav-controls td { border-right: auto; border-left:1px solid #ccc; vertical-align:middle; padding:0 6px; }
 .rb_nav-controls td.last { border:none; padding:0 18px 0 0; }
     
 /* Link Toggle */ 
-.rb_nav-controls .link-toggle { margin-left:5px; }
+.rb_nav-controls .link-toggle { margin-right: auto; margin-left:5px; }
 ul.link-toggle { display:block; }
 ul.link-toggle li { display:inline-block; }
 ul.link-toggle li a { 
@@ -2006,7 +2036,7 @@ ul.link-toggle li a:hover.prev,
 ul.link-toggle li a:hover.next { background-color:#6e6e6e; } 
     
 /* Pagination */
-.rb_nav-controls ul.pager { display:block; padding:0; margin-right:5px;  }
+.rb_nav-controls ul.pager { display:block; padding:0; margin-left: auto; margin-right:5px;  }
 .rb_nav-controls ul.pager li { border:none; color:#fff; }
 .rb_nav-controls ul.pager li.first {margin:0 0 0 6px; padding:0;}
 .rb_nav-controls ul.pager li.last {}
@@ -2055,6 +2085,7 @@ a.ic-time {
 #tooltip-box .t-arrow { 
     position:absolute; 
     top:-13px; 
+	right:auto;
     left:118px; 
     background:transparent url("../images/icon_sprite-2.png") 0 -181px no-repeat; 
     width:26px;
@@ -2082,10 +2113,11 @@ p.labeled-divider span { position:relative; top:-8px; display:inline-block; back
     -webkit-border-radius: 5px; 
     -moz-border-radius: 5px; 
     border-radius: 5px; 
+	border-left: auto;
     border-right:6px solid #368C00;
 }
-#rb_list-view .verified { border-right:6px solid #368C00; }
-#rb_list-view .unverified { border-right:6px solid #A60003; }
+#rb_list-view .verified { border-left: auto; border-right:6px solid #368C00; }
+#rb_list-view .unverified { border-left: auto; border-right:6px solid #A60003; }
     
 .reports-box .hover { background:#fffded; }
     
@@ -2132,6 +2164,7 @@ span.r_cat-desc { display:none; }
     display:none; 
     position:absolute; 
     top:0px;
+	left: auto;
     right:-10px;
     color:#FFFFFF;
     font-size:9px;
@@ -2153,7 +2186,8 @@ span.r_cat-desc { display:none; }
 p.r_date {
     position:absolute;
     top:0px;
-    left:0px;
+	right: auto;
+    left: 0px;
     padding:3px 23px 4px 5px; 
     background:#e3e3e3 url(../../default/images/icon_sprite.png) 0px -133px no-repeat;
     color:#908b88;
@@ -2183,12 +2217,13 @@ a.btn-show { display:none; }
 #filters-box h2 { color:#494949; }
 
 /* jquery UI theme overrides for accordion */
-#accordion .ui-accordion-header .ui-icon { left:.5em; }
+#accordion .ui-accordion-header .ui-icon { right:auto; left:.5em; }
 .ui-accordion .ui-accordion-header a { padding:0.5em 0.5em 0.5em 2.2em; color:#797979; font-weight:bold; }
 #accordion .ui-accordion-header .small-link-button { 
     position:absolute; 
     top:0;
-    left:0;
+	right: auto;
+    left: 0;
     display:inline-block;
     font-size:.9em;
     font-weight:normal;
@@ -2229,14 +2264,15 @@ ul.filter-list li a.selected {
     border-radius: 3px; 
 }
 
-ul.filter-list li a span.item-swatch { display:block; height:16px; width:16px; margin-left: 8px; border:1px solid white; float:right; }
-ul.filter-list li a span.item-icon { display:block; float:right; margin-left:8px; height:16px; width:16px; }
+ul.filter-list li a span.item-swatch { display:block; height:16px; width:16px; margin-right: auto; margin-left: 8px; border:1px solid white; float:right; }
+ul.filter-list li a span.item-icon { display:block; float:right; margin-right: auto;  margin-left:8px; height:16px; width:16px; }
 ul.filter-list li a span.item-title { display:block; padding:0 26px 0 40px; }
 ul.filter-list li a span.item-count {
     display:block; 
     padding:1px 3px; 
     position:absolute; 
-    left:0;
+	right: auto;
+    left: 0;
     top:4px;
     background:#dbdbdb;
     color:#636363;
@@ -2249,6 +2285,7 @@ ul.filter-list li li { position:relative; }
 
 ul.filter-list li a.btn-cancel { 
     position:absolute; 
+	left: auto;
     right:0; 
     overflow:hidden; 
     height:25px;
@@ -2259,7 +2296,7 @@ ul.filter-list li a.btn-cancel {
 }
 
 /* For child categories because nested UL/LIs are difficult in this case */
-li.report-listing-category-child { padding-right:20px; }
+li.report-listing-category-child { padding-left: auto; padding-right:20px; }
 
 /* Filter Controls */    
 #filter-controls    { position:relative; padding:15px; margin-top:-2px; }
@@ -2267,7 +2304,8 @@ li.report-listing-category-child { padding-right:20px; }
 
 a.filter-button    { 
     position:absolute;  
-    left:0px;
+	right: auto;
+    left: 0px;
     top:11px; 
     color:#fff;
     display:inline-block;
