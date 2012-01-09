@@ -51,7 +51,7 @@
                                                                             ));
                                                                     $color_css = '';
                                                             }
-                                                            echo '<li style="padding-left:20px;"><a href="#" id="cat_'. $child .'"><span '.$color_css.'>'.$child_image.'</span><span class="category-title">'.$child_title.'</span></a></li>';
+                                                            echo '<li style="padding-right:20px;"><a href="#" id="cat_'. $child .'"><span '.$color_css.'>'.$child_image.'</span><span class="category-title">'.$child_title.'</span></a></li>';
                                                     }
                                                     echo '</ul>';
                                                 }
