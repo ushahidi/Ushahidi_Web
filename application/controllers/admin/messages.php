@@ -215,6 +215,11 @@ class Messages_Controller extends Admin_Controller
                                                         ->where('message_type', 1)
                                                         ->where("message.message_level = '99'")
                                                         ->count_all();
+		
+		//Reporters
+		$this->template->content->count_reporters = ORM::factory('reporter')
+															->where('service_id', $service_id)
+															->count_all();
 
         $this->template->content->messages = $messages;
         $this->template->content->service_id = $service_id;

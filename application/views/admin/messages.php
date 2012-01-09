@@ -43,7 +43,8 @@
 							<li><a href="?type=<?php echo $type ?>&level=2" <?php if ($level == '2') echo "class=\"active2\""; ?>><?php echo Kohana::lang('ui_main.spam');?> (<?php echo $count_spam; ?>)</a></li>
 						<?php } ?>
 						<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-						<li><a href="<?php echo url::site()."admin/messages/reporters/index/".$service_id; ?>">Reporters</a></li>
+						<li><a href="<?php echo
+						url::site()."admin/messages/reporters/index/".$service_id; ?>">Reporters(<?php echo $count_reporters; ?>)</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
