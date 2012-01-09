@@ -1,0 +1,31 @@
+div.fullscreenmap-btn{
+    float:right;
+	background-image:url(../images/window.png);
+	background-repeat:no-repeat;
+	background-position:5px;
+	background-color:#eee;
+	padding:5px 5px 5px 28px;
+	line-height:16px;
+	border:1px solid #ccc;
+}
+div.fullscreenmap-btn a{
+	padding:0 5px 0 5px;
+	background-color:darkblue;
+	color:#fff;
+}
+div.fullscreenmap_cats{
+	width:293px;
+	height:600px;
+	border:4px solid #fff;
+	z-index:1001;
+	position:absolute;
+	overflow:auto;
+	top:60px;
+	right:60px;
+}
+div.fullscreenmap_window_title{
+	background:#999;
+	color:fff;
+	text-align:center;
+	font-size:16px;
+}
