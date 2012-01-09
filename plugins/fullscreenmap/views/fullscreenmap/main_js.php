@@ -18,7 +18,6 @@ $(document).ready(function() {
 //			$("#map").append(<?php echo $categories_view;?>);
 //			$(".fullscreenmap_cats").draggable( { handle: 'h2' } );
 			map.setCenter(currCenter, currZoom, false, false);
-			map.panBy(30, 30);
 		},
 		// Return DIV to original state
 		onClosed:function(){
