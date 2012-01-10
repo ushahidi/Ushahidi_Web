@@ -155,7 +155,7 @@
 									$incident_category = "";
 									foreach($incident_orm->incident_category as $category)
 									{
-										$incident_category .= "<a href=\"#\">" . $category->category->category_title . "</a>&nbsp;&nbsp;";
+										$incident_category .= $category->category->category_title ."&nbsp;&nbsp;";
 									}
 
 									// Incident Status
@@ -218,7 +218,9 @@
 												</li>
 											</ul>
 											<ul class="links">
-												<li class="none-separator"><?php echo Kohana::lang('ui_main.categories');?>:<?php echo $incident_category; ?></li>
+												<li class="none-separator"><?php echo Kohana::lang('ui_main.categories');?>:
+													<strong><?php echo $incident_category;?></strong>
+												</li>
 											</ul>
 											<?php
 											echo $edit_log;

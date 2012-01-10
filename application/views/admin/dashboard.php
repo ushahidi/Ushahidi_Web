@@ -44,7 +44,7 @@
 							<h3><?php echo Kohana::lang('ui_main.recent_reports');?></h3>
 							<ul>
 								<li class="none-separator"><a href="<?php echo url::site() . 'admin/reports' ?>"><?php echo Kohana::lang('ui_main.view_all');?></a></li>
-								<li><a href="#" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
+								<li><a href="<?php echo url::site(); ?>feed" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
 							</ul>
 						</div>
 						<?php
@@ -163,7 +163,7 @@
 							<h3><?php echo Kohana::lang('ui_main.news_feeds');?></h3>
 							<ul>
 								<li class="none-separator"><a href="<?php echo url::site() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.view_all');?></a></li>
-								<li><a href="#" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
+								<li><a href="<?php echo url::site(); ?>feeds" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
 							</ul>
 						</div>
 						<?php
