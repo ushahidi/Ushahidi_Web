@@ -19,7 +19,7 @@
 				<div class="column">
 
 					<!-- welcome box -->
-					<?php if($user->needinfo) { ?>
+					<?php if($hidden_welcome_fields['needinfo']) { ?>
 					<div class="box">
 						<h3><?php echo Kohana::lang("ui_main.more_information"); ?></h3>
 						<?php echo form::open('/members/profile/'); ?>
