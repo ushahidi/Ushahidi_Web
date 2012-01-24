@@ -213,7 +213,7 @@ class RiverID_Core {
 		}
 		else
 		{
-			$this->error[] = $registered->error;
+			$this->error[] = $register->error;
 			return FALSE;
 		}
 
