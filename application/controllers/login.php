@@ -201,7 +201,7 @@ class Login_Controller extends Template_Controller {
 			//	Add some filters
 			$post->pre_filter('trim', TRUE);
 
-			$post->add_rules('password','required', 'length[5,30]','alpha_numeric');
+			$post->add_rules('password','required', 'length['.kohana::config('auth.password_length').']','alpha_numeric');
 			$post->add_rules('name','required','length[3,100]');
 			$post->add_rules('email','required','email','length[4,64]');
 			$post->add_callbacks('username', array($this,'username_exists_chk'));
@@ -210,7 +210,7 @@ class Login_Controller extends Template_Controller {
 			// If Password field is not blank
 			if (!empty($post->password))
 			{
-				$post->add_rules('password','required','length[5,30]'
+				$post->add_rules('password','required','length['.kohana::config('auth.password_length').']'
 					,'alpha_numeric','matches[password_again]');
 			}
 
@@ -332,8 +332,8 @@ class Login_Controller extends Template_Controller {
 			$post->pre_filter('trim', TRUE);
 			$post->add_rules('token','required');
 			$post->add_rules('changeid','required');
-			$post->add_rules('password','required','length[5,30]','alpha_numeric');
-			$post->add_rules('password','required','length[5,30]','alpha_numeric','matches[password_again]');
+			$post->add_rules('password','required','length['.kohana::config('auth.password_length').']','alpha_numeric');
+			$post->add_rules('password','required','length['.kohana::config('auth.password_length').']','alpha_numeric','matches[password_again]');
 
 			if ($post->validate())
 			{
