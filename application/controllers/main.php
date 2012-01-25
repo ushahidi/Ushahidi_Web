@@ -337,6 +337,11 @@ class Main_Controller extends Template_Controller {
 		}
 		$this->template->content->phone_array = $phone_array;
 
+		// Get external apps
+		$external_apps = array();
+		$external_apps = ORM::factory('externalapp')->find_all();
+		$this->template->content->external_apps = $external_apps;
+
         // Get The START, END and Incident Dates
         $startDate = "";
 		$endDate = "";
