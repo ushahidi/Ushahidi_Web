@@ -99,7 +99,7 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 * @param   boolean  enable auto-login
 	 * @return  boolean
 	 */
-	public function perform_login($user,$remember)
+	public function perform_login($user,$remember,$riverid=false)
 	{
 		if ($remember === TRUE)
 		{
@@ -113,6 +113,13 @@ class Auth_ORM_Driver extends Auth_Driver {
 
 			// Set the autologin cookie
 			cookie::set('authautologin', $token->token, $this->config['lifetime']);
+		}
+
+		// If we are using RiverID, we want to save the object so other sites
+		//   on the same domain can use it for single signon
+		if (kohana::config('riverid.enable') == true)
+		{
+			session::set('riverid',$riverid);
 		}
 
 		// Finish the login
@@ -160,9 +167,10 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 * @param   string   password
 	 * @param   boolean  enable auto-login
 	 * @param   string   email
+	 * @param   object   a riverid object, not required
 	 * @return  boolean
 	 */
-	public function login_riverid($user, $password, $remember, $email)
+	public function login_riverid($user, $password, $remember, $email, $riverid=false)
 	{
 		// First check for exemptions
 
@@ -180,9 +188,13 @@ class Auth_ORM_Driver extends Auth_Driver {
 
 		// Get down to business since there were no exemptions
 
-		$riverid = new RiverID;
-		$riverid->email = $email;
-		$riverid->password = $password;
+		if ($riverid == false)
+		{
+			$riverid = new RiverID;
+			$riverid->email = $email;
+			$riverid->password = $password;
+		}
+
 		$is_registered = $riverid->is_registered();
 
 		// See if the request even fired off.
@@ -195,10 +207,13 @@ class Auth_ORM_Driver extends Auth_Driver {
 		{
 			// RiverID is registered on RiverID Server
 
-			// Attempt to sign in
-			$riverid->signin();
+			if ($riverid->authenticated != true)
+			{
+				// Attempt to sign in if our riverid object hasn't already authenticated
+				$riverid->signin();
+			}
 
-			if($riverid->authenticated == true)
+			if ($riverid->authenticated == true)
 			{
 				// Correct email/pass
 
@@ -257,7 +272,7 @@ class Auth_ORM_Driver extends Auth_Driver {
 
 				// Now that we have our user account tied to their RiverID, approve their authentication
 
-				return $this->perform_login($user,$remember);
+				return $this->perform_login($user,$remember,$riverid);
 
 			}
 			else
@@ -322,7 +337,7 @@ class Auth_ORM_Driver extends Auth_Driver {
 						throw new Exception($riverid->error[0]);
 					}
 
-					return $this->perform_login($user,$remember);
+					return $this->perform_login($user,$remember,$riverid);
 
 				}
 				else
@@ -389,10 +404,31 @@ class Auth_ORM_Driver extends Auth_Driver {
 	/**
 	 * Logs a user in, based on the authautologin cookie.
 	 *
+	 * @param bool Set to true to force standard login
 	 * @return  boolean
 	 */
-	public function auto_login()
+	public function auto_login($force_standard=false)
 	{
+		// If we are using RiverID
+
+		if (kohana::config('riverid.enable') == true
+		    AND $force_standard != true)
+		{
+			$riverid = session::get('riverid');
+
+			// Check if we have the RiverID model, fail auto login if we don't
+			if ( ! $riverid )
+			{
+				return FALSE;
+			}
+
+			// user, password, remember, email, riverid object
+			return $this->login_riverid($riverid->email, false, true, $riverid->email, $riverid);
+
+		}
+
+		// If we are not using RiverID
+
 		if ($token = cookie::get('authautologin'))
 		{
 			// Load the token and user
@@ -435,6 +471,12 @@ class Auth_ORM_Driver extends Auth_Driver {
 		{
 			// Delete the autologin cookie to prevent re-login
 			cookie::delete('authautologin');
+		}
+
+		if (session::get('riverid'))
+		{
+			// Delete the riverid object in case it's set
+			session::delete('riverid');
 		}
 
 		return parent::logout($destroy);
