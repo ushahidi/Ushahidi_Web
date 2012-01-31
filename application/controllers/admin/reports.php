@@ -368,8 +368,21 @@ class Reports_Controller extends Admin_Controller {
 		$form['incident_ampm'] = date('a');
 		$form['country_id'] = Kohana::config('settings.default_country');
 		
+		
+		//get the form ID if relevant, kind of a hack
+		//to just hit the database like this for one
+		//tiny bit of info then throw away the DB model object,
+		//but seems to be what everyone else does, so
+		//why should I care. Just know that when your Ush system crashes
+		//because you have 1000 concurrent users you'll need to do this 
+		//correctly. Etherton.
+		$form_id = '';
+		if($id && Incident_Model::is_valid_incident($id))
+		{
+			$form_id = ORM::factory('incident', $id)->form_id;			
+		}
 		// initialize custom field array
-        $form['custom_field'] = customforms::get_custom_form_fields($id,'',true);
+        $form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,true);
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
@@ -402,6 +415,7 @@ class Reports_Controller extends Admin_Controller {
 		$form['country_name'] = $countries[$form['country_id']];
 		
 		$this->template->content->countries = $countries;
+
 
 		//GET custom forms
 		$forms = array();
