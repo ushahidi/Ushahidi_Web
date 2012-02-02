@@ -286,7 +286,20 @@ class Messages_Controller extends Admin_Controller
                 {
                     // Yes! Replyto Exists
                     // This is the message we're replying to
-                    $sms_to = intval($reply_to->message_from);
+					
+					$sms_to = $reply_to->message_from;
+					//checks if the number is encrypted
+					if(preg_match("/([a-zA-Z])(\D)/", $sms_to))
+					{
+						$this->decrypter = new Encrypt;
+						$sms_to = intval($this->decrypter->decode($sms_to));
+					}
+					else
+					{
+						$sms_to = intval($sms_to);
+					}
+					
+					
 
                     // Load Users Settings
                     $settings = new Settings_Model(1);
