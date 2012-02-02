@@ -72,7 +72,7 @@ class Profile_Controller extends Members_Controller
 			// If Password field is not blank
 			if ( ! empty($post->new_password))
 			{
-				$post->add_rules('new_password','required','length[5,16]' ,'alpha_numeric','matches[password_again]');
+				$post->add_rules('new_password','required','length['.kohana::config('auth.password_length').']' ,'alpha_numeric','matches[password_again]');
 			}
 
 			if ($post->validate())

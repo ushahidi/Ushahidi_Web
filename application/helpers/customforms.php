@@ -23,7 +23,6 @@ class customforms_Core {
 	 * Retrieve Custom Form Fields
 	 * @param bool|int $incident_id The unique incident_id of the original report
 	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
-	 * @param bool $field_names_only Whether or not to include just fields names, or field names + data
 	 * @param bool $data_only Whether or not to include just data
 	 * @param string $action If this is being used to grab fields for submit or view of data
 	 */
@@ -49,10 +48,52 @@ class customforms_Core {
 		// Get the predicates for the public state
 		$public_state = ($action == "view") ? '<='.$user_level : ' <= '.$user_level;
 			
-		// Query to fetch the form fields and their responses
-		$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff WHERE 1=1 ";
+		// Query to fetch the form fields associated with the given form id
+		if($form_id != null AND $form_id != '')
+		{
+			$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff WHERE 1=1 ";
+			
+			$sql .= "AND ff.form_id = ".$form_id." "
+					. "AND ff.field_ispublic_visible ".$public_state." "
+					. "ORDER BY ff.field_position ASC";
+				
+			// Execute the SQL to fetch the custom form fields
+			$form_fields = Database::instance()->query($sql);
+			
+			foreach ($form_fields as $custom_formfield)
+			{
+				if ($data_only)
+				{
+					// Return Data Only
+					$fields_array[$custom_formfield->id] = $custom_formfield->form_response;
+				}
+				else
+				{
+					// Return Field Structure
+					$fields_array[$custom_formfield->id] = array(
+						'field_id' => $custom_formfield->id,
+						'field_name' => $custom_formfield->field_name,
+						'field_type' => $custom_formfield->field_type,
+						'field_default' => $custom_formfield->field_default,
+						'field_required' => $custom_formfield->field_required,
+						'field_maxlength' => $custom_formfield->field_maxlength,
+						'field_height' => $custom_formfield->field_height,
+						'field_width' => $custom_formfield->field_width,
+						'field_isdate' => $custom_formfield->field_isdate,
+						'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
+						'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
+						'field_response' => $custom_formfield->form_response
+						);
+				}
+			}
+		}
 		
-		// Check if the provided incident exists
+		
+		// Garbage collection
+		unset ($form_fields);
+		
+		
+		// Check if the provided incident exists, then fill in the data
 		if (Incident_Model::is_valid_incident($incident_id))
 		{
 			// Overwrite the previous query
@@ -60,39 +101,40 @@ class customforms_Core {
 				. "FROM ".$table_prefix."form_field ff "
 				. "RIGHT JOIN ".$table_prefix."form_response fr ON (fr.form_field_id = ff.id) "
 				. "WHERE fr.incident_id = ".$incident_id." ";
-		}
 		
-		$sql .= "AND ff.form_id = ".$form_id." "
-			. "AND ff.field_ispublic_visible ".$public_state." "
-			. "ORDER BY ff.field_position ASC";
-		
-		// Execute the SQL to fetch the custom form fields
-		$form_fields = Database::instance()->query($sql);
-		
-		foreach ($form_fields as $custom_formfield)
-		{
-			if ($data_only)
+			
+			$sql .= "AND ff.form_id = ".$form_id." "
+				. "AND ff.field_ispublic_visible ".$public_state." "
+				. "ORDER BY ff.field_position ASC";
+			
+			// Execute the SQL to fetch the custom form fields
+			$form_fields = Database::instance()->query($sql);
+			
+			foreach ($form_fields as $custom_formfield)
 			{
-				// Return Data Only
-				$fields_array[$custom_formfield->id] = $custom_formfield->form_response;
-			}
-			else
-			{
-				// Return Field Structure
-				$fields_array[$custom_formfield->id] = array(
-					'field_id' => $custom_formfield->id,
-					'field_name' => $custom_formfield->field_name,
-					'field_type' => $custom_formfield->field_type,
-					'field_default' => $custom_formfield->field_default,
-					'field_required' => $custom_formfield->field_required,
-					'field_maxlength' => $custom_formfield->field_maxlength,
-					'field_height' => $custom_formfield->field_height,
-					'field_width' => $custom_formfield->field_width,
-					'field_isdate' => $custom_formfield->field_isdate,
-					'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
-					'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
-					'field_response' => $custom_formfield->form_response
-					);
+				if ($data_only)
+				{
+					// Return Data Only
+					$fields_array[$custom_formfield->id] = $custom_formfield->form_response;
+				}
+				else
+				{
+					// Return Field Structure
+					$fields_array[$custom_formfield->id] = array(
+						'field_id' => $custom_formfield->id,
+						'field_name' => $custom_formfield->field_name,
+						'field_type' => $custom_formfield->field_type,
+						'field_default' => $custom_formfield->field_default,
+						'field_required' => $custom_formfield->field_required,
+						'field_maxlength' => $custom_formfield->field_maxlength,
+						'field_height' => $custom_formfield->field_height,
+						'field_width' => $custom_formfield->field_width,
+						'field_isdate' => $custom_formfield->field_isdate,
+						'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
+						'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
+						'field_response' => $custom_formfield->form_response
+						);
+				}
 			}
 		}
 		

@@ -331,6 +331,20 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 (246, 'ZM', 'Zambia', 'Lusaka', 0),
 (247, 'ZW', 'Zimbabwe', 'Harare', 0);
 
+/**
+* Table structure for table `externalapp`
+*
+*/
+
+CREATE TABLE `externalapp` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 255 ) NOT NULL ,
+`url` VARCHAR( 255 ) NOT NULL
+) ENGINE = MYISAM ;
+
+-- Dumping data for table `externalapp`
+
+INSERT INTO `externalapp` (`id`, `name`, `url`) VALUES (NULL, 'iPhone', 'http://download.ushahidi.com/track_download.php?download=ios'), (NULL, 'Android', 'http://download.ushahidi.com/track_download.php?download=android');
 
 /**
 * Table structure for table `incident`
@@ -729,7 +743,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `cache_pages` tinyint(4) NOT NULL DEFAULT '0',
     `cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
     `private_deployment` tinyint(4) NOT NULL DEFAULT '0',
-    `default_map` varchar(100) NOT NULL DEFAULT 'google_normal',
+    `default_map` varchar(100) NOT NULL DEFAULT 'osm_mapnik',
     `default_map_all` varchar(20) NOT NULL default 'CC0000',
     `api_google` varchar(200) default NULL,                                         
     `api_yahoo` varchar(200) default NULL,                                          
@@ -1462,4 +1476,4 @@ ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '71' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '72' WHERE `id`=1 LIMIT 1;

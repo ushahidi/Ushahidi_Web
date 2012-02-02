@@ -47,3 +47,9 @@ $config['users'] = array
 (
 	// 'admin' => '4ccd0e25c2a7ffefd4b92ecbbd4781752920145f826a881073',
 );
+
+/**
+ * Allowed Password Length. 127 is the upper limit.
+ * ie. '8,127' says passwords must be between 8 and 127 characters long
+ */
+$config['password_length'] = '1,127';

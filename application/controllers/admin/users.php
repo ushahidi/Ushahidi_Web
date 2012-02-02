@@ -235,7 +235,6 @@ class Users_Controller extends Admin_Controller
 			->orderby('name', 'asc')
 			->find_all();
 
-		$role_array = array("login" => "NONE");
 		foreach ($roles as $role)
 		{
 			$role_array[$role->name] = strtoupper($role->name);
@@ -374,6 +373,7 @@ class Users_Controller extends Admin_Controller
 
 
         $roles = ORM::factory('role')
+			->where('id != 1')
             ->orderby('access_level', 'desc')
             ->find_all();
 

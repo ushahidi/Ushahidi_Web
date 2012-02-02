@@ -33,7 +33,7 @@ class Auth_User_Model extends ORM {
 			->pre_filter('trim')
 			->add_rules('email', 'required', 'length[4,127]', 'valid::email')
 			->add_rules('username', 'required', 'length[4,32]', 'chars[a-zA-Z0-9_.]', array($this, 'username_exists'))
-			->add_rules('password', 'required', 'length[5,42]')
+			->add_rules('password', 'required', 'length['.kohana::config('auth.password_length').']')
 			->add_rules('password_confirm', 'matches[password]');
 
 		return parent::validate($array, $save);
@@ -52,7 +52,7 @@ class Auth_User_Model extends ORM {
 		$array = Validation::factory($array)
 			->pre_filter('trim')
 			->add_rules('username', 'required', 'length[4,127]')
-			->add_rules('password', 'required', 'length[5,42]');
+			->add_rules('password', 'required', 'length['.kohana::config('auth.password_length').']');
 
 		// Login starts out invalid
 		$status = FALSE;
@@ -93,7 +93,7 @@ class Auth_User_Model extends ORM {
 	{
 		$array = Validation::factory($array)
 			->pre_filter('trim')
-			->add_rules('password', 'required', 'length[5,127]')
+			->add_rules('password', 'required', 'length['.kohana::config('auth.password_length').']')
 			->add_rules('password_confirm', 'matches[password]');
 
 		if ($status = $array->validate())

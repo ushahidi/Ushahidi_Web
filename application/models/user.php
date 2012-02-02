@@ -139,7 +139,7 @@ class User_Model extends Auth_User_Model {
 		// Only check for the password if the user id has been specified and we are passing a pw
 		if (isset($post->user_id) AND isset($post->password))
 		{
-			$post->add_rules('password','required', 'length[8,255]');
+			$post->add_rules('password','required', 'length['.kohana::config('auth.password_length').']');
 			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
 
@@ -147,7 +147,7 @@ class User_Model extends Auth_User_Model {
 		if ( isset($post->password) AND
 			(! empty($post->password) OR (empty($post->password) AND ! empty($post->password_again))))
 		{
-			$post->add_rules('password','required','length[8,255]', 'matches[password_again]');
+			$post->add_rules('password','required','length['.kohana::config('auth.password_length').']', 'matches[password_again]');
 			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
 
