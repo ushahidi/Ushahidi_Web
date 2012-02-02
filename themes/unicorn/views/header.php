@@ -84,7 +84,11 @@
 			
 		</div>
 		<!-- / header -->
-
+         <!-- / header item for plugins -->
+        <?php
+            // Action::header_item - Additional items to be added by plugins
+	        Event::run('ushahidi_action.header_item');
+        ?>
 		<!-- main body -->
 		<div id="middle">
 			<div class="background layoutleft">

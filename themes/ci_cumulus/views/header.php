@@ -36,5 +36,10 @@
 			</div>
 	</div>
 </div>
+ <!-- / header item for plugins -->
+<?php
+    // Action::header_item - Additional items to be added by plugins
+    Event::run('ushahidi_action.header_item');
+?>
 
 <!-- END HEADER -->
