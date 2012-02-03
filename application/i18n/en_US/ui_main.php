@@ -451,6 +451,7 @@
 	'rss' => 'RSS',
 	'save' => 'Save',
 	'saved' => 'Saved',
+	'save_add_new' => 'Save & Add New',
 	'save_close' => 'Save & Close',
 	'save_report' => 'Save Report',
 	'schedule' => 'Schedule',

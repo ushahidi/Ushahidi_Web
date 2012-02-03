@@ -1649,6 +1649,13 @@ a.new-form_field{
 	display:none;
 }
 
+.required,
+.report-form h4 .required {
+  color: #CC1830;
+  font-size: 15px;
+  font-weight: normal;
+}
+
 /*-- Color Picker --*/
 .jColorSelect {
 	overflow:hidden; /* for IE6 */

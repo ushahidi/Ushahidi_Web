@@ -645,17 +645,20 @@ class Reports_Controller extends Admin_Controller {
 				// Action::report_edit - Edited a Report
 				Event::run('ushahidi_action.report_edit', $incident);
 
-
 				// SAVE AND CLOSE?
-				if ($post->save == 1)		
-				{
-					// Save but don't close
-					url::redirect('admin/reports/edit/'. $incident->id .'/saved');
-				}
-				else						
-				{
-					// Save and close
-					url::redirect('admin/reports/');
+				switch($post->save) {
+					case 1:
+					case 'dontclose':
+						// Save but don't close
+						url::redirect('admin/reports/edit/'. $incident->id .'/saved');
+						break;
+					case 'addnew':
+						// Save and add new
+						url::redirect('admin/reports/edit/0/saved');
+						break;
+					default:
+						// Save and close
+						url::redirect('admin/reports/');
 				}
 				
 			}

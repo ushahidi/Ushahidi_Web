@@ -251,4 +251,22 @@
 						</table>
 					</div>
 				<?php print form::close(); ?>
+				<div class="tabs">
+					<div class="tab">
+						<ul>
+						<li><a href="#" onclick="reportAction('a','<?php echo strtoupper(Kohana::lang('ui_main.approve')); ?>', '');">
+							<?php echo Kohana::lang('ui_main.approve');?></a>
+						</li>
+						<li><a href="#" onclick="reportAction('u','<?php echo strtoupper(Kohana::lang('ui_main.disapprove')); ?>', '');">
+							<?php echo Kohana::lang('ui_main.disapprove');?></a>
+						</li>
+						<li><a href="#" onclick="reportAction('v','<?php echo strtoupper(Kohana::lang('ui_admin.verify_unverify')); ?>', '');">
+							<?php echo Kohana::lang('ui_admin.verify_unverify');?></a>
+						</li>
+						<li><a href="#" onclick="reportAction('d','<?php echo strtoupper(Kohana::lang('ui_main.delete')); ?>', '');">
+							<?php echo Kohana::lang('ui_main.delete');?></a>
+						</li>
+						</ul>
+					</div>
+				</div>
 			</div>
