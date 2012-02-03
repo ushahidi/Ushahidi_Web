@@ -102,7 +102,7 @@ class Profile_Controller extends Members_Controller
 					$user->notify = $post->notify;
 					$user->public_profile = $post->public_profile;
 					$user->color = $post->color;
-					$post->password !='' ? $user->password = $post->new_password : '';
+					$user->password !='' ? $user->password = $post->new_password : '';
 					$user->needinfo = $needinfo;
 					$user->save();
 

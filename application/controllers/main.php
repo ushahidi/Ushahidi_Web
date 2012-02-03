@@ -111,17 +111,6 @@ class Main_Controller extends Template_Controller {
 		$site_name_style = (strlen($site_name) > 20) ? " style=\"font-size:21px;\"" : "";
 			
 		$this->template->header->private_deployment = Kohana::config('settings.private_deployment');
-		$this->template->header->loggedin_username = FALSE;
-		$this->template->header->loggedin_userid = FALSE;
-		
-		if ( isset(Auth::instance()->get_user()->username) AND isset(Auth::instance()->get_user()->id) )
-		{
-			// Load User
-			$this->user = Auth::instance()->get_user();
-			$this->template->header->loggedin_username = html::specialchars(Auth::instance()->get_user()->username);
-			$this->template->header->loggedin_userid = Auth::instance()->get_user()->id;
-			$this->template->header->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
-		}
 		
 		$this->template->header->site_name = $site_name;
 		$this->template->header->site_name_style = $site_name_style;
@@ -159,6 +148,18 @@ class Main_Controller extends Template_Controller {
 		
 		// Display news feeds?
 		$this->template->header->allow_feed = Kohana::config('settings.allow_feed');
+		
+		// Header Nav
+		$header_nav = new View('header_nav');
+		$this->template->header->header_nav = $header_nav;
+		$this->template->header->header_nav->loggedin_user = FALSE;
+		if ( isset(Auth::instance()->get_user()->id) )
+		{
+			// Load User
+			$this->template->header->header_nav->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
+			$this->template->header->header_nav->loggedin_user = Auth::instance()->get_user();
+		}
+		$this->template->header->header_nav->site_name = Kohana::config('settings.site_name');
 	}
 
 	/**

@@ -7,9 +7,11 @@
 echo html::stylesheet(url::file_loc('css').'media/css/jquery-ui-themeroller', '', true);
 echo html::stylesheet(url::file_loc('css').'media/css/login', '', true);
 echo html::stylesheet(url::file_loc('css').'media/css/openid', '', true);
+echo html::stylesheet(url::file_loc('css').'media/css/global', '', true);
 echo html::script(url::file_loc('js').'media/js/jquery', true);
 echo html::script(url::file_loc('js').'media/js/openid/openid-jquery', true);
 echo html::script(url::file_loc('js').'media/js/openid/openid-jquery-en', true);
+echo html::script(url::file_loc('js').'media/js/global', true);
 ?>
 <script type="text/javascript">
 	<?php echo $js; ?>
@@ -17,6 +19,9 @@ echo html::script(url::file_loc('js').'media/js/openid/openid-jquery-en', true);
 </head>
 
 <body>
+
+<?php echo $header_nav; ?>
+
 <div id="openid_login_container">
 
 	<div id="ushahidi_site_name" class="ui-corner-all">

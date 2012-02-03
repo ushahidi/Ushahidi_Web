@@ -1,0 +1,178 @@
+/* ---- Header Nav Bar ---- */
+
+header {
+	height:30px;
+	background-color: #585858;
+	border-bottom: 1px solid #FFFFFF;
+	color:#CCCCCC;
+	padding:0;
+	margin:0;
+	width:100%;
+	
+	-moz-box-shadow: 1px 1px 1px #CCC;
+	-webkit-box-shadow: 1px 1px 1px #CCC;
+	box-shadow: 1px 1px 1px #CCC;
+}
+
+header a {
+	color:#CCCCCC !important;
+	text-decoration:none;
+	display:inline-block;
+	height:30px;
+	padding: 0px 10px 0px 10px;
+}
+
+header a:hover {
+	background-color:#CCCCCC;
+	color:#000000 !important;
+	text-decoration:none;
+}
+
+header ul#header_nav_left a:hover {
+	background-color:transparent;
+	color:#CCCCCC !important;
+}
+
+header img {
+	border: 1px solid #CCCCCC;
+	vertical-align:middle;
+}
+
+header img {
+	border: 0;
+	vertical-align:middle;
+	margin:0;
+}
+
+header ul#header_nav_left {
+	padding:0 100px;
+	margin:0;
+}
+
+header ul#header_nav_left li {
+	list-style-type: none;
+	display: inline;
+}
+
+header ul#header_nav_right {
+	padding:0 100px;
+	margin:0;
+}
+
+header ul#header_nav_right li {
+	list-style-type: none;
+}
+
+header nav li.header_nav_user a {
+	padding: 4px 5px 0 5px;
+	height: 26px;
+}
+
+header nav li.header_nav_has_dropdown a span.header_nav_icon {
+	float: right;
+	width: 14px;
+	height: 14px;
+	background-position: center -24px;
+	margin: 11px 5px 0;
+}
+
+header nav li ul.header_nav_dropdown {
+	display: inline-block;
+	position:absolute;
+	z-index: 10;
+	right: 100px;
+	text-align: left;
+	border: 1px solid #FFFFFF;
+	border-top: 0px;
+	background: #585858;
+	padding: 5px 0;
+	float:right;
+	top:30px;
+	
+	-moz-box-shadow: 1px 1px 1px #CCC;
+	-webkit-box-shadow: 1px 1px 1px #CCC;
+	box-shadow: 1px 1px 1px #CCC;
+}
+
+header .header_nav_user {
+	float:right;
+	clear:right;
+}
+
+hgroup h1 {
+	font-size:100%;
+	font-weight:normal
+	margin:0;
+	padding:0;
+}
+
+header .left_bar, header .right_bar {
+	float: left;
+	height: 30px;
+	background-color:red;
+}
+
+header .center {
+	float: left;
+	margin: 0;
+}
+
+header hgroup {
+	float: left;
+	height: 30px;
+	margin:0;
+	padding:0;
+}
+
+header .logo {
+	vertical-align:middle;
+}
+
+header .logo a {
+	display: block;
+	width: 25px;
+	height: 25px;
+	-webkit-transition: all .2s ease;
+	-moz-transition: all .2s ease;
+	-o-transition: all .2s ease;
+	transition: all .2s ease;
+	padding-right: 5px;
+	margin: 0px 15px;
+}
+
+header .logo a:hover {
+	opacity: 0.7;
+	background-color: transparent;
+}
+
+header .nodisplay, .label {
+	display: none;
+}
+
+header label {
+	display: block;
+	font-weight: bold;
+	padding: 5px 0px 0px 15px;
+}
+
+header input {
+	display: block;
+	margin: 0px 15px;
+}
+
+header input.header_nav_login_btn {
+	margin-top: 8px;
+}
+
+header .bignext {
+	font-size:20px;
+}
+
+body {
+	margin:0;
+	padding:0;
+}
+
+form#header_nav_userforgot_form {
+	display:none;
+}

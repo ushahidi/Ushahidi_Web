@@ -17,10 +17,14 @@ $(document).ready(function() {
 	{
 		echo '$("#signin_new").show(400);';
 	}
-
-	// If we aren't showing OpenID, we should just go ahead and display the userpass login form
-
-	if (kohana::config('config.allow_openid') == false)
+	
+	// Determine which form to default to open
+	
+	if ( isset($_GET['newaccount']))
+	{
+		echo '$("#signin_new").show(0);';
+	}
+	elseif (kohana::config('config.allow_openid') == false)
 	{
 		echo '$("#signin_userpass").show(0);';
 	}

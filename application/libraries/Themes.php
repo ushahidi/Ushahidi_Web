@@ -4,18 +4,18 @@
  * These are regularly used templating functions
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
+ * @author	   Ushahidi Team <team@ushahidi.com>
  * @package	   Ushahidi - http://source.ushahididev.com
  * @module	   Themes Library
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Themes_Core {
-	
+
 	public $map_enabled = false;
 	public $api_url = null;
 	public $main_page = false;
@@ -27,10 +27,10 @@ class Themes_Core {
 	public $colorpicker_enabled = false;
 	public $site_style = false;
 	public $js = null;
-	
+
 	public $css_url = null;
 	public $js_url = null;
-	
+
 	public function __construct()
 	{
 		// Load cache
@@ -38,12 +38,12 @@ class Themes_Core {
 
 		// Load Session
 		$this->session = Session::instance();
-		
+
 		// Grab the proper URL for the css and js files
 		$this->css_url = url::file_loc('css');
 		$this->js_url = url::file_loc('js');
 	}
-	
+
 	/**
 	 * Header Block Contains CSS, JS and Feeds
 	 * Css is loaded before JS
@@ -55,7 +55,7 @@ class Themes_Core {
 			$this->_header_feeds().
 			$this->_header_js();
 	}
-	
+
 	/**
 	 * Css Items
 	 */
@@ -63,52 +63,54 @@ class Themes_Core {
 	{
 		$core_css = "";
 		$core_css .= html::stylesheet($this->css_url."media/css/jquery-ui-themeroller", "", true);
-		
+
 		foreach (Kohana::config("settings.site_style_css") as $theme_css)
 		{
 			$core_css .= html::stylesheet($theme_css,"",true);
 		}
-		
+
 		$core_css .= "<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",true)."<![endif]-->";
 		$core_css .= "<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",true)."<![endif]-->";
 		$core_css .= "<!--[if IE 6]>".html::stylesheet($this->css_url."media/css/ie6hacks","",true)."<![endif]-->";
-			
+
 		if ($this->map_enabled)
 		{
 			$core_css .= html::stylesheet($this->css_url."media/css/openlayers","",true);
 		}
-		
+
 		if ($this->treeview_enabled)
 		{
 			$core_css .= html::stylesheet($this->css_url."media/css/jquery.treeview","",true);
 		}
-		
+
 		if ($this->photoslider_enabled)
 		{
 			$core_css .= html::stylesheet($this->css_url."media/css/picbox/picbox","",true);
 		}
-		
+
 		if ($this->videoslider_enabled)
 		{
 			$core_css .= html::stylesheet($this->css_url."media/css/videoslider","",true);
 		}
-		
+
 		if ($this->colorpicker_enabled)
 		{
 			$core_css .= html::stylesheet($this->css_url."media/css/colorpicker","",true);
 		}
-		
+
 		if ($this->site_style AND $this->site_style != "default")
 		{
 			$core_css .= html::stylesheet($this->css_url."themes/".$site_style."/style.css");
 		}
-		
+
+		$core_css .= html::stylesheet($this->css_url."media/css/global","",true);
+
 		// Render CSS
 		$plugin_css = plugin::render('stylesheet');
-		
+
 		return $core_css.$plugin_css;
 	}
-	
+
 	/**
 	 * Javascript Files and Inline JS
 	 */
@@ -163,21 +165,23 @@ class Themes_Core {
 		{
 			$core_js .= html::script($this->js_url."media/js/coda-slider.pack");
 		}
-		
+
 		if ($this->colorpicker_enabled)
 		{
 			$core_js .= html::script($this->js_url."media/js/colorpicker");
 		}
-		
+
+		$core_js .= html::script($this->js_url."media/js/global");
+
 		// Javascript files from plugins
 		$plugin_js = plugin::render('javascript');
-		
+
 		// Javascript files from themes
 		foreach (Kohana::config("settings.site_style_js") as $theme_js)
 		{
 			$core_js .= html::script($theme_js,"",true);
 		}
-		
+
 		// Inline Javascript
 		$inline_js = "<script type=\"text/javascript\">
                         <!--//
@@ -185,13 +189,13 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 			".'$(document).ready(function(){$(document).pngFix();});'.$this->js.
                         "//-->
                         </script>";
-		
+
 		// Filter::header_js - Modify Header Javascript
 		Event::run('ushahidi_filter.header_js', $inline_js);
-		
+
 		return $core_js.$plugin_js.$inline_js;
 	}
-	
+
 	/**
 	 * RSS/Atom
 	 */
@@ -202,10 +206,10 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		{
 			$feeds .= "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".url::site()."feed/\" title=\"RSS2\" />";
 		}
-		
+
 		return $feeds;
 	}
-	
+
 	public function languages()
 	{
 		// *** Locales/Languages ***
@@ -219,7 +223,7 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 			$locales = locale::get_i18n();
 			$this->cache->set('locales', $locales, array('locales'), 604800);
 		}
-		
+
 		// Locale form submitted?
 		if (isset($_GET['l']) && !empty($_GET['l']))
 		{
@@ -231,16 +235,16 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 			// Change current locale
 			Kohana::config_set('locale.language', $_SESSION['locale']);
 		}
-		
+
 		$languages = "";
 		$languages .= "<div class=\"language-box\">";
 		$languages .= "<form action=\"\">";
-		
+
 		/**
 		 * E.Kala - 05/01/2011
 		 *
 		 * Fix to ensure to ensure that a change in language loads the page with the same data
-		 * 
+		 *
 		 * Only fetch the $_GET data to prevent double submission of data already submitted via $_POST
 		 * and create hidden form fields for each variable so that these are submitted along with the selected language
 		 *
@@ -250,7 +254,7 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		{
 		    $languages .= form::hidden($name, $value);
 		}
-		
+
 		// Do a case insensitive sort of locales so it comes up in a rough alphabetical order
 
 		natcasesort($locales);
@@ -259,10 +263,10 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 			' onchange="this.form.submit()" ');
 		$languages .= "</form>";
 		$languages .= "</div>";
-		
+
 		return $languages;
 	}
-	
+
 	public function search()
 	{
 		$search = "";
@@ -274,30 +278,30 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		$search .= "</ul>";
 		$search .= "</form>";
 		$search .= "</div>";
-		
+
 		return $search;
 	}
 
 	public function submit_btn()
 	{
 		$btn = "";
-		
+
 		// Action::pre_nav_submit - Add items before the submit button
 		$btn .= Event::run('ushahidi_action.pre_nav_submit');
-		
+
 		if (Kohana::config('settings.allow_reports'))
 		{
 			$btn .= "<div class=\"submit-incident clearingfix\">";
 			$btn .= "<a href=\"".url::site()."reports/submit"."\">".Kohana::lang('ui_main.submit')."</a>";
 			$btn .= "</div>";
 		}
-		
+
 		// Action::post_nav_submit - Add items after the submit button
 		$btn .= Event::run('ushahidi_action.post_nav_submit');
-		
+
 		return $btn;
 	}
-	
+
 	/*
 	* Google Analytics
 	* @param text mixed	 Input google analytics web property ID.

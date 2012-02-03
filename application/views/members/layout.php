@@ -61,13 +61,13 @@
 		echo html::script(url::file_loc('js').'media/js/excanvas.min', true);
 		echo html::script(url::file_loc('js').'media/js/timeline.js', true);
 	}
-	
+
 	// Load TreeView
 	if ($treeview_enabled) {
 		echo html::script(url::file_loc('js').'media/js/jquery.treeview');
 		echo html::stylesheet(url::file_loc('css').'media/css/jquery.treeview');
 	}
-	
+
 	// Load ProtoChart
 	if ($protochart_enabled)
 	{
@@ -78,7 +78,7 @@
 		echo '<![endif]-->';
 		echo html::script(url::file_loc('js').'media/js/protochart/ProtoChart', true);
 	}
-	
+
 	// Load Raphael
 	if($raphael_enabled)
 	{
@@ -116,10 +116,14 @@
 		echo html::stylesheet(url::file_loc('css').'media/css/jquery.autocomplete', '', true);
 		echo html::script(url::file_loc('js').'media/js/jquery.autocomplete.pack', true);
 	}
-	
+
 	// Turn on picbox
 	echo html::script(url::file_loc('js').'media/js/picbox', true);
 	echo html::stylesheet(url::file_loc('css').'media/css/picbox/picbox');
+
+	// Header Nav
+	echo html::script(url::file_loc('js').'media/js/global', true);
+	echo html::stylesheet(url::file_loc('css').'media/css/global','',true);
 	
 	// Render CSS and Javascript Files from Plugins
 	echo plugin::render('stylesheet');
@@ -155,19 +159,12 @@
 	</script>
 </head>
 <body>
+
+	<?php echo $header_nav; ?>
+
 	<div class="holder">
 		<!-- header -->
 		<div id="header">
-			<!-- top-area -->
-			<div class="top">
-				<ul>
-					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
-					<li class="none-separator"><a href="<?php echo url::site() ?>" title="View the home page">
-						<?php echo Kohana::lang('ui_admin.view_site');?></a>					
-					<li class="none-separator"><a href="<?php echo url::site()."members/profile/" ?>"><?php echo Kohana::lang('ui_admin.my_profile');?></a></li>
-					<li><a href="<?php echo url::site();?>logout"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
-				</ul>
-			</div>
 
 			<!-- info-nav -->
 			<div class="info-nav">

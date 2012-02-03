@@ -139,6 +139,18 @@ class Admin_Controller extends Template_Controller
 
 		// Load profiler
 		// $profiler = new Profiler;
+		
+		// Header Nav
+		$header_nav = new View('header_nav');
+		$this->template->header_nav = $header_nav;
+		$this->template->header_nav->loggedin_user = FALSE;
+		if ( isset(Auth::instance()->get_user()->id) )
+		{
+			// Load User
+			$this->template->header_nav->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
+			$this->template->header_nav->loggedin_user = Auth::instance()->get_user();
+		}
+		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
     }
 
 	public function index()

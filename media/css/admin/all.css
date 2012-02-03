@@ -1,9 +1,9 @@
 body{
 	margin:0;
 	font:12px/16px "Trebuchet MS",sans-serif;
-	background:url(../../img/admin/body-bg.gif) repeat-x;
 	color:#555;
 	min-width:960px;
+	padding:0;
 }
 form{
 	margin:0;
@@ -15,7 +15,7 @@ form{
 }
 h1, h2 ,h3, h4{margin:0;}
 h1{
-	padding:58px 0 0 2px;
+	padding:16px 0 0 2px;
 	color:#000;
 	font:28px/30px Georgia, "Times New Roman", Times, serif;
 }
@@ -104,7 +104,7 @@ a:hover{ text-decoration:none;}
 }
 /*-- info-nav --*/
 .info-nav {
-	margin:40px 7px 0 0;
+	margin:16px 7px 0 0;
 	display:inline;
 	float:right;
 }
