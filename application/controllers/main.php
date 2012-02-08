@@ -71,7 +71,7 @@ class Main_Controller extends Template_Controller {
 		{
 			if ( ! $this->auth->logged_in('login'))
 			{
-				url::redirect('login/front');
+				url::redirect('login');
 			}
 		}
 		
