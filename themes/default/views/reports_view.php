@@ -1,7 +1,7 @@
 <div id="main" class="report_detail">
 
 	<div class="left-col">
-	
+
   	  <?php
     	  if ($incident_verified)
     		{
@@ -11,28 +11,28 @@
     		{
     			echo '<p class="r_unverified">'.Kohana::lang('ui_main.unverified').'</p>';
     		}
-  	  ?>	
+  	  ?>
 
 		<h1 class="report-title"><?php
 			echo $incident_title;
-			
+
 			// If Admin is Logged In - Allow For Edit Link
 			if ($logged_in)
 			{
 				echo " [&nbsp;<a href=\"".url::site()."admin/reports/edit/".$incident_id."\">".Kohana::lang('ui_main.edit')."</a>&nbsp;]";
 			}
 		?></h1>
-	
+
 		<p class="report-when-where">
 			<span class="r_date"><?php echo $incident_time.' '.$incident_date; ?> </span>
 			<span class="r_location"><?php echo $incident_location; ?></span>
 			<?php Event::run('ushahidi_action.report_meta_after_time', $incident_id); ?>
 		</p>
-	
+
 		<div class="report-category-list">
 		<p>
 			<?php
-				foreach($incident_category as $category) 
+				foreach($incident_category as $category)
 				{
 
 					// don't show hidden categoies
@@ -45,8 +45,8 @@
 					{
 					?>
 					<a href="<?php echo url::site()."reports/?c=".$category->category->id; ?>"><span class="r_cat-box" style="background:transparent url(<?php echo url::base().Kohana::config('upload.relative_directory')."/".$category->category->category_image_thumb; ?>) 0 0 no-repeat;">&nbsp;</span> <?php echo $category->category->category_title; ?></a>
-					
-					<?php 
+
+					<?php
 					}
 					else
 					{
@@ -62,7 +62,7 @@
 			Event::run('ushahidi_action.report_meta', $incident_id);
 			?>
 		</div>
-		
+
 		<?php
 		// Action::report_display_media - Add content just above media section
 	    Event::run('ushahidi_action.report_display_media', $incident_id);
@@ -70,7 +70,7 @@
 
 		<!-- start report media -->
 		<div class="<?php if( count($incident_photos) > 0 || count($incident_videos) > 0){ echo "report-media";}?>">
-	    <?php 
+	    <?php
 	    // if there are images, show them
 	    if( count($incident_photos) > 0 )
 	    {
@@ -79,46 +79,46 @@
 			{
 				echo '<a class="photothumb" rel="lightbox-group1" href="'.$photo['large'].'"><img src="'.$photo['thumb'].'"/></a> ';
 			};
-			echo '</div>';  
+			echo '</div>';
 	    }
-	    
+
 	    // if there are videos, show those too
-	    if( count($incident_videos) > 0 ) 
-	    { 
+	    if( count($incident_videos) > 0 )
+	    {
 	      echo '<div id="report-video"><ol>';
 
           // embed the video codes
-          foreach( $incident_videos as $incident_video) 
+          foreach( $incident_videos as $incident_video)
           {
             echo '<li>';
             $videos_embed->embed($incident_video,'');
             echo '</li>';
           };
   			echo '</ol></div>';
-        
+
 	    }
 	    ?>
 		</div>
-		
+
 		<!-- start report description -->
 		<div class="report-description-text">
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
 			<?php echo $incident_description; ?>
 			<br/>
-			
-				
+
+
 			<!-- start news source link -->
 			<?php if( count($incident_news) > 0 ) { ?>
 			<div class="credibility">
 			<h5><?php echo Kohana::lang('ui_main.reports_news');?></h5>
 					<?php
-						foreach( $incident_news as $incident_new) 
+						foreach( $incident_news as $incident_new)
 						{
 							?>
 							<a href="<?php echo $incident_new; ?> " target="_blank"><?php
 							echo $incident_new;?></a>
 							<br/>
-							<?php	
+							<?php
 						}
 			?>
 			</div>
@@ -134,7 +134,7 @@
 				echo $custom_forms;
 
 			?>
-			<br/>			
+			<br/>
 			</div>
 			<?php } ?>
 			<!-- end additional fields -->
@@ -152,7 +152,7 @@
 						"<div class=\"feature_comment\">$feature->geometry_comment</div>" : "";
 				}
 			}?>
-			
+
 			<div class="credibility">
 				<table class="rating-table" cellspacing="0" cellpadding="0" border="0">
           <tr>
@@ -165,7 +165,7 @@
         </table>
 			</div>
 		</div>
-		
+
 		<?php
             // Action::report_extra - Allows you to target an individual report right after the description
             Event::run('ushahidi_action.report_extra', $incident_id);
@@ -174,19 +174,19 @@
 			Event::run('ushahidi_filter.comment_block', $comments);
 			echo $comments;
 		?>
-		
+
 		<?php
 			// Filter::comments_form_block - The block that contains the comments form
 			Event::run('ushahidi_filter.comment_form_block', $comments_form);
 			echo $comments_form;
 		?>
-	
+
 	</div>
-	
+
 	<div class="right-col">
 
 		<div class="report-media-box-content">
-			
+
 			<div id="report-map" class="report-map">
 				<div class="map-holder" id="map"></div>
         <ul class="map-toggles">
@@ -196,8 +196,14 @@
           <li><a href="#" class="shorter-map">Shorter Map</a></li>
         </ul>
         <div style="clear:both"></div>
-			</div>			
+			</div>
 		</div>
+
+		<?php
+			// Action::report_view_sidebar - This gives plugins the ability to insert into the sidebar (below the map and above additional reports)
+			Event::run('ushahidi_action.report_view_sidebar', $incident_id);
+		?>
+
 		<div class="report-additional-reports">
 			<h4><?php echo Kohana::lang('ui_main.additional_reports');?></h4>
 			<?php foreach($incident_neighbors as $neighbor) { ?>
@@ -210,10 +216,10 @@
 		</div>
 
 	</div>
-	
+
 	<div style="clear:both;"></div>
-	
-	
-	
-	
+
+
+
+
 </div>
