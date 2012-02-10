@@ -23,11 +23,11 @@
 					{
 						$category_title = $category_info[0];
 						$category_color = $category_info[1];
-						$category_image = '';
+						$category_image = ($category_info[2] != NULL) ? url::convert_uploaded_to_abs($category_info[2]) : NULL;
 						$color_css = 'class="swatch" style="background-color:#'.$category_color.'"';
 						if($category_info[2] != NULL) {
 							$category_image = html::image(array(
-								'src'=>$category_info[2],
+								'src'=>$category_image,
 								'style'=>'float:left;padding-right:5px;'
 								));
 							$color_css = '';
@@ -42,11 +42,11 @@
                                                     {
                                                             $child_title = $child_info[0];
                                                             $child_color = $child_info[1];
-                                                            $child_image = '';
+                                                            $child_image = ($child_info[2] != NULL) ? url::convert_uploaded_to_abs($child_info[2]) : NULL;
                                                             $color_css = 'class="swatch" style="background-color:#'.$child_color.'"';
-                                                            if($child_info[2] != NULL && file_exists(Kohana::config('upload.relative_directory').'/'.$child_info[2])) {
+                                                            if($child_info[2] != NULL) {
                                                                     $child_image = html::image(array(
-                                                                            'src'=>Kohana::config('upload.relative_directory').'/'.$child_info[2],
+                                                                            'src'=>$child_image,
                                                                             'style'=>'float:left;padding-right:5px;'
                                                                             ));
                                                                     $color_css = '';
