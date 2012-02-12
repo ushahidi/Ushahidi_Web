@@ -99,6 +99,13 @@
 							<?php print form::password('password_again', $form['password_again'], ' class="text"'); ?>
 						</div>
 
+						<?php }elseif(kohana::config('riverid.enable') == FALSE){ ?>
+
+						<div class="row">
+							<h4><?php echo Kohana::lang('ui_admin.new_password');?></h4>
+							<?php print form::password('new_password', '', ' class="text long2"'); ?>
+						</div>
+
 						<?php } ?>
 
                         <?php
