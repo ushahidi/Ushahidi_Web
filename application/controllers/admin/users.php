@@ -153,18 +153,17 @@ class Users_Controller extends Admin_Controller
 				$user->email = $post->email;
 				$user->notify = $post->notify;
 
-                if ($user_id == NULL)
-                {
-                    $user->password = $post->password;
-                }
+				if ($user_id == NULL)
+				{
+					$user->password = $post->password;
+				}
 
-                // We can only set a new password if we are using the standard ORM method,
-                //    otherwise it won't actually change the password used for authentication
-                if (isset($post->new_password) AND kohana::config('riverid.enable') == FALSE)
-                {
-                    echo 'SET A NEW PASSWORD';
-                    $user->password = $post->new_password;
-                }
+				// We can only set a new password if we are using the standard ORM method,
+				//    otherwise it won't actually change the password used for authentication
+				if (isset($post->new_password) AND kohana::config('riverid.enable') == FALSE)
+				{
+					$user->password = $post->new_password;
+				}
 
 				// Existing User??
 				if ($user->loaded==true)
