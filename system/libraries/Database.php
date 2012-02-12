@@ -413,7 +413,7 @@ class Database_Core {
 
 		foreach ($keys as $key => $value)
 		{
-			$key           = (strpos($key, '.') !== FALSE) ? $this->config['table_prefix'].$key : $key;
+			$key = (strpos($key, '.') !== FALSE) ? preg_replace_callback('/\b\w*\.\b/', 'Database_Core::replace_match', $key):$key;
 			$this->where[] = $this->driver->where($key, $value, 'AND ', count($this->where), $quote);
 		}
 
@@ -1326,6 +1326,19 @@ class Database_Core {
 		) = array_pop($this->query_history);
 
 		return $this;
+	}
+
+	/**
+	 * Adds the table prefix to a table name if its not included in the name.
+	 *
+	 * @return table name with prefix
+	 */
+	public function replace_match($matches){
+		if(strpos($matches[0], $this->config['table_prefix']) !== FALSE){
+			return $matches[0];
+		}else{
+			return $this->config['table_prefix'].$matches[0];
+		}
 	}
 
 
