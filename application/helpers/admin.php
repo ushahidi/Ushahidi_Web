@@ -230,11 +230,6 @@ class admin_Core {
 
 		$menu .= ($this_sub_page == "forms") ? Kohana::lang('ui_main.forms') : "<a href=\"".url::site()."admin/manage/forms\">".Kohana::lang('ui_main.forms')."</a>";
 
-		//** Not sure Organizations is necessary any more?
-		//$menu .= ($this_sub_page == "organizations") ? Kohana::lang('ui_main.organizations')."&nbsp;<span>(<a href=\"#add\">Add New</a>)</span>" : "<a href=\"".url::site()."admin/manage/organizations\">".Kohana::lang('ui_main.organizations')."</a>";
-
-		$menu .= ($this_sub_page == "sharing") ? Kohana::lang('ui_main.sharing') : "<a href=\"".url::site()."admin/manage/sharing\">".Kohana::lang('ui_main.sharing')."</a>";
-
 		$menu .= ($this_sub_page == "pages") ? Kohana::lang('ui_main.pages') : "<a href=\"".url::site()."admin/manage/pages\">".Kohana::lang('ui_main.pages')."</a>";
 
 		$menu .= ($this_sub_page == "feeds") ? Kohana::lang('ui_main.news_feeds') : "<a href=\"".url::site()."admin/manage/feeds\">".Kohana::lang('ui_main.news_feeds')."</a>";
