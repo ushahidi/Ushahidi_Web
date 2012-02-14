@@ -54,6 +54,9 @@ class Manage_Controller extends Admin_Controller
 
 		// Locale (Language) Array
 		$locales = locale::get_i18n();
+		
+		// Database table prefix
+		$table_prefix = Kohana::config('database.default.table_prefix');
 
 		// Setup and initialize form field names
 		$form = array
@@ -224,6 +227,45 @@ class Manage_Controller extends Admin_Controller
 						->where(array('category_id' => $category->id))
 						->delete_all();
 						
+					// Remove association between any report and the deleted category
+					
+					// Database instance
+					$db = new Database();	
+					$sql = "SELECT DISTINCT(id),incident_id FROM "
+						.$table_prefix."incident_category"
+						." WHERE category_id =".$category->id."";
+					$result = $db->query($sql);
+					
+					// If there are reports returned by the query
+					if($result)
+					{
+						foreach($result as $orphan)
+						{
+							$orphan_incident_id = $orphan->incident_id;
+						
+							// Check if the report is tied to any other category
+							$count = ORM::factory('incident_category')
+										->where('incident_id',$orphan_incident_id)
+										->count_all();
+					
+							// If this report is tied to only one category(is an orphan), assigne it to special category for orphans
+							if($count == 1)
+							{
+								$orphaned = ORM::factory('incident_category',$orphan->id);
+								$orphaned->category_id = 5;
+								$orphaned->save();
+							
+							}
+						
+							// If this report is tied to more than one category(not orphaned), remove relation to category being deleted						
+							else
+							{
+								ORM::factory('incident_category')
+									->delete($orphan->id);
+							}
+						}
+					}
+					
 					// @todo Delete the category image
 					
 					// Delete category itself - except if it is trusted

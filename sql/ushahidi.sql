@@ -39,7 +39,8 @@ INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_descr
 (1, 5, 'Category 1', 'Category 1', '9900CC', 1, 0),
 (2, 5, 'Category 2', 'Category 2', '3300FF', 1, 0),
 (3, 5, 'Category 3', 'Category 3', '663300', 1, 0),
-(4, 5, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1);
+(4, 5, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1),
+(5, 5, 'NONE', 'Holds orphaned reports', '009887', 1, 1);
 
 
 
@@ -416,7 +417,7 @@ PRIMARY KEY (`id`)
 CREATE TABLE IF NOT EXISTS `incident_category` (                                    
     `id` int(11) NOT NULL auto_increment,                                           
     `incident_id` bigint(20) NOT NULL default '0',                                  
-    `category_id` int(11) NOT NULL default '0',                                     
+    `category_id` int(11) NOT NULL default '5',                                     
   PRIMARY KEY  (`id`),
   UNIQUE KEY `incident_category_ids` (`incident_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -1476,4 +1477,4 @@ ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '72' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '73' WHERE `id`=1 LIMIT 1;

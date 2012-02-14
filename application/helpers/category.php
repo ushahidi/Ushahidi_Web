@@ -166,6 +166,7 @@ class category_Core {
 			. "AND c.category_visible = 1 "
 			. "AND c2.parent_id = 0 "
 			. "AND c2.category_title != \"Trusted Reports\" "
+			. "AND c2.category_title != \"NONE\""
 			. "GROUP BY c2.id "
 			. "ORDER BY c2.id ASC";
 		
