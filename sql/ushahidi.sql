@@ -1167,42 +1167,6 @@ INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url
 (3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL);
 
 
-
-/**
-* Table structure for table `sharing`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `sharing` (                                              
-	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`sharing_name` VARCHAR(150) NOT NULL,				-- name of the sharing website
-	`sharing_url` VARCHAR(255) NOT NULL,				-- main url of the sharing website
-	`sharing_color` VARCHAR(20) DEFAULT 'CC0000',		-- color for the map layer selector
-	`sharing_active` TINYINT DEFAULT 1 NOT NULL,		-- sharing layer active?
-	`sharing_date` DATETIME,							-- date of last update
-	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `sharing_log`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `sharing_incident` (                                          
-	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`sharing_id` INT UNSIGNED NOT NULL,
-	`incident_id` INT NOT NULL,							-- remote website incident ID
-	`incident_title` VARCHAR(255) NOT NULL,				-- remote incident title
-	`latitude` DOUBLE NOT NULL,							-- remote incident latitude
-	`longitude` DOUBLE NOT NULL,						-- remote incident longitude
-	`incident_date` DATETIME,							-- remote incident date
-	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
-
 /**
 * Table structure for table `page`
 * 
