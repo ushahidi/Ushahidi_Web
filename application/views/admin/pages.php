@@ -141,7 +141,7 @@
 						</div>
 						<div class="tab_form_item2">
 							<strong><?php echo Kohana::lang('ui_main.page_description');?>:</strong><br />
-							<?php print form::textarea('page_description', $form['page_description'], ' rows="12" cols="60" '); ?>
+							<?php print form::textarea('page_description',$form['page_description'],' rows="12" cols="60" ','id = page_description'); ?>
 						</div>
 						<?php
 							// Action::page_form_admin - Runs just after the page description

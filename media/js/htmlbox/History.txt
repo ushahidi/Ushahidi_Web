@@ -1,0 +1,122 @@
+            ----------- HtmlBox -----------
+          | Copyright@2008 Remiya Solutions |
+            -------------------------------
+
+========================================================
+| Version 1.4                                          |
+========================================================
+| Release Date: 20.05.2008                             |
+|                                                      |
+| New features:                                        |
+| - Added Cut, Copy, Paste support for IE, and help    |
+|   message for the other browsers.                    |
+| - Ajax support: Post and Get custom Success and Error|
+|   messages possible                                  |
+========================================================
+| Version 1.6                                          |
+========================================================
+| Developed Date: 08.06.2008 (Not released)            |
+|                                                      |
+| New features:                                        |
+| - Format support (H1..H6,P,PRE,Indented paragraph)   |
+| - Paragraph button added                             |
+========================================================
+| Version 1.8                                          |
+========================================================
+| Developed Date: 11.06.2008 (Not released)            |
+|                                                      |
+| New features:                                        |
+| - Remove format button                               |
+| - Strip tags button                                  |
+| - Colors as plug-in for less space                   |
+========================================================
+| Version 2.0                                          |
+========================================================
+| Release Date: 14.06.2008                             |
+|                                                      |
+| New features:                                        |
+| - Code buttons (ASP,C,C++,Java,JavaScript,PHP,VB,XML)|
+| - Custom CSS stylesheet support                      |
+========================================================
+| Version 2.2                                          |
+========================================================
+| Release Date: 16.06.2008                             |
+|                                                      |
+| New features:                                        |
+| - Unlink support                                     |
+========================================================
+| Version 2.4                                          |
+========================================================
+| Release Date: 18.07.2008                             |
+|                                                      |
+| New features:                                        |
+| - Custom CSS stylesheet support (Not Safari)         |
+| - Quote button                                       |
+| - User defined styles supported (as plug-in)         |
+========================================================
+| Version 2.5                                          |
+========================================================
+| Release Date: 05.10.2008                             |
+|                                                      |
+| New features:                                        |
+| - A bug removed when used with latest JQuery pack    |
+========================================================
+| Version 2.6                                          |
+========================================================
+| Release Date: 05.10.2008                             |
+|                                                      |
+| New features:                                        |
+| - Added remove function to remove the HtmlBox        |
+|   instance from the DOM and global space             |
+| - Added change function to fire when text in the     |
+|   HtmlBox instance is changed                        |
+========================================================
+| Version 2.8                                          |
+========================================================
+| Release Date: 19.01.2009                             |
+|                                                      |
+| New features:                                        |
+| - Source syntax made external(as plug-in)            |
+| - Added idir function to set an user-defined image   |
+|   directory                                          |
+========================================================
+| Version 3.2                                          |
+========================================================
+| Release Date: 29.03.2009                             |
+|                                                      |
+| New features:                                        |
+| - The entire source code has been redone. Now is     |
+|   more stable, easier to use and closer to the       |
+|   JQuery traditional usage                           |
+| - Advanced Undo Redo capabilities are added          |
+========================================================
+| Version 4.0                                          |
+========================================================
+| Release Date: 15.10.2009                             |
+|                                                      |
+| New features:                                        |
+| - Skins support is added out of the box.             |
+| - Custom icon sets are supported                     |
+| - Custom tools can be specified                      |
+| - The user manual has been updated                   |
+| - Tested with Chrome                                 |
+| - Source syntax made external(as plug-in)            |
+========================================================
+| Version 4.0.3                                        |
+========================================================
+| Release Date: 23.02.2011                             |
+|                                                      |
+| Removed bugs:                                        |
+| - Undo Redo manager was not working when minimized   |
+========================================================
+| Version 4.0.3                                        |
+========================================================
+| Release Date: 23.02.2011                             |
+|                                                      |
+| Removed bugs:                                        |
+| - Method set_text was causing problems with IE       |
+========================================================
+
+TODO (for the Pro version):
+ 2. Smiles and Image gallery support
+ 3. Advanced color picker, image and hyperlink dialogs

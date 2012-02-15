@@ -25,6 +25,7 @@ class Themes_Core {
 	public $photoslider_enabled = false;
 	public $videoslider_enabled = false;
 	public $colorpicker_enabled = false;
+	public $editor_enabled = false;
 	public $site_style = false;
 	public $js = null;
 
@@ -173,6 +174,11 @@ class Themes_Core {
 
 		$core_js .= html::script($this->js_url."media/js/global");
 
+		if ($this->editor_enabled)
+		{
+			$core_js .= html::script($this->js_url."media/js/htmlbox/htmlbox.min.js");
+		}
+	
 		// Javascript files from plugins
 		$plugin_js = plugin::render('javascript');
 
