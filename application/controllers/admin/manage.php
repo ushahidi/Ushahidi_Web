@@ -248,12 +248,18 @@ class Manage_Controller extends Admin_Controller
 										->where('incident_id',$orphan_incident_id)
 										->count_all();
 					
-							// If this report is tied to only one category(is an orphan), assigne it to special category for orphans
+							// If this report is tied to only one category(is an orphan)
 							if($count == 1)
 							{
+								// Assign it to special category for orphans
 								$orphaned = ORM::factory('incident_category',$orphan->id);
 								$orphaned->category_id = 5;
 								$orphaned->save();
+								
+								// Deactivate the report so that it's not accessible on the frontend
+								$orphaned_report = ORM::factory('incident',$orphan_incident_id);
+								$orphaned_report->incident_active = 0;
+								$orphaned_report->save();
 							
 							}
 						

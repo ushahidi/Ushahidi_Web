@@ -225,6 +225,7 @@ class Main_Controller extends Template_Controller {
 		$parent_categories = array();
 		foreach (ORM::factory('category')
 				->where('category_visible', '1')
+				->where('category_title != "NONE"')
 				->where('parent_id', '0')
 				->find_all() as $category)
 		{
@@ -244,16 +245,6 @@ class Main_Controller extends Template_Controller {
 						$child->category_color,
 						$ca_img
 					);
-
-					if ($child->category_trusted)
-					{ 
-						// Get Trusted Category Count
-						$trusted = $this->get_trusted_category_count($child->id);
-						if ( ! $trusted->count_all())
-						{
-							unset($children[$child->id]);
-						}
-					}
 				}
 			}
 
@@ -268,16 +259,6 @@ class Main_Controller extends Template_Controller {
 				$ca_img,
 				$children
 			);
-
-			if ($category->category_trusted)
-			{ 
-				// Get Trusted Category Count
-				$trusted = $this->get_trusted_category_count($category->id);
-				if ( ! $trusted->count_all())
-				{
-					unset($parent_categories[$category->id]);
-				}
-			}
 		}
 		$this->template->content->categories = $parent_categories;
 

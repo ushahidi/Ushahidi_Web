@@ -131,11 +131,10 @@ class Category_Model extends ORM_Tree {
 		$where = (intval($parent_id) > 0 AND self::is_valid_category($parent_id))
 			? array('parent_id' => $parent_id)
 			: array('parent_id' => 0);
-		// Make sure to hide the orphaned reports category
-		$where = array_merge($where, array('id !=' =>'5'));
 			
 		// Make sure the category is visible
-		if ($exclude_hidden) {
+		if ($exclude_hidden)
+		{
 			$where = array_merge($where, array('category_visible' =>'1'));
 		}
 		
@@ -148,6 +147,7 @@ class Category_Model extends ORM_Tree {
 		// Return
 		return self::factory('category')
 			->where($where)
+			->where('category_title != "NONE"')
 			->orderby('category_position', 'ASC')
 			->orderby('category_title', 'ASC')
 			->find_all();
