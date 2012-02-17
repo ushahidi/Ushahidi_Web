@@ -120,10 +120,10 @@
 	// Load TinyMCE
 	if ($editor_enabled)
 	{
-		if (Kohana::config("cdn.cdn_ignore_tinymce") == true) {
-			echo html::script(url::file_loc('ignore').'media/js/tinymce/tiny_mce', true);
+		if (Kohana::config("cdn.cdn_ignore_htmlbox") == true) {
+			echo html::script(url::file_loc('ignore').'media/js/htmlbox/htmlbox.min.js', true);
 		} else {
-			echo html::script(url::file_loc('js').'media/js/tinymce/tiny_mce', true);
+			echo html::script(url::file_loc('js').'media/js/htmlbox/htmlbox.min.js', true);
 		}
 	}
 	

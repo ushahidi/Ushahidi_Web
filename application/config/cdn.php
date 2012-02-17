@@ -54,7 +54,7 @@ $config['cdn_container'] = "";
 $config['cdn_gradual_upgrade'] = false;
 
 // Avoid XSS problems with TinyMCE in CDN environments.
-$config['cdn_ignore_tinymce'] = true;
+$config['cdn_ignore_htmlbox'] = true;
 
 
 ?>
