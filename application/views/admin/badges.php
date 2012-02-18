@@ -69,9 +69,27 @@
 							<strong><?php echo Kohana::lang('ui_main.description');?>:</strong><br />
 							<?php print form::input('description', $form['description'], ' class="text"'); ?>
 						</div>
+						
+						<div class="tab_form_item" style="clear:both;">
+							
+							<strong><?php echo Kohana::lang('ui_main.badge_select');?>:</strong><br />
+							<input type="hidden" name="selected_badge" value="" id="selected_badge"  />
+							<?php
+								foreach($badge_packs as $pack_name => $pack)
+								{
+									echo '<h4>'.$pack_name.' '.Kohana::lang('ui_main.badge_pack').'</h4>';
+									foreach($pack as $badge_filename)
+									{
+										$badge_url = url::base().'media/img/badge_packs/'.$pack_name.'/'.$badge_filename;
+										$encoded_badge = base64_encode($pack_name.'/'.$badge_filename);
+										echo '<img src="'.$badge_url.'" id="badge_'.$encoded_badge.'" class="badge_selection transparent-25" />'."\n";
+									}
+								}
+							?>
+						</div>
 
 						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.badge_image');?>:</strong><br />
+							<strong><?php echo Kohana::lang('ui_main.badge_image_upload_your_own');?>:</strong><br />
 							<?php echo form::upload('image', '', ''); ?>
 						</div>
 

@@ -86,7 +86,7 @@
 											</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><a href="<?php echo url::site() . 'admin/users/edit/' . $user_id; ?>"><?php echo $name; ?> (<?php echo $username; ?>)</a></h4>
+													<h4><a href="<?php echo url::site() . 'admin/users/edit/' . $user_id; ?>"><?php echo $name; ?></a></h4>
 												</div>
 												<ul class="info">
 													<li class="none-separator"><?php echo Kohana::lang('ui_main.email');?>: <strong><?php echo $email; ?></strong></li>

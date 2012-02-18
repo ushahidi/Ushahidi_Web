@@ -62,6 +62,20 @@ class Comments_Api_Object extends Api_Object_Core {
                         $this->response_data = $this->_get_comment_by_report_id($this->check_id_value($this->request['id']));
                     }
             	break;
+            	
+            	case "checkinid":
+				    if ( ! $this->api_service->verify_array_index($this->request, 'id'))
+                    {
+                        $this->set_error_message(array(
+                            "error" => $this->api_service->get_error_msg(001, 'id')
+                    ));
+                        return;
+                    }
+                    else
+                    {
+                        $this->response_data = $this->_get_comment_by_checkin_id($this->check_id_value($this->request['id']));
+                    }
+            	break;
             default:
                 $this->set_error_message(array(
                     "error" => $this->api_service->get_error_msg(002)
@@ -539,23 +553,81 @@ class Comments_Api_Object extends Api_Object_Core {
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
-            $post->add_rules('incident_id', 'required');
-			$post->add_rules('comment_author', 'required', 'length[3,100]');
-			$post->add_rules('comment_description', 'required');
-			$post->add_rules('comment_email', 'required','email', 'length[4,100]');
+			
+			// We can have either a checkin id or an incident id
+			if( isset($post->checkin_id) )
+			{
+				$post->add_rules('checkin_id', 'required');
+			}else{
+				$post->add_rules('incident_id', 'required');
+			}
+			
+			// If the user isn't posting an email and author name, then they need to log in
+			if ( ! isset($post->comment_author) AND ! isset($post->comment_email) )
+			{
+				if ( ! $this->api_service->_login())
+		        {
+		            $this->set_error_message($this->response(2));
+		            return;
+		        }
+			}
+			
+			// Grab variables for a logged in user
+			$auth = Auth::instance();
+
+			// Is user previously authenticated?
+			if ( $auth->logged_in() )
+			{
+				$user_id = $auth->get_user()->id;
+			} else {
+				$user_id = NULL;
+				$post->add_rules('comment_author', 'required', 'length[3,100]');
+				$post->add_rules('comment_email', 'required','email', 'length[4,100]');
+			}
+			
 			// Test to see if things passed the rule checks
 
 			if ($post->validate())
 			{
 				// Yes! everything is valid
-                $incident = ORM::factory('incident')
-				->where('id',$post->incident_id)
-				->where('incident_active',1)
-				->find();
-			    if ( $incident->id == 0 )	// Not Found
-			    {
-				    return $this->response(1, "No incidents with that ID");
-			    }
+				
+				$incident_id = NULL;
+				$checkin_id = NULL;
+				
+				if( isset($post->checkin_id) )
+				{
+					$checkin = ORM::factory('checkin')
+					               ->where('id',$post->checkin_id)
+					               ->find();
+					if ( $checkin->id == 0 )	// Not Found
+					{
+						return $this->response(1, "No checkins with that ID");
+					}
+					$checkin_id = $post->checkin_id;
+					$comment_url = '';
+					$comment_title = $checkin->checkin_description;
+				} else {
+					$incident = ORM::factory('incident')
+					                ->where('id',$post->incident_id)
+					                ->where('incident_active',1)
+					                ->find();
+					if ( $incident->id == 0 )	// Not Found
+					{
+						return $this->response(1, "No incidents with that ID");
+					}
+					$incident_id = $post->incident_id;
+					$comment_url = url::base().'reports/view/'.$post->incident_id;
+					$comment_title = $incident->incident_title;
+				}
+				
+				if ( $user_id == NULL )
+				{
+					$comment_author = $post->comment_author;
+					$comment_email = $post->comment_email;
+				} else {
+					$comment_author = $auth->get_user()->name;
+					$comment_email = $auth->get_user()->email;
+				}
 
 
 				if ($api_akismet != "")
@@ -567,8 +639,8 @@ class Comments_Api_Object extends Api_Object_Core {
 					// Comment data
 
 					$comment = array(
-						'author' => $post->comment_author,
-						'email' => $post->comment_email,
+						'author' => $comment_author,
+						'email' => $comment_email,
 						'website' => "",
 						'body' => $post->comment_description,
 						'user_ip' => $_SERVER['REMOTE_ADDR']
@@ -621,10 +693,11 @@ class Comments_Api_Object extends Api_Object_Core {
 
 
 				$comment = new Comment_Model();
-				$comment->incident_id = strip_tags($post->incident_id);
-				$comment->comment_author = strip_tags($post->comment_author);
+				$comment->incident_id = strip_tags($incident_id);
+				$comment->checkin_id = strip_tags($checkin_id);
+				$comment->comment_author = strip_tags($comment_author);
 				$comment->comment_description = strip_tags($post->comment_description);
-				$comment->comment_email = strip_tags($post->comment_email);
+				$comment->comment_email = strip_tags($comment_email);
 				$comment->comment_ip = $_SERVER['REMOTE_ADDR'];
 				$comment->comment_date = date("Y-m-d H:i:s",time());
 
@@ -647,8 +720,9 @@ class Comments_Api_Object extends Api_Object_Core {
 					"[".Kohana::config('settings.site_name')."] ".
 						Kohana::lang('notifications.admin_new_comment.subject'),
 						Kohana::lang('notifications.admin_new_comment.message')
-						."\n\n'".strtoupper($incident->incident_title)."'"
-						."\n".url::base().'reports/view/'.$post->incident_id
+						."\n\n'".$comment_title."'"
+						."\n".$comment_url
+						."\n\n".strip_tags($post->comment_description)
 					);
 			}
             else
@@ -753,6 +827,81 @@ class Comments_Api_Object extends Api_Object_Core {
 			{
 				//prompt user for a valid ID
 				return $this->response(1, "No report with that ID");
+			}
+		
+		}
+		else 
+		{
+			//prompt user about commenting not enabled on this deployment
+			return $this->response(1, "Commenting is not activated on this deployment");
+		}
+	}
+	
+	/**
+	 * 
+	 * Get comments by checkin id
+	 * 
+	 * @param int id - The checkin id
+	 * 
+	 * @return String XML or JSON string
+	 */
+	private function _get_comment_by_checkin_id($id) 
+	{
+		$json_comments = array();
+        $ret_json_or_xml = '';
+		$i = 0;
+		
+		//Check if comments are enabled by that deployments
+		if (Kohana::config('settings.allow_comments'))
+		{
+			
+			$checkin_comments = array();
+			if ($id)
+			{
+				$this->query = "SELECT id, checkin_id, comment_author, comment_email, ";
+				$this->query .= "comment_description,comment_rating,comment_date ";
+				$this->query .= "FROM ".$this->table_prefix."`comment`" ;
+				$this->query .= " WHERE `checkin_id` = ".$this->db->escape_str($id)." AND `comment_active` = '1' ";
+				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
+				$checkin_comments = $this->db->query($this->query);
+												
+				if ($checkin_comments->count() == 0)
+					return $this->response(4);
+				
+				foreach ($checkin_comments as $comment)
+				{
+					// Needs different treatment depending on the output
+		            if ($this->response_type == 'json')
+		            {
+		                $json_comments[] = array("comment" => $comment);
+		            } 
+		            else
+		            {
+		                $json_comments['comment'.$i] = array("comment" => $comment);
+		                $this->replar[] = 'comment'.$i;
+		            }
+
+		            $i++;
+				}
+				// Create the json array
+		        $data = array(
+		                "payload" => array(
+		                    "domain" => $this->domain,
+		                    "comments" => $json_comments
+		                ),
+		                "error" => $this->api_service->get_error_msg(0)
+		        );
+
+				$ret_json_or_xml = ($this->response_type == 'json')
+					? $this->array_as_json($data)
+					: $this->array_as_xml($data, $this->replar);
+
+		        return $ret_json_or_xml;
+			}
+			else 
+			{
+				//prompt user for a valid ID
+				return $this->response(1, "No checkins with that ID");
 			}
 		
 		}

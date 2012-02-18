@@ -57,7 +57,8 @@ class https_check {
                 CURLOPT_URL => url::base().'media/css/error.css',
                 CURLOPT_FOLLOWLOCATION => FALSE,
                 CURLOPT_RETURNTRANSFER => TRUE,
-                CURLOPT_HEADER, FALSE
+                CURLOPT_HEADER => FALSE,
+                CURLOPT_SSL_VERIFYPEER => FALSE
             );
             
             // Initialize session and set cURL

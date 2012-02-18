@@ -108,7 +108,7 @@ class Search_Controller extends Main_Controller {
 			if ( ! empty($keyword_string) AND !empty($where_string))
 			{
 				// Limit the result set to only those reports that have been approved	
-				$where_string .= ' AND incident_active = 1';
+				$where_string = '(' . $where_string . ') AND incident_active = 1';
 				$search_query = "SELECT *, (".$keyword_string.") AS relevance FROM "
 								. $this->table_prefix."incident "
 								. "WHERE ".$where_string." "

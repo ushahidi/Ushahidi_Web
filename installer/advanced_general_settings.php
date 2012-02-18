@@ -2,7 +2,7 @@
 	require_once('install.php');
 	global $install;
 	
-	if(!isset( $_SESSION['general_settings']) && $_SESSION['general_settings'] != "general_settings"){
+	if(!isset( $_SESSION['general_settings']) && $_SESSION['general_settings'] != "advanced_db_info"){
 		header('Location:.');
 	}
 	
@@ -18,6 +18,7 @@
 		<li class="active"><span>General</span></li>
 		<li class=""><span>Mail Server</span></li>
 		<li class=""><span>Map</span></li>
+		<li class=""><span>Admin Password</span></li>
 		<li class="last"><span>Finished</span></li>
 	</ol>
 

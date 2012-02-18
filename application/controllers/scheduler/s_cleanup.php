@@ -26,8 +26,14 @@ class S_Cleanup_Controller extends Controller {
 	 */
 	public function index()
 	{
-		// open the images directory
+		// open the images directory and create it if it's not there.
+		if( ! is_dir(Kohana::config('upload.relative_directory')))
+		{
+			mkdir(Kohana::config('upload.relative_directory'), 0755);
+		}
+
 		$dhandle = opendir(Kohana::config('upload.relative_directory'));
+
 		// define an array to hold the files
 		$files = array();
 		

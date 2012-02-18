@@ -104,8 +104,8 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('site_language','required', 'length[5, 5]');
 			//$post->add_rules('site_timezone','required', 'between[10,50]');
 			$post->add_rules('site_contact_page','required','between[0,1]');
-			$post->add_rules('items_per_page','required','between[10,50]');
-			$post->add_rules('items_per_page_admin','required','between[10,50]');
+			$post->add_rules('items_per_page','required','between[5,50]');
+			$post->add_rules('items_per_page_admin','required','between[5,50]');
 			$post->add_rules('blocks_per_row','required','numeric');
 			$post->add_rules('allow_alerts','required','between[0,1]');
 			$post->add_rules('allow_reports','required','between[0,1]');
@@ -114,7 +114,7 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
 			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('cache_pages','required','between[0,1]');
-			$post->add_rules('cache_pages_lifetime','required','in_array[300,600,900,1800]');
+			$post->add_rules('cache_pages_lifetime','required','in_array[60,300,600,900,1800]');
 			$post->add_rules('private_deployment','required','between[0,1]');
 			$post->add_rules('checkins','required','between[0,1]');
 			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
@@ -184,7 +184,7 @@ class Settings_Controller extends Admin_Controller
 					$filename = upload::save('banner_image');
 					if ($filename)
 					{
-						$new_filename = "banner";
+						$new_filename = "banner_".time();
 						$file_type = strrev(substr(strrev($filename),0,4));
 	
 						// Large size
@@ -248,6 +248,9 @@ class Settings_Controller extends Admin_Controller
 				// Everything is A-Okay!
 				$form_saved = TRUE;
 
+				// Action::site_settings_modified - Site settings have changed
+				Event::run('ushahidi_action.site_settings_modified');
+
 				// repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
@@ -310,9 +313,9 @@ class Settings_Controller extends Admin_Controller
 		// Get banner image
 		if($settings->site_banner_id != NULL){
 			$banner = ORM::factory('media')->find($settings->site_banner_id);
-			$this->template->content->banner = $banner->media_link;
-			$this->template->content->banner_m = $banner->media_medium;
-			$this->template->content->banner_t = $banner->media_thumb;
+			$this->template->content->banner = url::convert_uploaded_to_abs($banner->media_link);
+			$this->template->content->banner_m = url::convert_uploaded_to_abs($banner->media_medium);
+			$this->template->content->banner_t = url::convert_uploaded_to_abs($banner->media_thumb);
 		}else{
 			$this->template->content->banner = NULL;
 			$this->template->content->banner_m = NULL;
@@ -325,7 +328,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->items_per_page_array = array('10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
+		$this->template->content->items_per_page_array = array('5'=>'5 Items','10'=>'10 Items','20'=>'20 Items','30'=>'30 Items','50'=>'50 Items');
 		$blocks_per_row_array = array();
 		for ($i=1; $i <= 21; $i++)
 		{
@@ -342,6 +345,7 @@ class Settings_Controller extends Admin_Controller
 			'0'=>strtoupper(Kohana::lang('ui_main.no')));
 		
 		$this->template->content->cache_pages_lifetime_array = array(
+			'60'=>'1 '.Kohana::lang('ui_admin.minute'),
 			'300'=>'5 '.Kohana::lang('ui_admin.minutes'),
 			'600'=>'10 '.Kohana::lang('ui_admin.minutes'),
 			'900'=>'15 '.Kohana::lang('ui_admin.minutes'),
@@ -378,11 +382,9 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
 
 		// setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'default_map' => '',
 			'api_google' => '',
-			'api_yahoo' => '',
 			'default_country' => '',
 			'multi_country' => '',
 			'default_lat' => '',
@@ -393,14 +395,7 @@ class Settings_Controller extends Admin_Controller
 		//	corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
-		if ($saved == 'saved')
-		{
-			$form_saved = TRUE;
-		}
-		else
-		{
-			$form_saved = FALSE;
-		}
+		$form_saved = ($saved == 'saved');
 
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
@@ -418,7 +413,6 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('multi_country', 'numeric', 'length[1,1]');
 			$post->add_rules('default_map', 'required', 'length[0,100]');
 			$post->add_rules('api_google','required', 'length[0,200]');
-			$post->add_rules('api_yahoo','required', 'length[0,200]');
 			$post->add_rules('default_zoom','required','between[0,21]');		// Validate for maximum and minimum zoom values
 			$post->add_rules('default_lat','required','between[-85,85]');		// Validate for maximum and minimum latitude values
 			$post->add_rules('default_lon','required','between[-180,180]');		// Validate for maximum and minimum longitude values
@@ -432,7 +426,6 @@ class Settings_Controller extends Admin_Controller
 				$settings->multi_country = $post->multi_country;
 				$settings->default_map = $post->default_map;
 				$settings->api_google = $post->api_google;
-				$settings->api_yahoo = $post->api_yahoo;
 				$settings->default_zoom = $post->default_zoom;
 				$settings->default_lat = $post->default_lat;
 				$settings->default_lon = $post->default_lon;
@@ -445,6 +438,9 @@ class Settings_Controller extends Admin_Controller
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
+				
+				// Action::map_settings_modified - Map settings have changed
+				Event::run('ushahidi_action.map_settings_modified');
 
 				// Redirect to reload everything over again
 				url::redirect('admin/settings/index/saved');
@@ -468,11 +464,9 @@ class Settings_Controller extends Admin_Controller
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
 
-			$form = array
-			(
+			$form = array(
 				'default_map' => $settings->default_map,
 				'api_google' => $settings->api_google,
-				'api_yahoo' => $settings->api_yahoo,
 				'default_country' => $settings->default_country,
 				'multi_country' => $settings->multi_country,
 				'default_lat' => $settings->default_lat,
@@ -960,6 +954,7 @@ class Settings_Controller extends Admin_Controller
 			curl_setopt ($ch, CURLOPT_URL, $geonames_url);
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+			curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
 			$xmlstr = curl_exec($ch);
 			$err = curl_errno( $ch );
 			curl_close($ch);
@@ -1072,6 +1067,7 @@ class Settings_Controller extends Admin_Controller
 
 		curl_setopt($curl_handle, CURLOPT_URL, $url);
 		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );
+		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
 		curl_exec($curl_handle);
 
 		$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
@@ -1200,6 +1196,9 @@ class Settings_Controller extends Admin_Controller
 		
 		// Suppress header information from the output
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
+		
+		// Allow connection to HTTPS
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 
 		// Perform cURL session
 		curl_exec($ch);

@@ -331,6 +331,20 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 (246, 'ZM', 'Zambia', 'Lusaka', 0),
 (247, 'ZW', 'Zimbabwe', 'Harare', 0);
 
+/**
+* Table structure for table `externalapp`
+*
+*/
+
+CREATE TABLE `externalapp` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 255 ) NOT NULL ,
+`url` VARCHAR( 255 ) NOT NULL
+) ENGINE = MYISAM ;
+
+-- Dumping data for table `externalapp`
+
+INSERT INTO `externalapp` (`id`, `name`, `url`) VALUES (NULL, 'iPhone', 'http://download.ushahidi.com/track_download.php?download=ios'), (NULL, 'Android', 'http://download.ushahidi.com/track_download.php?download=android');
 
 /**
 * Table structure for table `incident`
@@ -349,8 +363,6 @@ CREATE TABLE IF NOT EXISTS `incident` (
     `incident_mode` tinyint(4) NOT NULL default '1' COMMENT '1 - WEB, 2 - SMS, 3 - EMAIL, 4 - TWITTER',    
     `incident_active` tinyint(4) NOT NULL default '0',                              
     `incident_verified` tinyint(4) NOT NULL default '0',                            
-    `incident_source` varchar(5) default NULL,                                      
-    `incident_information` varchar(5) default NULL,                                 
     `incident_rating` VARCHAR(15) DEFAULT '0' NOT NULL,                             
     `incident_dateadd` datetime default NULL,                                       
     `incident_dateadd_gmt` datetime default NULL,                                   
@@ -370,7 +382,7 @@ CREATE TABLE IF NOT EXISTS `incident` (
 
 LOCK TABLES `incident` WRITE;
 /*!40000 ALTER TABLE `incident` DISABLE KEYS */;
-INSERT INTO `incident` VALUES (1,1,1,'en_US',1,'Hello Ushahidi!','Welcome to Ushahidi. Please replace this report with a valid incident','2010-01-01 12:00:00',1,1,1,'0','2010-01-01 12:00:00','0',NULL,NULL,NULL,'0',NULL);
+INSERT INTO `incident` VALUES (1,1,1,'en_US',1,'Hello Ushahidi!','Welcome to Ushahidi. Please replace this report with a valid incident','2010-01-01 12:00:00',1,1,1,'0',NULL,NULL,NULL,'0',NULL);
 /*!40000 ALTER TABLE `incident` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -452,7 +464,8 @@ CREATE TABLE IF NOT EXISTS `incident_person` (
 CREATE TABLE IF NOT EXISTS `comment`                                                
 (
     `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,                                 
-    `incident_id` BIGINT NOT NULL,                                                  
+    `incident_id` BIGINT DEFAULT NULL,
+  	`checkin_id` BIGINT DEFAULT NULL,                                                  
     `user_id` INT(11) DEFAULT 0,                                                    
     `comment_author` VARCHAR(100) default NULL,                                     
     `comment_email` VARCHAR(120) default NULL,                                      
@@ -713,7 +726,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `site_tagline` varchar(255) default NULL,
     `site_banner_id` int(11) default NULL,
     `site_email` varchar(120) default NULL,
-    `site_key` varchar(100) default NULL,                                           
+    `site_key` varchar(100) default NULL,
     `site_language` varchar(10) NOT NULL default 'en_US',                           
     `site_style` varchar(50) NOT NULL default 'default',                            
     `site_timezone` varchar(80) default NULL,                                       
@@ -730,8 +743,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `cache_pages` tinyint(4) NOT NULL DEFAULT '0',
     `cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
     `private_deployment` tinyint(4) NOT NULL DEFAULT '0',
-    `default_map` varchar(100) NOT NULL DEFAULT 'google_normal',
-    `default_map_all` varchar(20) NOT NULL default 'CC0000',                        
+    `default_map` varchar(100) NOT NULL DEFAULT 'osm_mapnik',
+    `default_map_all` varchar(20) NOT NULL default 'CC0000',
     `api_google` varchar(200) default NULL,                                         
     `api_yahoo` varchar(200) default NULL,                                          
     `api_live` varchar(200) default NULL,                                           
@@ -742,8 +755,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `default_lat` varchar(100) default NULL,                                        
     `default_lon` varchar(100) default NULL,                                        
     `default_zoom` tinyint(4) NOT NULL default '10',                                
-    `items_per_page` smallint(6) NOT NULL default '20',                             
-    `items_per_page_admin` smallint(6) NOT NULL default '20',                       
+    `items_per_page` smallint(6) NOT NULL default '5',
+    `items_per_page_admin` smallint(6) NOT NULL default '20',
     `sms_provider` varchar(100) NULL DEFAULT NULL,
     `sms_no1` varchar(100) default NULL,                                            
     `sms_no2` varchar(100) default NULL,                                            
@@ -755,8 +768,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `date_modify` datetime default NULL,                                            
     `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',           
     `stat_key` VARCHAR(30) NOT NULL ,                                               
-    `email_username` VARCHAR(100) NOT NULL ,                                        
-    `email_password` VARCHAR(100) NOT NULL ,                                        
+    `email_username` VARCHAR(100) NOT NULL ,
+    `email_password` VARCHAR(100) NOT NULL ,
     `email_port` INT(11) NOT NULL ,                                                 
     `email_host` VARCHAR(100) NOT NULL ,                                            
     `email_servertype` VARCHAR(100) NOT NULL ,                                      
@@ -776,7 +789,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
 -- Dumping data for table `settings`
 
 INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_yahoo`, `api_live`, `default_country`, `default_city`, `default_lat`, `default_lon`, `default_zoom`, `items_per_page`, `items_per_page_admin`, `blocks`, `date_modify`) VALUES
-(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 20, 20, 'reports_block|news_block', '2008-08-25 10:25:18');
+(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 5, 20, 'reports_block|news_block', '2008-08-25 10:25:18');
 
 
 /**
@@ -785,11 +798,12 @@ INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_yahoo`, `api_live`
 */
 
 CREATE TABLE IF NOT EXISTS `users` (                                                
-    `id` int(11) unsigned NOT NULL auto_increment,                                  
-    `name` varchar(200) default NULL,                                               
-    `email` varchar(127) NOT NULL,                                                  
-    `username` varchar(31) NOT NULL default '',                                     
-    `password` char(50) NOT NULL,                                                   
+    `id` int(11) unsigned NOT NULL auto_increment,
+    `riverid` VARCHAR( 128 ) NOT NULL,
+    `name` varchar(200) default NULL,
+    `email` varchar(127) NOT NULL,
+    `username` varchar(100) NOT NULL default '',
+    `password` char(50) NOT NULL,
     `logins` int(10) unsigned NOT NULL default '0',                                 
     `last_login` int(10) unsigned default NULL,                                     
     `notify` tinyint(1) NOT NULL default '0' COMMENT 'Flag incase admin opts in for email notifications',    
@@ -798,11 +812,12 @@ CREATE TABLE IF NOT EXISTS `users` (
     `code` VARCHAR(30) NULL DEFAULT NULL,
     `confirmed` TINYINT(1) NOT NULL DEFAULT '0',
     `public_profile` TINYINT(1) NOT NULL DEFAULT '1',
+    `approved` TINYINT(1) NOT NULL DEFAULT '1',
+    `needinfo` TINYINT(1) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
 
 
 -- Dumping data for table `users`
@@ -819,10 +834,10 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `l
 CREATE TABLE IF NOT EXISTS `user_tokens` (                                          
     `id` int(11) unsigned NOT NULL auto_increment,                                  
     `user_id` int(11) unsigned NOT NULL,                                            
-    `user_agent` varchar(40) NOT NULL,                                              
-    `token` varchar(32) NOT NULL,                                                   
-    `created` int(10) unsigned NOT NULL,                                            
-    `expires` int(10) unsigned NOT NULL,                                            
+    `user_agent` varchar(40) NOT NULL,
+    `token` varchar(64) NOT NULL,
+    `created` int(10) unsigned NOT NULL,
+    `expires` int(10) unsigned NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `uniq_token` (`token`),
   KEY `fk_user_id` (`user_id`)
@@ -1151,42 +1166,6 @@ INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url
 (3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL);
 
 
-
-/**
-* Table structure for table `sharing`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `sharing` (                                              
-	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`sharing_name` VARCHAR(150) NOT NULL,				-- name of the sharing website
-	`sharing_url` VARCHAR(255) NOT NULL,				-- main url of the sharing website
-	`sharing_color` VARCHAR(20) DEFAULT 'CC0000',		-- color for the map layer selector
-	`sharing_active` TINYINT DEFAULT 1 NOT NULL,		-- sharing layer active?
-	`sharing_date` DATETIME,							-- date of last update
-	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `sharing_log`
-* 
-*/
-
-CREATE TABLE IF NOT EXISTS `sharing_incident` (                                          
-	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`sharing_id` INT UNSIGNED NOT NULL,
-	`incident_id` INT NOT NULL,							-- remote website incident ID
-	`incident_title` VARCHAR(255) NOT NULL,				-- remote incident title
-	`latitude` DOUBLE NOT NULL,							-- remote incident latitude
-	`longitude` DOUBLE NOT NULL,						-- remote incident longitude
-	`incident_date` DATETIME,							-- remote incident date
-	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
-
 /**
 * Table structure for table `page`
 * 
@@ -1461,4 +1440,4 @@ ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '67' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '72' WHERE `id`=1 LIMIT 1;

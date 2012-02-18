@@ -77,12 +77,12 @@ class Stats_Model extends ORM
 				$additional_query .= '&lon='.base64_encode($longitude);
 			}
 
-			$url = 'http://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
-
+			$url = 'https://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
 			$curl_handle = curl_init();
 			curl_setopt($curl_handle,CURLOPT_URL,$url);
 			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,self::$time_out); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
 			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); // Set cURL to store data in variable instead of print
+			curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
 			$buffer = curl_exec($curl_handle);
 			curl_close($curl_handle);
 
@@ -90,7 +90,7 @@ class Stats_Model extends ORM
 				$tag = (string) @simplexml_load_string($buffer); // This works because the tracking code is only wrapped in one tag
 			} catch (Exception $e) {
 				// In case the xml was malformed for whatever reason, we will just guess what the tag should be here
-				$tag = '<!-- Piwik --><script type="text/javascript">$(document).ready(function(){$(\'#piwik\').load(\'http://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'&rec=1\');});</script><div id="piwik"></div><!-- End Piwik Tag -->';
+				$tag = '<!-- Piwik --><script type="text/javascript">$(document).ready(function(){$(\'#piwik\').load(\'https://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'&rec=1\');});</script><div id="piwik"></div><!-- End Piwik Tag -->';
 			}
 
 			// Reset Cache Here
@@ -116,7 +116,7 @@ class Stats_Model extends ORM
 			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
 		}
 
-		$stat_url = 'http://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
+		$stat_url = 'https://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 
 		// Ignore errors since we are error checking later
 
@@ -167,7 +167,7 @@ class Stats_Model extends ORM
 			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
 		}
 
-		$stat_url = 'http://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
+		$stat_url = 'https://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 
 		// Ignore errors since we are error checking later
 
@@ -187,7 +187,7 @@ class Stats_Model extends ORM
 				$data[$date][$code]['label'] = (string) $row->label;
 				$data[$date][$code]['uniques'] = (string) $row->nb_uniq_visitors;
 				$logo = (string) $row->logo;
-				$data[$date][$code]['logo'] = 'http://tracker.ushahidi.com/piwik/'.$logo;
+				$data[$date][$code]['logo'] = 'https://tracker.ushahidi.com/piwik/'.$logo;
 			}
 		}
 
@@ -406,7 +406,7 @@ class Stats_Model extends ORM
 	 */
 	public function create_site( $sitename, $url )
 	{
-		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
+		$stat_url = 'https://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
 
 		// Ignore errors since we are error checking later
 
@@ -447,6 +447,7 @@ class Stats_Model extends ORM
 		// Set curl to store data in variable instead of print
 
 		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
+		curl_setopt($curl_handle,CURLOPT_SSL_VERIFYPEER,false);
 		$buffer = curl_exec($curl_handle);
 		curl_close($curl_handle);
 

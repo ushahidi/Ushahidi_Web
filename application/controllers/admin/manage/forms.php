@@ -357,7 +357,11 @@ class Forms_Controller extends Admin_Controller {
 		
 		if ($field_id > 0 AND $form_id > 0)
 		{
-			ORM::factory('form_field')->delete($field_id);
+			$form_field = ORM::factory('form_field', $field_id);
+			if ($form_field->loaded)
+			{
+				$form_field->delete();
+			}
 			$return_content = customforms::get_current_fields($form_id,$this->user);
 		}
 		
@@ -398,16 +402,16 @@ class Forms_Controller extends Admin_Controller {
 			{
 				// Get the total number of fields for the form
 				$total_fields = ORM::factory('form_field')->where('form_id', $field->form_id)->count_all();
-				
+
 				// Get current position
-			    $current_position = $field->field_position;
+				$current_position = $field->field_position;
 				
 				if ($field_position == 'u' AND $current_position > 1)
 				{
 					// Move down the fields whose position value is greater
 					// than that of the selected field 
-					$sql = "UPDATE %sform_field SET field_position = field_position + 1 WHERE id != %d";
-					$this->db->query(sprintf($sql, $this->table_prefix, $field_id));
+					$sql = "UPDATE %sform_field SET field_position = %d WHERE field_position = %d";
+					$this->db->query(sprintf($sql, $this->table_prefix, $current_position, $current_position-1));
 
 					// Move the selected field upwards
 					$field->field_position = $current_position - 1;
@@ -416,8 +420,8 @@ class Forms_Controller extends Admin_Controller {
 				elseif ($field_position == 'd' AND $current_position != $total_fields)
 				{ 
 					// Move all other form fields upwards
-					$sql = "UPDATE %sform_field SET field_position = field_position - 1 WHERE id != %d";
-					$this->db->query(sprintf($sql, $this->table_prefix, $field_id));
+					$sql = "UPDATE %sform_field SET field_position = %d WHERE field_position = %d";
+					$this->db->query(sprintf($sql, $this->table_prefix,  $current_position, $current_position + 1));
 					
 					// Move the selected field downwards - increase its field position in the database
 					$field->field_position = $current_position + 1;

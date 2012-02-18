@@ -106,8 +106,21 @@ class Smssync_Controller extends Controller {
 			
 			if ($secret_match)
 			{
-				sms::add($message_from, $message_description);
-				$success = "true";
+				if(stristr($message_description,"alert"))
+				{
+					alert::mobile_alerts_register($message_from, $message_description);
+					$success = "true";
+				}
+				elseif(stristr($message_description,"off"))
+				{
+					alert::mobile_alerts_unsubscribe($message_from, $message_description);
+					$success = "true";
+				}
+				else
+				{
+					sms::add($message_from, $message_description);
+					$success = "true";
+				}
 			}
 		}
 		
@@ -133,8 +146,22 @@ class Smssync_Controller extends Controller {
 			$message->smssync_sent = 1;
 			$message->smssync_sent_date = date("Y-m-d H:i:s",time());
 			$message->save();
-		}
+        }
+        
+        //get the secret key
+		$smssync = ORM::factory('smssync_settings')->find(1);
+			
+		if ($smssync->loaded)
+		{
+		    $smssync_secret = $smssync->smssync_secret;
+		} 
+        else 
+        {
+            //set to empty, because secret key wasn't set.
+            $smssync_secret = "";
+        }
 		
-		echo json_encode(array("payload"=>array("task"=>"send","messages"=>$all_messages)));
+        echo json_encode(array("payload"=>array("task"=>"send", 
+            "secret"=>$smssync_secret,"messages"=>$all_messages)));
 	}
 }

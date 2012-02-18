@@ -113,7 +113,7 @@
 									}
 									else
 									{
-										$message_from = "Unknown";
+										$message_from = Kohana::lang('ui_admin.unknown');
 									}
 									$subject = $priv_message->private_subject;
 									$message = text::auto_link($priv_message->private_message);

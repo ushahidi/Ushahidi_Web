@@ -37,3 +37,20 @@ function badgeAction ( action, confirmAction, badge_id )
 		$("#badgeListing").submit();
 	}
 }
+
+$(document).ready(function() {
+
+	$('.badge_selection').click(function() {
+
+		// Set form field value
+		$('#selected_badge').val(this.id);
+		
+		// Re-add transparency to every element
+		$('.badge_selection').addClass('transparent-25');
+
+		// Remove transparency from selected element
+		$(this).removeClass('transparent-25');
+
+	});
+
+});

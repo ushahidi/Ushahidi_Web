@@ -17,6 +17,7 @@ a:visited{
 	color:#0066CC;
 }
 /*-----header-----*/
+
 #header {
 	clear:both;
 	width:960px;
@@ -106,6 +107,7 @@ a:visited{
 	width:120px;
 	float:left;
 }
+
 #languages { float: left; margin:0; padding:0; }
 #languages li { display: inline; }
 #languages a { display: block; float: left; margin-right:10px; padding:2px 3px 0 3px; border: none; background: #333; }

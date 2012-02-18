@@ -53,7 +53,7 @@ class Members_Controller extends Template_Controller
 		
 		if ( ! $this->auth->logged_in('login') OR ! $this->auth->logged_in('member'))
 		{
-			url::redirect('members/login');
+			url::redirect('login');
 		}
 
 		// Set Table Prefix
@@ -91,20 +91,24 @@ class Members_Controller extends Template_Controller
 		$this->template->this_page = "";
 
 		// Load profiler
-		// $profiler = new Profiler;	
+		// $profiler = new Profiler;
+
+		// Header Nav
+		$header_nav = new View('header_nav');
+		$this->template->header_nav = $header_nav;
+		$this->template->header_nav->loggedin_user = FALSE;
+		if ( isset(Auth::instance()->get_user()->id) )
+		{
+			// Load User
+			$this->template->header_nav->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
+			$this->template->header_nav->loggedin_user = Auth::instance()->get_user();
+		}
+		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
     }
 
 	public function index()
 	{
 		url::redirect('members/dashboard');
-	}
-
-	public function log_out()
-	{
-		$auth = new Auth;
-		$auth->logout(TRUE);
-
-		url::redirect('members/login');
 	}
 
 } // End Admin

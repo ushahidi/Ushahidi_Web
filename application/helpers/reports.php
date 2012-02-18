@@ -10,6 +10,7 @@
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
+ * @category   Helpers
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
@@ -129,8 +130,6 @@ class reports_Core {
 			$post->add_rules('message_id','numeric');
 			$post->add_rules('incident_active','required', 'between[0,1]');
 			$post->add_rules('incident_verified','required', 'between[0,1]');
-			$post->add_rules('incident_source','numeric', 'length[1,1]');
-			$post->add_rules('incident_information','numeric', 'length[1,1]');
 			$post->add_rules('incident_zoom', 'numeric');
 		}
 		
@@ -266,28 +265,15 @@ class reports_Core {
 			}
 		}
 		
-		// Check for incident evaluation info
-		if ( ! empty($post->incident_active))
+		// Approval Status
+		if (isset($post->incident_active))
 		{
 			$incident->incident_active = $post->incident_active;
 		}
-		
 		// Verification status
-		if ( ! empty($post->incident_verified))
+		if (isset($post->incident_verified))
 		{
 			$incident->incident_verified = $post->incident_verified;
-		}
-		
-		// Incident source
-		if ( ! empty($post->incident_source))
-		{
-			$incident->incident_source = $post->incident_source;
-		}
-		
-		// Incident information
-		if ( ! empty($post->incident_information))
-		{
-			$incident->incident_information = $post->incident_information;
 		}
 		
 		// Incident zoom
@@ -295,7 +281,6 @@ class reports_Core {
 		{
 			$incident->incident_zoom = intval($post->incident_zoom);
 		}
-		
 		// Tag this as a report that needs to be sent out as an alert
 		if ($incident->incident_active == 1 AND $incident->incident_alert_status != 2)
 		{ 
@@ -319,7 +304,6 @@ class reports_Core {
 	 * @param mixed $post
 	 * @param mixed $verify Instance of the verify model
 	 * @param mixed $incident
-	 *
 	 */
 	public static function verify_approve($post, $verify, $incident)
 	{
@@ -404,7 +388,6 @@ class reports_Core {
 	 *
 	 * @param mixed $post
 	 * @param mixed $incident_model
-	 *
 	 */
 	public static function save_category($post, $incident)
 	{
@@ -849,10 +832,8 @@ class reports_Core {
 			foreach ($url_data['cff'] as $field)
 			{			
 				$field_id = $field[0];
-				if(intval($field_id) < 1)
-				{
-					break;
-				}
+				if (intval($field_id) < 1)
+					continue;
 
 				$field_value = $field[1];
 				if (is_array($field_value))
@@ -866,13 +847,32 @@ class reports_Core {
 					$where_text .= " OR ";
 				}
 				
-				$whereText .= "(form_field_id = ".intval($field_id)." AND form_response = '".mysql_real_escape_string(trim($field_value))."')";
+				$where_text .= "(form_field_id = ".intval($field_id)
+					. " AND form_response = '".Database::instance()->escape_str(trim($field_value))."')";
 			}
 			
 			// Make sure there was some valid input in there
 			if ($i > 0)
 			{
-				array_push(self::$params, 'i.id IN (SELECT DISTINCT incident_id FROM '.$table_prefix.'form_response WHERE '.$where_text.')');
+				// I run a database query here because it's way faster to get the valid IDs in a seperate database query than it is
+				//to run this query nested in the main query. 
+				$db = new Database();
+				$rows = $db->query('SELECT DISTINCT incident_id FROM '.$table_prefix.'form_response WHERE '.$where_text);
+				$incident_ids = '';
+				foreach($rows as $row)
+				{
+					if($incident_ids != ''){$incident_ids .= ',';}
+					$incident_ids .= $row->incident_id;
+				}
+				//make sure there are IDs found
+				if($incident_ids != '')
+				{
+					array_push(self::$params, 'i.id IN ('.$incident_ids.')');
+				}
+				else
+				{
+					array_push(self::$params, 'i.id IN (0)');
+				}
 			}
 			
 		} // End of handling cff
@@ -881,6 +881,7 @@ class reports_Core {
 		Event::run('ushahidi_filter.fetch_incidents_set_params', self::$params);
 		
 		//> END PARAMETER FETCH
+
 		
 		// Fetch all the incidents
 		$all_incidents = Incident_Model::get_incidents(self::$params);

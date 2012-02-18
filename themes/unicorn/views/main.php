@@ -29,7 +29,7 @@ $(function(){
 
 		<!-- right column -->
 		<div id="report-map-filter-box" class="clearingfix">
-	    <a class="btn toggle" id="filter-menu-toggle" class="" href="#the-filters">Filter Reports By <span class="btn-icon ic-right">&raquo;</span></a>
+	    <a class="btn toggle" id="filter-menu-toggle" class="" href="#the-filters"><?php echo Kohana::lang('ui_main.filter_reports_by'); ?><span class="btn-icon ic-right">&raquo;</span></a>
 	    
 	    <!-- filters box -->
 	    <div id="the-filters" class="map-menu-box">
@@ -170,25 +170,59 @@ $(function(){
 				?>
 				<a class="btn toggle" id="how-to-report-menu-toggle" class="" href="#how-to-report-box"><?php echo Kohana::lang('ui_main.how_to_report'); ?> <span class="btn-icon ic-question">&raquo;</span></a>
 				<div id="how-to-report-box" class="map-menu-box">
-					<ol>
-						<?php if (!empty($phone_array)) 
-						{ ?><li><?php echo Kohana::lang('ui_main.report_option_1')." "; ?> <?php foreach ($phone_array as $phone) {
-							echo "<strong>". $phone ."</strong>";
-							if ($phone != end($phone_array)) {
-								echo " or ";
-							}
-						} ?></li><?php } ?>
-						<?php if (!empty($report_email)) 
-						{ ?><li><?php echo Kohana::lang('ui_main.report_option_2')." "; ?> <a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a></li><?php } ?>
-						<?php if (!empty($twitter_hashtag_array)) 
-									{ ?><li><?php echo Kohana::lang('ui_main.report_option_3')." "; ?> <?php foreach ($twitter_hashtag_array as $twitter_hashtag) {
-						echo "<strong>". $twitter_hashtag ."</strong>";
-						if ($twitter_hashtag != end($twitter_hashtag_array)) {
-							echo " or ";
-						}
-						} ?></li><?php
-						} ?><li><a href="<?php echo url::site() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a></li>
-					</ol>
+					
+					<div>
+
+						<!-- Phone -->
+						<?php if (!empty($phone_array)) { ?>
+						<div style="margin-bottom:10px;">
+							<?php echo Kohana::lang('ui_main.report_option_1'); ?>
+							<?php foreach ($phone_array as $phone) { ?>
+								<strong><?php echo $phone; ?></strong>
+								<?php if ($phone != end($phone_array)) { ?>
+									 <br/>
+								<?php } ?>
+							<?php } ?>
+						</div>
+						<?php } ?>
+						
+						<!-- External Apps -->
+						<?php if (count($external_apps) > 0) { ?>
+						<div style="margin-bottom:10px;">
+							<strong><?php echo Kohana::lang('ui_main.report_option_external_apps'); ?>:</strong><br/>
+							<?php foreach ($external_apps as $app) { ?>
+								<a href="<?php echo $app->url; ?>"><?php echo $app->name; ?></a><br/>
+							<?php } ?>
+						</div>
+						<?php } ?>
+
+						<!-- Email -->
+						<?php if (!empty($report_email)) { ?>
+						<div style="margin-bottom:10px;">
+							<strong><?php echo Kohana::lang('ui_main.report_option_2'); ?>:</strong><br/>
+							<a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a>
+						</div>
+						<?php } ?>
+
+						<!-- Twitter -->
+						<?php if (!empty($twitter_hashtag_array)) { ?>
+						<div style="margin-bottom:10px;">
+							<strong><?php echo Kohana::lang('ui_main.report_option_3'); ?>:</strong><br/>
+							<?php foreach ($twitter_hashtag_array as $twitter_hashtag) { ?>
+								<span>#<?php echo $twitter_hashtag; ?></span>
+								<?php if ($twitter_hashtag != end($twitter_hashtag_array)) { ?>
+									<br />
+								<?php } ?>
+							<?php } ?>
+						</div>
+						<?php } ?>
+
+						<!-- Web Form -->
+						<div style="margin-bottom:10px;">
+							<a href="<?php echo url::site() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a>
+						</div>
+
+					</div>
 
 				</div>
 			<?php } ?>

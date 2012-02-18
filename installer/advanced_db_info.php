@@ -18,6 +18,7 @@
 		<li class=""><span>General</span></li>
 		<li class=""><span>Mail Server</span></li>
 		<li class=""><span>Map</span></li>
+		<li class=""><span>Admin Password</span></li>
 		<li class="last"><span>Finished</span></li>
 	</ol>
 

@@ -33,6 +33,12 @@ class Category_Model extends ORM_Tree {
 	protected $children = "category";
 	
 	/**
+	 * Default sort order
+	 * @var array
+	 */
+	protected $sorting = array("category_position" => "asc");
+	
+	/**
 	 * Validates and optionally saves a category record from an array
 	 *
 	 * @param array $array Values to check
@@ -119,7 +125,7 @@ class Category_Model extends ORM_Tree {
 	 * @param int $parent_id
 	 * @return ORM_Iterator
 	 */
-	public static function get_categories($parent_id = 0, $exclude_trusted = TRUE)
+	public static function get_categories($parent_id = 0, $exclude_trusted = TRUE, $exclude_hidden = TRUE)
 	{
 		// Check if the specified parent is valid
 		$where = (intval($parent_id) > 0 AND self::is_valid_category($parent_id))
@@ -127,7 +133,9 @@ class Category_Model extends ORM_Tree {
 			: array('parent_id' => 0);
 			
 		// Make sure the category is visible
-		$where = array_merge($where, array('category_visible' =>'1'));
+		if ($exclude_hidden) {
+			$where = array_merge($where, array('category_visible' =>'1'));
+		}
 		
 		// Exclude trusted reports
 		if ($exclude_trusted)
@@ -136,6 +144,10 @@ class Category_Model extends ORM_Tree {
 		}
 		
 		// Return
-		return self::factory('category')->where($where)->orderby('category_title', 'ASC')->find_all();
+		return self::factory('category')
+			->where($where)
+			->orderby('category_position', 'ASC')
+			->orderby('category_title', 'ASC')
+			->find_all();
 	}
 }

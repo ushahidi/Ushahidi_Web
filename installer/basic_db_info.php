@@ -3,7 +3,7 @@
 	global $install;
 	
 	if(!isset( $_SESSION['basic_db_info']) && $_SESSION['basic_db_info'] != "basic_summary"){
-		header('Location:.');
+		header('Location:.basic_summary.php');
 	}
 	
 	$header = $install->_include_html_header();
@@ -16,6 +16,7 @@
 	<ol class="progress-meter clearfix">
 		<li class="active"><span>Database</span></li>
 		<li class=""><span>General</span></li>
+		<li class=""><span>Admin Password</span></li>
 		<li class="last"><span>Finished</span></li>
 	</ol>
 

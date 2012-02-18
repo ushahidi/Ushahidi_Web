@@ -106,7 +106,7 @@ class Feed_Controller extends Controller
         $view->georss = 1; // this adds georss namespace in the feed
         $view->feed_url = $site_url.$feedpath;
         $view->feed_date = gmdate("D, d M Y H:i:s T", time());
-        $view->feed_description = Kohana::lang('ui_admin.incident_feed').' '.Kohana::config('settings.site_name');
+        $view->feed_description = htmlspecialchars(Kohana::lang('ui_admin.incident_feed').' '.Kohana::config('settings.site_name'));
         $view->items = $feed_items;
         $view->render(TRUE);
     }

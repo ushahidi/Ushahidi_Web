@@ -110,7 +110,7 @@
 									$comment_active = $comment->comment_active;
 									$comment_spam = $comment->comment_spam;
 									$comment_rating = $comment->comment_rating;
-									$comment_date = date('Y-m-d', strtotime($comment->comment_date));
+									$comment_date = date('Y-m-d H:i', strtotime($comment->comment_date));
 									
 									$incident_id = $comment->incident->id;
 									$incident_title = $comment->incident->incident_title;
@@ -119,7 +119,7 @@
 										<td class="col-1"><input name="comment_id[]" id="comment" value="<?php echo $comment_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<h4><?php echo $comment_author; ?></h4>
+												<h4><a href="<?php echo url::base() . 'reports/view/' . $incident_id; ?>"><?php echo $comment_author; ?></a></h4>
 												<?php
 												if ($incident_title != "")
 												{

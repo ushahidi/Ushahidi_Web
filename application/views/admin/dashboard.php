@@ -44,7 +44,7 @@
 							<h3><?php echo Kohana::lang('ui_main.recent_reports');?></h3>
 							<ul>
 								<li class="none-separator"><a href="<?php echo url::site() . 'admin/reports' ?>"><?php echo Kohana::lang('ui_main.view_all');?></a></li>
-								<li><a href="#" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
+								<li><a href="<?php echo url::site(); ?>feed" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
 							</ul>
 						</div>
 						<?php
@@ -105,7 +105,7 @@
 							?>
 							<div class="post">
 								<ul class="post-info">
-									<li><a href="#" class="<?php echo $incident_approved; ?>"><?php echo strtoupper(Kohana::lang('ui_main.active'));?>:</a></li>
+									<li><a href="#" class="<?php echo $incident_approved; ?>"><?php echo strtoupper(Kohana::lang('ui_main.approved'));?>:</a></li>
 									<li><a href="#" class="<?php echo $incident_verified ?>"><?php echo strtoupper(Kohana::lang('ui_main.verified'));?>:</a></li>
 									<li class="last"><a href="#" class="<?php echo $submit_mode; ?>"><?php echo strtoupper(Kohana::lang('ui_main.source'));?>:</a></li>
 								</ul>
@@ -163,7 +163,7 @@
 							<h3><?php echo Kohana::lang('ui_main.news_feeds');?></h3>
 							<ul>
 								<li class="none-separator"><a href="<?php echo url::site() . 'admin/manage/feeds' ?>"><?php echo Kohana::lang('ui_main.view_all');?></a></li>
-								<li><a href="#" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
+								<li><a href="<?php echo url::site(); ?>feeds" class="rss-icon"><?php echo Kohana::lang('ui_main.rss');?></a></li>
 							</ul>
 						</div>
 						<?php

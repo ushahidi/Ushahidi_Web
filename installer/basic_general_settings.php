@@ -2,8 +2,8 @@
 	require_once('install.php');
 	global $install;
 	
-	if(!isset( $_SESSION['basic_db_info']) && $_SESSION['basic_db_info'] != "basic_general_settings"){
-		header('Location:.');
+	if(!isset( $_SESSION['basic_general_settings']) && $_SESSION['basic_general_settings'] != "basic_db_info"){
+		header('Location:basic_db_info.php');
 	}
 	
 	$header = $install->_include_html_header();
@@ -16,6 +16,7 @@
 	<ol class="progress-meter clearfix">
 		<li class=""><span>Database</span></li>
 		<li class="active"><span>General</span></li>
+		<li class=""><span>Admin Password</span></li>
 		<li class="last"><span>Finished</span></li>
 	</ol>
 

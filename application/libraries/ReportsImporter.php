@@ -139,8 +139,18 @@ class ReportsImporter {
 		{
 			$location = new Location_Model();
 			$location->location_name = isset($row['LOCATION']) ? $row['LOCATION'] : '';
-			$location->latitude = isset($row['LATITUDE']) ? $row['LATITUDE'] : '';
-			$location->longitude = isset($row['LONGITUDE']) ? $row['LONGITUDE'] : '';
+			// If we have LATITUDE and LONGITUDE use those
+			if ( isset($row['LATITUDE']) AND isset($row['LONGITUDE']) ) {
+				$location->latitude = isset($row['LATITUDE']) ? $row['LATITUDE'] : '';
+				$location->longitude = isset($row['LONGITUDE']) ? $row['LONGITUDE'] : '';
+			// Geocode reports which don't have LATITUDE and LONGITUDE
+			} else {
+				$location_geocoded = Geocoder::geocode_location($location->location_name);
+				if ($location_geocoded) {
+					$location->latitude = $location_geocoded[1];
+					$location->longitude = $location_geocoded[0];
+				}
+			}
 			$location->location_date = $this->time;
 			$location->save();
 			$this->locations_added[] = $location->id;

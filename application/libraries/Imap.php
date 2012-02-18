@@ -207,6 +207,8 @@ class Imap_Core {
 	 */
 	public function close()
 	{
+		// Dump imap errors to avoid 'Mailbox is empty' errors 
+		$error = imap_errors();
 		@imap_close($this->imap_stream);
 	}
 

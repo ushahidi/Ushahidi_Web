@@ -8,23 +8,23 @@
  * @copyright 	(c) 2008-2011 Ushahidi Inc <http://www.ushahidi.com>
  * @license 	For license information, see License.txt
  */
-class Unit_Model_Test extends PHPUnit_Framework_TestCase {
+class User_Model_Test extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * Provides dummy data for testing User_Model::custom_validate
 	 * @dataProvider
 	 */
-	public function providerCustomValidate()
+	public function provider_custom_validate()
 	{
 		return array(array(
 			array(
 				'username' => 'ekala',
 				'name' => 'Emmanuel Kala',
 				'email'=>'emmanuel@example.com',
-				'password' => 'abc123tbhh', 
-				'password_again'=>'abc123tbhh',
+				'password' => 'abc#@_123tbhh', 
+				'password_again'=>'abc#@_123tbhh',
 				'notify' => '0',
-				'role' => 'admin'
+				'role' => 'superadmin'
 			),
 			array(
 				'username' => 'admin',
@@ -42,20 +42,44 @@ class Unit_Model_Test extends PHPUnit_Framework_TestCase {
 	 * Tests User_Model::custom_validate
 	 *
 	 * @test
-	 * @dataProvider providerCustomValidate
+	 * @dataProvider provider_custom_validate
 	 */
-	public function testCustomValidate($valid, $invalid)
+	public function test_custom_validate($valid, $invalid)
 	{
+		// set up mock, for prevent_superadmin_modification
+		$auth = $this->getMock('Auth', array('logged_in'));
+		$auth->expects($this->exactly(2))
+			 ->method('logged_in')
+			 ->with($this->equalTo('superadmin'))
+			 ->will($this->returnValue(True));
+
+		// Save initial data
+		$initial_valid = $valid;
+		$initial_invalid = $invalid;
+
 		// Test with valid data
-		$response = User_Model::custom_validate($valid);
+		$response = User_Model::custom_validate($valid, $auth);
 		$this->assertEquals(TRUE, $valid instanceof Validation);
 		$this->assertTrue($response, Kohana::debug($valid->errors()));
 		
 		// Test with invalid data
-		$response = User_Model::custom_validate($invalid);
+		$response = User_Model::custom_validate($invalid, $auth);
 		$this->assertEquals(TRUE, $invalid instanceof Validation);
 		$this->assertFalse($response);
-		
+
+		// restore valid, invalid
+		$valid = $initial_valid;
+		$invalid = $initial_invalid;
+
+		// Test modification to superadmin as admin
+		$auth = $this->getMock('Auth', array('logged_in'));
+		$auth->expects($this->once())
+			 ->method('logged_in')
+			 ->with($this->equalTo('superadmin'))
+			 ->will($this->returnValue(False));
+		$response = User_Model::custom_validate($valid, $auth);
+		$this->assertTrue($valid instanceof Validation);
+		$this->assertFalse($response, Kohana::debug($valid->errors()));
 	}
 }
 ?>

@@ -71,7 +71,7 @@ class Main_Controller extends Template_Controller {
 		{
 			if ( ! $this->auth->logged_in('login'))
 			{
-				url::redirect('login/front');
+				url::redirect('login');
 			}
 		}
 		
@@ -96,10 +96,13 @@ class Main_Controller extends Template_Controller {
 		$site_name = Kohana::config('settings.site_name');
 		
 		// Get banner image and pass to the header
-		if(Kohana::config('settings.site_banner_id') != NULL){
+		if (Kohana::config('settings.site_banner_id') != NULL)
+		{
 			$banner = ORM::factory('media')->find(Kohana::config('settings.site_banner_id'));
 			$this->template->header->banner = url::convert_uploaded_to_abs($banner->media_link);
-		}else{
+		}
+		else
+		{
 			$this->template->header->banner = NULL;
 		}
 		
@@ -108,17 +111,6 @@ class Main_Controller extends Template_Controller {
 		$site_name_style = (strlen($site_name) > 20) ? " style=\"font-size:21px;\"" : "";
 			
 		$this->template->header->private_deployment = Kohana::config('settings.private_deployment');
-		$this->template->header->loggedin_username = FALSE;
-		$this->template->header->loggedin_userid = FALSE;
-		
-		if ( isset(Auth::instance()->get_user()->username) AND isset(Auth::instance()->get_user()->id) )
-		{
-			// Load User
-			$this->user = Auth::instance()->get_user();
-			$this->template->header->loggedin_username = html::specialchars(Auth::instance()->get_user()->username);
-			$this->template->header->loggedin_userid = Auth::instance()->get_user()->id;
-			$this->template->header->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
-		}
 		
 		$this->template->header->site_name = $site_name;
 		$this->template->header->site_name_style = $site_name_style;
@@ -149,10 +141,25 @@ class Main_Controller extends Template_Controller {
 		// add copyright info
 		$this->template->footer->site_copyright_statement = '';
 		$site_copyright_statement = trim(Kohana::config('settings.site_copyright_statement'));
-		if($site_copyright_statement != '')
+		if ($site_copyright_statement != '')
 		{
 			$this->template->footer->site_copyright_statement = $site_copyright_statement;
 		}
+		
+		// Display news feeds?
+		$this->template->header->allow_feed = Kohana::config('settings.allow_feed');
+		
+		// Header Nav
+		$header_nav = new View('header_nav');
+		$this->template->header->header_nav = $header_nav;
+		$this->template->header->header_nav->loggedin_user = FALSE;
+		if ( isset(Auth::instance()->get_user()->id) )
+		{
+			// Load User
+			$this->template->header->header_nav->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
+			$this->template->header->header_nav->loggedin_user = Auth::instance()->get_user();
+		}
+		$this->template->header->header_nav->site_name = Kohana::config('settings.site_name');
 	}
 
 	/**
@@ -164,6 +171,7 @@ class Main_Controller extends Template_Controller {
 	    ->where('category_visible', '1')
 	    ->where('parent_id', '0')
 	    ->where('category_trusted != 1')
+	    ->orderby('category_position', 'ASC')
 	    ->orderby('category_title', 'ASC')
 	    ->find_all();
 
@@ -213,21 +221,16 @@ class Main_Controller extends Template_Controller {
 		// Get locale
 		$l = Kohana::config('locale.language.0');
 
-		// Display news feeds?
-		$this->template->content->allow_feed = Kohana::config('settings.allow_feed');
-
-
         // Get all active top level categories
 		$parent_categories = array();
 		foreach (ORM::factory('category')
 				->where('category_visible', '1')
 				->where('parent_id', '0')
-				->orderby('category_position', 'asc')
 				->find_all() as $category)
 		{
 			// Get The Children
 			$children = array();
-			foreach ($category->orderby('category_position', 'asc')->children as $child)
+			foreach ($category->children as $child)
 			{
 				$child_visible = $child->category_visible;
 				if ($child_visible)
@@ -334,6 +337,11 @@ class Main_Controller extends Template_Controller {
 			$phone_array[] = $sms_no3;
 		}
 		$this->template->content->phone_array = $phone_array;
+
+		// Get external apps
+		$external_apps = array();
+		$external_apps = ORM::factory('externalapp')->find_all();
+		$this->template->content->external_apps = $external_apps;
 
         // Get The START, END and Incident Dates
         $startDate = "";

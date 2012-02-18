@@ -8,9 +8,9 @@
 		$dont_show_css = $dont_show_css[0];
 		echo str_ireplace('<link rel="stylesheet" type="text/css" href="'.$dont_show_css.'" />','',$header_block);
 	?>
-	
+
 	<script type="text/javascript" src="<?php echo url::site(); ?>themes/ci_cumulus/js/jquery.timeago.js"></script>
-	
+
 	<?php
 		// Action::header_scripts - Additional Inline Scripts from Plugins
 		Event::run('ushahidi_action.header_scripts');
@@ -22,13 +22,15 @@
 </head>
 <body>
 
+<?php echo $header_nav; ?>
+
 <div id="header">
 	<div class="content-wrapper">
 			<div class="logo">
 				<h1><a href="/"><?php echo $site_name; ?></a></h1>
 				<h2><?php echo $site_tagline; ?></h2>
 			</div>
-			
+
 			<div id="menu">
 				<ul>
 					<?php nav::main_tabs($this_page,array('reports','reports_submit','alerts','contact')); ?>
@@ -36,5 +38,10 @@
 			</div>
 	</div>
 </div>
+ <!-- / header item for plugins -->
+<?php
+    // Action::header_item - Additional items to be added by plugins
+    Event::run('ushahidi_action.header_item');
+?>
 
 <!-- END HEADER -->

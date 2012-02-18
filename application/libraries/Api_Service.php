@@ -491,7 +491,13 @@ final class Api_Service {
 					"code" => "010",
 					"message" => Kohana::lang('ui_admin.disabled')
 				);
-			
+
+			case 011:
+				return array(
+					"code" => "011",
+					"message" => Kohana::lang('ui_admin.unknown_failure')
+				);
+
 			default:
 				return array(
 					"code" => "999",

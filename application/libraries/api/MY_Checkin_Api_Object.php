@@ -196,7 +196,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 		$users_names = array();
 		$i = 0;
 		foreach($checkins as $checkin)
-		{	
+		{
 			$data["checkins"][$i] = array(
 				"id" => $checkin->id,
 				"user" => $checkin->user_id,
@@ -207,7 +207,7 @@ class Checkin_Api_Object extends Api_Object_Core {
 				"lon" => $checkin->location->longitude
 			);
 			
-			$users_names[(int)$checkin->user_id] = array("id"=>$checkin->user_id,"name"=>$checkin->user->name,"color"=>$checkin->user->color);
+			$users_names[(int)$checkin->user_id] = array("id"=>$checkin->user_id,"name"=>$checkin->user->name,"color"=>$checkin->user->color,"username"=>$checkin->user->username);
 			
 			$j = 0;
 			foreach ($checkin->media as $media)
@@ -215,9 +215,37 @@ class Checkin_Api_Object extends Api_Object_Core {
 			    $data["checkins"][$i]['media'][(int)$j] = array(
 			    	"id" => $media->id,
 			    	"type" => $media->media_type,
-			    	"link" => $this->abs_upload_url.$media->media_link,
-			    	"medium" => $this->abs_upload_url.$media->media_medium,
-			    	"thumb" => $this->abs_upload_url.$media->media_thumb
+			    	"link" => url::convert_uploaded_to_abs($media->media_link),
+			    	"medium" => url::convert_uploaded_to_abs($media->media_medium),
+			    	"thumb" => url::convert_uploaded_to_abs($media->media_thumb)
+			    );
+			    $j++;
+			}
+			
+			$j = 0;
+			foreach ($checkin->comment as $comment)
+			{
+				
+				if ( $comment->user_id != 0 )
+				{
+					$author = $comment->user->name;
+					$email = $comment->user->email;
+					$username = $comment->user->username;
+				}else{
+					$author = $comment->comment_author;
+					$email = $comment->comment_email;
+					$username = '';
+				}
+				
+			    $data["checkins"][$i]['comments'][(int)$j] = array(
+			    	"id" => $comment->id,
+			    	"user_id" => $comment->user_id,
+			    	"author" => $author,
+			    	"email" => $email,
+			    	"username" => $username,
+			    	"description" => $comment->comment_description,
+			    	"rating" => $comment->comment_rating,
+			    	"date" => $comment->comment_date
 			    );
 			    $j++;
 			}

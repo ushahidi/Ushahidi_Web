@@ -3,7 +3,7 @@
 <head>
 	<title><?php echo $site_name; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet" type="text/css">
 	<?php echo $header_block; ?>
 		<?php
 	// Action::header_scripts - Additional Inline Scripts from Plugins
@@ -12,33 +12,35 @@
 </head>
 
 
-<?php 
+<?php
   // Add a class to the body tag according to the page URI
   // we're on the home page
-  if (count($uri_segments) == 0) 
+  if (count($uri_segments) == 0)
   {
     $body_class = "page-main";
   }
   // 1st tier pages
-  elseif (count($uri_segments) == 1) 
+  elseif (count($uri_segments) == 1)
   {
     $body_class = "page-".$uri_segments[0];
   }
   // 2nd tier pages... ie "/reports/submit"
-  elseif (count($uri_segments) >= 2) 
+  elseif (count($uri_segments) >= 2)
   {
     $body_class = "page-".$uri_segments[0]."-".$uri_segments[1];
   };
-    
-  echo '<body id="page" class="'.$body_class.'" />';
-  
+
 ?>
+
+<body id="page" class="<?php echo $body_class; ?>" />
+
+<?php echo $header_nav; ?>
 
   <!-- top bar-->
   <div id="top-bar">
     <!-- searchbox -->
 		<div id="searchbox">
-			
+
 			<!-- languages -->
 			<?php echo $languages;?>
 			<!-- / languages -->
@@ -46,16 +48,7 @@
 			<!-- searchform -->
 			<?php echo $search; ?>
 			<!-- / searchform -->
-			
-			<!-- user actions -->
-			<div id="loggedin_user_action" class="clearingfix">
-				<?php if($loggedin_username != FALSE){ ?>
-					<a href="<?php echo url::site().$loggedin_role;?>"><?php echo $loggedin_username; ?></a> <a href="<?php echo url::site();?>logout/front"><?php echo Kohana::lang('ui_admin.logout');?></a>
-				<?php } else { ?>
-					<a href="<?php echo url::site()."members/";?>"><?php echo Kohana::lang('ui_main.login'); ?></a>
-				<?php } ?>
-			</div>
-			<!-- / user actions -->
+
     </div>
   </div>
   <!-- / searchbox -->
@@ -66,7 +59,7 @@
 
 		<!-- header -->
 		<div id="header">
-			
+
 			<!-- logo -->
 			<?php if($banner == NULL){ ?>
 			<div id="logo">
@@ -77,14 +70,18 @@
 			<a href="<?php echo url::site();?>"><img src="<?php echo $banner; ?>" alt="<?php echo $site_name; ?>" /></a>
 			<?php } ?>
 			<!-- / logo -->
-			
+
 			<!-- submit incident -->
 			<?php echo $submit_btn; ?>
 			<!-- / submit incident -->
-			
+
 		</div>
 		<!-- / header -->
-
+         <!-- / header item for plugins -->
+        <?php
+            // Action::header_item - Additional items to be added by plugins
+	        Event::run('ushahidi_action.header_item');
+        ?>
 		<!-- main body -->
 		<div id="middle">
 			<div class="background layoutleft">

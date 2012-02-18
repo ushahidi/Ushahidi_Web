@@ -18,7 +18,7 @@ $config['site_protocol'] = 'http';
  *
  * This can be removed by using URL rewriting.
  */
-$config['index_page'] = 'index.php';
+$config['index_page'] = '';
 
 /**
  * Whether or not you want to have the auto upgrader enabled.
@@ -101,6 +101,11 @@ $config['render_stats'] = TRUE;
  * @see [A URL not yet created]
  */
 $config['enable_mhi'] = FALSE;
+
+/**
+ * Allow members to sign in with OpenID providers, excluding RiverID
+ */
+$config['allow_openid'] = FALSE;
 
 /**
  * Filename prefixed used to determine extensions. For example, an

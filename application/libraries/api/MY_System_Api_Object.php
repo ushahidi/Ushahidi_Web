@@ -64,6 +64,16 @@ class System_Api_Object extends Api_Object_Core {
             $this->replar[] = 'version';
         }
 
+        // Get Active Plugins
+        $plugins = ORM::factory('plugin')
+			->where('plugin_active = 1')
+			->orderby('plugin_name', 'ASC')
+			->find_all();
+		$active_plugins = array();
+		foreach($plugins as $plugin){
+			$active_plugins[] = $plugin->plugin_name;
+		}
+
         // Create the json array
         $data = array(
             "payload" => array(
@@ -71,7 +81,8 @@ class System_Api_Object extends Api_Object_Core {
                 "version" => $json_version,
                 "checkins" => Kohana::config('settings.checkins'),
                 "email" => Kohana::config('settings.site_email'),
-                "sms" => Kohana::config('settings.sms_no1')
+                "sms" => Kohana::config('settings.sms_no1'),
+                "plugins" => $active_plugins
                 ),
             "error" => $this->api_service->get_error_msg(0)
         );

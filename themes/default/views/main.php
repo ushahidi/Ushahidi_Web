@@ -10,12 +10,12 @@
 
 		<!-- right column -->
 		<div id="right" class="clearingfix">
-	
+
 			<!-- category filters -->
 			<div class="cat-filters clearingfix">
 				<strong><?php echo Kohana::lang('ui_main.category_filter');?> <span>[<a href="javascript:toggleLayer('category_switch_link', 'category_switch')" id="category_switch_link"><?php echo Kohana::lang('ui_main.hide'); ?></a>]</span></strong>
 			</div>
-		
+
 			<ul id="category_switch" class="category-filters">
 				<li><a class="active" id="cat_0" href="#"><span class="swatch" style="background-color:<?php echo "#".$default_map_all;?>"></span><span class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></span></a></li>
 				<?php
@@ -23,11 +23,11 @@
 					{
 						$category_title = $category_info[0];
 						$category_color = $category_info[1];
-						$category_image = '';
+						$category_image = ($category_info[2] != NULL) ? url::convert_uploaded_to_abs($category_info[2]) : NULL;
 						$color_css = 'class="swatch" style="background-color:#'.$category_color.'"';
 						if($category_info[2] != NULL) {
 							$category_image = html::image(array(
-								'src'=>$category_info[2],
+								'src'=>$category_image,
 								'style'=>'float:left;padding-right:5px;'
 								));
 							$color_css = '';
@@ -42,11 +42,11 @@
                                                     {
                                                             $child_title = $child_info[0];
                                                             $child_color = $child_info[1];
-                                                            $child_image = '';
+                                                            $child_image = ($child_info[2] != NULL) ? url::convert_uploaded_to_abs($child_info[2]) : NULL;
                                                             $color_css = 'class="swatch" style="background-color:#'.$child_color.'"';
-                                                            if($child_info[2] != NULL && file_exists(Kohana::config('upload.relative_directory').'/'.$child_info[2])) {
+                                                            if($child_info[2] != NULL) {
                                                                     $child_image = html::image(array(
-                                                                            'src'=>Kohana::config('upload.relative_directory').'/'.$child_info[2],
+                                                                            'src'=>$child_image,
                                                                             'style'=>'float:left;padding-right:5px;'
                                                                             ));
                                                                     $color_css = '';
@@ -60,7 +60,7 @@
 				?>
 			</ul>
 			<!-- / category filters -->
-			
+
 			<?php
 			if ($layers)
 			{
@@ -90,8 +90,7 @@
 				<?php
 			}
 			?>
-			
-			
+
 			<?php
 			if ($shares)
 			{
@@ -115,10 +114,9 @@
 				<?php
 			}
 			?>
-			
-			
+
 			<br />
-		
+
 			<!-- additional content -->
 			<?php
 			if (Kohana::config('settings.allow_reports'))
@@ -126,43 +124,74 @@
 				?>
 				<div class="additional-content">
 					<h5><?php echo Kohana::lang('ui_main.how_to_report'); ?></h5>
-					<ol>
-						<?php if (!empty($phone_array)) 
-						{ ?><li><?php echo Kohana::lang('ui_main.report_option_1')." "; ?> <?php foreach ($phone_array as $phone) {
-							echo "<strong>". $phone ."</strong>";
-							if ($phone != end($phone_array)) {
-								echo " or ";
-							}
-						} ?></li><?php } ?>
-						<?php if (!empty($report_email)) 
-						{ ?><li><?php echo Kohana::lang('ui_main.report_option_2')." "; ?> <a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a></li><?php } ?>
-						<?php if (!empty($twitter_hashtag_array)) 
-									{ ?><li><?php echo Kohana::lang('ui_main.report_option_3')." "; ?> <?php foreach ($twitter_hashtag_array as $twitter_hashtag) {
-						echo "<strong>". $twitter_hashtag ."</strong>";
-						if ($twitter_hashtag != end($twitter_hashtag_array)) {
-							echo " or ";
-						}
-						} ?></li><?php
-						} ?><li><a href="<?php echo url::site() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a></li>
-					</ol>
+
+					<div>
+
+						<!-- Phone -->
+						<?php if (!empty($phone_array)) { ?>
+						<div style="margin-bottom:10px;">
+							<?php echo Kohana::lang('ui_main.report_option_1'); ?>
+							<?php foreach ($phone_array as $phone) { ?>
+								<strong><?php echo $phone; ?></strong>
+								<?php if ($phone != end($phone_array)) { ?>
+									 <br/>
+								<?php } ?>
+							<?php } ?>
+						</div>
+						<?php } ?>
+						
+						<!-- External Apps -->
+						<?php if (count($external_apps) > 0) { ?>
+						<div style="margin-bottom:10px;">
+							<strong><?php echo Kohana::lang('ui_main.report_option_external_apps'); ?>:</strong><br/>
+							<?php foreach ($external_apps as $app) { ?>
+								<a href="<?php echo $app->url; ?>"><?php echo $app->name; ?></a><br/>
+							<?php } ?>
+						</div>
+						<?php } ?>
+
+						<!-- Email -->
+						<?php if (!empty($report_email)) { ?>
+						<div style="margin-bottom:10px;">
+							<strong><?php echo Kohana::lang('ui_main.report_option_2'); ?>:</strong><br/>
+							<a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a>
+						</div>
+						<?php } ?>
+
+						<!-- Twitter -->
+						<?php if (!empty($twitter_hashtag_array)) { ?>
+						<div style="margin-bottom:10px;">
+							<strong><?php echo Kohana::lang('ui_main.report_option_3'); ?>:</strong><br/>
+							<?php foreach ($twitter_hashtag_array as $twitter_hashtag) { ?>
+								<span>#<?php echo $twitter_hashtag; ?></span>
+								<?php if ($twitter_hashtag != end($twitter_hashtag_array)) { ?>
+									<br />
+								<?php } ?>
+							<?php } ?>
+						</div>
+						<?php } ?>
+
+						<!-- Web Form -->
+						<div style="margin-bottom:10px;">
+							<a href="<?php echo url::site() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a>
+						</div>
+
+					</div>
 
 				</div>
 			<?php } ?>
-			<?php if ($allow_feed == 1): ?>
-			<div class="holder">
-				<div class="feed">
-					<h2><?php echo Kohana::lang('ui_main.alerts_rss'); ?></h2>
-					<div class="holder">
-						<div class="box">
-							<a href="<?php echo url::site(); ?>feed/"><img src="<?php echo url::file_loc('img'); ?>media/img/icon-feed.png" style="vertical-align: middle;" border="0"></a>&nbsp;<strong><a href="<?php echo url::site(); ?>feed/"><?php echo url::site(); ?>feed/</a></strong>
-						</div>
-					</div>
-				</div>
-			</div>
-			<?php endif; ?>
-
 
 			<!-- / additional content -->
+			
+			<!-- Checkins -->
+			<?php if ( Kohana::config('settings.checkins') ) { ?>
+			<br/>
+			<div class="additional-content">
+				<h5><?php echo Kohana::lang('ui_admin.checkins'); ?></h5>
+				<div id="cilist"></div>
+			</div>
+			<?php } ?>
+			<!-- /Checkins -->
 			
 			<?php
 			// Action::main_sidebar - Add Items to the Entry Page Sidebar

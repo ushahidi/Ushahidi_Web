@@ -348,8 +348,18 @@ class Reports_Controller extends Main_Controller {
 
 				// Action::report_add/report_submit - Added a New Report
 				//++ Do we need two events for this? Or will one suffice?
-				Event::run('ushahidi_action.report_add', $incident);
+				//ETHERTON: Yes. Those of us who often write plugins for
+				//Ushahidi would like to have access to the $post arrays
+				//and the report object. Back in the day we even had access
+				//to the $post object, so if our plugins didn't get the 
+				//appropriate input we could raise an error, but alas,
+				//those days are gone. Now I suppose you could do something
+				//like Event::run('ushahidi_action.report_add', array($post, $incident));
+				//but for the sake of backward's compatibility, please don't
+				//Thanks.
 				Event::run('ushahidi_action.report_submit', $post);
+				Event::run('ushahidi_action.report_add', $incident);
+				
 
 				url::redirect('reports/thanks');
 			}

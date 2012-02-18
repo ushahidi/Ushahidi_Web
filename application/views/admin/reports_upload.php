@@ -46,6 +46,7 @@
 			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_2');?>.</li>
 			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_3');?>.</li>
 			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4');?></li>
+			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4b');?></li>
 		</ul>
 			<p>
 				<?php echo Kohana::lang('ui_main.upload_reports_detail_5');?>:

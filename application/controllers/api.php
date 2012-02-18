@@ -18,43 +18,7 @@
  */
 
 class Api_Controller extends Controller {
-
-	public function __construct()
-	{
-		parent::__construct();
-		
-		$this->auth = new Auth();
-		$this->auth->auto_login();
-		
-		// Load Session
-		$this->session = Session::instance();
-		
-		// Don't let unauthorized users in
-		if (Kohana::config('settings.private_deployment'))
-		{
-			if ( ! $this->auth->logged_in('login'))
-			{
-				header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-				header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the pas
-				
-				// Instantiate the API service
-				$api_service = new Api_Service();
-				if ($api_service->get_response_type() == 'xml')
-				{
-					header("Content-type: text/xml");
-					echo '<error><code>005</code><message>Access denied. Either your credentials are not valid or your request has been refused.</message></error>';    
-				}
-				else
-				{
-					header("Content-type: application/json; charset=utf-8");
-					echo '{"error": {"code": "005","message": "Access denied. Either your credentials are not valid or your request has been refused."}}';
-				}
-				
-				exit();
-			}
-		}
-	}
-    
+	
 	/**
 	 * Starting point
 	 */

@@ -18,6 +18,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
+	<?php echo Kohana::config("globalcode.head"); ?>
 	<title><?php echo $site_name ?></title>
 	<?php
 	echo html::stylesheet(url::file_loc('css').'media/css/admin/all', '', true);
@@ -119,7 +120,11 @@
 	// Load TinyMCE
 	if ($editor_enabled)
 	{
-		echo html::script(url::file_loc('js').'media/js/tinymce/tiny_mce', true);
+		if (Kohana::config("cdn.cdn_ignore_htmlbox") == true) {
+			echo html::script(url::file_loc('ignore').'media/js/htmlbox/htmlbox.min.js', true);
+		} else {
+			echo html::script(url::file_loc('js').'media/js/htmlbox/htmlbox.min.js', true);
+		}
 	}
 	
 	// Table Row Sort
@@ -137,6 +142,10 @@
 	// Turn on picbox
 	echo html::script(url::file_loc('js').'media/js/picbox', true);
 	echo html::stylesheet(url::file_loc('css').'media/css/picbox/picbox');
+	
+	// Header Nav
+	echo html::script(url::file_loc('js').'media/js/global', true);
+	echo html::stylesheet(url::file_loc('css').'media/css/global','',true);
 	
 	// Render CSS and Javascript Files from Plugins
 	echo plugin::render('stylesheet');
@@ -172,27 +181,20 @@
 	</script>
 </head>
 <body>
+
+	<?php
+		echo $header_nav;
+		
+		// Action::admin_header_top_left - Admin Header Menu
+		Event::run('ushahidi_action.admin_header_top_left');
+
+		// Action::admin_secondary_header_bar - Admin Secondary Menu
+		Event::run('ushahidi_action.admin_secondary_header_bar');
+	?>
+
 	<div class="holder">
 		<!-- header -->
 		<div id="header">
-			<!-- top-area -->
-			<div class="top">
-				<?php
-				// Action::admin_header_top_left - Admin Header Menu
-				Event::run('ushahidi_action.admin_header_top_left');
-				?>
-				<ul>
-					<li class="none-separator"> <?php echo Kohana::lang('ui_admin.welcome');echo $admin_name; ?>!</li>
-					<li class="none-separator"><a href="<?php echo url::site() ?>" title="View the home page">
-						<?php echo Kohana::lang('ui_admin.view_site');?></a>					
-					<li class="none-separator"><a href="<?php echo url::site()."admin/profile/" ?>"><?php echo Kohana::lang('ui_admin.my_profile');?></a></li>
-					<li><a href="<?php echo url::site();?>logout"><?php echo Kohana::lang('ui_admin.logout');?></a></li>
-				</ul>
-			</div>
-			<?php
-				// Action::admin_secondary_header_bar - Admin Secondary Menu
-				Event::run('ushahidi_action.admin_secondary_header_bar');
-			?>
 
 			<!-- info-nav -->
 			<div class="info-nav">
@@ -205,8 +207,7 @@
 				<div class="info-search"><form action="<?php echo url::site() ?>admin/reports" id="info-search"><input type="text" name="k" class="info-keyword" value=""> <a href="javascript:info_search();" class="btn"><?php echo Kohana::lang('ui_admin.search');?></a></form></div>
 				<div style="clear:both;"></div>
 				<div class="info-buttons"><a class="button" href="<?php echo url::site().'admin/manage/publiclisting'; ?>">Manage Your <?php echo Kohana::lang('ui_admin.public_listing'); ?></a></div>
-				
-				
+
 			</div>
 			<!-- title -->
 			<h1><?php echo $site_name ?></h1>

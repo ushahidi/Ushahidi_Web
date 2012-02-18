@@ -116,6 +116,10 @@
 								<?php endif; ?>
 							<?php endforeach; ?>
 						</div>
+						<?php
+						// Action::report_extra_media - Add items to the report list in the media section
+						Event::run('ushahidi_action.report_extra_media', $incident_id);
+						?>
 					</div>
 
 					<div class="r_details">
@@ -132,6 +136,10 @@
 						  <a class="btn-show btn-less" href="#<?php echo $incident_id ?>">&laquo; <?php echo Kohana::lang('ui_main.less_information'); ?></a> 
 						</div>
 						<p class="r_location"><a href="<?php echo url::site(); ?>reports/?l=<?php echo $location_id; ?>"><?php echo $location_name; ?></a></p>
+						<?php
+						// Action::report_extra_details - Add items to the report list details section
+						Event::run('ushahidi_action.report_extra_details', $incident_id);
+						?>
 					</div>
 				</div>
 			<?php } ?>

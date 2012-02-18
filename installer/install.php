@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * This class acts like a controller.
  *
@@ -26,9 +26,9 @@ class Install
 	public function __construct()
 	{
 		global $form;
-		
+
 		$this->install_directory = dirname(dirname(__FILE__));
-		
+
 		$this->_index();
 	}
 
@@ -65,14 +65,14 @@ class Install
 					"<code>database.template.php</code> to work
 			from. Please make sure this file is in the <code>application/config/</code> folder.");
 		}
-		
+
 		// load .htaccess file and work with it.
 		if(!file_exists('../.htaccess')){
 			$form->set_error("load_htaccess_file","<strong>Oops!</strong> I need a file called " .
 					"<code>.htaccess</code> to work
 			with. Please make sure this file is in the root directory of your Ushahidi files.");
 		}
-		
+
 		if( !is_writable('../.htaccess')) {
 			$form->set_error('htaccess_perm',
 			"<strong>Oops!</strong> Ushahidi is unable to write to the <code>.htaccess</code> file. " .
@@ -96,7 +96,7 @@ class Install
 			"	<li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li>" .
 			"</ul>");
 		}
-		
+
 		if( !is_writable('../application/config/config.php')) {
 			$form->set_error('config_perm',
 			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
@@ -130,25 +130,25 @@ class Install
 	   } else {
 
 			$this->_add_config_details($base_path);
-			
+
 			$this->_add_htaccess_entry($base_path);
-			
+
 			$this->_add_db_details( $username, $password, $host, $select_db_type,
 			   $db_name, $table_prefix );
 
 			$this->_import_sql($username, $password, $host, $db_name, $table_prefix);
 			$this->_chmod_folders();
-			
+
 			$sitename = $this->_get_url();
 			$url = $this->_get_url();
 			$configure_stats = $this->_configure_stats($sitename, $url, $host, $username, $password, $db_name, $table_prefix);
-			
+
 			return 0;
 	   }
 	}
-	
+
 	/**
-	 * Validates general settings fields and then add details to 
+	 * Validates general settings fields and then add details to
 	 * the settings table.
 	 */
 	public function _general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix,$clean_url)
@@ -161,14 +161,14 @@ class Install
 		} else {
 			$site_name = stripslashes($site_name);
 		}
-		
+
 		if(!$site_tagline || strlen($site_tagline = trim($site_tagline)) == 0 ){
 			$form->set_error("site_tagline", "Please make sure to " .
 					"enter a <strong>site tagline</strong>.");
 		} else {
 			$site_tagline = stripslashes($site_tagline);
 		}
-		
+
 		/* Email error checking */
 		if(!$site_email || strlen($site_email = trim($site_email)) == 0){
 			$form->set_error("site_email", "Please enter a <strong>site email address</strong>.");
@@ -182,7 +182,7 @@ class Install
 			}
 			$site_email = stripslashes($site_email);
 		}
-		
+
 		/**
 		 * error exists, have user correct them.
 		 */
@@ -190,13 +190,13 @@ class Install
 			return 1;
 
 		} else {
-			
+
 			$this->_add_general_settings($site_name, $site_tagline, $default_lang, $site_email, $table_prefix,$clean_url);
-			return 0;	
+			return 0;
 		}
-		
+
 	}
-	
+
 	public function _map_info($map_provider, $map_api_key, $table_prefix)
 	{
 		global $form;
@@ -207,7 +207,7 @@ class Install
 		} else {
 			$map_api_key = stripslashes($map_api_key);
 		}
-		
+
 		/**
 		 * error exists, have user correct them.
 		 */
@@ -219,11 +219,11 @@ class Install
 			return 0;
 		}
 	}
-	
-	
+
+
 	public function _mail_server($alert_email, $mail_username,$mail_password,
 		$mail_port,$mail_host,$mail_type,$mail_ssl,$table_prefix){
-		
+
 		global $form;
 		//check for empty fields
 		if(!$alert_email || strlen($alert_email = trim($alert_email)) == 0 ){
@@ -238,17 +238,17 @@ class Install
 		if( !$mail_password || strlen($mail_password = trim($mail_password)) == 0 ){
 			$form->set_error("mail_server_pwd","Please enter the <strong>password</strong> for your email account.");
 		}
-		
+
 		if(!$mail_port|| strlen($mail_port = trim($mail_port)) == 0 ){
 			$form->set_error("mail_server_port", "Please make sure to " .
 					"enter the <strong>port</strong> for your mail server.");
 		}
-		
+
 		if(!$mail_host|| strlen($mail_host = trim($mail_host)) == 0 ){
 			$form->set_error("mail_server_host", "Please make sure to " .
 					"enter the <strong>host</strong> of the mail server.");
 		}
-		
+
 		/**
 		 * error exists, have user correct them.
 		 */
@@ -262,20 +262,23 @@ class Install
 		}
 
 	}
-	
+
 	/**
 	 * gets the URL
 	 */
 	 private function _get_url()
 	 {
 		global $_SERVER;
-		if ($_SERVER["SERVER_PORT"] != "80") {
+		if ($_SERVER["SERVER_PORT"] != "80" && $_SERVER["SERVER_PORT"] != "443") {
 			$url = $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
 		} else {
 			$url = $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
 		}
-		
-		return 'http://'.substr($url,0,stripos($url,'/installer/'));
+
+		$url = substr($url,0,stripos($url,'/installer/'));
+
+		if(isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') return "https://{$url}";
+		return "http://{$url}";
 	 }
 
 	/**
@@ -290,7 +293,7 @@ class Install
 		$database_file = @file('../application/config/database.template.php');
 		$handle = @fopen('../application/config/database.php', 'w');
 		foreach( $database_file as $line_number => $line )
-		{	
+		{
 			switch( trim(substr( $line,0,14 )) ) {
 				case "'type'     =":
 					fwrite($handle, str_replace("'mysql'","'".
@@ -338,7 +341,7 @@ class Install
 	{
 		$config_file = @file('../application/config/config.template.php');
 		$handle = @fopen('../application/config/config.php', 'w');
-		
+
 		foreach( $config_file as $line_number => $line )
 		{
 			if( !empty( $base_path ) )
@@ -358,64 +361,64 @@ class Install
 		}
 
 	}
-	
+
 	/**
 	 * Removes index.php from index page variable in application/config.config.php file
 	 */
 	private function _remove_index_page($yes_or_no) {
 		$config_file = @file('../application/config/config.php');
 		$handle = @fopen('../application/config/config.php', 'w');
-		
+
 		if(is_array($config_file) ) {
         	foreach( $config_file as $line_number => $line )
         	{
             	if( $yes_or_no == 1 ) {
                 	if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 ) {
-                		fwrite($handle, str_replace("index.php","",$line ));    
+                		fwrite($handle, str_replace("index.php","",$line ));
             		} else {
                 		fwrite($handle, $line);
             		}
-        	
+
             	} else {
                 	if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 ) {
-        			
-                    	fwrite($handle, str_replace("''","'index.php'",$line ));    
+
+                    	fwrite($handle, str_replace("''","'index.php'",$line ));
                 	} else {
                     	fwrite($handle, $line);
-                	}        		
+                	}
             	}
         	}
     	}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Adds the right RewriteBase entry to the .htaccess file.
-	 * 
+	 *
 	 * @param base_path - the base path.
 	 */
 	private function _add_htaccess_entry($base_path) {
-		
+
 		$htaccess_file = @file('../.htaccess');
 		$handle = @fopen('../.htaccess','w');
 
 		if( is_array( $htaccess_file ) ) {
 			foreach($htaccess_file as $line_number => $line ) {
 				if( !empty($base_path) && $base_path != "/" ) {
-					
+
 					if( strpos(" ".$line,"RewriteBase /") != 0 ) {
-						fwrite($handle, str_replace("/","/".$base_path,$line));			
+						fwrite($handle, str_replace("/","/".$base_path,$line));
 					} else {
 						fwrite($handle,$line);
 					}
-						
+
 				} else {
 					fwrite($handle,$line);
 				}
 			}
-		}	
-	} 
+		}
+	}
 
 	/**
 	 * Imports sql file to the database.
@@ -424,7 +427,7 @@ class Install
 	{
 		$connection = @mysql_connect("$host", "$username", "$password");
 		$db_schema = @file_get_contents('../sql/ushahidi.sql');
-		
+
 		// If a table prefix is specified, add it to sql
 		if ($table_prefix) {
 			$find = array(
@@ -443,13 +446,13 @@ class Install
 				);
 			$db_schema = str_replace($find, $replace, $db_schema);
 		}
-		
+
 		// Use todays date as the date for the first incident in the system
 		$db_schema = str_replace('2010-01-01 12:00:00',
 			date("Y-m-d H:i:s",time()), $db_schema);
-		
+
 		$result = @mysql_query('CREATE DATABASE '.$db_name);
-		
+
 		// select newly created db
 		@mysql_select_db($db_name,$connection);
 		/**
@@ -457,16 +460,16 @@ class Install
 		 * tables.
 		 */
 		$tables = explode(';',$db_schema);
-		
+
 		foreach($tables as $query) {
-	   
+
 			$result = @mysql_query($query,$connection);
 		}
 
 		@mysql_close( $connection );
-		
+
 	}
-	
+
 	/**
 	 * Adds general settings detail to the db.
 	 * @param site_name - site name.
@@ -480,13 +483,13 @@ class Install
 		@mysql_select_db($_SESSION['db_name'],$connection);
 		@mysql_query('UPDATE `'.$table_prefix.'settings` SET `site_name` = \''.mysql_escape_string($site_name).
 		'\', site_tagline = \''.mysql_escape_string($site_tagline).'\', site_language= \''.mysql_escape_string($default_lang).'\' , site_email= \''.mysql_escape_string($site_email).'\' ');
-		@mysql_close($connection);	
-		
-		//enable / disable clean url 
+		@mysql_close($connection);
+
+		// Enable / disable clean url
 		$this->_remove_index_page($clean_url);
-		
+
 	}
-	
+
 	/**
 	 * Adds google map api key to the settings table.
 	 * @param map_provider - map provider.
@@ -497,22 +500,22 @@ class Install
 		//TODO modularize the db connection part.
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
-		
+
 		@mysql_query('UPDATE `'.$table_prefix.'settings` SET `default_map` = \''.mysql_escape_string($map_provider).
 		'\', api_google = \''.mysql_escape_string($map_api_key).'\' ');
 		@mysql_close($connection);
 	}
-	
+
 	/**
 	 * Adds mail server details to the settings table.
-	 * 
+	 *
 	 */
 	private function _add_mail_server_info( $alert_email, $mail_username,$mail_password,
 		$mail_port,$mail_host,$mail_type,$mail_ssl, $table_prefix = NULL ) {
 		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
-		
+
 		@mysql_query('UPDATE `'.$table_prefix.'settings` SET `alerts_email` = \''.mysql_escape_string($alert_email).
 		'\', `email_username` = \''.mysql_escape_string($mail_username).'\' , `email_password` = \''.mysql_escape_string($mail_password).'\'' .
 				', `email_port` = \''.mysql_escape_string($mail_port).'\' , `email_host` = \''.mysql_escape_string($mail_host).'\' ' .
@@ -535,7 +538,7 @@ class Install
 			return FALSE;
 		}
 	}
-	
+
 	/**
 	 * Set up stat tracking
 	 */
@@ -543,21 +546,21 @@ class Install
 	{
 		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
 		$stat_url = 'http://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
-		
+
 		$xml = simplexml_load_string($this->_curl_req($stat_url));
 		$stat_id = (string)$xml->id[0];
 		$stat_key = (string)$xml->key[0];
-		
+
 		if($stat_id > 0){
 			$connection = @mysql_connect("$host", "$username", "$password");
 			@mysql_select_db($db_name,$connection);
 			@mysql_query('UPDATE `'.$table_prefix.'settings` SET `stat_id` = \''.mysql_escape_string($stat_id).'\', `stat_key` = \''.mysql_escape_string($stat_key).'\' WHERE `id` =1 LIMIT 1;');
 			@mysql_close($connection);
-			
+
 			return $stat_id;
 		}
-		
-		return false;		
+
+		return false;
 	}
 
 	/**
@@ -569,7 +572,7 @@ class Install
 		@chmod('../application/logs',0777);
 		@chmod('../media/uploads',0777);
 	}
-	
+
 	/**
 	 * check if ushahidi has been installed.
 	 */
@@ -596,7 +599,7 @@ class Install
 
 		return $is_installed;
 	}
-	
+
 	/**
 	 * Helper function to send a cURL request
 	 * @param url - URL for cURL to hit
@@ -607,26 +610,26 @@ class Install
 		if (!function_exists('curl_exec')) {
 			return false;
 		}
-		
+
 		$curl_handle = curl_init();
 		curl_setopt($curl_handle,CURLOPT_URL,$url);
 		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
 		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
 		$buffer = curl_exec($curl_handle);
 		curl_close($curl_handle);
-		
+
 		return $buffer;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Check if relevant directories are writable.
 	 */
 	public function _check_writable_dir() {
 		global $form;
-		
-		
+
+
 		if( !is_writable('../.htaccess')) {
 			$form->set_error('htaccess_perm',
 			"<strong>Oops!</strong> Ushahidi is unable to write to your <code>.htaccess</code> file. " .
@@ -638,31 +641,31 @@ class Install
 			"<strong>Oops!</strong> Ushahidi needs the <code>application/config</code> folder to be writable. ".
 			"Please change the permissions of that folder to allow write access (777).	");
 		}
-		
+
 		if( !is_writable('../application/config/config.php')) {
 			$form->set_error('config_file_perm',
 			"<strong>Oops!</strong> Ushahidi is unable to write to <code>application/config/config.php</code> file. " .
 			"Please change the permissions of that file to allow write access (777).  ");
 		}
-		
+
 		if( !is_writable('../application/cache')) {
 			$form->set_error('cache_perm',
 			"<strong>Oops!</strong> Ushahidi needs <code>application/cache</code> folder to be writable. ".
 			"Please change the permissions of that folder to allow write access (777).	");
 		}
-		
+
 		if( !is_writable('../application/logs')) {
 			$form->set_error('logs_perm',
 			"<strong>Oops!</strong> Ushahidi needs <code>application/logs</code> folder to be writable. " .
 			"Please change the permissions of that folder to allow write access (777). ");
 		}
-		
+
 		if( !is_writable('../media/uploads')) {
 			$form->set_error('uploads_perm',
 			"<strong>Oops!</strong> Ushahidi needs <code>media/uploads</code> folder to be writable. " .
 			"Please change the permissions of that folder to allow write access (777). ");
 		}
-		
+
 		/**
 		 * error exists, have user correct them.
 		 */
@@ -672,17 +675,17 @@ class Install
 	   } else {
 			return 0;
 	   }
-			
+
 	}
-	
-	
+
+
 	/**
 	 * Check if required PHP libraries are installed. Basic Mode.
 	 */
 	public function _check_modules() {
 		global $form, $modules;
-		
-		if( ! $modules->isLoaded('curl') 
+
+		if( ! $modules->isLoaded('curl')
 			OR ! $modules->isLoaded('pcre')
 			OR ! $modules->isLoaded('iconv')
 			OR ! $modules->isLoaded('mcrypt')
@@ -690,16 +693,16 @@ class Install
 			OR ! $modules->isLoaded('mysql')
 		) {
 			$form->set_error('modules',
-			"<strong>Oops!</strong> Send an email to your system administrator or web host saying: \"I'm installing an application which requires  
-			<a href=\"http://php.net/curl\" target=\"_blank\">cURL</a>, 
-			<a href=\"http://php.net/pcre\" target=\"_blank\">PCRE</a>, 
-			<a href=\"http://php.net/iconv\" target=\"_blank\">iconv</a>, 
-			<a href=\"http://php.net/mcrypt\" target=\"_blank\">mcrypt</a>, 
+			"<strong>Oops!</strong> Send an email to your system administrator or web host saying: \"I'm installing an application which requires
+			<a href=\"http://php.net/curl\" target=\"_blank\">cURL</a>,
+			<a href=\"http://php.net/pcre\" target=\"_blank\">PCRE</a>,
+			<a href=\"http://php.net/iconv\" target=\"_blank\">iconv</a>,
+			<a href=\"http://php.net/mcrypt\" target=\"_blank\">mcrypt</a>,
 			<a href=\"http://php.net/spl\" target=\"_blank\">SPL</a> and
 			<a href=\"http://php.net/mysql\" target=\"_blank\">MySQL</a>.
 			Can you ensure that these PHP libraries are installed?\"");
 		}
-		
+
 		/**
 		 * error exists, have user correct them.
 		 */
@@ -708,7 +711,7 @@ class Install
 
 	   } else {
 			return 0;
-	   }	
+	   }
 	}
 
 
@@ -717,32 +720,32 @@ class Install
 	 */
 	public function _check_modules_advanced() {
 		global $form, $modules;
-		
+
 		if( ! $modules->isLoaded('curl')) {
 			$form->set_error('curl',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/curl\" target=\"_blank\">cURL</a> for getting or sending files using the URL syntax. ");
 		}
-		
+
 		if( ! $modules->isLoaded('pcre')) {
 			$form->set_error('pcre',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/pcre\" target=\"_blank\">PCRE</a> compiled with <code>–enable-utf8</code> and <code>–enable-unicode-properties</code> for UTF-8 functions to work properly. ");
 		}
-		
+
 		if( ! $modules->isLoaded('iconv')) {
 			$form->set_error('iconv',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/iconv\" target=\"_blank\">iconv</a> for UTF-8 transliteration. ");
 		}
-		
+
 		if( ! $modules->isLoaded('mcrypt')) {
 			$form->set_error('mcrypt',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/mcrypt\" target=\"_blank\">mcrypt</a> for encryption. ");
 		}
-		
+
 		if( ! $modules->isLoaded('SPL')) {
 			$form->set_error('spl',
 			"<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/spl\" target=\"_blank\">SPL</a> for several core libraries. ");
 		}
-		
+
 		if ( ! $modules->isLoaded('mysql')) {
 		    $form->set_error('mysql',
 		    "<strong>Oops!</strong> Ushahidi needs <a href=\"http://php.net/mysql\" target=\"_blank\">MySQL</a> for database access. ");
@@ -755,16 +758,16 @@ class Install
 
 	   } else {
 			return 0;
-	   }	
+	   }
 	}
-	
+
 	/**
 	 * Adds header details to the installer html pages.
 	 */
 	public function _include_html_header() {
 		/*TODO make title tag configurable*/
 		$header = <<<HTML
-			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 			<html xmlns="http://www.w3.org/1999/xhtml">
 			<head>
@@ -779,42 +782,184 @@ HTML;
 		return $header;
 
 	}
-	
+
 	/**
 	 * Gets the current directory ushahidi is installed in.
 	 */
 	public function _get_base_path($request_uri) {
 		return substr( substr($request_uri,0,stripos($request_uri,'/installer/')) ,1);
-		
+
 	}
-	
+
 	/**
-	 * Check if clean url can be enabled on the server so 
+	 * Check if clean url can be enabled on the server so
 	 * Ushahidi can emit clean URLs
-	 * 
+	 *
 	 * @return boolean
 	 */
-		
+
 	function _check_for_clean_url() {
-		
+
 		$url = $this->_get_url()."/installer/mod_rewrite/";
   		$curl_handle = curl_init();
-       
-   		curl_setopt($curl_handle, CURLOPT_URL, $url); 
-  	   	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );     
+
+   		curl_setopt($curl_handle, CURLOPT_URL, $url);
+  	   	curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );
   	  	curl_exec($curl_handle);
-   
+
   	   	$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
  	   	curl_close($curl_handle);
-  
+
  	   	if( $return_code ==  404 OR $return_code ==  403 ) {
- 	    	return FALSE; 	
+ 	    	return FALSE;
  	   	} else {
  	   		return TRUE;
  	   	}
 	}
-	
-	
+
+	/**
+	 * Validate password information
+	 */
+	function _password_info($password,$password_confirm,$table_prefix = NULL)
+	{
+		global $form;
+
+		// Check for empty password fields
+
+		// Password field is empty
+		if ( !$password || strlen($password = trim($password)) == 0)
+		{
+			$form->set_error('password',"You must enter a password.");
+		}
+
+		// Password confirmation field is empty
+		if (( !$password_confirm || strlen($password_confirm = trim($password_confirm)) == 0) && !empty($password))
+		{
+			$form->set_error('confirm',"You must enter the password confirmation.");
+		}
+
+		// Passwords don't match
+		if (((!empty($password) && !empty($password_confirm)) && ($password != $password_confirm)) || (empty($password) && !empty($password_confirm)))
+		{
+			$form->set_error('match',"Your passwords don't match.");
+		}
+
+		// Password length issues
+		if (strlen($password) < 8 || strlen($password) > 255)
+		{
+			$form->set_error('length',"Your password should not be less than 8 characters long or more than 255 characters long.");
+		}
+
+		// Password invalid
+		if( !($this->password_rule($password)))
+		{
+			$form->set_error('invalid',"Your password should have aplhabetical characters, the # and @symbol, numbers, dashes and underscores only.");
+		}
+
+		if ( $form->num_errors > 0)
+		{
+			return 1;
+		}
+		else
+		{
+			$this->_add_password_info($password);
+			return 0;
+		}
+	}
+
+	/**
+	 * Add the hashed password to the users table
+	 *
+	 * @param  string  password to be encrypted
+	 */
+
+	function _add_password_info($password)
+	{
+		// Encrypt the password
+		$admin_pass = $this->hash_password($password);
+
+		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		@mysql_query('UPDATE `'.$table_prefix.'users` SET `password` = \''.mysql_escape_string($admin_pass).
+		'\' WHERE `id` =1 LIMIT 1;');
+		@mysql_close($connection);
+	}
+
+	/**
+	 * Creates a hashed password from a plaintext password, inserting salt
+	 * based on the configured salt pattern.
+	 *
+	 * @param   string  plaintext password
+	 * @return  string  hashed password string
+	 */
+	public function hash_password($password, $salt = FALSE)
+	{
+		$salt_pattern = array(3, 5, 6, 10, 24, 26, 35, 36, 37, 40);
+		 //array(1, 3, 5, 9, 14, 15, 20, 21, 28, 30);
+		if ($salt === FALSE)
+		{
+			// Create a salt seed, same length as the number of offsets in the pattern
+			$salt = substr($this->hash(uniqid(NULL, TRUE)), 0, count($salt_pattern));
+		}
+
+		// Password hash that the salt will be inserted into
+		$hash = $this->hash($salt.$password);
+
+		// Change salt to an array
+		$salt = str_split($salt, 1);
+
+		// Returned password
+		$password = '';
+
+		// Used to calculate the length of splits
+		$last_offset = 0;
+
+		foreach ($salt_pattern as $offset)
+		{
+			// Split a new part of the hash off
+			$part = substr($hash, 0, $offset - $last_offset);
+
+			// Cut the current part out of the hash
+			$hash = substr($hash, $offset - $last_offset);
+
+			// Add the part to the password, appending the salt character
+			$password .= $part.array_shift($salt);
+
+			// Set the last offset to the current offset
+			$last_offset = $offset;
+		}
+
+		// Return the password, with the remaining hash appended
+		return $password.$hash;
+
+	}
+
+	/**
+	 * Perform a hash, using the configured method.
+	 *
+	 * @param   string  string to hash
+	 * @return  string
+	 */
+	public function hash($str)
+	{
+		return hash('sha1', $str);
+	}
+
+	/**
+	 * Check that password contains alphabetical letters, numbers, the # and @ symbol, hashes and underscores only
+	 *
+	 * @param  string  string that needs checking
+	 * @return  boolean
+	 */
+
+	public function password_rule($password, $utf8 = FALSE)
+	{
+		return ($utf8 === TRUE)
+			? (bool) preg_match('/^[-\pL\pN#@_]++$/uD', (string) $password)
+			: (bool) preg_match('/^[-a-z0-9#@_]++$/iD', (string) $password);
+	}
+
 }
 
 $install = new Install();

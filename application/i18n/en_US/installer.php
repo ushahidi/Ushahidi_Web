@@ -40,7 +40,7 @@
 	'mail_server_username_description' => 'If you are using Gmail, Hotmail, or Yahoo Mail, enter a full email address as a username',
 	'map' => 'Map',
 	'map_provider' => 'Map Provider',
-	'map_provider_description' => 'Ushahidi works equally well with any of these four mapping providers: Google, Bing, Yahoo or Open Street Map.  Choose the one that has the most detail in your area',
+	'map_provider_description' => 'Ushahidi works equally well with any of these three mapping providers: Google, Bing or Open Street Map.  Choose the one that has the most detail in your area',
 	'other_steps' => 'Other steps...',
 	'password' => 'Password',
 	'password_description' => 'Your database password',

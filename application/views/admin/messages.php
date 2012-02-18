@@ -43,7 +43,8 @@
 							<li><a href="?type=<?php echo $type ?>&level=2" <?php if ($level == '2') echo "class=\"active2\""; ?>><?php echo Kohana::lang('ui_main.spam');?> (<?php echo $count_spam; ?>)</a></li>
 						<?php } ?>
 						<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
-						<li><a href="<?php echo url::site()."admin/messages/reporters/index/".$service_id; ?>">Reporters</a></li>
+						<li><a href="<?php echo
+						url::site()."admin/messages/reporters/index/".$service_id; ?>">Reporters(<?php echo $count_reporters; ?>)</a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
@@ -116,7 +117,7 @@
 									$incident_id = $message->incident_id;
 									$message_description = text::auto_link($message->message);
 									$message_detail = nl2br(text::auto_link($message->message_detail));
-									$message_date = date('Y-m-d', strtotime($message->message_date));
+									$message_date = date('Y-m-d  H:i', strtotime($message->message_date));
 									$message_type = $message->message_type;
 									$message_level = $message->message_level;
 									
@@ -227,6 +228,15 @@
 						</table>
 					</div>
 				<?php print form::close(); ?>
+				<div class="tabs">
+					<div class="tab">
+						<ul>
+							<li><a href="#" onClick="messagesAction('d', 'DELETE', '')"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+							<li><a href="#" onClick="messagesAction('s', 'SPAM', '')"><?php echo strtoupper(Kohana::lang('ui_main.spam'));?></a></li>
+							<li><a href="#" onClick="messagesAction('n', 'NOT SPAM', '')"><?php echo strtoupper(Kohana::lang('ui_main.not_spam'));?></a></li>
+						</ul>
+					</div>
+				</div>
 			</div>
 
 <?php

@@ -246,7 +246,7 @@ div#loggedin_user_action{
     float:right;
     width:100%;
     text-align:right;
-    padding:5px 15px 0px 0px;
+    padding:0px 15px 0px 0px;
 }
 
 /* languages */
@@ -1829,6 +1829,10 @@ div.green-box ul, div.red-box ul{
     margin-bottom:10px;
 }
 
+span.required {
+  color: #CC1830;
+}
+
 /* Rounded Corners */
 .r-3 { -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
 .r-4 { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
@@ -2063,7 +2067,7 @@ p.labeled-divider span { position:relative; top:-8px; display:inline-block; back
         
 /* Report List View */
 .rb_report { position:relative; border-top:1px solid #c0c2b8; overflow:auto; padding-bottom:10px; }
-#rb_list-view { padding:18px 10px 0 0; height:415px; overflow:auto; }
+#rb_list-view { padding:18px 0 0 0; overflow:auto; }
 #rb_list-view .rb_report { 
     position:relative; 
     border:1px solid #c0c2b8; 
@@ -2355,4 +2359,35 @@ a.filter-button:hover { text-decoration:none; background:#707070;  }
     background-color:#E9E9E9;
     padding:5px;
     margin:0px 5px;
+}
+
+/*----- Checkins -----*/
+div.ci_imgblock {
+	width:59px;
+	height:59px;
+	overflow:hidden;
+	float:left;
+	margin:0px;
+}
+div.ci_shorterblock {
+	height:16px;
+}
+div.ci_tallerblock {
+	height:59px;
+}
+div.ci_colorblock {
+	width:69px;
+	float:left;
+	margin:0px 10px 0px 0px;
+}
+div.ci_colorfade {
+	width:59px;
+	height:20px;
+	float:left;
+	margin:0px;
+	background-color:#FFFFFF;
+	opacity:.5;
+}
+div.ci_checkin {
+	border-bottom:1px solid #B3B3B3;
 }

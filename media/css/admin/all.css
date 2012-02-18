@@ -1,9 +1,9 @@
 body{
 	margin:0;
 	font:12px/16px "Trebuchet MS",sans-serif;
-	background:url(../../img/admin/body-bg.gif) repeat-x;
 	color:#555;
 	min-width:960px;
+	padding:0;
 }
 form{
 	margin:0;
@@ -15,7 +15,7 @@ form{
 }
 h1, h2 ,h3, h4{margin:0;}
 h1{
-	padding:58px 0 0 2px;
+	padding:16px 0 0 2px;
 	color:#000;
 	font:28px/30px Georgia, "Times New Roman", Times, serif;
 }
@@ -104,7 +104,7 @@ a:hover{ text-decoration:none;}
 }
 /*-- info-nav --*/
 .info-nav {
-	margin:40px 7px 0 0;
+	margin:16px 7px 0 0;
 	display:inline;
 	float:right;
 }
@@ -933,6 +933,9 @@ div.experimental{
 	font-weight:bold;
 	text-transform: uppercase;
 }
+.welcome-form{
+	padding:12px 0px 0px 12px;
+}
 /*-- f-col --*/
 .f-col {
 	padding:0 10px 14px 20px;
@@ -1154,6 +1157,12 @@ a.rem{
 a.rem { background:url(../../img/icon-minus.gif) no-repeat;}
 input.short {
 	width:50px;
+}
+input.short2 {
+	width:100px;
+}
+input.short3 {
+	width:150px;
 }
 input.long {
 	width:454px;
@@ -1638,6 +1647,13 @@ a.new-form_field{
 }
 .hide{
 	display:none;
+}
+
+.required,
+.report-form h4 .required {
+  color: #CC1830;
+  font-size: 15px;
+  font-weight: normal;
 }
 
 /*-- Color Picker --*/
@@ -2407,4 +2423,52 @@ div.dp-popup td {
 }
 div.dp-popup td.disabled {
 	cursor: default;
+}
+.transparent-25 {
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=25);
+
+  /* Netscape */
+  -moz-opacity: 0.25;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.25;
+
+  /* Good browsers */
+  opacity: 0.25;
+}
+.transparent-50 {
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=50);
+
+  /* Netscape */
+  -moz-opacity: 0.5;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.5;
+
+  /* Good browsers */
+  opacity: 0.5;
+}
+.transparent-75 {
+  /* IE 8 */
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+
+  /* IE 5-7 */
+  filter: alpha(opacity=75);
+
+  /* Netscape */
+  -moz-opacity: 0.75;
+
+  /* Safari 1.x */
+  -khtml-opacity: 0.75;
+
+  /* Good browsers */
+  opacity: 0.75;
 }
