@@ -125,8 +125,6 @@ class Main_Controller extends Template_Controller {
 		$google_analytics = Kohana::config('settings.google_analytics');
 		$this->template->footer->google_analytics = $this->themes->google_analytics($google_analytics);
 
-        // Load profiler
-        // $profiler = new Profiler;
 
 		// Get tracking javascript for stats
 		$this->template->footer->ushahidi_stats = (Kohana::config('settings.allow_stat_sharing') == 1)
@@ -160,6 +158,10 @@ class Main_Controller extends Template_Controller {
 			$this->template->header->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header->header_nav->site_name = Kohana::config('settings.site_name');
+
+        // Load profiler
+        //$this->profiler = new Profiler;
+
 	}
 
 	/**
@@ -279,16 +281,6 @@ class Main_Controller extends Template_Controller {
 			$layers = $config_layers;
 		}
 		$this->template->content->layers = $layers;
-
-		// Get all active Shares
-		$shares = array();
-		foreach (ORM::factory('sharing')
-				  ->where('sharing_active', 1)
-				  ->find_all() as $share)
-		{
-			$shares[$share->id] = array($share->sharing_name, $share->sharing_color);
-		}
-		$this->template->content->shares = $shares;
 
 		// Get Default Color
 		$this->template->content->default_map_all = Kohana::config('settings.default_map_all');

@@ -964,8 +964,7 @@ INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_we
 (2, 'Alerts', 0, -1, -1, -1, -1, 's_alerts', 1),
 (3, 'Email', 0, -1, -1, -1, 0, 's_email', 1),
 (4, 'Twitter', 0, -1, -1, -1, 0, 's_twitter', 1),
-(5, 'Sharing', 0, -1, -1, -1, 0, 's_sharing', 1),
-(6, 'Cleanup', 0, -1, -1, -1, 0, 's_cleanup', 1);
+(5, 'Cleanup', 0, -1, -1, -1, 0, 's_cleanup', 1);
 
 
 /**
