@@ -58,6 +58,19 @@ class Sharing_Install {
 			   PRIMARY KEY (`id`)
 			);");
 
+			//Dump the sharing scheduler item from bundled SQL dump file
+			$this->db->query("DELETE FROM `".Kohana::config('database.default.table_prefix')."scheduler` where scheduler_name = 'Sharing' ");
+			$db_insert = fopen (dirname(dirname(__FILE__)).'/sql/s_sharing.sql', 'r');
+			$rows = fread ($db_insert, filesize(dirname(dirname(__FILE__)).'/sql/s_sharing.sql'));
+			
+			//split by ; to get the sql statement for inserting each row
+			$rows = explode(';\n',$rows);
+
+			foreach($rows as $query) 
+			{
+				$this->db->query($query);
+			}
+				
     
 	}
 
