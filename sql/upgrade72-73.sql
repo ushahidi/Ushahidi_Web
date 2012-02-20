@@ -21,5 +21,8 @@ SELECT `incident_id` FROM (
 	) 
 	AS X);  
 
+-- Unapprove orphaned reports	
+UPDATE `incident` SET `incident_active` = 0 WHERE `id` in (SELECT `incident_id` FROM `incident_category` WHERE `category_id` = 5);
+
 -- Update the database version
 UPDATE `settings` SET `db_version` = '73' WHERE `id` = 1 LIMIT 1;
