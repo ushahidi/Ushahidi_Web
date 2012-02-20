@@ -69,11 +69,11 @@ $(function(){
                                                                 if($child_info[2] != NULL) {
                                                                         $child_image = html::image(array(
                                                                                 'src'=>$child_info[2],
-                                                                                'style'=>'float:left;padding-right:5px;'
+                                                                                'style'=>'float:right;padding-left:5px;'
                                                                                 ));
                                                                         $color_css = '';
                                                                 }
-                                                                echo '<li style="padding-left:10px;"><a href="#" id="cat_'. $child .'"><span '.$color_css.'>'.$child_image.'</span><span class="category-title">'.$child_title.'</span></a></li>';
+                                                                echo '<li style="padding-right:10px;"><a href="#" id="cat_'. $child .'"><span '.$color_css.'>'.$child_image.'</span><span class="category-title">'.$child_title.'</span></a></li>';
                                                         }
                                                         echo '</ul>';
                                                     }
