@@ -87,7 +87,10 @@ class Media_Controller extends Controller {
         header('Content-type: '.$mime);
         header('Cache-Control: must-revalidate');
         header('Expires: '.gmdate("D, d M Y H:i:s", time() + $expiry_time).' GMT');
-        header('ETag: '.$mtime);
+        if (isset($mtime))
+        {
+          header('ETag: '.$mtime);
+        }
         header("Last-Modified: ".gmdate("D, d M Y H:i:s", $mtime)." GMT");
 
         $oldetag = isset($_SERVER['HTTP_IF_NONE_MATCH'])?trim($_SERVER['HTTP_IF_NONE_MATCH']):'';
