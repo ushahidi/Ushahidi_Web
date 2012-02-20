@@ -61,6 +61,10 @@ class Reports_Controller extends Admin_Controller {
 			{
 				array_push($this->params, 'i.incident_verified = 0');
 			}
+			elseif (strtolower($status) == 'o')
+			{
+				array_push($this->params, 'ic.category_id = 5');
+			}
 			else
 			{
 				$status = "0";
