@@ -139,7 +139,7 @@ $(function(){
 			
 			
 			<?php
-			if ($shares)
+			if (isset($shares))
 			{
 				?>
 				<div id="other-deployments-box">
