@@ -120,7 +120,7 @@ class Reports_Controller extends Admin_Controller {
 						// Query to check if this report is orphaned i.e categoryless	
 						$query = "SELECT ic.* FROM ".$table_prefix."incident_category ic
 								INNER JOIN ".$table_prefix."category c ON c.id = ic.category_id INNER JOIN ".$table_prefix."incident i ON i.id=ic.incident_id
-								WHERE c.category_title =\"NONE\" AND ic.incident_id = $item";
+								WHERE c.category_title =\"NONE\" AND c.category_trusted = '1' AND ic.incident_id = $item";
 						$result = $db->query($query);
 						
 						// Only approve the report IF it's not orphaned i.e the query returns a null set

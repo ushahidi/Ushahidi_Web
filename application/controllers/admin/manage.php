@@ -54,9 +54,6 @@ class Manage_Controller extends Admin_Controller
 
 		// Locale (Language) Array
 		$locales = locale::get_i18n();
-		
-		// Database table prefix
-		$table_prefix = Kohana::config('database.default.table_prefix');
 
 		// Setup and initialize form field names
 		$form = array
@@ -227,14 +224,10 @@ class Manage_Controller extends Admin_Controller
 						->where(array('category_id' => $category->id))
 						->delete_all();
 						
-					// Remove association between any report and the deleted category
-					
-					// Database instance
-					$db = new Database();	
-					$sql = "SELECT DISTINCT(id),incident_id FROM "
-						.$table_prefix."incident_category"
-						." WHERE category_id =".$category->id."";
-					$result = $db->query($sql);
+					// Check for all reports tied to this category to be deleted
+					$result = ORM::factory('incident_category')
+								->where('category_id',$category->id)
+								->find_all();
 					
 					// If there are reports returned by the query
 					if($result)
@@ -251,7 +244,7 @@ class Manage_Controller extends Admin_Controller
 							// If this report is tied to only one category(is an orphan)
 							if($count == 1)
 							{
-								// Assign it to special category for orphans
+								// Assign it to the special category for orphans
 								$orphaned = ORM::factory('incident_category',$orphan->id);
 								$orphaned->category_id = 5;
 								$orphaned->save();

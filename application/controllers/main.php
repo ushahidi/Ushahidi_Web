@@ -227,7 +227,7 @@ class Main_Controller extends Template_Controller {
 		$parent_categories = array();
 		foreach (ORM::factory('category')
 				->where('category_visible', '1')
-				->where('category_title != "NONE"')
+				->where('id != 5')
 				->where('parent_id', '0')
 				->find_all() as $category)
 		{
