@@ -1440,4 +1440,4 @@ ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '73' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '74' WHERE `id` = 1 LIMIT 1;
