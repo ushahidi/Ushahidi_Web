@@ -16,7 +16,7 @@
 
 	function fillFields(email)
 	{
-		$('#email').attr("value",unescape( email ) );
+		$('#email').attr("value", decodeURIComponent( email ) );
 			
 	}
 

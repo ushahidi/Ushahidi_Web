@@ -16,11 +16,11 @@
 		// Users JS
 		function fillFields(id, username, name, role, email)
 		{
-			$("#user_id").attr("value", unescape(id));
-			$("#username").attr("value", unescape(username));
-			$("#name").attr("value", unescape(name));
-			$('#role').attr("value",unescape( role ) );
-			$('#email').attr("value",unescape( email ) );
+			$("#user_id").attr("value", decodeURIComponent(id));
+			$("#username").attr("value", decodeURIComponent(username));
+			$("#name").attr("value", decodeURIComponent(name));
+			$('#role').attr("value", decodeURIComponent( role ) );
+			$('#email').attr("value", decodeURIComponent( email ) );
 			
 		}
 		
