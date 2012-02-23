@@ -1,5 +1,5 @@
 -- If there happens to be a category with id 5, assign it a different id
-UPDATE `category` SET `id` = '100' WHERE `id` = '5';
+UPDATE `category` SET `id` = '999' WHERE `id` = '5';
 
 -- Insert orphaned reports category
 INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_description`, `category_color`, `category_visible`, `category_trusted`) VALUES
@@ -19,9 +19,9 @@ SELECT `incident_id` FROM (
 	GROUP BY `ic`.`incident_id`
 	HAVING COUNT( `ic`.`category_id` ) >1
 	) 
-	AS X);  
+	AS X);
 
--- Unapprove orphaned reports	
+-- Unapprove orphaned reports
 UPDATE `incident` SET `incident_active` = 0 WHERE `id` in (SELECT `incident_id` FROM `incident_category` WHERE `category_id` = 5);
 
 -- Update the database version
