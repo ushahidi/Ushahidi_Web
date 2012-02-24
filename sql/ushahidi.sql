@@ -337,7 +337,7 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 *
 */
 
-CREATE TABLE `externalapp` (
+CREATE TABLE IF NOT EXISTS `externalapp` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `name` VARCHAR( 255 ) NOT NULL ,
 `url` VARCHAR( 255 ) NOT NULL
