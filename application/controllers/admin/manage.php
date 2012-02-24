@@ -224,6 +224,47 @@ class Manage_Controller extends Admin_Controller
 						->where(array('category_id' => $category->id))
 						->delete_all();
 						
+					// Check for all reports tied to this category to be deleted
+					$result = ORM::factory('incident_category')
+								->where('category_id',$category->id)
+								->find_all();
+					
+					// If there are reports returned by the query
+					if($result)
+					{
+						foreach($result as $orphan)
+						{
+							$orphan_incident_id = $orphan->incident_id;
+						
+							// Check if the report is tied to any other category
+							$count = ORM::factory('incident_category')
+										->where('incident_id',$orphan_incident_id)
+										->count_all();
+					
+							// If this report is tied to only one category(is an orphan)
+							if($count == 1)
+							{
+								// Assign it to the special category for orphans
+								$orphaned = ORM::factory('incident_category',$orphan->id);
+								$orphaned->category_id = 5;
+								$orphaned->save();
+								
+								// Deactivate the report so that it's not accessible on the frontend
+								$orphaned_report = ORM::factory('incident',$orphan_incident_id);
+								$orphaned_report->incident_active = 0;
+								$orphaned_report->save();
+							
+							}
+						
+							// If this report is tied to more than one category(not orphaned), remove relation to category being deleted						
+							else
+							{
+								ORM::factory('incident_category')
+									->delete($orphan->id);
+							}
+						}
+					}
+					
 					// @todo Delete the category image
 					
 					// Delete category itself - except if it is trusted

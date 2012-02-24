@@ -39,7 +39,8 @@ INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_descr
 (1, 5, 'Category 1', 'Category 1', '9900CC', 1, 0),
 (2, 5, 'Category 2', 'Category 2', '3300FF', 1, 0),
 (3, 5, 'Category 3', 'Category 3', '663300', 1, 0),
-(4, 5, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1);
+(4, 5, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1),
+(5, 5, 'NONE', 'Holds orphaned reports', '009887', 1, 1);
 
 
 
@@ -336,7 +337,7 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 *
 */
 
-CREATE TABLE `externalapp` (
+CREATE TABLE IF NOT EXISTS `externalapp` (
 `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
 `name` VARCHAR( 255 ) NOT NULL ,
 `url` VARCHAR( 255 ) NOT NULL
@@ -416,7 +417,7 @@ PRIMARY KEY (`id`)
 CREATE TABLE IF NOT EXISTS `incident_category` (                                    
     `id` int(11) NOT NULL auto_increment,                                           
     `incident_id` bigint(20) NOT NULL default '0',                                  
-    `category_id` int(11) NOT NULL default '0',                                     
+    `category_id` int(11) NOT NULL default '5',                                     
   PRIMARY KEY  (`id`),
   UNIQUE KEY `incident_category_ids` (`incident_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -963,8 +964,7 @@ INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_we
 (2, 'Alerts', 0, -1, -1, -1, -1, 's_alerts', 1),
 (3, 'Email', 0, -1, -1, -1, 0, 's_email', 1),
 (4, 'Twitter', 0, -1, -1, -1, 0, 's_twitter', 1),
-(5, 'Sharing', 0, -1, -1, -1, 0, 's_sharing', 1),
-(6, 'Cleanup', 0, -1, -1, -1, 0, 's_cleanup', 1);
+(5, 'Cleanup', 0, -1, -1, -1, 0, 's_cleanup', 1);
 
 
 /**
@@ -1440,4 +1440,4 @@ ALTER TABLE `settings` ADD `allow_alerts` tinyint(4) NOT NULL DEFAULT '0';
 * 
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '72' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '74' WHERE `id` = 1 LIMIT 1;

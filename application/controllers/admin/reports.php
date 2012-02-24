@@ -40,7 +40,10 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content = new View('admin/reports');
 		$this->template->content->title = Kohana::lang('ui_admin.reports');
 		
-		//hook into the event for the reports::fetch_incidents() method
+		// Database table prefix
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
+		// Hook into the event for the reports::fetch_incidents() method
 		Event::add('ushahidi_filter.fetch_incidents_set_params', array($this,'_add_incident_filters'));
 
 		
@@ -57,6 +60,10 @@ class Reports_Controller extends Admin_Controller {
 			elseif (strtolower($status) == 'v')
 			{
 				array_push($this->params, 'i.incident_verified = 0');
+			}
+			elseif (strtolower($status) == 'o')
+			{
+				array_push($this->params, 'ic.category_id = 5');
 			}
 			else
 			{
@@ -111,34 +118,48 @@ class Reports_Controller extends Admin_Controller {
 				{
 					foreach($post->incident_id as $item)
 					{
-						$update = new Incident_Model($item);
-						if ($update->loaded == TRUE) 
+						// Database instance
+						$db = new Database();
+						
+						// Query to check if this report is orphaned i.e categoryless	
+						$query = "SELECT ic.* FROM ".$table_prefix."incident_category ic
+								INNER JOIN ".$table_prefix."category c ON c.id = ic.category_id INNER JOIN ".$table_prefix."incident i ON i.id=ic.incident_id
+								WHERE c.category_title =\"NONE\" AND c.category_trusted = '1' AND ic.incident_id = $item";
+						$result = $db->query($query);
+						
+						// Only approve the report IF it's not orphaned i.e the query returns a null set
+						if(count($result) == 0)
 						{
-							$update->incident_active =($update->incident_active == 0) ? '1' : '0'; 
+							$update = new Incident_Model($item);
+							if ($update->loaded == TRUE) 
+							{
+								$update->incident_active =($update->incident_active == 0) ? '1' : '0'; 
 
-							// Tag this as a report that needs to be sent out as an alert
-							if ($update->incident_alert_status != '2')
-							{ 
-								// 2 = report that has had an alert sent
-								$update->incident_alert_status = '1';
-							}
+								// Tag this as a report that needs to be sent out as an alert
+								if ($update->incident_alert_status != '2')
+								{ 
+									// 2 = report that has had an alert sent
+									$update->incident_alert_status = '1';
+								}
 
-							$update->save();
+								$update->save();
 
-							$verify = new Verify_Model();
-							$verify->incident_id = $item;
-							$verify->verified_status = '1';
+								$verify = new Verify_Model();
+								$verify->incident_id = $item;
+								$verify->verified_status = '1';
 							
-							// Record 'Verified By' Action
-							$verify->user_id = $_SESSION['auth_user']->id;			
-							$verify->verified_date = date("Y-m-d H:i:s",time());
-							$verify->save();
+								// Record 'Verified By' Action
+								$verify->user_id = $_SESSION['auth_user']->id;			
+								$verify->verified_date = date("Y-m-d H:i:s",time());
+								$verify->save();
 
-							// Action::report_approve - Approve a Report
-							Event::run('ushahidi_action.report_approve', $update);
+								// Action::report_approve - Approve a Report
+								Event::run('ushahidi_action.report_approve', $update);
+							}
 						}
+						$form_action = strtoupper(Kohana::lang('ui_admin.approved'));
 					}
-					$form_action = strtoupper(Kohana::lang('ui_admin.approved'));
+					
 				}
 				// Unapprove Action
 				elseif ($post->action == 'u')	

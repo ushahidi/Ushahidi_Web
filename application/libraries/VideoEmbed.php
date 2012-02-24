@@ -44,7 +44,7 @@ class VideoEmbed
 		{
 			// Extract the domain name of the service and check if it exists in the provided video URL
 			preg_match('#^((https|http)://)?([^/]+)#i', $value, $matches);
-			if (count($matches) > 0 AND strpos($raw, $matches[2], 1))
+			if (count($matches) > 0 AND strpos($raw, $matches[3], 1))
 			{
 				$service_name = $key;
 			}

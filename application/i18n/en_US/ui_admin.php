@@ -196,6 +196,7 @@
 	'of' => 'of',
 	'on_specific_count' => 'On Specific Count',
 	'openids' => 'OpenID\'s',
+	'orphaned_category_explanation'=>'This is a special category that will not show up on the report submission form for users submitting reports. This is used to hold reports left without categories(orphaned reports) as a result of category deletion',
 	'page' => 'page',
 	'pages' => 'pages',
 	'page_not_found' => 'Page Not Found',

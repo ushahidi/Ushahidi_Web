@@ -325,6 +325,7 @@
 	'original' => 'Original',
 	'original_description' => 'Original Description',
 	'original_title' => 'Original Title',
+	'orphaned_reports' => 'Orphaned Reports',
 	'other_ushahidi_instances' => 'Other Deployments',
 	'outbox' => 'Outbox',
 	'outgoing' => 'Outgoing',

@@ -144,7 +144,7 @@ class category_Core {
 		$db = new Database();
 		
 		// Fetch all the top level parent categories
-		foreach (Category_Model::get_categories() as $category)
+		foreach (Category_Model::get_categories(0,FALSE,TRUE) as $category)
 		{
 			self::_extend_category_data($category_data, $category);
 		}
@@ -165,7 +165,7 @@ class category_Core {
 			. "AND c2.category_visible = 1 "
 			. "AND c.category_visible = 1 "
 			. "AND c2.parent_id = 0 "
-			. "AND c2.category_title != \"Trusted Reports\" "
+			. "AND c2.category_title != \"NONE\""
 			. "GROUP BY c2.id "
 			. "ORDER BY c2.id ASC";
 		
@@ -186,6 +186,7 @@ class category_Core {
 			. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
 			. "INNER JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id) "
 			. "WHERE c.category_visible = 1 "
+			. "AND c.category_title != \"NONE\" "
 			. "AND i.incident_active = 1 "
 			. "GROUP BY c.category_title "
 			. "ORDER BY c.category_title ASC";
