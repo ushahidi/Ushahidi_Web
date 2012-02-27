@@ -299,6 +299,7 @@
 	'next' => 'Next',
 	'no' => 'No',
 	'no_checkins' => 'No checkins to display.',
+	'no_data' => 'No data',
 	'notices' => 'Notices',
 	'not_approved' => 'Not Approved',
 	'not_approved_singular' => 'Not Approved',

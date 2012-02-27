@@ -61,6 +61,7 @@
 	'csv' => 'CSV',
 	'currently_active' => 'Currently Active',
 	'currently_inactive' => 'Currently Inactive',
+	'custom_forms_insufficient_permissions' => 'You don\'t have sufficient permissions to edit the following custom fields.',
 	'daily' => 'Daily',
 	'dashboard' => 'Dashboard',
 	'database' => 'database',

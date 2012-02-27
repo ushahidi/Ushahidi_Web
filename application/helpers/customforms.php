@@ -2,10 +2,10 @@
 /**
  * Custom Forms Helper
  * Functions to pull in the custom form fields and display them
- * 
+ *
  * @package    Custom Forms
  * @author     The Konpa Group - http://konpagroup.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 class customforms_Core {
 
@@ -32,34 +32,34 @@ class customforms_Core {
 
 		if (!$form_id)
 			$form_id = 1;
-		
+
 		// Validation
 		if (!Form_Model::is_valid_form($form_id))
 		{
 			return $fields_array;
 		}
-		
+
 		// Database table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
-		
+
 		//NOTE will probably need to add a user_level variable for non-web based requests
 		$user_level = self::get_user_max_auth();
 
 		// Get the predicates for the public state
 		$public_state = ($action == "view") ? '<='.$user_level : ' <= '.$user_level;
-			
+
 		// Query to fetch the form fields associated with the given form id
 		if($form_id != null AND $form_id != '')
 		{
 			$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff WHERE 1=1 ";
-			
+
 			$sql .= "AND ff.form_id = ".$form_id." "
 					. "AND ff.field_ispublic_visible ".$public_state." "
 					. "ORDER BY ff.field_position ASC";
-				
+
 			// Execute the SQL to fetch the custom form fields
 			$form_fields = Database::instance()->query($sql);
-			
+
 			foreach ($form_fields as $custom_formfield)
 			{
 				if ($data_only)
@@ -87,12 +87,12 @@ class customforms_Core {
 				}
 			}
 		}
-		
-		
+
+
 		// Garbage collection
 		unset ($form_fields);
-		
-		
+
+
 		// Check if the provided incident exists, then fill in the data
 		if (Incident_Model::is_valid_incident($incident_id))
 		{
@@ -101,15 +101,15 @@ class customforms_Core {
 				. "FROM ".$table_prefix."form_field ff "
 				. "RIGHT JOIN ".$table_prefix."form_response fr ON (fr.form_field_id = ff.id) "
 				. "WHERE fr.incident_id = ".$incident_id." ";
-		
-			
+
+
 			$sql .= "AND ff.form_id = ".$form_id." "
 				. "AND ff.field_ispublic_visible ".$public_state." "
 				. "ORDER BY ff.field_position ASC";
-			
+
 			// Execute the SQL to fetch the custom form fields
 			$form_fields = Database::instance()->query($sql);
-			
+
 			foreach ($form_fields as $custom_formfield)
 			{
 				if ($data_only)
@@ -137,10 +137,10 @@ class customforms_Core {
 				}
 			}
 		}
-		
+
 		// Garbage collection
 		unset ($form_fields);
-		
+
 		// Return
 		return $fields_array;
 	}
@@ -160,7 +160,7 @@ class customforms_Core {
 		$db->join('form_field','form_response.form_field_id','form_field.id');
 		$db->where(array('form_response.incident_id'=>$id,'form_field.field_ispublic_visible <='=>$user_level));
 		$db->orderby('form_field.field_position');
-		
+
 		return $db->get();
 	}
 
@@ -175,7 +175,7 @@ class customforms_Core {
 			return 0;
 
 		$user = new User_Model($_SESSION['auth_user']->id);
-		
+
 		if ($user->loaded == TRUE)
 		{
 			$r = array();
@@ -187,7 +187,7 @@ class customforms_Core {
 		}
 		return 0;
 	}
-	
+
 	/**
 	 * Validate Custom Form Fields
 	 * @param array $custom_fields Array
@@ -203,11 +203,11 @@ class customforms_Core {
 		if (!isset($post->custom_field))
 			return;
 
-		/* XXX Checkboxes hackery 
+		/* XXX Checkboxes hackery
 			 Checkboxes are submitted in the post as custom_field[field_id-boxnum]
 			 This foreach loop consolidates them into one variable separated by commas.
 			 If no checkboxes are selected then the custom_field[] for that variable is not sent
-			 To get around that the view sets a hidden custom_field[field_id-BLANKHACK] field that 
+			 To get around that the view sets a hidden custom_field[field_id-BLANKHACK] field that
 			 ensures the checkbox custom_field is there to be tested.
 		*/
 		foreach ($post->custom_field as $field_id => $field_response)
@@ -219,9 +219,9 @@ class customforms_Core {
 				if ($split[1] == 'BLANKHACK')
 				{
 					if(!isset($custom_fields[$split[0]]))
-					{ 
+					{
 						// then no checkboxes were checked
-						$custom_fields[$split[0]] = ''; 
+						$custom_fields[$split[0]] = '';
 					}
 					// E.Kala - Removed the else {} block; either way continue is still invoked
 					continue;
@@ -241,13 +241,13 @@ class customforms_Core {
 				$custom_fields[$split[0]] = $field_response;
 			}
 		}
-	
+
 		$post->custom_field = $custom_fields;
 		// Kohana::log('debug', Kohana::debug($custom_fields));
 
 		foreach ($post->custom_field  as $field_id => $field_response)
 		{
-		
+
 			$field_param = ORM::factory('form_field',$field_id);
 			$custom_name = $field_param->field_name;
 
@@ -331,7 +331,7 @@ class customforms_Core {
 				{
 					$options = explode(',',$defaults[0]);
 				}
-				
+
 				$responses = explode(',',$field_response);
 				foreach ($responses as $response)
 				{
@@ -358,7 +358,7 @@ class customforms_Core {
 	 * @return string
 	 */
     public static function get_current_fields($form_id = 0)
-    {  
+    {
 		$form_fields = "<form action=\"\">";
 		$form = array();
 		$form['custom_field'] = self::get_custom_form_fields('',$form_id, true);
@@ -370,11 +370,11 @@ class customforms_Core {
 		$custom_forms->editor = true;
 		$form_fields.= $custom_forms->render();
 		$form_fields .= "</form>";
-	
+
 		return $form_fields;
 	}
 
-	/** 
+	/**
 	 * Generates the html that's passed back in the json switch_Action form switcher
 	 * @param int $incident_id The Incident Id
 	 * @param int $form_id Form Id
@@ -397,10 +397,10 @@ class customforms_Core {
 		$custom_forms->form = $form;
 		$form_fields.= $custom_forms->render();
 
-		return $form_fields;	
+		return $form_fields;
 	}
-	
-	/** 
+
+	/**
 	 * Generates an array of fields that an admin can see but can't edit
 	 *
 	 * @param int $form_id The form id
@@ -411,15 +411,14 @@ class customforms_Core {
 		$user_level = self::get_user_max_auth();
 		$public_state = array('field_ispublic_submit >'=>$user_level, 'field_ispublic_visible <='=>$user_level);
 		$custom_form = ORM::factory('form', $form_id)->where($public_state)->orderby('field_position','asc');
-		$mismatches = array();	
+		$mismatches = array();
 		foreach ($custom_form->form_field as $custom_formfield)
 		{
 			$mismatches[$custom_formfield->id] = 1;
 		}
 		return $mismatches;
 	}
-	
-	
+
 	/**
 	 * Checks if a field type has multiple values
 	 *
@@ -434,15 +433,15 @@ class customforms_Core {
 			case 5: //Radio
 				$is_multi = TRUE;
 			break;
-			
+
 			case 6: // Checkbox
 				$is_multi = TRUE;
 			break;
-			
+
 			case 7: // Dropdown
 				$is_multi = TRUE;
 			break;
-			
+
 			default:
 			$is_multi = FALSE;
 		}
@@ -464,7 +463,7 @@ class customforms_Core {
 		{
 			$field_options[$option->option_name] = $option->option_value;
 		}
-		
+
 		return $field_options;
 	}
 }

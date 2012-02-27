@@ -1,52 +1,62 @@
 <div id="custom_forms">
-					
-     <?php
+
+<?php
+	// If the user has insufficient permissions to edit report fields, we flag this for a warning message
+	$show_permission_message = FALSE;
+
 	foreach ($disp_custom_fields as $field_id => $field_property)
 	{
 		// Is the field required
 		$isrequired = ($field_property['field_required'])
 			? "<font color=red> *</font>"
 			: "";
-			
+
 		// Private field
 		$isprivate = ($field_property['field_ispublic_visible'])
 			? '<font style="color:gray;font-size:70%">(' . Kohana::lang('ui_main.private') . ')</font>'
 			: '';
-		
-		// Workaround for situations where admin can view, but doesn't have suff. perms to edit.
+
+		// Workaround for situations where admin can view, but doesn't have sufficient perms to edit.
 		if (isset($custom_field_mismatch))
 		{
 			if(isset($custom_field_mismatch[$field_id]))
 			{
+				if($show_permission_message == FALSE)
+				{
+					echo '<small>'.Kohana::lang('ui_admin.custom_forms_insufficient_permissions').'</small><br/>';
+					$show_permission_message = TRUE;
+				}
+
+				echo '<strong>'.$field_property['field_name'].'</strong><br/>';
 				if (isset($form['custom_field'][$field_id]))
 				{
 					echo $form['custom_field'][$field_id];
 				}
 				else
 				{
-					echo "no data";
+					echo Kohana::lang('ui_main.no_data');;
 				}
-				
-				echo "</div>";
+				echo '<br/><br/>';
+				//echo "</div>";
 				continue;
 			}
 		}
 
 		// Give all the elements an id so they can be accessed easily via javascript
 		$id_name = 'id="custom_field_'.$field_id.'"';
-		
+
 		// Get the field value
 		$field_value = ( ! empty($form['custom_field'][$field_id]))
 			? $form['custom_field'][$field_id]
 			: $field_property['field_default'];
-		
+
 		if ($field_property['field_type'] == 1)
-		{ 
+		{
 			// Text Field
 			echo "<div class=\"report_row\" id=\"custom_field_row_" . $field_id ."\">";
-			
+
 			$field_options = customforms::get_custom_field_options($field_id);
-			
+
 			if (isset($field_options['field_hidden']) AND !isset($editor))
 			{
 				if($field_options['field_hidden'] == 1)
@@ -67,7 +77,7 @@
 			echo "</div>";
 		}
 		elseif ($field_property['field_type'] == 2)
-		{ 
+		{
 			// TextArea Field
 			$field_options = customforms::get_custom_field_options($field_id);
 			if (isset($field_options['field_datatype']))
@@ -81,7 +91,7 @@
 					echo form::textarea('custom_field['.$field_id.']', $field_value, $extra_fields);
 					echo "</div>";
 				}
-				
+
 				if ($field_options['field_datatype'] == 'markup')
 				{
 					echo "<div class=\"report_row\" id=\"custom_field_row_" . $field_id ."\">";
@@ -120,10 +130,10 @@
 			echo form::input('custom_field['.$field_id.']', $field_value, ' id="custom_field_'.$field_id.'" class="text"');
 			echo "<script type=\"text/javascript\">
 				$(document).ready(function() {
-				$(\"#custom_field_".$field_id."\").datepicker({ 
-				showOn: \"both\", 
-				buttonImage: \"".url::file_loc('img')."media/img/icon-calendar.gif\", 
-				buttonImageOnly: true 
+				$(\"#custom_field_".$field_id."\").datepicker({
+				showOn: \"both\",
+				buttonImage: \"".url::file_loc('img')."media/img/icon-calendar.gif\",
+				buttonImageOnly: true
 				});
 				});
 			</script>";
@@ -135,7 +145,7 @@
 			echo "<div class=\"report_row\" id=\"custom_field_row_" . $field_id ."\">";
 			echo "<h4>" . $field_property['field_name'] . $isrequired . " " . $isprivate . "</h4>";
 			$defaults = explode('::',$field_property['field_default']);
-			
+
 			$default = (isset($defaults[1])) ? $defaults[1] : 0;
 
 			if (isset($form['custom_field'][$field_id]))
@@ -147,7 +157,7 @@
 			}
 
 			$options = explode(',',$defaults[0]);
-			$html ='';	
+			$html ='';
 			switch ($field_property['field_type'])
 			{
 				case 5:
@@ -164,7 +174,7 @@
 					break;
 				case 6:
 					$multi_defaults = !empty($field_property['field_response'])? explode(',', $field_property['field_response']) : NULL;
-					
+
 					$cnt = 0;
 					$html .= "<table border=\"0\">";
 					foreach($options as $option)
@@ -173,10 +183,10 @@
 						{
 							$html .= "<tr>";
 						}
-						
+
 						$html .= "<td>";
 						$set_default = FALSE;
-						
+
 						if (!empty($multi_defaults))
 						{
 							foreach($multi_defaults as $key => $def)
@@ -229,11 +239,11 @@
 					$html .= form::dropdown("custom_field[".$field_id.']',$ddoptions,$default,$id_name);
 					break;
 
-			} 
-		
+			}
+
 			echo $html;
 			echo "</div>";
-		}	
+		}
 		elseif ($field_property['field_type'] == 8 )
 		{
 			//custom div
@@ -247,7 +257,7 @@
 			}
 
 			$field_options = customforms::get_custom_field_options($field_id);
-			
+
 			if (isset($field_options['field_toggle']) && !isset($editor))
 			{
 				if ($field_options['field_toggle'] >= 1)
@@ -258,13 +268,13 @@
   							$('#custom_field_" .$field_id . "_inner').toggle('slow', function() {
     						// Animation complete.
   							});
-						});	
+						});
 					});
 					</script>";
 					echo "<a href=\"javascript:void(0);\" id=\"custom_field_" . $field_id ."_link\">";
 					echo "<h2>" . $field_property['field_name'] . "</h2>";
 					echo "</a>";
-					
+
 					$inner_visibility = ($field_options['field_toggle'] == 2) ? "none": "visible";
 
 					echo "<div id=\"custom_field_" . $field_id . "_inner\" style=\"display:$inner_visibility;\">";
@@ -290,23 +300,23 @@
 				echo "<h4 style=\"padding-top:0px;\">-------" . Kohana::lang('ui_admin.divider_end_field') . "--------</h4>";
 			}
 		}
-		
+
 
 		if (isset($editor))
 		{
 			$form_fields = '';
-        	$visibility_selection = array('0' => Kohana::lang('ui_admin.anyone_role'));
+			$visibility_selection = array('0' => Kohana::lang('ui_admin.anyone_role'));
 			$roles = ORM::factory('role')->find_all();
 			foreach ($roles as $role)
 			{
 				$visibility_selection[$role->id] = ucfirst($role->name);
 			}
-			
+
 			// Check if the field is required
 			$isrequired = ($field_property['field_required'])
 				? Kohana::lang('ui_admin.yes')
 				: Kohana::lang('ui_admin.no');
-	
+
 			$form_fields .= "	<div class=\"forms_fields_edit\" style=\"clear:both\">
 			<a href=\"javascript:fieldAction('e','EDIT',".$field_id.",".$form['id'].",".$field_property['field_type'].");\">EDIT</a>&nbsp;|&nbsp;
 			<a href=\"javascript:fieldAction('d','DELETE',".$field_id.",".$form['id'].",".$field_property['field_type'].");\">DELETE</a>&nbsp;|&nbsp;
@@ -318,12 +328,12 @@
 			</div>";
 			echo $form_fields;
 		}
-	
+
 		if ($field_property['field_type'] != 8 AND $field_property['field_type'] != 9)
 		{
 			//if we're doing custom divs we don't want these div's to get in the way.
 			//echo "</div>";
 		}
 	}
-	?>
+?>
 </div>
