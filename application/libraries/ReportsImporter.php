@@ -170,9 +170,6 @@ class ReportsImporter {
 		$this->incidents_added[] = $incident->id;
 		
 		// STEP 3: SAVE CATEGORIES
-		$incident_category = new Incident_Category_Model();
-		$incident_category->incident_id = $incident->id;
-		
 		// If CATEGORY column exists
 		if (isset($row['CATEGORY']))
 		{
@@ -203,25 +200,12 @@ class ReportsImporter {
 						// Now category_id is known: This time, and for the rest of the import.
 						$this->category_ids[$categoryname] = $category->id; 
 					}
-					
+					$incident_category = new Incident_Category_Model();
+					$incident_category->incident_id = $incident->id;
 					$incident_category->category_id = $this->category_ids[$categoryname];
 					$incident_category->save();
 					$this->incident_categories_added[] = $incident_category->id;
-				}
-				
-				// If no category name exists, 
-				else
-				{
-					// Unapprove the report
-					$incident_update = ORM::factory('incident',$incident->id);
-					$incident_update->incident_active = 0;
-					$incident_update->save();
-					
-					// Assign the report to the special category for orphaned reports: NONE and Unapprove the report
-					$incident_category->category_id = '5';
-					$incident_category->save();
-					$this->incident_categories_added[] = $incident_category->id;	
-				} 
+				}	
 			} 
 		}
 		
@@ -234,11 +218,12 @@ class ReportsImporter {
 			$incident_update->save();
 			
 			// Assign reports to special category for orphaned reports: NONE
+			$incident_category = new Incident_Category_Model();
+			$incident_category->incident_id = $incident->id;
 			$incident_category->category_id = '5';
 			$incident_category->save();
-			$this->incident_categories_added[] = $incident_category->id;
 		} 
-		return true;
+	return true;
 	}
 }
 
