@@ -275,7 +275,7 @@ class Reports_Controller extends Main_Controller {
 			'incident_news' => array(),
 			'incident_video' => array(),
 			'incident_photo' => array(),
-			'incident_zoom' => intval(Kohana::config('settings.default_zoom')),
+			'incident_zoom' => '',
 			'person_first' => '',
 			'person_last' => '',
 			'person_email' => '',
