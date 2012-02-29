@@ -443,16 +443,19 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content = new View('reports_view');
 
 		// Load Akismet API Key (Spam Blocker)
-
 		$api_akismet = Kohana::config('settings.api_akismet');
-
-		if(is_int($id) AND Incident_Model::is_valid_incident($id,FALSE))
+		
+		// Sanitize the report id before proceeding
+		$id = intval($id);
+		
+		if ($id > 0 AND Incident_Model::is_valid_incident($id,FALSE))
 		{
 			$incident = ORM::factory('incident')
 				->where('id',$id)
 				->where('incident_active',1)
 				->find();
-			if ( $incident->id == 0 )	// Not Found
+			
+			if ( ! $incident->loaded)	// Not Found
 			{
 				url::redirect('reports/view/');
 			}
