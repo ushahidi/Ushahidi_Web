@@ -28,6 +28,7 @@ class Reports_Controller extends Main_Controller {
 
 		// Is the Admin Logged In?
 		$this->logged_in = Auth::instance()->logged_in();
+
 	}
 
 	/**
@@ -445,11 +446,7 @@ class Reports_Controller extends Main_Controller {
 
 		$api_akismet = Kohana::config('settings.api_akismet');
 
-		if ( ! Incident_Model::is_valid_incident($id, TRUE))
-		{
-			url::redirect('main');
-		}
-		else
+		if(is_int($id) AND Incident_Model::is_valid_incident($id,FALSE))
 		{
 			$incident = ORM::factory('incident')
 				->where('id',$id)
@@ -686,6 +683,10 @@ class Reports_Controller extends Main_Controller {
 				}
 				$this->template->content->comments->incident_comments = $incident_comments;
 			}
+		}
+		else
+		{
+			url::redirect('main');
 		}
 
 		// Add Neighbors
