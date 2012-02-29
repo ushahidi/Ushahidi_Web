@@ -18,10 +18,10 @@
 // Sharing JS
 function fillFields(id, sharing_url, sharing_name, sharing_color)
 {
-	$("#sharing_id").attr("value", unescape(id));
-	$("#sharing_name").attr("value", unescape(sharing_name));
-	$("#sharing_url").attr("value", unescape(sharing_url));
-	$("#sharing_color").attr("value", unescape(sharing_color));
+	$("#sharing_id").attr("value", decodeURIComponent(id));
+	$("#sharing_name").attr("value", decodeURIComponent(sharing_name));
+	$("#sharing_url").attr("value", decodeURIComponent(sharing_url));
+	$("#sharing_color").attr("value", decodeURIComponent(sharing_color));
 }
 
 // Ajax Submission

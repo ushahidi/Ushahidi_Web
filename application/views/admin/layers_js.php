@@ -18,11 +18,11 @@
 // Layers JS
 function fillFields(id, layer_name, layer_url, layer_color, layer_file_old)
 {
-	$("#layer_id").attr("value", unescape(id));
-	$("#layer_name").attr("value", unescape(layer_name));
-	$("#layer_url").attr("value", unescape(layer_url));
-	$("#layer_color").attr("value", unescape(layer_color));
-	$("#layer_file_old").attr("value", unescape(layer_file_old));
+	$("#layer_id").attr("value", decodeURIComponent(id));
+	$("#layer_name").attr("value", decodeURIComponent(layer_name));
+	$("#layer_url").attr("value", decodeURIComponent(layer_url));
+	$("#layer_color").attr("value", decodeURIComponent(layer_color));
+	$("#layer_file_old").attr("value", decodeURIComponent(layer_file_old));
 }
 
 function layerAction ( action, confirmAction, id )

@@ -978,7 +978,7 @@ class Forms_Controller extends Admin_Controller {
 		$html .="        	$('#formadd_".$form_id."').hide(300);";
 		$html .="        	$('#form_fields_".$form_id."').hide();";
 		$html .="        	$('#form_fields_current_".$form_id."').html('');";
-		$html .="        	$('#form_fields_current_".$form_id."').html(unescape(data.response));";
+		$html .="        	$('#form_fields_current_".$form_id."').html(decodeURIComponent(data.response));";
 		$html .="        	$('#form_fields_current_".$form_id."').effect(\"highlight\", {}, 2000);";
 		$html .="        };";
 		$html .="    } ";

@@ -1,23 +1,23 @@
 function fillFields(id, name, description, access_level, reports_view, reports_edit, reports_evaluation, reports_comments, reports_download, reports_upload, messages, messages_reporters, stats, settings, manage, users)
 {
 	show_addedit();
-	$("#role_id").attr("value", unescape(id));
-	$("#name").attr("value", unescape(name));
-	$("#description").attr("value", unescape(description));
-	$("#access_level").attr("value", unescape(access_level));
+	$("#role_id").attr("value", decodeURIComponent(id));
+	$("#name").attr("value", decodeURIComponent(name));
+	$("#description").attr("value", decodeURIComponent(description));
+	$("#access_level").attr("value", decodeURIComponent(access_level));
 
-	$("#reports_view").attr("checked", B(unescape(reports_view)));
-	$("#reports_edit").attr("checked", B(unescape(reports_edit)));
-	$("#reports_evaluation").attr("checked", B(unescape(reports_evaluation)));
-	$("#reports_comments").attr("checked", B(unescape(reports_comments)));
-	$("#reports_download").attr("checked", B(unescape(reports_download)));
-	$("#reports_upload").attr("checked", B(unescape(reports_upload)));
-	$("#messages").attr("checked", B(unescape(messages)));
-	$("#messages_reporters").attr("checked", B(unescape(messages_reporters)));
-	$("#stats").attr("checked", B(unescape(stats)));
-	$("#settings").attr("checked", B(unescape(settings)));
-	$("#manage").attr("checked", B(unescape(manage)));
-	$("#users").attr("checked", B(unescape(users)));
+	$("#reports_view").attr("checked", B(decodeURIComponent(reports_view)));
+	$("#reports_edit").attr("checked", B(decodeURIComponent(reports_edit)));
+	$("#reports_evaluation").attr("checked", B(decodeURIComponent(reports_evaluation)));
+	$("#reports_comments").attr("checked", B(decodeURIComponent(reports_comments)));
+	$("#reports_download").attr("checked", B(decodeURIComponent(reports_download)));
+	$("#reports_upload").attr("checked", B(decodeURIComponent(reports_upload)));
+	$("#messages").attr("checked", B(decodeURIComponent(messages)));
+	$("#messages_reporters").attr("checked", B(decodeURIComponent(messages_reporters)));
+	$("#stats").attr("checked", B(decodeURIComponent(stats)));
+	$("#settings").attr("checked", B(decodeURIComponent(settings)));
+	$("#manage").attr("checked", B(decodeURIComponent(manage)));
+	$("#users").attr("checked", B(decodeURIComponent(users)));
 }
 
 // Ajax Submission
