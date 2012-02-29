@@ -32,16 +32,16 @@ function fillFields(id, level_id, service_name, service_account, location_id, lo
 {
 	show_addedit();
 	$('#add_edit_form').show();
-	$("#reporter_id").attr("value", unescape(id));
-	$("#level_id").attr("value", unescape(level_id));
-	$("#service_name").attr("value", unescape(service_name));
-	$("#reporter_service").text(unescape(service_name));
-	$("#service_account").attr("value", unescape(service_account));
-	$("#reporter_account").text(unescape(service_account));
-	$("#location_id").attr("value", unescape(location_id));
-	$("#location_name").attr("value", unescape(location_name));
-	$("#latitude").attr("value", unescape(latitude));
-	$("#longitude").attr("value", unescape(longitude));
+	$("#reporter_id").attr("value", decodeURIComponent(id));
+	$("#level_id").attr("value", decodeURIComponent(level_id));
+	$("#service_name").attr("value", decodeURIComponent(service_name));
+	$("#reporter_service").text(decodeURIComponent(service_name));
+	$("#service_account").attr("value", decodeURIComponent(service_account));
+	$("#reporter_account").text(decodeURIComponent(service_account));
+	$("#location_id").attr("value", decodeURIComponent(location_id));
+	$("#location_name").attr("value", decodeURIComponent(location_name));
+	$("#latitude").attr("value", decodeURIComponent(latitude));
+	$("#longitude").attr("value", decodeURIComponent(longitude));
 	showMap();
 }
 
