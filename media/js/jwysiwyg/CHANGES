@@ -1,0 +1,15 @@
+== Version 0.6 ==
+
+* New $().wysiwyg('insertHtml', string) method - akzhan.abdulin
+* New example (nearby full editor) added - deansofer
+* CSS styling replaced with tags in Firefox -  Svel.Sontz, tobinl, AndreyKostromin ans others
+* Minor problems with focus in non-IE fixed - tyler.schacht
+* Correct setup of form events - Mickael.Hoareau
+* Editor now correctly sets its tabindex on initialization - denis.vysotskiy
+* Insertion of headers in safari fixed - gpearman
+* More correct styling of editor - gamingforever
+* Correct behaviour on IE using https protocol - jf.stgermain
+* Incorrect initialization of editor when content contains "$" characters fixed - JackPDouglas
+* Improved CSS deradability - deansofer
+* Improved ARIA accessability - akzhan.abdulin
+* Requires jQuery 1.3 or higher! Tested under jQuery 1.4 too.
