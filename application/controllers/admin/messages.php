@@ -292,11 +292,11 @@ class Messages_Controller extends Admin_Controller
 					if(preg_match("/([a-zA-Z])(\D)/", $sms_to))
 					{
 						$this->decrypter = new Encrypt;
-						$sms_to = intval($this->decrypter->decode($sms_to));
+						$sms_to = $this->decrypter->decode($sms_to);
 					}
 					else
 					{
-						$sms_to = intval($sms_to);
+						$sms_to = $sms_to;
 					}
 					
 					
