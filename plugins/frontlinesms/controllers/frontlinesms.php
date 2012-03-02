@@ -37,6 +37,7 @@ class Frontlinesms_Controller extends Controller
 		
 		if ( ! empty($frontlinesms_key) AND ! empty($message_from) AND ! empty($message_description))
 		{
+			
 			// Is this a valid FrontlineSMS Key?
 			$keycheck = ORM::factory('frontlinesms')
 				->where('frontlinesms_key', $frontlinesms_key)
@@ -44,7 +45,7 @@ class Frontlinesms_Controller extends Controller
 
 			if ($keycheck->loaded == TRUE)
 			{
-				sms::add($message_from, $message_description);
+					sms::add($message_from, $message_description);
 			}
 		}
 	}
