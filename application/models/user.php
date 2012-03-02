@@ -26,7 +26,7 @@ class User_Model extends Auth_User_Model {
 	 * @param   string  riverid user id
 	 * @return  object  ORM object from saving the user
 	 */
-	public static function create_user($email,$password,$riverid=false)
+	public static function create_user($email,$password,$riverid=false,$name=false)
 	{
 		$user = ORM::factory('user');
 
@@ -34,14 +34,27 @@ class User_Model extends Auth_User_Model {
 		$user->username = $email;
 		$user->password = $password;
 
+		if ($name != false)
+		{
+			$user->name = $name;
+		}
+
 		if ($riverid != false)
 		{
 			$user->riverid = $riverid;
 		}
 
-		// Add New Roles
-		$user->add(ORM::factory('role', 'login'));
-		$user->add(ORM::factory('role', 'member'));
+		// Add New Roles if:
+		//    1. We don't require admin to approve users (will be added when admin approves)
+		//    2. We don't require users to first confirm their email address (will be added
+		//       when user confirms if the admin doesn't have to first approve the user)
+		if (Kohana::config('settings.manually_approve_users') == 0
+			AND Kohana::config('settings.require_email_confirmation') == 0)
+		{
+			$user->add(ORM::factory('role', 'login'));
+			$user->add(ORM::factory('role', 'member'));
+		}
+
 		return $user->save();
 	}
 
@@ -150,7 +163,6 @@ class User_Model extends Auth_User_Model {
 			$post->add_rules('password','required','length['.kohana::config('auth.password_length').']', 'matches[password_again]');
 			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
-
 
 		$post->add_rules('role','required','length[3,30]', 'alpha_numeric');
 		$post->add_rules('notify','between[0,1]');

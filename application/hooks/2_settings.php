@@ -66,6 +66,8 @@ Kohana::config_set('settings.checkins', $settings->checkins);
 Kohana::config_set('settings.db_version', $settings->db_version);
 Kohana::config_set('settings.ushahidi_version', $settings->ushahidi_version);
 Kohana::config_set('settings.private_deployment', $settings->private_deployment);
+Kohana::config_set('settings.manually_approve_users', $settings->manually_approve_users);
+Kohana::config_set('settings.require_email_confirmation', $settings->require_email_confirmation);
 
 // Set Site Timezone
 if (function_exists('date_default_timezone_set'))

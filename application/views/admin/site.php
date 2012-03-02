@@ -1,16 +1,16 @@
-<?php 
+<?php
 /**
  * Site view page.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
 			<div class="bg">
@@ -46,13 +46,13 @@
 						</div>
 					<?php
 					}
-					?>				
+					?>
 					<div class="head">
 						<h3><?php echo Kohana::lang('settings.site.title');?></h3>
 						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 					</div>
-					<!-- column -->		
+					<!-- column -->
 					<div class="sms_holder">
 						<div id="need_to_upgrade" style="display:none;"></div>
 						<div class="row">
@@ -73,11 +73,11 @@
 							<?php
 								echo form::checkbox('delete_banner_image', '1');
 								echo form::label('delete_banner_image', Kohana::lang("settings.site.delete_banner_image"));
-								
+
 							?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_email"); ?>"><?php echo Kohana::lang('settings.site.email_site');?></a> 
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_site_email"); ?>"><?php echo Kohana::lang('settings.site.email_site');?></a>
 							<br /><?php echo Kohana::lang('settings.site.email_notice');?></h4>
 							<?php print form::input('site_email', $form['site_email'], ' class="text long2"'); ?>
 						</div>
@@ -129,7 +129,7 @@
 							<span class="sel-holder">
 								<?php print form::dropdown('blocks_per_row', $blocks_per_row_array, $form['blocks_per_row']); ?>
 							</span>
-						</div>						
+						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_reports"); ?>"><?php echo Kohana::lang('settings.site.allow_reports');?></a></h4>
 							<span class="sel-holder">
@@ -209,26 +209,24 @@
 							<span class="sel-holder">
 								<?php print form::dropdown('private_deployment', $yesno_array, $form['private_deployment']); ?>
 							</span>
-
-							<div class="experimental">
-								<img src="<?php echo url::file_loc('img'); ?>media/img/experimental.png" alt="<?php echo Kohana::lang('ui_admin.experimental');?>" width="9" height="20" /> * <?php echo Kohana::lang('ui_admin.experimental');?>
-							</div>
-
-							<div style="font-weight:bold;color:red;font-size:11px;">
-							&nbsp;&nbsp;&nbsp;Currently, this only locks down the interface and not the API. Only enabling this feature will not<br/>
-							&nbsp;&nbsp;&nbsp;protect your data and your approved reports will still be accessible via the API!</div><div style="clear:both;"></div>
-
+						</div>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_manually_approve_users"); ?>"><?php echo Kohana::lang('settings.site.manually_approve_users');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('manually_approve_users', $yesno_array, $form['manually_approve_users']); ?>
+							</span>
+						</div>
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_require_email_confirmation"); ?>"><?php echo Kohana::lang('settings.site.require_email_confirmation');?></a></h4>
+							<span class="sel-holder">
+								<?php print form::dropdown('require_email_confirmation', $yesno_array, $form['require_email_confirmation']); ?>
+							</span>
 						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_checkins"); ?>"><?php echo Kohana::lang('settings.site.checkins');?></a></h4>
 							<span class="sel-holder">
 								<?php print form::dropdown('checkins', $yesno_array, $form['checkins']); ?>
 							</span>
-
-							<div class="experimental">
-								<img src="<?php echo url::file_loc('img'); ?>media/img/experimental.png" alt="<?php echo Kohana::lang('ui_admin.experimental');?>" width="9" height="20" /> * <?php echo Kohana::lang('ui_admin.experimental');?>
-							</div>
-
 						</div>
 						<div class="row">
 						<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_google_analytics"); ?>"><?php echo Kohana::lang('settings.site.google_analytics');?></a></h4>
@@ -248,9 +246,9 @@
 							<?php print form::input('api_akismet', $form['api_akismet'], ' class="text"'); ?>
 						</div>
 					</div>
-		
+
 					<div class="simple_border"></div>
-		
+
 					<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 					<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 				</div>

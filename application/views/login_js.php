@@ -17,9 +17,13 @@ $(document).ready(function() {
 	{
 		echo '$("#signin_new").show(400);';
 	}
-	
+	elseif ($action == 'resend_confirmation' OR isset($_GET['new_confirm_email']))
+	{
+		echo '$("#resend_confirm_email").show(0);';
+	}
+
 	// Determine which form to default to open
-	
+
 	if ( isset($_GET['newaccount']))
 	{
 		echo '$("#signin_new").show(0);';

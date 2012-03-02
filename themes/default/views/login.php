@@ -33,6 +33,11 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 
     <?php
 
+    if ($message)
+	{
+		?><div class="<?php echo $message_class; ?> ui-corner-all">&#8226;&nbsp;<?php echo $message; ?></div><?php
+	}
+
 	if ($form_error)
 	{
 		?><div class="login_error ui-corner-all"><?php
@@ -41,26 +46,6 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 			echo (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
 		}
 		?></div><?php
-	}
-
-	if ($openid_error)
-	{
-		?><div class="login_error ui-corner-all"><?php echo "&#8226;&nbsp;" . $openid_error;?></div><?php
-	}
-
-	if ($insufficient_role)
-	{
-		?><div class="login_error ui-corner-all"><?php echo "&#8226;&nbsp;" . Kohana::lang('ui_main.insufficient_role');?></div><?php
-	}
-
-	if ($success)
-	{
-		?><div class="login_success ui-corner-all"><?php echo "&#8226;&nbsp;" . Kohana::lang('ui_main.login_confirmation_sent');?></div><?php
-	}
-
-	if ($change_pw_success)
-	{
-		?><div class="login_success ui-corner-all"><?php echo "&#8226;&nbsp;" . Kohana::lang('ui_main.password_changed_successfully');?></div><?php
 	}
 
 	?>
@@ -100,6 +85,24 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 
 	<div id="openid_login" class="ui-corner-all">
 
+		<?php if ($new_confirm_email_form) { ?>
+			<h2><?php echo Kohana::lang('ui_main.resend_confirm_email'); ?>:</h2>
+			<div id="resend_confirm_email" class="signin_select ui-corner-all" style="margin-top:10px;">
+				<form method="post" id="resendconfirm_form">
+					<input type="hidden" name="action" value="resend_confirmation">
+					<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
+						<tr>
+							<td><strong><?php echo Kohana::lang('ui_main.registered_email');?></strong><br />
+							<?php print form::input('confirmation_email', $form['confirmation_email'], ' class="login_text"'); ?></td>
+						</tr>
+						<tr>
+							<td><input type="submit" id="submit" name="submit" value="<?php echo Kohana::lang('ui_main.send_confirmation'); ?>" class="login_btn" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		<?php } ?>
+
 		<h2><?php echo Kohana::lang('ui_main.login_with'); ?>:</h2>
 
 		<h2><a href="javascript:toggle('signin_userpass');"><?php echo Kohana::lang('ui_main.login_userpass'); ?></a></h2>
@@ -132,7 +135,7 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 				<input type="hidden" name="action" value="forgot">
 				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
 					<tr>
-						<td><strong><?php echo Kohana::lang('ui_main.password_reset_prompt');?></strong><br />
+						<td><strong><?php echo Kohana::lang('ui_main.registered_email');?></strong><br />
 						<?php print form::input('resetemail', $form['resetemail'], ' class="login_text"'); ?></td>
 					</tr>
 					<tr>
