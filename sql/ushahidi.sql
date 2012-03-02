@@ -826,8 +826,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Dumping data for table `users`
 
-INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `last_login`, `updated`, `public_profile`) VALUES
-(1, 'Administrator', 'myemail@example.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22', 0);
+INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `last_login`, `updated`, `public_profile`, `confirmed`) VALUES
+(1, 'Administrator', 'myemail@example.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22', 0, 1);
 
 
 /**
