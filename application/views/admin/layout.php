@@ -121,7 +121,7 @@
 	if ($editor_enabled)
 	{
 		if (Kohana::config("cdn.cdn_ignore_jwysiwyg") == true) {
-			echo html::script(url::file_loc('ignore').'media/js/jwysiwyg/jquery.wysiwyg.js', true);
+			echo html::script(url::file_loc('ignore').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js', true);
 		} else {
 			echo html::script(url::file_loc('js').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js', true);
 		}
