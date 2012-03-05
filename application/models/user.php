@@ -31,7 +31,7 @@ class User_Model extends Auth_User_Model {
 		$user = ORM::factory('user');
 
 		$user->email = $email;
-		$user->username = $email;
+		$user->username = User_Model::random_username();
 		$user->password = $password;
 
 		if ($name != false)
@@ -255,6 +255,23 @@ class User_Model extends Auth_User_Model {
 		return ($utf8 === TRUE)
 			? (bool) preg_match('/^[-\pL\pN#@_]++$/uD', (string) $password)
 			: (bool) preg_match('/^[-a-z0-9#@_]++$/iD', (string) $password);
+	}
+
+	/*
+	* Creates a random int value for a username that isn't already represented in the database
+	*/
+	public function random_username()
+	{
+		while ($random = mt_rand(1000,mt_getrandmax()))
+		{
+			$find_username = ORM::factory('user')->where('username',$random)->count_all();
+			if ($find_username == 0)
+			{
+				return $random;
+			}
+		}
+
+		return FALSE;
 	}
 
 
