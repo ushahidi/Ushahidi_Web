@@ -655,7 +655,9 @@ class Login_Controller extends Template_Controller {
 			$user->confirmed = 1;
 
 			// Give the user the appropriate roles if the admin doesn't need to verify accounts
-			if (Kohana::config('settings.manually_approve_users') == 0)
+			//   and if they don't already have role assigned.
+			if (Kohana::config('settings.manually_approve_users') == 0
+				AND ! $user->has(ORM::factory('role', 'login')))
 			{
 				$user->add(ORM::factory('role', 'login'));
 				$user->add(ORM::factory('role', 'member'));
