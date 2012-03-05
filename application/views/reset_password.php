@@ -60,7 +60,7 @@
 			</tr>
 			<?php } else { ?>
             <tr>
-              <td><strong><?php echo Kohana::lang('ui_main.password_reset_prompt')?></strong><br />
+              <td><strong><?php echo Kohana::lang('ui_main.registered_email')?></strong><br />
               <?php print form::input('resetemail', '', 
 						' class="login_text"'); ?></td>
             </tr>
