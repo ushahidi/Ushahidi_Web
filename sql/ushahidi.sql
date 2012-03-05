@@ -783,7 +783,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
     `facebook_appsecret` VARCHAR(150) NULL DEFAULT NULL,
     `allow_alerts` tinyint(4) NOT NULL DEFAULT '0',
     `manually_approve_users` tinyint(4) NOT NULL DEFAULT '0',
-    `require_email_confirmation` tinyint(4) NOT NULL DEFAULT '1',
+    `require_email_confirmation` tinyint(4) NOT NULL DEFAULT '0',
     `db_version` varchar(20) default NULL,
     `ushahidi_version` varchar(20) default NULL,
   PRIMARY KEY  (`id`)
