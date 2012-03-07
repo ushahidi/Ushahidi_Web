@@ -101,6 +101,17 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 */
 	public function perform_login($user,$remember,$riverid=false)
 	{
+		// In case we need to check if the user has confirmed their address, do that here
+		if (Kohana::config('settings.require_email_confirmation') == 1)
+		{
+			if ($user->confirmed == 0)
+			{
+				// User has not confirmed email so kill auth cookies and fail login
+				$this->logout(true);
+				throw new Exception('need_email_confirmation');
+			}
+		}
+
 		if ($remember === TRUE)
 		{
 			// Create a new autologin token

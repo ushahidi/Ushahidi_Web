@@ -32,55 +32,55 @@ final class Api_Service {
 	 * @var array
 	 */
 	private $request = array();
-	
+
 	/**
 	 * Response to be returned to the calling controller
 	 * @var string
 	 */
 	private $response;
-	
+
 	/**
 	 * Format in which the response is returned to the client - defaults to JSON
 	 * @var string
 	 */
 	private $response_type;
-	
+
 	/**
 	 * API library object to handle the requested task
 	 * @var Api_Object
 	 */
 	private $api_object;
-	
+
 	/**
 	 * Name of the API task to be routed
 	 * @var string
 	 */
 	private $task_name;
-	
+
 	/**
 	 * IP Address of the client making the API request
 	 * @var string
 	 */
 	private $request_ip_address;
-	
+
 	/**
 	 * API request parameters
 	 * @var array
 	 */
 	private $api_parameters;
-	
+
 	/**
 	 * Api_Log_Model object
 	 * @var Api_Log_Model
 	 */
 	private $api_logger;
-	
+
 	/**
 	 * Database object
 	 * @var Database
 	 */
 	private $db;
-    
+
 	public function __construct()
 	{
 		// Set the request data
@@ -135,7 +135,7 @@ final class Api_Service {
 			return;
 		}
 	}
-	
+
 	/**
 	 * Gets the API request parameters as an array
 	 *
@@ -143,9 +143,9 @@ final class Api_Service {
 	 */
 	public function get_request()
 	{
-		return $this->request;        
+		return $this->request;
 	}
-    
+
 	/**
 	 * Sets the response type
 	 *
@@ -155,7 +155,7 @@ final class Api_Service {
 	{
 		$this->response_type = $response_type;
 	}
-        
+
 	/**
 	 * Returns the response type
 	 *
@@ -165,7 +165,7 @@ final class Api_Service {
 	{
 		return $this->response_type;
 	}
-        
+
 	/**
 	 * Sets the response data
 	 *
@@ -177,7 +177,7 @@ final class Api_Service {
 			? json_encode($response_data)
 			: $response_data;
 	}
-    
+
 	/**
 	 * Gets the response data
 	 *
@@ -186,8 +186,8 @@ final class Api_Service {
 	public function get_response()
 	{
 		return $this->response;
-	}    
-    
+	}
+
 	/**
 	 * Gets the name of the task being handled by the API service
 	 *
@@ -197,17 +197,17 @@ final class Api_Service {
 	{
 		return $this->task_name;
 	}
-    
+
 	/**
 	 * Log user in.
-	 * This method is mainly used for admin tasks performed via the API 
+	 * This method is mainly used for admin tasks performed via the API
 	 *
 	 * @param string $username User's username.
 	 * @param string $password User's password.
 	 * @return mixed user_id, FALSE if authentication fails
 	 */
 	public function _login()
-    {        
+    {
 		$auth = Auth::instance();
 
 		// Is user previously authenticated?
@@ -218,40 +218,44 @@ final class Api_Service {
 		else
         {
             //Get username and password
-            if (isset($_SERVER['PHP_AUTH_USER']) && 
-                isset($_SERVER['PHP_AUTH_PW'])) 
+            if (isset($_SERVER['PHP_AUTH_USER']) &&
+                isset($_SERVER['PHP_AUTH_PW']))
             {
-                $username = filter_var($_SERVER['PHP_AUTH_USER'], 
+                $username = filter_var($_SERVER['PHP_AUTH_USER'],
                     FILTER_SANITIZE_STRING,
                     FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
-                
-                $password = filter_var($_SERVER['PHP_AUTH_PW'], 
+
+                $password = filter_var($_SERVER['PHP_AUTH_PW'],
                     FILTER_SANITIZE_STRING,
                     FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
-                
-                if ($auth->login($username, $password)) 
-                {
-                    return $auth->get_user()->id;
-                }
-                else 
-                {
-                    //prompt user to login
-                    $this->_prompt_login();
-                    return FALSE;
-                }
 
-            }
+				try {
+					if ($auth->login($username, $password))
+					{
+						return $auth->get_user()->id;
+					}
+					else
+					{
+						$this->_prompt_login();
+						return FALSE;
+					}
+				} catch (Exception $e) {
+					$this->_prompt_login();
+					return FALSE;
+				}
 
-            //prompt user to login
-            $this->_prompt_login();
-            return FALSE;
-        }
-    }
+			}
+
+			//prompt user to login
+			$this->_prompt_login();
+			return FALSE;
+		}
+	}
 
     /**
      * Prompts user to login.
-     * 
-     * @param int user_id - The currently logged in user id to be passed as the 
+     *
+     * @param int user_id - The currently logged in user id to be passed as the
      *                      realm value.
      * @return void
      */
@@ -259,19 +263,18 @@ final class Api_Service {
     {
         header('WWW-Authenticate: Basic realm="'.$user_id.'"');
         header('HTTP/1.0 401 Unauthorized');
-
     }
-    
+
 	/**
 	 * Routes the API task requests to their respective API libraries
 	 *
-	 * The name of the library is inferred from the name of the task. If the 
+	 * The name of the library is inferred from the name of the task. If the
 	 * library is not found, a lookup is done in the task routing table. If the
 	 * lookup fails, the API task request returns a "not found"(404) error
 	 */
 	private function _route_api_task()
     {
-        
+
 		// Make sure we have a task to work with
 		if ( ! $this->verify_array_index($this->request, 'task'))
 		{
@@ -298,16 +301,16 @@ final class Api_Service {
 		{
 			$this->task_name = ucfirst($this->request['task']);
 		}
-        
+
 		// Load the base API library
 		require_once Kohana::find_file('libraries/api', 'Api_Object');
 
-		// Get the task handler (from the api config file) for the requested task    
+		// Get the task handler (from the api config file) for the requested task
 		$task_handler = $this->_get_task_handler(strtolower($this->task_name));
 
 		$task_library_found = FALSE;
 
-		// Check if handler has been set   
+		// Check if handler has been set
 		if (isset($task_handler))
 		{
 			// Check if the handler is an array
@@ -315,7 +318,7 @@ final class Api_Service {
 			{
 				// Load the library for the specified class
 				$this->_init_api_library($task_handler[0]);
- 
+
 				// Execute the callback function
 				call_user_func(array($this->api_object, $task_handler[1]));
 			}
@@ -327,7 +330,7 @@ final class Api_Service {
 				// Perform the requested task
 				$this->api_object->perform_task();
 			}
-                
+
 			// Set the response data
 			$this->response = $this->api_object->get_response_data();
 
@@ -335,10 +338,10 @@ final class Api_Service {
 		}
 		else // Task handler not found in routing table therefore look the implementing library
 		{
-			// All library file names *must* be suffixed with the value specified in API_LIBRARY_SUFFIX 
+			// All library file names *must* be suffixed with the value specified in API_LIBRARY_SUFFIX
 			$library_file_name = $this->task_name.API_LIBRARY_SUFFIX;
 
-			if (Kohana::find_file('libraries/api', 
+			if (Kohana::find_file('libraries/api',
 				Kohana::config('config.extension_prefix').$library_file_name)) // Library file exists
 			{
 				// Initialize the API library
@@ -364,7 +367,7 @@ final class Api_Service {
 				return;
 			}
 		}
-        
+
 		// Log successful API request
 		$this->_log_api_request($task_library_found);
 
@@ -374,7 +377,7 @@ final class Api_Service {
 			unset($this->api_object);
 		}
 	}
-    
+
 	/**
 	 * Initializes the API library to be used to service the API task
 	 *
@@ -389,14 +392,14 @@ final class Api_Service {
 		$class_name = $base_name.API_LIBRARY_SUFFIX;
 
 		// Check if the implementing library exists
-		if ( ! Kohana::find_file('libraries/api', 
+		if ( ! Kohana::find_file('libraries/api',
 			Kohana::config('config.extension_prefix').$class_name))
 		{
 			throw new Kohana_Exception('libraries.api_library_not_found',
 				Kohana::config('config.extension_prefix').$class_name.'.php', $class_name);
 		}
-        
-		// Include the implementing API library file        
+
+		// Include the implementing API library file
 		require_once Kohana::find_file('libraries/api', Kohana::config('config.extension_prefix').$class_name);
 
 		// Temporary instance for type checking
@@ -406,18 +409,18 @@ final class Api_Service {
 		// NOTE: All API libraries *MUST* be subclasses of Api_Object_Core
 		if ( ! $temp_api_object instanceof Api_Object_Core)
 			throw new Kohana_Exception('libraries.invalid_api_library', $class_name, 'Api_Object_Core');
-        
+
 		// Discard the old copy
 		unset($this->temp_api_object);
 
 		// Instaniate a fresh copy of the API library
 		$this->api_object = new $class_name($this);
 	}
-    
+
 	/**
-	 * Makes sure the appropriate key is there in a given 
+	 * Makes sure the appropriate key is there in a given
 	 * array (POST or GET) and that it is set
-	 * 
+	 *
 	 * @param arrray $arr - The given array.
 	 * @param string $index  The array key index to lookup
 	 * @return bool
@@ -426,12 +429,12 @@ final class Api_Service {
 	{
 		return (isset($arr[$index]) AND array_key_exists($index, $arr));
 	}
-    
+
 	/**
 	 * Displays Error codes with their corresponding messages.
-	 * returns an array error - array("code" => "CODE", 
+	 * returns an array error - array("code" => "CODE",
 	 * "message" => "MESSAGE") based on the given code
-	 * 
+	 *
 	 * @param string $errcode  - The error code to be displayed.
 	 * @param string $param - The missing parameter.
 	 * @param string $message - The error message to be displayed.
@@ -443,49 +446,49 @@ final class Api_Service {
 		{
 			case 0:
 				return array(
-					"code" => "0", 
+					"code" => "0",
 					"message" => Kohana::lang('ui_admin.no_error')
 				);
-				
+
 			case 001:
 				return array(
 					"code" => "001",
 					"message" => Kohana::lang('ui_admin.missing_parameter')." - $param."
 				);
-			
+
 			case 002:
 				return array(
 					"code" => "002",
 					"message" => Kohana::lang('ui_admin.invalid_parameter')
 				);
-			
+
 			case 003:
 				return array("code" => "003", "message" => $message);
 
 			case 004:
 				return array(
-					"code" => "004", 
+					"code" => "004",
 					"message" => Kohana::lang('ui_admin.post_method_not_used')
 				);
-			
+
 			case 005:
 				return array(
 					"code" => "005",
 					"message" => Kohana::lang('ui_admin.access_denied_credentials')
 				);
-			
+
 			case 006:
 				return array(
 					"code" => "006",
 					"message" => Kohana::lang('ui_admin.access_denied_others')
 				);
-			
+
 			case 007:
 				return array(
 					"code" => "007",
 					"message" => Kohana::lang('ui_admin.no_data')
 				);
-			
+
 			case 010:
 				return array(
 					"code" => "010",
@@ -505,7 +508,7 @@ final class Api_Service {
 				);
 		}
 	}
-    
+
 	/**
 	 * Looks up the api config file for the library that handles the task
 	 * specified in @param $task. The api config file is the API task routing
@@ -522,7 +525,7 @@ final class Api_Service {
 			? $task_handler
 			: NULL;
 	}
-	
+
 	/**
 	 * Logs API requests
 	 * If @param task_library_found == FALSE the no. of records returned is 0
@@ -540,8 +543,8 @@ final class Api_Service {
 
 		$this->api_logger->api_records = ($task_library_found)? $this->api_object->get_record_count() : 0;
 
-		$this->api_logger->api_date = date('Y-m-d H:i:s', time());        
-		$this->api_logger->save();        
+		$this->api_logger->api_date = date('Y-m-d H:i:s', time());
+		$this->api_logger->save();
 	}
 
 	/**
@@ -553,15 +556,25 @@ final class Api_Service {
 	 */
 	private function _is_api_request_allowed()
 	{
-		// STEP 1: Check if the IP has been banned
+		// STEP 1: Check to see if site is private
+		if(Kohana::config('settings.private_deployment'))
+		{
+			if ( ! $this->_login())
+			{
+				// @todo better error message
+				return FALSE;
+			}
+		}
+
+		// STEP 2: Check if the IP has been banned
 		$banned_count = ORM::factory('api_banned')
 						->where('banned_ipaddress', $this->request_ip_address)
 						->count_all();
-        
+
 		if ($banned_count > 0)
 			return FALSE;
-        
-		// STEP 2: Check if the IP address has exceeded the request quota
+
+		// STEP 3: Check if the IP address has exceeded the request quota
 
 		// Get the API settings
 		$api_settings = new Api_Settings_Model(1);
@@ -569,7 +582,7 @@ final class Api_Service {
 		// Check if an API request quota has been set
 		if ( ! isset ($api_settings->max_requests_per_ip_address))
 			return TRUE;
-        
+
 		// Get the API request quota
 		$request_quota = $api_settings->max_requests_per_ip_address;
 
@@ -582,13 +595,13 @@ final class Api_Service {
 
 		// Database table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
-        
+
 		// Template query
 		$template_query = "SELECT COUNT(*) AS record_count ";
 		$template_query .= "FROM ".$table_prefix."api_log ";
 		$template_query .= "WHERE DATE_FORMAT(api_date, '%s') = '%s' ";
 		$template_query .= "AND api_ipaddress = '".$this->request_ip_address."'";
-        
+
 		// Get the number of api requests logged depending on the quota basis
 		switch ($quota_basis)
 		{
@@ -604,7 +617,7 @@ final class Api_Service {
 				$num_api_requests = (int)$items[0]->record_count;
 			break;
 		}
-		
+
 		// Return value
 		return ($num_api_requests >= $request_quota)? FALSE : TRUE;
 	}

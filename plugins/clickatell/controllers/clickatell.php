@@ -59,7 +59,8 @@ class Clickatell_Controller extends Controller {
 
 			if ($keycheck->loaded == TRUE)
 			{
-				sms::add($message_from, $message_description, $message_to);
+					sms::add($message_from, $message_description, $message_to);
+
 			}
 		}
 	}

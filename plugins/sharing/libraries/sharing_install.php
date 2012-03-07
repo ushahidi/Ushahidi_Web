@@ -70,7 +70,7 @@ class Sharing_Install {
 			{
 				$this->db->query($query);
 			}
-				
+
     
 	}
 

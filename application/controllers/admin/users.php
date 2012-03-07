@@ -180,8 +180,11 @@ class Users_Controller extends Admin_Controller
 						}
 
 						// Add New Roles
-						$user->add(ORM::factory('role', 'login'));
-						$user->add(ORM::factory('role', $post->role));
+						if ($post->role != 'none')
+						{
+							$user->add(ORM::factory('role', 'login'));
+							$user->add(ORM::factory('role', $post->role));
+						}
 					}
 				}
 				// New User
@@ -190,8 +193,11 @@ class Users_Controller extends Admin_Controller
 					$user->username = $post->username;
 
 					// Add New Roles
-					$user->add(ORM::factory('role', 'login'));
-					$user->add(ORM::factory('role', $post->role));
+					if ($post->role != 'none')
+					{
+						$user->add(ORM::factory('role', 'login'));
+						$user->add(ORM::factory('role', $post->role));
+					}
 				}
 				$user->save();
 
@@ -221,6 +227,8 @@ class Users_Controller extends Admin_Controller
 				$user = ORM::factory('user', $user_id);
 				if ($user->loaded == true)
 				{
+					// Some users don't have roles so we have this "none" role
+					$role = 'none';
 					foreach ($user->roles as $user_role)
 					{
 						$role = $user_role->name;
@@ -247,6 +255,9 @@ class Users_Controller extends Admin_Controller
 		{
 			$role_array[$role->name] = strtoupper($role->name);
 		}
+
+		// Add one additional role for users with no role
+		$role_array['none'] = strtoupper(Kohana::lang('ui_main.none'));
 
 		$this->template->content->id = $user_id;
 		$this->template->content->display_roles = $this->display_roles;

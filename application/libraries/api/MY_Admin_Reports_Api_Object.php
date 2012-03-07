@@ -858,12 +858,9 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
                 $incident_time = $post->incident_hour . ":" . $post->incident_minute . ":00 " . $post->incident_ampm;
                 $incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) ); 
                 $incident->incident_datemodify = date("Y-m-d H:i:s",time());
-                
                 // Incident Evaluation Info
                 $incident->incident_active = $post->incident_active;
                 $incident->incident_verified = $post->incident_verified;
-                $incident->incident_source = $post->incident_source;
-                $incident->incident_information = $post->incident_information;
 
                 $incident->save();
 

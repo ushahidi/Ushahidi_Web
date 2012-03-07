@@ -117,16 +117,16 @@
 		echo html::script(url::file_loc('js').'media/js/colorpicker', true);
 	}
 	
-	// Load TinyMCE
+	// Load jwysiwyg
 	if ($editor_enabled)
 	{
-		if (Kohana::config("cdn.cdn_ignore_htmlbox") == true) {
-			echo html::script(url::file_loc('ignore').'media/js/htmlbox/htmlbox.min.js', true);
+		if (Kohana::config("cdn.cdn_ignore_jwysiwyg") == true) {
+			echo html::script(url::file_loc('ignore').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js', true);
 		} else {
-			echo html::script(url::file_loc('js').'media/js/htmlbox/htmlbox.min.js', true);
+			echo html::script(url::file_loc('js').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js', true);
 		}
 	}
-	
+
 	// Table Row Sort
 	if ($tablerowsort_enabled)
 	{
@@ -142,6 +142,9 @@
 	// Turn on picbox
 	echo html::script(url::file_loc('js').'media/js/picbox', true);
 	echo html::stylesheet(url::file_loc('css').'media/css/picbox/picbox');
+	
+	//Turn on jwysiwyg
+	echo html::stylesheet(url::file_loc('css').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.css');
 	
 	// Header Nav
 	echo html::script(url::file_loc('js').'media/js/global', true);

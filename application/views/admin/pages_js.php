@@ -21,14 +21,14 @@
 function fillFields(id, page_title, page_tab,
  page_description )
 {
-	$("#page_id").attr("value", unescape(id));
+	$("#page_id").attr("value", decodeURIComponent(id));
 	page_title = decodeURIComponent(escape($.base64.decode(page_title)));
-	$("#page_title").attr("value", unescape(page_title));
+	$("#page_title").attr("value", decodeURIComponent(page_title));
 	page_tab = decodeURIComponent(escape($.base64.decode(page_tab)));
-	$("#page_tab").attr("value", unescape(page_tab));
+	$("#page_tab").attr("value", decodeURIComponent(page_tab));
 	page_description = decodeURIComponent(escape($.base64.decode(page_description)));
-	$("#page_description").attr("value", unescape(page_description));
-	hb_full.set_text(unescape(page_description));
+	$("#page_description").attr("value", decodeURIComponent(page_description));
+	$("#page_description").wysiwyg("setContent",decodeURIComponent(page_description));
 }
 
 // Ajax Submission
@@ -46,13 +46,9 @@ function pageAction ( action, confirmAction, id )
 	}
 }
 
-//Load htmlbox editor
+//Load jwysiwyg editor
 var hb_full ;
 $(document).ready(function(){
-	hb_full = $("#page_description").htmlbox({
-		toolbars:[
-			["cut","copy","paste","bold","italic","underline","fontsize"]
-		],idir:"<?php echo url::site(); ?>/media/js/htmlbox/images/",
-		about:false});
+	hb_full = $("#page_description").wysiwyg();
 });
 

@@ -204,7 +204,7 @@ class Clickatell_API_Core {
         $to = str_replace($cleanup_chr, "", $to);
 
     	/* Send SMS now */
-    	$comm = sprintf ("%s/sendmsg?session_id=%s&to=%s&from=%s&text=%s&callback=%s&unicode=%s%s",
+    	$comm = sprintf ("%s/sendmsg?session_id=%s&to=%s&from=%s&text=%s&callback=%s&unicode=%s%s&mo=1",
             $this->base,
             $this->session,
             rawurlencode($to),

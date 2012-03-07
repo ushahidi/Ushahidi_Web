@@ -67,6 +67,8 @@ class Settings_Controller extends Admin_Controller
 			'cache_pages' => '',
 			'cache_pages_lifetime' => '',
 			'private_deployment' => '',
+			'manually_approve_users' => '',
+			'require_email_confirmation' => '',
 			'checkins' => '',
 			'default_map_all' => '',
 			'google_analytics' => '',
@@ -116,12 +118,14 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('cache_pages','required','between[0,1]');
 			$post->add_rules('cache_pages_lifetime','required','in_array[60,300,600,900,1800]');
 			$post->add_rules('private_deployment','required','between[0,1]');
+			$post->add_rules('manually_approve_users','required','between[0,1]');
+			$post->add_rules('require_email_confirmation','required','between[0,1]');
 			$post->add_rules('checkins','required','between[0,1]');
 			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('twitter_hashtags','length[0,500]');
 			$post->add_rules('api_akismet','length[0,100]', 'alpha_numeric');
-			
+
 			// Add rules for file upload
 			$files = Validation::factory($_FILES);
 			$files->add_rules('banner_image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[250K]');
@@ -158,6 +162,8 @@ class Settings_Controller extends Admin_Controller
 				$settings->cache_pages = $post->cache_pages;
 				$settings->cache_pages_lifetime = $post->cache_pages_lifetime;
 				$settings->private_deployment = $post->private_deployment;
+				$settings->manually_approve_users = $post->manually_approve_users;
+				$settings->require_email_confirmation = $post->require_email_confirmation;
 				$settings->checkins = $post->checkins;
 				$settings->default_map_all = $post->default_map_all;
 				$settings->google_analytics = $post->google_analytics;
@@ -165,20 +171,20 @@ class Settings_Controller extends Admin_Controller
 				$settings->api_akismet = $post->api_akismet;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
-				
+
 				// Deal with banner image now
-				
+
 				// Check if deleting or updating a new image (or doing nothing)
 				if( isset($post->delete_banner_image) AND $post->delete_banner_image == 1)
-				{	
+				{
 					// Delete old badge image
 					ORM::factory('media')->delete($settings->site_banner_id);
-					
+
 					// Remove from DB table
 					$settings = new Settings_Model(1);
 					$settings->site_banner_id = NULL;
 					$settings->save();
-					
+
 				}else{
 					// We aren't deleting, so try to upload if we are uploading an image
 					$filename = upload::save('banner_image');
@@ -186,45 +192,45 @@ class Settings_Controller extends Admin_Controller
 					{
 						$new_filename = "banner_".time();
 						$file_type = strrev(substr(strrev($filename),0,4));
-	
+
 						// Large size
 						$l_name = $new_filename.$file_type;
 						Image::factory($filename)->save(Kohana::config('upload.directory', TRUE).$l_name);
-						
+
 						// Medium size
 						$m_name = $new_filename."_m".$file_type;
 						Image::factory($filename)->resize(80,80,Image::HEIGHT)
 							->save(Kohana::config('upload.directory', TRUE).$m_name);
-	
+
 						// Thumbnail
 						$t_name = $new_filename."_t".$file_type;
 						Image::factory($filename)->resize(60,60,Image::HEIGHT)
 							->save(Kohana::config('upload.directory', TRUE).$t_name);
-						
+
 						// Name the files for the DB
 						$media_link = $l_name;
 						$media_medium = $m_name;
 						$media_thumb = $t_name;
-						
+
 						// Okay, now we have these three different files on the server, now check to see
 						//   if we should be dropping them on the CDN
-						
+
 						if (Kohana::config("cdn.cdn_store_dynamic_content"))
 						{
 							$media_link = cdn::upload($media_link);
 							$media_medium = cdn::upload($media_medium);
 							$media_thumb = cdn::upload($media_thumb);
-							
+
 							// We no longer need the files we created on the server. Remove them.
 							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
 							unlink($local_directory.$l_name);
 							unlink($local_directory.$m_name);
 							unlink($local_directory.$t_name);
 						}
-	
+
 						// Remove the temporary file
 						unlink($filename);
-						
+
 						// Save banner image in the media table
 						$media = new Media_Model();
 						$media->media_type = 1; // Image
@@ -233,7 +239,7 @@ class Settings_Controller extends Admin_Controller
 						$media->media_thumb = $media_thumb;
 						$media->media_date = date("Y-m-d H:i:s",time());
 						$media->save();
-	
+
 						// Save new banner image in settings
 						$settings = new Settings_Model(1);
 						$settings->site_banner_id = $media->id;
@@ -271,7 +277,7 @@ class Settings_Controller extends Admin_Controller
 					// Error with other form filed
 					$errors = arr::overwrite($errors, $post->errors('settings'));
 				}
-				
+
 				$form_error = TRUE;
 			}
 		}
@@ -302,6 +308,8 @@ class Settings_Controller extends Admin_Controller
 				'cache_pages' => $settings->cache_pages,
 				'cache_pages_lifetime' => $settings->cache_pages_lifetime,
 				'private_deployment' => $settings->private_deployment,
+				'manually_approve_users' => $settings->manually_approve_users,
+				'require_email_confirmation' => $settings->require_email_confirmation,
 				'checkins' => $settings->checkins,
 				'default_map_all' => $settings->default_map_all,
 				'google_analytics' => $settings->google_analytics,
@@ -309,7 +317,7 @@ class Settings_Controller extends Admin_Controller
 				'api_akismet' => $settings->api_akismet
 			);
 		}
-		
+
 		// Get banner image
 		if($settings->site_banner_id != NULL){
 			$banner = ORM::factory('media')->find($settings->site_banner_id);
@@ -321,8 +329,8 @@ class Settings_Controller extends Admin_Controller
 			$this->template->content->banner_m = NULL;
 			$this->template->content->banner_t = NULL;
 		}
-		
-		
+
+
 		$this->template->colorpicker_enabled = TRUE;
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
@@ -338,12 +346,12 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->yesno_array = array(
 			'1'=>strtoupper(Kohana::lang('ui_main.yes')),
 			'0'=>strtoupper(Kohana::lang('ui_main.no')));
-		   
+
 		$this->template->content->comments_array = array(
 			'1'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_auto')),
 			'2'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_manual')),
 			'0'=>strtoupper(Kohana::lang('ui_main.no')));
-		
+
 		$this->template->content->cache_pages_lifetime_array = array(
 			'60'=>'1 '.Kohana::lang('ui_admin.minute'),
 			'300'=>'5 '.Kohana::lang('ui_admin.minutes'),
@@ -359,8 +367,8 @@ class Settings_Controller extends Admin_Controller
 			$site_timezone_array[$timezone] = $timezone;
 		}
 		$this->template->content->site_timezone_array = $site_timezone_array;
-	
-	
+
+
 		// Generate Available Locales
 		$locales = locale::get_i18n();
 		$this->template->content->locales_array = $locales;
@@ -438,7 +446,7 @@ class Settings_Controller extends Admin_Controller
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
-				
+
 				// Action::map_settings_modified - Map settings have changed
 				Event::run('ushahidi_action.map_settings_modified');
 
@@ -612,12 +620,12 @@ class Settings_Controller extends Admin_Controller
 				'sms_no3' => $settings->sms_no3
 			);
 		}
-		
+
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		
+
 		$this->template->content->sms_provider_array = array_merge(
 			array("" => "-- Select One --"),
 			plugin::get_sms_providers()
@@ -1089,13 +1097,13 @@ class Settings_Controller extends Admin_Controller
 		if(is_array($config_file) )
 		{
 			foreach ($config_file as $line_number => $line)
-			{				
+			{
 				if ($yes_or_no == 1)
 				{
 					if( strpos(" ".$line,"\$config['index_page'] = 'index.php';") != 0 )
 					{
 						fwrite($handle, str_replace("index.php","",$line ));
-						
+
 						// Set the 'index_page' property in the configuration
 						Kohana::config_set('core.index_page', '');
 					}
@@ -1110,7 +1118,7 @@ class Settings_Controller extends Admin_Controller
 					if( strpos(" ".$line,"\$config['index_page'] = '';") != 0 )
 					{
 						fwrite($handle, str_replace("''","'index.php'",$line ));
-						
+
 						// Set the 'index_page' property in the configuration
 						Kohana::config_set('core.index_page', 'index.php');
 					}
@@ -1138,7 +1146,7 @@ class Settings_Controller extends Admin_Controller
 	{
 		$map_layers = array();
 		$layers = map::base();
-		
+
 		foreach ($layers as $layer)
 		{
 			$map_layers[$layer->name] = array();
@@ -1156,7 +1164,7 @@ class Settings_Controller extends Admin_Controller
 
 		return json_encode($map_layers);
 	}
-	
+
 	/**
 	 * Check if SSL is currently enabled on the instance
 	 */
@@ -1168,7 +1176,7 @@ class Settings_Controller extends Admin_Controller
 			? FALSE
 			: TRUE;
 	}
-	
+
 	/**
 	 * Check if the Webserver is HTTPS capable
 	 */
@@ -1176,42 +1184,42 @@ class Settings_Controller extends Admin_Controller
 	{
 		// Get the current site protocol
 		$protocol = Kohana::config('core.site_protocol');
-		
+
 		// Build an SSL URL
 		$url = ($protocol == 'https')? url::base() : str_replace('http://', 'https://', url::base());
-		
+
 		$url .= 'index.php';
-		
+
 		// Initialize cURL
 		$ch = curl_init();
-		
+
 		// Set cURL options
 		curl_setopt($ch, CURLOPT_URL, $url);
-		
+
 		// Disable following any "Location:" sent as part of the HTTP header
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, FALSE);
-		
+
 		// Return the output of curl_exec() as a string instead of outputting it directly
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-		
+
 		// Suppress header information from the output
 		curl_setopt($ch, CURLOPT_HEADER, FALSE);
-		
+
 		// Allow connection to HTTPS
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
 
 		// Perform cURL session
 		curl_exec($ch);
-		
+
 		// Get the cURL error number
 		$error_no = curl_errno($ch);
-		
+
 		// Get the return code
 		$http_return_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		
+
 		// Close the cURL handle
 		curl_close($ch);
-		
+
 		// Check if the cURL session succeeded
 		return (($error_no > 0 AND $error_no != 60) OR $http_return_code == 404)
 			? FALSE
@@ -1231,13 +1239,13 @@ class Settings_Controller extends Admin_Controller
 		if(is_array($config_file) AND $handle)
 		{
 			foreach ($config_file as $line_number => $line)
-			{				
+			{
 				if ($yes_or_no == 1)
 				{
 					if( strpos(" ".$line,"\$config['site_protocol'] = 'http';") != 0 )
 					{
 						fwrite($handle, str_replace("http", "https", $line ));
-						
+
 						// Enable HTTPS on the config
 						Kohana::config_set('core.site_protocol', 'https');
 					}
@@ -1251,7 +1259,7 @@ class Settings_Controller extends Admin_Controller
 					if( strpos(" ".$line,"\$config['site_protocol'] = 'https';") != 0 )
 					{
 						fwrite($handle, str_replace("https", "http", $line ));
-						
+
 						// Enable HTTP on the config
 						Kohana::config_set('core.site_protocol', 'http');
 					}
@@ -1262,6 +1270,6 @@ class Settings_Controller extends Admin_Controller
 				}
 			}
 		}
-		
+
 	}
 }

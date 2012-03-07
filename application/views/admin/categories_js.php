@@ -48,15 +48,15 @@ $(document).ready(function() {
 function fillFields(id, parent_id, category_title, category_description, category_color, locale<?php foreach($locale_array as $lang_key => $lang_name) echo ', '.$lang_key; ?>)
 {
 	show_addedit();
-	$("#category_id").attr("value", unescape(id));
-	$("#parent_id").attr("value", unescape(parent_id));
-	$("#category_title").attr("value", unescape(category_title));
-	$("#category_description").attr("value", unescape(category_description));
-	$("#category_color").attr("value", unescape(category_color));
-	$("#locale").attr("value", unescape(locale));
+	$("#category_id").attr("value", decodeURIComponent(id));
+	$("#parent_id").attr("value", decodeURIComponent(parent_id));
+	$("#category_title").attr("value", decodeURIComponent(category_title));
+	$("#category_description").attr("value", decodeURIComponent(category_description));
+	$("#category_color").attr("value", decodeURIComponent(category_color));
+	$("#locale").attr("value", decodeURIComponent(locale));
 	<?php
 		foreach($locale_array as $lang_key => $lang_name) {
-			echo '$("#category_title_'.$lang_key.'").attr("value", unescape('.$lang_key.'));'."\n";
+			echo '$("#category_title_'.$lang_key.'").attr("value", decodeURIComponent('.$lang_key.'));'."\n";
 		}
 	?>
 }

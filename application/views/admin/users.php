@@ -1,16 +1,16 @@
-<?php 
+<?php
 /**
  * Users view page.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
 			<div class="bg">
@@ -33,7 +33,8 @@
 										<th class="col-2">
 											<?php echo Kohana::lang('ui_admin.header_user'); ?>
 										</th>
-																				<?php
+
+										<?php
 											//Add header item to users listing page
 											Event::run('ushahidi_action.users_listing_header');
 										?>
@@ -65,7 +66,7 @@
 												</h3>
 											</td>
 										</tr>
-									<?php	
+									<?php
 									}
 									foreach ($users as $user)
 									{
@@ -74,13 +75,15 @@
 										$password = $user->password;
 										$name = $user->name;
 										$email = $user->email;
-										
+
+										// Show the highest role, defaulting to "none"
+										$role = Kohana::lang('ui_main.none');
 										foreach ($user->roles as $user_role) {
 											$role = $user_role->name;
 										}
 										?>
 										<tr>
-											
+
 											<td class="col-1">
 												&nbsp;
 											</td>

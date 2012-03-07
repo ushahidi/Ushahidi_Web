@@ -50,7 +50,7 @@
 						<form method="post" id="header_nav_userforgot_form" action="<?php echo url::site()."login/";?>">
 						<input type="hidden" name="action" value="forgot">
 
-						<label for="resetemail"><?php echo Kohana::lang('ui_main.password_reset_prompt');?></label>
+						<label for="resetemail"><?php echo Kohana::lang('ui_main.registered_email');?></label>
 						<input type="text" id="resetemail" name="resetemail" value="" />
 
 						<input type="submit" id="submit" name="submit" value="<?php echo Kohana::lang('ui_main.reset_password'); ?>" class="header_nav_login_btn" />
