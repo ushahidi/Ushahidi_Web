@@ -275,8 +275,7 @@ class Private_Controller extends Members_Controller {
 		
 		if ($name)
 		{
-			$users = $users = $db->query("SELECT * from users where id!=".$this->user->id." AND LOWER(name) LIKE '%".$db->escape_str($name)."%'");
-				
+			$users = $db->query("SELECT * from users where id != ? AND LOWER(name) LIKE ?",$this->user->id,$name);
 			foreach ($users as $user)
 			{
 				echo "$user->name\n";
