@@ -761,9 +761,7 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
             'person_last' => '',
             'person_email' => '',
             'incident_active ' => '',
-            'incident_verified' => '',
-            'incident_source' => '',
-            'incident_information' => ''
+            'incident_verified' => ''
         );
         
         $errors = $form;
@@ -820,8 +818,6 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 
             $post->add_rules('incident_active','required', 'between[0,1]');
             $post->add_rules('incident_verified','required', 'length[0,1]');
-            $post->add_rules('incident_source','numeric', 'length[1,1]');
-            $post->add_rules('incident_information','numeric', 'length[1,1]');
 
 
             // Test to see if things passed the rule checks
