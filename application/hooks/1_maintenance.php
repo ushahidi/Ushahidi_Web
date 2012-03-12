@@ -48,7 +48,7 @@ if ($maintenance == TRUE)
 
 	header("Status: 503 Service Temporarily Unavailable");
 
-	if(file_exists('maintenance_offx.php'))
+	if(file_exists('maintenance_off.php'))
 	{
 		// maintenance_off.php is our default maintenance message file
 		$contents = file_get_contents('maintenance_off.php');
