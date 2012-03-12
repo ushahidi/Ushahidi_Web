@@ -114,6 +114,11 @@ $config['allow_openid'] = FALSE;
 $config['extension_prefix'] = 'MY_';
 
 /**
+ * Check if we should launch the installer or not
+ */
+$config['installer_check'] = TRUE;
+
+/**
  * Additional resource paths, or "modules". Each path can either be absolute
  * or relative to the docroot. Modules can include any resource that can exist
  * in your application directory, configuration files, controllers, views, etc.
