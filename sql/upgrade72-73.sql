@@ -11,8 +11,8 @@ INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_descr
 -- Change incident_category table structure and set default value for category_id to orphaned reports category i.e 5
 ALTER TABLE `incident_category` CHANGE `category_id` `category_id` int(11) NOT NULL default '5';
 
--- Update entries tied to non existent categories in the incident_category table
-UPDATE `incident_category` SET `category_id` = '5' WHERE NOT EXISTS (select `category_title` from category where `id` = category_id);
+-- Remove incident category links that link to no category
+DELETE FROM `incident_category` WHERE NOT EXISTS (select `category_title` from `category` where `id` = category_id);
 
 -- Delete updated entries tied to a non-orphaned report i.e a report with multiple categories
 DELETE FROM `incident_category` WHERE `category_id` =5 AND `incident_id` IN (
