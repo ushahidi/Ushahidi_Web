@@ -535,6 +535,17 @@ INSERT INTO `location` VALUES (1,'Nairobi',115,-1.2873000707050097, 36.821451182
 /*!40000 ALTER TABLE `location` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+/**
+* Table structure for table `maintenance`
+*
+*/
+
+CREATE TABLE `maintenance` (
+`allowed_ip` VARCHAR( 15 ) NOT NULL ,
+PRIMARY KEY ( `allowed_ip` )
+) ENGINE = MYISAM ;
+
 /**
 * Table structure for table `media`
 *
@@ -1390,4 +1401,4 @@ CREATE TABLE IF NOT EXISTS `badge_users` (
 *
 */
 UPDATE `settings` SET `ushahidi_version` = '2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '75' WHERE `id` = 1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '76' WHERE `id` = 1 LIMIT 1;
