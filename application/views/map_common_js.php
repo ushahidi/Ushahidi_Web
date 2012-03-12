@@ -247,4 +247,5 @@
 		{
 			map.removePopup(map.popups[i]);
 		}
+    onPopupClose(true);
 	}
