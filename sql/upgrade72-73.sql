@@ -14,6 +14,10 @@ ALTER TABLE `incident_category` CHANGE `category_id` `category_id` int(11) NOT N
 -- Remove incident category links that link to no category
 DELETE FROM `incident_category` WHERE NOT EXISTS (select `category_title` from `category` where `id` = category_id);
 
+-- Add incidents with no categories deleted above, and assign them to orphaned reports category	
+INSERT into `incident_category` (`incident_id`) SELECT `e`.`id` FROM `incident` e	
+WHERE NOT EXISTS ( SELECT DISTINCT (`i`.`id`) FROM `incident` i JOIN `incident_category` ic ON `ic`.`incident_id` = `i`.`id` WHERE `e`.`id` = `ic`.`incident_id`);
+
 -- Delete updated entries tied to a non-orphaned report i.e a report with multiple categories
 DELETE FROM `incident_category` WHERE `category_id` =5 AND `incident_id` IN (
 SELECT `incident_id` FROM (
