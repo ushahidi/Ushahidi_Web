@@ -9,7 +9,7 @@
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
@@ -19,14 +19,14 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
+ * @author	   Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module	   Register Plugins Hook
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class register_plugins {
@@ -36,11 +36,11 @@ class register_plugins {
 	public function __construct()
 	{
 		// Hook into routing
-		if (file_exists(DOCROOT."application/config/database.php"))
+		if (Kohana::config('config.installer_check') == FALSE OR file_exists(DOCROOT."application/config/database.php"))
 		{
 			Event::add_after('system.routing', array('Router', 'find_uri'), array($this, 'register'));
 		}
-		
+
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 	}
@@ -66,7 +66,7 @@ class register_plugins {
 		// We need to manually include the hook file for each plugin,
 		// because the additional plugins aren't loaded until after the application hooks are loaded.
 		foreach ($plugins as $key => $plugin)
-		{	
+		{
 			if (file_exists($plugin.'/hooks'))
 			{
 				$d = dir($plugin.'/hooks'); // Load all the hooks
