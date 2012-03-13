@@ -359,7 +359,7 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 				document.write(unescape(\"%3Cscript src='\" + gaJsHost + \"google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E\"));
 				</script>
 				<script type=\"text/javascript\">
-				var pageTracker = _gat._getTracker(\"" . $google_analytics . "\");
+				var pageTracker = _gat._getTracker(\"" . Kohana::config('settings.google_analytics') . "\");
 				pageTracker._trackPageview();
 				</script>";
 		}
