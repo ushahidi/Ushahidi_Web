@@ -1,7 +1,33 @@
-Ushahidi 2.1.x (Development version)
-------------------------------------
+Ushahidi 2.2 (Juba), 13-03-2012
+---------------------------------
+* Riverid Integration
+    - RiverID is an authentication and identity management system that provides users with a secure central sign-on facility.
+    - With RiverID, your are able to access all the Ushahidi products using just one username and password. This includes all the Crowdmaps you've set up and, when launched, your SwiftRiver streams.
+    - This eliminates the need for multiple passwords per person per Crowdmap deployment. Though, you are free to use as many different passwords as you choose.
+* Base Map defaulted to OSM
+    - The default map version has been set to OpenStreetMap (OSM). There is a drop-down to select your map. You can select to use a variety of maps including Google.
+* Badges
+	- Badges are a great way for Ushahidi deployers to award their users.
+	- Developers can also find badge image resources to include in their projects.
+	- These are badge images in a variety of categories which can be used in Ushahidi or Crowdmap deployments or other services.	
+* Automated Actions
+    - The admin panel now allows you to set up automated actions on your deployment.
+	- You are now able to set a chain of events into motion when certain conditions that you specify are hit.
+* Alerts
+    - Subscription of Alerts via SMS.
+    - Unsubscribing from mobile alerts.
+* Security
+    - Plugged SQL and HTML injection vulnerabilites
+* Plugins
+    - Sharing feature moved into a plugin
+	- New plugins, adsense and Viddler
+* Public Listing
+    - Plublic listing of deployment which increases your deployment's discoverability.
+* Features changed on core
+    - Changed the Pages editor from Tinymce to JWYSIWYG
 * Themes
-    - Added bueno theme to the list of stock themes
+	- More themes to choose from.
+
 
 Ushahidi 2.1 (Tunis), 09-08-2011
 ---------------------------------
