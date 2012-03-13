@@ -3,17 +3,17 @@
  * This controller is used to list/view Organizations
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @subpackage Controllers
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Help_Controller extends Main_Controller 
+class Help_Controller extends Main_Controller
 {
     function __construct()
     {
@@ -26,12 +26,12 @@ class Help_Controller extends Main_Controller
     /**
      * Displays all Organizations.
      */
-    public function index() 
+    public function index()
     {
         $this->template->header->this_page = Kohana::lang('ui_admin.help');
         $this->template->content = new View('help');
         $items_per_page = (int) Kohana::config('settings.items_per_page');
-        
+
         // Pagination
         $pagination = new Pagination(array(
             'query_string' => 'page',
@@ -43,27 +43,28 @@ class Help_Controller extends Main_Controller
                             ->where('organization_active', '1')
                             ->orderby('organization_name', 'asc')
                             ->find_all($items_per_page, $pagination->sql_offset);
-        
+
         $this->template->content->organizations = $organizations;
         $this->template->content->pagination = $pagination;
-        
+
         //Only display stats when there are reports to display
         if ($pagination->total_items > 0)
         {
-            $this->template->content->pagination_stats = "(Showing " 
+            $this->template->content->pagination_stats = "(Showing "
                 .(($pagination->sql_offset/$items_per_page) + 1)
                 ." of ".ceil($pagination->total_items/$items_per_page)
-                ." pages)"; 
+                ." pages)";
         }
         else
         {
             $this->template->content->pagination_stats = "";
         }
-        
+
         // Rebuild Header Block
         $this->template->header->header_block = $this->themes->header_block();
+        $this->template->footer->footer_block = $this->themes->footer_block();
     }
-    
+
      /**
      * Displays a organization
      * @param boolean $id If id is supplied, an organization with that id will be
@@ -73,7 +74,7 @@ class Help_Controller extends Main_Controller
     {
         $this->template->header->this_page = Kohana::lang('ui_admin.help');
         $this->template->content = new View('help_view');
-        
+
         if (!$id)
         {
             url::redirect('main');
@@ -81,12 +82,12 @@ class Help_Controller extends Main_Controller
         else
         {
             $organization = ORM::factory('organization', $id);
-            
+
             if ($organization->loaded == FALSE) // Not Found
             {
                 url::redirect('main');
             }
-            
+
             // Comment Post?
             // setup and initialize form field names
             $form = array
@@ -97,20 +98,20 @@ class Help_Controller extends Main_Controller
                 'message' => '',
                 'captcha' => ''
             );
-            $captcha = Captcha::factory(); 
+            $captcha = Captcha::factory();
             $errors = $form;
             $form_error = FALSE;
-            
+
             // Check, has the form been submitted, if so, setup validation
             if ($_POST)
             {
-                // Instantiate Validation, use $post, so we don't overwrite 
+                // Instantiate Validation, use $post, so we don't overwrite
                 // $_POST fields with our own things
                 $post = Validation::factory($_POST);
 
                 //  Add some filters
                 $post->pre_filter('trim', TRUE);
-        
+
                 // Add some rules, the input field, followed by a list of checks,
                 // carried out in order
                 $post->add_rules('name', 'required', 'length[3, 100]');
@@ -118,7 +119,7 @@ class Help_Controller extends Main_Controller
                 $post->add_rules('phone', 'length[3, 100]');
                 $post->add_rules('message', 'required');
                 $post->add_rules('captcha', 'required', 'Captcha::valid');
-                
+
                 // Test to see if things passed the rule checks
                 if ($post->validate())
                 {
@@ -135,14 +136,14 @@ class Help_Controller extends Main_Controller
 
                         email::send($to, $from, $subject, $message, FALSE);
                     }
-                    
+
                     // Redirect
                     url::redirect('help/view/' . $id);
                 }
 
                 // No! We have validation errors, we need to show the form again,
                 // with the errors
-                else   
+                else
                 {
                     // repopulate the form fields
                     $form = arr::overwrite($form, $post->as_array());
@@ -152,7 +153,7 @@ class Help_Controller extends Main_Controller
                     $form_error = TRUE;
                 }
             }
-            
+
             $this->template->content->organization_id = $organization->id;
             $this->template->content->organization_name = $organization->organization_name;
             $this->template->content->organization_description = nl2br($organization->organization_description);
@@ -166,12 +167,13 @@ class Help_Controller extends Main_Controller
             $this->template->content->captcha = $captcha;
             $this->template->content->errors = $errors;
             $this->template->content->form_error = $form_error;
-            
+
             // Javascript Header
             $this->themes->js = new View('help_view_js');
         }
-        
+
         // Rebuild Header Block
         $this->template->header->header_block = $this->themes->header_block();
+        $this->template->footer->footer_block = $this->themes->footer_block();
     }
 }

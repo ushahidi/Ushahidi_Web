@@ -3,28 +3,27 @@
  * Search controller
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Search_Controller extends Main_Controller {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
 	}
-	
-	
+
     /**
   	 * Build a search query with relevancy
      * Stop word control included
      */
-	public function index($page = 1) 
+	public function index($page = 1)
 	{
 		$this->template->content = new View('search');
 
@@ -36,14 +35,14 @@ class Search_Controller extends Main_Controller {
 		$search_info = "";
 		$html = "";
 		$pagination = "";
-        
+
 		// Stop words that we won't search for
 		// Add words as needed!!
-		$stop_words = array('the', 'and', 'a', 'to', 'of', 'in', 'i', 'is', 'that', 'it', 
-			'on', 'you', 'this', 'for', 'but', 'with', 'are', 'have', 'be', 
+		$stop_words = array('the', 'and', 'a', 'to', 'of', 'in', 'i', 'is', 'that', 'it',
+			'on', 'you', 'this', 'for', 'but', 'with', 'are', 'have', 'be',
 			'at', 'or', 'as', 'was', 'so', 'if', 'out', 'not'
 		);
-        
+
 		if ($_GET)
 		{
 			/**
@@ -57,11 +56,11 @@ class Search_Controller extends Main_Controller {
 			 * the "<script>" tags from the URL variables and passes inline text as part of the URL
 			 * variable - This has to be fixed
 			 */
-              
+
 			// Phase 1 - Fetch the search string and perform initial sanitization
 			$keyword_raw = (isset($_GET['k']))? preg_replace('#/\w+/#', '', $_GET['k']) : "";
 
-			// Phase 2 - Strip the search string of any HTML and PHP tags that may be present for additional safety              
+			// Phase 2 - Strip the search string of any HTML and PHP tags that may be present for additional safety
 			$keyword_raw = strip_tags($keyword_raw);
 
 			// Phase 3 - Apply Kohana's XSS cleaning mechanism
@@ -71,16 +70,16 @@ class Search_Controller extends Main_Controller {
 		{
 			$keyword_raw = "";
 		}
-		
+
 		// Database instance
 		$db = new Database();
-		
+
 		$keywords = explode(' ', $keyword_raw);
-		if (is_array($keywords) AND !empty($keywords)) 
+		if (is_array($keywords) AND !empty($keywords))
 		{
 			array_change_key_case($keywords, CASE_LOWER);
 			$i = 0;
-            
+
 			foreach($keywords as $value)
 			{
 				if ( ! in_array($value,$stop_words) AND !empty($value))
@@ -93,21 +92,21 @@ class Search_Controller extends Main_Controller {
 						$plus = ' + ';
 						$or = ' OR ';
 					}
-                    
+
 					// Give relevancy weighting
 					// Title weight = 2
 					// Description weight = 1
 					$keyword_string = $keyword_string.$plus."(CASE WHEN incident_title LIKE '%$chunk%' THEN 2 ELSE 0 END) + "
 										. "(CASE WHEN incident_description LIKE '%$chunk%' THEN 1 ELSE 0 END) ";
-										
+
 					$where_string = $where_string.$or."(incident_title LIKE '%$chunk%' OR incident_description LIKE '%$chunk%')";
 					$i++;
 				}
 			}
-            
+
 			if ( ! empty($keyword_string) AND !empty($where_string))
 			{
-				// Limit the result set to only those reports that have been approved	
+				// Limit the result set to only those reports that have been approved
 				$where_string = '(' . $where_string . ') AND incident_active = 1';
 				$search_query = "SELECT *, (".$keyword_string.") AS relevance FROM "
 								. $this->table_prefix."incident "
@@ -124,9 +123,9 @@ class Search_Controller extends Main_Controller {
 				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
 				'total_items' => ORM::factory('incident')->where($where_string)->count_all()
 			));
-            
+
 			$query = $db->query($search_query . $pagination->sql_offset . ",". (int)Kohana::config('settings.items_per_page'));
-            
+
 			// Results Bar
 			if ($pagination->total_items != 0)
 			{
@@ -140,7 +139,7 @@ class Search_Controller extends Main_Controller {
 							. "</div>";
 			}
 			else
-			{ 
+			{
 				$search_info .= "<div class=\"search_info\">0 ".Kohana::lang('ui_admin.results')."</div>";
 
 				$html .= "<div class=\"search_result\">";
@@ -149,14 +148,14 @@ class Search_Controller extends Main_Controller {
 
 				$pagination = "";
 			}
-            
+
 			foreach ($query as $search)
 			{
 				$incident_id = $search->id;
 				$incident_title = $search->incident_title;
 				$highlight_title = "";
-				$incident_title_arr = explode(' ', $incident_title); 
-                
+				$incident_title_arr = explode(' ', $incident_title);
+
 				foreach($incident_title_arr as $value)
 				{
 					if (in_array(strtolower($value),$keywords) AND !in_array(strtolower($value),$stop_words))
@@ -168,7 +167,7 @@ class Search_Controller extends Main_Controller {
 						$highlight_title .= $value . " ";
 					}
 				}
-				
+
 				$incident_description = $search->incident_description;
 
 				// Remove any markup, otherwise trimming below will mess things up
@@ -180,7 +179,7 @@ class Search_Controller extends Main_Controller {
 					$whitespaceposition = strpos($incident_description," ",175)-1;
 					$incident_description = substr($incident_description, 0, $whitespaceposition);
 				}
-                
+
 				$highlight_description = "";
 				$incident_description_arr = explode(' ', $incident_description);
 
@@ -195,7 +194,7 @@ class Search_Controller extends Main_Controller {
 						$highlight_description .= $value . " ";
 					}
 				}
-                
+
 				$incident_date = date('D M j Y g:i:s a', strtotime($search->incident_date));
 
 				$html .= "<div class=\"search_result\">";
@@ -214,7 +213,7 @@ class Search_Controller extends Main_Controller {
 			$html .= "<h3>".Kohana::lang('ui_admin.your_search_for')."<strong>".$keyword_raw."</strong> ".Kohana::lang('ui_admin.match_no_documents')."</h3>";
 			$html .= "</div>";
 		}
-        
+
 		$html .= $pagination;
 
 		$this->template->content->search_info = $search_info;
@@ -222,5 +221,6 @@ class Search_Controller extends Main_Controller {
 
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
     }
 }

@@ -33,14 +33,14 @@ class Page_Controller extends Main_Controller {
 		$page = ORM::factory('page',$page_id)->find($page_id);
 		if ($page->loaded)
 		{
-			
+
 			$page_title = $page->page_title;
 			$page_description = $page->page_description;
 			// Filter::page_title - Modify Page Title
 			Event::run('ushahidi_filter.page_title', $page_title);
 			// Filter::page_description - Modify Page Description
 			Event::run('ushahidi_filter.page_description', $page_description);
-			
+
 			$this->template->content->page_title = $page_title;
 			$this->template->content->page_description = $page_description;
 			$this->template->content->page_id = $page->id;
@@ -49,8 +49,9 @@ class Page_Controller extends Main_Controller {
 		{
 			url::redirect('main');
 		}
-		
+
 		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 }

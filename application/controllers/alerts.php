@@ -3,18 +3,18 @@
  * This controller handles requests for SMS/ Email alerts
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @subpackage Controllers
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Alerts_Controller extends Main_Controller {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -31,19 +31,19 @@ class Alerts_Controller extends Main_Controller {
 
 		$this->template->header->this_page = $this->themes->this_page = 'alerts';
 		$this->template->content = new View('alerts');
-		
+
 		// Load the alert radius map view
 		$alert_radius_view = new View('alert_radius_view');
 		$alert_radius_view->show_usage_info = TRUE;
 		$alert_radius_view->enable_find_location = TRUE;
-		
+
 		$this->template->content->alert_radius_view = $alert_radius_view;
 
 
 		// Display Mobile Option?
 		$this->template->content->show_mobile = TRUE;
 		$settings = ORM::factory('settings', 1);
-		
+
 		if ( ! Kohana::config("settings.sms_provider"))
 		{
 			// Hide Mobile
@@ -71,12 +71,12 @@ class Alerts_Controller extends Main_Controller {
 			'alert_country' => '',
 			'alert_confirmed' => ''
 		);
-		
+
 		if ($this->user)
 		{
 			$form['alert_email'] = $this->user->email;
 		}
-		
+
 		// Get Countries
 		$countries = array();
 		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
@@ -89,20 +89,20 @@ class Alerts_Controller extends Main_Controller {
 			}
 			$countries[$country->id] = $this_country;
 		}
-		
+
 		// Initialize Default Value for Hidden Field Country Name, just incase Reverse Geo coding yields no result
 		$form['alert_country'] = $countries[$default_country];
 
 		//Initialize default value for Alert confirmed hidden value
-		
+
 		$this->template->content->countries = $countries;
-	
+
 		// Copy the form as errors, so the errors will be stored with keys
 		// corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
-       
+
 		// If there is a post and $_POST is not empty
 		if ($post = $this->input->post())
 		{
@@ -124,7 +124,7 @@ class Alerts_Controller extends Main_Controller {
 					$this->session->set('alert_email', $post->alert_email);
 				}
 
-				url::redirect('alerts/confirm');                    
+				url::redirect('alerts/confirm');
             }
             // No! We have validation errors, we need to show the form again, with the errors
             else
@@ -144,7 +144,7 @@ class Alerts_Controller extends Main_Controller {
 			$form['alert_radius'] = 20;
 			$form['alert_category'] = array();
         }
-        
+
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
@@ -161,9 +161,10 @@ class Alerts_Controller extends Main_Controller {
 
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
     }
 
-    
+
 	/**
 	 * Alerts Confirmation Page
 	 */
@@ -172,18 +173,18 @@ class Alerts_Controller extends Main_Controller {
 		$this->template->header->this_page = 'alerts';
 		$this->template->content = new View('alerts_confirm');
 
-		$this->template->content->alert_mobile = (isset($_SESSION['alert_mobile']) AND ! empty($_SESSION['alert_mobile'])) 
-			? $_SESSION['alert_mobile'] 
+		$this->template->content->alert_mobile = (isset($_SESSION['alert_mobile']) AND ! empty($_SESSION['alert_mobile']))
+			? $_SESSION['alert_mobile']
 			: "";
-        
+
 		$this->template->content->alert_email = (isset($_SESSION['alert_email']) AND ! empty($_SESSION['alert_email']))
-			? $_SESSION['alert_email'] 
+			? $_SESSION['alert_email']
 			: "";
-            
+
 		// Display Mobile Option?
 		$this->template->content->show_mobile = TRUE;
 		$settings = ORM::factory('settings', 1);
-		
+
 		//if ( ! Kohana::config("settings.sms_provider"))
 		if ( empty($_SESSION['alert_mobile']))
 		{
@@ -193,9 +194,10 @@ class Alerts_Controller extends Main_Controller {
 
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
-    
-    
+
+
 	/**
 	 * Verifies a previously sent alert confirmation code
 	 */
@@ -205,18 +207,18 @@ class Alerts_Controller extends Main_Controller {
 		define("ER_CODE_VERIFIED", 0);
 		define("ER_CODE_NOT_FOUND", 1);
 		define("ER_CODE_ALREADY_VERIFIED", 3);
-        
+
 		$code = (isset($_GET['c']) AND !empty($_GET['c'])) ? $_GET['c'] : "";
-            
+
 		$email = (isset($_GET['e']) AND !empty($_GET['e'])) ? $_GET['e'] : "";
-        
+
 		// INITIALIZE the content's section of the view
 		$this->template->content = new View('alerts_verify');
 		$this->template->header->this_page = 'alerts';
 
 		$filter = " ";
 		$missing_info = FALSE;
-		
+
 		if ($_POST AND isset($_POST['alert_code']) AND ! empty($_POST['alert_code']))
 		{
 			if (isset($_POST['alert_mobile']) AND ! empty($_POST['alert_mobile']))
@@ -243,7 +245,7 @@ class Alerts_Controller extends Main_Controller {
 				$filter = "alert.alert_type=2 AND alert_code='".$code."' AND alert_recipient='".$email."' ";
 			}
 		}
-        
+
 		if ( ! $missing_info)
 		{
 			$alert_check = ORM::factory('alert')
@@ -259,7 +261,7 @@ class Alerts_Controller extends Main_Controller {
 			{
 				$this->template->content->errno = ER_CODE_ALREADY_VERIFIED;
 			}
-			else 
+			else
 			{
 				// SET the alert as confirmed, and save it
 				$alert_check->set('alert_confirmed', 1)->save();
@@ -270,15 +272,16 @@ class Alerts_Controller extends Main_Controller {
 		{
 			$this->template->content->errno = ER_CODE_NOT_FOUND;
 		}
-        
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
 	} // END function verify
 
 
 	/**
 	 * Unsubscribes alertee using alertee's confirmation code
-	 * 
+	 *
 	 * @param string $code
 	 */
 	public function unsubscribe($code = NULL)
@@ -286,23 +289,24 @@ class Alerts_Controller extends Main_Controller {
 		$this->template->content = new View('alerts_unsubscribe');
 		$this->template->header->this_page = 'alerts';
 		$this->template->content->unsubscribed = FALSE;
-        
+
 		// XXX Might need to validate $code as well
 		if ($code != NULL)
 		{
 			Alert_Model::unsubscribe($code);
 			$this->template->content->unsubscribed = TRUE;
 		}
-        
+
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
     }
 
 
 
 
 
-     
+
 	/**
 	 * Retrieves Previously Cached Geonames Cities
 	 */
@@ -310,8 +314,8 @@ class Alerts_Controller extends Main_Controller {
 	{
 		$cities = ORM::factory('city')->orderby('city', 'asc')->find_all();
 		$city_select = array('' => Kohana::lang('ui_main.alerts_select_city'));
-		
-		foreach ($cities as $city) 
+
+		foreach ($cities as $city)
 		{
 			$city_select[$city->city_lon.",".$city->city_lat] = $city->city;
 		}
