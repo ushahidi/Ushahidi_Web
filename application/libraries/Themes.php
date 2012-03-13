@@ -51,10 +51,15 @@ class Themes_Core {
 	 */
 	public function header_block()
 	{
-		return Kohana::config("globalcode.head").
+		$content = Kohana::config("globalcode.head").
 			$this->_header_css().
 			$this->_header_feeds().
 			$this->_header_js();
+
+		// Filter::header_block - Modify Header Block
+		Event::run('ushahidi_filter.header_block', $content);
+
+		return $content;
 	}
 
 	/**
@@ -63,7 +68,12 @@ class Themes_Core {
 	*/
 	public function admin_header_block()
 	{
-		return Kohana::config("globalcode.head");
+		$content = Kohana::config("globalcode.head");
+
+		// Filter::admin_header_block - Modify Admin Header Block
+		Event::run('ushahidi_filter.admin_header_block', $content);
+
+		return $content;
 	}
 
 	/**
@@ -231,11 +241,16 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 	 */
 	public function footer_block()
 	{
-		return Kohana::config("globalcode.foot").
+		$content = Kohana::config("globalcode.foot").
 				$this->google_analytics()."\n".
 				$this->ushahidi_stats_js()."\n".
 				$this->cdn_gradual_upgrade()."\n".
 				$this->scheduler_js();
+
+		// Filter::footer_block - Modify Footer Block
+		Event::run('ushahidi_filter.footer_block', $content);
+
+		return $content;
 	}
 
 	public function languages()
