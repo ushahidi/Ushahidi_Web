@@ -83,6 +83,9 @@ class Admin_Controller extends Template_Controller
 		$this->session = Session::instance();
 		$this->auth->auto_login();
 
+		// Themes Helper
+		$this->themes = new Themes();
+
 		// Admin is not logged in, or this is a member (not admin)
 		if ( ! $this->auth->logged_in('login') OR $this->auth->logged_in('member'))
 		{
@@ -139,7 +142,7 @@ class Admin_Controller extends Template_Controller
 
 		// Load profiler
 		// $profiler = new Profiler;
-		
+
 		// Header Nav
 		$header_nav = new View('header_nav');
 		$this->template->header_nav = $header_nav;
@@ -151,6 +154,10 @@ class Admin_Controller extends Template_Controller
 			$this->template->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
+
+		// Header and Footer Blocks
+		$this->template->header_block = $this->themes->admin_header_block();
+		$this->template->footer_block = $this->themes->footer_block();
     }
 
 	public function index()

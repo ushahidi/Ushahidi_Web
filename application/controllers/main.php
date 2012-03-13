@@ -121,21 +121,6 @@ class Main_Controller extends Template_Controller {
 
 		$this->template->header->this_page = "";
 
-		// Google Analytics
-		$google_analytics = Kohana::config('settings.google_analytics');
-		$this->template->footer->google_analytics = $this->themes->google_analytics($google_analytics);
-
-
-		// Get tracking javascript for stats
-		$this->template->footer->ushahidi_stats = (Kohana::config('settings.allow_stat_sharing') == 1)
-			? Stats_Model::get_javascript()
-			: '';
-
-		// Enable CDN gradual upgrader
-		$this->template->footer->cdn_gradual_upgrade = (Kohana::config('cdn.cdn_gradual_upgrade') != false)
-			? cdn::cdn_gradual_upgrade_js()
-			: '';
-
 		// add copyright info
 		$this->template->footer->site_copyright_statement = '';
 		$site_copyright_statement = trim(Kohana::config('settings.site_copyright_statement'));
@@ -483,18 +468,9 @@ class Main_Controller extends Template_Controller {
 		//$myPacker = new javascriptpacker($js , 'Normal', false, false);
 		//$js = $myPacker->pack();
 
-		// Rebuild Header Block
+		// Build Header and Footer Blocks
 		$this->template->header->header_block = $this->themes->header_block();
-	}
-
-	public function cdn_gradual_upgrade()
-	{
-		$this->auto_render = FALSE;
-		$this->template = "";
-		if (Kohana::config('cdn.cdn_gradual_upgrade') != FALSE)
-		{
-			cdn::gradual_upgrade();
-		}
+		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 } // End Main
