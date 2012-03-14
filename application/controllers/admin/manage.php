@@ -192,6 +192,7 @@ class Manage_Controller extends Admin_Controller
 						$category->category_image = $cat_img_file;
 						$category->category_image_thumb = $cat_img_thumb_file;
 						$category->save();
+						Event::run('ushahidi_action.category_save', $post);
 					}
 
 					$form_saved = TRUE;
