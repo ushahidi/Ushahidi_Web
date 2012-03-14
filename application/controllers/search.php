@@ -18,11 +18,11 @@ class Search_Controller extends Main_Controller {
 	{
 		parent::__construct();
 	}
-
-    /**
-  	 * Build a search query with relevancy
-     * Stop word control included
-     */
+	
+	/**
+	 * Build a search query with relevancy
+	 * Stop word control included
+	 */
 	public function index($page = 1)
 	{
 		$this->template->content = new View('search');
@@ -75,14 +75,14 @@ class Search_Controller extends Main_Controller {
 		$db = new Database();
 
 		$keywords = explode(' ', $keyword_raw);
-		if (is_array($keywords) AND !empty($keywords))
+		if (is_array($keywords) AND ! empty($keywords)) 
 		{
 			array_change_key_case($keywords, CASE_LOWER);
 			$i = 0;
 
 			foreach($keywords as $value)
 			{
-				if ( ! in_array($value,$stop_words) AND !empty($value))
+				if ( ! in_array($value,$stop_words) AND ! empty($value))
 				{
 					// Escape the string for query safety
 					$chunk = $db->escape_str($value);
@@ -114,7 +114,7 @@ class Search_Controller extends Main_Controller {
 								. "ORDER BY relevance DESC LIMIT ";
 			}
 		}
-
+		
 		if ( ! empty($search_query))
 		{
 			// Pagination
