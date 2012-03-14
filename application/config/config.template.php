@@ -103,10 +103,20 @@ $config['render_stats'] = TRUE;
 $config['enable_mhi'] = FALSE;
 
 /**
+ * Allow members to sign in with OpenID providers, excluding RiverID
+ */
+$config['allow_openid'] = FALSE;
+
+/**
  * Filename prefixed used to determine extensions. For example, an
  * extension to the Controller class would be named MY_Controller.php.
  */
 $config['extension_prefix'] = 'MY_';
+
+/**
+ * Check if we should launch the installer or not
+ */
+$config['installer_check'] = TRUE;
 
 /**
  * Additional resource paths, or "modules". Each path can either be absolute
