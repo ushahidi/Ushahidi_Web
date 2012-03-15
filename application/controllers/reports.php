@@ -43,6 +43,8 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content = new View('reports');
 		$this->themes->js = new View('reports_js');
 
+		$this->template->header->page_title .= Kohana::lang('ui_main.reports').Kohana::config('settings.title_delimiter');
+
 		// Store any exisitng URL parameters
 		$this->themes->js->url_params = json_encode($_GET);
 
@@ -111,7 +113,6 @@ class Reports_Controller extends Main_Controller {
 		{
 			$latest_timestamp = Incident_Model::get_latest_report_timestamp();
 		}
-
 
 		// Round the number of days up to the nearest full day
 		$days_since = ceil((time() - $oldest_timestamp) / 86400);
@@ -255,6 +256,8 @@ class Reports_Controller extends Main_Controller {
 
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports_submit');
+
+		$this->template->header->page_title .= Kohana::lang('ui_main.reports_submit_new').Kohana::config('settings.title_delimiter');
 
 		//Retrieve API URL
 		$this->template->api_url = Kohana::config('settings.api_url');
@@ -631,6 +634,8 @@ class Reports_Controller extends Main_Controller {
 			$incident_description = nl2br($incident->incident_description);
 			Event::run('ushahidi_filter.report_title', $incident_title);
 			Event::run('ushahidi_filter.report_description', $incident_description);
+
+			$this->template->header->page_title .= $incident_title.Kohana::config('settings.title_delimiter');
 
 			// Add Features
 			$this->template->content->features_count = $incident->geometry->count();
