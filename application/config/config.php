@@ -81,6 +81,12 @@ if (@!is_writable($config["log_directory"])) {
 }
 
 /**
+ * The scheduler removes old logs. Set to false to disable or an int for the
+ * number of days to keep old logs.
+ */
+$config['log_cleanup_days_old'] = 7;
+
+/**
  * Enable or disable displaying of Kohana error pages. This will not affect
  * logging. Turning this off will disable ALL error pages.
  */
