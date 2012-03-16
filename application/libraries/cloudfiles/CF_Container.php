@@ -45,11 +45,11 @@ class CF_Container
         $bytes=0, $docdn=True)
     {
         if (strlen($name) > MAX_CONTAINER_NAME_LEN) {
-            throw new SyntaxException("Container name exceeds "
+            throw new Kohana_Exception("Container name exceeds "
                 . "maximum allowed length.");
         }
         if (strpos($name, "/") !== False) {
-            throw new SyntaxException(
+            throw new Kohana_Exception(
                 "Container names cannot contain a '/' character.");
         }
         $this->cfs_auth = $cfs_auth;
@@ -95,8 +95,8 @@ class CF_Container
             if ($this->cdn_acl_referrer != NULL) {
                 $me .= ", cdn acl referrer: " . $this->cdn_acl_referrer;
             }
-            
-            
+
+
         }
         return $me;
     }
@@ -130,7 +130,7 @@ class CF_Container
     function make_public($ttl=86400)
     {
         if ($this->cfs_http->getCDNMUrl() == NULL) {
-            throw new CDNNotEnabledException(
+            throw new Kohana_Exception(
                 "Authentication response did not indicate CDN availability");
         }
         if ($this->cdn_uri != NULL) {
@@ -159,7 +159,7 @@ class CF_Container
         #    return $this->make_public($ttl);
         #}
         if (!in_array($status, array(201,202))) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         $this->cdn_enabled = True;
@@ -182,7 +182,7 @@ class CF_Container
      * $container->purge_from_cdn("user@domain.com");
      * # or
      * $container->purge_from_cdn();
-     * # or 
+     * # or
      * $container->purge_from_cdn("user1@domain.com,user2@domain.com");
      * @returns boolean True if successful
      * @throws CDNNotEnabledException if CDN Is not enabled on this connection
@@ -190,16 +190,16 @@ class CF_Container
      */
     function purge_from_cdn($email=null)
     {
-        if (!$this->cfs_http->getCDNMUrl()) 
+        if (!$this->cfs_http->getCDNMUrl())
         {
-            throw new CDNNotEnabledException(
+            throw new Kohana_Exception(
                 "Authentication response did not indicate CDN availability");
         }
         $status = $this->cfs_http->purge_from_cdn($this->name, $email);
         if ($status < 199 or $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
-        } 
+        }
         return True;
     }
     /**
@@ -224,7 +224,7 @@ class CF_Container
      */
     function acl_user_agent($cdn_acl_user_agent="") {
         if ($this->cfs_http->getCDNMUrl() == NULL) {
-            throw new CDNNotEnabledException(
+            throw new Kohana_Exception(
                 "Authentication response did not indicate CDN availability");
         }
         list($status,$reason) =
@@ -235,7 +235,7 @@ class CF_Container
                                                   $this->cdn_acl_referrer
                 );
         if (!in_array($status, array(202,404))) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         $this->cdn_acl_user_agent = $cdn_acl_user_agent;
@@ -264,7 +264,7 @@ class CF_Container
      */
     function acl_referrer($cdn_acl_referrer="") {
         if ($this->cfs_http->getCDNMUrl() == NULL) {
-            throw new CDNNotEnabledException(
+            throw new Kohana_Exception(
                 "Authentication response did not indicate CDN availability");
         }
         list($status,$reason) =
@@ -275,13 +275,13 @@ class CF_Container
                                                   $cdn_acl_referrer
                 );
         if (!in_array($status, array(202,404))) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         $this->cdn_acl_referrer = $cdn_acl_referrer;
         return True;
     }
-    
+
     /**
      * Enable log retention for this CDN container.
      *
@@ -290,7 +290,7 @@ class CF_Container
      * uploaded to a ".CDN_ACCESS_LOGS" container in the form of
      * "container_name.YYYYMMDDHH-XXXX.gz". Requires CDN be enabled on
      * the account.
-     * 
+     *
      * Example:
      * <code>
      * # ... authentication code excluded (see previous examples) ...
@@ -310,7 +310,7 @@ class CF_Container
      */
     function log_retention($cdn_log_retention=False) {
         if ($this->cfs_http->getCDNMUrl() == NULL) {
-            throw new CDNNotEnabledException(
+            throw new Kohana_Exception(
                 "Authentication response did not indicate CDN availability");
         }
         list($status,$reason) =
@@ -321,13 +321,13 @@ class CF_Container
                                                   $this->cdn_acl_referrer
                 );
         if (!in_array($status, array(202,404))) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         $this->cdn_log_retention = $cdn_log_retention;
         return True;
     }
-    
+
     /**
      * Disable the CDN sharing for this container
      *
@@ -361,7 +361,7 @@ class CF_Container
     function make_private()
     {
         if ($this->cfs_http->getCDNMUrl() == NULL) {
-            throw new CDNNotEnabledException(
+            throw new Kohana_Exception(
                 "Authentication response did not indicate CDN availability");
         }
         list($status,$reason) = $this->cfs_http->remove_cdn_container($this->name);
@@ -369,7 +369,7 @@ class CF_Container
         #    return $this->make_private();
         #}
         if (!in_array($status, array(202,404))) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         $this->cdn_enabled = False;
@@ -484,7 +484,7 @@ class CF_Container
      * # Grab subsets of all storage objects
      * #
      * $first_ten = $images->list_objects(10);
-     * 
+     *
      * # Note the use of the previous result's last object name being
      * # used as the 'marker' parameter to fetch the next 10 objects
      * #
@@ -519,7 +519,7 @@ class CF_Container
         #    return $this->list_objects($limit, $marker, $prefix, $path);
         #}
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         return $obj_list;
@@ -578,7 +578,7 @@ class CF_Container
         #    return $this->get_objects($limit, $marker, $prefix, $path);
         #}
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         $objects = array();
@@ -634,7 +634,7 @@ class CF_Container
             $obj_name = $obj;
         }
         if (!$obj_name) {
-            throw new SyntaxException("Object name not set.");
+            throw new Kohana_Exception("Object name not set.");
         }
 
 				if ($dest_obj_name === NULL) {
@@ -651,17 +651,17 @@ class CF_Container
             $container_name_target = $container_target;
         }
         if (!$container_name_target) {
-            throw new SyntaxException("Container name target not set.");
+            throw new Kohana_Exception("Container name target not set.");
         }
 
         $status = $this->cfs_http->copy_object($obj_name,$dest_obj_name,$this->name,$container_name_target,$metadata,$headers);
         if ($status == 404) {
             $m = "Specified object '".$this->name."/".$obj_name;
             $m.= "' did not exist as source to copy from or '".$container_name_target."' did not exist as target to copy to.";
-            throw new NoSuchObjectException($m);
+            throw new Kohana_Exception($m);
         }
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         return true;
@@ -708,7 +708,7 @@ class CF_Container
             $obj_name = $obj;
         }
         if (!$obj_name) {
-            throw new SyntaxException("Object name not set.");
+            throw new Kohana_Exception("Object name not set.");
         }
 
 				if ($dest_obj_name === NULL) {
@@ -725,20 +725,20 @@ class CF_Container
             $container_name_source = $container_source;
         }
         if (!$container_name_source) {
-            throw new SyntaxException("Container name source not set.");
+            throw new Kohana_Exception("Container name source not set.");
         }
 
         $status = $this->cfs_http->copy_object($obj_name,$dest_obj_name,$container_name_source,$this->name,$metadata,$headers);
         if ($status == 404) {
             $m = "Specified object '".$container_name_source."/".$obj_name;
             $m.= "' did not exist as source to copy from or '".$this->name."/".$obj_name."' did not exist as target to copy to.";
-            throw new NoSuchObjectException($m);
+            throw new Kohana_Exception($m);
         }
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
-        
+
         return true;
     }
 
@@ -817,7 +817,7 @@ class CF_Container
 
         if(self::copy_object_from($obj,$container_source,$dest_obj_name,$metadata,$headers)) {
         	$retVal = self::delete_object($obj,$container_source);
-        } 	
+        }
 
         return $retVal;
     }
@@ -860,7 +860,7 @@ class CF_Container
             $obj_name = $obj;
         }
         if (!$obj_name) {
-            throw new SyntaxException("Object name not set.");
+            throw new Kohana_Exception("Object name not set.");
         }
 
         $container_name = NULL;
@@ -878,7 +878,7 @@ class CF_Container
 	            $container_name = $container;
 	        }
 	        if (!$container_name) {
-	            throw new SyntaxException("Container name source not set.");
+	            throw new Kohana_Exception("Container name source not set.");
 	        }
         }
 
@@ -889,10 +889,10 @@ class CF_Container
         if ($status == 404) {
             $m = "Specified object '".$container_name."/".$obj_name;
             $m.= "' did not exist to delete.";
-            throw new NoSuchObjectException($m);
+            throw new Kohana_Exception($m);
         }
         if ($status != 204) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         return True;
@@ -941,7 +941,7 @@ class CF_Container
         #    return $this->_cdn_initialize();
         #}
         if (!in_array($status, array(204,404))) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         $this->cdn_enabled = $cdn_enabled;

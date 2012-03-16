@@ -3,7 +3,7 @@
  * Object operations
  *
  * An Object is analogous to a file on a conventional filesystem. You can
- * read data from, or write data to your Objects. You can also associate 
+ * read data from, or write data to your Objects. You can also associate
  * arbitrary metadata with them.
  *
  * @package php-cloudfiles
@@ -32,10 +32,10 @@ class CF_Object
         if ($name[0] == "/") {
             $r = "Object name '".$name;
             $r .= "' cannot contain begin with a '/' character.";
-            throw new SyntaxException($r);
+            throw new Kohana_Exception($r);
         }
         if (strlen($name) > MAX_OBJECT_NAME_LEN) {
-            throw new SyntaxException("Object name exceeds "
+            throw new Kohana_Exception("Object name exceeds "
                 . "maximum allowed length.");
         }
         $this->container = $container;
@@ -50,7 +50,7 @@ class CF_Object
         $this->manifest = NULL;
         if ($dohead) {
             if (!$this->_initialize() && $force_exists) {
-                throw new NoSuchObjectException("No such object '".$name."'");
+                throw new Kohana_Exception("No such object '".$name."'");
             }
         }
     }
@@ -84,7 +84,7 @@ class CF_Object
      *
      * if fileinfo is not available it will try to use the internal
      * mime_content_type function.
-     * 
+     *
      * @param string $handle name of file or buffer to guess the type from
      * @return boolean <kbd>True</kbd> if successful
      * @throws BadContentTypeException
@@ -92,19 +92,19 @@ class CF_Object
     function _guess_content_type($handle) {
         if ($this->content_type)
             return;
-            
+
         if (function_exists("finfo_open")) {
             $local_magic = dirname(__FILE__) . "/share/magic";
             $finfo = @finfo_open(FILEINFO_MIME, $local_magic);
 
-            if (!$finfo) 
+            if (!$finfo)
                 $finfo = @finfo_open(FILEINFO_MIME);
-                
+
             if ($finfo) {
 
                 if (is_file((string)$handle))
                     $ct = @finfo_file($finfo, $handle);
-                else 
+                else
                     $ct = @finfo_buffer($finfo, $handle);
 
                 /* PHP 5.3 fileinfo display extra information like
@@ -128,11 +128,11 @@ class CF_Object
         }
 
         if (!$this->content_type) {
-            throw new BadContentTypeException("Required Content-Type not set");
+            throw new Kohana_Exception("Required Content-Type not set");
         }
         return True;
     }
-    
+
     /**
      * String representation of the Object's public URI
      *
@@ -247,7 +247,7 @@ class CF_Object
         #}
         if (($status < 200) || ($status > 299
                 && $status != 412 && $status != 304)) {
-            throw new InvalidResponseException("Invalid response (".$status."): "
+            throw new Kohana_Exception("Invalid response (".$status."): "
                 . $this->container->cfs_http->get_error());
         }
         return $data;
@@ -297,14 +297,14 @@ class CF_Object
      */
     function stream(&$fp, $hdrs=array())
     {
-        list($status, $reason) = 
+        list($status, $reason) =
                 $this->container->cfs_http->get_object_to_stream($this,$fp,$hdrs);
         #if ($status == 401 && $this->_re_auth()) {
         #    return $this->stream($fp, $hdrs);
         #}
         if (($status < 200) || ($status > 299
                 && $status != 412 && $status != 304)) {
-            throw new InvalidResponseException("Invalid response (".$status."): "
+            throw new Kohana_Exception("Invalid response (".$status."): "
                 .$reason);
         }
         return True;
@@ -354,7 +354,7 @@ class CF_Object
             #    return $this->sync_metadata();
             #}
             if ($status != 202) {
-                throw new InvalidResponseException("Invalid response ("
+                throw new Kohana_Exception("Invalid response ("
                     .$status."): ".$this->container->cfs_http->get_error());
             }
             return True;
@@ -425,10 +425,10 @@ class CF_Object
     function write($data=NULL, $bytes=0, $verify=True)
     {
         if (!$data && !is_string($data)) {
-            throw new SyntaxException("Missing data source.");
+            throw new Kohana_Exception("Missing data source.");
         }
         if ($bytes > MAX_OBJECT_SIZE) {
-            throw new SyntaxException("Bytes exceeds maximum object size.");
+            throw new Kohana_Exception("Bytes exceeds maximum object size.");
         }
         if ($verify) {
             if (!$this->_etag_override) {
@@ -451,7 +451,7 @@ class CF_Object
             $close_fh = True;
             $this->content_length = (float) strlen($data);
             if ($this->content_length > MAX_OBJECT_SIZE) {
-                throw new SyntaxException("Data exceeds maximum object size");
+                throw new Kohana_Exception("Data exceeds maximum object size");
             }
             $ct_data = substr($data, 0, 64);
         } else {
@@ -470,16 +470,16 @@ class CF_Object
         #}
         if ($status == 412) {
             if ($close_fh) { fclose($fp); }
-            throw new SyntaxException("Missing Content-Type header");
+            throw new Kohana_Exception("Missing Content-Type header");
         }
         if ($status == 422) {
             if ($close_fh) { fclose($fp); }
-            throw new MisMatchedChecksumException(
+            throw new Kohana_Exception(
                 "Supplied and computed checksums do not match.");
         }
         if ($status != 201) {
             if ($close_fh) { fclose($fp); }
-            throw new InvalidResponseException("Invalid response (".$status."): "
+            throw new Kohana_Exception("Invalid response (".$status."): "
                 . $this->container->cfs_http->get_error());
         }
         if (!$verify) {
@@ -522,18 +522,18 @@ class CF_Object
     {
         $fp = @fopen($filename, "r");
         if (!$fp) {
-            throw new IOException("Could not open file for reading: ".$filename);
+            throw new Kohana_Exception("Could not open file for reading: ".$filename);
         }
 
         clearstatcache();
-        
+
         $size = (float) sprintf("%u", filesize($filename));
         if ($size > MAX_OBJECT_SIZE) {
-            throw new SyntaxException("File size exceeds maximum object size.");
+            throw new Kohana_Exception("File size exceeds maximum object size.");
         }
 
         $this->_guess_content_type($filename);
-        
+
         $this->write($fp, $size, $verify);
         fclose($fp);
         return True;
@@ -567,7 +567,7 @@ class CF_Object
     {
         $fp = @fopen($filename, "wb");
         if (!$fp) {
-            throw new IOException("Could not open file for writing: ".$filename);
+            throw new Kohana_Exception("Could not open file for writing: ".$filename);
         }
         $result = $this->stream($fp);
         fclose($fp);
@@ -585,7 +585,7 @@ class CF_Object
      * $obj->purge_from_cdn("user@domain.com");
      * # or
      * $obj->purge_from_cdn();
-     * # or 
+     * # or
      * $obj->purge_from_cdn("user1@domain.com,user2@domain.com");
      * @returns boolean True if successful
      * @throws CDNNotEnabledException if CDN Is not enabled on this connection
@@ -595,12 +595,12 @@ class CF_Object
     {
         if (!$this->container->cfs_http->getCDNMUrl())
         {
-            throw new CDNNotEnabledException(
+            throw new Kohana_Exception(
                 "Authentication response did not indicate CDN availability");
         }
         $status = $this->container->cfs_http->purge_from_cdn($this->container->name . "/" . $this->name, $email);
         if ($status < 199 or $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->container->cfs_http->get_error());
         }
         return True;
@@ -681,7 +681,7 @@ class CF_Object
             return False;
         }
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException("Invalid response (".$status."): "
+            throw new Kohana_Exception("Invalid response (".$status."): "
                 . $this->container->cfs_http->get_error());
         }
         $this->etag = $etag;
