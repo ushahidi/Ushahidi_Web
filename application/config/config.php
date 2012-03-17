@@ -126,6 +126,7 @@ $config['installer_check'] = TRUE;
 $config['modules'] = array
 (
 	MODPATH.'auth',      // Authentication
+	MODPATH.'csrf',      // CSRF Handling
 	// MODPATH.'forge',     // Form generation
 	// MODPATH.'formation',     // Form generation
 	// MODPATH.'kodoc',     // Self-generating documentation

@@ -32,6 +32,13 @@ class reports_Core {
 	 */
 	public static function validate(array & $post, $admin_section = FALSE)
 	{
+		// CSRF validation before proceeding with the rest of the validation
+		if (isset($post['form_auth_token']))
+		{
+			if ( ! csrf::valid($post['form_auth_token']))
+				return FALSE
+		}
+
 		// Exception handling
 		if ( ! isset($post) OR ! is_array($post))
 			return FALSE;
