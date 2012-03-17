@@ -36,7 +36,7 @@ class reports_Core {
 		if (isset($post['form_auth_token']))
 		{
 			if ( ! csrf::valid($post['form_auth_token']))
-				return FALSE
+				return FALSE;
 		}
 
 		// Exception handling
