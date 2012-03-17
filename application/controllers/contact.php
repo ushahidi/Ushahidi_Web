@@ -26,6 +26,8 @@ class Contact_Controller extends Main_Controller
         $this->template->header->this_page = 'contact';
         $this->template->content = new View('contact');
 
+        $this->template->header->page_title .= Kohana::lang('ui_main.contact').Kohana::config('settings.title_delimiter');
+
 		// Setup and initialize form field names
         $form = array (
             'contact_name' => '',
