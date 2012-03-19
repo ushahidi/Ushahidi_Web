@@ -56,6 +56,10 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 				case "unverified" :
 					$this->response_data = $this->_get_unverified_reports();
 					break;
+					
+				case "all" :
+					$this->response_data = $this->_get_all_reports();
+					break;
 
 				default :
 					$this->set_error_message(array(
@@ -359,6 +363,21 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	{
 		$where = "\nWHERE i.incident_active = 0 ";
 
+		$where .= "ORDER BY i.id DESC ";
+
+		$limit = "\nLIMIT 0, $this->list_limit";
+
+		return $this->_get_reports($where, $limit);
+	}
+
+	/**
+	 * List first 15 reports
+	 *
+	 * @return array
+	 */
+	public function _get_all_reports()
+	{
+		$where = '';
 		$where .= "ORDER BY i.id DESC ";
 
 		$limit = "\nLIMIT 0, $this->list_limit";
