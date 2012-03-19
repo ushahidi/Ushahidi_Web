@@ -348,7 +348,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 	 * Generic function to get reports by given set of parameters
 	 *
 	 * @param string $where SQL where clause
-	 * @param int $limit No. of records to return - set to 20 by default
 	 * @return string XML or JSON string
 	 */
 	public function _get_incidents($where = array())
