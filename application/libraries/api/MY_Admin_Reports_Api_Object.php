@@ -357,20 +357,13 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_unapproved_reports()
 	{
-		if ($_POST)
-		{
-			$where = "\nWHERE i.incident_active = 0 ";
+		$where = "\nWHERE i.incident_active = 0 ";
 
-			$where .= "ORDER BY i.id DESC ";
+		$where .= "ORDER BY i.id DESC ";
 
-			$limit = "\nLIMIT 0, $this->list_limit";
+		$limit = "\nLIMIT 0, $this->list_limit";
 
-			return $this->_get_reports($where, $limit);
-		}
-		else
-		{
-			return $this->response(3);
-		}
+		return $this->_get_reports($where, $limit);
 	}
 
 	/**
@@ -380,21 +373,13 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	 */
 	public function _get_approved_reports()
 	{
-		if ($_POST)
-		{
-			$where = "\nWHERE i.incident_active = 1 ";
+		$where = "\nWHERE i.incident_active = 1 ";
 
-			$where .= "ORDER BY i.id DESC ";
+		$where .= "ORDER BY i.id DESC ";
 
-			$limit = "\nLIMIT 0, $this->list_limit";
+		$limit = "\nLIMIT 0, $this->list_limit";
 
-			return $this->_get_reports($where, $limit);
-		}
-		else
-		{
-			return $this->response(3);
-		}
-
+		return $this->_get_reports($where, $limit);
 	}
 
 	/**
@@ -404,21 +389,13 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	 */
 	public function _get_verified_reports()
 	{
-		if ($_POST)
-		{
-			$where = "\nWHERE i.incident_verified = 1 ";
+		$where = "\nWHERE i.incident_verified = 1 ";
 
-			$where .= "ORDER BY i.id DESC ";
+		$where .= "ORDER BY i.id DESC ";
 
-			$limit = "\nLIMIT 0, $this->list_limit";
+		$limit = "\nLIMIT 0, $this->list_limit";
 
-			return $this->_get_reports($where, $limit);
-		}
-		else
-		{
-			return $this->response(3);
-		}
-
+		return $this->_get_reports($where, $limit);
 	}
 
 	/**
@@ -430,21 +407,13 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	 */
 	public function _get_unverified_reports()
 	{
-		if ($_POST)
-		{
-			$where = "\nWHERE i.incident_verified = 0 ";
+		$where = "\nWHERE i.incident_verified = 0 ";
 
-			$where .= "ORDER BY i.id DESC ";
+		$where .= "ORDER BY i.id DESC ";
 
-			$limit = "\nLIMIT 0, $this->list_limit";
+		$limit = "\nLIMIT 0, $this->list_limit";
 
-			return $this->_get_reports($where, $limit);
-		}
-		else
-		{
-			return $this->response(3);
-		}
-
+		return $this->_get_reports($where, $limit);
 	}
 
 	/**
