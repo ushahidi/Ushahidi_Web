@@ -4,6 +4,9 @@ UPDATE `category` SET `id` = '999' WHERE `id` = '5';
 -- Added Query: Update any incident tied to recently altered category with the new id
 UPDATE `incident_category` set `category_id` = '999' where `category_id` = '5';
 
+-- Check to ensure that child categories of recently altered parent category are also updated
+UPDATE `category` set `parent_id` = '999' where `parent_id` = '5';
+
 -- Insert orphaned reports category
 INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_description`, `category_color`, `category_visible`, `category_trusted`) VALUES
 (5, 5, 'NONE', 'Holds orphaned reports', '009887', 1, 1);
