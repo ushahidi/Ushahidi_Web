@@ -335,6 +335,7 @@ class Manage_Controller extends Admin_Controller
 
 		$parents_array = ORM::factory('category')
 							->where('parent_id','0')
+							->where('category_trusted != 1')
 							->select_list('id', 'category_title');
 
 		// add none to the list
