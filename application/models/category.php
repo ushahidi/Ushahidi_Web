@@ -55,15 +55,52 @@ class Category_Model extends ORM_Tree {
 					->add_rules('category_description','required')
 					->add_rules('category_color','required', 'length[6,6]');
 		
-		
 		// Validation checks where parent_id > 0
 		if ($array->parent_id > 0)
 		{
-			if ( ! empty($this->id) AND ($this->id == $array->parent_id))
+			$this_parent = self::factory('category')->find($array->parent_id);
+			
+			// If parent category is trusted/special
+			if($this_parent->category_trusted == 1)
 			{
-				// Error
-				Kohana::log('error', 'The parent id and category id are the same!');
-				$array->add_error('parent_id', 'same');
+				Kohana::log('error', 'The parent id is a trusted category!');
+				$array->add_error('parent_id', 'parent_trusted');
+			}
+			
+			// When editing a category	
+			if ( ! empty($this->id))
+			{
+				$this_cat = self::factory('category')->find($this->id);
+				
+				// If this category is trusted/special, don't subcategorize
+				if($this_cat->category_trusted)
+				{
+					Kohana::log('error', 'This is a special category');
+					$array->add_error('parent_id', 'special');
+				}
+				
+				// If parent category is trusted/special
+				if($this_parent->category_trusted == 1)
+				{
+					Kohana::log('error', 'The parent id is a trusted category!');
+					$array->add_error('parent_id', 'parent_trusted');
+				}
+				
+				// If subcategories exist
+				$children = self::factory('category')->where('parent_id',$this->id)->count_all();
+				if($children > 0 )
+				{
+					Kohana::log('error', 'This category has subcategories');
+					$array->add_error('parent_id', 'already_parent');
+				}
+				
+				// If parent and category id are the same
+				if($this->id == $array->parent_id)
+				{
+					// Error
+					Kohana::log('error', 'The parent id and category id are the same!');
+					$array->add_error('parent_id', 'same');
+				}	
 			}
 			else
 			{
