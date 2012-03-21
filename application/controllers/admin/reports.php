@@ -946,19 +946,21 @@ class Reports_Controller extends Admin_Controller {
 				}
 				//handle active or not active
 				if($show_active && !$show_inactive)
-				{				
+				{
 					$filter .= ' incident_active = 1 ';
 				}
 				elseif(!$show_active && $show_inactive)
-				{				
+				{
 					$filter .= '  incident_active = 0 ';
 				}
 				elseif($show_active && $show_inactive)
-				{				
+				{
 					$filter .= ' (incident_active = 1 OR incident_active = 0) ';
 				}
+				// Neither active nor inactive selected: select nothing
 				elseif(!$show_active && !$show_inactive)
-				{				
+				{
+					// Equivalent to 1 = 0
 					$filter .= ' (incident_active = 0 AND incident_active = 1) ';
 				}
 				
