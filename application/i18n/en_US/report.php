@@ -11,6 +11,16 @@
 		'between' => 'Please select a valid item to include in the download',
 		'numeric' => 'Please select a valid item to include in the download',
 	),
+	'data_active' => array(
+		'between' => 'Please select "Reports Awaiting Approval" or "Approved Reports" or both',
+		'numeric' => 'Please select "Reports Awaiting Approval" or "Approved Reports" or both',
+		'required' => 'Please select "Reports Awaiting Approval" or "Approved Reports" or both',
+	),
+	'data_verified' => array(
+		'between' => 'Please select "Reports Awaiting Verification" or "Verified Reports" or both',
+		'numeric' => 'Please select "Reports Awaiting Verification" or "Verified Reports" or both',
+		'required' => 'Please select "Reports Awaiting Verification" or "Verified Reports" or both',
+	),
 	'data_point' => array(
 		'between' => 'Please select a valid type of report to download',
 		'numeric' => 'Please select a valid type of report to download',

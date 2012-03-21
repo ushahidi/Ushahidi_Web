@@ -30,9 +30,13 @@
 			
 			$("#reportForm").validate({
 				rules: {
-					"data_point[]": {
+					"data_active[]": {
 						required: true,
-						range: [1,4]
+						range: [0,1]
+					},
+					"data_verified[]": {
+						required: true,
+						range: [0,1]
 					},
 					"data_include[]": {
 						range: [1,5]
@@ -45,18 +49,22 @@
 					}
 				},
 				messages: {
-					"data_point[]": {
-						required: "Please select at least one type of report to download",
-						range: "Please select a valid report type"
+					"data_verified[]": {
+						required: "<?php echo addslashes(Kohana::lang('report.data_verified.required'));?>",
+						range: "<?php echo addslashes(Kohana::lang('report.data_verified.between'));?>"
+					},
+					"data_active[]": {
+						required: "<?php echo addslashes(Kohana::lang('report.data_active.required'));?>",
+						range: "<?php echo addslashes(Kohana::lang('report.data_active.between'));?>"
 					},
 					"data_include[]": {
-						range: "Please select a valid item"
+						range: "<?php echo addslashes(Kohana::lang('report.data_include.between'));?>"
 					},
 					from_date: {
-						date: "Please enter a valid FROM Date"
+						date: "<?php echo addslashes(Kohana::lang('report.from_date.date_mmddyyyy'));?>"
 					},
 					to_date: {
-						date: "Please enter a valid TO Date"
+						date: "<?php echo addslashes(Kohana::lang('report.to_date.date_mmddyyyy'));?>"
 					}
 				},
 				errorPlacement: function(error, element) {

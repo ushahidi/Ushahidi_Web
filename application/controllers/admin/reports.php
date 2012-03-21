@@ -864,7 +864,8 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
 		$form = array(
-			'data_point'   => '',
+			'data_active'   => '',
+			'data_verified'   => '',
 			'data_include' => '',
 			'from_date'	   => '',
 			'to_date'	   => ''
@@ -883,7 +884,8 @@ class Reports_Controller extends Admin_Controller {
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('data_point.*','required','numeric','between[1,4]');
+			$post->add_rules('data_active.*','required','numeric','between[0,1]');
+			$post->add_rules('data_verified.*','required','numeric','between[0,1]');
 			//$post->add_rules('data_include.*','numeric','between[1,5]');
 			$post->add_rules('data_include.*','numeric','between[1,6]');
 			$post->add_rules('from_date','date_mmddyyyy');
@@ -922,28 +924,27 @@ class Reports_Controller extends Admin_Controller {
 				$show_inactive = false;
 				$show_verified = false;
 				$show_not_verified = false;
-				foreach($post->data_point as $item)
+				
+				if (in_array(1, $post->data_active))
 				{
-					if ($item == 1)
-					{
-						$show_active = true;
-					}
-
-					if ($item == 2)
-					{
-						$show_verified = true;
-					}
-
-					if ($item == 3)
-					{
-						$show_inactive = true;
-					}
-
-					if ($item == 4)
-					{
-						$show_not_verified = true;
-					}
+					$show_active = true;
 				}
+
+				if (in_array(0, $post->data_active))
+				{
+					$show_inactive = true;
+				}
+
+				if (in_array(1, $post->data_verified))
+				{
+					$show_verified = true;
+				}
+
+				if (in_array(0, $post->data_verified))
+				{
+					$show_not_verified = true;
+				}
+				
 				//handle active or not active
 				if($show_active && !$show_inactive)
 				{

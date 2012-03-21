@@ -51,19 +51,19 @@
 					</td>
 				</tr>
 				<tr>
-					<td><?php print form::checkbox('data_point[]', '1', FALSE); ?><?php echo Kohana::lang('ui_main.approved_reports');?></td>
+					<td><?php print form::checkbox('data_active[]', '1', FALSE); ?><?php echo Kohana::lang('ui_main.approved_reports');?></td>
 					<td><?php print form::checkbox('data_include[]', '1', FALSE); ?><?php echo Kohana::lang('ui_main.include_location_information');?></td>
 				</tr>
 				<tr>
-					<td><?php print form::checkbox('data_point[]', '2', FALSE); ?><?php echo Kohana::lang('ui_main.verified_reports');?></td>
+					<td><?php print form::checkbox('data_verified[]', '1', FALSE); ?><?php echo Kohana::lang('ui_main.verified_reports');?></td>
 					<td><?php print form::checkbox('data_include[]', '2', FALSE); ?><?php echo Kohana::lang('ui_main.include_description');?></td>
 				</tr>
 				<tr>
-					<td><?php print form::checkbox('data_point[]', '3', FALSE); ?><?php echo Kohana::lang('ui_main.reports');?> <?php echo Kohana::lang('ui_main.awaiting_approval');?></td>
+					<td><?php print form::checkbox('data_active[]', '0', FALSE); ?><?php echo Kohana::lang('ui_main.reports');?> <?php echo Kohana::lang('ui_main.awaiting_approval');?></td>
 					<td><?php print form::checkbox('data_include[]', '3', FALSE); ?><?php echo Kohana::lang('ui_main.include_categories');?></td>
 				</tr>
                                 <tr>
-                                        <td><?php print form::checkbox('data_point[]', '4', FALSE); ?><?php echo Kohana::lang('ui_main.reports');?> <?php echo Kohana::lang('ui_main.awaiting_verification');?></td>
+                                        <td><?php print form::checkbox('data_verified[]', '0', FALSE); ?><?php echo Kohana::lang('ui_main.reports');?> <?php echo Kohana::lang('ui_main.awaiting_verification');?></td>
                                         <td><?php print form::checkbox('data_include[]','4',FALSE); ?><?php echo Kohana::lang('ui_main.include_latitude');?></td>
                                 </tr>
                                 <tr>
