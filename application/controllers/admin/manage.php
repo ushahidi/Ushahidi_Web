@@ -223,6 +223,20 @@ class Manage_Controller extends Admin_Controller
 					ORM::factory('category_lang')
 						->where(array('category_id' => $category->id))
 						->delete_all();
+					
+					// Check for all subcategories tied to this category and make them top level
+					$children = ORM::factory('category')
+								->where('parent_id', $category->id)
+								->find_all();
+					if($children)
+					{
+						foreach($children as $child)
+						{
+							$sub_cat = new Category_Model($child->id);
+							$sub_cat->parent_id = 0;
+							$sub_cat->save();
+						}
+					}
 						
 					// Check for all reports tied to this category to be deleted
 					$result = ORM::factory('incident_category')
@@ -281,6 +295,20 @@ class Manage_Controller extends Admin_Controller
 				// Show/Hide Action
 				if ($category->loaded)
 				{
+					// Check for all subcategories tied to this category 
+					$children = ORM::factory('category')
+								->where('parent_id', $category->id)
+								->find_all();
+					
+					// Then show/hide subcategories based on status of parent category
+					foreach($children as $child)
+					{
+						$sub_cat = new Category_Model($child->id);
+						$sub_cat->category_visible = ($category->category_visible == 1)? 0: 1;
+						$sub_cat->save();
+					}
+					
+					// Change status of the Parent Category
 					$category->category_visible = ($category->category_visible == 1)? 0 : 1;
 					$category->save();
 					$form_saved = TRUE;
