@@ -33,8 +33,9 @@
 			// Create the map
 			var latitude = <?php echo $latitude; ?>;
 			var longitude = <?php echo $longitude; ?>;
+			var zoomLevel = <?php echo $default_zoom; ?>;
 			
-			map = createMap('divMap', latitude, longitude);
+			map = createMap('divMap', latitude, longitude, zoomLevel);
 			
 			// Add the radius layer
 			addRadiusLayer(map, latitude, longitude);
