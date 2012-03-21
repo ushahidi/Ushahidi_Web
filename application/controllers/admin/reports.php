@@ -955,7 +955,7 @@ class Reports_Controller extends Admin_Controller {
 				}
 				elseif($show_active && $show_inactive)
 				{				
-					$filter .= ' (incident_active = 1 OR incident_active = 1) ';
+					$filter .= ' (incident_active = 1 OR incident_active = 0) ';
 				}
 				elseif(!$show_active && !$show_inactive)
 				{				
