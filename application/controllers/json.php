@@ -383,7 +383,7 @@ class Json_Controller extends Template_Controller
 				// Single Main Incident
 				$encoded_title = utf8tohtml::convert($marker->incident_title, TRUE);
 				$encoded_title = str_ireplace('"','&#34;',$encoded_title);
-				$item_name = "<a href='".url::base()."reports/view/".$marker->incident_id."'>".$encoded_title. "</a>";
+				$item_name = "<a href='".url::base()."reports/view/".$marker->id."'>".$encoded_title. "</a>";
 				$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
 	
 				$json_item = array();
