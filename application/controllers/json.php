@@ -132,7 +132,10 @@ class Json_Controller extends Template_Controller
 			$geometry = $this->_get_geometry($marker->incident_id, $marker->incident_title, $marker->incident_date);
 			if (count($geometry))
 			{
-				array_push($json_features, $geometry);
+				foreach($geometry as $g)
+				{
+					array_push($json_features, $g);
+				}
 			}
 		}
 		
@@ -396,13 +399,16 @@ class Json_Controller extends Template_Controller
 					'type' => 'Point',
 					'coordinates' => array($marker->location->longitude, $marker->location->latitude)
 				);
+				
+				array_push($json_features, $json_item);
 			}
 			else
 			{
-				$json_item = $geometry;
+				foreach($geometry as $g)
+				{
+					array_push($json_features, $g);
+				}
 			}
-
-			array_push($json_features, $json_item);
 		}
 
 		$json = json_encode(array(
@@ -808,6 +814,7 @@ class Json_Controller extends Template_Controller
 					'name' => $item_name,
 					'description' => utf8tohtml::convert($item->geometry_comment,TRUE),
 					'color' => $fillcolor,
+					'icon' => '',
 					'strokecolor' => $strokecolor,
 					'strokewidth' => $strokewidth,
 					'link' => url::base()."reports/view/".$incident_id,
