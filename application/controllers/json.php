@@ -701,7 +701,7 @@ class Json_Controller extends Template_Controller
 					$json_item['properties'] = array(
 						'name' => $item_name,
 						'link' => "http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast,
-						'category' => array($category_id),
+						'category' => array(0),
 						'color' => $sharing_color,
 						'icon' => '',
 						'thumb' => '',
