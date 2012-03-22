@@ -163,9 +163,9 @@ class Json_Controller extends Template_Controller
 		// Database
 		$db = new Database();
 
-		$json = "";
-		$json_item = "";
-		$json_array = array();
+		$json = array();
+		$json_item = array();
+		$json_features = array();
 		$geometry_array = array();
 
 		$color = Kohana::config('settings.default_map_all');
@@ -254,9 +254,9 @@ class Json_Controller extends Template_Controller
 		{
 			// Calculate cluster center
 			$bounds = $this->_calculateCenter($cluster);
-			$cluster_center = $bounds['center'];
-			$southwest = $bounds['sw'];
-			$northeast = $bounds['ne'];
+			$cluster_center = array_values($bounds['center']);
+			$southwest = $bounds['sw']['longitude'].','.$bounds['sw']['latitude'];
+			$northeast = $bounds['ne']['longitude'].','.$bounds['ne']['latitude'];
 
 			// Number of Items in Cluster
 			$cluster_count = count($cluster);
@@ -267,53 +267,53 @@ class Json_Controller extends Template_Controller
 				: "";
 			
 			// Build out the JSON string
-			$json_item = "{";
-			$json_item .= "\"type\":\"Feature\",";
-			$json_item .= "\"properties\": {";
-			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base()
-				 . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter.">" . $cluster_count . " Reports</a>")) . "\",";
-			$json_item .= "\"link\": \"".url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter."\", ";
-			$json_item .= "\"category\":[0], ";
-			$json_item .= "\"color\": \"".$color."\", ";
-			$json_item .= "\"icon\": \"".$icon."\", ";
-			$json_item .= "\"thumb\": \"\", ";
-			$json_item .= "\"timestamp\": \"0\", ";
-			$json_item .= "\"count\": \"" . $cluster_count . "\"";
-			$json_item .= "},";
-			$json_item .= "\"geometry\": {";
-			$json_item .= "\"type\":\"Point\", ";
-			$json_item .= "\"coordinates\":[" . $cluster_center . "]";
-			$json_item .= "}";
-			$json_item .= "}";
+			$item_name = str_replace(array(chr(10),chr(13)), ' ',
+				"<a href=" . url::base() . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter.">" . $cluster_count . " Reports</a>");
+			
+			$json_item = array();
+			$json_item['type'] = 'Feature';
+			$json_item['properties'] = array(
+				'name' => $item_name,
+				'link' => url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter,
+				'category' => array($category_id), // $category never set??
+				'color' => $color,
+				'icon' => $icon,
+				'thumb' => '',
+				'timestamp' => 0,
+				'count' => $cluster_count,
+			);
+			$json_item['geometry'] = array(
+				'type' => 'Point',
+				'coordinates' => $cluster_center
+			);
 
-			array_push($json_array, $json_item);
+			array_push($json_features, $json_item);
 		}
 
 		foreach ($singles as $single)
 		{
-			$json_item = "{";
-			$json_item .= "\"type\":\"Feature\",";
-			$json_item .= "\"properties\": {";
-			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href=" . url::base()
-					. "reports/view/" . $single['id'] . "/>".str_replace('"','\"',$single['incident_title'])."</a>")) . "\",";
-			$json_item .= "\"link\": \"".url::base()."reports/view/".$single['id']."\", ";
-			$json_item .= "\"category\":[0], ";
-			$json_item .= "\"color\": \"".$color."\", ";
-			$json_item .= "\"icon\": \"".$icon."\", ";
-			// $json_item .= "\"thumb\": \"".$single['thumb']."\", ";
-			$json_item .= "\"timestamp\": \"0\", ";
-			$json_item .= "\"count\": \"" . 1 . "\"";
-			$json_item .= "},";
-			$json_item .= "\"geometry\": {";
-			$json_item .= "\"type\":\"Point\", ";
-			$json_item .= "\"coordinates\":[" . $single['longitude'] . ", " . $single['latitude'] . "]";
-			$json_item .= "}";
-			$json_item .= "}";
+			$item_name = str_replace(array(chr(10),chr(13)), ' ', 
+				"<a href=" . url::base(). "reports/view/" . $single['id'] . "/>".str_replace('"','\"',$single['incident_title'])."</a>");
+			
+			$json_item = array();
+			$json_item['type'] = 'Feature';
+			$json_item['properties'] = array(
+				'name' => $item_name,
+				'link' => url::base()."reports/view/".$single['id'],
+				'category' => array($category_id), // $category never set??
+				'color' => $color,
+				'icon' => $icon,
+				'thumb' => '',
+				'timestamp' => 0,
+				'count' => 1,
+			);
+			$json_item['geometry'] = array(
+				'type' => 'Point',
+				'coordinates' => array($single['longitude'], $single['latitude']),
+			);
 
-			array_push($json_array, $json_item);
+			array_push($json_features, $json_item);
 		}
-
-		$json = implode(",", $json_array);
 		
 		// 
 		// E.Kala July 27, 2011
@@ -324,6 +324,11 @@ class Json_Controller extends Template_Controller
 		// {
 		// 	$json = implode(",", $geometry_array).",".$json;
 		// }
+		
+		$json = json_encode(array(
+			"type" => "FeatureCollection",
+			"features" => $json_features
+		));
 		
 		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
@@ -681,9 +686,9 @@ class Json_Controller extends Template_Controller
 				{
 					// Calculate cluster center
 					$bounds = $this->_calculateCenter($cluster);
-					$cluster_center = $bounds['center'];
-					$southwest = $bounds['sw'];
-					$northeast = $bounds['ne'];
+					$cluster_center = array_values($bounds['center']);
+					$southwest = $bounds['sw']['longitude'].','.$bounds['sw']['latitude'];
+					$northeast = $bounds['ne']['longitude'].','.$bounds['ne']['latitude'];
 
 					// Number of Items in Cluster
 					$cluster_count = count($cluster);
@@ -958,9 +963,9 @@ class Json_Controller extends Template_Controller
 		$lat_avg = $lat_sum / count($cluster);
 		$lon_avg = $lon_sum / count($cluster);
 
-		$center = $lon_avg.",".$lat_avg;
-		$sw = $west.",".$south;
-		$ne = $east.",".$north;
+		$center = array('longitude' => $lon_avg, 'latitude' => $lat_avg);
+		$sw = array('longitude' => $west,'latitude' => $south);
+		$ne = array('longitude' => $east,'latitude' => $north);
 
 		return array(
 			"center"=>$center,
