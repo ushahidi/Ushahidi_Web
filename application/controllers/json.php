@@ -333,7 +333,7 @@ class Json_Controller extends Template_Controller
 	{
 		$json = "";
 		$json_item = "";
-		$json_array = array();
+		$json_features = array();
 
 		// Get the neigbouring incidents
 		$neighbours = Incident_Model::get_neighbouring_incidents($incident_id, FALSE, 20, 100);
@@ -349,44 +349,27 @@ class Json_Controller extends Template_Controller
 
 			foreach ($neighbours as $row)
 			{
-				$json_item = "{";
-				$json_item .= "\"type\":\"Feature\",";
-				$json_item .= "\"properties\": {";
-				$json_item .= "\"id\": \"".$row->id."\", ";
-
-				$encoded_title = utf8tohtml::convert($row->incident_title,TRUE);
+				$encoded_title = utf8tohtml::convert($row->incident_title, TRUE);
 				$encoded_title = str_ireplace('"','&#34;',$encoded_title);
-				$encoded_title = json_encode($encoded_title);
-				$encoded_title = str_ireplace('"','',$encoded_title);
+				$item_name = "<a href='".url::base()."reports/view/".$row->id."'>".$encoded_title. "</a>";
+				$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+				
+				$json_item = array();
+				$json_item['type'] = 'Feature';
+				$json_item['properties'] = array(
+					'id' => $row->id,
+					'name' => $item_name,
+					'link' => url::base()."reports/view/".$row->id,
+					'category' => array(0), // $category never set??
+					'timestamp' => strtotime($row->incident_date)
+				);
+				$json_item['geometry'] = array(
+					'type' => 'Point',
+					'coordinates' => array($row->longitude, $row->latitude)
+				);
 
-				$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base()
-						. "reports/view/" . $row->id . "'>".$encoded_title."</a>")) . "\",";
-				$json_item .= "\"link\": \"".url::base()."reports/view/".$row->id."\", ";
-				$json_item .= "\"category\":[0], ";
-				$json_item .= "\"timestamp\": \"" . strtotime($row->incident_date) . "\"";
-				$json_item .= "},";
-				$json_item .= "\"geometry\": {";
-				$json_item .= "\"type\":\"Point\", ";
-				$json_item .= "\"coordinates\":[" . $row->longitude . ", " . $row->latitude . "]";
-				$json_item .= "}";
-				$json_item .= "}";
-
-				array_push($json_array, $json_item);
+				array_push($json_features, $json_item);
 			}
-			
-			// Single Main Incident
-			$json_single = "{";
-			$json_single .= "\"type\":\"Feature\",";
-			$json_single .= "\"properties\": {";
-			$json_single .= "\"id\": \"".$marker->id."\", ";
-
-			$encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
-
-			$json_single .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base()
-					. "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
-			$json_single .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
-			$json_single .= "\"category\":[0], ";
-			$json_single .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
 			
 			// Get Incident Geometries
 			$geometry = $this->_get_geometry($marker->id, $marker->incident_title, $marker->incident_date);
@@ -394,34 +377,38 @@ class Json_Controller extends Template_Controller
 			// If there are no geometries, use Single Incident Marker
 			if ( ! count($geometry))
 			{
-				$json_item = "{";
-				$json_item .= "\"type\":\"Feature\",";
-				$json_item .= "\"properties\": {";
-				$json_item .= "\"id\": \"".$marker->id."\", ";
-
-				$encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
-
-				$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base()
-					. "reports/view/" . $marker->id . "'>".$encoded_title."</a>")) . "\",";
-				$json_item .= "\"link\": \"".url::base()."reports/view/".$marker->id."\", ";
-				$json_item .= "\"category\":[0], ";
-				$json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
-				$json_item .= "},\"geometry\":";
-				$json_item .= "{\"type\":\"Point\", ";
-				$json_item .= "\"coordinates\":[" . $marker->location->longitude . ", " . $marker->location->latitude . "]";
-				$json_item .= "}";
-				$json_item .= "}";
+				// Single Main Incident
+				$encoded_title = utf8tohtml::convert($marker->incident_title, TRUE);
+				$encoded_title = str_ireplace('"','&#34;',$encoded_title);
+				$item_name = "<a href='".url::base()."reports/view/".$marker->incident_id."'>".$encoded_title. "</a>";
+				$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+	
+				$json_item = array();
+				$json_item['type'] = 'Feature';
+				$json_item['properties'] = array(
+					'id' => $marker->id,
+					'name' => $item_name,
+					'link' => url::base()."reports/view/".$marker->id,
+					'category' => array(0), // $category never set??
+					'timestamp' => strtotime($marker->incident_date)
+				);
+				$json_item['geometry'] = array(
+					'type' => 'Point',
+					'coordinates' => array($marker->location->longitude, $marker->location->latitude)
+				);
 			}
 			else
 			{
-				$json_item = implode(",", $geometry);
+				$json_item = $geometry;
 			}
 
-			array_push($json_array, $json_item);
+			array_push($json_features, $json_item);
 		}
 
-
-		$json = implode(",", $json_array);
+		$json = json_encode(array(
+			"type" => "FeatureCollection",
+			"features" => $json_features
+		));
 		
 		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
