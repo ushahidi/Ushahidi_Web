@@ -54,7 +54,7 @@ class Json_Controller extends Template_Controller
 	 */
 	public function index()
 	{
-		$json = array();
+		$json = '';
 		$json_item = array();
 		$json_item_first = array();
 		$json_features = array();
@@ -108,7 +108,7 @@ class Json_Controller extends Template_Controller
 				'id' => $marker->incident_id,
 				'name' => $item_name,
 				'link' => url::base()."reports/view/".$marker->incident_id,
-				'category' => array($category_id), // $category never set??
+				'category' => array($category_id),
 				'color' => $color,
 				'icon' => $icon,
 				'thumb' => $thumb,
@@ -163,7 +163,7 @@ class Json_Controller extends Template_Controller
 		// Database
 		$db = new Database();
 
-		$json = array();
+		$json = '';
 		$json_item = array();
 		$json_features = array();
 		$geometry_array = array();
@@ -275,7 +275,7 @@ class Json_Controller extends Template_Controller
 			$json_item['properties'] = array(
 				'name' => $item_name,
 				'link' => url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter,
-				'category' => array($category_id), // $category never set??
+				'category' => array($category_id),
 				'color' => $color,
 				'icon' => $icon,
 				'thumb' => '',
@@ -300,7 +300,7 @@ class Json_Controller extends Template_Controller
 			$json_item['properties'] = array(
 				'name' => $item_name,
 				'link' => url::base()."reports/view/".$single['id'],
-				'category' => array($category_id), // $category never set??
+				'category' => array($category_id),
 				'color' => $color,
 				'icon' => $icon,
 				'thumb' => '',
@@ -368,7 +368,7 @@ class Json_Controller extends Template_Controller
 					'id' => $row->id,
 					'name' => $item_name,
 					'link' => url::base()."reports/view/".$row->id,
-					'category' => array(0), // $category never set??
+					'category' => array(0),
 					'timestamp' => strtotime($row->incident_date)
 				);
 				$json_item['geometry'] = array(
@@ -397,7 +397,7 @@ class Json_Controller extends Template_Controller
 					'id' => $marker->id,
 					'name' => $item_name,
 					'link' => url::base()."reports/view/".$marker->id,
-					'category' => array(0), // $category never set??
+					'category' => array(0),
 					'timestamp' => strtotime($marker->incident_date)
 				);
 				$json_item['geometry'] = array(
@@ -572,10 +572,10 @@ class Json_Controller extends Template_Controller
 	 * @param int $sharing_id - ID of the new Share Layer
 	 */
 	public function share( $sharing_id = false )
-	{	
-		$json = "";
-		$json_item = "";
-		$json_array = array();
+	{
+		$json = '';
+		$json_item = array();
+		$json_features = array();
 		$sharing_data = "";
 		$clustering = Kohana::config('settings.allow_clustering');
 		
@@ -692,51 +692,53 @@ class Json_Controller extends Template_Controller
 
 					// Number of Items in Cluster
 					$cluster_count = count($cluster);
+					
+					$item_name = str_replace(array(chr(10),chr(13)), ' ',
+						"<a href='http://" . $sharing_url . "/reports/index/?c=0&sw=".$southwest."&ne=".$northeast."'>" . $cluster_count . " Reports</a>");
+					
+					$json_item = array();
+					$json_item['type'] = 'Feature';
+					$json_item['properties'] = array(
+						'name' => $item_name,
+						'link' => "http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast,
+						'category' => array($category_id),
+						'color' => $sharing_color,
+						'icon' => '',
+						'thumb' => '',
+						'timestamp' => 0,
+						'count' => $cluster_count,
+					);
+					$json_item['geometry'] = array(
+						'type' => 'Point',
+						'coordinates' => $cluster_center
+					);
 
-					$json_item = "{";
-					$json_item .= "\"type\":\"Feature\",";
-					$json_item .= "\"properties\": {";
-					$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/index/?c=0&sw=".$southwest."&ne=".$northeast."'>" . $cluster_count . " Reports</a>")) . "\",";
-					$json_item .= "\"link\": \"http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast."\", ";		  
-					$json_item .= "\"category\":[0], ";
-					$json_item .= "\"icon\": \"\", ";
-					$json_item .= "\"color\": \"".$sharing_color."\", ";
-					$json_item .= "\"timestamp\": \"0\", ";
-					$json_item .= "\"count\": \"" . $cluster_count . "\"";
-					$json_item .= "},";
-					$json_item .= "\"geometry\": {";
-					$json_item .= "\"type\":\"Point\", ";
-					$json_item .= "\"coordinates\":[" . $cluster_center . "]";
-					$json_item .= "}";
-					$json_item .= "}";
-
-					array_push($json_array, $json_item);
+					array_push($json_features, $json_item);
 				}
 
 				foreach ($singles as $single)
 				{
-					$json_item = "{";
-					$json_item .= "\"type\":\"Feature\",";
-					$json_item .= "\"properties\": {";
-					$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/view/" . $single['id'] . "'>".$single['incident_title']."</a>")) . "\",";
-					$json_item .= "\"link\": \"http://".$sharing_url."reports/view/".$single['id']."\", ";
-					$json_item .= "\"category\":[0], ";
-					$json_item .= "\"icon\": \"\", ";
-					$json_item .= "\"color\": \"".$sharing_color."\", ";
-					$json_item .= "\"timestamp\": \"0\", ";
-					$json_item .= "\"count\": \"" . 1 . "\"";
-					$json_item .= "},";
-					$json_item .= "\"geometry\": {";
-					$json_item .= "\"type\":\"Point\", ";
-					$json_item .= "\"coordinates\":[" . $single['longitude'] . ", " . $single['latitude'] . "]";
-					$json_item .= "}";
-					$json_item .= "}";
+					$item_name = "<a href='http://" . $sharing_url . "/reports/view/" . $single['id'] . "'>".$single['incident_title']."</a>";
+					$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+		
+					$json_item = array();
+					$json_item['type'] = 'Feature';
+					$json_item['properties'] = array(
+						'name' => $item_name,
+						'link' => "http://".$sharing_url."reports/view/".$single['id'],
+						'category' => array(0),
+						'color' => $sharing_color,
+						'icon' => '',
+						'timestamp' => 0,
+						'count' => 1
+					);
+					$json_item['geometry'] = array(
+						'type' => 'Point',
+						'coordinates' => array($single['longitude'],$single['latitude'])
+					);
 
-					array_push($json_array, $json_item);
+					array_push($json_features, $json_item);
 				}
-
-				$json = implode(",", $json_array);
-				
 			}
 			else
 			{
@@ -746,34 +748,39 @@ class Json_Controller extends Template_Controller
 										->find_all();
 
 				foreach ($markers as $marker)
-				{	
-					$json_item = "{";
-					$json_item .= "\"type\":\"Feature\",";
-					$json_item .= "\"properties\": {";
-					$json_item .= "\"id\": \"".$marker->incident_id."\", \n";
+				{
+					
+					$encoded_title = utf8tohtml::convert($marker->incident_title, TRUE);
+					$encoded_title = str_ireplace('"','&#34;',$encoded_title);
+					$item_name = "<a href='http://" . $sharing_url . "/reports/view/" . $marker->incident_id . "'>".$encoded_title."</a>";
+					$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+		
+					$json_item = array();
+					$json_item['type'] = 'Feature';
+					$json_item['properties'] = array(
+						'id' => $marker->incident_id,
+						'name' => $item_name,
+						'link' => "http://".$sharing_url."reports/view/".$marker->incident_id,
+						'color' => $sharing_color,
+						'icon' => '',
+						'timestamp' => strtotime($marker->incident_date)
+					);
+					$json_item['geometry'] = array(
+						'type' => 'Point',
+						'coordinates' => array($marker->longitude, $marker->latitude)
+					);
 
-					$encoded_title = utf8tohtml::convert($marker->incident_title,TRUE);
-
-					$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='http://" . $sharing_url . "/reports/view/" . $marker->incident_id . "'>".$encoded_title."</a>")) . "\",";
-					$json_item .= "\"link\": \"http://".$sharing_url."reports/view/".$marker->incident_id."\", ";
-					$json_item .= "\"icon\": \"\", ";
-					$json_item .= "\"color\": \"".$sharing_color ."\", \n";
-					$json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
-					$json_item .= "},";
-					$json_item .= "\"geometry\": {";
-					$json_item .= "\"type\":\"Point\", ";
-					$json_item .= "\"coordinates\":[" . $marker->longitude . ", " . $marker->latitude . "]";
-					$json_item .= "}";
-					$json_item .= "}";
-
-					array_push($json_array, $json_item);
+					array_push($json_features, $json_item);
 				}
-
-				$json = implode(",", $json_array);
 			}
+
+			$json = json_encode(array(
+				"type" => "FeatureCollection",
+				"features" => $json_features
+			));
 		}
 		
-		 header('Content-type: application/json; charset=utf-8');
+		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
 	}
 
@@ -823,7 +830,7 @@ class Json_Controller extends Template_Controller
 					'strokecolor' => $strokecolor,
 					'strokewidth' => $strokewidth,
 					'link' => url::base()."reports/view/".$incident_id,
-					'category' => array(0), // $category never set??
+					'category' => array(0),
 					'timestamp' => strtotime($incident_date),
 				);
 				$json_item['geometry'] = $geom_array;
