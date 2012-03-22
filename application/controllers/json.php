@@ -920,46 +920,30 @@ class Json_Controller extends Template_Controller
 	private function _calculateCenter($cluster)
 	{
 		// Calculate average lat and lon of clustered items
-		$south = 0;
-		$west = 0;
-		$north = 0;
-		$east = 0;
+		$south = 90;
+		$west = 180;
+		$north = -90;
+		$east = -180;
 
 		$lat_sum = $lon_sum = 0;
 		foreach ($cluster as $marker)
 		{
-			if (!$south)
-			{
-				$south = $marker['latitude'];
-			}
-			elseif ($marker['latitude'] < $south)
+			if ($marker['latitude'] < $south)
 			{
 				$south = $marker['latitude'];
 			}
 
-			if (!$west)
-			{
-				$west = $marker['longitude'];
-			}
-			elseif ($marker['longitude'] < $west)
+			if ($marker['longitude'] < $west)
 			{
 				$west = $marker['longitude'];
 			}
 
-			if (!$north)
-			{
-				$north = $marker['latitude'];
-			}
-			elseif ($marker['latitude'] > $north)
+			if ($marker['latitude'] > $north)
 			{
 				$north = $marker['latitude'];
 			}
 
-			if (!$east)
-			{
-				$east = $marker['longitude'];
-			}
-			elseif ($marker['longitude'] > $east)
+			if ($marker['longitude'] > $east)
 			{
 				$east = $marker['longitude'];
 			}
