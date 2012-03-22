@@ -54,9 +54,10 @@ class Json_Controller extends Template_Controller
 	 */
 	public function index()
 	{
-		$json = "";
-		$json_item = "";
-		$json_array = array();
+		$json = array();
+		$json_item = array();
+		$json_item_first = array();
+		$json_features = array();
 		$color = Kohana::config('settings.default_map_all');
 		$icon = "";
 
@@ -75,8 +76,6 @@ class Json_Controller extends Template_Controller
 		// Fetch the incidents
 		$markers = (isset($_GET['page']) AND intval($_GET['page']) > 0)? reports::fetch_incidents(TRUE) : reports::fetch_incidents();
 		
-		// Variable to store individual item for report detail page
-		$json_item_first = "";	
 		foreach ($markers as $marker)
 		{
 			$thumb = "";
@@ -97,35 +96,28 @@ class Json_Controller extends Template_Controller
 					}
 				}
 			}
-			
-			$json_item = "{";
-			$json_item .= "\"type\":\"Feature\",";
-			$json_item .= "\"properties\": {";
-			$json_item .= "\"id\": \"".$marker->incident_id."\", \n";
 
 			$encoded_title = utf8tohtml::convert($marker->incident_title, TRUE);
 			$encoded_title = str_ireplace('"','&#34;',$encoded_title);
-			$encoded_title = json_encode($encoded_title);
-			$encoded_title = str_ireplace('"', '', $encoded_title);
+			$item_name = "<a href='".url::base()."reports/view/".$marker->incident_id."'>".$encoded_title. "</a>";
+			$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
 
-			$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a "
-					. "href='".url::base()."reports/view/".$marker->incident_id."'>".$encoded_title)."</a>") . "\","
-					. "\"link\": \"".url::base()."reports/view/".$marker->incident_id."\", ";
-
-			$json_item .= (isset($category))
-				? "\"category\":[" . $category_id . "], "
-				: "\"category\":[0], ";
-
-			$json_item .= "\"color\": \"".$color."\", \n";
-			$json_item .= "\"icon\": \"".$icon."\", \n";
-			$json_item .= "\"thumb\": \"".$thumb."\", \n";
-			$json_item .= "\"timestamp\": \"" . strtotime($marker->incident_date) . "\"";
-			$json_item .= "},";
-			$json_item .= "\"geometry\": {";
-			$json_item .= "\"type\":\"Point\", ";
-			$json_item .= "\"coordinates\":[" . $marker->longitude . ", " . $marker->latitude . "]";
-			$json_item .= "}";
-			$json_item .= "}";
+			$json_item = array();
+			$json_item['type'] = 'Feature';
+			$json_item['properties'] = array(
+				'id' => $marker->incident_id,
+				'name' => $item_name,
+				'link' => url::base()."reports/view/".$marker->incident_id,
+				'category' => array($category_id), // $category never set??
+				'color' => $color,
+				'icon' => $icon,
+				'thumb' => $thumb,
+				'timestamp' => strtotime($marker->incident_date)
+			);
+			$json_item['geometry'] = array(
+				'type' => 'Point',
+				'coordinates' => array($marker->longitude, $marker->latitude)
+			);
 
 			if ($marker->incident_id == $incident_id)
 			{
@@ -133,25 +125,27 @@ class Json_Controller extends Template_Controller
 			}
 			else
 			{
-				array_push($json_array, $json_item);
+				array_push($json_features, $json_item);
 			}
 			
 			// Get Incident Geometries
 			$geometry = $this->_get_geometry($marker->incident_id, $marker->incident_title, $marker->incident_date);
 			if (count($geometry))
 			{
-				$json_item = implode(",", $geometry);
-				array_push($json_array, $json_item);
+				array_push($json_features, $geometry);
 			}
 		}
 		
 		if ($json_item_first)
 		{
 			// Push individual marker in last so that it is layered on top when pulled into map
-			array_push($json_array, $json_item_first);
+			array_push($json_features, $json_item_first);
 		}
 		
-		$json = implode(",", $json_array);
+		$json = json_encode(array(
+			"type" => "FeatureCollection",
+			"features" => $json_features
+		));
 
 		header('Content-type: application/json; charset=utf-8');
 		$this->template->json = $json;
@@ -806,15 +800,10 @@ class Json_Controller extends Template_Controller
 				$geom = $wkt->read($item->geometry);
 				$geom_array = $geom->getGeoInterface();
 
-				$json_item = "{";
-				$json_item .= "\"type\":\"Feature\",";
-				$json_item .= "\"properties\": {";
-				$json_item .= "\"id\": \"".$incident_id."\", ";
-				$json_item .= "\"feature_id\": \"".$item->id."\", ";
-
 				$title = ($item->geometry_label) ? 
 					utf8tohtml::convert($item->geometry_label,TRUE) : 
 					utf8tohtml::convert($incident_title,TRUE);
+				$item_name = str_replace(array(chr(10),chr(13)), ' ', "<a href='" . url::base() . "reports/view/" . $incident_id . "'>".$title."</a>");
 					
 				$fillcolor = ($item->geometry_color) ? 
 					utf8tohtml::convert($item->geometry_color,TRUE) : "ffcc66";
@@ -824,20 +813,26 @@ class Json_Controller extends Template_Controller
 					
 				$strokewidth = ($item->geometry_strokewidth) ? $item->geometry_strokewidth : "3";
 
-				$json_item .= "\"name\":\"" . str_replace(chr(10), ' ', str_replace(chr(13), ' ', "<a href='" . url::base() . "reports/view/" . $incident_id . "'>".$title."</a>")) . "\",";
+				$json_item = array();
+				$json_item['type'] = 'Feature';
+				$json_item['properties'] = array(
+					'id' => $incident_id,
+					'feature_id' => $item->id,
+					'name' => $item_name,
+					'description' => utf8tohtml::convert($item->geometry_comment,TRUE),
+					'color' => $fillcolor,
+					'strokecolor' => $strokecolor,
+					'strokewidth' => $strokewidth,
+					'link' => url::base()."reports/view/".$incident_id,
+					'category' => array(0), // $category never set??
+					'timestamp' => strtotime($incident_date),
+				);
+				$json_item['geometry'] = $geom_array;
 
-				$json_item .= "\"description\": \"" . utf8tohtml::convert($item->geometry_comment,TRUE) . "\", ";
-				$json_item .= "\"color\": \"" . $fillcolor . "\", ";
-				$json_item .= "\"strokecolor\": \"" . $strokecolor . "\", ";
-				$json_item .= "\"strokewidth\": \"" . $strokewidth . "\", ";
-				$json_item .= "\"link\": \"".url::base()."reports/view/".$incident_id."\", ";
-				$json_item .= "\"category\":[0], ";
-				$json_item .= "\"timestamp\": \"" . strtotime($incident_date) . "\"";
-				$json_item .= "},\"geometry\":".json_encode($geom_array)."}";
 				$geometry[] = $json_item;
 			}
 		}
-		
+
 		return $geometry;
 	}
 
