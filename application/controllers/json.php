@@ -46,6 +46,17 @@ class Json_Controller extends Template_Controller
 
 		// Cacheable JSON Controller
 		$this->is_cachable = TRUE;
+		
+		$this->auth = new Auth();
+		$this->auth->auto_login();
+
+		if(Kohana::config('settings.private_deployment'))
+		{
+			if ( ! $this->auth->logged_in('login'))
+			{
+				url::redirect('login');
+			}
+		}
 	}
 
 
