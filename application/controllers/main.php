@@ -61,19 +61,8 @@ class Main_Controller extends Template_Controller {
 	{
 		parent::__construct();
 
-		$this->auth = new Auth();
-		$this->auth->auto_login();
-
 		// Load Session
 		$this->session = Session::instance();
-
-		if(Kohana::config('settings.private_deployment'))
-		{
-			if ( ! $this->auth->logged_in('login'))
-			{
-				url::redirect('login');
-			}
-		}
 
 		// Load cache
 		$this->cache = new Cache;

@@ -79,9 +79,7 @@ class Admin_Controller extends Template_Controller
 		// Load database
 		$this->db = new Database();
 
-		$this->auth = new Auth();
 		$this->session = Session::instance();
-		$this->auth->auto_login();
 
 		// Themes Helper
 		$this->themes = new Themes();
