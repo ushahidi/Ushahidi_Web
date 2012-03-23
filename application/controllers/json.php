@@ -343,6 +343,12 @@ class Json_Controller extends Template_Controller
 		$json_item = "";
 		$json_features = array();
 
+		// Check if incident valid/approved
+		if ( ! Incident_Model::is_valid_incident($incident_id, TRUE) )
+		{
+			throw new Kohana_404_Exception();
+		}
+
 		// Get the neigbouring incidents
 		$neighbours = Incident_Model::get_neighbouring_incidents($incident_id, FALSE, 20, 100);
 
@@ -350,7 +356,11 @@ class Json_Controller extends Template_Controller
 		{
 			// Load the incident
 			// @todo Get this fixed
-			$marker = ORM::factory('incident', $incident_id);
+			$marker = ORM::factory('incident')->where('incident.incident_active',1)->find(intval($incident_id));
+			if ( ! $marker->loaded )
+			{
+				throw new Kohana_404_Exception();
+			}
 			
 			// Get the incident/report date
 			$incident_date = date('Y-m', strtotime($marker->incident_date));
