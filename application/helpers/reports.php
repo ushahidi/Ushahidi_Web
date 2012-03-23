@@ -380,7 +380,9 @@ class reports_Core {
 					if ($geometry)
 					{
 						// 	Format the SQL string
-						$sql = sprintf($sql, $incident->id, $geometry, $label, $comment, $color, $strokewidth);
+						$sql = "INSERT INTO ".Kohana::config('database.default.table_prefix')."geometry "
+							. "(incident_id, geometry, geometry_label, geometry_comment, geometry_color, geometry_strokewidth)"
+							. "VALUES(".$incident->id.", GeomFromText('".$geometry."'), '".$label."', '".$comment."', '".$color."', ".$strokewidth.")";
 						Kohana::log('debug', $sql);
 						// Execute the query
 						$db->query($sql);
