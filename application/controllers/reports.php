@@ -453,14 +453,14 @@ class Reports_Controller extends Main_Controller {
 		// Sanitize the report id before proceeding
 		$id = intval($id);
 
-		if ($id > 0 AND Incident_Model::is_valid_incident($id,FALSE))
+		if ($id > 0 AND Incident_Model::is_valid_incident($id,TRUE))
 		{
 			$incident = ORM::factory('incident')
 				->where('id',$id)
 				->where('incident_active',1)
 				->find();
 
-			if ( ! $incident->loaded)	// Not Found
+			if ( ! $incident->loaded) // Not Found
 			{
 				url::redirect('reports/view/');
 			}

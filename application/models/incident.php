@@ -304,12 +304,12 @@ class Incident_Model extends ORM {
 	 * Checks if a specified incident id is numeric and exists in the database
 	 *
 	 * @param int $incident_id ID of the incident to be looked up
-	 * @param bool $approved Whether the incident has been approved
+	 * @param bool $approved Whether to include un-approved reports
 	 * @return bool
 	 */
-	public static function is_valid_incident($incident_id, $approved = FALSE)
+	public static function is_valid_incident($incident_id, $approved = TRUE)
 	{
-		$where = ($approved == TRUE)? array("incident_active" => "1") : array("id >" => 0);
+		$where = ($approved == TRUE) ? array("incident_active" => "1") : array("id >" => 0);
 		return (intval($incident_id) > 0)
 			? ORM::factory('incident')->where($where)->find(intval($incident_id))->loaded
 			: FALSE;

@@ -398,7 +398,7 @@ class Reports_Controller extends Admin_Controller {
 		//because you have 1000 concurrent users you'll need to do this
 		//correctly. Etherton.
 		$form_id = '';
-		if($id && Incident_Model::is_valid_incident($id))
+		if($id && Incident_Model::is_valid_incident($id, FALSE))
 		{
 			$form_id = ORM::factory('incident', $id)->form_id;
 		}
@@ -409,7 +409,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
 		// Create Categories
-		$this->template->content->categories = Category_Model::get_categories(0, FALSE, TRUE);
+		$this->template->content->categories = Category_Model::get_categories(0, TRUE, FALSE);
 		$this->template->content->new_categories_form = $this->_new_categories_form_arr();
 
 		// Time formatting
@@ -448,7 +448,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->forms = $forms;
 
 		// Get the incident media
-		$incident_media =  Incident_Model::is_valid_incident($id)
+		$incident_media =  Incident_Model::is_valid_incident($id, FALSE)
 			? ORM::factory('incident', $id)->media
 			: FALSE;
 
@@ -578,7 +578,7 @@ class Reports_Controller extends Admin_Controller {
 			}
 
 			// Check if the incident id is valid an add it to the post data
-			if (Incident_Model::is_valid_incident($id))
+			if (Incident_Model::is_valid_incident($id, FALSE))
 			{
 				$post = array_merge($post, array('incident_id' => $id));
 			}
@@ -696,7 +696,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 		else
 		{
-			if (Incident_Model::is_valid_incident($id))
+			if (Incident_Model::is_valid_incident($id, FALSE))
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident', $id);
