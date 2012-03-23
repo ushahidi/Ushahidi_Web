@@ -459,6 +459,8 @@ class Incident_Model extends ORM {
 			// Get the table prefix
 			$table_prefix = Kohana::config('database.default.table_prefix');
 
+			$incident_id = (intval($incident_id));
+
 			// Get the location object and extract the latitude and longitude
 			$location = self::factory('incident', $incident_id)->location;
 			$latitude = $location->latitude;
@@ -469,14 +471,14 @@ class Incident_Model extends ORM {
 
 			// Query to fetch the neighbour
 			$sql = "SELECT DISTINCT i.*, l.`latitude`, l.`longitude`, l.location_name, "
-				. "((ACOS(SIN($latitude * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS($latitude * PI() / 180) * "
-				. "	COS(l.`latitude` * PI() / 180) * COS(($longitude - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance "
+				. "((ACOS(SIN( ? * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS( ? * PI() / 180) * "
+				. "	COS(l.`latitude` * PI() / 180) * COS(( ? - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance "
 				. "FROM `".$table_prefix."incident` AS i "
 				. "INNER JOIN `".$table_prefix."location` AS l ON (l.`id` = i.`location_id`) "
 				. "INNER JOIN `".$table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) "
 				. "INNER JOIN `".$table_prefix."category` AS c ON (ic.`category_id` = c.`id`) "
 				. "WHERE i.incident_active = 1 "
-				. "AND i.id <> ".$incident_id." ";
+				. "AND i.id <> ? ";
 
 			// Check if the distance has been specified
 			if (intval($distance) > 0)
@@ -501,7 +503,7 @@ class Incident_Model extends ORM {
 			}
 
 			// Fetch records and return
-			return Database::instance()->query($sql);
+			return Database::instance()->query($sql, $latitude, $latitude, $longitude, $incident_id);
 		}
 		else
 		{
