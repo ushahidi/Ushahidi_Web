@@ -104,7 +104,7 @@
 		//echo html::script(url::file_loc('js').'media/js/protochart/prototype', true);
 		echo html::script(url::file_loc('js').'media/js/raphael', true);
 		echo '<script type="text/javascript" charset="utf-8">';
-		echo 'var impact_json = { '.$impact_json .' };';
+		echo 'var impact_json = '.$impact_json .';';
 		echo '</script>';
 		echo html::script(url::file_loc('js').'media/js/raphael-ushahidi-impact', true);
 	}
