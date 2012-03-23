@@ -63,14 +63,12 @@ class Settings_Controller extends Admin_Controller
 			'allow_comments' => '',
 			'allow_feed' => '',
 			'allow_stat_sharing' => '',
-			'allow_clustering' => '',
 			'cache_pages' => '',
 			'cache_pages_lifetime' => '',
 			'private_deployment' => '',
 			'manually_approve_users' => '',
 			'require_email_confirmation' => '',
 			'checkins' => '',
-			'default_map_all' => '',
 			'google_analytics' => '',
 			'twitter_hashtags' => '',
 			'api_akismet' => ''
@@ -114,14 +112,12 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_comments','required','between[0,2]');
 			$post->add_rules('allow_feed','required','between[0,1]');
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
-			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('cache_pages','required','between[0,1]');
 			$post->add_rules('cache_pages_lifetime','required','in_array[60,300,600,900,1800]');
 			$post->add_rules('private_deployment','required','between[0,1]');
 			$post->add_rules('manually_approve_users','required','between[0,1]');
 			$post->add_rules('require_email_confirmation','required','between[0,1]');
 			$post->add_rules('checkins','required','between[0,1]');
-			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('twitter_hashtags','length[0,500]');
 			$post->add_rules('api_akismet','length[0,100]', 'alpha_numeric');
@@ -158,14 +154,12 @@ class Settings_Controller extends Admin_Controller
 				$settings->allow_comments = $post->allow_comments;
 				$settings->allow_feed = $post->allow_feed;
 				$settings->allow_stat_sharing = $post->allow_stat_sharing;
-				$settings->allow_clustering = $post->allow_clustering;
 				$settings->cache_pages = $post->cache_pages;
 				$settings->cache_pages_lifetime = $post->cache_pages_lifetime;
 				$settings->private_deployment = $post->private_deployment;
 				$settings->manually_approve_users = $post->manually_approve_users;
 				$settings->require_email_confirmation = $post->require_email_confirmation;
 				$settings->checkins = $post->checkins;
-				$settings->default_map_all = $post->default_map_all;
 				$settings->google_analytics = $post->google_analytics;
 				$settings->twitter_hashtags = $post->twitter_hashtags;
 				$settings->api_akismet = $post->api_akismet;
@@ -304,14 +298,12 @@ class Settings_Controller extends Admin_Controller
 				'allow_comments' => $settings->allow_comments,
 				'allow_feed' => $settings->allow_feed,
 				'allow_stat_sharing' => $settings->allow_stat_sharing,
-				'allow_clustering' => $settings->allow_clustering,
 				'cache_pages' => $settings->cache_pages,
 				'cache_pages_lifetime' => $settings->cache_pages_lifetime,
 				'private_deployment' => $settings->private_deployment,
 				'manually_approve_users' => $settings->manually_approve_users,
 				'require_email_confirmation' => $settings->require_email_confirmation,
 				'checkins' => $settings->checkins,
-				'default_map_all' => $settings->default_map_all,
 				'google_analytics' => $settings->google_analytics,
 				'twitter_hashtags' => $settings->twitter_hashtags,
 				'api_akismet' => $settings->api_akismet
@@ -397,7 +389,9 @@ class Settings_Controller extends Admin_Controller
 			'multi_country' => '',
 			'default_lat' => '',
 			'default_lon' => '',
-			'default_zoom' => ''
+			'default_zoom' => '',
+			'default_map_all' => '',
+			'allow_clustering' => '',
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
 		//	corresponding to the form field names
@@ -424,6 +418,8 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('default_zoom','required','between[0,21]');		// Validate for maximum and minimum zoom values
 			$post->add_rules('default_lat','required','between[-85,85]');		// Validate for maximum and minimum latitude values
 			$post->add_rules('default_lon','required','between[-180,180]');		// Validate for maximum and minimum longitude values
+			$post->add_rules('allow_clustering','required','between[0,1]');
+			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
 
 			// Test to see if things passed the rule checks
 			if ($post->validate())
@@ -437,6 +433,8 @@ class Settings_Controller extends Admin_Controller
 				$settings->default_zoom = $post->default_zoom;
 				$settings->default_lat = $post->default_lat;
 				$settings->default_lon = $post->default_lon;
+				$settings->allow_clustering = $post->allow_clustering;
+				$settings->default_map_all = $post->default_map_all;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
 
@@ -479,7 +477,9 @@ class Settings_Controller extends Admin_Controller
 				'multi_country' => $settings->multi_country,
 				'default_lat' => $settings->default_lat,
 				'default_lon' => $settings->default_lon,
-				'default_zoom' => $settings->default_zoom
+				'default_zoom' => $settings->default_zoom,
+				'allow_clustering' => $settings->allow_clustering,
+				'default_map_all' => $settings->default_map_all
 			);
 		}
 
@@ -520,9 +520,14 @@ class Settings_Controller extends Admin_Controller
 			$map_array[$layer->name] = $layer->title;
 		}
 		$this->template->content->map_array = $map_array;
+		
+		$this->template->content->yesno_array = array(
+			'1'=>strtoupper(Kohana::lang('ui_main.yes')),
+			'0'=>strtoupper(Kohana::lang('ui_main.no')));
 
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
+		$this->template->colorpicker_enabled = TRUE;
 		$this->template->js = new View('admin/settings_js');
 		$this->template->js->default_map = $form['default_map'];
 		$this->template->js->default_zoom = $form['default_zoom'];
@@ -732,7 +737,6 @@ class Settings_Controller extends Admin_Controller
 			);
 		}
 
-		$this->template->colorpicker_enabled = TRUE;
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;

@@ -106,6 +106,37 @@
 									</div>
 								</div>
 							</div>
+							
+							
+							<div class="has_border">
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_clustering"); ?>"><?php echo Kohana::lang('settings.site.allow_clustering');?></a></h4>
+								<div class="c_push">
+									<?php print form::dropdown('allow_clustering', $yesno_array, $form['allow_clustering']); ?>
+								</div>
+								
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_default_category_colors"); ?>"><?php echo Kohana::lang('settings.site.default_category_colors');?></a></h4>
+								<div class="c_push">
+								<?php print form::input('default_map_all', $form['default_map_all'], ' class="text"'); ?>
+								</div>
+								<script type="text/javascript" charset="utf-8">
+									$(document).ready(function() {
+										$('#default_map_all').ColorPicker({
+											onSubmit: function(hsb, hex, rgb) {
+												$('#default_map_all').val(hex);
+											},
+											onChange: function(hsb, hex, rgb) {
+												$('#default_map_all').val(hex);
+											},
+											onBeforeShow: function () {
+												$(this).ColorPickerSetColor(this.value);
+											}
+										})
+										.bind('keyup', function(){
+											$(this).ColorPickerSetColor(this.value);
+										});
+									});
+								</script>
+							</div>
 	
 								<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="margin-left: 0px;" />
 								<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
