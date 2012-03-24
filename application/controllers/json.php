@@ -572,7 +572,7 @@ class Json_Controller extends Template_Controller
 		}
 		else
 		{
-			echo "";
+			throw new Kohana_404_Exception();
 		}
 	}
 
@@ -596,7 +596,7 @@ class Json_Controller extends Template_Controller
 				->find($sharing_id);
 			
 			if( ! $sharing->loaded )
-				return;
+				throw new Kohana_404_Exception();
 			
 			$sharing_url = $sharing->sharing_url;
 			$sharing_color = $sharing->sharing_color;
