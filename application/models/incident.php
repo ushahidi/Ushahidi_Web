@@ -169,11 +169,11 @@ class Incident_Model extends ORM {
 			$groupby_date_text = "YEARWEEK(incident_date)";
 		}
 
-		$date_filter = ($start_date) ? ' AND incident_date >= "' . $start_date . '"' : "";
+		$date_filter = ($start_date) ? ' AND incident_date >= "' . $db->escape($start_date) . '"' : "";
 
 		if ($end_date)
 		{
-			$date_filter .= ' AND incident_date <= "' . $end_date . '"';
+			$date_filter .= ' AND incident_date <= "' . $db->escape($end_date) . '"';
 		}
 
 		$active_filter = ($active == 'all' || $active == 'false')? $active_filter = '0,1' : '1';
@@ -183,7 +183,7 @@ class Incident_Model extends ORM {
 		if (isset($media_type) AND is_numeric($media_type))
 		{
 			$joins = 'INNER JOIN '.$table_prefix.'media AS m ON m.incident_id = i.id';
-			$general_filter = ' AND m.media_type IN ('. $media_type  .')';
+			$general_filter = ' AND m.media_type IN ('. $db->escape($media_type)  .')';
 		}
 
 		$graph_data = array();
