@@ -76,6 +76,7 @@
 	'incident_title' => array(
 		'length' => 'The "Report Title" field must be at least 3 and no more 200 characters long.',
 		'required' => 'The "Report Title" field is required.',
+		'csrf' => 'Possible CSRF attack. Did you really mean to create/edit a report?'
 	),
 	'incident_verified' => array(
 		'between' => 'Please enter a valid value for Verify This Report',

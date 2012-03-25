@@ -32,12 +32,6 @@ class reports_Core {
 	 */
 	public static function validate(array & $post, $admin_section = FALSE)
 	{
-		// CSRF validation before proceeding with the rest of the validation
-		if (isset($post['form_auth_token']))
-		{
-			if ( ! csrf::valid($post['form_auth_token']))
-				return FALSE;
-		}
 
 		// Exception handling
 		if ( ! isset($post) OR ! is_array($post))
@@ -46,6 +40,13 @@ class reports_Core {
 		// Create validation object
 		$post = Validation::factory($post)
 				->pre_filter('trim', TRUE);
+		
+		// CSRF validation before proceeding with the rest of the validation
+		if ( ! isset($post['form_auth_token']) ||  ! csrf::valid($post['form_auth_token']))
+		{
+			$post->add_error('incident_title','csrf');
+			return FALSE;
+		}
 		
 		$post->add_rules('incident_title','required', 'length[3,200]');
 		$post->add_rules('incident_description','required');
