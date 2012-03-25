@@ -97,17 +97,15 @@ class Json_Controller extends Template_Controller
 				}
 			}
 
-			$encoded_title = utf8tohtml::convert($marker->incident_title, TRUE);
-			$encoded_title = str_ireplace('"','&#34;',$encoded_title);
-			$item_name = "<a href='".url::base()."reports/view/".$marker->incident_id."'>".$encoded_title. "</a>";
-			$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+			$link = url::base()."reports/view/".$marker->incident_id;
+			$item_name = $this->_get_title($marker->incident_title, $link);
 
 			$json_item = array();
 			$json_item['type'] = 'Feature';
 			$json_item['properties'] = array(
 				'id' => $marker->incident_id,
 				'name' => $item_name,
-				'link' => url::base()."reports/view/".$marker->incident_id,
+				'link' => $link,
 				'category' => array($category_id),
 				'color' => $color,
 				'icon' => $icon,
@@ -267,14 +265,14 @@ class Json_Controller extends Template_Controller
 				: "";
 			
 			// Build out the JSON string
-			$item_name = str_replace(array(chr(10),chr(13)), ' ',
-				"<a href=" . url::base() . "reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter.">" . $cluster_count . " Reports</a>");
+			$link = url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter;
+			$item_name = $this->_get_title($cluster_count . " Reports", $link);
 			
 			$json_item = array();
 			$json_item['type'] = 'Feature';
 			$json_item['properties'] = array(
 				'name' => $item_name,
-				'link' => url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter,
+				'link' => $link,
 				'category' => array($category_id),
 				'color' => $color,
 				'icon' => $icon,
@@ -292,14 +290,14 @@ class Json_Controller extends Template_Controller
 
 		foreach ($singles as $single)
 		{
-			$item_name = str_replace(array(chr(10),chr(13)), ' ', 
-				"<a href=" . url::base(). "reports/view/" . $single['id'] . "/>".str_replace('"','\"',$single['incident_title'])."</a>");
+			$link = url::base()."reports/view/".$single['id'];
+			$item_name = $this->_get_title($single['incident_title'], $link);
 			
 			$json_item = array();
 			$json_item['type'] = 'Feature';
 			$json_item['properties'] = array(
 				'name' => $item_name,
-				'link' => url::base()."reports/view/".$single['id'],
+				'link' => $link,
 				'category' => array($category_id),
 				'color' => $color,
 				'icon' => $icon,
@@ -367,17 +365,15 @@ class Json_Controller extends Template_Controller
 
 			foreach ($neighbours as $row)
 			{
-				$encoded_title = utf8tohtml::convert($row->incident_title, TRUE);
-				$encoded_title = str_ireplace('"','&#34;',$encoded_title);
-				$item_name = "<a href='".url::base()."reports/view/".$row->id."'>".$encoded_title. "</a>";
-				$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+				$link = url::base()."reports/view/".$row->id;
+				$item_name = $this->_get_title($row->incident_title, $link);
 				
 				$json_item = array();
 				$json_item['type'] = 'Feature';
 				$json_item['properties'] = array(
 					'id' => $row->id,
 					'name' => $item_name,
-					'link' => url::base()."reports/view/".$row->id,
+					'link' => $link,
 					'category' => array(0),
 					'timestamp' => strtotime($row->incident_date)
 				);
@@ -396,17 +392,15 @@ class Json_Controller extends Template_Controller
 			if ( ! count($geometry))
 			{
 				// Single Main Incident
-				$encoded_title = utf8tohtml::convert($marker->incident_title, TRUE);
-				$encoded_title = str_ireplace('"','&#34;',$encoded_title);
-				$item_name = "<a href='".url::base()."reports/view/".$marker->id."'>".$encoded_title. "</a>";
-				$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+				$link = url::base()."reports/view/".$marker->id;
+				$item_name = $this->_get_title($marker->incident_title, $link);
 	
 				$json_item = array();
 				$json_item['type'] = 'Feature';
 				$json_item['properties'] = array(
 					'id' => $marker->id,
 					'name' => $item_name,
-					'link' => url::base()."reports/view/".$marker->id,
+					'link' => $link,
 					'category' => array(0),
 					'timestamp' => strtotime($marker->incident_date)
 				);
@@ -703,14 +697,14 @@ class Json_Controller extends Template_Controller
 					// Number of Items in Cluster
 					$cluster_count = count($cluster);
 					
-					$item_name = str_replace(array(chr(10),chr(13)), ' ',
-						"<a href='http://" . $sharing_url . "/reports/index/?c=0&sw=".$southwest."&ne=".$northeast."'>" . $cluster_count . " Reports</a>");
+					$link = "http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast;
+					$item_name = $this->_get_title($cluster_count . " Reports", $link);
 					
 					$json_item = array();
 					$json_item['type'] = 'Feature';
 					$json_item['properties'] = array(
 						'name' => $item_name,
-						'link' => "http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast,
+						'link' => $link,
 						'category' => array(0),
 						'color' => $sharing_color,
 						'icon' => '',
@@ -728,14 +722,14 @@ class Json_Controller extends Template_Controller
 
 				foreach ($singles as $single)
 				{
-					$item_name = "<a href='http://" . $sharing_url . "/reports/view/" . $single['id'] . "'>".$single['incident_title']."</a>";
-					$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+					$link = "http://".$sharing_url."reports/view/".$single['id'];
+					$item_name = $this->_get_title($single['incident_title'], $link);
 		
 					$json_item = array();
 					$json_item['type'] = 'Feature';
 					$json_item['properties'] = array(
 						'name' => $item_name,
-						'link' => "http://".$sharing_url."reports/view/".$single['id'],
+						'link' => $link,
 						'category' => array(0),
 						'color' => $sharing_color,
 						'icon' => '',
@@ -759,18 +753,15 @@ class Json_Controller extends Template_Controller
 
 				foreach ($markers as $marker)
 				{
-					
-					$encoded_title = utf8tohtml::convert($marker->incident_title, TRUE);
-					$encoded_title = str_ireplace('"','&#34;',$encoded_title);
-					$item_name = "<a href='http://" . $sharing_url . "/reports/view/" . $marker->incident_id . "'>".$encoded_title."</a>";
-					$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
-		
+					$link = "http://".$sharing_url."reports/view/".$marker->incident_id;
+					$item_name = $this->_get_title($marker->incident_title, $link);
+
 					$json_item = array();
 					$json_item['type'] = 'Feature';
 					$json_item['properties'] = array(
 						'id' => $marker->incident_id,
 						'name' => $item_name,
-						'link' => "http://".$sharing_url."reports/view/".$marker->incident_id,
+						'link' => $link,
 						'color' => $sharing_color,
 						'icon' => '',
 						'timestamp' => strtotime($marker->incident_date)
@@ -815,10 +806,9 @@ class Json_Controller extends Template_Controller
 				$geom = $wkt->read($item->geometry);
 				$geom_array = $geom->getGeoInterface();
 
-				$title = ($item->geometry_label) ? 
-					utf8tohtml::convert($item->geometry_label,TRUE) : 
-					utf8tohtml::convert($incident_title,TRUE);
-				$item_name = str_replace(array(chr(10),chr(13)), ' ', "<a href='" . url::base() . "reports/view/" . $incident_id . "'>".$title."</a>");
+				$title = ($item->geometry_label) ? $item->geometry_label : $incident_title;
+				$link =  url::base()."reports/view/".$incident_id;
+				$item_name = $this->_get_title($title, $link);
 					
 				$fillcolor = ($item->geometry_color) ? 
 					utf8tohtml::convert($item->geometry_color,TRUE) : "ffcc66";
@@ -839,7 +829,7 @@ class Json_Controller extends Template_Controller
 					'icon' => '',
 					'strokecolor' => $strokecolor,
 					'strokewidth' => $strokewidth,
-					'link' => url::base()."reports/view/".$incident_id,
+					'link' => $link,
 					'category' => array(0),
 					'timestamp' => strtotime($incident_date),
 				);
@@ -973,5 +963,20 @@ class Json_Controller extends Template_Controller
 			"sw"=>$sw,
 			"ne"=>$ne
 		);
+	}
+	
+	/**
+	 * Get encoded title linked to url
+	 * @param string $title - Item title
+	 * @param string $url - URL to link to
+	 * @return string
+	 */
+	private function _get_title($title, $url)
+	{
+		$encoded_title = utf8tohtml::convert($title, TRUE);
+		$encoded_title = str_ireplace('"','&#34;',$encoded_title);
+		$item_name = "<a href='$url'>".$encoded_title."</a>";
+		$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
+		return $item_name;
 	}
 }
