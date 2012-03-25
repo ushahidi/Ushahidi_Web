@@ -341,6 +341,8 @@ class Json_Controller extends Template_Controller
 		$json_item = "";
 		$json_features = array();
 
+		$incident_id = intval($incident_id);
+
 		// Check if incident valid/approved
 		if ( ! Incident_Model::is_valid_incident($incident_id, TRUE) )
 		{
@@ -354,7 +356,7 @@ class Json_Controller extends Template_Controller
 		{
 			// Load the incident
 			// @todo Get this fixed
-			$marker = ORM::factory('incident')->where('incident.incident_active',1)->find(intval($incident_id));
+			$marker = ORM::factory('incident')->where('incident.incident_active',1)->find($incident_id);
 			if ( ! $marker->loaded )
 			{
 				throw new Kohana_404_Exception();
