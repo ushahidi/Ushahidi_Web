@@ -42,10 +42,13 @@ class reports_Core {
 				->pre_filter('trim', TRUE);
 		
 		// CSRF validation before proceeding with the rest of the validation
-		if ( ! isset($post['form_auth_token']) ||  ! csrf::valid($post['form_auth_token']))
+		if (in_array(MODPATH.'csrf', Kohana::config('config.modules')))
 		{
-			$post->add_error('incident_title','csrf');
-			return FALSE;
+			if ( ! isset($post['form_auth_token']) OR  ! csrf::valid($post['form_auth_token']))
+			{
+				$post->add_error('incident_title','csrf');
+				return FALSE;
+			}
 		}
 		
 		$post->add_rules('incident_title','required', 'length[3,200]');

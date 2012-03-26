@@ -135,10 +135,13 @@ class User_Model extends Auth_User_Model {
 				->pre_filter('trim', TRUE);
 		
 		// CSRF validation before proceeding with the rest of the validation
-		if ( ! isset($post['form_auth_token']) || ! csrf::valid($post['form_auth_token']))
+		if (in_array(MODPATH.'csrf', Kohana::config('config.modules')))
 		{
-			$post->add_error('username','csrf');
-			return FALSE;
+			if ( ! isset($post['form_auth_token']) OR ! csrf::valid($post['form_auth_token']))
+			{
+				$post->add_error('username','csrf');
+				return FALSE;
+			}
 		}
 		
 		if ($auth === null) {
