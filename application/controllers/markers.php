@@ -100,9 +100,8 @@ class Markers_Controller extends Template_Controller
     {
         $placemarks = "";
         $style_map = "";
-        $filter = 'incident.incident_active = 1';
         
-        $incident_id = (int) $incident_id;  
+        $incident_id = (int) $incident_id;
 
         // Check if incident valid/approved
         if ( ! Incident_Model::is_valid_incident($incident_id, TRUE) )
@@ -110,29 +109,28 @@ class Markers_Controller extends Template_Controller
           throw new Kohana_404_Exception();
         }
         
+        $marker = ORM::factory('incident')->join('incident_category', 'incident.id', 'incident_category.incident_id','INNER')->select('incident.*')->where('incident.incident_active = 1')->orderby('incident.incident_dateadd', 'desc')->find($incident_id);
+        
         // Retrieve individual markers
-        foreach (ORM::factory('incident')->join('incident_category', 'incident.id', 'incident_category.incident_id','INNER')->select('incident.*')->where($filter)->orderby('incident.incident_dateadd', 'desc')->find_all() as $marker)
+        $placemarks .= "<Placemark>\n";
+        $placemarks .= "<name>" . htmlentities("<a href=\"" . url::base() . "reports/view/" . $marker->id . "\">" . $marker->incident_title . "</a>") . "</name>\n";
+        $placemarks .= "<description>" . htmlentities($marker->incident_description) . "</description>\n";
+        $placemarks .= "<Point>\n";
+        $placemarks .= "<coordinates>" . htmlentities($marker->location->longitude . "," . $marker->location->latitude) . "</coordinates>\n";
+        $placemarks .= "</Point>\n";
+        
+        if ( $marker->id == $incident_id )
         {
-            $placemarks .= "<Placemark>\n";
-            $placemarks .= "<name>" . htmlentities("<a href=\"" . url::base() . "reports/view/" . $marker->id . "\">" . $marker->incident_title . "</a>") . "</name>\n";
-            $placemarks .= "<description>" . htmlentities($marker->incident_description) . "</description>\n";
-            $placemarks .= "<Point>\n";
-            $placemarks .= "<coordinates>" . htmlentities($marker->location->longitude . "," . $marker->location->latitude) . "</coordinates>\n";
-            $placemarks .= "</Point>\n";
-            
-            if ( $marker->id == $incident_id )
-            {
-                $placemarks .= "<styleUrl>#1</styleUrl>\n";
-            }
-            else
-            {
-                $placemarks .= "<styleUrl>#2</styleUrl>\n";
-            }
-            $placemarks .= "<TimeStamp>\n";
-            $placemarks .= "<when>" . date('Y-m-d', strtotime($marker->incident_date)) . "T" . date('H:i:s', strtotime($marker->incident_date)) . "-05:00" . "</when>\n";
-            $placemarks .= "</TimeStamp>\n";
-            $placemarks .= "</Placemark>\n";
+            $placemarks .= "<styleUrl>#1</styleUrl>\n";
         }
+        else
+        {
+            $placemarks .= "<styleUrl>#2</styleUrl>\n";
+        }
+        $placemarks .= "<TimeStamp>\n";
+        $placemarks .= "<when>" . date('Y-m-d', strtotime($marker->incident_date)) . "T" . date('H:i:s', strtotime($marker->incident_date)) . "-05:00" . "</when>\n";
+        $placemarks .= "</TimeStamp>\n";
+        $placemarks .= "</Placemark>\n";
         
         // Create Styles        
         $style_map .= "<Style id=\"1\">\n";
