@@ -22,6 +22,22 @@ class Markers_Controller extends Template_Controller
     // Main template
     public $template = 'markers';
     
+    public function __construct()
+    {
+      parent::__construct();
+
+      $this->auth = new Auth();
+      $this->auth->auto_login();
+
+      if(Kohana::config('settings.private_deployment'))
+      {
+        if ( ! $this->auth->logged_in('login'))
+        {
+          url::redirect('login');
+        }
+      }
+    }
+    
     function index( $category_id = 0, $start_date = NULL, $end_date = NULL )
     {       
         $placemarks = "";
