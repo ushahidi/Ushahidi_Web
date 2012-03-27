@@ -60,7 +60,20 @@ class Admin_Reports_Api_Object extends Incidents_Api_Object {
 				case "unverified" :
 					$this->response_data = $this->_get_unverified_reports();
 					break;
+				
+				case "incidentid":
+					if ( ! $this->api_service->verify_array_index($this->request, 'id'))
+					{
+						$this->set_error_message(array(
+							"error" => $this->api_service->get_error_msg(001, 'id')
+						));
+					}
 					
+					$where = array('i.id = '.$this->check_id_value($this->request['id']));
+					$where['all_reports'] = TRUE;
+					$this->response_data = $this->_get_incidents($where);
+				break;
+				
 				case "all" :
 					$this->response_data = $this->_get_all_reports();
 					break;
@@ -159,7 +172,7 @@ class Admin_Reports_Api_Object extends Incidents_Api_Object {
 		$where = array();
 		$where['all_reports'] = TRUE;
 		$where[] = "i.incident_active = 0";
-		return $this->_get_incidents($where, $this->list_limit, $this->order_field, $this->sort);
+		return $this->_get_incidents($where);
 	}
 
 	/**
