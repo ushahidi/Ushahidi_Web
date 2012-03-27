@@ -22,10 +22,15 @@ abstract class Controller extends Controller_Core {
 
 		$this->auth = new Auth();
 		$this->auth->auto_login();
+		
+		$controller_whitelist = array(
+			'login',
+			'riverid'
+		);
 
 		if (Kohana::config('settings.private_deployment'))
 		{
-			if (!$this->auth->logged_in('login') && Router::$controller != 'login')
+			if (!$this->auth->logged_in('login') && in_array(Router::$controller, $controller_whitelist))
 			{
 				url::redirect('login');
 			}
