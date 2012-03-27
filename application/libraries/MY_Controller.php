@@ -30,7 +30,7 @@ abstract class Controller extends Controller_Core {
 
 		if (Kohana::config('settings.private_deployment'))
 		{
-			if (!$this->auth->logged_in('login') && in_array(Router::$controller, $controller_whitelist))
+			if (!$this->auth->logged_in('login') AND ! in_array(Router::$controller, $controller_whitelist))
 			{
 				url::redirect('login');
 			}
