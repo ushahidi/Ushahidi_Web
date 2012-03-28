@@ -279,7 +279,7 @@ class Upgrade_Controller extends Admin_Controller {
 				$contents = nl2br($contents);
 				echo $contents;
 			}
-		}
+        }	
 	}
 	
 	public function check_current_version()
@@ -570,7 +570,8 @@ class Upgrade_Controller extends Admin_Controller {
 			$version_ushahidi=NULL )
 	{
 		if ($release_version AND $version_ushahidi)
-		{
+        {
+            
 			// Split version numbers xx.xx.xx
 			$remote_version = explode(".", $release_version);
 			$local_version = explode(".", $version_ushahidi);

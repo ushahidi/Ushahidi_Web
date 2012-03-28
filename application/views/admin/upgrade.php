@@ -14,10 +14,16 @@
  */
 ?>
 <div class="bg">
-	<h2><?php echo $title; ?></h2>
-	
+    <h2><?php echo $title; ?></h2>
+    <?php if( $release_version == Kohana::config('settings.ushahidi_version') ) {?>
+	<div class="settings_holder">
+        <h4><?php print Kohana::lang('upgrade.upgrade_status_info'); ?></h4>
+        <p><?php print"You do not need to upgrade."?></p>
+    </div>
+    <?php } ?>
+    <?php if( $release_version > Kohana::config('settings.ushahidi_version') ) {?>
 	<div class="head">
-		<h4 class="version"><?php print Kohana::lang('upgrade.upgrade_title_text_1') ?><?php print $current_version; ?> <?php print Kohana::lang('upgrade.upgrade_title_text_2') ?> <?php print $environment; ?></h4>
+		<h4 class="version"><?php print Kohana::lang('upgrade.upgrade_title_text_1') ?><?php print $current_version; ?> <?php print Kohana::lang('upgrade.upgrade_title_text_2') ?> <?php print $current_db_version; ?> <?php print Kohana::lang('upgrade.upgrade_title_text_3') ?> <?php print $environment; ?></h4>
 	</div>
 	<div class="head">
 		<h4><?php print Kohana::lang('upgrade.upgrade_available') ?></h4>
@@ -70,17 +76,14 @@
 	<div class="head">
 		<h4><?php print Kohana::lang('upgrade.upgrade_manual');?></h4>
 	</div>
-	<div class="settings_holder">
-		<p><?php echo Kohana::lang('upgrade.upgrade_text_1');?>.</p>
-		<p><?php echo Kohana::lang('upgrade.upgrade_text_2');?>
-.</p>
-		<p><?php echo Kohana::lang('upgrade.upgrade_text_3');?>:</p>
-		<ul>
-			<li> <strong>applications/config/</strong> </li>
-			<li> <strong>applications/cache/</strong> </li>
-			<li> <strong>applications/logs/</strong> </li>
-			<li> <strong><?php echo Kohana::config('upload.relative_directory'); ?></strong> </li>
-		</ul>
-	</div>	
+    <div class="settings_holder">
+        <p><?php echo Kohana::lang('upgrade.upgrade_text_1');?>.</p>
+        <p><?php echo Kohana::lang('upgrade.upgrade_text_2');?></p>
+        <?php if(isset($download)) { $url = "<a href=\"$download\">$download</a></dd>"?>
 
+		<p><?php echo Kohana::lang('upgrade.upgrade_text_3')." ".$url;?></p><?php } ?>
+
+        <p><?php echo Kohana::lang('upgrade.upgrade_text_4');?></p>
+	</div>	
+    <?php } ?>
 </div>
