@@ -23,6 +23,10 @@
 	'upgrade_text_5' => 'For automatic upgrade, click on the button below.',
 	'upgrade_title_text_1' => 'You are currently using Ushahidi v',
 	'upgrade_title_text_2' => 'running on',
-	'upgrading' => 'Upgrading',
-	);
+    'upgrading' => 'Upgrading',
+    'upgrade_ftp_text' => 'To Continue with the easy upgrade, the following information is required for the FTP server that your website is hosted on.',
+    'upgrade_ftp_hostname' => 'FTP Hostname: <span>Example: "localhost"</span>',
+    'upgrade_ftp_password' => 'FTP Password:',
+    'upgrade_ftp_username' => 'FTP User Name:',
+);
 ?>
