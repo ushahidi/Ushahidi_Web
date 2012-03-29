@@ -398,7 +398,7 @@ class Reports_Controller extends Admin_Controller {
 		//because you have 1000 concurrent users you'll need to do this
 		//correctly. Etherton.
 		$form_id = '';
-		if($id && Incident_Model::is_valid_incident($id))
+		if($id && Incident_Model::is_valid_incident($id, FALSE))
 		{
 			$form_id = ORM::factory('incident', $id)->form_id;
 		}
@@ -448,7 +448,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->forms = $forms;
 
 		// Get the incident media
-		$incident_media =  Incident_Model::is_valid_incident($id)
+		$incident_media =  Incident_Model::is_valid_incident($id, FALSE)
 			? ORM::factory('incident', $id)->media
 			: FALSE;
 
@@ -578,7 +578,7 @@ class Reports_Controller extends Admin_Controller {
 			}
 
 			// Check if the incident id is valid an add it to the post data
-			if (Incident_Model::is_valid_incident($id))
+			if (Incident_Model::is_valid_incident($id, FALSE))
 			{
 				$post = array_merge($post, array('incident_id' => $id));
 			}
@@ -696,7 +696,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 		else
 		{
-			if (Incident_Model::is_valid_incident($id))
+			if (Incident_Model::is_valid_incident($id, FALSE))
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident', $id);
@@ -864,7 +864,8 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
 		$form = array(
-			'data_point'   => '',
+			'data_active'   => '',
+			'data_verified'   => '',
 			'data_include' => '',
 			'from_date'	   => '',
 			'to_date'	   => ''
@@ -883,7 +884,8 @@ class Reports_Controller extends Admin_Controller {
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('data_point.*','required','numeric','between[1,4]');
+			$post->add_rules('data_active.*','required','numeric','between[0,1]');
+			$post->add_rules('data_verified.*','required','numeric','between[0,1]');
 			//$post->add_rules('data_include.*','numeric','between[1,5]');
 			$post->add_rules('data_include.*','numeric','between[1,6]');
 			$post->add_rules('from_date','date_mmddyyyy');
@@ -914,33 +916,138 @@ class Reports_Controller extends Admin_Controller {
 			// Test to see if things passed the rule checks
 			if ($post->validate())
 			{
-				// Add Filters
-				$filter = " ( 1 !=1";
-
+				//set filter
+				$filter = '( ';
+				
 				// Report Type Filter
+				$show_active = false;
+				$show_inactive = false;
+				$show_verified = false;
+				$show_not_verified = false;
+<<<<<<< HEAD
+				
+				if (in_array(1, $post->data_active))
+				{
+					$show_active = true;
+				}
+
+				if (in_array(0, $post->data_active))
+				{
+					$show_inactive = true;
+				}
+
+				if (in_array(1, $post->data_verified))
+				{
+					$show_verified = true;
+				}
+
+				if (in_array(0, $post->data_verified))
+				{
+					$show_not_verified = true;
+				}
+				
+				//handle active or not active
+				if($show_active && !$show_inactive)
+				{
+					$filter .= ' incident_active = 1 ';
+				}
+				elseif(!$show_active && $show_inactive)
+				{
+					$filter .= '  incident_active = 0 ';
+				}
+				elseif($show_active && $show_inactive)
+				{
+					$filter .= ' (incident_active = 1 OR incident_active = 0) ';
+				}
+				// Neither active nor inactive selected: select nothing
+				elseif(!$show_active && !$show_inactive)
+				{
+					// Equivalent to 1 = 0
+					$filter .= ' (incident_active = 0 AND incident_active = 1) ';
+				}
+				
+				$filter .= ' AND ';
+				
+				//handle verified
+				if($show_verified && !$show_not_verified)
+				{				
+					$filter .= ' incident_verified = 1 ';
+				}
+				elseif(!$show_verified && $show_not_verified)
+				{				
+					$filter .= ' incident_verified = 0 ';
+				}
+				elseif($show_verified && $show_not_verified)
+				{				
+					$filter .= ' (incident_verified = 0 OR incident_verified = 1) ';
+				}
+				elseif(!$show_verified && !$show_not_verified)
+				{				
+					$filter .= ' (incident_verified = 0 AND incident_verified = 1) ';
+				}
+=======
 				foreach($post->data_point as $item)
 				{
 					if ($item == 1)
 					{
-						$filter .= " OR incident_active = 1 ";
+						$show_active = true;
 					}
 
 					if ($item == 2)
 					{
-						$filter .= " OR incident_verified = 1 ";
+						$show_verified = true;
 					}
 
 					if ($item == 3)
 					{
-						$filter .= " OR incident_active = 0 ";
+						$show_inactive = true;
 					}
 
 					if ($item == 4)
 					{
-						$filter .= " OR incident_verified = 0 ";
+						$show_not_verified = true;
 					}
 				}
-				$filter .= ") ";
+				//handle active or not active
+				if($show_active && !$show_inactive)
+				{				
+					$filter .= ' incident_active = 1 ';
+				}
+				elseif(!$show_active && $show_inactive)
+				{				
+					$filter .= '  incident_active = 0 ';
+				}
+				elseif($show_active && $show_inactive)
+				{				
+					$filter .= ' (incident_active = 1 OR incident_active = 0) ';
+				}
+				elseif(!$show_active && !$show_inactive)
+				{				
+					$filter .= ' (incident_active = 0 AND incident_active = 1) ';
+				}
+				
+				$filter .= ' AND ';
+				
+				//handle verified
+				if($show_verified && !$show_not_verified)
+				{				
+					$filter .= ' incident_verified = 1 ';
+				}
+				elseif(!$show_verified && $show_not_verified)
+				{				
+					$filter .= ' incident_verified = 0 ';
+				}
+				elseif($show_verified && $show_not_verified)
+				{				
+					$filter .= ' (incident_verified = 0 OR incident_verified = 1) ';
+				}
+				elseif(!$show_verified && !$show_not_verified)
+				{				
+					$filter .= ' (incident_verified = 0 AND incident_verified = 1) ';
+				}
+>>>>>>> 1cafb6df6cde1d36888efd18879e892d34ecbcfa
+				
+				$filter .= ') ';
 
 				// Report Date Filter
 				if ( ! empty($post->from_date) AND !empty($post->to_date))

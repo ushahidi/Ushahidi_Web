@@ -22,6 +22,22 @@ class Markers_Controller extends Template_Controller
     // Main template
     public $template = 'markers';
     
+    public function __construct()
+    {
+      parent::__construct();
+
+      $this->auth = new Auth();
+      $this->auth->auto_login();
+
+      if(Kohana::config('settings.private_deployment'))
+      {
+        if ( ! $this->auth->logged_in('login'))
+        {
+          url::redirect('login');
+        }
+      }
+    }
+    
     function index( $category_id = 0, $start_date = NULL, $end_date = NULL )
     {       
         $placemarks = "";
@@ -103,6 +119,12 @@ class Markers_Controller extends Template_Controller
         $filter = 'incident.incident_active = 1';
         
         $incident_id = (int) $incident_id;  
+
+        // Check if incident valid/approved
+        if ( ! Incident_Model::is_valid_incident($incident_id, TRUE) )
+        {
+          throw new Kohana_404_Exception();
+        }
         
         // Retrieve individual markers
         foreach (ORM::factory('incident')->join('incident_category', 'incident.id', 'incident_category.incident_id','INNER')->select('incident.*')->where($filter)->orderby('incident.incident_dateadd', 'desc')->find_all() as $marker)
