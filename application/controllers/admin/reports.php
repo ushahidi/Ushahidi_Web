@@ -924,68 +924,6 @@ class Reports_Controller extends Admin_Controller {
 				$show_inactive = false;
 				$show_verified = false;
 				$show_not_verified = false;
-<<<<<<< HEAD
-				
-				if (in_array(1, $post->data_active))
-				{
-					$show_active = true;
-				}
-
-				if (in_array(0, $post->data_active))
-				{
-					$show_inactive = true;
-				}
-
-				if (in_array(1, $post->data_verified))
-				{
-					$show_verified = true;
-				}
-
-				if (in_array(0, $post->data_verified))
-				{
-					$show_not_verified = true;
-				}
-				
-				//handle active or not active
-				if($show_active && !$show_inactive)
-				{
-					$filter .= ' incident_active = 1 ';
-				}
-				elseif(!$show_active && $show_inactive)
-				{
-					$filter .= '  incident_active = 0 ';
-				}
-				elseif($show_active && $show_inactive)
-				{
-					$filter .= ' (incident_active = 1 OR incident_active = 0) ';
-				}
-				// Neither active nor inactive selected: select nothing
-				elseif(!$show_active && !$show_inactive)
-				{
-					// Equivalent to 1 = 0
-					$filter .= ' (incident_active = 0 AND incident_active = 1) ';
-				}
-				
-				$filter .= ' AND ';
-				
-				//handle verified
-				if($show_verified && !$show_not_verified)
-				{				
-					$filter .= ' incident_verified = 1 ';
-				}
-				elseif(!$show_verified && $show_not_verified)
-				{				
-					$filter .= ' incident_verified = 0 ';
-				}
-				elseif($show_verified && $show_not_verified)
-				{				
-					$filter .= ' (incident_verified = 0 OR incident_verified = 1) ';
-				}
-				elseif(!$show_verified && !$show_not_verified)
-				{				
-					$filter .= ' (incident_verified = 0 AND incident_verified = 1) ';
-				}
-=======
 				foreach($post->data_point as $item)
 				{
 					if ($item == 1)
@@ -1045,7 +983,6 @@ class Reports_Controller extends Admin_Controller {
 				{				
 					$filter .= ' (incident_verified = 0 AND incident_verified = 1) ';
 				}
->>>>>>> 1cafb6df6cde1d36888efd18879e892d34ecbcfa
 				
 				$filter .= ') ';
 
