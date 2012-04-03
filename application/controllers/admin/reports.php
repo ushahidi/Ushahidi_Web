@@ -398,7 +398,7 @@ class Reports_Controller extends Admin_Controller {
 		//because you have 1000 concurrent users you'll need to do this
 		//correctly. Etherton.
 		$form_id = '';
-		if($id && Incident_Model::is_valid_incident($id, FALSE))
+		if($id && Incident_Model::is_valid_incident($id))
 		{
 			$form_id = ORM::factory('incident', $id)->form_id;
 		}
@@ -448,7 +448,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->forms = $forms;
 
 		// Get the incident media
-		$incident_media =  Incident_Model::is_valid_incident($id, FALSE)
+		$incident_media =  Incident_Model::is_valid_incident($id)
 			? ORM::factory('incident', $id)->media
 			: FALSE;
 
@@ -578,7 +578,7 @@ class Reports_Controller extends Admin_Controller {
 			}
 
 			// Check if the incident id is valid an add it to the post data
-			if (Incident_Model::is_valid_incident($id, FALSE))
+			if (Incident_Model::is_valid_incident($id))
 			{
 				$post = array_merge($post, array('incident_id' => $id));
 			}
@@ -696,7 +696,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 		else
 		{
-			if (Incident_Model::is_valid_incident($id, FALSE))
+			if (Incident_Model::is_valid_incident($id))
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident', $id);
@@ -864,8 +864,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
 		$form = array(
-			'data_active'   => '',
-			'data_verified'   => '',
+			'data_point'   => '',
 			'data_include' => '',
 			'from_date'	   => '',
 			'to_date'	   => ''
@@ -884,8 +883,7 @@ class Reports_Controller extends Admin_Controller {
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('data_active.*','required','numeric','between[0,1]');
-			$post->add_rules('data_verified.*','required','numeric','between[0,1]');
+			$post->add_rules('data_point.*','required','numeric','between[1,4]');
 			//$post->add_rules('data_include.*','numeric','between[1,5]');
 			$post->add_rules('data_include.*','numeric','between[1,6]');
 			$post->add_rules('from_date','date_mmddyyyy');
@@ -916,75 +914,33 @@ class Reports_Controller extends Admin_Controller {
 			// Test to see if things passed the rule checks
 			if ($post->validate())
 			{
-				//set filter
-				$filter = '( ';
-				
+				// Add Filters
+				$filter = " ( 1 !=1";
+
 				// Report Type Filter
-				$show_active = false;
-				$show_inactive = false;
-				$show_verified = false;
-				$show_not_verified = false;
 				foreach($post->data_point as $item)
 				{
 					if ($item == 1)
 					{
-						$show_active = true;
+						$filter .= " OR incident_active = 1 ";
 					}
 
 					if ($item == 2)
 					{
-						$show_verified = true;
+						$filter .= " OR incident_verified = 1 ";
 					}
 
 					if ($item == 3)
 					{
-						$show_inactive = true;
+						$filter .= " OR incident_active = 0 ";
 					}
 
 					if ($item == 4)
 					{
-						$show_not_verified = true;
+						$filter .= " OR incident_verified = 0 ";
 					}
 				}
-				//handle active or not active
-				if($show_active && !$show_inactive)
-				{				
-					$filter .= ' incident_active = 1 ';
-				}
-				elseif(!$show_active && $show_inactive)
-				{				
-					$filter .= '  incident_active = 0 ';
-				}
-				elseif($show_active && $show_inactive)
-				{				
-					$filter .= ' (incident_active = 1 OR incident_active = 0) ';
-				}
-				elseif(!$show_active && !$show_inactive)
-				{				
-					$filter .= ' (incident_active = 0 AND incident_active = 1) ';
-				}
-				
-				$filter .= ' AND ';
-				
-				//handle verified
-				if($show_verified && !$show_not_verified)
-				{				
-					$filter .= ' incident_verified = 1 ';
-				}
-				elseif(!$show_verified && $show_not_verified)
-				{				
-					$filter .= ' incident_verified = 0 ';
-				}
-				elseif($show_verified && $show_not_verified)
-				{				
-					$filter .= ' (incident_verified = 0 OR incident_verified = 1) ';
-				}
-				elseif(!$show_verified && !$show_not_verified)
-				{				
-					$filter .= ' (incident_verified = 0 AND incident_verified = 1) ';
-				}
-				
-				$filter .= ') ';
+				$filter .= ") ";
 
 				// Report Date Filter
 				if ( ! empty($post->from_date) AND !empty($post->to_date))
