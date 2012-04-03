@@ -204,7 +204,7 @@
 			<div class="info-nav">
 				<h3><?php echo Kohana::lang('ui_admin.get_help');?></h3>
 				<ul>
-					<li ><a href="http://wiki.ushahididev.com/"><?php echo Kohana::lang('ui_admin.wiki');?></a></li>
+					<li ><a href="http://wiki.ushahidi.com/"><?php echo Kohana::lang('ui_admin.wiki');?></a></li>
 					<li><a href="http://ushahidi.com/community_resources/"><?php echo Kohana::lang('ui_admin.faqs');?></a></li>
 					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('ui_admin.forum');?></a></li>
 				</ul>
