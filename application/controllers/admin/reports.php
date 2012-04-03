@@ -914,33 +914,75 @@ class Reports_Controller extends Admin_Controller {
 			// Test to see if things passed the rule checks
 			if ($post->validate())
 			{
-				// Add Filters
-				$filter = " ( 1 !=1";
-
+				//set filter
+				$filter = '( ';
+				
 				// Report Type Filter
+				$show_active = false;
+				$show_inactive = false;
+				$show_verified = false;
+				$show_not_verified = false;
 				foreach($post->data_point as $item)
 				{
 					if ($item == 1)
 					{
-						$filter .= " OR incident_active = 1 ";
+						$show_active = true;
 					}
 
 					if ($item == 2)
 					{
-						$filter .= " OR incident_verified = 1 ";
+						$show_verified = true;
 					}
 
 					if ($item == 3)
 					{
-						$filter .= " OR incident_active = 0 ";
+						$show_inactive = true;
 					}
 
 					if ($item == 4)
 					{
-						$filter .= " OR incident_verified = 0 ";
+						$show_not_verified = true;
 					}
 				}
-				$filter .= ") ";
+				//handle active or not active
+				if($show_active && !$show_inactive)
+				{				
+					$filter .= ' incident_active = 1 ';
+				}
+				elseif(!$show_active && $show_inactive)
+				{				
+					$filter .= '  incident_active = 0 ';
+				}
+				elseif($show_active && $show_inactive)
+				{				
+					$filter .= ' (incident_active = 1 OR incident_active = 0) ';
+				}
+				elseif(!$show_active && !$show_inactive)
+				{				
+					$filter .= ' (incident_active = 0 AND incident_active = 1) ';
+				}
+				
+				$filter .= ' AND ';
+				
+				//handle verified
+				if($show_verified && !$show_not_verified)
+				{				
+					$filter .= ' incident_verified = 1 ';
+				}
+				elseif(!$show_verified && $show_not_verified)
+				{				
+					$filter .= ' incident_verified = 0 ';
+				}
+				elseif($show_verified && $show_not_verified)
+				{				
+					$filter .= ' (incident_verified = 0 OR incident_verified = 1) ';
+				}
+				elseif(!$show_verified && !$show_not_verified)
+				{				
+					$filter .= ' (incident_verified = 0 AND incident_verified = 1) ';
+				}
+				
+				$filter .= ') ';
 
 				// Report Date Filter
 				if ( ! empty($post->from_date) AND !empty($post->to_date))
