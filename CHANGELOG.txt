@@ -1,3 +1,16 @@
+Ushahidi 2.2.1 - bug fix release, 04-04-2012
+--------------------------
+* Map JS unification (#278)
+* Make Scheduler JS options (#331)
+* Update child categories of parent category that was reassigned to id 999 updated to match the correct parent_id 999 and not 5 (#322) 
+* Zoom level is never set on Get Alerts map (#358)
+* Security fixes
+    - JSON controller returned non-approved reports
+    - JSON controller exposed on private deployment
+    - Markers controller exposed on private deployment
+    - json/single/ID SQL injection vulnerability
+    - Download reports (admin) could inadvertently return non-approved reports
+
 Ushahidi 2.2 (Juba), 13-03-2012
 ---------------------------------
 * Riverid Integration
