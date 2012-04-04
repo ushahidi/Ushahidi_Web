@@ -46,17 +46,6 @@ class Json_Controller extends Template_Controller
 
 		// Cacheable JSON Controller
 		$this->is_cachable = TRUE;
-		
-		$this->auth = new Auth();
-		$this->auth->auto_login();
-
-		if(Kohana::config('settings.private_deployment'))
-		{
-			if ( ! $this->auth->logged_in('login'))
-			{
-				url::redirect('login');
-			}
-		}
 	}
 
 
@@ -351,14 +340,6 @@ class Json_Controller extends Template_Controller
 		$json = "";
 		$json_item = "";
 		$json_features = array();
-
-		$incident_id = intval($incident_id);
-
-		// Check if incident valid/approved
-		if ( ! Incident_Model::is_valid_incident($incident_id, TRUE) )
-		{
-			throw new Kohana_404_Exception();
-		}
 
 		$incident_id = intval($incident_id);
 
