@@ -1400,5 +1400,5 @@ CREATE TABLE IF NOT EXISTS `badge_users` (
 * Version information for table `settings`
 *
 */
-UPDATE `settings` SET `ushahidi_version` = '2.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '77' WHERE `id` = 1 LIMIT 1;
+UPDATE `settings` SET `ushahidi_version` = '2.2.1' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '79' WHERE `id` = 1 LIMIT 1;
