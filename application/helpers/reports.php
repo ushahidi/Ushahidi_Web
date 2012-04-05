@@ -568,7 +568,6 @@ class reports_Core {
 		ORM::factory('incident_person')->where('incident_id',$incident->id)->delete_all();
 		
 		$person = new Incident_Person_Model();
-		$person->location_id = $incident->location_id;
 		$person->incident_id = $incident->id;
 		$person->person_first = $post->person_first;
 		$person->person_last = $post->person_last;

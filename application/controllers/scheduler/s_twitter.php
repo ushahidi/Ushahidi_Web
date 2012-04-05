@@ -125,7 +125,6 @@ class S_Twitter_Controller extends Controller {
 
 				$reporter->service_id	   = $service->id;
 				$reporter->level_id			= $level->id;
-				$reporter->service_userid	= null;
 				$reporter->service_account	= $tweet->{'from_user'};
 				$reporter->reporter_first	= null;
 				$reporter->reporter_last	= null;

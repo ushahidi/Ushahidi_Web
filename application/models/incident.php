@@ -427,13 +427,14 @@ class Incident_Model extends ORM {
 		if (self::is_valid_incident($incident_id))
 		{
 			$where = array(
-				'incident_id' => $incident_id,
+				'comment.incident_id' => $incident_id,
 				'comment_active' => '1',
 				'comment_spam' => '0'
 			);
 
 			// Fetch the comments
 			return ORM::factory('comment')
+					->join('rating', 'rating.comment_id', 'comment.id', 'INNER')
 					->where($where)
 					->orderby('comment_date', 'asc')
 					->find_all();

@@ -651,9 +651,14 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->incident_category = $incident->incident_category;
 
 			// Incident rating
-			$this->template->content->incident_rating = ($incident->incident_rating == '')
+			$rating = ORM::factory('rating')
+					->join('incident','incident.id','rating.incident_id','INNER')
+					->where('rating.incident_id',$incident->id)
+					->find();
+					
+			$this->template->content->incident_rating = ($rating->rating == '')
 				? 0
-				: $incident->incident_rating;
+				: $rating->rating;
 
 			// Retrieve Media
 			$incident_news = array();
@@ -957,27 +962,7 @@ class Reports_Controller extends Main_Controller {
 			{
 				$total_rating += $rating->rating;
 			}
-
-			// Update Counts
-			if ($type == 'original')
-			{
-				$incident = ORM::factory('incident', $id);
-				if ($incident->loaded == TRUE)
-				{
-					$incident->incident_rating = $total_rating;
-					$incident->save();
-				}
-			}
-			elseif ($type == 'comment')
-			{
-				$comment = ORM::factory('comment', $id);
-				if ($comment->loaded == TRUE)
-				{
-					$comment->comment_rating = $total_rating;
-					$comment->save();
-				}
-			}
-
+			
 			return $total_rating;
 		}
 		else

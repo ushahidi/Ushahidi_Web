@@ -171,7 +171,7 @@ class Comments_Controller extends Admin_Controller
             'total_items'    => ORM::factory('comment')->where($filter)->count_all()
         ));
 
-        $comments = ORM::factory('comment')->where($filter)->orderby('comment_date', 'desc')->find_all($this->items_per_page, $pagination->sql_offset);
+        $comments = ORM::factory('comment')->join('rating', 'rating.comment_id', 'comment.id', 'INNER')->where($filter)->orderby('comment_date', 'desc')->find_all($this->items_per_page, $pagination->sql_offset);
         
         $this->template->content->comments = $comments;
         $this->template->content->pagination = $pagination;
