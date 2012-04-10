@@ -13,7 +13,7 @@ To install the platform on your computer/server, the target system must meet the
 * MySQL version 5.0 or greater
 * An HTTP Server. Kohana, which Ushahidi is built on, is known to work with the following web servers:
     - Apache 1.3+
-    - Apache2.0+
+    - Apache 2.0+
     - lighttpd
     - Microsoft Internet Information Server (MS IIS)
 * Unicode support in the operating system
@@ -117,4 +117,4 @@ Installation
 
 Additional Information
 ----------------------
-For further references and documentation, head over to our wiki (http://wiki.ushahidi.com/doku.php?id=how_to_use_ushahidi_alpha). Also, we encourage you to drop by our forums (http://forums.ushahidi.com/) if you have any additional questions or concerns.
+For further references and documentation, head over to our wiki (http://wiki.ushahidi.com). Also, we encourage you to drop by our forums (http://forums.ushahidi.com/) if you have any additional questions or concerns.
