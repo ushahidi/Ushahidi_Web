@@ -263,7 +263,7 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		// If we didn't find any languages, we need to look them up and set the cache
 		if( ! $locales)
 		{
-			$locales = locale::get_i18n();
+			$locales = ush_locale::get_i18n();
 			$this->cache->set('locales', $locales, array('locales'), 604800);
 		}
 

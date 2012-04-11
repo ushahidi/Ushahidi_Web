@@ -53,7 +53,7 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->title = Kohana::lang('ui_admin.categories');
 
 		// Locale (Language) Array
-		$locales = locale::get_i18n();
+		$locales = ush_locale::get_i18n();
 
 		// Setup and initialize form field names
 		$form = array
