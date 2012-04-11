@@ -34,6 +34,7 @@ class Profile_Controller extends Main_Controller {
 		$this->template->content->users = User_Model::get_public_users();
 
 		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 	/**
@@ -101,6 +102,7 @@ class Profile_Controller extends Main_Controller {
 		}
 
 		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 } // End Profile
