@@ -49,3 +49,5 @@ ALTER TABLE  `users` COMMENT =  'Stores registered users’ information';
 ALTER TABLE  `user_devices` COMMENT =  'Works with checkins';
 ALTER TABLE  `user_tokens` COMMENT =  'Stores browser tokens assigned to users';
 ALTER TABLE  `verified` COMMENT =  'Stores all verified reports';
+
+UPDATE `settings` SET `db_version` = '81' WHERE `id` = 1 LIMIT 1;
