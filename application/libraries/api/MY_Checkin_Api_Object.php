@@ -244,7 +244,6 @@ class Checkin_Api_Object extends Api_Object_Core {
 			    	"email" => $email,
 			    	"username" => $username,
 			    	"description" => $comment->comment_description,
-			    	"rating" => $comment->comment_rating,
 			    	"date" => $comment->comment_date
 			    );
 			    $j++;

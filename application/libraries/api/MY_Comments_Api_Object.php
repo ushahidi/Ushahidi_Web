@@ -209,8 +209,6 @@ class Comments_Api_Object extends Api_Object_Core {
                 $xml->writeElement('comment_description',
                         $list_item->comment_description);
                 $xml->writeElement('comment_ip',$list_item->comment_ip);
-                $xml->writeElement('comment_rating',
-                        $list_item->comment_spam);
                 $xml->writeElement('comment_active',
                         $list_item->comment_active);
                 $xml->writeElement('comment_date',$list_item->comment_date);
@@ -784,7 +782,7 @@ class Comments_Api_Object extends Api_Object_Core {
 			if ($id)
 			{
 				$this->query = "SELECT id, incident_id, comment_author, comment_email, ";
-				$this->query .= "comment_description,comment_rating,comment_date ";
+				$this->query .= "comment_description,comment_date ";
 				$this->query .= "FROM ".$this->table_prefix."`comment`" ;
 				$this->query .= " WHERE `incident_id` = ".$this->db->escape_str($id)." AND `comment_active` = '1' ";
 				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
@@ -859,7 +857,7 @@ class Comments_Api_Object extends Api_Object_Core {
 			if ($id)
 			{
 				$this->query = "SELECT id, checkin_id, comment_author, comment_email, ";
-				$this->query .= "comment_description,comment_rating,comment_date ";
+				$this->query .= "comment_description,comment_date ";
 				$this->query .= "FROM ".$this->table_prefix."`comment`" ;
 				$this->query .= " WHERE `checkin_id` = ".$this->db->escape_str($id)." AND `comment_active` = '1' ";
 				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
