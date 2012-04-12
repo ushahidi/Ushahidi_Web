@@ -85,7 +85,6 @@
 	'comment' => 'Comment',
 	'comments' => 'Comments',
 	'comment_details' => 'Comment Details',
-	'comment_rating' => 'Comment Rating',
 	'configuration_saved' => 'Your Settings Have Been Saved!',
 	'configure' => 'Configure',
 	'confirm_email_successful' => 'You have successfully confirmed your email address! Please login below.',

@@ -433,7 +433,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 		//
 		if ($this->comments) {
 			$this->query = "SELECT id, incident_id, comment_author, comment_email, "
-						. "comment_description, comment_rating, comment_date "
+						. "comment_description, comment_date "
 						. "FROM ".$this->table_prefix."comment AS c "
 						. "WHERE c.incident_id IN (".implode(',', $incident_ids).")";
 
@@ -454,7 +454,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 				$comment_items[$incident_comment->incident_id][$i]['comment_author'] = $incident_comment->comment_author;
 				$comment_items[$incident_comment->incident_id][$i]['comment_email'] = $incident_comment->comment_email;
 				$comment_items[$incident_comment->incident_id][$i]['comment_description'] = $incident_comment->comment_description;
-				$comment_items[$incident_comment->incident_id][$i]['comment_rating'] = $incident_comment->comment_rating;
 				$comment_items[$incident_comment->incident_id][$i]['comment_date'] = $incident_comment->comment_date;
 				$i++;
 			}
@@ -537,7 +536,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 						$xml->writeElement('comment_author',$comment_item['comment_author']);
 						$xml->writeElement('comment_email',$comment_item['comment_email']);
 						$xml->writeElement('comment_description',$comment_item['comment_description']);
-						$xml->writeElement('comment_rating',$comment_item['comment_rating']);
 						$xml->writeElement('comment_date',$comment_item['comment_date']);
 						$xml->endElement();
 					}
