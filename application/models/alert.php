@@ -202,10 +202,10 @@ class Alert_Model extends ORM {
 		if ($alerts->loaded)
 		{
 			// Delete all categories linked to the alert
-			ORM::factory('alert_category')->where('alert_id', $alert->id)->delete_all();
+			ORM::factory('alert_category')->where('alert_id', $alerts->id)->delete_all();
 			
 			// Delete the alert
-			$alert->delete();
+			$alerts->delete();
 
 			// Success!
 			return TRUE;
