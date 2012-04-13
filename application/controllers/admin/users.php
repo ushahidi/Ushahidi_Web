@@ -304,7 +304,7 @@ class Users_Controller extends Admin_Controller
         $form_action = "";
 
         // check, has the form been submitted, if so, setup validation
-        if ($_POST)
+        if ($_POST AND csrf::valid($_POST['form_auth_token']))
         {
             $post = Validation::factory($_POST);
 
