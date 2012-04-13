@@ -257,7 +257,6 @@ class Report_Api_Object extends Api_Object_Core {
                 if ( !empty($post->person_first) || !empty($post->person_last) || !empty($post->person_email))
                 {
                     $person = new Incident_Person_Model();
-                    $person->location_id = $location->id;
                     $person->incident_id = $incident->id;
                     if(!empty($post->person_first))
                     {

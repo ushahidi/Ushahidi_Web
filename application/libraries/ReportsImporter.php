@@ -196,7 +196,6 @@ class ReportsImporter {
 						// We'll just use black for now. Maybe something random?
 						$category->category_color = '000000'; 
 						// because all current categories are of type '5'
-						$category->category_type = 5; 
 						$category->category_visible = 1;
 						$category->category_description = $categoryname;
 						$category->save();
