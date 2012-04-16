@@ -181,7 +181,7 @@ class category_Core {
 		}
 		
 		// Fetch the other categories
-		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, COUNT(c.id) report_count "
+		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, c.category_image, c.category_image_thumb, COUNT(c.id) report_count "
 			. "FROM ".$table_prefix."category c "
 			. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
 			. "INNER JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id) "
@@ -204,6 +204,8 @@ class category_Core {
 					'category_title' => Category_Lang_Model::category_title($category->id,Kohana::config('locale.language.0')),
 					'parent_id' => $category->parent_id,
 					'category_color' => $category->category_color,
+					'category_image' => $category->category_image,
+					'category_image_thumb' => $category->category_image_thumb,
 					'report_count' => $category->report_count,
 					'children' => array()
 				);
@@ -238,6 +240,8 @@ class category_Core {
 				'category_title' => Category_Lang_Model::category_title($temp_category->id,Kohana::config('locale.language.0')),
 				'parent_id' => $temp_category->parent_id,
 				'category_color' => $temp_category->category_color,
+				'category_image_thumb' => $temp_category->category_image_thumb,
+				'category_image' => $temp_category->category_image,
 				'report_count' => $report_count,
 				'children' => array()
 			);
@@ -264,9 +268,11 @@ class category_Core {
 			// Determine the category class
 			$category_class = ($category['parent_id'] > 0)? " class=\"report-listing-category-child\"" : "";
 			
+			$category_image = $category['category_image_thumb'] ? html::image(array('src'=> url::convert_uploaded_to_abs($category['category_image_thumb']), 'style'=>'float:left;padding-right:5px;')) : NULL;
+			
 			$tree_html .= "<li".$category_class.">"
 							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$id."\">"
-							. "<span class=\"item-swatch\" style=\"background-color: #".$category['category_color']."\">&nbsp;</span>"
+							. "<span class=\"item-swatch\" style=\"background-color: #".$category['category_color']."\">$category_image</span>"
 							. "<span class=\"item-title\">".strip_tags($category['category_title'])."</span>"
 							. "<span class=\"item-count\">".$category['report_count']."</span>"
 							. "</a></li>";
