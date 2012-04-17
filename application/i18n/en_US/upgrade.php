@@ -32,5 +32,6 @@
     'upgrade_ftp_password' => 'FTP Password:',
     'upgrade_ftp_username' => 'FTP User Name:',
     'upgrade_status_info' => 'You have the latest version of Ushahidi.',
+    'upgrade_db_version' => 'DB version: ',
 );
 ?>

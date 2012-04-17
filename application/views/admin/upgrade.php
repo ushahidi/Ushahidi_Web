@@ -31,7 +31,8 @@
 	<div class="settings_holder">
 		<strong><u>Ushahidi <?php echo $release_version ?></u></strong>
 		<?php if (isset($critical)) echo "(<strong style=\"color:#FF0000\">".Kohana::lang('ui_admin.critical_upgrade')."</strong>)";?>
-        <?php if (is_array($changelogs)) { ?>
+        <?php if (is_array($changelogs)) { ?><br />
+        <?php echo Kohana::lang('upgrade.upgrade_db_version') . $release_db_version; ?>
 		<ul>
             <?php foreach ( $changelogs as $changelog ) { ?>
 			<li><?php print $changelog ?></li>
