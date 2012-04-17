@@ -39,23 +39,12 @@ class reports_Core {
 		
 		// Create validation object
 		$post = Validation::factory($post)
-				->pre_filter('trim', TRUE);
-		
-		// CSRF validation before proceeding with the rest of the validation
-		if (in_array(MODPATH.'csrf', Kohana::config('config.modules')))
-		{
-			if ( ! isset($post['form_auth_token']) OR  ! csrf::valid($post['form_auth_token']))
-			{
-				$post->add_error('incident_title','csrf');
-				return FALSE;
-			}
-		}
-		
-		$post->add_rules('incident_title','required', 'length[3,200]');
-		$post->add_rules('incident_description','required');
-		$post->add_rules('incident_date','required','date_mmddyyyy');
-		$post->add_rules('incident_hour','required','between[1,12]');
-		$post->add_rules('incident_minute','required','between[0,59]');
+				->pre_filter('trim', TRUE)
+				->add_rules('incident_title','required', 'length[3,200]')
+				->add_rules('incident_description','required')
+				->add_rules('incident_date','required','date_mmddyyyy')
+				->add_rules('incident_hour','required','between[1,12]')
+				->add_rules('incident_minute','required','between[0,59]');
 			
 		if ($post->incident_ampm != "am" AND $post->incident_ampm != "pm")
 		{
