@@ -31,7 +31,8 @@
 	<div class="settings_holder">
 		<strong><u>Ushahidi <?php echo $release_version ?></u></strong>
 		<?php if (isset($critical)) echo "(<strong style=\"color:#FF0000\">".Kohana::lang('ui_admin.critical_upgrade')."</strong>)";?>
-        <?php if (is_array($changelogs)) { ?>
+        <?php if (is_array($changelogs)) { ?><br />
+        <?php echo Kohana::lang('upgrade.upgrade_db_version') . $release_db_version; ?>
 		<ul>
             <?php foreach ( $changelogs as $changelog ) { ?>
 			<li><?php print $changelog ?></li>
@@ -47,7 +48,7 @@
 		<?php print form::open(NULL, array('id' => 'upgradeMain', 'name' => 'upgradeMain')); ?>
 			<p>
 		   		<?php print form::label('chk_db_backup_box', Kohana::lang('upgrade.upgrade_db_text_5'));?>
-			   	<?php print form::checkbox('chk_db_backup_box', '1');?>
+			   	<?php print form::checkbox('chk_db_backup_box', '1', 1);?>
 			</p>
 		    <input type="button" id="upgrade" name="button" value="<?php echo Kohana::lang('upgrade.upgrade_continue_btn_text');?>" class="login_btn" onClick="showFTP();" />
 			<div class="report-form ftp-settings" id="ftp_settings">

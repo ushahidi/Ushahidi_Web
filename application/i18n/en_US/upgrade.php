@@ -32,5 +32,9 @@
     'upgrade_ftp_password' => 'FTP Password:',
     'upgrade_ftp_username' => 'FTP User Name:',
     'upgrade_status_info' => 'You have the latest version of Ushahidi.',
+    'upgrade_db_version' => 'Database version: ',
+    'upgrade_warning_software_version' => 'Warning: Software version in version.php and database do not match',
+    'upgrade_warning_db_version' => 'Warning: Database version in version.php and database do not match',
+    'upgrade_database' => 'Database:'
 );
 ?>

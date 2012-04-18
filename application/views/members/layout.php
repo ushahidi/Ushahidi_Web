@@ -197,7 +197,7 @@
 		<div class="holder">
 			<strong>
 				<a href="http://www.ushahidi.com" target="_blank" title="Ushahidi Engine" alt="Ushahidi Engine">
-                	<sup><?php echo Kohana::config('version.ushahidi_version');?></sup>
+                	<sup><?php echo Kohana::config('settings.ushahidi_version');?></sup>
             	</a>
 			</strong>
 		</div>

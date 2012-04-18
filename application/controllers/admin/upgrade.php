@@ -117,9 +117,10 @@ class Upgrade_Controller extends Admin_Controller {
 		
 		$this->template->content->form_action = $form_action;
 		$this->template->content->current_version = Kohana::config('settings.ushahidi_version');
-		$this->template->content->current_db_version = ($this->release == true) ? $this->release->version_db : "";
+		$this->template->content->current_db_version = Kohana::config('settings.db_version');
 		$this->template->content->environment = $this->_environment();
 		$this->template->content->release_version = (is_object($this->release) == true) ? $this->release->version : "";
+		$this->template->content->release_db_version = (is_object($this->release) == true) ? $this->release->version_db : "";
 		$this->template->content->changelogs = (is_object($this->release) == true) ? $this->release->changelog : array();
 		$this->template->content->download = (is_object($this->release) == true) ? $this->release->download : "";
 		$this->template->content->critical = (is_object($this->release) == true) ? $this->release->critical : "";

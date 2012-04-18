@@ -34,7 +34,7 @@ $environ .= "*URL*: ".$url."\n";
 $environ .= "*REFERER*: ".$referer."\n";
 $environ .= "*USER_AGENT*: ".$user_agent."\n";
 $environ .= "*IP*: ".$ip_address."\n";
-$environ .= "*USHAHIDI VERSION*: ".Kohana::config('version.ushahidi_version')."\n";
+$environ .= "*USHAHIDI VERSION*: ".Kohana::config('settings.ushahidi_version')."\n";
 $environ .= "*DB VERSION*: ".Kohana::config('version.ushahidi_db_version')."\n";
 
 $error_message = "";

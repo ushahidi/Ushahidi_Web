@@ -50,7 +50,7 @@ class System_Api_Object extends Api_Object_Core {
     public function get_version_number()
     {
         $json_version = array();
-        $version = Kohana::config('version.ushahidi_version');
+        $version = Kohana::config('settings.ushahidi_version');
         
         $ret_json_or_xml = ''; // Will hold the JSON/XML string to return
 
