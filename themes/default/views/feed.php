@@ -21,10 +21,10 @@
 			<div class="step-1">
 				<h2><?php echo Kohana::lang('ui_main.alerts_step1_select_city'); ?></h2>
 				<div class="location">
-					<form action="">
+					<?php echo form::open(NULL, array('method' => 'get')); ?>
 						<label><?php echo Kohana::lang('ui_main.alerts_alert_me'); ?></label>
 						<?php print form::dropdown('alert_city',$cities,''); ?>
-					</form>
+					<?php echo form::close(); ?>
 				</div>
 				<div class="map">
 					<p><?php echo Kohana::lang('ui_main.alerts_place_spot'); ?></p>

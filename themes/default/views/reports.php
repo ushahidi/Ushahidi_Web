@@ -35,7 +35,7 @@
 				</ul>
 				
 				<p class="labeled-divider"><span><?php echo Kohana::lang('ui_main.choose_date_range'); ?>:</span></p>
-				<form>
+				<?php echo form::open(NULL, array('method' => 'get')); ?>
 					<table>
 						<tr>
 							<td><strong>
@@ -50,7 +50,7 @@
 							</td>
 						</tr>
 					</table>              
-				</form>
+				<?php form::close(); ?>
 			</div>
 
 			<div style="overflow:auto;">

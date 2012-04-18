@@ -14,20 +14,20 @@
  */
 ?>
 <div class="bg">
-	<h2><?php echo $title; ?> <a href="<?php print url::site() ?>admin/stats/hits"><?php echo Kohana::lang('stats.visitor_summary');?></a> <a href="<?php print url::site() ?>admin/stats/country"><?php echo Kohana::lang('stats.country_breakdown');?></a> <a href="<?php print url::site() ?>admin/stats/reports"><?php echo Kohana::lang('stats.report_stats');?></a> <a href="<?php print url::site() ?>admin/stats/impact"><?php echo Kohana::lang('stats.category_impact');?></a> <a href="<?php print url::site() ?>admin/stats/punchcard"><?php echo Kohana::lang('stats.report_punchcard');?></a></h2>
+	<h2><?php echo $title;sdf ?> <a href="<?php print url::site() ?>admin/stats/hits"><?php echo Kohana::lang('stats.visitor_summary');?></a> <a href="<?php print url::site() ?>admin/stats/country"><?php echo Kohana::lang('stats.country_breakdown');?></a> <a href="<?php print url::site() ?>admin/stats/reports"><?php echo Kohana::lang('stats.report_stats');?></a> <a href="<?php print url::site() ?>admin/stats/impact"><?php echo Kohana::lang('stats.category_impact');?></a> <a href="<?php print url::site() ?>admin/stats/punchcard"><?php echo Kohana::lang('stats.report_punchcard');?></a></h2>
 
 	<div class="content-wrap">
 	<h3><?php echo Kohana::lang('stats.country_breakdown');?></h3>
 	
 	<div id="time-period-selector">
 		<p>
-			<form method="get" action="<?php print url::base() ?>admin/stats/country/" style="display: inline;">
+			<?php echo form::open('admin/stats/country/', array('method' => 'get', 'style' => "display: inline;")); ?>
 				<?php echo Kohana::lang('stats.choose_date_range');?>: <a href="<?php print url::site() ?>admin/stats/country/?range=30"><?php echo Kohana::lang('stats.time_range_1');?></a> <a href="<?php print url::site() ?>admin/stats/country/?range=90"><?php echo Kohana::lang('stats.time_range_2');?></a> <a href="<?php print url::site() ?>admin/stats/country/?range=180"><?php echo Kohana::lang('stats.time_range_3');?></a>  <a href="<?php print url::site() ?>admin/stats/country/"><?php echo Kohana::lang('stats.time_range_all');?></a>
 				<input type="text" class="dp" name="dp1" id="dp1" value="<?php echo $dp1; ?>" />&nbsp;&nbsp;-&nbsp;&nbsp; 
 				<input type="text" class="dp" name="dp2" id="dp2" value="<?php echo $dp2; ?>" /> 
 				<input type="hidden" name="range" value="<?php echo $range; ?>" />
 				<input type="submit" value="Go &rarr;" class="button" />
-			</form>
+			<?php echo form::close(); ?>
 		</p>
 	</div>
 

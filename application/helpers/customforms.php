@@ -359,7 +359,7 @@ class customforms_Core {
 	 */
     public static function get_current_fields($form_id = 0)
     {
-		$form_fields = "<form action=\"\">";
+		$form_fields = form::open(NULL, array('method' => 'get'));
 		$form = array();
 		$form['custom_field'] = self::get_custom_form_fields('',$form_id, true);
 		$form['id'] = $form_id;
@@ -369,7 +369,7 @@ class customforms_Core {
 		$custom_forms->form = $form;
 		$custom_forms->editor = true;
 		$form_fields.= $custom_forms->render();
-		$form_fields .= "</form>";
+		$form_fields .= form::close();
 
 		return $form_fields;
 	}

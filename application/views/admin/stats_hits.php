@@ -21,14 +21,14 @@
 	
 	<div id="time-period-selector">
 		<p>
-			<form method="get" action="<?php print url::site() ?>admin/stats/hits/" style="display: inline;">
+			<?php echo form::open('admin/stats/hits/', array('method' => 'get', 'style' => "display: inline;")); ?>
 				<?php echo Kohana::lang('stats.choose_date_range');?>: <a href="<?php print url::site() ?>admin/stats/hits/?range=30"><?php echo Kohana::lang('stats.time_range_1');?></a> <a href="<?php print url::site() ?>admin/stats/hits/?range=90"><?php echo Kohana::lang('stats.time_range_2');?></a> <a href="<?php print url::site() ?>admin/stats/hits/?range=180"><?php echo Kohana::lang('stats.time_range_3');?></a> <a href="<?php print url::site() ?>admin/stats/hits/"><?php echo Kohana::lang('stats.time_range_all');?></a>
 				<input type="text" class="dp" name="dp1" id="dp1" value="<?php echo $dp1; ?>" />&nbsp;&nbsp;-&nbsp;&nbsp; 
 				<input type="text" class="dp" name="dp2" id="dp2" value="<?php echo $dp2; ?>" /> 
 				<input type="hidden" name="range" value="<?php echo $range; ?>" />
 				<input type="hidden" name="active_tab" value="<?php echo $active_tab; ?>" /> 
 				<input type="submit" value="Go &rarr;" class="button" />
-			</form>
+			<?php echo form::close(); ?>
 		</p>
 	</div>
 
