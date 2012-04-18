@@ -59,6 +59,7 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
 		$category_id = 0;
 
 		$_POST = array(
+			'form_auth_token' => csrf::token(),
 			'action' => 'add',
 			'parent_id' => '0',
 			'category_title' => 'Test Category Title',
@@ -87,6 +88,7 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function editCategory($category_id)
 	{
 		$_POST = array(
+			'form_auth_token' => csrf::token(),
 			'action' => 'edit',
 			'parent_id' => '0',
 			'category_id' => $category_id,
@@ -113,6 +115,7 @@ class Admin_Category_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function deleteCategory($category_id)
 	{
 		$_POST = array(
+			'form_auth_token' => csrf::token(),
 			'action' => 'delete',
 			'category_id' => $category_id,
 			'task' => 'category',
