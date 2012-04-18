@@ -367,6 +367,33 @@ class Validation_Core extends ArrayObject {
 	 */
 	public function validate()
 	{
+		// Check for pre-exising CSRF validation
+		$csrf_validation_exists = (
+			in_array('form_auth_token', array_keys($this->callbacks)) OR
+			in_array('form_auth_token', array_keys($this->rules))
+		);
+
+		// HTTP post no CSRF validation
+		if ($_POST AND ! $csrf_validation_exists)
+		{
+			// Check if CSRF module is loaded
+			if (in_array(MODPATH.'csrf', Kohana::config('config.modules')))
+			{
+				if ( ! isset($this['form_auth_token']))
+				{
+					// Check for presence of CSRF token in HTTP POST payload
+					$this['form_auth_token'] = (isset($_POST['form_auth_token']))
+					    ? $_POST['form_auth_token']
+
+					    // Generate invalid token
+					    : text::random('alnum', 10);
+				}
+
+				// Validation rule for the CSRF token
+				$this->add_rules('form_auth_token', array('csrf', 'valid'));
+			}
+		}
+
 		// All the fields that are being validated
 		$all_fields = array_unique(array_merge
 		(

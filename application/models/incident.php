@@ -434,7 +434,6 @@ class Incident_Model extends ORM {
 
 			// Fetch the comments
 			return ORM::factory('comment')
-					->join('rating', 'rating.comment_id', 'comment.id', 'INNER')
 					->where($where)
 					->orderby('comment_date', 'asc')
 					->find_all();

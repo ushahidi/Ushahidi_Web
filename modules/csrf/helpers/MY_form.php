@@ -50,10 +50,14 @@ class form extends form_Core {
 		// Set action
 		$attr['action'] = $action;
 
+		// Only show the CSRF field when form method is POST
+		$hidden_field = ($attr['method'] === 'post')
+		    ? form::hidden('form_auth_token', csrf::token())."\n"
+		    : '';
+
 		// Form opening tag
-		$form_auth_token = csrf::token();
 		$form = '<form'.form::attributes($attr).'>'."\n"
-		    . form::hidden('form_auth_token', $form_auth_token)."\n";
+		    . $hidden_field;
 
 		// Add hidden fields immediate after opening tag
 		empty($hidden) or $form .= form::hidden($hidden);
