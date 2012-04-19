@@ -73,6 +73,7 @@
 								<li>
 									<a href="#"><?php
 									$all_cat_image = '&nbsp';
+									$all_cat_image = '';
 									if($default_map_all_icon != NULL) {
 										$all_cat_image = html::image(array('src'=>$default_map_all_icon));
 									}

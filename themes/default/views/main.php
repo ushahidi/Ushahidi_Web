@@ -19,6 +19,7 @@
 			<ul id="category_switch" class="category-filters">
 				<?php
 				$color_css = 'class="swatch" style="background-color:#'.$default_map_all.'"';
+				$all_cat_image = '';
 				if($default_map_all_icon != NULL) {
 					$all_cat_image = html::image(array(
 						'src'=>$default_map_all_icon,
