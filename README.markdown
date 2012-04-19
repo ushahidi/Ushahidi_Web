@@ -66,8 +66,8 @@ To check if local `.htaccess` files are allowed, verify that the "AllowOverride"
     </Directory>
 
 __NOTE:__ 
-    * Clean URLs means that the URLs of your deployment will not have the 'index.php' prefix
-    * You __MUST__ restart your Apache web server after making the changes outlined above
+- Clean URLs means that the URLs of your deployment will not have the 'index.php' prefix
+- You __MUST__ restart your Apache web server after making the changes outlined above
 
 
 Installation

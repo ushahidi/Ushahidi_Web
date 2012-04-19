@@ -96,7 +96,7 @@ class Manage_Controller extends Admin_Controller
 			// Setup validation for the secondary data
 			$post = Validation::factory($secondary_data)
 						->pre_filter('trim', TRUE);
-						
+
 			// Add validation for the add/edit action
 			if ($post->action == 'a')
 			{
@@ -119,7 +119,7 @@ class Manage_Controller extends Admin_Controller
 			if ($post->action == 'a')
 			{
 				// Test to see if things passed the rule checks
-				if ($category->validate($category_data) AND $post->validate())
+				if ($category->validate($category_data) AND $post->validate(FALSE))
 				{
 					// Save the category
 					$category->save();
@@ -162,7 +162,7 @@ class Manage_Controller extends Admin_Controller
 						// Okay, now we have these three different files on the server, now check to see
 						//   if we should be dropping them on the CDN
 						
-						if(Kohana::config("cdn.cdn_store_dynamic_content"))
+						if (Kohana::config("cdn.cdn_store_dynamic_content"))
 						{
 							$cat_img_file = cdn::upload($cat_img_file);
 							$cat_img_thumb_file = cdn::upload($cat_img_thumb_file);
@@ -216,7 +216,7 @@ class Manage_Controller extends Admin_Controller
 				}
 				
 			}
-			elseif ($post->action == 'd')
+			elseif ($post->validate() AND $post->action == 'd')
 			{
 				// Delete action
 				if ($category->loaded)
@@ -291,7 +291,7 @@ class Manage_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 			}
-			elseif( $post->action == 'v')
+			elseif ($post->validate() AND $post->action == 'v')
 			{ 
 				// Show/Hide Action
 				if ($category->loaded)
@@ -316,7 +316,7 @@ class Manage_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
-			elseif( $post->action == 'i')
+			elseif ($post->validate() AND $post->action == 'i')
 			{ 
 				// Delete Image/Icon Action
 				if ($category->loaded)

@@ -363,33 +363,47 @@ class Validation_Core extends ArrayObject {
 	 * they are undefined. Validation will only be run if there is data already
 	 * in the array.
 	 *
+	 * @param bool $validate_csrf When TRUE, performs CSRF token validation
 	 * @return bool
 	 */
-	public function validate()
+	public function validate($validate_csrf = TRUE)
 	{
-		// Check for pre-exising CSRF validation
-		$csrf_validation_exists = (
-			in_array('form_auth_token', array_keys($this->callbacks)) OR
-			in_array('form_auth_token', array_keys($this->rules))
-		);
+		// CSRF token field
+		$csrf_token_key = 'form_auth_token';
+
+		// Delete the CSRF token field if it's in the validation
+		// rules
+		if (array_key_exists($csrf_token_key, $this->callbacks))
+		{
+			unset ($this->callbacks[$csrf_token_key]);
+		}
+		elseif (array_key_exists($csrf_token_key, $this->rules))
+		{
+			unset ($this->rules[$csrf_token_key]);
+		}
+		elseif (array_key_exists($csrf_token_key, $this))
+		{
+			unset ($this[$csrf_token_key]);
+		}
 
 		// HTTP post no CSRF validation
-		if ($_POST AND ! $csrf_validation_exists)
+		if ($_POST AND $validate_csrf)
 		{
 			// Check if CSRF module is loaded
 			if (in_array(MODPATH.'csrf', Kohana::config('config.modules')))
 			{
 
 				// Check for presence of CSRF token in HTTP POST payload
-				$form_auth_token = (isset($_POST['form_auth_token']))
-				    ? $_POST['form_auth_token']
+				$form_auth_token = (isset($_POST[$csrf_token_key]))
+				    ? $_POST[$csrf_token_key]
 
 					    // Generate invalid token
 				    : text::random('alnum', 10);
-
+				
 				// Validate the token
 				if ( ! csrf::valid($form_auth_token))
 				{
+					Kohana::log('info', 'CSRF validation failed');
 					return FALSE;
 				}
 			}
