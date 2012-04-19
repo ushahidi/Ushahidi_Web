@@ -423,8 +423,12 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
 
+			// Add rules for file upload
+			$files = Validation::factory($_FILES);
+			$files->add_rules('default_map_all_icon', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[250K]');
+
 			// Test to see if things passed the rule checks
-			if ($post->validate())
+			if ($post->validate() && $files->validate(FALSE))
 			{
 				// Yes! everything is valid
 				$settings = new Settings_Model(1);
