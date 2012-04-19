@@ -38,21 +38,24 @@ __NOTE: Need to figure out what extensions you already have installed on your se
 Optional Server Requirements
 ----------------------------
 To use Ushahidi's "Clean URLS" feature on an Apache Web Server, you will need the mod_rewrite module
-and the ability to use local `.htaccess` files.
+and the ability to use local `.htaccess` files. 
 
 ###mod_rewrite Installation
+---------------------------
 
-####Debian/Ubuntu flavours of Linux
+#####Debian/Ubuntu flavours of Linux
     
     sudo a2enmod rewrite
 
-####CentOS, OS X and Windows
+#####CentOS, OS X and Windows
 
 Make sure the following line is __NOT__ commented in your `httpd.conf`
 
     LoadModule rewrite_module
 
-    
+
+###Additional Configuration
+---------------------------
 To check if local `.htaccess` files are allowed, verify that the "AllowOverride" directive in your Apache config 
 (for the web server directory in which you have installed Ushahidi) has been set to "All" i.e.:
 
@@ -62,7 +65,9 @@ To check if local `.htaccess` files are allowed, verify that the "AllowOverride"
         ...
     </Directory>
 
-__NOTE: Clean URLs means that the URLs of your deployment will not have the 'index.php' prefix__
+__NOTE:__ 
+    * Clean URLs means that the URLs of your deployment will not have the 'index.php' prefix
+    * You __MUST__ restart your Apache web server after making the changes outlined above
 
 
 Installation
