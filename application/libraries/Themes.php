@@ -368,6 +368,18 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 
 			</script>";
 		}
+
+		// See if we need to disqualify showing the tag on the admin panel
+		if (Kohana::config('config.google_analytics_in_admin') == FALSE
+			AND isset(Router::$segments[0])
+			AND Router::$segments[0] == 'admin')
+		{
+			// Site is configured to not use the google analytics tag in the admin panel
+			//   and we are in the admin panel. Wipe out the tag.
+			$html = '';
+		}
+
+
 		return $html;
 	}
 

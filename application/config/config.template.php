@@ -35,6 +35,11 @@ $config['enable_auto_upgrader'] = TRUE;
 $config['enable_ver_sync_warning'] = TRUE;
 
 /**
+ * Include Google Analytics (if set) on admin panel
+ */
+$config['google_analytics_in_admin'] = TRUE;
+
+/**
  * Fake file extension that will be added to all generated URLs. Example: .html
  */
 $config['url_suffix'] = '';
