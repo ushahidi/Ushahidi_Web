@@ -38,8 +38,8 @@
                 	<h2>Installation Successful!</h2>
 				</div>
                 <p>To login, go to <a href="<?php echo $adminURL; ?>" target="_blank"><?php echo $adminURL; ?></a> and use the following credentials:<br /><br />
-			<strong>Username:</strong> admin<br />
-			<strong>Password:</strong><?php echo $_SESSION['admin_password']; ?></p>
+			<strong>Login Email:</strong> <?php echo $_SESSION['admin_email']; ?><br />
+			<strong>Password:</strong> (not shown)</p>
 			<p><strong>Other next steps...</strong></p>
 			<ul>
 				<li><a href="<?php echo substr($adminURL, 0, -6); ?>" target="_blank">View your website</a></li>
@@ -81,6 +81,7 @@
 	unset($_SESSION['general_settings']);
 
 	// send the database info to the next page for updating the settings table.
+	unset($_SESSION['admin_email']);
 	unset($_SESSION['username']);
 	unset($_SESSION['password']);
 	unset($_SESSION['host']);
