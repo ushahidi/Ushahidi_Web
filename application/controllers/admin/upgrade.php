@@ -33,11 +33,10 @@ class Upgrade_Controller extends Admin_Controller {
 		$release_version = $this->_get_release_version();
 		
 		// Don't show auto-upgrader when disabled.
-        if (Kohana::config('config.enable_auto_upgrader') == FALSE)
-        {
+		if (Kohana::config('config.enable_auto_upgrader') == FALSE)
+		{
 			die(Kohana::lang('ui_main.disabled'));
-        }
-		
+		}
 	}
 
 	/**
@@ -289,20 +288,18 @@ class Upgrade_Controller extends Admin_Controller {
 		$this->template = "";
 		$this->auto_render = FALSE;
 		$view = View::factory('admin/current_version');
-				
 		
 		$upgrade = new Upgrade;
 		
 		//fetch latest release of ushahidi
-		$this->release = $upgrade->_fetch_core_release();		
+		$this->release = $upgrade->_fetch_core_release();
 		
 		if(!empty($this->release) )
-        {
-		    $view->version = $this->_get_release_version();
-            $view->critical = $this->release->critical;        
-        }
-     
-        $view->render(TRUE);
+		{
+				$view->version = $this->_get_release_version();
+				$view->critical = $this->release->critical;
+		}
+		$view->render(TRUE);
 	}
 	
 	/**
