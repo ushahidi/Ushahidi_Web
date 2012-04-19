@@ -129,7 +129,7 @@ class Settings_Controller extends Admin_Controller
 			$files->add_rules('form_auth_token', 'standard_text');
 
 			// Test to see if things passed the rule checks
-			if ($post->validate() AND $files->validate())
+			if ($post->validate(FALSE) AND $files->validate())
 			{
 				// Yes! everything is valid
 				$settings = new Settings_Model(1);
