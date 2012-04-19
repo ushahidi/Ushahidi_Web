@@ -379,18 +379,19 @@ class Validation_Core extends ArrayObject {
 			// Check if CSRF module is loaded
 			if (in_array(MODPATH.'csrf', Kohana::config('config.modules')))
 			{
-				if ( ! isset($this['form_auth_token']))
-				{
-					// Check for presence of CSRF token in HTTP POST payload
-					$this['form_auth_token'] = (isset($_POST['form_auth_token']))
-					    ? $_POST['form_auth_token']
+
+				// Check for presence of CSRF token in HTTP POST payload
+				$form_auth_token = (isset($_POST['form_auth_token']))
+				    ? $_POST['form_auth_token']
 
 					    // Generate invalid token
-					    : text::random('alnum', 10);
-				}
+				    : text::random('alnum', 10);
 
-				// Validation rule for the CSRF token
-				$this->add_rules('form_auth_token', array('csrf', 'valid'));
+				// Validate the token
+				if ( ! csrf::valid($form_auth_token))
+				{
+					return FALSE;
+				}
 			}
 		}
 
