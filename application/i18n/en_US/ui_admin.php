@@ -225,6 +225,7 @@
 	'qualifiers' => 'Qualifiers',
 	'read' => 'read',
 	'relevance' => 'Relevance',
+	'report_title' => 'Report Title',
 	'reporters' => 'Reporters',
 	'reporter_levels' => 'Reporter Levels',
 	'reports' => 'Reports',

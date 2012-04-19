@@ -147,7 +147,9 @@ $(document).ready(function() {
 		$('#action_form_email_body').slideUp();
 		$('#action_form_email_send_address').slideUp();
 		$('#action_form_add_category').slideUp();
+		$('#action_form_report_title').slideUp();
 		$('#action_form_verify').slideUp();
+		$('#action_form_approve').slideUp();
 		$('#action_form_badge').slideUp();
 	}
 	hide_response_advanced_options();
@@ -166,12 +168,12 @@ $(document).ready(function() {
 		var selected = '';
 		$('#action_response').html('');
 		$.each(trigger_allowed_responses[trigger], function(k, response_key) {
-			
+
 			selected = '';
 			if(response_key == 'log_it') {
 				selected = 'selected';
 			}
-			
+
 			$('#action_response').append('<option value="'+response_key+'" '+selected+'>'+response_options[response_key]+'</option>');
 		});
 	}
@@ -210,10 +212,10 @@ $(document).ready(function() {
 				$("#action_specific_days").attr("value", selected_specific_days.join(','));
 			}
 		);
-	
-	
-	
-	
+
+
+
+
 });
 </script>
 
@@ -305,7 +307,7 @@ $(document).ready(function() {
 
 											// between_times doesn't actually show anything
 											if($qkey == 'between_times') continue;
-											
+
 											// Convert seconds to something easier to digest
 											if($qkey == 'between_times_1' OR $qkey == 'between_times_2')
 											{
@@ -322,7 +324,7 @@ $(document).ready(function() {
 												}
 												$qval = $hours.':'.$minutes.' <small>('.$site_timezone.')</small>';
 											}
-											
+
 											// Make sure we show the right language for days of the week
 											if($qkey == 'days_of_the_week')
 											{
@@ -330,12 +332,12 @@ $(document).ready(function() {
 													$qval[$key] = $days[$day];
 												}
 											}
-											
+
 											// If there's nothing there, don't show it
 											if($qval === '' OR $qval === 0 OR $qval === '0') continue;
 
 											// If it's really long and not an exempted key, chop off the end
-											if( is_string($qval) AND strlen($qval) > 150 
+											if( is_string($qval) AND strlen($qval) > 150
 												AND $qkey != 'location' AND $qkey != 'days_of_the_week')
 											{
 												$qval = substr($qval,0,150).'&#8230;';
@@ -369,7 +371,7 @@ $(document).ready(function() {
 												}
 
 											}
-											
+
 											$qualifier_string .= '<strong>'.$qkey.'</strong>: '.$qval.'<br/>';
 										}
 
@@ -462,7 +464,7 @@ $(document).ready(function() {
 
 						<input type="hidden" id="action_id" name="action_id" value="" />
 						<input type="hidden" name="form_action" id="form_action" value="a"/>
-						
+
 						<div style="float:right;padding:25px 25px 0 0;text-align:right;">
 							<?php echo Kohana::lang('ui_admin.server_time').' '.date("m/d/Y H:i:s",time()).' ('.$site_timezone.')'; ?><br/>
 							<a href="<?php echo url::base(); ?>admin/settings/site"><small><?php echo Kohana::lang('ui_admin.modify_timezone'); ?></small></a>
@@ -518,14 +520,14 @@ $(document).ready(function() {
 								<?php echo form::radio('action_on_specific_count_collective', '1', FALSE).' '.Kohana::lang('ui_admin.entire_collective'); ?>
 
 							</div>
-							
+
 							<div class="tab_form_item" id="action_form_days_of_the_week" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.days_of_the_week")); ?>"><?php echo Kohana::lang('ui_admin.days_of_the_week');?>:</a></h4>
 								<?php
 									echo form::dropdown(array('name' => 'action_days_of_the_week[]', 'multiple' => 'multiple', 'size' => 7), $days, array('standard', 'basic'));
 								?>
 							</div>
-							
+
 							<div class="tab_form_item" id="action_form_between_times" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.between_times")); ?>"><?php echo Kohana::lang('ui_admin.between_times');?>:</a></h4>
 								<?php
@@ -533,7 +535,7 @@ $(document).ready(function() {
 									foreach($hours as $hour_key => $hour){
 										if($hour < 10) $hours[$hour_key] = '0'.$hour;
 									}
-									
+
 									$minutes = range(0,59);
 									foreach($minutes as $minute_key => $minute){
 										if($minute < 10) $minutes[$minute_key] = '0'.$minute;
@@ -543,13 +545,13 @@ $(document).ready(function() {
 								<center><?php echo Kohana::lang('ui_main.and');?></center>
 								<?php echo form::dropdown('action_between_times_hour_2', $hours, 'standard'); ?> : <?php echo form::dropdown('action_between_times_minute_2', $minutes, 'standard'); ?>
 							</div>
-							
+
 							<div class="tab_form_item" id="action_form_specific_days" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.specific_days")); ?>"><?php echo Kohana::lang('ui_admin.specific_days');?>:</a></h4>
 								<div id="action_specific_days_calendar" class="action_specific_days_calendar" name="action_specific_days_calendar"></div>
 								<input type="hidden" name="action_specific_days" id="action_specific_days" value=""  />
 							</div>
-							
+
 						</div>
 
 						<div style="clear:both"></div>
@@ -595,12 +597,23 @@ $(document).ready(function() {
 								?>
 							</div>
 
+							<div class="tab_form_item" id="action_form_report_title" style="margin-right:75px;">
+								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.report_title")); ?>"><?php echo Kohana::lang('ui_admin.report_title');?>:</a></h4>
+								<?php echo form::input('action_report_title',''); ?>
+							</div>
+
 							<div class="tab_form_item" id="action_form_verify" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.verify")); ?>"><?php echo Kohana::lang('ui_admin.mark_as');?>:</a></h4>
 								<?php echo form::radio('action_verify', '0', TRUE).' '.Kohana::lang('ui_main.unverified'); ?><br/>
 								<?php echo form::radio('action_verify', '1', FALSE).' '.Kohana::lang('ui_main.verified'); ?>
 							</div>
-							
+
+							<div class="tab_form_item" id="action_form_approve" style="margin-right:75px;">
+								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.approve")); ?>"><?php echo Kohana::lang('ui_admin.mark_as');?>:</a></h4>
+								<?php echo form::radio('action_approve', '0', TRUE).' '.Kohana::lang('ui_main.disapprove'); ?><br/>
+								<?php echo form::radio('action_approve', '1', FALSE).' '.Kohana::lang('ui_main.approve'); ?>
+							</div>
+
 							<div class="tab_form_item" id="action_form_badge" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.assign_badge")); ?>"><?php echo Kohana::lang('ui_admin.assign_badge'); ?>:</a></h4>
 								<?php

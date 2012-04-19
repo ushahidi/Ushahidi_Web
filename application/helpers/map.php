@@ -479,6 +479,36 @@ class map_Core {
 	}
 
 	/**
+	 * Reverse Geocode a point
+	 *
+	 * @author
+	 * @param   double  $latitude
+	 * @param   double  $longitude
+	 * @return  string  closest approximation of the point as a display name
+	 */
+	public static function reverse_geocode($latitude,$longitude)
+	{
+		if ($latitude AND $longitude)
+		{
+			$url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat='.$latitude.'&lon='.$longitude;
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_URL,$url);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+			$json = curl_exec($ch);
+			curl_close($ch);
+
+			$location = json_decode($json, false);
+
+			return $location->display_name;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	/**
 	 * Calculate distances between two points
 	 *
 	 * @param   double	 point 1 latitude
