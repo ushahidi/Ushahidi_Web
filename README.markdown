@@ -99,8 +99,8 @@ Installation
     
     Again, you will be prompted for the 'username' database password. At the MySQL prompt, enter the following command:
     
-        GRANT SELECT, INSERT, DELETE, UPDATE, CREATE, DROP, ALTER, INDEX on 'databasename'.* 
-        TO 'username'@'localhost' IDENFIFIED BY 'password';
+        GRANT SELECT, INSERT, DELETE, UPDATE, CREATE, DROP, ALTER, INDEX on database.* 
+        TO 'username'@'localhost' IDENTIFIED BY 'password';
     
     Where:
     - 'databasename' is the name of your database
