@@ -17,7 +17,7 @@
 				<h2>
 					<?php admin::settings_subtabs("map"); ?>
 				</h2>
-				<?php print form::open(); ?>
+				<?php print form::open(NULL, array('enctype' => 'multipart/form-data')); ?>
 					<div class="report-form">
 						<?php
 						if ($form_error) {
@@ -136,6 +136,19 @@
 										});
 									});
 								</script>
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_default_category_icons"); ?>"><?php echo Kohana::lang('settings.site.default_category_icons');?></a></h4>
+								<div class="c_push">
+									<?php if($default_map_all_icon_m != NULL) { ?>
+										<img src="<?php echo $default_map_all_icon_m; ?>" alt="<?php Kohana::lang('settings.site.default_category_icons'); ?>" /><br/>
+									<?php } ?>
+									<?php echo form::upload('default_map_all_icon', '', ''); ?> (&lt;&#61; 250k)
+									<br/>
+									<?php
+										echo form::checkbox('delete_default_map_all_icon', '1');
+										echo form::label('delete_default_map_all_icon', Kohana::lang("settings.site.delete_default_map_all_icon"));
+		
+									?>
+								</div>
 							</div>
 	
 								<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="margin-left: 0px;" />

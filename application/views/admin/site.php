@@ -66,7 +66,7 @@
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_banner"); ?>"><?php echo Kohana::lang('settings.site.banner');?></a></h4>
 							<?php if($banner_m != NULL) { ?>
-								<img src="<?php echo url::base().Kohana::config('upload.relative_directory')."/".$banner_m; ?>" alt="<?php Kohana::lang('settings.site.banner'); ?>" /><br/>
+								<img src="<?php echo $banner_m; ?>" alt="<?php Kohana::lang('settings.site.banner'); ?>" /><br/>
 							<?php } ?>
 							<?php echo form::upload('banner_image', '', ''); ?> (&lt;&#61; 250k)
 							<br/>

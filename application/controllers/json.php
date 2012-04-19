@@ -60,6 +60,12 @@ class Json_Controller extends Template_Controller
 		$json_features = array();
 		$color = Kohana::config('settings.default_map_all');
 		$icon = "";
+		
+		if (Kohana::config('settings.default_map_all_icon_id'))
+		{
+			$icon_object = ORM::factory('media')->find(Kohana::config('settings.default_map_all_icon_id'));
+			$icon = Kohana::config('upload.relative_directory')."/".$icon_object->media_medium;
+		}
 
 		$media_type = (isset($_GET['m']) AND intval($_GET['m']) > 0)? intval($_GET['m']) : 0;
 		
@@ -174,6 +180,12 @@ class Json_Controller extends Template_Controller
 
 		$color = Kohana::config('settings.default_map_all');
 		$icon = "";
+		
+		if (Kohana::config('settings.default_map_all_icon_id'))
+		{
+			$icon_object = ORM::factory('media')->find(Kohana::config('settings.default_map_all_icon_id'));
+			$icon = Kohana::config('upload.relative_directory')."/".$icon_object->media_medium;
+		}
 
 		// Get Zoom Level
 		$zoomLevel = (isset($_GET['z']) AND !empty($_GET['z'])) ?

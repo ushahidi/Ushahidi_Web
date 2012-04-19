@@ -51,6 +51,7 @@
 	'settings_checkins' => 'This setting enables checkins on your deployment. This is a simplified report type that is not moderated before it goes on the homepage and requires your site to be configured a certain way. When you enable this, make sure your timezone setting is on UTC and your theme supports checkins. When you enable this, checkin only themes will become enabled under your addons/themes settings page.',
 	'settings_configure_map' => 'Set the map to cover a specific location ',
 	'settings_default_category_colors' => 'Set one color code for all the categories on the site',
+	'settings_default_category_icons' => 'Set one icon for all the categories on the site',
 	'settings_default_location' => 'This is the country the site is being deployed',
 	'settings_display_contact' => 'Turn the Contact Tab on or off on the main site.',
 	'settings_display_howtohelp' => 'Turn the How to Help Tab on or off on the main site.',

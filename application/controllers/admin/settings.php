@@ -394,6 +394,8 @@ class Settings_Controller extends Admin_Controller
 			'default_zoom' => '',
 			'default_map_all' => '',
 			'allow_clustering' => '',
+			'default_map_all_icon' => '',
+			'delete_default_map_all_icon' => ''
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
 		//	corresponding to the form field names
@@ -439,6 +441,82 @@ class Settings_Controller extends Admin_Controller
 				$settings->default_map_all = $post->default_map_all;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
+				
+				// Deal with default category icon now
+
+				// Check if deleting or updating a new image (or doing nothing)
+				if( isset($post->delete_default_map_all_icon) AND $post->delete_default_map_all_icon == 1)
+				{
+					// Delete old badge image
+					ORM::factory('media')->delete($settings->default_map_all_icon_id);
+
+					// Remove from DB table
+					$settings = new Settings_Model(1);
+					$settings->default_map_all_icon_id = NULL;
+					$settings->save();
+
+				}else{
+					// We aren't deleting, so try to upload if we are uploading an image
+					$filename = upload::save('default_map_all_icon');
+					if ($filename)
+					{
+						$new_filename = "default_map_all_".time();
+						$file_type = strrev(substr(strrev($filename),0,4));
+
+						// Large size
+						$l_name = $new_filename.$file_type;
+						Image::factory($filename)->save(Kohana::config('upload.directory', TRUE).$l_name);
+
+						// Medium size
+						$m_name = $new_filename."_m".$file_type;
+						Image::factory($filename)->resize(32,32,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE).$m_name);
+
+						// Thumbnail
+						$t_name = $new_filename."_t".$file_type;
+						Image::factory($filename)->resize(16,16,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE).$t_name);
+
+						// Name the files for the DB
+						$media_link = $l_name;
+						$media_medium = $m_name;
+						$media_thumb = $t_name;
+
+						// Okay, now we have these three different files on the server, now check to see
+						//   if we should be dropping them on the CDN
+
+						if (Kohana::config("cdn.cdn_store_dynamic_content"))
+						{
+							$media_link = cdn::upload($media_link);
+							$media_medium = cdn::upload($media_medium);
+							$media_thumb = cdn::upload($media_thumb);
+
+							// We no longer need the files we created on the server. Remove them.
+							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+							unlink($local_directory.$l_name);
+							unlink($local_directory.$m_name);
+							unlink($local_directory.$t_name);
+						}
+
+						// Remove the temporary file
+						unlink($filename);
+
+						// Save image in the media table
+						$media = new Media_Model();
+						$media->media_type = 1; // Image
+						$media->media_link = $media_link;
+						$media->media_medium = $media_medium;
+						$media->media_thumb = $media_thumb;
+						$media->media_date = date("Y-m-d H:i:s",time());
+						$media->save();
+
+						// Save new image in settings
+						$settings = new Settings_Model(1);
+						$settings->default_map_all_icon_id = $media->id;
+						$settings->save();
+					}
+				}
+				
 
 				// Delete Settings Cache
 				$this->cache->delete('settings');
@@ -481,10 +559,22 @@ class Settings_Controller extends Admin_Controller
 				'default_lon' => $settings->default_lon,
 				'default_zoom' => $settings->default_zoom,
 				'allow_clustering' => $settings->allow_clustering,
-				'default_map_all' => $settings->default_map_all
+				'default_map_all' => $settings->default_map_all,
+				'default_map_all_icon_id' => $settings->default_map_all_icon_id,
 			);
 		}
 
+		// Get default category image
+		if($settings->default_map_all_icon_id != NULL){
+			$icon = ORM::factory('media')->find($settings->default_map_all_icon_id);
+			$this->template->content->default_map_all_icon = url::convert_uploaded_to_abs($icon->media_link);
+			$this->template->content->default_map_all_icon_m = url::convert_uploaded_to_abs($icon->media_medium);
+			$this->template->content->default_map_all_icon_t = url::convert_uploaded_to_abs($icon->media_thumb);
+		}else{
+			$this->template->content->default_map_all_icon = NULL;
+			$this->template->content->default_map_all_icon_m = NULL;
+			$this->template->content->default_map_all_icon_t = NULL;
+		}
 
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;

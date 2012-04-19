@@ -41,6 +41,7 @@ Kohana::config_set('settings.sms_no2', $settings->sms_no2);
 Kohana::config_set('settings.sms_no3', $settings->sms_no3);
 Kohana::config_set('settings.default_map', $settings->default_map);
 Kohana::config_set('settings.default_map_all', $settings->default_map_all);
+Kohana::config_set('settings.default_map_all_icon_id', $settings->default_map_all_icon_id);
 Kohana::config_set('settings.api_google', $settings->api_google);
 Kohana::config_set('settings.api_yahoo', $settings->api_yahoo);
 Kohana::config_set('settings.api_akismet', $settings->api_akismet);
