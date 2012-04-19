@@ -998,6 +998,8 @@ CREATE TABLE IF NOT EXISTS `message` (
   `message_type` tinyint(4) DEFAULT '1' COMMENT '1 - INBOX, 2 - OUTBOX (From Admin), 3 - DELETED',
   `message_date` datetime DEFAULT NULL,
   `message_level` tinyint(4) DEFAULT '0' COMMENT '0 - UNREAD, 1 - READ, 99 - SPAM',
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `incident_id` (`incident_id`),
@@ -1448,4 +1450,4 @@ CREATE TABLE IF NOT EXISTS `verified` (
  *
  */
 UPDATE `settings` SET `ushahidi_version` = '2.2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '82' WHERE `id` = 1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '83' WHERE `id` = 1 LIMIT 1;

@@ -489,8 +489,14 @@ class Reports_Controller extends Admin_Controller {
 				$form['person_first'] = $message->reporter->reporter_first;
 				$form['person_last'] = $message->reporter->reporter_last;
 
-				// Does the sender of this message have a location?
-				if ($message->reporter->location->loaded)
+				// Does the message itself have a location?
+				if ($message->latitude != NULL AND $message->longitude != NULL)
+				{
+					$form['latitude'] = $message->latitude;
+					$form['longitude'] = $message->longitude;
+				}
+				// As a fallback, does the sender of this message have a location?
+				elseif ($message->reporter->location->loaded)
 				{
 					$form['location_id'] = $message->reporter->location->id;
 					$form['latitude'] = $message->reporter->location->latitude;

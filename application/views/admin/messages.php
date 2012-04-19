@@ -120,7 +120,9 @@
 									$message_date = date('Y-m-d  H:i', strtotime($message->message_date));
 									$message_type = $message->message_type;
 									$message_level = $message->message_level;
-									
+									$latitude = $message->latitude;
+									$longitude = $message->longitude;
+
 									$level_id = $message->reporter->level_id;
 									?>
 									<tr <?php if ($message_level == "99") {
@@ -137,7 +139,7 @@
 													<p><a href="javascript:preview('message_preview_<?php echo $message_id?>')"><?php echo Kohana::lang('ui_main.preview_message');?></a></p>
 													<div id="message_preview_<?php echo $message_id?>" style="display:none;">
 														<?php echo $message_detail; ?>
-														
+
 														<?php
 														// Retrieve Attachments if any
 														foreach($message->media as $photo) 
@@ -196,11 +198,16 @@
 												<?php
 												if ($message_type == 2)
 												{
-													?><li class="none-separator">To: <strong><?php echo $message_to; ?></strong><?php
+													?><li class="none-separator"><?php echo Kohana::lang('ui_admin.to');?>: <strong><?php echo $message_to; ?></strong><?php
 												}
 												else
 												{
-													?><li class="none-separator">From: <a href="<?php echo url::site()."admin/messages/reporters/index/".$service_id."?k=".urlencode($message_from);?>"><strong class="reporters_<?php echo $level_id?>"><?php echo $message_from; ?></strong></a><?php
+													?><li class="none-separator"><?php echo Kohana::lang('ui_admin.from');?>: <a href="<?php echo url::site()."admin/messages/reporters/index/".$service_id."?k=".urlencode($message_from);?>"><strong class="reporters_<?php echo $level_id?>"><?php echo $message_from; ?></strong></a><?php
+												}
+
+												if ($latitude != NULL AND $longitude != NULL)
+												{
+													?><li class="none-separator"> @ <?php echo $latitude; ?>,<?php echo $longitude; ?></li><?php
 												}
 												?>
 											</ul>
