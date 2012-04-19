@@ -125,11 +125,9 @@ class Settings_Controller extends Admin_Controller
 			// Add rules for file upload
 			$files = Validation::factory($_FILES);
 			$files->add_rules('banner_image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[250K]');
-			// Add fake CSRF rule to skip CSRF on files submission
-			$files->add_rules('form_auth_token', 'standard_text');
 
 			// Test to see if things passed the rule checks
-			if ($post->validate(FALSE) AND $files->validate())
+			if ($post->validate() AND $files->validate(FALSE))
 			{
 				// Yes! everything is valid
 				$settings = new Settings_Model(1);
