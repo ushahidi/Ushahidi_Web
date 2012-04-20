@@ -46,17 +46,16 @@ class map_Core {
 			{
 				if ($all == TRUE)
 				{
-					$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
-
-					if($layer->openlayers == 'XYZ')
+					//++ Bing doesn't have the first argument
+					if ($layer->openlayers == "Bing")
 					{
-						if(isset($layer->data['url']))
-						{
-							$js .= '"'.$layer->data['url'].'", ';
-						}
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."({ \n";
+					}
+					else
+					{
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
 					}
 
-					$js .= "{ \n";
 					foreach ($layer->data AS $key => $value)
 					{
 						if ( ! empty($value)
@@ -66,7 +65,7 @@ class map_Core {
 						{
 							if ($key == "type")
 							{
-								$js .= " ".$key.": ".urlencode($value).",\n";
+								$js .= " ".$key.": ".$value.",\n";
 							}
 							else
 							{
@@ -82,17 +81,15 @@ class map_Core {
 				{
 					if ($layer->openlayers == $openlayers_type)
 					{
-						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
-
-						if($layer->openlayers == 'XYZ')
+						//++ Bing doesn't have the first argument
+						if ($layer->openlayers == "Bing")
 						{
-							if(isset($layer->data['url']))
-							{
-								$js .= '"'.$layer->data['url'].'", ';
-							}
+							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."({ \n";
 						}
-
-						$js .= "{ \n";
+						else
+						{
+							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
+						}
 
 						foreach ($layer->data AS $key => $value)
 						{
@@ -103,7 +100,7 @@ class map_Core {
 							{
 								if ($key == "type")
 								{
-									$js .= " ".$key.": ".urlencode($value).",\n";
+									$js .= " ".$key.": ".$value.",\n";
 								}
 								else
 								{
@@ -255,7 +252,7 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// Google Satellite
+		// GOOGLE Satellite
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'google_satellite';
@@ -270,7 +267,7 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// Google Hybrid
+		// GOOGLE Hybrid
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'google_hybrid';
@@ -285,7 +282,7 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// Google Normal
+		// GOOGLE Normal
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'google_normal';
@@ -300,7 +297,7 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// Google Physical
+		// GOOGLE Physical
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'google_physical';
@@ -315,45 +312,51 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// Bing Street
+		// BING Road
 		$layer = new stdClass();
-		$layer->active = FALSE;
-		$layer->name = 'virtualearth_street';
-		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Bing Street';
-		$layer->description = 'Bing Street Tiles.';
-		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->active = TRUE;
+		$layer->name = 'bing_road';
+		$layer->openlayers = "Bing";
+		$layer->title = 'Bing-Road';
+		$layer->description = 'Bing Road Maps';
+		$layer->api_signup = 'https://www.bingmapsportal.com/';
 		$layer->data = array(
+			'name' => 'Bing-Road',
 			'baselayer' => TRUE,
-			'type' => 'VEMapStyle.Road',
+			'key' => Kohana::config('settings.api_live'),
+			'type' => '\'Road\'',
 		);
 		$layers[$layer->name] = $layer;
 
-		// Bing Satellite
+		// BING Hybrid
 		$layer = new stdClass();
 		$layer->active = TRUE;
-		$layer->name = 'virtualearth_satellite';
-		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Bing Satellite';
-		$layer->description = 'Bing Satellite Tiles.';
-		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
-		$layer->data = array(
-			'baselayer' => TRUE,
-			'type' => 'VEMapStyle.Aerial',
-		);
-		$layers[$layer->name] = $layer;
-
-		// Bing Hybrid
-		$layer = new stdClass();
-		$layer->active = TRUE;
-		$layer->name = 'virtualearth_hybrid';
-		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Bing Hybrid';
+		$layer->name = 'bing_hybrid';
+		$layer->openlayers = "Bing";
+		$layer->title = 'Bing-Hybrid';
 		$layer->description = 'Bing hybrid of streets and satellite tiles.';
-		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->api_signup = 'https://www.bingmapsportal.com/';
 		$layer->data = array(
+			'name' => 'Bing-Hybrid',
 			'baselayer' => TRUE,
-			'type' => 'VEMapStyle.Hybrid',
+			'key' => Kohana::config('settings.api_live'),
+			'type' => '\'AerialWithLabels\'',
+		);
+		$layers[$layer->name] = $layer;
+
+		// BING Aerial
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'bing_satellite';
+		$layer->openlayers = "Bing";
+		$layer->title = 'Bing-Satellite';
+		$layer->description = 'Bing Satellite Tiles';
+		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->data = array(
+			'name' => 'Bing-Satellite',
+			'baselayer' => TRUE,
+			'key' => Kohana::config('settings.api_live'),
+			'type' => '\'Aerial\'',
 		);
 		$layers[$layer->name] = $layer;
 
