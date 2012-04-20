@@ -3,6 +3,7 @@
 	'captcha' => array(
 		'default' => 'Please enter a valid security code',
 		'required' => 'Please enter the security code',
+		'valid' => 'You entered the wrong security code',
 	),
 	'comment_author' => array(
 		'length' => 'The name field must be at least 3 characters long.',
