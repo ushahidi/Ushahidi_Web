@@ -49,33 +49,43 @@ class map_Core {
 					//++ Bing doesn't have the first argument
 					if ($layer->openlayers == "Bing")
 					{
-						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."({ \n";
+						// Options for the Bing layer constructor
+						$bing_options = "{\n"
+						    . "\t name: \"".$layer->data['name']."\",\n"
+							. "\t type: \"".$layer->data['type']."\",\n"
+							. "\t key: \"".$layer->data['key']."\"\n"
+							. "}";
+
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
 					}
 					else
 					{
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
-					}
 
-					foreach ($layer->data AS $key => $value)
-					{
-						if ( ! empty($value)
-						 	AND $key != 'baselayer'
-						 	AND ($key == 'attribution' AND $layer->openlayers == 'XYZ')
-							AND $key != 'url')
+						foreach ($layer->data AS $key => $value)
 						{
-							if ($key == "type")
+							if 
+							( ! empty($value)
+							 	AND $key != 'baselayer'
+							 	AND ($key == 'attribution' AND $layer->openlayers == 'XYZ')
+								AND $key != 'url'
+							)
 							{
-								$js .= " ".$key.": ".$value.",\n";
-							}
-							else
-							{
-								$js .= " ".$key.": '".urlencode($value)."',\n";
+								if ($key == "type")
+								{
+									$js .= " ".$key.": ".$value.",\n";
+								}
+								else
+								{
+									$js .= " ".$key.": '".urlencode($value)."',\n";
+								}
 							}
 						}
-					}
 
-					$js .= " sphericalMercator: true,\n";
-					$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
+						$js .= " sphericalMercator: true,\n";
+						$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
+					}
+					
 				}
 				else
 				{
@@ -93,10 +103,13 @@ class map_Core {
 
 						foreach ($layer->data AS $key => $value)
 						{
-							if ( ! empty($value)
+							if
+							( 
+								! empty($value)
 							 	AND $key != 'baselayer'
 							 	AND ($key == 'attribution' AND $layer->openlayers == 'XYZ')
-								AND $key != 'url')
+								AND $key != 'url'
+							)
 							{
 								if ($key == "type")
 								{
@@ -324,7 +337,7 @@ class map_Core {
 			'name' => 'Bing-Road',
 			'baselayer' => TRUE,
 			'key' => Kohana::config('settings.api_live'),
-			'type' => '\'Road\'',
+			'type' => 'Road',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -340,7 +353,7 @@ class map_Core {
 			'name' => 'Bing-Hybrid',
 			'baselayer' => TRUE,
 			'key' => Kohana::config('settings.api_live'),
-			'type' => '\'AerialWithLabels\'',
+			'type' => 'AerialWithLabels',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -356,7 +369,7 @@ class map_Core {
 			'name' => 'Bing-Satellite',
 			'baselayer' => TRUE,
 			'key' => Kohana::config('settings.api_live'),
-			'type' => '\'Aerial\'',
+			'type' => 'Aerial',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -377,28 +390,11 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// OpenStreetMap Tiles @ Home
-		$layer = new stdClass();
-		$layer->active = TRUE;
-		$layer->name = 'osm_tah';
-		$layer->openlayers = "OSM.Mapnik";
-		$layer->title = 'OSM Tiles@Home';
-		$layer->description = 'Alternative, community-rendered OpenStreetMap';
-		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
-		$layer->data = array(
-			'baselayer' => TRUE,
-			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
-				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
-			'url' => 'http://tah.openstreetmap.org/Tiles/tile/${z}/${x}/${y}.png',
-			'type' => ''
-		);
-		$layers[$layer->name] = $layer;
-
 		// OpenStreetMap Cycling Map
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'osm_cycle';
-		$layer->openlayers = "OSM.Mapnik";
+		$layer->openlayers = "OSM.CycleMap";
 		$layer->title = 'OSM Cycling Map';
 		$layer->description = 'OpenStreetMap with highlighted bike lanes';
 		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
@@ -411,30 +407,6 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// OpenStreetMap 426 hybrid overlay
-		$layer = new stdClass();
-		$layer->active = FALSE;
-		$layer->name = 'osm_4326_hybrid';
-		$layer->openlayers = "OSM.Mapnik";
-		$layer->title = 'OSM Overlay';
-		$layer->description = 'Semi-transparent hybrid overlay. Projected into
-			WSG84 for use on non spherical-mercator maps.';
-		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
-		$layer->data = array(
-			'baselayer' => FALSE,
-			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
-				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
-			'url' => 'http://oam.hypercube.telascience.org/tiles',
-			'params' => array(
-				'layers' => 'osm-4326-hybrid',
-			),
-			'options' => array(
-				'isBaseLayer' => FALSE,
-				'buffer' => 1,
-			),
-			'type' => ''
-		);
-		$layers[$layer->name] = $layer;
 
 		// Add Custom Layers
 		// Filter::map_base_layers
