@@ -730,12 +730,12 @@ class Validation_Core extends ArrayObject {
 					//   this allows "custom" inputs to pass through, bypassing localization by design
 					$errors[$input] = $error;
 				}
+			}
 
-				// CSRF validation erros MUST always be returned
-				if ($this->csrf_validation_failed)
-				{
-					$errors['form_auth_token'] = $error;
-				}
+			// CSRF validation errors MUST always be returned
+			if ($this->csrf_validation_failed)
+			{
+				$errors['form_auth_token'] = $this->errors['form_auth_token'];
 			}
 
 			return $errors;
