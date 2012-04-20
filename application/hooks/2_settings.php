@@ -89,7 +89,8 @@ $default_map = $settings->default_map;
 $map_layer = map::base($default_map);
 if ($map_layer)
 {
-	Kohana::config_set('settings.api_url', "<script type=\"text/javascript\" src=\"".$map_layer->api_url."\"></script>" );
+	Kohana::config_set('settings.api_url', 
+		"<script type=\"text/javascript\" src=\"".$map_layer->api_url."\"></script>");
 }
 
 // And in case you want to display all maps on one page...

@@ -40,21 +40,29 @@ class map_Core {
 
 		// Get OpenLayers type
 		$openlayers_type = $layers[$default_map]->openlayers;
+
+		// To store options for the bing maps
+		$bing_options = "{}";
 		foreach ($layers as $layer)
 		{
 			if ($layer->active)
 			{
+				// Get the bing options 
+				if ($layer->openlayers == "Bing")
+				{
+					// Options for the Bing layer constructor
+					$bing_options = "{\n"
+					    . "\t name: \"".$layer->data['name']."\",\n"
+					    . "\t type: \"".$layer->data['type']."\",\n"
+					    . "\t key: \"".$layer->data['key']."\"\n"
+					    . "}";
+				}
+
 				if ($all == TRUE)
 				{
 					//++ Bing doesn't have the first argument
 					if ($layer->openlayers == "Bing")
 					{
-						// Options for the Bing layer constructor
-						$bing_options = "{\n"
-						    . "\t name: \"".$layer->data['name']."\",\n"
-							. "\t type: \"".$layer->data['type']."\",\n"
-							. "\t key: \"".$layer->data['key']."\"\n"
-							. "}";
 
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
 					}
@@ -94,36 +102,36 @@ class map_Core {
 						//++ Bing doesn't have the first argument
 						if ($layer->openlayers == "Bing")
 						{
-							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."({ \n";
+							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
 						}
 						else
 						{
 							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
-						}
 
-						foreach ($layer->data AS $key => $value)
-						{
-							if
-							( 
-								! empty($value)
-							 	AND $key != 'baselayer'
-							 	AND ($key == 'attribution' AND $layer->openlayers == 'XYZ')
-								AND $key != 'url'
-							)
+							foreach ($layer->data AS $key => $value)
 							{
-								if ($key == "type")
+								if
+								( 
+									! empty($value)
+								 	AND $key != 'baselayer'
+								 	AND ($key == 'attribution' AND $layer->openlayers == 'XYZ')
+									AND $key != 'url'
+								)
 								{
-									$js .= " ".$key.": ".$value.",\n";
-								}
-								else
-								{
-									$js .= " ".$key.": '".urlencode($value)."',\n";
+									if ($key == "type")
+									{
+										$js .= " ".$key.": ".$value.",\n";
+									}
+									else
+									{
+										$js .= " ".$key.": '".urlencode($value)."',\n";
+									}
 								}
 							}
-						}
 
-						$js .= " sphericalMercator: true,\n";
-						$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
+							$js .= " sphericalMercator: true,\n";
+							$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
+						}
 					}
 				}
 			}
