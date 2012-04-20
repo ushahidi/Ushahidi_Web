@@ -36,6 +36,12 @@ class Validation_Core extends ArrayObject {
 	protected $submitted;
 
 	/**
+	 * Whether CSRF validation has succeeded
+	 * @var bool
+	 */
+	protected $csrf_validation_failed = FALSE;
+
+	/**
 	 * Creates a new Validation instance.
 	 *
 	 * @param   array   array to use for validation
@@ -371,6 +377,11 @@ class Validation_Core extends ArrayObject {
 		// CSRF token field
 		$csrf_token_key = 'form_auth_token';
 
+		if (array_key_exists($csrf_token_key, $this))
+		{
+			unset ($this[$csrf_token_key]);
+		}
+
 		// Delete the CSRF token field if it's in the validation
 		// rules
 		if (array_key_exists($csrf_token_key, $this->callbacks))
@@ -380,10 +391,6 @@ class Validation_Core extends ArrayObject {
 		elseif (array_key_exists($csrf_token_key, $this->rules))
 		{
 			unset ($this->rules[$csrf_token_key]);
-		}
-		elseif (array_key_exists($csrf_token_key, $this))
-		{
-			unset ($this[$csrf_token_key]);
 		}
 
 		// HTTP post no CSRF validation
@@ -403,7 +410,12 @@ class Validation_Core extends ArrayObject {
 				// Validate the token
 				if ( ! csrf::valid($form_auth_token))
 				{
-					Kohana::log('info', 'CSRF validation failed');
+					// Flag CSRF validation as having failed
+					$this->csrf_validation_failed = TRUE;
+
+					// Set the error message
+					$this->errors[$csrf_token_key] = Kohana::lang('csrf.form_auth_token.error');
+
 					return FALSE;
 				}
 			}
@@ -717,6 +729,12 @@ class Validation_Core extends ArrayObject {
 					//   provide more clues as to the problem than what we are currently providing. Also,
 					//   this allows "custom" inputs to pass through, bypassing localization by design
 					$errors[$input] = $error;
+				}
+
+				// CSRF validation erros MUST always be returned
+				if ($this->csrf_validation_failed)
+				{
+					$errors['form_auth_token'] = $error;
 				}
 			}
 
