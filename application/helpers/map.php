@@ -42,27 +42,23 @@ class map_Core {
 		$openlayers_type = $layers[$default_map]->openlayers;
 
 		// To store options for the bing maps
-		$bing_options = "{}";
 		foreach ($layers as $layer)
 		{
 			if ($layer->active)
 			{
-				// Get the bing options 
-				if ($layer->openlayers == "Bing")
-				{
-					// Options for the Bing layer constructor
-					$bing_options = "{\n"
-					    . "\t name: \"".$layer->data['name']."\",\n"
-					    . "\t type: \"".$layer->data['type']."\",\n"
-					    . "\t key: \"".$layer->data['key']."\"\n"
-					    . "}";
-				}
 
-				if ($all == TRUE)
+				if ($all == TRUE OR $layer->openlayers == $openlayers_type)
 				{
 					//++ Bing doesn't have the first argument
 					if ($layer->openlayers == "Bing")
 					{
+						// Options for the Bing layer constructor
+						$bing_options = "{\n"
+						    . "\t name: \"".$layer->data['name']."\",\n"
+						    . "\t type: \"".$layer->data['type']."\",\n"
+						    . "\t key: \"".$layer->data['key']."\"\n"
+						    . "}";
+						
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
 					}
 					else
@@ -103,55 +99,6 @@ class map_Core {
 						$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
 					}
 					
-				}
-				else
-				{
-					if ($layer->openlayers == $openlayers_type)
-					{
-						//++ Bing doesn't have the first argument
-						if ($layer->openlayers == "Bing")
-						{
-							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
-						}
-						else
-						{
-							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
-
-							if($layer->openlayers == 'XYZ')
-							{
-								if(isset($layer->data['url']))
-								{
-									$js .= '"'.$layer->data['url'].'", ';
-								}
-							}
-		
-							$js .= "{ \n";
-
-							foreach ($layer->data AS $key => $value)
-							{
-								if
-								( 
-									! empty($value)
-								 	AND $key != 'baselayer'
-								 	AND ($key == 'attribution' AND $layer->openlayers == 'XYZ')
-									AND $key != 'url'
-								)
-								{
-									if ($key == "type")
-									{
-										$js .= " ".$key.": ".$value.",\n";
-									}
-									else
-									{
-										$js .= " ".$key.": '".urlencode($value)."',\n";
-									}
-								}
-							}
-
-							$js .= " sphericalMercator: true,\n";
-							$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
-						}
-					}
 				}
 			}
 		}
@@ -199,16 +146,9 @@ class map_Core {
 		{
 			if ($layer->name != $default_map AND $layer->active)
 			{
-				if ($all == TRUE)
+				if ($all == TRUE OR $layer->openlayers == $openlayers_type)
 				{
 					$js .= ",".$layer->name;
-				}
-				else
-				{
-					if ($layer->openlayers == $openlayers_type)
-					{
-						$js .= ",".$layer->name;
-					}
 				}
 			}
 		}
