@@ -302,6 +302,7 @@ class map_Core {
 		$layer->title = 'Bing-Road';
 		$layer->description = 'Bing Road Maps';
 		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_url = '';
 		$layer->data = array(
 			'name' => 'Bing-Road',
 			'baselayer' => TRUE,
@@ -318,6 +319,7 @@ class map_Core {
 		$layer->title = 'Bing-Hybrid';
 		$layer->description = 'Bing hybrid of streets and satellite tiles.';
 		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_url = '';
 		$layer->data = array(
 			'name' => 'Bing-Hybrid',
 			'baselayer' => TRUE,
@@ -334,6 +336,7 @@ class map_Core {
 		$layer->title = 'Bing-Satellite';
 		$layer->description = 'Bing Satellite Tiles';
 		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_url = '';
 		$layer->data = array(
 			'name' => 'Bing-Satellite',
 			'baselayer' => TRUE,
