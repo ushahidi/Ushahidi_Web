@@ -385,6 +385,7 @@ class Settings_Controller extends Admin_Controller
 		$form = array(
 			'default_map' => '',
 			'api_google' => '',
+			'api_live' => '',
 			'default_country' => '',
 			'multi_country' => '',
 			'default_lat' => '',
@@ -406,29 +407,26 @@ class Settings_Controller extends Admin_Controller
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST
 			// fields with our own things
-			$post = new Validation($_POST);
-
-			// Add some filters
-			$post->pre_filter('trim', TRUE);
-
-			// Add some rules, the input field, followed by a list of checks, carried out in order
-
-			$post->add_rules('default_country', 'required', 'numeric', 'length[1,4]');
-			$post->add_rules('multi_country', 'numeric', 'length[1,1]');
-			$post->add_rules('default_map', 'required', 'length[0,100]');
-			$post->add_rules('api_google','required', 'length[0,200]');
-			$post->add_rules('default_zoom','required','between[0,21]');		// Validate for maximum and minimum zoom values
-			$post->add_rules('default_lat','required','between[-85,85]');		// Validate for maximum and minimum latitude values
-			$post->add_rules('default_lon','required','between[-180,180]');		// Validate for maximum and minimum longitude values
-			$post->add_rules('allow_clustering','required','between[0,1]');
-			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
+			$post = Validation::factory($_POST)
+			    ->pre_filter('trim', TRUE)
+			    ->add_rules('default_country', 'required', 'numeric', 'length[1,4]')
+			    ->add_rules('multi_country', 'numeric', 'length[1,1]')
+			    ->add_rules('default_map', 'required', 'length[0,100]')
+			    ->add_rules('default_zoom','required','between[0,21]')		// Validate for maximum and minimum zoom values
+			    ->add_rules('default_lat','required','between[-85,85]')		// Validate for maximum and minimum latitude values
+			    ->add_rules('default_lon','required','between[-180,180]')		// Validate for maximum and minimum longitude values
+			    ->add_rules('allow_clustering','required','between[0,1]')
+			    ->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]')
+			    ->add_rules('api_google', 'length[0,200]')
+			    ->add_rules('api_live', 'length[0,200]');
+			
 
 			// Add rules for file upload
 			$files = Validation::factory($_FILES);
 			$files->add_rules('default_map_all_icon', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[250K]');
 
 			// Test to see if things passed the rule checks
-			if ($post->validate() && $files->validate(FALSE))
+			if ($post->validate() AND $files->validate(FALSE))
 			{
 				// Yes! everything is valid
 				$settings = new Settings_Model(1);
@@ -436,6 +434,15 @@ class Settings_Controller extends Admin_Controller
 				$settings->multi_country = $post->multi_country;
 				$settings->default_map = $post->default_map;
 				$settings->api_google = $post->api_google;
+				
+				// E.Kala 20th April 2012
+				// Gangsta workaround prevent resetting og Bing Maps API Key
+				// Soon to be addressed conclusively
+				if (isset($post['api_live']) AND ! empty($post['api_live']))
+				{
+					$settings->api_live = $post->api_live;
+				}
+
 				$settings->default_zoom = $post->default_zoom;
 				$settings->default_lat = $post->default_lat;
 				$settings->default_lon = $post->default_lon;
@@ -555,6 +562,7 @@ class Settings_Controller extends Admin_Controller
 			$form = array(
 				'default_map' => $settings->default_map,
 				'api_google' => $settings->api_google,
+				'api_live' => $settings->api_live,
 				'default_country' => $settings->default_country,
 				'multi_country' => $settings->multi_country,
 				'default_lat' => $settings->default_lat,
@@ -567,12 +575,15 @@ class Settings_Controller extends Admin_Controller
 		}
 
 		// Get default category image
-		if($settings->default_map_all_icon_id != NULL){
+		if ($settings->default_map_all_icon_id != NULL)
+		{
 			$icon = ORM::factory('media')->find($settings->default_map_all_icon_id);
 			$this->template->content->default_map_all_icon = url::convert_uploaded_to_abs($icon->media_link);
 			$this->template->content->default_map_all_icon_m = url::convert_uploaded_to_abs($icon->media_medium);
 			$this->template->content->default_map_all_icon_t = url::convert_uploaded_to_abs($icon->media_thumb);
-		}else{
+		}
+		else
+		{
 			$this->template->content->default_map_all_icon = NULL;
 			$this->template->content->default_map_all_icon_m = NULL;
 			$this->template->content->default_map_all_icon_t = NULL;

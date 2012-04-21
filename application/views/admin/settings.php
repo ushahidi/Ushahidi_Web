@@ -19,33 +19,27 @@
 				</h2>
 				<?php print form::open(NULL, array('enctype' => 'multipart/form-data')); ?>
 					<div class="report-form">
-						<?php
-						if ($form_error) {
-						?>
-							<!-- red-box -->
-							<div class="red-box">
-								<h3><?php echo Kohana::lang('ui_main.error');?></h3>
-								<ul>
-								<?php
-								foreach ($errors as $error_item => $error_description)
-								{
-									print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
-								}
-								?>
-								</ul>
-							</div>
-						<?php
-						}
+					<?php if ($form_error): ?>
+						<!-- red-box -->
+						<div class="red-box">
+							<h3><?php echo Kohana::lang('ui_main.error');?></h3>
+							<ul>
+							<?php
+							foreach ($errors as $error_item => $error_description)
+							{
+								print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+							}
+							?>
+							</ul>
+						</div>
+					<?php endif; ?>
 						
-						if ($form_saved) {
-						?>
-							<!-- green-box -->
-							<div class="green-box">
-								<h3><?php echo Kohana::lang('ui_main.configuration_saved');?></h3>
-							</div>
-						<?php
-						}
-						?>
+					<?php if ($form_saved): ?>
+						<!-- green-box -->
+						<div class="green-box">
+							<h3><?php echo Kohana::lang('ui_main.configuration_saved'); ?></h3>
+						</div>
+					<?php endif; ?>
 						<div class="head">
 							<h3><?php echo Kohana::lang('settings.map_settings');?></h3>
 							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
@@ -85,7 +79,8 @@
 							<div class="has_border">
 								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_map_provider"); ?>"><?php echo Kohana::lang('settings.map_provider.name');?></a></h4>
 								<p class="bold_desc"><?php echo Kohana::lang('settings.map_provider.info');?></p>
-								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 1: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.choose');?></span><br />
+								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 1: </span>
+								<span class="dark_span"><?php echo Kohana::lang('settings.map_provider.choose');?></span><br />
 								<div class="c_push">
 									<span class="my-sel-holder">
 										<?php										
@@ -94,13 +89,17 @@
 									</span>
 								</div>
 	
-								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 2: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.get_api');?></span><br />
+								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 2: </span>
+								<span class="dark_span"><?php echo Kohana::lang('settings.map_provider.get_api');?></span><br />
 								<div class="c_push">
-									<a href="http://code.google.com/apis/maps/signup.html" id="api_link" title="Get API Key"><img src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-get-api-key.gif" border="0" alt="Get API Key"></a>
+									<a href="http://code.google.com/apis/maps/signup.html" id="api_link" title="Get API Key">
+										<img src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-get-api-key.gif" border="0" alt="Get API Key">
+									</a>
 								</div>
 								
-								<div id="api_div_google" <?php if ($form['default_map'] != 1 && $form['default_map'] != 4) echo "style=\"display:none\""; ?>>
-									<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 3: </span><span class="dark_span"><?php echo Kohana::lang('settings.map_provider.enter_api');?></span><br />
+								<div id="api_div_google" <?php if ($form['default_map'] != 1 AND $form['default_map'] != 4) echo "style=\"display:none\""; ?>>
+									<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 3: </span>
+									<span class="dark_span"><?php echo Kohana::lang('settings.map_provider.enter_api');?></span><br />
 									<div class="c_push">
 										<?php print form::input('api_google', $form['api_google'], ' class="text"'); ?>
 									</div>
