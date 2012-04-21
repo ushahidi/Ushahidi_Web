@@ -63,12 +63,21 @@ class map_Core {
 					//++ Bing doesn't have the first argument
 					if ($layer->openlayers == "Bing")
 					{
-
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
 					}
 					else
 					{
-						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
+
+						if($layer->openlayers == 'XYZ')
+						{
+							if(isset($layer->data['url']))
+							{
+								$js .= '"'.$layer->data['url'].'", ';
+							}
+						}
+	
+						$js .= "{ \n";
 
 						foreach ($layer->data AS $key => $value)
 						{
@@ -106,7 +115,17 @@ class map_Core {
 						}
 						else
 						{
-							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
+							$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
+
+							if($layer->openlayers == 'XYZ')
+							{
+								if(isset($layer->data['url']))
+								{
+									$js .= '"'.$layer->data['url'].'", ';
+								}
+							}
+		
+							$js .= "{ \n";
 
 							foreach ($layer->data AS $key => $value)
 							{
