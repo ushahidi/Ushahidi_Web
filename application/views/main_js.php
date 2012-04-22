@@ -566,7 +566,9 @@
 				eventListeners: {
 					"zoomend": mapMove
 				},
-				'theme': null
+				'theme': null,
+				maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
+				maxResolution: 156543.0339
 			};
 			
 			map = new OpenLayers.Map('map', options);

@@ -29,6 +29,7 @@
 				, units: "m"
 				, projection: MapProj
 				, 'displayProjection': DispProj
+				, numZoomLevels: 18
 				, maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34)
 				, controls: [	new OpenLayers.Control.Navigation(),
 													new OpenLayers.Control.MouseDefaults(),
