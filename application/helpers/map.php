@@ -61,41 +61,52 @@ class map_Core {
 						
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
 					}
+					// Allow layers to specify a custom set of OpenLayers options
+					// this should allow plugins to add OpenLayers Layer types we haven't considered here
+					// See http://dev.openlayers.org/docs/files/OpenLayers/Layer-js.html for other layer types
+					else if (isset($layer->openlayers_options) && $layer->openlayers_options != null)
+					{
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.{$layer->openlayers}({$layer->openlayers_options});\n\n";
+					}
+					// Finally construct JS for the majority of layers
 					else
 					{
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
 
-						if($layer->openlayers == 'XYZ')
+						if($layer->openlayers == 'XYZ' || $layer->openlayers == 'WMS')
 						{
 							if(isset($layer->data['url']))
 							{
 								$js .= '"'.$layer->data['url'].'", ';
 							}
 						}
+
+						// Extra parameter used by WMS - key/value pairs representing the GetMap query string
+						if ($layer->openlayers == 'WMS' AND isset($layer->wms_params)) {
+							// Add some unnescessary params so that json_encode creates an object not an array.
+							if (!isset($layer->wms_params['styles'])) $layer->wms_params['styles'] = '';
+							if (!isset($layer->wms_params['layers'])) $layer->wms_params['layers'] = '';
+							
+							$js .= json_encode($layer->wms_params);
+							$js .= ', ';
+						}
 	
 						$js .= "{ \n";
 
-						foreach ($layer->data AS $key => $value)
+						$params = $layer->data;
+						if (isset($params['url'])) unset($params['url']);
+						if (isset($params['baselayer'])) unset($params['baselayer']);
+						$params['sphericalMercator'] = true;
+
+						foreach ($params AS $key => $value)
 						{
 							if 
-							( ! empty($value)
-							 	AND $key != 'baselayer'
-							 	AND ($key == 'attribution' AND $layer->openlayers == 'XYZ')
-								AND $key != 'url'
-							)
+							( ! empty($value) )
 							{
-								if ($key == "type")
-								{
-									$js .= " ".$key.": ".$value.",\n";
-								}
-								else
-								{
-									$js .= " ".$key.": '".urlencode($value)."',\n";
-								}
+								$js .= " ".$key.": ".json_encode($value).",\n";
 							}
 						}
 
-						$js .= " sphericalMercator: true,\n";
 						$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
 					}
 					
