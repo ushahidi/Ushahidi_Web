@@ -201,7 +201,7 @@ INSERT INTO `category` (`id`,`category_title`, `category_description`, `category
 (2, 'Category 2', 'Category 2', '3300FF', 1, 0),
 (3, 'Category 3', 'Category 3', '663300', 1, 0),
 (4, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1),
-(5, 'NONE', 'Holds orphaned reports', '009887', 1, 1);
+(5, 'NONE', 'Holds uncategorized reports', '009887', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1449,4 +1449,4 @@ CREATE TABLE IF NOT EXISTS `verified` (
  *
  */
 UPDATE `settings` SET `ushahidi_version` = '2.2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '84' WHERE `id` = 1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '85' WHERE `id` = 1 LIMIT 1;

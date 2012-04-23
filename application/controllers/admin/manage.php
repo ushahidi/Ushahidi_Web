@@ -256,10 +256,10 @@ class Manage_Controller extends Admin_Controller
 										->where('incident_id',$orphan_incident_id)
 										->count_all();
 					
-							// If this report is tied to only one category(is an orphan)
+							// If this report is tied to only one category(is uncategorized)
 							if($count == 1)
 							{
-								// Assign it to the special category for orphans
+								// Assign it to the special category for uncategorized reports
 								$orphaned = ORM::factory('incident_category',$orphan->id);
 								$orphaned->category_id = 5;
 								$orphaned->save();
@@ -271,7 +271,7 @@ class Manage_Controller extends Admin_Controller
 							
 							}
 						
-							// If this report is tied to more than one category(not orphaned), remove relation to category being deleted						
+							// If this report is tied to more than one category(not uncategorized), remove relation to category being deleted						
 							else
 							{
 								ORM::factory('incident_category')
