@@ -356,7 +356,7 @@
 	'photos' => 'Photos',
 	'pictures' => 'Pictures',
 	'pictures_and_videos' => 'Pictures and Videos',
-	'pinpoint_location' => '* Search for your location using a location name of latitude,longitude coordinates (format: 38.19,-85.61), or click on the map to pinpoint the correct location',
+	'pinpoint_location' => '* Search for your location using a location name OR latitude,longitude coordinates (format: 38.19, 85.61), OR click on the map to pinpoint the correct location.',
 	'play' => 'Play',
 	'please_note' => 'Please Note',
 	'plugins' => 'Plugins',
