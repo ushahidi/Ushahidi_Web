@@ -273,9 +273,9 @@
 					feature.attributes.feature_id == feature_id)
 				{
 					if (typeof(selectedFeature) != 'undefined' && selectedFeature !='' ) {
-						selectCtrl.unselect(selectedFeature);
+						selectControl.unselect(selectedFeature);
 					}
-					selectCtrl.select(feature);
+					selectControl.select(feature);
 				}
 			}
 		}
