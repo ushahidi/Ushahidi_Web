@@ -215,7 +215,7 @@ class ReportsImporter {
 					$incident_update->incident_active = 0;
 					$incident_update->save();
 
-					// Assign reports to special category for orphaned reports: NONE
+					// Assign reports to special category for uncategorized reports: NONE
 					$incident_category->category_id = '5';
 					$incident_category->save();
 				}	
@@ -230,7 +230,7 @@ class ReportsImporter {
 			$incident_update->incident_active = 0;
 			$incident_update->save();
 			
-			// Assign reports to special category for orphaned reports: NONE
+			// Assign reports to special category for uncategorized reports: NONE
 			$incident_category = new Incident_Category_Model();
 			$incident_category->incident_id = $incident->id;
 			$incident_category->category_id = '5';

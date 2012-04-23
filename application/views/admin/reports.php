@@ -27,7 +27,7 @@
 						<li><a href="?status=a" <?php if ($status == 'a') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.awaiting_approval');?></a></li>
 						<li><a href="?status=v" <?php if ($status == 'v') echo "class=\"active\""; ?>><?php echo Kohana::lang('ui_main.awaiting_verification');?></a></li>
 						<li><a href="?status=o" <?php if ($status == 'o') echo "class=\"active\""; ?>><?php echo
-Kohana::lang('ui_main.orphaned_reports'); ?></a></li>
+Kohana::lang('ui_main.uncategorized_reports'); ?></a></li>
 					</ul>
 					<!-- tab -->
 					<div class="tab">
