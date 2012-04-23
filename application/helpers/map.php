@@ -64,7 +64,7 @@ class map_Core {
 					// Allow layers to specify a custom set of OpenLayers options
 					// this should allow plugins to add OpenLayers Layer types we haven't considered here
 					// See http://dev.openlayers.org/docs/files/OpenLayers/Layer-js.html for other layer types
-					else if (isset($layer->openlayers_options) && $layer->openlayers_options != null)
+					elseif (isset($layer->openlayers_options) AND $layer->openlayers_options != null)
 					{
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.{$layer->openlayers}({$layer->openlayers_options});\n\n";
 					}
@@ -73,16 +73,17 @@ class map_Core {
 					{
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
 
-						if($layer->openlayers == 'XYZ' || $layer->openlayers == 'WMS')
+						if ($layer->openlayers == 'XYZ' || $layer->openlayers == 'WMS')
 						{
-							if(isset($layer->data['url']))
+							if (isset($layer->data['url']))
 							{
 								$js .= '"'.$layer->data['url'].'", ';
 							}
 						}
 
 						// Extra parameter used by WMS - key/value pairs representing the GetMap query string
-						if ($layer->openlayers == 'WMS' AND isset($layer->wms_params)) {
+						if ($layer->openlayers == 'WMS' AND isset($layer->wms_params))
+						{
 							// Add some unnescessary params so that json_encode creates an object not an array.
 							if (!isset($layer->wms_params['styles'])) $layer->wms_params['styles'] = '';
 							if (!isset($layer->wms_params['layers'])) $layer->wms_params['layers'] = '';
@@ -98,10 +99,9 @@ class map_Core {
 						if (isset($params['baselayer'])) unset($params['baselayer']);
 						$params['sphericalMercator'] = true;
 
-						foreach ($params AS $key => $value)
+						foreach ($params as $key => $value)
 						{
-							if 
-							( ! empty($value) )
+							if ( ! empty($value))
 							{
 								$js .= " ".$key.": ".json_encode($value).",\n";
 							}
@@ -146,7 +146,8 @@ class map_Core {
 		$default_map = Kohana::config('settings.default_map');
 
 		if ( ! isset($layers[$default_map]))
-		{ // Map Layer Doesn't Exist - default to google
+		{
+			// Map Layer Doesn't Exist - default to google
 			$default_map = "google_normal";
 		}
 
@@ -390,6 +391,21 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
+		// OpenStreetMap Transport
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'osm_TransportMap';
+		$layer->openlayers = "OSM.TransportMap";
+		$layer->title = 'OSM Transport Map';
+		$layer->description = 'TransportMap';
+		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '©CCBYSA 2010 OpenStreetMap.org contributors',
+			'url' => 'http://tile.openstreetmap.org/transport/${z}/${x}/${y}.png',
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
 
 		// Add Custom Layers
 		// Filter::map_base_layers
@@ -403,7 +419,7 @@ class map_Core {
 			}
 			else
 			{
-				return false;
+				return FALSE;
 			}
 		}
 		else
