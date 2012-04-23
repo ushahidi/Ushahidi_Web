@@ -188,7 +188,7 @@ class category_Core {
 			. "WHERE c.category_visible = 1 "
 			. "AND c.category_title != \"NONE\" "
 			. "AND i.incident_active = 1 "
-			. "GROUP BY c.category_title "
+			. "GROUP BY c.id "
 			. "ORDER BY c.category_title ASC";
 		
 		// Add child categories
