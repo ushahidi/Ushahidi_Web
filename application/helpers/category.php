@@ -181,13 +181,12 @@ class category_Core {
 		}
 		
 		// Fetch the other categories
-		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, c.category_image, c.category_image_thumb, COUNT(c.id) report_count "
+		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, c.category_image, c.category_image_thumb, COUNT(i.id) report_count "
 			. "FROM ".$table_prefix."category c "
-			. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
-			. "INNER JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id) "
+			. "LEFT JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
+			. "LEFT JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id AND i.incident_active = 1 ) "
 			. "WHERE c.category_visible = 1 "
 			. "AND c.category_title != \"NONE\" "
-			. "AND i.incident_active = 1 "
 			. "GROUP BY c.id "
 			. "ORDER BY c.category_title ASC";
 		
