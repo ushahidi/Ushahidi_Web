@@ -156,18 +156,18 @@ class category_Core {
 		self::_init_parent_category_report_totals($category_data, $table_prefix);
 		
 		// Query to fetch the report totals for the parent categories
-		$sql = "SELECT c2.id,  COUNT(DISTINCT ic.incident_id)  AS report_count "
-			. "FROM ".$table_prefix."category c, ".$table_prefix."category c2, ".$table_prefix."incident_category ic "
+		$sql = "SELECT c_parent.id,  COUNT(DISTINCT ic.incident_id)  AS report_count "
+			. "FROM ".$table_prefix."category c "
+			. "INNER JOIN ".$table_prefix."category c_parent ON (c.parent_id = c_parent.id) "
+			. "INNER JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id OR ic.category_id = c_parent.id) "
 			. "INNER JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id) "
-			. "WHERE (ic.category_id = c.id OR ic.category_id = c2.id) "
-			. "AND c.parent_id = c2.id "
-			. "AND i.incident_active = 1 "
-			. "AND c2.category_visible = 1 "
+			. "WHERE i.incident_active = 1 "
+			. "AND c_parent.category_visible = 1 "
 			. "AND c.category_visible = 1 "
-			. "AND c2.parent_id = 0 "
-			. "AND c2.category_title != \"NONE\""
-			. "GROUP BY c2.id "
-			. "ORDER BY c2.id ASC";
+			. "AND c_parent.parent_id = 0 "
+			. "AND c_parent.category_title != \"NONE\""
+			. "GROUP BY c_parent.id "
+			. "ORDER BY c_parent.id ASC";
 		
 		// Update the report_count field of each top-level category
 		foreach ($db->query($sql) as $category_total)
