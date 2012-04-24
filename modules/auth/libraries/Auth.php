@@ -142,7 +142,7 @@ class Auth_Core {
 			$user = ORM::factory('user',$user_id);
 
 			// Get the salt from the stored password
-			$salt = $this->find_salt($this->driver->password($user->username));
+			$salt = $this->find_salt($this->driver->password($user->email));
 
 			// Create a hashed password using the salt from the stored password
 			$password = $this->hash_password($password, $salt);

@@ -102,8 +102,11 @@ class Profile_Controller extends Members_Controller
 					$user->notify = $post->notify;
 					$user->public_profile = $post->public_profile;
 					$user->color = $post->color;
-					$user->password !='' ? $user->password = $post->new_password : '';
 					$user->needinfo = $needinfo;
+					if ($post->new_password != '')
+					{
+						$user->password = $post->new_password;
+					}
 					$user->save();
 
 					// We also need to update the RiverID server with the new password if
