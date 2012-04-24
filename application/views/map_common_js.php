@@ -27,7 +27,7 @@
 		{
 			// Create the default options
 			mapOptions = {
-				units: "mi",
+				units: "dd",
 				numZoomLevels: 18,
 				theme: false,
 				controls:[],

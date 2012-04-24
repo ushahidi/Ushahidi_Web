@@ -66,7 +66,7 @@
 		jQuery(window).load(function() {
 			// Map options
 			var options = {
-				units: "m",
+				units: "dd",
 				numZoomLevels: 18, 
 				controls:[],
 				theme: false,

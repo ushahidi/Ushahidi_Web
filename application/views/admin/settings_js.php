@@ -26,7 +26,7 @@
 				var MapProj = new OpenLayers.Projection("EPSG:900913");
 				var options = {
 				maxResolution: 156543.0339
-				, units: "m"
+				, units: "dd"
 				, projection: MapProj
 				, 'displayProjection': DispProj
 				, numZoomLevels: 18

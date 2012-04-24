@@ -34,7 +34,9 @@
 				numZoomLevels: 18,
 				controls:[],
 				projection: proj_900913,
-				'displayProjection': proj_4326
+				'displayProjection': proj_4326,
+				maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
+				maxResolution: 156543.0339
 				};
 			map = new OpenLayers.Map('map', options);
 			map.addControl( new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}) );

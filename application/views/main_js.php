@@ -558,7 +558,7 @@
 			- Units in Metres instead of Degrees					
 			*/
 			var options = {
-				units: "mi",
+				units: "dd",
 				numZoomLevels: 18,
 				controls:[],
 				projection: proj_900913,

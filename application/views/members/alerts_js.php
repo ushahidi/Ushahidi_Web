@@ -33,11 +33,13 @@ function showMap(id, lon, lat, radius) {
 	- Units in Metres instead of Degrees					
 	*/
 	var options = {
-		units: "m",
+		units: "dd",
 		numZoomLevels: 16,
 		controls:[],
 		projection: proj_900913,
-		'displayProjection': proj_4326
+		'displayProjection': proj_4326,
+		maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
+		maxResolution: 156543.0339
 	};
 		
 	map = new OpenLayers.Map(id + '_map', options);
