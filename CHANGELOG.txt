@@ -1,3 +1,14 @@
+Ushahidi 2.3 - (Juba) Bug fix release, 24-04-2012
+--------------------------
+* Cleaned up database Schema
+* Few improvements on the installer 
+	– This includes the introduction of an admin login email configuration.
+	- Hiding of admin password once installation is complete.
+* Added HTML editing and more attributes to the page editor. 
+* Security fixes
+    - Cross Site Request Forgery (CSRF)
+    - Cross Site Scripting (XSS)
+
 Ushahidi 2.2.1 - bug fix release, 04-04-2012
 --------------------------
 * Map JS unification (#278)
