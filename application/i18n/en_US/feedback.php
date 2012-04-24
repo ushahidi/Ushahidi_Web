@@ -15,7 +15,7 @@
 		'required' => 'A title is required.',
 	),
 	'person_email' => array(
-		'email' => 'The email field does not appear to contain a valid email address?',
+		'email' => 'The email field does not appear to contain a valid email address.',
 		'required' => 'Please enter your email address',
 	),
 	'person_name' => array(

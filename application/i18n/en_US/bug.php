@@ -1,8 +1,8 @@
 <?php
 	$lang = array(
 	'captcha' => array(
-		'default' => 'Please enter a valid security code',
-		'required' => 'Please enter the security code',
+		'default' => 'Please enter a valid security code.',
+		'required' => 'Please enter the security code.',
 	),
 	'email' => array(
 		'email' => 'The Email field does not appear to contain a valid email address?',
