@@ -73,7 +73,10 @@ class Profile_Controller extends Admin_Controller
 					$user->name = $post->name;
 					$user->email = $post->email;
 					$user->notify = $post->notify;
-					$post->new_password != '' ? $user->password = $post->new_password : '';
+					if ($post->new_password != '')
+                    {
+                        $user->password = $post->new_password;
+                    }
 					$user->save();
 
 	                // We also need to update the RiverID server with the new password if
