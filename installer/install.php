@@ -408,7 +408,7 @@ class Install
 				if( !empty($base_path) && $base_path != "/" ) {
 
 					if( strpos(" ".$line,"RewriteBase /") != 0 ) {
-						fwrite($handle, str_replace("/","/".$base_path,$line));
+						fwrite($handle, str_replace($line,"\t"."RewriteBase /".$base_path."\n\n",$line));
 					} else {
 						fwrite($handle,$line);
 					}
@@ -820,11 +820,17 @@ HTML;
 	/**
 	 * Validate password information
 	 */
-	function _password_info($password,$password_confirm,$table_prefix = NULL)
+	function _password_info($email,$password,$password_confirm,$table_prefix = NULL)
 	{
 		global $form;
 
 		// Check for empty password fields
+
+		// Email field is empty
+		if ( !$email || strlen($email = trim($email)) == 0)
+		{
+			$form->set_error('email',"You must enter an email address.");
+		}
 
 		// Password field is empty
 		if ( !$password || strlen($password = trim($password)) == 0)
@@ -856,13 +862,20 @@ HTML;
 			$form->set_error('invalid',"Your password should have aplhabetical characters, the # and @symbol, numbers, dashes and underscores only.");
 		}
 
+		// Email rules
+		if (filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE)
+		{
+			$form->set_error('invalid',"Your email address must be valid.");
+		}
+
 		if ( $form->num_errors > 0)
 		{
 			return 1;
 		}
 		else
 		{
-			$this->_add_password_info($password);
+			$this->_add_password_info($password,$table_prefix);
+			$this->_add_email($email,$table_prefix);
 			return 0;
 		}
 	}
@@ -873,7 +886,7 @@ HTML;
 	 * @param  string  password to be encrypted
 	 */
 
-	function _add_password_info($password)
+	function _add_password_info($password,$table_prefix=FALSE)
 	{
 		// Encrypt the password
 		$admin_pass = $this->hash_password($password);
@@ -881,7 +894,24 @@ HTML;
 		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
 		@mysql_select_db($_SESSION['db_name'],$connection);
-		@mysql_query('UPDATE `'.$table_prefix.'users` SET `password` = \''.mysql_escape_string($admin_pass).
+		@mysql_query('UPDATE `'.$table_prefix.'users` SET `password` = \''.mysql_real_escape_string($admin_pass).
+		'\' WHERE `id` =1 LIMIT 1;');
+		@mysql_close($connection);
+	}
+
+	/**
+	 * Add the admin email
+	 *
+	 * @param  string  email address for the administrator
+	 */
+
+	function _add_email($email,$table_prefix=FALSE)
+	{
+
+		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
+		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
+		@mysql_select_db($_SESSION['db_name'],$connection);
+		@mysql_query('UPDATE `'.$table_prefix.'users` SET `email` = \''.mysql_real_escape_string($email).
 		'\' WHERE `id` =1 LIMIT 1;');
 		@mysql_close($connection);
 	}

@@ -66,7 +66,7 @@
 		jQuery(window).load(function() {
 			// Map options
 			var options = {
-				units: "m",
+				units: "dd",
 				numZoomLevels: 18, 
 				controls:[],
 				theme: false,
@@ -74,7 +74,9 @@
 				'displayProjection': proj_4326,
 				eventListeners: {
 					"zoomend": incidentZoom
-				}
+				},
+				maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
+				maxResolution: 156543.0339
 			};
 			
 			// Now initialise the map
@@ -213,8 +215,8 @@
 					echo "wktFeature.color = '$geometry->color';\n";
 					echo "wktFeature.strokewidth = '$geometry->strokewidth';\n";
 					echo "vlayer.addFeatures(wktFeature);\n";
-					echo "var color = '$geometry->color';if (color) {updateFeature(wktFeature, color, '');};";
-					echo "var strokewidth = '$geometry->strokewidth';if (strokewidth) {updateFeature(wktFeature, '', strokewidth);};";
+					echo "var color = '$geometry->color';if (color) {updateFeature(wktFeature, color, '');};\n";
+					echo "var strokewidth = '$geometry->strokewidth';if (strokewidth) {updateFeature(wktFeature, '', strokewidth);};\n";
 				}
 			}
 			?>

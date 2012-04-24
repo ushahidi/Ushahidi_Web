@@ -17,9 +17,13 @@
 		'required' => 'The title field is required.',
 	),
 	'parent_id' => array(
+		'already_parent' => 'You cannot subcategorize a category with subcategories.',
 		'exists' => 'The parent category does not exist.',
 		'numeric' => 'The parent category field must be numeric.',
+		'parent_trusted' => 'The parent category cannot be a special category',
 		'required' => 'The parent category field is required.',
 		'same' => 'The category and the parent category cannot be the same.',
+		'special' => 'Special categories cannot be subcategorised.',
+		
 	));
 ?>

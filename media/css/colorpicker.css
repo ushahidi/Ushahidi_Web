@@ -6,6 +6,7 @@
 	background: url(../img/colorpicker/colorpicker_background.png);
 	font-family: Arial, Helvetica, sans-serif;
 	display: none;
+	z-index: 1010;
 }
 .colorpicker_color {
 	width: 150px;

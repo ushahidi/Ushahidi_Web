@@ -218,16 +218,15 @@ class Stats_Controller extends Admin_Controller
             return false;
         }
         
-        $json = '';
+        $json = array();
         $use_log = '';
-        $json .= '"buckets":['."\n";
+        $json['buckets'] = array();
         $cat_report_count = array();
         $category_counter = array();
         
         foreach($data['category_counts'] as $timestamp => $count_array)
         {
-            $comma_flag = false;
-            $line = '';
+            $line = array();
             // If this number is greater than 0, we'll show the line
             $display_test = 0;
             foreach($count_array as $category_id => $count)
@@ -237,15 +236,12 @@ class Stats_Controller extends Admin_Controller
                 // We aren't allowing 0s
                 if($count > 0)
                 {
-                    if($comma_flag) $line .= ',';
-                    $comma_flag = true;
-                    
-                    $line .= '['.$category_id.','.$count.']';
+                    $line[] = array($category_id, $count);
                     
                     $display_test += $count;
                     
                     // If we see a count over 50 (picked this arbitrarily), then switch to log format
-                    if($count > 50) $use_log = '"use_log":1,'."\n";
+                    if($count > 50) $use_log = 1;
                     
                     // Count the number of reports so we have something useful to show in the legend
                     if ( ! isset($cat_report_count[$category_id])) $cat_report_count[$category_id] = 0;
@@ -254,19 +250,18 @@ class Stats_Controller extends Admin_Controller
             }
             if ($display_test > 0)
             {
-                $json .= '{"d":'.$timestamp.',"i":[';
-                $json .= $line;
-                $json .= ']},'."\n";
+                $json['buckets'][] = array(
+                  'd' => $timestamp,
+                  'i' => $line
+                );
             }
         }
         
         $this->template->content->num_reports = $data['total_reports'];
         $this->template->content->num_categories = $data['total_categories'];
         
-        $json .= '],'."\n";
-        $json .= $use_log;
-        $json .= '"categories":'."\n";
-        $json .= '{'."\n";
+        $json['use_log'] = $use_log;
+        $json['categories'] = array();
         
         // Grab category data
         $cats = Category_Model::categories();
@@ -279,12 +274,14 @@ class Stats_Controller extends Admin_Controller
                 $report_count = $cat_report_count[$category_id];
             }
             
-            $json .= $category_id.':{"name":"'.$cat_array['category_title'].'","fill":"#'.$cat_array['category_color'].'","reports":'.$report_count.'},'."\n";
+            $json['categories'][$category_id] = array(
+              "name" => $cat_array['category_title'],
+              "fill" => '#'.$cat_array['category_color'],
+              "reports" => $report_count
+            );
         }
         
-        $json .= '}'."\n";
-        
-        $this->template->impact_json = $json;
+        $this->template->impact_json = json_encode($json);
         
         // Set the date
         $this->template->content->dp1 = date('Y-m-d',$data['earliest_report_time']);

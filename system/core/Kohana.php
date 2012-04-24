@@ -113,7 +113,7 @@ final class Kohana {
 
 			// Set default timezone, due to increased validation of date settings
 			// which cause massive amounts of E_NOTICEs to be generated in PHP 5.2+
-			date_default_timezone_set(empty($timezone) ? date_default_timezone_get() : $timezone);
+			date_default_timezone_set(empty($timezone) ? 'UTC' : $timezone);
 		}
 
 		// Restore error reporting
@@ -1224,7 +1224,11 @@ final class Kohana {
 
 		if ($line === NULL)
 		{
-			self::log('error', 'Missing i18n entry '.$key.' for language '.$locale);
+			// Only save error to log for en_US to the log since it's the default fallback
+			if ($locale == 'en_US')
+			{
+				self::log('error', 'Missing i18n entry '.$key.' for language '.$locale);
+			}
 
 			if ($force_locale != NULL)
 			{

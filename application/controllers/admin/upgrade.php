@@ -33,11 +33,10 @@ class Upgrade_Controller extends Admin_Controller {
 		$release_version = $this->_get_release_version();
 		
 		// Don't show auto-upgrader when disabled.
-        if (Kohana::config('config.enable_auto_upgrader') == FALSE)
-        {
+		if (Kohana::config('config.enable_auto_upgrader') == FALSE)
+		{
 			die(Kohana::lang('ui_main.disabled'));
-        }
-		
+		}
 	}
 
 	/**
@@ -117,9 +116,10 @@ class Upgrade_Controller extends Admin_Controller {
 		
 		$this->template->content->form_action = $form_action;
 		$this->template->content->current_version = Kohana::config('settings.ushahidi_version');
-		$this->template->content->current_db_version = ($this->release == true) ? $this->release->version_db : "";
+		$this->template->content->current_db_version = Kohana::config('settings.db_version');
 		$this->template->content->environment = $this->_environment();
 		$this->template->content->release_version = (is_object($this->release) == true) ? $this->release->version : "";
+		$this->template->content->release_db_version = (is_object($this->release) == true) ? $this->release->version_db : "";
 		$this->template->content->changelogs = (is_object($this->release) == true) ? $this->release->changelog : array();
 		$this->template->content->download = (is_object($this->release) == true) ? $this->release->download : "";
 		$this->template->content->critical = (is_object($this->release) == true) ? $this->release->critical : "";
@@ -279,7 +279,7 @@ class Upgrade_Controller extends Admin_Controller {
 				$contents = nl2br($contents);
 				echo $contents;
 			}
-		}
+        }	
 	}
 	
 	public function check_current_version()
@@ -288,20 +288,18 @@ class Upgrade_Controller extends Admin_Controller {
 		$this->template = "";
 		$this->auto_render = FALSE;
 		$view = View::factory('admin/current_version');
-				
 		
 		$upgrade = new Upgrade;
 		
 		//fetch latest release of ushahidi
-		$this->release = $upgrade->_fetch_core_release();		
+		$this->release = $upgrade->_fetch_core_release();
 		
 		if(!empty($this->release) )
-        {
-		    $view->version = $this->_get_release_version();
-            $view->critical = $this->release->critical;        
-        }
-     
-        $view->render(TRUE);
+		{
+				$view->version = $this->_get_release_version();
+				$view->critical = $this->release->critical;
+		}
+		$view->render(TRUE);
 	}
 	
 	/**
@@ -570,7 +568,8 @@ class Upgrade_Controller extends Admin_Controller {
 			$version_ushahidi=NULL )
 	{
 		if ($release_version AND $version_ushahidi)
-		{
+        {
+            
 			// Split version numbers xx.xx.xx
 			$remote_version = explode(".", $release_version);
 			$local_version = explode(".", $version_ushahidi);

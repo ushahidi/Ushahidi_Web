@@ -100,7 +100,6 @@ class sms_Core {
 			
 			$reporter->service_id = $service->id;
 			$reporter->level_id = $level->id;
-			$reporter->service_userid = null;
 			$reporter->service_account = $from;
 			$reporter->reporter_first = null;
 			$reporter->reporter_last = null;

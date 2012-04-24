@@ -17,7 +17,18 @@
 			</div>
 
 			<ul id="category_switch" class="category-filters">
-				<li><a class="active" id="cat_0" href="#"><span class="swatch" style="background-color:<?php echo "#".$default_map_all;?>"></span><span class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></span></a></li>
+				<?php
+				$color_css = 'class="swatch" style="background-color:#'.$default_map_all.'"';
+				$all_cat_image = '';
+				if($default_map_all_icon != NULL) {
+					$all_cat_image = html::image(array(
+						'src'=>$default_map_all_icon,
+						'style'=>'float:left;padding-right:5px;'
+					));
+					$color_css = '';
+				}
+				?>
+				<li><a class="active" id="cat_0" href="#"><span <?php echo $color_css;?>"><?php echo $all_cat_image; ?></span><span class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></span></a></li>
 				<?php
 					foreach ($categories as $category => $category_info)
 					{

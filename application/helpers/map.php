@@ -1,7 +1,7 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Map helper class
- * 
+ *
  * Portions of this class credited to: zzolo, phayes, tmcw, brynbellomy, bdragon
  *
  * @package    Map
@@ -12,7 +12,7 @@
 
 
 class map_Core {
-	
+
 	/**
 	 * Generate the Javascript for Each Layer
 	 * .. new OpenLayers.Layer.XXXX
@@ -26,86 +26,111 @@ class map_Core {
 	{
 		// Javascript
 		$js = "";
-		
+
 		// Get All Layers
 		$layers = map::base();
-		
+
 		// Next get the default base layer
 		$default_map = Kohana::config('settings.default_map');
-		
+
 		if ( ! isset($layers[$default_map]))
 		{ // Map Layer Doesn't Exist - default to google
-			$default_map = "google_normal";
+			$default_map = "osm_mapnik";
 		}
-			// Get openlayers type
+
+		// Get OpenLayers type
 		$openlayers_type = $layers[$default_map]->openlayers;
+
+		// To store options for the bing maps
 		foreach ($layers as $layer)
 		{
 			if ($layer->active)
 			{
-				if ($all == TRUE)
+
+				if ($all == TRUE OR $layer->openlayers == $openlayers_type)
 				{
-					$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
-					foreach ($layer->data AS $key => $value)
+					//++ Bing doesn't have the first argument
+					if ($layer->openlayers == "Bing")
 					{
-						if ( ! empty($value)
-						 	AND $key != 'baselayer'
-						 	AND $key != 'attribution'
-							AND $key != 'url')
-						{
-							if ($key == "type")
-							{
-								$js .= " ".$key.": ".urlencode($value).",\n";
-							}
-							else
-							{
-								$js .= " ".$key.": '".urlencode($value)."',\n";
-							}
-						}
+						// Options for the Bing layer constructor
+						$bing_options = "{\n"
+						    . "\t name: \"".$layer->data['name']."\",\n"
+						    . "\t type: \"".$layer->data['type']."\",\n"
+						    . "\t key: \"".$layer->data['key']."\"\n"
+						    . "}";
+						
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."($bing_options);\n\n";
 					}
-					
-					$js .= " sphericalMercator: true,\n";
-					$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
-				}
-				else
-				{
-					if ($layer->openlayers == $openlayers_type)
+					// Allow layers to specify a custom set of OpenLayers options
+					// this should allow plugins to add OpenLayers Layer types we haven't considered here
+					// See http://dev.openlayers.org/docs/files/OpenLayers/Layer-js.html for other layer types
+					elseif (isset($layer->openlayers_options) AND $layer->openlayers_options != null)
 					{
-						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", { \n";
-						foreach ($layer->data AS $key => $value)
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.{$layer->openlayers}({$layer->openlayers_options});\n\n";
+					}
+					// Finally construct JS for the majority of layers
+					else
+					{
+						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
+
+						if ($layer->openlayers == 'XYZ' || $layer->openlayers == 'WMS')
 						{
-							if ( ! empty($value)
-							 	AND $key != 'baselayer'
-							 	AND $key != 'attribution'
-								AND $key != 'url')
+							if (isset($layer->data['url']))
 							{
-								if ($key == "type")
-								{
-									$js .= " ".$key.": ".urlencode($value).",\n";
-								}
-								else
-								{
-									$js .= " ".$key.": '".urlencode($value)."',\n";
-								}
+								$js .= '"'.$layer->data['url'].'", ';
 							}
 						}
 
-						$js .= " sphericalMercator: true,\n";
+						// Extra parameter used by WMS - key/value pairs representing the GetMap query string
+						if ($layer->openlayers == 'WMS' AND isset($layer->wms_params))
+						{
+							// Add some unnescessary params so that json_encode creates an object not an array.
+							if (!isset($layer->wms_params['styles'])) $layer->wms_params['styles'] = '';
+							if (!isset($layer->wms_params['layers'])) $layer->wms_params['layers'] = '';
+							
+							$js .= json_encode($layer->wms_params);
+							$js .= ', ';
+						}
+	
+						$js .= "{ \n";
+
+						$params = $layer->data;
+						if (isset($params['url'])) unset($params['url']);
+						if (isset($params['baselayer'])) unset($params['baselayer']);
+						$params['sphericalMercator'] = true;
+
+						foreach ($params as $key => $value)
+						{
+							if ( ! empty($value))
+							{
+								$js .= " ".$key.": ".json_encode($value).",\n";
+							}
+						}
+
 						$js .= " maxExtent: new OpenLayers.Bounds(-20037508.34,-20037508.34,20037508.34,20037508.34)});\n\n";
 					}
+					
 				}
 			}
 		}
+
+		// Hack on XYZ / Esri Attribution layer here since XYZ doesn't support images in attribution
+		if (stripos($default_map,'esri_') !== FALSE AND $all == FALSE)
+		{
+			$js .= "$('div#map').append('<div style=\"position:absolute;right:0;z-index:1000;margin: -40px 10px 0 90px;\"><img src=\"http://www.arcgis.com/home/images/map/logo-sm.png\" style=\"float:right;\"/><small>Sources: Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), and the GIS User Community</small></div>');";
+		}
 		
+		Event::run('ushahidi_filter.map_layers_js', $js);
+
 		return $js;
 	}
-	
+
 	/**
 	 * Generate the Map Array.
 	 * These are the maps that show up in the Layer Switcher
 	 * if $all is set to TRUE all maps are rendered
 	 * **caveat is that each mapping api js must be loaded **
-	 * 
+	 *
 	 * @param   bool  $all
 	 * @return  string $js
 	 */
@@ -116,15 +141,16 @@ class map_Core {
 
 		// Get All Layers
 		$layers = map::base();
-		
+
 		// Next get the default base layer
 		$default_map = Kohana::config('settings.default_map');
-		
+
 		if ( ! isset($layers[$default_map]))
-		{ // Map Layer Doesn't Exist - default to google
+		{
+			// Map Layer Doesn't Exist - default to google
 			$default_map = "google_normal";
 		}
-		
+
 		// Get openlayers type
 		$openlayers_type = $layers[$default_map]->openlayers;
 		$js .= $default_map;
@@ -132,24 +158,17 @@ class map_Core {
 		{
 			if ($layer->name != $default_map AND $layer->active)
 			{
-				if ($all == TRUE)
+				if ($all == TRUE OR $layer->openlayers == $openlayers_type)
 				{
 					$js .= ",".$layer->name;
-				}
-				else
-				{
-					if ($layer->openlayers == $openlayers_type)
-					{
-						$js .= ",".$layer->name;
-					}
 				}
 			}
 		}
 		$js .= "]";
-		
+
 		return $js;
 	}
-	
+
 	/**
 	 * Generate the Map Base Layer Object
 	 * If a layer name is passed, it will return only the object
@@ -160,9 +179,74 @@ class map_Core {
 	 * @return  string $js
 	 */
 	public static function base($layer_name = NULL)
-	{	
+	{
 		$layers = array();
 
+		// Esri Topo
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'esri_topo';
+		$layer->openlayers = "XYZ";
+		$layer->title = 'Esri World Topo Map';
+		$layer->description = 'This world topographic map (aka "the community basemap") includes boundaries, cities, water features, physiographic features, parks, landmarks, transportation, and buildings.';
+		$layer->api_url = '';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '',
+			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}',
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
+
+		// Esri Street Map
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'esri_street';
+		$layer->openlayers = "XYZ";
+		$layer->title = 'Esri Street Map';
+		$layer->description = 'This map service presents highway-level data for the world and street-level data for North America, Europe, Southern Africa, parts of Asia, and more.';
+		$layer->api_url = '';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '',
+			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/${z}/${y}/${x}',
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
+
+		// Esri Imagery
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'esri_imagery';
+		$layer->openlayers = "XYZ";
+		$layer->title = 'Esri Imagery Map';
+		$layer->description = 'This map service presents satellite imagery for the world and high-resolution imagery for the United States, Great Britain, and hundreds of cities around the world.';
+		$layer->api_url = '';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '',
+			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}',
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
+
+		// Esri National Geographic
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'esri_natgeo';
+		$layer->openlayers = "XYZ";
+		$layer->title = 'Esri National Geographic Map';
+		$layer->description = 'This map is designed to be used as a general reference map for informational and educational purposes as well as a basemap by GIS professionals and other users for creating web maps and web mapping applications.';
+		$layer->api_url = '';
+		$layer->data = array(
+			'baselayer' => TRUE,
+			'attribution' => '',
+			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/${z}/${y}/${x}',
+			'type' => ''
+		);
+		$layers[$layer->name] = $layer;
+
+		// GOOGLE Satellite
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'google_satellite';
@@ -177,6 +261,7 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
+		// GOOGLE Hybrid
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'google_hybrid';
@@ -191,6 +276,7 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
+		// GOOGLE Normal
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'google_normal';
@@ -205,6 +291,7 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
+		// GOOGLE Physical
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'google_physical';
@@ -219,42 +306,54 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
+		// BING Road
 		$layer = new stdClass();
-		$layer->active = FALSE;
-		$layer->name = 'virtualearth_street';
-		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Bing Street';
-		$layer->description = 'Bing Street Tiles.';
-		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->active = TRUE;
+		$layer->name = 'bing_road';
+		$layer->openlayers = "Bing";
+		$layer->title = 'Bing-Road';
+		$layer->description = 'Bing Road Maps';
+		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_url = '';
 		$layer->data = array(
+			'name' => 'Bing-Road',
 			'baselayer' => TRUE,
-			'type' => 'VEMapStyle.Road',
+			'key' => Kohana::config('settings.api_live'),
+			'type' => 'Road',
 		);
 		$layers[$layer->name] = $layer;
 
+		// BING Hybrid
 		$layer = new stdClass();
 		$layer->active = TRUE;
-		$layer->name = 'virtualearth_satellite';
-		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Bing Satellite';
-		$layer->description = 'Bing Satellite Tiles.';
-		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
-		$layer->data = array(
-			'baselayer' => TRUE,
-			'type' => 'VEMapStyle.Aerial',
-		);
-		$layers[$layer->name] = $layer;
-
-		$layer = new stdClass();
-		$layer->active = TRUE;
-		$layer->name = 'virtualearth_hybrid';
-		$layer->openlayers = "VirtualEarth";
-		$layer->title = 'Bing Hybrid';
+		$layer->name = 'bing_hybrid';
+		$layer->openlayers = "Bing";
+		$layer->title = 'Bing-Hybrid';
 		$layer->description = 'Bing hybrid of streets and satellite tiles.';
-		$layer->api_url = 'https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6';
+		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_url = '';
 		$layer->data = array(
+			'name' => 'Bing-Hybrid',
 			'baselayer' => TRUE,
-			'type' => 'VEMapStyle.Hybrid',
+			'key' => Kohana::config('settings.api_live'),
+			'type' => 'AerialWithLabels',
+		);
+		$layers[$layer->name] = $layer;
+
+		// BING Aerial
+		$layer = new stdClass();
+		$layer->active = TRUE;
+		$layer->name = 'bing_satellite';
+		$layer->openlayers = "Bing";
+		$layer->title = 'Bing-Satellite';
+		$layer->description = 'Bing Satellite Tiles';
+		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_url = '';
+		$layer->data = array(
+			'name' => 'Bing-Satellite',
+			'baselayer' => TRUE,
+			'key' => Kohana::config('settings.api_live'),
+			'type' => 'Aerial',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -275,28 +374,11 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// OpenStreetMap Tiles @ Home
-		$layer = new stdClass();
-		$layer->active = TRUE;
-		$layer->name = 'osm_tah';
-		$layer->openlayers = "OSM.Mapnik";
-		$layer->title = 'OSM Tiles@Home';
-		$layer->description = 'Alternative, community-rendered OpenStreetMap';
-		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
-		$layer->data = array(
-			'baselayer' => TRUE,
-			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
-				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
-			'url' => 'http://tah.openstreetmap.org/Tiles/tile/${z}/${x}/${y}.png',
-			'type' => ''
-		);
-		$layers[$layer->name] = $layer;
-
 		// OpenStreetMap Cycling Map
 		$layer = new stdClass();
 		$layer->active = TRUE;
 		$layer->name = 'osm_cycle';
-		$layer->openlayers = "OSM.Mapnik";
+		$layer->openlayers = "OSM.CycleMap";
 		$layer->title = 'OSM Cycling Map';
 		$layer->description = 'OpenStreetMap with highlighted bike lanes';
 		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
@@ -309,35 +391,26 @@ class map_Core {
 		);
 		$layers[$layer->name] = $layer;
 
-		// OpenStreetMap 426 hybrid overlay
+		// OpenStreetMap Transport
 		$layer = new stdClass();
-		$layer->active = FALSE;
-		$layer->name = 'osm_4326_hybrid';
-		$layer->openlayers = "OSM.Mapnik";
-		$layer->title = 'OSM Overlay';
-		$layer->description = 'Semi-transparent hybrid overlay. Projected into 
-			WSG84 for use on non spherical-mercator maps.';
+		$layer->active = TRUE;
+		$layer->name = 'osm_TransportMap';
+		$layer->openlayers = "OSM.TransportMap";
+		$layer->title = 'OSM Transport Map';
+		$layer->description = 'TransportMap';
 		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
-			'baselayer' => FALSE,
-			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
-				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
-			'url' => 'http://oam.hypercube.telascience.org/tiles',
-			'params' => array(
-				'layers' => 'osm-4326-hybrid',
-			),
-			'options' => array(
-				'isBaseLayer' => FALSE,
-				'buffer' => 1,
-			),
+			'baselayer' => TRUE,
+			'attribution' => '©CCBYSA 2010 OpenStreetMap.org contributors',
+			'url' => 'http://tile.openstreetmap.org/transport/${z}/${x}/${y}.png',
 			'type' => ''
 		);
 		$layers[$layer->name] = $layer;
-		
+
 		// Add Custom Layers
 		// Filter::map_base_layers
 		Event::run('ushahidi_filter.map_base_layers', $layers);
-		
+
 		if ($layer_name)
 		{
 			if (isset($layers[$layer_name]))
@@ -346,15 +419,15 @@ class map_Core {
 			}
 			else
 			{
-				return false;
+				return FALSE;
 			}
 		}
 		else
-		{	
+		{
 			return $layers;
 		}
 	}
-	
+
 	/**
 	 * GeoCode An Address
 	 *
@@ -370,7 +443,7 @@ class map_Core {
 			//$map_object->_minify_js = isset($_REQUEST["min"]) ? FALSE : TRUE;
 			$geocodes = $map_object->getGeoCode($address);
 			//$geocodes = $MAP_OBJECT->geoGetCoordsFull($address);
-			
+
 			return $geocodes;
 		}
 		else
@@ -378,7 +451,37 @@ class map_Core {
 			return false;
 		}
 	}
-	
+
+	/**
+	 * Reverse Geocode a point
+	 *
+	 * @author
+	 * @param   double  $latitude
+	 * @param   double  $longitude
+	 * @return  string  closest approximation of the point as a display name
+	 */
+	public static function reverse_geocode($latitude,$longitude)
+	{
+		if ($latitude AND $longitude)
+		{
+			$url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat='.$latitude.'&lon='.$longitude;
+			$ch = curl_init();
+			curl_setopt($ch,CURLOPT_URL,$url);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
+			$json = curl_exec($ch);
+			curl_close($ch);
+
+			$location = json_decode($json, false);
+
+			return $location->display_name;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	/**
 	 * Calculate distances between two points
 	 *
@@ -390,16 +493,16 @@ class map_Core {
 	 */
 	public static function distance($lat1, $lon1, $lat2, $lon2, $unit = "k")
 	{
-		$theta = $lon1 - $lon2; 
-		$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta)); 
-		$dist = acos($dist); 
-		$dist = rad2deg($dist); 
+		$theta = $lon1 - $lon2;
+		$dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+		$dist = acos($dist);
+		$dist = rad2deg($dist);
 		$miles = $dist * 60 * 1.1515;
 		$unit = strtoupper($unit);
 
 		if ($unit == "K")
 		{
-			return ($miles * 1.609344); 
+			return ($miles * 1.609344);
 		}
 		else if ($unit == "N")
 		{
@@ -410,5 +513,5 @@ class map_Core {
 			return $miles;
 		}
 	}
-	
+
 }

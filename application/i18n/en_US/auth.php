@@ -60,5 +60,6 @@
 		'login error' => 'Please check that you entered the correct username.',
 		'required' => 'The username field is required.',
 		'superadmin' => 'The super admin role cannot be modified.',
+		'csrf' => 'Possible CSRF attack. Did you really mean to create/edit a user?'
 	));
 ?>

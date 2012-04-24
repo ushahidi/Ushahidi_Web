@@ -2,6 +2,7 @@
 	$lang = array(
 	'actions' => array(
 		'add_to_category' => 'This adds the report to additional categories. If you select Category 1 here and the report already has Category 2 attached to it, the report will then have both Category 1 and Category 2.',
+		'approve' => 'Approves a report or not. If approved, it will show up publicly.',
 		'assign_badge' => 'You will be able to assign a badge to the triggering user. Pick the badge that gets assigned here.',
 		'between_times' => 'This is a range of hours and/or minutes between two times in 24 hour format. If you input an earlier time in the second field, it will be flipped with the first. These times must be within a single day. Also, this time is checked against the time you have configured on your site in site settings and NOT necessarily the timezone of the user interacting with your deployment. Leave this at 00:00 to 00:00 to ignore this qualifier.',
 		'category' => 'If you would like to activate triggers only when a certain category is being used, you can set that here. This will allow a trigger to be activated if only one of the categories is used. For instace, if you select Category 1 and Category 2 here and a report is submitted using Category 2 and Category 3, it will pass the test.',
@@ -11,6 +12,7 @@
 		'keywords' => 'You can choose to leave this blank if you do not want to check against keywords. If you add words here, you will need to separate them with a comma (,). For example, if you want to activate a trigger when someone mentions "love" or "peace" in their message, you will want to add "love, peace" in the keywords box.',
 		'location' => 'You can either select anywhere or a specific location. If you select a specific location, you will be asked to draw a box around the area that qualifies an action. For example, if you want this trigger to be activated when someone submits a report in Brazil, you will select "specific area" and then draw the box around Brazil. You can make these boxes as small or as large as you would like. You can also draw multiple boxes.',
 		'on_specific_count' => 'This qualifier will activate the trigger on the N-th count either for the entire collective user base or for each individual user. Leave this blank to ignore it.',
+		'report_title' => 'This is the default title to add to the report.',
 		'response' => 'If all of the qualifiers above are passed, the trigger will initiate a response. This can range from approving a report to emailing a user. Select the response here to activate additional options for the specific responses.',
 		'send_to' => 'If you select "Triggering User", the email will be sent to the user who performed the action. If you select the radio button next to the input box, you will be able to enter a custom email address. This is useful if you are setting up triggers to notify people when certain parts of the map are seeing reports, check ins or some other activity.',
 		'specific_days' => 'You can select multiple days here. Dates are determined by your deployment timezone setting. Do not select any dates in order to default to all dates.',
@@ -51,6 +53,7 @@
 	'settings_checkins' => 'This setting enables checkins on your deployment. This is a simplified report type that is not moderated before it goes on the homepage and requires your site to be configured a certain way. When you enable this, make sure your timezone setting is on UTC and your theme supports checkins. When you enable this, checkin only themes will become enabled under your addons/themes settings page.',
 	'settings_configure_map' => 'Set the map to cover a specific location ',
 	'settings_default_category_colors' => 'Set one color code for all the categories on the site',
+	'settings_default_category_icons' => 'Set one icon for all the categories on the site',
 	'settings_default_location' => 'This is the country the site is being deployed',
 	'settings_display_contact' => 'Turn the Contact Tab on or off on the main site.',
 	'settings_display_howtohelp' => 'Turn the How to Help Tab on or off on the main site.',

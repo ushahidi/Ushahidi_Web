@@ -124,7 +124,7 @@
 									->orderby('id', 'asc')
 									->find_all();
 
-								$form_fields = "<form action=\"\">";
+								$form_fields = form::open(NULL, array('method' => 'get'));
 								foreach ($fields as $field)
 								{
 									$field_id = $field->id;
@@ -159,7 +159,7 @@
 									<a href=\"javascript:fieldAction('md','MOVE',".$field_id.",".$form_id.",".$field_type.");\">MOVE DOWN</a></div>";
 									$form_fields .= "</div>";
 								}
-								$form_fields .= "</form>";
+								$form_fields .= form::close();
 								?>
 								<?php print form::open(NULL,array('id' => 'form_action_' . $form_id,
 								 	'name' => 'form_action_' . $form_id )); ?>

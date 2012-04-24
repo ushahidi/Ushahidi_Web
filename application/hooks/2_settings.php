@@ -41,8 +41,9 @@ Kohana::config_set('settings.sms_no2', $settings->sms_no2);
 Kohana::config_set('settings.sms_no3', $settings->sms_no3);
 Kohana::config_set('settings.default_map', $settings->default_map);
 Kohana::config_set('settings.default_map_all', $settings->default_map_all);
+Kohana::config_set('settings.default_map_all_icon_id', $settings->default_map_all_icon_id);
 Kohana::config_set('settings.api_google', $settings->api_google);
-Kohana::config_set('settings.api_yahoo', $settings->api_yahoo);
+Kohana::config_set('settings.api_live', $settings->api_live);
 Kohana::config_set('settings.api_akismet', $settings->api_akismet);
 Kohana::config_set('settings.default_city', $settings->default_city);
 Kohana::config_set('settings.default_country', $settings->default_country);
@@ -88,13 +89,18 @@ $default_map = $settings->default_map;
 $map_layer = map::base($default_map);
 if ($map_layer)
 {
-	Kohana::config_set('settings.api_url', "<script type=\"text/javascript\" src=\"".$map_layer->api_url."\"></script>" );
+	Kohana::config_set('settings.api_url', 
+		"<script type=\"text/javascript\" src=\"".$map_layer->api_url."\"></script>");
 }
 
 // And in case you want to display all maps on one page...
 $api_google = $settings->api_google;
-$api_yahoo = $settings->api_yahoo;
-Kohana::config_set('settings.api_url_all', '<script src="https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6"></script><script type="text/javascript" src="http://api.maps.yahoo.com/ajaxymap?v=3.0&appid=' . $api_yahoo . '"></script><script src="https://maps.google.com/maps/api/js?v=3.2&amp;sensor=false" type="text/javascript"></script>'.html::script('https://www.openstreetmap.org/openlayers/OpenStreetMap.js'));
+$api_live = $settings->api_live;
+Kohana::config_set('settings.api_url_all', 
+	"<script type=\"text/javascript\" src=\"https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6\"></script>\n"
+	."<script type=\"text/javascript\" src=\"https://maps.google.com/maps/api/js?v=3.2&amp;sensor=false\"></script>\n"
+	. html::script('https://www.openstreetmap.org/openlayers/OpenStreetMap.js')
+);
 
 // Additional Mime Types (KMZ/KML)
 Kohana::config_set('mimes.kml', array('text/xml'));

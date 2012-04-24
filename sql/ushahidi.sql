@@ -1,10 +1,173 @@
-﻿-- Ushahidi Engine
--- version 66
+-- Ushahidi Engine
+-- version 82
 -- http://www.ushahidi.com
 
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `actions`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `actions` (
+  `action_id` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(75) NOT NULL,
+  `qualifiers` text NOT NULL,
+  `response` varchar(75) NOT NULL,
+  `response_vars` text NOT NULL,
+  `active` tinyint(4) NOT NULL,
+  PRIMARY KEY (`action_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores user defined actions triggered by certain events' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `actions_log`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `actions_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `action_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `time` int(10) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `action_id` (`action_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores a log of triggered actions' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `alert`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `alert` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT '0',
+  `alert_type` tinyint(4) NOT NULL COMMENT '1 - MOBILE, 2 - EMAIL',
+  `alert_recipient` varchar(200) DEFAULT NULL,
+  `alert_code` varchar(30) DEFAULT NULL,
+  `alert_confirmed` tinyint(4) NOT NULL DEFAULT '0',
+  `alert_lat` varchar(150) DEFAULT NULL,
+  `alert_lon` varchar(150) DEFAULT NULL,
+  `alert_radius` tinyint(4) NOT NULL DEFAULT '20',
+  `alert_ip` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_alert_code` (`alert_code`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores alerts subscribers information' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `alert_category`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `alert_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `alert_id` bigint(20) unsigned DEFAULT NULL,
+  `category_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `alert_id` (`alert_id`),
+  KEY `category_id` (`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores subscriber alert categories' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `alert_sent`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `alert_sent` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `incident_id` bigint(20) unsigned NOT NULL,
+  `alert_id` bigint(20) unsigned NOT NULL,
+  `alert_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `incident_id` (`incident_id`),
+  KEY `alert_id` (`alert_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores a log of alerts sent out to subscribers' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `api_banned`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `api_banned` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `banned_ipaddress` varchar(50) NOT NULL,
+  `banned_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='For logging banned API IP addresses' AUTO_INCREMENT=8 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `api_log`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `api_log` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `api_task` varchar(10) NOT NULL,
+  `api_parameters` varchar(100) NOT NULL,
+  `api_records` tinyint(11) NOT NULL,
+  `api_ipaddress` varchar(50) NOT NULL,
+  `api_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='For logging API activities' AUTO_INCREMENT=19 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `api_settings`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `api_settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `default_record_limit` int(11) NOT NULL DEFAULT '20',
+  `max_record_limit` int(11) DEFAULT NULL,
+  `max_requests_per_ip_address` int(11) DEFAULT NULL,
+  `max_requests_quota_basis` int(11) DEFAULT NULL,
+  `modification_date` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='For storing API logging settings' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `badge`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `badge` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(250) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores description of badges to be assigned' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `badge_users`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `badge_users` (
+  `user_id` int(11) unsigned NOT NULL,
+  `badge_id` int(11) NOT NULL,
+  PRIMARY KEY (`user_id`,`badge_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores assigned badge information';
 
 -- --------------------------------------------------------
 
@@ -14,74 +177,161 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
  */
 
 CREATE TABLE IF NOT EXISTS `category` (
-    `id` int(11) unsigned NOT NULL auto_increment,
-    `parent_id` INT NOT NULL DEFAULT '0',
-    `locale` varchar(10) NOT NULL default 'en_US',
-    `category_type` tinyint(4) default NULL,
-	`category_position` tinyint(4) NOT NULL DEFAULT '0',
-    `category_title` varchar(255) default NULL,
-    `category_description` text default NULL,
-    `category_color` varchar(20) default NULL,
-    `category_image` varchar(255) default NULL,
-    `category_image_thumb` varchar(255) default NULL,
-    `category_image_shadow` varchar(100) default NULL,
-    `category_visible` tinyint(4) NOT NULL default '1',
-    `category_trusted` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `locale` varchar(10) NOT NULL DEFAULT 'en_US',
+  `category_position` tinyint(4) NOT NULL DEFAULT '0',
+  `category_title` varchar(255) DEFAULT NULL,
+  `category_description` text DEFAULT NULL,
+  `category_color` varchar(20) DEFAULT NULL,
+  `category_image` varchar(255) DEFAULT NULL,
+  `category_image_thumb` varchar(255) DEFAULT NULL,
+  `category_visible` tinyint(4) NOT NULL DEFAULT '1',
+  `category_trusted` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `category_visible` (`category_visible`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Holds information about categories defined for a deployment' AUTO_INCREMENT=6 ;
 
-
-
+--
 -- Dumping data for table `category`
+--
 
-INSERT INTO `category` (`id`, `category_type`, `category_title`, `category_description`, `category_color`, `category_visible`, `category_trusted`) VALUES
-(1, 5, 'Category 1', 'Category 1', '9900CC', 1, 0),
-(2, 5, 'Category 2', 'Category 2', '3300FF', 1, 0),
-(3, 5, 'Category 3', 'Category 3', '663300', 1, 0),
-(4, 5, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1),
-(5, 5, 'NONE', 'Holds orphaned reports', '009887', 1, 1);
+INSERT INTO `category` (`id`,`category_title`, `category_description`, `category_color`, `category_visible`, `category_trusted`) VALUES
+(1, 'Category 1', 'Category 1', '9900CC', 1, 0),
+(2, 'Category 2', 'Category 2', '3300FF', 1, 0),
+(3, 'Category 3', 'Category 3', '663300', 1, 0),
+(4, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1),
+(5, 'NONE', 'Holds uncategorized reports', '009887', 1, 1);
 
-
-
-/**
-* Table structure for table `category_lang`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `category_lang`
-(
-    `id` INT(11) unsigned  NOT NULL AUTO_INCREMENT,
-    `category_id` int(11) NOT NULL,
-    `locale` VARCHAR(10) default NULL,
-    `category_title` VARCHAR(255) default NULL,
-    `category_description` TEXT default NULL,
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `category_lang`
-
-
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `country`
-*
-*/
+ * Table structure for table `category_lang`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `category_lang` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int(11) unsigned NOT NULL,
+  `locale` varchar(10) DEFAULT NULL,
+  `category_title` varchar(255) DEFAULT NULL,
+  `category_description` text DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `category_id` (`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds translations for category titles and descriptions' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `checkin`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `checkin` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `location_id` bigint(20) unsigned NOT NULL,
+  `incident_id` bigint(20) unsigned DEFAULT '0',
+  `checkin_description` varchar(255),
+  `checkin_date` datetime NOT NULL,
+  `checkin_auto` enum('0','1') DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `incident_id` (`incident_id`),
+  KEY `user_id` (`user_id`),
+  KEY `location_id` (`location_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores checkin information' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `city`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `city` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `country_id` int(11) DEFAULT NULL,
+  `city` varchar(200) DEFAULT NULL,
+  `city_lat` varchar(150) DEFAULT NULL,
+  `city_lon` varchar(200) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `country_id` (`country_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores cities of countries retrieved by user.' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `cluster`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `cluster` (
+  `id` int(11) NOT NULL,
+  `location_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
+  `latitude_min` double NOT NULL,
+  `longitude_min` double NOT NULL,
+  `latitude_max` double NOT NULL,
+  `longitude_max` double NOT NULL,
+  `child_count` int(11) NOT NULL,
+  `parent_id` int(11) NOT NULL,
+  `left_side` int(11) NOT NULL,
+  `right_side` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  `incident_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `category_id` int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `location_id` (`location_id`),
+  KEY `incident_id` (`incident_id`),
+  KEY `category_id` (`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores information used for clustering of reports on the map.';
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `comment`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `comment` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `incident_id` bigint(20) unsigned DEFAULT NULL,
+  `checkin_id` bigint(20) unsigned DEFAULT NULL,
+  `user_id` int(11) unsigned DEFAULT '0',
+  `comment_author` varchar(100) DEFAULT NULL,
+  `comment_email` varchar(120) DEFAULT NULL,
+  `comment_description` text,
+  `comment_ip` varchar(100) DEFAULT NULL,
+  `comment_spam` tinyint(4) NOT NULL DEFAULT '0',
+  `comment_active` tinyint(4) NOT NULL DEFAULT '0',
+  `comment_date` datetime DEFAULT NULL,
+  `comment_date_gmt` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `incident_id` (`incident_id`),
+  KEY `checkin_id` (`checkin_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores comments made on reports/checkins' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `country`
+ *
+ */
 
 CREATE TABLE IF NOT EXISTS `country` (
-    `id` int(11) NOT NULL auto_increment,
-    `iso` varchar(10) default NULL,
-    `country` varchar(100) default NULL,
-    `capital` varchar(100) default NULL,
-    `cities` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `iso` varchar(10) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `capital` varchar(100) DEFAULT NULL,
+  `cities` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores a list of all countries and their capital cities' AUTO_INCREMENT=248 ;
 
-
-
+--
 -- Dumping data for table `country`
+--
 
 INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 (1, 'AD', 'Andorra', 'Andorra la Vella', 0),
@@ -332,749 +582,322 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 (246, 'ZM', 'Zambia', 'Lusaka', 0),
 (247, 'ZW', 'Zimbabwe', 'Harare', 0);
 
+-- --------------------------------------------------------
+
 /**
-* Table structure for table `externalapp`
-*
-*/
+ * Table structure for table `externalapp`
+ *
+ */
 
 CREATE TABLE IF NOT EXISTS `externalapp` (
-`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-`name` VARCHAR( 255 ) NOT NULL ,
-`url` VARCHAR( 255 ) NOT NULL
-) ENGINE = MYISAM ;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Info on external apps(mobile) that work with your deployment' AUTO_INCREMENT=3 ;
 
+--
 -- Dumping data for table `externalapp`
+--
 
-INSERT INTO `externalapp` (`id`, `name`, `url`) VALUES (NULL, 'iPhone', 'http://download.ushahidi.com/track_download.php?download=ios'), (NULL, 'Android', 'http://download.ushahidi.com/track_download.php?download=android');
+INSERT INTO `externalapp` (`id`, `name`, `url`) VALUES
+(1, 'iPhone', 'http://download.ushahidi.com/track_download.php?download=ios'),
+(2, 'Android', 'http://download.ushahidi.com/track_download.php?download=android');
 
-/**
-* Table structure for table `incident`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `incident` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-    `location_id` bigint(20) NOT NULL,
-    `form_id` int(11) NOT NULL default '1',
-    `locale` varchar(10) NOT NULL default 'en_US',
-    `user_id` bigint(20) default NULL,
-    `incident_title` varchar(255) default NULL,
-    `incident_description` longtext,
-    `incident_date` datetime default NULL,
-    `incident_mode` tinyint(4) NOT NULL default '1' COMMENT '1 - WEB, 2 - SMS, 3 - EMAIL, 4 - TWITTER',
-    `incident_active` tinyint(4) NOT NULL default '0',
-    `incident_verified` tinyint(4) NOT NULL default '0',
-    `incident_rating` VARCHAR(15) DEFAULT '0' NOT NULL,
-    `incident_dateadd` datetime default NULL,
-    `incident_dateadd_gmt` datetime default NULL,
-    `incident_datemodify` datetime default NULL,
-    `incident_alert_status` TINYINT NOT NULL DEFAULT '0' COMMENT '0 - Not Tagged for Sending, 1 - Tagged for Sending, 2 - Alerts Have Been Sent',
-	`incident_zoom` tinyint NULL DEFAULT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `location_id` (`location_id`),
-  KEY `incident_active` (`incident_active`),
-  KEY `incident_date` (`incident_date`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `incident`
-
-
-LOCK TABLES `incident` WRITE;
-/*!40000 ALTER TABLE `incident` DISABLE KEYS */;
-INSERT INTO `incident` VALUES (1,1,1,'en_US',1,'Hello Ushahidi!','Welcome to Ushahidi. Please replace this report with a valid incident','2010-01-01 12:00:00',1,1,1,'0',NULL,NULL,NULL,'0',NULL);
-/*!40000 ALTER TABLE `incident` ENABLE KEYS */;
-UNLOCK TABLES;
-
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `incident_lang`
-*
-*/
+ * Table structure for table `feed`
+ *
+ */
 
-CREATE TABLE IF NOT EXISTS `incident_lang`
-(
-    `id` BIGINT(20) unsigned  NOT NULL AUTO_INCREMENT,
-    `incident_id` BIGINT(20) NOT NULL,
-    `locale` VARCHAR(10) default NULL,
-    `incident_title` VARCHAR(255) default NULL,
-    `incident_description` LONGTEXT default NULL,
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `feed` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `feed_name` varchar(255) DEFAULT NULL,
+  `feed_url` varchar(255) DEFAULT NULL,
+  `feed_cache` text,
+  `feed_active` tinyint(4) DEFAULT '1',
+  `feed_update` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Information about RSS Feeds a deployment subscribes to' AUTO_INCREMENT=1 ;
 
-
-
--- Dumping data for table `incident_lang`
-
-
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `incident_category`
-*
-*/
+ * Table structure for table `feed_item`
+ *
+ */
 
-CREATE TABLE IF NOT EXISTS `incident_category` (
-    `id` int(11) NOT NULL auto_increment,
-    `incident_id` bigint(20) NOT NULL default '0',
-    `category_id` int(11) NOT NULL default '5',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `incident_category_ids` (`incident_id`,`category_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+CREATE TABLE IF NOT EXISTS `feed_item` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `feed_id` int(11) unsigned NOT NULL,
+  `location_id` bigint(20) unsigned DEFAULT '0',
+  `incident_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `item_title` varchar(255) DEFAULT NULL,
+  `item_description` text,
+  `item_link` varchar(255) DEFAULT NULL,
+  `item_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `feed_id` (`feed_id`),
+  KEY `incident_id` (`incident_id`),
+  KEY `location_id` (`location_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores feed items pulled from each RSS Feed' AUTO_INCREMENT=1 ;
 
-
-
--- Dumping data for table `incident_category`
-LOCK TABLES `incident_category` WRITE;
-/*!40000 ALTER TABLE `incident_category` DISABLE KEYS */;
-INSERT INTO `incident_category` VALUES (1,1,1);
-/*!40000 ALTER TABLE `incident_category` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `incident_person`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `incident_person` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-    `incident_id` bigint(20) default NULL,
-    `location_id` bigint(20) default NULL,
-    `person_first` varchar(200) default NULL,
-    `person_last` varchar(200) default NULL,
-    `person_email` varchar(120) default NULL,
-    `person_phone` varchar(60) default NULL,
-    `person_ip` varchar(50) default NULL,
-    `person_date` datetime default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `incident_person`
-
-
-
-/**
-* Table structure for table `comment`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `comment`
-(
-    `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
-    `incident_id` BIGINT DEFAULT NULL,
-  	`checkin_id` BIGINT DEFAULT NULL,
-    `user_id` INT(11) DEFAULT 0,
-    `comment_author` VARCHAR(100) default NULL,
-    `comment_email` VARCHAR(120) default NULL,
-    `comment_description` TEXT default NULL,
-    `comment_ip` VARCHAR(100) default NULL,
-    `comment_rating` VARCHAR(15) DEFAULT '0' NOT NULL,
-    `comment_spam` TINYINT NOT NULL DEFAULT 0,
-    `comment_active` TINYINT NOT NULL DEFAULT 0,
-    `comment_date` DATETIME default NULL,
-    `comment_date_gmt` DATETIME default NULL,
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `comment`
-
-
-
-/**
-* Table structure for table `rating`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `rating`
-(
-    `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT,
-	`user_id` int(11) DEFAULT '0',
-    `incident_id` BIGINT default NULL,
-    `comment_id` BIGINT default NULL,
-    `rating` TINYINT DEFAULT 0,
-    `rating_ip` VARCHAR(100) default NULL,
-    `rating_date` DATETIME default NULL,
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `rating`
-
-
-
-/**
-* Table structure for table `location`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `location` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-    `location_name` varchar(255) default NULL,
-    `country_id` int(11) NOT NULL default '0',
-    `latitude` DOUBLE NOT NULL default '0',
-    `longitude` DOUBLE NOT NULL default '0',
-    `location_visible` tinyint(4) NOT NULL default '1',
-    `location_date` datetime default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `location`
-
-LOCK TABLES `location` WRITE;
-/*!40000 ALTER TABLE `location` DISABLE KEYS */;
-INSERT INTO `location` VALUES (1,'Nairobi',115,-1.2873000707050097, 36.821451182008204,1,'2009-06-30 00:00:00');
-/*!40000 ALTER TABLE `location` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
-/**
-* Table structure for table `maintenance`
-*
-*/
-
-CREATE TABLE `maintenance` (
-`allowed_ip` VARCHAR( 15 ) NOT NULL ,
-PRIMARY KEY ( `allowed_ip` )
-) ENGINE = MYISAM ;
-
-/**
-* Table structure for table `media`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `media` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-    `location_id` bigint(20) default NULL,
-    `incident_id` bigint(20) default NULL,
-    `checkin_id` bigint(20) default NULL,
-    `message_id` bigint(20) NULL DEFAULT NULL,
-    `badge_id` int(11) default NULL,
-    `media_type` tinyint(4) default NULL COMMENT '1 - IMAGES, 2 - VIDEO, 3 - AUDIO, 4 - NEWS, 5 - PODCAST',
-    `media_title` varchar(255) default NULL,
-    `media_description` longtext default NULL,
-    `media_link` varchar(255) default NULL,
-    `media_medium` varchar(255) default NULL,
-    `media_thumb` varchar(255) default NULL,
-    `media_date` datetime default NULL,
-    `media_active` tinyint(4) NOT NULL default '1',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `media`
-
-
-/**
-* Table structure for table `feed`
-*
-*/
-CREATE TABLE IF NOT EXISTS `feed`
-(
-    `id` int(11) unsigned  NOT NULL AUTO_INCREMENT ,
-    `feed_name` VARCHAR(255) default NULL,
-    `feed_url` VARCHAR(255) default NULL,
-    `feed_cache` TEXT default NULL,
-    `feed_active` TINYINT DEFAULT 1,
-    `feed_update` INT DEFAULT 0 NOT NULL,
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `feed`
-
-
-/**
-* Table structure for table `feed_item`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `feed_item`
-(
-    `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
-    `feed_id` INT(11) NOT NULL,
-    `location_id` BIGINT default '0',
-    `incident_id` INT(11) NOT NULL DEFAULT '0',
-    `item_title` VARCHAR(255) default NULL,
-    `item_description` TEXT default NULL,
-    `item_link` VARCHAR(255) default NULL,
-    `item_date` DATETIME default NULL,
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `feed_item`
-
-
-/**
-* Table structure for table `message`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `message`
-(
-    `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT ,
-/*Outgoing Messages From Admin*/
-    `parent_id` BIGINT DEFAULT 0,
-    `incident_id` INTEGER DEFAULT 0,
-    `user_id` INT DEFAULT 0,
-    `reporter_id` bigint(20) default NULL,
-    `service_messageid` varchar(100) default NULL,
-    `message_from` VARCHAR(100) DEFAULT NULL,
-    `message_to` VARCHAR(100) DEFAULT NULL,
-    `message` TEXT default NULL,
-    `message_detail` text default NULL,
-    `message_type` TINYINT default 1 COMMENT '1 - INBOX, 2 - OUTBOX (From Admin), 3 - DELETED',
-    `message_date` DATETIME default NULL,
-    `message_level` TINYINT NULL DEFAULT 0 COMMENT '0 - UNREAD, 1 - READ, 99 - SPAM',
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `message`
-
-
-
-
-/**
-* Table structure for table `roles`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `roles` (
-    `id` int(11) unsigned NOT NULL auto_increment,
-    `name` varchar(32) NOT NULL,
-    `description` varchar(255) NOT NULL,
-	`reports_view` tinyint(4) NOT NULL default '0',
-	`reports_edit` tinyint(4) NOT NULL default '0',
-	`reports_evaluation` tinyint(4) NOT NULL default '0',
-	`reports_comments` tinyint(4) NOT NULL default '0',
-	`reports_download` tinyint(4) NOT NULL default '0',
-	`reports_upload` tinyint(4) NOT NULL default '0',
-	`messages` tinyint(4) NOT NULL default '0',
-	`messages_reporters` tinyint(4) NOT NULL default '0',
-	`stats` tinyint(4) NOT NULL default '0',
-	`settings` tinyint(4) NOT NULL default '0',
-	`manage` tinyint(4) NOT NULL default '0',
-	`users` tinyint(4) NOT NULL default '0',
-	`manage_roles` tinyint(4) NOT NULL default '0',
-	`checkin` tinyint(4) NOT NULL default '1',
-	`checkin_admin` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `uniq_name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `roles`
-
-INSERT INTO `roles` (`id`, `name`, `description`, `reports_view`, `reports_edit`, `reports_evaluation`, `reports_comments`, `reports_download`, `reports_upload`, `messages`, `messages_reporters`, `stats`, `settings`, `manage`, `users`, `manage_roles`, `checkin`, `checkin_admin`) VALUES
-(1, 'login', 'Login privileges, granted after account confirmation', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0),
-(2, 'admin', 'Administrative user, has access to almost everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1),
-(3, 'superadmin','Super administrative user, has access to everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
-(4, 'member','Regular user with access only to the member area', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-
-
-/**
-* Table structure for table `roles_users`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `roles_users` (
-    `user_id` int(11) unsigned NOT NULL,
-    `role_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY  (`user_id`,`role_id`),
-  KEY `fk_role_id` (`role_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `roles_users`
-
-INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
-(1, 1),
-(1, 2),
-(1, 3);
-
-
-/**
-* Table structure for table `sessions`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `sessions` (
-    `session_id` varchar(40) NOT NULL,
-    `last_activity` int(10) unsigned NOT NULL,
-    `data` text NOT NULL,
-  PRIMARY KEY  (`session_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `sessions`
-
-
-
-/**
-* Table structure for table `settings`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `settings` (
-    `id` int(10) unsigned NOT NULL auto_increment,
-    `site_name` varchar(255) default NULL,
-    `site_tagline` varchar(255) default NULL,
-    `site_banner_id` int(11) default NULL,
-    `site_email` varchar(120) default NULL,
-    `site_key` varchar(100) default NULL,
-    `site_language` varchar(10) NOT NULL default 'en_US',
-    `site_style` varchar(50) NOT NULL default 'default',
-    `site_timezone` varchar(80) default NULL,
-    `site_contact_page` TINYINT NOT NULL DEFAULT '1',
-    `site_help_page` TINYINT NOT NULL DEFAULT '1',
-    `site_message` TEXT NOT NULL DEFAULT '',
-    `site_copyright_statement` TEXT DEFAULT NULL,
-    `site_submit_report_message` TEXT NOT NULL DEFAULT '',
-    `allow_reports` tinyint(4) NOT NULL default '1',
-    `allow_comments` tinyint(4) NOT NULL default '1',
-    `allow_feed` tinyint(4) NOT NULL default '1',
-    `allow_stat_sharing` tinyint(4) NOT NULL default '1',
-    `allow_clustering` tinyint(4) NOT NULL default '0',
-    `cache_pages` tinyint(4) NOT NULL DEFAULT '0',
-    `cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
-    `private_deployment` tinyint(4) NOT NULL DEFAULT '0',
-    `default_map` varchar(100) NOT NULL DEFAULT 'osm_mapnik',
-    `default_map_all` varchar(20) NOT NULL default 'CC0000',
-    `api_google` varchar(200) default NULL,
-    `api_yahoo` varchar(200) default NULL,
-    `api_live` varchar(200) default NULL,
-    `api_akismet` VARCHAR( 200 ) default NULL,
-    `default_country` int(11) default NULL,
-    `multi_country` TINYINT NOT NULL DEFAULT '0',
-    `default_city` varchar(150) default NULL,
-    `default_lat` varchar(100) default NULL,
-    `default_lon` varchar(100) default NULL,
-    `default_zoom` tinyint(4) NOT NULL default '10',
-    `items_per_page` smallint(6) NOT NULL default '5',
-    `items_per_page_admin` smallint(6) NOT NULL default '20',
-    `sms_provider` varchar(100) NULL DEFAULT NULL,
-    `sms_no1` varchar(100) default NULL,
-    `sms_no2` varchar(100) default NULL,
-    `sms_no3` varchar(100) default NULL,
-    `google_analytics` text,
-    `twitter_hashtags` text default NULL,
-	`blocks` text,
-	`blocks_per_row` tinyint(4) NOT NULL DEFAULT '2',
-    `date_modify` datetime default NULL,
-    `stat_id` BIGINT default NULL COMMENT 'comes from centralized stats',
-    `stat_key` VARCHAR(30) NOT NULL ,
-    `email_username` VARCHAR(100) NOT NULL ,
-    `email_password` VARCHAR(100) NOT NULL ,
-    `email_port` INT(11) NOT NULL ,
-    `email_host` VARCHAR(100) NOT NULL ,
-    `email_servertype` VARCHAR(100) NOT NULL ,
-    `email_ssl` INT(5) NOT NULL,
-	`ftp_server` varchar(100) NULL DEFAULT NULL,
-	`ftp_user_name` varchar(100) NULL DEFAULT NULL,
-    `alerts_email` VARCHAR(120) NOT NULL,
-    `checkins` tinyint(4) NOT NULL default '0',
-    `facebook_appid` VARCHAR(150) NULL DEFAULT NULL,
-    `facebook_appsecret` VARCHAR(150) NULL DEFAULT NULL,
-    `allow_alerts` tinyint(4) NOT NULL DEFAULT '0',
-    `manually_approve_users` tinyint(4) NOT NULL DEFAULT '0',
-    `require_email_confirmation` tinyint(4) NOT NULL DEFAULT '0',
-    `db_version` varchar(20) default NULL,
-    `ushahidi_version` varchar(20) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- Dumping data for table `settings`
-
-INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_yahoo`, `api_live`, `default_country`, `default_city`, `default_lat`, `default_lon`, `default_zoom`, `items_per_page`, `items_per_page_admin`, `blocks`, `date_modify`) VALUES
-(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', '5CYeWbfV34E21JOW1a4.54Mf6e9jLNkD0HVzaKoQmJZi2qzmSZd5mD8X49x7', NULL, 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 5, 20, 'reports_block|news_block', '2008-08-25 10:25:18');
-
-
-/**
-* Table structure for table `users`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `users` (
-    `id` int(11) unsigned NOT NULL auto_increment,
-    `riverid` VARCHAR( 128 ) NOT NULL,
-    `name` varchar(200) default NULL,
-    `email` varchar(127) NOT NULL,
-    `username` varchar(100) NOT NULL default '',
-    `password` char(50) NOT NULL,
-    `logins` int(10) unsigned NOT NULL default '0',
-    `last_login` int(10) unsigned default NULL,
-    `notify` tinyint(1) NOT NULL default '0' COMMENT 'Flag incase admin opts in for email notifications',
-    `updated` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    `color` varchar(6) NOT NULL DEFAULT 'FF0000',
-    `code` VARCHAR(30) NULL DEFAULT NULL,
-    `confirmed` TINYINT(1) NOT NULL DEFAULT '0',
-    `public_profile` TINYINT(1) NOT NULL DEFAULT '1',
-    `approved` TINYINT(1) NOT NULL DEFAULT '1',
-    `needinfo` TINYINT(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `uniq_username` (`username`),
-  UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
--- Dumping data for table `users`
-
-INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `last_login`, `updated`, `public_profile`, `confirmed`) VALUES
-(1, 'Administrator', 'myemail@example.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22', 0, 1);
-
-
-/**
-* Table structure for table `user_tokens`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `user_tokens` (
-    `id` int(11) unsigned NOT NULL auto_increment,
-    `user_id` int(11) unsigned NOT NULL,
-    `user_agent` varchar(40) NOT NULL,
-    `token` varchar(64) NOT NULL,
-    `created` int(10) unsigned NOT NULL,
-    `expires` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `uniq_token` (`token`),
-  KEY `fk_user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `verified`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `verified` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-    `incident_id` bigint(20) default NULL,
-    `user_id` int(11) default NULL,
-    `verified_comment` longtext default NULL,
-    `verified_date` datetime default NULL,
-    `verified_status` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `alert`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `alert` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-	`user_id` int(11) DEFAULT '0',
-    `alert_type` tinyint(4) NOT NULL COMMENT '1 - MOBILE, 2 - EMAIL',
-    `alert_recipient` varchar(200) default NULL,
-    `alert_code` varchar(30) default NULL,
-    `alert_confirmed` tinyint(4) NOT NULL default '0',
-    `alert_lat` varchar(150) default NULL,
-    `alert_lon` varchar(150) default NULL,
-    `alert_radius` TINYINT NOT NULL DEFAULT '20',
-    `alert_ip` varchar(100) default NULL,
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `uniq_alert_code` (`alert_code`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `alert_sent`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `alert_sent`
-(
-    `id` BIGINT unsigned  NOT NULL AUTO_INCREMENT,
-    `incident_id` BIGINT NOT NULL,
-    `alert_id` BIGINT NOT NULL,
-    `alert_date` DATETIME NULL,
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `city`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `city` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-    `country_id` int(11) default NULL,
-    `city` varchar(200) default NULL,
-    `city_lat` varchar(150) default NULL,
-    `city_lon` varchar(200) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `scheduler`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `scheduler` (
-    `id` int(10) unsigned NOT NULL auto_increment,
-    `scheduler_name` varchar(100) NOT NULL,
-    `scheduler_last` int(10) unsigned NOT NULL default '0',
-    `scheduler_weekday` smallint(6) NOT NULL default '-1',
-    `scheduler_day` smallint(6) NOT NULL default '-1',
-    `scheduler_hour` smallint(6) NOT NULL default '-1',
-    `scheduler_minute` smallint(6) NOT NULL,
-    `scheduler_controller` varchar(100) NOT NULL,
-    `scheduler_active` tinyint(4) NOT NULL default '1',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=4;
-
-
-
--- Dumping data for table `scheduler`
-
-INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_weekday`, `scheduler_day`, `scheduler_hour`, `scheduler_minute`, `scheduler_controller`, `scheduler_active`) VALUES
-(1, 'Feeds', 0, -1, -1, -1, 0, 's_feeds', 1),
-(2, 'Alerts', 0, -1, -1, -1, -1, 's_alerts', 1),
-(3, 'Email', 0, -1, -1, -1, 0, 's_email', 1),
-(4, 'Twitter', 0, -1, -1, -1, 0, 's_twitter', 1),
-(5, 'Cleanup', 0, -1, -1, -1, 0, 's_cleanup', 1);
-
-
-/**
-* Table structure for table `scheduler_log`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `scheduler_log` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-    `scheduler_id` int(11) NOT NULL,
-    `scheduler_name` varchar(100) NOT NULL,
-    `scheduler_status` varchar(20) default NULL,
-    `scheduler_date` int(10) unsigned NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `cluster`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `cluster` (
-    `id` int(11) NOT NULL,
-    `location_id` bigint(20) NOT NULL default '0',
-    `latitude` double NOT NULL,
-    `longitude` double NOT NULL,
-    `latitude_min` double NOT NULL,
-    `longitude_min` double NOT NULL,
-    `latitude_max` double NOT NULL,
-    `longitude_max` double NOT NULL,
-    `child_count` int(11) NOT NULL,
-    `parent_id` int(11) NOT NULL,
-    `left_side` int(11) NOT NULL,
-    `right_side` int(11) NOT NULL,
-    `level` int(11) NOT NULL,
-    `incident_id` bigint(20) NOT NULL default '0',
-    `incident_title` varchar(255) default NULL,
-    `incident_date` int(10) NOT NULL default 0,
-    `category_id` int(11) UNSIGNED NOT NULL default '0',
-    `category_color` varchar(20) NOT NULL default '990000',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `form`
-*
-*/
+ * Table structure for table `form`
+ *
+ */
 
 CREATE TABLE IF NOT EXISTS `form` (
-    `id` int(11) NOT NULL auto_increment,
-    `form_title` varchar(200) NOT NULL,
-    `form_description` text,
-    `form_active` tinyint(4) default '1',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `form_title` varchar(200) NOT NULL,
+  `form_description` text,
+  `form_active` tinyint(4) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores all report submission forms created(default+custom)' AUTO_INCREMENT=2 ;
 
-
-
+--
 -- Dumping data for table `form`
+--
 
 INSERT INTO `form` (`id`, `form_title`, `form_description`, `form_active`) VALUES
 (1, 'Default Form', 'Default form, for report entry', 1);
 
-
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `form_field`
-*
-*/
+ * Table structure for table `form_field`
+ *
+ */
 
 CREATE TABLE IF NOT EXISTS `form_field` (
-    `id` int(11) NOT NULL auto_increment,
-    `form_id` int(11) NOT NULL default '0',
-    `field_name` varchar(200) default NULL,
-    `field_type` tinyint(4) NOT NULL default '1' COMMENT '1 - TEXTFIELD, 2 - TEXTAREA (FREETEXT), 3 - DATE, 4 - PASSWORD, 5 - RADIO, 6 - CHECKBOX',
-    `field_required` tinyint(4) default '0',
-    `field_options` text,
-    `field_position` tinyint(4) NOT NULL default '0',
-    `field_default` varchar(200) default NULL,
-    `field_maxlength` int(11) NOT NULL default '0',
-    `field_width` smallint(6) NOT NULL default '0',
-    `field_height` tinyint(4) default '5',
-    `field_isdate` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`),
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `form_id` int(11) NOT NULL DEFAULT '0',
+  `field_name` varchar(200) DEFAULT NULL,
+  `field_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 - TEXTFIELD, 2 - TEXTAREA (FREETEXT), 3 - DATE, 4 - PASSWORD, 5 - RADIO, 6 - CHECKBOX',
+  `field_required` tinyint(4) DEFAULT '0',
+  `field_options` text,
+  `field_position` tinyint(4) NOT NULL DEFAULT '0',
+  `field_default` varchar(200) DEFAULT NULL,
+  `field_maxlength` int(11) NOT NULL DEFAULT '0',
+  `field_width` smallint(6) NOT NULL DEFAULT '0',
+  `field_height` tinyint(4) DEFAULT '5',
+  `field_isdate` tinyint(4) NOT NULL DEFAULT '0',
+  `field_ispublic_visible` tinyint(4) NOT NULL DEFAULT '0',
+  `field_ispublic_submit` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
   KEY `fk_form_id` (`form_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores all custom form fields created by users' AUTO_INCREMENT=1 ;
 
 /**
-* Table structure for table `form_response`
-*
-*/
+ * Constraints for table `form_field`
+ */
+
+ALTER TABLE `form_field`
+  ADD CONSTRAINT `form_field_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `form` (`id`) ON DELETE CASCADE;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `form_field_option`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `form_field_option` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `form_field_id` int(11) NOT NULL DEFAULT '0',
+  `option_name` varchar(200) DEFAULT NULL,
+  `option_value` text,
+  PRIMARY KEY (`id`),
+  KEY `form_field_id` (`form_field_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Options related to custom form fields' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `form_response`
+ *
+ */
 
 CREATE TABLE IF NOT EXISTS `form_response` (
-    `id` bigint(20) NOT NULL auto_increment,
-    `form_field_id` int(11) NOT NULL,
-    `incident_id` bigint(20) NOT NULL,
-    `form_response` text NOT NULL,
-  PRIMARY KEY  (`id`),
-  KEY `fk_form_field_id` (`form_field_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `form_field_id` int(11) NOT NULL,
+  `incident_id` bigint(20) unsigned NOT NULL,
+  `form_response` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_form_field_id` (`form_field_id`),
+  KEY `incident_id` (`incident_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores responses to custom form fields' AUTO_INCREMENT=1 ;
 
 
 /**
-* Table structure for table `level`
-*
-*/
+ * Constraints for table `form_response`
+ */
+
+ALTER TABLE `form_response`
+  ADD CONSTRAINT `form_response_ibfk_1` FOREIGN KEY (`form_field_id`) REFERENCES `form_field` (`id`) ON DELETE CASCADE;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `geometry`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `geometry` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `incident_id` bigint(20) unsigned NOT NULL,
+  `geometry` geometry NOT NULL,
+  `geometry_label` varchar(150) DEFAULT NULL,
+  `geometry_comment` varchar(255) DEFAULT NULL,
+  `geometry_color` varchar(20) DEFAULT NULL,
+  `geometry_strokewidth` varchar(5) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  SPATIAL KEY `geometry` (`geometry`),
+  KEY `incident_id` (`incident_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores map geometries i.e polygons, lines etc' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `incident`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `incident` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `location_id` bigint(20) unsigned NOT NULL,
+  `form_id` int(11) NOT NULL DEFAULT '1',
+  `locale` varchar(10) NOT NULL DEFAULT 'en_US',
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `incident_title` varchar(255) DEFAULT NULL,
+  `incident_description` longtext,
+  `incident_date` datetime DEFAULT NULL,
+  `incident_mode` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 - WEB, 2 - SMS, 3 - EMAIL, 4 - TWITTER',
+  `incident_active` tinyint(4) NOT NULL DEFAULT '0',
+  `incident_verified` tinyint(4) NOT NULL DEFAULT '0',
+  `incident_dateadd` datetime DEFAULT NULL,
+  `incident_dateadd_gmt` datetime DEFAULT NULL,
+  `incident_datemodify` datetime DEFAULT NULL,
+  `incident_alert_status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 - Not Tagged for Sending, 1 - Tagged for Sending, 2 - Alerts Have Been Sent',
+  `incident_zoom` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `location_id` (`location_id`),
+  KEY `incident_active` (`incident_active`),
+  KEY `incident_date` (`incident_date`),
+  KEY `form_id` (`form_id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores reports submitted' AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `incident`
+--
+
+LOCK TABLES `incident` WRITE;
+/*!40000 ALTER TABLE `incident` DISABLE KEYS */;
+INSERT INTO `incident` (`id`, `location_id`, `form_id`, `locale`, `user_id`, `incident_title`, `incident_description`, `incident_date`, `incident_mode`, `incident_active`, `incident_verified`, `incident_dateadd`, `incident_dateadd_gmt`, `incident_datemodify`, `incident_alert_status`, `incident_zoom`) VALUES
+(1, 1, 1, 'en_US', 1, 'Hello Ushahidi!', 'Welcome to Ushahidi. Please replace this report with a valid incident', '2012-04-04 12:54:31', 1, 1, 1, NULL, NULL, NULL, 0, NULL);
+/*!40000 ALTER TABLE `incident` ENABLE KEYS */;
+UNLOCK TABLES;
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `incident_category`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `incident_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `incident_id` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `category_id` int(11) unsigned NOT NULL DEFAULT '5',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `incident_category_ids` (`incident_id`,`category_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores submitted reports categories' AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `incident_category`
+--
+LOCK TABLES `incident_category` WRITE;
+/*!40000 ALTER TABLE `incident_category` DISABLE KEYS */;
+INSERT INTO `incident_category` (`id`, `incident_id`, `category_id`) VALUES
+(1, 1, 1);
+/*!40000 ALTER TABLE `incident_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `incident_lang`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `incident_lang` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `incident_id` bigint(20) unsigned NOT NULL,
+  `locale` varchar(10) DEFAULT NULL,
+  `incident_title` varchar(255) DEFAULT NULL,
+  `incident_description` longtext,
+  PRIMARY KEY (`id`),
+  KEY `incident_id` (`incident_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds translations for report titles and descriptions' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `incident_person`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `incident_person` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `incident_id` bigint(20) unsigned DEFAULT NULL,
+  `person_first` varchar(200) DEFAULT NULL,
+  `person_last` varchar(200) DEFAULT NULL,
+  `person_email` varchar(120) DEFAULT NULL,
+  `person_phone` varchar(60) DEFAULT NULL,
+  `person_ip` varchar(50) DEFAULT NULL,
+  `person_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `incident_id` (`incident_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds information provided by people who submit reports' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `layer`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `layer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `layer_name` varchar(255) DEFAULT NULL,
+  `layer_url` varchar(255) DEFAULT NULL,
+  `layer_file` varchar(100) DEFAULT NULL,
+  `layer_color` varchar(20) DEFAULT NULL,
+  `layer_visible` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds static layer information' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `level`
+ *
+ */
 
 CREATE TABLE IF NOT EXISTS `level` (
-    `id` INT( 11 ) UNSIGNED NOT NULL AUTO_INCREMENT,
-    `level_title` varchar(200) default NULL,
-    `level_description` varchar(200) default NULL,
-    `level_weight` tinyint(4) NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `level_title` varchar(200) DEFAULT NULL,
+  `level_description` varchar(200) DEFAULT NULL,
+  `level_weight` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores level of trust assigned to reporters of the platform' AUTO_INCREMENT=6 ;
 
-
-
+--
 -- Dumping data for table `level`
+--
 
 INSERT INTO `level` (`id`, `level_title`, `level_description`, `level_weight`) VALUES
 (1, 'SPAM + Delete', 'SPAM + Delete', -2),
@@ -1083,322 +906,547 @@ INSERT INTO `level` (`id`, `level_title`, `level_description`, `level_weight`) V
 (4, 'Trusted', 'Trusted', 1),
 (5, 'Trusted + Verify', 'Trusted + Verify', 2);
 
-
-
-/**
-* Table structure for table `reporter`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `reporter` (
-    `id` bigint(20) unsigned NOT NULL auto_increment,
-    `incident_id` bigint(20) default NULL,
-    `location_id` bigint(20) default NULL,
-    `user_id` int(11) default NULL,
-    `service_id` int(11) default NULL,
-    `level_id` INT( 11 ) NULL,
-    `service_userid` varchar(255) default NULL,
-    `service_account` varchar(255) default NULL,
-    `reporter_first` varchar(200) default NULL,
-    `reporter_last` varchar(200) default NULL,
-    `reporter_email` varchar(120) default NULL,
-    `reporter_phone` varchar(60) default NULL,
-    `reporter_ip` varchar(50) default NULL,
-    `reporter_date` datetime default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `service`
-*
-*/
+ * Table structure for table `location`
+ *
+ */
 
-CREATE TABLE IF NOT EXISTS `service` (
-    `id` int(10) unsigned NOT NULL auto_increment,
-    `service_name` varchar(100) default NULL,
-    `service_description` varchar(255) default NULL,
-    `service_url` varchar(255) default NULL,
-    `service_api` varchar(255) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-
--- Dumping data for table `service`
-
-INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url`, `service_api`) VALUES
-(1, 'SMS', 'Text messages from phones', NULL, NULL),
-(2, 'Email', 'Text messages from phones', NULL, NULL),
-(3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL);
-
-
-/**
-* Table structure for table `page`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `page` (
-    `id` int(11) NOT NULL auto_increment,
-    `page_title` varchar(255) NOT NULL,
-    `page_description` longtext,
-    `page_tab` varchar(100) NOT NULL,
-    `page_active` tinyint(4) NOT NULL default '0',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
-
-/**
-* Table structure for table `layer`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `layer` (
-    `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-    `layer_name` VARCHAR( 255 ) NULL ,
-    `layer_url` VARCHAR( 255 ) NULL ,
-    `layer_file` VARCHAR( 100 ) NULL ,
-    `layer_color` VARCHAR( 20 ) NULL ,
-    `layer_visible` TINYINT NOT NULL DEFAULT '1'
-) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
-
+CREATE TABLE IF NOT EXISTS `location` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `location_name` varchar(255) DEFAULT NULL,
+  `country_id` int(11) NOT NULL DEFAULT '0',
+  `latitude` double NOT NULL DEFAULT '0',
+  `longitude` double NOT NULL DEFAULT '0',
+  `location_visible` tinyint(4) NOT NULL DEFAULT '1',
+  `location_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `country_id` (`country_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores location information' AUTO_INCREMENT=2 ;
 
 --
--- Definition of table `api_settings`
+-- Dumping data for table `location`
 --
+LOCK TABLES `location` WRITE;
+/*!40000 ALTER TABLE `location` DISABLE KEYS */;
+INSERT INTO `location` (`id`, `location_name`, `country_id`, `latitude`, `longitude`, `location_visible`, `location_date`) VALUES
+(1, 'Nairobi', 115, -1.28730007070501, 36.8214511820082, 1, '2009-06-30 00:00:00');
+/*!40000 ALTER TABLE `location` ENABLE KEYS */;
+UNLOCK TABLES;
 
-CREATE TABLE IF NOT EXISTS `api_settings` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `default_record_limit` int(11) NOT NULL DEFAULT '20',
-  `max_record_limit` int(11) DEFAULT NULL,
-  `max_requests_per_ip_address` int(11) DEFAULT NULL,
-  `max_requests_quota_basis` int(11) DEFAULT NULL,
-  `modification_date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='For storing API logging settings';
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `api_banned`
-*
-*/
+ * Table structure for table `maintenance`
+ *
+ */
 
-CREATE TABLE IF NOT EXISTS `api_banned` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-    `banned_ipaddress` varchar(50) NOT NULL,
-    `banned_date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='For logging banned API IP addresses' AUTO_INCREMENT=8 ;
+CREATE TABLE IF NOT EXISTS `maintenance` (
+  `allowed_ip` varchar(15) NOT NULL,
+  PRIMARY KEY (`allowed_ip`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Puts a site in maintenance mode if data exists in this table';
 
+-- --------------------------------------------------------
 
 /**
-* Table structure for table 'alert_category'
-*
-*/
-CREATE TABLE IF NOT EXISTS `alert_category` (
-  `id` int(11) NOT NULL auto_increment,
-  `alert_id` int(11),
-  `category_id` int(11),
+ * Table structure for table `media`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `media` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `location_id` bigint(20) unsigned DEFAULT NULL,
+  `incident_id` bigint(20) unsigned DEFAULT NULL,
+  `checkin_id` bigint(20) unsigned DEFAULT NULL,
+  `message_id` bigint(20) unsigned DEFAULT NULL,
+  `badge_id` int(11) DEFAULT NULL,
+  `media_type` tinyint(4) DEFAULT NULL COMMENT '1 - IMAGES, 2 - VIDEO, 3 - AUDIO, 4 - NEWS, 5 - PODCAST',
+  `media_title` varchar(255) DEFAULT NULL,
+  `media_description` longtext,
+  `media_link` varchar(255) DEFAULT NULL,
+  `media_medium` varchar(255) DEFAULT NULL,
+  `media_thumb` varchar(255) DEFAULT NULL,
+  `media_date` datetime DEFAULT NULL,
+  `media_active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
-  KEY `alert_id` (`alert_id`),
-  KEY `category_id` (`category_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+  KEY `incident_id` (`incident_id`),
+  KEY `location_id` (`location_id`),
+  KEY `checkin_id` (`checkin_id`),
+  KEY `badge_id` (`badge_id`),
+  KEY `message_id` (`message_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores any media submitted along with a report/checkin' AUTO_INCREMENT=1 ;
 
-
-/**
-* Table structure for table `api_log`
-*
-*/
-
-CREATE TABLE IF NOT EXISTS `api_log` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-    `api_task` varchar(10) NOT NULL,
-    `api_parameters` varchar(100) NOT NULL,
-    `api_records` tinyint(11) NOT NULL,
-    `api_ipaddress` varchar(50) NOT NULL,
-    `api_date` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='For logging API activities' AUTO_INCREMENT=19 ;
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `plugin`
-*
-*/
+ * Table structure for table `message`
+ *
+ */
 
-CREATE TABLE IF NOT EXISTS `plugin` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `plugin_name` varchar(100) NOT NULL,
-  `plugin_url` varchar(250) NULL,
-  `plugin_description` text NULL,
-  `plugin_priority` tinyint(4) DEFAULT '0',
-  `plugin_active` tinyint(4) DEFAULT '0',
-  `plugin_installed` tinyint(4) DEFAULT '0',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `plugin_name` (`plugin_name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-
-/**
-* Table structure for table `geometry`
-*/
-CREATE TABLE IF NOT EXISTS `geometry` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `incident_id` bigint(20) NOT NULL,
-  `geometry` geometry NOT NULL,
-  `geometry_label` varchar(150) DEFAULT NULL,
-  `geometry_comment` varchar(255) DEFAULT NULL,
-  `geometry_color` varchar(20) DEFAULT NULL,
-  `geometry_strokewidth` varchar(5) DEFAULT NULL,
+CREATE TABLE IF NOT EXISTS `message` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `parent_id` bigint(20) DEFAULT '0',
+  `incident_id` bigint(20) unsigned DEFAULT '0',
+  `user_id` int(11) unsigned DEFAULT '0',
+  `reporter_id` bigint(20) unsigned DEFAULT NULL,
+  `service_messageid` varchar(100) DEFAULT NULL,
+  `message_from` varchar(100) DEFAULT NULL,
+  `message_to` varchar(100) DEFAULT NULL,
+  `message` text,
+  `message_detail` text,
+  `message_type` tinyint(4) DEFAULT '1' COMMENT '1 - INBOX, 2 - OUTBOX (From Admin), 3 - DELETED',
+  `message_date` datetime DEFAULT NULL,
+  `message_level` tinyint(4) DEFAULT '0' COMMENT '0 - UNREAD, 1 - READ, 99 - SPAM',
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL,
   PRIMARY KEY (`id`),
-  SPATIAL KEY `geometry` (`geometry`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  KEY `user_id` (`user_id`),
+  KEY `incident_id` (`incident_id`),
+  KEY `reporter_id` (`reporter_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores tweets, emails and SMS messages' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `checkin`
-*/
-CREATE TABLE IF NOT EXISTS `checkin`
-(
-`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-`user_id` INT UNSIGNED NOT NULL,
-`location_id` BIGINT UNSIGNED NOT NULL,
-`incident_id` int(11) DEFAULT '0',
-`checkin_description` VARCHAR(255),
-`checkin_date` DATETIME NOT NULL,
-`checkin_auto` ENUM('0','1') DEFAULT '0',
-PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+ * Table structure for table `openid`
+ *
+ */
 
-/**
-* Table structure for table `user_devices`
-*/
-CREATE TABLE IF NOT EXISTS `user_devices` (
-  `id` varchar(255) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-/**
-* Table structure for table `openid`
-*/
 CREATE TABLE IF NOT EXISTS `openid` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
   `openid` varchar(255) NOT NULL,
   `openid_email` varchar(127) NOT NULL,
   `openid_server` varchar(255) NOT NULL,
   `openid_date` datetime NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `openid` (`openid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  KEY `openid` (`openid`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores users’ openid information' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 /**
-* Table structure for table `private_message`
-*/
+ * Table structure for table `page`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `page` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `page_title` varchar(255) NOT NULL,
+  `page_description` longtext,
+  `page_tab` varchar(100) NOT NULL,
+  `page_active` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores user created pages' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `plugin`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `plugin` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `plugin_name` varchar(100) NOT NULL,
+  `plugin_url` varchar(250) DEFAULT NULL,
+  `plugin_description` text,
+  `plugin_priority` tinyint(4) DEFAULT '0',
+  `plugin_active` tinyint(4) DEFAULT '0',
+  `plugin_installed` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `plugin_name` (`plugin_name`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Holds a list of all plugins installed on a deployment' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `private_message`
+ *
+ */
+
 CREATE TABLE IF NOT EXISTS `private_message` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `parent_id` int(11) NOT NULL DEFAULT '0',
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
   `from_user_id` int(11) DEFAULT '0',
   `private_subject` varchar(255) NOT NULL,
   `private_message` text NOT NULL,
   `private_message_date` datetime NOT NULL,
   `private_message_new` tinyint(4) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores private messages sent between Members' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `rating`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `rating` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT '0',
+  `incident_id` bigint(20) unsigned DEFAULT NULL,
+  `comment_id` bigint(20) unsigned DEFAULT NULL,
+  `rating` tinyint(4) DEFAULT '0',
+  `rating_ip` varchar(100) DEFAULT NULL,
+  `rating_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `incident_id` (`incident_id`),
+  KEY `comment_id` (`comment_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores credibility ratings for reports and comments' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `reporter`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `reporter` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `location_id` bigint(20) unsigned DEFAULT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `service_id` int(10) unsigned DEFAULT NULL,
+  `level_id` int(11) unsigned DEFAULT NULL,
+  `service_account` varchar(255) DEFAULT NULL,
+  `reporter_first` varchar(200) DEFAULT NULL,
+  `reporter_last` varchar(200) DEFAULT NULL,
+  `reporter_email` varchar(120) DEFAULT NULL,
+  `reporter_phone` varchar(60) DEFAULT NULL,
+  `reporter_ip` varchar(50) DEFAULT NULL,
+  `reporter_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `location_id` (`location_id`),
+  KEY `service_id` (`service_id`),
+  KEY `level_id` (`level_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Information on report submitters via email, twitter and sms' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `roles`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `reports_view` tinyint(4) NOT NULL DEFAULT '0',
+  `reports_edit` tinyint(4) NOT NULL DEFAULT '0',
+  `reports_evaluation` tinyint(4) NOT NULL DEFAULT '0',
+  `reports_comments` tinyint(4) NOT NULL DEFAULT '0',
+  `reports_download` tinyint(4) NOT NULL DEFAULT '0',
+  `reports_upload` tinyint(4) NOT NULL DEFAULT '0',
+  `messages` tinyint(4) NOT NULL DEFAULT '0',
+  `messages_reporters` tinyint(4) NOT NULL DEFAULT '0',
+  `stats` tinyint(4) NOT NULL DEFAULT '0',
+  `settings` tinyint(4) NOT NULL DEFAULT '0',
+  `manage` tinyint(4) NOT NULL DEFAULT '0',
+  `users` tinyint(4) NOT NULL DEFAULT '0',
+  `manage_roles` tinyint(4) NOT NULL DEFAULT '0',
+  `checkin` tinyint(4) NOT NULL DEFAULT '1',
+  `checkin_admin` tinyint(4) NOT NULL DEFAULT '0',
+  `access_level` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_name` (`name`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Defines user access levels and privileges on a deployment' AUTO_INCREMENT=5 ;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `description`, `reports_view`, `reports_edit`, `reports_evaluation`, `reports_comments`, `reports_download`, `reports_upload`, `messages`, `messages_reporters`, `stats`, `settings`, `manage`, `users`, `manage_roles`, `checkin`, `checkin_admin`, `access_level`) VALUES
+(1, 'login', 'Login privileges, granted after account confirmation', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+(2, 'admin', 'Administrative user, has access to almost everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0),
+(3, 'superadmin', 'Super administrative user, has access to everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0),
+(4, 'member', 'Regular user with access only to the member area', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `roles_users`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `roles_users` (
+  `user_id` int(11) unsigned NOT NULL,
+  `role_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`,`role_id`),
+  KEY `fk_role_id` (`role_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores roles assigned to users registered on a deployment';
+
+--
+-- Dumping data for table `roles_users`
+--
+
+INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
+(1, 1),
+(1, 2),
+(1, 3);
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `scheduler`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `scheduler` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `scheduler_name` varchar(100) NOT NULL,
+  `scheduler_last` int(10) unsigned NOT NULL DEFAULT '0',
+  `scheduler_weekday` smallint(6) NOT NULL DEFAULT '-1',
+  `scheduler_day` smallint(6) NOT NULL DEFAULT '-1',
+  `scheduler_hour` smallint(6) NOT NULL DEFAULT '-1',
+  `scheduler_minute` smallint(6) NOT NULL,
+  `scheduler_controller` varchar(100) NOT NULL,
+  `scheduler_active` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores schedules for cron jobs' AUTO_INCREMENT=6 ;
 
+--
+-- Dumping data for table `scheduler`
+--
 
-/**
-* Constraints for dumped tables
-*
-*/
+INSERT INTO `scheduler` (`id`, `scheduler_name`, `scheduler_last`, `scheduler_weekday`, `scheduler_day`, `scheduler_hour`, `scheduler_minute`, `scheduler_controller`, `scheduler_active`) VALUES
+(1, 'Feeds', 0, -1, -1, -1, 0, 's_feeds', 1),
+(2, 'Alerts', 0, -1, -1, -1, -1, 's_alerts', 1),
+(3, 'Email', 0, -1, -1, -1, 0, 's_email', 1),
+(4, 'Twitter', 0, -1, -1, -1, 0, 's_twitter', 1),
+(5, 'Cleanup', 0, -1, -1, -1, 0, 's_cleanup', 1);
 
-/**
-* Constraints for table `form_field`
-*/
-ALTER TABLE `form_field`
-  ADD CONSTRAINT `form_field_ibfk_1` FOREIGN KEY (`form_id`) REFERENCES `form` (`id`) ON DELETE CASCADE;
-
-/**
-* Constraints for table `form_response`
-*/
-ALTER TABLE `form_response`
-  ADD CONSTRAINT `form_response_ibfk_1` FOREIGN KEY (`form_field_id`) REFERENCES `form_field` (`id`) ON DELETE CASCADE;
+-- --------------------------------------------------------
 
 /**
-* Table Structure for table `form_field_option`
-*/
-CREATE TABLE IF NOT EXISTS `form_field_option` (
-	`id` int(11) NOT NULL auto_increment,
-	`form_field_id` int(11) NOT NULL default '0',
-	`option_name` varchar(200) default NULL,
-	`option_value` text default NULL,
-	PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-/**
-* Add fields to table `form_field`
-*/
-
-ALTER TABLE `form_field` ADD `field_ispublic_visible` tinyint(4) NOT NULL default '0';
-
-ALTER TABLE `form_field` ADD  `field_ispublic_submit` tinyint(4) NOT NULL default '0';
-
-
-/**
-* Add field to table `roles`
-*/
-
-ALTER TABLE `roles` ADD `access_level` tinyint(4) NOT NULL default '0';
-
-/**
- * Table structure for table `actions`
+ * Table structure for table `scheduler_log`
  *
  */
-CREATE TABLE IF NOT EXISTS `actions` (
-	`action_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`action` VARCHAR( 75 ) NOT NULL ,
-	`qualifiers` TEXT NOT NULL ,
-	`response` VARCHAR( 75 ) NOT NULL ,
-	`response_vars` TEXT NOT NULL,
-	`active` TINYINT NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `scheduler_log` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `scheduler_id` int(10) unsigned NOT NULL,
+  `scheduler_status` varchar(20) DEFAULT NULL,
+  `scheduler_date` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `scheduler_id` (`scheduler_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores a log of scheduler actions' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
 
 /**
- * Table structure for table `actions_log`
+ * Table structure for table `service`
  *
  */
-CREATE TABLE IF NOT EXISTS `actions_log` (
-	`id` BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`action_id` INT NOT NULL ,
-	`user_id` INT NOT NULL ,
-	`time` INT( 10 ) NOT NULL
-) ENGINE = MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `service` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `service_name` varchar(100) DEFAULT NULL,
+  `service_description` varchar(255) DEFAULT NULL,
+  `service_url` varchar(255) DEFAULT NULL,
+  `service_api` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Info on input sources i.e SMS, Email, Twitter' AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `service`
+--
+
+INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url`, `service_api`) VALUES
+(1, 'SMS', 'Text messages from phones', NULL, NULL),
+(2, 'Email', 'Email messages sent to your deployment', NULL, NULL),
+(3, 'Twitter', 'Tweets tweets tweets', 'http://twitter.com', NULL);
+
+-- --------------------------------------------------------
 
 /**
- * Table structure for table `badge`
+ * Table structure for table `sessions`
  *
  */
-CREATE TABLE IF NOT EXISTS `badge` (
-	`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
-	`name` VARCHAR( 250 ) NOT NULL ,
-	`description` TEXT NOT NULL
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `sessions` (
+  `session_id` varchar(40) NOT NULL,
+  `last_activity` int(10) unsigned NOT NULL,
+  `data` text NOT NULL,
+  PRIMARY KEY (`session_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores session information';
+
+-- --------------------------------------------------------
 
 /**
- * Table structure for table `badge_assignment`
+ * Table structure for table `settings`
  *
  */
-CREATE TABLE IF NOT EXISTS `badge_users` (
-	`user_id` INT NOT NULL ,
-	`badge_id` INT NOT NULL ,
-	PRIMARY KEY (`user_id` , `badge_id`)
-) ENGINE=MYISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `site_name` varchar(255) DEFAULT NULL,
+  `site_tagline` varchar(255) DEFAULT NULL,
+  `site_banner_id` int(11) DEFAULT NULL,
+  `site_email` varchar(120) DEFAULT NULL,
+  `site_key` varchar(100) DEFAULT NULL,
+  `site_language` varchar(10) NOT NULL DEFAULT 'en_US',
+  `site_style` varchar(50) NOT NULL DEFAULT 'default',
+  `site_timezone` varchar(80) DEFAULT NULL,
+  `site_contact_page` tinyint(4) NOT NULL DEFAULT '1',
+  `site_help_page` tinyint(4) NOT NULL DEFAULT '1',
+  `site_message` text NOT NULL,
+  `site_copyright_statement` text,
+  `site_submit_report_message` text NOT NULL,
+  `allow_reports` tinyint(4) NOT NULL DEFAULT '1',
+  `allow_comments` tinyint(4) NOT NULL DEFAULT '1',
+  `allow_feed` tinyint(4) NOT NULL DEFAULT '1',
+  `allow_stat_sharing` tinyint(4) NOT NULL DEFAULT '1',
+  `allow_clustering` tinyint(4) NOT NULL DEFAULT '0',
+  `cache_pages` tinyint(4) NOT NULL DEFAULT '0',
+  `cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
+  `private_deployment` tinyint(4) NOT NULL DEFAULT '0',
+  `default_map` varchar(100) NOT NULL DEFAULT 'osm_mapnik',
+  `default_map_all` varchar(20) NOT NULL DEFAULT 'CC0000',
+  `default_map_all_icon_id` int(11) DEFAULT NULL,
+  `api_google` varchar(200) DEFAULT NULL,
+  `api_live` varchar(200) DEFAULT NULL,
+  `api_akismet` varchar(200) DEFAULT NULL,
+  `default_country` int(11) DEFAULT NULL,
+  `multi_country` tinyint(4) NOT NULL DEFAULT '0',
+  `default_city` varchar(150) DEFAULT NULL,
+  `default_lat` varchar(100) DEFAULT NULL,
+  `default_lon` varchar(100) DEFAULT NULL,
+  `default_zoom` tinyint(4) NOT NULL DEFAULT '10',
+  `items_per_page` smallint(6) NOT NULL DEFAULT '5',
+  `items_per_page_admin` smallint(6) NOT NULL DEFAULT '20',
+  `sms_provider` varchar(100) DEFAULT NULL,
+  `sms_no1` varchar(100) DEFAULT NULL,
+  `sms_no2` varchar(100) DEFAULT NULL,
+  `sms_no3` varchar(100) DEFAULT NULL,
+  `google_analytics` text,
+  `twitter_hashtags` text,
+  `blocks` text,
+  `blocks_per_row` tinyint(4) NOT NULL DEFAULT '2',
+  `date_modify` datetime DEFAULT NULL,
+  `stat_id` bigint(20) DEFAULT NULL COMMENT 'comes from centralized stats',
+  `stat_key` varchar(30) NOT NULL,
+  `email_username` varchar(100) NOT NULL,
+  `email_password` varchar(100) NOT NULL,
+  `email_port` int(11) NOT NULL,
+  `email_host` varchar(100) NOT NULL,
+  `email_servertype` varchar(100) NOT NULL,
+  `email_ssl` int(5) NOT NULL,
+  `ftp_server` varchar(100) DEFAULT NULL,
+  `ftp_user_name` varchar(100) DEFAULT NULL,
+  `alerts_email` varchar(120) NOT NULL,
+  `checkins` tinyint(4) NOT NULL DEFAULT '0',
+  `facebook_appid` varchar(150) DEFAULT NULL,
+  `facebook_appsecret` varchar(150) DEFAULT NULL,
+  `allow_alerts` tinyint(4) NOT NULL DEFAULT '0',
+  `manually_approve_users` tinyint(4) NOT NULL DEFAULT '0',
+  `require_email_confirmation` tinyint(4) NOT NULL DEFAULT '0',
+  `db_version` varchar(20) DEFAULT NULL,
+  `ushahidi_version` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores a deployment’s general settings' AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `settings`
+--
+INSERT INTO `settings` (`id`, `site_name`, `api_google`, `api_live`, `default_country`, `default_city`, `default_lat`, `default_lon`, `default_zoom`, `items_per_page`, `items_per_page_admin`, `blocks`, `date_modify`) VALUES
+(1, 'Ushahidi', 'ABQIAAAAjsEM5UsvCPCIHp80spK1kBQKW7L4j6gYznY0oMkScAbKwifzxxRhJ3SP_ijydkmJpN3jX8kn5r5fEQ', 'Apumcka0uPOF2lKLorq8aeo4nuqfVVeNRqJjqOcLMJ9iMCTsnMsNd9_OvpA8gR0i', 115, 'nairobi', '-1.2873000707050097', '36.821451182008204', 13, 5, 20, 'reports_block|news_block', '2008-08-25 10:25:18');
+-- --------------------------------------------------------
 
 /**
-* Version information for table `settings`
-*
-*/
+ * Table structure for table `users`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `riverid` varchar(128) NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `email` varchar(127) NOT NULL,
+  `username` varchar(100) NOT NULL DEFAULT '',
+  `password` char(50) NOT NULL,
+  `logins` int(10) unsigned NOT NULL DEFAULT '0',
+  `last_login` int(10) unsigned DEFAULT NULL,
+  `notify` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Flag incase admin opts in for email notifications',
+  `updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `color` varchar(6) NOT NULL DEFAULT 'FF0000',
+  `code` varchar(30) DEFAULT NULL,
+  `confirmed` tinyint(1) NOT NULL DEFAULT '0',
+  `public_profile` tinyint(1) NOT NULL DEFAULT '1',
+  `approved` tinyint(1) NOT NULL DEFAULT '1',
+  `needinfo` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_username` (`username`),
+  UNIQUE KEY `uniq_email` (`email`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores registered users’ information' AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `last_login`, `updated`, `public_profile`, `confirmed`) VALUES
+(1, 'Administrator', 'myemail@example.com', 'admin', 'bae4b17e9acbabf959654a4c496e577003e0b887c6f52803d7', 0, 1221420023, '2008-09-14 14:17:22', 0, 1);
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `user_devices`
+ * Ties mobile devices to users without logging in so that the ids on the devices make the distinction
+ */
+
+CREATE TABLE IF NOT EXISTS `user_devices` (
+  `id` varchar(255) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Works with checkins';
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `user_tokens`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `user_tokens` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned NOT NULL,
+  `user_agent` varchar(40) NOT NULL,
+  `token` varchar(64) NOT NULL,
+  `created` int(10) unsigned NOT NULL,
+  `expires` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniq_token` (`token`),
+  KEY `fk_user_id` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores browser tokens assigned to users' AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `verified`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `verified` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `incident_id` bigint(20) unsigned DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `verified_date` datetime DEFAULT NULL,
+  `verified_status` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `incident_id` (`incident_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores all verified reports' AUTO_INCREMENT=1 ;
+
+/**
+ * Version information for table `settings`
+ *
+ */
 UPDATE `settings` SET `ushahidi_version` = '2.2.1' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '79' WHERE `id` = 1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '85' WHERE `id` = 1 LIMIT 1;

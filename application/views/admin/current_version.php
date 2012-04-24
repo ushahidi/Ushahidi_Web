@@ -16,12 +16,16 @@
  */
 ?>
 
-<?php if ((Kohana::config('config.enable_auto_upgrader') == TRUE)) {?>
-    <?php if (( !empty($version)) AND (url::current() != "admin/upgrade")) { ?>
-        <div id="update-info">
-        <?php echo Kohana::lang('ui_admin.ushahidi');?> <?php echo $version; ?> 
-            <?php echo Kohana::lang('ui_admin.version_available');?>
-			        <a href="<?php echo url::site() ?>admin/upgrade" title="upgrade ushahidi"><?php echo Kohana::lang('ui_admin.update_link');?></a>
-        </div>
-    <?php } ?>
-<?php }?>
+<?php
+if ((Kohana::config('config.enable_auto_upgrader') == TRUE))
+{
+	if (( !empty($version)) AND (url::current() != "admin/upgrade"))
+	{ ?>
+		<div id="current-version" class="update-info">
+			<?php echo Kohana::lang('ui_admin.ushahidi');?> <?php echo $version; ?>
+			<?php echo Kohana::lang('ui_admin.version_available');?>
+			<a href="<?php echo url::site() ?>admin/upgrade" title="upgrade ushahidi"><?php echo Kohana::lang('ui_admin.update_link');?></a>
+		</div>
+	<?php
+	}
+} ?>

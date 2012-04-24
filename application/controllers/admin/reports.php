@@ -121,13 +121,13 @@ class Reports_Controller extends Admin_Controller {
 						// Database instance
 						$db = new Database();
 
-						// Query to check if this report is orphaned i.e categoryless
+						// Query to check if this report is uncategorized i.e categoryless
 						$query = "SELECT ic.* FROM ".$table_prefix."incident_category ic
 								INNER JOIN ".$table_prefix."category c ON c.id = ic.category_id INNER JOIN ".$table_prefix."incident i ON i.id=ic.incident_id
 								WHERE c.category_title =\"NONE\" AND c.category_trusted = '1' AND ic.incident_id = $item";
 						$result = $db->query($query);
 
-						// Only approve the report IF it's not orphaned i.e the query returns a null set
+						// Only approve the report IF it's not uncategorized i.e the query returns a null set
 						if(count($result) == 0)
 						{
 							$update = new Incident_Model($item);
@@ -398,7 +398,7 @@ class Reports_Controller extends Admin_Controller {
 		//because you have 1000 concurrent users you'll need to do this
 		//correctly. Etherton.
 		$form_id = '';
-		if($id && Incident_Model::is_valid_incident($id))
+		if($id && Incident_Model::is_valid_incident($id, FALSE))
 		{
 			$form_id = ORM::factory('incident', $id)->form_id;
 		}
@@ -448,7 +448,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->forms = $forms;
 
 		// Get the incident media
-		$incident_media =  Incident_Model::is_valid_incident($id)
+		$incident_media =  Incident_Model::is_valid_incident($id, FALSE)
 			? ORM::factory('incident', $id)->media
 			: FALSE;
 
@@ -489,8 +489,14 @@ class Reports_Controller extends Admin_Controller {
 				$form['person_first'] = $message->reporter->reporter_first;
 				$form['person_last'] = $message->reporter->reporter_last;
 
-				// Does the sender of this message have a location?
-				if ($message->reporter->location->loaded)
+				// Does the message itself have a location?
+				if ($message->latitude != NULL AND $message->longitude != NULL)
+				{
+					$form['latitude'] = $message->latitude;
+					$form['longitude'] = $message->longitude;
+				}
+				// As a fallback, does the sender of this message have a location?
+				elseif ($message->reporter->location->loaded)
 				{
 					$form['location_id'] = $message->reporter->location->id;
 					$form['latitude'] = $message->reporter->location->latitude;
@@ -578,7 +584,7 @@ class Reports_Controller extends Admin_Controller {
 			}
 
 			// Check if the incident id is valid an add it to the post data
-			if (Incident_Model::is_valid_incident($id))
+			if (Incident_Model::is_valid_incident($id, FALSE))
 			{
 				$post = array_merge($post, array('incident_id' => $id));
 			}
@@ -696,7 +702,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 		else
 		{
-			if (Incident_Model::is_valid_incident($id))
+			if (Incident_Model::is_valid_incident($id, FALSE))
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident', $id);
@@ -864,7 +870,8 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
 		$form = array(
-			'data_point'   => '',
+			'data_active'   => '',
+			'data_verified'   => '',
 			'data_include' => '',
 			'from_date'	   => '',
 			'to_date'	   => ''
@@ -883,7 +890,8 @@ class Reports_Controller extends Admin_Controller {
 			$post->pre_filter('trim', TRUE);
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('data_point.*','required','numeric','between[1,4]');
+			$post->add_rules('data_active.*','required','numeric','between[0,1]');
+			$post->add_rules('data_verified.*','required','numeric','between[0,1]');
 			//$post->add_rules('data_include.*','numeric','between[1,5]');
 			$post->add_rules('data_include.*','numeric','between[1,6]');
 			$post->add_rules('from_date','date_mmddyyyy');
@@ -922,43 +930,44 @@ class Reports_Controller extends Admin_Controller {
 				$show_inactive = false;
 				$show_verified = false;
 				$show_not_verified = false;
-				foreach($post->data_point as $item)
+				
+				if (in_array(1, $post->data_active))
 				{
-					if ($item == 1)
-					{
-						$show_active = true;
-					}
-
-					if ($item == 2)
-					{
-						$show_verified = true;
-					}
-
-					if ($item == 3)
-					{
-						$show_inactive = true;
-					}
-
-					if ($item == 4)
-					{
-						$show_not_verified = true;
-					}
+					$show_active = true;
 				}
+
+				if (in_array(0, $post->data_active))
+				{
+					$show_inactive = true;
+				}
+
+				if (in_array(1, $post->data_verified))
+				{
+					$show_verified = true;
+				}
+
+				if (in_array(0, $post->data_verified))
+				{
+					$show_not_verified = true;
+				}
+				
 				//handle active or not active
 				if($show_active && !$show_inactive)
-				{				
+				{
 					$filter .= ' incident_active = 1 ';
 				}
 				elseif(!$show_active && $show_inactive)
-				{				
+				{
 					$filter .= '  incident_active = 0 ';
 				}
 				elseif($show_active && $show_inactive)
-				{				
+				{
 					$filter .= ' (incident_active = 1 OR incident_active = 0) ';
 				}
+				// Neither active nor inactive selected: select nothing
 				elseif(!$show_active && !$show_inactive)
-				{				
+				{
+					// Equivalent to 1 = 0
 					$filter .= ' (incident_active = 0 AND incident_active = 1) ';
 				}
 				

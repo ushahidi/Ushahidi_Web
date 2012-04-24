@@ -6,6 +6,9 @@
 
 		</ul>
 	</hgroup>
+
+	<?php Event::run('ushahidi_action.header_nav_bar'); ?>
+
 	<nav>
 		<ul id="header_nav_right">
 			<li class="header_nav_user header_nav_has_dropdown">
@@ -31,7 +34,7 @@
 
 				<ul class="header_nav_dropdown" style="display:none;">
 
-					<form method="post" id="userpass_form" action="<?php echo url::site()."login/";?>">
+					<?php echo form::open('login/', array('id' => 'userpass_form')); ?>
 					<input type="hidden" name="action" value="signin">
 
 					<li><label for="username"><?php echo Kohana::lang('ui_main.email');?></label><input type="text" name="username" id="username" class="login_text" /></li>
@@ -39,7 +42,7 @@
 					<li><label for="password"><?php echo Kohana::lang('ui_main.password');?></label><input name="password" type="password" class="login_text" id="password" size="20" /></li>
 
 					<li><input type="submit" id="submit" name="submit" value="<?php echo Kohana::lang('ui_main.login'); ?>" class="header_nav_login_btn" /></li>
-					</form>
+					<?php echo form::close(); ?>
 
 					<li><hr/></li>
 
@@ -47,7 +50,7 @@
 
 					<li><a href="#" id="header_nav_forgot" onclick="return false"><?php echo Kohana::lang('ui_main.forgot_password');?></a>
 
-						<form method="post" id="header_nav_userforgot_form" action="<?php echo url::site()."login/";?>">
+						<?php echo form::open('login/', array('id' => 'header_nav_userforgot_form')); ?>
 						<input type="hidden" name="action" value="forgot">
 
 						<label for="resetemail"><?php echo Kohana::lang('ui_main.registered_email');?></label>
@@ -57,9 +60,7 @@
 
 						<br/>
 
-						</form>
-
-
+						<?php echo form::close(); ?>
 
 					</li>
 

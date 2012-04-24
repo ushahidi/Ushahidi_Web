@@ -310,30 +310,31 @@
 
             separator08 : { separator : false && !( $.browser.msie ) },
 
-            increaseFontSize : { visible : false && !( $.browser.msie ), tags : ['big'], tooltip : "Increase font size" },
-            decreaseFontSize : { visible : false && !( $.browser.msie ), tags : ['small'], tooltip : "Decrease font size" },
+            increaseFontSize : { visible : true && !( $.browser.msie ), tags : ['big'], tooltip : "Increase font size" },
+            decreaseFontSize : { visible : true && !( $.browser.msie ), tags : ['small'], tooltip : "Decrease font size" },
 
             separator09 : { separator : true },
 
-            html : {
-                visible : false,
-                exec    : function()
-                {
-                    if ( this.viewHTML )
-                    {
-                        this.setContent( $(this.original).val() );
-                        $(this.original).hide();
-                    }
-                    else
-                    {
-                        this.saveContent();
-                        $(this.original).show();
-                    }
+			html: {
+				visible: true,
+				exec: function()
+				{
+					if(this.viewHTML)
+					{
+						this.setContent($(this.original).val());
+						$(this.original).hide();
+						$(this.editor).show();
+					}else
+					{
+						this.saveContent();
+						$(this.original).show();
+						$(this.editor).hide();
+					}
 
-                    this.viewHTML = !( this.viewHTML );
-                },
-                tooltip : "View source code"
-            },
+						this.viewHTML=!(this.viewHTML);
+				},
+				tooltip : "View source code"
+			},
 
             removeFormat : {
                 visible : true,
@@ -419,6 +420,7 @@
                 .append(panel)
                 .append( $('<div><!-- --></div>').css({ clear : 'both' }) )
                 .append(editor)
+				.css('width', '850px')
 		;
 
             $(element)

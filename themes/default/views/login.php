@@ -50,10 +50,10 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 
 	?>
 
-	<?php if (isset($_GET["reset"])) { ?>
+	<?php if (isset($_GET["reset"])): ?>
 	<div id="password_reset_change_form" class="ui-corner-all">
 		<h2><?php echo Kohana::lang('ui_main.create_new_password'); ?></h2>
-		<form method="post" id="changepass_form">
+		<?php echo form::open(NULL, array('id' => "changepass_form")); ?>
 			<input type="hidden" name="action" value="changepass">
 			<input type="hidden" name="changeid" value="<?php echo $changeid; ?>">
 
@@ -79,16 +79,16 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 				</tr>
 			</table>
 
-		</form>
+		<?php echo form::close(); ?>
 	</div>
-	<?php } ?>
+	<?php endif; ?>
 
 	<div id="openid_login" class="ui-corner-all">
 
-		<?php if ($new_confirm_email_form) { ?>
+		<?php if ($new_confirm_email_form): ?>
 			<h2><?php echo Kohana::lang('ui_main.resend_confirm_email'); ?>:</h2>
 			<div id="resend_confirm_email" class="signin_select ui-corner-all" style="margin-top:10px;">
-				<form method="post" id="resendconfirm_form">
+				<?php echo form::open(NULL, array('id'=>"resendconfirm_form")); ?>
 					<input type="hidden" name="action" value="resend_confirmation">
 					<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
 						<tr>
@@ -99,15 +99,15 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 							<td><input type="submit" id="submit" name="submit" value="<?php echo Kohana::lang('ui_main.send_confirmation'); ?>" class="login_btn" /></td>
 						</tr>
 					</table>
-				</form>
+				<?php echo form::close(); ?>
 			</div>
-		<?php } ?>
+		<?php endif; ?>
 
 		<h2><?php echo Kohana::lang('ui_main.login_with'); ?>:</h2>
 
 		<h2><a href="javascript:toggle('signin_userpass');"><?php echo Kohana::lang('ui_main.login_userpass'); ?></a></h2>
 		<div id="signin_userpass" class="signin_select ui-corner-all">
-			<form method="post" id="userpass_form">
+			<?php echo form::open(NULL, array('id'=>"userpass_form")); ?>
 				<input type="hidden" name="action" value="signin">
 				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
 					<tr>
@@ -128,10 +128,10 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 						<td><a href="javascript:toggle('signin_forgot');"> <?php echo Kohana::lang('ui_main.forgot_password');?></a></td>
 					</tr>
 				</table>
-			</form>
+			<?php echo form::close(); ?>
 		</div>
 		<div id="signin_forgot" class="signin_select ui-corner-all" style="margin-top:10px;">
-			<form method="post" id="userforgot_form">
+			<?php echo form::open(NULL, array('id'=>"userforgot_form")); ?>
 				<input type="hidden" name="action" value="forgot">
 				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
 					<tr>
@@ -142,13 +142,13 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 						<td><input type="submit" id="submit" name="submit" value="<?php echo Kohana::lang('ui_main.reset_password'); ?>" class="login_btn" /></td>
 					</tr>
 				</table>
-			</form>
+			<?php echo form::close() ?>
 		</div>
 
 		<?php if(kohana::config('config.allow_openid') == true) { ?>
 		<h2><a href="javascript:toggle('signin_openid');"><?php echo Kohana::lang('ui_main.login_openid'); ?></a></h2>
 		<div id="signin_openid" class="signin_select ui-corner-all">
-			<form method="post" id="openid_form">
+			<?php echo form::open(NULL, array('id'=>"openid_form")); ?>
 				<input type="hidden" name="action" value="openid">
 				<div id="openid_choice">
 					<p><?php echo Kohana::lang('ui_main.login_select_openid'); ?>:</p>
@@ -163,7 +163,7 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 					<p>OpenID is service that allows you to log-on to many different websites using a single indentity.
 					Find out <a href="http://openid.net/what/">more about OpenID</a> and <a href="http://openid.net/get/">how to get an OpenID enabled account</a>.</p>
 				</noscript>
-			</form>
+			<?php echo form::close(); ?>
 		</div>
 		<?php } ?>
 	</div>
@@ -174,7 +174,7 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 
 		<?php echo Kohana::lang('ui_main.login_signup_text'); ?>
 		<div id="signin_new" class="signin_select ui-corner-all" style="margin-top:10px;">
-			<form method="post" id="usernew_form">
+			<?php echo form::open(NULL,  array('id' => "usernew_form")); ?>
 				<input type="hidden" name="action" value="new">
 				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
 					<tr>
@@ -200,7 +200,7 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 						<td><input type="submit" id="submit" name="submit" value="<?php echo Kohana::lang('ui_main.login_signup');?>" class="login_btn new_submit" /></td>
 					</tr>
 				</table>
-			</form>
+			<?php echo form::close(); ?>
 		</div>
 
 	</div>

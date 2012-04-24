@@ -1,7 +1,7 @@
 .hovertip {
     position: absolute;
     padding: 10px 13px;
-    z-index: 2;
+    z-index: 1010;
     max-width: 300px;
 
     color: #303030;

@@ -927,6 +927,26 @@ class Snoopy
 
 		return true;
 	}
+    
+    function _httpsrequest2($url,$URI,$http_method,$content_type="",$body="")
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_USERAGENT, $this->agent);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+
+        ## Below two option will enable the HTTPS option.
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  2);
+        $result = curl_exec($ch);
+
+        if( curl_error($ch) ) 
+        {
+            return false;
+        }
+        curl_close($ch);
+        return $result;
+    }
 
 /*======================================================================*\
 	Function:	_httpsrequest
@@ -936,7 +956,7 @@ class Snoopy
 				$body		body contents to send if any (POST)
 	Output:
 \*======================================================================*/
-
+    
 	function _httpsrequest($url,$URI,$http_method,$content_type="",$body="")
 	{
 		if($this->passcookies && $this->_redirectaddr)

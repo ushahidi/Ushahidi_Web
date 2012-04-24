@@ -2,12 +2,12 @@
 /**
  * Locale helper
  *
- * @package    Locale
+ * @package    Ush_Locale
  * @author     Ushahidi Team
  * @copyright  (c) 2008 Ushahidi Team
  * @license    http://www.ushahidi.com/license.html
  */
-class locale_Core
+class ush_locale_Core
 {
 	/**
 	 * @param   string	 ISO-639 language code
@@ -504,7 +504,7 @@ class locale_Core
 				if ( count($locale) < 2 )
 					continue;
 
-				$directories[$i18n_dir] = locale::language($locale[0])." (".$locale[1].")";
+				$directories[$i18n_dir] = ush_locale::language($locale[0])." (".$locale[1].")";
 			}
 		}
 

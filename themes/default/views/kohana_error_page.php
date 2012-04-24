@@ -34,7 +34,7 @@ $environ .= "*URL*: ".$url."\n";
 $environ .= "*REFERER*: ".$referer."\n";
 $environ .= "*USER_AGENT*: ".$user_agent."\n";
 $environ .= "*IP*: ".$ip_address."\n";
-$environ .= "*USHAHIDI VERSION*: ".Kohana::config('version.ushahidi_version')."\n";
+$environ .= "*USHAHIDI VERSION*: ".Kohana::config('settings.ushahidi_version')."\n";
 $environ .= "*DB VERSION*: ".Kohana::config('version.ushahidi_db_version')."\n";
 
 $error_message = "";
@@ -52,7 +52,7 @@ $error_message .= "ERROR: ".$message."\n";
 	<p class="bug_form_desc">Found a bug? Please fill out and submit the form below - help us make Ushahidi better software -- Thanks!</p>
 	<p class="bug_form_desc">All fields are required!</p>
 	<table width="100%" border="0" cellspacing="0" cellpadding="6">
-		<form method="post" action="http://bugs.ushahidi.com" id="form" onSubmit="return validatePost();">
+		<?php echo form::open('http://bugs.ushahidi.com', array('method' => 'post', 'id' => 'form', 'onSubmit' => "return validatePost();")); ?>
 			<input name="tracker" type="hidden" value="Bug">
 			<input name="remote" type="hidden" value="yes">
 			<tr>
@@ -95,7 +95,7 @@ $error_message .= "ERROR: ".$message."\n";
 				<td>&nbsp;</td>
 				<td><input name="submit" type="submit" class="action_btn" id="submit" value="Submit" /></td>
 			</tr>
-		</form>
+		<?php echo form::close(); ?>
 	</table>
 </div>
 <?php if ( ! empty($trace)): ?>

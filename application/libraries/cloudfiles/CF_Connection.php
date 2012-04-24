@@ -78,7 +78,7 @@ class CF_Connection
         if (!$this->cfs_auth->authenticated()) {
             $e = "Need to pass in a previously authenticated ";
             $e .= "CF_Authentication instance.";
-            throw new AuthenticationException($e);
+            throw new Kohana_Exception($e);
         }
         $this->cfs_http->setCFAuth($this->cfs_auth, $servicenet=$servicenet);
         $this->dbug = False;
@@ -100,19 +100,19 @@ class CF_Connection
      *
      * Example:
      * <code>
-     *  
+     *
      * $conn->close();
-     * 
+     *
      * </code>
      *
      * Will close all current cUrl active connections.
-     * 
+     *
      */
     public function close()
     {
         $this->cfs_http->close();
     }
-    
+
     /**
      * Cloud Files account information
      *
@@ -141,7 +141,7 @@ class CF_Connection
         #    return $this->get_info();
         #}
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         return array($container_count, $total_bytes);
@@ -170,32 +170,32 @@ class CF_Connection
     function create_container($container_name=NULL)
     {
         if ($container_name != "0" and !isset($container_name))
-            throw new SyntaxException("Container name not set.");
-        
-        if (!isset($container_name) or $container_name == "") 
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
+
+        if (!isset($container_name) or $container_name == "")
+            throw new Kohana_Exception("Container name not set.");
 
         if (strpos($container_name, "/") !== False) {
             $r = "Container name '".$container_name;
             $r .= "' cannot contain a '/' character.";
-            throw new SyntaxException($r);
+            throw new Kohana_Exception($r);
         }
         if (strlen($container_name) > MAX_CONTAINER_NAME_LEN) {
-            throw new SyntaxException(sprintf(
+            throw new Kohana_Exception(sprintf(
                 "Container name exeeds %d bytes.",
                 MAX_CONTAINER_NAME_LEN));
         }
 
         $return_code = $this->cfs_http->create_container($container_name);
         if (!$return_code) {
-            throw new InvalidResponseException("Invalid response ("
+            throw new Kohana_Exception("Invalid response ("
                 . $return_code. "): " . $this->cfs_http->get_error());
         }
         #if ($status == 401 && $this->_re_auth()) {
         #    return $this->create_container($container_name);
         #}
         if ($return_code != 201 && $return_code != 202) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$return_code."): "
                     . $this->cfs_http->get_error());
         }
@@ -227,7 +227,7 @@ class CF_Connection
     function delete_container($container=NULL)
     {
         $container_name = NULL;
-        
+
         if (is_object($container)) {
             if (get_class($container) == "CF_Container") {
                 $container_name = $container->name;
@@ -238,26 +238,26 @@ class CF_Connection
         }
 
         if ($container_name != "0" and !isset($container_name))
-            throw new SyntaxException("Must specify container object or name.");
+            throw new Kohana_Exception("Must specify container object or name.");
 
         $return_code = $this->cfs_http->delete_container($container_name);
 
         if (!$return_code) {
-            throw new InvalidResponseException("Failed to obtain http response");
+            throw new Kohana_Exception("Failed to obtain http response");
         }
         #if ($status == 401 && $this->_re_auth()) {
         #    return $this->delete_container($container);
         #}
         if ($return_code == 409) {
-            throw new NonEmptyContainerException(
+            throw new Kohana_Exception(
                 "Container must be empty prior to removing it.");
         }
         if ($return_code == 404) {
-            throw new NoSuchContainerException(
+            throw new Kohana_Exception(
                 "Specified container did not exist to delete.");
         }
         if ($return_code != 204) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$return_code."): "
                 . $this->cfs_http->get_error());
         }
@@ -294,10 +294,10 @@ class CF_Connection
         #    return $this->get_container($container_name);
         #}
         if ($status == 404) {
-            throw new NoSuchContainerException("Container not found.");
+            throw new Kohana_Exception("Container not found.");
         }
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response: ".$this->cfs_http->get_error());
         }
         return new CF_Container($this->cfs_auth, $this->cfs_http,
@@ -336,7 +336,7 @@ class CF_Connection
         #    return $this->get_containers();
         #}
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response: ".$this->cfs_http->get_error());
         }
         $containers = array();
@@ -380,7 +380,7 @@ class CF_Connection
         #    return $this->list_containers($limit, $marker);
         #}
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         return $containers;
@@ -422,13 +422,13 @@ class CF_Connection
      */
     function list_containers_info($limit=0, $marker=NULL)
     {
-        list($status, $reason, $container_info) = 
+        list($status, $reason, $container_info) =
                 $this->cfs_http->list_containers_info($limit, $marker);
         #if ($status == 401 && $this->_re_auth()) {
         #    return $this->list_containers_info($limit, $marker);
         #}
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         return $container_info;
@@ -470,7 +470,7 @@ class CF_Connection
         #    return $this->list_public_containers();
         #}
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Invalid response (".$status."): ".$this->cfs_http->get_error());
         }
         return $containers;

@@ -58,6 +58,7 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 		$report_id = 0;
 
 		$_POST = array(
+			'form_auth_token' => csrf::token(),
 			'incident_title' => 'Test Sample Report Title',
 			'incident_description' => 'Test Sampe Report Description',
 			'incident_date' => '03/18/2011',
@@ -113,6 +114,7 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function approveReport($report_id)
 	{
 		$_POST = array(
+			'form_auth_token' => csrf::token(),
 			'action' => 'approve',
 			'incident_id' => $report_id,
 			'task' => 'reports',
@@ -168,6 +170,7 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function verifyReport($report_id)
 	{
 		$_POST = array(
+			'form_auth_token' => csrf::token(),
 			'action' => 'verify',
 			'incident_id' => $report_id,
 			'task' => 'reports',
@@ -206,6 +209,7 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function editReport($report_id)
 	{
 		$_POST = array(
+			'form_auth_token' => csrf::token(),
 			'action' => 'edit',
 			'incident_id' => $report_id,
 			'incident_title' => 'Hello Ushahidi Edited',
@@ -243,6 +247,7 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function deleteReport($report_id)
 	{
 		$_POST = array(
+			'form_auth_token' => csrf::token(),
 			'action' => 'delete',
 			'incident_id' => $report_id,
 			'task' => 'reports',

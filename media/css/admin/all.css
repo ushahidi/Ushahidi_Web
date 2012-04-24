@@ -1861,7 +1861,7 @@ UL.mapNavigation LI A:focus {
 }
 
 /* update info */
-#update-info {
+.update-info {
     line-height: 29px;
     font-size: 12px;
     text-align: center;
@@ -1872,7 +1872,7 @@ UL.mapNavigation LI A:focus {
     border-top-style: solid;
 }
 
-#update-info a {
+.update-info a {
     font-size: 1.1em;
 }
 

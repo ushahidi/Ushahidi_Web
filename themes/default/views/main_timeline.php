@@ -1,5 +1,5 @@
 <div class="slider-holder">
-	<form action="">
+	<?php echo form::open(NULL, array('method' => 'get')); ?>
 		<input type="hidden" value="0" name="currentCat" id="currentCat"/>
 		<fieldset>
 			<div class="play"><a href="#" id="playTimeline"><?php echo Kohana::lang('ui_main.play'); ?></a></div>
@@ -8,6 +8,6 @@
 			<label for="endDate"><?php echo Kohana::lang('ui_main.to'); ?>:</label>
 			<select name="endDate" id="endDate"><?php echo $endDate; ?></select>
 		</fieldset>
-	</form>
+	<?php echo form::close(); ?>
 </div>
 <div id="graph" class="graph-holder"></div>

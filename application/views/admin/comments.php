@@ -98,7 +98,7 @@
 											<h3><?php echo Kohana::lang('ui_main.no_results');?></h3>
 										</td>
 									</tr>
-								<?php	
+								<?php
 								}
 								foreach ($comments as $comment)
 								{
@@ -109,9 +109,8 @@
 									$comment_ip = $comment->comment_ip;
 									$comment_active = $comment->comment_active;
 									$comment_spam = $comment->comment_spam;
-									$comment_rating = $comment->comment_rating;
 									$comment_date = date('Y-m-d H:i', strtotime($comment->comment_date));
-									
+
 									$incident_id = $comment->incident->id;
 									$incident_title = $comment->incident->incident_title;
 									?>
@@ -131,7 +130,6 @@
 											<ul class="info">
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.email');?>: <strong><?php echo $comment_email; ?></strong></li>
 												<li><?php echo Kohana::lang('ui_main.ip_address');?>: <strong><?php echo $comment_ip; ?></strong></li>
-												<li><?php echo Kohana::lang('ui_main.comment_rating');?>: <strong><?php echo $comment_rating; ?></strong></li>
 											</ul>
 										</td>
 										<td class="col-3"><?php echo $comment_date; ?></td>

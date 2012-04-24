@@ -66,7 +66,7 @@
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_banner"); ?>"><?php echo Kohana::lang('settings.site.banner');?></a></h4>
 							<?php if($banner_m != NULL) { ?>
-								<img src="<?php echo url::base().Kohana::config('upload.relative_directory')."/".$banner_m; ?>" alt="<?php Kohana::lang('settings.site.banner'); ?>" /><br/>
+								<img src="<?php echo $banner_m; ?>" alt="<?php Kohana::lang('settings.site.banner'); ?>" /><br/>
 							<?php } ?>
 							<?php echo form::upload('banner_image', '', ''); ?> (&lt;&#61; 250k)
 							<br/>
@@ -163,34 +163,6 @@
 							<span class="sel-holder">
 								<?php print form::dropdown('allow_stat_sharing', $yesno_array, $form['allow_stat_sharing']); ?>
 							</span>
-						</div>
-						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_clustering"); ?>"><?php echo Kohana::lang('settings.site.allow_clustering');?></a></h4>
-							<span class="sel-holder">
-								<?php print form::dropdown('allow_clustering', $yesno_array, $form['allow_clustering']); ?>
-							</span>
-						</div>
-						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_default_category_colors"); ?>"><?php echo Kohana::lang('settings.site.default_category_colors');?></a></h4>
-							<?php print form::input('default_map_all', $form['default_map_all'], ' class="text"'); ?>
-							<script type="text/javascript" charset="utf-8">
-								$(document).ready(function() {
-									$('#default_map_all').ColorPicker({
-										onSubmit: function(hsb, hex, rgb) {
-											$('#default_map_all').val(hex);
-										},
-										onChange: function(hsb, hex, rgb) {
-											$('#default_map_all').val(hex);
-										},
-										onBeforeShow: function () {
-											$(this).ColorPickerSetColor(this.value);
-										}
-									})
-									.bind('keyup', function(){
-										$(this).ColorPickerSetColor(this.value);
-									});
-								});
-							</script>
 						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_cache_pages"); ?>"><?php echo Kohana::lang('settings.site.cache_pages');?></a></h4>

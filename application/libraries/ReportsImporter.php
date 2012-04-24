@@ -196,7 +196,6 @@ class ReportsImporter {
 						// We'll just use black for now. Maybe something random?
 						$category->category_color = '000000'; 
 						// because all current categories are of type '5'
-						$category->category_type = 5; 
 						$category->category_visible = 1;
 						$category->category_description = $categoryname;
 						$category->save();
@@ -216,7 +215,7 @@ class ReportsImporter {
 					$incident_update->incident_active = 0;
 					$incident_update->save();
 
-					// Assign reports to special category for orphaned reports: NONE
+					// Assign reports to special category for uncategorized reports: NONE
 					$incident_category->category_id = '5';
 					$incident_category->save();
 				}	
@@ -231,7 +230,7 @@ class ReportsImporter {
 			$incident_update->incident_active = 0;
 			$incident_update->save();
 			
-			// Assign reports to special category for orphaned reports: NONE
+			// Assign reports to special category for uncategorized reports: NONE
 			$incident_category = new Incident_Category_Model();
 			$incident_category->incident_id = $incident->id;
 			$incident_category->category_id = '5';

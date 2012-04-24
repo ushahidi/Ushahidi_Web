@@ -114,11 +114,11 @@ class CF_Http
         # variable.
         $OS_CAFILE_NONUPDATED=array(
             "win","dar"
-        ); 
+        );
 
         if (in_array((strtolower (substr(PHP_OS, 0,3))), $OS_CAFILE_NONUPDATED))
             $this->ssl_use_cabundle();
-        
+
     }
 
     function ssl_use_cabundle($path=NULL)
@@ -129,7 +129,7 @@ class CF_Http
             $this->cabundle_path = dirname(__FILE__) . "/share/cacert.pem";
         }
         if (!file_exists($this->cabundle_path)) {
-            throw new IOException("Could not use CA bundle: "
+            throw new Kohana_Exception("Could not use CA bundle: "
                 . $this->cabundle_path);
         }
         return;
@@ -190,7 +190,7 @@ class CF_Http
         $this->_write_callback_type = "TEXT_LIST";
         if ($enabled_only)
         {
-            $return_code = $this->_send_request($conn_type, $url_path . 
+            $return_code = $this->_send_request($conn_type, $url_path .
             '/?enabled_only=true');
         }
         else
@@ -224,7 +224,7 @@ class CF_Http
     function purge_from_cdn($path, $email=null)
     {
         if(!$path)
-            throw new SyntaxException("Path not set");
+            throw new Kohana_Exception("Path not set");
         $url_path = $this->_make_path("CDN", NULL, $path);
         if($email)
         {
@@ -241,10 +241,10 @@ class CF_Http
                                   $cdn_acl_user_agent="", $cdn_acl_referrer)
     {
         if ($container_name == "")
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         if ($container_name != "0" and !isset($container_name))
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         $url_path = $this->_make_path("CDN", $container_name);
         $hdrs = array(
@@ -276,11 +276,11 @@ class CF_Http
     function add_cdn_container($container_name, $ttl=86400)
     {
         if ($container_name == "")
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         if ($container_name != "0" and !isset($container_name))
-            throw new SyntaxException("Container name not set.");
-        
+            throw new Kohana_Exception("Container name not set.");
+
         $url_path = $this->_make_path("CDN", $container_name);
         $hdrs = array(
             CDN_ENABLED => "True",
@@ -304,11 +304,11 @@ class CF_Http
     function remove_cdn_container($container_name)
     {
         if ($container_name == "")
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         if ($container_name != "0" and !isset($container_name))
-            throw new SyntaxException("Container name not set.");
-        
+            throw new Kohana_Exception("Container name not set.");
+
         $url_path = $this->_make_path("CDN", $container_name);
         $hdrs = array(CDN_ENABLED => "False");
         $return_code = $this->_send_request("DEL_POST",$url_path,$hdrs,"POST");
@@ -332,11 +332,11 @@ class CF_Http
     function head_cdn_container($container_name)
     {
         if ($container_name == "")
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         if ($container_name != "0" and !isset($container_name))
-            throw new SyntaxException("Container name not set.");
-        
+            throw new Kohana_Exception("Container name not set.");
+
         $conn_type = "HEAD";
         $url_path = $this->_make_path("CDN", $container_name);
         $return_code = $this->_send_request($conn_type, $url_path, NULL, "GET", True);
@@ -480,10 +480,10 @@ class CF_Http
     function create_container($container_name)
     {
         if ($container_name == "")
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         if ($container_name != "0" and !isset($container_name))
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         $url_path = $this->_make_path("STORAGE", $container_name);
         $return_code = $this->_send_request("PUT_CONT",$url_path);
@@ -500,10 +500,10 @@ class CF_Http
     function delete_container($container_name)
     {
         if ($container_name == "")
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         if ($container_name != "0" and !isset($container_name))
-            throw new SyntaxException("Container name not set.");
+            throw new Kohana_Exception("Container name not set.");
 
         $url_path = $this->_make_path("STORAGE", $container_name);
         $return_code = $this->_send_request("DEL_POST",$url_path,array(),"DELETE");
@@ -554,7 +554,7 @@ class CF_Http
         if (!empty($params)) {
             $url_path .= "?" . implode("&", $params);
         }
- 
+
         $conn_type = "GET_CALL";
         $this->_write_callback_type = "TEXT_LIST";
         $return_code = $this->_send_request($conn_type,$url_path);
@@ -572,7 +572,7 @@ class CF_Http
             return array($return_code,$this->error_str,array());
         }
         if ($return_code == 200) {
-	    $this->create_array();	
+	    $this->create_array();
             return array($return_code,$this->response_reason, $this->_text_list);
         }
         $this->error_str = "Unexpected HTTP response code: $return_code";
@@ -608,7 +608,7 @@ class CF_Http
         if (!empty($params)) {
             $url_path .= "?" . implode("&", $params);
         }
- 
+
         $conn_type = "GET_CALL";
         $this->_write_callback_type = "OBJECT_STRING";
         $return_code = $this->_send_request($conn_type,$url_path);
@@ -643,12 +643,12 @@ class CF_Http
             $this->error_str = "Container name not set.";
             return False;
         }
-        
+
         if ($container_name != "0" and !isset($container_name)) {
             $this->error_str = "Container name not set.";
             return False;
         }
-    
+
         $conn_type = "HEAD";
 
         $url_path = $this->_make_path("STORAGE", $container_name);
@@ -673,7 +673,7 @@ class CF_Http
     function get_object_to_string(&$obj, $hdrs=array())
     {
         if (!is_object($obj) || get_class($obj) != "CF_Object") {
-            throw new SyntaxException(
+            throw new Kohana_Exception(
                 "Method argument is not a valid CF_Object.");
         }
 
@@ -704,11 +704,11 @@ class CF_Http
     function get_object_to_stream(&$obj, &$resource=NULL, $hdrs=array())
     {
         if (!is_object($obj) || get_class($obj) != "CF_Object") {
-            throw new SyntaxException(
+            throw new Kohana_Exception(
                 "Method argument is not a valid CF_Object.");
         }
         if (!is_resource($resource)) {
-            throw new SyntaxException(
+            throw new Kohana_Exception(
                 "Resource argument not a valid PHP resource.");
         }
 
@@ -740,11 +740,11 @@ class CF_Http
     function put_object(&$obj, &$fp)
     {
         if (!is_object($obj) || get_class($obj) != "CF_Object") {
-            throw new SyntaxException(
+            throw new Kohana_Exception(
                 "Method argument is not a valid CF_Object.");
         }
         if (!is_resource($fp)) {
-            throw new SyntaxException(
+            throw new Kohana_Exception(
                 "File pointer argument is not a valid resource.");
         }
 
@@ -803,7 +803,7 @@ class CF_Http
     function update_object(&$obj)
     {
         if (!is_object($obj) || get_class($obj) != "CF_Object") {
-            throw new SyntaxException(
+            throw new Kohana_Exception(
                 "Method argument is not a valid CF_Object.");
         }
 
@@ -839,7 +839,7 @@ class CF_Http
     function head_object(&$obj)
     {
         if (!is_object($obj) || get_class($obj) != "CF_Object") {
-            throw new SyntaxException(
+            throw new Kohana_Exception(
                 "Method argument is not a valid CF_Object.");
         }
 
@@ -935,12 +935,12 @@ class CF_Http
             $this->error_str = "Container name not set.";
             return 0;
         }
-        
+
         if ($container_name != "0" and !isset($container_name)) {
             $this->error_str = "Container name not set.";
             return 0;
         }
-        
+
         if (!$object_name) {
             $this->error_str = "Object name not set.";
             return 0;
@@ -1322,7 +1322,7 @@ class CF_Http
             foreach ($argv[$argi] as $k => $v) {
                 $k = trim($k);
                 $v = trim($v);
-                if (strpos($k, ":") !== False) throw new SyntaxException(
+                if (strpos($k, ":") !== False) throw new Kohana_Exception(
                     "Header names cannot contain a ':' character.");
 
                 if (array_key_exists('filter', $rule)) {
@@ -1333,13 +1333,13 @@ class CF_Http
                             break;
                         }
                     }
-                    if (!$result) throw new SyntaxException(sprintf(
+                    if (!$result) throw new Kohana_Exception(sprintf(
                         "Header name %s is not allowed", $k));
                 }
 
                 $k = $rule['prefix'] . $k;
                 if (strlen($k) > MAX_HEADER_NAME_LEN || strlen($v) > MAX_HEADER_VALUE_LEN)
-                    throw new SyntaxException(sprintf(
+                    throw new Kohana_Exception(sprintf(
                         "Header %s exceeds maximum length: %d/%d",
                             $k, strlen($k), strlen($v)));
 
@@ -1349,7 +1349,7 @@ class CF_Http
 
         return $hdrs;
     }
-    
+
     private function _send_request($conn_type, $url_path, $hdrs=NULL, $method="GET", $force_new=False)
     {
         $this->_init($conn_type, $force_new);
@@ -1357,10 +1357,10 @@ class CF_Http
         $headers = $this->_make_headers($hdrs);
 
         if (gettype($this->connections[$conn_type]) == "unknown type")
-            throw new ConnectionNotOpenException (
+            throw new Kohana_Exception (
                 "Connection is not open."
                 );
-        
+
         switch ($method) {
         case "COPY":
             curl_setopt($this->connections[$conn_type],
@@ -1375,7 +1375,7 @@ class CF_Http
                 CURLOPT_CUSTOMREQUEST, "POST");
         default:
             break;
-        }        
+        }
 
         curl_setopt($this->connections[$conn_type],
                     CURLOPT_HTTPHEADER, $headers);
@@ -1391,7 +1391,7 @@ class CF_Http
         }
         return curl_getinfo($this->connections[$conn_type], CURLINFO_HTTP_CODE);
     }
-    
+
     function close()
     {
         foreach ($this->connections as $cnx) {

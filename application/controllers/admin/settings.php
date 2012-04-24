@@ -63,14 +63,12 @@ class Settings_Controller extends Admin_Controller
 			'allow_comments' => '',
 			'allow_feed' => '',
 			'allow_stat_sharing' => '',
-			'allow_clustering' => '',
 			'cache_pages' => '',
 			'cache_pages_lifetime' => '',
 			'private_deployment' => '',
 			'manually_approve_users' => '',
 			'require_email_confirmation' => '',
 			'checkins' => '',
-			'default_map_all' => '',
 			'google_analytics' => '',
 			'twitter_hashtags' => '',
 			'api_akismet' => ''
@@ -114,14 +112,12 @@ class Settings_Controller extends Admin_Controller
 			$post->add_rules('allow_comments','required','between[0,2]');
 			$post->add_rules('allow_feed','required','between[0,1]');
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
-			$post->add_rules('allow_clustering','required','between[0,1]');
 			$post->add_rules('cache_pages','required','between[0,1]');
 			$post->add_rules('cache_pages_lifetime','required','in_array[60,300,600,900,1800]');
 			$post->add_rules('private_deployment','required','between[0,1]');
 			$post->add_rules('manually_approve_users','required','between[0,1]');
 			$post->add_rules('require_email_confirmation','required','between[0,1]');
 			$post->add_rules('checkins','required','between[0,1]');
-			$post->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]');
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('twitter_hashtags','length[0,500]');
 			$post->add_rules('api_akismet','length[0,100]', 'alpha_numeric');
@@ -131,7 +127,7 @@ class Settings_Controller extends Admin_Controller
 			$files->add_rules('banner_image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[250K]');
 
 			// Test to see if things passed the rule checks
-			if ($post->validate() AND $files->validate())
+			if ($post->validate() AND $files->validate(FALSE))
 			{
 				// Yes! everything is valid
 				$settings = new Settings_Model(1);
@@ -158,14 +154,12 @@ class Settings_Controller extends Admin_Controller
 				$settings->allow_comments = $post->allow_comments;
 				$settings->allow_feed = $post->allow_feed;
 				$settings->allow_stat_sharing = $post->allow_stat_sharing;
-				$settings->allow_clustering = $post->allow_clustering;
 				$settings->cache_pages = $post->cache_pages;
 				$settings->cache_pages_lifetime = $post->cache_pages_lifetime;
 				$settings->private_deployment = $post->private_deployment;
 				$settings->manually_approve_users = $post->manually_approve_users;
 				$settings->require_email_confirmation = $post->require_email_confirmation;
 				$settings->checkins = $post->checkins;
-				$settings->default_map_all = $post->default_map_all;
 				$settings->google_analytics = $post->google_analytics;
 				$settings->twitter_hashtags = $post->twitter_hashtags;
 				$settings->api_akismet = $post->api_akismet;
@@ -304,14 +298,12 @@ class Settings_Controller extends Admin_Controller
 				'allow_comments' => $settings->allow_comments,
 				'allow_feed' => $settings->allow_feed,
 				'allow_stat_sharing' => $settings->allow_stat_sharing,
-				'allow_clustering' => $settings->allow_clustering,
 				'cache_pages' => $settings->cache_pages,
 				'cache_pages_lifetime' => $settings->cache_pages_lifetime,
 				'private_deployment' => $settings->private_deployment,
 				'manually_approve_users' => $settings->manually_approve_users,
 				'require_email_confirmation' => $settings->require_email_confirmation,
 				'checkins' => $settings->checkins,
-				'default_map_all' => $settings->default_map_all,
 				'google_analytics' => $settings->google_analytics,
 				'twitter_hashtags' => $settings->twitter_hashtags,
 				'api_akismet' => $settings->api_akismet
@@ -370,7 +362,7 @@ class Settings_Controller extends Admin_Controller
 
 
 		// Generate Available Locales
-		$locales = locale::get_i18n();
+		$locales = ush_locale::get_i18n();
 		$this->template->content->locales_array = $locales;
 		$this->cache->set('locales', $locales, array('locales'), 604800);
 	}
@@ -393,11 +385,16 @@ class Settings_Controller extends Admin_Controller
 		$form = array(
 			'default_map' => '',
 			'api_google' => '',
+			'api_live' => '',
 			'default_country' => '',
 			'multi_country' => '',
 			'default_lat' => '',
 			'default_lon' => '',
-			'default_zoom' => ''
+			'default_zoom' => '',
+			'default_map_all' => '',
+			'allow_clustering' => '',
+			'default_map_all_icon' => '',
+			'delete_default_map_all_icon' => ''
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
 		//	corresponding to the form field names
@@ -410,23 +407,26 @@ class Settings_Controller extends Admin_Controller
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST
 			// fields with our own things
-			$post = new Validation($_POST);
+			$post = Validation::factory($_POST)
+			    ->pre_filter('trim', TRUE)
+			    ->add_rules('default_country', 'required', 'numeric', 'length[1,4]')
+			    ->add_rules('multi_country', 'numeric', 'length[1,1]')
+			    ->add_rules('default_map', 'required', 'length[0,100]')
+			    ->add_rules('default_zoom','required','between[0,21]')		// Validate for maximum and minimum zoom values
+			    ->add_rules('default_lat','required','between[-85,85]')		// Validate for maximum and minimum latitude values
+			    ->add_rules('default_lon','required','between[-180,180]')		// Validate for maximum and minimum longitude values
+			    ->add_rules('allow_clustering','required','between[0,1]')
+			    ->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]')
+			    ->add_rules('api_google', 'length[0,200]')
+			    ->add_rules('api_live', 'length[0,200]');
+			
 
-			// Add some filters
-			$post->pre_filter('trim', TRUE);
-
-			// Add some rules, the input field, followed by a list of checks, carried out in order
-
-			$post->add_rules('default_country', 'required', 'numeric', 'length[1,4]');
-			$post->add_rules('multi_country', 'numeric', 'length[1,1]');
-			$post->add_rules('default_map', 'required', 'length[0,100]');
-			$post->add_rules('api_google','required', 'length[0,200]');
-			$post->add_rules('default_zoom','required','between[0,21]');		// Validate for maximum and minimum zoom values
-			$post->add_rules('default_lat','required','between[-85,85]');		// Validate for maximum and minimum latitude values
-			$post->add_rules('default_lon','required','between[-180,180]');		// Validate for maximum and minimum longitude values
+			// Add rules for file upload
+			$files = Validation::factory($_FILES);
+			$files->add_rules('default_map_all_icon', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[250K]');
 
 			// Test to see if things passed the rule checks
-			if ($post->validate())
+			if ($post->validate() AND $files->validate(FALSE))
 			{
 				// Yes! everything is valid
 				$settings = new Settings_Model(1);
@@ -434,11 +434,98 @@ class Settings_Controller extends Admin_Controller
 				$settings->multi_country = $post->multi_country;
 				$settings->default_map = $post->default_map;
 				$settings->api_google = $post->api_google;
+				
+				// E.Kala 20th April 2012
+				// Gangsta workaround prevent resetting og Bing Maps API Key
+				// Soon to be addressed conclusively
+				if (isset($post['api_live']) AND ! empty($post['api_live']))
+				{
+					$settings->api_live = $post->api_live;
+				}
+
 				$settings->default_zoom = $post->default_zoom;
 				$settings->default_lat = $post->default_lat;
 				$settings->default_lon = $post->default_lon;
+				$settings->allow_clustering = $post->allow_clustering;
+				$settings->default_map_all = $post->default_map_all;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
+				
+				// Deal with default category icon now
+
+				// Check if deleting or updating a new image (or doing nothing)
+				if( isset($post->delete_default_map_all_icon) AND $post->delete_default_map_all_icon == 1)
+				{
+					// Delete old badge image
+					ORM::factory('media')->delete($settings->default_map_all_icon_id);
+
+					// Remove from DB table
+					$settings = new Settings_Model(1);
+					$settings->default_map_all_icon_id = NULL;
+					$settings->save();
+
+				}else{
+					// We aren't deleting, so try to upload if we are uploading an image
+					$filename = upload::save('default_map_all_icon');
+					if ($filename)
+					{
+						$new_filename = "default_map_all_".time();
+						$file_type = strrev(substr(strrev($filename),0,4));
+
+						// Large size
+						$l_name = $new_filename.$file_type;
+						Image::factory($filename)->save(Kohana::config('upload.directory', TRUE).$l_name);
+
+						// Medium size
+						$m_name = $new_filename."_m".$file_type;
+						Image::factory($filename)->resize(32,32,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE).$m_name);
+
+						// Thumbnail
+						$t_name = $new_filename."_t".$file_type;
+						Image::factory($filename)->resize(16,16,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE).$t_name);
+
+						// Name the files for the DB
+						$media_link = $l_name;
+						$media_medium = $m_name;
+						$media_thumb = $t_name;
+
+						// Okay, now we have these three different files on the server, now check to see
+						//   if we should be dropping them on the CDN
+
+						if (Kohana::config("cdn.cdn_store_dynamic_content"))
+						{
+							$media_link = cdn::upload($media_link);
+							$media_medium = cdn::upload($media_medium);
+							$media_thumb = cdn::upload($media_thumb);
+
+							// We no longer need the files we created on the server. Remove them.
+							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+							unlink($local_directory.$l_name);
+							unlink($local_directory.$m_name);
+							unlink($local_directory.$t_name);
+						}
+
+						// Remove the temporary file
+						unlink($filename);
+
+						// Save image in the media table
+						$media = new Media_Model();
+						$media->media_type = 1; // Image
+						$media->media_link = $media_link;
+						$media->media_medium = $media_medium;
+						$media->media_thumb = $media_thumb;
+						$media->media_date = date("Y-m-d H:i:s",time());
+						$media->save();
+
+						// Save new image in settings
+						$settings = new Settings_Model(1);
+						$settings->default_map_all_icon_id = $media->id;
+						$settings->save();
+					}
+				}
+				
 
 				// Delete Settings Cache
 				$this->cache->delete('settings');
@@ -475,14 +562,32 @@ class Settings_Controller extends Admin_Controller
 			$form = array(
 				'default_map' => $settings->default_map,
 				'api_google' => $settings->api_google,
+				'api_live' => $settings->api_live,
 				'default_country' => $settings->default_country,
 				'multi_country' => $settings->multi_country,
 				'default_lat' => $settings->default_lat,
 				'default_lon' => $settings->default_lon,
-				'default_zoom' => $settings->default_zoom
+				'default_zoom' => $settings->default_zoom,
+				'allow_clustering' => $settings->allow_clustering,
+				'default_map_all' => $settings->default_map_all,
+				'default_map_all_icon_id' => $settings->default_map_all_icon_id,
 			);
 		}
 
+		// Get default category image
+		if ($settings->default_map_all_icon_id != NULL)
+		{
+			$icon = ORM::factory('media')->find($settings->default_map_all_icon_id);
+			$this->template->content->default_map_all_icon = url::convert_uploaded_to_abs($icon->media_link);
+			$this->template->content->default_map_all_icon_m = url::convert_uploaded_to_abs($icon->media_medium);
+			$this->template->content->default_map_all_icon_t = url::convert_uploaded_to_abs($icon->media_thumb);
+		}
+		else
+		{
+			$this->template->content->default_map_all_icon = NULL;
+			$this->template->content->default_map_all_icon_m = NULL;
+			$this->template->content->default_map_all_icon_t = NULL;
+		}
 
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
@@ -520,9 +625,14 @@ class Settings_Controller extends Admin_Controller
 			$map_array[$layer->name] = $layer->title;
 		}
 		$this->template->content->map_array = $map_array;
+		
+		$this->template->content->yesno_array = array(
+			'1'=>strtoupper(Kohana::lang('ui_main.yes')),
+			'0'=>strtoupper(Kohana::lang('ui_main.no')));
 
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
+		$this->template->colorpicker_enabled = TRUE;
 		$this->template->js = new View('admin/settings_js');
 		$this->template->js->default_map = $form['default_map'];
 		$this->template->js->default_zoom = $form['default_zoom'];
@@ -732,7 +842,6 @@ class Settings_Controller extends Admin_Controller
 			);
 		}
 
-		$this->template->colorpicker_enabled = TRUE;
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;

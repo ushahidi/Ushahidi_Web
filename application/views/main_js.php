@@ -558,7 +558,7 @@
 			- Units in Metres instead of Degrees					
 			*/
 			var options = {
-				units: "mi",
+				units: "dd",
 				numZoomLevels: 18,
 				controls:[],
 				projection: proj_900913,
@@ -566,7 +566,9 @@
 				eventListeners: {
 					"zoomend": mapMove
 				},
-				'theme': null
+				'theme': null,
+				maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
+				maxResolution: 156543.0339
 			};
 			
 			map = new OpenLayers.Map('map', options);

@@ -128,13 +128,14 @@ class User_Model extends Auth_User_Model {
 	 * @param   Auth   instance of Auth class; used for testing purposes
 	 * @return bool TRUE if validation succeeds, FALSE otherwise
 	 */
-	public static function custom_validate(array & $post, Auth $auth = null)
+	public static function custom_validate(array & $post, Auth $auth = NULL)
 	{
 		// Initalize validation
 		$post = Validation::factory($post)
 				->pre_filter('trim', TRUE);
-
-		if ($auth === null) {
+		
+		if ($auth === NULL)
+		{
 			$auth = new Auth;
 		}
 

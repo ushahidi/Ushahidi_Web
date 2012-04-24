@@ -106,7 +106,6 @@ class Scheduler_Controller extends Controller
                     // Record Action to Log             
                     $scheduler_log = new Scheduler_Log_Model();
                     $scheduler_log->scheduler_id = $scheduler_id;
-                    $scheduler_log->scheduler_name = $scheduler->scheduler_name;
                     $scheduler_log->scheduler_status = "200";
                     $scheduler_log->scheduler_date = $schedule_time;
                     $scheduler_log->save();

@@ -121,20 +121,20 @@ class CF_Authentication
      */
     function authenticate($version=DEFAULT_CF_API_VERSION)
     {
-        list($status,$reason,$surl,$curl,$atoken) = 
+        list($status,$reason,$surl,$curl,$atoken) =
                 $this->cfs_http->authenticate($this->username, $this->api_key,
                 $this->account_name, $this->auth_host);
 
         if ($status == 401) {
-            throw new AuthenticationException("Invalid username or access key.");
+            throw new Kohana_Exception("Invalid username or access key.");
         }
         if ($status < 200 || $status > 299) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Unexpected response (".$status."): ".$reason);
         }
 
         if (!($surl || $curl) || !$atoken) {
-            throw new InvalidResponseException(
+            throw new Kohana_Exception(
                 "Expected headers missing from auth service.");
         }
         $this->storage_url = $surl;
@@ -152,23 +152,23 @@ class CF_Authentication
          * #Pass Cached URL's and Token as Args
 	 * $auth->load_cached_credentials("auth_token", "storage_url", "cdn_management_url");
          * </code>
-	 * 
+	 *
 	 * @param string $auth_token A Cloud Files Auth Token (Required)
          * @param string $storage_url The Cloud Files Storage URL (Required)
          * @param string $cdnm_url CDN Management URL (Required)
-         * @return boolean <kbd>True</kbd> if successful 
+         * @return boolean <kbd>True</kbd> if successful
 	 * @throws SyntaxException If any of the Required Arguments are missing
          */
 	function load_cached_credentials($auth_token, $storage_url, $cdnm_url)
     {
         if(!$storage_url || !$cdnm_url)
         {
-                throw new SyntaxException("Missing Required Interface URL's!");
+                throw new Kohana_Exception("Missing Required Interface URL's!");
                 return False;
         }
         if(!$auth_token)
         {
-                throw new SyntaxException("Missing Auth Token!");
+                throw new Kohana_Exception("Missing Auth Token!");
                 return False;
         }
 
@@ -187,7 +187,7 @@ class CF_Authentication
          * $auth->authenticate();
          * $array = $auth->export_credentials();
          * </code>
-         * 
+         *
 	 * @return array of url's and an auth token.
          */
     function export_credentials()

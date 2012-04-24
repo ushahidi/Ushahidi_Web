@@ -1,1 +1,1 @@
-{"type": "FeatureCollection","features": [<?php echo $json; ?>]}
+<?php echo $json; ?>

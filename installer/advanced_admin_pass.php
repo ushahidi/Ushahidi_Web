@@ -50,6 +50,12 @@
 				<tbody>
 					<!-- The design of the password form -->
 					<tr>
+						<th scope="row"><label for="email">Admin Email</label></th>
+						<td><input value="<?php print $form->value('admin_email') == ""?
+						(empty($_SESSION['admin_email']) ?null: $_SESSION['admin_email']) : $form->value('admin_email')?>" size="25" id="admin_email" name="admin_email" /></td>
+						<td>The administrative user will log in with this email address.</td>
+					</tr>
+					<tr>
 						<th scope="row"><label for="password">Password</label></th>
 						<td><input type="password" value="<?php print $form->value('admin_password') == ""?
 						(empty($_SESSION['admin_password']) ?null: $_SESSION['admin_password']) : $form->value('admin_password')?>" size="25" id="admin_password" name="admin_password" /></td>

@@ -40,26 +40,23 @@
 	 * 
 	 * @param String url-- download URL
 	 */
-	public function download_ushahidi($url) {
-		$snoopy = new Snoopy();
-		$snoopy->agent = Kohana::lang('libraries.upgrade_title');
-		$snoopy->read_timeout = 30;
-		$snoopy->gzip = false;
-		$snoopy->fetch($url);
+    public function download_ushahidi($url) {
+        $http_client = new HttpClient($url,30);
+        $results = $http_client->fetch_url();
 		$this->log[] = "Starting to download the latest ushahidi build...";
 		
-		if ( $snoopy->status == '200' ) 
+		if ( $results) 
 		{
 			$this->log[] = "Download of latest ushahidi went successful.";
 			$this->success = true;		  
-			return $snoopy->results;
+			return $results;
 		} 
 		
 		else 
 		{			
-			$this->errors[] = sprintf(Kohana::lang('libraries.upgrade_failed').": %d", $snoopy->status);	
+			$this->errors[] = sprintf(Kohana::lang('libraries.upgrade_failed').": %d", $http_client->get_error_msg());	
 			$this->success = false;
-			return $snoopy;
+			return $results;
 		}
 			
 	}
@@ -524,7 +521,8 @@
 		$version_url = "http://version.ushahidi.com/2/?v=".$current.
 			"&u=".$url."&ip=".$ip_address;		
 		
-		preg_match('/({.*})/', file_get_contents($version_url), $matches);
+        preg_match('/({.*})/', file_get_contents($version_url), $matches);
+        
 		$version_json_string = $matches[0];
 		
 		// If we didn't get anything back...
@@ -533,8 +531,7 @@
 			 return "";
 		}
 
-		$version_details = json_decode($version_json_string);
-		
+		$version_details = json_decode($version_json_string);	
 		return $version_details;
 	}
 	

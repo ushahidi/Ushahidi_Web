@@ -32,19 +32,19 @@ class reports_Core {
 	 */
 	public static function validate(array & $post, $admin_section = FALSE)
 	{
+
 		// Exception handling
 		if ( ! isset($post) OR ! is_array($post))
 			return FALSE;
 		
 		// Create validation object
 		$post = Validation::factory($post)
-				->pre_filter('trim', TRUE);
-		
-		$post->add_rules('incident_title','required', 'length[3,200]');
-		$post->add_rules('incident_description','required');
-		$post->add_rules('incident_date','required','date_mmddyyyy');
-		$post->add_rules('incident_hour','required','between[1,12]');
-		$post->add_rules('incident_minute','required','between[0,59]');
+				->pre_filter('trim', TRUE)
+				->add_rules('incident_title','required', 'length[3,200]')
+				->add_rules('incident_description','required')
+				->add_rules('incident_date','required','date_mmddyyyy')
+				->add_rules('incident_hour','required','between[1,12]')
+				->add_rules('incident_minute','required','between[0,59]');
 			
 		if ($post->incident_ampm != "am" AND $post->incident_ampm != "pm")
 		{
@@ -110,7 +110,7 @@ class reports_Core {
 		// Validate Personal Information
 		if ( ! empty($post->person_first))
 		{
-			$post->add_rules('person_first', 'length[3,100]');
+			$post->add_rules('person_first', 'length[2,100]');
 		}
 
 		if ( ! empty($post->person_last))
@@ -373,7 +373,9 @@ class reports_Core {
 					if ($geometry)
 					{
 						// 	Format the SQL string
-						$sql = sprintf($sql, $incident->id, $geometry, $label, $comment, $color, $strokewidth);
+						$sql = "INSERT INTO ".Kohana::config('database.default.table_prefix')."geometry "
+							. "(incident_id, geometry, geometry_label, geometry_comment, geometry_color, geometry_strokewidth)"
+							. "VALUES(".$incident->id.", GeomFromText('".$geometry."'), '".$label."', '".$comment."', '".$color."', ".$strokewidth.")";
 						Kohana::log('debug', $sql);
 						// Execute the query
 						$db->query($sql);
@@ -555,7 +557,6 @@ class reports_Core {
 		ORM::factory('incident_person')->where('incident_id',$incident->id)->delete_all();
 		
 		$person = new Incident_Person_Model();
-		$person->location_id = $incident->location_id;
 		$person->incident_id = $incident->id;
 		$person->person_first = $post->person_first;
 		$person->person_last = $post->person_last;

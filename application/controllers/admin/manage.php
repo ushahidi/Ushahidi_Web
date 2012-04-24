@@ -53,7 +53,7 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->title = Kohana::lang('ui_admin.categories');
 
 		// Locale (Language) Array
-		$locales = locale::get_i18n();
+		$locales = ush_locale::get_i18n();
 
 		// Setup and initialize form field names
 		$form = array
@@ -96,7 +96,7 @@ class Manage_Controller extends Admin_Controller
 			// Setup validation for the secondary data
 			$post = Validation::factory($secondary_data)
 						->pre_filter('trim', TRUE);
-						
+
 			// Add validation for the add/edit action
 			if ($post->action == 'a')
 			{
@@ -119,7 +119,7 @@ class Manage_Controller extends Admin_Controller
 			if ($post->action == 'a')
 			{
 				// Test to see if things passed the rule checks
-				if ($category->validate($category_data) AND $post->validate())
+				if ($category->validate($category_data) AND $post->validate(FALSE))
 				{
 					// Save the category
 					$category->save();
@@ -162,7 +162,7 @@ class Manage_Controller extends Admin_Controller
 						// Okay, now we have these three different files on the server, now check to see
 						//   if we should be dropping them on the CDN
 						
-						if(Kohana::config("cdn.cdn_store_dynamic_content"))
+						if (Kohana::config("cdn.cdn_store_dynamic_content"))
 						{
 							$cat_img_file = cdn::upload($cat_img_file);
 							$cat_img_thumb_file = cdn::upload($cat_img_thumb_file);
@@ -192,6 +192,7 @@ class Manage_Controller extends Admin_Controller
 						$category->category_image = $cat_img_file;
 						$category->category_image_thumb = $cat_img_thumb_file;
 						$category->save();
+						Event::run('ushahidi_action.category_save', $post);
 					}
 
 					$form_saved = TRUE;
@@ -215,7 +216,7 @@ class Manage_Controller extends Admin_Controller
 				}
 				
 			}
-			elseif ($post->action == 'd')
+			elseif ($post->validate() AND $post->action == 'd')
 			{
 				// Delete action
 				if ($category->loaded)
@@ -223,6 +224,20 @@ class Manage_Controller extends Admin_Controller
 					ORM::factory('category_lang')
 						->where(array('category_id' => $category->id))
 						->delete_all();
+					
+					// Check for all subcategories tied to this category and make them top level
+					$children = ORM::factory('category')
+								->where('parent_id', $category->id)
+								->find_all();
+					if($children)
+					{
+						foreach($children as $child)
+						{
+							$sub_cat = new Category_Model($child->id);
+							$sub_cat->parent_id = 0;
+							$sub_cat->save();
+						}
+					}
 						
 					// Check for all reports tied to this category to be deleted
 					$result = ORM::factory('incident_category')
@@ -241,10 +256,10 @@ class Manage_Controller extends Admin_Controller
 										->where('incident_id',$orphan_incident_id)
 										->count_all();
 					
-							// If this report is tied to only one category(is an orphan)
+							// If this report is tied to only one category(is uncategorized)
 							if($count == 1)
 							{
-								// Assign it to the special category for orphans
+								// Assign it to the special category for uncategorized reports
 								$orphaned = ORM::factory('incident_category',$orphan->id);
 								$orphaned->category_id = 5;
 								$orphaned->save();
@@ -256,7 +271,7 @@ class Manage_Controller extends Admin_Controller
 							
 							}
 						
-							// If this report is tied to more than one category(not orphaned), remove relation to category being deleted						
+							// If this report is tied to more than one category(not uncategorized), remove relation to category being deleted						
 							else
 							{
 								ORM::factory('incident_category')
@@ -276,18 +291,32 @@ class Manage_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 			}
-			elseif( $post->action == 'v')
+			elseif ($post->validate() AND $post->action == 'v')
 			{ 
 				// Show/Hide Action
 				if ($category->loaded)
 				{
+					// Check for all subcategories tied to this category 
+					$children = ORM::factory('category')
+								->where('parent_id', $category->id)
+								->find_all();
+					
+					// Then show/hide subcategories based on status of parent category
+					foreach($children as $child)
+					{
+						$sub_cat = new Category_Model($child->id);
+						$sub_cat->category_visible = ($category->category_visible == 1)? 0: 1;
+						$sub_cat->save();
+					}
+					
+					// Change status of the Parent Category
 					$category->category_visible = ($category->category_visible == 1)? 0 : 1;
 					$category->save();
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
-			elseif( $post->action == 'i')
+			elseif ($post->validate() AND $post->action == 'i')
 			{ 
 				// Delete Image/Icon Action
 				if ($category->loaded)
@@ -335,6 +364,7 @@ class Manage_Controller extends Admin_Controller
 
 		$parents_array = ORM::factory('category')
 							->where('parent_id','0')
+							->where('category_trusted != 1')
 							->select_list('id', 'category_title');
 
 		// add none to the list

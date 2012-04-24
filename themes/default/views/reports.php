@@ -35,7 +35,7 @@
 				</ul>
 				
 				<p class="labeled-divider"><span><?php echo Kohana::lang('ui_main.choose_date_range'); ?>:</span></p>
-				<form>
+				<?php echo form::open(NULL, array('method' => 'get')); ?>
 					<table>
 						<tr>
 							<td><strong>
@@ -50,7 +50,7 @@
 							</td>
 						</tr>
 					</table>              
-				</form>
+				<?php form::close(); ?>
 			</div>
 
 			<div style="overflow:auto;">
@@ -71,8 +71,14 @@
 						<div class="f-category-box">
 							<ul class="filter-list fl-categories" id="category-filter-list">
 								<li>
-									<a href="#">
-									<span class="item-swatch" style="background-color: #<?php echo Kohana::config('settings.default_map_all'); ?>">&nbsp;</span>
+									<a href="#"><?php
+									$all_cat_image = '&nbsp';
+									$all_cat_image = '';
+									if($default_map_all_icon != NULL) {
+										$all_cat_image = html::image(array('src'=>$default_map_all_icon));
+									}
+									?>
+									<span class="item-swatch" style="background-color: #<?php echo Kohana::config('settings.default_map_all'); ?>"><?php echo $all_cat_image ?></span>
 									<span class="item-title"><?php echo Kohana::lang('ui_main.all_categories'); ?></span>
 									<span class="item-count" id="all_report_count"><?php echo $report_stats->total_reports; ?></span>
 									</a>

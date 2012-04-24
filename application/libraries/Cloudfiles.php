@@ -3,7 +3,7 @@
  * Cloudfiles
  *
  * Base class for all Cloud Files API Bindings
- * 
+ *
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
@@ -13,7 +13,7 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
- 
+
 define("PHP_CF_VERSION", "1.7.10");
 define("USER_AGENT", sprintf("PHP-CloudFiles/%s", PHP_CF_VERSION));
 define("MAX_HEADER_NAME_LEN", 128);
@@ -62,85 +62,85 @@ class Cloudfiles {
 
 	// Cloud Files Username, defined in cdn config file
 	protected $username;
-	
+
 	// Rackspace API Key, defined in cdn config file
 	protected $api_key;
-	
+
 	// Name of containter you want to store your files in, defined in cdn config file
 	protected $container;
-	
+
 	// Connection used throughout the class
 	protected $conn;
-	
+
 	public function __construct()
 	{
 		$this->username = Kohana::config("cdn.cdn_username");
 		$this->api_key = Kohana::config("cdn.cdn_api_key");
 		$this->container = Kohana::config("cdn.cdn_container");
-		
+
 		// Include CF libraries
 		require_once Kohana::find_file('libraries/cloudfiles', 'CF_Authentication');
 		require_once Kohana::find_file('libraries/cloudfiles', 'CF_Connection');
 		require_once Kohana::find_file('libraries/cloudfiles', 'CF_Container');
 		require_once Kohana::find_file('libraries/cloudfiles', 'CF_Http');
 		require_once Kohana::find_file('libraries/cloudfiles', 'CF_Object');
-		
+
 		// Authenticate with Rackspace
 		$this->authenticate();
 	}
-	
+
 	public function authenticate()
 	{
 		$auth = new CF_Authentication($this->username, $this->api_key);
 		$auth->authenticate();
 		$this->conn = new CF_Connection($auth);
 	}
-	
+
 	// $file must be the absolute path to the file
 	public function upload($filename)
 	{
 		$local_directory = Kohana::config('upload.directory', TRUE);
 		$local_directory = rtrim($local_directory, '/').'/';
-		
+
 		$fullpath = $local_directory.$filename;
-		
+
 		// Put this in a special directory based on subdomain if subdomain is set
 		$dir = $this->_special_dir();
-		
+
 		// Set container
 		$container = $this->conn->create_container($this->container);
-		
+
 		// This creates a "fake" directory structure on the Cloud Files system
 		$container->create_paths($dir.$filename);
-		
+
 		// Get the object ready for loading
 		$file = $container->create_object($dir.$filename);
-		
+
 		// Finally, upload the file
 		$file->load_from_filename($fullpath);
-		
+
 		$uri = $container->make_public();
-		
+
 		// Return the file path URL
 		return $file->public_ssl_uri();
 	}
-	
+
 	public function delete($url)
 	{
 		// Get the container that has the object
 		$container = $this->conn->get_container($this->container);
-		
+
 		// Figure out object name based on the URL
 		$url = str_ireplace('http://','',$url);
 		$url = str_ireplace('https://','',$url);
 		$url = explode('/',$url);
 		unset($url[0]);
 		$object = implode('/',$url);
-		
+
 		// Do the deed
 		$container->delete_object($object);
 	}
-	
+
 	public function _special_dir()
 	{
 		$dir = '';
