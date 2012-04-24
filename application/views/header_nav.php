@@ -6,6 +6,9 @@
 
 		</ul>
 	</hgroup>
+
+	<?php Event::run('ushahidi_action.header_nav_bar'); ?>
+
 	<nav>
 		<ul id="header_nav_right">
 			<li class="header_nav_user header_nav_has_dropdown">
@@ -58,8 +61,6 @@
 						<br/>
 
 						<?php echo form::close(); ?>
-
-
 
 					</li>
 
