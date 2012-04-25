@@ -1,5 +1,8 @@
-function fillFields(id, name, description, access_level, reports_view, reports_edit, reports_evaluation, reports_comments, reports_download, reports_upload, messages, messages_reporters, stats, settings, manage, users)
-{
+// Populates the fields in the add/edit form
+function fillFields(id, name, description, access_level, reports_view, reports_edit, 
+	reports_evaluation, reports_comments, reports_download, reports_upload, messages, 
+	messages_reporters, stats, settings, manage, users) {
+
 	show_addedit();
 	$("#role_id").attr("value", decodeURIComponent(id));
 	$("#name").attr("value", decodeURIComponent(name));
