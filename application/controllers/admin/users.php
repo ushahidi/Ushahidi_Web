@@ -279,9 +279,9 @@ class Users_Controller extends Admin_Controller
 
         $form = array
         (
-            'role_id'   => '',
-            'action'    => '',
-            'name'  => '',
+            'role_id' => '',
+            'action' => '',
+            'name' => '',
             'description'  => '',
             'reports_view' => '',
             'reports_edit' => '',

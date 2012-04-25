@@ -162,21 +162,29 @@
 			$("#info-search").submit();
 		}
 		function show_addedit(toggle){
+			var csrfToken = $('[name="form_auth_token"]').val();
+			var addEditForm = $("#addedit");
 			if (toggle) {
-				$("#addedit").toggle(400);
+				addEditForm.toggle(400);
 				$(':input','#addedit')
 				 .not(':button, :submit, :reset, #action')
 				 .val('')
 				 .removeAttr('checked')
 				 .removeAttr('selected');
 
-			}else{
-				$("#addedit").show(400);
+			} else {
+				addEditForm.show(400);
 			}
 			$("a.add").focus();
+
+			// Add the CSRF token
+			if (addEditForm != undefined && csrfToken != undefined) {
+				$('[name="form_auth_token"]', addEditForm).val(csrfToken);
+			}
 		}
 		<?php
-		if ($form_error) {
+		if ($form_error)
+		{
 			echo '$(document).ready(function() { $("#addedit").show(); });';
 		}
 		?>
