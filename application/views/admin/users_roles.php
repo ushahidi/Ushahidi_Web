@@ -18,36 +18,27 @@
 				<?php admin::user_subtabs("roles", $display_roles); ?>
 			</h2>
 
-			<?php
-			if ($form_error) {
-				
-			?>
+			<?php if ($form_error): ?>
 				<!-- red-box -->
 				<div class="red-box">
 					<h3><?php echo Kohana::lang('ui_admin.error_msg');?></h3>
 					<ul>
-					<?php
-					foreach ($errors as $error_item => $error_description)
-					{
-						print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
-					}
-					?>
+					<?php foreach ($errors as $error_item => $error_description): ?>
+						<?php if ($error_description): ?>
+						<li><?php echo $error_description; ?></li>
+						<?php endif; ?>
+					<?php endif; ?>
 					</ul>
 				</div>
-			<?php
-			}
-
-			if ($form_saved) {
-			?>
+			<?php endif; ?>
+			<?php if ($form_saved): ?>
 				<!-- green-box -->
 				<div class="green-box">
 					<h3>
 						<?php echo $form_action; ?>!
 					</h3>
 				</div>
-			<?php
-			}
-			?>
+			<?php endif; ?>
 				
 			<!-- tabs -->
 			<div class="tabs">
@@ -61,11 +52,10 @@
 					</li>
 				</ul>
 				<!-- tab -->
-				<div class="tab" id="addedit" style="display:none">
-					<?php print form::open(NULL,array('id' => 'rolesMain',
-					 	'name' => 'rolesMain')); ?>
+				<div class="tab" id="addedit" style="display: none">
+					<?php print form::open(NULL, array('id' => 'rolesMain','name' => 'rolesMain')); ?>
 					<input type="hidden" name="action" id="action" value="a"/>
-					<input type="hidden" id="role_id" name="role_id" value="">
+					<input type="hidden" id="role_id" name="role_id" value=""/>
 					<div class="tab_form_item">
 						<strong><?php echo Kohana::lang('ui_main.name');?>:</strong><br />
 						<?php print form::input('name', '', ' class="text"'); ?>
@@ -107,8 +97,7 @@
 			
 			<!-- report-table -->
 			<div class="report-form">
-				<?php print form::open(NULL,array('id' => 'roleListing',
-				 	'name' => 'roleListing')); ?>
+				<?php print form::open(NULL,array('id' => 'roleListing', 'name' => 'roleListing')); ?>
 					<input type="hidden" name="action" id="role_action_main" value="">
 					<input type="hidden" name="role_id" id="role_id_main" value="">
 					<div class="table-holder">
