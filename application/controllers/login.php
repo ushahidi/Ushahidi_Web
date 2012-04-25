@@ -60,7 +60,7 @@ class Login_Controller extends Template_Controller {
 
 				// Admins go to the admin panel
 				// Temporary fix - any non member role gets admin access
-				if($this->auth->logged_in('login') AND ! $this->auth->logged_in('member'))
+				if($auth->logged_in('login') AND ! $auth->logged_in('member'))
 				{
 					url::redirect('admin');
 				}
