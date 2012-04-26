@@ -988,7 +988,7 @@ a.new-cat, a.show-messages {
 	background:url(../../img/icon-plus.gif) no-repeat 0 4px;
 	float:right;
 }
-a.new-cat:hover, a.show-messages:hover;{ text-decoration:none;}
+a.new-cat:hover, a.show-messages:hover{ text-decoration:none;}
 .category {
 	background:#f5f5f5;
 	width:377px;

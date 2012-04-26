@@ -3,6 +3,10 @@
 		<ul id="header_nav_left">
 
 			<li><span class="bignext">&raquo;</span><a href="<?php echo url::site();?>"><?php echo $site_name; ?></a></li>
+			<?php
+			// Action::header_nav - Add items to header nav area
+			Event::run('ushahidi_action.header_nav');
+			?>
 
 		</ul>
 	</hgroup>

@@ -141,7 +141,7 @@ class Users_Controller extends Admin_Controller
 		{
 			// Get the submitted data
 			$post = $_POST;
-
+            
 			// Add the user_id to the $_POST data
 			$user_id = ($user_id) ? $user_id : NULL;
 			$post =  array_merge($post, array('user_id' => $user_id));
@@ -152,7 +152,6 @@ class Users_Controller extends Admin_Controller
 				$user->name = html::specialchars($post->name);
 				$user->email = $post->email;
 				$user->notify = $post->notify;
-
 				if ($user_id == NULL)
 				{
 					$user->password = $post->password;
@@ -160,7 +159,7 @@ class Users_Controller extends Admin_Controller
 
 				// We can only set a new password if we are using the standard ORM method,
 				//    otherwise it won't actually change the password used for authentication
-				if (isset($post->new_password) AND kohana::config('riverid.enable') == FALSE)
+				if (isset($post->new_password) AND kohana::config('riverid.enable') == FALSE AND AND strlen($post->new_password ) > 0)
 				{
 					$user->password = $post->new_password;
 				}

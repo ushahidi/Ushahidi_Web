@@ -23,11 +23,11 @@
 				<div class="red-box">
 					<h3><?php echo Kohana::lang('ui_admin.error_msg');?></h3>
 					<ul>
-					<?php foreach ($errors as $error_item => $error_description): ?>
+					<?php foreach ($errors as $error_item => $error_description) { ?>
 						<?php if ($error_description): ?>
 						<li><?php echo $error_description; ?></li>
 						<?php endif; ?>
-					<?php endif; ?>
+					<?php } ?>
 					</ul>
 				</div>
 			<?php endif; ?>
