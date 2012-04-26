@@ -159,7 +159,7 @@ class Users_Controller extends Admin_Controller
 
 				// We can only set a new password if we are using the standard ORM method,
 				//    otherwise it won't actually change the password used for authentication
-				if (isset($post->new_password) AND kohana::config('riverid.enable') == FALSE AND AND strlen($post->new_password ) > 0)
+				if (isset($post->new_password) AND kohana::config('riverid.enable') == FALSE AND strlen($post->new_password ) > 0)
 				{
 					$user->password = $post->new_password;
 				}
