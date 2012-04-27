@@ -644,7 +644,7 @@ final class Kohana {
 		self::$output = $output;
 
 		// Set and return the final output
-		return $output;
+		return "";
 	}
 
 	/**
@@ -668,7 +668,7 @@ final class Kohana {
 			}
 
 			// This will flush the Kohana buffer, which sets self::$output
-			ob_end_clean();
+			ob_end_flush();
 
 			// Reset the buffer level
 			self::$buffer_level = ob_get_level();
