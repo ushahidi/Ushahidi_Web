@@ -26,7 +26,7 @@ $config['expire'] = 0;
 $config['secure'] = FALSE;
 
 /**
- * Enable this option to disable the cookie from being accessed when using a
- * secure protocol. This option is only available in PHP 5.2 and above.
+ * Enable this option to disable the cookie cannot be accessed through client side scripts (ie. JS). This option is only available in PHP 5.2 and above.
+ * Prevent potentially XSS attacks in supported browsers - https://www.owasp.org/index.php/HttpOnly
  */
-$config['httponly'] = FALSE;
+$config['httponly'] = TRUE;
