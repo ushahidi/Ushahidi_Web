@@ -1272,7 +1272,7 @@ INSERT INTO `service` (`id`, `service_name`, `service_description`, `service_url
  */
 
 CREATE TABLE IF NOT EXISTS `sessions` (
-  `session_id` varchar(40) NOT NULL,
+  `session_id` varchar(127) NOT NULL,
   `last_activity` int(10) unsigned NOT NULL,
   `data` text NOT NULL,
   PRIMARY KEY (`session_id`)
