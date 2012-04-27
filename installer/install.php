@@ -108,11 +108,34 @@ class Install
 			"	<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\">Unix/Linux</a></li>" .
 			"	<li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li>" .
 			"</ul>"
-			/* CB: Commenting this out... I think it's better if we just have them change the permissions of the specific
-				files and folders rather than all the files
-			"Alternatively, you could make the webserver own all the ushahidi files. On unix usually, you" .
-			"issue this command <code>chown -R www-data:ww-data</code>");
-			*/
+			);
+		}
+
+		if( !is_writable('../application/config/auth.php')) {
+			$form->set_error('auth_file_perm',
+			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
+			"auth.php\" and is unable to do so at the moment. This is probably due to the fact " .
+			"that your permissions aren't set up properly for the <code>auth.php</code> file. " .
+			"Please change the permissions of that folder to allow write access (777).	" .
+			"<p>Here are instructions for changing file permissions:</p>" .
+			"<ul>" .
+			"	<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\">Unix/Linux</a></li>" .
+			"	<li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li>" .
+			"</ul>"
+			);
+		}
+
+		if( !is_writable('../application/config/encryption.php')) {
+			$form->set_error('encryption_file_perm',
+			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
+			"encryption.php\" and is unable to do so at the moment. This is probably due to the fact " .
+			"that your permissions aren't set up properly for the <code>encryption.php</code> file. " .
+			"Please change the permissions of that folder to allow write access (777).	" .
+			"<p>Here are instructions for changing file permissions:</p>" .
+			"<ul>" .
+			"	<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\">Unix/Linux</a></li>" .
+			"	<li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li>" .
+			"</ul>"
 			);
 		}
 
@@ -394,6 +417,62 @@ class Install
 	}
 
 	/**
+	 * Generate random encryption key and insert into application/config/encryption.php 
+	 */
+	private function _add_encryption_key( )
+	{
+		$config_file = @file('../application/config/encryption.php');
+		$handle = @fopen('../application/config/encryption.php', 'w');
+		
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+[]{};:,./?`~';
+		$randomString = '';
+		for ($i = 0; $i < 20; $i++) {
+			$randomString .= $characters[rand(0, strlen($characters) - 1)];
+		}
+		$new_key = $randomString;
+
+		foreach( $config_file as $line_number => $line )
+		{
+			switch( trim($line) ) {
+				case "\$config['default']['key'] = 'USHAHIDI-INSECURE';":
+					fwrite($handle, str_replace("USHAHIDI-INSECURE", $new_key, $line));
+				break;
+
+				default:
+					fwrite($handle, $line);
+			}
+		}
+	}
+
+	/**
+	 * Generate random salt pattern and insert into application/config/auth.php
+	 */
+	private function _add_salt_pattern( )
+	{
+		$config_file = @file('../application/config/auth.php');
+		$handle = @fopen('../application/config/auth.php', 'w');
+		
+		$new_pattern = array();
+		for ($i = 0; $i < 10; $i++) {
+			$new_pattern[] = rand(0,40);
+		}
+		sort($new_pattern);
+		$new_pattern = implode(', ',$new_pattern);
+
+		foreach( $config_file as $line_number => $line )
+		{
+			switch( trim($line) ) {
+				case "\$config['salt_pattern'] = '3, 5, 6, 10, 24, 26, 35, 36, 37, 40';":
+					fwrite($handle, str_replace("3, 5, 6, 10, 24, 26, 35, 36, 37, 40", $new_pattern, $line));
+				break;
+
+				default:
+					fwrite($handle, $line);
+			}
+		}
+	}
+
+	/**
 	 * Adds the right RewriteBase entry to the .htaccess file.
 	 *
 	 * @param base_path - the base path.
@@ -645,6 +724,18 @@ class Install
 		if( !is_writable('../application/config/config.php')) {
 			$form->set_error('config_file_perm',
 			"<strong>Oops!</strong> Ushahidi is unable to write to <code>application/config/config.php</code> file. " .
+			"Please change the permissions of that file to allow write access (777).  ");
+		}
+
+		if( !is_writable('../application/config/auth.php')) {
+			$form->set_error('encryption_file_perm',
+			"<strong>Oops!</strong> Ushahidi is unable to write to <code>application/config/auth.php</code> file. " .
+			"Please change the permissions of that file to allow write access (777).  ");
+		}
+
+		if( !is_writable('../application/config/encryption.php')) {
+			$form->set_error('auth_file_perm',
+			"<strong>Oops!</strong> Ushahidi is unable to write to <code>application/config/encryption.php</code> file. " .
 			"Please change the permissions of that file to allow write access (777).  ");
 		}
 
@@ -988,6 +1079,15 @@ HTML;
 		return ($utf8 === TRUE)
 			? (bool) preg_match('/^[-\pL\pN#@_]++$/uD', (string) $password)
 			: (bool) preg_match('/^[-a-z0-9#@_]++$/iD', (string) $password);
+	}
+	
+	/*
+	 * Add unique encryption key and salt pattern
+	 */
+	public function _add_security_info()
+	{
+		$this->_add_encryption_key();
+		$this->_add_salt_pattern();
 	}
 
 }
