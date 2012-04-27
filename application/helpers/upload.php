@@ -29,7 +29,7 @@ class upload_Core {
 		if ($filename === NULL)
 		{
 			// Use the default filename, with a timestamp pre-pended
-			$filename = time().$file['name'];
+			$filename = time().(is_array($file['name']) ? $file['name'][0] : $file['name']);
 		}
 
 		if (Kohana::config('upload.remove_spaces') === TRUE)
