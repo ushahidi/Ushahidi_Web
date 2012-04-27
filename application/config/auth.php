@@ -26,6 +26,7 @@ $config['hash_method'] = 'sha1';
 /**
  * Defines the hash offsets to insert the salt at. The password hash length
  * will be increased by the total number of offsets.
+ * CHANGE ME: THIS SHOULD BE UNIQUE TO YOUR DEPLOYMENT
  */
 $config['salt_pattern'] = '3, 5, 6, 10, 24, 26, 35, 36, 37, 40';
 
