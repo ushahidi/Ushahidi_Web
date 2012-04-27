@@ -23,7 +23,7 @@
  *           This is also known as 128-bit AES.
  *           @see http://php.net/mcrypt
  */
-// THIS SHOULD BE UNIQUE TO YOUR DEPLOYMENT
+// CHANGE ME: THIS SHOULD BE UNIQUE TO YOUR DEPLOYMENT
 $config['default']['key'] = 'USHAHIDI-INSECURE';
 $config['default']['mode'] = MCRYPT_MODE_NOFB;
 $config['default']['cipher'] = MCRYPT_RIJNDAEL_128;
