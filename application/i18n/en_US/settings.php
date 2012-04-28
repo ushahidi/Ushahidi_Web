@@ -1,33 +1,33 @@
 <?php
 	$lang = array(
 	'allow_comments' => array(
-		'between' => 'The allow comments field does not appear to contain a valid value?',
+		'between' => 'The allow comments field does not appear to contain a valid value.',
 		'required' => 'The allow comments field is required.',
 	),
 	'allow_feed' => array(
-		'between' => 'The include feed field does not appear to contain a valid value?',
+		'between' => 'The include feed field does not appear to contain a valid value.',
 		'required' => 'The include feed field is required.',
 	),
 	'allow_alerts' => array(
-		'between' => 'The allow alerts field does not appear to contain a valid value?',
+		'between' => 'The allow alerts field does not appear to contain a valid value.',
 		'required' => 'The allow alerts field is required.',
 	),
 	'allow_reports' => array(
-		'between' => 'The allow reports field does not appear to contain a valid value?',
+		'between' => 'The allow reports field does not appear to contain a valid value.',
 		'required' => 'The allow reports field is required.',
 	),
 	'allow_stat_sharing' => array(
-		'between' => 'The stat sharing field does not appear to contain a valid value?',
+		'between' => 'The stat sharing field does not appear to contain a valid value.',
 		'required' => 'The stat sharing field is required.',
 	),
 	'api' => array(
-		'default_record_limit' => 'Default no. of records to be fetched per API request',
-		'maximum_record_limit' => 'Maximum no. of records to be fetched per API request',
-		'maximum_requests_per_ip_address' => 'Maximum no. of API requests per IP address',
+		'default_record_limit' => 'Default number of records to be fetched per API request',
+		'maximum_record_limit' => 'Maximum number of records to be fetched per API request',
+		'maximum_requests_per_ip_address' => 'Maximum number of API requests per IP address',
 	),
 	'api_akismet' => array(
-		'alpha_numeric' => 'The Akismet field does not appear to contain a valid value?',
-		'length' => 'The Akismet field does not appear to contain a valid value?',
+		'alpha_numeric' => 'The Akismet field does not appear to contain a valid value.',
+		'length' => 'The Akismet field does not appear to contain a valid value.',
 	),
 	'banner_image' => array(
 		'default' => 'Something went wrong with your banner image upload.',
@@ -35,15 +35,15 @@
 	),
 	'cache_pages' => array(
 		'between' => 'The cache pages field is required.',
-		'required' => 'The cache pages field does not appear to contain a valid value?',
+		'required' => 'The cache pages field does not appear to contain a valid value.',
 	),
 	'cache_pages_lifetime' => array(
-		'in_array' => 'The cache pages lifetime field does not appear to contain a valid value?',
+		'in_array' => 'The cache pages lifetime field does not appear to contain a valid value.',
 		'required' => 'The cache pages lifetime field is required.',
 	),
 	'cleanurl' => array(
-		'clean_url_disabled' => 'It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at this forum <a href="http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite" target="_blank">post</a>',
-		'clean_url_enabled' => 'This option makes Ushahidi to be accessed via "clean" URLs. Without "index.php" in the URL.',
+		'clean_url_disabled' => 'It looks like your server is not configured to handle clean URLs. You will need to change the configuration of your server before you can enable clean URLs. See more info on how to enable clean URLs at <a href="http://forums.ushahidi.com/topic/server-configuration-for-apache-mod-rewrite" target="_blank">this forum post</a>',
+		'clean_url_enabled' => 'This option makes Ushahidi to be accessed via "clean" URLs (without "index.php" in the URL).',
 		'enable_clean_url' => 'Enable Clean URLs',
 		'title' => 'Clean URLs',
 	),
@@ -62,7 +62,7 @@
 	'configure_map' => 'Configure Map',
 	'default_location' => 'Default Location',
 	'default_map_all' => array(
-		'alpha_numeric' => 'The color feed field does not appear to contain a valid value?',
+		'alpha_numeric' => 'The color feed field does not appear to contain a valid value.',
 		'length' => 'The color field must be no more 6 characters long.',
 		'required' => 'The color field is required.',
 	),
@@ -70,7 +70,7 @@
 	'default_zoom_level' => 'Default Zoom Level',
 	'download_city_list' => 'Retrieve Cities From Geonames',
 	'email_host' => array(
-		'length' => 'The Mail server port field is too long',
+		'length' => 'The Mail server port field is too long.',
 		'numeric' => 'The Mail server port field should contain numbers only.',
 	),
 	'email_password' => array(
@@ -78,11 +78,11 @@
 		'required' => 'The Mail Server Password field is required.',
 	),
 	'email_port' => array(
-		'length' => 'The Mail server port field is too long',
+		'length' => 'The Mail server port field is too long.',
 		'numeric' => 'The Mail server port field should contain numbers only.',
 	),
 	'email_servertype' => array(
-		'length' => 'The Mail server port field is too long',
+		'length' => 'The Mail server port field is too long.',
 		'required' => 'The Mail Server Type field is required.',
 	),
 	'email_username' => array(
@@ -91,7 +91,7 @@
 	),
 	'facebook' => array(
 		'title' => 'Facebook Setup Options',
-		'description' => 'To get the information below you will need to create a new facebook application at',
+		'description' => 'To get the information below you will need to create a new Facebook application at',
 		'app_id' => 'Facebook App ID',
 		'app_secret' => 'Facebook App Secret'
 	),
@@ -105,26 +105,26 @@
 	   'title' => 'HTTPS'
 	),
 	'items_per_page' => array(
-		'between' => 'The items per page (Frontend) field does not appear to contain a valid value?',
+		'between' => 'The items per page (Frontend) field does not appear to contain a valid value.',
 		'required' => 'The items per page (Frontend) field is required.',
 	),
 	'items_per_page_admin' => array(
-		'between' => 'The items per page (Admin) field does not appear to contain a valid value?',
+		'between' => 'The items per page (Admin) field does not appear to contain a valid value.',
 		'required' => 'The items per page (Admin) field is required.',
 	),
 	'map' => array(
-		'default_location' => 'Setting up your map provider is a straight- forward process. Select a provider, obtain an API key from the provider\'s site, and enter the API key',
+		'default_location' => 'Setting up your map provider is a straight- forward process. Select a provider, obtain an API key from the provider\'s site, and enter the API key.',
 		'zoom' => 'Zoom Level',
 	),
 	'map_provider' => array(
 		'choose' => 'Select a Map Provider',
 		'enter_api' => 'Enter the new API Key',
 		'get_api' => 'Get an API Key',
-		'info' => 'Setting up your map provider is a straight- forward process. Select a provider, obtain an API key from the provider\'s site, and enter the API key',
+		'info' => 'Setting up your map provider is a straight-forward process. Select a provider, obtain an API key from the provider\'s site, and enter the API key.',
 		'name' => 'Map provider',
 	),
 	'map_settings' => 'Map Settings',
-	'multiple_countries' => 'Does this Ushahidi Deployment Span Multiple Countries',
+	'multiple_countries' => 'Does this Ushahidi Deployment span multiple countries?',
 	'select_default_location' => 'Please select a default country',
 	'set_location' => 'Click and drag the map to set your exact location',
 	'site' => array(
@@ -150,7 +150,7 @@
 		'email_notice' => '<span>In order to receive reports by email, please configure your email account settings.</span>',
 		'email_site' => 'Site Email Address',
 		'google_analytics' => 'Google Analytics',
-		'google_analytics_example' => 'Web Property ID - Formato: UA-XXXXX-XX',
+		'google_analytics_example' => 'Web Property ID - Format: UA-XXXXX-XX',
 		'items_per_page' => 'Items Per Page - Front End',
 		'items_per_page_admin' => 'Items Per Page - Admin',
 		'kismet_notice' => 'Prevent comment spam using <a href="http://akismet.com/" target="_blank">Akismet</a> from Automattic. <BR />You can get a free API key by registering for a <a href="http://en.wordpress.com/api-keys/" target="_blank">WordPress.com user account</a>',
@@ -171,7 +171,7 @@
 		'twitter_hashtags' => 'Hashtags - Separate with commas ',
 	),
 	'site_email' => array(
-		'email' => 'The site email field does not appear to contain a valid email address?',
+		'email' => 'The site email field does not appear to contain a valid email address.',
 		'length' => 'The site email field must be at least 4 and no more 100 characters long.',
 	),
 	'site_name' => array(
@@ -203,15 +203,15 @@
 		'title' => 'SMS Setup Options',
 	),
 	'sms_no1' => array(
-		'length' => 'The phone 1 field does not appear to contain a valid value?',
+		'length' => 'The phone 1 field does not appear to contain a valid value.',
 		'numeric' => 'The phone 1 field should contain numbers only.',
 	),
 	'sms_no2' => array(
-		'length' => 'The phone 2 field is too long',
+		'length' => 'The phone 2 field is too long.',
 		'numeric' => 'The phone 2 field should contain numbers only.',
 	),
 	'sms_no3' => array(
-		'length' => 'The phone 3 field is too long',
+		'length' => 'The phone 3 field is too long.',
 		'numeric' => 'The phone 3 field should contain numbers only.',
 	));
 ?>

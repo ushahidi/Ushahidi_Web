@@ -5,26 +5,26 @@
 		'length' => 'The Field Name must be at least 3 and no more than 200 characters long.'
 	),
 	'field_height' => array(
-		'between' => 'Please enter a value 0 to 50 for the Field Height',
+		'between' => 'Please enter a value 0 to 50 for the Field Height.',
 	),
 	'field_isdate' => array(
-		'between' => 'You have entered an invalid value for Date Field',
-		'required' => 'Please select Yes or No for the Date Field',
+		'between' => 'You have entered an invalid value for Date Field.',
+		'required' => 'Please select Yes or No for the Date Field.',
 	),
 	'field_name' => array(
 		'length' => 'The Field Name must be at least 3 and no more than 100 characters long.',
 		'required' => 'Please enter Field Name.',
 	),
 	'field_required' => array(
-		'between' => 'You have entered an invalid value for Field Required',
-		'required' => 'Please select Yes or No for Field Required',
+		'between' => 'You have entered an invalid value for Field Required.',
+		'required' => 'Please select Yes or No for Field Required.',
 	),
 	'field_type' => array(
 		'numeric' => 'Please select a valid Field Type.',
 		'required' => 'Please select a Field Type.',
 	),
 	'field_width' => array(
-		'between' => 'Please enter a value 0 to 300 for the Field Width',
+		'between' => 'Please enter a value 0 to 300 for the Field Width.',
 	),
 	'form_description' => array(
 		'required' => 'Please enter form\'s Description.',

@@ -1,6 +1,6 @@
 <?php
 	$lang = array(
-	'admin_footer' => 'This message was sent from your website',
+	'admin_footer' => 'This message was sent from your website.',
 	'admin_login_url' => 'Administrator Login',
 	'admin_new_comment' => array(
 		'message' => 'A new comment has been submitted to your website in response to:',
