@@ -3,7 +3,7 @@
  * The Ushahidi Engine version
  * Make sure to update the ushahidi_version in the settings table too!
  */
-$config['ushahidi_version'] = "2.3";
+$config['ushahidi_version'] = "2.3.1";
 
 
 /**
