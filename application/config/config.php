@@ -35,6 +35,12 @@ $config['enable_auto_upgrader'] = TRUE;
 $config['enable_ver_sync_warning'] = TRUE;
 
 /**
+ * The admin panel shows a warning if you haven't changed your 
+ * encryption key. Set this to false to disable
+ */
+$config['enable_security_info'] = TRUE;
+
+/**
  * Include Google Analytics (if set) on admin panel
  */
 $config['google_analytics_in_admin'] = TRUE;

@@ -1864,12 +1864,12 @@ UL.mapNavigation LI A:focus {
 .update-info {
     line-height: 29px;
     font-size: 12px;
-    text-align: center;
     background : #FFFEEB;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-top-width: 1px;
     border-top-style: solid;
+    padding: 5px;
 }
 
 .update-info a {

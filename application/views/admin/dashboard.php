@@ -15,6 +15,11 @@
 ?>
 			<div class="bg">
 				<h2><?php echo $title; ?></h2>
+				
+				<div id="need_to_upgrade" style="display:none;"></div>
+				<?php echo $version_sync; ?>
+				<?php echo $security_info; ?>
+				
 				<!-- column -->
 				<div class="column">
 					
@@ -121,8 +126,6 @@
 				<div class="column-1">
 					<!-- box -->
 					<div class="box">
-						<div id="need_to_upgrade" style="display:none;"></div>
-						<?php echo $version_sync; ?>
 						<h3><?php echo Kohana::lang('ui_main.quick_stats');?></h3>
 						<ul class="nav-list">
 							<li>

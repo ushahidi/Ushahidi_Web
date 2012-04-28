@@ -115,6 +115,13 @@ class Dashboard_Controller extends Admin_Controller
 			$this->template->content->version_sync = View::factory('admin/version_sync');
 		}
 		
+		// Render security checks if enabled
+		$this->template->content->security_info = NULL;
+		if (Kohana::config('config.enable_security_info') == TRUE)
+		{
+			$this->template->content->security_info = View::factory('admin/security_info');
+		}
+		
 	}
 }
 ?>
