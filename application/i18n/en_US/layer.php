@@ -5,7 +5,7 @@
 		'required' => 'The color field is required.',
 	),
 	'layer_file' => array(
-		'type' => 'The file field does not appear to contain a valid file. The only accepted formats are .KMZ, .KML.',
+		'type' => 'The file field does not appear to contain a valid file. The only accepted formats are .KMZ and .KML.',
 		'valid' => 'The file field does not appear to contain a valid file',
 	),
 	'layer_name' => array(
@@ -13,8 +13,8 @@
 		'required' => 'The name field is required.',
 	),
 	'layer_url' => array(
-		'atleast' => 'Either a KML Url or File is required',
-		'both' => 'You can\'t have both a KML file and a url',
-		'url' => 'Please enter a valid URL. Eg. http://www.ushahidi.com/layerl.kml',
+		'atleast' => 'Either a KML URL or File is required.',
+		'both' => 'You can\'t have both a KML file and a URL.',
+		'url' => 'Please enter a valid URL, e.g. http://www.ushahidi.com/layerl.kml',
 	));
 ?>
