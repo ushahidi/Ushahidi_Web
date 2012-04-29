@@ -2,7 +2,7 @@
 	<div class="content-bg">
 		<!-- start block -->
 		<div class="big-block">
-			<h1>Get Alerts</h1>
+			<h1><?php echo Kohana::lang('ui_main.alerts_get') ?></h1>
 				<?php
 					if ($unsubscribed)
 					{
