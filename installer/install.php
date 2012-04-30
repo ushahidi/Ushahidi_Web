@@ -442,6 +442,8 @@ class Install
 					fwrite($handle, $line);
 			}
 		}
+		
+		$this->encryption_key = $new_key;
 	}
 
 	/**
@@ -457,6 +459,9 @@ class Install
 			$new_pattern[] = rand(0,40);
 		}
 		sort($new_pattern);
+		// Save the salt pattern as array
+		$this->salt_pattern = $new_pattern;
+		
 		$new_pattern = implode(', ',$new_pattern);
 
 		foreach( $config_file as $line_number => $line )
@@ -965,6 +970,8 @@ HTML;
 		}
 		else
 		{
+			$this->_add_encryption_key();
+			$this->_add_salt_pattern();
 			$this->_add_password_info($password,$table_prefix);
 			$this->_add_email($email,$table_prefix);
 			return 0;
@@ -980,7 +987,7 @@ HTML;
 	function _add_password_info($password,$table_prefix=FALSE)
 	{
 		// Encrypt the password
-		$admin_pass = $this->hash_password($password);
+		$admin_pass = $this->hash_password($password, FALSE, $this->salt_pattern);
 
 		$table_prefix = ($table_prefix) ? $table_prefix.'_' : "";
 		$connection = @mysql_connect($_SESSION['host'],$_SESSION['username'], $_SESSION['password']);
@@ -1012,12 +1019,18 @@ HTML;
 	 * based on the configured salt pattern.
 	 *
 	 * @param   string  plaintext password
+	 * @param   string  salt for password hash
+	 * @param   array  salt pattern for password hash
 	 * @return  string  hashed password string
 	 */
-	public function hash_password($password, $salt = FALSE)
+	public function hash_password($password, $salt = FALSE, $salt_pattern = FALSE)
 	{
-		$salt_pattern = array(3, 5, 6, 10, 24, 26, 35, 36, 37, 40);
-		 //array(1, 3, 5, 9, 14, 15, 20, 21, 28, 30);
+		if ($salt_pattern === FALSE)
+		{
+			// Use default salt pattern if none set
+			$salt_pattern = array(3, 5, 6, 10, 24, 26, 35, 36, 37, 40);
+		}
+		
 		if ($salt === FALSE)
 		{
 			// Create a salt seed, same length as the number of offsets in the pattern
@@ -1079,15 +1092,6 @@ HTML;
 		return ($utf8 === TRUE)
 			? (bool) preg_match('/^[-\pL\pN#@_]++$/uD', (string) $password)
 			: (bool) preg_match('/^[-a-z0-9#@_]++$/iD', (string) $password);
-	}
-	
-	/*
-	 * Add unique encryption key and salt pattern
-	 */
-	public function _add_security_info()
-	{
-		$this->_add_encryption_key();
-		$this->_add_salt_pattern();
 	}
 
 }
