@@ -55,6 +55,9 @@
 							print ( $form->error('config_perm') == "" ) ? '' : 
 							"<li>".$form->error('config_perm')."</li>";
 							
+							print ( $form->error('encryption_file_perm') == "" ) ? '' : 
+							"<li>".$form->error('encryption_file_perm')."</li>";
+							
 						?>
 						
 					</ul>

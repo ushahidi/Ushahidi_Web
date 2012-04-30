@@ -27,9 +27,6 @@
 							print ( $form->error('encryption_file_perm') == "" ) ? '' : 
 							"<li>".$form->error('encryption_file_perm')."</li>";
 							
-							print ( $form->error('auth_file_perm') == "" ) ? '' : 
-							"<li>".$form->error('auth_file_perm')."</li>";
-							
 							print ( $form->error('cache_perm') == "" ) ? '' : 
 							"<li>".$form->error('cache_perm')."</li>";
 							
@@ -51,7 +48,6 @@
             <ul>
                 <li>application/config/config.php</li>
                 <li>application/config/encryption.php</li>
-                <li>application/config/auth.php</li>
                 <li>application/config</li>
                 <li>application/cache</li>
                 <li>application/logs</li>

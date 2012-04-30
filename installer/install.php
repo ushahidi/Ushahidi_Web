@@ -111,20 +111,6 @@ class Install
 			);
 		}
 
-		if( !is_writable('../application/config/auth.php')) {
-			$form->set_error('auth_file_perm',
-			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
-			"auth.php\" and is unable to do so at the moment. This is probably due to the fact " .
-			"that your permissions aren't set up properly for the <code>auth.php</code> file. " .
-			"Please change the permissions of that folder to allow write access (777).	" .
-			"<p>Here are instructions for changing file permissions:</p>" .
-			"<ul>" .
-			"	<li><a href=\"http://www.washington.edu/computing/unix/permissions.html\">Unix/Linux</a></li>" .
-			"	<li><a href=\"http://support.microsoft.com/kb/308419\">Windows</a></li>" .
-			"</ul>"
-			);
-		}
-
 		if( !is_writable('../application/config/encryption.php')) {
 			$form->set_error('encryption_file_perm',
 			"<strong>Oops!</strong> Ushahidi is trying to edit a file called \"" .
@@ -445,34 +431,6 @@ class Install
 	}
 
 	/**
-	 * Generate random salt pattern and insert into application/config/auth.php
-	 */
-	private function _add_salt_pattern( )
-	{
-		$config_file = @file('../application/config/auth.php');
-		$handle = @fopen('../application/config/auth.php', 'w');
-		
-		$new_pattern = array();
-		for ($i = 0; $i < 10; $i++) {
-			$new_pattern[] = rand(0,40);
-		}
-		sort($new_pattern);
-		$new_pattern = implode(', ',$new_pattern);
-
-		foreach( $config_file as $line_number => $line )
-		{
-			switch( trim($line) ) {
-				case "\$config['salt_pattern'] = '3, 5, 6, 10, 24, 26, 35, 36, 37, 40';":
-					fwrite($handle, str_replace("3, 5, 6, 10, 24, 26, 35, 36, 37, 40", $new_pattern, $line));
-				break;
-
-				default:
-					fwrite($handle, $line);
-			}
-		}
-	}
-
-	/**
 	 * Adds the right RewriteBase entry to the .htaccess file.
 	 *
 	 * @param base_path - the base path.
@@ -727,14 +685,8 @@ class Install
 			"Please change the permissions of that file to allow write access (777).  ");
 		}
 
-		if( !is_writable('../application/config/auth.php')) {
-			$form->set_error('encryption_file_perm',
-			"<strong>Oops!</strong> Ushahidi is unable to write to <code>application/config/auth.php</code> file. " .
-			"Please change the permissions of that file to allow write access (777).  ");
-		}
-
 		if( !is_writable('../application/config/encryption.php')) {
-			$form->set_error('auth_file_perm',
+			$form->set_error('encryption_file_perm',
 			"<strong>Oops!</strong> Ushahidi is unable to write to <code>application/config/encryption.php</code> file. " .
 			"Please change the permissions of that file to allow write access (777).  ");
 		}
@@ -965,6 +917,7 @@ HTML;
 		}
 		else
 		{
+			$this->_add_encryption_key();
 			$this->_add_password_info($password,$table_prefix);
 			$this->_add_email($email,$table_prefix);
 			return 0;
@@ -1012,12 +965,13 @@ HTML;
 	 * based on the configured salt pattern.
 	 *
 	 * @param   string  plaintext password
+	 * @param   string  salt for password hash
 	 * @return  string  hashed password string
 	 */
 	public function hash_password($password, $salt = FALSE)
 	{
 		$salt_pattern = array(3, 5, 6, 10, 24, 26, 35, 36, 37, 40);
-		 //array(1, 3, 5, 9, 14, 15, 20, 21, 28, 30);
+		
 		if ($salt === FALSE)
 		{
 			// Create a salt seed, same length as the number of offsets in the pattern
@@ -1079,15 +1033,6 @@ HTML;
 		return ($utf8 === TRUE)
 			? (bool) preg_match('/^[-\pL\pN#@_]++$/uD', (string) $password)
 			: (bool) preg_match('/^[-a-z0-9#@_]++$/iD', (string) $password);
-	}
-	
-	/*
-	 * Add unique encryption key and salt pattern
-	 */
-	public function _add_security_info()
-	{
-		$this->_add_encryption_key();
-		$this->_add_salt_pattern();
 	}
 
 }

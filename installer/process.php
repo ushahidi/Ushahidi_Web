@@ -329,8 +329,7 @@
 	public function _proc_basic_admin_pass()
 	{
 		global $install, $form;
-		$status = $install->_add_security_info();
-		$status += $install->_password_info(
+		$status = $install->_password_info(
 			$_POST['admin_email'],
 			$_POST['admin_password'],
 			$_POST['admin_password_again'],
@@ -369,8 +368,7 @@
 	public function _proc_advanced_admin_pass()
 	{
 		global $install, $form;
-		$status = $install->_add_security_info();
-		$status += $install->_password_info(
+		$status = $install->_password_info(
 			$_POST['admin_email'],
 			$_POST['admin_password'],
 			$_POST['admin_password_again'],
