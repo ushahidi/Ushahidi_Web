@@ -84,7 +84,7 @@ class category_Core {
 			}
 
 			// Display parent category.
-			$html .= '<li>';
+			$html .= '<li title="'.$category->category_description.'">';
 			$html .= category::display_category_checkbox($category, $selected_categories, $form_field, $enable_parents);
 			
 			// Visible Child Count
@@ -123,8 +123,8 @@ class category_Core {
 					}
 					else
 					{
-						$html .= '<li>';
-						$html .= category::display_category_checkbox($child, $selected_categories, $form_field, $enable_parents);	
+						$html .= '<li title="'.$child->category_description.'">';
+						$html .= category::display_category_checkbox($child, $selected_categories, $form_field, $enable_parents);
 					}
 				}
 				$html .= '</ul>';
