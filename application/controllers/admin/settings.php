@@ -85,7 +85,6 @@ class Settings_Controller extends Admin_Controller
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
-			//print_r($_POST);exit;
 			// Instantiate Validation, use $post, so we don't overwrite $_POST
 			// fields with our own things
 			$post = new Validation($_POST);

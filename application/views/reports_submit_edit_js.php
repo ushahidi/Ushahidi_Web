@@ -599,7 +599,16 @@
 		
 		function addFormField(div, field, hidden_id, field_type) {
 			var id = document.getElementById(hidden_id).value;
-			$("#" + div).append("<div class=\"row link-row second\" id=\"" + field + "_" + id + "\"><input type=\"" + field_type + "\" name=\"" + field + "[]\" class=\"" + field_type + " long\" /><a href=\"#\" class=\"add\" onClick=\"addFormField('" + div + "','" + field + "','" + hidden_id + "','" + field_type + "'); return false;\">add</a><a href=\"#\" class=\"rem\"  onClick='removeFormField(\"#" + field + "_" + id + "\"); return false;'>remove</a></div>");
+			
+			// HTML for the form field to be added
+			var formFieldHTML = "<div class=\"row link-row second\" id=\"" + field + "_" + id + "\">" +
+			    "<input type=\"" + field_type + "\" name=\"" + field + "[]\" class=\"" + field_type + " long2\" />" +
+			    "<a href=\"#\" class=\"add\" "+
+			    "    onClick=\"addFormField('" + div + "','" + field + "','" + hidden_id + "','" + field_type + "'); return false;\">"+
+			    "    add</a>" +
+			    "<a href=\"#\" class=\"rem\"  onClick='removeFormField(\"#" + field + "_" + id + "\"); return false;'>remove</a></div>";
+
+			$("#" + div).append(formFieldHTML);
 
 			$("#" + field + "_" + id).effect("highlight", {}, 800);
 
@@ -644,30 +653,33 @@
 						vlayer.removeFeatures(vlayer.features);
 						$('input[name="geometry[]"]').remove();
 						
-						point = new OpenLayers.Geometry.Point(data.message[1], data.message[0]);
+						point = new OpenLayers.Geometry.Point(data.longitude, data.latitude);
 						OpenLayers.Projection.transform(point, proj_4326,proj_900913);
 						
 						f = new OpenLayers.Feature.Vector(point);
 						vlayer.addFeatures(f);
 						
 						// create a new lat/lon object
-						myPoint = new OpenLayers.LonLat(data.message[1], data.message[0]);
+						myPoint = new OpenLayers.LonLat(data.longitude, data.latitude);
 						myPoint.transform(proj_4326, map.getProjectionObject());
 
 						// display the map centered on a latitude and longitude
 						map.setCenter(myPoint, <?php echo $default_zoom; ?>);
-						
-						// Looking up country name using reverse geocoding					
-						reverseGeocode(data.message[0], data.message[1]);
-						
+												
 						// Update form values
-						$("#latitude").attr("value", data.message[0]);
-						$("#longitude").attr("value", data.message[1]);
-						$("#location_name").attr("value", $("#location_find").val());
+						$("#country_name").val(data.country);
+						$("#latitude").val(data.latitide);
+						$("#longitude").val(data.longitude);
+						$("#location_name").val(data.location_name);
 					} else {
-						alert(address + " not found!\n\n***************************\nEnter more details like city, town, country\nor find a city or town close by and zoom in\nto find your precise location");
+						// Alert message to be displayed
+						var alertMessage = address + " not found!\n\n***************************\n" + 
+						    "Enter more details like city, town, country\nor find a city or town " +
+						    "close by and zoom in\nto find your precise location";
+
+						alert(alertMessage)
 					}
-					$('#find_loading').html('');
+					$('div#find_loading').html('');
 				}, "json");
 			return false;
 		}

@@ -440,15 +440,48 @@ class map_Core {
 		if ($address)
 		{
 			$map_object = new GoogleMapAPI;
-			//$map_object->_minify_js = isset($_REQUEST["min"]) ? FALSE : TRUE;
-			$geocodes = $map_object->getGeoCode($address);
-			//$geocodes = $MAP_OBJECT->geoGetCoordsFull($address);
+
+			// Get the full address data
+			$payload = $map_object->geoGetCoordsFull($address);
+
+			// Verify that the request succeeded
+			if ($payload->status != 'OK')
+				return FALSE;
+
+			// Convert the Geocoder's results to an array
+			$all_components = json_decode(json_encode($payload->results), TRUE);
+			$location = $all_components[0]['geometry']['location'];
+
+			// Find the country
+			$address_components = $all_components[0]['address_components'];
+			$country_name = NULL;
+			foreach ($address_components as $component)
+			{
+				if (in_array('country', $component['types']))
+				{
+					$country_name  = $component['long_name'];
+					break;
+				}
+			}
+
+			// If no country has been found, use the formatted address
+			if (empty($country_name))
+			{
+				$country_name = $all_components[0]['formatted_address'];
+			}
+
+			$geocodes = array(
+				'country' => $country_name,
+				'location_name' => $all_components[0]['formatted_address'],
+				'latitude' => $location['lat'],
+				'longitude' => $location['lng']
+			);
 
 			return $geocodes;
 		}
 		else
 		{
-			return false;
+			return FALSE;
 		}
 	}
 
