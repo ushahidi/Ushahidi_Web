@@ -229,13 +229,15 @@
 			// Display the map centered on a latitude and longitude (Google zoom levels)
 			map.setCenter(startPoint, <?php echo ($incident_zoom) ? $incident_zoom : $default_zoom; ?>);
 			
-			// Create the Editing Toolbar
-			var container = document.getElementById("panel");
-			var panel = new OpenLayers.Control.EditingToolbar(
-				vlayer, {div: container}
-			);
-			map.addControl(panel);
-			panel.activateControl(panel.controls[0]);
+			<?php if (!Kohana::config('settings.map_point_reports')) { ?>
+				// Create the Editing Toolbar
+				var container = document.getElementById("panel");
+				var panel = new OpenLayers.Control.EditingToolbar(
+					vlayer, {div: container}
+				);
+				map.addControl(panel);
+				panel.activateControl(panel.controls[0]);
+			<?php } ?>
 			drag.activate();
 			highlightCtrl.activate();
 			selectCtrl.activate();
@@ -243,6 +245,19 @@
 			map.events.register("click", map, function(e){
 				selectCtrl.deactivate();
 				selectCtrl.activate();
+				<?php if (Kohana::config('settings.map_point_reports')) { ?>
+					var i = vlayer.features.length - 1;
+					var feature = vlayer.features[i];
+
+					if (feature.geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
+						var lonlat = map.getLonLatFromPixel(e.xy);
+
+						feature.geometry.move(lonlat.lon - feature.geometry.x,
+							lonlat.lat - feature.geometry.y);
+						vlayer.drawFeature(vlayer.features[i]);
+						refreshFeatures();
+					}
+				<?php } ?>
 			});
 			
 			// Undo Action Removes Most Recent Marker
