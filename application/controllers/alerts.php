@@ -57,7 +57,7 @@ class Alerts_Controller extends Main_Controller {
 		$this->template->content->cities = $this->_get_cities($default_country);
 
 		// Get all active top level categories
-		$this->template->content->categories = $this->get_categories('foo');
+		$this->template->content->categories = Category_Model::get_categories(0, FALSE, TRUE);
 
 		// Setup and initialize form field names
 		$form = array (
