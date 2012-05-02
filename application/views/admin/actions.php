@@ -440,7 +440,7 @@ $(document).ready(function() {
 								</div>
 								<div id="geometryLabelerClose"></div>
 							</div>
-							<a href="#" class="btn_clear" style="float:right;margin-top:350px;padding:25px;"><?php echo strtoupper(Kohana::lang('ui_main.clear_map'));?></a>
+							<a href="#" class="btn_clear" style="float:right;padding:25px;"><?php echo strtoupper(Kohana::lang('ui_main.clear_map'));?></a>
 						</div>
 
 						<script type="text/javascript">
@@ -509,7 +509,7 @@ $(document).ready(function() {
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.category")); ?>"><?php echo Kohana::lang('ui_main.category'); ?>:</a></h4>
 								<?php
 									// categories, selected_categories, form field name, number of columns
-									echo category::tree($categories, array(), 'action_category', 2);
+									echo category::tree($categories, FALSE, array(), 'action_category', 2);
 								?>
 							</div>
 
@@ -593,7 +593,7 @@ $(document).ready(function() {
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.add_to_category")); ?>"><?php echo Kohana::lang('ui_admin.add_to_category'); ?>:</a></h4>
 								<?php
 									// categories, selected_categories, form field name, number of columns
-									echo category::tree($categories, array(), 'action_add_category', 2);
+									echo category::tree($categories, FALSE, array(), 'action_add_category', 2);
 								?>
 							</div>
 

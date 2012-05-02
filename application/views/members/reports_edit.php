@@ -81,7 +81,7 @@
 							</div>
 							<div class="row">
 								<h4><?php echo Kohana::lang('ui_main.description');?> <span><?php echo Kohana::lang('ui_main.include_detail');?>.</span></h4>
-								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"') ?>
+								<?php print form::textarea('incident_description', $form['incident_description'], ' rows="12" cols="40"'); ?>
 							</div>
 
 							<?php
@@ -90,7 +90,6 @@
 							?>
 
 							<?php if (!($id)): ?>
-								?>
 								<div class="row" id="datetime_default">
 									<h4><a href="#" id="date_toggle" class="new-cat">
 									<?php echo Kohana::lang('ui_main.modify_date');?></a><?php echo Kohana::lang('ui_main.modify_date');?>: 
@@ -136,7 +135,7 @@
 										$selected_categories = $form['incident_category'];
 									}
 									$columns = 2;
-									echo category::tree($categories, $selected_categories, 'incident_category', $columns);
+									echo category::tree($categories, TRUE, $selected_categories, 'incident_category', $columns);
 								?>
              					</div>
 							</div>

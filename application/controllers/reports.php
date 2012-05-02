@@ -911,19 +911,28 @@ class Reports_Controller extends Main_Controller {
 
 		if (isset($_POST['address']) AND ! empty($_POST['address']))
 		{
-			$geocode = map::geocode($_POST['address']);
-			if ($geocode)
+			$geocode_result = map::geocode($_POST['address']);
+			if ($geocode_result)
 			{
-				echo json_encode(array("status"=>"success", "message"=>array($geocode['lat'], $geocode['lon'])));
+				echo json_encode(array_merge(
+					$geocode_result, 
+					array('status' => 'success')
+				));
 			}
 			else
 			{
-				echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+				echo json_encode(array(
+					'status' => 'error',
+					'message' =>'ERROR!'
+				));
 			}
 		}
 		else
 		{
-			echo json_encode(array("status"=>"error", "message"=>"ERROR!"));
+			echo json_encode(array(
+				'status' => 'error',
+				'message' => 'ERROR!'
+			));
 		}
 	}
 

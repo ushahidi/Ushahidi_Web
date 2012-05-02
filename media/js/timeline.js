@@ -730,6 +730,10 @@
 			{
 				for (var i = 0; i < markers.length; i++)
 				{
+					// Workaround for original layer not being removed properly:
+					// Remove all features from a layer before the layer is removed from the map
+					// rjmackay 27/2/2011
+					markers[i].destroyFeatures();
 					map.removeLayer(markers[i]);
 				}
 			}

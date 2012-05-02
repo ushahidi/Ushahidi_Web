@@ -61,7 +61,7 @@ class Category_Model extends ORM_Tree {
 			$this_parent = self::factory('category')->find($array->parent_id);
 			
 			// If parent category is trusted/special
-			if($this_parent->category_trusted == 1)
+			if ($this_parent->category_trusted == 1)
 			{
 				Kohana::log('error', 'The parent id is a trusted category!');
 				$array->add_error('parent_id', 'parent_trusted');
@@ -73,14 +73,14 @@ class Category_Model extends ORM_Tree {
 				$this_cat = self::factory('category')->find($this->id);
 				
 				// If this category is trusted/special, don't subcategorize
-				if($this_cat->category_trusted)
+				if ($this_cat->category_trusted)
 				{
 					Kohana::log('error', 'This is a special category');
 					$array->add_error('parent_id', 'special');
 				}
 				
 				// If parent category is trusted/special
-				if($this_parent->category_trusted == 1)
+				if ($this_parent->category_trusted == 1)
 				{
 					Kohana::log('error', 'The parent id is a trusted category!');
 					$array->add_error('parent_id', 'parent_trusted');
@@ -88,14 +88,14 @@ class Category_Model extends ORM_Tree {
 				
 				// If subcategories exist
 				$children = self::factory('category')->where('parent_id',$this->id)->count_all();
-				if($children > 0 )
+				if ($children > 0 )
 				{
 					Kohana::log('error', 'This category has subcategories');
 					$array->add_error('parent_id', 'already_parent');
 				}
 				
 				// If parent and category id are the same
-				if($this->id == $array->parent_id)
+				if ($this->id == $array->parent_id)
 				{
 					// Error
 					Kohana::log('error', 'The parent id and category id are the same!');
@@ -178,7 +178,7 @@ class Category_Model extends ORM_Tree {
 		// Exclude trusted reports
 		if ($exclude_trusted)
 		{
-			$where = array_merge($where, array('category_title !=' => 'Trusted Reports'));
+			$where = array_merge($where, array('category_trusted !=' => '1'));
 		}
 		
 		// Return

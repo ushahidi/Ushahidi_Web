@@ -56,8 +56,7 @@ class Manage_Controller extends Admin_Controller
 		$locales = ush_locale::get_i18n();
 
 		// Setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'action' => '',
 			'category_id' => '',
 			'parent_id' => '',
@@ -65,7 +64,8 @@ class Manage_Controller extends Admin_Controller
 			'category_description' => '',
 			'category_color' => '',
 			'category_image' => '',
-			'category_image_thumb' => ''
+			'category_image_thumb' => '',
+			'form_auth_token' => ''
 		);
 
 		// Add the different language form keys for fields
@@ -83,15 +83,17 @@ class Manage_Controller extends Admin_Controller
 
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
-		{
+		{			
 			// Fetch the post data
 			$post_data = array_merge($_POST, $_FILES);
 			
 			// Extract category-specific  information
-			$category_data = arr::extract($post_data, 'parent_id', 'category_title', 'category_description', 'category_color');
+			$category_data = arr::extract($post_data, 'parent_id',
+				'category_title', 'category_description', 'category_color');
 			
 			// Extract category image and category languages for independent validation
-			$secondary_data = arr::extract($post_data, 'category_image', 'category_title_lang', 'action');
+			$secondary_data = arr::extract($post_data, 'category_image',
+				'category_title_lang', 'action');
 			
 			// Setup validation for the secondary data
 			$post = Validation::factory($secondary_data)
@@ -100,7 +102,8 @@ class Manage_Controller extends Admin_Controller
 			// Add validation for the add/edit action
 			if ($post->action == 'a')
 			{
-				$post->add_rules('category_image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[50K]');
+				$post->add_rules('category_image', 'upload::valid',
+					'upload::type[gif,jpg,png]', 'upload::size[50K]');
 
 				// Add the different language form keys for fields
 				foreach ($locales as $lang_key => $lang_name)
@@ -180,7 +183,7 @@ class Manage_Controller extends Admin_Controller
 						$category_old_image = $category->category_image;
 						if ( ! empty($category_old_image))
 						{
-							if(file_exists(Kohana::config('upload.directory', TRUE).$category_old_image))
+							if (file_exists(Kohana::config('upload.directory', TRUE).$category_old_image))
 							{
 								unlink(Kohana::config('upload.directory', TRUE).$category_old_image);
 							}elseif(Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($category_old_image)){
@@ -211,12 +214,11 @@ class Manage_Controller extends Admin_Controller
 					// populate the error fields, if any
 					$errors = arr::overwrite($errors, 
 						array_merge($category_data->errors('category'), $post->errors('category')));
-
 					$form_error = TRUE;
 				}
 				
 			}
-			elseif ($post->validate() AND $post->action == 'd')
+			elseif ($post->action == 'd' AND $post->validate())
 			{
 				// Delete action
 				if ($category->loaded)
@@ -227,9 +229,10 @@ class Manage_Controller extends Admin_Controller
 					
 					// Check for all subcategories tied to this category and make them top level
 					$children = ORM::factory('category')
-								->where('parent_id', $category->id)
-								->find_all();
-					if($children)
+						->where('parent_id', $category->id)
+						->find_all();
+					
+					if ($children)
 					{
 						foreach($children as $child)
 						{
@@ -245,9 +248,9 @@ class Manage_Controller extends Admin_Controller
 								->find_all();
 					
 					// If there are reports returned by the query
-					if($result)
+					if ($result)
 					{
-						foreach($result as $orphan)
+						foreach ($result as $orphan)
 						{
 							$orphan_incident_id = $orphan->incident_id;
 						
@@ -257,7 +260,7 @@ class Manage_Controller extends Admin_Controller
 										->count_all();
 					
 							// If this report is tied to only one category(is uncategorized)
-							if($count == 1)
+							if ($count == 1)
 							{
 								// Assign it to the special category for uncategorized reports
 								$orphaned = ORM::factory('incident_category',$orphan->id);
@@ -291,7 +294,7 @@ class Manage_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 			}
-			elseif ($post->validate() AND $post->action == 'v')
+			elseif ($post->action == 'v' AND $post->validate())
 			{ 
 				// Show/Hide Action
 				if ($category->loaded)
@@ -302,7 +305,7 @@ class Manage_Controller extends Admin_Controller
 								->find_all();
 					
 					// Then show/hide subcategories based on status of parent category
-					foreach($children as $child)
+					foreach ($children as $child)
 					{
 						$sub_cat = new Category_Model($child->id);
 						$sub_cat->category_visible = ($category->category_visible == 1)? 0: 1;
@@ -316,7 +319,7 @@ class Manage_Controller extends Admin_Controller
 					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
-			elseif ($post->validate() AND $post->action == 'i')
+			elseif ($post->action == 'i' AND $post->validate())
 			{ 
 				// Delete Image/Icon Action
 				if ($category->loaded)
@@ -324,14 +327,22 @@ class Manage_Controller extends Admin_Controller
 					$category_image = $category->category_image;
 					$category_image_thumb = $category->category_image_thumb;
 
-					if ( ! empty($category_image)
-						 AND file_exists(Kohana::config('upload.directory', TRUE).$category_image))
+					// Delete the main image
+					if
+					( 
+						! empty($category_image) AND
+						file_exists(Kohana::config('upload.directory', TRUE).$category_image)
+					)
 					{
 						unlink(Kohana::config('upload.directory', TRUE) . $category_image);
 					}
 
-					if ( ! empty($category_image_thumb)
-						 AND file_exists(Kohana::config('upload.directory', TRUE).$category_image_thumb))
+					// Delete the thumb
+					if
+					(
+						! empty($category_image_thumb) AND
+						file_exists(Kohana::config('upload.directory', TRUE).$category_image_thumb)
+					)
 					{
 						unlink(Kohana::config('upload.directory', TRUE) . $category_image_thumb);
 					}
@@ -343,7 +354,6 @@ class Manage_Controller extends Admin_Controller
 					$form_saved = TRUE;
 					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
 				}
-
 			}
 		}
 
@@ -796,7 +806,7 @@ class Manage_Controller extends Admin_Controller
 						->add_rules('layer_file', 'upload::valid','upload::type[kml,kmz]');
 				
 				// Test to see if validation has passed
-				if ($layer->validate($layer_data) AND $post->validate())
+				if ($layer->validate($layer_data) AND $post->validate(FALSE))
 				{
 					// Success! SAVE
 					$layer->save();
