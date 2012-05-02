@@ -242,7 +242,7 @@ class Actions_Controller extends Admin_Controller
 		$this->template->content->user_options = $this->_user_options();
 
 		// Grab categories for category advanced options
-		$this->template->content->categories = Category_Model::get_categories();
+		$this->template->content->categories = Category_Model::get_categories(0, FALSE, FALSE);
 
 		// Grab badges for dropdown
 		$this->template->content->badges = Badge_Model::badge_names();

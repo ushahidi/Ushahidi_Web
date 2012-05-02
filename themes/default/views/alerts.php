@@ -67,7 +67,7 @@
 									? $selected_categories = $form['alert_category']
 									: array();
 									
-								echo category::tree($categories, $selected_categories, 'alert_category', 2, TRUE);
+								echo category::tree($categories, TRUE, $selected_categories, 'alert_category', 2, TRUE);
 							?>
 							</div>
 						</div>

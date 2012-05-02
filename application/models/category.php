@@ -178,7 +178,7 @@ class Category_Model extends ORM_Tree {
 		// Exclude trusted reports
 		if ($exclude_trusted)
 		{
-			$where = array_merge($where, array('category_title !=' => 'Trusted Reports'));
+			$where = array_merge($where, array('category_trusted !=' => '1'));
 		}
 		
 		// Return
