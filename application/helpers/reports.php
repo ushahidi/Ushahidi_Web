@@ -223,8 +223,9 @@ class reports_Core {
 			$incident->form_id = $post->form_id;
 		}
 		
+
 		// Check if the user id has been specified
-		if (isset($_SESSION['auth_user']))
+		if ( ! $incident->loaded AND isset($_SESSION['auth_user']))
 		{
 			$incident->user_id = $_SESSION['auth_user']->id;
 		}
@@ -249,7 +250,7 @@ class reports_Core {
 				$incident->incident_mode = 2;
 			}
 			// Email
-			elseif($post->service_id == 2)
+			elseif ($post->service_id == 2)
 			{
 				$incident->incident_mode = 3;
 			}
