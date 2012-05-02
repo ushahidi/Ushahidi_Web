@@ -3,9 +3,8 @@
  * @package Session
  *
  * Session driver name.
- * WARNING : Do not use 'cookie' driver, potential security issue
  */
-$config['driver'] = 'database';
+$config['driver'] = 'cookie';
 
 /**
  * Session storage parameter, used by drivers.
