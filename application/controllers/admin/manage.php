@@ -806,7 +806,7 @@ class Manage_Controller extends Admin_Controller
 						->add_rules('layer_file', 'upload::valid','upload::type[kml,kmz]');
 				
 				// Test to see if validation has passed
-				if ($layer->validate($layer_data) AND $post->validate())
+				if ($layer->validate($layer_data) AND $post->validate(FALSE))
 				{
 					// Success! SAVE
 					$layer->save();
