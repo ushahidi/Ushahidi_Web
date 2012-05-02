@@ -262,10 +262,10 @@ class Reports_Controller extends Admin_Controller {
 						 	// Get all the photos for the current incident/report 
 							$incident_photos = ORM::factory('media')
 							    ->where('incident_id',$incident_id)
-							    ->where('media_type', 1)
+							    ->where('media_type', 1);
 
 							// Delete Photos From Directory
-							foreach ($incident_photo as $photo)
+							foreach ($incident_photos as $photo)
 							{
 								deletePhoto($photo->id);
 							}
