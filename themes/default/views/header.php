@@ -27,7 +27,7 @@
   elseif (count($uri_segments) >= 2)
   {
     $body_class = "page-".$uri_segments[0]."-".$uri_segments[1];
-  };
+  }
 ?>
 
 <body id="page" class="<?php echo $body_class; ?>" />
@@ -55,14 +55,14 @@
 			<!-- / searchbox -->
 
 			<!-- logo -->
-			<?php if($banner == NULL){ ?>
+			<?php if ($banner == NULL): ?>
 			<div id="logo">
 				<h1><a href="<?php echo url::site();?>"><?php echo $site_name; ?></a></h1>
 				<span><?php echo $site_tagline; ?></span>
 			</div>
-			<?php }else{ ?>
+			<?php else: ?>
 			<a href="<?php echo url::site();?>"><img src="<?php echo $banner; ?>" alt="<?php echo $site_name; ?>" /></a>
-			<?php } ?>
+			<?php endif; ?>
 			<!-- / logo -->
 
 			<!-- submit incident -->
