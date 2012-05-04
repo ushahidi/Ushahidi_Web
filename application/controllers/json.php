@@ -64,7 +64,7 @@ class Json_Controller extends Template_Controller
 		if (Kohana::config('settings.default_map_all_icon_id'))
 		{
 			$icon_object = ORM::factory('media')->find(Kohana::config('settings.default_map_all_icon_id'));
-			$icon = Kohana::config('upload.relative_directory')."/".$icon_object->media_medium;
+			$icon = url::convert_uploaded_to_abs($icon_object->media_medium);
 		}
 
 		$media_type = (isset($_GET['m']) AND intval($_GET['m']) > 0)? intval($_GET['m']) : 0;
@@ -81,7 +81,7 @@ class Json_Controller extends Template_Controller
 			$color = $cat->category_color;
 			if ($cat->category_image)
 			{
-				$icon = Kohana::config('upload.relative_directory') .'/'. $cat->category_image;
+				$icon = url::convert_uploaded_to_abs($cat->category_image);
 			}
 		}
 		
@@ -184,7 +184,7 @@ class Json_Controller extends Template_Controller
 		if (Kohana::config('settings.default_map_all_icon_id'))
 		{
 			$icon_object = ORM::factory('media')->find(Kohana::config('settings.default_map_all_icon_id'));
-			$icon = Kohana::config('upload.relative_directory')."/".$icon_object->media_medium;
+			$icon = url::convert_uploaded_to_abs($icon_object->media_medium);
 		}
 
 		// Get Zoom Level
@@ -213,7 +213,7 @@ class Json_Controller extends Template_Controller
 			$color = $cat->category_color;
 			if ($cat->category_image)
 			{
-				$icon = Kohana::config('upload.relative_directory') .'/'. $cat->category_image;
+				$icon = url::convert_uploaded_to_abs($cat->category_image);
 			}
 		}
 

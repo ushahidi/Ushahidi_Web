@@ -605,8 +605,8 @@
 						feature_icon = feature.attributes.icon;
 						if (feature_icon!=="")
 						{
-							return baseUrl + feature_icon;
-						} 
+							return feature_icon;
+						}
 						else
 						{
 							return "";
@@ -620,7 +620,7 @@
 							{ // IE6 Bug with Labels
 								return "";
 							}
-							
+
 							return feature.attributes.count;
 						}
 						else
