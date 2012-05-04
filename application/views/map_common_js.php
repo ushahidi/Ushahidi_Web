@@ -13,49 +13,48 @@
 	 * @param targetElement ID of the element to be used for creating the map
 	 * @param options Options to be used for creating the map
 	 */
-	function createMap(targetElement, lat, lon, zoomLevel, options)
+	function createMap(targetElement, lat, lon, zoomLevel, options, controls)
 	{
 		if (typeof targetElement == 'undefined' || $("#"+targetElement) == null)
 		{
 			return;
 		}
-				
-		// To hold the map options
-		var mapOptions;
 		
-		if (typeof(options) == 'undefined')
-		{
+		if (typeof(options) == 'undefined' || options == null) {
 			// Create the default options
-			mapOptions = {
+			options = {
 				units: "dd",
 				numZoomLevels: 18,
 				theme: false,
-				controls:[],
+				controls: [],
 				projection: proj_900913,
 				'displayProjection': proj_4326,
 				maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
 				maxResolution: 156543.0339
 			};
 		}
-		else
-		{
-			mapOptions = options;
+
+		// Add controls
+		if (typeof controls == "undefined") {
+			// Set the controls for the map options
+			options.controls = [
+				new OpenLayers.Control.Navigation(),
+				new OpenLayers.Control.PanZoom(),
+				new OpenLayers.Control.Attribution(),
+				new OpenLayers.Control.MousePosition(),
+				new OpenLayers.Control.LayerSwitcher()
+			]
+		} else if (controls.length > 0) {
+			options.controls = controls;
 		}
-		
+
 		// Create the map object
-		var map = new OpenLayers.Map(targetElement, mapOptions);
+		var map = new OpenLayers.Map(targetElement, options);
 		
 		<?php echo map::layers_js(FALSE); ?>
 		
 		// Add the default layers
 		map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-		
-		// Add controls
-		map.addControl(new OpenLayers.Control.Navigation());
-		map.addControl(new OpenLayers.Control.PanZoom());
-		map.addControl(new OpenLayers.Control.Attribution());
-		map.addControl(new OpenLayers.Control.MousePosition());
-		map.addControl(new OpenLayers.Control.LayerSwitcher());
 		
 		// Check for the zoom level
 		var zoom = (typeof zoomLevel == 'undefined' || zoomLevel < 1)? 9 : zoomLevel;
@@ -142,6 +141,9 @@
 		radiusLayer.addFeatures( [circleFeature] );
 	}
 	
+	/**
+	 * Registers feature selection events on the map
+	 */
 	function addFeatureSelectionEvents(map, layer) {
 		var selectedFeature = null;
 		selectControl = new OpenLayers.Control.SelectFeature(layer);
@@ -156,8 +158,7 @@
   /**
    * Display popup when feature selected
    */
-  function onFeatureSelect(event)
-  {
+  function onFeatureSelect(event) {
     selectedFeature = event.feature;
     zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
     lon = zoom_point.lon;
@@ -211,8 +212,7 @@
   /**
    * Destroy Popup Layer
    */
-  function onFeatureUnselect(event)
-  {
+  function onFeatureUnselect(event) {
     // Safety check
     if (event.feature.popup != null)
     {
@@ -225,8 +225,7 @@
 	/**
 	 * Close Popup
 	 */
-	function onPopupClose(event)
-	{
+	function onPopupClose(event) {
 		selectControl.unselect(selectedFeature);
 		selectedFeature = null;
 	};
@@ -234,8 +233,7 @@
 	/**
 	 * Zoom to Selected Feature from within Popup
 	 */
-	function zoomToSelectedFeature(lon, lat, zoomfactor)
-	{
+	function zoomToSelectedFeature(lon, lat, zoomfactor) {
 		var lonlat = new OpenLayers.LonLat(lon,lat);
 
 		// Get Current Zoom

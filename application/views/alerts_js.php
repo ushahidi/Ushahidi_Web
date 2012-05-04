@@ -17,28 +17,23 @@
 ?>
 		<?php require_once(APPPATH.'views/map_common_js.php'); ?>
 		
-		var map;
-		var radiusLayer;
 		jQuery(function($) {
 			
 			$(window).load(function(){
-			<?php 
 				
-				/*OpenLayers uses IE's VML for vector graphics.
-					We need to wait for IE's engine to finish loading all namespaces (document.namespaces) for VML.
-					jQuery.ready is executing too soon for IE to complete it's loading process.
-				 */
-			?>
+				// OpenLayers uses IE's VML for vector graphics. -->
+				// We need to wait for IE's engine to finish loading all namespaces (document.namespaces) for VML.
+				// jQuery.ready is executing too soon for IE to complete it's loading process.
 			
 			// Create the map
 			var latitude = <?php echo $latitude; ?>;
 			var longitude = <?php echo $longitude; ?>;
 			var zoomLevel = <?php echo $default_zoom; ?>;
 			
-			map = createMap('divMap', latitude, longitude, zoomLevel);
+			var map = createMap('divMap', latitude, longitude, zoomLevel);
 			
 			// Add the radius layer
-			addRadiusLayer(map, latitude, longitude);
+			var radiusLayer = addRadiusLayer(map, latitude, longitude);
 			
 			// Draw circle around point
 			drawCircle(map, latitude, longitude);
