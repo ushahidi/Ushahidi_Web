@@ -35,7 +35,8 @@ jQuery(window).load(function() {
 		new OpenLayers.Control.MousePosition(),
 		new OpenLayers.Control.ScaleLine(),
 		new OpenLayers.Control.Scale('mapScale'),
-		new OpenLayers.Control.LayerSwitcher()
+		new OpenLayers.Control.LayerSwitcher(),
+		new OpenLayers.Control.Attribution()
 	];
 
 	// Initialize the map

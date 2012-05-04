@@ -34,20 +34,6 @@
 			};
 		}
 
-		// Add controls
-		if (typeof controls == "undefined") {
-			// Set the controls for the map options
-			options.controls = [
-				new OpenLayers.Control.Navigation(),
-				new OpenLayers.Control.PanZoom(),
-				new OpenLayers.Control.Attribution(),
-				new OpenLayers.Control.MousePosition(),
-				new OpenLayers.Control.LayerSwitcher()
-			]
-		} else if (controls.length > 0) {
-			options.controls = controls;
-		}
-
 		// Create the map object
 		var map = new OpenLayers.Map(targetElement, options);
 		
@@ -55,6 +41,21 @@
 		
 		// Add the default layers
 		map.addLayers(<?php echo map::layers_array(FALSE); ?>);
+
+		// Add controls
+		if (typeof controls == "undefined" || controls == null) {
+			// Set the controls for the map options
+			map.addControls([
+				new OpenLayers.Control.Navigation(),
+				new OpenLayers.Control.PanZoom(),
+				new OpenLayers.Control.Attribution(),
+				new OpenLayers.Control.MousePosition(),
+				new OpenLayers.Control.LayerSwitcher()
+			]);
+		} else if (controls.length > 0) {
+			map.addControls(controls);
+		}
+
 		
 		// Check for the zoom level
 		var zoom = (typeof zoomLevel == 'undefined' || zoomLevel < 1)? 9 : zoomLevel;

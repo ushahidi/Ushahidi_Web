@@ -115,7 +115,7 @@ class Report_Api_Object extends Api_Object_Core {
             }
 
             // Test to see if things passed the rule checks
-            if ($post->validate()) 
+            if ($post->validate(FALSE)) 
             {
                 // SAVE LOCATION (***IF IT DOES NOT EXIST***)
                 $location = new Location_Model();
