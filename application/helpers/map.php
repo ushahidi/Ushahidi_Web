@@ -99,6 +99,13 @@ class map_Core {
 						if (isset($params['baselayer'])) unset($params['baselayer']);
 						$params['sphericalMercator'] = true;
 
+						// Special handling for layer type - don't quote the value as it should be a js variable
+						if (isset($params['type']) AND $params['type'] != '')
+						{
+							$js .= " type: ".$params['type'].",\n";
+							unset($params['type']);
+						}
+
 						foreach ($params as $key => $value)
 						{
 							if ( ! empty($value))

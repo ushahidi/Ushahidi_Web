@@ -206,40 +206,59 @@ final class Api_Service {
 	 * @param string $password User's password.
 	 * @return mixed user_id, FALSE if authentication fails
 	 */
-	public function _login()
+	public function _login($admin = FALSE)
     {
 		$auth = Auth::instance();
 
 		// Is user previously authenticated?
 		if ($auth->logged_in())
 		{
-			return $auth->get_user()->id;
+			// Check if admin privileges are required
+			if ($admin == TRUE AND $auth->logged_in('member'))
+			{
+				return FALSE;
+			}
+			else
+			{
+				return $auth->get_user()->id;
+			}
 		}
 		else
-        {
-            //Get username and password
-            if (isset($_SERVER['PHP_AUTH_USER']) &&
-                isset($_SERVER['PHP_AUTH_PW']))
-            {
-                $username = filter_var($_SERVER['PHP_AUTH_USER'],
-                    FILTER_SANITIZE_STRING,
-                    FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+		{
+			//Get username and password
+			if (isset($_SERVER['PHP_AUTH_USER']) &&
+				isset($_SERVER['PHP_AUTH_PW']))
+			{
+				$username = filter_var($_SERVER['PHP_AUTH_USER'],
+				FILTER_SANITIZE_STRING,
+				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+				
+				$password = filter_var($_SERVER['PHP_AUTH_PW'],
+				FILTER_SANITIZE_STRING,
+				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
 
-                $password = filter_var($_SERVER['PHP_AUTH_PW'],
-                    FILTER_SANITIZE_STRING,
-                    FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
-
-				try {
+				try
+				{
 					if ($auth->login($username, $password))
 					{
-						return $auth->get_user()->id;
+						// Check if admin privileges are required
+						if ($admin == TRUE AND $auth->logged_in('member'))
+						{
+							return FALSE;
+						}
+						else
+						{
+							return $auth->get_user()->id;
+						}
 					}
 					else
 					{
 						$this->_prompt_login();
 						return FALSE;
 					}
-				} catch (Exception $e) {
+				}
+				catch (Exception $e)
+				{
 					$this->_prompt_login();
 					return FALSE;
 				}
