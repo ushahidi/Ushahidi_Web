@@ -220,7 +220,7 @@ class Profile_Controller extends Members_Controller
 		if (array_key_exists('current_password',$post->errors()))
 			return;
 
-		$user = User_Model::get_user_by_email($post->email);
+		$user = User_Model::get_user_by_id($this->user_id);
 
 		if ( ! User_Model::check_password($user->email,$post->current_password) )
 		{
