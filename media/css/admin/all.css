@@ -748,7 +748,7 @@ ul.links {
 }
 ul.info {padding-top:4px;}
 ul.info li,
-ul.links li{width:50px;
+ul.links li{
 	line-height:12px;
 	font-size:10px;
 	color:#636363;
