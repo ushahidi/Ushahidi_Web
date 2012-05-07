@@ -124,7 +124,10 @@ class map_Core {
 		// Hack on XYZ / Esri Attribution layer here since XYZ doesn't support images in attribution
 		if (stripos($default_map,'esri_') !== FALSE AND $all == FALSE)
 		{
-			$js .= "var esriAttributionDiv = document.createElement('div');"
+			// We have two div ids that we use for maps, map and divMap. We need a more permanent
+			//   solution to cover any div name.
+			$js .= "if ( $(\"#map\").length > 0 ) { divName = \"map\" }else{ divName= \"divMap\" }"
+				. "var esriAttributionDiv = document.createElement('div');"
 			    . "$(esriAttributionDiv).html('"
 				. "<img src=\"http://www.arcgis.com/home/images/map/logo-sm.png\" style=\"float:right;\"/>"
 				. "<small style=\"position: absolute; bottom: -10px;\">"
@@ -136,10 +139,10 @@ class map_Core {
 			    . "\t'position': 'absolute',\n"
 			    . "\t'z-index': 10000,\n"
 			    . "\t'margin': '-40px 0 0 85px',\n"
-			    . "\t'right': $('div#map').offset().right + 10,\n"
-			    . "\t'width': $('div#map').width() - 90,\n"
+			    . "\t'right': $('div#'+divName).offset().right + 10,\n"
+			    . "\t'width': $('div#'+divName).width() - 90,\n"
 			    . "});\n"
-				. "$(esriAttributionDiv).appendTo($('div#map'));";
+				. "$(esriAttributionDiv).appendTo($('div#'+divName));";
 		}
 		
 		Event::run('ushahidi_filter.map_layers_js', $js);
