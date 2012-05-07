@@ -99,7 +99,7 @@
 													<?php
 													if($layer_file)
 													{
-														?><li class="none-separator"><?php echo Kohana::lang('ui_main.kml_kmz_file');?>: <strong><?php echo $layer_file; ?></strong>
+														?><li class="none-separator"><?php echo Kohana::lang('ui_main.kml_kmz_file');?>: <p><strong><?php echo $layer_file; ?></strong></p>
 														&nbsp;[<a href="javascript:layerAction('i','DELETE FILE','<?php echo rawurlencode($layer_id);?>')">Delete</a>]</li>
 														<?php
 													}
@@ -109,7 +109,7 @@
 													<?php
 													if($layer_url)
 													{
-														?><li class="none-separator"><?php echo Kohana::lang('ui_main.kml_url');?>: <strong><?php echo text::auto_link($layer_url); ?></strong></li><?php
+														?><li class="none-separator"><?php echo Kohana::lang('ui_main.kml_url');?>: <p><strong><?php echo text::auto_link($layer_url); ?></strong></p></li><?php
 													}
 													?>
 												</ul>
