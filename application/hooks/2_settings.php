@@ -87,7 +87,7 @@ Kohana::config_set('cache.default.lifetime', $settings->cache_pages_lifetime);
 
 $default_map = $settings->default_map;
 $map_layer = map::base($default_map);
-if ($map_layer)
+if (isset($map_layer->api_url) AND $map_layer->api_url != '')
 {
 	Kohana::config_set('settings.api_url', 
 		"<script type=\"text/javascript\" src=\"".$map_layer->api_url."\"></script>");
