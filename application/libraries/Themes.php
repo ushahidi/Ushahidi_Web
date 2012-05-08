@@ -151,7 +151,6 @@ class Themes_Core {
 
 		if ($this->map_enabled)
 		{
-			$core_js .= $this->api_url;
 
 			if ($this->main_page || $this->this_page == "alerts")
 			{

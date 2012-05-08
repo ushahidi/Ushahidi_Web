@@ -32,7 +32,7 @@
 
 ?>
 
-<body id="page" class="<?php echo $body_class; ?>" />
+<body id="page" class="<?php echo $body_class; ?>">
 
 <?php echo $header_nav; ?>
 
