@@ -90,9 +90,6 @@ class Alerts_Controller extends Main_Controller {
 			$countries[$country->id] = $this_country;
 		}
 
-		// Initialize Default Value for Hidden Field Country Name, just incase Reverse Geo coding yields no result
-		$form['alert_country'] = $countries[$default_country];
-
 		//Initialize default value for Alert confirmed hidden value
 
 		$this->template->content->countries = $countries;
@@ -134,6 +131,9 @@ class Alerts_Controller extends Main_Controller {
 
 				// populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('alerts'));
+        if (array_key_exists('alert_recipient', $post->errors('alerts'))) {
+          $errors = array_merge($errors, $post->errors('alerts'));
+        }
 				$form_error = TRUE;
             }
         }
@@ -145,10 +145,13 @@ class Alerts_Controller extends Main_Controller {
 			$form['alert_category'] = array();
         }
 
+		$this->template->content->form_error = $form_error;
+		// Initialize Default Value for Hidden Field Country Name, just incase Reverse Geo coding yields no result
+		$form['alert_country'] = $countries[$default_country];
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
-		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
+
 
 		// Javascript Header
 		$this->themes->map_enabled = TRUE;
