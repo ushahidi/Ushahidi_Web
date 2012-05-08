@@ -90,7 +90,7 @@ class Stats_Model extends ORM
 				$tag = (string) @simplexml_load_string($buffer); // This works because the tracking code is only wrapped in one tag
 			} catch (Exception $e) {
 				// In case the xml was malformed for whatever reason, we will just guess what the tag should be here
-				$tag = '<!-- Piwik --><script type="text/javascript">$(document).ready(function(){$(\'#piwik\').load(\'https://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'&rec=1\');});</script><div id="piwik"></div><!-- End Piwik Tag -->';
+				$tag = '<!-- Piwik --><script type="text/javascript">jQuery(document).ready(function(){$(\'#piwik\').load(\'https://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'&rec=1\');});</script><div id="piwik"></div><!-- End Piwik Tag -->';
 			}
 
 			// Reset Cache Here
