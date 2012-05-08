@@ -54,11 +54,11 @@
 	),
 	'username' => array(
 		'admin' => 'The admin user role cannot be modified.',
-		'alpha_numeric' => 'The username field must only contain numbers and letters.',
-		'exists' => 'Sorry, this username is already in use.',
-		'length' => 'The username field must be at least 2 and no more 100 characters long.',
-		'login error' => 'Please check that you entered the correct username.',
-		'required' => 'The username field is required.',
+		'alpha_numeric' => 'The public profile URL field must only contain numbers and letters.',
+		'exists' => 'Sorry, this public profile URL is already in use.',
+		'length' => 'The public profile URL field must be at least 2 and no more 100 characters long.',
+		'login error' => 'Please check that you entered the correct public profile URL.',
+		'required' => 'The public profile URL field is required.',
 		'superadmin' => 'The super admin role cannot be modified.',
 		'csrf' => 'Possible CSRF attack. Did you really mean to create/edit a user?'
 	));
