@@ -683,6 +683,7 @@ table td{
 	width:25px;
 }
 .table .col-2{ width:539px;}
+.table .col-2 p{ width:539px;word-wrap: break-word;}
 .table .col-2_sub{
 	width:519px;
 	padding-left:30px;

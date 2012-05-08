@@ -22,6 +22,7 @@
 	),
 	'change_picture' => 'Profile pages on this site use Gravatar. By clicking on your image, you will be taken to the Gravatar website where you can change your profile picture.',
 	'default_value' => 'Separate each value with a comma, e.g. value1, value2.',
+	'radio_choices' => 'Separate each value with a comma, e.g. value1, value2. In case you want to set a default value, end your list of options with :: e.g If you want to make value3 the default, it will be value1, value2, value3::value3',
 	'dropdown_choices' => 'Separate each choice item with a comma, e.g. Item 1, Item 2 etc.',
 	'private_to' => 'Start typing to list members.',
 	'private_subject' => 'Private message subject',

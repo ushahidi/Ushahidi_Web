@@ -896,7 +896,7 @@ class Forms_Controller extends Admin_Controller {
 		$values_prompt = (intval($type) == 7)? Kohana::lang('ui_admin.dropdown_choices') : Kohana::lang('ui_admin.field_choices');
 		
 		// Tooltip display value
-		$tooltip = (intval($type) == 7)? Kohana::lang('tooltips.dropdown_choices') : Kohana::lang('tooltips.default_value');
+		$tooltip = (intval($type) == 7) ? Kohana::lang('tooltips.dropdown_choices'): (intval($type) == 5)? Kohana::lang('tooltips.radio_choices'): Kohana::lang('tooltips.default_value');
 		
 		$html = "<input type=\"hidden\" name=\"form_id\" id=\"form_id\" value=\"".$form_id."\">"
 			. "<input type=\"hidden\" name=\"field_id\" id=\"field_id\" value=\"".$field_id."\">"
