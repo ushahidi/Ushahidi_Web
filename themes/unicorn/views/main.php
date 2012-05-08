@@ -50,7 +50,7 @@ $(function(){
 							$color_css = '';
 						}
 						?>
-						<li><a class="active" id="cat_0" href="#"><span <?php echo $color_css;?>"><?php echo $all_cat_image; ?></span><span class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></span></a></li>
+						<li><a class="active" id="cat_0" href="#"><span <?php echo $color_css;?>><?php echo $all_cat_image; ?></span><span class="category-title"><?php echo Kohana::lang('ui_main.all_categories');?></span></a></li>
 						<?php
     					foreach ($categories as $category => $category_info)
     					{
