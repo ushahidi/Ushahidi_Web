@@ -246,7 +246,7 @@
 			});
 			
 			// Undo Action Removes Most Recent Marker
-			$('.btn_del_last').live('click', function () {
+			$('.btn_del_last').on('click', function () {
 				if (vlayer.features.length > 0) {
 					x = vlayer.features.length - 1;
 					vlayer.removeFeatures(vlayer.features[x]);
@@ -257,7 +257,7 @@
 			});
 			
 			// Delete Selected Features
-			$('.btn_del_sel').live('click', function () {
+			$('.btn_del_sel').on('click', function () {
 				for(var y=0; y < selectedFeatures.length; y++) {
 					vlayer.removeFeatures(selectedFeatures);
 				}
@@ -267,7 +267,7 @@
 			});
 			
 			// Clear Map
-			$('.btn_clear').live('click', function () {
+			$('.btn_clear').on('click', function () {
 				vlayer.removeFeatures(vlayer.features);
 				$('input[name="geometry[]"]').remove();
 				$("#latitude").val("");
@@ -283,7 +283,7 @@
 			});
 			
 			// GeoCode
-			$('.btn_find').live('click', function () {
+			$('.btn_find').on('click', function () {
 				geoCode();
 			});
 			$('#location_find').bind('keypress', function(e) {
@@ -325,25 +325,25 @@
 			
 			/* Form Actions */
 			// Action on Save Only
-			$('.btn_save').live('click', function () {
+			$('.btn_save').on('click', function () {
 				$("#save").attr("value", "dontclose");
 				$(this).parents("form").submit();
 				return false;
 			});
 			
-			$('.btn_save_close').live('click', function () {
+			$('.btn_save_close').on('click', function () {
 				$(this).parents("form").submit();
 				return false;
 			});
 
-			$('.btn_save_add_new').live('click', function () {
+			$('.btn_save_add_new').on('click', function () {
 				$("#save").attr("value", "addnew");
 				$(this).parents("form").submit();
 				return false;
 			});
 			
 			// Delete Action
-			$('.btn_delete').live('click', function () {
+			$('.btn_delete').on('click', function () {
 				var agree=confirm("<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> <?php echo Kohana::lang('ui_admin.delete_action'); ?>?");
 				if (agree){
 					$('#reportMain').submit();

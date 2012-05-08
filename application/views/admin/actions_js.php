@@ -173,7 +173,7 @@ $(document).ready(function() {
 
 
 	// Clear Map
-	$('.btn_clear').live('click', function () {
+	$('.btn_clear').on('click', function () {
 		clear_everything();
 	});
 
@@ -188,7 +188,7 @@ $(document).ready(function() {
 	}
 
 	// GeoCode
-	$('.btn_find').live('click', function () {
+	$('.btn_find').on('click', function () {
 		geoCode();
 	});
 	$('#location_find').bind('keypress', function(e) {

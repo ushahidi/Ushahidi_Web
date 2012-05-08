@@ -56,17 +56,20 @@
 				$("#alert_lat").attr("value", lonlat2.lat);
 				$("#alert_lon").attr("value", lonlat2.lon);
 				
-				// Looking up country name using reverse geocoding					
-				reverseGeocode(lonlat2.lat, lonlat2.lon);
+				// Looking up country name using reverse geocoding
+				//    TODO: Function doesn't exist so it clearly isn't doing anything. -BH
+				// reverseGeocode(lonlat2.lat, lonlat2.lon);
 			});
-			
-			/* 
+
+			/*
 			Google GeoCoder
 			TODO - Add Yahoo and Bing Geocoding Services
 			 */
-			$('.btn_find').live('click', function () {
+
+			$('.btn_find').on('click', function () {
 				geoCode();
 			});
+
 			$('#location_find').bind('keypress', function(e) {
 				var code = (e.keyCode ? e.keyCode : e.which);
 				if(code == 13) { //Enter keycode
@@ -75,7 +78,6 @@
 				}
 			});
 
-			
 			// Alerts Slider
 			$("select#alert_radius").selectToUISlider({
 				labels: 6,
@@ -131,7 +133,7 @@
 		{
 			$('#find_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 			address = $("#location_find").val();
-			$.post("<?php echo url::site() . 'reports/geocode/' ?>", { address: address },
+			$.post("<?php echo url::site(); ?>reports/geocode/", { address: address },
 				function(data){
 					if (data.status == 'success'){
 						var lonlat = new OpenLayers.LonLat(data.longitude, data.latitude);
