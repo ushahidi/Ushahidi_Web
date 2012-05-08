@@ -1,3 +1,15 @@
+Ushahidi 2.3.2 - Bug fix release, 08-05-2012
+-------------------------------------
+
+* Security fix for Admin API - prevent member role from accessing the admin API. (SA-WEB-2012-005)
+* Fix Google maps base layers - base layer type were being incorrectly escaped
+* Fix session driver change from 2.3.1 - Set session driver back to cookie as other drivers are buggy
+
+Ushahidi 2.3.1 - Security fix release, 30-04-2012
+-------------------------------------
+
+* Security fix for session storage - sessions from any deployment were valid on any other deployment (SA-WEB-2012-004)
+
 Ushahidi 2.3 - (Juba) Bug fix release, 24-04-2012
 --------------------------
 * Cleaned up database Schema
