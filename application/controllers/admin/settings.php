@@ -574,6 +574,7 @@ class Settings_Controller extends Admin_Controller
 		}
 
 		// Get default category image
+		$settings = ORM::factory('settings', 1);
 		if ($settings->default_map_all_icon_id != NULL)
 		{
 			$icon = ORM::factory('media')->find($settings->default_map_all_icon_id);
