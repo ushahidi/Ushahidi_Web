@@ -88,7 +88,7 @@
 	        Event::run('ushahidi_action.header_item');
         ?>
 
-        <?php if($site_message != '') { ?>
+        <?php if(isset($site_message) AND $site_message != '') { ?>
 			<div class="green-box">
 				<h3><?php echo $site_message; ?></h3>
 			</div>
