@@ -504,37 +504,41 @@
 	}
 
 	/**
-	 * Fetch latest ushahidi version from a remote instance then 
+	 * Fetch latest ushahidi version from a remote instance then
 	 * compare it with local instance version number.
 	 */
-	public function _fetch_core_release() 
+	public function _fetch_core_release()
 	{
 		// Current Version
 		$current = urlencode(Kohana::config('settings.ushahidi_version'));
 
 		// Extra Stats
-		$url = urlencode(preg_replace("/^https?:\/\/(.+)$/i","\\1", 
+		$url = urlencode(preg_replace("/^https?:\/\/(.+)$/i","\\1",
 					url::base()));
 		$ip_address = (isset($_SERVER['REMOTE_ADDR'])) ?
 			urlencode($_SERVER['REMOTE_ADDR']) : "";
 
 		$version_url = "http://version.ushahidi.com/2/?v=".$current.
-			"&u=".$url."&ip=".$ip_address;		
-		
-        preg_match('/({.*})/', file_get_contents($version_url), $matches);
-        
-		$version_json_string = $matches[0];
-		
+			"&u=".$url."&ip=".$ip_address;
+
+		preg_match('/({.*})/', file_get_contents($version_url), $matches);
+
+		$version_json_string = false;
+		if(isset($matches[0]))
+		{
+			$version_json_string = $matches[0];
+		}
+
 		// If we didn't get anything back...
 		if ( ! $version_json_string )
 		{
 			 return "";
 		}
 
-		$version_details = json_decode($version_json_string);	
+		$version_details = json_decode($version_json_string);
 		return $version_details;
 	}
-	
+
 	/**
 	 * Log Messages To File
 	 */
