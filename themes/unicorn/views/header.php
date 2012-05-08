@@ -75,6 +75,11 @@
 			<?php echo $submit_btn; ?>
 			<!-- / submit incident -->
 
+			<?php
+				// Action::main_sidebar - Add Items to the Entry Page Sidebar
+				Event::run('ushahidi_action.main_sidebar');
+			?>
+
 		</div>
 		<!-- / header -->
          <!-- / header item for plugins -->
@@ -82,6 +87,13 @@
             // Action::header_item - Additional items to be added by plugins
 	        Event::run('ushahidi_action.header_item');
         ?>
+
+        <?php if($site_message != '') { ?>
+			<div class="green-box">
+				<h3><?php echo $site_message; ?></h3>
+			</div>
+		<?php } ?>
+
 		<!-- main body -->
 		<div id="middle">
 			<div class="background layoutleft">

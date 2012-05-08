@@ -197,7 +197,10 @@ class Main_Controller extends Template_Controller {
 		$site_message = trim(Kohana::config('settings.site_message'));
 		if($site_message != '')
 		{
+			// Send the site message to both the header and the main content body
+			//   so a theme can utilize it in either spot.
 			$this->template->content->site_message = $site_message;
+			$this->template->header->site_message = $site_message;
 		}
 
 		// Get locale
@@ -264,7 +267,7 @@ class Main_Controller extends Template_Controller {
 
 		// Get Default Color
 		$this->template->content->default_map_all = Kohana::config('settings.default_map_all');
-		
+
 		// Get default icon
 		$this->template->content->default_map_all_icon = '';
 		if (Kohana::config('settings.default_map_all_icon_id'))
@@ -462,7 +465,7 @@ class Main_Controller extends Template_Controller {
 		$this->themes->js->latitude = Kohana::config('settings.default_lat');
 		$this->themes->js->longitude = Kohana::config('settings.default_lon');
 		$this->themes->js->default_map_all = Kohana::config('settings.default_map_all');
-		
+
 		// Get default icon
 		$this->themes->js->default_map_all_icon = $this->template->content->default_map_all_icon;
 

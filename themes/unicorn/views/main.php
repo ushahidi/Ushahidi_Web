@@ -1,4 +1,3 @@
-
 <script type="text/javascript">
 $(function(){
   
@@ -20,12 +19,6 @@ $(function(){
 <!-- main body -->
 <div id="main" class="clearingfix">
 	<div id="mainmiddle">
-
-	<?php if($site_message != '') { ?>
-		<div class="green-box">
-			<h3><?php echo $site_message; ?></h3>
-		</div>
-	<?php } ?>
 
 		<!-- right column -->
 		<div id="report-map-filter-box" class="clearingfix">
@@ -238,20 +231,12 @@ $(function(){
 				</div>
 			<?php } ?>
 			<!-- / additional content -->
-			
-			<?php
-			// Action::main_sidebar - Add Items to the Entry Page Sidebar
-			Event::run('ushahidi_action.main_sidebar');
-			?>
-	
 		</div>
 		<!-- / right column -->
-	
+
 		<!-- content column -->
 		<div id="content" class="clearingfix">
-		  
-
-				<?php								
+				<?php
 				// Map and Timeline Blocks
 				echo $div_map;
 				echo $div_timeline;
