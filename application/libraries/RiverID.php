@@ -57,6 +57,7 @@ class RiverID_Core {
 
 		// Set endpoint
 		$this->endpoint = kohana::config('riverid.endpoint');
+		$this->api_key = kohana::config('riverid.api_key');
 
 		// Check if endpoint is there
 		$this->endpoint_exits = TRUE;
@@ -163,7 +164,7 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/registered?email='.$this->email;
+		$url = $this->endpoint.'/registered?email='.$this->email.'&api_secret='.$this->api_key;
 		return $this->_curl_req($url);
 	}
 
@@ -202,7 +203,7 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/register?email='.$this->email.'&password='.$this->password;
+		$url = $this->endpoint.'/register?email='.$this->email.'&password='.$this->password.'&api_secret='.$this->api_key;
 		$register_response = $this->_curl_req($url);
 		$register = json_decode($register_response);
 
@@ -231,7 +232,7 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/signin?email='.$this->email.'&password='.$this->password;
+		$url = $this->endpoint.'/signin?email='.$this->email.'&password='.$this->password.'&api_secret='.$this->api_key;
 		$signin_response = $this->_curl_req($url);
 		$signin = json_decode($signin_response);
 
@@ -264,8 +265,9 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/requestpassword?email='.$this->email.'&mailbody='.urlencode($mailbody);
+		$url = $this->endpoint.'/requestpassword?email='.$this->email.'&mailbody='.urlencode($mailbody).'&api_secret='.$this->api_key;
 		$requestpassword_response = $this->_curl_req($url);
+
 		$requestpassword = json_decode($requestpassword_response);
 
 		if ($requestpassword->success)
@@ -292,7 +294,7 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/setpassword?email='.$this->email.'&password='.$this->new_password.'&token='.$this->token;
+		$url = $this->endpoint.'/setpassword?email='.$this->email.'&password='.$this->new_password.'&token='.$this->token.'&api_secret='.$this->api_key;
 		$setpassword_response = $this->_curl_req($url);
 		$setpassword = json_decode($setpassword_response);
 
@@ -323,7 +325,7 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/changepassword?email='.$this->email.'&oldpassword='.$this->password.'&newpassword='.$this->new_password;
+		$url = $this->endpoint.'/changepassword?email='.$this->email.'&oldpassword='.$this->password.'&newpassword='.$this->new_password.'&api_secret='.$this->api_key;
 		$changepassword_response = $this->_curl_req($url);
 		$changepassword = json_decode($changepassword_response);
 
@@ -354,17 +356,17 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/checkpassword?email='.$this->email.'&password='.$this->password;
+		$url = $this->endpoint.'/checkpassword?email='.$this->email.'&password='.$this->password.'&api_secret='.$this->api_key;
 		$checkpassword_response = $this->_curl_req($url);
 		$checkpassword = json_decode($checkpassword_response);
 
-		if ($checkpassword->success)
+		if ($checkpassword->success && $checkpassword->response)
 		{
 			// Successful Checking of Password
 		}
 		else
 		{
-			$this->error[] = $checkpassword->error;
+			$this->error[] = 'Incorrect password provided.';
 			return FALSE;
 		}
 
