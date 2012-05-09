@@ -48,7 +48,7 @@ class Login_Controller extends Template_Controller {
 
 		$insufficient_role = FALSE;
 
-		if ($auth->logged_in() OR $auth->auto_login())
+		if ($auth->logged_in())
 		{
 			if ( $user = Session::instance()->get('auth_user',FALSE) )
 			{
