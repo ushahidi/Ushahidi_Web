@@ -3,11 +3,11 @@
  * The Ushahidi Engine version
  * Make sure to update the ushahidi_version in the settings table too!
  */
-$config['ushahidi_version'] = "2.3.1";
+$config['ushahidi_version'] = "2.3.2";
 
 
 /**
  * The Ushahidi Engine DB revision number
  * Increments when changes are made to the Ushahidi DB schema.
  */
-$config['ushahidi_db_version'] = "87";
+$config['ushahidi_db_version'] = "88";
