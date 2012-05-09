@@ -433,7 +433,7 @@
 				fillOpacity: "${opacity}",
 				strokeColor: "${strokeColor}",
 				strokeWidth: "${strokeWidth}",
-				strokeOpacity: "0.3",
+				strokeOpacity: "${strokeOpacity}",
 				label:"${clusterCount}",
 				//labelAlign: "${labelalign}", // IE doesn't like this for some reason
 				fontWeight: "${fontweight}",
@@ -631,13 +631,30 @@
 					opacity: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!=="")
+						if (typeof(feature.attributes.opacity) != 'undefined' && 
+							feature.attributes.opacity != '')
+						{
+							return feature.attributes.opacity
+						}
+						else if (feature_icon!=="")
 						{
 							return "1";
 						}
 						else
 						{
 							return markerOpacity;
+						}
+					},
+					strokeOpacity: function(feature)
+					{
+						if(typeof(feature.attributes.strokeopacity) != 'undefined' && 
+							feature.attributes.strokeopacity != '')
+						{
+							return feature.attributes.strokeopacity;
+						}
+						else
+						{
+							return markerStrokeOpacity
 						}
 					},
 					labelalign: function(feature)
