@@ -64,7 +64,7 @@ class Reports_Controller extends Main_Controller {
 		if (Kohana::config('settings.default_map_all_icon_id'))
 		{
 			$icon_object = ORM::factory('media')->find(Kohana::config('settings.default_map_all_icon_id'));
-			$this->themes->js->default_map_all_icon = $this->template->content->default_map_all_icon =		Kohana::config('upload.relative_directory')."/".$icon_object->media_thumb;
+			$this->themes->js->default_map_all_icon = $this->template->content->default_map_all_icon = Kohana::config('upload.relative_directory')."/".$icon_object->media_thumb;
 		}
 
 		// Load the alert radius view
