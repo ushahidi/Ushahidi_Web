@@ -61,8 +61,7 @@ class Reports_Controller extends Members_Controller {
 		// Get Search Keywords (If Any)
 		if (isset($_GET['k']))
 		{
-			//	Brute force input sanitization
-			
+			// Brute force input sanitization
 			// Phase 1 - Strip the search string of all non-word characters 
 			$keyword_raw = preg_replace('/[^\w+]\w*/', '', $_GET['k']);
 			
@@ -80,7 +79,7 @@ class Reports_Controller extends Members_Controller {
 			$keyword_raw = "";
 		}
 
-		// check, has the form been submitted?
+		// Check, has the form been submitted?
 		$form_error = FALSE;
 		$form_saved = FALSE;
 		$form_action = "";
@@ -99,7 +98,8 @@ class Reports_Controller extends Members_Controller {
 
 			if ($post->validate())
 			{
-				if ($post->action == 'd')	//Delete Action
+				// Delete Action
+				if ($post->action == 'd')	
 				{
 					foreach($post->incident_id as $item)
 					{
@@ -122,7 +122,8 @@ class Reports_Controller extends Members_Controller {
 							ORM::factory('incident_lang')->where('incident_id',$incident_id)->delete_all();
 
 							// Delete Photos From Directory
-							foreach (ORM::factory('media')->where('incident_id',$incident_id)->where('media_type', 1) as $photo) {
+							foreach (ORM::factory('media')->where('incident_id',$incident_id)->where('media_type', 1) as $photo) 
+							{
 								deletePhoto($photo->id);
 							}
 
@@ -183,7 +184,7 @@ class Reports_Controller extends Members_Controller {
 			$location_ids[] = $incident->location_id;
 		}
 		
-		//check if location_ids is not empty
+		// Check if location_ids is not empty
 		if( count($location_ids ) > 0 ) 
 		{
 			$locations_result = ORM::factory('location')->in('id',implode(',',$location_ids))->find_all();
@@ -202,7 +203,7 @@ class Reports_Controller extends Members_Controller {
 		$this->template->content->locations = $locations;
 		$this->template->content->country_ids = $country_ids;
 
-		//GET countries
+		// GET countries
 		$countries = array();
 		foreach (ORM::factory('country')->orderby('country')->find_all() as $country)
 		{
@@ -245,10 +246,10 @@ class Reports_Controller extends Members_Controller {
 		$this->template->content = new View('members/reports_edit');
 		$this->template->content->title = Kohana::lang('ui_admin.create_report');
 
-		// setup and initialize form field names
+		// Setup and initialize form field names
 		$form = array(
 			'location_id' => '',
-			'form_id' => '',
+			'form_id' => '1',
 			'locale' => '',
 			'incident_title' => '',
 			'incident_description' => '',
@@ -275,7 +276,7 @@ class Reports_Controller extends Members_Controller {
 			'incident_information' => ''
 		);
 
-		//	copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 		$form_saved = ($saved == 'saved');
@@ -289,8 +290,10 @@ class Reports_Controller extends Members_Controller {
 		$form['incident_hour'] = date('h');
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
-		// initialize custom field array
-		$form['custom_field'] = customforms::get_custom_form_fields($id, '', TRUE);
+		
+		// Initialize custom field array
+		$form_id = $form['form_id'];
+		$form['custom_field'] = customforms::get_custom_form_fields($id, $form_id, TRUE);
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
@@ -372,7 +375,7 @@ class Reports_Controller extends Members_Controller {
 		}
 		
 
-		// check, has the form been submitted, if so, setup validation
+		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
@@ -422,8 +425,8 @@ class Reports_Controller extends Members_Controller {
 				}
 
 				// Action::report_add / report_submit_members - Added a New Report
-				//++ Do we need two events for this? Or will one suffice?
-				//Event::run('ushahidi_action.report_add', $incident);
+				// ++ Do we need two events for this? Or will one suffice?
+				// Event::run('ushahidi_action.report_add', $incident);
 				Event::run('ushahidi_action.report_submit_members', $post);
 
 
@@ -443,10 +446,10 @@ class Reports_Controller extends Members_Controller {
 			// No! We have validation errors, we need to show the form again, with the errors
 			else
 			{
-				// repopulate the form fields
+				// Repopulate the form fields
 				$form = arr::overwrite($form, $post->as_array());
 
-				// populate the error fields, if any
+				// Populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
@@ -553,7 +556,7 @@ class Reports_Controller extends Members_Controller {
 		$this->template->content->form_saved = $form_saved;
 
 		// Retrieve Custom Form Fields Structure
-		$disp_custom_fields = customforms::get_custom_form_fields($id, $form['form_id'], FALSE);
+		$disp_custom_fields = customforms::get_custom_form_fields($id, $form_id, FALSE);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
 
 		// Retrieve Previous & Next Records
@@ -642,12 +645,10 @@ class Reports_Controller extends Members_Controller {
 	{
 		$incident = ORM::factory('incident', $id);
 
-		if ( $id )
+		if ($id)
 		{
 			$incident = ORM::factory('incident', $id);
-
 			return $incident;
-
 		}
 		return "0";
 	}
@@ -668,7 +669,6 @@ class Reports_Controller extends Members_Controller {
 		{
 			$minute_array[sprintf("%02d", $j)] = sprintf("%02d", $j);	// Add Leading Zero
 		}
-
 		return $minute_array;
 	}
 
@@ -682,13 +682,12 @@ class Reports_Controller extends Members_Controller {
 		for ($i = 0.5; $i <= 8 ; $i += 0.5)
 		{
 			$stroke_width_array["$i"] = $i;
-		}
-		
+		}	
 		return $stroke_width_array;
 	}
 
 	// Javascript functions
-	 private function _color_picker_js()
+	private function _color_picker_js()
 	{
 	 return "<script type=\"text/javascript\">
 				$(document).ready(function() {
@@ -810,7 +809,6 @@ class Reports_Controller extends Members_Controller {
 			}
 			$html .= "</div>";
 		}
-
 		echo json_encode(array("status"=>"success", "response"=>$html));
 	}
 
@@ -821,7 +819,6 @@ class Reports_Controller extends Members_Controller {
 	{
 		$or = '';
 		$where_string = '';
-
 
 		// Stop words that we won't search for
 		// Add words as needed!!
@@ -835,7 +832,6 @@ class Reports_Controller extends Members_Controller {
 		{
 			array_change_key_case($keywords, CASE_LOWER);
 			$i = 0;
-			
 			foreach($keywords as $value)
 			{
 				if (!in_array($value,$stop_words) && !empty($value))
@@ -844,7 +840,8 @@ class Reports_Controller extends Members_Controller {
 					if ($i > 0) {
 						$or = ' OR ';
 					}
-					$where_string = $where_string.$or."incident_title LIKE '%$chunk%' OR incident_description LIKE '%$chunk%'  OR location_name LIKE '%$chunk%'";
+					$where_string = $where_string.$or."incident_title LIKE '%$chunk%' OR incident_description LIKE '%"
+					.$chunk."%' OR location_name LIKE '%$chunk%'";
 					$i++;
 				}
 			}

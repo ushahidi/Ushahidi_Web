@@ -22,71 +22,75 @@ class customforms_Core {
 	/**
 	 * Retrieve Custom Form Fields
 	 * @param bool|int $incident_id The unique incident_id of the original report
-	 * @param int $form_id The unique form_id. Uses default form (1), if none selected
+	 * @param int $form_id The unique form_id. If none selected, retrieve custom form fields from ALL custom forms
 	 * @param bool $data_only Whether or not to include just data
 	 * @param string $action If this is being used to grab fields for submit or view of data
 	 */
-	public static function get_custom_form_fields($incident_id = FALSE, $form_id = 1, $data_only = FALSE, $action = "submit")
+	public static function get_custom_form_fields($incident_id = FALSE, $form_id = NULL, $data_only = FALSE, $action = "submit")
 	{
 		$fields_array = array();
 
-		if (!$form_id)
-			$form_id = 1;
-
-		// Validation
-		if (!Form_Model::is_valid_form($form_id))
+		if($form_id != null AND $form_id != '')
 		{
-			return $fields_array;
+			// Validation
+			if (!Form_Model::is_valid_form($form_id))
+			{
+				return $fields_array;
+			}
 		}
 
 		// Database table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
 
-		//NOTE will probably need to add a user_level variable for non-web based requests
+		// NOTE will probably need to add a user_level variable for non-web based requests
 		$user_level = self::get_user_max_auth();
 
 		// Get the predicates for the public state
 		$public_state = ($action == "view") ? '<='.$user_level : ' <= '.$user_level;
 
 		// Query to fetch the form fields associated with the given form id
-		if($form_id != null AND $form_id != '')
+		$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff WHERE 1=1 ";
+		
+		
+		if ($form_id != null AND $form_id != '')
 		{
-			$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff WHERE 1=1 ";
+			$sql .= "AND ff.form_id = ".$form_id." ";
+		}
+		
+		
+		$sql .= "AND ff.field_ispublic_visible ".$public_state." "
+				. "ORDER BY ff.field_position ASC";
 
-			$sql .= "AND ff.form_id = ".$form_id." "
-					. "AND ff.field_ispublic_visible ".$public_state." "
-					. "ORDER BY ff.field_position ASC";
+		// Execute the SQL to fetch the custom form fields
+		$form_fields = Database::instance()->query($sql);
 
-			// Execute the SQL to fetch the custom form fields
-			$form_fields = Database::instance()->query($sql);
-
-			foreach ($form_fields as $custom_formfield)
+		foreach ($form_fields as $custom_formfield)
+		{
+			if ($data_only)
 			{
-				if ($data_only)
-				{
-					// Return Data Only
-					$fields_array[$custom_formfield->id] = $custom_formfield->form_response;
-				}
-				else
-				{
-					// Return Field Structure
-					$fields_array[$custom_formfield->id] = array(
-						'field_id' => $custom_formfield->id,
-						'field_name' => $custom_formfield->field_name,
-						'field_type' => $custom_formfield->field_type,
-						'field_default' => $custom_formfield->field_default,
-						'field_required' => $custom_formfield->field_required,
-						'field_maxlength' => $custom_formfield->field_maxlength,
-						'field_height' => $custom_formfield->field_height,
-						'field_width' => $custom_formfield->field_width,
-						'field_isdate' => $custom_formfield->field_isdate,
-						'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
-						'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
-						'field_response' => $custom_formfield->form_response
-						);
-				}
+				// Return Data Only
+				$fields_array[$custom_formfield->id] = $custom_formfield->form_response;
+			}
+			else
+			{
+				// Return Field Structure
+				$fields_array[$custom_formfield->id] = array(
+					'field_id' => $custom_formfield->id,
+					'field_name' => $custom_formfield->field_name,
+					'field_type' => $custom_formfield->field_type,
+					'field_default' => $custom_formfield->field_default,
+					'field_required' => $custom_formfield->field_required,
+					'field_maxlength' => $custom_formfield->field_maxlength,
+					'field_height' => $custom_formfield->field_height,
+					'field_width' => $custom_formfield->field_width,
+					'field_isdate' => $custom_formfield->field_isdate,
+					'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
+					'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
+					'field_response' => $custom_formfield->form_response
+					);
 			}
 		}
+		
 
 
 		// Garbage collection
@@ -103,9 +107,13 @@ class customforms_Core {
 				. "WHERE fr.incident_id = ".$incident_id." ";
 
 
-			$sql .= "AND ff.form_id = ".$form_id." "
-				. "AND ff.field_ispublic_visible ".$public_state." "
-				. "ORDER BY ff.field_position ASC";
+			if ($form_id != null AND $form_id != '')
+			{
+				$sql .= "AND ff.form_id = ".$form_id." ";
+			}
+			
+			$sql .=	"AND ff.field_ispublic_visible ".$public_state." "
+					. "ORDER BY ff.field_position ASC";
 
 			// Execute the SQL to fetch the custom form fields
 			$form_fields = Database::instance()->query($sql);
