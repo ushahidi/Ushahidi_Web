@@ -51,12 +51,10 @@ class customforms_Core {
 		// Query to fetch the form fields associated with the given form id
 		$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff WHERE 1=1 ";
 		
-		
 		if ($form_id != null AND $form_id != '')
 		{
 			$sql .= "AND ff.form_id = ".$form_id." ";
 		}
-		
 		
 		$sql .= "AND ff.field_ispublic_visible ".$public_state." "
 				. "ORDER BY ff.field_position ASC";
@@ -90,12 +88,9 @@ class customforms_Core {
 					);
 			}
 		}
-		
-
 
 		// Garbage collection
 		unset ($form_fields);
-
 
 		// Check if the provided incident exists, then fill in the data
 		if (Incident_Model::is_valid_incident($incident_id))
@@ -105,7 +100,6 @@ class customforms_Core {
 				. "FROM ".$table_prefix."form_field ff "
 				. "RIGHT JOIN ".$table_prefix."form_response fr ON (fr.form_field_id = ff.id) "
 				. "WHERE fr.incident_id = ".$incident_id." ";
-
 
 			if ($form_id != null AND $form_id != '')
 			{
