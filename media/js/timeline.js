@@ -510,38 +510,46 @@
 					},
 					radius: function(feature)
 					{
-						feature_count = feature.attributes.count;
-						if (feature_count > 10000)
+						if ( typeof(feature.attributes.radius) != 'undefined' && 
+							feature.attributes.radius != '')
 						{
-							return markerRadius * 17;
-						}
-						else if (feature_count > 5000)
-						{
-							return markerRadius * 10;
-						}
-						else if (feature_count > 1000)
-						{
-							return markerRadius * 8;
-						}
-						else if (feature_count > 500)
-						{
-							return markerRadius * 7;
-						}
-						else if (feature_count > 100)
-						{
-							return markerRadius * 6;
-						}
-						else if (feature_count > 10)
-						{
-							return markerRadius * 5;
-						}
-						else if (feature_count >= 2)
-						{
-							return markerRadius * 3;
+							return feature.attributes.radius;
 						}
 						else
 						{
-							return markerRadius * 2;
+							feature_count = feature.attributes.count;
+							if (feature_count > 10000)
+							{
+								return markerRadius * 17;
+							}
+							else if (feature_count > 5000)
+							{
+								return markerRadius * 10;
+							}
+							else if (feature_count > 1000)
+							{
+								return markerRadius * 8;
+							}
+							else if (feature_count > 500)
+							{
+								return markerRadius * 7;
+							}
+							else if (feature_count > 100)
+							{
+								return markerRadius * 6;
+							}
+							else if (feature_count > 10)
+							{
+								return markerRadius * 5;
+							}
+							else if (feature_count >= 2)
+							{
+								return markerRadius * 3;
+							}
+							else
+							{
+								return markerRadius * 2;
+							}
 						}
 					},
 					strokeWidth: function(feature)
