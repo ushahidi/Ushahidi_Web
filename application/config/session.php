@@ -43,3 +43,18 @@ $config['encryption'] = TRUE;
  * Percentage probability that the gc (garbage collection) routine is started.
  */
 //$config['gc_probability'] = 2;
+
+/**
+ * Since there can be many concurrent requests sent to the server, we want to make sure
+ *   we only have one token change per pageview
+ */
+$config['generate_tokens_controllers'] = array('dashboard',
+												'reports',
+												'main',
+												'messages',
+												'stats',
+												'addons',
+												'manage',
+												'settings',
+												'login',
+												'contact');

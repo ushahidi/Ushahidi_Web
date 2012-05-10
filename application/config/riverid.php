@@ -19,6 +19,13 @@ $config['enable'] = false;
 $config['endpoint'] = '';
 
 /**
+ * RiverID API Key
+ * A registered API key is necessary to communicate with an endpoint.
+ */
+
+$config['api_key'] = '';
+
+/**
  * RiverID user exemption list
  * Performs authentication locally instead of on the defined RiverID server
  *
