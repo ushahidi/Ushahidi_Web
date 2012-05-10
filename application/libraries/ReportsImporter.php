@@ -187,25 +187,28 @@ class ReportsImporter {
 				// If category name exists, add entry in incident_category table
 				if ($row['CATEGORY'] != '')
 				{
-					if (!isset($this->category_ids[$categoryname]))
+					if($categoryname != '')
 					{
-						$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet.'
-						.' Added to database.';
-						$category = new Category_Model;
-						$category->category_title = $categoryname;
-						// We'll just use black for now. Maybe something random?
-						$category->category_color = '000000'; 
-						// because all current categories are of type '5'
-						$category->category_visible = 1;
-						$category->category_description = $categoryname;
-						$category->save();
-						$this->categories_added[] = $category->id;
-						// Now category_id is known: This time, and for the rest of the import.
-						$this->category_ids[$categoryname] = $category->id; 
+						if (!isset($this->category_ids[$categoryname]))
+						{
+							$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet.'
+							.' Added to database.';
+							$category = new Category_Model;
+							$category->category_title = $categoryname;
+							// We'll just use black for now. Maybe something random?
+							$category->category_color = '000000'; 
+							// because all current categories are of type '5'
+							$category->category_visible = 1;
+							$category->category_description = $categoryname;
+							$category->save();
+							$this->categories_added[] = $category->id;
+							// Now category_id is known: This time, and for the rest of the import.
+							$this->category_ids[$categoryname] = $category->id; 
+						}
+						$incident_category->category_id = $this->category_ids[$categoryname];
+						$incident_category->save();
+						$this->incident_categories_added[] = $incident_category->id;
 					}
-					$incident_category->category_id = $this->category_ids[$categoryname];
-					$incident_category->save();
-					$this->incident_categories_added[] = $incident_category->id;
 				}
 				
 				else

@@ -14,6 +14,7 @@
  */
 
 class Reports_Controller extends Main_Controller {
+	
 	/**
 	 * Whether an admin console user is logged in
 	 * @var bool
@@ -23,12 +24,10 @@ class Reports_Controller extends Main_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-
 		$this->themes->validator_enabled = TRUE;
 
 		// Is the Admin Logged In?
 		$this->logged_in = Auth::instance()->logged_in();
-
 	}
 
 	/**
@@ -101,8 +100,8 @@ class Reports_Controller extends Main_Controller {
 
 		// Collect report stats
 		$this->template->content->report_stats = new View('reports_stats');
+		
 		// Total Reports
-
 		$total_reports = Incident_Model::get_total_reports(TRUE);
 
 		// Get the date of the oldest report
@@ -115,7 +114,7 @@ class Reports_Controller extends Main_Controller {
 			$oldest_timestamp = Incident_Model::get_oldest_report_timestamp();
 		}
 
-		//Get the date of the latest report
+		// Get the date of the latest report
 		if (isset($_GET['e']) AND !empty($_GET['e']) AND intval($_GET['e']) > 0)
 		{
 			$latest_timestamp = intval($_GET['e']);
@@ -193,6 +192,7 @@ class Reports_Controller extends Main_Controller {
 				}
 			}
 		}
+		
 		// Set the view content
 		$report_listing->incidents = $incidents;
 		$report_listing->localized_categories = $localized_categories;
@@ -223,7 +223,8 @@ class Reports_Controller extends Main_Controller {
 											. Kohana::lang('ui_main.reports');
 			}
 			else
-			{ // If we don't want to show pagination
+			{ 
+				// If we don't want to show pagination
 				$report_listing->stats_breadcrumb = $pagination->total_items.' '.Kohana::lang('ui_admin.reports');
 			}
 		}
@@ -295,14 +296,13 @@ class Reports_Controller extends Main_Controller {
 			'person_first' => '',
 			'person_last' => '',
 			'person_email' => '',
-			'form_id'	  => '',
+			'form_id'	  => '1',
 			'custom_field' => array()
 		);
 
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
-
 		$form_saved = ($saved == 'saved');
 
 		// Initialize Default Values
@@ -317,15 +317,15 @@ class Reports_Controller extends Main_Controller {
 		$form['country_name'] = $country_name->country;
 
 		// Initialize custom field array
-		$form['custom_field'] = customforms::get_custom_form_fields($id,'',true);
+		$form_id = $form['form_id'];
+		$form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,true);
 
-		//GET custom forms
+		// GET custom forms
 		$forms = array();
 		foreach (customforms::get_custom_forms() as $custom_forms)
 		{
 			$forms[$custom_forms->id] = $custom_forms->form_title;
 		}
-
 		$this->template->content->forms = $forms;
 
 
@@ -413,7 +413,7 @@ class Reports_Controller extends Main_Controller {
 
 		// Retrieve Custom Form Fields Structure
 		$this->template->content->custom_forms = new View('reports_submit_custom_forms');
-		$disp_custom_fields = customforms::get_custom_form_fields($id,$form['form_id'], FALSE);
+		$disp_custom_fields = customforms::get_custom_form_fields($id,$form_id, FALSE);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
 		$this->template->content->stroke_width_array = $this->_stroke_width_array();
 		$this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
@@ -470,8 +470,9 @@ class Reports_Controller extends Main_Controller {
 				->where('id',$id)
 				->where('incident_active',1)
 				->find();
-
-			if ( ! $incident->loaded) // Not Found
+				
+			// Not Found
+			if ( ! $incident->loaded) 
 			{
 				url::redirect('reports/view/');
 			}
@@ -496,15 +497,12 @@ class Reports_Controller extends Main_Controller {
 			if ($_POST AND Kohana::config('settings.allow_comments') )
 			{
 				// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-
 				$post = Validation::factory($_POST);
 
 				// Add some filters
-
 				$post->pre_filter('trim', TRUE);
 
 				// Add some rules, the input field, followed by a list of checks, carried out in order
-
 				if ( ! $this->user)
 				{
 					$post->add_rules('comment_author', 'required', 'length[3,100]');
@@ -514,11 +512,9 @@ class Reports_Controller extends Main_Controller {
 				$post->add_rules('captcha', 'required', 'Captcha::valid');
 
 				// Test to see if things passed the rule checks
-
 				if ($post->validate())
 				{
 					// Yes! everything is valid
-
 					if ($api_akismet != "")
 					{
 						// Run Akismet Spam Checker
@@ -568,7 +564,6 @@ class Reports_Controller extends Main_Controller {
 							// If the server is down, we have to post
 							// the comment :(
 							// $this->_post_comment($comment);
-
 							$comment_spam = 0;
 						}
 						else
@@ -689,9 +684,9 @@ class Reports_Controller extends Main_Controller {
 				elseif ($media->media_type == 1)
 				{
 					$incident_photo[] = array(
-											'large' => url::convert_uploaded_to_abs($media->media_link),
-											'thumb' => url::convert_uploaded_to_abs($media->media_thumb)
-											);
+						'large' => url::convert_uploaded_to_abs($media->media_link),
+						'thumb' => url::convert_uploaded_to_abs($media->media_thumb)
+						);
 				}
 			}
 
