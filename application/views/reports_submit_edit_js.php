@@ -103,8 +103,8 @@
 				graphicOpacity: 1,
 				graphicWidth: 21,
 				graphicHeight: 25,
-				graphicXOffset: -14,
-				graphicYOffset: -27
+				graphicXOffset: -11,
+				graphicYOffset: -25
 			});
 			style2 = new OpenLayers.Style({
 				pointRadius: "8",
@@ -117,8 +117,8 @@
 				graphicOpacity: 1,
 				graphicWidth: 21,
 				graphicHeight: 25,
-				graphicXOffset: -14,
-				graphicYOffset: -27
+				graphicXOffset: -11,
+				graphicYOffset: -25
 			});
 			style3 = new OpenLayers.Style({
 				pointRadius: "8",
