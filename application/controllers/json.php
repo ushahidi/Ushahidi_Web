@@ -155,6 +155,8 @@ class Json_Controller extends Template_Controller
 			array_push($json_features, $json_item_first);
 		}
 		
+		Event::run('ushahidi_filter.json_index_features', $json_features);
+		
 		$json = json_encode(array(
 			"type" => "FeatureCollection",
 			"features" => $json_features
@@ -346,6 +348,8 @@ class Json_Controller extends Template_Controller
 		// 	$json = implode(",", $geometry_array).",".$json;
 		// }
 		
+		Event::run('ushahidi_filter.json_cluster_features', $json_features);
+		
 		$json = json_encode(array(
 			"type" => "FeatureCollection",
 			"features" => $json_features
@@ -444,6 +448,8 @@ class Json_Controller extends Template_Controller
 				}
 			}
 		}
+
+		Event::run('ushahidi_filter.json_single_features', $json_features);
 
 		$json = json_encode(array(
 			"type" => "FeatureCollection",
@@ -799,6 +805,8 @@ class Json_Controller extends Template_Controller
 					array_push($json_features, $json_item);
 				}
 			}
+
+			Event::run('ushahidi_filter.json_share_features', $json_features);
 
 			$json = json_encode(array(
 				"type" => "FeatureCollection",

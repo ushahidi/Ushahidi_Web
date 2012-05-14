@@ -433,7 +433,7 @@
 				fillOpacity: "${opacity}",
 				strokeColor: "${strokeColor}",
 				strokeWidth: "${strokeWidth}",
-				strokeOpacity: "0.3",
+				strokeOpacity: "${strokeOpacity}",
 				label:"${clusterCount}",
 				//labelAlign: "${labelalign}", // IE doesn't like this for some reason
 				fontWeight: "${fontweight}",
@@ -510,38 +510,46 @@
 					},
 					radius: function(feature)
 					{
-						feature_count = feature.attributes.count;
-						if (feature_count > 10000)
+						if ( typeof(feature.attributes.radius) != 'undefined' && 
+							feature.attributes.radius != '')
 						{
-							return markerRadius * 17;
-						}
-						else if (feature_count > 5000)
-						{
-							return markerRadius * 10;
-						}
-						else if (feature_count > 1000)
-						{
-							return markerRadius * 8;
-						}
-						else if (feature_count > 500)
-						{
-							return markerRadius * 7;
-						}
-						else if (feature_count > 100)
-						{
-							return markerRadius * 6;
-						}
-						else if (feature_count > 10)
-						{
-							return markerRadius * 5;
-						}
-						else if (feature_count >= 2)
-						{
-							return markerRadius * 3;
+							return feature.attributes.radius;
 						}
 						else
 						{
-							return markerRadius * 2;
+							feature_count = feature.attributes.count;
+							if (feature_count > 10000)
+							{
+								return markerRadius * 17;
+							}
+							else if (feature_count > 5000)
+							{
+								return markerRadius * 10;
+							}
+							else if (feature_count > 1000)
+							{
+								return markerRadius * 8;
+							}
+							else if (feature_count > 500)
+							{
+								return markerRadius * 7;
+							}
+							else if (feature_count > 100)
+							{
+								return markerRadius * 6;
+							}
+							else if (feature_count > 10)
+							{
+								return markerRadius * 5;
+							}
+							else if (feature_count >= 2)
+							{
+								return markerRadius * 3;
+							}
+							else
+							{
+								return markerRadius * 2;
+							}
 						}
 					},
 					strokeWidth: function(feature)
@@ -631,13 +639,30 @@
 					opacity: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!=="")
+						if (typeof(feature.attributes.opacity) != 'undefined' && 
+							feature.attributes.opacity != '')
+						{
+							return feature.attributes.opacity
+						}
+						else if (feature_icon!=="")
 						{
 							return "1";
 						}
 						else
 						{
 							return markerOpacity;
+						}
+					},
+					strokeOpacity: function(feature)
+					{
+						if(typeof(feature.attributes.strokeopacity) != 'undefined' && 
+							feature.attributes.strokeopacity != '')
+						{
+							return feature.attributes.strokeopacity;
+						}
+						else
+						{
+							return markerStrokeOpacity
 						}
 					},
 					labelalign: function(feature)

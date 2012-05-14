@@ -4,7 +4,7 @@
  *
  * Session driver name.
  */
-$config['driver'] = 'cookie';
+$config['driver'] = 'database';
 
 /**
  * Session storage parameter, used by drivers.
@@ -37,24 +37,9 @@ $config['encryption'] = TRUE;
  * Number of page loads before the session id is regenerated.
  * A value of 0 will disable automatic session id regeneration.
  */
-//$config['regenerate'] = 3;
+$config['regenerate'] = 0;
 
 /**
  * Percentage probability that the gc (garbage collection) routine is started.
  */
 //$config['gc_probability'] = 2;
-
-/**
- * Since there can be many concurrent requests sent to the server, we want to make sure
- *   we only have one token change per pageview
- */
-$config['generate_tokens_controllers'] = array('dashboard',
-												'reports',
-												'main',
-												'messages',
-												'stats',
-												'addons',
-												'manage',
-												'settings',
-												'login',
-												'contact');

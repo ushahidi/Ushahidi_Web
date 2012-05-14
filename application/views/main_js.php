@@ -48,6 +48,8 @@
 		var defaultZoom = <?php echo $default_zoom; ?>;
 		var markerRadius = <?php echo $marker_radius; ?>;
 		var markerOpacity = "<?php echo $marker_opacity; ?>";
+		var markerStokeWidth = <?php echo $marker_stroke_width; ?>;
+		var markerStrokeOpacity = "<?php echo $marker_stroke_opacity; ?>";
 		var selectedFeature;
 		var allGraphData = "";
 		var dailyGraphData = "";

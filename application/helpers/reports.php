@@ -593,36 +593,22 @@ class reports_Core {
 		// Fetch the URL data into a local variable
 		$url_data = array_merge($_GET);
 		
-		// Check if some parameter values are separated by "," except the location bounds
-		$exclude_params = array('c' => '', 'v' => '', 'm' => '', 'mode' => '', 'sw'=> '', 'ne'=> '');
+		// Split selected parameters on ","
+		// For simplicity, always turn them into arrays even theres just one value
+		$exclude_params = array('c', 'v', 'm', 'mode', 'sw', 'ne', 'start_loc');
 		foreach ($url_data as $key => $value)
 		{
-			if (array_key_exists($key, $exclude_params) AND !is_array($value))
+			if (in_array($key, $exclude_params) AND !is_array($value))
 			{
-				if (is_array(explode(",", $value)))
-				{
-					$url_data[$key] = explode(",", $value);
-				}
+				$url_data[$key] = explode(",", $value);
 			}
 		}
 		
 		//> BEGIN PARAMETER FETCH
-		
 		// 
 		// Check for the category parameter
 		// 
-		if (isset($url_data['c']) AND ! is_array($url_data['c']) AND intval($url_data['c']) > 0)
-		{
-			// Get the category ID
-			$category_id = intval($_GET['c']);
-			
-			// Add category parameter to the parameter list
-			array_push(self::$params,
-				'(c.id = '.$category_id.' OR c.parent_id = '.$category_id.')',
-				'c.category_visible = 1'
-			);
-		}
-		elseif (isset($url_data['c']) AND is_array($url_data['c']))
+		if (isset($url_data['c']) AND is_array($url_data['c']))
 		{
 			// Sanitize each of the category ids
 			$category_ids = array();
@@ -702,10 +688,6 @@ class reports_Core {
 		if (isset($url_data['radius']) AND isset($url_data['start_loc']))
 		{
 			//if $url_data['start_loc'] is just comma delimited strings, then make it into an array
-			if(!is_array($url_data['start_loc']))
-			{
-				$url_data['start_loc'] = explode(",", $url_data['start_loc']);
-			}
 			if (intval($url_data['radius']) > 0 AND is_array($url_data['start_loc']))
 			{
 				$bounds = $url_data['start_loc'];			
@@ -779,20 +761,6 @@ class reports_Core {
 			}
 			
 		}
-		elseif (isset($url_data['m']) AND !is_array($url_data['m']))
-		{
-			// A single media filter has been specified
-			$media_type = $url_data['m'];
-			
-			// Sanitization
-			if (intval($media_type) > 0)
-			{
-				array_push(self::$params, 
-					'i.id IN (SELECT DISTINCT incident_id FROM '
-						.$table_prefix.'media WHERE media_type = '.$media_type.')'
-				);
-			}
-		}
 		
 		// 
 		// Check if the verification status has been specified
@@ -814,12 +782,6 @@ class reports_Core {
 					'i.incident_verified IN ('.implode(",", $verified_status).')'
 				);
 			}
-		}
-		elseif (isset($url_data['v']) AND !is_array($url_data['v']) AND intval($url_data) >= 0)
-		{
-			array_push(self::$param, 
-				'i.incident_verified = '.intval($url_data['v'])
-			);
 		}
 		
 		//

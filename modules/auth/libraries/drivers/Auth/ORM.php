@@ -101,8 +101,6 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 */
 	public function perform_login($user,$remember,$riverid=false)
 	{
-		Kohana::log('debug', 'auth.perform_login: Performing Login');
-
 		// In case we need to check if the user has confirmed their address, do that here
 		if (Kohana::config('settings.require_email_confirmation') == 1)
 		{
@@ -152,8 +150,6 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 */
 	public function login_standard($user, $password, $remember)
 	{
-		Kohana::log('debug', 'auth.login_standard');
-
 		if ( ! is_object($user))
 		{
 			// Load the user
@@ -188,8 +184,6 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 */
 	public function login_riverid($user, $password, $remember, $email, $riverid=false)
 	{
-		Kohana::log('debug', 'auth.login_riverid: '.$email);
-
 		// First check for exemptions
 
 		if ( ! is_object($user))
@@ -277,7 +271,6 @@ class Auth_ORM_Driver extends Auth_Driver {
 							$user->email = $riverid->email;
 							$user->username = $riverid->email;
 							$user->save();
-
 						}
 						else
 						{
@@ -285,8 +278,6 @@ class Auth_ORM_Driver extends Auth_Driver {
 
 							// TODO: Figure out what to do when we need to update an email address on
 							//   one account but it's already in use on another.
-
-							Kohana::log('debug', 'auth.login_riverid: '.$email.' has a conflicting email account');
 						}
 					}
 				}
@@ -418,8 +409,6 @@ class Auth_ORM_Driver extends Auth_Driver {
 		// Mark the session as forced, to prevent users from changing account information
 		$_SESSION['auth_forced'] = TRUE;
 
-		Kohana::log('debug', 'auth.force_login: Forcing Login');
-
 		// Run the standard completion
 		$this->complete_login($user);
 	}
@@ -432,11 +421,25 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 */
 	public function auto_login($force_standard=false)
 	{
-		$generate_token_controllers = Kohana::config('session.generate_tokens_controllers');
+		// If we are using RiverID
 
-		Kohana::log('debug', 'auth.auto_login coming from controller: '.Router::$controller);
+		if (kohana::config('riverid.enable') == true
+		    AND $force_standard != true)
+		{
+			$riverid = session::get('riverid');
 
-		// Check auto login token
+			// Check if we have the RiverID model, fail auto login if we don't
+			if ( ! $riverid )
+			{
+				return FALSE;
+			}
+
+			// user, password, remember, email, riverid object
+			return $this->login_riverid($riverid->email, false, true, $riverid->email, $riverid);
+
+		}
+
+		// If we are not using RiverID
 
 		if ($token = cookie::get('authautologin'))
 		{
@@ -447,19 +450,12 @@ class Auth_ORM_Driver extends Auth_Driver {
 			{
 				if ($token->user_agent === sha1(Kohana::$user_agent))
 				{
+					// Save the token to create a new unique token
+					$token->save();
 
-					if( in_array(Router::$controller, $generate_token_controllers))
-					{
-						// Save the token to create a new unique token
-						$token->save();
+					// Set the new token
+					cookie::set('authautologin', $token->token, $token->expires - time());
 
-						// Set the new token
-						cookie::set('authautologin', $token->token, $token->expires - time());
-					}
-					else
-					{
-						// Skipped generating a new token
-					}
 					// Complete the login with the found data
 					$this->complete_login($token->user);
 
@@ -470,22 +466,6 @@ class Auth_ORM_Driver extends Auth_Driver {
 				// Token is invalid
 				$token->delete();
 			}
-		}
-
-		if (kohana::config('riverid.enable') == true)
-		{
-			// In some cases, our RiverID user may still be authenticated,
-			//   communicate with the RiverID server to check
-
-			$riverid = session::get('riverid');
-
-			// Check if we have the RiverID model, fail auto login if we don't
-			if ( ! $riverid )
-			{
-				return FALSE;
-			}
-
-			return $this->login_riverid($riverid->email, false, true, $riverid->email, $riverid);
 		}
 
 		return FALSE;
@@ -540,7 +520,6 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 */
 	protected function complete_login(User_Model $user)
 	{
-
 		// Update the number of logins
 		$user->logins += 1;
 
