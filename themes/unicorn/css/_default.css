@@ -169,14 +169,14 @@ div#right { position:absolute; z-index:1000; }
   #filter-menu-toggle { position:absolute; top:20px; left:58px; width:120px; }
   
   /* home page category filter */
-  #report-category-filter { padding:5px; float:left; width:175px; }
-  ul.category-filters { background:none; border:0; padding:0; }
-  ul.category-filters li { display:block; list-style-type:none; overflow:auto; }
-    ul.category-filters li li { clear:left; }
-  ul.category-filters li a { font-size:10px; padding:2px 4px 2px 2px; -moz-border-radius: 3px; -webkit-border-radius: 3px; float:left; clear:right; border:0; margin:1px; }
-  .swatch, .item-swatch { border-color:#f1f1f1; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
-  ul.category-filters li a:hover, 
-  ul.category-filters li a.active { background:none; border:1px solid #c2c2c2; color:inherit; margin:0; }
+  .page-main #report-category-filter { padding:5px; float:left; width:175px; }
+  .page-main ul.category-filters { background:none; border:0; padding:0; }
+  .page-main ul.category-filters li { display:block; list-style-type:none; overflow:auto; }
+    .page-main ul.category-filters li li { clear:left; }
+  .page-main ul.category-filters li a { font-size:10px; padding:2px 4px 2px 2px; -moz-border-radius: 3px; -webkit-border-radius: 3px; float:left; clear:right; border:0; border:1px transparent solid; }
+  .page-main .swatch, .page-main .item-swatch { border-color:#f1f1f1; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+  .page-main ul.category-filters li a:hover, 
+  .page-main ul.category-filters li a.active { background:none; border:1px solid #c2c2c2; color:inherit; }
   
   /* home page report type filters */
   #report-type-filter { overflow:auto; padding:5px; margin:0; } 
