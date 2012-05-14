@@ -79,7 +79,7 @@ class Incidents_Api_Object_Test extends PHPUnit_Framework_TestCase {
 		
 		// Assert the results
 		$this->assertEquals("0", $contents->error->code);
-		$this->assertEquals(20, count($contents->payload->incidents));
+		$this->assertEquals(count(Incident_Model::get_incidents(array(), 20)), count($contents->payload->incidents));
 	}
 	
 	/**
