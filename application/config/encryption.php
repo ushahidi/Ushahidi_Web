@@ -24,6 +24,6 @@
  *           @see http://php.net/mcrypt
  */
 // CHANGE ME: THIS SHOULD BE UNIQUE TO YOUR DEPLOYMENT
-$config['default']['key'] = 'USHAHIDI-INSECURE';
+$config['default']['key'] = 'm8^rY1%d;}v4q^H~4N#}';
 $config['default']['mode'] = MCRYPT_MODE_NOFB;
 $config['default']['cipher'] = MCRYPT_RIJNDAEL_128;
