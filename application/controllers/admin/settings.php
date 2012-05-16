@@ -1054,9 +1054,10 @@ class Settings_Controller extends Admin_Controller
 		{
 			$iso = $country->iso;
 
+			$lang = substr(Kohana::config('locale.language'), 0, 2);
 			// GeoNames WebService URL + Country ISO Code
 			$geonames_url = "http://ws.geonames.org/search?country="
-							.$iso."&featureCode=PPL&featureCode=PPLA&featureCode=PPLC&maxRows=1000";
+							.$iso."&featureCode=PPL&featureCode=PPLA&featureCode=PPLC&maxRows=1000&lang=".$lang;
 
 			// Grabbing GeoNames requires cURL so we will check for that here.
 			if (!function_exists('curl_exec'))
