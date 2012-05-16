@@ -373,6 +373,54 @@ class RiverID_Core {
 		return $checkpassword_response;
 	}
 
+	public function facebookAuthorized($appid, $appsecret, $permissions) {
+		$url = $this->endpoint .
+			'/facebook_authorized?email=' . $this->email .
+			'&session_id=' . $this->session_id .
+			'&api_secret=' . $this->api_key .
+			'&fb_appid=' . $appid .
+			'&fb_secret=' . $appsecret .
+			'&fb_scope=' . $permissions;
+
+		$apiResponse = json_decode($this->_curl_req($url));
+
+		if(isset($apiResponse->success) AND $apiResponse->success) {
+			return TRUE;
+		} else {
+			if(isset($apiResponse->response)) return $apiResponse->response;
+			return FALSE;
+		}
+	}
+
+	public function facebookAction($appid, $appsecret, $permissions, $namespace, $action, $object, $url, $params = array()) {
+		$url = $this->endpoint .
+			'/facebook_authorized?email=' . $this->email .
+			'&session_id=' . $this->session_id .
+			'&api_secret=' . $this->api_key .
+			'&fb_appid=' . $appid .
+			'&fb_secret=' . $appsecret .
+			'&fb_scope=' . $permissions .
+			'&fb_namespace=' . $namespace .
+			'&fb_action=' . $action .
+			'&fb__object=' . $object .
+			'&fb_object_url=' . $url;
+
+		if($params) {
+			foreach($params as $param => $val) {
+				$url .= "&fb_graph_{$param}={$val}";
+			}
+		}
+
+		$apiResponse = json_decode($this->_curl_req($url));
+
+		if(isset($apiResponse->success) && $apiResponse->success) {
+			return TRUE;
+		} else {
+			if(isset($apiResponse->response)) return $apiResponse->response;
+			return FALSE;
+		}
+	}
+
 	/**
      * Helper function to send a cURL request
      * @param url - URL for cURL to hit
