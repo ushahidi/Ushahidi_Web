@@ -1305,6 +1305,7 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `allow_feed` tinyint(4) NOT NULL DEFAULT '1',
   `allow_stat_sharing` tinyint(4) NOT NULL DEFAULT '1',
   `allow_clustering` tinyint(4) NOT NULL DEFAULT '0',
+  `map_point_reports` tinyint(4) NOT NULL DEFAULT '0',
   `cache_pages` tinyint(4) NOT NULL DEFAULT '0',
   `cache_pages_lifetime` int(4) NOT NULL DEFAULT '1800',
   `private_deployment` tinyint(4) NOT NULL DEFAULT '0',

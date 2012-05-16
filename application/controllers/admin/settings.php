@@ -392,6 +392,7 @@ class Settings_Controller extends Admin_Controller
 			'default_zoom' => '',
 			'default_map_all' => '',
 			'allow_clustering' => '',
+			'map_point_reports' => '',
 			'default_map_all_icon' => '',
 			'delete_default_map_all_icon' => ''
 		);
@@ -415,6 +416,7 @@ class Settings_Controller extends Admin_Controller
 			    ->add_rules('default_lat','required','between[-85,85]')		// Validate for maximum and minimum latitude values
 			    ->add_rules('default_lon','required','between[-180,180]')		// Validate for maximum and minimum longitude values
 			    ->add_rules('allow_clustering','required','between[0,1]')
+			    ->add_rules('map_point_reports','required','between[0,1]')
 			    ->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]')
 			    ->add_rules('api_google', 'length[0,200]')
 			    ->add_rules('api_live', 'length[0,200]');
@@ -446,6 +448,7 @@ class Settings_Controller extends Admin_Controller
 				$settings->default_lat = $post->default_lat;
 				$settings->default_lon = $post->default_lon;
 				$settings->allow_clustering = $post->allow_clustering;
+				$settings->map_point_reports = $post->map_point_reports;
 				$settings->default_map_all = $post->default_map_all;
 				$settings->date_modify = date("Y-m-d H:i:s",time());
 				$settings->save();
@@ -568,6 +571,7 @@ class Settings_Controller extends Admin_Controller
 				'default_lon' => $settings->default_lon,
 				'default_zoom' => $settings->default_zoom,
 				'allow_clustering' => $settings->allow_clustering,
+				'map_point_reports' => $settings->map_point_reports,
 				'default_map_all' => $settings->default_map_all,
 				'default_map_all_icon_id' => $settings->default_map_all_icon_id,
 			);
@@ -1045,6 +1049,7 @@ class Settings_Controller extends Admin_Controller
 		$this->template = "";
 		$this->auto_render = FALSE;
 
+		$settings = ORM::factory('settings', 1);
 		$cities = 0;
 
 		// Get country ISO code from DB
@@ -1054,9 +1059,10 @@ class Settings_Controller extends Admin_Controller
 		{
 			$iso = $country->iso;
 
+			$lang = substr($settings->site_language, 0, 2);
 			// GeoNames WebService URL + Country ISO Code
 			$geonames_url = "http://ws.geonames.org/search?country="
-							.$iso."&featureCode=PPL&featureCode=PPLA&featureCode=PPLC&maxRows=1000";
+							.$iso."&featureCode=PPL&featureCode=PPLA&featureCode=PPLC&maxRows=1000&lang=".$lang;
 
 			// Grabbing GeoNames requires cURL so we will check for that here.
 			if (!function_exists('curl_exec'))

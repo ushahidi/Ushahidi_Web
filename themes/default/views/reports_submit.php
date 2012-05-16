@@ -190,6 +190,7 @@
 						</div>
 					</div>
 					<div class="report-find-location">
+					    <?php if (!Kohana::config('settings.map_point_reports')) { ?>
 					    <div id="panel" class="olControlEditingToolbar"></div>
 						<div class="btns" style="float:left;">
 							<ul style="padding:4px;">
@@ -198,6 +199,7 @@
 								<li><a href="#" class="btn_clear"><?php echo strtoupper(Kohana::lang('ui_main.clear_map'));?></a></li>
 							</ul>
 						</div>
+					   <?php } ?>
 						<div style="clear:both;"></div>
 						<?php print form::input('location_find', '', ' title="'.Kohana::lang('ui_main.location_example').'" class="findtext"'); ?>
 						<div style="float:left;margin:9px 0 0 5px;">

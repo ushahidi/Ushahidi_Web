@@ -112,6 +112,11 @@
 								<div class="c_push">
 									<?php print form::dropdown('allow_clustering', $yesno_array, $form['allow_clustering']); ?>
 								</div>
+
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_map_point_reports"); ?>"><?php echo Kohana::lang('settings.site.map_point_reports');?></a></h4>
+								<div class="c_push">
+									<?php print form::dropdown('map_point_reports', $yesno_array, $form['map_point_reports']); ?>
+								</div>
 								
 								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_default_category_colors"); ?>"><?php echo Kohana::lang('settings.site.default_category_colors');?></a></h4>
 								<div class="c_push">

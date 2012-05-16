@@ -2,7 +2,7 @@
 	<div class="content-bg">
 		<!-- start block -->
 		<div class="big-block">
-			<h1>Get Alerts</h1>
+			<h1><?php echo Kohana::lang('ui_main.alerts_get') ?></h1>
 			<!-- green-box/ red-box depending on verification result -->
 			<?php
 			// SWITCH based on the value of the $errno

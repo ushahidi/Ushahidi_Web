@@ -103,8 +103,8 @@
 				graphicOpacity: 1,
 				graphicWidth: 21,
 				graphicHeight: 25,
-				graphicXOffset: -14,
-				graphicYOffset: -27
+				graphicXOffset: -11,
+				graphicYOffset: -25
 			});
 			style2 = new OpenLayers.Style({
 				pointRadius: "8",
@@ -117,8 +117,8 @@
 				graphicOpacity: 1,
 				graphicWidth: 21,
 				graphicHeight: 25,
-				graphicXOffset: -14,
-				graphicYOffset: -27
+				graphicXOffset: -11,
+				graphicYOffset: -25
 			});
 			style3 = new OpenLayers.Style({
 				pointRadius: "8",
@@ -229,13 +229,15 @@
 			// Display the map centered on a latitude and longitude (Google zoom levels)
 			map.setCenter(startPoint, <?php echo ($incident_zoom) ? $incident_zoom : $default_zoom; ?>);
 			
-			// Create the Editing Toolbar
-			var container = document.getElementById("panel");
-			var panel = new OpenLayers.Control.EditingToolbar(
-				vlayer, {div: container}
-			);
-			map.addControl(panel);
-			panel.activateControl(panel.controls[0]);
+			<?php if (!Kohana::config('settings.map_point_reports')) { ?>
+				// Create the Editing Toolbar
+				var container = document.getElementById("panel");
+				var panel = new OpenLayers.Control.EditingToolbar(
+					vlayer, {div: container}
+				);
+				map.addControl(panel);
+				panel.activateControl(panel.controls[0]);
+			<?php } ?>
 			drag.activate();
 			highlightCtrl.activate();
 			selectCtrl.activate();
@@ -243,6 +245,19 @@
 			map.events.register("click", map, function(e){
 				selectCtrl.deactivate();
 				selectCtrl.activate();
+				<?php if (Kohana::config('settings.map_point_reports')) { ?>
+					var i = vlayer.features.length - 1;
+					var feature = vlayer.features[i];
+
+					if (feature.geometry.CLASS_NAME == "OpenLayers.Geometry.Point") {
+						var lonlat = map.getLonLatFromPixel(e.xy);
+
+						feature.geometry.move(lonlat.lon - feature.geometry.x,
+							lonlat.lat - feature.geometry.y);
+						vlayer.drawFeature(vlayer.features[i]);
+						refreshFeatures();
+					}
+				<?php } ?>
 			});
 			
 			// Undo Action Removes Most Recent Marker
@@ -594,8 +609,38 @@
 				}
 				selectCtrl.activate();
 			});
+
+			// Detect Dropdown Select
+			$("#select_city").change(function() {
+				var lonlat = $(this).val().split(",");
+				if ( lonlat[0] && lonlat[1] )
+				{
+					// Clear the map first
+					vlayer.removeFeatures(vlayer.features);
+					$('input[name="geometry[]"]').remove();
+
+					point = new OpenLayers.Geometry.Point(lonlat[0], lonlat[1]);
+					OpenLayers.Projection.transform(point, proj_4326,proj_900913);
+
+					f = new OpenLayers.Feature.Vector(point);
+					vlayer.addFeatures(f);
+
+					// create a new lat/lon object
+					myPoint = new OpenLayers.LonLat(lonlat[0], lonlat[1]);
+					myPoint.transform(proj_4326, map.getProjectionObject());
+
+					// display the map centered on a latitude and longitude
+					map.setCenter(myPoint, <?php echo $default_zoom; ?>);
+
+					// Update form values (jQuery)
+					$("#location_name").attr("value", $('#select_city :selected').text());
+
+					$("#latitude").attr("value", lonlat[1]);
+					$("#longitude").attr("value", lonlat[0]);
+				}
+			});
+
 		});
-		
 		
 		function addFormField(div, field, hidden_id, field_type) {
 			var id = document.getElementById(hidden_id).value;
