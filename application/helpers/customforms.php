@@ -11,12 +11,17 @@ class customforms_Core {
 
 	/**
 	 * Retrieve Custom Forms
+	 * @param bool $active_only Whether or not to limit to active forms only
 	 * @return ORM_Iterator
 	 */
-	public static function get_custom_forms()
+	public static function get_custom_forms($active_only = TRUE)
 	{
-		$custom_forms = ORM::factory('form')->find_all();
-		return $custom_forms;
+		$custom_forms = ORM::factory('form');
+		if ($active_only)
+		{
+			$custom_forms->where('form_active',1);
+		}
+		return $custom_forms->find_all();
 	}
 
 	/**
