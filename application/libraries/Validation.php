@@ -41,6 +41,8 @@ class Validation_Core extends ArrayObject {
 	 */
 	protected $csrf_validation_failed = FALSE;
 
+	public static $is_api_request = FALSE;
+
 	/**
 	 * Creates a new Validation instance.
 	 *
@@ -393,13 +395,14 @@ class Validation_Core extends ArrayObject {
 			unset ($this->rules[$csrf_token_key]);
 		}
 
-		// HTTP post no CSRF validation
-		if ($_POST AND $validate_csrf)
+		// Perform CSRF validation for all HTTP POST requests
+		// where CSRF validation is enabled and the request
+		// was not submitted via the API
+		if ($_POST AND $validate_csrf AND ! Validation::$is_api_request)
 		{
 			// Check if CSRF module is loaded
 			if (in_array(MODPATH.'csrf', Kohana::config('config.modules')))
 			{
-
 				// Check for presence of CSRF token in HTTP POST payload
 				$form_auth_token = (isset($_POST[$csrf_token_key]))
 				    ? $_POST[$csrf_token_key]

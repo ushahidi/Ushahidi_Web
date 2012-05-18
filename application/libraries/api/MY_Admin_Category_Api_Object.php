@@ -373,7 +373,7 @@ class Admin_Category_Api_Object extends Api_Object_Core {
 			$post->add_callbacks('parent_id', array($this, 'parent_id_chk'));
 
 			// Test to see if things passed the rule checks
-			if ($post->validate())
+			if ($post->validate(FALSE))
 			{
 				$category = new Category_Model();
 

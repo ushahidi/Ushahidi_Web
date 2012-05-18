@@ -58,14 +58,14 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 		$report_id = 0;
 
 		$_POST = array(
-			'form_auth_token' => csrf::token(),
+			'task' => 'report',
 			'incident_title' => 'Test Sample Report Title',
 			'incident_description' => 'Test Sampe Report Description',
 			'incident_date' => '03/18/2011',
 			'incident_hour' => '10', 
 			'incident_minute' => '10',
 			'incident_ampm' => 'pm',
-			'incident_category' => '1,2,',
+			'incident_category' => '73,41	',
 			'latitude' => -1.28730007,
 			'longitude' => 36.82145118200820,
 			'location_name' => 'Accra',
@@ -74,7 +74,6 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 			'person_email' => 'henry@ushahidi.com',
 			'incident_active' => 1,
 			'incident_verified' => 1,
-			'task' => 'report',
 		);
 
 		ob_start();
@@ -114,7 +113,6 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function approveReport($report_id)
 	{
 		$_POST = array(
-			'form_auth_token' => csrf::token(),
 			'action' => 'approve',
 			'incident_id' => $report_id,
 			'task' => 'reports',
@@ -170,7 +168,6 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function verifyReport($report_id)
 	{
 		$_POST = array(
-			'form_auth_token' => csrf::token(),
 			'action' => 'verify',
 			'incident_id' => $report_id,
 			'task' => 'reports',
@@ -209,7 +206,7 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 	public function editReport($report_id)
 	{
 		$_POST = array(
-			'form_auth_token' => csrf::token(),
+			'task' => 'reports',
 			'action' => 'edit',
 			'incident_id' => $report_id,
 			'incident_title' => 'Hello Ushahidi Edited',
@@ -218,7 +215,7 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 			'incident_hour' => '10', 
 			'incident_minute' => '10',
 			'incident_ampm' => 'pm',
-			'incident_category' => '1,2,',
+			'incident_category' => '73,41',
 			'latitude' => -1.28730007,
 			'longitude' => 36.82145118200820,
 			'location_id'=> 2,
@@ -228,7 +225,6 @@ class Admin_Reports_Api_Object_Test extends PHPUnit_Framework_TestCase {
 			'incident_active' => 1,
 			'incident_verified' => 1,
 			'person_email' => 'henry@ushahidi.com',
-			'task' => 'reports',
 		);
 
 		ob_start();

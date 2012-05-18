@@ -328,7 +328,7 @@ class Comments_Api_Object extends Api_Object_Core {
             //checks, carried out in order
             $post->add_rules('comment_id','required','numeric');
 
-            if ($post->validate())
+            if ($post->validate(FALSE))
             {
                 $comment_id = $post->comment_id;
                 $comment = new Comment_Model($comment_id);
@@ -405,7 +405,7 @@ class Comments_Api_Object extends Api_Object_Core {
             //checks, carried out in order
             $post->add_rules('comment_id','required','numeric');
 
-            if ($post->validate())
+            if ($post->validate(FALSE))
             {
                 $comment_id = $post->comment_id;
                 $comment = new Comment_Model($comment_id);
@@ -469,7 +469,7 @@ class Comments_Api_Object extends Api_Object_Core {
             $post->add_rules('comment_id','required','numeric');
             
 
-            if ($post->validate())
+            if ($post->validate(FALSE))
             {
                 $comment_id = $post->comment_id;
                 $comment = new Comment_Model($comment_id);
@@ -585,7 +585,7 @@ class Comments_Api_Object extends Api_Object_Core {
 			
 			// Test to see if things passed the rule checks
 
-			if ($post->validate())
+			if ($post->validate(FALSE))
 			{
 				// Yes! everything is valid
 				

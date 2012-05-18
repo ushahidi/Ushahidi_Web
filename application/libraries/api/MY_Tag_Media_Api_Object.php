@@ -144,7 +144,7 @@ class Tag_Media_Api_Object extends Api_Object_Core {
                 $post->add_rules('photo', 'upload::valid', 
                         'upload::type[gif,jpg,png]', 'upload::size[1M]');
 
-                if ($post->validate())
+                if ($post->validate(FALSE))
                 {
                     //assuming this is a photo
                     $filename = upload::save('photo');
