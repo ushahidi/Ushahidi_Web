@@ -395,6 +395,14 @@ class Validation_Core extends ArrayObject {
 			unset ($this->rules[$csrf_token_key]);
 		}
 
+		// Disable CSRF for XHR
+		// Same method as django CSRF protection: 
+		//     http://michael-coates.blogspot.co.nz/2010/12/djangos-built-in-csrf-defense-for-ajax.html
+		if (request::is_ajax())
+		{
+			$validate_csrf = FALSE;
+		}
+
 		// Perform CSRF validation for all HTTP POST requests
 		// where CSRF validation is enabled and the request
 		// was not submitted via the API
