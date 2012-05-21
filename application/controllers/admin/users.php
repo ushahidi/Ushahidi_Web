@@ -149,7 +149,7 @@ class Users_Controller extends Admin_Controller
 			if (User_Model::custom_validate($post))
 			{
 				$user = ORM::factory('user',$user_id);
-				$user->name = html::specialchars($post->name);
+				$user->name = $post->name;
 				$user->email = $post->email;
 				$user->notify = $post->notify;
 				if ($user_id == NULL)
