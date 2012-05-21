@@ -315,25 +315,59 @@ class Admin_Category_Api_Object extends Api_Object_Core {
 		{
 			$category_id = $post->category_id;
 		}
-
+		
 		$parent_id = $post->parent_id;
 
 		// This is a parent category - exit
 		if ($parent_id == 0)
 			return;
 
-		$parent_exists = ORM::factory('category')->where('id', $parent_id)->find();
+		$parent_exists = ORM::factory('category')->find($parent_id);
 
 		if (!$parent_exists->loaded)
 		{
 			// Parent Category Doesn't Exist
 			$post->add_error('parent_id', 'exists');
 		}
-
-		if (!empty($category_id) && $category_id == $parent_id)
+		
+		else
 		{
-			// Category ID and Parent ID can't be the same!
-			$post->add_error('parent_id', 'same');
+			// Parent category is special
+			if($parent_exists->category_trusted == 1)
+			{
+				$post->add_error('parent_id', 'parent_trusted');
+			}
+		
+
+			if (!empty($post->category_id))
+			{
+				$this_cat = ORM::factory('category')->find($post->category_id);
+			
+				// Category ID and Parent ID can't be the same!
+				if($this_cat->id == $parent_exists->id)
+				{
+					$post->add_error('parent_id', 'same');
+				}
+			
+				// Don't subcategorize a special category
+				if($this_cat->category_trusted == 1)
+				{
+					$post->add_error('parent_id', 'special');
+				}
+			
+				// Don't add subcategories to a special category
+				if($parent_exists->category_trusted == 1)
+				{
+					$post->add_error('parent_id', 'parent_trusted');
+				}
+			
+				// Don't subcategorise a category that already has subcategories
+				$children = ORM::factory('category')->where('parent_id',$this_cat->id)->count_all();
+				if($children > 0)
+				{
+					$post->add_error('parent_id', 'already_parent');
+				}
+			}
 		}
 	}
 

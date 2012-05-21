@@ -65,8 +65,8 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 			return;
 		}
 
-		//action request
-		elseif ($this->api_service->verify_array_index($this->request, 'action'))
+		// action request
+		else if ($this->api_service->verify_array_index($this->request, 'action'))
 		{
 			$this->report_action();
 			return;
