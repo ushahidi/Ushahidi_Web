@@ -166,7 +166,7 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 		    . "i.incident_description AS incidentdescription, i.incident_date AS incidentdate, "
 		    . "i.incident_mode AS incidentmode, i.incident_active AS incidentactive, "
 		    . "i.incident_verified AS incidentverified, l.id AS locationid, "
-		    . "l.location_name AS locationname, l.latitude AS locationlatitude, ".
+		    . "l.location_name AS locationname, l.latitude AS locationlatitude, "
 		    . "l.longitude AS locationlongitude "
 		    . "FROM " . $this->table_prefix . "incident AS i "
 		    . "INNER JOIN " . $this->table_prefix . "location as l ON (l.id = i.location_id) "
