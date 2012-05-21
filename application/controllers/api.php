@@ -24,6 +24,9 @@ class Api_Controller extends Controller {
 	 */
 	public function index()
 	{
+		// Disables CSRF validation for API requests
+		Validation::$is_api_request = TRUE;
+
 		// Instantiate the API service
 		$api_service = new Api_Service();
 

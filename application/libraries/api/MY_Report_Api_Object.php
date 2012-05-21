@@ -41,8 +41,7 @@ class Report_Api_Object extends Api_Object_Core {
     private function _submit() 
     {
         // Setup and initialize form field names
-        $form = array
-        (
+        $form = array(
             'incident_title' => '',
             'incident_description' => '',
             'incident_date' => '',
@@ -64,220 +63,62 @@ class Report_Api_Object extends Api_Object_Core {
         
         $this->messages = $form;
         
-        // check, has the form been submitted, if so, setup validation
+        // Check for HTTP POST, setup validation
         if ($_POST) 
         {
-            // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-            $post = Validation::factory(array_merge($_POST, $_FILES));
-            
-            //in case there's a plugin that would like to know about this new incident, I mean report
-            Event::run('ushahidi_action.report_submit_api', $post);
+            // Instantiate Validation, use $post, so we don't overwrite 
+            // $_POST fields with our own things
+            $post = array_merge($_POST, $_FILES);
+            $post['incident_category'] = explode(',', $post['incident_category']);
 
-            //  Add some filters
-            $post->pre_filter('trim', TRUE);
+            // 
+            // EK <emmanuel@ushahidi.com> - 17/05/2012
+            // Commenting out this event ('ushahidi_action.report_submit_api') because
+            // of the following:
+            // The 'ushahidi_action.report_submit' and 'ushahidi_action.report_add'
+            // events should suffice for all plugins that wish to run extra
+            // operations once a report has been submitted and saved - avoid
+            // superfluous events
+            // 
 
-            // Add some rules, the input field, followed by a list of checks, carried out in order
-            $post->add_rules('incident_title','required', 'length[3,200]');
-            $post->add_rules('incident_description','required');
-            $post->add_rules('incident_date','required','date_mmddyyyy');
-            $post->add_rules('incident_hour','required','between[0,23]');
-            //$post->add_rules('incident_minute','required','between[0,59]');
+            // In case there's a plugin that would like to know about 
+            // this new incident, I mean report
+            // Event::run('ushahidi_action.report_submit_api', $post);
 
-            if ($this->api_service->verify_array_index($_POST, 'incident_ampm')) 
+            if (reports::validate($post))
             {
-                if ($_POST['incident_ampm'] != "am" AND  
-                        $_POST['incident_ampm'] != "pm") 
-                {
-                    $post->add_error('incident_ampm','values');
-                }
-            }
-
-            $post->add_rules('latitude','required','between[-90,90]');  
-            $post->add_rules('longitude','required','between[-180,180]');
-            $post->add_rules('location_name','required', 'length[3,200]');
-            $post->add_rules('incident_category','required',
-                    'length[1,100]');
-
-            // Validate Personal Information
-            if ( ! empty($post->person_first)) 
-            {
-                $post->add_rules('person_first', 'length[3,100]');
-            }
-
-            if ( ! empty($post->person_last)) 
-            {
-                $post->add_rules('person_last', 'length[3,100]');
-            }
-
-            if ( ! empty($post->person_email)) 
-            {
-                $post->add_rules('person_email', 'email', 'length[3,100]');
-            }
-
-            // Test to see if things passed the rule checks
-            if ($post->validate(FALSE)) 
-            {
-                // SAVE LOCATION (***IF IT DOES NOT EXIST***)
+                // STEP 1: SAVE LOCATION
                 $location = new Location_Model();
-                $location->location_name = $post->location_name;
-                $location->latitude = $post->latitude;
-                $location->longitude = $post->longitude;
-                $location->location_date = date("Y-m-d H:i:s",time());
-                $location->save();
+                reports::save_location($post, $location);
 
-                // SAVE INCIDENT
+                // STEP 2: SAVE INCIDENT
                 $incident = new Incident_Model();
-                $incident->location_id = $location->id;
-                $incident->user_id = 0;
-                $incident->incident_title = $post->incident_title;
-                $incident->incident_description = $post->incident_description;
+                reports::save_report($post, $incident, $location->id);
 
-                $incident_date=explode("/",$post->incident_date);
-                /**
-                * where the $_POST['date'] is a value posted by form in
-                * mm/dd/yyyy format
-                */
-                $incident_date=$incident_date[2]."-".$incident_date[0]."-".
-                    $incident_date[1];
+                // STEP 2b: SAVE INCIDENT GEOMETRIES
+                reports::save_report_geometry($post, $incident);
 
-                $incident_time = $post->incident_hour . ":" . 
-                    $post->incident_minute . ":00 " . $post->incident_ampm;
-                $incident->incident_date = date( "Y-m-d H:i:s", strtotime($incident_date . " " . $incident_time) );
-                $incident->incident_dateadd = date("Y-m-d H:i:s",time());
-                $incident->save();
-
-                // SAVE CATEGORIES
-                // Check if data is csv or a single value.
-                $pos = strpos($post->incident_category,",");
-                
-                if($pos === false)
-                {
-                    //for backward compactibility. will drop support for it in the future.
-                    if (@unserialize($post->incident_category)) 
-                    {
-                        $categories = unserialize($post->incident_category);
-                    } 
-                    else 
-                    {
-                        $categories = array($post->incident_category);
-                    }
-                } 
-                else 
-                {
-                    $categories = explode(",",$post->incident_category);
-                }
-
-                if( ! empty($categories) AND is_array($categories))
-                {
-                    foreach ($categories as $item)
-                    {
-                        $incident_category = new Incident_Category_Model();
-                        $incident_category->incident_id = $incident->id;
-                        $incident_category->category_id = $item;
-                        $incident_category->save();
-                    }
-                }
+                // STEP 3: SAVE CATEGORIES
+                reports::save_category($post, $incident);
 
                 // STEP 4: SAVE MEDIA
-                // a. News
-                if ( ! empty( $post->incident_news ) AND is_array($post->incident_news))
-                {
-                    foreach ($post->incident_news as $item) 
-                    {
-                        if( ! empty($item)) 
-                        {
-                            $news = new Media_Model();
-                            $news->location_id = $location->id;
-                            $news->incident_id = $incident->id;
-                            $news->media_type = 4;      // News
-                            $news->media_link = $item;
-                            $news->media_date = date("Y-m-d H:i:s",time());
-                            $news->save();
-                        }
-                    }
-                }
+                reports::save_media($post, $incident);
 
-                // b. Video
-                if( ! empty($post->incident_video) AND is_array($post->incident_video))
-                {
-                    foreach($post->incident_video as $item) 
-                    {
-                        if ( ! empty($item)) 
-                        {
-                            $video = new Media_Model();
-                            $video->location_id = $location->id;
-                            $video->incident_id = $incident->id;
-                            $video->media_type = 2;     // Video
-                            $video->media_link = $item;
-                            $video->media_date = date("Y-m-d H:i:s",time());
-                            $video->save();
-                        }
-                    }
-                }
+                // STEP 5: SAVE CUSTOM FORM FIELDS
+                reports::save_custom_fields($post, $incident);
 
-                // c. Photos
-                if ( ! empty($post->incident_photo))
-                {
-                    $filenames = upload::save('incident_photo');
-                    $i = 1;
-                    
-                    foreach ($filenames as $filename)
-                    {
-                        $new_filename = $incident->id . "_" . $i . "_" . time();
+                // STEP 6: SAVE PERSONAL INFORMATION
+                reports::save_personal_info($post, $incident);
 
-                        // Resize original file... make sure its max 408px wide
-                        Image::factory($filename)->resize(408,248,
-                                Image::AUTO)->save(
-                                    Kohana::config('upload.directory',
-                                        TRUE) . $new_filename . ".jpg");
-
-                        // Create thumbnail
-                        Image::factory($filename)->resize(70,41,
-                                Image::HEIGHT)->save(
-                                    Kohana::config('upload.directory',
-                                        TRUE) . $new_filename . "_t.jpg");
-
-                        // Remove the temporary file
-                        unlink($filename);
-
-                        // Save to DB
-                        $photo = new Media_Model();
-                        $photo->location_id = $location->id;
-                        $photo->incident_id = $incident->id;
-                        $photo->media_type = 1; // Images
-                        $photo->media_link = $new_filename . ".jpg";
-                        $photo->media_thumb = $new_filename . "_t.jpg";
-                        $photo->media_date = date("Y-m-d H:i:s",time());
-                        $photo->save();
-                        $i++;
-                    }
-                }
-
-                // SAVE PERSONAL INFORMATION IF ITS FILLED UP
-                if ( !empty($post->person_first) || !empty($post->person_last) || !empty($post->person_email))
-                {
-                    $person = new Incident_Person_Model();
-                    $person->incident_id = $incident->id;
-                    if(!empty($post->person_first))
-                    {
-						$person->person_first = $post->person_first;
-                    }
-                    if(!empty($post->person_last))
-                	{
-                    	$person->person_last = $post->person_last;
-                	}
-                    if(!empty($post->person_email))
-                    {
-                    	$person->person_email = $post->person_email;
-                    }
-                    $person->person_date = date("Y-m-d H:i:s",time());
-                    $person->save();
-                }
+                // Run events
+                Event::run('ushahidi_action.report_submit', $post);
+                Event::run('ushahidi_action.report_add', $incident);
                 
                 // Action::report_edit_api - Edited a Report
                 Event::run('ushahidi_action.report_edit_api', $incident);
 
-                return 0; //success
+                // Success
+                return 0;
 
             } 
             else 

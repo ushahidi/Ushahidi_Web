@@ -146,7 +146,7 @@ class Email_Api_Object extends Api_Object_Core {
             $post->add_rules('action','required', 'alpha', 'length[1,1]');
             $post->add_rules('message_id','required','numeric');
 
-            if ($post->validate())
+            if ($post->validate(FALSE))
             {
                 $email_id = $post->message_id;
                 $email = new Message_Model($email_id);
@@ -199,7 +199,7 @@ class Email_Api_Object extends Api_Object_Core {
             $post->add_rules('action','required', 'alpha', 'length[1,1]');
             $post->add_rules('message_id','required','numeric');
 
-            if ($post->validate())
+            if ($post->validate(FALSE))
             {
                 $email_id = $post->message_id;
                 $email = new Message_Model($email_id);

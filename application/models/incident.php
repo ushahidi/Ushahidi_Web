@@ -19,15 +19,31 @@ class Incident_Model extends ORM {
 	 * One-to-may relationship definition
 	 * @var array
 	 */
-	protected $has_many = array('category' => 'incident_category', 'media', 'verify', 'comment',
-		'rating', 'alert' => 'alert_sent', 'incident_lang', 'form_response','cluster' => 'cluster_incident',
-		'geometry');
+	protected $has_many = array(
+		'category' => 'incident_category',
+		'media',
+		'verify',
+		'comment',
+		'rating',
+		'alert' => 'alert_sent',
+		'incident_lang',
+		'form_response',
+		'cluster' => 'cluster_incident',
+		'geometry'
+	);
 
 	/**
 	 * One-to-one relationship definition
 	 * @var array
 	 */
-	protected $has_one = array('location','incident_person','user','message','twitter','form');
+	protected $has_one = array(
+		'location',
+		'incident_person',
+		'user',
+		'message',
+		'twitter',
+		'form'
+	);
 
 	/**
 	 * Many-to-one relationship definition
@@ -56,12 +72,17 @@ class Incident_Model extends ORM {
 	{
 		// Get all active categories
 		$categories = array();
-		foreach (ORM::factory('category')
-			->where('category_visible', '1')
-			->find_all() as $category)
+		foreach
+		(
+			ORM::factory('category')
+			    ->where('category_visible', '1')
+			    ->find_all() as $category)
 		{
 			// Create a list of all categories
-			$categories[$category->id] = array($category->category_title, $category->category_color);
+			$categories[$category->id] = array(
+				$category->category_title, 
+				$category->category_color
+			);
 		}
 		return $categories;
 	}
@@ -536,4 +557,114 @@ class Incident_Model extends ORM {
 		$incident->incident_verified = $val;
 		return $incident->save();
 	}
+
+	/**
+	 * Overrides the default delete method for the ORM.
+	 * Deletes all other content related to the incident - performs
+	 * an SQL destroy
+	 */
+	public function delete()
+	{
+		// Delete Location
+		ORM::factory('location')
+			->where('id', $this->location_id)
+			->delete_all();
+
+		// Delete Categories
+		ORM::factory('incident_category')
+		    ->where('incident_id', $this->id)
+		    ->delete_all();
+
+		// Delete Translations
+		ORM::factory('incident_lang')
+		    ->where('incident_id', $this->id)
+		    ->delete_all();
+
+		// Delete Photos From Directory
+		$photos = ORM::factory('media')
+				      ->where('incident_id', $this->id)
+				      ->where('media_type', 1)
+				      ->find_all();
+		
+		foreach ($photos as $photo)
+		{
+			$this->_delete_photo($photo->id);
+		}
+
+		// Delete Media
+		ORM::factory('media')
+		    ->where('incident_id', $this->id)
+		    ->delete_all();
+
+		// Delete Sender
+		ORM::factory('incident_person')
+		    ->where('incident_id', $this->id)
+		    ->delete_all();
+
+		// Delete relationship to SMS message
+		$updatemessage = ORM::factory('message')
+						     ->where('incident_id', $this->id)
+						     ->find();
+
+		if ($updatemessage->loaded)
+		{
+			$updatemessage->incident_id = 0;
+			$updatemessage->save();
+		}
+
+		// Delete Comments
+		ORM::factory('comment')
+			->where('incident_id', $this->id)
+			->delete_all();
+
+		$incident_id = $this->id;
+
+		// Action::report_delete - Deleted a Report
+		Event::run('ushahidi_action.report_delete', $incident_id);
+
+		parent::delete();
+	}
+
+	/**
+	 * Delete Photo
+	 * @param int $id The unique id of the photo to be deleted
+	 */
+	private function _delete_photo($id)
+	{
+		$photo = ORM::factory('media', $id);
+		$photo_large = $photo->media_link;
+		$photo_medium = $photo->media_medium;
+		$photo_thumb = $photo->media_thumb;
+
+		if (file_exists(Kohana::config('upload.directory', TRUE).$photo_large))
+		{
+			unlink(Kohana::config('upload.directory', TRUE).$photo_large);
+		}
+		elseif (Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_large))
+		{
+			cdn::delete($photo_large);
+		}
+
+		if (file_exists(Kohana::config('upload.directory', TRUE).$photo_medium))
+		{
+			unlink(Kohana::config('upload.directory', TRUE).$photo_medium);
+		}
+		elseif (Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_medium))
+		{
+			cdn::delete($photo_medium);
+		}
+
+		if (file_exists(Kohana::config('upload.directory', TRUE).$photo_thumb))
+		{
+			unlink(Kohana::config('upload.directory', TRUE).$photo_thumb);
+		}
+		elseif (Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($photo_thumb))
+		{
+			cdn::delete($photo_thumb);
+		}
+
+		// Finally Remove from DB
+		$photo->delete();
+	}
+
 }

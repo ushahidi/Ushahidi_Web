@@ -94,7 +94,7 @@ class reports_Core {
 		}
 		
 		// If deployment is a single country deployment, check that the location mapped is in the default country
-		if ( ! Kohana::config('settings.multi_country'))
+		if ( ! Kohana::config('settings.multi_country') AND isset($post->country_name))
 		{
 			$country = Country_Model::get_country_by_name($post->country_name);
 			if ($country AND $country->id != Kohana::config('settings.default_country'))
@@ -146,7 +146,7 @@ class reports_Core {
 		}
 
 		//> END custom form fields validation
-		
+
 		// Return
 		return $post->validate();
 	}
@@ -418,94 +418,104 @@ class reports_Core {
 		// Delete Previous Entries
 		ORM::factory('media')->where('incident_id',$incident->id)->where('media_type <> 1')->delete_all();
 		
+
 		// a. News
-		foreach ($post->incident_news as $item)
+		if (isset($post->incident_news))
 		{
-			if ( ! empty($item))
+			foreach ($post->incident_news as $item)
 			{
-				$news = new Media_Model();
-				$news->location_id = $incident->location_id;
-				$news->incident_id = $incident->id;
-				$news->media_type = 4;		// News
-				$news->media_link = $item;
-				$news->media_date = date("Y-m-d H:i:s",time());
-				$news->save();
+				if ( ! empty($item))
+				{
+					$news = new Media_Model();
+					$news->location_id = $incident->location_id;
+					$news->incident_id = $incident->id;
+					$news->media_type = 4;		// News
+					$news->media_link = $item;
+					$news->media_date = date("Y-m-d H:i:s",time());
+					$news->save();
+				}
 			}
 		}
 
 		// b. Video
-		foreach ($post->incident_video as $item)
+		if (isset($post->incident_video))
 		{
-			if ( ! empty($item))
+			foreach ($post->incident_video as $item)
 			{
-				$video = new Media_Model();
-				$video->location_id = $incident->location_id;
-				$video->incident_id = $incident->id;
-				$video->media_type = 2;		// Video
-				$video->media_link = $item;
-				$video->media_date = date("Y-m-d H:i:s",time());
-				$video->save();
+				if ( ! empty($item))
+				{
+					$video = new Media_Model();
+					$video->location_id = $incident->location_id;
+					$video->incident_id = $incident->id;
+					$video->media_type = 2;		// Video
+					$video->media_link = $item;
+					$video->media_date = date("Y-m-d H:i:s",time());
+					$video->save();
+				}
 			}
 		}
 
 		// c. Photos
-		$filenames = upload::save('incident_photo');
-		$i = 1;
-		foreach ($filenames as $filename)
+		if ( ! empty($post->incident_photo))
 		{
-			$new_filename = $incident->id.'_'.$i.'_'.time();
-
-			$file_type = strrev(substr(strrev($filename),0,4));
-					
-			// IMAGE SIZES: 800X600, 400X300, 89X59
-					
-			// Large size
-			Image::factory($filename)->resize(800,600,Image::AUTO)
-				->save(Kohana::config('upload.directory', TRUE).$new_filename.$file_type);
-
-			// Medium size
-			Image::factory($filename)->resize(400,300,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$new_filename.'_m'.$file_type);
-					
-			// Thumbnail
-			Image::factory($filename)->resize(89,59,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$new_filename.'_t'.$file_type);
-				
-			// Name the files for the DB
-			$media_link = $new_filename.$file_type;
-			$media_medium = $new_filename.'_m'.$file_type;
-			$media_thumb = $new_filename.'_t'.$file_type;
-				
-			// Okay, now we have these three different files on the server, now check to see
-			//   if we should be dropping them on the CDN
-			
-			if (Kohana::config("cdn.cdn_store_dynamic_content"))
+			$filenames = upload::save('incident_photo');
+			$i = 1;
+			foreach ($filenames as $filename)
 			{
-				$media_link = cdn::upload($media_link);
-				$media_medium = cdn::upload($media_medium);
-				$media_thumb = cdn::upload($media_thumb);
+				$new_filename = $incident->id.'_'.$i.'_'.time();
+
+				$file_type = strrev(substr(strrev($filename),0,4));
+						
+				// IMAGE SIZES: 800X600, 400X300, 89X59
+						
+				// Large size
+				Image::factory($filename)->resize(800,600,Image::AUTO)
+					->save(Kohana::config('upload.directory', TRUE).$new_filename.$file_type);
+
+				// Medium size
+				Image::factory($filename)->resize(400,300,Image::HEIGHT)
+					->save(Kohana::config('upload.directory', TRUE).$new_filename.'_m'.$file_type);
+						
+				// Thumbnail
+				Image::factory($filename)->resize(89,59,Image::HEIGHT)
+					->save(Kohana::config('upload.directory', TRUE).$new_filename.'_t'.$file_type);
+					
+				// Name the files for the DB
+				$media_link = $new_filename.$file_type;
+				$media_medium = $new_filename.'_m'.$file_type;
+				$media_thumb = $new_filename.'_t'.$file_type;
+					
+				// Okay, now we have these three different files on the server, now check to see
+				//   if we should be dropping them on the CDN
 				
-				// We no longer need the files we created on the server. Remove them.
-				$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
-				unlink($local_directory.$new_filename.$file_type);
-				unlink($local_directory.$new_filename.'_m'.$file_type);
-				unlink($local_directory.$new_filename.'_t'.$file_type);
+				if (Kohana::config("cdn.cdn_store_dynamic_content"))
+				{
+					$media_link = cdn::upload($media_link);
+					$media_medium = cdn::upload($media_medium);
+					$media_thumb = cdn::upload($media_thumb);
+					
+					// We no longer need the files we created on the server. Remove them.
+					$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+					unlink($local_directory.$new_filename.$file_type);
+					unlink($local_directory.$new_filename.'_m'.$file_type);
+					unlink($local_directory.$new_filename.'_t'.$file_type);
+				}
+
+				// Remove the temporary file
+				unlink($filename);
+
+				// Save to DB
+				$photo = new Media_Model();
+				$photo->location_id = $incident->location_id;
+				$photo->incident_id = $incident->id;
+				$photo->media_type = 1; // Images
+				$photo->media_link = $media_link;
+				$photo->media_medium = $media_medium;
+				$photo->media_thumb = $media_thumb;
+				$photo->media_date = date("Y-m-d H:i:s",time());
+				$photo->save();
+				$i++;
 			}
-
-			// Remove the temporary file
-			unlink($filename);
-
-			// Save to DB
-			$photo = new Media_Model();
-			$photo->location_id = $incident->location_id;
-			$photo->incident_id = $incident->id;
-			$photo->media_type = 1; // Images
-			$photo->media_link = $media_link;
-			$photo->media_medium = $media_medium;
-			$photo->media_thumb = $media_thumb;
-			$photo->media_date = date("Y-m-d H:i:s",time());
-			$photo->save();
-			$i++;
 		}
 	}
 	
