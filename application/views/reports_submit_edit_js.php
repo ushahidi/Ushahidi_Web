@@ -698,7 +698,7 @@
 												
 						// Update form values
 						$("#country_name").val(data.country);
-						$("#latitude").val(data.latitide);
+						$("#latitude").val(data.latitude);
 						$("#longitude").val(data.longitude);
 						$("#location_name").val(data.location_name);
 					} else {
