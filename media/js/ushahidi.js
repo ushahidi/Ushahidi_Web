@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2008-2012 by Ushahidi Dev Team
+ * Published under the LGPL license. See License.txt for the
+ * full text of the license
+ *
+ * @requires media/js/OpenLayers.js
+ */
 (function(){
 	
 	/**
@@ -160,8 +167,7 @@
 							}
 						}
 					},
-					strokeWidth: function(feature)
-					{
+					strokeWidth: function(feature) {
 						if ( typeof(feature.attributes.strokewidth) != 'undefined' && 
 							feature.attributes.strokewidth != '')
 						{
@@ -200,12 +206,10 @@
 							}
 						}
 					},
-					color: function(feature)
-					{
+					color: function(feature) {
 						return "#" + feature.attributes.color;
 					},
-					strokeColor: function(feature)
-					{
+					strokeColor: function(feature) {
 						if ( typeof(feature.attributes.strokecolor) != 'undefined' && 
 							feature.attributes.strokecolor != '')
 						{
@@ -216,23 +220,15 @@
 							return "#"+feature.attributes.color;
 						}
 					},
-					icon: function(feature)
-					{
+					icon: function(feature) {
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!=="")
-						{
-							return feature_icon;
-						}
-						else
-						{
-							return "";
-						}
+						
+						return (feature_icon !== "") ? feature_icon : "";
 					},
-					clusterCount: function(feature)
-					{
+					clusterCount: function(feature) {
 						if (feature.attributes.count > 1)
 						{
-							if($.browser.msie && $.browser.version=="6.0")
+							if ($.browser.msie && $.browser.version=="6.0")
 							{ // IE6 Bug with Labels
 								return "";
 							}
@@ -244,8 +240,7 @@
 							return "";
 						}
 					},
-					opacity: function(feature)
-					{
+					opacity: function(feature) {
 						feature_icon = feature.attributes.icon;
 						if (typeof(feature.attributes.opacity) != 'undefined' && 
 							feature.attributes.opacity != '')
@@ -261,8 +256,7 @@
 							return Ushahidi.markerOpacity;
 						}
 					},
-					strokeOpacity: function(feature)
-					{
+					strokeOpacity: function(feature) {
 						if(typeof(feature.attributes.strokeopacity) != 'undefined' && 
 							feature.attributes.strokeopacity != '')
 						{
@@ -273,8 +267,7 @@
 							return Ushahidi.markerStrokeOpacity
 						}
 					},
-					labelalign: function(feature)
-					{
+					labelalign: function(feature) {
 						return "c";
 					}
 				}
@@ -604,6 +597,9 @@
 
 	/**
 	 * APIMethod: onFeatureSelect
+	 * Callback that is executed when a feature that is on the map is
+	 * selected. When executed, it displays a popup with the content/information
+	 * about the selected feature
 	 */
 	Ushahidi.Map.prototype.onFeatureSelect = function(event) {
 		this._selectedFeature = event.feature;
@@ -724,7 +720,7 @@
 	}
 
 	/**
-	 * APIProperty: registerCallback
+	 * APIMethod: register
 	 * Registers a callback to be invoked when a specified event is triggered - the
 	 * report filters are passed to each of the registered callbacks as a parameter.
 	 *
@@ -753,7 +749,7 @@
 	}
 
 	/**
-	 * APIProperty: trigger
+	 * APIMethod: trigger
 	 * Triggers the event specified specified in the eventName parameter
 	 *
 	 * Parameters:

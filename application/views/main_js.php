@@ -201,11 +201,11 @@ function refreshTimeline() {
 	var options = (arguments.length == 0) ? {} : arguments[0];
 
 	// Compute the start and end dates
-	startTime = (options.s == undefined)
+	var from = (options.s == undefined)
 	    ? new Date(startTime * 1000)
 	    : new Date(options.s * 1000);
 
-	endTime = (options.e == undefined)
+	var to = (options.e == undefined)
 	    ? new Date(endTime * 1000)
 	    : new Date(options.e * 1000);
 
@@ -213,10 +213,10 @@ function refreshTimeline() {
 	url += (options.c !== undefined && parseInt(options.c) > 0) ?  options.c : '';
 
 	var parameters = {};
-	var divisor = 1000 * 3600 * 24;
-	if ((endTime - startTime) / divisor <= 3){
+	var interval = (to - from) / (1000 * 3600 * 24);
+	if (interval <= 3) {
 		parameters.i = "hour";
-	} else if ((endTime - startTime) / divisor >= 124) {
+	} else if (interval >= 124) {
 		parameters.i = "day";
 	}
 
