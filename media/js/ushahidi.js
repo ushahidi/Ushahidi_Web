@@ -442,8 +442,10 @@
 
 		// Transform feature point coordinate to Spherical Mercator
 		preFeatureInsert = function(feature) {
-			var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
-			OpenLayers.Projection.transform(point, Ushahidi.proj_4326, Ushahidi.proj_900913);
+			if (feature.geometry !== undefined && feature.geometry != null) {
+				var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
+				OpenLayers.Projection.transform(point, Ushahidi.proj_4326, Ushahidi.proj_900913);
+			}
 		}
 
 		// Layer names should be unique, therefore delete any
@@ -451,17 +453,16 @@
 		// being added
 		this.deleteLayer(options.name);
 
-		// Get the styling to use
-		var styleMap = null;
-		if (options.styleMap !== undefined) {
-			styleMap = options.styleMap;
-		} else {
-			var style = Ushahidi.defaultMarkerStyle();
-			styleMap = new OpenLayers.StyleMap({
-				"default": style,
-				"select": style
-			});
-		}
+		// Layer options
+		var layerOptions = {
+			preFeatureInsert: preFeatureInsert,
+			projection: Ushahidi.proj_4326,
+			formatOptions: {
+				extractStyles: true,
+				extractAttributes: true,
+			},
+			strategies: [new OpenLayers.Strategy.Fixed({preload: true})],
+		};
 
 		// Build out the fetch url
 		var fetchURL = Ushahidi.baseURL + options.url;
@@ -476,23 +477,31 @@
 
 			// Update the fetch URL
 			fetchURL += (params.length > 0) ? '?' + params.join('&') : '';
+
+			// Get the styling to use
+			var styleMap = null;
+			if (options.styleMap !== undefined) {
+				styleMap = options.styleMap;
+			} else {
+				var style = Ushahidi.defaultMarkerStyle();
+				styleMap = new OpenLayers.StyleMap({
+					"default": style,
+					"select": style
+				});
+			}
+
+			// Update the layer options with the style map
+			layerOptions.styleMap = styleMap;
 		}
 
-		// Create the layer
-		var layer = new OpenLayers.Layer.Vector(options.name, {
-			preFeatureInsert: preFeatureInsert,
-			projection: Ushahidi.proj_4326,
-			formatOptions: {
-				extractStyles: true,
-				extractAttributes: true,
-			},
-			styleMap: styleMap,
-			strategies: [new OpenLayers.Strategy.Fixed({preload: true})],
-			protocol: new OpenLayers.Protocol.HTTP({
-				url: fetchURL,
-				format: protocolFormat
-			})
+		// Set the protocol
+		layerOptions.protocol = new OpenLayers.Protocol.HTTP({
+			url: fetchURL,
+			format: protocolFormat
 		});
+
+		// Create the layer
+		var layer = new OpenLayers.Layer.Vector(options.name, layerOptions);
 
 		// Add the layer to the map
 		var context = this;
