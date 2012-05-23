@@ -40,7 +40,7 @@ class Reports_Controller extends Main_Controller {
 
 		$this->template->header->this_page = 'reports';
 		$this->template->content = new View('reports/main');
-		$this->themes->js = new View('reports_js');
+		$this->themes->js = new View('reports/reports_js');
 
 		$this->template->header->page_title .= Kohana::lang('ui_main.reports').Kohana::config('settings.title_delimiter');
 
@@ -415,7 +415,7 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->treeview_enabled = TRUE;
 		$this->themes->colorpicker_enabled = TRUE;
 
-		$this->themes->js = new View('reports_submit_edit_js');
+		$this->themes->js = new View('reports/submit_edit_js');
 		$this->themes->js->edit_mode = FALSE;
 		$this->themes->js->incident_zoom = FALSE;
 		$this->themes->js->default_map = Kohana::config('settings.default_map');
@@ -718,7 +718,7 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->map_enabled = TRUE;
 		$this->themes->photoslider_enabled = TRUE;
 		$this->themes->videoslider_enabled = TRUE;
-		$this->themes->js = new View('reports_view_js');
+		$this->themes->js = new View('reports/view_js');
 		$this->themes->js->incident_id = $incident->id;
 		$this->themes->js->default_map = Kohana::config('settings.default_map');
 		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');

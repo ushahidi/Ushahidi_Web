@@ -538,7 +538,8 @@ class Reports_Controller extends Admin_Controller {
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{
-			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			// Instantiate Validation, use $post, so we don't overwrite 
+			// $_POST fields with our own things
 			$post = array_merge($_POST, $_FILES);
 
 			// Check if the service id exists
@@ -774,13 +775,13 @@ class Reports_Controller extends Admin_Controller {
 
 		// Retrieve Previous & Next Records
 		$previous = ORM::factory('incident')->where('id < ', $id)->orderby('id','desc')->find();
-		$previous_url = ($previous->loaded ?
-				url::base().'admin/reports/edit/'.$previous->id :
-				url::base().'admin/reports/');
+		$previous_url = $previous->loaded
+		    ? url::base().'admin/reports/edit/'.$previous->id
+		    : url::base().'admin/reports/';
 		$next = ORM::factory('incident')->where('id > ', $id)->orderby('id','desc')->find();
-		$next_url = ($next->loaded ?
-				url::base().'admin/reports/edit/'.$next->id :
-				url::base().'admin/reports/');
+		$next_url = $next->loaded
+		    ? url::base().'admin/reports/edit/'.$next->id
+		    : url::base().'admin/reports/');
 		$this->template->content->previous_url = $previous_url;
 		$this->template->content->next_url = $next_url;
 
@@ -790,7 +791,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->treeview_enabled = TRUE;
 		$this->template->json2_enabled = TRUE;
 
-		$this->template->js = new View('reports_submit_edit_js');
+		$this->template->js = new View('reports/submit_edit_js');
 		$this->template->js->edit_mode = TRUE;
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');

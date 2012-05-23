@@ -13,20 +13,20 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-class Stats_Controller extends Admin_Controller
-{
-    function __construct()
-    {
-        parent::__construct();
-        $this->template->this_page = 'stats';
-        
-        // If user doesn't have access, redirect to dashboard
-        if ( ! admin::permissions($this->user, "stats"))
-        {
-            url::redirect(url::site().'admin/dashboard');
-        }
+class Stats_Controller extends Admin_Controller {
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->template->this_page = 'stats';
+
+		// If user doesn't have access, redirect to dashboard
+		if ( ! admin::permissions($this->user, "stats"))
+		{
+			url::redirect(url::site().'admin/dashboard');
+		}
     }
-    
+
 	public function index()
 	{   
 		$this->template->content = new View('admin/stats/hits');
@@ -35,7 +35,7 @@ class Stats_Controller extends Admin_Controller
 		// Retrieve Current Settings
 		$settings = ORM::factory('settings', 1);
 
-		if($settings->stat_id === null || $settings->stat_id == 0)
+		if ($settings->stat_id === NULL OR $settings->stat_id == 0)
 		{
 			$sitename = $settings->site_name;
 			$url = url::base();
@@ -62,28 +62,28 @@ class Stats_Controller extends Admin_Controller
 
 		// Set the date range (how many days in the past from today?)
 		$range = 10000;
-		if ( isset($_GET['range']))
+		if (isset($_GET['range']))
 		{
 			$range = $this->input->xss_clean($_GET['range']);
 			$range = (intval($range) > 0)? intval($range) : 10000;
 		}
 
 		$this->template->content->range = $range;
-        
+      
 		// Get an arbitrary date range
 		$dp1 = (isset($_GET['dp1'])) ? $_GET['dp1'] : null;
 		$dp2 = (isset($_GET['dp2'])) ? $_GET['dp2'] : null;
 
 		// Report Data
 		$data = Stats_Model::get_report_stats(false,false,$range,$dp1,$dp2);
-		
+
 		$reports_chart = new protochart;
-		
+
 		// This makes the chart a delicious pie chart
 		$options = array(
 			'pies'=>array('show'=>'true')
 		);
-		
+
 		// Grab category data
 		$cats = Category_Model::categories();
 
@@ -105,10 +105,10 @@ class Stats_Controller extends Admin_Controller
 					? $cats[$category_id]['category_color']
 					: 'FFFFFF';
 
-				foreach($count as $c)
+				foreach ($count as $c)
 				{             
 					// Count up the total number of reports per category
-					if( ! isset($reports_per_cat[$category_id]))
+					if ( ! isset($reports_per_cat[$category_id]))
 					{
                         $reports_per_cat[$category_id] = 0;
                     }
@@ -131,7 +131,7 @@ class Stats_Controller extends Admin_Controller
 		$report_status_chart = new protochart;
 		$report_staus_data = array();
         
-        foreach($data['verified_counts'] as $ver_or_un => $arr)
+        foreach ($data['verified_counts'] as $ver_or_un => $arr)
         {
             if ( ! isset($report_staus_data[$ver_or_un][0]))
             {
@@ -155,7 +155,8 @@ class Stats_Controller extends Admin_Controller
         
         $report_staus_data = array();
         
-        foreach($data['approved_counts'] as $app_or_un => $arr){
+		foreach ($data['approved_counts'] as $app_or_un => $arr)
+		{
             if ( ! isset($report_staus_data[$app_or_un][0]))
             {
                 $report_staus_data[$app_or_un][0] = 0;

@@ -16,7 +16,7 @@
 
 class Reports_Controller extends Members_Controller {
 	
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 
@@ -28,13 +28,13 @@ class Reports_Controller extends Members_Controller {
 	* Lists the reports.
 	* @param int $page
 	*/
-	function index($page = 1)
+	public function index($page = 1)
 	{
 		$this->template->content = new View('members/reports');
 		$this->template->content->title = Kohana::lang('ui_admin.reports');
 
 
-		if (!empty($_GET['status']))
+		if ( ! empty($_GET['status']))
 		{
 			$status = $_GET['status'];
 
@@ -101,7 +101,7 @@ class Reports_Controller extends Members_Controller {
 				// Delete Action
 				if ($post->action == 'd')	
 				{
-					foreach($post->incident_id as $item)
+					foreach ($post->incident_id as $item)
 					{
 						$update = ORM::factory('incident')
 							->where('user_id', $this->user->id)
@@ -162,7 +162,7 @@ class Reports_Controller extends Members_Controller {
 		// Pagination
 		$pagination = new Pagination(array(
 			'query_string'	 => 'page',
-			'items_per_page' => (int) Kohana::config('settings.items_per_page_admin'),
+			'items_per_page' => intval(Kohana::config('settings.items_per_page_admin')),
 			'total_items'	 => ORM::factory('incident')
 				->join('location', 'incident.location_id', 'location.id','INNER')
 				->where($filter)
@@ -185,7 +185,7 @@ class Reports_Controller extends Members_Controller {
 		}
 		
 		// Check if location_ids is not empty
-		if( count($location_ids ) > 0 ) 
+		if (count($location_ids ) > 0 ) 
 		{
 			$locations_result = ORM::factory('location')->in('id',implode(',',$location_ids))->find_all();
 			$locations = array();
@@ -276,7 +276,8 @@ class Reports_Controller extends Members_Controller {
 			'incident_information' => ''
 		);
 
-		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		// Copy the form as errors, so the errors will be stored with keys 
+		// corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
 		$form_saved = ($saved == 'saved');
@@ -340,7 +341,7 @@ class Reports_Controller extends Members_Controller {
 		
 		
 		// Are we creating this report from a Checkin?
-		if (isset($_GET['cid']) AND !empty($_GET['cid']) ) {
+		if (isset($_GET['cid']) AND ! empty($_GET['cid']) ) {
 
 			$checkin_id = (int) $_GET['cid'];
 			$checkin = ORM::factory('checkin', $checkin_id);
@@ -561,13 +562,14 @@ class Reports_Controller extends Members_Controller {
 
 		// Retrieve Previous & Next Records
 		$previous = ORM::factory('incident')->where('id < ', $id)->orderby('id','desc')->find();
-		$previous_url = ($previous->loaded ?
-				url::base().'members/reports/edit/'.$previous->id :
-				url::base().'members/reports/');
+		$previous_url = $previous->loaded
+		    ? url::base().'members/reports/edit/'.$previous->id
+		    : url::base().'members/reports/';
 		$next = ORM::factory('incident')->where('id > ', $id)->orderby('id','desc')->find();
-		$next_url = ($next->loaded ?
-				url::base().'members/reports/edit/'.$next->id :
-				url::base().'members/reports/');
+
+		$next_url = $next->loaded
+		    ? url::base().'members/reports/edit/'.$next->id
+		    : url::base().'members/reports/';
 		$this->template->content->previous_url = $previous_url;
 		$this->template->content->next_url = $next_url;
 
@@ -577,12 +579,12 @@ class Reports_Controller extends Members_Controller {
 		$this->template->treeview_enabled = TRUE;
 		$this->template->json2_enabled = TRUE;
 		
-		$this->template->js = new View('reports_submit_edit_js');
+		$this->template->js = new View('reports/submit_edit_js');
 		$this->template->js->edit_mode = FALSE;
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
 
-		if ( ! $form['latitude'] OR !$form['latitude'])
+		if ( ! $form['latitude'] OR ! $form['latitude'])
 		{
 			$this->template->js->latitude = Kohana::config('settings.default_lat');
 			$this->template->js->longitude = Kohana::config('settings.default_lon');
@@ -610,12 +612,12 @@ class Reports_Controller extends Members_Controller {
 	* Delete Photo
 	* @param int $id The unique id of the photo to be deleted
 	*/
-	function deletePhoto ( $id )
+	public function deletePhoto ($id)
 	{
 		$this->auto_render = FALSE;
 		$this->template = "";
 
-		if ( $id )
+		if ($id)
 		{
 			$photo = ORM::factory('media', $id);
 			$photo_large = $photo->media_link;

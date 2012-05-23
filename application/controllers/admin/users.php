@@ -14,11 +14,13 @@
  */
 
 class Users_Controller extends Admin_Controller {
+
     private $display_roles = FALSE;
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
+
         $this->template->this_page = 'users';
 
         // If user doesn't have access, redirect to dashboard
@@ -30,19 +32,17 @@ class Users_Controller extends Admin_Controller {
         $this->display_roles = admin::permissions($this->user, 'manage_roles');
     }
 
-    function index()
+    public function index()
     {
         $this->template->content = new View('admin/users/main');
         $this->template->js = new View('admin/users/users_js');
 
         // Check, has the form been submitted, if so, setup validation
-
-		if ($_POST)
-		{
-			$post = Validation::factory(array_merge($_POST,$_FILES));
+        if ($_POST)
+        {
+            $post = Validation::factory(array_merge($_POST,$_FILES));
 
 			// Add some filters
-
 			$post->pre_filter('trim', TRUE);
 
 			// As far as I know, the only time we submit a form here is to delete a user
@@ -158,13 +158,18 @@ class Users_Controller extends Admin_Controller {
 
 				// We can only set a new password if we are using the standard ORM method,
 				//    otherwise it won't actually change the password used for authentication
-				if (isset($post->new_password) AND kohana::config('riverid.enable') == FALSE AND strlen($post->new_password ) > 0)
+				if
+                (
+                    isset($post->new_password) AND
+                    Kohana::config('riverid.enable') == FALSE AND
+                    strlen($post->new_password ) > 0
+                )
 				{
 					$user->password = $post->new_password;
 				}
 
 				// Existing User??
-				if ($user->loaded==true)
+				if ($user->loaded)
 				{
 					// Prevent modification of the main admin account username or role
 					if ($user->id != 1)
@@ -223,7 +228,7 @@ class Users_Controller extends Admin_Controller {
 			{
 				// Retrieve Current Incident
 				$user = ORM::factory('user', $user_id);
-				if ($user->loaded == true)
+				if ($user->loaded)
 				{
 					// Some users don't have roles so we have this "none" role
 					$role = 'none';
@@ -275,8 +280,7 @@ class Users_Controller extends Admin_Controller {
     {
         $this->template->content = new View('admin/users/roles');
 
-        $form = array
-        (
+        $form = array(
             'role_id' => '',
             'action' => '',
             'name' => '',

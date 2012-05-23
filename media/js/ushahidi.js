@@ -298,7 +298,9 @@
 	  * Valid config options are:
 	  * zoom - Initial zoom level of the map
 	  * center - {Object} The default initial center of the map
-	  * mapOptions:
+	  * redrawOnZoom - {Boolean} Whether to redraw the layers when the map zoom changes.
+	  *                Default is false
+	  * mapControls - {Array(OpenLayers.Control)} The list of controls to add to the map
 	  */
 	 Ushahidi.Map = function(div, config) {
 	 	// Internal registry for the maker layers
@@ -310,6 +312,9 @@
 	 	// Markers are not yet loaded on the map
 	 	this._isLoaded = 0;
 
+	 	// List of supported events
+	 	this._EVENTS = ["filterschanged", "zoomchanged", "resize"];
+
 	 	// The set of filters/parameters to pass to the URL that fetches
 	 	// overlay data - not applicable to KMLs
 	 	this._reportFilters = {};
@@ -317,7 +322,7 @@
 	 	// Register for the callbacks to be invoked when the report filters
 	 	// are updated. The updated paramters will passed to the callback
 	 	// as a parameter
-	 	this._callbacks = [];
+	 	this._callbacks = {};
 
 	 	// Check for the mapDiv
 	 	if (div == undefined) {
@@ -345,14 +350,17 @@
 			controls: [],
 			projection: Ushahidi.proj_900913,
 			'displayProjection': Ushahidi.proj_4326,
-			eventListeners: {
-				"zoomend": this.refresh,
-				scope: this
-			},
 			maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 
 			                                 20037508.34, 20037508.34),
 			maxResolution: 156543.0339
 		};
+
+		if (config.redrawOnZoom !== undefined && config.redrawOnZoom) {
+			mapOptions.eventListeners = {
+				"zoomend": this.refresh,
+				scope: this
+			};
+		}
 
 		// Check for the controls to add to the map
 		if (config.mapControls == undefined) {
@@ -389,6 +397,9 @@
 		// NOTE: Only one map is allowed in the namespace
 		Ushahidi._currentMap = this;
 
+		// Register map resize event
+		this.register("resize", this.resize, this);
+
 		return this;
 	};
 
@@ -405,6 +416,7 @@
 	 *           Valid options are:
 	 *                name - {String} Name of the Layer being added
 	 *                url - {String} Fetch URL for the layer data
+	 *                styleMap - {OpenLayers.StyleMap} Styling for the layer
      *
 	 * save - {bool} Whether to save the layer in the internal registry of Ushahidi.Map This
 	 *        parameter should be set to true, if the layer being added is new so as to ensure
@@ -442,7 +454,16 @@
 
 
 		// Get the styling to use
-		var style = Ushahidi.defaultMarkerStyle();
+		var styleMap = null;
+		if (options.styleMap !== undefined) {
+			styleMap = options.styleMap;
+		} else {
+			var style = Ushahidi.defaultMarkerStyle();
+			styleMap = new OpenLayers.StyleMap({
+				"default": style,
+				"select": style
+			});
+		}
 
 		// Build out the fetch url
 		var fetchURL = Ushahidi.baseURL + options.url;
@@ -467,10 +488,7 @@
 				extractStyles: true,
 				extractAttributes: true,
 			},
-			styleMap: new OpenLayers.StyleMap({
-				"default": style,
-				"select": style
-			}),
+			styleMap: styleMap,
 			strategies: [new OpenLayers.Strategy.Fixed({preload: true})],
 			protocol: new OpenLayers.Protocol.HTTP({
 				url: fetchURL,
@@ -534,16 +552,7 @@
 			// Set the zoom level
 			context._reportFilters.z = context._olMap.getZoom();
 			context.redraw();
-
-			// Pass the updated filters to the callbacks
-			for (var i=0; i < context._callbacks.length; i++) {
-				var target = context._callbacks[i];
-				if (target.context == undefined || target.context == null) {
-					target.callback(context._reportFilters);
-				} else {
-					target.callback.call(target.context, context._reportFilters);
-				}
-			}
+			context.trigger("filterschanged", context._reportFilters);
 		}
 	}
 
@@ -709,12 +718,68 @@
 
 	/**
 	 * APIProperty: registerCallback
-	 * Registers a callback to be invoked when the report filters are updated - the
-	 * report filters are passed to each of the registered callbacks as a parameter
+	 * Registers a callback to be invoked when a specified event is triggered - the
+	 * report filters are passed to each of the registered callbacks as a parameter.
+	 *
+	 * Parameters:
+	 * eventName - {String} Name of the event for which to register the callback
+	 * callback - {Function} Function to be executed when the event in 'eventName' is triggered
+	 * context - {Object} Execution context of the callback function. This is necessary where
+	 *           the callback function is an object method
 	 */
-	Ushahidi.Map.prototype.registerCallback = function(callback, context) {
-		var entry = {callback: callback, context: context};
-		this._callbacks.push(entry);
+	Ushahidi.Map.prototype.register = function(eventName, callback, context) {
+
+		// Is the event known? i.e. in the internal event registry
+		if (this._EVENTS.indexOf(eventName) == -1)
+			return;
+
+		// Has the event already been registered
+		if (this._callbacks[eventName] == undefined) {
+			this._callbacks[eventName] = [];
+		}
+
+		// Subscribe to the event
+		this._callbacks[eventName].push({
+			callback: callback,
+			context: context
+		});
+	}
+
+	/**
+	 * APIProperty: trigger
+	 * Triggers the event specified specified in the eventName parameter
+	 *
+	 * Parameters:
+	 * eventName - {String} Name of the event to be triggered. No error will be returned
+	 *              if the event is not found
+	 * data - {Object} Data to be passed to the subscribers of the event specified in eventName
+	 */
+	Ushahidi.Map.prototype.trigger = function(eventName, data) {
+		// If the event is unknown, exit without throwing an error
+		if (this._callbacks.length == 0 || this._callbacks[eventName] == undefined) {
+			return;
+		}
+
+		// Get the subscribers for the event
+		var subscribers = this._callbacks[eventName];
+
+		for (var i=0; i < subscribers.length; i++) {
+			var subscriber = subscribers[i];
+			if (subscriber.context == undefined || subscriber.context == null) {
+				subscriber.callback(data);
+			} else {
+				subscriber.callback.call(subscriber.context, data);
+			}
+		}
+	}
+
+	/**
+	 * APIMethod: resize
+	 * Resizes the map when the size of its container changes
+	 */
+	Ushahidi.Map.prototype.resize = function() {
+		this._olMap.updateSize();
+		this._olMap.pan(0, 1);
 	}
 
 })();

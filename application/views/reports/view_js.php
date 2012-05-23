@@ -16,38 +16,40 @@
  */
 ?>
 
-// Global variables - should be accessible from map_common_js
-var map, selectedFeature;
+// Set the base url
+Ushahidi.baseURL = "<?php echo url::site(); ?>";
 
 jQuery(window).load(function() {
-	<?php @require_once(APPPATH.'views/map_common_js.php'); ?>
 
-	var moved=false;
+	<?php echo map::layers_js(FALSE); ?>
 
-	var latitude = <?php echo $latitude; ?>;
-	var longitude = <?php echo $longitude; ?>;
-	var zoomLevel = <?php echo ($incident_zoom) ? $incident_zoom : intval(Kohana::config('settings.default_zoom')); ?>;
+	// Configuration for the map
+	var mapConfig = {
 
-	// Controls to add to the map
-	var mapControls = [
-		new OpenLayers.Control.Navigation(),
-		new OpenLayers.Control.PanZoomBar(),
-		new OpenLayers.Control.MousePosition(),
-		new OpenLayers.Control.ScaleLine(),
-		new OpenLayers.Control.Scale('mapScale'),
-		new OpenLayers.Control.LayerSwitcher(),
-		new OpenLayers.Control.Attribution()
-	];
+		// Zoom level
+		zoom: <?php echo ($incident_zoom) ? $incident_zoom : intval(Kohana::config('settings.default_zoom')); ?>,
 
-	// Initialize the map
-	map  = createMap('map', latitude, longitude, zoomLevel, null, mapControls);
+		// Map center
+		center: {
+			latitude: <?php echo $latitude; ?>,
+			longitude: <?php echo $longitude; ?>
+		},
 
-	// Remove the PanZoom control
-	var panZoomControls = map.getControlsByClass("OpenLayers.Control.PanZoom");
-	for (var i=0; i<panZoomControls.length; i++) {
-		map.removeControl(panZoomControls[i]);
-	}
-	
+		// Map controls
+		mapControls: [
+			new OpenLayers.Control.Navigation(),
+			new OpenLayers.Control.PanZoomBar(),
+			new OpenLayers.Control.MousePosition(),
+			new OpenLayers.Control.ScaleLine(),
+			new OpenLayers.Control.Scale('mapScale'),
+			new OpenLayers.Control.LayerSwitcher(),
+			new OpenLayers.Control.Attribution()
+		],
+
+		// Base layers
+		baseLayers: <?php echo map::layers_array(FALSE); ?>,
+	};
+
 	// Set Feature Styles
 	var style1 = new OpenLayers.Style({
 		pointRadius: "8",
@@ -122,27 +124,24 @@ jQuery(window).load(function() {
 		strokeWidth: 3,
 		graphicZIndex: 1
 	});
-	
-	// Create the single marker layer
-	var markers = new OpenLayers.Layer.GML("single report", 
-	    "<?php echo url::site() . 'json/single/' . $incident_id; ?>", 
-	    {
-	    	format: OpenLayers.Format.GeoJSON,
-	    	projection: map.displayProjection,
-	    	styleMap: new OpenLayers.StyleMap({
-	    		"default": style1,
-	    		"select": style1,
-	    		"temporary": style2
-	    	})
-		}
-	);
-	
-	// Add the markers layer
-	map.addLayer(markers);
 
-	// Register feature selection events
-		addFeatureSelectionEvents(map, markers);
 
+	// Styles to use for rendering the markers
+	var styleMap = new OpenLayers.StyleMap({
+		default: style1,
+		select: style1,
+		temporary: style2
+	});
+
+
+	// Initialize the map
+	var map = new Ushahidi.Map('map', mapConfig);
+	map.addLayer(Ushahidi.REPORTS, {
+		name: "Single Report",
+		url: "<?php echo 'json/single/'.$incident_id; ?>",
+		styleMap: styleMap
+	});
+	
 	// Ajax Validation for the comments
 	$("#commentForm").validate({
 		rules: {
@@ -214,9 +213,7 @@ jQuery(window).load(function() {
 				break;
 		};
 		
-		map.updateSize();
-		map.pan(0,1);
-		
+		map.trigger("resize");
 		return false;
 	});
 

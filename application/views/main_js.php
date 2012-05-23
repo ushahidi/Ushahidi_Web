@@ -269,7 +269,7 @@ function refreshTimeline() {
 	    : new Date(options.e * 1000);
 
 	var url = "<?php echo url::site().'json/timeline/'; ?>";
-	url += (options.c == undefined && parseInt(options.c) > 0) ? '' : options.c;
+	url += (options.c !== undefined && parseInt(options.c) > 0) ?  options.c : '';
 
 	var parameters = {};
 	var divisor = 1000 * 3600 * 24;
@@ -283,10 +283,16 @@ function refreshTimeline() {
 	$.ajax({
 		url: url,
 		data: parameters,
-		async: true,
+		async: false,
 		success: function(response) {
+			// Clear out the any existing plots
+			$("#graph").html('');
+
+			if (response[0].data.length == 0)
+				return;
+
+			var graphData = [];
 			var raw = response[0].data;
-			var graphData = []
 			for (var i=0; i<raw.length; i++) {
 				var date = new Date(raw[i][0]);
 
@@ -298,7 +304,6 @@ function refreshTimeline() {
 
 				graphData.push([dateStr, parseInt(raw[i][1])]);
 			}
-			$("#graph").html('');
 			var timeline = $.jqplot('graph', [graphData], {
 				seriesDefaults: {
 					color: response[0].color,
@@ -344,6 +349,9 @@ jQuery(function() {
 		// Zoom level at which to display the map
 		zoom: <?php echo $default_zoom; ?>,
 
+		// Redraw the layers when the zoom level changes
+		redrawOnZoom: true,
+
 		// Center of the map
 		center: {
 			latitude: <?php echo $latitude; ?>,
@@ -382,7 +390,7 @@ jQuery(function() {
 
 
 	// Register the referesh timeline function as a callback
-	map.registerCallback(refreshTimeline);
+	map.register("filterschanged", refreshTimeline);
 	setTimeout(function() { refreshTimeline(); }, 1500);
 
 
