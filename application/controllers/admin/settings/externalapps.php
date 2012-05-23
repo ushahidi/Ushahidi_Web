@@ -18,7 +18,7 @@ class Externalapps_Controller extends Admin_Controller {
 
 	function index()
 	{
-		$this->template->content = new View('admin/externalapps');
+		$this->template->content = new View('admin/settings/externalapps/main');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
 
 		// setup and initialize form field names
@@ -99,7 +99,7 @@ class Externalapps_Controller extends Admin_Controller {
 		$this->template->content->form_saved = $form_saved;
 		
 		// Javascript Header
-		$this->template->js = new View('admin/externalapps_js');
+		$this->template->js = new View('admin/settings/externalapps/externalapps_js');
 	}
 	
 }

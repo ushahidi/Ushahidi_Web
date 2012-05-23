@@ -49,7 +49,7 @@ class Manage_Controller extends Admin_Controller
 	 */
 	public function index()
 	{
-		$this->template->content = new View('admin/categories');
+		$this->template->content = new View('admin/manage/categories/main');
 		$this->template->content->title = Kohana::lang('ui_admin.categories');
 
 		// Locale (Language) Array
@@ -397,7 +397,7 @@ class Manage_Controller extends Admin_Controller
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
 		$this->template->tablerowsort_enabled = TRUE;
-		$this->template->js = new View('admin/categories_js');
+		$this->template->js = new View('admin/manage/categories/categories_js');
 		$this->template->form_error = $form_error;
 
 		$this->template->content->locale_array = $locales;
@@ -463,7 +463,7 @@ class Manage_Controller extends Admin_Controller
 	 */
 	public function publiclisting()
 	{
-		$this->template->content = new View('admin/publiclisting');
+		$this->template->content = new View('admin/manage/publiclisting');
 		
 		$settings = ORM::factory('settings', 1);
 		
@@ -477,7 +477,7 @@ class Manage_Controller extends Admin_Controller
 	 */
 	public function pages()
 	{
-		$this->template->content = new View('admin/pages');
+		$this->template->content = new View('admin/manage/pages/main');
 
 		// setup and initialize form field names
 		$form = array
@@ -577,7 +577,7 @@ class Manage_Controller extends Admin_Controller
 
 		// Javascript Header
 		$this->template->editor_enabled = TRUE;
-		$this->template->js = new View('admin/pages_js');
+		$this->template->js = new View('admin/manage/pages/pages_js');
 	}
 
 
@@ -586,7 +586,7 @@ class Manage_Controller extends Admin_Controller
 	 */
 	public function feeds()
 	{
-		$this->template->content = new View('admin/feeds');
+		$this->template->content = new View('admin/manage/feeds/main');
 
 		// setup and initialize form field names
 		$form = array
@@ -681,7 +681,7 @@ class Manage_Controller extends Admin_Controller
 
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
-		$this->template->js = new View('admin/feeds_js');
+		$this->template->js = new View('admin/manage/feeds/feeds_js');
 	}
 
 	/**
@@ -689,7 +689,7 @@ class Manage_Controller extends Admin_Controller
 	 */
 	public function feeds_items()
 	{
-		$this->template->content = new View('admin/feeds_items');
+		$this->template->content = new View('admin/manage/feeds/items');
 		
 		// Check if the last segment of the URI is numeric and grab it
 		$feed_id = is_numeric($this->uri->last_segment())
@@ -748,7 +748,7 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->total_items = $pagination->total_items;
 
 		// Javascript Header
-		$this->template->js = new View('admin/feeds_items_js');
+		$this->template->js = new View('admin/manage/feeds/items_js');
 	}
 
 	/**
@@ -756,12 +756,11 @@ class Manage_Controller extends Admin_Controller
 	 */
 	public function layers()
 	{
-		$this->template->content = new View('admin/layers');
+		$this->template->content = new View('admin/manage/layers/main');
 		$this->template->content->title = Kohana::lang('ui_admin.layers');
 
 		// Setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'action' => '',
 			'layer_id' => '',
 			'layer_name' => '',
@@ -831,7 +830,12 @@ class Manage_Controller extends Admin_Controller
 									$ext_file_name = $file['filename'];
 									$archive_file_parts = pathinfo($ext_file_name);
 									//because there can be more than one file in a KMZ
-									if ($archive_file_parts['extension'] == 'kml' AND $ext_file_name AND $archive->extract(PCLZIP_OPT_PATH, Kohana::config('upload.directory')) == TRUE)
+									if
+									(
+										$archive_file_parts['extension'] == 'kml' AND
+										$ext_file_name AND
+										$archive->extract(PCLZIP_OPT_PATH, Kohana::config('upload.directory')) == TRUE
+									)
 									{ 
 										// Okay, so we have an extracted KML - Rename it and delete KMZ file
 										rename($path_parts['dirname']."/".$ext_file_name, 
@@ -956,7 +960,7 @@ class Manage_Controller extends Admin_Controller
 
 		// Javascript Header
 		$this->template->colorpicker_enabled = TRUE;
-		$this->template->js = new View('admin/layers_js');
+		$this->template->js = new View('admin/manage/layers/layers_js');
 	}
 
 	/**
@@ -964,7 +968,7 @@ class Manage_Controller extends Admin_Controller
 	 */
 	public function levels()
 	{
-		$this->template->content = new View('admin/levels');
+		$this->template->content = new View('admin/manage/levels');
 		$this->template->content->title = Kohana::lang('ui_admin.reporter_levels');
 
 		// setup and initialize form field names

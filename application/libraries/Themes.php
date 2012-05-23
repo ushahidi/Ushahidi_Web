@@ -82,40 +82,40 @@ class Themes_Core {
 	private function _header_css()
 	{
 		$core_css = "";
-		$core_css .= html::stylesheet($this->css_url."media/css/jquery-ui-themeroller", "", true);
+		$core_css .= html::stylesheet($this->css_url."media/css/jquery-ui-themeroller", "", TRUE);
 
 		foreach (Kohana::config("settings.site_style_css") as $theme_css)
 		{
-			$core_css .= html::stylesheet($theme_css,"",true);
+			$core_css .= html::stylesheet($theme_css,"",TRUE);
 		}
 
-		$core_css .= "<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",true)."<![endif]-->";
-		$core_css .= "<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",true)."<![endif]-->";
-		$core_css .= "<!--[if IE 6]>".html::stylesheet($this->css_url."media/css/ie6hacks","",true)."<![endif]-->";
+		$core_css .= "<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",TRUE)."<![endif]-->";
+		$core_css .= "<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",TRUE)."<![endif]-->";
+		$core_css .= "<!--[if IE 6]>".html::stylesheet($this->css_url."media/css/ie6hacks","",TRUE)."<![endif]-->";
 
 		if ($this->map_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/openlayers","",true);
+			$core_css .= html::stylesheet($this->css_url."media/css/openlayers","",TRUE);
 		}
 
 		if ($this->treeview_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/jquery.treeview","",true);
+			$core_css .= html::stylesheet($this->css_url."media/css/jquery.treeview","",TRUE);
 		}
 
 		if ($this->photoslider_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/picbox/picbox","",true);
+			$core_css .= html::stylesheet($this->css_url."media/css/picbox/picbox","",TRUE);
 		}
 
 		if ($this->videoslider_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/videoslider","",true);
+			$core_css .= html::stylesheet($this->css_url."media/css/videoslider","",TRUE);
 		}
 
 		if ($this->colorpicker_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/colorpicker","",true);
+			$core_css .= html::stylesheet($this->css_url."media/css/colorpicker","",TRUE);
 		}
 
 		if ($this->site_style AND $this->site_style != "default")
@@ -123,7 +123,8 @@ class Themes_Core {
 			$core_css .= html::stylesheet($this->css_url."themes/".$site_style."/style.css");
 		}
 
-		$core_css .= html::stylesheet($this->css_url."media/css/global","",true);
+		$core_css .= html::stylesheet($this->css_url."media/css/global","",TRUE);
+		$core_css .= html::stylesheet($this->css_url."media/css/jquery.jqplot.min", "", TRUE);
 
 		// Render CSS
 		$plugin_css = plugin::render('stylesheet');
@@ -139,15 +140,16 @@ class Themes_Core {
 		$core_js = "";
 		if ($this->map_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/OpenLayers", true);
+			$core_js .= html::script($this->js_url."media/js/OpenLayers", TRUE);
 			$core_js .= "<script type=\"text/javascript\">OpenLayers.ImgPath = '".$this->js_url."media/img/openlayers/"."';</script>";
+			$core_js .= html::script($this->js_url."media/js/ushahidi", TRUE);
 		}
 
-		$core_js .= html::script($this->js_url."media/js/jquery", true);
-		//$core_js .= html::script($this->js_url."media/js/jquery.ui.min", true);
-		$core_js .= html::script("https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", true);
-		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", true);
-		$core_js .= html::script($this->js_url."media/js/jquery.timeago", true);
+		$core_js .= html::script($this->js_url."media/js/jquery", TRUE);
+		//$core_js .= html::script($this->js_url."media/js/jquery.ui.min", TRUE);
+		$core_js .= html::script("https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", TRUE);
+		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", TRUE);
+		$core_js .= html::script($this->js_url."media/js/jquery.timeago", TRUE);
 
 		if ($this->map_enabled)
 		{
@@ -156,14 +158,19 @@ class Themes_Core {
 
 			if ($this->main_page || $this->this_page == "alerts")
 			{
-				$core_js .= html::script($this->js_url."media/js/selectToUISlider.jQuery", true);
+				$core_js .= html::script($this->js_url."media/js/selectToUISlider.jQuery", TRUE);
 			}
 
 			if ($this->main_page)
 			{
-				$core_js .= html::script($this->js_url."media/js/jquery.flot", true);
-				$core_js .= html::script($this->js_url."media/js/timeline", true);
-				$core_js .= "<!--[if IE]>".html::script($this->js_url."media/js/excanvas.min", true)."<![endif]-->";
+				$core_js .= html::script($this->js_url."media/js/jquery.flot", TRUE);
+
+				// Notes: E.Kala <emmanuel(at)ushahidi.com>
+				// TODO: Only include the jqplot JS when the timeline is enabled
+				$core_js .= html::script($this->js_url."media/js/jquery.jqplot.min");
+				$core_js .= html::script($this->js_url."media/js/jqplot.dateAxisRenderer.min");
+
+				$core_js .= "<!--[if IE]>".html::script($this->js_url."media/js/excanvas.min", TRUE)."<![endif]-->";
 			}
 		}
 
@@ -179,10 +186,10 @@ class Themes_Core {
 
 		if ($this->photoslider_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/picbox", true);
+			$core_js .= html::script($this->js_url."media/js/picbox", TRUE);
 		}
 
-		if($this->videoslider_enabled )
+		if ($this->videoslider_enabled)
 		{
 			$core_js .= html::script($this->js_url."media/js/coda-slider.pack");
 		}
@@ -205,7 +212,7 @@ class Themes_Core {
 		// Javascript files from themes
 		foreach (Kohana::config("settings.site_style_js") as $theme_js)
 		{
-			$core_js .= html::script($theme_js,"",true);
+			$core_js .= html::script($theme_js,"",TRUE);
 		}
 
 		// Inline Javascript
@@ -262,7 +269,7 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		$locales = $this->cache->get('locales');
 
 		// If we didn't find any languages, we need to look them up and set the cache
-		if( ! $locales)
+		if ( ! $locales)
 		{
 			$locales = ush_locale::get_i18n();
 			$this->cache->set('locales', $locales, array('locales'), 604800);
@@ -362,7 +369,7 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 			_gaq.push(['_trackPageview']);
 
 			(function() {
-			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = TRUE;
 			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();

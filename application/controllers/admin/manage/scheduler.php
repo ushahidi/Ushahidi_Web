@@ -30,7 +30,7 @@ class Scheduler_Controller extends Admin_Controller
 
 	function index()
 	{
-		$this->template->content = new View('admin/scheduler');
+		$this->template->content = new View('admin/manage/scheduler/main');
 
 		// Check if we should be running the scheduler and then do it
 		if (isset($_GET['run_scheduler'])){
@@ -59,8 +59,7 @@ class Scheduler_Controller extends Admin_Controller
 		}
 
 		// setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'action' => '',
 			'schedule_id'	  => '',
 			'scheduler_weekday'	  => '',
@@ -75,7 +74,7 @@ class Scheduler_Controller extends Admin_Controller
 		$form_saved = FALSE;
 		$form_action = "";
 
-		if ( $_POST )
+		if ($_POST)
 		{
 			//print_r($_POST);
 			$post = Validation::factory( $_POST );
@@ -190,13 +189,13 @@ class Scheduler_Controller extends Admin_Controller
 		$this->template->content->errors = $errors;
 
         // Javascript Header
-		$this->template->js = new View('admin/scheduler_js');
+		$this->template->js = new View('admin/manage/scheduler/scheduler_js');
 	}
 
 
 	public function log()
 	{
-		$this->template->content = new View('admin/scheduler_log');
+		$this->template->content = new View('admin/manage/scheduler/log');
 
 		// Pagination
 		$pagination = new Pagination(array(

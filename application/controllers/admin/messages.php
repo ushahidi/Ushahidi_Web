@@ -38,7 +38,7 @@ class Messages_Controller extends Admin_Controller {
 		$db_config = Kohana::config('database.default');
 		$table_prefix = $db_config['table_prefix'];
 
-		$this->template->content = new View('admin/messages');
+		$this->template->content = new View('admin/messages/main');
 
 		// Get Title
 		$service = ORM::factory('service', $service_id);
@@ -245,7 +245,7 @@ class Messages_Controller extends Admin_Controller {
 		$this->template->content->level = $level;
 
 		// Javascript Header
-		$this->template->js = new View('admin/messages_js');
+		$this->template->js = new View('admin/messages/messages_js');
 	}
 
 	/**

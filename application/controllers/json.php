@@ -14,8 +14,7 @@
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Json_Controller extends Template_Controller
-{
+class Json_Controller extends Template_Controller {
 	/**
 	 * Automatically render the views
 	 * @var bool
@@ -86,7 +85,9 @@ class Json_Controller extends Template_Controller
 		}
 		
 		// Fetch the incidents
-		$markers = (isset($_GET['page']) AND intval($_GET['page']) > 0)? reports::fetch_incidents(TRUE) : reports::fetch_incidents();
+		$markers = (isset($_GET['page']) AND intval($_GET['page']) > 0)
+		    ? reports::fetch_incidents(TRUE)
+		    : reports::fetch_incidents();
 		
 		foreach ($markers as $marker)
 		{
@@ -142,7 +143,7 @@ class Json_Controller extends Template_Controller
 			$geometry = $this->_get_geometry($marker->incident_id, $marker->incident_title, $marker->incident_date);
 			if (count($geometry))
 			{
-				foreach($geometry as $g)
+				foreach ($geometry as $g)
 				{
 					array_push($json_features, $g);
 				}
@@ -463,15 +464,16 @@ class Json_Controller extends Template_Controller
 	/**
 	 * Retrieve timeline JSON
 	 */
-	public function timeline( $category_id = 0 )
+	public function timeline($category_id = 0)
 	{
 		$category_id = (int) $category_id;
 
 		$this->auto_render = FALSE;
 		$db = new Database();
 
-		$interval = (isset($_GET["i"]) AND !empty($_GET["i"])) ?
-			$_GET["i"] : "month";
+		$interval = (isset($_GET["i"]) AND ! empty($_GET["i"]))
+		    ? $_GET["i"]
+		    : "month";
 
 		// Get Category Info
 		if ($category_id > 0)
@@ -521,12 +523,15 @@ class Json_Controller extends Template_Controller
 		// Gather allowed ids if we are looking at a specific category
 
 		$allowed_ids = array();
-		if($category_id != 0)
+		if ($category_id != 0)
 		{
-			$query = 'SELECT ic.incident_id AS incident_id FROM '.$this->table_prefix.'incident_category AS ic INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id)  WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
+			$query = 'SELECT ic.incident_id AS incident_id '
+			    . 'FROM '.$this->table_prefix.'incident_category AS ic '
+			    . 'INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id) '
+			    . 'WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
 			$query = $db->query($query);
 
-			foreach ( $query as $items )
+			foreach ($query as $items)
 			{
 				$allowed_ids[] = $items->incident_id;
 			}
@@ -535,7 +540,7 @@ class Json_Controller extends Template_Controller
 
 		// Add aditional filter here to only allow for incidents that are in the requested category
 		$incident_id_in = '';
-		if(count($allowed_ids) AND $category_id != 0)
+		if (count($allowed_ids) AND $category_id != 0)
 		{
 			$incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
 		}
@@ -544,10 +549,13 @@ class Json_Controller extends Template_Controller
 			$incident_id_in = ' AND 3 = 4';
 		}
 
-		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number FROM '.$this->table_prefix.'incident WHERE incident_active = 1 '.$incident_id_in.' GROUP BY '.$groupby_date_text;
+		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number '
+		    . 'FROM '.$this->table_prefix.'incident '
+		    . 'WHERE incident_active = 1 '.$incident_id_in.' '
+		    . 'GROUP BY '.$groupby_date_text;
 		$query = $db->query($query);
 
-		foreach ( $query as $items )
+		foreach ($query as $items)
 		{
 			array_push($graph_data[0]['data'],
 				array($items->time * 1000, $items->number));

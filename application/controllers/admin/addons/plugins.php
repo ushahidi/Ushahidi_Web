@@ -46,7 +46,7 @@ class Plugins_Controller extends Admin_Controller {
 	
 	public function index()
 	{
-		$this->template->content = new View('admin/plugins');
+		$this->template->content = new View('admin/addons/plugins');
 		$this->template->content->title = 'Addons';
 		
 		if (isset($_GET['status']) && ! empty($_GET['status']))
@@ -229,7 +229,7 @@ class Plugins_Controller extends Admin_Controller {
 		$this->template->content->status = $status;
 		
 		// Javascript Header
-		$this->template->js = new View('admin/plugins_js');
+		$this->template->js = new View('admin/addons/addons_js');
 	}
 	
 	/**

@@ -31,13 +31,13 @@ class Actions_Controller extends Admin_Controller
 
 	function index()
 	{
-		$this->template->content = new View('admin/actions');
+		$this->template->content = new View('admin/manage/actions/main');
 		$this->template->content->title = Kohana::lang('ui_admin.actions');
 
 		$this->template->map_enabled = TRUE;
 		$this->template->treeview_enabled = TRUE;
 
-		$this->template->js = new View('admin/actions_js');
+		$this->template->js = new View('admin/manage/actions/actions_js');
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->js->latitude = Kohana::config('settings.default_lat');
@@ -56,8 +56,7 @@ class Actions_Controller extends Admin_Controller
 		$trigger_allowed_responses = $this->_trigger_allowed_responses();
 
 		// Setup and initialize form field names
-		$form = array
-	    (
+		$form = array(
 			'geometry' => '',
 			'action_trigger' => '',
 			'action_user' => '',

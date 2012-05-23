@@ -34,7 +34,7 @@ class Blocks_Controller extends Admin_Controller
 	
 	function index()
 	{
-		$this->template->content = new View('admin/blocks');
+		$this->template->content = new View('admin/manage/blocks/main');
 		$this->template->content->title = Kohana::lang('ui_admin.blocks');
 		
 		// Get Registered Blocks 
@@ -115,7 +115,7 @@ class Blocks_Controller extends Admin_Controller
 		
 		// Javascript Header
 		$this->template->tablerowsort_enabled = TRUE;
-		$this->template->js = new View('admin/blocks_js');
+		$this->template->js = new View('admin/manage/blocks/blocks_js');
 	}
 	
 	public function sort()

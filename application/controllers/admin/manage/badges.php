@@ -31,7 +31,7 @@ class Badges_Controller extends Admin_Controller
 
 	function index()
 	{
-		$this->template->content = new View('admin/badges');
+		$this->template->content = new View('admin/manage/badges/main');
 		$this->template->content->title = Kohana::lang('ui_main.badges');
 
 		// setup and initialize form field names
@@ -226,6 +226,6 @@ class Badges_Controller extends Admin_Controller
 		$this->template->content->users = $users;
 
 		// Javascript Header
-		$this->template->js = new View('admin/badges_js');
+		$this->template->js = new View('admin/manage/badges/badges_js');
 	}
 }

@@ -181,14 +181,14 @@ class Main_Controller extends Template_Controller {
     public function index()
     {
         $this->template->header->this_page = 'home';
-        $this->template->content = new View('main');
+        $this->template->content = new View('main/layout');
 
 		// Cacheable Main Controller
 		$this->is_cachable = TRUE;
 
 		// Map and Slider Blocks
-		$div_map = new View('main_map');
-		$div_timeline = new View('main_timeline');
+		$div_map = new View('main/map');
+		$div_timeline = new View('main/timeline');
 
 		// Filter::map_main - Modify Main Map Block
 		Event::run('ushahidi_filter.map_main', $div_map);
@@ -215,11 +215,13 @@ class Main_Controller extends Template_Controller {
 
         // Get all active top level categories
 		$parent_categories = array();
-		foreach (ORM::factory('category')
-				->where('category_visible', '1')
-				->where('id != 5')
-				->where('parent_id', '0')
-				->find_all() as $category)
+		$all_parents = ORM::factory('category')
+		    ->where('category_visible', '1')
+		    ->where('id != 5')
+		    ->where('parent_id', '0')
+		    ->find_all();
+
+		foreach ($all_parents as $category)
 		{
 			// Get The Children
 			$children = array();
@@ -231,7 +233,10 @@ class Main_Controller extends Template_Controller {
 					// Check for localization of child category
 					$display_title = Category_Lang_Model::category_title($child->id,$l);
 
-					$ca_img = ($child->category_image != NULL) ? url::convert_uploaded_to_abs($child->category_image) : NULL;
+					$ca_img = ($child->category_image != NULL)
+					    ? url::convert_uploaded_to_abs($child->category_image)
+					    : NULL;
+					
 					$children[$child->id] = array(
 						$display_title,
 						$child->category_color,
@@ -244,7 +249,10 @@ class Main_Controller extends Template_Controller {
 			$display_title = Category_Lang_Model::category_title($category->id,$l);
 
 			// Put it all together
-			$ca_img = ($category->category_image != NULL) ? url::convert_uploaded_to_abs($category->category_image) : NULL;
+			$ca_img = ($category->category_image != NULL)
+			    ? url::convert_uploaded_to_abs($category->category_image)
+			    : NULL;
+
 			$parent_categories[$category->id] = array(
 				$display_title,
 				$category->category_color,
@@ -321,8 +329,13 @@ class Main_Controller extends Template_Controller {
 		$display_endDate = 0;
 
 		$db = new Database();
+		
         // Next, Get the Range of Years
-		$query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y-%c\') AS dates FROM '.$this->table_prefix.'incident WHERE incident_active = 1 GROUP BY DATE_FORMAT(incident_date, \'%Y-%c\') ORDER BY incident_date');
+		$query = $db->query('SELECT DATE_FORMAT(incident_date, \'%Y-%c\') AS dates '
+		    . 'FROM '.$this->table_prefix.'incident '
+		    . 'WHERE incident_active = 1 '
+		    . 'GROUP BY DATE_FORMAT(incident_date, \'%Y-%c\') '
+		    . 'ORDER BY incident_date');
 
 		$first_year = date('Y');
 		$last_year = date('Y');
@@ -338,7 +351,7 @@ class Main_Controller extends Template_Controller {
 			$month = $date[1];
 
 			// Set first year
-			if($i == 0)
+			if ($i == 0)
 			{
 				$first_year = $year;
 				$first_month = $month;
@@ -353,19 +366,20 @@ class Main_Controller extends Template_Controller {
 
 		$show_year = $first_year;
 		$selected_start_flag = TRUE;
-		while($show_year <= $last_year)
+
+		while ($show_year <= $last_year)
 		{
 			$startDate .= "<optgroup label=\"".$show_year."\">";
 
 			$s_m = 1;
-			if($show_year == $first_year)
+			if ($show_year == $first_year)
 			{
 				// If we are showing the first year, the starting month may not be January
 				$s_m = $first_month;
 			}
 
 			$l_m = 12;
-			if($show_year == $last_year)
+			if ($show_year == $last_year)
 			{
 				// If we are showing the last year, the ending month may not be December
 				$l_m = $last_month;
@@ -373,7 +387,7 @@ class Main_Controller extends Template_Controller {
 
 			for ( $i=$s_m; $i <= $l_m; $i++ )
 			{
-				if ( $i < 10 )
+				if ($i < 10 )
 				{
 					// All months need to be two digits
 					$i = "0".$i;
@@ -390,6 +404,7 @@ class Main_Controller extends Template_Controller {
 			$startDate .= "</optgroup>";
 
 			$endDate .= "<optgroup label=\"".$show_year."\">";
+			
 			for ( $i=$s_m; $i <= $l_m; $i++ )
 			{
 				if ( $i < 10 )
@@ -406,6 +421,7 @@ class Main_Controller extends Template_Controller {
 				}
 				$endDate .= ">".date('M', mktime(0,0,0,$i,1))." ".$show_year."</option>";
 			}
+			
 			$endDate .= "</optgroup>";
 
 			// Show next year
@@ -443,18 +459,25 @@ class Main_Controller extends Template_Controller {
 		$latTo = Kohana::config('map.latTo');
 
 		$this->themes->js = new View('main_js');
-		$this->themes->js->json_url = ($clustering == 1) ?
-			"json/cluster" : "json";
-		$this->themes->js->marker_radius =
-			($marker_radius >=1 && $marker_radius <= 10 ) ? $marker_radius : 5;
-		$this->themes->js->marker_opacity =
-			($marker_opacity >=1 && $marker_opacity <= 10 )
-			? $marker_opacity * 0.1  : 0.9;
-		$this->themes->js->marker_stroke_width =
-			($marker_stroke_width >=1 && $marker_stroke_width <= 5 ) ? $marker_stroke_width : 2;
-		$this->themes->js->marker_stroke_opacity =
-			($marker_stroke_opacity >=1 && $marker_stroke_opacity <= 10 )
-			? $marker_stroke_opacity * 0.1  : 0.9;
+		$this->themes->js->json_url = ($clustering == 1)
+			? "json/cluster"
+			: "json";
+
+		$this->themes->js->marker_radius = ($marker_radius >=1 AND $marker_radius <= 10 )
+		    ? $marker_radius
+		    : 5;
+
+		$this->themes->js->marker_opacity = ($marker_opacity >=1 AND $marker_opacity <= 10 )
+		    ? $marker_opacity * 0.1
+		    : 0.9;
+
+		$this->themes->js->marker_stroke_width = ($marker_stroke_width >=1 AND $marker_stroke_width <= 5)
+		    ? $marker_stroke_width
+		    : 2;
+
+		$this->themes->js->marker_stroke_opacity = ($marker_stroke_opacity >=1 AND $marker_stroke_opacity <= 10)
+		    ? $marker_stroke_opacity * 0.1
+		    : 0.9;
 
 		// pdestefanis - allows to restrict the number of zoomlevels available
 		$this->themes->js->numZoomLevels = $numZoomLevels;
@@ -480,9 +503,6 @@ class Main_Controller extends Template_Controller {
 		$this->themes->js->active_endDate = $display_endDate;
 
 		$this->themes->js->blocks_per_row = Kohana::config('settings.blocks_per_row');
-
-		//$myPacker = new javascriptpacker($js , 'Normal', false, false);
-		//$js = $myPacker->pack();
 
 		// Build Header and Footer Blocks
 		$this->template->header->header_block = $this->themes->header_block();

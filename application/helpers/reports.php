@@ -608,7 +608,7 @@ class reports_Core {
 		$exclude_params = array('c', 'v', 'm', 'mode', 'sw', 'ne', 'start_loc');
 		foreach ($url_data as $key => $value)
 		{
-			if (in_array($key, $exclude_params) AND !is_array($value))
+			if (in_array($key, $exclude_params) AND ! is_array($value))
 			{
 				$url_data[$key] = explode(",", $value);
 			}

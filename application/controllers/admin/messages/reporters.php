@@ -30,7 +30,7 @@ class Reporters_Controller extends Admin_Controller
 	
 	public function index($service_id = 1)
 	{
-		$this->template->content = new View('admin/reporters');
+		$this->template->content = new View('admin/reporters/main');
 		$this->template->content->title = Kohana::lang('ui_admin.reporters');
 		
 		$filter = "1=1";
@@ -220,7 +220,7 @@ class Reporters_Controller extends Admin_Controller
 		
 		// Javascript Header
         $this->template->map_enabled = TRUE;
-        $this->template->js = new View('admin/reporters_js');
+        $this->template->js = new View('admin/reporters/reporters_js');
 		$this->template->js->default_map = Kohana::config('settings.default_map');
 		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
 		$this->template->js->latitude = Kohana::config('settings.default_lat');

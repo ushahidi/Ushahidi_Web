@@ -21,7 +21,7 @@ class Facebook_Controller extends Admin_Controller {
 	 */
 	function index()
 	{
-		$this->template->content = new View('admin/facebook');
+		$this->template->content = new View('admin/settings/facebook/main');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
 
 		// setup and initialize form field names

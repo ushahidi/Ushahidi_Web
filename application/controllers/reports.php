@@ -39,7 +39,7 @@ class Reports_Controller extends Main_Controller {
 		$this->is_cachable = TRUE;
 
 		$this->template->header->this_page = 'reports';
-		$this->template->content = new View('reports');
+		$this->template->content = new View('reports/main');
 		$this->themes->js = new View('reports_js');
 
 		$this->template->header->page_title .= Kohana::lang('ui_main.reports').Kohana::config('settings.title_delimiter');
@@ -68,7 +68,7 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Load the alert radius view
-		$alert_radius_view = new View('alert_radius_view');
+		$alert_radius_view = new View('alerts/radius');
 		$alert_radius_view->show_usage_info = FALSE;
 		$alert_radius_view->enable_find_location = FALSE;
 		$alert_radius_view->css_class = "rb_location-radius";
@@ -99,7 +99,7 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Collect report stats
-		$this->template->content->report_stats = new View('reports_stats');
+		$this->template->content->report_stats = new View('reports/stats');
 		
 		// Total Reports
 		$total_reports = Incident_Model::get_total_reports(TRUE);
@@ -136,7 +136,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->category_tree_view = category::get_category_tree_view();
 
 		// Additional view content
-		$this->template->content->custom_forms_filter = new View('reports_submit_custom_forms');
+		$this->template->content->custom_forms_filter = new View('reports/submit_custom_forms');
 		$disp_custom_fields = customforms::get_custom_form_fields();
 		$this->template->content->custom_forms_filter->disp_custom_fields = $disp_custom_fields;
 		$this->template->content->oldest_timestamp = $oldest_timestamp;
@@ -162,7 +162,7 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		// Load the report listing view
-		$report_listing = new View('reports_listing');
+		$report_listing = new View('reports/list');
 
 		// Fetch all incidents
 		$all_incidents = reports::fetch_incidents();
@@ -209,8 +209,8 @@ class Reports_Controller extends Main_Controller {
 
 		if ($pagination->total_items > 0)
 		{
-			$current_page = ($pagination->sql_offset/ $pagination->items_per_page) + 1;
-			$total_pages = ceil($pagination->total_items/ $pagination->items_per_page);
+			$current_page = ($pagination->sql_offset / $pagination->items_per_page) + 1;
+			$total_pages = ceil($pagination->total_items / $pagination->items_per_page);
 
 			if ($total_pages >= 1)
 			{
@@ -267,9 +267,10 @@ class Reports_Controller extends Main_Controller {
 		}
 
 		$this->template->header->this_page = 'reports_submit';
-		$this->template->content = new View('reports_submit');
+		$this->template->content = new View('reports/submit');
 
-		$this->template->header->page_title .= Kohana::lang('ui_main.reports_submit_new').Kohana::config('settings.title_delimiter');
+		$this->template->header->page_title .= Kohana::lang('ui_main.reports_submit_new')
+											   .Kohana::config('settings.title_delimiter');
 
 		//Retrieve API URL
 		$this->template->api_url = Kohana::config('settings.api_url');
@@ -366,7 +367,6 @@ class Reports_Controller extends Main_Controller {
 				Event::run('ushahidi_action.report_submit', $post);
 				Event::run('ushahidi_action.report_add', $incident);
 
-
 				url::redirect('reports/thanks');
 			}
 
@@ -402,8 +402,8 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->site_submit_report_message = Kohana::config('settings.site_submit_report_message');
 
 		// Retrieve Custom Form Fields Structure
-		$this->template->content->custom_forms = new View('reports_submit_custom_forms');
-		$disp_custom_fields = customforms::get_custom_form_fields($id,$form_id, FALSE);
+		$this->template->content->custom_forms = new View('reports/submit_custom_forms');
+		$disp_custom_fields = customforms::get_custom_form_fields($id, $form_id, FALSE);
 		$this->template->content->disp_custom_fields = $disp_custom_fields;
 		$this->template->content->stroke_width_array = $this->_stroke_width_array();
 		$this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
@@ -420,7 +420,7 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->js->incident_zoom = FALSE;
 		$this->themes->js->default_map = Kohana::config('settings.default_map');
 		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
-		if (!$form['latitude'] OR !$form['latitude'])
+		if ( ! $form['latitude'] OR ! $form['latitude'])
 		{
 			$this->themes->js->latitude = Kohana::config('settings.default_lat');
 			$this->themes->js->longitude = Kohana::config('settings.default_lon');
@@ -446,7 +446,7 @@ class Reports_Controller extends Main_Controller {
 	public function view($id = FALSE)
 	{
 		$this->template->header->this_page = 'reports';
-		$this->template->content = new View('reports_view');
+		$this->template->content = new View('reports/detail');
 
 		// Load Akismet API Key (Spam Blocker)
 		$api_akismet = Kohana::config('settings.api_akismet');
@@ -551,9 +551,6 @@ class Reports_Controller extends Main_Controller {
 								// throw new Kohana_Exception('akismet.server_not_found');
 							}
 
-							// If the server is down, we have to post
-							// the comment :(
-							// $this->_post_comment($comment);
 							$comment_spam = 0;
 						}
 						else
@@ -661,7 +658,7 @@ class Reports_Controller extends Main_Controller {
 			$incident_video = array();
 			$incident_photo = array();
 
-			foreach($incident->media as $media)
+			foreach ($incident->media as $media)
 			{
 				if ($media->media_type == 4)
 				{
@@ -686,7 +683,7 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->comments = "";
 			if (Kohana::config('settings.allow_comments'))
 			{
-				$this->template->content->comments = new View('reports_comments');
+				$this->template->content->comments = new View('reports/comments');
 				$incident_comments = array();
 				if ($id)
 				{
@@ -731,7 +728,7 @@ class Reports_Controller extends Main_Controller {
 		$this->themes->js->incident_photos = $incident_photo;
 
 		// Initialize custom field array
-		$this->template->content->custom_forms = new View('reports_view_custom_forms');
+		$this->template->content->custom_forms = new View('reports/detail_custom_forms');
 		$form_field_names = customforms::get_custom_form_fields($id, $incident->form_id, FALSE, "view");
 		$this->template->content->custom_forms->form_field_names = $form_field_names;
 
@@ -739,7 +736,7 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->comments_form = "";
 		if (Kohana::config('settings.allow_comments'))
 		{
-			$this->template->content->comments_form = new View('reports_comments_form');
+			$this->template->content->comments_form = new View('reports/comments_form');
 			$this->template->content->comments_form->user = $this->user;
 			$this->template->content->comments_form->form = $form;
 			$this->template->content->comments_form->form_field_names = $form_field_names;
@@ -762,7 +759,7 @@ class Reports_Controller extends Main_Controller {
 	public function thanks()
 	{
 		$this->template->header->this_page = 'reports_submit';
-		$this->template->content = new View('reports_submit_thanks');
+		$this->template->content = new View('reports/submit_thanks');
 
 		// Rebuild Header Block
 		$this->template->header->header_block = $this->themes->header_block();
