@@ -33,7 +33,7 @@ class Forms_Controller extends Admin_Controller {
     */
 	public function index()
 	{
-		$this->template->content = new View('admin/forms');
+		$this->template->content = new View('admin/manage/forms/main');
 		
 		// Setup and initialize form field names
 		$form = array
@@ -46,7 +46,8 @@ class Forms_Controller extends Admin_Controller {
 			'field_type' => ''
 	    );
 	
-		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
+		// Copy the form as errors, so the errors will be stored with keys 
+		// corresponding to the form field names
 	    $errors = $form;
 		$form_error = FALSE;
 		$form_saved = FALSE;
@@ -162,7 +163,7 @@ class Forms_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 
         // Javascript Header
-        $this->template->js = new View('admin/forms_js');
+        $this->template->js = new View('admin/manage/forms/forms_js');
 		$this->template->js->form_id = $form_id;
 		$this->template->form_error = $form_error;
 	}

@@ -38,7 +38,7 @@ class Reports_Controller extends Admin_Controller {
 			url::redirect(url::site().'admin/dashboard');
 		}
 
-		$this->template->content = new View('admin/reports');
+		$this->template->content = new View('admin/reports/main');
 		$this->template->content->title = Kohana::lang('ui_admin.reports');
 
 		// Database table prefix
@@ -286,7 +286,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->status = $status;
 
 		// Javascript Header
-		$this->template->js = new View('admin/reports_js');
+		$this->template->js = new View('admin/reports/reports_js');
 	}
 
 	/**
@@ -304,7 +304,7 @@ class Reports_Controller extends Admin_Controller {
 			url::redirect(url::site().'admin/dashboard');
 		}
 
-		$this->template->content = new View('admin/reports_edit');
+		$this->template->content = new View('admin/reports/edit');
 		$this->template->content->title = Kohana::lang('ui_admin.create_report');
 
 		// Setup and initialize form field names
@@ -765,7 +765,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->form_saved = $form_saved;
 
 		// Retrieve Custom Form Fields Structure
-		$this->template->content->custom_forms = new View('reports_submit_custom_forms');
+		$this->template->content->custom_forms = new View('reports/submit_custom_forms');
 		$disp_custom_fields = customforms::get_custom_form_fields($id, $form['form_id'], FALSE, "view");
 		$custom_field_mismatch = customforms::get_edit_mismatch($form['form_id']);
         $this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
@@ -831,7 +831,7 @@ class Reports_Controller extends Admin_Controller {
 			url::redirect(url::site().'admin/dashboard');
 		}
 
-		$this->template->content = new View('admin/reports_download');
+		$this->template->content = new View('admin/reports/download');
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
 		$form = array(
@@ -1129,7 +1129,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->form_error = $form_error;
 
 		// Javascript Header
-		$this->template->js = new View('admin/reports_download_js');
+		$this->template->js = new View('admin/reports/download_js');
 		$this->template->js->calendar_img = url::base() . "media/img/icon-calendar.gif";
 	}
 
@@ -1142,7 +1142,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-			$this->template->content = new View('admin/reports_upload');
+			$this->template->content = new View('admin/reports/upload');
 			$this->template->content->title = 'Upload Reports';
 			$this->template->content->form_error = false;
 		}
@@ -1162,7 +1162,7 @@ class Reports_Controller extends Admin_Controller {
 
 						if ($importer->import($filehandle))
 						{
-							$this->template->content = new View('admin/reports_upload_success');
+							$this->template->content = new View('admin/reports/upload_success');
 							$this->template->content->title = 'Upload Reports';
 							$this->template->content->rowcount = $importer->totalrows;
 							$this->template->content->imported = $importer->importedrows;
@@ -1192,9 +1192,9 @@ class Reports_Controller extends Admin_Controller {
 				$errors[] = $_FILES['csvfile']['error'];
 			}
 
-			if(count($errors))
+			if (count($errors))
 			{
-				$this->template->content = new View('admin/reports_upload');
+				$this->template->content = new View('admin/reports/upload');
 				$this->template->content->title = Kohana::lang('ui_admin.upload_reports');
 				$this->template->content->errors = $errors;
 				$this->template->content->form_error = 1;
@@ -1210,7 +1210,7 @@ class Reports_Controller extends Admin_Controller {
 
 	public function translate( $id = false, $saved = FALSE)
 	{
-		$this->template->content = new View('admin/reports_translate');
+		$this->template->content = new View('admin/reports/translate');
 		$this->template->content->title = Kohana::lang('ui_admin.translate_reports');
 
 		// Which incident are we adding this translation for?
@@ -1337,7 +1337,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->form_saved = $form_saved;
 
 		// Javascript Header
-		$this->template->js = new View('admin/reports_translate_js');
+		$this->template->js = new View('admin/reports/translate_js');
 	}
 
 

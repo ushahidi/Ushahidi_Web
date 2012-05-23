@@ -13,9 +13,8 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Users_Controller extends Admin_Controller
-{
-    private $display_roles = false;
+class Users_Controller extends Admin_Controller {
+    private $display_roles = FALSE;
 
     function __construct()
     {
@@ -33,8 +32,8 @@ class Users_Controller extends Admin_Controller
 
     function index()
     {
-        $this->template->content = new View('admin/users');
-        $this->template->js = new View('admin/users_js');
+        $this->template->content = new View('admin/users/main');
+        $this->template->js = new View('admin/users/users_js');
 
         // Check, has the form been submitted, if so, setup validation
 
@@ -98,7 +97,7 @@ class Users_Controller extends Admin_Controller
     */
 	public function edit($user_id = FALSE, $saved = FALSE)
 	{
-		$this->template->content = new View('admin/users_edit');
+		$this->template->content = new View('admin/users/edit');
 
 		if ($user_id)
 		{
@@ -274,7 +273,7 @@ class Users_Controller extends Admin_Controller
 
     public function roles()
     {
-        $this->template->content = new View('admin/users_roles');
+        $this->template->content = new View('admin/users/roles');
 
         $form = array
         (
@@ -418,7 +417,7 @@ class Users_Controller extends Admin_Controller
         $this->template->content->form_error = $form_error;
         $this->template->content->form_saved = $form_saved;
         $this->template->content->form_action = $form_action;
-        $this->template->js = new View('admin/users_roles_js');
+        $this->template->js = new View('admin/users/roles_js');
     }
 
 

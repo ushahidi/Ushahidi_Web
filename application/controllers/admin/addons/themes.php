@@ -30,7 +30,7 @@ class Themes_Controller extends Admin_Controller {
 	
 	function index()
 	{
-		$this->template->content = new View('admin/themes');
+		$this->template->content = new View('admin/addons/themes');
 		$this->template->content->title = 'Addons';
 
 		// setup and initialize form field names

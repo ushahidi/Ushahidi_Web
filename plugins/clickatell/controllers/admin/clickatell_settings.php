@@ -14,14 +14,13 @@
 * 
 */
 
-class Clickatell_Settings_Controller extends Admin_Controller
-{
+class Clickatell_Settings_Controller extends Admin_Controller {
 	public function index()
 	{
 		$this->template->this_page = 'addons';
 		
 		// Standard Settings View
-		$this->template->content = new View("admin/plugins_settings");
+		$this->template->content = new View("admin/addons/plugin_settings");
 		$this->template->content->title = "Clickatell Settings";
 		
 		// Settings Form View

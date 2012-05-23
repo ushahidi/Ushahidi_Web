@@ -22,7 +22,7 @@ class Dashboard_Controller extends Admin_Controller
 
 	public function index()
 	{
-		$this->template->content = new View('admin/dashboard');
+		$this->template->content = new View('admin/dashboard/main');
 		$this->template->content->title = Kohana::lang('ui_admin.dashboard');
 		$this->template->this_page = 'dashboard';
 
@@ -75,7 +75,11 @@ class Dashboard_Controller extends Admin_Controller
 
 
 		// Get reports for display
-		$incidents = ORM::factory('incident')->limit(5)->orderby('incident_dateadd', 'desc')->find_all();
+		$incidents = ORM::factory('incident')
+					    ->limit(5)
+					    ->orderby('incident_dateadd', 'desc')
+					    ->find_all();
+
 		$this->template->content->incidents = $incidents;
 
 		// Get Incoming Media (We'll Use NewsFeeds for now)
@@ -86,7 +90,7 @@ class Dashboard_Controller extends Admin_Controller
 
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
-		$this->template->js = new View('admin/stats_js');
+		$this->template->js = new View('admin/stats/stats_js');
 
 		$this->template->content->failure = '';
 
@@ -106,7 +110,8 @@ class Dashboard_Controller extends Admin_Controller
 		$data = array('Reports'=>$incident_data);
 		$options = array('xaxis'=>array('mode'=>'"time"'));
 		
-		$this->template->content->report_chart = protochart::chart('report_chart',$data,$options,array('Reports'=>'CC0000'),410,310);
+		$this->template->content->report_chart = protochart::chart('report_chart', $data, $options, 
+		    array('Reports'=>'CC0000'), 410, 310);
 		
 		// Render version sync checks if enabled
 		$this->template->content->version_sync = NULL;

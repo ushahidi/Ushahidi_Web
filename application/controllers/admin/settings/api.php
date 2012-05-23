@@ -32,7 +32,7 @@ class Api_Controller extends Admin_Controller {
      */
     public function index()
     {
-        $this->template->content = new View('admin/api');
+        $this->template->content = new View('admin/settings/api/main');
 
         // Set up and initialize form field names
         $form = array
@@ -149,7 +149,7 @@ class Api_Controller extends Admin_Controller {
         );
         
         // Javascript header
-        $this->template->js = new View('admin/api_js');
+        $this->template->js = new View('admin/settings/api/api_js');
     }
     
     /**
@@ -157,7 +157,7 @@ class Api_Controller extends Admin_Controller {
      */
     public function log()
     {
-        $this->template->content = new View('admin/apilogs');
+        $this->template->content = new View('admin/settings/api/logs');
         $this->template->content->this_page='apilogs';
         $this->template->content->title = Kohana::lang('ui_main.api_logs');
         
@@ -267,15 +267,15 @@ class Api_Controller extends Admin_Controller {
         $this->template->content->pagination = $pagination;
         
         // Javascript header
-        $this->template->js = new View('admin/apilogs_js');
+        $this->template->js = new View('admin/settings/api/logs_js');
     }
     
     /**
      * Displays the list of IP addresses that have been banned from access the API
      */
-    public function apibanned()
+    public function banned()
     {
-        $this->template->content = new View('admin/api_banned');
+        $this->template->content = new View('admin/settings/api/banned');
         $this->template->content->this_page = 'apibanned';
         $this->template->content->title = Kohana::lang('ui_main.api_banned');
         
@@ -349,6 +349,6 @@ class Api_Controller extends Admin_Controller {
         $this->template->content->pagination = $pagination;
         
         // Javascript header
-        $this->template->js = new View('admin/api_banned_js');
+        $this->template->js = new View('admin/settings/api/banned_js');
     }
 }

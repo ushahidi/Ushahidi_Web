@@ -29,7 +29,7 @@ class Stats_Controller extends Admin_Controller
     
 	public function index()
 	{   
-		$this->template->content = new View('admin/stats_hits');
+		$this->template->content = new View('admin/stats/hits');
 		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 
 		// Retrieve Current Settings
@@ -51,12 +51,12 @@ class Stats_Controller extends Admin_Controller
 	 */
 	public function reports()
 	{
-		$this->template->content = new View('admin/stats_reports');
+		$this->template->content = new View('admin/stats/reports');
 		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
-		$this->template->js = new View('admin/stats_js');
+		$this->template->js = new View('admin/stats/stats_js');
 
 		$this->template->content->failure = '';
 
@@ -183,14 +183,14 @@ class Stats_Controller extends Admin_Controller
         $this->template->content->dp2 = date('Y-m-d',$data['latest_report_time']);
     }
     
-    function impact()
+    public function impact()
     {
-        $this->template->content = new View('admin/stats_impact');
+        $this->template->content = new View('admin/stats/impact');
         $this->template->content->title = Kohana::lang('ui_admin.statistics');
         
         // Javascript Header
         $this->template->raphael_enabled = TRUE;
-        $this->template->js = new View('admin/stats_js');
+        $this->template->js = new View('admin/stats/stats_js');
         
         $this->template->content->failure = '';
         
@@ -289,14 +289,14 @@ class Stats_Controller extends Admin_Controller
         
     }
     
-    function hits()
+	public function hits()
     {
-        $this->template->content = new View('admin/stats_hits');
+        $this->template->content = new View('admin/stats/hits');
         $this->template->content->title = Kohana::lang('ui_admin.statistics');
         
         // Javascript Header
         $this->template->protochart_enabled = TRUE;
-        $this->template->js = new View('admin/stats_js');
+        $this->template->js = new View('admin/stats/stats_js');
         
         $this->template->content->failure = '';
         
@@ -365,11 +365,11 @@ class Stats_Controller extends Admin_Controller
     
     function country()
     {
-        $this->template->content = new View('admin/stats_country');
+        $this->template->content = new View('admin/stats/country');
         $this->template->content->title = Kohana::lang('ui_admin.statistics');
         
         // Javascript Header
-        $this->template->js = new View('admin/stats_js');
+        $this->template->js = new View('admin/stats/stats_js');
         
         $this->template->content->failure = '';
         
@@ -489,7 +489,7 @@ class Stats_Controller extends Admin_Controller
     
     function punchcard()
 	{
-		$this->template->content = new View('admin/stats_punchcard');
+		$this->template->content = new View('admin/stats/punchcard');
 		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 
 		$incident_dates = Incident_Model::get_incident_dates();

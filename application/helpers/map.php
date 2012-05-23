@@ -126,23 +126,23 @@ class map_Core {
 		{
 			// We have two div ids that we use for maps, map and divMap. We need a more permanent
 			//   solution to cover any div name.
-			$js .= "if ( $(\"#map\").length > 0 ) { divName = \"map\" }else{ divName= \"divMap\" }"
-				. "var esriAttributionDiv = document.createElement('div');"
-			    . "$(esriAttributionDiv).html('"
-				. "<img src=\"http://www.arcgis.com/home/images/map/logo-sm.png\" style=\"float:right;\"/>"
-				. "<small style=\"position: absolute; bottom: -10px;\">"
-				. "Sources: Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, "
-				. "GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), "
-				. "and the GIS User Community"
-				. "</small>');\n"
-			    . "$(esriAttributionDiv).css({\n"
-			    . "\t'position': 'absolute',\n"
-			    . "\t'z-index': 10000,\n"
-			    . "\t'margin': '-40px 0 0 85px',\n"
-			    . "\t'right': $('div#'+divName).offset().right + 10,\n"
-			    . "\t'width': $('div#'+divName).width() - 90,\n"
-			    . "});\n"
-				. "$(esriAttributionDiv).appendTo($('div#'+divName));";
+			// $js .= "if ( $(\"#map\").length > 0 ) { divName = \"map\" }else{ divName= \"divMap\" }"
+			// 	. "var esriAttributionDiv = document.createElement('div');"
+			//     . "$(esriAttributionDiv).html('"
+			// 	. "<img src=\"http://www.arcgis.com/home/images/map/logo-sm.png\" style=\"float:right;\"/>"
+			// 	. "<small style=\"position: absolute; bottom: -10px;\">"
+			// 	. "Sources: Esri, DeLorme, NAVTEQ, TomTom, Intermap, iPC, USGS, FAO, NPS, NRCAN, "
+			// 	. "GeoBase, IGN, Kadaster NL, Ordnance Survey, Esri Japan, METI, Esri China (Hong Kong), "
+			// 	. "and the GIS User Community"
+			// 	. "</small>');\n"
+			//     . "$(esriAttributionDiv).css({\n"
+			//     . "\t'position': 'absolute',\n"
+			//     . "\t'z-index': 10000,\n"
+			//     . "\t'margin': '-40px 0 0 85px',\n"
+			//     . "\t'right': $('div#'+divName).offset().right + 10,\n"
+			//     . "\t'width': $('div#'+divName).width() - 90,\n"
+			//     . "});\n"
+			// 	. "$(esriAttributionDiv).appendTo($('div#'+divName));";
 		}
 		
 		Event::run('ushahidi_filter.map_layers_js', $js);

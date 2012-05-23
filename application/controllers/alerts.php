@@ -30,10 +30,10 @@ class Alerts_Controller extends Main_Controller {
 		}
 
 		$this->template->header->this_page = $this->themes->this_page = 'alerts';
-		$this->template->content = new View('alerts');
+		$this->template->content = new View('alerts/main');
 
 		// Load the alert radius map view
-		$alert_radius_view = new View('alert_radius_view');
+		$alert_radius_view = new View('alerts/radius');
 		$alert_radius_view->show_usage_info = TRUE;
 		$alert_radius_view->enable_find_location = TRUE;
 
@@ -131,9 +131,12 @@ class Alerts_Controller extends Main_Controller {
 
 				// populate the error fields, if any
 				$errors = arr::overwrite($errors, $post->errors('alerts'));
-        if (array_key_exists('alert_recipient', $post->errors('alerts'))) {
-          $errors = array_merge($errors, $post->errors('alerts'));
-        }
+				
+				if (array_key_exists('alert_recipient', $post->errors('alerts')))
+				{
+					$errors = array_merge($errors, $post->errors('alerts'));
+				}
+				
 				$form_error = TRUE;
             }
         }
@@ -171,10 +174,10 @@ class Alerts_Controller extends Main_Controller {
 	/**
 	 * Alerts Confirmation Page
 	 */
-	function confirm()
+	public function confirm()
 	{
 		$this->template->header->this_page = 'alerts';
-		$this->template->content = new View('alerts_confirm');
+		$this->template->content = new View('alerts/confirm');
 
 		$this->template->content->alert_mobile = (isset($_SESSION['alert_mobile']) AND ! empty($_SESSION['alert_mobile']))
 			? $_SESSION['alert_mobile']
@@ -216,7 +219,7 @@ class Alerts_Controller extends Main_Controller {
 		$email = (isset($_GET['e']) AND !empty($_GET['e'])) ? $_GET['e'] : "";
 
 		// INITIALIZE the content's section of the view
-		$this->template->content = new View('alerts_verify');
+		$this->template->content = new View('alerts/verify');
 		$this->template->header->this_page = 'alerts';
 
 		$filter = " ";
@@ -289,7 +292,7 @@ class Alerts_Controller extends Main_Controller {
 	 */
 	public function unsubscribe($code = NULL)
 	{
-		$this->template->content = new View('alerts_unsubscribe');
+		$this->template->content = new View('alerts/unsubscribe');
 		$this->template->header->this_page = 'alerts';
 		$this->template->content->unsubscribed = FALSE;
 
@@ -304,11 +307,6 @@ class Alerts_Controller extends Main_Controller {
 		$this->template->header->header_block = $this->themes->header_block();
 		$this->template->footer->footer_block = $this->themes->footer_block();
     }
-
-
-
-
-
 
 	/**
 	 * Retrieves Previously Cached Geonames Cities
