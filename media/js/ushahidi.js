@@ -313,7 +313,7 @@
 	 	this._isLoaded = 0;
 
 	 	// List of supported events
-	 	this._EVENTS = ["filterschanged", "zoomchanged", "resize"];
+	 	this._EVENTS = ["filterschanged", "zoomchanged", "resize", "deletelayer"];
 
 	 	// The set of filters/parameters to pass to the URL that fetches
 	 	// overlay data - not applicable to KMLs
@@ -397,8 +397,9 @@
 		// NOTE: Only one map is allowed in the namespace
 		Ushahidi._currentMap = this;
 
-		// Register map resize event
+		// Register events
 		this.register("resize", this.resize, this);
+		this.register("deletelayer", this.deleteLayer, this);
 
 		return this;
 	};
@@ -445,13 +446,10 @@
 			OpenLayers.Projection.transform(point, Ushahidi.proj_4326, Ushahidi.proj_900913);
 		}
 
-		// Check if the layer exists
-		var layers = this._olMap.getLayersByName(options.name);
-		for (var i=0; i<layers.length; i++) {
-			layers[i].destroyFeatures();
-			this._olMap.removeLayer(layers[i]);
-		}
-
+		// Layer names should be unique, therefore delete any
+		// existing layer that has the same name as the one
+		// being added
+		this.deleteLayer(options.name);
 
 		// Get the styling to use
 		var styleMap = null;
@@ -780,6 +778,21 @@
 	Ushahidi.Map.prototype.resize = function() {
 		this._olMap.updateSize();
 		this._olMap.pan(0, 1);
+	}
+
+	/**
+	 * APIMethod: deleteLayer
+	 * Deletes a layer from the map
+	 *
+	 * Parameters:
+	 * name - {String} Name of the layer to be deleted
+	 */
+	Ushahidi.Map.prototype.deleteLayer = function(name) {
+		var layers = this._olMap.getLayersByName(name);
+		for (var i=0; i < layers.length; i++) {
+			this._olMap.removeLayer(layers[i]);
+			layers[i].destroyFeatures();
+		}
 	}
 
 })();

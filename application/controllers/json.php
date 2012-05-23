@@ -587,7 +587,9 @@ class Json_Controller extends Template_Controller {
 			{
 				// Pull from a URL
 				$layer_link = $layer_url;
-			}else{
+			}
+			else
+			{
 				// Pull from an uploaded file
 				$layer_link = Kohana::config('upload.directory').'/'.$layer_file;
 			}

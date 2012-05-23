@@ -153,65 +153,6 @@ function showCheckins() {
 }
 
 /**
- * Add KML/KMZ Layers
- */
-function switchLayer(layerID, layerURL, layerColor) {
-	if ( $("#layer_" + layerID).hasClass("active") )
-	{
-		new_layer = map.getLayersByName("Layer_"+layerID);
-		if (new_layer)
-		{
-			for (var i = 0; i <?php echo '<'; ?> new_layer.length; i++)
-			{
-				map.removeLayer(new_layer[i]);
-			}
-			
-			// Part of #2168 fix
-			// Added by E.Kala <emmanuel(at)ushahidi.com>
-			// Remove the layer from the list of KML overlays - kmlOverlays
-			if (kmlOverlays.length == 1)
-			{
-				kmlOverlays.pop();
-			}
-			else if (kmlOverlays.length > 1)
-			{
-				// Temporarily store the current list of overlays
-				tempKmlOverlays = kmlOverlays;
-				
-				// Re-initialize the list of overlays
-				kmlOverlays = [];
-				
-				// Search for the overlay that has just been removed from display
-				for (var i = 0; i < tempKmlOverlays.length; i ++)
-				{
-					if (tempKmlOverlays[i].name != "Layer_"+layerID)
-					{
-						kmlOverlays.push(tempKmlOverlays[i]);
-					}
-				}
-				// Unset the working list
-				tempKmlOverlays = null;
-			}
-		}
-		$("#layer_" + layerID).removeClass("active");
-
-	}
-	else
-	{
-		$("#layer_" + layerID).addClass("active");
-
-		// Get Current Zoom
-		currZoom = map.getZoom();
-
-		// Get Current Center
-		currCenter = map.getCenter();
-		
-		// Add New Layer
-		addMarkers('', '', '', currZoom, currCenter, '', layerID, 'layers', layerURL, layerColor);
-	}
-}
-
-/**
  * Toggle Layer Switchers
  */
 function toggleLayer(link, layer) {
@@ -395,7 +336,7 @@ jQuery(function() {
 
 
 	// Category Switch Action
-	$("ul.category-filters li > a").click(function(e) {
+	$("ul#category_switch li > a").click(function(e) {
 		
 		var categoryId = this.id.substring(4);
 		var catSet = 'cat_' + this.id.substring(4);
@@ -421,19 +362,39 @@ jQuery(function() {
 		e.stopPropagation();
 		return false;
 	});
-	
-	// Sharing Layer[s] Switch Action
-	$("a[id^='share_']").click(function()
-	{
-		var shareID = this.id.substring(6);
-		
-		if ($("#share_" + shareID).hasClass("active")) {
-			
-		} else {
-			$("#share_" + shareID).addClass("active");
+
+	// Layer selection
+	$("ul#kml_switch li > a").click(function(e) {
+		// Get the layer id
+		var layerId = this.id.substring(6);
+
+		var isCurrentLayer = false;
+		var context = this;
+
+		// Remove all actively selected layers
+		$("#kml_switch a").each(function(i) {
+			if ($(this).hasClass("active")) {
+				if (this.id == context.id) {
+					isCurrentLayer = true;
+				}
+				map.trigger("deletelayer", $(".layer-name", this).html());
+				$(this).removeClass("active");
+			}
+		});
+
+		// Was a different layer selected?
+		if (!isCurrentLayer) {
+			// Set the currently selected layer as the active one
+			$(this).addClass("active");
+			map.addLayer(Ushahidi.KML, {
+				name: $(".layer-name", this).html(),
+				url: "json/layer/" + layerId
+			});
 		}
+
+		return false;
 	});
-	
+		
 	// Timeslider and date change actions
 	$("select#startDate, select#endDate").selectToUISlider({
 		labels: 4,
