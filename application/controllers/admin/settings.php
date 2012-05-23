@@ -13,11 +13,10 @@
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Settings_Controller extends Admin_Controller
-{
+class Settings_Controller extends Admin_Controller {
 	protected $cache;
 
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 		$this->template->this_page = 'settings';
@@ -32,13 +31,13 @@ class Settings_Controller extends Admin_Controller
 	}
 
 	/**
-	* Site Settings
-	*/
-	function site()
+	 * Site Settings
+	 */
+	public function site()
 	{
-		$this->template->content = new View('admin/site');
+		$this->template->content = new View('admin/settings/site');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
-		$this->template->js = new View('admin/site_js');
+		$this->template->js = new View('admin/settings/site_js');
 
 		// setup and initialize form field names
 		$form = array
@@ -369,7 +368,7 @@ class Settings_Controller extends Admin_Controller
 	/**
 	* Map Settings
 	*/
-	function index($saved = false)
+	public function index($saved = false)
 	{
 		// Display all maps
 		$this->template->api_url = Kohana::config('settings.api_url_all');
@@ -377,7 +376,7 @@ class Settings_Controller extends Admin_Controller
 		// Current Default Country
 		$current_country = Kohana::config('settings.default_country');
 
-		$this->template->content = new View('admin/settings');
+		$this->template->content = new View('admin/settings/main');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
 
 		// setup and initialize form field names
@@ -633,7 +632,7 @@ class Settings_Controller extends Admin_Controller
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
 		$this->template->colorpicker_enabled = TRUE;
-		$this->template->js = new View('admin/settings_js');
+		$this->template->js = new View('admin/settings/settings_js');
 		$this->template->js->default_map = $form['default_map'];
 		$this->template->js->default_zoom = $form['default_zoom'];
 		$this->template->js->default_lat = $form['default_lat'];
@@ -645,14 +644,13 @@ class Settings_Controller extends Admin_Controller
 	/**
 	 * Handles SMS Settings
 	 */
-	function sms()
+	public function sms()
 	{
-		$this->template->content = new View('admin/sms');
+		$this->template->content = new View('admin/settings/sms');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
 
 		// setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'sms_provider' => '',
 			'sms_no1' => '',
 			'sms_no2' => '',
@@ -722,8 +720,7 @@ class Settings_Controller extends Admin_Controller
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
 
-			$form = array
-			(
+			$form = array(
 				'sms_provider' => $settings->sms_provider,
 				'sms_no1' => $settings->sms_no1,
 				'sms_no2' => $settings->sms_no2,
@@ -744,16 +741,15 @@ class Settings_Controller extends Admin_Controller
 
 
 	/**
-	* Email Settings
-	*/
-	function email()
+	 * Email Settings
+	 */
+	public function email()
 	{
-		$this->template->content = new View('admin/email');
+		$this->template->content = new View('admin/settings/email');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
 
 		// setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'email_username' => '',
 			'email_password' => '',
 			'email_port' => '',
@@ -831,8 +827,7 @@ class Settings_Controller extends Admin_Controller
 			// Retrieve Current Settings
 			$settings = ORM::factory('settings', 1);
 
-			$form = array
-			(
+			$form = array(
 				'email_username' => $settings->email_username,
 				'email_password' => $settings->email_password,
 				'email_port' => $settings->email_port,
@@ -849,13 +844,13 @@ class Settings_Controller extends Admin_Controller
 		$this->template->content->email_ssl_array = array('1'=>Kohana::lang('ui_admin.yes'),'0'=>Kohana::lang('ui_admin.no'));
 
 		// Javascript Header
-		$this->template->js = new View('admin/email_js');
+		$this->template->js = new View('admin/settings/email_js');
 	}
 
 		/**
 	 * Clean URLs settings
 	 */
-	function cleanurl() {
+	public function cleanurl() {
 
 		// We cannot allow cleanurl settings to be changed if MHI is enabled since it modifies a file in the config folder
 		if (Kohana::config('config.enable_mhi') == TRUE)
@@ -863,7 +858,7 @@ class Settings_Controller extends Admin_Controller
 			throw new Kohana_User_Exception('Access Error', "Please contact the administrator in order to use this feature.");
 		}
 
-		$this->template->content = new View('admin/cleanurl');
+		$this->template->content = new View('admin/settings/cleanurl');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
 
 		// setup and initialize form field names
@@ -955,7 +950,7 @@ class Settings_Controller extends Admin_Controller
 			throw new Kohana_User_Exception('Access Error', "Please contact the administrator in order to use this feature.");
 		}
 
-		$this->template->content = new View('admin/https');
+		$this->template->content = new View('admin/settings/https');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
 
 		// setup and initialize form field names
