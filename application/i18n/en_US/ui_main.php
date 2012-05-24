@@ -218,6 +218,7 @@
 	'include_location_information' => 'Include Location Information',
 	'include_longitude' => 'Include Longitude',
 	'incoming_media' => 'Incoming Media',
+	'information_evaluation' => 'Information Evaluation',
 	'input_location' => 'Enter your precise location',
 	'insufficient_role' => 'Your account doesn\'t have the proper permission to fully log you in. Please contact the administrator.',
 	'in_response_to' => 'In response to',
