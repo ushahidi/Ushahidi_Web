@@ -212,24 +212,22 @@ function refreshTimeline() {
 	var url = "<?php echo url::site().'json/timeline/'; ?>";
 	url += (options.c !== undefined && parseInt(options.c) > 0) ?  options.c : '';
 
-	var parameters = {};
 	var interval = (to - from) / (1000 * 3600 * 24);
 	if (interval <= 3) {
-		parameters.i = "hour";
+		options.i = "hour";
 	} else if (interval >= 124) {
-		parameters.i = "day";
+		options.i = "day";
 	}
 
 	// Get the graph data
 	$.ajax({
 		url: url,
-		data: parameters,
-		async: false,
+		data: options,
 		success: function(response) {
 			// Clear out the any existing plots
 			$("#graph").html('');
 
-			if (response[0].data.length == 0)
+			if (response[0].data.length < 2)
 				return;
 
 			var graphData = [];
@@ -401,16 +399,17 @@ jQuery(function() {
 		labelSrc: 'text',
 		sliderOptions: {
 			change: function(e, ui) {
-				var startDate = $("#startDate").val();
-				var endDate = $("#endDate").val();
+				var from = $("#startDate").val();
+				var to = $("#endDate").val();
 
-				// The end date must always be greater
-				if (endDate > startDate) {
+				if (to > from && (from != startTime || to != endTime)) {
 					// Update the report filters
-					map.updateReportFilters({s: startDate, e: endDate});
+					startTime = from;
+					endTime = to;
+					map.updateReportFilters({s: from, e: to});
 				}
 
-				return false;
+				e.stopPropagation();
 			}
 		}
 	});

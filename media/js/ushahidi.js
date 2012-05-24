@@ -552,7 +552,10 @@
 			// Set the zoom level
 			context._reportFilters.z = context._olMap.getZoom();
 			context.redraw();
-			context.trigger("filterschanged", context._reportFilters);
+			
+			setTimeout(function() {
+				context.trigger("filterschanged", context._reportFilters);
+			}, 1200);
 		}
 	}
 
