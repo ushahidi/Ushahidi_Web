@@ -227,7 +227,7 @@ function refreshTimeline() {
 			// Clear out the any existing plots
 			$("#graph").html('');
 
-			if (response[0].data.length < 2)
+			if (response != null && response[0].data.length < 2)
 				return;
 
 			var graphData = [];

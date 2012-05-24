@@ -552,7 +552,7 @@
 			// Set the zoom level
 			context._reportFilters.z = context._olMap.getZoom();
 			context.redraw();
-			
+
 			setTimeout(function() {
 				context.trigger("filterschanged", context._reportFilters);
 			}, 1200);
@@ -606,6 +606,11 @@
 	 */
 	Ushahidi.Map.prototype.onFeatureSelect = function(event) {
 		this._selectedFeature = event.feature;
+		// Pre-fetch the background image for the popup so that it is 
+		// fetched from the cache when when popup is displayed
+		var popupBgImage = new Image();
+		popupBgImage.src = OpenLayers.Util.getImagesLocation() + 'cloud-popup-relative.png';
+
 		zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
 		lon = zoom_point.lon;
 		lat = zoom_point.lat;
