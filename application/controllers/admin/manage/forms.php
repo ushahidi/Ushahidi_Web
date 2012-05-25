@@ -444,7 +444,7 @@ class Forms_Controller extends Admin_Controller {
 	{
 		$visibility_selection = array('0' => Kohana::lang('ui_admin.anyone_role'));
 		
-		$roles = ORM::factory('role')->where('id != 1')->orderby('access_level','asc')->find_all();
+		$roles = ORM::factory('role')->orderby('access_level','asc')->find_all();
 		foreach($roles as $role)
 		{
 			$visibility_selection[$role->id] = ucfirst($role->name);
