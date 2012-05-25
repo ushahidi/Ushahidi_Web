@@ -44,31 +44,26 @@ class customforms_Core {
 			}
 		}
 
-		//Get user role_id
-		
-		$role_id = self::user_role();	
 		// Database table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
-
-		// NOTE will probably need to add a user_level variable for non-web based requests
-		$user_level = self::get_user_max_auth();
-
-		// Get the predicates for the public state
-		$public_state = ($action == "view") ? '<='.$user_level : ' <= '.$user_level;
+		
+		// Get field we'll check permissions against
+		$ispublic_field = ($action == "view") ? 'field_ispublic_visible' : 'field_ispublic_submit';
 
 		// Query to fetch the form fields associated with the given form id
-		$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff WHERE 1=1 ";
+		$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff LEFT JOIN roles r ON (r.id = $ispublic_field) WHERE 1=1 ";
 		
 		if ($form_id != null AND $form_id != '')
 		{
-			$sql .= "AND ff.form_id = ".$form_id. " AND ff.field_ispublic_submit = ".$role_id." OR
-			ff.field_ispublic_visible = ".$role_id." ";
+			$sql .= "AND ff.form_id = ".$form_id." ";
 		}
-
 		
-		$sql .= "AND ff.field_ispublic_visible ".$public_state." "
-				. "ORDER BY ff.field_position ASC";
+		// NOTE will probably need to add a user_level variable for non-web based requests
+		$user_level = self::get_user_max_auth();
 
+		// Check access_level
+		$sql .= 'AND (r.access_level <= '.$user_level.' OR r.access_level IS NULL)';
+		$sql .= " ORDER BY ff.field_position ASC";
 
 		// Execute the SQL to fetch the custom form fields
 		$form_fields = Database::instance()->query($sql);
@@ -111,17 +106,16 @@ class customforms_Core {
 			$sql = "SELECT ff.*, fr.form_response "
 				. "FROM ".$table_prefix."form_field ff "
 				. "RIGHT JOIN ".$table_prefix."form_response fr ON (fr.form_field_id = ff.id) "
+				. "LEFT JOIN roles r ON (r.id = $ispublic_field)"
 				. "WHERE fr.incident_id = ".$incident_id." ";
 
 			if ($form_id != null AND $form_id != '')
 			{
-				$sql .= "AND ff.form_id = ".$form_id. " AND ff.field_ispublic_submit = ".$role_id." OR
-				ff.field_ispublic_visible = ".$role_id." ";
+				$sql .= "AND ff.form_id = ".$form_id." ";
 			}
-			
-			$sql .=	"AND ff.field_ispublic_visible ".$public_state." "
-					. "ORDER BY ff.field_position ASC";
 
+			$sql .= 'AND (r.access_level <= '.$user_level.' OR r.access_level IS NULL)';
+			$sql .= " ORDER BY ff.field_position ASC";
 
 			// Execute the SQL to fetch the custom form fields
 			$form_fields = Database::instance()->query($sql);
@@ -162,34 +156,6 @@ class customforms_Core {
 	}
 
 	/**
-	* Checks the role of a user using their user_id
-	*/
-	public static function user_role()
-	{
-		if(isset($_SESSION['auth_user']))
-		{
-			$user = $_SESSION['auth_user'];
-
-			$user_id = $user->id;
-
-			//Get the role a user is assigned to
-			$db = Database::instance(); 
-			    
-			$roles = $db->query("SELECT role_id From roles_users WHERE user_id = ? AND role_id != ? ",$user_id,1);
-
-			foreach($roles as $role)
-			{
-				return $role_id = $role->role_id;
-			}
-		}
-		else
-		{
-			return 0;	
-		}
-		
-	}
-
-	/**
 	 * Returns a list of the field names and values for a given userlevel
 	 *
 	 * @param int $id incident id
@@ -215,7 +181,7 @@ class customforms_Core {
 	 * @return int
 	 */
 	public static function get_user_max_auth(){
-        if( ! isset($_SESSION['auth_user']))
+		if( ! isset($_SESSION['auth_user']))
 			return 0;
 
 		$user = new User_Model($_SESSION['auth_user']->id);
