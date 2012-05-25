@@ -201,35 +201,33 @@ function refreshTimeline() {
 	var options = (arguments.length == 0) ? {} : arguments[0];
 
 	// Compute the start and end dates
-	startTime = (options.s == undefined)
+	var from = (options.s == undefined)
 	    ? new Date(startTime * 1000)
 	    : new Date(options.s * 1000);
 
-	endTime = (options.e == undefined)
+	var to = (options.e == undefined)
 	    ? new Date(endTime * 1000)
 	    : new Date(options.e * 1000);
 
 	var url = "<?php echo url::site().'json/timeline/'; ?>";
 	url += (options.c !== undefined && parseInt(options.c) > 0) ?  options.c : '';
 
-	var parameters = {};
-	var divisor = 1000 * 3600 * 24;
-	if ((endTime - startTime) / divisor <= 3){
-		parameters.i = "hour";
-	} else if ((endTime - startTime) / divisor >= 124) {
-		parameters.i = "day";
+	var interval = (to - from) / (1000 * 3600 * 24);
+	if (interval <= 3) {
+		options.i = "hour";
+	} else if (interval >= 124) {
+		options.i = "day";
 	}
 
 	// Get the graph data
 	$.ajax({
 		url: url,
-		data: parameters,
-		async: false,
+		data: options,
 		success: function(response) {
 			// Clear out the any existing plots
 			$("#graph").html('');
 
-			if (response[0].data.length == 0)
+			if (response != null && response[0].data.length < 2)
 				return;
 
 			var graphData = [];
@@ -401,16 +399,17 @@ jQuery(function() {
 		labelSrc: 'text',
 		sliderOptions: {
 			change: function(e, ui) {
-				var startDate = $("#startDate").val();
-				var endDate = $("#endDate").val();
+				var from = $("#startDate").val();
+				var to = $("#endDate").val();
 
-				// The end date must always be greater
-				if (endDate > startDate) {
+				if (to > from && (from != startTime || to != endTime)) {
 					// Update the report filters
-					map.updateReportFilters({s: startDate, e: endDate});
+					startTime = from;
+					endTime = to;
+					map.updateReportFilters({s: from, e: to});
 				}
 
-				return false;
+				e.stopPropagation();
 			}
 		}
 	});

@@ -522,46 +522,91 @@ class Json_Controller extends Template_Controller {
 
 		// Gather allowed ids if we are looking at a specific category
 
-		$allowed_ids = array();
+		$incident_id_in = '';
 		if ($category_id != 0)
 		{
-			$query = 'SELECT ic.incident_id AS incident_id '
-			    . 'FROM '.$this->table_prefix.'incident_category AS ic '
-			    . 'INNER JOIN '.$this->table_prefix.'category AS c ON (ic.category_id = c.id) '
-			    . 'WHERE c.id='.$category_id.' OR c.parent_id='.$category_id.';';
-			$query = $db->query($query);
+			$query = 'SELECT ic.incident_id AS id '
+			    . 'FROM '.$this->table_prefix.'incident_category ic '
+			    . 'INNER JOIN '.$this->table_prefix.'category c ON (ic.category_id = c.id) '
+			    . 'WHERE (c.id='.$category_id.' OR c.parent_id='.$category_id.')';
 
-			foreach ($query as $items)
-			{
-				$allowed_ids[] = $items->incident_id;
-			}
-
+			$incident_id_in = $this->_exec_timeline_data_query($db, $query);
 		}
 
-		// Add aditional filter here to only allow for incidents that are in the requested category
-		$incident_id_in = '';
-		if (count($allowed_ids) AND $category_id != 0)
-		{
-			$incident_id_in = ' AND id IN ('.implode(',',$allowed_ids).')';
-		}
-		elseif(count($allowed_ids) == 0 AND $category_id != 0)
+		// If a category id was specified and no data was returned,
+		// skip application of the other filters
+		if ($category_id !== 0 AND empty($incident_id_in))
 		{
 			$incident_id_in = ' AND 3 = 4';
 		}
+		else
+		{
+			// Apply start and end date filters
+			if (isset($_GET['s']) AND isset($_GET['e']))
+			{
+				$query = 'SELECT id FROM '.$this->table_prefix.'incident '
+				    . 'WHERE incident_date >= "'.date("Y-m-d H:i:s", $_GET['s']).'" '
+				    . 'AND incident_date <= "'.date('Y-m-d H:i:s', $_GET['e']).'"'
+				    . $incident_id_in;
 
+				$incident_id_in = $this->_exec_timeline_data_query($db, $query);
+			}
+
+
+			// Apply media type filters
+			if (isset($_GET['m']) AND intval($_GET['m']) > 0)
+			{
+				$query = "SELECT incident_id AS id FROM ".$this->table_prefix."media "
+				    . "WHERE media_type = ".$_GET['m']
+				    . $incident_id_in;
+
+				$incident_id_in = $this->_exec_timeline_data_query($db, $query);
+			}
+		}
+
+		// Final verification - to prevent returning misleading data
+		$incident_id_in = ( ! empty($_GET) AND empty($incident_id_in) AND $category_id !== 0)
+		    ? ' AND 3 = 4'
+		    : $incident_id_in;
+
+		// Fetch the timeline data
 		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number '
 		    . 'FROM '.$this->table_prefix.'incident '
 		    . 'WHERE incident_active = 1 '.$incident_id_in.' '
 		    . 'GROUP BY '.$groupby_date_text;
-		$query = $db->query($query);
-
-		foreach ($query as $items)
+		
+		foreach ($db->query($query) as $items)
 		{
 			array_push($graph_data[0]['data'],
 				array($items->time * 1000, $items->number));
 		}
 
 		echo json_encode($graph_data);
+	}
+
+	/**
+	 * Given a query, generates an 'IN' clause to be used
+	 * in the final query that is used to fetch the timeline data
+	 *
+	 * @param Database $db Database instance to use for executing the query
+	 * @param string $query SQL query to be executed
+	 */
+	private function _exec_timeline_data_query($db, $query)
+	{
+		$incident_id_in = '';
+		$allowed_ids = array();
+
+		foreach ($db->query($query) as $incident)
+		{
+			$allowed_ids[] = $incident->id;
+		}
+
+		// Adjust the incident filter clause
+		$incident_id_in = (count($allowed_ids) > 0)
+		    ? ' AND id IN ('.implode(',', $allowed_ids).')'
+		    : '';
+
+	    return $incident_id_in;
 	}
 	
 

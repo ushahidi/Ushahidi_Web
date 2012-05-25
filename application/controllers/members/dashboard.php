@@ -111,7 +111,7 @@ class Dashboard_Controller extends Members_Controller {
 
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
-		$this->template->js = new View('admin/stats_js');
+		$this->template->js = new View('admin/stats/stats_js');
 
 		$this->template->content->failure = '';
 

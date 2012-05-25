@@ -440,39 +440,6 @@
 									</label>
 								</div>
 							</div>
-							<!-- f-col-bottom-1 -->
-							<div class="f-col-bottom-1">
-								<h4><?php echo Kohana::lang('ui_main.information_evaluation');?></h4>
-								<div class="row">
-									<div class="f-col-bottom-1-col"><?php echo Kohana::lang('ui_main.report_edit_dropdown_1_title');?>:</div>
-									<?php print form::dropdown('incident_source', 
-									array(""=> Kohana::lang('ui_main.report_edit_dropdown_1_default'), 
-									"1"=> Kohana::lang('ui_main.report_edit_dropdown_1_item_1'), 
-									"2"=> Kohana::lang('ui_main.report_edit_dropdown_1_item_2'), 
-									"3"=> Kohana::lang('ui_main.report_edit_dropdown_1_item_3'), 
-									"4"=> Kohana::lang('ui_main.report_edit_dropdown_1_item_4'), 
-									"5"=> Kohana::lang('ui_main.report_edit_dropdown_1_item_5'), 
-									"6"=> Kohana::lang('ui_main.report_edit_dropdown_1_item_6')
-									)
-									, $form['incident_source']) ?>									
-								</div>
-								<div class="row">
-									<div class="f-col-bottom-1-col"><?php echo Kohana::lang('ui_main.report_edit_dropdown_2_title');?>:</div>
-									<?php print form::dropdown(
-										'incident_information', 
-										array(
-											"" => Kohana::lang('ui_main.report_edit_dropdown_1_default'), 
-											"1"=> Kohana::lang('ui_main.report_edit_dropdown_2_item_1'), 
-											"2"=> Kohana::lang('ui_main.report_edit_dropdown_2_item_2'), 
-											"3"=> Kohana::lang('ui_main.report_edit_dropdown_2_item_3'), 
-											"4"=> Kohana::lang('ui_main.report_edit_dropdown_2_item_4'), 
-											"5"=> Kohana::lang('ui_main.report_edit_dropdown_2_item_5'), 
-											"6"=> Kohana::lang('ui_main.report_edit_dropdown_2_item_6')
-										),
-										$form['incident_information']); 
-									?>									
-								</div>								
-							</div>
 							<div style="clear:both;"></div>
 						</div>
 						<div class="btns">

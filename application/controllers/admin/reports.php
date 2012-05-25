@@ -781,7 +781,7 @@ class Reports_Controller extends Admin_Controller {
 		$next = ORM::factory('incident')->where('id > ', $id)->orderby('id','desc')->find();
 		$next_url = $next->loaded
 		    ? url::base().'admin/reports/edit/'.$next->id
-		    : url::base().'admin/reports/');
+		    : url::base().'admin/reports/';
 		$this->template->content->previous_url = $previous_url;
 		$this->template->content->next_url = $next_url;
 

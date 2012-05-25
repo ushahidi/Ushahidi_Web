@@ -230,7 +230,7 @@ class Reports_Controller extends Members_Controller {
 		$this->template->content->status = $status;
 
 		// Javascript Header
-		$this->template->js = new View('admin/reports_js');
+		$this->template->js = new View('admin/reports/reports_js');
 	}
 
 
