@@ -37,7 +37,7 @@
 	'profile_public' => 'Your profile can be viewed by anyone on the Internet if you check this option. This is also the easiest way to show off the reports you\'ve submitted, your checkins, badges, etc all on one page.',
 	'profile_public_url' => 'This is the address where your public profile can be found.',
 	'profile_username' => 'Your username cannot be changed.',
-	'settings_access_level' => 'Access Levels are used to restrict access to custom form field data. Higher access levels can access fields from lower levels. Superadmin has the highest access level (100). Public data is displayed at the lowest access level (0).',
+	'settings_access_level' => 'Access Levels are used to restrict access to custom form field data. Higher access levels can access fields from lower levels. Superadmin has the highest access level (100). Public data is displayed at the lowest access level (0). Members have access level 10. Admin is access level 90 by default.',
 	'settings_alert_email' => 'This is the email address that will be used to send email alerts.',
 	'settings_allow_alerts' => 'Allow users to subscribe for alerts via the web.',
 	'settings_allow_clustering' => 'This allows bundling of similar reports into a single dot on the map',
