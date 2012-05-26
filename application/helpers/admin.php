@@ -278,16 +278,24 @@ class admin_Core {
 		Event::run('ushahidi_action.nav_admin_users', $this_sub_page);
 	}
 
-	public static function permissions($user = FALSE, $section = FALSE)
+	/*
+	 * Check if user has specified permission
+	 * @param $user User_Model
+	 * @param $permission String permission name
+	 **/
+	public static function permissions($user = FALSE, $permission = FALSE)
 	{
-		if ($user AND $section)
+		if ($user AND $permission)
 		{
 			$access = FALSE;
 			foreach ($user->roles as $user_role)
 			{
-				if ($user_role->$section == 1)
+				foreach ($user_role->permissions as $user_permission)
 				{
-					$access = TRUE;
+					if ($user_permission->name == $permission)
+					{
+						$access = TRUE;
+					}
 				}
 			}
 

@@ -1072,6 +1072,28 @@ INSERT IGNORE INTO `permissions` VALUES
 (14,'checkin'),
 (15,'checkin_admin');
 
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `permission_roles`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `permission_roles` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`,`permission_id`)
+) ENGINE=MyISAM COMMENT='Stores permissions assigned to roles';
+
+--
+-- Dumping data for table `permission_roles`
+--
+
+INSERT INTO `permission_roles` VALUES
+(1,14),
+(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,14),(2,15),
+(3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),(3,15);
+
 -- ---------------------------------------------------------
 
 /**
@@ -1184,28 +1206,6 @@ INSERT INTO `roles` (`id`, `name`, `description`, `access_level`) VALUES
 (2, 'admin', 'Administrative user, has access to almost everything.', 90),
 (3, 'superadmin', 'Super administrative user, has access to everything.', 100),
 (4, 'member', 'Regular user with access only to the member area', 10);
-
--- --------------------------------------------------------
-
-/**
- * Table structure for table `roles_permissions`
- *
- */
-
-CREATE TABLE IF NOT EXISTS `roles_permissions` (
-  `role_id` int(11) NOT NULL,
-  `permission_id` int(11) NOT NULL,
-  PRIMARY KEY (`role_id`,`permission_id`)
-) ENGINE=MyISAM COMMENT='Stores permissions assigned to roles';
-
---
--- Dumping data for table `roles_permissions`
---
-
-INSERT INTO `roles_permissions` VALUES
-(1,14),
-(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,14),(2,15),
-(3,1),(3,2),(3,3),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),(3,15);
 
 -- --------------------------------------------------------
 

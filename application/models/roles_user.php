@@ -59,28 +59,22 @@ class Roles_User_Model extends Model {
 	 *   essentially saying there's a good chance that there are features
 	 *   in the admin panel they could access.
 	 */
-	public function role_allow_admin($roll_id)
+	public function role_allow_admin($role_id)
 	{
-		$roles = ORM::factory("role")->find($roll_id)->as_array();
+		// @todo add specific permissions for this
+		$permissions = ORM::factory("permission")->join('permissions_roles','permission_id','id')->where('role_id', $role_id)->find_all();
 
-		foreach($roles as $key => $allowed)
+		foreach($permissions as $permission)
 		{
-			
 			// Ignore these fields because they contain data that doesn't involve access
-			
-			if($key == 'id' OR $key == 'name' OR $key == 'description') continue;
-			
-			if($key == 'checkin')
+			if($permission->name == 'checkin')
 			{
 				// Checkin is a special case because they are allowed access to the front end
 				//   but not necessarily the back end so we will continue looping
 				continue;
 			}
 			
-			if($allowed == 1)
-			{
-				return TRUE;
-			}
+			return TRUE;
 		}
 		
 		// None of the fields allowed access to anything specific. This is just a login account.
