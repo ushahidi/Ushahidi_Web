@@ -66,17 +66,17 @@ class admin_Core {
 			if ($user)
 			{
 				// Check permissions for settings panel
-				$main_right_tabs = (self::permissions($user, 'settings'))
+				$main_right_tabs = (self::permissions('settings', $user))
 					? arr::merge($main_right_tabs, array('settings/site' => Kohana::lang('ui_admin.settings')))
 					: $main_right_tabs;
 
 				// Check permissions for the manage panel
-				$main_right_tabs = (self::permissions($user, 'manage'))
+				$main_right_tabs = (self::permissions('manage', $user))
 					? arr::merge($main_right_tabs, array('manage' => Kohana::lang('ui_admin.manage')))
 					: $main_right_tabs;
 
 				// Check permissions for users panel
-				$main_right_tabs = (self::permissions($user, 'users'))
+				$main_right_tabs = (self::permissions('users', $user))
 					? arr::merge($main_right_tabs, array('users' => Kohana::lang('ui_admin.users')))
 					: $main_right_tabs;
 			}
@@ -283,8 +283,14 @@ class admin_Core {
 	 * @param $user User_Model
 	 * @param $permission String permission name
 	 **/
-	public static function permissions($user = FALSE, $permission = FALSE)
+	public static function permissions($permission = FALSE, $user = FALSE)
 	{
+		// Get current user if none passed
+		if (!$user)
+		{
+			$user = Auth::instance()->get_user();
+		}
+
 		if ($user AND $permission)
 		{
 			$access = FALSE;

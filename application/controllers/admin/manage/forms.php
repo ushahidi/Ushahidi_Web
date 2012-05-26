@@ -21,7 +21,7 @@ class Forms_Controller extends Admin_Controller {
 		$this->template->this_page = 'manage';
 		
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "manage"))
+		if ( ! admin::permissions("manage"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}

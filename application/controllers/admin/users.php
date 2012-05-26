@@ -24,12 +24,12 @@ class Users_Controller extends Admin_Controller {
 		$this->template->this_page = 'users';
 
 		// If user doesn't have access, redirect to dashboard
-		if (!admin::permissions($this->user, "users"))
+		if (!admin::permissions("users"))
 		{
 			url::redirect(url::site() . 'admin/dashboard');
 		}
 
-		$this->display_roles = admin::permissions($this->user, 'manage_roles');
+		$this->display_roles = admin::permissions('manage_roles');
 	}
 
 	public function index()

@@ -23,7 +23,7 @@ class Sharing_Controller extends Admin_Controller
 		$this->template->this_page = 'settings';
 		
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "settings"))
+		if ( ! admin::permissions("settings"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}

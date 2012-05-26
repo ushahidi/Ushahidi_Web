@@ -21,7 +21,7 @@ class Api_Controller extends Admin_Controller {
         parent::__construct();
         
         $this->template->this_page = 'settings';
-        if ( ! admin::permissions($this->user, "manage"))
+        if ( ! admin::permissions("manage"))
         {
             url::redirect(url::site().'admin/dashboard');
         }
