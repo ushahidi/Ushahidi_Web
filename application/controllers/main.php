@@ -70,13 +70,6 @@ class Main_Controller extends Template_Controller {
         // Load Header & Footer
 		$this->template->header  = new View('header');
 		$this->template->footer  = new View('footer');
-		
-		// Get session information
-		$auth = Auth::instance();
-		if($auth->logged_in())
-		{
-			$this->user = new User_Model($_SESSION['auth_user']->id);
-		}
 
 		// Themes Helper
 		$this->themes = new Themes();

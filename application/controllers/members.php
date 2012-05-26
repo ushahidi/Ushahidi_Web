@@ -57,9 +57,6 @@ class Members_Controller extends Template_Controller
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
-		// Get Session Information
-		$this->user = new User_Model($_SESSION['auth_user']->id);
-
 		$this->template->admin_name = $this->user->name;
 		
 		// Retrieve Default Settings

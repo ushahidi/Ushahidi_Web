@@ -97,9 +97,6 @@ class Admin_Controller extends Template_Controller
 		// Get the no. of items to display setting
 		$this->items_per_page = (int) Kohana::config('settings.items_per_page_admin');
 
-		// Get Session Information
-		$this->user = new User_Model($_SESSION['auth_user']->id);
-
 		// Check if user has the right to see the admin panel
 		if(admin::admin_access($this->user) == FALSE)
 		{
