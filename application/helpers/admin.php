@@ -304,7 +304,6 @@ class admin_Core {
 					}
 				}
 			}
-
 			return $access;
 		}
 		else
@@ -320,6 +319,12 @@ class admin_Core {
 	 */
 	public static function admin_access($user = FALSE)
 	{
+		// Get current user if none passed
+		if (!$user)
+		{
+			$user = Auth::instance()->get_user();
+		}
+
 		if($user !== FALSE){
 			foreach ($user->roles as $user_role)
 			{

@@ -98,7 +98,7 @@ class Admin_Controller extends Template_Controller
 		$this->items_per_page = (int) Kohana::config('settings.items_per_page_admin');
 
 		// Check if user has the right to see the admin panel
-		if(admin::admin_access($this->user) == FALSE)
+		if(admin::admin_access() == FALSE)
 		{
 			// This user isn't allowed in the admin panel
 			url::redirect('/');
