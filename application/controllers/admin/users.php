@@ -369,10 +369,6 @@ class Users_Controller extends Admin_Controller {
 	}
 
 	/**
-	 * Check if
-	 */
-
-	/**
 	 * Checks if email address is associated with an account.
 	 * @param Validation $post $_POST variable with validation rules
 	 */
