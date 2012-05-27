@@ -33,7 +33,7 @@ class Checkins_Controller extends Admin_Controller
     */
     function index()
     {
-		$this->template->content = new View('admin/checkins');
+		$this->template->content = new View('admin/checkins/main');
     	$this->template->content->title = Kohana::lang('ui_admin.checkins');
     	
     	// check, has the form been submitted?
@@ -111,7 +111,7 @@ class Checkins_Controller extends Admin_Controller
         $this->template->content->total_items = $pagination->total_items;
         
         // Javascript Header
-        $this->template->js = new View('admin/checkins_js');
+        $this->template->js = new View('admin/checkins/checkins_js');
 	}
 
 }
