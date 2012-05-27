@@ -74,11 +74,11 @@
 					<div class="tab_form_item">
 					<?php
 					$i = 0;
-					foreach ($permissions as $permission => $permission_desc)
+					foreach ($permissions as $permission_id => $permission_name)
 					{
 						echo "<div style=\"width:200px;float:left;margin-bottom:3px;\">";
-						echo form::checkbox($permission, '1');
-						echo form::label($permission, $permission_desc);
+						echo form::checkbox('permissions[]', $permission_id, FALSE, "id='permission_$permission_name'");
+						echo form::label("permission_$permission_name", Kohana::lang('permissions.'.$permission_name));
 						echo "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 						echo "</div>";
 						$i++;
@@ -132,20 +132,12 @@
 									$role_id = $role->id;
 									$name = $role->name;
 									$description = $role->description;
-									
-									$reports_view = $role->reports_view;
-									$reports_edit = $role->reports_edit;
-									$reports_evaluation = $role->reports_evaluation;
-									$reports_comments = $role->reports_comments;
-									$reports_download = $role->reports_download;
-									$reports_upload = $role->reports_upload;
-									$messages = $role->messages;
-									$messages_reporters = $role->messages_reporters;
-									$stats = $role->stats;
-									$settings = $role->settings;
-									$manage = $role->manage;
-									$users = $role->users;
 									$access_level = $role->access_level;
+									$role_permissions = array();
+									foreach($role->permissions as $perm)
+									{
+										$role_permissions[] = $perm->name;
+									}
 									?>
 									<tr>
 										
@@ -170,19 +162,7 @@
 													'<?php echo(rawurlencode($name)); ?>',
 													'<?php echo(rawurlencode($description)); ?>',
 													'<?php echo(rawurlencode($access_level)); ?>',
-													<?php echo(rawurlencode($reports_view)); ?>,
-													<?php echo(rawurlencode($reports_edit)); ?>,
-													<?php echo(rawurlencode($reports_evaluation)); ?>,
-													<?php echo(rawurlencode($reports_comments)); ?>,
-													<?php echo(rawurlencode($reports_download)); ?>,
-													<?php echo(rawurlencode($reports_upload)); ?>,
-													<?php echo(rawurlencode($messages)); ?>,
-													<?php echo(rawurlencode($messages_reporters)); ?>,
-													<?php echo(rawurlencode($stats)); ?>,
-													<?php echo(rawurlencode($settings)); ?>,
-													<?php echo(rawurlencode($manage)); ?>,
-													<?php echo(rawurlencode($users)); ?>
-													)">
+													[<?php echo("'".implode("','",$role_permissions)."'");?>])">
 													<?php echo Kohana::lang('ui_admin.edit_action');?>
 													</a></li>
 	<li><a href="javascript:rolesAction('d','DELETE','<?php echo(rawurlencode($role_id)); ?>')" class="del">

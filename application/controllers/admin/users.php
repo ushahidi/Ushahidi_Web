@@ -246,8 +246,15 @@ class Users_Controller extends Admin_Controller {
 	public function roles()
 	{
 		$this->template->content = new View('admin/users/roles');
+		
+		$permissions = ORM::factory('permission')->find_all()->select_list('id','name');
 
-		$form = array('role_id' => '', 'action' => '', 'name' => '', 'description' => '', 'reports_view' => '', 'reports_edit' => '', 'reports_evaluation' => '', 'reports_comments' => '', 'reports_download' => '', 'reports_upload' => '', 'messages' => '', 'messages_reporters' => '', 'stats' => '', 'settings' => '', 'manage' => '', 'users' => '', 'access_level' => '');
+		$form = array('role_id' => '', 'action' => '', 'name' => '', 'description' => '', 'access_level' => '', 'permissions' => '');
+		foreach($permissions as $permission)
+		{
+			$form[$permission] = '';
+		}
+		
 		//copy the form as errors, so the errors will be stored with keys corresponding to the form field names
 		$errors = $form;
 		$form_error = FALSE;
@@ -267,18 +274,7 @@ class Users_Controller extends Admin_Controller {
 				$post->add_rules('name', 'required', 'length[3,30]', 'alpha_numeric');
 				$post->add_rules('description', 'required', 'length[3,100]');
 				$post->add_rules('access_level', 'required', 'between[0,100]', 'numeric');
-				$post->add_rules('reports_view', 'between[0,1]');
-				$post->add_rules('reports_edit', 'between[0,1]');
-				$post->add_rules('reports_evaluation', 'between[0,1]');
-				$post->add_rules('reports_comments', 'between[0,1]');
-				$post->add_rules('reports_download', 'between[0,1]');
-				$post->add_rules('reports_upload', 'between[0,1]');
-				$post->add_rules('messages', 'between[0,1]');
-				$post->add_rules('messages_reporters', 'between[0,1]');
-				$post->add_rules('stats', 'between[0,1]');
-				$post->add_rules('settings', 'between[0,1]');
-				$post->add_rules('manage', 'between[0,1]');
-				$post->add_rules('users', 'between[0,1]');
+				$post->add_rules('permissions[]', 'numeric');
 
 				if ($post->role_id == "3")
 				{
@@ -294,22 +290,20 @@ class Users_Controller extends Admin_Controller {
 				$role = ORM::factory('role', $post->role_id);
 				if ($post->action == 'a')// Add/Edit Action
 				{
+					// Remove non-existant permissions
+					$perm_ids = array_keys($permissions);
+					foreach ($post->permissions as $k => $perm)
+					{
+						if (! in_array($perm, $perm_ids))
+						{
+							unset($post->permissions[$k]);
+						}
+					}
+
 					$role->name = $post->name;
 					$role->description = $post->description;
 					$role->access_level = $post->access_level;
-					$role->reports_view = $post->reports_view;
-					$role->reports_edit = $post->reports_edit;
-					$role->reports_evaluation = $post->reports_evaluation;
-					$role->reports_comments = $post->reports_comments;
-					$role->reports_download = $post->reports_download;
-					$role->reports_upload = $post->reports_upload;
-					$role->messages = $post->messages;
-					$role->messages_reporters = $post->messages_reporters;
-					$role->stats = $post->stats;
-					$role->settings = $post->settings;
-					$role->manage = $post->manage;
-					$role->users = $post->users;
-
+					$role->permissions = array_unique($post->permissions);
 					$role->save();
 
 					$form_saved = TRUE;
@@ -339,8 +333,6 @@ class Users_Controller extends Admin_Controller {
 		}
 
 		$roles = ORM::factory('role')->where('id != 1')->orderby('access_level', 'desc')->find_all();
-
-		$permissions = array("reports_view" => "View Reports", "reports_edit" => "Create/Edit Reports", "reports_evaluation" => "Approve & Verify Reports", "reports_comments" => "Manage Report Comments", "reports_download" => "Download Reports", "reports_upload" => "Upload Reports", "messages" => "Manage Messages", "messages_reporters" => "Manage Message Reporters", "stats" => "View Stats", "settings" => "Modify Settings", "manage" => "Manage Panel", "users" => "Manage Users", );
 
 		$this->template->content->display_roles = $this->display_roles;
 		$this->template->content->roles = $roles;
