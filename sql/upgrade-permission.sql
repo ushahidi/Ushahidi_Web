@@ -79,3 +79,9 @@ DROP COLUMN `reports_view` ;
 #  ADD CONSTRAINT `permissions_roles_idfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
 #  ADD CONSTRAINT `permissions_roles_idfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
 
+/* Remove report_evaluation permission */
+INSERT INTO permissions (name) VALUES (16,'reports_verify'),(17,'reports_approve');
+INSERT INTO permissions_roles (role_id, permission_id) SELECT role_id, 16 as permission_id FROM permissions_roles WHERE permission_id = 3;
+INSERT INTO permissions_roles (role_id, permission_id) SELECT role_id, 17 as permission_id FROM permissions_roles WHERE permission_id = 3;
+DELETE FROM permissions WHERE id = 3;
+DELETE FROM permissions_roles WHERE permission_id = 3;

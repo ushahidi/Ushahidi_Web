@@ -2,7 +2,8 @@
 	$lang = array(
 		"reports_view" => "View Reports",
 		"reports_edit" => "Create/Edit Reports",
-		"reports_evaluation" => "Approve & Verify Reports",
+		"reports_approve" => "Approve Reports",
+		"reports_verify" => "Verify Reports",
 		"reports_comments" => "Manage Report Comments",
 		"reports_download" => "Download Reports",
 		"reports_upload" => "Upload Reports",
