@@ -162,12 +162,12 @@
 			$("#info-search").submit();
 		}
 		function show_addedit(toggle){
-			var csrfToken = $('[name="form_auth_token"]').val();
 			var addEditForm = $("#addedit");
 			if (toggle) {
 				addEditForm.toggle(400);
+				// Clear fields, but not buttons or the CSRF token.
 				$(':input','#addedit')
-				 .not(':button, :submit, :reset, #action')
+				 .not(':button, :submit, :reset, #action, [name="form_auth_token"]')
 				 .val('')
 				 .removeAttr('checked')
 				 .removeAttr('selected');
@@ -176,11 +176,6 @@
 				addEditForm.show(400);
 			}
 			$("a.add").focus();
-
-			// Add the CSRF token
-			if (addEditForm != undefined && csrfToken != undefined) {
-				$('[name="form_auth_token"]', addEditForm).val(csrfToken);
-			}
 		}
 		<?php
 		if ($form_error)
