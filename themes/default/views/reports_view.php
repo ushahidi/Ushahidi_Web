@@ -14,7 +14,7 @@
   	  ?>
 
 		<h1 class="report-title"><?php
-			echo $incident_title;
+			echo strip_tags($incident_title);
 
 			// If Admin is Logged In - Allow For Edit Link
 			if ($logged_in)
@@ -25,7 +25,7 @@
 
 		<p class="report-when-where">
 			<span class="r_date"><?php echo $incident_time.' '.$incident_date; ?> </span>
-			<span class="r_location"><?php echo $incident_location; ?></span>
+			<span class="r_location"><?php echo html::specialchars($incident_location); ?></span>
 			<?php Event::run('ushahidi_action.report_meta_after_time', $incident_id); ?>
 		</p>
 
@@ -103,7 +103,7 @@
 		<!-- start report description -->
 		<div class="report-description-text">
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
-			<?php echo $incident_description; ?>
+			<?php echo strip_tags($incident_description); ?>
 			<br/>
 
 
