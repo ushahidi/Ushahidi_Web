@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 88
+-- version 89
 -- http://www.ushahidi.com
 
 
@@ -1449,4 +1449,4 @@ CREATE TABLE IF NOT EXISTS `verified` (
  *
  */
 UPDATE `settings` SET `ushahidi_version` = '2.3.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '88' WHERE `id` = 1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '89' WHERE `id` = 1 LIMIT 1;

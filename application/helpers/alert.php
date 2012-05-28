@@ -180,8 +180,8 @@ class alert_Core {
 			'alert_type'=> self::MOBILE_ALERT,
 			'alert_mobile'=>$message_from,
 			'alert_code'=>$alert_code,
-			'alert_lon'=>$geocoder['lon'],
-			'alert_lat'=>$geocoder['lat'],
+			'alert_lon'=> isset($geocoder['lon']) ? $geocoder['lon'] : FALSE,
+			'alert_lat'=> isset($geocoder['lat']) ? $geocoder['lat'] : FALSE,
 			'alert_radius'=>'20',
 			'alert_confirmed'=>'1'
 		);
