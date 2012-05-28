@@ -9,14 +9,11 @@
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
  * @author     Ushahidi Team <team@ushahidi.com> 
- * @package    Ushahidi - http://source.ushahididev.com
- * @module     API Controller
+ * @package    Ushahidi - https://github.com/ushahidi/Ushahidi_Web
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 ?>
-		<?php require_once(APPPATH.'views/map_common_js.php'); ?>
-		
 		jQuery(function($) {
 			
 			$(window).load(function(){
@@ -24,78 +21,60 @@
 				// OpenLayers uses IE's VML for vector graphics. -->
 				// We need to wait for IE's engine to finish loading all namespaces (document.namespaces) for VML.
 				// jQuery.ready is executing too soon for IE to complete it's loading process.
-			
-			// Create the map
-			var latitude = <?php echo $latitude; ?>;
-			var longitude = <?php echo $longitude; ?>;
-			var zoomLevel = <?php echo $default_zoom; ?>;
-			
-			var map = createMap('divMap', latitude, longitude, zoomLevel);
-			
-			// Add the radius layer
-			var radiusLayer = addRadiusLayer(map, latitude, longitude);
-			
-			// Draw circle around point
-			drawCircle(map, latitude, longitude);
-			
-			// Detect Map Clicks
-			map.events.register("click", map, function(e){
-				var lonlat = map.getLonLatFromViewPortPx(e.xy);
-				var lonlat2 = map.getLonLatFromViewPortPx(e.xy);
-			    m = new OpenLayers.Marker(lonlat);
-				markers.clearMarkers();
-		    	markers.addMarker(m);
-		
-				currRadius = $("#alert_radius").val();
-				radius = currRadius * 1000
 				
-				lonlat2.transform(proj_900913, proj_4326);
-				drawCircle(map, lonlat2.lat, lonlat2.lon, radius);
-							
-				// Update form values (jQuery)
-				$("#alert_lat").attr("value", lonlat2.lat);
-				$("#alert_lon").attr("value", lonlat2.lon);
-				
-				// Looking up country name using reverse geocoding
-				//    TODO: Function doesn't exist so it clearly isn't doing anything. -BH
-				// reverseGeocode(lonlat2.lat, lonlat2.lon);
-			});
+				<?php echo map::layers_js(FALSE); ?>
+				var mapConfig = {
 
-			/*
-			Google GeoCoder
-			TODO - Add Yahoo and Bing Geocoding Services
-			 */
+					// Map center
+					center: {
+						latitude: <?php echo $latitude; ?>,
+						longitude: <?php echo $longitude; ?>,
+					},
 
-			$('.btn_find').on('click', function () {
-				geoCode();
-			});
+					// Zoom level
+					zoom: <?php echo $default_zoom; ?>,
 
-			$('#location_find').bind('keypress', function(e) {
-				var code = (e.keyCode ? e.keyCode : e.which);
-				if(code == 13) { //Enter keycode
+					// Base layers
+					baseLayers: <?php echo map::layers_array(FALSE); ?>
+				};
+
+				var map = new Ushahidi.Map('divMap', mapConfig);
+				map.addRadiusLayer({
+					latitude: <?php echo $latitude; ?>,
+					longitude: <?php echo $longitude; ?>
+				});
+
+				// Subscribe for makerpositionchanged event
+				map.register("markerpositionchanged", updateAlertCoordinates);
+
+				$('.btn_find').on('click', function () {
 					geoCode();
-					return false;
-				}
-			});
+				});
 
-			// Alerts Slider
-			$("select#alert_radius").selectToUISlider({
-				labels: 6,
-				labelSrc: 'text',
-				sliderOptions: {
-					change: function(e, ui) {
-						var newRadius = $("#alert_radius").val();
-						
-						// Convert to Meters
-						radius = newRadius * 1000;	
-						
-						// Redraw Circle
-						currLon = $("#alert_lon").val();
-						currLat = $("#alert_lat").val();
-						drawCircle(map, currLat, currLon, radius);
+				$('#location_find').bind('keypress', function(e) {
+					var code = (e.keyCode ? e.keyCode : e.which);
+					if(code == 13) { //Enter keycode
+						geoCode();
+						return false;
 					}
-				}
-			}).hide();
+				});
+
+				// Alerts Slider
+				$("select#alert_radius").selectToUISlider({
+					labels: 6,
+					labelSrc: 'text',
+					sliderOptions: {
+						change: function(e, ui) {
+							var newRadius = $("#alert_radius").val();
+							
+							// Convert to Meters
+							radius = newRadius * 1000;	
+							
+							// Redraw Circle
+							map.updateRadius({radius: radius});
+						}
+					}
+				}).hide();
 			
 			
 			// Some Default Values		
@@ -124,32 +103,30 @@
 			  });
 			});
 		});
+
+		// Update the coorindates for the alerts form
+		function updateAlertCoordinates(coords) {
+			$("#alert_lat").val(coords.latitude);
+			$("#alert_lon").val(coords.longitude);
+		}
 		
 		
 		/**
 		 * Google GeoCoder
 		 */
-		function geoCode()
-		{
+		function geoCode() {
 			$('#find_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
 			address = $("#location_find").val();
 			$.post("<?php echo url::site(); ?>reports/geocode/", { address: address },
 				function(data){
-					if (data.status == 'success'){
-						var lonlat = new OpenLayers.LonLat(data.longitude, data.latitude);
-						lonlat.transform(proj_4326,proj_900913);
-					
-						m = new OpenLayers.Marker(lonlat);
-						markers.clearMarkers();
-				    	markers.addMarker(m);
-						map.setCenter(lonlat, 9);
-					
-						newRadius = $("#alert_radius").val();
-						radius = newRadius * 1000
+					if (data.status == 'success') {
 
-						drawCircle(data.longitude,data.latitude, radius);
+						map.updateRadius({
+							longitude: data.longitude,
+							latitude: data.latitude
+						});
 					
-						// Update form values (jQuery)
+						// Update form values
 						$("#alert_lat").val(data.latitude);
 						$("#alert_lon").val(data.longitude);
 					} else {

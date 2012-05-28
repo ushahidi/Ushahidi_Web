@@ -50,13 +50,11 @@
 	 	markerStrokeOpacity: 0.9,
 
 		// Layer types
-		REPORTS: "Reports",
+		GEOJSON: "GeoJSON",
 
 		KML: "KML",
 
-		SHARES: "Share",
-
-		DEAULT: "default",
+		DEFAULT: "default",
 
 		/**
 		 * APIProperty: baseURL
@@ -65,11 +63,11 @@
 		baseURL: '',
 
 	 	/**
-	 	 * APIProperty: defaultMarkerStyle
-	 	 * Default OpenLayers style definition for rendering markers on
+	 	 * APIProperty: geoJSONStyle
+	 	 * Default styling for GeoJSON data
 	 	 * the map
 	 	 */
-	 	 defaultMarkerStyle: function() {
+	 	 GeoJSONStyle: function() {
 	 	 	var style = new OpenLayers.Style({
 	 	 		'externalGraphic': "${icon}",
 	 	 		'graphicTitle': "${cluster_count}",
@@ -264,7 +262,7 @@
 						}
 						else
 						{
-							return Ushahidi.markerStrokeOpacity
+							return Ushahidi.markerStrokeOpacity;
 						}
 					},
 					labelalign: function(feature) {
@@ -293,20 +291,40 @@
 	  * center - {Object} The default initial center of the map
 	  * redrawOnZoom - {Boolean} Whether to redraw the layers when the map zoom changes.
 	  *                Default is false
+	  * detectMapZoom - {Boolean} Whether to detect change in the zoom level. If the
+	  *                 redrawOnZoom property is true, this option is ignored
 	  * mapControls - {Array(OpenLayers.Control)} The list of controls to add to the map
 	  */
 	 Ushahidi.Map = function(div, config) {
 	 	// Internal registry for the maker layers
 	 	this._registry = [];
 
-	 	// Internal registry for the KML overlays
-	 	this._kmlOverlayers = [];
-
 	 	// Markers are not yet loaded on the map
 	 	this._isLoaded = 0;
 
 	 	// List of supported events
-	 	this._EVENTS = ["filterschanged", "zoomchanged", "resize", "deletelayer"];
+	 	this._EVENTS = [
+	 		// When the report filters change
+	 	    "filterschanged",
+
+	 	    // Map's zoom level changes
+	 	    "zoomchanged",
+
+	 	    // When the size of the map's viewport changes
+	 	    "resize",
+
+	 	    // When a layer is deleted
+	 	    "deletelayer",
+
+	 	    // Maker position changed
+	 	    "markerpositionchanged",
+
+	 	    // Base layer is changed
+	 	    "baselayerchanged",
+
+	 	    // Map center changed
+	 	    "mapcenterchanged"
+	 	];
 
 	 	// The set of filters/parameters to pass to the URL that fetches
 	 	// overlay data - not applicable to KMLs
@@ -316,6 +334,9 @@
 	 	// are updated. The updated paramters will passed to the callback
 	 	// as a parameter
 	 	this._callbacks = {};
+
+	 	// Tracks the current marker position
+	 	this._currentMarkerPosition = {};
 
 	 	// Check for the mapDiv
 	 	if (div == undefined) {
@@ -348,9 +369,19 @@
 			maxResolution: 156543.0339
 		};
 
+		// Are the layers to be redrawn on zoom change
 		if (config.redrawOnZoom !== undefined && config.redrawOnZoom) {
 			mapOptions.eventListeners = {
 				"zoomend": this.refresh,
+				scope: this
+			};
+		}
+
+		// Zoom detection is enabled and redrawOnZoom has not been specified or is false
+		if ((config.redrawOnZoom == undefined || !config.redrawOnZoom) && config.detectMapZoom) {
+			this.register("zoomchanged", this.updateZoom, this);
+			mapOptions.eventListeners = {
+				"zoomend": this.triggerZoomChanged,
 				scope: this
 			};
 		}
@@ -393,6 +424,13 @@
 		// Register events
 		this.register("resize", this.resize, this);
 		this.register("deletelayer", this.deleteLayer, this);
+		this.register("baselayerchanged", this.updateBaseLayer, this);
+		this.register("mapcenterchanged", this.updateMapCenter, this);
+		
+		// Pre-load the background image for the popup so that it is 
+		// fetched from the cache when when popup is displayed
+		var popupBgImage = new Image();
+		popupBgImage.src = OpenLayers.Util.getImagesLocation() + 'cloud-popup-relative.png';
 
 		return this;
 	};
@@ -403,18 +441,16 @@
 	 * Parameters:
 	 * layerType - {String} Type of marker to be added and could be one of the following 
 	 *             (Ushahidi.REPORTS, Ushahidi.KML, Ushahidi.SHARES. Ushahidi.DEFAULT)
-	 * options - {Object} Optional object key/value pairs of the markers to be added to the map
-	 * 			 where: key - name of the layer, value - URL for the fetching the 
-	 *           GeoJSON for the markers
+	 * options   - {Object} Optional object key/value pairs of the markers to be added to the map
 	 *
-	 *           Valid options are:
-	 *                name - {String} Name of the Layer being added
-	 *                url - {String} Fetch URL for the layer data
-	 *                styleMap - {OpenLayers.StyleMap} Styling for the layer
-     *
-	 * save - {bool} Whether to save the layer in the internal registry of Ushahidi.Map This
-	 *        parameter should be set to true, if the layer being added is new so as to ensure
-	 *        that it is redrawn when the map is zoomed in/out or the report filters are updated     
+	 *    Valid options are:
+	 *        name - {String} Name of the Layer being added
+	 *        url  - {String} Fetch URL for the layer data
+	 *        styleMap - {OpenLayers.StyleMap} Styling for the layer
+	 *
+	 * save -      {bool} Whether to save the layer in the internal registry of Ushahidi.Map This
+	 *             parameter should be set to true, if the layer being added is new so as to ensure
+	 *             that it is redrawn when the map is zoomed in/out or the report filters are updated     
 	 */
 	Ushahidi.Map.prototype.addLayer = function(layerType, options, save) {
 
@@ -426,6 +462,32 @@
 				extractAttributes: true,
 				maxDepth: 5
 			});
+		} else if (layerType == Ushahidi.DEFAULT) {
+			var point = this._olMap.getCenter();
+			this.deleteLayer("default");
+			var markers = new OpenLayers.Layer.Markers("default");
+			markers.addMarker(new OpenLayers.Marker(point));
+			this._olMap.addLayer(markers);
+			var context = this;
+
+			context._olMap.events.register("click", context._olMap, function(e){
+				point = context._olMap.getLonLatFromViewPortPx(e.xy);
+				markers.clearMarkers();
+				markers.addMarker(new OpenLayers.Marker(point));
+
+				point.transform(Ushahidi.proj_900913, Ushahidi.proj_4326);
+				
+				var coords = {latitude: point.lat, longitude: point.lon};
+				context.trigger("markerpositionchanged", coords);
+			});
+
+			this._isLoaded = 1;
+
+			return this;
+		}
+
+		if (options === undefined) {
+			throw "Invalid layer options";
 		}
 
 		// Save the layer data in the internal registry
@@ -468,7 +530,7 @@
 				params.push(_key + '=' + this._reportFilters[_key]);
 			}
 
-			// Update the fetch URL
+			// Update the fetch URL witht parameters
 			fetchURL += (params.length > 0) ? '?' + params.join('&') : '';
 
 			// Get the styling to use
@@ -476,7 +538,7 @@
 			if (options.styleMap !== undefined) {
 				styleMap = options.styleMap;
 			} else {
-				var style = Ushahidi.defaultMarkerStyle();
+				var style = Ushahidi.GeoJSONStyle();
 				styleMap = new OpenLayers.StyleMap({
 					"default": style,
 					"select": style
@@ -523,11 +585,11 @@
 	 * Parameters:
 	 * filters - {Object} Set of filter to apply to the map.
 	 * Allowable filters are:
-	 *     z - {Integer} The zoom level
-	 *     c - {Integer} The category id
-	 *     m - {Integer} The media type (0 - All, 1 - Pictures, 2 - Video 4 - News)
-	 *     s - {Integer} Start date - Earliest date by which to filter the reports
-	 *     e - {Integer} End date - Latest date by which to filter the reports
+	 *     z - {Number} The zoom level
+	 *     c - {Number} The category id
+	 *     m - {Number} The media type (0 - All, 1 - Pictures, 2 - Video 4 - News)
+	 *     s - {Number} Start date - Earliest date by which to filter the reports
+	 *     e - {Number} End date - Latest date by which to filter the reports
 	 */
 	Ushahidi.Map.prototype.updateReportFilters = function(filters) {
 		if (filters == undefined) {
@@ -549,8 +611,6 @@
 
 		// Have the filters changed
 		if (hasChanged) {
-			// Set the zoom level
-			context._reportFilters.z = context._olMap.getZoom();
 			context.redraw();
 
 			setTimeout(function() {
@@ -569,6 +629,7 @@
 
 	/**
 	 * APIMethod: refresh
+	 *
 	 * Deletes the markers and layers from the map and adds them afresh. This
 	 * method should be called when zoom level of the map changes
 	 */
@@ -583,6 +644,7 @@
 
 	/**
 	 * APIMethod: redraw
+	 *
 	 * Redraws the layers on the map using the updated report filters
 	 * This method is automatically invoked each time the map is zoomed
 	 * or when the report filters are updated
@@ -600,16 +662,13 @@
 
 	/**
 	 * APIMethod: onFeatureSelect
+	 *
 	 * Callback that is executed when a feature that is on the map is
 	 * selected. When executed, it displays a popup with the content/information
 	 * about the selected feature
 	 */
 	Ushahidi.Map.prototype.onFeatureSelect = function(event) {
 		this._selectedFeature = event.feature;
-		// Pre-fetch the background image for the popup so that it is 
-		// fetched from the cache when when popup is displayed
-		var popupBgImage = new Image();
-		popupBgImage.src = OpenLayers.Util.getImagesLocation() + 'cloud-popup-relative.png';
 
 		zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
 		lon = zoom_point.lon;
@@ -734,9 +793,9 @@
 	 *
 	 * Parameters:
 	 * eventName - {String} Name of the event for which to register the callback
-	 * callback - {Function} Function to be executed when the event in 'eventName' is triggered
-	 * context - {Object} Execution context of the callback function. This is necessary where
-	 *           the callback function is an object method
+	 * callback  - {Function} Function to be executed when the event in 'eventName' is triggered
+	 * context   - {Object} Execution context of the callback function. This is necessary where
+	 *             the callback function is an object method
 	 */
 	Ushahidi.Map.prototype.register = function(eventName, callback, context) {
 
@@ -804,7 +863,150 @@
 		var layers = this._olMap.getLayersByName(name);
 		for (var i=0; i < layers.length; i++) {
 			this._olMap.removeLayer(layers[i]);
-			layers[i].destroyFeatures();
+			if (layers[i].destroyFeatures !== undefined)
+				layers[i].destroyFeatures();
+		}
+	}
+
+	/**
+	 * APIMethod: createRadiusLayer
+	 * Creates a radius layer
+	 * Parameters:
+	 * config - {Object} The properties to be used to create the radius layer
+	 */
+	Ushahidi.Map.prototype.addRadiusLayer = function(config) {
+
+		// Check if the Layer Switcher control has been added to the map
+		// and delete all instances of such
+		var layerSwitchers = this._olMap.getControlsByClass("OpenLayers.Control.LayerSwitcher");
+		for (var i = 0; i < layerSwitchers.length; i++) {
+			this._olMap.removeControl(layerSwitchers[i]);
+		}
+
+		this.updateRadius(config);
+		var context = this;
+
+		// Detect click events on the map
+		this._olMap.events.register("click", context._olMap, function(e) {
+			var lonlat = context._olMap.getLonLatFromViewPortPx(e.xy);
+			lonlat.transform(Ushahidi.proj_900913, Ushahidi.proj_4326);
+
+			var coords = {latitude: lonlat.lat, longitude: lonlat.lon};
+			context.updateRadius(coords);
+			context.trigger("markerpositionchanged", coords);
+		});
+		
+	}
+
+	/**
+	 * APIMethod: updateRadius
+	 * Updates the location and size of the radius layer
+	 *
+	 * Parameters:
+	 * options - {Object} Properties for updating the radius layer
+	 *
+	 * Valid options are:
+	 * latitude - Latitude for the alert center
+	 * longitude - Longitude for the alert center
+	 * radius - {Number} Alert radius
+	 */
+	Ushahidi.Map.prototype.updateRadius = function(options) {
+		// Get the radius
+		this._radius = (options.radius == undefined) ? 20000 : options.radius;
+
+		if (options.latitude !== undefined && options.longitude !== undefined) {
+			this._currentMarkerPosition = {latitude: options.latitude, longitude: options.longitude};
+		} 
+
+		if (this._currentMarkerPosition.latitude == undefined) {
+			throw "Missing latitude and longitude in the options"
+		}
+
+		// Update the options with latitude and longitude
+		options.latitude = this._currentMarkerPosition.latitude;
+		options.longitude = this._currentMarkerPosition.longitude;
+
+		// Delete the layers and re-add them
+		this.deleteLayer("radius");
+		this.deleteLayer("radiusmarker");
+
+		// Get the current map center
+		var point  = new OpenLayers.LonLat(options.longitude, options.latitude);
+		point.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
+
+		var circleOrigin = new OpenLayers.Geometry.Point(options.longitude, options.latitude);
+		circleOrigin.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
+
+		// Radius feature
+		var radiusFeature = new OpenLayers.Feature.Vector(
+			OpenLayers.Geometry.Polygon.createRegularPolygon(circleOrigin, this._radius, 40, 0),
+			null,
+			OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style["default"])
+		);
+
+		var radiusLayer = new OpenLayers.Layer.Vector("radius");
+		radiusLayer.addFeatures([radiusFeature]);
+
+		// Create marker to be used for adjusting the center
+		// point for the radius
+		var markers = new OpenLayers.Layer.Markers("radiusmarker");
+		markers.addMarker(new OpenLayers.Marker(point));
+
+		this._olMap.addLayers([radiusLayer, markers]);
+
+	}
+
+	/**
+	 * APIMethod: updateBaseLayer
+	 * Changes the basealyer of the map
+	 * Parameters:
+	 * layerName - {String} Name of the new base layer
+	 */
+	Ushahidi.Map.prototype.updateBaseLayer = function(layerName) {
+		var layers =  this._olMap.getLayersByName(layerName);
+		if (layers.length < 1)
+			throw "Layer " + layerName + " not found";
+
+		layers[0].setVisibility(true);
+		this._olMap.setBaseLayer(layers[0]);
+	}
+
+	/**
+	 * APIMethod: updateZoom
+	 * Updates the zoom level of the map
+	 * Parameters:
+	 * zoom - {Number} The zoom level to adjust to
+	 */
+	Ushahidi.Map.prototype.updateZoom = function(zoom) {
+		if (this._olMap.getZoom() !== zoom) {
+			this._olMap.zoomTo(zoom);
+		}
+	}
+
+	/**
+	 * APIMethod: updateMapCenter
+	 * Updates the center of the map
+	 */
+	Ushahidi.Map.prototype.updateMapCenter = function(center) {
+		var point = new OpenLayers.LonLat(center.longitude, center.latitude);
+		point.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
+		this._olMap.setCenter(point);
+
+		// Re-add the default layer
+		this.addLayer(Ushahidi.DEFAULT);
+
+		// Map center has changed, trigger 
+		this.trigger("markerpositionchanged", center);
+	}
+
+	/**
+	 * APIMethod: triggerZoomChanged
+	 * Callback that triggers the "zoomchanged" event
+	 */
+	Ushahidi.Map.prototype.triggerZoomChanged = function(e) {
+		if (this._isLoaded) {
+			this.trigger("zoomchanged", this._olMap.getZoom());
+			this.addLayer(Ushahidi.DEFAULT);
 		}
 	}
 
