@@ -560,7 +560,7 @@
 
 		// Add the layer to the map
 		var context = this;
-		setTimeout(function(){ context._olMap.addLayer(layer); }, 800);
+		setTimeout(function(){ context._olMap.addLayer(layer); }, 1500);
 
 		// Select Feature control
 		this._selectControl = new OpenLayers.Control.SelectFeature(layer);
@@ -615,7 +615,7 @@
 
 			setTimeout(function() {
 				context.trigger("filterschanged", context._reportFilters);
-			}, 1200);
+			}, 800);
 		}
 	}
 
@@ -918,8 +918,9 @@
 			this._currentMarkerPosition = {latitude: options.latitude, longitude: options.longitude};
 		} 
 
-		if (this._currentMarkerPosition.latitude == undefined) {
-			throw "Missing latitude and longitude in the options"
+		if (this._currentMarkerPosition.latitude == undefined ||
+			this._currentMarkerPosition.longitude == undefined) {
+			throw "Missing latitude and longitude in the options";
 		}
 
 		// Update the options with latitude and longitude

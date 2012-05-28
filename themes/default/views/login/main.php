@@ -4,14 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?php echo Kohana::lang('ui_main.login');?></title>
 <?php
-echo html::stylesheet(url::file_loc('css').'media/css/jquery-ui-themeroller', '', true);
-echo html::stylesheet(url::file_loc('css').'media/css/login', '', true);
-echo html::stylesheet(url::file_loc('css').'media/css/openid', '', true);
-echo html::stylesheet(url::file_loc('css').'media/css/global', '', true);
-echo html::script(url::file_loc('js').'media/js/jquery', true);
-echo html::script(url::file_loc('js').'media/js/openid/openid-jquery', true);
-echo html::script(url::file_loc('js').'media/js/openid/openid-jquery-en', true);
-echo html::script(url::file_loc('js').'media/js/global', true);
+echo html::stylesheet(url::file_loc('css').'media/css/jquery-ui-themeroller', '', TRUE);
+echo html::stylesheet(url::file_loc('css').'media/css/login', '', TRUE);
+echo html::stylesheet(url::file_loc('css').'media/css/openid', '', TRUE);
+echo html::stylesheet(url::file_loc('css').'media/css/global', '', TRUE);
+echo html::script(url::file_loc('js').'media/js/jquery', TRUE);
+echo html::script(url::file_loc('js').'media/js/openid/openid-jquery', TRUE);
+echo html::script(url::file_loc('js').'media/js/openid/openid-jquery-en', TRUE);
+echo html::script(url::file_loc('js').'media/js/global', TRUE);
 ?>
 <script type="text/javascript">
 	<?php echo $js; ?>
@@ -31,24 +31,17 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 		</div>
     </div>
 
-    <?php
+    <?php if ($message): ?>
+		<div class="<?php echo $message_class; ?> ui-corner-all">&#8226;&nbsp;<?php echo $message; ?></div>
+	<?php endif; ?>
 
-    if ($message)
-	{
-		?><div class="<?php echo $message_class; ?> ui-corner-all">&#8226;&nbsp;<?php echo $message; ?></div><?php
-	}
-
-	if ($form_error)
-	{
-		?><div class="login_error ui-corner-all"><?php
-		foreach ($errors as $error_item => $error_description)
-		{
-			echo (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />";
-		}
-		?></div><?php
-	}
-
-	?>
+	<?php if ($form_error): ?>
+		<div class="login_error ui-corner-all">
+		<?php foreach ($errors as $error_item => $error_description): ?>
+			<?php echo (!$error_description) ? '' : "&#8226;&nbsp;" . $error_description . "<br />"; ?>
+		<?php endforeach; ?>
+		</div>
+	<?php endif; ?>
 
 	<?php if (isset($_GET["reset"])): ?>
 	<div id="password_reset_change_form" class="ui-corner-all">
@@ -145,7 +138,7 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 			<?php echo form::close() ?>
 		</div>
 
-		<?php if(kohana::config('config.allow_openid') == true) { ?>
+		<?php if (kohana::config('config.allow_openid') == TRUE): ?>
 		<h2><a href="javascript:toggle('signin_openid');"><?php echo Kohana::lang('ui_main.login_openid'); ?></a></h2>
 		<div id="signin_openid" class="signin_select ui-corner-all">
 			<?php echo form::open(NULL, array('id'=>"openid_form")); ?>
@@ -165,7 +158,7 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 				</noscript>
 			<?php echo form::close(); ?>
 		</div>
-		<?php } ?>
+		<?php endif; ?>
 	</div>
 
 	<div id="create_account" class="ui-corner-all">
@@ -205,11 +198,13 @@ echo html::script(url::file_loc('js').'media/js/global', true);
 
 	</div>
 
-	<?php if (kohana::config('riverid.enable') == TRUE) { ?>
+	<?php if (kohana::config('riverid.enable') == TRUE): ?>
 	<div style="text-align:center;margin-top:20px;" id="openid_login" class="ui-corner-all">
-		<small><?php echo $riverid_information; ?> <a href="<?php echo $riverid_url; ?>"><?php echo Kohana::lang('ui_main.more_information'); ?></a></small>
+		<small><?php echo $riverid_information; ?> 
+			<a href="<?php echo $riverid_url; ?>"><?php echo Kohana::lang('ui_main.more_information'); ?></a>
+		</small>
 	</div>
-	<?php } ?>
+	<?php endif; ?>
 
 </div>
 </body>
