@@ -112,11 +112,11 @@
 								foreach ($messages as $message)
 								{
 									$message_id = $message->id;
-									$message_from = $message->reporter->service_account;
-									$message_to = $message->message_to;
+									$message_from = strip_tags($message->reporter->service_account);
+									$message_to = strip_tags($message->message_to);
 									$incident_id = $message->incident_id;
-									$message_description = text::auto_link($message->message);
-									$message_detail = nl2br(text::auto_link($message->message_detail));
+									$message_description = text::auto_link(strip_tags($message->message));
+									$message_detail = nl2br(text::auto_link(strip_tags($message->message_detail)));
 									$message_date = date('Y-m-d  H:i', strtotime($message->message_date));
 									$message_type = $message->message_type;
 									$message_level = $message->message_level;

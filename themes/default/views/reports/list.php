@@ -45,8 +45,8 @@
 				{
 					$incident = ORM::factory('incident', $incident->incident_id);
 					$incident_id = $incident->id;
-					$incident_title = $incident->incident_title;
-					$incident_description = $incident->incident_description;
+					$incident_title = strip_tags($incident->incident_title);
+					$incident_description = strip_tags($incident->incident_description);
 					//$incident_category = $incident->incident_category;
 					// Trim to 150 characters without cutting words
 					// XXX: Perhaps delcare 150 as constant
@@ -124,7 +124,7 @@
 
 					<div class="r_details">
 						<h3><a class="r_title" href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>">
-								<?php echo $incident_title; ?>
+								<?php echo html::specialchars($incident_title); ?>
 							</a>
 							<a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>#discussion" class="r_comments">
 								<?php echo $comment_count; ?></a> 
@@ -135,7 +135,7 @@
 						  <a class="btn-show btn-more" href="#<?php echo $incident_id ?>"><?php echo Kohana::lang('ui_main.more_information'); ?> &raquo;</a> 
 						  <a class="btn-show btn-less" href="#<?php echo $incident_id ?>">&laquo; <?php echo Kohana::lang('ui_main.less_information'); ?></a> 
 						</div>
-						<p class="r_location"><a href="<?php echo url::site(); ?>reports/?l=<?php echo $location_id; ?>"><?php echo $location_name; ?></a></p>
+						<p class="r_location"><a href="<?php echo url::site(); ?>reports/?l=<?php echo $location_id; ?>"><?php echo html::specialchars($location_name); ?></a></p>
 						<?php
 						// Action::report_extra_details - Add items to the report list details section
 						Event::run('ushahidi_action.report_extra_details', $incident_id);
