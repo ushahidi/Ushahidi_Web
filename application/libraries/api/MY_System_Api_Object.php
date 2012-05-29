@@ -51,16 +51,23 @@ class System_Api_Object extends Api_Object_Core {
     {
         $json_version = array();
         $version = Kohana::config('settings.ushahidi_version');
+		$database = Kohana::config('version.ushahidi_db_version');
         
         $ret_json_or_xml = ''; // Will hold the JSON/XML string to return
 
         if ($this->response_type == 'json')
         {
-            $json_version[] = array("version" => $version);
+            $json_version[] = array(
+									"version" => $version,
+									"database" => $database
+									);
         }
         else
         {
-            $json_version['version'] = array("version" => $version);
+            $json_version['version'] = array(
+											"version" => $version, 
+											"database" => $database
+											);
             $this->replar[] = 'version';
         }
 
