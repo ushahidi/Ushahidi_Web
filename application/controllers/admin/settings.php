@@ -334,13 +334,13 @@ class Settings_Controller extends Admin_Controller {
 		}
 		$this->template->content->blocks_per_row_array = $blocks_per_row_array;
 		$this->template->content->yesno_array = array(
-			'1'=>strtoupper(Kohana::lang('ui_main.yes')),
-			'0'=>strtoupper(Kohana::lang('ui_main.no')));
+			'1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),
+			'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 
 		$this->template->content->comments_array = array(
-			'1'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_auto')),
-			'2'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_manual')),
-			'0'=>strtoupper(Kohana::lang('ui_main.no')));
+			'1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_auto')),
+			'2'=>utf8::strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_manual')),
+			'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 
 		$this->template->content->cache_pages_lifetime_array = array(
 			'60'=>'1 '.Kohana::lang('ui_admin.minute'),
@@ -626,8 +626,8 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->map_array = $map_array;
 		
 		$this->template->content->yesno_array = array(
-			'1'=>strtoupper(Kohana::lang('ui_main.yes')),
-			'0'=>strtoupper(Kohana::lang('ui_main.no')));
+			'1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),
+			'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
@@ -934,7 +934,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+		$this->template->content->yesno_array = array('1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 		$this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
 
 	}
@@ -1025,7 +1025,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+		$this->template->content->yesno_array = array('1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 		$this->template->content->is_https_capable = $this->_is_https_capable();
 	}
 

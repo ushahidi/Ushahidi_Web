@@ -66,7 +66,7 @@ class Checkins_Controller extends Members_Controller {
 							ORM::factory('media')->where('checkin_id',$checkin_id)->delete_all();
 						}
 					}
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				$form_saved = TRUE;
 			}

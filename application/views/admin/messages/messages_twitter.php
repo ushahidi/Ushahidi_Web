@@ -25,7 +25,7 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><!-- <a href="#" onClick="submitIds()">DELETE</a> --> <a href="#"><?php echo strtoupper(Kohana::lang('ui_main.delete_disabled'));?></a></li>
+							<li><!-- <a href="#" onClick="submitIds()">DELETE</a> --> <a href="#"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete_disabled'));?></a></li>
 						</ul>
 					</div>
 				</div>
@@ -103,7 +103,7 @@
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.from');?>: <strong><a href="<?php echo $tweet_link; ?>" target="_blank"><?php echo $tweet_from; ?></a></strong>
 												<?php
 												if($tweet_hashtag == ''){ //if this was a direct report
-													echo "<li class=\"none-separator\"><strong>". strtoupper(Kohana::lang('ui_main.direct_report'))."</strong>";
+													echo "<li class=\"none-separator\"><strong>". utf8::strtoupper(Kohana::lang('ui_main.direct_report'))."</strong>";
 												}else{ //if this was found using a hashtag search
 													echo "<li class=\"none-separator\">". Kohana::lang('ui_main.hashtag').": <strong>#".$tweet_hashtag."</strong>";
 												}

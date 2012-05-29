@@ -110,7 +110,7 @@ class Sharing_Controller extends Admin_Controller
 				{ // Delete Action
 					$sharing->delete( $sharing_id );
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				else if($post->action == 'v')
 				{ // Active/Inactive Action
@@ -126,7 +126,7 @@ class Sharing_Controller extends Admin_Controller
 						}
 						$sharing->save();
 						$form_saved = TRUE;
-						$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+						$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 					}
 				}
 				else
@@ -168,7 +168,7 @@ class Sharing_Controller extends Admin_Controller
 					{
 						$sharing->save();
 						$form_saved = TRUE;
-						$form_action = strtoupper(Kohana::lang('ui_admin.created_edited'));
+						$form_action = utf8::strtoupper(Kohana::lang('ui_admin.created_edited'));
 					}
 					else
 					{

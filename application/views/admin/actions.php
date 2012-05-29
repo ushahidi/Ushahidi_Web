@@ -440,7 +440,7 @@ $(document).ready(function() {
 								</div>
 								<div id="geometryLabelerClose"></div>
 							</div>
-							<a href="#" class="btn_clear" style="float:right;padding:25px;"><?php echo strtoupper(Kohana::lang('ui_main.clear_map'));?></a>
+							<a href="#" class="btn_clear" style="float:right;padding:25px;"><?php echo utf8::strtoupper(Kohana::lang('ui_main.clear_map'));?></a>
 						</div>
 
 						<script type="text/javascript">

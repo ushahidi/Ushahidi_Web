@@ -69,7 +69,7 @@ class Checkins_Controller extends Admin_Controller
                     }
                     
                     $form_saved = TRUE;
-                    $form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+                    $form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
                 }
             }
             // No! We have validation errors, we need to show the form again, with the errors

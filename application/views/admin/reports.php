@@ -32,16 +32,16 @@ Kohana::lang('ui_main.uncategorized_reports'); ?></a></li>
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onclick="reportAction('a','<?php echo strtoupper(Kohana::lang('ui_main.approve')); ?>', '');">
+							<li><a href="#" onclick="reportAction('a','<?php echo utf8::strtoupper(Kohana::lang('ui_main.approve')); ?>', '');">
 								<?php echo Kohana::lang('ui_main.approve');?></a>
 							</li>
-							<li><a href="#" onclick="reportAction('u','<?php echo strtoupper(Kohana::lang('ui_main.disapprove')); ?>', '');">
+							<li><a href="#" onclick="reportAction('u','<?php echo utf8::strtoupper(Kohana::lang('ui_main.disapprove')); ?>', '');">
 								<?php echo Kohana::lang('ui_main.disapprove');?></a>
 							</li>
-							<li><a href="#" onclick="reportAction('v','<?php echo strtoupper(Kohana::lang('ui_admin.verify_unverify')); ?>', '');">
+							<li><a href="#" onclick="reportAction('v','<?php echo utf8::strtoupper(Kohana::lang('ui_admin.verify_unverify')); ?>', '');">
 								<?php echo Kohana::lang('ui_admin.verify_unverify');?></a>
 							</li>
-							<li><a href="#" onclick="reportAction('d','<?php echo strtoupper(Kohana::lang('ui_main.delete')); ?>', '');">
+							<li><a href="#" onclick="reportAction('d','<?php echo utf8::strtoupper(Kohana::lang('ui_main.delete')); ?>', '');">
 								<?php echo Kohana::lang('ui_main.delete');?></a>
 							</li>
 						</ul>
@@ -182,7 +182,7 @@ Kohana::lang('ui_main.uncategorized_reports'); ?></a></li>
 									$i = 1;
 									$incident_translation  = "<div class=\"post-trans-new\">"
 											. "<a href=\"" . url::base() . 'admin/reports/translate/?iid='.$incident_id."\">"
-											. strtoupper(Kohana::lang('ui_main.add_translation')).":</a></div>";
+											. utf8::strtoupper(Kohana::lang('ui_main.add_translation')).":</a></div>";
 											
 									foreach ($incident_orm->incident_lang as $translation)
 									{
@@ -263,16 +263,16 @@ Kohana::lang('ui_main.uncategorized_reports'); ?></a></li>
 				<div class="tabs">
 					<div class="tab">
 						<ul>
-						<li><a href="#" onclick="reportAction('a','<?php echo strtoupper(Kohana::lang('ui_main.approve')); ?>', '');">
+						<li><a href="#" onclick="reportAction('a','<?php echo utf8::strtoupper(Kohana::lang('ui_main.approve')); ?>', '');">
 							<?php echo Kohana::lang('ui_main.approve');?></a>
 						</li>
-						<li><a href="#" onclick="reportAction('u','<?php echo strtoupper(Kohana::lang('ui_main.disapprove')); ?>', '');">
+						<li><a href="#" onclick="reportAction('u','<?php echo utf8::strtoupper(Kohana::lang('ui_main.disapprove')); ?>', '');">
 							<?php echo Kohana::lang('ui_main.disapprove');?></a>
 						</li>
-						<li><a href="#" onclick="reportAction('v','<?php echo strtoupper(Kohana::lang('ui_admin.verify_unverify')); ?>', '');">
+						<li><a href="#" onclick="reportAction('v','<?php echo utf8::strtoupper(Kohana::lang('ui_admin.verify_unverify')); ?>', '');">
 							<?php echo Kohana::lang('ui_admin.verify_unverify');?></a>
 						</li>
-						<li><a href="#" onclick="reportAction('d','<?php echo strtoupper(Kohana::lang('ui_main.delete')); ?>', '');">
+						<li><a href="#" onclick="reportAction('d','<?php echo utf8::strtoupper(Kohana::lang('ui_main.delete')); ?>', '');">
 							<?php echo Kohana::lang('ui_main.delete');?></a>
 						</li>
 						</ul>

@@ -104,7 +104,7 @@ class Sharing_Controller extends Admin_Controller
 				{ 
 					$sharing->delete( $sharing_id );
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				
 				// Hide Action
@@ -115,7 +115,7 @@ class Sharing_Controller extends Admin_Controller
 						$sharing->sharing_active = 0;
 						$sharing->save();
 						$form_saved = TRUE;
-						$form_action = strtoupper(Kohana::lang('ui_main.hidden'));
+						$form_action = utf8::strtoupper(Kohana::lang('ui_main.hidden'));
 					}	
 				}
 				
@@ -127,7 +127,7 @@ class Sharing_Controller extends Admin_Controller
 						$sharing->sharing_active = 1;
 						$sharing->save();
 						$form_saved = TRUE;
-						$form_action = strtoupper(Kohana::lang('ui_admin.shown'));
+						$form_action = utf8::strtoupper(Kohana::lang('ui_admin.shown'));
 					}
 				}
 				
@@ -140,7 +140,7 @@ class Sharing_Controller extends Admin_Controller
 					$sharing->save();
 					
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.created_edited'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.created_edited'));
 				}
 				
 			}

@@ -46,7 +46,7 @@
 			<table class="data_points">
 				<tr>
 					<td colspan="2">
-						<input type="checkbox" id="data_all" name="data_all" onclick="CheckAll(this.id)" /><strong><?php echo strtoupper(Kohana::lang('ui_main.select_all'));?></strong>
+						<input type="checkbox" id="data_all" name="data_all" onclick="CheckAll(this.id)" /><strong><?php echo utf8::strtoupper(Kohana::lang('ui_main.select_all'));?></strong>
 						<div id="form_error1"></div>
 					</td>
 				</tr>
