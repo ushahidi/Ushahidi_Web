@@ -373,7 +373,7 @@ class customforms_Core {
 		$form = array();
 		$form['custom_field'] = self::get_custom_form_fields('',$form_id, true);
 		$form['id'] = $form_id;
-		$custom_forms = new View('reports_submit_custom_forms');
+		$custom_forms = new View('reports/submit_custom_forms');
 		$disp_custom_fields = self::get_custom_form_fields('', $form_id,false);
 		$custom_forms->disp_custom_fields = $disp_custom_fields;
 		$custom_forms->form = $form;
@@ -401,7 +401,7 @@ class customforms_Core {
 		$form = array();
 		$form['custom_field'] = self::get_custom_form_fields($incident_id,$form_id, TRUE);
 		$form['id'] = $form_id;
-		$custom_forms = new View('reports_submit_custom_forms');
+		$custom_forms = new View('reports/submit_custom_forms');
 		$disp_custom_fields = self::get_custom_form_fields($incident_id,$form_id, FALSE);
 		$custom_forms->disp_custom_fields = $disp_custom_fields;
 		$custom_forms->form = $form;
