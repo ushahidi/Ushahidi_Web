@@ -458,7 +458,7 @@ class Main_Controller extends Template_Controller {
 		$lonTo = Kohana::config('map.lonTo');
 		$latTo = Kohana::config('map.latTo');
 
-		$this->themes->js = new View('main_js');
+		$this->themes->js = new View('main/main_js');
 		$this->themes->js->json_url = ($clustering == 1)
 			? "json/cluster"
 			: "json";

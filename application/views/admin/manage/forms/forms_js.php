@@ -47,9 +47,7 @@ function formAction ( action, confirmAction, id )
 		// Submit Form
 		$("#form_action_" + id).submit();			
 	
-	} else{
-		return false;
-	}
+	} 
 }
 
 // Show Function

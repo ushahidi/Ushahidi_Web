@@ -15,17 +15,17 @@
  */
 
 class Json_Controller extends Template_Controller {
+
 	/**
 	 * Automatically render the views
 	 * @var bool
 	 */
-	public $auto_render = TRUE;
+	public $auto_render = FALSE;
 
 	/**
-	 * Name of the view template for this controller
-	 * @var string
+	 *
 	 */
-	public $template = 'json';
+	public $template = '';
 
 	/**
 	 * Database table prefix
@@ -164,7 +164,7 @@ class Json_Controller extends Template_Controller {
 		));
 
 		header('Content-type: application/json; charset=utf-8');
-		$this->template->json = $json;
+		echo $json;
 	}
 
 
@@ -292,7 +292,7 @@ class Json_Controller extends Template_Controller {
 			
 			// Build out the JSON string
 			$link = url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter;
-			$item_name = $this->_get_title($cluster_count . Kohana::lang('json.cluster_name_reports'), $link);
+			$item_name = $this->_get_title($cluster_count.' '.Kohana::lang('ui_main.reports'), $link);
 			
 			$json_item = array();
 			$json_item['type'] = 'Feature';
@@ -357,7 +357,7 @@ class Json_Controller extends Template_Controller {
 		));
 		
 		header('Content-type: application/json; charset=utf-8');
-		$this->template->json = $json;
+		echo $json;
 	}
 
 	/**
@@ -458,7 +458,7 @@ class Json_Controller extends Template_Controller {
 		));
 		
 		header('Content-type: application/json; charset=utf-8');
-		$this->template->json = $json;
+		echo $json;
 	}
 
 	/**
@@ -565,7 +565,7 @@ class Json_Controller extends Template_Controller {
 		}
 
 		// Final verification - to prevent returning misleading data
-		$incident_id_in = ( ! empty($_GET) AND empty($incident_id_in) AND $category_id !== 0)
+		$incident_id_in = ( ! empty($_GET) AND empty($incident_id_in))
 		    ? ' AND 3 = 4'
 		    : $incident_id_in;
 
