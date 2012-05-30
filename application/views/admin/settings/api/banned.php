@@ -35,8 +35,8 @@
             		<!-- tab -->
             		<div class="tab">
             			<ul>
-            				<li><a href="#" onclick="apiBannedAction('d','UNBAN', '');"><?php echo strtoupper(Kohana::lang('ui_admin.api_unban')); ?></a></li>
-            				<li><a href="#" onclick="apiBannedAction('x','UNBAN ALL ', '000');"><?php echo strtoupper(Kohana::lang('ui_admin.api_unban_all')); ?></a></li>
+            				<li><a href="#" onclick="apiBannedAction('d','UNBAN', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_admin.api_unban')); ?></a></li>
+            				<li><a href="#" onclick="apiBannedAction('x','UNBAN ALL ', '000');"><?php echo utf8::strtoupper(Kohana::lang('ui_admin.api_unban_all')); ?></a></li>
             			</ul>
             		</div>
             		<!-- /tab -->

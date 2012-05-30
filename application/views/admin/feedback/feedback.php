@@ -32,15 +32,15 @@
 		<div class="tab">
 			<ul>
 				<li><a href="#" onclick="feedbackAction('r','READ', '');">
-					<?php echo strtoupper(Kohana::lang('ui_main.read')); ?></a>
+					<?php echo utf8::strtoupper(Kohana::lang('ui_main.read')); ?></a>
 				</li>
 				
 				<li><a href="#" onclick="feedbackAction('u','UNREAD', '');">
-					<?php echo strtoupper(Kohana::lang('ui_main.unread')); ?></a>
+					<?php echo utf8::strtoupper(Kohana::lang('ui_main.unread')); ?></a>
 				</li>
 				
 				<li><a href="#" onclick="feedbackAction('d','DELETE', '');">
-					<?php echo strtoupper(Kohana::lang('ui_main.delete')); ?></a>
+					<?php echo utf8::strtoupper(Kohana::lang('ui_main.delete')); ?></a>
 				</li>
 			</ul>
 		</div>

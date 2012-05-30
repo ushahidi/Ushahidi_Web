@@ -111,7 +111,7 @@
 											</div>
 											<ul class="info">
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.feed');?>: <strong><a href="<?php echo $item_link; ?>"><?php echo $feed_name; ?></a></strong>
-												<li><?php echo Kohana::lang('ui_main.geolocation_available');?>?: <strong><?php echo ($location_id) ? strtoupper(Kohana::lang('ui_main.yes')) : strtoupper(Kohana::lang('ui_main.no'));?></strong></li>
+												<li><?php echo Kohana::lang('ui_main.geolocation_available');?>?: <strong><?php echo ($location_id) ? utf8::strtoupper(Kohana::lang('ui_main.yes')) : utf8::strtoupper(Kohana::lang('ui_main.no'));?></strong></li>
 											</ul>
 										</td>
 										<td class="col-3"><?php echo $item_date; ?></td>
@@ -126,7 +126,7 @@
 													echo "<li class=\"none-separator\"><a href=\"".url::base().'admin/reports/edit?fid='.$item_id."\">".Kohana::lang('ui_main.create_report')."?</a></li>";
 												}
 												?>
-											<li><a href="javascript:feedAction('d','DELETE','<?php echo(rawurlencode($item_id)); ?>');"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+											<li><a href="javascript:feedAction('d','DELETE','<?php echo(rawurlencode($item_id)); ?>');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 											</ul>
 										</td>
 									</tr>

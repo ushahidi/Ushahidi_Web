@@ -32,8 +32,8 @@
 						{
 							?>
 							<ul>
-								<li><a href="#" onClick="messagesAction('d', 'DELETE', '')"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
-								<li><a href="#" onClick="messagesAction('r', 'MARK READ', '')"><?php echo strtoupper(Kohana::lang('ui_main.mark_read'));?></a></li>
+								<li><a href="#" onClick="messagesAction('d', 'DELETE', '')"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+								<li><a href="#" onClick="messagesAction('r', 'MARK READ', '')"><?php echo utf8::strtoupper(Kohana::lang('ui_main.mark_read'));?></a></li>
 							</ul>
 							<?php
 						}

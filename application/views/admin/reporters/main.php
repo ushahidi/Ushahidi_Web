@@ -18,7 +18,7 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onClick="reportersAction('d', 'DELETE', '', '')"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+							<li><a href="#" onClick="reportersAction('d', 'DELETE', '', '')"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 							<?php foreach($levels as $level) { ?>
 								<li><a href="#" onClick="reportersAction('l', 'Mark As <?php echo $level->level_title?>', '', <?php echo $level->id?>)" class="reporters_tab_<?php echo $level->id;?>"><?php echo $level->level_title?></a></li>
 							<?php } ?>

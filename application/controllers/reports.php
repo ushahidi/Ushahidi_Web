@@ -602,7 +602,7 @@ class Reports_Controller extends Main_Controller {
 						"[".Kohana::config('settings.site_name')."] ".
 							Kohana::lang('notifications.admin_new_comment.subject'),
 							Kohana::lang('notifications.admin_new_comment.message')
-							."\n\n'".strtoupper($incident->incident_title)."'"
+							."\n\n'".utf8::strtoupper($incident->incident_title)."'"
 							."\n".url::base().'reports/view/'.$id
 						);
 

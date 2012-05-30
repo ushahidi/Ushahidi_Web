@@ -29,16 +29,16 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onclick="commentAction('a','APPROVE', '');"><?php echo strtoupper(Kohana::lang('ui_main.approve'));?></a></li>
-							<li><a href="#" onclick="commentAction('u','UNAPPROVE', '');"><?php echo strtoupper(Kohana::lang('ui_main.disapprove'));?></a></li>
-							<li><a href="#" onclick="commentAction('s','MARK AS SPAM', '');"><?php echo strtoupper(Kohana::lang('ui_main.spam'));?></a></li>
-							<li><a href="#" onclick="commentAction('n','MARK AS NOT SPAM', '');"><?php echo strtoupper(Kohana::lang('ui_main.not_spam'));?></a></li>
-							<li><a href="#" onclick="commentAction('d','DELETE', '');"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+							<li><a href="#" onclick="commentAction('a','APPROVE', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.approve'));?></a></li>
+							<li><a href="#" onclick="commentAction('u','UNAPPROVE', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.disapprove'));?></a></li>
+							<li><a href="#" onclick="commentAction('s','MARK AS SPAM', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.spam'));?></a></li>
+							<li><a href="#" onclick="commentAction('n','MARK AS NOT SPAM', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.not_spam'));?></a></li>
+							<li><a href="#" onclick="commentAction('d','DELETE', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 							<?php 
 							if ($status == 's')
 							{
 								?>
-								<li><a href="#" onclick="commentAction('x','DELETE ALL SPAM', '000');"><?php echo strtoupper(Kohana::lang('ui_main.delete_spam'));?></a></li>
+								<li><a href="#" onclick="commentAction('x','DELETE ALL SPAM', '000');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete_spam'));?></a></li>
 								<?php
 							}
 							?>

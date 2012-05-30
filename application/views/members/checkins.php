@@ -27,7 +27,7 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onClick="checkinAction('d', 'DELETE', '')"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+							<li><a href="#" onClick="checkinAction('d', 'DELETE', '')"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 						</ul>
 					</div>
 				</div>

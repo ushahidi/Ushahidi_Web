@@ -29,8 +29,8 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onclick="pluginAction('a','ACTIVATE', '');"><?php echo strtoupper(Kohana::lang('ui_main.activate'));?></a></li>
-							<li><a href="#" onclick="pluginAction('i','DEACTIVATE', '');"><?php echo strtoupper(Kohana::lang('ui_main.deactivate'));?></a></li>
+							<li><a href="#" onclick="pluginAction('a','ACTIVATE', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.activate'));?></a></li>
+							<li><a href="#" onclick="pluginAction('i','DEACTIVATE', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.deactivate'));?></a></li>
 						</ul>
 					</div>
 				</div>

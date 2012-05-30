@@ -199,7 +199,7 @@ class Manage_Controller extends Admin_Controller
 					}
 
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.added_edited'));
 
 					// Empty $form array
 					array_fill_keys($form, '');
@@ -291,7 +291,7 @@ class Manage_Controller extends Admin_Controller
 						->delete($category->id);
 						
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 			}
 			elseif ($post->action == 'v' AND $post->validate())
@@ -316,7 +316,7 @@ class Manage_Controller extends Admin_Controller
 					$category->category_visible = ($category->category_visible == 1)? 0 : 1;
 					$category->save();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
 			elseif ($post->action == 'i' AND $post->validate())
@@ -352,7 +352,7 @@ class Manage_Controller extends Admin_Controller
 					$category->save();
 					
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
 		}
@@ -518,7 +518,7 @@ class Manage_Controller extends Admin_Controller
 					$page->save();
 					Event::run('ushahidi_action.page_edit', $page);
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.added_edited'));
 					array_fill_keys($form, '');
 				}
 				else
@@ -538,7 +538,7 @@ class Manage_Controller extends Admin_Controller
 				{
 					$page->delete();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 
 			}
@@ -550,7 +550,7 @@ class Manage_Controller extends Admin_Controller
 					$page->page_active = ($page->page_active == 1)? 0 : 1;
 					$page->save();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
 		}
@@ -620,7 +620,7 @@ class Manage_Controller extends Admin_Controller
 				{
 					$feed->save();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.added_edited'));
 				}
 				else
 				{
@@ -640,7 +640,7 @@ class Manage_Controller extends Admin_Controller
 					ORM::factory('feed_item')->where('feed_id', $feed->id)->delete_all();
 					$feed->delete();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 			}
 			elseif($_POST['action'] == 'v')
@@ -651,7 +651,7 @@ class Manage_Controller extends Admin_Controller
 					$feed->feed_active =  ($feed->feed_active == 1) ? 0 : 1;
 					$feed->save();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
 			elseif ($_POST['action'] == 'r')
@@ -720,7 +720,7 @@ class Manage_Controller extends Admin_Controller
 				ORM::factory('feed_item')->delete($item_id);
 
 				$form_saved = TRUE;
-				$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+				$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 			}
 		}
 
@@ -875,7 +875,7 @@ class Manage_Controller extends Admin_Controller
 					
 					$form_saved = TRUE;
 					array_fill_keys($form, '');
-					$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.added_edited'));
 				}
 				else
 				{
@@ -904,7 +904,7 @@ class Manage_Controller extends Admin_Controller
 
 					$layer->delete();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 			}
 			elseif ($post_data['action'] == 'v')
@@ -916,7 +916,7 @@ class Manage_Controller extends Admin_Controller
 					$layer->save();
 					
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
 			elseif ($post_data['action'] == 'i')
@@ -934,7 +934,7 @@ class Manage_Controller extends Admin_Controller
 					$layer->save();
 					
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
 		}
@@ -1003,7 +1003,7 @@ class Manage_Controller extends Admin_Controller
 				{
 					$level->save();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.added_edited'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.added_edited'));
 				}
 				// No! We have validation errors, we need to show the form again, with the errors
 				else
@@ -1024,7 +1024,7 @@ class Manage_Controller extends Admin_Controller
 					// @todo Reporter_Model::delink_level($level_id)
 					$level->delete();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 			}
 		}

@@ -154,7 +154,7 @@
 										</td>
 										<td class="col-2">
 											<div class="post">
-												<h4><?php echo strtoupper($name); ?></h4>
+												<h4><?php echo utf8::strtoupper($name); ?></h4>
 												<p><?php echo $description; ?></p>
 											</div>
 										</td>

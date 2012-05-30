@@ -123,7 +123,7 @@
 										<td class="col-4" style="width:120px;">
 
 											<ul>
-												<li><a href="javascript:appAction('d','<?php echo strtoupper(htmlspecialchars(Kohana::lang('ui_main.remove').' '.$app->name));?>','<?php echo rawurlencode($app->id); ?>')" class="del"><?php echo Kohana::lang('ui_main.remove');?></a></li>
+												<li><a href="javascript:appAction('d','<?php echo utf8::strtoupper(htmlspecialchars(Kohana::lang('ui_main.remove').' '.$app->name));?>','<?php echo rawurlencode($app->id); ?>')" class="del"><?php echo Kohana::lang('ui_main.remove');?></a></li>
 											</ul>
 
 										</td>

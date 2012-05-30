@@ -26,10 +26,10 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="#" onclick="reportAction('a','APPROVE');"><?php echo strtoupper(Kohana::lang('ui_main.appove'));?></a></li>
-							<li><a href="#" onclick="reportAction('u','UNAPPROVE');"><?php echo strtoupper(Kohana::lang('ui_main.disapprove'));?></a></li>
-							<li><a href="#" onclick="reportAction('v','VERIFY');"><?php echo strtoupper(Kohana::lang('ui_main.verify'));?></a></li>
-							<li><a href="#" onclick="reportAction('d','DELETE');"><?php echo strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
+							<li><a href="#" onclick="reportAction('a','APPROVE');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.appove'));?></a></li>
+							<li><a href="#" onclick="reportAction('u','UNAPPROVE');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.disapprove'));?></a></li>
+							<li><a href="#" onclick="reportAction('v','VERIFY');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.verify'));?></a></li>
+							<li><a href="#" onclick="reportAction('d','DELETE');"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete'));?></a></li>
 						</ul>
 					</div>
 				</div>

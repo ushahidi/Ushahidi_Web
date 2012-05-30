@@ -107,7 +107,7 @@
 											?>
 
 											<td class="col-3">
-												<?php echo strtoupper($role); ?>
+												<?php echo utf8::strtoupper($role); ?>
 											</td>
 											<td class="col-4">
 												<ul>

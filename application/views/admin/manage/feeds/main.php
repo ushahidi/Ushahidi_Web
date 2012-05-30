@@ -28,7 +28,7 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
-							<li><a href="javascript:refreshFeeds();"><?php echo strtoupper(Kohana::lang('ui_main.refresh_news_feeds'));?></a></li><span id="feeds_loading"></span>
+							<li><a href="javascript:refreshFeeds();"><?php echo utf8::strtoupper(Kohana::lang('ui_main.refresh_news_feeds'));?></a></li><span id="feeds_loading"></span>
 						</ul>
 					</div>
 				</div>
