@@ -1448,5 +1448,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `ushahidi_version` = '2.3.2' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '89' WHERE `id` = 1 LIMIT 1;
+UPDATE `settings` SET `ushahidi_version` = '2.4' WHERE `id`=1 LIMIT 1;
+UPDATE `settings` SET `db_version` = '90' WHERE `id` = 1 LIMIT 1;
