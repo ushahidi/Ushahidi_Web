@@ -452,7 +452,7 @@
 	'scheduler_log' => 'Scheduler Log',
 	'scheduler_minute' => 'Minute',
 	'scheduler_weekday' => 'Day of the Week',
-	'search' => 'SEARCH',
+	'search' => 'Search',
 	'search_results' => 'Search Results',
 	'security_code' => 'Security Code',
 	'select_all' => 'Select All',

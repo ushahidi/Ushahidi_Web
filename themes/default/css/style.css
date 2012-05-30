@@ -302,6 +302,7 @@ div.search-form input.searchbtn{
     text-indent: -10000px;
     cursor: pointer;
     padding: 1px 0 19px 0;
+    text-transform: uppercase;
 }
 
 /* submit incident */
