@@ -18,7 +18,7 @@
 			
 			$(window).load(function(){
 				
-				// OpenLayers uses IE's VML for vector graphics. -->
+				// OpenLayers uses IE's VML for vector graphics
 				// We need to wait for IE's engine to finish loading all namespaces (document.namespaces) for VML.
 				// jQuery.ready is executing too soon for IE to complete it's loading process.
 				
@@ -44,8 +44,11 @@
 					longitude: <?php echo $longitude; ?>
 				});
 
-				// Subscribe for makerpositionchanged event
-				map.register("markerpositionchanged", updateAlertCoordinates);
+				// Subscribe to makerpositionchanged event
+				map.register("markerpositionchanged", function(coords){
+					$("#alert_lat").val(coords.latitude);
+					$("#alert_lon").val(coords.longitude);
+				});
 
 				$('.btn_find').on('click', function () {
 					geoCode();
@@ -81,7 +84,7 @@
 			$("#alert_mobile").focus(function() {
 				$("#alert_mobile_yes").attr("checked",true);
 			}).blur(function() {
-				if( !this.value.length ) {
+				if(!this.value.length) {
 					$("#alert_mobile_yes").attr("checked",false);
 				}
 			});
@@ -93,8 +96,7 @@
 					$("#alert_email_yes").attr("checked",false);
 				}
 			});
-		
-		
+
 			// Category treeview
 		    $("#category-column-1,#category-column-2").treeview({
 		      persist: "location",
@@ -103,13 +105,6 @@
 			  });
 			});
 		});
-
-		// Update the coorindates for the alerts form
-		function updateAlertCoordinates(coords) {
-			$("#alert_lat").val(coords.latitude);
-			$("#alert_lon").val(coords.longitude);
-		}
-		
 		
 		/**
 		 * Google GeoCoder

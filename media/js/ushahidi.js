@@ -443,10 +443,16 @@
 	 *             (Ushahidi.REPORTS, Ushahidi.KML, Ushahidi.SHARES. Ushahidi.DEFAULT)
 	 * options   - {Object} Optional object key/value pairs of the markers to be added to the map
 	 *
-	 *    Valid options are:
-	 *        name - {String} Name of the Layer being added
-	 *        url  - {String} Fetch URL for the layer data
-	 *        styleMap - {OpenLayers.StyleMap} Styling for the layer
+	 * Valid options are:
+	 * name - {String} Name of the Layer being added
+	 * url  - {String} Fetch URL for the layer data
+	 * styleMap - {OpenLayers.StyleMap} Styling for the layer
+	 * callback - {Function} Callback function to preprocess the data returned by
+	 *            the url When the callback is specified, the protocol property
+	 *            is omitted from the options passed to the layer constructor. The
+	 *             features property is used instead
+	 * transform - {Boolean} When true, transforms the featur geometry to spherical mercator
+	 *             The default value is false
 	 *
 	 * save -      {bool} Whether to save the layer in the internal registry of Ushahidi.Map This
 	 *             parameter should be set to true, if the layer being added is new so as to ensure
@@ -463,15 +469,16 @@
 				maxDepth: 5
 			});
 		} else if (layerType == Ushahidi.DEFAULT) {
-			var point = this._olMap.getCenter();
 			this.deleteLayer("default");
+			
 			var markers = new OpenLayers.Layer.Markers("default");
-			markers.addMarker(new OpenLayers.Marker(point));
+			markers.addMarker(new OpenLayers.Marker(this._olMap.getCenter()));
+			
 			this._olMap.addLayer(markers);
 			var context = this;
 
 			context._olMap.events.register("click", context._olMap, function(e){
-				point = context._olMap.getLonLatFromViewPortPx(e.xy);
+				var point = context._olMap.getLonLatFromViewPortPx(e.xy);
 				markers.clearMarkers();
 				markers.addMarker(new OpenLayers.Marker(point));
 
@@ -486,45 +493,50 @@
 			return this;
 		}
 
-		if (options === undefined) {
+		// No options defined - where layerType !== Ushahidi.DEFAULT
+		if (options == undefined) {
 			throw "Invalid layer options";
 		}
 
 		// Save the layer data in the internal registry
-		if (save != undefined && save) {
+		if (save !== undefined && save) {
 			this._registry.push({layerType: layerType, options: options});
 		}
 
-		// Transform feature point coordinate to Spherical Mercator
+		// Transform feature geometry to Spherical Mercator
 		preFeatureInsert = function(feature) {
-			if (feature.geometry !== undefined && feature.geometry != null) {
+			if (feature.geometry) {
 				var point = new OpenLayers.Geometry.Point(feature.geometry.x, feature.geometry.y);
 				OpenLayers.Projection.transform(point, Ushahidi.proj_4326, Ushahidi.proj_900913);
+				feature.geometry.x = point.x;
+				feature.geometry.y = point.y;
 			}
 		}
 
 		// Layer names should be unique, therefore delete any
-		// existing layer that has the same name as the one
-		// being added
+		// existing layer that has the same name as the one being added
 		this.deleteLayer(options.name);
 
 		// Layer options
 		var layerOptions = {
-			preFeatureInsert: preFeatureInsert,
 			projection: Ushahidi.proj_4326,
 			formatOptions: {
 				extractStyles: true,
 				extractAttributes: true,
-			},
-			strategies: [new OpenLayers.Strategy.Fixed({preload: true})],
+			}
 		};
+
+		if (options.transform) {
+			// Transform the feature geometry to spherical mercator
+			layerOptions.preFeatureInsert = preFeatureInsert;
+		}
 
 		// Build out the fetch url
 		var fetchURL = Ushahidi.baseURL + options.url;
 
 		// Apply the report filters to the layer fetch URL except where
 		// the layer type is KML
-		if (layerType != Ushahidi.KML) {
+		if (layerType !== Ushahidi.KML) {
 			var params = [];
 			for (var _key in this._reportFilters) {
 				params.push(_key + '=' + this._reportFilters[_key]);
@@ -532,7 +544,6 @@
 
 			// Update the fetch URL witht parameters
 			fetchURL += (params.length > 0) ? '?' + params.join('&') : '';
-
 			// Get the styling to use
 			var styleMap = null;
 			if (options.styleMap !== undefined) {
@@ -549,14 +560,35 @@
 			layerOptions.styleMap = styleMap;
 		}
 
-		// Set the protocol
-		layerOptions.protocol = new OpenLayers.Protocol.HTTP({
-			url: fetchURL,
-			format: protocolFormat
-		});
+		// Is there a callback for the data
+		var layerFeatures = [];
+		if (options.callback !== undefined) {
+			$.ajax({
+				url: fetchURL,
+				async: false,
+				success: function(response) {
+					var jsonFormat = new OpenLayers.Format.JSON();
+					var jsonStr = jsonFormat.write(options.callback(response));
+					var format = new OpenLayers.Format.GeoJSON();
+					layerFeatures = format.read(jsonStr);
+				},
+				dataType: "json"
+			});
+		} else {
+			layerOptions.strategies = [new OpenLayers.Strategy.Fixed({preload: true})];
+
+			// Set the protocol
+			layerOptions.protocol = new OpenLayers.Protocol.HTTP({
+				url: fetchURL,
+				format: protocolFormat
+			});
+		}
 
 		// Create the layer
 		var layer = new OpenLayers.Layer.Vector(options.name, layerOptions);
+		if (layerFeatures !== null && layerFeatures.length > 0) {
+			layer.addFeatures(layerFeatures);
+		}
 
 		// Add the layer to the map
 		var context = this;
@@ -674,14 +706,20 @@
 		lon = zoom_point.lon;
 		lat = zoom_point.lat;
 
-		var thumb = "";
-		if (typeof(event.feature.attributes.thumb) != 'undefined' && 
-			event.feature.attributes.thumb != '') {
-			thumb = "<div class=\"infowindow_image\"><a href='"+event.feature.attributes.link+"'>";
-			thumb += "<img src=\""+event.feature.attributes.thumb+"\" height=\"59\" width=\"89\" /></a></div>";
+		// Image to display within the popup
+		var image = "";
+		if (event.feature.attributes.thumb !== undefined && event.feature.attributes.thumb != '') {
+			image = "<div class=\"infowindow_image\"><a href='"+event.feature.attributes.link+"'>";
+			image += "<img src=\""+event.feature.attributes.thumb+"\" height=\"59\" width=\"89\" /></a></div>";
+		} else if (event.feature.attributes.image !== undefined && event.feature.attributes.image != '') {
+			image = "<div class=\"infowindow_image\">";
+			image += "<a href=\""+event.feature.attributes.link+"\" title=\""+event.feature.attributes.name+"\">";
+			image += "<img src=\""+event.feature.attributes.image+"\" />";
+			image += "</a>";
+			image += "</div>";
 		}
 
-		var content = "<div class=\"infowindow\">" + thumb +
+		var content = "<div class=\"infowindow\">" + image +
 		    "<div class=\"infowindow_content\">"+
 		    "<div class=\"infowindow_list\">"+event.feature.attributes.name+"</div>\n" +
 		    "<div class=\"infowindow_meta\">";

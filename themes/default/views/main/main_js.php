@@ -31,128 +31,6 @@ var endTime = <?php echo $active_endDate ?>;
 
 
 /**
- * Display info window for checkin data
- */
-function showCheckinData(event) {
-	selectedFeature = event.feature;
-	zoom_point = event.feature.geometry.getBounds().getCenterLonLat();
-	lon = zoom_point.lon;
-	lat = zoom_point.lat;
-	
-	var content = "<div class=\"infowindow\" style=\"color:#000000\"><div class=\"infowindow_list\">";
-	
-	if(event.feature.attributes.ci_media_medium !== "")
-	{
-		content += "<a href=\""+event.feature.attributes.ci_media_link+"\" rel=\"lightbox-group1\" title=\""+event.feature.attributes.ci_msg+"\">";
-		content += "<img src=\""+event.feature.attributes.ci_media_medium+"\" /><br/>";
-	}
-
-	content += event.feature.attributes.ci_msg+"</div><div style=\"clear:both;\"></div>";
-	content += "\n<div class=\"infowindow_meta\">";
-	content += "<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",1)'><?php echo Kohana::lang('ui_main.zoom_in');?></a>";
-	content += "&nbsp;&nbsp;|&nbsp;&nbsp;";
-	content += "<a href='javascript:zoomToSelectedFeature("+ lon + ","+ lat +",-1)'><?php echo Kohana::lang('ui_main.zoom_out');?></a></div>";
-	content += "</div>";
-
-	if (content.search("<?php echo '<'; ?>script") != -1)
-	{
-		content = "Content contained Javascript! Escaped content below.<br />" + content.replace(/<?php echo '<'; ?>/g, "&lt;");
-	}
-	
-	popup = new OpenLayers.Popup.FramedCloud("chicken", 
-			event.feature.geometry.getBounds().getCenterLonLat(),
-			new OpenLayers.Size(100,100),
-			content,
-			null, true, onPopupClose);
-			
-	event.feature.popup = popup;
-	map.addPopup(popup);
-}
-
-/**
- * Display Checkin Points
- * Note: This function totally ignores the timeline
- */
-function showCheckins() {
-	$(document).ready(function(){
-
-		var ci_styles = new OpenLayers.StyleMap({
-			"default": new OpenLayers.Style({
-				pointRadius: "5", // sized according to type attribute
-				fillColor: "${fillcolor}",
-				strokeColor: "${strokecolor}",
-				fillOpacity: "${fillopacity}",
-				strokeOpacity: 0.75,
-				strokeWidth: 1.5
-			})
-		});
-
-		var checkinLayer = new OpenLayers.Layer.Vector('Checkins', {styleMap: ci_styles});
-		map.addLayers([checkinLayer]);
-
-		highlightCtrl = new OpenLayers.Control.SelectFeature(checkinLayer, {
-		    hover: true,
-		    highlightOnly: true,
-		    renderIntent: "temporary"
-		});
-		map.addControl(highlightCtrl);
-		highlightCtrl.activate();
-		
-		selectControl = new OpenLayers.Control.SelectFeature([checkinLayer,markers]);
-		map.addControl(selectControl);
-		selectControl.activate();
-		checkinLayer.events.on({
-			"featureselected": showCheckinData,
-			"featureunselected": onFeatureUnselect
-		});
-
-		$.getJSON("<?php echo url::site()."api/?task=checkin&action=get_ci&mapdata=1&sqllimit=1000&orderby=checkin.checkin_date&sort=ASC"?>", function(data) {
-			var user_colors = new Array();
-			// Get colors
-			$.each(data["payload"]["users"], function(i, payl) {
-				user_colors[payl.id] = payl.color;
-			});
-
-			// Get checkins
-			$.each(data["payload"]["checkins"], function(key, ci) {
-
-				var cipoint = new OpenLayers.Geometry.Point(parseFloat(ci.lon), parseFloat(ci.lat));
-				cipoint.transform(proj_4326, proj_900913);
-
-				var media_link = '';
-				var media_medium = '';
-				var media_thumb = '';
-
-				if(ci.media === undefined)
-				{
-					// No image
-				}
-				else
-				{
-					// Image!
-					media_link = ci.media[0].link;
-					media_medium = ci.media[0].medium;
-					media_thumb = ci.media[0].thumb;
-				}
-
-				var checkinPoint = new OpenLayers.Feature.Vector(cipoint, {
-					fillcolor: "#"+user_colors[ci.user],
-					strokecolor: "#FFFFFF",
-					fillopacity: ci.opacity,
-					ci_id: ci.id,
-					ci_msg: ci.msg,
-					ci_media_link: media_link,
-					ci_media_medium: media_medium,
-					ci_media_thumb: media_thumb
-				});
-
-				checkinLayer.addFeatures([checkinPoint]);
-			});
-		});
-	});			
-}
-
-/**
  * Toggle Layer Switchers
  */
 function toggleLayer(link, layer) {
@@ -277,24 +155,25 @@ function refreshTimeline() {
 
 
 jQuery(function() {
+	var reportsURL = "<?php echo Kohana::config('settings.allow_clustering') == 1 ? "json/cluster" : "json"; ?>";
+
 	// Render thee JavaScript for the base layers so that
 	// they are accessible by Ushahidi.js
-
 	<?php echo map::layers_js(FALSE); ?>
 	
 	// Map configuration
 	var config = {
 
 		// Zoom level at which to display the map
-		zoom: <?php echo $default_zoom; ?>,
+		zoom: <?php echo Kohana::config('settings.default_zoom'); ?>,
 
 		// Redraw the layers when the zoom level changes
 		redrawOnZoom: true,
 
 		// Center of the map
 		center: {
-			latitude: <?php echo $latitude; ?>,
-			longitude: <?php echo $longitude; ?>
+			latitude: <?php echo Kohana::config('settings.default_lat'); ?>,
+			longitude: <?php echo Kohana::config('settings.default_lon'); ?>
 		},
 
 		// Map controls
@@ -324,7 +203,7 @@ jQuery(function() {
 	var map = new Ushahidi.Map('map', config);
 	map.addLayer(Ushahidi.GEOJSON, {
 		name: "<?php echo Kohana::lang('ui_main.reports'); ?>",
-		url: "<?php echo $json_url; ?>"
+		url: reportsURL
 	}, true);
 
 
@@ -355,8 +234,6 @@ jQuery(function() {
 		// Update report filters
 		map.updateReportFilters({c: categoryId});
 
-		// Check if the timeline is enabled
-										
 		e.stopPropagation();
 		return false;
 	});
@@ -429,6 +306,69 @@ jQuery(function() {
 	
 	//Execute the function when page loads
 	smartColumns();
+
+	// Are checkins enabled?
+	<?php if (Kohana::config('settings.checkins')): ?>
+	
+	// URL for fetching the checkins
+	var checkinsURL = "api/?task=checkin&action=get_ci&mapdata=1&sqllimit=1000&orderby=checkin.checkin_date&sort=ASC";
+
+	// Styling for the checkins
+	var ciStyle = new OpenLayers.Style({
+		pointRadius: 5,
+		fillColor: "${color}",
+		strokeColor: "#FFFFFF",
+		fillOpacity: "${fillOpacity}",
+		strokeOpacity: 0.75,
+		strokeWidth: 1.5
+	});
+
+	var checkinStyleMap = new OpenLayers.StyleMap({
+		default: ciStyle
+	});
+
+	// Add the checkins layer
+	map.addLayer(Ushahidi.GEOJSON, {
+		url: checkinsURL,
+		name: "Checkins",
+		callback: json2GeoJSON,
+		styleMap: checkinStyleMap,
+		transform: true,
+	});
+
+	/**
+	 * Callback function to convert the data -
+	 * returned by the checkins API call - to GeoJSON
+	 */
+	function json2GeoJSON(json) {
+		var GeoJSON = {
+			type: "FeatureCollection",
+			features: []
+		};
+
+		$.each(json["payload"]["checkins"], function(index, checkin){
+			var checkinImage = (checkin.media !== undefined) ? checkin.media[0].medium : "";
+			var checkinLink = (checkinImage !== "") ? checkin.media[0].link : "";
+			var feature = {
+				type: "Feature",
+				properties: {
+					name: checkin.msg,
+					link: checkinLink,
+					color: "#"+checkin.user.color,
+					image: checkinImage,
+					fillOpacity: checkin.opacity,
+				},
+				geometry: {
+					type: "Point",
+					coordinates: [checkin.lon, checkin.lat],
+				}
+			};
+			GeoJSON.features.push(feature);
+		});
+		return GeoJSON;
+	}
+	<?php endif; ?>
+
 });
 
 $(window).resize(function () { 
@@ -437,116 +377,7 @@ $(window).resize(function () {
 });
 
 
-// START CHECKINS!
 <?php if (Kohana::config('settings.checkins')): ?>
-
-function cilisting(sqllimit,sqloffset) {
-	jsonurl = "<?php echo url::site(); ?>api/?task=checkin&action=get_ci&sqllimit="+sqllimit+"&sqloffset="+sqloffset+"&orderby=checkin.checkin_date&sort=DESC";
-	
-	var showncount = 0;
-	$.getJSON(jsonurl, function(data) {
-		
-		if(data.payload.checkins == undefined)
-		{
-			if(sqloffset != 0)
-			{
-				var newoffset = sqloffset - sqllimit;
-				$('div#cilist').html("<div style=\"text-align:center;\"><?php echo Kohana::lang('ui_main.no_checkins'); ?><br/><br/><a href=\"javascript:cilisting("+sqllimit+","+newoffset+");\">&lt;&lt; <?php echo Kohana::lang('ui_main.previous'); ?></a></div>");
-			}else{
-				$('div#cilist').html("<div style=\"text-align:center;\">No checkins to display.</div>");
-			}
-
-			return;
-		}
-		
-		$('div#cilist').html("");
-		
-		var user_colors = new Array();
-		// Get colors
-		$.each(data.payload.users, function(i, payl) {
-			user_colors[payl.id] = payl.color;
-		});
-		
-		$.each(data.payload.checkins, function(i,item){
-			
-			if(i == 0)
-			{
-				$('div#cilist').append("<div class=\"ci_checkin\" class=\"ci_id_"+item.id+"\"style=\"border:none\"><a name=\"ci_id_"+item.id+"\" />");
-			}else{
-				$('div#cilist').append("<div class=\"ci_checkin\" class=\"ci_id_"+item.id+"\" style=\"padding-bottom:5px;margin-bottom:5px;\"><a name=\"ci_id_"+item.id+"\" />");
-			}
-			
-			if(item.media === undefined)
-			{
-				// Tint the color a bit
-				$('div#cilist').append("<div class=\"ci_colorblock ci_shorterblock\" style=\"background-color:#"+user_colors[item.user]+";\"><div class=\"ci_colorfade\"></div></div>");
-			}else{
-				// Show image
-				$('div#cilist').append("<div class=\"ci_colorblock ci_tallerblock\" style=\"background-color:#"+user_colors[item.user]+";\"><div class=\"ci_imgblock\"><a href=\""+item.media[0].link+"\" rel=\"lightbox-group1\" title=\""+item.msg+"\"><img src=\""+item.media[0].thumb+"\" height=\"59\" /></a></div></div>");
-			}
-			
-			$('div#cilist').append("<div style=\"float:right;width:24px;height:24px;margin-right:10px;\"><a class=\"ci_moredetails\" reportid=\""+item.id+"\" href=\"javascript:externalZeroIn("+item.lon+","+item.lat+",16,"+item.id+");\"><img src=\"<?php echo url::file_loc('img'); ?>media/img/pin_trans.png\" width=\"24\" height=\"24\" /></a></div>");
-			
-			$.each(data.payload.users, function(j,useritem){
-				if(useritem.id == item.user){
-					$('div#cilist').append("<div style=\"font-size:14px;width:215px;padding-top:0px;\"><a href=\"<?php echo url::site(); ?>profile/user/"+useritem.username+"\">"+useritem.name+"</a></div>");
-				}
-			});
-			
-			var utcDate = item.date.replace(" ","T")+"Z";
-			
-			if(item.msg == "")
-			{
-				$('div#cilist').append("<div class=\"ci_cimsg\"><small><em>"+$.timeago(utcDate)+"</em></small></div>");
-			}else{
-				$('div#cilist').append("<div class=\"ci_cimsg\">"+item.msg+"<br/><small><em>"+$.timeago(utcDate)+"</em></small></div>");
-			}
-			
-			if(item.comments !== undefined)
-			{
-				var user_link = '';
-				var comment_utcDate = '';
-				$.each(item.comments, function(j,comment){
-					comment_utcDate = comment.date.replace(" ","T")+"Z";
-					if(item.user_id != 0){
-						user_link = '<a href=\"<?php echo url::site(); ?>profile/user/'+comment.username+'\">'+comment.author+'</a>';
-					}else{
-						user_link = ''+comment.author+'';
-					}
-					$('div#cilist').append("<div style=\"clear:both\"></div>"+user_link+": "+comment.description+" <small>(<em>"+$.timeago(comment_utcDate)+"</em>)</small></div>");
-				});
-			}
-			
-			$('div#cilist').append("<div style=\"clear:both\"></div></div>");
-
-			showncount = showncount + 1;
-		});
-		
-		// Show previous link
-		if(sqloffset == 0)
-		{
-			$('div#cilist').append("<div style=\"float:left;\">&lt;&lt; <?php echo Kohana::lang('ui_main.previous'); ?></div>");
-		}else{
-			var newoffset = sqllimit - sqloffset;
-			$('div#cilist').append("<div style=\"float:left;\"><a href=\"javascript:cilisting("+sqllimit+","+newoffset+");\">&lt;&lt; <?php echo Kohana::lang('ui_main.previous'); ?></a></div>");
-		}
-		
-		// Show next link
-		if(showncount != sqllimit)
-		{
-			$('div#cilist').append("<div style=\"float:right;\"><?php echo Kohana::lang('ui_main.next'); ?> &gt;&gt;</div>");
-		}else{
-			var newoffset = sqloffset + sqllimit;
-			$('div#cilist').append("<div style=\"float:right;\"><a href=\"javascript:cilisting("+sqllimit+","+newoffset+");\"><?php echo Kohana::lang('ui_main.next'); ?> &gt;&gt;</a></div>");
-		}
-		
-		$('div#cilist').append("<div style=\"clear:both\"></div>");
-
-	});
-	
-}
-
-cilisting(3,0);
-showCheckins();
-
+// EK <emmanuel(at)ushahidi.com
+// TODO: Load the sidebar with the checkins - moving this to BackboneJS
 <?php endif; ?>

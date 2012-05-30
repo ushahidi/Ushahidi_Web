@@ -17,13 +17,14 @@
 class Json_Controller extends Template_Controller {
 
 	/**
-	 * Automatically render the views
+	 * Disable automatic rendering
 	 * @var bool
 	 */
 	public $auto_render = FALSE;
 
 	/**
-	 *
+	 * Template for this controller
+	 * @var string
 	 */
 	public $template = '';
 
@@ -550,6 +551,11 @@ class Json_Controller extends Template_Controller {
 				    . $incident_id_in;
 
 				$incident_id_in = $this->_exec_timeline_data_query($db, $query);
+
+				if (empty($incident_id_in))
+				{
+					$incident_id_in = ' AND 3 = 4';
+				}
 			}
 
 
@@ -561,13 +567,13 @@ class Json_Controller extends Template_Controller {
 				    . $incident_id_in;
 
 				$incident_id_in = $this->_exec_timeline_data_query($db, $query);
+
+				if (empty($incident_id_in))
+				{
+					$incident_id_in = ' AND 3 = 4';
+				}
 			}
 		}
-
-		// Final verification - to prevent returning misleading data
-		$incident_id_in = ( ! empty($_GET) AND empty($incident_id_in))
-		    ? ' AND 3 = 4'
-		    : $incident_id_in;
 
 		// Fetch the timeline data
 		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number '

@@ -163,8 +163,6 @@ class Themes_Core {
 
 			if ($this->main_page)
 			{
-				$core_js .= html::script($this->js_url."media/js/jquery.flot", TRUE);
-
 				// Notes: E.Kala <emmanuel(at)ushahidi.com>
 				// TODO: Only include the jqplot JS when the timeline is enabled
 				$core_js .= html::script($this->js_url."media/js/jquery.jqplot.min");
