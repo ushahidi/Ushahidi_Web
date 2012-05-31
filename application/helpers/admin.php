@@ -313,7 +313,11 @@ class admin_Core {
 	}
 
 	/**
-	 * Generate User Sub Tab Menus
+	 * Check if user has admin_access
+	 * 
+	 * If any of the users roles allows them to access anything, put them on the admin page,
+	 * otherwise send them to the front end.
+	 * 
 	 * @param object $user
 	 * @return bool TRUE if has any permission to access anything. FALSE if not (essentially login only level)
 	 */
@@ -328,9 +332,7 @@ class admin_Core {
 		if($user !== FALSE){
 			foreach ($user->roles as $user_role)
 			{
-				// If any of the users roles allows them to access anything, put them on the admin page,
-				//	 otherwise send them to the front end.
-				if(Roles_User_Model::role_allow_admin($user_role->id) == TRUE) return TRUE;
+				if ($user_role->allow_admin()) return TRUE;
 			}
 		}
 

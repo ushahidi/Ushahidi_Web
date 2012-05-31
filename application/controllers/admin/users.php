@@ -57,11 +57,6 @@ class Users_Controller extends Admin_Controller {
 
 					$user = ORM::factory('user', $post->user_id_action)->delete();
 
-					// Remove the roles assigned to the now deleted user to clean up
-
-					$roles_user_model = new Roles_User_Model;
-					$roles_user_model->delete_role($post->user_id_action);
-
 				}
 
 				$form_saved = TRUE;

@@ -17,10 +17,11 @@
 
 class User_Model extends Auth_User_Model {
 
-	protected $has_many = array('alert', 'comment', 'openid', 'private_message', 'user');
-
+	protected $has_many = array('alert', 'comment', 'openid', 'private_message', 'rating');
+	
 	/**
 	 * Creates a basic user and assigns to login and member roles
+	 * 
 	 * @param   string  email
 	 * @param   string  password
 	 * @param   string  riverid user id
@@ -275,5 +276,19 @@ class User_Model extends Auth_User_Model {
 		return FALSE;
 	}
 
+
+	/**
+	 * Overrides the default delete method for the ORM.
+	 * Deletes roles associated with the user before user is removed from DB.
+	 */
+	public function delete()
+	{
+		// Remove assigned roles
+		ORM::factory('roles_user')
+		    ->where('user_id', $this->id)
+		    ->delete_all();
+
+		parent::delete();
+	}
 
 } // End User_Model
