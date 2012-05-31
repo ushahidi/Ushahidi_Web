@@ -152,7 +152,7 @@ class Search_Controller extends Main_Controller {
 			foreach ($query as $search)
 			{
 				$incident_id = $search->id;
-				$incident_title = $search->incident_title;
+				$incident_title = strip_tags($search->incident_title);
 				$highlight_title = "";
 				$incident_title_arr = explode(' ', $incident_title);
 
@@ -168,10 +168,8 @@ class Search_Controller extends Main_Controller {
 					}
 				}
 
-				$incident_description = $search->incident_description;
-
 				// Remove any markup, otherwise trimming below will mess things up
-				$incident_description = strip_tags($incident_description);
+				$incident_description = strip_tags($search->incident_description);
 
 				// Trim to 180 characters without cutting words
 				if ((strlen($incident_description) > 180) AND (strlen($incident_description) > 1))

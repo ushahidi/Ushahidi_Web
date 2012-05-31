@@ -19,15 +19,15 @@
 			</div>
 
 			<div style="float:left;padding-left:25px;width:400px;">
-				<h4><?php echo $user->name; ?></h4>
+				<h4><?php echo html::specialchars($user->name); ?></h4>
 
 				<div class="report-additional-reports">
 					<h4><?php echo Kohana::lang('ui_main.reports_by_this_user');?></h4>
 					<?php foreach($reports as $report) { ?>
 						<div class="rb_report">
-							<h5><a href="<?php echo url::site(); ?>reports/view/<?php echo $report->id; ?>"><?php echo $report->incident_title; ?></a></h5>
+							<h5><a href="<?php echo url::site(); ?>reports/view/<?php echo $report->id; ?>"><?php echo strip_tags($report->incident_title); ?></a></h5>
 							<p class="r_date r-3 bottom-cap"><?php echo date('H:i M d, Y', strtotime($report->incident_date)); ?></p>
-							<p class="r_location"><?php echo $report->location->location_name; ?></p>
+							<p class="r_location"><?php echo html::specialchars($report->location->location_name); ?></p>
 						</div>
 					<?php } ?>
 				</div>
@@ -43,7 +43,7 @@
 
 					<div class="badge r-5">
 					<img src="<?php echo $badge['img_m']; ?>" alt="<?php echo Kohana::lang('ui_main.badge').' '.$badge['id'];?>" width="80" height="80" style="margin:5px;" />
-					<br/><strong><?php echo $badge['name']; ?></strong>
+					<br/><strong><?php echo html::specialchars($badge['name']); ?></strong>
 				</div>
 
 				<?php } ?>
