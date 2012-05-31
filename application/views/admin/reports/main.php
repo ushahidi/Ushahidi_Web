@@ -182,7 +182,7 @@
 									
 									foreach ($incident_orm->verify as $verify)
 									{
-										$edit_log .= "<li>".Kohana::lang('ui_admin.edited_by')." ".$verify->user->name." : ".$verify->verified_date."</li>";
+										$edit_log .= "<li>".Kohana::lang('ui_admin.edited_by')." ".html::specialchars($verify->user->name)." : ".$verify->verified_date."</li>";
 									}
 									$edit_log .= "</ul></div>";
 
@@ -221,10 +221,10 @@
 											</div>
 											<ul class="info">
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: 
-													<strong><?php echo $incident->location_name; ?></strong>, <strong><?php echo $country_name; ?></strong>
+													<strong><?php echo html::specialchars($incident->location_name); ?></strong>, <strong><?php echo html::specialchars($country_name); ?></strong>
 												</li>
 												<li><?php echo Kohana::lang('ui_main.submitted_by');?> 
-													<strong><?php echo $submit_by; ?></strong> via <strong><?php echo $submit_mode; ?></strong>
+													<strong><?php echo html::specialchars($submit_by); ?></strong> via <strong><?php echo html::specialchars($submit_mode); ?></strong>
 												</li>
 											</ul>
 											<ul class="links">
