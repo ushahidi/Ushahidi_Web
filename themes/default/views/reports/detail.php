@@ -103,7 +103,7 @@
 		<!-- start report description -->
 		<div class="report-description-text">
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
-			<?php echo strip_tags($incident_description); ?>
+			<?php echo nl2br(strip_tags($incident_description)); ?>
 			<br/>
 
 
