@@ -284,10 +284,32 @@ class User_Model extends Auth_User_Model {
 	public function delete()
 	{
 		// Remove assigned roles
-		ORM::factory('roles_user')
+		// Have to use db->query() since we don't have an ORM model for roles_users
+		$this->db->query('DELETE FROM roles_users WHERE user_id = ?',$this->id);
+		
+		// Remove assigned badges
+		$this->db->query('DELETE FROM badge_users WHERE user_id = ?',$this->id);
+
+		// Delete alerts
+		ORM::factory('alert')
+		    ->where('user_id', $this->id)
+		    ->delete_all();
+		
+		// Delete user_token
+		ORM::factory('user_token')
+		    ->where('user_id', $this->id)
+		    ->delete_all();
+		
+		// Delete openid
+		ORM::factory('openid')
 		    ->where('user_id', $this->id)
 		    ->delete_all();
 
+		// Delete user_devices
+		ORM::factory('user_devices')
+		    ->where('user_id', $this->id)
+		    ->delete_all();
+		
 		parent::delete();
 	}
 
