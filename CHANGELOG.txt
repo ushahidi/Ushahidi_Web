@@ -1,3 +1,16 @@
+Ushahidi 2.4 - Bug fix release, 30-05-2012
+-------------------------------------
+
+* Fix A 500 error that was being thrown by the Scheduler (#387)
+* Category icons now showing up on the map (#390)
+* Fix map styling on the Actions/Triggers module (#435)
+* Security fixes
+	 - Cross Site Scripting (XSS)
+* More on the bugs fixed can be found here:
+	-> https://docs.google.com/a/ushahidi.com/spreadsheet/ccc?key=0AizezfooB3k9dC1GX3RsNl9ocnQ3U1lmTUtSbFAwMlE#gid=7
+
+
+
 Ushahidi 2.3.2 - Bug fix release, 08-05-2012
 -------------------------------------
 

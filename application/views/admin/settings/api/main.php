@@ -30,8 +30,8 @@
                     <!-- tab -->
                     <div class="tab">
                         <ul>
-                            <li><a href="#" onclick="apiSettingsAction('s', 'SAVE');"><?php echo strtoupper(Kohana::lang('ui_admin.save_settings')); ?></a></li>
-                            <li><a href="#" onclick-"apiSettingsAction('c', 'CANCEL');"><?php echo strtoupper(Kohana::lang('ui_admin.cancel')); ?></a></li>
+                            <li><a href="#" onclick="apiSettingsAction('s', 'SAVE');"><?php echo utf8::strtoupper(Kohana::lang('ui_admin.save_settings')); ?></a></li>
+                            <li><a href="#" onclick-"apiSettingsAction('c', 'CANCEL');"><?php echo utf8::strtoupper(Kohana::lang('ui_admin.cancel')); ?></a></li>
                         </ul>
                     </div>
                     <!-- /tab -->

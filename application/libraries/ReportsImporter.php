@@ -60,7 +60,7 @@ class ReportsImporter {
 		$temp_cat = array();
 		foreach($this->category_ids as $key=>$value)
 		{
-			$temp_cat[strtoupper($key)] = $value;
+			$temp_cat[utf8::strtoupper($key)] = $value;
 		}
 		$this->category_ids = $temp_cat;
 		
@@ -178,7 +178,7 @@ class ReportsImporter {
 			foreach ($categorynames as $categoryname)
 			{
 				// There seems to be an uppercase convention for categories... Don't know why
-				$categoryname = strtoupper(trim($categoryname));
+				$categoryname = utf8::strtoupper(trim($categoryname));
 				
 				// For purposes of adding an entry into the incident_category table
 				$incident_category = new Incident_Category_Model();

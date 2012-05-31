@@ -40,8 +40,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->js = new View('admin/settings/site_js');
 
 		// setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'site_name' => '',
 			'site_tagline' => '',
 			'banner_image' => '',
@@ -167,7 +166,7 @@ class Settings_Controller extends Admin_Controller {
 				// Deal with banner image now
 
 				// Check if deleting or updating a new image (or doing nothing)
-				if( isset($post->delete_banner_image) AND $post->delete_banner_image == 1)
+				if (isset($post->delete_banner_image) AND $post->delete_banner_image == 1)
 				{
 					// Delete old badge image
 					ORM::factory('media')->delete($settings->site_banner_id);
@@ -177,7 +176,9 @@ class Settings_Controller extends Admin_Controller {
 					$settings->site_banner_id = NULL;
 					$settings->save();
 
-				}else{
+				}
+				else
+				{
 					// We aren't deleting, so try to upload if we are uploading an image
 					$filename = upload::save('banner_image');
 					if ($filename)
@@ -275,8 +276,7 @@ class Settings_Controller extends Admin_Controller {
 		}
 		else
 		{
-			$form = array
-			(
+			$form = array(
 				'site_name' => $settings->site_name,
 				'site_tagline' => $settings->site_tagline,
 				'site_banner_id' => $settings->site_banner_id,
@@ -309,12 +309,15 @@ class Settings_Controller extends Admin_Controller {
 		}
 
 		// Get banner image
-		if($settings->site_banner_id != NULL){
+		if ($settings->site_banner_id != NULL)
+		{
 			$banner = ORM::factory('media')->find($settings->site_banner_id);
 			$this->template->content->banner = url::convert_uploaded_to_abs($banner->media_link);
 			$this->template->content->banner_m = url::convert_uploaded_to_abs($banner->media_medium);
 			$this->template->content->banner_t = url::convert_uploaded_to_abs($banner->media_thumb);
-		}else{
+		}
+		else
+		{
 			$this->template->content->banner = NULL;
 			$this->template->content->banner_m = NULL;
 			$this->template->content->banner_t = NULL;
@@ -334,13 +337,13 @@ class Settings_Controller extends Admin_Controller {
 		}
 		$this->template->content->blocks_per_row_array = $blocks_per_row_array;
 		$this->template->content->yesno_array = array(
-			'1'=>strtoupper(Kohana::lang('ui_main.yes')),
-			'0'=>strtoupper(Kohana::lang('ui_main.no')));
+			'1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),
+			'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 
 		$this->template->content->comments_array = array(
-			'1'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_auto')),
-			'2'=>strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_manual')),
-			'0'=>strtoupper(Kohana::lang('ui_main.no')));
+			'1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_auto')),
+			'2'=>utf8::strtoupper(Kohana::lang('ui_main.yes')." - ".Kohana::lang('ui_admin.approve_manual')),
+			'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 
 		$this->template->content->cache_pages_lifetime_array = array(
 			'60'=>'1 '.Kohana::lang('ui_admin.minute'),
@@ -462,7 +465,9 @@ class Settings_Controller extends Admin_Controller {
 					$settings->default_map_all_icon_id = NULL;
 					$settings->save();
 
-				}else{
+				}
+				else
+				{
 					// We aren't deleting, so try to upload if we are uploading an image
 					$filename = upload::save('default_map_all_icon');
 					if ($filename)
@@ -626,8 +631,8 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->map_array = $map_array;
 		
 		$this->template->content->yesno_array = array(
-			'1'=>strtoupper(Kohana::lang('ui_main.yes')),
-			'0'=>strtoupper(Kohana::lang('ui_main.no')));
+			'1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),
+			'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 
 		// Javascript Header
 		$this->template->map_enabled = TRUE;
@@ -934,7 +939,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+		$this->template->content->yesno_array = array('1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 		$this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
 
 	}
@@ -1025,7 +1030,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->yesno_array = array('1'=>strtoupper(Kohana::lang('ui_main.yes')),'0'=>strtoupper(Kohana::lang('ui_main.no')));
+		$this->template->content->yesno_array = array('1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 		$this->template->content->is_https_capable = $this->_is_https_capable();
 	}
 

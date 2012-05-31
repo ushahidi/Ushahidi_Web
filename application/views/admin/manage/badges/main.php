@@ -147,18 +147,18 @@
 												<br/><?php echo Kohana::lang('ui_admin.assignments'); ?>: <?php echo count($badge['users']);?>
 
 												<br/><?php echo form::dropdown('assign_user_'.$badge['id'], array_diff($users, $badge['users']), 'standard'); ?>
-													<a href="javascript:badgeAction('b','<?php echo strtoupper(htmlspecialchars(Kohana::lang('ui_admin.assign')));?>','<?php echo rawurlencode($badge['id']); ?>')"><?php echo Kohana::lang('ui_admin.assign');?></a>
+													<a href="javascript:badgeAction('b','<?php echo utf8::strtoupper(htmlspecialchars(Kohana::lang('ui_admin.assign')));?>','<?php echo rawurlencode($badge['id']); ?>')"><?php echo Kohana::lang('ui_admin.assign');?></a>
 													<?php if(count($badge['users']) > 0) { ?>
 														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 														<?php echo form::dropdown('revoke_user_'.$badge['id'], $badge['users'], 'standard'); ?>
-														<a href="javascript:badgeAction('r','<?php echo strtoupper(htmlspecialchars(Kohana::lang('ui_admin.revoke')));?>','<?php echo rawurlencode($badge['id']); ?>')"><?php echo Kohana::lang('ui_admin.revoke');?></a>
+														<a href="javascript:badgeAction('r','<?php echo utf8::strtoupper(htmlspecialchars(Kohana::lang('ui_admin.revoke')));?>','<?php echo rawurlencode($badge['id']); ?>')"><?php echo Kohana::lang('ui_admin.revoke');?></a>
 													<?php } ?>
 
 											</td>
 											<td class="col-4" style="width:120px;">
 
 												<ul>
-													<li><a href="javascript:badgeAction('d','<?php echo strtoupper(htmlspecialchars(Kohana::lang('ui_admin.delete_badge')));?>','<?php echo rawurlencode($badge['id']); ?>')" class="del"><?php echo Kohana::lang('ui_admin.delete_badge');?></a></li>
+													<li><a href="javascript:badgeAction('d','<?php echo utf8::strtoupper(htmlspecialchars(Kohana::lang('ui_admin.delete_badge')));?>','<?php echo rawurlencode($badge['id']); ?>')" class="del"><?php echo Kohana::lang('ui_admin.delete_badge');?></a></li>
 												</ul>
 
 											</td>

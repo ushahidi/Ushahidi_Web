@@ -23,7 +23,7 @@ class Login_Controller extends Template_Controller {
 	protected $session;
 
 	// Main template
-	public $template = 'login';
+	public $template = 'login/main';
 
 
 	public function __construct()
@@ -50,7 +50,7 @@ class Login_Controller extends Template_Controller {
 
 		if ($auth->logged_in())
 		{
-			if ( $user = Session::instance()->get('auth_user',FALSE) )
+			if ( $user = Session::instance()->get('auth_user', FALSE) )
 			{
 				// Members go to their member panel
 				if($auth->logged_in('member'))
@@ -60,7 +60,7 @@ class Login_Controller extends Template_Controller {
 
 				// Admins go to the admin panel
 				// Temporary fix - any non member role gets admin access
-				if($auth->logged_in('login') AND ! $auth->logged_in('member'))
+				if ($auth->logged_in('login') AND ! $auth->logged_in('member'))
 				{
 					url::redirect('admin');
 				}
@@ -72,8 +72,7 @@ class Login_Controller extends Template_Controller {
 		}
 
 		// setup and initialize form field names
-		$form = array
-		(
+		$form = array(
 			'action'	=> '',
 			'username'	=> '',
 			'password'	=> '',
@@ -227,8 +226,7 @@ class Login_Controller extends Template_Controller {
 			// END: Signin Process
 
 		}
-		elseif ($_POST AND isset($_POST["action"])
-			AND $_POST["action"] == "new")
+		elseif ($_POST AND isset($_POST["action"]) AND $_POST["action"] == "new")
 		{
 
 			// START: New User Process
@@ -245,7 +243,7 @@ class Login_Controller extends Template_Controller {
 			$post->add_callbacks('email', array($this,'email_exists_chk'));
 
 			// If Password field is not blank
-			if (!empty($post->password))
+			if ( ! empty($post->password))
 			{
 				$post->add_rules('password','required','length['.kohana::config('auth.password_length').']'
 					,'alpha_numeric','matches[password_again]');
@@ -296,8 +294,7 @@ class Login_Controller extends Template_Controller {
 			// END: New User Process
 
 		}
-		elseif ($_POST AND isset($_POST["action"])
-			AND $_POST["action"] == "forgot")
+		elseif ($_POST AND isset($_POST["action"]) AND $_POST["action"] == "forgot")
 		{
 
 			// START: Forgot Password Process
@@ -372,8 +369,7 @@ class Login_Controller extends Template_Controller {
 			// END: Forgot Password Process
 
 		}
-		elseif ($_POST AND isset($_POST["action"])
-			AND $_POST["action"] == "changepass")
+		elseif ($_POST AND isset($_POST["action"]) AND $_POST["action"] == "changepass")
 		{
 
 			// START: Password Change Process
@@ -472,7 +468,8 @@ class Login_Controller extends Template_Controller {
 			// START: OpenID Shenanigans
 
 			// OpenID Post
-			try {
+			try
+			{
 				$openid = new OpenID;
 
 				// Retrieve the Name (if available) and Email
@@ -619,7 +616,7 @@ class Login_Controller extends Template_Controller {
 		$this->template->site_tagline = Kohana::config('settings.site_tagline');
 
 		// Javascript Header
-		$this->template->js = new View('login_js');
+		$this->template->js = new View('login/login_js');
 		$this->template->js->action = $action;
 
 		// Header Nav

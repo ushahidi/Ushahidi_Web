@@ -130,7 +130,7 @@ class Messages_Controller extends Admin_Controller {
 					}
 
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				elseif ($post->action == 'n')
 				{
@@ -147,7 +147,7 @@ class Messages_Controller extends Admin_Controller {
 					}
 
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 				elseif ($post->action == 's')
 				{
@@ -164,7 +164,7 @@ class Messages_Controller extends Admin_Controller {
 					}
 
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 			}
 			// No! We have validation errors, we need to show the form again, with the errors

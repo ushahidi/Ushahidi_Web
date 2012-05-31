@@ -150,8 +150,8 @@
 												<p><?php echo $incident_description; ?>... <a href="<?php echo url::base() . 'members/reports/edit/' . $incident_id; ?>" class="more"><?php echo Kohana::lang('ui_main.more');?></a></p>
 											</div>
 											<ul class="info">
-												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: <strong><?php echo $incident_location; ?></strong>,<strong><?php if ($country_id !=0) { echo $countries[$country_id];}?></strong></li>
-												<li><?php echo Kohana::lang('ui_main.submitted_by');?> <strong><?php echo $submit_by; ?></strong> via <strong><?php echo $submit_mode; ?></strong></li>
+												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: <strong><?php echo html::specialchars($incident_location); ?></strong>,<strong><?php if ($country_id !=0) { echo $countries[$country_id];}?></strong></li>
+												<li><?php echo Kohana::lang('ui_main.submitted_by');?> <strong><?php echo html::specialchars($submit_by); ?></strong> via <strong><?php echo html::specialchars($submit_mode); ?></strong></li>
 											</ul>
 											<ul class="links">
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.categories');?>:<?php echo $incident_category; ?></li>

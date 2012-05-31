@@ -31,8 +31,8 @@
             		<!-- tab -->
             		<div class="tab">
             			<ul>
-            				<li><a href="#" onclick="apiLogAction('d','DELETE', '');"><?php echo strtoupper(Kohana::lang('ui_admin.delete_action')) ;?></a></li>
-            				<li><a href="#" onclick="apiLogAction('x','DELETE ALL ', '000');"><?php echo strtoupper(Kohana::lang('ui_admin.delete_all')) ;?></a></li>
+            				<li><a href="#" onclick="apiLogAction('d','DELETE', '');"><?php echo utf8::strtoupper(Kohana::lang('ui_admin.delete_action')) ;?></a></li>
+            				<li><a href="#" onclick="apiLogAction('x','DELETE ALL ', '000');"><?php echo utf8::strtoupper(Kohana::lang('ui_admin.delete_all')) ;?></a></li>
             			</ul>
             		</div>
             	</div>
@@ -119,15 +119,15 @@
             								    <li>
             								        <?php if ( ! isset($api_log->ban_id)): ?>
             								        <a href="#" class="del" onclick="apiLogAction('b', 'BAN', '<?php echo $api_log_id; ?>');">
-            								            <?php echo strtoupper(Kohana::lang('ui_admin.banip_action')); ?>
+            								            <?php echo utf8::strtoupper(Kohana::lang('ui_admin.banip_action')); ?>
             								        </a>
             								        <?php else: ?>
-            								            <span><?php echo strtoupper(Kohana::lang('ui_admin.banip_action')); ?></span>
+            								            <span><?php echo utf8::strtoupper(Kohana::lang('ui_admin.banip_action')); ?></span>
             								        <?php endif; ?>
             								    </li>
             								    <li>
             								        <a href="#" class="del" onclick="apiLogAction('d','DELETE', '<?php echo $api_log_id; ?>');">
-            								            <?php echo strtoupper(Kohana::lang('ui_admin.delete_action')) ;?>
+            								            <?php echo utf8::strtoupper(Kohana::lang('ui_admin.delete_action')) ;?>
             								        </a>
             								    </li>
             								</ul>

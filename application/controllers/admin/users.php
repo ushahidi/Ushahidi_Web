@@ -60,7 +60,7 @@ class Users_Controller extends Admin_Controller {
 				}
 
 				$form_saved = TRUE;
-				$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+				$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 			}
 		}
 
@@ -221,11 +221,11 @@ class Users_Controller extends Admin_Controller {
 
 		foreach ($roles as $role)
 		{
-			$role_array[$role->name] = strtoupper($role->name);
+			$role_array[$role->name] = utf8::strtoupper($role->name);
 		}
 
 		// Add one additional role for users with no role
-		$role_array['none'] = strtoupper(Kohana::lang('ui_main.none'));
+		$role_array['none'] = utf8::strtoupper(Kohana::lang('ui_main.none'));
 
 		$this->template->content->id = $user_id;
 		$this->template->content->display_roles = $this->display_roles;
@@ -234,7 +234,7 @@ class Users_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		$this->template->content->yesno_array = array('1' => strtoupper(Kohana::lang('ui_main.yes')), '0' => strtoupper(Kohana::lang('ui_main.no')));
+		$this->template->content->yesno_array = array('1' => utf8::strtoupper(Kohana::lang('ui_main.yes')), '0' => utf8::strtoupper(Kohana::lang('ui_main.no')));
 		$this->template->content->role_array = $role_array;
 	}
 

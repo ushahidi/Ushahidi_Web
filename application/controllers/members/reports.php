@@ -148,7 +148,7 @@ class Reports_Controller extends Members_Controller {
 							Event::run('ushahidi_action.report_delete', $update);
 						}
 					}
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				$form_saved = TRUE;
 			}

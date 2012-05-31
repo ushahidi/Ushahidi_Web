@@ -158,7 +158,7 @@ class Alerts_Controller extends Main_Controller {
 
 		// Javascript Header
 		$this->themes->map_enabled = TRUE;
-		$this->themes->js = new View('alerts_js');
+		$this->themes->js = new View('alerts/alerts_js');
 		$this->themes->treeview_enabled = TRUE;
 		$this->themes->js->default_map = Kohana::config('settings.default_map');
 		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
@@ -191,8 +191,7 @@ class Alerts_Controller extends Main_Controller {
 		$this->template->content->show_mobile = TRUE;
 		$settings = ORM::factory('settings', 1);
 
-		//if ( ! Kohana::config("settings.sms_provider"))
-		if ( empty($_SESSION['alert_mobile']))
+		if (empty($_SESSION['alert_mobile']))
 		{
 			// Hide Mobile
 			$this->template->content->show_mobile = FALSE;
@@ -229,7 +228,7 @@ class Alerts_Controller extends Main_Controller {
 		{
 			if (isset($_POST['alert_mobile']) AND ! empty($_POST['alert_mobile']))
 			{
-				$filter = "alert.alert_type=1 AND alert_code='".strtoupper($_POST['alert_code'])."' AND alert_recipient='".$_POST['alert_mobile']."' ";
+				$filter = "alert.alert_type=1 AND alert_code='".utf8::strtoupper($_POST['alert_code'])."' AND alert_recipient='".$_POST['alert_mobile']."' ";
 			}
 			elseif (isset($_POST['alert_email']) AND ! empty($_POST['alert_email']))
 			{

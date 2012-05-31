@@ -90,7 +90,7 @@ class Alerts_Controller extends Members_Controller {
 							ORM::factory('alert_category')->where('alert_id',$alert_id)->delete_all();
 						}
 					}
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				$form_saved = TRUE;
 			}

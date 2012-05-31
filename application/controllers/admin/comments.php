@@ -97,7 +97,7 @@ class Comments_Controller extends Admin_Controller {
                             $update->save();
                         }
                     }
-                    $form_action = strtoupper(Kohana::lang('ui_admin.approved'));
+                    $form_action = utf8::strtoupper(Kohana::lang('ui_admin.approved'));
                 }
                 elseif ($post->action == 'u')   
                 { // Unapprove Action
@@ -109,7 +109,7 @@ class Comments_Controller extends Admin_Controller {
                             $update->save();
                         }
                     }
-                    $form_action = strtoupper(Kohana::lang('ui_admin.unapproved'));
+                    $form_action = utf8::strtoupper(Kohana::lang('ui_admin.unapproved'));
                 }
                 elseif ($post->action == 's')   
                 { // Spam Action
@@ -122,7 +122,7 @@ class Comments_Controller extends Admin_Controller {
                             $update->save();
                         }
                     }
-                    $form_action = strtoupper(Kohana::lang('ui_admin.marked_as_spam'));
+                    $form_action = utf8::strtoupper(Kohana::lang('ui_admin.marked_as_spam'));
                 }
                 elseif ($post->action == 'n')   
                 { // Spam Action
@@ -135,7 +135,7 @@ class Comments_Controller extends Admin_Controller {
                             $update->save();
                         }
                     }
-                    $form_action = strtoupper(Kohana::lang('ui_admin.marked_as_not_spam'));
+                    $form_action = utf8::strtoupper(Kohana::lang('ui_admin.marked_as_not_spam'));
                 }
                 elseif ($post->action == 'd')   // Delete Action
                 {

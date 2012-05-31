@@ -86,7 +86,7 @@ class Forms_Controller extends Admin_Controller {
 					// Delete Action
 					$custom_form->delete( $form_id );
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				elseif ($post->action == 'h')
 				{ 
@@ -98,7 +98,7 @@ class Forms_Controller extends Admin_Controller {
 						$custom_form->form_active = ($custom_form->form_active == 1)? 0: 1;
 						$custom_form->save();
 						$form_saved = TRUE;
-						$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+						$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 					}
 				}
 				else
@@ -108,7 +108,7 @@ class Forms_Controller extends Admin_Controller {
 					$custom_form->form_description = $post->form_description;
 					$custom_form->save();
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.created_edited'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.created_edited'));
 				}
 				
 				// Empty $form array

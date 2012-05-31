@@ -434,27 +434,12 @@ class Main_Controller extends Template_Controller {
 		$this->themes->main_page = TRUE;
 
 		// Map Settings
-		$clustering = Kohana::config('settings.allow_clustering');
 		$marker_radius = Kohana::config('map.marker_radius');
 		$marker_opacity = Kohana::config('map.marker_opacity');
 		$marker_stroke_width = Kohana::config('map.marker_stroke_width');
 		$marker_stroke_opacity = Kohana::config('map.marker_stroke_opacity');
 
-        // pdestefanis - allows to restrict the number of zoomlevels available
-		$numZoomLevels = Kohana::config('map.numZoomLevels');
-		$minZoomLevel = Kohana::config('map.minZoomLevel');
-	   	$maxZoomLevel = Kohana::config('map.maxZoomLevel');
-
-		// pdestefanis - allows to limit the extents of the map
-		$lonFrom = Kohana::config('map.lonFrom');
-		$latFrom = Kohana::config('map.latFrom');
-		$lonTo = Kohana::config('map.lonTo');
-		$latTo = Kohana::config('map.latTo');
-
-		$this->themes->js = new View('main_js');
-		$this->themes->js->json_url = ($clustering == 1)
-			? "json/cluster"
-			: "json";
+		$this->themes->js = new View('main/main_js');
 
 		$this->themes->js->marker_radius = ($marker_radius >=1 AND $marker_radius <= 10 )
 		    ? $marker_radius
@@ -472,25 +457,6 @@ class Main_Controller extends Template_Controller {
 		    ? $marker_stroke_opacity * 0.1
 		    : 0.9;
 
-		// pdestefanis - allows to restrict the number of zoomlevels available
-		$this->themes->js->numZoomLevels = $numZoomLevels;
-		$this->themes->js->minZoomLevel = $minZoomLevel;
-		$this->themes->js->maxZoomLevel = $maxZoomLevel;
-
-		// pdestefanis - allows to limit the extents of the map
-		$this->themes->js->lonFrom = $lonFrom;
-		$this->themes->js->latFrom = $latFrom;
-		$this->themes->js->lonTo = $lonTo;
-		$this->themes->js->latTo = $latTo;
-
-		$this->themes->js->default_map = Kohana::config('settings.default_map');
-		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
-		$this->themes->js->latitude = Kohana::config('settings.default_lat');
-		$this->themes->js->longitude = Kohana::config('settings.default_lon');
-		$this->themes->js->default_map_all = Kohana::config('settings.default_map_all');
-
-		// Get default icon
-		$this->themes->js->default_map_all_icon = $this->template->content->default_map_all_icon;
 
 		$this->themes->js->active_startDate = $display_startDate;
 		$this->themes->js->active_endDate = $display_endDate;

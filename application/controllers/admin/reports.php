@@ -161,7 +161,7 @@ class Reports_Controller extends Admin_Controller {
 								Event::run('ushahidi_action.report_approve', $update);
 							}
 						}
-						$form_action = strtoupper(Kohana::lang('ui_admin.approved'));
+						$form_action = utf8::strtoupper(Kohana::lang('ui_admin.approved'));
 					}
 
 				}
@@ -197,7 +197,7 @@ class Reports_Controller extends Admin_Controller {
 							Event::run('ushahidi_action.report_unapprove', $update);
 						}
 					}
-					$form_action = strtoupper(Kohana::lang('ui_admin.unapproved'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.unapproved'));
 				}
 				
 				// Verify Action
@@ -231,7 +231,7 @@ class Reports_Controller extends Admin_Controller {
 					}
 
 					// Set the form action
-					$form_action = strtoupper(Kohana::lang('ui_admin.verified_unverified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.verified_unverified'));
 				}
 
 				// Delete Action
@@ -245,7 +245,7 @@ class Reports_Controller extends Admin_Controller {
 							$update->delete();
 						}
 					}
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				$form_saved = TRUE;
 			}

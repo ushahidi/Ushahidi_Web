@@ -144,9 +144,9 @@
 							?>
 							<div class="post">
 								<ul class="post-info">
-									<li><a href="#" class="<?php echo $incident_approved; ?>"><?php echo strtoupper(Kohana::lang('ui_main.approved'));?>:</a></li>
-									<li><a href="#" class="<?php echo $incident_verified ?>"><?php echo strtoupper(Kohana::lang('ui_main.verified'));?>:</a></li>
-									<li class="last"><a href="#" class="<?php echo $submit_mode; ?>"><?php echo strtoupper(Kohana::lang('ui_main.source'));?>:</a></li>
+									<li><a href="#" class="<?php echo $incident_approved; ?>"><?php echo utf8::strtoupper(Kohana::lang('ui_main.approved'));?>:</a></li>
+									<li><a href="#" class="<?php echo $incident_verified ?>"><?php echo utf8::strtoupper(Kohana::lang('ui_main.verified'));?>:</a></li>
+									<li class="last"><a href="#" class="<?php echo $submit_mode; ?>"><?php echo utf8::strtoupper(Kohana::lang('ui_main.source'));?>:</a></li>
 								</ul>
 								<h4><strong><?php echo $incident_date; ?></strong><a href="<?php echo url::site() . 'members/reports/edit/' . $incident_id; ?>"><?php echo $incident_title; ?></a></h4>
 								<p><?php echo $incident_description; ?></p>
@@ -167,7 +167,7 @@
 						<div class="member_profile">
 							<div class="member_photo"><img src="<?php echo members::gravatar($user->email); ?>" width="80" /></div>
 							<div class="member_info">
-								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.name');?>:</span> <?php echo $user->name; ?></div>
+								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.name');?>:</span> <?php echo html::specialchars($user->name); ?></div>
 
 								<?php if(count($user->openid) > 0) { ?>
 								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_admin.openids');?></span>:

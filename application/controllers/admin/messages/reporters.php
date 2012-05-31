@@ -119,7 +119,7 @@ class Reporters_Controller extends Admin_Controller
 					}
 					
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.deleted'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}
 				elseif( $post->action == 'l' )			// Modify Level Action
 				{
@@ -135,7 +135,7 @@ class Reporters_Controller extends Admin_Controller
 					}
 					
 					$form_saved = TRUE;
-					$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 				}
 				else if( $post->action == 'a' ) 		// Save Action
 				{
@@ -164,7 +164,7 @@ class Reporters_Controller extends Admin_Controller
 							$reporter->save();
 
 							$form_saved = TRUE;
-							$form_action = strtoupper(Kohana::lang('ui_admin.modified'));
+							$form_action = utf8::strtoupper(Kohana::lang('ui_admin.modified'));
 						}
 					}
 				}
