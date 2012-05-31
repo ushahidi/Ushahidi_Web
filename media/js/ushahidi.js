@@ -962,18 +962,21 @@
 		}
 
 		// Update the options with latitude and longitude
-		options.latitude = this._currentMarkerPosition.latitude;
-		options.longitude = this._currentMarkerPosition.longitude;
+		var latitude = this._currentMarkerPosition.latitude;
+		var longitude = this._currentMarkerPosition.longitude;
 
 		// Delete the layers and re-add them
 		this.deleteLayer("radius");
 		this.deleteLayer("radiusmarker");
 
 		// Get the current map center
-		var point  = new OpenLayers.LonLat(options.longitude, options.latitude);
+		var point  = new OpenLayers.LonLat(longitude, latitude);
 		point.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
 
-		var circleOrigin = new OpenLayers.Geometry.Point(options.longitude, options.latitude);
+		// Move the map to the new center
+		this._olMap.moveTo(point);
+
+		var circleOrigin = new OpenLayers.Geometry.Point(longitude, latitude);
 		circleOrigin.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
 
 		// Radius feature
