@@ -1,4 +1,4 @@
-<?php require SYSPATH.'../application/views/admin/form_utils_js.php' ?>
+<?php require APPPATH.'views/admin/utils_js.php' ?>
 function messagesAction ( action, confirmAction, message_id )
 {
 	var statusMessage;

@@ -14,7 +14,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
 
-<?php require SYSPATH.'../application/views/admin/form_utils_js.php' ?>
+<?php require APPPATH.'views/admin/utils_js.php' ?>
 // Ajax Submission
 function feedbackAction ( action, confirmAction, feedback_id )
 {
