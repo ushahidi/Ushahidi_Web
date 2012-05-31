@@ -1,4 +1,4 @@
-<?php require SYSPATH.'../application/views/admin/form_utils_js.php' ?>
+<?php require APPPATH.'views/admin/utils_js.php' ?>
 var map;
 var proj_4326 = new OpenLayers.Projection('EPSG:4326');
 var proj_900913 = new OpenLayers.Projection('EPSG:900913');
