@@ -1,4 +1,13 @@
--- Create the new settings table
+-- Create the new_settings table
+CREATE TABLE IF NOT `new_settings` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(100) NOT NULL DEFAULT '' COMMENT 'Unique identifier for the configuration parameter',
+  `value` text COMMENT 'Value for the settings parameter',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uq_settings_key` (`key`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Populate
 INSERT INTO `new_settings`(`key`, `value`) 
 SELECT 'id' AS `key`, `id` AS `value` FROM settings WHERE `id` = 1
 UNION
