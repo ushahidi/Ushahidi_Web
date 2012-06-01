@@ -9,8 +9,6 @@ CREATE TABLE IF NOT EXISTS `new_settings` (
 
 -- Populate
 INSERT INTO `new_settings`(`key`, `value`) 
-SELECT 'id' AS `key`, `id` AS `value` FROM settings WHERE `id` = 1
-UNION
 SELECT 'site_name' AS `key`, `site_name` AS `value` FROM settings WHERE `id` = 1
 UNION
 SELECT 'site_tagline' AS `key`, `site_tagline` AS `value` FROM settings WHERE `id` = 1
