@@ -1284,7 +1284,7 @@ CREATE TABLE IF NOT EXISTS `sessions` (
  * Table structure for table `settings`
  *
  */
-CREATE TABLE IF NOT `settings` (
+CREATE TABLE IF NOT EXISTS `settings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(100) NOT NULL DEFAULT '' COMMENT 'Unique identifier for the configuration parameter',
   `value` text COMMENT 'Value for the settings parameter',
