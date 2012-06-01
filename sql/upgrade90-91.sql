@@ -1,5 +1,5 @@
 -- Create the new_settings table
-CREATE TABLE IF NOT `new_settings` (
+CREATE TABLE IF NOT EXISTS `new_settings` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(100) NOT NULL DEFAULT '' COMMENT 'Unique identifier for the configuration parameter',
   `value` text COMMENT 'Value for the settings parameter',
