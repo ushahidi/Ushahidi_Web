@@ -243,7 +243,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 
 			// Get incidents based on a box using two lat,lon coords
 			case "bounds":
-				$this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne'],$this->request['c']);
+                                $this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne']);
 			break;
 
 			// Error therefore set error message
