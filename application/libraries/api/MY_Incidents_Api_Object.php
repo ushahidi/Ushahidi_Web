@@ -97,9 +97,29 @@ class Incidents_Api_Object extends Api_Object_Core {
 				{
 					// Build out the parameters
 					$params = array(
-						'l.latitude = '.$this->check_id_value($this->request['latitude']),
-						'l.longitude ='.$this->check_id_value($this->request['longitude'])
+						'l.latitude = '.$this->request['latitude'],
+						'l.longitude ='.$this->request['longitude']
 					);
+                                        if(isset($this->request['radius']))
+                                        {
+                                            $rad = $this->request['radius'];
+                                            $lat = $this->request['latitude'];
+                                            $lon = $this->request['longitude'];
+                                            //we take this to be radius of the earth, this sems to be more efficient than perming them directly at the query le                                            vel
+                                            $R = 6371;
+                                            $maxLat = $lat + rad2deg($rad/$R);
+                                            $minLat = $lat - rad2deg($rad/$R);
+                                            // compensate for degrees longitude getting smaller with increasing latitude
+                                            $maxLon = $lon + rad2deg($rad/$R/cos(deg2rad($lat)));
+                                            $minLon = $lon - rad2deg($rad/$R/cos(deg2rad($lat)));
+                                            $params = array(
+                                                'l.latitude > '.$minLat,
+                                                'l.latitude < '.$maxLat,
+                                                'l.longitude > '.$minLon,
+                                                'l.longitude < '.$maxLon
+                                            );
+
+                                        }
 
 					// Fetch the incidents
 					$this->response_data = $this->_get_incidents($params);
