@@ -243,7 +243,14 @@ class Incidents_Api_Object extends Api_Object_Core {
 
 			// Get incidents based on a box using two lat,lon coords
 			case "bounds":
-                                $this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne']);
+                                if (isset($this->request['c']))
+                                {
+                                    $this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne'],$this->request['c']);
+                                } 
+                                else
+                                {
+                                    $this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne'],0);
+                                }
 			break;
 
 			// Error therefore set error message
@@ -743,7 +750,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 	 * @param int $c is the categoryid
 	 * @return string XML or JSON string containing the fetched incidents
 	 */
-	private function _get_incidents_by_bounds($sw, $ne, $c = 0)
+	private function _get_incidents_by_bounds($sw, $ne, $c)
 	{
 		// Break apart location variables, if necessary
 		$southwest = array();
@@ -783,7 +790,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 		{
 			array_push($params, 'c.id = '.$c);
 		}
-
 		return $this->_get_incidents($params);
 
     }
