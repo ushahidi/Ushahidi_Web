@@ -293,23 +293,22 @@ class admin_Core {
 
 		if ($user AND $permission)
 		{
-			$access = FALSE;
+			// Special case - superadmin ALWAYS has all permissions
+			if ($user->has(ORM::factory('role','superadmin')))
+			{
+				return TRUE;
+			}
+			
 			foreach ($user->roles as $user_role)
 			{
-				foreach ($user_role->permissions as $user_permission)
+				if ($user_role->has(ORM::factory('permission',$permission)))
 				{
-					if ($user_permission->name == $permission)
-					{
-						$access = TRUE;
-					}
+					return TRUE;
 				}
 			}
-			return $access;
 		}
-		else
-		{
-			return FALSE;
-		}
+		
+		return FALSE;
 	}
 
 	/**
@@ -329,10 +328,18 @@ class admin_Core {
 			$user = Auth::instance()->get_user();
 		}
 
-		if($user !== FALSE){
+		if($user) {
+			// Special case - superadmin ALWAYS has admin access
+			if ($user->has(ORM::factory('role','superadmin')))
+			{
+				return TRUE;
+			}
+			
 			foreach ($user->roles as $user_role)
 			{
-				if ($user_role->allow_admin()) return TRUE;
+				if ( $user_role->allow_admin() )
+					return TRUE;
+				//if ( $user_role->has(ORM::Factory('permission','admin_pages')) ) return TRUE;
 			}
 		}
 

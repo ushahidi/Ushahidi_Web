@@ -71,17 +71,21 @@ DROP COLUMN `reports_evaluation` ,
 DROP COLUMN `reports_edit` ,
 DROP COLUMN `reports_view` ;
 
-/**
- * Constraints for table `form_field`
- */
-
-#ALTER TABLE `permissions_roles`
-#  ADD CONSTRAINT `permissions_roles_idfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
-#  ADD CONSTRAINT `permissions_roles_idfk_2` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
-
 /* Remove report_evaluation permission */
-INSERT INTO permissions (name) VALUES (16,'reports_verify'),(17,'reports_approve');
+INSERT INTO permissions (id, name) VALUES (16,'reports_verify'),(17,'reports_approve');
 INSERT INTO permissions_roles (role_id, permission_id) SELECT role_id, 16 as permission_id FROM permissions_roles WHERE permission_id = 3;
 INSERT INTO permissions_roles (role_id, permission_id) SELECT role_id, 17 as permission_id FROM permissions_roles WHERE permission_id = 3;
 DELETE FROM permissions WHERE id = 3;
 DELETE FROM permissions_roles WHERE permission_id = 3;
+
+/* Add permission for members pages & admin pages */
+INSERT INTO permissions (id, name) VALUES (18, 'admin_ui'),(19,'member_ui');
+/* Grant admin to superadmin role*/
+INSERT INTO permissions_roles (role_id, permission_id)
+  SELECT id as role_id, 18 as permission_id FROM roles WHERE name = 'superadmin';
+/* Grant member to member role */
+INSERT INTO permissions_roles (role_id, permission_id)
+  SELECT id as role_id, 19 as permission_id FROM roles WHERE name = 'member';
+/* Grant admin to any role with permissions other than checkin */
+INSERT IGNORE INTO permissions_roles (role_id, permission_id)
+  SELECT DISTINCT role_id, 18 as permission_id FROM permissions_roles WHERE permission_id IN (1,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17);
