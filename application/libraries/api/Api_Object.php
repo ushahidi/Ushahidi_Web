@@ -99,6 +99,10 @@ abstract class Api_Object_Core {
 	 * @var int
 	 */
 	protected $id;
+        /**
+        *This is for getting using specific cordinates or around a specific point*
+         */
+        protected $cord;
 	
 	/**
 	 * No. of records returned by the API request
@@ -450,6 +454,19 @@ abstract class Api_Object_Core {
 
 		return $this->id;
     }
+       protected function check_cordinate_value($cord)
+       {
+           // $this->cord = preg_match('/^(\-?\d+(\.\d+)?)$/', $cord);
+            //return $this->cord;
+            if(is_numeric($cord))
+            {
+               $this->cord = $cord;
+            } else 
+            {
+               $this->cord = Null;
+            }
+            return $this->cord;
+       }
 
     
 }
