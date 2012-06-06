@@ -43,32 +43,20 @@ class Login_Controller extends Template_Controller {
 		$auth = Auth::instance();
 
 		// If already logged in redirect to user account page
-		// Otherwise attempt to auto login if autologin cookie can be found
-		// (Set when user previously logged in and ticked 'stay logged in')
 
 		$insufficient_role = FALSE;
 
 		if ($auth->logged_in())
 		{
-			if ( $user = Session::instance()->get('auth_user', FALSE) )
+			// Redirect users to the relevant dashboard
+			if ($auth->logged_in('login'))
 			{
-				// Members go to their member panel
-				if($auth->logged_in('member'))
-				{
-					url::redirect('members/dashboard');
-				}
-
-				// Admins go to the admin panel
-				// Temporary fix - any non member role gets admin access
-				if ($auth->logged_in('login') AND ! $auth->logged_in('member'))
-				{
-					url::redirect('admin');
-				}
-
-				$insufficient_role = TRUE;
-				$message_class = 'login_error';
-				$message = Kohana::lang('ui_main.insufficient_role');
+				url::redirect($auth->get_user()->dashboard());
 			}
+
+			$insufficient_role = TRUE;
+			$message_class = 'login_error';
+			$message = Kohana::lang('ui_main.insufficient_role');
 		}
 
 		// setup and initialize form field names
@@ -177,7 +165,7 @@ class Login_Controller extends Template_Controller {
 						Event::run('ushahidi_action.user_login',$user);
 
 						// Exists Redirect to Dashboard
-						url::redirect("members/dashboard");
+						url::redirect($user->dashboard());
 					}
 					else
 					{
@@ -507,7 +495,7 @@ class Login_Controller extends Template_Controller {
 							$auth->force_login($openid_user->user->username);
 
 							// Exists Redirect to Dashboard
-							url::redirect("members/dashboard");
+							url::redirect($user->dashboard());
 						}
 						else
 						{
@@ -564,7 +552,7 @@ class Login_Controller extends Template_Controller {
 									$auth->login($username, $password, TRUE);
 
 									// Redirect to Dashboard
-									url::redirect("members/dashboard");
+									url::redirect($user->dashboard());
 								}
 							}
 						}
@@ -626,7 +614,7 @@ class Login_Controller extends Template_Controller {
 		if ( isset(Auth::instance()->get_user()->id) )
 		{
 			// Load User
-			$this->template->header_nav->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
+			$this->template->header_nav->loggedin_role = Auth::instance()->get_user()->dashboard();
 			$this->template->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
@@ -725,7 +713,7 @@ class Login_Controller extends Template_Controller {
 					$auth->force_login($openid_user->user->username);
 
 					// Exists Redirect to Dashboard
-					url::redirect("members/dashboard");
+					url::redirect($auth->get_user()->dashboard());
 				}
 				else
 				{
@@ -736,7 +724,7 @@ class Login_Controller extends Template_Controller {
 						$openid_error = "User has not been logged in. No Email Address Found.";
 
 						// Redirect back to login
-						url::redirect("members/login");
+						url::redirect("login");
 					}
 					else
 					{
@@ -750,7 +738,7 @@ class Login_Controller extends Template_Controller {
 							$openid_error = $new_openid["email"] . " is already registered in our system.";
 
 							// Redirect back to login
-							url::redirect("members/login");
+							url::redirect("login");
 						}
 						else
 						{
@@ -783,7 +771,7 @@ class Login_Controller extends Template_Controller {
 							$auth->login($username, $password, TRUE);
 
 							// Redirect to Dashboard
-							url::redirect("members/dashboard");
+							url::redirect($auth->get_user()->dashboard());
 						}
 					}
 				}

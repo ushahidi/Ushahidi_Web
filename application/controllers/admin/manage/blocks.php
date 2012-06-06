@@ -24,7 +24,7 @@ class Blocks_Controller extends Admin_Controller
 		$this->template->this_page = 'settings';
 		
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "manage"))
+		if ( ! $this->auth->has_permission("manage"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}

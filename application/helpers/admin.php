@@ -66,17 +66,17 @@ class admin_Core {
 			if ($user)
 			{
 				// Check permissions for settings panel
-				$main_right_tabs = (self::permissions($user, 'settings'))
+				$main_right_tabs = (Auth::instance()->has_permission('settings', $user))
 					? arr::merge($main_right_tabs, array('settings/site' => Kohana::lang('ui_admin.settings')))
 					: $main_right_tabs;
 
 				// Check permissions for the manage panel
-				$main_right_tabs = (self::permissions($user, 'manage'))
+				$main_right_tabs = (Auth::instance()->has_permission('manage', $user))
 					? arr::merge($main_right_tabs, array('manage' => Kohana::lang('ui_admin.manage')))
 					: $main_right_tabs;
 
 				// Check permissions for users panel
-				$main_right_tabs = (self::permissions($user, 'users'))
+				$main_right_tabs = (Auth::instance()->has_permission('users', $user))
 					? arr::merge($main_right_tabs, array('users' => Kohana::lang('ui_admin.users')))
 					: $main_right_tabs;
 			}
@@ -277,44 +277,22 @@ class admin_Core {
 		// Action::nav_admin_users - Add items to the admin manage navigation tabs
 		Event::run('ushahidi_action.nav_admin_users', $this_sub_page);
 	}
-
-	public static function permissions($user = FALSE, $section = FALSE)
-	{
-		if ($user AND $section)
-		{
-			$access = FALSE;
-			foreach ($user->roles as $user_role)
-			{
-				if ($user_role->$section == 1)
-				{
-					$access = TRUE;
-				}
-			}
-
-			return $access;
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
+	
 	/**
-	 * Generate User Sub Tab Menus
-	 * @param object $user
-	 * @return bool TRUE if has any permission to access anything. FALSE if not (essentially login only level)
+	 * Legacy permissions check
+	 * Use Auth::has_permission() instead.
 	 */
-	public static function admin_access($user = FALSE)
+	public function permissions($user = FALSE, $permission = FALSE)
 	{
-		if($user !== FALSE){
-			foreach ($user->roles as $user_role)
-			{
-				// If any of the users roles allows them to access anything, put them on the admin page,
-				//	 otherwise send them to the front end.
-				if(Roles_User_Model::role_allow_admin($user_role->id) == TRUE) return TRUE;
-			}
-		}
-
-		return FALSE;
+		return Auth::instance()->has_permission($permission, $user);
+	}
+	
+	/**
+	 * Legacy admin access check
+	 * Use Auth::admin_access() instead.
+	 */
+	public function admin_access($user = FALSE)
+	{
+		return Auth::instance()->admin_access($user);
 	}
 }

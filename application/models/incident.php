@@ -616,6 +616,11 @@ class Incident_Model extends ORM {
 		ORM::factory('comment')
 			->where('incident_id', $this->id)
 			->delete_all();
+			
+		// Delete ratings
+		ORM::factory('rating')
+			->where('incident_id', $this->id)
+			->delete_all();
 
 		$incident_id = $this->id;
 

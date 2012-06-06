@@ -214,13 +214,13 @@ final class Api_Service {
 		if ($auth->logged_in())
 		{
 			// Check if admin privileges are required
-			if ($admin == TRUE AND $auth->logged_in('member'))
+			if ($admin == FALSE OR $auth->has_permission('admin_ui'))
 			{
-				return FALSE;
+				return $auth->get_user()->id;
 			}
 			else
 			{
-				return $auth->get_user()->id;
+				return FALSE;
 			}
 		}
 		else
@@ -242,13 +242,13 @@ final class Api_Service {
 					if ($auth->login($username, $password))
 					{
 						// Check if admin privileges are required
-						if ($admin == TRUE AND $auth->logged_in('member'))
+						if ($admin == FALSE OR $auth->has_permission('admin_ui'))
 						{
-							return FALSE;
+							return $auth->get_user()->id;
 						}
 						else
 						{
-							return $auth->get_user()->id;
+							return FALSE;
 						}
 					}
 					else

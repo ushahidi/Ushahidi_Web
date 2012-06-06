@@ -33,7 +33,7 @@ class Reports_Controller extends Admin_Controller {
 	public function index($page = 1)
 	{
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "reports_view"))
+		if ( ! $this->auth->has_permission("reports_view"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}
@@ -299,7 +299,7 @@ class Reports_Controller extends Admin_Controller {
 		$db = new Database();
 
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "reports_edit"))
+		if ( ! $this->auth->has_permission("reports_edit"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}
@@ -827,7 +827,7 @@ class Reports_Controller extends Admin_Controller {
 	public function download()
 	{
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "reports_download"))
+		if ( ! $this->auth->has_permission("reports_download"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}
@@ -1137,7 +1137,7 @@ class Reports_Controller extends Admin_Controller {
 	public function upload()
 	{
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "reports_upload"))
+		if ( ! $this->auth->has_permission("reports_upload"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}

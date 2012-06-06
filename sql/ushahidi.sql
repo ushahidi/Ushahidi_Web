@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 89
+-- version 92
 -- http://www.ushahidi.com
 
 
@@ -1044,6 +1044,63 @@ CREATE TABLE IF NOT EXISTS `page` (
 -- --------------------------------------------------------
 
 /**
+ * Table structure for table `permissions`
+ *
+ */
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 COMMENT='Stores permissions used for access control';
+
+/* Data for permissions table */
+INSERT IGNORE INTO `permissions` VALUES 
+(1,'reports_view'),
+(2,'reports_edit'),
+(4,'reports_comments'),
+(5,'reports_download'),
+(6,'reports_upload'),
+(7,'messages'),
+(8,'messages_reporters'),
+(9,'stats'),
+(10,'settings'),
+(11,'manage'),
+(12,'users'),
+(13,'manage_roles'),
+(14,'checkin'),
+(15,'checkin_admin'),
+(16,'reports_verify'),
+(17,'reports_approve'),
+(18,'admin_ui'),
+(19,'member_ui');
+
+-- --------------------------------------------------------
+
+/**
+ * Table structure for table `permission_roles`
+ *
+ */
+
+CREATE TABLE IF NOT EXISTS `permission_roles` (
+  `role_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL,
+  PRIMARY KEY (`role_id`,`permission_id`)
+) ENGINE=MyISAM COMMENT='Stores permissions assigned to roles';
+
+--
+-- Dumping data for table `permission_roles`
+--
+
+INSERT INTO `permission_roles` VALUES
+(1,14),
+(2,1),(2,2),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,14),(2,15),(2,16),(2,17),(2,18),
+(3,1),(3,2),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),(3,15),(3,16),(3,17),(3,18),
+(4,19);
+
+-- ---------------------------------------------------------
+
+/**
  * Table structure for table `plugin`
  *
  */
@@ -1139,21 +1196,6 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `reports_view` tinyint(4) NOT NULL DEFAULT '0',
-  `reports_edit` tinyint(4) NOT NULL DEFAULT '0',
-  `reports_evaluation` tinyint(4) NOT NULL DEFAULT '0',
-  `reports_comments` tinyint(4) NOT NULL DEFAULT '0',
-  `reports_download` tinyint(4) NOT NULL DEFAULT '0',
-  `reports_upload` tinyint(4) NOT NULL DEFAULT '0',
-  `messages` tinyint(4) NOT NULL DEFAULT '0',
-  `messages_reporters` tinyint(4) NOT NULL DEFAULT '0',
-  `stats` tinyint(4) NOT NULL DEFAULT '0',
-  `settings` tinyint(4) NOT NULL DEFAULT '0',
-  `manage` tinyint(4) NOT NULL DEFAULT '0',
-  `users` tinyint(4) NOT NULL DEFAULT '0',
-  `manage_roles` tinyint(4) NOT NULL DEFAULT '0',
-  `checkin` tinyint(4) NOT NULL DEFAULT '1',
-  `checkin_admin` tinyint(4) NOT NULL DEFAULT '0',
   `access_level` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_name` (`name`)
@@ -1163,11 +1205,11 @@ CREATE TABLE IF NOT EXISTS `roles` (
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `name`, `description`, `reports_view`, `reports_edit`, `reports_evaluation`, `reports_comments`, `reports_download`, `reports_upload`, `messages`, `messages_reporters`, `stats`, `settings`, `manage`, `users`, `manage_roles`, `checkin`, `checkin_admin`, `access_level`) VALUES
-(1, 'login', 'Login privileges, granted after account confirmation', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0),
-(2, 'admin', 'Administrative user, has access to almost everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 90),
-(3, 'superadmin', 'Super administrative user, has access to everything.', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 100),
-(4, 'member', 'Regular user with access only to the member area', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10);
+INSERT INTO `roles` (`id`, `name`, `description`, `access_level`) VALUES
+(1, 'login', 'Login privileges, granted after account confirmation', 0),
+(2, 'admin', 'Administrative user, has access to almost everything.', 90),
+(3, 'superadmin', 'Super administrative user, has access to everything.', 100),
+(4, 'member', 'Regular user with access only to the member area', 10);
 
 -- --------------------------------------------------------
 
@@ -1449,5 +1491,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `ushahidi_version` = '2.4' WHERE `id`=1 LIMIT 1;
-UPDATE `settings` SET `db_version` = '90' WHERE `id` = 1 LIMIT 1;
+UPDATE `settings` SET `value` = '92' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '2.4' WHERE `key`= 'ushahidi_version';
