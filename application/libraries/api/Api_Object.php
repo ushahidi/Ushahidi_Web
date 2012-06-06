@@ -456,8 +456,6 @@ abstract class Api_Object_Core {
     }
        protected function check_cordinate_value($cord)
        {
-           // $this->cord = preg_match('/^(\-?\d+(\.\d+)?)$/', $cord);
-            //return $this->cord;
             if(is_numeric($cord))
             {
                $this->cord = $cord;
