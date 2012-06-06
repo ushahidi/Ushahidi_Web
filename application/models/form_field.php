@@ -106,6 +106,8 @@ class Form_Field_Model extends ORM {
 	{
 		// Delete all responses associated with this field
 		ORM::factory('form_response')->where('form_field_id', $this->id)->delete_all();
+		// Delete all responses associated with this field
+		ORM::factory('form_field_option')->where('form_field_id', $this->id)->delete_all();
 		
 		// Delete the field
 		parent::delete();

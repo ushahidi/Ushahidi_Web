@@ -38,4 +38,16 @@ class Form_Model extends ORM
 	{
 		return (intval($form_id) > 0)? ORM::factory('form', $form_id)->loaded : FALSE;
 	}
+	
+	/**
+	 * Deletes the a form and all its associated data
+	 */
+	public function delete()
+	{
+		// Delete all fields associated with this form
+		ORM::factory('form_field')->where('form_id', $this->id)->delete_all();
+		
+		// Delete the field
+		parent::delete();
+	}
 }

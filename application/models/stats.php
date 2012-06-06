@@ -15,27 +15,28 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Stats_Model extends ORM
-{
+class Stats_Model extends ORM {
+
 	static $time_out = 1;
 
-	/*
-	*
-	*
-	*/
-	static function get_javascript()
+	/**
+	 * Generates the JavaScript for stats tracking
+	 */
+	public static function get_javascript()
 	{
 		// Make sure cURL is installed
-		if (!function_exists('curl_exec')) {
+		if ( ! function_exists('curl_exec'))
+		{
 			throw new Kohana_Exception('footer.cURL_not_installed');
 			return false;
 		}
 
-		$settings = ORM::factory('settings', 1);
-		$stat_id = $settings->stat_id;
+		// Get the stat id
+		$stat_id = Settings_Model::get_setting('stat_id');
 
 		// If stats isn't set, ignore this
-		if($stat_id == 0) return '';
+		if ($stat_id == 0)
+			return '';
 
 		$cache = Cache::instance();
 		$tag = $cache->get(Kohana::config('settings.subdomain').'_piwiktag');
@@ -50,7 +51,10 @@ class Stats_Model extends ORM
 				// Grab the site domain from the config and trim any whitespaces
 				$site_domain = trim(Kohana::config('config.site_domain'));
 				$slashornoslash = '';
-				if (empty($site_domain) OR $site_domain{0} != '/') $slashornoslash = '/';
+				if (empty($site_domain) OR $site_domain{0} != '/')
+				{
+					$slashornoslash = '/';
+				}
 				
 				// URL
 				$val = 'http://'.$_SERVER["HTTP_HOST"].$slashornoslash.$site_domain;
@@ -79,16 +83,31 @@ class Stats_Model extends ORM
 
 			$url = 'https://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
 			$curl_handle = curl_init();
-			curl_setopt($curl_handle,CURLOPT_URL,$url);
-			curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,self::$time_out); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
-			curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); // Set cURL to store data in variable instead of print
-			curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
+			
+			// cURL options
+			$curl_options = array(
+				CURLOPT_URL => $url,
+
+				// Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
+				CURLOPT_CONNECTTIMEOUT => self::$time_out,
+
+				// Set cURL to store data in variable instead of print
+				CURLOPT_RETURNTRANSFER => 1,
+				CURLOPT_SSL_VERIFYPEER => FALSE
+			);
+
+			curl_setopt_array($curl_handle, $curl_options);
+
 			$buffer = curl_exec($curl_handle);
 			curl_close($curl_handle);
 
-			try {
-				$tag = (string) @simplexml_load_string($buffer); // This works because the tracking code is only wrapped in one tag
-			} catch (Exception $e) {
+			try
+			{
+				// This works because the tracking code is only wrapped in one tag
+				$tag = (string) @simplexml_load_string($buffer);
+			}
+			catch (Exception $e)
+			{
 				// In case the xml was malformed for whatever reason, we will just guess what the tag should be here
 				$tag = '<!-- Piwik --><script type="text/javascript">jQuery(document).ready(function(){$(\'#piwik\').load(\'https://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'&rec=1\');});</script><div id="piwik"></div><!-- End Piwik Tag -->';
 			}
@@ -105,51 +124,69 @@ class Stats_Model extends ORM
 	*	range will be ignored if dp1 and dp2 are set
 	*	dp1 and dp2 format is YYYY-MM-DD
 	*/
-	static function get_hit_stats($range=30,$dp1=null,$dp2=null)
+	public static function get_hit_stats($range=30, $dp1=NULL, $dp2=NULL)
 	{
 		// Get ID for stats
-		$settings = ORM::factory('settings', 1);
-		$stat_id = $settings->stat_id;
+		$stat_id = Settings_Model::get_setting('stat_id');
+		$stat_key = Settings_Model::get_setting('stat_key');
 
 		$twodates = '';
-		if ($dp1 !== null AND $dp2 !== null) {
+		if ($dp1 !== NULL AND $dp2 !== NULL)
+		{
 			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
 		}
 
-		$stat_url = 'https://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
+		$stat_url = 'https://tracker.ushahidi.com/px.php?stat_key='.$stat_key
+		    .'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 
 		// Ignore errors since we are error checking later
 
 		$response = @simplexml_load_string(self::_curl_req($stat_url));
 
 		// If we encounter an error, return false
-		if (isset($response->result->error[0]) OR isset($response->error[0]) OR ! isset($response->visits->result)) {
+		if
+		(
+			isset($response->result->error[0]) OR
+			isset($response->error[0]) OR
+			! isset($response->visits->result)
+		)
+		{
 			Kohana::log('error', "Error on stats request");
 			return false;
 		}
 
-		foreach ($response->visits->result as $res) {
+		foreach ($response->visits->result as $res)
+		{
 			$dt = $res['date'];
 			$y = substr($dt,0,4);
 			$m = substr($dt,5,2);
 			$d = substr($dt,8,2);
 			$timestamp = mktime(0,0,0,$m,$d,$y)*1000;
 
-			if (isset($res->nb_visits)){
+			if (isset($res->nb_visits))
+			{
 				$data['visits'][ (string) $timestamp] = (string) $res->nb_visits;
-			}else{
+			}
+			else
+			{
 				$data['visits'][ (string) $timestamp] = '0';
 			}
 
-			if (isset($res->nb_uniq_visitors)){
+			if (isset($res->nb_uniq_visitors))
+			{
 				$data['uniques'][ (string) $timestamp] = (string) $res->nb_uniq_visitors;
-			}else{
+			}
+			else
+			{
 				$data['uniques'][ (string) $timestamp] = '0';
 			}
 
-			if (isset($res->nb_actions)){
+			if (isset($res->nb_actions))
+			{
 				$data['pageviews'][ (string) $timestamp] = (string) $res->nb_actions;
-			}else{
+			}
+			else
+			{
 				$data['pageviews'][ (string) $timestamp] = '0';
 			}
 		}
@@ -157,32 +194,42 @@ class Stats_Model extends ORM
 		return $data;
 	}
 
-	static function get_hit_countries($range=30,$dp1=null,$dp2=null)
+	static function get_hit_countries($range=30, $dp1=NULL, $dp2=NULL)
 	{
-		$settings = ORM::factory('settings', 1);
-		$stat_id = $settings->stat_id;
+		$stat_id = Settings_Model::get_setting('stat_id');
+		$stat_key = Settings_Model::get_setting('stat_key');
 
 		$twodates = '';
-		if ($dp1 !== null AND $dp2 !== null) {
+		if ($dp1 !== NULL AND $dp2 !== NULL)
+		{
 			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
 		}
 
-		$stat_url = 'https://tracker.ushahidi.com/px.php?stat_key='.$settings->stat_key.'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
+		$stat_url = 'https://tracker.ushahidi.com/px.php?stat_key='.$stat_key
+		    .'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 
 		// Ignore errors since we are error checking later
 
 		$response = @simplexml_load_string(self::_curl_req($stat_url));
 
 		// If we encounter an error, return false
-		if (isset($response->result->error[0]) OR isset($response->error[0]) OR ! isset($response->countries->result)) {
+		if
+		(
+			isset($response->result->error[0]) OR
+			isset($response->error[0]) OR
+			! isset($response->countries->result)
+		)
+		{
 			Kohana::log('error', "Error on stats request");
 			return false;
 		}
 
 		$data = array();
-		foreach ($response->countries->result as $res) {
+		foreach ($response->countries->result as $res)
+		{
 			$date = (string) $res['date'];
-			foreach ($res->row as $row){
+			foreach ($res->row as $row)
+			{
 				$code = (string) $row->code;
 				$data[$date][$code]['label'] = (string) $row->label;
 				$data[$date][$code]['uniques'] = (string) $row->nb_uniq_visitors;
@@ -203,29 +250,44 @@ class Stats_Model extends ORM
 	* @param dp1 - Arbitrary date range. Low date. YYYY-MM-DD
 	* @param dp2 - Arbitrary date range. High date. YYYY-MM-DD
 	*/
-	static function get_report_stats($approved=false,$by_time=false,$range=null,$dp1=null,$dp2=null,$line_chart_data=false)
+	static function get_report_stats($approved=FALSE, $by_time=FALSE, $range=NULL, $dp1=NULL, $dp2=NULL, $line_chart_data=FALSE)
 	{
-		if ($range === null) {
+		if ($range === NULL)
+		{
 			$range = 100000;
 		}
 
-		if ($dp1 === null) {
+		if ($dp1 === NULL)
+		{
 			$dp1 = 0;
 		}
 
-		if ($dp2 === null) {
+		if ($dp2 === NULL)
+		{
 			$dp2 = '3000-01-01';
 		}
 
 		// Set up the range calculation
 		$time = time() - ($range*86400);
-		$range_date = date('Y-m-d',$time);
+		$range_date = date('Y-m-d', $time);
 
 		// Only grab approved
-		if ($approved) {
-			$reports = ORM::factory('incident')->where('incident_active','1')->where('incident_date >=',$dp1)->where('incident_date <=',$dp2)->where('incident_date >',$range_date)->find_all();
-		}else{
-			$reports = ORM::factory('incident')->where('incident_date >=',$dp1)->where('incident_date <=',$dp2)->where('incident_date >',$range_date)->find_all();
+		if ($approved)
+		{
+			$reports = ORM::factory('incident')
+			    ->where('incident_active', '1')
+			    ->where('incident_date >=', $dp1)
+			    ->where('incident_date <=',$dp2)
+			    ->where('incident_date >', $range_date)
+			    ->find_all();
+		}
+		else
+		{
+			$reports = ORM::factory('incident')
+			    ->where('incident_date >=', $dp1)
+			    ->where('incident_date <=', $dp2)
+			    ->where('incident_date >', $range_date)
+			    ->find_all();
 		}
 
 		$reports_categories = ORM::factory('incident_category')->find_all();
@@ -240,7 +302,8 @@ class Stats_Model extends ORM
 
 		// Gather some data into an array on incident reports
 		$num_reports = 0;
-		foreach ($reports as $report) {
+		foreach ($reports as $report)
+		{
 			$timestamp = (string) strtotime(substr($report->incident_date,0,10));
 			$report_data[$report->id] = array(
 				'date'=>$timestamp,
@@ -249,15 +312,18 @@ class Stats_Model extends ORM
 				'verified'=>$report->incident_verified
 			);
 
-			if ($timestamp < $earliest_timestamp) {
+			if ($timestamp < $earliest_timestamp)
+			{
 				$earliest_timestamp = $timestamp;
 			}
 
-			if ($timestamp > $latest_timestamp) {
+			if ($timestamp > $latest_timestamp)
+			{
 				$latest_timestamp = $timestamp;
 			}
 
-			if ( ! isset($verified_counts['verified'][$timestamp])) {
+			if ( ! isset($verified_counts['verified'][$timestamp]))
+			{
 				$verified_counts['verified'][$timestamp] = 0;
 				$verified_counts['unverified'][$timestamp] = 0;
 				$approved_counts['approved'][$timestamp] = 0;
@@ -267,15 +333,21 @@ class Stats_Model extends ORM
 
 			$all[$timestamp]++;
 
-			if ($report->incident_verified == 1){
+			if ($report->incident_verified == 1)
+			{
 				$verified_counts['verified'][$timestamp]++;
-			}else{
+			}
+			else
+			{
 				$verified_counts['unverified'][$timestamp]++;
 			}
 
-			if ($report->incident_active == 1){
+			if ($report->incident_active == 1)
+			{
 				$approved_counts['approved'][$timestamp]++;
-			}else{
+			}
+			else
+			{
 				$approved_counts['unapproved'][$timestamp]++;
 			}
 			$num_reports++;
@@ -284,24 +356,28 @@ class Stats_Model extends ORM
 		$category_counts = array();
 		$lowest_date = 9999999999; // Really far in the future.
 		$highest_date = 0;
-		foreach ($reports_categories as $report){
-
-			// if this report category doesn't have any reports (in case we are only
-			//   looking at approved reports), move on to the next one.
-			if ( ! isset($report_data[$report->incident_id])) continue;
+		foreach ($reports_categories as $report)
+		{
+			// If this report category doesn't have any reports (in case we are only
+			//  looking at approved reports), move on to the next one.
+			if ( ! isset($report_data[$report->incident_id]))
+				continue;
 
 			$c_id = $report->category_id;
 			$timestamp = $report_data[$report->incident_id]['date'];
 
-			if ($timestamp < $lowest_date) {
+			if ($timestamp < $lowest_date)
+			{
 				$lowest_date = $timestamp;
 			}
 
-			if ($timestamp > $highest_date) {
+			if ($timestamp > $highest_date)
+			{
 				$highest_date = $timestamp;
 			}
 
-			if ( ! isset($category_counts[$c_id][$timestamp])) {
+			if ( ! isset($category_counts[$c_id][$timestamp]))
+			{
 				$category_counts[$c_id][$timestamp] = 0;
 			}
 
@@ -311,35 +387,44 @@ class Stats_Model extends ORM
 		// Populate date range
 		$date_range = array();
 		$add_date = $lowest_date;
-		while ($add_date <= $highest_date){
+		while ($add_date <= $highest_date)
+		{
 			$date_range[] = $add_date;
 			$add_date += 86400;
 		}
 
 		// Zero out days that don't have a count
-		foreach ($category_counts as & $arr) {
-			foreach ($date_range as $timestamp){
-				if ( ! isset($arr[$timestamp])) {
+		foreach ($category_counts as & $arr)
+		{
+			foreach ($date_range as $timestamp)
+			{
+				if ( ! isset($arr[$timestamp]))
+				{
 					$arr[$timestamp] = 0;
 				}
 
-				if ( ! isset($verified_counts['verified'][$timestamp])) {
+				if ( ! isset($verified_counts['verified'][$timestamp]))
+				{
 					$verified_counts['verified'][$timestamp] = 0;
 				}
 
-				if ( ! isset($verified_counts['unverified'][$timestamp])) {
+				if ( ! isset($verified_counts['unverified'][$timestamp]))
+				{
 					$verified_counts['unverified'][$timestamp] = 0;
 				}
 
-				if ( ! isset($approved_counts['approved'][$timestamp])) {
+				if ( ! isset($approved_counts['approved'][$timestamp]))
+				{
 					$approved_counts['approved'][$timestamp] = 0;
 				}
 
-				if ( ! isset($approved_counts['unapproved'][$timestamp])) {
+				if ( ! isset($approved_counts['unapproved'][$timestamp]))
+				{
 					$approved_counts['unapproved'][$timestamp] = 0;
 				}
 
-				if ( ! isset($all[$timestamp])) {
+				if ( ! isset($all[$timestamp]))
+				{
 					$all[$timestamp] = 0;
 				}
 
@@ -363,20 +448,29 @@ class Stats_Model extends ORM
 		// I'm just tacking this on here. However, we could improve performance
 		//   by implementing the code above but I just don't have the time
 		//   to mess with it.
-
-		if ($by_time){
-
+		if ($by_time)
+		{
 			// Reorder the array. Is there a built in PHP function that can do this?
 			$new_data = array();
-			foreach ($data as $main_key => $data_array){
-				foreach ($data_array as $key => $counts){
+			foreach ($data as $main_key => $data_array)
+			{
+				foreach ($data_array as $key => $counts)
+				{
 
-					if ($line_chart_data == false){
-						foreach ($counts as $timestamp => $count) $new_data[$main_key][$timestamp][$key] = $count;
-					}else{
-						foreach ($counts as $timestamp => $count){
+					if ($line_chart_data == FALSE)
+					{
+						foreach ($counts as $timestamp => $count)
+						{
+							$new_data[$main_key][$timestamp][$key] = $count;
+						}
+					}
+					else
+					{
+						foreach ($counts as $timestamp => $count)
+						{
 							$timestamp_key = (string) ($timestamp*1000);
-							if ( ! isset($new_data[$main_key][$timestamp_key])) {
+							if ( ! isset($new_data[$main_key][$timestamp_key]))
+							{
 								$new_data[$main_key][$timestamp_key] = 0;
 							}
 							$new_data[$main_key][$timestamp_key] += $count;
@@ -389,7 +483,8 @@ class Stats_Model extends ORM
 
 		}
 
-		if ($line_chart_data == false) {
+		if ($line_chart_data == FALSE)
+		{
 			$data['total_reports'] = $num_reports;
 			$data['total_categories'] = count($category_counts);
 			$data['earliest_report_time'] = $earliest_timestamp;
@@ -404,7 +499,7 @@ class Stats_Model extends ORM
 	 * @param sitename - name of the instance
 	 * @param url - base url
 	 */
-	public function create_site( $sitename, $url )
+	public function create_site( $sitename, $url)
 	{
 		$stat_url = 'https://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
 
@@ -414,11 +509,10 @@ class Stats_Model extends ORM
 		$stat_id = (string) $xml->id[0];
 		$stat_key = (string) $xml->key[0];
 
-		if ($stat_id > 0){
-			$settings = ORM::factory('settings',1);
-			$settings->stat_id = $stat_id;
-			$settings->stat_key = $stat_key;
-			$settings->save();
+		if ($stat_id > 0)
+		{
+			Settings_Model::save_setting('stat_id', $stat_id);
+			Settings_Model::save_setting('stat_key', $stat_key);
 			return $stat_id;
 		}
 
@@ -429,25 +523,31 @@ class Stats_Model extends ORM
 	 * Helper function to send a cURL request
 	 * @param url - URL for cURL to hit
 	 */
-	public function _curl_req( $url )
+	public function _curl_req($url)
 	{
 		// Make sure cURL is installed
-		if ( ! function_exists('curl_exec')) {
+		if ( ! function_exists('curl_exec'))
+		{
 			throw new Kohana_Exception('stats.cURL_not_installed');
 			return false;
 		}
 
 		$curl_handle = curl_init();
-		curl_setopt($curl_handle,CURLOPT_URL,$url);
 
-		// Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
+		// cURL options
+		$curl_options = array(
+			CURLOPT_URL => $url,
 
-		curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT, 15);
+			// Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
+			CURLOPT_CONNECTTIMEOUT => 15,
 
-		// Set curl to store data in variable instead of print
+			// Set curl to store data in variable instead of print
+			CURLOPT_RETURNTRANSFER => 1,
 
-		curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1);
-		curl_setopt($curl_handle,CURLOPT_SSL_VERIFYPEER,false);
+			CURLOPT_SSL_VERIFYPEER => FALSE
+		);
+
+		curl_setopt_array($curl_handle, $curl_options);
 		$buffer = curl_exec($curl_handle);
 		curl_close($curl_handle);
 

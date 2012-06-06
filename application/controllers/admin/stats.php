@@ -33,11 +33,11 @@ class Stats_Controller extends Admin_Controller {
 		$this->template->content->title = Kohana::lang('ui_admin.statistics');
 
 		// Retrieve Current Settings
-		$settings = ORM::factory('settings', 1);
+		$stat_id = Settings_Model::get_setting('stat_id');
 
-		if ($settings->stat_id === NULL OR $settings->stat_id == 0)
+		if ($stat_id === NULL OR $stat_id == 0)
 		{
-			$sitename = $settings->site_name;
+			$sitename = Settings_Model::get_setting('site_name');
 			$url = url::base();
 			$this->template->content->stat_id = Stats_Model::create_site( $sitename, $url );
 		}

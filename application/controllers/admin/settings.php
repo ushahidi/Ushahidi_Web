@@ -127,41 +127,7 @@ class Settings_Controller extends Admin_Controller {
 			if ($post->validate() AND $files->validate(FALSE))
 			{
 				// Yes! everything is valid
-				$settings = new Settings_Model(1);
-				$settings->site_name = $post->site_name;
-				$settings->site_tagline = $post->site_tagline;
-				$settings->site_email = $post->site_email;
-				$settings->alerts_email = $post->alerts_email;
-				$settings->site_message = $post->site_message;
-				$settings->site_copyright_statement = $post->site_copyright_statement;
-				$settings->site_submit_report_message = $post->site_submit_report_message;
-				$settings->site_language = $post->site_language;
-				$settings->site_timezone = $post->site_timezone;
-				if($settings->site_timezone == "0")
-				{
-					// "0" is the "Server Timezone" setting and it needs to be null in the db
-					$settings->site_timezone = NULL;
-				}
-				$settings->site_contact_page = $post->site_contact_page;
-				$settings->items_per_page = $post->items_per_page;
-				$settings->items_per_page_admin = $post->items_per_page_admin;
-				$settings->blocks_per_row = $post->blocks_per_row;
-				$settings->allow_alerts = $post->allow_alerts;
-				$settings->allow_reports = $post->allow_reports;
-				$settings->allow_comments = $post->allow_comments;
-				$settings->allow_feed = $post->allow_feed;
-				$settings->allow_stat_sharing = $post->allow_stat_sharing;
-				$settings->cache_pages = $post->cache_pages;
-				$settings->cache_pages_lifetime = $post->cache_pages_lifetime;
-				$settings->private_deployment = $post->private_deployment;
-				$settings->manually_approve_users = $post->manually_approve_users;
-				$settings->require_email_confirmation = $post->require_email_confirmation;
-				$settings->checkins = $post->checkins;
-				$settings->google_analytics = $post->google_analytics;
-				$settings->twitter_hashtags = $post->twitter_hashtags;
-				$settings->api_akismet = $post->api_akismet;
-				$settings->date_modify = date("Y-m-d H:i:s",time());
-				$settings->save();
+				Settings_Model::save_all($post);
 
 				// Deal with banner image now
 
@@ -169,13 +135,10 @@ class Settings_Controller extends Admin_Controller {
 				if (isset($post->delete_banner_image) AND $post->delete_banner_image == 1)
 				{
 					// Delete old badge image
-					ORM::factory('media')->delete($settings->site_banner_id);
+					ORM::factory('media')->delete(Settings_Model::get_setting('site_banner_id'));
 
 					// Remove from DB table
-					$settings = new Settings_Model(1);
-					$settings->site_banner_id = NULL;
-					$settings->save();
-
+					Settings_Model::save_setting('site_banner_id', NULL);
 				}
 				else
 				{
@@ -234,9 +197,7 @@ class Settings_Controller extends Admin_Controller {
 						$media->save();
 
 						// Save new banner image in settings
-						$settings = new Settings_Model(1);
-						$settings->site_banner_id = $media->id;
-						$settings->save();
+						Settings_Model::save_setting('site_banner_id', $media->id);
 					}
 				}
 
@@ -263,10 +224,13 @@ class Settings_Controller extends Admin_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// populate the error fields, if any
-				if(is_array($files->errors()) AND count($files->errors()) > 0){
+				if (is_array($files->errors()) AND count($files->errors()) > 0)
+				{
 					// Error with file upload
 					$errors = arr::overwrite($errors, $files->errors('settings'));
-				}else{
+				}
+				else
+				{
 					// Error with other form filed
 					$errors = arr::overwrite($errors, $post->errors('settings'));
 				}
@@ -276,42 +240,44 @@ class Settings_Controller extends Admin_Controller {
 		}
 		else
 		{
+			$settings = Settings_Model::get_array();
+
 			$form = array(
-				'site_name' => $settings->site_name,
-				'site_tagline' => $settings->site_tagline,
-				'site_banner_id' => $settings->site_banner_id,
-				'site_email' => $settings->site_email,
-				'alerts_email' => $settings->alerts_email,
-				'site_message' => $settings->site_message,
-				'site_copyright_statement' => $settings->site_copyright_statement,
-				'site_submit_report_message' => $settings->site_submit_report_message,
-				'site_language' => $settings->site_language,
-				'site_timezone' => $settings->site_timezone,
-				'site_contact_page' => $settings->site_contact_page,
-				'items_per_page' => $settings->items_per_page,
-				'items_per_page_admin' => $settings->items_per_page_admin,
-				'blocks_per_row' => $settings->blocks_per_row,
-				'allow_alerts' => $settings->allow_alerts,
-				'allow_reports' => $settings->allow_reports,
-				'allow_comments' => $settings->allow_comments,
-				'allow_feed' => $settings->allow_feed,
-				'allow_stat_sharing' => $settings->allow_stat_sharing,
-				'cache_pages' => $settings->cache_pages,
-				'cache_pages_lifetime' => $settings->cache_pages_lifetime,
-				'private_deployment' => $settings->private_deployment,
-				'manually_approve_users' => $settings->manually_approve_users,
-				'require_email_confirmation' => $settings->require_email_confirmation,
-				'checkins' => $settings->checkins,
-				'google_analytics' => $settings->google_analytics,
-				'twitter_hashtags' => $settings->twitter_hashtags,
-				'api_akismet' => $settings->api_akismet
+				'site_name' => $settings['site_name'],
+				'site_tagline' => $settings['site_tagline'],
+				'site_banner_id' => $settings['site_banner_id'],
+				'site_email' => $settings['site_email'],
+				'alerts_email' => $settings['alerts_email'],
+				'site_message' => $settings['site_message'],
+				'site_copyright_statement' => $settings['site_copyright_statement'],
+				'site_submit_report_message' => $settings['site_submit_report_message'],
+				'site_language' => $settings['site_language'],
+				'site_timezone' => $settings['site_timezone'],
+				'site_contact_page' => $settings['site_contact_page'],
+				'items_per_page' => $settings['items_per_page'],
+				'items_per_page_admin' => $settings['items_per_page_admin'],
+				'blocks_per_row' => $settings['blocks_per_row'],
+				'allow_alerts' => $settings['allow_alerts'],
+				'allow_reports' => $settings['allow_reports'],
+				'allow_comments' => $settings['allow_comments'],
+				'allow_feed' => $settings['allow_feed'],
+				'allow_stat_sharing' => $settings['allow_stat_sharing'],
+				'cache_pages' => $settings['cache_pages'],
+				'cache_pages_lifetime' => $settings['cache_pages_lifetime'],
+				'private_deployment' => $settings['private_deployment'],
+				'manually_approve_users' => $settings['manually_approve_users'],
+				'require_email_confirmation' => $settings['require_email_confirmation'],
+				'checkins' => $settings['checkins'],
+				'google_analytics' => $settings['google_analytics'],
+				'twitter_hashtags' => $settings['twitter_hashtags'],
+				'api_akismet' => $settings['api_akismet']
 			);
 		}
 
 		// Get banner image
-		if ($settings->site_banner_id != NULL)
+		if (($site_banner_id = Settings_Model::get_setting('site_banner_id')) !== NULL)
 		{
-			$banner = ORM::factory('media')->find($settings->site_banner_id);
+			$banner = ORM::factory('media')->find($site_banner_id);
 			$this->template->content->banner = url::convert_uploaded_to_abs($banner->media_link);
 			$this->template->content->banner_m = url::convert_uploaded_to_abs($banner->media_medium);
 			$this->template->content->banner_t = url::convert_uploaded_to_abs($banner->media_thumb);
@@ -395,6 +361,7 @@ class Settings_Controller extends Admin_Controller {
 			'default_map_all' => '',
 			'allow_clustering' => '',
 			'default_map_all_icon' => '',
+			'default_map_all_icon_id' => '',
 			'delete_default_map_all_icon' => ''
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
@@ -429,28 +396,17 @@ class Settings_Controller extends Admin_Controller {
 			// Test to see if things passed the rule checks
 			if ($post->validate() AND $files->validate(FALSE))
 			{
-				// Yes! everything is valid
-				$settings = new Settings_Model(1);
-				$settings->default_country = $post->default_country;
-				$settings->multi_country = $post->multi_country;
-				$settings->default_map = $post->default_map;
-				$settings->api_google = $post->api_google;
+				// Save all the settings
+				Settings_Model::save_all($post);
 				
 				// E.Kala 20th April 2012
-				// Gangsta workaround prevent resetting og Bing Maps API Key
+				// Ghetto workaround prevent resetting og Bing Maps API Key
 				// Soon to be addressed conclusively
 				if (isset($post['api_live']) AND ! empty($post['api_live']))
 				{
-					$settings->api_live = $post->api_live;
+					Settings_Model::save_setting('api_live', $post->api_live);
 				}
 
-				$settings->default_zoom = $post->default_zoom;
-				$settings->default_lat = $post->default_lat;
-				$settings->default_lon = $post->default_lon;
-				$settings->allow_clustering = $post->allow_clustering;
-				$settings->default_map_all = $post->default_map_all;
-				$settings->date_modify = date("Y-m-d H:i:s",time());
-				$settings->save();
 				
 				// Deal with default category icon now
 
@@ -458,12 +414,10 @@ class Settings_Controller extends Admin_Controller {
 				if( isset($post->delete_default_map_all_icon) AND $post->delete_default_map_all_icon == 1)
 				{
 					// Delete old badge image
-					ORM::factory('media')->delete($settings->default_map_all_icon_id);
+					ORM::factory('media')->delete(Settings_Model::get_setting('default_map_all_icon_id'));
 
 					// Remove from DB table
-					$settings = new Settings_Model(1);
-					$settings->default_map_all_icon_id = NULL;
-					$settings->save();
+					Settings_Model::save_setting('default_map_all_icon_id', NULL);
 
 				}
 				else
@@ -523,9 +477,7 @@ class Settings_Controller extends Admin_Controller {
 						$media->save();
 
 						// Save new image in settings
-						$settings = new Settings_Model(1);
-						$settings->default_map_all_icon_id = $media->id;
-						$settings->save();
+						Settings_Model::save_setting('default_map_all_icon_id', $media->id);
 					}
 				}
 				
@@ -560,28 +512,27 @@ class Settings_Controller extends Admin_Controller {
 		else
 		{
 			// Retrieve Current Settings
-			$settings = ORM::factory('settings', 1);
+			$settings = Settings_Model::get_settings(array_keys($form));
 
 			$form = array(
-				'default_map' => $settings->default_map,
-				'api_google' => $settings->api_google,
-				'api_live' => $settings->api_live,
-				'default_country' => $settings->default_country,
-				'multi_country' => $settings->multi_country,
-				'default_lat' => $settings->default_lat,
-				'default_lon' => $settings->default_lon,
-				'default_zoom' => $settings->default_zoom,
-				'allow_clustering' => $settings->allow_clustering,
-				'default_map_all' => $settings->default_map_all,
-				'default_map_all_icon_id' => $settings->default_map_all_icon_id,
+				'default_map' => $settings['default_map'],
+				'api_google' => $settings['api_google'],
+				'api_live' => $settings['api_live'],
+				'default_country' => $settings['default_country'],
+				'multi_country' => $settings['multi_country'],
+				'default_lat' => $settings['default_lat'],
+				'default_lon' => $settings['default_lon'],
+				'default_zoom' => $settings['default_zoom'],
+				'allow_clustering' => $settings['allow_clustering'],
+				'default_map_all' => $settings['default_map_all'],
+				'default_map_all_icon_id' => $settings['default_map_all_icon_id'],
 			);
 		}
 
 		// Get default category image
-		$settings = ORM::factory('settings', 1);
-		if ($settings->default_map_all_icon_id != NULL)
+		if (($default_map_all_icon_id = Settings_Model::get_setting('default_map_all_icon_id')) !== NULL)
 		{
-			$icon = ORM::factory('media')->find($settings->default_map_all_icon_id);
+			$icon = ORM::factory('media')->find($default_map_all_icon_id);
 			$this->template->content->default_map_all_icon = url::convert_uploaded_to_abs($icon->media_link);
 			$this->template->content->default_map_all_icon_m = url::convert_uploaded_to_abs($icon->media_medium);
 			$this->template->content->default_map_all_icon_t = url::convert_uploaded_to_abs($icon->media_thumb);
@@ -688,13 +639,7 @@ class Settings_Controller extends Admin_Controller {
 			if ($post->validate())
 			{
 				// Yes! everything is valid
-				$settings = new Settings_Model(1);
-				$settings->sms_provider = $post->sms_provider;
-				$settings->sms_no1 = $post->sms_no1;
-				$settings->sms_no2 = $post->sms_no2;
-				$settings->sms_no3 = $post->sms_no3;
-				$settings->date_modify = date("Y-m-d H:i:s",time());
-				$settings->save();
+				Settings_Model::save_all($post);
 
 				// Delete Settings Cache
 				$this->cache->delete('settings');
@@ -722,14 +667,14 @@ class Settings_Controller extends Admin_Controller {
 		}
 		else
 		{
+			$settings = Settings_Model::get_settings(array_keys($form))
+			;
 			// Retrieve Current Settings
-			$settings = ORM::factory('settings', 1);
-
 			$form = array(
-				'sms_provider' => $settings->sms_provider,
-				'sms_no1' => $settings->sms_no1,
-				'sms_no2' => $settings->sms_no2,
-				'sms_no3' => $settings->sms_no3
+				'sms_provider' => $settings['sms_provider'],
+				'sms_no1' => $settings['sms_no1'],
+				'sms_no2' => $settings['sms_no2'],
+				'sms_no3' => $settings['sms_no3']
 			);
 		}
 
@@ -790,22 +735,11 @@ class Settings_Controller extends Admin_Controller {
 			if ($post->validate())
 			{
 				// Yes! everything is valid
-				$settings = new Settings_Model(1);
-				$settings->email_username = $post->email_username;
-				$settings->email_password = $post->email_password;
-				$settings->email_port = $post->email_port;
-				$settings->email_host = $post->email_host;
-				$settings->email_servertype = $post->email_servertype;
-				$settings->email_ssl = $post->email_ssl;
-				$settings->save();
-
-				//add details to application/config/email.php
-				//$this->_add_email_settings($settings);
+				Settings_Model::save_all($post);
 
 				// Delete Settings Cache
 				$this->cache->delete('settings');
 				$this->cache->delete_tag('settings');
-
 
 				// Everything is A-Okay!
 				$form_saved = TRUE;
@@ -830,15 +764,15 @@ class Settings_Controller extends Admin_Controller {
 		else
 		{
 			// Retrieve Current Settings
-			$settings = ORM::factory('settings', 1);
+			$settings = Settings_Model::get_settings(array_keys($form));
 
 			$form = array(
-				'email_username' => $settings->email_username,
-				'email_password' => $settings->email_password,
-				'email_port' => $settings->email_port,
-				'email_host' => $settings->email_host,
-				'email_servertype' => $settings->email_servertype,
-				'email_ssl' => $settings->email_ssl
+				'email_username' => $settings['email_username'],
+				'email_password' => $settings['email_password'],
+				'email_port' => $settings['email_port'],
+				'email_host' => $settings['email_host'],
+				'email_servertype' => $settings['email_servertype'],
+				'email_ssl' => $settings['email_ssl']
 			);
 		}
 
