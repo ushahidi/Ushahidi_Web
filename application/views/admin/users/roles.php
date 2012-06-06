@@ -152,7 +152,7 @@
 										</td>
 										<td class="col-3">&nbsp;</td>
 										<td class="col-4">
-											<?php if($role_id == 1 OR $role_id == 3 OR $role->name == "member") { echo "&nbsp;";
+											<?php if($role_id == 1 OR $role_id == 3 OR $role_id == 4) { echo "&nbsp;";
 											
 											} else {?>
 											<ul>

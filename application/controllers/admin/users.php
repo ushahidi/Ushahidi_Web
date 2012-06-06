@@ -271,7 +271,7 @@ class Users_Controller extends Admin_Controller {
 				$post->add_rules('access_level', 'required', 'between[0,100]', 'numeric');
 				$post->add_rules('permissions[]', 'numeric');
 
-				if ($post->role_id == "3")
+				if ($post->role_id == "3" || $post->role_id == "1" || $post->role_id == "4")
 				{
 					$post->add_error('name', 'nomodify');
 				}
