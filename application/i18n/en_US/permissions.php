@@ -15,5 +15,7 @@
 		"users" => "Manage Users",
 		"manage_roles" => "Manage Roles",
 		"checkin" => "Can checkin",
-		"checkin_admin" => "Manage checkins"
+		"checkin_admin" => "Manage checkins",
+		"admin_ui" => "Access Admin UI",
+		"member_ui" => "Access Members UI"
 	);
