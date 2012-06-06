@@ -49,9 +49,10 @@ class S_Twitter_Controller extends Controller {
 		{
 			$last_tweet_id = "&since_id=" . $tweets->service_messageid;
 		}
-
-		//Perform Hashtag Search
-		$hashtags = explode(',',$settings->twitter_hashtags);
+		
+		// Perform Hashtag Search
+		$twitter_hashtags = Settings_Model::get_setting('twitter_hashtags');
+		$hashtags = explode(',',$twitter_hashtags);
 		foreach($hashtags as $hashtag){
 			if (!empty($hashtag))
 			{
