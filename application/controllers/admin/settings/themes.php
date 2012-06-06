@@ -22,7 +22,7 @@ class Themes_Controller extends Admin_Controller
 		$this->template->this_page = Kohana::lang('ui_admin.settings');
 		
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "settings"))
+		if ( ! $this->auth->has_permission("settings"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}

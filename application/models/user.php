@@ -17,10 +17,11 @@
 
 class User_Model extends Auth_User_Model {
 
-	protected $has_many = array('alert', 'comment', 'openid', 'private_message', 'user');
-
+	protected $has_many = array('alert', 'comment', 'openid', 'private_message', 'rating');
+	
 	/**
 	 * Creates a basic user and assigns to login and member roles
+	 * 
 	 * @param   string  email
 	 * @param   string  password
 	 * @param   string  riverid user id
@@ -275,5 +276,83 @@ class User_Model extends Auth_User_Model {
 		return FALSE;
 	}
 
+
+	/**
+	 * Overrides the default delete method for the ORM.
+	 * Deletes roles associated with the user before user is removed from DB.
+	 */
+	public function delete()
+	{
+		// Remove assigned roles
+		// Have to use db->query() since we don't have an ORM model for roles_users
+		$this->db->query('DELETE FROM roles_users WHERE user_id = ?',$this->id);
+		
+		// Remove assigned badges
+		$this->db->query('DELETE FROM badge_users WHERE user_id = ?',$this->id);
+
+		// Delete alerts
+		ORM::factory('alert')
+		    ->where('user_id', $this->id)
+		    ->delete_all();
+		
+		// Delete user_token
+		ORM::factory('user_token')
+		    ->where('user_id', $this->id)
+		    ->delete_all();
+		
+		// Delete openid
+		ORM::factory('openid')
+		    ->where('user_id', $this->id)
+		    ->delete_all();
+
+		// Delete user_devices
+		ORM::factory('user_devices')
+		    ->where('user_id', $this->id)
+		    ->delete_all();
+		
+		parent::delete();
+	}
+	
+	/**
+	 * Check if user has specified permission
+	 * @param $permission String permission name
+	 **/
+	public function has_permission($permission)
+	{
+		// Special case - superadmin ALWAYS has all permissions
+		if ($this->has(ORM::factory('role','superadmin')))
+		{
+			return TRUE;
+		}
+		
+		foreach ($this->roles as $user_role)
+		{
+			if ($user_role->has(ORM::factory('permission',$permission)))
+			{
+				return TRUE;
+			}
+		}
+		
+		return FALSE;
+	}
+	
+	/**
+	 * Get user's dashboard
+	 */
+	public function dashboard()
+	{
+		if ($this->has_permission('admin_ui'))
+			return 'admin';
+		
+		if ($this->has_permission('member_ui'))
+			return 'members';
+		
+		// Just in case someone has a login only role
+		if ($this->has(ORM::factory('role','login')))
+			return '';
+		
+		// Send anyone else to login
+		return 'login';
+	}
 
 } // End User_Model

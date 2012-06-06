@@ -70,13 +70,6 @@ class Main_Controller extends Template_Controller {
         // Load Header & Footer
 		$this->template->header  = new View('header');
 		$this->template->footer  = new View('footer');
-		
-		// Get session information
-		$auth = Auth::instance();
-		if($auth->logged_in())
-		{
-			$this->user = new User_Model($_SESSION['auth_user']->id);
-		}
 
 		// Themes Helper
 		$this->themes = new Themes();
@@ -141,7 +134,7 @@ class Main_Controller extends Template_Controller {
 		if ( isset(Auth::instance()->get_user()->id) )
 		{
 			// Load User
-			$this->template->header->header_nav->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
+			$this->template->header->header_nav->loggedin_role = Auth::instance()->get_user()->dashboard();
 			$this->template->header->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header->header_nav->site_name = Kohana::config('settings.site_name');

@@ -13,6 +13,9 @@
 	'access_level' => array(
 		'numeric' => 'Access Level field must be a number between 0 - 100.',
 		'required' => 'Access Level field must be a number between 0 - 100.',
+	),
+	'permissions' => array(
+		'numeric' => 'Permissions field must be a number between 0 - 100.',
 	)
 	);
 ?>

@@ -22,7 +22,7 @@ class Checkins_Controller extends Admin_Controller
         $this->template->this_page = 'checkins';
         
         // If user doesn't have access, redirect to dashboard
-        if ( ! admin::permissions($this->user, "checkin_admin"))
+        if ( ! $this->auth->has_permission("checkin_admin"))
         {
             url::redirect(url::site().'admin/dashboard');
         }

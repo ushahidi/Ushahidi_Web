@@ -20,7 +20,11 @@ abstract class Controller extends Controller_Core {
 	{
 		parent::__construct();
 
-		$this->auth = new Auth();
+		$this->auth = Auth::instance();
+
+		// Get session information
+		$this->user = Auth::instance()->get_user();
+
 		// Are we logged in? if not, do we have an auto-login cookie?
 		if (! $this->auth->logged_in()) {
 			$this->auth->auto_login();

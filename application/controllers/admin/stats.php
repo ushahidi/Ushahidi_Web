@@ -21,7 +21,7 @@ class Stats_Controller extends Admin_Controller {
 		$this->template->this_page = 'stats';
 
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions($this->user, "stats"))
+		if ( ! $this->auth->has_permission("stats"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}

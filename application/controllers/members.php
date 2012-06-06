@@ -48,17 +48,21 @@ class Members_Controller extends Template_Controller
 		$this->db = new Database();
 
 		$this->session = Session::instance();
-		
-		if ( ! $this->auth->logged_in('login') OR ! $this->auth->logged_in('member'))
+
+		if ( ! $this->auth->logged_in('login'))
 		{
 			url::redirect('login');
 		}
 
+		// Check if user has the right to see the user dashboard
+		if( ! $this->auth->has_permission('member_ui'))
+		{
+			// This user isn't allowed in the admin panel
+			url::redirect('/');
+		}
+
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
-
-		// Get Session Information
-		$this->user = new User_Model($_SESSION['auth_user']->id);
 
 		$this->template->admin_name = $this->user->name;
 		
@@ -98,7 +102,7 @@ class Members_Controller extends Template_Controller
 		if ( isset(Auth::instance()->get_user()->id) )
 		{
 			// Load User
-			$this->template->header_nav->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
+			$this->template->header_nav->loggedin_role = Auth::instance()->get_user()->dashboard();
 			$this->template->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
