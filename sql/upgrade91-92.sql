@@ -89,3 +89,6 @@ INSERT INTO permissions_roles (role_id, permission_id)
 /* Grant admin to any role with permissions other than checkin */
 INSERT IGNORE INTO permissions_roles (role_id, permission_id)
   SELECT DISTINCT role_id, 18 as permission_id FROM permissions_roles WHERE permission_id IN (1,2,3,4,5,6,7,8,9,10,11,12,13,15,16,17);
+
+-- Update the DB version
+UPDATE `settings` SET `value` = 92 WHERE `key` = 'db_version';
