@@ -66,17 +66,17 @@ class admin_Core {
 			if ($user)
 			{
 				// Check permissions for settings panel
-				$main_right_tabs = (self::permissions('settings', $user))
+				$main_right_tabs = (Auth::instance()->has_permission('settings', $user))
 					? arr::merge($main_right_tabs, array('settings/site' => Kohana::lang('ui_admin.settings')))
 					: $main_right_tabs;
 
 				// Check permissions for the manage panel
-				$main_right_tabs = (self::permissions('manage', $user))
+				$main_right_tabs = (Auth::instance()->has_permission('manage', $user))
 					? arr::merge($main_right_tabs, array('manage' => Kohana::lang('ui_admin.manage')))
 					: $main_right_tabs;
 
 				// Check permissions for users panel
-				$main_right_tabs = (self::permissions('users', $user))
+				$main_right_tabs = (Auth::instance()->has_permission('users', $user))
 					? arr::merge($main_right_tabs, array('users' => Kohana::lang('ui_admin.users')))
 					: $main_right_tabs;
 			}
@@ -277,72 +277,22 @@ class admin_Core {
 		// Action::nav_admin_users - Add items to the admin manage navigation tabs
 		Event::run('ushahidi_action.nav_admin_users', $this_sub_page);
 	}
-
-	/*
-	 * Check if user has specified permission
-	 * @param $user User_Model
-	 * @param $permission String permission name
-	 **/
-	public static function permissions($permission = FALSE, $user = FALSE)
-	{
-		// Get current user if none passed
-		if (!$user)
-		{
-			$user = Auth::instance()->get_user();
-		}
-
-		if ($user AND $permission)
-		{
-			// Special case - superadmin ALWAYS has all permissions
-			if ($user->has(ORM::factory('role','superadmin')))
-			{
-				return TRUE;
-			}
-			
-			foreach ($user->roles as $user_role)
-			{
-				if ($user_role->has(ORM::factory('permission',$permission)))
-				{
-					return TRUE;
-				}
-			}
-		}
-		
-		return FALSE;
-	}
-
+	
 	/**
-	 * Check if user has admin_access
-	 * 
-	 * If any of the users roles allows them to access anything, put them on the admin page,
-	 * otherwise send them to the front end.
-	 * 
-	 * @param object $user
-	 * @return bool TRUE if has any permission to access anything. FALSE if not (essentially login only level)
+	 * Legacy permissions check
+	 * Use Auth::has_permission() instead.
 	 */
-	public static function admin_access($user = FALSE)
+	public function permissions($user = FALSE, $permission = FALSE)
 	{
-		// Get current user if none passed
-		if (!$user)
-		{
-			$user = Auth::instance()->get_user();
-		}
-
-		if($user) {
-			// Special case - superadmin ALWAYS has admin access
-			if ($user->has(ORM::factory('role','superadmin')))
-			{
-				return TRUE;
-			}
-			
-			foreach ($user->roles as $user_role)
-			{
-				if ( $user_role->allow_admin() )
-					return TRUE;
-				//if ( $user_role->has(ORM::Factory('permission','admin_pages')) ) return TRUE;
-			}
-		}
-
-		return FALSE;
+		return Auth::instance()->has_permission($permission, $user);
+	}
+	
+	/**
+	 * Legacy admin access check
+	 * Use Auth::admin_access() instead.
+	 */
+	public function admin_access($user = FALSE)
+	{
+		return Auth::instance()->admin_access($user);
 	}
 }

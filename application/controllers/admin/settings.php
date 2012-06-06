@@ -22,7 +22,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->this_page = 'settings';
 
 		// If user doesn't have access, redirect to dashboard
-		if ( ! admin::permissions("settings"))
+		if ( ! $this->auth->has_permission("settings"))
 		{
 			url::redirect(url::site().'admin/dashboard');
 		}

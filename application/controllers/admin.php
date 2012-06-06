@@ -85,9 +85,16 @@ class Admin_Controller extends Template_Controller
 		$this->themes = new Themes();
 
 		// Admin is not logged in, or this is a member (not admin)
-		if ( ! $this->auth->logged_in('login') OR $this->auth->logged_in('member'))
+		if ( ! $this->auth->logged_in('login'))
 		{
 			url::redirect('login');
+		}
+
+		// Check if user has the right to see the admin panel
+		if( ! $this->auth->admin_access())
+		{
+			// This user isn't allowed in the admin panel
+			url::redirect('/');
 		}
 
 		// Set Table Prefix
@@ -96,13 +103,6 @@ class Admin_Controller extends Template_Controller
 
 		// Get the no. of items to display setting
 		$this->items_per_page = (int) Kohana::config('settings.items_per_page_admin');
-
-		// Check if user has the right to see the admin panel
-		if(admin::admin_access() == FALSE)
-		{
-			// This user isn't allowed in the admin panel
-			url::redirect('/');
-		}
 
 		$this->template->admin_name = $this->user->name;
 
@@ -131,7 +131,7 @@ class Admin_Controller extends Template_Controller
 		// Generate main tab navigation list.
 		$this->template->main_tabs = admin::main_tabs();
 		// Generate sub navigation list (in default layout, sits on right side).
-        $this->template->main_right_tabs = admin::main_right_tabs($this->user);
+		$this->template->main_right_tabs = admin::main_right_tabs($this->user);
 
 		$this->template->this_page = "";
 
@@ -145,7 +145,7 @@ class Admin_Controller extends Template_Controller
 		if ( isset(Auth::instance()->get_user()->id) )
 		{
 			// Load User
-			$this->template->header_nav->loggedin_role = ( Auth::instance()->logged_in('member') ) ? "members" : "admin";
+			$this->template->header_nav->loggedin_role = Auth::instance()->get_user()->dashboard();
 			$this->template->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
