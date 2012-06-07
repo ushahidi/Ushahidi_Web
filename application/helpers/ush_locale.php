@@ -209,7 +209,7 @@ class ush_locale_Core
 		}
 		else
 		{
-			return Kohana::lang('ui_admin.unknown');
+			return FALSE;
 		}
 	}
 
@@ -512,10 +512,11 @@ class ush_locale_Core
 					continue;
 
 				$locale = explode("_", $i18n_dir);
-				if ( count($locale) < 2 )
+				if ( count($locale) < 2 AND ! ush_locale::language($locale[0]))
 					continue;
 
-				$locales[$i18n_dir] = ush_locale::language($locale[0])." (".$locale[1].")";
+				$locales[$i18n_dir] = ush_locale::language($locale[0]);
+				$locales[$i18n_dir] .= isset($locale[1]) ? " (".$locale[1].")" : "";
 			}
 		}
 
