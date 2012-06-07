@@ -98,8 +98,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 			           // Build out the parameters
                                    $lat = $this->check_cordinate_value($this->request['latitude']);
                                    $lon = $this->check_cordinate_value($this->request['longitude']);
-                                   //$lat = $this->request['latitude'];
-                                   //$lon = $this->request['longitude'];
                                    $params = array(
                                                 'l.latitude = '.$this->request['latitude'],
                                                 'l.longitude = '.$this->request['longitude']
@@ -111,7 +109,8 @@ class Incidents_Api_Object extends Api_Object_Core {
                                         ));
 
                                         return;
-                                   } else
+                                   }
+                                   else
                                    {
                                         if(isset($this->request['radius']))
                                         {
@@ -274,14 +273,8 @@ class Incidents_Api_Object extends Api_Object_Core {
 
 			// Get incidents based on a box using two lat,lon coords
 			case "bounds":
-                                if (isset($this->request['c']))
-                                {
-                                    $this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne'],$this->request['c']);
-                                } 
-                                else
-                                {
-                                    $this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne'],0);
-                                }
+                                $c = isset($this->request['c']) ? $this->request['c'] : 0;
+                                $this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne'],$c);
 			break;
 
 			// Error therefore set error message
@@ -924,4 +917,17 @@ class Incidents_Api_Object extends Api_Object_Core {
 			? $this->array_as_json($data)
 			: $this->array_as_xml($data, $replar);
 	}
+       protected function check_cordinate_value($cord)
+       {
+            if(is_numeric($cord))
+            {
+               $this->cord = floatval($cord);
+            } 
+            else 
+            {
+               $this->cord = Null;
+            }
+            return $this->cord;
+       }
+
 }
