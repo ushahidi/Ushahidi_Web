@@ -25,9 +25,6 @@ class Members_Controller extends Template_Controller
 
 	// Enable auth
 	protected $auth_required = FALSE;
-	
-	// User Object
-	protected $user;
 
 	// Table Prefix
 	protected $table_prefix;

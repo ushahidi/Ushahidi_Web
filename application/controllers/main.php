@@ -54,9 +54,6 @@ class Main_Controller extends Template_Controller {
 	 */
 	protected $themes;
 
-	// User Object
-	protected $user;
-
 	public function __construct()
 	{
 		parent::__construct();
