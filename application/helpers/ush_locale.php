@@ -515,7 +515,7 @@ class ush_locale_Core
 				if ( count($locale) < 2 AND ! ush_locale::language($locale[0]))
 					continue;
 
-				$locales[$i18n_dir] = ush_locale::language($locale[0]);
+				$locales[$i18n_dir] = ush_locale::language($locale[0]) ? ush_locale::language($locale[0]) : $locale[0];
 				$locales[$i18n_dir] .= isset($locale[1]) ? " (".$locale[1].")" : "";
 			}
 		}
