@@ -1,3 +1,0 @@
-Go to http://github.com/ushahidi/Ushahidi-Localizations to download up to date localizations. Also, you can contribute to the localization effort by forking that repository and adding your own translations.
-
-Thank you!
