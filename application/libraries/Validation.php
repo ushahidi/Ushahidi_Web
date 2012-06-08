@@ -740,7 +740,7 @@ class Validation_Core extends ArrayObject {
 					// Don't get the default message because we rarely set it. Pass the key since it will
 					//   provide more clues as to the problem than what we are currently providing. Also,
 					//   this allows "custom" inputs to pass through, bypassing localization by design
-					$errors[$input] = $error;
+					//$errors[$input] = $key;
 				}
 			}
 
