@@ -105,7 +105,7 @@ class reports_Core {
 			$country = Country_Model::get_country_by_name($post->country_name);
 			if ($country AND $country->id != Kohana::config('settings.default_country'))
 			{
-				$post->add_error('country_name','single_country');
+				$post->add_error('country_name','single_country', array(ORM::factory('country', Kohana::config('settings.default_country'))->country) );
 			}
 		}
 		
