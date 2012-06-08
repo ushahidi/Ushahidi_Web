@@ -84,10 +84,8 @@ class Upgrade_Controller extends Admin_Controller {
 				$this->session->set('ftp_user_name', $post->ftp_user_name);
 				$this->session->set('ftp_user_pass', $post->ftp_user_pass);
 				
-				$settings = ORM::factory("settings")->find(1);
-				$settings->ftp_server = $post->ftp_server;
-				$settings->ftp_user_name = $post->ftp_user_name;
-				$settings->save();
+				Settings_Model::save_setting('ftp_server', $post->ftp_server);
+				Settings_Model::save_setting('ftp_user_name', $post->ftp_user_name);
 				
 				// Log file location
 				$this->template->js->log_file = url::site(). "admin/upgrade/logfile?f=".$this->session->get('upgrade_session').".txt";
@@ -110,9 +108,8 @@ class Upgrade_Controller extends Admin_Controller {
 			$this->template->js = new View('admin/upgrade/upgrade_js');
 		}
 		
-		$settings = ORM::factory("settings")->find(1);
-		$this->template->content->ftp_server = $settings->ftp_server;
-		$this->template->content->ftp_user_name = $settings->ftp_user_name;
+		$this->template->content->ftp_server = Settings_Model::get_setting('ftp_server');
+		$this->template->content->ftp_user_name = Settings_Model::get_setting('ftp_user_name');
 		
 		$this->template->content->form_action = $form_action;
 		$this->template->content->current_version = Kohana::config('settings.ushahidi_version');
@@ -383,11 +380,8 @@ class Upgrade_Controller extends Admin_Controller {
 	private function _get_db_version()
 	{
 			
-	   // get the db version from the settings page
-		$this->db = new Database();
-		$sql = 'SELECT db_version from '.Kohana::config('database.default.table_prefix').'settings';
-		$settings = $this->db->query($sql);
-		$version_in_db = $settings[0]->db_version;
+		// get the db version from the settings page
+		$version_in_db = Settings_Model::get_setting('db_version');
 		
 		// Update DB
 		$db_version = $version_in_db;
