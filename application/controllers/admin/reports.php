@@ -310,7 +310,7 @@ class Reports_Controller extends Admin_Controller {
 		// Setup and initialize form field names
 		$form = array(
 			'location_id' => '',
-			'form_id' => '1',
+			'form_id' => '',
 			'locale' => '',
 			'incident_title' => '',
 			'incident_description' => '',
@@ -360,6 +360,7 @@ class Reports_Controller extends Admin_Controller {
 		// why should I care. Just know that when your Ush system crashes
 		// because you have 1000 concurrent users you'll need to do this
 		// correctly. Etherton.
+		$form['form_id'] = 1;
 		$form_id = $form['form_id'];
 		if ($id AND Incident_Model::is_valid_incident($id, FALSE))
 		{
@@ -662,7 +663,7 @@ class Reports_Controller extends Admin_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// Populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('report'));
+				$errors = arr::merge($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
 		}
@@ -1120,7 +1121,7 @@ class Reports_Controller extends Admin_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// Populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('report'));
+				$errors = arr::merge($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
 		}
@@ -1308,7 +1309,7 @@ class Reports_Controller extends Admin_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// Populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('report'));
+				$errors = arr::merge($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
 		}
