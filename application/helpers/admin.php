@@ -244,6 +244,8 @@ class admin_Core {
 
 		$menu .= ($this_sub_page == "badges") ? Kohana::lang('ui_main.badges') : "<a href=\"".url::site()."admin/manage/badges\">".Kohana::lang('ui_main.badges')."</a>";
 
+		$menu .= ($this_sub_page == "alerts") ? Kohana::lang('ui_admin.alerts') : "<a href=\"".url::site()."admin/manage/alerts\">".Kohana::lang('ui_admin.alerts')."</a>";
+
 		echo $menu;
 
 		// Action::nav_admin_manage - Add items to the admin manage navigation tabs
