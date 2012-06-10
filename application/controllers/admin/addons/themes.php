@@ -62,9 +62,7 @@ class Themes_Controller extends Admin_Controller {
 	        if ($post->validate())
 	        {
 	            // Yes! everything is valid
-				$settings = new Settings_Model(1);
-				$settings->site_style = $post->site_style;
-				$settings->save();
+				Settings_Model::save_setting('site_style',$post->site_style);
 				
 				//add details to application/config/email.php
 				//$this->_add_email_settings($settings);
@@ -98,11 +96,9 @@ class Themes_Controller extends Admin_Controller {
 		else
 		{
 			// Retrieve Current Settings
-			$settings = ORM::factory('settings', 1);
-
 			$form = array
 		    (
-		        'site_style' => $settings->site_style
+		        'site_style' => Settings_Model::get_setting('site_style')
 		    );
 		}
 		
