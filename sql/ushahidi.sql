@@ -1083,7 +1083,7 @@ INSERT IGNORE INTO `permissions` VALUES
  */
 
 CREATE TABLE IF NOT EXISTS `permission_roles` (
-  `role_id` int(11) NOT NULL,
+  `role_id` INT( 11 ) UNSIGNED NOT NULL,
   `permission_id` int(11) NOT NULL,
   PRIMARY KEY (`role_id`,`permission_id`)
 ) ENGINE=MyISAM COMMENT='Stores permissions assigned to roles';
@@ -1491,5 +1491,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '92' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '93' WHERE `key` = 'db_version';
 UPDATE `settings` SET `value` = '2.4' WHERE `key`= 'ushahidi_version';
