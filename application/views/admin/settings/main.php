@@ -61,7 +61,7 @@
 										<div id="city_count"></div>
 									</div>
 									<div>
-										<?php echo Kohana::lang('settings.multiple_countries');?>?<br />
+										<?php echo Kohana::lang('settings.multiple_countries');?><br />
 										<input type="radio" name="multi_country" value="1"
 										<?php if ($form['multi_country'] == 1)
 										{

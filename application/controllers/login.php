@@ -16,9 +16,6 @@
 class Login_Controller extends Template_Controller {
 
 	public $auto_render = TRUE;
-
-	protected $user;
-
 	// Session Object
 	protected $session;
 

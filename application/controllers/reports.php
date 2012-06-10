@@ -297,7 +297,7 @@ class Reports_Controller extends Main_Controller {
 			'person_first' => '',
 			'person_last' => '',
 			'person_email' => '',
-			'form_id'	  => '1',
+			'form_id'	  => '',
 			'custom_field' => array()
 		);
 
@@ -318,6 +318,7 @@ class Reports_Controller extends Main_Controller {
 		$form['country_name'] = $country_name->country;
 
 		// Initialize custom field array
+		$form['form_id'] = 1;
 		$form_id = $form['form_id'];
 		$form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,true);
 
@@ -377,7 +378,7 @@ class Reports_Controller extends Main_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// Populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('report'));
+				$errors = arr::merge($errors, $post->errors('report'));
 				$form_error = TRUE;
 			}
 		}

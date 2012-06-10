@@ -16,6 +16,19 @@
  */
 
 abstract class Controller extends Controller_Core {
+
+	/**
+	 * ORM reference for the currently logged in user
+	 * @var object
+	 */
+	protected $user;
+
+	/**
+	 * Reference to Auth object 
+	 * @var object
+	 */
+	protected $auth;
+	
 	public function __construct()
 	{
 		parent::__construct();
