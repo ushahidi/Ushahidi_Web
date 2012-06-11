@@ -29,6 +29,9 @@ var startTime = <?php echo $active_startDate ?>;
 // Default to most active month
 var endTime = <?php echo $active_endDate ?>;
 
+// To hold the Ushahidi.Map reference
+var map = null;
+
 
 /**
  * Toggle Layer Switchers
@@ -200,7 +203,7 @@ jQuery(function() {
 	};
 
 	// Initialize the map
-	var map = new Ushahidi.Map('map', config);
+	map = new Ushahidi.Map('map', config);
 	map.addLayer(Ushahidi.GEOJSON, {
 		name: "<?php echo Kohana::lang('ui_main.reports'); ?>",
 		url: reportsURL
