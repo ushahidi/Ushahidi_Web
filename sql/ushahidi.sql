@@ -196,12 +196,12 @@ CREATE TABLE IF NOT EXISTS `category` (
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`,`category_title`, `category_description`, `category_color`, `category_visible`, `category_trusted`) VALUES
-(1, 'Category 1', 'Category 1', '9900CC', 1, 0),
-(2, 'Category 2', 'Category 2', '3300FF', 1, 0),
-(3, 'Category 3', 'Category 3', '663300', 1, 0),
-(4, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1),
-(5, 'NONE', 'Holds uncategorized reports', '009887', 1, 1);
+INSERT INTO `category` (`id`,`category_title`, `category_description`, `category_color`, `category_visible`, `category_trusted`, `category_position`) VALUES
+(1, 'Category 1', 'Category 1', '9900CC', 1, 0, 0),
+(2, 'Category 2', 'Category 2', '3300FF', 1, 0, 1),
+(3, 'Category 3', 'Category 3', '663300', 1, 0, 2),
+(4, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1, 3),
+(5, 'NONE', 'Holds uncategorized reports', '009887', 1, 1, 4);
 
 -- --------------------------------------------------------
 
