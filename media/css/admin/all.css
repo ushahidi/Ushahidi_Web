@@ -154,6 +154,22 @@ a:hover{ text-decoration:none;}
 	width:100px;
 }
 
+.info-nav .language-box{
+	margin:0;
+	padding:6px 0 9px 20px;
+	border-top:1px solid #898989;
+	border-bottom:1px solid #898989;
+	float:left;
+	line-height:25px;
+}
+.info-nav .language-box select{
+	width: 160px;
+	margin: 0;
+	padding: 1px;
+	font-size: 11px;
+	color: #00789F;
+}
+
 .info-buttons { clear:both; margin:10px 0 0 0; text-align:right; }
 
 /*-- nav-holder --*/

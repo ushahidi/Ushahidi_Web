@@ -153,7 +153,10 @@ class Admin_Controller extends Template_Controller
 		// Header and Footer Blocks
 		$this->template->header_block = $this->themes->admin_header_block();
 		$this->template->footer_block = $this->themes->footer_block();
-    }
+
+		// Language switcher
+		$this->template->languages = $this->themes->languages();
+		}
 
 	public function index()
 	{
