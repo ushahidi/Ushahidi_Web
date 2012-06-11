@@ -264,7 +264,7 @@
 					<?php echo form::open('admin/reports', array('method' => 'get', 'id' => 'info-search')); ?>
 					<input type="text" name="k" class="info-keyword" value=""> 
 					<a href="javascript:info_search();" class="btn">
-						<?php echo Kohana::lang('ui_admin.search');?>
+						<?php echo Kohana::lang('ui_admin.search_reports');?>
 					</a>
 					<?php echo form::close(); ?>
 				</div>
