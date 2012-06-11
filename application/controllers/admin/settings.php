@@ -329,7 +329,7 @@ class Settings_Controller extends Admin_Controller {
 
 
 		// Generate Available Locales
-		$locales = ush_locale::get_i18n();
+		$locales = ush_locale::get_i18n(TRUE);
 		$this->template->content->locales_array = $locales;
 		$this->cache->set('locales', $locales, array('locales'), 604800);
 	}

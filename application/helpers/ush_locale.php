@@ -477,9 +477,20 @@ class ush_locale_Core
 
 	/**
 	 * checks the i18n folder to see what folders we have available
+	 * @param boolean Force reloading locale cache
 	 */
-	public static function get_i18n()
+	public static function get_i18n($refresh = FALSE)
 	{
+		// If we had cached locales return those
+		if (! $refresh)
+		{
+			$locales = Cache::instance()->get('locales');
+			if ( $locales )
+			{
+				return $locales;
+			}
+		}
+
 		$locales = array();
 
 		// i18n path
@@ -504,13 +515,35 @@ class ush_locale_Core
 				if ( count($locale) < 2 )
 					continue;
 
-				$directories[$i18n_dir] = ush_locale::language($locale[0])." (".$locale[1].")";
+				$locales[$i18n_dir] = ush_locale::language($locale[0])." (".$locale[1].")";
 			}
 		}
 
 		if ( is_dir( $i18n_dir ) )
 			@closedir( $i18n_dir );
 
-		return $directories;
+		Cache::instance()->set('locales', $locales, array('locales'), 604800);
+
+		return $locales;
+	}
+	
+	/**
+	 * Detect language from GET param, session or settings.
+	 * @param string 
+	 */
+	public static function detect_language($language = FALSE)
+	{
+		// Locale form submitted?
+		if (isset($_GET['l']) && !empty($_GET['l']))
+		{
+			Session::instance()->set('locale', $_GET['l']);
+		}
+
+		// Has a locale session been set?
+		if (Session::instance()->get('locale',FALSE))
+		{
+			// Change current locale
+			Kohana::config_set('locale.language', $_SESSION['locale']);
+		}
 	}
 }
