@@ -48,8 +48,7 @@
 						}
 						?>
 						<div class="head">
-							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
-							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-report.gif" class="save-rep-btn" />
+							<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_main.save_report');?>" />
 						</div>
 						<!-- f-col -->
 						<div class="f-col-full">

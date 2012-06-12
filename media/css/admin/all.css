@@ -1238,12 +1238,18 @@ input.long2 {
 	width:180px;
 }
 
-.report-form .save-rep-btn,
-.report-form .save-close-btn,
-.report-form .cancel-btn{
+.save-rep-btn,
+.save-close-btn,
+.cancel-btn {
 	display:inline;
 	float:left;
-	margin:11px 12px 0 0;
+	margin:13px 12px 0 0;
+	padding:0 9px;
+	color:#5c5c5c;
+	background:#f2f7fa;
+	border:1px solid #d1d1d1;
+	text-transform: uppercase;
+	line-height: 24px;
 }
 .report-form .save-rep-btn { margin-left:20px;}
 .report-form .head .save-rep-btn,
@@ -1251,6 +1257,13 @@ input.long2 {
 	margin:0 9px 0 0;
 	display:inline;
 	float:right;
+}
+
+.save-rep-btn:hover,
+.save-close-btn:hover,
+.cancel-btn:hover
+{
+	cursor: pointer;
 }
 .report-form .report_thumbs {
 	border-bottom:1px #ccc dotted;

@@ -48,7 +48,7 @@
 					}
 					?>				
 					<div class="head">
-						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-send.gif" class="save-rep-btn" />
+						<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_main.send');?>" />
 					</div>
 					<!-- column -->		
 					<div class="sms_holder">
@@ -68,7 +68,7 @@
 		
 					<div class="simple_border"></div>
 		
-					<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-send.gif" class="save-rep-btn" />
+					<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_main.send');?>" />
 				</div>
 				<?php print form::close(); ?>
 			</div>

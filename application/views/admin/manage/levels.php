@@ -132,8 +132,7 @@
 							<?php print form::input('level_weight', '', ' class="text"'); ?>
 						</div>
 						<div class="tab_form_item">
-							&nbsp;<br />
-							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save.gif" class="save-rep-btn" />
+							<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_main.save');?>" />
 						</div>
 						<?php print form::close(); ?>			
 					</div>
