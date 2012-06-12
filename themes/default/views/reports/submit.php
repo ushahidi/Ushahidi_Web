@@ -58,7 +58,7 @@
 						<?php echo Kohana::lang('ui_main.date_time'); ?>: 
 						<?php echo Kohana::lang('ui_main.today_at')." "."<span id='current_time'>".$form['incident_hour']
 							.":".$form['incident_minute']." ".$form['incident_ampm']."</span>"; ?>
-						<?php if($site_timezone != NULL): ?>
+						<?php if($site_timezone): ?>
 							<small>(<?php echo $site_timezone; ?>)</small>
 						<?php endif; ?>
 					</h4>
