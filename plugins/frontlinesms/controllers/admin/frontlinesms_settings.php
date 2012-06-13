@@ -20,7 +20,7 @@ class Frontlinesms_Settings_Controller extends Admin_Controller {
 		$this->template->this_page = 'addons';
 		
 		// Standard Settings View
-		$this->template->content = new View("admin/addons/plugins_settings");
+		$this->template->content = new View("admin/addons/plugin_settings");
 		$this->template->content->title = "FrontlineSMS Settings";
 		
 		// Settings Form View
