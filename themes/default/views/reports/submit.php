@@ -301,7 +301,7 @@
 						<a href="#" class="add" onClick="addFormField('divPhoto', 'incident_photo','photo_id','file'); return false;">add</a>
 					</div>
 					<?php else: ?>
-						<?php foreach ($form[$this_field]['name'] as $value): ?>
+						<?php foreach ($form['incident_photo']['name'] as $value): ?>
 
 							<div class="report_row" id="<?php echo $i; ?>">
 								<?php print form::upload('incident_photo[]', $value, ' class="file long2"'); ?>
