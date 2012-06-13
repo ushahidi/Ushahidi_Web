@@ -264,26 +264,7 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		// *** Locales/Languages ***
 		// First Get Available Locales
 
-		$locales = $this->cache->get('locales');
-
-		// If we didn't find any languages, we need to look them up and set the cache
-		if ( ! $locales)
-		{
-			$locales = ush_locale::get_i18n();
-			$this->cache->set('locales', $locales, array('locales'), 604800);
-		}
-
-		// Locale form submitted?
-		if (isset($_GET['l']) && !empty($_GET['l']))
-		{
-			$this->session->set('locale', $_GET['l']);
-		}
-		// Has a locale session been set?
-		if ($this->session->get('locale',FALSE))
-		{
-			// Change current locale
-			Kohana::config_set('locale.language', $_SESSION['locale']);
-		}
+		$locales = ush_locale::get_i18n();
 
 		$languages = "";
 		$languages .= "<div class=\"language-box\">";

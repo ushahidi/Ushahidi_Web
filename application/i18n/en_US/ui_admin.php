@@ -237,6 +237,7 @@
 	'revoke' => 'Revoke',
 	'save_settings' => 'Save Settings',
 	'search' => 'Search',
+	'search_reports' => 'Search Reports',
 	'searching_for' => 'searching for',
 	'security_info_encryption_key' => 'The encryption key is still set to the default value. This is insecure and must be changed.',
 	'security_info_https' => 'This site being served over HTTP. This should be set to HTTPS for increased security.',

@@ -549,7 +549,7 @@ class Forms_Controller extends Admin_Controller {
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .="<div class=\"forms_item\">";
 		$html .="	<div id=\"form_loading_".$form_id."\" class=\"forms_fields_loading\"></div>";
-		$html .="	<input type=\"image\" src=\"".url::base()."media/img/admin/btn-save.gif\" />";
+		$html .="<input type=\"submit\" class=\"save-rep-btn\" value=\"".Kohana::lang('ui_main.save')."\" />";
 		$html .="</div>";
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .=$this->_get_selector_js($form_id);
@@ -661,7 +661,7 @@ class Forms_Controller extends Admin_Controller {
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .="<div class=\"forms_item\">";
 		$html .="	<div id=\"form_loading_".$form_id."\" class=\"forms_fields_loading\"></div>";
-		$html .="	<input type=\"image\" src=\"".url::base()."media/img/admin/btn-save.gif\" />";
+		$html .="<input type=\"submit\" class=\"save-rep-btn\" value=\"".Kohana::lang('ui_main.save')."\" />";
 		$html .="</div>";
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .=$this->_get_selector_js($form_id);
@@ -778,7 +778,7 @@ class Forms_Controller extends Admin_Controller {
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .="<div class=\"forms_item\">";
 		$html .="	<div id=\"form_loading_".$form_id."\" class=\"forms_fields_loading\"></div>";
-		$html .="	<input type=\"image\" src=\"".url::base()."media/img/admin/btn-save.gif\" />";
+		$html .="<input type=\"submit\" class=\"save-rep-btn\" value=\"".Kohana::lang('ui_main.save')."\" />";
 		$html .="</div>";
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .=$this->_get_selector_js($form_id);
@@ -855,7 +855,7 @@ class Forms_Controller extends Admin_Controller {
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .="<div class=\"forms_item\">";
 		$html .="	<div id=\"form_loading_".$form_id."\" class=\"forms_fields_loading\"></div>";
-		$html .="	<input type=\"image\" src=\"".url::base()."media/img/admin/btn-save.gif\" />";
+		$html .="<input type=\"submit\" class=\"save-rep-btn\" value=\"".Kohana::lang('ui_main.save')."\" />";
 		$html .="</div>";
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .=$this->_get_selector_js($form_id);
@@ -931,7 +931,7 @@ class Forms_Controller extends Admin_Controller {
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .="<div class=\"forms_item\">";
 		$html .="	<div id=\"form_loading_".$form_id."\" class=\"forms_fields_loading\"></div>";
-		$html .="	<input type=\"image\" src=\"".url::base()."media/img/admin/btn-save.gif\" />";
+		$html .="<input type=\"submit\" class=\"save-rep-btn\" value=\"".Kohana::lang('ui_main.save')."\" />";
 		$html .="</div>";
 		$html .="<div style=\"clear:both;\"></div>";
 		$html .=$this->_get_selector_js($form_id);

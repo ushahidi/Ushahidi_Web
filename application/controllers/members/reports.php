@@ -619,23 +619,7 @@ class Reports_Controller extends Members_Controller {
 
 		if ($id)
 		{
-			$photo = ORM::factory('media', $id);
-			$photo_large = $photo->media_link;
-			$photo_thumb = $photo->media_thumb;
-
-			// Delete Files from Directory
-			if ( ! empty($photo_large))
-			{
-				unlink(Kohana::config('upload.directory', TRUE) . $photo_large);
-			}
-			
-			if ( ! empty($photo_thumb))
-			{
-				unlink(Kohana::config('upload.directory', TRUE) . $photo_thumb);
-			}
-
-			// Finally Remove from DB
-			$photo->delete();
+			Media_Model::delete_photo($id);
 		}
 	}
 

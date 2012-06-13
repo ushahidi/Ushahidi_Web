@@ -460,26 +460,34 @@ class reports_Core {
 		{
 			$filenames = upload::save('incident_photo');
 			$i = 1;
+
 			foreach ($filenames as $filename)
 			{
 				$new_filename = $incident->id.'_'.$i.'_'.time();
 
 				$file_type = strrev(substr(strrev($filename),0,4));
-						
+				
 				// IMAGE SIZES: 800X600, 400X300, 89X59
-						
-				// Large size
-				Image::factory($filename)->resize(800,600,Image::AUTO)
-					->save(Kohana::config('upload.directory', TRUE).$new_filename.$file_type);
+				// Catch any errors from corrupt image files
+				try
+				{
+					// Large size
+					Image::factory($filename)->resize(800,600,Image::AUTO)
+						->save(Kohana::config('upload.directory', TRUE).$new_filename.$file_type);
 
-				// Medium size
-				Image::factory($filename)->resize(400,300,Image::HEIGHT)
-					->save(Kohana::config('upload.directory', TRUE).$new_filename.'_m'.$file_type);
-						
-				// Thumbnail
-				Image::factory($filename)->resize(89,59,Image::HEIGHT)
-					->save(Kohana::config('upload.directory', TRUE).$new_filename.'_t'.$file_type);
-					
+					// Medium size
+					Image::factory($filename)->resize(400,300,Image::HEIGHT)
+						->save(Kohana::config('upload.directory', TRUE).$new_filename.'_m'.$file_type);
+
+					// Thumbnail
+					Image::factory($filename)->resize(89,59,Image::HEIGHT)
+						->save(Kohana::config('upload.directory', TRUE).$new_filename.'_t'.$file_type);
+				}
+				catch (Kohana_Exception $e)
+				{
+					// Do nothing. Too late to throw errors
+				}
+				
 				// Name the files for the DB
 				$media_link = $new_filename.$file_type;
 				$media_medium = $new_filename.'_m'.$file_type;

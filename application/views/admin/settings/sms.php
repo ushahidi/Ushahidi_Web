@@ -50,8 +50,7 @@
 					?>				
 					<div class="head">
 						<h3><?php echo Kohana::lang('settings.sms.title');?></h3>
-						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
-						<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
+						<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_admin.save_settings');?>" />
 					</div>
 					<!-- column -->
 		
@@ -82,8 +81,7 @@
 		
 					<div class="simple_border"></div>
 		
-					<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
-					<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+					<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_admin.save_settings');?>" />
 				</div>
 				<?php print form::close(); ?>
 			</div>

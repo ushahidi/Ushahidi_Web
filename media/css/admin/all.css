@@ -154,6 +154,22 @@ a:hover{ text-decoration:none;}
 	width:100px;
 }
 
+.info-nav .language-box{
+	margin:0;
+	padding:6px 0 9px 20px;
+	border-top:1px solid #898989;
+	border-bottom:1px solid #898989;
+	float:left;
+	line-height:25px;
+}
+.info-nav .language-box select{
+	width: 160px;
+	margin: 0;
+	padding: 1px;
+	font-size: 11px;
+	color: #00789F;
+}
+
 .info-buttons { clear:both; margin:10px 0 0 0; text-align:right; }
 
 /*-- nav-holder --*/
@@ -1222,12 +1238,18 @@ input.long2 {
 	width:180px;
 }
 
-.report-form .save-rep-btn,
-.report-form .save-close-btn,
-.report-form .cancel-btn{
+.save-rep-btn,
+.save-close-btn,
+.cancel-btn {
 	display:inline;
 	float:left;
-	margin:11px 12px 0 0;
+	margin:13px 12px 0 0;
+	padding:0 9px;
+	color:#5c5c5c;
+	background:#f2f7fa;
+	border:1px solid #d1d1d1;
+	text-transform: uppercase;
+	line-height: 24px;
 }
 .report-form .save-rep-btn { margin-left:20px;}
 .report-form .head .save-rep-btn,
@@ -1235,6 +1257,13 @@ input.long2 {
 	margin:0 9px 0 0;
 	display:inline;
 	float:right;
+}
+
+.save-rep-btn:hover,
+.save-close-btn:hover,
+.cancel-btn:hover
+{
+	cursor: pointer;
 }
 .report-form .report_thumbs {
 	border-bottom:1px #ccc dotted;

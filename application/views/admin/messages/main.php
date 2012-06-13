@@ -133,7 +133,7 @@
 											<div class="post">
 												<p><?php echo $message_description; ?></p>
 												<?php
-												if ($message_detail)
+												if ($message_detail OR $message->media != null)
 												{
 													?>
 													<p><a href="javascript:preview('message_preview_<?php echo $message_id?>')"><?php echo Kohana::lang('ui_main.preview_message');?></a></p>

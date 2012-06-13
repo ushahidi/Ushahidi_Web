@@ -256,11 +256,15 @@
 					<li><a href="http://ushahidi.com/community_resources/"><?php echo Kohana::lang('ui_admin.faqs');?></a></li>
 					<li><a href="http://forums.ushahidi.com/"><?php echo Kohana::lang('ui_admin.forum');?></a></li>
 				</ul>
+				
+				<!-- languages -->
+				<?php echo $languages; ?>
+				<!-- / languages -->
 				<div class="info-search">
 					<?php echo form::open('admin/reports', array('method' => 'get', 'id' => 'info-search')); ?>
 					<input type="text" name="k" class="info-keyword" value=""> 
 					<a href="javascript:info_search();" class="btn">
-						<?php echo Kohana::lang('ui_admin.search');?>
+						<?php echo Kohana::lang('ui_admin.search_reports');?>
 					</a>
 					<?php echo form::close(); ?>
 				</div>

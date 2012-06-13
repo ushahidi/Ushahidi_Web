@@ -17,6 +17,7 @@ if ( ! $settings)
 
 // Set Site Language
 Kohana::config_set('locale.language', $settings['site_language']);
+ush_locale::detect_language();
 
 // Main Site Settings
 Kohana::config_set('settings.site_name', $settings['site_name']);

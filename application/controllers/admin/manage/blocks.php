@@ -44,8 +44,7 @@ class Blocks_Controller extends Admin_Controller
 		}
 		
 		// Get Active Blocks
-		$settings = ORM::factory('settings', 1);
-		$active_blocks = $settings->blocks;
+		$active_blocks = Settings_Model::get_setting('blocks');
 		$active_blocks = array_filter(explode("|", $active_blocks));
 		
 		// setup and initialize form field names
@@ -81,16 +80,14 @@ class Blocks_Controller extends Admin_Controller
 				if ($post->action == 'a')
 				{
 					array_push($active_blocks, $post->block);
-					$settings->blocks = implode("|", $active_blocks);
-					$settings->save();
+					Settings_Model::save_setting('blocks', implode("|", $active_blocks));
 				}
 				
 				// Deactivate a block
 				elseif ($post->action =='d')
 				{
 					$active_blocks = array_diff($active_blocks, array($post->block));
-					$settings->blocks = implode("|", $active_blocks);
-					$settings->save();
+					Settings_Model::save_setting('blocks', implode("|", $active_blocks));
 				}
 			}
 			else
@@ -129,8 +126,7 @@ class Blocks_Controller extends Admin_Controller
 				AND ! empty($_POST['blocks'])
 				)
 			{
-				$settings = ORM::factory('settings', 1);
-				$active_blocks = $settings->blocks;
+				$active_blocks = Settings_Model::get_setting('blocks');
 				$active_blocks = array_filter(explode("|", $active_blocks));
 				
 				$blocks = array_map('trim', explode(',', $_POST['blocks']));
@@ -143,9 +139,7 @@ class Blocks_Controller extends Admin_Controller
 					}
 				}
 				
-				$settings = ORM::factory('settings', 1);
-				$settings->blocks = implode("|", $block_check);
-				$settings->save();
+				Settings_Model::save_setting('blocks', implode("|", $active_blocks));
 			}
 		}
 	}

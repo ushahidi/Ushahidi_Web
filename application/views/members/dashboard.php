@@ -49,7 +49,7 @@
 								?>
 							</div>
 
-							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="padding-top:10px;" />
+							<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_admin.save_settings');?>" />
 
 						</div>
 
