@@ -99,6 +99,10 @@ abstract class Api_Object_Core {
 	 * @var int
 	 */
 	protected $id;
+        /**
+        *This is for getting using specific cordinates or around a specific point*
+         */
+        protected $cord;
 	
 	/**
 	 * No. of records returned by the API request
@@ -450,7 +454,6 @@ abstract class Api_Object_Core {
 
 		return $this->id;
     }
-
     
 }
 

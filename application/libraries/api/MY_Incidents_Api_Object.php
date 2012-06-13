@@ -95,15 +95,45 @@ class Incidents_Api_Object extends Api_Object_Core {
 				if ($this->api_service->verify_array_index($this->request, 'latitude')
 					AND $this->api_service->verify_array_index($this->request, 'longitude'))
 				{
-					// Build out the parameters
-					$params = array(
-						'l.latitude = '.$this->check_id_value($this->request['latitude']),
-						'l.longitude ='.$this->check_id_value($this->request['longitude'])
-					);
+			           // Build out the parameters
+                                   $lat = $this->check_cordinate_value($this->request['latitude']);
+                                   $lon = $this->check_cordinate_value($this->request['longitude']);
+                                   $params = array(
+                                                'l.latitude = '.$this->request['latitude'],
+                                                'l.longitude = '.$this->request['longitude']
+                                   );
+                                   if ($lat==0 or $lon==0)
+                                   {
+                                      $this->set_error_message(array(
+                                                "error" => $this->api_service->get_error_msg(001, 'invalid latitude or longitude values')
+                                        ));
 
-					// Fetch the incidents
-					$this->response_data = $this->_get_incidents($params);
-				}
+                                        return;
+                                   }
+                                   else
+                                   {
+                                        if(isset($this->request['radius']))
+                                        {
+                                            $rad = $this->check_id_value($this->request['radius']);
+                                            //we take this to be radius of the earth, this sems to be more efficient than perming them directly at the query le                                            vel
+                                            $R = 6371;
+                                            $maxLat = $lat + rad2deg($rad/$R);
+                                            $minLat = $lat - rad2deg($rad/$R);
+                                            // compensate for degrees longitude getting smaller with increasing latitude
+                                            $maxLon = $lon + rad2deg($rad/$R/cos(deg2rad($lat)));
+                                            $minLon = $lon - rad2deg($rad/$R/cos(deg2rad($lat)));
+                                            $params = array(
+                                                'l.latitude > '.$minLat,
+                                                'l.latitude < '.$maxLat,
+                                                'l.longitude > '.$minLon,
+                                                'l.longitude < '.$maxLon
+                                            );
+ 
+                                        
+                                       }
+                                        $this->response_data = $this->_get_incidents($params);    
+				   } 
+                                }
 				else
 				{
 					$this->set_error_message(array(
@@ -243,7 +273,8 @@ class Incidents_Api_Object extends Api_Object_Core {
 
 			// Get incidents based on a box using two lat,lon coords
 			case "bounds":
-				$this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne'],$this->request['c']);
+                                $c = isset($this->request['c']) ? $this->request['c'] : 0;
+                                $this->response_data = $this->_get_incidents_by_bounds($this->request['sw'],$this->request['ne'],$c);
 			break;
 
 			// Error therefore set error message
@@ -743,7 +774,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 	 * @param int $c is the categoryid
 	 * @return string XML or JSON string containing the fetched incidents
 	 */
-	private function _get_incidents_by_bounds($sw, $ne, $c = 0)
+	private function _get_incidents_by_bounds($sw, $ne, $c)
 	{
 		// Break apart location variables, if necessary
 		$southwest = array();
@@ -783,7 +814,6 @@ class Incidents_Api_Object extends Api_Object_Core {
 		{
 			array_push($params, 'c.id = '.$c);
 		}
-
 		return $this->_get_incidents($params);
 
     }
@@ -887,4 +917,9 @@ class Incidents_Api_Object extends Api_Object_Core {
 			? $this->array_as_json($data)
 			: $this->array_as_xml($data, $replar);
 	}
+       protected function check_cordinate_value($cord)
+       {
+            return floatval($cord);
+       }
+
 }
