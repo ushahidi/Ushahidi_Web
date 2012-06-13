@@ -1,7 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
- * @package  Core
- *
  * Captcha configuration is defined in groups which allows you to easily switch
  * between different Captcha settings for different forms on your website.
  * Note: all groups inherit and overwrite the default group.
