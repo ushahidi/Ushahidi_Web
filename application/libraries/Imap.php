@@ -84,26 +84,42 @@ class Imap_Core {
 			return array();
 		}
 
-		$no_of_msgs = imap_num_msg($this->imap_stream);
+		// Use imap_search() to find the 'UNSEEN' messages.
+		// This is more efficient than previous code using imap_num_msg()
+		$new_msgs = imap_search($this->imap_stream, 'UNSEEN');
 		$max_imap_messages = Kohana::config('email.max_imap_messages');
+
+		if ($new_msgs == null)
+		{
+			return array();
+		}
 
 		// Check to see if the number of messages we want to sort through is greater than
 		//   the number of messages we want to allow. If there are too many messages, it
 		//   can fail and that's no good.
-		$msg_to_pull = $no_of_msgs;
+		$msg_to_pull = sizeof($new_msgs);
 		
-		//** Disabled this config setting for now - causing issues **
-		//if($msg_to_pull > $max_imap_messages){
-		//	$msg_to_pull = $max_imap_messages;
-		//}
+		// This check has had problems in the past
+		if($msg_to_pull > $max_imap_messages)
+		{
+			$msg_to_pull = $max_imap_messages;
+		}
 
 		$messages = array();
 
-		for ($msgno = 1; $msgno <= $msg_to_pull; $msgno++)
+		for ($msgidx = 0; $msgidx < $msg_to_pull; $msgidx++)
 		{
+			$msgno = $new_msgs[$msgidx];
 			$header = imap_headerinfo($this->imap_stream, $msgno);
 
 			if( ! isset($header->message_id) OR ! isset($header->udate))
+			{
+				continue;
+			}
+			
+			// Skip messages that aren't new/unseen
+			// not sure we need this check now we use imap_search to pull only UNSEEN
+			if ($header->Unseen != 'U' AND $header->Recent != 'N')
 			{
 				continue;
 			}
@@ -248,8 +264,19 @@ class Imap_Core {
 					'is_attachment' => false,
 					'file_name' => '',
 					'name' => '',
+					'type' => 0,
+					'subtype' => '',
 					'attachment' => ''
 				);
+
+				// Use the type and subtype to resolve the attachments.
+				// Previously used of the file name extension but found that different phone models (when sending MMS to email),
+				// different carriers (when sending MMS to email), and different email clients
+				// do not reliably add extensions or even provide a sane filename.
+				// However, they all set the content type correctly and PHP was able to identify the mime type as image/*.
+				
+				$attachments[$i]['type'] = $structure->parts[$i]->type;
+				$attachments[$i]['subtype'] = $structure->parts[$i]->subtype;
 
 				if($structure->parts[$i]->ifdparameters) {
 					foreach($structure->parts[$i]->dparameters as $object) {
@@ -286,11 +313,30 @@ class Imap_Core {
 		$valid_attachments = array();
 		foreach ($attachments as $attachment)
 		{
-			$file_name = $attachment['file_name'];
 			$file_content = $attachment['attachment'];
-			$file_type = strrev(substr(strrev($file_name),0,4));
+			
+			// Don't accept images smaller that 12.5k
+			// When MMS is sent to an email address, sometimes the source
+			// carrier wraps the message and the image into html with some 
+			// embedded GIFs. This tries to filter them out
+			if (strlen($file_content) < 12500) {
+				continue;
+			}
+			
+			$file_type = $attachment['type'];
+			$file_extension = $attachment['subtype'];
+			
+			if ($file_extension == 'JPEG')
+			{
+				$file_extension = '.JPG';
+			}
+			else
+			{
+				$file_extension = '.' . $file_extension;
+			}
+			
 			$new_file_name = time()."_".$this->_random_string(10); // Included rand so that files don't overwrite each other
-			$valid_attachments[] = $this->_save_attachments($file_type, $new_file_name, $file_content);
+			$valid_attachments[] = $this->_save_attachments($file_type, $new_file_name, $file_content, $file_extension);
 		}
 
 		// Remove Nulls
@@ -302,14 +348,14 @@ class Imap_Core {
 	 * Save Attachments to Upload Folder
 	 * Right now we only accept gif, png and jpg files
 	 */	
-	private function _save_attachments($file_type,$file_name,$file_content)
+	private function _save_attachments($file_type,$file_name,$file_content,$file_extension)
 	{
-		if ($file_type == ".gif"
-			OR $file_type == ".png"
-			OR $file_type == ".jpg")
+	  // $file_type == 5 is image, == 6 is video...  see:
+	  // http://us.php.net/manual/en/function.imap-fetchstructure.php
+	  if ($file_type == 5)
 		{
 			$attachments = array();
-			$file = Kohana::config("upload.directory")."/".$file_name.$file_type;
+			$file = Kohana::config("upload.directory")."/".$file_name.$file_extension;
 			$fp = fopen($file, "w");
 			fwrite($fp, $file_content);
 			fclose($fp);
@@ -318,20 +364,20 @@ class Imap_Core {
 			
 			// Large size
 			Image::factory($file)->resize(800,600,Image::AUTO)
-				->save(Kohana::config('upload.directory', TRUE).$file_name.$file_type);
+				->save(Kohana::config('upload.directory', TRUE).$file_name.$file_extension);
 
 			// Medium size
 			Image::factory($file)->resize(400,300,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$file_name."_m".$file_type);
+				->save(Kohana::config('upload.directory', TRUE).$file_name."_m".$file_extension);
 			
 			// Thumbnail
 			Image::factory($file)->resize(89,59,Image::HEIGHT)
-				->save(Kohana::config('upload.directory', TRUE).$file_name."_t".$file_type);
+				->save(Kohana::config('upload.directory', TRUE).$file_name."_t".$file_extension);
 				
 			$attachments[] = array(
-					$file_name.$file_type,
-					$file_name."_m".$file_type,
-					$file_name."_t".$file_type
+					$file_name.$file_extension,
+					$file_name."_m".$file_extension,
+					$file_name."_t".$file_extension
 				);
 			return $attachments;
 		}
