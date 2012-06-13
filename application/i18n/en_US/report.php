@@ -97,8 +97,8 @@
 		'required' => 'The locale is required.',
 	),
 	'location_name' => array(
-		'length' => 'The "Refine Location Name" field must be at least 3 and no more 200 characters long.',
-		'required' => 'The "Refine Location Name" field is required.',
+		'length' => 'The "Location Name" field must be at least 3 and no more 200 characters long.',
+		'required' => 'The "Location Name" field is required.',
 	),
 	'longitude' => array(
 		'between' => 'The longitude field does not appear to contain a valid longitude.',
