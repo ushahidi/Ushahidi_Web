@@ -66,7 +66,7 @@ class nav_Core {
 		// Contacts
 		if( ! in_array('contact',$dontshow))
 		{
-			if (Kohana::config('settings.site_contact_page'))
+			if (Kohana::config('settings.site_contact_page') AND Kohana::config('settings.site_email') != "")
 			{
 				$menu .= "<li><a href=\"".url::site()."contact\" ";
 				$menu .= ($this_page == 'contact') ? " class=\"active\"" : "";

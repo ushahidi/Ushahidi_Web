@@ -21,6 +21,11 @@ class Contact_Controller extends Main_Controller {
 
 	public function index()
 	{
+		// If contact page disabled, or site_email not set then return 404
+		if (! Kohana::config('settings.site_contact_page') OR Kohana::config('settings.site_email') == "")
+		{
+			throw new Kohana_404_Exception();
+		}
 
 		$this->template->header->this_page = 'contact';
 		$this->template->content = new View('contact');
@@ -54,7 +59,8 @@ class Contact_Controller extends Main_Controller {
 			$post->add_rules('captcha', 'required', 'Captcha::valid');
 
 			// Test to see if things passed the rule checks
-			if ($post->validate())
+			// Skip CSRF check since we have a CAPTCHA already
+			if ($post->validate(FALSE))
 			{
 				// Yes! everything is valid - Send email
 				$site_email = Kohana::config('settings.site_email');
@@ -66,9 +72,24 @@ class Contact_Controller extends Main_Controller {
 				$message .= Kohana::lang('ui_admin.sent_from_website') . url::base();
 
 				// Send Admin Message
-				email::send($site_email, $post->contact_email, $post->contact_subject, $message, FALSE);
+				try
+				{
+					email::send($site_email, $post->contact_email, $post->contact_subject, $message, FALSE);
+	
+					$form_sent = TRUE;
+				}
+				catch (Exception $e)
+				{
+					// repopulate the form fields
+					$form = arr::overwrite($form, $post->as_array());
 
-				$form_sent = TRUE;
+					// Manually add an error message for the email send failure.
+					$errors['email_send'] = Kohana::lang('contact.email_send.failed');
+
+					// populate the error fields, if any
+					$errors = arr::merge($errors, $post->errors('contact'));
+					$form_error = TRUE;
+				}
 			}
 			// No! We have validation errors, we need to show the form again, with the errors
 			else
@@ -77,7 +98,7 @@ class Contact_Controller extends Main_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('contact'));
+				$errors = arr::merge($errors, $post->errors('contact'));
 				$form_error = TRUE;
 			}
 		}

@@ -2,6 +2,7 @@
 	$lang = array(
 	'captcha' => array(
 		'default' => 'Please enter a valid security code.',
+		'valid' => 'Please enter a valid security code.',
 		'required' => 'Please enter the security code.',
 	),
 	'contact_email' => array(
@@ -19,5 +20,9 @@
 	'contact_subject' => array(
 		'length' => 'The subject field must be at least 3 characters long.',
 		'required' => 'The subject field is required.',
-	));
+	),
+	'email_send' => array(
+		'failed' => 'There was an error sending your message.'
+	),
+	);
 ?>
