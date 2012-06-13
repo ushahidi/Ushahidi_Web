@@ -454,18 +454,6 @@ abstract class Api_Object_Core {
 
 		return $this->id;
     }
-       protected function check_cordinate_value($cord)
-       {
-            if(is_numeric($cord))
-            {
-               $this->cord = $cord;
-            } else 
-            {
-               $this->cord = Null;
-            }
-            return $this->cord;
-       }
-
     
 }
 

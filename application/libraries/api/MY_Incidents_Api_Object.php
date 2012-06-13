@@ -102,7 +102,7 @@ class Incidents_Api_Object extends Api_Object_Core {
                                                 'l.latitude = '.$this->request['latitude'],
                                                 'l.longitude = '.$this->request['longitude']
                                    );
-                                   if (is_null($lat) or is_null($lon))
+                                   if ($lat==0 or $lon==0)
                                    {
                                       $this->set_error_message(array(
                                                 "error" => $this->api_service->get_error_msg(001, 'invalid latitude or longitude values')
@@ -919,15 +919,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 	}
        protected function check_cordinate_value($cord)
        {
-            if(is_numeric($cord))
-            {
-               $this->cord = floatval($cord);
-            } 
-            else 
-            {
-               $this->cord = Null;
-            }
-            return $this->cord;
+            return floatval($cord);
        }
 
 }
