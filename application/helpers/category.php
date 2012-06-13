@@ -129,7 +129,7 @@ class category_Core {
 				}
 				$html .= '</ul>';
 			}
-			$i++;
+			
 
 			// If this is the last element of a column, close the UL
 			if ($i > $maxper_col || $i == $categories_total)
@@ -138,6 +138,7 @@ class category_Core {
 				$i = 1;
 				$this_col++;
 			}
+			$i++;
 		}
 
 		return $html;
