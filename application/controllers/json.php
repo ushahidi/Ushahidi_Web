@@ -790,7 +790,7 @@ class Json_Controller extends Template_Controller {
 					$cluster_count = count($cluster);
 					
 					$link = "http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast;
-					$item_name = $this->_get_title($cluster_count . Kohana::lang('json.cluster_name_reports'), $link);
+					$item_name = $this->_get_title($cluster_count . Kohana::lang('ui_main.reports'), $link);
 					
 					$json_item = array();
 					$json_item['type'] = 'Feature';
