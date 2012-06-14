@@ -23,6 +23,12 @@ class reports_Core {
 	 */
 	public static $params = array();
 	
+	/**
+	 * Pagination object user in fetch_incidents method
+	 * @var Pagination
+	 */
+	public static $pagination = array();
+	
 			
 	/**
 	 * Validation of form fields
@@ -609,7 +615,7 @@ class reports_Core {
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
 		// Fetch the URL data into a local variable
-		$url_data = array_merge($_GET);
+		$url_data = $_GET;
 		
 		// Split selected parameters on ","
 		// For simplicity, always turn them into arrays even theres just one value
@@ -869,31 +875,46 @@ class reports_Core {
 		
 		//> END PARAMETER FETCH
 
-		
-		// Fetch all the incidents
-		$all_incidents = Incident_Model::get_incidents(self::$params);
+		// Check for order and sort params
+		$order_field = NULL; $sort = NULL;
+		$order_options = array(
+			'title' => 'i.incident_title',
+			'date' => 'i.incident_date',
+			'id' => 'i.id'
+		);
+		if (isset($url_data['order']) AND isset($order_options[$url_data['order']]))
+		{
+			$order_field = $order_options[$url_data['order']];
+		}
+		if (isset($url_data['sort']))
+		{
+			$sort = (strtoupper($url_data['sort']) == 'ASC') ? 'ASC' : 'DESC';
+		}
 		
 		if ($paginate)
 		{
+			// Fetch incident count
+			$incident_count = Incident_Model::get_incidents(self::$params, false, $order_field, $sort, TRUE);
+			
 			// Set up pagination
 			$page_limit = (intval($items_per_page) > 0)
 			    ? $items_per_page 
 			    : intval(Kohana::config('settings.items_per_page'));
 			
-			$pagination = new Pagination(array(
+			self::$pagination = new Pagination(array(
 					'style' => 'front-end-reports',
 					'query_string' => 'page',
 					'items_per_page' => $page_limit,
-					'total_items' => $all_incidents->count()
-					));
+					'total_items' => $incident_count->current()->report_count
+				));
 			
 			// Return paginated results
-			return Incident_Model::get_incidents(self::$params, $pagination);
+			return Incident_Model::get_incidents(self::$params, self::$pagination, $order_field, $sort);
 		}
 		else
 		{
 			// Return
-			return $all_incidents;
+			return Incident_Model::get_incidents(self::$params, false, $order_field, $sort);;
 		}
 	}	
 }
