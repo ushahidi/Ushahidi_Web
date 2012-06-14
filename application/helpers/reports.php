@@ -905,12 +905,16 @@ class reports_Core {
 					? $incident_count->current()->report_count
 					: 0;
 			
-			self::$pagination = new Pagination(array(
+			$pagination = new Pagination(array(
 					'style' => 'front-end-reports',
 					'query_string' => 'page',
 					'items_per_page' => $page_limit,
 					'total_items' => $total_items
 				));
+			
+			Event::run('ushahidi_filter.pagination',$pagination);
+			
+			self::$pagination = $pagination;
 			
 			// Return paginated results
 			return Incident_Model::get_incidents(self::$params, self::$pagination, $order_field, $sort);
