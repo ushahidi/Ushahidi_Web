@@ -48,7 +48,10 @@
 		$("select[id^='custom_field_']").prepend('<option value="---NOT_SELECTED---"><?php echo Kohana::lang("ui_main.not_selected"); ?></option>');
 		$("select[id^='custom_field_']").val("---NOT_SELECTED---");
 		$("input[id^='custom_field_']:checkbox").removeAttr("checked");
-		$("input[id^='custom_field_']:radio").removeAttr("checked");		
+		$("input[id^='custom_field_']:radio").removeAttr("checked");
+		$("input[id^='custom_field_']:text").val("");
+		// Hide textareas - should really replace with a keyword search field
+		$("textarea[id^='custom_field_']").parent().remove();
 		  
 		// "Choose Date Range"" Datepicker
 		var dates = $( "#report_date_from, #report_date_to" ).datepicker({

@@ -137,8 +137,8 @@ class Reports_Controller extends Main_Controller {
 
 		// Additional view content
 		$this->template->content->custom_forms_filter = new View('reports/submit_custom_forms');
-		$disp_custom_fields = customforms::get_custom_form_fields();
-		$this->template->content->custom_forms_filter->disp_custom_fields = $disp_custom_fields;
+		$this->template->content->custom_forms_filter->disp_custom_fields = customforms::get_custom_form_fields();
+		$this->template->content->custom_forms_filter->search_form = TRUE;
 		$this->template->content->oldest_timestamp = $oldest_timestamp;
 		$this->template->content->latest_timestamp = $latest_timestamp;
 		$this->template->content->report_stats->total_reports = $total_reports;
@@ -241,16 +241,9 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template = "";
 		$this->auto_render = FALSE;
-
-		if ($_GET)
-		{
-			$report_listing_view = $this->_get_report_listing_view();
-			print $report_listing_view;
-		}
-		else
-		{
-			print "";
-		}
+		
+		$report_listing_view = $this->_get_report_listing_view();
+		print $report_listing_view;
 	}
 
 	/**
