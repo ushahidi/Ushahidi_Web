@@ -214,6 +214,11 @@
 				$(item).removeClass("selected");
 			});
 			
+			$("select[id^='custom_field_']").val("---NOT_SELECTED---");
+			$("input[id^='custom_field_']:checkbox").removeAttr("checked");
+			$("input[id^='custom_field_']:radio").removeAttr("checked");
+			$("input[id^='custom_field_']:text").val("");
+			
 			// Reset the url parameters
 			urlParameters = {};
 		
