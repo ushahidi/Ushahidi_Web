@@ -106,7 +106,7 @@ class customforms_Core {
 			$sql = "SELECT ff.*, fr.form_response "
 				. "FROM ".$table_prefix."form_field ff "
 				. "RIGHT JOIN ".$table_prefix."form_response fr ON (fr.form_field_id = ff.id) "
-				. "LEFT JOIN roles r ON (r.id = $ispublic_field)"
+				. "LEFT JOIN ".$table_prefix."roles r ON (r.id = $ispublic_field)"
 				. "WHERE fr.incident_id = ".$incident_id." ";
 
 			if ($form_id != null AND $form_id != '')
