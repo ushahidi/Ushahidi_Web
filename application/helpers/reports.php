@@ -900,12 +900,16 @@ class reports_Core {
 			$page_limit = (intval($items_per_page) > 0)
 			    ? $items_per_page 
 			    : intval(Kohana::config('settings.items_per_page'));
+					
+			$total_items = $incident_count->current()
+					? $incident_count->current()->report_count
+					: 0;
 			
 			self::$pagination = new Pagination(array(
 					'style' => 'front-end-reports',
 					'query_string' => 'page',
 					'items_per_page' => $page_limit,
-					'total_items' => $incident_count->current()->report_count
+					'total_items' => $total_items
 				));
 			
 			// Return paginated results
