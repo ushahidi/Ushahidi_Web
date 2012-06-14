@@ -1370,7 +1370,7 @@ VALUES
   (31,'default_lat','-1.2873000707050097'),
   (32,'default_lon','36.821451182008204'),
   (33,'default_zoom','13'),
-  (34,'items_per_page','20'),
+  (34,'items_per_page','5'),
   (35,'items_per_page_admin','20'),
   (36,'sms_provider',''),
   (37,'sms_no1',NULL),
