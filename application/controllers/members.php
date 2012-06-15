@@ -89,9 +89,6 @@ class Members_Controller extends Template_Controller
 
 		$this->template->this_page = "";
 
-		// Load profiler
-		// $profiler = new Profiler;
-
 		// Header Nav
 		$header_nav = new View('header_nav');
 		$this->template->header_nav = $header_nav;

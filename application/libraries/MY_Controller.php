@@ -32,6 +32,9 @@ abstract class Controller extends Controller_Core {
 	public function __construct()
 	{
 		parent::__construct();
+		
+		// Load profiler
+		// $profiler = new Profiler;
 
 		$this->auth = Auth::instance();
 
