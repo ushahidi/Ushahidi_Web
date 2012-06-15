@@ -20,7 +20,6 @@ class J2me_Controller extends Controller
 	public function __construct()
     {
         parent::__construct();
-		//$profile = new Profiler;
 	}
 	
 	public function index()

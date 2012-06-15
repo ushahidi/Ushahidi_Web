@@ -135,10 +135,6 @@ class Main_Controller extends Template_Controller {
 			$this->template->header->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header->header_nav->site_name = Kohana::config('settings.site_name');
-
-        // Load profiler
-        //$this->profiler = new Profiler;
-
 	}
 
 	/**

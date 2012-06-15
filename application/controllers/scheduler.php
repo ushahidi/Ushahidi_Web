@@ -19,7 +19,6 @@ class Scheduler_Controller extends Controller
     public function __construct()
     {
         parent::__construct();
-        //$profiler = new Profiler;
     }
     
     public function index()
