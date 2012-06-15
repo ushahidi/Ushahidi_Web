@@ -22,47 +22,69 @@ class Category_Lang_Model extends ORM
 
 	// Database table name
 	protected $table_name = 'category_lang';
+	
+	// Array of all category_langs
+	protected static $category_langs;
 
-	static function category_langs($category_id=FALSE)
+	/**
+	 * Get array of category lang entries
+	 * @param int category id
+	 */
+	static function category_langs($category_id = FALSE)
 	{
-		if($category_id != FALSE)
+		// If we haven't already, grab all category_lang entries at once
+		// We often list all categories at once so its more efficient to just get them all.
+		if (! isset(self::$category_langs))
 		{
-			$category_langs = ORM::factory('category_lang')->where(array('category_id'=>$category_id))->find_all();
-		}else{
 			$category_langs = ORM::factory('category_lang')->find_all();
+			self::$category_langs = array();
+			
+			foreach($category_langs as $category_lang) {
+				self::$category_langs[$category_lang->category_id][$category_lang->locale]['id'] = $category_lang->id;
+				self::$category_langs[$category_lang->category_id][$category_lang->locale]['category_title'] = $category_lang->category_title;
+				self::$category_langs[$category_lang->category_id][$category_lang->locale]['category_description'] = $category_lang->category_description;
+			}
 		}
 
-		$cat_langs = array();
-		foreach($category_langs as $category_lang) {
-			$cat_langs[$category_lang->category_id][$category_lang->locale]['id'] = $category_lang->id;
-			$cat_langs[$category_lang->category_id][$category_lang->locale]['category_title'] = $category_lang->category_title;
+		
+		// Not sure we need to bother with this
+		if ($category_id AND isset(self::$category_langs[$category_id]))
+		{
+			return array($category_id => self::$category_langs[$category_id]);
 		}
 
-		return $cat_langs;
+		return self::$category_langs;
 	}
 
-	static function category_title($category_id,$locale)
+	/**
+	 * Return category title in specified language
+	 * If not locale specified return default
+	 * @param int category id
+	 * @param string Locale string
+	 */
+	static function category_title($category_id, $locale = FALSE)
 	{
-		$category_lang = ORM::factory('category_lang')
-							->where(array('category_id'=>$category_id,'locale'=>$locale))
-							->find_all();
-
-		foreach($category_lang as $cat){
-			if(isset($cat->category_title) AND $cat->category_title != '')
-			{
-				return $cat->category_title;
-			}
+		// Use default locale from settings if not specified
+		if (! $locale)
+		{
+			$locale = Kohana::config('locale.language.0');
+		}
+		
+		// Use self::category_langs() to grab all category_lang entries
+		// This function is often in a loop so only query once
+		$cat_langs = self::category_langs();
+		
+		// Return translated title if its not blank
+		if (isset($cat_langs[$category_id][$locale]) AND ! empty($cat_langs[$category_id][$locale]['category_title']))
+		{
+			return $cat_langs[$category_id][$locale]['category_title'];
 		}
 		
 		// If we didn't find one, grab the default title
-		$category_title = ORM::factory('category')
-							->where(array('id'=>$category_id))
-							->find_all();
-		foreach($category_title as $cat){
-			if(isset($cat->category_title) AND $cat->category_title != '')
-			{
-				return $cat->category_title;
-			}
+		$categories = Category_Model::categories();
+		if (isset($categories[$category_id]['category_title']))
+		{
+			return $categories[$category_id]['category_title'];
 		}
 		
 		return FALSE;

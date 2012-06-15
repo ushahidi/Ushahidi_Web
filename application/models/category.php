@@ -38,6 +38,8 @@ class Category_Model extends ORM_Tree {
 	 */
 	protected $sorting = array("category_position" => "asc");
 	
+	protected static $categories;
+	
 	/**
 	 * Validates and optionally saves a category record from an array
 	 *
@@ -128,25 +130,29 @@ class Category_Model extends ORM_Tree {
 	 * @param string $local Localization to use
 	 * @return array
 	 */
-	public static function categories($category_id = NULL, $locale='en_US')
+	public static function categories($category_id = NULL)
 	{
-		$categories = (empty($category_id) OR ! self::is_valid_category($category_id))
-			? ORM::factory('category')->where('locale', $locale)->find_all()
-			: ORM::factory('category')->where('id', $category_id)->find_all();
-		
-		// To hold the return values
-		$cats = array();
-		
-		foreach($categories as $category)
+		if (! isset(self::$categories))
 		{
-			$cats[$category->id]['category_id'] = $category->id;
-			$cats[$category->id]['category_title'] = $category->category_title;
-			$cats[$category->id]['category_color'] = $category->category_color;
-			$cats[$category->id]['category_image'] = $category->category_image;
-			$cats[$category->id]['category_image_thumb'] = $category->category_image_thumb;
+			$categories = ORM::factory('category')->find_all();
+			
+			self::$categories = array();
+			foreach($categories as $category)
+			{
+				self::$categories[$category->id]['category_id'] = $category->id;
+				self::$categories[$category->id]['category_title'] = $category->category_title;
+				self::$categories[$category->id]['category_color'] = $category->category_color;
+				self::$categories[$category->id]['category_image'] = $category->category_image;
+				self::$categories[$category->id]['category_image_thumb'] = $category->category_image_thumb;
+			}
 		}
 		
-		return $cats;
+		if ($category_id AND isset(self::$categories[$category_id]))
+		{
+			return array($category_id => self::$categories[$category_id]);
+		}
+		
+		return self::$categories;
 	}
 
 	/**
@@ -190,7 +196,7 @@ class Category_Model extends ORM_Tree {
 		}
 		
 		// Return
-		return self::factory('category')
+		return ORM::factory('category')
 			->where($where)
 			->where('category_title != "NONE"')
 			->orderby('category_position', 'ASC')
