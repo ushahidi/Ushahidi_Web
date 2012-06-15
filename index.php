@@ -13,7 +13,8 @@
  * directory of your site. (Same directory as this index.php file)
  *
  */
-if(file_exists('maintenance.php')){
+if (file_exists('maintenance.php'))
+{
 	header("Status: 503 Service Temporarily Unavailable");
 	die(file_get_contents('maintenance.php'));
 }

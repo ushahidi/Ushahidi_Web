@@ -112,7 +112,7 @@ class Auth_Core {
 			return FALSE;
 
 		// Hash the password only if we are not using RiverID
-		if (is_string($password) AND kohana::config('riverid.enable') != true)
+		if (is_string($password) AND Kohana::config('riverid.enable') != TRUE)
 		{
 			// Get the salt from the stored password
 			$salt = $this->find_salt($this->driver->password($username));
