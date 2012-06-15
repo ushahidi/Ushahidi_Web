@@ -138,7 +138,7 @@ class Reports_Controller extends Admin_Controller {
 							$update = new Incident_Model($item);
 							if ($update->loaded == TRUE)
 							{
-								$update->incident_active = ($update->incident_active == 0) ? '1' : '0';
+								$update->incident_active = '1';
 
 								// Tag this as a report that needs to be sent out as an alert
 								if ($update->incident_alert_status != '2')
