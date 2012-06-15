@@ -49,6 +49,7 @@ Kohana::config_set('settings.api_akismet', $settings['api_akismet']);
 Kohana::config_set('settings.default_city', $settings['default_city']);
 Kohana::config_set('settings.default_country', $settings['default_country']);
 Kohana::config_set('settings.multi_country', $settings['multi_country']);
+Kohana::config_set('settings.enable_timeline', $settings['enable_timeline']);
 Kohana::config_set('settings.default_lat', $settings['default_lat']);
 Kohana::config_set('settings.default_lon', $settings['default_lon']);
 Kohana::config_set('settings.default_zoom', $settings['default_zoom']);

@@ -362,7 +362,8 @@ class Settings_Controller extends Admin_Controller {
 			'allow_clustering' => '',
 			'default_map_all_icon' => '',
 			'default_map_all_icon_id' => '',
-			'delete_default_map_all_icon' => ''
+			'delete_default_map_all_icon' => '',
+			'enable_timeline' => ''
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
 		//	corresponding to the form field names
@@ -386,7 +387,8 @@ class Settings_Controller extends Admin_Controller {
 			    ->add_rules('allow_clustering','required','between[0,1]')
 			    ->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]')
 			    ->add_rules('api_google', 'length[0,200]')
-			    ->add_rules('api_live', 'length[0,200]');
+			    ->add_rules('api_live', 'length[0,200]')
+				->add_rules('enable_timeline', 'numeric', 'length[1,1]');
 			
 
 			// Add rules for file upload
@@ -526,6 +528,7 @@ class Settings_Controller extends Admin_Controller {
 				'allow_clustering' => $settings['allow_clustering'],
 				'default_map_all' => $settings['default_map_all'],
 				'default_map_all_icon_id' => $settings['default_map_all_icon_id'],
+				'enable_timeline' => $settings['enable_timeline'],
 			);
 		}
 

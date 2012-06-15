@@ -123,6 +123,7 @@
 		'info' => 'Setting up your map provider is a straight-forward process. Select a provider, obtain an API key from the provider\'s site, and enter the API key.',
 		'name' => 'Map provider',
 	),
+	'map_timeline' => 'Map Timeline',
 	'map_settings' => 'Map Settings',
 	'multiple_countries' => 'Does this Ushahidi Deployment span multiple countries?',
 	'select_default_location' => 'Please select a default country',

@@ -42,7 +42,8 @@
 					<?php endif; ?>
 						<div class="head">
 							<h3><?php echo Kohana::lang('settings.map_settings');?></h3>
-							<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_admin.save_settings');?>" />
+							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
 						</div>
 						<!-- column -->
 						<div class="l-column">
@@ -60,7 +61,7 @@
 										<div id="city_count"></div>
 									</div>
 									<div>
-										<?php echo Kohana::lang('settings.multiple_countries');?><br />
+										<?php echo Kohana::lang('settings.multiple_countries');?>?<br />
 										<input type="radio" name="multi_country" value="1"
 										<?php if ($form['multi_country'] == 1)
 										{
@@ -75,6 +76,20 @@
 									</div>
 								</div>
 							</div>
+							<div class="has_border">
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_map_timeline");?>"><?php echo Kohana::lang('settings.map_timeline');?></a></h4>
+								<input type="radio" name="enable_timeline" value="1"
+								<?php if ($form['enable_timeline'] == 1)
+								{
+									echo " checked=\"checked\" ";
+								}?>> <?php echo Kohana::lang('ui_main.yes');?>
+								<input type="radio" name="enable_timeline" value="0"
+								<?php if ($form['enable_timeline'] !=1)
+								{
+									echo " checked=\"checked\" ";
+								}?>> <?php echo Kohana::lang('ui_main.no');?> 
+							</div>
+
 							<div class="has_border">
 								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_map_provider"); ?>"><?php echo Kohana::lang('settings.map_provider.name');?></a></h4>
 								<p class="bold_desc"><?php echo Kohana::lang('settings.map_provider.info');?></p>
@@ -148,7 +163,9 @@
 									?>
 								</div>
 							</div>
-							<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_admin.save_settings');?>" />
+	
+								<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="margin-left: 0px;" />
+								<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
 						</div>
 						<div class="r-column">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_configure_map"); ?>"><?php echo Kohana::lang('settings.configure_map');?></a></h4>

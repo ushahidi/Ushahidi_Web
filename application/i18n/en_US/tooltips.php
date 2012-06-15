@@ -67,6 +67,7 @@
 	'settings_locale' => 'Sets the language that will be used in the site.',
 	'settings_manually_approve_users' => 'If you set this option to yes, you must approve every individual user who creates an account on your site by assigning them roles (ie. Member, Admin, Superadmin).',
 	'settings_map_provider' => 'This defines which map is to be used on the site.',
+	'settings_map_timeline' => 'This shows the timeline based on the date and time reports were submitted',
 	'settings_private_deployment' => 'Setting this value to true or yes will make your deployment private so only users with accounts that you specify will be able to access the deployment.',
 	'settings_require_email_confirmation' => 'Users will be emailed with a confirmation link to click before they are allowed to log into the deployment if this is set to yes. If you enable this after your deployment has accepted users, they will be prompted to confirm their account before they will be allowed to continue using it.',
 	'settings_server_host' => 'This is where the emails reside',

@@ -79,6 +79,8 @@ function smartColumns() {
  */
 function refreshTimeline() {
 
+	<?php if (Kohana::config('settings.enable_timeline')) {?>
+
 	var options = (arguments.length == 0) ? {} : arguments[0];
 
 	// Compute the start and end dates
@@ -154,6 +156,7 @@ function refreshTimeline() {
 		},
 		dataType: "json"
 	});
+	<?php }?>
 }
 
 
