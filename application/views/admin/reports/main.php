@@ -208,6 +208,7 @@
 										</td>
 										<td class="col-2">
 											<div class="post">
+												<div class="incident-id"><a href="<?php echo url::site() . 'admin/reports/edit/' . $incident_id; ?>" class="more">#<?php echo $incident_id; ?></a></div>
 												<h4>
 													<a href="<?php echo url::site() . 'admin/reports/edit/' . $incident_id; ?>" class="more">
 														<?php echo $incident_title; ?>

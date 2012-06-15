@@ -749,6 +749,9 @@ table td{
 	margin:0;
 	padding:3px 20px 0 0;
 }
+.table .post .incident-id{
+	float:right;
+}
 .table th {
 	padding-top:0 !important;
 	padding-bottom:0 !important;

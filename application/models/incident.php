@@ -347,7 +347,7 @@ class Incident_Model extends ORM {
 	 * @param string $sort How to order the records - only ASC or DESC are allowed
 	 * @return Database_Result
 	 */
-	public static function get_incidents($where = array(), $limit = NULL, $order_field = NULL, $sort = NULL)
+	public static function get_incidents($where = array(), $limit = NULL, $order_field = NULL, $sort = NULL, $count = FALSE)
 	{
 		// Get the table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
@@ -365,9 +365,18 @@ class Incident_Model extends ORM {
 		}
 
 		// Query
-		$sql = 'SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, i.incident_mode, i.incident_active, '
-			. 'i.incident_verified, i.location_id, l.country_id, l.location_name, l.latitude, l.longitude ';
-
+		// Normal query
+		if (! $count)
+		{
+			$sql = 'SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, i.incident_mode, i.incident_active, '
+				. 'i.incident_verified, i.location_id, l.country_id, l.location_name, l.latitude, l.longitude ';
+		}
+		// Count query
+		else
+		{
+			$sql = 'SELECT COUNT(DISTINCT i.id) as report_count ';
+		}
+		
 		// Check if all the parameters exist
 		if (count($radius) > 0 AND array_key_exists('latitude', $radius) AND array_key_exists('longitude', $radius)
 			AND array_key_exists('distance', $radius))
@@ -431,11 +440,7 @@ class Incident_Model extends ORM {
 		}
 
 		// Kohana::log('debug', $sql);
-		// Database instance for the query
-		$db = new Database();
-
-		// Return
-		return $db->query($sql);
+		return Database::instance()->query($sql);
 	}
 
 	/**

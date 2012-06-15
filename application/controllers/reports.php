@@ -137,8 +137,8 @@ class Reports_Controller extends Main_Controller {
 
 		// Additional view content
 		$this->template->content->custom_forms_filter = new View('reports/submit_custom_forms');
-		$disp_custom_fields = customforms::get_custom_form_fields();
-		$this->template->content->custom_forms_filter->disp_custom_fields = $disp_custom_fields;
+		$this->template->content->custom_forms_filter->disp_custom_fields = customforms::get_custom_form_fields();
+		$this->template->content->custom_forms_filter->search_form = TRUE;
 		$this->template->content->oldest_timestamp = $oldest_timestamp;
 		$this->template->content->latest_timestamp = $latest_timestamp;
 		$this->template->content->report_stats->total_reports = $total_reports;
@@ -165,18 +165,10 @@ class Reports_Controller extends Main_Controller {
 		$report_listing = new View('reports/list');
 
 		// Fetch all incidents
-		$all_incidents = reports::fetch_incidents();
+		$incidents = reports::fetch_incidents(TRUE);
 
 		// Pagination
-		$pagination = new Pagination(array(
-				'style' => 'front-end-reports',
-				'query_string' => 'page',
-				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
-				'total_items' => $all_incidents->count()
-				));
-
-		// Reports
-		$incidents = Incident_Model::get_incidents(reports::$params, $pagination);
+		$pagination = reports::$pagination;
 
 		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
 		$localized_categories = array();
@@ -241,16 +233,9 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template = "";
 		$this->auto_render = FALSE;
-
-		if ($_GET)
-		{
-			$report_listing_view = $this->_get_report_listing_view();
-			print $report_listing_view;
-		}
-		else
-		{
-			print "";
-		}
+		
+		$report_listing_view = $this->_get_report_listing_view();
+		print $report_listing_view;
 	}
 
 	/**

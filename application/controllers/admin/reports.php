@@ -256,31 +256,19 @@ class Reports_Controller extends Admin_Controller {
 		}
 
 		// Fetch all incidents
-		$all_incidents = reports::fetch_incidents();
-
-		// Pagination
-		$pagination = new Pagination(array(
-				'style' => 'front-end-reports',
-				'query_string' => 'page',
-				'items_per_page' => (int) Kohana::config('settings.items_per_page'),
-				'total_items' => $all_incidents->count()
-				));
-
-		Event::run('ushahidi_filter.pagination',$pagination);
-
-		// Reports
-		$incidents = Incident_Model::get_incidents(reports::$params, $pagination);
+		$incidents = reports::fetch_incidents(TRUE, Kohana::config('settings.items_per_page_admin'));
 
 		Event::run('ushahidi_filter.filter_incidents',$incidents);
+
 		$this->template->content->countries = Country_Model::get_countries_list();
 		$this->template->content->incidents = $incidents;
-		$this->template->content->pagination = $pagination;
+		$this->template->content->pagination = reports::$pagination;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
 
 		// Total Reports
-		$this->template->content->total_items = $pagination->total_items;
+		$this->template->content->total_items = reports::$pagination->total_items;
 
 		// Status Tab
 		$this->template->content->status = $status;

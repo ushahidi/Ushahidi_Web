@@ -406,7 +406,7 @@
 	'reports_find_location' => 'Find a location near you',
 	'reports_first' => 'First Name',
 	'reports_last' => 'Last Name',
-	'reports_location_name' => 'Refine Location Name',
+	'reports_location_name' => 'Location Name',
 	'reports_news' => 'News Source Link',
 	'reports_optional' => 'Optional Information',
 	'reports_photos' => 'Upload Photos',

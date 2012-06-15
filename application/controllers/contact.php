@@ -13,91 +13,105 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Contact_Controller extends Main_Controller
-{
+class Contact_Controller extends Main_Controller {
 	function __construct()
-    {
-        parent::__construct();
-    }
+	{
+		parent::__construct();
+	}
 
-    public function index()
-    {
+	public function index()
+	{
+		// If contact page disabled, or site_email not set then return 404
+		if (! Kohana::config('settings.site_contact_page') OR Kohana::config('settings.site_email') == "")
+		{
+			throw new Kohana_404_Exception();
+		}
 
-        $this->template->header->this_page = 'contact';
-        $this->template->content = new View('contact');
+		$this->template->header->this_page = 'contact';
+		$this->template->content = new View('contact');
 
-        $this->template->header->page_title .= Kohana::lang('ui_main.contact').Kohana::config('settings.title_delimiter');
+		$this->template->header->page_title .= Kohana::lang('ui_main.contact') . Kohana::config('settings.title_delimiter');
 
 		// Setup and initialize form field names
-        $form = array (
-            'contact_name' => '',
-            'contact_email' => '',
-            'contact_phone' => '',
-            'contact_subject' => '',
-            'contact_message' => '',
-            'captcha' => ''
-        );
+		$form = array('contact_name' => '', 'contact_email' => '', 'contact_phone' => '', 'contact_subject' => '', 'contact_message' => '', 'captcha' => '');
 
-        // Copy the form as errors, so the errors will be stored with keys
-        // corresponding to the form field names
+		// Copy the form as errors, so the errors will be stored with keys
+		// corresponding to the form field names
 		$captcha = Captcha::factory();
-        $errors = $form;
-        $form_error = FALSE;
-        $form_sent = FALSE;
+		$errors = $form;
+		$form_error = FALSE;
+		$form_sent = FALSE;
 
 		// Check, has the form been submitted, if so, setup validation
-        if ($_POST)
-        {
-            // Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-            $post = Validation::factory($_POST);
+		if ($_POST)
+		{
+			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			$post = Validation::factory($_POST);
 
-            // Add some filters
-            $post->pre_filter('trim', TRUE);
+			// Add some filters
+			$post->pre_filter('trim', TRUE);
 
-	        // Add some rules, the input field, followed by a list of checks, carried out in order
-            $post->add_rules('contact_name', 'required', 'length[3,100]');
-			$post->add_rules('contact_email', 'required','email', 'length[4,100]');
-            $post->add_rules('contact_subject', 'required', 'length[3,100]');
-            $post->add_rules('contact_message', 'required');
-            $post->add_rules('captcha', 'required', 'Captcha::valid');
+			// Add some rules, the input field, followed by a list of checks, carried out in order
+			$post->add_rules('contact_name', 'required', 'length[3,100]');
+			$post->add_rules('contact_email', 'required', 'email', 'length[4,100]');
+			$post->add_rules('contact_subject', 'required', 'length[3,100]');
+			$post->add_rules('contact_message', 'required');
+			$post->add_rules('captcha', 'required', 'Captcha::valid');
 
 			// Test to see if things passed the rule checks
-            if ($post->validate())
-            {
-                // Yes! everything is valid - Send email
-                $site_email = Kohana::config('settings.site_email');
-                $message = Kohana::lang('ui_admin.sender').": " . $post->contact_name . "\n";
-                $message .= Kohana::lang('ui_admin.email').": " . $post->contact_email . "\n";
-                $message .= Kohana::lang('ui_admin.phone').": " . $post->contact_phone . "\n\n";
-                $message .= Kohana::lang('ui_admin.message').": \n" . $post->contact_message . "\n\n\n";
-                $message .= "~~~~~~~~~~~~~~~~~~~~~~\n";
-                $message .= Kohana::lang('ui_admin.sent_from_website'). url::base();
+			// Skip CSRF check since we have a CAPTCHA already
+			if ($post->validate(FALSE))
+			{
+				// Yes! everything is valid - Send email
+				$site_email = Kohana::config('settings.site_email');
+				$message = Kohana::lang('ui_admin.sender') . ": " . $post->contact_name . "\n";
+				$message .= Kohana::lang('ui_admin.email') . ": " . $post->contact_email . "\n";
+				$message .= Kohana::lang('ui_admin.phone') . ": " . $post->contact_phone . "\n\n";
+				$message .= Kohana::lang('ui_admin.message') . ": \n" . $post->contact_message . "\n\n\n";
+				$message .= "~~~~~~~~~~~~~~~~~~~~~~\n";
+				$message .= Kohana::lang('ui_admin.sent_from_website') . url::base();
 
-                // Send Admin Message
-                email::send( $site_email, $post->contact_email, $post->contact_subject, $message, FALSE );
+				// Send Admin Message
+				try
+				{
+					email::send($site_email, $post->contact_email, $post->contact_subject, $message, FALSE);
+	
+					$form_sent = TRUE;
+				}
+				catch (Exception $e)
+				{
+					// repopulate the form fields
+					$form = arr::overwrite($form, $post->as_array());
 
-                $form_sent = TRUE;
-            }
-            // No! We have validation errors, we need to show the form again, with the errors
-            else
-            {
-                // repopulate the form fields
-                $form = arr::overwrite($form, $post->as_array());
+					// Manually add an error message for the email send failure.
+					$errors['email_send'] = Kohana::lang('contact.email_send.failed');
 
-                // populate the error fields, if any
-                $errors = arr::overwrite($errors, $post->errors('contact'));
-                $form_error = TRUE;
-            }
-        }
+					// populate the error fields, if any
+					$errors = arr::merge($errors, $post->errors('contact'));
+					$form_error = TRUE;
+				}
+			}
+			// No! We have validation errors, we need to show the form again, with the errors
+			else
+			{
+				// repopulate the form fields
+				$form = arr::overwrite($form, $post->as_array());
 
-        $this->template->content->form = $form;
-        $this->template->content->errors = $errors;
-        $this->template->content->form_error = $form_error;
-        $this->template->content->form_sent = $form_sent;
-        $this->template->content->captcha = $captcha;
+				// populate the error fields, if any
+				$errors = arr::merge($errors, $post->errors('contact'));
+				$form_error = TRUE;
+			}
+		}
 
-        // Rebuild Header Block
-        $this->template->header->header_block = $this->themes->header_block();
-        $this->template->footer->footer_block = $this->themes->footer_block();
-    }
+		$this->template->content->form = $form;
+		$this->template->content->errors = $errors;
+		$this->template->content->form_error = $form_error;
+		$this->template->content->form_sent = $form_sent;
+		$this->template->content->captcha = $captcha;
+
+		// Rebuild Header Block
+		$this->template->header->header_block = $this->themes->header_block();
+		$this->template->footer->footer_block = $this->themes->footer_block();
+	}
+
 }
