@@ -353,7 +353,7 @@ class Messages_Controller extends Admin_Controller {
 							// Message Failed 
 							echo json_encode(array(
 								"status" => "error", 
-								"message" => Kohana::lang('ui_admin.error')." - " . $response
+								"message" => Kohana::lang('ui_admin.error_msg')." - " . $response
 							));
 						}
 					}
@@ -361,7 +361,7 @@ class Messages_Controller extends Admin_Controller {
 					{
 						echo json_encode(array(
 							"status" => "error",
-							"message" => Kohana::lang('ui_admin.error').Kohana::lang('ui_admin.check_sms_settings')
+							"message" => Kohana::lang('ui_admin.error_msg').Kohana::lang('ui_admin.check_sms_settings')
 						));
 					}
 				}
@@ -370,7 +370,7 @@ class Messages_Controller extends Admin_Controller {
 					// Send_To Mobile Number Doesn't Exist
 					echo json_encode(array(
 						"status" => "error", 
-						"message" => Kohana::lang('ui_admin.error').Kohana::lang('ui_admin.check_number')
+						"message" => Kohana::lang('ui_admin.error_msg').Kohana::lang('ui_admin.check_number')
 					));
 				}
 			}
@@ -383,7 +383,7 @@ class Messages_Controller extends Admin_Controller {
 
 				echo json_encode(array(
 					"status" => "error",
-					"message" => Kohana::lang('ui_admin.error').Kohana::lang('ui_admin.check_message_valid')
+					"message" => Kohana::lang('ui_admin.error_msg').Kohana::lang('ui_admin.check_message_valid')
 				));
 			}
 		}
