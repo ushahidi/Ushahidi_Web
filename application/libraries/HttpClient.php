@@ -4,7 +4,7 @@
  *
  * @author Henry Addo <henry@addhen.org>
  * @version 1.0
- * @package php
+ * @package HttpClient
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
@@ -50,7 +50,7 @@ class HttpClient_Core {
      */
     private $timeout;
     
-    public function __construct($url,$timeout)
+    public function __construct($url, $timeout=20)
     {
         $this->url = $url;
         $this->timeout = $timeout;
@@ -170,8 +170,8 @@ class HttpClient_Core {
 
     }
 
-    /** fetch data from target URL	 
-     * return data returned from url or false if error occured
+    /** 
+     * Fetch data from target URL return data returned from url or false if error occured
      *
      * @access proctected
      *
@@ -180,7 +180,7 @@ class HttpClient_Core {
 	 * @param int timeout in sec for complete curl operation (default 5)
 	 * @return string data
 	 */
-	public function fetch_url()
+	public function execute()
     {
         $this->prepare_curl(); 
 		//set method to get
@@ -188,11 +188,12 @@ class HttpClient_Core {
 		//and finally send curl request
 		$result = curl_exec($this->ch);
 
-		if(curl_errno($this->ch))
+		if (curl_errno($this->ch))
         {
             $this->set_error_msg();
             $this->close();
-			return false;
+
+			return FALSE;
 		}
 		
         $this->close();

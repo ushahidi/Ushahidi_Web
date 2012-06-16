@@ -978,138 +978,135 @@ class Settings_Controller extends Admin_Controller {
 
 	/**
 	 * Retrieves cities listing using GeoNames Service
-	 * @param int $cid The id of the country to retrieve cities for
+	 *
+	 * @param int $country_id The id of the country to retrieve cities for
 	 * Returns a JSON response
 	 */
-	function updateCities($cid = 0)
+	public function update_cities($country_id = 0)
 	{
 		$this->template = "";
 		$this->auto_render = FALSE;
 
-		$cities = 0;
-
 		// Get country ISO code from DB
-		$country = ORM::factory('country', (int)$cid);
+		$country = ORM::factory('country', (int) $country_id);
 
-		if ($country->loaded==true)
+		// No. of cities fetched
+		$entries = 0;
+
+		// Default payload to be returned to client as a JSON object
+		$status_response = array(
+			"status" => "error",
+
+			// Default response message
+			"response" => sprintf("%d %s %s", $entries, Kohana::lang('ui_admin.cities_loaded'), 
+			                        Kohana::lang('ui_admin.country_not_found'))
+		);
+
+		if ($country->loaded)
 		{
-			$iso = $country->iso;
+			$iso = strtoupper($country->iso);
 
-			$lang = substr(Kohana::config('locale.language'), 0, 2);
-			// GeoNames WebService URL + Country ISO Code
-			$geonames_url = "http://ws.geonames.org/search?country="
-							.$iso."&featureCode=PPL&featureCode=PPLA&featureCode=PPLC&maxRows=1000&lang=".$lang;
+			// Base URL for the Geonames API endpoint
+			$base_url = "http://api.geonames.org/";
 
-			// Grabbing GeoNames requires cURL so we will check for that here.
-			if (!function_exists('curl_exec'))
+			// Get the country info
+			$country_url = $base_url."countryInfoJSON?country=%s&username=ushahididev";
+
+			$client = new HttpClient(sprintf($country_url, $iso));
+			if (($response = $client->execute()) !== FALSE)
 			{
-				throw new Kohana_Exception('settings.updateCities.cURL_not_installed');
-				return false;
-			}
+				// Decode the JSON
+				$response = json_decode($response, TRUE);
 
-			// Use Curl
-			$ch = curl_init();
-			$timeout = 20;
-			curl_setopt ($ch, CURLOPT_URL, $geonames_url);
-			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-			curl_setopt ($ch, CURLOPT_SSL_VERIFYPEER, false);
-			$xmlstr = curl_exec($ch);
-			$err = curl_errno( $ch );
-			curl_close($ch);
-
-			// $xmlstr = file_get_contents($geonames_url);
-
-			// No Timeout Error, so proceed
-			if ($err == 0) {
-				// Reset All Countries City Counts to Zero
-				$countries = ORM::factory('country')->find_all();
-				foreach ($countries as $country)
+				// Geonames returned an error
+				if ( ! array_key_exists('geonames', $response))
 				{
-					$country->cities = 0;
-					$country->save();
+					echo json_encode($status_response);
+					exit;
 				}
 
-				// Delete currently loaded cities
-				ORM::factory('city')->delete_all();
+				// Get the south,east, north and west bounds
+				$country_info = $response['geonames'][0];
 
-				$sitemap = new SimpleXMLElement($xmlstr);
-				foreach($sitemap as $city)
+				// Fetch the city names
+
+				// 
+				// TODO: EK <emmanuel(at)ushahidi.com
+				// The maximum no. of cities + the geonames username
+				// should be configurable parameters. Right now, I've set the upper
+				// limit for the cities to 1000
+				// 
+				$cities_url = $base_url."citiesJSON?north=%s&south=%s&east=%s&west=%s&username=ushahididev&maxRows=1000";
+
+				// Add the bounding box values
+				$cities_url = sprintf($cities_url, $country_info['north'], $country_info['south'],
+				    $country_info['east'], $country_info['west']);
+
+				// Fetch the cities
+				$cities_client = new HttpClient($cities_url);
+				if (($response = $cities_client->execute()) !== FALSE)
 				{
-					if ($city->name && $city->lng && $city->lat)
+					// Decode the JSON response
+					$response = json_decode($response, TRUE);
+
+					$cities = array_key_exists('geonames', $response) 
+					    ? $response['geonames']
+					    : array();
+
+					// Only proceed if cities are returned
+					if (count($cities) > 0)
 					{
-						$newcity = new City_Model();
-						$newcity->country_id = $cid;
-						$newcity->city = mysql_real_escape_string($city->name);
-						$newcity->city_lat = mysql_real_escape_string($city->lat);
-						$newcity->city_lon = mysql_real_escape_string($city->lng);
-						$newcity->save();
+						// Set the city count for the country
+						$country->cities = count($cities);
+						$country->save();
 
-						$cities++;
+						// Delete all the cities for the current country
+						ORM::factory('city')
+						    ->where('country_id', $country->id)
+						    ->delete_all();
+
+						 $query = sprintf("INSERT INTO %scity (`country_id`, `city`, `city_lat`, `city_lon`) VALUES ", 
+						     $this->table_prefix);
+
+						 $values = array();
+						 $values_template = "(%d, '%s', %s, %s)";
+
+						// Add the freshly fetched cities
+						foreach ($cities as $city)
+						{
+							$values[] = sprintf($values_template, $country->id, 
+							    $city['name'], $city['lat'], $city['lng']);
+						}
+
+						$query .= implode(",", $values);
+
+						// Batch insert
+						Database::instance()->query($query);
+
+						$entries = count($cities);
 					}
+
+					// Set the response payload
+					$status_response['status'] = "success";
+					$status_response['response'] = sprintf("%d %s", $entries,
+					    Kohana::lang('ui_admin.cities_loaded'));
 				}
-				// Update Country With City Count
-				$country = ORM::factory('country', $cid);
-				$country->cities = $cities;
-				$country->save();
-
-				echo json_encode(array("status"=>"success", "response"=>"$cities ".Kohana::lang('ui_admin.cities_loaded')));
+				else
+				{
+					// Geonames timed out
+					$status_response['response'] = Kohana::lang('ui_admin.geonames_timeout');
+				}
 			}
-			else {
-				echo json_encode(array("status"=>"error", "response"=>"0 ".Kohana::lang('ui_admin.cities_loaded').". ".Kohana::lang('ui_admin.geonames_timeout')));
-			}
-		}
-		else
-		{
-			echo json_encode(array("status"=>"error", "response"=>"0 ".Kohana::lang('ui_admin.cities_loaded').". ".Kohana::lang('ui_admin.country_not_found')));
-		}
-	}
-
-	/**
-	 * adds the email settings to the application/config/email.php file
-	 */
-	private function _add_email_settings( $settings )
-	{
-		$email_file = @file('application/config/email.template.php');
-		$handle = @fopen('application/config/email.php', 'w');
-
-		if(is_array($email_file) ) {
-			foreach( $email_file as $number_line => $line )
+			else
 			{
-
-				switch( $line ) {
-					case strpos($line,"\$config['username']"):
-						fwrite($handle,	 str_replace("\$config['username'] = \"\"","\$config['username'] = ".'"'.$settings->email_username.'"',$line ));
-						break;
-
-					case strpos($line,"\$config['password']"):
-						fwrite($handle,	 str_replace("\$config['password'] = \"\"","\$config['password'] = ".'"'.$settings->email_password.'"',$line ));
-						break;
-
-					case strpos($line,"\$config['port']"):
-						fwrite($handle,	 str_replace("\$config['port'] = 25","\$config['port'] = ".'"'.$settings->email_port.'"',$line ));
-						break;
-
-					case strpos($line,"\$config['server']"):
-						fwrite($handle,	 str_replace("\$config['server'] = \"\"","\$config['server'] = ".'"'.$settings->email_host.'"',$line ));
-						break;
-
-					case strpos($line,"\$config['servertype']"):
-						fwrite($handle,	 str_replace("\$config['servertype'] = \"pop3\"","\$config['servertype'] = ".'"'.$settings->email_servertype.'"',$line ));
-						break;
-
-					case strpos($line,"\$config['ssl']"):
-						$enable = $settings->email_ssl == 0? 'false':'true';
-						fwrite($handle,	 str_replace("\$config['ssl'] = false","\$config['ssl'] = ".$enable,$line ));
-						break;
-
-					default:
-						fwrite($handle, $line );
-				}
+				// Geonames timeout
+				$status_response['response'] = Kohana::lang('ui_admin.geonames_timeout');
 			}
 		}
 
+		echo json_encode($status_response);
 	}
+
 
 	/**
 	 * Check if clean url can be enabled on the server so
@@ -1185,7 +1182,8 @@ class Settings_Controller extends Admin_Controller {
 	/**
 	 * Check if clean URL is enabled on Ushahidi
 	 */
-	private function _check_clean_url_on_ushahidi() {
+	private function _check_clean_url_on_ushahidi()
+	{
 		$config_file = @file_get_contents('application/config/config.php');
 
 		return (strpos( $config_file,"\$config['index_page'] = 'index.php';") != 0 )
