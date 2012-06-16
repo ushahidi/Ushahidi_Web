@@ -108,8 +108,7 @@ class Login_Controller extends Template_Controller {
 
 		// Regular Form Post for Signin
 		// check, has the form been submitted, if so, setup validation
-		if ($_POST AND isset($_POST["action"])
-			AND $_POST["action"] == "signin")
+		if ($_POST AND isset($_POST["action"]) AND $_POST["action"] == "signin")
 		{
 
 			// START: Signin Process
@@ -125,37 +124,37 @@ class Login_Controller extends Template_Controller {
 				$postdata_array = $post->safe_array();
 
 				// Flip this flag to flase to skip the login
-				$valid_login = true;
+				$valid_login = TRUE;
 
 				// Load the user
 				$user = ORM::factory('user', $postdata_array['username']);
 
-				$remember = (isset($post->remember))? TRUE : FALSE;
+				$remember = (isset($post->remember)) ? TRUE : FALSE;
 
 				// Allow a login with username or email address, but we need to figure out which is
-				//   which so we can pass the appropriate variable on login. Mostly used for RiverID
+				// which so we can pass the appropriate variable on login. Mostly used for RiverID
 
 				$email = $postdata_array['username'];
-				if (valid::email($email) == false)
+				if (valid::email($email) == FALSE)
 				{
 					// Invalid Email, we need to grab it from the user account instead
 
 					$email = $user->email;
-					if (valid::email($email) == false AND kohana::config('riverid.enable') == true)
+					if (valid::email($email) == FALSE AND kohana::config('riverid.enable') == TRUE)
 					{
 						// We don't have any valid email for this user.
 						// Only skip login if we are authenticating with RiverID.
-						$valid_login = false;
+						$valid_login = FALSE;
 					}
 				}
 
 				// Auth Login requires catching exceptions to properly show errors
-				try {
-
+				try
+				{
 					$login = $auth->login($user, $postdata_array['password'], $remember, $email);
 
 					// Attempt a login
-					if ( $login AND $valid_login )
+					if ($login AND $valid_login )
 					{
 						// Action::user_login - User Logged In
 						Event::run('ushahidi_action.user_login',$user);
@@ -169,8 +168,9 @@ class Login_Controller extends Template_Controller {
 						$post->add_error('password', 'login error');
 					}
 
-				} catch (Exception $e) {
-
+				}
+				catch (Exception $e)
+				{
 					$error_message = $e->getMessage();
 
 					// In a special case, we want to show a form to resend a confirmation email

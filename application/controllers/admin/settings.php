@@ -14,6 +14,10 @@
  */
 
 class Settings_Controller extends Admin_Controller {
+
+	/**
+	 * @var Cache
+	 */
 	protected $cache;
 
 	public function __construct()

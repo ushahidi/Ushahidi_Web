@@ -15,8 +15,7 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Admin_Controller extends Template_Controller
-{
+class Admin_Controller extends Template_Controller {
 	/**
 	 * Automatically display the views
 	 * @var bool
@@ -65,6 +64,12 @@ class Admin_Controller extends Template_Controller
 	 */
 	protected $items_per_page;
 
+	/**
+	 * Auth instance for the admin controllers
+	 * @var Auth
+	 */
+	protected $auth;
+
 
 	public function __construct()
 	{
@@ -80,6 +85,8 @@ class Admin_Controller extends Template_Controller
 		$this->db = new Database();
 
 		$this->session = Session::instance();
+
+		$this->auth = Auth::instance();
 
 		// Themes Helper
 		$this->themes = new Themes();
@@ -97,9 +104,11 @@ class Admin_Controller extends Template_Controller
 			url::redirect('/');
 		}
 
+		// Get the authenticated user
+		$this->user = $this->auth->get_user();
+
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
-
 
 		// Get the no. of items to display setting
 		$this->items_per_page = (int) Kohana::config('settings.items_per_page_admin');
@@ -130,6 +139,7 @@ class Admin_Controller extends Template_Controller
 
 		// Generate main tab navigation list.
 		$this->template->main_tabs = admin::main_tabs();
+
 		// Generate sub navigation list (in default layout, sits on right side).
 		$this->template->main_right_tabs = admin::main_right_tabs($this->user);
 
@@ -138,13 +148,8 @@ class Admin_Controller extends Template_Controller
 		// Header Nav
 		$header_nav = new View('header_nav');
 		$this->template->header_nav = $header_nav;
-		$this->template->header_nav->loggedin_user = FALSE;
-		if ( isset(Auth::instance()->get_user()->id) )
-		{
-			// Load User
-			$this->template->header_nav->loggedin_role = Auth::instance()->get_user()->dashboard();
-			$this->template->header_nav->loggedin_user = Auth::instance()->get_user();
-		}
+		$this->template->header_nav->loggedin_user = $this->user;
+		$this->template->header_nav->loggedin_role = $this->user->dashboard();
 		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
 
 		// Header and Footer Blocks
@@ -153,7 +158,7 @@ class Admin_Controller extends Template_Controller
 
 		// Language switcher
 		$this->template->languages = $this->themes->languages();
-		}
+	}
 
 	public function index()
 	{
@@ -169,7 +174,6 @@ class Admin_Controller extends Template_Controller
 	}
 
 
-
     /**
      * Checks version sequence parts
      *
@@ -178,8 +182,7 @@ class Admin_Controller extends Template_Controller
      *
      * @return boolean
      */
-	private function _new_or_not($release_version=NULL,
-			$version_ushahidi=NULL )
+	private function _new_or_not($release_version=NULL, $version_ushahidi=NULL)
 	{
 		if ($release_version AND $version_ushahidi)
 		{
@@ -191,14 +194,14 @@ class Admin_Controller extends Template_Controller
 			if (isset($remote_version[0]) AND isset($local_version[0])
 				AND (int) $remote_version[0] > (int) $local_version[0])
 			{
-				return true;
+				return TRUE;
 			}
 
 			// Check second part .. if its the same, move on to next part
 			if (isset($remote_version[1]) AND isset($local_version[1])
 				AND (int) $remote_version[1] > (int) $local_version[1])
 			{
-				return true;
+				return TRUE;
 			}
 
 			// Check third part
@@ -206,16 +209,16 @@ class Admin_Controller extends Template_Controller
 			{
 				if ( ! isset($local_version[2]))
 				{
-					return true;
+					return TRUE;
 				}
 				elseif( (int) $remote_version[2] > (int) $local_version[2] )
 				{
-					return true;
+					return TRUE;
 				}
 			}
 		}
 
-		return false;
+		return TRUE;
 	}
 
 
