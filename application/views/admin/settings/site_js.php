@@ -16,10 +16,8 @@
  */
 ?>
 
-<?php
-	// Prevent an HTTP call if auto upgrading isn't enabled
-	if (Kohana::config('config.enable_auto_upgrader') == TRUE){
-?>
+// Prevent an HTTP call if auto upgrading isn't enabled
+<?php if (Kohana::config('config.enable_auto_upgrader') == TRUE): ?>
 
 // Check for a new version of the Ushahidi Software
 jQuery(document).ready(function() {
@@ -42,11 +40,9 @@ jQuery(document).ready(function() {
 });
 
 
-function showhide()
-{
+function showhide() {
 	var allow_alerts = $("#allow_alerts").val();
-	if (allow_alerts > 0)
-	{   
+	if (allow_alerts > 0) {   
 		// Show the alerts email textbox
 		$("#alerts_selector").show('slow'); 
 
@@ -64,22 +60,14 @@ function showhide()
 				}
 			}
 		});
-	}    
-	else
-	{
+	} else {
 		// Hide the alerts email textbox
 		$("#alerts_selector").hide('slow');
 		
 		jQuery('#siteForm').validate({
 			   onsubmit : false
 		});
-
-		
 	}
-	
-	
 }
 
-<?php
-	}
-?>
+<?php endif; ?>

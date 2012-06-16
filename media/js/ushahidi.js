@@ -347,6 +347,9 @@
 	 	var config = config || {};
 	 	if (config.zoom == undefined) config.zoom = 8;
 
+	 	// Internally track the current zoom
+	 	this.currentZoom = config.zoom;
+
 	 	// Update the report filters with the zoom level
 	 	this._reportFilters.z = config.zoom;
 
@@ -408,6 +411,8 @@
 
 		var point = new OpenLayers.LonLat(config.center.longitude, config.center.latitude);
 		point.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
+
+		this._currentCenter = point;
 
 		// Set the map center
 		this._olMap.setCenter(point, config.zoom);
@@ -486,6 +491,11 @@
 				
 				var coords = {latitude: point.lat, longitude: point.lon};
 				context.trigger("markerpositionchanged", coords);
+
+				// Update the current map center
+				var newCenter = new OpenLayers.LonLat(coords.longitude, coords.latitude);
+				newCenter.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
+				context._currentCenter = newCenter;
 			});
 
 			this._isLoaded = 1;
@@ -1020,8 +1030,9 @@
 	 * zoom - {Number} The zoom level to adjust to
 	 */
 	Ushahidi.Map.prototype.updateZoom = function(zoom) {
-		if (this._olMap.getZoom() !== zoom) {
-			this._olMap.zoomTo(zoom);
+		if (this.currentZoom !== zoom) {
+			this.currentZoom = zoom;
+			this._olMap.setCenter(this._currentCenter, zoom);
 		}
 	}
 
@@ -1043,11 +1054,19 @@
 
 	/**
 	 * APIMethod: triggerZoomChanged
-	 * Callback that triggers the "zoomchanged" event
+	 * Callback that triggers the "zoomchanged" event. This method
+	 * is called by OpenLayers when the map zoom changes and the
+	 * Ushahidi.Map object was initialized with the detectMapZoom
+	 * option set to TRUE
 	 */
 	Ushahidi.Map.prototype.triggerZoomChanged = function(e) {
 		if (this._isLoaded) {
 			this.trigger("zoomchanged", this._olMap.getZoom());
+
+			// EK <emmanuel(at)ushahidi.com>
+			// Dirty hack to add back the default layer
+			// The assumption here is that this method is only called
+			// when we're using the default layer
 			this.addLayer(Ushahidi.DEFAULT);
 		}
 	}
