@@ -183,7 +183,7 @@ class category_Core {
 				$report_count = isset($category_data[$category->id]['report_count']) ? $category_data[$category->id]['report_count'] : 0;
 				
 				$category_data[$category->id] = array(
-					'category_title' => Category_Lang_Model::category_title($category->id),
+					'category_title' => Category_Lang_Model::category_title($category->id, Kohana::config('locale.language.0')),
 					'parent_id' => $category->parent_id,
 					'category_color' => $category->category_color,
 					'category_image' => $category->category_image,
