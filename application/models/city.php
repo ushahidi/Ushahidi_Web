@@ -20,4 +20,12 @@ class City_Model extends ORM
 	
 	// Database table name
 	protected $table_name = 'city';
+
+	/**
+	 * Gets all the cities
+	 */
+	public static function get_all()
+	{
+		return ORM::factory('city')->orderby('city', 'asc')->find_all();
+	}
 }

@@ -146,7 +146,7 @@
 				</div>
 			</div>
 			<div class="report_right">
-				<?php if ( ! $multi_country AND count($cities) > 1): ?>
+				<?php if (count($cities) > 1): ?>
 				<div class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_find_location'); ?></h4>
 					<?php print form::dropdown('select_city',$cities,'', ' class="select" '); ?>

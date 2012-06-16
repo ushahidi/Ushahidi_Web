@@ -74,4 +74,15 @@ class Country_Model extends ORM
 		
 		return $countries;
 	}
+
+	/**
+	 * Gets all the cities for country
+	 */
+	public function get_cities()
+	{
+		return ORM::factory('city')
+		    ->where('country_id', $this->id)
+		    ->orderby('city', 'asc')
+		    ->find_all();
+	}
 }

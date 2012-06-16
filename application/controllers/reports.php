@@ -906,10 +906,16 @@ class Reports_Controller extends Main_Controller {
 
 	/**
 	 * Retrieves Cities
+	 * @param int $country_id Id of teh country whose cities are to be fetched
+	 * @return array
 	 */
-	private function _get_cities()
+	private function _get_cities($country_id)
 	{
-		$cities = ORM::factory('city')->orderby('city', 'asc')->find_all();
+		// Get the cities
+		$cities = (Kohana::config('settings.multi_country'))
+		    ? City_Model::get_all()
+		    : ORM::factory('country', $country_id)->get_cities();
+
 		$city_select = array('' => Kohana::lang('ui_main.reports_select_city'));
 
 		foreach ($cities as $city)
