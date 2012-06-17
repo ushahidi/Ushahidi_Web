@@ -20,8 +20,6 @@
 	    <div class="feedback info"> 
 	    	<p>Before you get started, you will need to make sure the following files and folders are writable by your webserver. This involves changing file permissions.</p>
 	            <ul>
-	                <li>application/config/config.php</li>
-	                <li>application/config/encryption.php</li>
 	                <li>application/config</li>
 	                <li>application/cache</li>
 	                <li>application/logs</li>

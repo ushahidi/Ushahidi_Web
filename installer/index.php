@@ -1,4 +1,5 @@
 <?php
+// ini_set('display_errors', 'On');
 /**
  * This file acts as the bootstrap for the installer.
  * It forwards all HTTP requests to the Install_Wizard class
@@ -15,18 +16,18 @@ require INSTALLER_DIR . 'wizard.php';
 require INSTALLER_DIR . 'utils.php';
 
 // Bootstrap the installer
-Install_Wizard::init();
+Installer_Wizard::init();
 
 if ($_POST)
 {
 	if  (isset($_POST['previous']))
 	{
-		Install_Wizard::previous();
+		Installer_Wizard::previous();
 	}
 	else
 	{
 		// Show the next step
-		Install_Wizard::next();
+		Installer_Wizard::next();
 	}
 }
 

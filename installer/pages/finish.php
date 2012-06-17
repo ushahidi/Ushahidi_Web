@@ -16,7 +16,7 @@
 				<div class="feedback success">
 	             	<h2>Installation Successful!</h2>
 				</div>
-	            <p>To login, go to <a href="<?php echo $base_url; ?>/admin" target="_blank">
+	            <p>To login, go to <a href="<?php echo $base_url; ?>admin" target="_blank">
 					<?php echo $base_url."admin"; ?></a> and use the following credentials:<br /><br />
 				<strong>Login Email:</strong> <?php echo $admin_email; ?><br />
 				<strong>Password:</strong> (not shown)</p>

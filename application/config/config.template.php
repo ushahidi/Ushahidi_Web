@@ -18,7 +18,7 @@ $config['site_protocol'] = 'http';
  *
  * This can be removed by using URL rewriting.
  */
-$config['index_page'] = '';
+$config['index_page'] = 'index.php';
 
 /**
  * Whether or not you want to have the auto upgrader enabled.
@@ -154,10 +154,10 @@ $config['output_scheduler_js'] = TRUE;
  */
 $config['modules'] = array
 (
-	MODPATH.'auth',      // Authentication
-	MODPATH.'csrf',      // CSRF Handling
+	MODPATH.'auth',         // Authentication
+	MODPATH.'csrf',         // CSRF Handling
 	// MODPATH.'forge',     // Form generation
-	// MODPATH.'formation',     // Form generation
+	// MODPATH.'formation', // Form generation
 	// MODPATH.'kodoc',     // Self-generating documentation
 	// MODPATH.'media',     // Media caching and compression
 	// MODPATH.'archive',   // Archive utility

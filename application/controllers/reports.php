@@ -906,7 +906,7 @@ class Reports_Controller extends Main_Controller {
 
 	/**
 	 * Retrieves Cities
-	 * @param int $country_id Id of teh country whose cities are to be fetched
+	 * @param int $country_id Id of the country whose cities are to be fetched
 	 * @return array
 	 */
 	private function _get_cities($country_id)

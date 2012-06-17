@@ -1395,11 +1395,12 @@ VALUES
   (56,'checkins','0'),
   (57,'facebook_appid',NULL),
   (58,'facebook_appsecret',NULL),
-  (59,'db_version','91'),
+  (59,'db_version','94'),
   (60,'ushahidi_version','2.4'),
   (61,'allow_alerts','1'),
   (62,'require_email_confirmation','0'),
-  (63,'manually_approve_users','0');
+  (63,'manually_approve_users','0'),
+  (64,'enable_timeline','0');
 -- --------------------------------------------------------
 
 /**

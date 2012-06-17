@@ -19,7 +19,7 @@
  * @copyright  Ushahidi - http://www.ushahidi.com
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
  */
-class Install_Wizard {
+class Installer_Wizard {
 	
 	/**
 	 * Configuration directory for the application
@@ -80,25 +80,16 @@ class Install_Wizard {
 	private static $_filesystem = array(
 		// Cache directory
 		'cache' => 'application/cache',
-		
+
 		// Logs directory
 		'logs' => 'application/logs',
-		
+
 		// Config directory
 		'config' => 'application/config',
-		
+
 		// Uploads directory
 		'uploads' => 'media/uploads',
-		
-		// Config php
-		'main_config' => 'application/config/config.php',
 
-		// Encryption config
-		'encryption' => 'application/config/encryption.php',
-		
-		// Auth config
-		'auth'=> 'application/config/auth.php',
-		
 		// .htaccess file
 		'htaccess' => '.htaccess'
 	);
@@ -198,7 +189,9 @@ class Install_Wizard {
 			self::$_data['started'] = TRUE;
 			
 			// Get the site protocol
-			list($protocol) = array_map("strtolower", explode("/", $_SERVER['SERVER_PROTOCOL']));
+			$protocol = (isset($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] == 'on')
+			    ? 'https'
+			    : 'http';
 			
 			// Check for SSL
 			if ($_SERVER['SERVER_PORT'] === '443')
@@ -219,8 +212,14 @@ class Install_Wizard {
 			{
 				$site_domain = "/" . $site_domain;
 			}
+			
+			// Server port
+			$port = ! in_array($_SERVER['SERVER_PORT'], array("80", "443"))
+			    ? ':'.$_SERVER['SERVER_PORT'] 
+			    : '';
 
-			$base_url = $protocol.'://'.$_SERVER['SERVER_NAME'].$site_domain;
+			// Build out the base URL
+			$base_url = $protocol.'://'.$_SERVER['SERVER_NAME'].$port.$site_domain;
 			
 			self::$_data['site_domain'] = $site_domain;
 			self::$_data['base_url'] = $base_url;
@@ -237,6 +236,7 @@ class Install_Wizard {
 		{
 			self::render_install_page(self::$_data['current_stage']);
 		}
+		
 	}
 	
 		
@@ -399,7 +399,7 @@ class Install_Wizard {
 		{
 			if ( ! extension_loaded($extension))
 			{
-				$self::$_errors[] = sprintf("The <code>%</code> is disabled", $extension);
+				$self::$_errors[] = sprintf("The <code>%</code> extension is disabled", $extension);
 			}
 		}
 		
@@ -526,13 +526,13 @@ class Install_Wizard {
 	 * Checks whether a set of parameters have values in the payload. The optional
 	 * items are skipped
 	 *
-	 * @param array $params
-	 * @param array $payload
-	 * @param array $optional
+	 * @param array $params    Parameter keys to be checked for in the payload
+	 * @param array $payload   Input data 
+	 * @param array $optional  Parameters to be exempted from the validation check
 	 *
 	 * @return bool
 	 */
-	private static function _validate_params($params, $payload, $optional = NULL)
+	private static function _validate_params($params, & $payload, $optional = NULL)
 	{
 		foreach ($params as $param)
 		{
@@ -543,6 +543,11 @@ class Install_Wizard {
 			{
 				self::$_errors[] = sprintf("The <code>%s</code> parameter has not been specified", $param);
 			}
+			else
+			{
+				// Input sanitization
+				$payload[$param] = strip_tags($payload[$param]);
+			}
 		}
 
 		return count(self::$_errors) === 0;
@@ -550,7 +555,10 @@ class Install_Wizard {
 
 
 	/**
-	 * Callback function for the requirements stage
+	 * Verifies whether the installation requirements
+	 * have been met
+	 *
+	 * @return bool
 	 */
 	public static function install_requirements()
 	{
@@ -575,6 +583,8 @@ class Install_Wizard {
 	/**
 	 * Sets up the database and creates the database.php
 	 * config file
+	 *
+	 * @return bool
 	 */
 	public static function install_database()
 	{
@@ -734,13 +744,9 @@ class Install_Wizard {
 							break;
 						}
 					}
-					
-					// Write to file
 					fwrite($output_file, $line);
 				}
 			}
-		
-			// Close the files
 			fclose($output_file);
 		}
 		else
@@ -794,10 +800,13 @@ class Install_Wizard {
 		
 		// config.php
 		$config_file = self::$_app_config_dir.'config.php';
-		$config = file($config_file);
+		
+		// Load the template file
+		$config_template = file(self::$_app_config_dir.'config.template.php');
+		
 		if (($fp = @fopen($config_file, 'w')) !== FALSE)
 		{
-			foreach ($config as $line_no => $line)
+			foreach ($config_template as $line_no => $line)
 			{
 				foreach ($params as $param => $value)
 				{
@@ -827,13 +836,15 @@ class Install_Wizard {
 	{
 		// Auth.php
 		$auth_file_name = self::$_app_config_dir.'auth.php';
-		$auth_file = file($auth_file_name);
+		
+		// Load the template
+		$auth_template = file(self::$_app_config_dir.'auth.template.php');
 
 		if (($fp = fopen($auth_file_name, 'w')) !== FALSE)
 		{
 			// Get the salt pattern
 			$salt_pattern = self::$_data['salt_pattern'];
-			foreach ($auth_file as $line_no => $line)
+			foreach ($auth_template as $line_no => $line)
 			{
 				if (preg_match("/config\['salt_pattern'\].*/i", $line, $matches))
 				{
@@ -853,10 +864,13 @@ class Install_Wizard {
 		$crypto_key = Installer_Utils::get_random_str(32);
 		
 		$encrypt_file_name = self::$_app_config_dir.'encryption.php';
-		$encrypt_file = file($encrypt_file_name);
+		
+		// Load the template file
+		$encryption_template = file(self::$_app_config_dir.'encryption.template.php');
+		
 		if (($fp = @fopen($encrypt_file_name, 'w')) !== FALSE)
 		{
-			foreach ($encrypt_file as $line_no => $line)
+			foreach ($encryption_template as $line_no => $line)
 			{
 				if (preg_match("/config\['default'\]\['key'\].*/i", $line, $matches))
 				{
@@ -865,7 +879,6 @@ class Install_Wizard {
 				}
 				fwrite($fp, $line);
 			}
-			// Close the file
 			fclose($fp);
 		}
 		else
@@ -887,9 +900,20 @@ class Install_Wizard {
 		if ( ! self::_validate_params($params, $_POST, $optional))
 			return FALSE;
 		
+		// Clean URLs
 		if (isset($_POST['enable_clean_urls']))
 		{
 			self::$_data['enable_clean_urls'] = (bool) $_POST['enable_clean_urls'];
+		}
+		
+		// Validate email
+		if ( ! empty($_POST['site_email']))
+		{
+			if ((filter_var($_POST['site_email'], FILTER_VALIDATE_EMAIL)) === FALSE)
+			{
+				self::$_errors[] = sprintf("Invalid email address: <strong>%s</strong>", $_POST['site_email']);
+				return FALSE;
+			}
 		}
 		
 		return self::_update_settings($params);
@@ -995,7 +1019,7 @@ class Install_Wizard {
 		
 		extract($_POST);
 		
-		if (filter_var($email, FILTER_VALIDATE_EMAIL) == FALSE)
+		if (filter_var($email, FILTER_VALIDATE_EMAIL) === FALSE)
 		{
 			self::$_errors[] = sprintf("Invalid email address: <strong>%s</strong>", $email);
 			return FALSE;
