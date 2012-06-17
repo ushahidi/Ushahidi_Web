@@ -23,6 +23,7 @@ class reports_block {
 			->where('incident_active', '1')
 			->limit('8')->count_all();
 		$content->incidents = ORM::factory('incident')
+			->with('location')
 			->where('incident_active', '1')
 			->limit('10')
 			->orderby('incident_date', 'desc')
