@@ -186,7 +186,9 @@ class Manage_Controller extends Admin_Controller
 							if (file_exists(Kohana::config('upload.directory', TRUE).$category_old_image))
 							{
 								unlink(Kohana::config('upload.directory', TRUE).$category_old_image);
-							}elseif(Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($category_old_image)){
+							}
+							elseif (Kohana::config("cdn.cdn_store_dynamic_content") AND valid::url($category_old_image))
+							{
 								cdn::delete($category_old_image);
 							}
 						}
@@ -234,7 +236,7 @@ class Manage_Controller extends Admin_Controller
 					
 					if ($children)
 					{
-						foreach($children as $child)
+						foreach ($children as $child)
 						{
 							$sub_cat = new Category_Model($child->id);
 							$sub_cat->parent_id = 0;

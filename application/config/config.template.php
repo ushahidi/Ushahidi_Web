@@ -94,7 +94,8 @@ $config['log_threshold'] = 1;
  */
 $config['log_directory'] = APPPATH.'logs';
 
-if (@!is_writable($config["log_directory"])) {
+if ( ! @is_writable($config["log_directory"]))
+{
 	$config["log_threshold"] = 0;
 }
 

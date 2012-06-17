@@ -768,12 +768,12 @@ class Installer_Wizard {
 			'site_protocol' => self::$_data['site_protocol'], 
 		);
 		
-		// Clean URLs enabled, set the 'site_index' config to ''
+		// Clean URLs enabled, set the 'index_page' config to ''
 		// else it remains as 'index.php'
 		if (self::$_data['enable_clean_urls'])
 		{
 			$params = array_merge($params, array(
-				'site_index' => ''
+				'index_page' => ''
 			));
 		}
 

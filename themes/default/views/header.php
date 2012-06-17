@@ -23,7 +23,7 @@
   // we're on the home page
   if (count($uri_segments) == 0)
   {
-    $body_class = "page-main";
+  	$body_class = "page-main";
   }
   // 1st tier pages
   elseif (count($uri_segments) == 1)
