@@ -192,14 +192,8 @@ class Installer_Wizard {
 			$protocol = (isset($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] == 'on')
 			    ? 'https'
 			    : 'http';
-			
-			// Check for SSL
-			if ($_SERVER['SERVER_PORT'] === '443')
-			{
-				$protocol = 'https';
-			}
-			
-			// HTTP/S
+						
+			// Site protocol
 			self::$_data['site_protocol'] = $protocol;
 			
 			// Build the full URI

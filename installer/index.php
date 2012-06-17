@@ -1,5 +1,4 @@
 <?php
-// ini_set('display_errors', 'On');
 /**
  * This file acts as the bootstrap for the installer.
  * It forwards all HTTP requests to the Install_Wizard class
