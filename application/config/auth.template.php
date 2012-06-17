@@ -28,7 +28,7 @@ $config['hash_method'] = 'sha1';
  * will be increased by the total number of offsets.
  * CHANGE ME: THIS SHOULD BE UNIQUE TO YOUR DEPLOYMENT
  */
-$config['salt_pattern'] = '8, 10, 12, 21, 22, 23, 29, 34, 38, 39';
+$config['salt_pattern'] = '3, 5, 6, 10, 24, 26, 35, 36, 37, 40';
 
 /**
  * Set the auto-login (remember me) cookie lifetime, in seconds. The default
