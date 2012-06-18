@@ -163,11 +163,18 @@
 							
 									// Retrieve Incident Categories
 									$incident_category = "";
-									foreach ($incident_orm->incident_category as $category)
+									if ($incident_orm->incident_category->count() > 0)
 									{
-										$incident_category .= $category->category->category_title ."&nbsp;&nbsp;";
+										foreach ($incident_orm->incident_category as $category)
+										{
+											$incident_category .= Category_Lang_Model::category_title($category->category_id) ."&nbsp;&nbsp;";
+										}
 									}
-
+									else
+									{
+										$incident_category .= Kohana::lang('ui_main.none');
+									}
+									
 									// Incident Status
 									$incident_approved = $incident->incident_active;
 									$incident_verified = $incident->incident_verified;

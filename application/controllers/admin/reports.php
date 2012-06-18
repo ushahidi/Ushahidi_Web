@@ -64,7 +64,7 @@ class Reports_Controller extends Admin_Controller {
 			}
 			elseif (strtolower($status) == 'o')
 			{
-				array_push($this->params, 'ic.category_id = 5');
+				array_push($this->params, '(ic.category_id = 5 OR ic.category_id IS NULL)');
 			}
 			else
 			{
