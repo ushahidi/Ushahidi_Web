@@ -77,6 +77,10 @@ function fillFields(event)
 	$.each(params.category_langs, function (lang_key, value) {
 		$("#category_title_"+lang_key).attr("value",value['category_title']);
 		$("#category_description_"+lang_key).attr("value",value['category_description']);
+		if (value['category_title'] != '')
+		{
+			$('.category_translations_form_fields').show();
+		}
 	});
 }
 
