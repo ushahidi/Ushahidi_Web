@@ -43,7 +43,7 @@
 			<?php
 				foreach ($incidents as $incident)
 				{
-					$incident = ORM::factory('incident', $incident->incident_id);
+					$incident = ORM::factory('incident')->with('location')->find($incident->incident_id);
 					$incident_id = $incident->id;
 					$incident_title = strip_tags($incident->incident_title);
 					$incident_description = strip_tags($incident->incident_description);
