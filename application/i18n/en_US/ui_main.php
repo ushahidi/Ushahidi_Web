@@ -398,6 +398,7 @@
 	'reports_btn_submit' => 'Submit',
 	'reports_by_this_user' => 'Reports By This User',
 	'reports_categories' => 'Categories',
+	'reports_count' => '%d Reports',
 	'reports_date' => 'Date',
 	'reports_description' => 'Description',
 	'reports_download_csv' => 'Reports will be downloaded in CSV format',
