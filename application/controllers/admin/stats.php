@@ -117,6 +117,8 @@ class Stats_Controller extends Admin_Controller {
 				}
 			}
 		}
+		asort($reports_per_cat, SORT_NUMERIC);
+		$reports_per_cat = array_reverse($reports_per_cat, TRUE);
 		
 		$this->template->content->num_categories = $data['total_categories'];
 		$this->template->content->reports_per_cat = $reports_per_cat;
