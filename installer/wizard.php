@@ -759,7 +759,8 @@ class Installer_Wizard {
 		// TODO Set the site_domain, site_protocol and install_check parameters
 		$params = array(
 			'site_domain' => self::$_data['site_domain'],
-			'site_protocol' => self::$_data['site_protocol'], 
+			'site_protocol' => self::$_data['site_protocol'],
+			'installer_check' => FALSE
 		);
 		
 		// Clean URLs enabled, set the 'index_page' config to ''
@@ -789,7 +790,7 @@ class Installer_Wizard {
 		}
 		else
 		{
-			self::$_errors[] = "Permission error. Could not open <code>.htacess</code> for writing";
+			self::$_errors[] = "Permission error. Could not open <code>.htaccess</code> for writing";
 		}
 		
 		// config.php
@@ -806,12 +807,25 @@ class Installer_Wizard {
 				{
 					if (preg_match("/config\['".$param."'\].*/i", $line, $matches))
 					{
-						$replace = sprintf("config['%s'] = '%s';", $param, $value);
+						// Type check for the param values
+						if (is_bool($value))
+						{
+							// Get the string represenation of the boolean value
+							// without quotes
+							$value = ($value) ? 'TRUE' : 'FALSE';
+						}
+						else
+						{
+							// Quote the value
+							$value = "'".$value."'";
+						}
+
+						$replace = sprintf("config['%s'] = %s;", $param, $value);
+
 						$line = str_replace($matches[0], $replace, $line);
 						break;
 					}
 				}
-				
 				fwrite($fp, $line);
 			}
 			fclose($fp);
