@@ -160,14 +160,23 @@
 										? $countries[$incident->country_id] 
 										: $countries[Kohana::config('settings.default_country')]; 
 									
+									// Incident location
+									$incident_location = $incident->location_id ? $incident->location_name.', '.$country_name : Kohana::lang('ui_main.none');
 							
 									// Retrieve Incident Categories
 									$incident_category = "";
-									foreach ($incident_orm->incident_category as $category)
+									if ($incident_orm->incident_category->count() > 0)
 									{
-										$incident_category .= $category->category->category_title ."&nbsp;&nbsp;";
+										foreach ($incident_orm->incident_category as $category)
+										{
+											$incident_category .= Category_Lang_Model::category_title($category->category_id) ."&nbsp;&nbsp;";
+										}
 									}
-
+									else
+									{
+										$incident_category .= Kohana::lang('ui_main.none');
+									}
+									
 									// Incident Status
 									$incident_approved = $incident->incident_active;
 									$incident_verified = $incident->incident_verified;
@@ -222,7 +231,7 @@
 											</div>
 											<ul class="info">
 												<li class="none-separator"><?php echo Kohana::lang('ui_main.location');?>: 
-													<strong><?php echo html::specialchars($incident->location_name); ?></strong>, <strong><?php echo html::specialchars($country_name); ?></strong>
+													<strong><?php echo html::specialchars($incident_location); ?></strong>
 												</li>
 												<li><?php echo Kohana::lang('ui_main.submitted_by');?> 
 													<strong><?php echo html::specialchars($submit_by); ?></strong> via <strong><?php echo html::specialchars($submit_mode); ?></strong>

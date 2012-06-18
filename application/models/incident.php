@@ -392,9 +392,9 @@ class Incident_Model extends ORM {
 		}
 
 		$sql .=  'FROM '.$table_prefix.'incident i '
-			. 'INNER JOIN '.$table_prefix.'location l ON (i.location_id = l.id) '
-			. 'INNER JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
-			. 'INNER JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) ';
+			. 'LEFT JOIN '.$table_prefix.'location l ON (i.location_id = l.id) '
+			. 'LEFT JOIN '.$table_prefix.'incident_category ic ON (ic.incident_id = i.id) '
+			. 'LEFT JOIN '.$table_prefix.'category c ON (ic.category_id = c.id) ';
 		
 		// Check if the all reports flag has been specified
 		if (array_key_exists('all_reports', $where) AND $where['all_reports'] == TRUE)
@@ -416,6 +416,8 @@ class Incident_Model extends ORM {
 			}
 		}
 
+		// Might need "GROUP BY i.id" do avoid dupes
+		
 		// Add the having clause
 		$sql .= $having_clause;
 
@@ -501,8 +503,6 @@ class Incident_Model extends ORM {
 				. "	COS(l.`latitude` * PI() / 180) * COS(( ? - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance "
 				. "FROM `".$table_prefix."incident` AS i "
 				. "INNER JOIN `".$table_prefix."location` AS l ON (l.`id` = i.`location_id`) "
-				. "INNER JOIN `".$table_prefix."incident_category` AS ic ON (i.`id` = ic.`incident_id`) "
-				. "INNER JOIN `".$table_prefix."category` AS c ON (ic.`category_id` = c.`id`) "
 				. "WHERE i.incident_active = 1 "
 				. "AND i.id <> ? ";
 

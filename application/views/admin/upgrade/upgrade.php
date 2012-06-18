@@ -23,16 +23,16 @@
     <?php } ?>
     <?php if( $release_version > Kohana::config('settings.ushahidi_version') ) {?>
 	<div class="head">
-		<h4 class="version"><?php print Kohana::lang('upgrade.upgrade_title_text_1') ?><?php print $current_version; ?> <?php print Kohana::lang('upgrade.upgrade_title_text_2') ?> <?php print $current_db_version; ?> <?php print Kohana::lang('upgrade.upgrade_title_text_3') ?> <?php print $environment; ?></h4>
+		<h4 class="version"><?php print Kohana::lang('upgrade.upgrade_title_text', array($current_version, $current_db_version, $environment)); ?></h4>
 	</div>
 	<div class="head">
 		<h4><?php print Kohana::lang('upgrade.upgrade_available') ?></h4>
 	</div>
 	<div class="settings_holder">
-		<strong><u>Ushahidi <?php echo $release_version ?></u></strong>
+		<strong><u><?php print Kohana::lang('upgrade.ushahidi_release_version', array($release_version)); ?></u></strong>
 		<?php if (isset($critical)) echo "(<strong style=\"color:#FF0000\">".Kohana::lang('ui_admin.critical_upgrade')."</strong>)";?>
         <?php if (is_array($changelogs)) { ?><br />
-        <?php echo Kohana::lang('upgrade.upgrade_db_version') . $release_db_version; ?>
+        <?php echo Kohana::lang('upgrade.upgrade_db_version', array($release_db_version)); ?>
 		<ul>
             <?php foreach ( $changelogs as $changelog ) { ?>
 			<li><?php print $changelog ?></li>
@@ -42,7 +42,7 @@
 	</div>
 	
 	<div class="head">
-		<h4><?php print Kohana::lang('upgrade.upgrade_automatic'); ?> (BETA!)</h4>
+		<h4><?php print Kohana::lang('upgrade.upgrade_automatic'); ?> (<?php print Kohana::lang('upgrade.beta'); ?>)</h4>
 	</div>
 	<div class="settings_holder">
 		<?php print form::open(NULL, array('id' => 'upgradeMain', 'name' => 'upgradeMain')); ?>
