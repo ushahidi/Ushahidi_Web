@@ -90,4 +90,38 @@ class Category_Lang_Model extends ORM
 		return FALSE;
 	}
 
+	/**
+	 * Return category description in specified language
+	 * If not locale specified return default
+	 * @param int category id
+	 * @param string Locale string
+	 */
+	static function category_description($category_id, $locale = FALSE)
+	{
+		// Use default locale from settings if not specified
+		if (! $locale)
+		{
+			$locale = Kohana::config('locale.language.0');
+		}
+		
+		// Use self::category_langs() to grab all category_lang entries
+		// This function is often in a loop so only query once
+		$cat_langs = self::category_langs();
+		
+		// Return translated title if its not blank
+		if (isset($cat_langs[$category_id][$locale]) AND ! empty($cat_langs[$category_id][$locale]['category_description']))
+		{
+			return $cat_langs[$category_id][$locale]['category_description'];
+		}
+		
+		// If we didn't find one, grab the default title
+		$categories = Category_Model::categories();
+		if (isset($categories[$category_id]['category_description']))
+		{
+			return $categories[$category_id]['category_description'];
+		}
+		
+		return FALSE;
+	}
+
 }

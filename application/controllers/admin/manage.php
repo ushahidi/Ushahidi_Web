@@ -136,6 +136,11 @@ class Manage_Controller extends Admin_Controller
 					// Save localizations
 					foreach ($post->category_title_lang as $lang_key => $localized_category_name)
 					{
+						// Skip language if same as category locale
+						if ($lang_key == $category->locale) continue;
+						// Skip lang if fields are blank
+						if ($localized_category_name == '' AND $post->category_description_lang[$lang_key] == '') continue;
+						
 						$cl = (isset($category_lang[$lang_key]['id']))
 							? ORM::factory('category_lang',$category_lang[$lang_key]['id'])
 							: ORM::factory('category_lang');

@@ -150,8 +150,8 @@
 									{
 										$category_id = $category->id;
 										$parent_id = $category->parent_id;
-										$category_title = $category->category_title;
-										$category_description = substr($category->category_description, 0, 150);
+										$category_title = Category_Lang_Model::category_title($category_id);
+										$category_description = substr(Category_Lang_Model::category_description($category_id), 0, 150);
 										$category_color = $category->category_color;
 										$category_image = ($category->category_image != NULL) ? url::convert_uploaded_to_abs($category->category_image) : NULL;
 										$category_visible = $category->category_visible;
@@ -227,8 +227,8 @@
 										{
 											$category_id = $child->id;
 											$parent_id = $child->parent_id;
-											$category_title = $child->category_title;
-											$category_description = substr($child->category_description, 0, 150);
+											$category_title = Category_Lang_Model::category_title($category_id);
+											$category_description = substr(Category_Lang_Model::category_description($category_id), 0, 150);
 											$category_color = $child->category_color;
 											$category_image = ($child->category_image != NULL) ? url::convert_uploaded_to_abs($child->category_image) : NULL;
 											$category_visible = $child->category_visible;
