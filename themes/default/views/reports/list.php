@@ -106,12 +106,12 @@
 									<?php $category_image = url::base().Kohana::config('upload.relative_directory')."/".$category->category_image_thumb; ?>
 									<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>">
 										<span class="r_cat-box"><img src="<?php echo $category_image; ?>" height="16" width="16" /></span> 
-										<span class="r_cat-desc"><?php echo $localized_categories[(string)$category->category_title];?></span>
+										<span class="r_cat-desc"><?php echo Category_Lang_Model::category_title($category->id); ?></span>
 									</a>
 								<?php else:	?>
 									<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>">
 										<span class="r_cat-box" style="background-color:#<?php echo $category->category_color;?>;"></span> 
-										<span class="r_cat-desc"><?php echo $localized_categories[(string)$category->category_title];?></span>
+										<span class="r_cat-desc"><?php echo Category_Lang_Model::category_title($category->id); ?></span>
 									</a>
 								<?php endif; ?>
 							<?php endforeach; ?>

@@ -170,21 +170,14 @@ class Reports_Controller extends Main_Controller {
 		// Pagination
 		$pagination = reports::$pagination;
 
-		// Swap out category titles with their proper localizations using an array (cleaner way to do this?)
-		$localized_categories = array();
-		foreach ($incidents as $incident)
+		// For compatibility with older custom themes:
+		// Generate array of category titles with their proper localizations using an array
+		// DO NOT use this in new code, call Category_Lang_Model::category_title() directly
+		foreach(Category_Model::categories() as $category)
 		{
-			$incident = ORM::factory('incident', $incident->incident_id);
-			foreach ($incident->category AS $category)
-			{
-				$ct = (string)$category->category_title;
-				if ( ! isset($localized_categories[$ct]))
-				{
-					$localized_categories[$ct] = Category_Lang_Model::category_title($category->id, $locale);
-				}
-			}
+			$localized_categories[$category['category_title']] = Category_Lang_Model::category_title($category['category_id']);
 		}
-		
+
 		// Set the view content
 		$report_listing->incidents = $incidents;
 		$report_listing->localized_categories = $localized_categories;
