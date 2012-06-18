@@ -16,7 +16,7 @@ $(document).ready(function() {
 				if (data.status == 'success'){
 					$('#upgrade_log').append("<div class=\"upgrade_log_message log_success\">"+data.message+"</div>");
 				} else if (data.status == 'error') {
-					$('#upgrade_log').append("<div class=\"upgrade_log_message log_error\">"+data.message+" <a href=\"<?php echo $log_file; ?>\" target=\"_blank\">Log File</a></div>");
+					$('#upgrade_log').append("<div class=\"upgrade_log_message log_error\">"+data.message+" <a href=\"<?php echo $log_file; ?>\" target=\"_blank\"><?php echo Kohana::lang('upgrade.log_file'); ?></a></div>");
 					upgrade_error = true;
 				} else {
 					upgrade_error = true;
