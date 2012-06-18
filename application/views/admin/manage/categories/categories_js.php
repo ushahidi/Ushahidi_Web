@@ -42,23 +42,42 @@ $(document).ready(function() {
 	}, function() {
 		$(this.cells[0]).removeClass('col-show-handle');
 	});
+
+	$('a#category_translations').click(function() {
+		$('.category_translations_form_fields').toggle(400);
+		return false;
+	});
+	
+	$('#category_color').ColorPicker({
+		onSubmit: function(hsb, hex, rgb) {
+			$('#category_color').val(hex);
+		},
+		onChange: function(hsb, hex, rgb) {
+			$('#category_color').val(hex);
+		},
+		onBeforeShow: function () {
+			$(this).ColorPickerSetColor(this.value);
+		}
+	})
+	.bind('keyup', function(){
+		$(this).ColorPickerSetColor(this.value);
+	});
 });
 
 // Categories JS
-function fillFields(id, parent_id, category_title, category_description, category_color, locale<?php foreach($locale_array as $lang_key => $lang_name) echo ', '.$lang_key; ?>)
+function fillFields(event)
 {
+	params = event.data;
 	show_addedit();
-	$("#category_id").attr("value", decodeURIComponent(id));
-	$("#parent_id").attr("value", decodeURIComponent(parent_id));
-	$("#category_title").attr("value", decodeURIComponent(category_title));
-	$("#category_description").attr("value", decodeURIComponent(category_description));
-	$("#category_color").attr("value", decodeURIComponent(category_color));
-	$("#locale").attr("value", decodeURIComponent(locale));
-	<?php
-		foreach($locale_array as $lang_key => $lang_name) {
-			echo '$("#category_title_'.$lang_key.'").attr("value", decodeURIComponent('.$lang_key.'));'."\n";
-		}
-	?>
+	$("#category_id").attr("value", params.category_id);
+	$("#parent_id").attr("value", params.parent_id);
+	$("#category_title").attr("value", params.category_title);
+	$("#category_description").attr("value", params.category_description);
+	$("#category_color").attr("value", params.category_color);
+	$.each(params.category_langs, function (lang_key, value) {
+		$("#category_title_"+lang_key).attr("value",value['category_title']);
+		$("#category_description_"+lang_key).attr("value",value['category_description']);
+	});
 }
 
 // Ajax Submission

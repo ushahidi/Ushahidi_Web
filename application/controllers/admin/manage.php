@@ -72,6 +72,7 @@ class Manage_Controller extends Admin_Controller
 		foreach ($locales as $lang_key => $lang_name)
 		{
 			$form['category_title_'.$lang_key] = '';
+			$form['category_description_'.$lang_key] = '';
 		}
 
 		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
@@ -93,7 +94,7 @@ class Manage_Controller extends Admin_Controller
 			
 			// Extract category image and category languages for independent validation
 			$secondary_data = arr::extract($post_data, 'category_image',
-				'category_title_lang', 'action');
+				'category_title_lang','category_description_lang', 'action');
 			
 			// Setup validation for the secondary data
 			$post = Validation::factory($secondary_data)
@@ -140,6 +141,7 @@ class Manage_Controller extends Admin_Controller
 							: ORM::factory('category_lang');
 						
  						$cl->category_title = $localized_category_name;
+ 						$cl->category_description = $post->category_description_lang[$lang_key];
  						$cl->locale = $lang_key;
  						$cl->category_id = $category->id;
 						$cl->save();

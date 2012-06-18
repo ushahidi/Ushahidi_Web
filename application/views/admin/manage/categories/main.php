@@ -62,63 +62,38 @@
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_main.category_name');?>:</strong><br />
 							<?php print form::input('category_title', $form['category_title'], ' class="text"'); ?><br/>
-							<a href="#" id="category_translations" class="new-cat" style="clear:both;">Category Translations</a>
-							<div id="category_translations_form_fields" style="display:none;">
-								<div style="clear:both;"></div>
+						</div>
+						<div class="tab_form_item">
+							<strong><?php echo Kohana::lang('ui_main.description');?>:</strong><br />
+							<?php print form::input('category_description', $form['category_description'], ' class="text category_description"'); ?>
+						</div>
+						<div style="clear:both"></div>
+
+						<div style="clear: left; width: 100%;">
+							<a href="#" id="category_translations" class="category_translations" style="clear:both;">Category Translations</a>
+							<div style="clear:both;"></div>
+							<div class="category_translations_form_fields">
 								<?php
 									foreach($locale_array as $lang_key => $lang_name){
-										echo '<div style="margin-top:10px;"><strong>'.$lang_name.':</strong></div>';
-										print form::input('category_title_lang['.$lang_key.']', $form['category_title_'.$lang_key], ' class="text" id="category_title_'.$lang_key.'"');
+										echo '<div class="category_lang"><strong>'.$lang_name.':</strong></div>';
+										echo '<div class="tab_form_item">'.form::input('category_title_lang['.$lang_key.']', $form['category_title_'.$lang_key], ' class="text" id="category_title_'.$lang_key.'"').'</div>';
+										echo '<div class="tab_form_item">'.form::input('category_description_lang['.$lang_key.']', $form['category_description_'.$lang_key], ' class="text category_description" id="category_description_'.$lang_key.'"').'</div>';
 										echo '<br />';
 									}
 								?>
 
 							</div>
 						</div>
-
-						<script type="text/javascript">
-						    $(document).ready(function() {
-
-						    $('a#category_translations').click(function() {
-							    $('#category_translations_form_fields').toggle(400);
-							    $('#category_translations').toggle(0);
-							    return false;
-							});
-
-							});
-						</script>
-
-						<div class="tab_form_item">
-							<strong><?php echo Kohana::lang('ui_main.description');?>:</strong><br />
-							<?php print form::input('category_description', $form['category_description'], ' class="text"'); ?>
-						</div>
+						<div style="clear:both"></div>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_admin.color');?>:</strong><br />
 							<?php print form::input('category_color', $form['category_color'], ' class="text"'); ?>
-							<script type="text/javascript" charset="utf-8">
-								$(document).ready(function() {
-									$('#category_color').ColorPicker({
-										onSubmit: function(hsb, hex, rgb) {
-											$('#category_color').val(hex);
-										},
-										onChange: function(hsb, hex, rgb) {
-											$('#category_color').val(hex);
-										},
-										onBeforeShow: function () {
-											$(this).ColorPickerSetColor(this.value);
-										}
-									})
-									.bind('keyup', function(){
-										$(this).ColorPickerSetColor(this.value);
-									});
-								});
-							</script>
+							
 						</div>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_main.parent_category');?>:</strong><br />
 							<?php print form::dropdown('parent_id', $parents_array, '0'); ?>
 						</div>
-						<div style="clear:both"></div>
 						<div class="tab_form_item">
 							<strong><?php echo Kohana::lang('ui_main.image_icon');?>:</strong><br />
 							<?php
@@ -180,10 +155,22 @@
 										$category_image = ($category->category_image != NULL) ? url::convert_uploaded_to_abs($category->category_image) : NULL;
 										$category_visible = $category->category_visible;
 										$category_trusted = $category->category_trusted;
-										$category_locals = array();
-										foreach($category->category_lang as $category_lang){
-											$category_locals[$category_lang->locale] = $category_lang->category_title;
+										
+										$fillFields = array();
+										$fillFields['category_id'] = $category->id;
+										$fillFields['parent_id'] = $category->parent_id;
+										$fillFields['category_title'] = $category->category_title;
+										$fillFields['category_description'] = $category->category_description;
+										$fillFields['category_color'] = $category->category_color;
+										$fillFields['category_image'] = $category->category_image;
+										$fillFields['category_langs'] = array();
+										foreach($category->category_lang as $category_lang) {
+											$fillFields['category_langs'][$category_lang->locale] = array(
+												'category_title' => $category_lang->category_title,
+												'category_description' => $category_lang->category_description
+											);
 										}
+										
 										?>
 										<tr id="<?php echo $category_id; ?>">
 											<td class="col-1 col-drag-handle">&nbsp;</td>
@@ -201,24 +188,22 @@
 											}
 											else
 											{
-												echo "<img src=\"".url::base()."swatch/?c=".$category_color."&w=30&h=30\">";
+												echo "<span class=\"swatch\" style=\"background-color: #".$category_color.";\">&nbsp;</span>";
 											}
 											?>
 											</td>
 											<td class="col-4">
 												<ul>
-													<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>'<?php
-													foreach($locale_array as $lang_key => $lang_name){
-														echo ',';
-														if(isset($category_locals[$lang_key])){
-															echo ' \''.rawurlencode($category_locals[$lang_key]).'\'';
-														}else{
-															echo ' \'\'';
-														}
-													}
-													?>)"><?php echo Kohana::lang('ui_main.edit');?></a></li>
-													<li class="none-separator"><a class="status_yes" href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"><?php if ($category_visible) { echo Kohana::lang('ui_main.visible'); } else { echo Kohana::lang('ui_main.hidden'); }?></a></li>
-<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
+													<li class="none-separator"><a href="#add" id="edit-cat-<?php echo($category_id); ?>"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+													<script type="text/javascript">
+														$('#edit-cat-<?php echo($category_id); ?>').click(<?php echo json_encode($fillFields); ?>, fillFields);
+													</script>
+													<li class="none-separator">
+														<a class="status_yes" href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"><?php if ($category_visible) { echo Kohana::lang('ui_main.visible'); } else { echo Kohana::lang('ui_main.hidden'); }?></a>
+													</li>
+													<li>
+														<a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a>
+													</li>
 												</ul>
 												
 												<?php if($category_trusted == 1) { ?>
@@ -246,9 +231,19 @@
 											$category_image = ($child->category_image != NULL) ? url::convert_uploaded_to_abs($child->category_image) : NULL;
 											$category_visible = $child->category_visible;
 
-											$child_category_locals = array();
-											foreach($child->category_lang as $category_lang){
-												$child_category_locals[$category_lang->locale] = $category_lang->category_title;
+											$fillFields = array();
+											$fillFields['category_id'] = $child->id;
+											$fillFields['parent_id'] = $child->parent_id;
+											$fillFields['category_title'] = $child->category_title;
+											$fillFields['category_description'] = $child->category_description;
+											$fillFields['category_color'] = $child->category_color;
+											$fillFields['category_image'] = $child->category_image;
+											$fillFields['category_langs'] = array();
+											foreach($child->category_lang as $category_lang) {
+												$fillFields['category_langs'][$category_lang->locale] = array(
+													'category_title' => $category_lang->category_title,
+													'category_description' => $category_lang->category_description
+												);
 											}
 
 											?>
@@ -268,22 +263,16 @@
 												}
 												else
 												{
-													echo "<img src=\"".url::base()."swatch/?c=".$category_color."&w=30&h=30\">";
+													echo "<span class=\"swatch\" style=\"background-color: #".$category_color.";\">&nbsp;</span>";
 												}
 												?>
 												</td>
 												<td class="col-4">
 													<ul>
-														<li class="none-separator"><a href="#add" onClick="fillFields('<?php echo(rawurlencode($category_id)); ?>','<?php echo(rawurlencode($parent_id)); ?>','<?php echo(rawurlencode($category_title)); ?>','<?php echo(rawurlencode($category_description)); ?>','<?php echo(rawurlencode($category_color)); ?>','<?php echo(rawurlencode($category_image)); ?>'<?php
-													foreach($locale_array as $lang_key => $lang_name){
-														echo ',';
-														if(isset($child_category_locals[$lang_key])){
-															echo ' \''.rawurlencode($child_category_locals[$lang_key]).'\'';
-														}else{
-															echo ' \'\'';
-														}
-													}
-													?>)"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+														<li class="none-separator"><a href="#add" id="edit-cat-<?php echo($category_id); ?>"><?php echo Kohana::lang('ui_main.edit');?></a></li>
+														<script type="text/javascript">
+															$('#edit-cat-<?php echo($category_id); ?>').click(<?php echo json_encode($fillFields); ?>, fillFields);
+														</script>
 														<li class="none-separator"><a class="status_yes" href="javascript:catAction('v','SHOW/HIDE','<?php echo(rawurlencode($category_id)); ?>')"><?php if ($category_visible) { echo Kohana::lang('ui_main.visible'); } else { echo Kohana::lang('ui_main.hidden'); }?></a></li>
 	<li><a href="javascript:catAction('d','DELETE','<?php echo(rawurlencode($category_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>
 													</ul>
