@@ -100,15 +100,6 @@ class Dashboard_Controller extends Members_Controller {
 			'needinfo' => 0 // After we save this form once, we don't need to show it again
 		);
 
-		/*
-		// Javascript Header
-		$this->template->flot_enabled = TRUE;
-		$this->template->js = new View('admin/dashboard_js');
-		// Graph
-		$this->template->js->all_graphs = Incident_Model::get_incidents_by_interval('ALL',NULL,NULL,'all');
-		$this->template->js->current_date = date('Y') . '/' . date('m') . '/01';
-		*/
-
 		// Javascript Header
 		$this->template->protochart_enabled = TRUE;
 		$this->template->js = new View('admin/stats/stats_js');
