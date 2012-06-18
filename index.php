@@ -156,28 +156,32 @@ if ( ! IN_PRODUCTION)
 
 // 
 // Check if the application has been installed
+// -------------------------------------------
 // This has to be done before bootstrapping the Kohana framework
 // 
-if ( ! file_exists(APPPATH.'config'.DIRECTORY_SEPARATOR.'database.php'))
-{
-	// Get the server protocol
-	$protocol = (isset($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] == 'on')
-	    ? 'https'
-	    : 'http';
-	
-	// Server port
-	$port = ! in_array($_SERVER['SERVER_PORT'], array("80", "443"))
-	    ? ':'.$_SERVER['SERVER_PORT'] 
-	    : '';
 
-	// Generate the redirect URL
-	$url = $protocol.'://'.$_SERVER['SERVER_NAME'].$port.'/installer';
-	
-	// Redirect to the installer
-	header(sprintf("Location: %s", $url));
-}
-else
+// Does the installer directory exist?
+if (file_exists(DOCROOT.DIRECTORY_SEPARATOR.'installer'))
 {
-	// Initialize.
-	require SYSPATH.'core/Bootstrap'.EXT;
+	if ( ! file_exists(APPPATH.'config'.DIRECTORY_SEPARATOR.'database.php'))
+	{
+		// Get the server protocol
+		$protocol = (isset($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] == 'on')
+		    ? 'https'
+		    : 'http';
+	
+		// Server port
+		$port = ! in_array($_SERVER['SERVER_PORT'], array("80", "443"))
+		    ? ':'.$_SERVER['SERVER_PORT'] 
+		    : '';
+
+		// Generate the redirect URL
+		$url = $protocol.'://'.$_SERVER['SERVER_NAME'].$port.'/installer';
+	
+		// Redirect to the installer
+		header(sprintf("Location: %s", $url));
+	}
 }
+
+// Initialize.
+require SYSPATH.'core/Bootstrap'.EXT;
