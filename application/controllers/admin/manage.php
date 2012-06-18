@@ -290,10 +290,11 @@ class Manage_Controller extends Admin_Controller
 					// @todo Delete the category image
 					
 					// Delete category itself - except if it is trusted
-					ORM::factory('category')
-						->where('category_trusted != 1')
-						->delete($category->id);
-						
+					if (! $category->category_trusted)
+					{
+						$category->delete();
+					}
+					
 					$form_saved = TRUE;
 					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
 				}

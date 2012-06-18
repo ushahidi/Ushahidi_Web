@@ -74,11 +74,12 @@
 							<div style="clear:both;"></div>
 							<div class="category_translations_form_fields">
 								<?php
-									foreach($locale_array as $lang_key => $lang_name){
-										echo '<div class="category_lang"><strong>'.$lang_name.':</strong></div>';
+									foreach($locale_array as $lang_key => $lang_name) {
+										echo '<div class="category_lang category_lang_'.$lang_key.'">';
+										echo '<div class="category_lang_name"><strong>'.$lang_name.':</strong></div>';
 										echo '<div class="tab_form_item">'.form::input('category_title_lang['.$lang_key.']', $form['category_title_'.$lang_key], ' class="text" id="category_title_'.$lang_key.'"').'</div>';
 										echo '<div class="tab_form_item">'.form::input('category_description_lang['.$lang_key.']', $form['category_description_'.$lang_key], ' class="text category_description" id="category_description_'.$lang_key.'"').'</div>';
-										echo '<br />';
+										echo '</div>';
 									}
 								?>
 
@@ -163,6 +164,7 @@
 										$fillFields['category_description'] = $category->category_description;
 										$fillFields['category_color'] = $category->category_color;
 										$fillFields['category_image'] = $category->category_image;
+										$fillFields['locale'] = $category->locale;
 										$fillFields['category_langs'] = array();
 										foreach($category->category_lang as $category_lang) {
 											$fillFields['category_langs'][$category_lang->locale] = array(
@@ -238,6 +240,7 @@
 											$fillFields['category_description'] = $child->category_description;
 											$fillFields['category_color'] = $child->category_color;
 											$fillFields['category_image'] = $child->category_image;
+											$fillFields['locale'] = $category->locale;
 											$fillFields['category_langs'] = array();
 											foreach($child->category_lang as $category_lang) {
 												$fillFields['category_langs'][$category_lang->locale] = array(

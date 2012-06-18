@@ -74,6 +74,8 @@ function fillFields(event)
 	$("#category_title").attr("value", params.category_title);
 	$("#category_description").attr("value", params.category_description);
 	$("#category_color").attr("value", params.category_color);
+	$(".category_lang").show();
+	$(".category_lang_"+params.locale).hide();
 	$.each(params.category_langs, function (lang_key, value) {
 		$("#category_title_"+lang_key).attr("value",value['category_title']);
 		$("#category_description_"+lang_key).attr("value",value['category_description']);

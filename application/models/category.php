@@ -55,6 +55,14 @@ class Category_Model extends ORM_Tree {
 					->add_rules('category_description','required')
 					->add_rules('category_color','required', 'length[6,6]');
 		
+		
+		// When creating a new category
+		if ( empty($this->id) )
+		{
+			// Set locale to current language
+			$this->locale = Kohana::config('locale.language.0');
+		}
+		
 		// Validation checks where parent_id > 0
 		if ($array->parent_id > 0)
 		{
@@ -189,4 +197,20 @@ class Category_Model extends ORM_Tree {
 			->orderby('category_title', 'ASC')
 			->find_all();
 	}
+	
+	/**
+	 * Extend the default ORM save to also update matching Category_Lang record if it exits
+	 */
+	public function save()
+	{
+		parent::save();
+		
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
+		Database::instance()->query('UPDATE `'.$table_prefix.'category_lang` SET category_title = ?, category_description = ? WHERE category_id = ? AND locale = ?',
+			$this->category_title, $this->category_description, $this->id, $this->locale
+		);
+	}
+
+	
 }
