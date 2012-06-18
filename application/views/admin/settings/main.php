@@ -42,8 +42,7 @@
 					<?php endif; ?>
 						<div class="head">
 							<h3><?php echo Kohana::lang('settings.map_settings');?></h3>
-							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
-							<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" />
+							<input type="submit" value="<?php echo Kohana::lang('ui_admin.save_settings'); ?>" class="save-rep-btn" />
 						</div>
 						<!-- column -->
 						<div class="l-column">
@@ -163,9 +162,7 @@
 									?>
 								</div>
 							</div>
-	
-								<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-save-settings.gif" class="save-rep-btn" style="margin-left: 0px;" />
-								<input type="image" src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-cancel.gif" class="cancel-btn" />
+							<input type="submit" value="<?php echo Kohana::lang('ui_admin.save_settings'); ?>" class="cancel-btn" />
 						</div>
 						<div class="r-column">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_configure_map"); ?>"><?php echo Kohana::lang('settings.configure_map');?></a></h4>
