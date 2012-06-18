@@ -16,25 +16,27 @@
  */
 ?>
 
-// Prevent an HTTP call if auto upgrading isn't enabled
-<?php if (Kohana::config('config.enable_auto_upgrader') == TRUE): ?>
 
 // Check for a new version of the Ushahidi Software
 jQuery(document).ready(function() {
+
+	// Prevent an HTTP call if auto upgrading isn't enabled
+	<?php if (Kohana::config('config.enable_auto_upgrader') == TRUE): ?>
+
 	// Check if we need to upgrade this deployment of Ushahidi
-	//   if we're on the dashbboard, check for a new version
+	// if we're on the dashbboard, check for a new version
 	jQuery.get("<?php echo url::base().'admin/upgrade/check_current_version' ?>", function(data){
 			jQuery('#need_to_upgrade').html(data);
 			jQuery('#need_to_upgrade').removeAttr("style");
 		});
-	
-	showhide();
 
+	<?php endif; ?>
+
+	showhide();
 
 	// onChange event handler for the alerts dropdown
-	$("#allow_alerts").change(function(){
-	showhide();
-	
+	$("#allow_alerts").change(function() {
+		showhide();
 	});
 		
 });
@@ -42,7 +44,7 @@ jQuery(document).ready(function() {
 
 function showhide() {
 	var allow_alerts = $("#allow_alerts").val();
-	if (allow_alerts > 0) {   
+	if (parseInt(allow_alerts) == 1) {   
 		// Show the alerts email textbox
 		$("#alerts_selector").show('slow'); 
 
@@ -55,19 +57,15 @@ function showhide() {
 			},
 			messages: {
 				alerts_email: {
-				required: "Please enter an alerts email address",
-				email: "Please enter a valid email address"
+					required: "Please enter an alerts email address",
+					email: "Please enter a valid email address"
 				}
 			}
 		});
 	} else {
 		// Hide the alerts email textbox
-		$("#alerts_selector").hide('slow');
+		$("#alerts_selector").remove("rules").hide('slow');
 		
-		jQuery('#siteForm').validate({
-			   onsubmit : false
-		});
+		$("#siteForm").unbind("submit");
 	}
 }
-
-<?php endif; ?>
