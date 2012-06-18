@@ -141,6 +141,7 @@ class Category_Model extends ORM_Tree {
 			{
 				self::$categories[$category->id]['category_id'] = $category->id;
 				self::$categories[$category->id]['category_title'] = $category->category_title;
+				self::$categories[$category->id]['category_description'] = $category->category_description;
 				self::$categories[$category->id]['category_color'] = $category->category_color;
 				self::$categories[$category->id]['category_image'] = $category->category_image;
 				self::$categories[$category->id]['category_image_thumb'] = $category->category_image_thumb;
