@@ -6,13 +6,15 @@ class Role_Model extends Auth_Role_Model {
 	
 	public function delete()
 	{
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
 		// Remove assigned users
 		// Have to use db->query() since we don't have an ORM model for roles_users
-		$this->db->query('DELETE FROM roles_users WHERE role_id = ?',$this->id);
+		$this->db->query('DELETE FROM '.$table_prefix.'roles_users WHERE role_id = ?',$this->id);
 		
 		// Remove assigned permissions
 		// Have to use db->query() since we don't have an ORM model for permissions_roles
-		$this->db->query('DELETE FROM permissions_roles WHERE role_id = ?',$this->id);
+		$this->db->query('DELETE FROM '.$table_prefix.'permissions_roles WHERE role_id = ?',$this->id);
 
 		parent::delete();
 	}

@@ -6,10 +6,11 @@ class Permission_Model extends ORM {
 	
 	public function delete()
 	{
+		$table_prefix = Kohana::config('database.default.table_prefix');
 		
 		// Remove records referencing this permission
 		// Have to use db->query() since we don't have an ORM model for permissions_roles
-		$this->db->query('DELETE FROM permissions_roles WHERE permission_id = ?',$this->id);
+		$this->db->query('DELETE FROM '.$table_prefix.'permissions_roles WHERE permission_id = ?',$this->id);
 
 		parent::delete();
 	}
