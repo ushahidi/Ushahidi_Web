@@ -475,10 +475,8 @@ class Manage_Controller extends Admin_Controller
 	{
 		$this->template->content = new View('admin/manage/publiclisting');
 		
-		$settings = ORM::factory('settings', 1);
-		
-		$this->template->content->encoded_stat_id = base64_encode($settings->stat_id);
-		$this->template->content->encoded_stat_key = base64_encode($settings->stat_key);
+		$this->template->content->encoded_stat_id = base64_encode(Settings_Model::get_setting('stat_id'));
+		$this->template->content->encoded_stat_key = base64_encode(Settings_Model::get_setting('stat_key'));
 	}
 
 
