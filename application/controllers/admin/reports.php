@@ -1557,11 +1557,11 @@ class Reports_Controller extends Admin_Controller {
 	}
 
 	/**
-	 * Adds extra filter paramters to the reports::fetch_incidents()
+	 * Adds extra filter parameters to the reports::fetch_incidents()
 	 * method. This way we can add 'all_reports=>true and other filters
-	 * that don't come standard sinc we are on the backend.
+	 * that don't come standard since we are on the backend.
 	 * Works by simply adding in SQL conditions to the params
-	 * array of the reprots::fetch_incidents() method
+	 * array of the reports::fetch_incidents() method
 	 * @return none
 	 */
 	public function _add_incident_filters()

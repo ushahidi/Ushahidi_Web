@@ -314,6 +314,9 @@ class Reports_Controller extends Main_Controller {
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
 			$post = array_merge($_POST, $_FILES);
+			
+			// Adding event for endtime plugin to hook into
+			Event::run('ushahidi_action.report_posted_frontend', $post);
 
 			// Test to see if things passed the rule checks
 			if (reports::validate($post))
@@ -342,7 +345,7 @@ class Reports_Controller extends Main_Controller {
 				// STEP 6: SAVE PERSONAL INFORMATION
 				reports::save_personal_info($post, $incident);
 
-				// Run evnets
+				// Run events
 				Event::run('ushahidi_action.report_submit', $post);
 				Event::run('ushahidi_action.report_add', $incident);
 
