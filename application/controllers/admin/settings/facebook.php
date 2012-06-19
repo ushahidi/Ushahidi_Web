@@ -55,11 +55,8 @@ class Facebook_Controller extends Admin_Controller {
 			if ($post->validate())
 			{
 				// Yes! everything is valid
-				$settings = new Settings_Model(1);
-				$settings->facebook_appid = $post->facebook_appid;
-				$settings->facebook_appsecret = $post->facebook_appsecret;
-				$settings->date_modify = date("Y-m-d H:i:s",time());
-				$settings->save();
+				Settings_Model::save_setting('facebook_appid', $post->facebook_appid);
+				Settings_Model::save_setting('facebook_appsecret', $post->facebook_appsecret);
 
 				// Delete Settings Cache
 				$this->cache->delete('settings');
@@ -87,13 +84,10 @@ class Facebook_Controller extends Admin_Controller {
 		}
 		else
 		{
-			// Retrieve Current Settings
-			$settings = ORM::factory('settings', 1);
-
 			$form = array
 			(
-				'facebook_appid' => $settings->facebook_appid,
-				'facebook_appsecret' => $settings->facebook_appsecret
+				'facebook_appid' => Settings_Model::get_setting('facebook_appid'),
+				'facebook_appsecret' => Settings_Model::get_setting('facebook_appsecret')
 			);
 		}
 		
