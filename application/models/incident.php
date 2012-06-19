@@ -46,12 +46,6 @@ class Incident_Model extends ORM {
 	);
 
 	/**
-	 * Many-to-one relationship definition
-	 * @var array
-	 */
-	protected $belongs_to = array('sharing');
-
-	/**
 	 * Database table name
 	 * @var string
 	 */
