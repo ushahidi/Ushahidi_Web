@@ -78,6 +78,11 @@ class Profile_Controller extends Admin_Controller
                         $user->password = $post->new_password;
                     }
 					$user->save();
+					
+					Event::run('ushahidi_action.profile_add_admin', $post);
+					
+					Event::run('ushahidi_action.profile_edit', $user);
+						
 
 	                // We also need to update the RiverID server with the new password if
 	                //    we are using RiverID and a password is being passed
