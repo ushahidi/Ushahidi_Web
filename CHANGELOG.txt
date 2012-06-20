@@ -1,3 +1,26 @@
+Ushahidi 2.5b - (Name) beta release, 18-06-2012
+-------------------------------------
+
+* Mapping: 
+	- The mapping code has been refactored and decoupled from the timeline. 
+	- The timeline can now be turned on or off.
+* Themes: 
+	- The views have been namespaced on a per-controller basis.
+	- Views for the front-end have all been moved to the themes folder
+* Database:
+	- The settings table has been restructured so as to store data in a key-value way
+* Installer:
+	- The installer has been reworked in order to work with the new settings table structure
+	- Additionally, we now perform the installation check in index.php
+* Configuration files:
+	- The following files are no longer in the repository: config.php, auth.php and encryption.php. In their place are templates (.template.php files) which are used by the installer to generate the respective config files.
+* Roles and Permission:
+	- These have been reworked and are now extensive accomodating plugins
+* Alerts
+	- Allow admin to view, search and delete user alerts in the system
+
+
+
 Ushahidi 2.4 - Bug fix release, 30-05-2012
 -------------------------------------
 

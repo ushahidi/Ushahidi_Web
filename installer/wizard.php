@@ -172,24 +172,31 @@ class Installer_Wizard {
 		
 		// Initialize the session
 		session_start();
-		
+
 		self::$_data = & $_SESSION;
 		
 		// Check if the application has already been installed
 		if (self::is_installed())
 		{
 			session_destroy();
+
+			session_unset();
 			
 			header("Location:../");
 		}
-		
-		// Check if installation has started
-		if ( ! isset(self::$_data['started']))
+
+		// 
+		// TODO: Expire the session after 30 minutes
+		// and implement mechanisms to prevent attacks on sessions
+		// 
+
+		// Check if installation has started or if a current stage exists
+		if ( ! isset(self::$_data['started']) OR ! isset(self::$_data['current_stage']))
 		{
 			self::$_data['started'] = TRUE;
 			
 			// Get the site protocol
-			$protocol = (isset($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] == 'on')
+			$protocol = (isset($_SERVER['HTTPS']) OR (isset($_SERVER['HTTPS']) AND $_SERVER['HTTPS'] === 'on'))
 			    ? 'https'
 			    : 'http';
 						
@@ -214,6 +221,12 @@ class Installer_Wizard {
 
 			// Build out the base URL
 			$base_url = $protocol.'://'.$_SERVER['SERVER_NAME'].$port.$site_domain;
+
+			// Add a trailing slash to the base URL
+			if (substr($base_url, -1) !== "/")
+			{
+				$base_url .= "/";
+			}
 			
 			self::$_data['site_domain'] = $site_domain;
 			self::$_data['base_url'] = $base_url;
@@ -393,7 +406,7 @@ class Installer_Wizard {
 		{
 			if ( ! extension_loaded($extension))
 			{
-				$self::$_errors[] = sprintf("The <code>%</code> extension is disabled", $extension);
+				self::$_errors[] = sprintf("The <code>%s</code> extension is disabled", $extension);
 			}
 		}
 		
@@ -508,7 +521,11 @@ class Installer_Wizard {
 		
 		if (self::_is_last_stage())
 		{
+			// Destroy session data
 			session_destroy();
+
+			// Unset $_SESSION variable for the runtime
+			session_unset();
 		}
 		
 		$content = ob_get_contents();
