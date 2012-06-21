@@ -20,7 +20,7 @@ class Share_Controller extends Json_Controller {
 	 * Read in new layer JSON from shared connection
 	 * @param int $sharing_id - ID of the new Share Layer
 	 */
-	public function index( $sharing_id = false )
+	public function index( $sharing_id = FALSE )
 	{
 		$json = '';
 		$json_item = array();
@@ -229,7 +229,7 @@ class Share_Controller extends Json_Controller {
 		}
 		
 		header('Content-type: application/json; charset=utf-8');
-		$this->template->json = $json;
+		echo $json;
 	}
 
 }

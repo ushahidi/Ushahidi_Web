@@ -97,6 +97,7 @@ class Reports_Controller extends Admin_Controller {
 
 		// Check, has the form been submitted?
 		$form_error = FALSE;
+		$errors = array();
 		$form_saved = FALSE;
 		$form_action = "";
 
@@ -111,6 +112,46 @@ class Reports_Controller extends Admin_Controller {
 			// carried out in order
 			$post->add_rules('action','required', 'alpha', 'length[1,1]');
 			$post->add_rules('incident_id.*','required','numeric');
+			
+			if (in_array($post->action, array('a','u')) AND ! Auth::instance()->has_permission('reports_approve'))
+			{
+				$post->add_error('action','permission');
+			}
+			
+			if ($post->action == 'v' AND ! Auth::instance()->has_permission('reports_verify'))
+			{
+				$post->add_error('action','permission');
+			}
+			
+			if ($post->action == 'd' AND ! Auth::instance()->has_permission('reports_edit'))
+			{
+				$post->add_error('action','permission');
+			}
+			
+			if ($post->action == 'a')
+			{
+				// sanitize the incident_ids
+				foreach($post->incident_id as $key => $id)
+				{
+					$post->incident_id[$key] = intval($id);
+				}
+				
+				// Query to check if this report is uncategorized i.e categoryless
+				$query = "SELECT i.* FROM ".$table_prefix."incident i "
+				    . "LEFT JOIN ".$table_prefix."incident_category ic ON i.id=ic.incident_id "
+				    . "LEFT JOIN ".$table_prefix."category c ON c.id = ic.category_id "
+				    . "WHERE (c.category_title =\"NONE\" OR c.id IS NULL) "
+				    . "AND i.id IN (".implode(',',$post->incident_id).")";
+
+				$result = Database::instance()->query($query);
+
+				// We enly approve the report IF it's categorized
+				// throw an error if any incidents aren't categorized
+				foreach ($result as $incident)
+				{
+					$post->add_error('incident_id', 'categories_required', $incident->incident_title);
+				}
+			}
 
 			if ($post->validate())
 			{
@@ -119,47 +160,24 @@ class Reports_Controller extends Admin_Controller {
 				{
 					foreach($post->incident_id as $item)
 					{
-						// Database instance
-						$db = new Database();
-
-						// Query to check if this report is uncategorized i.e categoryless
-						$query = "SELECT ic.* FROM ".$table_prefix."incident_category ic "
-						    . "INNER JOIN ".$table_prefix."category c ON c.id = ic.category_id "
-						    . "INNER JOIN ".$table_prefix."incident i ON i.id=ic.incident_id "
-						    . "WHERE c.category_title =\"NONE\" AND c.category_trusted = '1' "
-						    . "AND ic.incident_id = $item";
-
-						$result = $db->query($query);
-
-						// Only approve the report IF it's not uncategorized
-						// i.e the query returns a null set
-						if (count($result) == 0)
+						$update = new Incident_Model($item);
+						if ($update->loaded == TRUE)
 						{
-							$update = new Incident_Model($item);
-							if ($update->loaded == TRUE)
+							$update->incident_active = '1';
+
+							// Tag this as a report that needs to be sent out as an alert
+							if ($update->incident_alert_status != '2')
 							{
-								$update->incident_active = '1';
-
-								// Tag this as a report that needs to be sent out as an alert
-								if ($update->incident_alert_status != '2')
-								{
-									// 2 = report that has had an alert sent
-									$update->incident_alert_status = '1';
-								}
-								$update->save();
-
-								$verify = new Verify_Model();
-								$verify->incident_id = $item;
-								$verify->verified_status = '1';
-
-								// Record 'Verified By' Action
-								$verify->user_id = $_SESSION['auth_user']->id;
-								$verify->verified_date = date("Y-m-d H:i:s",time());
-								$verify->save();
-
-								// Action::report_approve - Approve a Report
-								Event::run('ushahidi_action.report_approve', $update);
+								// 2 = report that has had an alert sent
+								$update->incident_alert_status = '1';
 							}
+							$update->save();
+
+							// Record 'Verified By' Action
+							reports::verify_approve($update);
+
+							// Action::report_approve - Approve a Report
+							Event::run('ushahidi_action.report_approve', $update);
 						}
 						$form_action = utf8::strtoupper(Kohana::lang('ui_admin.approved'));
 					}
@@ -184,14 +202,8 @@ class Reports_Controller extends Admin_Controller {
 
 							$update->save();
 
-							$verify = new Verify_Model();
-							$verify->incident_id = $item;
-							$verify->verified_status = '0';
-
 							// Record 'Verified By' Action
-							$verify->user_id = $_SESSION['auth_user']->id;
-							$verify->verified_date = date("Y-m-d H:i:s",time());
-							$verify->save();
+							reports::verify_approve($update);
 
 							// Action::report_unapprove - Unapprove a Report
 							Event::run('ushahidi_action.report_unapprove', $update);
@@ -221,12 +233,8 @@ class Reports_Controller extends Admin_Controller {
 							}
 							$update->save();
 
-							$verify->incident_id = $item;
-
 							// Record 'Verified By' Action
-							$verify->user_id = $_SESSION['auth_user']->id;
-							$verify->verified_date = date("Y-m-d H:i:s",time());
-							$verify->save();
+							reports::verify_approve($update);
 						}
 					}
 
@@ -251,6 +259,11 @@ class Reports_Controller extends Admin_Controller {
 			}
 			else
 			{
+				// Repopulate the form fields
+				//$form = arr::overwrite($form, $post->as_array());
+
+				// Populate the error fields, if any
+				$errors = $post->errors('reports');
 				$form_error = TRUE;
 			}
 		}
@@ -264,6 +277,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->incidents = $incidents;
 		$this->template->content->pagination = reports::$pagination;
 		$this->template->content->form_error = $form_error;
+		$this->template->content->errors = $errors;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
 
@@ -289,7 +303,7 @@ class Reports_Controller extends Admin_Controller {
 		// If user doesn't have access, redirect to dashboard
 		if ( ! $this->auth->has_permission("reports_edit"))
 		{
-			url::redirect(url::site().'admin/dashboard');
+			url::redirect('admin/dashboard');
 		}
 
 		$this->template->content = new View('admin/reports/edit');
@@ -356,7 +370,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 		
 		// Initialize custom field array
-        $form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,true);
+		$form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,true);
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
@@ -555,7 +569,7 @@ class Reports_Controller extends Admin_Controller {
 			Event::run('ushahidi_action.report_submit_admin', $post);
 
 			// Validate
-			if (reports::validate($post, TRUE))
+			if (reports::validate($post))
 			{
 				// Yes! everything is valid
 				$location_id = $post->location_id;
@@ -569,8 +583,7 @@ class Reports_Controller extends Admin_Controller {
 				reports::save_report($post, $incident, $location->id);
 
 				// STEP 2b: Record Approval/Verification Action
-				$verify = new Verify_Model();
-				reports::verify_approve($post, $verify, $incident);
+				reports::verify_approve($incident);
 
 				// STEP 2c: SAVE INCIDENT GEOMETRIES
 				reports::save_report_geometry($post, $incident);
