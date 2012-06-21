@@ -449,6 +449,7 @@
 								<h4><?php echo Kohana::lang('ui_main.information_evaluation');?></h4>
 								<div class="row">
 									<div class="f-col-bottom-1-col"><?php echo Kohana::lang('ui_main.approve_this_report');?>?</div>
+									<?php if (Auth::instance()->has_permission('reports_approve')): ?>
 									<input type="radio" name="incident_active" value="1"
 									<?php if ($form['incident_active'] == 1)
 									{
@@ -459,9 +460,13 @@
 									{
 										echo " checked=\"checked\" ";
 									}?>> <?php echo Kohana::lang('ui_main.no');?>
+									<?php else: ?>
+										<?php echo $form['incident_active'] ? Kohana::lang('ui_main.yes') : Kohana::lang('ui_main.no');?>
+									<?php endif; ?>
 								</div>
 								<div class="row">
 									<div class="f-col-bottom-1-col"><?php echo Kohana::lang('ui_main.verify_this_report');?>?</div>
+									<?php if (Auth::instance()->has_permission('reports_verify')): ?>
 									<input type="radio" name="incident_verified" value="1"
 									<?php if ($form['incident_verified'] == 1)
 									{
@@ -472,6 +477,9 @@
 									{
 										echo " checked=\"checked\" ";
 									}?>> <?php echo Kohana::lang('ui_main.no');?>									
+									<?php else: ?>
+										<?php echo $form['incident_verified'] ? Kohana::lang('ui_main.yes') : Kohana::lang('ui_main.no');?>
+									<?php endif; ?>
 								</div>
 							</div>
 							<div style="clear:both;"></div>
