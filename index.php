@@ -115,12 +115,12 @@ define('KOHANA',  basename(__FILE__));
 is_link(KOHANA) and chdir(dirname(realpath(__FILE__)));
 
 // Define application and system paths
-define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).DIRECTORY_SEPARATOR);
-define('THEMEPATH', str_replace('\\', '/', realpath($kohana_themes)).DIRECTORY_SEPARATOR);
-define('PLUGINPATH', str_replace('\\', '/', realpath($kohana_plugins)).DIRECTORY_SEPARATOR);
-define('MODPATH', str_replace('\\', '/', realpath($kohana_modules)).DIRECTORY_SEPARATOR);
-define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).DIRECTORY_SEPARATOR);
-define('MEDIAPATH', str_replace('\\', '/', realpath($kohana_media)).DIRECTORY_SEPARATOR);
+define('APPPATH', realpath($kohana_application).DIRECTORY_SEPARATOR);
+define('THEMEPATH', realpath($kohana_themes).DIRECTORY_SEPARATOR);
+define('PLUGINPATH', realpath($kohana_plugins).DIRECTORY_SEPARATOR);
+define('MODPATH', realpath($kohana_modules).DIRECTORY_SEPARATOR);
+define('SYSPATH', realpath($kohana_system).DIRECTORY_SEPARATOR);
+define('MEDIAPATH', realpath($kohana_media).DIRECTORY_SEPARATOR);
 
 // Clean up
 unset($kohana_application, $kohana_themes, $kohana_plugins, $kohana_modules, $kohana_system, $kohana_media);
@@ -159,27 +159,13 @@ if ( ! IN_PRODUCTION)
 // -------------------------------------------
 // This has to be done before bootstrapping the Kohana framework
 // 
-
 // Does the installer directory exist?
 if (file_exists(DOCROOT.DIRECTORY_SEPARATOR.'installer'))
 {
 	if ( ! file_exists(APPPATH.'config'.DIRECTORY_SEPARATOR.'database.php'))
 	{
-		// Get the server protocol
-		$protocol = (isset($_SERVER['HTTPS']) OR $_SERVER['HTTPS'] == 'on')
-		    ? 'https'
-		    : 'http';
-	
-		// Server port
-		$port = ! in_array($_SERVER['SERVER_PORT'], array("80", "443"))
-		    ? ':'.$_SERVER['SERVER_PORT'] 
-		    : '';
-
-		// Generate the redirect URL
-		$url = $protocol.'://'.$_SERVER['SERVER_NAME'].$port.'/installer';
-	
 		// Redirect to the installer
-		header(sprintf("Location: %s", $url));
+		header("Location: ./installer");
 	}
 }
 
