@@ -35,18 +35,24 @@
 					<!-- tab -->
 					<div class="tab">
 						<ul>
+							<?php if (Auth::instance()->has_permission('reports_approve')): ?>
 							<li><a href="#" onclick="reportAction('a','<?php echo utf8::strtoupper(Kohana::lang('ui_main.approve')); ?>', '');">
 								<?php echo Kohana::lang('ui_main.approve');?></a>
 							</li>
 							<li><a href="#" onclick="reportAction('u','<?php echo utf8::strtoupper(Kohana::lang('ui_main.disapprove')); ?>', '');">
 								<?php echo Kohana::lang('ui_main.disapprove');?></a>
 							</li>
+							<?php endif; ?>
+							<?php if (Auth::instance()->has_permission('reports_verify')): ?>
 							<li><a href="#" onclick="reportAction('v','<?php echo utf8::strtoupper(Kohana::lang('ui_admin.verify_unverify')); ?>', '');">
 								<?php echo Kohana::lang('ui_admin.verify_unverify');?></a>
 							</li>
+							<?php endif; ?>
+							<?php if (Auth::instance()->has_permission('reports_edit')): ?>
 							<li><a href="#" onclick="reportAction('d','<?php echo utf8::strtoupper(Kohana::lang('ui_main.delete')); ?>', '');">
 								<?php echo Kohana::lang('ui_main.delete');?></a>
 							</li>
+							<?php endif; ?>
 						</ul>
 					</div>
 				</div>
@@ -54,7 +60,14 @@
 					<!-- red-box -->
 					<div class="red-box">
 						<h3><?php echo Kohana::lang('ui_main.error');?></h3>
-						<ul><?php echo Kohana::lang('ui_main.select_one');?></ul>
+						<ul>
+							<?php
+								foreach ($errors as $error_item => $error_description)
+								{
+									print (!$error_description) ? '' : "<li>" . $error_description . "</li>";
+								}
+							?>
+						</ul>
 					</div>
 				<?php endif; ?>
 				
@@ -252,6 +265,7 @@
 										<td class="col-3"><?php echo $incident_date; ?></td>
 										<td class="col-4">
 											<ul>
+												<?php if (Auth::instance()->has_permission('reports_approve')): ?>
 												<li class="none-separator">
 													<?php if ($incident_approved): ?>
 													<a href="#" class="status_yes" onclick="reportAction('u','UNAPPROVE', '<?php echo $incident_id; ?>');">
@@ -263,6 +277,8 @@
 													</a>
 													<?php endif; ?>	
 												</li>
+												<?php endif; ?>
+												<?php if (Auth::instance()->has_permission('reports_verify')): ?>
 												<li>
 													<?php if ($incident_verified): ?>
 													<a href="#" class="status_yes" 
@@ -274,11 +290,14 @@
 													</a>
 													<?php endif; ?>
 												</li>
+												<?php endif; ?>
+												<?php if (Auth::instance()->has_permission('reports_edit')): ?>
 												<li>
 													<a href="#" class="del" onclick="reportAction('d','DELETE', '<?php echo $incident_id; ?>');">
 														<?php echo Kohana::lang('ui_main.delete');?>
 													</a>
 												</li>
+												<?php endif; ?>
 											</ul>
 										</td>
 									</tr>
