@@ -1,7 +1,7 @@
 <?php
 	$lang = array(
 		"reports_view" => "View Reports",
-		"reports_edit" => "Create/Edit Reports",
+		"reports_edit" => "Create/Edit/Delete Reports",
 		"reports_approve" => "Approve Reports",
 		"reports_verify" => "Verify Reports",
 		"reports_comments" => "Manage Report Comments",

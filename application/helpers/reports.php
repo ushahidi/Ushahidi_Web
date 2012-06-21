@@ -34,9 +34,8 @@ class reports_Core {
 	 * Validation of form fields
 	 *
 	 * @param array $post Values to be validated
-	 * @param bool $admin_section Whether the validation is for the admin section
 	 */
-	public static function validate(array & $post, $admin_section = FALSE)
+	public static function validate(array & $post)
 	{
 
 		// Exception handling
@@ -129,15 +128,10 @@ class reports_Core {
 			$post->add_rules('person_email', 'email', 'length[3,100]');
 		}
 		
-		// Extra validation rules for the admin section
-		if ($admin_section)
-		{
-			$post->add_rules('location_id','numeric');
-			$post->add_rules('message_id','numeric');
-			$post->add_rules('incident_active','required', 'between[0,1]');
-			$post->add_rules('incident_verified','required', 'between[0,1]');
-			$post->add_rules('incident_zoom', 'numeric');
-		}
+		$post->add_rules('location_id','numeric');
+		$post->add_rules('incident_active', 'between[0,1]');
+		$post->add_rules('incident_verified', 'between[0,1]');
+		$post->add_rules('incident_zoom', 'numeric');
 		
 		// Custom form fields validation
 		$errors = customforms::validate_custom_form_fields($post);
@@ -216,7 +210,7 @@ class reports_Core {
 			// Edit
 			$incident->incident_datemodify = date("Y-m-d H:i:s",time());
 		}
-		else		
+		else
 		{
 			// New
 			$incident->incident_dateadd = date("Y-m-d H:i:s",time());
@@ -272,13 +266,13 @@ class reports_Core {
 			}
 		}
 		
-		// Approval Status
-		if (isset($post->incident_active))
+		// Approval Status: Only set if user has permission
+		if (isset($post->incident_active) AND Auth::instance()->has_permission('reports_approve'))
 		{
 			$incident->incident_active = $post->incident_active;
 		}
-		// Verification status
-		if (isset($post->incident_verified))
+		// Verification status:  Only set if user has permission
+		if (isset($post->incident_verified) AND Auth::instance()->has_permission('reports_verify'))
 		{
 			$incident->incident_verified = $post->incident_verified;
 		}
@@ -308,29 +302,28 @@ class reports_Core {
 	/**
 	 * Function to record the verification/approval actions
 	 *
-	 * @param mixed $post
-	 * @param mixed $verify Instance of the verify model
 	 * @param mixed $incident
 	 */
-	public static function verify_approve($post, $verify, $incident)
+	public static function verify_approve($incident)
 	{
 		// @todo Exception handling
 		
+		$verify = new Verify_Model();
 		$verify->incident_id = $incident->id;
 		
 		// Record 'Verified By' Action
-		$verify->user_id = $_SESSION['auth_user']->id;			
+		$verify->user_id = $_SESSION['auth_user']->id;
 		$verify->verified_date = date("Y-m-d H:i:s",time());
-				
-		if ($post->incident_active == 1)
+		
+		if ($incident->incident_active == 1)
 		{
 			$verify->verified_status = '1';
 		}
-		elseif ($post->incident_verified == 1)
+		elseif ($incident->incident_verified == 1)
 		{
 			$verify->verified_status = '2';
 		}
-		elseif ($post->incident_active == 1 AND $post->incident_verified == 1)
+		elseif ($incident->incident_active == 1 AND $incident->incident_verified == 1)
 		{
 			$verify->verified_status = '3';
 		}
@@ -340,7 +333,7 @@ class reports_Core {
 		}
 		
 		// Save
-		$verify->save();		
+		$verify->save();
 	} 
 	
 	/**
