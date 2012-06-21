@@ -87,11 +87,11 @@ class Main_Controller extends Template_Controller {
 		if (Kohana::config('settings.site_banner_id') != NULL)
 		{
 			$banner = ORM::factory('media')->find(Kohana::config('settings.site_banner_id'));
-			$this->template->header->banner = url::convert_uploaded_to_abs($banner->media_link);
+			$this->template->set_global('banner', url::convert_uploaded_to_abs($banner->media_link));
 		}
 		else
 		{
-			$this->template->header->banner = NULL;
+			$this->template->set_global('banner',NULL);
 		}
 
 		// Prevent Site Name From Breaking up if its too long
@@ -100,9 +100,9 @@ class Main_Controller extends Template_Controller {
 
 		$this->template->header->private_deployment = Kohana::config('settings.private_deployment');
 
-		$this->template->header->site_name = $site_name;
-		$this->template->header->site_name_style = $site_name_style;
-		$this->template->header->site_tagline = Kohana::config('settings.site_tagline');
+		$this->template->set_global('site_name', $site_name);
+		$this->template->set_global('site_name_style', $site_name_style);
+		$this->template->set_global('site_tagline', Kohana::config('settings.site_tagline'));
 
 		// page_title is a special variable that will be overridden by other controllers to
 		//    change the title bar contents
