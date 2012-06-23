@@ -78,34 +78,35 @@ class sms_Core {
 			return "Missing Sender and/or Message";
 		
 		//Filters to allow modification of the values from the SMS gateway
-        Event::run('ushahidi_filter.message_sms_from',$from);
-        Event::run('ushahidi_filter.message_sms', $message);
-		
+		Event::run('ushahidi_filter.message_sms_from',$from);
+		Event::run('ushahidi_filter.message_sms', $message);
+
 		$services = new Service_Model();
 		$service = $services->where('service_name', 'SMS')->find();
+
 		if ( ! $service) 
-			return false;
-	
+			return FALSE;
+
 		$reporter = ORM::factory('reporter')
-			->where('service_id', $service->id)
-			->where('service_account', $from)
-			->find();
+		    ->where('service_id', $service->id)
+		    ->where('service_account', $from)
+		    ->find();
 
 		if ( ! $reporter->loaded == TRUE)
 		{
 			// get default reporter level (Untrusted)
 			$level = ORM::factory('level')
-				->where('level_weight', 0)
-				->find();
+			    ->where('level_weight', 0)
+			    ->find();
 			
 			$reporter->service_id = $service->id;
 			$reporter->level_id = $level->id;
 			$reporter->service_account = $from;
-			$reporter->reporter_first = null;
-			$reporter->reporter_last = null;
-			$reporter->reporter_email = null;
-			$reporter->reporter_phone = null;
-			$reporter->reporter_ip = null;
+			$reporter->reporter_first = NULL;
+			$reporter->reporter_last = NULL;
+			$reporter->reporter_email = NULL;
+			$reporter->reporter_phone = NULL;
+			$reporter->reporter_ip = NULL;
 			$reporter->reporter_date = date('Y-m-d');
 			$reporter->save();
 		}
@@ -121,7 +122,7 @@ class sms_Core {
 		$sms->message = $message;
 		$sms->message_type = 1; // Inbox
 		$sms->message_date = date("Y-m-d H:i:s",time());
-		$sms->service_messageid = null;
+		$sms->service_messageid = NULL;
 		$sms->save();
 		
 		// Notify Admin Of New Email Message
