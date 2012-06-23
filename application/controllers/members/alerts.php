@@ -16,7 +16,7 @@
 
 class Alerts_Controller extends Members_Controller {
 	
-	function __construct()
+	public function __construct()
 	{
 		parent::__construct();
 
@@ -81,7 +81,7 @@ class Alerts_Controller extends Members_Controller {
 						$update = ORM::factory('alert')
 							->where('user_id', $this->user->id)
 							->find($item);
-						if ($update->loaded == true)
+						if ($update->loaded)
 						{
 							$alert_id = $update->id;
 							$update->delete();
@@ -127,7 +127,6 @@ class Alerts_Controller extends Members_Controller {
 		$this->template->content->total_items = $pagination->total_items;
 		
 		// Javascript Header
-		$this->template->map_enabled = TRUE;
 		$this->template->js = new View('members/alerts_js');
 	}	
 }

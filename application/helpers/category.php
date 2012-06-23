@@ -57,7 +57,7 @@ class category_Core {
 	/**
 	 * Display category tree with input checkboxes.
 	 */
-	public static function tree($categories,$hide_children = TRUE, array $selected_categories, $form_field, $columns = 1, $enable_parents = FALSE)
+	public static function tree($categories, $hide_children = TRUE, array $selected_categories, $form_field, $columns = 1, $enable_parents = FALSE)
 	{
 		$html = '';
 
@@ -71,8 +71,12 @@ class category_Core {
 		$categories_total = $categories->count();
 
 		// Format categories for column display.
-		$this_col = 1; // column number
-		$maxper_col = round($categories_total/$columns); // Maximum number of elements per column
+		// Column number
+		$this_col = 1;
+
+		// Maximum number of elements per column
+		$maxper_col = round($categories_total/$columns);
+
 		$i = 1;  // Element Count
 		foreach ($categories as $category)
 		{
@@ -92,7 +96,7 @@ class category_Core {
 			foreach ($category->children as $child)
 			{
 				// If we don't want to show a category's hidden children
-				if($hide_children == TRUE)
+				if ($hide_children == TRUE)
 				{
 					$child_visible = $child->category_visible;
 					if ($child_visible)
@@ -129,16 +133,18 @@ class category_Core {
 				}
 				$html .= '</ul>';
 			}
-			
 
 			// If this is the last element of a column, close the UL
-			if ($i > $maxper_col || $i == $categories_total)
+			if ($i > $maxper_col OR $i == $categories_total)
 			{
 				$html .= '</ul>';
 				$i = 1;
 				$this_col++;
 			}
-			$i++;
+			else
+			{
+				$i++;
+			}
 		}
 
 		return $html;
