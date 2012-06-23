@@ -406,7 +406,7 @@ class Installer_Wizard {
 		{
 			if ( ! extension_loaded($extension))
 			{
-				self::$_errors[] = sprintf("The <code>%</code> extension is disabled", $extension);
+				self::$_errors[] = sprintf("The <code>%s</code> extension is disabled", $extension);
 			}
 		}
 		
