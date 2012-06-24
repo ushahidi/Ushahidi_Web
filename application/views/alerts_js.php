@@ -79,23 +79,22 @@
 			});
 
 			// Alerts Slider
+            var updateAlertCircle = function (e, ui) {
+                var newRadius = $("#alert_radius").val();
+                
+                // Convert to Meters
+                radius = newRadius * 1000;	
+                
+                // Redraw Circle
+                currLon = $("#alert_lon").val();
+                currLat = $("#alert_lat").val();
+                drawCircle(map, currLat, currLon, radius);
+            };
 			$("select#alert_radius").selectToUISlider({
 				labels: 6,
 				labelSrc: 'text',
-				sliderOptions: {
-					change: function(e, ui) {
-						var newRadius = $("#alert_radius").val();
-						
-						// Convert to Meters
-						radius = newRadius * 1000;	
-						
-						// Redraw Circle
-						currLon = $("#alert_lon").val();
-						currLat = $("#alert_lat").val();
-						drawCircle(map, currLat, currLon, radius);
-					}
-				}
-			}).hide();
+                sliderOptions: { change: updateAlertCircle }
+            }).hide();
 			
 			
 			// Some Default Values		
@@ -121,46 +120,45 @@
 		      persist: "location",
 			  collapsed: true,
 			  unique: false
-			  });
 			});
-		});
-		
-		
-		/**
-		 * Google GeoCoder
-		 */
-		function geoCode()
-		{
-			$('#find_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
-			address = $("#location_find").val();
-			$.post("<?php echo url::site(); ?>reports/geocode/", { address: address },
-				function(data){
-					if (data.status == 'success'){
-						var lonlat = new OpenLayers.LonLat(data.longitude, data.latitude);
-						lonlat.transform(proj_4326,proj_900913);
-					
-						m = new OpenLayers.Marker(lonlat);
-						markers.clearMarkers();
-				    	markers.addMarker(m);
-						map.setCenter(lonlat, 9);
-					
-						newRadius = $("#alert_radius").val();
-						radius = newRadius * 1000
 
-						drawCircle(data.longitude,data.latitude, radius);
-					
-						// Update form values (jQuery)
-						$("#alert_lat").val(data.latitude);
-						$("#alert_lon").val(data.longitude);
-					} else {
-						// Alert message to be displayed
-						var alertMessage = address + " not found!\n\n***************************\n" + 
-						    "Enter more details like city, town, country\nor find a city or town " +
-						    "close by and zoom in\nto find your precise location";
+            
+            /**
+             * Google GeoCoder
+             */
+            function geoCode()
+            {
+                $('#find_loading').html('<img src="<?php echo url::file_loc('img')."media/img/loading_g.gif"; ?>">');
+                address = $("#location_find").val();
+                $.post("<?php echo url::site(); ?>reports/geocode/", { address: address },
+                    function(data){
+                        if (data.status == 'success'){
+                            var lonlat = new OpenLayers.LonLat(data.longitude, data.latitude);
+                            lonlat.transform(proj_4326,proj_900913);
+                        
+                            m = new OpenLayers.Marker(lonlat);
+                            markers.clearMarkers();
+                            markers.addMarker(m);
+                            map.setCenter(lonlat, 9);
+                        
+                            // Update form values (jQuery)
+                            $("#alert_lat").val(data.latitude);
+                            $("#alert_lon").val(data.longitude);
+                            
+                            updateAlertCircle();
+                        
+                        } else {
+                            // Alert message to be displayed
+                            var alertMessage = address + " not found!\n\n***************************\n" + 
+                                "Enter more details like city, town, country\nor find a city or town " +
+                                "close by and zoom in\nto find your precise location";
 
-						alert(alertMessage)
-					}
-					$('#find_loading').html('');
-				}, "json");
-			return false;
-		}
+                            alert(alertMessage)
+                        }
+                        $('#find_loading').html('');
+                    }, "json");
+                return false;
+            }
+
+        });  // jquery window onload
+    });  // jquery wrapper
