@@ -125,6 +125,8 @@
 	'from_date' => 'From',
 	'geonames_timeout' => 'Geonames Timeout Error',
 	'get_help' => 'Get Help',
+	'get_more_themes' => 'Get more themes',
+	'get_more_plugins' => 'Get more plugins',
 	'header_actions' => 'Actions',
 	'header_add_edit' => 'Add/Edit',
 	'header_email' => 'Email',

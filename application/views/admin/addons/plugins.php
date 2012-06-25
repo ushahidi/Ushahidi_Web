@@ -143,6 +143,7 @@
 								?>
 							</tbody>
 						</table>
+						<p class="more_addons"><a href="http://community.ushahidi.com/plugins"><?php echo Kohana::lang('ui_admin.get_more_plugins'); ?></a></p>
 					</div>
 				<?php print form::close(); ?>
 			</div>
