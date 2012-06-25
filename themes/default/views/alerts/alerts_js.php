@@ -17,6 +17,9 @@
 
 // Map reference
 var map = null;
+var latitude = <?php echo Kohana::config('settings.default_lat') ?>;
+var longitude = <?php echo Kohana::config('settings.default_lon'); ?>;
+var zoom = <?php echo Kohana::config('settings.default_zoom'); ?>;
 
 jQuery(function($) {
 	$(window).load(function(){
@@ -30,12 +33,12 @@ jQuery(function($) {
 
 			// Map center
 			center: {
-				latitude: <?php echo $latitude; ?>,
-				longitude: <?php echo $longitude; ?>,
+				latitude: latitude,
+				longitude: longitude,
 			},
 
 			// Zoom level
-			zoom: <?php echo $default_zoom; ?>,
+			zoom: zoom,
 
 			// Base layers
 			baseLayers: <?php echo map::layers_array(FALSE); ?>
@@ -43,8 +46,8 @@ jQuery(function($) {
 
 		map = new Ushahidi.Map('divMap', mapConfig);
 		map.addRadiusLayer({
-			latitude: <?php echo $latitude; ?>,
-			longitude: <?php echo $longitude; ?>
+			latitude: latitude,
+			longitude: longitude
 		});
 
 		// Subscribe to makerpositionchanged event

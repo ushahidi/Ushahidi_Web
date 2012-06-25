@@ -1,11 +1,5 @@
 <?php require APPPATH.'views/admin/utils_js.php' ?>
 var map;
-var proj_4326 = new OpenLayers.Projection('EPSG:4326');
-var proj_900913 = new OpenLayers.Projection('EPSG:900913');
-var latitude;
-var longitude;
-var markers;
-var linestring;
 
 function showCheckin(id, lon, lat) {
 	if (id) {
@@ -26,56 +20,43 @@ function showCheckin(id, lon, lat) {
 }
 
 function showMap(id, lon, lat) {
-	/*
-	- Initialize Map
-	- Uses Spherical Mercator Projection
-	- Units in Metres instead of Degrees					
-	*/
-	var options = {
-		units: "dd",
-		numZoomLevels: 16,
-		controls:[],
-		projection: proj_900913,
-		'displayProjection': proj_4326,
-		maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
-		maxResolution: 156543.0339
-	};
-		
-	map = new OpenLayers.Map(id + '_map', options);
-
 	<?php echo map::layers_js(FALSE); ?>
-	map.addLayers(<?php echo map::layers_array(FALSE); ?>);
+
+	// Map configuration
+	var mapConfig = {
+		// Map center
+		center: {
+			latitude: lat,
+			longitude: lon,
+		},
+
+		// Zoom level
+		zoom: <?php echo Kohana::config('settings.default_zoom'); ?>,
+
+		// Base layers
+		baseLayers: <?php echo map::layers_array(FALSE); ?>
+	};
+
+	// Initialize the map
+	map = new Ushahidi.Map(id + '_map', mapConfig);
 	
-	map.addControl(new OpenLayers.Control.Navigation());
-	map.addControl(new OpenLayers.Control.PanZoomBar());
-	map.addControl(new OpenLayers.Control.MousePosition());
-	map.addControl(new OpenLayers.Control.LayerSwitcher());
-	
-	
-	style = new OpenLayers.Style({
+	// Style for the checkin
+	var style = new OpenLayers.Style({
 		fillColor: "#<?php echo Kohana::config('settings.default_map_all'); ?>",
 		fillOpacity: 0.8,
 		strokeColor: "white",
 		strokeOpacity: 1,
 		pointRadius: "8"
 	});
-	
-	var vectorLayer = new OpenLayers.Layer.Vector("Checkin", {
-		styleMap: new OpenLayers.StyleMap({
-			"default":style,
-			"select": style
-		})
+
+	// Style map for the checkins
+	var styleMap = new OpenLayers.StyleMap({
+		default: style,
+		select: style
 	});
-	
-	var lonlat = new OpenLayers.LonLat(lon, lat);
-	lonlat.transform(proj_4326, proj_900913);
-	map.setCenter(lonlat, 14);
-	
-	point = new OpenLayers.Geometry.Point(lon, lat);
-	point.transform(proj_4326, proj_900913);
-	var origFeature = new OpenLayers.Feature.Vector(point);
-	vectorLayer.addFeatures(origFeature);
-	map.addLayer(vectorLayer);
+
+	// Add the layer
+	map.addLayer(Ushahidi.DEFAULT, {styleMap: styleMap, detectMapClicks: false});		
 }
 
 function checkinAction( action, confirmAction, checkin_id )
