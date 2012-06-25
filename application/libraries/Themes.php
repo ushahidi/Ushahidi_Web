@@ -106,13 +106,17 @@ class Themes_Core {
 			Requirements::css("media/css/colorpicker");
 		}
 
+		if (Kohana::config('settings.enable_timeline'))
+		{
+			Requirements::css("media/css/jquery.jqplot.min");
+		}
+
 		if ($this->site_style AND $this->site_style != "default")
 		{
 			Requirements::css("themes/".$site_style."/style.css");
 		}
 
 		Requirements::css("media/css/global");
-		Requirements::css("media/css/jquery.jqplot.min");
 	}
 
 	/**
@@ -146,10 +150,11 @@ class Themes_Core {
 
 			if ($this->main_page)
 			{
-				// Notes: E.Kala <emmanuel(at)ushahidi.com>
-				// TODO: Only include the jqplot JS when the timeline is enabled
-				Requirements::js("media/js/jquery.jqplot.min");
-				Requirements::js("media/js/jqplot.dateAxisRenderer.min");
+				if (Kohana::config('settings.enable_timeline'))
+				{
+					Requirements::js("media/js/jquery.jqplot.min");
+					Requirements::js("media/js/jqplot.dateAxisRenderer.min");
+				}
 
 				Requirements::customHeadTags("<!--[if IE]>".html::script($this->js_url."media/js/excanvas.min", TRUE)."<![endif]-->");
 			}

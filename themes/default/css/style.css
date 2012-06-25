@@ -428,8 +428,12 @@ a.share{
 div.map {
     border: #999 1px solid;
     width: 573px;
-    height: 366px;
+    height: 480px;
     position:relative;
+}
+/* Change map height when timeline is enabled */
+div.map.timeline-enabled {
+	height:366px;
 }
 
 #mapStatus {
