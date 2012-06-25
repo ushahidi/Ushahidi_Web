@@ -53,16 +53,16 @@ class ReportsImporter {
 		}
 		
 		// So we can assign category id to incidents, based on category title
-		$this->category_ids = ORM::factory('category')->select_list('category_title','id'); 
+		$this->existing_categories = ORM::factory('category')->select_list('category_title','id'); 
 		//Since we capitalize the category names from the CSV file, we should also capitlize the 
 		//category titles here so we get case insensative behavior. For some reason users don't
 		//always captilize the cateogry names as they enter them in
 		$temp_cat = array();
-		foreach($this->category_ids as $key=>$value)
+		foreach($this->existing_categories as $title => $id)
 		{
-			$temp_cat[utf8::strtoupper($key)] = $value;
+			$temp_cat[utf8::strtoupper($title)] = $id;
 		}
-		$this->category_ids = $temp_cat;
+		$this->existing_categories = $temp_cat;
 		
 		// So we can check if incident already exists in database
 		$this->incident_ids = ORM::factory('incident')->select_list('id','id'); 
@@ -177,38 +177,36 @@ class ReportsImporter {
 			// Add categories to incident
 			foreach ($categorynames as $categoryname)
 			{
-				// There seems to be an uppercase convention for categories... Don't know why
-				$categoryname = utf8::strtoupper(trim($categoryname));
+				// Trim the category name - but don't convert to upper case (only convert for comparisons, not creating a new category)
+				$categoryname = trim($categoryname);
 				
 				// For purposes of adding an entry into the incident_category table
 				$incident_category = new Incident_Category_Model();
 				$incident_category->incident_id = $incident->id; 
 				
 				// If category name exists, add entry in incident_category table
-				if ($row['CATEGORY'] != '')
+				if($categoryname != '')
 				{
-					if($categoryname != '')
+					// Check if the category exists (made sure to convert to uppercase for comparison)
+					if (!isset($this->existing_categories[utf8::strtoupper($categoryname)]))
 					{
-						if (!isset($this->category_ids[$categoryname]))
-						{
-							$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet.'
-							.' Added to database.';
-							$category = new Category_Model;
-							$category->category_title = $categoryname;
-							// We'll just use black for now. Maybe something random?
-							$category->category_color = '000000'; 
-							// because all current categories are of type '5'
-							$category->category_visible = 1;
-							$category->category_description = $categoryname;
-							$category->save();
-							$this->categories_added[] = $category->id;
-							// Now category_id is known: This time, and for the rest of the import.
-							$this->category_ids[$categoryname] = $category->id; 
-						}
-						$incident_category->category_id = $this->category_ids[$categoryname];
-						$incident_category->save();
-						$this->incident_categories_added[] = $incident_category->id;
+						$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet.'
+						.' Added to database.';
+						$category = new Category_Model;
+						$category->category_title = $categoryname;
+						// We'll just use black for now. Maybe something random?
+						$category->category_color = '000000'; 
+						// because all current categories are of type '5'
+						$category->category_visible = 1;
+						$category->category_description = $categoryname;
+						$category->save();
+						$this->categories_added[] = $category->id;
+						// Now category_id is known: This time, and for the rest of the import.
+						$this->existing_categories[utf8::strtoupper($categoryname)] = $category->id; 
 					}
+					$incident_category->category_id = $this->existing_categories[utf8::strtoupper($categoryname)];
+					$incident_category->save();
+					$this->incident_categories_added[] = $incident_category->id;
 				}
 				
 				else
