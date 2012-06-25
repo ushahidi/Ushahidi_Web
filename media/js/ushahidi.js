@@ -456,6 +456,9 @@
 	 *            the url When the callback is specified, the protocol property
 	 *            is omitted from the options passed to the layer constructor. The
 	 *             features property is used instead
+	 * detectMapClicks - {Boolean} - When true, registers a callback function to detect
+	 *               click events on the map. This option is only used with the default
+	 *               layer (Ushahidi.DEFAULT). The default value is true
 	 * transform - {Boolean} When true, transforms the featur geometry to spherical mercator
 	 *             The default value is false
 	 *
@@ -476,27 +479,46 @@
 		} else if (layerType == Ushahidi.DEFAULT) {
 			this.deleteLayer("default");
 			
-			var markers = new OpenLayers.Layer.Markers("default");
-			markers.addMarker(new OpenLayers.Marker(this._olMap.getCenter()));
+			var markers = null;
 			
+			// Check for the style map
+			if (options.styleMap) {
+
+				// Create vector layer
+				markers = new OpenLayers.Layer.Vector("default", {
+					styleMap: styleMap
+				});
+
+				// Add features to the vector layer
+				makers.addFeatures(new OpenLayers.Feature.Vector(this._olMap.getCenter()));
+
+			} else {
+				markers = new OpenLayers.Layer.Markers("default");
+				markers.addMarker(new OpenLayers.Marker(this._olMap.getCenter()));
+			}			
+
+			// Add the layer to the map
 			this._olMap.addLayer(markers);
-			var context = this;
 
-			context._olMap.events.register("click", context._olMap, function(e){
-				var point = context._olMap.getLonLatFromViewPortPx(e.xy);
-				markers.clearMarkers();
-				markers.addMarker(new OpenLayers.Marker(point));
+			// Is map-click detection enabled?
+			if (options.detectMapClicks == undefined || options.detectMapClicks) {
+				var context = this;
+				context._olMap.events.register("click", context._olMap, function(e){
+					var point = context._olMap.getLonLatFromViewPortPx(e.xy);
+					markers.clearMarkers();
+					markers.addMarker(new OpenLayers.Marker(point));
 
-				point.transform(Ushahidi.proj_900913, Ushahidi.proj_4326);
-				
-				var coords = {latitude: point.lat, longitude: point.lon};
-				context.trigger("markerpositionchanged", coords);
+					point.transform(Ushahidi.proj_900913, Ushahidi.proj_4326);
+					
+					var coords = {latitude: point.lat, longitude: point.lon};
+					context.trigger("markerpositionchanged", coords);
 
-				// Update the current map center
-				var newCenter = new OpenLayers.LonLat(coords.longitude, coords.latitude);
-				newCenter.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
-				context._currentCenter = newCenter;
-			});
+					// Update the current map center
+					var newCenter = new OpenLayers.LonLat(coords.longitude, coords.latitude);
+					newCenter.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
+					context._currentCenter = newCenter;
+				});
+			}
 
 			this._isLoaded = 1;
 
