@@ -2,7 +2,7 @@
 	<div class="content-bg">
 
 		<?php if ($site_submit_report_message != ''): ?>
-			<div class="green-box" style="margin: 25px 25px 0px 25px">
+			<div class="green-box">
 				<h3><?php echo $site_submit_report_message; ?></h3>
 			</div>
 		<?php endif; ?>
@@ -41,7 +41,7 @@
 							<?php print form::dropdown('form_id', $forms, $form['form_id'],
 						' onchange="formSwitch(this.options[this.selectedIndex].value, \''.$id.'\')"') ?>
 						</span>
-						<div id="form_loader" style="float:left;"></div>
+						<div id="form_loader"></div>
 						</h4>
 					</div>
 					<?php endif; ?>
@@ -193,9 +193,9 @@
 						</div>
 					</div>
 					<div class="report-find-location">
-					    <div id="panel" class="olControlEditingToolbar"></div>
-						<div class="btns" style="float:left;">
-							<ul style="padding:4px;">
+						<div id="panel" class="olControlEditingToolbar"></div>
+						<div class="btns">
+							<ul>
 								<li><a href="#" class="btn_del_last"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete_last'));?></a></li>
 								<li><a href="#" class="btn_del_sel"><?php echo utf8::strtoupper(Kohana::lang('ui_main.delete_selected'));?></a></li>
 								<li><a href="#" class="btn_clear"><?php echo utf8::strtoupper(Kohana::lang('ui_main.clear_map'));?></a></li>
@@ -203,9 +203,7 @@
 						</div>
 						<div style="clear:both;"></div>
 						<?php print form::input('location_find', '', ' title="'.Kohana::lang('ui_main.location_example').'" class="findtext"'); ?>
-						<div style="float:left;margin:9px 0 0 5px;">
-							<input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" />
-						</div>
+						<input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" />
 						<div id="find_loading" class="report-find-loading"></div>
 						<div style="clear:both;" id="find_text"><?php echo Kohana::lang('ui_main.pinpoint_location'); ?>.</div>
 					</div>

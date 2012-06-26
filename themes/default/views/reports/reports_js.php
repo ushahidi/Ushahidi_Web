@@ -514,9 +514,9 @@
 		mapLoaded = 0;
 		
 		var loadingURL = "<?php echo url::file_loc('img').'media/img/loading_g.gif'; ?>";
-		var statusHtml = "<div style=\"width: 100%; margin-top: 100px;\" align=\"center\">" + 
+		var statusHtml = "<div class=\"loading-reports\">" + 
 					"<div><img src=\""+loadingURL+"\" border=\"0\"></div>" + 
-					"<p style=\"padding: 10px 2px;\"><h3><?php echo Kohana::lang('ui_main.loading_reports'); ?>...</h3></p>" +
+					"<h3><?php echo Kohana::lang('ui_main.loading_reports'); ?>...</h3>" +
 					"</div>";
 	
 		$("#reports-box").html(statusHtml);

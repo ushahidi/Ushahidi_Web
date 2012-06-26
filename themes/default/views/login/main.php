@@ -80,7 +80,7 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 
 		<?php if ($new_confirm_email_form): ?>
 			<h2><?php echo Kohana::lang('ui_main.resend_confirm_email'); ?>:</h2>
-			<div id="resend_confirm_email" class="signin_select ui-corner-all" style="margin-top:10px;">
+			<div id="resend_confirm_email" class="signin_select ui-corner-all">
 				<?php echo form::open(NULL, array('id'=>"resendconfirm_form")); ?>
 					<input type="hidden" name="action" value="resend_confirmation">
 					<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
@@ -126,7 +126,7 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 			<?php echo form::close(); ?>
 		</div>
 		
-		<div id="signin_forgot" class="signin_select ui-corner-all" style="margin-top:10px;">
+		<div id="signin_forgot" class="signin_select ui-corner-all">
 			<?php echo form::open(NULL, array('id'=>"userforgot_form")); ?>
 				<input type="hidden" name="action" value="forgot">
 				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
@@ -169,7 +169,7 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 		<h2><a href="javascript:toggle('signin_new');"><?php echo Kohana::lang('ui_main.login_signup_click'); ?></a></h2>
 
 		<?php echo Kohana::lang('ui_main.login_signup_text'); ?>
-		<div id="signin_new" class="signin_select ui-corner-all" style="margin-top:10px;">
+		<div id="signin_new" class="signin_select ui-corner-all">
 			<?php echo form::open(NULL,  array('id' => "usernew_form")); ?>
 				<input type="hidden" name="action" value="new">
 				<table width="100%" border="0" cellspacing="3" cellpadding="4" background="" id="ushahidi_loginbox">
@@ -206,7 +206,7 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 	</div>
 
 	<?php if (kohana::config('riverid.enable') == TRUE): ?>
-	<div style="text-align:center;margin-top:20px;" id="openid_login" class="ui-corner-all">
+	<div id="openid_login" class="ui-corner-all">
 		<small><?php echo $riverid_information; ?> 
 			<a href="<?php echo $riverid_url; ?>"><?php echo Kohana::lang('ui_main.more_information'); ?></a>
 		</small>

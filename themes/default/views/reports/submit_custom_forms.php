@@ -8,12 +8,12 @@
 	{
 		// Is the field required
 		$isrequired = ($field_property['field_required'])
-			? "<font color=red> *</font>"
+			? "<span class='required'> *</span>"
 			: "";
 
 		// Private field
 		$isprivate = ($field_property['field_ispublic_visible'])
-			? '<font style="color:gray;font-size:70%">(' . Kohana::lang('ui_main.private') . ')</font>'
+			? '<span class="private">(' . Kohana::lang('ui_main.private') . ')</span>'
 			: '';
 
 		// Workaround for situations where admin can view, but doesn't have sufficient perms to edit.
@@ -166,7 +166,7 @@
 						$option = trim($option);
 						$set_default = ($option == trim($default));
 
-						$html .= "<span style=\"margin-right: 15px\">";
+						$html .= "<span class=\"custom-field-option\">";
 						$html .= form::label('custom_field['.$field_id.']'," ".$option." ");
 						$html .= form::radio('custom_field['.$field_id.']',$option, $set_default, $id_name);
 						$html .= "</span>";
@@ -197,7 +197,7 @@
 							}
 						}
 						$option = trim($option);
-						$html .= "<span style=\"margin-right: 15px\">";
+						$html .= "<span class=\"custom-field-option\">";
 						$html .= form::checkbox("custom_field[".$field_id.'-'.$cnt.']', $option, $set_default, $id_name);
 						$html .= form::label("custom_field[".$field_id.']'," ".$option);
 						$html .= "</span>";

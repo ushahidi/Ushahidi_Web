@@ -38,15 +38,14 @@ $(function(){
 			
 					<ul id="category_switch" class="category-filters">
 					<?php
-					$color_css = 'class="swatch" style="background-color:#'.$default_map_all.'"';
+					$color_css = 'class="category-icon swatch" style="background-color:#'.$default_map_all.'"';
 					$all_cat_image = '';
 					if ($default_map_all_icon != NULL)
 					{
 						$all_cat_image = html::image(array(
-							'src'=>$default_map_all_icon,
-							'style'=>'float:left;padding-right:5px;'
+							'src'=>$default_map_all_icon
 						));
-						$color_css = '';
+						$color_css = 'class="category-icon"';
 					}
 					?>
 					<li>
@@ -65,14 +64,13 @@ $(function(){
 							    : NULL;
 							$category_description = htmlentities(Category_Lang_Model::category_description($category), ENT_QUOTES, "UTF-8");
 	
-							$color_css = 'class="swatch" style="background-color:#'.$category_color.'"';
+							$color_css = 'class="category-icon swatch" style="background-color:#'.$category_color.'"';
 							if ($category_info[2] != NULL)
 							{
 								$category_image = html::image(array(
 									'src'=>$category_image,
-									'style'=>'float:left;padding-right:5px;'
 									));
-								$color_css = '';
+								$color_css = 'class="category-icon"';
 							}
 	
 							echo '<li>'
@@ -95,18 +93,17 @@ $(function(){
 									    : NULL;
 									$child_description = htmlentities(Category_Lang_Model::category_description($child), ENT_QUOTES, "UTF-8");
 									
-									$color_css = 'class="swatch" style="background-color:#'.$child_color.'"';
+									$color_css = 'class="category-icon swatch" style="background-color:#'.$child_color.'"';
 									if ($child_info[2] != NULL)
 									{
 										$child_image = html::image(array(
-											'src' => $child_image,
-											'style' => 'float:left;padding-right:5px;'
+											'src' => $child_image
 										));
 	
-										$color_css = '';
+										$color_css = 'class="category-icon"';
 									}
 	
-									echo '<li style="padding-left:20px;">'
+									echo '<li>'
 									    . '<a href="#" id="cat_'. $child .'" title="'.$child_description.'">'
 									    . '<span '.$color_css.'>'.$child_image.'</span>'
 									    . '<span class="category-title">'.$child_title.'</span>'
@@ -182,31 +179,6 @@ $(function(){
 			?>
 			
 			
-			<?php
-			if (isset($shares))
-			{
-				?>
-				<div id="other-deployments-box">
-					<a class="btn toggle" id="other-deployments-menu-toggle" class="" href="#sharing_switch"><?php echo Kohana::lang('ui_main.other_ushahidi_instances');?> <span class="btn-icon ic-right">&raquo;</span></a>
-					<!-- Layers (Other Ushahidi Layers) -->
-					<ul id="sharing_switch" class="category-filters map-menu-box">
-						<?php
-						foreach ($shares as $share => $share_info)
-						{
-							$sharing_name = $share_info[0];
-							$sharing_color = $share_info[1];
-							echo '<li><a href="#" id="share_'. $share .'"><span class="swatch" style="background-color:#'.$sharing_color.'"></span>
-							<span class="category-title">'.$sharing_name.'</span></a></li>';
-						}
-						?>
-					</ul>
-				</div>
-				<!-- /Layers -->
-				<?php
-			}
-			?>
-			
-			
 			<!-- additional content -->
 			<?php
 			if (Kohana::config('settings.allow_reports'))
@@ -215,11 +187,11 @@ $(function(){
 				<a class="btn toggle" id="how-to-report-menu-toggle" class="" href="#how-to-report-box"><?php echo Kohana::lang('ui_main.how_to_report'); ?> <span class="btn-icon ic-question">&raquo;</span></a>
 				<div id="how-to-report-box" class="map-menu-box">
 					
-					<div>
+					<div class="how-to-report-methods">
 
 						<!-- Phone -->
 						<?php if (!empty($phone_array)) { ?>
-						<div style="margin-bottom:10px;">
+						<div>
 							<strong><?php echo Kohana::lang('ui_main.report_option_1'); ?></strong>
 							<?php foreach ($phone_array as $phone) { ?>
 								<?php echo $phone; ?><br/>
@@ -229,7 +201,7 @@ $(function(){
 						
 						<!-- External Apps -->
 						<?php if (count($external_apps) > 0) { ?>
-						<div style="margin-bottom:10px;">
+						<div>
 							<strong><?php echo Kohana::lang('ui_main.report_option_external_apps'); ?>:</strong><br/>
 							<?php foreach ($external_apps as $app) { ?>
 								<a href="<?php echo $app->url; ?>"><?php echo $app->name; ?></a><br/>
@@ -239,7 +211,7 @@ $(function(){
 
 						<!-- Email -->
 						<?php if (!empty($report_email)) { ?>
-						<div style="margin-bottom:10px;">
+						<div>
 							<strong><?php echo Kohana::lang('ui_main.report_option_2'); ?>:</strong><br/>
 							<a href="mailto:<?php echo $report_email?>"><?php echo $report_email?></a>
 						</div>
@@ -247,7 +219,7 @@ $(function(){
 
 						<!-- Twitter -->
 						<?php if (!empty($twitter_hashtag_array)) { ?>
-						<div style="margin-bottom:10px;">
+						<div>
 							<strong><?php echo Kohana::lang('ui_main.report_option_3'); ?>:</strong><br/>
 							<?php foreach ($twitter_hashtag_array as $twitter_hashtag) { ?>
 								<span>#<?php echo $twitter_hashtag; ?></span>
@@ -259,7 +231,7 @@ $(function(){
 						<?php } ?>
 
 						<!-- Web Form -->
-						<div style="margin-bottom:10px;">
+						<div>
 							<a href="<?php echo url::site() . 'reports/submit/'; ?>"><?php echo Kohana::lang('ui_main.report_option_4'); ?></a>
 						</div>
 

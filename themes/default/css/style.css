@@ -220,6 +220,9 @@ div#underfooter{
     clear: both;
     visibility: hidden;
 }
+.clear {
+	clear: both;
+}
 
 .clearingfix{
     display: block;
@@ -363,6 +366,14 @@ div#mainmenu a:hover, div#mainmenu a.active{
     background: #2E8AB8;
 }
 
+.feedicon {
+  float:right;
+}
+.feedicon img {
+  vertical-align: middle;
+  border: 0;
+}
+
 /* Filters */
 div.filters{
     font-size: 85%;
@@ -400,6 +411,8 @@ div.filters ul li a:hover, div.filters ul li a.active{
     text-decoration: none;
 }
 
+div.filters .media-filters {float:left; width: 100%;}
+
 a.share{
     float: left;
     border-right: 1px solid #999;
@@ -434,6 +447,10 @@ div.map {
     display: inline-block;
     padding: 4px 6px 4px 6px;
 }
+
+#mapScale {border-right: solid 1px #999}
+#mapMousePosition {min-width: 135px;border-right: solid 1px #999;text-align: center}
+#mapProjection {border-right: solid 1px #999}
 
 #mapOutput sup {
     height: 0;
@@ -523,6 +540,15 @@ ul.category-filters li a:hover, ul.category-filters li a.active {
 ul.category-filters li.child{
     display:none;
 }
+ul.category-filters li li {
+	padding-left:20px;
+}
+
+div.layers-filters{
+    font-size: 85%;
+    text-transform: uppercase;
+    margin: 20px 0 15px 0;
+}
 
 /* additional content */
 div.additional-content{
@@ -532,6 +558,10 @@ div.additional-content{
 
 div.additional-content ol {
     margin-left: 2em;
+}
+
+div.how-to-report-methods div{
+	margin-bottom: 10px;
 }
 
 /* content blocks */
@@ -633,6 +663,10 @@ div.footer-credits{
     font-weight: bold;
     text-transform: uppercase;
     margin: 0 20px 0 0;
+}
+
+div.footer-credits .footer-logo{
+	vertical-align:middle;
 }
 
 /* Reports */
@@ -1005,7 +1039,9 @@ div.incident-notation ul li{
 .category-title {
     padding-left: 0;
 }
-
+.category-icon img {
+	float:left;padding-right:5px;
+}
 
 /*-----UI Slider CSS-----*/
 .ui-slider { clear: both; top: 5px; text-decoration: none !important; }
@@ -1209,6 +1245,8 @@ label.error {
 .report_right table { width: 100%; }
 .report_right table tr th { text-align: left; }
 
+#form_loader { float:left; }
+
 .report-description table { width: 100%; }
 .report-description table tr th { text-align: left; padding:5px; background:#E8E4DB; border-collapse:collapse; }
 .report-description table tr td { padding:0 5px; }
@@ -1236,6 +1274,8 @@ td.w-03 { border-bottom:1px dotted #E8E4DB; text-transform:capitalize; }
 .report_category ul{ width:50%; float:left; margin:0; padding:0 0 11px; }
 .report_category ul li{ overflow:hidden; list-style:none; }
 .report_category ul li label{ color:#555; }
+
+.report_row .custom-field-option { margin-right: 15px; }
 
 /*Categories Tree*/
 .report_category ul ul { width: auto; float: none; }
@@ -1317,6 +1357,9 @@ a.rem { background:url(../images/icon-minus.gif) no-repeat;}
     font-size:90%;
     color:#666;
 }
+.report-find-location .btns { float:left; }
+.report-find-location .btns ul { padding: 4px; }
+.report-find-location .btn_find { float:left; margin:10px 0 0 5px; }
 .report-find-location input.findtext {
     margin-top:9px;
     padding:5px 3px 0 3px;
@@ -1526,6 +1569,11 @@ a.show-more {
     float:left;
     padding:0 0 0 10px;
 }
+.find-location{
+	float:left;
+	margin:9px 0 0 5px;
+}
+
 /*-- pager --*/
 ul.pager {
     margin:0;
@@ -1812,6 +1860,10 @@ div.green-box ul, div.red-box ul{
     padding-left:2em;
 }
 
+.page-reports-submit div.green-box {
+	margin: 25px 25px 0px 25px;
+}
+
 /*--Alerts Messages--*/
 .alert_response, .thanks_msg {
     margin:10px 15px 10px 15px;
@@ -1832,6 +1884,9 @@ div.green-box ul, div.red-box ul{
 
 span.required {
   color: #CC1830;
+}
+span.private {
+	color:gray;font-size:70%
 }
 
 /* Rounded Corners */
@@ -2066,6 +2121,11 @@ ul.inline-links li a.active { background:#c2c2c2; font-weight:bold; color:#fff; 
 p.labeled-divider { text-align:center; border-top:1px solid #a4a4a4; margin:10px 5px 0; }
 p.labeled-divider span { position:relative; top:-8px; display:inline-block; background:#f2f2f2; padding:0 8px; }
         
+.report-date-filter input { width:78px; }
+.report-date-filter .filter-button { position: static; }
+
+.reports-main {overflow: auto;}
+
 /* Report List View */
 .rb_report { position:relative; border-top:1px solid #c0c2b8; overflow:auto; padding-bottom:10px; }
 #rb_list-view { padding:18px 0 0 0; overflow:auto; }
@@ -2082,11 +2142,15 @@ p.labeled-divider span { position:relative; top:-8px; display:inline-block; back
 }
 #rb_list-view .verified { border-left:6px solid #368C00; }
 #rb_list-view .unverified { border-left:6px solid #A60003; }
+
+#rb_map-view { display:none; width: 590px; height: 384px; border:1px solid #CCCCCC; margin: 3px auto; }
     
 .reports-box .hover { background:#fffded; }
     
 .r_media { float:left; width:95px; margin:3px 15px 3px 3px; }
+.r_photo { text-align: center; }
 .r_photo a { display:inline-block; padding: 2px; border:1px solid #c0c2b8;}
+.r_photo img { max-width:89px; max-height:59px; }
 .r_video { }
 .r_video a { display:inline-block; font-size:11px; background:transparent url(../../default/images/icon_sprite.png) -3px -100px no-repeat; padding:4px 0 3px 23px; }
     
@@ -2177,6 +2241,9 @@ a.btn-show { display:none; }
 /* Filters */
 #filters-box {}
 #filters-box h2 { color:#494949; }
+
+.loading-reports {width: 100%; margin-top: 100px; text-align: center;}
+.loading-reports h3 { padding: 10px 2px; }
 
 /* jquery UI theme overrides for accordion */
 #accordion .ui-accordion-header .ui-icon { right:.5em; }
@@ -2278,6 +2345,7 @@ a.filter-button    {
 
 a.filter-button:hover { text-decoration:none; background:#707070;  }
 
+.report-stats-container {display: none;}
 
 /* Icons */
 /* things */
@@ -2392,3 +2460,11 @@ div.ci_colorfade {
 div.ci_checkin {
 	border-bottom:1px solid #B3B3B3;
 }
+
+.page-profile .content-bg { padding:25px; }
+.page-profile-user .content-bg { padding:25px; }
+.profile-left { float:left;height:250px;width:160px;text-align:center; }
+.profile-right { float:left;padding-left:25px;width:400px; }
+.user-color { width:160px;height:20px; }
+.badges { float:left;padding-left:25px;width:275px;}
+.badge img { margin:5px; }

@@ -34,24 +34,24 @@
 				
 				<p class="labeled-divider"><span><?php echo Kohana::lang('ui_main.choose_date_range'); ?>:</span></p>
 				<?php echo form::open(NULL, array('method' => 'get')); ?>
-					<table>
+					<table class="report-date-filter">
 						<tr>
 							<td><strong>
-								<?php echo Kohana::lang('ui_admin.from')?>:</strong><input id="report_date_from" type="text" style="width:78px" />
+								<?php echo Kohana::lang('ui_admin.from')?>:</strong><input id="report_date_from" type="text" />
 							</td>
 							<td>
 								<strong><?php echo ucfirst(strtolower(Kohana::lang('ui_admin.to'))); ?>:</strong>
-								<input id="report_date_to" type="text" style="width:78px" />
+								<input id="report_date_to" type="text" />
 							</td>
 							<td valign="bottom">
-								<a href="#" id="applyDateFilter" class="filter-button" style="position:static;"><?php echo Kohana::lang('ui_main.go')?></a>
+								<a href="#" id="applyDateFilter" class="filter-button"><?php echo Kohana::lang('ui_main.go')?></a>
 							</td>
 						</tr>
 					</table>
 				<?php echo form::close(); ?>
 			</div>
 
-			<div style="overflow:auto;">
+			<div class="reports-content">
 				<!-- reports-box -->
 				<div id="reports-box">
 					<?php echo $report_listing_view; ?>
@@ -206,7 +206,7 @@
 				<!-- end #filters-box -->
 			</div>
       
-			<div style="display:none">
+			<div class="report-stats-container">
 				<?php
 					// Filter::report_stats - The block that contains reports list statistics
 					Event::run('ushahidi_filter.report_stats', $report_stats);

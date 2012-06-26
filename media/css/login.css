@@ -96,11 +96,12 @@ dl {}
 }
 #openid_login {
 	border:3px solid #999;
-	text-align:left;
 	padding: 20px;
 	background-color: #ddd;
 	float:left;
 	width:340px;
+	text-align:center;
+	margin-top:20px;
 }
 #create_account {
 	border:3px solid #999;
@@ -275,6 +276,8 @@ html[xmlns] .clearfix {
 	padding:10px;
 	background-color:#eee;
 }
+
+#resend_confirm_email, #signin_forgot, #signin_new { margin-top:10px; }
 
 .hidden{
 	display:none;
