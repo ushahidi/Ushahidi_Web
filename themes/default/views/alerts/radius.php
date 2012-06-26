@@ -12,7 +12,7 @@
  * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 ?>
-	<div class="map">
+	<div class="map-wrapper">
 	<?php if ($show_usage_info): ?>
 		<p><?php echo Kohana::lang('ui_main.alerts_place_spot'); ?></p>
 	<?php endif; ?>

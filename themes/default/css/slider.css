@@ -1,0 +1,107 @@
+/**
+ * UI Slider CSS
+ * Used by the slider on the main map page
+ */
+
+/*-----UI Slider CSS-----*/
+.ui-slider { clear: both; top: 5px; text-decoration: none !important; }
+.ui-slider .ui-slider-handle  { overflow: visible !important; }
+.ui-slider .ui-slider-tooltip { display: none; }
+.ui-slider .screenReaderContext {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    left: -999999999px;
+}
+.ui-slider .ui-state-active .ui-slider-tooltip, .ui-slider .ui-state-focus .ui-slider-tooltip, .ui-slider .ui-state-hover .ui-slider-tooltip {
+    display: block;
+    position: absolute;
+    bottom: 2.5em;
+    text-align: center;
+    padding: .3em .2em .4em;
+    font-size: .9em;
+    width: 8em;
+    margin-left: -3.7em;
+}
+.ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down, .ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down-inner {
+    position: absolute; 
+    display: block;
+    width:0; 
+    height:0; 
+    border-bottom-width: 0;
+    background: none;
+}
+.ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down {    
+    border-left: 7px dashed transparent; 
+    border-right: 7px dashed transparent;
+    border-top-width: 8px;
+    bottom:    -8px;
+    right: auto;
+    left: 50%;
+    margin-left: -7px;
+}
+.ui-slider .ui-slider-tooltip .ui-tooltip-pointer-down-inner {
+    border-left: 6px dashed transparent; 
+    border-right: 6px dashed transparent;
+    border-top: 7px solid #fff;
+    bottom:    auto;
+    top: -9px;
+    left: -6px;
+}
+.ui-slider a {
+    text-decoration: none;
+}
+.ui-slider ol, .ui-slider li, .ui-slider dl, .ui-slider dd, .ui-slider dt {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.ui-slider ol, .ui-slider dl {
+    position: relative;
+    top: 1.3em;
+    width: 100%;
+}
+.ui-slider dt {
+    top: 1.5em;
+    position: absolute;
+    padding-top: .2em;
+    text-align: center;
+    border-bottom: 1px dotted #ddd;
+    height: .7em;
+    color: #999;
+}
+.ui-slider dt span {
+    background: #fff;
+    padding: 0 .5em;
+}
+.ui-slider li, .ui-slider dd {
+    position: absolute;
+    overflow: visible;
+    color: #666;
+}
+.ui-slider span.ui-slider-label {
+    position: absolute;
+}
+.ui-slider li span.ui-slider-label, .ui-slider dd span.ui-slider-label {
+    display: none;
+}
+.ui-slider li span.ui-slider-label-show, .ui-slider dd span.ui-slider-label-show {
+    display: block;
+}
+.ui-slider span.ui-slider-tic {
+    position: absolute;
+    left: 0;
+    height: .8em;
+    top: -1.3em;
+}
+.ui-slider li span.ui-widget-content, .ui-slider dd span.ui-widget-content {
+    border-right: 0;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-top: 0;
+    border-bottom: 0;
+}
+.ui-slider .first .ui-slider-tic, .ui-slider .last .ui-slider-tic {
+    display: none;
+}
