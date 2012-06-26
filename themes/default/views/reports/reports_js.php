@@ -77,7 +77,7 @@
 			$("#tooltip-box").css({
 				'left': ($(this).offset().left - 80),
 				'top': ($(this).offset().right)
-			}).show();
+			}).toggle();
 			
 	        return false;
 		});
