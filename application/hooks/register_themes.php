@@ -38,7 +38,7 @@ class register_themes {
 	 */
 	public function register()
 	{
-		$this->themes = addon::get_addons('theme', FALSE);
+		$this->themes = addon::get_addons('theme', TRUE);
 		
 		$theme = Kohana::config("settings.site_style");
 		$theme = empty($theme) ? 'default' : $theme;
@@ -60,7 +60,7 @@ class register_themes {
 		$this->loaded_themes[] = $theme;
 		
 		// Get meta data to check the base theme
-		$meta = addon::meta_data($theme, 'theme', array('Base Theme' => 'default'));
+		$meta = $this->themes[$theme];
 		
 		// If base theme is set, the base theme exists, and we haven't loaded it yet
 		// Load the base theme
@@ -98,15 +98,34 @@ class register_themes {
 	 */
 	private function load_theme_css($theme)
 	{
-		$css_dir = THEMEPATH.$theme.'/css';
-		if ( is_dir($css_dir) )
+		$meta = $this->themes[$theme];
+		// Add special cases for old themes
+		if (empty($meta['CSS']))
 		{
-			$css = dir($css_dir); // Load all the themes css files
-			while (($css_file = $css->read()) !== FALSE)
-				if (preg_match('/\.css/i', $css_file))
-				{
-					$this->theme_css[str_replace('.css','',$css_file)] = "themes/$theme/css/$css_file";
-				}
+			$meta['CSS'] = array();
+			$meta['CSS'][] = 'base';
+			$meta['CSS'][] = 'style';
+			$meta['CSS'][] = '_default';
+			$meta['CSS'][] = $theme;
+		}
+		else
+		{
+			$meta['CSS'] = explode(',', $meta['CSS']);
+			$meta['CSS'] = array_map('trim',$meta['CSS']);
+		}
+		
+		// Add specified theme stylesheets
+		foreach ($meta['CSS'] as $css)
+		{
+			if (file_exists(THEMEPATH."$theme/css/$css.css"))
+				$this->theme_css[$css] = "themes/$theme/css/$css";
+		}
+		
+		// Check for overrides of already added stylesheets
+		foreach ($this->theme_css as $css => $path)
+		{
+			if (file_exists(THEMEPATH."$theme/css/$css.css"))
+				$this->theme_css[$css] = "themes/$theme/css/$css";
 		}
 	}
 
@@ -115,14 +134,30 @@ class register_themes {
 	 */
 	private function load_theme_js($theme)
 	{
-		if ( is_dir(THEMEPATH.$theme.'/js') )
+		$meta = $this->themes[$theme];
+		// Add special cases for old themes
+		if (empty($meta['JS']))
 		{
-			$js = dir(THEMEPATH.$theme.'/js'); // Load all the themes js files
-			while (($js_file = $js->read()) !== FALSE)
-				if (preg_match('/\.js/i', $js_file))
-				{
-					$this->theme_js[str_replace('.js','',$js_file)] = "themes/$theme/js/$js_file";
-				}
+			$meta['JS'] = array();
+		}
+		else
+		{
+			$meta['JS'] = explode(',', $meta['JS']);
+			$meta['JS'] = array_map('trim',$meta['JS']);
+		}
+		
+		// Add specified theme js
+		foreach ($meta['JS'] as $js)
+		{
+			if (file_exists(THEMEPATH."$theme/js/$js.js"))
+				$this->theme_js[$js] = "themes/$theme/js/$js";
+		}
+		
+		// Check for overrides of already added js
+		foreach ($this->theme_css as $js => $path)
+		{
+			if (file_exists(THEMEPATH."$theme/js/$js.js"))
+				$this->theme_js[$js] = "themes/$theme/js/$js";
 		}
 	}
 }

@@ -5,3 +5,4 @@ Version: 1.0
 Author: Brian Herbert
 Author Email: brian@ushahidi.com
 Checkins: 1
+JS: jquery.timeago
