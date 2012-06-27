@@ -240,6 +240,23 @@
 			highlightCtrl.activate();
 			selectCtrl.activate();
 			
+			/**
+			 * Hack to make sure selectControl always works 
+			 *
+			 * Override navigation activate/deactive to also activate/deactive
+			 * the selectCtrl. Previously selectCtrl was not being re-activated
+			 * after new features were added.
+			 */
+			panel.controls[0].navActivate = panel.controls[0].activate;
+			panel.controls[0].navDeactivate = panel.controls[0].deactivate;
+			panel.controls[0].activate = function () {
+				this.navActivate();
+				selectCtrl.activate();
+			}
+			panel.controls[0].deactivate = function () {
+				this.navDeactivate();
+				selectCtrl.deactivate();
+			}
 			map.events.register("click", map, function(e){
 				selectCtrl.deactivate();
 				selectCtrl.activate();
@@ -254,6 +271,7 @@
 				$('#geometry_color').ColorPickerHide();
 				$('#geometryLabelerHolder').hide(400);
 				selectCtrl.activate();
+				return false;
 			});
 			
 			// Delete Selected Features
@@ -264,6 +282,7 @@
 				$('#geometry_color').ColorPickerHide();
 				$('#geometryLabelerHolder').hide(400);
 				selectCtrl.activate();
+				return false;
 			});
 			
 			// Clear Map
@@ -280,6 +299,7 @@
 				$('#geometry_color').ColorPickerHide();
 				$('#geometryLabelerHolder').hide(400);
 				selectCtrl.activate();
+				return false;
 			});
 			
 			// GeoCode
