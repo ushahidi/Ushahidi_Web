@@ -1680,72 +1680,6 @@ ul.pager li a.active {background:#f2f7fa;}
     font-style: italic;
     margin-top:3px;
 }
-/*-gallery-*/
-.gallery {
-    overflow:hidden;
-    width:100%;
-    padding:0 0 10px;
-}
-.gallery .gal-nav {
-    overflow:hidden;
-    width:98%;
-}
-.gallery .gal-nav a.btn-prev {
-    float:left;
-    width:34px;
-    height:31px;
-    margin:7px 0 0;
-    text-indent:-9999px;
-    overflow:hidden;
-    background:url(../images/btn-prev.gif) no-repeat;
-}
-.gallery .gal-nav a.btn-prev:hover {background-position:0 -31px;}
-.gallery .gal-nav a.btn-next {
-    float:right;
-    width:34px;
-    height:31px;
-    margin:7px 0 0;
-    text-indent:-9999px;
-    overflow:hidden;
-    background:url(../images/btn-next.gif) no-repeat;
-}
-.gallery .gal-nav a.btn-next:hover {background-position:0 -31px;}
-.gallery .gal-nav .mask {
-    float:left;
-    width:320px;
-    height:43px;
-    margin:0 0 0 12px;
-    display:inline;
-    overflow:hidden;
-}
-.gallery .gal-nav .mask ul {
-    overflow:hidden;
-    width:9999px;
-    margin:0;
-    padding:0;
-}
-.gallery .gal-nav .mask ul li {
-    float:left;
-    padding:0 10px 0 0;
-    list-style:none;
-    border:none;
-    width:auto;
-}
-.gallery .gal-nav .mask ul li img {
-    display:block;
-    margin:0;
-    border:1px solid #ccc;
-}
-.gallery .big-img {
-    overflow:hidden;
-    width:100%;
-    padding:10px 0 0;
-}
-.gallery .big-img img {
-    display:block;
-    margin:0;
-    border:1px solid #ccc;
-}
 
 .report-description .orig-report {
     overflow:hidden;
@@ -2286,7 +2220,7 @@ ul.filter-list li a { display:block; position:relative; overflow:auto; padding:3
 
 ul.filter-list li a.selected {
     background:#dbdbdb url("../images/icon_sprite-2.png") -22px -103px no-repeat; 
-    z-index:120;; color:#636363;
+    z-index:120; color:#636363;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px; 
@@ -2377,49 +2311,6 @@ a.filter-button:hover { text-decoration:none; background:#707070;  }
 #accordion .ui-accordion-header a.hide { display:none; }
 
 .ui-datepicker { display:none; } /* fixes bug where an empty datepicker div was showing up on the bottom of the reports page */
-    
-    
-/* Rounded Corners */
-.r-3 { -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px; }
-.r-4 { -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; }
-.r-5 { -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px; }
-.r-8 { -webkit-border-radius: 8px; -moz-border-radius: 8px; border-radius: 8px; }
-
-.top-cap { 
-    -webkit-border-bottom-left-radius: 0px; 
-    -webkit-border-bottom-right-radius: 0px;
-    -moz-border-radius-bottomright: 0px;
-    -moz-border-radius-bottomleft: 0px;
-    border-bottom-right-radius: 0px; 
-    border-bottom-left-radius: 0px;
-}
-
-.right-cap { 
-    -webkit-border-top-right-radius: 0px; 
-    -webkit-border-bottom-right-radius: 0px;
-    -moz-border-radius-topright: 0px;
-    -moz-border-radius-bottomright: 0px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0px;
-}
-
-.bottom-cap    {
-    -webkit-border-top-left-radius: 0px;
-    -webkit-border-top-right-radius: 0px;
-    -moz-border-radius-topright: 0px;
-    -moz-border-radius-topleft: 0px;
-    border-top-right-radius: 0px;
-    border-top-left-radius: 0px;
-}
-
-.left-cap {
-    -webkit-border-top-left-radius: 0px;
-    -webkit-border-bottom-left-radius: 0px;
-    -moz-border-radius-topleft: 0px;
-    -moz-border-radius-bottomleft: 0px;
-    border-top-left-radius: 0px;
-    border-bottom-left-radius: 0px;
-}
 
 .badge {
     float:left;
