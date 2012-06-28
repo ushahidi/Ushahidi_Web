@@ -159,8 +159,8 @@ class Requirements {
 	 * A CSS file in the current theme path name "themename/css/$name.css" is
 	 * first searched for, and it that doesn't exist and the module parameter is
 	 * set then a CSS file with that name in the module is used.
-	 *
-	 * NOTE: This API is experimental and may change in the future.
+	 * If neither theme nor module css exists, then a file from media/css will
+	 * be used.
 	 *
 	 * @param string $name The name of the file - e.g. "/css/File.css" would have
 	 *        the name "File".
@@ -170,6 +170,32 @@ class Requirements {
 	 */
 	public static function themedCSS($name, $module = null, $media = null) {
 		return self::backend()->themedCSS($name, $module, $media);
+	}
+	
+	/**
+	 * Registers the given stylesheet in an IE conditional comment
+	 *
+	 * @param string $version The conditional IE version string e.g. "lt IE 7"
+	 * @param string $name The name of the file - e.g. "/css/File.css" would have
+	 *        the name "File".
+	 * @param string $media The CSS media attribute.
+	 */
+	public static function ieCSS($version, $name, $media = null) {
+		return self::backend()->ieCSS($version, $name, $media);
+	}
+	
+	/**
+	 * Registers an IE themeable stylesheet 
+	 *
+	 * @param string $version The conditional IE version string e.g. "lt IE 7"
+	 * @param string $name The name of the file - e.g. "/css/File.css" would have
+	 *        the name "File".
+	 * @param string $module The module to fall back to if the css file does not
+	 *        exist in the current theme.
+	 * @param string $media The CSS media attribute.
+	 */
+	public static function ieThemedCSS($version, $name, $module = null, $media = null) {
+		return self::backend()->ieThemedCSS($version, $name, $module, $media);
 	}
 
 	/**
@@ -986,26 +1012,45 @@ class Requirements_Backend {
 	 * @see Requirements::themedCSS()
 	 */
 	public function themedCSS($name, $module = null, $media = null) {
+		$this->css($this->themedCSSPath($name, $module), $media);
+		return;
+	}
+
+	/**
+	 * @see Requirements::ieCSS()
+	 */
+	public function ieCSS($version, $name, $media = null) {
+		Requirements::customHeadTags("<!--[if $version]>".html::stylesheet(url::file_loc('css').$name,$media,TRUE)."<![endif]-->",'iecss-'.$name);
+		return;
+	}
+
+	/**
+	 * @see Requirements::ieThemedCSS()
+	 */
+	public function ieThemedCSS($version, $name, $module = null, $media = null) {
+		$this->ieCSS($version, $this->themedCSSPath($name, $module), $media, FALSE);
+		return;
+	}
+	
+	private function themedCSSPath($name, $module = null)
+	{
 		// try to include from a loaded theme
 		foreach (Kohana::config("settings.site_styles_loaded") as $theme)
 		{
 			$path  = THEMEPATH . "$theme/css/$name.css";
 			if (file_exists($path)) {
-				$this->css("themes/$theme/css/$name.css", $media);
-				return;
+				return "themes/$theme/css/$name.css";
 			}
 		}
 
 		// Try to include from fall back module
 		if ($module AND file_exists(DOCROOT . "$module/css/$name.css")) {
-			$this->css("$module/css/$name.css", $media);
-			return;
+			return "$module/css/$name.css";
 		}
 		
 		// Try to include from global media
 		if (file_exists(DOCROOT . "media/css/$name.css")) {
-			$this->css("media/css/$name.css", $media);
-			return;
+			return "media/css/$name.css";
 		}
 	}
 	

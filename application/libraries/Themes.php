@@ -83,9 +83,9 @@ class Themes_Core {
 		Requirements::clear();
 		Requirements::themedCSS("jquery-ui-themeroller");
 
-		Requirements::customHeadTags("<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",TRUE)."<![endif]-->",'iehacks');
-		Requirements::customHeadTags("<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",TRUE)."<![endif]-->",'ie7hacks');
-		Requirements::customHeadTags("<!--[if IE 6]>".html::stylesheet($this->css_url."media/css/ie6hacks","",TRUE)."<![endif]-->",'ie6hacks');
+		Requirements::ieThemedCSS("lte IE 7", "iehacks");
+		Requirements::ieThemedCSS("IE 7", "ie7hacks");
+		Requirements::ieThemedCSS("IE 6", "ie6hacks");
 
 		if ($this->map_enabled)
 		{
