@@ -80,7 +80,8 @@ class Themes_Core {
 	 */
 	private function _header_css()
 	{
-		Requirements::css("media/css/jquery-ui-themeroller");
+		Requirements::clear();
+		Requirements::themedCSS("jquery-ui-themeroller");
 
 		Requirements::customHeadTags("<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",TRUE)."<![endif]-->",'iehacks');
 		Requirements::customHeadTags("<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",TRUE)."<![endif]-->",'ie7hacks');
@@ -88,7 +89,7 @@ class Themes_Core {
 
 		if ($this->map_enabled)
 		{
-			Requirements::css("media/css/openlayers");
+			Requirements::themedCSS("openlayers");
 		}
 
 		if ($this->treeview_enabled)

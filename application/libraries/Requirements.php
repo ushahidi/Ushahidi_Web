@@ -986,16 +986,26 @@ class Requirements_Backend {
 	 * @see Requirements::themedCSS()
 	 */
 	public function themedCSS($name, $module = null, $media = null) {
-		$theme = Kohana::config("settings.site_style");
-		$path  = THEMEPATH . Kohana::config("settings.site_style") . "/css/$name.css";
-
-		if (file_exists($path)) {
-			$this->css($path, $media);
-			return;
+		// try to include from a loaded theme
+		foreach (Kohana::config("settings.site_styles_loaded") as $theme)
+		{
+			$path  = THEMEPATH . "$theme/css/$name.css";
+			if (file_exists($path)) {
+				$this->css("themes/$theme/css/$name.css", $media);
+				return;
+			}
 		}
 
-		if ($module) {
+		// Try to include from fall back module
+		if ($module AND file_exists(DOCROOT . "$module/css/$name.css")) {
 			$this->css("$module/css/$name.css", $media);
+			return;
+		}
+		
+		// Try to include from global media
+		if (file_exists(DOCROOT . "media/css/$name.css")) {
+			$this->css("media/css/$name.css", $media);
+			return;
 		}
 	}
 	

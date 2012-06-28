@@ -47,6 +47,8 @@ class register_themes {
 		// Save theme CSS and JS for inclusion later
 		Kohana::config_set('settings.site_style_js', $this->theme_js);
 		Kohana::config_set('settings.site_style_css', $this->theme_css);
+		// Save loaded themes for use by Requirements library
+		Kohana::config_set('settings.site_styles_loaded', $this->loaded_themes);
 	}
 	
 	/**
