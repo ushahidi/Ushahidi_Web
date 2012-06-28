@@ -207,8 +207,6 @@ class Themes_Core {
 		$inline_js = <<< INLINEJS
 <script type="text/javascript">
 //<![CDATA[
-\$(function() { $(document).pngFix(); });
-
 {$insert_js}
 //]]>
 </script>

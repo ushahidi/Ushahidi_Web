@@ -45,6 +45,7 @@
 	echo html::script(url::file_loc('js').'media/js/selectToUISlider.jQuery', TRUE);
 	echo html::script(url::file_loc('js').'media/js/jquery.hovertip-1.0', TRUE);
 	echo html::script(url::file_loc('js').'media/js/jquery.base64', TRUE);
+	echo html::script(url::file_loc('js')."media/js/jquery.pngFix.pack", TRUE);
 	?>
 
 	<?php if ($datepicker_enabled): ?>
