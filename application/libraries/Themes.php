@@ -89,8 +89,8 @@ class Themes_Core {
 		Requirements::customHeadTags(Kohana::config("globalcode.head"),'globalcode-head');
 		
 		Requirements::js("media/js/jquery");
-		//Requirements::js("media/js/jquery.ui.min");
-		Requirements::js(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js");
+		Requirements::js("media/js/jquery.ui.min");
+		//Requirements::js(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js");
 		Requirements::js("media/js/jquery.pngFix.pack");
 		Requirements::js("media/js/jquery.timeago");
 		
