@@ -35,7 +35,7 @@ class Users_Controller extends Admin_Controller {
 	public function index()
 	{
 		$this->template->content = new View('admin/users/main');
-		$this->template->js = new View('admin/users/users_js');
+		$this->themes->js = new View('admin/users/users_js');
 
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
@@ -337,7 +337,7 @@ class Users_Controller extends Admin_Controller {
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
-		$this->template->js = new View('admin/users/roles_js');
+		$this->themes->js = new View('admin/users/roles_js');
 	}
 
 	/**

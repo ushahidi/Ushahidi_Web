@@ -197,7 +197,7 @@ class Scheduler_Controller extends Admin_Controller
 		$this->template->content->errors = $errors;
 
         // Javascript Header
-		$this->template->js = new View('admin/manage/scheduler/scheduler_js');
+		$this->themes->js = new View('admin/manage/scheduler/scheduler_js');
 	}
 
 

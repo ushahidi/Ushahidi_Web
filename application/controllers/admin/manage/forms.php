@@ -173,8 +173,8 @@ class Forms_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 
         // Javascript Header
-        $this->template->js = new View('admin/manage/forms/forms_js');
-		$this->template->js->form_id = $form_id;
+        $this->themes->js = new View('admin/manage/forms/forms_js');
+		$this->themes->js->form_id = $form_id;
 		$this->template->form_error = $form_error;
 	}
 

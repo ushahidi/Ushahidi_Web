@@ -118,24 +118,24 @@ class Admin_Controller extends Template_Controller {
 		// Retrieve Default Settings
 		$this->template->site_name = Kohana::config('settings.site_name');
 		$this->template->mapstraction = Kohana::config('settings.mapstraction');
-		$this->template->api_url = Kohana::config('settings.api_url');
+		$this->themes->api_url = Kohana::config('settings.api_url');
 
 		// Javascript Header
-		$this->template->map_enabled = FALSE;
-		$this->template->datepicker_enabled = FALSE;
-		$this->template->flot_enabled = FALSE;
-		$this->template->treeview_enabled = FALSE;
-		$this->template->protochart_enabled = FALSE;
-		$this->template->colorpicker_enabled = FALSE;
-		$this->template->editor_enabled = FALSE;
-		$this->template->tablerowsort_enabled = FALSE;
-		$this->template->json2_enabled = FALSE;
-		$this->template->js = '';
+		$this->themes->map_enabled = FALSE;
+		$this->themes->datepicker_enabled = FALSE;
+		$this->themes->flot_enabled = FALSE;
+		$this->themes->treeview_enabled = FALSE;
+		$this->themes->protochart_enabled = FALSE;
+		$this->themes->colorpicker_enabled = FALSE;
+		$this->themes->editor_enabled = FALSE;
+		$this->themes->tablerowsort_enabled = FALSE;
+		$this->themes->json2_enabled = FALSE;
+		$this->themes->js = '';
 		$this->template->form_error = FALSE;
 
 		// Initialize some variables for raphael impact charts
-		$this->template->raphael_enabled = FALSE;
-		$this->template->impact_json = '';
+		$this->themes->raphael_enabled = FALSE;
+		$this->themes->impact_json = '';
 
 		// Generate main tab navigation list.
 		$this->template->main_tabs = admin::main_tabs();
@@ -158,6 +158,8 @@ class Admin_Controller extends Template_Controller {
 
 		// Language switcher
 		$this->template->languages = $this->themes->languages();
+		
+		Event::add('ushahidi_filter.view_pre_render-admin_layout', array($this, '_trigger_requirements'));
 	}
 
 	public function index()
@@ -219,6 +221,16 @@ class Admin_Controller extends Template_Controller {
 		}
 
 		return TRUE;
+	}
+	
+	/**
+	 * Trigger themes->admin_requirements() at the last minute
+	 * 
+	 * This is in case features are enabled/disabled
+	 */
+	public function _trigger_requirements()
+	{
+		$this->themes->admin_requirements();
 	}
 
 

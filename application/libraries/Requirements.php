@@ -103,7 +103,7 @@ class Requirements {
 	 * See {@link Requirements_Backend::javascript()} for more info
 	 * 
 	 */
-	static function js($file) {		
+	static function js($file) {
 		self::backend()->js($file);
 	}
 	
@@ -511,9 +511,20 @@ class Requirements_Backend {
 	/**
 	 * Register the given javascript file as required.
 	 * Filenames should be relative to the base, eg, 'framework/javascript/loader.js'
+	 * @param $file String|Array Filenames should be relative to the base, eg, 'framework/javascript/tree/tree.js'
 	 */
 	
 	public function js($file) {
+		// If array, loop over array and add individual js files
+		if (is_array($file))
+		{
+			foreach($file as $name)
+			{
+				$this->js($name);
+			}
+			return;
+		}
+		
 		$this->js[$file] = true;
 	}
 	
@@ -565,11 +576,21 @@ class Requirements_Backend {
 	/**
 	 * Register the given stylesheet file as required.
 	 * 
-	 * @param $file String Filenames should be relative to the base, eg, 'framework/javascript/tree/tree.css'
+	 * @param $file String|Array Filenames should be relative to the base, eg, 'framework/javascript/tree/tree.css'
 	 * @param $media String Comma-separated list of media-types (e.g. "screen,projector") 
 	 * @see http://www.w3.org/TR/REC-CSS2/media.html
 	 */
 	function css($file, $media = null) {
+		// If array, loop over array and add individual js files
+		if (is_array($file))
+		{
+			foreach($file as $name)
+			{
+				$this->css($name);
+			}
+			return;
+		}
+		
 		$this->css[$file] = array(
 			"media" => $media
 		);

@@ -351,13 +351,13 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->parents_array = $parents_array;
 
 		// Javascript Header
-		$this->template->colorpicker_enabled = TRUE;
-		$this->template->tablerowsort_enabled = TRUE;
-		$this->template->js = new View('admin/manage/categories/categories_js');
+		$this->themes->colorpicker_enabled = TRUE;
+		$this->themes->tablerowsort_enabled = TRUE;
+		$this->themes->js = new View('admin/manage/categories/categories_js');
 		$this->template->form_error = $form_error;
 
 		$this->template->content->locale_array = $locales;
-		$this->template->js->locale_array = $locales;
+		$this->themes->js->locale_array = $locales;
 	}
 	
 	/**
@@ -530,8 +530,8 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->errors = $errors;
 
 		// Javascript Header
-		$this->template->editor_enabled = TRUE;
-		$this->template->js = new View('admin/manage/pages/pages_js');
+		$this->themes->editor_enabled = TRUE;
+		$this->themes->js = new View('admin/manage/pages/pages_js');
 	}
 
 
@@ -634,8 +634,8 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->errors = $errors;
 
 		// Javascript Header
-		$this->template->colorpicker_enabled = TRUE;
-		$this->template->js = new View('admin/manage/feeds/feeds_js');
+		$this->themes->colorpicker_enabled = TRUE;
+		$this->themes->js = new View('admin/manage/feeds/feeds_js');
 	}
 
 	/**
@@ -702,7 +702,7 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->total_items = $pagination->total_items;
 
 		// Javascript Header
-		$this->template->js = new View('admin/manage/feeds/items_js');
+		$this->themes->js = new View('admin/manage/feeds/items_js');
 	}
 
 	/**
@@ -913,8 +913,8 @@ class Manage_Controller extends Admin_Controller
 		$this->template->content->layers = $layers;
 
 		// Javascript Header
-		$this->template->colorpicker_enabled = TRUE;
-		$this->template->js = new View('admin/manage/layers/layers_js');
+		$this->themes->colorpicker_enabled = TRUE;
+		$this->themes->js = new View('admin/manage/layers/layers_js');
 	}
 
 	/**

@@ -53,7 +53,7 @@ foreach (map::base() as $layer)
 {
 	if (empty($layer->api_url)) continue;
 	// Add to array, use url as key to avoid dupes
-	$api_url_all[$layer->api_url] = '<script type="text/javascript" src="'.$layer->api_url.'"></script>';
+	$api_url_all[$layer->api_url] = $layer->api_url;
 }
 Kohana::config_set('settings.api_url_all', $api_url_all);
 

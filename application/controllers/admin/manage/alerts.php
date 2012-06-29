@@ -161,6 +161,6 @@ class Alerts_Controller extends Admin_Controller {
 		$this->template->content->keyword = $keyword;
 
 		// Javascript Header
-		$this->template->js = new View('admin/manage/alerts/alerts_js');
+		$this->themes->js = new View('admin/manage/alerts/alerts_js');
 	}
 }

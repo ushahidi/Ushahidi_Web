@@ -245,7 +245,7 @@ class Messages_Controller extends Admin_Controller {
 		$this->template->content->level = $level;
 
 		// Javascript Header
-		$this->template->js = new View('admin/messages/messages_js');
+		$this->themes->js = new View('admin/messages/messages_js');
 	}
 
 	/**

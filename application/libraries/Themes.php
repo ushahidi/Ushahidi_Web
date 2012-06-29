@@ -24,8 +24,15 @@ class Themes_Core {
 	public $validator_enabled = false;
 	public $photoslider_enabled = false;
 	public $colorpicker_enabled = false;
+	public $datepicker_enabled = false;
 	public $editor_enabled = false;
-	public $site_style = false;
+	public $flot_enabled = false;
+	public $protochart_enabled = false;
+	public $raphael_enabled = false;
+	public $tablerowsort_enabled = false;
+	public $json2_enabled = false;
+	
+	// Custom JS to be added
 	public $js = null;
 
 	public $css_url = null;
@@ -206,6 +213,184 @@ class Themes_Core {
 		{
 			Requirements::customHeadTags("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".url::site('feed')."\" title=\"RSS2\" />",'rss-feed');
 		}
+	}
+
+	public function admin_requirements()
+	{
+		Requirements::clear();
+		Requirements::set_write_js_to_body(FALSE);
+		Requirements::css('media/css/admin/all');
+		Requirements::css('media/css/jquery-ui-themeroller');
+		Requirements::ieCSS("lt IE 7", 'media/css/admin/ie6');
+
+		// Load OpenLayers
+		if ($this->map_enabled)
+		{
+			Requirements::js('media/js/OpenLayers');
+			Requirements::js('media/js/ushahidi');
+			Requirements::js($this->api_url);
+			Requirements::customJS("OpenLayers.ImgPath = '".url::file_loc('img').'media/img/openlayers/'."';",'openlayers-imgpath');
+			Requirements::css('media/css/openlayers');
+		}
+
+		// Load jQuery
+		Requirements::js('media/js/jquery');
+		Requirements::js('media/js/jquery.form');
+		Requirements::js('media/js/jquery.validate.min');
+		Requirements::js('media/js/jquery.ui.min');
+		Requirements::js('media/js/selectToUISlider.jQuery');
+		Requirements::js('media/js/jquery.hovertip-1.0');
+		Requirements::js('media/js/jquery.base64');
+		Requirements::js("media/js/jquery.pngFix.pack");
+		
+		Requirements::js('media/js/admin');
+	
+		if ($this->datepicker_enabled) {
+			Requirements::customJS("
+				Date.dayNames = [
+				    '". Kohana::lang('datetime.sunday.full') ."',
+				    '". Kohana::lang('datetime.monday.full') ."',
+				    '". Kohana::lang('datetime.tuesday.full') ."',
+				    '". Kohana::lang('datetime.wednesday.full') ."',
+				    '". Kohana::lang('datetime.thursday.full') ."',
+				    '". Kohana::lang('datetime.friday.full') ."',
+				    '". Kohana::lang('datetime.saturday.full') ."'
+				];
+				Date.abbrDayNames = [
+				    '". Kohana::lang('datetime.sunday.abbv') ."',
+				    '". Kohana::lang('datetime.monday.abbv') ."',
+				    '". Kohana::lang('datetime.tuesday.abbv') ."',
+				    '". Kohana::lang('datetime.wednesday.abbv') ."',
+				    '". Kohana::lang('datetime.thursday.abbv') ."',
+				    '". Kohana::lang('datetime.friday.abbv') ."',
+				    '". Kohana::lang('datetime.saturday.abbv') ."'
+				];
+				Date.monthNames = [
+				    '". Kohana::lang('datetime.january.full') ."',
+				    '". Kohana::lang('datetime.february.full') ."',
+				    '". Kohana::lang('datetime.march.full') ."',
+				    '". Kohana::lang('datetime.april.full') ."',
+				    '". Kohana::lang('datetime.may.full') ."',
+				    '". Kohana::lang('datetime.june.full') ."',
+				    '". Kohana::lang('datetime.july.full') ."',
+				    '". Kohana::lang('datetime.august.full') ."',
+				    '". Kohana::lang('datetime.september.full') ."',
+				    '". Kohana::lang('datetime.october.full') ."',
+				    '". Kohana::lang('datetime.november.full') ."',
+				    '". Kohana::lang('datetime.december.full') ."'
+				];
+				Date.abbrMonthNames = [
+				    '". Kohana::lang('datetime.january.abbv') ."',
+				    '". Kohana::lang('datetime.february.abbv') ."',
+				    '". Kohana::lang('datetime.march.abbv') ."',
+				    '". Kohana::lang('datetime.april.abbv') ."',
+				    '". Kohana::lang('datetime.may.abbv') ."',
+				    '". Kohana::lang('datetime.june.abbv') ."',
+				    '". Kohana::lang('datetime.july.abbv') ."',
+				    '". Kohana::lang('datetime.august.abbv') ."',
+				    '". Kohana::lang('datetime.september.abbv') ."',
+				    '". Kohana::lang('datetime.october.abbv') ."',
+				    '". Kohana::lang('datetime.november.abbv') ."',
+				    '". Kohana::lang('datetime.december.abbv') ."'
+				];
+				Date.firstDayOfWeek = 1;
+				Date.format = 'mm/dd/yyyy';
+			",'locale-dates');
+	
+			Requirements::js('media/js/jquery.datePicker');
+			Requirements::customHeadTags(
+				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/jquery.bgiframe.min', TRUE).'<![endif]-->','jquery.bgiframe.min');
+		}
+	
+		Requirements::css('media/css/jquery.hovertip-1.0', '');
+	
+		Requirements::customJS(
+			"$(function() {
+					if($('.tooltip[title]') != null)
+					$('.tooltip[title]').hovertip();
+				});",
+			'tooltip-js'
+		);
+	
+		// Load Flot
+		if ($this->flot_enabled)
+		{
+			Requirements::js('media/js/jquery.flot');
+			Requirements::js('media/js/excanvas.min');
+			Requirements::js('media/js/timeline.js');
+		}
+	
+		// Load TreeView
+		if ($this->treeview_enabled)
+		{
+			Requirements::js('media/js/jquery.treeview');
+			Requirements::css('media/css/jquery.treeview');
+		}
+	
+		// Load ProtoChart
+		if ($this->protochart_enabled)
+		{
+			Requirements::customJS("jQuery.noConflict()", 'jquery-noconflict');
+			Requirements::js('media/js/protochart/prototype');
+			Requirements::customHeadTags(
+				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/protochart/excanvas-compressed', TRUE).'<![endif]-->');
+			Requirements::js('media/js/protochart/ProtoChart');
+		}
+	
+		// Load Raphael
+		if ($this->raphael_enabled)
+		{
+			// The only reason we include prototype is to keep the div element naming convention consistent
+			//Requirements::js('media/js/protochart/prototype');
+			Requirements::js('media/js/raphael');
+			Requirements::customJS('var impact_json = '.$this->impact_json .';','impact_json');
+			Requirements::js('media/js/raphael-ushahidi-impact');
+		}
+	
+		// Load ColorPicker
+		if ($this->colorpicker_enabled)
+		{
+			Requirements::css('media/css/colorpicker');
+			Requirements::js('media/js/colorpicker');
+		}
+	
+		// Load jwysiwyg
+		if ($this->editor_enabled)
+		{
+			if (Kohana::config("cdn.cdn_ignore_jwysiwyg") == TRUE) {
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js'); // not sure what the hell to do about this
+			} else {
+				Requirements::js('media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js');
+			}
+		}
+	
+		// Table Row Sort
+		if ($this->tablerowsort_enabled)
+		{
+			Requirements::js('media/js/jquery.tablednd_0_5');
+		}
+	
+		// JSON2 for IE+
+		if ($this->json2_enabled)
+		{
+			Requirements::js('media/js/json2');
+		}
+	
+		// Turn on picbox
+		Requirements::js('media/js/picbox');
+		Requirements::css('media/css/picbox/picbox');
+	
+		//Turn on jwysiwyg
+		Requirements::css('media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.css');
+	
+		// Header Nav
+		Requirements::js('media/js/global');
+		Requirements::css('media/css/global');
+		
+		
+		// Inline Javascript
+		Requirements::customJS($this->js,'pagejs');
+		
 	}
 
 	/**
