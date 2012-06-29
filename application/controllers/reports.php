@@ -144,9 +144,6 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->report_stats->avg_reports_per_day = $avg_reports_per_day;
 		$this->template->content->report_stats->percent_verified = $percent_verified;
 		$this->template->content->services = Service_Model::get_array();
-
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 	/**
@@ -412,10 +409,6 @@ class Reports_Controller extends Main_Controller {
 		}
 		$this->themes->js->geometries = $form['geometry'];
 
-
-		// Rebuild Header Block
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 	 /**
@@ -727,10 +720,6 @@ class Reports_Controller extends Main_Controller {
 
 		// If the Admin is Logged in - Allow for an edit link
 		$this->template->content->logged_in = $this->logged_in;
-
-		// Rebuild Header Block
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 	/**
@@ -740,10 +729,6 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports/submit_thanks');
-
-		// Rebuild Header Block
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 	/**

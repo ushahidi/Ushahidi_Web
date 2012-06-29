@@ -290,8 +290,8 @@ class Settings_Controller extends Admin_Controller {
 			$this->template->content->banner_t = NULL;
 		}
 
-
 		$this->themes->colorpicker_enabled = TRUE;
+		$this->themes->slider_enabled = TRUE;
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;

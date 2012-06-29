@@ -216,9 +216,5 @@ class Search_Controller extends Main_Controller {
 
 		$this->template->content->search_info = $search_info;
 		$this->template->content->search_results = $html;
-
-		// Rebuild Header Block
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
     }
 }

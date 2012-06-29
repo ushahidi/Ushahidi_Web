@@ -51,9 +51,6 @@ class Page_Controller extends Main_Controller {
 		}
 
 		$this->template->header->page_title .= $page_title.Kohana::config('settings.title_delimiter');
-
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 }

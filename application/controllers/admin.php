@@ -90,6 +90,7 @@ class Admin_Controller extends Template_Controller {
 
 		// Themes Helper
 		$this->themes = new Themes();
+		$this->themes->admin = TRUE;
 
 		// Admin is not logged in, or this is a member (not admin)
 		if ( ! $this->auth->logged_in('login'))
@@ -130,6 +131,8 @@ class Admin_Controller extends Template_Controller {
 		$this->themes->editor_enabled = FALSE;
 		$this->themes->tablerowsort_enabled = FALSE;
 		$this->themes->json2_enabled = FALSE;
+		$this->themes->hovertip_enabled = TRUE;
+		$this->themes->slider_enabled = TRUE;
 		$this->themes->js = '';
 		$this->template->form_error = FALSE;
 
@@ -152,14 +155,10 @@ class Admin_Controller extends Template_Controller {
 		$this->template->header_nav->loggedin_role = $this->user->dashboard();
 		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
 
-		// Header and Footer Blocks
-		$this->template->header_block = $this->themes->admin_header_block();
-		$this->template->footer_block = $this->themes->footer_block();
-
 		// Language switcher
 		$this->template->languages = $this->themes->languages();
 		
-		Event::add('ushahidi_filter.view_pre_render-admin_layout', array($this, '_trigger_requirements'));
+		Event::add('ushahidi_filter.view_pre_render-admin_layout', array($this, '_pre_render'));
 	}
 
 	public function index()
@@ -228,9 +227,11 @@ class Admin_Controller extends Template_Controller {
 	 * 
 	 * This is in case features are enabled/disabled
 	 */
-	public function _trigger_requirements()
+	public function _pre_render()
 	{
-		$this->themes->admin_requirements();
+		$this->themes->requirements();
+		$this->template->header_block = $this->themes->admin_header_block();
+		$this->template->footer_block = $this->themes->footer_block();
 	}
 
 
