@@ -297,10 +297,9 @@ class Private_Controller extends Members_Controller {
 			->where("name", $name)
 			->where("id !=".$this->user->id)
 			->find();
-			
+
 		if ( ! $account->loaded)
 		{
-			echo "{{{$name}}}";
 			$post->add_error('private_to','exists');
 		}
 	}
