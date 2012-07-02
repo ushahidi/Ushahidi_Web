@@ -33,59 +33,6 @@ class Location_Model extends ORM
 	 * @var string
 	 */
 	protected $table_name = 'location';
-		
-	/**
-	 * Gets the list of all locations
-	 *
-	 * @param array $where Key value array with extra predicates for the query
-	 * @param int $limit Number of records to fetch
-	 * @return Result
-	 */
-	public static function get_locations($where = array(), $limit = 0)
-	{
-		// Database table prefix
-		$table_prefix = Kohana::config('database.default.table_prefix');
-		
-		// SQL query
-		$sql = 'SELECT id, location_name AS name, country_id, latitude, longitude '
-			. 'FROM '.$table_prefix.'location '
-			. 'WHERE location_visible = 1 ';
-		
-		// Check for parameters
-		if ( ! empty($where) AND count($where) > 0)
-		{
-			foreach ($where as $column => $value)
-			{
-				if ($predicate_items = explode("=", $value))
-				{
-					if (count($predicate_items) == 2)
-					{
-						$column = $predicate_items[0];
-						$value = $predicate_items[1];
-					}
-					else
-					{
-						// Exception handling
-						throw new Kohana_Exception('Invalid value in "where" parameter');
-					}
-				}
-				
-				$sql .= 'AND '.$column.' = '.$value.' ';	
-			}
-		}
-		
-		// Order the records by database ID
-		$sql .= 'ORDER BY id DESC ';
-		
-		// Check if the record limit has been specified
-		if ((int)$limit > 0)
-		{
-			$sql .= 'LIMIT 0, '.$limit;
-		}
-		
-		$db = new Database();
-		return $db->query($sql);
-	}
 	
 	/**
 	 * Checks if a location id exists in the database
