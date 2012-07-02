@@ -247,16 +247,17 @@
 			 * the selectCtrl. Previously selectCtrl was not being re-activated
 			 * after new features were added.
 			 */
-			panel.controls[0].navActivate = panel.controls[0].activate;
-			panel.controls[0].navDeactivate = panel.controls[0].deactivate;
-			panel.controls[0].activate = function () {
+			navigationCtrl = panel.controls[0];
+			navigationCtrl.navActivate = panel.controls[0].activate;
+			navigationCtrl.navDeactivate = panel.controls[0].deactivate;
+			navigationCtrl.activate = function () {
 				this.navActivate();
 				selectCtrl.activate();
-			}
-			panel.controls[0].deactivate = function () {
+			};
+			navigationCtrl.deactivate = function () {
 				this.navDeactivate();
 				selectCtrl.deactivate();
-			}
+			};
 			map.events.register("click", map, function(e){
 				selectCtrl.deactivate();
 				selectCtrl.activate();
