@@ -17,7 +17,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=7" />
-	<title><?php echo $site_name ?></title>
+	<title><?php echo html::specialchars($site_name) ?></title>
 	<?php
 	echo html::stylesheet(url::file_loc('css').'media/css/admin/all', '', TRUE);
 	echo html::stylesheet(url::file_loc('css').'media/css/jquery-ui-themeroller', '', TRUE);

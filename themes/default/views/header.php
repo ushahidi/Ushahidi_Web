@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-	<title><?php echo $page_title.$site_name; ?></title>
+	<title><?php echo html::specialchars($page_title.$site_name); ?></title>
 	<?php if (!Kohana::config('settings.enable_timeline')) { ?>
 		<style>
 			#graph{display:none;}
