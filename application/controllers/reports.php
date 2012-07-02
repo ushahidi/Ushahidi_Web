@@ -373,9 +373,9 @@ class Reports_Controller extends Main_Controller {
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
-
-		$categories = $this->get_categories($form['incident_category']);
-		$this->template->content->categories = $categories;
+		
+		 // Populate this for backwards compat
+		$this->template->content->categories = array();
 
 		// Pass timezone
 		$this->template->content->site_timezone = Kohana::config('settings.site_timezone');
