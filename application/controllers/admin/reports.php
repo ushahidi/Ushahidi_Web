@@ -707,8 +707,8 @@ class Reports_Controller extends Admin_Controller {
 					$sql = "SELECT AsText(geometry) as geometry, geometry_label,
 						geometry_comment, geometry_color, geometry_strokewidth
 						FROM ".Kohana::config('database.default.table_prefix')."geometry
-						WHERE incident_id=".$id;
-					$query = $db->query($sql);
+						WHERE incident_id = ?";
+					$query = $db->query($sql, $id);
 					foreach ( $query as $item )
 					{
 						$geometry = array(
