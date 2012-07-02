@@ -157,6 +157,20 @@ class category_Core {
 	 */
 	public static function get_category_tree_view()
 	{
+		$category_data = self::get_category_tree_data(TRUE);
+		
+		// Generate and return the HTML
+		return self::_generate_treeview_html($category_data);
+	}
+	
+	/**
+	 * Get categories as an tree array
+	 * @param bool Get category count?
+	 * @return array
+	 **/
+	public static function get_category_tree_data($count = FALSE)
+	{
+		
 		// To hold the category data
 		$category_data = array();
 		
@@ -167,20 +181,39 @@ class category_Core {
 		$db = new Database();
 		
 		// Fetch the other categories
-		$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, c.category_image, c.category_image_thumb, COUNT(i.id) report_count "
-			. "FROM ".$table_prefix."category c "
-			. "LEFT JOIN ".$table_prefix."category c_parent ON (c.parent_id = c_parent.id) "
-			. "LEFT JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
-			. "LEFT JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id AND i.incident_active = 1 ) "
-			. "WHERE c.category_visible = 1 "
-			. "AND (c_parent.category_visible = 1 OR c.parent_id = 0)" // Parent must be visible, or must be top level
-			. "AND c.category_title != \"NONE\" "
-			. "GROUP BY c.id "
-			. "ORDER BY c.category_title ASC";
+		if ($count)
+		{
+			$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, c.category_image, c.category_image_thumb, COUNT(i.id) report_count "
+				. "FROM ".$table_prefix."category c "
+				. "LEFT JOIN ".$table_prefix."category c_parent ON (c.parent_id = c_parent.id) "
+				. "LEFT JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
+				. "LEFT JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id AND i.incident_active = 1 ) "
+				. "WHERE c.category_visible = 1 "
+				. "AND (c_parent.category_visible = 1 OR c.parent_id = 0)" // Parent must be visible, or must be top level
+				. "AND c.category_title != \"NONE\" "
+				. "GROUP BY c.id "
+				. "ORDER BY c.category_title ASC";
+		}
+		else
+		{
+			$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, c.category_image, c.category_image_thumb "
+				. "FROM ".$table_prefix."category c "
+				. "LEFT JOIN ".$table_prefix."category c_parent ON (c.parent_id = c_parent.id) "
+				. "WHERE c.category_visible = 1 "
+				. "AND (c_parent.category_visible = 1 OR c.parent_id = 0)" // Parent must be visible, or must be top level
+				. "AND c.category_title != \"NONE\" "
+				. "ORDER BY c.category_title ASC";
+		}
 		
 		// Create nested array - all in one pass
 		foreach ($db->query($sql) as $category)
 		{
+			// If we didn't fetch report_count set fake value
+			if (!$count)
+			{
+			$category->report_count = 0;
+			}
+			
 			// If this is a parent category, just add it to the array
 			if ($category->parent_id == 0)
 			{
@@ -189,13 +222,13 @@ class category_Core {
 				$report_count = isset($category_data[$category->id]['report_count']) ? $category_data[$category->id]['report_count'] : 0;
 				
 				$category_data[$category->id] = array(
-					'category_title' => Category_Lang_Model::category_title($category->id, Kohana::config('locale.language.0')),
-					'parent_id' => $category->parent_id,
+					'category_title' => Category_Lang_Model::category_title($category->id),
 					'category_color' => $category->category_color,
 					'category_image' => $category->category_image,
+					'children' => $children,
 					'category_image_thumb' => $category->category_image_thumb,
-					'report_count' => $category->report_count + $report_count,
-					'children' => $children
+					'parent_id' => $category->parent_id,
+					'report_count' => $category->report_count + $report_count
 				);
 			}
 			// If this is a child, add it underneath its parent category
@@ -221,9 +254,8 @@ class category_Core {
 				$category_data[$category->parent_id]['report_count'] += $category->report_count;
 			}
 		}
-		
-		// Generate and return the HTML
-		return self::_generate_treeview_html($category_data);
+
+		return $category_data;
 	}
 	
 	/**
