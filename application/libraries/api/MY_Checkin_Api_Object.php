@@ -377,8 +377,8 @@ class Checkin_Api_Object extends Api_Object_Core {
 			
 			// Check if email exists
 			
-			$query = 'SELECT id FROM '.$this->table_prefix.'users WHERE `email` = \''.$user_email.'\' LIMIT 1;';
-			$usercheck = $this->db->query($query);
+			$query = 'SELECT id FROM `'.$this->table_prefix.'users` WHERE `email` = ? LIMIT 1;';
+			$usercheck = $this->db->query($query, $user_email);
 			
 			if ( isset($usercheck[0]->id) )
 			{
