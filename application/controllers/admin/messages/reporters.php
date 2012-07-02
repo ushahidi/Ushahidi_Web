@@ -33,27 +33,6 @@ class Reporters_Controller extends Admin_Controller
 		$this->template->content = new View('admin/reporters/main');
 		$this->template->content->title = Kohana::lang('ui_admin.reporters');
 		
-		$filter = "1=1";
-		$search_type = "";
-		$keyword = "";
-		// Get Search Type (If Any)
-		if ($service_id)
-		{
-			$search_type = $service_id;
-			$filter .= " AND (service_id='".$service_id."')";
-		}
-		else
-		{
-			$search_type = "0";
-		}
-		
-		// Get Search Keywords (If Any)
-		if (isset($_GET['k']) AND !empty($_GET['k']))
-		{
-			$keyword = $_GET['k'];
-			$filter .= " AND (service_account LIKE'%".$_GET['k']."%')";
-		}
-		
 		// setup and initialize form field names
 		$form = array
 		(
@@ -179,6 +158,24 @@ class Reporters_Controller extends Admin_Controller
 				$errors = arr::overwrite($errors, $post->errors('reporters'));
 				$form_error = TRUE;
 			}
+		}
+
+		// Start building query
+		$filter = '1=1 ';
+		
+		// Default search type to service id
+		$search_type = ( isset($_GET['s']) ) ? intval($_GET['s']) : intval($service_id);
+		if ($search_type > 0)
+		{
+			$filter .= 'AND service_id = '.intval($search_type).' ';
+		}
+		
+		// Get Search Keywords (If Any)
+		$keyword = '';
+		if (isset($_GET['k']) AND !empty($_GET['k']))
+		{
+			$keyword = $_GET['k'];
+			$filter .= 'AND service_account LIKE \'%'.Database::instance()->escape_str($_GET['k']).'%\' ';
 		}
 
 		// Pagination
