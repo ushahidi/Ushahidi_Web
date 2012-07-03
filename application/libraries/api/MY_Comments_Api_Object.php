@@ -38,10 +38,24 @@ class Comments_Api_Object extends Api_Object_Core {
                 break;
             
                 case "spam":
+									// Check for admin access on all comments
+									if ( ! $this->api_service->_login(TRUE) )
+									{
+										$this->set_error_message($this->response(2));
+										return;
+									}
+									
                     $this->response_data = $this->_get_spam_comments();
                 break;
             
                 case "pending":
+									// Check for admin access on all comments
+						  		if ( ! $this->api_service->_login(TRUE) )
+									{
+										$this->set_error_message($this->response(2));
+										return;
+									}
+									
                     $this->response_data = $this->_get_pending_comments();
                 break;
             
@@ -89,6 +103,13 @@ class Comments_Api_Object extends Api_Object_Core {
         else if($this->api_service->verify_array_index(
             $this->request, 'action'))
         {
+				  		// Check for admin access on all comments
+				  		if ( ! $this->api_service->_login(TRUE) )
+							{
+								$this->set_error_message($this->response(2));
+								return;
+							}
+					
             $this->comment_action();
             return;
         }
