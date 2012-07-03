@@ -202,11 +202,11 @@ final class Api_Service {
 	 * Log user in.
 	 * This method is mainly used for admin tasks performed via the API
 	 *
-	 * @param string $username User's username.
-	 * @param string $password User's password.
+	 * @param bool $admin require admin access?
+	 * @param bool $member require member access?
 	 * @return mixed user_id, FALSE if authentication fails
 	 */
-	public function _login($admin = FALSE)
+	public function _login($admin = FALSE, $member = FALSE)
     {
 		$auth = Auth::instance();
 
@@ -215,6 +215,11 @@ final class Api_Service {
 		{
 			// Check if admin privileges are required
 			if ($admin == FALSE OR $auth->has_permission('admin_ui'))
+			{
+				return $auth->get_user()->id;
+			}
+			// Check if member perms required, assume admins also have member perms
+			else if ($member == FALSE OR $auth->has_permission('member_ui') OR $auth->has_permission('admin_ui'))
 			{
 				return $auth->get_user()->id;
 			}

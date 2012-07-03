@@ -49,9 +49,10 @@ class reports_Core {
 				->add_rules('incident_description','required')
 				->add_rules('incident_date','required','date_mmddyyyy')
 				->add_rules('incident_hour','required','between[1,12]')
-				->add_rules('incident_minute','required','between[0,59]');
+				->add_rules('incident_minute','required','between[0,59]')
+				->add_rules('incident_ampm','required');
 			
-		if ($post->incident_ampm != "am" AND $post->incident_ampm != "pm")
+		if (isset($post->incident_ampm) AND $post->incident_ampm != "am" AND $post->incident_ampm != "pm")
 		{
 			$post->add_error('incident_ampm','values');
 		}
@@ -117,15 +118,27 @@ class reports_Core {
 		{
 			$post->add_rules('person_first', 'length[2,100]');
 		}
+		else
+		{
+			$post->person_first = '';
+		}
 
 		if ( ! empty($post->person_last))
 		{
 			$post->add_rules('person_last', 'length[2,100]');
 		}
+		else
+		{
+			$post->person_last = '';
+		}
 
 		if ( ! empty($post->person_email))
 		{
 			$post->add_rules('person_email', 'email', 'length[3,100]');
+		}
+		else
+		{
+			$post->person_email = '';
 		}
 		
 		$post->add_rules('location_id','numeric');
