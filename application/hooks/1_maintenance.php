@@ -9,6 +9,14 @@
 *   to maintenance.php and all users will be told the site is undergoing maintenance.
 */
 
+// running at the command line, fake some server values
+if (php_sapi_name() == 'cli')
+{
+	$_SERVER['SERVER_PROTOCOL'] = "HTTP/1.1";
+	$_SERVER['HTTP_HOST'] = 'localhost';
+	$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+}
+
 // Grab the IP address in case we need to use it for maintenance mode
 $ip_address = FALSE;
 if ( ! empty($_SERVER['HTTP_CLIENT_IP']))
