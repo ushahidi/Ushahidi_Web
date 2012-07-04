@@ -246,7 +246,7 @@ class Api_Controller extends Admin_Controller {
                 FROM '.$this->table_prefix.'api_log al
                 LEFT JOIN '.$this->table_prefix.'api_banned AS ab ON (ab.banned_ipaddress = al.api_ipaddress)
                 ORDER BY al.api_date DESC
-                LIMIT ' . $pagination->sql_offset. ', '.$this->items_per_page
+                LIMIT ?, ?', $pagination->sql_offset, $this->items_per_page
             );
         
         /*    

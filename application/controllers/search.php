@@ -111,7 +111,7 @@ class Search_Controller extends Main_Controller {
 				$search_query = "SELECT *, (".$keyword_string.") AS relevance FROM "
 								. $this->table_prefix."incident "
 								. "WHERE ".$where_string." "
-								. "ORDER BY relevance DESC LIMIT ";
+								. "ORDER BY relevance DESC LIMIT ?, ?";
 			}
 		}
 		
@@ -124,7 +124,7 @@ class Search_Controller extends Main_Controller {
 				'total_items' => ORM::factory('incident')->where($where_string)->count_all()
 			));
 
-			$query = $db->query($search_query . $pagination->sql_offset . ",". (int)Kohana::config('settings.items_per_page'));
+			$query = $db->query($search_query, $pagination->sql_offset, (int)Kohana::config('settings.items_per_page'));
 
 			// Results Bar
 			if ($pagination->total_items != 0)
