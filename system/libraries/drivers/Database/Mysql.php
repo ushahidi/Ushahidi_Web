@@ -126,6 +126,9 @@ class Database_Mysql_Driver extends Database_Driver {
 		if (strtolower($column) == 'count(*)' OR $column == '*')
 			return $column;
 
+		if ($column instanceof Database_Expression)
+			return $column->compile($this);
+
 		// This matches any modifiers we support to SELECT.
 		if ( ! preg_match('/\b(?:rand|all|distinct(?:row)?|high_priority|sql_(?:small_result|b(?:ig_result|uffer_result)|no_cache|ca(?:che|lc_found_rows)))\s/i', $column))
 		{

@@ -316,6 +316,22 @@ abstract class Database_Driver {
 				// Convert to non-locale aware float to prevent possible commas
 				$value = sprintf('%F', $value);
 			break;
+			case 'array':
+				// Array handling copied from KO3
+				$value = '('.implode(', ', array_map(array($this, __FUNCTION__), $value)).')';
+			break;
+			case 'object':
+				// Object handling copied from KO3
+				if ($value instanceof Database_Expression)
+				{
+					// Compile the expression
+					$value = $value->compile($this);
+				}
+				else
+				{
+					// Otherwise convert to string and escape
+					$value =  $this->escape( (string) $value);
+				}
 			default:
 				$value = ($value === NULL) ? 'NULL' : $value;
 			break;
