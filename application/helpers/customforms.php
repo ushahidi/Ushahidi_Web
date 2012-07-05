@@ -35,14 +35,8 @@ class customforms_Core {
 	{
 		$fields_array = array();
 
-		if($form_id != null AND $form_id != '')
-		{
-			// Validation
-			if (!Form_Model::is_valid_form($form_id))
-			{
-				return $fields_array;
-			}
-		}
+		if( ! empty($form_id) AND ! Form_Model::is_valid_form($form_id))
+			return $fields_array;
 
 		// Database table prefix
 		$table_prefix = Kohana::config('database.default.table_prefix');
@@ -50,34 +44,41 @@ class customforms_Core {
 		// Get field we'll check permissions against
 		$ispublic_field = ($action == "view") ? 'field_ispublic_visible' : 'field_ispublic_submit';
 
-		// Query to fetch the form fields associated with the given form id
-		$sql = "SELECT ff.*, '' AS form_response FROM ".$table_prefix."form_field ff LEFT JOIN ".$table_prefix."roles r ON (r.id = $ispublic_field) WHERE 1=1 ";
+		// NOTE will probably need to add a user_level variable for non-web based requests
+		$user_level = self::get_user_max_auth();
+		
+		// Check if incident is valid
+		// Have to do this early since we can't build 2 ORM queries at once.
+		$valid_incident = Incident_Model::is_valid_incident($incident_id);
+
+		$form_fields = ORM::factory('Form_Field')
+			->join('roles', 'roles.id', $ispublic_field, 'LEFT')
+			->where('(access_level <= '.(int)$user_level.' OR access_level IS NULL)')
+			->orderby('field_position','ASC');
 		
 		if ($form_id != null AND $form_id != '')
 		{
-			$sql .= "AND ff.form_id = ".$form_id." ";
+			$form_fields->where('form_id', $form_id);
+		}
+
+		// Check if the provided incident exists, then fill in the data
+		if ($valid_incident)
+		{
+			$form_fields->join('form_response','form_response.form_field_id','form_field.id','RIGHT');
+			$form_fields->where('form_response.incident_id', $incident_id);
 		}
 		
-		// NOTE will probably need to add a user_level variable for non-web based requests
-		$user_level = self::get_user_max_auth();
-
-		// Check access_level
-		$sql .= 'AND (r.access_level <= '.$user_level.' OR r.access_level IS NULL)';
-		$sql .= " ORDER BY ff.field_position ASC";
-
-		// Execute the SQL to fetch the custom form fields
-		$form_fields = Database::instance()->query($sql);
-
+		$form_fields = $form_fields->find_all();
+		
 		foreach ($form_fields as $custom_formfield)
 		{
 			if ($data_only)
 			{
 				// Return Data Only
-				$fields_array[$custom_formfield->id] = $custom_formfield->form_response;
+				$fields_array[$custom_formfield->id] = isset($custom_formfield->form_response) ? $custom_formfield->form_response : '';
 			}
 			else
 			{
-
 				// Return Field Structure
 				$fields_array[$custom_formfield->id] = array(
 					'field_id' => $custom_formfield->id,
@@ -91,60 +92,8 @@ class customforms_Core {
 					'field_isdate' => $custom_formfield->field_isdate,
 					'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
 					'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
-					'field_response' => $custom_formfield->form_response
-					);
-			}
-		}
-
-		// Garbage collection
-		unset ($form_fields);
-
-		// Check if the provided incident exists, then fill in the data
-		if (Incident_Model::is_valid_incident($incident_id))
-		{
-			// Overwrite the previous query
-			$sql = "SELECT ff.*, fr.form_response "
-				. "FROM ".$table_prefix."form_field ff "
-				. "RIGHT JOIN ".$table_prefix."form_response fr ON (fr.form_field_id = ff.id) "
-				. "LEFT JOIN ".$table_prefix."roles r ON (r.id = $ispublic_field)"
-				. "WHERE fr.incident_id = ".$incident_id." ";
-
-			if ($form_id != null AND $form_id != '')
-			{
-				$sql .= "AND ff.form_id = ".$form_id." ";
-			}
-
-			$sql .= 'AND (r.access_level <= '.$user_level.' OR r.access_level IS NULL)';
-			$sql .= " ORDER BY ff.field_position ASC";
-
-			// Execute the SQL to fetch the custom form fields
-			$form_fields = Database::instance()->query($sql);
-
-			foreach ($form_fields as $custom_formfield)
-			{
-				if ($data_only)
-				{
-					// Return Data Only
-					$fields_array[$custom_formfield->id] = $custom_formfield->form_response;
-				}
-				else
-				{
-					// Return Field Structure
-					$fields_array[$custom_formfield->id] = array(
-						'field_id' => $custom_formfield->id,
-						'field_name' => $custom_formfield->field_name,
-						'field_type' => $custom_formfield->field_type,
-						'field_default' => $custom_formfield->field_default,
-						'field_required' => $custom_formfield->field_required,
-						'field_maxlength' => $custom_formfield->field_maxlength,
-						'field_height' => $custom_formfield->field_height,
-						'field_width' => $custom_formfield->field_width,
-						'field_isdate' => $custom_formfield->field_isdate,
-						'field_ispublic_visible' => $custom_formfield->field_ispublic_visible,
-						'field_ispublic_submit' => $custom_formfield->field_ispublic_submit,
-						'field_response' => $custom_formfield->form_response
-						);
-				}
+					'field_response' => isset($custom_formfield->form_response) ? $custom_formfield->form_response : '',
+				);
 			}
 		}
 

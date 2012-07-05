@@ -997,16 +997,16 @@ class Reports_Controller extends Main_Controller {
 
 	/**
 	 * Ajax call to update Incident Reporting Form
-    */
-    public function switch_form()
-    {
-        $this->template = "";
-        $this->auto_render = FALSE;
-        isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
-        isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
-
+	 */
+	public function switch_form()
+	{
+		$this->template = "";
+		$this->auto_render = FALSE;
+		isset($_POST['form_id']) ? $form_id = $_POST['form_id'] : $form_id = "1";
+		isset($_POST['incident_id']) ? $incident_id = $_POST['incident_id'] : $incident_id = "";
+		
 		$form_fields = customforms::switcheroo($incident_id,$form_id);
-        echo json_encode(array("status"=>"success", "response"=>$form_fields));
-    }
+		echo json_encode(array("status"=>"success", "response"=>$form_fields));
+	}
 
 }
