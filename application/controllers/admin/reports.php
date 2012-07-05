@@ -131,19 +131,16 @@ class Reports_Controller extends Admin_Controller {
 			if ($post->action == 'a')
 			{
 				// sanitize the incident_ids
-				foreach($post->incident_id as $key => $id)
-				{
-					$post->incident_id[$key] = intval($id);
-				}
+				$post->incident_id = array_map('intval', $post->incident_id);
 				
 				// Query to check if this report is uncategorized i.e categoryless
 				$query = "SELECT i.* FROM ".$table_prefix."incident i "
 				    . "LEFT JOIN ".$table_prefix."incident_category ic ON i.id=ic.incident_id "
 				    . "LEFT JOIN ".$table_prefix."category c ON c.id = ic.category_id "
 				    . "WHERE (c.category_title =\"NONE\" OR c.id IS NULL) "
-				    . "AND i.id IN (".implode(',',$post->incident_id).")";
+				    . "AND i.id IN :incidentids";
 
-				$result = Database::instance()->query($query);
+				$result = Database::instance()->query($query, array(':incidentids' => $post->incident_id));
 
 				// We enly approve the report IF it's categorized
 				// throw an error if any incidents aren't categorized
