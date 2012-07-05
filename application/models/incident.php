@@ -141,22 +141,6 @@ class Incident_Model extends ORM {
 		}
 	}
 
-	private static function category_graph_text($sql, $category)
-	{
-		$db = new Database();
-		$query = $db->query($sql);
-		$graph_data = array();
-		$graph = ", \"".  $category[0] ."\": { label: '". str_replace("'","",$category[0]) ."', ";
-		foreach ( $query as $month_count )
-		{
-			array_push($graph_data, "[" . $month_count->time * 1000 . ", " . $month_count->number . "]");
-		}
-		$graph .= "data: [". join($graph_data, ",") . "], ";
-		$graph .= "color: '#". $category[1] ."' ";
-		$graph .= " } ";
-		return $graph;
-	}
-
 	public static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL,$active='true',$media_type=NULL)
 	{
 		// Table Prefix
