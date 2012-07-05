@@ -563,7 +563,7 @@ class Json_Controller extends Template_Controller {
 			if (isset($_GET['m']) AND intval($_GET['m']) > 0)
 			{
 				$query = "SELECT incident_id AS id FROM ".$this->table_prefix."media "
-				    . "WHERE media_type = ".$_GET['m']
+				    . "WHERE media_type = ".intval($_GET['m'])
 				    . $incident_id_in;
 
 				$incident_id_in = $this->_exec_timeline_data_query($db, $query);
