@@ -458,7 +458,7 @@ class Incident_Model extends ORM {
 	 * @param int $num_neigbours Number of neigbouring incidents to fetch
 	 * @return mixed FALSE is the parameters are invalid, Result otherwise
 	 */
-	public static function get_neighbouring_incidents($incident_id, $order_by_distance = FALSE, $distance = 0, $num_neighbours)
+	public static function get_neighbouring_incidents($incident_id, $order_by_distance = FALSE, $distance = 0, $num_neighbours = 100)
 	{
 		if (self::is_valid_incident($incident_id))
 		{
@@ -477,17 +477,17 @@ class Incident_Model extends ORM {
 
 			// Query to fetch the neighbour
 			$sql = "SELECT DISTINCT i.*, l.`latitude`, l.`longitude`, l.location_name, "
-				. "((ACOS(SIN( ? * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS( ? * PI() / 180) * "
-				. "	COS(l.`latitude` * PI() / 180) * COS(( ? - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance "
+				. "((ACOS(SIN( :lat * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS( :lat * PI() / 180) * "
+				. "	COS(l.`latitude` * PI() / 180) * COS(( :lon - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance "
 				. "FROM `".$table_prefix."incident` AS i "
 				. "INNER JOIN `".$table_prefix."location` AS l ON (l.`id` = i.`location_id`) "
 				. "WHERE i.incident_active = 1 "
-				. "AND i.id <> ? ";
+				. "AND i.id <> :incidentid ";
 
 			// Check if the distance has been specified
 			if (intval($distance) > 0)
 			{
-				$sql .= "HAVING distance <= ".intval($distance)." ";
+				$sql .= "HAVING distance <= :distance ";
 			}
 
 			// If the order by distance parameter is TRUE
@@ -503,11 +503,13 @@ class Incident_Model extends ORM {
 			// Has the no. of neigbours been specified
 			if (intval($num_neighbours) > 0)
 			{
-				$sql .= "LIMIT ".intval($num_neighbours);
+				$sql .= "LIMIT :limit";
 			}
 
 			// Fetch records and return
-			return Database::instance()->query($sql, $latitude, $latitude, $longitude, $incident_id);
+			return Database::instance()->query($sql,
+				array(':lat' => $latitude, ':lon' => $longitude, ':incidentid' => $incident_id, ':limit' => (int)$num_neighbours, ':distance' => (int)$distance)
+			);
 		}
 		else
 		{
