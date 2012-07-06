@@ -141,97 +141,6 @@ class Incident_Model extends ORM {
 		}
 	}
 
-	public static function get_incidents_by_interval($interval='month',$start_date=NULL,$end_date=NULL,$active='true',$media_type=NULL)
-	{
-		// Table Prefix
-		$table_prefix = Kohana::config('database.default.table_prefix');
-
-		// get graph data
-		// could not use DB query builder. It does not support parentheses yet
-		$db = new Database();
-
-		$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-01')";
-		$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m')";
-		if ($interval == 'day')
-		{
-			$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d')";
-			$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d')";
-		}
-		elseif ($interval == 'hour')
-		{
-			$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d %H:%M')";
-			$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d%H')";
-		}
-		elseif ($interval == 'week')
-		{
-			$select_date_text = "STR_TO_DATE(CONCAT(CAST(YEARWEEK(incident_date) AS CHAR), ' Sunday'), '%X%V %W')";
-			$groupby_date_text = "YEARWEEK(incident_date)";
-		}
-
-		$date_filter = ($start_date) ? ' AND incident_date >= "' . $db->escape($start_date) . '"' : "";
-
-		if ($end_date)
-		{
-			$date_filter .= ' AND incident_date <= "' . $db->escape($end_date) . '"';
-		}
-
-		$active_filter = ($active == 'all' || $active == 'false')? $active_filter = '0,1' : '1';
-
-		$joins = '';
-		$general_filter = '';
-		if (isset($media_type) AND is_numeric($media_type))
-		{
-			$joins = 'INNER JOIN '.$table_prefix.'media AS m ON m.incident_id = i.id';
-			$general_filter = ' AND m.media_type IN ('. $db->escape($media_type)  .')';
-		}
-
-		$graph_data = array();
-		$all_graphs = array();
-
-		$all_graphs['0'] = array();
-		$all_graphs['0']['label'] = 'All Categories';
-		$query_text = 'SELECT UNIX_TIMESTAMP(' . $select_date_text . ') AS time,
-					   COUNT(*) AS number
-					   FROM '.$table_prefix.'incident AS i ' . $joins . '
-					   WHERE incident_active IN (' . $active_filter .')' .
-		$general_filter .'
-					   GROUP BY ' . $groupby_date_text;
-		$query = $db->query($query_text);
-		$all_graphs['0']['data'] = array();
-		foreach ( $query as $month_count )
-		{
-			array_push($all_graphs['0']['data'],
-				array($month_count->time * 1000, $month_count->number));
-		}
-		$all_graphs['0']['color'] = '#990000';
-
-		$query_text = 'SELECT category_id, category_title, category_color, UNIX_TIMESTAMP(' . $select_date_text . ')
-							AS time, COUNT(*) AS number
-								FROM '.$table_prefix.'incident AS i
-							INNER JOIN '.$table_prefix.'incident_category AS ic ON ic.incident_id = i.id
-							INNER JOIN '.$table_prefix.'category AS c ON ic.category_id = c.id
-							' . $joins . '
-							WHERE incident_active IN (' . $active_filter . ')
-								  ' . $general_filter . '
-							GROUP BY ' . $groupby_date_text . ', category_id ';
-		$query = $db->query($query_text);
-		foreach ($query as $month_count)
-		{
-			$category_id = $month_count->category_id;
-			if (!isset($all_graphs[$category_id]))
-			{
-				$all_graphs[$category_id] = array();
-				$all_graphs[$category_id]['label'] = $month_count->category_title;
-				$all_graphs[$category_id]['color'] = '#'. $month_count->category_color;
-				$all_graphs[$category_id]['data'] = array();
-			}
-			array_push($all_graphs[$category_id]['data'],
-				array($month_count->time * 1000, $month_count->number));
-		}
-		$graphs = json_encode($all_graphs);
-		return $graphs;
-	}
-
 	/**
 	 * Get the number of reports by date for dashboard chart
 	 *
@@ -247,29 +156,33 @@ class Incident_Model extends ORM {
 		// Database instance
 		$db = new Database();
 
-		// Filter by User
-		$user_id = (int) $user_id;
-		$u_sql = ($user_id)? " AND user_id = ".$user_id." " : "";
-
-		// Query to generate the report count
-		$sql = 'SELECT COUNT(id) as count, DATE(incident_date) as date, MONTH(incident_date) as month, DAY(incident_date) as day, '
-			. 'YEAR(incident_date) as year '
-			. 'FROM '.$table_prefix.'incident ';
-
-		// Check if the range has been specified and is non-zero then add predicates to the query
-		if ($range != NULL AND intval($range) > 0)
+		$params = array();
+		
+		$db->select(
+				'COUNT(id) as count',
+				'DATE(incident_date) as date',
+				'MONTH(incident_date) as month',
+				'DAY(incident_date) as day',
+				'YEAR(incident_date) as year'
+			)
+			->from('incident')
+			->groupby('date')
+			->orderby('incident_date', 'ASC');
+		
+		if (!empty($user_id))
 		{
-			$sql .= 'WHERE incident_date >= DATE_SUB(CURDATE(), INTERVAL '.$db->escape_str($range).' DAY) ';
+			$db->where('user_id', $user_id);
 		}
-		else
+		
+		if (!empty($range))
 		{
-			$sql .= 'WHERE 1=1 ';
+			// Use Database_Expression to sanitize range param
+			$range_expr = new Database_Expression('incident_date  >= DATE_SUB(CURDATE(), INTERVAL :range DAY)', array(':range' => (int)$range));
+			$db->where(
+				$range_expr->compile()
+			);
 		}
-
-		// Group and order the records
-		$sql .= $u_sql.'GROUP BY date ORDER BY incident_date ASC';
-
-		$query = $db->query($sql);
+		$query = $db->get();
 		$result = $query->result_array(FALSE);
 
 		$array = array();

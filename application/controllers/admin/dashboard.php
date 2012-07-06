@@ -97,14 +97,10 @@ class Dashboard_Controller extends Admin_Controller
 		// Build dashboard chart
 
 		// Set the date range (how many days in the past from today?)
-		// Default to one year if invalid or not set
-		$range = 0;
-		if (isset($_GET['range']))
-		{
-			// Sanitize the range parameter
-			$range = $this->input->xss_clean($_GET['range']);
-			$range = (intval($range) > 0)? intval($range) : 0;
-		}
+		// Default to all time if not set
+		$range = (!empty($_GET['range']))
+			? $_GET['range']
+			: 0;
 		
 		$incident_data = Incident_Model::get_number_reports_by_date($range);
 		$data = array('Reports'=>$incident_data);
