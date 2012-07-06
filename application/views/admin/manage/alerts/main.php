@@ -78,7 +78,7 @@
 								<thead>
 									<tr>
 										<th class="col-1"><input id="checkallalerts" type="checkbox" class="check-box" onclick="CheckAll( this.id, 'alert_id[]' )" /></th>
-										<th class="col-2"><?php echo Kohana::lang('ui_main.recipient');?></th>
+										<th class="col-2"><?php echo Kohana::lang('ui_admin.alerts');?></th>
 										<th class="col-3"><?php echo Kohana::lang('ui_main.sent');?></th>
 										<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
 									</tr>

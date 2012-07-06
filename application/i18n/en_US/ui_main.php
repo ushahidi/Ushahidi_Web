@@ -26,6 +26,7 @@
 	'alerts_enter_email' => 'enter email address',
 	'alerts_enter_mobile' => 'enter mobile number with country code',
 	'alerts_get' => 'Get Alerts',
+	'alert_has_been' => 'Alert has been',
 	'alerts_mobile_phone' => 'Mobile phone:',
 	'alerts_place_spot' => 'Or place a spot on the map below, and we will alert you when a report is submitted within 20 kilometers.',
 	'alerts_place_spot2' => 'If you can\'t find your location, please click on the map to pinpoint the correct location.',
