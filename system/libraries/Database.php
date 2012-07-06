@@ -1135,39 +1135,24 @@ class Database_Core {
 	 */
 	public function compile_binds($sql, $binds)
 	{
-		$isIndexed = array_values($binds) === $binds;
-		// if we have an associative array, use named bindings ala KO3
-		if (! $isIndexed)
+		foreach ((array) $binds as $val)
 		{
-			// Escape all of the values
-			$values = array_map(array($this->driver, 'escape'), $binds);
-	
-			// Replace the values in the SQL
-			$sql = strtr($sql, $values);
-			
-			return $sql;
+			// If the SQL contains no more bind marks ("?"), we're done.
+			if (($next_bind_pos = strpos($sql, '?')) === FALSE)
+				break;
+
+			// Properly escape the bind value.
+			$val = $this->driver->escape($val);
+
+			// Temporarily replace possible bind marks ("?"), in the bind value itself, with a placeholder.
+			$val = str_replace('?', '{%B%}', $val);
+
+			// Replace the first bind mark ("?") with its corresponding value.
+			$sql = substr($sql, 0, $next_bind_pos).$val.substr($sql, $next_bind_pos + 1);
 		}
-		else
-		{
-			foreach ((array) $binds as $val)
-			{
-				// If the SQL contains no more bind marks ("?"), we're done.
-				if (($next_bind_pos = strpos($sql, '?')) === FALSE)
-					break;
-	
-				// Properly escape the bind value.
-				$val = $this->driver->escape($val);
-	
-				// Temporarily replace possible bind marks ("?"), in the bind value itself, with a placeholder.
-				$val = str_replace('?', '{%B%}', $val);
-	
-				// Replace the first bind mark ("?") with its corresponding value.
-				$sql = substr($sql, 0, $next_bind_pos).$val.substr($sql, $next_bind_pos + 1);
-			}
-	
-			// Restore placeholders.
-			return str_replace('{%B%}', '?', $sql);
-		}
+
+		// Restore placeholders.
+		return str_replace('{%B%}', '?', $sql);
 	}
 
 	/**

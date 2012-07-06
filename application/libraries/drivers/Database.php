@@ -1,13 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Database API driver
- *
- * $Id: Database.php 3917 2009-01-21 03:06:22Z zombor $
- *
- * @package    Core
- * @author     Kohana Team
- * @copyright  (c) 2007-2008 Kohana Team
- * @license    http://kohanaphp.com/license.html
+ * 
+ * Overrides core database driver to backport some KO3 features
+ * - modified escape()
+ * 
+ * @package	   Ushahidi
+ * @author	   Ushahidi Team
+ * @copyright  (c) 2008 Ushahidi Team
+ * @license	   http://www.ushahidi.com/license.html
  */
 abstract class Database_Driver {
 
@@ -295,6 +296,8 @@ abstract class Database_Driver {
 
 	/**
 	 * Escapes any input value.
+	 * 
+	 * Customised to handle array and Database_Expression types
 	 *
 	 * @param   mixed   value to escape
 	 * @return  string
@@ -316,6 +319,22 @@ abstract class Database_Driver {
 				// Convert to non-locale aware float to prevent possible commas
 				$value = sprintf('%F', $value);
 			break;
+			case 'array':
+				// Array handling copied from KO3
+				$value = '('.implode(', ', array_map(array($this, __FUNCTION__), $value)).')';
+			break;
+			case 'object':
+				// Object handling copied from KO3
+				if ($value instanceof Database_Expression)
+				{
+					// Compile the expression
+					$value = $value->compile($this);
+				}
+				else
+				{
+					// Otherwise convert to string and escape
+					$value =  $this->escape( (string) $value);
+				}
 			default:
 				$value = ($value === NULL) ? 'NULL' : $value;
 			break;

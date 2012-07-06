@@ -2,12 +2,13 @@
 /**
  * MySQL Database Driver
  *
- * $Id: Mysql.php 3917 2009-01-21 03:06:22Z zombor $
- *
- * @package    Core
- * @author     Kohana Team
- * @copyright  (c) 2007-2008 Kohana Team
- * @license    http://kohanaphp.com/license.html
+ * Overrides core database mysql driver to backport some KO3 features
+ * - modified escape_column()
+ * 
+ * @package	   Ushahidi
+ * @author	   Ushahidi Team
+ * @copyright  (c) 2008 Ushahidi Team
+ * @license	   http://www.ushahidi.com/license.html
  */
 class Database_Mysql_Driver extends Database_Driver {
 
@@ -118,6 +119,9 @@ class Database_Mysql_Driver extends Database_Driver {
 		return '`'.str_replace('.', '`.`', $table).'`';
 	}
 
+	/**
+	 * Modified to handle Database_Expression
+	 **/
 	public function escape_column($column)
 	{
 		if (!$this->db_config['escape'])
@@ -125,6 +129,9 @@ class Database_Mysql_Driver extends Database_Driver {
 
 		if (strtolower($column) == 'count(*)' OR $column == '*')
 			return $column;
+
+		if ($column instanceof Database_Expression)
+			return $column->compile($this);
 
 		// This matches any modifiers we support to SELECT.
 		if ( ! preg_match('/\b(?:rand|all|distinct(?:row)?|high_priority|sql_(?:small_result|b(?:ig_result|uffer_result)|no_cache|ca(?:che|lc_found_rows)))\s/i', $column))

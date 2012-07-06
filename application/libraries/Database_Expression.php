@@ -1,5 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 /**
+ * Database Expression library ported from KO3
+ * 
  * Database expressions can be used to add unescaped SQL fragments to a
  * [Database_Query_Builder] object.
  *
