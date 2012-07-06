@@ -140,7 +140,7 @@ class Main_Controller extends Template_Controller {
 	/**
 	 * Retrieves Categories
 	 */
-	protected function get_categories($selected_categories)
+	protected function get_categories()
 	{
 	  $categories = ORM::factory('category')
 	    ->where('category_visible', '1')

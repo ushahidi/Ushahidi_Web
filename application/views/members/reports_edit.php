@@ -135,7 +135,7 @@
 										$selected_categories = $form['incident_category'];
 									}
 									$columns = 2;
-									echo category::tree($categories, TRUE, $selected_categories, 'incident_category', $columns);
+									echo category::form_tree('incident_category', $selected_categories, $columns);
 								?>
              					</div>
 							</div>

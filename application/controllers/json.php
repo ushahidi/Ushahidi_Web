@@ -477,6 +477,8 @@ class Json_Controller extends Template_Controller {
 		    : "month";
 
 		// Get Category Info
+		$category_title = "All Categories";
+		$category_color = "#990000";
 		if ($category_id > 0)
 		{
 			$category = ORM::factory("category", $category_id);
@@ -485,18 +487,11 @@ class Json_Controller extends Template_Controller {
 				$category_title = $category->category_title;
 				$category_color = "#".$category->category_color;
 			}
-			else
-			{
-				break;
-			}
-		}
-		else
-		{
-			$category_title = "All Categories";
-			$category_color = "#990000";
 		}
 
-		// Get the Counts
+		// Change select / group by expression based on interval
+		// Not a great way to do this but can't think of a better option
+		// Default values: month
 		$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-01')";
 		$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m')";
 		if ($interval == 'day')
@@ -522,57 +517,40 @@ class Json_Controller extends Template_Controller {
 		$graph_data[0]['data'] = array();
 
 		// Gather allowed ids if we are looking at a specific category
-
 		$incident_id_in = '';
+		$params = array();
 		if ($category_id != 0)
 		{
 			$query = 'SELECT ic.incident_id AS id '
 			    . 'FROM '.$this->table_prefix.'incident_category ic '
 			    . 'INNER JOIN '.$this->table_prefix.'category c ON (ic.category_id = c.id) '
-			    . 'WHERE (c.id='.$category_id.' OR c.parent_id='.$category_id.')';
+			    . 'WHERE (c.id = :cid OR c.parent_id = :cid)';
+			
+			$params[':cid'] = $category_id;
+			$incident_id_in .= " AND incident.id IN ( $query ) ";
+		}
+		
+		// Apply start and end date filters
+		if (isset($_GET['s']) AND isset($_GET['e']))
+		{
+			$query = 'SELECT id FROM '.$this->table_prefix.'incident '
+			    . 'WHERE incident_date >= :datestart '
+			    . 'AND incident_date <= :dateend ';
 
-			$incident_id_in = $this->_exec_timeline_data_query($db, $query);
+			// Cast timestamps to int to avoid php error - they'll be sanitized again by db_query
+			$params[':datestart'] = date("Y-m-d H:i:s", (int)$_GET['s']);
+			$params[':dateend'] = date('Y-m-d H:i:s', (int)$_GET['e']);
+			$incident_id_in .= " AND incident.id IN ( $query ) ";
 		}
 
-		// If a category id was specified and no data was returned,
-		// skip application of the other filters
-		if ($category_id !== 0 AND empty($incident_id_in))
+		// Apply media type filters
+		if (isset($_GET['m']) AND intval($_GET['m']) > 0)
 		{
-			$incident_id_in = ' AND 3 = 4';
-		}
-		else
-		{
-			// Apply start and end date filters
-			if (isset($_GET['s']) AND isset($_GET['e']))
-			{
-				$query = 'SELECT id FROM '.$this->table_prefix.'incident '
-				    . 'WHERE incident_date >= "'.date("Y-m-d H:i:s", $_GET['s']).'" '
-				    . 'AND incident_date <= "'.date('Y-m-d H:i:s', $_GET['e']).'"'
-				    . $incident_id_in;
+			$query = "SELECT incident_id AS id FROM ".$this->table_prefix."media "
+			    . "WHERE media_type = :mtype ";
 
-				$incident_id_in = $this->_exec_timeline_data_query($db, $query);
-
-				if (empty($incident_id_in))
-				{
-					$incident_id_in = ' AND 3 = 4';
-				}
-			}
-
-
-			// Apply media type filters
-			if (isset($_GET['m']) AND intval($_GET['m']) > 0)
-			{
-				$query = "SELECT incident_id AS id FROM ".$this->table_prefix."media "
-				    . "WHERE media_type = ".$_GET['m']
-				    . $incident_id_in;
-
-				$incident_id_in = $this->_exec_timeline_data_query($db, $query);
-
-				if (empty($incident_id_in))
-				{
-					$incident_id_in = ' AND 3 = 4';
-				}
-			}
+			$params[':mtype'] = $_GET['m'];
+			$incident_id_in .= " AND incident.id IN ( $query ) ";
 		}
 
 		// Fetch the timeline data
@@ -581,38 +559,24 @@ class Json_Controller extends Template_Controller {
 		    . 'WHERE incident_active = 1 '.$incident_id_in.' '
 		    . 'GROUP BY '.$groupby_date_text;
 		
-		foreach ($db->query($query) as $items)
+		foreach ($db->query($query, $params) as $items)
 		{
-			array_push($graph_data[0]['data'],
-				array($items->time * 1000, $items->number));
+			array_push($graph_data[0]['data'], array($items->time * 1000, $items->number));
+		}
+		
+		// If no data fake a flat line graph
+		// This is so jqplot still plots something
+		if (count($graph_data[0]['data']) == 0)
+		{
+			array_push($graph_data[0]['data'], array((int)$_GET['s'] * 1000, 0));
+			array_push($graph_data[0]['data'], array((int)$_GET['e'] * 1000, 0));
 		}
 
+		// Debug: push the query back in json
+		//$graph_data['query'] = $db->last_query();
+
+		header('Content-type: application/json; charset=utf-8');
 		echo json_encode($graph_data);
-	}
-
-	/**
-	 * Given a query, generates an 'IN' clause to be used
-	 * in the final query that is used to fetch the timeline data
-	 *
-	 * @param Database $db Database instance to use for executing the query
-	 * @param string $query SQL query to be executed
-	 */
-	private function _exec_timeline_data_query($db, $query)
-	{
-		$incident_id_in = '';
-		$allowed_ids = array();
-
-		foreach ($db->query($query) as $incident)
-		{
-			$allowed_ids[] = $incident->id;
-		}
-
-		// Adjust the incident filter clause
-		$incident_id_in = (count($allowed_ids) > 0)
-		    ? ' AND id IN ('.implode(',', $allowed_ids).')'
-		    : '';
-
-	    return $incident_id_in;
 	}
 	
 

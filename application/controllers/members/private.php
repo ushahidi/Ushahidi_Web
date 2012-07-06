@@ -295,12 +295,13 @@ class Private_Controller extends Members_Controller {
 	{
 		$account = ORM::factory('user')
 			->where("name", $name)
+			->orwhere("username", $name)
+			->orwhere("email", $name)
 			->where("id !=".$this->user->id)
 			->find();
-			
+
 		if ( ! $account->loaded)
 		{
-			echo "{{{$name}}}";
 			$post->add_error('private_to','exists');
 		}
 	}

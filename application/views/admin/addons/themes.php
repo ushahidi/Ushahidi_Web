@@ -111,6 +111,7 @@
 						}						
 						?>
 						<div style="clear:both;"></div>
+						<p class="more_addons"><a href="http://community.ushahidi.com/themes"><?php echo Kohana::lang('ui_admin.get_more_themes'); ?></a></p>
 					</div>
 		
 					<div class="simple_border"></div>

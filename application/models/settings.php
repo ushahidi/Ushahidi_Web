@@ -102,8 +102,12 @@ class Settings_Model extends ORM {
 		$values = array();
 		$keys = array();
 		
+		// Modification date
+		$settings['date_modify'] = date("Y-m-d H:i:s",time());
+		
 		// List of value to skip
 		$skip = array('api_live');
+		$value_expr = new Database_Expression("WHEN :key THEN :value ");
 		foreach ($settings as $key => $value)
 		{
 			// If an item has been marked for skipping or is a 
@@ -116,21 +120,19 @@ class Settings_Model extends ORM {
 			{
 				$value = NULL;
 			}
+			
+			$value_expr->param(':key', $key);
+			$value_expr->param(':value', $value);
 
-			$keys[] = sprintf("'%s'", $key);
-			$values[] = sprintf("WHEN '%s' THEN '%s' ", $key, $value);
+			$keys[] = $key;
+			$values[] = $value_expr->compile();
 		}
 		
-		// Modification date
-		$keys[] = "'date_modify'";
-		$values[] = sprintf("WHEN 'date_modify' THEN '%s' ", date("Y-m-d H:i:s",time()));
-		
 		// Construct the final query
-		$query .= implode(" ", $values)."END WHERE `key` IN (%s)";
-		$query = sprintf($query, implode(",", $keys));
-		
+		$query .= implode(" ", $values)."END WHERE `key` IN :keys";
+
 		// Performa batch update
-		Database::instance()->query($query);
+		Database::instance()->query($query, array(':keys' => $keys));
 	}
 
 

@@ -299,9 +299,6 @@ class Reports_Controller extends Members_Controller {
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
-		// Create Categories
-		$this->template->content->categories =Category_Model::get_categories();
-
 		// Time formatting
 		$this->template->content->hour_array = $this->_hour_array();
 		$this->template->content->minute_array = $this->_minute_array();
@@ -496,8 +493,8 @@ class Reports_Controller extends Members_Controller {
 					$sql = "SELECT AsText(geometry) as geometry, geometry_label, 
 						geometry_comment, geometry_color, geometry_strokewidth 
 						FROM ".Kohana::config('database.default.table_prefix')."geometry 
-						WHERE incident_id=".$id;
-					$query = $db->query($sql);
+						WHERE incident_id = ?";
+					$query = $db->query($sql, $id);
 					foreach ( $query as $item )
 					{
 						$geometry = array(

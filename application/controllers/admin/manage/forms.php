@@ -411,8 +411,8 @@ class Forms_Controller extends Admin_Controller {
 				{
 					// Move down the fields whose position value is greater
 					// than that of the selected field 
-					$sql = "UPDATE %sform_field SET field_position = %d WHERE field_position = %d";
-					$this->db->query(sprintf($sql, $this->table_prefix, $current_position, $current_position-1));
+					$sql = "UPDATE `".$this->table_prefix."form_field` SET field_position = ? WHERE field_position = ?";
+					$this->db->query($sql, $current_position, $current_position-1);
 
 					// Move the selected field upwards
 					$field->field_position = $current_position - 1;
@@ -421,8 +421,8 @@ class Forms_Controller extends Admin_Controller {
 				elseif ($field_position == 'd' AND $current_position != $total_fields)
 				{ 
 					// Move all other form fields upwards
-					$sql = "UPDATE %sform_field SET field_position = %d WHERE field_position = %d";
-					$this->db->query(sprintf($sql, $this->table_prefix,  $current_position, $current_position + 1));
+					$sql = "UPDATE `".$this->table_prefix."form_field` SET field_position = ? WHERE field_position = ?";
+					$this->db->query($sql,  $current_position, $current_position + 1);
 					
 					// Move the selected field downwards - increase its field position in the database
 					$field->field_position = $current_position + 1;

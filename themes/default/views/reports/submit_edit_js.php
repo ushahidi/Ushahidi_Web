@@ -240,6 +240,24 @@
 			highlightCtrl.activate();
 			selectCtrl.activate();
 			
+			/**
+			 * Hack to make sure selectControl always works 
+			 *
+			 * Override navigation activate/deactive to also activate/deactive
+			 * the selectCtrl. Previously selectCtrl was not being re-activated
+			 * after new features were added.
+			 */
+			navigationCtrl = panel.controls[0];
+			navigationCtrl.navActivate = panel.controls[0].activate;
+			navigationCtrl.navDeactivate = panel.controls[0].deactivate;
+			navigationCtrl.activate = function () {
+				this.navActivate();
+				selectCtrl.activate();
+			};
+			navigationCtrl.deactivate = function () {
+				this.navDeactivate();
+				selectCtrl.deactivate();
+			};
 			map.events.register("click", map, function(e){
 				selectCtrl.deactivate();
 				selectCtrl.activate();
@@ -254,6 +272,7 @@
 				$('#geometry_color').ColorPickerHide();
 				$('#geometryLabelerHolder').hide(400);
 				selectCtrl.activate();
+				return false;
 			});
 			
 			// Delete Selected Features
@@ -264,6 +283,7 @@
 				$('#geometry_color').ColorPickerHide();
 				$('#geometryLabelerHolder').hide(400);
 				selectCtrl.activate();
+				return false;
 			});
 			
 			// Clear Map
@@ -280,6 +300,7 @@
 				$('#geometry_color').ColorPickerHide();
 				$('#geometryLabelerHolder').hide(400);
 				selectCtrl.activate();
+				return false;
 			});
 			
 			// GeoCode
@@ -723,7 +744,7 @@
 					function(data){
 						if (data.status == 'success'){
 							$('#custom_forms').html('');
-							$('#custom_forms').html(decodeURIComponent(data.response));
+							$('#custom_forms').html(data.response);
 							$('#form_loader').html('');
 						}
 				  	}, "json");

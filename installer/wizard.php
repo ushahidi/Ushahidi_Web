@@ -183,6 +183,9 @@ class Installer_Wizard {
 			session_unset();
 			
 			header("Location:../");
+			
+			// For security: Make sure we don't return the rest of the page
+			exit();
 		}
 
 		// 

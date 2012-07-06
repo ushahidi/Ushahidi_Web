@@ -302,6 +302,7 @@ div.search-form input.searchbtn{
     text-indent: -10000px;
     cursor: pointer;
     padding: 1px 0 19px 0;
+    text-transform: uppercase;
 }
 
 /* submit incident */
@@ -1940,7 +1941,7 @@ span.required {
     right:0;
     width:18px;
     height:18px;
-    background: url("../img/openlayers/layer-switcher-minimize.png") no-repeat;
+    background: url("../../../media/img/openlayers/layer-switcher-minimize.png") no-repeat;
     cursor: pointer;
 }
 

@@ -28,6 +28,13 @@ class Report_Api_Object extends Api_Object_Core {
      */
     public function perform_task()
     {
+  		// If user doesn't have member perms and allow_reports is disabled, Throw auth error
+  		if ( ! Kohana::config('settings.allow_reports') AND ! $this->api_service->_login(FALSE, TRUE) )
+			{
+				$this->set_error_message($this->response(2));
+				return;
+			}
+			
         $ret_value = $this->_submit();
         
         $this->response_data =  $this->response($ret_value, $this->error_string);

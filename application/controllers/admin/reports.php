@@ -131,19 +131,16 @@ class Reports_Controller extends Admin_Controller {
 			if ($post->action == 'a')
 			{
 				// sanitize the incident_ids
-				foreach($post->incident_id as $key => $id)
-				{
-					$post->incident_id[$key] = intval($id);
-				}
+				$post->incident_id = array_map('intval', $post->incident_id);
 				
 				// Query to check if this report is uncategorized i.e categoryless
 				$query = "SELECT i.* FROM ".$table_prefix."incident i "
 				    . "LEFT JOIN ".$table_prefix."incident_category ic ON i.id=ic.incident_id "
 				    . "LEFT JOIN ".$table_prefix."category c ON c.id = ic.category_id "
 				    . "WHERE (c.category_title =\"NONE\" OR c.id IS NULL) "
-				    . "AND i.id IN (".implode(',',$post->incident_id).")";
+				    . "AND i.id IN :incidentids";
 
-				$result = Database::instance()->query($query);
+				$result = Database::instance()->query($query, array(':incidentids' => $post->incident_id));
 
 				// We enly approve the report IF it's categorized
 				// throw an error if any incidents aren't categorized
@@ -376,7 +373,6 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
 
 		// Create Categories
-		$this->template->content->categories = Category_Model::get_categories(0, FALSE, FALSE);
 		$this->template->content->new_categories_form = $this->_new_categories_form_arr();
 
 		// Time formatting
@@ -707,8 +703,8 @@ class Reports_Controller extends Admin_Controller {
 					$sql = "SELECT AsText(geometry) as geometry, geometry_label,
 						geometry_comment, geometry_color, geometry_strokewidth
 						FROM ".Kohana::config('database.default.table_prefix')."geometry
-						WHERE incident_id=".$id;
-					$query = $db->query($sql);
+						WHERE incident_id = ?";
+					$query = $db->query($sql, $id);
 					foreach ( $query as $item )
 					{
 						$geometry = array(
@@ -1204,145 +1200,6 @@ class Reports_Controller extends Admin_Controller {
 			}
 		}
 	}
-
-	/**
-	* Translate a report
-	* @param bool|int $id The id no. of the report
-	* @param bool|string $saved
-	*/
-
-	public function translate( $id = false, $saved = FALSE)
-	{
-		$this->template->content = new View('admin/reports/translate');
-		$this->template->content->title = Kohana::lang('ui_admin.translate_reports');
-
-		// Which incident are we adding this translation for?
-		if (isset($_GET['iid']) && !empty($_GET['iid']))
-		{
-			$incident_id = (int) $_GET['iid'];
-			$incident = ORM::factory('incident', $incident_id);
-
-			if ($incident->loaded == true)
-			{
-				$orig_locale = $incident->locale;
-				$this->template->content->orig_title = $incident->incident_title;
-				$this->template->content->orig_description = $incident->incident_description;
-			}
-			else
-			{
-				// Redirect
-				url::redirect('admin/reports/');
-			}
-		}
-		else
-		{
-			// Redirect
-			url::redirect('admin/reports/');
-		}
-
-		// Setup and initialize form field names
-		$form = array(
-			'locale'	  => '',
-			'incident_title'	  => '',
-			'incident_description'	  => ''
-		);
-
-		// Copy the form as errors, so the errors will be stored with keys corresponding to the form field names
-		$errors = $form;
-		$form_error = FALSE;
-
-		$form_saved = ($saved == 'saved')? TRUE : FALSE;
-
-		// Locale (Language) Array
-		$this->template->content->locale_array = Kohana::config('locale.all_languages');
-
-		// Check, has the form been submitted, if so, setup validation
-		if ($_POST)
-		{
-			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-			$post = Validation::factory($_POST);
-
-			 //	Add some filters
-			$post->pre_filter('trim', TRUE);
-
-			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('locale','required','alpha_dash','length[5]');
-			$post->add_rules('incident_title','required', 'length[3,200]');
-			$post->add_rules('incident_description','required');
-			$post->add_callbacks('locale', array($this,'translate_exists_chk'));
-
-			if ($orig_locale == $_POST['locale'])
-			{
-				// The original report and the translation are the same language!
-				$post->add_error('locale','locale');
-			}
-
-			// Test to see if things passed the rule checks
-			if ($post->validate())
-			{
-				// SAVE INCIDENT TRANSLATION
-				$incident_l = new Incident_Lang_Model($id);
-				$incident_l->incident_id = $incident_id;
-				$incident_l->locale = $post->locale;
-				$incident_l->incident_title = $post->incident_title;
-				$incident_l->incident_description = $post->incident_description;
-				$incident_l->save();
-
-
-				// SAVE AND CLOSE?
-				// Save but don't close
-				if ($post->save == 1)
-				{
-					url::redirect('admin/reports/translate/'. $incident_l->id .'/saved/?iid=' . $incident_id);
-				}
-
-				// Save and close
-				else
-				{
-					url::redirect('admin/reports/');
-				}
-			}
-
-			// No! We have validation errors, we need to show the form again, with the errors
-			else
-			{
-				// Repopulate the form fields
-				$form = arr::overwrite($form, $post->as_array());
-
-				// Populate the error fields, if any
-				$errors = arr::merge($errors, $post->errors('report'));
-				$form_error = TRUE;
-			}
-		}
-		else
-		{
-			if ($id)
-			{
-				// Retrieve Current Incident
-				$incident_l = ORM::factory('incident_lang', $id)->where('incident_id', $incident_id)->find();
-				if ($incident_l->loaded == true)
-				{
-					$form['locale'] = $incident_l->locale;
-					$form['incident_title'] = $incident_l->incident_title;
-					$form['incident_description'] = $incident_l->incident_description;
-				}
-				else
-				{
-					// Redirect
-					url::redirect('admin/reports/');
-				}
-			}
-		}
-
-		$this->template->content->form = $form;
-		$this->template->content->errors = $errors;
-		$this->template->content->form_error = $form_error;
-		$this->template->content->form_saved = $form_saved;
-
-		// Javascript Header
-		$this->template->js = new View('admin/reports/translate_js');
-	}
-
 
 	/**
 	* Save newly added dynamic categories

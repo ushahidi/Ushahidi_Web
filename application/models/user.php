@@ -150,11 +150,15 @@ class User_Model extends Auth_User_Model {
 			$post->add_callbacks('username', array('User_Model', 'unique_value_exists'));
 			$post->add_callbacks('email', array('User_Model', 'unique_value_exists'));
 		}
+		
+		// Make sure we have a value for password length to avoid PHP error for missing length[] function
+		$password_length = Kohana::config('auth.password_length');
+		$password_length = ( ! empty($password_length)) ? $password_length : '1,127';
 
 		// Only check for the password if the user id has been specified and we are passing a pw
 		if (isset($post->user_id) AND isset($post->password))
 		{
-			$post->add_rules('password','required', 'length['.Kohana::config('auth.password_length').']');
+			$post->add_rules('password','required', 'length['.$password_length.']');
 			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
 
@@ -162,7 +166,7 @@ class User_Model extends Auth_User_Model {
 		if ( isset($post->password) AND
 			(! empty($post->password) OR (empty($post->password) AND ! empty($post->password_again))))
 		{
-			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']', 'matches[password_again]');
+			$post->add_rules('password','required','length['.$password_length.']', 'matches[password_again]');
 			$post->add_callbacks('password' ,'User_Model::validate_password');
 		}
 

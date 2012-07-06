@@ -15,8 +15,10 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class Admin_Reports_Api_Object extends Api_Object_Core {
+require_once Kohana::find_file('libraries/api', Kohana::config('config.extension_prefix').'Incidents_Api_Object');
 
+class Admin_Reports_Api_Object extends Incidents_Api_Object {
+	
 	public function __construct($api_service)
 	{
 		parent::__construct($api_service);
@@ -37,6 +39,8 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 		// by request
 		if ($this->api_service->verify_array_index($this->request, 'by'))
 		{
+			$this->_check_optional_parameters();
+			
 			$this->by = $this->request['by'];
 
 			switch ($this->by)
@@ -55,6 +59,23 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 
 				case "unverified" :
 					$this->response_data = $this->_get_unverified_reports();
+					break;
+				
+				case "incidentid":
+					if ( ! $this->api_service->verify_array_index($this->request, 'id'))
+					{
+						$this->set_error_message(array(
+							"error" => $this->api_service->get_error_msg(001, 'id')
+						));
+					}
+					
+					$where = array('i.id = '.$this->check_id_value($this->request['id']));
+					$where['all_reports'] = TRUE;
+					$this->response_data = $this->_get_incidents($where);
+				break;
+				
+				case "all" :
+					$this->response_data = $this->_get_all_reports();
 					break;
 
 				default :
@@ -140,215 +161,6 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	}
 
 	/**
-	 * Generic function to get reports by given set of parameters
-	 */
-	private function _get_reports($where = '', $limit = '')
-	{
-		$ret_json_or_xml = '';
-		// Will hold the JSON/XML string
-
-		$json_reports = array();
-		$json_report_media = array();
-		$json_incident_media = array();
-		$json_report_categories = array();
-
-		//XML elements
-		$xml = new XmlWriter();
-		$xml->openMemory();
-		$xml->startDocument('1.0', 'UTF-8');
-		$xml->startElement('response');
-		$xml->startElement('payload');
-		$xml->writeElement('domain', $this->domain);
-		$xml->startElement('incidents');
-
-		// Find reports/incidents
-		$this->query = "SELECT i.id AS incidentid, i.incident_title AS incidenttitle, "
-		    . "i.incident_description AS incidentdescription, i.incident_date AS incidentdate, "
-		    . "i.incident_mode AS incidentmode, i.incident_active AS incidentactive, "
-		    . "i.incident_verified AS incidentverified, l.id AS locationid, "
-		    . "l.location_name AS locationname, l.latitude AS locationlatitude, "
-		    . "l.longitude AS locationlongitude "
-		    . "FROM " . $this->table_prefix . "incident AS i "
-		    . "INNER JOIN " . $this->table_prefix . "location as l ON (l.id = i.location_id) "
-		    . "$where $limit";
-
-		$items = $this->db->query($this->query);
-
-		$i = 0;
-
-		//No record found.
-		if ($items->count() == 0)
-		{
-			return $this->response(4);
-		}
-
-		foreach ($items as $item)
-		{
-
-			if ($this->response_type == 'json')
-			{
-				$json_report_media = array();
-				$json_report_categories = array();
-			}
-
-			//build xml file
-			$xml->startElement('incident');
-
-			$xml->writeElement('id', $item->incidentid);
-			$xml->writeElement('title', $item->incidenttitle);
-			$xml->writeElement('description', $item->incidentdescription);
-			$xml->writeElement('date', $item->incidentdate);
-			$xml->writeElement('mode', $item->incidentmode);
-			$xml->writeElement('active', $item->incidentactive);
-			$xml->writeElement('verified', $item->incidentverified);
-			$xml->startElement('location');
-			$xml->writeElement('id', $item->locationid);
-			$xml->writeElement('name', $item->locationname);
-			$xml->writeElement('latitude', $item->locationlatitude);
-			$xml->writeElement('longitude', $item->locationlongitude);
-			$xml->endElement();
-			$xml->startElement('categories');
-
-			// Fetch categories
-			$this->query = " SELECT c.category_title AS categorytitle, c.id AS cid "
-			    . "FROM " . $this->table_prefix . "category AS c "
-			    . "INNER JOIN " . $this->table_prefix . "incident_category AS ic ON (ic.category_id = c.id) "
-			    . "WHERE ic.incident_id =" . $item->incidentid;
-
-			$category_items = $this->db->query($this->query);
-
-			foreach ($category_items as $category_item)
-			{
-				if ($this->response_type == 'json')
-				{
-					$json_report_categories[] = array(
-					    "category" => array(
-					    	"id" => $category_item->cid,
-					    	"title" => $category_item->categorytitle
-					));
-				}
-				else
-				{
-					$xml->startElement('category');
-					$xml->writeElement('id', $category_item->cid);
-					$xml->writeElement('title', $category_item->categorytitle);
-					$xml->endElement();
-				}
-			}
-
-			$xml->endElement();
-			//end categories
-
-			//fetch media associated with an incident
-			$this->query = "SELECT m.id as mediaid, m.media_title AS mediatitle, m.media_type AS mediatype,"
-			    . "m.media_link AS medialink, " . "m.media_thumb AS mediathumb "
-			    . "FROM " . $this->table_prefix . "media AS m "
-			    . "INNER JOIN " . $this->table_prefix . "incident AS i ON (i.id = m.incident_id) "
-			    . "WHERE i.id =" . $item->incidentid;
-
-			$media_items = $this->db->query($this->query);
-
-			if (count($media_items) > 0)
-			{
-				$xml->startElement('mediaItems');
-				foreach ($media_items as $media_item)
-				{
-					if ($this->response_type == 'json')
-					{
-						$json_incident_media[] = array(
-							"id" => $media_item->mediaid,
-							"type" => $media_item->mediatype,
-							"link" => $media_item->medialink
-						);
-					}
-					else
-					{
-						$xml->startElement('media');
-
-						if ($media_item->mediaid != "")
-						{
-							$xml->writeElement('id', $media_item->mediaid);
-						}
-
-						if ($media_item->mediatitle != "")
-						{
-							$xml->writeElement('title', $media_item->mediatitle);
-						}
-
-						if ($media_item->mediatype != "")
-						{
-							$xml->writeElement('type', $media_item->mediatype);
-						}
-
-						if ($media_item->medialink != "")
-						{
-							$xml->writeElement('link', $media_item->medialink);
-						}
-
-						if ($media_item->mediathumb != "")
-						{
-							$xml->writeElement('thumb', $media_item->mediathumb);
-						}
-
-						$xml->endElement();
-					}
-				}
-
-				$xml->endElement();
-				// media
-
-			}
-
-			$xml->endElement();
-			// end incident
-
-			//needs different treatment depending on the output
-			if ($this->response_type == 'json')
-			{
-				$json_reports[] = array(
-					"incident" => $item,
-					"categories" => $json_report_categories,
-					"media" => $json_report_media
-				);
-			}
-
-		}
-
-		// Create the json array
-		$data = array(
-			"payload" => array(
-				"domain" => $this->domain,
-				"incidents" => $json_reports
-			),
-			"error" => $this->api_service->get_error_msg(0)
-		);
-
-		if ($this->response_type == 'json')
-		{
-			$ret_json_or_xml = $this->array_as_json($data);
-
-			return $ret_json_or_xml;
-		}
-		else
-		{
-			$xml->endElement();
-			//end incidents
-			$xml->endElement();
-			// end payload
-			$xml->startElement('error');
-			$xml->writeElement('code', 0);
-			$xml->writeElement('message', 'No Error');
-			$xml->endElement();
-			//end error
-			$xml->endElement();
-			// end response
-
-			return $xml->outputMemory(true);
-		}
-
-	}
-
-	/**
 	 * List unapproved reports
 	 *
 	 * @param string response - The response to return.XML or JSON
@@ -357,20 +169,22 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_unapproved_reports()
 	{
-		if ($_POST)
-		{
-			$where = "\nWHERE i.incident_active = 0 ";
+		$where = array();
+		$where['all_reports'] = TRUE;
+		$where[] = "i.incident_active = 0";
+		return $this->_get_incidents($where);
+	}
 
-			$where .= "ORDER BY i.id DESC ";
-
-			$limit = "\nLIMIT 0, $this->list_limit";
-
-			return $this->_get_reports($where, $limit);
-		}
-		else
-		{
-			return $this->response(3);
-		}
+	/**
+	 * List first 15 reports
+	 *
+	 * @return array
+	 */
+	private function _get_all_reports()
+	{
+		$where = array();
+		$where['all_reports'] = TRUE;
+		return $this->_get_incidents($where);
 	}
 
 	/**
@@ -378,23 +192,9 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	 *
 	 * @return array
 	 */
-	public function _get_approved_reports()
+	private function _get_approved_reports()
 	{
-		if ($_POST)
-		{
-			$where = "\nWHERE i.incident_active = 1 ";
-
-			$where .= "ORDER BY i.id DESC ";
-
-			$limit = "\nLIMIT 0, $this->list_limit";
-
-			return $this->_get_reports($where, $limit);
-		}
-		else
-		{
-			return $this->response(3);
-		}
-
+		return $this->_get_incidents();
 	}
 
 	/**
@@ -402,23 +202,12 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	 *
 	 * @return array
 	 */
-	public function _get_verified_reports()
+	private function _get_verified_reports()
 	{
-		if ($_POST)
-		{
-			$where = "\nWHERE i.incident_verified = 1 ";
-
-			$where .= "ORDER BY i.id DESC ";
-
-			$limit = "\nLIMIT 0, $this->list_limit";
-
-			return $this->_get_reports($where, $limit);
-		}
-		else
-		{
-			return $this->response(3);
-		}
-
+		$where = array();
+		$where['all_reports'] = TRUE;
+		$where[] = 'i.incident_verified = 1';
+		return $this->_get_incidents($where);
 	}
 
 	/**
@@ -428,23 +217,12 @@ class Admin_Reports_Api_Object extends Api_Object_Core {
 	 *
 	 * @return array
 	 */
-	public function _get_unverified_reports()
+	private function _get_unverified_reports()
 	{
-		if ($_POST)
-		{
-			$where = "\nWHERE i.incident_verified = 0 ";
-
-			$where .= "ORDER BY i.id DESC ";
-
-			$limit = "\nLIMIT 0, $this->list_limit";
-
-			return $this->_get_reports($where, $limit);
-		}
-		else
-		{
-			return $this->response(3);
-		}
-
+		$where = array();
+		$where['all_reports'] = TRUE;
+		$where[] = 'i.incident_verified = 0';
+		return $this->_get_incidents($where);
 	}
 
 	/**

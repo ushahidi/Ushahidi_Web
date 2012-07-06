@@ -1065,17 +1065,21 @@ class Settings_Controller extends Admin_Controller {
 						    ->where('country_id', $country->id)
 						    ->delete_all();
 
-						 $query = sprintf("INSERT INTO %scity (`country_id`, `city`, `city_lat`, `city_lon`) VALUES ", 
-						     $this->table_prefix);
+						// Manually construct the query (DB library can't do bulk inserts)
+						$query = sprintf("INSERT INTO %scity (`country_id`, `city`, `city_lat`, `city_lon`) VALUES ", $this->table_prefix);
 
-						 $values = array();
-						 $values_template = "(%d, '%s', %s, %s)";
+						$values = array();
+						// Create a database expression and use that to sanitize values
+						$values_expr = new Database_Expression("(:countryid, :city, :lat, :lon)");
 
 						// Add the freshly fetched cities
 						foreach ($cities as $city)
 						{
-							$values[] = sprintf($values_template, $country->id, 
-							    $city['name'], $city['lat'], $city['lng']);
+							$values_expr->param(':countryid', $country->id);
+							$values_expr->param(':city', $city['name']);
+							$values_expr->param(':lat', $city['lat']);
+							$values_expr->param(':lon', $city['lng']);
+							$values[] = $values_expr->compile();
 						}
 
 						$query .= implode(",", $values);
