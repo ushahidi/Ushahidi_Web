@@ -166,6 +166,7 @@ if (file_exists(DOCROOT.DIRECTORY_SEPARATOR.'installer'))
 	{
 		// Redirect to the installer
 		header("Location: ./installer");
+		exit();
 	}
 }
 
