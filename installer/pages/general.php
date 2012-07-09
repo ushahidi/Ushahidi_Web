@@ -75,14 +75,10 @@
 						</tr>
 					</tbody>
 				</table>
-				<table class="form-table">
-					<tbody>
-						<tr>
-							<td class="next"><input type="submit" name="previous" value="&larr; Previous" class="button" /></td>
-							<td class="prev"><input type="submit" name="continue" value="Continue &rarr;" class="button" /></td>
-						</tr>
-					</tbody>
-				</table>
+				<div class="actions clearfix">
+					<div class="next"><input type="submit" name="continue" value="Continue &rarr;" class="button" /></div>
+					<div class="prev"><input type="submit" name="previous" value="&larr; Previous" class="button" /></div>
+				</div>
 
 			</form>
 

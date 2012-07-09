@@ -153,8 +153,6 @@ dl {}
 .form-table { border-collapse: collapse; margin: 1em 0; width: 100%; }
 
 .form-table td { margin-bottom: 9px; padding: 10px; border-bottom: 4px solid #eee; font-size: 12px; }
-	.form-table td.next { text-align:left; border:none; }
-	.form-table td.prev { text-align:right; border:none; }
 .fields th { font-size: 13px; text-align: left; line-height:18px; padding: 16px 10px 10px 10px; border-bottom: 4px solid #eee; width: 140px; vertical-align: middle;}
 
 .form-table tr { background: #DDDDDD; }
@@ -167,6 +165,8 @@ dl {}
 
 .form-table input { line-height: 20px; font-size: 15px; padding: 2px; }
 
+.next { text-align:right; border:none; float: right; }
+.prev { text-align:left; border:none; float: left; }
 
 	/* System Messages */
 	/*****************************/
