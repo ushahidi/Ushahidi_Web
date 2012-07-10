@@ -92,10 +92,11 @@
 		        </ol>
 			</div>	
 
-			<p>
-				<input type="submit" name="previous" value="&larr; Go back" class="button" />&nbsp;&nbsp;
-				<input type="submit" name="continue" value="Let's get started!" class="button" />
-			</p>
+			
+			<div class="actions clearfix">
+				<div class="next"><input type="submit" name="continue" value="Continue &rarr;" class="button" /></div>
+				<div class="prev"><input type="submit" name="previous" value="&larr; Previous" class="button" /></div>
+			</div>
 			</div>
 
 		<?php endif; ?>

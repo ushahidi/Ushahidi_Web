@@ -34,5 +34,9 @@ $(function(){
 	
 	//Close button for system messages
 	$("a.btn-close").click(function(){$(this).parent().slideUp(); return false;});
+	
+	// Submit form if user clicks anywhere in the box
+	$("#install-box-basic").click(function() { $('form').append("<input type='hidden' name='install_mode_basic' value='1' />").submit(); } )
+	$("#install-box-advanced").click(function() { $('form').append("<input type='hidden' name='install_mode_advanced' value='1' />").submit(); } );
 
 });
