@@ -38,7 +38,8 @@ class sharing {
 		}
 		elseif (strripos(Router::$current_uri, "main") !== false)
 		{
-			Event::add('ushahidi_action.main_sidebar', array($this, '_display'));
+			Event::add('ushahidi_action.header_scripts', array($this, 'sharing_js'));
+			Event::add('ushahidi_action.main_sidebar', array($this, 'sharing_bar'));
 		}
 	}
 
@@ -48,7 +49,10 @@ class sharing {
 		echo ($this_sub_page == "sharing") ? "Sharing" : "<a href=\"".url::site()."admin/manage/sharing\">Sharing</a>";
 	}
 
-	public function _display()
+	/**
+	 * Loads the sharing bar on the side bar on the main page
+	 */
+	public function sharing_bar()
 	{
 		// Get all active Shares
 		$shares = array();
@@ -63,8 +67,15 @@ class sharing {
 
 		$sharing_bar->shares = $shares;
 		$sharing_bar->render(TRUE);
-		$this->template->js = new View('js/sharing_bar_js');
-		
+	}
+	
+	/**
+	 * Loads the JavaScript for the sharing sidebar
+	 */
+	public function sharing_js()
+	{
+		$js = View::factory('js/sharing_bar_js');
+		$js->render(TRUE);
 	}
 }
 new sharing;

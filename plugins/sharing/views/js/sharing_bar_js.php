@@ -15,36 +15,26 @@
  */
 ?>
 
-			// Sharing Layer[s] Switch Action
-			$("a[id^='share_']").click(function()
-			{
-				var shareID = this.id.substring(6);
-				
-				if ( $("#share_" + shareID).hasClass("active") )
-				{
-					share_layer = map.getLayersByName("Share_"+shareID);
-					if (share_layer)
-					{
-						for (var i = 0; i <?php echo '<'; ?> share_layer.length; i++)
-						{
-							map.removeLayer(share_layer[i]);
-						}
-					}
-					$("#share_" + shareID).removeClass("active");
-					
-				} 
-				else
-				{
-					$("#share_" + shareID).addClass("active");
-					
-					// Get Current Zoom
-					currZoom = map.getZoom();
-
-					// Get Current Center
-					currCenter = map.getCenter();
-					
-					// Add New Layer
-					addMarkers('', '', '', currZoom, currCenter, '', shareID, 'shares');
-				}
-			});
-
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	// Sharing Layer[s] Switch Action
+	$("a[id^='share_']").click(function() {
+		var shareID = this.id.substring(6);
+	
+		if ( $("#share_" + shareID).hasClass("active")) {
+			map.deleteLayer($("#share_" + shareID).html());
+			$("#share_" + shareID).removeClass("active");
+		
+		}  else {
+			$("#share_" + shareID).addClass("active");
+			map.addLayer(Ushahidi.SHARES, {
+							name: $("#share_" + shareID).html(),
+							url: "json/share/index/" + shareID
+						});
+		}
+		
+		return false;
+	});
+});
+</script>
