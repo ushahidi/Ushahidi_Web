@@ -33,8 +33,8 @@ class Share_Controller extends Json_Controller {
 			// Get This Sharing ID Color
 			$sharing = ORM::factory('sharing')
 				->find($sharing_id);
-			
-			if( ! $sharing->loaded )
+
+			if( ! $sharing->loaded)
 				throw new Kohana_404_Exception();
 			
 			$sharing_url = $sharing->sharing_url;
@@ -46,22 +46,22 @@ class Share_Controller extends Json_Controller {
 				$db = new Database();
 				
 				// Start Date
-				$start_date = (isset($_GET['s']) && !empty($_GET['s'])) ?
+				$start_date = (isset($_GET['s']) AND !empty($_GET['s'])) ?
 					(int) $_GET['s'] : "0";
 
 				// End Date
-				$end_date = (isset($_GET['e']) && !empty($_GET['e'])) ?
+				$end_date = (isset($_GET['e']) AND !empty($_GET['e'])) ?
 					(int) $_GET['e'] : "0";
 
 				// SouthWest Bound
-				$southwest = (isset($_GET['sw']) && !empty($_GET['sw'])) ?
+				$southwest = (isset($_GET['sw']) AND !empty($_GET['sw'])) ?
 					$_GET['sw'] : "0";
 
-				$northeast = (isset($_GET['ne']) && !empty($_GET['ne'])) ?
+				$northeast = (isset($_GET['ne']) AND !empty($_GET['ne'])) ?
 					$_GET['ne'] : "0";
 				
 				// Get Zoom Level
-				$zoomLevel = (isset($_GET['z']) && !empty($_GET['z'])) ?
+				$zoomLevel = (isset($_GET['z']) AND !empty($_GET['z'])) ?
 					(int) $_GET['z'] : 8;
 
 				//$distance = 60;
@@ -73,7 +73,7 @@ class Share_Controller extends Json_Controller {
 				$filter .= ($end_date) ? 
 					" AND incident_date <= '" . date("Y-m-d H:i:s", $end_date) . "'" : "";
 
-				if ($southwest && $northeast)
+				if ($southwest AND $northeast)
 				{
 					list($latitude_min, $longitude_min) = explode(',', $southwest);
 					list($latitude_max, $longitude_max) = explode(',', $northeast);
@@ -108,6 +108,7 @@ class Share_Controller extends Json_Controller {
 
 						$pixels = abs($marker['longitude']-$target['longitude']) + 
 							abs($marker['latitude']-$target['latitude']);
+
 						// echo $pixels."<BR>";
 						// If two markers are closer than defined distance, remove compareMarker from array and add to cluster.
 						if ($pixels < $distance)
@@ -134,7 +135,7 @@ class Share_Controller extends Json_Controller {
 				foreach ($clusters as $cluster)
 				{
 					// Calculate cluster center
-					$bounds = $this->_calculateCenter($cluster);
+					$bounds = $this->calculate_center($cluster);
 					$cluster_center = array_values($bounds['center']);
 					$southwest = $bounds['sw']['longitude'].','.$bounds['sw']['latitude'];
 					$northeast = $bounds['ne']['longitude'].','.$bounds['ne']['latitude'];
@@ -143,7 +144,7 @@ class Share_Controller extends Json_Controller {
 					$cluster_count = count($cluster);
 					
 					$link = "http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast;
-					$item_name = $this->_get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
+					$item_name = $this->get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
 					
 					$json_item = array();
 					$json_item['type'] = 'Feature';
@@ -164,11 +165,11 @@ class Share_Controller extends Json_Controller {
 
 					array_push($json_features, $json_item);
 				}
-
+				
 				foreach ($singles as $single)
 				{
 					$link = "http://".$sharing_url."reports/view/".$single['id'];
-					$item_name = $this->_get_title($single['incident_title'], $link);
+					$item_name = $this->get_title($single['incident_title'], $link);
 		
 					$json_item = array();
 					$json_item['type'] = 'Feature';
@@ -188,6 +189,7 @@ class Share_Controller extends Json_Controller {
 
 					array_push($json_features, $json_item);
 				}
+				
 			}
 			else
 			{
@@ -199,7 +201,7 @@ class Share_Controller extends Json_Controller {
 				foreach ($markers as $marker)
 				{
 					$link = "http://".$sharing_url."reports/view/".$marker->incident_id;
-					$item_name = $this->_get_title($marker->incident_title, $link);
+					$item_name = $this->get_title($marker->incident_title, $link);
 
 					$json_item = array();
 					$json_item['type'] = 'Feature';
@@ -221,7 +223,7 @@ class Share_Controller extends Json_Controller {
 			}
 
 			Event::run('ushahidi_filter.json_share_features', $json_features);
-
+			
 			$json = json_encode(array(
 				"type" => "FeatureCollection",
 				"features" => $json_features

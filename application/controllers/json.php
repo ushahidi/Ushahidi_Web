@@ -34,8 +34,12 @@ class Json_Controller extends Template_Controller {
 	 */
 	protected $table_prefix;
 
-	// Geometry data
+	/**
+	 * Geometry data
+	 * @var array
+	 */
 	private static $geometry_data = array();
+
 
 	public function __construct()
 	{
@@ -112,7 +116,7 @@ class Json_Controller extends Template_Controller {
 			}
 
 			$link = url::base()."reports/view/".$marker->incident_id;
-			$item_name = $this->_get_title($marker->incident_title, $link);
+			$item_name = $this->get_title($marker->incident_title, $link);
 
 			$json_item = array();
 			$json_item['type'] = 'Feature';
@@ -278,7 +282,7 @@ class Json_Controller extends Template_Controller {
 		foreach ($clusters as $cluster)
 		{
 			// Calculate cluster center
-			$bounds = $this->_calculateCenter($cluster);
+			$bounds = $this->calculate_center($cluster);
 			$cluster_center = array_values($bounds['center']);
 			$southwest = $bounds['sw']['longitude'].','.$bounds['sw']['latitude'];
 			$northeast = $bounds['ne']['longitude'].','.$bounds['ne']['latitude'];
@@ -757,7 +761,7 @@ class Json_Controller extends Template_Controller {
 	 * @param array $cluster
 	 * @return array - (center, southwest bound, northeast bound)
 	 */
-	private function _calculateCenter($cluster)
+	protected function calculate_center($cluster)
 	{
 		// Calculate average lat and lon of clustered items
 		$south = 90;
@@ -811,7 +815,7 @@ class Json_Controller extends Template_Controller {
 	 * @param string $url - URL to link to
 	 * @return string
 	 */
-	private function _get_title($title, $url)
+	protected function get_title($title, $url)
 	{
 		$encoded_title = utf8tohtml::convert($title, TRUE);
 		$encoded_title = str_ireplace('"','&#34;',$encoded_title);
