@@ -109,7 +109,7 @@ class Email_Api_Object extends Api_Object_Core {
 
         foreach ($items as $email)
         {
-            if ( $response_type == 'json')
+            if ( $response_type == 'json' OR $response_type == 'jsonp')
             {
                 $json_categories[] = array("email" => $item);        
             }
@@ -127,7 +127,7 @@ class Email_Api_Object extends Api_Object_Core {
             "count" => $json_categories),
             "error" => $this->api_service->get_error_msg(0));
 
-        if ($this->response_type == 'json') 
+        if ($this->response_type == 'json' OR $this->response_type == 'jsonp') 
         {
             $ret_json_or_xml = $this->array_as_json($data);
         }

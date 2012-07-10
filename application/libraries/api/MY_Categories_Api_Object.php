@@ -94,7 +94,7 @@ class Categories_Api_Object extends Api_Object_Core {
             $item->icon = $item->icon ? $url_prefix . $item->icon : '';
 
             // Needs different treatment depending on the output
-            if ($this->response_type == 'json')
+            if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
             {
                 $json_categories[] = array("category" => $item);
             } 
@@ -116,7 +116,7 @@ class Categories_Api_Object extends Api_Object_Core {
                 "error" => $this->api_service->get_error_msg(0)
         );
 
-        if ($this->response_type == 'json')
+        if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
         {
             $ret_json_or_xml = $this->array_as_json($data);
         } 
@@ -164,7 +164,7 @@ class Categories_Api_Object extends Api_Object_Core {
             $item->icon = $item->icon ? $url_prefix . $item->icon : '';
 
             //needs different treatment depending on the output
-            if ($this->response_type == 'json')
+            if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
             {
                 $json_categories[] = array("category" => $item);
             }
@@ -186,7 +186,7 @@ class Categories_Api_Object extends Api_Object_Core {
                 "error" => $this->api_service->get_error_msg(0)
         );
 
-        if ($this->response_type == 'json')
+        if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
         {
             $ret_json_or_xml = $this->array_as_json($data);
         }

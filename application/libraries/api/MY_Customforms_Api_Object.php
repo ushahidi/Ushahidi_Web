@@ -440,6 +440,6 @@ class CustomForms_Api_Object extends Api_Object_Core {
 	 */
 	private function _is_json()
 	{
-		return ($this->response_type == "json") ? TRUE : FALSE;
+		return ($this->response_type == "json" OR $this->response_type == "jsonp") ? TRUE : FALSE;
 	}
 }
