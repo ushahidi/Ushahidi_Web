@@ -297,7 +297,7 @@ class Json_Controller extends Template_Controller {
 			
 			// Build out the JSON string
 			$link = url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter;
-			$item_name = $this->_get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
+			$item_name = $this->get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
 			
 			$json_item = array();
 			$json_item['type'] = 'Feature';
@@ -322,7 +322,7 @@ class Json_Controller extends Template_Controller {
 		foreach ($singles as $single)
 		{
 			$link = url::base()."reports/view/".$single['id'];
-			$item_name = $this->_get_title($single['incident_title'], $link);
+			$item_name = $this->get_title($single['incident_title'], $link);
 			
 			$json_item = array();
 			$json_item['type'] = 'Feature';
@@ -401,7 +401,7 @@ class Json_Controller extends Template_Controller {
 			foreach ($neighbours as $row)
 			{
 				$link = url::base()."reports/view/".$row->id;
-				$item_name = $this->_get_title($row->incident_title, $link);
+				$item_name = $this->get_title($row->incident_title, $link);
 				
 				$json_item = array();
 				$json_item['type'] = 'Feature';
@@ -428,7 +428,7 @@ class Json_Controller extends Template_Controller {
 			{
 				// Single Main Incident
 				$link = url::base()."reports/view/".$marker->id;
-				$item_name = $this->_get_title($marker->incident_title, $link);
+				$item_name = $this->get_title($marker->incident_title, $link);
 	
 				$json_item = array();
 				$json_item['type'] = 'Feature';
@@ -652,7 +652,7 @@ class Json_Controller extends Template_Controller {
 
 				$title = ($item->geometry_label) ? $item->geometry_label : $incident_title;
 				$link =  url::base()."reports/view/".$incident_id;
-				$item_name = $this->_get_title($title, $link);
+				$item_name = $this->get_title($title, $link);
 					
 				$fillcolor = ($item->geometry_color) ? 
 					utf8tohtml::convert($item->geometry_color,TRUE) : "ffcc66";
