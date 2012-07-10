@@ -520,7 +520,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 			{
 				foreach ($category_items[$item->incident_id] as $category_item)
 				{
-					if ($this->response_type == 'json')
+					if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 					{
 						$json_report_categories[$item->incident_id][] = array(
 							"category"=> array(
@@ -551,7 +551,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 			{
 				foreach ($comment_items[$item->incident_id] as $comment_item)
 				{
-					if ($this->response_type == 'json')
+					if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 					{
 						$json_report_comments[$item->incident_id][] = array(
 							"comment"=> $comment_item
@@ -598,7 +598,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 							$url_prefix = '';
 						}
 
-						if($this->response_type == 'json')
+						if($this->response_type == 'json' OR $this->response_type == 'jsonp')
 						{
 							$json_report_media[$item->incident_id][] = array(
 								"id" => $media_item['mediaid'],
@@ -666,7 +666,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 			$xml->endElement(); // End incident
 
 			// Check for response type
-			if ($this->response_type == 'json')
+			if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 			{
 				$json_reports[] = array(
 					"incident" => array(
@@ -698,7 +698,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 			"error" => $this->api_service->get_error_msg(0)
 		);
 
-		if ($this->response_type == 'json')
+		if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 		{
 			return $this->array_as_json($data);
 
@@ -755,7 +755,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 		);
 
 		// Return data
-		$this->response_data =  ($this->response_type == 'json')
+		$this->response_data =  ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 			? $this->array_as_json($data)
 			: $this->array_as_xml($data, $replar);
 
@@ -833,7 +833,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 			break;
 		}
 
-		if ($this->response_type == 'json')
+		if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 		{
 			$json_count[] = array("count" => $count);
 		}
@@ -852,7 +852,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 			"error" => $this->api_service->get_error_msg(0)
 		);
 
-		$this->response_data = ($this->response_type == 'json')
+		$this->response_data = ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 			? $this->array_as_json($data)
 			: $this->array_as_xml($data, $this->replar);
 	}
@@ -881,7 +881,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 			break;
 		}
 
-		if ($this->response_type == 'json')
+		if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 		{
 			$json_latlon[] = array(
 				"latitude" => $latitude,
@@ -908,7 +908,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 		);
 
 		// Return data
-		$this->response_data =  ($this->response_type == 'json')
+		$this->response_data =  ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 			? $this->array_as_json($data)
 			: $this->array_as_xml($data, $replar);
 	}

@@ -34,8 +34,12 @@ class Json_Controller extends Template_Controller {
 	 */
 	protected $table_prefix;
 
-	// Geometry data
+	/**
+	 * Geometry data
+	 * @var array
+	 */
 	private static $geometry_data = array();
+
 
 	public function __construct()
 	{
@@ -112,7 +116,7 @@ class Json_Controller extends Template_Controller {
 			}
 
 			$link = url::base()."reports/view/".$marker->incident_id;
-			$item_name = $this->_get_title($marker->incident_title, $link);
+			$item_name = $this->get_title($marker->incident_title, $link);
 
 			$json_item = array();
 			$json_item['type'] = 'Feature';
@@ -278,7 +282,7 @@ class Json_Controller extends Template_Controller {
 		foreach ($clusters as $cluster)
 		{
 			// Calculate cluster center
-			$bounds = $this->_calculateCenter($cluster);
+			$bounds = $this->calculate_center($cluster);
 			$cluster_center = array_values($bounds['center']);
 			$southwest = $bounds['sw']['longitude'].','.$bounds['sw']['latitude'];
 			$northeast = $bounds['ne']['longitude'].','.$bounds['ne']['latitude'];
@@ -293,7 +297,7 @@ class Json_Controller extends Template_Controller {
 			
 			// Build out the JSON string
 			$link = url::base()."reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter;
-			$item_name = $this->_get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
+			$item_name = $this->get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
 			
 			$json_item = array();
 			$json_item['type'] = 'Feature';
@@ -318,7 +322,7 @@ class Json_Controller extends Template_Controller {
 		foreach ($singles as $single)
 		{
 			$link = url::base()."reports/view/".$single['id'];
-			$item_name = $this->_get_title($single['incident_title'], $link);
+			$item_name = $this->get_title($single['incident_title'], $link);
 			
 			$json_item = array();
 			$json_item['type'] = 'Feature';
@@ -397,7 +401,7 @@ class Json_Controller extends Template_Controller {
 			foreach ($neighbours as $row)
 			{
 				$link = url::base()."reports/view/".$row->id;
-				$item_name = $this->_get_title($row->incident_title, $link);
+				$item_name = $this->get_title($row->incident_title, $link);
 				
 				$json_item = array();
 				$json_item['type'] = 'Feature';
@@ -424,7 +428,7 @@ class Json_Controller extends Template_Controller {
 			{
 				// Single Main Incident
 				$link = url::base()."reports/view/".$marker->id;
-				$item_name = $this->_get_title($marker->incident_title, $link);
+				$item_name = $this->get_title($marker->incident_title, $link);
 	
 				$json_item = array();
 				$json_item['type'] = 'Feature';
@@ -648,7 +652,7 @@ class Json_Controller extends Template_Controller {
 
 				$title = ($item->geometry_label) ? $item->geometry_label : $incident_title;
 				$link =  url::base()."reports/view/".$incident_id;
-				$item_name = $this->_get_title($title, $link);
+				$item_name = $this->get_title($title, $link);
 					
 				$fillcolor = ($item->geometry_color) ? 
 					utf8tohtml::convert($item->geometry_color,TRUE) : "ffcc66";
@@ -757,7 +761,7 @@ class Json_Controller extends Template_Controller {
 	 * @param array $cluster
 	 * @return array - (center, southwest bound, northeast bound)
 	 */
-	private function _calculateCenter($cluster)
+	protected function calculate_center($cluster)
 	{
 		// Calculate average lat and lon of clustered items
 		$south = 90;
@@ -811,7 +815,7 @@ class Json_Controller extends Template_Controller {
 	 * @param string $url - URL to link to
 	 * @return string
 	 */
-	private function _get_title($title, $url)
+	protected function get_title($title, $url)
 	{
 		$encoded_title = utf8tohtml::convert($title, TRUE);
 		$encoded_title = str_ireplace('"','&#34;',$encoded_title);

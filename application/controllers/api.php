@@ -35,17 +35,27 @@ class Api_Controller extends Controller {
 
 		// Avoid caching
 		header("Cache-Control: no-cache, must-revalidate"); // HTTP/1.1
-		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the pas
+		header("Expires: Sat, 26 Jul 1997 05:00:00 GMT"); // Date in the past
 
-		if ($api_service->get_response_type() == 'xml')
+		$resp = '';
+		
+		if ($api_service->get_response_type() == 'jsonp')
+		{
+			header("Content-type: application/json; charset=utf-8");
+			$resp = $_GET['callback'].'('.$api_service->get_response().')';
+		}
+		elseif ($api_service->get_response_type() == 'xml')
 		{
 			header("Content-type: text/xml");    
+			$resp = $api_service->get_response();
 		}
 		else
 		{
 			header("Content-type: application/json; charset=utf-8");
+			$resp =  $api_service->get_response();
 		}
 
-		print $api_service->get_response();
+		print $resp;
+
 	}
 }

@@ -212,7 +212,7 @@ class Comments_Api_Object extends Api_Object_Core {
         
         foreach ($items as $list_item) 
         {
-            if ($this->response_type == "json") 
+            if ($this->response_type == "json" OR $this->response_type == "jsonp") 
             {
                 $json_item = (array) $list_item;
             }
@@ -810,7 +810,7 @@ class Comments_Api_Object extends Api_Object_Core {
 				foreach ($incident_comments as $comment)
 				{
 					// Needs different treatment depending on the output
-		            if ($this->response_type == 'json')
+		            if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 		            {
 		                $json_comments[] = array("comment" => $comment);
 		            } 
@@ -831,7 +831,7 @@ class Comments_Api_Object extends Api_Object_Core {
 		                "error" => $this->api_service->get_error_msg(0)
 		        );
 
-				$ret_json_or_xml = ($this->response_type == 'json')
+				$ret_json_or_xml = ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 					? $this->array_as_json($data)
 					: $this->array_as_xml($data, $this->replar);
 
@@ -885,7 +885,7 @@ class Comments_Api_Object extends Api_Object_Core {
 				foreach ($checkin_comments as $comment)
 				{
 					// Needs different treatment depending on the output
-		            if ($this->response_type == 'json')
+		            if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 		            {
 		                $json_comments[] = array("comment" => $comment);
 		            } 
@@ -906,7 +906,7 @@ class Comments_Api_Object extends Api_Object_Core {
 		                "error" => $this->api_service->get_error_msg(0)
 		        );
 
-				$ret_json_or_xml = ($this->response_type == 'json')
+				$ret_json_or_xml = ($this->response_type == 'json' OR $this->response_type == 'jsonp' )
 					? $this->array_as_json($data)
 					: $this->array_as_xml($data, $this->replar);
 
