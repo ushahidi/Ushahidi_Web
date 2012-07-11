@@ -88,7 +88,6 @@ Installation
     into a directory within your webserver's document root or your public HTML directory.
 
 * ####Ensure the following directories are writable (i.e. have their permission values set to 777)
-    - application/config/config.php
     - application/config
     - application/cache
     - application/logs
