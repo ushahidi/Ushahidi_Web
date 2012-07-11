@@ -83,9 +83,6 @@ class Themes_Core {
 	 */
 	public function requirements()
 	{
-		Requirements::clear();
-		Requirements::set_write_js_to_body(FALSE);
-		
 		Requirements::customHeadTags(Kohana::config("globalcode.head"),'globalcode-head');
 		
 		Requirements::js("media/js/jquery");

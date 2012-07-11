@@ -458,6 +458,15 @@ class Requirements_Backend {
 	 */
 	public $write_js_to_body = true;
 
+	public function __construct()
+	{
+		// Set up defaults from config file
+		$this->combine_js_with_jsmin = Kohana::config('requirements.combine_js_with_jsmin');
+		$this->set_suffix_requirements(Kohana::config('requirements.suffix_requirements'));
+		$this->set_combined_files_enabled(Kohana::config('requirements.combined_files_enabled'));
+		$this->set_write_js_to_body(Kohana::config('requirements.write_js_to_body'));
+	}
+
 	function set_combined_files_enabled($enable) {
 		$this->combined_files_enabled = (bool) $enable;
 	}
