@@ -1,4 +1,20 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.'); ?>
+<?php
+if (PHP_SAPI === 'cli')
+{
+	echo $error . ': ' . $message ."\n";
+	if ( ! empty($file))
+	{
+		echo "FILE: ".$file."\n";
+	}
+	if ( ! empty($line))
+	{
+		echo "LINE: ".$line."\n";
+	}
+	echo "ERROR: ".$message."\n";
+	exit();
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
@@ -25,7 +41,9 @@ echo html::script('media/js/bugs', true);
 <div id="loader"></div>
 <?php
 $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : "";
-$url = $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+$url = ( isset($_SERVER["SERVER_NAME"]) AND isset($_SERVER["REQUEST_URI"]) )
+	? $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"]
+	: '';
 $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : "";
 $ip_address = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : "";
 
