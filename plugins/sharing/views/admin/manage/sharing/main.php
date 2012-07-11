@@ -98,7 +98,7 @@
 													<?php
 													if($sharing_url)
 													{
-														?><li class="none-separator"><strong><?php echo text::auto_link("http://".$sharing_url); ?></strong></li><?php
+														?><li class="none-separator"><strong><?php echo text::auto_link($sharing_url); ?></strong></li><?php
 													}
 													?>
 												</ul>
