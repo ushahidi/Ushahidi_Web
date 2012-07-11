@@ -36,8 +36,8 @@ class Share_Controller extends Json_Controller {
 
 			if( ! $sharing->loaded)
 				throw new Kohana_404_Exception();
-			
-			$sharing_url = $sharing->sharing_url;
+
+			$sharing_url = sharing_helper::clean_url($sharing->sharing_url);
 			$sharing_color = $sharing->sharing_color;
 			
 			if ($clustering)
@@ -142,8 +142,7 @@ class Share_Controller extends Json_Controller {
 
 					// Number of Items in Cluster
 					$cluster_count = count($cluster);
-					
-					$link = "http://".$sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast;
+					$link = $sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast;
 					$item_name = $this->get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
 					
 					$json_item = array();
@@ -168,8 +167,8 @@ class Share_Controller extends Json_Controller {
 				
 				foreach ($singles as $single)
 				{
-					$link = "http://".$sharing_url."reports/view/".$single['id'];
-					$item_name = $this->get_title($single['incident_title'], $link);
+					$link = $sharing_url."reports/view/".$single['id'];
+					$item_name = $this->get_title(html::specialchars(strip_tags($single['incident_title'])), $link);
 		
 					$json_item = array();
 					$json_item['type'] = 'Feature';
@@ -200,7 +199,7 @@ class Share_Controller extends Json_Controller {
 
 				foreach ($markers as $marker)
 				{
-					$link = "http://".$sharing_url."reports/view/".$marker->incident_id;
+					$link = $sharing_url."reports/view/".$marker->incident_id;
 					$item_name = $this->get_title($marker->incident_title, $link);
 
 					$json_item = array();

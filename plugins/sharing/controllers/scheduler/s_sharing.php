@@ -29,7 +29,7 @@ class S_Sharing_Controller extends Controller {
 
 		foreach ($shares as $share)
 		{
-			$sharing_url = "http://".$share->sharing_url;
+			$sharing_url = $share->sharing_url;
 
 			$this->_parse_json($share->id, $sharing_url);
 		}
@@ -57,7 +57,7 @@ class S_Sharing_Controller extends Controller {
 			$api_url = "/api?task=incidents&limit=".$limit."&resp=json&orderfield=incidentid&sort=0&by=sinceid&id=".$since_id;
 
 			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL,$sharing_url.$api_url);
+			curl_setopt($ch,CURLOPT_URL, sharing_helper::clean_url($sharing_url).$api_url);
 			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
 			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
 			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);

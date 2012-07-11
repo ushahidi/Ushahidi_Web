@@ -80,6 +80,12 @@ class System_Api_Object extends Api_Object_Core {
 		foreach($plugins as $plugin){
 			$active_plugins[] = $plugin->plugin_name;
 		}
+		
+		$features = array(
+			'admin_reports_v2' => TRUE,
+			'api_key' => FALSE,
+		);
+		
 
         // Create the json array
         $data = array(
@@ -89,7 +95,8 @@ class System_Api_Object extends Api_Object_Core {
                 "checkins" => Kohana::config('settings.checkins'),
                 "email" => Kohana::config('settings.site_email'),
                 "sms" => Kohana::config('settings.sms_no1'),
-                "plugins" => $active_plugins
+                "plugins" => $active_plugins,
+                "features" => $features,
                 ),
             "error" => $this->api_service->get_error_msg(0)
         );

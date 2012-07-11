@@ -70,6 +70,11 @@ class Sharing_Install {
 			{
 				$this->db->query($query);
 			}
+			
+			// Update sharing urls to include http://
+			$this->db->query("
+			UPDATE `".Kohana::config('database.default.table_prefix')."sharing` SET sharing_url = CONCAT('http://', sharing_url) WHERE sharing_url NOT LIKE '%http%';
+			");
 
     
 	}
