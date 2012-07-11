@@ -481,8 +481,12 @@
 			
 			var markers = null;
 			
+			if (options == undefined) {
+				options = {};
+			}
+			
 			// Check for the style map
-			if (options.styleMap) {
+			if (options.styleMap != undefined) {
 
 				// Create vector layer
 				markers = new OpenLayers.Layer.Vector("default", {
@@ -495,7 +499,7 @@
 			} else {
 				markers = new OpenLayers.Layer.Markers("default");
 				markers.addMarker(new OpenLayers.Marker(this._olMap.getCenter()));
-			}			
+			}
 
 			// Add the layer to the map
 			this._olMap.addLayer(markers);
