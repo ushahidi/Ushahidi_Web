@@ -100,7 +100,7 @@ class customforms_Core {
 		unset ($form_fields);
 
 		// Check if the provided incident exists, then fill in the data
-		if (Incident_Model::is_valid_incident($incident_id))
+		if (Incident_Model::is_valid_incident($incident_id, FALSE))
 		{
 			// Overwrite the previous query
 			$sql = "SELECT ff.*, fr.form_response "
