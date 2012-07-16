@@ -25,7 +25,7 @@
 					
 					<!-- box -->
 					<div class="box">
-						<h3><?php echo Kohana::lang('ui_main.reports');?> <?php echo Kohana::lang('ui_main.reports_timeline');?></h3>
+						<h3><?php echo Kohana::lang('ui_main.reports_timeline');?></h3>
 						<ul class="inf" style="margin-bottom:10px;">
 							<li class="none-separator"><?php echo Kohana::lang('ui_main.view');?>:<a href="<?php print url::site() ?>admin/dashboard/?range=1"><?php echo Kohana::lang('ui_main.today');?></a></li>
 							<li><a href="<?php print url::site() ?>admin/dashboard/?range=31"><?php echo Kohana::lang('ui_main.past_month');?></a></li>

@@ -97,7 +97,7 @@
 					</td>
 				</tr>
 			</table>
-			<input id="save_only" type="image" src="<?php print url::file_loc('img'); ?>media/img/admin/btn-download.gif" class="save-rep-btn" />
+			<input id="save_only" type="submit" value="<?php echo utf8::strtoupper(Kohana::lang('ui_main.download'));?>" class="save-rep-btn" />
 			<?php print form::close(); ?>
 		</div>
 	</div>
