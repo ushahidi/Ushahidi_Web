@@ -29,7 +29,7 @@ class Profile_Controller extends Main_Controller {
 		$this->is_cachable = TRUE;
 
 		$this->template->header->this_page = 'profile';
-		$this->template->content = new View('profile_browse');
+		$this->template->content = new View('profile/main');
 
 		$this->template->content->users = User_Model::get_public_users();
 
@@ -68,7 +68,7 @@ class Profile_Controller extends Main_Controller {
 		// We only want to show public profiles here
 		if($user->public_profile == 1)
 		{
-			$this->template->content = new View('profile');
+			$this->template->content = new View('profile/user');
 
 			$this->template->content->user = $user;
 
