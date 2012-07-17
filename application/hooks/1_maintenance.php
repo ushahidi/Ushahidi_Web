@@ -15,6 +15,7 @@ if (php_sapi_name() == 'cli')
 	$_SERVER['SERVER_PROTOCOL'] = "HTTP/1.1";
 	$_SERVER['HTTP_HOST'] = 'localhost';
 	$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+	$_SERVER['REQUEST_URI'] = Router::$current_uri;
 }
 
 // Grab the IP address in case we need to use it for maintenance mode
