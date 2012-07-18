@@ -191,7 +191,7 @@ class category_Core {
 				$category_data[$category->id] = array(
 					'category_id' => $category->id,
 					'category_title' => Category_Lang_Model::category_title($category->id),
-					'category_description' => Category_Lang_Model::category_description($category->id, Kohana::config('locale.language.0')),
+					'category_description' => Category_Lang_Model::category_description($category->id),
 					'category_color' => $category->category_color,
 					'category_image' => $category->category_image,
 					'children' => $children,
@@ -206,7 +206,17 @@ class category_Core {
 				// If we haven't processed the parent yet, add placeholder parent category
 				if (! array_key_exists($category->parent_id, $category_data))
 				{
-					$category_data[$category->parent_id] = array('children' => array(), 'report_count' => 0);
+					$category_data[$category->parent_id] = array(
+						'category_id' => $category->parent_id,
+						'category_title' => '',
+						'category_description' => '',
+						'parent_id' => 0,
+						'category_color' => '',
+						'category_image' => '',
+						'category_image_thumb' => '',
+						'children' => array(),
+						'report_count' => 0
+					);
 				}
 				
 				// Add children

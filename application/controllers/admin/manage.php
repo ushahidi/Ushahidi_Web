@@ -379,6 +379,7 @@ class Manage_Controller extends Admin_Controller
 		$categories = ORM::factory('category')
 						->with('category_lang')
 						->where('parent_id','0')
+						->orwhere('parent_id NOT IN (SELECT id from `'.Kohana::config('database.default.table_prefix').'category`)') // Find orphaned categories.. slightly horrible SQL
 						->orderby('category_title', 'asc')
 						->find_all($this->items_per_page, $pagination->sql_offset);
 
