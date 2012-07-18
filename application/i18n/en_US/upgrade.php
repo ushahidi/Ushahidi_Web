@@ -23,7 +23,7 @@
 	'upgrade_tables' => '<strong>Step 3:</strong> Look inside the <strong>sql</strong> folder. Manuall run the upgrade<xx>-<xx>.sql file starting from the current db version of your install through to the final sql upgrade file.',
 	'upgrade_text_5' => '<strong>Step 4:</strong> Click on the <strong>"Continue"</strong> button to upgrade the necessary tables.',
 	'upgrade_text_6' => 'For automatic upgrade, click on the button below.',
-	'upgrade_title_text' => 'You are currently using Ushahidi v%d with database version %d running on %s',
+	'upgrade_title_text' => 'You are currently using Ushahidi v%s with database version %d running on %s',
 	'upgrading' => 'Upgrading',
 	'upgrade_ftp_text' => 'To continue with the easy upgrade, the following information is required for the FTP server that your website is hosted on.',
 	'upgrade_ftp_hostname' => 'FTP Hostname: <span>Example: "localhost"</span>',
