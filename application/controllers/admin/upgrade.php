@@ -342,7 +342,12 @@ class Upgrade_Controller extends Admin_Controller {
 	
 		foreach ($queries as $query)
 		{
-			$result = $this->db->query($query);
+			// Trim whitespace and make sure we're not running an empty query (for example from the new line after the last query.)
+			$query = trim($query);
+			if (!empty($query))
+			{
+				$result = $this->db->query($query);
+			}
 		}
 			
 		// Delete cache
@@ -357,34 +362,42 @@ class Upgrade_Controller extends Admin_Controller {
 	 */
 	private function _process_db_upgrade($dir_path)
 	{
-	
-		$upgrade_sql = '';
-
-		$files = scandir($dir_path);
-		sort($files);
-		foreach ( $files as $file )
+		$file = $dir_path . $this->_get_next_db_upgrade();
+		while ( file_exists($file) )
 		{
-			// We're going to try and execute each of the sql files in order
-			$file_ext = strrev(substr(strrev($file),0,4));
-			if ($file_ext == ".sql")
-			{
-				$this->upgrade->logger("Database imported ".$dir_path.$file);
-				$this->_execute_upgrade_script($dir_path.$file);
-			}
+			$this->upgrade->logger("Database imported ".$file);
+			$this->_execute_upgrade_script($file);
+			
+			// Get the next file
+			$file = $dir_path . $this->_get_next_db_upgrade();
 		}
 		return "";
 	}
 	
 	/**
-	 * Gets the current db version of the ushahidi deployment.
+	 * Gets the file name for the next db upgrade script
 	 * 
 	 * @return the db version.
 	 */
-	private function _get_db_version()
+	private function _get_next_db_upgrade()
 	{
-			
 		// get the db version from the settings page
-		$version_in_db = Settings_Model::get_setting('db_version');
+		try {
+			$version_in_db = Settings_Model::get_setting('db_version');
+		}
+		// Catch error from old settings table, and use query for old settings schema
+		catch (Exception $e)
+		{
+			$query = Database::instance()->query('SELECT db_version FROM '.Kohana::config('database.default.table_prefix').'settings LIMIT 1');
+			$query = $query->result();
+			$version_in_db = $query->db_version;
+		}
+		
+		// Special case for really old Ushahidi version
+		if ($version_in_db < 11)
+		{
+			return 'upgrade.sql';
+		}
 		
 		// Update DB
 		$db_version = $version_in_db;
