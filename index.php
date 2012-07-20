@@ -115,12 +115,12 @@ define('KOHANA',  basename(__FILE__));
 is_link(KOHANA) and chdir(dirname(realpath(__FILE__)));
 
 // Define application and system paths
-define('APPPATH', realpath($kohana_application).DIRECTORY_SEPARATOR);
-define('THEMEPATH', realpath($kohana_themes).DIRECTORY_SEPARATOR);
-define('PLUGINPATH', realpath($kohana_plugins).DIRECTORY_SEPARATOR);
-define('MODPATH', realpath($kohana_modules).DIRECTORY_SEPARATOR);
-define('SYSPATH', realpath($kohana_system).DIRECTORY_SEPARATOR);
-define('MEDIAPATH', realpath($kohana_media).DIRECTORY_SEPARATOR);
+define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
+define('THEMEPATH', str_replace('\\', '/', realpath($kohana_themes)).'/');
+define('PLUGINPATH', str_replace('\\', '/', realpath($kohana_plugins)).'/');
+define('MODPATH', str_replace('\\', '/', realpath($kohana_modules)).'/');
+define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).'/');
+define('MEDIAPATH', str_replace('\\', '/', realpath($kohana_media)).'/');
 
 // Clean up
 unset($kohana_application, $kohana_themes, $kohana_plugins, $kohana_modules, $kohana_system, $kohana_media);
