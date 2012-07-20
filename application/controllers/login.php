@@ -191,7 +191,7 @@ class Login_Controller extends Template_Controller {
 				// populate the error fields, if any
 				// We need to already have created an error message file, for Kohana to use
 				// Pass the error message file name to the errors() method
-				$errors = arr::overwrite($errors, $post->errors('auth'));
+				$errors = arr::merge($errors, $post->errors('auth'));
 				$form_error = TRUE;
 
 			}
@@ -203,7 +203,7 @@ class Login_Controller extends Template_Controller {
 				// populate the error fields, if any
 				// We need to already have created an error message file, for Kohana to use
 				// Pass the error message file name to the errors() method
-				$errors = arr::overwrite($errors, $post->errors('auth'));
+				$errors = arr::merge($errors, $post->errors('auth'));
 				$form_error = TRUE;
 			}
 
@@ -271,7 +271,7 @@ class Login_Controller extends Template_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('auth'));
+				$errors = arr::merge($errors, $post->errors('auth'));
 				$form_error = TRUE;
 			}
 
@@ -346,7 +346,7 @@ class Login_Controller extends Template_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('auth'));
+				$errors = arr::merge($errors, $post->errors('auth'));
 				$form_error = TRUE;
 			}
 
@@ -386,7 +386,7 @@ class Login_Controller extends Template_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('auth'));
+				$errors = arr::merge($errors, $post->errors('auth'));
 				$form_error = TRUE;
 			}
 
@@ -439,7 +439,7 @@ class Login_Controller extends Template_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('auth'));
+				$errors = arr::merge($errors, $post->errors('auth'));
 				$form_error = TRUE;
 			}
 		}
