@@ -271,7 +271,7 @@
 				<div style="clear:both;"></div>
 				<div class="info-buttons">
 					<a class="button" href="<?php echo url::site().'admin/manage/publiclisting'; ?>">
-						<?php echo Kohana::lang('ui_admin.manage_your'); ?> <?php echo Kohana::lang('ui_admin.public_listing'); ?>
+						<?php echo Kohana::lang('ui_admin.manage_public_listing'); ?>
 					</a>
 				</div>
 			</div>
