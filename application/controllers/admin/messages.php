@@ -305,21 +305,21 @@ class Messages_Controller extends Admin_Controller {
 					}
 
 					// Load Users Settings
-					$settings = new Settings_Model(1);
-					if ($settings->loaded == TRUE)
+					$settings = Settings_Model::get_array();
+					if ( !empty($settings))
 					{
 						// Get SMS Numbers
-						if ( ! empty($settings->sms_no3))
+						if ( ! empty($settings['sms_no1']))
 						{
-							$sms_from = $settings->sms_no3;
+							$sms_from = $settings['sms_no1'];
 						}
-						elseif ( ! empty($settings->sms_no2))
+						elseif ( ! empty($settings['sms_no2']))
 						{
-							$sms_from = $settings->sms_no2;
+							$sms_from = $settings['sms_no2'];
 						}
-						elseif ( ! empty($settings->sms_no1))
+						elseif ( ! empty($settings['sms_no3']))
 						{
-							$sms_from = $settings->sms_no1;
+							$sms_from = $settings['sms_no3'];
 						}
 						else
 						{
