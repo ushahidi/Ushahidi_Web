@@ -282,19 +282,21 @@ class admin_Core {
 	
 	/**
 	 * Legacy permissions check
-	 * Use Auth::has_permission() instead.
+	 * @deprecated Use Auth::has_permission() instead.
 	 */
 	public function permissions($user = FALSE, $permission = FALSE)
 	{
+		Kohana::log('alert', 'admin::permissions() in deprecated and replaced by Auth::has_permission()');
 		return Auth::instance()->has_permission($permission, $user);
 	}
 	
 	/**
 	 * Legacy admin access check
-	 * Use Auth::admin_access() instead.
+	 * @deprecated Use Auth::admin_access() instead.
 	 */
 	public function admin_access($user = FALSE)
 	{
+		Kohana::log('alert', 'admin::admin_access() in deprecated and replaced by Auth::admin_access()');
 		return Auth::instance()->admin_access($user);
 	}
 }
