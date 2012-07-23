@@ -134,6 +134,7 @@
 	'help' => 'help',
 	'hourly' => 'Hourly',
 	'incident_feed' => 'Incident feed for',
+	'installer_info' => 'Please delete the installer folder. It is  vulnerable to security hacks.',
 	'instance' => 'Instance',
 	'instances' => 'Instances',
 	'instance_details' => 'Instance Details',

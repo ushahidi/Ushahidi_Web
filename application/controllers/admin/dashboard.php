@@ -126,6 +126,17 @@ class Dashboard_Controller extends Admin_Controller
 		{
 			$this->template->content->security_info = View::factory('admin/security_info');
 		}
+
+		// Render Installer files check ---files should be deleted once installation is complete
+		$this->template->content->installer_info = NULL;
+		if (file_exists(DOCROOT.DIRECTORY_SEPARATOR.'installer'))
+		{
+			$this->template->content->installer_info = View::factory('admin/installer_info');
+				
+		}
+	
+
+
 		
 	}
 }
