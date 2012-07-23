@@ -159,6 +159,7 @@
 	'manage_roles' => 'Manage Roles & Permissions',
 	'manage_users' => 'View Users',
 	'manage_users_edit' => 'Add/Edit Users',
+	'manage_public_listing' => 'Manage Your Public Listing',
 	'mark_as' => 'Mark As',
 	'marked_as_not_spam' => 'marked as not spam',
 	'marked_as_spam' => 'marked as spam',
