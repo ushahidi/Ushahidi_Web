@@ -26,7 +26,7 @@ else
 
 $maintenance = FALSE;
 $db = Database::instance();
-$maintenance_ips = $db->query("SELECT `allowed_ip` FROM `maintenance`;");
+$maintenance_ips = $db->query("SELECT `allowed_ip` FROM `".Kohana::config('database.default.table_prefix')."maintenance`;");
 foreach ($maintenance_ips as $row)
 {
 	// Assume we will be in maintenance mode now
