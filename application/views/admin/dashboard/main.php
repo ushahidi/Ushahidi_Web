@@ -19,7 +19,6 @@
 				<div id="need_to_upgrade" style="display:none;"></div>
 				<?php echo $version_sync; ?>
 				<?php echo $security_info; ?>
-				<?php echo $installer_info; ?>
 				
 				<!-- column -->
 				<div class="column">

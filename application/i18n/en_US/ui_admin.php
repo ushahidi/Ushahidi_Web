@@ -136,7 +136,7 @@
 	'help' => 'help',
 	'hourly' => 'Hourly',
 	'incident_feed' => 'Incident feed for',
-	'installer_info' => 'Please delete the installer folder. It is  vulnerable to security hacks.',
+	'installer_info' => 'The installer folder still exists. Delete the installer folder. It is a potential security vulnerability.',
 	'instance' => 'Instance',
 	'instances' => 'Instances',
 	'instance_details' => 'Instance Details',
