@@ -136,6 +136,7 @@
 	'help' => 'help',
 	'hourly' => 'Hourly',
 	'incident_feed' => 'Incident feed for',
+	'installer_info' => 'The installer folder still exists. Delete the installer folder. It is a potential security vulnerability.',
 	'instance' => 'Instance',
 	'instances' => 'Instances',
 	'instance_details' => 'Instance Details',

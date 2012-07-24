@@ -31,7 +31,7 @@
 						<tr>
 							<th scope="row"><label for="default_map">Map Provider</label></th>
 							<td>
-								<select name="default_map">
+								<select name="default_map" id="default_map">
 									<option selected="selected">--Select Map Provider</option>
 									<option value="osm_mapnik" url="http://www.openstreetmap.org/user/new">OpenStreetMap</option>
 									<option value="google_normal" url="https://developers.google.com/maps/signup">Google</option>
@@ -65,9 +65,7 @@
 			if ($(this).val() == "" || $(this).val() == null)
 				return;
 				
-			if ($(this).val() == 'osm_mapnink') {
-				$("#api_key_row").hide();
-			} else {
+			if ($(this).val() == 'bing_road') {
 				var providerTitle = $(":selected", this).text();
 				var labelHTML = "<span>"+providerTitle+"</span> API Key";
 				$("#api_key_row").show();
@@ -76,6 +74,10 @@
 				// Get the url
 				$("#api-link").attr({href: $(":selected", this).attr("url")});
 				$("#map-provider-title").html(providerTitle);
+
+			} else {
+
+				$("#api_key_row").hide();
 			}
 		});
 	});

@@ -639,16 +639,20 @@ class Installer_Wizard {
 			$find = array(
 				'CREATE TABLE IF NOT EXISTS `',
 				'INSERT INTO `',
+				'INSERT IGNORE INTO `',
 				'ALTER TABLE `',
 				'UPDATE `',
-				'DELETE FROM `'
+				'DELETE FROM `',
+				'LOCK TABLES `',
 			);
 			$replace = array(
-				'CREATE TABLE IF NOT EXISTS `'.$table_prefix.'_',
-				'INSERT INTO `'.$table_prefix.'_',
-				'ALTER TABLE `'.$table_prefix.'_',
-				'UPDATE `'.$table_prefix.'_',
-				'DELETE FROM `'.$table_prefix.'_'
+				'CREATE TABLE IF NOT EXISTS `'.$table_prefix,
+				'INSERT INTO `'.$table_prefix,
+				'INSERT IGNORE INTO `'.$table_prefix,
+				'ALTER TABLE `'.$table_prefix,
+				'UPDATE `'.$table_prefix,
+				'DELETE FROM `'.$table_prefix,
+				'LOCK TABLES `'.$table_prefix,
 			);
 		
 			$schema_ddl = str_replace($find, $replace, $schema_ddl);
@@ -743,7 +747,8 @@ class Installer_Wizard {
 					'user' => $params['username'],
 					'pass' => $params['password'],
 					'host' => $params['host'],
-					'database' => $params['database_name']
+					'database' => $params['database_name'],
+					'table_prefix' => $params['table_prefix']
 				);
 				
 				foreach ($template_file as $line_no => $line)
@@ -989,11 +994,11 @@ class Installer_Wizard {
 	public static function install_map()
 	{
 		extract($_POST);
-		$exempt_providers = array('osm_mapnik');
+		$api_key_mapping = array('bing_road' => 'api_live');
 		
-		$api_key_mapping = array(
-			'google_normal' => 'api_google',
-			'bing_road' => 'api_live'
+		$exempt_providers = array(
+			'google_normal',
+			'osm_mapnik'
 		);
 		
 		if (empty($default_map))
@@ -1010,7 +1015,7 @@ class Installer_Wizard {
 		
 		$settings_keys = array("'default_map'");
 		
-		// Check for BingMaps and Google API Key
+		// Check for BingMaps API Key
 		if ( ! in_array($default_map, $exempt_providers))
 		{
 			// Check for the API key
@@ -1020,7 +1025,7 @@ class Installer_Wizard {
 
 				array_push($settings_keys, "'" + $setting_id + "'");
 				
-				$query .= sprinf("WHEN '%s' THEN '%s'", $setting_id, $api_key);
+				$query .= sprintf("WHEN '%s' THEN '%s'", $setting_id, $api_key);
 			}
 			else
 			{
