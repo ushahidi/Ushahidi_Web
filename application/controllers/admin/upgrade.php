@@ -321,15 +321,21 @@ class Upgrade_Controller extends Admin_Controller {
 			$find = array(
 				'CREATE TABLE IF NOT EXISTS `',
 				'INSERT INTO `',
+				'INSERT IGNORE INTO `',
 				'ALTER TABLE `',
-				'UPDATE `'
+				'UPDATE `',
+				'DELETE FROM `',
+				'LOCK TABLES `',
 			);
 			
 			$replace = array(
-				'CREATE TABLE IF NOT EXISTS `'.$table_prefix.'_',
-				'INSERT INTO `'.$table_prefix.'_',
-				'ALTER TABLE `'.$table_prefix.'_',
-				'UPDATE `'.$table_prefix.'_'
+				'CREATE TABLE IF NOT EXISTS `'.$table_prefix,
+				'INSERT INTO `'.$table_prefix,
+				'INSERT IGNORE INTO `'.$table_prefix,
+				'ALTER TABLE `'.$table_prefix,
+				'UPDATE `'.$table_prefix,
+				'DELETE FROM `'.$table_prefix,
+				'LOCK TABLES `'.$table_prefix,
 			);
 			
 			$upgrade_schema = str_replace($find, $replace, $upgrade_schema);
