@@ -543,12 +543,14 @@
 	 * Log Messages To File
 	 */
 	public function logger($message)
-	{
-		$message = date("Y-m-d H:i:s")." : ".$message;
-		$message .= "\n";
+    {
+        $filter_crlf = array("\n", "\r");
+        $message = date("Y-m-d H:i:s")." : ".$message;
+        $mesg = str_replace($filter_crlf,'',$message);
+		$mesg .= "\n";
 		$logfile = DOCROOT."application/logs/upgrade_".$this->session->get('upgrade_session').".txt";
 		$logfile = fopen($logfile, 'a+');
-		fwrite($logfile, $message);
+		fwrite($logfile, $mesg);
 		fclose($logfile);
 	}	
  }
