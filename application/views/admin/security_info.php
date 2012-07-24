@@ -29,6 +29,10 @@ if ( Kohana::config('config.enable_security_info') == TRUE)
 	{
 		$warnings[] = "<li>". Kohana::lang('ui_admin.security_info_https'). "</li>";
 	}
+	if (file_exists(DOCROOT.DIRECTORY_SEPARATOR.'installer'))
+	{
+		$warnings[] = "<li>" .Kohana::lang('ui_admin.installer_info'). "</li>";
+	}
 	
 	if (count($warnings) > 0) 
 	{ ?>
