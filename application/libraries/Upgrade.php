@@ -87,7 +87,15 @@
 		$this->ftp->chdir($ftp_base_path);
 		
 		if (is_file($source))
-		{	
+		{
+			// Skip ushahidi.zip
+			if (strpos($source, 'ushahidi.zip') !== FALSE)
+			{
+				$this->success = true;
+				$this->logger("Skipping file to ".$source);
+				return;
+			}
+			
 			$__dest=$dest;
 			
 			// Turn off error reporting temporarily
