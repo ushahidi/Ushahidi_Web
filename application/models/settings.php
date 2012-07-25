@@ -29,9 +29,9 @@ class Settings_Model extends ORM {
 	 * Check if settings table is still using old schema
 	 * @return bool
 	 */
-	protected static function new_schema()
+	protected static function new_schema($force = FALSE)
 	{
-		return array_key_exists('key', ORM::factory('settings')->reload_columns()->table_columns);
+		return array_key_exists('key', ORM::factory('settings')->reload_columns($force)->table_columns);
 	}
 	
 	/**
@@ -51,7 +51,7 @@ class Settings_Model extends ORM {
 		}
 		else
 		{
-			$setting = Database::instance()->query('SELECT * FROM `'.Kohana::config('database.default.table_prefix').'settings` LIMIT 1', $key)->result();
+			$setting = Database::instance()->query('SELECT * FROM `'.Kohana::config('database.default.table_prefix').'settings` LIMIT 1', $key)->current();
 			return isset($setting->$key) ? $setting->$key : NULL;
 		}
 	}

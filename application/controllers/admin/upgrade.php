@@ -217,9 +217,9 @@ class Upgrade_Controller extends Admin_Controller {
 			
 			if (empty($error))
 			{
-				if (file_exists($working_dir."/ushahidi/sql"))
+				if (file_exists(DOCROOT."sql/"))
 				{
-					$this->_process_db_upgrade($working_dir."ushahidi/sql/");
+					$this->_process_db_upgrade(DOCROOT."sql/");
 				}
 				$this->upgrade->logger("Database backup and upgrade successful.");
 				echo json_encode(array("status"=>"success", "message"=>Kohana::lang('upgrade.backup_success')));
@@ -235,10 +235,10 @@ class Upgrade_Controller extends Admin_Controller {
 		// Database UPGRADE ONLY
 		if ($step == 5)
 		{
-			if (file_exists($working_dir."ushahidi/sql"))
+			if (file_exists(DOCROOT."sql/"))
 			{
 				//upgrade tables
-				$this->_process_db_upgrade($working_dir."ushahidi/sql/");
+				$this->_process_db_upgrade(DOCROOT."sql/");
 				$this->upgrade->logger("Database upgrade successful.");
 				echo json_encode(array("status"=>"success", "message"=>Kohana::lang('upgrade.dbupgrade_success')));
 			}
@@ -452,9 +452,11 @@ class Upgrade_Controller extends Admin_Controller {
 	 */
 	private function _process_db_upgrade($dir_path)
 	{
+		ini_set('max_execution_time', 300);
+		
 		$file = $dir_path . $this->_get_next_db_upgrade();
 		$this->upgrade->logger("Looking for update file: ".$file);
-		while ( file_exists($file) )
+		while ( file_exists($file) AND is_file($file) )
 		{
 			$this->upgrade->logger("Database imported ".$file);
 			$this->_execute_upgrade_script($file);
@@ -463,7 +465,7 @@ class Upgrade_Controller extends Admin_Controller {
 			$file = $dir_path . $this->_get_next_db_upgrade();
 			$this->upgrade->logger("Looking for update file: ".$file);
 		}
-		return "";
+		return;
 	}
 	
 	/**
@@ -473,8 +475,26 @@ class Upgrade_Controller extends Admin_Controller {
 	 */
 	private function _get_next_db_upgrade()
 	{
-		// get the db version from the settings page
-		$version_in_db = Settings_Model::get_setting('db_version');
+		// Make sure we recheck the settings schema between updates
+		Settings_Model::new_schema(TRUE);
+		
+		// get the db version from the settings
+		try
+		{
+			$query = Database::instance()->query('SELECT `value` FROM '.Kohana::config('database.default.table_prefix').'settings WHERE `key` = \'db_version\' LIMIT 1')->current();
+			$version_in_db = $query->value;
+		}
+		catch (Exception $e)
+		{
+			$query = Database::instance()->query('SELECT `db_version` FROM '.Kohana::config('database.default.table_prefix').'settings LIMIT 1')->current();
+			$version_in_db = $query->db_version;
+		}
+		
+		// Just in case we get a DB fail.
+		if ($version_in_db == NULL)
+		{
+			return FALSE;
+		}
 		
 		// Special case for really old Ushahidi version
 		if ($version_in_db < 11)
@@ -598,11 +618,11 @@ class Upgrade_Controller extends Admin_Controller {
 			unlink($tmpnam);
 		}
 		else
-		{		 
+		{
 			passthru($command, $error);
 		}
-				   
-		return $error;	
+		
+		return $error;
 	}
 	
 	/**
