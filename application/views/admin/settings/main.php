@@ -60,7 +60,7 @@
 										<div id="city_count"></div>
 									</div>
 									<div>
-										<?php echo Kohana::lang('settings.multiple_countries');?>?<br />
+										<?php echo Kohana::lang('settings.multiple_countries');?><br />
 										<input type="radio" name="multi_country" value="1"
 										<?php if ($form['multi_country'] == 1)
 										{
@@ -102,19 +102,22 @@
 									</span>
 								</div>
 	
-								<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 2: </span>
-								<span class="dark_span"><?php echo Kohana::lang('settings.map_provider.get_api');?></span><br />
-								<div class="c_push">
-									<a href="http://code.google.com/apis/maps/signup.html" id="api_link" title="Get API Key">
-										<img src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-get-api-key.gif" border="0" alt="Get API Key">
-									</a>
-								</div>
-								
-								<div id="api_div_google" <?php if ($form['default_map'] != 1 AND $form['default_map'] != 4) echo "style=\"display:none\""; ?>>
-									<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 3: </span>
-									<span class="dark_span"><?php echo Kohana::lang('settings.map_provider.enter_api');?></span><br />
-									<div class="c_push">
-										<?php print form::input('api_google', $form['api_google'], ' class="text"'); ?>
+								<div id="api_key_div" <?php if (strpos($form['default_map'],'bing') === FALSE) echo "style=\"display:none\""; ?>>
+									<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 2: </span>
+									<span class="dark_span"><?php echo Kohana::lang('settings.map_provider.get_api');?></span><br />
+									
+									<div class="c_push api_key_div">
+										<a href="https://www.bingmapsportal.com/" id="api_link" title="Get API Key">
+											<img src="<?php echo url::file_loc('img'); ?>media/img/admin/btn-get-api-key.gif" border="0" alt="Get API Key">
+										</a>
+									</div>
+									
+									<div class="api_key_div">
+										<span class="blue_span"><?php echo Kohana::lang('ui_main.step');?> 3: </span>
+										<span class="dark_span"><?php echo Kohana::lang('settings.map_provider.enter_api');?></span><br />
+										<div class="c_push">
+											<?php print form::input('api_live', $form['api_live'], ' class="text"'); ?>
+										</div>
 									</div>
 								</div>
 							</div>
