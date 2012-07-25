@@ -42,7 +42,7 @@
 	 */
     public function download_ushahidi($url) {
         $http_client = new HttpClient($url,30);
-        $results = $http_client->fetch_url();
+        $results = $http_client->execute();
 		$this->log[] = "Starting to download the latest ushahidi build...";
 		
 		if ( $results) 
