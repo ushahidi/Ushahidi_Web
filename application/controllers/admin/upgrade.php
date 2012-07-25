@@ -186,7 +186,7 @@ class Upgrade_Controller extends Admin_Controller {
 		if ($step == 3)
 		{
 			//copy files
-			$this->upgrade->ftp_recursively($working_dir."ushahidi/",DOCROOT);
+			$this->upgrade->ftp_recursively($working_dir,DOCROOT);
 			
 			//copying was successful
 			if ($this->upgrade->success)
@@ -212,9 +212,9 @@ class Upgrade_Controller extends Admin_Controller {
 			
 			if (empty($error))
 			{
-				if (file_exists($working_dir."/ushahidi/sql"))
+				if (file_exists($working_dir."sql"))
 				{
-					$this->_process_db_upgrade($working_dir."ushahidi/sql/");
+					$this->_process_db_upgrade($working_dir."sql/");
 				}
 				$this->upgrade->logger("Database backup and upgrade successful.");
 				echo json_encode(array("status"=>"success", "message"=>Kohana::lang('upgrade.backup_success')));
@@ -233,7 +233,7 @@ class Upgrade_Controller extends Admin_Controller {
 			if (file_exists($working_dir."ushahidi/sql"))
 			{
 				//upgrade tables
-				$this->_process_db_upgrade($working_dir."ushahidi/sql/");
+				$this->_process_db_upgrade($working_dir."sql/");
 				$this->upgrade->logger("Database upgrade successful.");
 				echo json_encode(array("status"=>"success", "message"=>Kohana::lang('upgrade.dbupgrade_success')));
 			}
