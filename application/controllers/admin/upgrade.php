@@ -190,6 +190,12 @@ class Upgrade_Controller extends Admin_Controller {
 		{
 			//copy files
 			$this->upgrade->ftp_recursively($working_dir."ushahidi/",DOCROOT);
+			// Clear out caches before new request
+			Cache::instance()->delete_all();
+			Kohana::cache_save('configuration', NULL, Kohana::config('core.internal_cache'));
+			Kohana::cache_save('language', NULL, Kohana::config('core.internal_cache'));
+			Kohana::cache_save('find_file_paths', NULL, Kohana::config('core.internal_cache'));
+			Event::clear('system.shutdown', array('Kohana', 'internal_cache_save'));
 			
 			//copying was successful
 			if ($this->upgrade->success)
