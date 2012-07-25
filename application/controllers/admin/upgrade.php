@@ -453,6 +453,7 @@ class Upgrade_Controller extends Admin_Controller {
 	private function _process_db_upgrade($dir_path)
 	{
 		$file = $dir_path . $this->_get_next_db_upgrade();
+		$this->upgrade->logger("Looking for update file: ".$file);
 		while ( file_exists($file) )
 		{
 			$this->upgrade->logger("Database imported ".$file);
@@ -460,6 +461,7 @@ class Upgrade_Controller extends Admin_Controller {
 			
 			// Get the next file
 			$file = $dir_path . $this->_get_next_db_upgrade();
+			$this->upgrade->logger("Looking for update file: ".$file);
 		}
 		return "";
 	}
