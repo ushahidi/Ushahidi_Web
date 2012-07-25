@@ -388,16 +388,7 @@ class Upgrade_Controller extends Admin_Controller {
 	private function _get_next_db_upgrade()
 	{
 		// get the db version from the settings page
-		try {
-			$version_in_db = Settings_Model::get_setting('db_version');
-		}
-		// Catch error from old settings table, and use query for old settings schema
-		catch (Exception $e)
-		{
-			$query = Database::instance()->query('SELECT db_version FROM '.Kohana::config('database.default.table_prefix').'settings LIMIT 1');
-			$query = $query->result();
-			$version_in_db = $query->db_version;
-		}
+		$version_in_db = Kohana::config('settings.db_version');
 		
 		// Special case for really old Ushahidi version
 		if ($version_in_db < 11)
