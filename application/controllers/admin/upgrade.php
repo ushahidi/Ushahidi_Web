@@ -99,7 +99,7 @@ class Upgrade_Controller extends Admin_Controller {
 				$form = arr::overwrite($form, $post->as_array());
 
 				// populate the error fields, if any
-				$errors = arr::overwrite($errors, $post->errors('upgrade'));
+				$errors = $post->errors('upgrade');
 				$form_error = TRUE;
 			}
 		}
