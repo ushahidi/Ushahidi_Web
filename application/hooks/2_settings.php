@@ -9,7 +9,7 @@
 $cache = Cache::instance();
 $subdomain = Kohana::config('settings.subdomain');
 $settings = $cache->get($subdomain.'_settings');
-if ( ! $settings )
+if ( ! $settings OR ! is_array($settings))
 { // Cache is Empty so Re-Cache
 	$settings = Settings_Model::get_array();
 	$cache->set($subdomain.'_settings', $settings, array('settings'), 60); // 1 Day
