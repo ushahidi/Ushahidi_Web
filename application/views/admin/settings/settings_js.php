@@ -95,29 +95,30 @@ $(document).ready(function() {
 	});
 
 	// detect map provider dropdown change
-	$('#default_map').change(function(){					
-		var selected_map = $(":selected", this).text();
-		for (var i in all_maps) {
-			if (all_maps[i].title == selected_map) {
-				
-				// Trigger baselayer changed event
-				map.trigger("baselayerchanged", selected_map);
+	$('#default_map').change(function(){
+		if ($(this).val() == "" || $(this).val() == null)
+			return;
+		
+		var selected_key = $(this).val();
+		
+		selected_map = all_maps[selected_key];
 
-				if (all_maps[i].api_signup) {
-					$('#api_link').attr('href', all_maps[i].api_signup);
-					$('#api_link').attr('target', '_blank');
-				} else {
-					$('#api_link').attr('href', 'javascript:alert(\'Your current selection does not require an API key!\')');
-					$('#api_link').attr('target', '_top');
-				}
-				
-				if (all_maps[i].openlayers == 'Google') {
-					$("#api_div_google").show();
-				} else {
-					$("#api_div_google").hide();
-				}
-			}
+		if (selected_map.api_signup) {
+			$('#api_link').attr('href', selected_map.api_signup);
+			$('#api_link').attr('target', '_blank');
+		} else {
+			$('#api_link').attr('href', 'javascript:alert(\'Your current selection does not require an API key!\')');
+			$('#api_link').attr('target', '_top');
 		}
+		
+		if (selected_key.indexOf('bing') !== -1) {
+			$("#api_key_div").show();
+		} else {
+			$("#api_key_div").hide();
+		}
+		
+		// Trigger baselayer changed event
+		map.trigger("baselayerchanged", selected_map.title);
 	});
 		
 });
