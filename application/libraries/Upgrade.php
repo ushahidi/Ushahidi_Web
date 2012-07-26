@@ -71,7 +71,7 @@
 	 * @return boolean 
 	 */
 	function ftp_recursively($source, $dest, $options=array('folderPermission'=>0775,'filePermission'=>0664))
-	{		
+	{
 		if ( ! $this->ftp_connect() )
 		{
 			$this->success = false;
@@ -550,6 +550,83 @@
 		$logfile = fopen($logfile, 'a+');
 		fwrite($logfile, $message);
 		fclose($logfile);
-	}	
- }
-?>
+	}
+	
+	/**
+	 * Delete files that no longer exist in latest version
+	 **/
+	public function remove_old($file, $base_directory)
+	{
+		if ( ! $this->ftp_connect() )
+		{
+			$this->success = false;
+			return false;
+		}
+		
+		if ( ! $ftp_base_path = $this->ftp_base_path())
+		{
+			$this->success = false;
+			return false;
+		}
+		
+		$this->ftp->chdir($ftp_base_path);
+		
+		$old_files = file($file, FILE_IGNORE_NEW_LINES);
+		foreach ($old_files as $old_file)
+		{
+			$ftp_filename = str_replace(DOCROOT,"",$old_file);
+			
+			// Skip removed config files
+			if (stripos($old_file,'application/config/') !== FALSE) continue;
+			
+			if (is_file($old_file))
+			{
+				// Turn off error reporting temporarily
+				error_reporting(0);
+				$result = $this->ftp->delete($ftp_filename);
+				if ($result)
+				{
+					$this->success = true;
+					$this->logger("Removed ".$old_file);
+					//Turn on error reporting again
+					error_reporting($this->error_level);
+				}
+				else
+				{
+					$this->success = false;
+					$this->logger("** Failed removing ".$old_file);
+					//Turn on error reporting again
+					error_reporting($this->error_level);
+					return false;
+				}
+			}
+			elseif(is_dir($old_file))
+			{
+				error_reporting(0);
+				$result = $this->ftp->mdel($ftp_filename);
+				if ($result)
+				{
+					$this->success = true;
+					$this->logger("Removed ".$old_file);
+					//Turn on error reporting again
+					error_reporting($this->error_level);
+				}
+				else
+				{
+					$this->success = false;
+					$this->logger("** Failed removing ".$old_file);
+					//Turn on error reporting again
+					error_reporting($this->error_level);
+					return false;
+				}
+			}
+			
+		}
+
+		// Remove upgrader removed files list
+		error_reporting(0);
+		$result = $this->ftp->delete('upgrader_removed_files.txt');
+		error_reporting($this->error_level);
+	}
+}
+
