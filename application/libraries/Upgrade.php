@@ -624,6 +624,11 @@
 			}
 			
 		}
+
+		// Remove upgrader removed files list
+		error_reporting(0);
+		$result = $this->ftp->delete('upgrader_removed_files.txt');
+		error_reporting($this->error_level);
 	}
 }
 
