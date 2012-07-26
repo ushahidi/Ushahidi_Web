@@ -223,9 +223,9 @@ class Upgrade_Controller extends Admin_Controller {
 			
 			if (empty($error))
 			{
-				if (file_exists($working_dir."/ushahidi/sql"))
+				if (file_exists(DOCROOT."sql/"))
 				{
-					$this->_process_db_upgrade($working_dir."ushahidi/sql/");
+					$this->_process_db_upgrade(DOCROOT."sql/");
 				}
 				$this->upgrade->logger("Database backup and upgrade successful.");
 				echo json_encode(array("status"=>"success", "message"=>"Database backup and upgrade successful."));
@@ -241,10 +241,10 @@ class Upgrade_Controller extends Admin_Controller {
 		// Database UPGRADE ONLY
 		if ($step == 5)
 		{
-			if (file_exists($working_dir."ushahidi/sql"))
+			if (file_exists(DOCROOT."sql/"))
 			{
 				//upgrade tables
-				$this->_process_db_upgrade($working_dir."ushahidi/sql/");
+				$this->_process_db_upgrade(DOCROOT."sql/");
 				$this->upgrade->logger("Database upgrade successful.");
 				echo json_encode(array("status"=>"success", "message"=>"Database upgrade successful."));
 			}
@@ -329,15 +329,21 @@ class Upgrade_Controller extends Admin_Controller {
 			$find = array(
 				'CREATE TABLE IF NOT EXISTS `',
 				'INSERT INTO `',
+				'INSERT IGNORE INTO `',
 				'ALTER TABLE `',
-				'UPDATE `'
+				'UPDATE `',
+				'DELETE FROM `',
+				'LOCK TABLES `',
 			);
 			
 			$replace = array(
-				'CREATE TABLE IF NOT EXISTS `'.$table_prefix.'_',
-				'INSERT INTO `'.$table_prefix.'_',
-				'ALTER TABLE `'.$table_prefix.'_',
-				'UPDATE `'.$table_prefix.'_'
+				'CREATE TABLE IF NOT EXISTS `'.$table_prefix,
+				'INSERT INTO `'.$table_prefix,
+				'INSERT IGNORE INTO `'.$table_prefix,
+				'ALTER TABLE `'.$table_prefix,
+				'UPDATE `'.$table_prefix,
+				'DELETE FROM `'.$table_prefix,
+				'LOCK TABLES `'.$table_prefix,
 			);
 			
 			$upgrade_schema = str_replace($find, $replace, $upgrade_schema);
@@ -350,7 +356,12 @@ class Upgrade_Controller extends Admin_Controller {
 	
 		foreach ($queries as $query)
 		{
-			$result = $this->db->query($query);
+			// Trim whitespace and make sure we're not running an empty query (for example from the new line after the last query.)
+			$query = trim($query);
+			if (!empty($query))
+			{
+				$result = $this->db->query($query);
+			}
 		}
 			
 		// Delete cache
@@ -365,37 +376,52 @@ class Upgrade_Controller extends Admin_Controller {
 	 */
 	private function _process_db_upgrade($dir_path)
 	{
-	
-		$upgrade_sql = '';
-
-		$files = scandir($dir_path);
-		sort($files);
-		foreach ( $files as $file )
+		ini_set('max_execution_time', 300);
+		
+		$file = $dir_path . $this->_get_next_db_upgrade();
+		$this->upgrade->logger("Looking for update file: ".$file);
+		while ( file_exists($file) AND is_file($file) )
 		{
-			// We're going to try and execute each of the sql files in order
-			$file_ext = strrev(substr(strrev($file),0,4));
-			if ($file_ext == ".sql")
-			{
-				$this->upgrade->logger("Database imported ".$dir_path.$file);
-				$this->_execute_upgrade_script($dir_path.$file);
-			}
+			$this->upgrade->logger("Database imported ".$file);
+			$this->_execute_upgrade_script($file);
+			
+			// Get the next file
+			$file = $dir_path . $this->_get_next_db_upgrade();
+			$this->upgrade->logger("Looking for update file: ".$file);
 		}
-		return "";
+		return;
 	}
 	
 	/**
-	 * Gets the current db version of the ushahidi deployment.
+	 * Gets the file name for the next db upgrade script
 	 * 
 	 * @return the db version.
 	 */
-	private function _get_db_version()
+	private function _get_next_db_upgrade()
 	{
-			
-	   // get the db version from the settings page
-		$this->db = new Database();
-		$sql = 'SELECT db_version from '.Kohana::config('database.default.table_prefix').'settings';
-		$settings = $this->db->query($sql);
-		$version_in_db = $settings[0]->db_version;
+		// get the db version from the settings
+		try
+		{
+			$query = Database::instance()->query('SELECT `value` FROM '.Kohana::config('database.default.table_prefix').'settings WHERE `key` = \'db_version\' LIMIT 1')->current();
+			$version_in_db = $query->value;
+		}
+		catch (Exception $e)
+		{
+			$query = Database::instance()->query('SELECT `db_version` FROM '.Kohana::config('database.default.table_prefix').'settings LIMIT 1')->current();
+			$version_in_db = $query->db_version;
+		}
+		
+		// Just in case we get a DB fail.
+		if ($version_in_db == NULL)
+		{
+			return FALSE;
+		}
+		
+		// Special case for really old Ushahidi version
+		if ($version_in_db < 11)
+		{
+			return 'upgrade.sql';
+		}
 		
 		// Update DB
 		$db_version = $version_in_db;
