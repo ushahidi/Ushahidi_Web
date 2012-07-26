@@ -477,9 +477,6 @@ class Upgrade_Controller extends Admin_Controller {
 	 */
 	private function _get_next_db_upgrade()
 	{
-		// Make sure we recheck the settings schema between updates
-		Settings_Model::new_schema(TRUE);
-		
 		// get the db version from the settings
 		try
 		{
