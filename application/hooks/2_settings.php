@@ -9,7 +9,7 @@
 $cache = Cache::instance();
 $subdomain = Kohana::config('settings.subdomain');
 $settings = $cache->get($subdomain.'_settings');
-if ( ! $settings)
+if ( ! $settings OR ! is_array($settings))
 { // Cache is Empty so Re-Cache
 	$settings = Settings_Model::get_array();
 	$cache->set($subdomain.'_settings', $settings, array('settings'), 60); // 1 Day
@@ -49,7 +49,7 @@ Kohana::config_set('settings.api_akismet', $settings['api_akismet']);
 Kohana::config_set('settings.default_city', $settings['default_city']);
 Kohana::config_set('settings.default_country', $settings['default_country']);
 Kohana::config_set('settings.multi_country', $settings['multi_country']);
-Kohana::config_set('settings.enable_timeline', $settings['enable_timeline']);
+Kohana::config_set('settings.enable_timeline', isset($settings['enable_timeline']) ? $settings['enable_timeline'] : 0);
 Kohana::config_set('settings.default_lat', $settings['default_lat']);
 Kohana::config_set('settings.default_lon', $settings['default_lon']);
 Kohana::config_set('settings.default_zoom', $settings['default_zoom']);

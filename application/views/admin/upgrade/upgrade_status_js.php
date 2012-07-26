@@ -21,6 +21,9 @@ $(document).ready(function() {
 				} else {
 					upgrade_error = true;
 				}
+			},
+			error: function(data) {
+				upgrade_error = true;
 			}
 		});
 			

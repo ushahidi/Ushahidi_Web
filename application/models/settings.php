@@ -26,6 +26,15 @@ class Settings_Model extends ORM {
 	protected $reload_on_wakeup   = FALSE;
 
 	/**
+	 * Check if settings table is still using old schema
+	 * @return bool
+	 */
+	protected static function new_schema($force = FALSE)
+	{
+		return array_key_exists('key', ORM::factory('settings')->reload_columns($force)->table_columns);
+	}
+	
+	/**
 	 * Given the setting identifier, returns its value. If the identifier
 	 * is non-existed, a NULL value is returned
 	 *
@@ -35,10 +44,16 @@ class Settings_Model extends ORM {
 	 */
 	public static function get_setting($key)
 	{
-		$setting = ORM::factory('settings')->where('key', $key)->find();
-
-		return ($setting->loaded) ? $setting->value : NULL;
-
+		if (self::new_schema())
+		{
+			$setting = ORM::factory('settings')->where('key', $key)->find();
+			return ($setting->loaded) ? $setting->value : NULL;
+		}
+		else
+		{
+			$setting = Database::instance()->query('SELECT * FROM `'.Kohana::config('database.default.table_prefix').'settings` LIMIT 1', $key)->current();
+			return isset($setting->$key) ? $setting->$key : NULL;
+		}
 	}
 
 	/**
@@ -59,10 +74,19 @@ class Settings_Model extends ORM {
 	 */
 	public static function save_setting($key, $value)
 	{
-		$setting = ORM::factory('settings')->where('key', $key)->find();
-		
-		$setting->value = $value;
-		$setting->save();
+		if (self::new_schema())
+		{
+			$setting = ORM::factory('settings')->where('key', $key)->find();
+			
+			$setting->value = $value;
+			$setting->save();
+		}
+		else
+		{
+			$settings = ORM::factory('settings', 1);
+			$settings->$key = $value;
+			$settings->save();
+		}
 	}
 
 	/**
@@ -73,11 +97,18 @@ class Settings_Model extends ORM {
 	 */
 	public static function get_array()
 	{
-		$all_settings = ORM::factory('settings')->find_all();
-		$settings = array();
-		foreach ($all_settings as $setting)
+		if (self::new_schema())
 		{
-			$settings[$setting->key] = $setting->value;
+			$all_settings = ORM::factory('settings')->find_all();
+			$settings = array();
+			foreach ($all_settings as $setting)
+			{
+				$settings[$setting->key] = $setting->value;
+			}
+		}
+		else
+		{
+			$settings = ORM::factory('settings', 1)->as_array();
 		}
 
 		return $settings;
@@ -91,6 +122,10 @@ class Settings_Model extends ORM {
 	 */
 	public static function save_all(Validation $settings)
 	{
+		// For old schema throw error
+		if (! $this->new_schema())
+			throw new Kohana_User_Exception('Settings database schema out of date');
+		
 		// Get all the settings
 		$all_settings = self::get_array();
 
@@ -147,13 +182,16 @@ class Settings_Model extends ORM {
 	 */
 	public function get_settings($keys)
 	{
+		// For old schema just return everything
+		if (! $this->new_schema())
+			return Settings::get_array();
+		
 		if ( ! is_array($keys) OR empty($keys))
 			throw new Kohana_Exception("Invalid parameters");
 
 		$selected_settings = ORM::factory('settings')
 			->in('key', $keys)
 			->find_all();
-
 
 		$settings = array();
 		foreach ($selected_settings as $setting)

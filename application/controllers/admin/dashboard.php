@@ -22,6 +22,13 @@ class Dashboard_Controller extends Admin_Controller
 
 	public function index()
 	{
+		
+		// Don't show auto-upgrader when disabled.
+		if (Kohana::config('config.enable_auto_upgrader') AND Kohana::config('version.ushahidi_db_version') > Kohana::config('settings.db_version'))
+		{
+			url::redirect('admin/upgrade/database');
+		}
+		
 		$this->template->content = new View('admin/dashboard/main');
 		$this->template->content->title = Kohana::lang('ui_admin.dashboard');
 		$this->template->this_page = 'dashboard';
