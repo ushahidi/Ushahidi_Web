@@ -1,5 +1,5 @@
--- Add enable_timeline as a setting to make it an off/on feature
-INSERT INTO `settings` (`key`, `value`) values ('enable_timeline','0');
+-- Change structure of foreign key role_id to match referenced field roles.id
+ALTER TABLE  `permissions_roles` CHANGE  `role_id`  `role_id` INT( 11 ) UNSIGNED NOT NULL;
 
--- UPDATE db_version
+-- Update the DB version
 UPDATE `settings` SET `value` = 94 WHERE `key` = 'db_version';
