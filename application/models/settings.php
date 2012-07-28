@@ -123,7 +123,7 @@ class Settings_Model extends ORM {
 	public static function save_all(Validation $settings)
 	{
 		// For old schema throw error
-		if (! $this->new_schema())
+		if (! self::new_schema())
 			throw new Kohana_User_Exception('Settings database schema out of date');
 		
 		// Get all the settings
@@ -182,7 +182,7 @@ class Settings_Model extends ORM {
 	public function get_settings($keys)
 	{
 		// For old schema just return everything
-		if (! $this->new_schema())
+		if (! self::new_schema())
 			return Settings::get_array();
 		
 		if ( ! is_array($keys) OR empty($keys))
