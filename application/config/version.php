@@ -5,7 +5,6 @@
  */
 $config['ushahidi_version'] = "2.5b";
 
-
 /**
  * The Ushahidi Engine DB revision number
  * Increments when changes are made to the Ushahidi DB schema.
