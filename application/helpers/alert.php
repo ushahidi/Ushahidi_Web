@@ -30,29 +30,8 @@ class alert_Core {
 
 		// Should be 8 distinct characters
 		$alert_code = text::random('distinct', 8);
-          
-		$settings = ORM::factory('settings', 1);
 
-		if ( ! $settings->loaded)
-			return FALSE;
-
-        // Get SMS Numbers
-		if ( ! empty($settings->sms_no3)) 
-		{
-			$sms_from = $settings->sms_no3;
-		}
-		elseif ( ! empty($settings->sms_no2)) 
-		{
-			$sms_from = $settings->sms_no2;
-		}
-		elseif ( ! empty($settings->sms_no1)) 
-		{
-			$sms_from = $settings->sms_no1;
-		}
-		else
-		{
-			$sms_from = "000";// User needs to set up an SMS number
-		}
+		$sms_from = $this->_sms_from();
 
 		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code
 			.'.'.Kohana::lang('ui_admin.not_case_sensitive');
@@ -217,28 +196,7 @@ class alert_Core {
 			return FALSE;
 		}
 
-		$settings = ORM::factory('settings', 1);
-
-		if ( ! $settings->loaded)
-			return FALSE;
-
-        // Get SMS Numbers
-		if ( ! empty($settings->sms_no3)) 
-		{
-			$sms_from = $settings->sms_no3;
-		}
-		elseif ( ! empty($settings->sms_no2)) 
-		{
-			$sms_from = $settings->sms_no2;
-		}
-		elseif ( ! empty($settings->sms_no1)) 
-		{
-			$sms_from = $settings->sms_no1;
-		}
-		else
-		{
-			$sms_from = "000";// User needs to set up an SMS number
-		}
+		$sms_from = $this->_sms_from();
 
 		$site_name = $settings->site_name;
 		$message = Kohana::lang('ui_admin.unsubscribe_message').' ' .$site_name;
@@ -287,6 +245,32 @@ class alert_Core {
 				}
 			}
 		}
+	}
+	
+	private static function _sms_from()
+	{
+		
+		$settings = Kohana::config('settings');
+		
+		// Get SMS Numbers
+		if ( ! empty($settings['sms_no3'])) 
+		{
+			$sms_from = $settings['sms_no3'];
+		}
+		elseif ( ! empty($settings['sms_no2'])) 
+		{
+			$sms_from = $settings['sms_no2'];
+		}
+		elseif ( ! empty($settings['sms_no1'])) 
+		{
+			$sms_from = $settings['sms_no1'];
+		}
+		else
+		{
+			$sms_from = "000";// User needs to set up an SMS number
+		}
+		
+		return $sms_from;
 	}
 
 }

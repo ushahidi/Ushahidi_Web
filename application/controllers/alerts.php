@@ -42,7 +42,6 @@ class Alerts_Controller extends Main_Controller {
 
 		// Display Mobile Option?
 		$this->template->content->show_mobile = TRUE;
-		$settings = ORM::factory('settings', 1);
 
 		if ( ! Kohana::config("settings.sms_provider"))
 		{
@@ -187,7 +186,6 @@ class Alerts_Controller extends Main_Controller {
 
 		// Display Mobile Option?
 		$this->template->content->show_mobile = TRUE;
-		$settings = ORM::factory('settings', 1);
 
 		if (empty($_SESSION['alert_mobile']))
 		{

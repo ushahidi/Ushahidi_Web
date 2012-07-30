@@ -81,9 +81,6 @@ class Settings_Controller extends Admin_Controller {
 		$form_error = FALSE;
 		$form_saved = FALSE;
 
-		// Retrieve Current Settings
-		$settings = ORM::factory('settings', 1);
-
 		// check, has the form been submitted, if so, setup validation
 		if ($_POST)
 		{

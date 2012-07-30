@@ -35,9 +35,6 @@ class S_Twitter_Controller extends Controller {
 			return false;
 		}
 
-		// Retrieve Current Settings
-		$settings = ORM::factory('settings', 1);
-
 		// Retrieve Last Stored Twitter ID
 		$last_tweet_id = "";
 		$tweets = ORM::factory('message')
