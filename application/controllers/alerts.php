@@ -224,11 +224,11 @@ class Alerts_Controller extends Main_Controller {
 		{
 			if (isset($_POST['alert_mobile']) AND ! empty($_POST['alert_mobile']))
 			{
-				$filter = "alert.alert_type=1 AND alert_code='".utf8::strtoupper($_POST['alert_code'])."' AND alert_recipient='".$_POST['alert_mobile']."' ";
+				$filter = "alert.alert_type=1 AND alert_code='".Database::instance()->escape_str(utf8::strtoupper($_POST['alert_code']))."' AND alert_recipient='".Database::instance()->escape_str($_POST['alert_mobile'])."' ";
 			}
 			elseif (isset($_POST['alert_email']) AND ! empty($_POST['alert_email']))
 			{
-				$filter = "alert.alert_type=2 AND alert_code='".$_POST['alert_code']."' AND alert_recipient='".$_POST['alert_email']."' ";
+				$filter = "alert.alert_type=2 AND alert_code='".Database::instance()->escape_str($_POST['alert_code'])."' AND alert_recipient='".Database::instance()->escape_str($_POST['alert_email'])."' ";
 			}
 			else
 			{
@@ -243,7 +243,7 @@ class Alerts_Controller extends Main_Controller {
 			}
 			else
 			{
-				$filter = "alert.alert_type=2 AND alert_code='".$code."' AND alert_recipient='".$email."' ";
+				$filter = "alert.alert_type=2 AND alert_code='".Database::instance()->escape_str($code)."' AND alert_recipient='".Database::instance()->escape_str($email)."' ";
 			}
 		}
 
