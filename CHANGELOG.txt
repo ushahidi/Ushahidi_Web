@@ -1,4 +1,4 @@
-Ushahidi 2.5 (Cairo), 30-07-2012
+Ushahidi 2.5 (Cairo), 01-08-2012
 -------------------------------------
 
 * Mapping: 
@@ -21,10 +21,11 @@ Ushahidi 2.5 (Cairo), 30-07-2012
 * Alerts
 	- Allow admin to view, search and delete user alerts in the system
 * Security fixes thanks to OWASP Portland
-	- Multiple SQL injections
-	- Missing authentication on comments and reports API calls
-	- Admin user hijacking through the installer
-	- Stored XSS on member profile pages
+	- Multiple SQL injections  (Thanks: Timothy D. Morgan, Kees Cook, postmodern)
+	- Missing authentication on comments, reports and email API calls  (Thanks: Kees Cook, Dennison Williams)
+	- Admin user hijacking through the installer  (Thanks: Wil Clouser)
+	- Stored XSS on member profile pages  (Thanks: Amy K. Farrell)
+	- User data exposed in comment API
 * Further details on migrating to 2.5 are available on the wiki
   -> https://wiki.ushahidi.com/display/WIKI/Migrating+to+Ushahidi+2.5
 
