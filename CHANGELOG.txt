@@ -30,6 +30,13 @@ Ushahidi 2.5 (Cairo), 01-08-2012
   -> https://wiki.ushahidi.com/display/WIKI/Migrating+to+Ushahidi+2.5
 
 
+Ushahidi 2.4.1 - Upgrader fix release, 01-08-2012
+-------------------------------------
+
+* Add support for removing old files during upgrade (#716)
+* Clear cache after new files copied over
+* Fix for DB upgrades 
+
 
 Ushahidi 2.4 - Bug fix release, 30-05-2012
 -------------------------------------
