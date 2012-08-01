@@ -1,23 +1,33 @@
-Ushahidi 2.5b - (Name) beta release, 18-06-2012
+Ushahidi 2.5 (Cairo), 01-08-2012
 -------------------------------------
 
 * Mapping: 
 	- The mapping code has been refactored and decoupled from the timeline. 
+	- There are now events triggered for actions such as zoom changes, changine layer, etc. , which can be used to extend mapping function
 	- The timeline can now be turned on or off.
 * Themes: 
 	- The views have been namespaced on a per-controller basis.
-	- Views for the front-end have all been moved to the themes folder
-* Database:
-	- The settings table has been restructured so as to store data in a key-value way
+	- Views for the front-end (including JS) have all been moved to the themes folder
+* Settings table:
+	- The structure for the settings table has been modified so that data are stored as key/value pairs.
 * Installer:
 	- The installer has been reworked in order to work with the new settings table structure
 	- Additionally, we now perform the installation check in index.php
 * Configuration files:
-	- The following files are no longer in the repository: config.php, auth.php and encryption.php. In their place are templates (.template.php files) which are used by the installer to generate the respective config files.
+	- The following files are no longer in the repository: config.php, auth.php and encryption.php.
+		In their place are templates (.template.php files) which are used by the installer to generate the respective config files.
 * Roles and Permission:
-	- These have been reworked and are now extensive accomodating plugins
+	- User permissions have been refactored into a separate table form roles. This now allows plugins to add their own permissions.
 * Alerts
 	- Allow admin to view, search and delete user alerts in the system
+* Security fixes thanks to OWASP Portland
+	- Multiple SQL injections  (Thanks: Timothy D. Morgan, Kees Cook, postmodern)
+	- Missing authentication on comments, reports and email API calls  (Thanks: Kees Cook, Dennison Williams)
+	- Admin user hijacking through the installer  (Thanks: Wil Clouser)
+	- Stored XSS on member profile pages  (Thanks: Amy K. Farrell)
+	- User data exposed in comment API
+* Further details on migrating to 2.5 are available on the wiki
+  -> https://wiki.ushahidi.com/display/WIKI/Migrating+to+Ushahidi+2.5
 
 
 
