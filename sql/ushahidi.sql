@@ -1395,8 +1395,8 @@ VALUES
   (56,'checkins','0'),
   (57,'facebook_appid',NULL),
   (58,'facebook_appsecret',NULL),
-  (59,'db_version','96'),
-  (60,'ushahidi_version','2.5b'),
+  (59,'db_version','97'),
+  (60,'ushahidi_version','2.5'),
   (61,'allow_alerts','1'),
   (62,'require_email_confirmation','0'),
   (63,'manually_approve_users','0'),
@@ -1491,5 +1491,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '96' WHERE `key` = 'db_version';
-UPDATE `settings` SET `value` = '2.5b' WHERE `key`= 'ushahidi_version';
+UPDATE `settings` SET `value` = '97' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '2.5' WHERE `key`= 'ushahidi_version';
