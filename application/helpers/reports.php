@@ -325,7 +325,11 @@ class reports_Core {
 		$verify->incident_id = $incident->id;
 		
 		// Record 'Verified By' Action
-		$verify->user_id = $_SESSION['auth_user']->id;
+		$verify->user_id = 0;
+		if (Auth::instance()->get_user() instanceof User_Model)
+		{
+			$verify->user_id = Auth::instance()->get_user()->id;
+		}
 		$verify->verified_date = date("Y-m-d H:i:s",time());
 		
 		if ($incident->incident_active == 1)
