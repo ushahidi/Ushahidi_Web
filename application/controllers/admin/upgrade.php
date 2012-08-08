@@ -435,7 +435,7 @@ class Upgrade_Controller extends Admin_Controller {
 		foreach ($queries as $query)
 		{
 			// Trim whitespace and make sure we're not running an empty query (for example from the new line after the last query.)
-			$query = trim($query);
+			$query = utf8::trim($query);
 			if (!empty($query))
 			{
 				$result = $this->db->query($query);

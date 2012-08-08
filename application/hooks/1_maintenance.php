@@ -34,21 +34,25 @@ else
 }
 
 $maintenance = FALSE;
-$db = Database::instance();
-$maintenance_ips = $db->query("SELECT `allowed_ip` FROM `".Kohana::config('database.default.table_prefix')."maintenance`;");
-foreach ($maintenance_ips as $row)
-{
-	// Assume we will be in maintenance mode now
-	$maintenance = TRUE;
-
-	// Check if we should be allowed to bypass maintenance
-	if ($ip_address == $row->allowed_ip)
+try {
+	$db = Database::instance();
+	$maintenance_ips = $db->query("SELECT `allowed_ip` FROM `".Kohana::config('database.default.table_prefix')."maintenance`;");
+	foreach ($maintenance_ips as $row)
 	{
-		$maintenance = FALSE;
-		// Since we already matched an IP, no need to keep looping
-		break;
+		// Assume we will be in maintenance mode now
+		$maintenance = TRUE;
+
+		// Check if we should be allowed to bypass maintenance
+		if ($ip_address == $row->allowed_ip)
+		{
+			$maintenance = FALSE;
+			// Since we already matched an IP, no need to keep looping
+			break;
+		}
 	}
 }
+catch (Exception $e)
+{}
 
 // If we are in maintenance mode and didn't match the IP, show maintenance message
 if ($maintenance == TRUE)
