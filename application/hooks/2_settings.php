@@ -19,58 +19,11 @@ if ( ! $settings OR ! is_array($settings))
 Kohana::config_set('locale.language', $settings['site_language']);
 ush_locale::detect_language();
 
-// Main Site Settings
-Kohana::config_set('settings.site_name', $settings['site_name']);
-Kohana::config_set('settings.site_email', $settings['site_email']);
-Kohana::config_set('settings.site_banner_id', $settings['site_banner_id']);
-Kohana::config_set('settings.site_tagline', $settings['site_tagline']);
-Kohana::config_set('settings.site_style', $settings['site_style']);
-Kohana::config_set('settings.site_contact_page', $settings['site_contact_page']);
-Kohana::config_set('settings.site_help_page', $settings['site_help_page']);
-Kohana::config_set('settings.site_message', $settings['site_message']);
-Kohana::config_set('settings.site_copyright_statement', $settings['site_copyright_statement']);
-Kohana::config_set('settings.site_submit_report_message', $settings['site_submit_report_message']);
-if (isset($settings['allow_alerts'])) Kohana::config_set('settings.allow_alerts', $settings['allow_alerts']);
-Kohana::config_set('settings.allow_reports', $settings['allow_reports']);
-Kohana::config_set('settings.allow_comments', $settings['allow_comments']);
-Kohana::config_set('settings.allow_feed', $settings['allow_feed']);
-Kohana::config_set('settings.allow_stat_sharing', $settings['allow_stat_sharing']);
-Kohana::config_set('settings.allow_clustering', $settings['allow_clustering']);
-Kohana::config_set('settings.sms_provider', $settings['sms_provider']);
-Kohana::config_set('settings.sms_no1', $settings['sms_no1']);
-Kohana::config_set('settings.sms_no2', $settings['sms_no2']);
-Kohana::config_set('settings.sms_no3', $settings['sms_no3']);
-Kohana::config_set('settings.default_map', $settings['default_map']);
-Kohana::config_set('settings.default_map_all', $settings['default_map_all']);
-if (isset($settings['default_map_all_icon_id'])) Kohana::config_set('settings.default_map_all_icon_id', $settings['default_map_all_icon_id']);
-Kohana::config_set('settings.api_google', $settings['api_google']);
-Kohana::config_set('settings.api_live', $settings['api_live']);
-Kohana::config_set('settings.api_akismet', $settings['api_akismet']);
-Kohana::config_set('settings.default_city', $settings['default_city']);
-Kohana::config_set('settings.default_country', $settings['default_country']);
-Kohana::config_set('settings.multi_country', $settings['multi_country']);
-if (isset($settings['enable_timeline'])) Kohana::config_set('settings.enable_timeline', $settings['enable_timeline']);
-Kohana::config_set('settings.default_lat', $settings['default_lat']);
-Kohana::config_set('settings.default_lon', $settings['default_lon']);
-Kohana::config_set('settings.default_zoom', $settings['default_zoom']);
-Kohana::config_set('settings.items_per_page', $settings['items_per_page']);
-Kohana::config_set('settings.items_per_page_admin', $settings['items_per_page_admin']);
-Kohana::config_set('settings.blocks_per_row', $settings['blocks_per_row']);
-Kohana::config_set('settings.google_analytics', $settings['google_analytics']);
-Kohana::config_set('settings.twitter_hashtags', $settings['twitter_hashtags']);
-Kohana::config_set('settings.email_username', $settings['email_username']);
-Kohana::config_set('settings.email_password', $settings['email_password']);
-Kohana::config_set('settings.email_port', $settings['email_port']);
-Kohana::config_set('settings.email_host', $settings['email_host']);
-Kohana::config_set('settings.email_servertype', $settings['email_servertype']);
-Kohana::config_set('settings.email_ssl', $settings['email_ssl']);
-Kohana::config_set('settings.alerts_email', $settings['alerts_email']);
-Kohana::config_set('settings.checkins', $settings['checkins']);
-Kohana::config_set('settings.db_version', $settings['db_version']);
-Kohana::config_set('settings.ushahidi_version', $settings['ushahidi_version']);
-Kohana::config_set('settings.private_deployment', $settings['private_deployment']);
-if (isset($settings['manually_approve_users'])) Kohana::config_set('settings.manually_approve_users', $settings['manually_approve_users']);
-if (isset($settings['require_email_confirmation'])) Kohana::config_set('settings.require_email_confirmation', $settings['require_email_confirmation']);
+// Copy everything into kohana config settings.XYZ
+foreach($settings as $key => $setting)
+{
+	Kohana::config_set('settings.'.$key, $setting);
+}
 
 // Set Site Timezone
 if (function_exists('date_default_timezone_set'))
