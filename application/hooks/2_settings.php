@@ -30,7 +30,7 @@ Kohana::config_set('settings.site_help_page', $settings['site_help_page']);
 Kohana::config_set('settings.site_message', $settings['site_message']);
 Kohana::config_set('settings.site_copyright_statement', $settings['site_copyright_statement']);
 Kohana::config_set('settings.site_submit_report_message', $settings['site_submit_report_message']);
-Kohana::config_set('settings.allow_alerts', $settings['allow_alerts']);
+if (isset($settings['allow_alerts'])) Kohana::config_set('settings.allow_alerts', $settings['allow_alerts']);
 Kohana::config_set('settings.allow_reports', $settings['allow_reports']);
 Kohana::config_set('settings.allow_comments', $settings['allow_comments']);
 Kohana::config_set('settings.allow_feed', $settings['allow_feed']);
@@ -42,14 +42,14 @@ Kohana::config_set('settings.sms_no2', $settings['sms_no2']);
 Kohana::config_set('settings.sms_no3', $settings['sms_no3']);
 Kohana::config_set('settings.default_map', $settings['default_map']);
 Kohana::config_set('settings.default_map_all', $settings['default_map_all']);
-Kohana::config_set('settings.default_map_all_icon_id', $settings['default_map_all_icon_id']);
+if (isset($settings['default_map_all_icon_id'])) Kohana::config_set('settings.default_map_all_icon_id', $settings['default_map_all_icon_id']);
 Kohana::config_set('settings.api_google', $settings['api_google']);
 Kohana::config_set('settings.api_live', $settings['api_live']);
 Kohana::config_set('settings.api_akismet', $settings['api_akismet']);
 Kohana::config_set('settings.default_city', $settings['default_city']);
 Kohana::config_set('settings.default_country', $settings['default_country']);
 Kohana::config_set('settings.multi_country', $settings['multi_country']);
-Kohana::config_set('settings.enable_timeline', isset($settings['enable_timeline']) ? $settings['enable_timeline'] : 0);
+if (isset($settings['enable_timeline'])) Kohana::config_set('settings.enable_timeline', $settings['enable_timeline']);
 Kohana::config_set('settings.default_lat', $settings['default_lat']);
 Kohana::config_set('settings.default_lon', $settings['default_lon']);
 Kohana::config_set('settings.default_zoom', $settings['default_zoom']);
@@ -69,8 +69,8 @@ Kohana::config_set('settings.checkins', $settings['checkins']);
 Kohana::config_set('settings.db_version', $settings['db_version']);
 Kohana::config_set('settings.ushahidi_version', $settings['ushahidi_version']);
 Kohana::config_set('settings.private_deployment', $settings['private_deployment']);
-Kohana::config_set('settings.manually_approve_users', $settings['manually_approve_users']);
-Kohana::config_set('settings.require_email_confirmation', $settings['require_email_confirmation']);
+if (isset($settings['manually_approve_users'])) Kohana::config_set('settings.manually_approve_users', $settings['manually_approve_users']);
+if (isset($settings['require_email_confirmation'])) Kohana::config_set('settings.require_email_confirmation', $settings['require_email_confirmation']);
 
 // Set Site Timezone
 if (function_exists('date_default_timezone_set'))
