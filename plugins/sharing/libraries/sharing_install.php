@@ -60,16 +60,12 @@ class Sharing_Install {
 
 			//Dump the sharing scheduler item from bundled SQL dump file
 			$this->db->query("DELETE FROM `".Kohana::config('database.default.table_prefix')."scheduler` where scheduler_name = 'Sharing' ");
-			$db_insert = fopen (dirname(dirname(__FILE__)).'/sql/s_sharing.sql', 'r');
-			$rows = fread ($db_insert, filesize(dirname(dirname(__FILE__)).'/sql/s_sharing.sql'));
 			
-			//split by ; to get the sql statement for inserting each row
-			$rows = explode(';\n',$rows);
-
-			foreach($rows as $query) 
-			{
-				$this->db->query($query);
-			}
+			// Add sharing in to scheduler table
+			$this->db->query("INSERT IGNORE INTO `".Kohana::config('database.default.table_prefix')."scheduler`
+				(`scheduler_name`,`scheduler_last`,`scheduler_weekday`,`scheduler_day`,`scheduler_hour`,`scheduler_minute`,`scheduler_controller`,`scheduler_active`) VALUES
+				('Sharing','0','-1','-1','-1','-1','s_sharing','1')"
+			);
 			
 			// Update sharing urls to include http://
 			$this->db->query("
