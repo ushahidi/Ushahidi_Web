@@ -207,36 +207,10 @@ class ReportsImporter {
 					$incident_category->category_id = $this->existing_categories[utf8::strtoupper($categoryname)];
 					$incident_category->save();
 					$this->incident_categories_added[] = $incident_category->id;
-				}
-				
-				else
-				{
-					// Unapprove the report
-					$incident_update = ORM::factory('incident',$incident->id);
-					$incident_update->incident_active = 0;
-					$incident_update->save();
-
-					// Assign reports to special category for uncategorized reports: NONE
-					$incident_category->category_id = '5';
-					$incident_category->save();
 				}	
 			} 
 		}
-		
-		// If CATEGORY column doesn't exist, 
-		else
-		{
-			// Unapprove the report
-			$incident_update = ORM::factory('incident',$incident->id);
-			$incident_update->incident_active = 0;
-			$incident_update->save();
-			
-			// Assign reports to special category for uncategorized reports: NONE
-			$incident_category = new Incident_Category_Model();
-			$incident_category->incident_id = $incident->id;
-			$incident_category->category_id = '5';
-			$incident_category->save();
-		} 
+		 
 	return true;
 	}
 }
