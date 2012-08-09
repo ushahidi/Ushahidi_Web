@@ -88,9 +88,17 @@ class Scheduler_Controller extends Controller {
 				$debug .= "~~~~~~~~~~~~~~~~~~~~~~~~~~~" . "<BR />~~~~~~~~~~~~~~~~~~~~~~~~~~~" . "<BR />RUNNING: " . $scheduler->scheduler_name . "<BR />~~~~~~~~~~~~~~~~~~~~~~~~~~~" . "<BR /> LAST RUN: " . date("r", $scheduler_last) . "<BR /> LAST DUE AT: " . date('r', $cron->getLastRanUnix()) . "<BR /> SCHEDULE: <a href=\"http://en.wikipedia.org/wiki/Cron\" target=\"_blank\">" . $scheduler_cron . "</a>";
 			}
 
-			if (!($scheduler_last > $cronRan) OR $scheduler_last == 0)
+			if ($scheduler_controller AND (!($scheduler_last > $cronRan) OR $scheduler_last == 0))
 			{
-				$run = Dispatch::controller("$scheduler_controller", "scheduler/")->method('index', '');
+				// Catch errors from missing scheduler or other bugs
+				try {
+					$dispatch = Dispatch::controller($scheduler_controller, "scheduler/");
+					if ($dispatch instanceof Dispatch) $run = $dispatch->method('index', '');
+				}
+				catch (Exception $e)
+				{
+					$run = FALSE;
+				}
 
 				if ($run !== FALSE)
 				{

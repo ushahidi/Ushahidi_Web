@@ -40,7 +40,15 @@ class Scheduler_Controller extends Admin_Controller
 				->find_all() as $scheduler)
 			{
 				$s_controller = $scheduler->scheduler_controller;
-				$run = Dispatch::controller("$s_controller", "scheduler/")->method('index', '');
+				try {
+					$dispatch = Dispatch::controller($s_controller, "scheduler/");
+					if ($dispatch instanceof Dispatch) $run = $dispatch->method('index', '');
+				}
+				catch (Exception $e)
+				{
+					$run = FALSE;
+				}
+				
 				if ($run !== FALSE)
 				{
 					// Set last time of last execution
