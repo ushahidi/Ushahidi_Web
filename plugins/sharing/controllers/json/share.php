@@ -142,7 +142,7 @@ class Share_Controller extends Json_Controller {
 
 					// Number of Items in Cluster
 					$cluster_count = count($cluster);
-					$link = $sharing_url."reports/index/?c=0&sw=".$southwest."&ne=".$northeast;
+					$link = $sharing_url."/reports/index/?c=0&sw=".$southwest."&ne=".$northeast;
 					$item_name = $this->get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
 					
 					$json_item = array();
@@ -167,7 +167,7 @@ class Share_Controller extends Json_Controller {
 				
 				foreach ($singles as $single)
 				{
-					$link = $sharing_url."reports/view/".$single['id'];
+					$link = $sharing_url."/reports/view/".$single['id'];
 					$item_name = $this->get_title(html::specialchars(strip_tags($single['incident_title'])), $link);
 		
 					$json_item = array();
@@ -199,7 +199,7 @@ class Share_Controller extends Json_Controller {
 
 				foreach ($markers as $marker)
 				{
-					$link = $sharing_url."reports/view/".$marker->incident_id;
+					$link = $sharing_url."/reports/view/".$marker->incident_id;
 					$item_name = $this->get_title($marker->incident_title, $link);
 
 					$json_item = array();
