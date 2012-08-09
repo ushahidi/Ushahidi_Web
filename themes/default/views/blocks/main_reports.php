@@ -10,7 +10,7 @@
 	</thead>
 	<tbody>
 		<?php
-		if ($total_items == 0)
+		if ($incidents->count() == 0)
 		{
 			?>
 			<tr><td colspan="3"><?php echo Kohana::lang('ui_main.no_reports'); ?></td></tr>

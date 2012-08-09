@@ -305,7 +305,11 @@ class Main_Controller extends Template_Controller {
 
 		// Get external apps
 		$external_apps = array();
-		$external_apps = ORM::factory('externalapp')->find_all();
+		// Catch errors, in case we have an old db
+		try {
+			$external_apps = ORM::factory('externalapp')->find_all();
+		}
+		catch(Exception $e) {}
 		$this->template->content->external_apps = $external_apps;
 
         // Get The START, END and Incident Dates

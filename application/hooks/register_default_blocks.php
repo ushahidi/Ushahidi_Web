@@ -18,10 +18,6 @@ class reports_block {
 		$content = new View('blocks/main_reports');
 
 		// Get Reports
-        // XXX: Might need to replace magic no. 8 with a constant
-		$content->total_items = ORM::factory('incident')
-			->where('incident_active', '1')
-			->limit('8')->count_all();
 		$content->incidents = ORM::factory('incident')
 			->with('location')
 			->where('incident_active', '1')

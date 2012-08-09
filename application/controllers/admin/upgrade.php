@@ -410,8 +410,13 @@ class Upgrade_Controller extends Admin_Controller {
 				'INSERT IGNORE INTO `',
 				'ALTER TABLE `',
 				'UPDATE `',
-				'DELETE FROM `',
+				'FROM `',
 				'LOCK TABLES `',
+				'DROP TABLE IF EXISTS `',
+				'RENAME TABLE `',
+				' TO `',
+				 // Potentially problematic. We use this to catch CREATE TABLE X LIKE Y, but could catch SELECT * WHERE X LIKE Y;
+				' LIKE `',
 			);
 			
 			$replace = array(
@@ -420,8 +425,12 @@ class Upgrade_Controller extends Admin_Controller {
 				'INSERT IGNORE INTO `'.$table_prefix,
 				'ALTER TABLE `'.$table_prefix,
 				'UPDATE `'.$table_prefix,
-				'DELETE FROM `'.$table_prefix,
+				'FROM `'.$table_prefix,
 				'LOCK TABLES `'.$table_prefix,
+				'DROP TABLE IF EXISTS `'.$table_prefix,
+				'RENAME TABLE `'.$table_prefix,
+				' TO `'.$table_prefix,
+				' LIKE `'.$table_prefix,
 			);
 			
 			$upgrade_schema = str_replace($find, $replace, $upgrade_schema);
@@ -435,7 +444,7 @@ class Upgrade_Controller extends Admin_Controller {
 		foreach ($queries as $query)
 		{
 			// Trim whitespace and make sure we're not running an empty query (for example from the new line after the last query.)
-			$query = trim($query);
+			$query = utf8::trim($query);
 			if (!empty($query))
 			{
 				$result = $this->db->query($query);
