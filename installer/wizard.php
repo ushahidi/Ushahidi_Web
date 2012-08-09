@@ -642,17 +642,24 @@ class Installer_Wizard {
 				'INSERT IGNORE INTO `',
 				'ALTER TABLE `',
 				'UPDATE `',
-				'DELETE FROM `',
+				'FROM `',
 				'LOCK TABLES `',
+				'DROP TABLE IF EXISTS `',
+				'RENAME TABLE `',
+				' TO `',
 			);
+			
 			$replace = array(
 				'CREATE TABLE IF NOT EXISTS `'.$table_prefix,
 				'INSERT INTO `'.$table_prefix,
 				'INSERT IGNORE INTO `'.$table_prefix,
 				'ALTER TABLE `'.$table_prefix,
 				'UPDATE `'.$table_prefix,
-				'DELETE FROM `'.$table_prefix,
+				'FROM `'.$table_prefix,
 				'LOCK TABLES `'.$table_prefix,
+				'DROP TABLE IF EXISTS `'.$table_prefix,
+				'RENAME TABLE `'.$table_prefix,
+				' TO `'.$table_prefix,
 			);
 		
 			$schema_ddl = str_replace($find, $replace, $schema_ddl);
