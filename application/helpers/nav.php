@@ -75,12 +75,19 @@ class nav_Core {
 		}
 		
 		// Custom Pages
-		$pages = ORM::factory('page')->where('page_active', '1')->find_all();
-		foreach ($pages as $page)
+		
+		if( ! in_array('pages',$dontshow))
 		{
-			$menu .= "<li><a href=\"".url::site()."page/index/".$page->id."\" ";
-			$menu .= ($this_page == 'page_'.$page->id) ? " class=\"active\"" : "";
-		 	$menu .= ">".$page->page_tab."</a></li>";
+			$pages = ORM::factory('page')->where('page_active', '1')->find_all();
+			foreach ($pages as $page)
+			{
+				if( ! in_array('page/'.$page->id,$dontshow))
+				{
+					$menu .= "<li><a href=\"".url::site()."page/index/".$page->id."\" ";
+					$menu .= ($this_page == 'page_'.$page->id) ? " class=\"active\"" : "";
+					$menu .= ">".$page->page_tab."</a></li>";
+				}
+			}
 		}
 
 		echo $menu;
