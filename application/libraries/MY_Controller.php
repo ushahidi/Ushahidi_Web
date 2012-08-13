@@ -49,7 +49,8 @@ abstract class Controller extends Controller_Core {
 		// Chceck private deployment access
 		$controller_whitelist = array(
 			'login',
-			'riverid'
+			'riverid',
+			'api'
 		);
 
 		if (Kohana::config('settings.private_deployment'))
