@@ -581,6 +581,7 @@ class Upgrade_Controller extends Admin_Controller {
 		
 		$database = Kohana::config('database');
 		
+		$error = '';
 		$backup = array();
 		$backup += $mysql_path;
 		$backup['user'] = $database['default']['connection']['user'];
