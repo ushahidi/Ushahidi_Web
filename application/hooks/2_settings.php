@@ -53,7 +53,7 @@ $api_google = $settings['api_google'];
 $api_live = $settings['api_live'];
 Kohana::config_set('settings.api_url_all', 
 	"<script type=\"text/javascript\" src=\"https://dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6\"></script>\n"
-	."<script type=\"text/javascript\" src=\"https://maps.google.com/maps/api/js?v=3.2&amp;sensor=false\"></script>\n"
+	."<script type=\"text/javascript\" src=\"https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false\"></script>\n"
 	. html::script('https://www.openstreetmap.org/openlayers/OpenStreetMap.js')
 );
 
