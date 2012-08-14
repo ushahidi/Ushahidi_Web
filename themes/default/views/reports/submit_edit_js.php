@@ -336,11 +336,12 @@
 					myPoint.transform(proj_4326, map.getProjectionObject());
 
 					// display the map centered on a latitude and longitude
-					map.setCenter(myPoint, <?php echo $default_zoom; ?>);
+					map.panTo(myPoint);
 				}
 				else
 				{
-					alert('Invalid value!')
+					// Commenting this out as its horribly annoying
+					//alert('Invalid value!');
 				}
 			});
 			
@@ -636,7 +637,7 @@
 					myPoint.transform(proj_4326, map.getProjectionObject());
 
 					// display the map centered on a latitude and longitude
-					map.setCenter(myPoint, <?php echo $default_zoom; ?>);
+					map.panTo(myPoint);
 
 					// Update form values (jQuery)
 					$("#location_name").attr("value", $('#select_city :selected').text());
@@ -715,7 +716,7 @@
 						myPoint.transform(proj_4326, map.getProjectionObject());
 
 						// display the map centered on a latitude and longitude
-						map.setCenter(myPoint, <?php echo $default_zoom; ?>);
+						map.panTo(myPoint);
 												
 						// Update form values
 						$("#country_name").val(data.country);

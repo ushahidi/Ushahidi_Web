@@ -851,7 +851,8 @@
 		var zoomLevel = data.zoomFactor + data.context._olMap.getZoom();
 
 		// Center and zoom
-		data.context._olMap.setCenter(point, zoomLevel);
+		map.zoomTo(zoomLevel);
+		data.context._olMap.panTo(point);
 
 		// Close any open popups
 		data.context.closePopups();
@@ -1069,7 +1070,7 @@
 	Ushahidi.Map.prototype.updateMapCenter = function(center) {
 		var point = new OpenLayers.LonLat(center.longitude, center.latitude);
 		point.transform(Ushahidi.proj_4326, Ushahidi.proj_900913);
-		this._olMap.setCenter(point);
+		this._olMap.panTo(point);
 
 		// Re-add the default layer
 		this.addLayer(Ushahidi.DEFAULT);
