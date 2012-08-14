@@ -219,7 +219,8 @@ class map_Core {
 			'baselayer' => TRUE,
 			'attribution' => '',
 			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}',
-			'type' => ''
+			'type' => '',
+			'transitionEffect' => 'resize',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -235,7 +236,8 @@ class map_Core {
 			'baselayer' => TRUE,
 			'attribution' => '',
 			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/${z}/${y}/${x}',
-			'type' => ''
+			'type' => '',
+			'transitionEffect' => 'resize',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -251,7 +253,8 @@ class map_Core {
 			'baselayer' => TRUE,
 			'attribution' => '',
 			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}',
-			'type' => ''
+			'type' => '',
+			'transitionEffect' => 'resize',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -267,7 +270,8 @@ class map_Core {
 			'baselayer' => TRUE,
 			'attribution' => '',
 			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/${z}/${y}/${x}',
-			'type' => ''
+			'type' => '',
+			'transitionEffect' => 'resize',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -283,6 +287,7 @@ class map_Core {
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.SATELLITE',
+			'animationEnabled' => TRUE,
 		);
 		$layers[$layer->name] = $layer;
 
@@ -298,6 +303,7 @@ class map_Core {
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.HYBRID',
+			'animationEnabled' => TRUE,
 		);
 		$layers[$layer->name] = $layer;
 
@@ -313,6 +319,7 @@ class map_Core {
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => '',
+			'animationEnabled' => TRUE,
 		);
 		$layers[$layer->name] = $layer;
 
@@ -328,6 +335,7 @@ class map_Core {
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.TERRAIN',
+			'animationEnabled' => TRUE,
 		);
 		$layers[$layer->name] = $layer;
 
@@ -395,7 +403,8 @@ class map_Core {
 			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
 				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
 			'url' => 'http://tile.openstreetmap.org/${z}/${x}/${y}.png',
-			'type' => ''
+			'type' => '',
+			'transitionEffect' => 'resize',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -412,7 +421,8 @@ class map_Core {
 			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
 				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
 			'url' => 'http://andy.sandbox.cloudmade.com/tiles/cycle/${z}/${x}/${y}.png',
-			'type' => ''
+			'type' => '',
+			'transitionEffect' => 'resize',
 		);
 		$layers[$layer->name] = $layer;
 
@@ -428,7 +438,8 @@ class map_Core {
 			'baselayer' => TRUE,
 			'attribution' => '©CCBYSA 2010 OpenStreetMap.org contributors',
 			'url' => 'http://tile.openstreetmap.org/transport/${z}/${x}/${y}.png',
-			'type' => ''
+			'type' => '',
+			'transitionEffect' => 'resize',
 		);
 		$layers[$layer->name] = $layer;
 
