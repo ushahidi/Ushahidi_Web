@@ -369,7 +369,9 @@
 			'displayProjection': Ushahidi.proj_4326,
 			maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 
 			                                 20037508.34, 20037508.34),
-			maxResolution: 156543.0339
+			maxResolution: 156543.0339,
+			// Shrink the popup padding so popups don't land under zoom control
+			paddingForPopups: new OpenLayers.Bounds(40,15,15,15)
 		};
 
 		// Are the layers to be redrawn on zoom change
