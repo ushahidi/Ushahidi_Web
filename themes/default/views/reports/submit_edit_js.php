@@ -316,7 +316,7 @@
 			});
 			
 			// Event on Latitude/Longitude Typing Change
-			$('#latitude, #longitude').bind("change keyup", function() {
+			$('#latitude, #longitude').bind("focusout keyup", function() {
 				var newlat = $("#latitude").val();
 				var newlon = $("#longitude").val();
 				if (!isNaN(newlat) && !isNaN(newlon))

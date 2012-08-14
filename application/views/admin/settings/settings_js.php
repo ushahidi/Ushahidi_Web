@@ -27,7 +27,7 @@ $(document).ready(function() {
 			longitude: <?php echo $default_lon; ?>
 		},
 		mapControls: [
-		    new OpenLayers.Control.Navigation(),
+		    new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
 		    new OpenLayers.Control.MouseDefaults(),
 		    new OpenLayers.Control.PanZoom(),
 		    new OpenLayers.Control.ArgParser(),

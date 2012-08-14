@@ -47,7 +47,7 @@
 		if (typeof controls == "undefined" || controls == null) {
 			// Set the controls for the map options
 			map.addControls([
-				new OpenLayers.Control.Navigation(),
+				new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
 				new OpenLayers.Control.PanZoom(),
 				new OpenLayers.Control.Attribution(),
 				new OpenLayers.Control.MousePosition(),
