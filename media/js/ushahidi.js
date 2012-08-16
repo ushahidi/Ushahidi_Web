@@ -272,7 +272,7 @@
 			});
 
 			return style;
-		},
+		}
 
 	 };
 
@@ -558,7 +558,7 @@
 			projection: Ushahidi.proj_4326,
 			formatOptions: {
 				extractStyles: true,
-				extractAttributes: true,
+				extractAttributes: true
 			}
 		};
 
@@ -874,7 +874,7 @@
 	Ushahidi.Map.prototype.register = function(eventName, callback, context) {
 
 		// Is the event known? i.e. in the internal event registry
-		if (this._EVENTS.indexOf(eventName) == -1)
+		if ($.inArray(eventName, this._EVENTS) === -1)
 			return;
 
 		// Has the event already been registered
