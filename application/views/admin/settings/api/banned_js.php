@@ -16,7 +16,7 @@
  */
 ?>
 
-<?php require SYSPATH.'../application/views/admin/forms/utils_js.php' ?>
+<?php require SYSPATH.'../application/views/admin/utils_js.php' ?>
 
 	// Ajax Submission
 	function apiBannedAction ( action, confirmAction, api_banned_id )
