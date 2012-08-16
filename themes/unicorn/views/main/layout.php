@@ -129,9 +129,9 @@ $(function(){
   						$layer_link = (!$layer_url) ?
   							url::base().Kohana::config('upload.relative_directory').'/'.$layer_file :
   							$layer_url;
-  						echo '<li><a href="#" id="layer_'. $layer .'"
-  						onclick="switchLayer(\''.$layer.'\',\''.$layer_link.'\',\''.$layer_color.'\'); return false;"><span class="swatch" style="background-color:#'.$layer_color.'"></span>
-  						<span class="category-title">'.$layer_name.'</span></a></li>';
+  						echo '<li><a href="#" id="layer_'. $layer .'">
+  						<span class="swatch" style="background-color:#'.$layer_color.'"></span>
+  						<span class="layer-name">'.$layer_name.'</span></a></li>';
   					}
   					?>
   				</ul>
