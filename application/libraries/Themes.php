@@ -250,7 +250,6 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		$content = Kohana::config("globalcode.foot").
 				$this->google_analytics()."\n".
 				$this->ushahidi_stats_js()."\n".
-				$this->cdn_gradual_upgrade()."\n".
 				$this->scheduler_js();
 
 		// Filter::footer_block - Modify Footer Block
@@ -387,21 +386,6 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
                 . '</script>'
                 . '<div id="schedulerholder"></div>'
                 . '<!-- End Task Scheduler -->';
-		}
-		return '';
-	}
-
-	/*
-	* CDN Gradual Upgrade JS Call
-	*   This upgrader pushes files from local server to the CDN in a gradual
-	*   fashion so there doesn't need to be any downtime when a deployer makes
-	*   the switch to a CDN
-	*/
-	public function cdn_gradual_upgrade()
-	{
-		if (Kohana::config('cdn.cdn_gradual_upgrade') != FALSE)
-		{
-			return cdn::gradual_upgrade();
 		}
 		return '';
 	}
