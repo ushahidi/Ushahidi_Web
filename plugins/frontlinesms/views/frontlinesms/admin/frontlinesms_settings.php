@@ -8,7 +8,7 @@
 			<p>
 				<?php echo Kohana::lang('settings.sms.flsms_description');?>.
 			</p>
-			<a href="http://www.frontlinesms.com/download/" class="no_border">
+			<a href="http://www.frontlinesms.com/the-software/frontlinesms-version-1/" class="no_border">
 				<img src="<?php echo url::base() ?>media/img/admin/download_frontline_engine.gif" />
 			</a>
 		</td>
