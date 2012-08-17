@@ -90,14 +90,20 @@ class Scheduler_Controller extends Controller {
 
 			if ($scheduler_controller AND (!($scheduler_last > $cronRan) OR $scheduler_last == 0))
 			{
+				$run = FALSE;
+
 				// Catch errors from missing scheduler or other bugs
 				try {
 					$dispatch = Dispatch::controller($scheduler_controller, "scheduler/");
-					if ($dispatch instanceof Dispatch) $run = $dispatch->method('index', '');
+
+					if ($dispatch instanceof Dispatch && method_exists($dispatch,'method'))
+					{
+						$run = $dispatch->method('index', '');
+					}
 				}
 				catch (Exception $e)
 				{
-					$run = FALSE;
+					// Nada.
 				}
 
 				if ($run !== FALSE)
