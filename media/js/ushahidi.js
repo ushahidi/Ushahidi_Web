@@ -551,10 +551,6 @@
 			}
 		}
 
-		// Layer names should be unique, therefore delete any
-		// existing layer that has the same name as the one being added
-		this.deleteLayer(options.name);
-
 		// Layer options
 		var layerOptions = {
 			projection: Ushahidi.proj_4326,
@@ -627,10 +623,23 @@
 		if (layerFeatures !== null && layerFeatures.length > 0) {
 			layer.addFeatures(layerFeatures);
 		}
+		
+		// Store context for callbacks
+		var context = this;
+		
+		// Hide the layer until its loaded
+		// only delete the old layer on loadend
+		layer.display(false);
+		var oldLayer = this._olMap.getLayersByName(options.name);
+		layer.events.register('loadend', layer, function () {
+			context.deleteLayer(oldLayer);
+			layer.display(true);
+		});
 
 		// Add the layer to the map
-		var context = this;
-		setTimeout(function(){ context._olMap.addLayer(layer); }, 1500);
+		// We do this after a delay in case someone zooms multiple times
+		clearTimeout(this._addLayerTimeout);
+		this._addLayerTimeout = setTimeout(function(){ context._olMap.addLayer(layer); }, 300);
 
 		// Select Feature control
 		this._selectControl = new OpenLayers.Control.SelectFeature(layer);
@@ -937,7 +946,10 @@
 	 * name - {String} Name of the layer to be deleted
 	 */
 	Ushahidi.Map.prototype.deleteLayer = function(name) {
-		var layers = this._olMap.getLayersByName(name);
+		var layers = name;
+		if (typeof name === 'string')
+			layers = this._olMap.getLayersByName(name);
+		
 		for (var i=0; i < layers.length; i++) {
 			this._olMap.removeLayer(layers[i]);
 			if (layers[i].destroyFeatures !== undefined)
