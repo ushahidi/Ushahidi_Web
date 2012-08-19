@@ -77,6 +77,11 @@ class Cloudfiles {
 		$this->username = Kohana::config("cdn.cdn_username");
 		$this->api_key = Kohana::config("cdn.cdn_api_key");
 		$this->container = Kohana::config("cdn.cdn_container");
+	}
+
+	public function authenticate()
+	{
+		if($this->conn) return;
 
 		// Include CF libraries
 		require_once Kohana::find_file('libraries/cloudfiles', 'CF_Authentication');
@@ -85,12 +90,6 @@ class Cloudfiles {
 		require_once Kohana::find_file('libraries/cloudfiles', 'CF_Http');
 		require_once Kohana::find_file('libraries/cloudfiles', 'CF_Object');
 
-		// Authenticate with Rackspace
-		$this->authenticate();
-	}
-
-	public function authenticate()
-	{
 		$auth = new CF_Authentication($this->username, $this->api_key);
 		$auth->authenticate();
 		$this->conn = new CF_Connection($auth);
@@ -99,6 +98,8 @@ class Cloudfiles {
 	// $file must be the absolute path to the file
 	public function upload($filename)
 	{
+		$this->authenticate();
+
 		$local_directory = Kohana::config('upload.directory', TRUE);
 		$local_directory = rtrim($local_directory, '/').'/';
 
@@ -127,6 +128,8 @@ class Cloudfiles {
 
 	public function delete($url)
 	{
+		$this->authenticate();
+
 		// Get the container that has the object
 		$container = $this->conn->get_container($this->container);
 

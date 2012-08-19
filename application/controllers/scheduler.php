@@ -148,6 +148,11 @@ class Scheduler_Controller extends Controller {
 			}
 		}
 
+		if (Kohana::config('cdn.cdn_gradual_upgrade') != FALSE)
+		{
+			return cdn::gradual_upgrade();
+		}
+
 		// If DEBUG is TRUE echo DEBUG info instead of transparent GIF
 		if (isset($_GET['debug']) AND $_GET['debug'] == 1)
 		{
