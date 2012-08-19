@@ -143,7 +143,7 @@ class S_Cleanup_Controller extends Controller {
 								// This is an orphan... so delete it
 								$orphan = Kohana::config('upload.relative_directory')."/".$fname;
 								//echo '-- '.$orphan.'<br/><br/>';
-								unlink($orphan);
+								@unlink($orphan);
 							}
 						}
 					}
