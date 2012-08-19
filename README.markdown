@@ -95,8 +95,6 @@ Installation
 
     We add the recursive flag so that git will clone the submodules too      
 
-* #####
-
 * ####Ensure the following directories are writable (i.e. have their permission values set to 777)
     - application/config
     - application/cache
@@ -142,6 +140,17 @@ Installation
     
     You will be guided through a series of screens to set up the database and site settings depending on the installation method you choose (Basic or Advanced)
 
+* ####Clean up
+    ##### Delete the installer
+    Leaving the installer files in your installation is a security risk.
+    Now you've installed successfully, **Delete the entire installer directory**
+
+    ##### Remove write permissions from config files
+
+        cd path-to-webserver-document-root-directory
+        chmod -R 755 application/config
+        chmod 644 application/config/*
+        chmod 644 .htaccess
 
 Additional Information
 ----------------------
