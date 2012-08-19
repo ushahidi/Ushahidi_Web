@@ -55,27 +55,27 @@ class Stats_Model extends ORM {
 				{
 					$slashornoslash = '/';
 				}
-				
+
 				// URL
 				$val = 'http://'.$_SERVER["HTTP_HOST"].$slashornoslash.$site_domain;
 				$additional_query = '&val='.base64_encode($val);
-				
+
 				// Site Name
 				$site_name = utf8tohtml::convert(Kohana::config('settings.site_name'),TRUE);
 				$additional_query .= '&sitename='.base64_encode($site_name);
-				
+
 				// Version
 				$version = Kohana::config('settings.ushahidi_version');
 				$additional_query .= '&version='.base64_encode($version);
-				
+
 				// Report Count
 				$number_reports = ORM::factory("incident")->where("incident_active", 1)->count_all();
 				$additional_query .= '&reports='.base64_encode($number_reports);
-				
+
 				// Latitude
 				$latitude = Kohana::config('settings.default_lat');
 				$additional_query .= '&lat='.base64_encode($latitude);
-				
+
 				// Longitude
 				$longitude = Kohana::config('settings.default_lon');
 				$additional_query .= '&lon='.base64_encode($longitude);
@@ -83,7 +83,7 @@ class Stats_Model extends ORM {
 
 			$url = 'https://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
 			$curl_handle = curl_init();
-			
+
 			// cURL options
 			$curl_options = array(
 				CURLOPT_URL => $url,
@@ -109,7 +109,19 @@ class Stats_Model extends ORM {
 			catch (Exception $e)
 			{
 				// In case the xml was malformed for whatever reason, we will just guess what the tag should be here
-				$tag = '<!-- Piwik --><script type="text/javascript">jQuery(document).ready(function(){$(\'#piwik\').load(\'https://tracker.ushahidi.com/piwik/piwik.php?idsite='.$stat_id.'&rec=1\');});</script><div id="piwik"></div><!-- End Piwik Tag -->';
+				$tag = <<< STATSCOLLECTOR
+					<!-- Stats Collector -->
+					<script type="text/javascript">
+					setTimeout(function() {
+						var statsCollector = document.createElement('img');
+						    statsCollector.src = document.location.protocol + "//tracker.ushahidi.com/piwik/piwik.php?idsite={$stat_id}&rec=1";
+						    statsCollector.style.cssText = "width: 1px; height: 1px; opacity: 0.1;";
+
+						document.body.appendChild(statsCollector);
+					}, 100);
+					</script>
+					<!-- End Stats Collector -->
+STATSCOLLECTOR;
 			}
 
 			// Reset Cache Here
