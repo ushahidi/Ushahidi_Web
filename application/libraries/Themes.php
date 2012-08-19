@@ -214,11 +214,16 @@ class Themes_Core {
 		}
 
 		// Inline Javascript
-		$inline_js = "<script type=\"text/javascript\">
-                        <!--//
-			".'$(document).ready(function(){$(document).pngFix();});'.$this->js.
-                        "//-->
-                        </script>";
+		$insert_js = trim($this->js);
+		$inline_js = <<< INLINEJS
+<script type="text/javascript">
+<!--//
+\$(function() { $(document).pngFix(); });
+
+{$insert_js}
+//-->
+</script>
+INLINEJS;
 
 		// Filter::header_js - Modify Header Javascript
 		Event::run('ushahidi_filter.header_js', $inline_js);
@@ -377,14 +382,21 @@ class Themes_Core {
 	{
 		if (Kohana::config('config.output_scheduler_js'))
 		{
-			return '<!-- Task Scheduler -->'
-			    . '<script type="text/javascript">'
-			    . 'jQuery(document).ready(function(){'
-			    . '	jQuery(\'#schedulerholder\').html(\'<img src="'.url::base().'scheduler" />\');'
-			    . '});'
-                . '</script>'
-                . '<div id="schedulerholder"></div>'
-                . '<!-- End Task Scheduler -->';
+			$schedulerPath = url::base() . 'scheduler';
+			$schedulerCode = <<< SCHEDULER
+				<!-- Task Scheduler -->
+				<script type="text/javascript">
+				setTimeout(function() {
+					var scheduler = document.createElement('img');
+					    scheduler.src = "$schedulerPath";
+					    scheduler.style.cssText = "width: 1px; height: 1px; opacity: 0.1;";
+
+					document.body.appendChild(scheduler);
+				}, 200);
+				</script>
+				<!-- End Task Scheduler -->
+SCHEDULER;
+			return $schedulerCode;
 		}
 		return '';
 	}
