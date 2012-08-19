@@ -1,0 +1,3 @@
+[submodule "application/i18n"]
+	path = application/i18n
+	url = git://github.com/ushahidi/Ushahidi-Localizations.git
