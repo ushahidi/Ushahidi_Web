@@ -83,9 +83,19 @@ Installation
     or in the case of a zip file:
 
         unzip Ushahidi_Web-xxxx.zip
-    
+
     This will create a new directory Ushahidi_Web-xxxx containing all the Ushahidi platform files and directories - Move the contents of this directory
     into a directory within your webserver's document root or your public HTML directory.
+
+    #####Getting the latest develop code (CAUTION: only do this if you know what you're doing) 
+
+    clone the latest code from github
+
+        git clone --recursive git://github.com/ushahidi/Ushahidi_Web.git
+
+    We add the recursive flag so that git will clone the submodules too      
+
+* #####
 
 * ####Ensure the following directories are writable (i.e. have their permission values set to 777)
     - application/config
