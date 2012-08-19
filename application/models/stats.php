@@ -125,7 +125,7 @@ STATSCOLLECTOR;
 			}
 
 			// Reset Cache Here
-			$cache->set(Kohana::config('settings.subdomain').'_piwiktag', $tag, array('piwiktag'), 60); // 1 Day
+			$cache->set(Kohana::config('settings.subdomain').'_piwiktag', $tag, array('piwiktag'), 86400); // 1 Day
 		}
 
 		return $tag;
