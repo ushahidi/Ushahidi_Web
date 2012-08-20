@@ -15,6 +15,7 @@ To install the platform on your computer/server, the target system must meet the
     - Apache 1.3+
     - Apache 2.0+
     - lighttpd
+    - nginx
     - Microsoft Internet Information Server (MS IIS)
 * Unicode support in the operating system
 

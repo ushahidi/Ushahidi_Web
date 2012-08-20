@@ -214,12 +214,16 @@ class Themes_Core {
 		}
 
 		// Inline Javascript
-		$inline_js = "<script type=\"text/javascript\">
-                        <!--//
-function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler'."';}
-			".'$(document).ready(function(){$(document).pngFix();});'.$this->js.
-                        "//-->
-                        </script>";
+		$insert_js = trim($this->js);
+		$inline_js = <<< INLINEJS
+<script type="text/javascript">
+<!--//
+\$(function() { $(document).pngFix(); });
+
+{$insert_js}
+//-->
+</script>
+INLINEJS;
 
 		// Filter::header_js - Modify Header Javascript
 		Event::run('ushahidi_filter.header_js', $inline_js);
@@ -250,7 +254,6 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 		$content = Kohana::config("globalcode.foot").
 				$this->google_analytics()."\n".
 				$this->ushahidi_stats_js()."\n".
-				$this->cdn_gradual_upgrade()."\n".
 				$this->scheduler_js();
 
 		// Filter::footer_block - Modify Footer Block
@@ -379,29 +382,21 @@ function runScheduler(img){img.onload = null;img.src = '".url::site().'scheduler
 	{
 		if (Kohana::config('config.output_scheduler_js'))
 		{
-			return '<!-- Task Scheduler -->'
-			    . '<script type="text/javascript">'
-			    . 'jQuery(document).ready(function(){'
-			    . '	jQuery(\'#schedulerholder\').html(\'<img src="'.url::base().'scheduler" />\');'
-			    . '});'
-                . '</script>'
-                . '<div id="schedulerholder"></div>'
-                . '<!-- End Task Scheduler -->';
-		}
-		return '';
-	}
+			$schedulerPath = url::base() . 'scheduler';
+			$schedulerCode = <<< SCHEDULER
+				<!-- Task Scheduler -->
+				<script type="text/javascript">
+				setTimeout(function() {
+					var scheduler = document.createElement('img');
+					    scheduler.src = "$schedulerPath";
+					    scheduler.style.cssText = "width: 1px; height: 1px; opacity: 0.1;";
 
-	/*
-	* CDN Gradual Upgrade JS Call
-	*   This upgrader pushes files from local server to the CDN in a gradual
-	*   fashion so there doesn't need to be any downtime when a deployer makes
-	*   the switch to a CDN
-	*/
-	public function cdn_gradual_upgrade()
-	{
-		if (Kohana::config('cdn.cdn_gradual_upgrade') != FALSE)
-		{
-			return cdn::gradual_upgrade();
+					document.body.appendChild(scheduler);
+				}, 200);
+				</script>
+				<!-- End Task Scheduler -->
+SCHEDULER;
+			return $schedulerCode;
 		}
 		return '';
 	}
