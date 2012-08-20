@@ -929,7 +929,7 @@ class Login_Controller extends Template_Controller {
 	private function _email_resetlink( $email, $name, $secret_url )
 	{
 		$to = $email;
-		$from = Kohana::lang('ui_admin.password_reset_from');
+		$from = array(Kohana::config('settings.site_email'), Kohana::config('settings.site_name'));
 		$subject = Kohana::lang('ui_admin.password_reset_subject');
 		$message = $this->_email_resetlink_message($name, $secret_url);
 
