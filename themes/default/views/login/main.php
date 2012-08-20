@@ -118,17 +118,14 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 						<td><input type="submit" id="submit" name="submit" value="<?php echo Kohana::lang('ui_main.login'); ?>" class="login_btn" /></td>
 					</tr>
 					
-					<?php if (Kohana::config('settings.require_email_confirmation')): ?>
 					<tr>
 						<td><a href="javascript:toggle('signin_forgot');"> <?php echo Kohana::lang('ui_main.forgot_password');?></a></td>
 					</tr>
-					<?php endif; ?>
 
 				</table>
 			<?php echo form::close(); ?>
 		</div>
 		
-		<?php if (Kohana::config('settings.require_email_confirmation')): ?>
 		<div id="signin_forgot" class="signin_select ui-corner-all" style="margin-top:10px;">
 			<?php echo form::open(NULL, array('id'=>"userforgot_form")); ?>
 				<input type="hidden" name="action" value="forgot">
@@ -143,7 +140,6 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 				</table>
 			<?php echo form::close() ?>
 		</div>
-		<?php endif; ?>
 
 		<?php if (kohana::config('config.allow_openid') == TRUE): ?>
 		<h2><a href="javascript:toggle('signin_openid');"><?php echo Kohana::lang('ui_main.login_openid'); ?></a></h2>
