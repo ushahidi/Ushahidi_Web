@@ -114,8 +114,8 @@ class Auth_ORM_Driver extends Auth_Driver {
 			if ($user->confirmed == 0)
 			{
 				// User has not confirmed email so kill auth cookies and fail login
-				$this->logout(true);
-				url::redirect('/');
+				$this->logout(TRUE);
+				
 				return FALSE;
 			}
 		}

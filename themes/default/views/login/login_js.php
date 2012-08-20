@@ -17,7 +17,7 @@ $(document).ready(function() {
 	{
 		echo '$("#signin_new").show(400);';
 	}
-	elseif ($action == 'resend_confirmation' OR isset($_GET['new_confirm_email']))
+	elseif ($action == 'resend_confirmation' OR isset($_GET['new_confirm_email']) OR isset($_GET['confirmation_failure']))
 	{
 		echo '$("#resend_confirm_email").show(0);';
 	}

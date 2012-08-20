@@ -92,6 +92,14 @@ class Login_Controller extends Template_Controller {
 			$message = Kohana::lang('ui_main.must_confirm_email_address');
 		}
 
+		// Show send new confirm email form
+		if (isset($_GET["confirmation_failure"]))
+		{
+			$new_confirm_email_form = TRUE;
+			$message_class = 'login_error';
+			$message = Kohana::lang('ui_main.confirm_email_failed');
+		}
+
 		// Show that confirming the email address was a success
 		if (isset($_GET["confirmation_success"]))
 		{
@@ -164,22 +172,19 @@ class Login_Controller extends Template_Controller {
 					}
 					else
 					{
+						// If user isn't confirmed, redirect to resend confirmation page
+						if (Kohana::config('settings.require_email_confirmation') AND ORM::factory('user', $user)->confirmed == 0)
+						{
+							url::redirect("login?new_confirm_email");
+						}
+						
 						// Generic Error if exception not passed
 						$post->add_error('password', 'login error');
 					}
-
 				}
 				catch (Exception $e)
 				{
 					$error_message = $e->getMessage();
-
-					// In a special case, we want to show a form to resend a confirmation email
-					//   "need_email_confirmation" can be found in modules/auth/libraries/drivers/Auth/ORM.php
-					if ( $error_message == 'need_email_confirmation')
-					{
-						//Redirect back to the login form and show the for to request a new confirmation email
-						url::redirect("login?new_confirm_email");
-					}
 
 					// We use a "custom" message because of RiverID.
 					$post->add_error('password', $error_message);
@@ -652,7 +657,7 @@ class Login_Controller extends Template_Controller {
 		else
 		{
 			// Redirect to Login which will log themin if they are already logged in
-			url::redirect("login");
+			url::redirect("login?confirmation_failure");
 		}
 
 
@@ -901,7 +906,7 @@ class Login_Controller extends Template_Controller {
 		$user->code = $code;
 		$user->save();
 
-		$url = url::site()."login/verify/?c=$code&e=$email";
+		$url = url::site()."login/verify/?c=".urlencode($code)."&e=".urlencode($email);
 
 		$to = $email;
 		$from = array($settings['site_email'], $settings['site_name']);
