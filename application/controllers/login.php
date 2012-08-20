@@ -319,11 +319,8 @@ class Login_Controller extends Template_Controller {
 						// the reset link expires automatically.
 						$secret = $auth->hash_password($user->email.$user->last_login);
 						$secret_link = url::site('login/index/'.$user->id.'/'.$secret.'?reset');
-						$this->_email_resetlink($post->resetemail,$user->name,$secret_link);
+						$email_sent = $this->_email_resetlink($post->resetemail,$user->name,$secret_link);
 					}
-
-					// Send Confirmation email
-					$email_sent = $this->_send_email_confirmation($user);
 
 					if ($email_sent == TRUE)
 					{
@@ -933,16 +930,16 @@ class Login_Controller extends Template_Controller {
 		$subject = Kohana::lang('ui_admin.password_reset_subject');
 		$message = $this->_email_resetlink_message($name, $secret_url);
 
-		//email details
-		if( email::send( $to, $from, $subject, $message, FALSE ) == 1 )
-		{
-			return TRUE;
+		try {
+			$recipients = email::send( $to, $from, $subject, $message, FALSE );
 		}
-		else
+		catch (Exception $e)
 		{
+			Kohana::log('warning', Swift_LogContainer::getLog()->dump(true));
 			return FALSE;
 		}
 
+		return TRUE;
 	}
 
 	/**
