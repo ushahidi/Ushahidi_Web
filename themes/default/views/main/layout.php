@@ -10,6 +10,11 @@
 
 		<!-- right column -->
 		<div id="right" class="clearingfix">
+			
+			<?php
+			// Action::main_sidebar_pre_filters - Add Items to the Entry Page before filters
+			Event::run('ushahidi_action.main_sidebar_pre_filters');
+			?>
 
 			<!-- category filters -->
 			<div class="cat-filters clearingfix">
@@ -141,6 +146,11 @@
 				</ul>
 				<!-- /Layers -->
 			<?php endif; ?>
+			
+			<?php
+			// Action::main_sidebar_post_filters - Add Items to the Entry Page after filters
+			Event::run('ushahidi_action.main_sidebar_post_filters');
+			?>
 
 			<br />
 
