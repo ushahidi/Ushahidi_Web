@@ -84,9 +84,17 @@ Installation
     or in the case of a zip file:
 
         unzip Ushahidi_Web-xxxx.zip
-    
+
     This will create a new directory Ushahidi_Web-xxxx containing all the Ushahidi platform files and directories - Move the contents of this directory
     into a directory within your webserver's document root or your public HTML directory.
+
+    #####Getting the latest develop code (CAUTION: only do this if you know what you're doing) 
+
+    clone the latest code from github
+
+        git clone --recursive git://github.com/ushahidi/Ushahidi_Web.git
+
+    We add the recursive flag so that git will clone the submodules too      
 
 * ####Ensure the following directories are writable (i.e. have their permission values set to 777)
     - application/config
@@ -133,6 +141,17 @@ Installation
     
     You will be guided through a series of screens to set up the database and site settings depending on the installation method you choose (Basic or Advanced)
 
+* ####Clean up
+    ##### Delete the installer
+    Leaving the installer files in your installation is a security risk.
+    Now you've installed successfully, **Delete the entire installer directory**
+
+    ##### Remove write permissions from config files
+
+        cd path-to-webserver-document-root-directory
+        chmod -R 755 application/config
+        chmod 644 application/config/*
+        chmod 644 .htaccess
 
 Additional Information
 ----------------------
