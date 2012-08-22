@@ -93,6 +93,7 @@ class Json_Controller extends Template_Controller {
 			// Get the color & icon
 			$cat = ORM::factory('category', $category_id);
 			$color = $cat->category_color;
+			$icon = "";
 			if ($cat->category_image)
 			{
 				$icon = url::convert_uploaded_to_abs($cat->category_image);
