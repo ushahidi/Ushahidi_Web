@@ -171,21 +171,19 @@ class Json_Controller extends Template_Controller {
 			$latitude = isset($marker->latitude) ? $marker->latitude : $marker->location->latitude;
 			$longitude = isset($marker->longitude) ? $marker->longitude : $marker->location->longitude;
 			
+			// Get thumbnail
 			$thumb = "";
-			if ($media_type == 1)
+			$media = ORM::factory('incident', $marker->id)->media;
+			if ($media->count())
 			{
-				$media = ORM::factory('incident', $marker->id)->media;
-				if ($media->count())
+				foreach ($media as $photo)
 				{
-					foreach ($media as $photo)
+					if ($photo->media_thumb)
 					{
-						if ($photo->media_thumb)
-						{
-							// Get the first thumb
-							$prefix = url::base().Kohana::config('upload.relative_directory');
-							$thumb = $prefix."/".$photo->media_thumb;
-							break;
-						}
+						// Get the first thumb
+						$prefix = url::base().Kohana::config('upload.relative_directory');
+						$thumb = $prefix."/".$photo->media_thumb;
+						break;
 					}
 				}
 			}
