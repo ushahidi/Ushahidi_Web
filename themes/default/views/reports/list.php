@@ -43,8 +43,7 @@
 			<?php
 				foreach ($incidents as $incident)
 				{
-					$incident = ORM::factory('incident')->with('location')->find($incident->incident_id);
-					$incident_id = $incident->id;
+					$incident_id = $incident->incident_id;
 					$incident_title = strip_tags($incident->incident_title);
 					$incident_description = strip_tags($incident->incident_description);
 					//$incident_category = $incident->incident_category;
@@ -55,7 +54,7 @@
 					$incident_date = date('H:i M d, Y', strtotime($incident->incident_date));
 					//$incident_time = date('H:i', strtotime($incident->incident_date));
 					$location_id = $incident->location_id;
-					$location_name = $incident->location->location_name;
+					$location_name = $incident->location_name;
 					$incident_verified = $incident->incident_verified;
 
 					if ($incident_verified)
@@ -69,10 +68,10 @@
 						$incident_verified_class = "unverified";
 					}
 
-					$comment_count = $incident->comment->count();
+					$comment_count = ORM::Factory('comment')->where('incident_id', $incident_id)->count_all();
 
 					$incident_thumb = url::file_loc('img')."media/img/report-thumb-default.jpg";
-					$media = $incident->media;
+					$media = ORM::Factory('media')->where('incident_id', $incident_id)->find_all();
 					if ($media->count())
 					{
 						foreach ($media as $photo)
@@ -97,7 +96,9 @@
 						<!-- Category Selector -->
 						<div class="r_categories">
 							<h4><?php echo Kohana::lang('ui_main.categories'); ?></h4>
-							<?php foreach ($incident->category as $category): ?>
+							<?php
+							$categories = ORM::Factory('category')->join('incident_category', 'category_id', 'category.id')->where('incident_id', $incident_id)->find_all();
+							foreach ($categories as $category): ?>
 								
 								<?php // Don't show hidden categories ?>
 								<?php if($category->category_visible == 0) continue; ?>
