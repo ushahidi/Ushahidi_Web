@@ -434,6 +434,9 @@ class Incident_Model extends ORM {
 		{
 			$sql .= 'LIMIT '.$limit->sql_offset.', '.$limit->items_per_page;
 		}
+		
+		// Event to alter SQL
+		Event::run('ushahidi_filter.get_incidents_sql', $sql);
 
 		// Kohana::log('debug', $sql);
 		return Database::instance()->query($sql);
