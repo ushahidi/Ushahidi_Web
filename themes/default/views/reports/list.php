@@ -46,6 +46,7 @@
 					$incident_id = $incident->incident_id;
 					$incident_title = strip_tags($incident->incident_title);
 					$incident_description = strip_tags($incident->incident_description);
+					$incident_url = "reports/view/$incident_id";
 					//$incident_category = $incident->incident_category;
 					// Trim to 150 characters without cutting words
 					// XXX: Perhaps delcare 150 as constant
@@ -86,7 +87,7 @@
 				?>
 				<div id="<?php echo $incident_id ?>" class="rb_report <?php echo $incident_verified_class; ?>">
 					<div class="r_media">
-						<p class="r_photo" style="text-align:center;"> <a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>">
+						<p class="r_photo" style="text-align:center;"> <a href="<?php echo url::site($incident_url); ?>">
 							<img src="<?php echo $incident_thumb; ?>" style="max-width:89px;max-height:59px;" /> </a>
 						</p>
 
@@ -104,13 +105,13 @@
 								<?php if($category->category_visible == 0) continue; ?>
 						
 								<?php if ($category->category_image_thumb): ?>
-									<?php $category_image = url::base().Kohana::config('upload.relative_directory')."/".$category->category_image_thumb; ?>
-									<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>">
+									<?php $category_image = url::site(Kohana::config('upload.relative_directory')."/".$category->category_image_thumb); ?>
+									<a class="r_category" href="<?php echo url::site("reports/?c=$category->id") ?>">
 										<span class="r_cat-box"><img src="<?php echo $category_image; ?>" height="16" width="16" /></span> 
 										<span class="r_cat-desc"><?php echo Category_Lang_Model::category_title($category->id); ?></span>
 									</a>
 								<?php else:	?>
-									<a class="r_category" href="<?php echo url::site(); ?>reports/?c=<?php echo $category->id; ?>">
+									<a class="r_category" href="<?php echo url::site("reports/?c=$category->id") ?>">
 										<span class="r_cat-box" style="background-color:#<?php echo $category->category_color;?>;"></span> 
 										<span class="r_cat-desc"><?php echo Category_Lang_Model::category_title($category->id); ?></span>
 									</a>
@@ -124,10 +125,10 @@
 					</div>
 
 					<div class="r_details">
-						<h3><a class="r_title" href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>">
+						<h3><a class="r_title" href="<?php echo url::site($incident_url); ?>">
 								<?php echo html::specialchars($incident_title); ?>
 							</a>
-							<a href="<?php echo url::site(); ?>reports/view/<?php echo $incident_id; ?>#discussion" class="r_comments">
+							<a href="<?php echo url::site("$incident_url#discussion"); ?>" class="r_comments">
 								<?php echo $comment_count; ?></a> 
 								<?php echo $incident_verified; ?>
 							</h3>
@@ -136,7 +137,7 @@
 						  <a class="btn-show btn-more" href="#<?php echo $incident_id ?>"><?php echo Kohana::lang('ui_main.more_information'); ?> &raquo;</a> 
 						  <a class="btn-show btn-less" href="#<?php echo $incident_id ?>">&laquo; <?php echo Kohana::lang('ui_main.less_information'); ?></a> 
 						</div>
-						<p class="r_location"><a href="<?php echo url::site(); ?>reports/?l=<?php echo $location_id; ?>"><?php echo html::specialchars($location_name); ?></a></p>
+						<p class="r_location"><a href="<?php echo url::site("reports/?l=$location_id"); ?>"><?php echo html::specialchars($location_name); ?></a></p>
 						<?php
 						// Action::report_extra_details - Add items to the report list details section
 						Event::run('ushahidi_action.report_extra_details', $incident_id);
