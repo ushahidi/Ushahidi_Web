@@ -1531,7 +1531,9 @@ final class Kohana {
 
 			if (isset($entry['file']))
 			{
-				$temp .= self::lang('core.error_file_line', preg_replace('!^'.preg_quote(DOCROOT).'!', '', $entry['file']), $entry['line']);
+				// Hack this since kohana lang seems to fail here every time
+				$temp .= sprintf('<tt>%s <strong>[%s]:</strong></tt>', preg_replace('!^'.preg_quote(DOCROOT).'!', '', $entry['file']), $entry['line']);
+				//$temp .= self::lang('core.error_file_line', preg_replace('!^'.preg_quote(DOCROOT).'!', '', $entry['file']), $entry['line']);
 			}
 
 			$temp .= '<pre>';
