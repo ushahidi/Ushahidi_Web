@@ -612,7 +612,7 @@ class Incidents_Api_Object extends Api_Object_Core {
 							if($media_item['mediatype'] == 1)
 							{
 								// Grab that last key up there
-								$add_to_key = key($json_report_media[$item->incident_id]) + 1;
+								$add_to_key = key($json_report_media[$item->incident_id]);
 
 								// Give a full absolute URL to the image
 								$json_report_media[$item->incident_id][$add_to_key]["thumb_url"] =  $url_prefix.$upload_path.$media_item['mediathumb'];
