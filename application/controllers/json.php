@@ -188,7 +188,19 @@ class Json_Controller extends Template_Controller {
 				}
 			}
 
-			$link = url::site("reports/view/".$marker->id);
+			// Get URL from object, fallback to Incident_Model::get() if object doesn't have url or url()
+			if (method_exists($marker, 'url'))
+			{
+				$link = $marker->url();
+			}
+			elseif (isset($marker->url))
+			{
+				$link = $marker->url;
+			}
+			else
+			{
+				$link = Incident_Model::get_url($marker);
+			}
 			$item_name = $this->get_title($marker->incident_title, $link);
 
 			$json_item = array();
