@@ -182,8 +182,7 @@ class Json_Controller extends Template_Controller {
 					if ($photo->media_thumb)
 					{
 						// Get the first thumb
-						$prefix = url::base().Kohana::config('upload.relative_directory');
-						$thumb = $prefix."/".$photo->media_thumb;
+						$thumb = url::convert_uploaded_to_abs($photo->media_thumb);
 						break;
 					}
 				}
