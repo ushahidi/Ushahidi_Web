@@ -338,8 +338,18 @@ class Json_Controller extends Template_Controller {
 				? "&s=".$start_date."&e=".$end_date
 				: "";
 			
+			// Build query string for title link, passing through any GET params
+			// This allows plugins to extend more easily
+			$query = http_build_query(array_merge(
+				array(
+					'sw' => $southwest,
+					'ne' => $northeast
+				),
+				$_GET
+			));
+			
 			// Build out the JSON string
-			$link = url::site("reports/index/?c=".$category_id."&sw=".$southwest."&ne=".$northeast.$time_filter);
+			$link = url::site("reports/index/?$query");
 			$item_name = $this->get_title(Kohana::lang('ui_main.reports_count', $cluster_count), $link);
 			
 			$json_item = array();
