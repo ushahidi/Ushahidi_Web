@@ -635,4 +635,36 @@ class Incident_Model extends ORM {
 		parent::delete();
 	}
 
+	/**
+	 * Get url of this incident
+	 * @return string
+	 **/
+	public function url()
+	{
+		return self::get_url($this);
+	}
+	
+	/**
+	 * Get url for the incident object passed
+	 * @param object|int
+	 * @return string
+	 **/
+	public static function get_url($incident)
+	{
+		if (is_object($incident))
+		{
+			$id = isset($incident->incident_id) ? $incident->incident_id : $incident->id;
+		}
+		elseif (is_int($incident))
+		{
+			$id = intval($incident);
+		}
+		else
+		{
+			return false;
+		}
+		
+		return url::site('reports/view/'.$id);
+	}
+
 }
