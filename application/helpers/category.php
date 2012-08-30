@@ -159,7 +159,7 @@ class category_Core {
 				. (!$include_hidden ? "AND c.category_visible = 1 " : "")
 				. (!$include_hidden ? "AND (c_parent.category_visible = 1 OR c.parent_id = 0)" : "") // Parent must be visible, or must be top level
 				. "GROUP BY c.id "
-				. "ORDER BY c.category_title ASC";
+				. "ORDER BY c.category_position ASC";
 		}
 		else
 		{
@@ -169,7 +169,7 @@ class category_Core {
 				. "WHERE c.category_title != \"NONE\" "
 				. (!$include_hidden ? "AND c.category_visible = 1 " : "")
 				. (!$include_hidden ? "AND (c_parent.category_visible = 1 OR c.parent_id = 0)" : "") // Parent must be visible, or must be top level
-				. "ORDER BY c.category_title ASC";
+				. "ORDER BY c.category_position ASC";
 		}
 		
 		// Create nested array - all in one pass
