@@ -126,7 +126,7 @@ class Login_Controller extends Template_Controller {
 			$post->add_rules('username', 'required');
 			$post->add_rules('password', 'required');
 
-			if ($post->validate())
+			if ($post->validate(FALSE))
 			{
 				// Sanitize $_POST data removing all inputs without rules
 				$postdata_array = $post->safe_array();
