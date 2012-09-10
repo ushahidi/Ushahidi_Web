@@ -333,13 +333,19 @@ jQuery(function() {
 		default: ciStyle
 	});
 
-	// Add the checkins layer
-	map.addLayer(Ushahidi.GEOJSON, {
-		url: checkinsURL,
-		name: "Checkins",
-		callback: json2GeoJSON,
-		styleMap: checkinStyleMap,
-		transform: true,
+	$.getJSON(checkinsURL, function(data)
+	{
+		if (data["payload"]["checkins"] !== undefined)
+		{
+			// Add the checkins layer
+			map.addLayer(Ushahidi.GEOJSON, {
+				url: checkinsURL,
+				name: "Checkins",
+				callback: json2GeoJSON,
+				styleMap: checkinStyleMap,
+				transform: true,
+			});
+		}
 	});
 
 	/**
