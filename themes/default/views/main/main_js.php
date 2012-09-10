@@ -209,7 +209,8 @@ jQuery(function() {
 	map = new Ushahidi.Map('map', config);
 	map.addLayer(Ushahidi.GEOJSON, {
 		name: "<?php echo Kohana::lang('ui_main.reports'); ?>",
-		url: reportsURL
+		url: reportsURL,
+		transform: false
 	}, true);
 
 
