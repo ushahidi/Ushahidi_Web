@@ -37,6 +37,7 @@ class csrf_Core {
 			// Generates a hash of variable length random alpha-numeric string
 			$token = hash('sha256', text::random('alnum', rand(25, 32)));
 			Session::instance()->set('csrf-token', $token);
+			Kohana::log('debug', 'Regenerated CSRF token: '.$token);
 		}
 
 		return $token;

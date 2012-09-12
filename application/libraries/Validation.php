@@ -423,6 +423,7 @@ class Validation_Core extends ArrayObject {
 				if ( ! csrf::valid($form_auth_token))
 				{
 					Kohana::log('debug', 'Invalid CSRF token: '.$form_auth_token);
+					Kohana::log('debug', 'Actual CSRF token: '.csrf::token());
 					// Flag CSRF validation as having failed
 					$this->csrf_validation_failed = TRUE;
 
