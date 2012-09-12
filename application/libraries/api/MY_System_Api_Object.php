@@ -75,6 +75,7 @@ class System_Api_Object extends Api_Object_Core {
 		$features = array(
 			'admin_reports_v2' => TRUE,
 			'api_key' => FALSE,
+			'jsonp' => TRUE,
 		);
 
 		// Create the json array
