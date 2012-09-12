@@ -66,6 +66,7 @@ class customforms_Core {
 		{
 			$form_fields->join('form_response','form_response.form_field_id','form_field.id','RIGHT');
 			$form_fields->where('form_response.incident_id', $incident_id);
+			$form_fields->select('form_field.*', 'form_response.*');
 		}
 		
 		$form_fields = $form_fields->find_all();
