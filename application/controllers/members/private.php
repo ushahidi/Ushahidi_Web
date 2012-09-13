@@ -271,11 +271,13 @@ class Private_Controller extends Members_Controller {
 		$this->template = "";
 		$this->auto_render = FALSE;
 		
-		$name = (isset($_GET['q'])) ? strtolower($_GET['q']) : "";
+		$name = (isset($_GET['q'])) ? utf8::strtolower('%'.str_replace(array('%','_'), array('|%','|_'), $_GET['q']).'%') : "";
 		
 		if ($name)
 		{
-			$users = $db->query("SELECT * from users where id != ? AND LOWER(name) LIKE ?",$this->user->id,$name);
+			$users = $db->query("SELECT * from users where id != :id AND LOWER(name) LIKE :name ESCAPE '|'",
+				array(':id' => $this->user->id, ':name' => $name));
+			
 			foreach ($users as $user)
 			{
 				echo "$user->name\n";
