@@ -199,7 +199,6 @@ class Category_Model extends ORM_Tree {
 		// Return
 		return ORM::factory('category')
 			->where($where)
-			->where('category_title != "NONE"')
 			->orderby('category_position', 'ASC')
 			->orderby('category_title', 'ASC')
 			->find_all();
@@ -214,9 +213,49 @@ class Category_Model extends ORM_Tree {
 		
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
-		Database::instance()->query('UPDATE `'.$table_prefix.'category_lang` SET category_title = ?, category_description = ? WHERE category_id = ? AND locale = ?',
+		$this->db->query('UPDATE `'.$table_prefix.'category_lang` SET category_title = ?, category_description = ? WHERE category_id = ? AND locale = ?',
 			$this->category_title, $this->category_description, $this->id, $this->locale
 		);
+	}
+	
+	/**
+	 * Extend the default ORM delete to remove related records
+	 */
+	public function delete()
+	{
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
+		// Delete category_lang entries
+		ORM::factory('category_lang')
+			->where('category_id', $this->id)
+			->delete_all();
+		
+		// Update subcategories tied to this category and make them top level
+		$this->db->query(
+			'UPDATE `'.$table_prefix.'category` SET parent_id = 0 WHERE parent_id = :category_id',
+			array(':category_id' => $this->id)
+		);
+		
+		// Unapprove all reports tied to this category only (not to multiple categories)
+		$this->db->query(
+			'UPDATE `'.$table_prefix.'incident`
+				SET incident_active = 0
+				WHERE
+					id IN (SELECT incident_id FROM `'.$table_prefix.'incident_category` WHERE category_id = :category_id)
+				AND
+					id NOT IN (SELECT DISTINCT incident_id FROM `'.$table_prefix.'incident_category` WHERE category_id != :category_id)
+			',
+			array(':category_id' => $this->id)
+		);
+
+		// Delete all incident_category entries
+		$result = ORM::factory('incident_category')
+					->where('category_id',$this->id)
+					->delete_all();
+		
+		// @todo Delete the category image
+		
+		parent::delete();
 	}
 
 	

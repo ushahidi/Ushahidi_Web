@@ -155,7 +155,7 @@ class category_Core {
 				. "LEFT JOIN ".$table_prefix."category c_parent ON (c.parent_id = c_parent.id) "
 				. "LEFT JOIN ".$table_prefix."incident_category ic ON (ic.category_id = c.id) "
 				. "LEFT JOIN ".$table_prefix."incident i ON (ic.incident_id = i.id AND i.incident_active = 1 ) "
-				. "WHERE c.category_title != \"NONE\" "
+				. "WHERE 1=1 "
 				. (!$include_hidden ? "AND c.category_visible = 1 " : "")
 				. (!$include_hidden ? "AND (c_parent.category_visible = 1 OR c.parent_id = 0)" : "") // Parent must be visible, or must be top level
 				. "GROUP BY c.id "
@@ -166,7 +166,7 @@ class category_Core {
 			$sql = "SELECT c.id, c.parent_id, c.category_title, c.category_color, c.category_image, c.category_image_thumb "
 				. "FROM ".$table_prefix."category c "
 				. "LEFT JOIN ".$table_prefix."category c_parent ON (c.parent_id = c_parent.id) "
-				. "WHERE c.category_title != \"NONE\" "
+				. "WHERE 1=1 "
 				. (!$include_hidden ? "AND c.category_visible = 1 " : "")
 				. (!$include_hidden ? "AND (c_parent.category_visible = 1 OR c.parent_id = 0)" : "") // Parent must be visible, or must be top level
 				. "ORDER BY c.category_position ASC";

@@ -203,7 +203,6 @@ class Main_Controller extends Template_Controller {
 		$parent_categories = array();
 		$all_parents = ORM::factory('category')
 		    ->where('category_visible', '1')
-		    ->where('id != 5')
 		    ->where('parent_id', '0')
 		    ->find_all();
 

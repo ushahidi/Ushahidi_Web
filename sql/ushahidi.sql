@@ -200,8 +200,7 @@ INSERT INTO `category` (`id`,`category_title`, `category_description`, `category
 (1, 'Category 1', 'Category 1', '9900CC', 1, 0, 0),
 (2, 'Category 2', 'Category 2', '3300FF', 1, 0, 1),
 (3, 'Category 3', 'Category 3', '663300', 1, 0, 2),
-(4, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1, 3),
-(5, 'NONE', 'Holds uncategorized reports', '009887', 1, 1, 4);
+(4, 'Trusted Reports', 'Reports from trusted reporters', '339900', 1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -811,7 +810,7 @@ UNLOCK TABLES;
 CREATE TABLE IF NOT EXISTS `incident_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `incident_id` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `category_id` int(11) unsigned NOT NULL DEFAULT '5',
+  `category_id` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `incident_category_ids` (`incident_id`,`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores submitted reports categories' AUTO_INCREMENT=2 ;
