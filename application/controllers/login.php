@@ -225,7 +225,7 @@ class Login_Controller extends Template_Controller {
 			//	Add some filters
 			$post->pre_filter('trim', TRUE);
 
-			$post->add_rules('password','required', 'length['.kohana::config('auth.password_length').']','alpha_numeric');
+			$post->add_rules('password','required', 'length['.kohana::config('auth.password_length').']','alpha_dash');
 			$post->add_rules('name','required','length[3,100]');
 			$post->add_rules('email','required','email','length[4,64]');
 			$post->add_callbacks('username', array($this,'username_exists_chk'));
@@ -235,7 +235,7 @@ class Login_Controller extends Template_Controller {
 			if ( ! empty($post->password))
 			{
 				$post->add_rules('password','required','length['.kohana::config('auth.password_length').']'
-					,'alpha_numeric','matches[password_again]');
+					,'alpha_dash','matches[password_again]');
 			}
 
 			if ($post->validate())
