@@ -366,8 +366,8 @@ class Login_Controller extends Template_Controller {
 			$post->pre_filter('trim', TRUE);
 			$post->add_rules('token','required');
 			$post->add_rules('changeid','required');
-			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']','alpha_numeric');
-			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']','alpha_numeric','matches[password_again]');
+			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']','alpha_dash');
+			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']','alpha_dash','matches[password_again]');
 
 			if ($post->validate())
 			{
