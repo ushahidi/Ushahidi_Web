@@ -98,6 +98,7 @@ class Session_Database_Driver implements Session_Driver {
 
 	public function write($id, $data)
 	{
+		$this->db->push();
 		$data = array
 		(
 			'session_id' => $id,
@@ -126,6 +127,8 @@ class Session_Database_Driver implements Session_Driver {
 			// Set the new session id
 			$this->session_id = $id;
 		}
+
+		$this->db->pop();
 
 		return (bool) $query->count();
 	}
