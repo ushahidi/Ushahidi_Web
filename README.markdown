@@ -9,7 +9,7 @@ System Requirements
 -------------------
 To install the platform on your computer/server, the target system must meet the following requirements:
 
-* PHP version 5.2.3 or greater
+* PHP version 5.2.3 or greater (5.3 or greater is recommended)
 * MySQL version 5.0 or greater
 * An HTTP Server. Kohana, which Ushahidi is built on, is known to work with the following web servers:
     - Apache 1.3+
