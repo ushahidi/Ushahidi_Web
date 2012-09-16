@@ -140,16 +140,11 @@
 											// Report was submitted by a visitor
 											$submit_by = $incident_person->person_first . " " . $incident_person->person_last;
 										}
-										else
+										
+										// If $submit_by is empty, check for user id
+										if (trim($submit_by) == "" AND $incident_orm->user_id)	// Report Was Submitted By authenticated user
 										{
-											if ($incident_orm->user_id)					// Report Was Submitted By Administrator
-											{
-												$submit_by = $incident_orm->user->name;
-											}
-											else
-											{
-												$submit_by = Kohana::lang('ui_admin.unknown');
-											}
+											$submit_by = $incident_orm->user->name;
 										}
 									}
 									elseif ($incident_mode == 2) 	// Submitted via SMS
@@ -167,6 +162,13 @@
 										$submit_mode = "TWITTER";
 										$submit_by = $incident_orm->message->message_from;
 									}
+									
+									// If $submit_by is still empty, set it to Unknown
+									if (trim($submit_by) == "")
+									{
+										$submit_by = Kohana::lang('ui_admin.unknown');
+									}
+									
 									
 									// Get the country name
 									$country_name = ($incident->country_id != 0)
