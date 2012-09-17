@@ -557,7 +557,8 @@ ul.tabset li a:hover{
 	background:#f5f5f5;
 }
 /*-- tabs --*/
-.tab{
+/* Adding content tabs for where we just want a tab, but not the tab button style lists */
+.tab, .content-tab {
 	background:#eee;
 	width:100%;
 	clear:both;
@@ -585,7 +586,8 @@ ul.tabset li a:hover{
 	border:1px solid #d1d1d1;
 }
 .tab ul li a:hover{ text-decoration:underline;}
-.tab .tab_form_item{
+.tab .tab_form_item,
+.content-tab .tab_form_item {
 	float:left;
 	margin:10px 10px 0 10px;
 }

@@ -290,6 +290,14 @@ $(document).ready(function() {
 	});
 
 	hide_map();
+	
+	
+	// Category treeview
+	$(".category-column").treeview({
+		persist: "location",
+		collapsed: true,
+		unique: false
+	});
 
 });
 

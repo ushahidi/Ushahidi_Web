@@ -393,7 +393,7 @@ $(document).ready(function() {
 						<li><a href="#" class="active"><?php echo Kohana::lang('ui_main.add_edit');?></a></li>
 					</ul>
 					<!-- tab -->
-					<div class="tab">
+					<div class="content-tab">
 						<?php echo form::open(NULL,array('id' => 'actionsMain', 'name' => 'actionsMain')); ?>
 
 						<div id="divMap" style="width:900px;height:350px;border:0px;">
@@ -489,7 +489,7 @@ $(document).ready(function() {
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.category")); ?>"><?php echo Kohana::lang('ui_main.category'); ?>:</a></h4>
 								<?php
 									// categories, selected_categories, form field name, number of columns
-									echo category::form_tree('action_category', array(), 2, FALSE, TRUE);
+									echo category::form_tree('action_category', array(), 1, FALSE, TRUE);
 								?>
 							</div>
 
@@ -573,7 +573,7 @@ $(document).ready(function() {
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.add_to_category")); ?>"><?php echo Kohana::lang('ui_admin.add_to_category'); ?>:</a></h4>
 								<?php
 									// categories, selected_categories, form field name, number of columns
-									echo category::form_tree('action_add_category', array(), 2, FALSE, TRUE);
+									echo category::form_tree('action_add_category', array(), 1, FALSE, TRUE);
 								?>
 							</div>
 
