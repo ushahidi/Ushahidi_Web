@@ -1230,7 +1230,7 @@ final class Kohana {
 			// Only save error to log for en_US to the log since it's the default fallback
 			if ($locale == 'en_US')
 			{
-				self::log('error', 'Missing i18n entry '.$key.' for language '.$locale);
+				self::log('info', 'Missing i18n entry '.$key.' for language '.$locale);
 			}
 
 			if ($force_locale != NULL)
