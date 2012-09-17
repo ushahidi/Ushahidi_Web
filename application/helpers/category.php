@@ -27,8 +27,10 @@ class category_Core {
 			$disabled = " disabled=\"disabled\"";	
 		}
 
+		$html .= "<label>";
 		$html .= form::checkbox($form_field.'[]', $cid, $category_checked, ' class="check-box"'.$disabled);
 		$html .= $category['category_title'];
+		$html .= "</label>";
 
 		return $html;
 	}
@@ -81,7 +83,7 @@ class category_Core {
 			// If this is the first element of a column, start a new UL
 			if ($i == 1)
 			{
-				$html .= '<ul id="category-column-'.$this_col.'">';
+				$html .= '<ul class="category-column category-column-'.$this_col.'">';
 			}
 
 			// Display parent category.
