@@ -1230,7 +1230,7 @@ final class Kohana {
 			// Only save error to log for en_US to the log since it's the default fallback
 			if ($locale == 'en_US')
 			{
-				self::log('error', 'Missing i18n entry '.$key.' for language '.$locale);
+				self::log('info', 'Missing i18n entry '.$key.' for language '.$locale);
 			}
 
 			if ($force_locale != NULL)
@@ -1531,7 +1531,9 @@ final class Kohana {
 
 			if (isset($entry['file']))
 			{
-				$temp .= self::lang('core.error_file_line', preg_replace('!^'.preg_quote(DOCROOT).'!', '', $entry['file']), $entry['line']);
+				// Hack this since kohana lang seems to fail here every time
+				$temp .= sprintf('<tt>%s <strong>[%s]:</strong></tt>', preg_replace('!^'.preg_quote(DOCROOT).'!', '', $entry['file']), $entry['line']);
+				//$temp .= self::lang('core.error_file_line', preg_replace('!^'.preg_quote(DOCROOT).'!', '', $entry['file']), $entry['line']);
 			}
 
 			$temp .= '<pre>';
