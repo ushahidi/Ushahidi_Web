@@ -129,6 +129,7 @@
 									
 									// Get the person submitting the report
 									$incident_person = $incident_orm->incident_person;
+									$submit_by = NULL;
 									
 									//XXX incident_Mode will be discontinued in favour of $service_id
 									if ($incident_mode == 1)	// Submitted via WEB
