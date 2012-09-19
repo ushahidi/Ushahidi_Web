@@ -120,12 +120,12 @@ class ReportsImporter {
 			.($this->rownumber+1);
 		}
 		// If a value of Yes or No is NOT set for approval status for the imported row
-		if (isset($row["APPROVED"]) AND !in_array($row["APPROVED"],array('NO','YES')))
+		if (isset($row["APPROVED"]) AND !in_array(utf8::strtoupper($row["APPROVED"]),array('NO','YES')))
 		{
 			$this->errors[] = 'APPROVED must be either YES or NO on line '.($this->rownumber+1);
 		}
 		// If a value of Yes or No is NOT set for verified status for the imported row 
-		if (isset($row["VERIFIED"]) AND !in_array($row["VERIFIED"],array('NO','YES'))) 
+		if (isset($row["VERIFIED"]) AND !in_array(utf8::strtoupper($row["VERIFIED"]),array('NO','YES'))) 
 		{
 			$this->errors[] = 'VERIFIED must be either YES or NO on line '.($this->rownumber+1);
 		}
@@ -164,8 +164,8 @@ class ReportsImporter {
 		$incident->incident_description = isset($row['DESCRIPTION']) ? $row['DESCRIPTION'] : '';
 		$incident->incident_date = date("Y-m-d H:i:s",strtotime($row['INCIDENT DATE']));
 		$incident->incident_dateadd = $this->time;
-		$incident->incident_active = (isset($row['APPROVED']) AND $row['APPROVED'] == 'YES') ? 1 : 0;
-		$incident->incident_verified = (isset($row['VERIFIED']) AND $row['VERIFIED'] == 'YES') ? 1 :0;
+		$incident->incident_active = (isset($row['APPROVED']) AND utf8::strtoupper($row['APPROVED']) == 'YES') ? 1 : 0;
+		$incident->incident_verified = (isset($row['VERIFIED']) AND utf8::strtoupper($row['VERIFIED']) == 'YES') ? 1 :0;
 		$incident->save();
 		$this->incidents_added[] = $incident->id;
 		
