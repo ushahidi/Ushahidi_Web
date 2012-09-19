@@ -1178,6 +1178,9 @@ class Manage_Controller extends Admin_Controller
 							}
 
 							$newitem->save();
+
+							// Action::feed_item_add - Feed Item Received!
+							Event::run('ushahidi_action.feed_item_add', $newitem);
 						}
 					}
 				}
