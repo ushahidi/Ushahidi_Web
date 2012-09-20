@@ -79,19 +79,19 @@ class Actions_Controller extends Admin_Controller
 			'action_add_category' => array(),
 			'action_verify' => '',
 			'action_badge' => ''
-	    );
-
-	    // Process form submission
-	    if ($_POST)
+			);
+			
+		// Process form submission
+		if ($_POST)
 		{
 			$post = Validation::factory($_POST);
 
 			// Trim all of the fields to get rid of errant spaces
-	        $post->pre_filter('trim', TRUE);
-
-	        $expected_qualifier_fields = $trigger_advanced_options[$post['action_trigger']];
-	        $expected_response_fields = $response_advanced_options[$post['action_response']];
-	        $expected_fileds = array_merge($expected_qualifier_fields,$expected_response_fields);
+			$post->pre_filter('trim', TRUE);
+			
+			$expected_qualifier_fields = $trigger_advanced_options[$post['action_trigger']];
+			$expected_response_fields = $response_advanced_options[$post['action_response']];
+			$expected_fileds = array_merge($expected_qualifier_fields,$expected_response_fields);
 
 			// Since our form is dynamic, we need to set validation dynamically
 			foreach($expected_fileds as $field)
