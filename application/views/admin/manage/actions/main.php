@@ -15,82 +15,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-<?php
-	// Set up some variables so javascript can display the right form fields
-
 	// ----- TRIGGERS & QUALIFIERS ------
 
-	echo 'var advanced_fields = new Array;'."\n";
-	foreach($trigger_advanced_options as $tao_action => $tao_data)
-	{
-		echo 'advanced_fields[\''.$tao_action.'\'] = [';
-		$i = 0;
-		foreach($tao_data as $tao) {
-			if($i != 0) echo ',';
-			echo '\''.$tao.'\'';
-			$i++;
-		}
-		echo '];'."\n";
-	}
-	echo "\n";
-	echo 'var advanced_option_areas = new Array(';
-	$i = 0;
-	foreach($advanced_option_areas as $aoa)
-	{
-		if($i != 0) echo ',';
-		echo '\''.$aoa.'\'';
-		$i++;
-	}
-	echo ');';
-
-	// ----- RESPONSES ------
-
-	echo "\n";
-	echo 'var response_advanced_fields = new Array;'."\n";
-	foreach($response_advanced_options as $rao_action => $rao_data)
-	{
-		echo 'response_advanced_fields[\''.$rao_action.'\'] = [';
-		$i = 0;
-		foreach($rao_data as $rao) {
-			if($i != 0) echo ',';
-			echo '\''.$rao.'\'';
-			$i++;
-		}
-		echo '];'."\n";
-	}
-
-	echo 'var response_advanced_option_areas = new Array(';
-	$i = 0;
-	foreach($response_advanced_option_areas as $raoa)
-	{
-		if($i != 0) echo ',';
-		echo '\''.$raoa.'\'';
-		$i++;
-	}
-	echo ');';
-
-	// Allowed responses for triggers
-	echo "\n";
-	echo 'var trigger_allowed_responses = new Array;'."\n";
-	foreach($trigger_allowed_responses as $trigger => $allowed_responses)
-	{
-		echo 'trigger_allowed_responses[\''.$trigger.'\'] = [';
-		$i = 0;
-		foreach($allowed_responses as $allowed_response) {
-			if($i != 0) echo ',';
-			echo '\''.$allowed_response.'\'';
-			$i++;
-		}
-		echo '];'."\n";
-	}
-
-	echo "\n";
-	echo 'var response_options = new Array;'."\n";
-	foreach($response_options as $response_key => $response_name)
-	{
-		echo 'response_options[\''.$response_key.'\'] = \''.$response_name.'\';'."\n";
-	}
-?>
+	var advanced_fields = <?php echo json_encode($trigger_advanced_options); ?>;
+	var advanced_option_areas = <?php echo json_encode($advanced_option_areas); ?>;
+	var response_advanced_fields = <?php echo json_encode($response_advanced_options); ?>;
+	var response_advanced_option_areas = <?php echo json_encode($response_advanced_option_areas); ?>;
+	var trigger_allowed_responses = <?php echo json_encode($trigger_allowed_responses); ?>;
+	var response_options = <?php echo json_encode($response_options); ?>;
 
 	// ----- ACTIONS & TRIGGERS
 
@@ -115,14 +47,9 @@ $(document).ready(function() {
 	});
 
 	function hide_advanced_options(){
-		$('#action_form_location').slideUp();
-		$('#action_form_keyword').slideUp();
-		$('#action_form_user').slideUp();
-		$('#action_form_category').slideUp();
-		$('#action_form_on_specific_count').slideUp();
-		$('#action_form_between_times').slideUp();
-		$('#action_form_days_of_the_week').slideUp();
-		$('#action_form_specific_days').slideUp();
+		for(i=0; i<advanced_option_areas.length; i++) {
+			$('#action_form_'+advanced_option_areas[i]).slideUp();
+		}
 	}
 	hide_advanced_options();
 
@@ -142,14 +69,9 @@ $(document).ready(function() {
 	});
 
 	function hide_response_advanced_options(){
-		$('#action_form_email_subject').slideUp();
-		$('#action_form_email_body').slideUp();
-		$('#action_form_email_send_address').slideUp();
-		$('#action_form_add_category').slideUp();
-		$('#action_form_report_title').slideUp();
-		$('#action_form_verify').slideUp();
-		$('#action_form_approve').slideUp();
-		$('#action_form_badge').slideUp();
+		for(i=0; i<response_advanced_option_areas.length; i++) {
+			$('#action_form_'+response_advanced_option_areas[i]).slideUp();
+		}
 	}
 	hide_response_advanced_options();
 
@@ -399,16 +321,18 @@ $(document).ready(function() {
 											<td class="col-3" style="width:125px;">
 												<?php echo $response_options[$response]; ?>
 											</td>
-											<td class="col-4" style="width:275px;border-right:0px;">
+											<td class="col-4" style="width:250px;border-right:0px;">
 												<?php echo $response_string; ?>
 											</td>
-											<td class="col" style="width:100px;border-left:0px;">
+											<td class="col" style="width:125px;border-left:0px;">
 
 												<?php if($active) {?>
 													<?php echo Kohana::lang('ui_admin.currently_active'); ?><br/><a href="javascript:actionsAction('0','DEACTIVATE',<?php echo rawurlencode($action_id);?>)" class="status_yes"><?php echo Kohana::lang('ui_main.deactivate'); ?></a>
 												<?php } else {?>
 													<?php echo Kohana::lang('ui_admin.currently_inactive'); ?><br/><a href="javascript:actionsAction('1','ACTIVATE',<?php echo rawurlencode($action_id);?>)" class="status_no"><?php echo Kohana::lang('ui_main.activate'); ?></a>
 												<?php } ?>
+												<br />
+												<a href="javascript:actionsAction('de','DELETE',<?php echo rawurlencode($action_id);?>)" class="del"><?php echo Kohana::lang('ui_main.delete'); ?></a>
 
 											</td>
 										</tr>
@@ -490,7 +414,7 @@ $(document).ready(function() {
 
 							<div class="tab_form_item" id="action_form_user" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.user")); ?>"><?php echo Kohana::lang('ui_admin.user'); ?>:</a></h4>
-								<?php echo form::dropdown('action_user', $user_options, 'standard'); ?>
+								<?php echo form::dropdown('action_user', $user_options, 0); ?>
 							</div>
 
 							<div class="tab_form_item" id="action_form_location" style="margin-right:75px;">
@@ -502,6 +426,23 @@ $(document).ready(function() {
 							<div class="tab_form_item" id="action_form_keyword" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.keywords")); ?>"><?php echo Kohana::lang('ui_admin.keywords'); ?>:</a></h4>
 								<?php echo form::input('action_keyword',''); ?>
+							</div>
+
+							<div class="tab_form_item" id="action_form_from" style="margin-right:75px;">
+								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.from")); ?>"><?php echo Kohana::lang('ui_admin.from'); ?>:</a></h4>
+								<?php echo form::input('action_from',''); ?>
+							</div>
+
+							<div class="tab_form_item" id="action_form_feed_id" style="margin-right:75px;">
+								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.feed_id")); ?>"><?php echo Kohana::lang('ui_main.feed'); ?>:</a></h4>
+								<ul>
+								<?php
+									foreach ($feeds as $id => $feed)
+									{
+										echo "<li><label>".form::checkbox('action_feed_id[]',$id)." $feed</label></li>";
+									}
+								?>
+								</ul>
 							</div>
 
 							<div class="tab_form_item" id="action_form_category" style="margin-right:75px;">
