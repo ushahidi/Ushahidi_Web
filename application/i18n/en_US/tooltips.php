@@ -9,6 +9,8 @@
 		'days_of_the_week' => 'If these actions happen on certain days of the week, set that here. Keep in mind the day is determined by the timezone configured on your deployment. Hold shift, command, or control for multiple day selection.',
 		'email_body' => 'Body of the email that will be sent.',
 		'email_subject' => 'Subject of email that will be sent.',
+		'feed_id' => 'The feed can be all feeds or a specific feeds. If you would only like specific feeds to activate a trigger, you will want to select them here. Otherwise, you will want to leave this as "all"',
+		'from' => 'Twitter author username (or multiple usernames separated by commas). If you would like to activate triggers only for twitter messages from a particular user, enter their username here (not including @)',
 		'keywords' => 'You can choose to leave this blank if you do not want to check against keywords. If you add words here, you will need to separate them with a comma (,). For example, if you want to activate a trigger when someone mentions "love" or "peace" in their message, you will want to add "love, peace" in the keywords box.',
 		'location' => 'You can either select anywhere or a specific location. If you select a specific location, you will be asked to draw a box around the area that qualifies an action. For example, if you want this trigger to be activated when someone submits a report in Brazil, you will select "specific area" and then draw the box around Brazil. You can make these boxes as small or as large as you would like. You can also draw multiple boxes.',
 		'on_specific_count' => 'This qualifier will activate the trigger on the N-th count either for the entire collective user base or for each individual user. Leave this blank to ignore it.',

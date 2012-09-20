@@ -49,6 +49,8 @@ $(document).ready(function() {
 	function hide_advanced_options(){
 		$('#action_form_location').slideUp();
 		$('#action_form_keyword').slideUp();
+		$('#action_form_feed_id').slideUp();
+		$('#action_form_from').slideUp();
 		$('#action_form_user').slideUp();
 		$('#action_form_category').slideUp();
 		$('#action_form_on_specific_count').slideUp();
@@ -422,7 +424,7 @@ $(document).ready(function() {
 
 							<div class="tab_form_item" id="action_form_user" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.user")); ?>"><?php echo Kohana::lang('ui_admin.user'); ?>:</a></h4>
-								<?php echo form::dropdown('action_user', $user_options, 'standard'); ?>
+								<?php echo form::dropdown('action_user', $user_options, 0); ?>
 							</div>
 
 							<div class="tab_form_item" id="action_form_location" style="margin-right:75px;">
@@ -434,6 +436,23 @@ $(document).ready(function() {
 							<div class="tab_form_item" id="action_form_keyword" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.keywords")); ?>"><?php echo Kohana::lang('ui_admin.keywords'); ?>:</a></h4>
 								<?php echo form::input('action_keyword',''); ?>
+							</div>
+
+							<div class="tab_form_item" id="action_form_from" style="margin-right:75px;">
+								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.from")); ?>"><?php echo Kohana::lang('ui_admin.from'); ?>:</a></h4>
+								<?php echo form::input('action_from',''); ?>
+							</div>
+
+							<div class="tab_form_item" id="action_form_feed_id" style="margin-right:75px;">
+								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.feed_id")); ?>"><?php echo Kohana::lang('ui_main.feed'); ?>:</a></h4>
+								<ul>
+								<?php
+									foreach ($feeds as $id => $feed)
+									{
+										echo "<li><label>".form::checkbox('action_feed_id[]',$id)." $feed</label></li>";
+									}
+								?>
+								</ul>
 							</div>
 
 							<div class="tab_form_item" id="action_form_category" style="margin-right:75px;">

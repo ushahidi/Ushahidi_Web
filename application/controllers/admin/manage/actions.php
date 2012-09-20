@@ -246,6 +246,9 @@ class Actions_Controller extends Admin_Controller
 		// Grab badges for dropdown
 		$this->template->content->badges = Badge_Model::badge_names();
 
+		// Grab feeds for dropdown
+		$this->template->content->feeds = ORM::factory('feed')->find_all()->select_list('id','feed_name');
+
 		// Timezone
 		$this->template->content->site_timezone = Kohana::config('settings.site_timezone');
 

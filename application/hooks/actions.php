@@ -113,6 +113,14 @@ class actioner {
 				// Not the right location
 				continue;
 			}
+			
+			// --- Check author against message from
+
+			if( ! $this->__check_from($this->qualifiers['from'],$this->data->message_from))
+			{
+				// Not the right keyword
+				continue;
+			}
 
 			// --- Check Keywords
 			//     against subject and body. If both fail, then this action doesn't qualify
@@ -206,6 +214,13 @@ class actioner {
 				continue;
 			}
 
+
+			if( ! $this->__check_feed_id($this->qualifiers['feed_id'],$this->data->feed_id))
+			{
+				// Not the right feed
+				continue;
+			}
+			
 			// --- Check Keywords
 			//     against subject and body. If both fail, then this action doesn't qualify
 
@@ -415,6 +430,28 @@ class actioner {
 		return true;
 	}
 
+	// Checks if feed is global and matches the data passed for feedid
+	public function __check_feed_id($feeds, $feed_check_against)
+	{
+		// Return true if no feeds selected
+		if ($feeds == 0 || count($feeds) == 0) return TRUE;
+		
+		// Make sure feeds is an array
+		if (! is_array($feeds)) $feeds = array($feeds);
+		
+		foreach ($feeds as $feed_id)
+		{
+			if($feed_id == $feed_check_against)
+			{
+				// Feed Match!
+				return TRUE;
+			}
+		}
+
+		// Never matched a category
+		return FALSE;
+	}
+
 	// Checks if the data has any categories in the qualifier set of categories
 	public function __check_category($categories)
 	{
@@ -604,6 +641,29 @@ class actioner {
 			// If no keywords were set, then you can simply pass this test
 			return TRUE;
 		}
+	}
+
+	/**
+	 * Takes a CSV list of twitter usernames and checks each of them against a string
+	 */
+	public function __check_from($from,$string)
+	{
+		if($from != '')
+		{
+			// Okay, from was defined so lets check to see if the authors match
+			$exploded_author = explode(',',$from);
+			foreach($exploded_author as $author) {
+				// if we found it, get out of the function
+				if(strtolower($string) == strtolower($author)) {
+					return TRUE;
+				}
+			}
+			return FALSE;
+		} else {
+			// If no author was set, then you can simply pass this test
+			return TRUE;
+		}
+		return FALSE;
 	}
 
 	// START COUNT / QUALIFIER / RESPONSE FUNCTIONS

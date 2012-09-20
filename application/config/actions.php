@@ -26,15 +26,15 @@ $config['trigger_options'] = array
 // This is a list of the advanced option areas for the qualifiers
 
 $config['advanced_option_areas'] = array('user','location','keyword','category','on_specific_count',
-										'between_times','days_of_the_week','specific_days');
+										'between_times','days_of_the_week','specific_days','from','feed_id');
 
 // This shows which advanced options are relevant to the triggers
 
 $config['trigger_advanced_options'] = array(
 	'report_add' => array('user','location','keyword','category','on_specific_count','between_times','days_of_the_week','specific_days'),
 	'checkin_recorded' => array('user','location','keyword','on_specific_count','between_times','days_of_the_week','specific_days'),
-	'message_twitter_add' => array('location','keyword','between_times','days_of_the_week','specific_days'),
-	'feed_item_add' => array('location','keyword','between_times','days_of_the_week','specific_days')
+	'message_twitter_add' => array('location','keyword','between_times','days_of_the_week','specific_days','from'),
+	'feed_item_add' => array('location','keyword','between_times','days_of_the_week','specific_days','feed_id')
 );
 
 // ----- RESPONSES -----

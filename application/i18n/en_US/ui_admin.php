@@ -11,6 +11,7 @@
 	'admin_role' => 'Admin',
 	'alerts' => 'Alerts',
 	'alerts_received' => 'Alerts Received',
+	'all' => 'All',
 	'am' => 'AM',
 	'anonymous' => 'Anonymous',
 	'anyone_role' => 'Anyone',
