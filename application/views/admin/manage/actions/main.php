@@ -47,16 +47,9 @@ $(document).ready(function() {
 	});
 
 	function hide_advanced_options(){
-		$('#action_form_location').slideUp();
-		$('#action_form_keyword').slideUp();
-		$('#action_form_feed_id').slideUp();
-		$('#action_form_from').slideUp();
-		$('#action_form_user').slideUp();
-		$('#action_form_category').slideUp();
-		$('#action_form_on_specific_count').slideUp();
-		$('#action_form_between_times').slideUp();
-		$('#action_form_days_of_the_week').slideUp();
-		$('#action_form_specific_days').slideUp();
+		for(i=0; i<advanced_option_areas.length; i++) {
+			$('#action_form_'+advanced_option_areas[i]).slideUp();
+		}
 	}
 	hide_advanced_options();
 
@@ -76,14 +69,9 @@ $(document).ready(function() {
 	});
 
 	function hide_response_advanced_options(){
-		$('#action_form_email_subject').slideUp();
-		$('#action_form_email_body').slideUp();
-		$('#action_form_email_send_address').slideUp();
-		$('#action_form_add_category').slideUp();
-		$('#action_form_report_title').slideUp();
-		$('#action_form_verify').slideUp();
-		$('#action_form_approve').slideUp();
-		$('#action_form_badge').slideUp();
+		for(i=0; i<response_advanced_option_areas.length; i++) {
+			$('#action_form_'+response_advanced_option_areas[i]).slideUp();
+		}
 	}
 	hide_response_advanced_options();
 
