@@ -802,7 +802,7 @@ ul.links li a:hover{
 	float:left;
 	list-style:none;
 }
-.table .col-4 ul li a.del{ color:#b75f5f;}
+.table .col-4 ul li a.del, a.del { color:#b75f5f;}
 .table td .check-box { margin-top:2px !important;}
 
 /*-- tooltips --*/

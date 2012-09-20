@@ -333,16 +333,18 @@ $(document).ready(function() {
 											<td class="col-3" style="width:125px;">
 												<?php echo $response_options[$response]; ?>
 											</td>
-											<td class="col-4" style="width:275px;border-right:0px;">
+											<td class="col-4" style="width:250px;border-right:0px;">
 												<?php echo $response_string; ?>
 											</td>
-											<td class="col" style="width:100px;border-left:0px;">
+											<td class="col" style="width:125px;border-left:0px;">
 
 												<?php if($active) {?>
 													<?php echo Kohana::lang('ui_admin.currently_active'); ?><br/><a href="javascript:actionsAction('0','DEACTIVATE',<?php echo rawurlencode($action_id);?>)" class="status_yes"><?php echo Kohana::lang('ui_main.deactivate'); ?></a>
 												<?php } else {?>
 													<?php echo Kohana::lang('ui_admin.currently_inactive'); ?><br/><a href="javascript:actionsAction('1','ACTIVATE',<?php echo rawurlencode($action_id);?>)" class="status_no"><?php echo Kohana::lang('ui_main.activate'); ?></a>
 												<?php } ?>
+												<br />
+												<a href="javascript:actionsAction('de','DELETE',<?php echo rawurlencode($action_id);?>)" class="del"><?php echo Kohana::lang('ui_main.delete'); ?></a>
 
 											</td>
 										</tr>

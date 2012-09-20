@@ -279,13 +279,22 @@ class Actions_Controller extends Admin_Controller
 			// Trim all of the fields to get rid of errant spaces
 			$post->pre_filter('trim', TRUE);
 			$post->add_rules('action_id','required', 'digit');
-			$post->add_rules('action_switch_to','required', 'digit');
+			$post->add_rules('action_switch_to','required');
 
 			if( $post->validate())
 			{
-				$action = ORM::factory('actions',$post->action_id);
-				$action->active = $post->action_switch_to;
-				$action->save();
+				if ($post->action_switch_to == 'de')
+				{
+					ORM::factory('actions',$post->action_id)->delete();
+				}
+				else
+				{
+					$active = (int)($post->action_switch_to);
+					
+					$action = ORM::factory('actions',$post->action_id);
+					$action->active = $active;
+					$action->save();
+				}
 			}
 		}
 
