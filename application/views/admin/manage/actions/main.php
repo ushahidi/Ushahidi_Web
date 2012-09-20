@@ -15,82 +15,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
-<?php
-	// Set up some variables so javascript can display the right form fields
-
 	// ----- TRIGGERS & QUALIFIERS ------
 
-	echo 'var advanced_fields = new Array;'."\n";
-	foreach($trigger_advanced_options as $tao_action => $tao_data)
-	{
-		echo 'advanced_fields[\''.$tao_action.'\'] = [';
-		$i = 0;
-		foreach($tao_data as $tao) {
-			if($i != 0) echo ',';
-			echo '\''.$tao.'\'';
-			$i++;
-		}
-		echo '];'."\n";
-	}
-	echo "\n";
-	echo 'var advanced_option_areas = new Array(';
-	$i = 0;
-	foreach($advanced_option_areas as $aoa)
-	{
-		if($i != 0) echo ',';
-		echo '\''.$aoa.'\'';
-		$i++;
-	}
-	echo ');';
-
-	// ----- RESPONSES ------
-
-	echo "\n";
-	echo 'var response_advanced_fields = new Array;'."\n";
-	foreach($response_advanced_options as $rao_action => $rao_data)
-	{
-		echo 'response_advanced_fields[\''.$rao_action.'\'] = [';
-		$i = 0;
-		foreach($rao_data as $rao) {
-			if($i != 0) echo ',';
-			echo '\''.$rao.'\'';
-			$i++;
-		}
-		echo '];'."\n";
-	}
-
-	echo 'var response_advanced_option_areas = new Array(';
-	$i = 0;
-	foreach($response_advanced_option_areas as $raoa)
-	{
-		if($i != 0) echo ',';
-		echo '\''.$raoa.'\'';
-		$i++;
-	}
-	echo ');';
-
-	// Allowed responses for triggers
-	echo "\n";
-	echo 'var trigger_allowed_responses = new Array;'."\n";
-	foreach($trigger_allowed_responses as $trigger => $allowed_responses)
-	{
-		echo 'trigger_allowed_responses[\''.$trigger.'\'] = [';
-		$i = 0;
-		foreach($allowed_responses as $allowed_response) {
-			if($i != 0) echo ',';
-			echo '\''.$allowed_response.'\'';
-			$i++;
-		}
-		echo '];'."\n";
-	}
-
-	echo "\n";
-	echo 'var response_options = new Array;'."\n";
-	foreach($response_options as $response_key => $response_name)
-	{
-		echo 'response_options[\''.$response_key.'\'] = \''.$response_name.'\';'."\n";
-	}
-?>
+	var advanced_fields = <?php echo json_encode($trigger_advanced_options); ?>;
+	var advanced_option_areas = <?php echo json_encode($advanced_option_areas); ?>;
+	var response_advanced_fields = <?php echo json_encode($response_advanced_options); ?>;
+	var response_advanced_option_areas = <?php echo json_encode($response_advanced_option_areas); ?>;
+	var trigger_allowed_responses = <?php echo json_encode($trigger_allowed_responses); ?>;
+	var response_options = <?php echo json_encode($response_options); ?>;
 
 	// ----- ACTIONS & TRIGGERS
 
