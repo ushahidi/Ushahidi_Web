@@ -89,7 +89,7 @@ class Twitter_Api_Object extends Api_Object_Core {
         //No record found.
         if ($items->count() == 0)
         {
-            $this-response_data = $this->response(4);
+            $this->response_data = $this->response(4);
             return;
         }
 
