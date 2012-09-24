@@ -198,7 +198,7 @@ class Actions_Controller extends Admin_Controller
 
 				$response_vars = serialize($response_vars);
 
-				$action = ORM::factory('actions');
+				$action = ORM::factory('actions', $post->id);
 				$action->action = $post->action_trigger;
 				$action->qualifiers = $qualifiers;
 				$action->response = $post->action_response;

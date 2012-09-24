@@ -2353,6 +2353,7 @@ input[type="button"]:hover */ {
 /* jquery datePicker CSS */
 
 
+
 table.jCalendar {
 	border: 1px solid #000;
 	background: #aaa;
@@ -2480,6 +2481,8 @@ div.dp-popup td {
 div.dp-popup td.disabled {
 	cursor: default;
 }
+/* end datepicker css */
+
 .transparent-25 {
   /* IE 8 */
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=25)";
