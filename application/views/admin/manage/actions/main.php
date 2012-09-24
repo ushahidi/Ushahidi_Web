@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 	});
 
-	function hide_advanced_options(){
+	hide_advanced_options = function (){
 		for(i=0; i<advanced_option_areas.length; i++) {
 			$('#action_form_'+advanced_option_areas[i]).slideUp();
 		}
@@ -68,7 +68,7 @@ $(document).ready(function() {
 		}
 	});
 
-	function hide_response_advanced_options(){
+	hide_response_advanced_options = function (){
 		for(i=0; i<response_advanced_option_areas.length; i++) {
 			$('#action_form_'+response_advanced_option_areas[i]).slideUp();
 		}
@@ -113,7 +113,7 @@ $(document).ready(function() {
 	$('#action_specific_days_calendar')
 		.datePicker(
 			{
-				startDate:'01/01/2000', // date obviously in the past
+				startDate:'2000/01/01', // date obviously in the past
 				inline:true,
 				selectMultiple:true
 			}
@@ -123,19 +123,16 @@ $(document).ready(function() {
 			function(e, selectedDate, $td, state)
 			{
 				//console.log('You ' + (state ? '' : 'un') + 'selected ' + selectedDate);
-				if(state){
+				if (state){
 					// selected
-					selected_specific_days.push(String(selectedDate));
-				}else{
+					selected_specific_days.push(selectedDate.asString());
+				} else {
 					// unselected, remove from array
-					selected_specific_days = jQuery.grep(selected_specific_days, function (a) { return a != String(selectedDate); });
+					selected_specific_days = jQuery.grep(selected_specific_days, function (a) { return a != selectedDate.asString(); });
 				}
 				$("#action_specific_days").attr("value", selected_specific_days.join(','));
 			}
 		);
-
-
-
 
 });
 </script>
@@ -218,7 +215,8 @@ $(document).ready(function() {
 										$active = $action->active;
 
 										$qualifier_string = '';
-										foreach($qualifiers as $qkey => $qval){
+										foreach($qualifiers as $qkey => $qval)
+										{
 
 											// Show username
 											if($qkey == 'user') $qval = $user_options[$qval];
@@ -238,12 +236,11 @@ $(document).ready(function() {
 													$hours = '00';
 													$minutes = '00';
 												}else{
-													$hours = floor($qval / 3600);
-													if($hours < 10) $hours = '0'.$hours;
-													$minutes = ($qval % 3600) * 60;
-													if($minutes < 10) $minutes = '0'.$minutes;
+													$total_mins = $qval / 60;
+													$minutes = $total_mins % 60;
+													$hours = ($total_mins - $minutes) / 60;
 												}
-												$qval = $hours.':'.$minutes.' <small>('.$site_timezone.')</small>';
+												$qval = sprintf('%02d:%02d <small>(%d)</small>', $hours, $minutes, $site_timezone);
 											}
 
 											// Make sure we show the right language for days of the week
@@ -252,6 +249,16 @@ $(document).ready(function() {
 												foreach($qval as $key => $day){
 													$qval[$key] = $days[$day];
 												}
+											}
+
+											// Make sure we show the right language for days of the week
+											if($qkey == 'specific_days')
+											{
+												foreach($qval as $key => $day){
+													$qval[$key] = date('Y/m/d', $day);
+												}
+												// Actually update the original (before it gets json encoded)
+												$qualifiers[$qkey] = $qval;
 											}
 
 											// If there's nothing there, don't show it
@@ -265,28 +272,59 @@ $(document).ready(function() {
 											}
 
 											// If it's a specific location, show the polygon on a static map
-											if($qkey == 'location' && $qval == 'specific') {
+											if ($qkey == 'location' AND $qval == 'specific') {
 												// TODO: Find some more intuitive way to illustrate where this is.
-												//$qval = print_r($qualifiers['geometry'],true);
-
-												$geometry = str_ireplace('{"geometry":"POLYGON((','',$qualifiers['geometry']);
-												$geometry = str_ireplace('))"}','',$geometry);
-												$polygon = explode(',',$geometry[0]);
-
+												//$qval = print_r($qualifiers['geometry'],true);;
 												$qval = 'Geofenced<br/>';
-												$qval .= '<img src ="https://maps.googleapis.com/maps/api/staticmap?size=275x200&path=color:0xff0000ff|weight:2|fillcolor:0xFFFF0033';
-												foreach($polygon as $pk => $pv)
-												{
-													$point = str_ireplace(' ',',',$pv);
-													$point = explode(',',$point);
-													$qval .= '|'.$point[1].','.$point[0];
+												$qval .= '<img src ="https://maps.googleapis.com/maps/api/staticmap?size=275x200';
+												
+												$wkt = new Wkt();
+												
+												// helper function to recusively collapse points to lat,lon strings
+												function collapse_points(&$item, $key) {
+													if (is_array($item[0]))
+													{
+														array_walk($item, 'collapse_points');
+													}
+													else
+													{
+														$item = $item[1].','.$item[0];
+													}
+												};
+												// helper to flatten arrays to single dimension
+												function flatten(array $array) {
+													$return = array();
+													array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
+													return $return;
 												}
+												
+												foreach ($qualifiers['geometry'] as $geom_key => $geom)
+												{
+													$geom = json_decode($geom);
+													// Decode in qualifiers array too, so it gets passed to edit as an array
+													$qualifiers['geometry'][$geom_key] = $geom;
 
+													// Decode polygon with WKT
+													$polygon = $wkt->read($geom->geometry);
+													$coordinates = $polygon->getCoordinates();
+													collapse_points($coordinates, 0);
+													// for polygons
+													if (is_array($coordinates))
+													{
+														$qval .= "&path=color:0xff0000ff|weight:2|fillcolor:0xFFFF0033|";
+														$qval .= implode('|', flatten($coordinates));
+													}
+													// for points
+													else
+													{
+														$qval .= '&markers='.$coordinates;
+													}
+												}
 												$qval .= '&sensor=false" />';
-											}else{
+											} else {
 
 												// If it's not a location, break the array into a string
-												if(is_array($qval))
+												if (is_array($qval))
 												{
 													$qval = implode(', ',$qval);
 												}
@@ -332,7 +370,9 @@ $(document).ready(function() {
 													<?php echo Kohana::lang('ui_admin.currently_inactive'); ?><br/><a href="javascript:actionsAction('1','ACTIVATE',<?php echo rawurlencode($action_id);?>)" class="status_no"><?php echo Kohana::lang('ui_main.activate'); ?></a>
 												<?php } ?>
 												<br />
-												<a href="javascript:actionsAction('de','DELETE',<?php echo rawurlencode($action_id);?>)" class="del"><?php echo Kohana::lang('ui_main.delete'); ?></a>
+												<a href='javascript:actionEdit(<?php echo json_encode($action_id); ?>,<?php echo json_encode($trigger); ?>,<?php echo json_encode($qualifiers); ?>,<?php echo json_encode($response); ?>,<?php echo json_encode($response_vars); ?>)'><?php echo Kohana::lang('ui_main.edit'); ?></a>
+												<br />
+												<a href="javascript:actionsAction('de','DELETE',<?php echo (int)$action_id;?>)" class="del"><?php echo Kohana::lang('ui_main.delete'); ?></a>
 
 											</td>
 										</tr>
@@ -371,7 +411,7 @@ $(document).ready(function() {
 							// Close map to start
 							//hide_map();
 
-							$('.action_location').click(function(){
+							$('.action_location').change(function(){
 								// Check value.
 								if($(this).val() == 'specific'){
 									// Open map
@@ -399,7 +439,7 @@ $(document).ready(function() {
 
 							<div class="tab_form_item" id="action_form_trigger">
 								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.actions.trigger"); ?>"><?php echo Kohana::lang('ui_admin.trigger'); ?>:</a></h4>
-								<?php echo form::dropdown('action_trigger', $trigger_options, 'standard'); ?>
+								<?php echo form::dropdown('action_trigger', $trigger_options); ?>
 							</div>
 
 						</div>
@@ -464,7 +504,7 @@ $(document).ready(function() {
 							<div class="tab_form_item" id="action_form_days_of_the_week" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.days_of_the_week")); ?>"><?php echo Kohana::lang('ui_admin.days_of_the_week');?>:</a></h4>
 								<?php
-									echo form::dropdown(array('name' => 'action_days_of_the_week[]', 'multiple' => 'multiple', 'size' => 7), $days, array('standard', 'basic'));
+									echo form::dropdown(array('name' => 'action_days_of_the_week[]', 'multiple' => 'multiple', 'size' => 7), $days);
 								?>
 							</div>
 
@@ -481,14 +521,14 @@ $(document).ready(function() {
 										if($minute < 10) $minutes[$minute_key] = '0'.$minute;
 									}
 								?>
-								<?php echo form::dropdown('action_between_times_hour_1', $hours, 'standard'); ?> : <?php echo form::dropdown('action_between_times_minute_1', $minutes, 'standard'); ?>
+								<?php echo form::dropdown('action_between_times_hour_1', $hours); ?> : <?php echo form::dropdown('action_between_times_minute_1', $minutes); ?>
 								<center><?php echo Kohana::lang('ui_main.and');?></center>
-								<?php echo form::dropdown('action_between_times_hour_2', $hours, 'standard'); ?> : <?php echo form::dropdown('action_between_times_minute_2', $minutes, 'standard'); ?>
+								<?php echo form::dropdown('action_between_times_hour_2', $hours); ?> : <?php echo form::dropdown('action_between_times_minute_2', $minutes); ?>
 							</div>
 
 							<div class="tab_form_item" id="action_form_specific_days" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.specific_days")); ?>"><?php echo Kohana::lang('ui_admin.specific_days');?>:</a></h4>
-								<div id="action_specific_days_calendar" class="action_specific_days_calendar" name="action_specific_days_calendar"></div>
+								<div id="action_specific_days_calendar" class="action_specific_days_calendar"></div>
 								<input type="hidden" name="action_specific_days" id="action_specific_days" value=""  />
 							</div>
 
@@ -508,7 +548,7 @@ $(document).ready(function() {
 									// This dropdown is special since it will write all options and then be
 									//   changed as soon as an action trigger is selected. It does this
 									//   so the advanced options for responses will show up properly.
-									echo form::dropdown('action_response', $response_options, 'standard', 'log_it');
+									echo form::dropdown('action_response', $response_options, 'log_it');
 								?>
 							</div>
 
@@ -557,7 +597,7 @@ $(document).ready(function() {
 							<div class="tab_form_item" id="action_form_badge" style="margin-right:75px;">
 								<h4><a href="#" class="tooltip" title="<?php echo htmlspecialchars(Kohana::lang("tooltips.actions.assign_badge")); ?>"><?php echo Kohana::lang('ui_admin.assign_badge'); ?>:</a></h4>
 								<?php
-									echo form::dropdown('action_badge', $badges, 'standard');
+									echo form::dropdown('action_badge', $badges);
 								?>
 							</div>
 
@@ -568,6 +608,7 @@ $(document).ready(function() {
 						<div class="tab_form_item">
 							<input type="submit" class="save-rep-btn" value="<?php echo Kohana::lang('ui_main.save');?>" />
 						</div>
+						<?php echo form::hidden('id', 0); ?>
 						<?php echo form::close(); ?>
 					</div>
 				</div>

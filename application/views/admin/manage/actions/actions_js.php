@@ -405,3 +405,105 @@ function actionsAction ( action, confirmAction, id )
 		$("#actionListing").submit();
 	}
 }
+
+var update_field = function(k, v) {
+	var select = $("select[name='action_"+k+"']");
+	var input = $("input[name='action_"+k+"']");
+	// Is the value an array?
+	if( Object.prototype.toString.call( v ) === '[object Array]' ) {
+		input = $("input[name='action_"+k+"[]']");
+		var select = $("select[name='action_"+k+"[]']");
+	}
+	
+	// If theres a matching select
+	if (select.length > 0)
+	{
+		if( Object.prototype.toString.call( v ) === '[object Array]' ) {
+			options = $('option', select);
+			$.each(options, function(i, el) {
+				if (jQuery.inArray($(el).val(), v) != -1) $(el).attr('selected', true);
+			});
+		}
+		else
+		{
+			$('option[value='+v+']', select).attr('selected', true);
+		}
+	}
+	// If its a text input
+	else if (input.attr('type') == 'text')
+	{
+		input.val(v);
+	}
+	// For radios and checkboxes
+	else if (input.attr('type') == 'radio' ||
+		input.attr('type') == 'checkbox')
+	{
+		if( Object.prototype.toString.call( v ) === '[object Array]' ) {
+			$.each(input, function(i, el) {
+				if (jQuery.inArray($(el).val(), v) != -1) $(el).attr('checked', true);
+			});
+		}
+		else
+		{
+			$.each(input, function(i, el) {
+				if ($(el).val() == v) $(el).attr('checked', true);
+			});
+		}
+	}
+};
+
+function actionEdit(id, trigger, qualifiers, response, responseVars)
+{
+	$('form#actionsMain').trigger('reset');
+	// Reset date picker
+	$.each($('#action_specific_days_calendar').dpGetSelected(), function(i, date) {
+		$('#action_specific_days_calendar').dpSetSelected(new Date(date).asString(), false);
+	});
+	hide_advanced_options();
+	hide_response_advanced_options();
+	
+	$("form#actionsMain input[name=id]").val(id);
+	$("#action_trigger option[value='"+trigger+"']").attr('selected',true).trigger('change');
+	$("#action_response option[value='"+response+"']").attr('selected',true).trigger('change');
+	
+	jQuery.each(qualifiers, update_field);
+	jQuery.each(responseVars, update_field);
+	
+	// Special cases
+	if (qualifiers.between_times == 1)
+	{
+		qualifiers.between_times_1 = qualifiers.between_times_1 / 60;
+		var min_1 = qualifiers.between_times_1 % 60;
+		var hr_1 = (qualifiers.between_times_1 - min_1) / 60;
+		update_field("between_times_hour_1", hr_1);
+		update_field("between_times_minute_1", min_1);
+
+		qualifiers.between_times_2 = qualifiers.between_times_2 / 60;
+		var min_2 = qualifiers.between_times_2 % 60;
+		var hr_2 = (qualifiers.between_times_2 - min_2) / 60;
+		update_field("between_times_hour_2", hr_2);
+		update_field("between_times_minute_2", min_2);
+	}
+	
+	// Set selected days in date picker
+	if (qualifiers.specific_days != undefined)
+	{
+		$.each(qualifiers.specific_days, function(i, date) {
+			$('#action_specific_days_calendar').dpSetSelected(new Date(date).asString());
+		});
+	}
+	
+	// Load geometries
+	vlayer.removeAllFeatures();
+	if (qualifiers.geometry != undefined)
+	{
+		wkt = new OpenLayers.Format.WKT();
+		$.each(qualifiers.geometry, function (i, geom) {
+			wktFeature = wkt.read(geom.geometry);
+			wktFeature.geometry.transform(proj_4326,proj_900913);
+			vlayer.addFeatures(wktFeature);
+		});
+	}
+	// Trigger change event
+	$('.action_location').change();
+}
