@@ -1155,6 +1155,15 @@ class Reports_Controller extends Admin_Controller {
 			{
 				if (file_exists($_FILES['csvfile']['tmp_name']))
 				{
+					// Get contents of CSV file
+					$data = file_get_contents($_FILES['csvfile']['tmp_name']);
+					
+					// Replace carriage return character
+					$replacedata = preg_replace("/\r/","\n",$data);
+					
+					// Replace file content
+					file_put_contents($_FILES['csvfile']['tmp_name'], $replacedata);
+					
 					if($filehandle = fopen($_FILES['csvfile']['tmp_name'], 'r'))
 					{
 						$importer = new ReportsImporter;
