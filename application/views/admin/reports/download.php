@@ -79,7 +79,7 @@
 
 				 <tr>
                     <td><?php print form::checkbox('data_include[]','6',FALSE); ?><?php echo Kohana::lang('ui_main.include_custom_fields');?></td>
-					<td></td>
+					<td><?php print form::checkbox('data_include[]','7',FALSE); ?><?php echo Kohana::lang('ui_main.include_personal_info');?></td>
                 </tr>
 
 

@@ -169,7 +169,18 @@ class ReportsImporter {
 		$incident->save();
 		$this->incidents_added[] = $incident->id;
 		
-		// STEP 3: SAVE CATEGORIES
+		// STEP 3: Save Personal Information
+		if(isset($row['FIRST NAME']) AND isset($row['LAST NAME']) AND isset($row['EMAIL']))
+		{
+			$person = new Incident_Person_Model();
+			$person->incident_id = $incident->id;
+			$person->person_first = isset($row['FIRST NAME']) ? $row['FIRST NAME'] : '';
+			$person->person_last = isset($row['LAST NAME']) ? $row['LAST NAME'] : '';
+			$person->person_email = isset($row['EMAIL']) ? $row['EMAIL'] : '';
+			$person->person_date = date("Y-m-d H:i:s",time());
+			$person->save();
+		}
+		// STEP 4: SAVE CATEGORIES
 		// If CATEGORY column exists
 		if (isset($row['CATEGORY']))
 		{
