@@ -14,7 +14,8 @@
 <h3><?php echo html::specialchars($error) ?></h3>
 <p><?php echo html::specialchars($description) ?></p>
 <?php if ( ! empty($line) AND ! empty($file)): ?>
-<p><?php echo Kohana::lang('core.error_file_line', $file, $line) ?></p>
+<p><?php //echo Kohana::lang('core.error_file_line', $file, $line) ?></p>
+<p><?php echo sprintf('<tt>%s <strong>[%s]:</strong></tt>', $file, $line); ?></p>
 <?php endif ?>
 <p><code class="block"><?php echo $message ?></code></p>
 <?php if ( ! empty($trace)): ?>
