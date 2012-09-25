@@ -639,7 +639,7 @@
 		// Add the layer to the map
 		// We do this after a delay in case someone zooms multiple times
 		clearTimeout(this._addLayerTimeout);
-		this._addLayerTimeout = setTimeout(function(){ context._olMap.addLayer(layer); }, 300);
+		this._addLayerTimeout = setTimeout(function(){ context._olMap.addLayer(layer); }, 100);
 
 		// Select Feature control
 		this._selectControl = new OpenLayers.Control.SelectFeature(layer);
@@ -951,6 +951,9 @@
 			layers = this._olMap.getLayersByName(name);
 		
 		for (var i=0; i < layers.length; i++) {
+			// Skip layer if its not on the map
+			if (this._olMap.getLayerIndex(layers[i]) == -1) continue;
+			
 			this._olMap.removeLayer(layers[i]);
 			if (layers[i].destroyFeatures !== undefined)
 				layers[i].destroyFeatures();
