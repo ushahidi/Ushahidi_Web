@@ -38,7 +38,7 @@ jQuery(window).load(function() {
 		// Map controls
 		mapControls: [
 			new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
-			new OpenLayers.Control.PanZoomBar(),
+			new OpenLayers.Control.Zoom(),
 			new OpenLayers.Control.MousePosition(),
 			new OpenLayers.Control.ScaleLine(),
 			new OpenLayers.Control.Scale('mapScale'),

@@ -396,7 +396,7 @@
 			// Default map controls
 			mapOptions.controls = [
 				new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
-				new OpenLayers.Control.PanZoomBar(),
+				new OpenLayers.Control.Zoom(),
 				new OpenLayers.Control.Attribution(),
 				new OpenLayers.Control.MousePosition(),
 				new OpenLayers.Control.LayerSwitcher()

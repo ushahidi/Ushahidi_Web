@@ -184,10 +184,9 @@ jQuery(function() {
 
 		// Map controls
 		mapControls: [
-			new OpenLayers.Control.LoadingPanel({minSize: new OpenLayers.Size(573, 366)}),
 			new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
 			new OpenLayers.Control.Attribution(),
-			new OpenLayers.Control.PanZoomBar(),
+			new OpenLayers.Control.Zoom(),
 			new OpenLayers.Control.MousePosition({
 				div: document.getElementById('mapMousePosition'),
 				numdigits: 5

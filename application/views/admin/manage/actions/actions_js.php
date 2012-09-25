@@ -43,7 +43,7 @@ $(document).ready(function() {
 	map.addLayers(<?php echo map::layers_array(FALSE); ?>);
 
 	map.addControl(new OpenLayers.Control.Navigation());
-	map.addControl(new OpenLayers.Control.PanZoomBar());
+	map.addControl(new OpenLayers.Control.Zoom());
 	map.addControl(new OpenLayers.Control.MousePosition());
 	map.addControl(new OpenLayers.Control.ScaleLine());
 	map.addControl(new OpenLayers.Control.Scale('mapScale'));
