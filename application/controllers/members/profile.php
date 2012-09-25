@@ -72,9 +72,10 @@ class Profile_Controller extends Members_Controller
 			// If Password field is not blank
 			if ( ! empty($post->new_password))
 			{
-				$post->add_rules('new_password','required','length['.kohana::config('auth.password_length').']' ,'alpha_dash','matches[password_again]');
+				$post->add_rules('new_password','required','length['.kohana::config('auth.password_length').']' ,'alpha_dash','matches[password_again]');	
 			}
-
+			//for plugins that want to know what the user had to say about things
+			Event::run('ushahidi_action.profile_post_member', $post);
 			if ($post->validate())
 			{
 
@@ -106,8 +107,10 @@ class Profile_Controller extends Members_Controller
 					if ($post->new_password != '')
 					{
 						$user->password = $post->new_password;
-					}
+					}					
 					$user->save();
+					//for plugins that want to know how the user now stands
+					Event::run('ushahidi_action.profile_edit_member', $user);
 
 					// We also need to update the RiverID server with the new password if
 	                //    we are using RiverID and a password is being passed

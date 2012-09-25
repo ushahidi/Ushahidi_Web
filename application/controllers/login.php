@@ -235,9 +235,10 @@ class Login_Controller extends Template_Controller {
 			if ( ! empty($post->password))
 			{
 				$post->add_rules('password','required','length['.kohana::config('auth.password_length').']'
-					,'alpha_dash','matches[password_again]');
+					,'alpha_dash','matches[password_again]');			
 			}
-
+			//pass the post object to any plugins that care to know.
+			Event::run('ushahidi_action.users_add_login_form', $post);
 			if ($post->validate())
 			{
 
@@ -252,7 +253,8 @@ class Login_Controller extends Template_Controller {
 				}
 
 				$user = User_Model::create_user($post->email,$post->password,$riverid_id,$post->name);
-
+				//pass the new user on to any plugins that care to know
+				Event::run('ushahidi_action.user_edit', $user); 
 				// Send Confirmation email
 				$email_sent = $this->_send_email_confirmation($user);
 
