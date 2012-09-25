@@ -179,15 +179,13 @@ class ReportsImporter {
 			$person->person_email = isset($row['EMAIL']) ? $row['EMAIL'] : '';
 			$person->person_date = date("Y-m-d H:i:s",time());
 			
+			// Make sure that you're not importing an empty record i.e at least one field has been recorded
 			// If all fields are empty i.e you have an empty record, don't save
-			if(empty($person->person_first) AND empty($person->person_last) AND empty($person->person_email))
-			{
-				$this->notices[] = 'Could not import Personal Information. Empty records on line'.($this->rownumber+1);
-			}
-			else
+			if(!empty($person->person_first) OR !empty($person->person_last) OR !empty($person->person_email))
 			{
 				$person->save();
 			}
+			
 		}
 		// STEP 4: SAVE CATEGORIES
 		// If CATEGORY column exists
