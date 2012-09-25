@@ -630,10 +630,16 @@
 		// Hide the layer until its loaded
 		// only delete the old layer on loadend
 		layer.display(false);
+		// Hack to start with opacity 0 then fade in
+		layer.div.style['opacity'] = 0;
 		var oldLayer = this._olMap.getLayersByName(options.name);
 		layer.events.register('loadend', layer, function () {
+			// Delete the old layers
 			context.deleteLayer(oldLayer);
+			// Display the new layer, fading in if we've got CSS3
 			layer.display(true);
+			layer.div.className += " olVectorLayerDiv";
+			layer.div.style['opacity'] = 1;
 		});
 
 		// Add the layer to the map
@@ -951,6 +957,9 @@
 			layers = this._olMap.getLayersByName(name);
 		
 		for (var i=0; i < layers.length; i++) {
+			// Set opacity to 0 then hide, using CSS3 transitions to fade the layer out
+			layers[i].div.style['opacity'] = 0.2;
+			layers[i].display(false);
 			// Skip layer if its not on the map
 			if (layers[i].map == null || this._olMap.getLayerIndex(layers[i]) == -1) continue;
 			

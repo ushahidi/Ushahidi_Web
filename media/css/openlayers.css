@@ -577,3 +577,9 @@ div.olControlMousePosition {
 .olControlAttribution {
 	bottom: 0.5em;
 }
+.olVectorLayerDiv {
+    -webkit-transition: opacity 0.3s linear;
+    -moz-transition: opacity 0.3s linear;
+    -o-transition: opacity 0.3s linear;
+    transition: opacity 0.3s linear;
+}
