@@ -170,7 +170,7 @@ class ReportsImporter {
 		$this->incidents_added[] = $incident->id;
 		
 		// STEP 3: Save Personal Information
-		if(isset($row['FIRST NAME']) AND isset($row['LAST NAME']) AND isset($row['EMAIL']))
+		if(isset($row['FIRST NAME']) OR isset($row['LAST NAME']) OR isset($row['EMAIL']))
 		{
 			$person = new Incident_Person_Model();
 			$person->incident_id = $incident->id;
@@ -178,7 +178,16 @@ class ReportsImporter {
 			$person->person_last = isset($row['LAST NAME']) ? $row['LAST NAME'] : '';
 			$person->person_email = isset($row['EMAIL']) ? $row['EMAIL'] : '';
 			$person->person_date = date("Y-m-d H:i:s",time());
-			$person->save();
+			
+			// If all fields are empty i.e you have an empty record, don't save
+			if(empty($person->person_first) AND empty($person->person_last) AND empty($person->person_email))
+			{
+				$this->notices[] = 'Could not import Personal Information. Empty records on line'.($this->rownumber+1);
+			}
+			else
+			{
+				$person->save();
+			}
 		}
 		// STEP 4: SAVE CATEGORIES
 		// If CATEGORY column exists
