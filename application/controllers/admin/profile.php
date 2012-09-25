@@ -64,7 +64,8 @@ class Profile_Controller extends Admin_Controller
             {
                 $post->add_rules('new_password','required','length[5,30]','alpha_dash','matches[password_again]');
             }
-
+		//for plugins that'd like to know what the user has to say about their profile
+		Event::run('ushahidi_action.profile_add_admin', $post);
 			if ($post->validate())
 			{
 				$user = ORM::factory('user',$this->user_id);
@@ -79,7 +80,7 @@ class Profile_Controller extends Admin_Controller
                     }
 					$user->save();
 					
-					Event::run('ushahidi_action.profile_add_admin', $post);
+					
 					
 					Event::run('ushahidi_action.profile_edit', $user);
 						

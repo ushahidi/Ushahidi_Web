@@ -192,6 +192,10 @@ echo html::script(url::file_loc('js').'media/js/global', TRUE);
 						<td><strong><?php echo Kohana::lang('ui_main.password_again'); ?>:</strong><br />
 						<?php print form::password('password_again', $form['password_again'], 'class="login_text new_password_again"'); ?></td>
 					</tr>
+					<?php 
+						//for plugins that want to add some extra stuff to this lovely view
+						Event::run('ushahidi_action.login_new_user_form');
+					?>
 					<tr>
 						<td><input type="submit" id="submit" name="submit" value="<?php echo Kohana::lang('ui_main.login_signup');?>" class="login_btn new_submit" /></td>
 					</tr>
