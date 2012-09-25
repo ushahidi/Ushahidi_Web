@@ -952,7 +952,7 @@
 		
 		for (var i=0; i < layers.length; i++) {
 			// Skip layer if its not on the map
-			if (this._olMap.getLayerIndex(layers[i]) == -1) continue;
+			if (layers[i].map == null || this._olMap.getLayerIndex(layers[i]) == -1) continue;
 			
 			this._olMap.removeLayer(layers[i]);
 			if (layers[i].destroyFeatures !== undefined)
