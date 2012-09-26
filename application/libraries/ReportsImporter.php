@@ -228,6 +228,36 @@ class ReportsImporter {
 				}	
 			} 
 		}
+		
+		// STEP 5: Save Custom form fields responses
+		$custom_titles = customforms::get_custom_form_fields('','',false);
+		
+		// Do custom form fields exist on this deployment?
+		if (!empty($custom_titles))
+		{
+			foreach($custom_titles as $field_name)
+			{
+				// Check if the column exists in the CSV
+				$rowname = utf8::strtoupper($field_name['field_name']);
+				$field_id = $field_name['field_id'];
+				if(isset($row[$rowname]))
+				{		
+					$response = $row[$rowname];
+						
+					// Initialize form response model
+					$form_response = new Form_Response_Model();
+					$form_response->incident_id = $incident->id;
+					$form_response->form_field_id = $field_id;
+						
+					// If form response exists
+					if($response != '')
+					{
+						$form_response->form_response = $response;
+						$form_response->save();
+					}
+				}	
+			}	
+		}
 		 
 	return true;
 	}
