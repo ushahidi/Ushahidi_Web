@@ -49,7 +49,7 @@ class customforms_Core {
 		
 		// Check if incident is valid
 		// Have to do this early since we can't build 2 ORM queries at once.
-		$valid_incident = Incident_Model::is_valid_incident($incident_id, TRUE);
+		$valid_incident = Incident_Model::is_valid_incident($incident_id, FALSE);
 
 		// Check if the provided incident exists, then fill in the data
 		if ($valid_incident)
