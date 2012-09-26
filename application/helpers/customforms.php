@@ -51,26 +51,47 @@ class customforms_Core {
 		// Have to do this early since we can't build 2 ORM queries at once.
 		$valid_incident = Incident_Model::is_valid_incident($incident_id, TRUE);
 
-		$form_fields = ORM::factory('Form_Field')
-			->join('roles', 'roles.id', $ispublic_field, 'LEFT')
-			->where('(access_level <= '.(int)$user_level.' OR access_level IS NULL)')
-			->orderby('field_position','ASC');
-		
-		if ($form_id != null AND $form_id != '')
-		{
-			$form_fields->where('form_id', $form_id);
-		}
-
 		// Check if the provided incident exists, then fill in the data
 		if ($valid_incident)
 		{
-			$form_fields->join('form_response','form_response.form_field_id','form_field.id','RIGHT');
-			$form_fields->where('form_response.incident_id', $incident_id);
-			$form_fields->select('form_field.*', 'form_response.*');
+			$sql = "SELECT form_field. *, form_response.form_response
+			FROM form_field
+			LEFT JOIN
+				roles ON (roles.id = field_ispublic_visible)
+			LEFT JOIN
+				form_response ON (
+					form_response.form_field_id = form_field.id AND
+					form_response.incident_id = :incident_id
+				)
+			WHERE
+				(access_level <= :user_level OR access_level IS NULL) ";
+			if ($form_id != null AND $form_id != '')
+			{
+				$sql .= "AND form_id = :form_id ";
+			}
+			$sql .= "ORDER BY field_position ASC";
+		}
+		else
+		{
+			$sql = "SELECT form_field. *, '' AS form_response
+			FROM form_field
+			LEFT JOIN
+				roles ON (roles.id = field_ispublic_visible)
+			WHERE
+				(access_level <= :user_level OR access_level IS NULL) ";
+			if ($form_id != null AND $form_id != '')
+			{
+				$sql .= "AND form_id = :form_id ";
+			}
+			$sql .= "ORDER BY field_position ASC";
 		}
 		
-		$form_fields = $form_fields->find_all();
-		
+		$form_fields = Database::instance()->query($sql, array(
+			':form_id' => $form_id,
+			':user_level' => $user_level,
+			':incident_id' => $incident_id
+		));
+
 		foreach ($form_fields as $custom_formfield)
 		{
 			if ($data_only)
