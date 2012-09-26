@@ -91,7 +91,7 @@ class Categories_Api_Object extends Api_Object_Core {
         $url_prefix = url::base().Kohana::config('upload.relative_directory').'/';
         foreach ($items as $item)
         {
-            $item->icon = $item->icon ? $url_prefix . $item->icon : '';
+            $item->icon = isset($item->icon) ? $url_prefix . $item->icon : '';
 
             // Needs different treatment depending on the output
             if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
