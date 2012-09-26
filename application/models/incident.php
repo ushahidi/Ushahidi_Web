@@ -524,6 +524,9 @@ class Incident_Model extends ORM {
 			{
 				$sql .= "LIMIT ".intval($num_neighbours);
 			}
+		
+			// Event to alter SQL
+			Event::run('ushahidi_filter.get_neighbouring_incidents_sql', $sql);
 
 			// Fetch records and return
 			return Database::instance()->query($sql, $latitude, $latitude, $longitude, $incident_id);
