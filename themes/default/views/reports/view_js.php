@@ -47,7 +47,8 @@ jQuery(window).load(function() {
 		],
 
 		// Base layers
-		baseLayers: <?php echo map::layers_array(FALSE); ?>,
+		baseLayers: <?php echo map::layers_array(FALSE); ?>
+
 	};
 
 	// Set Feature Styles
@@ -128,9 +129,9 @@ jQuery(window).load(function() {
 
 	// Styles to use for rendering the markers
 	var styleMap = new OpenLayers.StyleMap({
-		default: style1,
-		select: style1,
-		temporary: style2
+		'default': style1,
+		'select': style1,
+		'temporary': style2
 	});
 
 
