@@ -163,8 +163,8 @@
 				case 5:
 					foreach($options as $option)
 					{
-						$set_default = ($option == $default);
 						$option = trim($option);
+						$set_default = ($option == trim($default));
 
 						$html .= "<span style=\"margin-right: 15px\">";
 						$html .= form::label('custom_field['.$field_id.']'," ".$option." ");
