@@ -35,6 +35,7 @@ class customforms_Core {
 	{
 		$fields_array = array();
 
+		// If we have a form id but its invalid, return empty
 		if( ! empty($form_id) AND ! Form_Model::is_valid_form($form_id))
 			return $fields_array;
 
@@ -54,36 +55,26 @@ class customforms_Core {
 		// Check if the provided incident exists, then fill in the data
 		if ($valid_incident)
 		{
-			$sql = "SELECT form_field. *, form_response.form_response
+			$sql = "SELECT form_field.*, form_response.form_response
 			FROM form_field
-			LEFT JOIN
-				roles ON (roles.id = field_ispublic_visible)
+			LEFT JOIN roles ON (roles.id = field_ispublic_visible)
 			LEFT JOIN
 				form_response ON (
 					form_response.form_field_id = form_field.id AND
 					form_response.incident_id = :incident_id
 				)
-			WHERE
-				(access_level <= :user_level OR access_level IS NULL) ";
-			if ($form_id != null AND $form_id != '')
-			{
-				$sql .= "AND form_id = :form_id ";
-			}
-			$sql .= "ORDER BY field_position ASC";
+			WHERE (access_level <= :user_level OR access_level IS NULL) "
+			. ( ! empty($form_id) ? "AND form_id = :form_id " : '')
+			. "ORDER BY field_position ASC";
 		}
 		else
 		{
-			$sql = "SELECT form_field. *, '' AS form_response
+			$sql = "SELECT form_field.*
 			FROM form_field
-			LEFT JOIN
-				roles ON (roles.id = field_ispublic_visible)
-			WHERE
-				(access_level <= :user_level OR access_level IS NULL) ";
-			if ($form_id != null AND $form_id != '')
-			{
-				$sql .= "AND form_id = :form_id ";
-			}
-			$sql .= "ORDER BY field_position ASC";
+			LEFT JOIN roles ON (roles.id = field_ispublic_visible)
+			WHERE (access_level <= :user_level OR access_level IS NULL) "
+			. ( ! empty($form_id) ? "AND form_id = :form_id " : '')
+			. "ORDER BY field_position ASC";
 		}
 		
 		$form_fields = Database::instance()->query($sql, array(
