@@ -138,22 +138,6 @@ class Main_Controller extends Template_Controller {
 	}
 
 	/**
-	 * Retrieves Categories
-	 */
-	protected function get_categories()
-	{
-	  $categories = ORM::factory('category')
-	    ->where('category_visible', '1')
-	    ->where('parent_id', '0')
-	    ->where('category_trusted != 1')
-	    ->orderby('category_position', 'ASC')
-	    ->orderby('category_title', 'ASC')
-	    ->find_all();
-
-	  return $categories;
-	}
-
-	/**
 	 * Get Trusted Category Count
 	 */
 	public function get_trusted_category_count($id)
