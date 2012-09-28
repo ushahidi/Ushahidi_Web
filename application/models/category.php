@@ -148,9 +148,9 @@ class Category_Model extends ORM_Tree {
 			}
 		}
 		
-		if ($category_id AND isset(self::$categories[$category_id]))
+		if ($category_id)
 		{
-			return array($category_id => self::$categories[$category_id]);
+			return isset(self::$categories[$category_id]) ? array($category_id => self::$categories[$category_id]) : FALSE;
 		}
 		
 		return self::$categories;
@@ -177,31 +177,49 @@ class Category_Model extends ORM_Tree {
 	 * @param int $parent_id
 	 * @return ORM_Iterator
 	 */
-	public static function get_categories($parent_id = 0, $exclude_trusted = TRUE, $exclude_hidden = TRUE)
+	public static function get_categories($parent_id = FALSE, $exclude_trusted = TRUE, $exclude_hidden = TRUE)
 	{
-		// Check if the specified parent is valid
-		$where = (intval($parent_id) > 0 AND self::is_valid_category($parent_id))
-			? array('parent_id' => $parent_id)
-			: array('parent_id' => 0);
+		$where = array();
+		$categories = ORM::factory('category')
+			->join('category AS c_parent','category.parent_id','c_parent.id','LEFT')
+			->orderby('category.category_position', 'ASC')
+			->orderby('category.category_title', 'ASC');
+		
+		// Check if the parent is specified, if FALSE get everything
+		if ($parent_id !== FALSE)
+		{
+			// top level
+			if ($parent_id === 0)
+			{
+				$categories->where('category.parent_id', 0);
+			}
+			// valid parent
+			elseif (self::is_valid_category($parent_id))
+			{
+				$categories->where('category.parent_id', $parent_id);
+			}
+			// invalid parent
+			else
+			{
+				// Force no results, but still returning an ORM_Iterator
+				$categories->where('1 = 0');
+			}
+		}
 			
 		// Make sure the category is visible
 		if ($exclude_hidden)
 		{
-			$where = array_merge($where, array('category_visible' =>'1'));
+			$categories->where('category.category_visible', '1');
+			$categories->where('(c_parent.category_visible = 1 OR c_parent.id IS NULL)');
 		}
 		
 		// Exclude trusted reports
 		if ($exclude_trusted)
 		{
-			$where = array_merge($where, array('category_trusted !=' => '1'));
+			$categories->where('category.category_trusted !=', '1');
 		}
 		
-		// Return
-		return ORM::factory('category')
-			->where($where)
-			->orderby('category_position', 'ASC')
-			->orderby('category_title', 'ASC')
-			->find_all();
+		return $categories->find_all();
 	}
 	
 	/**
