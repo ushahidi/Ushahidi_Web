@@ -65,12 +65,13 @@ class Categories_Api_Object extends Api_Object_Core {
 	private function _get_categories_by_id($id)
 	{
 		// Find incidents
-		$this->query = "SELECT id, parent_id, category_title, category_description, ";
-		$this->query .= "category_color, category_position, category_image_thumb AS category_icon ";
-		$this->query .= "FROM `" . $this->table_prefix . "category` ";
-		$this->query .= "WHERE category_visible = 1 AND id=$id ORDER BY category_position ASC";
+		$this->query = "SELECT c.*, c.category_image_thumb AS category_icon ";
+		$this->query .= "FROM `" . $this->table_prefix . "category` c ";
+		$this->query .= "LEFT JOIN `" . $this->table_prefix . "category` c_parent ON (c.parent_id = c_parent.id) ";
+		$this->query .= "WHERE c.category_visible = 1 AND (c_parent.category_visible = 1 OR c.parent_id = 0) AND c.id = :id ";	
+		$this->query .= "ORDER BY category_position ASC";
 
-		$items = $this->db->query($this->query);
+		$items = $this->db->query($this->query, array(':id' => $id));
 
 		// Set the no. of records fetched
 		$this->record_count = $items->count();
@@ -142,7 +143,8 @@ class Categories_Api_Object extends Api_Object_Core {
 		//find incidents
 		$this->query = "SELECT c.id, c.parent_id, c.category_title as title, c.category_description as description, 
                 c.category_color as color, c.category_position as position, c.category_image_thumb AS icon
-                FROM `" . $this->table_prefix . "category` c LEFT JOIN `" . $this->table_prefix . "category` c_parent ON (c.parent_id = c_parent.id) WHERE
+                FROM `" . $this->table_prefix . "category` c
+                LEFT JOIN `" . $this->table_prefix . "category` c_parent ON (c.parent_id = c_parent.id) WHERE
                 c.category_visible = 1 AND (c_parent.category_visible = 1 OR c.parent_id = 0) ORDER BY c.category_position ASC";
 
 		$items = $this->db->query($this->query);
