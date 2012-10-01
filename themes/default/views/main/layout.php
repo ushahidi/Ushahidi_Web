@@ -10,6 +10,11 @@
 
 		<!-- right column -->
 		<div id="right" class="clearingfix">
+			
+			<?php
+			// Action::main_sidebar_pre_filters - Add Items to the Entry Page before filters
+			Event::run('ushahidi_action.main_sidebar_pre_filters');
+			?>
 
 			<!-- category filters -->
 			<div class="cat-filters clearingfix">
@@ -50,6 +55,7 @@
 						$category_image = ($category_info[2] != NULL)
 						    ? url::convert_uploaded_to_abs($category_info[2])
 						    : NULL;
+						$category_description = htmlentities(Category_Lang_Model::category_description($category), ENT_QUOTES, "UTF-8");
 
 						$color_css = 'class="swatch" style="background-color:#'.$category_color.'"';
 						if ($category_info[2] != NULL)
@@ -62,7 +68,7 @@
 						}
 
 						echo '<li>'
-						    . '<a href="#" id="cat_'. $category .'">'
+						    . '<a href="#" id="cat_'. $category .'" title="'.$category_description.'">'
 						    . '<span '.$color_css.'>'.$category_image.'</span>'
 						    . '<span class="category-title">'.$category_title.'</span>'
 						    . '</a>';
@@ -79,6 +85,7 @@
 								$child_image = ($child_info[2] != NULL)
 								    ? url::convert_uploaded_to_abs($child_info[2])
 								    : NULL;
+								$child_description = htmlentities(Category_Lang_Model::category_description($child), ENT_QUOTES, "UTF-8");
 								
 								$color_css = 'class="swatch" style="background-color:#'.$child_color.'"';
 								if ($child_info[2] != NULL)
@@ -92,7 +99,7 @@
 								}
 
 								echo '<li style="padding-left:20px;">'
-								    . '<a href="#" id="cat_'. $child .'">'
+								    . '<a href="#" id="cat_'. $child .'" title="'.$child_description.'">'
 								    . '<span '.$color_css.'>'.$child_image.'</span>'
 								    . '<span class="category-title">'.$child_title.'</span>'
 								    . '</a>'
@@ -141,6 +148,11 @@
 				</ul>
 				<!-- /Layers -->
 			<?php endif; ?>
+			
+			<?php
+			// Action::main_sidebar_post_filters - Add Items to the Entry Page after filters
+			Event::run('ushahidi_action.main_sidebar_post_filters');
+			?>
 
 			<br />
 

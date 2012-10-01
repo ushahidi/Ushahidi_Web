@@ -331,6 +331,9 @@ class Incident_Model extends ORM {
 		{
 			$sql .= 'LIMIT '.$limit->sql_offset.', '.$limit->items_per_page;
 		}
+		
+		// Event to alter SQL
+		Event::run('ushahidi_filter.get_incidents_sql', $sql);
 
 		// Kohana::log('debug', $sql);
 		return Database::instance()->query($sql);
@@ -418,6 +421,9 @@ class Incident_Model extends ORM {
 			{
 				$sql .= "LIMIT :limit";
 			}
+		
+			// Event to alter SQL
+			Event::run('ushahidi_filter.get_neighbouring_incidents_sql', $sql);
 
 			// Fetch records and return
 			return Database::instance()->query($sql,
@@ -526,6 +532,38 @@ class Incident_Model extends ORM {
 		Event::run('ushahidi_action.report_delete', $incident_id);
 
 		parent::delete();
+	}
+
+	/**
+	 * Get url of this incident
+	 * @return string
+	 **/
+	public function url()
+	{
+		return self::get_url($this);
+	}
+	
+	/**
+	 * Get url for the incident object passed
+	 * @param object|int
+	 * @return string
+	 **/
+	public static function get_url($incident)
+	{
+		if (is_object($incident))
+		{
+			$id = isset($incident->incident_id) ? $incident->incident_id : $incident->id;
+		}
+		elseif (is_int($incident))
+		{
+			$id = intval($incident);
+		}
+		else
+		{
+			return false;
+		}
+		
+		return url::site('reports/view/'.$id);
 	}
 
 }

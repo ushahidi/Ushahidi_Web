@@ -521,7 +521,8 @@
 		$version_url = "http://version.ushahidi.com/2/?v=".$current.
 			"&u=".$url."&ip=".$ip_address;
 
-		preg_match('/({.*})/', file_get_contents($version_url), $matches);
+		// Ignore errors in case file_get_contents can't retrieve url
+		@preg_match('/({.*})/', file_get_contents($version_url), $matches);
 
 		$version_json_string = false;
 		if(isset($matches[0]))

@@ -258,7 +258,7 @@ class category_Core {
 			$category_image = $category['category_image_thumb'] ? html::image(array('src'=> url::convert_uploaded_to_abs($category['category_image_thumb']), 'style'=>'float:left;padding-right:5px;')) : NULL;
 			
 			$tree_html .= "<li".$category_class.">"
-							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$id."\">"
+							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$id."\" title=\"{$category['category_description']}\">"
 							. "<span class=\"item-swatch\" style=\"background-color: #".$category['category_color']."\">$category_image</span>"
 							. "<span class=\"item-title\">".strip_tags($category['category_title'])."</span>"
 							. "<span class=\"item-count\">".$category['report_count']."</span>"

@@ -746,6 +746,10 @@
 				delete urlParameters["cff"];
 			}
 			
+			<?php
+				// Action, allows plugins to add custom filters
+				Event::run('ushahidi_action.report_js_filterReportsAction');
+			?>
 			
 			// Fetch the reports
 			fetchReports();
