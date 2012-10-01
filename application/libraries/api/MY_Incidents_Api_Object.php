@@ -397,27 +397,21 @@ class Incidents_Api_Object extends Api_Object_Core {
 		// STEP 2.
 		// Fetch the incident categories
 		//
-		$this->query = "SELECT c.category_title AS categorytitle, ic.incident_id, "
-					. "c.id AS cid "
-					. "FROM ".$this->table_prefix."category AS c "
-					. "INNER JOIN ". $this->table_prefix."incident_category AS ic ON ic.category_id = c.id "
-					. "WHERE ic.incident_id IN (".implode(',', $incident_ids).")";
 
 		// Execute the query
-		$incident_categories = $this->db->query($this->query);
+		$incident_categories = ORM::factory('category')
+			->select('category.*, incident_category.incident_id')
+			->join('incident_category','category.id','incident_category.category_id')
+			->in('incident_category.incident_id', $incident_ids)
+			->find_all();
 
 		// To hold the incident category items
 		$category_items = array();
 
-		// Temporary counter
-		$i = 1;
-
 		// Fetch items into array
 		foreach ($incident_categories as $incident_category)
 		{
-			$category_items[$incident_category->incident_id][$i]['cid'] = $incident_category->cid;
-			$category_items[$incident_category->incident_id][$i]['categorytitle'] = $incident_category->categorytitle;
-			$i++;
+			$category_items[$incident_category->incident_id][] = $incident_category->as_array();
 		}
 
 		// Free temporary variables from memory
@@ -427,63 +421,41 @@ class Incidents_Api_Object extends Api_Object_Core {
 		// STEP 3.
 		// Fetch the media associated with all the incidents
 		//
-		$this->query = "SELECT i.id AS incident_id, m.id AS mediaid, m.media_title AS mediatitle, "
-					. "m.media_type AS mediatype, m.media_link AS medialink, m.media_thumb AS mediathumb "
-					. "FROM ".$this->table_prefix."media AS m "
-					. "INNER JOIN ".$this->table_prefix."incident AS i ON i.id = m.incident_id "
-					. "WHERE i.id IN (".implode(",", $incident_ids).")";
-
-		$media_items_result = $this->db->query($this->query);
+		$media_items_result = ORM::factory('media')->in('incident_id', $incident_ids)->find_all();
 
 		// To store the fetched media items
 		$media_items = array();
 
-		// Reset the temporary counter
-		$i = 1;
-
 		// Fetch items into array
 		foreach ($media_items_result as $media_item)
 		{
-			$media_items[$media_item->incident_id][$i]['mediaid'] = $media_item->mediaid;
-			$media_items[$media_item->incident_id][$i]['mediatitle'] = $media_item->mediatitle;
-			$media_items[$media_item->incident_id][$i]['mediatype'] = $media_item->mediatype;
-			$media_items[$media_item->incident_id][$i]['medialink'] = $media_item->medialink;
-			$media_items[$media_item->incident_id][$i]['mediathumb'] = $media_item->mediathumb;
-			$i++;
+			$media_item_array = $media_item->as_array();
+			if ( $media_item->media_type == 1 AND ! empty($media_item->media_thumb))
+			{
+				$media_item_array["media_thumb_url"] =  url::convert_uploaded_to_abs($media_item->media_thumb);
+				$media_item_array["media_link_url"] = url::convert_uploaded_to_abs($media_item->media_link);
+			}
+			$media_items[$media_item->incident_id][] = $media_item_array;
 		}
 
 		// Free temporary variables
-		unset ($media_items_result, $i);
+		unset ($media_items_result, $media_item_array);
 
 		//
 		// STEP 4.
 		// Fetch the comments associated with the incidents
 		//
 		if ($this->comments) {
-			$this->query = "SELECT id, incident_id, comment_author, comment_email, "
-						. "comment_description, comment_date "
-						. "FROM ".$this->table_prefix."comment AS c "
-						. "WHERE c.incident_id IN (".implode(',', $incident_ids).")";
-
 			// Execute the query
-			$incident_comments = $this->db->query($this->query);
+			$incident_comments = ORM::factory('comment')->in('incident_id', $incident_ids)->find_all();
 
 			// To hold the incident category items
 			$comment_items = array();
 
-			// Temporary counter
-			$i = 1;
-
 			// Fetch items into array
 			foreach ($incident_comments as $incident_comment)
 			{
-				$comment_items[$incident_comment->incident_id][$i]['id'] = $incident_comment->id;
-				$comment_items[$incident_comment->incident_id][$i]['incident_id'] = $incident_comment->incident_id;
-				$comment_items[$incident_comment->incident_id][$i]['comment_author'] = $incident_comment->comment_author;
-				$comment_items[$incident_comment->incident_id][$i]['comment_email'] = $incident_comment->comment_email;
-				$comment_items[$incident_comment->incident_id][$i]['comment_description'] = $incident_comment->comment_description;
-				$comment_items[$incident_comment->incident_id][$i]['comment_date'] = $incident_comment->comment_date;
-				$i++;
+				$comment_items[$incident_comment->incident_id][] = $incident_comment->as_array();
 			}
 			// Free temporary variables from memory
 			unset ($incident_comments);
@@ -524,16 +496,16 @@ class Incidents_Api_Object extends Api_Object_Core {
 					{
 						$json_report_categories[$item->incident_id][] = array(
 							"category"=> array(
-								"id" => $category_item['cid'],
-								"title" => $category_item['categorytitle']
+								"id" => $category_item['id'],
+								"title" => $category_item['category_title']
 							)
 						);
 					}
 					else
 					{
 						$xml->startElement('category');
-						$xml->writeElement('id',$category_item['cid']);
-						$xml->writeElement('title', $category_item['categorytitle'] );
+						$xml->writeElement('id', $category_item['id']);
+						$xml->writeElement('title', $category_item['category_title'] );
 						$xml->endElement();
 					}
 				}
@@ -584,77 +556,58 @@ class Incidents_Api_Object extends Api_Object_Core {
 					foreach ($media_items[$item->incident_id] as $media_item)
 					{
 
-						$url_prefix = url::base().Kohana::config('upload.relative_directory').'/';
-
-						// If our media is not an image, we don't need to show an upload path
-						if ($media_item['mediatype'] != 1)
-						{
-							$upload_path = '';
-						}
-						elseif ($media_item['mediatype'] == 1 AND valid::url($media_item['medialink']) == TRUE)
-						{
-							// If our media is an img and is a valid URL, don't show the upload path or prefix
-							$upload_path = '';
-							$url_prefix = '';
-						}
-
 						if($this->response_type == 'json' OR $this->response_type == 'jsonp')
 						{
-							$json_report_media[$item->incident_id][] = array(
-								"id" => $media_item['mediaid'],
-								"type" => $media_item['mediatype'],
-								"link" => $upload_path.$media_item['medialink'],
-								"thumb" => $upload_path.$media_item['mediathumb'],
+							 $json_media_array = array(
+								"id" => $media_item['id'],
+								"type" => $media_item['media_type'],
+								"link" => $media_item['media_link'],
+								"thumb" => $media_item['media_thumb'],
 							);
 
 							// If we are look at certain types of media, add some fields
-							if($media_item['mediatype'] == 1)
+							if($media_item['media_type'] == 1 AND isset($media_item['media_thumb_url']))
 							{
-								// Grab that last key up there
-								$add_to_key = key($json_report_media[$item->incident_id]);
-
 								// Give a full absolute URL to the image
-								$json_report_media[$item->incident_id][$add_to_key]["thumb_url"] =  $url_prefix.$upload_path.$media_item['mediathumb'];
-
-								$json_report_media[$item->incident_id][$add_to_key]["link_url"] = $url_prefix.$upload_path.$media_item['medialink'];
+								$json_media_array["thumb_url"] =  $media_item['media_thumb_url'];
+								$json_media_array["link_url"] = $media_item['media_link_url'];
 							}
+							$json_report_media[$item->incident_id][] = $json_media_array;
 						}
 						else
 						{
 							$xml->startElement('media');
 
-							if( $media_item['mediaid'] != "" )
+							if( $media_item['id'] != "" )
 							{
-								$xml->writeElement('id',$media_item['mediaid']);
+								$xml->writeElement('id',$media_item['id']);
 							}
 
-							if( $media_item['mediatitle'] != "" )
+							if( $media_item['media_title'] != "" )
 							{
-								$xml->writeElement('title', $media_item['mediatitle']);
+								$xml->writeElement('title', $media_item['media_title']);
 							}
 
-							if( $media_item['mediatype'] != "" )
+							if( $media_item['media_type'] != "" )
 							{
-								$xml->writeElement('type', $media_item['mediatype']);
+								$xml->writeElement('type', $media_item['media_type']);
 							}
 
-							if( $media_item['medialink'] != "" )
+							if( $media_item['media_link'] != "" )
 							{
-								$xml->writeElement('link', $upload_path.$media_item['medialink']);
+								$xml->writeElement('link', $upload_path.$media_item['media_link']);
 							}
 
-							if( $media_item['mediathumb'] != "" )
+							if( $media_item['media_thumb'] != "" )
 							{
-								$xml->writeElement('thumb', $upload_path.$media_item['mediathumb']);
+								$xml->writeElement('thumb', $upload_path.$media_item['media_thumb']);
 							}
 
-							if( $media_item['mediathumb'] != "" AND $media_item['mediatype'] == 1 )
+							if($media_item['media_type'] == 1 AND isset($media_item['media_thumb_url']))
 							{
-								$add_to_key = key($json_report_media[$item->incident_id]) + 1;
+								$xml->writeElement('thumb_url', $media_item['media_thumb_url']);
 
-								$xml->writeElement('thumb_url', $url_prefix.$upload_path.$media_item['mediathumb']);
-
-								$xml->writeElement('link_url', $url_prefix.$upload_path.$media_item['medialink']);
+								$xml->writeElement('link_url', $media_item['media_link_url']);
 							}
 							$xml->endElement();
 						}
