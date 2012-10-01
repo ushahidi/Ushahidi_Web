@@ -554,7 +554,7 @@ class Incident_Model extends ORM {
 		{
 			$id = isset($incident->incident_id) ? $incident->incident_id : $incident->id;
 		}
-		elseif (is_int($incident))
+		elseif (intval($incident) > 0)
 		{
 			$id = intval($incident);
 		}

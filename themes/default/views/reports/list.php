@@ -46,7 +46,7 @@
 					$incident_id = $incident->incident_id;
 					$incident_title = strip_tags($incident->incident_title);
 					$incident_description = strip_tags($incident->incident_description);
-					$incident_url = "reports/view/$incident_id";
+					$incident_url = Incident_Model::get_url($incident_id);
 					//$incident_category = $incident->incident_category;
 					// Trim to 150 characters without cutting words
 					// XXX: Perhaps delcare 150 as constant
