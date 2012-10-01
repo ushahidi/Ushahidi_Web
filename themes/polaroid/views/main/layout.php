@@ -14,6 +14,11 @@
 	    
 	    <!-- filters box -->
 	    <div id="the-filters" class="map-menu-box">
+			
+				<?php
+				// Action::main_sidebar_pre_filters - Add Items to the Entry Page before filters
+				Event::run('ushahidi_action.main_sidebar_pre_filters');
+				?>
 	      
         <!-- report category filters -->
         <div id="report-category-filter">
@@ -95,6 +100,11 @@
       				</div>
       				<!-- / report type filters -->
   			</div>
+			
+				<?php
+				// Action::main_sidebar_post_filters - Add Items to the Entry Page after filters
+				Event::run('ushahidi_action.main_sidebar_post_filters');
+				?>
       			
 			</div>
 			<!-- / filters box -->

@@ -222,8 +222,8 @@ class category_Core {
 				// Add children
 				$category_data[$category->parent_id]['children'][$category->id] = array(
 					'category_id' => $category->id,
-					'category_title' => Category_Lang_Model::category_title($category->id, Kohana::config('locale.language.0')),
-					'category_description' => Category_Lang_Model::category_description($category->id, Kohana::config('locale.language.0')),
+					'category_title' => htmlentities(Category_Lang_Model::category_title($category->id, Kohana::config('locale.language.0')), ENT_QUOTES, "UTF-8"),
+					'category_description' => htmlentities(Category_Lang_Model::category_description($category->id, Kohana::config('locale.language.0')), ENT_QUOTES, "UTF-8"),
 					'parent_id' => $category->parent_id,
 					'category_color' => $category->category_color,
 					'category_image' => $category->category_image,
@@ -258,7 +258,7 @@ class category_Core {
 			$category_image = $category['category_image_thumb'] ? html::image(array('src'=> url::convert_uploaded_to_abs($category['category_image_thumb']), 'style'=>'float:left;padding-right:5px;')) : NULL;
 			
 			$tree_html .= "<li".$category_class.">"
-							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$id."\">"
+							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$id."\" title=\"{$category['category_description']}\">"
 							. "<span class=\"item-swatch\" style=\"background-color: #".$category['category_color']."\">$category_image</span>"
 							. "<span class=\"item-title\">".strip_tags($category['category_title'])."</span>"
 							. "<span class=\"item-count\">".$category['report_count']."</span>"

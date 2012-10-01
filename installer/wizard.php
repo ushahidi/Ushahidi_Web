@@ -60,7 +60,7 @@ class Installer_Wizard {
 		'curl',
 		
 		// IMAP extension
-		'imap',
+		//'imap',
 		
 		// GD library for imaging
 		'gd',
