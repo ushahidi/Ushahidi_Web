@@ -72,6 +72,7 @@ class Categories_Api_Object extends Api_Object_Core {
 		$this->query .= "ORDER BY category_position ASC";
 
 		$items = $this->db->query($this->query, array(':id' => $id));
+		$translations = Category_Lang_Model::category_langs();
 
 		// Set the no. of records fetched
 		$this->record_count = $items->count();
@@ -95,10 +96,23 @@ class Categories_Api_Object extends Api_Object_Core {
 			// Needs different treatment depending on the output
 			if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 			{
-				$json_categories[] = array("category" => $item);
+				$json_categories[] = array(
+					"category" => $item,
+					"translations" => isset($translations[$item->id]) ? $translations[$item->id] : array()
+				);
 			}
 			else
 			{
+				$item->translations = array();
+				if (isset($translations[$item->id]))
+				{
+					foreach ($translations[$item->id] as $lang => $translation)
+					{
+						$translation['lang'] = $lang;
+						$item->translations['translation' . $translation['id']] = array('translation' => $translation);
+						$this->replar[] = 'translation' . $translation['id'];
+					}
+				}
 				$json_categories['category' . $i] = array("category" => $item);
 				$this->replar[] = 'category' . $i;
 			}
@@ -149,6 +163,8 @@ class Categories_Api_Object extends Api_Object_Core {
 
 		$items = $this->db->query($this->query);
 
+		$translations = Category_Lang_Model::category_langs();
+
 		// Set the no. of records fetched
 		$this->record_count = $items->count();
 
@@ -165,10 +181,23 @@ class Categories_Api_Object extends Api_Object_Core {
 			//needs different treatment depending on the output
 			if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
 			{
-				$json_categories[] = array("category" => $item);
+				$json_categories[] = array(
+					"category" => $item,
+					"translations" => isset($translations[$item->id]) ? $translations[$item->id] : array()
+				);
 			}
 			else
 			{
+				$item->translations = array();
+				if (isset($translations[$item->id]))
+				{
+					foreach ($translations[$item->id] as $lang => $translation)
+					{
+						$translation['lang'] = $lang;
+						$item->translations['translation' . $translation['id']] = array('translation' => $translation);
+						$this->replar[] = 'translation' . $translation['id'];
+					}
+				}
 				$json_categories['category' . $i] = array("category" => $item);
 				$this->replar[] = 'category' . $i;
 			}
