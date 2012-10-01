@@ -178,8 +178,8 @@
 											<td class="col-1 col-drag-handle">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $category_title; ?></h4>
-													<p><?php echo $category_description; ?></p>
+													<h4><?php echo htmlentities($category_title, ENT_QUOTES, "UTF-8"); ?></h4>
+													<p><?php echo htmlentities($category_description, ENT_QUOTES, "UTF-8"); ?></p>
 												</div>
 											</td>
 											<td class="col-3">
@@ -254,8 +254,8 @@
 												<td class="col-1 col-drag-handle">&nbsp;</td>
 												<td class="col-2_sub">
 													<div class="post">
-														<h4><?php echo $category_title; ?></h4>
-														<p><?php echo $category_description; ?>...</p>
+														<h4><?php echo htmlentities($category_title, ENT_QUOTES, "UTF-8"); ?></h4>
+														<p><?php echo htmlentities($category_description, ENT_QUOTES, "UTF-8"); ?>...</p>
 													</div>
 												</td>
 												<td class="col-3">
