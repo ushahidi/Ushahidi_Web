@@ -126,7 +126,16 @@
 							<div class="has_border">
 								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_clustering"); ?>"><?php echo Kohana::lang('settings.site.allow_clustering');?></a></h4>
 								<div class="c_push">
-									<?php print form::dropdown('allow_clustering', $yesno_array, $form['allow_clustering']); ?>
+									<input type="radio" name="allow_clustering" value="1"
+									<?php if ($form['allow_clustering'] == 1)
+									{
+										echo " checked=\"checked\" ";
+									}?>> <?php echo Kohana::lang('ui_main.yes');?>
+									<input type="radio" name="allow_clustering" value="0"
+									<?php if ($form['allow_clustering'] !=1)
+									{
+										echo " checked=\"checked\" ";
+									}?>> <?php echo Kohana::lang('ui_main.no');?> 
 								</div>
 								
 								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_default_category_colors"); ?>"><?php echo Kohana::lang('settings.site.default_category_colors');?></a></h4>
