@@ -15,30 +15,28 @@
 		<div class="report-category-list">
 		<p>
 			<?php
-				foreach($incident_category as $category) 
+				foreach ($incident_category as $category)
 				{
-
 					// don't show hidden categoies
-					if($category->category->category_visible == 0)
+					if ($category->category->category_visible == 0)
 					{
 						continue;
 					}
-
-				  if ($category->category->category_image_thumb)
+					if ($category->category->category_image_thumb)
 					{
-					?>
-					  <!-- <?php echo url::site()."reports/?c=".$category->category->id; ?> -->
-					  <a href="#"><span class="r_cat-box" style="background:transparent url(<?php echo url::base().Kohana::config('upload.relative_directory')."/".$category->category->category_image_thumb; ?>) 0 0 no-repeat;">&nbsp;</span> <?php echo $category->category->category_title; ?></a>
-					
-					<?php 
+						$style = "background:transparent url(".url::convert_uploaded_to_abs($category->category->category_image_thumb).") 0 0 no-repeat";
 					}
 					else
 					{
+						$style = "background-color:#".$category->category->category_color;
+					}
+					
 					?>
-					  <!-- <?php echo url::site()."reports/?c=".$category->category->id; ?> -->
-					  <a href="#"><span class="r_cat-box" style="background-color:#<?php echo $category->category->category_color; ?>">&nbsp;</span> <?php echo $category->category->category_title; ?></a>
-				  <?php
-				  }
+					<a href="<?php echo url::site()."reports/?c=".$category->category->id; ?>" title="<?php echo Category_Lang_Model::category_description($category->category_id);; ?>">
+						<span class="r_cat-box" style="<?php echo $style ?>">&nbsp;</span>
+						<?php echo Category_Lang_Model::category_title($category->category_id); ?>
+					</a>
+					<?php 
 				}
 			?>
 			</p>
