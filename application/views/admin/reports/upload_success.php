@@ -15,19 +15,26 @@
 ?>
 
 <div class="bg">
-	<h2><?php print $title; ?> <span></span><a href="<?php print url::site() ?>admin/reports/download"><?php echo Kohana::lang('ui_main.download_reports');?></a><a href="<?php print url::site() ?>admin/reports"><?php echo Kohana::lang('ui_main.view_reports');?></a><a href="<?php print url::site() ?>admin/reports/edit"><?php echo Kohana::lang('ui_main.create_report');?></a></h2>
-	
-	<h3><?php echo Kohana::lang('ui_main.upload_successful');?></h3>
-	   <p><?php echo Kohana::lang('ui_main.successfully_imported');?> <?php echo $imported; ?> of <?php echo $rowcount; ?> <?php echo Kohana::lang('ui_main.reports');?>.</p>
+	<h2>
+		<?php admin::reports_subtabs("upload"); ?>
+	</h2>
+	<!-- report-form -->
+	<div class="report-form">
 
-	
-	<?php if(count($notices)){  ?>  
-	<h3><?php echo Kohana::lang('ui_main.notices');?></h3>	
-		<ul>
-	<?php foreach($notices as $notice)  { ?>
-	<li><?php echo $notice ?></li>
+		<div class = "green-box">
+			<h3><?php echo Kohana::lang('ui_main.upload_successful');?></h3>
+		</div>
+		<div class="upload_container">
+   			<p><?php echo Kohana::lang('ui_main.successfuly_imported');?> <?php echo $imported; ?> of <?php echo $rowcount; ?> <?php echo Kohana::lang('ui_main.reports');?>.</p>
 
-	<?php } }?>
-	</ul>
+
+		<?php if(count($notices)){  ?>  
+			<h3><?php echo Kohana::lang('ui_main.notices');?></h3>	
+			<ul>
+			<?php foreach($notices as $notice)  { ?>
+				<li><?php echo $notice ?></li>
+				<?php } }?>
+			</ul>
+		</div>
 	</div>
 </div>
