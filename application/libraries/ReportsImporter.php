@@ -239,11 +239,14 @@ class ReportsImporter {
 			{
 				// Check if the column exists in the CSV
 				$rowname = utf8::strtoupper($field_name['field_name']);
-				$field_id = $field_name['field_id'];
 				if(isset($row[$rowname]))
 				{		
 					$response = $row[$rowname];
 						
+					// Grab field_id and field_type
+					$field_id = $field_name['field_id'];
+					$field_type = $field_name['field_type'];
+					
 					// Initialize form response model
 					$form_response = new Form_Response_Model();
 					$form_response->incident_id = $incident->id;
@@ -252,7 +255,62 @@ class ReportsImporter {
 					// If form response exists
 					if($response != '')
 					{
-						$form_response->form_response = $response;
+						/* Handling case sensitivity issues with custom form field upload */ 
+						// Check if the field is a radio button, checkbox OR dropdown field
+						if ($field_type == '5' OR $field_type == '6' OR $field_type =='7')
+						{
+							// Get field option values
+							$field_values = $field_name['field_default'];
+							
+							// Split field options into individual values
+							$options = explode(",", $field_values);
+							
+							// Since radio button and dropdown fields take single responses
+							if ($field_type == '5' OR $field_type == '7')
+							{
+								foreach ($options as $option)
+								{
+									// Carry out a case insensitive comparison between individual field options and csv response
+									// If there's a match, store field option value from the db
+									if(strcasecmp($option, $response) == 0)
+									{
+										$form_response->form_response = $option;
+									}
+								}	
+							}
+							
+							// For checkboxes, which accomodate multiple responses
+							if ($field_type == '6')
+							{
+								// Split user responses into single values
+								$csvresponses = explode(",", $response);
+								$values = array();
+								foreach ($options as $option)
+								{
+									foreach ($csvresponses as $csvresponse)
+									{
+										// Carry out a case insensitive comparison between individual field options and csv response
+										// If there's a match
+										if(strcasecmp($option, $csvresponse) == 0)
+										{
+											// Store field option value from the db
+											$values[] = $option;
+										}
+									}	
+								}
+								
+								// Concatenate checkbox values into a string, separated by a comma
+								$form_response->form_response = implode(",", $values);	
+							}	
+						}
+						
+						// For all other form fields apart from the three mentioned above
+						else
+						{
+							$form_response->form_response = $response;
+						}
+						
+						// Save the form response
 						$form_response->save();
 					}
 				}	
