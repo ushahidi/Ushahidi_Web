@@ -174,7 +174,7 @@ jQuery(function() {
 		zoom: <?php echo Kohana::config('settings.default_zoom'); ?>,
 
 		// Redraw the layers when the zoom level changes
-		redrawOnZoom: true,
+		redrawOnZoom: <?php echo Kohana::config('settings.allow_clustering') == 1 ? "true" : "false"; ?>,
 
 		// Center of the map
 		center: {
