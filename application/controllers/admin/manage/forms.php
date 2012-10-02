@@ -254,7 +254,7 @@ class Forms_Controller extends Admin_Controller {
 		if ($_POST) 
 		{
 			// @todo Manually extract the data to be validated
-			$form_field_data = arr::extract($_POST, 'form_id', 'field_type', 'field_name', 'field_default', 'field_required', 
+			$form_field_data = arr::extract($_POST, 'form_id', 'field_id', 'field_type', 'field_name', 'field_default', 'field_required', 
 				'field_width', 'field_height', 'field_isdate', 'field_ispublic_visible', 'field_ispublic_submit');
 			
 			// Sanitize the default value (if provided)

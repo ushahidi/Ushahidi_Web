@@ -687,6 +687,7 @@ CREATE TABLE IF NOT EXISTS `form_field` (
   `field_ispublic_visible` tinyint(4) NOT NULL DEFAULT '0',
   `field_ispublic_submit` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `field_name` (`field_name`),
   KEY `fk_form_id` (`form_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores all custom form fields created by users' AUTO_INCREMENT=1 ;
 
@@ -1490,5 +1491,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '98' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '99' WHERE `key` = 'db_version';
 UPDATE `settings` SET `value` = '2.5' WHERE `key`= 'ushahidi_version';
