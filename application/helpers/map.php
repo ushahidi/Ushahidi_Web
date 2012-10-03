@@ -481,8 +481,8 @@ class map_Core {
 			$payload = $map_object->geoGetCoordsFull($address);
 
 			// Verify that the request succeeded
-			if ($payload->status != 'OK')
-				return FALSE;
+			if (! isset($payload->status)) return FALSE;
+			if ($payload->status != 'OK') return FALSE;
 
 			// Convert the Geocoder's results to an array
 			$all_components = json_decode(json_encode($payload->results), TRUE);
