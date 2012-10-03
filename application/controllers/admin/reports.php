@@ -66,7 +66,7 @@ class Reports_Controller extends Admin_Controller {
 			{
 				array_push($this->params, '(ic.category_id IS NULL)');
 			}
-			else
+			elseif (strtolower($status) != 'search')
 			{
 				$status = "0";
 			}
@@ -95,6 +95,10 @@ class Reports_Controller extends Admin_Controller {
 			$keyword_raw = "";
 		}
 		
+		$this->template->content->search_form = $this->_search_form();
+		$this->template->content->search_form->keywords = $keyword_raw;
+		
+		// Handler sort/order fields
 		$order_field = 'date'; $sort = 'DESC';
 		if (isset($_GET['order']))
 		{
@@ -296,6 +300,9 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->order_field = $order_field;
 		$this->template->content->sort = $sort;
 		
+		$this->template->map_enabled = TRUE;
+		$this->template->json2_enabled = TRUE;
+		$this->template->treeview_enabled = TRUE;
 
 		// Javascript Header
 		$this->template->js = new View('admin/reports/reports_js');
@@ -1495,6 +1502,91 @@ class Reports_Controller extends Admin_Controller {
 		{
 			Media_Model::delete_photo($id);
 		}
+	}
+	
+	private function _search_form()
+	{
+		$search_form = View::factory('admin/reports/search_form');
+		
+		// Handling location filter
+		$location_filter = isset($_GET['location_filter']);
+		if (! $location_filter)
+		{
+			if ( isset($_GET['start_loc']) )
+			{
+				unset($_GET['start_loc']);
+			}
+			if ( isset($_GET['alert_radius']) )
+			{
+				unset($_GET['alert_radius']);
+			}
+		}
+		else
+		{
+			$_GET['radius'] = $_GET['alert_radius'];
+		}
+		$search_form->location_filter = $location_filter;
+		$search_form->start_loc = isset($_GET['start_loc']) ? $_GET['start_loc'] : array(0,0);
+		
+		// Get the date of the oldest report
+		if (! empty($_GET['from']))
+		{
+			$date_from = strtotime($_GET['from']);
+		}
+		else
+		{
+			$date_from = Incident_Model::get_oldest_report_timestamp();
+		}
+
+		// Get the date of the latest report
+		if (! empty($_GET['to']))
+		{
+			$date_to = strtotime($_GET['to']);
+		}
+		else
+		{
+			$date_to = Incident_Model::get_latest_report_timestamp();
+		}
+		
+		$search_form->date_from = $date_from;
+		$search_form->date_to = $date_to;
+		
+		// Categories
+		if (! isset($_GET['c']) OR ! is_array($_GET['c']))
+		{
+			$_GET['c'] = isset($_GET['c']) ? array($_GET['c']) : array();
+		}
+		$search_form->categories = $_GET['c'];
+		
+		// Media
+		if (! isset($_GET['m']) OR ! is_array($_GET['m']))
+		{
+			$_GET['m'] = isset($_GET['m']) ? array($_GET['m']) : array();
+		}
+		$search_form->media = $_GET['m'];
+		
+		// Mode
+		if (! isset($_GET['mode']) OR ! is_array($_GET['mode']))
+		{
+			$_GET['mode'] = isset($_GET['mode']) ? array($_GET['mode']) : array();
+		}
+		$search_form->mode = $_GET['mode'];
+		
+		// Approved
+		$search_form->approved = $_GET['a'] = isset($_GET['a']) ? $_GET['a'] : 'all';
+		if ($_GET['a'] == 'all') unset($_GET['a']);
+		// Verified
+		$search_form->verified = $_GET['v'] = isset($_GET['v']) ? $_GET['v'] : 'all';
+		if ($_GET['v'] == 'all') unset($_GET['v']);
+		
+		// Load the alert radius view
+		$alert_radius_view = new View('alerts/radius');
+		$alert_radius_view->show_usage_info = FALSE;
+		$alert_radius_view->enable_find_location = TRUE;
+		$alert_radius_view->css_class = "map_holder_reports";
+		$search_form->alert_radius_view = $alert_radius_view;
+		
+		return $search_form;
 	}
 
 }

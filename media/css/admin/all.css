@@ -2563,3 +2563,60 @@ div.dp-popup td.disabled {
 	.sort-DESC {
 		background: url(../../img/admin/drag.gif) 0 -8px no-repeat;
 	}
+
+/* Report search form */
+.search-tab {
+	padding: 1.2em;
+	display: none;
+}
+	.search-tab .row {
+		margin-bottom: 1em;
+	}
+		.search-tab .category-row, .search-tab .location-row {
+			float: left;
+			clear: none;
+			padding-right: 0.5em;
+		}
+		.search-tab .category-row { width: 300px; }
+		.search-tab .location-row { width: 515px; }
+	.search-tab label.fixw {
+		width: 100px;
+		float: left;
+	}
+	.search-tab label.wrapped {
+		padding-right: 5px;
+	}
+	.search-tab .map {
+		overflow: hidden;
+		padding: 10px;
+		margin: 10px 0 0 0;
+	}
+	.search-tab .report-find-location {
+		padding: 9px 18px 18px 18px;
+		font-size: 80%;
+	}
+
+.report-find-location {
+	margin-right:1px;
+	padding:0 9px 9px 9px;
+	background-color:#eee;
+	font-size:90%;
+	color:#666;
+}
+.report-find-location input.findtext {
+	margin-top:9px;
+	padding:5px 3px 0 3px;
+	height:24px;
+	float:left;
+	font-size:14px;
+	font-weight:bold;
+	color:#666;
+	width:250px;
+	border:1px #ccc solid;
+}
+.report-find-loading {
+	float:left;
+	height:31px;
+	margin:9px 0 0 3px;
+}
+

@@ -720,7 +720,7 @@ class reports_Core {
 			//if $url_data['start_loc'] is just comma delimited strings, then make it into an array
 			if (intval($url_data['radius']) > 0 AND is_array($url_data['start_loc']))
 			{
-				$bounds = $url_data['start_loc'];			
+				$bounds = $url_data['start_loc'];
 				if (count($bounds) == 2 AND is_numeric($bounds[0]) AND is_numeric($bounds[1]))
 				{
 					self::$params['radius'] = array(
