@@ -673,11 +673,10 @@ INSERT INTO `form` (`id`, `form_title`, `form_description`, `form_active`) VALUE
 
 CREATE TABLE IF NOT EXISTS `form_field` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `form_id` int(11) NOT NULL DEFAULT '0',
+  `form_id` int(11) NOT NULL DEFAULT '1',
   `field_name` varchar(200) DEFAULT NULL,
   `field_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 - TEXTFIELD, 2 - TEXTAREA (FREETEXT), 3 - DATE, 4 - PASSWORD, 5 - RADIO, 6 - CHECKBOX',
   `field_required` tinyint(4) DEFAULT '0',
-  `field_options` text,
   `field_position` tinyint(4) NOT NULL DEFAULT '0',
   `field_default` varchar(200) DEFAULT NULL,
   `field_maxlength` int(11) NOT NULL DEFAULT '0',
@@ -1491,5 +1490,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '99' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '100' WHERE `key` = 'db_version';
 UPDATE `settings` SET `value` = '2.5' WHERE `key`= 'ushahidi_version';
