@@ -556,6 +556,9 @@ ul.tabset li a:hover{
 	color:#636363;
 	background:#f5f5f5;
 }
+ul.tabset li.right {
+	float: right;
+}
 /*-- tabs --*/
 /* Adding content tabs for where we just want a tab, but not the tab button style lists */
 .tab, .content-tab {
@@ -568,7 +571,8 @@ ul.tabset li a:hover{
 .tab ul{
 	margin:0;
 	padding:9px 10px 0;
-	clear:both;
+	float:left;
+	clear:left;
 	overflow:hidden;
 }
 .tab ul li{
@@ -2540,13 +2544,12 @@ div.dp-popup td.disabled {
 	height: 30px;
 	display: inline-block;
 }
-
+/* Reports sort/order fields */
 .sort_by {
 	float: right;
 	margin: 0;
 	padding: 9px 10px 0;
 }
-
 .sort {
 	width: 18px;
 	height: 9px;
