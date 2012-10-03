@@ -87,7 +87,7 @@
 				?>
 				<div id="<?php echo $incident_id ?>" class="rb_report <?php echo $incident_verified_class; ?>">
 					<div class="r_media">
-						<p class="r_photo" style="text-align:center;"> <a href="<?php echo url::site($incident_url); ?>">
+						<p class="r_photo" style="text-align:center;"> <a href="<?php echo $incident_url; ?>">
 							<img src="<?php echo $incident_thumb; ?>" style="max-width:89px;max-height:59px;" /> </a>
 						</p>
 
@@ -125,10 +125,10 @@
 					</div>
 
 					<div class="r_details">
-						<h3><a class="r_title" href="<?php echo url::site($incident_url); ?>">
+						<h3><a class="r_title" href="<?php echo $incident_url; ?>">
 								<?php echo html::specialchars($incident_title); ?>
 							</a>
-							<a href="<?php echo url::site("$incident_url#discussion"); ?>" class="r_comments">
+							<a href="<?php echo "$incident_url#discussion"; ?>" class="r_comments">
 								<?php echo $comment_count; ?></a> 
 								<?php echo $incident_verified; ?>
 							</h3>
