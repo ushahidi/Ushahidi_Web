@@ -54,6 +54,26 @@
 							</li>
 							<?php endif; ?>
 						</ul>
+						
+						<div class="sort_by">
+							<?php print form::open(NULL, array('method' => 'get', 'class' => 'sort-form')); ?>
+							<?php echo Kohana::lang('ui_main.sort_by'); ?>
+							<?php echo form::dropdown('order', array(
+								'date' => Kohana::lang('ui_admin.report_date'),
+								'id' => Kohana::lang('ui_main.id'),
+								'datemodify' => Kohana::lang('ui_admin.date_modified'),
+								'dateadd' => Kohana::lang('ui_admin.date_added'),
+								'title' => Kohana::lang('ui_admin.report_title'),
+							), $order_field); 
+							echo form::input(array(
+									'type'  => 'hidden',
+									'name'  => 'sort',
+									'value' => $sort,
+									'class' => 'sort-field'
+								));
+							echo form::hidden('status', $status);
+							echo form::close(); ?>
+						</div>
 					</div>
 				</div>
 				<?php if ($form_error): ?>
@@ -94,7 +114,10 @@
 									</th>
 									<th class="col-2"><?php echo Kohana::lang('ui_main.report_details');?></th>
 									<th class="col-3"><?php echo Kohana::lang('ui_main.date');?></th>
-									<th class="col-4"><?php echo Kohana::lang('ui_main.actions');?></th>
+									<th class="col-4">
+										<a class="sort sort-<?php echo $sort; ?>" title="<?php echo ($sort == 'ASC') ? Kohana::lang('ui_main.ascending') : Kohana::lang('ui_main.descending'); ?>" href="#"></a>
+										<?php echo Kohana::lang('ui_main.actions');?>
+									</th>
 								</tr>
 							</thead>
 							<tfoot>

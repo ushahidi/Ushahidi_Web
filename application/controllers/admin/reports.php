@@ -94,6 +94,16 @@ class Reports_Controller extends Admin_Controller {
 		{
 			$keyword_raw = "";
 		}
+		
+		$order_field = 'date'; $sort = 'DESC';
+		if (isset($_GET['order']))
+		{
+			$order_field = htmlentities($_GET['order']);
+		}
+		if (isset($_GET['sort']))
+		{
+			$sort = (strtoupper($_GET['sort']) == 'ASC') ? 'ASC' : 'DESC';
+		}
 
 		// Check, has the form been submitted?
 		$form_error = FALSE;
@@ -283,6 +293,9 @@ class Reports_Controller extends Admin_Controller {
 
 		// Status Tab
 		$this->template->content->status = $status;
+		$this->template->content->order_field = $order_field;
+		$this->template->content->sort = $sort;
+		
 
 		// Javascript Header
 		$this->template->js = new View('admin/reports/reports_js');

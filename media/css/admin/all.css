@@ -2540,3 +2540,23 @@ div.dp-popup td.disabled {
 	height: 30px;
 	display: inline-block;
 }
+
+.sort_by {
+	float: right;
+	margin: 0;
+	padding: 9px 10px 0;
+}
+
+.sort {
+	width: 18px;
+	height: 9px;
+	display: block;
+	float: right;
+	margin: 4px 0 0 6px;
+}
+	.sort-ASC {
+		background: url(../../img/admin/drag.gif) 0 0 no-repeat;
+	}
+	.sort-DESC {
+		background: url(../../img/admin/drag.gif) 0 -8px no-repeat;
+	}

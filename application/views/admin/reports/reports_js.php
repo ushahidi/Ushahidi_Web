@@ -56,3 +56,17 @@
 			$('#' + id).toggle(400);
 		}
 
+$(function () {
+	$("select#order").change(function() { $('.sort-form').submit(); });
+	$(".sort-ASC").click(function() {
+		$('.sort-field').val('DESC');
+		$('.sort-form').submit();
+		return false;
+	});
+	$(".sort-DESC").click(function() {
+		$('.sort-field').val('ASC');
+		$('.sort-form').submit();
+		return false;
+	});
+});
+
