@@ -285,7 +285,8 @@ INLINEJS;
 		 */
 		foreach ($_GET as $name => $value)
 		{
-		    $languages .= form::hidden($name, $value);
+			if (is_array($value)) continue;
+			$languages .= form::hidden($name, $value);
 		}
 
 		// Do a case insensitive sort of locales so it comes up in a rough alphabetical order
