@@ -122,9 +122,10 @@ class Blocks_Controller extends Admin_Controller
 		
 		if ($_POST)
 		{
-			if (isset($_POST['blocks'])
-				AND ! empty($_POST['blocks'])
-				)
+			$post = Validation::factory($_POST);
+			$post->add_rules('blocks','required');
+			
+			if ($post->validate())
 			{
 				$active_blocks = Settings_Model::get_setting('blocks');
 				$active_blocks = array_filter(explode("|", $active_blocks));
@@ -139,8 +140,12 @@ class Blocks_Controller extends Admin_Controller
 					}
 				}
 				
-				Settings_Model::save_setting('blocks', implode("|", $active_blocks));
+				Settings_Model::save_setting('blocks', implode("|", $block_check));
+				echo 'success';
+				return;
 			}
 		}
+		echo 'failure';
+		return;
 	}
 }
