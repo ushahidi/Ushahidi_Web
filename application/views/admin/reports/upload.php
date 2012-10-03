@@ -48,6 +48,17 @@
 			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4');?></li>
 			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4b');?></li>
 		</ul>
+		<p><strong><?php echo Kohana::lang('ui_main.upload_reports_detail_4c')?></strong></p>
+		<ul>
+			<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4d')?></li>
+			<li><?php echo Kohana::lang('ui_main.upload_reports_custom_forms')?>
+				<ol>
+					<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4e')?></li>
+					<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4f')?></li>
+					<li><?php echo Kohana::lang('ui_main.upload_reports_detail_4g')?></li>
+				<ol>
+			</li>
+		</ul>
 			<p>
 				<?php echo Kohana::lang('ui_main.upload_reports_detail_5');?>:
 				<p>
