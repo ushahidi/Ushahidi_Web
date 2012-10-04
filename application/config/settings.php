@@ -23,7 +23,7 @@ $config = array
 	'items_per_page' => '5',
 	'items_per_page_admin' => '20',
 	'items_per_api_request' => '20',
-	'api_url' => '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=" type="text/javascript"></script>',
+	'api_url' => '',
 	'api_url_all' => '',
 	'subdomain' => $subdomain,
 	'title_delimiter' => ' | '
