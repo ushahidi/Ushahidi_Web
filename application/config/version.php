@@ -9,4 +9,4 @@ $config['ushahidi_version'] = "2.5";
  * The Ushahidi Engine DB revision number
  * Increments when changes are made to the Ushahidi DB schema.
  */
-$config['ushahidi_db_version'] = "99";
+$config['ushahidi_db_version'] = "100";
