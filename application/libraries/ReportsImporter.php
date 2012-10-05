@@ -192,11 +192,18 @@ class ReportsImporter {
 		if (isset($row['CATEGORY']))
 		{
 			$categorynames = explode(',',trim($row['CATEGORY']));
+			
+			// Trim whitespace from array values
+			$categorynames = array_map('trim',$categorynames);
+			
+			// Get rid of duplicate category entries in a row
+			$categories = array_unique(array_map('strtolower', $categorynames));
+		
 			// Add categories to incident
-			foreach ($categorynames as $categoryname)
+			foreach ($categories as $categoryname)
 			{
-				// Trim the category name - but don't convert to upper case (only convert for comparisons, not creating a new category)
-				$categoryname = trim($categoryname);
+				// Convert the first string character of the category name to Uppercase
+				$categoryname = utf8::ucfirst($categoryname);
 				
 				// For purposes of adding an entry into the incident_category table
 				$incident_category = new Incident_Category_Model();
@@ -212,8 +219,10 @@ class ReportsImporter {
 						.' Added to database.';
 						$category = new Category_Model;
 						$category->category_title = $categoryname;
+	
 						// We'll just use black for now. Maybe something random?
 						$category->category_color = '000000'; 
+						
 						// because all current categories are of type '5'
 						$category->category_visible = 1;
 						$category->category_description = $categoryname;
