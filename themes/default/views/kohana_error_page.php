@@ -67,54 +67,7 @@ if ( ! empty($line))
 $error_message .= "ERROR: ".$message."\n";
 ?>
 <div id="bug_form">
-	<p class="bug_form_desc">Found a bug? Please fill out and submit the form below - help us make Ushahidi better software -- Thanks!</p>
-	<p class="bug_form_desc">All fields are required!</p>
-	<table width="100%" border="0" cellspacing="0" cellpadding="6">
-		<?php echo form::open('http://bugs.ushahidi.com', array('method' => 'post', 'id' => 'form', 'onSubmit' => "return validatePost();")); ?>
-			<input name="tracker" type="hidden" value="Bug">
-			<input name="remote" type="hidden" value="yes">
-			<tr>
-				<td width="25%" align="right" valign="top" bgcolor="#eeeeee" class="label">Subject:</td>
-				<td width="75%" bgcolor="#eeeeee">
-					<input name="subject" id="subject" value="" class="text long" />
-					<label class="error" for="name" id="subject_error">This field is required.</label>
-				</td>
-			</tr>
-			<tr>
-				<td align="right" valign="top" class="label">Your Name:</td>
-				<td>
-					<input name="yourname" id="yourname" value="" class="text long" />
-					<label class="error" for="name" id="yourname_error">This field is required.</label>
-				</td>
-			</tr>
-			<tr bgcolor="#eeeeee">
-				<td align="right" valign="top" class="label">Your Email Address:</td>
-				<td>
-					<input name="email" id="email" value="" class="text long" />
-					<label class="error" for="name" id="email_error">This field is required.</label>
-				</td>
-			</tr>
-			<tr>
-				<td align="right" valign="top" class="label">Please describe what you were doing when this error occurred:</td>
-				<td>
-					<textarea id="description" name="description" class="textarea long" rows="10"></textarea>
-					<label class="error" for="description" id="description_error">This field is required.</label>
-				</td>
-			</tr>
-			<tr bgcolor="#eeeeee">
-				<td align="right" valign="top" class="label">Error:</td>
-				<td><textarea name="error_message" rows="3" class="textarea long environ" id="error_message" readonly="readonly"><?php echo $error_message; ?></textarea></td>
-			</tr>
-			<tr>
-				<td align="right" valign="top" class="label">Your Environment:</td>
-				<td><textarea name="environ" rows="3" class="textarea long environ" id="environ" readonly="readonly"><?php echo $environ; ?></textarea></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><input name="submit" type="submit" class="action_btn" id="submit" value="Submit" /></td>
-			</tr>
-		<?php echo form::close(); ?>
-	</table>
+	<p class="bug_form_desc">Found a bug? Submit a bug report to the Ushahidi <a href="https://github.com/ushahidi/Ushahidi_Web/issues">Github issues page</a>- help us make Ushahidi better software -- Thanks!</p>
 </div>
 <?php if ( ! empty($trace)): ?>
 <h3><?php echo Kohana::lang('core.stack_trace') ?></h3>
