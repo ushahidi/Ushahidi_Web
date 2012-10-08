@@ -633,29 +633,42 @@
 		// Hack to start with opacity 0 then fade in
 		layer.div.style['opacity'] = 0;
 		var oldLayer = this._olMap.getLayersByName(options.name);
-		layer.events.register('loadend', layer, function () {
+		layer.events.register('loadend', this, function () {
 			// Delete the old layers
-			context.deleteLayer(oldLayer);
+			this.deleteLayer(oldLayer);
 			// Display the new layer, fading in if we've got CSS3
 			layer.display(true);
 			layer.div.className += " olVectorLayerDiv";
 			layer.div.style['opacity'] = 1;
+			
+			// Update / Create SelectFeature Control
+			if (typeof this._selectControl == "object")
+			{
+				// Update SelectFeature control with all vector layers
+				this._selectControl.setLayer(this._olMap.getLayersByClass("OpenLayers.Layer.Vector"));
+			}
+			else
+			{
+				// Select Feature control
+				this._selectControl = new OpenLayers.Control.SelectFeature(
+					this._olMap.getLayersByClass("OpenLayers.Layer.Vector"),
+					{ clickout: true, toggle: false, multiple: false, hover: false }
+				);
+				this._olMap.addControl(this._selectControl);
+				this._selectControl.activate();
+			}
+			// Bind popup events for select/unselect
+			layer.events.on({
+				"featureselected": this.onFeatureSelect,
+				"featureunselected": this.onFeatureUnselect,
+				scope: this
+			});
 		});
 
 		// Add the layer to the map
 		// We do this after a delay in case someone zooms multiple times
 		clearTimeout(this._addLayerTimeout);
 		this._addLayerTimeout = setTimeout(function(){ context._olMap.addLayer(layer); }, 100);
-
-		// Select Feature control
-		this._selectControl = new OpenLayers.Control.SelectFeature(layer);
-		this._olMap.addControl(this._selectControl);
-		this._selectControl.activate();
-		layer.events.on({
-			"featureselected": this.onFeatureSelect,
-			"featureunselected": this.onFeatureUnselect,
-			scope: this
-		});
 
 		this._isLoaded = 1;
 
