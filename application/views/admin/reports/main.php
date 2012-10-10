@@ -193,15 +193,9 @@
 										$submit_by = Kohana::lang('ui_admin.unknown');
 									}
 									
-									
-									// Get the country name
-									$country_name = ($incident->country_id != 0)
-										? $countries[$incident->country_id] 
-										: $countries[Kohana::config('settings.default_country')]; 
-									
 									// Incident location
-									$incident_location = $incident->location_id ? $incident->location_name.', '.$country_name : Kohana::lang('ui_main.none');
-							
+									$incident_location = $incident->location_id ? $incident->location_name : Kohana::lang('ui_main.none');
+									
 									// Retrieve Incident Categories
 									$incident_category = "";
 									if ($incident_orm->incident_category->count() > 0)
