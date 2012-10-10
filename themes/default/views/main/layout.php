@@ -166,12 +166,9 @@
 						<!-- Phone -->
 						<?php if ( ! empty($phone_array)): ?>
 						<div style="margin-bottom:10px;">
-							<?php echo Kohana::lang('ui_main.report_option_1'); ?>
+							<strong><?php echo Kohana::lang('ui_main.report_option_1'); ?></strong><br />
 							<?php foreach ($phone_array as $phone): ?>
-								<strong><?php echo $phone; ?></strong>
-								<?php if ($phone != end($phone_array)): ?>
-									 <br/>
-								<?php endif; ?>
+								<?php echo $phone; ?><br />
 							<?php endforeach; ?>
 						</div>
 						<?php endif; ?>
