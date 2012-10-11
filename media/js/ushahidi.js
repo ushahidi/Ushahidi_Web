@@ -302,6 +302,9 @@
 	 	// Markers are not yet loaded on the map
 	 	this._isLoaded = 0;
 
+	 	// Timeouts for layers about to be loaded, keyed by layer name
+	 	this._addLayerTimeouts = {};
+
 	 	// List of supported events
 	 	this._EVENTS = [
 	 		// When the report filters change
@@ -469,16 +472,8 @@
 	 *             that it is redrawn when the map is zoomed in/out or the report filters are updated     
 	 */
 	Ushahidi.Map.prototype.addLayer = function(layerType, options, save) {
-
-		var protocolFormat = new OpenLayers.Format.GeoJSON();
-
-		if (layerType == Ushahidi.KML) {
-			protocolFormat = new OpenLayers.Format.KML({
-				extractStyles: true,
-				extractAttributes: true,
-				maxDepth: 5
-			});
-		} else if (layerType == Ushahidi.DEFAULT) {
+		// Default markers layer
+		if (layerType == Ushahidi.DEFAULT) {
 			this.deleteLayer("default");
 			
 			var markers = null;
@@ -529,6 +524,17 @@
 			this._isLoaded = 1;
 
 			return this;
+		}
+		
+		// Setup default protocol format
+		var protocolFormat = new OpenLayers.Format.GeoJSON();
+		// Switch protocol format if layer is KML
+		if (layerType == Ushahidi.KML) {
+			protocolFormat = new OpenLayers.Format.KML({
+				extractStyles: true,
+				extractAttributes: true,
+				maxDepth: 5
+			});
 		}
 
 		// No options defined - where layerType !== Ushahidi.DEFAULT
@@ -667,8 +673,8 @@
 
 		// Add the layer to the map
 		// We do this after a delay in case someone zooms multiple times
-		clearTimeout(this._addLayerTimeout);
-		this._addLayerTimeout = setTimeout(function(){ context._olMap.addLayer(layer); }, 100);
+		clearTimeout(this._addLayerTimeouts[options.name]);
+		this._addLayerTimeouts[options.name] = setTimeout(function(){ context._olMap.addLayer(layer); }, 100);
 
 		this._isLoaded = 1;
 
