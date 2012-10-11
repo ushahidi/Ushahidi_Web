@@ -287,12 +287,14 @@ class User_Model extends Auth_User_Model {
 	 */
 	public function delete()
 	{
+		$table_prefix = Kohana::config('database.default.table_prefix');
+		
 		// Remove assigned roles
 		// Have to use db->query() since we don't have an ORM model for roles_users
-		$this->db->query('DELETE FROM roles_users WHERE user_id = ?',$this->id);
+		$this->db->query('DELETE FROM `'.$table_prefix.'roles_users` WHERE user_id = ?',$this->id);
 		
 		// Remove assigned badges
-		$this->db->query('DELETE FROM badge_users WHERE user_id = ?',$this->id);
+		$this->db->query('DELETE FROM `'.$table_prefix.'badge_users` WHERE user_id = ?',$this->id);
 
 		// Delete alerts
 		ORM::factory('alert')
