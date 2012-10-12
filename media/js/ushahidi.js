@@ -296,8 +296,11 @@
 	  * mapControls - {Array(OpenLayers.Control)} The list of controls to add to the map
 	  */
 	 Ushahidi.Map = function(div, config) {
-	 	// Internal registry for the maker layers
+	 	// Internal registry for the marker layers
 	 	this._registry = [];
+	 	
+	 	// Internal list of layers to keep at the top
+	 	this._onTop = [];
 
 	 	// Markers are not yet loaded on the map
 	 	this._isLoaded = 0;
@@ -393,6 +396,9 @@
 				scope: this
 			};
 		}
+		
+		// Trigger keepOnTop fn whenever new layers are added
+		mapOptions.eventListeners.addlayer = this.keepOnTop;
 
 		// Check for the controls to add to the map
 		if (config.mapControls == undefined) {
@@ -468,9 +474,10 @@
 	 *
 	 * save -      {bool} Whether to save the layer in the internal registry of Ushahidi.Map This
 	 *             parameter should be set to true, if the layer being added is new so as to ensure
-	 *             that it is redrawn when the map is zoomed in/out or the report filters are updated     
+	 *             that it is redrawn when the map is zoomed in/out or the report filters are updated   
+	 * keepOnTop - {bool} Whether to keep this layer above others.
 	 */
-	Ushahidi.Map.prototype.addLayer = function(layerType, options, save) {
+	Ushahidi.Map.prototype.addLayer = function(layerType, options, save, keepOnTop) {
 		// Default markers layer
 		if (layerType == Ushahidi.DEFAULT) {
 			this.deleteLayer("default");
@@ -544,6 +551,11 @@
 		// Save the layer data in the internal registry
 		if (save !== undefined && save) {
 			this._registry.push({layerType: layerType, options: options});
+		}
+
+		// Save the layer name to keep on top
+		if (keepOnTop !== undefined && keepOnTop) {
+			this._onTop.push(options.name);
 		}
 
 		// Transform feature geometry to Spherical Mercator
@@ -1134,6 +1146,21 @@
 			// The assumption here is that this method is only called
 			// when we're using the default layer
 			this.addLayer(Ushahidi.DEFAULT);
+		}
+	}
+	
+	/**
+	 * APIMethod: keepOnTop
+	 * Forces specified layer(s) to the top of the stack
+	 */
+	Ushahidi.Map.prototype.keepOnTop = function(layer) {
+		for (var i=0; i<this._onTop.length; i++) {
+			var layerName = this._onTop[i];
+			var layers = this._olMap.getLayersByName(layerName);
+			
+			for (var j=0; j<layers.length; j++) {
+				this._olMap.raiseLayer(layers[j], this._olMap.getNumLayers());
+			}
 		}
 	}
 

@@ -210,7 +210,7 @@ jQuery(function() {
 		name: "<?php echo Kohana::lang('ui_main.reports'); ?>",
 		url: reportsURL,
 		transform: false
-	}, true);
+	}, true, true);
 
 
 	// Register the referesh timeline function as a callback
@@ -347,7 +347,7 @@ jQuery(function() {
 				features: layerFeatures,
 				styleMap: checkinStyleMap,
 				transform: true,
-			});
+			}, false, true);
 		}
 	});
 
