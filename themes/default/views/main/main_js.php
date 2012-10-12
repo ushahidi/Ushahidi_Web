@@ -335,13 +335,16 @@ jQuery(function() {
 
 	$.getJSON(checkinsURL, function(data)
 	{
-		if (data["payload"]["checkins"] !== undefined)
-		{
+		var jsonFormat = new OpenLayers.Format.JSON();
+		var jsonStr = jsonFormat.write(json2GeoJSON(data));
+		var format = new OpenLayers.Format.GeoJSON();
+		layerFeatures = format.read(jsonStr);
+		if (layerFeatures.length > 0) {
 			// Add the checkins layer
 			map.addLayer(Ushahidi.GEOJSON, {
 				url: checkinsURL,
 				name: "Checkins",
-				callback: json2GeoJSON,
+				features: layerFeatures,
 				styleMap: checkinStyleMap,
 				transform: true,
 			});

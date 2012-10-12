@@ -457,15 +457,14 @@
 	 * name - {String} Name of the Layer being added
 	 * url  - {String} Fetch URL for the layer data
 	 * styleMap - {OpenLayers.StyleMap} Styling for the layer
-	 * callback - {Function} Callback function to preprocess the data returned by
-	 *            the url When the callback is specified, the protocol property
-	 *            is omitted from the options passed to the layer constructor. The
-	 *             features property is used instead
 	 * detectMapClicks - {Boolean} - When true, registers a callback function to detect
 	 *               click events on the map. This option is only used with the default
 	 *               layer (Ushahidi.DEFAULT). The default value is true
 	 * transform - {Boolean} When true, transforms the featur geometry to spherical mercator
 	 *             The default value is false
+	 * features - {Array(OpenLayers.Feature.Vector)} Features to add to the layer 
+	 *            When the features ar specified, the protocol property is omitted from the
+	 *            options passed to the layer constructor. The features property is used instead
 	 *
 	 * save -      {bool} Whether to save the layer in the internal registry of Ushahidi.Map This
 	 *             parameter should be set to true, if the layer being added is new so as to ensure
@@ -582,7 +581,7 @@
 				params.push(_key + '=' + this._reportFilters[_key]);
 			}
 
-			// Update the fetch URL witht parameters
+			// Update the fetch URL with parameters
 			fetchURL += (params.length > 0) ? '?' + params.join('&') : '';
 			// Get the styling to use
 			var styleMap = null;
@@ -600,21 +599,9 @@
 			layerOptions.styleMap = styleMap;
 		}
 
-		// Is there a callback for the data
-		var layerFeatures = [];
-		if (options.callback !== undefined) {
-			$.ajax({
-				url: fetchURL,
-				async: false,
-				success: function(response) {
-					var jsonFormat = new OpenLayers.Format.JSON();
-					var jsonStr = jsonFormat.write(options.callback(response));
-					var format = new OpenLayers.Format.GeoJSON();
-					layerFeatures = format.read(jsonStr);
-				},
-				dataType: "json"
-			});
-		} else {
+		// If no features were passed in layer options,
+		// set up protocal and strategy to grab GeoJSON
+		if (options.features === undefined) {
 			layerOptions.strategies = [new OpenLayers.Strategy.Fixed({preload: true})];
 
 			// Set the protocol
@@ -626,9 +613,6 @@
 
 		// Create the layer
 		var layer = new OpenLayers.Layer.Vector(options.name, layerOptions);
-		if (layerFeatures !== null && layerFeatures.length > 0) {
-			layer.addFeatures(layerFeatures);
-		}
 		
 		// Store context for callbacks
 		var context = this;
@@ -639,14 +623,14 @@
 		// Hack to start with opacity 0 then fade in
 		layer.div.style['opacity'] = 0;
 		var oldLayer = this._olMap.getLayersByName(options.name);
-		layer.events.register('loadend', this, function () {
+		var displayLayer = function () {
 			// Delete the old layers
 			this.deleteLayer(oldLayer);
 			// Display the new layer, fading in if we've got CSS3
 			layer.display(true);
 			layer.div.className += " olVectorLayerDiv";
 			layer.div.style['opacity'] = 1;
-			
+
 			// Update / Create SelectFeature Control
 			if (typeof this._selectControl == "object")
 			{
@@ -663,13 +647,23 @@
 				this._olMap.addControl(this._selectControl);
 				this._selectControl.activate();
 			}
+			
 			// Bind popup events for select/unselect
 			layer.events.on({
 				"featureselected": this.onFeatureSelect,
 				"featureunselected": this.onFeatureUnselect,
 				scope: this
 			});
-		});
+		}
+		// Register display layer fn to run on load end
+		layer.events.register('loadend', this, displayLayer);
+		
+		// If features were passed in layer options
+		// Add features to layer and register display layer on layer added
+		if (options.features !== undefined && options.features.length > 0) {
+			layer.addFeatures(options.features);
+			layer.events.register('added', this, displayLayer);
+		}
 
 		// Add the layer to the map
 		// We do this after a delay in case someone zooms multiple times
