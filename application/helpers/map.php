@@ -73,7 +73,7 @@ class map_Core {
 					{
 						$js .= "var ".$layer->name." = new OpenLayers.Layer.".$layer->openlayers."(\"".$layer->title."\", ";
 
-						if ($layer->openlayers == 'XYZ' || $layer->openlayers == 'WMS')
+						if ($layer->openlayers == 'XYZ' || $layer->openlayers == 'WMS' || $layer->openlayers == 'TMS')
 						{
 							if (isset($layer->data['url']))
 							{
