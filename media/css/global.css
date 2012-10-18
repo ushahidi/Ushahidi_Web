@@ -79,8 +79,7 @@
 	margin: 11px 5px 0;
 }
 
-#header_nav_right li ul.header_nav_dropdown {
-	display: inline-block;
+#header_nav_right li .header_nav_dropdown {
 	position:absolute;
 	z-index: 10;
 	right: 100px;
@@ -94,7 +93,19 @@
 	
 	-moz-box-shadow: 1px 1px 1px #CCC;
 	-webkit-box-shadow: 1px 1px 1px #CCC;
+	-o-box-shadow: 1px 1px 1px #CCC;
+	
 	box-shadow: 1px 1px 1px #CCC;
+}
+
+#header_nav_right li .header_nav_dropdown ul {
+	margin: 0;
+}
+
+#header_nav_right li .header_nav_dropdown #userpass_form ul {
+	padding-bottom: 7px;
+	margin-bottom: 7px;
+	border-bottom: 1px solid #fff;
 }
 
 #header_nav .header_nav_user {
@@ -104,7 +115,7 @@
 
 #header_nav_left h1 {
 	font-size:100%;
-	font-weight:normal
+	font-weight:normal;
 	margin:0;
 	padding:0;
 }

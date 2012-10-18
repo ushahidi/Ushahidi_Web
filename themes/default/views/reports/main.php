@@ -47,8 +47,8 @@
 								<a href="#" id="applyDateFilter" class="filter-button" style="position:static;"><?php echo Kohana::lang('ui_main.go')?></a>
 							</td>
 						</tr>
-					</table>              
-				<?php form::close(); ?>
+					</table>
+				<?php echo form::close(); ?>
 			</div>
 
 			<div style="overflow:auto;">
@@ -186,9 +186,8 @@
 							<a class="f-title" href="#"><?php echo Kohana::lang('ui_main.custom_fields'); ?></a>
 						</h3>
 						<div class="f-customFields-box">
-							<ul class="filter-list fl-customFields">
-								<?php echo $custom_forms_filter; ?>
-							</ul>
+							<?php echo $custom_forms_filter; ?>
+							
 						</div>
 						<?php
 							// Action, allows plugins to add custom filters
