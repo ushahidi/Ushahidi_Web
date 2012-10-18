@@ -192,8 +192,8 @@ class category_Core {
 				
 				$category_data[$category->id] = array(
 					'category_id' => $category->id,
-					'category_title' => Category_Lang_Model::category_title($category->id),
-					'category_description' => Category_Lang_Model::category_description($category->id),
+					'category_title' => htmlentities(Category_Lang_Model::category_title($category->id), ENT_QUOTES, "UTF-8"),
+					'category_description' => htmlentities(Category_Lang_Model::category_description($category->id), ENT_QUOTES, "UTF-8"),
 					'category_color' => $category->category_color,
 					'category_image' => $category->category_image,
 					'children' => $children,
@@ -224,8 +224,8 @@ class category_Core {
 				// Add children
 				$category_data[$category->parent_id]['children'][$category->id] = array(
 					'category_id' => $category->id,
-					'category_title' => htmlentities(Category_Lang_Model::category_title($category->id, Kohana::config('locale.language.0')), ENT_QUOTES, "UTF-8"),
-					'category_description' => htmlentities(Category_Lang_Model::category_description($category->id, Kohana::config('locale.language.0')), ENT_QUOTES, "UTF-8"),
+					'category_title' => htmlentities(Category_Lang_Model::category_title($category->id), ENT_QUOTES, "UTF-8"),
+					'category_description' => htmlentities(Category_Lang_Model::category_description($category->id), ENT_QUOTES, "UTF-8"),
 					'parent_id' => $category->parent_id,
 					'category_color' => $category->category_color,
 					'category_image' => $category->category_image,
