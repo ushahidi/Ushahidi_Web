@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `private_message` (
 */
 ALTER TABLE `settings` ADD `blocks` text  AFTER `twitter_hashtags`;
 ALTER TABLE `settings` ADD `blocks_per_row` tinyint NOT NULL DEFAULT '2'  AFTER `blocks`;
-UPDATE `settings` SET `blocks`='reports_block;news_block' WHERE `id` = '1';
+UPDATE `settings` SET `blocks`='reports_block|news_block' WHERE `id` = '1';
 
 
 UPDATE `settings` SET `db_version` = 55 WHERE `id` = 1 LIMIT 1;
