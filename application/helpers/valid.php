@@ -73,11 +73,14 @@ class valid_Core {
 	 * Validate URL
 	 *
 	 * @param   string   URL
+	 * @param   bool     allow idna/unicode urls
 	 * @return  boolean
 	 */
-	public static function url($url)
+	public static function url($url, $idna = TRUE)
 	{
-		return (bool) filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
+		if ($idna) $url = IDNA_convert::singleton()->encode($url);
+		
+		return $url AND (bool) filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
 	}
 
 	/**

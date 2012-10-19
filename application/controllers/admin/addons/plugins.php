@@ -74,9 +74,9 @@ class Plugins_Controller extends Admin_Controller {
 		}
 		
 		// Add the hidden plugins to the list of plugins to filter out
-		if(count(Kohana::config('plugins.hide_from_list')) != 0){
-			$hide_from_list = array_map('mysql_real_escape_string',Kohana::config('plugins.hide_from_list'));
-			$filter .= ' AND plugin_name NOT IN (\''.implode("','",$hide_from_list).'\')';
+		if(count(Kohana::config('plugins.hide_from_list')) != 0) {
+			$hide_from_list = array_map(array(Database::instance(), 'escape'), Kohana::config('plugins.hide_from_list'));
+			$filter .= ' AND plugin_name NOT IN ('.implode(",", $hide_from_list).')';
 		}
 
 		$db = new Database();
@@ -122,18 +122,19 @@ class Plugins_Controller extends Admin_Controller {
 		{
 			$post = Validation::factory($_POST);
 
-	         //  Add some filters
-	        $post->pre_filter('trim', TRUE);
+			//  Add some filters
+			$post->pre_filter('trim', TRUE);
 
-	        // Add some rules, the input field, followed by a list of checks, carried out in order
+			// Add some rules, the input field, followed by a list of checks, carried out in order
 			$post->add_rules('action','required', 'alpha', 'length[1,1]');
-			$post->add_rules('comment_id.*','required','numeric');
+			$post->add_rules('plugin_id.*','required','numeric');
 
 			if ($post->validate())
-	        {
-				if ($post->action == 'a')		
-				{ // Activate Action
-					foreach($post->plugin_id as $item)
+			{
+				if ($post->action == 'a')
+				{
+					// Activate Action
+					foreach(array_unique($post->plugin_id) as $item)
 					{
 						$plugin = ORM::factory('plugin', $item);
 						// Make sure we run the installer if it hasnt been installed yet.

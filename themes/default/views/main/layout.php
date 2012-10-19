@@ -139,8 +139,8 @@
 						
 						echo '<li>'
 						    . '<a href="#" id="layer_'. $layer .'">'
-						    . '<div class="swatch" style="background-color:#'.$layer_color.'"></div>'
-						    . '<div class="layer-name">'.$layer_name.'</div>'
+						    . '<span class="swatch" style="background-color:#'.$layer_color.'"></span>'
+						    . '<span class="layer-name">'.$layer_name.'</span>'
 						    . '</a>'
 						    . '</li>';
 					}
@@ -245,11 +245,10 @@
 					<div style="float:left; width: 100%">
 						<strong><?php echo Kohana::lang('ui_main.filters'); ?></strong>
 						<ul>
-							<li><a id="media_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.reports'); ?></span></a></li>
+							<li><a id="media_0" class="active" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
 							<li><a id="media_4" href="#"><span><?php echo Kohana::lang('ui_main.news'); ?></span></a></li>
 							<li><a id="media_1" href="#"><span><?php echo Kohana::lang('ui_main.pictures'); ?></span></a></li>
 							<li><a id="media_2" href="#"><span><?php echo Kohana::lang('ui_main.video'); ?></span></a></li>
-							<li><a id="media_0" href="#"><span><?php echo Kohana::lang('ui_main.all'); ?></span></a></li>
 						</ul>
 					</div>
 

@@ -1,6 +1,6 @@
 /* ---- Header Nav Bar ---- */
 
-header {
+#header_nav {
 	height:30px;
 	background-color: #585858;
 	border-bottom: 1px solid #FFFFFF;
@@ -14,7 +14,7 @@ header {
 	box-shadow: 1px 1px 1px #CCC;
 }
 
-header a {
+#header_nav a {
 	color:#CCCCCC !important;
 	text-decoration:none;
 	display:inline-block;
@@ -22,53 +22,56 @@ header a {
 	padding: 0px 10px 0px 10px;
 }
 
-header a:hover {
+#header_nav a:hover {
 	background-color:#CCCCCC;
 	color:#000000 !important;
 	text-decoration:none;
 }
 
-header ul#header_nav_left a:hover {
+#header_nav ul#header_nav_left a:hover {
 	background-color:transparent;
 	color:#CCCCCC !important;
 }
 
-header img {
+#header_nav img {
 	border: 1px solid #CCCCCC;
 	vertical-align:middle;
 }
 
-header img {
+#header_nav img {
 	border: 0;
 	vertical-align:middle;
 	margin:0;
 }
 
-header ul#header_nav_left {
+
+#header_nav_left {
+	float: left;
+	height: 30px;
 	padding:0 100px;
 	margin:0;
 }
 
-header ul#header_nav_left li {
+#header_nav_left li {
 	list-style-type: none;
 	display: inline;
 }
 
-header ul#header_nav_right {
+#header_nav_right {
 	padding:0 100px;
 	margin:0;
 }
 
-header ul#header_nav_right li {
+#header_nav_right li {
 	list-style-type: none;
 }
 
-header nav li.header_nav_user a {
+#header_nav_right li.header_nav_user a {
 	padding: 4px 5px 0 5px;
 	height: 26px;
 }
 
-header nav li.header_nav_has_dropdown a span.header_nav_icon {
+#header_nav_right li.header_nav_has_dropdown a span.header_nav_icon {
 	float: right;
 	width: 14px;
 	height: 14px;
@@ -76,8 +79,7 @@ header nav li.header_nav_has_dropdown a span.header_nav_icon {
 	margin: 11px 5px 0;
 }
 
-header nav li ul.header_nav_dropdown {
-	display: inline-block;
+#header_nav_right li .header_nav_dropdown {
 	position:absolute;
 	z-index: 10;
 	right: 100px;
@@ -91,44 +93,49 @@ header nav li ul.header_nav_dropdown {
 	
 	-moz-box-shadow: 1px 1px 1px #CCC;
 	-webkit-box-shadow: 1px 1px 1px #CCC;
+	-o-box-shadow: 1px 1px 1px #CCC;
+	
 	box-shadow: 1px 1px 1px #CCC;
 }
 
-header .header_nav_user {
+#header_nav_right li .header_nav_dropdown ul {
+	margin: 0;
+}
+
+#header_nav_right li .header_nav_dropdown #userpass_form ul {
+	padding-bottom: 7px;
+	margin-bottom: 7px;
+	border-bottom: 1px solid #fff;
+}
+
+#header_nav .header_nav_user {
 	float:right;
 	clear:right;
 }
 
-hgroup h1 {
+#header_nav_left h1 {
 	font-size:100%;
-	font-weight:normal
+	font-weight:normal;
 	margin:0;
 	padding:0;
 }
 
-header .left_bar, header .right_bar {
+#header_nav .left_bar, header .right_bar {
 	float: left;
 	height: 30px;
 	background-color:red;
 }
 
-header .center {
+#header_nav .center {
 	float: left;
 	margin: 0;
 }
 
-header hgroup {
-	float: left;
-	height: 30px;
-	margin:0;
-	padding:0;
-}
-
-header .logo {
+#header_nav .logo {
 	vertical-align:middle;
 }
 
-header .logo a {
+#header_nav .logo a {
 	display: block;
 	width: 25px;
 	height: 25px;
@@ -140,31 +147,31 @@ header .logo a {
 	margin: 0px 15px;
 }
 
-header .logo a:hover {
+#header_nav .logo a:hover {
 	opacity: 0.7;
 	background-color: transparent;
 }
 
-header .nodisplay, .label {
+#header_nav .nodisplay, .label {
 	display: none;
 }
 
-header label {
+#header_nav label {
 	display: block;
 	font-weight: bold;
 	padding: 5px 0px 0px 15px;
 }
 
-header input {
+#header_nav input {
 	display: block;
 	margin: 0px 15px;
 }
 
-header input.header_nav_login_btn {
+#header_nav input.header_nav_login_btn {
 	margin-top: 8px;
 }
 
-header .bignext {
+#header_nav .bignext {
 	font-size:20px;
 }
 

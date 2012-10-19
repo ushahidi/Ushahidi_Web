@@ -3,7 +3,7 @@
 <head>
 	<title><?php echo html::specialchars($page_title.$site_name); ?></title>
 	<?php if (!Kohana::config('settings.enable_timeline')) { ?>
-		<style>
+		<style type="text/css">
 			#graph{display:none;}
 			#map{height:480px;}
 		</style>
@@ -95,7 +95,7 @@
 					</ul>
 
 					<?php if ($allow_feed == 1) { ?>
-					<div style="float:right;"><a href="<?php echo url::site(); ?>feed/"><img src="<?php echo url::file_loc('img'); ?>media/img/icon-feed.png" style="vertical-align: middle;" border="0"></a></div>
+					<div style="float:right;"><a href="<?php echo url::site(); ?>feed/"><img alt="<?php echo htmlentities(Kohana::lang('ui_main.rss'), ENT_QUOTES); ?>" src="<?php echo url::file_loc('img'); ?>media/img/icon-feed.png" style="vertical-align: middle;" border="0" /></a></div>
 					<?php } ?>
 
 				</div>

@@ -477,7 +477,7 @@
 		addReportViewOptionsEvents();
 		
 		// Remove page links for the metadata pager
-		$("ul.pager a").attr("href", "#");
+		//$("ul.pager a").attr("href", "#");
 		
 		$("ul.pager a").click(function() {
 			// Add the clicked page to the url parameters
@@ -490,7 +490,7 @@
 		});
 		
 		$("td.last li a").click(function(){
-			pageNumber = $(this).attr("id").substr("page_".length);
+			pageNumber = $(this).attr("href").substr("#page_".length);
 			if (Number(pageNumber) > 0)
 			{
 				urlParameters["page"] = Number(pageNumber);
