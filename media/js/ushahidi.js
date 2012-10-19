@@ -593,8 +593,19 @@
 				params.push(_key + '=' + this._reportFilters[_key]);
 			}
 
+			if (fetchURL.indexOf("?") !== -1) {
+				var index = fetchURL.indexOf("?");
+				var args = fetchURL.substr(index+1, fetchURL.length).split("&");
+				fetchURL = fetchURL.substring(0, index);
+
+				for (var i=0; i<args.length; i++) {
+					params.push(args[i]);
+				}
+			}
+
 			// Update the fetch URL with parameters
 			fetchURL += (params.length > 0) ? '?' + params.join('&') : '';
+
 			// Get the styling to use
 			var styleMap = null;
 			if (options.styleMap !== undefined) {
