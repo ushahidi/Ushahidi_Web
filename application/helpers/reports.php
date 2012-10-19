@@ -80,7 +80,7 @@ class reports_Core {
 		{
 			foreach ($post->incident_news as $key => $url) 
 			{
-				if ( ! empty($url) AND !(bool) filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED))
+				if ( ! empty($url) AND ! valid::url($url))
 				{
 					$post->add_error('incident_news','url');
 				}
@@ -92,7 +92,7 @@ class reports_Core {
 		{
 			foreach ($post->incident_video as $key => $url) 
 			{
-				if (!empty($url) AND !(bool) filter_var($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED))
+				if (!empty($url) AND ! valid::url($url))
 				{
 					$post->add_error('incident_video','url');
 				}
