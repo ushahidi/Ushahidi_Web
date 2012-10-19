@@ -423,10 +423,8 @@ class Reports_Controller extends Members_Controller {
 				}
 
 				// Action::report_add / report_submit_members - Added a New Report
-				// ++ Do we need two events for this? Or will one suffice?
-				// Event::run('ushahidi_action.report_add', $incident);
 				Event::run('ushahidi_action.report_submit_members', $post);
-
+				Event::run('ushahidi_action.report_edit', $incident);
 
 				// SAVE AND CLOSE?
 				if ($post->save == 1)
