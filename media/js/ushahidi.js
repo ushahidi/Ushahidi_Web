@@ -893,7 +893,7 @@
 		var zoomLevel = data.zoomFactor + data.context._olMap.getZoom();
 
 		// Center and zoom
-		map.zoomTo(zoomLevel);
+		data.context._olMap.zoomTo(zoomLevel);
 		data.context._olMap.panTo(point);
 
 		// Close any open popups
