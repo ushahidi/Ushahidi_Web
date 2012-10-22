@@ -386,7 +386,7 @@ class Reports_Controller extends Members_Controller {
 				reports::save_location($post, $location);
 
 				// STEP 2: SAVE INCIDENT
-				$incident = new Incident_Model();
+				$incident = new Incident_Model($id);
 				reports::save_report($post, $incident, $location->id);
 
 				// STEP 2b: SAVE INCIDENT GEOMETRIES
