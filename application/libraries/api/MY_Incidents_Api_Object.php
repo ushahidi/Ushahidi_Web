@@ -388,9 +388,14 @@ class Incidents_Api_Object extends Api_Object_Core {
 		// Records found, proceed
 		// Store the incident ids
 		$incidents_ids = array();
+		$custom_field_items = array();
 		foreach ($items as $item)
 		{
 			$incident_ids[] = $item->incident_id;
+			$thiscustomfields = customforms::get_custom_form_fields($item->incident_id, null, false, "view");
+			if(!empty($thiscustomfields)){
+				$custom_field_items[$item->incident_id] = $thiscustomfields;
+			}
 		}
 
 		//
@@ -637,7 +642,8 @@ class Incidents_Api_Object extends Api_Object_Core {
 					),
 					"categories" => $json_report_categories[$item->incident_id],
 					"media" => $json_report_media[$item->incident_id],
-					"comments" => $json_report_comments[$item->incident_id]
+					"comments" => $json_report_comments[$item->incident_id],
+					"customfields" => $custom_field_items[$item->incident_id]
 				);
 			}
 		}
