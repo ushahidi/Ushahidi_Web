@@ -75,44 +75,47 @@ class category_Core {
 
 		// Maximum number of elements per column
 		$maxper_col = round($categories_total / $columns);
+		
+		// start the first column
+		$html .= "\r\n".'<ul id="category-column-'.$this_col.'">'."\r\n";
 
 		$i = 1;  // Element Count
 		foreach ($category_data as $category)
 		{
 
-			// If this is the first element of a column, start a new UL
-			if ($i == 1)
-			{
-				$html .= '<ul class="category-column category-column-'.$this_col.'">';
-			}
-
 			// Display parent category.
-			$html .= '<li title="'.$category['category_description'].'">';
-			$html .= category::display_category_checkbox($category, $selected_categories, $form_field, $enable_parents);
+			$html .= "\r\n\t".'<li title="'.$category['category_description'].'">';
+			$html .= "\r\n\t\t".category::display_category_checkbox($category, $selected_categories, $form_field, $enable_parents)."\r\n";
 			
 			// Display child categories.
 			if (count($category['children']) > 0)
 			{
-				$html .= '<ul>';
+				$html .= "\t\t<ul>";
 				foreach ($category['children'] as $child)
 				{
-					$html .= '<li title="'.$child['category_description'].'">';
+					$html .= "\r\n\t\t\t".'<li title="'.$child['category_description'].'">'."\r\n";
 					$html .= category::display_category_checkbox($child, $selected_categories, $form_field, $enable_parents);
+					$html .= "\r\n\t\t\t".'</li>'."\r\n";
 				}
-				$html .= '</ul>';
+				$html .= "\t\t".'</ul>'."\r\n";
 			}
+			
+			$html .= "\t</li>\r\n";
 
 			// If this is the last element of a column, close the UL
-			if ($i > $maxper_col OR $i == $categories_total)
+			//if ($i > $maxper_col OR $i == $categories_total)
+			if ( (($i % $maxper_col) == 0 AND $i > 0) OR $i == $categories_total)
 			{
-				$html .= '</ul>';
-				$i = 1;
+				$html .= "</ul>\r\n";
 				$this_col++;
+				if($i < $categories_total)
+				{
+					$html .= '<ul id="category-column-'.$this_col.'">';
+				}
 			}
-			else
-			{
-				$i++;
-			}
+			
+			$i++;
+			
 		}
 
 		return $html;
