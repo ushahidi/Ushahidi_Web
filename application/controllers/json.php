@@ -296,16 +296,44 @@ class Json_Controller extends Template_Controller {
 		{
 			$marker	 = array_pop($markers);
 			$cluster = array();
+			
+			// Handle both reports::fetch_incidents() response and actual ORM objects
+			$marker->id = isset($marker->incident_id) ? $marker->incident_id : $marker->id;
+			if (isset($marker->latitude) AND isset($marker->longitude))
+			{
+				$marker_latitude = $marker->latitude;
+				$marker_longitude = $marker->longitude;
+			}
+			elseif (isset($marker->location) AND isset($marker->location->latitude) AND isset($marker->location->longitude))
+			{
+				$marker_latitude = $marker->location->latitude;
+				$marker_longitude = $marker->location->longitude;
+			}
+			else
+			{
+				// No location - skip this report
+				continue;
+			}
 
 			// Compare marker against all remaining markers.
 			foreach ($markers as $key => $target)
 			{
 				// Handle both reports::fetch_incidents() response and actual ORM objects
-				$marker->id = isset($marker->incident_id) ? $marker->incident_id : $marker->id;
-				$marker_latitude = isset($marker->latitude) ? $marker->latitude : $marker->location->latitude;
-				$marker_longitude = isset($marker->longitude) ? $marker->longitude : $marker->location->longitude;
-				$target_latitude = isset($target->latitude) ? $target->latitude : $target->location->latitude;
-				$target_longitude = isset($target->longitude) ? $target->longitude : $target->location->longitude;
+				if (isset($target->latitude) AND isset($target->longitude))
+				{
+					$target_latitude = $target->latitude;
+					$target_longitude = $target->longitude;
+				}
+				elseif (isset($target->location) AND isset($target->location->latitude) AND isset($target->location->longitude))
+				{
+					$target_latitude = $target->location->latitude;
+					$target_longitude = $target->location->longitude;
+				}
+				else
+				{
+					// No location - skip this report
+					continue;
+				}
 				
 				// This function returns the distance between two markers, at a defined zoom level.
 				// $pixels = $this->_pixelDistance($marker['latitude'], $marker['longitude'],
