@@ -377,28 +377,24 @@
 			                                 20037508.34, 20037508.34),
 			maxResolution: 156543.0339,
 			// Shrink the popup padding so popups don't land under zoom control
-			paddingForPopups: new OpenLayers.Bounds(40,15,15,15)
+			paddingForPopups: new OpenLayers.Bounds(40,15,15,15),
+			eventListeners: { 
+				// Trigger keepOnTop fn whenever new layers are added
+				addlayer: this.keepOnTop,
+				scope: this
+			}
 		};
 
 		// Are the layers to be redrawn on zoom change
 		if (config.redrawOnZoom !== undefined && config.redrawOnZoom) {
-			mapOptions.eventListeners = {
-				"zoomend": this.refresh,
-				scope: this
-			};
+			mapOptions.eventListeners.zoomend = this.refresh;
 		}
 
 		// Zoom detection is enabled and redrawOnZoom has not been specified or is false
 		if ((config.redrawOnZoom == undefined || !config.redrawOnZoom) && config.detectMapZoom) {
 			this.register("zoomchanged", this.updateZoom, this);
-			mapOptions.eventListeners = {
-				"zoomend": this.triggerZoomChanged,
-				scope: this
-			};
+			mapOptions.eventListeners.zoomend = this.triggerZoomChanged;
 		}
-		
-		// Trigger keepOnTop fn whenever new layers are added
-		mapOptions.eventListeners.addlayer = this.keepOnTop;
 
 		// Check for the controls to add to the map
 		if (config.mapControls == undefined) {
