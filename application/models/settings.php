@@ -78,6 +78,7 @@ class Settings_Model extends ORM {
 		{
 			$setting = ORM::factory('settings')->where('key', $key)->find();
 			
+			$setting->key = $key;
 			$setting->value = $value;
 			$setting->save();
 		}

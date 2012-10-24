@@ -1,4 +1,4 @@
-Ushahidi 2.6b (Name), 06-10-2012
+Ushahidi 2.6 (Tripoli), 23-10-2012
 -------------------------------------
 * Improved way of handling translations
 	- Ushahidi translations are now managed through Transifex  - Ushahidi
