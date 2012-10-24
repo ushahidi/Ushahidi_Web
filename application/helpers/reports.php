@@ -737,8 +737,9 @@ class reports_Core {
 		// 
 		if (isset($url_data['from']) AND isset($url_data['to']))
 		{
-			$date_from = date('Y-m-d', strtotime($url_data['from']));
-			$date_to = date('Y-m-d', strtotime($url_data['to']));
+			// Add hours/mins/seconds so we still get reports if from and to are the same day
+			$date_from = date('Y-m-d 00:00:00', strtotime($url_data['from']));
+			$date_to = date('Y-m-d 23:59:59', strtotime($url_data['to']));
 			
 			array_push(self::$params, 
 				'i.incident_date >= "'.$date_from.'"',
