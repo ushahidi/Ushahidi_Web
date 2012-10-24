@@ -88,7 +88,7 @@
 				<div id="incident_<?php echo $incident_id ?>" class="rb_report <?php echo $incident_verified_class; ?>">
 					<div class="r_media">
 						<p class="r_photo" style="text-align:center;"> <a href="<?php echo $incident_url; ?>">
-							<img alt="<?php echo htmlentities($incident_title, ENT_QUOTES); ?>" src="<?php echo $incident_thumb; ?>" style="max-width:89px;max-height:59px;" /> </a>
+							<img alt="<?php echo htmlentities($incident_title, ENT_QUOTES, "UTF-8"); ?>" src="<?php echo $incident_thumb; ?>" style="max-width:89px;max-height:59px;" /> </a>
 						</p>
 
 						<!-- Only show this if the report has a video -->
@@ -126,7 +126,7 @@
 
 					<div class="r_details">
 						<h3><a class="r_title" href="<?php echo $incident_url; ?>">
-								<?php echo htmlentities($incident_title); ?>
+								<?php echo htmlentities($incident_title, ENT_QUOTES, "UTF-8"); ?>
 							</a>
 							<a href="<?php echo "$incident_url#discussion"; ?>" class="r_comments">
 								<?php echo $comment_count; ?></a> 
