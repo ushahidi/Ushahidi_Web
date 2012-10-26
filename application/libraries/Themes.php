@@ -38,10 +38,6 @@ class Themes_Core {
 
 		// Load Session
 		$this->session = Session::instance();
-
-		// Grab the proper URL for the css and js files
-		$this->css_url = url::file_loc('css');
-		$this->js_url = url::file_loc('js');
 	}
 
 	/**
@@ -50,11 +46,14 @@ class Themes_Core {
 	 */
 	public function header_block()
 	{
-		$content = Kohana::config("globalcode.head").
-			$this->_header_css().
-			$this->_header_feeds().
+		Requirements::customHeadTags(Kohana::config("globalcode.head"),'globalcode-head');
+		
+		// These just need to run now
+		$this->_header_css();
+		$this->_header_feeds();
 		$this->_header_js();
 
+		$content = Requirements::render('head');
 		// Filter::header_block - Modify Header Block
 		Event::run('ushahidi_filter.header_block', $content);
 
@@ -67,8 +66,9 @@ class Themes_Core {
 	*/
 	public function admin_header_block()
 	{
-		$content = Kohana::config("globalcode.head");
+		Requirements::customHeadTags(Kohana::config("globalcode.head"),'globalcode-head');
 
+		$content = '';
 		// Filter::admin_header_block - Modify Admin Header Block
 		Event::run('ushahidi_filter.admin_header_block', $content);
 
@@ -80,142 +80,110 @@ class Themes_Core {
 	 */
 	private function _header_css()
 	{
-		$core_css = "";
-		$core_css .= html::stylesheet($this->css_url."media/css/jquery-ui-themeroller", "", TRUE);
+		Requirements::css("media/css/jquery-ui-themeroller");
 
-		foreach (Kohana::config("settings.site_style_css") as $theme_css)
-		{
-			$core_css .= html::stylesheet($theme_css,"",TRUE);
-		}
-
-		$core_css .= "<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",TRUE)."<![endif]-->";
-		$core_css .= "<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",TRUE)."<![endif]-->";
-		$core_css .= "<!--[if IE 6]>".html::stylesheet($this->css_url."media/css/ie6hacks","",TRUE)."<![endif]-->";
+		Requirements::customHeadTags("<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",TRUE)."<![endif]-->",'iehacks');
+		Requirements::customHeadTags("<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",TRUE)."<![endif]-->",'ie7hacks');
+		Requirements::customHeadTags("<!--[if IE 6]>".html::stylesheet($this->css_url."media/css/ie6hacks","",TRUE)."<![endif]-->",'ie6hacks');
 
 		if ($this->map_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/openlayers","",TRUE);
+			Requirements::css("media/css/openlayers");
 		}
 
 		if ($this->treeview_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/jquery.treeview","",TRUE);
+			Requirements::css("media/css/jquery.treeview");
 		}
 
 		if ($this->photoslider_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/picbox/picbox","",TRUE);
+			Requirements::css("media/css/picbox/picbox");
 		}
 
 		if ($this->colorpicker_enabled)
 		{
-			$core_css .= html::stylesheet($this->css_url."media/css/colorpicker","",TRUE);
+			Requirements::css("media/css/colorpicker");
 		}
 
 		if ($this->site_style AND $this->site_style != "default")
 		{
-			$core_css .= html::stylesheet($this->css_url."themes/".$site_style."/style.css");
+			Requirements::css("themes/".$site_style."/style.css");
 		}
 
-		$core_css .= html::stylesheet($this->css_url."media/css/global","",TRUE);
-		$core_css .= html::stylesheet($this->css_url."media/css/jquery.jqplot.min", "", TRUE);
-		
-		// Render CSS
-		$plugin_css = plugin::render('stylesheet');
-
-		return $core_css.$plugin_css;
-		}
+		Requirements::css("media/css/global");
+		Requirements::css("media/css/jquery.jqplot.min");
+	}
 
 	/**
 	 * Javascript Files and Inline JS
 	 */
 	private function _header_js()
 	{
-		$core_js = "";
+		Requirements::set_write_js_to_body(FALSE);
+		
 		if ($this->map_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/OpenLayers", TRUE);
-			$core_js .= "<script type=\"text/javascript\">OpenLayers.ImgPath = '".$this->js_url."media/img/openlayers/"."';</script>";
-			$core_js .= html::script($this->js_url."media/js/ushahidi", TRUE);
+			Requirements::js("media/js/OpenLayers");
+			Requirements::customJS("OpenLayers.ImgPath = '".url::file_loc('js')."media/img/openlayers/"."';",'openlayers-imgpath');
+			Requirements::js("media/js/ushahidi");
 		}
 
-		$core_js .= html::script($this->js_url."media/js/jquery", TRUE);
-		//$core_js .= html::script($this->js_url."media/js/jquery.ui.min", TRUE);
-		$core_js .= html::script(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", TRUE);
-		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", TRUE);
-		$core_js .= html::script($this->js_url."media/js/jquery.timeago", TRUE);
+		Requirements::js("media/js/jquery");
+		//Requirements::js("media/js/jquery.ui.min");
+		Requirements::js(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js");
+		Requirements::js("media/js/jquery.pngFix.pack");
+		Requirements::js("media/js/jquery.timeago");
 
 		if ($this->map_enabled)
 		{
-
-			$core_js .= $this->api_url;
+			Requirements::js($this->api_url);
 
 			if ($this->main_page || $this->this_page == "alerts")
 			{
-				$core_js .= html::script($this->js_url."media/js/selectToUISlider.jQuery", TRUE);
+				Requirements::js($this->js_url."media/js/selectToUISlider.jQuery");
 			}
 
 			if ($this->main_page)
 			{
 				// Notes: E.Kala <emmanuel(at)ushahidi.com>
 				// TODO: Only include the jqplot JS when the timeline is enabled
-				$core_js .= html::script($this->js_url."media/js/jquery.jqplot.min");
-				$core_js .= html::script($this->js_url."media/js/jqplot.dateAxisRenderer.min");
+				Requirements::js("media/js/jquery.jqplot.min");
+				Requirements::js("media/js/jqplot.dateAxisRenderer.min");
 
-				$core_js .= "<!--[if IE]>".html::script($this->js_url."media/js/excanvas.min", TRUE)."<![endif]-->";
+				Requirements::customHeadTags("<!--[if IE]>".html::script($this->js_url."media/js/excanvas.min", TRUE)."<![endif]-->");
 			}
 		}
 
 		if ($this->treeview_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/jquery.treeview");
+			Requirements::js("media/js/jquery.treeview");
 		}
 
 		if ($this->validator_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/jquery.validate.min");
+			Requirements::js("media/js/jquery.validate.min");
 		}
 
 		if ($this->photoslider_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/picbox", TRUE);
+			Requirements::js("media/js/picbox");
 		}
 
 		if ($this->colorpicker_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/colorpicker");
+			Requirements::js("media/js/colorpicker");
 		}
 
-		$core_js .= html::script($this->js_url."media/js/global");
+		Requirements::js("media/js/global");
 
 		if ($this->editor_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js");
-		}
-		
-		// Javascript files from plugins
-		$plugin_js = plugin::render('javascript');
-
-		// Javascript files from themes
-		foreach (Kohana::config("settings.site_style_js") as $theme_js)
-		{
-			$core_js .= html::script($theme_js,"",TRUE);
+			Requirements::js("media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js");
 		}
 
 		// Inline Javascript
-		$insert_js = trim($this->js);
-		$inline_js = <<< INLINEJS
-<script type="text/javascript">
-//<![CDATA[
-{$insert_js}
-//]]>
-</script>
-INLINEJS;
-
-		// Filter::header_js - Modify Header Javascript
-		Event::run('ushahidi_filter.header_js', $inline_js);
-
-		return $core_js.$plugin_js.$inline_js;
+		Requirements::customJS($this->js,'pagejs');
 	}
 
 	/**
@@ -223,13 +191,10 @@ INLINEJS;
 	 */
 	private function _header_feeds()
 	{
-		$feeds = "";
 		if (Kohana::config("settings.allow_feed"))
 		{
-			$feeds .= "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".url::site()."feed/\" title=\"RSS2\" />";
+			Requirements::customHeadTags("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".url::site('feed')."\" title=\"RSS2\" />",'rss-feed');
 		}
-
-		return $feeds;
 	}
 
 	/**
@@ -243,6 +208,8 @@ INLINEJS;
 				$this->ushahidi_stats_js()."\n".
 				$this->scheduler_js();
 		
+		$content .= Requirements::render('body');
+
 		// Filter::footer_block - Modify Footer Block
 		Event::run('ushahidi_filter.footer_block', $content);
 

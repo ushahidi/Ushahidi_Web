@@ -30,7 +30,7 @@
 	if ($map_enabled)
 	{
 		echo html::script(url::file_loc('js').'media/js/OpenLayers', TRUE);
-		echo $api_url . "\n";
+		echo html::script($api_url) . "\n";
 		echo "<script type=\"text/javascript\">
 			OpenLayers.ImgPath = '".url::file_loc('img').'media/img/openlayers/'."';
 			</script>";
@@ -127,8 +127,7 @@
 	echo html::stylesheet(url::file_loc('css').'media/css/global','',TRUE);
 	
 	// Render CSS and Javascript Files from Plugins
-	echo plugin::render('stylesheet');
-	echo plugin::render('javascript');
+	echo Requirements::render('head');
 	
 	// Action::header_scripts_member - Additional Inline Scripts
 	Event::run('ushahidi_action.header_scripts_member');
