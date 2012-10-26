@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 	<title><?php echo html::specialchars($page_title.$site_name); ?></title>
+	<?php echo Requirements::render('head'); ?>
 	<?php if (!Kohana::config('settings.enable_timeline')) { ?>
 		<style type="text/css">
 			#graph{display:none;}
