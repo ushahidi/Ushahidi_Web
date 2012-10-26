@@ -53,54 +53,33 @@
 					</div>
 					<!-- column -->
 					<div class="sms_holder">
-						<!-- Default Theme -->
-						<div class="theme_holder">
-							<div class="theme_screenshot"><?php
-								echo "<img src=\"".url::file_loc('img')."media/img/default_theme.png\" width=240 height=150 border=0>";
-							?></div>
-							<strong><?php echo Kohana::lang('ui_main.theme_default');?></strong><BR />
-							<?php echo Kohana::lang('ui_main.theme_default');?>.<BR />
-							<strong><u><?php echo Kohana::lang('ui_main.version');?></u></strong>: 1.0<BR />
-							<strong><u><?php echo Kohana::lang('ui_main.demo');?></u></strong>: http://www.ushahidi.com<BR />
-							<strong><u><?php echo Kohana::lang('ui_main.contact');?></u></strong>: team@ushahidi.com<BR />
-							<strong><u><?php echo Kohana::lang('ui_main.location');?></u></strong>: 
-							<div class="theme_select">
-								<input type="radio" name="site_style" value="" <?php
-								if ($form['site_style'] == "")
-								{
-									echo "checked = \"checked\"";
-								}
-								?> /><?php echo Kohana::lang('ui_main.select_theme');?>
-							</div>												
-						</div>
-						<!-- / Default Theme -->				
 						<?php
-						$i = 2; // Start at 2 because the default theme isn't in this array
-						foreach ($themes as $theme)
+						$i = 1; // Start at 2 because the default theme isn't in this array
+						foreach ($themes as $theme_key => $theme)
 						{
 							?>
 							<div class="theme_holder">
 								<div class="theme_screenshot"><?php
 									if (!empty($theme['Screenshot']))
 									{
-										echo "<img src=\"".url::base()."themes/".$theme['Template_Dir']."/".
-										$theme['Screenshot']."\" width=240 height=150 border=0>";
+										echo "<img src=\"".url::site("themes/".$theme_key."/".$theme['Screenshot'])."\" width=240 height=150 border=0>";
 									}
 								?></div>
-								<strong><?php echo $theme['Title']." $i by ".$theme['Author']; ?></strong><BR />
+								<strong><?php echo $theme['Theme Name']." by ".$theme['Author']; ?></strong><BR />
 								<?php echo $theme['Description'] ?><BR />
 								<strong><u><?php echo Kohana::lang('ui_main.version');?></u></strong>: <?php echo $theme['Version'] ?><BR />
 								<strong><u><?php echo Kohana::lang('ui_main.demo');?></u></strong>: <?php echo $theme['Demo'] ?><BR />
-								<strong><u><?php echo Kohana::lang('ui_main.contact');?></u></strong>: <?php echo $theme['Author_Email'] ?><BR />
-								<strong><u><?php echo Kohana::lang('ui_main.location');?></u></strong>: <i>/themes/<?php echo $theme['Template_Dir'] ?>/</i>
-								<div class="theme_select">
-									<input type="radio" name="site_style" value="<?php echo $theme['Template_Dir'] ?>" <?php
-									if ($theme['Template_Dir'] == $form['site_style'])
+								<strong><u><?php echo Kohana::lang('ui_main.contact');?></u></strong>: <?php echo $theme['Author Email'] ?><BR />
+								<strong><u><?php echo Kohana::lang('ui_main.location');?></u></strong>: <i>/themes/<?php echo $theme_key ?>/</i>
+								<label class="theme_select" style="display: block;">
+									<input type="radio" name="site_style" value="<?php echo $theme_key ?>" <?php
+									if ($theme_key == $form['site_style'])
 									{
 										echo "checked = \"checked\"";
 									}
 									?> /><?php echo Kohana::lang('ui_main.select_theme');?>
-								</div>
+									
+								</label>
 							</div>
 							<?php
 							// Make sure the themes don't get bunched up

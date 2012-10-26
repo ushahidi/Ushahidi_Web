@@ -1463,12 +1463,13 @@ div.sms_holder, div.settings_holder{
 			background-color:#ccc;
 			margin-bottom:10px;
 		}
-		div.theme_select{
+		.theme_select{
 			margin-top:10px;
 			padding:5px;
 			background-color:#eee;
 			border:1px solid #ccc;
 			font-weight:bold;
+			display: block;
 		}
 		div.theme_select:hover{
 			background-color:#FFFFCC;

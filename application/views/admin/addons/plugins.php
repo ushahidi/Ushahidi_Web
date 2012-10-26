@@ -96,10 +96,17 @@
 									$plugin_active = $plugin->plugin_active;
 									
 									// Retrieve Plugin Header Information from readme.txt
-									$plugin_meta = plugin::meta($plugin->plugin_name);
-
+									$defaults = array(
+										"name" => "",
+										"description" => "",
+										"website" => "",
+										"author" => "",
+										"version" => "",
+									);
+									$plugin_meta = addon::meta_data($plugin->plugin_name, 'plugin', $defaults);
+									
 									// Do we have a settings page?
-									$settings = plugin::settings($plugin->plugin_name);
+									$settings = plugin::find_settings($plugin->plugin_name);
 									?>
 									<tr <?php if ($plugin_active)
 									{
@@ -109,20 +116,20 @@
 										<td class="col-2">
 											<div class="post">
 												<h4>
-												<?php echo $plugin_meta["plugin_name"]; ?><?php
+												<?php echo $plugin_meta["name"]; ?><?php
 												if ($plugin_active AND $settings)
 												{
-													echo "&nbsp;&nbsp;&nbsp;[<a href=\"".url::base()."admin/".$settings."\">".Kohana::lang('ui_admin.settings')."</a>]";
+													echo "&nbsp;&nbsp;&nbsp;[<a href=\"".url::site($settings)."\">".Kohana::lang('ui_admin.settings')."</a>]";
 												}
 												?></h4>
-												<p><?php echo $plugin_meta["plugin_description"]; ?></p>
+												<p><?php echo $plugin_meta["description"]; ?></p>
 											</div>
 											<ul class="info">
-												<li class="none-separator"><?php echo Kohana::lang('ui_main.author');?>: <strong><?php echo $plugin_meta["plugin_author"]; ?></strong></li>
-												<li><?php echo Kohana::lang('ui_main.plugin_url');?>: <strong><?php echo $plugin_meta["plugin_uri"]; ?></strong></li>
+												<li class="none-separator"><?php echo Kohana::lang('ui_main.author');?>: <strong><?php echo $plugin_meta["author"]; ?></strong></li>
+												<li><?php echo Kohana::lang('ui_main.plugin_url');?>: <strong><?php echo $plugin_meta["website"]; ?></strong></li>
 											</ul>
 										</td>
-										<td class="col-3"><?php echo $plugin_meta["plugin_version"]; ?></td>
+										<td class="col-3"><?php echo $plugin_meta["version"]; ?></td>
 										<td class="col-4">
 											<ul>
 												<li class="none-separator"><?php
