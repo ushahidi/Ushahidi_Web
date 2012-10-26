@@ -281,7 +281,7 @@ class Themes_Core {
 		Requirements::js('media/js/jquery.base64');
 		Requirements::js('media/js/admin');
 		Requirements::css('media/css/admin/all');
-		Requirements::ieCSS("lt IE 7", 'media/css/admin/ie6');
+		Requirements::ieCSS("lt IE 7", 'media/css/ie6');
 	}
 	
 	public function frontend_requirements()
