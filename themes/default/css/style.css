@@ -2022,7 +2022,7 @@ a.ic-time {
 #tooltip-box {
     display:none; 
     position:absolute; 
-    z-index:200; 
+    z-index:1250; 
     width:250px; 
     background:#f2f2f2; 
     font-size:10px; 
