@@ -169,8 +169,21 @@ class Json_Controller extends Template_Controller {
 		{
 			// Handle both reports::fetch_incidents() response and actual ORM objects
 			$marker->id = isset($marker->incident_id) ? $marker->incident_id : $marker->id;
-			$latitude = isset($marker->latitude) ? $marker->latitude : $marker->location->latitude;
-			$longitude = isset($marker->longitude) ? $marker->longitude : $marker->location->longitude;
+			if (isset($marker->latitude) AND isset($marker->longitude))
+			{
+				$latitude = $marker->latitude;
+				$longitude = $marker->longitude;
+			}
+			elseif (isset($marker->location) AND isset($marker->location->latitude) AND isset($marker->location->longitude))
+			{
+				$latitude = $marker->location->latitude;
+				$longitude = $marker->location->longitude;
+			}
+			else
+			{
+				// No location - skip this report
+				continue;
+			}
 			
 			// Get thumbnail
 			$thumb = "";
