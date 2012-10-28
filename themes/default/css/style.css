@@ -80,7 +80,7 @@ body{
 
 
 /* wrapper setup */
-div.rapidxwpr{
+div.wrapper, div.rapidxwpr{
     margin: auto;
     width: 960px;
 }

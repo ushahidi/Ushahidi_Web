@@ -174,7 +174,7 @@ body.page-reports-view { background:#ffffff; background-image:none; }
 .report_detail .r_location,
 div.credibility { display:none; }
 
-.page-reports-view div.rapidxwpr { width:740px; }
+.page-reports-view div.wrapper { width:740px; }
 .page-reports-view div#main { padding:0; }
 #main .left-col { width:150px; margin-right:45px; }
 #main .middle-col { width:350px; margin-right:45px; float:left; }

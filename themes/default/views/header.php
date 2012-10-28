@@ -42,7 +42,7 @@
 	<?php echo $header_nav; ?>
 
 	<!-- wrapper -->
-	<div class="rapidxwpr floatholder">
+	<div class="wrapper floatholder rapidxwpr">
 
 		<!-- header -->
 		<div id="header">
