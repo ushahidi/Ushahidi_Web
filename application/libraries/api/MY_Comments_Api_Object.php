@@ -34,6 +34,13 @@ class Comments_Api_Object extends Api_Object_Core {
 			switch ($this->by)
 			{
 				case "all" :
+					// Check for admin access on all comments
+					if (!$this->api_service->_login(TRUE))
+					{
+						$this->response_data = $this->_get_approved_comments();
+						return;
+					}
+					
 					$this->response_data = $this->_get_all_comments();
 					break;
 
@@ -96,13 +103,6 @@ class Comments_Api_Object extends Api_Object_Core {
 		//action request
 		else if ($this->api_service->verify_array_index($this->request, 'action'))
 		{
-			// Check for admin access on all comments
-			if (!$this->api_service->_login(TRUE))
-			{
-				$this->set_error_message($this->response(2));
-				return;
-			}
-
 			$this->comment_action();
 			return;
 		}
@@ -137,6 +137,13 @@ class Comments_Api_Object extends Api_Object_Core {
 		switch ($action)
 		{
 			case "approve" :
+				// Check for admin access on all comments
+				if (!$this->api_service->_login(TRUE))
+				{
+					$this->set_error_message($this->response(2));
+					return;
+				}
+
 				//Aprrove / Unapprove comment
 				$this->response_data = $this->_approve_comment();
 				break;
@@ -147,11 +154,25 @@ class Comments_Api_Object extends Api_Object_Core {
 				break;
 
 			case "delete" :
+				// Check for admin access on all comments
+				if (!$this->api_service->_login(TRUE))
+				{
+					$this->set_error_message($this->response(2));
+					return;
+				}
+				
 				// Delete an existing comment
 				$this->response_data = $this->_delete_comment();
 				break;
 
 			case "spam" :
+				// Check for admin access on all comments
+				if (!$this->api_service->_login(TRUE))
+				{
+					$this->set_error_message($this->response(2));
+					return;
+				}
+				
 				// Spam or Unspam a comment
 				$this->response_data = $this->_spam_comment();
 				break;
@@ -169,16 +190,20 @@ class Comments_Api_Object extends Api_Object_Core {
 	 *
 	 * @return array
 	 */
-	private function _get_comment_list($where, $limit = '')
+	private function _get_comment_list($where = array(), $limit = '')
 	{
 
 		$xml = new XMLWriter();
 		$json = array();
-		$json_item = array();
+		$json_items = array();
 
-		$this->query = "SELECT id, incident_id, comment_author, comment_description, comment_date, user_id FROM comment $where $limit";
+		$query = ORM::factory('comment')
+			->orderby('comment_date','desc')
+			->where($where)
+			->limit($this->list_limit);
+		//$sql = "SELECT id, incident_id, comment_author, comment_description, comment_date, user_id FROM comment $where $limit";
 
-		$items = $this->db->query($this->query);
+		$items = $query->find_all();
 
 		// Set the no. of records returned
 		$this->record_count = $items->count();
@@ -203,7 +228,7 @@ class Comments_Api_Object extends Api_Object_Core {
 		{
 			if ($this->response_type == "json" OR $this->response_type == "jsonp")
 			{
-				$json_item = (array)$list_item;
+				$json_items[] = $list_item->as_array();
 			}
 			else
 			{
@@ -239,7 +264,7 @@ class Comments_Api_Object extends Api_Object_Core {
 		}
 		else
 		{
-			$json = array("payload" => array("comments" => $json_item));
+			$json = array("payload" => array("comments" => $json_items));
 
 			return $this->array_as_json($json);
 		}
@@ -252,11 +277,9 @@ class Comments_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_spam_comments()
 	{
-		$where = "\nWHERE comment_spam = 1";
-		$where .= "\nORDER BY comment_date DESC";
-		$limit = "\nLIMIT 0, $this->list_limit";
+		$where = array('comment_spam' => 1);
 
-		return $this->_get_comment_list($where, $limit);
+		return $this->_get_comment_list($where);
 	}
 
 	/**
@@ -269,11 +292,9 @@ class Comments_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_all_comments()
 	{
-		$where = "\nWHERE comment_spam = 0";
-		$where .= "\nORDER BY comment_date DESC";
-		$limit = "\nLIMIT 0, $this->list_limit";
+		$where = array('comment_spam' => 0);
 
-		return $this->_get_comment_list($where, $limit);
+		return $this->_get_comment_list($where);
 	}
 
 	/**
@@ -286,11 +307,9 @@ class Comments_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_approved_comments()
 	{
-		$where = "\nWHERE comment_active = 1 AND comment_spam = 0";
-		$where .= "\nORDER BY comment_date DESC";
-		$limit = "\nLIMIT 0, $this->list_limit";
+		$where = array('comment_spam' => 0,'comment_active' => 1);
 
-		return $this->_get_comment_list($where, $limit);
+		return $this->_get_comment_list($where);
 
 	}
 
@@ -304,11 +323,9 @@ class Comments_Api_Object extends Api_Object_Core {
 	 */
 	private function _get_pending_comments()
 	{
-		$where = "\nWHERE comment_active = 0 AND comment_spam = 0";
-		$where .= "\nORDER BY comment_date DESC";
-		$limit = "\nLIMIT 0, $this->list_limit";
+		$where = array('comment_spam' => 0, 'comment_active' => 0);
 
-		return $this->_get_comment_list($where, $limit);
+		return $this->_get_comment_list($where);
 	}
 
 	/**
@@ -557,7 +574,7 @@ class Comments_Api_Object extends Api_Object_Core {
 			}
 
 			// If the user isn't posting an email and author name, then they need to log in
-			if (!isset($post->comment_author) AND !isset($post->comment_email))
+			if (empty($post->comment_author) OR empty($post->comment_email))
 			{
 				if (!$this->api_service->_login())
 				{
@@ -580,6 +597,8 @@ class Comments_Api_Object extends Api_Object_Core {
 				$post->add_rules('comment_author', 'required', 'length[3,100]');
 				$post->add_rules('comment_email', 'required', 'email', 'length[4,100]');
 			}
+			
+			$post->add_rules('comment_description', 'required');
 
 			// Test to see if things passed the rule checks
 
