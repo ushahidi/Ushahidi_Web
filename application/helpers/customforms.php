@@ -95,6 +95,7 @@ class customforms_Core {
 				// Return Field Structure
 				$fields_array[$custom_formfield->id] = array(
 					'field_id' => $custom_formfield->id,
+					'form_id' => $custom_formfield->form_id,
 					'field_name' => $custom_formfield->field_name,
 					'field_type' => $custom_formfield->field_type,
 					'field_default' => $custom_formfield->field_default,
