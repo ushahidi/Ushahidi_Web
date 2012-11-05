@@ -655,7 +655,7 @@ CREATE TABLE IF NOT EXISTS `form` (
   `form_description` text,
   `form_active` tinyint(4) DEFAULT '1',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `form_title` (`form_title`),
+  UNIQUE KEY `form_title` (`form_title`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores all report submission forms created(default+custom)' AUTO_INCREMENT=2 ;
 
 --
