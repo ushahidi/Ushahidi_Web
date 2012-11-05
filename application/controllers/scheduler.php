@@ -23,12 +23,45 @@ class Scheduler_Controller extends Controller {
 		{
 			ini_set('max_execution_time', 180);
 		}
+		// Set time limit regardless of ini settings
+		set_time_limit(180);
 	}
 
 	public function index()
 	{
 		// Debug
 		$debug = "";
+		
+		
+		// @todo abstract most of this into a library, especially locking
+		
+		// Ensure settings entry for `scheduler_lock` exists
+		try {
+			Database::instance()->query(
+				"INSERT INTO `".Kohana::config('database.default.table_prefix')."settings`
+				(`key`, `value`) VALUES ('scheduler_lock', 0)");
+		}
+		catch (Kohana_Database_Exception $e)
+		{
+			// ignore database error from already existing scheduler_lock row
+		}
+		
+		// Now try and update the scheduler_lock
+		$result = Database::instance()->query(
+			"UPDATE `".Kohana::config('database.default.table_prefix')."settings`
+			SET `value` = UNIX_TIMESTAMP() + 180
+			WHERE `value` < UNIX_TIMESTAMP() AND `key` = 'scheduler_lock';");
+		
+		// If no entries were changed, scheduler is already running
+		if ($result->count() <= 0)
+		{
+			Kohana::log('info', 'Could not acquire scheduler lock');
+			if (isset($_GET['debug']) AND $_GET['debug'] == 1)
+			{
+				echo 'Could not acquire scheduler lock';
+			}
+			return;
+		}
 
 		// Get all active scheduled items
 		foreach (ORM::factory('scheduler')
@@ -111,6 +144,8 @@ class Scheduler_Controller extends Controller {
 					// Nada.
 				}
 
+				// @todo allow tasks to save state between runs. 
+
 				if ($run !== FALSE)
 				{
 					// Set last time of last execution
@@ -177,6 +212,13 @@ class Scheduler_Controller extends Controller {
 			Header("Content-Length: 49");
 			echo pack('H*', '47494638396101000100910000000000ffffffff' . 'ffff00000021f90405140002002c000000000100' . '01000002025401003b');
 		}
+		
+		// Release lock
+		$result = Database::instance()->query(
+			"UPDATE `".Kohana::config('database.default.table_prefix')."settings`
+			SET `value` = 0
+			WHERE `key` = 'scheduler_lock';");
+		
 	}
 
 }
