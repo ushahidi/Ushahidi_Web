@@ -44,6 +44,12 @@ class Json_Controller extends Template_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		
+		// Disable profiler
+		if (isset($this->profiler))
+		{
+			$this->profiler->disable();
+		}
 
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');

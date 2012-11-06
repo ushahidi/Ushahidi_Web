@@ -18,13 +18,13 @@ class Scheduler_Controller extends Controller {
 	public function __construct()
 	{
 		parent::__construct();
-	}
+		}
 
 	public function index()
 	{
 		// Debug
 		$debug = "";
-
+		
 		// Get all active scheduled items
 		foreach (ORM::factory('scheduler')
 		->where('scheduler_active','1')
@@ -157,6 +157,10 @@ class Scheduler_Controller extends Controller {
 		if (isset($_GET['debug']) AND $_GET['debug'] == 1)
 		{
 			echo $debug;
+			if (isset($this->profiler))
+			{
+				echo $this->profiler->render(TRUE);
+			}
 		}
 		else
 		{

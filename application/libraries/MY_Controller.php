@@ -34,8 +34,11 @@ abstract class Controller extends Controller_Core {
 		parent::__construct();
 		
 		// Load profiler
-		// $profiler = new Profiler;
-
+		if (Kohana::config('config.enable_profiler'))
+		{
+			$this->profiler = new Profiler;
+		}
+		
 		$this->auth = Auth::instance();
 
 		// Get session information

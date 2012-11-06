@@ -120,6 +120,11 @@ $config['display_errors'] = TRUE;
 $config['render_stats'] = TRUE;
 
 /**
+ * Enable profiler
+ */
+$config['enable_profiler'] = FALSE;
+
+/**
  * Turn MHI on or off. This is an advanced feature that will drastically alter
  * the way your instance works. Please read documentation before proceeding.
  *
