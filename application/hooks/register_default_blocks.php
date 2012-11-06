@@ -50,6 +50,7 @@ class news_block {
 		$content = new View('blocks/main_news');
 		// Get RSS News Feeds
 		$content->feeds = ORM::factory('feed_item')
+			->with('feed')
 			->limit('10')
 			->orderby('item_date', 'desc')
 			->find_all();
