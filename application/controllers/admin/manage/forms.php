@@ -66,6 +66,16 @@ class Forms_Controller extends Admin_Controller {
 				// Add some rules, the input field, followed by a list of checks, carried out in order
 				$post->add_rules('form_title','required', 'length[1,1000]');
 				$post->add_rules('form_description','required');
+				
+				// Ensure that you don't have forms with duplicate names
+				$same_form = ORM::factory('form')
+						->where('form_title', $_POST['form_title'])
+						->count_all();
+				
+				if ($same_form > 0)
+				{
+					$post->add_error('form_title', 'exists');
+				}
 			}
 			elseif ($post->action == 'd')
 			{

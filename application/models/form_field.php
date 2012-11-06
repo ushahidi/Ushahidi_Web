@@ -61,6 +61,7 @@ class Form_Field_Model extends ORM {
 		{
 			$field_name = ORM::factory('form_field')
 						->where('field_name', $array->field_name)
+						->where('form_id', $array->form_id)
 						->count_all();
 			if ($field_name > 0)
 			{

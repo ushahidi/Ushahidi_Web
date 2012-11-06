@@ -984,7 +984,7 @@ class Reports_Controller extends Admin_Controller {
 
 				// Column Titles
 				ob_start();
-				echo "#,INCIDENT TITLE,INCIDENT DATE";
+				echo "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
 				foreach($post->data_include as $item)
 				{
 					if ($item == 1) {
@@ -1012,7 +1012,7 @@ class Reports_Controller extends Admin_Controller {
 						foreach($custom_titles as $field_name)
 						{
 
-							echo ",".$field_name['field_name'];
+							echo ",".$field_name['field_name']."-".$field_name['form_id'];
 						}
 
 					}
@@ -1035,6 +1035,7 @@ class Reports_Controller extends Admin_Controller {
 				foreach ($incidents as $incident)
 				{
 					echo '"'.$incident->id.'",';
+					echo '"'.$incident->form_id.'",';
 					echo '"'.$this->_csv_text($incident->incident_title).'",';
 					echo '"'.$incident->incident_date.'"';
 

@@ -26,6 +26,8 @@ class ReportsImporter {
 		$this->categories_added = array();
 		$this->locations_added = array();
 		$this->incident_categories_added = array();
+		$this->incident_persons_added = array();
+		$this->incident_responses_added = array();
 	}
 	
 	/**
@@ -104,6 +106,8 @@ class ReportsImporter {
 		if (count($this->categories_added)) ORM::factory('category')->delete_all($this->categories_added);
 		if (count($this->locations_added)) ORM::factory('location')->delete_all($this->locations_added);
 		if (count($this->incident_categories_added)) ORM::factory('location')->delete_all($this->incident_categories_added);
+		if (count($this->incident_persons_added)) ORM::factory('incident_person')->delete_all($this->incident_persons_added);
+		if (count($this->incident_responses_added)) ORM::factory('form_response')->delete_all($this->incident_responses_added);
 	}
 	
 	/**
@@ -160,6 +164,7 @@ class ReportsImporter {
 		$incident = new Incident_Model();
 		$incident->location_id = isset($row['LOCATION']) ? $location->id : 0;
 		$incident->user_id = 0;
+		$incident->form_id = (isset($row['FORM #']) AND Form_Model::is_valid_form($row['FORM #'])) ? $row['FORM #'] : 1;
 		$incident->incident_title = $row['INCIDENT TITLE'];
 		$incident->incident_description = isset($row['DESCRIPTION']) ? $row['DESCRIPTION'] : '';
 		$incident->incident_date = date("Y-m-d H:i:s",strtotime($row['INCIDENT DATE']));
@@ -184,6 +189,7 @@ class ReportsImporter {
 			if(!empty($person->person_first) OR !empty($person->person_last) OR !empty($person->person_email))
 			{
 				$person->save();
+				$this->incident_persons_added[] = $person->id;
 			}
 			
 		}
@@ -239,7 +245,11 @@ class ReportsImporter {
 		}
 		
 		// STEP 5: Save Custom form fields responses
-		$custom_titles = customforms::get_custom_form_fields('','',false);
+		// Check for form_id
+		$form_id = (isset($row['FORM #']) AND Form_Model::is_valid_form($row['FORM #'])) ? $row['FORM #'] : 1;
+		
+		// Get custom form fields for this particular form
+		$custom_titles = customforms::get_custom_form_fields('',$form_id,false);
 		
 		// Do custom form fields exist on this deployment?
 		if (!empty($custom_titles))
@@ -248,9 +258,9 @@ class ReportsImporter {
 			{
 				// Check if the column exists in the CSV
 				$rowname = utf8::strtoupper($field_name['field_name']);
-				if(isset($row[$rowname]))
+				if(isset($row[$rowname.'-'.$form_id]))
 				{		
-					$response = $row[$rowname];
+					$response = $row[$rowname.'-'.$form_id];
 						
 					// Grab field_id and field_type
 					$field_id = $field_name['field_id'];
@@ -321,7 +331,8 @@ class ReportsImporter {
 						
 						// Save the form response
 						$form_response->save();
-					}
+						$this->incident_responses_added[] = $form_response->id;
+					}	
 				}	
 			}	
 		}

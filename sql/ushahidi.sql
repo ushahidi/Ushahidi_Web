@@ -654,7 +654,8 @@ CREATE TABLE IF NOT EXISTS `form` (
   `form_title` varchar(200) NOT NULL,
   `form_description` text,
   `form_active` tinyint(4) DEFAULT '1',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `form_title` (`form_title`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores all report submission forms created(default+custom)' AUTO_INCREMENT=2 ;
 
 --
@@ -686,7 +687,7 @@ CREATE TABLE IF NOT EXISTS `form_field` (
   `field_ispublic_visible` tinyint(4) NOT NULL DEFAULT '0',
   `field_ispublic_submit` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `field_name` (`field_name`),
+  UNIQUE KEY `field_name` (  `field_name` ,  `form_id` ),
   KEY `fk_form_id` (`form_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores all custom form fields created by users' AUTO_INCREMENT=1 ;
 
@@ -1490,5 +1491,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '101' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '102' WHERE `key` = 'db_version';
 UPDATE `settings` SET `value` = '2.6' WHERE `key`= 'ushahidi_version';
