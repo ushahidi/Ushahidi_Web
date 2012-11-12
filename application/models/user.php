@@ -389,7 +389,7 @@ class User_Model extends Auth_User_Model {
 	 */
 	private function _forgot_password_token($salt = FALSE)
 	{
-		// Secret consists of email and the last_login field.
+		// Hashed datq consists of email and the last_login field
 		// So as soon as the user logs in again, the reset link expires automatically.
 		$salt = $salt ? $salt : text::random('alnum', 32); // Limited charset to keep it URL friendly
 		$key = Kohana::config('settings.forgot_password_secret');
