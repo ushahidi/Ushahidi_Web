@@ -60,3 +60,12 @@ Kohana::config_set('settings.api_url_all',
 // Additional Mime Types (KMZ/KML)
 Kohana::config_set('mimes.kml', array('text/xml'));
 Kohana::config_set('mimes.kmz', array('text/xml'));
+
+// Set 'settings.forgot_password_key' if not set already
+if ( ! Kohana::config('settings.forgot_password_secret'))
+{
+	$pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+[]{};:,.?`~';
+	$key = text::random($pool, 64);
+	Settings_Model::save_setting('forgot_password_secret', $key);
+	Kohana::config_set('settings.forgot_password_secret', $key);
+}

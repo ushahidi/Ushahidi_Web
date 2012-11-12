@@ -320,13 +320,9 @@ class Login_Controller extends Template_Controller {
 					else
 					{
 						// Reset locally
-
-						// Secret consists of email and the last_login field.
-						// So as soon as the user logs in again,
-						// the reset link expires automatically.
-						$secret = $auth->hash_password($user->email.$user->last_login);
-						$secret_link = url::site('login/index/'.$user->id.'/'.$secret.'?reset');
-						$email_sent = $this->_email_resetlink($post->resetemail,$user->name,$secret_link);
+						$secret = $user->forgot_password_token();
+						$secret_link = url::site('login/index/'.$user->id.'/'.urlencode($secret).'?reset');
+						$email_sent = $this->_email_resetlink($post->resetemail, $user->name, $secret_link);
 					}
 
 					if ($email_sent == TRUE)
@@ -870,8 +866,7 @@ class Login_Controller extends Template_Controller {
 			else
 			{
 				// Use Standard
-
-				if($auth->hash_password($user->email.$user->last_login, $auth->find_salt($token)) == $token)
+				if($user->check_forgot_password_token($token))
 				{
 					$user->password = $password;
 					$user->save();
