@@ -378,7 +378,17 @@ class Login_Controller extends Template_Controller {
 					//   changing their password
 
 					url::redirect("login?change_pw_success");
+					exit();
 				}
+				
+				$post->add_error('token', 'invalid');
+				
+				// repopulate the form fields
+				$form = arr::overwrite($form, $post->as_array());
+
+				// populate the error fields, if any
+				$errors = arr::merge($errors, $post->errors('auth'));
+				$form_error = TRUE;
 			}
 			else
 			{
@@ -832,12 +842,12 @@ class Login_Controller extends Template_Controller {
 		}
 	}
 
-    /**
-     * Create New password upon user request.
-     */
-    private function _new_password($user_id = 0, $password, $token)
-    {
-    	$auth = Auth::instance();
+	/**
+	 * Create New password upon user request.
+	 */
+	private function _new_password($user_id = 0, $password, $token)
+	{
+		$auth = Auth::instance();
 		$user = ORM::factory('user',$user_id);
 		if ($user->loaded == true)
 		{
@@ -859,7 +869,7 @@ class Login_Controller extends Template_Controller {
 				$riverid->new_password = $password;
 				if ($riverid->setpassword() == FALSE)
 				{
-					// TODO: Something went wrong. Tell the user.
+					return FALSE;
 				}
 
 			}
@@ -873,14 +883,12 @@ class Login_Controller extends Template_Controller {
 				}
 				else
 				{
-					// TODO: Something went wrong, tell the user.
+					return FALSE;
 				}
 			}
 
 			return TRUE;
 		}
-
-		// TODO: User doesn't exist, tell the user (meta, I know).
 
 		return FALSE;
 	}
