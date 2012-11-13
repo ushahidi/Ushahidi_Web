@@ -149,10 +149,10 @@ class ReportsImporter {
 				$location->longitude = isset($row['LONGITUDE']) ? $row['LONGITUDE'] : '';
 			// Geocode reports which don't have LATITUDE and LONGITUDE
 			} else {
-				$location_geocoded = Geocoder::geocode_location($location->location_name);
+				$location_geocoded = map::geocode($location->location_name);
 				if ($location_geocoded) {
-					$location->latitude = $location_geocoded[1];
-					$location->longitude = $location_geocoded[0];
+					$location->latitude = $location_geocoded['latitude'];
+					$location->longitude = $location_geocoded['longitude'];
 				}
 			}
 			$location->location_date = $this->time;

@@ -471,10 +471,13 @@ class map_Core {
 	{
 		if ($address)
 		{
-			$map_object = new GoogleMapAPI;
+			$payload = FALSE;
 
-			// Get the full address data
-			$payload = $map_object->geoGetCoordsFull($address);
+			$url = Kohana::config('config.external_site_protocol').'://maps.google.com/maps/api/geocode/json?sensor=false&address='.rawurlencode($address);
+			$result = FALSE;
+			if ($result = @file_get_contents($url)) {
+				$payload = json_decode($result);
+			}
 
 			// Verify that the request succeeded
 			if (! isset($payload->status)) return FALSE;
