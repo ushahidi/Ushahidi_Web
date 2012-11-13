@@ -489,6 +489,13 @@ class Forms_Controller extends Admin_Controller {
     */
 	private function _get_selector_div($form_id = 0, $field_id = 0, $type = "")
 	{
+		// Grab the last field_id to be incremented and amended to blank_div
+		$form_field_id = ORM::factory('form_field')
+					->orderby('id','desc')
+					->limit(1)
+					->find();
+		$increment = $form_field_id->id + 1;
+		
 		if (intval($field_id) > 0)
 		{
 			$field = ORM::factory('form_field', $field_id);
@@ -534,8 +541,8 @@ class Forms_Controller extends Admin_Controller {
 			$html .= 	form::input('field_default', $field_default, ' class="text"');
 			$html .="</div>"; 
 		}else{
-			$html .="<input type=\"hidden\" name=\"field_name\" id=\"field_name\" value=\"BLANKDIV\">";
-			$html .="<input type=\"hidden\" name=\"field_default\" id=\"field_default\" value=\"BLANKDIV\">";
+			$html .="<input type=\"hidden\" name=\"field_name\" id=\"field_name\" value=\"BLANKDIV-".$increment."\">";
+			$html .="<input type=\"hidden\" name=\"field_default\" id=\"field_default\" value=\"BLANKDIV-".$increment."\">";
 		}
 		$html .="<input type=\"hidden\" name=\"field_required\" id=\"field_required\" value=\"FALSE\">";
 		$html .= $this->_get_public_state($field_ispublic_submit, $field_ispublic_visible);
