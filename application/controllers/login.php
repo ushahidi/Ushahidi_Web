@@ -767,7 +767,7 @@ class Login_Controller extends Template_Controller {
 							$openid_user->user_id = $user->id;
 							$openid_user->openid = "facebook_".$new_openid["id"];
 							$openid_user->openid_email = $new_openid["email"];
-							$openid_user->openid_server = "http://www.facebook.com";
+							$openid_user->openid_server = Kohana::config('config.external_site_protocol').'://www.facebook.com';
 							$openid_user->openid_date = date("Y-m-d H:i:s");
 							$openid_user->save();
 

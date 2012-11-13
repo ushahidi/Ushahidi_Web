@@ -28,7 +28,7 @@ class Geocoder_Core {
 			$api_key = Kohana::config('settings.api_google');
 			if ($api_key)
 			{
-				$base_url = "http://" . GEOCODER_GOOGLE . "/maps/geo?output=xml" . "&key=" . $api_key;
+				$base_url = Kohana::config('config.external_site_protocol')."://" . GEOCODER_GOOGLE . "/maps/geo?output=xml" . "&key=" . $api_key;
 
 				// Deal with the geocoder timing out during operations
 				$geocode_pending = true;

@@ -154,6 +154,15 @@ $config['installer_check'] = TRUE;
 $config['output_scheduler_js'] = TRUE;
 
 /**
+ * Protocol to use for loading external requests
+ * 
+ * This is used for requests from PHP to external APIs that offer
+ * both http and https. Normally this should default to 'https'
+ * but some countries/firewalls block https requests so its a setting.
+ */
+$config['external_site_protocol'] = 'https';
+
+/**
  * Additional resource paths, or "modules". Each path can either be absolute
  * or relative to the docroot. Modules can include any resource that can exist
  * in your application directory, configuration files, controllers, views, etc.

@@ -57,7 +57,7 @@ class Stats_Model extends ORM {
 				}
 
 				// URL
-				$val = 'http://'.$_SERVER["HTTP_HOST"].$slashornoslash.$site_domain;
+				$val = url::base();
 				$additional_query = '&val='.base64_encode($val);
 
 				// Site Name
@@ -81,7 +81,7 @@ class Stats_Model extends ORM {
 				$additional_query .= '&lon='.base64_encode($longitude);
 			}
 
-			$url = 'https://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
+			$url = Kohana::config('config.external_site_protocol').'://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
 			$curl_handle = curl_init();
 
 			// cURL options
@@ -148,7 +148,7 @@ STATSCOLLECTOR;
 			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
 		}
 
-		$stat_url = 'https://tracker.ushahidi.com/px.php?stat_key='.$stat_key
+		$stat_url = Kohana::config('config.external_site_protocol').'://tracker.ushahidi.com/px.php?stat_key='.$stat_key
 		    .'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 
 		// Ignore errors since we are error checking later
@@ -217,7 +217,7 @@ STATSCOLLECTOR;
 			$twodates = '&twodates='.urlencode($dp1.','.$dp2);
 		}
 
-		$stat_url = 'https://tracker.ushahidi.com/px.php?stat_key='.$stat_key
+		$stat_url = Kohana::config('config.external_site_protocol').'://tracker.ushahidi.com/px.php?stat_key='.$stat_key
 		    .'&task=stats&siteid='.urlencode($stat_id).'&period=day&range='.urlencode($range).$twodates;
 
 		// Ignore errors since we are error checking later
@@ -246,7 +246,7 @@ STATSCOLLECTOR;
 				$data[$date][$code]['label'] = (string) $row->label;
 				$data[$date][$code]['uniques'] = (string) $row->nb_uniq_visitors;
 				$logo = (string) $row->logo;
-				$data[$date][$code]['logo'] = 'https://tracker.ushahidi.com/piwik/'.$logo;
+				$data[$date][$code]['logo'] = Kohana::config('core.site_protocol').'://tracker.ushahidi.com/piwik/'.$logo;
 			}
 		}
 
@@ -513,7 +513,7 @@ STATSCOLLECTOR;
 	 */
 	public function create_site( $sitename, $url)
 	{
-		$stat_url = 'https://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
+		$stat_url = Kohana::config('config.external_site_protocol').'://tracker.ushahidi.com/px.php?task=cs&sitename='.urlencode($sitename).'&url='.urlencode($url);
 
 		// Ignore errors since we are error checking later
 

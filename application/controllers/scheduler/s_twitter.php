@@ -58,7 +58,7 @@ class S_Twitter_Controller extends Controller {
 				while($have_results == TRUE AND $page <= 2)
 				{ //This loop is for pagination of rss results
 					$hashtag = rawurlencode(trim(str_replace('#','',$hashtag)));
-					$twitter_url = 'http://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page; //.$last_tweet_id;
+					$twitter_url = Kohana::config('config.external_site_protocol').'://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page; //.$last_tweet_id;
 					$curl_handle = curl_init();
 					curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
 					curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,4); //Since Twitter is down a lot, set timeout to 4 secs

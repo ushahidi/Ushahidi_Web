@@ -3,7 +3,7 @@
 <head>
 	<title><?php echo $page_title.$site_name; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<link href="https://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet" type="text/css">
+	<link href="<?php echo Kohana::config('core.site_protocol'); ?>://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel="stylesheet" type="text/css">
 	<?php echo $header_block; ?>
 		<?php
 	// Action::header_scripts - Additional Inline Scripts from Plugins

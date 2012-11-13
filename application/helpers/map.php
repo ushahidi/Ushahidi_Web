@@ -218,7 +218,7 @@ class map_Core {
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '',
-			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}',
+			'url' => Kohana::config('core.site_protocol').'://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}',
 			'type' => '',
 			'transitionEffect' => 'resize',
 		);
@@ -235,7 +235,7 @@ class map_Core {
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '',
-			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/${z}/${y}/${x}',
+			'url' => Kohana::config('core.site_protocol').'://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/${z}/${y}/${x}',
 			'type' => '',
 			'transitionEffect' => 'resize',
 		);
@@ -252,7 +252,7 @@ class map_Core {
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '',
-			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}',
+			'url' => Kohana::config('core.site_protocol').'://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/${z}/${y}/${x}',
 			'type' => '',
 			'transitionEffect' => 'resize',
 		);
@@ -269,7 +269,7 @@ class map_Core {
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '',
-			'url' => 'http://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/${z}/${y}/${x}',
+			'url' => Kohana::config('core.site_protocol').'://server.arcgisonline.com/ArcGIS/rest/services/NatGeo_World_Map/MapServer/tile/${z}/${y}/${x}',
 			'type' => '',
 			'transitionEffect' => 'resize',
 		);
@@ -282,8 +282,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Satellite';
 		$layer->description = 'Google Maps Satellite Imagery.';
-		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
-		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->api_url = Kohana::config('core.site_protocol').'://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.SATELLITE',
@@ -298,8 +297,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Hybrid';
 		$layer->description = 'Google Maps with roads and terrain.';
-		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
-		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->api_url = Kohana::config('core.site_protocol').'://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.HYBRID',
@@ -314,8 +312,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Normal';
 		$layer->description = 'Standard Google Maps Roads';
-		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
-		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->api_url = Kohana::config('core.site_protocol').'://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => '',
@@ -330,8 +327,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Physical';
 		$layer->description = 'Google Maps Hillshades';
-		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
-		$layer->api_signup = 'http://code.google.com/apis/maps/signup.html';
+		$layer->api_url = Kohana::config('core.site_protocol').'://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.TERRAIN',
@@ -346,7 +342,7 @@ class map_Core {
 		$layer->openlayers = "Bing";
 		$layer->title = 'Bing-Road';
 		$layer->description = 'Bing Road Maps';
-		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_signup = Kohana::config('core.site_protocol').'://www.bingmapsportal.com/';
 		$layer->api_url = '';
 		$layer->data = array(
 			'name' => 'Bing-Road',
@@ -363,7 +359,7 @@ class map_Core {
 		$layer->openlayers = "Bing";
 		$layer->title = 'Bing-Hybrid';
 		$layer->description = 'Bing hybrid of streets and satellite tiles.';
-		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_signup = Kohana::config('core.site_protocol').'://www.bingmapsportal.com/';
 		$layer->api_url = '';
 		$layer->data = array(
 			'name' => 'Bing-Hybrid',
@@ -380,7 +376,7 @@ class map_Core {
 		$layer->openlayers = "Bing";
 		$layer->title = 'Bing-Satellite';
 		$layer->description = 'Bing Satellite Tiles';
-		$layer->api_signup = 'https://www.bingmapsportal.com/';
+		$layer->api_signup = Kohana::config('core.site_protocol').'://www.bingmapsportal.com/';
 		$layer->api_url = '';
 		$layer->data = array(
 			'name' => 'Bing-Satellite',
@@ -397,7 +393,7 @@ class map_Core {
 		$layer->openlayers = "OSM.Mapnik";
 		$layer->title = 'OSM Mapnik';
 		$layer->description = 'The main OpenStreetMap map';
-		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
@@ -415,12 +411,12 @@ class map_Core {
 		$layer->openlayers = "OSM.CycleMap";
 		$layer->title = 'OSM Cycling Map';
 		$layer->description = 'OpenStreetMap with highlighted bike lanes';
-		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
 				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
-			'url' => 'http://andy.sandbox.cloudmade.com/tiles/cycle/${z}/${x}/${y}.png',
+			'url' => 'http://tile.openstreetmap.org/cycle/${z}/${x}/${y}.png',
 			'type' => '',
 			'transitionEffect' => 'resize',
 		);
@@ -433,7 +429,7 @@ class map_Core {
 		$layer->openlayers = "OSM.TransportMap";
 		$layer->title = 'OSM Transport Map';
 		$layer->description = 'TransportMap';
-		$layer->api_url = 'https://www.openstreetmap.org/openlayers/OpenStreetMap.js';
+		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'attribution' => '©CCBYSA 2010 OpenStreetMap.org contributors',

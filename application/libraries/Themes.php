@@ -141,7 +141,7 @@ class Themes_Core {
 
 		$core_js .= html::script($this->js_url."media/js/jquery", TRUE);
 		//$core_js .= html::script($this->js_url."media/js/jquery.ui.min", TRUE);
-		$core_js .= html::script("https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", TRUE);
+		$core_js .= html::script(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", TRUE);
 		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", TRUE);
 		$core_js .= html::script($this->js_url."media/js/jquery.timeago", TRUE);
 

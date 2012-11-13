@@ -276,7 +276,7 @@ $(document).ready(function() {
 												// TODO: Find some more intuitive way to illustrate where this is.
 												//$qval = print_r($qualifiers['geometry'],true);;
 												$qval = 'Geofenced<br/>';
-												$qval .= '<img src ="https://maps.googleapis.com/maps/api/staticmap?size=275x200';
+												$qval .= '<img src="'.Kohana::config('core.site_protocol').'://maps.googleapis.com/maps/api/staticmap?size=275x200';
 												
 												$wkt = new Wkt();
 												
