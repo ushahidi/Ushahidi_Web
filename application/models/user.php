@@ -325,9 +325,13 @@ class User_Model extends Auth_User_Model {
 	 **/
 	public function has_permission($permission)
 	{
+		// Static variable cache superadmin status
+		static $is_superadmin = FALSE;
+		
 		// Special case - superadmin ALWAYS has all permissions
-		if ($this->has(ORM::factory('role','superadmin')))
+		if ($is_superadmin OR $this->has(ORM::factory('role','superadmin')))
 		{
+			$is_superadmin = TRUE;
 			return TRUE;
 		}
 		
