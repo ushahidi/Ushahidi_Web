@@ -55,13 +55,13 @@ class customforms_Core {
 		// Check if the provided incident exists, then fill in the data
 		if ($valid_incident)
 		{
-			$sql = "SELECT form_field.*, form_response.form_response
-			FROM form_field
-			LEFT JOIN roles ON (roles.id = field_ispublic_visible)
+			$sql = "SELECT ff.*, fr.form_response
+			FROM `{$table_prefix}form_field` ff
+			LEFT JOIN `{$table_prefix}roles` r ON (r.id = field_ispublic_visible)
 			LEFT JOIN
-				form_response ON (
-					form_response.form_field_id = form_field.id AND
-					form_response.incident_id = :incident_id
+				`{$table_prefix}form_response` fr ON (
+					fr.form_field_id = ff.id AND
+					fr.incident_id = :incident_id
 				)
 			WHERE (access_level <= :user_level OR access_level IS NULL) "
 			. ( ! empty($form_id) ? "AND form_id = :form_id " : '')
@@ -69,9 +69,9 @@ class customforms_Core {
 		}
 		else
 		{
-			$sql = "SELECT form_field.*
-			FROM form_field
-			LEFT JOIN roles ON (roles.id = field_ispublic_visible)
+			$sql = "SELECT ff.*
+			FROM `{$table_prefix}form_field` ff
+			LEFT JOIN `{$table_prefix}roles` r ON (r.id = field_ispublic_visible)
 			WHERE (access_level <= :user_level OR access_level IS NULL) "
 			. ( ! empty($form_id) ? "AND form_id = :form_id " : '')
 			. "ORDER BY field_position ASC";

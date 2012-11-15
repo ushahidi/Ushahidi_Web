@@ -360,5 +360,40 @@ class User_Model extends Auth_User_Model {
 		// Send anyone else to login
 		return 'login';
 	}
+	
+	/**
+	 * Get a new forgotten password challenge token for this user
+	 * @param string $salt Optional salt for token generation (use this)
+	 * @return string
+	 */
+	public function forgot_password_token()
+	{
+		return $this->_forgot_password_token();
+	}
+
+	/**
+	 * Check to see if forgotten password token is valid
+	 * @param string $token token to check
+	 * @return boolean is token valid
+	 **/
+	public function check_forgot_password_token($token)
+	{
+		$salt = substr($token, 0, 32);
+		return $this->_forgot_password_token($salt) == $token;
+	}
+
+	/**
+	 * Generate a forgotten password challenge token for this user
+	 * @param string $salt Optional salt for token generation (only use this for checking a token in URL)
+	 * @return string token
+	 */
+	private function _forgot_password_token($salt = FALSE)
+	{
+		// Secret consists of email and the last_login field.
+		// So as soon as the user logs in again, the reset link expires automatically.
+		$salt = $salt ? $salt : text::random('alnum', 32); // Limited charset to keep it URL friendly
+		$key = Kohana::config('settings.forgot_password_secret');
+		return $salt . hash_hmac('sha1', $this->last_login . $this->email, $salt . $key);
+	}
 
 } // End User_Model

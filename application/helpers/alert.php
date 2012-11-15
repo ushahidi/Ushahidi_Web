@@ -31,7 +31,7 @@ class alert_Core {
 		// Should be 8 distinct characters
 		$alert_code = text::random('distinct', 8);
 
-		$sms_from = $this->_sms_from();
+		$sms_from = self::_sms_from();
 
 		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code
 			.'.'.Kohana::lang('ui_admin.not_case_sensitive');
@@ -196,7 +196,7 @@ class alert_Core {
 			return FALSE;
 		}
 
-		$sms_from = $this->_sms_from();
+		$sms_from = self::_sms_from();
 
 		$site_name = $settings->site_name;
 		$message = Kohana::lang('ui_admin.unsubscribe_message').' ' .$site_name;
