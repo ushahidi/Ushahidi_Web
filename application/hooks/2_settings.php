@@ -69,6 +69,7 @@ if ( ! Kohana::config('settings.forgot_password_secret'))
 	$key = text::random($pool, 64);
 	Settings_Model::save_setting('forgot_password_secret', $key);
 	Kohana::config_set('settings.forgot_password_secret', $key);
+	$cache->delete($subdomain.'_settings');
 }
 
 // Set dfault value for external site protocol
