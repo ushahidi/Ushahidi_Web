@@ -18,13 +18,18 @@ class Scheduler_Controller extends Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		// Increase max execution time
+		if (ini_get('max_execution_time') < 180)
+		{
+			ini_set('max_execution_time', 180);
 		}
+	}
 
 	public function index()
 	{
 		// Debug
 		$debug = "";
-		
+
 		// Get all active scheduled items
 		foreach (ORM::factory('scheduler')
 		->where('scheduler_active','1')
@@ -160,7 +165,7 @@ class Scheduler_Controller extends Controller {
 			if (isset($this->profiler))
 			{
 				echo $this->profiler->render(TRUE);
-			}
+		}
 		}
 		else
 		{
