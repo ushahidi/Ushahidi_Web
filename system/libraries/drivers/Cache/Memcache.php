@@ -48,7 +48,7 @@ class Cache_Memcache_Driver implements Cache_Driver {
 
 	public function set($id, $data, $tags, $lifetime)
 	{
-		count($tags) and Kohana::log('error', 'Cache: Tags are unsupported by the memcache driver');
+		count($tags) and Kohana::log('alert', 'Cache: Tags are unsupported by the memcache driver');
 
 		// Memcache driver expects unix timestamp
 		if ($lifetime !== 0)
