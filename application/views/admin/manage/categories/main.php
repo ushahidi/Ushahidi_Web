@@ -211,9 +211,9 @@
 												<?php if($category_trusted == 1) { ?>
 												<div class="right">
 													<?php if($category_id == '4') { ?>
-													<a href="#" class="tooltip" title="<?php echo htmlentities(Kohana::lang('ui_admin.special_category_explanation'),ENT_QUOTES);?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
+													<a href="#" class="tooltip" title="<?php echo htmlentities(Kohana::lang('ui_admin.special_category_explanation'),ENT_QUOTES, "UTF-8");?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
 													<?php } else {?>
-														<a href="#" class="tooltip" title="<?php echo htmlentities(Kohana::lang('ui_admin.none_category_explanation'),ENT_QUOTES); ?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
+														<a href="#" class="tooltip" title="<?php echo htmlentities(Kohana::lang('ui_admin.none_category_explanation'),ENT_QUOTES, "UTF-8"); ?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
 													<?php } ?>
 												</div>
 												<?php } ?>
