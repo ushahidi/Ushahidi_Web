@@ -1,3 +1,7 @@
+Ushahidi 2.6.1 - Security Fix Release, 20-11-2012
+-------------------------------------
+* Vulnerability: Forgotten password challenge guessable. 
+
 Ushahidi 2.6 (Tripoli), 23-10-2012
 -------------------------------------
 * Improved way of handling translations
