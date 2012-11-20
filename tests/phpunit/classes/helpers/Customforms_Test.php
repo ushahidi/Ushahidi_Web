@@ -128,7 +128,9 @@ class Customforms_Helper_Test extends PHPUnit_Framework_TestCase {
 							->pre_filter('trim', TRUE);
 
 		// Get the return value for validation of valid date
-		$errors = customforms::validate_custom_form_fields($valid_validator);
+		customforms::validate_custom_form_fields($valid_validator);
+
+		$errors = $valid_validator->errors();
 
 		// Assert that validation of the valid data returns no errors
 		$this->assertEquals(0, count($errors), "Some errors have been found".Kohana::debug($errors));
@@ -139,6 +141,8 @@ class Customforms_Helper_Test extends PHPUnit_Framework_TestCase {
 
 		// Get the return value for validation of invalid data
 		$errors = customforms::validate_custom_form_fields($invalid_validator);
+
+		$errors = $invalid_validator->errors();
 
 		// Assert that the validation of the invalid data returns some errors
 		$this->assertEquals(TRUE, count($errors) > 0, "Expected to encounter errors. None found: ".count($errors));
