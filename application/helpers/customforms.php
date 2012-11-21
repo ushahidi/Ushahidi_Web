@@ -156,6 +156,13 @@ class customforms_Core {
 			{
 				array_push($r,$role->access_level);
 			}
+
+			if (count($r) == 0)
+			{
+				// There are no roles so clearly they have no authorization
+				return 0;
+			}
+
 			return max($r);
 		}
 		return 0;
