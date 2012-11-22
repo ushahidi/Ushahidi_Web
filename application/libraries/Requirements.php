@@ -1065,7 +1065,7 @@ class Requirements_Backend {
 	private function themedCSSPath($name, $module = null)
 	{
 		// try to include from a loaded theme
-		foreach (Kohana::config("settings.site_styles_loaded") as $theme)
+		foreach (Themes::loaded_themes() as $theme)
 		{
 			$path  = THEMEPATH . "$theme/css/$name.css";
 			if (file_exists($path)) {
