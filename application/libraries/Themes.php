@@ -255,6 +255,8 @@ class Themes_Core {
 				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/jquery.bgiframe.min', TRUE).'<![endif]-->','jquery.bgiframe.min');
 		}
 		
+		Event::run('ushahidi_action.themes_add_requirements_pre_theme', $this);
+		
 		if ($this->admin)
 		{
 			$this->admin_requirements();
@@ -271,7 +273,7 @@ class Themes_Core {
 			Requirements::customJS($this->js,'pagejs');
 		}
 		
-		Event::run('ushahidi_action.themes_add_requirements');
+		Event::run('ushahidi_action.themes_add_requirements', $this);
 	}
 
 	public function admin_requirements()
