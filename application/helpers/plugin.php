@@ -26,12 +26,12 @@ class plugin_Core {
 		{
 			foreach($javascripts as $javascript)
 			{
-				Requirements::js('plugins/'.$javascript);
+				Requirements::js('plugins/'.$javascript.'.js');
 			}
 		}
 		else
 		{
-			Requirements::js('plugins/'.$javascripts);
+			Requirements::js('plugins/'.$javascripts.'.js');
 		}
 	}
 	
@@ -45,7 +45,7 @@ class plugin_Core {
 	{
 		foreach ($javascripts as $javascript)
 		{
-			Requirements::block('plugins/'.$javascripts);
+			Requirements::block('plugins/'.$javascripts.'.js');
 		}
 	}
 	
@@ -61,12 +61,12 @@ class plugin_Core {
 		{
 			foreach($stylesheets as $stylesheet)
 			{
-				Requirements::css('plugins/'.$stylesheet);
+				Requirements::css('plugins/'.$stylesheet.'.css');
 			}
 		}
 		else
 		{
-			Requirements::css('plugins/'.$stylesheets);
+			Requirements::css('plugins/'.$stylesheets.'.css');
 		}
 	}
 	

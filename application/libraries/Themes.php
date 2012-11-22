@@ -57,8 +57,17 @@ class Themes_Core {
 	 */
 	public function header_block()
 	{
+		$content = '';
 		// For backward compatibility render Requirements here rather than in the view
-		$content = Requirements::render('head');
+		if (Kohana::config('requirements.write_js_to_body'))
+		{
+			$content .= Requirements::render('css');
+			$content .= Requirements::render('headtags');
+		}
+		else
+		{
+			$content .= Requirements::render();
+		}
 		
 		// Filter::header_block - Modify Header Block
 		if ($this->admin)
@@ -67,9 +76,9 @@ class Themes_Core {
 		}
 		elseif ($this->frontend)
 		{
-			Event::run('ushahidi_filter.header_block', $content);
+		Event::run('ushahidi_filter.header_block', $content);
 		}
-		
+
 		return $content;
 	}
 
@@ -89,31 +98,31 @@ class Themes_Core {
 	{
 		Requirements::customHeadTags(Kohana::config("globalcode.head"),'globalcode-head');
 		
-		Requirements::js("media/js/jquery");
-		Requirements::js("media/js/jquery.ui.min");
+		Requirements::js("media/js/jquery.js");
+		Requirements::js("media/js/jquery.ui.min.js");
 		//Requirements::js(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js");
-		Requirements::js("media/js/jquery.pngFix.pack");
-		Requirements::js("media/js/jquery.timeago");
+		Requirements::js("media/js/jquery.pngFix.pack.js");
+		Requirements::js("media/js/jquery.timeago.js");
 		
-		Requirements::css("media/css/jquery-ui-themeroller");
+		Requirements::css("media/css/jquery-ui-themeroller.css");
 		
-		Requirements::js('media/js/global');
-		Requirements::css('media/css/global');
+		Requirements::js('media/js/global.js');
+		Requirements::css('media/css/global.css');
 
 		if ($this->map_enabled)
 		{
-			Requirements::js("media/js/OpenLayers");
-			Requirements::js("media/js/ushahidi");
+			Requirements::js("media/js/OpenLayers.js");
+			Requirements::js("media/js/ushahidi.js");
 			Requirements::js($this->api_url);
 			Requirements::customJS("OpenLayers.ImgPath = '".url::file_loc('js')."media/img/openlayers/"."';",'openlayers-imgpath');
 			
-			Requirements::css("media/css/openlayers");
+			Requirements::css("media/css/openlayers.css");
 		}
 		
 		if ($this->hovertip_enabled)
 		{
-			Requirements::js('media/js/jquery.hovertip-1.0');
-			Requirements::css('media/css/jquery.hovertip-1.0', '');
+			Requirements::js('media/js/jquery.hovertip-1.0.js');
+			Requirements::css('media/css/jquery.hovertip-1.0.css', '');
 			Requirements::customJS(
 				"$(function() {
 						if($('.tooltip[title]') != null)
@@ -125,57 +134,58 @@ class Themes_Core {
 		
 		if ($this->slider_enabled)
 		{
-			Requirements::js('media/js/selectToUISlider.jQuery');
+			Requirements::js('media/js/selectToUISlider.jQuery.js');
 		}
 
 		if ($this->timeline_enabled)
 		{
-			Requirements::js("media/js/jquery.jqplot.min");
-			Requirements::css("media/css/jquery.jqplot.min");
-			Requirements::js("media/js/jqplot.dateAxisRenderer.min");
+			Requirements::js("media/js/jquery.jqplot.min.js");
+			Requirements::css("media/css/jquery.jqplot.min.css");
+			Requirements::js("media/js/jqplot.dateAxisRenderer.min.js");
 		}
 
 		if ($this->treeview_enabled)
 		{
-			Requirements::css("media/css/jquery.treeview");
-			Requirements::js("media/js/jquery.treeview");
+			Requirements::css("media/css/jquery.treeview.css");
+			Requirements::js("media/js/jquery.treeview.js");
 		}
 	
 		// Load ProtoChart
 		if ($this->protochart_enabled)
 		{
 			Requirements::customJS("jQuery.noConflict()", 'jquery-noconflict');
-			Requirements::js('media/js/protochart/prototype');
+			Requirements::js('media/js/protochart/prototype.js');
 			Requirements::customHeadTags(
-				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/protochart/excanvas-compressed', TRUE).'<![endif]-->');
-			Requirements::js('media/js/protochart/ProtoChart');
+				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/protochart/excanvas-compressed', TRUE).'<![endif]-->', 
+				'ie-excanvas-compressed');
+			Requirements::js('media/js/protochart/ProtoChart.js');
 		}
 	
 		// Load Raphael
 		if ($this->raphael_enabled)
 		{
 			// The only reason we include prototype is to keep the div element naming convention consistent
-			//Requirements::js('media/js/protochart/prototype');
-			Requirements::js('media/js/raphael');
+			//Requirements::js('media/js/protochart/prototype.js');
+			Requirements::js('media/js/raphael.js');
 			Requirements::customJS('var impact_json = '.$this->impact_json .';','impact_json');
-			Requirements::js('media/js/raphael-ushahidi-impact');
+			Requirements::js('media/js/raphael-ushahidi-impact.js');
 		}
 
 		if ($this->validator_enabled)
 		{
-			Requirements::js("media/js/jquery.validate.min");
+			Requirements::js("media/js/jquery.validate.min.js");
 		}
 
 		if ($this->photoslider_enabled)
 		{
-			Requirements::css("media/css/picbox/picbox");
-			Requirements::js("media/js/picbox");
+			Requirements::css("media/css/picbox/picbox.css");
+			Requirements::js("media/js/picbox.js");
 		}
 
 		if ($this->colorpicker_enabled)
 		{
-			Requirements::css("media/css/colorpicker");
-			Requirements::js("media/js/colorpicker");
+			Requirements::css("media/css/colorpicker.css");
+			Requirements::js("media/js/colorpicker.js");
 		}
 
 		// Load jwysiwyg
@@ -192,13 +202,13 @@ class Themes_Core {
 		// Table Row Sort
 		if ($this->tablerowsort_enabled)
 		{
-			Requirements::js('media/js/jquery.tablednd_0_5');
+			Requirements::js('media/js/jquery.tablednd_0_5.js');
 		}
 	
 		// JSON2 for IE+
 		if ($this->json2_enabled)
 		{
-			Requirements::js('media/js/json2');
+			Requirements::js('media/js/json2.js');
 		}
 		
 		if ($this->datepicker_enabled)
@@ -254,7 +264,7 @@ class Themes_Core {
 				Date.format = 'mm/dd/yyyy';
 			",'locale-dates');
 	
-			Requirements::js('media/js/jquery.datePicker');
+			Requirements::js('media/js/jquery.datePicker.js');
 			Requirements::customHeadTags(
 				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/jquery.bgiframe.min', TRUE).'<![endif]-->','jquery.bgiframe.min');
 		}
@@ -274,6 +284,7 @@ class Themes_Core {
 		// Inline Javascript
 		if (!empty($this->js))
 		{
+			//@todo add deprecated warning
 			Requirements::customJS($this->js,'pagejs');
 		}
 		
@@ -282,12 +293,12 @@ class Themes_Core {
 
 	public function admin_requirements()
 	{
-		Requirements::js('media/js/jquery.form');
-		Requirements::js('media/js/jquery.validate.min');
-		Requirements::js('media/js/jquery.base64');
-		Requirements::js('media/js/admin');
-		Requirements::css('media/css/admin/all');
-		Requirements::ieCSS("lt IE 7", 'media/css/ie6');
+		Requirements::js('media/js/jquery.form.js');
+		Requirements::js('media/js/jquery.validate.min.js');
+		Requirements::js('media/js/jquery.base64.js');
+		Requirements::js('media/js/admin.js');
+		Requirements::css('media/css/admin/all.css');
+		Requirements::ieCSS("lt IE 7", 'media/css/ie6.css');
 	}
 	
 	public function frontend_requirements()
@@ -310,9 +321,9 @@ class Themes_Core {
 			Requirements::js($js);
 		}
 		
-		Requirements::ieThemedCSS("lte IE 7", "iehacks");
-		Requirements::ieThemedCSS("IE 7", "ie7hacks");
-		Requirements::ieThemedCSS("IE 6", "ie6hacks");
+		Requirements::ieThemedCSS("lte IE 7", "iehacks.css");
+		Requirements::ieThemedCSS("IE 7", "ie7hacks.css");
+		Requirements::ieThemedCSS("IE 6", "ie6hacks.css");
 	}
 
 	/**
@@ -326,7 +337,10 @@ class Themes_Core {
 				$this->ushahidi_stats_js()."\n".
 				$this->scheduler_js();
 		
-		$content .= Requirements::render('body');
+		if (Kohana::config('requirements.write_js_to_body'))
+		{
+			$content .= Requirements::render('js');
+		}
 
 		// Filter::footer_block - Modify Footer Block
 		Event::run('ushahidi_filter.footer_block', $content);
@@ -506,7 +520,7 @@ SCHEDULER;
 		$theme = Kohana::config("settings.site_style");
 		$theme = empty($theme) ? 'default' : $theme;
 		self::load_theme($theme);
-	}
+}
 	
 	/**
 	 * Load theme
@@ -577,14 +591,14 @@ SCHEDULER;
 		foreach ($meta['CSS'] as $css)
 		{
 			if (file_exists(THEMEPATH."$theme/css/$css.css"))
-				self::$theme_css[$css] = "themes/$theme/css/$css";
+				self::$theme_css[$css] = "themes/$theme/css/$css.css";
 		}
 		
 		// Check for overrides of already added stylesheets
 		foreach (self::$theme_css as $css => $path)
 		{
 			if (file_exists(THEMEPATH."$theme/css/$css.css"))
-				self::$theme_css[$css] = "themes/$theme/css/$css";
+				self::$theme_css[$css] = "themes/$theme/css/$css.css";
 		}
 	}
 
@@ -609,14 +623,14 @@ SCHEDULER;
 		foreach ($meta['JS'] as $js)
 		{
 			if (file_exists(THEMEPATH."$theme/js/$js.js"))
-				self::$theme_js[$js] = "themes/$theme/js/$js";
+				self::$theme_js[$js] = "themes/$theme/js/$js.js";
 		}
 		
 		// Check for overrides of already added js
 		foreach (self::$theme_css as $js => $path)
 		{
 			if (file_exists(THEMEPATH."$theme/js/$js.js"))
-				self::$theme_js[$js] = "themes/$theme/js/$js";
+				self::$theme_js[$js] = "themes/$theme/js/$js.js";
 		}
 	}
 	

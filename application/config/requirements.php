@@ -5,8 +5,7 @@
 */
 
 /**
- * Do we want requirements to suffix onto the requirement link
- * tags for caching or is it disabled.
+ * Do we want requirements to suffix modification time onto file names
  * */
 $config['suffix_requirements'] = TRUE;
 
