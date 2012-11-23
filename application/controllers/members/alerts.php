@@ -127,6 +127,6 @@ class Alerts_Controller extends Members_Controller {
 		$this->template->content->total_items = $pagination->total_items;
 		
 		// Javascript Header
-		$this->template->js = new View('members/alerts_js');
+		$this->themes->js = new View('members/alerts_js');
 	}	
 }

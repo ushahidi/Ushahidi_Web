@@ -300,9 +300,9 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->order_field = $order_field;
 		$this->template->content->sort = $sort;
 		
-		$this->template->map_enabled = TRUE;
-		$this->template->json2_enabled = TRUE;
-		$this->template->treeview_enabled = TRUE;
+		$this->themes->map_enabled = TRUE;
+		$this->themes->json2_enabled = TRUE;
+		$this->themes->treeview_enabled = TRUE;
 
 		// Javascript Header
 		$this->themes->js = new View('admin/reports/reports_js');
