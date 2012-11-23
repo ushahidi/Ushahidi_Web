@@ -30,6 +30,9 @@
 			
 			$("#reportForm").validate({
 				rules: {
+					format: {
+						required: true
+					},
 					"data_active[]": {
 						required: true,
 						range: [0,1]
@@ -49,6 +52,9 @@
 					}
 				},
 				messages: {
+					format: {
+						required: "<?php echo addslashes(Kohana::lang('report.format.required')); ?>"
+					},
 					"data_verified[]": {
 						required: "<?php echo addslashes(Kohana::lang('report.data_verified.required'));?>",
 						range: "<?php echo addslashes(Kohana::lang('report.data_verified.between'));?>"
@@ -71,9 +77,15 @@
 					if (element.attr("name") == "data_point" || element.attr("name") == "data_include")
 					{
 						error.appendTo("#form_error1");
-					}else if (element.attr("name") == "from_date" || element.attr("name") == "to_date"){
+					}
+					else if (element.attr("name") == "from_date" || element.attr("name") == "to_date"){
 						error.appendTo("#form_error2");
-					}else{
+					}
+					else if (element.attr("name") == "format" )
+					{
+						error.appendTo("#form_error_format");
+					}
+					else{
 						error.insertAfter(element);
 					}
 				}

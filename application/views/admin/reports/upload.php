@@ -68,7 +68,7 @@
 				</p>
 			</p>
 			<?php print form::open(NULL, array('id' => 'uploadForm', 'name' => 'uploadForm', 'enctype' => 'multipart/form-data')); ?>
-            <p><b><?php echo Kohana::lang('ui_main.upload_file');?></b> <?php echo form::upload(array('name' => 'csvfile'), 'path/to/local/file'); ?></p>
+            <p><b><?php echo Kohana::lang('ui_main.upload_file');?></b> <?php echo form::upload(array('name' => 'uploadfile'), 'path/to/local/file'); ?></p>
 			<button type="submit"><?php echo Kohana::lang('ui_main.upload');?></button>
 			<?php print form::close(); ?>
 		</div>

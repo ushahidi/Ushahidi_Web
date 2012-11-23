@@ -21,8 +21,8 @@ class User_Model_Test extends PHPUnit_Framework_TestCase {
 				'username' => 'ekala',
 				'name' => 'Emmanuel Kala',
 				'email'=>'emmanuel@example.com',
-				'password' => 'abc#@_123tbhh', 
-				'password_again'=>'abc#@_123tbhh',
+				'password' => 'abc123tbhh', 
+				'password_again'=>'abc123tbhh',
 				'notify' => '0',
 				'role' => 'superadmin'
 			),

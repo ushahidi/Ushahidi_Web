@@ -1,6 +1,6 @@
 <?php
 /**
- * Report Importer Library
+ * CSV Report Importer Library
  *
  * Imports reports within CSV file referenced by filehandle.
  * 
@@ -14,28 +14,73 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  *
  */
-class ReportsImporter {
+class CSVImporter {	
+	/**
+	 * Notices to be passed on successful data import
+	 * @var array
+	 */
+	public $notices = array();
 	
-	function __construct() 
-	{
-		$this->notices = array();
-		$this->errors = array();		
-		$this->totalrows = 0;
-		$this->importedrows = 0;
-		$this->incidents_added = array();
-		$this->categories_added = array();
-		$this->locations_added = array();
-		$this->incident_categories_added = array();
-		$this->incident_persons_added = array();
-		$this->incident_responses_added = array();
-	}
+	/**
+	 * Errors to be passed on failed data import
+	 * @var array
+	 */
+	public $errors = array();
+	
+	/**
+	 * Total number of reports within CSV file
+	 * @var int
+	 */		
+	public $totalrows = 0;
+	
+	/**
+	 * Total number of reports successfully imported
+	 * @var int
+	 */
+	public $importedrows = 0;
+	
+	/**
+	 * Categories successfully imported
+	 * @var array
+	 */
+	private $categories_added = array();
+		
+	/**
+	 * Reports successfully imported
+	 * @var array
+	 */
+	private $incidents_added = array();
+	
+	/**
+	 * Incident persons successfully imported
+	 * @var array
+	 */
+	private $incident_persons_added = array();
+	
+	/**
+	 * Custom form field responses successfully imported
+	 * @var array
+	 */
+	private $incident_responses_added = array();
+	
+	/**
+	 * Incident locations successfully imported
+	 * @var array
+	 */
+	private $locations_added = array();
+	
+	/**
+	 * Incident categories successfully imported
+	 * @var array
+	 */
+	private $incident_categories_added = array();
 	
 	/**
 	 * Function to import CSV file referenced by the file handle
 	 * @param string $filehandle
 	 * @return bool 
 	 */
-	function import($filehandle) 
+	function import_csv($filehandle) 
 	{
 		$csvtable = new Csvtable($filehandle);
 		// Set the required columns of the CSV file
@@ -83,7 +128,7 @@ class ReportsImporter {
 			}
 			else
 			{
-				if ($this->importreport($row))
+				if ($this->import_report($row))
 				{
 					$this->importedrows++;
 				}
@@ -105,7 +150,7 @@ class ReportsImporter {
 		if (count($this->incidents_added)) ORM::factory('incident')->delete_all($this->incidents_added);
 		if (count($this->categories_added)) ORM::factory('category')->delete_all($this->categories_added);
 		if (count($this->locations_added)) ORM::factory('location')->delete_all($this->locations_added);
-		if (count($this->incident_categories_added)) ORM::factory('location')->delete_all($this->incident_categories_added);
+		if (count($this->incident_categories_added)) ORM::factory('incident_category')->delete_all($this->incident_categories_added);
 		if (count($this->incident_persons_added)) ORM::factory('incident_person')->delete_all($this->incident_persons_added);
 		if (count($this->incident_responses_added)) ORM::factory('form_response')->delete_all($this->incident_responses_added);
 	}
@@ -115,7 +160,7 @@ class ReportsImporter {
 	 * @param array $row
 	 * @return bool
 	 */
-	function importreport($row)
+	function import_report($row)
 	{
 		// If the date is not in proper date format
 		if (!strtotime($row['INCIDENT DATE']))
@@ -143,18 +188,24 @@ class ReportsImporter {
 		{
 			$location = new Location_Model();
 			$location->location_name = isset($row['LOCATION']) ? $row['LOCATION'] : '';
+			
+			// For Geocoding purposes
+			$location_geocoded = Geocoder::geocode_location($location->location_name);
+			
 			// If we have LATITUDE and LONGITUDE use those
-			if ( isset($row['LATITUDE']) AND isset($row['LONGITUDE']) ) {
-				$location->latitude = isset($row['LATITUDE']) ? $row['LATITUDE'] : '';
-				$location->longitude = isset($row['LONGITUDE']) ? $row['LONGITUDE'] : '';
-			// Geocode reports which don't have LATITUDE and LONGITUDE
-			} else {
-				$location_geocoded = map::geocode($location->location_name);
-				if ($location_geocoded) {
-					$location->latitude = $location_geocoded['latitude'];
-					$location->longitude = $location_geocoded['longitude'];
-				}
+			if ( isset($row['LATITUDE']) AND isset($row['LONGITUDE']) ) 
+			{
+				$location->latitude = isset($row['LATITUDE']) ? $row['LATITUDE'] : 0;
+				$location->longitude = isset($row['LONGITUDE']) ? $row['LONGITUDE'] : 0;
+			} 
+			
+			// Otherwise, get geocoded lat/lon values
+			else
+			{
+				$location->latitude = $location_geocoded ? $location_geocoded[1] : 0;
+				$location->longitude = $location_geocoded ? $location_geocoded[0] : 0;
 			}
+			$location->country_id = $location_geocoded ? $location_geocoded[2] : 0;
 			$location->location_date = $this->time;
 			$location->save();
 			$this->locations_added[] = $location->id;
@@ -181,7 +232,7 @@ class ReportsImporter {
 			$person->incident_id = $incident->id;
 			$person->person_first = isset($row['FIRST NAME']) ? $row['FIRST NAME'] : '';
 			$person->person_last = isset($row['LAST NAME']) ? $row['LAST NAME'] : '';
-			$person->person_email = isset($row['EMAIL']) ? $row['EMAIL'] : '';
+			$person->person_email = (isset($row['EMAIL']) AND valid::email($row['EMAIL']))? $row['EMAIL'] : '';
 			$person->person_date = date("Y-m-d H:i:s",time());
 			
 			// Make sure that you're not importing an empty record i.e at least one field has been recorded
@@ -189,6 +240,8 @@ class ReportsImporter {
 			if(!empty($person->person_first) OR !empty($person->person_last) OR !empty($person->person_email))
 			{
 				$person->save();
+								
+				// Add to array of incident persons added
 				$this->incident_persons_added[] = $person->id;
 			}
 			
@@ -232,6 +285,7 @@ class ReportsImporter {
 						// because all current categories are of type '5'
 						$category->category_visible = 1;
 						$category->category_description = $categoryname;
+						$category->category_position = count($this->existing_categories);
 						$category->save();
 						$this->categories_added[] = $category->id;
 						// Now category_id is known: This time, and for the rest of the import.
@@ -291,7 +345,7 @@ class ReportsImporter {
 								{
 									// Carry out a case insensitive comparison between individual field options and csv response
 									// If there's a match, store field option value from the db
-									if(strcasecmp($option, $response) == 0)
+									if (strcasecmp($option, $response) == 0)
 									{
 										$form_response->form_response = $option;
 									}
@@ -329,10 +383,15 @@ class ReportsImporter {
 							$form_response->form_response = $response;
 						}
 						
-						// Save the form response
-						$form_response->save();
-						$this->incident_responses_added[] = $form_response->id;
-					}	
+						// If form_response is provided based on conditions set above, Save the form response
+						if ($form_response->form_response != '')
+						{
+							$form_response->save();
+							
+							// Add to array of field responses added
+							$this->incident_responses_added[] = $form_response->id;
+						}
+					}
 				}	
 			}	
 		}

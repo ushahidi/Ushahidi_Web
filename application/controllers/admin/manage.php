@@ -125,6 +125,13 @@ class Manage_Controller extends Admin_Controller
 				// Test to see if things passed the rule checks
 				if ($category->validate($category_data) AND $post->validate(FALSE))
 				{
+					// Get Category position for a new category
+					if (empty($_POST['category_id']))
+					{
+						$cat_count = count(Category_Model::get_categories(false, false, false));
+						$category->category_position = $cat_count;
+					}
+					
 					// Save the category
 					$category->save();
 					
