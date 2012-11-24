@@ -961,7 +961,10 @@ class Reports_Controller extends Admin_Controller {
 				$categories = Category_Model::get_categories(false, false, false);
 				
 				// Retrieve Forms
-				$custom_forms = ORM::Factory('form')->find_all();
+				$forms = ORM::Factory('form')->find_all();
+				
+				// Retrieve Custom forms
+				$custom_forms = customforms::get_custom_form_fields('','',false);
 
 				// If CSV format is selected
 				if($post->format == 'csv')
@@ -984,7 +987,7 @@ class Reports_Controller extends Admin_Controller {
 					header('Content-type: text/xml; charset=UTF-8');
 					header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 					header("Content-Disposition: attachment; filename=" . time() . ".xml");	
-					$content = download::download_xml($post, $incidents, $categories, $custom_forms);
+					$content = download::download_xml($post, $incidents, $categories, $forms);
 					echo $content;
 					exit;
 				}
