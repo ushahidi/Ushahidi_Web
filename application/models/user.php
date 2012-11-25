@@ -325,8 +325,12 @@ class User_Model extends Auth_User_Model {
 	 **/
 	public function has_permission($permission)
 	{
+		// Cache superadmin role to avoid repeating query
+		static $superadmin;
+		if (!isset($superadmin)) $superadmin = ORM::factory('role','superadmin');
+		
 		// Special case - superadmin ALWAYS has all permissions
-		if ($this->has(ORM::factory('role','superadmin')))
+		if ($this->has($superadmin))
 		{
 			return TRUE;
 		}
