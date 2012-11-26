@@ -38,13 +38,16 @@
 		// Incidents object : Limit it to one incident only
 		$this->incident = ORM::factory('incident')->limit(1)->find_all();
 		
-		// Custom forms object : Limit it to one custom form only
-		$this->custom_forms = ORM::factory('form')->join('form_field','form_field.form_id', 'form.id', 'inner')->limit(1)->find_all();
+		// Forms object to be used for XML download : Limit it to one custom form only
+		$this->forms = ORM::factory('form')->join('form_field','form_field.form_id', 'form.id', 'inner')->limit(1)->find_all();
+		
+		// Custom forms object to be used for CSV download
+		$this->custom_forms = customforms::get_custom_form_fields('','',false);
 	}
 	
 	public function tearDown()
 	{
-		unset($this->post, $this->category, $this->incident, $this->custom_forms);
+		unset($this->post, $this->category, $this->incident, $this->forms);
 	}
 	
 	/**
@@ -318,13 +321,13 @@
 	 * @return string $xml_content
 	 */
 	public function testDownloadXML()
-	{
+	{	
+		/* Test XML Tag generation */
 		// Test to ensure validation passed
 		$this->assertEquals(TRUE, download::validate($this->post), 'Report download validation failed');
 		
-		/* Test XML Tag generation */
 		// Load XML Content into a string
-		$xml_content = download::download_xml($this->post, $this->incident, $this->category, $this->custom_forms);
+		$xml_content = download::download_xml($this->post, $this->incident, $this->category, $this->forms);
 		
 		// Make sure string holding XML Content is not empty
 		$this->assertNotEmpty($xml_content, 'XML Download Failed');
@@ -514,7 +517,7 @@
 			$forms_element = $d_customforms->item(0);
 			
 			// If we don't have custom forms on this deployment
-			if (count($this->custom_forms) == 0)
+			if (count($this->forms) == 0)
 			{
 				// Ensure the customforms element has the following message
 				$this->assertEquals('There are no custom forms on this deployment.', $d_customforms->item(0)->nodeValue);
@@ -524,7 +527,7 @@
 			else
 			{
 				// Grab individual form
-				$form = $this->custom_forms[0];
+				$form = $this->forms[0];
 				
 				// Grab contents of <form> element
 				$form_element = $forms_element->getElementsByTagName('form');
@@ -943,6 +946,180 @@
 				$this->assertEquals(0, $custom_responses_element->length, "Report custom responses element should not exist");
 			}
 		}	
+	}
+	
+	/**
+	 * Test CSV Download
+	 * @test
+	 */
+	public function testDownloadCSV()
+	{
+		// Test to ensure validation passed
+		$this->assertEquals(TRUE, download::validate($this->post), 'Report download validation failed');
+		
+		$expected_csv_content = "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
+		
+		// Include location information?
+		if (in_array(1,$this->post['data_include']))
+		{
+			$expected_csv_content.= ",LOCATION";
+		}
+		
+		// Include description information?
+		if (in_array(2,$this->post['data_include']))
+		{
+			$expected_csv_content.= ",DESCRIPTION";
+		}
+		
+		// Include category information?
+		if (in_array(3,$this->post['data_include']))
+		{
+			$expected_csv_content.= ",CATEGORY";
+		}
+		
+		// Include latitude information?
+		if (in_array(4,$this->post['data_include']))
+		{
+			$expected_csv_content.= ",LATITUDE";
+		}
+		
+		// Include longitude information?
+		if (in_array(5,$this->post['data_include']))
+		{
+			$expected_csv_content.= ",LONGITUDE";
+		}
+		
+		// Include custom forms information?
+		if (in_array(6,$this->post['data_include']))
+		{
+			foreach($this->custom_forms as $field_name)
+			{
+				$expected_csv_content.= ",".$field_name['field_name']."-".$field_name['form_id'];
+			}
+		}
+		
+		// Include personal information?
+		if (in_array(7,$this->post['data_include']))
+		{
+			$expected_csv_content.= ",FIRST NAME, LAST NAME, EMAIL";	
+		}
+		
+		$expected_csv_content.= ",APPROVED,VERIFIED";
+		$expected_csv_content.="\n";
+		
+		// Add Report information 
+		$report = $this->incident[0];
+		
+		// Report id, form_id, title, and date
+		$expected_csv_content.='"'.$report->id.'",'
+								.'"'.$report->form_id.'",'
+								.'"'.download::_csv_text($report->incident_title).'",'
+								.'"'.$report->incident_date.'"';
+		
+		
+		
+		// Include location information?
+		if (in_array(1,$this->post['data_include']))
+		{
+			$expected_csv_content.= ',"'.download::_csv_text($report->location->location_name).'"';
+		}
+		
+		// Include description information?
+		if (in_array(2,$this->post['data_include']))
+		{
+			$expected_csv_content.= ',"'.download::_csv_text($report->incident_description).'"';
+		}
+		
+		// Include category information?
+		if (in_array(3,$this->post['data_include']))
+		{
+			$cat = '';
+			foreach($report->incident_category as $category)
+			{
+				if ($category->category->category_title)
+				{
+					$cat.= download::_csv_text($category->category->category_title).', ';
+				}
+			}
+			$expected_csv_content.= ',"'.$cat.'"';
+		}
+		
+		// Include latitude information?
+		if (in_array(4,$this->post['data_include']))
+		{
+			$expected_csv_content.= ',"'.download::_csv_text($report->location->latitude).'"';
+		}
+		
+		// Include longitude information?
+		if (in_array(5,$this->post['data_include']))
+		{
+			$expected_csv_content.= ',"'.download::_csv_text($report->location->longitude).'"';
+		}
+		
+		// Include custom forms information?
+		if (in_array(6,$this->post['data_include']))
+		{
+			$custom_fields = customforms::get_custom_form_fields($report->id,'',false);
+			if ( ! empty($custom_fields))
+			{
+				foreach($custom_fields as $custom_field)
+				{
+					$expected_csv_content.= ',"'.download::_csv_text($custom_field['field_response']).'"';
+				}
+			}
+			else
+			{
+				foreach ($this->custom_forms as $custom)
+				{
+					$expected_csv_content.= ',"'.download::_csv_text("").'"';
+				}
+			}
+		}
+		
+		// Include personal information?
+		if (in_array(7,$this->post['data_include']))
+		{
+			$person = $report->incident_person;
+			if($person->loaded)
+			{
+				$expected_csv_content.= ',"'.download::_csv_text($person->person_first).'"'
+										.',"'.download::_csv_text($person->person_last).'"'
+										.',"'.download::_csv_text($person->person_email).'"';
+			}
+			else
+			{
+				$expected_csv_content.= ',"'.download::_csv_text("").'"'.',"'.dowload::_csv_text("").'"'.',"'.download::_csv_text("").'"';
+			}	
+		}	
+		
+		// Approved status
+		if ($report->incident_active)
+		{
+			$expected_csv_content.= ",YES";
+		}
+		else
+		{
+			$expected_csv_content.= ",NO";
+		}
+
+		// Verified Status
+		if ($report->incident_verified)
+		{
+			$expected_csv_content.= ",YES";
+		}
+		else
+		{
+			$expected_csv_content.= ",NO";
+		}
+		
+		// End Expected output
+		$expected_csv_content.= "\n";
+		
+		// Grab actual output
+		$actual_csv_content = download::download_csv($this->post, $this->incident, $this->custom_forms);
+		
+		// Test CSV Output
+		$this->assertEquals($expected_csv_content, $actual_csv_content, 'CSV Download failed. Content mismatch');
 	}
 } 
 

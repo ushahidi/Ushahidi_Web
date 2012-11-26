@@ -158,8 +158,7 @@ class download_Core {
 					}
 					else
 					{
-						$custom_field = customforms::get_custom_form_fields('','',false);
-						foreach ($custom_field as $custom)
+						foreach ($custom_forms as $custom)
 						{
 							echo',"'.self::_csv_text("").'"';
 						}
@@ -668,7 +667,7 @@ class download_Core {
 		
 	}
 	
-	private static function _csv_text($text)
+	public static function _csv_text($text)
 	{
 		$text = stripslashes(htmlspecialchars($text));
 		return $text;
