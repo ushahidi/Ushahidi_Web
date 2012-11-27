@@ -96,14 +96,14 @@ class Cloudfiles {
 	}
 
 	// $file must be the absolute path to the file
-	public function upload($filename)
+	public function upload($filename, $appendUploadDir = TRUE)
 	{
 		$this->authenticate();
 
 		$local_directory = Kohana::config('upload.directory', TRUE);
 		$local_directory = rtrim($local_directory, '/').'/';
 
-		$fullpath = $local_directory.$filename;
+		$fullpath = $appendUploadDir ? $local_directory.$filename : DOCROOT.$filename;
 
 		// Put this in a special directory based on subdomain if subdomain is set
 		$dir = $this->_special_dir();
@@ -123,7 +123,7 @@ class Cloudfiles {
 		$uri = $container->make_public();
 
 		// Return the file path URL
-		return $file->public_ssl_uri();
+		return (Kohana::config('config.external_site_protocol') == 'https') ? $file->public_ssl_uri() : $file->public_uri();
 	}
 
 	public function delete($url)

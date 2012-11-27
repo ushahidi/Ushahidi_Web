@@ -269,6 +269,55 @@ class Themes_Core {
 				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/jquery.bgiframe.min', TRUE).'<![endif]-->','jquery.bgiframe.min');
 		}
 		
+		// JS base combines
+		$base_js = array(
+			'media/js/jquery.js',
+			'media/js/jquery.ui.min.js',
+			'media/js/jquery.pngFix.pack.js',
+			'media/js/jquery.timeago.js',
+			'media/js/global.js',
+			//'media/js/OpenLayers.js',
+			//'media/js/ushahidi.js',
+			'media/js/jquery.treeview.js',
+			'media/js/selectToUISlider.jQuery.js',
+			'media/js/jquery.validate.min.js',
+			'media/js/colorpicker.js',
+		);
+		if ($this->timeline_enabled)
+		{
+			$base_js[] = 'media/js/jquery.jqplot.min.js';
+			$base_js[] = 'media/js/jqplot.dateAxisRenderer.min.js';
+		}
+		Requirements::combine_files('0_base.js', $base_js);
+		
+		// CSS base combines
+		$base_css = array(
+			'media/css/jquery-ui-themeroller.css',
+			'media/css/global.css',
+			'media/css/openlayers.css',
+			'media/css/jquery.treeview.css',
+			'media/css/colorpicker.css',
+		);
+		if ($this->timeline_enabled)
+		{
+			$base_css[] = 'media/css/jquery.jqplot.min.css';
+		}
+		Requirements::combine_files('0_base.css', $base_css);
+		
+		// JS admin combies
+		Requirements::combine_files('1_admin.js', array(
+			'media/js/jquery.form.js',
+			'media/js/jquery.base64.js',
+			'media/js/admin.js',
+			'media/js/jquery.hovertip-1.0.js',
+		));
+		
+		// CSS admin combines
+		Requirements::combine_files('1_admin.css', array(
+			'media/css/jquery.hovertip-1.0.css',
+			'media/css/admin.css'
+		));
+		
 		Event::run('ushahidi_action.themes_add_requirements_pre_theme', $this);
 		
 		if ($this->admin)
@@ -297,7 +346,7 @@ class Themes_Core {
 		Requirements::js('media/js/jquery.validate.min.js');
 		Requirements::js('media/js/jquery.base64.js');
 		Requirements::js('media/js/admin.js');
-		Requirements::css('media/css/admin/all.css');
+		Requirements::css('media/css/admin.css');
 		Requirements::ieCSS("lt IE 7", 'media/css/ie6.css');
 	}
 	

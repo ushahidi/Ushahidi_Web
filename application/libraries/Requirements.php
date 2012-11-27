@@ -30,6 +30,30 @@
  * @license	   https://github.com/silverstripe/sapphire Modified BSD License
  */
 class Requirements {
+	
+	/**
+	 * Enable combining of css/javascript files.
+	 * @param boolean $enable
+	 */
+	public static function set_combined_files_enabled($enable) {
+		self::backend()->set_combined_files_enabled($enable);
+	}
+
+	/**
+	 * Checks whether combining of css/javascript files is enabled.
+	 * @return boolean
+	 */
+	public static function get_combined_files_enabled() {
+	  return self::backend()->get_combined_files_enabled();
+	}
+
+	/**
+	 * Set the relative folder e.g. "assets" for where to store combined files
+	 * @param string $folder Path to folder
+	 */
+	public static function set_combined_files_folder($folder) {
+		self::backend()->setCombinedFilesFolder($folder);
+	}
 
 	/**
 	 * Set whether we want to suffix requirements with the time / 
@@ -232,6 +256,52 @@ class Requirements {
 	static function render($type = 'all') {
 		return self::backend()->render($type);
 	}
+	
+	/**
+	 * Concatenate several css or javascript files into a single dynamically generated file.
+	 * See {@link Requirements_Backend::combine_files()} for more info.
+	 *
+	 * @param string $combinedFileName
+	 * @param array $files
+	 */
+	static function combine_files($combinedFileName, $files) {
+		self::backend()->combine_files($combinedFileName, $files);
+	}
+	
+	/**
+	 * Returns all combined files.
+	 * See {@link Requirements_Backend::get_combine_files()}
+	 * 
+	 * @return array
+	 */
+	static function get_combine_files() {
+		return self::backend()->get_combine_files();
+	}
+	
+	/**
+	 * Deletes all dynamically generated combined files from the filesystem. 
+	 * See {@link Requirements_Backend::delete_combine_files()}
+	 * 
+	 * @param string $combinedFileName If left blank, all combined files are deleted.
+	 */
+	static function delete_combined_files($combinedFileName = null) {
+		return self::backend()->delete_combined_files($combinedFileName);
+	}
+	
+
+	/**
+	 * Re-sets the combined files definition. See {@link Requirements_Backend::clear_combined_files()}
+	 */
+	static function clear_combined_files() {
+		self::backend()->clear_combined_files();
+	}
+		
+	/**
+	 * See {@link combine_files()}.
+ 	 */
+	static function process_combined_files() {
+		return self::backend()->process_combined_files();
+	}
 
 	/**
 	 * Returns all custom scripts
@@ -333,7 +403,7 @@ class Requirements_Backend {
 	 *
 	 * @var array $combine_files
 	 */
-	public $combine_files = array();
+	public $combine_files = array('js' => array(), 'css' => array());
 
 	/**
 	 * Using the JSMin library to minify any
@@ -369,6 +439,29 @@ class Requirements_Backend {
 		// Set up defaults from config file
 		$this->combine_js_with_jsmin = Kohana::config('requirements.combine_js_with_jsmin');
 		$this->set_suffix_requirements(Kohana::config('requirements.suffix_requirements'));
+		$this->set_combined_files_enabled(Kohana::config('requirements.combined_files_enabled'));
+	}
+
+	function set_combined_files_enabled($enable) {
+		$this->combined_files_enabled = (bool) $enable;
+	}
+	
+	function get_combined_files_enabled() {
+		return $this->combined_files_enabled;
+	}
+
+	/**
+	 * @param String $folder
+	 */
+	function setCombinedFilesFolder($folder) {
+		$this->combinedFilesFolder = $folder;
+	}
+	
+	/**
+	 * @return String Folder relative to the webroot
+	 */
+	function getCombinedFilesFolder() {
+		return ($this->combinedFilesFolder) ? $this->combinedFilesFolder : Kohana::config('upload.relative_directory', FALSE);
 	}
 	
 	/**
@@ -595,10 +688,13 @@ class Requirements_Backend {
 	 * 
 	 * @return string HTML include tags for inclusion in template
 	 */
-	function renderJS()
+	private function renderJS()
 	{
 		$content = '';
 		if($this->js || $this->customJS) {
+			// Combine files - updates $this->js
+			$this->process_combined_files('js');
+		
 			foreach(array_diff_key($this->js,$this->blocked) as $id => $file) {
 				$path = $this->path_for_file($file, 'js');
 				if($path) {
@@ -627,7 +723,7 @@ class Requirements_Backend {
 	 * 
 	 * @return string HTML include tags for inclusion in template
 	 */
-	function renderHeadTags()
+	private function renderHeadTags()
 	{
 		$content = '';
 		if($this->customHeadTags) {
@@ -645,10 +741,14 @@ class Requirements_Backend {
 	 * 
 	 * @return string HTML include tags for inclusion in template
 	 */
-	function renderCSS()
+	private function renderCSS()
 	{
+		
 		$content = '';
 		if($this->css || $this->customCSS) {
+			// Combine files - updates $this->css 
+			$this->process_combined_files('css');
+			
 			foreach(array_diff_key($this->css,$this->blocked) as $id => $params) {
 				$file = $params['file'];
 				$path = $this->path_for_file($file, 'css');
@@ -696,11 +796,253 @@ class Requirements_Backend {
 				return "{$prefix}{$fileOrUrl}{$mtimesuffix}{$suffix}";
 			}
 		}
-		Kohana::log('alert', "Requirments: file $fileOrUrl not found");
+		Kohana::log('alert', "Requirements: file $fileOrUrl not found");
 		return false;
 	}
-  
-  function get_custom_scripts() {
+	
+	/**
+	 * Concatenate several css or javascript files into a single dynamically generated
+	 * file. This increases performance by fewer HTTP requests.
+	 * 
+	 * The combined file is only included if one or more of the individual files was included
+	 * with Requirements::js() or Requirements::css() already.
+	 * 
+	 * The combined file is regenerated based on every file modification time.
+	 * Optionally a rebuild can be triggered by appending ?flush=1 to the URL.
+	 * If all files to be combined are javascript, we use the external JSMin library
+	 * to minify the javascript. This can be controlled by {@link $combine_js_with_jsmin}.
+	 * 
+	 * CAUTION: You're responsible for ensuring that the load order for combined files
+	 * is retained - otherwise combining javascript files can lead to functional errors
+	 * in the javascript logic, and combining css can lead to wrong styling inheritance.
+	 * Depending on the javascript logic, you also have to ensure that files are not included
+	 * in more than one combine_files() call.
+	 * 
+	 * Best practice is to include every javascript file in exactly *one* combine_files()
+	 * directive to avoid the issues mentioned above - this is enforced by this function.
+	 * 
+	 * CAUTION: Combining CSS Files discards any "media" information.
+	 *
+	 * Example for combined JavaScript:
+	 * <code>
+	 * Requirements::combine_files(
+	 *  'foobar.js',
+	 *  array(
+	 * 		'mysite/javascript/foo.js',
+	 * 		'mysite/javascript/bar.js',
+	 * 		'baz.min' => 'mysite/javascript/baz.min',
+	 * 	)
+	 * );
+	 * </code>
+	 *
+	 * Example for combined CSS:
+	 * <code>
+	 * Requirements::combine_files(
+	 *  'foobar.css',
+	 * 	array(
+	 * 		'mysite/javascript/foo.css',
+	 * 		'mysite/javascript/bar.css',
+	 * 	)
+	 * );
+	 * </code>
+	 *
+	 * @see http://code.google.com/p/jsmin-php/
+	 * 
+	 * @todo Should we enforce unique inclusion of files, or leave it to the developer? Can auto-detection cause breaks?
+	 * 
+	 * @param string $combinedFileName Filename of the combined file
+	 * @param array $files Array of filenames relative to the webroot
+	 */
+	function combine_files($combinedFileName, $files) {
+		$type = stripos($combinedFileName, '.js') ? 'js' : 'css';
+		
+		// duplicate check
+		foreach($this->combine_files[$type] as $_combinedFileName => $_files) {
+			$duplicates = array_intersect($_files, $files);
+			if($duplicates && $combinedFileName != $_combinedFileName) {
+				Kohana::log('info', "Requirements_Backend::combine_files(): Already included files " . implode(',', $duplicates) . " in combined file '{$_combinedFileName}'");
+				return false;
+			}
+		}
+		
+		// If the $files array is indexed, generate uniquenessID from last part of filename
+		if (array_values($files) === $files)
+		{
+			$new_files = array();
+			foreach($files as $file)
+			{
+				$uniquenessID = substr( $file, strrpos( $file, '/' ) +1 );
+				$new_files[$uniquenessID] = $file;
+			}
+			$files = $new_files;
+		}
+		
+		$this->combine_files[$type][$combinedFileName] = $files;
+	}
+	
+	/**
+	 * Returns all combined files.
+	 * @return array
+	 */
+	function get_combine_files() {
+		return $this->combine_files;
+	}
+	
+	/**
+	 * Deletes all dynamically generated combined files from the filesystem. 
+	 * 
+	 * @param string $combinedFileName If left blank, all combined files are deleted.
+	 */
+	function delete_combined_files($combinedFileName = null) {
+		$combinedFiles = ($combinedFileName) ? array($combinedFileName => null) : array_merge($this->combine_files['css'], $this->combine_files['js']);
+		$combinedFolder = ($this->getCombinedFilesFolder()) ? (DOCROOT . $this->combinedFilesFolder) : DOCROOT . Kohana::config('upload.directory', FALSE);
+		foreach($combinedFiles as $combinedFile => $sourceItems) {
+			$filePath = $combinedFolder . '/' . $combinedFile;
+			if(file_exists($filePath)) {
+				unlink($filePath);
+			}
+		}
+	}
+	
+	function clear_combined_files() {
+		$this->combine_files = array('js' => array(), 'css' => array());
+	}
+
+	/**
+	 * See {@link combine_files()}
+	 *
+	 */
+	function process_combined_files($type = 'all') {
+		if( !$this->combined_files_enabled) {
+			return;
+		}
+		
+		switch ($type)
+		{
+			case 'js':
+				$this->_process_combined_files('js');
+				break;
+			case 'css':
+				$this->_process_combined_files('css');
+				break;
+			case 'all':
+			default:
+				$this->_process_combined_files('js');
+				$this->_process_combined_files('css');
+				break;
+		}
+	}
+
+	/**
+	 * See {@link combine_files()}
+	 *
+	 */
+	private function _process_combined_files($type) {
+		// Make a map of files that could be potentially combined
+		$combinerCheck = array();
+		foreach($this->combine_files[$type] as $combinedFile => $sourceItems) {
+			foreach($sourceItems as $id => $sourceItem) {
+				if(isset($combinerCheck[$sourceItem]) && $combinerCheck[$sourceItem] != $combinedFile){ 
+					Kohana::log('alert',"Requirements_Backend::process_combined_files - file '$sourceItem' appears in two combined files:" .	" '{$combinerCheck[$sourceItem]}' and '$combinedFile'");
+				}
+				$combinerCheck[$sourceItem] = $combinedFile;
+				$combinerCheck[$id] = $combinedFile;
+			}
+		}
+
+		// Work out the relative URL for the combined files from the base folder
+		$combinedFilesFolder = ($this->getCombinedFilesFolder()) ? ($this->getCombinedFilesFolder() . '/') : '';
+
+		// Figure out which ones apply to this pageview
+		$combinedFiles = array();
+		$newRequirements = array();
+		foreach($this->$type as $id => $params) {
+			$file = ($type == 'js') ? $params : $params['file'];
+			if(isset($combinerCheck[$file])) {
+				$newRequirements[$combinerCheck[$file]] = ($type == 'js') ? $combinedFilesFolder . $combinerCheck[$file] : array('file' => $combinedFilesFolder . $combinerCheck[$file]);
+				$combinedFiles[$combinerCheck[$file]] = true;
+			} elseif(isset($combinerCheck[$id])) {
+				$newRequirements[$combinerCheck[$id]] = ($type == 'js') ? $combinedFilesFolder . $combinerCheck[$id] : array('file' => $combinedFilesFolder . $combinerCheck[$id]);
+				$combinedFiles[$combinerCheck[$id]] = true;
+			} else {
+				$newRequirements[$id] = $params;
+			}
+		}
+
+		// Process the combined files
+		$base = DOCROOT;
+		foreach(array_diff_key($combinedFiles, $this->blocked) as $combinedFile => $dummy) {
+			$fileList = $this->combine_files[$type][$combinedFile];
+			$combinedFilePath = $base . $combinedFilesFolder . $combinedFile;
+
+			// Make the folder if necessary
+			if(!file_exists(dirname($combinedFilePath))) {
+				mkdir(dirname($combinedFilePath));
+			}
+
+			// If the file isn't writebale, don't even bother trying to make the combined file
+			// Complex test because is_writable fails if the file doesn't exist yet.
+			if((file_exists($combinedFilePath) && !is_writable($combinedFilePath)) ||
+				(!file_exists($combinedFilePath) && !is_writable(dirname($combinedFilePath)))) {
+				Kohana::log('alert', "Requirements_Backend::process_combined_files(): Couldn't create '$combinedFilePath'");
+				continue;
+			}
+
+			 // Determine if we need to build the combined include
+			if(file_exists($combinedFilePath) && !isset($_GET['flush'])) {
+				// file exists, check modification date of every contained file
+				$srcLastMod = 0;
+				foreach($fileList as $file) {
+					$srcLastMod = max(filemtime($base . $file), $srcLastMod);
+				}
+				$refresh = $srcLastMod > filemtime($combinedFilePath);
+			} else {
+				// file doesn't exist, or refresh was explicitly required
+				$refresh = true;
+			}
+
+			if(!$refresh) continue;
+
+			$combinedData = "";
+			foreach(array_diff($fileList, $this->blocked) as $id => $file) {
+				$fileContent = file_get_contents($base . $file);
+				// if we have a javascript file and jsmin is enabled, minify the content
+				if($type == 'js' && $this->combine_js_with_jsmin) {
+					//increase_time_limit_to();
+					$fileContent = JSMin::minify($fileContent);
+				}
+				// write a header comment for each file for easier identification and debugging
+				// also the semicolon between each file is required for jQuery to be combinable properly
+				$combinedData .= "/****** FILE: $file *****/\n" . $fileContent . "\n" . ($type == 'js' ? ';' : '') . "\n";
+			}
+
+			$successfulWrite = false;
+			$fh = fopen($combinedFilePath, 'wb');
+			if($fh) {
+				if(fwrite($fh, $combinedData) == strlen($combinedData)) $successfulWrite = true;
+				fclose($fh);
+				unset($fh);
+			}
+			
+			// Should we push this to the CDN too?
+			if (Kohana::config("cdn.cdn_store_dynamic_content") AND Kohana::config("requirements.cdn_store_combined_files"))
+			{
+				$cdn_combined_path = cdn::upload($combinedFilesFolder . $combinedFile, FALSE);
+			}
+
+			// Unsuccessful write - just include the regular JS files, rather than the combined one
+			if(!$successfulWrite) {
+				Kohana::log('alert', "Requirements_Backend::process_combined_files(): Couldn't create '$combinedFilePath'");
+				continue;
+			}
+		}
+
+		// @todo Alters the original information, which means you can't call this
+		// method repeatedly - it will behave different on the second call!
+		$this->$type = $newRequirements;
+	}
+	
+	function get_custom_scripts() {
 		$requirements = "";
 		
 		if($this->customJS) {

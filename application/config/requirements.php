@@ -15,6 +15,17 @@ $config['suffix_requirements'] = TRUE;
 $config['combined_files_enabled'] = TRUE;
 
 /**
+ * Using the JSMin library to minify any
+ * javascript file passed to {@link combine_files()}.
+ **/
+$config['combine_js_with_jsmin'] = TRUE;
+
+/**
+ * Enable auto uploading combined css/js to CDN
+ **/
+$config['cdn_store_combined_files'] = TRUE;
+
+/**
  * Put all javascript includes at the bottom of the template
  * before the closing <body> tag instead of the <head> tag.
  * This means script downloads won't block other HTTP-requests,
@@ -22,9 +33,3 @@ $config['combined_files_enabled'] = TRUE;
  * @see Requirements_Backend::$write_js_to_body for details
  **/
 $config['write_js_to_body'] = FALSE;
-
-/**
- * Using the JSMin library to minify any
- * javascript file passed to {@link combine_files()}.
- **/
-$config['combine_js_with_jsmin'] = TRUE;

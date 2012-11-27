@@ -49,14 +49,14 @@ class cdn_Core {
 	 * @param string $filename Name of the file to be uploaded
 	 * @return string
 	 */
-	public static function upload($filename)
+	public static function upload($filename, $appendUploadDir = TRUE)
 	{
 		try
 		{
 			self::connection();
 
 			// Upload to the CDN and return new filename
-			return self::$cdn->upload($filename);
+			return self::$cdn->upload($filename, $appendUploadDir);
 		}
 		catch (Exception $e)
 		{
