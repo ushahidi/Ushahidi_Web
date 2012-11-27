@@ -31,13 +31,13 @@ class CSVImporter {
 	 * Total number of reports within CSV file
 	 * @var int
 	 */		
-	public $totalrows = 0;
+	public $totalreports = 0;
 	
 	/**
 	 * Total number of reports successfully imported
 	 * @var int
 	 */
-	public $importedrows = 0;
+	public $importedreports = 0;
 	
 	/**
 	 * Categories successfully imported
@@ -80,66 +80,84 @@ class CSVImporter {
 	 * @param string $filehandle
 	 * @return bool 
 	 */
-	function import_csv($filehandle) 
+	function import($file) 
 	{
-		$csvtable = new Csvtable($filehandle);
-		// Set the required columns of the CSV file
-		$requiredcolumns = array('INCIDENT TITLE','INCIDENT DATE');
-		foreach ($requiredcolumns as $requiredcolumn)
-		{
-			// If the CSV file is missing any required column, return an error
-			if (!$csvtable->hasColumn($requiredcolumn))
-			{
-				$this->errors[] = 'CSV file is missing required column "'.$requiredcolumn.'"';
-			}
-		}
+		// Get contents of CSV file
+		$data = file_get_contents($file);
+
+		// Replace carriage return character
+		$replacedata = preg_replace("/\r/","\n",$data);
+
+		// Replace file content
+		file_put_contents($file, $replacedata);
 		
-		if (count($this->errors))
+		if($filehandle = fopen($_FILES['uploadfile']['tmp_name'], 'r'))
 		{
-			return false;
-		}
-		
-		// So we can assign category id to incidents, based on category title
-		$this->existing_categories = ORM::factory('category')->select_list('category_title','id'); 
-		//Since we capitalize the category names from the CSV file, we should also capitlize the 
-		//category titles here so we get case insensative behavior. For some reason users don't
-		//always captilize the cateogry names as they enter them in
-		$temp_cat = array();
-		foreach($this->existing_categories as $title => $id)
-		{
-			$temp_cat[utf8::strtoupper($title)] = $id;
-		}
-		$this->existing_categories = $temp_cat;
-		
-		// So we can check if incident already exists in database
-		$this->incident_ids = ORM::factory('incident')->select_list('id','id'); 
-		$this->time = date("Y-m-d H:i:s",time());
-		$rows = $csvtable->getRows();
-		$this->totalrows = count($rows);
-		$this->rownumber = 0;
-	 	
-		// Loop through CSV rows
-	 	foreach($rows as $row)
-	 	{
-			$this->rownumber++;
-			if (isset($row['#']) AND isset($this->incident_ids[$row['#']]))
+			$csvtable = new Csvtable($filehandle);
+			// Set the required columns of the CSV file
+			$requiredcolumns = array('INCIDENT TITLE','INCIDENT DATE');
+			foreach ($requiredcolumns as $requiredcolumn)
 			{
-				$this->notices[] = 'Incident with id #'.$row['#'].' already exists.';
-			}
-			else
-			{
-				if ($this->import_report($row))
+				// If the CSV file is missing any required column, return an error
+				if (!$csvtable->hasColumn($requiredcolumn))
 				{
-					$this->importedrows++;
+					$this->errors[] = 'CSV file is missing required column "'.$requiredcolumn.'"';
+				}
+			}
+		
+			if (count($this->errors))
+			{
+				return false;
+			}
+		
+			// So we can assign category id to incidents, based on category title
+			$this->existing_categories = ORM::factory('category')->select_list('category_title','id'); 
+			//Since we capitalize the category names from the CSV file, we should also capitlize the 
+			//category titles here so we get case insensative behavior. For some reason users don't
+			//always captilize the cateogry names as they enter them in
+			$temp_cat = array();
+			foreach($this->existing_categories as $title => $id)
+			{
+				$temp_cat[utf8::strtoupper($title)] = $id;
+			}
+			$this->existing_categories = $temp_cat;
+		
+			// So we can check if incident already exists in database
+			$this->incident_ids = ORM::factory('incident')->select_list('id','id'); 
+			$this->time = date("Y-m-d H:i:s",time());
+			$rows = $csvtable->getRows();
+			$this->totalreports = count($rows);
+			$this->rownumber = 0;
+	 	
+			// Loop through CSV rows
+		 	foreach($rows as $row)
+		 	{
+				$this->rownumber++;
+				if (isset($row['#']) AND isset($this->incident_ids[$row['#']]))
+				{
+					$this->notices[] = 'Incident with id #'.$row['#'].' already exists.';
 				}
 				else
 				{
-					$this->rollback();
-					return false;
+					if ($this->import_report($row))
+					{
+						$this->importedreports++;
+					}
+					else
+					{
+						$this->rollback();
+						return false;
+					}
 				}
-			}
-		} 
-		return true;
+			} 
+		}
+		else
+		{
+			$this->errors[] = Kohana::lang('ui_admin.file_open_error');
+		}
+		
+		// If we have errors, return FALSE, else TRUE
+		return count($this->errors) === 0;
 	}
 	
 	/**
@@ -190,7 +208,7 @@ class CSVImporter {
 			$location->location_name = isset($row['LOCATION']) ? $row['LOCATION'] : '';
 			
 			// For Geocoding purposes
-			$location_geocoded = map::geocode_location($location->location_name);
+			$location_geocoded = map::geocode($location->location_name);
 			
 			// If we have LATITUDE and LONGITUDE use those
 			if ( isset($row['LATITUDE']) AND isset($row['LONGITUDE']) ) 
@@ -202,10 +220,10 @@ class CSVImporter {
 			// Otherwise, get geocoded lat/lon values
 			else
 			{
-				$location->latitude = $location_geocoded ? $location_geocoded[1] : 0;
-				$location->longitude = $location_geocoded ? $location_geocoded[0] : 0;
+				$location->latitude = $location_geocoded ? $location_geocoded['latitude'] : 0;
+				$location->longitude = $location_geocoded ? $location_geocoded['longitude'] : 0;
 			}
-			$location->country_id = $location_geocoded ? $location_geocoded[2] : 0;
+			$location->country_id = $location_geocoded ? $location_geocoded['country_id'] : 0;
 			$location->location_date = $this->time;
 			$location->save();
 			$this->locations_added[] = $location->id;

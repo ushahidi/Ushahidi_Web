@@ -129,7 +129,7 @@ class XMLImporter {
 	 * @param file $file
 	 * @return bool
 	 */
-	public function import_xml($file)
+	public function import($file)
 	{
 		/* For purposes of checking whether the data we're trying to import already exists */
 		// Pick out existing categories 
@@ -655,7 +655,7 @@ class XMLImporter {
 					if ($location_name)
 					{
 						// For geocoding purposes
-						$location_geocoded = map::geocode_location($location_name);
+						$location_geocoded = map::geocode($location_name);
 						
 						// Save the location
 						$new_location = new Location_Model();
@@ -672,10 +672,10 @@ class XMLImporter {
 						else
 						{
 							// Get geocoded lat/lon values
-							$new_location->latitude = $location_geocoded ? $location_geocoded[1] : $latitude;
-							$new_location->longitude = $location_geocoded ? $location_geocoded[0] : $longitude;
+							$new_location->latitude = $location_geocoded ? $location_geocoded['latitude'] : $latitude;
+							$new_location->longitude = $location_geocoded ? $location_geocoded['longitude'] : $longitude;
 						} 
-						$new_location->country_id = $location_geocoded ? $location_geocoded[2] : 0;
+						$new_location->country_id = $location_geocoded ? $location_geocoded['country_id'] : 0;
 						$new_location->save();
 						
 						// Add this location to array of imported locations

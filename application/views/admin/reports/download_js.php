@@ -78,7 +78,8 @@
 					{
 						error.appendTo("#form_error1");
 					}
-					else if (element.attr("name") == "from_date" || element.attr("name") == "to_date"){
+					else if (element.attr("name") == "from_date" || element.attr("name") == "to_date")
+					{
 						error.appendTo("#form_error2");
 					}
 					else if (element.attr("name") == "format" )

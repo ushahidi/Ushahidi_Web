@@ -1048,60 +1048,28 @@ class Reports_Controller extends Admin_Controller {
 				// Establish if file to be uploaded is .xml or .csv format
 				$fileinfo = pathinfo($post['uploadfile']['name']);
 				$extension = $fileinfo['extension'];
+				$allowable_extensions = array ('csv', 'xml');
 				
 				if (file_exists($_FILES['uploadfile']['tmp_name']))
 				{
-					/* Sorting out compatibility issues for CSV files */
-					if ($extension == 'csv')
+					// If file type uploaded is CSV or XML
+					if (in_array($extension, $allowable_extensions))
 					{
-						// Get contents of CSV file
-						$data = file_get_contents($_FILES['uploadfile']['tmp_name']);
-
-						// Replace carriage return character
-						$replacedata = preg_replace("/\r/","\n",$data);
-
-						// Replace file content
-						file_put_contents($_FILES['uploadfile']['tmp_name'], $replacedata);
-
-						if($filehandle = fopen($_FILES['uploadfile']['tmp_name'], 'r'))
-						{
-							$csv_importer = new CSVImporter;
-
-							if ($csv_importer->import_csv($filehandle))
-							{
-								$this->template->content = new View('admin/reports/upload_success');
-								$this->template->content->title = 'Upload Reports';
-								$this->template->content->rowcount = $csv_importer->totalrows;
-								$this->template->content->imported = $csv_importer->importedrows;
-								$this->template->content->notices = $csv_importer->notices;
-							}
-							else
-							{
-								$errors = $csv_importer->errors;	
-							}
-						}
-						else
-						{
-							$errors[] = Kohana::lang('ui_admin.file_open_error');
-						}
-					}
-					
-					elseif ($extension == 'xml')
-					{
-						$xml_importer = new XMLImporter;
-						if($xml_importer->import_xml($_FILES['uploadfile']['tmp_name']))
+						// Pick the corresponding import library
+						$importer = $extension == 'csv' ? new CSVImporter : new XMLImporter;
+						if($importer->import($_FILES['uploadfile']['tmp_name']))
 						{
 							$this->template->content = new View('admin/reports/upload_success');
 							$this->template->content->title = 'Upload Reports';
-							$this->template->content->rowcount = $xml_importer->totalreports;
-							$this->template->content->imported = $xml_importer->importedreports;
-							$this->template->content->notices = $xml_importer->notices;
+							$this->template->content->rowcount = $importer->totalreports;
+							$this->template->content->imported = $importer->importedreports;
+							$this->template->content->notices = $importer->notices;
 						}
 						
 						else
 						{
-							$errors = $xml_importer->errors;
-						}
+							$errors = $importer->errors;
+						}	
 					}
 					
 					else
