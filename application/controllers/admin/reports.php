@@ -387,7 +387,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 		
 		// Initialize custom field array
-		$form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,true);
+		$form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,TRUE);
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
@@ -454,7 +454,7 @@ class Reports_Controller extends Admin_Controller {
 					url::redirect('admin/reports/edit/'. $message->incident_id);
 				}
 
-				$this->template->content->show_messages = true;
+				$this->template->content->show_messages = TRUE;
 				$incident_description = $message->message;
 				if ( ! empty($message->message_detail))
 				{
@@ -690,7 +690,7 @@ class Reports_Controller extends Admin_Controller {
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident', $id);
-				if ($incident->loaded == true)
+				if ($incident->loaded == TRUE)
 				{
 					// Retrieve Categories
 					$incident_category = array();
@@ -759,7 +759,7 @@ class Reports_Controller extends Admin_Controller {
 						'person_first' => $incident->incident_person->person_first,
 						'person_last' => $incident->incident_person->person_last,
 						'person_email' => $incident->incident_person->person_email,
-						'custom_field' => customforms::get_custom_form_fields($id,$incident->form_id,true),
+						'custom_field' => customforms::get_custom_form_fields($id,$incident->form_id,TRUE),
 						'incident_active' => $incident->incident_active,
 						'incident_verified' => $incident->incident_verified,
 						'incident_zoom' => $incident->incident_zoom
@@ -834,7 +834,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
 
 		// Pack Javascript
-		$myPacker = new javascriptpacker($this->template->js , 'Normal', false, false);
+		$myPacker = new javascriptpacker($this->template->js , 'Normal', FALSE, FALSE);
 		$this->template->js = $myPacker->pack();
 	}
 
@@ -879,29 +879,29 @@ class Reports_Controller extends Admin_Controller {
 				$filter = '( ';
 				
 				// Report Type Filter
-				$show_active = false;
-				$show_inactive = false;
-				$show_verified = false;
-				$show_not_verified = false;
+				$show_active = FALSE;
+				$show_inactive = FALSE;
+				$show_verified = FALSE;
+				$show_not_verified = FALSE;
 				
 				if (in_array(1, $post->data_active))
 				{
-					$show_active = true;
+					$show_active = TRUE;
 				}
 
 				if (in_array(0, $post->data_active))
 				{
-					$show_inactive = true;
+					$show_inactive = TRUE;
 				}
 
 				if (in_array(1, $post->data_verified))
 				{
-					$show_verified = true;
+					$show_verified = TRUE;
 				}
 
 				if (in_array(0, $post->data_verified))
 				{
-					$show_not_verified = true;
+					$show_not_verified = TRUE;
 				}
 				
 				// Handle active or not active
@@ -958,13 +958,13 @@ class Reports_Controller extends Admin_Controller {
 				$incidents = ORM::factory('incident')->where($filter)->orderby('incident_dateadd', 'desc')->find_all();
 				
 				// Retrieve categories
-				$categories = Category_Model::get_categories(false, false, false);
+				$categories = Category_Model::get_categories(FALSE, FALSE, FALSE);
 				
 				// Retrieve Forms
 				$forms = ORM::Factory('form')->find_all();
 				
 				// Retrieve Custom forms
-				$custom_forms = customforms::get_custom_form_fields('','',false);
+				$custom_forms = customforms::get_custom_form_fields();
 
 				// If CSV format is selected
 				if($post->format == 'csv')
@@ -1032,7 +1032,7 @@ class Reports_Controller extends Admin_Controller {
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->template->content = new View('admin/reports/upload');
 			$this->template->content->title = 'Upload Reports';
-			$this->template->content->form_error = false;
+			$this->template->content->form_error = FALSE;
 		}
 
 		if ($_SERVER['REQUEST_METHOD']=='POST')
@@ -1086,7 +1086,7 @@ class Reports_Controller extends Admin_Controller {
 						}
 					}
 					
-					else if ($extension == 'xml')
+					elseif ($extension == 'xml')
 					{
 						$xml_importer = new XMLImporter;
 						if($xml_importer->import_xml($_FILES['uploadfile']['tmp_name']))
@@ -1259,7 +1259,7 @@ class Reports_Controller extends Admin_Controller {
 				$(\"#incident_date\").datepicker({
 				showOn: \"both\",
 				buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\",
-				buttonImageOnly: true
+				buttonImageOnly: TRUE
 				});
 				});
 			</script>";
@@ -1272,7 +1272,7 @@ class Reports_Controller extends Admin_Controller {
 				$(document).ready(function() {
 				$('a#category_toggle').click(function() {
 				$('#category_add').toggle(400);
-				return false;
+				return FALSE;
 				});
 				});
 			</script>";
@@ -1357,7 +1357,7 @@ class Reports_Controller extends Admin_Controller {
 
 	/**
 	 * Adds extra filter parameters to the reports::fetch_incidents()
-	 * method. This way we can add 'all_reports=>true and other filters
+	 * method. This way we can add 'all_reports=>TRUE and other filters
 	 * that don't come standard since we are on the backend.
 	 * Works by simply adding in SQL conditions to the params
 	 * array of the reports::fetch_incidents() method

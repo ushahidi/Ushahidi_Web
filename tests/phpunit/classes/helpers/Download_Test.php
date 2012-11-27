@@ -96,8 +96,8 @@
 				'locale' => 'locale',
 			),
 			'elements' => array(
-				'transtitle' => 'category_title',
-				'transdescription' => 'category_description'
+				'translation_title' => 'category_title',
+				'translation_description' => 'category_description'
 			)
 		);
 
@@ -107,8 +107,8 @@
 				'locale' => $translation->locale,
 			),
 			'elements' => array(
-				'transtitle' => $translation->category_title,
-				'transdescription' => $translation->category_description
+				'translation_title' => $translation->category_title,
+				'translation_description' => $translation->category_description
 			)
 		);
 		
@@ -312,6 +312,17 @@
 			}	
 		}
 		
+		if ($object_name == 'Report')
+		{
+			// Make sure the incident_form is loaded
+			if ($object_orm->form->loaded)
+			{
+				// Add form_name attribute to actual map and expected map
+				$expected_map['attributes']['form_name'] = $object_orm->form->form_title;
+				$actual_map['attributes']['form_name'] = $object_orm->form->form_title;
+			}
+		}
+		
 		// Test to ensure expected array map and actual array map match
 		$this->assertEquals($expected_map, $actual_map, 'Output does not match expected array for the '.$object_name.' object');	
 	}
@@ -354,7 +365,7 @@
 		
 		// Check for categories, customforms and reports elements
 		$d_categories = $reader->getElementsByTagName('categories');
-		$d_customforms = $reader->getElementsByTagName('customforms');
+		$d_customforms = $reader->getElementsByTagName('custom_forms');
 		$d_reports = $reader->getElementsByTagName('reports');
 		
 		// Ensure that at least one of the elements i.e categories, customforms OR reports exist
@@ -471,11 +482,11 @@
 					$this->assertEquals($translation->locale, $locale, 'Translation locales do not match/ attribute does not exist');
 					
 					// Test Translation category title
-					$transtitle = xml::get_node_text($translation_element->item($index), 'transtitle');
+					$transtitle = xml::get_node_text($translation_element->item($index), 'translation_title');
 					$this->assertEquals($translation->category_title, $transtitle, 'Translation titles do not match/ element does not exist');
 					
 					// Test Translation category description
-					$transdescription = xml::get_node_text($translation_element->item($index), 'transdescription');
+					$transdescription = xml::get_node_text($translation_element->item($index), 'translation_description');
 					$this->assertEquals($translation->category_description, $transdescription, 'Translation descriptions do not match/ element does not exist');
 				}
 				
@@ -504,14 +515,14 @@
 		// When custom forms option is not selected, make sure the custom forms element does not exist
 		if ( ! in_array(6, $this->post['data_include']))
 		{
-			$this->assertEquals(0, $d_customforms->length, 'The "customforms" element should not exist');
+			$this->assertEquals(0, $d_customforms->length, 'The "custom_forms" element should not exist');
 		}
 		
 		// Custom forms option is selected
 		else
 		{
 			// Test to make sure <customforms> element exists
-			$this->assertGreaterThan(0, $d_customforms->length, 'The "customforms" element SHOULD exist');
+			$this->assertGreaterThan(0, $d_customforms->length, 'The "custom_forms" element SHOULD exist');
 			
 			// Contents of <customforms> element
 			$forms_element = $d_customforms->item(0);
@@ -582,11 +593,11 @@
 					$this->assertEquals($field->field_required, $required, 'Field required does not match/attribute does not exist');
 					
 					// Test field visibility status
-					$visible_by = $field_element->getAttribute('visible-by');
+					$visible_by = $field_element->getAttribute('visible_by');
 					$this->assertEquals($field->field_ispublic_visible, $visible_by, 'Field visible status does not match/attribute does not exist');
 					
 					// Test field submit status
-					$submit_by = $field_element->getAttribute('submit-by');
+					$submit_by = $field_element->getAttribute('submit_by');
 					$this->assertEquals($field->field_ispublic_submit, $submit_by, 'Field submit status does not match/attribute does not exist');
 					
 					// Test field options
@@ -709,9 +720,8 @@
 			$this->assertEquals($incident->incident_mode, $mode, 'Report mode does not match/attribute does not exist');
 			
 			// Test Report form_id
-			$form_id = xml::get_node_text($report_element->item(0), 'form_id', FALSE);
-			$incident_form = ORM::factory('form')->where('form_title', $form_id)->find();
-			$this->assertEquals($incident_form->form_title, $form_id, 'Report form_id does not match/attribute does not exist');
+			$form_name = xml::get_node_text($report_element->item(0), 'form_name', FALSE);
+			$this->assertEquals($incident->form->form_title, $form_name, 'Report form_id does not match/attribute does not exist');
 			
 			// Test Report Title
 			$title = xml::get_node_text($report_element->item(0), 'title');
@@ -820,7 +830,7 @@
 			}
 		
 			/* Personal info check */
-			$person_info_element = $report_element->item(0)->getElementsByTagName('personal-info');
+			$person_info_element = $report_element->item(0)->getElementsByTagName('personal_info');
 			$incident_person = $incident->incident_person;
 			
 			// Include personal info option selected?
@@ -833,11 +843,11 @@
 					$this->assertGreaterThan(0, $person_info_element->length, 'Report personal-info element SHOULD exist');
 				
 					// Test First Name
-					$firstname = xml::get_node_text($person_info_element->item(0), 'firstname');
+					$firstname = xml::get_node_text($person_info_element->item(0), 'first_name');
 					$this->assertEquals($incident_person->person_first, $firstname, 'Person first name does not match/ element does not exist');
 				
 					// Test last name
-					$lastname = xml::get_node_text($person_info_element->item(0), 'lastname');
+					$lastname = xml::get_node_text($person_info_element->item(0), 'last_name');
 					$this->assertEquals($incident_person->person_last, $lastname, 'Person last name does not match/ element does not exist');
 				
 					// Test Email
@@ -855,7 +865,7 @@
 			}
 		
 			/* Incident Category check */
-			$report_cat_element = $report_element->item(0)->getElementsByTagName('reportcategories');
+			$report_cat_element = $report_element->item(0)->getElementsByTagName('report_categories');
 			$incident_categories = $incident->incident_category;
 			$incident_cat_count = count($incident_categories);
 			$cat_index = rand(0, $incident_cat_count-1);
@@ -879,7 +889,7 @@
 			}
 		
 			/* Custom response check */
-			$custom_responses_element = $report_element->item(0)->getElementsByTagName('customfields');
+			$custom_responses_element = $report_element->item(0)->getElementsByTagName('custom_fields');
 			$sql = "SELECT form_field.*, form_response.form_response
 					FROM form_field
 					LEFT JOIN roles ON (roles.id = field_ispublic_visible)

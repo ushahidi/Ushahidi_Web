@@ -128,7 +128,7 @@ class Manage_Controller extends Admin_Controller
 					// Get Category position for a new category
 					if (empty($_POST['category_id']))
 					{
-						$cat_count = count(Category_Model::get_categories(false, false, false));
+						$cat_count = ORM::factory('category')->count_all();
 						$category->category_position = $cat_count;
 					}
 					

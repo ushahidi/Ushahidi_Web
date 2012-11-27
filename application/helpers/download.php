@@ -66,12 +66,12 @@ class download_Core {
 	 * @param Validation $post Validation object with the download criteria 
 	 * @param array $incidents Reports to be downloaded
 	 * @param array $custom_forms Custom form field structure and values
+	 * @return string $report_csv CSV content
 	 */
 	public static function download_csv($post, $incidents, $custom_forms)
 	{
 		// Column Titles
-		ob_start();
-		echo "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
+		$report_csv = "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
 		$item_map = array(
 		    1 => 'LOCATION',
 		    2 => 'DESCRIPTION',
@@ -87,80 +87,80 @@ class download_Core {
 			{
 				foreach($custom_forms as $field_name)
 				{
-					echo ",".$field_name['field_name']."-".$field_name['form_id'];
+					$report_csv .= ",".$field_name['field_name']."-".$field_name['form_id'];
 				}
 
 			}
-			else if ( array_key_exists($item, $item_map))
+			elseif ( array_key_exists($item, $item_map))
 			{
-			    echo sprintf(",%s", $item_map[$item]);
+			    $report_csv .= sprintf(",%s", $item_map[$item]);
 			}
 		}
 
-		echo ",APPROVED,VERIFIED";
+		$report_csv .= ",APPROVED,VERIFIED";
 
 		// Incase a plugin would like to add some custom fields
 		$custom_headers = "";
 		Event::run('ushahidi_filter.report_download_csv_header', $custom_headers);
-		echo $custom_headers;
+		$report_csv .= $custom_headers;
 
-		echo "\n";
+		$report_csv .= "\n";
 
 		foreach ($incidents as $incident)
 		{
-			echo '"'.$incident->id.'",';
-			echo '"'.$incident->form_id.'",';
-			echo '"'.self::_csv_text($incident->incident_title).'",';
-			echo '"'.$incident->incident_date.'"';
+			$report_csv .= '"'.$incident->id.'",';
+			$report_csv .= '"'.$incident->form_id.'",';
+			$report_csv .= '"'.self::_csv_text($incident->incident_title).'",';
+			$report_csv .= '"'.$incident->incident_date.'"';
 
 			foreach($post->data_include as $item)
 			{
 				switch ($item)
 				{
 					case 1:
-					echo ',"'.self::_csv_text($incident->location->location_name).'"';
+					$report_csv .= ',"'.self::_csv_text($incident->location->location_name).'"';
 					break;
 
 					case 2:
-					echo ',"'.self::_csv_text($incident->incident_description).'"';
+					$report_csv .= ',"'.self::_csv_text($incident->incident_description).'"';
 					break;
 
 					case 3:
-					echo ',"';
+					$report_csv .= ',"';
 
 					foreach($incident->incident_category as $category)
 					{
 						if ($category->category->category_title)
 						{
-							echo self::_csv_text($category->category->category_title) . ", ";
+							$report_csv .= self::_csv_text($category->category->category_title) . ", ";
 						}
 					}
-					echo '"';
+					$report_csv .= '"';
 					break;
 
 					case 4:
-					echo ',"'.self::_csv_text($incident->location->latitude).'"';
+					$report_csv .= ',"'.self::_csv_text($incident->location->latitude).'"';
 					break;
 
 					case 5:
-					echo ',"'.self::_csv_text($incident->location->longitude).'"';
+					$report_csv .= ',"'.self::_csv_text($incident->location->longitude).'"';
 					break;
 
 					case 6:
 					$incident_id = $incident->id;
-					$custom_fields = customforms::get_custom_form_fields($incident_id,'',false);
+					$custom_fields = customforms::get_custom_form_fields($incident_id, NULL, FALSE);
 					if ( ! empty($custom_fields))
 					{
 						foreach($custom_fields as $custom_field)
 						{
-							echo',"'.self::_csv_text($custom_field['field_response']).'"';
+							$report_csv .= ',"'.self::_csv_text($custom_field['field_response']).'"';
 						}
 					}
 					else
 					{
 						foreach ($custom_forms as $custom)
 						{
-							echo',"'.self::_csv_text("").'"';
+							$report_csv .= ',"'.self::_csv_text("").'"';
 						}
 					}
 					break;
@@ -169,12 +169,13 @@ class download_Core {
 					$incident_person = $incident->incident_person;
 					if($incident_person->loaded)
 					{
-						echo',"'.self::_csv_text($incident_person->person_first).'"'.',"'.self::_csv_text($incident_person->person_last).'"'.
-							',"'.self::_csv_text($incident_person->person_email).'"';
+						$report_csv .= ',"'.self::_csv_text($incident_person->person_first).'"'
+										.',"'.self::_csv_text($incident_person->person_last).'"'
+										.',"'.self::_csv_text($incident_person->person_email).'"';
 					}
 					else
 					{
-						echo',"'.self::_csv_text("").'"'.',"'.self::_csv_text("").'"'.',"'.self::_csv_text("").'"';
+						$report_csv .= ',"'.self::_csv_text("").'"'.',"'.self::_csv_text("").'"'.',"'.self::_csv_text("").'"';
 					}
 					break;
 				}
@@ -182,30 +183,29 @@ class download_Core {
 
 			if ($incident->incident_active)
 			{
-				echo ",YES";
+				$report_csv .= ",YES";
 			}
 			else
 			{
-				echo ",NO";
+				$report_csv .= ",NO";
 			}
 
 			if ($incident->incident_verified)
 			{
-				echo ",YES";
+				$report_csv .= ",YES";
 			}
 			else
 			{
-				echo ",NO";
+				$report_csv .= ",NO";
 			}
 
 			// Incase a plugin would like to add some custom data for an incident
 			$event_data = array("report_csv" => "", "incident" => $incident);
 			Event::run('ushahidi_filter.report_download_csv_incident', $event_data);
-			echo $event_data['report_csv'];
-			echo "\n";
+			$report_csv .= $event_data['report_csv'];
+			$report_csv .= "\n";
 		}
-		$report_csv = ob_get_clean();
-
+		
 		return $report_csv;
 	}
 	
@@ -222,7 +222,7 @@ class download_Core {
 		$writer = new XMLWriter;
 		$writer->openMemory();
 		$writer->startDocument('1.0', 'UTF-8');
-		$writer->setIndent(true);
+		$writer->setIndent(TRUE);
 		
 		/* Category Element/Attribute maps */
 		// Category map
@@ -248,13 +248,13 @@ class download_Core {
 				'locale' => 'locale',
 			),
 			'elements' => array(
-				'transtitle' => 'category_title',
-				'transdescription' => 'category_description'
+				'translation_title' => 'category_title',
+				'translation_description' => 'category_description'
 			)
 		);
 		
 		// Array of translation elements
-		$translation_elements = array('locale', 'transtitle', 'transdescription');
+		$translation_elements = array('locale', 'translation_title', 'translation_description');
 		
 		/* Form element/attribute maps */
 		// Forms map
@@ -273,7 +273,7 @@ class download_Core {
 		
 		/* Custom fields element/attribute maps */	
 		// Field elements
-		$form_field_elements = array('type', 'required', 'visible-by', 'submit-by', 'datatype', 'hidden', 'name', 'default');
+		$form_field_elements = array('type', 'required', 'visible_by', 'submit_by', 'datatype', 'hidden', 'name', 'default');
 		
 		/* Reports element/attribute maps */
 		// Report map
@@ -292,7 +292,7 @@ class download_Core {
 					);
 					
 		// Report elements
-		$report_elements = array('id', 'approved', 'verified', 'form_id', 'mode', 'title', 'date', 'dateadd');
+		$report_elements = array('id', 'approved', 'verified', 'form_name', 'mode', 'title', 'date', 'dateadd');
 		
 		// Location Map
 		$location_map = array(
@@ -324,14 +324,14 @@ class download_Core {
 		$person_map = array(
 						'attributes' => array(),
 						'elements' => array(
-							'firstname' => 'person_first',
-							'lastname' => 'person_last',
+							'first_name' => 'person_first',
+							'last_name' => 'person_last',
 							'email' => 'person_email'	
 						)
 					);
 	
 		// Personal info elements
-		$person_elements = array('firstname', 'lastname', 'email');
+		$person_elements = array('first_name', 'last_name', 'email');
 		
 		// Incident Category map
 		$incident_category_map = array(
@@ -346,7 +346,7 @@ class download_Core {
 		$incident_category_elements = array('category');
 												
 		/* Start Import Tag*/
-		$writer->startElement('import');
+		$writer->startElement('UshahidiReports');
 		foreach ($post->data_include as $item)
 		{
 			switch($item)
@@ -419,7 +419,7 @@ class download_Core {
 				
 				case 6:
 				/* Start Customforms Element */
-				$writer->startElement('customforms');
+				$writer->startElement('custom_forms');
 			
 				// If we have custom forms
 				if (count($custom_forms) > 0)
@@ -436,7 +436,7 @@ class download_Core {
 						xml::generate_tags($writer, $form_element_map, $form_elements);
 					
 						// Get custom fields associated with this form
-						$form_fields = customforms::get_custom_form_fields('',$form->id,'');
+						$form_fields = customforms::get_custom_form_fields(FALSE,$form->id,FALSE);
 						foreach ($form_fields as $field)
 						{
 							// Make sure this custom form field belongs to the current form
@@ -449,8 +449,8 @@ class download_Core {
 													'attributes' => array(
 														'type' => $field['field_type'],
 														'required' => $field['field_required'],
-														'visible-by' => $field['field_ispublic_visible'],
-														'submit-by' => $field['field_ispublic_submit']
+														'visible_by' => $field['field_ispublic_visible'],
+														'submit_by' => $field['field_ispublic_submit']
 														),
 													'elements' => array()
 													);
@@ -521,11 +521,10 @@ class download_Core {
 				$report_element_map = xml::generate_element_attribute_map($incident, $report_map);
 				
 				// Form this incident belongs to?
-				$form = ORM::factory('form')->find($incident->form_id);
-				$form_name = $form->loaded ? $form->form_title : '';
+				$form_name = $incident->form->loaded ? $incident->form->form_title : '';
 				
 				// Add it to report element map
-				$report_element_map['attributes']['form_id'] = $form_name;
+				$report_element_map['attributes']['form_name'] = $form_name;
 				
 				// Generate report tags
 				xml::generate_tags($writer, $report_element_map, $report_elements);
@@ -590,7 +589,7 @@ class download_Core {
 						$incident_person = $incident->incident_person;
 						if ($incident_person->loaded)
 						{
-							$writer->startElement('personal-info');
+							$writer->startElement('personal_info');
 							
 							// Generate incident person element map
 							$person_element_map = xml::generate_element_attribute_map($incident_person, $person_map);
@@ -606,7 +605,7 @@ class download_Core {
 						case 3:
 						
 						// Report Category
-						$writer->startElement('reportcategories');
+						$writer->startElement('report_categories');
 						foreach($incident->incident_category as $category)
 						{
 							// Generate Incident Category Element Map
@@ -621,10 +620,10 @@ class download_Core {
 						case 6:
 						
 						// Report Fields
-						$customresponses = customforms::get_custom_form_fields($incident->id,$incident->form_id,false);
+						$customresponses = customforms::get_custom_form_fields($incident->id,$incident->form_id,FALSE);
 						if ( ! empty($customresponses))
 						{
-							$writer->startElement('customfields');
+							$writer->startElement('custom_fields');
 							foreach($customresponses as $customresponse)
 							{
 								// If we don't have an empty form response

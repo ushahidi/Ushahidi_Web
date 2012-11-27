@@ -85,7 +85,8 @@
 					{
 						error.appendTo("#form_error_format");
 					}
-					else{
+					else
+					{
 						error.insertAfter(element);
 					}
 				}

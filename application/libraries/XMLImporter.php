@@ -175,7 +175,7 @@ class XMLImporter {
 		if (@$xml->load($file) !== FALSE)
 		{
 			$depcategories = $xml->getElementsByTagName('categories');
-			$depcustomforms = $xml->getElementsByTagName('customforms');
+			$depcustomforms = $xml->getElementsByTagName('custom_forms');
 			$depreports = $xml->getElementsByTagName('reports');
 			
 			if ($depcategories->length == 0 AND $depcustomforms->length == 0 AND $depreports->length == 0)
@@ -349,10 +349,10 @@ class XMLImporter {
 							if (count($existing_translations) == 0)
 							{
 								// Get category title for this localization
-								$trans_title = xml::get_node_text($translation, 'transtitle');
+								$trans_title = xml::get_node_text($translation, 'translation_title');
 								
 								// Category Description
-								$trans_description = xml::get_node_text($translation, 'transdescription');
+								$trans_description = xml::get_node_text($translation, 'translation_description');
 								
 								// If we're missing the translated category title
 								if ( ! $trans_title)
@@ -486,11 +486,11 @@ class XMLImporter {
 								$required = (isset($field_required) AND in_array($field_required, $this->allowable)) ? $field_required : 0;
 								
 								// Field Publicly Visible
-								$field_visible = $field->getAttribute('visible-by');
+								$field_visible = $field->getAttribute('visible_by');
 								$public_visible = (isset($field_visible) AND in_array($field_visible, $this->allowable)) ? $field_visible : 0;
 								
 								// Field Publicly submit?
-								$field_submit = $field->getAttribute('submit-by');
+								$field_submit = $field->getAttribute('submit_by');
 								$public_submit = (isset($field_submit) AND in_array($field_submit, $this->allowable)) ? $field_submit : 0;
 
 								// Field Default
@@ -655,7 +655,7 @@ class XMLImporter {
 					if ($location_name)
 					{
 						// For geocoding purposes
-						$location_geocoded = Geocoder::geocode_location($location_name);
+						$location_geocoded = map::geocode_location($location_name);
 						
 						// Save the location
 						$new_location = new Location_Model();
@@ -721,7 +721,7 @@ class XMLImporter {
 					$report_mode = (isset($mode) AND in_array($mode, $allowed_modes)) ? $mode : 1;
 					
 					// Report Form
-					$report_form = xml::get_node_text($report,'form_id', FALSE);
+					$report_form = xml::get_node_text($report,'form_name', FALSE);
 					if ($report_form)
 					{
 						if (! isset($this->existing_forms[utf8::strtoupper($report_form)]))
@@ -762,7 +762,7 @@ class XMLImporter {
 					
 					/* Step 3: Save Report Categories*/
 					// Report Categories exist?
-					$reportcategories = $report->getElementsByTagName('reportcategories') ;
+					$reportcategories = $report->getElementsByTagName('report_categories') ;
 					if ($reportcategories->length > 0)
 					{
 						$report_categories = $reportcategories->item(0);
@@ -794,7 +794,7 @@ class XMLImporter {
 					/* Step 4: Save Custom form field responses for this report */
 					// Report Custom Fields
 					$this_form = $new_report->form_id;
-					$reportfields = $report->getElementsByTagName('customfields');
+					$reportfields = $report->getElementsByTagName('custom_fields');
 					if ($reportfields->length > 0)
 					{
 						$report_fields = $reportfields->item(0);
@@ -907,7 +907,7 @@ class XMLImporter {
 					
 					/* Step 5: Save incident persons for this report */
 					// Report Personal Information
-					$personal_info = $report->getElementsByTagName('personal-info');
+					$personal_info = $report->getElementsByTagName('personal_info');
 					
 					// If personal info exists
 					if ($personal_info->length > 0)
@@ -915,10 +915,10 @@ class XMLImporter {
 						$report_info = $personal_info->item(0);
 
 						// First Name
-						$firstname = xml::get_node_text($report_info, 'firstname');
+						$firstname = xml::get_node_text($report_info, 'first_name');
 
 						// Last Name
-						$lastname = xml::get_node_text($report_info, 'lastname');
+						$lastname = xml::get_node_text($report_info, 'last_name');
 
 						// Email
 						$r_email = xml::get_node_text($report_info, 'email');	

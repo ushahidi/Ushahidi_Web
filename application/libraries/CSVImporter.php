@@ -190,7 +190,7 @@ class CSVImporter {
 			$location->location_name = isset($row['LOCATION']) ? $row['LOCATION'] : '';
 			
 			// For Geocoding purposes
-			$location_geocoded = Geocoder::geocode_location($location->location_name);
+			$location_geocoded = map::geocode_location($location->location_name);
 			
 			// If we have LATITUDE and LONGITUDE use those
 			if ( isset($row['LATITUDE']) AND isset($row['LONGITUDE']) ) 

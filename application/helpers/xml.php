@@ -30,7 +30,7 @@ class xml_Core{
 			}
 
 			// For elements
-			else if (array_key_exists($element, $object_map['elements']))
+			elseif (array_key_exists($element, $object_map['elements']))
 			{
 				$writer->startElement($element);
 					$writer->text($object_map['elements'][$element]);
