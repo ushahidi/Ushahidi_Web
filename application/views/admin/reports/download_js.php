@@ -97,7 +97,13 @@
 		// Check All / Check None
 		function CheckAll( id )
 		{
-			//$("INPUT[name='data_point'][type='checkbox']").attr('checked', $('#' + id).is(':checked'));
-			//$("INPUT[name='data_include'][type='checkbox']").attr('checked', $('#' + id).is(':checked'));
-			$("td > input:checkbox").attr('checked', $('#' + id).is(':checked'));
+			if (id == 'data_all')
+			{
+				$("td > input:checkbox[name='data_verified[]']").attr('checked', $('#' + id).is(':checked'));
+				$("td > input:checkbox[name='data_active[]']").attr('checked', $('#' + id).is(':checked'));
+			}
+			else if (id == 'data_include_all')
+			{
+				$("td > input:checkbox[name='data_include[]']").attr('checked', $('#' + id).is(':checked'));
+			}
 		}
