@@ -290,17 +290,13 @@ class XMLImporter {
 					
 					/* Get other category elements */
 					// Parent Category
-					$parent = $category->getElementsByTagName('parent');
-					if ($parent->length > 0)
+					$cat_parent = xml::get_node_text($category, 'parent');
+					if ($cat_parent)
 					{
-						$cat_parent = xml::get_node_text($category, 'parent');
-						if ($cat_parent)
-						{
-							$parent_id = isset($this->existing_categories[utf8::strtoupper($cat_parent)])
-							 			? $this->existing_categories[utf8::strtoupper($cat_parent)] 
-										: 0;
-						}	 	
-					}
+						$parent_id = isset($this->existing_categories[utf8::strtoupper($cat_parent)])
+						 			? $this->existing_categories[utf8::strtoupper($cat_parent)] 
+									: 0;
+					}	 	
 			
 					// Save the Category
 					$new_category = new Category_Model;
@@ -494,12 +490,8 @@ class XMLImporter {
 								$public_submit = (isset($field_submit) AND in_array($field_submit, $this->allowable)) ? $field_submit : 0;
 
 								// Field Default
-								$fielddefault = $field->getElementsByTagName('default');
-								if ($fielddefault->length > 0)
-								{		
-									$default = xml::get_node_text($field, 'default');
-									$default_values = $default ? $default : NULL;
-								}
+								$default = xml::get_node_text($field, 'default');
+								$default_values = $default ? $default : NULL;
 								
 								// Make sure we have default values for Radio buttons, Checkboxes and drop down fields
 								// If not provided, don't import this custom field
