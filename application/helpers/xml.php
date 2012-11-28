@@ -88,9 +88,6 @@ class xml_Core{
 	 */	
 	public function get_node_text($node, $tag_name, $element = TRUE)
 	{
-		// Load Database Library, for purposes of input sanitization
-		$db = new Database;
-		
 		$node_value = NULL;
 		try
 		{
@@ -100,7 +97,7 @@ class xml_Core{
 				if ($node->getElementsByTagName($tag_name)->length > 0)
 				{
 					$element = $node->getElementsByTagName($tag_name)->item(0);
-					$node_value = trim($db->escape_str($element->nodeValue));
+					$node_value = $element->nodeValue;
 				}
 				else
 				{
@@ -112,7 +109,7 @@ class xml_Core{
 			else
 			{
 				$attribute = $node->getAttribute($tag_name);
-				$node_value = trim($db->escape_str($attribute));
+				$node_value = $attribute;
 			}
 		}
 		catch (Kohana_Exception $e)
