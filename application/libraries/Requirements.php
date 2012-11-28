@@ -781,6 +781,17 @@ class Requirements_Backend {
 			return $fileOrUrl;
 		} else {
 			if (file_exists(DOCROOT . $fileOrUrl)) {
+
+				// Check for RTL replacements
+				if ($type == 'css' AND ush_locale::is_rtl_language())
+				{
+					$rtlFile = substr($fileOrUrl, 0, strpos($fileOrUrl, ".$type")) . "-rtl" . substr($fileOrUrl, strpos($fileOrUrl, ".$type"));
+					if (file_exists(DOCROOT . $rtlFile))
+					{
+						$fileOrUrl = $rtlFile;
+					}
+				}
+				
 				// Get url prefix, either site base url or CDN url
 				$prefix = url::file_loc($type);
 				
@@ -974,6 +985,30 @@ class Requirements_Backend {
 		foreach(array_diff_key($combinedFiles, $this->blocked) as $combinedFile => $dummy) {
 			$fileList = $this->combine_files[$type][$combinedFile];
 			$combinedFilePath = $base . $combinedFilesFolder . $combinedFile;
+
+			// Check for RTL alternatives
+			if ($type == 'css' AND ush_locale::is_rtl_language())
+			{
+				$has_rtl_files = FALSE;
+				foreach($fileList as $index => $file)
+				{
+					$rtlFile = substr($file, 0, strpos($file, ".$type")) . "-rtl" . substr($file, strpos($file, ".$type"));
+					if (file_exists(DOCROOT . $rtlFile))
+					{
+						$fileList[$index] = $rtlFile;
+						$has_rtl_files = TRUE;
+					}
+				}
+				
+				// Update combined files details, only if the include RTL alternatives
+				// We store the RTL version separate from the LTR version, so we don't regenerate every time someone changes language
+				if ($has_rtl_files)
+				{
+					$combinedFile = substr($combinedFile, 0, -4).'-rtl.css';
+					$combinedFilePath = $base . $combinedFilesFolder . $combinedFile;
+					$newRequirements[$combinedFile] = ($type == 'js') ? $combinedFilesFolder . $combinedFile : array('file' => $combinedFilesFolder . $combinedFile);
+				}
+			}
 
 			// Make the folder if necessary
 			if(!file_exists(dirname($combinedFilePath))) {
