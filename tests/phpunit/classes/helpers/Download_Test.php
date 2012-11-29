@@ -1023,7 +1023,7 @@
 		// Report id, form_id, title, and date
 		$expected_csv_content.='"'.$report->id.'",'
 								.'"'.$report->form_id.'",'
-								.'"'.download::_csv_text($report->incident_title).'",'
+								.'"'.$report->incident_title.'",'
 								.'"'.$report->incident_date.'"';
 		
 		
@@ -1031,13 +1031,13 @@
 		// Include location information?
 		if (in_array(1,$this->post['data_include']))
 		{
-			$expected_csv_content.= ',"'.download::_csv_text($report->location->location_name).'"';
+			$expected_csv_content.= ',"'.$report->location->location_name.'"';
 		}
 		
 		// Include description information?
 		if (in_array(2,$this->post['data_include']))
 		{
-			$expected_csv_content.= ',"'.download::_csv_text($report->incident_description).'"';
+			$expected_csv_content.= ',"'.$report->incident_description.'"';
 		}
 		
 		// Include category information?
@@ -1048,7 +1048,7 @@
 			{
 				if ($category->category->category_title)
 				{
-					$cat.= download::_csv_text($category->category->category_title).', ';
+					$cat.= $category->category->category_title.', ';
 				}
 			}
 			$expected_csv_content.= ',"'.$cat.'"';
@@ -1057,13 +1057,13 @@
 		// Include latitude information?
 		if (in_array(4,$this->post['data_include']))
 		{
-			$expected_csv_content.= ',"'.download::_csv_text($report->location->latitude).'"';
+			$expected_csv_content.= ',"'.$report->location->latitude.'"';
 		}
 		
 		// Include longitude information?
 		if (in_array(5,$this->post['data_include']))
 		{
-			$expected_csv_content.= ',"'.download::_csv_text($report->location->longitude).'"';
+			$expected_csv_content.= ',"'.$report->location->longitude.'"';
 		}
 		
 		// Include custom forms information?
@@ -1074,14 +1074,14 @@
 			{
 				foreach($custom_fields as $custom_field)
 				{
-					$expected_csv_content.= ',"'.download::_csv_text($custom_field['field_response']).'"';
+					$expected_csv_content.= ',"'.$custom_field['field_response'].'"';
 				}
 			}
 			else
 			{
 				foreach ($this->custom_forms as $custom)
 				{
-					$expected_csv_content.= ',"'.download::_csv_text("").'"';
+					$expected_csv_content.= ',""';
 				}
 			}
 		}
@@ -1092,13 +1092,13 @@
 			$person = $report->incident_person;
 			if($person->loaded)
 			{
-				$expected_csv_content.= ',"'.download::_csv_text($person->person_first).'"'
-										.',"'.download::_csv_text($person->person_last).'"'
-										.',"'.download::_csv_text($person->person_email).'"';
+				$expected_csv_content.= ',"'.$person->person_first.'"'
+										.',"'.$person->person_last.'"'
+										.',"'.$person->person_email.'"';
 			}
 			else
 			{
-				$expected_csv_content.= ',"'.download::_csv_text("").'"'.',"'.dowload::_csv_text("").'"'.',"'.download::_csv_text("").'"';
+				$expected_csv_content.= ',""'.',""'.',""';
 			}	
 		}	
 		

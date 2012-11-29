@@ -97,7 +97,7 @@ class xml_Core{
 				if ($node->getElementsByTagName($tag_name)->length > 0)
 				{
 					$element = $node->getElementsByTagName($tag_name)->item(0);
-					$node_value = $element->nodeValue;
+					$node_value = trim($element->nodeValue);
 				}
 				else
 				{
@@ -109,7 +109,7 @@ class xml_Core{
 			else
 			{
 				$attribute = $node->getAttribute($tag_name);
-				$node_value = $attribute;
+				$node_value = trim($attribute);
 			}
 		}
 		catch (Kohana_Exception $e)

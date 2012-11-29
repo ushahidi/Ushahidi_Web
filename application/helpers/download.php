@@ -110,7 +110,7 @@ class download_Core {
 		{
 			$report_csv .= '"'.$incident->id.'",';
 			$report_csv .= '"'.$incident->form_id.'",';
-			$report_csv .= '"'.self::_csv_text($incident->incident_title).'",';
+			$report_csv .= '"'.$incident->incident_title.'",';
 			$report_csv .= '"'.$incident->incident_date.'"';
 
 			foreach($post->data_include as $item)
@@ -118,11 +118,11 @@ class download_Core {
 				switch ($item)
 				{
 					case 1:
-					$report_csv .= ',"'.self::_csv_text($incident->location->location_name).'"';
+					$report_csv .= ',"'.$incident->location->location_name.'"';
 					break;
 
 					case 2:
-					$report_csv .= ',"'.self::_csv_text($incident->incident_description).'"';
+					$report_csv .= ',"'.$incident->incident_description.'"';
 					break;
 
 					case 3:
@@ -132,18 +132,18 @@ class download_Core {
 					{
 						if ($category->category->category_title)
 						{
-							$report_csv .= self::_csv_text($category->category->category_title) . ", ";
+							$report_csv .= $category->category->category_title.", ";
 						}
 					}
 					$report_csv .= '"';
 					break;
 
 					case 4:
-					$report_csv .= ',"'.self::_csv_text($incident->location->latitude).'"';
+					$report_csv .= ',"'.$incident->location->latitude.'"';
 					break;
 
 					case 5:
-					$report_csv .= ',"'.self::_csv_text($incident->location->longitude).'"';
+					$report_csv .= ',"'.$incident->location->longitude.'"';
 					break;
 
 					case 6:
@@ -153,14 +153,14 @@ class download_Core {
 					{
 						foreach($custom_fields as $custom_field)
 						{
-							$report_csv .= ',"'.self::_csv_text($custom_field['field_response']).'"';
+							$report_csv .= ',"'.$custom_field['field_response'].'"';
 						}
 					}
 					else
 					{
 						foreach ($custom_forms as $custom)
 						{
-							$report_csv .= ',"'.self::_csv_text("").'"';
+							$report_csv .= ',""';
 						}
 					}
 					break;
@@ -169,13 +169,13 @@ class download_Core {
 					$incident_person = $incident->incident_person;
 					if($incident_person->loaded)
 					{
-						$report_csv .= ',"'.self::_csv_text($incident_person->person_first).'"'
-										.',"'.self::_csv_text($incident_person->person_last).'"'
-										.',"'.self::_csv_text($incident_person->person_email).'"';
+						$report_csv .= ',"'.$incident_person->person_first.'"'
+										.',"'.$incident_person->person_last.'"'
+										.',"'.$incident_person->person_email.'"';
 					}
 					else
 					{
-						$report_csv .= ',"'.self::_csv_text("").'"'.',"'.self::_csv_text("").'"'.',"'.self::_csv_text("").'"';
+						$report_csv .= ',""'.',""'.',""';
 					}
 					break;
 				}
@@ -664,12 +664,6 @@ class download_Core {
 		// Print
 		return $writer->outputMemory(TRUE);
 		
-	}
-	
-	public static function _csv_text($text)
-	{
-		$text = stripslashes(htmlspecialchars($text));
-		return $text;
 	}
 }
 ?>
