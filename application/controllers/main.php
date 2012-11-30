@@ -70,13 +70,12 @@ class Main_Controller extends Template_Controller {
 
 		// Themes Helper
 		$this->themes = new Themes();
+		$this->themes->requirements();
 		$this->themes->frontend = TRUE;
 		$this->themes->api_url = Kohana::config('settings.api_url');
 		$this->template->header->submit_btn = $this->themes->submit_btn();
 		$this->template->header->languages = $this->themes->languages();
 		$this->template->header->search = $this->themes->search();
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
