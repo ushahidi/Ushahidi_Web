@@ -21,6 +21,12 @@ $config['combined_files_enabled'] = TRUE;
 $config['combine_js_with_jsmin'] = TRUE;
 
 /**
+ * Using the CSSMin library to minify any
+ * css file passed to {@link combine_files()}.
+ **/
+$config['combine_css_with_cssmin'] = TRUE;
+
+/**
  * Enable auto uploading combined css/js to CDN
  **/
 $config['cdn_store_combined_files'] = TRUE;

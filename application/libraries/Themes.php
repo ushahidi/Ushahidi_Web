@@ -364,11 +364,15 @@ class Themes_Core {
 			Requirements::css($css);
 		}
 		
+		Requirements::combine_files("theme_".Kohana::config("settings.site_style").".css", self::$theme_css);
+		
 		// Theme JS
 		foreach(self::$theme_js as $js)
 		{
 			Requirements::js($js);
 		}
+		
+		Requirements::combine_files("theme_".Kohana::config("settings.site_style").".js", self::$theme_js);
 		
 		Requirements::ieThemedCSS("lte IE 7", "iehacks.css");
 		Requirements::ieThemedCSS("IE 7", "ie7hacks.css");

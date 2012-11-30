@@ -412,6 +412,15 @@ class Requirements_Backend {
 	 * @var boolean
 	 */
 	public $combine_js_with_jsmin = true;
+	
+
+	/**
+	 * Using the CSSMin library to minify any
+	 * css file passed to {@link combine_files()}.
+	 *
+	 * @var boolean
+	 */
+	public $combine_css_with_cssmin = true;
 
 	/**
 	 * @var string By default, combined files are stored in assets/_combinedfiles.
@@ -438,6 +447,7 @@ class Requirements_Backend {
 	{
 		// Set up defaults from config file
 		$this->combine_js_with_jsmin = Kohana::config('requirements.combine_js_with_jsmin');
+		$this->combine_css_with_cssmin = Kohana::config('requirements.combine_css_with_cssmin');
 		$this->set_suffix_requirements(Kohana::config('requirements.suffix_requirements'));
 		$this->set_combined_files_enabled(Kohana::config('requirements.combined_files_enabled'));
 	}
@@ -1041,11 +1051,22 @@ class Requirements_Backend {
 			$combinedData = "";
 			foreach(array_diff($fileList, $this->blocked) as $id => $file) {
 				$fileContent = file_get_contents($base . $file);
+				
 				// if we have a javascript file and jsmin is enabled, minify the content
 				if($type == 'js' && $this->combine_js_with_jsmin) {
-					//increase_time_limit_to();
 					$fileContent = JSMin::minify($fileContent);
 				}
+				
+				if($type == 'css') {
+					// Rewrite urls in css to be relative to the docroot
+					$fileContent = Minify_CSS_UriRewriter::rewrite($fileContent, pathinfo($base . $file, PATHINFO_DIRNAME), DOCROOT);
+					// compress css (if enabled)
+					if ($this->combine_css_with_cssmin)
+					{
+						$fileContent = CSSMin::go($fileContent);
+					}
+				}
+				
 				// write a header comment for each file for easier identification and debugging
 				// also the semicolon between each file is required for jQuery to be combinable properly
 				$combinedData .= "/****** FILE: $file *****/\n" . $fileContent . "\n" . ($type == 'js' ? ';' : '') . "\n";
