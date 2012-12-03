@@ -14,6 +14,13 @@
  */
 
 class register_themes {
+	
+	protected $themes = array();
+	protected $loaded_themes = array();
+	
+	protected $theme_js = array();
+	protected $theme_css = array();
+	
 	/**
 	 * Adds the register method to load after system.ready
 	 */
@@ -31,48 +38,90 @@ class register_themes {
 	 */
 	public function register()
 	{
-		// 1. Load the default theme
-		Kohana::config_set('core.modules', array_merge(array(THEMEPATH."default"), Kohana::config("core.modules")));
-
-		Requirements::css("themes/default/css/style");
-
-		// 2. Extend the default theme
-		$theme = THEMEPATH.Kohana::config("settings.site_style");
-		if ( Kohana::config("settings.site_style") != "default" )
+		$this->themes = addon::get_addons('theme', FALSE);
+		
+		$theme = Kohana::config("settings.site_style");
+		$theme = empty($theme) ? 'default' : $theme;
+		$this->_load_theme($theme);
+		
+		// Save theme CSS and JS for inclusion later
+		Kohana::config_set('settings.site_style_js', $this->theme_js);
+		Kohana::config_set('settings.site_style_css', $this->theme_css);
+	}
+	
+	/**
+	 * Load theme
+	 * Loads theme into modules, includes its hooks and recursively loads parent themes
+	 * @param string $theme theme name/directory
+	 **/
+	private function _load_theme($theme)
+	{
+		// Record loading this theme, so we can avoid dependency loops
+		$this->loaded_themes[] = $theme;
+		
+		// Get meta data to check the base theme
+		$meta = addon::meta_data($theme, 'theme', array('Base Theme' => 'default'));
+		
+		// If base theme is set, the base theme exists, and we haven't loaded it yet
+		// Load the base theme
+		if (! empty($meta['Base Theme'])
+				AND isset($this->themes[$meta['Base Theme']])
+				AND ! in_array($meta['Base Theme'], $this->loaded_themes)
+			)
 		{
-			Kohana::config_set('core.modules', array_merge(array($theme),
-				Kohana::config("core.modules")));
-
-			if ( is_dir($theme.'/css') )
-			{
-				$css = dir($theme.'/css'); // Load all the themes css files
-				while (($css_file = $css->read()) !== FALSE)
-					if (preg_match('/\.css/i', $css_file))
-					{
-						Requirements::css("themes/".Kohana::config("settings.site_style")."/css/".$css_file);
-					}
-			}
-
-			if ( is_dir($theme.'/js') )
-			{
-				$js = dir($theme.'/js'); // Load all the themes js files
-				while (($js_file = $js->read()) !== FALSE)
-					if (preg_match('/\.js/i', $js_file))
-					{
-						Requirements::js("themes/".Kohana::config("settings.site_style")."/js/".$js_file);
-					}
-			}
+			$this->_load_theme($meta['Base Theme']);
 		}
+		
+		// Add theme to modules
+		$theme_base = THEMEPATH . $theme;
+		Kohana::config_set('core.modules', array_merge(array($theme_base), Kohana::config("core.modules")));
 
-		// 3. Find and add hooks
 		// We need to manually include the hook file for each theme
-		if (file_exists($theme.'/hooks'))
+		if (file_exists($theme_base.'/hooks'))
 		{
-			$d = dir($theme.'/hooks'); // Load all the hooks
+			$d = dir($theme_base.'/hooks'); // Load all the hooks
 			while (($entry = $d->read()) !== FALSE)
+			{
 				if ($entry[0] != '.')
 				{
-					include $theme.'/hooks/'.$entry;
+					include $theme_base.'/hooks/'.$entry;
+				}
+			}
+		}
+		
+		$this->load_theme_css($theme);
+		$this->load_theme_js($theme);
+	}
+
+	/*
+	 * Find theme css and store for inclusion later
+	 */
+	private function load_theme_css($theme)
+	{
+		$css_dir = THEMEPATH.$theme.'/css';
+		if ( is_dir($css_dir) )
+		{
+			$css = dir($css_dir); // Load all the themes css files
+			while (($css_file = $css->read()) !== FALSE)
+				if (preg_match('/\.css/i', $css_file))
+				{
+					$this->theme_css[str_replace('.css','',$css_file)] = "themes/$theme/css/$css_file";
+				}
+		}
+	}
+
+	/*
+	 * Find theme css and store for inclusion later
+	 */
+	private function load_theme_js($theme)
+	{
+		if ( is_dir(THEMEPATH.$theme.'/js') )
+		{
+			$js = dir(THEMEPATH.$theme.'/js'); // Load all the themes js files
+			while (($js_file = $js->read()) !== FALSE)
+				if (preg_match('/\.js/i', $js_file))
+				{
+					$this->theme_js[str_replace('.js','',$js_file)] = "themes/$theme/js/$js_file";
 				}
 		}
 	}

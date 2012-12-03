@@ -111,12 +111,12 @@ class Themes_Core {
 			Requirements::css("media/css/jquery.jqplot.min");
 		}
 
-		if ($this->site_style AND $this->site_style != "default")
-		{
-			Requirements::css("themes/".$site_style."/style.css");
-		}
-
 		Requirements::css("media/css/global");
+		
+		foreach(Kohana::config('settings.site_style_css') as $css)
+		{
+			Requirements::css($css);
+		}
 	}
 
 	/**
@@ -152,8 +152,8 @@ class Themes_Core {
 			{
 				if (Kohana::config('settings.enable_timeline'))
 				{
-					Requirements::js("media/js/jquery.jqplot.min");
-					Requirements::js("media/js/jqplot.dateAxisRenderer.min");
+				Requirements::js("media/js/jquery.jqplot.min");
+				Requirements::js("media/js/jqplot.dateAxisRenderer.min");
 				}
 
 				Requirements::customHeadTags("<!--[if IE]>".html::script($this->js_url."media/js/excanvas.min", TRUE)."<![endif]-->");
@@ -185,6 +185,11 @@ class Themes_Core {
 		if ($this->editor_enabled)
 		{
 			Requirements::js("media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js");
+		}
+		
+		foreach(Kohana::config('settings.site_style_js') as $js)
+		{
+			Requirements::js($js);
 		}
 
 		// Inline Javascript
