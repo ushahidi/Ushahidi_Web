@@ -28,9 +28,6 @@
 		<?php endif; ?>
 	</script>
 
-	<?php // Render CSS and Javascript Files
-	echo Requirements::render('head'); ?>
-
 	<?php echo $header_block; ?>
 </head>
 <body>

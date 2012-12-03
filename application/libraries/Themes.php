@@ -59,9 +59,17 @@ class Themes_Core {
 	{
 		// For backward compatibility render Requirements here rather than in the view
 		$content = Requirements::render('head');
+		
 		// Filter::header_block - Modify Header Block
-		Event::run('ushahidi_filter.header_block', $content);
-
+		if ($this->admin)
+		{
+			Event::run('ushahidi_filter.admin_header_block', $content);
+		}
+		elseif ($this->frontend)
+		{
+			Event::run('ushahidi_filter.header_block', $content);
+		}
+		
 		return $content;
 	}
 
@@ -71,11 +79,7 @@ class Themes_Core {
 	*/
 	public function admin_header_block()
 	{
-		$content = '';
-		// Filter::admin_header_block - Modify Admin Header Block
-		Event::run('ushahidi_filter.admin_header_block', $content);
-
-		return $content;
+		$this->header_block();
 	}
 
 	/**
