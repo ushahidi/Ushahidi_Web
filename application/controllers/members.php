@@ -106,7 +106,7 @@ class Members_Controller extends Template_Controller
 		}
 		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
 		
-		Event::add('ushahidi_filter.view_pre_render-members_layout', array($this, '_pre_render'));
+		Event::add('ushahidi_filter.view_pre_render.members_layout', array($this, '_pre_render'));
 	}
 
 	public function index()

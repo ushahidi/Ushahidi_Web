@@ -136,7 +136,7 @@ class Main_Controller extends Template_Controller {
 		}
 		$this->template->header->header_nav->site_name = Kohana::config('settings.site_name');
 		
-		Event::add('ushahidi_filter.view_pre_render-layout', array($this, '_pre_render'));
+		Event::add('ushahidi_filter.view_pre_render.layout', array($this, '_pre_render'));
 	}
 
 	/**

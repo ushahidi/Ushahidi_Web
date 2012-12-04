@@ -158,7 +158,7 @@ class Admin_Controller extends Template_Controller {
 		// Language switcher
 		$this->template->languages = $this->themes->languages();
 		
-		Event::add('ushahidi_filter.view_pre_render-admin_layout', array($this, '_pre_render'));
+		Event::add('ushahidi_filter.view_pre_render.admin_layout', array($this, '_pre_render'));
 	}
 
 	public function index()
