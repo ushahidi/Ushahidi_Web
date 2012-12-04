@@ -192,9 +192,12 @@ class Themes_Core {
 		if ($this->editor_enabled)
 		{
 			Requirements::css('media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.css');
-			if (Kohana::config("cdn.cdn_ignore_jwysiwyg") == TRUE) {
+			if (Kohana::config("cdn.cdn_ignore_jwysiwyg") == TRUE)
+			{
 				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js'); // not sure what the hell to do about this
-			} else {
+			}
+			else
+			{
 				Requirements::js('media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js');
 			}
 		}
