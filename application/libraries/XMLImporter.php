@@ -180,7 +180,7 @@ class XMLImporter {
 			
 			if ($depcategories->length == 0 AND $depcustomforms->length == 0 AND $depreports->length == 0)
 			{
-				$this->errors[] = 'XML file selected for import must have at least one of the following: Categories, Custom forms or Reports';
+				$this->errors[] = Kohana::lang('import.xml.missing_elements');
 			}
 		
 			// If we're importing categories
@@ -198,7 +198,7 @@ class XMLImporter {
 				}
 				else
 				{
-					$this->notices[] = 'There are no categories to import';
+					$this->notices[] = Kohana::lang('import.xml.no_categories');
 				}	
 			}
 		
@@ -217,7 +217,7 @@ class XMLImporter {
 				}
 				else
 				{
-					$this->notices[] = 'There are no custom forms to import.';
+					$this->notices[] = Kohana::lang('import.xml.no_custom_forms');
 				}	
 			}
 		
@@ -236,7 +236,7 @@ class XMLImporter {
 				}
 				else
 				{
-					$this->notices[] = 'There are reports to import.';
+					$this->notices[] = Kohana::lang('import.xml.no_reports');
 				}
 			}	
 		}
@@ -244,7 +244,7 @@ class XMLImporter {
 		// The file we're trying to load is empty
 		else
 		{
-			$this->errors[] = 'Import failed. The file you have uploaded is empty.';
+			$this->errors[] = Kohana::lang('import.xml.file_empty');;
 		}
 		
 		// If we have errors, return FALSE, else TRUE
@@ -273,8 +273,7 @@ class XMLImporter {
 			// If either the category title or description is not provided
 			if ( ! $cat_title OR  ! $cat_description )
 			{
-				$this->errors[] = 'The category title and category description fields are required. XML Import failed for category #'
-									.$this->totalcategories;
+				$this->errors[] = Kohana::lang('import.xml.category_error').$this->totalcategories;
 			}
 		
 			// Both category title and descriptions exist
@@ -314,7 +313,7 @@ class XMLImporter {
 					
 					// Also add it to the array of categories added during import
 					$this->categories_added[] = $new_category->id;
-					$this->notices[] = 'New category "'.htmlspecialchars($cat_title).'" added to database.';
+					$this->notices[] = Kohana::lang('import.new_category').htmlspecialchars($cat_title);
 				}
 
 				/* Category Translations */
@@ -353,9 +352,8 @@ class XMLImporter {
 								// If we're missing the translated category title
 								if ( ! $trans_title)
 								{
-									$this->notices[] = 'Category translation import failed. Missing category title: Localization '
-														.utf8::strtoupper($locale)
-														." for category #".$this->totalcategories;
+									$this->notices[] = Kohana::lang('import.xml.translation_title').$this->totalcategories
+														.': '.utf8::strtoupper($locale);
 								}
 								else
 								{
@@ -369,9 +367,8 @@ class XMLImporter {
 									
 									// Add this to array of category translations added during import
 									$this->category_translations_added[] = $cl->id;
-									$this->notices[] = 'Category translation added: Localization "'
-														.utf8::strtoupper($locale)
-									    				. '" for category "'.$cat_title.'"';
+									$this->notices[] = Kohana::lang('import.xml.translation_added')
+														.'"'.utf8::strtoupper($locale).'" for '.$cat_title;
 								}
 							}	
 						}
@@ -379,7 +376,7 @@ class XMLImporter {
 						// Locale attribute does not exist
 						else
 						{
-							$this->notices[] = 'Could not import empty category translation for localization for category #'.$this->totalcategories;
+							$this->notices[] = Kohana::lang('import.xml.missing_localization').$this->totalcategories;
 						}
 					}	
 				}
@@ -411,7 +408,7 @@ class XMLImporter {
 			// If the form title is missing
 			if ( ! $title)
 			{
-				$this->errors[] = "Form title must be provided for form #".$this->totalforms;
+				$this->errors[] = Kohana::lang('import.xml.missing_form_title').$this->totalforms;
 			}
 			
 			// Form title exists, proceed
@@ -441,7 +438,7 @@ class XMLImporter {
 
 					// Add new form to array of forms added during import
 					$this->forms_added[] = $new_form->id;
-					$this->notices[] = 'New form "'.$title.'" added to database';
+					$this->notices[] = Kohana::lang('import.xml.new_form').'"'.$title.'"';
 				}
 
 				// Form Fields
@@ -467,8 +464,7 @@ class XMLImporter {
 						// If field name is missing or field type is null 
 						if (! $name OR ! isset($type))
 						{
-							$this->notices[] = 'Custom field name missing/field type not allowed. Import failed for field #'
-							.$totalfields.' on form "'.$title.'"';
+							$this->notices[] = Kohana::lang('import.xml.field_error').'"'.$title.'" : Field #'.$totalfields;
 						}
 						
 						// Field name is provided, proceed
@@ -498,8 +494,7 @@ class XMLImporter {
 								$default_required = array(5, 6, 7);
 								if ( ! isset($default_values) AND in_array($type, $default_required))
 								{
-									$this->notices[] = 'Default values are required for radio, checkbox and dropdown fields: field "'.$name
-									.'" on form "'.$title.'"';
+									$this->notices[] = Kohana::lang('import.xml.field_default').'"'.$title.'" : Field "'.$name.'"';
 								}
 								
 								// Defaults have been provided / Not required
@@ -521,7 +516,7 @@ class XMLImporter {
 									
 									// Also add it to array of fields added during import
 									$this->fields_added[] = $new_field->id;
-									$this->notices[] = 'New form field "'.$name.'" added to database';
+									$this->notices[] = Kohana::lang('import.xml.new_field').'"'.$name.'"';
 									
 									// Field Options exist?
 									if ($field->hasAttribute('datatype') OR $field->hasAttribute('hidden'))
@@ -551,7 +546,7 @@ class XMLImporter {
 
 													// Add to array of field options added during import
 													$this->field_options_added[] = $datatype_option->id;
-													$this->notices[] = 'Field datatype option added for field "'.$name.'"';
+													$this->notices[] = Kohana::lang('import.xml.field_datatype').'"'.$name.'"';
 												}
 											}								
 										}
@@ -578,7 +573,7 @@ class XMLImporter {
 
 													// Add to array of field options added during import
 													$this->field_options_added[] = $hidden_option->id;
-													$this->notices[] = 'Field hidden option added for field field "'.$name.'"';
+													$this->notices[] = Kohana::lang('import.xml.field_hidden').'"'.$name.'"';
 												}
 											} 
 										}
@@ -621,7 +616,7 @@ class XMLImporter {
 			// Check if this incident already exists in the db
 			if (isset($report_id) AND isset($this->incident_ids[$report_id]))
 			{
-				$this->notices[] = 'Incident with id #'.$report_id.' already exists.';
+				$this->notices[] = Kohana::lang('import.incident_exists').$report_id;
 			}
 			
 			// Otherwise, begin import
@@ -686,14 +681,13 @@ class XMLImporter {
 				// Missing report title or report date?
 				if ( ! $report_title OR ! $report_date)
 				{
-					$this->errors[] = "Both Report Title and Report Date are required for incident #".$this->totalreports;
+					$this->errors[] = Kohana::lang('import.xml.incident_title_date').$this->totalreports;
 				}
 				
 				// If report date is not in the required format
 				if ( ! strtotime($report_date))
 				{
-					$this->errors[] = 'Could not parse incident date "'.htmlspecialchars($report_date).'" on report # '
-					.$this->totalreports;
+					$this->errors[] = Kohana::lang('import.incident_date').$this->totalreports.': '.htmlspecialchars($report_date);
 				}
 				
 				// Report title and date(in correct format) both provided, proceed
@@ -718,8 +712,8 @@ class XMLImporter {
 					{
 						if (! isset($this->existing_forms[utf8::strtoupper($report_form)]))
 						{
-							$this->notices[] = 'The form "'.$report_form.'" listed in report #'
-												.$this->totalreports.' does not exist on this deployment';
+							$this->notices[] = Kohana::lang('import.xml.no_form_exists').$this->totalreports
+												.': "'.$report_form.'"';
 						}
 						
 						$form_id = isset($this->existing_forms[utf8::strtoupper($report_form)])
@@ -777,8 +771,7 @@ class XMLImporter {
 							
 							if ($report_category != '' AND ! isset($this->existing_categories[utf8::strtoupper($report_category)]))
 							{
-								$this->notices[] = 'The category "'.$report_category.'" listed in report #'
-													.$this->totalreports.' does not exist on this deployment';
+								$this->notices[] = Kohana::lang('import.xml.no_category_exists').$this->totalreports.': "'.$report_category.'"';
 							}
 						}	
 					}
@@ -799,97 +792,88 @@ class XMLImporter {
 								$field_name = $field->hasAttribute('name') ? xml::get_node_text($field, 'name', FALSE) : FALSE;
 								if ($field_name)
 								{
-									// If this field exists
+									// If this field exists in the form listed for this report
 									if(isset($this->existing_fields[utf8::strtoupper($field_name)][$this_form]))
 									{
-										// Make sure this field is tagged to the same form as that of this incident
-										$match_fields = customforms::get_custom_form_fields('',$new_report->form_id,false);
-							
-										// Field exists in that form?
-										if (isset($match_fields[$this->existing_fields[utf8::strtoupper($field_name)][$this_form]]))
-										{
-											// Get field type and default values
-											$match_field_id = $this->existing_fields[utf8::strtoupper($field_name)][$this_form];
-											$match_field_type = $match_fields[$match_field_id]['field_type'];
-											$match_field_defaults = $match_fields[$match_field_id]['field_default'];
+										// Get field type and default values
+										$match_field_id = $this->existing_fields[utf8::strtoupper($field_name)][$this_form];
+										
+										// Grab form field object
+										$match_fields = ORM::Factory('form_field', $match_field_id);
+										$match_field_type = $match_fields->field_type;
+										$match_field_defaults = $match_fields->field_default;
 											
-											// Grab form responses
-											$field_response = trim($field->nodeValue);
-											if ($field_response != '')
+										// Grab form responses
+										$field_response = trim($field->nodeValue);
+										if ($field_response != '')
+										{
+											// Initialize form response model
+											$new_form_response = new Form_Response_Model();
+											$new_form_response->incident_id = $new_report->id;
+											$new_form_response->form_field_id = $match_field_id;
+												
+											// For radio buttons, checkbox fields and drop downs, make sure form responses are
+											// within bounds of allowable options for that field
+											// Split field defaults into individual values
+											$field_defaults = explode(',',$match_field_defaults);
+												
+											/* Radio buttons and Drop down fields which take single responses */
+											if ($match_field_type == 5 OR $match_field_type == 7)
 											{
-												// Initialize form response model
-												$new_form_response = new Form_Response_Model();
-												$new_form_response->incident_id = $new_report->id;
-												$new_form_response->form_field_id = $match_field_id;
-												
-												// For radio buttons, checkbox fields and drop downs, make sure form responses are
-												// within bounds of allowable options for that field
-												// Split field defaults into individual values
-												$field_defaults = explode(',',$match_field_defaults);
-												
-												/* Radio buttons and Drop down fields which take single responses */
-												if ($match_field_type == 5 OR $match_field_type == 7)
+												foreach ($match_field_defaults as $match_field_default)
 												{
-													foreach ($match_field_defaults as $match_field_default)
+													// Carry out a case insensitive string comparison
+													$new_form_response->form_response = strcasecmp($match_field_default, $field_response) == 0
+																						? $match_field_default 
+																						: NULL;
+													if ($new_form_response->form_response == NULL)
 													{
-														// Carry out a case insensitive string comparison
-														$new_form_response->form_response = strcasecmp($match_field_default, $field_response) == 0
-																							? $match_field_default 
-																							: NULL;
-														if ($new_form_response->form_response == NULL)
-														{
-															$this->notices[] = 'Invalid field response for field "'
-																				.$field_name.'" on report #'.$this->totalreports;
-														}
+														$this->notices[] = Kohana::lang('import.xml.invalid_response')
+																			.$this->totalreports.': "'.$field_name.'"';
 													}
 												}
-												
-												// Checkboxes which 
-												if ($match_field_type == 6)
-												{
-													// Split user responses into individual value
-													$responses = explode(',', $field_response);
-													$values = array();
-													foreach ($match_field_defaults as $match_field_default)
-													{
-														foreach ($responses as $response)
-														{
-															$values[] = strcasecmp($match_field_default, $response) == 0
-															 			? $match_field_default 
-																		: NULL;
-														}
-													}
-													
-													// Concatenate checkbox values into a string, separated by a comma
-													$new_form_response->form_response = implode(",", $values);
-												}
-											
-												// For all other fields
-												else
-												{
-													$new_form_response->form_response = $field_response;
-												}
-												
-												// Only save if form response is not empty
-												if ($new_form_response->form_response != NULL)
-												{
-													$new_form_response->save();
-												}
-												
-												// Add this to array of form responses added
-												$this->incident_responses_added[] = $new_form_response->id;	
 											}
-										}
-										else
-										{
-											$this->notices[] = 'The field "'.$field_name.'" listed in report #'
-																.$this->totalreports.' does not exist on form id #'.$new_report->form_id;
-										}									
+												
+											// Checkboxes which 
+											if ($match_field_type == 6)
+											{
+												// Split user responses into individual value
+												$responses = explode(',', $field_response);
+												$values = array();
+												foreach ($match_field_defaults as $match_field_default)
+												{
+													foreach ($responses as $response)
+													{
+														$values[] = strcasecmp($match_field_default, $response) == 0
+														 			? $match_field_default 
+																	: NULL;
+													}
+												}
+													
+												// Concatenate checkbox values into a string, separated by a comma
+												$new_form_response->form_response = implode(",", $values);
+											}
+											
+											// For all other fields
+											else
+											{
+												$new_form_response->form_response = $field_response;
+											}
+												
+											// Only save if form response is not empty
+											if ($new_form_response->form_response != NULL)
+											{
+												$new_form_response->save();
+											}
+												
+											// Add this to array of form responses added
+											$this->incident_responses_added[] = $new_form_response->id;	
+										}								
 									}
 									else
 									{
-										$this->notices[] = 'The field "'.$field_name.'" listed in report #'
-															.$this->totalreports.' does not exist on this deployment';
+										$this->notices[] = Kohana::lang('import.xml.form_field_no_match')
+															.$this->totalreports.': "'.$field_name.'" on form "'.$new_report->form->form_title.'"';
 									}
 								}
 							}

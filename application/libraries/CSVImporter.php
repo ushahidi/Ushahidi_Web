@@ -101,7 +101,7 @@ class CSVImporter {
 				// If the CSV file is missing any required column, return an error
 				if (!$csvtable->hasColumn($requiredcolumn))
 				{
-					$this->errors[] = 'CSV file is missing required column "'.$requiredcolumn.'"';
+					$this->errors[] = Kohana::lang('import.csv.required_column').'"'.$requiredcolumn.'"';
 				}
 			}
 		
@@ -135,7 +135,7 @@ class CSVImporter {
 				$this->rownumber++;
 				if (isset($row['#']) AND isset($this->incident_ids[$row['#']]))
 				{
-					$this->notices[] = 'Incident with id #'.$row['#'].' already exists.';
+					$this->notices[] = Kohana::lang('import.incident_exists').$row['#'];
 				}
 				else
 				{
@@ -183,18 +183,17 @@ class CSVImporter {
 		// If the date is not in proper date format
 		if (!strtotime($row['INCIDENT DATE']))
 		{
-			$this->errors[] = 'Could not parse incident date "'.htmlspecialchars($row['INCIDENT DATE']).'" on line '
-			.($this->rownumber+1);
+			$this->errors[] = Kohana::lang('import.incident_date').($this->rownumber+1).': 'htmlspecialchars($row['INCIDENT DATE']);
 		}
 		// If a value of Yes or No is NOT set for approval status for the imported row
 		if (isset($row["APPROVED"]) AND !in_array(utf8::strtoupper($row["APPROVED"]),array('NO','YES')))
 		{
-			$this->errors[] = 'APPROVED must be either YES or NO on line '.($this->rownumber+1);
+			$this->errors[] = Kohana::lang('import.csv.approved').($this->rownumber+1);
 		}
 		// If a value of Yes or No is NOT set for verified status for the imported row 
 		if (isset($row["VERIFIED"]) AND !in_array(utf8::strtoupper($row["VERIFIED"]),array('NO','YES'))) 
 		{
-			$this->errors[] = 'VERIFIED must be either YES or NO on line '.($this->rownumber+1);
+			$this->errors[] = Kohana::lang('import.csv.verified').($this->rownumber+1);
 		}
 		if (count($this->errors)) 
 		{
@@ -292,8 +291,7 @@ class CSVImporter {
 					// Check if the category exists (made sure to convert to uppercase for comparison)
 					if (!isset($this->existing_categories[utf8::strtoupper($categoryname)]))
 					{
-						$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet.'
-						.' Added to database.';
+						$this->notices[] = Kohana::lang('import.new_category').htmlspecialchars($categoryname);
 						$category = new Category_Model;
 						$category->category_title = $categoryname;
 	

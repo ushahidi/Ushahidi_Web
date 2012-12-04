@@ -520,8 +520,11 @@ class download_Core {
 				// Generate report map
 				$report_element_map = xml::generate_element_attribute_map($incident, $report_map);
 				
+				// Grab Default form title
+				$default_form = ORM::factory('form', 1);
+				
 				// Form this incident belongs to?
-				$form_name = $incident->form->loaded ? $incident->form->form_title : '';
+				$form_name = $incident->form->loaded ? $incident->form->form_title : $default_form->form_title;
 				
 				// Add it to report element map
 				$report_element_map['attributes']['form_name'] = $form_name;
