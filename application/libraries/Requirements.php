@@ -2,7 +2,7 @@
 /**
  * Requirements tracker, for javascript and css.
  * 
- * Based on Requirements class from sapphire framework
+ * Based on Requirements class from sapphire framework (but heavily modified)
  * https://github.com/silverstripe/sapphire/blob/master/view/Requirements.php
  * 
  * LICENSE: This source file is subject to BSD license
@@ -24,9 +24,7 @@
  * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY 
  * OF SUCH DAMAGE.
  * 
- * @author	   Ushahidi Team <team@ushahidi.com>
- * @package	   Ushahidi - http://source.ushahididev.com
- * @copyright  Ushahidi - http://www.ushahidi.com
+ * @package	   Ushahidi - https://github.com/ushahidi/Ushahidi_Web
  * @license	   https://github.com/silverstripe/sapphire Modified BSD License
  */
 class Requirements {
