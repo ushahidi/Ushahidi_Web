@@ -40,9 +40,14 @@
 		?>
 		<!-- column -->
 		<div class="download_container">
-			<p><?php echo Kohana::lang('ui_main.reports_download_csv');?>.</p>
-			<span style="font-weight: bold; color: #00699b; display: block; padding-bottom: 5px;"><?php echo Kohana::lang('ui_main.choose_data_points');?>:</span>
 			<?php print form::open(NULL, array('id' => 'reportForm', 'name' => 'reportForm')); ?>
+			<p><?php echo Kohana::lang('ui_admin.select_download_format'); ?></p>
+			<div id="form_error_format"></div>
+			<p>
+				<span><?php print form::radio('format','csv', FALSE); ?><?php echo Kohana::lang('ui_admin.csv')?></span>
+				<span><?php print form::radio('format','xml', FALSE); ?><?php echo Kohana::lang('ui_admin.xml') ?></span>
+			</p>
+			<span style="font-weight: bold; color: #00699b; display: block; padding-bottom: 5px;"><?php echo Kohana::lang('ui_main.choose_data_points');?>:</span>
 			<table class="data_points">
 				<tr>
 					<td colspan="2">

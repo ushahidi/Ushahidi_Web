@@ -182,8 +182,9 @@ class Category_Model extends ORM_Tree {
 		$where = array();
 		$categories = ORM::factory('category')
 			->join('category AS c_parent','category.parent_id','c_parent.id','LEFT')
-			->orderby('category.category_position', 'ASC')
-			->orderby('category.category_title', 'ASC');
+				->orderby('category.parent_id', 'ASC')
+				->orderby('category.category_position', 'ASC')
+				->orderby('category.category_title', 'ASC');
 		
 		// Check if the parent is specified, if FALSE get everything
 		if ($parent_id !== FALSE)
