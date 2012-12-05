@@ -967,6 +967,12 @@
 		// Test to ensure validation passed
 		$this->assertEquals(TRUE, download::validate($this->post), 'Report download validation failed');
 		
+		// If we have no reports
+		if (count($this->incident) == 0)
+		{
+			$this->markTestSkipped('There are no reports, CSV Download test skipped');
+		}
+		
 		$expected_csv_content = "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
 		
 		// Include location information?
@@ -1023,7 +1029,7 @@
 		// Report id, form_id, title, and date
 		$expected_csv_content.='"'.$report->id.'",'
 								.'"'.$report->form_id.'",'
-								.'"'.$report->incident_title.'",'
+								.'"'.download::_encode_text($report->incident_title).'",'
 								.'"'.$report->incident_date.'"';
 		
 		
@@ -1031,13 +1037,13 @@
 		// Include location information?
 		if (in_array(1,$this->post['data_include']))
 		{
-			$expected_csv_content.= ',"'.$report->location->location_name.'"';
+			$expected_csv_content.= ',"'.download::_encode_text($report->location->location_name).'"';
 		}
 		
 		// Include description information?
 		if (in_array(2,$this->post['data_include']))
 		{
-			$expected_csv_content.= ',"'.$report->incident_description.'"';
+			$expected_csv_content.= ',"'.download::_encode_text($report->incident_description).'"';
 		}
 		
 		// Include category information?
@@ -1048,7 +1054,7 @@
 			{
 				if ($category->category->category_title)
 				{
-					$cat.= $category->category->category_title.', ';
+					$cat.= download::_encode_text($category->category->category_title).', ';
 				}
 			}
 			$expected_csv_content.= ',"'.$cat.'"';
@@ -1074,7 +1080,7 @@
 			{
 				foreach($custom_fields as $custom_field)
 				{
-					$expected_csv_content.= ',"'.$custom_field['field_response'].'"';
+					$expected_csv_content.= ',"'.download::_encode_text($custom_field['field_response']).'"';
 				}
 			}
 			else
@@ -1092,9 +1098,9 @@
 			$person = $report->incident_person;
 			if($person->loaded)
 			{
-				$expected_csv_content.= ',"'.$person->person_first.'"'
-										.',"'.$person->person_last.'"'
-										.',"'.$person->person_email.'"';
+				$expected_csv_content.= ',"'.download::_encode_text($person->person_first).'"'
+										.',"'.download::_encode_text($person->person_last).'"'
+										.',"'.download::_encode_text($person->person_email).'"';
 			}
 			else
 			{

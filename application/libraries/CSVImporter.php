@@ -183,7 +183,7 @@ class CSVImporter {
 		// If the date is not in proper date format
 		if (!strtotime($row['INCIDENT DATE']))
 		{
-			$this->errors[] = Kohana::lang('import.incident_date').($this->rownumber+1).': 'htmlspecialchars($row['INCIDENT DATE']);
+			$this->errors[] = Kohana::lang('import.incident_date').($this->rownumber+1).': '.$row['INCIDENT DATE'];
 		}
 		// If a value of Yes or No is NOT set for approval status for the imported row
 		if (isset($row["APPROVED"]) AND !in_array(utf8::strtoupper($row["APPROVED"]),array('NO','YES')))
@@ -291,7 +291,7 @@ class CSVImporter {
 					// Check if the category exists (made sure to convert to uppercase for comparison)
 					if (!isset($this->existing_categories[utf8::strtoupper($categoryname)]))
 					{
-						$this->notices[] = Kohana::lang('import.new_category').htmlspecialchars($categoryname);
+						$this->notices[] = Kohana::lang('import.new_category').$categoryname;
 						$category = new Category_Model;
 						$category->category_title = $categoryname;
 	
