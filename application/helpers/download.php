@@ -675,7 +675,7 @@ class download_Core {
 	{
 		$encoding = mb_detect_encoding($text, "auto");
 		$detected_encoding = $encoding == 'ASCII' ? 'iso-8859-1': $encoding;
-		$text = htmlentities($text,NULL,$detected_encoding);
+		$text = htmlentities($text, ENT_QUOTES, $detected_encoding);
 		return $text;
 	 }
 }
