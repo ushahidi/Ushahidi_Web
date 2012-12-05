@@ -719,9 +719,12 @@
 			$mode = $report_element->item(0)->getAttribute('mode');
 			$this->assertEquals($incident->incident_mode, $mode, 'Report mode does not match/attribute does not exist');
 			
-			// Test Report form_id
+			// Test Report form_name
+			// Grab Default form object
+			$default_form = ORM::factory('form', 1);
+			$expected_form = $incident->form->loaded ? $incident->form->form_title : $default_form->form_title;
 			$form_name = xml::get_node_text($report_element->item(0), 'form_name', FALSE);
-			$this->assertEquals($incident->form->form_title, $form_name, 'Report form_id does not match/attribute does not exist');
+			$this->assertEquals($expected_form, $form_name, 'Report form_name does not match/attribute does not exist');
 			
 			// Test Report Title
 			$title = xml::get_node_text($report_element->item(0), 'title');
