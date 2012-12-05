@@ -112,7 +112,7 @@ class xml_Core{
 				$node_value = trim($attribute);
 			}
 		}
-		catch (Kohana_Exception $e)
+		catch (Exception $e)
 		{
 			Kohana::log("xml_upload_error", $e->getMessage());
 			return FALSE;
