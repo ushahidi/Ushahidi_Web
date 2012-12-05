@@ -504,9 +504,14 @@ class map_Core {
 			{
 				$country_name = $all_components[0]['formatted_address'];
 			}
+			
+			// Grab country_id
+			$country = Country_Model::get_country_by_name($country_name);
+			$country_id = ( ! empty($country) AND $country->loaded)? $country->id : 0;
 
 			$geocodes = array(
 				'country' => $country_name,
+				'country_id' => $country_id,
 				'location_name' => $all_components[0]['formatted_address'],
 				'latitude' => $location['lat'],
 				'longitude' => $location['lng']

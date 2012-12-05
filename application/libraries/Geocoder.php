@@ -28,7 +28,7 @@ class Geocoder_Core {
 		$result = map::geocode($address);
 		if ($result)
 		{
-			return array($result['longitude'], $result['latitude']);
+			return array($result['longitude'], $result['latitude'], $result['country_id']);
 		}
 		else
 		{

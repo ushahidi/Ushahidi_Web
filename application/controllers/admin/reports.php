@@ -387,7 +387,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 		
 		// Initialize custom field array
-		$form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,true);
+		$form['custom_field'] = customforms::get_custom_form_fields($id,$form_id,TRUE);
 
 		// Locale (Language) Array
 		$this->template->content->locale_array = Kohana::config('locale.all_languages');
@@ -454,7 +454,7 @@ class Reports_Controller extends Admin_Controller {
 					url::redirect('admin/reports/edit/'. $message->incident_id);
 				}
 
-				$this->template->content->show_messages = true;
+				$this->template->content->show_messages = TRUE;
 				$incident_description = $message->message;
 				if ( ! empty($message->message_detail))
 				{
@@ -690,7 +690,7 @@ class Reports_Controller extends Admin_Controller {
 			{
 				// Retrieve Current Incident
 				$incident = ORM::factory('incident', $id);
-				if ($incident->loaded == true)
+				if ($incident->loaded == TRUE)
 				{
 					// Retrieve Categories
 					$incident_category = array();
@@ -759,7 +759,7 @@ class Reports_Controller extends Admin_Controller {
 						'person_first' => $incident->incident_person->person_first,
 						'person_last' => $incident->incident_person->person_last,
 						'person_email' => $incident->incident_person->person_email,
-						'custom_field' => customforms::get_custom_form_fields($id,$incident->form_id,true),
+						'custom_field' => customforms::get_custom_form_fields($id,$incident->form_id,TRUE),
 						'incident_active' => $incident->incident_active,
 						'incident_verified' => $incident->incident_verified,
 						'incident_zoom' => $incident->incident_zoom
@@ -834,7 +834,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
 
 		// Pack Javascript
-		$myPacker = new javascriptpacker($this->template->js , 'Normal', false, false);
+		$myPacker = new javascriptpacker($this->template->js , 'Normal', FALSE, FALSE);
 		$this->template->js = $myPacker->pack();
 	}
 
@@ -854,6 +854,7 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
 		$form = array(
+			'format' =>'',
 			'data_active'   => '',
 			'data_verified'   => '',
 			'data_include' => '',
@@ -869,71 +870,38 @@ class Reports_Controller extends Admin_Controller {
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
-			$post = Validation::factory($_POST);
-
-			 //	Add some filters
-			$post->pre_filter('trim', TRUE);
-
-			// Add some rules, the input field, followed by a list of checks, carried out in order
-			$post->add_rules('data_active.*','required','numeric','between[0,1]');
-			$post->add_rules('data_verified.*','required','numeric','between[0,1]');
-			//$post->add_rules('data_include.*','numeric','between[1,5]');
-			$post->add_rules('data_include.*','numeric','between[1,7]');
-			$post->add_rules('from_date','date_mmddyyyy');
-			$post->add_rules('to_date','date_mmddyyyy');
-
-			// Validate the report dates, if included in report filter
-			if (!empty($_POST['from_date']) OR !empty($_POST['to_date']))
-			{
-				// Valid FROM Date?
-				if (empty($_POST['from_date']) OR (strtotime($_POST['from_date']) > strtotime("today")))
-				{
-					$post->add_error('from_date','range');
-				}
-
-				// Valid TO date?
-				if (empty($_POST['to_date']) OR (strtotime($_POST['to_date']) > strtotime("today")))
-				{
-					$post->add_error('to_date','range');
-				}
-
-				// TO Date not greater than FROM Date?
-				if (strtotime($_POST['from_date']) > strtotime($_POST['to_date']))
-				{
-					$post->add_error('to_date','range_greater');
-				}
-			}
+			$post = array_merge($_POST, $_FILES);
 
 			// Test to see if things passed the rule checks
-			if ($post->validate(TRUE))
+			if (download::validate($post))
 			{
 				// Set filter
 				$filter = '( ';
 				
 				// Report Type Filter
-				$show_active = false;
-				$show_inactive = false;
-				$show_verified = false;
-				$show_not_verified = false;
+				$show_active = FALSE;
+				$show_inactive = FALSE;
+				$show_verified = FALSE;
+				$show_not_verified = FALSE;
 				
 				if (in_array(1, $post->data_active))
 				{
-					$show_active = true;
+					$show_active = TRUE;
 				}
 
 				if (in_array(0, $post->data_active))
 				{
-					$show_inactive = true;
+					$show_inactive = TRUE;
 				}
 
 				if (in_array(1, $post->data_verified))
 				{
-					$show_verified = true;
+					$show_verified = TRUE;
 				}
 
 				if (in_array(0, $post->data_verified))
 				{
-					$show_not_verified = true;
+					$show_not_verified = TRUE;
 				}
 				
 				// Handle active or not active
@@ -988,166 +956,41 @@ class Reports_Controller extends Admin_Controller {
 
 				// Retrieve reports
 				$incidents = ORM::factory('incident')->where($filter)->orderby('incident_dateadd', 'desc')->find_all();
+				
+				// Retrieve categories
+				$categories = Category_Model::get_categories(FALSE, FALSE, FALSE);
+				
+				// Retrieve Forms
+				$forms = ORM::Factory('form')->find_all();
+				
+				// Retrieve Custom forms
+				$custom_forms = customforms::get_custom_form_fields();
 
-				// Column Titles
-				ob_start();
-				echo "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
-				foreach($post->data_include as $item)
+				// If CSV format is selected
+				if($post->format == 'csv')
 				{
-					if ($item == 1) {
-						echo ",LOCATION";
-					}
-
-					if ($item == 2) {
-						echo ",DESCRIPTION";
-					}
-
-					if ($item == 3) {
-						echo ",CATEGORY";
-					}
-
-					if ($item == 4) {
-						echo ",LATITUDE";
-					}
-
-					if($item == 5) {
-						echo ",LONGITUDE";
-					}
-					if($item == 6)
-					{
-						$custom_titles = customforms::get_custom_form_fields('','',false);
-						foreach($custom_titles as $field_name)
-						{
-
-							echo ",".$field_name['field_name']."-".$field_name['form_id'];
-						}
-
-					}
-					if($item == 7)
-					{
-						echo ",FIRST NAME,LAST NAME,EMAIL";
-					}
-
+					$report_csv = download::download_csv($post, $incidents, $custom_forms);
+					
+					// Output to browser
+					header("Content-type: text/x-csv");
+					header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+					header("Content-Disposition: attachment; filename=" . time() . ".csv");
+					header("Content-Length: " . strlen($report_csv));
+					echo $report_csv;
+					exit;
+					
 				}
-
-				echo ",APPROVED,VERIFIED";
-
-				// Incase a plugin would like to add some custom fields
-				$custom_headers = "";
-				Event::run('ushahidi_filter.report_download_csv_header', $custom_headers);
-				echo $custom_headers;
-
-				echo "\n";
-
-				foreach ($incidents as $incident)
-				{
-					echo '"'.$incident->id.'",';
-					echo '"'.$incident->form_id.'",';
-					echo '"'.$this->_csv_text($incident->incident_title).'",';
-					echo '"'.$incident->incident_date.'"';
-
-					foreach($post->data_include as $item)
-					{
-						switch ($item)
-						{
-							case 1:
-								echo ',"'.$this->_csv_text($incident->location->location_name).'"';
-							break;
-
-							case 2:
-								echo ',"'.$this->_csv_text($incident->incident_description).'"';
-							break;
-
-							case 3:
-								echo ',"';
-
-								foreach($incident->incident_category as $category)
-								{
-									if ($category->category->category_title)
-									{
-										echo $this->_csv_text($category->category->category_title) . ", ";
-									}
-								}
-								echo '"';
-							break;
-
-							case 4:
-								echo ',"'.$this->_csv_text($incident->location->latitude).'"';
-							break;
-
-							case 5:
-								echo ',"'.$this->_csv_text($incident->location->longitude).'"';
-							break;
-
-							case 6:
-								$incident_id = $incident->id;
-								$custom_fields = customforms::get_custom_form_fields($incident_id,'',false);
-								if ( ! empty($custom_fields))
-								{
-									foreach($custom_fields as $custom_field)
-									{
-										echo',"'.$this->_csv_text($custom_field['field_response']).'"';
-									}
-								}
-								else
-								{
-									$custom_field = customforms::get_custom_form_fields('','',false);
-									foreach ($custom_field as $custom)
-									{
-										echo',"'.$this->_csv_text("").'"';
-									}
-								}
-							break;
-							
-							case 7:
-								$incident_orm = ORM::factory('incident', $incident->id);
-								$incident_person = $incident_orm->incident_person;
-								if($incident_person->loaded)
-								{
-									echo',"'.$this->_csv_text($incident_person->person_first).'"'.',"'.$this->_csv_text($incident_person->person_last).'"'.
-									',"'.$this->_csv_text($incident_person->person_email).'"';
-								}
-								else
-								{
-									echo',"'.$this->_csv_text("").'"'.',"'.$this->_csv_text("").'"'.',"'.$this->_csv_text("").'"';
-								}
-							break;
-						}
-					}
-
-					if ($incident->incident_active)
-					{
-						echo ",YES";
-					}
-					else
-					{
-						echo ",NO";
-					}
-
-					if ($incident->incident_verified)
-					{
-						echo ",YES";
-					}
-					else
-					{
-						echo ",NO";
-					}
-
-					// Incase a plugin would like to add some custom data for an incident
-					$event_data = array("report_csv" => "", "incident" => $incident);
-					Event::run('ushahidi_filter.report_download_csv_incident', $event_data);
-					echo $event_data['report_csv'];
-					echo "\n";
+				
+				// If XML format is selected
+				if($post->format == 'xml')
+				{ 
+					header('Content-type: text/xml; charset=UTF-8');
+					header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+					header("Content-Disposition: attachment; filename=" . time() . ".xml");	
+					$content = download::download_xml($post, $incidents, $categories, $forms);
+					echo $content;
+					exit;
 				}
-				$report_csv = ob_get_clean();
-
-				// Output to browser
-				header("Content-type: text/x-csv");
-				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-				header("Content-Disposition: attachment; filename=" . time() . ".csv");
-				header("Content-Length: " . strlen($report_csv));
-				echo $report_csv;
-				exit;
 			}
 
 			// No! We have validation errors, we need to show the form again, with the errors
@@ -1173,6 +1016,13 @@ class Reports_Controller extends Admin_Controller {
 
 	public function upload()
 	{
+		$form = array(
+			'uploadfile' => '',
+		);
+		
+		$errors = array();
+		$notices = array();
+		
 		// If user doesn't have access, redirect to dashboard
 		if ( ! $this->auth->has_permission("reports_upload"))
 		{
@@ -1182,64 +1032,69 @@ class Reports_Controller extends Admin_Controller {
 		if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 			$this->template->content = new View('admin/reports/upload');
 			$this->template->content->title = 'Upload Reports';
-			$this->template->content->form_error = false;
+			$this->template->content->form_error = FALSE;
 		}
 
 		if ($_SERVER['REQUEST_METHOD']=='POST')
 		{
-			$errors = array();
-			$notices = array();
+			$post = array_merge($_POST, $_FILES);
 
-			if (!$_FILES['csvfile']['error'])
+			// Set up validation
+			$post = Validation::factory($post)
+					->add_rules('uploadfile', 'upload::valid', 'upload::required', 'upload::type[xml,csv]', 'upload::size[3M]');
+					
+			if($post->validate(TRUE))
 			{
-				if (file_exists($_FILES['csvfile']['tmp_name']))
+				// Establish if file to be uploaded is .xml or .csv format
+				$fileinfo = pathinfo($post['uploadfile']['name']);
+				$extension = $fileinfo['extension'];
+				$allowable_extensions = array ('csv', 'xml');
+				
+				if (file_exists($_FILES['uploadfile']['tmp_name']))
 				{
-					// Get contents of CSV file
-					$data = file_get_contents($_FILES['csvfile']['tmp_name']);
-					
-					// Replace carriage return character
-					$replacedata = preg_replace("/\r/","\n",$data);
-					
-					// Replace file content
-					file_put_contents($_FILES['csvfile']['tmp_name'], $replacedata);
-					
-					if($filehandle = fopen($_FILES['csvfile']['tmp_name'], 'r'))
+					// If file type uploaded is CSV or XML
+					if (in_array($extension, $allowable_extensions))
 					{
-						$importer = new ReportsImporter;
-
-						if ($importer->import($filehandle))
+						// Pick the corresponding import library
+						$importer = $extension == 'csv' ? new CSVImporter : new XMLImporter;
+						if($importer->import($_FILES['uploadfile']['tmp_name']))
 						{
 							$this->template->content = new View('admin/reports/upload_success');
 							$this->template->content->title = 'Upload Reports';
-							$this->template->content->rowcount = $importer->totalrows;
-							$this->template->content->imported = $importer->importedrows;
+							$this->template->content->rowcount = $importer->totalreports;
+							$this->template->content->imported = $importer->importedreports;
 							$this->template->content->notices = $importer->notices;
 						}
+						
 						else
 						{
 							$errors = $importer->errors;
-						}
+						}	
 					}
+					
 					else
 					{
-						$errors[] = Kohana::lang('ui_admin.file_open_error');
+						$errors[] = Kohana::lang('reports.uploadfile.type');
 					}
 				}
 
-				// File exists?
+				// File doesn't exist
 				else
 				{
 					$errors[] = Kohana::lang('ui_admin.file_not_found_upload');
 				}
 			}
 
-			// Upload errors?
 			else
 			{
-				$errors[] = $_FILES['csvfile']['error'];
+				foreach($post->errors('reports') as $error)
+				{
+					$errors[] = $error;
+				}
+				
 			}
-
-			if (count($errors))
+			
+			if ( count($errors))
 			{
 				$this->template->content = new View('admin/reports/upload');
 				$this->template->content->title = Kohana::lang('ui_admin.upload_reports');
@@ -1372,7 +1227,7 @@ class Reports_Controller extends Admin_Controller {
 				$(\"#incident_date\").datepicker({
 				showOn: \"both\",
 				buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\",
-				buttonImageOnly: true
+				buttonImageOnly: TRUE
 				});
 				});
 			</script>";
@@ -1385,7 +1240,7 @@ class Reports_Controller extends Admin_Controller {
 				$(document).ready(function() {
 				$('a#category_toggle').click(function() {
 				$('#category_add').toggle(400);
-				return false;
+				return FALSE;
 				});
 				});
 			</script>";
@@ -1468,15 +1323,9 @@ class Reports_Controller extends Admin_Controller {
 		return (!empty($where_string)) ? $where_string :  "1=1";
 	}
 
-	private function _csv_text($text)
-	{
-		$text = stripslashes(htmlspecialchars($text));
-		return $text;
-	}
-
 	/**
 	 * Adds extra filter parameters to the reports::fetch_incidents()
-	 * method. This way we can add 'all_reports=>true and other filters
+	 * method. This way we can add 'all_reports=>TRUE and other filters
 	 * that don't come standard since we are on the backend.
 	 * Works by simply adding in SQL conditions to the params
 	 * array of the reports::fetch_incidents() method

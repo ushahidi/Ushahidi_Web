@@ -24,6 +24,7 @@ class Form_Field_Model_Test extends PHPUnit_Framework_TestCase
 			array(
 				array(
 					'form_id' => '1',
+					'field_id' => '',
 					'field_type' => '3',
 					'field_name' => 'Test Date',
 					'field_default' => '03/08/2011',
@@ -37,6 +38,7 @@ class Form_Field_Model_Test extends PHPUnit_Framework_TestCase
 
 				array(
 					'form_id' => '1',
+					'field_id' => '',
 					'field_type' => '3',
 					'field_name' => 'Test Date',
 					'field_default' => 'test',
