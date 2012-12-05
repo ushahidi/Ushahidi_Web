@@ -523,7 +523,9 @@ class Requirements_Backend {
 	 * @return array
 	 */
 	public function get_js() {
-		return array_keys(array_diff_key($this->js,$this->blocked));
+		$js = array_diff_key($this->js,$this->blocked); // removed blocked js by id
+		$js = array_diff($js, $this->blocked); // remove blocked js by filename
+		return $js;
 	}
 	
 	/**
@@ -589,7 +591,14 @@ class Requirements_Backend {
 	}
 	
 	function get_css() {
-		return array_diff_key($this->css, $this->blocked);
+		$css = array_diff_key($this->css,$this->blocked); // removed blocked css by id
+		// Remove blocked css by filename
+		foreach($css as $id => $params)
+		{
+			if (in_array($params['file'], $this->blocked)) unset($css[$id]);
+		}
+		
+		return $css;
 	}
 	
 	/**
@@ -703,7 +712,7 @@ class Requirements_Backend {
 			// Combine files - updates $this->js
 			$this->process_combined_files('js');
 		
-			foreach(array_diff_key($this->js,$this->blocked) as $id => $file) {
+			foreach($this->get_js() as $id => $file) {
 				$path = $this->path_for_file($file, 'js');
 				if($path) {
 					//$jsRequirements .= html::script($path, TRUE);
@@ -757,7 +766,7 @@ class Requirements_Backend {
 			// Combine files - updates $this->css 
 			$this->process_combined_files('css');
 			
-			foreach(array_diff_key($this->css,$this->blocked) as $id => $params) {
+			foreach($this->get_css() as $id => $params) {
 				$file = $params['file'];
 				$path = $this->path_for_file($file, 'css');
 				if($path) {
@@ -788,8 +797,14 @@ class Requirements_Backend {
 		if(preg_match('/^http[s]?/', $fileOrUrl)) {
 			return $fileOrUrl;
 		} else {
+			// Split query from filename
+			$suffix = '';
+			if(strpos($fileOrUrl, '?') !== false) {
+				$suffix = substr($fileOrUrl, strpos($fileOrUrl, '?')+1);
+				$fileOrUrl = substr($fileOrUrl, 0, strpos($fileOrUrl, '?'));
+			}
+			
 			if (file_exists(DOCROOT . $fileOrUrl)) {
-
 				// Check for RTL replacements
 				if ($type == 'css' AND ush_locale::is_rtl_language())
 				{
@@ -803,14 +818,10 @@ class Requirements_Backend {
 				// Get url prefix, either site base url or CDN url
 				$prefix = url::file_loc($type);
 				
-				$mtimesuffix = "";
-				$suffix = '';
-				if(strpos($fileOrUrl, '?') !== false) {
-					$suffix = '&' . substr($fileOrUrl, strpos($fileOrUrl, '?')+1);
-					$fileOrUrl = substr($fileOrUrl, 0, strpos($fileOrUrl, '?'));
-				}
+				$mtimesuffix = "?";
 				if($this->suffix_requirements) {
-					$mtimesuffix = "?m=" . filemtime(DOCROOT . $fileOrUrl);
+					$mtimesuffix .= "m=" . filemtime(DOCROOT . $fileOrUrl);
+					$suffix = '&'.$suffix;
 				}
 				return "{$prefix}{$fileOrUrl}{$mtimesuffix}{$suffix}";
 			}
@@ -914,7 +925,7 @@ class Requirements_Backend {
 	 */
 	function delete_combined_files($combinedFileName = null) {
 		$combinedFiles = ($combinedFileName) ? array($combinedFileName => null) : array_merge($this->combine_files['css'], $this->combine_files['js']);
-		$combinedFolder = ($this->getCombinedFilesFolder()) ? (DOCROOT . $this->combinedFilesFolder) : DOCROOT . Kohana::config('upload.directory', FALSE);
+		$combinedFolder = DOCROOT . $this->getCombinedFilesFolder();
 		foreach($combinedFiles as $combinedFile => $sourceItems) {
 			$filePath = $combinedFolder . '/' . $combinedFile;
 			if(file_exists($filePath)) {
