@@ -92,7 +92,7 @@ function refreshTimeline(options) {
 
 	if (interval <= 3) {
 		options.i = "hour";
-	} else if (interval <= 124) {
+	} else if (interval <= (31 * 6)) {
 		options.i = "day";
 	} else {
 		options.i = "month";
