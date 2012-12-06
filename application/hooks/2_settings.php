@@ -28,7 +28,7 @@ foreach($settings as $key => $setting)
 // Set Site Timezone
 if (function_exists('date_default_timezone_set'))
 {
-	$timezone = $settings['site_timezone'];
+	$timezone = isset($settings['site_timezone']) ? $settings['site_timezone'] : null;
 	// Set default timezone, due to increased validation of date settings
 	// which cause massive amounts of E_NOTICEs to be generated in PHP 5.2+
 	date_default_timezone_set(empty($timezone) ? date_default_timezone_get() : $timezone);
@@ -36,11 +36,11 @@ if (function_exists('date_default_timezone_set'))
 }
 
 // Cache Settings
-$cache_pages = ($settings['cache_pages']) ? TRUE : FALSE;
+$cache_pages = (isset($settings['cache_pages']) AND $settings['cache_pages']) ? TRUE : FALSE;
 Kohana::config_set('cache.cache_pages', $cache_pages);
-Kohana::config_set('cache.default.lifetime', $settings['cache_pages_lifetime']);
+Kohana::config_set('cache.default.lifetime', isset($settings['cache_pages_lifetime']) ? $settings['cache_pages_lifetime'] : 1800);
 
-$default_map = $settings['default_map'];
+$default_map = isset($settings['default_map']) ? $settings['default_map'] : 'osm_mapnik';
 $map_layer = map::base($default_map);
 if (isset($map_layer->api_url) AND $map_layer->api_url != '')
 {
