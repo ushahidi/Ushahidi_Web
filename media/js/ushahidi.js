@@ -294,6 +294,7 @@
 	  * detectMapZoom - {Boolean} Whether to detect change in the zoom level. If the
 	  *                 redrawOnZoom property is true, this option is ignored
 	  * mapControls - {Array(OpenLayers.Control)} The list of controls to add to the map
+	  * reportFilters - Initial report filters to be passed in URL
 	  */
 	 Ushahidi.Map = function(div, config) {
 	 	// Internal registry for the marker layers
@@ -332,10 +333,6 @@
 	 	    "mapcenterchanged"
 	 	];
 
-	 	// The set of filters/parameters to pass to the URL that fetches
-	 	// overlay data - not applicable to KMLs
-	 	this._reportFilters = {};
-
 	 	// Register for the callbacks to be invoked when the report filters
 	 	// are updated. The updated paramters will passed to the callback
 	 	// as a parameter
@@ -355,6 +352,10 @@
 
 	 	// Internally track the current zoom
 	 	this.currentZoom = config.zoom;
+
+	 	// The set of filters/parameters to pass to the URL that fetches
+	 	// overlay data - not applicable to KMLs
+	 	this._reportFilters = config.reportFilters || {};
 
 	 	// Update the report filters with the zoom level
 	 	this._reportFilters.z = config.zoom;
