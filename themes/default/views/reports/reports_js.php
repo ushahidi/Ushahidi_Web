@@ -141,7 +141,8 @@
 			}
 			else if ($(this).attr("id") == 'dateRangeMonth')
 			{
-				d1 = new Date(d.setDate(32));
+				d1 = new Date(d);
+				d1.setDate(32);
 				lastMonthDay = 32 - d1.getDay();
 				
 				$("#report_date_from").val(month + '/01/' + d.getFullYear());
@@ -159,6 +160,7 @@
 			
 			// Hide the box
 			$("#tooltip-box").hide();
+			$("#tooltip-box a.filter-button").click();
 			
 			return false;
 		});
