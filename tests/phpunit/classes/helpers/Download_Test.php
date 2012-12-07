@@ -868,7 +868,7 @@
 			}
 		
 			/* Incident Category check */
-			$report_cat_element = $report_element->item(0)->getElementsByTagName('report_categories');
+			$report_categories_element = $report_element->item(0)->getElementsByTagName('report_categories');
 			$incident_categories = $incident->incident_category;
 			$incident_cat_count = count($incident_categories);
 			$cat_index = rand(0, $incident_cat_count-1);
@@ -877,13 +877,15 @@
 			if (in_array(3, $this->post['data_include']))
 			{
 				// Make sure the <reportcategories> element exists
-				$this->assertGreaterThan(0, $report_cat_element->length, "Report categories element should exist");
+				$this->assertGreaterThan(0, $report_categories_element->length, "Report categories element should exist");
 				
 				// Pick a random incident category
 				$this_cat = $incident_categories[$cat_index];
 				
+				$report_cat_element = $report_categories_element->item(0)->getElementsByTagName('category');
+				
 				// Test incident_category title
-				$incident_cat = xml::get_node_text($report_cat_element->item($cat_index), 'category');
+				$incident_cat = $report_cat_element->item($cat_index)->nodeValue;
 				$this->assertEquals($this_cat->category->category_title, $incident_cat, 'Incident_category does not match/element does not exist');
 			}
 			else
