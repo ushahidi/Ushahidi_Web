@@ -26,14 +26,14 @@ class xml_Core{
 			if (array_key_exists($element, $object_map['attributes']))
 			{
 				$writer->startAttribute($element);
-					$writer->text(download::_encode_text($object_map['attributes'][$element]));
+					$writer->text($object_map['attributes'][$element]);
 			}
 
 			// For elements
 			elseif (array_key_exists($element, $object_map['elements']))
 			{
 				$writer->startElement($element);
-					$writer->text(download::_encode_text($object_map['elements'][$element]));
+					$writer->text($object_map['elements'][$element]);
 				$writer->endElement();
 			}
 		}	

@@ -70,80 +70,92 @@ class download_Core {
 	 */
 	public static function download_csv($post, $incidents, $custom_forms)
 	{
+		$fiveMBs = 5 * 1024 * 1024;
+		$fp = fopen("php://temp/maxmemory:$fiveMBs", 'r+');
+		
 		// Column Titles
-		$report_csv = "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
+		$csv_headers = array("#","FORM #","INCIDENT TITLE","INCIDENT DATE");
 		$item_map = array(
 		    1 => 'LOCATION',
 		    2 => 'DESCRIPTION',
 		    3 => 'CATEGORY',
 		    4 => 'LATITUDE',
 		    5 => 'LONGITUDE',
-		    7 => 'FIRST NAME, LAST NAME, EMAIL'
+		    7 => array('FIRST NAME','LAST NAME','EMAIL')
 		);
-		
+
+		// Ensure column order is always the same
+		sort($post->data_include);
+
 		foreach($post->data_include as $item)
-		{		
+		{
 			if ( (int)$item == 6)
 			{
 				foreach($custom_forms as $field_name)
 				{
-					$report_csv .= ",".$field_name['field_name']."-".$field_name['form_id'];
+					$csv_headers[] = $field_name['field_name']."-".$field_name['form_id'];
 				}
 
 			}
+			elseif (is_array($item_map[$item]))
+			{
+				foreach ($item_map[$item] as $i)
+				{
+					$csv_headers[] = $i;
+				}
+			}
 			elseif ( array_key_exists($item, $item_map))
 			{
-			    $report_csv .= sprintf(",%s", $item_map[$item]);
+				$csv_headers[] = $item_map[$item];
 			}
 		}
 
-		$report_csv .= ",APPROVED,VERIFIED";
+		$csv_headers[] = 'APPROVED';
+		$csv_headers[] = 'VERIFIED';
 
 		// Incase a plugin would like to add some custom fields
-		$custom_headers = "";
-		Event::run('ushahidi_filter.report_download_csv_header', $custom_headers);
-		$report_csv .= $custom_headers;
+		Event::run('ushahidi_filter.report_download_csv_header', $csv_headers);
 
-		$report_csv .= "\n";
+		fwrite($fp, self::arrayToCsv($csv_headers));
 
 		foreach ($incidents as $incident)
 		{
-			$report_csv .= '"'.$incident->id.'",';
-			$report_csv .= '"'.$incident->form_id.'",';
-			$report_csv .= '"'.strip_tags(self::_encode_text($incident->incident_title)).'",';
-			$report_csv .= '"'.$incident->incident_date.'"';
+			$csv_line = array();
+			$csv_line[] = $incident->id;
+			$csv_line[] = $incident->form_id;
+			$csv_line[] = $incident->incident_title;
+			$csv_line[] = $incident->incident_date;
 
 			foreach($post->data_include as $item)
 			{
 				switch ($item)
 				{
 					case 1:
-					$report_csv .= ',"'.self::_encode_text($incident->location->location_name).'"';
+					$csv_line[] = $incident->location->location_name;
 					break;
 
 					case 2:
-					$report_csv .= ',"'.self::_encode_text($incident->incident_description).'"';
+					$csv_line[] = $incident->incident_description;
 					break;
 
 					case 3:
-					$report_csv .= ',"';
-
+					$cat_titles = array();
 					foreach($incident->incident_category as $category)
 					{
 						if ($category->category->category_title)
 						{
-							$report_csv .= self::_encode_text($category->category->category_title).", ";
+							$cat_titles[] = $category->category->category_title;
 						}
 					}
-					$report_csv .= '"';
+					$csv_line[] = implode(',',$cat_titles);
 					break;
 
 					case 4:
-					$report_csv .= ',"'.$incident->location->latitude.'"';
+					$csv_line[] = $incident->location->latitude;
 					break;
 
 					case 5:
-					$report_csv .= ',"'.$incident->location->longitude.'"';
+					$csv_line[] = $incident->location->longitude;
 					break;
 
 					case 6:
@@ -153,14 +165,14 @@ class download_Core {
 					{
 						foreach($custom_fields as $custom_field)
 						{
-							$report_csv .= ',"'.self::_encode_text($custom_field['field_response']).'"';
+							$csv_line[] = $custom_field['field_response'];
 						}
 					}
 					else
 					{
 						foreach ($custom_forms as $custom)
 						{
-							$report_csv .= ',""';
+							$csv_line[] = '';
 						}
 					}
 					break;
@@ -169,43 +181,36 @@ class download_Core {
 					$incident_person = $incident->incident_person;
 					if($incident_person->loaded)
 					{
-						$report_csv .= ',"'.self::_encode_text($incident_person->person_first).'"'
-										.',"'.self::_encode_text($incident_person->person_last).'"'
-										.',"'.self::_encode_text($incident_person->person_email).'"';
+						$csv_line[] = $incident_person->person_first;
+						$csv_line[] = $incident_person->person_last;
+						$csv_line[] = $incident_person->person_email;
 					}
 					else
 					{
-						$report_csv .= ',""'.',""'.',""';
+						$csv_line[] = '';
+						$csv_line[] = '';
+						$csv_line[] = '';
 					}
 					break;
 				}
 			}
 
-			if ($incident->incident_active)
-			{
-				$report_csv .= ",YES";
-			}
-			else
-			{
-				$report_csv .= ",NO";
-			}
-
-			if ($incident->incident_verified)
-			{
-				$report_csv .= ",YES";
-			}
-			else
-			{
-				$report_csv .= ",NO";
-			}
+			$csv_line[] = $incident->incident_active ? 'YES' : 'NO';
+			$csv_line[] = $incident->incident_verified ? 'YES' : 'NO';
+			
 
 			// Incase a plugin would like to add some custom data for an incident
-			$event_data = array("report_csv" => "", "incident" => $incident);
+			$event_data = array("csv_line" => $csv_line, "incident" => $incident);
 			Event::run('ushahidi_filter.report_download_csv_incident', $event_data);
-			$report_csv .= $event_data['report_csv'];
-			$report_csv .= "\n";
+			$csv_line = $event_data['csv_line'];
+			// Add line to CSV
+			fwrite($fp, self::arrayToCsv($csv_line));
 		}
-		return $report_csv;
+		
+		rewind($fp);
+		$csv_text = stream_get_contents($fp);
+		fclose($fp);
+		return $csv_text;
 	}
 	
 	/**
@@ -343,7 +348,10 @@ class download_Core {
 					
 		// Incident Category elements 
 		$incident_category_elements = array('category');
-												
+
+		// Ensure column order is always the same
+		sort($post->data_include);
+
 		/* Start Import Tag*/
 		$writer->startElement('UshahidiReports');
 		foreach ($post->data_include as $item)
@@ -567,7 +575,7 @@ class download_Core {
 						// Report Description
 						case 2:
 						$writer->startElement('description');
-							$writer->text(self::_encode_text($incident->incident_description));
+							$writer->text($incident->incident_description);
 						$writer->endElement();
 						break;
 						
@@ -633,9 +641,9 @@ class download_Core {
 								{
 									$writer->startElement('field');
 										$writer->startAttribute('name');
-											$writer->text(self::_encode_text($customresponse['field_name']));
+											$writer->text($customresponse['field_name']);
 										$writer->endAttribute();
-										$writer->text(self::_encode_text($customresponse['field_response']));
+										$writer->text($customresponse['field_response']);
 									$writer->endElement();
 								}
 							}
@@ -667,16 +675,36 @@ class download_Core {
 		return $writer->outputMemory(TRUE);
 		
 	}
-	
+
 	/**
-	 * Handles character encoding of text to be downloaded
-	 */
-	public static function _encode_text($text)
-	{
-		$encoding = mb_detect_encoding($text, "auto");
-		$detected_encoding = $encoding == 'ASCII' ? 'iso-8859-1': $encoding;
-		$text = htmlentities($text, ENT_QUOTES, $detected_encoding);
-		return $text;
-	 }
+	  * Formats a line (passed as a fields  array) as CSV and returns the CSV as a string.
+	  * Adapted from http://us3.php.net/manual/en/function.fputcsv.php#87120
+	  */
+	function arrayToCsv( array &$fields, $delimiter = ',', $enclosure = '"', $encloseAll = TRUE, $nullToMysqlNull = FALSE ) {
+		$delimiter_esc = preg_quote($delimiter, '/');
+		$enclosure_esc = preg_quote($enclosure, '/');
+		
+		$output = array();
+		foreach ( $fields as $field )
+		{
+			if ($field === null && $nullToMysqlNull)
+			{
+				$output[] = 'NULL';
+				continue;
+			}
+			
+			// Enclose fields containing $delimiter, $enclosure or whitespace
+			if ( $encloseAll || preg_match( "/(?:${delimiter_esc}|${enclosure_esc}|\s)/", $field ) )
+			{
+				$output[] = $enclosure . str_replace($enclosure, $enclosure . $enclosure, $field) . $enclosure;
+			}
+			else
+			{
+				$output[] = $field;
+			}
+		}
+		
+		return implode( $delimiter, $output ) . "\r\n";
+	}
 }
 ?>
