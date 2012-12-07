@@ -781,7 +781,11 @@
 			}
 		
 			/* Media Check */
-			$incident_media = $incident->media;
+			$incident_media = ORM::Factory('media')
+							->where('media_type = 2 OR media_type = 4')
+							->where('incident_id', $incident->id)
+							->find_all();
+			
 			$media_element = $report_element->item(0)->getElementsByTagName('media');
 			if (count($incident_media) > 0)
 			{
@@ -815,7 +819,7 @@
 					$this->assertEquals($this_media->media_date, $media_date, 'Media date does not match/ attribute does not exist');
 			
 					// Test media link
-					$media_link = xml::get_node_text($media_element->item(0), 'item');
+					$media_link = $media_item->item($media_index)->nodeValue;
 					$this->assertEquals($this_media->media_link, $media_link, 'Media link does not match/ element does not exist');
 				}
 				else
