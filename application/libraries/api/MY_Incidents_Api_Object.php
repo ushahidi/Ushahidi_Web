@@ -620,6 +620,23 @@ class Incidents_Api_Object extends Api_Object_Core {
 					$xml->endElement(); // Media
 				}
 			}
+			
+			if (count($custom_field_items) > 0 && $this->response_type != 'json' && $this->response_type != 'jsonp')
+			{
+				if (isset($custom_field_items[$item->incident_id]) AND count($custom_field_items[$item->incident_id]) > 0)
+				{
+					$xml->startElement('customFields');
+					foreach ($custom_field_items[$item->incident_id] as $field_item)
+					{
+						$xml->startElement('field');
+						foreach($field_item as $fname => $fval){
+							$xml->writeElement($fname, $fval);
+						}
+						$xml->endElement(); // field
+					}
+					$xml->endElement(); // customFields
+				}
+			}
 
 			$xml->endElement(); // End incident
 
