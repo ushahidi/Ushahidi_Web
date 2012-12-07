@@ -32,18 +32,6 @@ class download_Core {
 		// Validate the report dates, if included in report filter
 		if (!empty($post->from_date) OR !empty($post->to_date))
 		{
-			// Valid FROM Date?
-			if (empty($post->from_date) OR (strtotime($post->from_date) > strtotime("today")))
-			{
-				$post->add_error('from_date','range');
-			}
-
-			// Valid TO date?
-			if (empty($post->to_date) OR (strtotime($post->to_date) > strtotime("today")))
-			{
-				$post->add_error('to_date','range');
-			}
-
 			// TO Date not greater than FROM Date?
 			if (strtotime($post->from_date) > strtotime($post->to_date))
 			{
