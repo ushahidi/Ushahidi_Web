@@ -820,17 +820,12 @@ class XMLImporter {
 											/* Radio buttons and Drop down fields which take single responses */
 											if ($match_field_type == 5 OR $match_field_type == 7)
 											{
-												foreach ($match_field_defaults as $match_field_default)
+												foreach ($field_defaults as $match_field_default)
 												{
 													// Carry out a case insensitive string comparison
 													$new_form_response->form_response = strcasecmp($match_field_default, $field_response) == 0
 																						? $match_field_default 
 																						: NULL;
-													if ($new_form_response->form_response == NULL)
-													{
-														$this->notices[] = Kohana::lang('import.xml.invalid_response')
-																			.$this->totalreports.': "'.$field_name.'"';
-													}
 												}
 											}
 												

@@ -189,6 +189,7 @@ class download_Core {
 			$event_data = array("csv_line" => $csv_line, "incident" => $incident);
 			Event::run('ushahidi_filter.report_download_csv_incident', $event_data);
 			$csv_line = $event_data['csv_line'];
+			
 			// Add line to CSV
 			fwrite($fp, self::arrayToCsv($csv_line));
 		}
@@ -524,35 +525,6 @@ class download_Core {
 				
 				// Generate report tags
 				xml::generate_tags($writer, $report_element_map, $report_elements);
-				
-				// Report Media
-				$reportmedia = $incident->media;
-						
-				if (count($reportmedia) > 0)
-				{
-					$writer->startElement('media');
-					foreach ($reportmedia as $media)
-					{
-						// Videos and news links only
-						if ($media->media_type == 2 OR $media->media_type == 4)
-						{
-							$writer->startElement('item');
-									
-							// Generate media elements map 
-							$media_element_map = xml::generate_element_attribute_map($media, $media_map);
-									
-							// Generate media elements
-							xml::generate_tags($writer, $media_element_map, $media_elements);
-									
-							$writer->endAttribute();
-							$writer->text($media->media_link);
-							
-							// Close item tag
-							$writer->endElement();
-						}
-					}
-					$writer->endElement();
-				}
 								
 				foreach($post->data_include as $item)
 				{
@@ -639,6 +611,35 @@ class download_Core {
 					}
 				}
 				
+				// Report Media
+				$reportmedia = $incident->media;
+						
+				if (count($reportmedia) > 0)
+				{
+					$writer->startElement('media');
+					foreach ($reportmedia as $media)
+					{
+						// Videos and news links only
+						if ($media->media_type == 2 OR $media->media_type == 4)
+						{
+							$writer->startElement('item');
+									
+							// Generate media elements map 
+							$media_element_map = xml::generate_element_attribute_map($media, $media_map);
+									
+							// Generate media elements
+							xml::generate_tags($writer, $media_element_map, $media_elements);
+									
+							$writer->endAttribute();
+							$writer->text($media->media_link);
+							
+							// Close item tag
+							$writer->endElement();
+						}
+					}
+					$writer->endElement();
+				}
+				
 				// Close individual report	
 				$writer->endElement();
 			}
@@ -666,7 +667,8 @@ class download_Core {
 	  * Formats a line (passed as a fields  array) as CSV and returns the CSV as a string.
 	  * Adapted from http://us3.php.net/manual/en/function.fputcsv.php#87120
 	  */
-	function arrayToCsv( array &$fields, $delimiter = ',', $enclosure = '"', $encloseAll = TRUE, $nullToMysqlNull = FALSE ) {
+	public static function arrayToCsv( array &$fields, $delimiter = ',', $enclosure = '"', $encloseAll = TRUE, $nullToMysqlNull = FALSE )
+	{
 		$delimiter_esc = preg_quote($delimiter, '/');
 		$enclosure_esc = preg_quote($enclosure, '/');
 		
