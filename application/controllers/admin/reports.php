@@ -952,10 +952,13 @@ class Reports_Controller extends Admin_Controller {
 				$filter .= ') ';
 
 				// Report Date Filter
-				if ( ! empty($post->from_date) AND !empty($post->to_date))
+				if ( ! empty($post->from_date))
 				{
-					$filter .= " AND ( incident_date >= '" . date("Y-m-d H:i:s",strtotime($post->from_date))
-							. "' AND incident_date <= '" . date("Y-m-d H:i:s",strtotime($post->to_date)) . "' ) ";
+					$filter .= " AND incident_date >= '" . date("Y-m-d H:i:s",strtotime($post->from_date)) . "' ";
+				}
+				if (  !empty($post->to_date))
+				{
+					$filter .= " AND incident_date <= '" . date("Y-m-d H:i:s",strtotime($post->to_date)) . "' ";
 				}
 
 				// Retrieve reports

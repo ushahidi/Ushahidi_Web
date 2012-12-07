@@ -29,14 +29,12 @@ class download_Core {
 				->add_rules('from_date','date_mmddyyyy')
 				->add_rules('to_date','date_mmddyyyy');
 				
-		// Validate the report dates, if included in report filter
-		if (!empty($post->from_date) OR !empty($post->to_date))
-		{
+		// Validate the report dates
 			// TO Date not greater than FROM Date?
-			if (strtotime($post->from_date) > strtotime($post->to_date))
-			{
-				$post->add_error('to_date','range_greater');
-			}
+		if (!empty($post->from_date) AND !empty($post->to_date)
+			AND strtotime($post->from_date) > strtotime($post->to_date))
+		{
+			$post->add_error('to_date','range_greater');
 		}
 			
 		// Make sure valid format is passed
