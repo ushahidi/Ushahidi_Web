@@ -978,36 +978,36 @@
 			$this->markTestSkipped('There are no reports, CSV Download test skipped');
 		}
 		
-		$expected_csv_content = "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
+		$expected_csv_content = "\"#\",\"FORM #\",\"INCIDENT TITLE\",\"INCIDENT DATE\"";
 		
 		// Include location information?
 		if (in_array(1,$this->post['data_include']))
 		{
-			$expected_csv_content.= ",LOCATION";
+			$expected_csv_content.= ",\"LOCATION\"";
 		}
 		
 		// Include description information?
 		if (in_array(2,$this->post['data_include']))
 		{
-			$expected_csv_content.= ",DESCRIPTION";
+			$expected_csv_content.= ",\"DESCRIPTION\"";
 		}
 		
 		// Include category information?
 		if (in_array(3,$this->post['data_include']))
 		{
-			$expected_csv_content.= ",CATEGORY";
+			$expected_csv_content.= ",\"CATEGORY\"";
 		}
 		
 		// Include latitude information?
 		if (in_array(4,$this->post['data_include']))
 		{
-			$expected_csv_content.= ",LATITUDE";
+			$expected_csv_content.= ",\"LATITUDE\"";
 		}
 		
 		// Include longitude information?
 		if (in_array(5,$this->post['data_include']))
 		{
-			$expected_csv_content.= ",LONGITUDE";
+			$expected_csv_content.= ",\"LONGITUDE\"";
 		}
 		
 		// Include custom forms information?
@@ -1015,18 +1015,18 @@
 		{
 			foreach($this->custom_forms as $field_name)
 			{
-				$expected_csv_content.= ",".$field_name['field_name']."-".$field_name['form_id'];
+				$expected_csv_content.= ",\"".$field_name['field_name']."-".$field_name['form_id']."\"";
 			}
 		}
 		
 		// Include personal information?
 		if (in_array(7,$this->post['data_include']))
 		{
-			$expected_csv_content.= ",FIRST NAME, LAST NAME, EMAIL";	
+			$expected_csv_content.= ",\"FIRST NAME\",\"LAST NAME\",\"EMAIL\"";	
 		}
 		
-		$expected_csv_content.= ",APPROVED,VERIFIED";
-		$expected_csv_content.="\n";
+		$expected_csv_content.= ",\"APPROVED\",\"VERIFIED\"";
+		$expected_csv_content.="\r\n";
 		
 		// Add Report information 
 		$report = $this->incident[0];
@@ -1034,7 +1034,7 @@
 		// Report id, form_id, title, and date
 		$expected_csv_content.='"'.$report->id.'",'
 								.'"'.$report->form_id.'",'
-								.'"'.download::_encode_text($report->incident_title).'",'
+								.'"'.$report->incident_title.'",'
 								.'"'.$report->incident_date.'"';
 		
 		
@@ -1042,27 +1042,27 @@
 		// Include location information?
 		if (in_array(1,$this->post['data_include']))
 		{
-			$expected_csv_content.= ',"'.download::_encode_text($report->location->location_name).'"';
+			$expected_csv_content.= ',"'.$report->location->location_name.'"';
 		}
 		
 		// Include description information?
 		if (in_array(2,$this->post['data_include']))
 		{
-			$expected_csv_content.= ',"'.download::_encode_text($report->incident_description).'"';
+			$expected_csv_content.= ',"'.$report->incident_description.'"';
 		}
 		
 		// Include category information?
 		if (in_array(3,$this->post['data_include']))
 		{
-			$cat = '';
+			$cat = array();
 			foreach($report->incident_category as $category)
 			{
 				if ($category->category->category_title)
 				{
-					$cat.= download::_encode_text($category->category->category_title).', ';
+					$cat[] = $category->category->category_title;
 				}
 			}
-			$expected_csv_content.= ',"'.$cat.'"';
+			$expected_csv_content.= ',"'.implode($cat,',').'"';
 		}
 		
 		// Include latitude information?
@@ -1085,7 +1085,7 @@
 			{
 				foreach($custom_fields as $custom_field)
 				{
-					$expected_csv_content.= ',"'.download::_encode_text($custom_field['field_response']).'"';
+					$expected_csv_content.= ',"'.$custom_field['field_response'].'"';
 				}
 			}
 			else
@@ -1103,9 +1103,9 @@
 			$person = $report->incident_person;
 			if($person->loaded)
 			{
-				$expected_csv_content.= ',"'.download::_encode_text($person->person_first).'"'
-										.',"'.download::_encode_text($person->person_last).'"'
-										.',"'.download::_encode_text($person->person_email).'"';
+				$expected_csv_content.= ',"'.$person->person_first.'"'
+										.',"'.$person->person_last.'"'
+										.',"'.$person->person_email.'"';
 			}
 			else
 			{
@@ -1116,25 +1116,25 @@
 		// Approved status
 		if ($report->incident_active)
 		{
-			$expected_csv_content.= ",YES";
+			$expected_csv_content.= ",\"YES\"";
 		}
 		else
 		{
-			$expected_csv_content.= ",NO";
+			$expected_csv_content.= ",\"NO\"";
 		}
 
 		// Verified Status
 		if ($report->incident_verified)
 		{
-			$expected_csv_content.= ",YES";
+			$expected_csv_content.= ",\"YES\"";
 		}
 		else
 		{
-			$expected_csv_content.= ",NO";
+			$expected_csv_content.= ",\"NO\"";
 		}
 		
 		// End Expected output
-		$expected_csv_content.= "\n";
+		$expected_csv_content.= "\r\n";
 		
 		// Grab actual output
 		$actual_csv_content = download::download_csv($this->post, $this->incident, $this->custom_forms);
