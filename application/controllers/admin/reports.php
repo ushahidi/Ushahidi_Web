@@ -853,17 +853,21 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content = new View('admin/reports/download');
 		$this->template->content->title = Kohana::lang('ui_admin.download_reports');
 
-		$form = array(
+		$errors = $form = array(
 			'format' =>'',
-			'data_active'   => '',
-			'data_verified'   => '',
-			'data_include' => '',
+			'data_active'   => array(),
+			'data_verified'   => array(),
+			'data_include' => array(),
 			'from_date'	   => '',
 			'to_date'	   => '',
 			'form_auth_token'=> ''
 		);
-
-		$errors = $form;
+		
+		// Default to all selected
+		$form['data_active'] = array(0,1);
+		$form['data_verified'] = array(0,1);
+		$form['data_include'] = array(1,2,3,4,5,6,7);
+		
 		$form_error = FALSE;
 
 		// Check, has the form been submitted, if so, setup validation
@@ -948,10 +952,13 @@ class Reports_Controller extends Admin_Controller {
 				$filter .= ') ';
 
 				// Report Date Filter
-				if ( ! empty($post->from_date) AND !empty($post->to_date))
+				if ( ! empty($post->from_date))
 				{
-					$filter .= " AND ( incident_date >= '" . date("Y-m-d H:i:s",strtotime($post->from_date))
-							. "' AND incident_date <= '" . date("Y-m-d H:i:s",strtotime($post->to_date)) . "' ) ";
+					$filter .= " AND incident_date >= '" . date("Y-m-d H:i:s",strtotime($post->from_date)) . "' ";
+				}
+				if (  !empty($post->to_date))
+				{
+					$filter .= " AND incident_date <= '" . date("Y-m-d H:i:s",strtotime($post->to_date)) . "' ";
 				}
 
 				// Retrieve reports

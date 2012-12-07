@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UshahidiReports>
+ <categories>
+  <category color="9900CC" visible="1" trusted="0">
+   <title>C1</title>
+   <description>C1 Description</description>
+  </category>
+  <category color="9900CC" visible="0" trusted="0">
+   <title>C2</title>
+   <description>C2 Description</description>
+   <translations>
+    <translation locale="fr_FR">
+     <translation_title>C2 Translation</translation_title>
+     <translation_description>C2 Translation Description</translation_description>
+    </translation>
+   </translations>
+  </category>
+ </categories>
+ <custom_forms>
+  <form active="1">
+   <title>Default Form</title>
+   <description>Default form, for report entry</description>
+  </form>
+ </custom_forms>
+ <reports>
+  <report id="9999" approved="1" verified="0" form_name="Default Form" mode="1">
+   <title>The Zombie Apocalypse on Facebook ' &quot; quote &amp;</title>
+   <date>2012-12-21 00:01:00</date>
+   <dateadd>2010-11-03 20:56:21</dateadd>
+   <location>
+    <name>El Cerrito, CA</name>
+    <longitude>-150.27082</longitude>
+    <latitude>10.311179</latitude>
+   </location>
+   <description>Foodstuffs, come join in on the fun...bring friends with &quot;like minds&quot;. Snacks will be provided...as they arrive. Dancing optional, shuffling encouraged. Boomsticks and flamethrowers must be checked at the door.  Party kicks off as soon as the Mayan Calendar expires, and rocks until the break of a new dawn.
+
+&amp; ; ' &quot; &lt;&gt;
+
+http://forum.x-kirov.ru/topic/2383-попала-в-дтп-чудом-осталась-жива</description>
+   <report_categories>
+    <category>C2</category>
+    <category>C1</category>
+   </report_categories>
+  </report>
+ </reports>
+</UshahidiReports>

@@ -963,184 +963,164 @@
 		}	
 	}
 	
+	
+	
+	public function setUpFakeObject()
+	{
+		
+		// Categories object : Limit it to one category only
+		$category1 = ORM::factory('category', 9908);
+		$category1->category_title = 'C1';
+		$category1->category_description = 'C1 Description';
+		$category1->category_color = '9900CC';
+		$category1->category_visible = TRUE;
+		$category1->locale = 'en_US';
+		$category1->id = 9908;
+		$category1->save();
+		$category2 = ORM::factory('category', 9909);
+		$category2->category_title = 'C2';
+		$category2->category_description = 'C2 Description';
+		$category2->category_color = '9900CC';
+		$category2->category_visible = FALSE;
+		$category2->locale = 'en_US';
+		$category2->id = 9909;
+		$category2->save();
+		$this->fake_category = array($category1, $category2);
+		//@todo translation
+		$c2_fr = ORM::factory('category_lang');
+		$c2_fr->locale = 'fr_FR';
+		$c2_fr->category_title = 'C2 Translation';
+		$c2_fr->category_description = 'C2 Translation Description';
+		$c2_fr->category_id = 9909;
+		$c2_fr->save();
+		$this->fake_cat_translation = $c2_fr;
+
+		// Construct fake incident
+		$incident = ORM::factory('incident', 9999);
+		$incident->incident_title = "The Zombie Apocalypse on Facebook ' \" quote &";
+		$incident->incident_description = <<<DESC
+Foodstuffs, come join in on the fun...bring friends with "like minds". Snacks will be provided...as they arrive. Dancing optional, shuffling encouraged. Boomsticks and flamethrowers must be checked at the door.  Party kicks off as soon as the Mayan Calendar expires, and rocks until the break of a new dawn.
+
+& ; ' " <>
+
+http://forum.x-kirov.ru/topic/2383-попала-в-дтп-чудом-осталась-жива
+DESC;
+		$incident->incident_date = "2012-12-21 00:01:00";
+		$incident->incident_dateadd = "2010-11-03 20:56:21";
+		
+		$location = ORM::factory('location');
+		$location->latitude = 10.311179;
+		$location->longitude = -150.27082;
+		$location->location_name = "El Cerrito, CA";
+		$location->save();
+		$this->fake_location = $location;
+		
+		$incident->location_id = $location->id;
+		$incident->incident_active = TRUE;
+		$incident->incident_verified = FALSE;
+		$incident->incident_mode = 1;
+		$incident->form_id = 1;
+		$incident->id = 9999;
+		
+		$ic = ORM::factory('incident_category',9000);
+		$ic->incident_id = 9999;
+		$ic->category_id = 9909;
+		$ic->id = 9000;
+		$ic->save();
+		$ic2 = ORM::factory('incident_category',9001);
+		$ic2->incident_id = 9999;
+		$ic2->category_id = 9908;
+		$ic2->id = 9001;
+		$ic2->save();
+		
+		$this->fake_ic = array($ic, $ic2);
+		$this->fake_incidents = array($incident);
+		
+		// Forms object to be used for XML download : Limit it to one custom form only
+		$form = ORM::Factory('form');
+		$form->form_title = "Default Form";
+		$form->form_active = 1;
+		$form->form_description = "Default form, for report entry";
+		$this->fake_forms = array($form);
+	}
+	
+	public function tearDownFakeObject()
+	{
+		// Delete location
+		if (isset($this->fake_location)) $this->fake_location->delete();
+		if (isset($this->fake_cat_translation)) $this->fake_cat_translation->delete();
+		if (isset($this->fake_category))
+		{
+			foreach($this->fake_category as $cat)
+			{
+				$cat->delete();
+			}
+		}
+		if (isset($this->fake_ic))
+		{
+			foreach($this->fake_ic as $ic)
+			{
+				$ic->delete();
+			}
+		}
+		ORM::factory('incident_category')->where('incident_id', 9999)->delete_all();
+		unset($this->fake_category, $this->fake_incidents, $this->fake_forms, $this->fake_cat_translation, $this->fake_location);
+	}
+	
+	/**
+	 * Test XML Tag generation
+	 * @test
+	 */
+	public function testXMLText()
+	{
+		$this->setUpFakeObject();
+		
+		/* Test XML Tag generation */
+		// Test to ensure validation passed
+		$this->assertEquals(TRUE, download::validate($this->post), 'Report download validation failed');
+		
+		// Load XML Content into a string
+		$actual_xml_content = download::download_xml($this->post, $this->fake_incidents, $this->fake_category, $this->fake_forms);
+		
+		// Make sure string holding XML Content is not empty
+		$this->assertNotEmpty($actual_xml_content, 'XML Download Failed');
+		
+		$expected_xml_content = file_get_contents(DOCROOT. 'tests/phpunit/data/download.xml');
+		
+		$this->assertEquals($expected_xml_content, $actual_xml_content, 'CSV Download failed. Content mismatch');
+		
+		$this->tearDownFakeObject();
+		
+		return;
+	}
+	
 	/**
 	 * Test CSV Download
 	 * @test
 	 */
 	public function testDownloadCSV()
 	{
+		$this->setUpFakeObject();
 		// Test to ensure validation passed
 		$this->assertEquals(TRUE, download::validate($this->post), 'Report download validation failed');
 		
-		// If we have no reports
-		if (count($this->incident) == 0)
-		{
-			$this->markTestSkipped('There are no reports, CSV Download test skipped');
-		}
-		
-		$expected_csv_content = "#,FORM #,INCIDENT TITLE,INCIDENT DATE";
-		
-		// Include location information?
-		if (in_array(1,$this->post['data_include']))
-		{
-			$expected_csv_content.= ",LOCATION";
-		}
-		
-		// Include description information?
-		if (in_array(2,$this->post['data_include']))
-		{
-			$expected_csv_content.= ",DESCRIPTION";
-		}
-		
-		// Include category information?
-		if (in_array(3,$this->post['data_include']))
-		{
-			$expected_csv_content.= ",CATEGORY";
-		}
-		
-		// Include latitude information?
-		if (in_array(4,$this->post['data_include']))
-		{
-			$expected_csv_content.= ",LATITUDE";
-		}
-		
-		// Include longitude information?
-		if (in_array(5,$this->post['data_include']))
-		{
-			$expected_csv_content.= ",LONGITUDE";
-		}
-		
-		// Include custom forms information?
-		if (in_array(6,$this->post['data_include']))
-		{
-			foreach($this->custom_forms as $field_name)
-			{
-				$expected_csv_content.= ",".$field_name['field_name']."-".$field_name['form_id'];
-			}
-		}
-		
-		// Include personal information?
-		if (in_array(7,$this->post['data_include']))
-		{
-			$expected_csv_content.= ",FIRST NAME, LAST NAME, EMAIL";	
-		}
-		
-		$expected_csv_content.= ",APPROVED,VERIFIED";
-		$expected_csv_content.="\n";
-		
-		// Add Report information 
-		$report = $this->incident[0];
-		
-		// Report id, form_id, title, and date
-		$expected_csv_content.='"'.$report->id.'",'
-								.'"'.$report->form_id.'",'
-								.'"'.download::_encode_text($report->incident_title).'",'
-								.'"'.$report->incident_date.'"';
-		
-		
-		
-		// Include location information?
-		if (in_array(1,$this->post['data_include']))
-		{
-			$expected_csv_content.= ',"'.download::_encode_text($report->location->location_name).'"';
-		}
-		
-		// Include description information?
-		if (in_array(2,$this->post['data_include']))
-		{
-			$expected_csv_content.= ',"'.download::_encode_text($report->incident_description).'"';
-		}
-		
-		// Include category information?
-		if (in_array(3,$this->post['data_include']))
-		{
-			$cat = '';
-			foreach($report->incident_category as $category)
-			{
-				if ($category->category->category_title)
-				{
-					$cat.= download::_encode_text($category->category->category_title).', ';
-				}
-			}
-			$expected_csv_content.= ',"'.$cat.'"';
-		}
-		
-		// Include latitude information?
-		if (in_array(4,$this->post['data_include']))
-		{
-			$expected_csv_content.= ',"'.$report->location->latitude.'"';
-		}
-		
-		// Include longitude information?
-		if (in_array(5,$this->post['data_include']))
-		{
-			$expected_csv_content.= ',"'.$report->location->longitude.'"';
-		}
-		
-		// Include custom forms information?
-		if (in_array(6,$this->post['data_include']))
-		{
-			$custom_fields = customforms::get_custom_form_fields($report->id,'',false);
-			if ( ! empty($custom_fields))
-			{
-				foreach($custom_fields as $custom_field)
-				{
-					$expected_csv_content.= ',"'.download::_encode_text($custom_field['field_response']).'"';
-				}
-			}
-			else
-			{
-				foreach ($this->custom_forms as $custom)
-				{
-					$expected_csv_content.= ',""';
-				}
-			}
-		}
-		
-		// Include personal information?
-		if (in_array(7,$this->post['data_include']))
-		{
-			$person = $report->incident_person;
-			if($person->loaded)
-			{
-				$expected_csv_content.= ',"'.download::_encode_text($person->person_first).'"'
-										.',"'.download::_encode_text($person->person_last).'"'
-										.',"'.download::_encode_text($person->person_email).'"';
-			}
-			else
-			{
-				$expected_csv_content.= ',""'.',""'.',""';
-			}	
-		}	
-		
-		// Approved status
-		if ($report->incident_active)
-		{
-			$expected_csv_content.= ",YES";
-		}
-		else
-		{
-			$expected_csv_content.= ",NO";
-		}
+		$expected_csv_content = <<<CSV
+"#","FORM #","INCIDENT TITLE","INCIDENT DATE","LOCATION","DESCRIPTION","CATEGORY","LATITUDE","LONGITUDE","FIRST NAME","LAST NAME","EMAIL","APPROVED","VERIFIED"\r
+"9999","1","The Zombie Apocalypse on Facebook ' "" quote &","2012-12-21 00:01:00","El Cerrito, CA","Foodstuffs, come join in on the fun...bring friends with ""like minds"". Snacks will be provided...as they arrive. Dancing optional, shuffling encouraged. Boomsticks and flamethrowers must be checked at the door.  Party kicks off as soon as the Mayan Calendar expires, and rocks until the break of a new dawn.
 
-		// Verified Status
-		if ($report->incident_verified)
-		{
-			$expected_csv_content.= ",YES";
-		}
-		else
-		{
-			$expected_csv_content.= ",NO";
-		}
-		
-		// End Expected output
-		$expected_csv_content.= "\n";
+& ; ' "" <>
+
+http://forum.x-kirov.ru/topic/2383-попала-в-дтп-чудом-осталась-жива","C2,C1","10.311179","-150.27082","","","","YES","NO"\r
+
+CSV;
 		
 		// Grab actual output
-		$actual_csv_content = download::download_csv($this->post, $this->incident, $this->custom_forms);
+		$actual_csv_content = download::download_csv($this->post, $this->fake_incidents, $this->custom_forms);
 		
 		// Test CSV Output
 		$this->assertEquals($expected_csv_content, $actual_csv_content, 'CSV Download failed. Content mismatch');
+		
+		$this->tearDownFakeObject();
 	}
 } 
 
