@@ -1,6 +1,6 @@
 <?php
 /**
- * Report Importer Library
+ * CSV Report Importer Library
  *
  * Imports reports within CSV file referenced by filehandle.
  * 
@@ -14,85 +14,150 @@
  * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  *
  */
-class ReportsImporter {
+class CSVImporter {	
+	/**
+	 * Notices to be passed on successful data import
+	 * @var array
+	 */
+	public $notices = array();
 	
-	function __construct() 
-	{
-		$this->notices = array();
-		$this->errors = array();		
-		$this->totalrows = 0;
-		$this->importedrows = 0;
-		$this->incidents_added = array();
-		$this->categories_added = array();
-		$this->locations_added = array();
-		$this->incident_categories_added = array();
-	}
+	/**
+	 * Errors to be passed on failed data import
+	 * @var array
+	 */
+	public $errors = array();
+	
+	/**
+	 * Total number of reports within CSV file
+	 * @var int
+	 */		
+	public $totalreports = 0;
+	
+	/**
+	 * Total number of reports successfully imported
+	 * @var int
+	 */
+	public $importedreports = 0;
+	
+	/**
+	 * Categories successfully imported
+	 * @var array
+	 */
+	private $categories_added = array();
+		
+	/**
+	 * Reports successfully imported
+	 * @var array
+	 */
+	private $incidents_added = array();
+	
+	/**
+	 * Incident persons successfully imported
+	 * @var array
+	 */
+	private $incident_persons_added = array();
+	
+	/**
+	 * Custom form field responses successfully imported
+	 * @var array
+	 */
+	private $incident_responses_added = array();
+	
+	/**
+	 * Incident locations successfully imported
+	 * @var array
+	 */
+	private $locations_added = array();
+	
+	/**
+	 * Incident categories successfully imported
+	 * @var array
+	 */
+	private $incident_categories_added = array();
 	
 	/**
 	 * Function to import CSV file referenced by the file handle
 	 * @param string $filehandle
 	 * @return bool 
 	 */
-	function import($filehandle) 
+	function import($file) 
 	{
-		$csvtable = new Csvtable($filehandle);
-		// Set the required columns of the CSV file
-		$requiredcolumns = array('INCIDENT TITLE','INCIDENT DATE');
-		foreach ($requiredcolumns as $requiredcolumn)
-		{
-			// If the CSV file is missing any required column, return an error
-			if (!$csvtable->hasColumn($requiredcolumn))
-			{
-				$this->errors[] = 'CSV file is missing required column "'.$requiredcolumn.'"';
-			}
-		}
+		// Get contents of CSV file
+		$data = file_get_contents($file);
+
+		// Replace carriage return character
+		$replacedata = preg_replace("/\r/","\n",$data);
+
+		// Replace file content
+		file_put_contents($file, $replacedata);
 		
-		if (count($this->errors))
+		if($filehandle = fopen($_FILES['uploadfile']['tmp_name'], 'r'))
 		{
-			return false;
-		}
-		
-		// So we can assign category id to incidents, based on category title
-		$this->existing_categories = ORM::factory('category')->select_list('category_title','id'); 
-		//Since we capitalize the category names from the CSV file, we should also capitlize the 
-		//category titles here so we get case insensative behavior. For some reason users don't
-		//always captilize the cateogry names as they enter them in
-		$temp_cat = array();
-		foreach($this->existing_categories as $title => $id)
-		{
-			$temp_cat[utf8::strtoupper($title)] = $id;
-		}
-		$this->existing_categories = $temp_cat;
-		
-		// So we can check if incident already exists in database
-		$this->incident_ids = ORM::factory('incident')->select_list('id','id'); 
-		$this->time = date("Y-m-d H:i:s",time());
-		$rows = $csvtable->getRows();
-		$this->totalrows = count($rows);
-		$this->rownumber = 0;
-	 	
-		// Loop through CSV rows
-	 	foreach($rows as $row)
-	 	{
-			$this->rownumber++;
-			if (isset($row['#']) AND isset($this->incident_ids[$row['#']]))
+			$csvtable = new Csvtable($filehandle);
+			// Set the required columns of the CSV file
+			$requiredcolumns = array('INCIDENT TITLE','INCIDENT DATE');
+			foreach ($requiredcolumns as $requiredcolumn)
 			{
-				$this->notices[] = 'Incident with id #'.$row['#'].' already exists.';
-			}
-			else
-			{
-				if ($this->importreport($row))
+				// If the CSV file is missing any required column, return an error
+				if (!$csvtable->hasColumn($requiredcolumn))
 				{
-					$this->importedrows++;
+					$this->errors[] = Kohana::lang('import.csv.required_column').'"'.$requiredcolumn.'"';
+				}
+			}
+		
+			if (count($this->errors))
+			{
+				return false;
+			}
+		
+			// So we can assign category id to incidents, based on category title
+			$this->existing_categories = ORM::factory('category')->select_list('category_title','id'); 
+			//Since we capitalize the category names from the CSV file, we should also capitlize the 
+			//category titles here so we get case insensative behavior. For some reason users don't
+			//always captilize the cateogry names as they enter them in
+			$temp_cat = array();
+			foreach($this->existing_categories as $title => $id)
+			{
+				$temp_cat[utf8::strtoupper($title)] = $id;
+			}
+			$this->existing_categories = $temp_cat;
+		
+			// So we can check if incident already exists in database
+			$this->incident_ids = ORM::factory('incident')->select_list('id','id'); 
+			$this->time = date("Y-m-d H:i:s",time());
+			$rows = $csvtable->getRows();
+			$this->totalreports = count($rows);
+			$this->rownumber = 0;
+	 	
+			// Loop through CSV rows
+		 	foreach($rows as $row)
+		 	{
+				$this->rownumber++;
+				if (isset($row['#']) AND isset($this->incident_ids[$row['#']]))
+				{
+					$this->notices[] = Kohana::lang('import.incident_exists').$row['#'];
 				}
 				else
 				{
-					$this->rollback();
-					return false;
+					if ($this->import_report($row))
+					{
+						$this->importedreports++;
+					}
+					else
+					{
+						$this->rollback();
+						return false;
+					}
 				}
-			}
-		} 
-		return true;
+			} 
+		}
+		else
+		{
+			$this->errors[] = Kohana::lang('ui_admin.file_open_error');
+		}
+		
+		// If we have errors, return FALSE, else TRUE
+		return count($this->errors) === 0;
 	}
 	
 	/**
@@ -103,7 +168,9 @@ class ReportsImporter {
 		if (count($this->incidents_added)) ORM::factory('incident')->delete_all($this->incidents_added);
 		if (count($this->categories_added)) ORM::factory('category')->delete_all($this->categories_added);
 		if (count($this->locations_added)) ORM::factory('location')->delete_all($this->locations_added);
-		if (count($this->incident_categories_added)) ORM::factory('location')->delete_all($this->incident_categories_added);
+		if (count($this->incident_categories_added)) ORM::factory('incident_category')->delete_all($this->incident_categories_added);
+		if (count($this->incident_persons_added)) ORM::factory('incident_person')->delete_all($this->incident_persons_added);
+		if (count($this->incident_responses_added)) ORM::factory('form_response')->delete_all($this->incident_responses_added);
 	}
 	
 	/**
@@ -111,23 +178,22 @@ class ReportsImporter {
 	 * @param array $row
 	 * @return bool
 	 */
-	function importreport($row)
+	function import_report($row)
 	{
 		// If the date is not in proper date format
 		if (!strtotime($row['INCIDENT DATE']))
 		{
-			$this->errors[] = 'Could not parse incident date "'.htmlspecialchars($row['INCIDENT DATE']).'" on line '
-			.($this->rownumber+1);
+			$this->errors[] = Kohana::lang('import.incident_date').($this->rownumber+1).': '.$row['INCIDENT DATE'];
 		}
 		// If a value of Yes or No is NOT set for approval status for the imported row
 		if (isset($row["APPROVED"]) AND !in_array(utf8::strtoupper($row["APPROVED"]),array('NO','YES')))
 		{
-			$this->errors[] = 'APPROVED must be either YES or NO on line '.($this->rownumber+1);
+			$this->errors[] = Kohana::lang('import.csv.approved').($this->rownumber+1);
 		}
 		// If a value of Yes or No is NOT set for verified status for the imported row 
 		if (isset($row["VERIFIED"]) AND !in_array(utf8::strtoupper($row["VERIFIED"]),array('NO','YES'))) 
 		{
-			$this->errors[] = 'VERIFIED must be either YES or NO on line '.($this->rownumber+1);
+			$this->errors[] = Kohana::lang('import.csv.verified').($this->rownumber+1);
 		}
 		if (count($this->errors)) 
 		{
@@ -139,18 +205,24 @@ class ReportsImporter {
 		{
 			$location = new Location_Model();
 			$location->location_name = isset($row['LOCATION']) ? $row['LOCATION'] : '';
+			
+			// For Geocoding purposes
+			$location_geocoded = map::geocode($location->location_name);
+			
 			// If we have LATITUDE and LONGITUDE use those
-			if ( isset($row['LATITUDE']) AND isset($row['LONGITUDE']) ) {
-				$location->latitude = isset($row['LATITUDE']) ? $row['LATITUDE'] : '';
-				$location->longitude = isset($row['LONGITUDE']) ? $row['LONGITUDE'] : '';
-			// Geocode reports which don't have LATITUDE and LONGITUDE
-			} else {
-				$location_geocoded = Geocoder::geocode_location($location->location_name);
-				if ($location_geocoded) {
-					$location->latitude = $location_geocoded[1];
-					$location->longitude = $location_geocoded[0];
-				}
+			if ( isset($row['LATITUDE']) AND isset($row['LONGITUDE']) ) 
+			{
+				$location->latitude = isset($row['LATITUDE']) ? $row['LATITUDE'] : 0;
+				$location->longitude = isset($row['LONGITUDE']) ? $row['LONGITUDE'] : 0;
+			} 
+			
+			// Otherwise, get geocoded lat/lon values
+			else
+			{
+				$location->latitude = $location_geocoded ? $location_geocoded['latitude'] : 0;
+				$location->longitude = $location_geocoded ? $location_geocoded['longitude'] : 0;
 			}
+			$location->country_id = $location_geocoded ? $location_geocoded['country_id'] : 0;
 			$location->location_date = $this->time;
 			$location->save();
 			$this->locations_added[] = $location->id;
@@ -160,6 +232,7 @@ class ReportsImporter {
 		$incident = new Incident_Model();
 		$incident->location_id = isset($row['LOCATION']) ? $location->id : 0;
 		$incident->user_id = 0;
+		$incident->form_id = (isset($row['FORM #']) AND Form_Model::is_valid_form($row['FORM #'])) ? $row['FORM #'] : 1;
 		$incident->incident_title = $row['INCIDENT TITLE'];
 		$incident->incident_description = isset($row['DESCRIPTION']) ? $row['DESCRIPTION'] : '';
 		$incident->incident_date = date("Y-m-d H:i:s",strtotime($row['INCIDENT DATE']));
@@ -176,7 +249,7 @@ class ReportsImporter {
 			$person->incident_id = $incident->id;
 			$person->person_first = isset($row['FIRST NAME']) ? $row['FIRST NAME'] : '';
 			$person->person_last = isset($row['LAST NAME']) ? $row['LAST NAME'] : '';
-			$person->person_email = isset($row['EMAIL']) ? $row['EMAIL'] : '';
+			$person->person_email = (isset($row['EMAIL']) AND valid::email($row['EMAIL']))? $row['EMAIL'] : '';
 			$person->person_date = date("Y-m-d H:i:s",time());
 			
 			// Make sure that you're not importing an empty record i.e at least one field has been recorded
@@ -184,6 +257,9 @@ class ReportsImporter {
 			if(!empty($person->person_first) OR !empty($person->person_last) OR !empty($person->person_email))
 			{
 				$person->save();
+								
+				// Add to array of incident persons added
+				$this->incident_persons_added[] = $person->id;
 			}
 			
 		}
@@ -215,8 +291,7 @@ class ReportsImporter {
 					// Check if the category exists (made sure to convert to uppercase for comparison)
 					if (!isset($this->existing_categories[utf8::strtoupper($categoryname)]))
 					{
-						$this->notices[] = 'There exists no category "'.htmlspecialchars($categoryname).'" in database yet.'
-						.' Added to database.';
+						$this->notices[] = Kohana::lang('import.new_category').$categoryname;
 						$category = new Category_Model;
 						$category->category_title = $categoryname;
 	
@@ -226,6 +301,7 @@ class ReportsImporter {
 						// because all current categories are of type '5'
 						$category->category_visible = 1;
 						$category->category_description = $categoryname;
+						$category->category_position = count($this->existing_categories);
 						$category->save();
 						$this->categories_added[] = $category->id;
 						// Now category_id is known: This time, and for the rest of the import.
@@ -239,7 +315,11 @@ class ReportsImporter {
 		}
 		
 		// STEP 5: Save Custom form fields responses
-		$custom_titles = customforms::get_custom_form_fields('','',false);
+		// Check for form_id
+		$form_id = (isset($row['FORM #']) AND Form_Model::is_valid_form($row['FORM #'])) ? $row['FORM #'] : 1;
+		
+		// Get custom form fields for this particular form
+		$custom_titles = customforms::get_custom_form_fields('',$form_id,false);
 		
 		// Do custom form fields exist on this deployment?
 		if (!empty($custom_titles))
@@ -248,9 +328,9 @@ class ReportsImporter {
 			{
 				// Check if the column exists in the CSV
 				$rowname = utf8::strtoupper($field_name['field_name']);
-				if(isset($row[$rowname]))
+				if(isset($row[$rowname.'-'.$form_id]))
 				{		
-					$response = $row[$rowname];
+					$response = $row[$rowname.'-'.$form_id];
 						
 					// Grab field_id and field_type
 					$field_id = $field_name['field_id'];
@@ -281,7 +361,7 @@ class ReportsImporter {
 								{
 									// Carry out a case insensitive comparison between individual field options and csv response
 									// If there's a match, store field option value from the db
-									if(strcasecmp($option, $response) == 0)
+									if (strcasecmp($option, $response) == 0)
 									{
 										$form_response->form_response = $option;
 									}
@@ -319,8 +399,14 @@ class ReportsImporter {
 							$form_response->form_response = $response;
 						}
 						
-						// Save the form response
-						$form_response->save();
+						// If form_response is provided based on conditions set above, Save the form response
+						if ($form_response->form_response != '')
+						{
+							$form_response->save();
+							
+							// Add to array of field responses added
+							$this->incident_responses_added[] = $form_response->id;
+						}
 					}
 				}	
 			}	

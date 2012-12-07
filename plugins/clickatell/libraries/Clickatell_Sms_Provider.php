@@ -30,7 +30,7 @@ class Clickatell_Sms_Provider implements Sms_Provider_Core {
 			$new_sms->api_id = $clickatell->clickatell_api;
 			$new_sms->user = $clickatell->clickatell_username;
 			$new_sms->password = $clickatell->clickatell_password;
-			$new_sms->use_ssl = false;
+			$new_sms->use_ssl = Kohana::config('core.site_protocol') == 'https';
 			$new_sms->sms();
 			$response = $new_sms->send($to, $from, $message);
 			

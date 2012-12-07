@@ -28,13 +28,13 @@
 			continue;
 		}
 
-		echo "<tr>";
+		echo "<tr class='custom_field custom_field_{$field_property['field_id']}'>";
 
 		// Get the value for the form field
 		$value = $field_property['field_response'];
 
 		// Check if a value was fetched
-		if ($value == "")
+		if ($value == "" AND empty($show_empty))
 			continue;
 
 		if ($field_property['field_type'] == 1 OR $field_property['field_type'] > 3)

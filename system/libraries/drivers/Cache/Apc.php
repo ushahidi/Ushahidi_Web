@@ -24,7 +24,7 @@ class Cache_Apc_Driver implements Cache_Driver {
 
 	public function set($id, $data, $tags, $lifetime)
 	{
-		count($tags) and Kohana::log('error', 'Cache: tags are unsupported by the APC driver');
+		count($tags) and Kohana::log('alert', 'Cache: tags are unsupported by the APC driver');
 
 		return apc_store($id, $data, $lifetime);
 	}

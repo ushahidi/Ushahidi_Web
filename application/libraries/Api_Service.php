@@ -87,7 +87,7 @@ final class Api_Service {
 		$this->request = ($_SERVER['REQUEST_METHOD'] == 'POST')
 			? $_POST
 			: $_GET;
-			
+
 		// Reset the session - API should be stateless
 		$_SESSION = array();
 		// Especially reset auth
@@ -242,14 +242,20 @@ final class Api_Service {
 				$username = filter_var($_SERVER['PHP_AUTH_USER'],
 				FILTER_SANITIZE_STRING,
 				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
-				
+
 				$password = filter_var($_SERVER['PHP_AUTH_PW'],
 				FILTER_SANITIZE_STRING,
 				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
 
+				$email = FALSE;
+				if(kohana::config('riverid.enable') == TRUE && filter_var($username, FILTER_VALIDATE_EMAIL))
+				{
+					$email = $username;
+				}
+
 				try
 				{
-					if ($auth->login($username, $password))
+					if ($auth->login($username, $password, FALSE, $email))
 					{
 						// Check if admin privileges are required
 						if ($admin == FALSE OR $auth->has_permission('admin_ui'))

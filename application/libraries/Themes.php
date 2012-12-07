@@ -23,7 +23,6 @@ class Themes_Core {
 	public $treeview_enabled = false;
 	public $validator_enabled = false;
 	public $photoslider_enabled = false;
-	public $videoslider_enabled = false;
 	public $colorpicker_enabled = false;
 	public $editor_enabled = false;
 	public $site_style = false;
@@ -54,7 +53,7 @@ class Themes_Core {
 		$content = Kohana::config("globalcode.head").
 			$this->_header_css().
 			$this->_header_feeds().
-			$this->_header_js();
+		$this->_header_js();
 
 		// Filter::header_block - Modify Header Block
 		Event::run('ushahidi_filter.header_block', $content);
@@ -108,11 +107,6 @@ class Themes_Core {
 			$core_css .= html::stylesheet($this->css_url."media/css/picbox/picbox","",TRUE);
 		}
 
-		if ($this->videoslider_enabled)
-		{
-			$core_css .= html::stylesheet($this->css_url."media/css/videoslider","",TRUE);
-		}
-
 		if ($this->colorpicker_enabled)
 		{
 			$core_css .= html::stylesheet($this->css_url."media/css/colorpicker","",TRUE);
@@ -125,12 +119,12 @@ class Themes_Core {
 
 		$core_css .= html::stylesheet($this->css_url."media/css/global","",TRUE);
 		$core_css .= html::stylesheet($this->css_url."media/css/jquery.jqplot.min", "", TRUE);
-
+		
 		// Render CSS
 		$plugin_css = plugin::render('stylesheet');
 
 		return $core_css.$plugin_css;
-	}
+		}
 
 	/**
 	 * Javascript Files and Inline JS
@@ -147,7 +141,7 @@ class Themes_Core {
 
 		$core_js .= html::script($this->js_url."media/js/jquery", TRUE);
 		//$core_js .= html::script($this->js_url."media/js/jquery.ui.min", TRUE);
-		$core_js .= html::script("https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", TRUE);
+		$core_js .= html::script(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", TRUE);
 		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", TRUE);
 		$core_js .= html::script($this->js_url."media/js/jquery.timeago", TRUE);
 
@@ -187,11 +181,6 @@ class Themes_Core {
 			$core_js .= html::script($this->js_url."media/js/picbox", TRUE);
 		}
 
-		if ($this->videoslider_enabled)
-		{
-			$core_js .= html::script($this->js_url."media/js/coda-slider.pack");
-		}
-
 		if ($this->colorpicker_enabled)
 		{
 			$core_js .= html::script($this->js_url."media/js/colorpicker");
@@ -203,7 +192,7 @@ class Themes_Core {
 		{
 			$core_js .= html::script($this->js_url."media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js");
 		}
-
+		
 		// Javascript files from plugins
 		$plugin_js = plugin::render('javascript');
 
@@ -255,7 +244,7 @@ INLINEJS;
 				$this->google_analytics()."\n".
 				$this->ushahidi_stats_js()."\n".
 				$this->scheduler_js();
-
+		
 		// Filter::footer_block - Modify Footer Block
 		Event::run('ushahidi_filter.footer_block', $content);
 

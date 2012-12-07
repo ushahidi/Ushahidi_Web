@@ -387,7 +387,7 @@ class Html2Text
     {
         if ( empty($url) ) {
         	if ( !empty($_SERVER['HTTP_HOST']) ) {
-	            $this->url = 'http://' . $_SERVER['HTTP_HOST'];
+	            $this->url = Kohana::config('core.site_protocol').'://' . $_SERVER['HTTP_HOST'];
         	} else {
 	            $this->url = '';
 	        }

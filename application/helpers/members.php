@@ -114,7 +114,7 @@ class members_Core {
 	 */
 	public function gravatar($email, $s = 80, $d = 'mm', $r = 'g', $img = FALSE, $atts = array())
 	{
-		$url = 'https://secure.gravatar.com/avatar/'
+		$url = Kohana::config('core.site_protocol').'://secure.gravatar.com/avatar/'
 			. md5(strtolower(trim( $email)))
 			. "?s=$s&d=$d&r=$r";
 			

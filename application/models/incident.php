@@ -566,4 +566,16 @@ class Incident_Model extends ORM {
 		return url::site('reports/view/'.$id);
 	}
 
+	/**
+	 * Overrides the default save method for the ORM.
+	 * 
+	 */
+	public function save()
+	{
+		// Fire an event on every save
+		Event::run('ushahidi_action.report_save', $this);
+		
+		parent::save();
+	}
+
 }

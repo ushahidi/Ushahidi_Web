@@ -334,7 +334,7 @@ class OpenID_Core {
         if (!$url) throw new ErrorException('No identity supplied.');
         # Use xri.net proxy to resolve i-name identities
         if (!preg_match('#^https?:#', $url)) {
-            $url = "https://xri.net/$url";
+            $url = Kohana::config('config.external_site_protocol')."://xri.net/$url";
         }
 
         # We save the original url in case of Yadis discovery failure.

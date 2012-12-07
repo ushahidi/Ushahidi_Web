@@ -325,7 +325,11 @@ class reports_Core {
 		$verify->incident_id = $incident->id;
 		
 		// Record 'Verified By' Action
-		$verify->user_id = $_SESSION['auth_user']->id;
+		$verify->user_id = 0;
+		if (Auth::instance()->get_user() instanceof User_Model)
+		{
+			$verify->user_id = Auth::instance()->get_user()->id;
+		}
 		$verify->verified_date = date("Y-m-d H:i:s",time());
 		
 		if ($incident->incident_active == 1)
@@ -720,7 +724,7 @@ class reports_Core {
 			//if $url_data['start_loc'] is just comma delimited strings, then make it into an array
 			if (intval($url_data['radius']) > 0 AND is_array($url_data['start_loc']))
 			{
-				$bounds = $url_data['start_loc'];			
+				$bounds = $url_data['start_loc'];
 				if (count($bounds) == 2 AND is_numeric($bounds[0]) AND is_numeric($bounds[1]))
 				{
 					self::$params['radius'] = array(
@@ -737,8 +741,9 @@ class reports_Core {
 		// 
 		if (isset($url_data['from']) AND isset($url_data['to']))
 		{
-			$date_from = date('Y-m-d', strtotime($url_data['from']));
-			$date_to = date('Y-m-d', strtotime($url_data['to']));
+			// Add hours/mins/seconds so we still get reports if from and to are the same day
+			$date_from = date('Y-m-d 00:00:00', strtotime($url_data['from']));
+			$date_to = date('Y-m-d 23:59:59', strtotime($url_data['to']));
 			
 			array_push(self::$params, 
 				'i.incident_date >= "'.$date_from.'"',

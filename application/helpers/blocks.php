@@ -93,8 +93,11 @@ class blocks_Core {
 		$active_blocks = array_filter(explode("|", $active_blocks));
 		foreach ($active_blocks as $block)
 		{
-			$block = new $block();
-			$block->block();
+			if (class_exists($block))
+			{
+				$block = new $block();
+				$block->block();
+			}
 		}
 	}
 	

@@ -24,7 +24,6 @@ class Reports_Controller extends Main_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->themes->validator_enabled = TRUE;
 
 		// Is the Admin Logged In?
 		$this->logged_in = Auth::instance()->logged_in();
@@ -698,7 +697,7 @@ class Reports_Controller extends Main_Controller {
 		// Javascript Header
 		$this->themes->map_enabled = TRUE;
 		$this->themes->photoslider_enabled = TRUE;
-		$this->themes->videoslider_enabled = TRUE;
+		$this->themes->validator_enabled = TRUE;
 		$this->themes->js = new View('reports/view_js');
 		$this->themes->js->incident_id = $incident->id;
 		$this->themes->js->default_map = Kohana::config('settings.default_map');

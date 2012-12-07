@@ -78,14 +78,23 @@ class Settings_Model extends ORM {
 		{
 			$setting = ORM::factory('settings')->where('key', $key)->find();
 			
+			$setting->key = $key;
 			$setting->value = $value;
 			$setting->save();
 		}
 		else
 		{
-			$settings = ORM::factory('settings', 1);
-			$settings->$key = $value;
-			$settings->save();
+			try
+			{
+				$settings = ORM::factory('settings', 1);
+				$settings->$key = $value;
+				$settings->save();
+			}
+			// Catch errors from missing settings and log
+			catch (Exception $e)
+			{
+				Kohana::log('alert',(string)$e);
+			}
 		}
 	}
 

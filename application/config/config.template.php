@@ -120,6 +120,11 @@ $config['display_errors'] = TRUE;
 $config['render_stats'] = TRUE;
 
 /**
+ * Enable profiler
+ */
+$config['enable_profiler'] = FALSE;
+
+/**
  * Turn MHI on or off. This is an advanced feature that will drastically alter
  * the way your instance works. Please read documentation before proceeding.
  *
@@ -147,6 +152,15 @@ $config['installer_check'] = TRUE;
  * Output scheduler JS in footer
  */
 $config['output_scheduler_js'] = TRUE;
+
+/**
+ * Protocol to use for loading external requests
+ * 
+ * This is used for requests from PHP to external APIs that offer
+ * both http and https. Normally this should default to 'https'
+ * but some countries/firewalls block https requests so its a setting.
+ */
+$config['external_site_protocol'] = 'https';
 
 /**
  * Additional resource paths, or "modules". Each path can either be absolute

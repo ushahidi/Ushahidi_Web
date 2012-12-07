@@ -16,73 +16,19 @@ class Geocoder_Core {
 
 	/**
 	 * Google Location GeoCoding
+	 * 
+	 * Reuses map::geocode() rather than reimplementing.
+	 * Only really keeping this for backwards compat
 	 *
 	 * @param   string location / address
 	 * @return  array (longitude, latitude)
 	 */
 	function geocode_location ($address = NULL)
 	{
-		if ($address)
+		$result = map::geocode($address);
+		if ($result)
 		{
-			// Does this installation have a google api key?
-			$api_key = Kohana::config('settings.api_google');
-			if ($api_key)
-			{
-				$base_url = "http://" . GEOCODER_GOOGLE . "/maps/geo?output=xml" . "&key=" . $api_key;
-
-				// Deal with the geocoder timing out during operations
-				$geocode_pending = true;
-				$delay = 0;
-
-				while ($geocode_pending) {
-					$request_url = $base_url . "&q=" . urlencode($address);
-
-					//$xml = simplexml_load_file(utf8_encode($request_url)) or die("url not loading");
-					// Get XML from geocoder. Squashing errors in case internet connection is down
-					$page = @file_get_contents($request_url);
-					$page = utf8_encode($page);
-					// Try to parse XML - assume geocoder is not accessible if we can't
-					try {
-						$xml = new SimpleXMLElement($page);
-					} catch ( Exception $e ) {
-						return false;
-					}
-
-					$status = $xml->Response->Status->code;
-					if (strcmp($status, "200") == 0)
-					{
-						// Successful geocode
-						$geocode_pending = false;
-						$coordinates = $xml->Response->Placemark->Point->coordinates;
-						$coordinatesSplit = explode(",", $coordinates);
-						// Format: Longitude, Latitude, Altitude
-						$lng = $coordinatesSplit[0];
-						$lat = $coordinatesSplit[1];
-
-						return array($lng, $lat);
-
-					}
-					else if (strcmp($status, "620") == 0)
-					{
-						// sent geocodes too fast
-						$delay += 100000;
-					}
-					else
-					{
-						// failure to geocode
-						return false;
-					}
-
-					if ($delay)
-						usleep($delay);
-				}
-
-			}
-			// Install doesn't have api key - can't geocode with google
-			else
-			{
-				return false;
-			}
+			return array($result['longitude'], $result['latitude'], $result['country_id']);
 		}
 		else
 		{

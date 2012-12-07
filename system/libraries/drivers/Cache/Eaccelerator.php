@@ -29,7 +29,7 @@ class Cache_Eaccelerator_Driver implements Cache_Driver {
 
 	public function set($id, $data, $tags, $lifetime)
 	{
-		count($tags) and Kohana::log('error', 'tags are unsupported by the eAccelerator driver');
+		count($tags) and Kohana::log('alert', 'tags are unsupported by the eAccelerator driver');
 
 		return eaccelerator_put($id, $data, $lifetime);
 	}

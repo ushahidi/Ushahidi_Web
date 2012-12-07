@@ -87,7 +87,7 @@ class Kml_Api_Object extends Api_Object_Core {
         $kml = '<?xml version="1.0" encoding="UTF-8"?>
         <kml xmlns="http://earth.google.com/kml/2.2">
         <Document>
-        <name>Ushahidi</name>'."\n";
+        <name><![CDATA['.Kohana::config('settings.site_name').']]></name>'."\n";
 
         // Get the categories that each incident belongs to
         $incident_categories = $this->_report_categories();
@@ -104,8 +104,7 @@ class Kml_Api_Object extends Api_Object_Core {
         }
         
         // Finally, grab the incidents
-        $incidents = json_decode($this->incidents_api_object->_get_incidents(
-            'WHERE incident_active=1',''));
+        $incidents = json_decode($this->incidents_api_object->_get_incidents());
 
         $incidents = $incidents->payload->incidents;
         
@@ -166,8 +165,8 @@ class Kml_Api_Object extends Api_Object_Core {
                         $hex_color{2}.$hex_color{3}.$hex_color{0}.$hex_color{1};
 
                     $kml .= '<Placemark>
-                        <name>'.$incident->incidenttitle.'</name>
-                        <description>'.$incident->incidentdescription.'</description>
+                        <name><![CDATA['.$incident->incidenttitle.']]></name>
+                        <description><![CDATA['.$incident->incidentdescription.']]></description>
                         <Style>
                             <IconStyle>
                                 <Icon>
@@ -191,6 +190,7 @@ class Kml_Api_Object extends Api_Object_Core {
 
         $kml .= '</Document>
         </kml>';
+        $this->set_response_type('xml');
 
         return $kml;
     }

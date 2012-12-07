@@ -33,11 +33,11 @@
 		
 	<?php if ($enable_find_location): ?>
 		<?php print form::input('location_find', '', ' title="City, State and/or Country" class="findtext"'); ?>
-		<div style="float:left;margin:9px 0 0 5px;">
+		<div class="find-location">
 			<input type="button" name="button" id="button" value="<?php echo Kohana::lang('ui_main.find_location'); ?>" class="btn_find" />
 		</div>
 		<div id="find_loading" class="report-find-loading"></div>
-		<div style="clear:both;" id="find_text">* <?php echo Kohana::lang('ui_main.alerts_place_spot2'); ?></div>
+		<div class="find-text clear">* <?php echo Kohana::lang('ui_main.alerts_place_spot2'); ?></div>
 	<?php endif; ?>
 		
 	</div>

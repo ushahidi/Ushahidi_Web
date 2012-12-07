@@ -134,55 +134,26 @@ class plugin_Core {
 	public static function get_sms_providers()
 	{
 		return self::$sms_providers;
-	}	
+	}
 	
 	/**
-	 * Load Plugin Information from readme.txt file
-	 *
-	 * @param   string plugin name
-	 * @return  array
+	 * Find plugin install file
+	 * Using this function because someone somewhere will name this file wrong!!!
+	 * @param string $plugin 
 	 */
-	public static function meta($plugin = NULL)
-	{	
-		// Set Default Values
-		$plugin_headers = array(
-			"plugin_name" => "name",
-			"plugin_description" => "description",
-			"plugin_uri" => "website",
-			"plugin_author" => "author",
-			"plugin_version" => "version",
-			);
-			
+	public static function find_install($plugin, $type = 'plugin')
+	{
+		$base = ($type == 'plugin') ? PLUGINPATH : THEMEPATH;
 		// Determine if readme.txt (Case Insensitive) exists
-		$file = PLUGINPATH.$plugin."/readme.txt";
-		if ( file::file_exists_i($file) )
+		$file = $base."{$plugin}/libraries/{$plugin}_install.php";
+		$real_path = null;
+		if ( file::file_exists_i($file, $real_path) )
 		{
-			$fp = fopen( $file, 'r' );
-			
-			// Pull only the first 8kiB of the file in.
-			$file_data = fread( $fp, 8192 );
-			fclose( $fp );
-
-			foreach ( $plugin_headers as $field => $regex )
-			{
-				preg_match( '/' . preg_quote( $regex, '/' ) . ':(.*)$/mi', $file_data, ${$field});
-				if ( ! empty( ${$field} ) )
-				{
-					${$field} = trim(preg_replace("/\s*(?:\*\/|\?>).*/", '', ${$field}[1] ));
-				}
-				else
-				{
-					${$field} = '';
-				}
-			}
-
-			$file_data = compact( array_keys( $plugin_headers ) );
-			
-			return $file_data;
+			return $real_path;
 		}
 		else
 		{
-			return $plugin_headers;
+			return FALSE;
 		}
 	}
 	
@@ -192,13 +163,18 @@ class plugin_Core {
 	 * @param   string plugin name
 	 * @return  mixed Plugin settings page on success, FALSE otherwise
 	 */
-	public static function settings($plugin = NULL)
+	public static function find_settings($plugin)
 	{
-		// Determine if readme.txt (Case Insensitive) exists
-		$file = PLUGINPATH.$plugin."/controllers/admin/".$plugin."_settings.php";
-		if ( file::file_exists_i($file) )
+		// Determine if settings controller exists
+		$file = "admin/{$plugin}_settings";
+		$file2 = "admin/settings/{$plugin}";
+		if ($path = Kohana::find_file('controllers', $file))
 		{
-			return $plugin."_settings";
+			return $file;
+		}
+		elseif ($path = Kohana::find_file('controllers', $file2))
+		{
+			return $file2;
 		}
 		else
 		{
@@ -207,86 +183,33 @@ class plugin_Core {
 	}
 	
 	/**
-	 * Delete plugin from Plugin Folder
-	 *
-	 * @param string  plugin name/folder
+	 * Resync plugins in codebase with database
 	 */
-	public static function delete($folder = NULL)
+	public static function resync_plugins()
 	{
-		if ($folder)
-		{
-			if (is_dir(PLUGINPATH.$folder))
-			{ 
-				// First Delete Files Recursively
-				$files = scandir(PLUGINPATH.$folder);
-				array_shift($files);    // remove '.' from array
-				array_shift($files);    // remove '..' from array
+		$plugins = addon::get_addons('plugin', FALSE);
 
-				foreach ($files as $file)
-				{
-					$file = PLUGINPATH.$folder."/".$file;
-					if (is_dir($file))
-					{
-						plugin::delete($file);
-						try
-						{
-							rmdir($file);
-						}
-						catch (Kohana_Database_Exception $e)
-						{
-							// Log exceptions
-							Kohana::log('error', 'Caught exception: '.$e->getMessage());
-						}
-					}
-					else
-					{
-						try
-						{
-							unlink($file);
-						}
-						catch (Kohana_Database_Exception $e)
-						{
-							// Log exceptions
-							Kohana::log('error', 'Caught exception: '.$e->getMessage());
-						}
-					}
-				}
+		// Get all plugins from the db
+		$plugins_db = ORM::factory('plugin')->select_list('id','plugin_name');
+
+		// Sync the folder with the database
+		foreach ($plugins as $dir => $plugin)
+		{
+			if ( ! in_array($dir, $plugins_db))
+			{
+				$plugin = ORM::factory('plugin');
+				$plugin->plugin_name = $dir;
+				$plugin->save();
+			}
+		}
+
+		// Remove any plugins not found in the plugins folder and not previously installed from the database
+		foreach (ORM::factory('plugin')->where('plugin_installed', 0)->find_all() as $plugin)
+		{
+			if ( ! array_key_exists($plugin->plugin_name, $plugins) )
+			{
+				$plugin->delete();
 			}
 		}
 	}
-
-	/**
-	 * Temporarily load a config file.
-	 *
-	 * @param string $name config filename, without extension
-	 * @param boolean $required is the file required?
-	 * @return array
-	 */
-	public static function config_load($name, $required = TRUE)
-	{
-		if (isset(self::$internal_cache['configuration'][$name]))
-			return self::$internal_cache['configuration'][$name];
-
-		// Load matching configs
-		$configuration = array();
-		
-		$file = PLUGINPATH.$name.'/config/'.$name.'.php';
-		if ( file_exists($file) )
-		{
-			require $file;
-			if (isset($config) AND is_array($config))
-			{
-				// Merge in configuration
-				$configuration = array_merge($configuration, $config);
-			}
-		}
-
-		if ( ! isset(self::$write_cache['configuration']))
-		{
-			// Cache has changed
-			self::$write_cache['configuration'] = TRUE;
-		}
-
-		return self::$internal_cache['configuration'][$name] = $configuration;
-	}	
 }

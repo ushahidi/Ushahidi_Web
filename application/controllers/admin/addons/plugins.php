@@ -10,7 +10,7 @@
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
  * copyright notice and this permission notice appear in all copies.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
  * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
  * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
@@ -20,10 +20,10 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @subpackage Admin
  * @copyright  Ushahidi - http://www.ushahidi.com
@@ -31,28 +31,28 @@
  */
 
 class Plugins_Controller extends Admin_Controller {
-	
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->template->this_page = 'addons';
 
 		// If this is not a super-user account, redirect to dashboard
-		if(!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
-        {
-             url::redirect('admin/dashboard');
+		if (!$this->auth->logged_in('admin') && !$this->auth->logged_in('superadmin'))
+		{
+			url::redirect('admin/dashboard');
 		}
 	}
-	
+
 	public function index()
 	{
 		$this->template->content = new View('admin/addons/plugins');
 		$this->template->content->title = 'Addons';
-		
-		if (isset($_GET['status']) && ! empty($_GET['status']))
+
+		if (isset($_GET['status']) && !empty($_GET['status']))
 		{
 			$status = $_GET['status'];
-			
+
 			if (strtolower($status) == 'a')
 			{
 				$filter = 'plugin_active = 1';
@@ -72,48 +72,15 @@ class Plugins_Controller extends Admin_Controller {
 			$status = "0";
 			$filter = '1=1';
 		}
-		
+
 		// Add the hidden plugins to the list of plugins to filter out
 		if(count(Kohana::config('plugins.hide_from_list')) != 0) {
 			$hide_from_list = array_map(array(Database::instance(), 'escape'), Kohana::config('plugins.hide_from_list'));
 			$filter .= ' AND plugin_name NOT IN ('.implode(",", $hide_from_list).')';
 		}
 
-		$db = new Database();
+		$plugins = plugin::resync_plugins();
 
-		// Update the plugin list in the database
-		$d = dir(PLUGINPATH);
-		$directories = array();
-		while (($entry = $d->read()) !== FALSE)
-		{
-			// Set the plugin to not enabled by default
-			// Don't include hidden folders
-			if ($entry[0] != '.') $directories[$entry] = FALSE;
-		}
-		
-		// Sync the folder with the database
-		foreach ($directories as $dir => $found)
-		{
-			// Only include the plugin if it contains readme.txt
-			$file = PLUGINPATH.$dir."/readme.txt";
-			if ( file::file_exists_i($file) AND ! count($db->from('plugin')->where('plugin_name', $dir)->limit(1)->get()))
-			{
-				$plugin = ORM::factory('plugin');
-				$plugin->plugin_name = $dir;
-				$plugin->save();
-			}
-		}
-
-		// Remove Any Plugins not found in the plugins folder from the database
-		foreach (ORM::factory('plugin')->find_all() as $plugin)
-		{
-			$file = PLUGINPATH.$plugin->plugin_name."/readme.txt";
-			if ( ! array_key_exists($plugin->plugin_name, $directories) OR ! file::file_exists_i($file) )
-			{
-				$plugin->delete();
-			}
-		}		
-				
 		// check, has the form been submitted?
 		$form_error = FALSE;
 		$form_saved = FALSE;
@@ -141,13 +108,13 @@ class Plugins_Controller extends Admin_Controller {
 						// Then mark it as installed
 						if ($plugin->loaded AND $plugin->plugin_name)
 						{
-							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH.$plugin->plugin_name)));
-							
+							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH . $plugin->plugin_name)));
+
 							// Name of the class (First letter of class should be capitalized)
-							$class = ucfirst($plugin->plugin_name).'_Install';
-							
+							$class = ucfirst($plugin->plugin_name) . '_Install';
+
 							// Find the Library File
-							$path = $this->_find_install($plugin->plugin_name);
+							$path = plugin::find_install($plugin->plugin_name);
 							if ($path)
 							{
 								include $path;
@@ -156,7 +123,7 @@ class Plugins_Controller extends Admin_Controller {
 								$install = new $class;
 								$install->run_install();
 							}
-							
+
 							// Mark as Active and Mark as Installed
 							$plugin->plugin_active = 1;
 							$plugin->plugin_installed = 1;
@@ -164,9 +131,10 @@ class Plugins_Controller extends Admin_Controller {
 						}
 					}
 				}
-				elseif ($post->action == 'i')	
-				{ // Deactivate Action
-					foreach($post->plugin_id as $item)
+				elseif ($post->action == 'i')
+				{
+					// Deactivate Action
+					foreach ($post->plugin_id as $item)
 					{
 						$plugin = ORM::factory('plugin', $item);
 						if ($plugin->loaded)
@@ -177,20 +145,21 @@ class Plugins_Controller extends Admin_Controller {
 					}
 				}
 				elseif ($post->action == 'd')
-				{ // Delete Action
-					foreach($post->plugin_id as $item)
+				{
+					// Delete Action
+					foreach ($post->plugin_id as $item)
 					{
 						$plugin = ORM::factory('plugin', $item);
 						if ($plugin->loaded AND $plugin->plugin_name)
 						{
-							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH.$plugin->plugin_name)));
-							
+							Kohana::config_set('core.modules', array_merge(Kohana::config('core.modules'), array(PLUGINPATH . $plugin->plugin_name)));
+
 							// Name of the class (First letter of class should be capitalized)
-							$class = ucfirst($plugin->plugin_name).'_Install';
-							
+							$class = ucfirst($plugin->plugin_name) . '_Install';
+
 							// Find the Library File
-							$path = $this->_find_install($plugin->plugin_name);
-							
+							$path = plugin::find_install($plugin->plugin_name);
+
 							if ($path)
 							{
 								include $path;
@@ -199,7 +168,7 @@ class Plugins_Controller extends Admin_Controller {
 								$install = new $class;
 								$install->uninstall();
 							}
-							
+
 							// Mark as InActive and Mark as UnInstalled
 							$plugin->plugin_active = 0;
 							$plugin->plugin_installed = 0;
@@ -212,52 +181,24 @@ class Plugins_Controller extends Admin_Controller {
 			{
 				$form_error = TRUE;
 			}
-
 		}
-		
+
 		$plugins = ORM::factory('plugin')
 			->where($filter)
 			->orderby('plugin_name', 'ASC')
 			->find_all();
 		$this->template->content->plugins = $plugins;
 		$this->template->content->total_items = $plugins->count();
-		
+
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->form_action = $form_action;
-		
+
 		// Status Tab
 		$this->template->content->status = $status;
-		
+
 		// Javascript Header
 		$this->template->js = new View('admin/addons/addons_js');
 	}
-	
-	/**
-	 * Using this function because someone somewhere will name this file wrong!!!
-	 */
-	private function _find_install($plugin_name)
-	{
-		if ($path = Kohana::find_file('libraries', $plugin_name.'_install'))
-		{ // plugin_i
-			return $path;
-		}
-		elseif ($path = Kohana::find_file('libraries', $plugin_name.'_Install'))
-		{ // plugin_I
-			return $path;
-		}
-		elseif ($path = Kohana::find_file('libraries', ucfirst($plugin_name).'_install'))
-		{ // Plugin_i
-			return $path;
-		}
-		elseif ($path = Kohana::find_file('libraries', ucfirst($plugin_name).'_Install'))
-		{ // Plugin_I
-			return $path;
-		}
-		else
-		{
-			return false;
-		}
-		
-	}	
+
 }

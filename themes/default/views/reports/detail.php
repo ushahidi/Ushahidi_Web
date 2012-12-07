@@ -14,7 +14,7 @@
   	  ?>
 
 		<h1 class="report-title"><?php
-			echo htmlentities($incident_title, ENT_QUOTES);
+			echo htmlentities($incident_title, ENT_QUOTES, "UTF-8");
 
 			// If Admin is Logged In - Allow For Edit Link
 			if ($logged_in)
@@ -78,7 +78,7 @@
 			echo '<div id="report-images">';
 			foreach ($incident_photos as $photo)
 			{
-				echo '<a class="photothumb" rel="lightbox-group1" href="'.$photo['large'].'"><img alt="'.htmlentities($incident_title, ENT_QUOTES).'" src="'.$photo['thumb'].'"/></a> ';
+				echo '<a class="photothumb" rel="lightbox-group1" href="'.$photo['large'].'"><img alt="'.htmlentities($incident_title, ENT_QUOTES, "UTF-8").'" src="'.$photo['thumb'].'"/></a> ';
 			};
 			echo '</div>';
 	    }

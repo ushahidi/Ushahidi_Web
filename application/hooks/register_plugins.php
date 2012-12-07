@@ -71,12 +71,14 @@ class register_plugins {
 			{
 				$d = dir($plugin.'/hooks'); // Load all the hooks
 				while (($entry = $d->read()) !== FALSE)
+				{
 					if ($entry[0] != '.')
 					{
 						// $plugin_base Variable gives plugin hook access to the base location of the plugin
 						$plugin_base = url::base()."plugins/".$key."/";
 						include $plugin.'/hooks/'.$entry;
 					}
+				}
 			}
 		}
 	}

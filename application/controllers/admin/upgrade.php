@@ -294,6 +294,13 @@ class Upgrade_Controller extends Admin_Controller {
 		//This is an AJAX call, so none of this fancy templating, just render the data
 		$this->template = "";
 		$this->auto_render = FALSE;
+		
+		// Disable profiler
+		if (isset($this->profiler))
+		{
+			$this->profiler->disable();
+		}
+		
 		$view = View::factory('admin/current_version');
 		
 		$upgrade = new Upgrade;
