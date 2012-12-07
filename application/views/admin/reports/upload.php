@@ -59,6 +59,11 @@
 				<ol>
 			</li>
 		</ul>
+		<h3><?php echo Kohana::lang('ui_main.upload_guide')?></h3>
+		<ul>
+			<li><a href="https://wiki.ushahidi.com/display/WIKI/XML+Upload+Guide"><?php echo Kohana::lang('ui_main.upload_docs_1')?></a></li>
+			<li><a href="https://wiki.ushahidi.com/display/WIKI/CSV+Upload+Guide"><?php echo Kohana::lang('ui_main.upload_docs_2')?></a></li>
+		</ul>
 			<p>
 				<?php echo Kohana::lang('ui_main.upload_reports_detail_5');?>:
 				<p>
