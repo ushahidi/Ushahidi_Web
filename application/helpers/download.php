@@ -664,9 +664,15 @@ class download_Core {
 	}
 
 	/**
-	  * Formats a line (passed as a fields  array) as CSV and returns the CSV as a string.
-	  * Adapted from http://us3.php.net/manual/en/function.fputcsv.php#87120
-	  */
+	 * Formats a line (passed as a fields  array) as CSV and returns the CSV as a string.
+	 * 
+	 * @param array $fields            Array of fields ie. array('Field 3','Field 2', 'Field 3')
+	 * @param String $delimiter        Field delimiter, defaults to comma ','
+	 * @param String $enclosure        Enclosure character, defaults to double-quote '"'
+	 * @param Boolean $encloseAll      Enclose all fields, even if they don't have whitespace or characters to escape
+	 * @param Boolean $nullToMysqlNull Convert null values to MySQL type String 'NULL'
+	 * @return String CSV formatted string
+	 */
 	public static function arrayToCsv( array &$fields, $delimiter = ',', $enclosure = '"', $encloseAll = TRUE, $nullToMysqlNull = FALSE )
 	{
 		$delimiter_esc = preg_quote($delimiter, '/');
