@@ -32,7 +32,7 @@ class Media_Model extends ORM
 		$photo_medium = $photo->media_medium;
 		$photo_thumb = $photo->media_thumb;
 
-		if (file_exists(Kohana::config('upload.directory', TRUE).$photo_large))
+		if (!empty($photo_large) AND file_exists(Kohana::config('upload.directory', TRUE).$photo_large))
 		{
 			unlink(Kohana::config('upload.directory', TRUE).$photo_large);
 		}
@@ -41,7 +41,7 @@ class Media_Model extends ORM
 			cdn::delete($photo_large);
 		}
 
-		if (file_exists(Kohana::config('upload.directory', TRUE).$photo_medium))
+		if (!empty($photo_medium) AND file_exists(Kohana::config('upload.directory', TRUE).$photo_medium))
 		{
 			unlink(Kohana::config('upload.directory', TRUE).$photo_medium);
 		}
@@ -50,7 +50,7 @@ class Media_Model extends ORM
 			cdn::delete($photo_medium);
 		}
 
-		if (file_exists(Kohana::config('upload.directory', TRUE).$photo_thumb))
+		if (!empty($photo_thumb) AND file_exists(Kohana::config('upload.directory', TRUE).$photo_thumb))
 		{
 			unlink(Kohana::config('upload.directory', TRUE).$photo_thumb);
 		}
