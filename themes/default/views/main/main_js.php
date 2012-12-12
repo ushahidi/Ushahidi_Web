@@ -115,10 +115,8 @@ function refreshTimeline(options) {
 				var date = new Date(raw[i][0]);
 
 				var dateStr = date.getFullYear() + "-";
-				dateStr += (date.getMonth() < 10) ? "0" : "";
-				dateStr += (date.getMonth() +1) + "-" ;
-				dateStr += (date.getDate() < 10) ? "0" : "";
-				dateStr += date.getDate();
+				dateStr += ('0' + (date.getMonth()+1)).slice(-2) + '-';
+				dateStr += ('0' + date.getDate()).slice(-2);
 
 				graphData.push([dateStr, parseInt(raw[i][1])]);
 			}
