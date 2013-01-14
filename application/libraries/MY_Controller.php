@@ -47,9 +47,12 @@ abstract class Controller extends Controller_Core {
 		// Are we logged in? if not, do we have an auto-login cookie?
 		if (! $this->auth->logged_in()) {
 			$this->auth->auto_login();
+
+			// Login user in via HTTP AUTH
+			$this->auth->http_auth_login();
 		}
 		
-		// Chceck private deployment access
+		// Check private deployment access
 		$controller_whitelist = array(
 			'login',
 			'riverid',
@@ -60,6 +63,7 @@ abstract class Controller extends Controller_Core {
 		{
 			if (!$this->auth->logged_in('login') AND ! in_array(Router::$controller, $controller_whitelist))
 			{
+				// Redirect to login form
 				url::redirect('login');
 			}
 		}
