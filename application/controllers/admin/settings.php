@@ -972,7 +972,6 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->is_https_capable = $this->_is_https_capable();
 	}
 
-
 	/**
 	 * Retrieves cities listing using GeoNames Service
 	 *
@@ -1001,107 +1000,83 @@ class Settings_Controller extends Admin_Controller {
 
 		if ($country->loaded)
 		{
-			$iso = strtoupper($country->iso);
+			$base_url = "http://overpass-api.de/api/";
 
-			// Base URL for the Geonames API endpoint
-			$base_url = "http://api.geonames.org/";
+			// Get the cities within the country info
+			// Limited to 1000 items to avoid query time out
+			/* This URL runs an Overpass API request using OverpassQL similar to:
+				[out:json][timeout:300];
+				area["admin_level"="2"]["name:en"~"^Germany"];
+				(
+				  node["place"="city"](area);
+				);
+				out body 1000;
+			*/
+			$cities_url = $base_url . "interpreter?data=" .
+			urlencode(
+				'[out:json][timeout:300];area["admin_level"="2"]["name:en"~"^'.$country->country.'"];(node["place"="city"](area););out body 1000;'
+			);
 
-			// Get the country info
-			$country_url = $base_url."countryInfoJSON?country=%s&username=ushahididev";
-
-			$client = new HttpClient(sprintf($country_url, $iso));
-			if (($response = $client->execute()) !== FALSE)
+			// Fetch the cities
+			$cities_client = new HttpClient($cities_url, 300);
+			if (($response = $cities_client->execute()) !== FALSE)
 			{
-				// Decode the JSON
-				$response = json_decode($response, TRUE);
+				// Decode the JSON responce
+				$response = json_decode($response);
+				
+				$cities = isset($response->elements) 
+				    ? $response->elements
+				    : array();
 
-				// Geonames returned an error
-				if ( ! array_key_exists('geonames', $response))
+				// Only proceed if cities are returned
+				if (count($cities) > 0)
 				{
-					echo json_encode($status_response);
-					exit;
-				}
+					// Set the city count for the country
+					$country->cities = count($cities);
+					$country->save();
 
-				// Get the south,east, north and west bounds
-				$country_info = $response['geonames'][0];
+					// Delete all the cities for the current country
+					ORM::factory('city')
+					    ->where('country_id', $country->id)
+					    ->delete_all();
 
-				// Fetch the city names
+					// Manually construct the query (DB library can't do bulk inserts)
+					$query = sprintf("INSERT INTO %scity (`country_id`, `city`, `city_lat`, `city_lon`) VALUES ", $this->table_prefix);
 
-				// 
-				// TODO: EK <emmanuel(at)ushahidi.com
-				// The maximum no. of cities + the geonames username
-				// should be configurable parameters. Right now, I've set the upper
-				// limit for the cities to 1000
-				// 
-				$cities_url = $base_url."citiesJSON?north=%s&south=%s&east=%s&west=%s&username=ushahididev&maxRows=1000";
+					$values = array();
+					// Create a database expression and use that to sanitize values
+					$values_expr = new Database_Expression("(:countryid, :city, :lat, :lon)");
 
-				// Add the bounding box values
-				$cities_url = sprintf($cities_url, $country_info['north'], $country_info['south'],
-				    $country_info['east'], $country_info['west']);
-
-				// Fetch the cities
-				$cities_client = new HttpClient($cities_url);
-				if (($response = $cities_client->execute()) !== FALSE)
-				{
-					// Decode the JSON response
-					$response = json_decode($response, TRUE);
-
-					$cities = array_key_exists('geonames', $response) 
-					    ? $response['geonames']
-					    : array();
-
-					// Only proceed if cities are returned
-					if (count($cities) > 0)
+					// Add the freshly fetched cities
+					foreach ($cities as $city)
 					{
-						// Set the city count for the country
-						$country->cities = count($cities);
-						$country->save();
-
-						// Delete all the cities for the current country
-						ORM::factory('city')
-						    ->where('country_id', $country->id)
-						    ->delete_all();
-
-						// Manually construct the query (DB library can't do bulk inserts)
-						$query = sprintf("INSERT INTO %scity (`country_id`, `city`, `city_lat`, `city_lon`) VALUES ", $this->table_prefix);
-
-						$values = array();
-						// Create a database expression and use that to sanitize values
-						$values_expr = new Database_Expression("(:countryid, :city, :lat, :lon)");
-
-						// Add the freshly fetched cities
-						foreach ($cities as $city)
-						{
-							$values_expr->param(':countryid', $country->id);
-							$values_expr->param(':city', $city['name']);
-							$values_expr->param(':lat', $city['lat']);
-							$values_expr->param(':lon', $city['lng']);
-							$values[] = $values_expr->compile();
-						}
-
-						$query .= implode(",", $values);
-
-						// Batch insert
-						Database::instance()->query($query);
-
-						$entries = count($cities);
+						// Skip nameless nodes or nodes with lat/lon
+						if (!isset($city->tags->name) OR ! $city->lat OR ! $city->lon) continue;
+						
+						$values_expr->param(':countryid', $country->id);
+						$values_expr->param(':city', $city->tags->name);
+						$values_expr->param(':lat', $city->lat);
+						$values_expr->param(':lon', $city->lon);
+						$values[] = $values_expr->compile();
 					}
 
-					// Set the response payload
-					$status_response['status'] = "success";
-					$status_response['response'] = sprintf("%d %s", $entries,
-					    Kohana::lang('ui_admin.cities_loaded'));
+					$query .= implode(",", $values);
+
+					// Batch insert
+					Database::instance()->query($query);
+
+					$entries = count($cities);
 				}
-				else
-				{
-					// Geonames timed out
-					$status_response['response'] = Kohana::lang('ui_admin.geonames_timeout');
-				}
+
+				// Set the response payload
+				$status_response['status'] = "success";
+				$status_response['response'] = sprintf("%d %s", $entries,
+				    Kohana::lang('ui_admin.cities_loaded'));
 			}
 			else
 			{
 				// Geonames timeout
-				$status_response['response'] = Kohana::lang('ui_admin.geonames_timeout');
+				$status_response['response'] = Kohana::lang('ui_admin.timeout');
 			}
 		}
 
