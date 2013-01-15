@@ -20,7 +20,8 @@ class VideoEmbed
 		$services = array(
 			"youtube" => array(
 				'baseurl' => "http://www.youtube.com/watch?v=",
-				'searchstring' => 'youtube.com'
+				'searchstring' => 'youtube.com',
+				'oembed' => 'http://www.youtube.com/oembed',
 			),
 			// May now be defunct
 			"google" => array(
@@ -33,11 +34,13 @@ class VideoEmbed
 			),
 			"dotsub" => array(
 				'baseurl' => "http://dotsub.com/view/",
-				'searchstring' => 'dotsub.com'
+				'searchstring' => 'dotsub.com',
+				'oembed' => 'http://dotsub.com/services/oembed',
 			),
 			"vimeo" => array(
 				'baseurl' => "http://vimeo.com/",
-				'searchstring' => 'vimeo.com'
+				'searchstring' => 'vimeo.com',
+				'oembed' => 'http://vimeo.com/api/oembed.json',
 			),
 		);
 		
@@ -160,41 +163,13 @@ class VideoEmbed
 		$services = $this->services();
 		$output = FALSE;
 		
-		// Get video code from url.
-		$code = str_replace($services[$service_name]['baseurl'], "", $raw);
-		
-		switch($service_name)
+		if (isset($services[$service_name]['oembed']))
 		{
-			case "youtube":
-				$oembed = @json_decode(file_get_contents("http://www.youtube.com/oembed?url=".urlencode($raw)));
-				if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
-				{
-					$output = $oembed->thumbnail_url;
-				}
-			break;
-			
-			case "dotsub":
-				$oembed = @json_decode(file_get_contents("http://dotsub.com/services/oembed?url=".urlencode($raw)));
-				if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
-				{
-					$output = $oembed->thumbnail_url;
-				}
-			break;
-			
-			case "vimeo":
-				$oembed = @json_decode(file_get_contents("http://vimeo.com/api/oembed.json?url=".urlencode($raw)));
-				if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
-				{
-					$output = $oembed->thumbnail_url;
-				}
-			break;
-			
-			
-			case "google":
-			case "metacafe":
-			default:
-				$output = FALSE;
-			break;
+			$oembed = @json_decode(file_get_contents($services[$service_name]['oembed']."?url=".urlencode($raw)));
+			if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
+			{
+				$output = $oembed->thumbnail_url;
+			}
 		}
 
 		$data = array($service_name, $output);
