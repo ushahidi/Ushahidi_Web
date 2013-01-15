@@ -11,26 +11,44 @@
  */
 class VideoEmbed 
 {
-	/*
+	/**
+	 * @var current video url
+	 */
+	private $url = FALSE;
+	
+	/**
+	 * @var name of current service
+	 */
+	private $service_name = FALSE;
+	
+	/**
+	 * @var config array for current service
+	 */
+	private $service = array();
+	
+	/**
 	 * Get the services supported by VideoEmbed
 	 * 
+	 * @return array
 	 */
-	public function services()
+	private function services()
 	{
 		$services = array(
 			"youtube" => array(
 				'baseurl' => "http://www.youtube.com/watch?v=",
 				'searchstring' => 'youtube.com',
 				'oembed' => 'http://www.youtube.com/oembed',
+				'keep-params' => 'v'
 			),
 			// May now be defunct
 			"google" => array(
 				'baseurl' => "http://video.google.com/videoplay?docid=-",
-				'searchstring' => 'google.com'
+				'searchstring' => 'google.com',
+				'keep-params' => 'docid'
 			),
 			"metacafe" => array(
 				'baseurl' => "http://www.metacafe.com/watch/", 
-				'searchstring' => 'metacafe.com'
+				'searchstring' => 'metacafe.com',
 			),
 			"dotsub" => array(
 				'baseurl' => "http://dotsub.com/view/",
@@ -49,7 +67,47 @@ class VideoEmbed
 		return $services;
 	}
 	
-	public function detect_service($raw)
+	/**
+	 * Set current video url and preprocess
+	 * 
+	 * @param string $url video url
+	 **/
+	public function set_url($url)
+	{
+		$this->service_name = $this->detect_service($url);
+		$services = $this->services();
+		$this->service = $services[$this->service_name];
+		
+		$this->url = $this->clean_url($url);
+	}
+	
+	/**
+	 * Convert raw url to standard structure
+	 * Particularly needed for youtube where v= param must be first
+	 * 
+	 * @param string $raw raw url
+	 * @return string standarized url
+	 */
+	private function clean_url($raw)
+	{
+		if (isset($this->service['keep-params']))
+		{
+			$components = parse_url($raw);
+			parse_str($components['query'], $query);
+			if (! isset($query[$this->service['keep-params']]) ) break;
+			$raw = $this->service['baseurl']. $query[$this->service['keep-params']];
+		}
+
+		return $raw;
+	}
+	
+	/**
+	 * Detect video services based on URL
+	 * 
+	 * @param string $raw video url
+	 * @return string $service_name service name
+	 */
+	private function detect_service($raw)
 	{
 		// To hold the name of the video service
 		$service_name = "";
@@ -61,7 +119,7 @@ class VideoEmbed
 		$services = $this->services();
 		
 		// Determine the video service to use
-		$service_name = false;
+		$service_name = FALSE;
 		foreach ($services as $key => $value)
 		{
 			// Match raw url against service search string
@@ -85,17 +143,17 @@ class VideoEmbed
 	 * @param string $raw URL of the video to be embedded
 	 * @param boolean $auto Autoplays the video as soon as its loaded
 	 * @param boolean $echo Should we echo the embed code or just return it
+	 * @return
 	 */
 	public function embed($raw, $auto = FALSE, $echo = TRUE)
 	{
-		$service_name = $this->detect_service($raw);
-		$services = $this->services();
+		$this->set_url($raw);
 		$output = FALSE;
 		
 		// Get video code from url.
-		$code = str_replace($services[$service_name]['baseurl'], "", $raw);
+		$code = str_replace($this->service['baseurl'], "", $this->url);
 		
-		switch($service_name)
+		switch($this->service_name)
 		{
 			case "youtube":
 				// Check for autoplay
@@ -138,13 +196,13 @@ class VideoEmbed
 			break;
 		}
 
-		$data = array($service_name, $output);
+		$data = array($this->service_name, $output);
 		Event::run('ushahidi_filter.video_embed_embed', $data);
-		list($service_name, $output) = $data;
+		list($this->service_name, $output) = $data;
 		
 		if (!$output)
 		{
-			$output = '<a href="'.$raw.'" target="_blank">'.Kohana::lang('ui_main.view_view').'</a>';
+			$output = '<a href="'.$this->url.'" target="_blank">'.Kohana::lang('ui_main.view_view').'</a>';
 		}
 
 		if ($echo) echo $output;
@@ -156,25 +214,25 @@ class VideoEmbed
 	 * Generates the thumbnail a video
 	 *
 	 * @param string $raw URL of the video
+	 * @return string url of video thumbnail
 	 */
 	public function thumbnail($raw)
 	{
-		$service_name = $this->detect_service($raw);
-		$services = $this->services();
+		$this->set_url($raw);
 		$output = FALSE;
 		
-		if (isset($services[$service_name]['oembed']))
+		if (isset($this->service['oembed']))
 		{
-			$oembed = @json_decode(file_get_contents($services[$service_name]['oembed']."?url=".urlencode($raw)));
+			$oembed = @json_decode(file_get_contents($this->service['oembed']."?url=".urlencode($this->url)));
 			if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
 			{
 				$output = $oembed->thumbnail_url;
 			}
 		}
 
-		$data = array($service_name, $output);
+		$data = array($this->service_name, $output);
 		Event::run('ushahidi_filter.video_embed_thumbnail', $data);
-		list($service_name, $output) = $data;
+		list($this->service_name, $output) = $data;
 
 		return $output;
 	}
