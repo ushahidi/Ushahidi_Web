@@ -35,8 +35,17 @@ function feedAction ( action, confirmAction, id )
 	if (answer){
 		// Set Category ID
 		$("#feed_id_action").attr("value", id);
-		// Set Item ID
-		$("#item_id_action").attr("value", id);
+		if (id != '') 
+		{
+			$("input[name=\"item_id[]\"]").attr('checked',false);
+			// Submit Form For Single Item
+			$("#item_id_action").attr("value", id);
+		}
+		else
+		{
+			// Set Item ID to 0
+			$("#item_id_action").attr("value", 0);
+		}
 		// Set Submit Type
 		$("#action").attr("value", action);		
 		// Submit Form

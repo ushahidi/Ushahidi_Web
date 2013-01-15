@@ -670,8 +670,9 @@ class Manage_Controller extends Admin_Controller
 			if( $post->validate() )
 			{
 				$item_id = $this->input->post('item_id');
+				if (!is_array($item_id)) $item_id = array($item_id);
 
-				ORM::factory('feed_item')->delete($item_id);
+				ORM::factory('feed_item')->in('id', $item_id)->delete_all($item_id);
 
 				$form_saved = TRUE;
 				$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
