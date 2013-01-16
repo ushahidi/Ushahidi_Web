@@ -88,14 +88,11 @@ class Tag_Media_Api_Object extends Api_Object_Core {
             // Get the locationid for the incidentid
             $locationid = 0;
 
-            $this->query = "SELECT location_id FROM ".$this->table_prefix.
-                "incident WHERE id=$incidentid";
+            $items = ORM::factory('incident')->select(array('location_id'))->where(array('incident.id' => $incidentid))->find();
 
-            $items = $this->db->query($this->query);
-
-            if (count($items) > 0)
+            if ($items->count_all() > 0)
             {
-                $locationid = $items[0]->location_id;
+                $locationid = $items->location_id;
             }
 
             $media = new Media_Model(); //create media model object
