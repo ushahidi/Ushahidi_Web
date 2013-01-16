@@ -16,7 +16,6 @@
  */
 
 class Tag_Media_Api_Object extends Api_Object_Core {
-
     public function __construct($api_service)
     {
         parent::__construct($api_service);
@@ -126,7 +125,7 @@ class Tag_Media_Api_Object extends Api_Object_Core {
                 }
 
                 $post->add_rules('photo', 'upload::valid', 
-                        'upload::type[gif,jpg,png]', 'upload::size[1M]');
+                    'upload::type[gif,jpg,png]', 'upload::size[1M]');
 
                 if ($post->validate(FALSE))
                 {
@@ -137,7 +136,7 @@ class Tag_Media_Api_Object extends Api_Object_Core {
                     // Resize original file... make sure its max 408px wide
                     Image::factory($filename)->resize(408,248,Image::AUTO)->
                         save(Kohana::config('upload.directory', TRUE) .
-                                $new_filename . ".jpg");
+                            $new_filename . ".jpg");
 
                     // Create thumbnail
                     Image::factory($filename)->resize(70,41,Image::HEIGHT)->
@@ -184,15 +183,12 @@ class Tag_Media_Api_Object extends Api_Object_Core {
                 ),
                 "error" => $this->api_service->get_error_msg(0)
             );
-
             return $this->set_error_message($ret);
         } 
         else 
         {
             return $this->set_error_message(array("error" => 
-                    $this->api_service->get_error_msg(003)));
-           
+                $this->api_service->get_error_msg(003)));
         }
     }
-
 }
