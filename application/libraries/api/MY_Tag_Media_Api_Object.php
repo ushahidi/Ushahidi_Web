@@ -75,7 +75,17 @@ class Tag_Media_Api_Object extends Api_Object_Core {
     {
         if ($_POST) 
         {
-            //get the locationid for the incidentid
+
+            // Check if incident ID exist 
+            $incidentid_exist = Incident_Model::is_valid_incident($incidentid);
+
+            if(!$incidentid_exist) 
+            {
+                return $this->set_error_message(array("error" => 
+                    $this->api_service->get_error_msg(012)));
+            }
+
+            // Get the locationid for the incidentid
             $locationid = 0;
 
             $this->query = "SELECT location_id FROM ".$this->table_prefix.
@@ -94,15 +104,7 @@ class Tag_Media_Api_Object extends Api_Object_Core {
 
             $post = Validation::factory(array_merge($_POST, $_FILES));
 
-            //see if 
-            $incidentid_exist = Incident_Model::is_valid_incident($incidentid);
-
-            if(!$incidentid_exist) 
-            {
-                return $this->set_error_message(array("error" => 
-                    $this->api_service->get_error_msg(012)));
-            }    
-            else if ($mediatype == 2 OR $mediatype == 4)
+            if ($mediatype == 2 OR $mediatype == 4)
             {
                 //require a url
                 if ( ! $this->api_service->verify_array_index($this->request, 'url'))
