@@ -44,9 +44,10 @@ class Auth extends Auth_Core {
 	/**
 	 * Attempt to log user in via HTTP BASIC AUTH
 	 *
- 	 * @return void
+ 	 * @return bool
  	 */
 	public function http_auth_login() {
+
 		//Get username and password
 		if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']))
 		{
@@ -66,20 +67,19 @@ class Auth extends Auth_Core {
  
 			try
 			{
-				if (!$this->login($username, $password, FALSE, $email))
+				if ($this->login($username, $password, FALSE, $email))
 				{
-					$this->prompt_login();
+					return TRUE;
 				}
 			}
 			catch (Exception $e)
 			{
-				$this->prompt_login();
+				return FALSE;
 			}
  
 		}
  
-		//prompt user to login
-		$this->prompt_login();
+		return FALSE;
 	}
 
 	/**
