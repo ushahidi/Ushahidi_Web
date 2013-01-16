@@ -42,46 +42,45 @@ class Auth extends Auth_Core {
 	}
 
 	/**
-     * Attempt to log user in via HTTP BASIC AUTH
-     *
-     * @return void
-     */
-    public function http_auth_login() {
-       //Get username and password
+	 * Attempt to log user in via HTTP BASIC AUTH
+	 *
+ 	 * @return void
+ 	 */
+	public function http_auth_login() {
+		//Get username and password
 		if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']))
 		{
-		    $username = filter_var($_SERVER['PHP_AUTH_USER'],
-			    FILTER_SANITIZE_STRING,
-			    FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+			$username = filter_var($_SERVER['PHP_AUTH_USER'],
+				FILTER_SANITIZE_STRING,
+				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
  
 			$password = filter_var($_SERVER['PHP_AUTH_PW'],
-			    FILTER_SANITIZE_STRING,
-			    FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+				FILTER_SANITIZE_STRING,
+				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
  
 			$email = FALSE;
 			if(kohana::config('riverid.enable') == TRUE && filter_var($username, FILTER_VALIDATE_EMAIL))
 			{
-			    $email = $username;
+				$email = $username;
 			}
  
 			try
 			{
-			    if (!$this->login($username, $password, FALSE, $email))
+				if (!$this->login($username, $password, FALSE, $email))
 				{
-                    $this->prompt_login();
+					$this->prompt_login();
 				}
 			}
 			catch (Exception $e)
 			{
-			    $this->prompt_login();
+				$this->prompt_login();
 			}
  
 		}
  
 		//prompt user to login
 		$this->prompt_login();
-
-    }
+	}
 
 	/**
      * Prompts user to login.
@@ -90,11 +89,11 @@ class Auth extends Auth_Core {
      *                      realm value.
      * @return void
      */
-    public function prompt_login($user_id = 0)
-    {
-        header('WWW-Authenticate: Basic realm="'.$user_id.'"');
-        header('HTTP/1.0 401 Unauthorized');
-        die(sprintf("%s, %s",Kohana::lang('auth.username.required'),Kohana::lang('auth.password.required')));
+	public function prompt_login($user_id = 0)
+	{
+		header('WWW-Authenticate: Basic realm="'.$user_id.'"');
+		header('HTTP/1.0 401 Unauthorized');
+		die(sprintf("%s, %s",Kohana::lang('auth.username.required'),Kohana::lang('auth.password.required')));
     }
 
 }
