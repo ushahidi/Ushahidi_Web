@@ -179,9 +179,17 @@ class Category_Model extends ORM_Tree {
 	 */
 	public static function get_categories($parent_id = FALSE, $exclude_trusted = TRUE, $exclude_hidden = TRUE)
 	{
+		
 		$where = array();
+		//a little hack to work around the way ORM handles table prefixes
+		//it seems that when you use "JOIN table_name as table_alias ON other_table.id = table_alias.id"
+		//with a database that uses prefixes, that ORM adds the prefix to "table_alias" so that you get
+		//"JOIN table_name as table_alias ON other_table.id = prefix_table_alias.id"
+		//so I added the the table prefix to the ORM code.
+		//This should be properly fixed by the good people at Kohana. Might even be fixed in Kohana 3.x
+		$table_prefix = Kohana::config('database.default.table_prefix');
 		$categories = ORM::factory('category')
-			->join('category AS c_parent','category.parent_id','c_parent.id','LEFT')
+			->join('category AS '.$table_prefix.'c_parent','category.parent_id','c_parent.id','LEFT')
 				->orderby('category.parent_id', 'ASC')
 				->orderby('category.category_position', 'ASC')
 				->orderby('category.category_title', 'ASC');
