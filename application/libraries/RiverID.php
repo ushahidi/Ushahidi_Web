@@ -179,15 +179,21 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$registered = json_decode($this->registered());
+		$registered = $this->registered();
+		$registered = json_decode($registered);
 
-		if ($registered->success == true)
+		if (isset($registered->success) AND $registered->success == true)
 		{
 			return $registered->response;
 		}
 		else
 		{
-			$this->error[] = $registered->error;
+			if (isset($registered->error))
+			{
+				$this->error[] = $registered->error;
+			}else{
+				$this->error[] = 'Unknown Error';
+			}
 			return FALSE;
 		}
 	}
