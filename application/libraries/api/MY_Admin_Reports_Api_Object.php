@@ -492,8 +492,7 @@ class Admin_Reports_Api_Object extends Incidents_Api_Object {
 				reports::save_location($post, $location);
 
 				// STEP 2: SAVE INCIDENT
-				$incident_id = $post->incident_id;
-				$incident = new Incident_Model($incident_id);
+				$incident = new Incident_Model(isset($post->incident_id) ? $post->incident_id : 0);
 				reports::save_report($post, $incident, $location->id);
 
 				// STEP 2b: Record Approval/Verification Action
