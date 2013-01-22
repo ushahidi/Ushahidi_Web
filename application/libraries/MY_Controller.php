@@ -60,7 +60,7 @@ abstract class Controller extends Controller_Core {
 		{
 			if (!$this->auth->logged_in('login') AND ! in_array(Router::$controller, $controller_whitelist))
 			{
-				url::redirect('login');
+				$this->auth->http_auth_login();
 			}
 		}
 	}

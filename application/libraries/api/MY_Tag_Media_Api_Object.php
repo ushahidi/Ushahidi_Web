@@ -37,10 +37,10 @@ class Tag_Media_Api_Object extends Api_Object_Core {
         else
         {
             // Get the media type
-            $media_type = $this->api_service->get_task_name();
-            
+            $media_type = $this->_get_media_type(strtolower($this->api_service->get_task_name()));
+
             // Tag the media and set the response data
-            $this->response_data = $this->_tag_media($this->check_id_value($this->request['id'], $media_type));
+            $this->response_data = $this->_tag_media($this->check_id_value($this->request['id']), $media_type);
         }
     }
     
@@ -95,25 +95,21 @@ class Tag_Media_Api_Object extends Api_Object_Core {
 
             $post = Validation::factory(array_merge($_POST, $_FILES));
 
-            if ($mediatype == 2 OR $mediatype == 4)
+            //see if 
+            $incidentid_exist = Incident_Model::is_valid_incident($incidentid);
+
+            if(!$incidentid_exist) 
+            {
+                return $this->set_error_message(array("error" => 
+                    $this->api_service->get_error_msg(012)));
+            }    
+            else if ($mediatype == 2 OR $mediatype == 4)
             {
                 //require a url
                 if ( ! $this->api_service->verify_array_index($this->request, 'url'))
                 {
-                    if ($this->response_type == 'json')
-                    {
-                        json_encode(array(
-                            "error" => $this->api_service->get_error_msg(001, 'url')
-                        ));
-                    } 
-                    else 
-                    {
-                        $err = array(
-                            "error" => $this->api_service->get_error_msg(001,'url')
-                        );
-
-                        return $this->array_as_xml($err, array());
-                    }
+                    return $this->set_error_message(array("error" => 
+                        $this->api_service->get_error_msg(001, 'url')));
                 } 
                 else 
                 {
@@ -125,20 +121,8 @@ class Tag_Media_Api_Object extends Api_Object_Core {
             {
                 if ( ! $this->api_service->verify_array_index($this->request, 'photo'))
                 {
-                    if ($this->response_type == 'photo')
-                    {
-                        json_encode(array(
-                            "error" => $this->api_service->get_error_msg(001, 'photo'))
-                        );
-                    } 
-                    else 
-                    {
-                        $err = array(
-                            "error" => $this->api_service->get_error_msg(001, 'photo')
-                        );
-
-                        return $this->api_service->array_as_xml($err, array());
-                    }
+                    $this->api_service->set_error_message(array("error" => 
+                        $this->api_service->get_error_msg(001),'photo'));
                 }
 
                 $post->add_rules('photo', 'upload::valid', 
@@ -201,30 +185,13 @@ class Tag_Media_Api_Object extends Api_Object_Core {
                 "error" => $this->api_service->get_error_msg(0)
             );
 
-            if ($this->response_type == 'json')
-            {
-                return json_encode($ret);
-            } 
-            else 
-            {
-                return $this->array_as_xml($ret, array());
-            }
+            return $this->set_error_message($ret);
         } 
         else 
         {
-            if ($this->response_type == 'json')
-            {
-                return json_encode(array(
-                        "error" => $this->api_service->get_error_msg(003)));
-            } 
-            else 
-            {
-                $err = array(
-                    "error" => $this->api_service->get_error_msg(003)
-                );
-
-                return $this->array_as_xml($err, array());
-            }
+            return $this->set_error_message(array("error" => 
+                    $this->api_service->get_error_msg(003)));
+           
         }
     }
 
