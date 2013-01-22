@@ -119,7 +119,7 @@ class Tag_Media_Api_Object extends Api_Object_Core {
             {
                 if ( ! $this->api_service->verify_array_index($this->request, 'photo'))
                 {
-                    $this->api_service->set_error_message(array("error" => 
+                    $this->set_error_message(array("error" => 
                         $this->api_service->get_error_msg(001),'photo'));
                 }
 
