@@ -729,8 +729,8 @@ div.report-media { padding:10px 0; border-bottom:1px dotted #C0C2B8;; }
 
 #report-images { } 
 #report-video { padding:10px 0 0 0; } 
-#report-video ol { overflow:auto; }
-#report-video ol li { float:left; display:list-item; list-style-position:inside; margin-right:10px; }
+#report-video ul, #report-video ol { overflow:auto; }
+#report-video ul li, #report-video ol li { float:left; list-style: none; margin-right:10px; }
 
 div.report-description-text {
     padding:10px 0;

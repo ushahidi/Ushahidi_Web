@@ -12,12 +12,102 @@
 class VideoEmbed 
 {
 	/**
-	 * Generates the HTML for embedding a video in a report
-	 *
-	 * @param string $raw URL of the video to be embedded
-	 * @param string $auto Autoplays the video as soon as its loaded
+	 * @var current video url
 	 */
-	public function embed($raw, $auto)
+	private $url = FALSE;
+	
+	/**
+	 * @var name of current service
+	 */
+	private $service_name = FALSE;
+	
+	/**
+	 * @var config array for current service
+	 */
+	private $service = array();
+	
+	/**
+	 * Get the services supported by VideoEmbed
+	 * 
+	 * @return array
+	 */
+	private function services()
+	{
+		$services = array(
+			"youtube" => array(
+				'baseurl' => "http://www.youtube.com/watch?v=",
+				'searchstring' => 'youtube.com',
+				'oembed' => 'http://www.youtube.com/oembed',
+				'keep-params' => 'v'
+			),
+			// May now be defunct
+			"google" => array(
+				'baseurl' => "http://video.google.com/videoplay?docid=-",
+				'searchstring' => 'google.com',
+				'keep-params' => 'docid'
+			),
+			"metacafe" => array(
+				'baseurl' => "http://www.metacafe.com/watch/", 
+				'searchstring' => 'metacafe.com',
+			),
+			"dotsub" => array(
+				'baseurl' => "http://dotsub.com/view/",
+				'searchstring' => 'dotsub.com',
+				'oembed' => 'http://dotsub.com/services/oembed',
+			),
+			"vimeo" => array(
+				'baseurl' => "http://vimeo.com/",
+				'searchstring' => 'vimeo.com',
+				'oembed' => 'http://vimeo.com/api/oembed.json',
+			),
+		);
+		
+		Event::run('ushahidi_filter.video_embed_services', $services);
+		
+		return $services;
+	}
+	
+	/**
+	 * Set current video url and preprocess
+	 * 
+	 * @param string $url video url
+	 **/
+	public function set_url($url)
+	{
+		$this->service_name = $this->detect_service($url);
+		$services = $this->services();
+		$this->service = $services[$this->service_name];
+		
+		$this->url = $this->clean_url($url);
+	}
+	
+	/**
+	 * Convert raw url to standard structure
+	 * Particularly needed for youtube where v= param must be first
+	 * 
+	 * @param string $raw raw url
+	 * @return string standarized url
+	 */
+	private function clean_url($raw)
+	{
+		if (isset($this->service['keep-params']))
+		{
+			$components = parse_url($raw);
+			parse_str($components['query'], $query);
+			if (! isset($query[$this->service['keep-params']]) ) break;
+			$raw = $this->service['baseurl']. $query[$this->service['keep-params']];
+		}
+
+		return $raw;
+	}
+	
+	/**
+	 * Detect video services based on URL
+	 * 
+	 * @param string $raw video url
+	 * @return string $service_name service name
+	 */
+	private function detect_service($raw)
 	{
 		// To hold the name of the video service
 		$service_name = "";
@@ -26,104 +116,125 @@ class VideoEmbed
 		$raw = trim($raw);
 		
 		// Array of the supportted video services
-		$services = array(
-			"youtube" => "http://www.youtube.com/watch?v=", 
-			"google" => "http://video.google.com/videoplay?docid=-",
-			"revver" => "http://one.revver.com/watch/", 
-			"metacafe" => "http://www.metacafe.com/watch/", 
-			"lieveleak" => "http://www.liveleak.com/view?i=",
-			"dotsub" => "http://dotsub.com/media/",
-			"vimeo" => "http://vimeo.com/"
-		);
-		
-		// Get the video URL
-		$code = str_replace(array_values($services), "", $raw);
+		$services = $this->services();
 		
 		// Determine the video service to use
+		$service_name = FALSE;
 		foreach ($services as $key => $value)
 		{
-			// Extract the domain name of the service and check if it exists in the provided video URL
-			preg_match('#^((https|http)://)?([^/]+)#i', $value, $matches);
-			if (count($matches) > 0 AND strpos($raw, $matches[3], 1))
+			// Match raw url against service search string
+			if (strpos($raw, $value['searchstring']))
 			{
 				$service_name = $key;
+				break;
 			}
 		}
 		
-		// Check for valid hostnames
-		if ( ! array_key_exists($service_name, $services))
-		{
-			echo '<a href="'.$raw.'" target="_blank">'.Kohana::lang('ui_main.view').' '.Kohana::lang('ui_main.video').'</a>';
-			
-			// No point in proceeding past this point therefore return
-			return;
-		}
+		$data = array($services, $service_name);
+		Event::run('ushahidi_filter.video_embed_detect_services', $data);
+		list($services, $service_name) = $data;
 		
-		// Print the HTML embed code depending on the video service
-		if ($service_name == "youtube")
-		{
-			// Check for autoplay
-			$you_auto = ($auto == "play")? "&autoplay=1" : "";
-			
-			echo "<object width='320' height='265'>"
-				. "	<param name='movie' value='http://www.youtube.com/v/$code$you_auto'></param>"
-				. "	<param name='wmode' value='transparent'></param>"
-				. "	<embed src='http://www.youtube.com/v/$code$you_auto' type='application/x-shockwave-flash' "
-				. "		wmode='transparent' width='320' height='265'>"
-				. "	</embed>"
-				. "</object>";
-		}
-		elseif ($service_name == "google")
-		{
-			// Check for autoplay
-			$google_auto = ($auto == "play")? "&autoPlay=true" : "";
-
-			echo "<embed style='width:320px; height:265px;' id='VideoPlayback' type='application/x-shockwave-flash'"
-				. "	src='http://video.google.com/googleplayer.swf?docId=-$code$google_auto&hl=en' flashvars=''>"
-				. "</embed>";
-		}
-		elseif ($service_name == "revver")
-		{
-			// Sanitization
-			$code = str_replace("/flv", "", $code);
-
-			// Check for autoplay
-			$rev_auto = ($auto == "play")? "&autoStart=true" : "";
-
-			echo "<script src='http://flash.revver.com/player/1.0/player.js?mediaId:$code;affiliateId:0;height:320;width:265;'"
-				. "	type='text/javascript'>"
-				. "</script>";
-		}
-		elseif ($service_name == "metacafe")
-		{
-			// Sanitize input
-			$code = strrev(trim(strrev($code), "/"));
-			
-			echo "<embed src='http://www.metacafe.com/fplayer/$code.swf'"
-				. "	width='320' height='265' wmode='transparent' pluginspage='http://get.adobe.com/flashplayer/'"
-				. "	type='application/x-shockwave-flash'> "
-				. "</embed>";
-		}
-		elseif ($service_name == "liveleak")
-		{
-			echo "<object type='application/x-shockwave-flash' width='320' height='272'='transparent'"
-				. "	data='http://www.liveleak.com/e/$code'>"
-				. "	<param name='movie' value='http://www.liveleak.com/e/$code'>"
-				. "	<param name='wmode' value='transparent'><param name='quality' value='high'>"
-				. "</object>";
-		}
-		elseif ($service_name == "dotsub") 
-		{
-			echo "<iframe src='http://dotsub.com/media/$code' frameborder='0' width='320' height='500'></iframe>";
-		}
-		elseif ($service_name == "vimeo") 
-		{
-			echo "<iframe src=\"http://player.vimeo.com/video/$code\" width=\"100%\" height=\"300\" frameborder=\"0\">"
-				. "</iframe>";
-		}
+		return $service_name;
+	}
+	
+	/**
+	 * Generates the HTML for embedding a video
+	 *
+	 * @param string $raw URL of the video to be embedded
+	 * @param boolean $auto Autoplays the video as soon as its loaded
+	 * @param boolean $echo Should we echo the embed code or just return it
+	 * @return
+	 */
+	public function embed($raw, $auto = FALSE, $echo = TRUE)
+	{
+		$this->set_url($raw);
+		$output = FALSE;
 		
-		// Free memory - though this is done implicitly by the PHP interpreter
-		unset($raw, $code, $service_name);
+		// Get video code from url.
+		$code = str_replace($this->service['baseurl'], "", $this->url);
+		
+		switch($this->service_name)
+		{
+			case "youtube":
+				// Check for autoplay
+				$you_auto = ($auto) ? "&autoplay=1" : "";
+				
+				$output = '<iframe id="ytplayer" type="text/html" width="320" height="265" '
+					. 'src="http://www.youtube.com/embed/'.htmlentities($code, ENT_QUOTES, "UTF-8").'?origin='.urlencode(url::base()).htmlentities($you_auto, ENT_QUOTES, "UTF-8").'" '
+					. 'frameborder="0"></iframe>';
+			break;
+			
+			case "google":
+				// Check for autoplay
+				$google_auto = ($auto) ? "&autoPlay=true" : "";
+				
+				$output = "<embed style='width:320px; height:265px;' id='VideoPlayback' type='application/x-shockwave-flash'"
+					. "	src='http://video.google.com/googleplayer.swf?docId=-".htmlentities($code.$google_auto, ENT_QUOTES, "UTF-8")."&hl=en' flashvars=''>"
+					. "</embed>";
+			break;
+			
+			case "metacafe":
+				// Sanitize input
+				$code = strrev(trim(strrev($code), "/"));
+				
+				$output = "<embed src='http://www.metacafe.com/fplayer/".htmlentities($code, ENT_QUOTES, "UTF-8").".swf'"
+					. "	width='320' height='265' wmode='transparent' pluginspage='http://get.adobe.com/flashplayer/'"
+					. "	type='application/x-shockwave-flash'> "
+					. "</embed>";
+			break;
+			
+			case "dotsub":
+				$output = "<iframe src='http://dotsub.com/media/".htmlentities($code, ENT_QUOTES, "UTF-8")."' frameborder='0' width='320' height='500'></iframe>";
+			
+			break;
+			
+			case "vimeo":
+				$vimeo_auto = ($auto) ? "?autoplay=1" : "";
+				
+				$output = '<iframe src="http://player.vimeo.com/video/'.htmlentities($code.$vimeo_auto, ENT_QUOTES, "UTF-8").'" width="320" height="265" frameborder="0">'
+					. '</iframe>';
+			break;
+		}
+
+		$data = array($this->service_name, $output);
+		Event::run('ushahidi_filter.video_embed_embed', $data);
+		list($this->service_name, $output) = $data;
+		
+		if (!$output)
+		{
+			$output = '<a href="'.$this->url.'" target="_blank">'.Kohana::lang('ui_main.view_view').'</a>';
+		}
+
+		if ($echo) echo $output;
+
+		return $output;
+	}
+	
+	/**
+	 * Generates the thumbnail a video
+	 *
+	 * @param string $raw URL of the video
+	 * @return string url of video thumbnail
+	 */
+	public function thumbnail($raw)
+	{
+		$this->set_url($raw);
+		$output = FALSE;
+		
+		if (isset($this->service['oembed']))
+		{
+			$oembed = @json_decode(file_get_contents($this->service['oembed']."?url=".urlencode($this->url)));
+			if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
+			{
+				$output = $oembed->thumbnail_url;
+			}
+		}
+
+		$data = array($this->service_name, $output);
+		Event::run('ushahidi_filter.video_embed_thumbnail', $data);
+		list($this->service_name, $output) = $data;
+
+		return $output;
 	}
 }
 ?>

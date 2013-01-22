@@ -29,7 +29,9 @@
 				
 					<!-- tab -->
 					<div class="tab">
-						&nbsp;
+						<ul><li><a href="#" onclick="feedAction('d','<?php echo utf8::strtoupper(Kohana::lang('ui_main.delete')); ?>', '');">
+							<?php echo Kohana::lang('ui_main.delete');?></a>
+						</li></ul>
 					</div>
 				</div>
 				
@@ -56,7 +58,7 @@
 				<!-- report-table -->
 				<?php print form::open(NULL, array('id' => 'feedListing', 'name' => 'feedListing')); ?>
 					<input type="hidden" name="action" id="action" value="">
-					<input type="hidden" name="item_id"  id="item_id_action"  value="">
+					<input type="hidden" name="item_id[]"  id="item_id_action"  value="">
 					<div class="table-holder">
 						<table class="table">
 							<thead>
