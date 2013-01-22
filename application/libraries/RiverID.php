@@ -152,8 +152,6 @@ class RiverID_Core {
 			$url = substr($url, 0, -1);
 		}
 
-		file_put_contents("./test.log", "$url\n");
-
 		return $url;
 	}
 
