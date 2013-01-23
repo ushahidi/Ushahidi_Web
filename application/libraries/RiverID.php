@@ -47,6 +47,9 @@ class RiverID_Core {
 	// Cache lifetime
 	public $cache_lifetime;
 
+	// Curl object
+	public $api;
+
 	function __construct()
 	{
 		// We haven't authenticated yet
@@ -103,6 +106,55 @@ class RiverID_Core {
 		return FALSE;
 	}
 
+	function parseResponse($json, $raw = NULL, $params = array()) {
+		if (isset($json->success) AND $json->success) {
+			if (isset($params['returnResponse'])) {
+				if (isset($json->response)) {
+					return $json->response;
+				} else {
+					return FALSE;
+				}
+			} else {
+				if ($raw) {
+					return $raw;
+				} else {
+					return TRUE;
+				}
+			}
+		}
+
+		if (isset($json->error)) {
+			$this->error[] = $json->error;
+		} else {
+			$error = 'An unexpected authentication error occured. Please try again shortly.';
+
+			if (isset($params['error'])) {
+				$this->errorr[] = $error . " (" . $params['error'] . ")";
+			} else {
+				$this->error[] = $error;
+			}
+		}
+
+		return FALSE;
+	}
+
+	function buildURL($path = '/about', $parameters = array()) {
+		$parameters['api_secret'] = $this->api_key;
+		$url = $this->endpoint . '/' . ltrim($path, '/');
+
+		if ($parameters) {
+			$url .= '?';
+
+			foreach($parameters as $k => $v) {
+				$url .= trim($k) . '=' . trim($v) . '&';
+			}
+
+			$url = substr($url, 0, -1);
+		}
+
+		return $url;
+	}
+
 	/**
 	* Grabs some information about the server we're dealing with
 	*
@@ -121,16 +173,16 @@ class RiverID_Core {
 		$this->server_url = $cache->get('riverid_server_url');
 
 		if ( ! $this->server_name
-		    OR ! $this->server_version
-		    OR ! $this->server_url )
+			OR ! $this->server_version
+			OR ! $this->server_url )
 		{
 			// Cache is Empty so Re-Cache
 
-			$url = $this->endpoint.'/about';
+			$url = $this->endpoint . '/about';
 			$about_response = $this->_curl_req($url);
 			$about = json_decode($about_response);
 
-			if ($about->success)
+			if (isset($about->success) && $about->success)
 			{
 				// Successful signin, save some variables
 				$this->server_name = $about->response->name;
@@ -164,8 +216,7 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/registered?email='.$this->email.'&api_secret='.$this->api_key;
-		return $this->_curl_req($url);
+		return $this->_curl_req($this->buildURL('/registered', array('email' => urlencode($this->email))));
 	}
 
 	/**
@@ -179,17 +230,7 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$registered = json_decode($this->registered());
-
-		if ($registered->success == true)
-		{
-			return $registered->response;
-		}
-		else
-		{
-			$this->error[] = $registered->error;
-			return FALSE;
-		}
+		return $this->parseResponse(json_decode($this->registered()), NULL, array('returnResponse' => TRUE));
 	}
 
 	/**
@@ -203,22 +244,15 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/register?email='.$this->email.'&password='.$this->password.'&api_secret='.$this->api_key;
-		$register_response = $this->_curl_req($url);
-		$register = json_decode($register_response);
+		$raw = $this->_curl_req($this->buildURL('/register', array('email' => urlencode($this->email), 'password' => urlencode($this->password))));
+		$response = json_decode($raw);
 
-		if ($register->success == true)
-		{
-			// Successful creation, save the user_id
-			$this->user_id = $register->response;
-		}
-		else
-		{
-			$this->error[] = $register->error;
-			return FALSE;
+		if ($this->parseResponse($response)) {
+			$this->user_id = $response->response;
+			return $raw;
 		}
 
-		return $register_response;
+		return FALSE;
 	}
 
 	/**
@@ -232,25 +266,19 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/signin?email='.$this->email.'&password='.$this->password.'&api_secret='.$this->api_key;
-		$signin_response = $this->_curl_req($url);
-		$signin = json_decode($signin_response);
+		$raw      = $this->_curl_req($this->buildURL('/signin', array('email' => urlencode($this->email), 'password' => urlencode($this->password))));
+		$response = json_decode($raw);
 
-		if ($signin->success)
-		{
+		if ($this->parseResponse($response)) {
 			// Successful signin, save some variables
-			$this->user_id = $signin->response->user_id;
-			$this->session_id = $signin->response->session_id;
+			$this->user_id       = $response->response->user_id;
+			$this->session_id    = $response->response->session_id;
 			$this->authenticated = true;
-		}
-		else
-		{
-			// Failed signin
-			$this->error[] = $signin->error;
-			return FALSE;
+
+			return $raw;
 		}
 
-		return $signin_response;
+		return FALSE;
 	}
 
 	/**
@@ -265,22 +293,10 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/requestpassword?email='.$this->email.'&mailbody='.urlencode($mailbody).'&api_secret='.$this->api_key;
-		$requestpassword_response = $this->_curl_req($url);
+		$raw      = $this->_curl_req($this->buildURL('/requestpassword', array('email' => urlencode($this->email), 'mailbody' => urlencode($mailbody))));
+		$response = json_decode($raw);
 
-		$requestpassword = json_decode($requestpassword_response);
-
-		if ($requestpassword->success)
-		{
-			// Successful Password Reset
-		}
-		else
-		{
-			$this->error[] = $requestpassword->error;
-			return FALSE;
-		}
-
-		return $requestpassword_response;
+		return $this->parseResponse($response, $raw);
 	}
 
 	/**
@@ -294,24 +310,16 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/setpassword?email='.$this->email.'&password='.$this->new_password.'&token='.$this->token.'&api_secret='.$this->api_key;
-		$setpassword_response = $this->_curl_req($url);
-		$setpassword = json_decode($setpassword_response);
 
-		if ($setpassword->success)
-		{
-			// Successful Set Password
+		$raw      = $this->_curl_req($this->buildURL('/setpassword', array('email' => urlencode($this->email), 'password' => urlencode($this->new_password), 'token' => $this->token)));
+		$response = json_decode($raw);
 
-			// Since this was a success, save that password as the newly set one
+		if ($this->parseResponse($response)) {
 			$this->password = $this->new_password;
-		}
-		else
-		{
-			$this->error[] = $setpassword->error;
-			return FALSE;
+			return $raw;
 		}
 
-		return $setpassword_response;
+		return FALSE;
 	}
 
 	/**
@@ -325,24 +333,15 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/changepassword?email='.$this->email.'&oldpassword='.$this->password.'&newpassword='.$this->new_password.'&api_secret='.$this->api_key;
-		$changepassword_response = $this->_curl_req($url);
-		$changepassword = json_decode($changepassword_response);
+		$raw      = $this->_curl_req($this->buildURL('/changepassword', array('email' => urlencode($this->email), 'oldpassword' => urlencode($this->password), 'newpassword' => urlencode($this->new_password))));
+		$response = json_decode($raw);
 
-		if ($changepassword->success)
-		{
-			// Successful Password Change
-
-			// Since this was a success, save that password as the newly set one
+		if ($this->parseResponse($response)) {
 			$this->password = $this->new_password;
-		}
-		else
-		{
-			$this->error[] = $changepassword->error;
-			return FALSE;
+			return $raw;
 		}
 
-		return $changepassword_response;
+		return FALSE;
 	}
 
 	/**
@@ -356,24 +355,13 @@ class RiverID_Core {
 		if ($this->errors_exist())
 			return FALSE;
 
-		$url = $this->endpoint.'/checkpassword?email='.$this->email.'&password='.$this->password.'&api_secret='.$this->api_key;
-		$checkpassword_response = $this->_curl_req($url);
-		$checkpassword = json_decode($checkpassword_response);
+		$raw      = $this->_curl_req($this->buildURL('/checkpassword', array('email' => urlencode($this->email), 'password' => urlencode($this->password))));
+		$response = json_decode($raw);
 
-		if ($checkpassword->success && $checkpassword->response)
-		{
-			// Successful Checking of Password
-		}
-		else
-		{
-			$this->error[] = 'Incorrect password provided.';
-			return FALSE;
-		}
-
-		return $checkpassword_response;
+		return $this->parseResponse($response, $raw);
 	}
 
-	public function facebookAuthorized($appid, $appsecret, $permissions) {
+	function facebookAuthorized($appid, $appsecret, $permissions) {
 		$url = $this->endpoint .
 			'/facebook_authorized?email=' . $this->email .
 			'&session_id=' . $this->session_id .
@@ -384,15 +372,18 @@ class RiverID_Core {
 
 		$apiResponse = json_decode($this->_curl_req($url));
 
-		if(isset($apiResponse->success) AND $apiResponse->success) {
+		if (isset($apiResponse->success) AND $apiResponse->success) {
 			return TRUE;
 		} else {
-			if(isset($apiResponse->response)) return $apiResponse->response;
-			return FALSE;
+			if (isset($apiResponse->response)) {
+				return $apiResponse->response;
+			}
 		}
+
+		return FALSE;
 	}
 
-	public function facebookAction($appid, $appsecret, $permissions, $namespace, $action, $object, $url, $params = array()) {
+	function facebookAction($appid, $appsecret, $permissions, $namespace, $action, $object, $url, $params = array()) {
 		$url = $this->endpoint .
 			'/facebook_authorized?email=' . $this->email .
 			'&session_id=' . $this->session_id .
@@ -405,46 +396,61 @@ class RiverID_Core {
 			'&fb__object=' . $object .
 			'&fb_object_url=' . $url;
 
-		if($params) {
-			foreach($params as $param => $val) {
+		if ($params) {
+			foreach ($params as $param => $val) {
 				$url .= "&fb_graph_{$param}={$val}";
 			}
 		}
 
 		$apiResponse = json_decode($this->_curl_req($url));
 
-		if(isset($apiResponse->success) && $apiResponse->success) {
+		if (isset($apiResponse->success) AND $apiResponse->success) {
 			return TRUE;
 		} else {
-			if(isset($apiResponse->response)) return $apiResponse->response;
-			return FALSE;
+			if (isset($apiResponse->response)) {
+				return $apiResponse->response;
+			}
 		}
+
+		return FALSE;
 	}
 
 	/**
-     * Helper function to send a cURL request
-     * @param url - URL for cURL to hit
-     */
-    public function _curl_req($url)
-    {
-        // Make sure cURL is installed
-        if ( ! function_exists('curl_exec'))
-        {
-            throw new Kohana_Exception('stats.cURL_not_installed');
-            return FALSE;
-        }
+	 * Helper function to send a cURL request
+	 * @param url - URL for cURL to hit
+	 */
+	function _curl_req($url)
+	{
+		// Make sure cURL is installed
+		if ( ! function_exists('curl_exec'))
+		{
+			throw new Kohana_Exception('stats.cURL_not_installed');
+			return FALSE;
+		}
 
-        $curl_handle = curl_init();
-        curl_setopt($curl_handle,CURLOPT_URL,$url);
-        curl_setopt($curl_handle, CURLOPT_FOLLOWLOCATION, true );
-        curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
-        curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
-        curl_setopt($curl_handle,CURLOPT_SSL_VERIFYPEER, false);
-        $buffer = curl_exec($curl_handle);
-        curl_close($curl_handle);
+		$this->api = curl_init($url);
 
-        return $buffer;
-    }
+		$curlFlags = array(
+			CURLOPT_URL             => $url,
+			CURLOPT_FOLLOWLOCATION  => TRUE,
+			CURLOPT_CONNECTTIMEOUT  => 15,
+			CURLOPT_RETURNTRANSFER  => 1,
+			CURLOPT_SSL_VERIFYPEER  => FALSE
+			);
+
+		if (function_exists('curl_setopt_array')) {
+			curl_setopt_array($this->api, $curlFlags);
+		} else {
+			foreach($curlFlags as $flag => $val) {
+				curl_setopt($this->api, $flag, $val);
+			}
+		}
+
+		$buffer = curl_exec($this->api);
+		curl_close($this->api);
+
+		return $buffer;
+	}
 
 	/**
 	* Checks if the server specified in the url exists.

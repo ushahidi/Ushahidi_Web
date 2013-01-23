@@ -236,11 +236,10 @@ class reports_Core {
 			$incident->form_id = $post->form_id;
 		}
 		
-
 		// Check if the user id has been specified
-		if ( ! $incident->loaded AND isset($_SESSION['auth_user']))
+		if ( ! $incident->loaded AND Auth::instance()->get_user() instanceof User_Model)
 		{
-			$incident->user_id = $_SESSION['auth_user']->id;
+			$incident->user_id = Auth::instance()->get_user()->id;
 		}
 		
 		$incident->incident_title = $post->incident_title;
