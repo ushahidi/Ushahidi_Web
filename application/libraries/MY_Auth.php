@@ -83,13 +83,13 @@ class Auth extends Auth_Core {
 	}
 
 	/**
-     * Prompts user to login.
+     * Sends an HTTP AUTH prompt.
      *
      * @param int user_id - The currently logged in user id to be passed as the
      *                      realm value.
      * @return void
      */
-	public function prompt_login($user_id = 0)
+	public function http_auth_prompt_login($user_id = 0)
 	{
 		header('WWW-Authenticate: Basic realm="'.$user_id.'"');
 		header('HTTP/1.0 401 Unauthorized');
