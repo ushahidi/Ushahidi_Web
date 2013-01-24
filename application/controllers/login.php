@@ -303,7 +303,7 @@ class Login_Controller extends Template_Controller {
 				// Existing User??
 				if ($user->loaded)
 				{
-
+					$email_sent = FALSE;
 					// Determine which reset method to use. The options are to use the RiverID server
 					//  or to use the normal method which just resets the password locally.
 					if (Kohana::config('riverid.enable') == TRUE AND ! empty($user->riverid))
@@ -315,7 +315,7 @@ class Login_Controller extends Template_Controller {
 
 						$riverid = new RiverID;
 						$riverid->email = $post->resetemail;
-						$riverid->requestpassword($message);
+						$email_sent = $riverid->requestpassword($message);
 					}
 					else
 					{
