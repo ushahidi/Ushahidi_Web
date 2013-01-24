@@ -49,18 +49,15 @@ class Auth extends Auth_Core {
 	public function http_auth_login() {
 
 		//Get username and password
-		if (isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']))
+		if (isset($_SERVER['PHP_AUTH_USER']) AND isset($_SERVER['PHP_AUTH_PW']))
 		{
-			$username = filter_var($_SERVER['PHP_AUTH_USER'],
-				FILTER_SANITIZE_STRING,
-				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+			$username = $_SERVER['PHP_AUTH_USER'];
  
-			$password = filter_var($_SERVER['PHP_AUTH_PW'],
-				FILTER_SANITIZE_STRING,
-				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
+			$password = $_SERVER['PHP_AUTH_PW'];
  
 			$email = FALSE;
-			if(kohana::config('riverid.enable') == TRUE && filter_var($username, FILTER_VALIDATE_EMAIL))
+			
+			if(kohana::config('riverid.enable') == TRUE AND filter_var($username, FILTER_VALIDATE_EMAIL))
 			{
 				$email = $username;
 			}
