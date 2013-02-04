@@ -149,7 +149,7 @@ class Api_Controller extends Admin_Controller {
         );
         
         // Javascript header
-        $this->template->js = new View('admin/settings/api/api_js');
+        $this->themes->js = new View('admin/settings/api/api_js');
     }
     
     /**
@@ -267,7 +267,7 @@ class Api_Controller extends Admin_Controller {
         $this->template->content->pagination = $pagination;
         
         // Javascript header
-        $this->template->js = new View('admin/settings/api/logs_js');
+        $this->themes->js = new View('admin/settings/api/logs_js');
     }
     
     /**
@@ -349,6 +349,6 @@ class Api_Controller extends Admin_Controller {
         $this->template->content->pagination = $pagination;
         
         // Javascript header
-        $this->template->js = new View('admin/settings/api/banned_js');
+        $this->themes->js = new View('admin/settings/api/banned_js');
     }
 }

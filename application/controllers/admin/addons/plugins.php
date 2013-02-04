@@ -198,7 +198,7 @@ class Plugins_Controller extends Admin_Controller {
 		$this->template->content->status = $status;
 
 		// Javascript Header
-		$this->template->js = new View('admin/addons/addons_js');
+		$this->themes->js = new View('admin/addons/addons_js');
 	}
 
 }

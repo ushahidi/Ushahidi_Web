@@ -186,7 +186,7 @@ class Comments_Controller extends Admin_Controller {
         $this->template->content->status = $status;
         
         // Javascript Header
-        $this->template->js = new View('admin/comments/comments_js');        
+        $this->themes->js = new View('admin/comments/comments_js');        
     }
     
 }

@@ -3,7 +3,7 @@ Description: NOTE: Polaroid requires you to change additional settings -> http:/
 Version: 1.1
 Author: Caleb Bell
 Author Email: caleb@ushahidi.com
-
+JS: initialize,_jquery.colorbox-min,_jquery.isotope.min
 
 ===INSTALLATION===
 1. Activate the theme

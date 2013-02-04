@@ -34,18 +34,18 @@ class Actions_Controller extends Admin_Controller
 		$this->template->content = new View('admin/manage/actions/main');
 		$this->template->content->title = Kohana::lang('ui_admin.actions');
 
-		$this->template->map_enabled = TRUE;
-		$this->template->treeview_enabled = TRUE;
+		$this->themes->map_enabled = TRUE;
+		$this->themes->treeview_enabled = TRUE;
 
-		$this->template->js = new View('admin/manage/actions/actions_js');
-		$this->template->js->default_map = Kohana::config('settings.default_map');
-		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
-		$this->template->js->latitude = Kohana::config('settings.default_lat');
-		$this->template->js->longitude = Kohana::config('settings.default_lon');
+		$this->themes->js = new View('admin/manage/actions/actions_js');
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->themes->js->latitude = Kohana::config('settings.default_lat');
+		$this->themes->js->longitude = Kohana::config('settings.default_lon');
 
 		// TODO: Figure out what to do with this
-		$this->template->js->incident_zoom = array();
-		$this->template->js->geometries = array();
+		$this->themes->js->incident_zoom = array();
+		$this->themes->js->geometries = array();
 
 		$trigger_options = $this->_trigger_options();
 		$response_options = $this->_response_options();
@@ -265,7 +265,7 @@ class Actions_Controller extends Admin_Controller
 		$this->template->content->errors = $errors;
 
 		// Enable date picker
-		$this->template->datepicker_enabled = TRUE;
+		$this->themes->datepicker_enabled = TRUE;
 	}
 
 	function changestate(){

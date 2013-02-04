@@ -100,7 +100,7 @@ class Checkins_Controller extends Members_Controller {
 		$this->template->content->total_items = $pagination->total_items;
 		
 		// Javascript Header
-		$this->template->map_enabled = TRUE;
-		$this->template->js = new View('members/checkins_js');
+		$this->themes->map_enabled = TRUE;
+		$this->themes->js = new View('members/checkins_js');
 	}	
 }

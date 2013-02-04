@@ -58,6 +58,10 @@ class Members_Controller extends Template_Controller
 			url::redirect('/');
 		}
 
+		// Themes Helper
+		$this->themes = new Themes();
+		$this->themes->admin = TRUE;
+
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
 
@@ -65,24 +69,25 @@ class Members_Controller extends Template_Controller
 		
 		// Retrieve Default Settings
 		$this->template->site_name = Kohana::config('settings.site_name');
-		$this->template->api_url = Kohana::config('settings.api_url');
+		$this->themes->api_url = Kohana::config('settings.api_url');
 
 		// Javascript Header
-		$this->template->map_enabled = FALSE;
-		$this->template->flot_enabled = FALSE;
-		$this->template->treeview_enabled = FALSE;
-		$this->template->protochart_enabled = FALSE;
-		$this->template->colorpicker_enabled = FALSE;
-		$this->template->editor_enabled = FALSE;
-		$this->template->tablerowsort_enabled = FALSE;
-		$this->template->autocomplete_enabled = FALSE;
-		$this->template->json2_enabled = FALSE;
-		$this->template->js = '';
+		$this->themes->map_enabled = FALSE;
+		$this->themes->flot_enabled = FALSE;
+		$this->themes->treeview_enabled = FALSE;
+		$this->themes->protochart_enabled = FALSE;
+		$this->themes->colorpicker_enabled = FALSE;
+		$this->themes->editor_enabled = FALSE;
+		$this->themes->tablerowsort_enabled = FALSE;
+		$this->themes->autocomplete_enabled = FALSE;
+		$this->themes->json2_enabled = FALSE;
+		$this->themes->js = '';
+		
 		$this->template->form_error = FALSE;
 
 		// Initialize some variables for raphael impact charts
-		$this->template->raphael_enabled = FALSE;
-		$this->template->impact_json = '';
+		$this->themes->raphael_enabled = FALSE;
+		$this->themes->impact_json = '';
 
 		// Generate main tab navigation list.
 		$this->template->main_tabs = members::main_tabs();
@@ -100,11 +105,25 @@ class Members_Controller extends Template_Controller
 			$this->template->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header_nav->site_name = Kohana::config('settings.site_name');
-    }
+		
+		Event::add('ushahidi_filter.view_pre_render.members_layout', array($this, '_pre_render'));
+	}
 
 	public function index()
 	{
 		url::redirect('members/dashboard');
+	}
+	
+	/**
+	 * Trigger themes->admin_requirements() at the last minute
+	 * 
+	 * This is in case features are enabled/disabled
+	 */
+	public function _pre_render()
+	{
+		$this->themes->requirements();
+		$this->template->header_block = $this->themes->header_block();
+		$this->template->footer_block = $this->themes->footer_block();
 	}
 
 } // End Admin

@@ -214,6 +214,22 @@ class ush_locale_Core
 	}
 
 	/**
+	 * Is a language written Right-to-left
+	 * @param $locale
+	 */
+	public static function is_rtl_language($locale = NULL)
+	{
+		// Check for text direction override
+		if (Kohana::config('locale.force_text_direction') == 'rtl') return TRUE;
+		if (Kohana::config('locale.force_text_direction') == 'ltr') return FALSE;
+
+		// Check for special translation string 'ui_main.text_direction'
+		if (Kohana::lang('core.text_direction', $locale) == 'rtl') return TRUE;
+
+		return FALSE;
+	}
+
+	/**
 	 * @param   string	 ISO-3166 country code
 	 */
 	public static function country($iso3166)
@@ -530,9 +546,8 @@ class ush_locale_Core
 	
 	/**
 	 * Detect language from GET param, session or settings.
-	 * @param string 
 	 */
-	public static function detect_language($language = FALSE)
+	public static function detect_language()
 	{
 		// Locale form submitted?
 		if (isset($_GET['l']) && !empty($_GET['l']))

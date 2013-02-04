@@ -41,7 +41,7 @@ class Settings_Controller extends Admin_Controller {
 	{
 		$this->template->content = new View('admin/settings/site');
 		$this->template->content->title = Kohana::lang('ui_admin.settings');
-		$this->template->js = new View('admin/settings/site_js');
+		$this->themes->js = new View('admin/settings/site_js');
 
 		// setup and initialize form field names
 		$form = array(
@@ -290,8 +290,8 @@ class Settings_Controller extends Admin_Controller {
 			$this->template->content->banner_t = NULL;
 		}
 
-
-		$this->template->colorpicker_enabled = TRUE;
+		$this->themes->colorpicker_enabled = TRUE;
+		$this->themes->slider_enabled = TRUE;
 		$this->template->content->form = $form;
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
@@ -341,7 +341,7 @@ class Settings_Controller extends Admin_Controller {
 	public function index($saved = false)
 	{
 		// Display all maps
-		$this->template->api_url = Kohana::config('settings.api_url_all');
+		$this->themes->api_url = Kohana::config('settings.api_url_all');
 
 		// Current Default Country
 		$current_country = Kohana::config('settings.default_country');
@@ -590,14 +590,14 @@ class Settings_Controller extends Admin_Controller {
 			'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 
 		// Javascript Header
-		$this->template->map_enabled = TRUE;
-		$this->template->colorpicker_enabled = TRUE;
-		$this->template->js = new View('admin/settings/settings_js');
-		$this->template->js->default_map = $form['default_map'];
-		$this->template->js->default_zoom = $form['default_zoom'];
-		$this->template->js->default_lat = $form['default_lat'];
-		$this->template->js->default_lon = $form['default_lon'];
-		$this->template->js->all_maps_json = $this->_generate_settings_map_js();
+		$this->themes->map_enabled = TRUE;
+		$this->themes->colorpicker_enabled = TRUE;
+		$this->themes->js = new View('admin/settings/settings_js');
+		$this->themes->js->default_map = $form['default_map'];
+		$this->themes->js->default_zoom = $form['default_zoom'];
+		$this->themes->js->default_lat = $form['default_lat'];
+		$this->themes->js->default_lon = $form['default_lon'];
+		$this->themes->js->all_maps_json = $this->_generate_settings_map_js();
 	}
 
 
@@ -787,7 +787,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->email_ssl_array = array('1'=>Kohana::lang('ui_admin.yes'),'0'=>Kohana::lang('ui_admin.no'));
 
 		// Javascript Header
-		$this->template->js = new View('admin/settings/email_js');
+		$this->themes->js = new View('admin/settings/email_js');
 	}
 
 		/**
@@ -878,7 +878,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->yesno_array = array('1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
-		$this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
+		$this->themes->content->is_clean_url_enabled = $this->_check_for_clean_url();
 
 	}
 

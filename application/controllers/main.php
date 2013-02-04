@@ -70,12 +70,12 @@ class Main_Controller extends Template_Controller {
 
 		// Themes Helper
 		$this->themes = new Themes();
+		$this->themes->requirements();
+		$this->themes->frontend = TRUE;
 		$this->themes->api_url = Kohana::config('settings.api_url');
 		$this->template->header->submit_btn = $this->themes->submit_btn();
 		$this->template->header->languages = $this->themes->languages();
 		$this->template->header->search = $this->themes->search();
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 
 		// Set Table Prefix
 		$this->table_prefix = Kohana::config('database.default.table_prefix');
@@ -135,6 +135,8 @@ class Main_Controller extends Template_Controller {
 			$this->template->header->header_nav->loggedin_user = Auth::instance()->get_user();
 		}
 		$this->template->header->header_nav->site_name = Kohana::config('settings.site_name');
+		
+		Event::add('ushahidi_filter.view_pre_render.layout', array($this, '_pre_render'));
 	}
 
 	/**
@@ -411,7 +413,12 @@ class Main_Controller extends Template_Controller {
 
 		// Javascript Header
 		$this->themes->map_enabled = TRUE;
-		$this->themes->main_page = TRUE;
+		$this->themes->slider_enabled = TRUE;
+		
+		if (Kohana::config('settings.enable_timeline'))
+		{
+			$this->themes->timeline_enabled = TRUE;
+		}
 
 		// Map Settings
 		$marker_radius = Kohana::config('map.marker_radius');
@@ -442,8 +449,16 @@ class Main_Controller extends Template_Controller {
 		$this->themes->js->active_endDate = $display_endDate;
 
 		$this->themes->js->blocks_per_row = Kohana::config('settings.blocks_per_row');
-
-		// Build Header and Footer Blocks
+	}
+	
+	/**
+	 * Trigger themes->requirements() at the last minute
+	 * 
+	 * This is in case features are enabled/disabled
+	 */
+	public function _pre_render()
+	{
+		$this->themes->requirements();
 		$this->template->header->header_block = $this->themes->header_block();
 		$this->template->footer->footer_block = $this->themes->footer_block();
 	}

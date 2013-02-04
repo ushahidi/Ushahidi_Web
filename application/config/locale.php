@@ -20,3 +20,10 @@ $config['all_languages'] = array ( 'en_US'=>'English (US)', 'fr_FR'=>'Français'
  * @see http://php.net/timezones
  */
 $config['timezone'] = '';
+
+/**
+ * Force text-direction to be either LTR or RTL
+ * Possible values: 'rtl' 'ltr' or FALSE
+ * @see Ush_Locale::is_rtl_language()
+ */
+$config['force_text_direction'] = FALSE;

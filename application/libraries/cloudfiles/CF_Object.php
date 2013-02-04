@@ -29,7 +29,7 @@ class CF_Object
      */
     function __construct(&$container, $name, $force_exists=False, $dohead=True)
     {
-        if ($name[0] == "/") {
+        if (isset($name[0]) && $name[0] == "/") {
             $r = "Object name '".$name;
             $r .= "' cannot contain begin with a '/' character.";
             throw new Kohana_Exception($r);

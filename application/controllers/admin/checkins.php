@@ -111,7 +111,7 @@ class Checkins_Controller extends Admin_Controller
         $this->template->content->total_items = $pagination->total_items;
         
         // Javascript Header
-        $this->template->js = new View('admin/checkins/checkins_js');
+        $this->themes->js = new View('admin/checkins/checkins_js');
 	}
 
 }

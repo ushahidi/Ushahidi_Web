@@ -145,7 +145,7 @@ class Private_Controller extends Members_Controller {
 		$this->template->content->total_items = $pagination->total_items;
 		
 		// Javascript Header
-		$this->template->js = new View('members/private_js');
+		$this->themes->js = new View('members/private_js');
 	}
 	
 	/**
@@ -258,8 +258,8 @@ class Private_Controller extends Members_Controller {
 		$this->template->content->form_saved = $form_saved;
 		
 		// Javascript Header
-		$this->template->autocomplete_enabled = TRUE;
-		$this->template->js = new View('members/private_send_js');
+		$this->themes->autocomplete_enabled = TRUE;
+		$this->themes->js = new View('members/private_send_js');
 	}
 	
 	/**

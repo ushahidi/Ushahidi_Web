@@ -9,4 +9,6 @@
 		</fieldset>
 	<?php echo form::close(); ?>
 </div>
+<?php if (Kohana::config('settings.enable_timeline')): ?>
 <div id="graph" class="graph-holder"></div>
+<?php endif; ?>

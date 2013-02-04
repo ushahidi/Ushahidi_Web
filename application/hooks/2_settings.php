@@ -42,10 +42,9 @@ Kohana::config_set('cache.default.lifetime', isset($settings['cache_pages_lifeti
 
 $default_map = isset($settings['default_map']) ? $settings['default_map'] : 'osm_mapnik';
 $map_layer = map::base($default_map);
-if (isset($map_layer->api_url) AND $map_layer->api_url != '')
+if (! empty($map_layer->api_url))
 {
-	Kohana::config_set('settings.api_url', 
-		"<script type=\"text/javascript\" src=\"".$map_layer->api_url."\"></script>");
+	Kohana::config_set('settings.api_url', $map_layer->api_url);
 }
 
 // And in case you want to display all maps on one page...
@@ -54,9 +53,9 @@ foreach (map::base() as $layer)
 {
 	if (empty($layer->api_url)) continue;
 	// Add to array, use url as key to avoid dupes
-	$api_url_all[$layer->api_url] = '<script type="text/javascript" src="'.$layer->api_url.'"></script>';
+	$api_url_all[$layer->api_url] = $layer->api_url;
 }
-Kohana::config_set('settings.api_url_all', implode("\n",$api_url_all));
+Kohana::config_set('settings.api_url_all', $api_url_all);
 
 // Additional Mime Types (KMZ/KML)
 Kohana::config_set('mimes.kml', array('text/xml'));

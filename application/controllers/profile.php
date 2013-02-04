@@ -34,9 +34,6 @@ class Profile_Controller extends Main_Controller {
 		$this->template->content->users = User_Model::get_public_users();
 
 		$this->template->header->page_title .= Kohana::lang('ui_main.browse_profiles').Kohana::config('settings.title_delimiter');
-
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 	/**
@@ -104,9 +101,6 @@ class Profile_Controller extends Main_Controller {
 		}
 
 		$this->template->header->page_title .= $user->name.Kohana::config('settings.title_delimiter');
-
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
 	}
 
 } // End Profile
