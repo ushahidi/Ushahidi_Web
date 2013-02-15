@@ -13,16 +13,6 @@ class plugin_Core {
 	/**
 	 * @var array
 	 */
-	protected static $javascripts = array();
-	
-	/**
-	 * @var array
-	 */
-	protected static $stylesheets = array();
-	
-	/**
-	 * @var array
-	 */
 	protected static $sms_providers = array();
 	
 	/**
@@ -32,12 +22,16 @@ class plugin_Core {
 	 */
 	public static function add_javascript($javascripts = array())
 	{
-		if ( ! is_array($javascripts))
-			$javascripts = array($javascripts);
-
-		foreach ($javascripts as $key => $javascript)
+		if (is_array($javascripts))
 		{
-			self::$javascripts[] = $javascript;
+			foreach($javascripts as $javascript)
+			{
+				Requirements::js('plugins/'.$javascript.'.js');
+			}
+		}
+		else
+		{
+			Requirements::js('plugins/'.$javascripts.'.js');
 		}
 	}
 	
@@ -49,10 +43,9 @@ class plugin_Core {
 	 */
 	public static function remove_javascript($javascripts = array())
 	{
-		foreach (self::$javascripts as $key => $javascript)
+		foreach ($javascripts as $javascript)
 		{
-			if (in_array($javascript, $javascripts))
-				unset(self::$javascripts[$key]);
+			Requirements::block('plugins/'.$javascripts.'.js');
 		}
 	}
 	
@@ -64,12 +57,16 @@ class plugin_Core {
 	 */
 	public static function add_stylesheet($stylesheets = array())
 	{
-		if ( ! is_array($stylesheets))
-			$stylesheets = array($stylesheets);
-
-		foreach ($stylesheets as $key => $stylesheet)
+		if (is_array($stylesheets))
 		{
-			self::$stylesheets[] = $stylesheet;
+			foreach($stylesheets as $stylesheet)
+			{
+				Requirements::css('plugins/'.$stylesheet.'.css');
+			}
+		}
+		else
+		{
+			Requirements::css('plugins/'.$stylesheets.'.css');
 		}
 	}
 	
@@ -87,43 +84,6 @@ class plugin_Core {
 		{
 			self::$sms_providers[$key] = $sms_provider;
 		}
-	}
-	
-	/**
-	 * Adds a the stylesheet/javascript to the header of the view file
-	 *
-	 * @param string $type
-	 */
-	public static function render($type)
-	{
-		$files = $type.'s';
-		
-		$html = '';
-
-		foreach (self::$$files as $key => $file)
-		{
-			switch ($type)
-			{
-				case 'stylesheet':
-					if (substr_compare($file, '.css', -3, 3, FALSE) !== 0)
-					{
-						// Add the javascript suffix
-						$file .= '.css';
-					}
-					$html .= '<link rel="stylesheet" type="text/css" href="'.url::base()."plugins/".$file.'" />';
-					break;
-				case 'javascript':
-					if (substr_compare($file, '.js', -3, 3, FALSE) !== 0)
-					{
-						// Add the javascript suffix
-						$file .= '.js';
-					}
-					$html .= '<script type="text/javascript" src="'.url::base()."plugins/".$file.'"></script>';
-					break;
-			}
-		}
-		
-		return $html;
 	}
 	
 	/**

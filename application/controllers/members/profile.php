@@ -179,7 +179,7 @@ class Profile_Controller extends Members_Controller
 		$this->template->content->yesno_array = array('1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
 
 		// Javascript Header
-		$this->template->colorpicker_enabled = TRUE;
+		$this->themes->colorpicker_enabled = TRUE;
 	}
 
 	/**

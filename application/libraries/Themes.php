@@ -16,16 +16,27 @@
 
 class Themes_Core {
 
+	public $frontend = false;
+	public $admin = false;
+	
 	public $map_enabled = false;
 	public $api_url = null;
-	public $main_page = false;
 	public $this_page = false;
 	public $treeview_enabled = false;
 	public $validator_enabled = false;
 	public $photoslider_enabled = false;
 	public $colorpicker_enabled = false;
+	public $datepicker_enabled = false;
 	public $editor_enabled = false;
-	public $site_style = false;
+	public $protochart_enabled = false;
+	public $raphael_enabled = false;
+	public $tablerowsort_enabled = false;
+	public $json2_enabled = false;
+	public $hovertip_enabled = false;
+	public $slider_enabled = false;
+	public $timeline_enabled = false;
+	
+	// Custom JS to be added
 	public $js = null;
 
 	public $css_url = null;
@@ -38,10 +49,6 @@ class Themes_Core {
 
 		// Load Session
 		$this->session = Session::instance();
-
-		// Grab the proper URL for the css and js files
-		$this->css_url = url::file_loc('css');
-		$this->js_url = url::file_loc('js');
 	}
 
 	/**
@@ -50,13 +57,27 @@ class Themes_Core {
 	 */
 	public function header_block()
 	{
-		$content = Kohana::config("globalcode.head").
-			$this->_header_css().
-			$this->_header_feeds().
-		$this->_header_js();
-
+		$content = '';
+		// For backward compatibility render Requirements here rather than in the view
+		if (Kohana::config('requirements.write_js_to_body'))
+		{
+			$content .= Requirements::render('css');
+			$content .= Requirements::render('headtags');
+		}
+		else
+		{
+			$content .= Requirements::render();
+		}
+		
 		// Filter::header_block - Modify Header Block
+		if ($this->admin)
+		{
+			Event::run('ushahidi_filter.admin_header_block', $content);
+		}
+		elseif ($this->frontend)
+		{
 		Event::run('ushahidi_filter.header_block', $content);
+		}
 
 		return $content;
 	}
@@ -67,171 +88,298 @@ class Themes_Core {
 	*/
 	public function admin_header_block()
 	{
-		$content = Kohana::config("globalcode.head");
-
-		// Filter::admin_header_block - Modify Admin Header Block
-		Event::run('ushahidi_filter.admin_header_block', $content);
-
-		return $content;
+		$this->header_block();
 	}
 
 	/**
-	 * Css Items
+	 * CSS/JS requirements
 	 */
-	private function _header_css()
+	public function requirements()
 	{
-		$core_css = "";
-		$core_css .= html::stylesheet($this->css_url."media/css/jquery-ui-themeroller", "", TRUE);
-
-		foreach (Kohana::config("settings.site_style_css") as $theme_css)
-		{
-			$core_css .= html::stylesheet($theme_css,"",TRUE);
-		}
-
-		$core_css .= "<!--[if lte IE 7]>".html::stylesheet($this->css_url."media/css/iehacks","",TRUE)."<![endif]-->";
-		$core_css .= "<!--[if IE 7]>".html::stylesheet($this->css_url."media/css/ie7hacks","",TRUE)."<![endif]-->";
-		$core_css .= "<!--[if IE 6]>".html::stylesheet($this->css_url."media/css/ie6hacks","",TRUE)."<![endif]-->";
-
-		if ($this->map_enabled)
-		{
-			$core_css .= html::stylesheet($this->css_url."media/css/openlayers","",TRUE);
-		}
-
-		if ($this->treeview_enabled)
-		{
-			$core_css .= html::stylesheet($this->css_url."media/css/jquery.treeview","",TRUE);
-		}
-
-		if ($this->photoslider_enabled)
-		{
-			$core_css .= html::stylesheet($this->css_url."media/css/picbox/picbox","",TRUE);
-		}
-
-		if ($this->colorpicker_enabled)
-		{
-			$core_css .= html::stylesheet($this->css_url."media/css/colorpicker","",TRUE);
-		}
-
-		if ($this->site_style AND $this->site_style != "default")
-		{
-			$core_css .= html::stylesheet($this->css_url."themes/".$site_style."/style.css");
-		}
-
-		$core_css .= html::stylesheet($this->css_url."media/css/global","",TRUE);
-		$core_css .= html::stylesheet($this->css_url."media/css/jquery.jqplot.min", "", TRUE);
+		Requirements::customHeadTags(Kohana::config("globalcode.head"),'globalcode-head');
 		
-		// Render CSS
-		$plugin_css = plugin::render('stylesheet');
-
-		return $core_css.$plugin_css;
-		}
-
-	/**
-	 * Javascript Files and Inline JS
-	 */
-	private function _header_js()
-	{
-		$core_js = "";
-		if ($this->map_enabled)
-		{
-			$core_js .= html::script($this->js_url."media/js/OpenLayers", TRUE);
-			$core_js .= "<script type=\"text/javascript\">OpenLayers.ImgPath = '".$this->js_url."media/img/openlayers/"."';</script>";
-			$core_js .= html::script($this->js_url."media/js/ushahidi", TRUE);
-		}
-
-		$core_js .= html::script($this->js_url."media/js/jquery", TRUE);
-		//$core_js .= html::script($this->js_url."media/js/jquery.ui.min", TRUE);
-		$core_js .= html::script(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js", TRUE);
-		$core_js .= html::script($this->js_url."media/js/jquery.pngFix.pack", TRUE);
-		$core_js .= html::script($this->js_url."media/js/jquery.timeago", TRUE);
+		Requirements::js("media/js/jquery.js");
+		Requirements::js("media/js/jquery.ui.min.js");
+		//Requirements::js(Kohana::config('core.site_protocol')."://ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js");
+		Requirements::js("media/js/jquery.pngFix.pack.js");
+		Requirements::js("media/js/jquery.timeago.js");
+		
+		Requirements::css("media/css/jquery-ui-themeroller.css");
+		
+		Requirements::js('media/js/global.js');
+		Requirements::css('media/css/global.css');
 
 		if ($this->map_enabled)
 		{
+			Requirements::js("media/js/OpenLayers.js");
+			Requirements::js("media/js/ushahidi.js");
+			Requirements::js($this->api_url);
+			Requirements::customJS("OpenLayers.ImgPath = '".url::file_loc('js')."media/img/openlayers/"."';",'openlayers-imgpath');
+			
+			Requirements::css("media/css/openlayers.css");
+		}
+		
+		if ($this->hovertip_enabled)
+		{
+			Requirements::js('media/js/jquery.hovertip-1.0.js');
+			Requirements::css('media/css/jquery.hovertip-1.0.css', '');
+			Requirements::customJS(
+				"$(function() {
+						if($('.tooltip[title]') != null)
+						$('.tooltip[title]').hovertip();
+					});",
+				'tooltip-js'
+			);
+		}
+		
+		if ($this->slider_enabled)
+		{
+			Requirements::js('media/js/selectToUISlider.jQuery.js');
+		}
 
-			$core_js .= $this->api_url;
-
-			if ($this->main_page || $this->this_page == "alerts")
-			{
-				$core_js .= html::script($this->js_url."media/js/selectToUISlider.jQuery", TRUE);
-			}
-
-			if ($this->main_page)
-			{
-				// Notes: E.Kala <emmanuel(at)ushahidi.com>
-				// TODO: Only include the jqplot JS when the timeline is enabled
-				$core_js .= html::script($this->js_url."media/js/jquery.jqplot.min");
-				$core_js .= html::script($this->js_url."media/js/jqplot.dateAxisRenderer.min");
-
-				$core_js .= "<!--[if IE]>".html::script($this->js_url."media/js/excanvas.min", TRUE)."<![endif]-->";
-			}
+		if ($this->timeline_enabled)
+		{
+			Requirements::js("media/js/jquery.jqplot.min.js");
+			Requirements::css("media/css/jquery.jqplot.min.css");
+			Requirements::js("media/js/jqplot.dateAxisRenderer.min.js");
 		}
 
 		if ($this->treeview_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/jquery.treeview");
+			Requirements::css("media/css/jquery.treeview.css");
+			Requirements::js("media/js/jquery.treeview.js");
+		}
+	
+		// Load ProtoChart
+		if ($this->protochart_enabled)
+		{
+			Requirements::customJS("jQuery.noConflict()", 'jquery-noconflict');
+			Requirements::js('media/js/protochart/prototype.js');
+			Requirements::customHeadTags(
+				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/protochart/excanvas-compressed', TRUE).'<![endif]-->', 
+				'ie-excanvas-compressed');
+			Requirements::js('media/js/protochart/ProtoChart.js');
+		}
+	
+		// Load Raphael
+		if ($this->raphael_enabled)
+		{
+			// The only reason we include prototype is to keep the div element naming convention consistent
+			//Requirements::js('media/js/protochart/prototype.js');
+			Requirements::js('media/js/raphael.js');
+			Requirements::customJS('var impact_json = '.$this->impact_json .';','impact_json');
+			Requirements::js('media/js/raphael-ushahidi-impact.js');
 		}
 
 		if ($this->validator_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/jquery.validate.min");
+			Requirements::js("media/js/jquery.validate.min.js");
 		}
 
 		if ($this->photoslider_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/picbox", TRUE);
+			Requirements::css("media/css/picbox/picbox.css");
+			Requirements::js("media/js/picbox.js");
 		}
 
 		if ($this->colorpicker_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/colorpicker");
+			Requirements::css("media/css/colorpicker.css");
+			Requirements::js("media/js/colorpicker.js");
 		}
 
-		$core_js .= html::script($this->js_url."media/js/global");
-
+		// Load jwysiwyg
 		if ($this->editor_enabled)
 		{
-			$core_js .= html::script($this->js_url."media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js");
+			Requirements::css('media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.css');
+			if (Kohana::config("cdn.cdn_ignore_jwysiwyg") == TRUE)
+			{
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js'); // not sure what the hell to do about this
+			}
+			else
+			{
+				Requirements::js('media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js');
+			}
+		}
+	
+		// Table Row Sort
+		if ($this->tablerowsort_enabled)
+		{
+			Requirements::js('media/js/jquery.tablednd_0_5.js');
+		}
+	
+		// JSON2 for IE+
+		if ($this->json2_enabled)
+		{
+			Requirements::js('media/js/json2.js');
 		}
 		
-		// Javascript files from plugins
-		$plugin_js = plugin::render('javascript');
-
-		// Javascript files from themes
-		foreach (Kohana::config("settings.site_style_js") as $theme_js)
+		if ($this->datepicker_enabled)
 		{
-			$core_js .= html::script($theme_js,"",TRUE);
+			Requirements::customJS("
+				Date.dayNames = [
+				    '". Kohana::lang('datetime.sunday.full') ."',
+				    '". Kohana::lang('datetime.monday.full') ."',
+				    '". Kohana::lang('datetime.tuesday.full') ."',
+				    '". Kohana::lang('datetime.wednesday.full') ."',
+				    '". Kohana::lang('datetime.thursday.full') ."',
+				    '". Kohana::lang('datetime.friday.full') ."',
+				    '". Kohana::lang('datetime.saturday.full') ."'
+				];
+				Date.abbrDayNames = [
+				    '". Kohana::lang('datetime.sunday.abbv') ."',
+				    '". Kohana::lang('datetime.monday.abbv') ."',
+				    '". Kohana::lang('datetime.tuesday.abbv') ."',
+				    '". Kohana::lang('datetime.wednesday.abbv') ."',
+				    '". Kohana::lang('datetime.thursday.abbv') ."',
+				    '". Kohana::lang('datetime.friday.abbv') ."',
+				    '". Kohana::lang('datetime.saturday.abbv') ."'
+				];
+				Date.monthNames = [
+				    '". Kohana::lang('datetime.january.full') ."',
+				    '". Kohana::lang('datetime.february.full') ."',
+				    '". Kohana::lang('datetime.march.full') ."',
+				    '". Kohana::lang('datetime.april.full') ."',
+				    '". Kohana::lang('datetime.may.full') ."',
+				    '". Kohana::lang('datetime.june.full') ."',
+				    '". Kohana::lang('datetime.july.full') ."',
+				    '". Kohana::lang('datetime.august.full') ."',
+				    '". Kohana::lang('datetime.september.full') ."',
+				    '". Kohana::lang('datetime.october.full') ."',
+				    '". Kohana::lang('datetime.november.full') ."',
+				    '". Kohana::lang('datetime.december.full') ."'
+				];
+				Date.abbrMonthNames = [
+				    '". Kohana::lang('datetime.january.abbv') ."',
+				    '". Kohana::lang('datetime.february.abbv') ."',
+				    '". Kohana::lang('datetime.march.abbv') ."',
+				    '". Kohana::lang('datetime.april.abbv') ."',
+				    '". Kohana::lang('datetime.may.abbv') ."',
+				    '". Kohana::lang('datetime.june.abbv') ."',
+				    '". Kohana::lang('datetime.july.abbv') ."',
+				    '". Kohana::lang('datetime.august.abbv') ."',
+				    '". Kohana::lang('datetime.september.abbv') ."',
+				    '". Kohana::lang('datetime.october.abbv') ."',
+				    '". Kohana::lang('datetime.november.abbv') ."',
+				    '". Kohana::lang('datetime.december.abbv') ."'
+				];
+				Date.firstDayOfWeek = 1;
+				Date.format = 'mm/dd/yyyy';
+			",'locale-dates');
+	
+			Requirements::js('media/js/jquery.datePicker.js');
+			Requirements::customHeadTags(
+				'<!--[if IE]>'.html::script(url::file_loc('js').'media/js/jquery.bgiframe.min', TRUE).'<![endif]-->','jquery.bgiframe.min');
 		}
-
+		
+		// JS base combines
+		$base_js = array(
+			'media/js/jquery.js',
+			'media/js/jquery.ui.min.js',
+			'media/js/jquery.pngFix.pack.js',
+			'media/js/jquery.timeago.js',
+			'media/js/global.js',
+			//'media/js/OpenLayers.js',
+			//'media/js/ushahidi.js',
+			'media/js/jquery.treeview.js',
+			'media/js/selectToUISlider.jQuery.js',
+			'media/js/jquery.validate.min.js',
+			'media/js/colorpicker.js',
+		);
+		if ($this->timeline_enabled)
+		{
+			$base_js[] = 'media/js/jquery.jqplot.min.js';
+			$base_js[] = 'media/js/jqplot.dateAxisRenderer.min.js';
+		}
+		Requirements::combine_files('0_base.js', $base_js);
+		
+		// CSS base combines
+		$base_css = array(
+			'media/css/jquery-ui-themeroller.css',
+			'media/css/global.css',
+			'media/css/openlayers.css',
+			'media/css/jquery.treeview.css',
+			'media/css/colorpicker.css',
+		);
+		if ($this->timeline_enabled)
+		{
+			$base_css[] = 'media/css/jquery.jqplot.min.css';
+		}
+		Requirements::combine_files('0_base.css', $base_css);
+		
+		// JS admin combies
+		Requirements::combine_files('1_admin.js', array(
+			'media/js/jquery.form.js',
+			'media/js/jquery.base64.js',
+			'media/js/admin.js',
+			'media/js/jquery.hovertip-1.0.js',
+		));
+		
+		// CSS admin combines
+		Requirements::combine_files('1_admin.css', array(
+			'media/css/jquery.hovertip-1.0.css',
+			'media/css/admin.css'
+		));
+		
+		Event::run('ushahidi_action.themes_add_requirements_pre_theme', $this);
+		
+		if ($this->admin)
+		{
+			$this->admin_requirements();
+		}
+		
+		if ($this->frontend)
+		{
+			$this->frontend_requirements();
+		}
+		
 		// Inline Javascript
-		$insert_js = trim($this->js);
-		$inline_js = <<< INLINEJS
-<script type="text/javascript">
-//<![CDATA[
-\$(function() { $(document).pngFix(); });
-
-{$insert_js}
-//]]>
-</script>
-INLINEJS;
-
-		// Filter::header_js - Modify Header Javascript
-		Event::run('ushahidi_filter.header_js', $inline_js);
-
-		return $core_js.$plugin_js.$inline_js;
+		if (!empty($this->js))
+		{
+			//@todo add deprecated warning
+			Requirements::customJS($this->js,'pagejs');
+		}
+		
+		Event::run('ushahidi_action.themes_add_requirements', $this);
 	}
 
-	/**
-	 * RSS/Atom
-	 */
-	private function _header_feeds()
+	public function admin_requirements()
 	{
-		$feeds = "";
+		Requirements::js('media/js/jquery.form.js');
+		Requirements::js('media/js/jquery.validate.min.js');
+		Requirements::js('media/js/jquery.base64.js');
+		Requirements::js('media/js/admin.js');
+		Requirements::css('media/css/admin.css');
+		Requirements::ieCSS("lt IE 7", 'media/css/ie6.css');
+	}
+	
+	public function frontend_requirements()
+	{
+		// Add RSS feed if enabled
 		if (Kohana::config("settings.allow_feed"))
 		{
-			$feeds .= "<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".url::site()."feed/\" title=\"RSS2\" />";
+			Requirements::customHeadTags("<link rel=\"alternate\" type=\"application/rss+xml\" href=\"".url::site('feed')."\" title=\"RSS2\" />",'rss-feed');
 		}
-
-		return $feeds;
+		
+		// Theme CSS
+		foreach(self::$theme_css as $css)
+		{
+			Requirements::css($css);
+		}
+		
+		Requirements::combine_files("theme_".Kohana::config("settings.site_style").".css", self::$theme_css);
+		
+		// Theme JS
+		foreach(self::$theme_js as $js)
+		{
+			Requirements::js($js);
+		}
+		
+		Requirements::combine_files("theme_".Kohana::config("settings.site_style").".js", self::$theme_js);
+		
+		Requirements::ieThemedCSS("lte IE 7", "iehacks.css");
+		Requirements::ieThemedCSS("IE 7", "ie7hacks.css");
+		Requirements::ieThemedCSS("IE 6", "ie6hacks.css");
 	}
 
 	/**
@@ -245,6 +393,11 @@ INLINEJS;
 				$this->ushahidi_stats_js()."\n".
 				$this->scheduler_js();
 		
+		if (Kohana::config('requirements.write_js_to_body'))
+		{
+			$content .= Requirements::render('js');
+		}
+
 		// Filter::footer_block - Modify Footer Block
 		Event::run('ushahidi_filter.footer_block', $content);
 
@@ -403,5 +556,142 @@ SCHEDULER;
 			return Stats_Model::get_javascript();
 		}
 		return '';
+	}
+	
+	/* Static functions for theme loading */
+	
+	private static $themes = array();
+	private static $loaded_themes = array();
+	private static $theme_js = array();
+	private static $theme_css = array();
+	
+
+	/**
+	 * Loads ushahidi themes
+	 */
+	public static function register_theme()
+	{
+		self::$themes = addon::get_addons('theme', TRUE);
+		
+		$theme = Kohana::config("settings.site_style");
+		$theme = empty($theme) ? 'default' : $theme;
+		self::load_theme($theme);
+}
+	
+	/**
+	 * Load theme
+	 * Loads theme into modules, includes its hooks and recursively loads parent themes
+	 * @param string $theme theme name/directory
+	 **/
+	public static function load_theme($theme)
+	{
+		// Record loading this theme, so we can avoid dependency loops
+		self::$loaded_themes[] = $theme;
+		
+		// Get meta data to check the base theme
+		$meta = self::$themes[$theme];
+		
+		// If base theme is set, the base theme exists, and we haven't loaded it yet
+		// Load the base theme
+		if (! empty($meta['Base Theme'])
+				AND isset(self::$themes[$meta['Base Theme']])
+				AND ! in_array($meta['Base Theme'], self::$loaded_themes)
+			)
+		{
+			self::load_theme($meta['Base Theme']);
+		}
+		
+		// Add theme to modules
+		$theme_base = THEMEPATH . $theme;
+		Kohana::config_set('core.modules', array_merge(array($theme_base), Kohana::config("core.modules")));
+
+		// We need to manually include the hook file for each theme
+		if (file_exists($theme_base.'/hooks'))
+		{
+			$d = dir($theme_base.'/hooks'); // Load all the hooks
+			while (($entry = $d->read()) !== FALSE)
+			{
+				if ($entry[0] != '.')
+				{
+					include $theme_base.'/hooks/'.$entry;
+				}
+			}
+		}
+		
+		self::load_theme_css($theme);
+		self::load_theme_js($theme);
+	}
+
+	/*
+	 * Find theme css and store for inclusion later
+	 */
+	private static function load_theme_css($theme)
+	{
+		$meta = self::$themes[$theme];
+		// Add special cases for old themes
+		if (empty($meta['CSS']))
+		{
+			$meta['CSS'] = array();
+			$meta['CSS'][] = 'base';
+			$meta['CSS'][] = 'style';
+			$meta['CSS'][] = '_default';
+			$meta['CSS'][] = $theme;
+		}
+		else
+		{
+			$meta['CSS'] = explode(',', $meta['CSS']);
+			$meta['CSS'] = array_map('trim',$meta['CSS']);
+		}
+		
+		// Add specified theme stylesheets
+		foreach ($meta['CSS'] as $css)
+		{
+			if (file_exists(THEMEPATH."$theme/css/$css.css"))
+				self::$theme_css[$css] = "themes/$theme/css/$css.css";
+		}
+		
+		// Check for overrides of already added stylesheets
+		foreach (self::$theme_css as $css => $path)
+		{
+			if (file_exists(THEMEPATH."$theme/css/$css.css"))
+				self::$theme_css[$css] = "themes/$theme/css/$css.css";
+		}
+	}
+
+	/*
+	 * Find theme css and store for inclusion later
+	 */
+	private static function load_theme_js($theme)
+	{
+		$meta = self::$themes[$theme];
+		// Add special cases for old themes
+		if (empty($meta['JS']))
+		{
+			$meta['JS'] = array();
+		}
+		else
+		{
+			$meta['JS'] = explode(',', $meta['JS']);
+			$meta['JS'] = array_map('trim',$meta['JS']);
+		}
+		
+		// Add specified theme js
+		foreach ($meta['JS'] as $js)
+		{
+			if (file_exists(THEMEPATH."$theme/js/$js.js"))
+				self::$theme_js[$js] = "themes/$theme/js/$js.js";
+		}
+		
+		// Check for overrides of already added js
+		foreach (self::$theme_css as $js => $path)
+		{
+			if (file_exists(THEMEPATH."$theme/js/$js.js"))
+				self::$theme_js[$js] = "themes/$theme/js/$js.js";
+		}
+	}
+	
+	public static function loaded_themes()
+	{
+		return self::$loaded_themes;
 	}
 }

@@ -99,7 +99,7 @@ class Externalapps_Controller extends Admin_Controller {
 		$this->template->content->form_saved = $form_saved;
 		
 		// Javascript Header
-		$this->template->js = new View('admin/settings/externalapps/externalapps_js');
+		$this->themes->js = new View('admin/settings/externalapps/externalapps_js');
 	}
 	
 }

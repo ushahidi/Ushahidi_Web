@@ -11,7 +11,7 @@
 		<div id="underfooter"></div>
 
 		<!-- footer content -->
-		<div class="rapidxwpr floatholder">
+		<div class="wrapper floatholder">
 
 			<!-- footer credits -->
 			<div class="footer-credits">

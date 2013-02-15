@@ -41,8 +41,8 @@ class View extends View_Core
 	{
 		// Run view_pre_render filter to allow plugins/themes to add extra data to a view
 		Event::run('ushahidi_filter.view_pre_render', $this->kohana_local_data);
-		// View specific hook pre render hook ie. view_pre_render-reports_main
-		Event::run('ushahidi_filter.view_pre_render-'.str_replace('/','_',$this->name), $this->kohana_local_data);
+		// View specific hook pre render hook ie. ushahidi_filter.view_pre_render.reports_main
+		Event::run('ushahidi_filter.view_pre_render.'.str_replace('/','_',$this->name), $this->kohana_local_data);
 		
 		return parent::render($print, $renderer);
 	}

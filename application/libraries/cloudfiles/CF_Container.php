@@ -910,7 +910,7 @@ class CF_Container
      */
     function create_paths($path_name)
     {
-        if ($path_name[0] == '/') {
+        if (isset($path_name[0]) && $path_name[0] == '/') {
             $path_name = mb_substr($path_name, 0, 1);
         }
         $elements = explode('/', $path_name, -1);

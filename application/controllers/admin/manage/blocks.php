@@ -111,8 +111,8 @@ class Blocks_Controller extends Admin_Controller
 		$this->template->content->sorted_blocks = $sorted_blocks;
 		
 		// Javascript Header
-		$this->template->tablerowsort_enabled = TRUE;
-		$this->template->js = new View('admin/manage/blocks/blocks_js');
+		$this->themes->tablerowsort_enabled = TRUE;
+		$this->themes->js = new View('admin/manage/blocks/blocks_js');
 	}
 	
 	public function sort()

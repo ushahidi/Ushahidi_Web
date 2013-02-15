@@ -77,10 +77,5 @@ class Feeds_Controller extends Main_Controller {
 		{
 			$this->template->content->pagination_stats = $pagination->total_items.' '.Kohana::lang('ui_admin.feeds');
 		}
-
-		// Rebuild Header Block
-		$this->template->header->header_block = $this->themes->header_block();
-		$this->template->footer->footer_block = $this->themes->footer_block();
-
 	}
 }

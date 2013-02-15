@@ -53,7 +53,7 @@
 
 
 	<!-- wrapper -->
-	<div class="rapidxwpr floatholder">
+	<div class="wrapper floatholder">
 
 		<!-- header -->
 		<div id="header">

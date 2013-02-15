@@ -300,12 +300,12 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->order_field = $order_field;
 		$this->template->content->sort = $sort;
 		
-		$this->template->map_enabled = TRUE;
-		$this->template->json2_enabled = TRUE;
-		$this->template->treeview_enabled = TRUE;
+		$this->themes->map_enabled = TRUE;
+		$this->themes->json2_enabled = TRUE;
+		$this->themes->treeview_enabled = TRUE;
 
 		// Javascript Header
-		$this->template->js = new View('admin/reports/reports_js');
+		$this->themes->js = new View('admin/reports/reports_js');
 	}
 
 	/**
@@ -804,29 +804,29 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->next_url = $next_url;
 
 		// Javascript Header
-		$this->template->map_enabled = TRUE;
-		$this->template->colorpicker_enabled = TRUE;
-		$this->template->treeview_enabled = TRUE;
-		$this->template->json2_enabled = TRUE;
+		$this->themes->map_enabled = TRUE;
+		$this->themes->colorpicker_enabled = TRUE;
+		$this->themes->treeview_enabled = TRUE;
+		$this->themes->json2_enabled = TRUE;
 
-		$this->template->js = new View('reports/submit_edit_js');
-		$this->template->js->edit_mode = TRUE;
-		$this->template->js->default_map = Kohana::config('settings.default_map');
-		$this->template->js->default_zoom = Kohana::config('settings.default_zoom');
+		$this->themes->js = new View('reports/submit_edit_js');
+		$this->themes->js->edit_mode = TRUE;
+		$this->themes->js->default_map = Kohana::config('settings.default_map');
+		$this->themes->js->default_zoom = Kohana::config('settings.default_zoom');
 
 		if ( ! $form['latitude'] OR !$form['latitude'])
 		{
-			$this->template->js->latitude = Kohana::config('settings.default_lat');
-			$this->template->js->longitude = Kohana::config('settings.default_lon');
+			$this->themes->js->latitude = Kohana::config('settings.default_lat');
+			$this->themes->js->longitude = Kohana::config('settings.default_lon');
 		}
 		else
 		{
-			$this->template->js->latitude = $form['latitude'];
-			$this->template->js->longitude = $form['longitude'];
+			$this->themes->js->latitude = $form['latitude'];
+			$this->themes->js->longitude = $form['longitude'];
 		}
 
-		$this->template->js->incident_zoom = $form['incident_zoom'];
-		$this->template->js->geometries = $form['geometry'];
+		$this->themes->js->incident_zoom = $form['incident_zoom'];
+		$this->themes->js->geometries = $form['geometry'];
 
 		// Inline Javascript
 		$this->template->content->date_picker_js = $this->_date_picker_js();
@@ -834,8 +834,8 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->new_category_toggle_js = $this->_new_category_toggle_js();
 
 		// Pack Javascript
-		$myPacker = new javascriptpacker($this->template->js , 'Normal', FALSE, FALSE);
-		$this->template->js = $myPacker->pack();
+		$myPacker = new javascriptpacker($this->themes->js , 'Normal', FALSE, FALSE);
+		$this->themes->js = $myPacker->pack();
 	}
 
 
@@ -862,7 +862,7 @@ class Reports_Controller extends Admin_Controller {
 			'to_date'	   => '',
 			'form_auth_token'=> ''
 		);
-		
+
 		// Default to all selected
 		$form['data_active'] = array(0,1);
 		$form['data_verified'] = array(0,1);
@@ -963,31 +963,31 @@ class Reports_Controller extends Admin_Controller {
 
 				// Retrieve reports
 				$incidents = ORM::factory('incident')->where($filter)->orderby('incident_dateadd', 'desc')->find_all();
-				
+
 				// Retrieve categories
 				$categories = Category_Model::get_categories(FALSE, FALSE, FALSE);
-				
+
 				// Retrieve Forms
 				$forms = ORM::Factory('form')->find_all();
-				
+
 				// Retrieve Custom forms
 				$custom_forms = customforms::get_custom_form_fields();
 
 				// If CSV format is selected
 				if($post->format == 'csv')
-				{
+					{
 					$report_csv = download::download_csv($post, $incidents, $custom_forms);
+
+				// Output to browser
+				header("Content-type: text/x-csv");
+				header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+				header("Content-Disposition: attachment; filename=" . time() . ".csv");
+				header("Content-Length: " . strlen($report_csv));
+				echo $report_csv;
+				exit;
 					
-					// Output to browser
-					header("Content-type: text/x-csv");
-					header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-					header("Content-Disposition: attachment; filename=" . time() . ".csv");
-					header("Content-Length: " . strlen($report_csv));
-					echo $report_csv;
-					exit;
-					
-				}
-				
+			}
+
 				// If XML format is selected
 				if($post->format == 'xml')
 				{ 
@@ -1017,8 +1017,8 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->form_error = $form_error;
 
 		// Javascript Header
-		$this->template->js = new View('admin/reports/download_js');
-		$this->template->js->calendar_img = url::base() . "media/img/icon-calendar.gif";
+		$this->themes->js = new View('admin/reports/download_js');
+		$this->themes->js->calendar_img = url::base() . "media/img/icon-calendar.gif";
 	}
 
 	public function upload()
@@ -1051,14 +1051,14 @@ class Reports_Controller extends Admin_Controller {
 					->add_rules('uploadfile', 'upload::valid', 'upload::required', 'upload::type[xml,csv]', 'upload::size[3M]');
 					
 			if($post->validate(TRUE))
-			{
+					{
 				// Establish if file to be uploaded is .xml or .csv format
 				$fileinfo = pathinfo($post['uploadfile']['name']);
 				$extension = $fileinfo['extension'];
 				$allowable_extensions = array ('csv', 'xml');
-				
+
 				if (file_exists($_FILES['uploadfile']['tmp_name']))
-				{
+						{
 					// If file type uploaded is CSV or XML
 					if (in_array($extension, $allowable_extensions))
 					{
@@ -1076,7 +1076,7 @@ class Reports_Controller extends Admin_Controller {
 						else
 						{
 							$errors = $importer->errors;
-						}	
+						}
 					}
 					
 					else
@@ -1097,11 +1097,11 @@ class Reports_Controller extends Admin_Controller {
 				foreach($post->errors('reports') as $error)
 				{
 					$errors[] = $error;
-				}
-				
+			}
+
 			}
 			
-			if ( count($errors))
+			if (count($errors))
 			{
 				$this->template->content = new View('admin/reports/upload');
 				$this->template->content->title = Kohana::lang('ui_admin.upload_reports');
