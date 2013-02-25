@@ -413,16 +413,18 @@ class Manage_Controller extends Admin_Controller
 			}
 		}
 	}
-	
+
 	/**
 	 * Manage Public Listing for External Applications
 	 */
 	public function publiclisting()
 	{
 		$this->template->content = new View('admin/manage/publiclisting');
-		
+
 		$this->template->content->encoded_stat_id = base64_encode(Settings_Model::get_setting('stat_id'));
 		$this->template->content->encoded_stat_key = base64_encode(Settings_Model::get_setting('stat_key'));
+		$this->template->content->lat = Settings_Model::get_setting('default_lat');
+		$this->template->content->lon = Settings_Model::get_setting('default_lon');
 	}
 
 
