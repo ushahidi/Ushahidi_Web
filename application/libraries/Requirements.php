@@ -1068,7 +1068,9 @@ class Requirements_Backend {
 				
 				if($type == 'css') {
 					// Rewrite urls in css to be relative to the docroot
-					$fileContent = Minify_CSS_UriRewriter::rewrite($fileContent, pathinfo($base . $file, PATHINFO_DIRNAME), DOCROOT);
+					// Docroot param needs to be actual server docroot, not root of ushahidi site.
+					// Using $_SERVER['DOCUMENT_ROOT']. Should possibly use DOCROOT, but remove Kohana::config('core.site_domain', TRUE);
+					$fileContent = Minify_CSS_UriRewriter::rewrite($fileContent, pathinfo($base . $file, PATHINFO_DIRNAME), $_SERVER['DOCUMENT_ROOT']);
 					// compress css (if enabled)
 					if ($this->combine_css_with_cssmin)
 					{
