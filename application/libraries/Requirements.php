@@ -1072,7 +1072,7 @@ class Requirements_Backend {
 					// compress css (if enabled)
 					if ($this->combine_css_with_cssmin)
 					{
-						$fileContent = CSSMin::go($fileContent);
+						$fileContent = CSSmin::go($fileContent);
 					}
 				}
 				
