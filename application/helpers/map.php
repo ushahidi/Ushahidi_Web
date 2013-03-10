@@ -396,8 +396,7 @@ class map_Core {
 		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
-			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
-				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
+			'attribution' => '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
 			'url' => 'http://tile.openstreetmap.org/${z}/${x}/${y}.png',
 			'type' => '',
 			'transitionEffect' => 'resize',
@@ -414,8 +413,7 @@ class map_Core {
 		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
-			'attribution' => '&copy;<a href="@ccbysa">CCBYSA</a> 2010
-				<a href="@openstreetmap">OpenStreetMap.org</a> contributors',
+			'attribution' => '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
 			'url' => 'http://tile.openstreetmap.org/cycle/${z}/${x}/${y}.png',
 			'type' => '',
 			'transitionEffect' => 'resize',
@@ -432,7 +430,7 @@ class map_Core {
 		$layer->api_url = Kohana::config('core.site_protocol').'://www.openstreetmap.org/openlayers/OpenStreetMap.js';
 		$layer->data = array(
 			'baselayer' => TRUE,
-			'attribution' => '©CCBYSA 2010 OpenStreetMap.org contributors',
+			'attribution' => '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>',
 			'url' => 'http://tile.openstreetmap.org/transport/${z}/${x}/${y}.png',
 			'type' => '',
 			'transitionEffect' => 'resize',
