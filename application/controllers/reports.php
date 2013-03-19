@@ -617,14 +617,7 @@ class Reports_Controller extends Main_Controller {
 			$this->template->content->incident_category = $incident->incident_category;
 
 			// Incident rating
-			$rating = ORM::factory('rating')
-					->join('incident','incident.id','rating.incident_id','INNER')
-					->where('rating.incident_id',$incident->id)
-					->find();
-					
-			$this->template->content->incident_rating = ($rating->rating == '')
-				? 0
-				: $rating->rating;
+			$this->template->content->incident_rating = $this->_get_rating($incident->id, 'original');
 
 			// Retrieve Media
 			$incident_news = array();
