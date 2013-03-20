@@ -62,10 +62,14 @@ class Geocoder_Core {
 				$request_url = $feed_url;
 			}
 
-			$georss = file_get_contents($request_url);
+			if ( ! ($georss = @file_get_contents($request_url)))
+			{
+				// If the request failed, something may be wrong with the GEOCODER_GEONAMES service
+				return false;
+			}
 			//$georss = utf8_encode($georss);
 
-			return $georss;
+			return trim($georss);
 
 		}
 		else
