@@ -111,41 +111,6 @@ class Reports_Controller extends Members_Controller {
 							$incident_id = $update->id;
 							$location_id = $update->location_id;
 							$update->delete();
-
-							// Delete Location
-							ORM::factory('location')->where('id',$location_id)->delete_all();
-
-							// Delete Categories
-							ORM::factory('incident_category')->where('incident_id',$incident_id)->delete_all();
-
-							// Delete Translations
-							ORM::factory('incident_lang')->where('incident_id',$incident_id)->delete_all();
-
-							// Delete Photos From Directory
-							foreach (ORM::factory('media')->where('incident_id',$incident_id)->where('media_type', 1) as $photo) 
-							{
-								deletePhoto($photo->id);
-							}
-
-							// Delete Media
-							ORM::factory('media')->where('incident_id',$incident_id)->delete_all();
-
-							// Delete Sender
-							ORM::factory('incident_person')->where('incident_id',$incident_id)->delete_all();
-
-							// Delete relationship to SMS message
-							$updatemessage = ORM::factory('message')->where('incident_id',$incident_id)->find();
-							if ($updatemessage->loaded)
-							{
-								$updatemessage->incident_id = 0;
-								$updatemessage->save();
-							}
-
-							// Delete Comments
-							ORM::factory('comment')->where('incident_id',$incident_id)->delete_all();
-
-							// Action::report_delete - Deleted a Report
-							Event::run('ushahidi_action.report_delete', $update);
 						}
 					}
 					$form_action = utf8::strtoupper(Kohana::lang('ui_admin.deleted'));
