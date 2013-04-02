@@ -88,11 +88,6 @@ final class Api_Service {
 			? $_POST
 			: $_GET;
 
-		// Reset the session - API should be stateless
-		$_SESSION = array();
-		// Especially reset auth
-		Session::instance()->set(Kohana::config('auth.session_key'), null);
-
 		// Load the API configuration file
 		Kohana::config_load('api');
 
@@ -118,6 +113,9 @@ final class Api_Service {
 
 		// Instantiate the database
 		$this->db = new Database();
+		
+		// Get auth instance
+		$this->auth = Auth::instance();
 	}
 
 	/**
@@ -212,21 +210,21 @@ final class Api_Service {
 	 * @return mixed user_id, FALSE if authentication fails
 	 */
 	public function _login($admin = FALSE, $member = FALSE)
-    {
-		$auth = Auth::instance();
-
+	{
+		// Actual HTTP Auth login is now handled by base controller and Auth->http_auth_login()
+		
 		// Is user previously authenticated?
-		if ($auth->logged_in())
+		if ($this->auth->logged_in())
 		{
 			// Check if admin privileges are required
-			if ($admin == FALSE OR $auth->has_permission('admin_ui'))
+			if ($admin == FALSE OR $this->auth->has_permission('admin_ui'))
 			{
-				return $auth->get_user()->id;
+				return $this->auth->get_user()->id;
 			}
 			// Check if member perms required, assume admins also have member perms
-			else if ($member == FALSE OR $auth->has_permission('member_ui') OR $auth->has_permission('admin_ui'))
+			else if ($member == FALSE OR $this->auth->has_permission('member_ui') OR $this->auth->has_permission('admin_ui'))
 			{
-				return $auth->get_user()->id;
+				return $this->auth->get_user()->id;
 			}
 			else
 			{
@@ -235,70 +233,15 @@ final class Api_Service {
 		}
 		else
 		{
-			//Get username and password
-			if (isset($_SERVER['PHP_AUTH_USER']) &&
-				isset($_SERVER['PHP_AUTH_PW']))
+			// Get username and password
+			if ($admin OR $member)
 			{
-				$username = filter_var($_SERVER['PHP_AUTH_USER'],
-				FILTER_SANITIZE_STRING,
-				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
-
-				$password = filter_var($_SERVER['PHP_AUTH_PW'],
-				FILTER_SANITIZE_STRING,
-				FILTER_FLAG_ENCODE_HIGH|FILTER_FLAG_ENCODE_LOW);
-
-				$email = FALSE;
-				if(kohana::config('riverid.enable') == TRUE && filter_var($username, FILTER_VALIDATE_EMAIL))
-				{
-					$email = $username;
-				}
-
-				try
-				{
-					if ($auth->login($username, $password, FALSE, $email))
-					{
-						// Check if admin privileges are required
-						if ($admin == FALSE OR $auth->has_permission('admin_ui'))
-						{
-							return $auth->get_user()->id;
-						}
-						else
-						{
-							return FALSE;
-						}
-					}
-					else
-					{
-						$this->_prompt_login();
-						return FALSE;
-					}
-				}
-				catch (Exception $e)
-				{
-					$this->_prompt_login();
-					return FALSE;
-				}
-
+				$this->auth->http_auth_prompt_login();
 			}
 
-			//prompt user to login
-			$this->_prompt_login();
 			return FALSE;
 		}
 	}
-
-    /**
-     * Prompts user to login.
-     *
-     * @param int user_id - The currently logged in user id to be passed as the
-     *                      realm value.
-     * @return void
-     */
-    private function _prompt_login($user_id = 0)
-    {
-        header('WWW-Authenticate: Basic realm="'.$user_id.'"');
-        header('HTTP/1.0 401 Unauthorized');
-    }
 
 	/**
 	 * Routes the API task requests to their respective API libraries
@@ -535,7 +478,11 @@ final class Api_Service {
 					"code" => "011",
 					"message" => Kohana::lang('ui_admin.unknown_failure')
 				);
-
+			case 012:
+				return array(
+					"code" => "012",
+					"message" => Kohana::lang('ui_admin.unknown_id')
+				);
 			default:
 				return array(
 					"code" => "999",
