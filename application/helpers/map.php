@@ -282,7 +282,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Satellite';
 		$layer->description = 'Google Maps Satellite Imagery.';
-		$layer->api_url = Kohana::config('core.site_protocol').'://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.SATELLITE',
@@ -297,7 +297,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Hybrid';
 		$layer->description = 'Google Maps with roads and terrain.';
-		$layer->api_url = Kohana::config('core.site_protocol').'://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.HYBRID',
@@ -312,7 +312,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Normal';
 		$layer->description = 'Standard Google Maps Roads';
-		$layer->api_url = Kohana::config('core.site_protocol').'://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => '',
@@ -327,7 +327,7 @@ class map_Core {
 		$layer->openlayers = "Google";
 		$layer->title = 'Google Maps Physical';
 		$layer->description = 'Google Maps Hillshades';
-		$layer->api_url = Kohana::config('core.site_protocol').'://maps.google.com/maps/api/js?v=3.7&amp;sensor=false';
+		$layer->api_url = 'https://maps.google.com/maps/api/js?v=3.7&amp;sensor=false&amp;language='.Kohana::config('locale.language.0');
 		$layer->data = array(
 			'baselayer' => TRUE,
 			'type' => 'google.maps.MapTypeId.TERRAIN',
@@ -502,7 +502,7 @@ class map_Core {
 			{
 				$country_name = $all_components[0]['formatted_address'];
 			}
-			
+
 			// Grab country_id
 			$country = Country_Model::get_country_by_name($country_name);
 			$country_id = ( ! empty($country) AND $country->loaded)? $country->id : 0;
