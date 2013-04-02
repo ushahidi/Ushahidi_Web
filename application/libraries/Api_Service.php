@@ -88,11 +88,6 @@ final class Api_Service {
 			? $_POST
 			: $_GET;
 
-		// Reset the session - API should be stateless
-		$_SESSION = array();
-		// Especially reset auth
-		Session::instance()->set(Kohana::config('auth.session_key'), null);
-
 		// Load the API configuration file
 		Kohana::config_load('api');
 
