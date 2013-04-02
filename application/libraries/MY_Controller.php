@@ -41,9 +41,6 @@ abstract class Controller extends Controller_Core {
 		
 		$this->auth = Auth::instance();
 
-		// Get session information
-		$this->user = Auth::instance()->get_user();
-
 		// Are we logged in? if not, do we have an auto-login cookie?
 		if (! $this->auth->logged_in()) {
 			// Try to login with 'remember me' token
@@ -53,7 +50,10 @@ abstract class Controller extends Controller_Core {
 				$this->auth->http_auth_login();
 			}
 		}
-		
+
+		// Get session information
+		$this->user = Auth::instance()->get_user();
+
 		// Check private deployment access
 		$controller_whitelist = array(
 			'login',
