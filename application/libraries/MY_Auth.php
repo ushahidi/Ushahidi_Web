@@ -85,10 +85,12 @@ class Auth extends Auth_Core {
 	 */
 	public function http_auth_prompt_login()
 	{
-		header('WWW-Authenticate: Basic realm="Ushahidi API"');
 		header('HTTP/1.0 401 Unauthorized');
-		
-		
+		// Avoid popping login box for ajax requests
+		if (!request::is_ajax())
+		{
+			header('WWW-Authenticate: Basic realm="Ushahidi API"');
+		}
 	}
 
 }
