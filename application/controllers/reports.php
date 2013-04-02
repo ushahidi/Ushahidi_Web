@@ -763,11 +763,11 @@ class Reports_Controller extends Main_Controller {
 					// Has this User or IP Address rated this post before?
 					if ($this->user)
 					{
-						$filter = "user_id = ".$this->user->id;
+						$filter = array("user_id" => $this->user->id);
 					}
 					else
 					{
-						$filter = "rating_ip = '".$_SERVER['REMOTE_ADDR']."' ";
+						$filter = array("rating_ip" => $_SERVER['REMOTE_ADDR']);
 					}
 
 					if ($type == 'original')
