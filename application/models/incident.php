@@ -526,6 +526,11 @@ class Incident_Model extends ORM {
 			->where('incident_id', $this->id)
 			->delete_all();
 
+		// Delete form responses
+		ORM::factory('form_response')
+			->where('incident_id', $this->id)
+			->delete_all();
+
 		$incident_id = $this->id;
 
 		// Action::report_delete - Deleted a Report
