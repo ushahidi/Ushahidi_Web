@@ -566,22 +566,6 @@ class Reports_Controller extends Members_Controller {
 		$myPacker = new javascriptpacker($this->themes->js , 'Normal', FALSE, FALSE);
 		$this->themes->js = $myPacker->pack();
 	}
-	
-
-	/**
-	* Delete Photo
-	* @param int $id The unique id of the photo to be deleted
-	*/
-	public function deletePhoto ($id)
-	{
-		$this->auto_render = FALSE;
-		$this->template = "";
-
-		if ($id)
-		{
-			Media_Model::delete_photo($id);
-		}
-	}
 
 	/* private functions */
 
