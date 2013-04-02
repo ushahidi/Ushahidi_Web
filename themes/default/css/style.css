@@ -1973,7 +1973,7 @@ a.btn-show { display:none; }
 .loading-reports h3 { padding: 10px 2px; }
 
 /* Filter content boxes */
-.f-category-box { height:258px; }
+.f-category-box { height:258px; overflow: auto; }
 .f-location-box .rb_location-radius { width: 259px; height: 280px; border: #999 1px solid; }
 .f-type-box {}
 .f-verification-box {}
