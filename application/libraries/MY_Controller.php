@@ -28,6 +28,12 @@ abstract class Controller extends Controller_Core {
 	 * @var object
 	 */
 	protected $auth;
+
+	/**
+	 * Reference to Database object 
+	 * @var object
+	 */
+	protected $db;
 	
 	public function __construct()
 	{
@@ -40,6 +46,8 @@ abstract class Controller extends Controller_Core {
 		}
 		
 		$this->auth = Auth::instance();
+		
+		$this->db = Database::instance();
 
 		// Get session information
 		$this->user = Auth::instance()->get_user();

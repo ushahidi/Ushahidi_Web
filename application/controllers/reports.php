@@ -904,37 +904,26 @@ class Reports_Controller extends Main_Controller {
 	 */
 	private function _get_rating($id = FALSE, $type = NULL)
 	{
-		if (!empty($id) AND ($type == 'original' OR $type == 'comment'))
-		{
-			if ($type == 'original')
-			{
-				$which_count = 'incident_id';
-			}
-			elseif ($type == 'comment')
-			{
-				$which_count = 'comment_id';
-			}
-			else
-			{
-				return 0;
-			}
-
-			$total_rating = 0;
-
-			// Get All Ratings and Sum them up
-			foreach (ORM::factory('rating')
-							->where($which_count,$id)
-							->find_all() as $rating)
-			{
-				$total_rating += $rating->rating;
-			}
-			
-			return $total_rating;
-		}
-		else
-		{
+		if (empty($id))
 			return 0;
+		
+		$total_rating = 0;
+		$result = FALSE;
+		
+		if ($type == 'original')
+		{
+			$result = $this->db->query('SELECT SUM(rating) as total_rating FROM rating WHERE incident_id = ?', $id);
 		}
+		elseif ($type == 'comment')
+		{
+			$result = $this->db->query('SELECT SUM(rating) as total_rating FROM rating WHERE comment_id = ?', $id);
+		}
+		
+		if ($result->count() == 0 OR $result->current()->total_rating == NULL) return 0;
+		
+		$total_rating = $result->current()->total_rating;
+		
+		return $total_rating;
 	}
 
 	/**
