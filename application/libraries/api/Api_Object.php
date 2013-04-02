@@ -24,7 +24,7 @@ abstract class Api_Object_Core {
 	 * Prefix for the database tables
 	 * @var string
 	 */
-	protected $table_preix;
+	protected $table_prefix;
 	
 	/**
 	 * Form validation error messages
