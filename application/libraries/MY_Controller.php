@@ -28,6 +28,12 @@ abstract class Controller extends Controller_Core {
 	 * @var object
 	 */
 	protected $auth;
+
+	/**
+	 * Reference to Database object 
+	 * @var object
+	 */
+	protected $db;
 	
 	public function __construct()
 	{
@@ -40,6 +46,8 @@ abstract class Controller extends Controller_Core {
 		}
 		
 		$this->auth = Auth::instance();
+		
+		$this->db = Database::instance();
 
 		// Are we logged in? if not, do we have an auto-login cookie?
 		if (! $this->auth->logged_in()) {
