@@ -185,7 +185,7 @@ class Imap_Core {
 			//   so if it doesn't return an encoding, lets assume it's arabic. (sucks)
 			if(mb_detect_encoding($body, 'auto', true) == '')
 			{
-				$body = iconv("windows-1256", "UTF-8", $body);
+				$body = iconv("KOI8-R", "UTF-8", $body); //for russian email
 			}
 
 			// Convert to valid UTF8
