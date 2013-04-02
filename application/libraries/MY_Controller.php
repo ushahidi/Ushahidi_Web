@@ -46,10 +46,12 @@ abstract class Controller extends Controller_Core {
 
 		// Are we logged in? if not, do we have an auto-login cookie?
 		if (! $this->auth->logged_in()) {
-			$this->auth->auto_login();
-
-			// Login user in via HTTP AUTH
-			$this->auth->http_auth_login();
+			// Try to login with 'remember me' token
+			if (! $this->auth->auto_login())
+			{
+				// Login user in via HTTP AUTH
+				$this->auth->http_auth_login();
+			}
 		}
 		
 		// Check private deployment access
