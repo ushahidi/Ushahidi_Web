@@ -38,6 +38,11 @@
 								<span style="float:left;"><?php echo url::base().'profile/user/'; ?></span>
 								<?php echo form::input('username', $user->username, ' class="text short2"'); ?>
 							</div>
+							
+							<div class="row">
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_password"); ?>"><?php echo Kohana::lang('ui_main.current_password'); ?></a> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
+								<?php print form::password('current_password', '', ' class="text"'); ?>
+							</div>
 
 							<div class="row" style="padding-top:10px;">
 								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_public"); ?>"><?php echo Kohana::lang('ui_main.public_profile');?>:</a></h4>
