@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 103
+-- version 104
 -- http://www.ushahidi.com
 
 
@@ -189,7 +189,8 @@ CREATE TABLE IF NOT EXISTS `category` (
   `category_visible` tinyint(4) NOT NULL DEFAULT '1',
   `category_trusted` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  KEY `category_visible` (`category_visible`)
+  KEY `category_visible` (`category_visible`),
+  KEY `parent_id` (`parent_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Holds information about categories defined for a deployment' AUTO_INCREMENT=6 ;
 
 --
@@ -788,7 +789,9 @@ CREATE TABLE IF NOT EXISTS `incident` (
   KEY `incident_active` (`incident_active`),
   KEY `incident_date` (`incident_date`),
   KEY `form_id` (`form_id`),
-  KEY `user_id` (`user_id`)
+  KEY `user_id` (`user_id`),
+  KEY `incident_mode` (`incident_mode`),
+  KEY `incident_verified` (`incident_verified`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores reports submitted' AUTO_INCREMENT=2 ;
 
 --
@@ -813,7 +816,9 @@ CREATE TABLE IF NOT EXISTS `incident_category` (
   `incident_id` bigint(20) unsigned NOT NULL DEFAULT '0',
   `category_id` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `incident_category_ids` (`incident_id`,`category_id`)
+  UNIQUE KEY `incident_category_ids` (`incident_id`,`category_id`),
+  KEY `incident_id` (`incident_id`),
+  KEY `category_id` (`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores submitted reports categories' AUTO_INCREMENT=2 ;
 
 --
@@ -922,7 +927,9 @@ CREATE TABLE IF NOT EXISTS `location` (
   `location_visible` tinyint(4) NOT NULL DEFAULT '1',
   `location_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `country_id` (`country_id`)
+  KEY `country_id` (`country_id`),
+  KEY `latitude` (`latitude`),
+  KEY `longitude` (`longitude`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores location information' AUTO_INCREMENT=2 ;
 
 --
@@ -1491,5 +1498,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '103' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '104' WHERE `key` = 'db_version';
 UPDATE `settings` SET `value` = '2.6.1' WHERE `key`= 'ushahidi_version';
