@@ -27,6 +27,19 @@ class Api_Controller extends Controller {
 		// Disables CSRF validation for API requests
 		Validation::$is_api_request = TRUE;
 
+		// Reset session for API requests - since they don't get CSRF checked
+		// AJAX requests are ok - they skip CSRF anyway.
+		if (! request::is_ajax())
+		{
+			// Reset the session - API should be stateless
+			$_SESSION = array();
+			// Especially reset auth
+			Session::instance()->set(Kohana::config('auth.session_key'), null);
+			
+			// Re-authenticate
+			$this->auth->http_auth_login();
+		}
+
 		// Instantiate the API service
 		$api_service = new Api_Service();
 

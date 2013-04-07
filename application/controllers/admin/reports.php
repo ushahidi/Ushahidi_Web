@@ -1345,22 +1345,6 @@ class Reports_Controller extends Admin_Controller {
 		Event::$data = $params;
 	}
 	
-
-	/**
-	* Delete Photo
-	* @param int $id The unique id of the photo to be deleted
-	*/
-	public function deletePhoto ($id)
-	{
-		$this->auto_render = FALSE;
-		$this->template = "";
-
-		if ($id)
-		{
-			Media_Model::delete_photo($id);
-		}
-	}
-	
 	private function _search_form()
 	{
 		$search_form = View::factory('admin/reports/search_form');

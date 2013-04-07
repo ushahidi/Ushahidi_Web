@@ -300,10 +300,10 @@ jQuery(function() {
 	});
 	
 	// Media Filter Action
-	$('.filters li a').click(function() {
+	$('.filters a').click(function() {
 		var mediaType = parseFloat(this.id.replace('media_', '')) || 0;
 		
-		$('.filters li a').attr('class', '');
+		$('.filters a.active').removeClass('active');
 		$(this).addClass('active');
 
 		// Update the report filters
