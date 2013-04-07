@@ -102,7 +102,7 @@ class S_Cleanup_Controller extends Controller {
 		{
 			// Get all the media files from the database so we can check if the file isn't orphaned
 
-			$images = ORM::factory("media")->find_all();
+			$images = ORM::factory("media")->where('media_type', 1)->find_all();
 
 			// Turn this into an array that we can easily check against
 
