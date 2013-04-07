@@ -205,13 +205,6 @@
 							<?php print form::input('google_analytics', $form['google_analytics'], ' class="text"'); ?>
 						</div>
 						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_twitter_configuration"); ?>"><?php echo Kohana::lang('settings.site.twitter_configuration');?></a></h4>
-							<div class="row">
-								<?php echo Kohana::lang('settings.site.twitter_hashtags');?>
-								<?php print form::input('twitter_hashtags', $form['twitter_hashtags'], ' class="text"'); ?>
-							</div>
-						</div>
-						<div class="row">
 							<h4><?php echo Kohana::lang('settings.site.api_akismet');?></h4>
 							<?php echo Kohana::lang('settings.site.kismet_notice');?>.
 							<?php print form::input('api_akismet', $form['api_akismet'], ' class="text"'); ?>

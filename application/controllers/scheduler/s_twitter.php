@@ -2,6 +2,8 @@
 /**
  * Twitter Scheduler Controller
  *
+ * This utilizes twitterouath by abrahama -> https://github.com/abraham/twitteroauth
+
  * PHP version 5
  * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
@@ -24,16 +26,36 @@ class S_Twitter_Controller extends Controller {
 
 		// Load cache
 		$this->cache = new Cache;
+
+		//Load session
+		$this->session = new Session;
 	}
 
 	public function index()
 	{
-		// Grabbing tweets requires cURL so we will check for that here.
-		if (!function_exists('curl_exec'))
-		{
-			throw new Kohana_Exception('twitter.cURL_not_installed');
-			return false;
-		}
+
+		require_once Kohana::find_file('libraries/twitteroauth/twitteroauth','twitteroauth');
+
+		// Grab all the twitter credentials - tokens and keys
+		$consumer_key = Settings_Model::get_setting('twitter_api_key');
+		$consumer_secret = Settings_Model::get_setting('twitter_api_key_secret');
+		$oauth_token = Settings_Model::get_setting('twitter_token');
+		$oauth_token_secret = Settings_Model::get_setting('twitter_token_secret');
+
+		$_SESSION['access_token'] = array(
+		  'oauth_token'=> $oauth_token,
+			'oauth_token_secret' => $oauth_token_secret
+			);
+
+		/* Get user access tokens out of the session. */
+		$access_token = $_SESSION['access_token'];
+
+		/* Create a TwitterOauth object with consumer/user tokens. */
+		$connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token['oauth_token'], $access_token['oauth_token_secret']);
+		$connection->decode_json = FALSE;
+		 
+		/* Get logged in user to help with tests. */
+		$user = $connection->get('account/verify_credentials');
 
 		// Retrieve Last Stored Twitter ID
 		$last_tweet_id = "";
@@ -56,18 +78,10 @@ class S_Twitter_Controller extends Controller {
 				$page = 1;
 				$have_results = TRUE; //just starting us off as true, although there may be no results
 				while($have_results == TRUE AND $page <= 2)
-				{ //This loop is for pagination of rss results
+				{ //This loop is for pagination of twitter results
 					$hashtag = rawurlencode(trim(str_replace('#','',$hashtag)));
-					$twitter_url = Kohana::config('config.external_site_protocol').'://search.twitter.com/search.json?q=%23'.$hashtag.'&rpp=100&page='.$page; //.$last_tweet_id;
-					$curl_handle = curl_init();
-					curl_setopt($curl_handle,CURLOPT_URL,$twitter_url);
-					curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,4); //Since Twitter is down a lot, set timeout to 4 secs
-					curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
-					$buffer = curl_exec($curl_handle);
-					curl_close($curl_handle);
-
-					$have_results = $this->add_hash_tweets($buffer); //if FALSE, we will drop out of the loop
-
+					$twitter_url = $connection->get('search/tweets',array('count' => 100, 'q' => $hashtag));
+					$have_results = $this->add_hash_tweets($twitter_url);
 					$page++;
 				}
 			}
@@ -81,40 +95,16 @@ class S_Twitter_Controller extends Controller {
 	*/
 	private function add_hash_tweets($data)
 	{
-		if ($this->_lock())
-		{
-			return false;
-		}
 
 		$services = new Service_Model();
 		$service = $services->where('service_name', 'Twitter')->find();
 
-		if ( ! $service)
-		{
-			$this->_unlock();
-			return false;
-		}
-
-		$tweets = json_decode($data, false);
-		if ( ! $tweets)
-		{
-			$this->_unlock();
-			return false;
-		}
-
-		if (isset($tweets->{'error'}))
-		{
-			$this->_unlock();
-			return false;
-		}
-
-		$tweet_results = $tweets->{'results'};
-
-		foreach($tweet_results as $tweet)
+		$tweet_results = json_decode($data);
+		foreach($tweet_results ->statuses as $tweet)
 		{
 			$reporter = ORM::factory('reporter')
 				->where('service_id', $service->id)
-				->where('service_account', $tweet->{'from_user'})
+				->where('service_account', $tweet->user->screen_name)
 				->find();
 
 			if (!$reporter->loaded)
@@ -126,7 +116,7 @@ class S_Twitter_Controller extends Controller {
 
 				$reporter->service_id	   = $service->id;
 				$reporter->level_id			= $level->id;
-				$reporter->service_account	= $tweet->{'from_user'};
+				$reporter->service_account	= $tweet->user->screen_name;
 				$reporter->reporter_first	= null;
 				$reporter->reporter_last	= null;
 				$reporter->reporter_email	= null;
@@ -157,7 +147,7 @@ class S_Twitter_Controller extends Controller {
 				$message->incident_id = 0;
 				$message->user_id = 0;
 				$message->reporter_id = $reporter->id;
-				$message->message_from = $tweet->{'from_user'};
+				$message->message_from = $tweet->user->screen_name;
 				$message->message_to = null;
 				$message->message = $tweet->{'text'};
 				$message->message_type = 1; // Inbox

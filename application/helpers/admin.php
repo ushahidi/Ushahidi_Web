@@ -184,7 +184,9 @@ class admin_Core {
 
 		$menu .= ($this_sub_page == "api") ? Kohana::lang('ui_main.api') : "<a href=\"".url::site()."admin/settings/api\">".Kohana::lang('ui_main.api')."</a>";
 
-		$menu .= ($this_sub_page == "facebook") ? "Facebook" : "<a href=\"".url::site()."admin/settings/facebook\">Facebook</a>";
+		$menu .= ($this_sub_page == "facebook") ? "Facebook" : "<a href=\"".url::site()."admin/settings/facebook\">".Kohana::lang('ui_main.facebook')."</a>";
+
+		$menu .= ($this_sub_page == "twitter") ? "Twitter" : "<a href=\"".url::site()."admin/settings/twitter\">".Kohana::lang('ui_main.twitter')."</a>";
 
 		$menu .= ($this_sub_page == "externalapps") ? Kohana::lang('ui_main.external_apps') : "<a href=\"".url::site()."admin/settings/externalapps\">".Kohana::lang('ui_main.external_apps')."</a>";
 
