@@ -798,14 +798,21 @@ class reports_Core {
 		// 
 		// Check for incident date range parameters
 		// 
-		if (isset($url_data['from']) AND isset($url_data['to']))
+		if (!empty($url_data['from']))
 		{
 			// Add hours/mins/seconds so we still get reports if from and to are the same day
 			$date_from = date('Y-m-d 00:00:00', strtotime($url_data['from']));
+			
+			array_push(self::$params, 
+				'i.incident_date >= "'.$date_from.'"'
+			);
+		}
+		if (!empty($url_data['to']))
+		{
+			// Add hours/mins/seconds so we still get reports if from and to are the same day
 			$date_to = date('Y-m-d 23:59:59', strtotime($url_data['to']));
 			
 			array_push(self::$params, 
-				'i.incident_date >= "'.$date_from.'"',
 				'i.incident_date <= "'.$date_to.'"'
 			);
 		}
