@@ -122,7 +122,7 @@ class Settings_Controller extends Admin_Controller {
 
 			// Add rules for file upload
 			$files = Validation::factory($_FILES);
-			$files->add_rules('banner_image', 'upload::valid', 'upload::type[gif,jpg,png]', 'upload::size[250K]');
+			$files->add_rules('banner_image', 'upload::valid', 'upload::type[gif,jpg,jpeg,png]', 'upload::size[250K]');
 
 			// Test to see if things passed the rule checks
 			if ($post->validate() AND $files->validate(FALSE))
