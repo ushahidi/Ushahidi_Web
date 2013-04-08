@@ -34,8 +34,6 @@ class S_Twitter_Controller extends Controller {
 	public function index()
 	{
 
-		require_once Kohana::find_file('libraries/twitteroauth/twitteroauth','twitteroauth');
-
 		// Grab all the twitter credentials - tokens and keys
 		$consumer_key = Settings_Model::get_setting('twitter_api_key');
 		$consumer_secret = Settings_Model::get_setting('twitter_api_key_secret');
@@ -51,7 +49,7 @@ class S_Twitter_Controller extends Controller {
 		$access_token = $_SESSION['access_token'];
 
 		/* Create a TwitterOauth object with consumer/user tokens. */
-		$connection = new TwitterOAuth($consumer_key, $consumer_secret, $access_token['oauth_token'], $access_token['oauth_token_secret']);
+		$connection = new Twitter_Oauth($consumer_key, $consumer_secret, $access_token['oauth_token'], $access_token['oauth_token_secret']);
 		$connection->decode_json = FALSE;
 		 
 		/* Get logged in user to help with tests. */
