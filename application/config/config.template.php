@@ -163,6 +163,20 @@ $config['output_scheduler_js'] = TRUE;
 $config['external_site_protocol'] = 'https';
 
 /**
+ * Allowed HTML tags in report description and other large text fields
+ * 
+ * Formated is based on http://htmlpurifier.org/live/configdoc/plain.html#HTML.Allowed
+ */
+$config['allowed_html'] = "a[href|title],p,img[src|alt],br,b,u,strong,em,i";
+
+/**
+ * Allowed iframe URLs in report description and other large text fields
+ * 
+ * Formated is based on http://htmlpurifier.org/live/configdoc/plain.html#URI.SafeIframeRegexp
+ */
+$config['safe_iframe_regexp'] = '%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player)%';
+
+/**
  * Additional resource paths, or "modules". Each path can either be absolute
  * or relative to the docroot. Modules can include any resource that can exist
  * in your application directory, configuration files, controllers, views, etc.

@@ -25,11 +25,11 @@ class html extends html_Core {
 		// $config->set('Core.Encoding', 'UTF-8');
 		// $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
 		$config->set('Core.EnableIDNA', TRUE);
-		$config->set('HTML.Allowed', "a[href|title],p,img[src|alt],br,b,u,strong,em,i");
+		$config->set('HTML.Allowed', Kohana::config('config.allowed_html', FALSE, TRUE));
 		// Allow some basic iframes
 		$config->set('HTML.SafeIframe', true);
 		$config->set('URI.SafeIframeRegexp', 
-			'%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player)%'
+			Kohana::config('config.allowed_iframe_regexp', FALSE, TRUE)
 		);
 		$config->set('Filter.YouTube', true);
 		$purifier = new HTMLPurifier($config);
