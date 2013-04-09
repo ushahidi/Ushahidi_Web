@@ -194,8 +194,8 @@ class category_Core {
 				
 				$category_data[$category->id] = array(
 					'category_id' => $category->id,
-					'category_title' => htmlentities(Category_Lang_Model::category_title($category->id), ENT_QUOTES, "UTF-8"),
-					'category_description' => htmlentities(Category_Lang_Model::category_description($category->id), ENT_QUOTES, "UTF-8"),
+					'category_title' => html::escape(Category_Lang_Model::category_title($category->id)),
+					'category_description' => html::escape(Category_Lang_Model::category_description($category->id)),
 					'category_color' => $category->category_color,
 					'category_image' => $category->category_image,
 					'children' => $children,
@@ -226,8 +226,8 @@ class category_Core {
 				// Add children
 				$category_data[$category->parent_id]['children'][$category->id] = array(
 					'category_id' => $category->id,
-					'category_title' => htmlentities(Category_Lang_Model::category_title($category->id), ENT_QUOTES, "UTF-8"),
-					'category_description' => htmlentities(Category_Lang_Model::category_description($category->id), ENT_QUOTES, "UTF-8"),
+					'category_title' => html::escape(Category_Lang_Model::category_title($category->id)),
+					'category_description' => html::escape(Category_Lang_Model::category_description($category->id)),
 					'parent_id' => $category->parent_id,
 					'category_color' => $category->category_color,
 					'category_image' => $category->category_image,
@@ -264,7 +264,7 @@ class category_Core {
 			$tree_html .= "<li".$category_class.">"
 							. "<a href=\"#\" class=\"cat_selected\" id=\"filter_link_cat_".$id."\" title=\"{$category['category_description']}\">"
 							. "<span class=\"item-swatch\" style=\"background-color: #".$category['category_color']."\">$category_image</span>"
-							. "<span class=\"item-title\">".strip_tags($category['category_title'])."</span>"
+							. "<span class=\"item-title\">".html::strip_tags($category['category_title'])."</span>"
 							. "<span class=\"item-count\">".$category['report_count']."</span>"
 							. "</a></li>";
 							

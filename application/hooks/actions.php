@@ -862,11 +862,8 @@ class actioner {
 		// If this is a feed item
 		elseif (isset($this->data->item_title))
 		{
-			$incident_title = strip_tags(html_entity_decode(html_entity_decode($this->data->item_title, ENT_QUOTES)));
-			$incident_description = strip_tags(
-				// @todo place with real html sanitizing
-				str_ireplace(array('<p>','</p>','<br>','<br />','<br/>'), "\n", html_entity_decode($this->data->item_description, ENT_QUOTES))
-			);
+			$incident_title = html::strip_tags(html_entity_decode(html_entity_decode($this->data->item_title, ENT_QUOTES)));
+			$incident_description = html::clean(html_entity_decode($this->data->item_description, ENT_QUOTES));
 			$incident_date = $this->data->item_date;
 		}
 		

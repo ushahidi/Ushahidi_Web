@@ -64,8 +64,8 @@
 						foreach ($incidents as $incident)
 						{
 							$incident_id = $incident->id;
-							$incident_title = strip_tags($incident->incident_title);
-							$incident_description = text::limit_chars(strip_tags($incident->incident_description), 150, '...');
+							$incident_title = html::escape($incident->incident_title);
+							$incident_description = text::limit_chars(html::escape($incident->incident_description), 150, '...');
 							$incident_date = $incident->incident_date;
 							$incident_date = date('g:i A', strtotime($incident->incident_date));
 							$incident_mode = $incident->incident_mode;	// Mode of submission... WEB/SMS/EMAIL?
@@ -175,7 +175,7 @@
 						{
 							$feed_id = $feed->id;
 							$feed_title = $feed->item_title;
-							$feed_description = text::limit_chars(strip_tags($feed->item_description), 150, '...', True);
+							$feed_description = text::limit_chars(html::escape($feed->item_description), 150, '...', True);
 							$feed_link = $feed->item_link;
 							$feed_date = date('M j Y', strtotime($feed->item_date));
 							$feed_source = "NEWS";

@@ -16,7 +16,7 @@
 
 function appAction ( action, confirmAction, externalapp_id )
 {
-	var answer = confirm('<?php echo htmlspecialchars(Kohana::lang('ui_admin.are_you_sure_you_want_to')); ?> ' + confirmAction + '?')
+	var answer = confirm(<?php echo json_encode(Kohana::lang('ui_admin.are_you_sure_you_want_to')); ?> +' '+ confirmAction + '?')
 	if (answer){
 
 		// Set External App ID

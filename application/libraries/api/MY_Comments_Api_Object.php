@@ -695,11 +695,11 @@ class Comments_Api_Object extends Api_Object_Core {
 				}
 
 				$comment = new Comment_Model();
-				$comment->incident_id = strip_tags($incident_id);
-				$comment->checkin_id = strip_tags($checkin_id);
-				$comment->comment_author = strip_tags($comment_author);
-				$comment->comment_description = strip_tags($post->comment_description);
-				$comment->comment_email = strip_tags($comment_email);
+				$comment->incident_id = intval($incident_id);
+				$comment->checkin_id = intval($checkin_id);
+				$comment->comment_author = html::strip_tags($comment_author, FALSE);
+				$comment->comment_description = html::strip_tags($post->comment_description, FALSE);
+				$comment->comment_email = html::strip_tags($comment_email, FALSE);
 				$comment->comment_ip = $_SERVER['REMOTE_ADDR'];
 				$comment->comment_date = date("Y-m-d H:i:s", time());
 

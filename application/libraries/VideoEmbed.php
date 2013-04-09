@@ -160,7 +160,7 @@ class VideoEmbed
 				$you_auto = ($auto) ? "&autoplay=1" : "";
 				
 				$output = '<iframe id="ytplayer" type="text/html" width="320" height="265" '
-					. 'src="http://www.youtube.com/embed/'.htmlentities($code, ENT_QUOTES, "UTF-8").'?origin='.urlencode(url::base()).htmlentities($you_auto, ENT_QUOTES, "UTF-8").'" '
+					. 'src="http://www.youtube.com/embed/'.html::escape($code).'?origin='.urlencode(url::base()).html::escape($you_auto).'" '
 					. 'frameborder="0"></iframe>';
 			break;
 			
@@ -169,7 +169,7 @@ class VideoEmbed
 				$google_auto = ($auto) ? "&autoPlay=true" : "";
 				
 				$output = "<embed style='width:320px; height:265px;' id='VideoPlayback' type='application/x-shockwave-flash'"
-					. "	src='http://video.google.com/googleplayer.swf?docId=-".htmlentities($code.$google_auto, ENT_QUOTES, "UTF-8")."&hl=en' flashvars=''>"
+					. "	src='http://video.google.com/googleplayer.swf?docId=-".html::escape($code.$google_auto)."&hl=en' flashvars=''>"
 					. "</embed>";
 			break;
 			
@@ -177,21 +177,21 @@ class VideoEmbed
 				// Sanitize input
 				$code = strrev(trim(strrev($code), "/"));
 				
-				$output = "<embed src='http://www.metacafe.com/fplayer/".htmlentities($code, ENT_QUOTES, "UTF-8").".swf'"
+				$output = "<embed src='http://www.metacafe.com/fplayer/".html::escape($code).".swf'"
 					. "	width='320' height='265' wmode='transparent' pluginspage='http://get.adobe.com/flashplayer/'"
 					. "	type='application/x-shockwave-flash'> "
 					. "</embed>";
 			break;
 			
 			case "dotsub":
-				$output = "<iframe src='http://dotsub.com/media/".htmlentities($code, ENT_QUOTES, "UTF-8")."' frameborder='0' width='320' height='500'></iframe>";
+				$output = "<iframe src='http://dotsub.com/media/".html::escape($code)."' frameborder='0' width='320' height='500'></iframe>";
 			
 			break;
 			
 			case "vimeo":
 				$vimeo_auto = ($auto) ? "?autoplay=1" : "";
 				
-				$output = '<iframe src="http://player.vimeo.com/video/'.htmlentities($code.$vimeo_auto, ENT_QUOTES, "UTF-8").'" width="320" height="265" frameborder="0">'
+				$output = '<iframe src="http://player.vimeo.com/video/'.html::escape($code.$vimeo_auto).'" width="320" height="265" frameborder="0">'
 					. '</iframe>';
 			break;
 		}

@@ -313,7 +313,7 @@ class XMLImporter {
 					
 					// Also add it to the array of categories added during import
 					$this->categories_added[] = $new_category->id;
-					$this->notices[] = Kohana::lang('import.new_category').htmlspecialchars($cat_title);
+					$this->notices[] = Kohana::lang('import.new_category').html::escape($cat_title);
 				}
 
 				/* Category Translations */
@@ -687,7 +687,7 @@ class XMLImporter {
 				// If report date is not in the required format
 				if ( ! strtotime($report_date))
 				{
-					$this->errors[] = Kohana::lang('import.incident_date').$this->totalreports.': '.htmlspecialchars($report_date);
+					$this->errors[] = Kohana::lang('import.incident_date').$this->totalreports.': '.html::escape($report_date);
 				}
 				
 				// Report title and date(in correct format) both provided, proceed
