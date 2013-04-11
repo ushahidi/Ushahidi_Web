@@ -170,14 +170,13 @@ class customforms_Core {
 
 	/**
 	 * Validate Custom Form Fields
-	 * @param array $custom_fields Array
+	 * @param Validation $post Validation object from form post
 	 * XXX This whole function is being done backwards
 	 * Need to pull the list of custom form fields first
 	 * Then look through them to see if they're set, not the other way around.
 	 */
 	public static function validate_custom_form_fields(&$post)
 	{
-		$errors = array();
 		$custom_fields = array();
 
 		if (!isset($post->custom_field))
@@ -235,23 +234,24 @@ class customforms_Core {
 			if ( ! $field_param->loaded)
 			{
 				// Populate the error field
-				$errors[$custom_name] = "The $custom_name field does not exist";
-				return $errors;
+				//$errors[$field_id] = "The $custom_name field does not exist";
+				$post->add_error('custom_field', 'not_exist', array($field_id));
+				return;
 			}
 
 			$max_auth = self::get_user_max_auth();
 			if ($field_param->field_ispublic_submit > $max_auth)
 			{
 				// Populate the error field
-				$errors[$custom_name] = "The $custom_name field cannot be edited by your account";
-				return $errors;
+				$post->add_error('custom_field', 'permission', array($custom_name));
+				return;
 			}
 
 			// Validate that the field is required
 			if ( $field_param->field_required == 1 AND $field_response == "")
 			{
-				$errors[$custom_name] = "The $custom_name field is required";
-				return $errors;
+				$post->add_error('custom_field', 'required', array($custom_name));
+				return;
 			}
 
 			// Grab the custom field options for this field
@@ -260,24 +260,21 @@ class customforms_Core {
 			// Validate Custom fields for text boxes
 			if ($field_param->field_type == 1 AND isset($field_options) AND $field_response != '')
 			{
-				foreach ($field_options as $option => $value)
+				if (isset($field_options['field_datatype']))
 				{
-					if ($option == 'field_datatype')
+					if ($field_options['field_datatype'] == 'email' AND !valid::email($field_response))
 					{
-						if ($value == 'email' AND !valid::email($field_response))
-						{
-							$errors[$custom_name] = "The $custom_name field requires a valid email address";
-						}
+						$post->add_error('custom_field', 'email', array($custom_name));
+					}
 
-						if ($value == 'phonenumber' AND !valid::phone($field_response))
-						{
-							$errors[$custom_name] = "The $custom_name field requires a valid email address";
-						}
+					if ($field_options['field_datatype'] == 'phonenumber' AND !valid::phone($field_response))
+					{
+						$post->add_error('custom_field', 'phone', array($custom_name));
+					}
 
-						if ($value == 'numeric' AND !valid::numeric($field_response))
-						{
-							$errors[$custom_name] = "The $custom_name field must be numeric";
-						}
+					if ($field_options['field_datatype'] == 'numeric' AND !valid::numeric($field_response))
+					{
+						$post->add_error('custom_field', 'numeric', array($custom_name));
 					}
 				}
 			}
@@ -288,7 +285,7 @@ class customforms_Core {
 				$field_default = $field_param->field_default;
 				if ( ! valid::date_mmddyyyy($field_response))
 				{
-					$errors[$custom_name] = "The $custom_name field is not a valid date (MM/DD/YYYY)";
+					$post->add_error('custom_field', 'date_mmddyyyy', array($custom_name));
 				}
 			}
 
@@ -317,7 +314,8 @@ class customforms_Core {
 				{
 					if ( ! in_array($response, $options) AND $response != '')
 					{
-						$errors[$custom_name] = "The $custom_name field does not include $response as an option";
+						$post->add_error('custom_field', 'values', array($custom_name));
+						//$errors[$field_id] = "The $custom_name field does not include $response as an option";
 					}
 				}
 			}
@@ -325,11 +323,11 @@ class customforms_Core {
 			// Validate that a required checkbox is checked
 			if ($field_param->field_type == 6 AND $field_response == 'BLANKHACK' AND $field_param->field_required == 1)
 			{
-				$errors[$custom_name] = "The $custom_name field is required";
+				$post->add_error('custom_field', 'required', array($custom_name));
 			}
 		}
 
-		return $errors;
+		return;
 	}
 
 	/**
