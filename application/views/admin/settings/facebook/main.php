@@ -57,6 +57,7 @@
 					<div class="sms_holder">
 						<div class="row" style="margin-top:20px;">
 							<h4><?php echo Kohana::lang('settings.facebook.description');?>:<BR /><a href="http://www.facebook.com/developers/" target="_blank">http://www.facebook.com/developers/</a></h4>
+							<?php echo Kohana::lang('settings.facebook.description_2');?>
 						</div>
 						<div class="row">
 							<h4><?php echo Kohana::lang('settings.facebook.app_id');?>:</h4>
