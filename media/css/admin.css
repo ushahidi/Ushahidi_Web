@@ -2620,4 +2620,9 @@ div.dp-popup td.disabled {
 	height:31px;
 	margin:9px 0 0 3px;
 }
-
+.allowed-html {
+	font-weight: normal;
+	font-size: 10px;
+	line-height: 12px;
+	color: #a1a1a1;
+}

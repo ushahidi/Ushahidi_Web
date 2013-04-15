@@ -15,6 +15,9 @@ class html extends html_Core {
 	
 	/**
 	 * Helper function for easy use of HTMLPurifier
+	 * 
+	 * @param string $input
+	 * @return string
 	 */
 	public function clean($input)
 	{
@@ -42,6 +45,10 @@ class html extends html_Core {
 	 * Helper function to clean and escape plaintext before display
 	 * 
 	 * This should be used to strip tags and then escape html entities, etc.
+	 * 
+	 * @param string $input
+	 * @param bool $encode Encode html entities?
+	 * @return string
 	 */
 	public function strip_tags($input, $encode = TRUE)
 	{
@@ -61,9 +68,32 @@ class html extends html_Core {
 	}
 	
 	/**
+	 * Get info message about allowed html tags
+	 * 
+	 * @return string
+	 **/
+	public function allowed_html()
+	{
+		require_once APPPATH.'libraries/htmlpurifier/HTMLPurifier.auto.php';
+		
+		$def = new HTMLPurifier_HTMLDefinition();
+		list($el, $attr) = $def->parseTinyMCEAllowedList(Kohana::config('config.allowed_html', FALSE, TRUE));
+		$iframes = explode('|', str_replace(array('%^http://(',')%'), '', Kohana::config('config.safe_iframe_regexp', FALSE, TRUE)));
+		
+		$output = "";
+		$output .= Kohana::lang('ui_main.allowed_tags', implode(', ', array_keys($el)));
+		$output .= "<br/> ";
+		$output .= Kohana::lang('ui_main.allowed_iframes', implode(', ', $iframes));
+		return $output;
+	}
+	
+	/**
 	 * Helper function to escape plaintext before display
 	 * 
 	 * This should be used to escape html entities, etc.
+	 * 
+	 * @param string $input
+	 * @return string
 	 */
 	public function escape($input)
 	{
