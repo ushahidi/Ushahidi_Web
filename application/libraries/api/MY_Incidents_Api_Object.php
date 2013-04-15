@@ -453,7 +453,10 @@ class Incidents_Api_Object extends Api_Object_Core {
 		//
 		if ($this->comments) {
 			// Execute the query
-			$incident_comments = ORM::factory('comment')->in('incident_id', $incident_ids)->find_all();
+			$incident_comments = ORM::factory('comment')
+				->in('incident_id', $incident_ids)
+				->where('comment_spam', 0)
+				->find_all();
 
 			// To hold the incident category items
 			$comment_items = array();
