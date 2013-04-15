@@ -44,14 +44,14 @@
 				foreach ($incidents as $incident)
 				{
 					$incident_id = $incident->incident_id;
-					$incident_title = strip_tags($incident->incident_title);
-					$incident_description = strip_tags($incident->incident_description);
+					$incident_title = html::strip_tags($incident->incident_title);
+					$incident_description = html::strip_tags($incident->incident_description);
 					$incident_url = Incident_Model::get_url($incident_id);
 					//$incident_category = $incident->incident_category;
 					// Trim to 150 characters without cutting words
 					// XXX: Perhaps delcare 150 as constant
 
-					$incident_description = text::limit_chars(strip_tags($incident_description), 140, "...", true);
+					$incident_description = text::limit_chars(html::strip_tags($incident_description), 140, "...", true);
 					$incident_date = date('H:i M d, Y', strtotime($incident->incident_date));
 					//$incident_time = date('H:i', strtotime($incident->incident_date));
 					$location_id = $incident->location_id;
@@ -88,7 +88,7 @@
 				<div id="incident_<?php echo $incident_id ?>" class="rb_report <?php echo $incident_verified_class; ?>">
 					<div class="r_media">
 						<p class="r_photo"> <a href="<?php echo $incident_url; ?>">
-							<img alt="<?php echo htmlentities($incident_title, ENT_QUOTES, "UTF-8"); ?>" src="<?php echo $incident_thumb; ?>" /> </a>
+							<img alt="<?php echo html::escape($incident_title); ?>" src="<?php echo $incident_thumb; ?>" /> </a>
 						</p>
 
 						<!-- Only show this if the report has a video -->
@@ -126,7 +126,7 @@
 
 					<div class="r_details">
 						<h3><a class="r_title" href="<?php echo $incident_url; ?>">
-								<?php echo htmlentities($incident_title, ENT_QUOTES, "UTF-8"); ?>
+								<?php echo html::escape($incident_title); ?>
 							</a>
 							<a href="<?php echo "$incident_url#discussion"; ?>" class="r_comments">
 								<?php echo $comment_count; ?></a> 

@@ -122,7 +122,7 @@
 												<?php
 												if ($incident_title != "")
 												{
-													?><div class="comment_incident"><?php echo Kohana::lang('ui_main.in_response_to');?>: <strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo strip_tags($incident_title); ?></a></strong></div><?php
+													?><div class="comment_incident"><?php echo Kohana::lang('ui_main.in_response_to');?>: <strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo html::escape($incident_title); ?></a></strong></div><?php
 												}
 												?>
 												<p><?php echo html::specialchars($comment_description); ?></p>

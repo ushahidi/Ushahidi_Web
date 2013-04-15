@@ -117,7 +117,7 @@
 									}
 									$subject = $priv_message->private_subject;
 									$message = text::auto_link($priv_message->private_message);
-									$message_preview = text::limit_chars(strip_tags($message), 150, "...", true);
+									$message_preview = text::limit_chars(html::strip_tags($message), 150, "...", true);
 									$message_date = date('Y-m-d', strtotime($priv_message->private_message_date));
 									$message_new = $priv_message->private_message_new;
 									?>

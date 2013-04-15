@@ -77,5 +77,8 @@ abstract class Controller extends Controller_Core {
 				url::redirect('login');
 			}
 		}
+		
+		// Set default content-type header
+		header('Content-type: text/html; charset=UTF-8');
 	}
 }

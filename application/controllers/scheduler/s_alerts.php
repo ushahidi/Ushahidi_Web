@@ -91,6 +91,7 @@ class S_Alerts_Controller extends Controller {
 			// Convert HTML to Text
 			$incident_description = $incident->incident_description;
 			$incident_url = url::site().'reports/view/'.$incident->id;
+			$incident_description = html::clean($incident_description);
 			$html2text = new Html2Text($incident_description);
 			$incident_description = $html2text->get_text();
 

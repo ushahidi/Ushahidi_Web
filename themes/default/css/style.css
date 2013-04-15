@@ -2126,3 +2126,10 @@ div.ci_checkin {
 .user-color { width:160px;height:20px; }
 .badges { float:left;padding-left:25px;width:275px;}
 .badge img { margin:5px; }
+
+.allowed-html {
+	font-weight: normal;
+	font-size: 10px;
+	line-height: 12px;
+	color: #a1a1a1;
+}

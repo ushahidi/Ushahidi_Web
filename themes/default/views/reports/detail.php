@@ -14,7 +14,7 @@
   	  ?>
 
 		<h1 class="report-title"><?php
-			echo htmlentities($incident_title, ENT_QUOTES, "UTF-8");
+			echo html::escape($incident_title);
 
 			// If Admin is Logged In - Allow For Edit Link
 			if ($logged_in)
@@ -78,7 +78,7 @@
 				echo '<div id="report-images">';
 				foreach ($incident_photos as $photo)
 				{
-					echo '<a class="photothumb" rel="lightbox-group1" href="'.$photo['large'].'"><img alt="'.htmlentities($incident_title, ENT_QUOTES, "UTF-8").'" src="'.$photo['thumb'].'"/></a> ';
+					echo '<a class="photothumb" rel="lightbox-group1" href="'.$photo['large'].'"><img alt="'.html::escape($incident_title).'" src="'.$photo['thumb'].'"/></a> ';
 				};
 				echo '</div>';
 			}
@@ -103,7 +103,7 @@
 		<!-- start report description -->
 		<div class="report-description-text">
 			<h5><?php echo Kohana::lang('ui_main.reports_description');?></h5>
-			<?php echo nl2br($incident_description); ?>
+			<?php echo html::clean(nl2br($incident_description)); ?>
 			<br/>
 
 
