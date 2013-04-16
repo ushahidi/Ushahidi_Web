@@ -55,6 +55,28 @@
 					<!-- column -->
 		
 					<div class="sms_holder">
+						<?php
+						if ( ! $form_error
+							AND ! empty($form['twitter_api_key'])
+							AND ! empty($form['twitter_api_key_secret'])
+							AND ! empty($form['twitter_token'])
+							AND ! empty($form['twitter_token_secret'])
+						)
+						{
+						?>
+							<div class="test_settings">
+								<div class="tab">
+									<ul>
+										<li><a href="javascript:twitterTest();">TEST SETTINGS</a></li>
+										<li id="test_loading"></li>
+										<li id="test_status"></li>
+									</ul>
+								</div>
+							</div>
+						<?php
+						}
+						?>
+
 						<div class="row">
 							<h4><?php echo Kohana::lang('settings.twitter.description');?>:<br><a href="https://twitter.com/oauth_clients/" target="_blank">https://twitter.com/oauth_clients/</a></h4>
 							<h4>For instructions see <a

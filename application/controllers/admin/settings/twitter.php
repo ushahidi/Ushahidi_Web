@@ -107,6 +107,10 @@ class Twitter_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
+
+		// Javascript Header
+		$this->themes->js = new View('admin/settings/twitter/twitter_js');
+
 	}
 	
 }

@@ -72,7 +72,6 @@ class Settings_Controller extends Admin_Controller {
 			'require_email_confirmation' => '',
 			'checkins' => '',
 			'google_analytics' => '',
-			'twitter_hashtags' => '',
 			'api_akismet' => ''
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
@@ -117,7 +116,6 @@ class Settings_Controller extends Admin_Controller {
 			$post->add_rules('require_email_confirmation','required','between[0,1]');
 			$post->add_rules('checkins','required','between[0,1]');
 			$post->add_rules('google_analytics','length[0,20]');
-			$post->add_rules('twitter_hashtags','length[0,500]');
 			$post->add_rules('api_akismet','length[0,100]', 'alpha_numeric');
 
 			// Add rules for file upload
@@ -270,7 +268,6 @@ class Settings_Controller extends Admin_Controller {
 				'require_email_confirmation' => $settings['require_email_confirmation'],
 				'checkins' => $settings['checkins'],
 				'google_analytics' => $settings['google_analytics'],
-				'twitter_hashtags' => $settings['twitter_hashtags'],
 				'api_akismet' => $settings['api_akismet']
 			);
 		}
