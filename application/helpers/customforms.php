@@ -57,7 +57,7 @@ class customforms_Core {
 		{
 			$sql = "SELECT ff.*, fr.form_response
 			FROM `{$table_prefix}form_field` ff
-			LEFT JOIN `{$table_prefix}roles` r ON (r.id = field_ispublic_visible)
+			LEFT JOIN `{$table_prefix}roles` r ON (r.id = {$ispublic_field})
 			LEFT JOIN
 				`{$table_prefix}form_response` fr ON (
 					fr.form_field_id = ff.id AND
@@ -71,7 +71,7 @@ class customforms_Core {
 		{
 			$sql = "SELECT ff.*
 			FROM `{$table_prefix}form_field` ff
-			LEFT JOIN `{$table_prefix}roles` r ON (r.id = field_ispublic_visible)
+			LEFT JOIN `{$table_prefix}roles` r ON (r.id = {$ispublic_field})
 			WHERE (access_level <= :user_level OR access_level IS NULL) "
 			. ( ! empty($form_id) ? "AND form_id = :form_id " : '')
 			. "ORDER BY field_position ASC";
