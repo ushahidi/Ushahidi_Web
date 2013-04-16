@@ -1498,5 +1498,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '104' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '105' WHERE `key` = 'db_version';
 UPDATE `settings` SET `value` = '2.6.1' WHERE `key`= 'ushahidi_version';
