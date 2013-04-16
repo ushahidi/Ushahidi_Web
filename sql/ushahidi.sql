@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 104
+-- version 106
 -- http://www.ushahidi.com
 
 
@@ -680,7 +680,7 @@ CREATE TABLE IF NOT EXISTS `form_field` (
   `field_type` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 - TEXTFIELD, 2 - TEXTAREA (FREETEXT), 3 - DATE, 4 - PASSWORD, 5 - RADIO, 6 - CHECKBOX',
   `field_required` tinyint(4) DEFAULT '0',
   `field_position` tinyint(4) NOT NULL DEFAULT '0',
-  `field_default` varchar(200) DEFAULT NULL,
+  `field_default` TEXT,
   `field_maxlength` int(11) NOT NULL DEFAULT '0',
   `field_width` smallint(6) NOT NULL DEFAULT '0',
   `field_height` tinyint(4) DEFAULT '5',
@@ -1498,5 +1498,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '104' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '106' WHERE `key` = 'db_version';
 UPDATE `settings` SET `value` = '2.6.1' WHERE `key`= 'ushahidi_version';
