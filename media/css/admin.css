@@ -912,6 +912,7 @@ div.custom_div h2 {
 .report-form input.custom_text {
 	width:363px;
 	margin-bottom: 10px;
+	float: none;
 }
 .report-form textarea{
 	width:368px;
