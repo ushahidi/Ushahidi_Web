@@ -759,7 +759,7 @@ class Reports_Controller extends Admin_Controller {
 						'person_first' => $incident->incident_person->person_first,
 						'person_last' => $incident->incident_person->person_last,
 						'person_email' => $incident->incident_person->person_email,
-						'custom_field' => customforms::get_custom_form_fields($id,$incident->form_id,TRUE),
+						'custom_field' => customforms::get_custom_form_fields($id, $incident->form_id, TRUE, 'submit'),
 						'incident_active' => $incident->incident_active,
 						'incident_verified' => $incident->incident_verified,
 						'incident_zoom' => $incident->incident_zoom
@@ -787,9 +787,16 @@ class Reports_Controller extends Admin_Controller {
 		$this->template->content->custom_forms = new View('reports/submit_custom_forms');
 		$disp_custom_fields = customforms::get_custom_form_fields($id, $form['form_id'], FALSE, "view");
 		$custom_field_mismatch = customforms::get_edit_mismatch($form['form_id']);
-        $this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
+		// Quick hack to make sure view-only fields have data set
+		foreach ($custom_field_mismatch as $id => $field)
+		{
+			$form['custom_field'][$id] = $disp_custom_fields[$id]['field_response'];
+		}
+		
+		$this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
 		$this->template->content->custom_forms->custom_field_mismatch = $custom_field_mismatch;
 		$this->template->content->custom_forms->form = $form;
+		
 
 		// Retrieve Previous & Next Records
 		$previous = ORM::factory('incident')->where('id < ', $id)->orderby('id','desc')->find();

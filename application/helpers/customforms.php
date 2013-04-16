@@ -76,7 +76,7 @@ class customforms_Core {
 			. ( ! empty($form_id) ? "AND form_id = :form_id " : '')
 			. "ORDER BY field_position ASC";
 		}
-		
+
 		$form_fields = Database::instance()->query($sql, array(
 			':form_id' => $form_id,
 			':user_level' => $user_level,
@@ -240,7 +240,8 @@ class customforms_Core {
 			}
 
 			$max_auth = self::get_user_max_auth();
-			if ($field_param->field_ispublic_submit > $max_auth)
+			$required_role = ORM::factory('role', $field_param->field_ispublic_submit);
+			if (($required_role->loaded ? $required_role->access_level : 0) > $max_auth)
 			{
 				// Populate the error field
 				$post->add_error('custom_field', 'permission', array($custom_name));
@@ -387,10 +388,27 @@ class customforms_Core {
 	public static function get_edit_mismatch($form_id = 0)
 	{
 		$user_level = self::get_user_max_auth();
-		$public_state = array('field_ispublic_submit >'=>$user_level, 'field_ispublic_visible <='=>$user_level);
-		$custom_form = ORM::factory('form', $form_id)->where($public_state)->orderby('field_position','asc');
+		
+		$db = Database::instance();
+		$custom_formfields = $db->query(
+			'SELECT `form_field`.`id`
+			FROM `form_field`
+			LEFT JOIN `roles` AS `roles_submit` ON (`form_field`.`field_ispublic_submit` = `roles_submit`.`id`)
+			LEFT JOIN `roles` AS `roles_view` ON (`form_field`.`field_ispublic_visible` = `roles_view`.`id`)
+			WHERE `form_id` = :form_id 
+			AND `roles_submit`.`access_level` > :user_level 
+			AND (`roles_view`.`access_level` <= :user_level OR `roles_view`.`access_level` IS NULL )
+			ORDER BY `field_position` ASC',
+			array(
+				':user_level' => $user_level,
+				':form_id' => $form_id
+			)
+		);
+			
+		/*$public_state = array('field_ispublic_submit >'=>$user_level, 'field_ispublic_visible <='=>$user_level);
+		$custom_form = ORM::factory('form', $form_id)->where($public_state)->orderby('field_position','asc');*/
 		$mismatches = array();
-		foreach ($custom_form->form_field as $custom_formfield)
+		foreach ($custom_formfields as $custom_formfield)
 		{
 			$mismatches[$custom_formfield->id] = 1;
 		}
