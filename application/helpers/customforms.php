@@ -119,25 +119,6 @@ class customforms_Core {
 	}
 
 	/**
-	 * Returns a list of the field names and values for a given userlevel
-	 *
-	 * @param int $id incident id
-	 * @param int $user_level the user's role level
-	 * @return Result
-	 */
-	public static function view_everything($id, $user_level)
-	{
-		$db = new Database();
-		$db->select('form_response.form_response', 'form_field.field_name');
-		$db->from('form_response');
-		$db->join('form_field','form_response.form_field_id','form_field.id');
-		$db->where(array('form_response.incident_id'=>$id,'form_field.field_ispublic_visible <='=>$user_level));
-		$db->orderby('form_field.field_position');
-
-		return $db->get();
-	}
-
-	/**
 	 * Returns the user's maximum role id number
 	 *
 	 * @param array $user the current user object
@@ -404,9 +385,7 @@ class customforms_Core {
 				':form_id' => $form_id
 			)
 		);
-			
-		/*$public_state = array('field_ispublic_submit >'=>$user_level, 'field_ispublic_visible <='=>$user_level);
-		$custom_form = ORM::factory('form', $form_id)->where($public_state)->orderby('field_position','asc');*/
+		
 		$mismatches = array();
 		foreach ($custom_formfields as $custom_formfield)
 		{
