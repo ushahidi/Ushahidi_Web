@@ -67,7 +67,8 @@
 							<div class="test_settings">
 								<div class="tab">
 									<ul>
-										<li><a href="javascript:twitterTest();">TEST SETTINGS</a></li>
+										<li><a
+										href="javascript:twitterTest();"><?php echo utf8::strtoupper(Kohana::lang('settings.test_settings'));?></a></li>
 										<li id="test_loading"></li>
 										<li id="test_status"></li>
 									</ul>

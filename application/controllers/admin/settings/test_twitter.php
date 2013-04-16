@@ -31,10 +31,7 @@ class Test_Twitter_Controller extends Admin_Controller {
 		$consumer_secret = Settings_Model::get_setting('twitter_api_key_secret');
 		$oauth_token = Settings_Model::get_setting('twitter_token');
 		$oauth_token_secret =Settings_Model::get_setting('twitter_token_secret');
-		$_SESSION['access_token'] = array(
-			'oauth_token'=> $oauth_token,
-				'oauth_token_secret' => $oauth_token_secret
-				);
+		$_SESSION['access_token'] = array('oauth_token'=> $oauth_token,'oauth_token_secret' => $oauth_token_secret);
 		$access_token = $_SESSION['access_token'];
 
 		$connection = new Twitter_Oauth($consumer_key,$consumer_secret,$access_token['oauth_token'],$access_token['oauth_token_secret']);
