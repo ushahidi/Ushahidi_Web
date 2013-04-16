@@ -100,7 +100,7 @@
 
 				<!-- mainmenu -->
 				<div id="mainmenu" class="clearingfix">
-					<ul>
+					<ul class="clearingfix">
 						<?php nav::main_tabs($this_page); ?>
 					</ul>
 

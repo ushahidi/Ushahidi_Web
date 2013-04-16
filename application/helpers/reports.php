@@ -145,19 +145,9 @@ class reports_Core {
 		$post->add_rules('incident_active', 'between[0,1]');
 		$post->add_rules('incident_verified', 'between[0,1]');
 		$post->add_rules('incident_zoom', 'numeric');
-		
+
 		// Custom form fields validation
-		$errors = customforms::validate_custom_form_fields($post);
-
-		// Check if any errors have been returned
-		if (count($errors) > 0)
-		{
-			foreach ($errors as $field_name => $error)
-			{
-				$post->add_error($field_name, $error);
-			}
-		}
-
+		customforms::validate_custom_form_fields($post);
 		//> END custom form fields validation
 
 		// Return

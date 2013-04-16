@@ -30,6 +30,6 @@ class Addons_Controller extends Admin_Controller {
     
     public function index()
     {
-        url::redirect(url::base().'admin/addons/plugins/');
+        url::redirect('admin/addons/plugins/');
     }
 }

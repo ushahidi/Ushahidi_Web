@@ -129,9 +129,10 @@ div.submit-incident a, .btn_submit {
 }
 
 /* primary nav */
-div#mainmenu { background:none; border:none; height:27px; }
+div#mainmenu { background:none; border:none; height: auto; padding: 0 10px 0 10px; }
 div#mainmenu ul {
-  
+  background: #5c5c5c;
+  padding: 7px 0 7px 0;
 }
 div#mainmenu ul li {
   margin:0 8px 0 0;
