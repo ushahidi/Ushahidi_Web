@@ -168,7 +168,7 @@ class Share_Controller extends Json_Controller {
 				foreach ($singles as $single)
 				{
 					$link = $sharing_url."/reports/view/".$single['id'];
-					$item_name = $this->get_title(html::specialchars(strip_tags($single['incident_title'])), $link);
+					$item_name = $this->get_title(html::strip_tags($single['incident_title']), $link);
 		
 					$json_item = array();
 					$json_item['type'] = 'Feature';

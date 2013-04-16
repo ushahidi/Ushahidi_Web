@@ -685,11 +685,9 @@ class Json_Controller extends Template_Controller {
 				$title = ($item->geometry_label) ? $item->geometry_label : $incident_title;
 				$item_name = $this->get_title($title, $incident_link);
 					
-				$fillcolor = ($item->geometry_color) ? 
-					utf8tohtml::convert($item->geometry_color,TRUE) : "ffcc66";
+				$fillcolor = ($item->geometry_color) ? $item->geometry_color : "ffcc66";
 					
-				$strokecolor = ($item->geometry_color) ? 
-					utf8tohtml::convert($item->geometry_color,TRUE) : "CC0000";
+				$strokecolor = ($item->geometry_color) ? $item->geometry_color : "CC0000";
 					
 				$strokewidth = ($item->geometry_strokewidth) ? $item->geometry_strokewidth : "3";
 
@@ -699,7 +697,7 @@ class Json_Controller extends Template_Controller {
 					'id' => $incident_id,
 					'feature_id' => $item->id,
 					'name' => $item_name,
-					'description' => utf8tohtml::convert($item->geometry_comment,TRUE),
+					'description' => $item->geometry_comment,
 					'color' => $fillcolor,
 					'icon' => '',
 					'strokecolor' => $strokecolor,

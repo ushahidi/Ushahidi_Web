@@ -183,7 +183,7 @@ class Imap_Core {
 
 			// This isn't the perfect solution but windows-1256 encoding doesn't work with mb_detect_encoding()
 			//   so if it doesn't return an encoding, lets assume it's arabic. (sucks)
-			if(mb_detect_encoding($body, 'auto', true) == '')
+			if(mb_detect_encoding($body, 'auto', TRUE) == '')
 			{
 				$body = iconv("windows-1256", "UTF-8", $body);
 			}
@@ -191,8 +191,9 @@ class Imap_Core {
 			// Convert to valid UTF8
 			$detected_encoding = mb_detect_encoding($body, "auto");
 			if($detected_encoding == 'ASCII') $detected_encoding = 'iso-8859-1';
-			$body = htmlentities($body,NULL,$detected_encoding);
-			$subject = htmlentities(strip_tags($subject),NULL,'UTF-8');
+			$body = mb_convert_encoding($body, $detected_encoding, 'UTF-8');
+			$body = html::escape($body);
+			$subject = html::strip_tags($subject);
 
 			array_push($messages, array('message_id' => $message_id,
 										'date' => $date,

@@ -84,7 +84,7 @@
 						$latitude = $checkin->location->latitude;
 						$longitude = $checkin->location->longitude;
 						$description = $checkin->checkin_description;
-						$preview = text::limit_chars(strip_tags($description), 150, "...", true);
+						$preview = text::limit_chars(html::strip_tags($description), 150, "...", true);
 						
 						$checkin_date = date('Y-m-d h:i', strtotime($checkin->checkin_date));
 						$auto_checkin = ($checkin->checkin_auto) ? "YES" : "NO";

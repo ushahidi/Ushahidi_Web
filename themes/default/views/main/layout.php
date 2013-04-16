@@ -49,12 +49,12 @@
 				<?php
 					foreach ($categories as $category => $category_info)
 					{
-						$category_title = htmlentities($category_info[0], ENT_QUOTES, "UTF-8");
+						$category_title = html::escape($category_info[0]);
 						$category_color = $category_info[1];
 						$category_image = ($category_info[2] != NULL)
 						    ? url::convert_uploaded_to_abs($category_info[2])
 						    : NULL;
-						$category_description = htmlentities(Category_Lang_Model::category_description($category), ENT_QUOTES, "UTF-8");
+						$category_description = html::escape(Category_Lang_Model::category_description($category));
 
 						$color_css = 'class="category-icon swatch" style="background-color:#'.$category_color.'"';
 						if ($category_info[2] != NULL)
@@ -78,12 +78,12 @@
 							echo '<ul>';
 							foreach ($category_info[3] as $child => $child_info)
 							{
-								$child_title = htmlentities($child_info[0], ENT_QUOTES, "UTF-8");
+								$child_title = html::escape($child_info[0]);
 								$child_color = $child_info[1];
 								$child_image = ($child_info[2] != NULL)
 								    ? url::convert_uploaded_to_abs($child_info[2])
 								    : NULL;
-								$child_description = htmlentities(Category_Lang_Model::category_description($child), ENT_QUOTES, "UTF-8");
+								$child_description = html::escape(Category_Lang_Model::category_description($child));
 								
 								$color_css = 'class="category-icon swatch" style="background-color:#'.$child_color.'"';
 								if ($child_info[2] != NULL)

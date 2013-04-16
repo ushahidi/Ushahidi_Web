@@ -102,7 +102,7 @@ class Reports_Controller extends Admin_Controller {
 		$order_field = 'date'; $sort = 'DESC';
 		if (isset($_GET['order']))
 		{
-			$order_field = htmlentities($_GET['order']);
+			$order_field = html::escape($_GET['order']);
 		}
 		if (isset($_GET['sort']))
 		{

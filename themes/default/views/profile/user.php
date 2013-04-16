@@ -24,7 +24,7 @@
 					<h4><?php echo Kohana::lang('ui_main.reports_by_this_user');?></h4>
 					<?php foreach($reports as $report) { ?>
 						<div class="rb_report">
-							<h5><a href="<?php echo url::site(); ?>reports/view/<?php echo $report->id; ?>"><?php echo strip_tags($report->incident_title); ?></a></h5>
+							<h5><a href="<?php echo url::site(); ?>reports/view/<?php echo $report->id; ?>"><?php echo html::escape($report->incident_title); ?></a></h5>
 							<p class="r_date r-3 bottom-cap"><?php echo date('H:i M d, Y', strtotime($report->incident_date)); ?></p>
 							<p class="r_location"><?php echo html::specialchars($report->location->location_name); ?></p>
 						</div>

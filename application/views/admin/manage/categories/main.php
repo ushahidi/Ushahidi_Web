@@ -178,8 +178,8 @@
 											<td class="col-1 col-drag-handle">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo htmlentities($category_title, ENT_QUOTES, "UTF-8"); ?></h4>
-													<p><?php echo htmlentities($category_description, ENT_QUOTES, "UTF-8"); ?></p>
+													<h4><?php echo html::escape($category_title); ?></h4>
+													<p><?php echo html::escape($category_description); ?></p>
 												</div>
 											</td>
 											<td class="col-3">
@@ -211,9 +211,9 @@
 												<?php if($category_trusted == 1) { ?>
 												<div class="right">
 													<?php if($category_id == '4') { ?>
-													<a href="#" class="tooltip" title="<?php echo htmlentities(Kohana::lang('ui_admin.special_category_explanation'),ENT_QUOTES, "UTF-8");?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
+													<a href="#" class="tooltip" title="<?php echo html::escape(Kohana::lang('ui_admin.special_category_explanation'));?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
 													<?php } else {?>
-														<a href="#" class="tooltip" title="<?php echo htmlentities(Kohana::lang('ui_admin.none_category_explanation'),ENT_QUOTES, "UTF-8"); ?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
+														<a href="#" class="tooltip" title="<?php echo html::escape(Kohana::lang('ui_admin.none_category_explanation')); ?>"><strong><?php echo Kohana::lang('ui_admin.special_category');?></strong></a>
 													<?php } ?>
 												</div>
 												<?php } ?>
@@ -254,8 +254,8 @@
 												<td class="col-1 col-drag-handle">&nbsp;</td>
 												<td class="col-2_sub">
 													<div class="post">
-														<h4><?php echo htmlentities($category_title, ENT_QUOTES, "UTF-8"); ?></h4>
-														<p><?php echo htmlentities($category_description, ENT_QUOTES, "UTF-8"); ?>...</p>
+														<h4><?php echo html::escape($category_title); ?></h4>
+														<p><?php echo html::escape($category_description); ?>...</p>
 													</div>
 												</td>
 												<td class="col-3">
