@@ -517,8 +517,17 @@ class Reports_Controller extends Members_Controller {
 		$this->template->content->form_saved = $form_saved;
 
 		// Retrieve Custom Form Fields Structure
-		$disp_custom_fields = customforms::get_custom_form_fields($id, $form_id, FALSE);
-		$this->template->content->disp_custom_fields = $disp_custom_fields;
+		$this->template->content->custom_forms = new View('reports/submit_custom_forms');
+		$disp_custom_fields = customforms::get_custom_form_fields($id, $form['form_id'], FALSE, "view");
+		$custom_field_mismatch = customforms::get_edit_mismatch($form['form_id']);
+		// Quick hack to make sure view-only fields have data set
+		foreach ($custom_field_mismatch as $id => $field)
+		{
+			$form['custom_field'][$id] = $disp_custom_fields[$id]['field_response'];
+		}
+		$this->template->content->custom_forms->disp_custom_fields = $disp_custom_fields;
+		$this->template->content->custom_forms->custom_field_mismatch = $custom_field_mismatch;
+		$this->template->content->custom_forms->form = $form;
 
 		// Retrieve Previous & Next Records
 		$previous = ORM::factory('incident')->where('id < ', $id)->orderby('id','desc')->find();
