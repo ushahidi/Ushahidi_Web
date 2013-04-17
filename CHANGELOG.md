@@ -10,7 +10,7 @@ Ushahidi 2.7
 	- Add function to html helper: html::escape() html::strip_tags() html::clean()
 	  These should be used instead of htmlentities, string_tags or other built in HTML cleaning functions
 * Theming changes
-	- Use CDN for theme files too #904
+	- Use CDN for theme files too [#904](https://github.com/ushahidi/Ushahidi_Web/issues/904)
 	- Add theme inheritance and css/js overriding
 		* This still default to including the default theme
 		* Allows themes to specify CSS/JS files to include through readme.txt
@@ -25,44 +25,44 @@ Ushahidi 2.7
 	- Further documentation here: https://wiki.ushahidi.com/display/WIKI/Managing+CSS+and+JS+in+Ushahidi
 * Reworking reports upload and download
 	- Adding support for upload/download of reports via XML format
-	- Adding Form_id to downloaded CSV, allowing for import of reports/field responses matched with their respective forms #792.
+	- Adding Form_id to downloaded CSV, allowing for import of reports/field responses matched with their respective forms [#792](https://github.com/ushahidi/Ushahidi_Web/issues/792).
 		* Custom fields within different forms but with the same name shall be differentiated by the form_id appended to column names
 * New hooks and events
-	- Added hook for getting the incident object from the member's report controller #891
-	- Add new event to change members main tabs #882
-	- Add event to allow adding extra variables to a view #550
-	- Add report_save hook to incidents model #913
+	- Added hook for getting the incident object from the member's report controller [#891](https://github.com/ushahidi/Ushahidi_Web/issues/891)
+	- Add new event to change members main tabs [#882](https://github.com/ushahidi/Ushahidi_Web/issues/882)
+	- Add event to allow adding extra variables to a view [#550](https://github.com/ushahidi/Ushahidi_Web/issues/550)
+	- Add report_save hook to incidents model [#913](https://github.com/ushahidi/Ushahidi_Web/issues/913)
 
 ### Other changes and fixes
 
 * Removing hard coded HTTP requests
 	- Add config.external_site_protocol setting to control if external requests use HTTP
 * Ushahidi.js / Other mapping improvements
-	- Restore Openlayers TMS support so cloudmade works again #911
+	- Restore Openlayers TMS support so cloudmade works again [#911](https://github.com/ushahidi/Ushahidi_Web/issues/911)
 	- Fix broken map on /reports/view/XXX pages
-	- Improve handling of marker selection in Ushahidi.js #780
+	- Improve handling of marker selection in Ushahidi.js [#780](https://github.com/ushahidi/Ushahidi_Web/issues/780)
 	- Fix handling for layer urls with query parameters
 	- Make map helper handle TMS layers
-	- Extend timeline by day to up to 6 month #964
-	- Make main map filter by start and end date on first load #964
+	- Extend timeline by day to up to 6 month [#964](https://github.com/ushahidi/Ushahidi_Web/issues/964)
+	- Make main map filter by start and end date on first load [#964](https://github.com/ushahidi/Ushahidi_Web/issues/964)
 	- Set Google maps language based on current locale
-	- Fix json/cluster when some reports have no location #907
-	- Improve JSON controller for easier extension #853
-	- Build cities list from OSM instead of Geonames #979
+	- Fix json/cluster when some reports have no location [#907](https://github.com/ushahidi/Ushahidi_Web/issues/907)
+	- Improve JSON controller for easier extension [#853](https://github.com/ushahidi/Ushahidi_Web/issues/853)
+	- Build cities list from OSM instead of Geonames [#979](https://github.com/ushahidi/Ushahidi_Web/issues/979)
 * Custom forms fixes
-	- Fix form field visibility/submission permissions #744
-	- Fix custom form fields with large list of select options #906
-	- Fix custom form fields permissions #695
+	- Fix form field visibility/submission permissions [#744](https://github.com/ushahidi/Ushahidi_Web/issues/744)
+	- Fix custom form fields with large list of select options [#906](https://github.com/ushahidi/Ushahidi_Web/issues/906)
+	- Fix custom form fields permissions [#695](https://github.com/ushahidi/Ushahidi_Web/issues/695)
 	- Don't assume all users have roles that are pushed in customforms helper.
-	- Removing index in form_field table for those upgrading #922.
+	- Removing index in form_field table for those upgrading [#922](https://github.com/ushahidi/Ushahidi_Web/issues/922).
 * API fixes
-	- Comments API fixes #918
+	- Comments API fixes [#918](https://github.com/ushahidi/Ushahidi_Web/issues/918)
 	- Fix fatal errors in KML api
 	- Fix for API authentication on installations that use CrowdmapID
-	- Fix incidents API returning spam comments. Closes #1002
-	- Make api?task=reports able to submit reports too #988
+	- Fix incidents API returning spam comments. Closes [#1002](https://github.com/ushahidi/Ushahidi_Web/issues/1002)
+	- Make api?task=reports able to submit reports too [#988](https://github.com/ushahidi/Ushahidi_Web/issues/988)
 	- Allow HTTP Basic Auth for authentication anywhere, not just API. Particularly useful for private deployments
-	- Only reset session for non-ajax API requests #791
+	- Only reset session for non-ajax API requests [#791](https://github.com/ushahidi/Ushahidi_Web/issues/791)
 	- Added support for custom fields in Ushahidi API
 * Scheduler
 	- Optimize cleanup scheduler to only load image media type
@@ -74,41 +74,41 @@ Ushahidi 2.7
 	* Load feed items for feed block with the feed data in 1 query 
 * Fixing and improving date fitlers:
 	- Allow date filters with only 'from' or 'to' value, not both
-	- Fix /reports date filter: make 'All Time' filter work #91
-	- Make fetch_incidents() date search from beginning till end of day #220
+	- Fix /reports date filter: make 'All Time' filter work [#91](https://github.com/ushahidi/Ushahidi_Web/issues/91)
+	- Make fetch_incidents() date search from beginning till end of day [#220](https://github.com/ushahidi/Ushahidi_Web/issues/220)
 * Other miscellaneous changes
-	- Allow deleting multiple feed items #981
-	- Fix redirect to addons/plugins when clean urls are off. Closes #1061
-	- Fix unicorn theme with man nav items. Closes #952
-	- Clarify what facebook settings are for. Closes #1059
-	- Site banner setting: accept jpeg and add error message. Closes #579
+	- Allow deleting multiple feed items [#981](https://github.com/ushahidi/Ushahidi_Web/issues/981)
+	- Fix redirect to addons/plugins when clean urls are off. Closes [#1061](https://github.com/ushahidi/Ushahidi_Web/issues/1061)
+	- Fix unicorn theme with man nav items. Closes [#952](https://github.com/ushahidi/Ushahidi_Web/issues/952)
+	- Clarify what facebook settings are for. Closes [#1059](https://github.com/ushahidi/Ushahidi_Web/issues/1059)
+	- Site banner setting: accept jpeg and add error message. Closes [#579](https://github.com/ushahidi/Ushahidi_Web/issues/579)
 	- Fix incident rating: get total incident rating, not single rating entry
 	- Delete form responses when deleting an incident.
-	- Correct OSM attribution. Closes #1029
+	- Correct OSM attribution. Closes [#1029](https://github.com/ushahidi/Ushahidi_Web/issues/1029)
 	- Fix public listing: Pass lat,lon of map center to public listing form.
 	- Fix lat/lon checks on reports/edit form
-	- Fix more info form when member logs in #300
-	- Fix #993 undefined variable when resetting password.
-	- Fix missing table prefix when listing messages by reporter #992
+	- Fix more info form when member logs in [#300](https://github.com/ushahidi/Ushahidi_Web/issues/300)
+	- Fix [#993](https://github.com/ushahidi/Ushahidi_Web/issues/993) undefined variable when resetting password.
+	- Fix missing table prefix when listing messages by reporter [#992](https://github.com/ushahidi/Ushahidi_Web/issues/992)
 	- Rewrote a large portion of the CrowdmapID authentication driver to resolve character encoding issues and improve error handling.
-	- Fix Category_Model::get_categories with prefixes in the database #994
+	- Fix Category_Model::get_categories with prefixes in the database [#994](https://github.com/ushahidi/Ushahidi_Web/issues/994)
 	- Support thumbnails for Videos
-	- Better handling of youtube URL without v= first #982
-	- Better handling of missing settings in hooks/2_settings.php #963
-	- More information link on /reports #935
+	- Better handling of youtube URL without v= first [#982](https://github.com/ushahidi/Ushahidi_Web/issues/982)
+	- Better handling of missing settings in hooks/2_settings.php [#963](https://github.com/ushahidi/Ushahidi_Web/issues/963)
+	- More information link on /reports [#935](https://github.com/ushahidi/Ushahidi_Web/issues/935)
 	- Add config option to enable the profiler everywhere
 	- Fix data switcher on /reports so it sits above the map
-	- Make blocks::render() handle missing block classes gracefully #916
-	- Add extra class to custom field ```<tr>``` and check to show empty fields #914
-	- Fix error in reports::verify_approve() if no authenticated user #912
-	- Add admin reports search form #220
-	- Fix html escaping with UTF8 characters #908
+	- Make blocks::render() handle missing block classes gracefully [#916](https://github.com/ushahidi/Ushahidi_Web/issues/916)
+	- Add extra class to custom field ```<tr>``` and check to show empty fields [#914](https://github.com/ushahidi/Ushahidi_Web/issues/914)
+	- Fix error in reports::verify_approve() if no authenticated user [#912](https://github.com/ushahidi/Ushahidi_Web/issues/912)
+	- Add admin reports search form [#220](https://github.com/ushahidi/Ushahidi_Web/issues/220)
+	- Fix html escaping with UTF8 characters [#908](https://github.com/ushahidi/Ushahidi_Web/issues/908)
 	- Make Settings_Model::save_setting() work when inserting new records too
-	- Fix errors when signing up for mobile alerts #895
-	- Fix category::form_tree() not closing ```<li>``` and ```<ul>``` tags. #905
-	- Fixing bug: Editing a pre-existing incident as a member creates a duplicate incident #897
-	- Don't append country name to locations in /admin/reports. Fixes #880
-	- Add new lines between phone number #879.
+	- Fix errors when signing up for mobile alerts [#895](https://github.com/ushahidi/Ushahidi_Web/issues/895)
+	- Fix category::form_tree() not closing ```<li>``` and ```<ul>``` tags. [#905](https://github.com/ushahidi/Ushahidi_Web/issues/905)
+	- Fixing bug: Editing a pre-existing incident as a member creates a duplicate incident [#897](https://github.com/ushahidi/Ushahidi_Web/issues/897)
+	- Don't append country name to locations in /admin/reports. Fixes [#880](https://github.com/ushahidi/Ushahidi_Web/issues/880)
+	- Add new lines between phone number [#879](https://github.com/ushahidi/Ushahidi_Web/issues/879).
 
 Ushahidi 2.6.1 - Security Fix Release, 20-11-2012
 -------------------------------------
