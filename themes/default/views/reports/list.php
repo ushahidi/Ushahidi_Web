@@ -44,8 +44,8 @@
 				foreach ($incidents as $incident)
 				{
 					$incident_id = $incident->incident_id;
-					$incident_title = html::strip_tags($incident->incident_title);
-					$incident_description = html::strip_tags($incident->incident_description);
+					$incident_title = $incident->incident_title;
+					$incident_description = $incident->incident_description;
 					$incident_url = Incident_Model::get_url($incident_id);
 					//$incident_category = $incident->incident_category;
 					// Trim to 150 characters without cutting words

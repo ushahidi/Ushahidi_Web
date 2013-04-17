@@ -850,9 +850,7 @@ class Json_Controller extends Template_Controller {
 	 */
 	protected function get_title($title, $url)
 	{
-		$encoded_title = utf8tohtml::convert($title, TRUE);
-		$encoded_title = str_ireplace('"','&#34;',$encoded_title);
-		$item_name = "<a href='$url'>".$encoded_title."</a>";
+		$item_name = "<a href='$url'>".$title."</a>";
 		$item_name = str_replace(array(chr(10),chr(13)), ' ', $item_name);
 		return $item_name;
 	}
