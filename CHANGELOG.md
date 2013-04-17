@@ -1,5 +1,118 @@
+Ushahidi 2.7
+-------------------------------------
+
+### Major changes
+
+* Switched WYSIWYG HTML editor to Redactor as previous editor had many issues
+* Use OAuth to grab twitter feeds
+* Better XSS protection
+	- Add HTMLPurifier library for proper HTML sanitization
+	- Add function to html helper: html::escape() html::strip_tags() html::clean()
+	  These should be used instead of htmlentities, string_tags or other built in HTML cleaning functions
+* Theming changes
+	- Use CDN for theme files too #904
+	- Add theme inheritance and css/js overriding
+		* This still default to including the default theme
+		* Allows themes to specify CSS/JS files to include through readme.txt
+		* Allow themes to override CSS/JS from parent theme by include a file of the same name
+	- Split out themes/default/css/style.css
+	- Handle all CSS / JS includes through 1 library: Requirements
+		* This enables us to combine and compress these files
+		* We're adding CSSMin and JSMin to compress files
+		* A bunch of new options in application/config/requirements.php
+	- Add support for RTL css files through Requirements library.
+		* All CSS files can be replaced by a file of the same name with the -rtl suffix.
+	- Further documentation here: https://wiki.ushahidi.com/display/WIKI/Managing+CSS+and+JS+in+Ushahidi
+* Reworking reports upload and download
+	- Adding support for upload/download of reports via XML format
+	- Adding Form_id to downloaded CSV, allowing for import of reports/field responses matched with their respective forms #792.
+		* Custom fields within different forms but with the same name shall be differentiated by the form_id appended to column names
+* New hooks and events
+	- Added hook for getting the incident object from the member's report controller #891
+	- Add new event to change members main tabs #882
+	- Add event to allow adding extra variables to a view #550
+	- Add report_save hook to incidents model #913
+
+### Other changes and fixes
+
+* Removing hard coded HTTP requests
+	- Add config.external_site_protocol setting to control if external requests use HTTP
+* Ushahidi.js / Other mapping improvements
+	- Restore Openlayers TMS support so cloudmade works again #911
+	- Fix broken map on /reports/view/XXX pages
+	- Improve handling of marker selection in Ushahidi.js #780
+	- Fix handling for layer urls with query parameters
+	- Make map helper handle TMS layers
+	- Extend timeline by day to up to 6 month #964
+	- Make main map filter by start and end date on first load #964
+	- Set Google maps language based on current locale
+	- Fix json/cluster when some reports have no location #907
+	- Improve JSON controller for easier extension #853
+	- Build cities list from OSM instead of Geonames #979
+* Custom forms fixes
+	- Fix form field visibility/submission permissions #744
+	- Fix custom form fields with large list of select options #906
+	- Fix custom form fields permissions #695
+	- Don't assume all users have roles that are pushed in customforms helper.
+	- Removing index in form_field table for those upgrading #922.
+* API fixes
+	- Comments API fixes #918
+	- Fix fatal errors in KML api
+	- Fix for API authentication on installations that use CrowdmapID
+	- Fix incidents API returning spam comments. Closes #1002
+	- Make api?task=reports able to submit reports too #988
+	- Allow HTTP Basic Auth for authentication anywhere, not just API. Particularly useful for private deployments
+	- Only reset session for non-ajax API requests #791
+	- Added support for custom fields in Ushahidi API
+* Scheduler
+	- Optimize cleanup scheduler to only load image media type
+	- Scheduler: Add locking mechanism base on using mysql
+	- Scheduler: Check and increase max_execution_time if its too low
+* Optimizations
+	* Adding indexes based on @jetherton's blog post to speed up sql queries
+	* Optimize User_Model::has_permission() to only load roles once
+	* Load feed items for feed block with the feed data in 1 query 
+* Fixing and improving date fitlers:
+	- Allow date filters with only 'from' or 'to' value, not both
+	- Fix /reports date filter: make 'All Time' filter work #91
+	- Make fetch_incidents() date search from beginning till end of day #220
+* Other miscellaneous changes
+	- Allow deleting multiple feed items #981
+	- Fix redirect to addons/plugins when clean urls are off. Closes #1061
+	- Fix unicorn theme with man nav items. Closes #952
+	- Clarify what facebook settings are for. Closes #1059
+	- Site banner setting: accept jpeg and add error message. Closes #579
+	- Fix incident rating: get total incident rating, not single rating entry
+	- Delete form responses when deleting an incident.
+	- Correct OSM attribution. Closes #1029
+	- Fix public listing: Pass lat,lon of map center to public listing form.
+	- Fix lat/lon checks on reports/edit form
+	- Fix more info form when member logs in #300
+	- Fix #993 undefined variable when resetting password.
+	- Fix missing table prefix when listing messages by reporter #992
+	- Rewrote a large portion of the CrowdmapID authentication driver to resolve character encoding issues and improve error handling.
+	- Fix Category_Model::get_categories with prefixes in the database #994
+	- Support thumbnails for Videos
+	- Better handling of youtube URL without v= first #982
+	- Better handling of missing settings in hooks/2_settings.php #963
+	- More information link on /reports #935
+	- Add config option to enable the profiler everywhere
+	- Fix data switcher on /reports so it sits above the map
+	- Make blocks::render() handle missing block classes gracefully #916
+	- Add extra class to custom field ```<tr>``` and check to show empty fields #914
+	- Fix error in reports::verify_approve() if no authenticated user #912
+	- Add admin reports search form #220
+	- Fix html escaping with UTF8 characters #908
+	- Make Settings_Model::save_setting() work when inserting new records too
+	- Fix errors when signing up for mobile alerts #895
+	- Fix category::form_tree() not closing ```<li>``` and ```<ul>``` tags. #905
+	- Fixing bug: Editing a pre-existing incident as a member creates a duplicate incident #897
+	- Don't append country name to locations in /admin/reports. Fixes #880
+	- Add new lines between phone number #879.
+
 Ushahidi 2.6.1 - Security Fix Release, 20-11-2012
 -------------------------------------
+
 * Vulnerability: Forgotten password challenge guessable. 
 
 Ushahidi 2.6 (Tripoli), 23-10-2012
@@ -222,7 +335,7 @@ Ushahidi 2.0 (Luanda), 22-11-2010
     
 Ushahidi 1.2 (After Haiti in Jan 2010)
 --------------------------------------
-*Usability
+* Usability
     - A collapsible category tree on the submit report page
 * Clustering
     - Clustering of reports is now on the server side. It was previously being done on the client side via JavaScript
