@@ -1,4 +1,4 @@
-Ushahidi 2.7
+Ushahidi 2.7b
 -------------------------------------
 
 ### Major changes
