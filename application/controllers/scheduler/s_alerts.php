@@ -69,22 +69,9 @@ class S_Alerts_Controller extends Controller {
 
 		$db = new Database();
 		
-		/* Find All Alerts with the following parameters
-		- incident_active = 1 -- An approved incident
-		- incident_alert_status = 1 -- Incident has been tagged for sending
-		
-		Incident Alert Statuses
-		  - 0, Incident has not been tagged for sending. Ensures old incidents are not sent out as alerts
-		  - 1, Incident has been tagged for sending by updating it with 'approved' or 'verified'
-		  - 2, Incident has been tagged as sent. No need to resend again
-		*/
-		/*$incidents = $db->query("SELECT i.id, incident_title,
-			incident_description, incident_verified,
-			l.latitude, l.longitude, a.alert_id, a.incident_id
-			FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
-			LEFT OUTER JOIN ".$this->table_prefix."alert_sent AS a ON i.id = a.incident_id WHERE
-			i.incident_active=1 AND i.incident_alert_status = 1 ");*/
 		// HT: New Code
+		// Fixes an issue with one report being sent out as an alert more than ones
+		// becoming spam to users
 		$incidents = $db->query("SELECT i.id, incident_title,
 					incident_description, incident_verified,
 					l.latitude, l.longitude FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
@@ -119,12 +106,6 @@ class S_Alerts_Controller extends Controller {
 			// Find all the catecories including parents
 			$category_ids = $this->_find_categories($incident->id);
 
-			// Get all alertees
-			/*
-			$alertees = ORM::factory('alert')
-						->where('alert_confirmed','1')
-						->find_all();
-			*/
 				
 			// HT: New Code
 			$alert_sent = ORM::factory('alert_sent')->where('incident_id', $incident->id)->select_list('id', 'alert_id');
