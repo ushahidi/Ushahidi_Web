@@ -78,12 +78,18 @@ class S_Alerts_Controller extends Controller {
 		  - 1, Incident has been tagged for sending by updating it with 'approved' or 'verified'
 		  - 2, Incident has been tagged as sent. No need to resend again
 		*/
-		$incidents = $db->query("SELECT i.id, incident_title, 
-			incident_description, incident_verified, 
+		/*$incidents = $db->query("SELECT i.id, incident_title,
+			incident_description, incident_verified,
 			l.latitude, l.longitude, a.alert_id, a.incident_id
 			FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
 			LEFT OUTER JOIN ".$this->table_prefix."alert_sent AS a ON i.id = a.incident_id WHERE
-			i.incident_active=1 AND i.incident_alert_status = 1 ");
+			i.incident_active=1 AND i.incident_alert_status = 1 ");*/
+		// HT: New Code
+		$incidents = $db->query("SELECT i.id, incident_title,
+					incident_description, incident_verified,
+					l.latitude, l.longitude FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
+					WHERE i.incident_active=1 AND i.incident_alert_status = 1 ");
+		// End of New Code		
 		
 		foreach ($incidents as $incident)
 		{
@@ -109,15 +115,27 @@ class S_Alerts_Controller extends Controller {
 			
 			$latitude = (double) $incident->latitude;
 			$longitude = (double) $incident->longitude;
-			
+
 			// Find all the catecories including parents
 			$category_ids = $this->_find_categories($incident->id);
 
 			// Get all alertees
+			/*
 			$alertees = ORM::factory('alert')
-				->where('alert_confirmed','1')
-				->find_all();
+						->where('alert_confirmed','1')
+						->find_all();
+			*/
+				
+			// HT: New Code
+			$alert_sent = ORM::factory('alert_sent')->where('incident_id', $incident->id)->select_list('id', 'alert_id');
+			$alertObj = ORM::factory('alert')->where('alert_confirmed','1');
 			
+			if(!empty($alert_sent)) {
+				$alertObj->notin('id', $alert_sent);
+			}
+			$alertees = $alertObj->find_all();
+			// End of new code
+					
 			foreach ($alertees as $alertee)
 			{
 				// Has this alert been sent to this alertee?
@@ -179,7 +197,8 @@ class S_Alerts_Controller extends Controller {
 									."\n\n".$unsubscribe_message
 									.$alertee->alert_code."\n";
 
-						if (email::send($to, $from, $subject, $message, FALSE) == 1)
+						//if (email::send($to, $from, $subject, $message, FALSE) == 1)
+						if (email::send($to, $from, $subject, $message, TRUE) == 1) // HT: New Code
 						{
 							$alert = ORM::factory('alert_sent');
 							$alert->alert_id = $alertee->id;
