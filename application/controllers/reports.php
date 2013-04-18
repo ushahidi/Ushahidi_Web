@@ -571,17 +571,18 @@ class Reports_Controller extends Main_Controller {
 					Event::run('ushahidi_action.comment_add', $comment);
 
 					// Notify Admin Of New Comment
-					$send = notifications::notify_admins(
-						"[".Kohana::config('settings.site_name')."] ".
-							Kohana::lang('notifications.admin_new_comment.subject'),
-							Kohana::lang('notifications.admin_new_comment.message')
-							."\n\n'".utf8::strtoupper($incident->incident_title)."'"
-							."\n".url::base().'reports/view/'.$id
-						);
-
+					if ($comment_spam == 0) { // HT: New Code # send notification if not spam
+						$send = notifications::notify_admins(
+							"[".Kohana::config('settings.site_name')."] ".
+								Kohana::lang('notifications.admin_new_comment.subject'),
+								Kohana::lang('notifications.admin_new_comment.message')
+								."\n\n'".utf8::strtoupper($incident->incident_title)."'"
+								."\n".url::base().'reports/view/'.$id
+							);
+					}
 					// Redirect
 					url::redirect('reports/view/'.$id);
-
+				
 				}
 				else
 				{
