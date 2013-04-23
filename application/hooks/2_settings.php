@@ -76,3 +76,15 @@ if ( ! Kohana::config('config.external_site_protocol'))
 {
 	Kohana::config_set('config.external_site_protocol', 'https');
 }
+
+// Default for allowed_html in case upgraders don't add it to config.php
+if ( ! Kohana::config('config.allowed_html') )
+{
+  Kohana::config_set('config.allowed_html', 'a[href|title],p,img[src|alt],br,b,u,strong,em,i'); 
+}
+// Default for allowed iframe regexp, in case upgraders don't add it to config.php
+if ( ! Kohana::config('config.allowed_iframe_regexp') )
+{
+  Kohana::config_set('config.allowed_iframe_regexp', '%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player)%'); 
+}
+
