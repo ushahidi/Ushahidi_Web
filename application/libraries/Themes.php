@@ -188,17 +188,17 @@ class Themes_Core {
 			Requirements::js("media/js/colorpicker.js");
 		}
 
-		// Load redactor
+		// Load jwysiwyg
 		if ($this->editor_enabled)
 		{
-			Requirements::css('media/js/redactor/redactor/redactor.css');
-			if (Kohana::config("cdn.cdn_ignore_redactor") == TRUE)
+			Requirements::css('media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.css');
+			if (Kohana::config("cdn.cdn_ignore_jwysiwyg") == TRUE)
 			{
-				Requirements::js(url::file_loc('ignore').'media/js/redactor/redactor/redactor.min.js'); // not sure what the hell to do about this
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js'); // not sure what the hell to do about this
 			}
 			else
 			{
-				Requirements::js('media/js/redactor/redactor/redactor.min.js');
+				Requirements::js('media/js/jwysiwyg/jwysiwyg/jquery.wysiwyg.js');
 			}
 		}
 	

@@ -28,7 +28,7 @@ function fillFields(id, page_title, page_tab,
 	$("#page_tab").attr("value", decodeURIComponent(page_tab));
 	page_description = decodeURIComponent(escape($.base64.decode(page_description)));
 	$("#page_description").attr("value", decodeURIComponent(page_description));
-	$("#page_description").redactor("setContent",decodeURIComponent(page_description));
+	$("#page_description").wysiwyg("setContent",decodeURIComponent(page_description));
 }
 
 // Ajax Submission
@@ -46,9 +46,9 @@ function pageAction ( action, confirmAction, id )
 	}
 }
 
-//Load redactor editor
+//Load jwysiwyg editor
 var hb_full ;
 $(document).ready(function(){
-	hb_full = $("#page_description").redactor();
+	hb_full = $("#page_description").wysiwyg();
 });
 
