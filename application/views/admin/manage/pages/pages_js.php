@@ -49,6 +49,18 @@ function pageAction ( action, confirmAction, id )
 //Load jwysiwyg editor
 var hb_full ;
 $(document).ready(function(){
-	hb_full = $("#page_description").wysiwyg();
+	hb_full = $("#page_description").wysiwyg({
+		controls: {
+			strikeThrough: { visible: false },
+			underline: { visible: false },
+			subscript: { visible: false },
+			superscript: { visible: false },
+			justifyLeft:{ visible: false },
+			justifyCenter: { visible: false },
+			justifyRight: { visible: false },
+			justifyFull: { visible: false },
+			html: {visible: true},
+		}
+	});
 });
 
