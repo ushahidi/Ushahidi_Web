@@ -3,7 +3,7 @@
 		<!-- start reports block -->
 		<div class="big-block">
 			<h1 class="heading">
-				<?php echo Kohana::lang('ui_main.showing_reports_from', array(date('M d, Y', $oldest_timestamp), date('M d, Y', $latest_timestamp))); ?> 
+				<?php echo Kohana::lang('ui_main.showing_reports_from', array(date('M d, Y', $oldest_timestamp), date('M d, Y', $latest_timestamp))); ?>
 				<a href="#" class="btn-change-time ic-time"><?php echo Kohana::lang('ui_main.change_date_range'); ?></a>
 			</h1>
 			
@@ -85,7 +85,7 @@
 							</ul>
 						</div>
 						
-						<h3>	
+						<h3>
 							<a href="#" class="small-link-button f-clear reset" onclick="removeParameterKey('radius', 'f-location-box');removeParameterKey('start_loc', 'f-location-box');">
 								<?php echo Kohana::lang('ui_main.clear')?>
 							</a>
@@ -198,10 +198,11 @@
 					
 					<div id="filter-controls">
 						<p>
-							<a href="#" class="small-link-button reset" id="reset_all_filters"><?php echo Kohana::lang('ui_main.reset_all_filters'); ?></a> 
+							<a href="#" class="small-link-button reset" id="reset_all_filters"><?php echo Kohana::lang('ui_main.reset_all_filters'); ?></a>
 							<a href="#" id="applyFilters" class="filter-button"><?php echo Kohana::lang('ui_main.filter_reports'); ?></a>
 						</p>
-					</div>          
+						<?php Event::run('ushahidi_action.report_filters_controls_ui'); ?>
+					</div>
 				</div>
 				<!-- end #filters-box -->
 			</div>
