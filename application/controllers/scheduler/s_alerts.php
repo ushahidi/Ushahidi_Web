@@ -3,14 +3,14 @@
  * Alerts Scheduler Controller
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
+ * @author	   Ushahidi Team <team@ushahidi.com>
  * @package	   Ushahidi - http://source.ushahididev.com
  * @subpackage Scheduler
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
 */
 
 class S_Alerts_Controller extends Controller {
@@ -52,7 +52,7 @@ class S_Alerts_Controller extends Controller {
 		$this->cache->delete(Kohana::config('settings.subdomain')."_alerts_lock");
 	}
 	
-	public function index() 
+	public function index()
 	{
 		$settings = kohana::config('settings');
 		$site_name = $settings['site_name'];
@@ -89,7 +89,7 @@ class S_Alerts_Controller extends Controller {
 					incident_description, incident_verified,
 					l.latitude, l.longitude FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
 					WHERE i.incident_active=1 AND i.incident_alert_status = 1 ");
-		// End of New Code		
+		// End of New Code
 		
 		foreach ($incidents as $incident)
 		{
@@ -139,9 +139,9 @@ class S_Alerts_Controller extends Controller {
 			foreach ($alertees as $alertee)
 			{
 				// Has this alert been sent to this alertee?
-				if ($alertee->id == $incident->alert_id)
+				/* if ($alertee->id == $incident->alert_id)
 					continue;
-				
+				 */
 				// Check the categories
 				if (!$this->_check_categories($alertee, $category_ids)) {
 				  continue;
@@ -167,7 +167,7 @@ class S_Alerts_Controller extends Controller {
 						elseif (Kohana::config("settings.sms_no1"))
 							$sms_from = Kohana::config("settings.sms_no1");
 						else
-							$sms_from = "12053705050";		// Admin needs to set up an SMS number	
+							$sms_from = "12053705050";		// Admin needs to set up an SMS number
 						
 						
 						
