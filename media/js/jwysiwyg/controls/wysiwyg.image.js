@@ -115,7 +115,7 @@
 				// File Manager (select file):
 				if ($.wysiwyg.fileManager) {
 					$("div.wysiwyg-fileManager").bind("click", function () {
-						$.wysiwyg.fileManager.init(function (selected) {
+						$.wysiwyg.fileManager.init(Wysiwyg, function (selected) {
 							dialog.find("input[name=src]").val(selected);
 							dialog.find("input[name=src]").trigger("change");
 						});

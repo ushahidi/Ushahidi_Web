@@ -30,10 +30,10 @@
 			return this;
 		},
 		ready: false,
-		init: function (callback) {
+		init: function (Wysiwyg, callback) {
 			if (this.ready) {
 				var manager = new fileManagerObj(this.ajaxHandler);
-				manager.load(callback);
+				manager.load(Wysiwyg, callback);
 			} else {
 				console.log("$.wysiwyg.fileManager: Must set ajax handler first, using $.wysiwyg.fileManager.setAjaxHandler()");
 				return false;
@@ -57,14 +57,15 @@
 		this.curDir = "/";
 		this.curListHtml = "";
 		this.dialog = null;
+		this.baseUrl = "";
 
 		/**
 		 * Methods
 		 */
 		var console = $.wysiwyg.console;
-		console.log("handler: " + this.handler);
+		//console.log("handler: " + this.handler);
 
-		this.load = function (callback) {
+		this.load = function (Wysiwyg, callback) {
 			var self = this;
 			self.loaded = true;
 			self.authenticate(function (response) {
@@ -100,7 +101,7 @@
 				if ($.wysiwyg.dialog) {
 					// Support for native $.wysiwyg.dialog()
 					var _title = self.i18n("{{file_manager}}");
-					var fileManagerUI = new $.wysiwyg.dialog(_handler, {
+					var fileManagerUI = new $.wysiwyg.dialog(Wysiwyg, {
 						"title": _title,
 						"content": uiHtml,
 						"close": function (e, dialog) {
@@ -119,7 +120,7 @@
 								var file = dialog.find("input[name=url]").val();
 								fileManagerUI.close();
 								self.loaded = false;
-								callback(file);
+								callback(self.baseUrl+file);
 							});
 
 							// Create Directory
@@ -185,6 +186,7 @@
 					self.remove = json.data.remove;
 					self.mkdir = json.data.mkdir;
 					self.upload = json.data.upload;
+					self.baseUrl = json.data.baseUrl;
 					callback("success");
 				} else {
 					callback(json.error + "\n<br>$.wysiwyg.fileManager: Unable to authenticate handler.");

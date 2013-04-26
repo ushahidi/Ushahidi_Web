@@ -192,13 +192,26 @@ class Themes_Core {
 		if ($this->editor_enabled)
 		{
 			Requirements::css('media/js/jwysiwyg/jquery.wysiwyg.css');
+			Requirements::css('media/js/jwysiwyg/plugins/fileManager/wysiwyg.fileManager.css');
 			if (Kohana::config("cdn.cdn_ignore_jwysiwyg") == TRUE)
 			{
 				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/jquery.wysiwyg.js'); // not sure what the hell to do about this
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/controls/wysiwyg.link.js');
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/controls/wysiwyg.image.js');
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/controls/wysiwyg.table.js');
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/plugins/wysiwyg.fullscreen.js');
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/plugins/wysiwyg.rmFormat.js');
+				Requirements::js(url::file_loc('ignore').'media/js/jwysiwyg/plugins/wysiwyg.fileManager.js');
 			}
 			else
 			{
 				Requirements::js('media/js/jwysiwyg/jquery.wysiwyg.js');
+				Requirements::js('media/js/jwysiwyg/controls/wysiwyg.link.js');
+				Requirements::js('media/js/jwysiwyg/controls/wysiwyg.image.js');
+				Requirements::js('media/js/jwysiwyg/controls/wysiwyg.table.js');
+				Requirements::js('media/js/jwysiwyg/plugins/wysiwyg.fullscreen.js');
+				Requirements::js('media/js/jwysiwyg/plugins/wysiwyg.rmFormat.js');
+				Requirements::js('media/js/jwysiwyg/plugins/wysiwyg.fileManager.js');
 			}
 		}
 	

@@ -1,11 +1,10 @@
-<?php
+<?php defined('SYSPATH') or die('No direct script access.');
 
 /**
  * PHP handler for jWYSIWYG file uploader.
  *
  * By Alec Gorge <alecgorge@gmail.com>
  */
-require_once 'config.php';
 
 class Config {
 	public static $instance;
