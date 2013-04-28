@@ -53,7 +53,7 @@ $config['cdn_container'] = "";
 //
 $config['cdn_gradual_upgrade'] = false;
 
-// Avoid XSS problems with redactor in CDN environments.
-$config['cdn_ignore_redactor'] = true;
+// Avoid XSS problems with jwysiwyg in CDN environments.
+$config['cdn_ignore_jwysiwyg'] = true;
 
 ?>

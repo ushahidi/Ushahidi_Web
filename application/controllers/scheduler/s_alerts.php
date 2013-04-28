@@ -69,6 +69,15 @@ class S_Alerts_Controller extends Controller {
 
 		$db = new Database();
 		
+		/* Find All Alerts with the following parameters
+		- incident_active = 1 -- An approved incident
+		- incident_alert_status = 1 -- Incident has been tagged for sending
+		
+		Incident Alert Statuses
+		- 0, Incident has not been tagged for sending. Ensures old incidents are not sent out as alerts
+		- 1, Incident has been tagged for sending by updating it with 'approved' or 'verified'
+		- 2, Incident has been tagged as sent. No need to resend again
+		*/
 		// HT: New Code
 		// Fixes an issue with one report being sent out as an alert more than ones
 		// becoming spam to users
@@ -116,13 +125,9 @@ class S_Alerts_Controller extends Controller {
 			}
 			$alertees = $alertObj->find_all();
 			// End of new code
-					
+			
 			foreach ($alertees as $alertee)
 			{
-				// Has this alert been sent to this alertee?
-				if ($alertee->id == $incident->alert_id)
-					continue;
-				
 				// Check the categories
 				if (!$this->_check_categories($alertee, $category_ids)) {
 				  continue;
