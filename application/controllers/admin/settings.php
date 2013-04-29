@@ -875,7 +875,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
 		$this->template->content->yesno_array = array('1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
-		$this->themes->content->is_clean_url_enabled = $this->_check_for_clean_url();
+		$this->template->content->is_clean_url_enabled = $this->_check_for_clean_url();
 
 	}
 
