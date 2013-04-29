@@ -1,9 +1,8 @@
-Ushahidi 2.7b
+Ushahidi 2.7 (Bamako) - 02/05/2013
 -------------------------------------
 
 ### Major changes
 
-* Switched WYSIWYG HTML editor to Redactor as previous editor had many issues
 * Use OAuth to grab twitter feeds
 * Better XSS protection
 	- Add HTMLPurifier library for proper HTML sanitization
