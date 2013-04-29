@@ -1,4 +1,4 @@
-Ushahidi 2.7b
+Ushahidi 2.7 (Bamako) - 02/05/2013
 -------------------------------------
 
 ### Major changes
