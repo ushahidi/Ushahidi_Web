@@ -25,7 +25,7 @@
 			$incident_location = $incident->location->location_name;
 		?>
 		<tr>
-			<td><a href="<?php echo url::site() . 'reports/view/' . $incident_id; ?>"> <?php echo html::escape($incident_title) ?></a></td>
+			<td><a href="<?php echo url::site() . 'reports/view/' . $incident_id; ?>"> <?php echo $incident_title ?></a></td>
 			<td><?php echo html::escape($incident_location) ?></td>
 			<td><?php echo $incident_date; ?></td>
 		</tr>
