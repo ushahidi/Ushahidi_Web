@@ -28,6 +28,7 @@ class html extends html_Core {
 		// $config->set('Core.Encoding', 'UTF-8');
 		// $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
 		$config->set('Core.EnableIDNA', TRUE);
+		$config->set('Cache.SerializerPath', APPPATH.'cache');
 		$config->set('HTML.Allowed', Kohana::config('config.allowed_html', FALSE, TRUE));
 		// Allow some basic iframes
 		$config->set('HTML.SafeIframe', true);
@@ -59,6 +60,7 @@ class html extends html_Core {
 		// $config->set('Core.Encoding', 'UTF-8');
 		// $config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
 		$config->set('Core.EnableIDNA', TRUE);
+		$config->set('Cache.SerializerPath', APPPATH.'cache');
 		$config->set('HTML.Allowed', "");
 		
 		$purifier = new HTMLPurifier($config);
