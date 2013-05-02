@@ -915,11 +915,11 @@ class Reports_Controller extends Main_Controller {
 		
 		if ($type == 'original')
 		{
-			$result = $this->db->query('SELECT SUM(rating) as total_rating FROM rating WHERE incident_id = ?', $id);
+			$result = $this->db->query('SELECT SUM(rating) as total_rating FROM '.$this->table_prefix.'rating WHERE incident_id = ?', $id);
 		}
 		elseif ($type == 'comment')
 		{
-			$result = $this->db->query('SELECT SUM(rating) as total_rating FROM rating WHERE comment_id = ?', $id);
+			$result = $this->db->query('SELECT SUM(rating) as total_rating FROM '.$this->table_prefix.'rating WHERE comment_id = ?', $id);
 		}
 		
 		if ($result->count() == 0 OR $result->current()->total_rating == NULL) return 0;
