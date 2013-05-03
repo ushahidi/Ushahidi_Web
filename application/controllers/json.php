@@ -594,7 +594,7 @@ class Json_Controller extends Template_Controller {
 
 		// Fetch the timeline data
 		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number '
-		    . 'FROM '.$this->table_prefix.'incident '
+		    . 'FROM '.$this->table_prefix.'incident AS incident '
 		    . 'WHERE incident_active = 1 '.$incident_id_in.' '
 		    . 'GROUP BY '.$groupby_date_text;
 		
