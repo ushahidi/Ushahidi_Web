@@ -531,22 +531,22 @@ class Json_Controller extends Template_Controller {
 		// Change select / group by expression based on interval
 		// Not a great way to do this but can't think of a better option
 		// Default values: month
-		$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-01')";
-		$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m')";
+		$select_date_text = "DATE_FORMAT(i.incident_date, '%Y-%m-01')";
+		$groupby_date_text = "DATE_FORMAT(i.incident_date, '%Y%m')";
 		if ($interval == 'day')
 		{
-			$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d')";
-			$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d')";
+			$select_date_text = "DATE_FORMAT(i.incident_date, '%Y-%m-%d')";
+			$groupby_date_text = "DATE_FORMAT(i.incident_date, '%Y%m%d')";
 		}
 		elseif ($interval == 'hour')
 		{
-			$select_date_text = "DATE_FORMAT(incident_date, '%Y-%m-%d %H:%M')";
-			$groupby_date_text = "DATE_FORMAT(incident_date, '%Y%m%d%H')";
+			$select_date_text = "DATE_FORMAT(i.incident_date, '%Y-%m-%d %H:%M')";
+			$groupby_date_text = "DATE_FORMAT(i.incident_date, '%Y%m%d%H')";
 		}
 		elseif ($interval == 'week')
 		{
-			$select_date_text = "STR_TO_DATE(CONCAT(CAST(YEARWEEK(incident_date) AS CHAR), ' Sunday'), '%X%V %W')";
-			$groupby_date_text = "YEARWEEK(incident_date)";
+			$select_date_text = "STR_TO_DATE(CONCAT(CAST(YEARWEEK(i.incident_date) AS CHAR), ' Sunday'), '%X%V %W')";
+			$groupby_date_text = "YEARWEEK(i.incident_date)";
 		}
 
 		$graph_data = array();
@@ -566,20 +566,20 @@ class Json_Controller extends Template_Controller {
 			    . 'WHERE (c.id = :cid OR c.parent_id = :cid)';
 			
 			$params[':cid'] = $category_id;
-			$incident_id_in .= " AND incident.id IN ( $query ) ";
+			$incident_id_in .= " AND i.id IN ( $query ) ";
 		}
 		
 		// Apply start and end date filters
 		if (isset($_GET['s']) AND isset($_GET['e']))
 		{
-			$query = 'SELECT id FROM '.$this->table_prefix.'incident '
-			    . 'WHERE incident_date >= :datestart '
-			    . 'AND incident_date <= :dateend ';
+			$query = 'SELECT filtered_incidents.id FROM '.$this->table_prefix.'incident AS filtered_incidents '
+			    . 'WHERE filtered_incidents.incident_date >= :datestart '
+			    . 'AND filtered_incidents.incident_date <= :dateend ';
 
 			// Cast timestamps to int to avoid php error - they'll be sanitized again by db_query
 			$params[':datestart'] = date("Y-m-d H:i:s", (int)$_GET['s']);
 			$params[':dateend'] = date('Y-m-d H:i:s', (int)$_GET['e']);
-			$incident_id_in .= " AND incident.id IN ( $query ) ";
+			$incident_id_in .= " AND i.id IN ( $query ) ";
 		}
 
 		// Apply media type filters
@@ -589,15 +589,15 @@ class Json_Controller extends Template_Controller {
 			    . "WHERE media_type = :mtype ";
 
 			$params[':mtype'] = $_GET['m'];
-			$incident_id_in .= " AND incident.id IN ( $query ) ";
+			$incident_id_in .= " AND i.id IN ( $query ) ";
 		}
 
 		// Fetch the timeline data
-		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(id) AS number '
-		    . 'FROM '.$this->table_prefix.'incident '
-		    . 'WHERE incident_active = 1 '.$incident_id_in.' '
+		$query = 'SELECT UNIX_TIMESTAMP('.$select_date_text.') AS time, COUNT(i.id) AS number '
+		    . 'FROM '.$this->table_prefix.'incident AS i '
+		    . 'WHERE i.incident_active = 1 '.$incident_id_in.' '
 		    . 'GROUP BY '.$groupby_date_text;
-		
+
 		foreach ($db->query($query, $params) as $items)
 		{
 			array_push($graph_data[0]['data'], array($items->time * 1000, $items->number));
