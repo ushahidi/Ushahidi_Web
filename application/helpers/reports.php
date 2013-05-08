@@ -563,15 +563,30 @@ class reports_Core {
 				
 				if (Kohana::config("cdn.cdn_store_dynamic_content"))
 				{
-					$media_link = cdn::upload($media_link);
-					$media_medium = cdn::upload($media_medium);
-					$media_thumb = cdn::upload($media_thumb);
+					$cdn_media_link = cdn::upload($media_link);
+					$cdn_media_medium = cdn::upload($media_medium);
+					$cdn_media_thumb = cdn::upload($media_thumb);
 					
 					// We no longer need the files we created on the server. Remove them.
 					$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
-					unlink($local_directory.$media_link);
-					unlink($local_directory.$media_medium);
-					unlink($local_directory.$media_thumb);
+					if (file_exists($local_directory.$media_link))
+					{
+						unlink($local_directory.$media_link);
+					}
+ 
+					if (file_exists($local_directory.$media_medium))
+					{
+						unlink($local_directory.$media_medium);
+					}
+ 
+					if (file_exists($local_directory.$media_thumb))
+					{
+						unlink($local_directory.$media_thumb);
+					}
+					
+					$media_link = $cdn_media_link;
+					$media_medium = $cdn_media_medium;
+					$media_thumb = $cdn_media_thumb;
 				}
 
 				// Remove the temporary file

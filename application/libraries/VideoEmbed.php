@@ -75,8 +75,11 @@ class VideoEmbed
 	public function set_url($url)
 	{
 		$this->service_name = $this->detect_service($url);
-		$services = $this->services();
-		$this->service = $services[$this->service_name];
+		if ($this->service_name !== FALSE)
+		{
+			$services = $this->services();
+			$this->service = $services[$this->service_name];
+		}
 		
 		$this->url = $this->clean_url($url);
 	}
@@ -151,7 +154,10 @@ class VideoEmbed
 		$output = FALSE;
 		
 		// Get video code from url.
-		$code = str_replace($this->service['baseurl'], "", $this->url);
+		if (isset($this->service['baseurl']))
+		{
+			$code = str_replace($this->service['baseurl'], "", $this->url);
+		}
 		
 		switch($this->service_name)
 		{
@@ -202,7 +208,7 @@ class VideoEmbed
 		
 		if (!$output)
 		{
-			$output = '<a href="'.$this->url.'" target="_blank">'.Kohana::lang('ui_main.view_view').'</a>';
+			$output = '<a href="'.$this->url.'" target="_blank">'.Kohana::lang('ui_main.view_video').'</a>';
 		}
 
 		if ($echo) echo $output;
