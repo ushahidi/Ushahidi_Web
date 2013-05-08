@@ -230,6 +230,7 @@ class Admin_Controller extends Template_Controller {
 	public function _pre_render()
 	{
 		$this->themes->requirements();
+		$this->themes->plugin_requirements();
 		$this->template->header_block = $this->themes->header_block();
 		$this->template->footer_block = $this->themes->footer_block();
 	}
