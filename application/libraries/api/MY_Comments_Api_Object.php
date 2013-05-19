@@ -781,7 +781,7 @@ class Comments_Api_Object extends Api_Object_Core {
 			{
 				$this->query = "SELECT id, incident_id, comment_author, ";
 				$this->query .= "comment_description, comment_date ";
-				$this->query .= "FROM " . $this->table_prefix . "`comment`";
+				$this->query .= "FROM `" . $this->table_prefix . "comment`";
 				$this->query .= " WHERE `incident_id` = " . $this->db->escape_str($id) . " AND `comment_active` = '1' ";
 				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
 				$incident_comments = $this->db->query($this->query);
@@ -848,7 +848,7 @@ class Comments_Api_Object extends Api_Object_Core {
 			{
 				$this->query = "SELECT id, checkin_id, comment_author, ";
 				$this->query .= "comment_description, comment_date ";
-				$this->query .= "FROM " . $this->table_prefix . "`comment`";
+				$this->query .= "FROM `" . $this->table_prefix . "comment`";
 				$this->query .= " WHERE `checkin_id` = " . $this->db->escape_str($id) . " AND `comment_active` = '1' ";
 				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
 				$checkin_comments = $this->db->query($this->query);
