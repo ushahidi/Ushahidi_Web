@@ -40,14 +40,7 @@ class User_Model extends Auth_User_Model {
 			$user->name = $name;
 		}
 
-		if ($riverid != false)
-		{
-			$user->riverid = $riverid;
-		}
-		else
-		{
-			$user->riverid = '';
-		}
+		$user->riverid = ( $riverid == false ) ? '' : $riverid;
 
 		// Add New Roles if:
 		//    1. We don't require admin to approve users (will be added when admin approves)
