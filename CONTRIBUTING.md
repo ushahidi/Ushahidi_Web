@@ -11,7 +11,7 @@ Ushahidi is an open source project. We encourage you to pitch in. [Join the mail
 
 *We only accept bug reports, feature request and pull requests in GitHub*.
 
-* If you have a question about how to use Ruby on Rails, please [ask on the Ushahidi Forums](http://forums.ushahidi.com).
+* If you have a question about how to use Ushahidi, please [ask on the Ushahidi Forums](http://forums.ushahidi.com).
 
-Thanks! :heart: :heart: :heart: <br />
+Thanks!
 Ushahidi Team
