@@ -1,4 +1,4 @@
-Ruby on Rails is a volunteer effort. We encourage you to pitch in. [Join the team](http://contributors.rubyonrails.org)!
+Ushahidi is an open source project. We encourage you to pitch in. [Join the mailing list](http://list.ushahidi.com) and dive into the [wiki](https://wiki.ushahidi.com)!
 
 * If you want to submit a bug report please make sure to follow our [reporting guidelines](https://wiki.ushahidi.com/display/WIKI/Report+a+bug).
 
