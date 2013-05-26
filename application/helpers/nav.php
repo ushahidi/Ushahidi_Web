@@ -13,11 +13,11 @@ class nav_Core {
 	 * Generate Main Tabs
      * @param string $this_page
      * @param array $dontshow
-	 * @return string $menu
      */
 	public static function main_tabs($this_page = FALSE, $dontshow = FALSE)
 	{
-		$menu = "";
+		$menu_items = array();
+		$site = url::site();
 		
 		if( ! is_array($dontshow))
 		{
@@ -28,17 +28,21 @@ class nav_Core {
 		// Home
 		if( ! in_array('home',$dontshow))
 		{
-			$menu .= "<li><a href=\"".url::site()."main\" ";
-			$menu .= ($this_page == 'home') ? " class=\"active\"" : "";
-		 	$menu .= ">".Kohana::lang('ui_main.home')."</a></li>";
-		 }
+			$menu_items[] = array( 
+				'page' => 'home',
+				'url' => $site.'main',
+				'name' => Kohana::lang('ui_main.home')
+			);
+		}
 
 		// Reports List
 		if( ! in_array('reports',$dontshow))
 		{
-			$menu .= "<li><a href=\"".url::site()."reports\" ";
-			$menu .= ($this_page == 'reports') ? " class=\"active\"" : "";
-		 	$menu .= ">".Kohana::lang('ui_main.reports')."</a></li>";
+			$menu_items[] = array( 
+				'page' => 'reports',
+				'url' => $site.'reports',
+				'name' => Kohana::lang('ui_main.reports')
+			);
 		 }
 		
 		// Reports Submit
@@ -46,9 +50,11 @@ class nav_Core {
 		{
 			if (Kohana::config('settings.allow_reports'))
 			{
-				$menu .= "<li><a href=\"".url::site()."reports/submit\" ";
-				$menu .= ($this_page == 'reports_submit') ? " class=\"active\"":"";
-			 	$menu .= ">".Kohana::lang('ui_main.submit')."</a></li>";
+				$menu_items[] = array( 
+					'page' => 'reports_submit',
+					'url' => $site.'reports/submit',
+					'name' => Kohana::lang('ui_main.submit')
+				);
 			}
 		}
 		
@@ -57,9 +63,11 @@ class nav_Core {
 		{
 			if(Kohana::config('settings.allow_alerts'))
 			{
-				$menu .= "<li><a href=\"".url::site()."alerts\" ";
-				$menu .= ($this_page == 'alerts') ? " class=\"active\"" : "";
-				$menu .= ">".Kohana::lang('ui_main.alerts')."</a></li>";
+				$menu_items[] = array( 
+					'page' => 'alerts',
+					'url' => $site.'alerts',
+					'name' => Kohana::lang('ui_main.alerts')
+				);
 			}
 		}
 		
@@ -68,9 +76,11 @@ class nav_Core {
 		{
 			if (Kohana::config('settings.site_contact_page') AND Kohana::config('settings.site_email') != "")
 			{
-				$menu .= "<li><a href=\"".url::site()."contact\" ";
-				$menu .= ($this_page == 'contact') ? " class=\"active\"" : "";
-			 	$menu .= ">".Kohana::lang('ui_main.contact')."</a></li>";	
+				$menu_items[] = array( 
+					'page' => 'contact',
+					'url' => $site.'contact',
+					'name' => Kohana::lang('ui_main.contact')
+				);	
 			}
 		}
 		
@@ -83,15 +93,26 @@ class nav_Core {
 			{
 				if( ! in_array('page/'.$page->id,$dontshow))
 				{
-					$menu .= "<li><a href=\"".url::site()."page/index/".$page->id."\" ";
-					$menu .= ($this_page == 'page_'.$page->id) ? " class=\"active\"" : "";
-					$menu .= ">".$page->page_tab."</a></li>";
+					$menu_items[] = array( 
+						'page' => 'page_'.$page->id,
+						'url' => $site.'page/index/'.$page->id,
+						'name' => $page->page_tab
+					);
 				}
 			}
 		}
 
+		Event::run('ushahidi_filter.nav_main_tabs', $menu_items);
+
+		$menu = '';
+		foreach( $menu_items as $item )
+		{
+			$active = ($this_page == $item['page']) ? ' class="active"' : '';
+			$menu .= '<li><a href="'.$item['url'].'"'.$active.'>'.$item['name'].'</a></li>';
+		}
+
 		echo $menu;
-		
+
 		// Action::nav_admin_reports - Add items to the admin reports navigation tabs
 		Event::run('ushahidi_action.nav_main_top', $this_page);
 	}
