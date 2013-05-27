@@ -17,8 +17,7 @@ class nav_Core {
 	public static function main_tabs($this_page = FALSE, $dontshow = FALSE)
 	{
 		$menu_items = array();
-		$site = url::site();
-		
+
 		if( ! is_array($dontshow))
 		{
 			// Set $dontshow as an array to prevent errors
@@ -30,7 +29,7 @@ class nav_Core {
 		{
 			$menu_items[] = array( 
 				'page' => 'home',
-				'url' => $site.'main',
+				'url' => url::site('main'),
 				'name' => Kohana::lang('ui_main.home')
 			);
 		}
@@ -40,7 +39,7 @@ class nav_Core {
 		{
 			$menu_items[] = array( 
 				'page' => 'reports',
-				'url' => $site.'reports',
+				'url' => url::site('reports'),
 				'name' => Kohana::lang('ui_main.reports')
 			);
 		 }
@@ -52,7 +51,7 @@ class nav_Core {
 			{
 				$menu_items[] = array( 
 					'page' => 'reports_submit',
-					'url' => $site.'reports/submit',
+					'url' => url::site('reports/submit'),
 					'name' => Kohana::lang('ui_main.submit')
 				);
 			}
@@ -65,7 +64,7 @@ class nav_Core {
 			{
 				$menu_items[] = array( 
 					'page' => 'alerts',
-					'url' => $site.'alerts',
+					'url' => url::site('alerts'),
 					'name' => Kohana::lang('ui_main.alerts')
 				);
 			}
@@ -78,7 +77,7 @@ class nav_Core {
 			{
 				$menu_items[] = array( 
 					'page' => 'contact',
-					'url' => $site.'contact',
+					'url' => url::site('contact'),
 					'name' => Kohana::lang('ui_main.contact')
 				);	
 			}
@@ -95,7 +94,7 @@ class nav_Core {
 				{
 					$menu_items[] = array( 
 						'page' => 'page_'.$page->id,
-						'url' => $site.'page/index/'.$page->id,
+						'url' => url::site('page/index/'.$page->id),
 						'name' => $page->page_tab
 					);
 				}
@@ -104,14 +103,11 @@ class nav_Core {
 
 		Event::run('ushahidi_filter.nav_main_tabs', $menu_items);
 
-		$menu = '';
 		foreach( $menu_items as $item )
 		{
 			$active = ($this_page == $item['page']) ? ' class="active"' : '';
-			$menu .= '<li><a href="'.$item['url'].'"'.$active.'>'.$item['name'].'</a></li>';
+			echo '<li><a href="'.$item['url'].'"'.$active.'>'.$item['name'].'</a></li>';
 		}
-
-		echo $menu;
 
 		// Action::nav_admin_reports - Add items to the admin reports navigation tabs
 		Event::run('ushahidi_action.nav_main_top', $this_page);
