@@ -174,6 +174,7 @@ class S_Twitter_Controller extends Controller {
 					$incident->incident_date = $tweet_date;
 					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 					$incident->incident_active = 1;
+					$incident->incident_mode = 4;
 					if ($reporter_weight == 2)
 					{
 						$incident->incident_verified = 1;
