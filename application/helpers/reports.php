@@ -538,17 +538,39 @@ class reports_Core {
 				// Catch any errors from corrupt image files
 				try
 				{
+					$image = Image::factory($filename);
 					// Large size
-					Image::factory($filename)->resize(800,600,Image::AUTO)
-						->save(Kohana::config('upload.directory', TRUE).$media_link);
+					if( $image->width > 800 || $image->height > 600 )
+					{
+						Image::factory($filename)->resize(800,600,Image::AUTO)
+							->save(Kohana::config('upload.directory', TRUE).$media_link);
+					}
+					else
+					{
+						$image->save(Kohana::config('upload.directory', TRUE).$media_link);
+					}
 
 					// Medium size
-					Image::factory($filename)->resize(400,300,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$media_medium);
+					if( $image->height > 300 )
+					{
+						Image::factory($filename)->resize(400,300,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE).$media_medium);
+					}
+					else
+					{
+						$image->save(Kohana::config('upload.directory', TRUE).$media_medium);
+					}
 
 					// Thumbnail
-					Image::factory($filename)->resize(89,59,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$media_thumb);
+					if( $image->height > 59 )
+					{
+						Image::factory($filename)->resize(89,59,Image::HEIGHT)
+							->save(Kohana::config('upload.directory', TRUE).$media_thumb);
+					}
+					else
+					{
+						$image->save(Kohana::config('upload.directory', TRUE).$media_thumb);
+					}
 				}
 				catch (Kohana_Exception $e)
 				{
