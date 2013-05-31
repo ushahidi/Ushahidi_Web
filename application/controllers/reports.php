@@ -282,7 +282,7 @@ class Reports_Controller extends Main_Controller {
 
 		// Initialize Default Values
 		$form['incident_date'] = date("m/d/Y",time());
-		$form['incident_hour'] = date('g');
+		$form['incident_hour'] = date('h');
 		$form['incident_minute'] = date('i');
 		$form['incident_ampm'] = date('a');
 		$form['country_id'] = Kohana::config('settings.default_country');
