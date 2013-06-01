@@ -36,8 +36,8 @@ class Test_Twitter_Controller extends Admin_Controller {
 
 		$connection = new Twitter_Oauth($consumer_key,$consumer_secret,$access_token['oauth_token'],$access_token['oauth_token_secret']);
 		$connection->decode_json = FALSE;
-		$verify_credentials = $connection->get('account/verify_credentials');
-		if ($verify_credentials['code'] == 200) 
+		$connection->get('account/verify_credentials');
+		if ($connection->http_code == 200) 
 		{
 			echo json_encode(array("status"=>"success", "message"=>Kohana::lang('ui_main.success')));
 		}
