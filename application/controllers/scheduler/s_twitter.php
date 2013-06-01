@@ -130,10 +130,10 @@ class S_Twitter_Controller extends Controller {
 				// Grab geo data if it exists from the tweet
 				$tweet_lat = null;
 				$tweet_lon = null;
-				if ($tweet->{'geo'} != null)
+				if ($tweet->{'coordinates'} != null)
 				{
-					$tweet_lat = $tweet->{'geo'}->coordinates[0];
-					$tweet_lon = $tweet->{'geo'}->coordinates[1];
+					$tweet_lat = $tweet->{'coordinates'}->coordinates[0];
+					$tweet_lon = $tweet->{'coordinates'}->coordinates[1];
 				}
 
 				// Save Tweet as Message
