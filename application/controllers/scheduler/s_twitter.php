@@ -51,9 +51,6 @@ class S_Twitter_Controller extends Controller {
 		/* Create a TwitterOauth object with consumer/user tokens. */
 		$connection = new Twitter_Oauth($consumer_key, $consumer_secret, $access_token['oauth_token'], $access_token['oauth_token_secret']);
 		$connection->decode_json = FALSE;
-		 
-		/* Get logged in user to help with tests. */
-		$user = $connection->get('account/verify_credentials');
 
 		// Retrieve Last Stored Twitter ID
 		$last_tweet_id = "";
