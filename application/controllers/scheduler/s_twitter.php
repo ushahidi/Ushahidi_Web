@@ -51,9 +51,6 @@ class S_Twitter_Controller extends Controller {
 		/* Create a TwitterOauth object with consumer/user tokens. */
 		$connection = new Twitter_Oauth($consumer_key, $consumer_secret, $access_token['oauth_token'], $access_token['oauth_token_secret']);
 		$connection->decode_json = FALSE;
-		 
-		/* Get logged in user to help with tests. */
-		$user = $connection->get('account/verify_credentials');
 
 		// Retrieve Last Stored Twitter ID
 		$last_tweet_id = "";
@@ -133,10 +130,10 @@ class S_Twitter_Controller extends Controller {
 				// Grab geo data if it exists from the tweet
 				$tweet_lat = null;
 				$tweet_lon = null;
-				if ($tweet->{'geo'} != null)
+				if ($tweet->{'coordinates'} != null)
 				{
-					$tweet_lat = $tweet->{'geo'}->coordinates[0];
-					$tweet_lon = $tweet->{'geo'}->coordinates[1];
+					$tweet_lat = $tweet->{'coordinates'}->coordinates[0];
+					$tweet_lon = $tweet->{'coordinates'}->coordinates[1];
 				}
 
 				// Save Tweet as Message
@@ -174,6 +171,7 @@ class S_Twitter_Controller extends Controller {
 					$incident->incident_date = $tweet_date;
 					$incident->incident_dateadd = date("Y-m-d H:i:s",time());
 					$incident->incident_active = 1;
+					$incident->incident_mode = 4;
 					if ($reporter_weight == 2)
 					{
 						$incident->incident_verified = 1;
