@@ -11,7 +11,7 @@
 				<strong><?php echo html::strip_tags($comment->comment_author); ?></strong>&nbsp;(<?php echo date('M j Y', strtotime($comment->comment_date)); ?>)
 			</div>
 
-			<div><?php echo html::escape($comment->comment_description); ?></div>
+			<div><?php echo html::clean($comment->comment_description); ?></div>
 
 		</div>
 	<?php endforeach; ?>
