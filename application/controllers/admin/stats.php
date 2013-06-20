@@ -283,9 +283,9 @@ class Stats_Controller extends Admin_Controller {
               "reports" => $report_count
             );
         }
-        
-        $this->template->impact_json = json_encode($json);
-        
+
+        $this->themes->impact_json = json_encode($json);
+
         // Set the date
         $this->template->content->dp1 = date('Y-m-d',$data['earliest_report_time']);
         $this->template->content->dp2 = date('Y-m-d',$data['latest_report_time']);
