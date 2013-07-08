@@ -55,7 +55,7 @@ $config['url_suffix'] = '';
  * The internal cache stores file paths and config entries across requests and
  * can give significant speed improvements at the expense of delayed updating.
  */
-$config['internal_cache'] = TRUE;
+$config['internal_cache'] = FALSE;
 
 /**
  * Enable or disable gzip output compression. This can dramatically decrease
@@ -135,7 +135,7 @@ $config['enable_mhi'] = FALSE;
 /**
  * Allow members to sign in with OpenID providers, excluding RiverID
  */
-$config['allow_openid'] = FALSE;
+$config['allow_openid'] = TRUE;
 
 /**
  * Filename prefixed used to determine extensions. For example, an
