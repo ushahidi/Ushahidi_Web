@@ -1,17 +1,17 @@
 /**
  * Main reports js file.
- * 
+ *
  * Handles javascript stuff related to reports function.
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @module     API Controller
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 <?php require SYSPATH.'../application/views/admin/utils_js.php' ?>
@@ -21,16 +21,16 @@
 		{
 			var statusMessage;
 			if( !isChecked( "incident" ) && incident_id=='' )
-			{ 
+			{
 				alert('Please select at least one report.');
 			} else {
 				var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
 				if (answer){
-					
+
 					// Set Submit Type
 					$("#action").attr("value", action);
-					
-					if (incident_id != '') 
+
+					if (incident_id != '')
 					{
 						// Submit Form For Single Item
 						$("#incident_single").attr("value", incident_id);
@@ -40,17 +40,17 @@
 					{
 						// Set Hidden form item to 000 so that it doesn't return server side error for blank value
 						$("#incident_single").attr("value", "000");
-						
+
 						// Submit Form For Multiple Items
 						$("#reportMain").submit();
 					}
-				
+
 				} else {
 					return false;
 				}
 			}
 		}
-		
+
 		function showLog(id)
 		{
 			$('#' + id).toggle(400);
@@ -79,9 +79,9 @@ $(function () {
 		}
 		else
 		{
-			$(".action-tab").removeClass('active').slideUp(300, function() { 
+			$(".action-tab").removeClass('active').slideUp(300, function() {
 				$(".search-tab").slideDown().addClass('active');
-			
+
 				// Check if the map has already been created
 				if (mapLoaded == false)
 				{
@@ -90,10 +90,10 @@ $(function () {
 			});
 			$(".tabset .search").addClass('active');
 		}
-		
+
 		return false;
 	});
-	
+
 	// Category treeview
 	$(".category-column").treeview({
 	  persist: "location",
@@ -101,8 +101,8 @@ $(function () {
 	  unique: false
 	});
 });
-	
-	
+
+
 // Map reference
 var map = null;
 var latitude = <?php echo isset($_GET['start_loc'][0]) ? floatval($_GET['start_loc'][0]) : Kohana::config('settings.default_lat') ?>;
@@ -115,14 +115,14 @@ var initMap = function(){
 		// OpenLayers uses IE's VML for vector graphics
 		// We need to wait for IE's engine to finish loading all namespaces (document.namespaces) for VML.
 		// jQuery.ready is executing too soon for IE to complete it's loading process.
-		
+
 		<?php echo map::layers_js(FALSE); ?>
 		var mapConfig = {
 
 			// Map center
 			center: {
 				latitude: latitude,
-				longitude: longitude,
+				longitude: longitude
 			},
 
 			// Zoom level
@@ -143,20 +143,20 @@ var initMap = function(){
 			$(".search_lat").val(coords.latitude);
 			$(".search_lon").val(coords.longitude);
 		});
-		
+
 		// Alerts Slider
 		$("select#alert_radius").change(
 			function(e, ui) {
 				var newRadius = $("#alert_radius").val();
-				
+
 				// Convert to Meters
-				radius = newRadius * 1000;	
-				
+				radius = newRadius * 1000;
+
 				// Redraw Circle
 				map.updateRadius({radius: radius});
 			}
 		);
-		
+
 		mapLoaded = true;
 };
 
@@ -189,13 +189,13 @@ function geoCode() {
 					longitude: data.longitude,
 					latitude: data.latitude
 				});
-			
+
 				// Update form values
 				$("#alert_lat").val(data.latitude);
 				$("#alert_lon").val(data.longitude);
 			} else {
 				// Alert message to be displayed
-				var alertMessage = address + " not found!\n\n***************************\n" + 
+				var alertMessage = address + " not found!\n\n***************************\n" +
 				    "Enter more details like city, town, country\nor find a city or town " +
 				    "close by and zoom in\nto find your precise location";
 
