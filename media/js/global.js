@@ -26,6 +26,9 @@ jQuery(document).ready(function( $ ) {
 	}
 	
 	// Trigger pngFix
-	$(document).pngFix();
+	if($(document).pngFix)
+	{
+		$(document).pngFix();
+	}
 
 });
