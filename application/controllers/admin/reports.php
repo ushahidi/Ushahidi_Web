@@ -1436,5 +1436,23 @@ class Reports_Controller extends Admin_Controller {
 		
 		return $search_form;
 	}
+	
+	/**
+	 * Function used by the photo delete button
+	 * in /admin/reports/edit/N
+	 * @param $id is the DB id of the image to delete
+	 **/
+	public function deletePhoto($id = 0){
+	    $this->auto_render = false;
+	    $this->template = null;
+	    if($id == 0){
+	    	return;
+	    }
+	    ORM::factory('media')
+		->where('id',$id)
+		->delete_all();
+	    
+	    echo "droped that photo like a jacket in July";
+	}
 
 }
