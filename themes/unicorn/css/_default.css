@@ -42,7 +42,7 @@ h5, h4 {
 }
 
 /* structural divs */
-body#page { background:#e4e1dd url(../images/bg_transparent-lines.png) repeat; }
+body#page { background:#e4e1dd; }
 
 div#middle { background:transparent url(../images/bg_top-cap.png) top no-repeat; }
 
