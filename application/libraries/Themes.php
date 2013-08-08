@@ -499,8 +499,10 @@ class Themes_Core {
 
 		if (Kohana::config('settings.allow_reports'))
 		{
-			$btn .= "<div class=\"submit-incident clearingfix\">";
-			$btn .= "<a href=\"".url::site()."reports/submit"."\">".Kohana::lang('ui_main.submit')."</a>";
+			$btn .= "<div class=\"submit-incident clearingfix\">";			
+			$btn .= "<a href=\"https://bitmerch.com/buying-bitcoins/7410350d-b9de-5f0c-be65-e5c99011e011\"><img src=\"https://bitmerch.com/img/button-donate-100.png\" alt=\"Pay with Bitcoin\"/></a>";
+			$btn .= "&nbsp;";
+			$btn .= "<a href=\"".url::site()."reports/submit"."\">".Kohana::lang('ui_main.submit')."</a>";			
 			$btn .= "</div>";
 		}
 

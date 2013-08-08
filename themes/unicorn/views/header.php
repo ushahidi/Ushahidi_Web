@@ -9,6 +9,23 @@
 	// Action::header_scripts - Additional Inline Scripts from Plugins
 	Event::run('ushahidi_action.header_scripts');
 	?>
+    
+    <!-- AddThis Smart Layers BEGIN -->
+    <!-- Go to http://www.addthis.com/get/smart-layers to customize -->
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5202f462738e893a"></script>
+    <script type="text/javascript">
+      addthis.layers({
+        'theme' : 'transparent', 
+        'follow' : {
+          'services' : [
+            {'service': 'facebook', 'id': 'IPaidABribeZim'},
+            {'service': 'twitter', 'id': 'IPaidABribeZim'}
+          ]
+        },  
+        'whatsnext' : {}  
+      });
+    </script>
+    <!-- AddThis Smart Layers END -->
 </head>
 
 
