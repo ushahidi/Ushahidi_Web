@@ -17,13 +17,13 @@ Author Email: caleb@ushahidi.com
   div.footermenu ul li a,
   div.search-form input.text  { color: #d24836; }
   div.search-form input.text:focus { border-color: #d24836; }
-  div.submit-incident a, .btn_submit,
+  div.submit-incident a.thebtn, .btn_submit,
   div.filters ul li a:hover, div.filters ul li a.active,
   ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#d24836; }
   
   /* Lighter Primary Color - for hover effects */
   div#loggedin_user_action a, div#loggedin_user_action a:visited { color:#d25e4f; }
-  div.submit-incident a:hover, .btn_submit:hover,
+  div.submit-incident a.thebtn:hover, .btn_submit:hover,
   div.search-form input.searchbtn,
   div#mainmenu ul li a:hover,
   div#mainmenu a.active { background-color:#d25e4f; }
@@ -122,7 +122,7 @@ div#logo span {
 
 /* submit report button */
 div.submit-incident { margin:0; top:20%; }
-div.submit-incident a, .btn_submit {
+div.submit-incident a.thebtn, .btn_submit {
   text-shadow: 1px 1px 0 #424242;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
