@@ -303,6 +303,7 @@ a.btn:hover {
   text-decoration: none;
 }
 
+
 span.btn-icon { display:block; position:absolute; height:16px; width:16px; overflow:hidden; text-indent:-234324px; top:6px; right:5px; }
   .ic-right     { background:transparent url(../images/bg_category-filter-controls.png) -32px -41px no-repeat; }
   .ic-down      { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
@@ -310,4 +311,8 @@ span.btn-icon { display:block; position:absolute; height:16px; width:16px; overf
   
   /* active state */
   .active-toggle .ic-right { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
-  
+ 
+ div.submit-incident a.btc{
+	 padding:0;
+	 background:none;
+ }
