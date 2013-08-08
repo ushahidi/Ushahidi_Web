@@ -17,13 +17,13 @@ Author Email: caleb@ushahidi.com
   div.footermenu ul li a,
   div.search-form input.text  { color: #d24836; }
   div.search-form input.text:focus { border-color: #d24836; }
-  div.submit-incident a, .btn_submit,
+  div.submit-incident a.thebtn, .btn_submit,
   div.filters ul li a:hover, div.filters ul li a.active,
   ul.category-filters li a:hover, ul.category-filters li a.active { background-color:#d24836; }
   
   /* Lighter Primary Color - for hover effects */
   div#loggedin_user_action a, div#loggedin_user_action a:visited { color:#d25e4f; }
-  div.submit-incident a:hover, .btn_submit:hover,
+  div.submit-incident a.thebtn:hover, .btn_submit:hover,
   div.search-form input.searchbtn,
   div#mainmenu ul li a:hover,
   div#mainmenu a.active { background-color:#d25e4f; }
@@ -42,7 +42,7 @@ h5, h4 {
 }
 
 /* structural divs */
-body#page { background:#e4e1dd url(../images/bg_transparent-lines.png) repeat; }
+body#page { background:#e4e1dd; }
 
 div#middle { background:transparent url(../images/bg_top-cap.png) top no-repeat; }
 
@@ -122,7 +122,7 @@ div#logo span {
 
 /* submit report button */
 div.submit-incident { margin:0; top:20%; }
-div.submit-incident a, .btn_submit {
+div.submit-incident a.thebtn, .btn_submit {
   text-shadow: 1px 1px 0 #424242;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
@@ -160,7 +160,7 @@ div#right { position:absolute; z-index:1000; }
 }
 #the-filters { 
   top:49px; left:59px;
-  width:300px;
+  width:350px;
   
   display:none; }
 
@@ -303,6 +303,7 @@ a.btn:hover {
   text-decoration: none;
 }
 
+
 span.btn-icon { display:block; position:absolute; height:16px; width:16px; overflow:hidden; text-indent:-234324px; top:6px; right:5px; }
   .ic-right     { background:transparent url(../images/bg_category-filter-controls.png) -32px -41px no-repeat; }
   .ic-down      { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
@@ -310,4 +311,8 @@ span.btn-icon { display:block; position:absolute; height:16px; width:16px; overf
   
   /* active state */
   .active-toggle .ic-right { background:transparent url(../images/bg_category-filter-controls.png) -32px -55px no-repeat; }
-  
+ 
+ div.submit-incident a.btc{
+	 padding:0;
+	 background:none;
+ }

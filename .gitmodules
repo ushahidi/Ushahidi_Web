@@ -1,3 +1,18 @@
 [submodule "application/i18n"]
 	path = application/i18n
 	url = git://github.com/ushahidi/Ushahidi-Localizations.git
+[submodule "plugins/Adsense"]
+	path = plugins/Adsense
+	url = git://github.com/tkembo/Adsense.git
+[submodule "plugins/forwardreport"]
+	path = plugins/forwardreport
+	url = git://github.com/tkembo/forwardreport.git
+[submodule "plugins/linkreports"]
+	path = plugins/linkreports
+	url = git://github.com/tkembo/linkreports.git
+[submodule "plugins/Ushahidi-plugin-actionable"]
+	path = plugins/Ushahidi-plugin-actionable
+	url = git://github.com/tkembo/Ushahidi-plugin-actionable.git
+[submodule "plugins/Ushahidi-plugin-facebook-social"]
+	path = plugins/Ushahidi-plugin-facebook-social
+	url = git://github.com/tkembo/Ushahidi-plugin-facebook-social.git
