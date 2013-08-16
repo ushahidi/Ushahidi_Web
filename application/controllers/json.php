@@ -239,8 +239,7 @@ class Json_Controller extends Template_Controller {
 				'thumb' => $thumb,
 				'timestamp' => strtotime($marker->incident_date),
 				'count' => 1,
-				'class' => get_class($marker),
-				'title'	=> $marker->incident_title
+				'class' => get_class($marker)
 			);
 			$json_item['geometry'] = array(
 				'type' => 'Point',
