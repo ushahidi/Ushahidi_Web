@@ -68,15 +68,15 @@ class Users_Controller extends Admin_Controller {
 		$pagination = new Pagination( array('query_string' => 'page', 'items_per_page' => (int)Kohana::config('settings.items_per_page_admin'), 'total_items' => ORM::factory('user')->count_all()));
 
 		// Non superadmin users shouldn't be able to edit superadmin users
-		$where = $this->auth->has_permission('superadmin') ? 
-					"1=1" : 
-					"users.id NOT IN (SELECT user_id FROM roles INNER JOIN roles_users ON roles_users.role_id = roles.id WHERE roles.name = 'superadmin')";
+		$where = $this->auth->has_permission('superadmin') 
+			   ? "1=1" 
+			   : "users.id NOT IN (SELECT user_id FROM roles INNER JOIN roles_users ON roles_users.role_id = roles.id WHERE roles.name = 'superadmin')";
 
 
 		$users = ORM::factory('user')
-					->where($where)
-					->orderby('name', 'asc')
-					->find_all((int)Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+					  ->where($where)
+					  ->orderby('name', 'asc')
+					  ->find_all((int)Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
 		// Set the flag for displaying the roles link
 		$this->template->content->display_roles = $this->display_roles;
@@ -99,8 +99,9 @@ class Users_Controller extends Admin_Controller {
 		{
 			$user_exists = ORM::factory('user')->find($user_id);
 
-			if (!$user_exists->loaded || 
-					($user_exists->has_permission('superadmin') && !$this->auth->has_permission('superadmin')))
+			if ( ! $user_exists->loaded OR
+					($user_exists->has_permission('superadmin') && !$this->auth->has_permission('superadmin'))
+				)
 			{
 				// Redirect
 				url::redirect(url::site() . 'admin/users/');
