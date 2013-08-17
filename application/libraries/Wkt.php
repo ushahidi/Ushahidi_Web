@@ -254,14 +254,14 @@ class WKT {
 	
 		if (is_array($array)) 
 		{
-    	    foreach ($array as $k => $v) 
+    	    foreach ($array as $v) 
     	    {
         	    if (is_array($v)) 
         	    {
             	    $tmp_array = self::flatten($v);
                 	$return = array_merge($return, $tmp_array);
             	} else {
-                	$return[$k] = $v;
+                	$return[] = $v;
             	}
         	}
     	}
