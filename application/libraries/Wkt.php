@@ -243,9 +243,9 @@ class WKT {
 	 * Helper to flatten arrays to single dimension
 	 * Reference: http://www.robpeck.com/2010/06/diffing-flattening-and-expanding-multidimensional-arrays-in-php/
 	 *
-	 * @param Array $point
+	 * @param Array $coordinates
 	 *
-	 * @return String Latitude,Longitude string
+	 * @return Array $flatten_coordinates
 	 */
 	static function flatten(array $array) {
 		$return = array();
