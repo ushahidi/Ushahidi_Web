@@ -228,7 +228,7 @@ class WKT {
 	 *
 	 * @return String Latitude,Longitude string
 	 */
-	static function collapse_points(&$item, $key) {
+	public static function collapse_points(&$item, $key) {
 		if (is_array($item[0]))
 		{
 			array_walk($item, 'self::collapse_points');
@@ -247,7 +247,7 @@ class WKT {
 	 *
 	 * @return Array $flatten_coordinates
 	 */
-	static function flatten(array $array) {
+	public static function flatten(array $array) {
 		$return = array();
 		if(is_array($array)) {
     	    foreach($array as $k => $v) {
