@@ -557,7 +557,7 @@ class Themes_Core {
 	{
 		if (Kohana::config('config.output_scheduler_js'))
 		{
-			$schedulerPath = url::base() . 'scheduler';
+			$schedulerPath = url::site('scheduler');
 			$schedulerCode = <<< SCHEDULER
 				<!-- Task Scheduler -->
 				<script type="text/javascript">
