@@ -183,7 +183,7 @@ jQuery(function() {
 			new OpenLayers.Control.Zoom(),
 			new OpenLayers.Control.MousePosition({
 				div: document.getElementById('mapMousePosition'),
-				formatOutput: function(longLat) { return longLat.lat.toFixed(5) + ", " + longLat.lon.toFixed(5) }
+				formatOutput: Ushahidi.convertLongLat
 			}),
 			new OpenLayers.Control.Scale('mapScale'),
 			new OpenLayers.Control.ScaleLine(),
