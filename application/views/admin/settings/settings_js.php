@@ -29,7 +29,9 @@ $(document).ready(function() {
 		mapControls: [
 		    new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
 		    new OpenLayers.Control.Zoom(),
-		    new OpenLayers.Control.MousePosition()
+		    new OpenLayers.Control.MousePosition({
+				formatOutput: Ushahidi.convertLongLat
+			})
 		],
 		
 		// Base layers

@@ -183,7 +183,7 @@ jQuery(function() {
 			new OpenLayers.Control.Zoom(),
 			new OpenLayers.Control.MousePosition({
 				div: document.getElementById('mapMousePosition'),
-				numdigits: 5
+				formatOutput: Ushahidi.convertLongLat
 			}),
 			new OpenLayers.Control.Scale('mapScale'),
 			new OpenLayers.Control.ScaleLine(),
