@@ -1333,12 +1333,24 @@ input.long2 {
 	width: 280px;
 	float:left;
 }
+
+.l-column.inverse {
+	padding: 0 20px 0 0;
+	width: 558px;
+}
+
 .r-column{
 	padding: 0 30px 0;
 	width: 558px;
 	float:left;
 	border: 1px solid #dadada;
 }
+
+.r-column.inverse {
+	width: 220px;
+}
+
+
 p.bold_desc{
 	margin-top: 0px;
 	font-weight: bold;	
