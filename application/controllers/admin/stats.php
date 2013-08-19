@@ -69,7 +69,7 @@ class Stats_Controller extends Admin_Controller {
 		}
 
 		$this->template->content->range = $range;
-      
+
 		// Get an arbitrary date range
 		$dp1 = (isset($_GET['dp1'])) ? $_GET['dp1'] : null;
 		$dp2 = (isset($_GET['dp2'])) ? $_GET['dp2'] : null;
@@ -218,6 +218,10 @@ class Stats_Controller extends Admin_Controller {
             $this->template->content->num_reports = 0;
             $this->template->content->num_categories = 0;
             $this->template->impact_json = '';
+
+            $this->template->content->dp1 = $dp1;
+            $this->template->content->dp2 = $dp2;
+
             return false;
         }
         
@@ -330,8 +334,8 @@ class Stats_Controller extends Admin_Controller {
         {
             $this->template->content->traffic_chart = Kohana::lang('ui_admin.chart_display_error');
             $this->template->content->raw_data = array();
-            $this->template->content->dp1 = null;
-            $this->template->content->dp2 = null;
+            $this->template->content->dp1 = $dp1;
+            $this->template->content->dp2 = $dp2;
             $this->template->content->failure = 'Stat Collection Failed! Either your stat_id or stat_key in the settings table in the database are incorrect or our stat server is down. Try back in a bit to see if the server is up and running. If you are really in a pinch, you can always modify stat_id (set to null) and stat_key (set to 0) in the settings table of your database to get your stats back up and running. Keep in mind you will lose access to your stats currently on the stats server.';
             return false;
         }
@@ -391,8 +395,8 @@ class Stats_Controller extends Admin_Controller {
         if(!$countries) {
             $this->template->content->countries = array();
             $this->template->content->num_countries = 0;
-            $this->template->content->dp1 = null;
-            $this->template->content->dp2 = null;
+            $this->template->content->dp1 = $dp1;
+            $this->template->content->dp2 = $dp2;
             $this->template->content->visitor_map = '';
             $this->template->content->uniques = 0;
             $this->template->content->visits = 0;
@@ -466,6 +470,9 @@ class Stats_Controller extends Admin_Controller {
         // If we failed to get hit data, fail.
         if ( ! $data)
         {
+            $this->template->content->dp1 = $dp1;
+            $this->template->content->dp2 = $dp2;
+
             return false;
         }
         
