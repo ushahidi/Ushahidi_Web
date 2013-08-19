@@ -254,19 +254,19 @@ class WKT {
 	
 		if (is_array($array)) 
 		{
-    	    foreach ($array as $v) 
-    	    {
-        	    if (is_array($v)) 
-        	    {
-            	    $tmp_array = self::flatten($v);
-                	$return = array_merge($return, $tmp_array);
-            	} else {
-                	$return[] = $v;
-            	}
-        	}
-    	}
+			foreach ($array as $v) 
+			{
+				if (is_array($v)) 
+				{
+					$tmp_array = self::flatten($v);
+					$return = array_merge($return, $tmp_array);
+				} else {
+					$return[] = $v;
+				}
+			}
+		}
 
-    	return $return;	
+		return $return;	
 	}
 }
 
