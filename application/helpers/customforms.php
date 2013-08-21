@@ -288,7 +288,7 @@ class customforms_Core {
 				}
 				else
 				{
-					$options = explode(',',$defaults[0]);
+					$options = array_map('trim',explode(',',$defaults[0]));
 				}
 
 				$responses = explode(',',$field_response);

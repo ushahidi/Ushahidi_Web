@@ -220,6 +220,54 @@ class WKT {
 		$instance = new self;
 		return $instance->write($geometry);
 	}
+
+	/**
+	 * Helper function to recusively collapse points to lat,lon strings
+	 *
+	 * @param Array $point
+	 *
+	 * @return String Latitude,Longitude string
+	 */
+	public static function collapse_points(&$item, $key) 
+	{
+		if (is_array($item[0]))
+		{
+			array_walk($item, 'self::collapse_points');
+		}
+		else
+		{
+			$item = $item[1].','.$item[0];
+		}
+	}
+
+	/**
+	 * Helper to flatten arrays to single dimension
+	 * Reference: http://www.robpeck.com/2010/06/diffing-flattening-and-expanding-multidimensional-arrays-in-php/
+	 *
+	 * @param Array $coordinates
+	 *
+	 * @return Array $flatten_coordinates
+	 */
+	public static function flatten(array $array) 
+	{
+		$return = array();
+	
+		if (is_array($array)) 
+		{
+			foreach ($array as $v) 
+			{
+				if (is_array($v)) 
+				{
+					$tmp_array = self::flatten($v);
+					$return = array_merge($return, $tmp_array);
+				} else {
+					$return[] = $v;
+				}
+			}
+		}
+
+		return $return;	
+	}
 }
 
 abstract class Geometry 

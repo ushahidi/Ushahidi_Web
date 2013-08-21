@@ -27,7 +27,7 @@ function showMap(id, lon, lat) {
 		// Map center
 		center: {
 			latitude: lat,
-			longitude: lon,
+			longitude: lon
 		},
 
 		// Zoom level
@@ -39,7 +39,7 @@ function showMap(id, lon, lat) {
 
 	// Initialize the map
 	map = new Ushahidi.Map(id + '_map', mapConfig);
-	
+
 	// Style for the checkin
 	var style = new OpenLayers.Style({
 		fillColor: "#<?php echo Kohana::config('settings.default_map_all'); ?>",
@@ -56,14 +56,14 @@ function showMap(id, lon, lat) {
 	});
 
 	// Add the layer
-	map.addLayer(Ushahidi.DEFAULT, {styleMap: styleMap, detectMapClicks: false});		
+	map.addLayer(Ushahidi.DEFAULT, {styleMap: styleMap, detectMapClicks: false});
 }
 
 function checkinAction( action, confirmAction, checkin_id )
 {
 	var statusMessage;
 	if( !isChecked( "checkin" ) && checkin_id=='' )
-	{ 
+	{
 		alert('Please select at least one checkin.');
 	} else {
 		var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
@@ -72,7 +72,7 @@ function checkinAction( action, confirmAction, checkin_id )
 			// Set Submit Type
 			$("#action").attr("value", action);
 
-			if (checkin_id != '') 
+			if (checkin_id != '')
 			{
 				// Submit Form For Single Item
 				$("#checkin_single").attr("value", checkin_id);

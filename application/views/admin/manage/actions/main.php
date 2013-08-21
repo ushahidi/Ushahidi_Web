@@ -279,25 +279,7 @@ $(document).ready(function() {
 												$qval .= '<img src="'.Kohana::config('core.site_protocol').'://maps.googleapis.com/maps/api/staticmap?size=275x200';
 												
 												$wkt = new Wkt();
-												
-												// helper function to recusively collapse points to lat,lon strings
-												function collapse_points(&$item, $key) {
-													if (is_array($item[0]))
-													{
-														array_walk($item, 'collapse_points');
-													}
-													else
-													{
-														$item = $item[1].','.$item[0];
-													}
-												};
-												// helper to flatten arrays to single dimension
-												function flatten(array $array) {
-													$return = array();
-													array_walk_recursive($array, function($a) use (&$return) { $return[] = $a; });
-													return $return;
-												}
-												
+																							
 												foreach ($qualifiers['geometry'] as $geom_key => $geom)
 												{
 													$geom = json_decode($geom);
@@ -307,12 +289,13 @@ $(document).ready(function() {
 													// Decode polygon with WKT
 													$polygon = $wkt->read($geom->geometry);
 													$coordinates = $polygon->getCoordinates();
-													collapse_points($coordinates, 0);
+													WKT::collapse_points($coordinates, 0);
+
 													// for polygons
 													if (is_array($coordinates))
 													{
 														$qval .= "&path=color:0xff0000ff|weight:2|fillcolor:0xFFFF0033|";
-														$qval .= implode('|', flatten($coordinates));
+														$qval .= implode('|', WKT::flatten($coordinates));
 													}
 													// for points
 													else
