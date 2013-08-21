@@ -413,7 +413,7 @@ $(document).ready(function() {
 
 						<div style="float:right;padding:25px 25px 0 0;text-align:right;">
 							<?php echo Kohana::lang('ui_admin.server_time').' '.date("m/d/Y H:i:s",time()).' ('.$site_timezone.')'; ?><br/>
-							<a href="<?php echo url::base(); ?>admin/settings/site"><small><?php echo Kohana::lang('ui_admin.modify_timezone'); ?></small></a>
+							<a href="<?php echo url::site(); ?>admin/settings/site"><small><?php echo Kohana::lang('ui_admin.modify_timezone'); ?></small></a>
 						</div>
 
 						<h3><?php echo Kohana::lang('ui_admin.trigger'); ?></h3>

@@ -94,11 +94,11 @@ class admin_Core {
 	{
 		$menu = "";
 
-		$menu .= ($this_sub_page == "deployments") ? "Deployments" : "<a href=\"".url::base()."admin/mhi/\">Deployments</a>";
+		$menu .= ($this_sub_page == "deployments") ? "Deployments" : "<a href=\"".url::site('admin/mhi')."\">Deployments</a>";
 
-		$menu .= ($this_sub_page == "activity") ? "Activity Stream" : "<a href=\"".url::base()."admin/mhi/activity\">Activity Stream</a>";
+		$menu .= ($this_sub_page == "activity") ? "Activity Stream" : "<a href=\"".url::site('admin/mhi/activity')."\">Activity Stream</a>";
 
-		$menu .= ($this_sub_page == "updatelist") ? "Update List" : "<a href=\"".url::base()."admin/mhi/updatelist\">Update List</a>";
+		$menu .= ($this_sub_page == "updatelist") ? "Update List" : "<a href=\"".url::site('admin/mhi/updatelist')."\">Update List</a>";
 
 		echo $menu;
 	}
@@ -112,15 +112,15 @@ class admin_Core {
 	{
 		$menu = "";
 
-		$menu .= ($this_sub_page == "view") ? Kohana::lang('ui_main.view_reports') : "<a href=\"".url::base()."admin/reports\">".Kohana::lang('ui_main.view_reports')."</a>";
+		$menu .= ($this_sub_page == "view") ? Kohana::lang('ui_main.view_reports') : "<a href=\"".url::site("admin/reports")."\">".Kohana::lang('ui_main.view_reports')."</a>";
 
-		$menu .= ($this_sub_page == "edit") ? Kohana::lang('ui_main.create_report') : "<a href=\"".url::base()."admin/reports/edit\">".Kohana::lang('ui_main.create_report')."</a>";
+		$menu .= ($this_sub_page == "edit") ? Kohana::lang('ui_main.create_report') : "<a href=\"".url::site("admin/reports/edit")."\">".Kohana::lang('ui_main.create_report')."</a>";
 
-		$menu .= ($this_sub_page == "comments") ? Kohana::lang('ui_main.comments') : "<a href=\"".url::base()."admin/comments\">".Kohana::lang('ui_main.comments')."</a>";
+		$menu .= ($this_sub_page == "comments") ? Kohana::lang('ui_main.comments') : "<a href=\"".url::site('admin/comments')."\">".Kohana::lang('ui_main.comments')."</a>";
 
-		$menu .= ($this_sub_page == "download") ? Kohana::lang('ui_main.download_reports') : "<a href=\"".url::base()."admin/reports/download\">".Kohana::lang('ui_main.download_reports')."</a>";
+		$menu .= ($this_sub_page == "download") ? Kohana::lang('ui_main.download_reports') : "<a href=\"".url::site("admin/reports/download")."\">".Kohana::lang('ui_main.download_reports')."</a>";
 
-		$menu .= ($this_sub_page == "upload") ? Kohana::lang('ui_main.upload_reports') : "<a href=\"".url::base()."admin/reports/upload\">".Kohana::lang('ui_main.upload_reports')."</a>";
+		$menu .= ($this_sub_page == "upload") ? Kohana::lang('ui_main.upload_reports') : "<a href=\"".url::site("admin/reports/upload")."\">".Kohana::lang('ui_main.upload_reports')."</a>";
 
 		echo $menu;
 
@@ -205,8 +205,8 @@ class admin_Core {
 	public static function settings_sms_subtabs($this_sub_page = FALSE)
 	{
 		$menu = "";
-		$menu .= ($this_sub_page == "sms") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::base()."admin/settings/sms\">".Kohana::lang('settings.sms.option_1')."</a>";
-		$menu .= ($this_sub_page == "smsglobal") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::base()."admin/settings/smsglobal\">".Kohana::lang('settings.sms.option_2')."</a>";
+		$menu .= ($this_sub_page == "sms") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::site('admin/settings/sms')."\">".Kohana::lang('settings.sms.option_1')."</a>";
+		$menu .= ($this_sub_page == "smsglobal") ? Kohana::lang('ui_main.sms') : "<a href=\"".url::site('admin/settings/smsglobal')."\">".Kohana::lang('settings.sms.option_2')."</a>";
 
 		echo $menu;
 
