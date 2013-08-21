@@ -532,13 +532,13 @@ class Reports_Controller extends Members_Controller {
 		// Retrieve Previous & Next Records
 		$previous = ORM::factory('incident')->where('id < ', $id)->orderby('id','desc')->find();
 		$previous_url = $previous->loaded
-		    ? url::base().'members/reports/edit/'.$previous->id
-		    : url::base().'members/reports/';
+		    ? url::site('members/reports/edit/'.$previous->id)
+		    : url::site().'members/reports/';
 		$next = ORM::factory('incident')->where('id > ', $id)->orderby('id','desc')->find();
 
 		$next_url = $next->loaded
-		    ? url::base().'members/reports/edit/'.$next->id
-		    : url::base().'members/reports/';
+		    ? url::site('members/reports/edit/'.$next->id)
+		    : url::site('members/reports/');
 		$this->template->content->previous_url = $previous_url;
 		$this->template->content->next_url = $next_url;
 

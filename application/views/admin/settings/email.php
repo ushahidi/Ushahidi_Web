@@ -75,7 +75,7 @@
 						<?php
 						}
 						?>
-						<?php echo Kohana::lang('ui_main.email_settings_comment_00');?> <a href="<?php echo url::base()."admin/settings/site";?>"><?php echo Kohana::lang('ui_main.site_email_address');?></a> 
+						<?php echo Kohana::lang('ui_main.email_settings_comment_00');?> <a href="<?php echo url::site()."admin/settings/site";?>"><?php echo Kohana::lang('ui_main.site_email_address');?></a> 
 						(<strong> <?php echo Kohana::config('settings.site_email');?></strong>), <?php echo Kohana::lang('ui_main.email_settings_comment_0');?>.
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_server_username"); ?>"><?php echo Kohana::lang('ui_main.email_server_username');?></a></h4>

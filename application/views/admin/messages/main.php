@@ -217,11 +217,11 @@
 											<ul>
 												<?php
 												if ($incident_id != 0 && $message_type != 2) {
-													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_admin.view_report')."</strong></a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>".Kohana::lang('ui_admin.view_report')."</strong></a></li>";
 												}
 												elseif ($message_type != 2)
 												{
-													echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $message_id ."\">".Kohana::lang('ui_admin.create_report')."?</a></li>";
+													echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit?mid=' . $message_id ."\">".Kohana::lang('ui_admin.create_report')."?</a></li>";
 												}
 												?>
 												<li><a href="javascript:messagesAction('d','DELETE','<?php echo(rawurlencode($message_id)); ?>')" class="del"><?php echo Kohana::lang('ui_main.delete');?></a></li>

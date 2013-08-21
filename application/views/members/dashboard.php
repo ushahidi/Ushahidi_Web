@@ -35,7 +35,7 @@
 
 							<div class="row" style="padding-top:10px;">
 								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_public_url"); ?>"><?php echo Kohana::lang('ui_main.public_profile_url');?></a></h4>
-								<span style="float:left;"><?php echo url::base().'profile/user/'; ?></span>
+								<span style="float:left;"><?php echo url::site().'profile/user/'; ?></span>
 								<?php echo form::input('username', $user->username, ' class="text short2"'); ?>
 							</div>
 							
@@ -197,7 +197,7 @@
 									{
 								?>
 								<div class="member_info_row"><span class="member_info_label"><?php echo Kohana::lang('ui_main.public_profile_url');?></span>:
-									<br/><a href="<?php echo url::base().'profile/user/'.$user->username; ?>"><?php echo url::base().'profile/user/'.$user->username; ?></a>
+									<br/><a href="<?php echo url::site().'profile/user/'.$user->username; ?>"><?php echo url::site().'profile/user/'.$user->username; ?></a>
 								</div>
 								<?php
 									}

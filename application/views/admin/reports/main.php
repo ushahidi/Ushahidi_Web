@@ -240,14 +240,14 @@
 									// Get Any Translations
 									$i = 1;
 									$incident_translation  = "<div class=\"post-trans-new\">"
-											. "<a href=\"" . url::base() . 'admin/reports/translate/?iid='.$incident_id."\">"
+											. "<a href=\"" . url::site('admin/reports/translate/?iid='.$incident_id) ."\">"
 											. utf8::strtoupper(Kohana::lang('ui_main.add_translation')).":</a></div>";
 											
 									foreach ($incident_orm->incident_lang as $translation)
 									{
 										$incident_translation .= "<div class=\"post-trans\">"
 											. Kohana::lang('ui_main.translation'). $i . ": "
-											. "<a href=\"" . url::base() . 'admin/reports/translate/'. $translation->id .'/?iid=' . $incident_id . "\">"
+											. "<a href=\"" . url::site('admin/reports/translate/'. $translation->id .'/?iid=' . $incident_id). "\">"
 											. text::limit_chars($translation->incident_title, 150, "...", TRUE)
 											. "</a>"
 											. "</div>";
@@ -266,7 +266,7 @@
 													</a>
 												</h4>
 												<p><?php echo $incident_description; ?>... 
-													<a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>" class="more">
+													<a href="<?php echo url::site('admin/reports/edit/' . $incident_id); ?>" class="more">
 														<?php echo Kohana::lang('ui_main.more');?>
 													</a>
 												</p>
