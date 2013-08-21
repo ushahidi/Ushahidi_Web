@@ -469,7 +469,20 @@ class Requirements_Backend {
 	 * @return String Folder relative to the webroot
 	 */
 	function getCombinedFilesFolder() {
-		return ($this->combinedFilesFolder) ? $this->combinedFilesFolder : Kohana::config('upload.relative_directory', FALSE);
+		$default = Kohana::config('upload.relative_directory', FALSE);
+		
+		if (Kohana::config("cdn.cdn_store_dynamic_content") AND Kohana::config("requirements.cdn_store_combined_files"))
+		{
+			$subdomain_dir = '';
+			if (Kohana::config('settings.subdomain') != '') {
+				// Make sure there's a slash on the end
+				$subdomain_dir = rtrim(Kohana::config('settings.subdomain'), '/').'/';
+			}
+
+			$default = $subdomain_dir . Kohana::config('upload.relative_directory', FALSE);
+		}
+		
+		return ($this->combinedFilesFolder) ? $this->combinedFilesFolder : $default;
 	}
 	
 	/**
