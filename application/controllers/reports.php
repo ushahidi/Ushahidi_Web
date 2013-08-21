@@ -547,10 +547,10 @@ class Reports_Controller extends Main_Controller {
 					}
 					else
 					{
-						$comment->comment_author = html::strip_tags($post->comment_author, FALSE);
-						$comment->comment_email = html::strip_tags($post->comment_email, FALSE);
+						$comment->comment_author = $post->comment_author;
+						$comment->comment_email = $post->comment_email;
 					}
-					$comment->comment_description = html::strip_tags($post->comment_description, FALSE);
+					$comment->comment_description = $post->comment_description;
 					$comment->comment_ip = $_SERVER['REMOTE_ADDR'];
 					$comment->comment_date = date("Y-m-d H:i:s",time());
 
