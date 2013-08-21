@@ -226,7 +226,7 @@ class Private_Controller extends Members_Controller {
 							"\n\n~~~~~~~~~~~~~~~~~~~~~~~~~\n".
 							$post->private_message.
 							"\n\n".Kohana::lang('notifications.member_new_message.footer').
-							"\n ".url::base()."members/";
+							"\n ".url::site('members/');
 							
 						if ( ! email::send($to,
 							$from,
