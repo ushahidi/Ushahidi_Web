@@ -118,11 +118,11 @@
 										<td class="col-1"><input name="comment_id[]" id="comment" value="<?php echo $comment_id; ?>" type="checkbox" class="check-box"/></td>
 										<td class="col-2">
 											<div class="post">
-												<h4><a href="<?php echo url::base() . 'reports/view/' . $incident_id; ?>"><?php echo html::specialchars($comment_author); ?></a></h4>
+												<h4><a href="<?php echo url::site('reports/view/' . $incident_id); ?>"><?php echo html::specialchars($comment_author); ?></a></h4>
 												<?php
 												if ($incident_title != "")
 												{
-													?><div class="comment_incident"><?php echo Kohana::lang('ui_main.in_response_to');?>: <strong><a href="<?php echo url::base() . 'admin/reports/edit/' . $incident_id; ?>"><?php echo html::escape($incident_title); ?></a></strong></div><?php
+													?><div class="comment_incident"><?php echo Kohana::lang('ui_main.in_response_to');?>: <strong><a href="<?php echo url::site('admin/reports/edit/' . $incident_id); ?>"><?php echo html::escape($incident_title); ?></a></strong></div><?php
 												}
 												?>
 												<p><?php echo html::specialchars($comment_description); ?></p>
