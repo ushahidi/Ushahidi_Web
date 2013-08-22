@@ -70,15 +70,19 @@ class Users_Controller extends Admin_Controller {
 		$users_query = ORM::factory('user')
 						->orderby('name', 'asc');
 
+		$superadmin_role = ORM::factory('role','superadmin');
+
 		// If users is NOT a superadmin, exclude superadmin users
-		if (! $this->auth->get_user()->has( ORM::factory('role','superadmin') ) )
+		if (! $this->auth->get_user()->has( $superadmin_role ) )
 		{
 
-			//QUERY NEEDS REVIEW - super admin users also have non-super admin permissions, and show up here
 			$users_query
+				->select("users.*")
+				->select("MAX(access_level) as max_access_level")
 				->join('roles_users', 'roles_users.user_id' , 'users.id', 'INNER')
 				->join('roles', 'roles.id', 'roles_users.role_id', 'INNER')
-				->where('roles.name !=', 'superadmin');
+				->groupby("users.email")
+				->having("max_access_level <", $superadmin_role->access_level);
 		}
 
 		$users = $users_query->find_all((int)Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
