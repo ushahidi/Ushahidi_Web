@@ -648,9 +648,14 @@ class Json_Controller extends Template_Controller {
 				$layer_link = Kohana::config('upload.directory').'/'.$layer_file;
 			}
 
-			$content = file_get_contents($layer_link);
+			$layer_request = new HttpClient($layer_link);
+			$content = $layer_request->execute();
 
-			if ($content !== false)
+			if ($content === false) 
+			{
+				throw new Kohana_Exception($layer_request->get_error_msg());
+			}
+			else
 			{
 				echo $content;
 			}
