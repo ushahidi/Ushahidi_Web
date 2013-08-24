@@ -522,7 +522,15 @@
 			"&u=".$url."&ip=".$ip_address;
 
 		// Ignore errors in case file_get_contents can't retrieve url
-		@preg_match('/({.*})/', file_get_contents($version_url), $matches);
+		$request = new HttpClient($version_url);
+		$version = $request->execute();
+
+		if ($version === false) 
+		{
+			throw new Kohana_Exception($request->get_error_msg());
+		}
+
+		@preg_match('/({.*})/', $version, $matches);
 
 		$version_json_string = false;
 		if(isset($matches[0]))
