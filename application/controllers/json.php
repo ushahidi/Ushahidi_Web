@@ -621,7 +621,7 @@ class Json_Controller extends Template_Controller {
 	
 
 	/**
-	 * Read in new layer KML via file_get_contents
+	 * Read in new layer KML via HttpClient
 	 * @param int $layer_id - ID of the new KML Layer
 	 */
 	public function layer($layer_id = 0)
