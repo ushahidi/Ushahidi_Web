@@ -473,7 +473,10 @@ class map_Core {
 
 			$url = Kohana::config('config.external_site_protocol').'://maps.google.com/maps/api/geocode/json?sensor=false&address='.rawurlencode($address);
 			$result = FALSE;
-			if ($result = @file_get_contents($url)) {
+
+			$url_request = new HttpClient($url);
+
+			if ($result = $url_request->execute()) {
 				$payload = json_decode($result);
 			}
 
