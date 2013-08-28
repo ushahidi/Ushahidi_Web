@@ -155,4 +155,4 @@ Installation
 
 Additional Information
 ----------------------
-For further references and documentation, head over to our wiki (http://wiki.ushahidi.com). Also, we encourage you to drop by our forums (http://forums.ushahidi.com/) if you have any additional questions or concerns.
+For further references and documentation, head over to our wiki (http://wiki.ushahidi.com). Also, we encourage you to drop by our forums (https://wiki.ushahidi.com/display/forums/Ushahidi+Forums) if you have any additional questions or concerns.
