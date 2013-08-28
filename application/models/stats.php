@@ -517,7 +517,7 @@ STATSCOLLECTOR;
 
 		// Ignore errors since we are error checking later
 
-		$xml = simplexml_load_string(Stats_Model::_curl_req($stat_url));
+		$xml = simplexml_load_string(self::_curl_req($stat_url));
 
 		if($xml == false)
 		{
