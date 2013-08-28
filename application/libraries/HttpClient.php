@@ -8,7 +8,8 @@
  * @license http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
-class HttpClient_Core {
+class HttpClient_Core 
+{
 
 	/**
 	 * Curl handler
@@ -75,7 +76,7 @@ class HttpClient_Core {
 		curl_setopt($this->ch, CURLOPT_FOLLOWLOCATION, TRUE);
 
 		// use gzip if possible for performance
-		curl_setopt($this->ch,CURLOPT_ENCODING , 'gzip, deflate');
+		curl_setopt($this->ch, CURLOPT_ENCODING , 'gzip, deflate');
 
 		// do not veryfy ssl for
 		// as well for being able to access pages with non valid cert
@@ -124,8 +125,8 @@ class HttpClient_Core {
 	 */
 	public function set_error_msg()
 	{
-		$err = "Error number: " .curl_errno($this->ch) ."\n";
-		$err .= "Error message: " .curl_error($this->ch)."\n";
+		$err = "Error number: " . curl_errno($this->ch) ."\n";
+		$err .= "Error message: "  .curl_error($this->ch) ."\n";
 		$this->error_msg .= $err;
 
 		return $this->error_msg;
@@ -159,10 +160,10 @@ class HttpClient_Core {
 	{
 
 		//set various curl options first
-		curl_setopt($this->ch, CURLOPT_URL,$this->url);
+		curl_setopt($this->ch, CURLOPT_URL, $this->url);
 
 		// return into a variable rather than displaying it
-		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER,TRUE);
+		curl_setopt($this->ch, CURLOPT_RETURNTRANSFER, TRUE);
 
 		//set curl function timeout to $timeout
 		curl_setopt($this->ch, CURLOPT_TIMEOUT, $this->timeout);
