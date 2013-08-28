@@ -229,7 +229,17 @@ class VideoEmbed
 		
 		if (isset($this->service['oembed']))
 		{
-			$oembed = @json_decode(file_get_contents($this->service['oembed']."?url=".urlencode($this->url)));
+
+			$url = $this->service['oembed']."?url=".urlencode($this->url);
+
+			$request = new HttpClient($url);
+			$result = $request->execute();
+
+			if ($result === false) {
+				throw new Kohana_Exception($request->get_error_msg());
+			}
+
+			$oembed = @json_decode($result);
 			if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
 			{
 				$output = $oembed->thumbnail_url;
