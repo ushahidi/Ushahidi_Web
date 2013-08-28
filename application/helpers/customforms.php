@@ -288,7 +288,7 @@ class customforms_Core {
 				}
 				else
 				{
-					$options = explode(',',$defaults[0]);
+					$options = array_map('trim',explode(',',$defaults[0]));
 				}
 
 				$responses = explode(',',$field_response);
@@ -368,18 +368,20 @@ class customforms_Core {
 	 */
 	public static function get_edit_mismatch($form_id = 0)
 	{
+		$table_prefix = Kohana::config('database.default.table_prefix');
+
 		$user_level = self::get_user_max_auth();
 		
 		$db = Database::instance();
 		$custom_formfields = $db->query(
-			'SELECT `form_field`.`id`
-			FROM `form_field`
-			LEFT JOIN `roles` AS `roles_submit` ON (`form_field`.`field_ispublic_submit` = `roles_submit`.`id`)
-			LEFT JOIN `roles` AS `roles_view` ON (`form_field`.`field_ispublic_visible` = `roles_view`.`id`)
+			"SELECT `form_field`.`id`
+			FROM `{$table_prefix}form_field` AS `form_field`
+			LEFT JOIN `{$table_prefix}roles` AS `roles_submit` ON (`form_field`.`field_ispublic_submit` = `roles_submit`.`id`)
+			LEFT JOIN `{$table_prefix}roles` AS `roles_view` ON (`form_field`.`field_ispublic_visible` = `roles_view`.`id`)
 			WHERE `form_id` = :form_id 
 			AND `roles_submit`.`access_level` > :user_level 
 			AND (`roles_view`.`access_level` <= :user_level OR `roles_view`.`access_level` IS NULL )
-			ORDER BY `field_position` ASC',
+			ORDER BY `field_position` ASC",
 			array(
 				':user_level' => $user_level,
 				':form_id' => $form_id

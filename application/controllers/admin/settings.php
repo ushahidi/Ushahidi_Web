@@ -1090,7 +1090,7 @@ class Settings_Controller extends Admin_Controller {
 
 	private function _check_for_clean_url() {
 
-		$url = url::base()."help";
+		$url = url::base().'reports/';
 
 		$curl_handle = curl_init();
 

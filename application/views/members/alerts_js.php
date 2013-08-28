@@ -26,7 +26,7 @@ function showMap(id, lon, lat, radius) {
 		// Map center
 		center: {
 			latitude: lat,
-			longitude: lon,
+			longitude: lon
 		},
 
 		// Zoom level
@@ -46,7 +46,7 @@ function showMap(id, lon, lat, radius) {
 function alertsAction (action, confirmAction, alert_id) {
 	var statusMessage;
 	if( !isChecked( "alert" ) && alert_id=='' )
-	{ 
+	{
 		alert('Please select at least one alert.');
 	} else {
 		var answer = confirm('<?php echo Kohana::lang('ui_admin.are_you_sure_you_want_to'); ?> ' + confirmAction + '?')
@@ -55,7 +55,7 @@ function alertsAction (action, confirmAction, alert_id) {
 			// Set Submit Type
 			$("#action").attr("value", action);
 
-			if (alert_id != '') 
+			if (alert_id != '')
 			{
 				// Submit Form For Single Item
 				$("#alert_single").attr("value", alert_id);

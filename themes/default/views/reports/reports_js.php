@@ -58,6 +58,7 @@
 			defaultDate: "+1w",
 			changeMonth: true,
 			numberOfMonths: 1,
+			dateFormat: "yyyy-mm-dd",
 			onSelect: function( selectedDate ) {
 				var option = this.id == "report_date_from" ? "minDate" : "maxDate",
 				instance = $( this ).data( "datepicker" ),
@@ -84,10 +85,19 @@
 			
 		  	
 		/**
+		 *	Helper function for date formatting.
+		 */
+		var twoDigitNumber = function(n)
+		{
+			return ( n < 10 ) ? "0" + n : n;
+		}
+
+		/**
 		 * Change time period text in page header to reflect what was clicked
 		 * then hide the date range picker box
 		 */
-		$(".btn-date-range").click(function(){
+		$(".btn-date-range").click(function()
+		{
 			// Change the text
 			$(".time-period").text($(this).attr("title"));
 			
@@ -99,11 +109,7 @@
 			// Date object
 			var d = new Date();
 			
-			var month = d.getMonth() + 1;
-			if (month < 10)
-			{
-				month = "0" + month;
-			}
+			var month = twoDigitNumber( d.getMonth() + 1 );
 			
 			if ($(this).attr("id") == 'dateRangeAll')
 			{
@@ -121,7 +127,7 @@
 			{
 				// Set today's date
 				currentDate = (d.getDate() < 10)? "0"+d.getDate() : d.getDate();
-				var dateString = month + '/' + currentDate + '/' + d.getFullYear();
+				var dateString = [d.getFullYear(), month, currentDate].join("-");
 				$("#report_date_from").val(dateString);
 				$("#report_date_to").val(dateString);
 			}
@@ -136,8 +142,8 @@
 				firstWeekDay = (d1.getDate() < 10)? ("0" + d1.getDate()) : d1.getDate();
 				lastWeekDay = (d2.getDate() < 10)? ("0" + d2.getDate()) : d2.getDate();
 				
-				$("#report_date_from").val(month + '/' + firstWeekDay + '/' + d1.getFullYear());
-				$("#report_date_to").val(month + '/' + lastWeekDay + '/' + d2.getFullYear());
+				$("#report_date_from").val( [d1.getFullYear(), twoDigitNumber( d1.getMonth() + 1 ), twoDigitNumber( d1.getDate() ) ].join("-") );
+				$("#report_date_to").val( [d2.getFullYear(), twoDigitNumber( d2.getMonth() + 1 ), twoDigitNumber( d2.getDate() ) ].join("-") );
 			}
 			else if ($(this).attr("id") == 'dateRangeMonth')
 			{
@@ -145,8 +151,8 @@
 				d1.setDate(32);
 				lastMonthDay = 32 - d1.getDay();
 				
-				$("#report_date_from").val(month + '/01/' + d.getFullYear());
-				$("#report_date_to").val(month + '/' + lastMonthDay +'/' + d.getFullYear());
+				$("#report_date_from").val( [d.getFullYear(), month, '01'].join("-") );
+				$("#report_date_to").val( [d.getFullYear(), month, lastMonthDay].join("-") );
 			}
 			
 			// Update the url parameters

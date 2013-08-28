@@ -801,12 +801,12 @@ class Reports_Controller extends Admin_Controller {
 		// Retrieve Previous & Next Records
 		$previous = ORM::factory('incident')->where('id < ', $id)->orderby('id','desc')->find();
 		$previous_url = $previous->loaded
-		    ? url::base().'admin/reports/edit/'.$previous->id
-		    : url::base().'admin/reports/';
+		    ? url::site('admin/reports/edit/'.$previous->id)
+		    : url::site('admin/reports/');
 		$next = ORM::factory('incident')->where('id > ', $id)->orderby('id','desc')->find();
 		$next_url = $next->loaded
-		    ? url::base().'admin/reports/edit/'.$next->id
-		    : url::base().'admin/reports/';
+		    ? url::site('admin/reports/edit/'.$next->id)
+		    : url::site('admin/reports/');
 		$this->template->content->previous_url = $previous_url;
 		$this->template->content->next_url = $next_url;
 
@@ -1435,6 +1435,21 @@ class Reports_Controller extends Admin_Controller {
 		$search_form->alert_radius_view = $alert_radius_view;
 		
 		return $search_form;
+	}
+	
+	/**
+	 * Function used by the photo delete button
+	 * in /admin/reports/edit/N
+	 * @param $id is the DB id of the image to delete
+	 **/
+	public function deletePhoto($id = 0)
+	{
+		$this->auto_render = false;
+		$this->template = null;
+		if($id)
+		{
+			Media_Model::delete_photo($id);
+		}
 	}
 
 }
