@@ -543,13 +543,6 @@ STATSCOLLECTOR;
 	 */
 	public function _curl_req($url)
 	{
-		// Make sure cURL is installed
-		if ( ! function_exists('curl_exec'))
-		{
-			throw new Kohana_Exception('stats.cURL_not_installed');
-			return false;
-		}
-
 		$request = new HttpClient($url);
 		$buffer = $request->execute();
 
