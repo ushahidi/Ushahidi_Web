@@ -103,7 +103,7 @@ class Feed_Controller extends Controller {
 
 		$feedpath = $feedtype == 'atom' ? 'feed/atom/' : 'feed/';
 
-		//header("Content-Type: text/xml; charset=utf-8");
+		header('Content-Type: application/' . ($feedtype == 'atom' ? 'atom' : 'rss') . '+xml; charset=utf-8');
 		$view = new View('feed/'.$feedtype);
 		$view->feed_title = Kohana::config('settings.site_name');
 		$view->site_url = $site_url;

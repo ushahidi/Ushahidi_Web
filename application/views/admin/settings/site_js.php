@@ -25,7 +25,7 @@ jQuery(document).ready(function() {
 
 	// Check if we need to upgrade this deployment of Ushahidi
 	// if we're on the dashbboard, check for a new version
-	jQuery.get("<?php echo url::base().'admin/upgrade/check_current_version' ?>", function(data){
+	jQuery.get("<?php echo url::site().'admin/upgrade/check_current_version' ?>", function(data){
 			jQuery('#need_to_upgrade').html(data);
 			jQuery('#need_to_upgrade').removeAttr("style");
 		});

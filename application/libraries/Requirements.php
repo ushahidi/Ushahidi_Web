@@ -469,7 +469,20 @@ class Requirements_Backend {
 	 * @return String Folder relative to the webroot
 	 */
 	function getCombinedFilesFolder() {
-		return ($this->combinedFilesFolder) ? $this->combinedFilesFolder : Kohana::config('upload.relative_directory', FALSE);
+		$default = Kohana::config('upload.relative_directory', FALSE);
+		
+		if (Kohana::config("cdn.cdn_store_dynamic_content") AND Kohana::config("requirements.cdn_store_combined_files"))
+		{
+			$subdomain_dir = '';
+			if (Kohana::config('settings.subdomain') != '') {
+				// Make sure there's a slash on the end
+				$subdomain_dir = rtrim(Kohana::config('settings.subdomain'), '/').'/';
+			}
+
+			$default = $subdomain_dir . Kohana::config('upload.relative_directory', FALSE);
+		}
+		
+		return ($this->combinedFilesFolder) ? $this->combinedFilesFolder : $default;
 	}
 	
 	/**
@@ -1150,20 +1163,20 @@ class Requirements_Backend {
 		// try to include from a loaded theme
 		foreach (Themes::loaded_themes() as $theme)
 		{
-			$path  = THEMEPATH . "$theme/css/$name.css";
+			$path  = THEMEPATH . "$theme/css/$name";
 			if (file_exists($path)) {
-				return "themes/$theme/css/$name.css";
+				return "themes/$theme/css/$name";
 			}
 		}
 
 		// Try to include from fall back module
-		if ($module AND file_exists(DOCROOT . "$module/css/$name.css")) {
-			return "$module/css/$name.css";
+		if ($module AND file_exists(DOCROOT . "$module/css/$name")) {
+			return "$module/css/$name";
 		}
 		
 		// Try to include from global media
-		if (file_exists(DOCROOT . "media/css/$name.css")) {
-			return "media/css/$name.css";
+		if (file_exists(DOCROOT . "media/css/$name")) {
+			return "media/css/$name";
 		}
 	}
 	

@@ -84,7 +84,7 @@
 
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_public_url"); ?>"><?php echo Kohana::lang('ui_main.public_profile_url');?></a></h4>
-							<span style="float:left;"><?php echo url::base().'profile/user/'; ?></span>
+							<span style="float:left;"><?php echo url::site().'profile/user/'; ?></span>
 							<?php print form::input('username', $form['username'], ' class="text short3"'); ?>
 						</div>
 

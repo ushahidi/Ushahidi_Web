@@ -80,10 +80,18 @@
 				label:"${clusterCount}",
 				fontWeight: "${fontweight}",
 				fontColor: "#ffffff",
-				fontSize: "${fontsize}"
+				fontSize: "${fontsize}",
+				title: "${title}"    
 			},
 			{
 				context: {
+					title: function(feature) {
+            			if (feature.attributes.count >= 2) {
+              				return feature.attributes.count + " reports";
+            			} else {
+              				return feature.attributes.title;
+            			}
+          			},
 					count: function(feature) {
 						if (feature.attributes.count < 2) {
 							return 2 * Ushahidi.markerRadius;
@@ -404,7 +412,9 @@
 				new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
 				new OpenLayers.Control.Zoom(),
 				new OpenLayers.Control.Attribution(),
-				new OpenLayers.Control.MousePosition(),
+				new OpenLayers.Control.MousePosition({
+					formatOutput: Ushahidi.convertLongLat
+				}),
 				new OpenLayers.Control.LayerSwitcher()
 			];
 		} else {
@@ -1172,4 +1182,12 @@
 		}
 	}
 
+
+	/**
+	 * Helper method: convert LongLat
+	 * Converts LongLat coordinates from Open Layers to "lat, long"
+	 */
+	Ushahidi.convertLongLat = function(longLat) {
+		return longLat.lat.toFixed(5) + ", " + longLat.lon.toFixed(5)
+	}
 })();

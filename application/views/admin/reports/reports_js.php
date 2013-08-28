@@ -29,26 +29,29 @@
 					
 					// Set Submit Type
 					$("#action").attr("value", action);
+
+					var $incident_single = $(document.getElementById("incident_single"))
+					var $mainform = $(document.getElementById("reportMain"));
 					
 					if (incident_id != '') 
 					{
 						// Submit Form For Single Item
-						$("#incident_single").attr("value", incident_id);
-						$("#reportMain").submit();
+						$incident_single.attr("value", incident_id);
+
+						//prevent checked reports from receiving actoin if action is triggered from a single report
+						$mainform.find("input:checkbox").attr("checked", false);
 					}
 					else
 					{
 						// Set Hidden form item to 000 so that it doesn't return server side error for blank value
-						$("#incident_single").attr("value", "000");
-						
-						// Submit Form For Multiple Items
-						$("#reportMain").submit();
+						$incident_single.attr("value", "000");
 					}
-				
-				} else {
-					return false;
+
+					$mainform.submit();
 				}
 			}
+
+			return false;						
 		}
 		
 		function showLog(id)
@@ -122,7 +125,7 @@ var initMap = function(){
 			// Map center
 			center: {
 				latitude: latitude,
-				longitude: longitude,
+				longitude: longitude
 			},
 
 			// Zoom level

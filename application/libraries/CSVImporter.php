@@ -86,7 +86,7 @@ class CSVImporter {
 		$data = file_get_contents($file);
 
 		// Replace carriage return character
-		$replacedata = preg_replace("/\r/","\n",$data);
+		$replacedata = preg_replace("/\r\n/","\n",$data);
 
 		// Replace file content
 		file_put_contents($file, $replacedata);

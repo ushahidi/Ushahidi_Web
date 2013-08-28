@@ -36,15 +36,9 @@ class Scheduler_Controller extends Controller {
 		// @todo abstract most of this into a library, especially locking
 		
 		// Ensure settings entry for `scheduler_lock` exists
-		try {
-			Database::instance()->query(
-				"INSERT INTO `".Kohana::config('database.default.table_prefix')."settings`
-				(`key`, `value`) VALUES ('scheduler_lock', 0)");
-		}
-		catch (Kohana_Database_Exception $e)
-		{
-			// ignore database error from already existing scheduler_lock row
-		}
+		Database::instance()->query(
+			"INSERT IGNORE INTO `".Kohana::config('database.default.table_prefix')."settings`
+			(`key`, `value`) VALUES ('scheduler_lock', 0)");
 		
 		// Now try and update the scheduler_lock
 		$result = Database::instance()->query(

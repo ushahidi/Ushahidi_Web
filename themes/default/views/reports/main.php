@@ -201,7 +201,11 @@
 							<a href="#" class="small-link-button reset" id="reset_all_filters"><?php echo Kohana::lang('ui_main.reset_all_filters'); ?></a> 
 							<a href="#" id="applyFilters" class="filter-button"><?php echo Kohana::lang('ui_main.filter_reports'); ?></a>
 						</p>
-					</div>          
+						<?php
+						// Action, allows plugins to add custom filter controls
+						Event::run('ushahidi_action.report_filters_controls_ui');
+						?>
+					</div>
 				</div>
 				<!-- end #filters-box -->
 			</div>

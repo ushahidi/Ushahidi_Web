@@ -96,7 +96,7 @@
 											<td class="col-1">&nbsp;</td>
 											<td class="col-2">
 												<div class="post">
-													<h4><?php echo $feed_name; ?>&nbsp;&nbsp;&nbsp;[<a href="<?php echo url::base() . 'admin/manage/feeds_items/'.$feed_id ?>"><?php echo Kohana::lang('ui_main.view_items');?></a>]</h4>
+													<h4><?php echo $feed_name; ?>&nbsp;&nbsp;&nbsp;[<a href="<?php echo url::site() . 'admin/manage/feeds_items/'.$feed_id ?>"><?php echo Kohana::lang('ui_main.view_items');?></a>]</h4>
 													<p><?php echo $feed_url; ?></p>
 												</div>
 											</td>

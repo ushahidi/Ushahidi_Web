@@ -44,7 +44,9 @@ $(document).ready(function() {
 
 	map.addControl(new OpenLayers.Control.Navigation());
 	map.addControl(new OpenLayers.Control.Zoom());
-	map.addControl(new OpenLayers.Control.MousePosition());
+	map.addControl(new OpenLayers.Control.MousePosition({
+		formatOutput: Ushahidi.convertLongLat
+	}));
 	map.addControl(new OpenLayers.Control.ScaleLine());
 	map.addControl(new OpenLayers.Control.Scale('mapScale'));
 	map.addControl(new OpenLayers.Control.LayerSwitcher());

@@ -420,6 +420,8 @@ class reports_Core {
 	 */
 	public static function save_media($post, $incident)
 	{
+		$upload_dir = Kohana::config('upload.directory', TRUE);
+
 		// Delete Previous Entries
 		ORM::factory('media')->where('incident_id',$incident->id)->where('media_type <> 1')->delete_all();
 
@@ -463,19 +465,37 @@ class reports_Core {
 						$media_medium = $new_filename.'_m'.$file_type;
 						$media_thumb = $new_filename.'_t'.$file_type;
 						
-						file_put_contents(Kohana::config('upload.directory', TRUE).$media_link, @file_get_contents($video_thumb));
+						file_put_contents($upload_dir.$media_link, @file_get_contents($video_thumb));
 						
 						// IMAGE SIZES: 800X600, 400X300, 89X59
 						// Catch any errors from corrupt image files
 						try
 						{
+							$image = Image::factory($upload_dir.$media_link);
+							
 							// Medium size
-							Image::factory(Kohana::config('upload.directory', TRUE).$media_link)->resize(400,300,Image::HEIGHT)
-								->save(Kohana::config('upload.directory', TRUE).$media_medium);
+							if( $image->height > 300 )
+							{
+								Image::factory($upload_dir.$media_link)->resize(400,300,Image::HEIGHT)
+									->save($upload_dir.$media_medium);
+							}
+							else
+							{
+								// Cannot reuse the original image as it is deleted a bit further down
+								$image->save($upload_dir.$media_medium);
+							}
 							
 							// Thumbnail
-							Image::factory(Kohana::config('upload.directory', TRUE).$media_link)->resize(89,59,Image::HEIGHT)
-								->save(Kohana::config('upload.directory', TRUE).$media_thumb);
+							if( $image->height > 59 )
+							{
+								Image::factory($upload_dir.$media_link)->resize(89,59,Image::HEIGHT)
+									->save($upload_dir.$media_thumb);
+							}
+							else
+							{
+								// Reuse the medium image when it is small enough
+								$media_thumb = $media_medium;
+							}
 						}
 						catch (Exception $e)
 						{
@@ -495,13 +515,13 @@ class reports_Core {
 							$media_thumb = cdn::upload($media_thumb);
 							
 							// We no longer need the files we created on the server. Remove them.
-							$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+							$local_directory = rtrim($upload_dir, '/').'/';
 							//unlink($local_directory.$media_link);
 							unlink($local_directory.$media_medium);
 							unlink($local_directory.$media_thumb);
 						}
 						// Remove original image
-						unlink(Kohana::config('upload.directory', TRUE).$media_link);
+						unlink($upload_dir.$media_link);
 					}
 					
 					$video = new Media_Model();
@@ -527,28 +547,53 @@ class reports_Core {
 			{
 				$new_filename = $incident->id.'_'.$i.'_'.time();
 
-				$file_type = substr($filename,-4);
+				//$file_type = substr($filename,-4);
+				$file_type =".".substr(strrchr($filename, '.'), 1); // replaces the commented line above to take care of images with .jpeg extension.
 				
 				// Name the files for the DB
 				$media_link = $new_filename.$file_type;
 				$media_medium = $new_filename.'_m'.$file_type;
 				$media_thumb = $new_filename.'_t'.$file_type;
-				
+
 				// IMAGE SIZES: 800X600, 400X300, 89X59
 				// Catch any errors from corrupt image files
 				try
 				{
+					$image = Image::factory($filename);
 					// Large size
-					Image::factory($filename)->resize(800,600,Image::AUTO)
-						->save(Kohana::config('upload.directory', TRUE).$media_link);
+					if( $image->width > 800 || $image->height > 600 )
+					{
+						Image::factory($filename)->resize(800,600,Image::AUTO)
+							->save($upload_dir.$media_link);
+					}
+					else
+					{
+						$image->save($upload_dir.$media_link);
+					}
 
 					// Medium size
-					Image::factory($filename)->resize(400,300,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$media_medium);
+					if( $image->height > 300 )
+					{
+						Image::factory($filename)->resize(400,300,Image::HEIGHT)
+							->save($upload_dir.$media_medium);
+					}
+					else
+					{
+						// Reuse the large image when it is small enough
+						$media_medium = $media_link;
+					}
 
 					// Thumbnail
-					Image::factory($filename)->resize(89,59,Image::HEIGHT)
-						->save(Kohana::config('upload.directory', TRUE).$media_thumb);
+					if( $image->height > 59 )
+					{
+						Image::factory($filename)->resize(89,59,Image::HEIGHT)
+							->save($upload_dir.$media_thumb);
+					}
+					else
+					{
+						// Reuse the medium image when it is small enough
+						$media_thumb = $media_medium;
+					}
 				}
 				catch (Kohana_Exception $e)
 				{
@@ -568,7 +613,7 @@ class reports_Core {
 					$cdn_media_thumb = cdn::upload($media_thumb);
 					
 					// We no longer need the files we created on the server. Remove them.
-					$local_directory = rtrim(Kohana::config('upload.directory', TRUE), '/').'/';
+					$local_directory = rtrim($upload_dir, '/').'/';
 					if (file_exists($local_directory.$media_link))
 					{
 						unlink($local_directory.$media_link);

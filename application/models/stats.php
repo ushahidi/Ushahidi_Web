@@ -518,6 +518,12 @@ STATSCOLLECTOR;
 		// Ignore errors since we are error checking later
 
 		$xml = simplexml_load_string(Stats_Model::_curl_req($stat_url));
+
+		if($xml == false)
+		{
+			return false;
+		}
+
 		$stat_id = (string) $xml->id[0];
 		$stat_key = (string) $xml->key[0];
 
