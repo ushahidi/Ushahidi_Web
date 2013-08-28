@@ -51,6 +51,15 @@ class HttpClient_Core
 	 */
 	private $timeout;
 
+	/**
+	 * Holds response code in case someone is interested in it
+	 *
+	 * @access private
+	 * @var int
+	 */
+	private $response_code;
+
+
 	public function __construct($url, $timeout=20)
 	{
 		$this->url = $url;
@@ -103,7 +112,7 @@ class HttpClient_Core
 	 */
 	public function get_http_response_code()
 	{
-		return curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
+		return $this->response_code;
 	}
 
 	/**
@@ -186,6 +195,7 @@ class HttpClient_Core
 
 		//and finally send curl request
 		$result = curl_exec($this->ch);
+		$this->response_code = curl_getinfo($this->ch, CURLINFO_HTTP_CODE);
 
 		if (curl_errno($this->ch))
 		{
