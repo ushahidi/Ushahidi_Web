@@ -178,8 +178,19 @@ class Login_Controller extends Template_Controller {
 							url::redirect("login?new_confirm_email");
 						}
 						
-						// Generic Error if exception not passed
-						$post->add_error('password', 'login error');
+						// If user isn't approved, show not approved error
+						elseif (Kohana::config('settings.manually_approve_users')
+							AND ! ORM::factory('user', $user)->has(ORM::factory('role', 'login'))
+							)
+						{
+							$post->add_error('username', 'approval error');
+						}
+						
+						else
+						{
+							// Generic Error if exception not passed
+							$post->add_error('password', 'login error');
+						}
 					}
 				}
 				catch (Exception $e)
@@ -262,6 +273,11 @@ class Login_Controller extends Template_Controller {
 				{
 					$message_class = 'login_success';
 					$message = Kohana::lang('ui_main.login_confirmation_sent');
+				}
+				elseif (Kohana::config('settings.manually_approve_users'))
+				{
+					$message_class = 'login_success';
+					$message = Kohana::lang('ui_main.login_approval_required');
 				}
 				else
 				{
