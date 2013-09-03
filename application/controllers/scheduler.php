@@ -28,7 +28,7 @@ class Scheduler_Controller extends Controller {
 		$safe_mode_enabled = ini_get('safe_mode');
 		$disabled_functions = ini_get('disable_functions');
 
-		if (empty($safe_mode_enabled) && !preg_match("/set_time_limit/", $disabled_functions))
+		if (empty($safe_mode_enabled) && strstr($disabled_functions, "set_time_limit") === false)
 		{
 			set_time_limit(180);
 		}
