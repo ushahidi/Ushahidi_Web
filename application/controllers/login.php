@@ -103,8 +103,17 @@ class Login_Controller extends Template_Controller {
 		// Show that confirming the email address was a success
 		if (isset($_GET["confirmation_success"]))
 		{
-			$message_class = 'login_success';
-			$message = Kohana::lang('ui_main.confirm_email_successful');
+			// Check if approval is still required
+			if (Kohana::config('settings.manually_approve_users'))
+			{
+				$message_class = 'login_success';
+				$message = Kohana::lang('ui_main.confirm_email_successful_and_approval');
+			}
+			else
+			{
+				$message_class = 'login_success';
+				$message = Kohana::lang('ui_main.confirm_email_successful');
+			}
 		}
 
 		// Is this a password reset request? We need to show the password reset form if it is
@@ -668,6 +677,11 @@ class Login_Controller extends Template_Controller {
 			{
 				$user->add(ORM::factory('role', 'login'));
 				$user->add(ORM::factory('role', 'member'));
+			}
+			else
+			{
+				// Try sending and email to the admin for approval
+				$this->_send_email_admin_approval($user);
 			}
 
 			$user->save();
