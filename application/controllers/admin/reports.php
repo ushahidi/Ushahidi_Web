@@ -1241,7 +1241,7 @@ class Reports_Controller extends Admin_Controller {
 				$(\"#incident_date\").datepicker({
 				showOn: \"both\",
 				buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\",
-				buttonImageOnly: TRUE
+				buttonImageOnly: true
 				});
 				});
 			</script>";
@@ -1252,10 +1252,10 @@ class Reports_Controller extends Admin_Controller {
 	{
 		return "<script type=\"text/javascript\">
 				$(document).ready(function() {
-				$('a#category_toggle').click(function() {
-				$('#category_add').toggle(400);
-				return FALSE;
-				});
+					$('a#category_toggle').click(function() {console.log('toggle');
+						$('#category_add').toggle(400);
+						return false;
+					});
 				});
 			</script>";
 	}
