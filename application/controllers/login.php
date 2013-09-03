@@ -274,7 +274,7 @@ class Login_Controller extends Template_Controller {
 					$message_class = 'login_success';
 					$message = Kohana::lang('ui_main.login_confirmation_sent');
 				}
-				elseif (Kohana::config('settings.manually_approve_users'))
+				elseif ($this->_send_email_admin_approval($user))
 				{
 					$message_class = 'login_success';
 					$message = Kohana::lang('ui_main.login_approval_required');
@@ -934,6 +934,39 @@ class Login_Controller extends Template_Controller {
 		$subject = $settings['site_name'].' '.Kohana::lang('ui_main.login_signup_confirmation_subject');
 		$message = Kohana::lang('ui_main.login_signup_confirmation_message',
 			array($settings['site_name'], $url));
+
+		email::send($to, $from, $subject, $message, FALSE);
+
+		return TRUE;
+	}
+
+	/**
+	 * Sends an email for admin approval
+	 */
+	private function _send_email_admin_approval($user)
+	{
+		// Check if we require users to go through this process
+		if (! Kohana::config('settings.manually_approve_users'))
+		{
+			return FALSE;
+		}
+
+		$url = url::site('admin/users/edit/'.$user->id);
+
+		$admins = ORM::factory('User')
+			->join('roles_users', 'roles_users.user_id', 'users.id', 'INNER')
+			->join('roles', 'roles_users.role_id', 'roles.id', 'INNER')
+			->where("(roles.name = 'superadmin' OR roles.name = 'admin')")
+			->where("users.notify", 1)
+			->find_all();
+		
+		$emails = array('bcc' => array_values($admins->select_list('id', 'email')));
+		
+		$to = $emails;
+		$from = array(Kohana::config('settings.site_email'), Kohana::config('settings.site_name'));
+		$subject = Kohana::config('settings.site_name').' '.Kohana::lang('ui_main.login_signup_admin_approval_subject');
+		$message = Kohana::lang('ui_main.login_signup_admin_approval_message',
+			array(Kohana::config('settings.site_name'), $url));
 
 		email::send($to, $from, $subject, $message, FALSE);
 
