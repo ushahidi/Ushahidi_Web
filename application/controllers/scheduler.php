@@ -24,9 +24,11 @@ class Scheduler_Controller extends Controller {
 			ini_set('max_execution_time', 180);
 		}
 
-		// Set time limit only if we're not on safe_mode
+		// Set time limit only if we're not on safe_mode and set_time_limit is enabled
 		$safe_mode_enabled = ini_get('safe_mode');
-		if (empty($safe_mode_enabled))
+		$disabled_functions = ini_get('disable_functions');
+
+		if (empty($safe_mode_enabled) && !preg_match("/set_time_limit/", $disabled_functions))
 		{
 			set_time_limit(180);
 		}
