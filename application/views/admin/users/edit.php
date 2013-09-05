@@ -119,14 +119,13 @@
 
 							<div class="row">
 								<h4><?php echo Kohana::lang('ui_admin.user_last_login');?></h4>
-								<?php // TODO: handle timezone? handle date format? ?>
-								<p class="bold_desc"><?php echo date("m/d/Y g:ia", $user->last_login); ?></p>
-							</div>			
-							
+								<p class="bold_desc"><?php echo date("m/d/Y g:ia", $user->last_login); ?> <?php echo date_default_timezone_get(); ?></p>
+							</div>
+
 							<div class="row">
 								<h4><?php echo Kohana::lang('ui_admin.user_confirmed_account');?></h4>
 								<p class="bold_desc"><?php echo Kohana::lang('ui_admin.' . ($user->confirmed ? "yes" : "no"));?></p>
-							</div>			
+							</div>
 
 						</div>
 						<?php
