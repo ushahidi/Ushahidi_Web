@@ -974,7 +974,9 @@ class Login_Controller extends Template_Controller {
 			->where("users.notify", 1)
 			->find_all();
 		
-		$emails = array('bcc' => array_values($admins->select_list('id', 'email')));
+		$emails = array(
+			'to' => array_values($admins->select_list('id', 'email'))
+		);
 		
 		$to = $emails;
 		$from = array(Kohana::config('settings.site_email'), Kohana::config('settings.site_name'));
