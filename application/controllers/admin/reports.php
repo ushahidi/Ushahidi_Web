@@ -1168,7 +1168,7 @@ class Reports_Controller extends Admin_Controller {
 	public function deleteall() {
 
 		// Only superadmins should be able to do this...
-		if ( ! $this->auth->has_permission("reports_delete_all"))
+		if ( ! $this->auth->get_user()->has( ORM::factory('role','superadmin') ))
 		{
 			url::redirect(url::site() . 'admin/dashboard');
 		}
