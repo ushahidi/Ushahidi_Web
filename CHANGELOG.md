@@ -1,4 +1,4 @@
-Ushahidi 2.7.1 (Bug fix release) - 22/08/2013
+Ushahidi 2.7.1 (Bug fix release) - 04/09/2013
 -------------------------------------
 
 ### Major Fixes
