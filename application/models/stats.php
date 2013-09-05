@@ -23,7 +23,7 @@ class Stats_Model extends ORM {
 	 * Generates the JavaScript for stats tracking
 	 */
 	public static function get_javascript()
-	{
+	{	
 		// Make sure cURL is installed
 		if ( ! function_exists('curl_exec'))
 		{
@@ -82,24 +82,12 @@ class Stats_Model extends ORM {
 			}
 
 			$url = Kohana::config('config.external_site_protocol').'://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
-			$curl_handle = curl_init();
+			$request = new HttpClient($url);
+			$buffer = $request->execute();
 
-			// cURL options
-			$curl_options = array(
-				CURLOPT_URL => $url,
-
-				// Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
-				CURLOPT_CONNECTTIMEOUT => self::$time_out,
-
-				// Set cURL to store data in variable instead of print
-				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_SSL_VERIFYPEER => FALSE
-			);
-
-			curl_setopt_array($curl_handle, $curl_options);
-
-			$buffer = curl_exec($curl_handle);
-			curl_close($curl_handle);
+			if ($buffer === false) {
+				throw new Kohana_Exception($request->get_error_msg());
+			}
 
 			try
 			{
