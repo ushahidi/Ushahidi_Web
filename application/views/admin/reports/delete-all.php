@@ -22,18 +22,19 @@
 	<div class="report-form">
 		<!-- column -->
 		<div class="deleteall_container">
+			<h1><?php echo Kohana::lang('ui_admin.delete_all')?></h1>
+
 			<?php if($report_count > 0): ?>
 				<?php print form::open(NULL, array('id' => 'reportForm', 'name' => 'reportForm')); ?>
 
-				<h1><?php echo Kohana::lang('ui_admin.deleteall_title')?></h1>
-
-				<p><?php echo Kohana::lang('ui_admin.deleteall_instructions', $report_count)?></p>
+				<p><?php echo Kohana::lang('ui_admin.delete_all_instructions')?></p>
+				<p><?php echo Kohana::lang('ui_admin.delete_all_backup')?></p>
 
 				<?php print form::hidden('confirm_delete_all','1'); ?>
-				<input type="submit" value="<?php echo Kohana::lang('ui_admin.deleteall_button', $report_count)?>" />
+				<input type="submit" value="<?php echo Kohana::lang('ui_admin.delete_all_button', $report_count)?>" />
 				<?php print form::close(); ?>			
 			<?php else: ?>
-				<p><?php echo Kohana::lang('ui_admin.deleteall_no_reports')?></p>
+				<p><?php echo Kohana::lang('ui_admin.delete_all_no_reports')?></p>
 			<?php endif; ?>
 		</div>
 	</div>

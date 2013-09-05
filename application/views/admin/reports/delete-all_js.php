@@ -16,6 +16,6 @@
 
 		$(document).ready(function() {		
 			$(document.getElementById("reportForm")).submit(function () {
-				return window.confirm("<?php echo addslashes(Kohana::lang('ui_admin.deleteall_confirm')); ?>");
+				return window.confirm("<?php echo addslashes(Kohana::lang('ui_admin.delete_all_confirm')); ?>");
 			});
 		});
