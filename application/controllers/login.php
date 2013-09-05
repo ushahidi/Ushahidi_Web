@@ -974,17 +974,21 @@ class Login_Controller extends Template_Controller {
 			->where("users.notify", 1)
 			->find_all();
 		
-		$emails = array(
-			'to' => array_values($admins->select_list('id', 'email'))
-		);
+		$emails = $admins->select_list('id', 'email');
 		
-		$to = $emails;
+		//$to = $emails;
 		$from = array(Kohana::config('settings.site_email'), Kohana::config('settings.site_name'));
 		$subject = Kohana::config('settings.site_name').' '.Kohana::lang('ui_main.login_signup_admin_approval_subject');
 		$message = Kohana::lang('ui_main.login_signup_admin_approval_message',
 			array(Kohana::config('settings.site_name'), $url));
 
-		email::send($to, $from, $subject, $message, FALSE);
+		foreach ($emails as $id => $email)
+		{
+			if ( ! email::send($email, $from, $subject, $message, FALSE))
+			{
+				Kohana::log('error', "email to $email could not be sent");
+			}
+		}
 
 		return TRUE;
 	}
