@@ -67,7 +67,26 @@ class Users_Controller extends Admin_Controller {
 		// Pagination
 		$pagination = new Pagination( array('query_string' => 'page', 'items_per_page' => (int)Kohana::config('settings.items_per_page_admin'), 'total_items' => ORM::factory('user')->count_all()));
 
-		$users = ORM::factory('user')->orderby('name', 'asc')->find_all((int)Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		$users_query = ORM::factory('user')
+						->orderby('name', 'asc');
+
+		$superadmin_role = ORM::factory('role','superadmin');
+
+		// If users is NOT a superadmin, exclude superadmin users
+		if (! $this->auth->get_user()->has( $superadmin_role ) )
+		{
+			// !!WARNING: UNESCAPED QUERY - DO NOT INSERT VARIABLES!!
+			$users_query
+				->where(
+					"`{$this->table_prefix}users`.`id` NOT IN (
+						SELECT `ru`.`user_id` FROM `{$this->table_prefix}roles` r
+						INNER JOIN `{$this->table_prefix}roles_users` ru ON `ru`.`role_id` = `r`.`id`
+						WHERE `r`.`name` = 'superadmin'
+					)"
+				);
+		}
+
+		$users = $users_query->find_all((int)Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
 		// Set the flag for displaying the roles link
 		$this->template->content->display_roles = $this->display_roles;
@@ -89,7 +108,10 @@ class Users_Controller extends Admin_Controller {
 		if ($user_id)
 		{
 			$user_exists = ORM::factory('user')->find($user_id);
-			if (!$user_exists->loaded)
+
+			if ( ! $user_exists->loaded OR
+					($user_exists->has( ORM::factory('role','superadmin') ) && !$this->auth->get_user()->has( ORM::factory('role','superadmin') ) )
+				)
 			{
 				// Redirect
 				url::redirect(url::site() . 'admin/users/');
