@@ -75,14 +75,15 @@ class Users_Controller extends Admin_Controller {
 		// If users is NOT a superadmin, exclude superadmin users
 		if (! $this->auth->get_user()->has( $superadmin_role ) )
 		{
-
+			// !!WARNING: UNESCAPED QUERY - DO NOT INSERT VARIABLES!!
 			$users_query
-				->select("users.*")
-				->select("MAX(access_level) as max_access_level")
-				->join('roles_users', 'roles_users.user_id' , 'users.id', 'INNER')
-				->join('roles', 'roles.id', 'roles_users.role_id', 'INNER')
-				->groupby("users.email")
-				->having("max_access_level <", $superadmin_role->access_level);
+				->where(
+					"`{$this->table_prefix}users`.`id` NOT IN (
+						SELECT `ru`.`user_id` FROM `{$this->table_prefix}roles` r
+						INNER JOIN `{$this->table_prefix}roles_users` ru ON `ru`.`role_id` = `r`.`id`
+						WHERE `r`.`name` = 'superadmin'
+					)"
+				);
 		}
 
 		$users = $users_query->find_all((int)Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
