@@ -67,7 +67,11 @@ abstract class Controller extends Controller_Core {
 			'login',
 			'riverid',
 			'api',
-			'frontlinesms'
+			// Whitelist all known SMS plugins
+			// @todo add hook for plugins to add themselves
+			'frontlinesms',
+			'smssync',
+			'nexmo'
 		);
 
 		if (Kohana::config('settings.private_deployment'))
