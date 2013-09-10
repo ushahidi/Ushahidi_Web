@@ -66,7 +66,8 @@ abstract class Controller extends Controller_Core {
 		$controller_whitelist = array(
 			'login',
 			'riverid',
-			'api'
+			'api',
+			'frontlinesms'
 		);
 
 		if (Kohana::config('settings.private_deployment'))
