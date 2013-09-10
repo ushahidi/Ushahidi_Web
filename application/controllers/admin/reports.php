@@ -1173,7 +1173,7 @@ class Reports_Controller extends Admin_Controller {
 			url::redirect(url::site() . 'admin/dashboard');
 		}
 
-		$this->template->content = new View('admin/reports/delete-all');
+		$this->template->content = new View('admin/reports/delete_all');
 
 		if ($_SERVER['REQUEST_METHOD']=='POST' && $_POST["confirm_delete_all"] == 1)
 		{
@@ -1186,7 +1186,7 @@ class Reports_Controller extends Admin_Controller {
 		}
 
 		$this->template->content->report_count = Incident_Model::get_total_reports();
-		$this->themes->js = new View('admin/reports/delete-all_js');
+		$this->themes->js = new View('admin/reports/delete_all_js');
 
 
 	}
