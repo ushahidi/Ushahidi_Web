@@ -244,7 +244,7 @@ ul {
 .btn-less {
 	display: none;
 }
-.r_categories, .r_location {
+.rb_list-view .r_categories, .rb_list-view .r_location {
 	display: none;
 }
 #tooltip-box {

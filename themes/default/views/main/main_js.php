@@ -17,7 +17,7 @@
 ?>
 		
 // Initialize the Ushahidi namespace
-Ushahidi.baseUrl = "<?php echo url::site(); ?>";
+Ushahidi.baseURL = "<?php echo url::site(); ?>";
 Ushahidi.markerRadius = <?php echo $marker_radius; ?>;
 Ushahidi.markerOpacity = <?php echo $marker_opacity; ?>;
 Ushahidi.markerStokeWidth = <?php echo $marker_stroke_width; ?>;
@@ -183,7 +183,7 @@ jQuery(function() {
 			new OpenLayers.Control.Zoom(),
 			new OpenLayers.Control.MousePosition({
 				div: document.getElementById('mapMousePosition'),
-				numdigits: 5
+				formatOutput: Ushahidi.convertLongLat
 			}),
 			new OpenLayers.Control.Scale('mapScale'),
 			new OpenLayers.Control.ScaleLine(),

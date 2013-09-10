@@ -911,6 +911,31 @@ class XMLImporter {
 							$this->incident_persons_added[] = $new_incident_person->id;
 						}	
 					}			
+
+
+					/* Step 6: Save media links for this report */
+					// Report Media
+					$media = $report->getElementsByTagName('media') ;
+					if ($media->length > 0)
+					{
+						$media = $media->item(0);
+
+						foreach($media->getElementsByTagName('item') as $media_element)
+						{
+							$media_link = trim($media_element->nodeValue);
+							$media_date = $media_element->getAttribute('date');
+							if ( ! empty($media_link))
+							{
+								$media_item = new Media_Model();
+								$media_item->location_id = isset($new_location) ? $new_location->id : 0;
+								$media_item->incident_id = $new_report->id;
+								$media_item->media_type = $media_element->getAttribute('type');
+								$media_item->media_link = $media_link;
+								$media_item->media_date = ! empty($media_date) ? $media_date : $new_report->incident_date;
+								$media_item->save();
+							}
+						}
+					}
 				}
 			}
 		}

@@ -110,9 +110,9 @@
 									<!-- TODO: Add Create Report Functionality
 									<?php
 									if ($incident_id != 0) {
-										echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
+										echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit/' . $incident_id ."\" class=\"status_yes\"><strong>View Report</strong></a></li>";
 									}else{
-										echo "<li class=\"none-separator\"><a href=\"". url::base() . 'admin/reports/edit?mid=' . $checkin_id ."\">Create Report?</a></li>";
+										echo "<li class=\"none-separator\"><a href=\"". url::site() . 'admin/reports/edit?mid=' . $checkin_id ."\">Create Report?</a></li>";
 									}
 									?>
 									-->

@@ -113,7 +113,10 @@ class Themes_Core {
 		{
 			Requirements::js("media/js/OpenLayers.js");
 			Requirements::js("media/js/ushahidi.js");
-			Requirements::js($this->api_url);
+			if ($this->api_url)
+			{
+				Requirements::js($this->api_url);
+			}
 			Requirements::customJS("OpenLayers.ImgPath = '".url::file_loc('js')."media/img/openlayers/"."';",'openlayers-imgpath');
 			
 			Requirements::css("media/css/openlayers.css");
@@ -320,19 +323,6 @@ class Themes_Core {
 		}
 		Requirements::combine_files('0_base.css', $base_css);
 		
-		// JS admin combies
-		Requirements::combine_files('1_admin.js', array(
-			'media/js/jquery.form.js',
-			'media/js/jquery.base64.js',
-			'media/js/admin.js',
-			'media/js/jquery.hovertip-1.0.js',
-		));
-		
-		// CSS admin combines
-		Requirements::combine_files('1_admin.css', array(
-			'media/css/jquery.hovertip-1.0.css',
-			'media/css/admin.css'
-		));
 		
 		Event::run('ushahidi_action.themes_add_requirements_pre_theme', $this);
 		
@@ -364,6 +354,20 @@ class Themes_Core {
 		Requirements::js('media/js/admin.js');
 		Requirements::css('media/css/admin.css');
 		Requirements::ieCSS("lt IE 7", 'media/css/ie6.css');
+		
+		// JS admin combies
+		Requirements::combine_files('1_admin.js', array(
+			'media/js/jquery.form.js',
+			'media/js/jquery.base64.js',
+			'media/js/admin.js',
+			'media/js/jquery.hovertip-1.0.js',
+		));
+		
+		// CSS admin combines
+		Requirements::combine_files('1_admin.css', array(
+			'media/css/jquery.hovertip-1.0.css',
+			'media/css/admin.css'
+		));
 	}
 	
 	public function frontend_requirements()
@@ -393,6 +397,21 @@ class Themes_Core {
 		Requirements::ieThemedCSS("lte IE 7", "iehacks.css");
 		Requirements::ieThemedCSS("IE 7", "ie7hacks.css");
 		Requirements::ieThemedCSS("IE 6", "ie6hacks.css");
+	}
+
+	/**
+	 *  Add plugin css and js
+	 */
+	public function plugin_requirements()
+	{
+		foreach (plugin::get_requirements('javascript') as $js)
+		{
+			Requirements::js($js);
+		}
+		foreach (plugin::get_requirements('stylesheet') as $css)
+		{
+			Requirements::css($css);
+		}
 	}
 
 	/**
@@ -538,7 +557,7 @@ class Themes_Core {
 	{
 		if (Kohana::config('config.output_scheduler_js'))
 		{
-			$schedulerPath = url::base() . 'scheduler';
+			$schedulerPath = url::site('scheduler');
 			$schedulerCode = <<< SCHEDULER
 				<!-- Task Scheduler -->
 				<script type="text/javascript">

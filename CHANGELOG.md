@@ -1,3 +1,38 @@
+Ushahidi 2.7.1 (Bug fix release) - 04/09/2013
+-------------------------------------
+
+### Major Fixes
+
+* Ushahidi should not upsize uploaded images, only downsize them[#1132](https://github.com/ushahidi/Ushahidi_Web/issues/1132)
+* Tagline running under report button[#1040](https://github.com/ushahidi/Ushahidi_Web/issues/1040)
+* Long, Lat order on mouse hover[#1092](https://github.com/ushahidi/Ushahidi_Web/issues/1092)
+* Bulk deletions coupled with single report deletion[#1093](https://github.com/ushahidi/Ushahidi_Web/issues/1093)
+* Unexpected Function error[#1123](https://github.com/ushahidi/Ushahidi_Web/issues/1123)
+* ‘Undefined’ on hover[#1067](https://github.com/ushahidi/Ushahidi_Web/issues/1067)
+* Wrong Content Type for RSS Feeds[#991](https://github.com/ushahidi/Ushahidi_Web/issues/991)
+* Twitter Credential Error[#1109](https://github.com/ushahidi/Ushahidi_Web/issues/1109)
+* Validation error on custom fields dropdown[#1113](https://github.com/ushahidi/Ushahidi_Web/issues/1113)
+* CSV Uploader[#1181](https://github.com/ushahidi/Ushahidi_Web/issues/1181)
+* Error with reports view page[#1176,1166,1178](https://github.com/ushahidi/Ushahidi_Web/issues/1176,https://github.com/ushahidi/Ushahidi_Web/issues/1166,https://github.com/ushahidi/Ushahidi_Web/issues/1178)
+* Login page issues[#1161](https://github.com/ushahidi/Ushahidi_Web/pull/1161)
+* Issues on Crowdmap[#1158](https://github.com/ushahidi/Ushahidi_Web/issues/1158)
+* Database table prefix installation[#1154](https://github.com/ushahidi/Ushahidi_Web/issues/1154)
+* Upload images .jpeg fails[#1136](https://github.com/ushahidi/Ushahidi_Web/issues/1136)
+* Database Error[#1149](https://github.com/ushahidi/Ushahidi_Web/issues/1149)
+* Category impact charts not loading[#1147](https://github.com/ushahidi/Ushahidi_Web/issues/1147)
+* Fatal error in stats page[#1134](https://github.com/ushahidi/Ushahidi_Web/pull/1134)
+* Twitter scheduler bugs[#1133](https://github.com/ushahidi/Ushahidi_Web/pull/1133)
+* CSV downloaded form platform throws errors on attempt to upload[#1140](https://github.com/ushahidi/Ushahidi_Web/issues/1140)
+* Default report time on reports always wrong[#1130](https://github.com/ushahidi/Ushahidi_Web/pull/1130)
+* Date picker issues in default theme[#1126](https://github.com/ushahidi/Ushahidi_Web/pull/1126)
+* Make nav helper more friendly and filterable for plugins and themes[#1125](https://github.com/ushahidi/Ushahidi_Web/pull/1125)
+* Cannot enable clean URLs from admin[#1124](https://github.com/ushahidi/Ushahidi_Web/pull/1124)
+* Unable to create new users, database error[#1122](https://github.com/ushahidi/Ushahidi_Web/pull/1122)
+* Incident location not on incident pages[#1121](https://github.com/ushahidi/Ushahidi_Web/issues/1122)
+* Table name escaping creates SQL error when there’s a table prefix[#1118](https://github.com/ushahidi/Ushahidi_Web/pull/1118)
+* Error adding report to a photo (Crowdmap Classic)[#1099](https://github.com/ushahidi/Ushahidi_Web/pull/1099)
+
+
 Ushahidi 2.7 (Bamako) - 02/05/2013
 -------------------------------------
 
