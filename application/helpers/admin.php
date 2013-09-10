@@ -123,7 +123,7 @@ class admin_Core {
 		$menu .= ($this_sub_page == "upload") ? Kohana::lang('ui_main.upload_reports') : "<a href=\"".url::base()."admin/reports/upload\">".Kohana::lang('ui_main.upload_reports')."</a>";
 
 		//only super admins have access to this
-		if (Auth::instance()->get_user()->has( ORM::factory('role','superadmin') ))
+		if (Auth::instance()->has_permission("delete_all"))
 		{
 			$menu .= ($this_sub_page == "deleteall") ? Kohana::lang('ui_admin.delete_all') : "<a href=\"".url::base()."admin/reports/deleteall\">".Kohana::lang('ui_admin.delete_all')."</a>";
 		}

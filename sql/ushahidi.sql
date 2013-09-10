@@ -1080,7 +1080,8 @@ INSERT IGNORE INTO `permissions` VALUES
 (16,'reports_verify'),
 (17,'reports_approve'),
 (18,'admin_ui'),
-(19,'member_ui');
+(19,'member_ui'),
+(20,'delete_all');
 
 -- --------------------------------------------------------
 
