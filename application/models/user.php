@@ -333,7 +333,7 @@ class User_Model extends Auth_User_Model {
 		// Special case - superadmin ALWAYS has all permissions
 		if ($this->has($superadmin))
 		{
-		//	return TRUE;
+			return TRUE;
 		}
 		
 		foreach ($this->roles as $user_role)
