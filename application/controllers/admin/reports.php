@@ -1173,7 +1173,7 @@ class Reports_Controller extends Admin_Controller {
 			url::redirect(url::site() . 'admin/dashboard');
 		}
 
-		if ($_SERVER['REQUEST_METHOD']=='POST' && $_POST["confirm_delete_all"] == 1)
+		if (isset($_POST["confirm_delete_all"]) && $_POST["confirm_delete_all"] == 1)
 		{
 			$table_prefix = Kohana::config('database.default.table_prefix');
 
