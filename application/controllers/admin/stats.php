@@ -69,7 +69,7 @@ class Stats_Controller extends Admin_Controller {
 		}
 
 		$this->template->content->range = $range;
-        
+    
 		// Get an arbitrary date range
 		$dp1 = (isset($_GET['dp1'])) ? $_GET['dp1'] : null;
 		$dp2 = (isset($_GET['dp2'])) ? $_GET['dp2'] : null;
@@ -466,9 +466,6 @@ class Stats_Controller extends Admin_Controller {
         // If we failed to get hit data, fail.
         if ( ! $data)
         {
-            $this->template->content->dp1 = null;
-            $this->template->content->dp2 = null;
-
             return false;
         }
         
