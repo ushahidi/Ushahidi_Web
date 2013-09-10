@@ -1164,6 +1164,33 @@ class Reports_Controller extends Admin_Controller {
 		}
 	}
 
+	/** Deletes all reports from the database **/
+	public function deleteall() {
+
+		// Only superadmins should be able to do this...
+		if ( ! $this->auth->has_permission("delete_all"))
+		{
+			url::redirect(url::site() . 'admin/dashboard');
+		}
+
+		$this->template->content = new View('admin/reports/delete_all');
+
+		if ($_SERVER['REQUEST_METHOD']=='POST' && $_POST["confirm_delete_all"] == 1)
+		{
+			$incidents = Incident_Model::get_incidents(array("all_reports" => true));
+
+			foreach ($incidents->result_array() as $row) {
+				$incident = new Incident_Model($row->incident_id);
+				$incident->delete();
+			}
+		}
+
+		$this->template->content->report_count = Incident_Model::get_total_reports();
+		$this->themes->js = new View('admin/reports/delete_all_js');
+
+
+	}	
+
 	/* private functions */
 
 	// Dynamic categories form fields
@@ -1451,5 +1478,7 @@ class Reports_Controller extends Admin_Controller {
 			Media_Model::delete_photo($id);
 		}
 	}
+
+
 
 }

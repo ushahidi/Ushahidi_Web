@@ -122,6 +122,12 @@ class admin_Core {
 
 		$menu .= ($this_sub_page == "upload") ? Kohana::lang('ui_main.upload_reports') : "<a href=\"".url::site("admin/reports/upload")."\">".Kohana::lang('ui_main.upload_reports')."</a>";
 
+		//only super admins have access to this
+		if (Auth::instance()->has_permission("delete_all"))
+		{
+			$menu .= ($this_sub_page == "deleteall") ? Kohana::lang('ui_admin.delete_all') : "<a href=\"".url::base()."admin/reports/deleteall\">".Kohana::lang('ui_admin.delete_all')."</a>";
+		}
+
 		echo $menu;
 
 		// Action::nav_admin_reports - Add items to the admin reports navigation tabs
