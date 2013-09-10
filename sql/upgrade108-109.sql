@@ -1,5 +1,5 @@
 -- UPDATE db_version
 UPDATE `settings` SET `value` = 109 WHERE `key` = 'db_version';
 
--- DELETE Viddler from plugin list in case
-DELETE FROM `plugin` WHERE `plugin_name` = 'viddler';
+-- UPDATE ushahidi_version
+UPDATE `settings` SET `value` = '2.7.1' WHERE `key` = 'ushahidi_version';
