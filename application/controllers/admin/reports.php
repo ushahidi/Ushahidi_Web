@@ -1173,18 +1173,24 @@ class Reports_Controller extends Admin_Controller {
 			url::redirect(url::site() . 'admin/dashboard');
 		}
 
-		$this->template->content = new View('admin/reports/delete_all');
-
 		if ($_SERVER['REQUEST_METHOD']=='POST' && $_POST["confirm_delete_all"] == 1)
 		{
-			$incidents = Incident_Model::get_incidents(array("all_reports" => true));
+			$table_prefix = Kohana::config('database.default.table_prefix');
 
-			foreach ($incidents->result_array() as $row) {
-				$incident = new Incident_Model($row->incident_id);
-				$incident->delete();
-			}
+			Database::instance()->query("UPDATE `" . $table_prefix . "message` SET `incident_id` = 0;");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "media`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "location`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "comment`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "rating`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "form_response`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "incident_person`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "incident_lang`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "incident_category`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "incident`");
 		}
 
+
+		$this->template->content = new View('admin/reports/delete_all');
 		$this->template->content->report_count = Incident_Model::get_total_reports();
 		$this->themes->js = new View('admin/reports/delete_all_js');
 
