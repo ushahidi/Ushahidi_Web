@@ -212,7 +212,7 @@ jQuery.fn.selectToUISlider = function(settings){
 	.slider(options.sliderOptions)
 	.attr('role','application');
 
-	var labels = jQuery('.ui-slider-label');
+	var labels = jQuery('.ui-slider-label', sliderComponent);
 	var width = labels.width() / 2;
 	labels.css("marginLeft", width);
 
