@@ -12,7 +12,7 @@ $config['suffix_requirements'] = TRUE;
 /**
  * Enable combining of css/javascript files.
  **/
-$config['combined_files_enabled'] = TRUE;
+$config['combined_files_enabled'] = FALSE;
 
 /**
  * Using the JSMin library to minify any
