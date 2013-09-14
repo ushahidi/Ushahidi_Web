@@ -126,7 +126,7 @@ class Reports_Helper_Test extends PHPUnit_Framework_TestCase {
 		$expected_sql = "SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, "
 				. "i.incident_mode, i.incident_active, i.incident_verified, i.location_id, l.country_id, l.location_name, l.latitude, l.longitude "
 				. ", ((ACOS(SIN(".$latitude." * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS(".$latitude." * PI() / 180) * "
-				. "	COS(l.`latitude` * PI() / 180) * COS((".$longitude." - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance "
+				. "	COS(l.`latitude` * PI() / 180) * COS((".$longitude." - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515 * 1.609344) AS distance "
 				. "FROM ".$table_prefix."incident i "
 				. "LEFT JOIN ".$table_prefix."location l ON (i.location_id = l.id) "
 				. "LEFT JOIN ".$table_prefix."incident_category ic ON (ic.incident_id = i.id) "
