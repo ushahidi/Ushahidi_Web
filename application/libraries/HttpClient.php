@@ -74,6 +74,13 @@ class HttpClient_Core
 	 */
 	private function init_curl()
 	{
+        // Make sure cURL is installed
+        if ( ! function_exists('curl_exec'))
+        {
+            throw new Kohana_Exception('HttpClient - cURL_not_installed');
+            return FALSE;
+        }
+
 		//initial curl handle
 		$this->ch = curl_init();
 		// set curl's various options
