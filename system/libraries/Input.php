@@ -312,13 +312,15 @@ class Input_Core {
 				if ( ! class_exists('HTMLPurifier_Config', FALSE))
 				{
 					// Load HTMLPurifier
-					require Kohana::find_file('vendor', 'htmlpurifier/HTMLPurifier.auto', TRUE);
+					require_once APPPATH.'libraries/htmlpurifier/HTMLPurifier.auto.php';
 					require 'HTMLPurifier.func.php';
 				}
 
 				// Set configuration
 				$config = HTMLPurifier_Config::createDefault();
-				$config->set('HTML', 'TidyLevel', 'none'); // Only XSS cleaning now
+				$config->set('HTML.TidyLevel', 'none'); // Only XSS cleaning now
+				$config->set('HTML.SafeIframe', true);
+				$config->set('URI.SafeIframeRegexp', Kohana::config('config.safe_iframe_regexp', FALSE, TRUE));
 
 				// Run HTMLPurifier
 				$data = HTMLPurifier($data, $config);
