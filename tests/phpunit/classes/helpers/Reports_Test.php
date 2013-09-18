@@ -123,6 +123,11 @@ class Reports_Helper_Test extends PHPUnit_Framework_TestCase {
 		$table_prefix = Kohana::config('database.default.table_prefix');
 		
 		// Expected SQL statement; based on the $filter_params above
+
+		// Distance calculation deets:
+		// 60 = nautical miles per degree of latitude, 1.1515 miles in every nautical mile, 1.609344 km = 1 km
+		// more details about the math here: http://sgowtham.net/ramblings/2009/08/04/php-calculating-distance-between-two-locations-given-their-gps-coordinates/
+
 		$expected_sql = "SELECT DISTINCT i.id incident_id, i.incident_title, i.incident_description, i.incident_date, "
 				. "i.incident_mode, i.incident_active, i.incident_verified, i.location_id, l.country_id, l.location_name, l.latitude, l.longitude "
 				. ", ((ACOS(SIN(".$latitude." * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS(".$latitude." * PI() / 180) * "

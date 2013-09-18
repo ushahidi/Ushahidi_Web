@@ -272,7 +272,10 @@ class Incident_Model extends ORM {
 		if (count($radius) > 0 AND array_key_exists('latitude', $radius) AND array_key_exists('longitude', $radius)
 			AND array_key_exists('distance', $radius))
 		{
-			// Calculate the distance of each point from the starting point
+
+			// Calculate the distance of each point from the starting point using Spherical Law of Cosines
+			// 60 = nautical miles per degree of latitude, 1.1515 miles in every nautical mile, 1.609344 km = 1 km
+			// more details about the math here: http://sgowtham.net/ramblings/2009/08/04/php-calculating-distance-between-two-locations-given-their-gps-coordinates/
 			$sql .= ", ((ACOS(SIN(%s * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS(%s * PI() / 180) * "
 				. "	COS(l.`latitude` * PI() / 180) * COS((%s - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515 * 1.609344) AS distance ";
 
@@ -392,6 +395,8 @@ class Incident_Model extends ORM {
 			unset ($location);
 
 			// Query to fetch the neighbour
+			// 60 = nautical miles per degree of latitude, 1.1515 miles in every nautical mile, 1.609344 km = 1 km
+			// more details about the math here: http://sgowtham.net/ramblings/2009/08/04/php-calculating-distance-between-two-locations-given-their-gps-coordinates/
 			$sql = "SELECT DISTINCT i.*, l.`latitude`, l.`longitude`, l.location_name, "
 				. "((ACOS(SIN( :lat * PI() / 180) * SIN(l.`latitude` * PI() / 180) + COS( :lat * PI() / 180) * "
 				. "	COS(l.`latitude` * PI() / 180) * COS(( :lon - l.`longitude`) * PI() / 180)) * 180 / PI()) * 60 * 1.1515 * 1.609344) AS distance "
