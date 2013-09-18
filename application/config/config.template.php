@@ -174,7 +174,7 @@ $config['allowed_html'] = "a[href|title],p,img[src|alt],br,b,u,strong,em,i";
  * 
  * Formated is based on http://htmlpurifier.org/live/configdoc/plain.html#URI.SafeIframeRegexp
  */
-$config['safe_iframe_regexp'] = '%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player)%';
+$config['safe_iframe_regexp'] = '%^//(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player!)%';
 
 /**
  * Additional resource paths, or "modules". Each path can either be absolute
