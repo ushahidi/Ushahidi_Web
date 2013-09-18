@@ -167,7 +167,7 @@ $config['external_site_protocol'] = 'https';
  * 
  * Formated is based on http://htmlpurifier.org/live/configdoc/plain.html#HTML.Allowed
  */
-$config['allowed_html'] = "a[href|title],p,img[src|alt],br,b,u,strong,em,i";
+$config['allowed_html'] = "a[href|title],p,img[src|alt],br,b,u,strong,em,i,iframe[width|height|frameborder|src]";
 
 /**
  * Allowed iframe URLs in report description and other large text fields
