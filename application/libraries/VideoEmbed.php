@@ -226,7 +226,7 @@ class VideoEmbed
 	{
 		$this->set_url($raw);
 		$output = FALSE;
-		
+
 		if (isset($this->service['oembed']))
 		{
 
@@ -235,14 +235,14 @@ class VideoEmbed
 			$request = new HttpClient($url);
 			$result = $request->execute();
 
-			if ($result === false) {
-				throw new Kohana_Exception($request->get_error_msg());
-			}
-
-			$oembed = @json_decode($result);
-			if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
+			if ($result !== FALSE)
 			{
-				$output = $oembed->thumbnail_url;
+				$oembed = json_decode($result);
+
+				if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
+				{
+					$output = $oembed->thumbnail_url;
+				}
 			}
 		}
 
