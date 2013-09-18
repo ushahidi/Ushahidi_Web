@@ -85,10 +85,6 @@ class Stats_Model extends ORM {
 			$request = new HttpClient($url);
 			$buffer = $request->execute();
 
-			if ($buffer === false) {
-				throw new Kohana_Exception($request->get_error_msg());
-			}
-
 			try
 			{
 				// This works because the tracking code is only wrapped in one tag
@@ -534,7 +530,8 @@ STATSCOLLECTOR;
 		$request = new HttpClient($url);
 		$buffer = $request->execute();
 
-		if ($buffer === false) {
+		if ($buffer === FALSE) 
+		{
 			throw new Kohana_Exception($request->get_error_msg());
 		}
 
