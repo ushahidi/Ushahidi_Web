@@ -652,7 +652,7 @@ class Json_Controller extends Template_Controller {
 			$layer_request = new HttpClient($layer_link);
 			$content = $layer_request->execute();
 
-			if ($content === false) 
+			if ($content === FALSE) 
 			{
 				throw new Kohana_Exception($layer_request->get_error_msg());
 			}
