@@ -524,12 +524,7 @@
 		$request = new HttpClient($version_url);
 		$version = $request->execute();
 
-		if ($version === false) 
-		{
-			throw new Kohana_Exception($request->get_error_msg());
-		}
-
-		@preg_match('/({.*})/', $version, $matches);
+		preg_match('/({.*})/', $version, $matches);
 
 		$version_json_string = false;
 		if(isset($matches[0]))
