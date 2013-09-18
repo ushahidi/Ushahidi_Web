@@ -476,7 +476,8 @@ class map_Core {
 
 			$url_request = new HttpClient($url);
 
-			if ($result = $url_request->execute()) {
+			if ($result = $url_request->execute()) 
+			{
 				$payload = json_decode($result);
 			}
 

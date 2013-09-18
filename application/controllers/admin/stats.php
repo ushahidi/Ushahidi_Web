@@ -35,7 +35,6 @@ class Stats_Controller extends Admin_Controller {
 		// Retrieve Current Settings
 		$stat_id = Settings_Model::get_setting('stat_id');
 
-
 		if ($stat_id === NULL OR $stat_id == 0)
 		{
 			$sitename = Settings_Model::get_setting('site_name');
