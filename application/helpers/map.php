@@ -476,10 +476,6 @@ class map_Core {
 
 			$url_request = new HttpClient($url);
 
-			if ($url_request === false) {
-				throw new Kohana_Exception($request->get_error_msg());
-			}
-
 			if ($result = $url_request->execute()) {
 				$payload = json_decode($result);
 			}
