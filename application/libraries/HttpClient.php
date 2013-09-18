@@ -193,7 +193,7 @@ class HttpClient_Core
 	 * @param string getdata - The query data to pass to the url
 	 * @param string ip address to bind (default null)
 	 * @param int timeout in sec for complete curl operation (default 5)
-	 * @return string data
+	 * @return string|boolean Returns HTTP response body or FALSE on error
 	 */
 	public function execute()
 	{

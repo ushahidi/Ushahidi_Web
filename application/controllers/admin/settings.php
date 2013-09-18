@@ -1093,7 +1093,8 @@ class Settings_Controller extends Admin_Controller {
 		$url = url::base() .'reports/';
 
 		$request = new HttpClient($url);
-		if ($request->execute() === false) {
+		if ($request->execute() === false) 
+		{
 			throw new Kohana_Exception($request->get_error_msg());
 		}
 

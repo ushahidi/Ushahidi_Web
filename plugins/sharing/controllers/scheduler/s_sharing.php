@@ -59,7 +59,8 @@ class S_Sharing_Controller extends Controller {
 			$request = new HttpClient(sharing_helper::clean_url($sharing_url) . $api_url);
 			$json = $request->execute();
 
-			if ($json === false) {
+			if ($json === FALSE) 
+			{
 				throw new Kohana_Exception($request->get_error_msg());
 			}
 
