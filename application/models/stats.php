@@ -23,7 +23,7 @@ class Stats_Model extends ORM {
 	 * Generates the JavaScript for stats tracking
 	 */
 	public static function get_javascript()
-	{	
+	{
 		// Make sure cURL is installed
 		if ( ! function_exists('curl_exec'))
 		{
