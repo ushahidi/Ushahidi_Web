@@ -215,16 +215,6 @@
 
 			<!-- / additional content -->
 			
-			<!-- Checkins -->
-			<?php if (Kohana::config('settings.checkins')): ?>
-			<br/>
-			<div class="additional-content">
-				<h5><?php echo Kohana::lang('ui_admin.checkins'); ?></h5>
-				<div id="cilist"></div>
-			</div>
-			<?php endif; ?>
-			<!-- /Checkins -->
-			
 			<?php
 			// Action::main_sidebar - Add Items to the Entry Page Sidebar
 			Event::run('ushahidi_action.main_sidebar');
