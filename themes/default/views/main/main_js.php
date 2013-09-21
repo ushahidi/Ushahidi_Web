@@ -321,9 +321,3 @@ $(window).resize(function () {
 	//Each time the viewport is adjusted/resized, execute the function
 	smartColumns();
 });
-
-
-<?php if (Kohana::config('settings.checkins')): ?>
-// EK <emmanuel(at)ushahidi.com
-// TODO: Load the sidebar with the checkins - moving this to BackboneJS
-<?php endif; ?>

@@ -48,11 +48,6 @@ class MY_Auth_Test extends PHPUnit_Framework_TestCase {
 		// not logged in: return false
 		$this->assertFalse( Auth::instance()->has_permission('admin_ui') );
 		
-		// Login role checkin permission
-		$user = new User_Model();
-		$user->add(ORM::factory('role','login'));
-		$this->assertTrue( Auth::instance()->has_permission('checkin', $user) );
-		
 		// member: return false
 		$user = new User_Model();
 		$user->add(ORM::factory('role','member'));
@@ -74,7 +69,6 @@ class MY_Auth_Test extends PHPUnit_Framework_TestCase {
 		$user = new User_Model();
 		$user->add(ORM::factory('role','phpunit'));
 		$this->assertTrue( Auth::instance()->has_permission('phpunit_access', $user) );
-		$this->assertFalse( Auth::instance()->has_permission('checkin', $user) );
 		
 	}
 	

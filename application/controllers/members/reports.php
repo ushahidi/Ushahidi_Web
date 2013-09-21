@@ -332,24 +332,6 @@ class Reports_Controller extends Members_Controller {
 
 				// STEP 6: SAVE PERSONAL INFORMATION
 				reports::save_personal_info($post, $incident);
-				
-				// If creating a report from a checkin
-				if (isset($checkin_id) AND $checkin_id != "")
-				{
-					$checkin = ORM::factory('checkin', $checkin_id);
-					if ($checkin->loaded)
-					{
-						$checkin->incident_id = $incident->id;
-						$checkin->save();
-					
-						// Attach all the media items in this checkin to the report
-						foreach ($checkin->media as $media)
-						{
-							$media->incident_id = $incident->id;
-							$media->save();
-						}
-					}
-				}
 
 				// Action::report_add / report_submit_members - Added a New Report
 				Event::run('ushahidi_action.report_submit_members', $post);
