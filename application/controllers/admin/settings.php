@@ -1090,19 +1090,12 @@ class Settings_Controller extends Admin_Controller {
 
 	private function _check_for_clean_url() {
 
-		$url = url::base().'reports/';
+		$url = url::base() .'reports/';
 
-		$curl_handle = curl_init();
+		$request = new HttpClient($url);
+		$return_code = $request->get_http_response_code();
 
-		curl_setopt($curl_handle, CURLOPT_URL, $url);
-		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
-		curl_exec($curl_handle);
-
-		$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
-		curl_close($curl_handle);
-
-		return ($return_code ==	 404)? FALSE : TRUE;
+		return ($return_code == 404)? FALSE : TRUE;
 	}
 
 	/**
