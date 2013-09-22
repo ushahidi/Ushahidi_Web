@@ -56,13 +56,8 @@ class S_Sharing_Controller extends Controller {
 		{
 			$api_url = "/api?task=incidents&limit=".$limit."&resp=json&orderfield=incidentid&sort=0&by=sinceid&id=".$since_id;
 
-			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL, sharing_helper::clean_url($sharing_url).$api_url);
-			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-			curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
-			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-			$json = curl_exec($ch);
-			curl_close($ch);
+			$request = new HttpClient(sharing_helper::clean_url($sharing_url) . $api_url);
+			$json = $request->execute();
 
 			$all_data = json_decode($json, false);
 			if ( ! $all_data)

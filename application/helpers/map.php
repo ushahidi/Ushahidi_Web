@@ -473,7 +473,11 @@ class map_Core {
 
 			$url = Kohana::config('config.external_site_protocol').'://maps.google.com/maps/api/geocode/json?sensor=false&address='.rawurlencode($address);
 			$result = FALSE;
-			if ($result = @file_get_contents($url)) {
+
+			$url_request = new HttpClient($url);
+
+			if ($result = $url_request->execute()) 
+			{
 				$payload = json_decode($result);
 			}
 
@@ -535,13 +539,10 @@ class map_Core {
 	{
 		if ($latitude AND $longitude)
 		{
-			$url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat='.$latitude.'&lon='.$longitude;
-			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL,$url);
-			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-			$json = curl_exec($ch);
-			curl_close($ch);
+			$url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat=' . $latitude . '&lon=' . $longitude;
+
+			$request = new HttpClient($url);
+			$json = $request->execute();
 
 			$location = json_decode($json, false);
 
