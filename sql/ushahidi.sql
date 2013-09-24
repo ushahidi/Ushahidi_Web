@@ -1420,21 +1420,6 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `l
 -- --------------------------------------------------------
 
 /**
- * Table structure for table `user_devices`
- * Ties mobile devices to users without logging in so that the ids on the devices make the distinction
- */
-
- /* Model doesn't seem to be used by anyone - not sure if still relevant since the deletion of Checkins */
-CREATE TABLE IF NOT EXISTS `user_devices` (
-  `id` varchar(255) NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Works with checkins';
-
--- --------------------------------------------------------
-
-/**
  * Table structure for table `user_tokens`
  *
  */
