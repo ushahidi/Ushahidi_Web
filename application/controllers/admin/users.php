@@ -173,6 +173,10 @@ class Users_Controller extends Admin_Controller {
 					{
 						$user->username = $post->username;
 
+						// Flag if user was previously unapproved
+						$previously_unapproved = FALSE;
+						if (count($user->roles) == 0) $previously_unapproved = TRUE;
+
 						// Remove Old Roles
 						foreach ($user->roles as $role)
 						{
@@ -184,6 +188,12 @@ class Users_Controller extends Admin_Controller {
 						{
 							$user->add(ORM::factory('role', 'login'));
 							$user->add(ORM::factory('role', $post->role));
+							
+							if ($previously_unapproved)
+							{
+								// Send approved email
+								$this->_send_email_approved($user);
+							}
 						}
 					}
 				}
@@ -407,6 +417,30 @@ class Users_Controller extends Admin_Controller {
 		{
 			$post->add_error('name', 'exists');
 		}
+	}
+
+	/**
+	 * Sends an email for admin approval
+	 */
+	private function _send_email_approved($user)
+	{
+		// Check if we require users to go through this process
+		if (! Kohana::config('settings.manually_approve_users'))
+		{
+			return FALSE;
+		}
+
+		$url = url::site('login');
+
+		$to = $user->email;
+		$from = array(Kohana::config('settings.site_email'), Kohana::config('settings.site_name'));
+		$subject = Kohana::config('settings.site_name').' '.Kohana::lang('ui_main.login_signup_approval_subject');
+		$message = Kohana::lang('ui_main.login_signup_approval_message',
+			array(Kohana::config('settings.site_name'), $url));
+
+		email::send($to, $from, $subject, $message, FALSE);
+
+		return TRUE;
 	}
 
 }
