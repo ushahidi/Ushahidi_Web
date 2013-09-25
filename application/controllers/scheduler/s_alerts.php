@@ -86,7 +86,7 @@ class S_Alerts_Controller extends Controller {
 					l.latitude, l.longitude FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
 					WHERE i.incident_active=1 AND i.incident_alert_status = 1 ");
 		// End of New Code		
-		
+
 		foreach ($incidents as $incident)
 		{
 			// ** Pre-Formatting Message ** //
@@ -94,8 +94,6 @@ class S_Alerts_Controller extends Controller {
 			$incident_description = $incident->incident_description;
 			$incident_url = url::site().'reports/view/'.$incident->id;
 			$incident_description = html::clean($incident_description);
-			//$html2text = new Html2Text($incident_description);
-			//$incident_description = $html2text->get_text();
 
 			// EMAIL MESSAGE
 			$email_message = $incident_description . "\n\n" . $incident_url;
