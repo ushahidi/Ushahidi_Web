@@ -211,10 +211,10 @@ class geocode_Core {
 	 * @param   double  $longitude
 	 * @return  string  closest approximation of the point as a display name
 	 */
-	static function reverseNominatin($lat, $long) {
-		if ($lat && $long)
+	static function reverseNominatim($lat, $lng) {
+		if ($lat && $lng)
 		{
-			$url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat=' . $lat . '&lon=' . $long;
+			$url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat=' . $lat . '&lon=' . $lng;
 
 			$request = new HttpClient($url);
 			if ( ! $json = $request->execute()) {
@@ -241,26 +241,34 @@ class geocode_Core {
 	 * @param   double  $longitude
 	 * @return  string  closest approximation of the point as a display name
 	 */
-	static function reverseGoogle($lat, $long) {
-		if ($lat && $long)
+	static function reverseGoogle($lat, $lng) {
+		if ($lat && $lng)
 		{
-			$url = Kohana::config('config.external_site_protocol') . '//maps.googleapis.com/maps/api/geocode/json?latlng=' . $lat . "," . $lng;
+			$url = Kohana::config('config.external_site_protocol') . '://maps.googleapis.com/maps/api/geocode/json?sensor=false&latlng=' . $lat . "," . $lng;
 
 			$request = new HttpClient($url);
 			if ( ! $json = $request->execute()) {
-				Kohana::log('error', "Geocode - reverseNominatin\n" . $url_request->get_error_msg());
+				Kohana::log('error', "Geocode - reverseGoogle\n" . $url . "\n" . $request->get_error_msg());
 
 				return FALSE;
 			}
 
-			$location = json_decode($json, TRUE);
+			$location = json_decode($json);
 
-			if (count($location["results"]) == 0)
+			if ($location->status != 'OK')
+			{
+				// logs anything different from OK
+				Kohana::log('error', "Geocode - reverseGoogle: " . $location->status . " - " . $location->error_message);
+
+				return FALSE;
+			}
+
+			if (count($location->results) == 0)
 			{
 				return FALSE;
 			}
 
-			return $location["results"][0]["formatted_address"];
+			return $location->results[0]->formatted_address;
 		}
 		else
 		{
