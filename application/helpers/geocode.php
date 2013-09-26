@@ -80,9 +80,17 @@ class geocode_Core {
 
 		$country_name = isset($result->address->country) ? $result->address->country : $result->display_name;
 
+		$country = self::getCountryId($country_name);
+
+		// if we can't find the country by name, try finding it by code
+		if ($country == 0 && isset($result->address->country_code))
+		{
+			$country = self::getCountryIdByCode($result->address->country_code);
+		}
+
 		$geocodes = array(
 			'country' 			=> $country_name,
-			'country_id' 		=> self::getCountryId($country_name),
+			'country_id' 		=> $country,
 			'location_name' 	=> $result->display_name,
 			'latitude' 			=> $result->lat,
 			'longitude' 		=> $result->lon
@@ -164,7 +172,7 @@ class geocode_Core {
 	}
 
 	/**
-	 * Finds country on deployment database
+	 * Finds country on deployment database by name
 	 * @param 	string 	Country Name
 	 * @return 	int 	Country Id if exists, 0 if not
 	 *
@@ -175,6 +183,17 @@ class geocode_Core {
 		return ( ! empty($country) AND $country->loaded)? $country->id : 0;
 	}
 
+	/**
+	 * Finds country on deployment database by code
+	 * @param 	string 	Country Name
+	 * @return 	int 	Country Id if exists, 0 if not
+	 *
+	 */
+	static function getCountryIdByCode($country_code) {
+		// Grab country_id
+		$country = Country_Model::get_country_by_code($country_code);
+		return ( ! empty($country) AND $country->loaded)? $country->id : 0;
+	}
 
 
 	/**
