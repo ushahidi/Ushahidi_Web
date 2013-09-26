@@ -480,21 +480,7 @@ class map_Core {
 	 */
 	public static function reverse_geocode($latitude,$longitude)
 	{
-		if ($latitude AND $longitude)
-		{
-			$url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat=' . $latitude . '&lon=' . $longitude;
-
-			$request = new HttpClient($url);
-			$json = $request->execute();
-
-			$location = json_decode($json, false);
-
-			return $location->display_name;
-		}
-		else
-		{
-			return false;
-		}
+		return geocode::reverseGeocode($latitude, $longitude);
 	}
 
 	/**
