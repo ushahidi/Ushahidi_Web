@@ -766,7 +766,7 @@ class Installer_Wizard {
 				$params = self::$_data['database'];
 				$config_params = array(
 					'user' => $params['username'],
-					'pass' => $params['password'],
+					'pass' => addslashes($params['password']),
 					'host' => $params['host'],
 					'database' => $params['database_name'],
 					'table_prefix' => $params['table_prefix']
