@@ -519,7 +519,7 @@ STATSCOLLECTOR;
 
 		$xml = simplexml_load_string(Stats_Model::_curl_req($stat_url));
 
-		if($xml == false)
+		if ($xml === false)
 		{
 			return false;
 		}
