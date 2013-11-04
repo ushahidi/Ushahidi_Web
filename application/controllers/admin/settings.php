@@ -70,7 +70,6 @@ class Settings_Controller extends Admin_Controller {
 			'private_deployment' => '',
 			'manually_approve_users' => '',
 			'require_email_confirmation' => '',
-			'checkins' => '',
 			'google_analytics' => '',
 			'api_akismet' => ''
 		);
@@ -114,7 +113,6 @@ class Settings_Controller extends Admin_Controller {
 			$post->add_rules('private_deployment','required','between[0,1]');
 			$post->add_rules('manually_approve_users','required','between[0,1]');
 			$post->add_rules('require_email_confirmation','required','between[0,1]');
-			$post->add_rules('checkins','required','between[0,1]');
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('api_akismet','length[0,100]', 'alpha_numeric');
 
@@ -266,7 +264,6 @@ class Settings_Controller extends Admin_Controller {
 				'private_deployment' => $settings['private_deployment'],
 				'manually_approve_users' => $settings['manually_approve_users'],
 				'require_email_confirmation' => $settings['require_email_confirmation'],
-				'checkins' => $settings['checkins'],
 				'google_analytics' => $settings['google_analytics'],
 				'api_akismet' => $settings['api_akismet']
 			);

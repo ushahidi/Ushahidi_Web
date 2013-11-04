@@ -30,12 +30,6 @@ class admin_Core {
 			$tabs = array();
 			$tabs['dashboard'] = Kohana::lang('ui_admin.dashboard');
 			$tabs['reports'] = Kohana::lang('ui_admin.reports');
-
-			if(Kohana::config('settings.checkins'))
-			{
-				$tabs['checkins'] = Kohana::lang('ui_admin.checkins');
-			}
-
 			$tabs['messages'] = Kohana::lang('ui_admin.messages');
 			$tabs['stats'] = Kohana::lang('ui_admin.stats');
 			$tabs['addons'] = Kohana::lang('ui_admin.addons');

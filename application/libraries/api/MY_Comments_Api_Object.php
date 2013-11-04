@@ -82,17 +82,6 @@ class Comments_Api_Object extends Api_Object_Core {
 					}
 					break;
 
-				case "checkinid" :
-					if (!$this->api_service->verify_array_index($this->request, 'id'))
-					{
-						$this->set_error_message(array("error" => $this->api_service->get_error_msg(001, 'id')));
-						return;
-					}
-					else
-					{
-						$this->response_data = $this->_get_comment_by_checkin_id($this->check_id_value($this->request['id']));
-					}
-					break;
 				default :
 					$this->set_error_message(array("error" => $this->api_service->get_error_msg(002)));
 			}
@@ -563,15 +552,8 @@ class Comments_Api_Object extends Api_Object_Core {
 
 			// Add some rules, the input field, followed by a list of checks, carried out in order
 
-			// We can have either a checkin id or an incident id
-			if (isset($post->checkin_id))
-			{
-				$post->add_rules('checkin_id', 'required');
-			}
-			else
-			{
-				$post->add_rules('incident_id', 'required');
-			}
+			// We have an incident id (used to be so we could have check in ids too)
+			$post->add_rules('incident_id', 'required');
 
 			// If the user isn't posting an email and author name, then they need to log in
 			if (empty($post->comment_author) OR empty($post->comment_email))
@@ -607,30 +589,15 @@ class Comments_Api_Object extends Api_Object_Core {
 				// Yes! everything is valid
 
 				$incident_id = NULL;
-				$checkin_id = NULL;
 
-				if (isset($post->checkin_id))
+				$incident = ORM::factory('incident')->where('id', $post->incident_id)->where('incident_active', 1)->find();
+				if ($incident->id == 0)// Not Found
 				{
-					$checkin = ORM::factory('checkin')->where('id', $post->checkin_id)->find();
-					if ($checkin->id == 0)// Not Found
-					{
-						return $this->response(1, "No checkins with that ID");
-					}
-					$checkin_id = $post->checkin_id;
-					$comment_url = '';
-					$comment_title = $checkin->checkin_description;
+					return $this->response(1, "No incidents with that ID");
 				}
-				else
-				{
-					$incident = ORM::factory('incident')->where('id', $post->incident_id)->where('incident_active', 1)->find();
-					if ($incident->id == 0)// Not Found
-					{
-						return $this->response(1, "No incidents with that ID");
-					}
-					$incident_id = $post->incident_id;
-					$comment_url = url::base() . 'reports/view/' . $post->incident_id;
-					$comment_title = $incident->incident_title;
-				}
+				$incident_id = $post->incident_id;
+				$comment_url = url::base() . 'reports/view/' . $post->incident_id;
+				$comment_title = $incident->incident_title;
 
 				if ($user_id == NULL)
 				{
@@ -696,7 +663,6 @@ class Comments_Api_Object extends Api_Object_Core {
 
 				$comment = new Comment_Model();
 				$comment->incident_id = intval($incident_id);
-				$comment->checkin_id = intval($checkin_id);
 				$comment->comment_author = html::strip_tags($comment_author, FALSE);
 				$comment->comment_description = html::strip_tags($post->comment_description, FALSE);
 				$comment->comment_email = html::strip_tags($comment_email, FALSE);
@@ -815,73 +781,6 @@ class Comments_Api_Object extends Api_Object_Core {
 			{
 				//prompt user for a valid ID
 				return $this->response(1, "No report with that ID");
-			}
-
-		}
-		else
-		{
-			//prompt user about commenting not enabled on this deployment
-			return $this->response(1, "Commenting is not activated on this deployment");
-		}
-	}
-
-	/**
-	 *
-	 * Get comments by checkin id
-	 *
-	 * @param int id - The checkin id
-	 *
-	 * @return String XML or JSON string
-	 */
-	private function _get_comment_by_checkin_id($id)
-	{
-		$json_comments = array();
-		$ret_json_or_xml = '';
-		$i = 0;
-
-		//Check if comments are enabled by that deployments
-		if (Kohana::config('settings.allow_comments'))
-		{
-
-			$checkin_comments = array();
-			if ($id)
-			{
-				$this->query = "SELECT id, checkin_id, comment_author, ";
-				$this->query .= "comment_description, comment_date ";
-				$this->query .= "FROM `" . $this->table_prefix . "comment`";
-				$this->query .= " WHERE `checkin_id` = " . $this->db->escape_str($id) . " AND `comment_active` = '1' ";
-				$this->query .= "AND `comment_spam` = '0' ORDER BY `comment_date` ASC";
-				$checkin_comments = $this->db->query($this->query);
-
-				if ($checkin_comments->count() == 0)
-					return $this->response(4);
-
-				foreach ($checkin_comments as $comment)
-				{
-					// Needs different treatment depending on the output
-					if ($this->response_type == 'json' OR $this->response_type == 'jsonp')
-					{
-						$json_comments[] = array("comment" => $comment);
-					}
-					else
-					{
-						$json_comments['comment' . $i] = array("comment" => $comment);
-						$this->replar[] = 'comment' . $i;
-					}
-
-					$i++;
-				}
-				// Create the json array
-				$data = array("payload" => array("domain" => $this->domain, "comments" => $json_comments), "error" => $this->api_service->get_error_msg(0));
-
-				$ret_json_or_xml = ($this->response_type == 'json' OR $this->response_type == 'jsonp') ? $this->array_as_json($data) : $this->array_as_xml($data, $this->replar);
-
-				return $ret_json_or_xml;
-			}
-			else
-			{
-				//prompt user for a valid ID
-				return $this->response(1, "No checkins with that ID");
 			}
 
 		}
