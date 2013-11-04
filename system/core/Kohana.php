@@ -865,7 +865,7 @@ final class Kohana {
 		if ($level <= self::$configuration['core']['log_threshold'])
 		{
 			// Log the error
-			self::log('error', self::lang('core.uncaught_exception', $type, $message, $file, $line));
+			self::log('error', self::lang('core.uncaught_exception', array($type, $message, $file, $line)));
 		}
 
 		if ($PHP_ERROR)
