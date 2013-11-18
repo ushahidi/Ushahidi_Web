@@ -85,8 +85,8 @@ class CSVImporter {
 		// Get contents of CSV file
 		$data = file_get_contents($file);
 
-		// Replace carriage return character
-		$replacedata = preg_replace("/\r\n/","\n",$data);
+		// Normalize new lines, replace ANY unicode new line with \n (should cover Mac OS9, Unix, Windows, etc)
+		$replacedata = preg_replace("/\R/u","\n",$data);
 
 		// Replace file content
 		file_put_contents($file, $replacedata);
