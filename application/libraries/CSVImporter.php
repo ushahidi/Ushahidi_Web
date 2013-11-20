@@ -86,7 +86,12 @@ class CSVImporter {
 		$data = file_get_contents($file);
 
 		// Normalize new lines, replace ANY unicode new line with \n (should cover Mac OS9, Unix, Windows, etc)
-		$replacedata = preg_replace("/\R/u","\n",$data);
+		$replacedata = preg_replace('/\R/u', "\n", mb_convert_encoding($data, 'UTF-8'));
+
+		// Check for preg error, and fall back to original data
+		if (preg_last_error() !== PREG_NO_ERROR) {
+			$replacedata = $data;
+		}
 
 		// Replace file content
 		file_put_contents($file, $replacedata);
