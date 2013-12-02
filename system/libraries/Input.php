@@ -318,6 +318,7 @@ class Input_Core {
 
 				// Set configuration
 				$config = HTMLPurifier_Config::createDefault();
+				$config->set('Cache.SerializerPath', APPPATH.'cache');
 				$config->set('HTML.TidyLevel', 'none'); // Only XSS cleaning now
 				$config->set('HTML.SafeIframe', true);
 				$config->set('URI.SafeIframeRegexp', Kohana::config('config.safe_iframe_regexp', FALSE, TRUE));

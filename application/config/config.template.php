@@ -70,7 +70,7 @@ $config['output_compression'] = TRUE;
  * Enable or disable global XSS filtering of GET, POST, and SERVER data. This
  * option also accepts a string to specify a specific XSS filtering tool.
  */
-$config['global_xss_filtering'] = TRUE;
+$config['global_xss_filtering'] = 'htmlpurifier';
 
 /**
  * Enable or disable hooks. Setting this option to TRUE will enable
