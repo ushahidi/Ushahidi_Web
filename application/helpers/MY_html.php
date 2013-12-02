@@ -33,7 +33,7 @@ class html extends html_Core {
 		// Allow some basic iframes
 		$config->set('HTML.SafeIframe', true);
 		$config->set('URI.SafeIframeRegexp', 
-			Kohana::config('config.allowed_iframe_regexp', FALSE, TRUE)
+			Kohana::config('config.safe_iframe_regexp', FALSE, TRUE)
 		);
 		$config->set('Filter.YouTube', true);
 		$purifier = new HTMLPurifier($config);
