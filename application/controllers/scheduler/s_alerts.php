@@ -128,6 +128,10 @@ class S_Alerts_Controller extends Controller {
 			
 			foreach ($alertees as $alertee)
 			{
+				// HT: check same alert_receipent multi subscription does not get multiple alert
+				if($this->_multi_subscribe($alertee, $incident->id)) {
+					continue;
+				}
 				// Check the categories
 				if (!$this->_check_categories($alertee, $category_ids)) {
 				  continue;
@@ -263,4 +267,17 @@ class S_Alerts_Controller extends Controller {
 
 	  return $ret;
 	}
+	
+	/**
+	 * HT: Function to verify that alert is not sent to same alert_receipent being subscribed multiple time
+	 * @param Alert_Model $alertee
+	 * @param integer $incident_id
+	 * @return boolean
+	 */
+	private function _multi_subscribe(Alert_Model $alertee, $incident_id) {
+		$multi_subscribe_ids = ORM::factory('alert')->where('alert_confirmed','1')->where('alert_recipient', $alertee->recipient)->select_list('id', 'id');
+		$subscription_alert = ORM::factory('alert_sent')->where('incident_id', $incident_id)->in('alert_id', $multi_subscribe_ids)->find();
+		return ((boolean) $subscription_alert->id);
+	}
+
 }
