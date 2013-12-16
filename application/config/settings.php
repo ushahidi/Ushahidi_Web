@@ -26,5 +26,6 @@ $config = array
 	'api_url' => '',
 	'api_url_all' => '',
 	'subdomain' => $subdomain,
-	'title_delimiter' => ' | '
+	'title_delimiter' => ' | ',
+	'alert_days' => 0 // HT: No of days of alert to be sent
 );

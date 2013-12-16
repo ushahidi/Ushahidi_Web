@@ -81,10 +81,19 @@ class S_Alerts_Controller extends Controller {
 		// HT: New Code
 		// Fixes an issue with one report being sent out as an alert more than ones
 		// becoming spam to users
-		$incidents = $db->query("SELECT i.id, incident_title,
-					incident_description, incident_verified,
-					l.latitude, l.longitude FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
-					WHERE i.incident_active=1 AND i.incident_alert_status = 1 ");
+		$incident_query = "SELECT i.id, incident_title,
+				incident_description, incident_verified,
+				l.latitude, l.longitude FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
+				WHERE i.incident_active=1 AND i.incident_alert_status = 1 ";
+		/** HT: Code for alert days limitation
+		 * @int alert_days = 0 : All alerts
+		 * @int alert_days = 1 : TODAY
+		 * @int alert_days > 1 : alert_days - 1 days before
+		 */
+		if($alert_days = $settings['alert_days'])
+		{
+			$incident_query .= "AND DATE(i.incident_date) >= DATE_SUB( CURDATE(), INTERVAL ".($alert_days-1)." DAY )";
+		}
 		// End of New Code		
 		
 		foreach ($incidents as $incident)
