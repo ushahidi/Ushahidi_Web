@@ -151,6 +151,13 @@
 								<?php print form::dropdown('allow_comments', $comments_array, $form['allow_comments']); ?>
 							</span>
 						</div>
+						<!--  HT: Number of alert days setting -->
+						<div class="row">
+							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_alert_days"); ?>"><?php echo Kohana::lang('settings.site.alert_days');?></a>
+							<br /><?php echo Kohana::lang('settings.site.alert_days_notice');?></h4>
+							<?php print form::input('alert_days', $form['alert_days'], ' class="text long2"'); ?>
+						</div>
+						<!--  HT: End of Number of alert days setting -->
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_feed"); ?>"><?php echo Kohana::lang('settings.site.allow_feed');?></a></h4>
 							<span class="sel-holder">

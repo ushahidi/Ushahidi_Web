@@ -81,10 +81,19 @@ class S_Alerts_Controller extends Controller {
 		// HT: New Code
 		// Fixes an issue with one report being sent out as an alert more than ones
 		// becoming spam to users
-		$incidents = $db->query("SELECT i.id, incident_title,
-					incident_description, incident_verified,
-					l.latitude, l.longitude FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
-					WHERE i.incident_active=1 AND i.incident_alert_status = 1 ");
+		$incident_query = "SELECT i.id, incident_title,
+				incident_description, incident_verified,
+				l.latitude, l.longitude FROM ".$this->table_prefix."incident AS i INNER JOIN ".$this->table_prefix."location AS l ON i.location_id = l.id
+				WHERE i.incident_active=1 AND i.incident_alert_status = 1 ";
+		/** HT: Code for alert days limitation
+		 * @int alert_days = 0 : All alerts
+		 * @int alert_days = 1 : TODAY
+		 * @int alert_days > 1 : alert_days - 1 days before
+		 */
+		if($alert_days = $settings['alert_days'])
+		{
+			$incident_query .= "AND DATE(i.incident_date) >= DATE_SUB( CURDATE(), INTERVAL ".($alert_days-1)." DAY )";
+		}
 		// End of New Code		
 		
 		foreach ($incidents as $incident)
@@ -128,6 +137,10 @@ class S_Alerts_Controller extends Controller {
 			
 			foreach ($alertees as $alertee)
 			{
+				// HT: check same alert_receipent multi subscription does not get multiple alert
+				if($this->_multi_subscribe($alertee, $incident->id)) {
+					continue;
+				}
 				// Check the categories
 				if (!$this->_check_categories($alertee, $category_ids)) {
 				  continue;
@@ -263,4 +276,17 @@ class S_Alerts_Controller extends Controller {
 
 	  return $ret;
 	}
+	
+	/**
+	 * HT: Function to verify that alert is not sent to same alert_receipent being subscribed multiple time
+	 * @param Alert_Model $alertee
+	 * @param integer $incident_id
+	 * @return boolean
+	 */
+	private function _multi_subscribe(Alert_Model $alertee, $incident_id) {
+		$multi_subscribe_ids = ORM::factory('alert')->where('alert_confirmed','1')->where('alert_recipient', $alertee->recipient)->select_list('id', 'id');
+		$subscription_alert = ORM::factory('alert_sent')->where('incident_id', $incident_id)->in('alert_id', $multi_subscribe_ids)->find();
+		return ((boolean) $subscription_alert->id);
+	}
+
 }

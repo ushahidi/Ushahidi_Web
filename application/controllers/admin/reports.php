@@ -547,6 +547,15 @@ class Reports_Controller extends Admin_Controller {
 					$form['longitude'] = $feed_item->location->longitude;
 					$form['location_name'] = $feed_item->location->location_name;
 				}
+				// HT: new code
+				$feed_categories = ORM::factory('feed_category')->where('feed_item_id', $feed_item->id)->select_list('id', 'category_id');
+				if ($feed_categories)
+				{
+					foreach($feed_categories as $feed_category) {
+						$form['incident_category'][] = $feed_category;
+					}
+				}
+				// HT: end of new code
 			}
 			else
 			{
