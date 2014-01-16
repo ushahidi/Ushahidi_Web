@@ -24,7 +24,8 @@ class upload_Core {
 	public static function save($file, $filename = NULL, $directory = NULL, $chmod = 0644)
 	{
 		// Load file data from FILES if not passed as array
-		$file = is_array($file) ? $file : $_FILES[$file];
+		
+              $file = is_array($file) ? $file : $_FILES[$file];
 
 		if ($filename === NULL)
 		{
@@ -113,7 +114,8 @@ class upload_Core {
 			// Is this a multi-upload array?
 			if (is_array($file['name']))
 			{
-				for ($i=0; $i <= count($file['name']) ; $i++) 
+                            $filesCount = count($file['name'])-1;
+				for ($i=0; $i <= $filesCount ; $i++) 
 				{ 
 					if (isset($file['error'][$i])
 						AND isset($file['name'][$i])
@@ -121,7 +123,9 @@ class upload_Core {
 						AND isset($file['tmp_name'][$i])
 						AND isset($file['size'][$i]))
 					{
-						return true;
+                                            
+						if($filesCount == $i)
+                                                    return true;
 					}
 					else
 					{
@@ -188,10 +192,11 @@ class upload_Core {
 	 * @return  bool
 	 */
 	public static function type(array $file, array $allowed_types)
-	{
+	{ 
 		if (is_array($file['name']))
 		{
-			for ($i=0; $i <= count($file['name']) ; $i++) 
+                        $filesCount =  count($file['name'])-1;
+			for ($i=0; $i <= $filesCount ; $i++) 
 			{ 
 				if ((int) $file['error'][$i] !== UPLOAD_ERR_OK)
 				{
@@ -199,14 +204,15 @@ class upload_Core {
 				}
 				
 				// Get the default extension of the file
-				$extension = strtolower(substr(strrchr($file['name'][$i], '.'), 1));
-
+                                $extension = strtolower(pathinfo($file['name'][$i], PATHINFO_EXTENSION));
+                                
 				// Get the mime types for the extension
 				$mime_types = Kohana::config('mimes.'.$extension);
 
 				// Make sure there is an extension, that the extension is allowed, and that mime types exist
 				if ( ! empty($extension) AND in_array($extension, $allowed_types) AND is_array($mime_types))
 				{
+                                      if($filesCount == $i)
 					return TRUE;
 				}
 				else
@@ -222,7 +228,7 @@ class upload_Core {
 				return TRUE;
 
 			// Get the default extension of the file
-			$extension = strtolower(substr(strrchr($file['name'], '.'), 1));
+                        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));			
 
 			// Get the mime types for the extension
 			$mime_types = Kohana::config('mimes.'.$extension);
@@ -246,33 +252,35 @@ class upload_Core {
 	{
 		if (is_array($file['name']))
 		{
-			for ($i=0; $i <= count($file['name']) ; $i++) 
+                    // Only one size is allowed
+                    $size = strtoupper($size[0]);
+
+                    /*if ( ! preg_match('/[0-9]++[BKMG]/', $size))
+                    {
+                            return FALSE;
+                    }*/
+
+                    // Make the size into a power of 1024
+                    switch (substr($size, -1))
+                    {
+                            case 'G': $size = intval($size) * pow(1024, 3); break;
+                            case 'M': $size = intval($size) * pow(1024, 2); break;
+                            case 'K': $size = intval($size) * pow(1024, 1); break;
+                            default:  $size = intval($size);                break;
+                    }
+                    $filesCount = count($file['name'])-1;
+			for ($i=0; $i <= $filesCount ; $i++) 
 			{
 				if ((int) $file['error'][$i] !== UPLOAD_ERR_OK)
 				{
 					return TRUE;
 				}
-
-				// Only one size is allowed
-				$size = strtoupper($size[0]);
-
-				if ( ! preg_match('/[0-9]++[BKMG]/', $size))
-				{
-					return FALSE;
-				}
-
-				// Make the size into a power of 1024
-				switch (substr($size, -1))
-				{
-					case 'G': $size = intval($size) * pow(1024, 3); break;
-					case 'M': $size = intval($size) * pow(1024, 2); break;
-					case 'K': $size = intval($size) * pow(1024, 1); break;
-					default:  $size = intval($size);                break;
-				}
-
+				
 				// Test that the file is under or equal to the max size
 				if ($file['size'][$i] <= $size)
 				{
+                                    
+                                     if($filesCount == $i)
 					return true;
 				}
 				else
