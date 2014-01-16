@@ -614,12 +614,12 @@ class Installer_Wizard {
 		// Store the database info
 		self::$_data['database'] = array(
 			'host' => $host,
-			'username' => $username,
-			'password' => $password,
-			'database_name' => $database,
+			'user' => $username,
+			'pass' => $password,
+			'database' => $database,
 			'table_prefix' => $table_prefix
 		);
-		
+
 		// Set up the database schema + objects
 		self::_database_connect();
 		
@@ -684,8 +684,8 @@ class Installer_Wizard {
 	{
 		$params = self::$_data['database'];
 		
-		self::$_connection = mysql_connect($params['host'], $params['username'], 
-		    $params['password'], TRUE);
+		self::$_connection = mysql_connect($params['host'], $params['user'], 
+		    $params['pass'], TRUE);
 		
 		if ( ! self::$_connection)
 		{
@@ -694,7 +694,7 @@ class Installer_Wizard {
 			return FALSE;
 		}
 		
-		$database_name = $params['database_name'];
+		$database_name = $params['database'];
 		
 		if ( ! mysql_select_db($database_name))
 		{
@@ -763,15 +763,8 @@ class Installer_Wizard {
 		{
 			if (($template_file = file($template_file_name)) !== FALSE)
 			{
-				$params = self::$_data['database'];
-				$config_params = array(
-					'user' => $params['username'],
-					'pass' => $params['password'],
-					'host' => $params['host'],
-					'database' => $params['database_name'],
-					'table_prefix' => $params['table_prefix']
-				);
-				
+				$config_params = self::$_data['database'];
+
 				foreach ($template_file as $line_no => $line)
 				{
 					foreach ($config_params as $config => $value)
@@ -779,7 +772,7 @@ class Installer_Wizard {
 						$search = sprintf("/'%s' =>.*/i", $config);
 						if (preg_match($search, $line, $matches))
 						{
-							$replace = sprintf("'%s' => '%s',", $config, $value);
+							$replace = sprintf("'%s' => '%s',", $config, addslashes($value));
 							$line = preg_replace("/".$matches[0]."/i", $replace, $line);
 							break;
 						}
