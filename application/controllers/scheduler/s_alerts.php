@@ -95,7 +95,7 @@ class S_Alerts_Controller extends Controller {
 			$incident_query .= "AND DATE(i.incident_date) >= DATE_SUB( CURDATE(), INTERVAL ".($alert_days-1)." DAY )";
 		}
 		// End of New Code		
-		
+
 		foreach ($incidents as $incident)
 		{
 			// ** Pre-Formatting Message ** //
@@ -103,11 +103,9 @@ class S_Alerts_Controller extends Controller {
 			$incident_description = $incident->incident_description;
 			$incident_url = url::site().'reports/view/'.$incident->id;
 			$incident_description = html::clean($incident_description);
-			$html2text = new Html2Text($incident_description);
-			$incident_description = $html2text->get_text();
 
 			// EMAIL MESSAGE
-			$email_message = $incident_description."\n\n".$incident_url;
+			$email_message = $incident_description . "\n\n" . $incident_url;
 
 			// SMS MESSAGE
 			$sms_message = $incident_description;
@@ -192,9 +190,9 @@ class S_Alerts_Controller extends Controller {
 							$from[] = $alerts_email;
 							$from[] = $site_name;
 						$subject = "[$site_name] ".$incident->incident_title;
-						$message = $email_message
-									."\n\n".$unsubscribe_message
-									.$alertee->alert_code."\n";
+						$message = text::auto_p($email_message
+									. "\n\n".$unsubscribe_message
+									. $alertee->alert_code . "\n");
 
 						//if (email::send($to, $from, $subject, $message, FALSE) == 1)
 						if (email::send($to, $from, $subject, $message, TRUE) == 1) // HT: New Code
