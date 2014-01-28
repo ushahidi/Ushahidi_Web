@@ -92,7 +92,7 @@ class Themes_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
-		
+		$themes = addon::get_addons('theme');	
 		$this->template->content->themes = $themes;
 	}
 
