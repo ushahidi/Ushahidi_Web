@@ -5,31 +5,30 @@
  * Tests pulling email via pop3 or imap
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author     Ushahidi Team <team@ushahidi.com> 
+ * @author     Ushahidi Team <team@ushahidi.com>
  * @package    Ushahidi - http://source.ushahididev.com
  * @subpackage Admin
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license    http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
  */
 
 class Test_Email_Controller extends Admin_Controller {
-	
+
 	function __construct()
 	{
 		parent::__construct();
 	}
-	
+
 	public function index()
-	{		
+	{
 		$this->template = "";
 		$this->auto_render = FALSE;
-		
+
 		// First is IMAP PHP Library Installed?
-		$modules = new Modulecheck;
-		if ($modules->isLoaded('imap'))
+		if (extension_loaded('imap'))
 		{
 			// If SSL Enabled
 			$ssl = Kohana::config('settings.email_ssl') == true ? "/ssl" : "";
@@ -40,12 +39,12 @@ class Test_Email_Controller extends Admin_Controller {
 
 			// If POP3 Disable TLS
 			$notls = strtolower(Kohana::config('settings.email_servertype')) == "pop3" ? "/notls" : "";
-			
+
 			$service = "{".Kohana::config('settings.email_host').":"
 				.Kohana::config('settings.email_port')."/"
 				.Kohana::config('settings.email_servertype')
 				.$notls.$ssl.$novalidate."}";
-			
+
 			// Connected!
 			if (@imap_open($service, Kohana::config('settings.email_username')
 				,Kohana::config('settings.email_password'), 0, 1))

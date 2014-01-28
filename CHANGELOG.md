@@ -1,3 +1,24 @@
+Ushahidi 2.7.2 (Bug fix release) - 28/01/2014
+-------------------------------------
+
+### Major Fixes
+
+* Tiding up conflicting logic on email alerts(https://github.com/ushahidi/Ushahidi_Web/issues/943) 
+* Escaping db password (https://github.com/ushahidi/Ushahidi_Web/issues/1265) 
+* Added Feed category (https://github.com/ushahidi/Ushahidi_Web/issues/1291) 
+* Fix incosistency in custom fields position(https://github.com/ushahidi/Ushahidi_Web/issues/1296) 
+* Handle bad file encodings when importing CSV files (https://github.com/ushahidi/Ushahidi_Web/issues/1140) 
+* Adding Nominatin as a geocoder option (https://github.com/ushahidi/Ushahidi_Web/issues/794) 
+* Fixed reports date picker 
+* Added reverse geocoder 
+* Moved header_nav.php to themes/default/views/ to allow theme override 
+* Cleaned up alerts scheduler 
+* Removed ci_cumulus theme 
+* Removed checkins 
+* Added Delete All Reports for Admin
+* Fixed timeline js timing out
+* Lots of code clean up, error handling and coding standards.
+
 Ushahidi 2.7.1 (Bug fix release) - 04/09/2013
 -------------------------------------
 

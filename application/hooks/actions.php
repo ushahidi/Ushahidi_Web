@@ -44,7 +44,6 @@ class actioner {
 	public function add()
 	{
 		Event::add('ushahidi_action.report_add', array($this, '_report_add'));
-		Event::add('ushahidi_action.checkin_recorded', array($this, '_checkin_recorded'));
 		Event::add('ushahidi_action.message_twitter_add', array($this, '_message_twitter_add'));
 		Event::add('ushahidi_action.feed_item_add', array($this, '_feed_item_add'));
 	}
@@ -333,83 +332,6 @@ class actioner {
 			}
 
 			// --- Begin Response
-
-			// Record that the magic happened
-			$this->__record_log($this->action_id,$this->data->user_id);
-
-			// Qapla! Begin response phase since we passed all of the qualifier tests
-			$this->__perform_response($response,$response_vars);
-		}
-	}
-
-	/**
-	 * Perform actions for checkin_recorded
-	 */
-	public function _checkin_recorded()
-	{
-		$this->data = Event::$data;
-
-		// Grab all action triggers that involve this fired action
-		$actions = $this->_get_actions('checkin_recorded');
-
-		// Get out of here as fast as possible if there are no actions.
-		if($actions->count() <= 0) return false;
-
-		foreach ($actions as $action)
-		{
-			// Collect variables for this action
-			$this->action_id = $action->action_id;
-			$trigger = $action->action;
-			$this->qualifiers = unserialize($action->qualifiers);
-			$response = $action->response;
-			$response_vars = unserialize($action->response_vars);
-
-			// If geometry isn't set because we didn't have any geometry to pass, set it as false
-			//   to prevent errors when we need to call the variable later in the script.
-			if( ! isset($this->qualifiers['geometry'])) $this->qualifiers['geometry'] = FALSE;
-
-			// Check if we qualify for performing the response
-
-			// If it's not for everyone and the user submitting isn't the user specified, then
-			//   move on to the next action
-			if( ! $this->__check_user($this->qualifiers['user'],$this->data->user_id)){
-				// Not the correct user
-				continue;
-			}
-
-			// Passed User Qualifier
-
-			// Now check location
-			if( ! $this->__check_location($this->qualifiers['location'],$this->qualifiers['geometry']))
-			{
-				// Not the right location
-				continue;
-			}
-
-			// Passed Location Qualifier
-
-			// Check keywords against subject and body. If both fail, then this action doesn't qualify
-			if( ! $this->__check_keywords($this->qualifiers['keyword'],$this->data->checkin_description))
-			{
-				// Not the right keyword
-				continue;
-			}
-
-			// Passed Keyword Qualifier
-
-			// --- Check Between Times
-			if( ! $this->__check_between_times(strtotime($this->data->checkin_date)))
-			{
-				// Not the right time
-				continue;
-			}
-
-			// --- Check Specific Days
-			if( ! $this->__check_specific_days(strtotime($this->data->checkin_date)))
-			{
-				// Not the right day
-				continue;
-			}
 
 			// Record that the magic happened
 			$this->__record_log($this->action_id,$this->data->user_id);

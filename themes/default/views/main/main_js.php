@@ -17,7 +17,7 @@
 ?>
 		
 // Initialize the Ushahidi namespace
-Ushahidi.baseUrl = "<?php echo url::site(); ?>";
+Ushahidi.baseURL = "<?php echo url::site(); ?>";
 Ushahidi.markerRadius = <?php echo $marker_radius; ?>;
 Ushahidi.markerOpacity = <?php echo $marker_opacity; ?>;
 Ushahidi.markerStokeWidth = <?php echo $marker_stroke_width; ?>;
@@ -315,86 +315,9 @@ jQuery(function() {
 	//Execute the function when page loads
 	smartColumns();
 
-	// Are checkins enabled?
-	<?php if (Kohana::config('settings.checkins')): ?>
-	
-	// URL for fetching the checkins
-	var checkinsURL = "api/?task=checkin&action=get_ci&mapdata=1&sqllimit=1000&orderby=checkin.checkin_date&sort=ASC";
-
-	// Styling for the checkins
-	var ciStyle = new OpenLayers.Style({
-		pointRadius: 5,
-		fillColor: "${color}",
-		strokeColor: "#FFFFFF",
-		fillOpacity: "${fillOpacity}",
-		strokeOpacity: 0.75,
-		strokeWidth: 1.5
-	});
-
-	var checkinStyleMap = new OpenLayers.StyleMap({
-		default: ciStyle
-	});
-
-	$.getJSON(checkinsURL, function(data)
-	{
-		var jsonFormat = new OpenLayers.Format.JSON();
-		var jsonStr = jsonFormat.write(json2GeoJSON(data));
-		var format = new OpenLayers.Format.GeoJSON();
-		layerFeatures = format.read(jsonStr);
-		if (layerFeatures.length > 0) {
-			// Add the checkins layer
-			map.addLayer(Ushahidi.GEOJSON, {
-				url: checkinsURL,
-				name: "Checkins",
-				features: layerFeatures,
-				styleMap: checkinStyleMap,
-				transform: true,
-			}, false, true);
-		}
-	});
-
-	/**
-	 * Callback function to convert the data -
-	 * returned by the checkins API call - to GeoJSON
-	 */
-	function json2GeoJSON(json) {
-		var GeoJSON = {
-			type: "FeatureCollection",
-			features: []
-		};
-
-		$.each(json["payload"]["checkins"], function(index, checkin){
-			var checkinImage = (checkin.media !== undefined) ? checkin.media[0].medium : "";
-			var checkinLink = (checkinImage !== "") ? checkin.media[0].link : "";
-			var feature = {
-				type: "Feature",
-				properties: {
-					name: checkin.msg,
-					link: checkinLink,
-					color: "#"+checkin.user.color,
-					image: checkinImage,
-					fillOpacity: checkin.opacity,
-				},
-				geometry: {
-					type: "Point",
-					coordinates: [checkin.lon, checkin.lat],
-				}
-			};
-			GeoJSON.features.push(feature);
-		});
-		return GeoJSON;
-	}
-	<?php endif; ?>
-
 });
 
 $(window).resize(function () { 
 	//Each time the viewport is adjusted/resized, execute the function
 	smartColumns();
 });
-
-
-<?php if (Kohana::config('settings.checkins')): ?>
-// EK <emmanuel(at)ushahidi.com
-// TODO: Load the sidebar with the checkins - moving this to BackboneJS
-<?php endif; ?>

@@ -70,9 +70,9 @@ class Settings_Controller extends Admin_Controller {
 			'private_deployment' => '',
 			'manually_approve_users' => '',
 			'require_email_confirmation' => '',
-			'checkins' => '',
 			'google_analytics' => '',
-			'api_akismet' => ''
+			'api_akismet' => '',
+			'alert_days' => 0, // HT: No of days of alert to be sent
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
 		//	corresponding to the form field names
@@ -114,9 +114,9 @@ class Settings_Controller extends Admin_Controller {
 			$post->add_rules('private_deployment','required','between[0,1]');
 			$post->add_rules('manually_approve_users','required','between[0,1]');
 			$post->add_rules('require_email_confirmation','required','between[0,1]');
-			$post->add_rules('checkins','required','between[0,1]');
 			$post->add_rules('google_analytics','length[0,20]');
 			$post->add_rules('api_akismet','length[0,100]', 'alpha_numeric');
+			$post->add_rules('alert_days', 'numeric'); // HT: No of days of alert to be sent
 
 			// Add rules for file upload
 			$files = Validation::factory($_FILES);
@@ -240,6 +240,7 @@ class Settings_Controller extends Admin_Controller {
 		else
 		{
 			$settings = Settings_Model::get_array();
+			$settings['alert_days'] = (isset($settings['alert_days'])) ? $settings['alert_days'] : 0; // HT: might not be in database so calling manually retrun NULL if not exist
 
 			$form = array(
 				'site_name' => $settings['site_name'],
@@ -266,9 +267,9 @@ class Settings_Controller extends Admin_Controller {
 				'private_deployment' => $settings['private_deployment'],
 				'manually_approve_users' => $settings['manually_approve_users'],
 				'require_email_confirmation' => $settings['require_email_confirmation'],
-				'checkins' => $settings['checkins'],
 				'google_analytics' => $settings['google_analytics'],
-				'api_akismet' => $settings['api_akismet']
+				'api_akismet' => $settings['api_akismet'],
+				'alert_days' => $settings['alert_days'] // HT: No of days of alert to be sent
 			);
 		}
 
@@ -1090,19 +1091,12 @@ class Settings_Controller extends Admin_Controller {
 
 	private function _check_for_clean_url() {
 
-		$url = url::base().'reports/';
+		$url = url::base() .'reports/';
 
-		$curl_handle = curl_init();
+		$request = new HttpClient($url);
+		$return_code = $request->get_http_response_code();
 
-		curl_setopt($curl_handle, CURLOPT_URL, $url);
-		curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, true );
-		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, false);
-		curl_exec($curl_handle);
-
-		$return_code = curl_getinfo($curl_handle,CURLINFO_HTTP_CODE);
-		curl_close($curl_handle);
-
-		return ($return_code ==	 404)? FALSE : TRUE;
+		return ($return_code == 404)? FALSE : TRUE;
 	}
 
 	/**

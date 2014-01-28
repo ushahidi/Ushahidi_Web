@@ -30,12 +30,6 @@ class admin_Core {
 			$tabs = array();
 			$tabs['dashboard'] = Kohana::lang('ui_admin.dashboard');
 			$tabs['reports'] = Kohana::lang('ui_admin.reports');
-
-			if(Kohana::config('settings.checkins'))
-			{
-				$tabs['checkins'] = Kohana::lang('ui_admin.checkins');
-			}
-
 			$tabs['messages'] = Kohana::lang('ui_admin.messages');
 			$tabs['stats'] = Kohana::lang('ui_admin.stats');
 			$tabs['addons'] = Kohana::lang('ui_admin.addons');
@@ -121,6 +115,12 @@ class admin_Core {
 		$menu .= ($this_sub_page == "download") ? Kohana::lang('ui_main.download_reports') : "<a href=\"".url::site("admin/reports/download")."\">".Kohana::lang('ui_main.download_reports')."</a>";
 
 		$menu .= ($this_sub_page == "upload") ? Kohana::lang('ui_main.upload_reports') : "<a href=\"".url::site("admin/reports/upload")."\">".Kohana::lang('ui_main.upload_reports')."</a>";
+
+		//only super admins have access to this
+		if (Auth::instance()->has_permission("delete_all_reports"))
+		{
+			$menu .= ($this_sub_page == "deleteall") ? Kohana::lang('ui_admin.delete_all') : "<a href=\"".url::site('admin/reports/deleteall')."\">".Kohana::lang('ui_admin.delete_all')."</a>";
+		}
 
 		echo $menu;
 

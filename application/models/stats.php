@@ -82,24 +82,8 @@ class Stats_Model extends ORM {
 			}
 
 			$url = Kohana::config('config.external_site_protocol').'://tracker.ushahidi.com/dev.px.php?task=tc&siteid='.$stat_id.$additional_query;
-			$curl_handle = curl_init();
-
-			// cURL options
-			$curl_options = array(
-				CURLOPT_URL => $url,
-
-				// Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
-				CURLOPT_CONNECTTIMEOUT => self::$time_out,
-
-				// Set cURL to store data in variable instead of print
-				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_SSL_VERIFYPEER => FALSE
-			);
-
-			curl_setopt_array($curl_handle, $curl_options);
-
-			$buffer = curl_exec($curl_handle);
-			curl_close($curl_handle);
+			$request = new HttpClient($url);
+			$buffer = $request->execute();
 
 			try
 			{
@@ -517,9 +501,9 @@ STATSCOLLECTOR;
 
 		// Ignore errors since we are error checking later
 
-		$xml = simplexml_load_string(Stats_Model::_curl_req($stat_url));
+		$xml = simplexml_load_string(self::_curl_req($stat_url));
 
-		if($xml == false)
+		if ($xml === false)
 		{
 			return false;
 		}
@@ -543,31 +527,13 @@ STATSCOLLECTOR;
 	 */
 	public function _curl_req($url)
 	{
-		// Make sure cURL is installed
-		if ( ! function_exists('curl_exec'))
+		$request = new HttpClient($url);
+		$buffer = $request->execute();
+
+		if ($buffer === FALSE) 
 		{
-			throw new Kohana_Exception('stats.cURL_not_installed');
-			return false;
+			throw new Kohana_Exception($request->get_error_msg());
 		}
-
-		$curl_handle = curl_init();
-
-		// cURL options
-		$curl_options = array(
-			CURLOPT_URL => $url,
-
-			// Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
-			CURLOPT_CONNECTTIMEOUT => 15,
-
-			// Set curl to store data in variable instead of print
-			CURLOPT_RETURNTRANSFER => 1,
-
-			CURLOPT_SSL_VERIFYPEER => FALSE
-		);
-
-		curl_setopt_array($curl_handle, $curl_options);
-		$buffer = curl_exec($curl_handle);
-		curl_close($curl_handle);
 
 		return $buffer;
 	}

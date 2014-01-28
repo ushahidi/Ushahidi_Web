@@ -52,6 +52,22 @@ class Country_Model extends ORM
 		return ($country->loaded)? $country : NULL;
 
 	}
+
+	/**
+	 * Given a country code, returns a country model object reference. Country codes are unique and ISO based
+	 *
+	 * @param string $country_code The two letter country code
+	 * @return mixed ORM reference if country exists, FALSE otherwise
+	 */
+	public static function get_country_by_code($country_code)
+	{
+		// Find the country with the specified name
+		$country = self::factory('country')->where('iso', $country_code)->find();
+
+		// Return
+		return ($country->loaded)? $country : NULL;
+
+	}
 	
 	/**
 	 * Returns a key=>value array of the list of countries in the database

@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 106
+-- version 110
 -- http://www.ushahidi.com
 
 
@@ -223,27 +223,6 @@ CREATE TABLE IF NOT EXISTS `category_lang` (
 -- --------------------------------------------------------
 
 /**
- * Table structure for table `checkin`
- *
- */
-
-CREATE TABLE IF NOT EXISTS `checkin` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) unsigned NOT NULL,
-  `location_id` bigint(20) unsigned NOT NULL,
-  `incident_id` bigint(20) unsigned DEFAULT '0',
-  `checkin_description` varchar(255),
-  `checkin_date` datetime NOT NULL,
-  `checkin_auto` enum('0','1') DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `incident_id` (`incident_id`),
-  KEY `user_id` (`user_id`),
-  KEY `location_id` (`location_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores checkin information' AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
-/**
  * Table structure for table `city`
  *
  */
@@ -297,7 +276,6 @@ CREATE TABLE IF NOT EXISTS `cluster` (
 CREATE TABLE IF NOT EXISTS `comment` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `incident_id` bigint(20) unsigned DEFAULT NULL,
-  `checkin_id` bigint(20) unsigned DEFAULT NULL,
   `user_id` int(11) unsigned DEFAULT '0',
   `comment_author` varchar(100) DEFAULT NULL,
   `comment_email` varchar(120) DEFAULT NULL,
@@ -309,9 +287,8 @@ CREATE TABLE IF NOT EXISTS `comment` (
   `comment_date_gmt` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `incident_id` (`incident_id`),
-  KEY `checkin_id` (`checkin_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores comments made on reports/checkins' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores comments made on reports' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -965,7 +942,6 @@ CREATE TABLE IF NOT EXISTS `media` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `location_id` bigint(20) unsigned DEFAULT NULL,
   `incident_id` bigint(20) unsigned DEFAULT NULL,
-  `checkin_id` bigint(20) unsigned DEFAULT NULL,
   `message_id` bigint(20) unsigned DEFAULT NULL,
   `badge_id` int(11) DEFAULT NULL,
   `media_type` tinyint(4) DEFAULT NULL COMMENT '1 - IMAGES, 2 - VIDEO, 3 - AUDIO, 4 - NEWS, 5 - PODCAST',
@@ -979,10 +955,9 @@ CREATE TABLE IF NOT EXISTS `media` (
   PRIMARY KEY (`id`),
   KEY `incident_id` (`incident_id`),
   KEY `location_id` (`location_id`),
-  KEY `checkin_id` (`checkin_id`),
   KEY `badge_id` (`badge_id`),
   KEY `message_id` (`message_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores any media submitted along with a report/checkin' AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Stores any media submitted along with a report' AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -1075,12 +1050,11 @@ INSERT IGNORE INTO `permissions` VALUES
 (11,'manage'),
 (12,'users'),
 (13,'manage_roles'),
-(14,'checkin'),
-(15,'checkin_admin'),
 (16,'reports_verify'),
 (17,'reports_approve'),
 (18,'admin_ui'),
-(19,'member_ui');
+(19,'member_ui'),
+(20,'delete_all_reports');
 
 -- --------------------------------------------------------
 
@@ -1101,7 +1075,7 @@ CREATE TABLE IF NOT EXISTS `permissions_roles` (
 INSERT INTO `permissions_roles` VALUES
 (1,14),
 (2,1),(2,2),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,14),(2,15),(2,16),(2,17),(2,18),
-(3,1),(3,2),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),(3,15),(3,16),(3,17),(3,18),
+(3,1),(3,2),(3,4),(3,5),(3,6),(3,7),(3,8),(3,9),(3,10),(3,11),(3,12),(3,13),(3,14),(3,15),(3,16),(3,17),(3,18),(3,20),
 (4,19);
 
 -- ---------------------------------------------------------
@@ -1399,7 +1373,6 @@ VALUES
   (53,'ftp_server',NULL),
   (54,'ftp_user_name',NULL),
   (55,'alerts_email',NULL),
-  (56,'checkins','0'),
   (57,'facebook_appid',NULL),
   (58,'facebook_appsecret',NULL),
   (59,'db_version','97'),
@@ -1447,20 +1420,6 @@ INSERT INTO `users` (`id`, `name`, `email`, `username`, `password`, `logins`, `l
 -- --------------------------------------------------------
 
 /**
- * Table structure for table `user_devices`
- * Ties mobile devices to users without logging in so that the ids on the devices make the distinction
- */
-
-CREATE TABLE IF NOT EXISTS `user_devices` (
-  `id` varchar(255) NOT NULL,
-  `user_id` int(11) unsigned NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Works with checkins';
-
--- --------------------------------------------------------
-
-/**
  * Table structure for table `user_tokens`
  *
  */
@@ -1498,5 +1457,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '108' WHERE `key` = 'db_version';
-UPDATE `settings` SET `value` = '2.7.1' WHERE `key`= 'ushahidi_version';
+UPDATE `settings` SET `value` = '113' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '2.7.2' WHERE `key`= 'ushahidi_version';

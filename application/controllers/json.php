@@ -621,7 +621,7 @@ class Json_Controller extends Template_Controller {
 	
 
 	/**
-	 * Read in new layer KML via file_get_contents
+	 * Read in new layer KML via HttpClient
 	 * @param int $layer_id - ID of the new KML Layer
 	 */
 	public function layer($layer_id = 0)
@@ -649,9 +649,14 @@ class Json_Controller extends Template_Controller {
 				$layer_link = Kohana::config('upload.directory').'/'.$layer_file;
 			}
 
-			$content = file_get_contents($layer_link);
+			$layer_request = new HttpClient($layer_link);
+			$content = $layer_request->execute();
 
-			if ($content !== false)
+			if ($content === FALSE) 
+			{
+				throw new Kohana_Exception($layer_request->get_error_msg());
+			}
+			else
 			{
 				echo $content;
 			}

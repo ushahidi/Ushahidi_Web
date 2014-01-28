@@ -121,6 +121,19 @@ class Form_Field_Model extends ORM {
 		// Delete all responses associated with this field
 		ORM::factory('form_field_option')->where('form_field_id', $this->id)->delete_all();
 		
+		// Update other fields position
+		$fields = ORM::factory('form_field')
+			->where(array(
+				'form_id' => $this->form_id, 
+				'id != ' => $this->id, 
+				'field_position > ' => $this->field_position))
+			->find_all();
+		foreach($fields as $field)
+		{
+			$field->field_position = $field->field_position - 1;
+			$field->save();
+		}
+		
 		// Delete the field
 		parent::delete();
 	}

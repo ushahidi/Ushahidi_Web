@@ -226,13 +226,23 @@ class VideoEmbed
 	{
 		$this->set_url($raw);
 		$output = FALSE;
-		
+
 		if (isset($this->service['oembed']))
 		{
-			$oembed = @json_decode(file_get_contents($this->service['oembed']."?url=".urlencode($this->url)));
-			if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
+
+			$url = $this->service['oembed']."?url=".urlencode($this->url);
+
+			$request = new HttpClient($url);
+			$result = $request->execute();
+
+			if ($result !== FALSE)
 			{
-				$output = $oembed->thumbnail_url;
+				$oembed = json_decode($result);
+
+				if (!empty($oembed) AND ! empty($oembed->thumbnail_url))
+				{
+					$output = $oembed->thumbnail_url;
+				}
 			}
 		}
 

@@ -467,60 +467,7 @@ class map_Core {
 	 */
 	public static function geocode($address = NULL)
 	{
-		if ($address)
-		{
-			$payload = FALSE;
-
-			$url = Kohana::config('config.external_site_protocol').'://maps.google.com/maps/api/geocode/json?sensor=false&address='.rawurlencode($address);
-			$result = FALSE;
-			if ($result = @file_get_contents($url)) {
-				$payload = json_decode($result);
-			}
-
-			// Verify that the request succeeded
-			if (! isset($payload->status)) return FALSE;
-			if ($payload->status != 'OK') return FALSE;
-
-			// Convert the Geocoder's results to an array
-			$all_components = json_decode(json_encode($payload->results), TRUE);
-			$location = $all_components[0]['geometry']['location'];
-
-			// Find the country
-			$address_components = $all_components[0]['address_components'];
-			$country_name = NULL;
-			foreach ($address_components as $component)
-			{
-				if (in_array('country', $component['types']))
-				{
-					$country_name  = $component['long_name'];
-					break;
-				}
-			}
-
-			// If no country has been found, use the formatted address
-			if (empty($country_name))
-			{
-				$country_name = $all_components[0]['formatted_address'];
-			}
-
-			// Grab country_id
-			$country = Country_Model::get_country_by_name($country_name);
-			$country_id = ( ! empty($country) AND $country->loaded)? $country->id : 0;
-
-			$geocodes = array(
-				'country' => $country_name,
-				'country_id' => $country_id,
-				'location_name' => $all_components[0]['formatted_address'],
-				'latitude' => $location['lat'],
-				'longitude' => $location['lng']
-			);
-
-			return $geocodes;
-		}
-		else
-		{
-			return FALSE;
-		}
+		return geocode::geocode($address);
 	}
 
 	/**
@@ -533,24 +480,7 @@ class map_Core {
 	 */
 	public static function reverse_geocode($latitude,$longitude)
 	{
-		if ($latitude AND $longitude)
-		{
-			$url = 'http://nominatim.openstreetmap.org/reverse?format=json&lat='.$latitude.'&lon='.$longitude;
-			$ch = curl_init();
-			curl_setopt($ch,CURLOPT_URL,$url);
-			curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-			curl_setopt($ch,CURLOPT_SSL_VERIFYPEER, false);
-			$json = curl_exec($ch);
-			curl_close($ch);
-
-			$location = json_decode($json, false);
-
-			return $location->display_name;
-		}
-		else
-		{
-			return false;
-		}
+		return geocode::reverseGeocode($latitude, $longitude);
 	}
 
 	/**

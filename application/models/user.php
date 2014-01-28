@@ -312,11 +312,6 @@ class User_Model extends Auth_User_Model {
 		    ->where('user_id', $this->id)
 		    ->delete_all();
 
-		// Delete user_devices
-		ORM::factory('user_devices')
-		    ->where('user_id', $this->id)
-		    ->delete_all();
-		
 		parent::delete();
 	}
 	

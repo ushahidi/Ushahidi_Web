@@ -1333,12 +1333,24 @@ input.long2 {
 	width: 280px;
 	float:left;
 }
+
+.l-column.inverse {
+	padding: 0 20px 0 0;
+	width: 558px;
+}
+
 .r-column{
 	padding: 0 30px 0;
 	width: 558px;
 	float:left;
 	border: 1px solid #dadada;
 }
+
+.r-column.inverse {
+	width: 220px;
+}
+
+
 p.bold_desc{
 	margin-top: 0px;
 	font-weight: bold;	
@@ -1559,7 +1571,7 @@ span.span_cl3{font-size: 12px; color:#9b0000;}
 .dark_red{color:#9b0000;}
 span.dark_red_span{color:#9b0000; display: block; font-weight: bold; padding:0px; margin: 0px 0 -20px 0;}
 span.dark_red_span_2{color:#9b0000; display: block; font-weight: bold; padding:0px; margin: 0px 0 -10px 0;}
-div.download_container{
+div.download_container, div.deleteall_container {
 	width: 900px;
 	padding: 0 0 100px 0;
 	margin: 0 0 10px 20px;

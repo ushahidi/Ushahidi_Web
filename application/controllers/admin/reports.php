@@ -547,6 +547,15 @@ class Reports_Controller extends Admin_Controller {
 					$form['longitude'] = $feed_item->location->longitude;
 					$form['location_name'] = $feed_item->location->location_name;
 				}
+				// HT: new code
+				$feed_categories = ORM::factory('feed_category')->where('feed_item_id', $feed_item->id)->select_list('id', 'category_id');
+				if ($feed_categories)
+				{
+					foreach($feed_categories as $feed_category) {
+						$form['incident_category'][] = $feed_category;
+					}
+				}
+				// HT: end of new code
 			}
 			else
 			{
@@ -1164,6 +1173,39 @@ class Reports_Controller extends Admin_Controller {
 		}
 	}
 
+	/** Deletes all reports from the database **/
+	public function deleteall() {
+
+		// Only superadmins should be able to do this...
+		if ( ! $this->auth->has_permission("delete_all_reports"))
+		{
+			url::redirect(url::site() . 'admin/dashboard');
+		}
+
+		if (isset($_POST["confirm_delete_all"]) && $_POST["confirm_delete_all"] == 1)
+		{
+			$table_prefix = Kohana::config('database.default.table_prefix');
+
+			Database::instance()->query("UPDATE `" . $table_prefix . "message` SET `incident_id` = 0;");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "media`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "location`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "comment`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "rating`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "form_response`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "incident_person`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "incident_lang`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "incident_category`");
+			Database::instance()->query("TRUNCATE TABLE `" . $table_prefix . "incident`");
+		}
+
+
+		$this->template->content = new View('admin/reports/delete_all');
+		$this->template->content->report_count = Incident_Model::get_total_reports();
+		$this->themes->js = new View('admin/reports/delete_all_js');
+
+
+	}
+
 	/* private functions */
 
 	// Dynamic categories form fields
@@ -1241,7 +1283,7 @@ class Reports_Controller extends Admin_Controller {
 				$(\"#incident_date\").datepicker({
 				showOn: \"both\",
 				buttonImage: \"" . url::base() . "media/img/icon-calendar.gif\",
-				buttonImageOnly: TRUE
+				buttonImageOnly: true
 				});
 				});
 			</script>";
@@ -1252,10 +1294,10 @@ class Reports_Controller extends Admin_Controller {
 	{
 		return "<script type=\"text/javascript\">
 				$(document).ready(function() {
-				$('a#category_toggle').click(function() {
-				$('#category_add').toggle(400);
-				return FALSE;
-				});
+					$('a#category_toggle').click(function() {console.log('toggle');
+						$('#category_add').toggle(400);
+						return false;
+					});
 				});
 			</script>";
 	}
@@ -1451,5 +1493,7 @@ class Reports_Controller extends Admin_Controller {
 			Media_Model::delete_photo($id);
 		}
 	}
+
+
 
 }
