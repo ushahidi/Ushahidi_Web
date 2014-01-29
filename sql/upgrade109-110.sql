@@ -5,7 +5,7 @@ UPDATE `settings` SET `value` = 110 WHERE `key` = 'db_version';
 INSERT INTO `permissions` (`name`) VALUES ('delete_all_reports');
 
 -- Adding permission to superadmin role - @Robbie: will the ORM pick up on the subqueries?
-INSERT INTO `permission_roles` (`role_id`, `permission_id`) VALUES (
+INSERT INTO `permissions_roles` (`role_id`, `permission_id`) VALUES (
 	(SELECT `id` FROM `roles` WHERE `name` = 'superadmin' LIMIT 1),
-	(SELECT `id` FROM `permission` WHERE `name` = 'delete_all_reports' LIMIT 1),
+	(SELECT `id` FROM `permissions` WHERE `name` = 'delete_all_reports' LIMIT 1),
 );
