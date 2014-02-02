@@ -18,7 +18,7 @@ class Category_Model extends ORM_Tree {
 	 * One-to-many relationship definition
 	 * @var array
 	 */
-	protected $has_many = array('incident' => 'incident_category', 'category_lang');
+	protected $has_many = array('incident' => 'incident_category', 'feed_item' => 'feed_item_category', 'category_lang');
 	
 	/**
 	 * Database table name

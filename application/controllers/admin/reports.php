@@ -548,11 +548,11 @@ class Reports_Controller extends Admin_Controller {
 					$form['location_name'] = $feed_item->location->location_name;
 				}
 				// HT: new code
-				$feed_categories = ORM::factory('feed_category')->where('feed_item_id', $feed_item->id)->select_list('id', 'category_id');
-				if ($feed_categories)
+				$feed_item_categories = ORM::factory('feed_item_category')->where('feed_item_id', $feed_item->id)->select_list('id', 'category_id');
+				if ($feed_item_categories)
 				{
-					foreach($feed_categories as $feed_category) {
-						$form['incident_category'][] = $feed_category;
+					foreach($feed_item_categories as $feed_item_category) {
+						$form['incident_category'][] = $feed_item_category;
 					}
 				}
 				// HT: end of new code
