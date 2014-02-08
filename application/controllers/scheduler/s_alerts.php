@@ -95,7 +95,9 @@ class S_Alerts_Controller extends Controller {
 			$incident_query .= "AND DATE(i.incident_date) >= DATE_SUB( CURDATE(), INTERVAL ".($alert_days-1)." DAY )";
 		}
 		// End of New Code		
-
+		
+		$incidents = $db->query($incident_query);
+		
 		foreach ($incidents as $incident)
 		{
 			// ** Pre-Formatting Message ** //

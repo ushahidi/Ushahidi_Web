@@ -95,7 +95,7 @@ class S_Twitter_Controller extends Controller {
 		$service = $services->where('service_name', 'Twitter')->find();
 
 		$tweet_results = json_decode($data);
-		foreach($tweet_results ->statuses as $tweet)
+		foreach($tweet_results->statuses as $tweet)
 		{
 			$reporter = ORM::factory('reporter')
 				->where('service_id', $service->id)
