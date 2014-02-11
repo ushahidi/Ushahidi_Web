@@ -95,7 +95,9 @@ class S_Alerts_Controller extends Controller {
 			$incident_query .= "AND DATE(i.incident_date) >= DATE_SUB( CURDATE(), INTERVAL ".($alert_days-1)." DAY )";
 		}
 		// End of New Code		
-
+		
+		$incidents = $db->query($incident_query);
+		
 		foreach ($incidents as $incident)
 		{
 			// ** Pre-Formatting Message ** //
@@ -282,7 +284,7 @@ class S_Alerts_Controller extends Controller {
 	 * @return boolean
 	 */
 	private function _multi_subscribe(Alert_Model $alertee, $incident_id) {
-		$multi_subscribe_ids = ORM::factory('alert')->where('alert_confirmed','1')->where('alert_recipient', $alertee->recipient)->select_list('id', 'id');
+		$multi_subscribe_ids = ORM::factory('alert')->where('alert_confirmed','1')->where('alert_recipient', $alertee->alert_recipient)->select_list('id', 'id');
 		$subscription_alert = ORM::factory('alert_sent')->where('incident_id', $incident_id)->in('alert_id', $multi_subscribe_ids)->find();
 		return ((boolean) $subscription_alert->id);
 	}

@@ -56,7 +56,7 @@ class Geocoder_Core {
 
 			if ($geonames_status == "200")
 			{ // Successful
-				$request_url = $base_url . "&feedUrl=" . urlencode($feed_url);
+				$request_url = $base_url . "&feedUrl=" . urlencode($feed_url)."&username=ushahididev";
 			}
 			else
 			{ // Down perhaps?? Use direct feed
