@@ -16,7 +16,7 @@ class Geocoder_Core {
 
 	/**
 	 * Google Location GeoCoding
-	 * 
+	 *
 	 * Reuses map::geocode() rather than reimplementing.
 	 * Only really keeping this for backwards compat
 	 *
@@ -48,21 +48,22 @@ class Geocoder_Core {
 	{
 		$base_url = "http://" . GEOCODER_GEONAMES . "/rssToGeoRSS?";
 
+		// Only requests service if we have an user
+		$geocode_username = Settings_Model::get_setting('feed_geolocation_user');
 
-		if ($feed_url)
+		if ($feed_url && !empty($geocode_username))
 		{
 			// First check to make sure geonames webservice is running
 			$geonames_status = @remote::status( $base_url );
 
 			if ($geonames_status == "200")
 			{ // Successful
-				$request_url = $base_url . "&feedUrl=" . urlencode($feed_url)."&username=ushahididev";
+				$request_url = $base_url . "&feedUrl=" . urlencode($feed_url) . "&username=" . $geocode_username;
 			}
 			else
 			{ // Down perhaps?? Use direct feed
 				$request_url = $feed_url;
 			}
-
 
 			$request = new HttpClient($request_url);
 
@@ -73,9 +74,20 @@ class Geocoder_Core {
 			}
 			//$georss = utf8_encode($georss);
 
+			// Lez verify this we got a good reply from the geocoder before proceeding
+			$data = new SimplePie();
+			$data->set_raw_data( $georss );
+			$data->init();
+			$data->handle_content_type();
+
+			// Feed no good - get outta here!
+			if ($data->error()) {
+				Kohana::log('error', $data->error() . $request_url);
+
+				return false;
+			}
 
 			return trim($georss);
-
 		}
 		else
 		{
