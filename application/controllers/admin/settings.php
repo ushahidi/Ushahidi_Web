@@ -64,6 +64,7 @@ class Settings_Controller extends Admin_Controller {
 			'allow_reports' => '',
 			'allow_comments' => '',
 			'allow_feed' => '',
+			'feed_geolocation_user' => '',
 			'allow_stat_sharing' => '',
 			'cache_pages' => '',
 			'cache_pages_lifetime' => '',
@@ -108,6 +109,7 @@ class Settings_Controller extends Admin_Controller {
 			$post->add_rules('allow_reports','required','between[0,1]');
 			$post->add_rules('allow_comments','required','between[0,2]');
 			$post->add_rules('allow_feed','required','between[0,1]');
+			$post->add_rules('feed_geolocation_user','length[0,100]');
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
 			$post->add_rules('cache_pages','required','between[0,1]');
 			$post->add_rules('cache_pages_lifetime','required','in_array[60,300,600,900,1800]');
@@ -261,6 +263,7 @@ class Settings_Controller extends Admin_Controller {
 				'allow_reports' => $settings['allow_reports'],
 				'allow_comments' => $settings['allow_comments'],
 				'allow_feed' => $settings['allow_feed'],
+				'feed_geolocation_user' => isset($settings['feed_geolocation_user']) ? $settings['feed_geolocation_user'] : null,
 				'allow_stat_sharing' => $settings['allow_stat_sharing'],
 				'cache_pages' => $settings['cache_pages'],
 				'cache_pages_lifetime' => $settings['cache_pages_lifetime'],
@@ -388,7 +391,7 @@ class Settings_Controller extends Admin_Controller {
 			    ->add_rules('api_google', 'length[0,200]')
 			    ->add_rules('api_live', 'length[0,200]')
 				->add_rules('enable_timeline', 'numeric', 'length[1,1]');
-			
+
 
 			// Add rules for file upload
 			$files = Validation::factory($_FILES);
@@ -399,7 +402,7 @@ class Settings_Controller extends Admin_Controller {
 			{
 				// Save all the settings
 				Settings_Model::save_all($post);
-				
+
 				// E.Kala 20th April 2012
 				// Ghetto workaround prevent resetting og Bing Maps API Key
 				// Soon to be addressed conclusively
@@ -408,7 +411,7 @@ class Settings_Controller extends Admin_Controller {
 					Settings_Model::save_setting('api_live', $post->api_live);
 				}
 
-				
+
 				// Deal with default category icon now
 
 				// Check if deleting or updating a new image (or doing nothing)
@@ -481,7 +484,7 @@ class Settings_Controller extends Admin_Controller {
 						Settings_Model::save_setting('default_map_all_icon_id', $media->id);
 					}
 				}
-				
+
 
 				// Delete Settings Cache
 				$this->cache->delete('settings');
@@ -582,7 +585,7 @@ class Settings_Controller extends Admin_Controller {
 			$map_array[$layer->name] = $layer->title;
 		}
 		$this->template->content->map_array = $map_array;
-		
+
 		$this->template->content->yesno_array = array(
 			'1'=>utf8::strtoupper(Kohana::lang('ui_main.yes')),
 			'0'=>utf8::strtoupper(Kohana::lang('ui_main.no')));
@@ -992,7 +995,7 @@ class Settings_Controller extends Admin_Controller {
 			"status" => "error",
 
 			// Default response message
-			"response" => sprintf("%d %s %s", $entries, Kohana::lang('ui_admin.cities_loaded'), 
+			"response" => sprintf("%d %s %s", $entries, Kohana::lang('ui_admin.cities_loaded'),
 			                        Kohana::lang('ui_admin.country_not_found'))
 		);
 
@@ -1021,8 +1024,8 @@ class Settings_Controller extends Admin_Controller {
 			{
 				// Decode the JSON responce
 				$response = json_decode($response);
-				
-				$cities = isset($response->elements) 
+
+				$cities = isset($response->elements)
 				    ? $response->elements
 				    : array();
 
@@ -1050,7 +1053,7 @@ class Settings_Controller extends Admin_Controller {
 					{
 						// Skip nameless nodes or nodes with lat/lon
 						if (!isset($city->tags->name) OR ! $city->lat OR ! $city->lon) continue;
-						
+
 						$values_expr->param(':countryid', $country->id);
 						$values_expr->param(':city', $city->tags->name);
 						$values_expr->param(':lat', $city->lat);
