@@ -96,14 +96,14 @@ class S_Feeds_Controller extends Controller {
 							$newitem->item_date = date("Y-m-d H:i:s",time());
 						}
 						// HT: new code
-						if (Kohana::config('settings.allow_feed_category'))
-						{
 							if(!empty($categories)) {
 								foreach($categories as $category) {
 									$categoryData = ORM::factory('category')->where('category_title', $category->term)->find();
 									if($categoryData->loaded == TRUE) {
 										$category_ids->feed_item_category[$categoryData->id] = $categoryData->id;
-									} else {
+									}
+									elseif (Kohana::config('settings.allow_feed_category'))
+									{
 										$newcategory = new Category_Model();
 										$newcategory->category_title = $category->term;
 										$newcategory->parent_id = 0;
@@ -115,7 +115,6 @@ class S_Feeds_Controller extends Controller {
 									}
 								}	
 							}
-						}	
 						// HT: End of new code
 						
 						$newitem->save();
