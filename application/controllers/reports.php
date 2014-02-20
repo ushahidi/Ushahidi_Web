@@ -725,6 +725,8 @@ class Reports_Controller extends Main_Controller {
 	{
 		$this->template->header->this_page = 'reports_submit';
 		$this->template->content = new View('reports/submit_thanks');
+		// Get Site Email
+		$this->template->content->report_email = Kohana::config('settings.site_email');
 	}
 
 	/**
