@@ -1,5 +1,5 @@
 -- Ushahidi Engine
--- version 110
+-- version 115
 -- http://www.ushahidi.com
 
 
@@ -557,7 +557,9 @@ INSERT INTO `country` (`id`, `iso`, `country`, `capital`, `cities`) VALUES
 (244, 'YT', 'Mayotte', 'Mamoudzou', 0),
 (245, 'ZA', 'South Africa', 'Pretoria', 0),
 (246, 'ZM', 'Zambia', 'Lusaka', 0),
-(247, 'ZW', 'Zimbabwe', 'Harare', 0);
+(247, 'ZW', 'Zimbabwe', 'Harare', 0),
+(248, 'XK', 'Kosovo', 'Pristina', 0),
+(249, 'SS', 'South Sudan', 'Juba', 0);
 
 -- --------------------------------------------------------
 
@@ -1457,5 +1459,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '113' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '115' WHERE `key` = 'db_version';
 UPDATE `settings` SET `value` = '2.7.2' WHERE `key`= 'ushahidi_version';
