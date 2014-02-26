@@ -26,7 +26,7 @@ class geocode_Core {
 		if ($address)
 		{
 			if (! method_exists('geocode_Core', $service)) {
-				throw new Kohana_Exception("'" . $service . "' is not a valid geocode service");			
+				throw new Kohana_Exception("'" . $service . "' is not a valid geocode service");
 				return FALSE;
 			}
 
@@ -52,7 +52,7 @@ class geocode_Core {
 		$params = array(
 				"format"			=> "json",
 				"addressdetails"	=> 1,
-				"accept-language"	=> "en_US", // force country names to come back as english,
+				"accept-language"	=> Settings_Model::get('site_language'),
 				"q"					=> $address,
 				"zoom"				=> 200
 			);
@@ -61,7 +61,7 @@ class geocode_Core {
 
 		$url_request = new HttpClient($url);
 
-		if ($result = $url_request->execute()) 
+		if ($result = $url_request->execute())
 		{
 			$payload = json_decode($result);
 		}
@@ -114,13 +114,13 @@ class geocode_Core {
 
 		$url_request = new HttpClient($url);
 
-		if ($result = $url_request->execute()) 
+		if ($result = $url_request->execute())
 		{
 			$payload = json_decode($result);
 		}
 		else
 		{
-			Kohana::log('error', "Geocode - Google\n" . $url_request->get_error_msg());			
+			Kohana::log('error', "Geocode - Google\n" . $url_request->get_error_msg());
 		}
 
 		// Verify that the request succeeded
@@ -130,7 +130,7 @@ class geocode_Core {
 			if ($payload->status != 'ZERO_RESULTS')
 			{
 				// logs anything different from OK or ZERO_RESULTS
-				Kohana::log('error', "Geocode - Google: " . $payload->status);			
+				Kohana::log('error', "Geocode - Google: " . $payload->status);
 			}
 
 			return FALSE;
@@ -210,7 +210,7 @@ class geocode_Core {
 			$function = "reverse" . ucfirst($service);
 
 			if (! method_exists('geocode_Core', $function)) {
-				throw new Kohana_Exception("'" . $service . "' is not a valid geocode service");			
+				throw new Kohana_Exception("'" . $service . "' is not a valid geocode service");
 				return FALSE;
 			}
 
@@ -219,7 +219,7 @@ class geocode_Core {
 		else
 		{
 			return FALSE;
-		}		
+		}
 	}
 
 	/**
