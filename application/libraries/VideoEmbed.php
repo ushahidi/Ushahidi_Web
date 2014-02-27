@@ -166,7 +166,7 @@ class VideoEmbed
 				$you_auto = ($auto) ? "&autoplay=1" : "";
 				
 				$output = '<iframe id="ytplayer" type="text/html" width="320" height="265" '
-					. 'src="http://www.youtube.com/embed/'.html::escape($code).'?origin='.urlencode(url::base()).html::escape($you_auto).'" '
+					. 'src="//www.youtube.com/embed/'.html::escape($code).'?origin='.urlencode(url::base()).html::escape($you_auto).'" '
 					. 'frameborder="0"></iframe>';
 			break;
 			
@@ -175,7 +175,7 @@ class VideoEmbed
 				$google_auto = ($auto) ? "&autoPlay=true" : "";
 				
 				$output = "<embed style='width:320px; height:265px;' id='VideoPlayback' type='application/x-shockwave-flash'"
-					. "	src='http://video.google.com/googleplayer.swf?docId=-".html::escape($code.$google_auto)."&hl=en' flashvars=''>"
+					. "	src='//video.google.com/googleplayer.swf?docId=-".html::escape($code.$google_auto)."&hl=en' flashvars=''>"
 					. "</embed>";
 			break;
 			
@@ -197,7 +197,7 @@ class VideoEmbed
 			case "vimeo":
 				$vimeo_auto = ($auto) ? "?autoplay=1" : "";
 				
-				$output = '<iframe src="http://player.vimeo.com/video/'.html::escape($code.$vimeo_auto).'" width="320" height="265" frameborder="0">'
+				$output = '<iframe src="//player.vimeo.com/video/'.html::escape($code.$vimeo_auto).'" width="320" height="265" frameborder="0">'
 					. '</iframe>';
 			break;
 		}
