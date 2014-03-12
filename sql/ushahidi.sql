@@ -1039,7 +1039,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
 ) ENGINE=MyISAM AUTO_INCREMENT=16 COMMENT='Stores permissions used for access control';
 
 /* Data for permissions table */
-INSERT IGNORE INTO `permissions` VALUES 
+INSERT IGNORE INTO `permissions` VALUES
 (1,'reports_view'),
 (2,'reports_edit'),
 (4,'reports_comments'),
@@ -1382,7 +1382,8 @@ VALUES
   (61,'allow_alerts','1'),
   (62,'require_email_confirmation','0'),
   (63,'manually_approve_users','0'),
-  (64,'enable_timeline','0');
+  (64,'enable_timeline','0'),
+  (65,'feed_geolocation_user', '');
 -- --------------------------------------------------------
 
 /**
