@@ -300,43 +300,7 @@ class Reports_Controller extends Members_Controller {
 		// Retrieve thumbnail photos (if edit);
 		//XXX: fix _get_thumbnails
 		$this->template->content->incident = $this->_get_thumbnails($id);
-		
-		
-		// Are we creating this report from a Checkin?
-		if (isset($_GET['cid']) AND ! empty($_GET['cid']) ) {
-
-			$checkin_id = (int) $_GET['cid'];
-			$checkin = ORM::factory('checkin', $checkin_id);
-
-			if ($checkin->loaded)
-			{
-				// Has a report already been created for this Checkin?
-				if ( (int) $checkin->incident_id > 0)
-				{
-					// Redirect to report
-					url::redirect('members/reports/edit/'. $checkin->incident_id);
-				}
-
-				$incident_description = $checkin->checkin_description;
-				$incident_title = text::limit_chars(strip_tags($incident_description), 100, "...", true);
-				$form['incident_title'] = $incident_title;
-				$form['incident_description'] = $incident_description;
-				$form['incident_date'] = date('m/d/Y', strtotime($checkin->checkin_date));
-				$form['incident_hour'] = date('h', strtotime($checkin->checkin_date));
-				$form['incident_minute'] = date('i', strtotime($checkin->checkin_date));
-				$form['incident_ampm'] = date('a', strtotime($checkin->checkin_date));
-
-				// Does the sender of this message have a location?
-				if ($checkin->location->loaded)
-				{
-					$form['location_id'] = $checkin->location_id;
-					$form['latitude'] = $checkin->location->latitude;
-					$form['longitude'] = $checkin->location->longitude;
-					$form['location_name'] = $checkin->location->location_name;
-				}
-			}
-		}
-		
+	
 
 		// Check, has the form been submitted, if so, setup validation
 		if ($_POST)
@@ -368,24 +332,6 @@ class Reports_Controller extends Members_Controller {
 
 				// STEP 6: SAVE PERSONAL INFORMATION
 				reports::save_personal_info($post, $incident);
-				
-				// If creating a report from a checkin
-				if (isset($checkin_id) AND $checkin_id != "")
-				{
-					$checkin = ORM::factory('checkin', $checkin_id);
-					if ($checkin->loaded)
-					{
-						$checkin->incident_id = $incident->id;
-						$checkin->save();
-					
-						// Attach all the media items in this checkin to the report
-						foreach ($checkin->media as $media)
-						{
-							$media->incident_id = $incident->id;
-							$media->save();
-						}
-					}
-				}
 
 				// Action::report_add / report_submit_members - Added a New Report
 				Event::run('ushahidi_action.report_submit_members', $post);

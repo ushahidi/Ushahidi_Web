@@ -47,11 +47,6 @@ class Dashboard_Controller extends Members_Controller {
 			->where("user_id", $this->user->id)
 			->count_all();
 
-		// Total Checkins
-		$this->template->content->checkins = ORM::factory('checkin')
-			->where("user_id", $this->user->id)
-			->count_all();
-
 		// Total Alerts
 		$this->template->content->alerts = ORM::factory('alert')
 			->where("user_id", $this->user->id)

@@ -159,6 +159,7 @@ class Alerts_Controller extends Main_Controller {
 		$this->themes->map_enabled = TRUE;
 		$this->themes->js = new View('alerts/alerts_js');
 		$this->themes->treeview_enabled = TRUE;
+		$this->themes->slider_enabled = TRUE;
 		$this->themes->js->latitude = $form['alert_lat'];
 		$this->themes->js->longitude = $form['alert_lon'];
 

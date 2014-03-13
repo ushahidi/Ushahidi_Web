@@ -20,23 +20,23 @@ class Csvtable_Core {
 	 * Column names
 	 * @var array
 	 */
-	private $columnnames = array();
-	
+	private $colnames = array();
+
 	function __construct($filehandle)
 	{
 		$this->filehandle = $filehandle;
 		// 1000 chars is max line length
-		if(($fields = fgetcsv($filehandle, 1000)) !== FALSE) 
-		{ 
+		if(($fields = fgetcsv($filehandle, 1000)) !== FALSE)
+		{
 			$colnum = 0;
 			foreach($fields as $field)
 			{
 				$this->colnames[utf8::strtoupper($field)] = $colnum;
 				$colnum++;
 			}
-		}		
+		}
 	}
-	
+
 	/**
 	 * Function to check if the CSV File has a column in the name given
 	 * @param string $name Name of column to be checked
@@ -46,7 +46,7 @@ class Csvtable_Core {
 	{
 		return isset($this->colnames[$name]);
 	}
-	
+
 	/**
 	 * Function to get rows in the CSV files
 	 * @return array
@@ -54,7 +54,6 @@ class Csvtable_Core {
 	function getRows()
 	{
 		$rows = array();
-		$numcols = count($this->columnnames);
 		while (($fields = fgetcsv($this->filehandle, 4000, ",")) !== FALSE)
 		{
 			foreach ($this->colnames as $colname => $colnum)
@@ -64,6 +63,6 @@ class Csvtable_Core {
 			$rows[] = $row;
 		}
 		return $rows;
-	}	
+	}
 }
 ?>

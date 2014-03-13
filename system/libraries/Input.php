@@ -312,13 +312,16 @@ class Input_Core {
 				if ( ! class_exists('HTMLPurifier_Config', FALSE))
 				{
 					// Load HTMLPurifier
-					require Kohana::find_file('vendor', 'htmlpurifier/HTMLPurifier.auto', TRUE);
+					require_once APPPATH.'libraries/htmlpurifier/HTMLPurifier.auto.php';
 					require 'HTMLPurifier.func.php';
 				}
 
 				// Set configuration
 				$config = HTMLPurifier_Config::createDefault();
-				$config->set('HTML', 'TidyLevel', 'none'); // Only XSS cleaning now
+				$config->set('Cache.SerializerPath', APPPATH.'cache');
+				$config->set('HTML.TidyLevel', 'none'); // Only XSS cleaning now
+				$config->set('HTML.SafeIframe', true);
+				$config->set('URI.SafeIframeRegexp', Kohana::config('config.safe_iframe_regexp', FALSE, TRUE));
 
 				// Run HTMLPurifier
 				$data = HTMLPurifier($data, $config);
@@ -380,7 +383,7 @@ class Input_Core {
 				{
 					// Remove really unwanted tags
 					$old_data = $data;
-					$data = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $data);
+					$data = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $data);
 				}
 				while ($old_data !== $data);
 			break;

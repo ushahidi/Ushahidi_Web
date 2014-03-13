@@ -83,7 +83,6 @@ class System_Api_Object extends Api_Object_Core {
 			array(
 				"domain" => $this->domain,
 				"version" => $json_version,
-				"checkins" => Kohana::config('settings.checkins'),
 				"email" => Kohana::config('settings.site_email'),
 				"sms" => Kohana::config('settings.sms_no1'),
 				"plugins" => $active_plugins,

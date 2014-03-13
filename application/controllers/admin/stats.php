@@ -69,7 +69,7 @@ class Stats_Controller extends Admin_Controller {
 		}
 
 		$this->template->content->range = $range;
-      
+
 		// Get an arbitrary date range
 		$dp1 = (isset($_GET['dp1'])) ? $_GET['dp1'] : null;
 		$dp2 = (isset($_GET['dp2'])) ? $_GET['dp2'] : null;
@@ -218,6 +218,10 @@ class Stats_Controller extends Admin_Controller {
             $this->template->content->num_reports = 0;
             $this->template->content->num_categories = 0;
             $this->template->impact_json = '';
+
+            $this->template->content->dp1 = $dp1;
+            $this->template->content->dp2 = $dp2;
+
             return false;
         }
         
@@ -330,8 +334,8 @@ class Stats_Controller extends Admin_Controller {
         {
             $this->template->content->traffic_chart = Kohana::lang('ui_admin.chart_display_error');
             $this->template->content->raw_data = array();
-            $this->template->content->dp1 = null;
-            $this->template->content->dp2 = null;
+            $this->template->content->dp1 = $dp1;
+            $this->template->content->dp2 = $dp2;
             $this->template->content->failure = 'Stat Collection Failed! Either your stat_id or stat_key in the settings table in the database are incorrect or our stat server is down. Try back in a bit to see if the server is up and running. If you are really in a pinch, you can always modify stat_id (set to null) and stat_key (set to 0) in the settings table of your database to get your stats back up and running. Keep in mind you will lose access to your stats currently on the stats server.';
             return false;
         }
@@ -391,8 +395,8 @@ class Stats_Controller extends Admin_Controller {
         if(!$countries) {
             $this->template->content->countries = array();
             $this->template->content->num_countries = 0;
-            $this->template->content->dp1 = null;
-            $this->template->content->dp2 = null;
+            $this->template->content->dp1 = $dp1;
+            $this->template->content->dp2 = $dp2;
             $this->template->content->visitor_map = '';
             $this->template->content->uniques = 0;
             $this->template->content->visits = 0;
@@ -466,6 +470,9 @@ class Stats_Controller extends Admin_Controller {
         // If we failed to get hit data, fail.
         if ( ! $data)
         {
+            $this->template->content->dp1 = $dp1;
+            $this->template->content->dp2 = $dp2;
+
             return false;
         }
         
@@ -536,28 +543,4 @@ class Stats_Controller extends Admin_Controller {
 		$this->template->content->chart_url = Kohana::config('core.site_protocol').'://chart.googleapis.com/chart?chs=905x300&chds=-1,24,-1,7,0,'.$highest_value.'&chf=bg,s,efefef&chd=t:0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23|0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7|'.implode(',',$data['sun']).','.implode(',',$data['mon']).','.implode(',',$data['tue']).','.implode(',',$data['wed']).','.implode(',',$data['thu']).','.implode(',',$data['fri']).','.implode(',',$data['sat']).',0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0&chxt=x,y&chm=o,333333,1,1.0,30.0&chxl=0:||12'.Kohana::lang('datetime.am').'|1|2|3|4|5|6|7|8|9|10|11|12'.Kohana::lang('datetime.pm').'|1|2|3|4|5|6|7|8|9|10|11||1:||'.Kohana::lang('datetime.sunday.abbv').'|'.Kohana::lang('datetime.monday.abbv').'|'.Kohana::lang('datetime.tuesday.abbv').'|'.Kohana::lang('datetime.wednesday.abbv').'|'.Kohana::lang('datetime.thursday.abbv').'|'.Kohana::lang('datetime.friday.abbv').'|'.Kohana::lang('datetime.saturday.abbv').'|&cht=s';
 
 	}
-    
-    /**
-     * Helper function to send a cURL request
-     * @param url - URL for cURL to hit
-     */
-    public function _curl_req( $url )
-    {
-        // Make sure cURL is installed
-        if ( ! function_exists('curl_exec'))
-        {
-            throw new Kohana_Exception('stats.cURL_not_installed');
-            return false;
-        }
-        
-        $curl_handle = curl_init();
-        curl_setopt($curl_handle,CURLOPT_URL,$url);
-        curl_setopt($curl_handle,CURLOPT_CONNECTTIMEOUT,15); // Timeout set to 15 seconds. This is somewhat arbitrary and can be changed.
-        curl_setopt($curl_handle,CURLOPT_RETURNTRANSFER,1); //Set curl to store data in variable instead of print
-        curl_setopt($curl_handle,CURLOPT_SSL_VERIFYPEER, false);
-        $buffer = curl_exec($curl_handle);
-        curl_close($curl_handle);
-        
-        return $buffer;
-    }
 }

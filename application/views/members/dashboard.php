@@ -254,10 +254,6 @@
 								</ul>
 							</li>
 							<li>
-								<a href="<?php echo url::site() . 'members/checkins' ?>" class="checkins"><?php echo Kohana::lang('ui_admin.my_checkins');?></a>
-								<strong><?php echo $checkins; ?></strong>
-							</li>
-							<li>
 								<a href="<?php echo url::site() . 'members/alerts' ?>" class="alerts"><?php echo Kohana::lang('ui_admin.my_alerts');?></a>
 								<strong><?php echo $alerts; ?></strong>
 							</li>

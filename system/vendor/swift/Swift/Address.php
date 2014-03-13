@@ -88,7 +88,10 @@ class Swift_Address extends Swift_AddressContainer
     {
       if (($this->name !== null))
       {
-        return $this->name . " <" . $this->address . ">";
+        //return $this->name . " <" . $this->address . ">";
+        // HACK: Add quotes and escaping on address name
+        return "\"" . addslashes($this->name) . "\" <" . $this->address . ">";
+        // END HACK
       }
       else return $this->address;
     }

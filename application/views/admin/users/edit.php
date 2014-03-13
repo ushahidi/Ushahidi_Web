@@ -51,60 +51,86 @@
 					</div>
 					<!-- column -->
 					<div class="sms_holder">
+						<div class="l-column inverse">
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_main.full_name');?> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
+								<?php print form::input('name', $form['name'], ' class="text long2"'); ?>
+							</div>
 
-						<div class="row">
-							<h4><?php echo Kohana::lang('ui_main.full_name');?> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
-							<?php print form::input('name', $form['name'], ' class="text long2"'); ?>
-						</div>
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_main.email');?> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
+								<?php print form::input('email', $form['email'], ' class="text long2"'); ?>
+							</div>
 
-						<div class="row">
-							<h4><?php echo Kohana::lang('ui_main.email');?> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
-							<?php print form::input('email', $form['email'], ' class="text long2"'); ?>
-						</div>
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_main.role');?></h4>
+								<?php
+								if ($user AND $user->loaded AND $user->id == 1)
+								{
+									print form::dropdown('role', $role_array, $form['role'], ' readonly="readonly"');
+								}
+								else
+								{
+									print form::dropdown('role', $role_array, $form['role']);
+								}
+								?>
+							</div>
 
-						<div class="row">
-							<h4><?php echo Kohana::lang('ui_main.role');?></h4>
-							<?php
-							if ($user AND $user->loaded AND $user->id == 1)
-							{
-								print form::dropdown('role', $role_array, $form['role'], ' readonly="readonly"');
-							}
-							else
-							{
-								print form::dropdown('role', $role_array, $form['role']);
-							}
-							?>
-						</div>
-
-						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_public_url"); ?>"><?php echo Kohana::lang('ui_main.public_profile_url');?></a> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
+							<div class="row">
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_public_url"); ?>"><?php echo Kohana::lang('ui_main.public_profile_url');?></a> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
 							<span style="float:left;"><?php echo url::site().'profile/user/'; ?></span>
-							<?php print form::input('username', $form['username'], ' class="text short3"'); ?>
+								<?php print form::input('username', $form['username'], ' class="text short3"'); ?>
+							</div>
+
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_main.receive_notifications');?>?</h4>
+								<?php print form::dropdown('notify', $yesno_array, $form['notify']); ?>
+							</div>
+
+							<?php if ($user_id == FALSE) { ?>
+
+							<div class="row">
+								<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_new_users_password"); ?>"><?php echo Kohana::lang('ui_main.password'); ?></a> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
+								<?php print form::password('password', '', ' class="text"'); ?>
+							</div>
+
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_main.password_again');?></h4>
+								<?php print form::password('password_again', $form['password_again'], ' class="text"'); ?>
+							</div>
+
+							<?php }elseif(kohana::config('riverid.enable') == FALSE){ ?>
+
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_admin.new_password');?></h4>
+								<?php print form::password('new_password', '', ' class="text long2"'); ?>
+							</div>
 						</div>
 
-						<div class="row">
-							<h4><?php echo Kohana::lang('ui_main.receive_notifications');?>?</h4>
-							<?php print form::dropdown('notify', $yesno_array, $form['notify']); ?>
+						<?php
+						if ($user AND $user->loaded)
+						{
+						?>
+						<div class="r-column inverse">
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_admin.user_no_logins');?></h4>
+								<p class="bold_desc"><?php echo $user->logins; ?></p>
+							</div>
+
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_admin.user_last_login');?></h4>
+								<p class="bold_desc"><?php echo date("m/d/Y g:ia", $user->last_login); ?> <?php echo date_default_timezone_get(); ?></p>
+							</div>
+
+							<div class="row">
+								<h4><?php echo Kohana::lang('ui_admin.user_confirmed_account');?></h4>
+								<p class="bold_desc"><?php echo Kohana::lang('ui_admin.' . ($user->confirmed ? "yes" : "no"));?></p>
+							</div>
+
 						</div>
-
-						<?php if ($user_id == FALSE) { ?>
-
-						<div class="row">
-							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.profile_new_users_password"); ?>"><?php echo Kohana::lang('ui_main.password'); ?></a> <span class="required"><?php echo Kohana::lang('ui_main.required'); ?></span></h4>
-							<?php print form::password('password', '', ' class="text"'); ?>
-						</div>
-
-						<div class="row">
-							<h4><?php echo Kohana::lang('ui_main.password_again');?></h4>
-							<?php print form::password('password_again', $form['password_again'], ' class="text"'); ?>
-						</div>
-
-						<?php }elseif(kohana::config('riverid.enable') == FALSE){ ?>
-
-						<div class="row">
-							<h4><?php echo Kohana::lang('ui_admin.new_password');?></h4>
-							<?php print form::password('new_password', '', ' class="text long2"'); ?>
-						</div>
+						<?php
+						}
+						?>
 
 						<?php } ?>
 

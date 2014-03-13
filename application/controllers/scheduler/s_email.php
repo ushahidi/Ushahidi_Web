@@ -3,34 +3,33 @@
  * EMAIL Scheduler Controller (IMAP/POP3)
  *
  * PHP version 5
- * LICENSE: This source file is subject to LGPL license 
+ * LICENSE: This source file is subject to LGPL license
  * that is available through the world-wide-web at the following URI:
  * http://www.gnu.org/copyleft/lesser.html
- * @author	   Ushahidi Team <team@ushahidi.com> 
+ * @author	   Ushahidi Team <team@ushahidi.com>
  * @package	   Ushahidi - http://source.ushahididev.com
  * @subpackage Scheduler
  * @copyright  Ushahidi - http://www.ushahidi.com
- * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL) 
+ * @license	   http://www.gnu.org/copyleft/lesser.html GNU Lesser General Public License (LGPL)
 */
 
 class S_Email_Controller extends Controller {
-	
+
 	public function __construct()
 	{
 		parent::__construct();
-	}	
-	
-	public function index() 
+	}
+
+	public function index()
 	{
-		$modules = new Modulecheck;
-		if ($modules->isLoaded('imap'))
+		if (extension_loaded('imap'))
 		{
 			$email_username = Kohana::config('settings.email_username');
 			$email_password = Kohana::config('settings.email_password');
 			$email_host = Kohana::config('settings.email_host');
 			$email_port = Kohana::config('settings.email_port');
 			$email_servertype = Kohana::config('settings.email_servertype');
-			
+
 			if ( ! empty($email_username)
 			AND ! empty($email_password)
 			AND ! empty($email_host)
@@ -69,40 +68,40 @@ class S_Email_Controller extends Controller {
 		$service = ORM::factory('service')
 			->where('service_name', 'Email')
 			->find();
-		
+
 		if ( ! $service->loaded)
 		{
 			return;
 		}
-	
+
 		if (empty($messages) OR ! is_array($messages))
 		{
 			return;
 		}
-		
-		foreach($messages as $message) {		
+
+		foreach($messages as $message) {
 			$reporter = ORM::factory('reporter')
 				->where('service_id', $service->id)
 				->where('service_account', $message['email'])
 				->find();
-			
+
 			if (!$reporter->loaded == true)
 			{
 				// Add new reporter
 				$names = explode(' ', $message['from'], 2);
 				$last_name = '';
 				if (count($names) == 2) {
-					$last_name = $names[1]; 
+					$last_name = $names[1];
 				}
-				
+
 				// get default reporter level (Untrusted)
 				$level = ORM::factory('level')
 					->where('level_weight', 0)
 					->find();
-				
+
 				$reporter->service_id		= $service->id;
 				$reporter->level_id			= $level->id;
-				$reporter->service_account	= $message['email']; 
+				$reporter->service_account	= $message['email'];
 				$reporter->reporter_first	= $names[0];
 				$reporter->reporter_last	= $last_name;
 				$reporter->reporter_email	= $message['email'];
@@ -111,12 +110,12 @@ class S_Email_Controller extends Controller {
 				$reporter->reporter_date	= date('Y-m-d');
 				$reporter->save();
 			}
-			
-			if ($reporter->level_id > 1 && 
+
+			if ($reporter->level_id > 1 &&
 				count(ORM::factory('message')
 					->where('service_messageid', $message['message_id'])
 					->find_all()) == 0 )
-			{	
+			{
 				// Save Email as Message
 				$email = new Message_Model();
 				$email->parent_id = 0;
@@ -131,8 +130,8 @@ class S_Email_Controller extends Controller {
 				$email->message_date = $message['date'];
 				$email->service_messageid = $message['message_id'];
 				$email->save();
-				
-				// Attachments?			
+
+				// Attachments?
 				foreach ($message['attachments'] as $attachments)
 				{
 					foreach ($attachments as $attachment)
@@ -149,8 +148,8 @@ class S_Email_Controller extends Controller {
 						$media->save();
 					}
 				}
-				
-				
+
+
 				// Auto-Create A Report if Reporter is Trusted
 				$reporter_weight = $reporter->level->level_weight;
 				$reporter_location = $reporter->location;
@@ -196,15 +195,15 @@ class S_Email_Controller extends Controller {
 						$attachment->save();
 					}
 				}
-				
-				
+
+
 				// Notify Admin Of New Email Message
 				$send = notifications::notify_admins(
 					"[".Kohana::config('settings.site_name')."] ".
 						Kohana::lang('notifications.admin_new_email.subject'),
 					Kohana::lang('notifications.admin_new_email.message')
 					);
-					
+
 				// Action::message_email_add - Email Received!
 				Event::run('ushahidi_action.message_email_add', $email);
 			}

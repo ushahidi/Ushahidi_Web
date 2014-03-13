@@ -113,16 +113,22 @@ class email_Core {
 	 * @param   boolean       send email as HTML
 	 * @return  integer       number of emails sent
 	 */
-	public static function send($to, $from, $subject, $message, $html = FALSE)
+	public static function send($to, $from, $subject, $content, $html = FALSE)
 	{
 		// Connect to SwiftMailer
 		(email::$mail === NULL) and email::connect();
 
 		// Determine the message type
-		$html = ($html === TRUE) ? 'text/html' : 'text/plain';
+		$header_type = ($html === TRUE) ? 'text/html' : 'text/plain';
 
 		// Create the message
-		$message = new Swift_Message($subject, $message, $html, '8bit', 'utf-8');
+		$message = new Swift_Message($subject, $content, $header_type, '8bit', 'utf-8');
+
+		if ($html === TRUE)
+		{
+			$html2text = new Html2Text($content);
+			$message->attach(new Swift_Message_Part($html2text->get_text(), 'text/plain'));
+		}
 
 		if (is_string($to))
 		{

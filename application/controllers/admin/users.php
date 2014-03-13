@@ -67,7 +67,26 @@ class Users_Controller extends Admin_Controller {
 		// Pagination
 		$pagination = new Pagination( array('query_string' => 'page', 'items_per_page' => (int)Kohana::config('settings.items_per_page_admin'), 'total_items' => ORM::factory('user')->count_all()));
 
-		$users = ORM::factory('user')->orderby('name', 'asc')->find_all((int)Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
+		$users_query = ORM::factory('user')
+						->orderby('name', 'asc');
+
+		$superadmin_role = ORM::factory('role','superadmin');
+
+		// If users is NOT a superadmin, exclude superadmin users
+		if (! $this->auth->get_user()->has( $superadmin_role ) )
+		{
+			// !!WARNING: UNESCAPED QUERY - DO NOT INSERT VARIABLES!!
+			$users_query
+				->where(
+					"`{$this->table_prefix}users`.`id` NOT IN (
+						SELECT `ru`.`user_id` FROM `{$this->table_prefix}roles` r
+						INNER JOIN `{$this->table_prefix}roles_users` ru ON `ru`.`role_id` = `r`.`id`
+						WHERE `r`.`name` = 'superadmin'
+					)"
+				);
+		}
+
+		$users = $users_query->find_all((int)Kohana::config('settings.items_per_page_admin'), $pagination->sql_offset);
 
 		// Set the flag for displaying the roles link
 		$this->template->content->display_roles = $this->display_roles;
@@ -89,7 +108,10 @@ class Users_Controller extends Admin_Controller {
 		if ($user_id)
 		{
 			$user_exists = ORM::factory('user')->find($user_id);
-			if (!$user_exists->loaded)
+
+			if ( ! $user_exists->loaded OR
+					($user_exists->has( ORM::factory('role','superadmin') ) && !$this->auth->get_user()->has( ORM::factory('role','superadmin') ) )
+				)
 			{
 				// Redirect
 				url::redirect(url::site() . 'admin/users/');
@@ -151,6 +173,10 @@ class Users_Controller extends Admin_Controller {
 					{
 						$user->username = $post->username;
 
+						// Flag if user was previously unapproved
+						$previously_unapproved = FALSE;
+						if (count($user->roles) == 0) $previously_unapproved = TRUE;
+
 						// Remove Old Roles
 						foreach ($user->roles as $role)
 						{
@@ -162,6 +188,12 @@ class Users_Controller extends Admin_Controller {
 						{
 							$user->add(ORM::factory('role', 'login'));
 							$user->add(ORM::factory('role', $post->role));
+							
+							if ($previously_unapproved)
+							{
+								// Send approved email
+								$this->_send_email_approved($user);
+							}
 						}
 					}
 				}
@@ -385,6 +417,30 @@ class Users_Controller extends Admin_Controller {
 		{
 			$post->add_error('name', 'exists');
 		}
+	}
+
+	/**
+	 * Sends an email for admin approval
+	 */
+	private function _send_email_approved($user)
+	{
+		// Check if we require users to go through this process
+		if (! Kohana::config('settings.manually_approve_users'))
+		{
+			return FALSE;
+		}
+
+		$url = url::site('login');
+
+		$to = $user->email;
+		$from = array(Kohana::config('settings.site_email'), Kohana::config('settings.site_name'));
+		$subject = Kohana::config('settings.site_name').' '.Kohana::lang('ui_main.login_signup_approval_subject');
+		$message = Kohana::lang('ui_main.login_signup_approval_message',
+			array(Kohana::config('settings.site_name'), $url));
+
+		email::send($to, $from, $subject, $message, FALSE);
+
+		return TRUE;
 	}
 
 }

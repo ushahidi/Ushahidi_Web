@@ -70,7 +70,7 @@ $config['output_compression'] = TRUE;
  * Enable or disable global XSS filtering of GET, POST, and SERVER data. This
  * option also accepts a string to specify a specific XSS filtering tool.
  */
-$config['global_xss_filtering'] = TRUE;
+$config['global_xss_filtering'] = 'htmlpurifier';
 
 /**
  * Enable or disable hooks. Setting this option to TRUE will enable
@@ -167,14 +167,14 @@ $config['external_site_protocol'] = 'https';
  * 
  * Formated is based on http://htmlpurifier.org/live/configdoc/plain.html#HTML.Allowed
  */
-$config['allowed_html'] = "a[href|title],p,img[src|alt],br,b,u,strong,em,i";
+$config['allowed_html'] = "a[href|title],p,img[src|alt],br,b,u,strong,em,i,iframe[width|height|frameborder|src]";
 
 /**
  * Allowed iframe URLs in report description and other large text fields
  * 
  * Formated is based on http://htmlpurifier.org/live/configdoc/plain.html#URI.SafeIframeRegexp
  */
-$config['safe_iframe_regexp'] = '%^http://(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player)%';
+$config['safe_iframe_regexp'] = '%^//(www.youtube.com/embed/|player.vimeo.com/video/|w.soundcloud.com/player!)%';
 
 /**
  * Additional resource paths, or "modules". Each path can either be absolute

@@ -210,11 +210,12 @@ jQuery.fn.selectToUISlider = function(settings){
 	sliderComponent
 	.insertAfter(jQuery(this).eq(this.length-1))
 	.slider(options.sliderOptions)
-	.attr('role','application')
-	.find('.ui-slider-label')
-	.each(function(){
-		jQuery(this).css('marginLeft', -jQuery(this).width()/2);
-	});
+	.attr('role','application');
+
+	var labels = jQuery('.ui-slider-label', sliderComponent);
+	var width = labels.width() / 2;
+	labels.css("marginLeft", width);
+
 	
 	//update tooltip arrow inner color
 	sliderComponent.find('.ui-tooltip-pointer-down-inner').each(function(){
