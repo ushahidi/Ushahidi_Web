@@ -447,13 +447,14 @@ class reports_Core {
 		if (isset($post->incident_video))
 		{
 			$videoembed = new VideoEmbed();
-			foreach ($post->incident_video as $k => $item)
+			foreach ($post->incident_video as $k => $video_link)
 			{
-				if ( ! empty($item))
+				if ( ! empty($video_link))
 				{
-					$video_thumb = $videoembed->thumbnail($item);
+					$video_thumb = $videoembed->thumbnail($video_link);
 					$new_filename = $incident->id.'_v'.$k.'_'.time();
-					$file_type = substr($video_thumb,-4);
+					$file_type = substr($video_thumb, strrpos($video_thumb, '.'));
+
 					$media_thumb = NULL;
 					$media_medium = NULL;
 
@@ -465,7 +466,16 @@ class reports_Core {
 						$media_medium = $new_filename.'_m'.$file_type;
 						$media_thumb = $new_filename.'_t'.$file_type;
 						
-						file_put_contents($upload_dir.$media_link, @file_get_contents($video_thumb));
+						try {
+							if ($data = file_get_contents($video_thumb))
+							{
+								file_put_contents($upload_dir.$media_link, $data);
+							}
+						}
+						catch (Exception $e)
+						{
+
+						}
 						
 						// IMAGE SIZES: 800X600, 400X300, 89X59
 						// Catch any errors from corrupt image files
@@ -507,28 +517,40 @@ class reports_Core {
 						
 						// Okay, now we have these three different files on the server, now check to see
 						//   if we should be dropping them on the CDN
-						
-						if (Kohana::config("cdn.cdn_store_dynamic_content"))
+
+						if ($media_medium AND $media_thumb AND Kohana::config("cdn.cdn_store_dynamic_content"))
 						{
-							//$media_link = cdn::upload($media_link);
-							$media_medium = cdn::upload($media_medium);
-							$media_thumb = cdn::upload($media_thumb);
-							
+							$cdn_media_medium = cdn::upload($media_medium);
+							$cdn_media_thumb = cdn::upload($media_thumb);
+
 							// We no longer need the files we created on the server. Remove them.
 							$local_directory = rtrim($upload_dir, '/').'/';
-							//unlink($local_directory.$media_link);
-							unlink($local_directory.$media_medium);
-							unlink($local_directory.$media_thumb);
+
+							if (file_exists($local_directory.$media_medium))
+							{
+								unlink($local_directory.$media_medium);
+							}
+
+							if (file_exists($local_directory.$media_thumb))
+							{
+								unlink($local_directory.$media_thumb);
+							}
+
+							$media_medium = $cdn_media_medium;
+							$media_thumb = $cdn_media_thumb;
 						}
-						// Remove original image
-						unlink($upload_dir.$media_link);
+
+						if (file_exists($local_directory.$media_link)) {
+							// Remove original image
+							unlink($upload_dir.$media_link);
+						}
 					}
 					
 					$video = new Media_Model();
 					$video->location_id = $incident->location_id;
 					$video->incident_id = $incident->id;
 					$video->media_type = 2;		// Video
-					$video->media_link = $item;
+					$video->media_link = $video_link;
 					$video->media_thumb = $media_thumb;
 					$video->media_medium = $media_medium;
 					$video->media_date = date("Y-m-d H:i:s",time());

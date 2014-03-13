@@ -96,28 +96,31 @@ class S_Feeds_Controller extends Controller {
 							$newitem->item_date = date("Y-m-d H:i:s",time());
 						}
 						// HT: new code
-						if(!empty($categories)) {
-							foreach($categories as $category) {
-								$categoryData = ORM::factory('category')->where('category_title', $category->term)->find();
-								if($categoryData) {
-									$category_ids->feed_category[$categoryData->id] = $categoryData->id;
-								} else {
-									$newcategory = new Category_Model();
-									$newcategory->category_title = $category->term;
-									$newcategory->parent_id = 0;
-									$newcategory->category_description = $category->term;
-									$newcategory->category_color = '000000';
-									$newcategory->save();
-									$category_ids->feed_category[$newcategory->id] = $newcategory->id;
-								}
+							if(!empty($categories)) {
+								foreach($categories as $category) {
+									$categoryData = ORM::factory('category')->where('category_title', $category->term)->find();
+									if($categoryData->loaded == TRUE) {
+										$category_ids->feed_item_category[$categoryData->id] = $categoryData->id;
+									}
+									elseif (Kohana::config('settings.allow_feed_category'))
+									{
+										$newcategory = new Category_Model();
+										$newcategory->category_title = $category->term;
+										$newcategory->parent_id = 0;
+										$newcategory->category_description = $category->term;
+										$newcategory->category_color = '000000';
+										$newcategory->category_visible = 0;
+										$newcategory->save();
+										$category_ids->feed_item_category[$newcategory->id] = $newcategory->id;
+									}
+								}	
 							}
-						}
 						// HT: End of new code
 						
 						$newitem->save();
 
 						// HT: New code
-						if(!empty($category_ids->feed_category)) {
+						if(!empty($category_ids->feed_item_category)) {
 							feed::save_category($category_ids, $newitem);
 						}
 						// HT: End of New code

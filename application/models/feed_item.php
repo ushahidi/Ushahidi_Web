@@ -13,7 +13,7 @@ class Feed_Item_Model extends ORM
 	
 	// HT: New code
 	protected $has_many = array(
-			'category' => 'feed_category',
+			'category' => 'feed_item_category',
 	);
 	// HT: End of new code
 	

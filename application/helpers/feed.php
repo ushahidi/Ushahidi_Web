@@ -53,14 +53,14 @@ class feed_Core {
 	public static function save_category($post, $feed_item)
 	{
 		// Delete Previous Entries
-		ORM::factory('feed_category')->where('feed_item_id', $feed_item->id)->delete_all();
+		ORM::factory('feed_item_category')->where('feed_item_id', $feed_item->id)->delete_all();
 	
-		foreach ($post->feed_category as $item)
+		foreach ($post->feed_item_category as $item)
 		{
-			$feed_category = new Feed_Category_Model();
-			$feed_category->feed_item_id = $feed_item->id;
-			$feed_category->category_id = $item;
-			$feed_category->save();
+			$feed_item_category = new Feed_Item_Category_Model();
+			$feed_item_category->feed_item_id = $feed_item->id;
+			$feed_item_category->category_id = $item;
+			$feed_item_category->save();
 		}
 	}
 	

@@ -64,6 +64,7 @@ class Settings_Controller extends Admin_Controller {
 			'allow_reports' => '',
 			'allow_comments' => '',
 			'allow_feed' => '',
+			'allow_feed_category' => '',
 			'allow_stat_sharing' => '',
 			'cache_pages' => '',
 			'cache_pages_lifetime' => '',
@@ -108,6 +109,7 @@ class Settings_Controller extends Admin_Controller {
 			$post->add_rules('allow_reports','required','between[0,1]');
 			$post->add_rules('allow_comments','required','between[0,2]');
 			$post->add_rules('allow_feed','required','between[0,1]');
+			$post->add_rules('allow_feed_category','required','between[0,1]');
 			$post->add_rules('allow_stat_sharing','required','between[0,1]');
 			$post->add_rules('cache_pages','required','between[0,1]');
 			$post->add_rules('cache_pages_lifetime','required','in_array[60,300,600,900,1800]');
@@ -261,6 +263,7 @@ class Settings_Controller extends Admin_Controller {
 				'allow_reports' => $settings['allow_reports'],
 				'allow_comments' => $settings['allow_comments'],
 				'allow_feed' => $settings['allow_feed'],
+				'allow_feed_category' => $settings['allow_feed_category'],
 				'allow_stat_sharing' => $settings['allow_stat_sharing'],
 				'cache_pages' => $settings['cache_pages'],
 				'cache_pages_lifetime' => $settings['cache_pages_lifetime'],

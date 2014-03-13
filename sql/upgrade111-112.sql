@@ -12,3 +12,6 @@ CREATE TABLE IF NOT EXISTS `feed_item_category` (
   KEY `feed_item_id` (`feed_item_id`),
   KEY `category_id` (`category_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='Stores fetched feed items categories' AUTO_INCREMENT=1 ;
+
+-- UPDATE db_version
+UPDATE `settings` SET `value` = 112 WHERE `key` = 'db_version';
