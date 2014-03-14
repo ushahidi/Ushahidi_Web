@@ -1139,6 +1139,20 @@ class Reports_Controller extends Admin_Controller {
 		if ($_POST)
 		{
 			// Instantiate Validation, use $post, so we don't overwrite $_POST fields with our own things
+			// HT: New code for category save with parent
+			$post = arr::extract($_POST, 'parent_id',
+					'category_title', 'category_description', 'category_color');
+
+			// Category instance for the operation
+			$category = new Category_Model();
+			if ($category->validate($post)) {
+				$category->save();
+				$form_saved = TRUE;
+
+				echo json_encode(array("status"=>"saved", "id"=>$category->id));
+			}
+			// HT: End of code for category save with parent
+			/*
 			$post = Validation::factory($_POST);
 
 			 //	Add some filters
@@ -1161,7 +1175,7 @@ class Reports_Controller extends Admin_Controller {
 				$form_saved = TRUE;
 
 				echo json_encode(array("status"=>"saved", "id"=>$category->id));
-			}
+			}*/
 			else
 			{
 				echo json_encode(array("status"=>"error"));
@@ -1211,10 +1225,25 @@ class Reports_Controller extends Admin_Controller {
 	// Dynamic categories form fields
 	private function _new_categories_form_arr()
 	{
+		// HT: Parent category list
+		$parents_array = ORM::factory('category')
+		->where('parent_id','0')
+		->where('category_trusted != 1')
+		->select_list('id', 'category_title');
+
+		// add none to the list
+		$parents_array[0] = "--- Top Level Category ---";
+
+		// Put "--- Top Level Category ---" at the top of the list
+		ksort($parents_array);
+		// HT: End of Parent category list
+
 		return array(
 			'category_name' => '',
 			'category_description' => '',
 			'category_color' => '',
+			'parent_id' => 0, // HT: new category parent
+			'category_parent_array' => $parents_array, // HT: new category parent
 		);
 	}
 
