@@ -21,6 +21,7 @@ class smssync {
 	{	
 		// Hook into routing
 		Event::add('system.pre_controller', array($this, 'add'));
+		Event::add('ushahidi_action.message_sms_add', array($this, 'after_add'));
 	}
 	
 	/**
@@ -31,6 +32,19 @@ class smssync {
 		// SMS Provider
 		plugin::add_sms_provider("smssync");
 	}
+	
+	/**
+	 * Adds incident_url to message for sms if incident is auto created for sms add 
+	 */
+	public function after_add() {
+		$sms = Event::$data;
+		if($sms->incident_id) {
+			$incident_url = Incident_Model::get_url($sms->incident_id);
+			$sms->message = $sms->message.'<a href="'.$incident_url.'">View incident</a>';
+			$sms->save();
+		}
+	}
+
 }
 
 new smssync;
