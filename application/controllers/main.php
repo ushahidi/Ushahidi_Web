@@ -298,6 +298,7 @@ class Main_Controller extends Template_Controller {
 		$this->template->content->external_apps = $external_apps;
 
         // Get The START, END and Incident Dates
+		$intervalDate = ""; // HT: manual intervalDate
         $startDate = "";
 		$endDate = "";
 		$display_startDate = 0;
@@ -403,6 +404,14 @@ class Main_Controller extends Template_Controller {
 			$show_year++;
 		}
 
+		//HT: Manaul time interval form input
+		$intervals = array('' =>'Auto', 'hour' => 'Hourly', 'day' => 'Daily', 'week' => 'Weekly', 'month' => 'Monthly');
+		foreach($intervals as $val => $label) {
+			$intervalDate .= "<option value=\"".$val."\"";
+			$intervalDate .= ">".Kohana::lang('ui_main.'.$label)."</option>";
+		}
+		// HT: End of time interval form input
+
 		Event::run('ushahidi_filter.active_startDate', $display_startDate);
 		Event::run('ushahidi_filter.active_endDate', $display_endDate);
 		Event::run('ushahidi_filter.startDate', $startDate);
@@ -410,6 +419,7 @@ class Main_Controller extends Template_Controller {
 
 		$this->template->content->div_timeline->startDate = $startDate;
 		$this->template->content->div_timeline->endDate = $endDate;
+		$this->template->content->div_timeline->intervalDate = $intervalDate; // HT: manual interval time selection options
 
 		// Javascript Header
 		$this->themes->map_enabled = TRUE;
