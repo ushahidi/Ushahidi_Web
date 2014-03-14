@@ -132,9 +132,6 @@ class sms_Core {
 			Kohana::lang('notifications.admin_new_sms.message')
 			);
 
-		// Action::message_sms_add - SMS Received!
-		Event::run('ushahidi_action.message_sms_add', $sms);
-		
 		// Auto-Create A Report if Reporter is Trusted
 		$reporter_weight = $reporter->level->level_weight;
 		$reporter_location = $reporter->location;
@@ -172,6 +169,10 @@ class sms_Core {
 			}
 		}
 		
+		// HT: moved this section down below so can work on saved incident as well
+		// Action::message_sms_add - SMS Received!
+		Event::run('ushahidi_action.message_sms_add', $sms);
+
 		return TRUE;
 	}
 }
