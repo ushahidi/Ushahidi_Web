@@ -365,7 +365,9 @@ class Settings_Controller extends Admin_Controller {
 			'default_map_all_icon' => '',
 			'default_map_all_icon_id' => '',
 			'delete_default_map_all_icon' => '',
-			'enable_timeline' => ''
+			'enable_timeline' => '',
+			'timeline_graph' => '', // HT: To choose graph type line or bar
+			'timeline_point_label' => '' // HT: Timeline graph point label
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
 		//	corresponding to the form field names
@@ -390,8 +392,9 @@ class Settings_Controller extends Admin_Controller {
 			    ->add_rules('default_map_all','required', 'alpha_numeric', 'length[6,6]')
 			    ->add_rules('api_google', 'length[0,200]')
 			    ->add_rules('api_live', 'length[0,200]')
-				->add_rules('enable_timeline', 'numeric', 'length[1,1]');
-			
+				->add_rules('enable_timeline', 'numeric', 'length[1,1]')
+				->add_rules('timeline_graph', 'in_array[line, bar]') // HT: Timeline graph type
+				->add_rules('timeline_point_label', 'numeric', 'length[1,1]'); // HT: Timeline graph type
 
 			// Add rules for file upload
 			$files = Validation::factory($_FILES);
@@ -400,6 +403,12 @@ class Settings_Controller extends Admin_Controller {
 			// Test to see if things passed the rule checks
 			if ($post->validate() AND $files->validate(FALSE))
 			{
+				// HT: Default timeline_graph if not in database
+				if(!Settings_Model::get_setting('timeline_graph'))
+					Settings_Model::save_setting('timeline_graph', $post->timeline_graph);
+				if(!Settings_Model::get_setting('timeline_point_label'))
+					Settings_Model::save_setting('timeline_point_label', $post->timeline_point_label);
+
 				// Save all the settings
 				Settings_Model::save_all($post);
 				
@@ -517,6 +526,8 @@ class Settings_Controller extends Admin_Controller {
 		{
 			// Retrieve Current Settings
 			$settings = Settings_Model::get_settings(array_keys($form));
+			$settings['timeline_graph'] = (isset($settings['timeline_graph'])) ? $settings['timeline_graph'] : 'line'; // HT: might not be in database so calling manually retrun NULL if not exist
+			$settings['timeline_point_label'] = (isset($settings['timeline_point_label'])) ? $settings['timeline_point_label'] : false; // HT: might not be in database so calling manually retrun NULL if not exist
 
 			$form = array(
 				'default_map' => $settings['default_map'],
@@ -531,6 +542,8 @@ class Settings_Controller extends Admin_Controller {
 				'default_map_all' => $settings['default_map_all'],
 				'default_map_all_icon_id' => $settings['default_map_all_icon_id'],
 				'enable_timeline' => $settings['enable_timeline'],
+				'timeline_graph' => $settings['timeline_graph'], // HT: Timeline graph type line or bar
+				'timeline_point_label' => $settings['timeline_point_label'] // HT: Timeline graph point label
 			);
 		}
 
