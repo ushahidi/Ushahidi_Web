@@ -30,11 +30,14 @@ class alert_Core {
 
 		// Should be 8 distinct characters
 		$alert_code = text::random('distinct', 8);
-
+		// HT: Mobile alert for link
+		$alert_mobile = $post->alert_mobile;
 		$sms_from = self::_sms_from();
 
 		$message = Kohana::lang('ui_admin.confirmation_code').$alert_code
 			.'.'.Kohana::lang('ui_admin.not_case_sensitive');
+		// HT: verify link for mobile
+		$message .= ' '.Kohana::lang('alerts.confirm_request').url::site().'alerts/verify?c='.$alert_code."&m=".$alert_mobile;
 	
 		if (sms::send($post->alert_mobile, $sms_from, $message) === true)
 		{
