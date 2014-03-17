@@ -628,7 +628,8 @@ class Settings_Controller extends Admin_Controller {
 			'sms_provider' => '',
 			'sms_no1' => '',
 			'sms_no2' => '',
-			'sms_no3' => ''
+			'sms_no3' => '',
+			'sms_alert_url' => '' // HT: new setting for url on sms
 		);
 		//	Copy the form as errors, so the errors will be stored with keys
 		//	corresponding to the form field names
@@ -652,10 +653,13 @@ class Settings_Controller extends Admin_Controller {
 			$post->add_rules('sms_no1', 'numeric', 'length[1,30]');
 			$post->add_rules('sms_no2', 'numeric', 'length[1,30]');
 			$post->add_rules('sms_no3', 'numeric', 'length[1,30]');
+			$post->add_rules('sms_alert_url','required','between[0,1]'); // HT: new setting for url on sms
 
 			// Test to see if things passed the rule checks
 			if ($post->validate())
 			{
+				if(!Settings_Model::get_setting('sms_alert_url'))
+					Settings_Model::save_setting('sms_alert_url', $post->sms_alert_url);
 				// Yes! everything is valid
 				Settings_Model::save_all($post);
 
@@ -687,12 +691,14 @@ class Settings_Controller extends Admin_Controller {
 		{
 			$settings = Settings_Model::get_settings(array_keys($form))
 			;
+			$settings['sms_alert_url'] = (isset($settings['sms_alert_url'])) ? $settings['sms_alert_url'] : 0; // HT: might not be in database so calling manually return NULL if not exist
 			// Retrieve Current Settings
 			$form = array(
 				'sms_provider' => $settings['sms_provider'],
 				'sms_no1' => $settings['sms_no1'],
 				'sms_no2' => $settings['sms_no2'],
-				'sms_no3' => $settings['sms_no3']
+				'sms_no3' => $settings['sms_no3'],
+				'sms_alert_url' => $settings['sms_alert_url'] // HT: new setting for url on sms
 			);
 		}
 
@@ -700,6 +706,7 @@ class Settings_Controller extends Admin_Controller {
 		$this->template->content->errors = $errors;
 		$this->template->content->form_error = $form_error;
 		$this->template->content->form_saved = $form_saved;
+		$this->template->content->alert_url_array = array('1'=>Kohana::lang('ui_admin.yes'),'0'=>Kohana::lang('ui_admin.no'));
 
 		$this->template->content->sms_provider_array = array_merge(
 			array("" => "-- Select One --"),

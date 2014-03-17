@@ -114,7 +114,15 @@ class S_Alerts_Controller extends Controller {
 			// Remove line breaks
 			$sms_message = str_replace("\n", " ", $sms_message);
 			// Shorten to text message size
-			$sms_message = text::limit_chars($sms_message, 150, "...");
+			if(Kohana::config("settings.sms_alert_url"))
+			{
+				$sms_message = text::limit_chars($sms_message, 100, "..."); // HT: Decreased sms lenght of sms to add incident_url
+				$sms_message .= " ".$incident_url; // HT: Added incident_url to sms
+			}
+			else
+			{
+				$sms_message = text::limit_chars($sms_message, 150, "...");
+			}
 			
 			
 			
