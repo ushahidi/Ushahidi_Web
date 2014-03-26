@@ -103,6 +103,9 @@ class Alerts_Controller extends Main_Controller {
 		if ($post = $this->input->post())
 		{
 			$alert_orm = new Alert_Model();
+			// HT: created new model and post for mobile alert
+			$alert_orm1 = new Alert_Model();
+			$post1 = $this->input->post();
 			if ($alert_orm->validate($post))
 			{
 				// Yes! everything is valid
@@ -110,7 +113,9 @@ class Alerts_Controller extends Main_Controller {
 
 				if ( ! empty($post->alert_mobile))
 				{
-					alert::_send_mobile_alert($post, $alert_orm);
+					// HT: setting value of post1 to alert_orm1
+					$alert_orm1->validate($post1);
+					alert::_send_mobile_alert($post1, $alert_orm1);
 					$this->session->set('alert_mobile', $post->alert_mobile);
 				}
 
@@ -206,6 +211,8 @@ class Alerts_Controller extends Main_Controller {
 		$code = (isset($_GET['c']) AND !empty($_GET['c'])) ? $_GET['c'] : "";
 
 		$email = (isset($_GET['e']) AND !empty($_GET['e'])) ? $_GET['e'] : "";
+		// HT: Mobile verification by url
+		$mobile = (isset($_GET['m']) AND !empty($_GET['m'])) ? $_GET['m'] : "";
 
 		// INITIALIZE the content's section of the view
 		$this->template->content = new View('alerts/verify');
@@ -231,13 +238,17 @@ class Alerts_Controller extends Main_Controller {
 		}
 		else
 		{
-			if (empty($code) OR empty($email))
+			//if (empty($code) OR empty($email))
+			if (empty($code) OR (empty($email) AND empty($mobile)))
 			{
 				$missing_info = TRUE;
 			}
 			else
 			{
-				$filter = "alert.alert_type=2 AND alert_code='".Database::instance()->escape_str($code)."' AND alert_recipient='".Database::instance()->escape_str($email)."' ";
+				if(! empty($email)) // HT: condition to check email alert
+					$filter = "alert.alert_type=2 AND alert_code='".Database::instance()->escape_str($code)."' AND alert_recipient='".Database::instance()->escape_str($email)."' ";
+				elseif(! empty($mobile)) // HT: condition to check mobile alert
+				$filter = "alert.alert_type=1 AND alert_code='".Database::instance()->escape_str(utf8::strtoupper($code))."' AND alert_recipient='".Database::instance()->escape_str($mobile)."' ";
 			}
 		}
 

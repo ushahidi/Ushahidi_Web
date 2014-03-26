@@ -29,6 +29,8 @@ var startTime = <?php echo $active_startDate ?>;
 // Default to most active month
 var endTime = <?php echo $active_endDate ?>;
 
+var intervalTime = ''; // HT: manual time interval
+
 // To hold the Ushahidi.Map reference
 var map = null;
 
@@ -88,15 +90,19 @@ function refreshTimeline(options) {
 
 	var url = "<?php echo url::site().'json/timeline/'; ?>";
 
-	var interval = (options.e - options.s) / (3600 * 24);
-
-	if (interval <= 3) {
-		options.i = "hour";
-	} else if (interval <= (31 * 6)) {
-		options.i = "day";
-	} else {
-		options.i = "month";
+	if(options.i == undefined || options.i == '') { // HT: Added condition only to auto interval if empty interval type choosed
+		var interval = (options.e - options.s) / (3600 * 24);
+		if (interval <= 3) {
+			options.i = "hour";
+		} else if (interval <= (31 * 6)) {
+			options.i = "day";
+		} else {
+			options.i = "month";
+		}
 	}
+	// HT: More info link
+	var urlLink = "<?php echo url::site().'reports/index/?'?>"+$.param(options);
+	$('#timelineMoreLink').attr('href', urlLink);
 
 	// Get the graph data
 	$.ajax({
@@ -122,11 +128,31 @@ function refreshTimeline(options) {
 			}
 			var timeline = $.jqplot('graph', [graphData], {
 				seriesDefaults: {
+					<?php if (Kohana::config('settings.timeline_graph') == 'bar') { ?>
+					renderer: $.jqplot.BarRenderer, // HT: For bargraph
+					rendererOptions: { // HT: For bargraph
+						varyBarColor: true,
+						barWidth: 1,
+						shadowAlpha: 0
+					},
+					<?php } ?>
 					color: response[0].color,
 					lineWidth: 1.6,
 					markerOptions: {
-						show: false
-					}
+						<?php if (Kohana::config('settings.timeline_point_label')) { ?>
+							show: true, // HT: To show the points
+							//style: 'circle' // HT: Circle point
+						<?php } else { ?>
+							show: false,
+						<?php } ?>
+					},
+					<?php if (Kohana::config('settings.timeline_point_label')) { ?>
+						pointLabels: { // HT: To show point label
+							show: true,
+							edgeTolerance: -10,
+							ypadding: 3
+						}
+					<?php } ?>
 				},
 				axesDefaults: {
 					pad: 1.23,
@@ -145,7 +171,11 @@ function refreshTimeline(options) {
 						}
 					}
 				},
-				cursor: {show: false}
+				<?php if (Kohana::config('settings.timeline_point_label')) { ?>
+					cursor: {show: true}, // HT: To show current point detail
+				<?php } else { ?>
+					cursor: {show: false},
+				<?php } ?>
 			});
 		},
 		dataType: "json"
@@ -286,17 +316,26 @@ jQuery(function() {
 			change: function(e, ui) {
 				var from = $("#startDate").val();
 				var to = $("#endDate").val();
+				var intrvl = $("#intervalDate").val(); // HT: manual time interval
 
-				if (to > from && (from != startTime || to != endTime)) {
+				if (to > from && (from != startTime || to != endTime || intrvl != intervalTime)) { // HT: manual time interval
+				//if (to > from && (from != startTime || to != endTime)) {
 					// Update the report filters
 					startTime = from;
 					endTime = to;
-					map.updateReportFilters({s: from, e: to});
+					intervalTime = intrvl; // HT: manual time interval
+					map.updateReportFilters({s: from, e: to, i: intrvl}); // HT: manual time interval
+					// map.updateReportFilters({s: from, e: to});
 				}
 
 				e.stopPropagation();
 			}
 		}
+	});
+	
+	// HT: manual time interval trigger timeslider change on interval change
+	$("select#intervalDate").change(function() {
+		$("select#startDate").trigger('change');
 	});
 	
 	// Media Filter Action

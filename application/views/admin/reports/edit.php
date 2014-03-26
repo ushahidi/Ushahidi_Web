@@ -169,6 +169,12 @@
                                     print '<br/>';
                                     print form::input('category_name', $new_categories_form['category_name'], 'class=""');
                                     print '<br/>';
+									// HT: Parent category on report edit
+									print form::label(array("id"=>"parent_id_label", "for"=>"parent_id"), Kohana::lang('ui_main.parent_category'));
+									print '<br/>';
+									print form::dropdown('category_parent_id', $new_categories_form['category_parent_array'], $new_categories_form['parent_id'], 'class=""');
+									print '<br/>';
+									// HT: End of Parent category on report edit
                                     print form::label(array("id"=>"description_label", "for"=>"description"), Kohana::lang('ui_main.description'));
                                     print '<br/>';
                                     print form::input('category_description', $new_categories_form['category_description'], 'class=""');

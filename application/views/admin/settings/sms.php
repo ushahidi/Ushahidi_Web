@@ -77,6 +77,13 @@
 							<h4><?php echo Kohana::lang('ui_main.phone');?> 3: <span><?php echo Kohana::lang('settings.sms.flsms_text_2');?></span></h4>
 							<?php print form::input('sms_no3', $form['sms_no3'], ' class="text title_2"'); ?>
 						</div>
+						<div class="row">
+							<h4><?php echo Kohana::lang('ui_main.alert_url');?></h4>
+							<?php print form::dropdown('sms_alert_url', $alert_url_array, $form['sms_alert_url']); ?>
+						</div>
+						<span>
+							<?php echo Kohana::lang('settings.sms.alert_url_text');?>
+						</span>
 					</div>
 		
 					<div class="simple_border"></div>

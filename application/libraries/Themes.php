@@ -145,6 +145,8 @@ class Themes_Core {
 			Requirements::js("media/js/jquery.jqplot.min.js");
 			Requirements::css("media/css/jquery.jqplot.min.css");
 			Requirements::js("media/js/jqplot.dateAxisRenderer.min.js");
+			Requirements::js("media/js/jqplot.barRenderer.min.js"); // HT: added for bar graph
+			Requirements::js("media/js/jqplot.pointLabels.min.js"); // HT: added for showing point label
 		}
 
 		if ($this->treeview_enabled)
@@ -306,6 +308,8 @@ class Themes_Core {
 		{
 			$base_js[] = 'media/js/jquery.jqplot.min.js';
 			$base_js[] = 'media/js/jqplot.dateAxisRenderer.min.js';
+			$base_js[] = 'media/js/jqplot.barRenderer.min.js';  // HT: added for bar graph
+			$base_js[] = 'media/js/jqplot.pointLabels.min.js';  // HT: added for showing point label
 		}
 		Requirements::combine_files('0_base.js', $base_js);
 		
