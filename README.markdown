@@ -136,6 +136,9 @@ Installation
 
     __NOTE: Your account must have all the privileges listed above in order to run Ushahidi on your webserver.__
 
+* ####Ensure PHP error_reporting level is compatable
+    As of PHP-5.4 Ushahidi doesn't work with the error_reporting level E_STRICT.  Ensure this level is excluded from the error_reporting configuration.
+
 * ####Run the install script
     To run the install script, point your browser to the base url of your website: (e.g. http://www.example.com).
     
