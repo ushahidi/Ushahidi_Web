@@ -205,6 +205,8 @@ class geocode_Core {
 	 * @return  string  closest approximation of the point as a display name
 	 */
 	static function reverseGeocode($latitude, $longitude) {
+		$service = Kohana::config('map.geocode');
+        
 		if ($latitude && $longitude)
 		{
 			$function = "reverse" . ucfirst($service);
@@ -214,7 +216,7 @@ class geocode_Core {
 				return FALSE;
 			}
 
-			return self::$service($address);
+			return self::$function($latitude, $longitude);
 		}
 		else
 		{
@@ -243,7 +245,7 @@ class geocode_Core {
 			}
 
 			$location = json_decode($json, FALSE);
-
+            
 			return $location->display_name;
 		}
 		else
