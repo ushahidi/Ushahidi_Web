@@ -52,7 +52,7 @@ class geocode_Core {
 		$params = array(
 				"format"			=> "json",
 				"addressdetails"	=> 1,
-				"accept-language"	=> "en_US", // force country names to come back as english,
+				"accept-language"	=> Settings_Model::get('site_language'),
 				"q"					=> $address,
 				"zoom"				=> 200
 			);
