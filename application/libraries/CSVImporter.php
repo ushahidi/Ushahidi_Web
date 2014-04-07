@@ -124,6 +124,16 @@ class CSVImporter {
 			foreach($this->existing_categories as $title => $id)
 			{
 				$temp_cat[utf8::strtoupper($title)] = $id;
+
+				// Add translated titles too
+				$langs = Category_Lang_Model::category_langs($id);
+				if (isset($langs[$id]))
+				{
+					foreach($langs[$id] as $l)
+					{
+						$temp_cat[utf8::strtoupper($l['category_title'])] = $id;
+					}
+				}
 			}
 			$this->existing_categories = $temp_cat;
 		
