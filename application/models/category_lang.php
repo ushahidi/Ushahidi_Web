@@ -48,9 +48,16 @@ class Category_Lang_Model extends ORM
 
 		
 		// Not sure we need to bother with this
-		if ($category_id AND isset(self::$category_langs[$category_id]))
+		if ($category_id)
 		{
-			return array($category_id => self::$category_langs[$category_id]);
+			if (isset(self::$category_langs[$category_id]))
+			{
+				return array($category_id => self::$category_langs[$category_id]);
+			}
+			else
+			{
+				return array();
+			}
 		}
 
 		return self::$category_langs;
