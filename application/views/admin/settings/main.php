@@ -87,6 +87,30 @@
 								{
 									echo " checked=\"checked\" ";
 								}?>> <?php echo Kohana::lang('ui_main.no');?> 
+								<!--  HT: Timeline Graph style setting -->
+								<h4><?php echo Kohana::lang('settings.graph_style');?></h4>
+								<input type="radio" name="timeline_graph" value="line"
+								<?php if ($form['timeline_graph'] != 'bar')
+								{
+									echo " checked=\"checked\" ";
+								}?>> <?php echo Kohana::lang('settings.line');?>
+								<input type="radio" name="timeline_graph" value="bar"
+								<?php if ($form['timeline_graph'] == 'bar')
+								{
+									echo " checked=\"checked\" ";
+								}?>> <?php echo Kohana::lang('settings.bar');?>
+								<h4><?php echo Kohana::lang('settings.timeline_point_label');?></h4>
+								<input type="radio" name="timeline_point_label" value="1"
+								<?php if ($form['timeline_point_label'] == 1)
+								{
+									echo " checked=\"checked\" ";
+								}?>> <?php echo Kohana::lang('ui_main.yes');?>
+								<input type="radio" name="timeline_point_label" value="0"
+								<?php if ($form['timeline_point_label'] != 1)
+								{
+									echo " checked=\"checked\" ";
+								}?>> <?php echo Kohana::lang('ui_main.no');?>
+								<!--  HT: End of Timeline Graph style setting -->
 							</div>
 
 							<div class="has_border">
