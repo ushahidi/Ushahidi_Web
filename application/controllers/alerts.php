@@ -103,6 +103,9 @@ class Alerts_Controller extends Main_Controller {
 		if ($post = $this->input->post())
 		{
 			$alert_orm = new Alert_Model();
+			// HT: created new model and post for mobile alert
+			$alert_orm1 = new Alert_Model();
+			$post1 = $this->input->post();
 			if ($alert_orm->validate($post))
 			{
 				// Yes! everything is valid
@@ -110,7 +113,9 @@ class Alerts_Controller extends Main_Controller {
 
 				if ( ! empty($post->alert_mobile))
 				{
-					alert::_send_mobile_alert($post, $alert_orm);
+					// HT: setting value of post1 to alert_orm1
+					$alert_orm1->validate($post1);
+					alert::_send_mobile_alert($post1, $alert_orm1);
 					$this->session->set('alert_mobile', $post->alert_mobile);
 				}
 
