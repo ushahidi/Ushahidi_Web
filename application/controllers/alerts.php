@@ -206,6 +206,8 @@ class Alerts_Controller extends Main_Controller {
 		$code = (isset($_GET['c']) AND !empty($_GET['c'])) ? $_GET['c'] : "";
 
 		$email = (isset($_GET['e']) AND !empty($_GET['e'])) ? $_GET['e'] : "";
+		// HT: Mobile verification by url
+		$mobile = (isset($_GET['m']) AND !empty($_GET['m'])) ? $_GET['m'] : "";
 
 		// INITIALIZE the content's section of the view
 		$this->template->content = new View('alerts/verify');
@@ -231,13 +233,17 @@ class Alerts_Controller extends Main_Controller {
 		}
 		else
 		{
-			if (empty($code) OR empty($email))
+			//if (empty($code) OR empty($email))
+			if (empty($code) OR (empty($email) AND empty($mobile)))
 			{
 				$missing_info = TRUE;
 			}
 			else
 			{
-				$filter = "alert.alert_type=2 AND alert_code='".Database::instance()->escape_str($code)."' AND alert_recipient='".Database::instance()->escape_str($email)."' ";
+				if(! empty($email)) // HT: condition to check email alert
+					$filter = "alert.alert_type=2 AND alert_code='".Database::instance()->escape_str($code)."' AND alert_recipient='".Database::instance()->escape_str($email)."' ";
+				elseif(! empty($mobile)) // HT: condition to check mobile alert
+				$filter = "alert.alert_type=1 AND alert_code='".Database::instance()->escape_str(utf8::strtoupper($code))."' AND alert_recipient='".Database::instance()->escape_str($mobile)."' ";
 			}
 		}
 
