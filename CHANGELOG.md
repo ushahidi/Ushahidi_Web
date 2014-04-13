@@ -1,3 +1,18 @@
+Ushahidi 2.7.3b (Bug fix release) - 14/04/2014
+-------------------------------------
+
+### Major Fixes
+
+* Timeline upgrade (https://github.com/ushahidi/Ushahidi_Web/pull/1341) 
+* Fixed issue with dual alert sign up (https://github.com/ushahidi/Ushahidi_Web/pull/1339) 
+* Updated sms helper and scheduler to add url in sms (https://github.com/ushahidi/Ushahidi_Web/pull/1339)
+* Check category translation on csv import to avoid category duplication (https://github.com/ushahidi/Ushahidi_Web/pull/1345)
+* Fixed issue with the reverse geocoder (https://github.com/ushahidi/Ushahidi_Web/pull/1336)
+* Fixed broken video embeds in reports when viewed over HTTPS (https://github.com/ushahidi/Ushahidi_Web/pull/1328)
+* Added South Sudan and Kosovo to the country list (https://github.com/ushahidi/Ushahidi_Web/pull/1324) 
+* Fixed issue with feed category 
+* Replaced feedback email after submit report with site email
+
 Ushahidi 2.7.2 (Bug fix release) - 28/01/2014
 -------------------------------------
 
