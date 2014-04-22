@@ -518,13 +518,13 @@ class reports_Core {
 						// Okay, now we have these three different files on the server, now check to see
 						//   if we should be dropping them on the CDN
 
+						$local_directory = rtrim($upload_dir, '/').'/';
 						if ($media_medium AND $media_thumb AND Kohana::config("cdn.cdn_store_dynamic_content"))
 						{
 							$cdn_media_medium = cdn::upload($media_medium);
 							$cdn_media_thumb = cdn::upload($media_thumb);
 
 							// We no longer need the files we created on the server. Remove them.
-							$local_directory = rtrim($upload_dir, '/').'/';
 
 							if (file_exists($local_directory.$media_medium))
 							{
