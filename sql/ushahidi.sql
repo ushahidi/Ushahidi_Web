@@ -1400,8 +1400,8 @@ VALUES
   (62,'require_email_confirmation','0'),
   (63,'manually_approve_users','0'),
   (64,'enable_timeline','0'),
-  (65,'feed_geolocation_user', '');
-  (65,'allow_feed_category', '0');
+  (65,'feed_geolocation_user', ''),
+  (66,'allow_feed_category', '0');
 -- --------------------------------------------------------
 
 /**
