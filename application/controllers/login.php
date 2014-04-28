@@ -1014,7 +1014,7 @@ class Login_Controller extends Template_Controller {
 		}
 		catch (Exception $e)
 		{
-			Kohana::log('warning', Swift_LogContainer::getLog()->dump(true));
+			Kohana::log('alert', Swift_LogContainer::getLog()->dump(true));
 			return FALSE;
 		}
 
