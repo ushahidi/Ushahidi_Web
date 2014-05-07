@@ -30,28 +30,6 @@ class reports_Core {
 	public static $pagination = array();
 	
 	/**
-	 * Convert php.ini shorthand to actual bytes
-	 * This is used when figuring out max upload size
-	 * code found in the php man
-	 *
-	 * @param val The value to convert to bytes
-	 */
-	public static function return_bytes($val) {
-    $val = trim($val);
-    $last = strtolower($val[strlen($val)-1]);
-    switch($last) {
-        // The 'G' modifier is available since PHP 5.1.0
-        case 'g':
-            $val *= 1024;
-        case 'm':
-            $val *= 1024;
-        case 'k':
-            $val *= 1024;
-    }
-
-    return $val;
-}
-	/**
 	 * Validation of form fields
 	 *
 	 * @param array $post Values to be validated
@@ -131,16 +109,9 @@ class reports_Core {
 		}
 		
 		// Validate photo uploads
-
-		//check that php.ini has upload size set to at least 10M
-		//if not, set max upload size to 2M (php default)
-		$max_upload = return_bytes((int)(ini_get('upload_max_filesize')));
-
-		if($max_upload > 10*1024*1024) {
-			$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png,jpeg]', 'upload::size[10M]');
-		} else {
-			$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png,jpeg]', 'upload::size[2M]');
-		}
+		$max_upload_size = Kohana::config('settings.max_upload_size');
+		$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png,jpeg]', "upload::size[".$max_upload_size."M]");
+		//$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png,jpeg]', Kohana::config('settings.max_upload_size'));
 
 		// Validate Personal Information
 		if ( ! empty($post->person_first))
