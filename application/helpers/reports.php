@@ -29,7 +29,6 @@ class reports_Core {
 	 */
 	public static $pagination = array();
 	
-			
 	/**
 	 * Validation of form fields
 	 *
@@ -110,8 +109,9 @@ class reports_Core {
 		}
 		
 		// Validate photo uploads
-		$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png,jpeg]', 'upload::size[2M]');
-
+		$max_upload_size = Kohana::config('settings.max_upload_size');
+		$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png,jpeg]', "upload::size[".$max_upload_size."M]");
+		//$post->add_rules('incident_photo', 'upload::valid', 'upload::type[gif,jpg,png,jpeg]', Kohana::config('settings.max_upload_size'));
 
 		// Validate Personal Information
 		if ( ! empty($post->person_first))
