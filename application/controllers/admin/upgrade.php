@@ -134,7 +134,7 @@ class Upgrade_Controller extends Admin_Controller {
 		if ($step == 0)
 		{
 			$this->upgrade->logger("Downloading latest version of ushahidi...");
-			echo json_encode(array("status"=>"success", "message"=> Kohana.lang('upgrade.download')));
+			echo json_encode(array("status"=>"success", "message"=> Kohana::lang('upgrade.download')));
 		}
 		
 		if ($step == 1)
