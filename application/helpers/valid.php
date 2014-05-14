@@ -240,7 +240,7 @@ class valid_Core {
 	}
 
 	/**
-	 * Checks whether a string consists of alphabetical characters, numbers, underscores and dashes only.
+	 * Checks whether a string consists of alphabetical characters, numbers, underscores, '@', '#' and dashes only.
 	 *
 	 * @param   string   input string
 	 * @param   boolean  trigger UTF-8 compatibility
@@ -249,8 +249,8 @@ class valid_Core {
 	public static function alpha_dash($str, $utf8 = FALSE)
 	{
 		return ($utf8 === TRUE)
-			? (bool) preg_match('/^[-\pL\pN_]++$/uD', (string) $str)
-			: (bool) preg_match('/^[-a-z0-9_]++$/iD', (string) $str);
+			? (bool) preg_match('/^[-\pL\pN_@#]++$/uD', (string) $str)
+			: (bool) preg_match('/^[-a-z0-9_@#]++$/iD', (string) $str);
 	}
 
 	/**
