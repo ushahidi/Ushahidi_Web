@@ -135,6 +135,13 @@
 								<?php print form::dropdown('allow_reports', $yesno_array, $form['allow_reports']); ?>
 							</span>
 						</div>
+						 <!--Adding max file upload setting-->
+						<div class="row">
+						 <h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_max_upload_size"); ?>"><?php echo Kohana::lang('settings.site.max_upload_size');?></a></h4>
+						 	<span class="sel-holder">
+						 		<?php print form::input('max_upload_size', $form['max_upload_size'], ' class="text long2"', 'id = max_upload_size'); ?>
+						 	</span>
+						</div>
 						<div class="row">
 							<h4><a href="#" class="tooltip" title="<?php echo Kohana::lang("tooltips.settings_allow_alerts"); ?>"><?php echo Kohana::lang('settings.site.allow_alerts');?></a></h4>
 							<span class="sel-holder">

@@ -293,6 +293,7 @@
 				<!-- Photo Fields -->
 				<div id="divPhoto" class="report_row">
 					<h4><?php echo Kohana::lang('ui_main.reports_photos'); ?></h4>
+					<span class="allowed-html"><?php echo Kohana::lang('ui_main.maximum_filesize'),": ", Kohana::config('settings.max_upload_size'), "Mb"; ?></span>
 					<?php 
 						// Initialize the counter
 						$i = (empty($form['incident_photo']['name'][0])) ? 1 : 0;
