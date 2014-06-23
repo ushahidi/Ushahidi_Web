@@ -120,7 +120,7 @@ function showMap()
 	// Now initialise the map
 	var options = {
 	units: "dd"
-	, numZoomLevels: 18
+	, numZoomLevels: 14
 	, controls:[],
 	projection: proj_900913,
 	'displayProjection': proj_4326,

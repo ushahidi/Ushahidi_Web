@@ -67,7 +67,7 @@
 			// Map options
 			var options = {
 				units: "dd",
-				numZoomLevels: 18, 
+				numZoomLevels: 14, 
 				controls:[],
 				theme: false,
 				projection: proj_900913,

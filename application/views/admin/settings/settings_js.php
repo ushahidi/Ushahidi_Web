@@ -27,7 +27,7 @@ $(document).ready(function() {
 			longitude: <?php echo $default_lon; ?>
 		},
 		mapControls: [
-		    new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
+		    new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }, {zoomWheelEnabled: false}),
 		    new OpenLayers.Control.Zoom(),
 		    new OpenLayers.Control.MousePosition({
 				formatOutput: Ushahidi.convertLongLat

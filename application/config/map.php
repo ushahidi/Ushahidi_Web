@@ -49,7 +49,7 @@ $config['layers'] = array();
  * If maxZoomLevel - minZoomLevel > numZoomLevels then numZoomLevels has priority
  */
 
-$config['numZoomLevels'] = "21";
+$config['numZoomLevels'] = "14";
 
 
 /**
@@ -65,7 +65,7 @@ $config['minZoomLevel'] = "0";
  * http://code.google.com/apis/maps/documentation/staticmaps/#Zoomlevels
  */
 
-$config['maxZoomLevel'] = "21";
+$config['maxZoomLevel'] = "14";
 
 /**
  * Set maximum extents for the map. This will limit the area on the map

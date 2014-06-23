@@ -85,7 +85,7 @@ class Search_Controller extends Main_Controller {
 				if ( ! in_array($value,$stop_words) AND ! empty($value))
 				{
 					// Escape the string for query safety
-					$chunk = $db->escape_str($value);
+					$chunk = $db->real_escape_string($value);
 
 					if ($i > 0)
 					{
@@ -96,7 +96,7 @@ class Search_Controller extends Main_Controller {
 					// Give relevancy weighting
 					// Title weight = 2
 					// Description weight = 1
-					$keyword_string = $keyword_string.$plus."(CASE WHEN incident_title LIKE '%$chunk%' THEN 2 ELSE 0 END) + "
+					$keyword_string = $keyword_string.$plus."(CASE ('incident') WHEN 'incident_title' LIKE '%$chunk%' THEN 2 ELSE 0 END) + "
 										. "(CASE WHEN incident_description LIKE '%$chunk%' THEN 1 ELSE 0 END) ";
 
 					$where_string = $where_string.$or."(incident_title LIKE '%$chunk%' OR incident_description LIKE '%$chunk%')";
