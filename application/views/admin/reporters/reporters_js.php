@@ -120,12 +120,12 @@ function showMap()
 	// Now initialise the map
 	var options = {
 	units: "dd"
-	, numZoomLevels: 14
+	, numZoomLevels: 7
 	, controls:[],
 	projection: proj_900913,
 	'displayProjection': proj_4326,
 	maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
-	maxResolution: 156543.0339
+	maxResolution: 76.43702827453613
 	};
 	
 	map = new OpenLayers.Map('ReporterMap', options);
@@ -133,7 +133,7 @@ function showMap()
 	<?php echo map::layers_js(FALSE); ?>
 	map.addLayers(<?php echo map::layers_array(FALSE); ?>);
 	
-	map.addControl(new OpenLayers.Control.Navigation());
+	map.addControl(new OpenLayers.Control.Navigation({zoomWheelEnabled: false}));
 	map.addControl(new OpenLayers.Control.Zoom());
 	map.addControl(new OpenLayers.Control.MousePosition({
 		formatOutput: Ushahidi.convertLongLat	

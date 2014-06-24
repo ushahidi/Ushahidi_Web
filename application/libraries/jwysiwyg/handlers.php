@@ -74,7 +74,7 @@ class ListHandler extends ResponseHandler {
 
 		return array(
 			"success" => true,
-			"data" => "Successfully uploaded file"
+			"data" => $data
 		);
 	}
 }
@@ -93,7 +93,7 @@ class RenameHandler extends ResponseHandler {
 		if(rename($root.$dir.$file, $root.$dir.$router->cleanFile($_GET['newName']))) {
 			return array(
 				"success" => true,
-				"data" => "Successfully renamed file"
+				"data" => "File was renamed"
 			);
 		}
 		else {
@@ -131,7 +131,7 @@ class RemoveHandler extends ResponseHandler {
 		if ($is_removed) {
 			return array(
 				"success" => true,
-				"data" => "Successfully removed file."
+				"data" => "File was successfully deleted"
 			);
 		} else {
 			return array(
@@ -155,7 +155,7 @@ class MkdirHandler extends ResponseHandler {
 		if(mkdir($root.$dir.$newName)) {
 			return array(
 				"success" => true,
-				"data" => "Created: ".$root.$dir.$newName
+				"data" => "Made: ".$root.$dir.$newName
 			);
 		}
 		else {
@@ -181,7 +181,7 @@ class MoveHandler extends ResponseHandler {
 		if(rename($root.$dir.$file, $root.$newPath)) {
 			return array(
 				"success" => true,
-				"data" => "Successfully renamed directory"
+				"data" => "File already exists "
 			);
 		}
 		else {

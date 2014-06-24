@@ -208,7 +208,7 @@ jQuery(function() {
 
 		// Map controls
 		mapControls: [
-			new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }, {zoomWheelEnabled: false}),
+			new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } },  {zoomWheelEnabled: false} ),
 			new OpenLayers.Control.Attribution(),
 			new OpenLayers.Control.Zoom(),
 			new OpenLayers.Control.MousePosition({

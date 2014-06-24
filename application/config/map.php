@@ -49,7 +49,7 @@ $config['layers'] = array();
  * If maxZoomLevel - minZoomLevel > numZoomLevels then numZoomLevels has priority
  */
 
-$config['numZoomLevels'] = "14";
+$config['numZoomLevels'] = "7";
 
 
 /**
@@ -57,7 +57,7 @@ $config['numZoomLevels'] = "14";
  * http://code.google.com/apis/maps/documentation/staticmaps/#Zoomlevels
  */
 
-$config['minZoomLevel'] = "0";
+$config['minZoomLevel'] = "10";
 
 
 /**
@@ -65,7 +65,7 @@ $config['minZoomLevel'] = "0";
  * http://code.google.com/apis/maps/documentation/staticmaps/#Zoomlevels
  */
 
-$config['maxZoomLevel'] = "14";
+$config['maxZoomLevel'] = "21";
 
 /**
  * Set maximum extents for the map. This will limit the area on the map
@@ -73,10 +73,10 @@ $config['maxZoomLevel'] = "14";
  * Default values allow the user to see the whole world
  */
 
-$config['lonFrom'] = "-180";
-$config['latFrom'] = "-85";
-$config['lonTo'] = "180";
-$config['latTo'] = "85";
+$config['lonFrom'] = "-75";
+$config['latFrom'] = "-20";
+$config['lonTo'] = "75";
+$config['latTo'] = "20";
 
 
 

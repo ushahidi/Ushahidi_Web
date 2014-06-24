@@ -67,7 +67,7 @@
 			// Map options
 			var options = {
 				units: "dd",
-				numZoomLevels: 14, 
+				numZoomLevels: 7, 
 				controls:[],
 				theme: false,
 				projection: proj_900913,
@@ -75,8 +75,9 @@
 				eventListeners: {
 					"zoomend": incidentZoom
 				},
-				maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 20037508.34, 20037508.34),
-				maxResolution: 156543.0339
+				maxExtent: new OpenLayers.Bounds(-71.147, -71.147, 
+			                                 42.472, 42.472),
+				maxResolution: 76.43702827453613,
 			};
 			
 			// Now initialise the map
@@ -84,7 +85,7 @@
 			
 			<?php echo map::layers_js(FALSE); ?>
 			map.addLayers(<?php echo map::layers_array(FALSE); ?>);
-			map.addControl(new OpenLayers.Control.Navigation());
+			map.addControl(new OpenLayers.Control.Navigation({zoomWheelEnabled: false}));
 			map.addControl(new OpenLayers.Control.Zoom());
 			map.addControl(new OpenLayers.Control.MousePosition({
 				formatOutput: Ushahidi.convertLongLat
