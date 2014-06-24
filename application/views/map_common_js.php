@@ -24,14 +24,14 @@
 			// Create the default options
 			options = {
 				units: "dd",
-				numZoomLevels: 18,
+				numZoomLevels: 7,
 				theme: false,
 				controls: [],
 				projection: proj_900913,
 				'displayProjection': proj_4326,
-				maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 
-				                                 20037508.34, 20037508.34),
-				maxResolution: 156543.0339
+				maxExtent: new OpenLayers.Bounds(-71.147, -71.147, 
+			                                 42.472, 42.472),
+				maxResolution: 76.43702827453613,
 			};
 		}
 
@@ -47,7 +47,7 @@
 		if (typeof controls == "undefined" || controls == null) {
 			// Set the controls for the map options
 			map.addControls([
-				new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
+				new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } },  {zoomWheelEnabled: false}),
 				new OpenLayers.Control.Zoom(),
 				new OpenLayers.Control.Attribution(),
 				new OpenLayers.Control.MousePosition({

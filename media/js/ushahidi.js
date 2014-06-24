@@ -377,14 +377,14 @@
 		// Map options
 		var mapOptions = {
 			units: "dd",
-			numZoomLevels: 18,
+			numZoomLevels: 7,
 			theme: false,
 			controls: [],
 			projection: Ushahidi.proj_900913,
 			'displayProjection': Ushahidi.proj_4326,
-			maxExtent: new OpenLayers.Bounds(-20037508.34, -20037508.34, 
-			                                 20037508.34, 20037508.34),
-			maxResolution: 156543.0339,
+			maxExtent: new OpenLayers.Bounds(-71.147, -71.147, 
+			                                 42.472, 42.472),
+			maxResolution: 76.43702827453613,
 			// Shrink the popup padding so popups don't land under zoom control
 			paddingForPopups: new OpenLayers.Bounds(40,15,15,15),
 			eventListeners: { 
@@ -409,7 +409,7 @@
 		if (config.mapControls == undefined) {
 			// Default map controls
 			mapOptions.controls = [
-				new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } }),
+				new OpenLayers.Control.Navigation({ dragPanOptions: { enableKinetic: true } },  {zoomWheelEnabled: false} ),
 				new OpenLayers.Control.Zoom(),
 				new OpenLayers.Control.Attribution(),
 				new OpenLayers.Control.MousePosition({

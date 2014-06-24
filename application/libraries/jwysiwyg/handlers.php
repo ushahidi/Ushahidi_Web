@@ -93,7 +93,7 @@ class RenameHandler extends ResponseHandler {
 		if(rename($root.$dir.$file, $root.$dir.$router->cleanFile($_GET['newName']))) {
 			return array(
 				"success" => true,
-				"data" => "message .. "
+				"data" => "File was renamed"
 			);
 		}
 		else {
@@ -131,7 +131,7 @@ class RemoveHandler extends ResponseHandler {
 		if ($is_removed) {
 			return array(
 				"success" => true,
-				"data" => "message .. "
+				"data" => "File was successfully deleted"
 			);
 		} else {
 			return array(
@@ -181,7 +181,7 @@ class MoveHandler extends ResponseHandler {
 		if(rename($root.$dir.$file, $root.$newPath)) {
 			return array(
 				"success" => true,
-				"data" => "message .. "
+				"data" => "File already exists "
 			);
 		}
 		else {
