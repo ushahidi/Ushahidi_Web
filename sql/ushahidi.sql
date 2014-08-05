@@ -1401,7 +1401,9 @@ VALUES
   (63,'manually_approve_users','0'),
   (64,'enable_timeline','0'),
   (65,'feed_geolocation_user', ''),
-  (66,'allow_feed_category', '0');
+  (66,'allow_feed_category', '0'),
+  (67, 'max_upload_size', '10');
+
 -- --------------------------------------------------------
 
 /**
@@ -1478,5 +1480,5 @@ CREATE TABLE IF NOT EXISTS `verified` (
  * Version information for table `settings`
  *
  */
-UPDATE `settings` SET `value` = '117' WHERE `key` = 'db_version';
-UPDATE `settings` SET `value` = '2.7.3' WHERE `key`= 'ushahidi_version';
+UPDATE `settings` SET `value` = '119' WHERE `key` = 'db_version';
+UPDATE `settings` SET `value` = '2.7.4' WHERE `key`= 'ushahidi_version';

@@ -1,3 +1,13 @@
+Ushahidi 2.7.4 (Bug fix release) - 05/08/2014
+-------------------------------------
+
+### Major Fixes
+
+* Upgraded Openlayers to version 2.13.1 (https://github.com/ushahidi/Ushahidi_Web/pull/1391) 
+* Stop checking what characters are in passowrd (https://github.com/ushahidi/Ushahidi_Web/pull/1373) 
+* Added option for admins to change the maximum file size for attaching photos to reports (https://github.com/ushahidi/Ushahidi_Web/pull/1369)
+* Delete cache after changing theme so changes reflect immediately (https://github.com/ushahidi/Ushahidi_Web/pull/1368)
+
 Ushahidi 2.7.3 (Bug fix release) - 23/04/2014
 -------------------------------------
 

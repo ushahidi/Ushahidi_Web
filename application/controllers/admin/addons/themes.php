@@ -94,6 +94,8 @@ class Themes_Controller extends Admin_Controller {
 		$this->template->content->form_saved = $form_saved;
 		$themes = addon::get_addons('theme');	
 		$this->template->content->themes = $themes;
+		//delete cache to make sure theme is reloaded after change
+  		$this->cache->delete_all();
 	}
 
 }

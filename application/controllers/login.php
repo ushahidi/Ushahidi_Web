@@ -245,7 +245,7 @@ class Login_Controller extends Template_Controller {
 			//	Add some filters
 			$post->pre_filter('trim', TRUE);
 
-			$post->add_rules('password','required', 'length['.kohana::config('auth.password_length').']','alpha_dash');
+			$post->add_rules('password','required', 'length['.kohana::config('auth.password_length').']');
 			$post->add_rules('name','required','length[3,100]');
 			$post->add_rules('email','required','email','length[4,64]');
 			$post->add_callbacks('username', array($this,'username_exists_chk'));
@@ -255,7 +255,7 @@ class Login_Controller extends Template_Controller {
 			if ( ! empty($post->password))
 			{
 				$post->add_rules('password','required','length['.kohana::config('auth.password_length').']'
-					,'alpha_dash','matches[password_again]');			
+					,'matches[password_again]');			
 			}
 			//pass the post object to any plugins that care to know.
 			Event::run('ushahidi_action.users_add_login_form', $post);
@@ -389,8 +389,8 @@ class Login_Controller extends Template_Controller {
 			$post->pre_filter('trim', TRUE);
 			$post->add_rules('token','required');
 			$post->add_rules('changeid','required');
-			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']','alpha_dash');
-			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']','alpha_dash','matches[password_again]');
+			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']');
+			$post->add_rules('password','required','length['.Kohana::config('auth.password_length').']','matches[password_again]');
 
 			if ($post->validate())
 			{
@@ -1014,7 +1014,7 @@ class Login_Controller extends Template_Controller {
 		}
 		catch (Exception $e)
 		{
-			Kohana::log('warning', Swift_LogContainer::getLog()->dump(true));
+			Kohana::log('alert', Swift_LogContainer::getLog()->dump(true));
 			return FALSE;
 		}
 

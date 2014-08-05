@@ -63,6 +63,7 @@ class Settings_Controller extends Admin_Controller {
 			'allow_alerts' => '',
 			'allow_reports' => '',
 			'allow_comments' => '',
+			'max_upload_size' => '',
 			'allow_feed' => '',
 			'allow_feed_category' => '',
 			'feed_geolocation_user' => '',
@@ -108,6 +109,7 @@ class Settings_Controller extends Admin_Controller {
 			$post->add_rules('blocks_per_row','required','numeric');
 			$post->add_rules('allow_alerts','required','between[0,1]');
 			$post->add_rules('allow_reports','required','between[0,1]');
+			$post->add_rules('max_upload_size','length[0,50]', 'alpha_numeric');
 			$post->add_rules('allow_comments','required','between[0,2]');
 			$post->add_rules('allow_feed','required','between[0,1]');
 			$post->add_rules('allow_feed_category','required','between[0,1]');
@@ -264,6 +266,7 @@ class Settings_Controller extends Admin_Controller {
 				'allow_alerts' => $settings['allow_alerts'],
 				'allow_reports' => $settings['allow_reports'],
 				'allow_comments' => $settings['allow_comments'],
+				'max_upload_size' => $settings['max_upload_size'],
 				'allow_feed' => $settings['allow_feed'],
 				'allow_feed_category' => $settings['allow_feed_category'],
 				'feed_geolocation_user' => isset($settings['feed_geolocation_user']) ? $settings['feed_geolocation_user'] : null,
