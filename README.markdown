@@ -1,6 +1,6 @@
 Ushahidi Platform
 =================
-The Ushahidi Platform is an open source web application for information collection, vizualisation and interactive 
+The Ushahidi Platform is an open source web application for information collection, visualization and interactive 
 mapping. It allows people to collect and share their own stories using various mediums such
 as SMS, Web Forms, Email or Twitter. For more information about the platform and use cases (case studies) visit: http://www.ushahidi.com
 
@@ -22,7 +22,7 @@ To install the platform on your computer/server, the target system must meet the
 
 Required Extensions
 -------------------
-The follwing is a list of PHP extensions that must be installed on your server in order for Ushahidi to run properly:
+The following is a list of PHP extensions that must be installed on your server in order for Ushahidi to run properly:
 
 * PCRE (http://php.net/pcre) must be compiled with –enable-utf8 and –enable-unicode-properties for UTF-8 functions to work properly.
 * iconv (http://php.net/iconv) is required for UTF-8 transliteration.
@@ -79,7 +79,7 @@ Installation
     
     To unzip/extract the archive on a typical Unix/Linux command line:
     
-        tar -xvf Ushahidi_Web-xxxx.tar.gz
+        tar -zxvf Ushahidi_Web-xxxx.tar.gz
     
     or in the case of a zip file:
 
