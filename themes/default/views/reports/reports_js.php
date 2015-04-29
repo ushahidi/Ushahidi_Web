@@ -638,6 +638,11 @@
 				removeParameterItem("v", verification);
 				
 			}
+
+			<?php
+				// Action, allows plugins to add custom filters
+				Event::run('ushahidi_action.report_js_filterReportsActionRemove');
+			?>
 		}
 	}
 	
