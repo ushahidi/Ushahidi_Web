@@ -244,7 +244,7 @@ class Json_Controller extends Template_Controller {
 			);
 			$json_item['geometry'] = array(
 				'type' => 'Point',
-				'coordinates' => array($longitude, $latitude)
+				'coordinates' => array((float)$longitude, (float)$latitude)
 			);
 
 			if ($marker->id == $first_incident_id)
