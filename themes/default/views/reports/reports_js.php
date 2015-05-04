@@ -622,7 +622,7 @@
 		// Save filter options to the URL so it can act as a permalink
 		if(history.pushState)
 		{
-			history.pushState(null, null, '/reports/?filterParams='+encodeURIComponent(JSON.stringify(urlParameters)));
+			history.pushState(null, null, window.location.pathname+'?filterParams='+encodeURIComponent(JSON.stringify(urlParameters)));
 		}
 		
 		// Get the content for the new page
