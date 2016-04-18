@@ -1,5 +1,6 @@
 .*swp
 .htaccess
+.vagrant
 *~
 *.DS_Store
 application/logs/*
