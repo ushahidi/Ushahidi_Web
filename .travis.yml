@@ -1,5 +1,13 @@
 language: ruby
 rvm:
-  - 2.2
+- 2.2
 install: gem install capistrano
-script: cap staging deploy
+script: echo 'No tests here :P'
+before_deploy:
+  - openssl aes-256-cbc -K $encrypted_e2c5c9d58b16_key -iv $encrypted_e2c5c9d58b16_iv
+    -in config/deploy/id_rsa_deploy.enc -out config/deploy/id_rsa_deploy -d
+deploy:
+  provider: script
+  script: ./config/deploy/travis.sh
+  on:
+    branch: develop
