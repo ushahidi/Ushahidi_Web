@@ -344,6 +344,23 @@ span.btn-icon { display:block; position:absolute; height:16px; width:16px; overf
         text-align: center;
     }
 
+    #main .left-col {
+        margin: 0;
+        width: 100%;
+    }
+
+    .left-col h1.report-title {
+        float: none;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    #main .right-col {
+        float: none;
+        width: 100%;        
+    }
+
     /* login */
     #openid_login_container .row {
         margin: 0;

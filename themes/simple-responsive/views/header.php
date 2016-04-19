@@ -11,10 +11,6 @@
 // Action::header_scripts - Additional Inline Scripts from Plugins
 Event::run('ushahidi_action.header_scripts');
 ?>
-<link rel="stylesheet" type="text/css" href="<?php print URL::base() ?>themes/simple-responsive/assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="<?php print URL::base() ?>themes/simple-responsive/assets/bootstrap/css/bootstrap-theme.min.css">
-<script type="text/javascript" src="<?php print URL::base() ?>themes/simple-responsive/assets/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="<?php print URL::base() ?>themes/simple-responsive/js/jquery.browser.js"></script>
 </head>
 <?php
   // Add a class to the body tag according to the page URI
