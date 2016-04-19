@@ -1,7 +1,6 @@
 language: ruby
 rvm:
 - 2.2
-install: gem install capistrano
 script: echo 'No tests here :P'
 before_deploy:
   - openssl aes-256-cbc -K $encrypted_e2c5c9d58b16_key -iv $encrypted_e2c5c9d58b16_iv
