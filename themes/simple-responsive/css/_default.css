@@ -358,7 +358,12 @@ span.btn-icon { display:block; position:absolute; height:16px; width:16px; overf
 
     #main .right-col {
         float: none;
-        width: 100%;        
+        width: 100%;
+    }
+
+    #footer .row > div {
+        float: none;
+        margin-bottom: 10px;
     }
 
     /* login */
