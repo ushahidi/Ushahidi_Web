@@ -69,3 +69,13 @@ set :ssh_options, {
 #     auth_methods: %w(publickey password)
 #     # password: 'please use keys'
 #   }
+
+set :linked_files, %w{
+  .htaccess
+  application/config/auth.php
+  application/config/config.php
+  application/config/database.php
+  application/config/encryption.php
+}
+
+set :linked_dirs, %w{application/logs application/cache media/uploads}
