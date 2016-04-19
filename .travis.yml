@@ -8,7 +8,7 @@ before_deploy:
     -in config/deploy/id_rsa_deploy.enc -out config/deploy/id_rsa_deploy -d
 deploy:
   provider: script
-  script: ./config/deploy/travis.sh
+  script: cap staging deploy
   skip_cleanup: true
   on:
     branch: develop
