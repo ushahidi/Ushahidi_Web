@@ -31,7 +31,7 @@ role :app, %w{deployer@mapa.desastre.ec}
 # http://capistranorb.com/documentation/getting-started/configuration/
 # Feel free to add new variables to customise your setup.
 
-set :branch , 'staging'
+set :branch , 'develop'
 set :deploy_to, '/var/www/deploys/www/beta.mapa.desastre.ec'
 
 # Custom SSH Options
